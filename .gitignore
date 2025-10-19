@@ -1,0 +1,29 @@
+# Installation folders (customer-specific customization)
+# Exclude by default - customers can opt-in via separate repo
+/*-group/
+/acme/
+/tesla/
+/[a-z]*/
+# Exception: Always track global templates
+!/one/
+!/web/
+!/backend/
+!/apps/
+!/cli/
+!/.claude/
+
+# macOS
+.DS_Store
+.AppleDouble
+.LSOverride
+
+# Editor files
+.vscode/
+.idea/
+
+# Temporary files
+*.tmp
+*.bak
+*.swp
+*.swo
+*~
