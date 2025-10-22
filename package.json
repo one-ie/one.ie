@@ -58,7 +58,7 @@
   "author": "Anthony O'Connell <anthony@one.ie>",
   "license": "SEE LICENSE IN https://one.ie/free-license",
   "engines": {
-    "node": ">=18.0.0",
+    "node": ">=22.16.0",
     "bun": ">=1.2.0"
   },
   "devDependencies": {
@@ -68,7 +68,9 @@
     "prettier-plugin-astro": "^0.14.1",
     "vitest": "^3.2.4"
   },
-  "dependencies": {},
+  "dependencies": {
+    "esbuild": "^0.25.11"
+  },
   "funding": {
     "type": "individual",
     "url": "https://one.ie/pricing"

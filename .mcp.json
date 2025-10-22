@@ -12,16 +12,39 @@
       "args": [
         "-y",
         "mcp-remote",
-        "https://builds.mcp.cloudflare.com/sse"
-      ]
+        "https://builds.mcp.cloudflare.com/mcp"
+      ],
+      "env": {
+        "CLOUDFLARE_ACCOUNT_ID": "${CLOUDFLARE_ACCOUNT_ID}",
+        "CLOUDFLARE_API_TOKEN": "${CLOUDFLARE_GLOBAL_API_KEY}",
+        "CLOUDFLARE_EMAIL": "${CLOUDFLARE_EMAIL}"
+      }
+    },
+    "cloudflare-observability": {
+      "command": "npx",
+      "args": [
+        "-y",
+        "mcp-remote",
+        "https://observability.mcp.cloudflare.com/mcp"
+      ],
+      "env": {
+        "CLOUDFLARE_ACCOUNT_ID": "${CLOUDFLARE_ACCOUNT_ID}",
+        "CLOUDFLARE_API_TOKEN": "${CLOUDFLARE_GLOBAL_API_KEY}",
+        "CLOUDFLARE_EMAIL": "${CLOUDFLARE_EMAIL}"
+      }
     },
     "cloudflare-docs": {
       "command": "npx",
       "args": [
         "-y",
         "mcp-remote",
-        "https://docs.mcp.cloudflare.com/sse"
-      ]
+        "https://docs.mcp.cloudflare.com/mcp"
+      ],
+      "env": {
+        "CLOUDFLARE_ACCOUNT_ID": "${CLOUDFLARE_ACCOUNT_ID}",
+        "CLOUDFLARE_API_TOKEN": "${CLOUDFLARE_GLOBAL_API_KEY}",
+        "CLOUDFLARE_EMAIL": "${CLOUDFLARE_EMAIL}"
+      }
     },
     "chrome-devtools": {
       "command": "npx",
@@ -30,29 +53,42 @@
         "chrome-devtools-mcp@latest"
       ]
     },
-    "figma-remote-mcp": {
-      "type": "http",
-      "url": "https://mcp.figma.com/mcp"
-    },
-    "stripe": {
-      "url": "https://mcp.stripe.com"
-    },
-    "desktop-commander": {
-      "command": "npx",
-      "args": [
-        "@wonderwhy-er/desktop-commander@latest"
-      ]
-    },
-    "director__one": {
+    "claude": {
       "command": "npx",
       "args": [
         "-y",
-        "@director.run/cli@latest",
-        "http2stdio",
-        "http://localhost:3673/one/sse"
+        "@anthropic-ai/mcp-server-claude"
       ],
       "env": {
-        "LOG_LEVEL": "silent"
+        "ANTHROPIC_API_KEY": "${ANTHROPIC_API_KEY}"
+      }
+    },
+    "framelink-figma": {
+      "command": "npx",
+      "args": [
+        "-y",
+        "figma-developer-mcp",
+        "--figma-api-key=${FIGMA_ACCESS_TOKEN}",
+        "--stdio"
+      ]
+    },
+    "astro-docs": {
+      "command": "npx",
+      "args": [
+        "-y",
+        "mcp-remote",
+        "https://mcp.docs.astro.build/mcp"
+      ]
+    },
+    "stripe": {
+      "command": "npx",
+      "args": [
+        "-y",
+        "mcp-remote",
+        "https://mcp.stripe.com/"
+      ],
+      "env": {
+        "STRIPE_API_KEY": "${STRIPE_API_KEY}"
       }
     }
   }
