@@ -1,0 +1,35 @@
+{
+  "organizationName": "ONE Platform",
+  "tagline": "Make Your Ideas Real",
+  "logoUrl": "/logo.svg",
+  "colors": {
+    "primary": "216 55% 25%",
+    "secondary": "219 14% 28%",
+    "accent": "105 22% 25%",
+    "background": "36 8% 88%",
+    "foreground": "0 0% 13%"
+  },
+  "features": [
+    {
+      "title": "AI-Native Architecture",
+      "description": "Built on a 6-dimension ontology that models reality through Groups, People, Things, Connections, Events, and Knowledge.",
+      "icon": "cpu"
+    },
+    {
+      "title": "Multi-Tenant by Design",
+      "description": "Hierarchical groups from friend circles to global governments. Complete data isolation with flexible access control.",
+      "icon": "users"
+    },
+    {
+      "title": "Real-Time Everything",
+      "description": "Powered by Convex for instant updates. Effect.ts for pure business logic. Type-safe from database to UI.",
+      "icon": "zap"
+    }
+  ],
+  "cta": {
+    "title": "Ready to Build?",
+    "description": "Start creating with the ONE Platform today.",
+    "buttonText": "Get Started",
+    "buttonLink": "/account/signup"
+  }
+}

@@ -18,6 +18,38 @@
 ## Coding Style & Naming Conventions
 Prettier controls formatting—use 2-space indentation for Astro/TSX/JSON. Components take PascalCase (`GroupSelector.tsx`); hooks/utilities use camelCase (`useBetterAuth.ts`). Keep Tailwind values tokenized (`hsl(var(--token))`) and add tokens solely in `web/src/styles/global.css`. Convex `_generated/` files are read-only.
 
+### Tailwind v4 & Styling Best Practices
+
+**CRITICAL: Gradient Text Usage**
+- ❌ NEVER use `bg-gradient-to-r from-primary to-secondary bg-clip-text text-transparent` manually
+- ✅ ALWAYS use the `.gradient-text` utility class for gradient text
+- Why: Tailwind v4 handles background opacity differently; manual patterns cause invisible text
+- The `.gradient-text` utility includes `!important` flags, browser fallbacks, and animation
+
+```html
+<!-- ❌ FORBIDDEN - Becomes transparent/invisible -->
+<h1 class="bg-gradient-to-r from-primary to-secondary bg-clip-text text-transparent">
+  Invisible Text
+</h1>
+
+<!-- ✅ CORRECT - Always visible with gradient animation -->
+<h1 class="gradient-text">
+  Beautiful Gradient Text
+</h1>
+```
+
+**Transparency Prevention (Site-Wide)**
+- All modals, dialogs, popovers, and UI components have transparency fixes in `global.css`
+- 14 categories of fixes prevent transparent backgrounds (see `/web/TRANSPARENCY-FIXES.md`)
+- Never override these fixes with inline styles or `!important` background: transparent
+- If adding new modal/dialog components, they inherit fixes automatically via CSS selectors
+
+**Color System**
+- Use HSL format only: `hsl(var(--color-background))`
+- Define colors in `@theme` blocks with `--color-*` pattern
+- No OKLCH, no arbitrary color values
+- All semantic colors auto-support dark mode
+
 ## Testing Guidelines
 Co-locate new specs beside the feature or in the relevant `test/` subtree, naming them `<feature>.test.ts` or `.spec.ts`. Use helpers in `web/test/auth/utils.ts` for deterministic auth flows. Capture a failing test before fixing a regression and run the auth suite when touching login, signup, or mandate logic.
 

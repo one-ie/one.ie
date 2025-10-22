@@ -2,19 +2,58 @@
   "mcpServers": {
     "shadcn": {
       "command": "npx",
-      "args": ["shadcn@latest", "mcp"]
+      "args": [
+        "shadcn@latest",
+        "mcp"
+      ]
     },
     "cloudflare-builds": {
       "command": "npx",
-      "args": ["-y", "mcp-remote", "https://builds.mcp.cloudflare.com/sse"]
+      "args": [
+        "-y",
+        "mcp-remote",
+        "https://builds.mcp.cloudflare.com/sse"
+      ]
     },
     "cloudflare-docs": {
       "command": "npx",
-      "args": ["-y", "mcp-remote", "https://docs.mcp.cloudflare.com/sse"]
+      "args": [
+        "-y",
+        "mcp-remote",
+        "https://docs.mcp.cloudflare.com/sse"
+      ]
     },
     "chrome-devtools": {
       "command": "npx",
-      "args": ["-y", "chrome-devtools-mcp@latest"]
+      "args": [
+        "-y",
+        "chrome-devtools-mcp@latest"
+      ]
+    },
+    "figma-remote-mcp": {
+      "type": "http",
+      "url": "https://mcp.figma.com/mcp"
+    },
+    "stripe": {
+      "url": "https://mcp.stripe.com"
+    },
+    "desktop-commander": {
+      "command": "npx",
+      "args": [
+        "@wonderwhy-er/desktop-commander@latest"
+      ]
+    },
+    "director__one": {
+      "command": "npx",
+      "args": [
+        "-y",
+        "@director.run/cli@latest",
+        "http2stdio",
+        "http://localhost:3673/one/sse"
+      ],
+      "env": {
+        "LOG_LEVEL": "silent"
+      }
     }
   }
 }
