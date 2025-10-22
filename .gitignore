@@ -17,6 +17,7 @@ cli/
 one/
 web/
 backend/
+import/
 # Ignore patterns
 .gi
 
