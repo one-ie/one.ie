@@ -101,6 +101,12 @@ cd web && bun run dev > /dev/null 2>&1 &
 sleep 2 && lsof -ti:4321 2>/dev/null
 ```
 
+### Step 5: Open Start Page in Browser
+
+```bash
+open http://localhost:4321/start 2>/dev/null || xdg-open http://localhost:4321/start 2>/dev/null || start http://localhost:4321/start 2>/dev/null
+```
+
 **If started successfully:**
 
 ```
@@ -108,8 +114,10 @@ sleep 2 && lsof -ti:4321 2>/dev/null
 🚀 Dev Server Started!
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
-URL: http://localhost:4321
+URL: http://localhost:4321/start
 PID: [process-id]
+
+Opening start page in your browser...
 
 The server is running in the background.
 
@@ -215,6 +223,12 @@ sleep 2
 lsof -ti:4321 2>/dev/null
 ```
 
+### Step 4: Open Start Page in Browser
+
+```bash
+open http://localhost:4321/start 2>/dev/null || xdg-open http://localhost:4321/start 2>/dev/null || start http://localhost:4321/start 2>/dev/null
+```
+
 **If restarted successfully:**
 
 ```
@@ -222,10 +236,11 @@ lsof -ti:4321 2>/dev/null
 🔄 Dev Server Restarted!
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
-URL: http://localhost:4321
+URL: http://localhost:4321/start
 PID: [process-id]
 
 Fresh server instance running.
+Opening start page in your browser...
 
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 ```
@@ -275,6 +290,7 @@ cd backend && npx convex deploy
 3. **RELIABLE** - Always verify server status before/after actions
 4. **CLEAR** - Show clear status and actionable commands
 5. **SAFE** - Graceful shutdown, verify before killing processes
+6. **HELPFUL** - Auto-open start page (http://localhost:4321/start) after successful start/restart
 
 ---
 
