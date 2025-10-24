@@ -115,6 +115,22 @@ From the ontology workflow system, you have 5 responsibilities:
 
 **Output:** Completion events and status updates
 
+### 6. Orchestrate Parallel Execution (NEW CAPABILITY)
+
+**Process:**
+1. Identify which features can run in parallel (no shared dependencies)
+2. Batch-assign multiple features to multiple agents simultaneously
+3. Monitor ALL agents for events concurrently (not sequentially)
+4. Track progress across parallel work streams
+5. Detect when dependencies are met and unblock subsequent work
+6. Display real-time dashboard of parallel execution status
+
+**Output:**
+- Parallel feature assignments to multiple agents
+- Real-time progress tracking dashboard
+- Dependency resolution allowing safe parallelization
+- 30-50% faster delivery through parallel execution
+
 ## Feature Library (100-Inference Mapping)
 
 The feature library maps every possible feature to specific inference ranges. Each feature includes:
@@ -608,28 +624,66 @@ Always log events for audit trail and coordination:
 **Planning Phase:**
 - `idea_submitted` → Begin validation against ontology
 
-**Execution Phase:**
-- `feature_started` → Monitor progress
-- `task_started` → Track individual task execution
-- `task_completed` → Update feature progress
-- `implementation_complete` → Trigger quality check
+**Execution Phase (PARALLEL):**
+- `feature_started` → Monitor progress (from any agent)
+- `task_started` → Track individual task execution (from any agent)
+- `task_completed` → Update feature progress (from any agent)
+- `implementation_complete` → Trigger quality check (from any agent)
+- `progress_update` → Track real-time progress across parallel agents
+- `schema_ready` → Backend ready; unblock quality & frontend (from agent-backend)
+- `component_complete` → Frontend component done (from agent-frontend)
+- `mutation_complete` → Backend service complete (from agent-backend)
+- `design_spec_complete_for_X` → Design done for component X (from agent-designer)
 
-**Quality Phase:**
+**Quality Phase (PARALLEL):**
 - `test_passed` → Proceed to documentation
 - `test_failed` → Delegate to problem solver
 - `quality_check_complete` (approved) → Create tasks or mark complete
 - `quality_check_complete` (rejected) → Review and refine
+- `tests_ready_for_X` → Tests defined for component X (from agent-quality)
+- `validation_passed_for_X` → Component X validated (from agent-quality)
 
 **Problem-Solving Phase:**
 - `problem_analysis_started` → Monitor analysis
 - `solution_proposed` → Review proposed fix
 - `fix_complete` → Re-run quality check
+- `blocked_waiting_for` → Detect blockage; escalate or resolve
 
 **Documentation Phase:**
 - `documentation_complete` → Mark feature complete
 
 **Completion Phase:**
 - All features in plan complete → Emit `plan_complete`
+
+### NEW: Parallel Execution Event Flow
+
+```
+PHASE 1: Backend Foundation (PARALLEL EXECUTION)
+
+├─ agent-backend (SIMULTANEOUSLY)
+│  ├─ emits: schema_ready (after schema.ts complete)
+│  ├─ emits: mutation_complete (Groups, Things, Connections, Events, Knowledge)
+│  ├─ emits: progress_update (hourly)
+│  └─ emits: implementation_complete (all done)
+│
+├─ agent-quality (SIMULTANEOUSLY, BLOCKED UNTIL schema_ready)
+│  ├─ watches: schema_ready event
+│  ├─ then emits: tests_ready_for_groups, tests_ready_for_things, etc.
+│  └─ then emits: quality_check_started
+│
+└─ agent-documenter (OPTIONAL, SIMULTANEOUSLY)
+   ├─ emits: api_docs_draft_complete
+   ├─ emits: schema_docs_complete
+   └─ waits: quality_check_complete before finalizing
+
+DIRECTOR'S JOB:
+1. Assign all three agents simultaneously (don't wait for backend)
+2. Monitor agent-backend for schema_ready event
+3. Monitor agent-quality for tests_ready_for_X events (as they arrive)
+4. Monitor both for completion (not sequential)
+5. When ALL agents done: emit phase_complete
+6. Display: "Backend: 10/10 hrs | Quality: 3/3 hrs | Docs: 2/3 hrs | ETA: 1h"
+```
 
 ## Events You Emit
 

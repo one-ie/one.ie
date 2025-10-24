@@ -5,8 +5,14 @@
 # ============================================================
 # Automates the 13-step release process for ONE Platform
 # Syncs ontology, web, backend, CLI, and master assembly
-# Usage: ./scripts/release.sh [version_bump]
+# Usage: ./scripts/release.sh [version_bump] [target]
 #   version_bump: major, minor, patch (optional, default: none)
+#   target: main, demo, both (optional, default: both)
+#
+# Examples:
+#   ./scripts/release.sh patch main    # Deploy to one.ie only
+#   ./scripts/release.sh patch demo    # Deploy to demo.one.ie only
+#   ./scripts/release.sh patch         # Deploy to both
 #
 # See: release.md for complete documentation
 # ============================================================
@@ -29,6 +35,14 @@ NC='\033[0m' # No Color
 # Workspace
 WORKSPACE_ROOT="$(cd "$(dirname "${BASH_SOURCE[0]}")/.." && pwd)"
 VERSION_BUMP="${1:-none}"
+TARGET="${2:-both}"  # main, demo, or both
+
+# Validate target
+if [[ ! "$TARGET" =~ ^(main|demo|both)$ ]]; then
+    echo -e "${RED}Invalid target: $TARGET${NC}"
+    echo "Valid targets: main, demo, both"
+    exit 1
+fi
 
 # ============================================================
 # HELPER FUNCTIONS
@@ -72,19 +86,20 @@ info() {
 # Synchronise web using rsync (simpler and more reliable than git subtree)
 sync_web_rsync() {
     local SOURCE="$WORKSPACE_ROOT/web/"
-    local DEST="$WORKSPACE_ROOT/apps/one/web/"
+    local DEST_DIR="$1"  # apps/oneie or apps/one
+    local DEST="$WORKSPACE_ROOT/$DEST_DIR/web/"
 
     if [ ! -d "$SOURCE" ]; then
         warning "Source web/ directory not found, skipping web sync"
         return
     fi
 
-    if [ ! -d "$WORKSPACE_ROOT/apps/one" ]; then
-        warning "Destination apps/one/ directory not found, skipping web sync"
+    if [ ! -d "$WORKSPACE_ROOT/$DEST_DIR" ]; then
+        warning "Destination $DEST_DIR/ directory not found, skipping web sync"
         return
     fi
 
-    info "Syncing web/ → apps/one/web/ (rsync)"
+    info "Syncing web/ → $DEST_DIR/web/ (rsync)"
 
     # Sync everything except git, build artifacts, and node_modules
     rsync -av --delete \
@@ -93,9 +108,166 @@ sync_web_rsync() {
         --exclude='dist' \
         --exclude='.astro' \
         --exclude='.wrangler' \
+        --exclude='.env' \
+        --exclude='.env.local' \
         "$SOURCE" "$DEST"
 
-    success "Web synced to apps/one/web/"
+    success "Web synced to $DEST_DIR/web/"
+}
+
+# Commit and push to target repo
+commit_and_push_target() {
+    local TARGET_NAME="$1"  # "main" or "demo"
+    local TARGET_DIR=""
+    local REPO_NAME=""
+    local REPO_URL=""
+
+    if [ "$TARGET_NAME" = "main" ]; then
+        TARGET_DIR="apps/oneie"
+        REPO_NAME="one-ie/oneie"
+        REPO_URL="https://github.com/one-ie/oneie.git"
+    elif [ "$TARGET_NAME" = "demo" ]; then
+        TARGET_DIR="apps/one"
+        REPO_NAME="one-ie/one"
+        REPO_URL="https://github.com/one-ie/one.git"
+    else
+        error "Invalid target: $TARGET_NAME"
+        return 1
+    fi
+
+    if [ ! -d "$TARGET_DIR/.git" ]; then
+        error "$TARGET_DIR/ is not a git repository"
+        echo ""
+        info "To initialize:"
+        echo "  cd $TARGET_DIR"
+        echo "  git init"
+        echo "  git remote add origin $REPO_URL"
+        echo "  git add ."
+        echo "  git commit -m 'chore: initialize repository'"
+        echo "  git push -u origin main"
+        return 1
+    fi
+
+    cd "$TARGET_DIR"
+
+    if [ -n "$(git status --porcelain)" ]; then
+        echo ""
+        git status --short
+        echo ""
+
+        # Auto-commit and push (no confirmation)
+        COMMIT_MSG="chore: sync documentation and configuration"
+
+        if [ "$VERSION_BUMP" != "none" ] && [ -n "$NEW_VERSION" ]; then
+            COMMIT_MSG="chore: release v$NEW_VERSION"
+        fi
+
+        info "Auto-committing $TARGET_DIR changes..."
+        git add -A
+        git commit -m "$COMMIT_MSG"
+        success "Committed to $TARGET_DIR/"
+
+        info "Auto-pushing to $REPO_NAME..."
+        git push origin main
+        success "Pushed to $REPO_NAME"
+
+        # Create and push tag if version was bumped
+        if [ "$VERSION_BUMP" != "none" ] && [ -n "$NEW_VERSION" ]; then
+            info "Creating tag v$NEW_VERSION..."
+            git tag -a "v$NEW_VERSION" -m "Release v$NEW_VERSION"
+            git push origin "v$NEW_VERSION"
+            success "Created and pushed tag v$NEW_VERSION"
+        fi
+    else
+        info "No changes to commit in $TARGET_DIR/"
+    fi
+
+    cd "$WORKSPACE_ROOT"
+}
+
+# Sync to target (oneie or one)
+sync_to_target() {
+    local TARGET_NAME="$1"  # "main" or "demo"
+    local TARGET_DIR=""
+    local ENV_FILE=""
+    local CLOUDFLARE_PROJECT=""
+
+    # Determine target directory and configuration
+    if [ "$TARGET_NAME" = "main" ]; then
+        TARGET_DIR="apps/oneie"
+        ENV_FILE="web/.env.main"
+        CLOUDFLARE_PROJECT="oneie"
+        info "Target: Main site (one.ie)"
+    elif [ "$TARGET_NAME" = "demo" ]; then
+        TARGET_DIR="apps/one"
+        ENV_FILE="web/.env.demo"
+        CLOUDFLARE_PROJECT="one"
+        info "Target: Demo site (demo.one.ie)"
+    else
+        error "Invalid target: $TARGET_NAME"
+        return 1
+    fi
+
+    # Create target directories
+    info "Creating target directories in $TARGET_DIR..."
+    mkdir -p "$TARGET_DIR/one"
+    mkdir -p "$TARGET_DIR/one/.claude"
+    mkdir -p "$TARGET_DIR/web"
+    success "Target directories ready"
+
+    # Sync /one directory
+    info "Syncing: one/ → $TARGET_DIR/one/"
+    rsync -av --delete \
+        --exclude='.DS_Store' \
+        --exclude='*.swp' \
+        --exclude='*.tmp' \
+        --exclude='.git' \
+        one/ "$TARGET_DIR/one/"
+    success "Synced to $TARGET_DIR/one/"
+
+    # Sync .claude directory
+    if [ -d ".claude" ]; then
+        info "Syncing: .claude/ → $TARGET_DIR/one/.claude/"
+        rsync -av --delete \
+            --exclude='.DS_Store' \
+            --exclude='*.swp' \
+            --exclude='*.tmp' \
+            .claude/ "$TARGET_DIR/one/.claude/"
+        success "Synced to $TARGET_DIR/one/.claude/"
+    fi
+
+    # Sync web directory
+    sync_web_rsync "$TARGET_DIR"
+
+    # Copy environment file
+    if [ -f "$ENV_FILE" ]; then
+        info "Copying: $ENV_FILE → $TARGET_DIR/web/.env.local"
+        cp "$ENV_FILE" "$TARGET_DIR/web/.env.local"
+        success "Environment file copied"
+    else
+        warning "$ENV_FILE not found, skipping environment copy"
+    fi
+
+    # Copy core documentation files
+    info "Syncing core documentation files to $TARGET_DIR/one/..."
+    for file in "${REQUIRED_FILES[@]}"; do
+        if [ -f "$file" ]; then
+            cp "$file" "$TARGET_DIR/one/"
+            success "Synced $file"
+        fi
+    done
+
+    # Copy AGENTS.md from web/
+    if [ -f "web/AGENTS.md" ]; then
+        info "Copying: web/AGENTS.md → $TARGET_DIR/one/AGENTS.md"
+        cp web/AGENTS.md "$TARGET_DIR/one/AGENTS.md"
+        success "Copied AGENTS.md"
+    fi
+
+    success "Sync to $TARGET_DIR complete"
+
+    # Return target info for deployment
+    echo "$TARGET_DIR:$CLOUDFLARE_PROJECT"
 }
 
 # Print step message
@@ -118,6 +290,7 @@ banner "   ONE Platform Release Script"
 
 echo "Workspace: $WORKSPACE_ROOT"
 echo "Version bump: $VERSION_BUMP"
+echo "Target: $TARGET"
 echo ""
 
 # Change to workspace root
@@ -158,14 +331,51 @@ else
     success "Multiple independent repositories will be managed"
 fi
 
-# Check required directories
-REQUIRED_DIRS=("one" "cli" "apps/one")
+# Check and create required directories based on target
+REQUIRED_DIRS=("one" "cli")
+OPTIONAL_ASSEMBLY_DIRS=()
+
+if [ "$TARGET" = "main" ] || [ "$TARGET" = "both" ]; then
+    OPTIONAL_ASSEMBLY_DIRS+=("apps/oneie")
+fi
+if [ "$TARGET" = "demo" ] || [ "$TARGET" = "both" ]; then
+    OPTIONAL_ASSEMBLY_DIRS+=("apps/one")
+fi
+
+# Check core directories
 for dir in "${REQUIRED_DIRS[@]}"; do
     if [ ! -d "$dir" ]; then
         error "Required directory '$dir' does not exist"
         exit 1
     fi
     success "Directory '$dir' exists"
+done
+
+# Create and initialize assembly directories if they don't exist
+for dir in "${OPTIONAL_ASSEMBLY_DIRS[@]}"; do
+    if [ ! -d "$dir" ]; then
+        warning "Directory '$dir' does not exist, creating..."
+        mkdir -p "$dir"
+
+        # Determine repo URL
+        if [[ "$dir" == "apps/oneie" ]]; then
+            REPO_URL="https://github.com/one-ie/oneie.git"
+            REPO_NAME="one-ie/oneie"
+        elif [[ "$dir" == "apps/one" ]]; then
+            REPO_URL="https://github.com/one-ie/one.git"
+            REPO_NAME="one-ie/one"
+        fi
+
+        # Initialize git repository
+        cd "$dir"
+        git init
+        git remote add origin "$REPO_URL"
+        cd "$WORKSPACE_ROOT"
+
+        success "Created and initialized $dir → $REPO_NAME"
+    else
+        success "Directory '$dir' exists"
+    fi
 done
 
 # Check optional directories
@@ -285,36 +495,19 @@ echo ""
 success "Core repositories processed"
 
 # ============================================================
-# STEP 4: SYNC VIA FOLDERS.YAML
+# STEP 4: SYNC TO TARGETS
 # ============================================================
 
-section "Step 4: Sync Documentation via folders.yaml"
+section "Step 4: Sync to Deployment Targets"
 
 step "4"
 
-# Create target directories
-info "Cleaning apps/one/ root..."
-ASSEMBLY_ROOT="apps/one"
-ASSEMBLY_ONE_DIR="$ASSEMBLY_ROOT/one"
-ASSEMBLY_ONE_CLAUDE="$ASSEMBLY_ONE_DIR/.claude"
-
-# Remove legacy top-level folders that should live inside apps/one/one/
-LEGACY_FOLDERS=("connections" "events" "groups" "knowledge" "organisation" "people" "things")
-for legacy in "${LEGACY_FOLDERS[@]}"; do
-    if [ -d "$ASSEMBLY_ROOT/$legacy" ]; then
-        rm -rf "$ASSEMBLY_ROOT/$legacy"
-        success "Removed legacy directory: $ASSEMBLY_ROOT/$legacy"
-    fi
-done
-
-info "Creating target directories..."
+# Always sync to CLI
+info "Syncing to CLI (always)..."
 mkdir -p cli/one
 mkdir -p cli/.claude
-mkdir -p "$ASSEMBLY_ONE_DIR"
-mkdir -p "$ASSEMBLY_ONE_CLAUDE"
-success "Target directories ready"
+success "CLI directories ready"
 
-# Sync /one to cli/one and apps/one/one
 info "Syncing: one/ → cli/one/"
 rsync -av --delete \
     --exclude='.DS_Store' \
@@ -324,16 +517,6 @@ rsync -av --delete \
     one/ cli/one/
 success "Synced to cli/one/"
 
-info "Syncing: one/ → $ASSEMBLY_ONE_DIR/"
-rsync -av --delete \
-    --exclude='.DS_Store' \
-    --exclude='*.swp' \
-    --exclude='*.tmp' \
-    --exclude='.git' \
-    one/ "$ASSEMBLY_ONE_DIR"/
-success "Synced to $ASSEMBLY_ONE_DIR/"
-
-# Sync .claude
 if [ -d ".claude" ]; then
     info "Syncing: .claude/ → cli/.claude/"
     rsync -av --delete \
@@ -342,48 +525,42 @@ if [ -d ".claude" ]; then
         --exclude='*.tmp' \
         .claude/ cli/.claude/
     success "Synced to cli/.claude/"
-
-    info "Syncing: .claude/ → $ASSEMBLY_ONE_CLAUDE/"
-    rsync -av --delete \
-        --exclude='.DS_Store' \
-        --exclude='*.swp' \
-        --exclude='*.tmp' \
-        .claude/ "$ASSEMBLY_ONE_CLAUDE"/
-    success "Synced to $ASSEMBLY_ONE_CLAUDE/"
-else
-    warning "Skipping .claude sync (directory not found)"
 fi
 
-info "Syncing web subtree into apps/one/"
-sync_web_rsync
-
-# Copy AGENTS.md from web/ to both cli/ and apps/one/one/
-if [ -f "web/AGENTS.md" ]; then
-    info "Copying: web/AGENTS.md → cli/AGENTS.md"
-    cp web/AGENTS.md cli/AGENTS.md
-    success "Copied AGENTS.md to cli/"
-
-    info "Copying: web/AGENTS.md → $ASSEMBLY_ONE_DIR/AGENTS.md"
-    cp web/AGENTS.md "$ASSEMBLY_ONE_DIR/AGENTS.md"
-    success "Copied AGENTS.md to $ASSEMBLY_ONE_DIR/"
-else
-    warning "Skipping AGENTS.md (not found in web/)"
-fi
-
-# Sync core documentation files (CLAUDE.md, README.md, LICENSE.md, SECURITY.md)
-info "Syncing core documentation files..."
+# Copy core files to CLI
 for file in "${REQUIRED_FILES[@]}"; do
     if [ -f "$file" ]; then
         cp "$file" cli/
-        cp "$file" "$ASSEMBLY_ONE_DIR/"
-        success "Synced $file"
-    else
-        warning "Skipping $file (not found)"
+        success "Synced $file to cli/"
     fi
 done
 
+if [ -f "web/AGENTS.md" ]; then
+    cp web/AGENTS.md cli/AGENTS.md
+    success "Copied AGENTS.md to cli/"
+fi
+
 echo ""
-success "Documentation sync complete"
+
+# Sync to deployment targets
+DEPLOY_TARGETS=()
+if [ "$TARGET" = "main" ] || [ "$TARGET" = "both" ]; then
+    echo ""
+    section "Syncing to Main Site (one.ie)"
+    MAIN_INFO=$(sync_to_target "main")
+    DEPLOY_TARGETS+=("$MAIN_INFO")
+    echo ""
+fi
+
+if [ "$TARGET" = "demo" ] || [ "$TARGET" = "both" ]; then
+    echo ""
+    section "Syncing to Demo Site (demo.one.ie)"
+    DEMO_INFO=$(sync_to_target "demo")
+    DEPLOY_TARGETS+=("$DEMO_INFO")
+    echo ""
+fi
+
+success "All targets synced successfully"
 
 # ============================================================
 # STEP 5: UPDATE CLI README
@@ -640,61 +817,29 @@ fi
 echo ""
 
 # ============================================================
-# STEP 11: COMMIT AND PUSH APPS/ONE
+# STEP 11: COMMIT AND PUSH DEPLOYMENT TARGETS
 # ============================================================
 
-section "Step 11: Commit & Push apps/one to one-ie/one"
+section "Step 11: Commit & Push to GitHub"
 
 step "11"
 
-if [ -d "apps/one/.git" ]; then
-    cd apps/one
-
-    if [ -n "$(git status --porcelain)" ]; then
-        echo ""
-        git status --short
-        echo ""
-
-        # ALWAYS commit and push apps/one (no confirmation needed)
-        COMMIT_MSG="chore: sync documentation and configuration"
-
-        if [ "$VERSION_BUMP" != "none" ] && [ -n "$NEW_VERSION" ]; then
-            COMMIT_MSG="chore: release v$NEW_VERSION"
-        fi
-
-        info "Auto-committing apps/one changes..."
-        git add -A
-        git commit -m "$COMMIT_MSG"
-        success "Committed to apps/one/"
-
-        info "Auto-pushing to one-ie/one..."
-        git push origin main
-        success "Pushed to one-ie/one"
-
-        # Create and push tag if version was bumped
-        if [ "$VERSION_BUMP" != "none" ] && [ -n "$NEW_VERSION" ]; then
-            info "Creating tag v$NEW_VERSION..."
-            git tag -a "v$NEW_VERSION" -m "Release v$NEW_VERSION"
-            git push origin "v$NEW_VERSION"
-            success "Created and pushed tag v$NEW_VERSION"
-        fi
-    else
-        info "No changes to commit in apps/one/"
-    fi
-
-    cd "$WORKSPACE_ROOT"
-else
-    error "apps/one/ is not a git repository"
+# Commit and push based on target
+if [ "$TARGET" = "main" ] || [ "$TARGET" = "both" ]; then
     echo ""
-    info "To initialize:"
-    echo "  cd apps/one"
-    echo "  git init"
-    echo "  git remote add origin https://github.com/one-ie/one.git"
-    echo "  git add ."
-    echo "  git commit -m 'chore: initialize ONE assembly'"
-    echo "  git push -u origin main"
+    section "Committing Main Site (one-ie/oneie)"
+    commit_and_push_target "main"
+    echo ""
 fi
 
+if [ "$TARGET" = "demo" ] || [ "$TARGET" = "both" ]; then
+    echo ""
+    section "Committing Demo Site (one-ie/one)"
+    commit_and_push_target "demo"
+    echo ""
+fi
+
+success "All targets committed and pushed"
 echo ""
 
 # ============================================================
@@ -741,38 +886,47 @@ if [ -f "scripts/cloudflare-deploy.sh" ]; then
     source scripts/cloudflare-deploy.sh
 fi
 
-# Deploy from apps/one/web (production source, already synced)
-WEB_DIR="apps/one/web"
+# Deploy each target
+for deploy_info in "${DEPLOY_TARGETS[@]}"; do
+    IFS=':' read -r TARGET_DIR CLOUDFLARE_PROJECT <<< "$deploy_info"
+    WEB_DIR="$TARGET_DIR/web"
 
-if [ -d "$WEB_DIR" ]; then
+    if [ ! -d "$WEB_DIR" ]; then
+        warning "$WEB_DIR directory not found, skipping"
+        continue
+    fi
+
     echo ""
+    section "Deploying $CLOUDFLARE_PROJECT → ${CLOUDFLARE_PROJECT}.one.ie"
 
-    # Check if Cloudflare credentials are set (API Token OR Global API Key)
+    # Check if Cloudflare credentials are set
     if [[ -z "${CLOUDFLARE_API_TOKEN:-}" && -z "${CLOUDFLARE_GLOBAL_API_KEY:-}" ]] || [[ -z "${CLOUDFLARE_ACCOUNT_ID:-}" ]]; then
         warning "Cloudflare credentials not set"
         warning "Required: (CLOUDFLARE_API_TOKEN OR CLOUDFLARE_GLOBAL_API_KEY) + CLOUDFLARE_ACCOUNT_ID"
         warning "Falling back to wrangler CLI deployment"
 
-        if confirm "Deploy web to Cloudflare Pages via wrangler?"; then
+        if confirm "Deploy $CLOUDFLARE_PROJECT to Cloudflare Pages via wrangler?"; then
             cd "$WEB_DIR"
 
-            info "Building web from $WEB_DIR (production source)..."
-            # Skip type checking on build - deploy with warnings
+            info "Building web from $WEB_DIR..."
             if ASTRO_TELEMETRY_DISABLED=1 bun run build 2>&1 | grep -v "^src/" | tail -20; then
                 success "Build completed (check warnings above)"
 
                 echo ""
                 info "Deploying to Cloudflare Pages..."
-                if wrangler pages deploy dist --project-name=web --commit-dirty=true; then
+                if wrangler pages deploy dist --project-name="$CLOUDFLARE_PROJECT" --commit-dirty=true; then
                     success "Deployed to Cloudflare Pages"
                     echo ""
-                    info "Live URLs:"
-                    echo "  - Production: https://web.one.ie"
-                    echo "  - Preview: https://web-d3d.pages.dev"
+                    info "Live URL:"
+                    if [ "$CLOUDFLARE_PROJECT" = "oneie" ]; then
+                        echo "  - Production: https://one.ie"
+                    else
+                        echo "  - Production: https://demo.one.ie"
+                    fi
                 else
                     error "Cloudflare deployment failed"
                     warning "You can deploy manually later with:"
-                    echo "  cd $WEB_DIR && wrangler pages deploy dist --project-name=web"
+                    echo "  cd $WEB_DIR && wrangler pages deploy dist --project-name=$CLOUDFLARE_PROJECT"
                 fi
             else
                 error "Build failed - skipping deployment"
@@ -782,8 +936,7 @@ if [ -d "$WEB_DIR" ]; then
 
             cd "$WORKSPACE_ROOT"
         else
-            warning "Skipped Cloudflare deployment"
-            info "Deploy later with: cd $WEB_DIR && wrangler pages deploy dist --project-name=web"
+            warning "Skipped Cloudflare deployment for $CLOUDFLARE_PROJECT"
         fi
     else
         # Automated deployment via Cloudflare API
@@ -794,8 +947,7 @@ if [ -d "$WEB_DIR" ]; then
         fi
 
         cd "$WEB_DIR"
-        info "Building web from $WEB_DIR (production source)..."
-        # Skip type checking on build - deploy with warnings
+        info "Building web from $WEB_DIR..."
         if ASTRO_TELEMETRY_DISABLED=1 bun run build 2>&1 | grep -v "^src/" | tail -20; then
             success "Build completed (check warnings above)"
 
@@ -803,19 +955,22 @@ if [ -d "$WEB_DIR" ]; then
             cd "$WORKSPACE_ROOT"
 
             info "Deploying to Cloudflare Pages via API..."
-            if deploy_to_cloudflare "web" "$WEB_DIR/dist" "production"; then
+            if deploy_to_cloudflare "$CLOUDFLARE_PROJECT" "$WEB_DIR/dist" "production"; then
                 success "Deployed to Cloudflare Pages via API"
                 echo ""
                 info "Checking deployment status..."
-                get_deployment_status "web"
+                get_deployment_status "$CLOUDFLARE_PROJECT"
                 echo ""
-                info "Live URLs:"
-                echo "  - Production: https://web.one.ie"
-                echo "  - Preview: https://web-d3d.pages.dev"
+                info "Live URL:"
+                if [ "$CLOUDFLARE_PROJECT" = "oneie" ]; then
+                    echo "  - Production: https://one.ie"
+                else
+                    echo "  - Production: https://demo.one.ie"
+                fi
             else
                 error "Cloudflare API deployment failed"
                 warning "You can deploy manually with:"
-                echo "  cd $WEB_DIR && wrangler pages deploy dist --project-name=web"
+                echo "  cd $WEB_DIR && wrangler pages deploy dist --project-name=$CLOUDFLARE_PROJECT"
             fi
         else
             error "Build failed - skipping deployment"
@@ -823,9 +978,12 @@ if [ -d "$WEB_DIR" ]; then
             echo "  cd $WEB_DIR && bun run build"
         fi
     fi
-else
-    warning "$WEB_DIR directory not found, skipping Cloudflare deployment"
-    warning "Run web sync first: sync_web_rsync"
+
+    echo ""
+done
+
+if [ ${#DEPLOY_TARGETS[@]} -eq 0 ]; then
+    warning "No deployment targets found, skipping Cloudflare deployment"
 fi
 
 echo ""
