@@ -3,17 +3,20 @@
 # ============================================================
 # ONE Platform Release Script
 # ============================================================
-# Automates the 13-step release process for ONE Platform
-# Syncs ontology, web, backend, CLI, and master assembly
-# Usage: ./scripts/release.sh [version_bump] [target]
+# Automates release process for TWO-SITE architecture
+#
+# TWO-SITE ARCHITECTURE:
+#   - oneie/ → one.ie (production site, source of truth)
+#   - web/ → web.one.ie (starter template, AUTO-GENERATED)
+#
+# Usage: ./scripts/release.sh [version_bump]
 #   version_bump: major, minor, patch (optional, default: none)
-#   target: main, demo, both (optional, default: both)
 #
 # Examples:
-#   ./scripts/release.sh patch main    # Deploy to one.ie only
-#   ./scripts/release.sh patch demo    # Deploy to demo.one.ie only
-#   ./scripts/release.sh patch         # Deploy to both
+#   ./scripts/release.sh patch    # Patch release with deployment
+#   ./scripts/release.sh minor    # Minor release with deployment
 #
+# For simpler releases: ./scripts/release-simple.sh
 # See: release.md for complete documentation
 # ============================================================
 
