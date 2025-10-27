@@ -2,6 +2,7 @@
 name: agent-frontend
 description: Frontend specialist for implementing Astro 5 + React 19 UI components that render the 6-dimension ontology with performance optimization and islands architecture.
 tools: Read, Write, Edit, Bash, Grep, Glob
+skills: agent-frontend:create-page, agent-frontend:create-component, agent-frontend:optimize-performance
 model: inherit
 ---
 

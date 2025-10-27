@@ -45,6 +45,63 @@ Installation folders support branding and feature customization, NOT custom onto
 
 **Important:** The ontology is ALWAYS universal. Installation folders do NOT create custom ontologies.
 
+## Frontend-First Strategy (DEFAULT)
+
+**By default, build FRONTEND ONLY** using existing /web components:
+
+### Available Frontend Components Ready to Use
+- **Shop (ecommerce):** `/web/src/pages/shop.astro` - Full product catalog, cart, checkout
+- **Blog (content):** `/web/src/pages/blog/` - Articles, featured content, RSS feeds
+- **Portfolio:** `/web/src/pages/portfolio.astro` - Project showcase, filtering, gallery
+- **Course Pages:** Components available in `/web/src/components/features/`
+- **Instructor Profiles:** Card components, detail pages
+- **Testimonials:** Showcase components
+
+### Decision Tree for Building
+
+```
+User Request:
+    ↓
+Does it require NEW backend logic?
+    ├─ NO → Use frontend agent only (fast: 1-3 days)
+    │   • Customize existing pages
+    │   • Add new React components
+    │   • Integrate with existing Convex queries
+    │   • Update styling & branding
+    │
+    └─ YES → Requires backend agent (slower: 7-14 days)
+        • "build backend AI tutor system"
+        • "build backend token economy"
+        • "build backend custom analytics"
+```
+
+### Examples of Frontend-Only (DEFAULT)
+
+✅ **Frontend only - use existing features:**
+- "Redesign the shop page with new branding"
+- "Add course preview cards to blog"
+- "Create portfolio gallery with filtering"
+- "Add testimonials section to landing"
+- "Build instructor profile pages"
+- "Customize product pages with recommendations"
+
+❌ **Requires backend - must explicitly say "build backend":**
+- "build backend AI tutor integration"
+- "build backend token economy"
+- "build backend custom analytics"
+- "build backend enrollment system"
+
+### Default Workflow
+
+When user requests a feature:
+
+1. **Check existing /web components first**
+2. **If reusable components exist → Frontend agent only**
+3. **If new backend logic needed → User must explicitly say "build backend"**
+4. **Never assume backend work unless explicitly requested**
+
+This keeps builds FAST and SIMPLE by default.
+
 ## Your 5 Core Responsibilities
 
 From the ontology workflow system, you have 5 responsibilities:

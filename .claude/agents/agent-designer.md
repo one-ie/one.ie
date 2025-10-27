@@ -2,6 +2,7 @@
 name: agent-designer
 description: Create wireframes, component definitions, and design tokens from feature specs and tests, ensuring WCAG accessibility and brand compliance.
 tools: Read, Write, Edit, Bash, Grep, Glob
+skills: agent-designer:create-wireframe, agent-designer:define-components, agent-designer:set-design-tokens
 model: inherit
 ---
 
