@@ -22,7 +22,11 @@ info() { echo -e "${BLUE}ℹ${NC} $*"; }
 validate_env() {
     local missing=()
 
-    [[ -z "${CLOUDFLARE_API_TOKEN:-}" ]] && missing+=("CLOUDFLARE_API_TOKEN")
+    # Check for Global API Key (preferred) or API Token
+    if [[ -z "${CLOUDFLARE_GLOBAL_API_KEY:-}" ]] && [[ -z "${CLOUDFLARE_API_TOKEN:-}" ]]; then
+        missing+=("CLOUDFLARE_GLOBAL_API_KEY or CLOUDFLARE_API_TOKEN")
+    fi
+
     [[ -z "${CLOUDFLARE_ACCOUNT_ID:-}" ]] && missing+=("CLOUDFLARE_ACCOUNT_ID")
 
     if [[ ${#missing[@]} -gt 0 ]]; then
@@ -30,6 +34,14 @@ validate_env() {
         for var in "${missing[@]}"; do
             echo "  - $var"
         done
+        error ""
+        error "Use CLOUDFLARE_GLOBAL_API_KEY for automated deployments (RECOMMENDED):"
+        error "  export CLOUDFLARE_GLOBAL_API_KEY=your-global-api-key"
+        error "  export CLOUDFLARE_ACCOUNT_ID=your-account-id"
+        error ""
+        error "Or use CLOUDFLARE_API_TOKEN for scoped access:"
+        error "  export CLOUDFLARE_API_TOKEN=your-api-token"
+        error "  export CLOUDFLARE_ACCOUNT_ID=your-account-id"
         return 1
     fi
 
@@ -40,11 +52,30 @@ validate_env() {
 get_project_id() {
     local project_name="$1"
 
+    # Use Global API Key if available, otherwise API Token
+    local auth_header
+    if [[ -n "${CLOUDFLARE_GLOBAL_API_KEY:-}" ]]; then
+        auth_header="X-Auth-Key: ${CLOUDFLARE_GLOBAL_API_KEY}"
+        local email_header="X-Auth-Email: ${CLOUDFLARE_EMAIL:-}"
+    else
+        auth_header="Authorization: Bearer ${CLOUDFLARE_API_TOKEN}"
+        local email_header=""
+    fi
+
     local response
-    response=$(curl -s -X GET \
-        "https://api.cloudflare.com/client/v4/accounts/${CLOUDFLARE_ACCOUNT_ID}/pages/projects/${project_name}" \
-        -H "Authorization: Bearer ${CLOUDFLARE_API_TOKEN}" \
-        -H "Content-Type: application/json")
+    local curl_opts=(
+        -s -X GET
+        "https://api.cloudflare.com/client/v4/accounts/${CLOUDFLARE_ACCOUNT_ID}/pages/projects/${project_name}"
+        -H "Content-Type: application/json"
+    )
+
+    if [[ -n "${CLOUDFLARE_GLOBAL_API_KEY:-}" ]]; then
+        curl_opts+=(-H "${auth_header}" -H "${email_header}")
+    else
+        curl_opts+=(-H "${auth_header}")
+    fi
+
+    response=$(curl "${curl_opts[@]}")
 
     local success
     success=$(echo "$response" | jq -r '.success')
@@ -120,10 +151,18 @@ get_deployment_status() {
     local project_name="$1"
     local deployment_id="${2:-latest}"
 
+    # Use Global API Key if available, otherwise API Token
+    local auth_header
+    if [[ -n "${CLOUDFLARE_GLOBAL_API_KEY:-}" ]]; then
+        auth_header=(-H "X-Auth-Key: ${CLOUDFLARE_GLOBAL_API_KEY}" -H "X-Auth-Email: ${CLOUDFLARE_EMAIL:-}")
+    else
+        auth_header=(-H "Authorization: Bearer ${CLOUDFLARE_API_TOKEN}")
+    fi
+
     local response
     response=$(curl -s -X GET \
         "https://api.cloudflare.com/client/v4/accounts/${CLOUDFLARE_ACCOUNT_ID}/pages/projects/${project_name}/deployments" \
-        -H "Authorization: Bearer ${CLOUDFLARE_API_TOKEN}")
+        "${auth_header[@]}")
 
     echo "$response" | jq -r '.result[0] | {
         id: .id,
@@ -142,10 +181,18 @@ list_deployments() {
 
     info "Recent deployments for ${project_name}:"
 
+    # Use Global API Key if available, otherwise API Token
+    local auth_header
+    if [[ -n "${CLOUDFLARE_GLOBAL_API_KEY:-}" ]]; then
+        auth_header=(-H "X-Auth-Key: ${CLOUDFLARE_GLOBAL_API_KEY}" -H "X-Auth-Email: ${CLOUDFLARE_EMAIL:-}")
+    else
+        auth_header=(-H "Authorization: Bearer ${CLOUDFLARE_API_TOKEN}")
+    fi
+
     local response
     response=$(curl -s -X GET \
         "https://api.cloudflare.com/client/v4/accounts/${CLOUDFLARE_ACCOUNT_ID}/pages/projects/${project_name}/deployments" \
-        -H "Authorization: Bearer ${CLOUDFLARE_API_TOKEN}")
+        "${auth_header[@]}")
 
     echo "$response" | jq -r ".result[:${limit}] | .[] |
         \"  • \(.id[:8])... | \(.environment) | \(.latest_stage.status) | \(.url)\""
