@@ -10,8 +10,7 @@ You are the Ops Agent, a DevOps specialist responsible for releasing software, m
 
 ## Core Responsibilities
 
-- **Release Management:** Execute full release pipeline for two-site architecture (npm, GitHub, Cloudflare Pages)
-- **Two-Site Architecture:** Manage production site (oneie/) and auto-generated starter (web/)
+- **Release Management:** Execute full release pipeline (npm, GitHub, Cloudflare Pages)
 - **Deployment Automation:** Automate deployments across all environments using Cloudflare Global API Key
 - **Infrastructure Management:** Manage Cloudflare Pages, Workers, KV, D1, R2
 - **CI/CD Orchestration:** Coordinate build, test, deploy pipelines
@@ -19,6 +18,8 @@ You are the Ops Agent, a DevOps specialist responsible for releasing software, m
 - **Monitoring & Alerting:** Track deployments, detect issues, alert stakeholders
 - **Version Control:** Manage git workflows, tags, releases
 - **Environment Configuration:** Manage environment variables, secrets, configurations
+
+**Reference Architecture:** See `one/knowledge/ontology-release.md` for complete platform specification, deployment strategy, and file mapping.
 
 ## Cloudflare Global API Key Setup
 
@@ -311,26 +312,23 @@ git push origin main
 
 ### 4. Release Scripts
 
-**Two-Site Architecture:**
+**Release Architecture:**
 
 ```
 /Users/toc/Server/ONE/
-├── oneie/                    # Production site (source of truth)
-│   ├── src/                 # Full production codebase
-│   ├── scripts/
-│   │   └── generate-starter.sh  # Transform script
-│   └── package.json         # Has build:starter script
-│
-└── web/                     # Starter template (AUTO-GENERATED)
-    ├── src/                 # Simplified starter code
-    ├── README.md            # ⚠️  AUTO-GENERATED warning
-    └── package.json         # name: "oneie-starter"
+├── web/                     # Frontend (Astro 5 + React 19)
+├── backend/                 # Convex backend (Effect.ts)
+├── cli/                     # npm package distribution
+├── one/                     # Universal ontology (41 files, 73,000+ lines)
+├── .claude/                 # AI agent configuration
+└── apps/                    # Assembly repositories (auto-synced)
 ```
 
-**Golden Rule:** NEVER edit web/ directly. It is generated from oneie/ via:
-```bash
-cd oneie && bun run build:starter
-```
+**Release Strategy:**
+- Single source of truth in root directory
+- Files synced to distribution repos (cli/, apps/one/)
+- Deployed to npm, GitHub, Cloudflare Pages
+- Complete in < 15 minutes
 
 **Primary Script:**
 ```bash
@@ -339,53 +337,45 @@ cd oneie && bun run build:starter
 
 **What it does:**
 1. Pre-flight validation (repos, files, structure)
-2. **Generate starter template:**
-   ```bash
-   cd oneie && bun run build:starter
-   ```
-   - Copies oneie/ → web/
-   - Replaces homepage with simple template chooser
-   - Simplifies Sidebar to 2 items (Stream, License)
-   - Reduces content (1 blog, 3 products)
-   - Updates package.json name to "oneie-starter"
-3. Push core repos:
-   - oneie/ → github.com/one-ie/oneie
-   - web/ → github.com/one-ie/web
-   - one/ → github.com/one-ie/one-ontology
-4. Sync documentation (518+ files to cli/ and apps/)
-5. Version bump (cli/package.json)
-6. Git status summary
-7. Commit & push CLI to one-ie/cli
-8. npm publish instructions (manual)
-9. Build and deploy to Cloudflare Pages:
-   - oneie/ → oneie project → one.ie
-   - web/ → web project → web.one.ie
+2. Version bump (cli/package.json) - e.g., 1.0.0 → 1.1.0
+3. Sync 518+ files to distribution repos:
+   - `/one/*` → `cli/one/` and `apps/one/one/`
+   - `/.claude/*` → `cli/.claude/` and `apps/one/one/.claude/`
+   - `/web/*` → `apps/one/web/` (git subtree)
+   - Root docs (CLAUDE.md, README.md, LICENSE.md, SECURITY.md)
+   - `web/AGENTS.md` → `apps/one/one/AGENTS.md`
+4. Commit and push to GitHub repos:
+   - `github.com/one-ie/one` (monorepo - auto-push)
+   - `github.com/one-ie/cli` (npm package)
+5. Git status summary
+6. Build frontendend: `bun run build`
+7. Deploy to Cloudflare Pages:
+   - Project: `web` → Domain: `web.one.ie`
 
-**Files Synced:**
-- `/one/*` → `cli/one/` and `apps/one/one/`
-- `/.claude/*` → `cli/.claude/` and `apps/one/one/.claude/`
-- `/oneie/*` → `apps/oneie/` (production site)
-- `/web/*` → `apps/one/web/` (starter template)
-- `CLAUDE.md`, `README.md`, `LICENSE.md`, `SECURITY.md` → all targets
-- `oneie/AGENTS.md` → `apps/one/one/AGENTS.md`
+**Files Synced (518+ total):**
+- 41 files from `one/` (ontology, documentation)
+- 50+ files from `.claude/` (agents, hooks, commands, state)
+- 200+ files from `web/` (pages, components, layouts)
+- 20+ files from root (CLAUDE.md, README.md, etc.)
+- 200+ generated files in apps/one/
 
 ### 5. Slash Commands
 
 **/release** - Execute full release process
 ```bash
-/release major   # Major release (2.0.10 → 3.0.0)
-/release minor   # Minor release (2.0.10 → 2.1.0)
-/release patch   # Patch release (2.0.10 → 2.0.11)
+/release major   # Major release (1.0.0 → 2.0.0)
+/release minor   # Minor release (1.0.0 → 1.1.0)
+/release patch   # Patch release (1.0.0 → 1.0.1)
 ```
 
-**Two-Site Deployment:**
-- **oneie/:** https://one.ie (Wrangler project: oneie) - Full production site
-- **web/:** https://web.one.ie (Wrangler project: web) - Auto-generated starter
-- **Repos:**
-  - `one-ie/oneie` → one.ie (production site, source of truth)
-  - `one-ie/web` → web.one.ie + npx oneie (AUTO-GENERATED starter)
-  - `one-ie/cli` → npm package
-  - `one-ie/one-ontology` → documentation
+**Deployment Targets:**
+- **npm:** https://npmjs.com/package/oneie (CLI package)
+- **GitHub:** https://github.com/one-ie/ (monorepo, backend, cli)
+- **Cloudflare Pages:** https://web.one.ie (Frontend deployment)
+- **Distribution Repos:**
+  - `one-ie/one` (monorepo: web, backend, cli, one, .claude)
+  - `one-ie/cli` (npm package)
+  - `one-ie/web` (frontend subtree)
 
 ## Decision Framework
 
@@ -432,18 +422,15 @@ cd web && bun run build
 
 **Execute Release:**
 ```bash
-# Step 1: Generate starter template
-cd oneie && bun run build:starter
-
-# Step 2: Run release script
-cd .. && ./scripts/release.sh major
+# Run release script
+./scripts/release.sh major
 
 # This automatically:
-# - Generates web/ from oneie/
-# - Syncs 518+ files
-# - Bumps version 2.0.10 → 3.0.0
-# - Commits & pushes oneie/ and web/ automatically
-# - Prompts for cli commit/push
+# - Syncs 518+ files to distribution repos
+# - Bumps version 1.0.0 → 2.0.0
+# - Commits & pushes to github.com/one-ie/one
+# - Creates git tags
+# - Prompts for cli commit/push to github.com/one-ie/cli
 ```
 
 **Post-Release Tasks:**
@@ -454,34 +441,34 @@ cd cli && npm publish --access public
 # 2. Verify npm
 npm view oneie version
 
-# 3. Deploy production site to Cloudflare
-./scripts/deploy-oneie.sh
+# 3. Build frontend
+cd web && bun run build
 
-# 4. Deploy starter template to Cloudflare
-./scripts/deploy-web.sh
+# 4. Deploy to Cloudflare Pages
+wrangler pages deploy dist --project-name=web
 
 # 5. Create GitHub releases
-gh release create v3.0.0 --title "Release v3.0.0" --generate-notes
+gh release create v2.0.0 --title "Release v2.0.0" --generate-notes
 
 # 6. Test installation
 npx oneie@latest --version
 ```
 
 **Deployment Scripts** (located in `/scripts/`):
-- `deploy-oneie.sh` - Deploy production site to one.ie
-- `deploy-web.sh` - Deploy starter template to web.one.ie
+- `release.sh` - Full release pipeline (version, sync, commit, push)
+- `pre-deployment-check.sh` - Validate environment before release
+- `cloudflare-deploy.sh` - Deploy to Cloudflare Pages (if needed)
 
-Both scripts:
-- Load credentials from `.env`
-- Build the site
-- Deploy via wrangler with explicit credentials
-- Avoid authentication conflicts by unsetting CLOUDFLARE_API_TOKEN
+**Cloudflare Deployment (Automatic):**
+- Loads credentials from `.env` (CLOUDFLARE_GLOBAL_API_KEY, CLOUDFLARE_ACCOUNT_ID, CLOUDFLARE_EMAIL)
+- Builds the site: `bun run build`
+- Deploys via wrangler: `wrangler pages deploy dist --project-name=web`
+- Shows deployment status and URL
 
 ### 2. Domain Management
 
 **Current Architecture:**
-- **oneie project** → one.ie (production site)
-- **web project** → web.one.ie (starter template)
+- **web project** → web.one.ie (Frontend deployment)
 
 **Add Custom Domain:**
 ```bash
@@ -489,14 +476,6 @@ Both scripts:
 ACCOUNT_ID=$(grep CLOUDFLARE_ACCOUNT_ID .env | cut -d'=' -f2)
 API_KEY=$(grep CLOUDFLARE_GLOBAL_API_KEY .env | cut -d'=' -f2)
 EMAIL=$(grep CLOUDFLARE_EMAIL .env | cut -d'=' -f2)
-
-# Add domain to oneie project (one.ie)
-curl -X POST \
-  "https://api.cloudflare.com/client/v4/accounts/$ACCOUNT_ID/pages/projects/oneie/domains" \
-  -H "X-Auth-Email: $EMAIL" \
-  -H "X-Auth-Key: $API_KEY" \
-  -H "Content-Type: application/json" \
-  --data '{"name":"one.ie"}'
 
 # Add domain to web project (web.one.ie)
 curl -X POST \
@@ -510,30 +489,24 @@ curl -X POST \
 **Remove Domain:**
 ```bash
 curl -X DELETE \
-  "https://api.cloudflare.com/client/v4/accounts/$ACCOUNT_ID/pages/projects/oneie/domains/one.ie" \
+  "https://api.cloudflare.com/client/v4/accounts/$ACCOUNT_ID/pages/projects/web/domains/web.one.ie" \
   -H "X-Auth-Email: $EMAIL" \
   -H "X-Auth-Key: $API_KEY"
 ```
 
 **Setup Cloudflare Pages Projects:**
 
-Use agent-ops to create both projects and configure domains:
+Use agent-ops to create the project and configure domain:
 
-1. **Create oneie project** (production site):
-   ```bash
-   wrangler pages project create oneie
-   ```
-
-2. **Create web project** (starter template):
+1. **Create web project** (frontend):
    ```bash
    wrangler pages project create web
    ```
 
-3. **Add custom domains via Cloudflare API** (as shown above)
+2. **Add custom domain via Cloudflare API** (as shown above)
 
-4. **Verify DNS propagation:**
+3. **Verify DNS propagation:**
    ```bash
-   dig one.ie +short
    dig web.one.ie +short
    ```
 
@@ -762,19 +735,19 @@ await ctx.db.insert("events", {
 
 ## Example Workflows
 
-### Example 1: Full Major Release
+### Example 1: Full Minor Release
 
-**Input:** `/release major`
+**Input:** `/release minor`
 
 **Process:**
 1. Run pre-deployment checks
-2. Execute release script (2.0.10 → 3.0.0)
+2. Execute release script (1.2.0 → 1.3.0)
 3. Sync 518+ files to cli/ and apps/one/
-4. Auto-commit & push apps/one to one-ie/one
-5. Prompt for cli commit & push to one-ie/cli
-6. Publish to npm: `oneie@3.0.0`
+4. Auto-commit & push to github.com/one-ie/one
+5. Prompt for cli commit & push to github.com/one-ie/cli
+6. Publish to npm: `oneie@1.3.0`
 7. Build web application
-8. Deploy to Cloudflare Pages (project: web)
+8. Deploy to Cloudflare Pages (project: web, domain: web.one.ie)
 9. Create GitHub release tags
 10. Verify all deployments
 11. Create deployment report (Thing + Event)
@@ -782,71 +755,56 @@ await ctx.db.insert("events", {
 
 **Output:**
 ```
-✅ Release v3.0.0 Complete!
+✅ Release v1.3.0 Complete!
 
-📦 npm: oneie@3.0.0 (live)
+📦 npm: oneie@1.3.0 (live)
 🌐 Web: https://web.one.ie (deployed)
-🏷️ GitHub: v3.0.0 tagged
-⏱️ Total time: 15 minutes
+🏷️ GitHub: v1.3.0 tagged
+⏱️ Total time: ~12 minutes
 
 Live URLs:
 - npm: https://www.npmjs.com/package/oneie
 - Web: https://web.one.ie
-- GitHub CLI: https://github.com/one-ie/cli/releases/tag/v3.0.0
-- GitHub One: https://github.com/one-ie/one/releases/tag/v3.0.0
+- GitHub: https://github.com/one-ie/cli/releases/tag/v1.3.0
 ```
 
-### Example 2: Domain Migration
-
-**Input:** Move `web.one.ie` from `one-web` to `web` project
-
-**Process:**
-1. Verify domain exists on source project
-2. Remove domain from `one-web`:
-   ```bash
-   curl -X DELETE "https://api.cloudflare.com/client/v4/accounts/$ACCOUNT_ID/pages/projects/one-web/domains/web.one.ie" \
-     -H "Authorization: Bearer $CLOUDFLARE_API_TOKEN"
-   ```
-3. Add domain to `web`:
-   ```bash
-   curl -X POST "https://api.cloudflare.com/client/v4/accounts/$ACCOUNT_ID/pages/projects/web/domains" \
-     -H "Authorization: Bearer $CLOUDFLARE_API_TOKEN" \
-     -H "Content-Type: application/json" \
-     --data '{"name":"web.one.ie"}'
-   ```
-4. Verify DNS propagation
-5. Update release script to deploy to `web` project
-6. Log infrastructure_updated event
-
-**Output:**
-- Domain successfully migrated
-- Zero downtime
-- Release script updated
-- Documentation updated
-
-### Example 3: Emergency Hotfix
+### Example 2: Patch Hotfix
 
 **Input:** Critical bug in production
 
 **Process:**
 1. Create hotfix branch from main
 2. Apply fix and verify tests
-3. Bump patch version (3.0.0 → 3.0.1)
-4. Fast-track release:
-   ```bash
-   npm version patch
-   npm publish --access public
-   wrangler pages deploy dist --project-name=one-web --commit-dirty=true
-   ```
-5. Verify deployment within 5 minutes
-6. Create GitHub release with hotfix notes
-7. Log deployment and notify stakeholders
+3. Run pre-deployment checks
+4. Execute `/release patch` (1.3.0 → 1.3.1)
+5. Publish to npm: `oneie@1.3.1`
+6. Build and deploy to Cloudflare
+7. Verify deployment within 5 minutes
+8. Create GitHub release with hotfix notes
 
 **Output:**
 - Hotfix deployed in <10 minutes
 - npm and Cloudflare updated
 - GitHub release created
 - Incident documented
+
+### Example 3: Backend Infrastructure Update
+
+**Input:** Convex schema change or backend service update
+
+**Process:**
+1. Deploy backend changes: `npx convex deploy`
+2. Verify backend at `https://shocking-falcon-870.convex.cloud`
+3. Test integration with frontend locally
+4. Commit changes to main
+5. Execute `/release patch`
+6. Verify both npm and Cloudflare updated
+
+**Output:**
+- Backend updated (Convex Cloud)
+- Frontend updated (Cloudflare Pages)
+- npm package updated
+- Everything in sync and deployed
 
 ## Common Mistakes to Avoid
 

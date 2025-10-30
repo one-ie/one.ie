@@ -5,7 +5,9 @@ description: Execute full ONE Platform release via agent-ops specialist
 
 # /release - Full ONE Platform Release
 
-**Purpose:** Delegate to `agent-ops` specialist to execute the complete 13-step release process including npm publish, GitHub pushes, and Cloudflare Pages deployment.
+**Purpose:** Delegate to `agent-ops` specialist to execute the complete release process including npm publish, GitHub pushes, and Cloudflare Pages deployment.
+
+**Reference Architecture:** See `one/knowledge/ontology-release.md` for complete platform specification, file mapping, and deployment strategy.
 
 ## How It Works
 
