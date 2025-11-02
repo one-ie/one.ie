@@ -17,6 +17,7 @@
 !/README.md
 !/.nvmrc
 !/.mcp.json.backup
+!/scripts/push.sh
 
 # Ensure directories are tracked
 !*/
