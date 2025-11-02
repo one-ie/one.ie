@@ -1,18 +1,22 @@
 # Ignore everything by default
 *
 
-# Whitelist specific directories and files
+# Whitelist specific directories
 !/.claude/
 !/.claude/**
 !/one/
 !/one/**
 !/web/
 !/web/**
-!/README.md
-!/SECURITY.md
-!/AGENTS.md
-!/CLAUDE.md
+
+# Whitelist specific files at root level
 !/.gitignore
+!/AGENTS.md
+!/LICENSE.md
+!/CLAUDE.md
+!/README.md
+!/.nvmrc
+!/.mcp.json.backup
 
 # Ensure directories are tracked
 !*/
