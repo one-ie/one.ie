@@ -1,46 +1,18 @@
-# Environment files
-.env
-.env.local
-.env.*.local
+# Ignore everything by default
+*
 
-# Dependencies
-node_modules/
-
-# Build outputs
-.astro/
-dist/
-apps/
-/apps
-/apps/*
-docs/
-cli/
-one/
-web/
-backend/
-import/
-# Ignore patterns
-.gi
-
-# Installation folders (customer-specific customization)
-# Exclude by default - customers can opt-in via separate repo
-
-# Exception: Always track global templates
+# Whitelist specific directories and files
 !/.claude/
+!/.claude/**
+!/one/
+!/one/**
+!/web/
+!/web/**
+!/README.md
+!/SECURITY.md
+!/AGENTS.md
+!/CLAUDE.md
+!/.gitignore
 
-# macOS
-.DS_Store
-.AppleDouble
-.LSOverride
-
-# Editor files
-.vscode/
-.idea/
-
-# Temporary files
-*.tmp
-*.bak
-*.swp
-*.swo
-*~
-nine-padel/.obsidian/
-nine-padel/commerce-mobile.png
+# Ensure directories are tracked
+!*/
