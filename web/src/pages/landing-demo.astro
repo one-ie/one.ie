@@ -1,0 +1,226 @@
+---
+import Layout from '../layouts/Layout.astro';
+import HeroSection from '@/components/landing-page/HeroSection.astro';
+import FeaturesSection from '@/components/landing-page/FeaturesSection.astro';
+import TestimonialsSection from '@/components/landing-page/TestimonialsSection.astro';
+import HowItWorksSection from '@/components/landing-page/HowItWorksSection.astro';
+import CTASection from '@/components/landing-page/CTASection.astro';
+import FAQSection from '@/components/landing-page/FAQSection.astro';
+import type { LandingPageConfig } from '@/types/landing-page';
+
+// Example landing page configuration
+const pageConfig: LandingPageConfig = {
+  title: 'Landing Page Template Demo',
+  slug: 'landing-demo',
+  description: 'A demo of the new modular landing page template system',
+  branding: {
+    primaryColor: '#3b82f6',
+    accentColor: '#f59e0b',
+  },
+  sections: [
+    {
+      id: 'hero-1',
+      type: 'hero',
+      headline: 'Build Beautiful Landing Pages in Minutes',
+      subheadline: 'No coding required. Customize colors, sections, and content. Deploy instantly.',
+      ctaText: 'Start Building',
+      ctaLink: '/page',
+      ctaVariant: 'default',
+    },
+    {
+      id: 'features-1',
+      type: 'features',
+      title: 'Powerful Features Built In',
+      subtitle: 'Everything You Need',
+      columns: 3,
+      features: [
+        {
+          icon: 'wand',
+          title: 'Easy Customization',
+          description: 'Change colors, fonts, and layout without touching code.',
+        },
+        {
+          icon: 'code',
+          title: 'Production Ready',
+          description: 'Fully responsive, optimized, and accessible components.',
+        },
+        {
+          icon: 'trending',
+          title: 'Analytics Built In',
+          description: 'Track visitors, form submissions, and conversion rates.',
+        },
+        {
+          icon: 'zap',
+          title: 'Lightning Fast',
+          description: 'Lighthouse 95+. Optimized images and code splitting.',
+        },
+        {
+          icon: 'shield',
+          title: 'Secure by Default',
+          description: 'Form validation, spam protection, and HTTPS everywhere.',
+        },
+        {
+          icon: 'globe',
+          title: 'Deploy Anywhere',
+          description: 'Works on Cloudflare, Vercel, or your own server.',
+        },
+      ],
+    },
+    {
+      id: 'how-it-works-1',
+      type: 'how-it-works',
+      title: 'Get Started in 4 Steps',
+      steps: [
+        {
+          number: 1,
+          title: 'Choose a Template',
+          description: 'Select from SaaS, creator, service, or event templates.',
+        },
+        {
+          number: 2,
+          title: 'Customize Content',
+          description: 'Edit headline, features, testimonials, and more in seconds.',
+        },
+        {
+          number: 3,
+          title: 'Update Branding',
+          description: 'Change colors, logo, and add custom CSS if needed.',
+        },
+        {
+          number: 4,
+          title: 'Deploy & Share',
+          description: 'Get a live URL, share with the world, and track analytics.',
+        },
+      ],
+    },
+    {
+      id: 'testimonials-1',
+      type: 'testimonials',
+      title: 'What Creators Are Saying',
+      layout: 'grid',
+      testimonials: [
+        {
+          quote: 'Built my entire product landing page in 30 minutes. No code required!',
+          author: 'Sarah Chen',
+          role: 'Founder, TechStart',
+          rating: 5,
+        },
+        {
+          quote: 'The customization options are incredible. Feels like I designed it myself.',
+          author: 'Marcus Williams',
+          role: 'Creative Director',
+          rating: 5,
+        },
+        {
+          quote: 'Finally, a landing page tool that takes accessibility seriously.',
+          author: 'Elena Rodriguez',
+          role: 'Accessibility Advocate',
+          rating: 5,
+        },
+      ],
+    },
+    {
+      id: 'faq-1',
+      type: 'faq',
+      title: 'Frequently Asked Questions',
+      faqs: [
+        {
+          question: 'Do I need coding skills to use this?',
+          answer: 'No! The template is fully visual. You customize content, colors, and layout through a simple interface. No code required.',
+        },
+        {
+          question: 'Can I use my own domain?',
+          answer: 'Yes! You can use a custom domain, subdomain, or our provided landing.one.ie URL.',
+        },
+        {
+          question: 'Is my data secure?',
+          answer: 'Absolutely. All data is encrypted in transit and at rest. We comply with GDPR, CCPA, and SOC 2. Forms use spam protection by default.',
+        },
+        {
+          question: 'Can I integrate with my email service?',
+          answer: 'Yes. You can connect ConvertKit, Mailchimp, Substack, or any Zapier-compatible service.',
+        },
+      ],
+    },
+    {
+      id: 'cta-1',
+      type: 'cta',
+      headline: 'Ready to Launch Your Landing Page?',
+      description: 'Join thousands of creators and entrepreneurs building faster than ever.',
+      primaryCtaText: 'Create Free Landing Page',
+      primaryCtaLink: '/page',
+      secondaryCtaText: 'View More Examples',
+      secondaryCtaLink: '/',
+    },
+  ],
+};
+---
+
+<Layout
+  title="Landing Page Template Demo | ONE Platform"
+  description="A demonstration of the new modular landing page template system with customizable sections and branding."
+>
+  <div class="min-h-screen bg-background">
+    <!-- Render sections dynamically -->
+    {pageConfig.sections.map((section) => {
+      switch (section.type) {
+        case 'hero':
+          return (
+            <HeroSection
+              section={section as any}
+              branding={pageConfig.branding}
+            />
+          );
+        case 'features':
+          return (
+            <FeaturesSection
+              section={section as any}
+              branding={pageConfig.branding}
+            />
+          );
+        case 'testimonials':
+          return (
+            <TestimonialsSection
+              section={section as any}
+              branding={pageConfig.branding}
+            />
+          );
+        case 'how-it-works':
+          return (
+            <HowItWorksSection
+              section={section as any}
+              branding={pageConfig.branding}
+            />
+          );
+        case 'faq':
+          return (
+            <FAQSection
+              section={section as any}
+              branding={pageConfig.branding}
+            />
+          );
+        case 'cta':
+          return (
+            <CTASection
+              section={section as any}
+              branding={pageConfig.branding}
+            />
+          );
+        default:
+          return null;
+      }
+    })}
+
+    <!-- Footer -->
+    <footer class="border-t px-4 py-8 sm:px-6 md:px-8 text-center">
+      <div class="mx-auto max-w-2xl space-y-2">
+        <p class="text-sm text-muted-foreground">
+          This is a demo of the new landing page template system.
+        </p>
+        <p class="text-xs text-muted-foreground">
+          All sections are customizable and reusable across different landing pages.
+        </p>
+      </div>
+    </footer>
+  </div>
+</Layout>

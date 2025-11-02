@@ -1,0 +1,184 @@
+---
+import { getCollection } from 'astro:content';
+import Layout from '../../layouts/Layout.astro';
+import type { CollectionEntry } from 'astro:content';
+import { ChevronRight } from 'lucide-react';
+import { PlanTaskList } from '@/components/features/PlanTaskList';
+
+// Disable transitions for better content rendering
+export const prerender = true;
+
+export async function getStaticPaths() {
+  const plans = await getCollection('plans');
+  return plans.map((entry: CollectionEntry<'plans'>) => ({
+    params: { slug: entry.slug },
+    props: { entry },
+  }));
+}
+
+interface Props {
+  entry: CollectionEntry<'plans'>;
+}
+
+const { entry } = Astro.props;
+const { Content } = await entry.render();
+
+// Calculate statistics
+const progressPercent = Math.round((entry.data.completedInferences / entry.data.totalInferences) * 100);
+const completedTasks = entry.data.tasks?.filter(t => t.status === 'completed').length || 0;
+const inProgressTasks = entry.data.tasks?.filter(t => t.status === 'in_progress').length || 0;
+const pendingTasks = entry.data.tasks?.filter(t => t.status === 'pending').length || 0;
+---
+
+<Layout
+  title={entry.data.title}
+  description={entry.data.description}
+  sidebarInitialCollapsed
+>
+  <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
+    <!-- Header with Progress -->
+    <div class="mb-8 flex items-start justify-between">
+      <div class="text-3xl font-bold text-accent">{progressPercent}%</div>
+      <div class="text-sm text-muted-foreground">Complete</div>
+    </div>
+
+    <!-- Metadata -->
+    <div class="grid grid-cols-2 sm:grid-cols-4 gap-4 mb-8">
+      {entry.data.feature && (
+        <div class="bg-card border rounded-lg p-4">
+          <div class="text-xs text-muted-foreground mb-1">Feature</div>
+          <div class="font-medium">{entry.data.feature}</div>
+        </div>
+      )}
+      {entry.data.assignedSpecialist && (
+        <div class="bg-card border rounded-lg p-4">
+          <div class="text-xs text-muted-foreground mb-1">Specialist</div>
+          <div class="font-medium">{entry.data.assignedSpecialist}</div>
+        </div>
+      )}
+      {entry.data.organization && (
+        <div class="bg-card border rounded-lg p-4">
+          <div class="text-xs text-muted-foreground mb-1">Organization</div>
+          <div class="font-medium">{entry.data.organization}</div>
+        </div>
+      )}
+      <div class="bg-card border rounded-lg p-4">
+        <div class="text-xs text-muted-foreground mb-1">Progress</div>
+        <div class="font-medium">{entry.data.completedInferences}/{entry.data.totalInferences}</div>
+      </div>
+    </div>
+
+    <!-- Task Summary -->
+    {(completedTasks > 0 || inProgressTasks > 0 || pendingTasks > 0) && (
+      <div class="grid grid-cols-3 gap-4 mb-8">
+        {completedTasks > 0 && (
+          <div class="bg-green-50 dark:bg-green-950 border border-green-200 dark:border-green-800 rounded-lg p-4">
+            <div class="text-2xl font-bold text-green-600">{completedTasks}</div>
+            <div class="text-sm text-green-700 dark:text-green-300">Completed</div>
+          </div>
+        )}
+        {inProgressTasks > 0 && (
+          <div class="bg-blue-50 dark:bg-blue-950 border border-blue-200 dark:border-blue-800 rounded-lg p-4">
+            <div class="text-2xl font-bold text-blue-600">{inProgressTasks}</div>
+            <div class="text-sm text-blue-700 dark:text-blue-300">In Progress</div>
+          </div>
+        )}
+        {pendingTasks > 0 && (
+          <div class="bg-gray-50 dark:bg-gray-900 border border-gray-200 dark:border-gray-800 rounded-lg p-4">
+            <div class="text-2xl font-bold text-gray-600">{pendingTasks}</div>
+            <div class="text-sm text-gray-700 dark:text-gray-300">Pending</div>
+          </div>
+        )}
+      </div>
+    )}
+
+    <div class="grid gap-8 lg:grid-cols-3 mb-12">
+      <!-- Main Content -->
+      <div class="lg:col-span-2">
+        <!-- Plan Content -->
+        <div class="bg-card border rounded-lg p-8 mb-8">
+          <div class="prose dark:prose-invert max-w-none">
+            <Content />
+          </div>
+        </div>
+
+        <!-- Tasks by Phase -->
+        {entry.data.tasks && entry.data.tasks.length > 0 && (
+          <div class="space-y-6">
+            <h2 class="text-2xl font-bold">Task Breakdown</h2>
+            <PlanTaskList client:load tasks={entry.data.tasks} editable={false} />
+          </div>
+        )}
+      </div>
+
+      <!-- Sidebar -->
+      <div class="lg:col-span-1">
+        <!-- Ontology Dimensions -->
+        {entry.data.ontologyDimensions && entry.data.ontologyDimensions.length > 0 && (
+          <div class="bg-card border rounded-lg p-6 mb-6">
+            <h3 class="font-semibold mb-4">Ontology Dimensions</h3>
+            <div class="space-y-2">
+              {entry.data.ontologyDimensions.map((dimension) => (
+                <div class="flex items-center gap-2">
+                  <ChevronRight className="w-4 h-4 text-accent" />
+                  <span class="text-sm">{dimension}</span>
+                </div>
+              ))}
+            </div>
+          </div>
+        )}
+
+        <!-- Lessons Learned -->
+        {entry.data.lessonsLearned && entry.data.lessonsLearned.length > 0 && (
+          <div class="bg-card border rounded-lg p-6 mb-6">
+            <h3 class="font-semibold mb-4">Lessons Learned</h3>
+            <div class="space-y-3">
+              {entry.data.lessonsLearned.slice(0, 5).map((lesson) => (
+                <div class="text-sm">
+                  <div class="font-medium text-accent">Infer {lesson.inference}</div>
+                  <div class="text-muted-foreground mt-1">{lesson.lesson}</div>
+                </div>
+              ))}
+              {entry.data.lessonsLearned.length > 5 && (
+                <div class="text-sm text-muted-foreground pt-2 border-t">
+                  +{entry.data.lessonsLearned.length - 5} more lessons
+                </div>
+              )}
+            </div>
+          </div>
+        )}
+
+        <!-- Timestamps -->
+        <div class="bg-card border rounded-lg p-6">
+          <h3 class="font-semibold mb-4">Timeline</h3>
+          <div class="space-y-3 text-sm">
+            {entry.data.createdAt && (
+              <div>
+                <div class="text-muted-foreground">Created</div>
+                <div class="font-medium">{new Date(entry.data.createdAt).toLocaleDateString()}</div>
+              </div>
+            )}
+            {entry.data.startedAt && (
+              <div>
+                <div class="text-muted-foreground">Started</div>
+                <div class="font-medium">{new Date(entry.data.startedAt).toLocaleDateString()}</div>
+              </div>
+            )}
+            {entry.data.updatedAt && (
+              <div>
+                <div class="text-muted-foreground">Last Updated</div>
+                <div class="font-medium">{new Date(entry.data.updatedAt).toLocaleDateString()}</div>
+              </div>
+            )}
+            {entry.data.completedAt && (
+              <div>
+                <div class="text-muted-foreground">Completed</div>
+                <div class="font-medium">{new Date(entry.data.completedAt).toLocaleDateString()}</div>
+              </div>
+            )}
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</Layout>

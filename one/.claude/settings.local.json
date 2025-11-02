@@ -1,0 +1,11 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(lsof:*)",
+      "Bash(tree:*)",
+      "Read(//Users/toc/Server/ONE/**)"
+    ],
+    "deny": [],
+    "ask": []
+  }
+}

@@ -1,0 +1,408 @@
+---
+import { getCollection } from 'astro:content';
+import Layout from '../../layouts/Layout.astro';
+import type { CollectionEntry } from 'astro:content';
+import { ChevronRight, Calendar, Target, Zap } from 'lucide-react';
+import ProjectActionButtons from '@/components/ProjectActionButtons.astro';
+import { ProjectDetailActions } from '@/components/ProjectDetailActions';
+
+// Disable transitions for better content rendering
+export const prerender = true;
+
+export async function getStaticPaths() {
+  const projects = await getCollection('projects');
+  return projects.map((entry: CollectionEntry<'projects'>) => ({
+    params: { slug: entry.slug },
+    props: { entry },
+  }));
+}
+
+interface Props {
+  entry: CollectionEntry<'projects'>;
+}
+
+const { entry } = Astro.props;
+const { Content } = await entry.render();
+
+// Generate project prompt similar to the index page
+function generateProjectPrompt(data: any, slug: string): string {
+  const objectives = (data.objectives || []).map((o: string) => `- ${o}`).join('\n');
+  const deliverables = (data.deliverables || []).map((d: string) => `- ${d}`).join('\n');
+  const dimensions = (data.ontologyDimensions || []).map((dim: string) => `- ${dim}`).join('\n');
+
+  return `# ${data.title} Project
+
+**Status:** ${data.status || 'Planning'}
+**Priority:** ${data.priority || 'Medium'}
+**Progress:** ${data.progress || 0}%
+**Estimated Hours:** ${data.estimatedHours || 'TBD'}
+
+## Description
+${data.description}
+
+${objectives ? `## Objectives\n${objectives}\n` : ''}
+${deliverables ? `## Deliverables\n${deliverables}\n` : ''}
+${dimensions ? `## Ontology Dimensions\n${dimensions}\n` : ''}
+
+## Timeline
+${data.startDate ? `Start Date: ${new Date(data.startDate).toLocaleDateString()}` : ''}
+${data.targetEndDate ? `Target End: ${new Date(data.targetEndDate).toLocaleDateString()}` : ''}
+
+${data.budget ? `## Budget\nTotal Budget: $${data.budget}` : ''}
+${data.spent ? `Spent: $${data.spent}` : ''}
+
+## Getting Started
+1. Review the full project details at /projects/${slug}
+2. Copy this prompt into Claude Code
+3. Implement following the architecture
+4. Test thoroughly
+5. Deploy to production
+
+${data.demoUrl ? `Demo: ${data.demoUrl}` : ''}
+${data.planUrl ? `Plan: ${data.planUrl}` : ''}`;
+}
+
+const projectPrompt = generateProjectPrompt(entry.data, entry.slug);
+
+// Calculate statistics
+const budgetPercentage = entry.data.budget && entry.data.spent
+  ? Math.round((entry.data.spent / entry.data.budget) * 100)
+  : 0;
+
+const hoursPercentage = entry.data.estimatedHours && entry.data.actualHours
+  ? Math.round((entry.data.actualHours / entry.data.estimatedHours) * 100)
+  : 0;
+
+const statusBadgeClass = (status: string) => {
+  switch (status) {
+    case 'completed':
+      return 'bg-green-100 text-green-700 dark:bg-green-900 dark:text-green-200';
+    case 'active':
+      return 'bg-blue-100 text-blue-700 dark:bg-blue-900 dark:text-blue-200';
+    case 'on_hold':
+      return 'bg-yellow-100 text-yellow-700 dark:bg-yellow-900 dark:text-yellow-200';
+    case 'planning':
+      return 'bg-purple-100 text-purple-700 dark:bg-purple-900 dark:text-purple-200';
+    case 'archived':
+      return 'bg-gray-100 text-gray-700 dark:bg-gray-800 dark:text-gray-200';
+    default:
+      return 'bg-gray-100 text-gray-700';
+  }
+};
+
+const statusLabel = (status: string) => {
+  return status.split('_').map(word => word.charAt(0).toUpperCase() + word.slice(1)).join(' ');
+};
+
+const priorityBadgeClass = (priority?: string) => {
+  switch (priority) {
+    case 'critical':
+      return 'bg-red-100 text-red-700 dark:bg-red-900 dark:text-red-200';
+    case 'high':
+      return 'bg-orange-100 text-orange-700 dark:bg-orange-900 dark:text-orange-200';
+    case 'medium':
+      return 'bg-blue-100 text-blue-700 dark:bg-blue-900 dark:text-blue-200';
+    case 'low':
+      return 'bg-green-100 text-green-700 dark:bg-green-900 dark:text-green-200';
+    default:
+      return '';
+  }
+};
+---
+
+<Layout title={entry.data.title} description={entry.data.description}>
+  <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
+    <!-- Header -->
+    <div class="mb-8">
+      <div class="flex items-start justify-between mb-4 gap-4">
+        <div class="flex-1">
+          <div class="flex items-center gap-3 mb-2">
+            <h1 class="text-4xl font-bold">{entry.data.title}</h1>
+            <span class={`px-3 py-1 rounded-lg text-sm font-medium ${statusBadgeClass(entry.data.status)}`}>
+              {statusLabel(entry.data.status)}
+            </span>
+            {entry.data.priority && (
+              <span class={`px-3 py-1 rounded-lg text-sm font-medium ${priorityBadgeClass(entry.data.priority)}`}>
+                {entry.data.priority.charAt(0).toUpperCase() + entry.data.priority.slice(1)} Priority
+              </span>
+            )}
+          </div>
+          <p class="text-lg text-muted-foreground">{entry.data.description}</p>
+        </div>
+        <div class="text-right flex-shrink-0">
+          <div class="text-4xl font-bold text-accent">{entry.data.progress}%</div>
+          <div class="text-sm text-muted-foreground">Complete</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Action Buttons -->
+    <ProjectActionButtons
+      demoUrl={entry.data.demoUrl}
+      planUrl={entry.data.planUrl}
+      projectPrompt={projectPrompt}
+      projectTitle={entry.data.title}
+    />
+
+    <div class="mb-8"></div>
+
+    <!-- Timeline Info -->
+    {(entry.data.startDate || entry.data.targetEndDate || entry.data.completedAt || entry.data.totalInferences) && (
+      <div class="bg-card border rounded-lg p-4 mb-8">
+        <div class="flex items-center gap-2 mb-3">
+          <Calendar className="w-5 h-5 text-accent" />
+          <h3 class="font-semibold">Timeline</h3>
+        </div>
+        <div class="grid grid-cols-2 sm:grid-cols-4 gap-4 text-sm">
+          {entry.data.startDate && (
+            <div>
+              <div class="text-muted-foreground">Start Date</div>
+              <div class="font-medium">{new Date(entry.data.startDate).toLocaleDateString()}</div>
+            </div>
+          )}
+          {entry.data.targetEndDate && (
+            <div>
+              <div class="text-muted-foreground">Target End</div>
+              <div class="font-medium">{new Date(entry.data.targetEndDate).toLocaleDateString()}</div>
+            </div>
+          )}
+          {entry.data.completedAt && (
+            <div>
+              <div class="text-muted-foreground">Completed</div>
+              <div class="font-medium text-green-600">{new Date(entry.data.completedAt).toLocaleDateString()}</div>
+            </div>
+          )}
+          {entry.data.totalInferences && (
+            <div>
+              <div class="text-muted-foreground">Progress</div>
+              <div class="font-medium">{entry.data.completedInferences || 0}/{entry.data.totalInferences} inferences</div>
+            </div>
+          )}
+        </div>
+      </div>
+    )}
+
+    <!-- Metadata -->
+    <div class="grid grid-cols-2 sm:grid-cols-4 gap-4 mb-8">
+      {entry.data.project && (
+        <div class="bg-card border rounded-lg p-4">
+          <div class="text-xs text-muted-foreground mb-1">Project</div>
+          <div class="font-medium">{entry.data.project}</div>
+        </div>
+      )}
+      {entry.data.assignedSpecialist && (
+        <div class="bg-card border rounded-lg p-4">
+          <div class="text-xs text-muted-foreground mb-1">Specialist</div>
+          <div class="font-medium">{entry.data.assignedSpecialist}</div>
+        </div>
+      )}
+      {entry.data.organization && (
+        <div class="bg-card border rounded-lg p-4">
+          <div class="text-xs text-muted-foreground mb-1">Organization</div>
+          <div class="font-medium">{entry.data.organization}</div>
+        </div>
+      )}
+      <div class="bg-card border rounded-lg p-4">
+        <div class="text-xs text-muted-foreground mb-1">Progress</div>
+        <div class="font-medium">{entry.data.progress}%</div>
+      </div>
+    </div>
+
+    <!-- Progress Bar -->
+    <div class="mb-8">
+      <div class="flex justify-between items-center mb-2">
+        <span class="text-sm font-medium">Overall Progress</span>
+        <span class="text-sm text-muted-foreground">{entry.data.progress}% complete</span>
+      </div>
+      <div class="w-full bg-muted rounded-full h-3">
+        <div
+          class="bg-accent h-3 rounded-full transition-all duration-500"
+          style={{ width: `${entry.data.progress}%` }}
+        ></div>
+      </div>
+    </div>
+
+    <div class="grid gap-8 lg:grid-cols-3 mb-12">
+      <!-- Main Content -->
+      <div class="lg:col-span-2">
+        <!-- Project Content -->
+        {entry.body && (
+          <div class="bg-card border rounded-lg p-8 mb-8">
+            <div class="prose dark:prose-invert max-w-none">
+              <Content />
+            </div>
+          </div>
+        )}
+
+        <!-- Objectives -->
+        {entry.data.objectives && entry.data.objectives.length > 0 && (
+          <div class="bg-card border rounded-lg p-8 mb-8">
+            <h2 class="text-2xl font-bold mb-4 flex items-center gap-2">
+              <Target className="w-6 h-6 text-accent" />
+              Objectives
+            </h2>
+            <ul class="space-y-3">
+              {entry.data.objectives.map((objective) => (
+                <li class="flex items-start gap-3">
+                  <ChevronRight className="w-5 h-5 text-accent flex-shrink-0 mt-0.5" />
+                  <span class="text-muted-foreground">{objective}</span>
+                </li>
+              ))}
+            </ul>
+          </div>
+        )}
+
+        <!-- Deliverables -->
+        {entry.data.deliverables && entry.data.deliverables.length > 0 && (
+          <div class="bg-card border rounded-lg p-8 mb-8">
+            <h2 class="text-2xl font-bold mb-4 flex items-center gap-2">
+              <Zap className="w-6 h-6 text-accent" />
+              Deliverables
+            </h2>
+            <ul class="space-y-3">
+              {entry.data.deliverables.map((deliverable) => (
+                <li class="flex items-start gap-3">
+                  <ChevronRight className="w-5 h-5 text-accent flex-shrink-0 mt-0.5" />
+                  <span class="text-muted-foreground">{deliverable}</span>
+                </li>
+              ))}
+            </ul>
+          </div>
+        )}
+      </div>
+
+      <!-- Sidebar -->
+      <div class="lg:col-span-1">
+        <!-- Budget & Resources -->
+        {(entry.data.budget || entry.data.estimatedHours) && (
+          <div class="bg-card border rounded-lg p-6 mb-6">
+            <h3 class="font-semibold mb-4">Resources</h3>
+            <div class="space-y-4">
+              {entry.data.budget && (
+                <div>
+                  <div class="text-xs text-muted-foreground mb-2">Budget</div>
+                  <div class="text-sm font-medium mb-2">
+                    ${entry.data.spent || 0} / ${entry.data.budget}
+                  </div>
+                  <div class="w-full bg-muted rounded-full h-2">
+                    <div
+                      class={`h-2 rounded-full transition-all duration-500 ${budgetPercentage > 100 ? 'bg-red-500' : 'bg-accent'}`}
+                      style={{ width: `${Math.min(budgetPercentage, 100)}%` }}
+                    ></div>
+                  </div>
+                </div>
+              )}
+              {entry.data.estimatedHours && (
+                <div>
+                  <div class="text-xs text-muted-foreground mb-2">Hours</div>
+                  <div class="text-sm font-medium mb-2">
+                    {entry.data.actualHours || 0} / {entry.data.estimatedHours}h
+                  </div>
+                  <div class="w-full bg-muted rounded-full h-2">
+                    <div
+                      class={`h-2 rounded-full transition-all duration-500 ${hoursPercentage > 100 ? 'bg-red-500' : 'bg-accent'}`}
+                      style={{ width: `${Math.min(hoursPercentage, 100)}%` }}
+                    ></div>
+                  </div>
+                </div>
+              )}
+            </div>
+          </div>
+        )}
+
+        <!-- Ontology Dimensions -->
+        {entry.data.ontologyDimensions && entry.data.ontologyDimensions.length > 0 && (
+          <div class="bg-card border rounded-lg p-6 mb-6">
+            <h3 class="font-semibold mb-4">Ontology Dimensions</h3>
+            <div class="space-y-2">
+              {entry.data.ontologyDimensions.map((dimension) => (
+                <div class="flex items-center gap-2">
+                  <ChevronRight className="w-4 h-4 text-accent" />
+                  <span class="text-sm">{dimension}</span>
+                </div>
+              ))}
+            </div>
+          </div>
+        )}
+
+        <!-- Teams -->
+        {entry.data.teams && entry.data.teams.length > 0 && (
+          <div class="bg-card border rounded-lg p-6 mb-6">
+            <h3 class="font-semibold mb-4">Team Members</h3>
+            <div class="space-y-2">
+              {entry.data.teams.map((member) => (
+                <div class="text-sm text-muted-foreground">{member}</div>
+              ))}
+            </div>
+          </div>
+        )}
+
+        <!-- Tags -->
+        {entry.data.tags && entry.data.tags.length > 0 && (
+          <div class="bg-card border rounded-lg p-6 mb-6">
+            <h3 class="font-semibold mb-4">Tags</h3>
+            <div class="flex flex-wrap gap-2">
+              {entry.data.tags.map((tag) => (
+                <span class="bg-accent/20 text-accent px-3 py-1 rounded-full text-xs font-medium">
+                  {tag}
+                </span>
+              ))}
+            </div>
+          </div>
+        )}
+
+        <!-- Lessons Learned -->
+        {entry.data.lessonsLearned && entry.data.lessonsLearned.length > 0 && (
+          <div class="bg-card border rounded-lg p-6 mb-6">
+            <h3 class="font-semibold mb-4">Lessons Learned</h3>
+            <div class="space-y-3">
+              {entry.data.lessonsLearned.slice(0, 5).map((lesson) => (
+                <div class="text-sm">
+                  <div class="font-medium text-accent">{lesson.milestone}</div>
+                  <div class="text-muted-foreground mt-1">{lesson.lesson}</div>
+                </div>
+              ))}
+              {entry.data.lessonsLearned.length > 5 && (
+                <div class="text-sm text-muted-foreground pt-2 border-t">
+                  +{entry.data.lessonsLearned.length - 5} more lessons
+                </div>
+              )}
+            </div>
+          </div>
+        )}
+
+        <!-- Timestamps -->
+        <div class="bg-card border rounded-lg p-6">
+          <h3 class="font-semibold mb-4">Metadata</h3>
+          <div class="space-y-3 text-sm">
+            {entry.data.createdAt && (
+              <div>
+                <div class="text-muted-foreground">Created</div>
+                <div class="font-medium">{new Date(entry.data.createdAt).toLocaleDateString()}</div>
+              </div>
+            )}
+            {entry.data.updatedAt && (
+              <div>
+                <div class="text-muted-foreground">Last Updated</div>
+                <div class="font-medium">{new Date(entry.data.updatedAt).toLocaleDateString()}</div>
+              </div>
+            )}
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Bottom Action Buttons - Duplicate for Convenience -->
+    <div class="mt-12 pt-8 border-t">
+      <ProjectActionButtons
+        demoUrl={entry.data.demoUrl}
+        planUrl={entry.data.planUrl}
+        projectPrompt={projectPrompt}
+        projectTitle={entry.data.title}
+      />
+    </div>
+  </div>
+
+  <!-- Modal Handler Component -->
+  <ProjectDetailActions client:load prompt={projectPrompt} projectTitle={entry.data.title} />
+</Layout>

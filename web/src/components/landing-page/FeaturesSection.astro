@@ -1,0 +1,94 @@
+---
+import { Card, CardHeader, CardTitle, CardDescription } from "@/components/ui/card";
+import { Badge } from "@/components/ui/badge";
+import {
+  Wand2,
+  Code,
+  TrendingUp,
+  DollarSign,
+  Globe,
+  Shield,
+  Zap,
+  Sparkles,
+} from "lucide-react";
+import type { FeaturesSectionProps } from "@/types/landing-page";
+
+interface Props extends Omit<FeaturesSectionProps, "branding"> {
+  branding?: any;
+}
+
+const { section, branding } = Astro.props;
+
+// Icon mapping for feature icons
+const iconMap: Record<string, any> = {
+  wand: Wand2,
+  code: Code,
+  trending: TrendingUp,
+  dollar: DollarSign,
+  globe: Globe,
+  shield: Shield,
+  zap: Zap,
+  sparkles: Sparkles,
+};
+
+const columns = section.columns || 3;
+const gridClass =
+  columns === 2
+    ? "grid-cols-1 sm:grid-cols-2"
+    : columns === 4
+      ? "grid-cols-1 sm:grid-cols-2 lg:grid-cols-4"
+      : "grid-cols-1 sm:grid-cols-2 lg:grid-cols-3";
+
+const brandingStyle = branding
+  ? `--primary: ${branding.primaryColor || "#3b82f6"};`
+  : "";
+---
+
+<section class={`px-4 py-20 sm:px-6 sm:py-24 md:px-8 md:py-32 ${section.customClass || ""}`} style={brandingStyle}>
+  <div class="mx-auto max-w-full sm:max-w-6xl">
+    <!-- Section Header -->
+    {(section.title || section.subtitle) && (
+      <div class="mb-20 space-y-4 text-center">
+        {section.subtitle && (
+          <Badge variant="outline" className="mb-2 inline-flex items-center gap-2">
+            <Sparkles className="h-4 w-4" />
+            {section.subtitle}
+          </Badge>
+        )}
+        {section.title && (
+          <h2 class="text-4xl font-bold leading-tight tracking-tight sm:text-5xl">
+            {section.title}
+          </h2>
+        )}
+      </div>
+    )}
+
+    <!-- Features Grid -->
+    <div class={`grid gap-6 ${gridClass}`}>
+      {section.features.map((feature) => {
+        const IconComponent = feature.icon ? iconMap[feature.icon] || null : null;
+        return (
+          <Card className="group border-border/50 bg-card/50 backdrop-blur transition-all hover:scale-[1.02] hover:border-primary/20 hover:bg-card hover:shadow-lg hover:shadow-primary/5">
+            <CardHeader className="space-y-4">
+              {IconComponent && (
+                <div class="flex h-12 w-12 items-center justify-center rounded-lg bg-primary/10 transition-colors group-hover:bg-primary/15">
+                  <IconComponent className="h-6 w-6 text-primary" />
+                </div>
+              )}
+              <CardTitle className="text-xl">{feature.title}</CardTitle>
+              <CardDescription className="leading-relaxed text-base">
+                {feature.description}
+              </CardDescription>
+            </CardHeader>
+          </Card>
+        );
+      })}
+    </div>
+  </div>
+</section>
+
+<style define:vars={{ brandingStyle }}>
+  section {
+    --primary: var(--primary, #3b82f6);
+  }
+</style>

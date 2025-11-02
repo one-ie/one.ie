@@ -1,0 +1,123 @@
+---
+export interface Props {
+  demoUrl?: string;
+  planUrl?: string;
+  projectPrompt: string;
+  projectTitle: string;
+}
+
+const { demoUrl, planUrl, projectPrompt } = Astro.props;
+
+// Design token colors in HSL
+const colors = {
+  primary: 'hsl(216, 55%, 25%)',      // Deep navy
+  primaryForeground: 'hsl(36, 8%, 96%)',  // Warm light foreground
+  secondary: 'hsl(219, 14%, 28%)',    // Graphite
+  accent: 'hsl(105, 22%, 25%)',       // Leaf green
+};
+---
+
+<div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 w-full">
+  <!-- Demo Button - Inverted (White/Light background with dark text) -->
+  {demoUrl && (
+    <a
+      href={demoUrl}
+      target="_blank"
+      rel="noopener noreferrer"
+      style={{
+        backgroundColor: '#ffffff',
+        color: '#1f2937',
+        borderColor: '#e5e7eb'
+      }}
+      class="flex items-center justify-center gap-2 px-8 py-4 rounded-xl transition-all duration-200 font-bold text-base shadow-xl hover:shadow-2xl hover:scale-105 border-2 dark:bg-gray-100 dark:text-gray-900"
+      onmouseover={`this.style.backgroundColor='#f3f4f6'; this.style.borderColor='#d1d5db'; this.style.filter='brightness(1.05)'`}
+      onmouseout={`this.style.backgroundColor='#ffffff'; this.style.borderColor='#e5e7eb'; this.style.filter='brightness(1)'`}
+    >
+      <svg class="h-6 w-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="2.5">
+        <path stroke-linecap="round" stroke-linejoin="round" d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14" />
+      </svg>
+      <span>Demo</span>
+    </a>
+  )}
+
+  <!-- Plan Button - Primary (Deep Navy) -->
+  {planUrl && (
+    <a
+      href={planUrl}
+      style={{
+        backgroundColor: colors.primary,
+        color: colors.primaryForeground,
+        borderColor: colors.primary
+      }}
+      class="flex items-center justify-center gap-2 px-8 py-4 rounded-xl transition-all duration-200 font-bold text-base shadow-xl hover:shadow-2xl hover:scale-105 border-2"
+      onmouseover={`this.style.backgroundColor='hsl(216, 55%, 35%)'; this.style.filter='brightness(1.1)'`}
+      onmouseout={`this.style.backgroundColor='${colors.primary}'; this.style.filter='brightness(1)'`}
+    >
+      <svg class="h-6 w-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="2.5">
+        <path stroke-linecap="round" stroke-linejoin="round" d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2m-3 7h3m-3 4h3" />
+      </svg>
+      <span>Plan</span>
+    </a>
+  )}
+
+  <!-- Copy Prompt Button - Secondary (Graphite) -->
+  <button
+    id="copy-prompt-btn"
+    style={{
+      backgroundColor: colors.secondary,
+      color: colors.primaryForeground,
+      borderColor: colors.secondary
+    }}
+    class="flex items-center justify-center gap-2 px-8 py-4 rounded-xl transition-all duration-200 font-bold text-base shadow-xl hover:shadow-2xl hover:scale-105 border-2 cursor-pointer"
+    onmouseover={`this.style.backgroundColor='hsl(219, 14%, 38%)'; this.style.filter='brightness(1.1)'`}
+    onmouseout={`this.style.backgroundColor='${colors.secondary}'; this.style.filter='brightness(1)'`}
+    onclick={`
+      const text = \`${projectPrompt.replace(/`/g, '\\`')}\`;
+      navigator.clipboard.writeText(text).then(() => {
+        const btn = this;
+        const originalText = btn.innerHTML;
+        btn.innerHTML = '<svg class="h-6 w-6" fill="currentColor" viewBox="0 0 24 24"><path d="M5 13l4 4L19 7"/></svg><span>Copied!</span>';
+        setTimeout(() => {
+          btn.innerHTML = originalText;
+        }, 2000);
+      });
+    `}
+  >
+    <svg class="h-6 w-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="2.5">
+      <path stroke-linecap="round" stroke-linejoin="round" d="M8 16H6a2 2 0 01-2-2V6a2 2 0 012-2h8a2 2 0 012 2v2m-6 12h8a2 2 0 002-2v-8a2 2 0 00-2-2h-8a2 2 0 00-2 2v8a2 2 0 002 2z" />
+    </svg>
+    <span>Copy Prompt</span>
+  </button>
+
+  <!-- Send to Claude Button - Accent (Leaf Green) -->
+  <button
+    id="send-to-claude-btn"
+    style={{
+      backgroundColor: colors.accent,
+      color: colors.primaryForeground,
+      borderColor: colors.accent
+    }}
+    class="flex items-center justify-center gap-2 px-8 py-4 rounded-xl transition-all duration-200 font-bold text-base shadow-xl hover:shadow-2xl hover:scale-105 border-2 cursor-pointer"
+    onmouseover={`this.style.backgroundColor='hsl(105, 22%, 35%)'; this.style.filter='brightness(1.1)'`}
+    onmouseout={`this.style.backgroundColor='${colors.accent}'; this.style.filter='brightness(1)'`}
+  >
+    <svg class="h-6 w-6" fill="currentColor" viewBox="0 0 24 24">
+      <path d="M13.5 2H6a2 2 0 00-2 2v16a2 2 0 002 2h12a2 2 0 002-2V8.5L13.5 2z" />
+    </svg>
+    <span>Send to Claude</span>
+  </button>
+</div>
+
+<style>
+  button {
+    outline: none;
+  }
+
+  button:active {
+    transform: scale(0.97);
+  }
+
+  a:active {
+    transform: scale(0.97);
+  }
+</style>

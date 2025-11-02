@@ -1,0 +1,21 @@
+---
+/**
+ * PlanContent Component
+ * Renders plan markdown with processed checkboxes
+ * Transforms [x] to green checkmarks and [ ] to empty checkboxes
+ */
+
+import { processCheckboxes } from '@/lib/checkbox-processor';
+
+export interface Props {
+  html: string;
+  class?: string;
+}
+
+const { html, class: className = '' } = Astro.props;
+
+// Process the HTML to replace checkbox syntax
+const { html: processedHtml } = processCheckboxes(html);
+---
+
+<div class:list={['prose dark:prose-invert max-w-none', className]} set:html={processedHtml} />

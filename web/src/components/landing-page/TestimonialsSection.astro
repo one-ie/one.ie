@@ -1,0 +1,137 @@
+---
+import { Card, CardHeader } from "@/components/ui/card";
+import { Badge } from "@/components/ui/badge";
+import { Star } from "lucide-react";
+import type { TestimonialsSectionProps } from "@/types/landing-page";
+
+interface Props extends Omit<TestimonialsSectionProps, "branding"> {
+  branding?: any;
+}
+
+const { section, branding } = Astro.props;
+
+const layout = section.layout || "grid";
+const brandingStyle = branding
+  ? `--primary: ${branding.primaryColor || "#3b82f6"};`
+  : "";
+
+// Generate star array for display
+const getStars = (rating?: number) => {
+  if (!rating) return [];
+  return Array.from({ length: 5 });
+};
+---
+
+<section class={`px-4 py-20 sm:px-6 sm:py-24 md:px-8 md:py-32 bg-muted/50 ${section.customClass || ""}`} style={brandingStyle}>
+  <div class="mx-auto max-w-full sm:max-w-6xl">
+    <!-- Section Header -->
+    {section.title && (
+      <div class="mb-20 space-y-4 text-center">
+        <Badge variant="outline" className="mb-2 inline-flex items-center gap-2">
+          <Star className="h-4 w-4" />
+          Social Proof
+        </Badge>
+        <h2 class="text-4xl font-bold leading-tight tracking-tight sm:text-5xl">
+          {section.title}
+        </h2>
+      </div>
+    )}
+
+    <!-- Testimonials Grid or Carousel -->
+    {layout === "grid" ? (
+      <div class="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
+        {section.testimonials.map((testimonial) => (
+          <Card className="group border-border/50 bg-card/50 backdrop-blur transition-all hover:scale-[1.02] hover:border-primary/20 hover:bg-card hover:shadow-lg hover:shadow-primary/5">
+            <CardHeader className="space-y-4">
+              <!-- Quote -->
+              <p class="text-base leading-relaxed italic text-foreground">
+                "{testimonial.quote}"
+              </p>
+
+              <!-- Rating -->
+              {testimonial.rating && (
+                <div class="flex gap-1">
+                  {getStars(testimonial.rating).map((_, i) => (
+                    <Star
+                      className={`h-4 w-4 ${i < testimonial.rating! ? "fill-yellow-400 text-yellow-400" : "text-muted-foreground"}`}
+                    />
+                  ))}
+                </div>
+              )}
+
+              <!-- Author Info -->
+              <div class="flex items-center gap-3 pt-2 border-t border-border/50">
+                {testimonial.avatar && (
+                  <img
+                    src={testimonial.avatar}
+                    alt={testimonial.author}
+                    class="h-10 w-10 rounded-full object-cover"
+                  />
+                )}
+                <div>
+                  <p class="font-semibold text-sm text-foreground">
+                    {testimonial.author}
+                  </p>
+                  {testimonial.role && (
+                    <p class="text-xs text-muted-foreground">
+                      {testimonial.role}
+                    </p>
+                  )}
+                </div>
+              </div>
+            </CardHeader>
+          </Card>
+        ))}
+      </div>
+    ) : (
+      <!-- Carousel Layout -->
+      <div class="flex gap-6 overflow-x-auto pb-4 snap-x snap-mandatory">
+        {section.testimonials.map((testimonial) => (
+          <div class="min-w-[300px] snap-center">
+            <Card className="h-full border-border/50 bg-card/50 backdrop-blur">
+              <CardHeader className="space-y-4">
+                <p class="text-base leading-relaxed italic text-foreground">
+                  "{testimonial.quote}"
+                </p>
+                {testimonial.rating && (
+                  <div class="flex gap-1">
+                    {getStars(testimonial.rating).map((_, i) => (
+                      <Star
+                        className={`h-4 w-4 ${i < testimonial.rating! ? "fill-yellow-400 text-yellow-400" : "text-muted-foreground"}`}
+                      />
+                    ))}
+                  </div>
+                )}
+                <div class="flex items-center gap-3 pt-2 border-t border-border/50">
+                  {testimonial.avatar && (
+                    <img
+                      src={testimonial.avatar}
+                      alt={testimonial.author}
+                      class="h-10 w-10 rounded-full object-cover"
+                    />
+                  )}
+                  <div>
+                    <p class="font-semibold text-sm text-foreground">
+                      {testimonial.author}
+                    </p>
+                    {testimonial.role && (
+                      <p class="text-xs text-muted-foreground">
+                        {testimonial.role}
+                      </p>
+                    )}
+                  </div>
+                </div>
+              </CardHeader>
+            </Card>
+          </div>
+        ))}
+      </div>
+    )}
+  </div>
+</section>
+
+<style define:vars={{ brandingStyle }}>
+  section {
+    --primary: var(--primary, #3b82f6);
+  }
+</style>

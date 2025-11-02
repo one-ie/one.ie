@@ -1,0 +1,164 @@
+---
+/**
+ * Things Management Page
+ *
+ * List all entities (things) with filters by type, status, and group.
+ * Uses Effect services for server-side rendering with pagination.
+ */
+
+import { Effect } from "effect";
+import { ConvexReactClient } from "convex/react";
+import { ThingService } from "@/services/ThingService";
+import {
+  createDataProvider,
+  createDataProviderLayer,
+} from "@/providers/factory";
+import Layout from "@/layouts/Layout.astro";
+import { EntityTable } from "@/components/dashboard/EntityTable";
+import { EntityFilters } from "@/components/dashboard/EntityFilters";
+
+// Get query parameters for filters
+const url = new URL(Astro.request.url);
+const typeFilter = url.searchParams.get("type") || undefined;
+const statusFilter = url.searchParams.get("status") as "draft" | "active" | "published" | "archived" | undefined;
+const page = parseInt(url.searchParams.get("page") || "1");
+const limit = 20;
+
+// Initialize Convex provider
+const convexUrl = import.meta.env.PUBLIC_CONVEX_URL;
+if (!convexUrl) {
+  throw new Error("PUBLIC_CONVEX_URL environment variable is not set");
+}
+const convexClient = new ConvexReactClient(convexUrl);
+const provider = createDataProvider({
+  type: "convex",
+  client: convexClient,
+});
+const providerLayer = createDataProviderLayer(provider);
+
+// Server-side data fetching using Effect
+const program = Effect.gen(function* () {
+  // List all things with filters
+  const allThings = yield* ThingService.list({
+    type: typeFilter,
+    status: statusFilter,
+    limit: limit * page, // Fetch up to current page
+  }).pipe(
+    Effect.catchAll(() => Effect.succeed([]))
+  );
+
+  // Get unique types for filter dropdown
+  const uniqueTypes = [...new Set(allThings.map(thing => thing.type))];
+
+  // Paginate results
+  const startIndex = (page - 1) * limit;
+  const endIndex = startIndex + limit;
+  const paginatedThings = allThings.slice(startIndex, endIndex);
+
+  return {
+    things: paginatedThings,
+    total: allThings.length,
+    page,
+    totalPages: Math.ceil(allThings.length / limit),
+    uniqueTypes,
+    filters: {
+      type: typeFilter,
+      status: statusFilter,
+    },
+  };
+});
+
+// Run Effect program with DataProvider layer
+const data = await Effect.runPromise(
+  program.pipe(
+    Effect.provide(providerLayer),
+    Effect.catchAll((error) => {
+      console.error("Things list fetch failed:", error);
+      return Effect.succeed({
+        things: [],
+        total: 0,
+        page: 1,
+        totalPages: 0,
+        uniqueTypes: [],
+        filters: { type: typeFilter, status: statusFilter },
+      });
+    })
+  )
+);
+---
+
+<Layout title="Entity Management">
+  <div class="min-h-screen bg-gray-50 dark:bg-gray-900">
+    <!-- Header -->
+    <header class="bg-white dark:bg-gray-800 shadow">
+      <div class="mx-auto max-w-7xl px-4 py-6 sm:px-6 lg:px-8">
+        <div class="flex items-center justify-between">
+          <div>
+            <h1 class="text-3xl font-bold text-gray-900 dark:text-white">
+              Entity Management
+            </h1>
+            <p class="mt-1 text-sm text-gray-500 dark:text-gray-400">
+              Manage all {data.total} entities across your organization
+            </p>
+          </div>
+          <a
+            href="/dashboard/things/new"
+            class="inline-flex items-center rounded-md bg-blue-600 px-4 py-2 text-sm font-medium text-white shadow-sm hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2"
+          >
+            Create Entity
+          </a>
+        </div>
+      </div>
+    </header>
+
+    <!-- Main Content -->
+    <main class="mx-auto max-w-7xl px-4 py-8 sm:px-6 lg:px-8">
+      <!-- Filters -->
+      <div class="mb-6">
+        <EntityFilters
+          client:load
+          availableTypes={data.uniqueTypes}
+          currentFilters={data.filters}
+        />
+      </div>
+
+      <!-- Entity Table -->
+      <div class="overflow-hidden bg-white dark:bg-gray-800 shadow sm:rounded-lg">
+        <EntityTable
+          client:load
+          entities={data.things}
+          page={data.page}
+          totalPages={data.totalPages}
+          total={data.total}
+        />
+      </div>
+
+      <!-- Pagination -->
+      {data.totalPages > 1 && (
+        <div class="mt-6 flex items-center justify-between">
+          <div class="text-sm text-gray-700 dark:text-gray-300">
+            Showing {(data.page - 1) * limit + 1} to {Math.min(data.page * limit, data.total)} of {data.total} entities
+          </div>
+          <div class="flex gap-2">
+            {data.page > 1 && (
+              <a
+                href={`/dashboard/things?page=${data.page - 1}${typeFilter ? `&type=${typeFilter}` : ""}${statusFilter ? `&status=${statusFilter}` : ""}`}
+                class="inline-flex items-center rounded-md bg-white dark:bg-gray-700 px-4 py-2 text-sm font-medium text-gray-700 dark:text-gray-200 shadow-sm hover:bg-gray-50 dark:hover:bg-gray-600"
+              >
+                Previous
+              </a>
+            )}
+            {data.page < data.totalPages && (
+              <a
+                href={`/dashboard/things?page=${data.page + 1}${typeFilter ? `&type=${typeFilter}` : ""}${statusFilter ? `&status=${statusFilter}` : ""}`}
+                class="inline-flex items-center rounded-md bg-white dark:bg-gray-700 px-4 py-2 text-sm font-medium text-gray-700 dark:text-gray-200 shadow-sm hover:bg-gray-50 dark:hover:bg-gray-600"
+              >
+                Next
+              </a>
+            )}
+          </div>
+        </div>
+      )}
+    </main>
+  </div>
+</Layout>

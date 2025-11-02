@@ -1,0 +1,215 @@
+---
+import Layout from '@/layouts/Layout.astro';
+import { Button } from '@/components/ui/button';
+import { Card, CardHeader, CardTitle, CardDescription, CardContent } from '@/components/ui/card';
+import { Zap, BookOpen } from 'lucide-react';
+
+// Redirect if already logged in
+if (Astro.locals.user) {
+  return Astro.redirect('/dashboard');
+}
+---
+
+<Layout title="Choose Your Sign Up Method - ONE">
+  <div class="min-h-screen bg-gradient-to-br from-background via-secondary/5 to-background py-12 px-4">
+    <div class="max-w-4xl mx-auto space-y-8">
+      {/* Header */}
+      <div class="text-center space-y-4">
+        <h1 class="text-4xl md:text-5xl font-bold tracking-tight">Join ONE</h1>
+        <p class="text-lg text-muted-foreground max-w-2xl mx-auto">
+          Choose the sign-up method that works best for you
+        </p>
+      </div>
+
+      {/* Two Options */}
+      <div class="grid md:grid-cols-2 gap-6">
+        {/* Option 1: Quick Signup */}
+        <Card class="border-2 hover:border-primary/50 transition-colors">
+          <CardHeader>
+            <div class="flex items-center gap-2 mb-2">
+              <Zap class="w-5 h-5 text-blue-500" />
+              <span class="text-sm font-semibold text-blue-600">Fast & Simple</span>
+            </div>
+            <CardTitle>Quick Sign Up</CardTitle>
+            <CardDescription>
+              Get started in seconds with email verification
+            </CardDescription>
+          </CardHeader>
+          <CardContent class="space-y-4">
+            <div class="space-y-3 text-sm">
+              <div class="flex gap-3">
+                <div class="flex-shrink-0 w-5 h-5 rounded-full bg-blue-100 flex items-center justify-center">
+                  <span class="text-xs font-bold text-blue-600">1</span>
+                </div>
+                <div>
+                  <p class="font-medium">Enter email & password</p>
+                  <p class="text-muted-foreground text-xs">Quick validation</p>
+                </div>
+              </div>
+              <div class="flex gap-3">
+                <div class="flex-shrink-0 w-5 h-5 rounded-full bg-blue-100 flex items-center justify-center">
+                  <span class="text-xs font-bold text-blue-600">2</span>
+                </div>
+                <div>
+                  <p class="font-medium">Click verification link</p>
+                  <p class="text-muted-foreground text-xs">24-hour expiry</p>
+                </div>
+              </div>
+              <div class="flex gap-3">
+                <div class="flex-shrink-0 w-5 h-5 rounded-full bg-blue-100 flex items-center justify-center">
+                  <span class="text-xs font-bold text-blue-600">3</span>
+                </div>
+                <div>
+                  <p class="font-medium">You're in!</p>
+                  <p class="text-muted-foreground text-xs">Start exploring</p>
+                </div>
+              </div>
+            </div>
+
+            <div class="space-y-2">
+              <h4 class="font-semibold text-sm">Perfect for:</h4>
+              <ul class="text-sm text-muted-foreground space-y-1">
+                <li>• Quick login & exploration</li>
+                <li>• Users with email access</li>
+                <li>• Minimal setup needed</li>
+              </ul>
+            </div>
+
+            <Button asChild class="w-full" size="lg">
+              <a href="/account/signup">Sign Up Now</a>
+            </Button>
+          </CardContent>
+        </Card>
+
+        {/* Option 2: Creator Onboarding */}
+        <Card class="border-2 border-primary hover:border-primary transition-colors relative">
+          <div class="absolute -top-3 -right-3 bg-primary text-primary-foreground px-3 py-1 rounded-full text-xs font-semibold">
+            Recommended for Creators
+          </div>
+          <CardHeader>
+            <div class="flex items-center gap-2 mb-2">
+              <BookOpen class="w-5 h-5 text-green-500" />
+              <span class="text-sm font-semibold text-green-600">Complete Setup</span>
+            </div>
+            <CardTitle>Creator Onboarding</CardTitle>
+            <CardDescription>
+              Build your complete creator profile in one flow
+            </CardDescription>
+          </CardHeader>
+          <CardContent class="space-y-4">
+            <div class="space-y-3 text-sm">
+              <div class="flex gap-3">
+                <div class="flex-shrink-0 w-5 h-5 rounded-full bg-green-100 flex items-center justify-center">
+                  <span class="text-xs font-bold text-green-600">1</span>
+                </div>
+                <div>
+                  <p class="font-medium">Enter email & password</p>
+                  <p class="text-muted-foreground text-xs">With 6-digit code</p>
+                </div>
+              </div>
+              <div class="flex gap-3">
+                <div class="flex-shrink-0 w-5 h-5 rounded-full bg-green-100 flex items-center justify-center">
+                  <span class="text-xs font-bold text-green-600">2</span>
+                </div>
+                <div>
+                  <p class="font-medium">Complete your profile</p>
+                  <p class="text-muted-foreground text-xs">Name, bio, skills</p>
+                </div>
+              </div>
+              <div class="flex gap-3">
+                <div class="flex-shrink-0 w-5 h-5 rounded-full bg-green-100 flex items-center justify-center">
+                  <span class="text-xs font-bold text-green-600">3</span>
+                </div>
+                <div>
+                  <p class="font-medium">Create workspace</p>
+                  <p class="text-muted-foreground text-xs">Your creator hub</p>
+                </div>
+              </div>
+              <div class="flex gap-3">
+                <div class="flex-shrink-0 w-5 h-5 rounded-full bg-green-100 flex items-center justify-center">
+                  <span class="text-xs font-bold text-green-600">4</span>
+                </div>
+                <div>
+                  <p class="font-medium">Optional: Invite team & connect wallet</p>
+                  <p class="text-muted-foreground text-xs">Build & earn</p>
+                </div>
+              </div>
+            </div>
+
+            <div class="space-y-2">
+              <h4 class="font-semibold text-sm">Perfect for:</h4>
+              <ul class="text-sm text-muted-foreground space-y-1">
+                <li>• Content creators & instructors</li>
+                <li>• Team/course builders</li>
+                <li>• Web3 integration</li>
+              </ul>
+            </div>
+
+            <Button asChild class="w-full" size="lg" variant="default">
+              <a href="/onboard">Start Creating</a>
+            </Button>
+          </CardContent>
+        </Card>
+      </div>
+
+      {/* FAQ Section */}
+      <div class="mt-12 space-y-6">
+        <h2 class="text-2xl font-bold text-center">Which should I choose?</h2>
+        <div class="grid md:grid-cols-2 gap-4">
+          <Card>
+            <CardHeader>
+              <CardTitle class="text-base">I just want to explore</CardTitle>
+            </CardHeader>
+            <CardContent class="text-sm text-muted-foreground">
+              → Use <strong>Quick Sign Up</strong>. You can always upgrade to full creator setup later.
+            </CardContent>
+          </Card>
+          <Card>
+            <CardHeader>
+              <CardTitle class="text-base">I'm a content creator</CardTitle>
+            </CardHeader>
+            <CardContent class="text-sm text-muted-foreground">
+              → Use <strong>Creator Onboarding</strong>. Set up everything you need to start earning.
+            </CardContent>
+          </Card>
+          <Card>
+            <CardHeader>
+              <CardTitle class="text-base">I want to add a team</CardTitle>
+            </CardHeader>
+            <CardContent class="text-sm text-muted-foreground">
+              → Use <strong>Creator Onboarding</strong>. Invite team members during setup.
+            </CardContent>
+          </Card>
+          <Card>
+            <CardHeader>
+              <CardTitle class="text-base">Can I switch later?</CardTitle>
+            </CardHeader>
+            <CardContent class="text-sm text-muted-foreground">
+              → Yes! Both flows lead to the same dashboard. You can upgrade anytime.
+            </CardContent>
+          </Card>
+        </div>
+      </div>
+
+      {/* Footer */}
+      <div class="text-center text-sm text-muted-foreground space-y-2 pt-8 border-t">
+        <p>
+          Already have an account?{' '}
+          <a href="/account/signin" class="text-primary hover:underline font-medium">
+            Sign in here
+          </a>
+        </p>
+        <p class="text-xs">
+          By signing up, you agree to our{' '}
+          <a href="/terms" class="text-primary hover:underline">
+            Terms of Service
+          </a>
+          {' '}and{' '}
+          <a href="/privacy" class="text-primary hover:underline">
+            Privacy Policy
+          </a>
+        </p>
+      </div>
+    </div>
+  </div>
+</Layout>

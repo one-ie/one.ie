@@ -1,0 +1,216 @@
+---
+import Layout from '../layouts/Layout.astro';
+import { getCollection } from 'astro:content';
+import { ProjectSearch } from '@/components/ProjectSearch';
+import { ClientProjectsManager } from '@/components/ClientProjectsManager';
+import {
+  Grid,
+  List
+} from 'lucide-react';
+
+// Load projects from content collection
+const allProjects = await getCollection('projects');
+const contentProjects = allProjects
+  .filter(p => !p.data.draft)
+  .map((project) => ({
+    id: project.slug,
+    title: project.data.title,
+    description: project.data.description,
+    prompt: generateProjectPrompt(project.data, project.slug),
+    demoUrl: project.data.demoUrl || '/landing',
+    iconName: 'Rocket' as const,
+    borderColor: project.data.borderColor || 'border-l-primary',
+    bgColor: project.data.bgColor || 'bg-primary/20',
+    level: (project.data.level || 'Beginner') as "Beginner" | "Intermediate" | "Advanced",
+    levelColor: project.data.levelColor || 'text-primary',
+  }));
+
+function generateProjectPrompt(data: any, slug: string): string {
+  const features = (data.features || []).map((f: string) => `- ${f}`).join('\n');
+  const technologies = (data.technologies || []).map((t: string) => `- ${t}`).join('\n');
+  const learningObjectives = (data.learningPath || []).map((item: string) => `- ${item}`).join('\n');
+
+  return `# ${data.title} Project
+
+**Level:** ${data.level || 'Beginner'}
+**Estimated Time:** ${data.estimatedHours || 40} hours
+**Demo:** ${data.demoUrl || '/landing'}
+
+## Description
+${data.description}
+
+## Key Features
+${features || '- Professional UI/UX\n- Responsive design\n- Dark mode support'}
+
+## Technologies
+${technologies || '- Astro 5\n- React 19\n- Tailwind CSS v4\n- TypeScript'}
+
+${learningObjectives ? `## Learning Objectives\n${learningObjectives}` : ''}
+
+## Getting Started
+1. Review the project structure at /projects/${slug}
+2. Copy this prompt into Claude Code
+3. Implement following the architecture
+4. Test thoroughly
+5. Deploy to production
+
+Visit /projects/${slug} for full project details and step-by-step guide.`;
+}
+
+// Get view mode from URL params, default to 3-column grid (all projects above fold)
+const viewModeParam = Astro.url.searchParams.get('view') || 'grid';
+const viewMode = (viewModeParam === 'list' || viewModeParam === 'grid') ? viewModeParam : 'grid';
+const gridColumnsParam = Astro.url.searchParams.get('columns') || '3';
+const gridColumns = (gridColumnsParam === '2' || gridColumnsParam === '3') ? gridColumnsParam : '3';
+
+const projects = contentProjects;
+---
+
+<Layout title="Start a Project | Learn to Build | ONE Platform" description="Learn web development with progressive projects. Beginner to Advanced. Shareable demos + code templates.">
+  <div class="min-h-screen bg-background">
+    <!-- Header with Search - Optimized for Above the Fold -->
+    <section class="relative overflow-hidden px-4 py-6 sm:px-6 sm:py-7 md:px-8 md:py-8">
+      <div class="absolute inset-0 -z-10">
+        <div class="absolute inset-0 bg-gradient-to-b from-background via-primary/5 to-background"></div>
+      </div>
+
+      <div class="mx-auto max-w-2xl space-y-4 text-center">
+        <h1 class="text-3xl sm:text-4xl font-bold leading-tight">
+          Start a Project
+        </h1>
+        <p class="text-sm text-muted-foreground">
+          Pick any project, copy the prompt, build with Claude.
+        </p>
+
+        <!-- Search Bar -->
+        <div class="pt-2">
+          <ProjectSearch client:load onSearch={(query) => {
+            const event = new CustomEvent('projectSearch', { detail: { query } });
+            window.dispatchEvent(event);
+          }} />
+        </div>
+
+        <!-- View Mode Toggle - Large with Hover Effects -->
+        <div class="flex gap-3 items-center justify-center flex-shrink-0 pt-4">
+          <a
+            href="/?view=list"
+            class={`p-3 rounded-lg transition-all duration-200 ${viewMode === 'list' ? 'bg-primary/20 text-primary scale-110' : 'hover:bg-accent/50 hover:scale-110 text-muted-foreground'}`}
+            title="List view"
+          >
+            <List className="w-6 h-6" />
+          </a>
+          <a
+            href="/?view=grid&columns=2"
+            class={`p-3 rounded-lg transition-all duration-200 ${viewMode === 'grid' && gridColumns === '2' ? 'bg-primary/20 text-primary scale-110' : 'hover:bg-accent/50 hover:scale-110 text-muted-foreground'}`}
+            title="2 columns grid"
+          >
+            <Grid className="w-6 h-6" />
+          </a>
+          <a
+            href="/?view=grid&columns=3"
+            class={`p-3 rounded-lg transition-all duration-200 ${viewMode === 'grid' && gridColumns === '3' ? 'bg-primary/20 text-primary scale-110' : 'hover:bg-accent/50 hover:scale-110 text-muted-foreground'}`}
+            title="3 columns grid (default)"
+          >
+            <div class="w-5 h-5 grid grid-cols-3 gap-1">
+              <div class="bg-current rounded-sm"></div>
+              <div class="bg-current rounded-sm"></div>
+              <div class="bg-current rounded-sm"></div>
+              <div class="bg-current rounded-sm"></div>
+              <div class="bg-current rounded-sm"></div>
+              <div class="bg-current rounded-sm"></div>
+              <div class="bg-current rounded-sm"></div>
+              <div class="bg-current rounded-sm"></div>
+              <div class="bg-current rounded-sm"></div>
+            </div>
+          </a>
+        </div>
+      </div>
+    </section>
+
+    <!-- Project Grid - Featured Projects Above the Fold -->
+    <section class="px-4 py-4 sm:px-6 md:px-8">
+      <ClientProjectsManager client:load projects={projects as any} viewMode={viewMode} gridColumns={gridColumns} />
+    </section>
+
+    <!-- Minimal Footer -->
+    <section class="border-t px-4 py-8 sm:px-6 md:px-8 text-center">
+      <div class="mx-auto max-w-2xl space-y-2">
+        <p class="text-sm text-muted-foreground">
+          Pick any project, copy the prompt, paste into Claude/ChatGPT, build with AI.
+        </p>
+        <p class="text-xs text-muted-foreground">
+          MIT licensed • Production-ready • Built to teach
+        </p>
+      </div>
+    </section>
+  </div>
+</Layout>
+
+<style>
+  /* Accessibility: Respect user motion preferences */
+  @media (prefers-reduced-motion: reduce) {
+    *,
+    *::before,
+    *::after {
+      animation-duration: 0.01ms !important;
+      animation-iteration-count: 1 !important;
+      transition-duration: 0.01ms !important;
+      scroll-behavior: auto !important;
+    }
+  }
+
+  .gradient-text {
+    background: linear-gradient(90deg,
+      hsl(var(--color-primary)) 0%,
+      hsl(var(--color-chart-1)) 50%,
+      hsl(var(--color-chart-2)) 100%
+    );
+    background-size: 200% auto;
+    background-clip: text;
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    animation: gradient 8s linear infinite;
+    display: inline-block;
+  }
+
+  @keyframes gradient {
+    0% { background-position: 0% center; }
+    100% { background-position: 200% center; }
+  }
+
+  /* Disable gradient animation when motion is reduced */
+  @media (prefers-reduced-motion: reduce) {
+    .gradient-text {
+      animation: none;
+      background-clip: unset;
+      -webkit-background-clip: unset;
+      -webkit-text-fill-color: unset;
+      color: hsl(var(--color-primary));
+    }
+  }
+
+  @supports not (background-clip: text) {
+    .gradient-text {
+      -webkit-text-fill-color: inherit;
+      color: hsl(var(--color-foreground));
+    }
+  }
+
+  /* Smooth scroll behavior for anchors */
+  html {
+    scroll-behavior: smooth;
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    html {
+      scroll-behavior: auto;
+    }
+  }
+
+  /* Enhanced focus states for keyboard navigation */
+  button:focus-visible,
+  a:focus-visible {
+    outline: 2px solid hsl(var(--color-primary));
+    outline-offset: 2px;
+  }
+</style>

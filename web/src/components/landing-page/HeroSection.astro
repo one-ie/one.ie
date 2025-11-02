@@ -1,0 +1,92 @@
+---
+import { Button } from "@/components/ui/button";
+import { Badge } from "@/components/ui/badge";
+import { Rocket } from "lucide-react";
+import type { HeroSectionProps } from "@/types/landing-page";
+
+interface Props extends Omit<HeroSectionProps, "branding"> {
+  branding?: any;
+}
+
+const { section, branding } = Astro.props;
+
+// Generate CSS variables for branding colors
+const brandingStyle = branding
+  ? `--primary: ${branding.primaryColor || "#3b82f6"}; --accent: ${branding.accentColor || "#f59e0b"};`
+  : "";
+
+// Determine background styling
+let backgroundStyle = "";
+if (section.backgroundImage) {
+  backgroundStyle = `background-image: url('${section.backgroundImage}'); background-size: cover; background-position: center;`;
+} else if (section.backgroundGradient) {
+  backgroundStyle = `background: ${section.backgroundGradient};`;
+} else {
+  backgroundStyle = "background: linear-gradient(135deg, rgba(59, 130, 246, 0.1) 0%, rgba(245, 158, 11, 0.1) 100%);";
+}
+
+const containerClass = `relative overflow-hidden px-4 py-20 sm:px-6 sm:py-32 md:px-8 md:py-40 ${section.customClass || ""}`;
+---
+
+<section class={containerClass} style={`${brandingStyle} ${backgroundStyle}`}>
+  <!-- Background overlay if using image -->
+  {
+    section.backgroundImage && (
+      <div class="absolute inset-0 -z-10 bg-black/40"></div>
+    )
+  }
+
+  <div class="absolute inset-0 -z-10">
+    {!section.backgroundImage && !section.backgroundGradient && (
+      <div class="absolute inset-0 bg-gradient-to-b from-background via-primary/5 to-background"></div>
+    )}
+  </div>
+
+  <div class="mx-auto max-w-4xl space-y-8 text-center relative z-10">
+    <!-- Badge (Optional: Beginner-friendly) -->
+    {section.subheadline && (
+      <Badge
+        variant="secondary"
+        className="inline-flex items-center gap-2 text-base font-medium px-6 py-2"
+      >
+        <Rocket className="h-4 w-4" />
+        {section.subheadline}
+      </Badge>
+    )}
+
+    <!-- Main Headline -->
+    <h1 class="text-5xl font-bold leading-[1.1] tracking-tight sm:text-6xl md:text-7xl">
+      {section.headline}
+    </h1>
+
+    <!-- Subheadline/Description (Optional) -->
+    {section.subheadline && (
+      <p class="mx-auto max-w-2xl text-xl sm:text-2xl leading-relaxed text-muted-foreground">
+        {section.subheadline}
+      </p>
+    )}
+
+    <!-- CTA Button -->
+    {section.ctaText && section.ctaLink && (
+      <div class="flex flex-col gap-4 sm:flex-row sm:justify-center">
+        <a href={section.ctaLink} class="inline-block">
+          <Button
+            size="lg"
+            variant={section.ctaVariant || "default"}
+            className="h-12 px-8 text-lg font-semibold"
+          >
+            {section.ctaText}
+            <span class="ml-2">→</span>
+          </Button>
+        </a>
+      </div>
+    )}
+  </div>
+</section>
+
+<style define:vars={{ brandingStyle }}>
+  section {
+    --primary: var(--primary, #3b82f6);
+    --accent: var(--accent, #f59e0b);
+  }
+</style>

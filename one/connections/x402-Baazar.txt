@@ -1,0 +1,1005 @@
+What if your AI agent could explore an
+
+open marketplace of APIs, compare
+
+providers and access them instantly
+
+without any account, API keys or
+
+subscriptions? Sounds impressive, right?
+
+But that's not how today's marketplaces
+
+work. They want you to create an
+
+account, set up billing, manage API keys
+
+and more, which forces human
+
+intervention and blocks AI agents who
+
+operate independently. X42 was designed
+
+to change that. But with Bazar, it
+
+elevates to a next level. Let's see how.
+
+Bazar here is the discovery layer. This
+
+is where your AI agents can find API
+
+it's looking for. Each listing here
+
+would provide information like what
+
+services it offers, what is the price
+
+per request, what network it operates on
+
+and more. And underneath this is X42.
+
+X42 is the payment protocol used within
+
+the Bazar. And every services which need
+
+payment will be using this X42 which
+
+lets the AI agents to settle payments
+
+instantly typically in USDC on base or
+
+any other token and then operate
+
+independently. So bazar plus x42 seems
+
+gamechanging, right? But let's see how
+
+it works. So we have an AI agent here
+
+called Bob. So now you're going to ask
+
+Bob, hey Bob, I have an image and I want
+
+to turn this into grayscale and the
+
+budget is $1. Can you help me with that?
+
+So now what Bob will do is Bob will list
+
+all the providers who are providing
+
+image conversion as a service and then
+
+you're going to compare the pricing,
+
+other details and everything and select
+
+the one that is best suited for this
+
+particular request. Then Bobs sends a
+
+request to that provider and the
+
+provider returns a payment required
+
+prompt with X42 details. So this details
+
+will include what is the address that
+
+Bob has to pay and what is the amount of
+
+tokens typically USDC that Bob is
+
+required to pay for this particular
+
+service. Now Bob will pay all the USDC
+
+that is specified in that particular
+
+details to the specified address and
+
+resends the request with the payment
+
+details. Now the provider will verify
+
+that detail and then turns Bob image to
+
+grayscale and then returns that
+
+response. This is the entire flow of X42
+
+with Bazar which is very simple and lets
+
+your AI agent operate autonomously
+
+without human intervention in any of the
+
+flow nor did this Bob maintain any
+
+accounts any API keys any subscription.
+
+But wait how did the provider verify the
+
+payment? That's a question right? So
+
+let's see. So there is something called
+
+facilitator. So the role of this
+
+facilitator is to verify the onchain
+
+payment and verify if it if it was
+
+settled and verify if it was legitimate.
+
+And in this video we'll be using the
+
+default facilitator from Coinbase. Okay,
+
+which deals with USDC basically. But you
+
+can still explore many of the community
+
+facilitators or you can run your own
+
+facilitator. Just refer to the CDP docs
+
+for that. Okay, sounds interesting,
+
+right? So let's get to it. So here's
+
+what we'll be building in this demo.
+
+We'll be writing a NodeJS script that
+
+will simulate both seller and the buyer
+
+end. Seller will actually sell an API
+
+that will be using CDP facilitator
+
+within it. So this CDP facilitator is a
+
+default facilitator provided to you
+
+which is already hosted and accepts USDC
+
+payments and it's very effortless to
+
+integrate. Let's get started. The first
+
+thing you have to do is install all
+
+these dependencies which is available in
+
+your description as well. You can just
+
+copy paste it. Okay. Then create a
+
+index.js file. Okay. And now we're going
+
+to start setting up Express. So what
+
+exactly is Express? So Express lets you
+
+effortlessly create API endpoints. Okay,
+
+it is actually more than that. For this
+
+demo, we'll just we'll just stick with
+
+Express will let you help you to create
+
+API endpoints or servers really fast.
+
+Okay, now we're going to say app express
+
+initialize it. And then you have to also
+
+set up the body parser. Okay, to get the
+
+details from a AI agent. The next thing
+
+we're going to do is we're going to set
+
+up the API endpoint. So we will just say
+
+RPS play. But wait, what exactly is this
+
+RPS? So this is what we'll be building.
+
+We'll be building something called rock
+
+paper scissor API. So now the AI agents
+
+will send you their move. Let's say
+
+rock. Your server, okay, or your API
+
+will randomly select a move on its own.
+
+It can be rock, paper, scissor, any of
+
+these move. It will compare whether or
+
+not it's a victory or defeat or a draw.
+
+So now we have an endpoint called RPS
+
+play. Then we will actually start the
+
+server. We'll just say listen
+
+and then we'll just say console.log
+
+server is listening at localus 4021.
+
+Okay. So now the server is ready. Let's
+
+start adding the code for this logic.
+
+First thing is you would get the request
+
+body. Okay. Get the request body and
+
+then you would s see if the body was
+
+actually present or not. Right? If the
+
+body is actually present or not. But the
+
+server doesn't know what is rope
+
+processor. Right? we have to define it.
+
+So we're going to define a constant
+
+called moves. Okay. And then list it as
+
+rock paper scissors over here. And then
+
+also check if the moves okay if the move
+
+provided here is something out of these
+
+three or not. If not we will actually
+
+send a result saying that hey you must
+
+select rock paper procedure nothing
+
+else. No fire no lizard. And then we're
+
+going to say the server move. Then we're
+
+going to pick the server move. So we'll
+
+just say oops con server move.
+
+We'll get the server move over here and
+
+then we'll have to get the outcome. So
+
+outcome but what is the outcome? How are
+
+we going to calculate the outcome? So
+
+outcome calculation is a bit simple. So
+
+we're going to move that to another uh
+
+dedicated function. So we're going to
+
+say get outcome and they we'll check if
+
+both the server and player chose the
+
+same move. We're going to say draw else
+
+it's a victory or a lose. Okay. And then
+
+we'll just call that function to get
+
+outcome. And then we'll actually respond
+
+back saying that JSON
+
+server move
+
+user move and the outcome. Okay. And
+
+this will be status
+
+200. And if in case something fails,
+
+let's wrap this up inside a try catch
+
+block.
+
+Okay. So we can just say status 500.
+
+something went wrong and then also
+
+console log it for your reference. So
+
+the user will see internal server error
+
+but you will have the log within your
+
+server. So now this makes it clear
+
+right. So this will make sure that you
+
+have an API right now. Okay even if you
+
+run the server you have an API you can
+
+normally send it a request it will
+
+respond but we want to make this baser
+
+ready. So for that we have to plug in
+
+x42. So let's see how to do that. So we
+
+did install something called x42
+
+express. So we will actually import it.
+
+Okay, we will import X42 express over
+
+here and then we need to initialize it.
+
+So the way we initializing it is we are
+
+using this as a global middleware. So
+
+we're going to say use payment
+
+middleware. Okay. Now this particular
+
+endpoint is gated gated before X42
+
+payment middleware. So this will make
+
+sure that if you're accessing this API,
+
+it needs a payment. Okay. Now we will
+
+actually specify where do the payment
+
+actually go. So I'm going to actually
+
+use my own address here. So whoever pays
+
+for this endpoint that pay particular
+
+payment will actually go to my account.
+
+So I'm going to add my wallet address
+
+over here. And then we have to provide
+
+some metadata. Okay, metadata is like
+
+what is your endpoint about? What is the
+
+price per request? Okay, what is the
+
+input and output structure? All those
+
+things. So I already have it defined. So
+
+I'm just going to copy paste it. So
+
+there you go. Copy paste it. Okay. So
+
+here you go. We have our API RPS player
+
+per request 001 0.01 001 and it's on
+
+base sepoleia test net the name and
+
+description discoverable true I'll
+
+explain what this is okay and the input
+
+and output schema and then the
+
+facilitator okay we're using the default
+
+CDP facilitator so this will make sure
+
+that this particular endpoint is payment
+
+okay so if you're accessing this
+
+endpoint you have to pay for it now
+
+coming to this discoverable true what
+
+does this do so this will make sure that
+
+when you deploy your server right this
+
+particular express server if I deploy it
+
+to some server let's say AWS or railway
+
+anywhere if this is true okay it will it
+
+will trigger the bazar to index it so it
+
+will just let the bazar know hey I am
+
+discoverable I am a public 402 compliant
+
+endpoint or API okay please suggest me
+
+to the user who require my service so
+
+it's you telling bazar to recommend you
+
+to the people or AI agents that's what
+
+discoverable will do okay it'll
+
+automatically let bazar know to provide
+
+you or to suggest you to anybody who is
+
+requesting
+
+Okay, that's the entire meaning of it.
+
+So now since your server is ready, you
+
+can deploy it to any server. I have
+
+already deployed this to railway. Okay,
+
+with this endpoint if I show that to you
+
+over here. So this server is already
+
+deployed in a railway app. Okay, and
+
+this is the URL or the API endpoint to
+
+access it. And after a while, Bazar will
+
+be indexing it. It will take some time,
+
+but it will be indexing indexing it and
+
+it will show that or recommend that to
+
+the requester. Okay, it can be an AI
+
+agent or a user. It will then recommend
+
+it. Okay, but for now we'll just
+
+directly use this endpoint within our
+
+script. So now going back to the code
+
+again. So we have another file here
+
+called list catalog. Okay, so now this
+
+is done with the seller side. Now let's
+
+talk about the buyer side. The first
+
+thing we'll do is list all the catalog.
+
+Okay, basically like who are uh what are
+
+the APIs we have, who are the providers
+
+and all those things. That's very
+
+simple. So what we're going to do is
+
+we'll actually create const
+
+list catalog a function. Okay, which is
+
+an async function.
+
+Okay, and then we'll actually call this
+
+function
+
+list catalog.
+
+Okay, no need to await since it's just
+
+one function we have. Okay, then we'll
+
+use uh response equals await fetch.
+
+We'll use the inbuilt fetch. We'll get
+
+the result from awaiting the response
+
+and then console logging the result. But
+
+where are we going to fetch this from?
+
+So, Coinbase gives you an endpoint that
+
+will return the list of API providers
+
+you have within the bazar. Basically,
+
+this will give you the entire list of
+
+catalog. Basically, entire list of
+
+providers who are within bazar. So,
+
+we're going to use this as the URL.
+
+Okay. Now, if you run this, let's say
+
+node list catalog
+
+js. No needs. So you can see we got so
+
+many list of details JSON details over
+
+here. So all these are the list of
+
+people who are offering some sort of
+
+services. Okay, list of sellers who are
+
+offering some sort of services and many
+
+of these metadata are uh empty here
+
+because this is a test net people list
+
+their own test uh endpoints test
+
+services. So many of these things can be
+
+empty but in mainet everything will be
+
+properly verified and everything will be
+
+properly compliant. Okay, moving on. All
+
+right. So this was another thing that I
+
+want to show to you guys how you can
+
+list and find services. And moving on to
+
+the buyer.js. Okay. Now let's talk about
+
+buyer. So how can we set up or simulate
+
+the entire consume process of the APIs.
+
+All right. In order to actually make a
+
+request to sell our APIs, we need to pay
+
+for it, right? And to pay for it, we
+
+need an account and a funds in that
+
+account. So how are we going to enable
+
+the AI agents to have an account or to
+
+have access to the account and also the
+
+funds. So luckily for us, CDP gives us
+
+wallets which are programmatically
+
+accessible and it's very easy and also
+
+enable us to access faucet
+
+programmatically if our funds are low so
+
+that we can top up our wallet and this
+
+topup only works on test net. You cannot
+
+actually get mainet tokens using
+
+faucets. Okay, let's see how that works.
+
+In order to do that, you need to create
+
+an account in your CDP platform. Okay,
+
+get all the API keys, secret API keys,
+
+client API keys, add that in your env
+
+over here. Okay, which I already done.
+
+And the next thing we're going to do is
+
+we're going to import CDP client and
+
+env. We're going to config, initialize
+
+CDP client, set up a CDP account. And
+
+then here I'm actually doing get
+
+account. I'll tell you how to actually
+
+create an account as well. We're going
+
+to request foset right. So what are we
+
+doing here? So if you can see over here,
+
+we are create getting an account from
+
+the CDP. Okay, which is which has a name
+
+called buyer account one. You can
+
+actually change this to create account
+
+if it's your first time. Okay. And then
+
+this particular request faucet, right?
+
+This will give us testn net USDC which
+
+is operational or can work only under
+
+basoleia network. Okay. And since since
+
+our seller API is on basoleia and buyer
+
+is also on basapolia. So it works right
+
+now. We have a function called play rps.
+
+What is play rps? Rock paper scissor. So
+
+what we're going to do is we're going to
+
+send a request to the endpoint that we
+
+just deployed the seller endpoint. Okay.
+
+Post request. It's a JSON content. And
+
+then we're actually sending the move.
+
+what move the user actually wants to
+
+perform. Okay, then we're console
+
+logging the result. So there we go. So
+
+we're going to actually play RPS. Now
+
+let's actually let's run this. So I'm
+
+going to clear the end terminal. I'm
+
+going to say node buyer. Oops, sorry.
+
+Typo node buyer. And there we go. We got
+
+an error. It's actually expected
+
+actually. So this says X payment header
+
+is required. So what does that mean? So
+
+remember the X42 payment required. This
+
+is the actual error. Okay. Now it's
+
+saying that hey you're trying to make a
+
+request but seems like you need to pay
+
+for it and you need to pay in the
+
+network basia you need to pay 1,000 way
+
+USDC meaning 0.001 001 USDC it's in V
+
+format and this is the resources you're
+
+trying to request for and this is the
+
+description of it who do you have to pay
+
+for and what is the timeout seconds
+
+timeout window for you to pay and then
+
+what is the asset and this is the
+
+address of USDC in basipulia your AI
+
+agent who actually making this request
+
+will actually go through this error
+
+message it will understand where to pay
+
+whom to pay what to pay and how much to
+
+pay every single answer is here for all
+
+your questions the AI agent has Now the
+
+AI agent will make the payment and it
+
+should retry the request. Okay, along
+
+with the X payment header here. But it's
+
+tedious, isn't it? Writing a request,
+
+getting back the response, okay, finding
+
+out, oh, the payment is required,
+
+they're making the payment, and then
+
+making the same request again. Isn't
+
+that tedious? What if we can automate
+
+that as well? That's where CDP shines.
+
+Okay, it actually gives us another SDK.
+
+Okay, if you check the installs that we
+
+did, we have something called X42 fetch,
+
+right? So, we'll be using that. And if
+
+you're using uh axios instead of fetch,
+
+you have x42 axios as well. Okay, since
+
+we're using inbuilt fetch, I can just
+
+use this. So I'm going to wrap this with
+
+the inbuilt fetch. So basically, this is
+
+a wrapper. You can just wrap it on top
+
+of the inbuilt fetch. I'm going to
+
+comment this out so that I don't get in
+
+the faucet. Since I already have a
+
+faucet, it doesn't make any sense to
+
+have another one. So we'll just replace
+
+this account over here. Okay. The reason
+
+why I did this is since we already have
+
+balance, right? It's not good to keep
+
+requesting again and again. So it's
+
+better to disable it. Okay. So now we
+
+just wrap the fetch the inbuilt fetch
+
+with some utilities from X42 and then
+
+also pass our account. So this will make
+
+sure that whenever if you get X42 error
+
+it will automatically pay the payment
+
+using your account and then it will
+
+automatically retry that request. So in
+
+reality your AI agent using this wrap
+
+fetch it will just send one request and
+
+explor SDK will take care of the payment
+
+reerequesting again. So your AI agent
+
+will be waiting for the response and it
+
+will get the response. Okay, all the
+
+payment will be handled automatically.
+
+Okay, now we will actually replace our
+
+fetch with fetch with payments and then
+
+we can also decode the response as well
+
+the payment details. So after this
+
+result, you can just add this line.
+
+Okay. Oops, sorry. So we can just add
+
+this line over here. Oops, one sec.
+
+There we go. So this will decode the
+
+payment response that we're getting and
+
+then we'll just console log it. So now
+
+if I try the request again node buyer
+
+so env was injected
+
+waiting for the payment and there we go.
+
+So we got the result game result that
+
+was we made a move called rock and then
+
+the server said rock. So it's a draw and
+
+then these are the transaction has you
+
+can actually search this in sepoleia and
+
+this is the player address payer
+
+address. Okay address in essence your
+
+account address this address. Okay let's
+
+make another request. This time I'm
+
+going to say paper. Okay. So we'll send
+
+the request again.
+
+There we go. So this time the server
+
+said scissor so I lose. Okay. So this is
+
+how simple it is to set up the entire
+
+infrastructure for seller and buyer.
+
+Okay. So what we just did in a nutshell
+
+is that we as a seller published an API
+
+to X42 bazar. Okay. With X42 middlewares
+
+payment middlewares and started
+
+accepting the payments. And as a buyer,
+
+what we did, we we set up X 402 rappers
+
+on top of our inbuilt fetch to enable
+
+autonomous payments. Okay. And then we
+
+also use CDP accounts to get seamless
+
+wallet access. Okay. And transactions
+
+without having to use our own private
+
+keys and accounts. And also we use FET
+
+for test net only to get the funds
+
+programmatically without us having to go
+
+to some foset portal adding our address
+
+and getting the funds. Okay, everything
+
+was simplified, right? So what are the
+
+use cases? So what can you do with this?
+
+What is the potential of this entirely
+
+or what is the point of this? See with
+
+Bazar, your AI agent can start small. It
+
+can be like converting an image, getting
+
+a live exchange rates or maybe
+
+transcribing a clip where it just pays
+
+once, get the result and move on. Or it
+
+can scale up, right? It can try to chain
+
+multiple services from different
+
+providers. It can be like transcribing a
+
+video, analyzing the sentiment,
+
+extracting the audio, summarizing the
+
+text over there and then maybe creating
+
+different messages out of it. Okay. All
+
+while discovering each and every
+
+services, okay, from different providers
+
+who are the best at what they do and
+
+paying them individually. Okay. And then
+
+getting the job done. And as new
+
+services appear, your AI agent can
+
+compare the providers with cost,
+
+latency, network results, reputation and
+
+try to match that with your budget and
+
+personal preference policies and
+
+dynamically change if something changes.
+
+And at the end of day, Bazar powered by
+
+Explorer2 gives your AI agent the
+
+freedom to explore, compare, and then
+
+operate independently without any
+
+restrictions. Thank you so much for
+
+watching. For a more in-depth deep dive,
+
+follow Coinbase developer platform
+
+documentation and follow Heimlabs. And
+
+in the next video, we'll actually be
+
+taking this a bit for forward where
+
+we'll actually implement an AI agent who
+
+is performing some task with Bazar and
+
+X42 and which can pay autonomously and
+
+operate independently. So see you soon
+
+in the next video.
+
+

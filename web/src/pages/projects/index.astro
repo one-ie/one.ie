@@ -1,0 +1,315 @@
+---
+import Layout from '../../layouts/Layout.astro';
+import { getCollection } from 'astro:content';
+import { StaggeredFadeIn } from '@/components/features/StaggeredFadeIn';
+import { Grid, List } from 'lucide-react';
+
+// Disable view transitions for faster content loading
+export const prerender = false;
+
+// Get all Projects entries
+const projects = await getCollection('projects');
+
+// Get view mode from URL params, default to grid with 4 columns
+const viewModeParam = Astro.url.searchParams.get('view') || 'grid';
+const viewMode = (viewModeParam === 'list' || viewModeParam === 'grid') ? viewModeParam : 'grid';
+const gridColumnsParam = Astro.url.searchParams.get('columns') || '3';
+const gridColumns = (gridColumnsParam === '2' || gridColumnsParam === '3' || gridColumnsParam === '4') ? gridColumnsParam : '3';
+
+// Get status filter from URL params
+const statusParam = Astro.url.searchParams.get('status') || '';
+
+// Sort by updatedAt (most recent first)
+const sortedProjects = projects
+  .filter(p => !statusParam || p.data.status === statusParam)
+  .sort((a, b) => {
+    const dateA = a.data.updatedAt?.getTime() || a.data.createdAt?.getTime() || 0;
+    const dateB = b.data.updatedAt?.getTime() || b.data.createdAt?.getTime() || 0;
+    return dateB - dateA;
+  });
+
+// Calculate project statistics
+const projectStats = {
+  total: projects.length,
+  active: projects.filter(p => p.data.status === 'active').length,
+  completed: projects.filter(p => p.data.status === 'completed').length,
+  planning: projects.filter(p => p.data.status === 'planning').length,
+  onHold: projects.filter(p => p.data.status === 'on_hold').length,
+  averageProgress: Math.round(projects.reduce((sum, p) => sum + (p.data.progress || 0), 0) / projects.length),
+};
+
+const statusBadgeClass = (status: string) => {
+  switch (status) {
+    case 'completed':
+      return 'bg-green-100 text-green-700 dark:bg-green-900 dark:text-green-200';
+    case 'active':
+      return 'bg-blue-100 text-blue-700 dark:bg-blue-900 dark:text-blue-200';
+    case 'on_hold':
+      return 'bg-yellow-100 text-yellow-700 dark:bg-yellow-900 dark:text-yellow-200';
+    case 'planning':
+      return 'bg-purple-100 text-purple-700 dark:bg-purple-900 dark:text-purple-200';
+    case 'archived':
+      return 'bg-gray-100 text-gray-700 dark:bg-gray-800 dark:text-gray-200';
+    default:
+      return 'bg-gray-100 text-gray-700';
+  }
+};
+
+const statusLabel = (status: string) => {
+  return status.split('_').map(word => word.charAt(0).toUpperCase() + word.slice(1)).join(' ');
+};
+
+const priorityBadgeClass = (priority?: string) => {
+  switch (priority) {
+    case 'critical':
+      return 'bg-red-100 text-red-700 dark:bg-red-900 dark:text-red-200';
+    case 'high':
+      return 'bg-orange-100 text-orange-700 dark:bg-orange-900 dark:text-orange-200';
+    case 'medium':
+      return 'bg-blue-100 text-blue-700 dark:bg-blue-900 dark:text-blue-200';
+    case 'low':
+      return 'bg-green-100 text-green-700 dark:bg-green-900 dark:text-green-200';
+    default:
+      return '';
+  }
+};
+---
+
+<Layout title="Projects" description="Project management and initiative tracking">
+  <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
+    <!-- Header -->
+    <div class="flex justify-between items-start mb-12">
+      <div>
+        <h1 class="text-4xl font-bold mb-4">Projects</h1>
+        <p class="text-lg text-muted-foreground mb-8">
+          Manage development projects, initiatives, and deliverables
+        </p>
+      </div>
+
+      <!-- View Toggle Buttons -->
+      <div class="flex gap-2 items-center">
+        <a
+          href="/projects?view=list"
+          class={`p-2 rounded-md hover:bg-accent hover:scale-110 transition-all duration-200 ${viewMode === 'list' ? 'bg-accent' : ''}`}
+          title="List view"
+        >
+          <List className="w-5 h-5" />
+        </a>
+        <a
+          href="/projects?view=grid&columns=2"
+          class={`p-2 rounded-md hover:bg-accent hover:scale-110 transition-all duration-200 ${viewMode === 'grid' && gridColumns === '2' ? 'bg-accent' : ''}`}
+          title="2 columns grid"
+        >
+          <Grid className="w-5 h-5" />
+        </a>
+        <a
+          href="/projects?view=grid&columns=3"
+          class={`p-2 rounded-md hover:bg-accent hover:scale-110 transition-all duration-200 ${viewMode === 'grid' && gridColumns === '3' ? 'bg-accent' : ''}`}
+          title="3 columns grid"
+        >
+          <div class="w-5 h-5 grid grid-cols-3 gap-0.5">
+            <div class="bg-current rounded-sm"></div>
+            <div class="bg-current rounded-sm"></div>
+            <div class="bg-current rounded-sm"></div>
+          </div>
+        </a>
+        <a
+          href="/projects?view=grid&columns=4"
+          class={`p-2 rounded-md hover:bg-accent hover:scale-110 transition-all duration-200 ${viewMode === 'grid' && gridColumns === '4' ? 'bg-accent' : ''}`}
+          title="4 columns grid"
+        >
+          <div class="w-5 h-5 grid grid-cols-2 grid-rows-2 gap-0.5">
+            <div class="bg-current rounded-sm"></div>
+            <div class="bg-current rounded-sm"></div>
+            <div class="bg-current rounded-sm"></div>
+            <div class="bg-current rounded-sm"></div>
+          </div>
+        </a>
+      </div>
+    </div>
+
+    <!-- Status Filter Buttons -->
+    <div class="flex gap-2 mb-8 flex-wrap">
+      <a
+        href="/projects"
+        class={`px-4 py-2 rounded-lg transition-all duration-200 ${!statusParam ? 'bg-accent text-accent-foreground' : 'bg-card border hover:border-accent'}`}
+      >
+        All ({projectStats.total})
+      </a>
+      <a
+        href="/projects?status=active"
+        class={`px-4 py-2 rounded-lg transition-all duration-200 ${statusParam === 'active' ? 'bg-blue-100 text-blue-700 dark:bg-blue-900 dark:text-blue-200' : 'bg-card border hover:border-accent'}`}
+      >
+        Active ({projectStats.active})
+      </a>
+      <a
+        href="/projects?status=planning"
+        class={`px-4 py-2 rounded-lg transition-all duration-200 ${statusParam === 'planning' ? 'bg-purple-100 text-purple-700 dark:bg-purple-900 dark:text-purple-200' : 'bg-card border hover:border-accent'}`}
+      >
+        Planning ({projectStats.planning})
+      </a>
+      <a
+        href="/projects?status=on_hold"
+        class={`px-4 py-2 rounded-lg transition-all duration-200 ${statusParam === 'on_hold' ? 'bg-yellow-100 text-yellow-700 dark:bg-yellow-900 dark:text-yellow-200' : 'bg-card border hover:border-accent'}`}
+      >
+        On Hold ({projectStats.onHold})
+      </a>
+      <a
+        href="/projects?status=completed"
+        class={`px-4 py-2 rounded-lg transition-all duration-200 ${statusParam === 'completed' ? 'bg-green-100 text-green-700 dark:bg-green-900 dark:text-green-200' : 'bg-card border hover:border-accent'}`}
+      >
+        Completed ({projectStats.completed})
+      </a>
+    </div>
+
+    <!-- Statistics -->
+    <div class="grid grid-cols-2 sm:grid-cols-5 gap-4 mb-12">
+      <div class="bg-card border rounded-lg p-4">
+        <div class="text-3xl font-bold">{projectStats.total}</div>
+        <div class="text-sm text-muted-foreground">Total Projects</div>
+      </div>
+      <div class="bg-card border rounded-lg p-4">
+        <div class="text-3xl font-bold text-blue-600">{projectStats.active}</div>
+        <div class="text-sm text-muted-foreground">Active</div>
+      </div>
+      <div class="bg-card border rounded-lg p-4">
+        <div class="text-3xl font-bold text-purple-600">{projectStats.planning}</div>
+        <div class="text-sm text-muted-foreground">Planning</div>
+      </div>
+      <div class="bg-card border rounded-lg p-4">
+        <div class="text-3xl font-bold text-green-600">{projectStats.completed}</div>
+        <div class="text-sm text-muted-foreground">Completed</div>
+      </div>
+      <div class="bg-card border rounded-lg p-4">
+        <div class="text-3xl font-bold text-accent">{projectStats.averageProgress}%</div>
+        <div class="text-sm text-muted-foreground">Avg Progress</div>
+      </div>
+    </div>
+
+    <!-- Projects Grid with Staggered Animation -->
+    {sortedProjects.length > 0 ? (
+      <StaggeredFadeIn
+        client:load
+        delay={80}
+        duration={500}
+        staggerDirection="up"
+      >
+        {viewMode === 'grid' ? (
+          <div class={`grid gap-6 grid-cols-1 ${gridColumns === '2' ? 'md:grid-cols-2' : gridColumns === '3' ? 'md:grid-cols-3' : 'md:grid-cols-4'}`}>
+            {sortedProjects.map((project) => (
+              <a href={`/projects/${project.slug}`} class="group">
+                <div class="bg-card border rounded-lg p-6 hover:border-accent hover:shadow-lg transition-all duration-300 h-full flex flex-col">
+                  {/* Header */}
+                  <div class="mb-4">
+                    <div class="flex items-start justify-between mb-2">
+                      <h3 class="text-lg font-semibold group-hover:text-accent transition-colors flex-1">{project.data.title}</h3>
+                      <span class={`px-2 py-1 rounded text-xs font-medium whitespace-nowrap ml-2 ${statusBadgeClass(project.data.status)}`}>
+                        {statusLabel(project.data.status)}
+                      </span>
+                    </div>
+                    <p class="text-sm text-muted-foreground line-clamp-2">{project.data.description}</p>
+                  </div>
+
+                  {/* Priority & Details */}
+                  <div class="mb-4 flex-1">
+                    <div class="flex items-center gap-2 mb-2">
+                      {project.data.priority && (
+                        <span class={`px-2 py-0.5 rounded text-xs font-medium ${priorityBadgeClass(project.data.priority)}`}>
+                          {project.data.priority.charAt(0).toUpperCase() + project.data.priority.slice(1)}
+                        </span>
+                      )}
+                    </div>
+                    {project.data.organization && (
+                      <div class="mb-2">
+                        <div class="text-xs text-muted-foreground">Organization</div>
+                        <div class="text-sm font-medium">{project.data.organization}</div>
+                      </div>
+                    )}
+                    {project.data.assignedSpecialist && (
+                      <div>
+                        <div class="text-xs text-muted-foreground">Specialist</div>
+                        <div class="text-sm font-medium">{project.data.assignedSpecialist}</div>
+                      </div>
+                    )}
+                  </div>
+
+                  {/* Progress Bar */}
+                  <div class="mb-3">
+                    <div class="flex justify-between items-center mb-1">
+                      <span class="text-xs text-muted-foreground">Progress</span>
+                      <span class="text-xs font-medium">{project.data.progress}%</span>
+                    </div>
+                    <div class="w-full bg-muted rounded-full h-2">
+                      <div
+                        class="bg-accent h-2 rounded-full transition-all duration-500"
+                        style={{ width: `${project.data.progress}%` }}
+                      ></div>
+                    </div>
+                  </div>
+
+                  {/* Metadata */}
+                  <div class="flex items-center justify-between text-xs text-muted-foreground pt-3 border-t">
+                    <div>
+                      {project.data.startDate && (
+                        <span>{new Date(project.data.startDate).toLocaleDateString()}</span>
+                      )}
+                    </div>
+                    <div>
+                      {project.data.updatedAt && (
+                        <span>{new Date(project.data.updatedAt).toLocaleDateString()}</span>
+                      )}
+                    </div>
+                  </div>
+                </div>
+              </a>
+            ))}
+          </div>
+        ) : (
+          <div class="space-y-3">
+            {sortedProjects.map((project) => (
+              <a href={`/projects/${project.slug}`} class="group block">
+                <div class="bg-card border rounded-lg p-4 hover:border-accent hover:shadow-md transition-all duration-300">
+                  <div class="flex items-center justify-between gap-4">
+                    <div class="flex-1">
+                      <div class="flex items-center gap-2 mb-2">
+                        <h3 class="text-base font-semibold group-hover:text-accent transition-colors">{project.data.title}</h3>
+                        <span class={`px-2 py-0.5 rounded text-xs font-medium ${statusBadgeClass(project.data.status)}`}>
+                          {statusLabel(project.data.status).charAt(0)}
+                        </span>
+                        {project.data.priority && (
+                          <span class={`px-2 py-0.5 rounded text-xs font-medium ${priorityBadgeClass(project.data.priority)}`}>
+                            {project.data.priority.charAt(0).toUpperCase()}
+                          </span>
+                        )}
+                      </div>
+                      <p class="text-sm text-muted-foreground mb-2">{project.data.description}</p>
+                      <div class="flex items-center gap-4 text-xs text-muted-foreground">
+                        {project.data.organization && <span>{project.data.organization}</span>}
+                        {project.data.assignedSpecialist && <span>{project.data.assignedSpecialist}</span>}
+                        {project.data.startDate && <span>{new Date(project.data.startDate).toLocaleDateString()}</span>}
+                      </div>
+                    </div>
+                    <div class="flex-shrink-0 text-right">
+                      <div class="text-sm font-medium mb-1">{project.data.progress}%</div>
+                      <div class="w-24 bg-muted rounded-full h-2">
+                        <div
+                          class="bg-accent h-2 rounded-full transition-all duration-500"
+                          style={{ width: `${project.data.progress}%` }}
+                        ></div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </a>
+            ))}
+          </div>
+        )}
+      </StaggeredFadeIn>
+    ) : (
+      <div class="text-center py-12">
+        <p class="text-lg text-muted-foreground mb-4">No projects found</p>
+        <p class="text-sm text-muted-foreground">Create your first project to get started managing initiatives and deliverables</p>
+      </div>
+    )}
+  </div>
+</Layout>

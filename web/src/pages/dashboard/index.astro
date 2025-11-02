@@ -1,0 +1,170 @@
+---
+/**
+ * Dashboard Home Page
+ *
+ * Main dashboard with organization overview and entity statistics.
+ * Uses Effect services for server-side rendering.
+ */
+
+import { Effect } from "effect";
+import { ConvexReactClient } from "convex/react";
+import { ThingService } from "@/services/ThingService";
+import { EventService } from "@/services/EventService";
+import { OrganizationService } from "@/services/OrganizationService";
+import {
+  createDataProvider,
+  createDataProviderLayer,
+} from "@/providers/factory";
+import Layout from "@/layouts/Layout.astro";
+import { DashboardStats } from "@/components/dashboard/DashboardStats";
+import { EntityOverview } from "@/components/dashboard/EntityOverview";
+import { RecentActivity } from "@/components/dashboard/RecentActivity";
+import { QuickActions } from "@/components/dashboard/QuickActions";
+
+// Mock auth context - TODO: Replace with actual auth
+const currentOrgId = "default-org";
+const currentUserId = "system";
+
+// Initialize Convex provider
+const convexUrl = import.meta.env.PUBLIC_CONVEX_URL;
+if (!convexUrl) {
+  throw new Error("PUBLIC_CONVEX_URL environment variable is not set");
+}
+const convexClient = new ConvexReactClient(convexUrl);
+const provider = createDataProvider({
+  type: "convex",
+  client: convexClient,
+});
+const providerLayer = createDataProviderLayer(provider);
+
+// Server-side data fetching using Effect
+const program = Effect.gen(function* () {
+  // Get organization details
+  const org = yield* OrganizationService.get(currentOrgId).pipe(
+    Effect.catchAll(() => Effect.succeed({
+      _id: currentOrgId,
+      name: "Default Organization",
+      type: "organization" as const,
+      status: "active" as const,
+      properties: { plan: "starter" },
+      createdAt: Date.now(),
+      updatedAt: Date.now(),
+    }))
+  );
+
+  // Get entity counts by type
+  const productCount = yield* ThingService.list({ type: "product" }).pipe(
+    Effect.map(items => items.length),
+    Effect.catchAll(() => Effect.succeed(0))
+  );
+
+  const courseCount = yield* ThingService.list({ type: "course" }).pipe(
+    Effect.map(items => items.length),
+    Effect.catchAll(() => Effect.succeed(0))
+  );
+
+  const userCount = yield* ThingService.list({ type: "creator" }).pipe(
+    Effect.map(items => items.length),
+    Effect.catchAll(() => Effect.succeed(0))
+  );
+
+  // Get recent events
+  const recentEvents = yield* EventService.list({ limit: 10 }).pipe(
+    Effect.catchAll(() => Effect.succeed([]))
+  );
+
+  // Get all things for overview
+  const allThings = yield* ThingService.list({ limit: 50 }).pipe(
+    Effect.catchAll(() => Effect.succeed([]))
+  );
+
+  return {
+    org,
+    stats: {
+      products: productCount,
+      courses: courseCount,
+      users: userCount,
+      total: productCount + courseCount + userCount,
+    },
+    recentEvents,
+    allThings,
+  };
+});
+
+// Run Effect program with DataProvider layer
+const data = await Effect.runPromise(
+  program.pipe(
+    Effect.provide(providerLayer),
+    Effect.catchAll((error) => {
+      console.error("Dashboard data fetch failed:", error);
+      return Effect.succeed({
+        org: {
+          _id: currentOrgId,
+          name: "Error Loading Organization",
+          type: "organization" as const,
+          status: "active" as const,
+          properties: {},
+          createdAt: Date.now(),
+          updatedAt: Date.now(),
+        },
+        stats: { products: 0, courses: 0, users: 0, total: 0 },
+        recentEvents: [],
+        allThings: [],
+      });
+    })
+  )
+);
+---
+
+<Layout title={`Dashboard - ${data.org.name}`}>
+  <div class="min-h-screen bg-gray-50 dark:bg-gray-900">
+    <!-- Header -->
+    <header class="bg-white dark:bg-gray-800 shadow">
+      <div class="mx-auto max-w-7xl px-4 py-6 sm:px-6 lg:px-8">
+        <div class="flex items-center justify-between">
+          <h1 class="text-3xl font-bold text-gray-900 dark:text-white">
+            Dashboard
+          </h1>
+          <div class="text-sm text-gray-500 dark:text-gray-400">
+            {data.org.name} • {data.org.properties.plan || "Free"} Plan
+          </div>
+        </div>
+      </div>
+    </header>
+
+    <!-- Main Content -->
+    <main class="mx-auto max-w-7xl px-4 py-8 sm:px-6 lg:px-8">
+      <!-- Stats Section -->
+      <div class="mb-8">
+        <h2 class="mb-4 text-xl font-semibold text-gray-900 dark:text-white">
+          Overview
+        </h2>
+        <DashboardStats client:load stats={data.stats} />
+      </div>
+
+      <!-- Quick Actions -->
+      <div class="mb-8">
+        <h2 class="mb-4 text-xl font-semibold text-gray-900 dark:text-white">
+          Quick Actions
+        </h2>
+        <QuickActions client:idle />
+      </div>
+
+      <!-- Entity Overview -->
+      <div class="mb-8">
+        <h2 class="mb-4 text-xl font-semibold text-gray-900 dark:text-white">
+          Recent Entities
+        </h2>
+        <EntityOverview client:visible entities={data.allThings} />
+      </div>
+
+      <!-- Recent Activity -->
+      <div class="mb-8">
+        <h2 class="mb-4 text-xl font-semibold text-gray-900 dark:text-white">
+          Recent Activity
+        </h2>
+        <RecentActivity client:visible events={data.recentEvents} />
+      </div>
+    </main>
+  </div>
+</Layout>
