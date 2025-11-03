@@ -1,3 +1,21 @@
+---
+title: 2 3 Effectts Services
+dimension: things
+category: features
+tags: ai, backend, frontend, ontology
+related_dimensions: connections, events, groups, knowledge, people
+scope: global
+created: 2025-11-03
+updated: 2025-11-03
+version: 1.0.0
+ai_context: |
+  This document is part of the things dimension in the features category.
+  Location: one/things/features/2-3-effectts-services.md
+  Purpose: Documents feature 2-3: effect.ts service layer
+  Related dimensions: connections, events, groups, knowledge, people
+  For AI agents: Read this to understand 2 3 effectts services.
+---
+
 # Feature 2-3: Effect.ts Service Layer
 
 **Feature ID:** `feature_2_3_effectts_services`
@@ -15,6 +33,7 @@
 The Effect.ts Service Layer provides **backend-agnostic business logic** for all 6-dimension ontology operations. Services encapsulate validation, business rules, error handling, and event logging, allowing the frontend to swap data providers (Convex, Supabase, Firebase) without changing business logic.
 
 This layer ensures:
+
 - **100% ontology compliance**: All 66 thing types, 25 connection types, 67 event types validated
 - **Automatic event logging**: Every mutation creates audit trail entries
 - **Status lifecycle enforcement**: draft → active → published → archived transitions validated
@@ -32,6 +51,7 @@ This layer ensures:
 **Purpose:** Multi-tenant isolation, resource quotas, billing
 
 **Responsibilities:**
+
 - Create/update organizations with default limits
 - Enforce resource quotas (users, storage, API calls, inference)
 - Track usage metrics (increment/decrement counters)
@@ -40,6 +60,7 @@ This layer ensures:
 - Log organization lifecycle events
 
 **Key Methods:**
+
 ```typescript
 createOrganization(args: CreateOrgArgs): Effect<Organization, OrgError>
 getOrganization(id: string): Effect<Organization, OrgError>
@@ -55,6 +76,7 @@ suspendOrganization(id: string, reason: string): Effect<Organization, OrgError>
 **Purpose:** Authorization, role-based access control, governance
 
 **Responsibilities:**
+
 - Validate user roles (platform_owner, org_owner, org_user, customer)
 - Check permissions before operations (RBAC enforcement)
 - Manage multi-org membership (user can belong to multiple orgs)
@@ -63,6 +85,7 @@ suspendOrganization(id: string, reason: string): Effect<Organization, OrgError>
 - Audit user actions via event logging
 
 **Key Methods:**
+
 ```typescript
 getPerson(id: string): Effect<Person, PeopleError>
 getPersonByEmail(email: string): Effect<Person, PeopleError>
@@ -78,6 +101,7 @@ addToOrganization(personId: string, orgId: string, role: Role): Effect<Connectio
 **Purpose:** Manage all 66 entity types with validation and lifecycle
 
 **Responsibilities:**
+
 - **Validate thing types**: Reject invalid types (not in 66 defined types)
 - **Enforce status lifecycle**: draft → active → published → archived transitions
 - **Type-specific property validation**: Course needs title/creatorId, token needs symbol/network
@@ -87,47 +111,76 @@ addToOrganization(personId: string, orgId: string, role: Role): Effect<Connectio
 - **Enrich with connections**: Optionally load related entities
 
 **66 Thing Types:**
+
 ```typescript
 // Core (4)
-"creator", "ai_clone", "audience_member", "organization"
+("creator", "ai_clone", "audience_member", "organization");
 
 // Business Agents (10)
-"strategy_agent", "research_agent", "marketing_agent", "sales_agent",
-"service_agent", "design_agent", "engineering_agent", "finance_agent",
-"legal_agent", "intelligence_agent"
+("strategy_agent",
+  "research_agent",
+  "marketing_agent",
+  "sales_agent",
+  "service_agent",
+  "design_agent",
+  "engineering_agent",
+  "finance_agent",
+  "legal_agent",
+  "intelligence_agent");
 
 // Content (7)
-"blog_post", "video", "podcast", "social_post", "email", "course", "lesson"
+("blog_post", "video", "podcast", "social_post", "email", "course", "lesson");
 
 // Products (4)
-"digital_product", "membership", "consultation", "nft"
+("digital_product", "membership", "consultation", "nft");
 
 // Community (3)
-"community", "conversation", "message"
+("community", "conversation", "message");
 
 // Token (2)
-"token", "token_contract"
+("token", "token_contract");
 
 // Platform (6)
-"website", "landing_page", "template", "livestream", "recording", "media_asset"
+("website",
+  "landing_page",
+  "template",
+  "livestream",
+  "recording",
+  "media_asset");
 
 // Business (7)
-"payment", "subscription", "invoice", "metric", "insight", "prediction", "report"
+("payment",
+  "subscription",
+  "invoice",
+  "metric",
+  "insight",
+  "prediction",
+  "report");
 
 // Authentication (5)
-"session", "oauth_account", "verification_token", "password_reset_token", "ui_preferences"
+("session",
+  "oauth_account",
+  "verification_token",
+  "password_reset_token",
+  "ui_preferences");
 
 // Marketing (6)
-"notification", "email_campaign", "announcement", "referral", "campaign", "lead"
+("notification",
+  "email_campaign",
+  "announcement",
+  "referral",
+  "campaign",
+  "lead");
 
 // External (3)
-"external_agent", "external_workflow", "external_connection"
+("external_agent", "external_workflow", "external_connection");
 
 // Protocol (2)
-"mandate", "product"
+("mandate", "product");
 ```
 
 **Key Methods:**
+
 ```typescript
 createThing(args: CreateThingArgs): Effect<Thing, ThingError>
 getThing(id: string): Effect<Thing, ThingError>
@@ -141,50 +194,65 @@ enrichWithConnections(thing: Thing, relationshipTypes?: string[]): Effect<Enrich
 ```
 
 **Type-Specific Validation Examples:**
+
 ```typescript
 // Course validation
 if (type === "course") {
   if (!properties.title) throw ValidationError("Course must have title");
-  if (!properties.creatorId) throw ValidationError("Course must have creatorId");
-  if (!properties.modules || properties.modules <= 0) throw ValidationError("Course must have modules");
+  if (!properties.creatorId)
+    throw ValidationError("Course must have creatorId");
+  if (!properties.modules || properties.modules <= 0)
+    throw ValidationError("Course must have modules");
 }
 
 // Token validation
 if (type === "token") {
   if (!properties.symbol) throw ValidationError("Token must have symbol");
   if (!properties.network) throw ValidationError("Token must specify network");
-  if (!properties.totalSupply || properties.totalSupply <= 0) throw ValidationError("Invalid totalSupply");
+  if (!properties.totalSupply || properties.totalSupply <= 0)
+    throw ValidationError("Invalid totalSupply");
 }
 
 // Payment validation
 if (type === "payment") {
-  if (!properties.amount || properties.amount <= 0) throw ValidationError("Payment must have positive amount");
-  if (!properties.currency) throw ValidationError("Payment must specify currency");
-  if (!properties.paymentMethod) throw ValidationError("Payment must specify method");
+  if (!properties.amount || properties.amount <= 0)
+    throw ValidationError("Payment must have positive amount");
+  if (!properties.currency)
+    throw ValidationError("Payment must specify currency");
+  if (!properties.paymentMethod)
+    throw ValidationError("Payment must specify method");
 }
 
 // Lesson validation
 if (type === "lesson") {
-  if (!properties.courseId) throw ValidationError("Lesson must belong to a course");
-  if (!properties.order || properties.order < 0) throw ValidationError("Lesson must have order");
+  if (!properties.courseId)
+    throw ValidationError("Lesson must belong to a course");
+  if (!properties.order || properties.order < 0)
+    throw ValidationError("Lesson must have order");
 }
 
 // AI Clone validation
 if (type === "ai_clone") {
-  if (!properties.systemPrompt) throw ValidationError("AI clone must have system prompt");
-  if (!properties.temperature || properties.temperature < 0 || properties.temperature > 1) {
+  if (!properties.systemPrompt)
+    throw ValidationError("AI clone must have system prompt");
+  if (
+    !properties.temperature ||
+    properties.temperature < 0 ||
+    properties.temperature > 1
+  ) {
     throw ValidationError("Temperature must be between 0 and 1");
   }
 }
 ```
 
 **Status Lifecycle Enforcement:**
+
 ```typescript
 const STATUS_TRANSITIONS: Record<string, string[]> = {
-  "draft": ["active", "archived"],
-  "active": ["published", "archived"],
-  "published": ["active", "archived"],
-  "archived": [], // Terminal state
+  draft: ["active", "archived"],
+  active: ["published", "archived"],
+  published: ["active", "archived"],
+  archived: [], // Terminal state
 };
 
 // Validation logic
@@ -199,6 +267,7 @@ if (!STATUS_TRANSITIONS[currentStatus]?.includes(newStatus)) {
 **Purpose:** Manage all 25 relationship types with bidirectional support
 
 **Responsibilities:**
+
 - **Validate relationship types**: Reject invalid types (not in 25 defined types)
 - **Create bidirectional connections**: Both from→to and to→from queryable
 - **Prevent duplicate connections**: Same from/to/type combination
@@ -208,33 +277,41 @@ if (!STATUS_TRANSITIONS[currentStatus]?.includes(newStatus)) {
 - **Automatic event logging**: connection_created, connection_deleted
 
 **25 Connection Types:**
+
 ```typescript
 // Ownership (2)
-"owns", "created_by"
+("owns", "created_by");
 
 // AI Relationships (3)
-"clone_of", "trained_on", "powers"
+("clone_of", "trained_on", "powers");
 
 // Content Relationships (5)
-"authored", "generated_by", "published_to", "part_of", "references"
+("authored", "generated_by", "published_to", "part_of", "references");
 
 // Community Relationships (4)
-"member_of", "following", "moderates", "participated_in"
+("member_of", "following", "moderates", "participated_in");
 
 // Business Relationships (3)
-"manages", "reports_to", "collaborates_with"
+("manages", "reports_to", "collaborates_with");
 
 // Token Relationships (3)
-"holds_tokens", "staked_in", "earned_from"
+("holds_tokens", "staked_in", "earned_from");
 
 // Product Relationships (4)
-"purchased", "enrolled_in", "completed", "teaching"
+("purchased", "enrolled_in", "completed", "teaching");
 
 // Consolidated Types (7)
-"transacted", "notified", "referred", "communicated", "delegated", "approved", "fulfilled"
+("transacted",
+  "notified",
+  "referred",
+  "communicated",
+  "delegated",
+  "approved",
+  "fulfilled");
 ```
 
 **Key Methods:**
+
 ```typescript
 createConnection(args: CreateConnectionArgs): Effect<Connection, ConnectionError>
 getConnection(id: string): Effect<Connection, ConnectionError>
@@ -253,6 +330,7 @@ traverseGraph(startId: string, maxDepth: number, types?: string[]): Effect<Graph
 **Purpose:** Audit trail, event logging, time-series queries, analytics
 
 **Responsibilities:**
+
 - **Validate event types**: Reject invalid types (not in 67 defined types)
 - **Log all entity mutations**: Automatic audit trail creation
 - **Query audit trail**: By actor, target, type, time range
@@ -262,59 +340,100 @@ traverseGraph(startId: string, maxDepth: number, types?: string[]): Effect<Graph
 - **Event replay**: Reconstruct entity state from event log
 
 **67 Event Types:**
+
 ```typescript
 // Entity Lifecycle (4)
-"entity_created", "entity_updated", "entity_deleted", "entity_archived"
+("entity_created", "entity_updated", "entity_deleted", "entity_archived");
 
 // User Events (5)
-"user_registered", "user_verified", "user_login", "user_logout", "profile_updated"
+("user_registered",
+  "user_verified",
+  "user_login",
+  "user_logout",
+  "profile_updated");
 
 // Authentication Events (6)
-"password_reset_requested", "password_reset_completed",
-"email_verification_sent", "email_verified",
-"two_factor_enabled", "two_factor_disabled"
+("password_reset_requested",
+  "password_reset_completed",
+  "email_verification_sent",
+  "email_verified",
+  "two_factor_enabled",
+  "two_factor_disabled");
 
 // Organization Events (5)
-"organization_created", "organization_updated",
-"user_invited_to_org", "user_joined_org", "user_removed_from_org"
+("organization_created",
+  "organization_updated",
+  "user_invited_to_org",
+  "user_joined_org",
+  "user_removed_from_org");
 
 // Dashboard & UI Events (4)
-"dashboard_viewed", "settings_updated", "theme_changed", "preferences_updated"
+("dashboard_viewed",
+  "settings_updated",
+  "theme_changed",
+  "preferences_updated");
 
 // AI/Clone Events (4)
-"clone_created", "clone_updated", "voice_cloned", "appearance_cloned"
+("clone_created", "clone_updated", "voice_cloned", "appearance_cloned");
 
 // Agent Events (4)
-"agent_created", "agent_executed", "agent_completed", "agent_failed"
+("agent_created", "agent_executed", "agent_completed", "agent_failed");
 
 // Token Events (7)
-"token_created", "token_minted", "token_burned",
-"tokens_purchased", "tokens_staked", "tokens_unstaked", "tokens_transferred"
+("token_created",
+  "token_minted",
+  "token_burned",
+  "tokens_purchased",
+  "tokens_staked",
+  "tokens_unstaked",
+  "tokens_transferred");
 
 // Course Events (5)
-"course_created", "course_enrolled", "lesson_completed",
-"course_completed", "certificate_earned"
+("course_created",
+  "course_enrolled",
+  "lesson_completed",
+  "course_completed",
+  "certificate_earned");
 
 // Analytics Events (5)
-"metric_calculated", "insight_generated", "prediction_made",
-"optimization_applied", "report_generated"
+("metric_calculated",
+  "insight_generated",
+  "prediction_made",
+  "optimization_applied",
+  "report_generated");
 
 // Inference Events (7)
-"inference_request", "inference_completed", "inference_failed",
-"inference_quota_exceeded", "inference_revenue_collected",
-"org_revenue_generated", "revenue_share_distributed"
+("inference_request",
+  "inference_completed",
+  "inference_failed",
+  "inference_quota_exceeded",
+  "inference_revenue_collected",
+  "org_revenue_generated",
+  "revenue_share_distributed");
 
 // Blockchain Events (5)
-"nft_minted", "nft_transferred", "tokens_bridged",
-"contract_deployed", "treasury_withdrawal"
+("nft_minted",
+  "nft_transferred",
+  "tokens_bridged",
+  "contract_deployed",
+  "treasury_withdrawal");
 
 // Consolidated Events (11)
-"content_event", "payment_event", "subscription_event", "commerce_event",
-"livestream_event", "notification_event", "referral_event",
-"communication_event", "task_event", "mandate_event", "price_event"
+("content_event",
+  "payment_event",
+  "subscription_event",
+  "commerce_event",
+  "livestream_event",
+  "notification_event",
+  "referral_event",
+  "communication_event",
+  "task_event",
+  "mandate_event",
+  "price_event");
 ```
 
 **Key Methods:**
+
 ```typescript
 logEvent(args: CreateEventArgs): Effect<Event, EventError>
 queryEvents(filter: EventFilter): Effect<Event[], EventError>
@@ -332,6 +451,7 @@ replayEvents(entityId: string): Effect<EntityState, EventError>
 **Purpose:** RAG operations, embeddings, vector search, labels
 
 **Responsibilities:**
+
 - **Create/manage knowledge items**: Labels (taxonomy) and chunks (RAG)
 - **Link knowledge to things**: Via thingKnowledge junction table
 - **Generate embeddings**: Text → vector representation
@@ -341,11 +461,13 @@ replayEvents(entityId: string): Effect<EntityState, EventError>
 - **Knowledge graph**: Link chunks to source things
 
 **Knowledge Types:**
+
 ```typescript
-type KnowledgeType = "label" | "document" | "chunk" | "vector_only"
+type KnowledgeType = "label" | "document" | "chunk" | "vector_only";
 ```
 
 **Key Methods:**
+
 ```typescript
 createKnowledge(args: CreateKnowledgeArgs): Effect<Knowledge, KnowledgeError>
 linkKnowledgeToThing(knowledgeId: string, thingId: string, role?: string): Effect<void, KnowledgeError>
@@ -371,14 +493,24 @@ export type ThingError =
   | { _tag: "BusinessRuleError"; message: string; rule: string }
   | { _tag: "NotFoundError"; id: string; entityType: string }
   | { _tag: "UnauthorizedError"; userId: string; action: string }
-  | { _tag: "LimitExceededError"; resource: string; limit: number; usage: number }
+  | {
+      _tag: "LimitExceededError";
+      resource: string;
+      limit: number;
+      usage: number;
+    }
   | { _tag: "InvalidStatusTransitionError"; from: string; to: string }
   | { _tag: "InvalidTypeError"; type: string; validTypes: string[] };
 
 // ConnectionService Errors
 export type ConnectionError =
   | { _tag: "ValidationError"; message: string }
-  | { _tag: "DuplicateConnectionError"; fromId: string; toId: string; type: string }
+  | {
+      _tag: "DuplicateConnectionError";
+      fromId: string;
+      toId: string;
+      type: string;
+    }
   | { _tag: "InvalidRelationshipTypeError"; type: string; validTypes: string[] }
   | { _tag: "ThingNotFoundError"; id: string };
 
@@ -549,7 +681,7 @@ export class ThingService extends BaseService {
             id: args.organizationId,
             entityType: "organization",
           }),
-        })
+        }),
       );
 
       if (!org || org.status !== "active") {
@@ -557,7 +689,7 @@ export class ThingService extends BaseService {
           Effect.fail<ThingError>({
             _tag: "ValidationError",
             message: "Organization is not active",
-          })
+          }),
         );
       }
 
@@ -570,7 +702,7 @@ export class ThingService extends BaseService {
             resource: resourceKey,
             limit: org.limits[resourceKey],
             usage: org.usage[resourceKey],
-          })
+          }),
         );
       }
 
@@ -594,7 +726,7 @@ export class ThingService extends BaseService {
             _tag: "ValidationError" as const,
             message: String(error),
           }),
-        })
+        }),
       );
 
       // 6. Create ownership connection if creatorId provided
@@ -613,7 +745,7 @@ export class ThingService extends BaseService {
               _tag: "ValidationError" as const,
               message: "Failed to create ownership connection",
             }),
-          })
+          }),
         );
       }
 
@@ -635,7 +767,7 @@ export class ThingService extends BaseService {
             _tag: "ValidationError" as const,
             message: "Failed to log event",
           }),
-        })
+        }),
       );
 
       // 8. Update organization usage
@@ -644,14 +776,17 @@ export class ThingService extends BaseService {
           Effect.tryPromise({
             try: () =>
               this.provider.updateOrganization(args.organizationId, {
-                usage: { ...org.usage, [resourceKey]: org.usage[resourceKey] + 1 },
+                usage: {
+                  ...org.usage,
+                  [resourceKey]: org.usage[resourceKey] + 1,
+                },
                 updatedAt: Date.now(),
               }),
             catch: () => ({
               _tag: "ValidationError" as const,
               message: "Failed to update usage",
             }),
-          })
+          }),
         );
       }
 
@@ -664,7 +799,7 @@ export class ThingService extends BaseService {
    */
   updateThing(
     id: string,
-    updates: UpdateThingArgs
+    updates: UpdateThingArgs,
   ): Effect.Effect<Thing, ThingError> {
     return Effect.gen(this, function* (_) {
       // 1. Get existing thing
@@ -672,7 +807,9 @@ export class ThingService extends BaseService {
 
       // 2. Validate status transition if status is being updated
       if (updates.status && updates.status !== existingThing.status) {
-        yield* _(validateStatusTransition(existingThing.status, updates.status));
+        yield* _(
+          validateStatusTransition(existingThing.status, updates.status),
+        );
       }
 
       // 3. Validate type-specific properties if properties are being updated
@@ -681,7 +818,7 @@ export class ThingService extends BaseService {
           this.validateTypeSpecificProperties(existingThing.type, {
             ...existingThing.properties,
             ...updates.properties,
-          })
+          }),
         );
       }
 
@@ -697,7 +834,7 @@ export class ThingService extends BaseService {
             _tag: "ValidationError" as const,
             message: String(error),
           }),
-        })
+        }),
       );
 
       // 5. Log event
@@ -718,7 +855,7 @@ export class ThingService extends BaseService {
             _tag: "ValidationError" as const,
             message: "Failed to log event",
           }),
-        })
+        }),
       );
 
       return updatedThing;
@@ -743,7 +880,7 @@ export class ThingService extends BaseService {
    */
   private validateTypeSpecificProperties(
     type: string,
-    properties: any
+    properties: any,
   ): Effect.Effect<void, ThingError> {
     return Effect.gen(this, function* (_) {
       switch (type) {
@@ -754,7 +891,7 @@ export class ThingService extends BaseService {
                 _tag: "ValidationError",
                 message: "Course must have a title",
                 field: "properties.title",
-              })
+              }),
             );
           if (!properties.creatorId)
             yield* _(
@@ -762,7 +899,7 @@ export class ThingService extends BaseService {
                 _tag: "ValidationError",
                 message: "Course must have a creatorId",
                 field: "properties.creatorId",
-              })
+              }),
             );
           break;
 
@@ -773,7 +910,7 @@ export class ThingService extends BaseService {
                 _tag: "ValidationError",
                 message: "Lesson must belong to a course",
                 field: "properties.courseId",
-              })
+              }),
             );
           break;
 
@@ -784,7 +921,7 @@ export class ThingService extends BaseService {
                 _tag: "ValidationError",
                 message: "Token must have a symbol",
                 field: "properties.symbol",
-              })
+              }),
             );
           if (!properties.network)
             yield* _(
@@ -792,7 +929,7 @@ export class ThingService extends BaseService {
                 _tag: "ValidationError",
                 message: "Token must specify network",
                 field: "properties.network",
-              })
+              }),
             );
           break;
 
@@ -803,7 +940,7 @@ export class ThingService extends BaseService {
                 _tag: "ValidationError",
                 message: "Payment must have positive amount",
                 field: "properties.amount",
-              })
+              }),
             );
           break;
 
@@ -814,7 +951,7 @@ export class ThingService extends BaseService {
                 _tag: "ValidationError",
                 message: "AI clone must have system prompt",
                 field: "properties.systemPrompt",
-              })
+              }),
             );
           if (
             properties.temperature !== undefined &&
@@ -825,7 +962,7 @@ export class ThingService extends BaseService {
                 _tag: "ValidationError",
                 message: "Temperature must be between 0 and 1",
                 field: "properties.temperature",
-              })
+              }),
             );
           break;
 
@@ -845,17 +982,14 @@ export class ThingService extends BaseService {
 ```typescript
 import { Effect } from "effect";
 import { BaseService } from "./base/BaseService";
-import {
-  validateConnectionType,
-  validateRequired,
-} from "./utils/validation";
+import { validateConnectionType, validateRequired } from "./utils/validation";
 
 export class ConnectionService extends BaseService {
   /**
    * Create connection with duplicate prevention and bidirectional support
    */
   createConnection(
-    args: CreateConnectionArgs
+    args: CreateConnectionArgs,
   ): Effect.Effect<Connection, ConnectionError> {
     return Effect.gen(this, function* (_) {
       // 1. Validate required fields
@@ -872,7 +1006,7 @@ export class ConnectionService extends BaseService {
             _tag: "ThingNotFoundError" as const,
             id: args.fromThingId,
           }),
-        })
+        }),
       );
 
       const toThing = yield* _(
@@ -882,7 +1016,7 @@ export class ConnectionService extends BaseService {
             _tag: "ThingNotFoundError" as const,
             id: args.toThingId,
           }),
-        })
+        }),
       );
 
       if (!fromThing || !toThing) {
@@ -890,7 +1024,7 @@ export class ConnectionService extends BaseService {
           Effect.fail<ConnectionError>({
             _tag: "ThingNotFoundError",
             id: !fromThing ? args.fromThingId : args.toThingId,
-          })
+          }),
         );
       }
 
@@ -907,7 +1041,7 @@ export class ConnectionService extends BaseService {
             _tag: "ValidationError" as const,
             message: "Failed to check duplicates",
           }),
-        })
+        }),
       );
 
       if (existing.length > 0) {
@@ -917,7 +1051,7 @@ export class ConnectionService extends BaseService {
             fromId: args.fromThingId,
             toId: args.toThingId,
             type: args.relationshipType,
-          })
+          }),
         );
       }
 
@@ -938,7 +1072,7 @@ export class ConnectionService extends BaseService {
             _tag: "ValidationError" as const,
             message: String(error),
           }),
-        })
+        }),
       );
 
       // 5. Log event
@@ -960,7 +1094,7 @@ export class ConnectionService extends BaseService {
             _tag: "ValidationError" as const,
             message: "Failed to log event",
           }),
-        })
+        }),
       );
 
       return connection;
@@ -973,7 +1107,7 @@ export class ConnectionService extends BaseService {
   traverseGraph(
     startId: string,
     maxDepth: number,
-    types?: string[]
+    types?: string[],
   ): Effect.Effect<GraphNode[], ConnectionError> {
     return Effect.gen(this, function* (_) {
       const visited = new Set<string>();
@@ -1005,7 +1139,7 @@ export class ConnectionService extends BaseService {
             _tag: "ValidationError" as const,
             message: String(error),
           }),
-        })
+        }),
       );
 
       return result;
@@ -1026,7 +1160,7 @@ export class CourseService {
   constructor(
     private thingService: ThingService,
     private connectionService: ConnectionService,
-    private eventService: EventService
+    private eventService: EventService,
   ) {}
 
   /**
@@ -1055,7 +1189,7 @@ export class CourseService {
             creatorId: args.creatorId,
           },
           status: "draft",
-        })
+        }),
       );
 
       // 2. Create all lessons
@@ -1074,9 +1208,9 @@ export class CourseService {
                 courseId: course._id,
               },
               status: "draft",
-            })
-          )
-        )
+            }),
+          ),
+        ),
       );
 
       // 3. Create part_of connections
@@ -1089,9 +1223,9 @@ export class CourseService {
               relationshipType: "part_of",
               actorId: args.creatorId,
               metadata: { order: lesson.properties.order },
-            })
-          )
-        )
+            }),
+          ),
+        ),
       );
 
       // 4. Log course_created event
@@ -1104,7 +1238,7 @@ export class CourseService {
             title: args.title,
             modules: args.lessons.length,
           },
-        })
+        }),
       );
 
       return { course, lessons };
@@ -1116,7 +1250,7 @@ export class CourseService {
    */
   publishCourse(
     courseId: string,
-    actorId: string
+    actorId: string,
   ): Effect.Effect<Thing, ThingError> {
     return Effect.gen(this, function* (_) {
       // 1. Get course
@@ -1124,15 +1258,15 @@ export class CourseService {
 
       // 2. Get all lessons
       const lessonConnections = yield* _(
-        this.connectionService.getConnectionsFrom(courseId, "part_of")
+        this.connectionService.getConnectionsFrom(courseId, "part_of"),
       );
 
       const lessons = yield* _(
         Effect.all(
           lessonConnections.map((conn) =>
-            this.thingService.getThing(conn.toThingId)
-          )
-        )
+            this.thingService.getThing(conn.toThingId),
+          ),
+        ),
       );
 
       // 3. Validate all lessons are active or published
@@ -1143,14 +1277,14 @@ export class CourseService {
               _tag: "BusinessRuleError",
               message: "Cannot publish course with draft lessons",
               rule: "all_lessons_must_be_active",
-            })
+            }),
           );
         }
       }
 
       // 4. Transition status
       const published = yield* _(
-        this.thingService.transitionStatus(courseId, "published", actorId)
+        this.thingService.transitionStatus(courseId, "published", actorId),
       );
 
       // 5. Log content_event
@@ -1163,7 +1297,7 @@ export class CourseService {
             action: "published",
             entityType: "course",
           },
-        })
+        }),
       );
 
       return published;
@@ -1259,6 +1393,7 @@ export class CourseService {
 **Location:** `/frontend/tests/unit/services/`
 
 **ThingService Tests (25 tests):**
+
 - Create thing with valid type
 - Reject invalid thing type
 - Enforce status lifecycle transitions
@@ -1271,6 +1406,7 @@ export class CourseService {
 - Enrich thing with connections
 
 **ConnectionService Tests (15 tests):**
+
 - Create connection with valid type
 - Reject invalid connection type
 - Prevent duplicate connections
@@ -1282,6 +1418,7 @@ export class CourseService {
 - Handle temporal validity (validFrom/validTo)
 
 **EventService Tests (10 tests):**
+
 - Log event with valid type
 - Reject invalid event type
 - Query events by actor
@@ -1291,6 +1428,7 @@ export class CourseService {
 - Aggregate events by day/week/month
 
 **OrganizationService Tests (10 tests):**
+
 - Create organization with default limits
 - Check resource limits before operations
 - Update usage counters (increment/decrement)
@@ -1299,6 +1437,7 @@ export class CourseService {
 - Log organization events
 
 **PeopleService Tests (10 tests):**
+
 - Check permission by role
 - Get organizations for person
 - Switch active organization
@@ -1306,6 +1445,7 @@ export class CourseService {
 - Validate role assignments
 
 **KnowledgeService Tests (10 tests):**
+
 - Create knowledge label
 - Create knowledge chunk with embedding
 - Link knowledge to thing
@@ -1320,6 +1460,7 @@ export class CourseService {
 **Location:** `/frontend/tests/integration/services/`
 
 **CourseService Integration (10 tests):**
+
 - Create course with lessons workflow
 - Publish course workflow (validates lessons)
 - Enroll user in course
@@ -1329,6 +1470,7 @@ export class CourseService {
 - Archive course and lessons
 
 **TokenService Integration (5 tests):**
+
 - Create token with contract
 - Mint tokens to user
 - Transfer tokens between users
@@ -1336,6 +1478,7 @@ export class CourseService {
 - Track token holdings
 
 **PaymentService Integration (5 tests):**
+
 - Process payment for product
 - Create subscription
 - Handle failed payment
@@ -1343,6 +1486,7 @@ export class CourseService {
 - Track payment analytics
 
 **Multi-Service Workflows (10 tests):**
+
 - Complete user registration (Person + Organization + Events)
 - Create and publish content (Thing + Connection + Event + Knowledge)
 - Purchase and fulfill product (Thing + Connection + Event + Payment)
@@ -1375,6 +1519,7 @@ export class CourseService {
 **Location:** `/frontend/docs/services/api-reference.md`
 
 **Contents:**
+
 - All service classes with method signatures
 - Parameter descriptions
 - Return types
@@ -1386,6 +1531,7 @@ export class CourseService {
 **Location:** `/frontend/docs/services/business-rules.md`
 
 **Contents:**
+
 - Organization limits by plan (starter/pro/enterprise)
 - Status lifecycle rules (valid transitions)
 - Permission matrix (role → actions)
@@ -1397,6 +1543,7 @@ export class CourseService {
 **Location:** `/frontend/docs/services/examples.md`
 
 **Contents:**
+
 - Create course workflow (ThingService + ConnectionService + EventService)
 - Token minting workflow (ThingService + ConnectionService)
 - User enrollment workflow (ThingService + ConnectionService + EventService)

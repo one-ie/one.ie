@@ -1,3 +1,21 @@
+---
+title: Open Agent
+dimension: things
+category: plans
+tags: agent, ai, ai-agent, architecture, frontend
+related_dimensions: connections, events, groups, knowledge, people
+scope: global
+created: 2025-11-03
+updated: 2025-11-03
+version: 1.0.0
+ai_context: |
+  This document is part of the things dimension in the plans category.
+  Location: one/things/plans/open-agent.md
+  Purpose: Documents open-agent assessment & integration plan
+  Related dimensions: connections, events, groups, knowledge, people
+  For AI agents: Read this to understand open agent.
+---
+
 # Open-Agent Assessment & Integration Plan
 
 **Repository**: https://github.com/AFK-surf/open-agent
@@ -29,6 +47,7 @@ Layer 3: Backend (Hono API + Convex Database)
 ```
 
 **Key Principles:**
+
 - **100% Effect.ts coverage** - All business logic uses Effect.ts (no raw async/await)
 - **Functional programming** - Pure functions, typed errors, composition, immutability
 - **6-dimension ontology (organizations, people, things, connections, events, knowledge)** - entities, connections, events, tags (plain Convex schema)
@@ -99,88 +118,92 @@ Just as ONE has separate blockchain providers (SuiProvider, BaseProvider, Solana
 
 ```typescript
 // convex/services/providers/OpenAIProvider.ts
-export class OpenAIProvider extends Effect.Service<OpenAIProvider>()("OpenAIProvider", {
-  effect: Effect.gen(function* () {
-    const config = yield* ConfigService;
+export class OpenAIProvider extends Effect.Service<OpenAIProvider>()(
+  "OpenAIProvider",
+  {
+    effect: Effect.gen(function* () {
+      const config = yield* ConfigService;
 
-    return {
-      complete: (prompt: string, options?: CompletionOptions) =>
-        Effect.gen(function* () {
-          const response = yield* Effect.tryPromise({
-            try: () => openai.chat.completions.create({
-              model: options?.model || "gpt-4",
-              messages: [{ role: "user", content: prompt }],
-              temperature: options?.temperature || 0.7,
-            }),
-            catch: (error) => new OpenAIError({ cause: error }),
-          });
-          return response.choices[0].message.content;
-        }).pipe(
-          Effect.retry({ times: 3 }),
-          Effect.timeout("30 seconds")
-        ),
+      return {
+        complete: (prompt: string, options?: CompletionOptions) =>
+          Effect.gen(function* () {
+            const response = yield* Effect.tryPromise({
+              try: () =>
+                openai.chat.completions.create({
+                  model: options?.model || "gpt-4",
+                  messages: [{ role: "user", content: prompt }],
+                  temperature: options?.temperature || 0.7,
+                }),
+              catch: (error) => new OpenAIError({ cause: error }),
+            });
+            return response.choices[0].message.content;
+          }).pipe(Effect.retry({ times: 3 }), Effect.timeout("30 seconds")),
 
-      embeddings: (text: string) =>
-        Effect.gen(function* () {
-          const response = yield* Effect.tryPromise({
-            try: () => openai.embeddings.create({
-              model: "text-embedding-3-small",
-              input: text,
-            }),
-            catch: (error) => new OpenAIError({ cause: error }),
-          });
-          return response.data[0].embedding;
-        }),
-    };
-  }),
-}) {}
+        embeddings: (text: string) =>
+          Effect.gen(function* () {
+            const response = yield* Effect.tryPromise({
+              try: () =>
+                openai.embeddings.create({
+                  model: "text-embedding-3-small",
+                  input: text,
+                }),
+              catch: (error) => new OpenAIError({ cause: error }),
+            });
+            return response.data[0].embedding;
+          }),
+      };
+    }),
+  },
+) {}
 
 // convex/services/providers/ClaudeProvider.ts
-export class ClaudeProvider extends Effect.Service<ClaudeProvider>()("ClaudeProvider", {
-  effect: Effect.gen(function* () {
-    const config = yield* ConfigService;
+export class ClaudeProvider extends Effect.Service<ClaudeProvider>()(
+  "ClaudeProvider",
+  {
+    effect: Effect.gen(function* () {
+      const config = yield* ConfigService;
 
-    return {
-      complete: (prompt: string, options?: CompletionOptions) =>
-        Effect.gen(function* () {
-          const response = yield* Effect.tryPromise({
-            try: () => anthropic.messages.create({
-              model: options?.model || "claude-sonnet-4",
-              messages: [{ role: "user", content: prompt }],
-              max_tokens: options?.maxTokens || 1024,
-            }),
-            catch: (error) => new ClaudeError({ cause: error }),
-          });
-          return response.content[0].text;
-        }).pipe(
-          Effect.retry({ times: 3 }),
-          Effect.timeout("30 seconds")
-        ),
-    };
-  }),
-}) {}
+      return {
+        complete: (prompt: string, options?: CompletionOptions) =>
+          Effect.gen(function* () {
+            const response = yield* Effect.tryPromise({
+              try: () =>
+                anthropic.messages.create({
+                  model: options?.model || "claude-sonnet-4",
+                  messages: [{ role: "user", content: prompt }],
+                  max_tokens: options?.maxTokens || 1024,
+                }),
+              catch: (error) => new ClaudeError({ cause: error }),
+            });
+            return response.content[0].text;
+          }).pipe(Effect.retry({ times: 3 }), Effect.timeout("30 seconds")),
+      };
+    }),
+  },
+) {}
 
 // convex/services/providers/GeminiProvider.ts
-export class GeminiProvider extends Effect.Service<GeminiProvider>()("GeminiProvider", {
-  effect: Effect.gen(function* () {
-    return {
-      complete: (prompt: string, options?: CompletionOptions) =>
-        Effect.gen(function* () {
-          const response = yield* Effect.tryPromise({
-            try: () => gemini.generateContent({
-              model: options?.model || "gemini-pro",
-              prompt: prompt,
-            }),
-            catch: (error) => new GeminiError({ cause: error }),
-          });
-          return response.text;
-        }).pipe(
-          Effect.retry({ times: 3 }),
-          Effect.timeout("30 seconds")
-        ),
-    };
-  }),
-}) {}
+export class GeminiProvider extends Effect.Service<GeminiProvider>()(
+  "GeminiProvider",
+  {
+    effect: Effect.gen(function* () {
+      return {
+        complete: (prompt: string, options?: CompletionOptions) =>
+          Effect.gen(function* () {
+            const response = yield* Effect.tryPromise({
+              try: () =>
+                gemini.generateContent({
+                  model: options?.model || "gemini-pro",
+                  prompt: prompt,
+                }),
+              catch: (error) => new GeminiError({ cause: error }),
+            });
+            return response.text;
+          }).pipe(Effect.retry({ times: 3 }), Effect.timeout("30 seconds")),
+      };
+    }),
+  },
+) {}
 ```
 
 ### Agent Orchestration Service
@@ -224,10 +247,11 @@ export class AgentOrchestrator extends Effect.Service<AgentOrchestrator>()(
             return result;
           }).pipe(
             Effect.catchTags({
-              OpenAIError: (e) => openai.complete(task.prompt, { model: "gpt-3.5-turbo" }), // fallback
+              OpenAIError: (e) =>
+                openai.complete(task.prompt, { model: "gpt-3.5-turbo" }), // fallback
               ClaudeError: (e) => gemini.complete(task.prompt), // fallback
               GeminiError: (e) => openai.complete(task.prompt), // fallback
-            })
+            }),
           ),
 
         // Multi-agent collaboration (parallel execution)
@@ -240,19 +264,23 @@ export class AgentOrchestrator extends Effect.Service<AgentOrchestrator>()(
                 claude.complete(task.subtasks[1].prompt),
                 gemini.complete(task.subtasks[2].prompt),
               ],
-              { concurrency: 3 }
+              { concurrency: 3 },
             );
 
             // Synthesize results
             const synthesis = yield* claude.complete(
-              `Synthesize these perspectives: ${results.join("\n\n")}`
+              `Synthesize these perspectives: ${results.join("\n\n")}`,
             );
 
             return synthesis;
           }),
 
         // Agent-to-agent communication via context engineering
-        delegateTask: (fromAgent: Id<"entities">, toAgent: Id<"entities">, task: string) =>
+        delegateTask: (
+          fromAgent: Id<"entities">,
+          toAgent: Id<"entities">,
+          task: string,
+        ) =>
           Effect.gen(function* () {
             // Get both agents
             const source = yield* db.get(fromAgent);
@@ -295,13 +323,14 @@ export class AgentOrchestrator extends Effect.Service<AgentOrchestrator>()(
       GeminiProvider.Default,
       ConvexDatabase.Default,
     ],
-  }
+  },
 ) {}
 ```
 
 ### 4-Table Ontology Mapping for Agents
 
 **Entities Table:**
+
 ```typescript
 {
   _id: "agent_123",
@@ -318,6 +347,7 @@ export class AgentOrchestrator extends Effect.Service<AgentOrchestrator>()(
 ```
 
 **Connections Table:**
+
 ```typescript
 // Agent collaboration
 {
@@ -337,6 +367,7 @@ export class AgentOrchestrator extends Effect.Service<AgentOrchestrator>()(
 ```
 
 **Events Table:**
+
 ```typescript
 {
   entityId: "agent_123",
@@ -363,16 +394,19 @@ export class AgentOrchestrator extends Effect.Service<AgentOrchestrator>()(
 ```
 
 **New Entity Types for Agents:**
+
 - `ai_agent` - Individual AI agent with model preferences
 - `agent_workflow` - Multi-step agent workflow definition
 - `agent_context` - Shared context for agent collaboration
 
 **New Connection Types:**
+
 - `collaborates_with` - Agent-to-agent collaboration
 - `delegates_to` - Task delegation relationship
 - `uses_model` - Agent-to-model preference
 
 **New Event Types:**
+
 - `agent_task_started` - Task execution began
 - `agent_task_completed` - Task execution finished
 - `agent_task_failed` - Task execution failed
@@ -382,6 +416,7 @@ export class AgentOrchestrator extends Effect.Service<AgentOrchestrator>()(
 ### Benefits of This Approach
 
 **Consistency with ONE's Architecture:**
+
 1. Same pattern as multi-chain blockchain (separate providers per model)
 2. All business logic in Effect.ts services (no raw async/await)
 3. Typed errors throughout (OpenAIError, ClaudeError, GeminiError)
@@ -389,6 +424,7 @@ export class AgentOrchestrator extends Effect.Service<AgentOrchestrator>()(
 5. Easy to test (mock providers via Effect layers)
 
 **AI-Friendly:**
+
 1. Pure functional composition (predictable)
 2. Explicit dependencies (visible in type signatures)
 3. Typed errors (exhaustive error handling)
@@ -396,6 +432,7 @@ export class AgentOrchestrator extends Effect.Service<AgentOrchestrator>()(
 5. Composable services (combine agents easily)
 
 **Scalability:**
+
 1. Add new models without changing existing code
 2. Agent collaboration via service composition
 3. Context engineering via 6-dimension ontology (organizations, people, things, connections, events, knowledge)
@@ -451,6 +488,7 @@ export class AgentOrchestrator extends Effect.Service<AgentOrchestrator>()(
 When reviewing open-agent code, assess against ONE's principles:
 
 **✅ Good Patterns (Adopt):**
+
 - Pure functions (same input → same output)
 - Immutable data structures
 - Explicit type signatures
@@ -458,6 +496,7 @@ When reviewing open-agent code, assess against ONE's principles:
 - Clear error handling
 
 **❌ Anti-Patterns (Refactor to Effect.ts):**
+
 - Raw async/await in business logic → Effect.ts services
 - try/catch error handling → Typed errors with `_tag`
 - Global state mutation → Immutable state in ontology
@@ -466,16 +505,16 @@ When reviewing open-agent code, assess against ONE's principles:
 
 **📊 Comparison Matrix:**
 
-| Aspect | Open-Agent (Expected) | ONE Architecture | Integration Strategy |
-|--------|----------------------|------------------|----------------------|
-| Async handling | async/await | Effect.ts | Wrap in Effect.tryPromise |
-| Error handling | try/catch | Typed errors | Define error classes with `_tag` |
-| State management | Variables/objects | 6-dimension ontology (organizations, people, things, connections, events, knowledge) | Map to entities/connections/events |
-| Model switching | if/switch | Effect.catchTags | Use typed error fallbacks |
-| Task composition | Promises | Effect.gen | Convert to Effect pipelines |
-| Dependencies | Imports | Effect DI | Define as Effect services |
-| Testing | Mocks/stubs | Effect layers | Create test layers |
-| Configuration | JSON files | Entities table | Store in database |
+| Aspect           | Open-Agent (Expected) | ONE Architecture                                                                     | Integration Strategy               |
+| ---------------- | --------------------- | ------------------------------------------------------------------------------------ | ---------------------------------- |
+| Async handling   | async/await           | Effect.ts                                                                            | Wrap in Effect.tryPromise          |
+| Error handling   | try/catch             | Typed errors                                                                         | Define error classes with `_tag`   |
+| State management | Variables/objects     | 6-dimension ontology (organizations, people, things, connections, events, knowledge) | Map to entities/connections/events |
+| Model switching  | if/switch             | Effect.catchTags                                                                     | Use typed error fallbacks          |
+| Task composition | Promises              | Effect.gen                                                                           | Convert to Effect pipelines        |
+| Dependencies     | Imports               | Effect DI                                                                            | Define as Effect services          |
+| Testing          | Mocks/stubs           | Effect layers                                                                        | Create test layers                 |
+| Configuration    | JSON files            | Entities table                                                                       | Store in database                  |
 
 ## Enhancement Roadmap for ONE
 
@@ -504,6 +543,7 @@ When reviewing open-agent code, assess against ONE's principles:
    - [ ] Add Docker deployment configuration (optional alternative to Cloudflare)
 
 **Files to Create:**
+
 ```
 convex/services/providers/OpenAIProvider.ts
 convex/services/providers/ClaudeProvider.ts
@@ -539,6 +579,7 @@ tests/unit/services/agents/orchestrator.test.ts
    - [ ] GET `/api/agents/:id/performance` - Get metrics
 
 **Files to Create:**
+
 ```
 convex/services/agents/AgentOrchestrator.ts
 convex/services/agents/ContextManager.ts
@@ -577,6 +618,7 @@ src/components/features/agents/AgentExecutor.tsx
    - [ ] Desktop application support
 
 **Files to Create:**
+
 ```
 convex/services/agents/WorkflowEngine.ts
 convex/services/agents/PluginManager.ts
@@ -589,13 +631,15 @@ docs/Plugins.md (plugin development guide)
 ### Success Metrics
 
 **Technical Metrics:**
+
 - [ ] 100% Effect.ts coverage in agent services (no raw async/await)
 - [ ] All errors typed with `_tag` pattern
-- [ ] >80% unit test coverage for agent services
+- [ ] > 80% unit test coverage for agent services
 - [ ] <100ms overhead for agent orchestration (excluding model latency)
 - [ ] Support 3+ AI models with automatic fallback
 
 **Feature Metrics:**
+
 - [ ] Multi-model task execution working
 - [ ] Agent collaboration (parallel + delegation) working
 - [ ] Context sharing between agents
@@ -603,6 +647,7 @@ docs/Plugins.md (plugin development guide)
 - [ ] Plugin system allowing community extensions
 
 **Integration Metrics:**
+
 - [ ] All agent types mapped to 6-dimension ontology (organizations, people, things, connections, events, knowledge)
 - [ ] All agent operations tracked in events table
 - [ ] Agent configuration stored in entities table
@@ -612,12 +657,14 @@ docs/Plugins.md (plugin development guide)
 ## Resources & References
 
 **Open-Agent:**
+
 - Repository: https://github.com/AFK-surf/open-agent
 - License: Apache 2.0
 - Tech Stack: TypeScript (98.9%), Rust (0.4%), Docker
 - Community: Discord (check repository for link)
 
 **ONE Architecture Docs:**
+
 - `docs/Architecture.md` - Three-layer architecture, Effect.ts patterns
 - `docs/Ontology.md` - 6-dimension ontology (organizations, people, things, connections, events, knowledge) (entities, connections, events, tags)
 - `docs/Hono.md` - Effect.ts services, Hono API routes
@@ -625,6 +672,7 @@ docs/Plugins.md (plugin development guide)
 - `docs/Service Providers.md` - External service integration patterns
 
 **Effect.ts Resources:**
+
 - Official Docs: https://effect.website
 - Effect.ts patterns in ONE: See `convex/services/` for examples
 - Multi-chain example: `convex/services/providers/SuiProvider.ts` (template for AI providers)
@@ -634,6 +682,7 @@ docs/Plugins.md (plugin development guide)
 ### Implementing a New AI Model Provider
 
 **Template** (follow existing pattern from SuiProvider/BaseProvider):
+
 ```typescript
 // convex/services/providers/NewModelProvider.ts
 import { Effect } from "effect";
@@ -672,6 +721,7 @@ export class NewModelProvider extends Effect.Service<NewModelProvider>()(
 ### Adding Agent to 4-Table Ontology
 
 **Entity:**
+
 ```typescript
 await ctx.db.insert("entities", {
   entityType: "ai_agent",
@@ -685,6 +735,7 @@ await ctx.db.insert("entities", {
 ```
 
 **Connection (collaboration):**
+
 ```typescript
 await ctx.db.insert("connections", {
   fromEntityId: agent1Id,
@@ -695,6 +746,7 @@ await ctx.db.insert("connections", {
 ```
 
 **Event (task completion):**
+
 ```typescript
 await ctx.db.insert("events", {
   entityId: agentId,
@@ -707,6 +759,7 @@ await ctx.db.insert("events", {
 ### Testing Agent Services
 
 **Unit Test Template:**
+
 ```typescript
 import { Effect, Layer } from "effect";
 
@@ -717,14 +770,14 @@ describe("AgentOrchestrator", () => {
       complete: () => Effect.succeed("response"),
     });
 
-    const TestLayer = Layer.mergeAll(MockClaude, /* ... */);
+    const TestLayer = Layer.mergeAll(MockClaude /* ... */);
 
     // Run test
     const result = await Effect.runPromise(
       Effect.gen(function* () {
         const orchestrator = yield* AgentOrchestrator;
         return yield* orchestrator.executeTask(task);
-      }).pipe(Effect.provide(TestLayer))
+      }).pipe(Effect.provide(TestLayer)),
     );
 
     expect(result).toBe("response");
@@ -745,6 +798,7 @@ describe("AgentOrchestrator", () => {
 ### What to Look for in Open-Agent Codebase
 
 **✅ Patterns to Adopt:**
+
 - Context management strategies
 - Multi-agent communication protocols
 - Task decomposition approaches
@@ -752,6 +806,7 @@ describe("AgentOrchestrator", () => {
 - Performance optimization techniques
 
 **⚠️ Patterns to Adapt (refactor to Effect.ts):**
+
 - Any raw async/await → Effect.gen
 - Any try/catch → typed errors with catchTags
 - Any global state → 6-dimension ontology (organizations, people, things, connections, events, knowledge)

@@ -1,3 +1,21 @@
+---
+title: Release
+dimension: things
+category: plans
+tags: ai, frontend, ontology
+related_dimensions: connections, events
+scope: global
+created: 2025-11-03
+updated: 2025-11-03
+version: 1.0.0
+ai_context: |
+  This document is part of the things dimension in the plans category.
+  Location: one/things/plans/release.md
+  Purpose: Documents release strategy for one platform
+  Related dimensions: connections, events
+  For AI agents: Read this to understand release.
+---
+
 # Release Strategy for ONE Platform
 
 **Version:** 1.0.0
@@ -58,11 +76,13 @@ ONE/                          # Main development workspace (private/local)
 ### 1. Core Documentation Sync
 
 **Source → Targets:**
+
 - `/one/*` → `cli/one/*` and `apps/one/one/*`
 - `/.claude/*` → `cli/.claude/*` and `apps/one/.claude/*`
 - `/AGENTS.md`, `/CLAUDE.md`, `/README.md`, `/LICENSE.md` → `cli/` and `apps/one/`
 
 **Rationale:**
+
 - Keep ontology and configuration in sync across distributions
 - CLI package contains everything needed for `npx oneie`
 - Apps directory is staging area for multi-repo coordination
@@ -72,12 +92,14 @@ ONE/                          # Main development workspace (private/local)
 **Options for web sync:**
 
 #### Option A: Git Submodule (Recommended)
+
 ```bash
 cd apps/one
 git submodule add https://github.com/one-ie/web.git web
 ```
 
 **Pros:**
+
 - Clean separation of concerns
 - Independent versioning
 - Explicit version pinning
@@ -85,37 +107,44 @@ git submodule add https://github.com/one-ie/web.git web
 - One-ie/web can be used standalone
 
 **Cons:**
+
 - Requires submodule knowledge
 - Extra step during clone: `git clone --recursive`
 - Can be confusing for contributors
 
 #### Option B: Directory Sync
+
 ```bash
 rsync -av --delete web/ apps/one/web/
 ```
 
 **Pros:**
+
 - Simple, no git complexity
 - Everything in one repo
 - Easy for contributors
 
 **Cons:**
+
 - Duplicate code maintenance
 - No independent versioning
 - Harder to keep in sync
 - Bloats repository size
 
 #### Option C: Symbolic Link (Development Only)
+
 ```bash
 ln -s ../../web apps/one/web
 ```
 
 **Pros:**
+
 - Perfect for local development
 - No duplication
 - Instant sync
 
 **Cons:**
+
 - Doesn't work in git
 - Local development only
 
@@ -124,6 +153,7 @@ ln -s ../../web apps/one/web
 ### 3. Documentation Strategy
 
 **Same as web - use Git Submodule:**
+
 ```bash
 cd apps/one
 git submodule add https://github.com/one-ie/docs.git docs
@@ -149,6 +179,7 @@ Run the release script - it handles everything:
 ```
 
 **What happens automatically:**
+
 - ✅ Validate prerequisites (git, directories, files)
 - ✅ Push core repos (one/, web/, backend/) to GitHub
 - ✅ Sync documentation (one/ → cli/one/ and apps/one/one/)
@@ -204,6 +235,7 @@ The `scripts/release.sh` script automates phases 1-2:
 ```
 
 **What it does:**
+
 1. Validates git status (clean working directory)
 2. Runs tests
 3. Syncs all files to staging areas
@@ -213,6 +245,7 @@ The `scripts/release.sh` script automates phases 1-2:
 7. Creates release tags
 
 **What it does NOT do:**
+
 - Publish to npm (manual step for safety)
 - Deploy to production (CI/CD handles this)
 - Create GitHub releases (manual step for release notes)
@@ -220,16 +253,19 @@ The `scripts/release.sh` script automates phases 1-2:
 ## Version Strategy
 
 ### Semantic Versioning
+
 - **Major (1.0.0):** Breaking changes to ontology or APIs
 - **Minor (0.1.0):** New features, backward compatible
 - **Patch (0.0.1):** Bug fixes, no API changes
 
 ### Synchronized Releases
+
 - CLI, Web, and Docs share the same version number
 - Ontology version (in `one/knowledge/ontology.md`) is independent
 - Example: ONE Platform v1.2.3 can use Ontology v2.0.0
 
 ### Release Channels
+
 - **stable:** Production releases (main branch)
 - **beta:** Testing releases (beta branch)
 - **canary:** Nightly builds (dev branch)
@@ -237,6 +273,7 @@ The `scripts/release.sh` script automates phases 1-2:
 ## Git Submodule Commands
 
 ### Initial Setup
+
 ```bash
 # In apps/one directory
 git submodule add https://github.com/one-ie/web.git web
@@ -245,6 +282,7 @@ git commit -m "Add web and docs as submodules"
 ```
 
 ### Cloning with Submodules
+
 ```bash
 git clone --recursive https://github.com/one-ie/one.git
 # Or after regular clone:
@@ -253,6 +291,7 @@ git submodule update
 ```
 
 ### Updating Submodules
+
 ```bash
 # Update to latest from remote
 git submodule update --remote web
@@ -264,6 +303,7 @@ git commit -m "Update web and docs submodules"
 ```
 
 ### Working in Submodules
+
 ```bash
 # Make changes in submodule
 cd web
@@ -286,13 +326,14 @@ git push
 ### GitHub Actions Workflow
 
 **.github/workflows/release.yml:**
+
 ```yaml
 name: Release
 
 on:
   push:
     tags:
-      - 'v*'
+      - "v*"
 
 jobs:
   release:
@@ -305,7 +346,7 @@ jobs:
       - name: Setup Node
         uses: actions/setup-node@v4
         with:
-          node-version: '20'
+          node-version: "20"
 
       - name: Install dependencies
         run: npm install
@@ -330,7 +371,9 @@ jobs:
 ## Security Considerations
 
 ### Sensitive Files
+
 **Never sync these:**
+
 - `.env*` files
 - `node_modules/`
 - Build artifacts (`dist/`, `.astro/`)
@@ -338,6 +381,7 @@ jobs:
 - Private keys
 
 ### Access Control
+
 - CLI repo: Public (open source)
 - Web repo: Public (open source)
 - Docs repo: Public (open source)
@@ -348,12 +392,14 @@ jobs:
 ### If Release Fails
 
 1. **Revert npm publish:**
+
    ```bash
    npm unpublish one@1.2.3
    npm publish --tag latest one@1.2.2
    ```
 
 2. **Revert git tag:**
+
    ```bash
    git tag -d v1.2.3
    git push origin :refs/tags/v1.2.3
@@ -368,6 +414,7 @@ jobs:
 ## Testing Before Release
 
 ### Checklist
+
 - [ ] All tests pass (`bun test`)
 - [ ] Build succeeds (`bun run build`)
 - [ ] Type checking passes (`bunx astro check`)
@@ -379,6 +426,7 @@ jobs:
 - [ ] Migration guide written (if needed)
 
 ### Local Testing
+
 ```bash
 # Test CLI locally before publishing
 cd cli
@@ -396,6 +444,7 @@ oneie dev
 ## Future Enhancements
 
 ### Planned Improvements
+
 1. **Automated testing in release script**
 2. **Automated CHANGELOG generation**
 3. **Release candidate (RC) builds**
@@ -405,13 +454,16 @@ oneie dev
 7. **A/B testing for new features**
 
 ### Monorepo Consideration
+
 **Future option:** Migrate to a monorepo using Turborepo or Nx
+
 - Single repository for all packages
 - Shared dependencies
 - Atomic commits across packages
 - Simplified version management
 
 **Not recommended now because:**
+
 - Current structure is simple and working
 - Want to validate separation of concerns first
 - Monorepo adds complexity during early development
@@ -436,6 +488,7 @@ oneie dev
 ## Conclusion
 
 This release strategy provides:
+
 - **Clear separation** between CLI, Web, and Docs
 - **Single source of truth** in main workspace
 - **Automated syncing** via release script

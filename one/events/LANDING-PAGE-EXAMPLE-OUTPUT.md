@@ -1,3 +1,21 @@
+---
+title: Landing Page Example Output
+dimension: events
+category: LANDING-PAGE-EXAMPLE-OUTPUT.md
+tags: ai, architecture, connections, events, groups, knowledge, ontology, people, things
+related_dimensions: connections, groups, knowledge, people, things
+scope: global
+created: 2025-11-03
+updated: 2025-11-03
+version: 1.0.0
+ai_context: |
+  This document is part of the events dimension in the LANDING-PAGE-EXAMPLE-OUTPUT.md category.
+  Location: one/events/LANDING-PAGE-EXAMPLE-OUTPUT.md
+  Purpose: Documents landing page generator - example output
+  Related dimensions: connections, groups, knowledge, people, things
+  For AI agents: Read this to understand LANDING PAGE EXAMPLE OUTPUT.
+---
+
 # Landing Page Generator - Example Output
 
 This document shows exactly what gets generated when you run the landing page generator.

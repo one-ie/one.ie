@@ -1,3 +1,21 @@
+---
+title: Package Structure
+dimension: events
+category: PACKAGE-STRUCTURE.md
+tags: agent, ai, connections, events, groups, installation, knowledge, ontology, people, testing
+related_dimensions: connections, groups, knowledge, people, things
+scope: global
+created: 2025-11-03
+updated: 2025-11-03
+version: 1.0.0
+ai_context: |
+  This document is part of the events dimension in the PACKAGE-STRUCTURE.md category.
+  Location: one/events/PACKAGE-STRUCTURE.md
+  Purpose: Documents one platform package structure
+  Related dimensions: connections, groups, knowledge, people, things
+  For AI agents: Read this to understand PACKAGE STRUCTURE.
+---
+
 # ONE Platform Package Structure
 
 **Version:** 3.6.0

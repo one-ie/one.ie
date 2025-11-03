@@ -1,3 +1,21 @@
+---
+title: Wave1 Onboarding 100 Inferences
+dimension: things
+category: plans
+tags: agent, ai, backend, claude, frontend, inference, ontology, testing
+related_dimensions: connections, events, groups, knowledge, people
+scope: global
+created: 2025-11-03
+updated: 2025-11-03
+version: 1.0.0
+ai_context: |
+  This document is part of the things dimension in the plans category.
+  Location: one/things/plans/wave1-onboarding-100-inferences.md
+  Purpose: Documents wave 1: creator onboarding - 100-inference execution plan
+  Related dimensions: connections, events, groups, knowledge, people
+  For AI agents: Read this to understand wave1 onboarding 100 inferences.
+---
+
 # Wave 1: Creator Onboarding - 100-Inference Execution Plan
 
 **Version:** 1.0.0
@@ -37,6 +55,7 @@ Each phase has dependencies clearly marked. **Bold dependencies** block downstre
 **Task:** Validate onboarding maps to ALL 6 dimensions
 
 **Checklist:**
+
 - [ ] Groups dimension: Workspace group creation ✓
 - [ ] People dimension: Creator person + team roles ✓
 - [ ] Things dimension: Creator, workspace, tokens, preferences ✓
@@ -48,6 +67,7 @@ Each phase has dependencies clearly marked. **Bold dependencies** block downstre
 **Status:** ✅ COMPLETE
 
 **Decision Gate:**
+
 - If ANY dimension missing → Rethink feature
 - If all aligned → Proceed to Infer 2
 
@@ -58,6 +78,7 @@ Each phase has dependencies clearly marked. **Bold dependencies** block downstre
 **Task:** Specify exact properties for creator, workspace, invitation tokens
 
 **Creator Properties:**
+
 ```typescript
 {
   type: 'creator',
@@ -112,6 +133,7 @@ Each phase has dependencies clearly marked. **Bold dependencies** block downstre
 ```
 
 **Organization (Workspace) Properties:**
+
 ```typescript
 {
   type: 'organization',
@@ -135,6 +157,7 @@ Each phase has dependencies clearly marked. **Bold dependencies** block downstre
 ```
 
 **Invitation Token Properties:**
+
 ```typescript
 {
   type: 'invitation_token',
@@ -163,6 +186,7 @@ Each phase has dependencies clearly marked. **Bold dependencies** block downstre
 **Task:** List all events that need logging during onboarding
 
 **Event Types to Create:**
+
 1. `user_registered` - Signup form submitted
 2. `email_verification_sent` - Code sent to email
 3. `email_verified` - Email confirmed
@@ -175,6 +199,7 @@ Each phase has dependencies clearly marked. **Bold dependencies** block downstre
 10. `onboarding_completed` - Full journey done
 
 **Event Logging Strategy:**
+
 - Every state transition → event logged
 - Metadata captures context (source, device, values changed)
 - Timestamp precise (milliseconds)
@@ -192,6 +217,7 @@ Each phase has dependencies clearly marked. **Bold dependencies** block downstre
 **Connections to Create:**
 
 1. **Creator → Workspace Group (member_of)**
+
    ```
    {
      fromThingId: creatorId,
@@ -275,6 +301,7 @@ Prefix: interest:*
 ```
 
 **Knowledge Pattern:**
+
 ```typescript
 // Create knowledge item for each skill
 {
@@ -303,6 +330,7 @@ Prefix: interest:*
 **Task:** Break down into manageable tasks for specialists
 
 **Backend Tasks (Infer 11-30):**
+
 - [ ] Extend creator entity type
 - [ ] Extend organization entity type
 - [ ] Create invitation_token entity type
@@ -321,6 +349,7 @@ Prefix: interest:*
 - [ ] Create rate limiting rules
 
 **Frontend Tasks (Infer 31-50):**
+
 - [ ] Create SignupForm component
 - [ ] Create EmailVerification component
 - [ ] Create ProfileForm component
@@ -336,6 +365,7 @@ Prefix: interest:*
 - [ ] Create redirect logic
 
 **Quality Tasks (Infer 81-90):**
+
 - [ ] Write unit tests (mutations, services)
 - [ ] Write integration tests (full flows)
 - [ ] Write E2E tests (signup to dashboard)
@@ -345,12 +375,14 @@ Prefix: interest:*
 - [ ] Run security audit
 
 **Designer Tasks (Infer 41-60 parallel):**
+
 - [ ] Create wireframes for 8 stages
 - [ ] Design component specs
 - [ ] Create accessibility guide
 - [ ] Design mobile layouts
 
 **Documentation Tasks (Infer 91-100):**
+
 - [ ] User guide
 - [ ] API documentation
 - [ ] Developer setup guide
@@ -366,6 +398,7 @@ Prefix: interest:*
 **Task:** Leave buffer for unexpected issues
 
 **Possible issues:**
+
 - Better Auth integration complexity
 - Rate limiting complexity
 - Email delivery problems
@@ -390,6 +423,7 @@ Prefix: interest:*
 **Task:** Update `schema.ts` to include all creator properties
 
 **Files to modify:**
+
 - `/backend/convex/schema.ts` - Add creator properties to entities table
 
 **Deliverable:** Updated schema with creator type
@@ -401,6 +435,7 @@ Prefix: interest:*
 **Task:** Add organization properties (workspace)
 
 **Files to modify:**
+
 - `/backend/convex/schema.ts` - Add organization properties
 
 **Deliverable:** Updated schema with organization type
@@ -411,6 +446,7 @@ Prefix: interest:*
 **Task:** Add invitation_token entity type
 
 **Files to modify:**
+
 - `/backend/convex/schema.ts` - Add invitation_token type
 
 **Deliverable:** Updated schema with invitation_token type
@@ -423,18 +459,33 @@ Prefix: interest:*
 **File to create:** `/backend/convex/services/onboarding.ts`
 
 **Methods:**
+
 ```typescript
 export interface OnboardingService {
-  registerUser(email: string, password: string): Effect<CreatorEntity>
-  sendVerificationEmail(userId: Id<'things'>, email: string): Effect<void>
-  verifyEmail(userId: Id<'things'>, code: string): Effect<{ verified: boolean }>
-  updateProfile(userId: Id<'things'>, data: ProfileData): Effect<CreatorEntity>
-  createWorkspace(userId: Id<'things'>, name: string): Effect<OrganizationEntity>
-  inviteTeamMember(userId: Id<'things'>, workspaceId: Id<'groups'>, email: string, role: string): Effect<void>
-  acceptInvitation(token: string): Effect<{ joined: boolean }>
-  connectWallet(userId: Id<'things'>, address: string): Effect<{ verified: boolean }>
-  addSkills(userId: Id<'things'>, skills: string[]): Effect<CreatorEntity>
-  completeOnboarding(userId: Id<'things'>): Effect<{ completed: boolean }>
+  registerUser(email: string, password: string): Effect<CreatorEntity>;
+  sendVerificationEmail(userId: Id<"things">, email: string): Effect<void>;
+  verifyEmail(
+    userId: Id<"things">,
+    code: string,
+  ): Effect<{ verified: boolean }>;
+  updateProfile(userId: Id<"things">, data: ProfileData): Effect<CreatorEntity>;
+  createWorkspace(
+    userId: Id<"things">,
+    name: string,
+  ): Effect<OrganizationEntity>;
+  inviteTeamMember(
+    userId: Id<"things">,
+    workspaceId: Id<"groups">,
+    email: string,
+    role: string,
+  ): Effect<void>;
+  acceptInvitation(token: string): Effect<{ joined: boolean }>;
+  connectWallet(
+    userId: Id<"things">,
+    address: string,
+  ): Effect<{ verified: boolean }>;
+  addSkills(userId: Id<"things">, skills: string[]): Effect<CreatorEntity>;
+  completeOnboarding(userId: Id<"things">): Effect<{ completed: boolean }>;
 }
 ```
 
@@ -462,8 +513,8 @@ export const signUp = mutation({
     // 4. Create creator entity
     // 5. Log user_registered event
     // 6. Return user + session
-  }
-})
+  },
+});
 ```
 
 **Deliverable:** Working signup mutation
@@ -486,8 +537,8 @@ export const verifyEmail = mutation({
     // 3. Mark creator as emailVerified
     // 4. Log email_verified event
     // 5. Return success
-  }
-})
+  },
+});
 ```
 
 **Deliverable:** Email verification mutation
@@ -514,8 +565,8 @@ export const updateProfile = mutation({
     // 3. Update creator properties
     // 4. Log profile_updated event
     // 5. Return updated creator
-  }
-})
+  },
+});
 ```
 
 **Deliverable:** Profile update mutation
@@ -532,7 +583,7 @@ export const createWorkspace = mutation({
   args: {
     name: v.string(),
     slug: v.string(),
-    visibility: v.union(v.literal('private'), v.literal('public')),
+    visibility: v.union(v.literal("private"), v.literal("public")),
   },
   handler: async (ctx, args) => {
     // 1. Validate slug is unique
@@ -541,8 +592,8 @@ export const createWorkspace = mutation({
     // 4. Update creator.workspaceId
     // 5. Log thing_created event
     // 6. Return workspace
-  }
-})
+  },
+});
 ```
 
 **Deliverable:** Workspace creation mutation
@@ -557,9 +608,9 @@ export const createWorkspace = mutation({
 ```typescript
 export const inviteTeamMember = mutation({
   args: {
-    workspaceId: v.id('groups'),
+    workspaceId: v.id("groups"),
     email: v.string(),
-    role: v.union(v.literal('editor'), v.literal('viewer')),
+    role: v.union(v.literal("editor"), v.literal("viewer")),
   },
   handler: async (ctx, args) => {
     // 1. Validate workspace exists + user is owner
@@ -568,8 +619,8 @@ export const inviteTeamMember = mutation({
     // 4. Send invitation email
     // 5. Log user_invited_to_group event
     // 6. Return invitation
-  }
-})
+  },
+});
 ```
 
 **Deliverable:** Team invitation mutation
@@ -594,8 +645,8 @@ export const acceptInvitation = mutation({
     // 5. Mark invitation as accepted
     // 6. Log user_joined_group event
     // 7. Return success
-  }
-})
+  },
+});
 ```
 
 **Deliverable:** Invitation acceptance mutation
@@ -620,8 +671,8 @@ export const connectWallet = mutation({
     // 4. Update creator.walletVerified
     // 5. Log wallet_connected event
     // 6. Return success
-  }
-})
+  },
+});
 ```
 
 **Deliverable:** Wallet connection mutation
@@ -645,8 +696,8 @@ export const addSkills = mutation({
     // 4. Update creator.expertise
     // 5. Log thing_updated event
     // 6. Return updated creator
-  }
-})
+  },
+});
 ```
 
 **Deliverable:** Skill tagging mutation
@@ -676,12 +727,14 @@ export const getUserWorkspaces = query({ ... })  // List user's workspaces
 **Task:** Build email templates with Resend
 
 **Files to create:**
+
 - `/backend/convex/emails/welcome.email.tsx`
 - `/backend/convex/emails/verify-email.email.tsx`
 - `/backend/convex/emails/team-invite.email.tsx`
 - `/backend/convex/emails/password-reset.email.tsx`
 
 **Email Content:**
+
 1. **Welcome:** "Welcome to ONE! Complete your profile to get started"
 2. **Verify Email:** "Your 6-digit code: {code} (valid for 10 minutes)"
 3. **Team Invite:** "You're invited to join {workspace}! {invite_link}"
@@ -697,12 +750,12 @@ export const getUserWorkspaces = query({ ... })  // List user's workspaces
 **File to create:** `/backend/convex/lib/verification.ts`
 
 ```typescript
-export function generateVerificationCode(): string  // 6-digit code
-export function generateVerificationLink(): string  // unique URL
-export function verifyCode(code: string): boolean
-export function verifyLink(token: string): boolean
-export function rateLimit(email: string): boolean  // 5/hour
-export function generateInvitationToken(): string  // for team invites
+export function generateVerificationCode(): string; // 6-digit code
+export function generateVerificationLink(): string; // unique URL
+export function verifyCode(code: string): boolean;
+export function verifyLink(token: string): boolean;
+export function rateLimit(email: string): boolean; // 5/hour
+export function generateInvitationToken(): string; // for team invites
 ```
 
 **Deliverable:** Verification utilities
@@ -713,6 +766,7 @@ export function generateInvitationToken(): string  // for team invites
 **Task:** Configure rate limiting for signup, verification
 
 **Mutations to rate limit:**
+
 - signUp (5 per IP per hour)
 - sendVerificationEmail (5 per email per hour)
 - inviteTeamMember (20 per workspace per day)
@@ -726,6 +780,7 @@ export function generateInvitationToken(): string  // for team invites
 **Task:** Final backend validation before frontend starts
 
 **Checklist:**
+
 - [ ] All mutations tested locally
 - [ ] All queries working
 - [ ] Email templates rendering
@@ -752,6 +807,7 @@ export function generateInvitationToken(): string  // for team invites
 **File to create:** `/web/src/components/onboarding/SignupForm.tsx`
 
 **Features:**
+
 - Email input (with validation)
 - Password input (with strength meter)
 - "I agree to terms" checkbox
@@ -770,6 +826,7 @@ export function generateInvitationToken(): string  // for team invites
 **File to create:** `/web/src/components/onboarding/EmailVerification.tsx`
 
 **Features:**
+
 - 6 separate input fields (auto-focus, auto-submit)
 - "Check email" message
 - Resend button (with 30s cooldown)
@@ -787,6 +844,7 @@ export function generateInvitationToken(): string  // for team invites
 **File to create:** `/web/src/components/onboarding/ProfileForm.tsx`
 
 **Fields:**
+
 - Avatar upload (preview, drag-drop)
 - Display name
 - Username (with slug preview: one.ie/@username)
@@ -805,6 +863,7 @@ export function generateInvitationToken(): string  // for team invites
 **File to create:** `/web/src/components/onboarding/WorkspaceSetup.tsx`
 
 **Options:**
+
 - Option A: "I'm solo" → Personal workspace
 - Option B: "I manage a team" → Team workspace setup
 - If team: Name workspace + invite members (email list)
@@ -820,6 +879,7 @@ export function generateInvitationToken(): string  // for team invites
 **File to create:** `/web/src/components/onboarding/WalletConnection.tsx`
 
 **Features:**
+
 - Why wallet needed (explanation)
 - "Connect Wallet" button
 - Wallet options (MetaMask, Rainbow Kit, WalletConnect)
@@ -837,6 +897,7 @@ export function generateInvitationToken(): string  // for team invites
 **File to create:** `/web/src/components/onboarding/SkillSelection.tsx`
 
 **Features:**
+
 - Grouped skill tags (education, fitness, tech, etc)
 - Multi-select (checkboxes)
 - Add custom skill (free text)
@@ -853,6 +914,7 @@ export function generateInvitationToken(): string  // for team invites
 **File to create:** `/web/src/components/onboarding/OnboardingTour.tsx`
 
 **Steps:**
+
 1. Welcome - Intro + features
 2. Create content - Show editor
 3. Manage team - Show team page
@@ -861,6 +923,7 @@ export function generateInvitationToken(): string  // for team invites
 6. What's next - Call to action
 
 **Features:**
+
 - Skip anytime
 - Highlight UI elements
 - Progress indicator (step X of 6)
@@ -877,6 +940,7 @@ export function generateInvitationToken(): string  // for team invites
 **File to create:** `/web/src/components/onboarding/OnboardingChecklist.tsx`
 
 **Checklist items:**
+
 - Profile 80% complete
 - Email verified
 - Workspace created
@@ -885,6 +949,7 @@ export function generateInvitationToken(): string  // for team invites
 - First skill added
 
 **Features:**
+
 - Progress bar (X/6 complete)
 - Checkmarks + links to incomplete items
 - Completion reward/badge
@@ -898,12 +963,14 @@ export function generateInvitationToken(): string  // for team invites
 **Task:** Build 4 Astro pages for onboarding flow
 
 **Files to create:**
+
 - `/web/src/pages/onboarding/index.astro` - Main entry
 - `/web/src/pages/onboarding/signup.astro` - Signup form
 - `/web/src/pages/onboarding/verify.astro` - Email verification
 - `/web/src/pages/onboarding/profile.astro` - Profile form
 
 **Features:**
+
 - All `client:load` (interactive)
 - Form validation
 - Redirect on auth failure
@@ -918,12 +985,14 @@ export function generateInvitationToken(): string  // for team invites
 **Task:** Build remaining 4 Astro pages
 
 **Files to create:**
+
 - `/web/src/pages/onboarding/workspace.astro` - Workspace setup
 - `/web/src/pages/onboarding/wallet.astro` - Wallet connection
 - `/web/src/pages/onboarding/skills.astro` - Skill selection
 - `/web/src/pages/onboarding/complete.astro` - Success + tour
 
 **Features:**
+
 - All `client:load`
 - Progress tracking
 - Skip options
@@ -940,6 +1009,7 @@ export function generateInvitationToken(): string  // for team invites
 **File to create:** `/web/src/pages/workspace/settings/team.astro`
 
 **Sections:**
+
 - Members list (table)
 - Invite new member form
 - Pending invitations
@@ -947,6 +1017,7 @@ export function generateInvitationToken(): string  // for team invites
 - Remove member button
 
 **Actions:**
+
 - Invite by email
 - Change member role
 - Remove member
@@ -963,6 +1034,7 @@ export function generateInvitationToken(): string  // for team invites
 **File to create:** `/web/src/components/onboarding/AvatarUpload.tsx`
 
 **Features:**
+
 - Drag-drop + click upload
 - Image preview
 - Cropping (optional)
@@ -980,6 +1052,7 @@ export function generateInvitationToken(): string  // for team invites
 **File to create:** `/web/src/components/onboarding/NicheSelection.tsx`
 
 **Features:**
+
 - Grouped categories (fitness, education, tech, etc)
 - Multi-select (checkboxes)
 - Descriptions on hover
@@ -994,6 +1067,7 @@ export function generateInvitationToken(): string  // for team invites
 **Task:** Add loading spinners + skeleton screens
 
 **Components:**
+
 - Form submit spinner
 - Email sending indicator
 - Page loading skeleton
@@ -1007,6 +1081,7 @@ export function generateInvitationToken(): string  // for team invites
 **Task:** Build error display + recovery UI
 
 **Features:**
+
 - Error toast notifications
 - Field-level error messages
 - Retry buttons
@@ -1021,6 +1096,7 @@ export function generateInvitationToken(): string  // for team invites
 **Task:** Add celebration animations
 
 **Animations:**
+
 - Email verified checkmark
 - Workspace created success
 - Profile completed celebration
@@ -1034,6 +1110,7 @@ export function generateInvitationToken(): string  // for team invites
 **Task:** Optimize all components for mobile
 
 **Checklist:**
+
 - [ ] All forms mobile-friendly
 - [ ] Avatar upload works on mobile
 - [ ] Code input optimized for mobile keyboard
@@ -1049,6 +1126,7 @@ export function generateInvitationToken(): string  // for team invites
 **Task:** Add WCAG 2.1 AA compliance
 
 **Features:**
+
 - Proper labels + aria-labels
 - Keyboard navigation
 - Color contrast (4.5:1 minimum)
@@ -1064,6 +1142,7 @@ export function generateInvitationToken(): string  // for team invites
 **Task:** Add dark theme support
 
 **Features:**
+
 - Color scheme aware
 - Stored preference
 - System preference detection
@@ -1077,6 +1156,7 @@ export function generateInvitationToken(): string  // for team invites
 **Task:** Final frontend validation
 
 **Checklist:**
+
 - [ ] All 8 onboarding pages working
 - [ ] Team management page working
 - [ ] All components rendering
@@ -1135,6 +1215,7 @@ export function generateInvitationToken(): string  // for team invites
 ```
 
 Each route:
+
 - Validates input
 - Calls Convex mutation/query
 - Handles errors
@@ -1149,6 +1230,7 @@ Each route:
 **Task:** Configure email sending with Resend
 
 **Setup:**
+
 - Resend API key configured
 - Email templates created
 - Verification code system
@@ -1156,6 +1238,7 @@ Each route:
 - Tracking (opens, clicks)
 
 **Emails sent:**
+
 1. Welcome email (after signup)
 2. Verification code (6-digit)
 3. Team invitation
@@ -1170,6 +1253,7 @@ Each route:
 **Task:** Test frontend → API → backend → database flow
 
 **Test scenarios:**
+
 1. Signup flow (email + password)
 2. Email verification
 3. Profile completion
@@ -1180,6 +1264,7 @@ Each route:
 8. Full journey (signup to dashboard)
 
 **Each scenario:**
+
 - Test happy path
 - Test error cases
 - Test validation
@@ -1204,6 +1289,7 @@ Each route:
 **Task:** Test mutations, queries, services in isolation
 
 **Coverage:**
+
 - Onboarding service (all methods)
 - Verification system
 - Rate limiting
@@ -1219,6 +1305,7 @@ Each route:
 **Task:** Test React components in isolation
 
 **Coverage:**
+
 - SignupForm validation
 - EmailVerification logic
 - ProfileForm validation
@@ -1235,6 +1322,7 @@ Each route:
 **Task:** Test full signup → dashboard flow
 
 **Scenarios:**
+
 1. Complete signup in < 10 minutes
 2. Verify email delivery timing
 3. Workspace creation triggers event
@@ -1249,6 +1337,7 @@ Each route:
 **Task:** Test full user journey in browser
 
 **Scenarios:**
+
 1. New user signup → dashboard access
 2. Team member invitation → acceptance → join workspace
 3. Wallet connection flow
@@ -1264,6 +1353,7 @@ Each route:
 **Task:** Verify security + accessibility compliance
 
 **Security checks:**
+
 - SQL injection prevention
 - XSS protection
 - CSRF tokens
@@ -1271,6 +1361,7 @@ Each route:
 - Email verification required before action
 
 **Accessibility checks:**
+
 - WCAG 2.1 AA compliance
 - Keyboard navigation
 - Screen reader testing
@@ -1285,6 +1376,7 @@ Each route:
 **Task:** Verify performance targets met
 
 **Metrics:**
+
 - Page load: < 2s
 - Form submit: < 1s
 - Email delivery: < 30s
@@ -1305,6 +1397,7 @@ Each route:
 ### Infer 91-92: Create User Documentation
 
 **Files:**
+
 - `/docs/getting-started.md` - For new creators
 - `/docs/onboarding-guide.md` - Step-by-step walkthrough
 - `/docs/team-management.md` - How to manage team
@@ -1316,6 +1409,7 @@ Each route:
 ### Infer 93-94: Create API Documentation
 
 **Files:**
+
 - `/docs/api/auth.md` - Auth endpoints
 - `/docs/api/profile.md` - Profile endpoints
 - `/docs/api/workspace.md` - Workspace endpoints
@@ -1323,6 +1417,7 @@ Each route:
 - `/docs/api/errors.md` - Error codes + meanings
 
 **Content:**
+
 - Endpoint description
 - Request/response examples
 - Curl examples
@@ -1337,6 +1432,7 @@ Each route:
 **File:** `/docs/developer-setup.md`
 
 **Content:**
+
 - Clone repo
 - Install dependencies
 - Environment variables
@@ -1352,6 +1448,7 @@ Each route:
 **File:** `/DEPLOYMENT.md`
 
 **Checklist:**
+
 - [ ] All tests passing
 - [ ] Security audit passed
 - [ ] Performance targets met
@@ -1370,6 +1467,7 @@ Each route:
 **Task:** Deploy backend + frontend to production
 
 **Steps:**
+
 1. Deploy backend to Convex Cloud
 2. Deploy frontend to Cloudflare Pages
 3. Run smoke tests in production
@@ -1384,6 +1482,7 @@ Each route:
 **Task:** Monitor production for issues
 
 **Metrics to track:**
+
 - Signup completion rate
 - Email delivery rate
 - API error rate
@@ -1391,6 +1490,7 @@ Each route:
 - User feedback
 
 **Optimizations:**
+
 - Fix any performance issues
 - Improve UX based on usage
 - Fix any bugs found
@@ -1403,6 +1503,7 @@ Each route:
 **Task:** Document lessons for Wave 2
 
 **Document:**
+
 - What worked well
 - What was harder than expected
 - What would improve next time
@@ -1457,7 +1558,9 @@ TOTAL: 10 days (more like 1.5 weeks with buffers)
 ## Specialist Assignments
 
 ### Agent-Backend (Infer 11-30 + 51-70)
+
 **40 inferences total**
+
 - Schema updates (Infer 11-16)
 - Onboarding service (Infer 17)
 - All mutations (Infer 18-25)
@@ -1469,7 +1572,9 @@ TOTAL: 10 days (more like 1.5 weeks with buffers)
 - Email system setup (Infer 61-70)
 
 ### Agent-Frontend (Infer 31-50)
+
 **20 inferences total**
+
 - All 8 onboarding components (Infer 31-38)
 - 8 onboarding pages (Infer 39-40)
 - Team management page (Infer 41)
@@ -1484,7 +1589,9 @@ TOTAL: 10 days (more like 1.5 weeks with buffers)
 - Final validation (Infer 50)
 
 ### Agent-Quality (Infer 81-90)
+
 **10 inferences total**
+
 - Backend unit tests (Infer 81-82)
 - Frontend unit tests (Infer 83-84)
 - Integration tests (Infer 85-86)
@@ -1493,7 +1600,9 @@ TOTAL: 10 days (more like 1.5 weeks with buffers)
 - Performance audit (Infer 90)
 
 ### Agent-Ops / Agent-Documenter (Infer 91-100)
+
 **10 inferences total**
+
 - User documentation (Infer 91-92)
 - API documentation (Infer 93-94)
 - Developer setup (Infer 95)
@@ -1503,7 +1612,9 @@ TOTAL: 10 days (more like 1.5 weeks with buffers)
 - Lessons learned (Infer 100)
 
 ### Agent-Director (Orchestrator)
+
 **Throughout**
+
 - Progress tracking
 - Blocker resolution
 - Specialist coordination
@@ -1543,27 +1654,27 @@ All of these must be ✅ before Wave 1 is marked done:
 
 **Potential blockers & solutions:**
 
-| Risk | Likelihood | Impact | Mitigation |
-|------|-----------|--------|-----------|
-| Better Auth integration complexity | Medium | High | Have 2 backend specialists ready |
-| Email delivery delays | Low | Medium | Use Resend sandbox for testing |
-| Rate limiting issues | Low | Medium | Start simple, iterate based on testing |
-| Mobile UI responsive issues | Medium | Medium | Test early + often on real devices |
-| Database performance | Low | Medium | Index optimization, pre-optimize |
-| Security vulnerabilities | Low | High | Early security audit, follow OWASP |
+| Risk                               | Likelihood | Impact | Mitigation                             |
+| ---------------------------------- | ---------- | ------ | -------------------------------------- |
+| Better Auth integration complexity | Medium     | High   | Have 2 backend specialists ready       |
+| Email delivery delays              | Low        | Medium | Use Resend sandbox for testing         |
+| Rate limiting issues               | Low        | Medium | Start simple, iterate based on testing |
+| Mobile UI responsive issues        | Medium     | Medium | Test early + often on real devices     |
+| Database performance               | Low        | Medium | Index optimization, pre-optimize       |
+| Security vulnerabilities           | Low        | High   | Early security audit, follow OWASP     |
 
 ---
 
 ## Estimated Resource Requirements
 
-| Resource | Quantity | Days |
-|----------|----------|------|
-| Backend Specialist | 1 | 10 days |
-| Frontend Specialist | 1 | 10 days |
-| Quality Specialist | 1 | 3 days |
-| Designer/Documenter | 1 | 5 days |
-| Orchestrator (Director) | 1 | 10 days |
-| **Total Person-Days** | **5** | **38 person-days** |
+| Resource                | Quantity | Days               |
+| ----------------------- | -------- | ------------------ |
+| Backend Specialist      | 1        | 10 days            |
+| Frontend Specialist     | 1        | 10 days            |
+| Quality Specialist      | 1        | 3 days             |
+| Designer/Documenter     | 1        | 5 days             |
+| Orchestrator (Director) | 1        | 10 days            |
+| **Total Person-Days**   | **5**    | **38 person-days** |
 
 **Actual Calendar Time:** 10-12 days (due to parallelization)
 
@@ -1573,4 +1684,3 @@ All of these must be ✅ before Wave 1 is marked done:
 **Approved:** Engineering Director
 **Start Date:** Immediate (Infer 1)
 **Expected Completion:** +10-12 calendar days
-

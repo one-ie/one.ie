@@ -1,3 +1,21 @@
+---
+title: Tests Quick Ref
+dimension: events
+category: TESTS-QUICK-REF.md
+tags: backend, frontend, groups
+related_dimensions: groups, knowledge, things
+scope: global
+created: 2025-11-03
+updated: 2025-11-03
+version: 1.0.0
+ai_context: |
+  This document is part of the events dimension in the TESTS-QUICK-REF.md category.
+  Location: one/events/TESTS-QUICK-REF.md
+  Purpose: Documents groups test suite - quick reference card
+  Related dimensions: groups, knowledge, things
+  For AI agents: Read this to understand TESTS QUICK REF.
+---
+
 # Groups Test Suite - Quick Reference Card
 
 **Total: 117 Tests** | Backend: 55 | Frontend: 62

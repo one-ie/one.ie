@@ -1,3 +1,21 @@
+---
+title: Backend Cleanup Quickstart
+dimension: things
+category: plans
+tags: backend, convex, knowledge, ontology
+related_dimensions: events, groups, knowledge
+scope: global
+created: 2025-11-03
+updated: 2025-11-03
+version: 1.0.0
+ai_context: |
+  This document is part of the things dimension in the plans category.
+  Location: one/things/plans/backend-cleanup-quickstart.md
+  Purpose: Documents backend cleanup quickstart guide
+  Related dimensions: events, groups, knowledge
+  For AI agents: Read this to understand backend cleanup quickstart.
+---
+
 # Backend Cleanup Quickstart Guide
 
 **Status**: Ready to execute
@@ -42,50 +60,57 @@
 ## Three Essential Documents Created
 
 ### 1. `/backend/BACKEND-AUDIT-MANIFEST.md`
+
 **What**: File-by-file assessment of all 33 backend root files
 **Content**:
+
 - Classification of each file (keep, move, delete, consolidate)
 - Duplicate detection
 - Ontology mapping
 - Risk assessment
-**Use this to**: Understand what each file does and why
+  **Use this to**: Understand what each file does and why
 
 ### 2. `/one/things/plans/backend-ontology-conformance.md`
+
 **What**: Complete 100-inference execution plan
 **Content**:
+
 - 5 phases (Audit, Consolidation, Reorganization, Cleanup, Verification)
 - 60 detailed inference steps (Infer 1-100)
 - Execution timeline
 - Success criteria
-**Use this to**: Follow the step-by-step execution plan
+  **Use this to**: Follow the step-by-step execution plan
 
 ### 3. `/one/things/plans/backend-target-structure.md`
+
 **What**: Vision of what backend looks like after cleanup
 **Content**:
+
 - Before/after directory structures
 - File mapping to 6 dimensions
 - Quality metrics
 - Success checklist
-**Use this to**: Visualize the end goal
+  **Use this to**: Visualize the end goal
 
 ---
 
 ## Quick Summary Table
 
-| Action | Files | Destination | Effort |
-|--------|-------|-------------|--------|
-| **KEEP** (no changes) | convex/, lib/, test/, scripts/ | /backend/ | 0% |
-| **DELETE** | ONTOLOGY-FILE-STRUCTURE.md, PERFECT-ONTOLOGY-STRUCTURE.md, ONTOLOGY-INTEGRATION-TEST-SUMMARY.md, _tests_disabled/ | - | 5% |
-| **CONSOLIDATE** | 3 query files → 1, 3 structure files → 1, 2 test report files → 1 | /one/connections/api/, /one/things/plans/, /one/events/ | 20% |
-| **MOVE** | 12 other markdown files | /one/events/, /one/knowledge/, /one/things/, /one/people/, /one/connections/ | 30% |
-| **UPDATE** | README.md (change 4-table to 6-dimension) | /backend/ | 5% |
-| **VERIFY** | TypeScript, links, schema | - | 40% |
+| Action                | Files                                                                                                              | Destination                                                                  | Effort |
+| --------------------- | ------------------------------------------------------------------------------------------------------------------ | ---------------------------------------------------------------------------- | ------ |
+| **KEEP** (no changes) | convex/, lib/, test/, scripts/                                                                                     | /backend/                                                                    | 0%     |
+| **DELETE**            | ONTOLOGY-FILE-STRUCTURE.md, PERFECT-ONTOLOGY-STRUCTURE.md, ONTOLOGY-INTEGRATION-TEST-SUMMARY.md, \_tests_disabled/ | -                                                                            | 5%     |
+| **CONSOLIDATE**       | 3 query files → 1, 3 structure files → 1, 2 test report files → 1                                                  | /one/connections/api/, /one/things/plans/, /one/events/                      | 20%    |
+| **MOVE**              | 12 other markdown files                                                                                            | /one/events/, /one/knowledge/, /one/things/, /one/people/, /one/connections/ | 30%    |
+| **UPDATE**            | README.md (change 4-table to 6-dimension)                                                                          | /backend/                                                                    | 5%     |
+| **VERIFY**            | TypeScript, links, schema                                                                                          | -                                                                            | 40%    |
 
 ---
 
 ## How to Get Started
 
 ### Option A: Follow the Full Plan (Recommended)
+
 ```bash
 # Read these in order:
 1. /backend/BACKEND-AUDIT-MANIFEST.md (understand current state)
@@ -94,6 +119,7 @@
 ```
 
 ### Option B: Quick Cleanup (Just Fix It)
+
 ```bash
 # Phase 1: Consolidate duplicates
 cp /backend/QUERIES_ONTOLOGY_COMPLETE.md /tmp/queries-backup.md
@@ -119,6 +145,7 @@ cd /backend && npx tsc --noEmit
 ## Files to Keep vs. Move at a Glance
 
 ### In `/backend/` (KEEP - source code)
+
 ```
 ✅ convex/          (all - database schema, queries, mutations, auth)
 ✅ lib/             (all - validators, utilities)
@@ -131,6 +158,7 @@ cd /backend && npx tsc --noEmit
 ```
 
 ### In `/one/` (MOVE - documentation)
+
 ```
 📋 /one/things/plans/backend-structure.md (merged from 3)
 📋 /one/things/implementation/backend-guide.md
@@ -142,6 +170,7 @@ cd /backend && npx tsc --noEmit
 ```
 
 ### DELETE (no longer needed)
+
 ```
 ❌ _tests_disabled/                          (obsolete)
 ❌ ONTOLOGY-FILE-STRUCTURE.md                (duplicate)
@@ -238,6 +267,7 @@ echo "Backend cleanup complete! 🎉"
 ## What Won't Change (Safe)
 
 ✅ **Source code completely safe**
+
 - All Convex code stays in `/backend/convex/`
 - All imports remain the same
 - Schema.ts untouched (6 dimensions still there)
@@ -245,11 +275,13 @@ echo "Backend cleanup complete! 🎉"
 - Database structure unchanged
 
 ✅ **Tests still pass**
+
 - `/backend/test/` stays exactly as-is
 - `_tests_disabled/` deleted (already disabled)
 - Active tests unaffected
 
 ✅ **Configuration unchanged**
+
 - `.env.local`, `package.json`, `vitest.config.ts` unchanged
 - Build process unaffected
 - Deployment unaffected
@@ -258,13 +290,13 @@ echo "Backend cleanup complete! 🎉"
 
 ## Risk Mitigation
 
-| Risk | Likelihood | Impact | Mitigation |
-|------|-----------|--------|-----------|
-| Broken imports | Very low | High | Only moving docs, not code |
-| Lost documentation | Low | Medium | Copy before deleting, verify copy exists |
-| TypeScript errors | Very low | High | Run `tsc --noEmit` after changes |
-| Schema validation fails | Almost zero | Critical | Not touching schema.ts |
-| Broken markdown links | Medium | Low | Use grep to find before moving |
+| Risk                    | Likelihood  | Impact   | Mitigation                               |
+| ----------------------- | ----------- | -------- | ---------------------------------------- |
+| Broken imports          | Very low    | High     | Only moving docs, not code               |
+| Lost documentation      | Low         | Medium   | Copy before deleting, verify copy exists |
+| TypeScript errors       | Very low    | High     | Run `tsc --noEmit` after changes         |
+| Schema validation fails | Almost zero | Critical | Not touching schema.ts                   |
+| Broken markdown links   | Medium      | Low      | Use grep to find before moving           |
 
 ---
 
@@ -289,6 +321,7 @@ echo "Backend cleanup complete! 🎉"
 ## Success = Beautiful Backend
 
 **Before**: Confusing mess
+
 - 20+ markdown files in root
 - 7 duplicate files
 - Examples buried in /backend/examples/
@@ -297,6 +330,7 @@ echo "Backend cleanup complete! 🎉"
 - Unclear mapping to ontology
 
 **After**: Crystal clear
+
 - Only 2-3 markdown files in /backend/ (README, LICENSE)
 - Zero duplicates (consolidated)
 - Examples in `/one/knowledge/examples/`

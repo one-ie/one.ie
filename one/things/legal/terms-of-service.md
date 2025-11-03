@@ -1,3 +1,21 @@
+---
+title: Terms Of Service
+dimension: things
+category: legal
+tags: ai, connections, events, groups, knowledge, ontology, people, things
+related_dimensions: connections, events, groups, knowledge, people
+scope: global
+created: 2025-11-03
+updated: 2025-11-03
+version: 1.0.0
+ai_context: |
+  This document is part of the things dimension in the legal category.
+  Location: one/things/legal/terms-of-service.md
+  Purpose: Documents one platform terms of service
+  Related dimensions: connections, events, groups, knowledge, people
+  For AI agents: Read this to understand terms of service.
+---
+
 # ONE Platform Terms of Service
 
 **Effective Date:** October 16, 2025
@@ -9,6 +27,7 @@
 By accessing or using ONE Platform ("Platform," "Service," "we," "us," "our") available at https://one.ie or through our CLI tool `npx oneie`, you agree to be bound by these Terms of Service ("Terms"). If you do not agree to these Terms, do not use the Platform.
 
 **Important Legal Information:**
+
 - These Terms constitute a legally binding contract between you and ONE Platform
 - You must be 18 years or older to use the Platform (or 16+ with parental consent in the EU)
 - These Terms are governed by Irish law and EU regulations
@@ -48,6 +67,7 @@ These Terms are structured according to our 6-dimension ontology (Groups, People
 ### 3.1 Eligibility Requirements
 
 You must meet the following requirements to use the Platform:
+
 - **Age:** 18 years or older (or 16+ with parental consent in the EU/EEA)
 - **Capacity:** Legal capacity to enter into binding contracts
 - **Compliance:** Not prohibited from using the Platform under applicable law
@@ -59,12 +79,14 @@ If you are under 18, you must have explicit parental or guardian consent. We may
 ### 3.2 Account Registration
 
 **Required Information:**
+
 - Valid email address
 - Unique username
 - Secure password (minimum 12 characters, including uppercase, lowercase, number, symbol)
 - Role selection (group_owner, group_user, customer)
 
 **Optional Information:**
+
 - Display name
 - Profile bio
 - Avatar image
@@ -72,6 +94,7 @@ If you are under 18, you must have explicit parental or guardian consent. We may
 
 **Account Security:**
 You are responsible for:
+
 - Maintaining the confidentiality of your password
 - All activities under your account
 - Notifying us immediately of unauthorized access (security@one.ie)
@@ -83,12 +106,14 @@ You may only create one account per email address. Multiple accounts for the sam
 ### 3.3 Account Verification
 
 We may require identity verification for:
+
 - Group owner accounts
 - High-value transactions
 - Suspicious activity
 - Compliance with anti-money laundering (AML) and know-your-customer (KYC) regulations
 
 **Verification Methods:**
+
 - Email verification (required for all accounts)
 - Phone verification (for elevated access)
 - Government ID (for group owners and high-value transactions)
@@ -96,6 +121,7 @@ We may require identity verification for:
 
 **Failure to Verify:**
 If you fail to complete required verification, we may:
+
 - Restrict account functionality
 - Suspend the account
 - Terminate the account (with 30 days notice)
@@ -107,6 +133,7 @@ If you fail to complete required verification, we may:
 ### 4.1 Plan Levels
 
 **Free Plan (Starter):**
+
 - Personal use only
 - Limited to 1 group
 - 100 AI inference calls per month
@@ -114,6 +141,7 @@ If you fail to complete required verification, we may:
 - Community support
 
 **Pro Plan ($29/month or $290/year):**
+
 - Commercial use permitted
 - Up to 10 groups
 - 10,000 AI inference calls per month
@@ -122,6 +150,7 @@ If you fail to complete required verification, we may:
 - Custom domain support
 
 **Enterprise Plan (Custom pricing):**
+
 - Unlimited groups
 - Unlimited AI inference calls
 - Unlimited storage
@@ -132,6 +161,7 @@ If you fail to complete required verification, we may:
 
 **Group Limits:**
 Each plan specifies:
+
 - Maximum number of groups
 - Maximum users per group
 - Maximum storage per group
@@ -140,36 +170,43 @@ Each plan specifies:
 ### 4.2 Billing & Payment
 
 **Payment Methods:**
+
 - Credit/debit card (via Stripe)
 - Cryptocurrency (Base, Ethereum, Polygon via X402 protocol)
 - Wire transfer (Enterprise only)
 
 **Billing Cycle:**
+
 - Monthly: Billed on the same day each month
 - Annual: Billed once per year (17% discount applied)
 
 **Auto-Renewal:**
+
 - Subscriptions auto-renew unless canceled
 - You will receive email notification 7 days before renewal
 - Cancel anytime (Settings → Billing → Cancel Subscription)
 
 **Price Changes:**
+
 - We will notify you 30 days before any price increase
 - You may cancel before the increase takes effect
 - Grandfathered pricing for annual plans (locked in for 1 year)
 
 **Refund Policy:**
+
 - **30-day money-back guarantee** for first-time Pro plan subscribers
 - Annual plans: Pro-rated refund if canceled within 30 days
 - No refunds for free upgrades or promotional credits
 - Refunds processed within 5-10 business days
 
 **Failed Payments:**
+
 - We will attempt to charge your payment method 3 times over 10 days
 - After 3 failed attempts, your account will be downgraded to Free plan
 - No data loss occurs; you can reactivate anytime
 
 **Tax:**
+
 - Prices exclude applicable taxes (VAT, GST, sales tax)
 - Tax calculated based on your billing address
 - EU VAT: Charged to EU customers (reverse charge for businesses with valid VAT ID)
@@ -178,33 +215,40 @@ Each plan specifies:
 ### 4.3 Free Trial
 
 **Pro Plan Trial:**
+
 - 14-day free trial (no credit card required)
 - Full Pro plan features during trial
 - Automatically downgrades to Free plan if not upgraded
 
 **Enterprise Trial:**
+
 - Contact sales for custom trial (agent@one.ie)
 
 **Trial Restrictions:**
+
 - One trial per user (per email address)
 - Cannot abuse trial by creating multiple accounts
 
 ### 4.4 Overage Charges
 
 **AI Inference Overage:**
+
 - Free plan: $0.10 per inference over limit
 - Pro plan: $0.01 per inference over limit
 - Enterprise: No overage (unlimited)
 
 **Storage Overage:**
+
 - $0.50 per GB per month over limit
 - Charged at end of billing cycle
 
 **API Call Overage:**
+
 - $0.001 per API call over limit
 
 **Notification:**
 You will receive email alerts at:
+
 - 80% of limit
 - 100% of limit (overage begins)
 
@@ -215,6 +259,7 @@ You will receive email alerts at:
 ### 5.1 License to You
 
 Subject to these Terms, we grant you a limited, non-exclusive, non-transferable, revocable license to:
+
 - Access and use the Platform for your personal or commercial use (per your plan)
 - Download and use our CLI tool (`npx oneie`)
 - Create, modify, and deploy applications using the Platform
@@ -223,6 +268,7 @@ Subject to these Terms, we grant you a limited, non-exclusive, non-transferable,
 
 **Restrictions:**
 You may NOT:
+
 - Remove or obscure copyright/trademark notices
 - Reverse engineer, decompile, or disassemble the Platform (except as permitted by law)
 - Rent, lease, lend, sell, or sublicense the Platform to third parties
@@ -232,6 +278,7 @@ You may NOT:
 
 **ONE License Compatibility:**
 Our software is licensed under ONE License 1.0 (see LICENSE.md). Key provisions:
+
 - ✅ Unlimited commercial use
 - ✅ Modify and create derivative works
 - ✅ Sell products built on ONE Platform
@@ -246,12 +293,14 @@ You retain all ownership rights to Content you create on the Platform. We do NOT
 
 **License to Us:**
 By uploading Content, you grant us a worldwide, non-exclusive, royalty-free license to:
+
 - Store, process, and transmit your Content to provide the Platform
 - Make temporary copies for caching and backups
 - Display your Content per your privacy settings
 - Use your Content to train your personal AI clones (NOT to train platform-wide AI models)
 
 **AI-Generated Content:**
+
 - You own AI-generated content created by your AI clones
 - AI-generated content is derivative of your training data and prompts
 - You are responsible for ensuring AI-generated content complies with laws and does not infringe rights
@@ -263,6 +312,7 @@ We reserve the right to remove Content that violates these Terms without prior n
 
 **Platform Ownership:**
 We own all rights to:
+
 - ONE Platform software and source code
 - ONE brand, logos, and trademarks
 - ONE documentation and tutorials
@@ -271,6 +321,7 @@ We own all rights to:
 
 **Trademarks:**
 "ONE," "ONE Platform," and our logos are trademarks of ONE Platform. You may NOT use our trademarks without written permission, except:
+
 - "Powered by ONE" footer link (required by ONE License)
 - Truthful references in documentation or press
 
@@ -285,6 +336,7 @@ We respect intellectual property rights. If you believe your copyrighted work ha
 Send to: dmca@one.ie
 
 Include:
+
 - Your contact information (name, address, email, phone)
 - Identification of the copyrighted work
 - Identification of the infringing material (URL)
@@ -294,6 +346,7 @@ Include:
 
 **Counter-Notice:**
 If you believe your Content was wrongly removed, send a counter-notice to dmca@one.ie with:
+
 - Your contact information
 - Identification of removed material
 - Statement of good faith belief
@@ -310,6 +363,7 @@ We will terminate accounts of repeat copyright infringers.
 ### 6.1 AI Clone Features
 
 **What AI Clones Do:**
+
 - Generate text responses mimicking your writing style
 - Create voice responses (if voice cloning enabled)
 - Generate visual representations (if appearance cloning enabled)
@@ -318,17 +372,20 @@ We will terminate accounts of repeat copyright infringers.
 
 **Training Data:**
 AI clones are trained on:
+
 - Content you explicitly upload (videos, audio, text)
 - Historical content you've published
 - Personality prompts you provide
 - Interaction logs (conversations, feedback)
 
 **You Control Training Data:**
+
 - You choose what data to use for training
 - You can delete training data at any time
 - Deleted training data is removed from AI clone (re-training required)
 
 **AI Clone Limitations:**
+
 - Not a perfect replica of you
 - May generate inaccurate, nonsensical, or offensive content
 - May reveal training data or patterns
@@ -336,6 +393,7 @@ AI clones are trained on:
 - Does not have your judgment, ethics, or legal accountability
 
 **Your Responsibility:**
+
 - Review AI-generated content before publishing
 - Monitor AI clone interactions
 - Correct inaccuracies and inappropriate responses
@@ -344,6 +402,7 @@ AI clones are trained on:
 ### 6.2 Business Agent Features
 
 **10 Agent Types:**
+
 - Strategy Agent (vision, planning, OKRs)
 - Research Agent (market trends, competitors)
 - Marketing Agent (content strategy, SEO)
@@ -356,18 +415,21 @@ AI clones are trained on:
 - Intelligence Agent (analytics, insights, predictions)
 
 **Agent Capabilities:**
+
 - Autonomous task execution per agent type
 - Multi-agent coordination (agents work together)
 - External API integrations (with your permission)
 - Real-time decision-making (within configured guardrails)
 
 **Agent Limitations:**
+
 - NOT legal, financial, or professional advice
 - May make errors or suboptimal decisions
 - Cannot sign contracts or make legal commitments on your behalf
 - Require human oversight for high-stakes decisions
 
 **Agent Permissions:**
+
 - You configure agent capabilities and limits
 - Agents operate within your defined guardrails
 - You can pause or terminate agents at any time
@@ -376,17 +438,20 @@ AI clones are trained on:
 ### 6.3 AI Disclaimers & Limitations of Liability
 
 **AI Content Accuracy:**
+
 - AI-generated content may be inaccurate, incomplete, or misleading
 - AI cannot verify facts or cite sources reliably
 - AI may "hallucinate" (make up plausible-sounding but false information)
 - AI-generated legal, medical, or financial advice is NOT reliable
 
 **AI Bias:**
+
 - AI models may exhibit biases from training data
 - We conduct regular bias audits but cannot eliminate all bias
 - You are responsible for reviewing AI output for bias
 
 **AI Security:**
+
 - AI clones may be vulnerable to adversarial attacks
 - Prompt injection attacks may cause unexpected behavior
 - We implement security measures but cannot guarantee invulnerability
@@ -396,6 +461,7 @@ AI FEATURES ARE PROVIDED "AS IS" WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIE
 
 **Limitation of Liability:**
 TO THE MAXIMUM EXTENT PERMITTED BY LAW, WE SHALL NOT BE LIABLE FOR ANY DAMAGES ARISING FROM AI-GENERATED CONTENT, INCLUDING BUT NOT LIMITED TO:
+
 - Inaccurate or harmful advice
 - Copyright or trademark infringement by AI
 - Defamation or privacy violations by AI
@@ -404,6 +470,7 @@ TO THE MAXIMUM EXTENT PERMITTED BY LAW, WE SHALL NOT BE LIABLE FOR ANY DAMAGES A
 
 **Your Indemnification:**
 You agree to indemnify and hold us harmless from any claims arising from:
+
 - Your use of AI features
 - AI-generated content you publish
 - Actions taken based on AI recommendations
@@ -413,6 +480,7 @@ You agree to indemnify and hold us harmless from any claims arising from:
 
 **Mandatory Review:**
 You MUST review AI-generated content before:
+
 - Publishing publicly
 - Sending to customers
 - Making business decisions
@@ -420,6 +488,7 @@ You MUST review AI-generated content before:
 
 **High-Risk Decisions:**
 AI should NOT be solely relied upon for:
+
 - Legal contracts or advice
 - Medical diagnoses or treatment
 - Financial investment decisions
@@ -429,6 +498,7 @@ AI should NOT be solely relied upon for:
 
 **Prohibited AI Uses:**
 You may NOT use AI features for:
+
 - Generating illegal content
 - Impersonating others without disclosure
 - Creating deepfakes for fraud or harassment
@@ -442,35 +512,41 @@ You may NOT use AI features for:
 ### 7.1 Group Types
 
 **Friend Circle:**
+
 - Informal group of friends (2-10 people)
 - Shared content, tokens, and AI agents
 - Simple governance (group owner has full control)
 
 **Business:**
+
 - Small to medium business (10-1,000 people)
 - Departmental sub-groups
 - Role-based access control
 - Business-grade security
 
 **Community:**
+
 - Public or private community (100-100,000 people)
 - Open or invite-only membership
 - Community moderation features
 - Token-gated access (optional)
 
 **DAO:**
+
 - Decentralized autonomous organization
 - Token-based governance (voting)
 - On-chain treasury management
 - Smart contract integrations
 
 **Government:**
+
 - Large-scale governmental organization (10,000-1,000,000,000 people)
 - Multi-level hierarchical structure
 - Stringent security and compliance
 - Enterprise-grade support
 
 **Organization:**
+
 - Generic multi-tenant organization
 - Flexible configuration
 - Custom hierarchical structures
@@ -480,35 +556,41 @@ You may NOT use AI features for:
 As a **group owner**, you are the **data controller** and have the following responsibilities:
 
 **Compliance:**
+
 - Comply with GDPR, CCPA, PIPEDA, and other data protection laws
 - Provide privacy notice to group users
 - Handle data subject access requests
 - Report data breaches per legal requirements
 
 **User Management:**
+
 - Invite users to your group
 - Assign roles and permissions
 - Remove users when necessary
 - Monitor user activity
 
 **Content Moderation:**
+
 - Enforce acceptable use policies
 - Remove prohibited content
 - Respond to abuse reports
 - Cooperate with law enforcement (if required)
 
 **Billing:**
+
 - Maintain valid payment method
 - Pay for group subscriptions and overages
 - Manage group plan upgrades/downgrades
 
 **Security:**
+
 - Enforce security policies (password requirements, 2FA)
 - Review access logs
 - Respond to security incidents
 
 **Termination:**
 If you terminate your group:
+
 - All group data will be deleted after 30-day grace period
 - Group users will be notified
 - Billing will stop immediately
@@ -519,22 +601,26 @@ If you terminate your group:
 As a **group user**, you have the following rights:
 
 **Access Control:**
+
 - Access only data you are authorized to view (per group owner permissions)
 - Create content within your permissions
 - Invite other users (if permitted by group owner)
 
 **Data Rights:**
+
 - Request access to your personal data
 - Request correction or deletion of your data
 - Export your data
 - Leave the group at any time
 
 **Reporting:**
+
 - Report prohibited content or abusive behavior
 - Report security vulnerabilities
 - Escalate concerns to platform owner (if group owner is unresponsive)
 
 **Limitations:**
+
 - You do NOT control group-level settings
 - You do NOT own group data (group owner does)
 - You may be removed by group owner at any time
@@ -543,16 +629,19 @@ As a **group user**, you have the following rights:
 
 **Parent-Child Relationships:**
 Groups can have parent-child relationships:
+
 - Parent group: Business
   - Child group: Marketing Department
     - Grandchild group: Content Team
 
 **Inheritance:**
+
 - Child groups inherit parent group settings (unless overridden)
 - Parent groups CAN access child group data (configurable)
 - Child groups CANNOT access parent group data (unless granted permission)
 
 **Use Cases:**
+
 - Enterprises: Organization → Departments → Teams
 - Governments: Federal → State → Local
 - Communities: Platform → Sub-communities → Topic groups
@@ -570,30 +659,35 @@ By default, groups are isolated. Cross-group access requires explicit permission
 You may NOT use the Platform for:
 
 **Illegal Activity:**
+
 - Violating any local, state, national, or international law
 - Promoting or facilitating illegal activities
 - Money laundering or terrorist financing
 - Child exploitation or abuse (zero tolerance)
 
 **Harmful Content:**
+
 - Hate speech, harassment, or threats
 - Incitement to violence or self-harm
 - Sexually explicit content (without age verification)
 - Glorification of violence or extremism
 
 **Fraud & Deception:**
+
 - Impersonating others (individuals, businesses, government entities)
 - Phishing or social engineering attacks
 - Pyramid schemes or multi-level marketing scams
 - False advertising or misleading claims
 
 **Intellectual Property Violation:**
+
 - Copyright infringement
 - Trademark infringement
 - Trade secret theft
 - Plagiarism
 
 **System Abuse:**
+
 - Hacking, cracking, or unauthorized access
 - Denial-of-service attacks
 - Malware, viruses, or malicious code
@@ -601,12 +695,14 @@ You may NOT use the Platform for:
 - Bypassing rate limits or security measures
 
 **Spam & Manipulation:**
+
 - Unsolicited commercial messages (spam)
 - Fake reviews or testimonials
 - Vote manipulation or astroturfing
 - Automated account creation (bots)
 
 **Privacy Violations:**
+
 - Doxing (publishing private information without consent)
 - Unauthorized surveillance or stalking
 - Non-consensual sharing of intimate images
@@ -618,18 +714,21 @@ You may NOT use the Platform for:
 Report violations to: abuse@one.ie
 
 Include:
+
 - Description of violation
 - URL or location of prohibited content
 - Your contact information (if you wish to be notified of outcome)
 
 **Investigation:**
 We will investigate reports within:
+
 - 24 hours (urgent: child safety, imminent harm)
 - 72 hours (high priority: harassment, fraud)
 - 7 days (standard: copyright, spam)
 
 **Enforcement Actions:**
 Depending on severity, we may:
+
 - Issue a warning
 - Remove prohibited content
 - Suspend your account (temporary or permanent)
@@ -639,17 +738,20 @@ Depending on severity, we may:
 
 **Appeals:**
 If you believe enforcement action was taken in error:
+
 - Email: appeals@one.ie
 - Include: Account email, explanation, supporting evidence
 - Response time: 14 days
 
 **Repeat Violations:**
+
 - First violation: Warning
 - Second violation: 7-day suspension
 - Third violation: Permanent termination
 
 **Zero Tolerance:**
 Certain violations result in immediate permanent termination:
+
 - Child exploitation or abuse
 - Terrorism or violent extremism
 - Credible threats of violence
@@ -664,24 +766,29 @@ Certain violations result in immediate permanent termination:
 The Platform integrates with third-party services. Your use of these services is subject to their terms:
 
 **AI Providers:**
+
 - OpenAI: https://openai.com/policies/terms-of-use
 - ElevenLabs: https://elevenlabs.io/terms
 
 **Infrastructure:**
+
 - Convex: https://www.convex.dev/terms
 - Cloudflare: https://www.cloudflare.com/terms/
 
 **Payment Processing:**
+
 - Stripe: https://stripe.com/legal/consumer
 - Blockchain networks (Ethereum, Base, Polygon): Decentralized (no central terms)
 
 **External Integrations (Optional):**
+
 - ElizaOS: https://elizaos.ai/terms
 - n8n: https://n8n.io/legal/terms
 - Zapier: https://zapier.com/terms
 - Make: https://www.make.com/en/terms-and-conditions
 
 **Your Responsibility:**
+
 - You are responsible for complying with third-party terms
 - We are not liable for third-party service failures or changes
 - We may remove integrations at any time
@@ -689,6 +796,7 @@ The Platform integrates with third-party services. Your use of these services is
 ### 9.2 External Links
 
 The Platform may contain links to third-party websites. We do NOT:
+
 - Endorse or recommend third-party sites
 - Control third-party content
 - Assume liability for third-party sites
@@ -702,11 +810,13 @@ Visiting third-party sites is at your own risk. Review their privacy policies an
 All plans include API access (subject to rate limits per plan).
 
 **Rate Limits:**
+
 - Free: 100 requests per hour
 - Pro: 10,000 requests per hour
 - Enterprise: Unlimited
 
 **API Terms:**
+
 - Use our API for legitimate purposes only
 - Do NOT abuse, spam, or overload the API
 - Respect rate limits (or upgrade your plan)
@@ -714,12 +824,14 @@ All plans include API access (subject to rate limits per plan).
 - Cache responses where appropriate
 
 **API Key Security:**
+
 - Keep your API keys confidential
 - Rotate keys regularly
 - Never expose keys in client-side code
 - Report compromised keys immediately (security@one.ie)
 
 **API Changes:**
+
 - We may update the API with breaking changes
 - Major version updates: 90 days notice, maintain backward compatibility for deprecated endpoints
 - Minor updates: No notice required for non-breaking changes
@@ -733,6 +845,7 @@ All plans include API access (subject to rate limits per plan).
 Your privacy is governed by our Privacy Policy: [Link to /one/things/legal/privacy-policy.md]
 
 Key points:
+
 - We collect minimal data necessary for platform functionality
 - We do NOT sell your data
 - We do NOT use your data for advertising
@@ -743,6 +856,7 @@ Key points:
 
 **Your Data:**
 You own:
+
 - Your account data
 - Content you create
 - AI-generated content (you commissioned)
@@ -750,12 +864,14 @@ You own:
 
 **Our Data:**
 We own:
+
 - Platform software and infrastructure
 - Aggregated, anonymized analytics
 - System logs and performance data
 - Security and fraud detection data
 
 **Shared Data:**
+
 - Usage analytics (anonymized and aggregated)
 - Public content (per your privacy settings)
 - Events and audit logs (retained per compliance requirements)
@@ -764,28 +880,33 @@ We own:
 
 **Export Your Data:**
 You can export all your data in machine-readable format (JSON):
+
 - Account data
 - Content (entities, connections, events, knowledge)
 - AI clone configurations
 - Group data (if group owner)
 
 **Export Methods:**
+
 - Self-service: Settings → Privacy → Export Data
 - API: `/api/v1/export` endpoint
 - Support request: privacy@one.ie (for large exports)
 
 **Transfer to Another Service:**
+
 - We provide tools to export data in standard formats
 - We will cooperate with data portability requests per GDPR Article 20
 
 ### 10.4 Data Deletion
 
 **Account Deletion:**
+
 - Settings → Account → Delete Account
 - 30-day grace period (account recoverable)
 - Permanent deletion after 30 days
 
 **What Gets Deleted:**
+
 - Your account data
 - Your content (entities, connections, events)
 - Your AI clone configurations and training data
@@ -793,6 +914,7 @@ You can export all your data in machine-readable format (JSON):
 - Your group data (if you are the sole group owner)
 
 **What Does NOT Get Deleted:**
+
 - Financial transaction records (7-year legal retention)
 - Anonymized analytics (aggregated, not personally identifiable)
 - Event logs required for compliance or security (anonymized actor)
@@ -800,6 +922,7 @@ You can export all your data in machine-readable format (JSON):
 
 **Group Owner Deletion:**
 If you are a group owner, you must:
+
 - Transfer group ownership to another user, OR
 - Delete all group data and close the group
 
@@ -811,6 +934,7 @@ If you are a group owner, you must:
 
 **"AS IS" Disclaimer:**
 THE PLATFORM IS PROVIDED "AS IS" AND "AS AVAILABLE" WITHOUT ANY WARRANTIES OF ANY KIND, EITHER EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO:
+
 - **Merchantability:** The Platform is suitable for general use
 - **Fitness for a Particular Purpose:** The Platform meets your specific needs
 - **Non-Infringement:** The Platform does not violate third-party rights
@@ -820,6 +944,7 @@ THE PLATFORM IS PROVIDED "AS IS" AND "AS AVAILABLE" WITHOUT ANY WARRANTIES OF AN
 
 **No Guarantee:**
 We do NOT guarantee:
+
 - Uninterrupted or error-free operation
 - Defects will be corrected
 - AI features will work as expected
@@ -829,12 +954,14 @@ We do NOT guarantee:
 ### 11.2 Service Level Agreement (SLA)
 
 **Uptime Commitment:**
+
 - Free plan: No SLA (best effort)
 - Pro plan: 99.5% uptime (monthly)
 - Enterprise plan: 99.9% uptime (monthly)
 
 **Uptime Definition:**
 Percentage of time the Platform is accessible and functional, excluding:
+
 - Scheduled maintenance (with 24-hour notice)
 - Force majeure events (natural disasters, wars, pandemics)
 - Third-party service failures (outside our control)
@@ -842,11 +969,13 @@ Percentage of time the Platform is accessible and functional, excluding:
 
 **SLA Credits:**
 If we fail to meet uptime commitment:
+
 - 99.0%-99.5%: 10% monthly fee credit
 - 95.0%-99.0%: 25% monthly fee credit
 - <95.0%: 50% monthly fee credit
 
 **Claim SLA Credit:**
+
 - Email: sla@one.ie within 30 days of downtime
 - Include: Date, duration, evidence of downtime
 - Credits applied to next month's bill (not cash refunds)
@@ -858,6 +987,7 @@ SLA credits are your sole remedy for downtime. Our maximum liability for downtim
 
 **Experimental Features:**
 We may release beta or experimental features labeled as such. Beta features:
+
 - May not work as intended
 - May be changed or removed at any time
 - Are provided "AS IS" without warranty
@@ -873,12 +1003,14 @@ By enabling beta features, you acknowledge and accept the risks.
 ### 12.1 Liability Cap
 
 TO THE MAXIMUM EXTENT PERMITTED BY LAW, OUR TOTAL LIABILITY TO YOU FOR ANY DAMAGES ARISING FROM OR RELATED TO THESE TERMS OR YOUR USE OF THE PLATFORM SHALL NOT EXCEED THE GREATER OF:
+
 - (A) THE AMOUNT YOU PAID US IN THE 12 MONTHS BEFORE THE EVENT GIVING RISE TO LIABILITY, OR
 - (B) €100 (ONE HUNDRED EUROS)
 
 ### 12.2 Excluded Damages
 
 IN NO EVENT SHALL WE BE LIABLE FOR:
+
 - **Indirect Damages:** Loss of profits, revenue, data, business opportunities, goodwill, or reputation
 - **Consequential Damages:** Damages resulting from your reliance on the Platform or AI-generated content
 - **Incidental Damages:** Damages from third-party actions, service interruptions, or security breaches
@@ -886,6 +1018,7 @@ IN NO EVENT SHALL WE BE LIABLE FOR:
 - **Special Damages:** Unusual or unforeseeable damages
 
 **Even If:**
+
 - We were advised of the possibility of such damages
 - A remedy fails of its essential purpose
 - The damages were reasonably foreseeable
@@ -893,6 +1026,7 @@ IN NO EVENT SHALL WE BE LIABLE FOR:
 ### 12.3 Exceptions to Limitations
 
 **Limitations Do NOT Apply To:**
+
 - Death or personal injury caused by our gross negligence
 - Fraud or fraudulent misrepresentation
 - Liabilities that cannot be excluded under applicable law (EU consumer protection, etc.)
@@ -904,6 +1038,7 @@ If you are a consumer in the EU/EEA, you have statutory rights that cannot be wa
 
 **You Agree to Indemnify Us:**
 You agree to indemnify, defend, and hold harmless ONE Platform, its officers, directors, employees, agents, and contractors from any claims, damages, liabilities, costs, and expenses (including reasonable attorneys' fees) arising from:
+
 - Your violation of these Terms
 - Your violation of applicable laws or regulations
 - Your Content (including AI-generated content you publish)
@@ -913,6 +1048,7 @@ You agree to indemnify, defend, and hold harmless ONE Platform, its officers, di
 
 **Indemnification Process:**
 If we are subject to a claim for which you must indemnify us:
+
 - We will notify you promptly
 - You will assume control of the defense (with our cooperation)
 - You will pay all costs, damages, and settlements
@@ -920,6 +1056,7 @@ If we are subject to a claim for which you must indemnify us:
 
 **Settlement Approval:**
 You may not settle any claim without our prior written consent if the settlement:
+
 - Requires us to admit fault or wrongdoing
 - Imposes obligations or restrictions on us
 - Grants rights to third parties that affect our business
@@ -936,10 +1073,12 @@ These Terms remain in effect while you use the Platform or have an account.
 
 **Cancel Anytime:**
 You may terminate your account at any time:
+
 - Settings → Account → Delete Account
 - Email request to: support@one.ie
 
 **Effect of Termination:**
+
 - Access to the Platform will be revoked
 - Billing will stop immediately (no refunds except as per Section 4.2)
 - 30-day grace period to recover account
@@ -948,6 +1087,7 @@ You may terminate your account at any time:
 ### 13.3 Termination by Us
 
 **We May Terminate Your Account If:**
+
 - You violate these Terms
 - You engage in prohibited conduct (Section 8)
 - Your account is inactive for 2+ years (with 60 days notice)
@@ -955,11 +1095,13 @@ You may terminate your account at any time:
 - We cease operations (with 90 days notice)
 
 **Notice Period:**
+
 - Immediate termination: Serious violations (illegal activity, child safety, fraud)
 - 30 days notice: Standard violations (acceptable use, payment failure)
 - 90 days notice: Business closure
 
 **Effect of Termination:**
+
 - Access revoked immediately
 - Data deleted per Section 10.4 (with grace period for non-serious violations)
 - No refunds for prepaid fees (except pro-rated for business closure)
@@ -967,6 +1109,7 @@ You may terminate your account at any time:
 ### 13.4 Survival
 
 The following sections survive termination:
+
 - Section 5 (Intellectual Property)
 - Section 6.3 (AI Disclaimers & Limitations of Liability)
 - Section 10 (Data & Privacy - for retention obligations)
@@ -984,11 +1127,13 @@ The following sections survive termination:
 
 **Material Changes:**
 We will notify you of material changes to these Terms by:
+
 - Email notification (14 days before changes take effect)
 - In-app notification banner
 - Update to "Last Updated" date at top of these Terms
 
 **Material Changes Include:**
+
 - New fees or price increases
 - Changes to dispute resolution process
 - Changes to limitation of liability
@@ -996,6 +1141,7 @@ We will notify you of material changes to these Terms by:
 - Changes to termination rights
 
 **Non-Material Changes:**
+
 - Clarifications or formatting improvements
 - Updated contact information
 - New features or service additions
@@ -1008,15 +1154,16 @@ By continuing to use the Platform after changes take effect, you accept the new 
 
 **Rejection of Changes:**
 If you do not accept the new Terms:
+
 - Stop using the Platform
 - Delete your account within 30 days
 - You will receive a pro-rated refund for prepaid fees (if material changes adversely affect you)
 
 ### 14.3 Version History
 
-| Version | Date | Changes |
-|---------|------|---------|
-| 1.0.0 | 2025-10-16 | Initial Terms of Service |
+| Version | Date       | Changes                  |
+| ------- | ---------- | ------------------------ |
+| 1.0.0   | 2025-10-16 | Initial Terms of Service |
 
 ---
 
@@ -1026,6 +1173,7 @@ If you do not accept the new Terms:
 
 **Good Faith Negotiation:**
 Before pursuing formal dispute resolution, you agree to:
+
 - Contact us in writing: legal@one.ie
 - Describe the dispute in detail
 - Propose a resolution
@@ -1038,6 +1186,7 @@ We are committed to resolving disputes fairly and quickly through informal negot
 
 **If Negotiation Fails:**
 If informal negotiation does not resolve the dispute within 90 days:
+
 - Either party may request mediation
 - Mediation will be conducted by a neutral third-party mediator
 - Location: Dublin, Ireland (or online)
@@ -1053,6 +1202,7 @@ If mediation does not result in resolution within 60 days, either party may purs
 If mediation fails, disputes will be resolved by binding arbitration, NOT by court litigation.
 
 **Arbitration Rules:**
+
 - Administered by: International Chamber of Commerce (ICC)
 - Rules: ICC Arbitration Rules
 - Location: Dublin, Ireland
@@ -1060,12 +1210,14 @@ If mediation fails, disputes will be resolved by binding arbitration, NOT by cou
 - Number of arbitrators: 1 (for disputes under €100,000), 3 (for disputes over €100,000)
 
 **Arbitration Process:**
+
 - Each party appoints one arbitrator (if 3-arbitrator panel)
 - The appointed arbitrators select a third (presiding) arbitrator
 - Hearing conducted in person or remotely (at arbitrator's discretion)
 - Decision is final and binding (limited appeal rights per ICC Rules)
 
 **Arbitration Costs:**
+
 - Filing fees and arbitrator fees shared equally
 - Each party pays their own legal fees
 - Prevailing party may recover costs if arbitrator awards them
@@ -1079,6 +1231,7 @@ You may opt out of binding arbitration by sending written notice to legal@one.ie
 ### 15.4 Exceptions to Arbitration
 
 **The Following Disputes Are NOT Subject to Arbitration:**
+
 - Small claims court disputes (under €5,000 in Ireland, or equivalent in your jurisdiction)
 - Intellectual property disputes (copyright, trademark, patent, trade secret)
 - Injunctive relief (to prevent irreparable harm)
@@ -1098,6 +1251,7 @@ These Terms are governed by the laws of Ireland, without regard to conflict of l
 
 **EU Law:**
 To the extent applicable, these Terms comply with EU regulations including:
+
 - General Data Protection Regulation (GDPR)
 - Digital Services Act (DSA)
 - E-Commerce Directive
@@ -1132,6 +1286,7 @@ You agree to comply with all applicable export control and sanctions laws, inclu
 ### 17.1 Entire Agreement
 
 These Terms, together with:
+
 - Privacy Policy
 - Acceptable Use Policy
 - ONE License 1.0
@@ -1145,6 +1300,7 @@ These Terms supersede all prior agreements, understandings, and communications r
 ### 17.2 Severability
 
 If any provision of these Terms is found to be invalid or unenforceable:
+
 - That provision will be limited or eliminated to the minimum extent necessary
 - The remaining provisions will remain in full force and effect
 - The invalid provision will be replaced with a valid provision that most closely reflects the original intent
@@ -1164,6 +1320,7 @@ You may not assign or transfer these Terms or your account without our prior wri
 
 **We May Assign:**
 We may assign these Terms or delegate our obligations to:
+
 - A subsidiary or affiliate
 - A successor in connection with a merger, acquisition, or sale of assets
 - Any other party with your consent
@@ -1174,6 +1331,7 @@ We will notify you of any assignment at least 30 days in advance.
 ### 17.5 Force Majeure
 
 We are NOT liable for failure or delay in performance due to events beyond our reasonable control, including:
+
 - Natural disasters (earthquakes, floods, fires)
 - War, terrorism, or civil unrest
 - Government action or regulation
@@ -1188,6 +1346,7 @@ During force majeure events, our performance obligations are suspended. We will 
 ### 17.6 Independent Contractors
 
 You and ONE Platform are independent contractors. These Terms do NOT create:
+
 - Partnership, joint venture, or agency relationship
 - Employment relationship
 - Franchise or distributor relationship
@@ -1203,6 +1362,7 @@ We will send notices to the email address associated with your account.
 
 **To Us:**
 Send legal notices to:
+
 - Email: legal@one.ie
 - Mail: [Address to be added]
 
@@ -1251,6 +1411,7 @@ Translations are provided for convenience only and do NOT alter your rights or o
 ## 19. Acknowledgment & Acceptance
 
 By using ONE Platform, you acknowledge that:
+
 - You have read these Terms in full
 - You understand these Terms
 - You agree to be bound by these Terms

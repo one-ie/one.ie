@@ -1,3 +1,21 @@
+---
+title: Feature Based Sites
+dimension: things
+category: plans
+tags: architecture, ontology, things
+related_dimensions: events, people
+scope: global
+created: 2025-11-03
+updated: 2025-11-03
+version: 1.0.0
+ai_context: |
+  This document is part of the things dimension in the plans category.
+  Location: one/things/plans/feature-based-sites.md
+  Purpose: Documents feature-based multi-site architecture
+  Related dimensions: events, people
+  For AI agents: Read this to understand feature based sites.
+---
+
 # Feature-Based Multi-Site Architecture
 
 **Status:** 🎯 Active Plan
@@ -13,6 +31,7 @@ Build websites by **enabling features**, not selecting templates. Users mix and 
 ### The Shift: From Templates to Features
 
 **❌ Template-Based (Rigid):**
+
 ```bash
 PUBLIC_SITE_TEMPLATE=creator     # Gets: portfolio, blog, courses
 PUBLIC_SITE_TEMPLATE=ecommerce   # Gets: shop, cart, checkout
@@ -20,6 +39,7 @@ PUBLIC_SITE_TEMPLATE=ecommerce   # Gets: shop, cart, checkout
 ```
 
 **✅ Feature-Based (Flexible):**
+
 ```bash
 # Enable exactly what you need
 PUBLIC_FEATURES=blog,portfolio,shop,courses,community,tokens
@@ -50,25 +70,25 @@ PUBLIC_FEATURES=portfolio,blog,courses,shop,community,tokens
 ```typescript
 // src/config/features.ts
 export type Feature =
-  | 'blank'        // Minimal starter (homepage, about, contact)
-  | 'blog'         // Content hub
-  | 'portfolio'    // Project showcase
-  | 'courses'      // Course platform
-  | 'shop'         // Ecommerce
-  | 'community'    // Forums/chat
-  | 'tokens'       // Creator tokens
-  | 'library'      // Resource library
-  | 'events'       // Event management
-  | 'booking'      // Appointment scheduling
-  | 'membership'   // Subscription tiers
-  | 'analytics';   // Dashboard & insights
+  | "blank" // Minimal starter (homepage, about, contact)
+  | "blog" // Content hub
+  | "portfolio" // Project showcase
+  | "courses" // Course platform
+  | "shop" // Ecommerce
+  | "community" // Forums/chat
+  | "tokens" // Creator tokens
+  | "library" // Resource library
+  | "events" // Event management
+  | "booking" // Appointment scheduling
+  | "membership" // Subscription tiers
+  | "analytics"; // Dashboard & insights
 
-export const FEATURES = (
-  import.meta.env.PUBLIC_FEATURES || 'blank'
-).split(',').map(f => f.trim()) as Feature[];
+export const FEATURES = (import.meta.env.PUBLIC_FEATURES || "blank")
+  .split(",")
+  .map((f) => f.trim()) as Feature[];
 
 export const hasFeature = (feature: Feature) =>
-  FEATURES.includes(feature) || FEATURES.includes('all');
+  FEATURES.includes(feature) || FEATURES.includes("all");
 ```
 
 ---
@@ -80,12 +100,14 @@ export const hasFeature = (feature: Feature) =>
 **Perfect for:** Starting from scratch, custom builds
 
 **Includes:**
+
 - Homepage (hero + CTA)
 - About page
 - Contact page
 - Basic navigation
 
 **Routes:**
+
 - `/`
 - `/about`
 - `/contact`
@@ -99,6 +121,7 @@ export const hasFeature = (feature: Feature) =>
 **Perfect for:** Content creators, writers, marketers
 
 **Includes:**
+
 - Blog listing (grid/list views)
 - Individual blog posts
 - Categories & tags
@@ -106,6 +129,7 @@ export const hasFeature = (feature: Feature) =>
 - RSS feed
 
 **Routes:**
+
 - `/blog`
 - `/blog/[slug]`
 - `/blog/category/[category]`
@@ -119,12 +143,14 @@ export const hasFeature = (feature: Feature) =>
 **Perfect for:** Artists, designers, developers
 
 **Includes:**
+
 - Project showcase
 - Case studies
 - Image galleries
 - Client testimonials
 
 **Routes:**
+
 - `/portfolio`
 - `/portfolio/[project-slug]`
 
@@ -137,6 +163,7 @@ export const hasFeature = (feature: Feature) =>
 **Perfect for:** Educators, coaches, trainers
 
 **Includes:**
+
 - Course catalog
 - Lesson pages
 - Progress tracking
@@ -144,12 +171,14 @@ export const hasFeature = (feature: Feature) =>
 - Certificates
 
 **Routes:**
+
 - `/courses`
 - `/courses/[slug]`
 - `/courses/[slug]/lessons/[lesson]`
 - `/dashboard` (student progress)
 
 **Backend needs:**
+
 - `things` table (type: `course`, `lesson`)
 - `connections` table (relationshipType: `enrolled_in`)
 - `events` table (type: `lesson_completed`)
@@ -161,6 +190,7 @@ export const hasFeature = (feature: Feature) =>
 **Perfect for:** Product sellers, brands, merchants
 
 **Includes:**
+
 - Product catalog
 - Product pages
 - Shopping cart
@@ -168,6 +198,7 @@ export const hasFeature = (feature: Feature) =>
 - Order management
 
 **Routes:**
+
 - `/shop`
 - `/shop/[product-slug]`
 - `/cart`
@@ -175,6 +206,7 @@ export const hasFeature = (feature: Feature) =>
 - `/orders`
 
 **Backend needs:**
+
 - `things` table (type: `product`)
 - `connections` table (relationshipType: `purchased`)
 - `events` table (type: `order_placed`)
@@ -187,18 +219,21 @@ export const hasFeature = (feature: Feature) =>
 **Perfect for:** Building engaged audiences
 
 **Includes:**
+
 - Discussion forums
 - Chat rooms
 - Member directory
 - Direct messaging
 
 **Routes:**
+
 - `/community`
 - `/community/topics/[topic]`
 - `/community/members`
 - `/community/messages`
 
 **Backend needs:**
+
 - `things` table (type: `forum_topic`, `message`)
 - `connections` table (relationshipType: `follows`, `member_of`)
 - Real-time subscriptions
@@ -210,17 +245,20 @@ export const hasFeature = (feature: Feature) =>
 **Perfect for:** Creator economy, fan engagement
 
 **Includes:**
+
 - Token overview
 - Buy/sell interface
 - Holder benefits
 - Token-gated content
 
 **Routes:**
+
 - `/tokens`
 - `/tokens/buy`
 - `/tokens/holders`
 
 **Backend needs:**
+
 - `things` table (type: `token`)
 - `connections` table (relationshipType: `holds_tokens`)
 - `events` table (type: `tokens_purchased`)
@@ -233,17 +271,20 @@ export const hasFeature = (feature: Feature) =>
 **Perfect for:** Resource hubs, knowledge bases
 
 **Includes:**
+
 - Document library
 - File uploads
 - Search & categories
 - Download tracking
 
 **Routes:**
+
 - `/library`
 - `/library/[category]`
 - `/library/[slug]`
 
 **Backend needs:**
+
 - `things` table (type: `document`)
 - `events` table (type: `document_downloaded`)
 
@@ -254,17 +295,20 @@ export const hasFeature = (feature: Feature) =>
 **Perfect for:** Event organizers, conferences
 
 **Includes:**
+
 - Event calendar
 - Event pages
 - RSVP/ticketing
 - Attendee list
 
 **Routes:**
+
 - `/events`
 - `/events/[slug]`
 - `/events/[slug]/register`
 
 **Backend needs:**
+
 - `things` table (type: `event`)
 - `connections` table (relationshipType: `registered_for`)
 - `events` table (type: `event_registered`)
@@ -276,17 +320,20 @@ export const hasFeature = (feature: Feature) =>
 **Perfect for:** Consultants, coaches, service providers
 
 **Includes:**
+
 - Calendar availability
 - Appointment booking
 - Payment integration
 - Reminders
 
 **Routes:**
+
 - `/book`
 - `/book/confirm`
 - `/appointments`
 
 **Backend needs:**
+
 - `things` table (type: `appointment`)
 - `events` table (type: `appointment_booked`)
 - Calendar integration
@@ -298,17 +345,20 @@ export const hasFeature = (feature: Feature) =>
 **Perfect for:** Subscription businesses
 
 **Includes:**
+
 - Membership tiers
 - Subscription management
 - Member-only content
 - Recurring billing
 
 **Routes:**
+
 - `/membership`
 - `/membership/[tier]`
 - `/members/dashboard`
 
 **Backend needs:**
+
 - `things` table (type: `membership_tier`)
 - `connections` table (relationshipType: `subscribed_to`)
 - `events` table (type: `subscription_created`)
@@ -321,17 +371,20 @@ export const hasFeature = (feature: Feature) =>
 **Perfect for:** Data-driven creators
 
 **Includes:**
+
 - Traffic dashboard
 - Revenue analytics
 - User insights
 - Export reports
 
 **Routes:**
+
 - `/analytics`
 - `/analytics/revenue`
 - `/analytics/audience`
 
 **Backend needs:**
+
 - `events` table (all event types)
 - Aggregation queries
 
@@ -358,6 +411,7 @@ PUBLIC_FEATURES=blog,portfolio,community,tokens
 **Use case:** Influencer, artist, writer with engaged fans
 
 **Routes unlocked:**
+
 - `/` - Homepage
 - `/blog` - Content hub
 - `/portfolio` - Work showcase
@@ -375,6 +429,7 @@ PUBLIC_FEATURES=courses,library,community,membership
 **Use case:** Teacher, coach, trainer with paid content
 
 **Routes unlocked:**
+
 - `/` - Homepage
 - `/courses` - Course catalog
 - `/library` - Resources
@@ -392,6 +447,7 @@ PUBLIC_FEATURES=shop,blog,membership
 **Use case:** Brand with products + content marketing
 
 **Routes unlocked:**
+
 - `/` - Homepage
 - `/shop` - Product catalog
 - `/blog` - Content marketing
@@ -532,42 +588,42 @@ const Page = await import(`@/features/${feature}/pages/${route}.astro`);
 
 ```typescript
 // src/config/navigation.ts
-import { hasFeature } from './features';
+import { hasFeature } from "./features";
 
 export const generateNavigation = () => {
   const nav = [];
 
   // Always include home
-  nav.push({ label: 'Home', href: '/' });
+  nav.push({ label: "Home", href: "/" });
 
   // Add feature-specific nav items
-  if (hasFeature('blog')) {
-    nav.push({ label: 'Blog', href: '/blog' });
+  if (hasFeature("blog")) {
+    nav.push({ label: "Blog", href: "/blog" });
   }
 
-  if (hasFeature('portfolio')) {
-    nav.push({ label: 'Portfolio', href: '/portfolio' });
+  if (hasFeature("portfolio")) {
+    nav.push({ label: "Portfolio", href: "/portfolio" });
   }
 
-  if (hasFeature('courses')) {
-    nav.push({ label: 'Courses', href: '/courses' });
+  if (hasFeature("courses")) {
+    nav.push({ label: "Courses", href: "/courses" });
   }
 
-  if (hasFeature('shop')) {
-    nav.push({ label: 'Shop', href: '/shop' });
+  if (hasFeature("shop")) {
+    nav.push({ label: "Shop", href: "/shop" });
   }
 
-  if (hasFeature('community')) {
-    nav.push({ label: 'Community', href: '/community' });
+  if (hasFeature("community")) {
+    nav.push({ label: "Community", href: "/community" });
   }
 
-  if (hasFeature('events')) {
-    nav.push({ label: 'Events', href: '/events' });
+  if (hasFeature("events")) {
+    nav.push({ label: "Events", href: "/events" });
   }
 
   // Always include about & contact
-  nav.push({ label: 'About', href: '/about' });
-  nav.push({ label: 'Contact', href: '/contact' });
+  nav.push({ label: "About", href: "/about" });
+  nav.push({ label: "Contact", href: "/contact" });
 
   return nav;
 };
@@ -692,12 +748,16 @@ Only loads/generates code for enabled features:
 
 ```typescript
 // Conditionally load feature services
-if (hasFeature('shop')) {
-  const { ProductService } = await import('@/features/shop/services/ProductService');
+if (hasFeature("shop")) {
+  const { ProductService } = await import(
+    "@/features/shop/services/ProductService"
+  );
 }
 
-if (hasFeature('courses')) {
-  const { CourseService } = await import('@/features/courses/services/CourseService');
+if (hasFeature("courses")) {
+  const { CourseService } = await import(
+    "@/features/courses/services/CourseService"
+  );
 }
 ```
 
@@ -710,12 +770,12 @@ Some features depend on others:
 ```typescript
 // src/config/features.ts
 export const FEATURE_DEPENDENCIES: Record<Feature, Feature[]> = {
-  membership: ['shop'],      // Memberships need payment
-  tokens: ['community'],     // Tokens need community
-  analytics: [],             // No dependencies
-  booking: ['shop'],         // Booking needs payment
-  library: [],               // No dependencies
-  events: ['shop'],          // Events may need ticketing
+  membership: ["shop"], // Memberships need payment
+  tokens: ["community"], // Tokens need community
+  analytics: [], // No dependencies
+  booking: ["shop"], // Booking needs payment
+  library: [], // No dependencies
+  events: ["shop"], // Events may need ticketing
   // etc.
 };
 
@@ -725,7 +785,7 @@ export const resolveFeatures = (requested: Feature[]): Feature[] => {
 
   for (const feature of requested) {
     const deps = FEATURE_DEPENDENCIES[feature] || [];
-    deps.forEach(dep => enabled.add(dep));
+    deps.forEach((dep) => enabled.add(dep));
   }
 
   return Array.from(enabled);
@@ -741,21 +801,29 @@ For convenience, offer pre-built combos:
 ```typescript
 // src/config/presets.ts
 export const PRESETS = {
-  blank: ['blank'],
+  blank: ["blank"],
 
-  blogger: ['blog', 'portfolio'],
+  blogger: ["blog", "portfolio"],
 
-  creator: ['blog', 'portfolio', 'community', 'tokens'],
+  creator: ["blog", "portfolio", "community", "tokens"],
 
-  educator: ['courses', 'library', 'community', 'membership'],
+  educator: ["courses", "library", "community", "membership"],
 
-  ecommerce: ['shop', 'blog'],
+  ecommerce: ["shop", "blog"],
 
-  powerhouse: ['blog', 'portfolio', 'courses', 'shop', 'community', 'tokens', 'events'],
+  powerhouse: [
+    "blog",
+    "portfolio",
+    "courses",
+    "shop",
+    "community",
+    "tokens",
+    "events",
+  ],
 };
 
 // Usage
-PUBLIC_FEATURES_PRESET=creator
+PUBLIC_FEATURES_PRESET = creator;
 // Expands to: blog,portfolio,community,tokens
 ```
 
@@ -764,26 +832,31 @@ PUBLIC_FEATURES_PRESET=creator
 ## Implementation Timeline
 
 ### Week 1: Core Infrastructure
+
 - Create feature system
 - Build blank template
 - Add feature detection logic
 
 ### Week 2: Core Features
+
 - Build blog feature
 - Build portfolio feature
 - Test feature combinations
 
 ### Week 3-4: Additional Features
+
 - Build courses feature
 - Build shop feature
 - Build community feature
 
 ### Week 5-6: Advanced Features
+
 - Build tokens feature
 - Build events feature
 - Build membership feature
 
 ### Week 7: CLI Integration
+
 - Update `npx oneie` to support features
 - Add feature selection UI
 - Test end-to-end

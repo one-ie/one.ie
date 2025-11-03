@@ -1,3 +1,21 @@
+---
+title: Ontology Visual Guide
+dimension: knowledge
+category: ontology-visual-guide.md
+tags: 6-dimensions, agent, connections, ontology, things
+related_dimensions: connections, events, groups, people, things
+scope: global
+created: 2025-11-03
+updated: 2025-11-03
+version: 1.0.0
+ai_context: |
+  This document is part of the knowledge dimension in the ontology-visual-guide.md category.
+  Location: one/knowledge/ontology-visual-guide.md
+  Purpose: Documents visual guide: 6-dimension ontology implementation
+  Related dimensions: connections, events, groups, people, things
+  For AI agents: Read this to understand ontology visual guide.
+---
+
 # Visual Guide: 6-Dimension Ontology Implementation
 
 ## The Reality Flow

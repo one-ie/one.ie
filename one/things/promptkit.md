@@ -1,3 +1,21 @@
+---
+title: Promptkit
+dimension: things
+category: promptkit.md
+tags: agent, ai, installation
+related_dimensions: events
+scope: global
+created: 2025-11-03
+updated: 2025-11-03
+version: 1.0.0
+ai_context: |
+  This document is part of the things dimension in the promptkit.md category.
+  Location: one/things/promptkit.md
+  Purpose: Documents prompt kit integration guide
+  Related dimensions: events
+  For AI agents: Read this to understand promptkit.
+---
+
 # Prompt Kit Integration Guide
 
 Comprehensive documentation for integrating [Prompt Kit](https://www.prompt-kit.com/) components with **Vercel AI SDK 5** in this Astro + React project.
@@ -7,6 +25,7 @@ Comprehensive documentation for integrating [Prompt Kit](https://www.prompt-kit.
 **Prompt Kit** is a collection of high-quality, customizable React components specifically designed for AI applications. Built on top of shadcn/ui, it provides production-ready UI components for chat interfaces, AI agents, and autonomous assistants.
 
 **Tech Stack:**
+
 - React 19+
 - shadcn/ui
 - Tailwind CSS v4
@@ -50,45 +69,49 @@ bunx shadcn@latest add prompt-kit/[component]
 
 ### Core Components
 
-| Component | Description | Registry Dependencies |
-|-----------|-------------|----------------------|
-| **prompt-input** | Input field for chat interfaces with auto-resize and submit handling | textarea, tooltip |
-| **message** | Display chat messages with avatars, markdown, and actions | avatar, tooltip |
-| **markdown** | Markdown renderer with syntax highlighting | - |
-| **code-block** | Syntax-highlighted code blocks with Shiki | - |
-| **chat-container** | Chat interface with intelligent auto-scrolling | - |
-| **scroll-button** | Floating button to scroll to bottom | - |
-| **loader** | Loading indicators with multiple variants | button |
-| **prompt-suggestion** | Suggested prompts UI | - |
-| **response-stream** | Display streaming AI responses | - |
-| **reasoning** | Display AI reasoning/thinking process | - |
-| **file-upload** | File upload component for AI interactions | - |
-| **image** | Display images in chat messages | - |
-| **jsx-preview** | Preview JSX components in chat | - |
-| **tool** | Display AI tool usage/calls | - |
-| **source** | Display sources/citations | - |
-| **steps** | Display multi-step processes | - |
+| Component             | Description                                                          | Registry Dependencies |
+| --------------------- | -------------------------------------------------------------------- | --------------------- |
+| **prompt-input**      | Input field for chat interfaces with auto-resize and submit handling | textarea, tooltip     |
+| **message**           | Display chat messages with avatars, markdown, and actions            | avatar, tooltip       |
+| **markdown**          | Markdown renderer with syntax highlighting                           | -                     |
+| **code-block**        | Syntax-highlighted code blocks with Shiki                            | -                     |
+| **chat-container**    | Chat interface with intelligent auto-scrolling                       | -                     |
+| **scroll-button**     | Floating button to scroll to bottom                                  | -                     |
+| **loader**            | Loading indicators with multiple variants                            | button                |
+| **prompt-suggestion** | Suggested prompts UI                                                 | -                     |
+| **response-stream**   | Display streaming AI responses                                       | -                     |
+| **reasoning**         | Display AI reasoning/thinking process                                | -                     |
+| **file-upload**       | File upload component for AI interactions                            | -                     |
+| **image**             | Display images in chat messages                                      | -                     |
+| **jsx-preview**       | Preview JSX components in chat                                       | -                     |
+| **tool**              | Display AI tool usage/calls                                          | -                     |
+| **source**            | Display sources/citations                                            | -                     |
+| **steps**             | Display multi-step processes                                         | -                     |
 
 ### NPM Dependencies by Component
 
 **prompt-input:**
+
 ```bash
 # Installed automatically with shadcn add
 bunx shadcn@latest add textarea tooltip
 ```
 
 **message:**
+
 ```bash
 bunx shadcn@latest add avatar tooltip
 bun add react-markdown remark-gfm remark-breaks shiki marked
 ```
 
 **code-block:**
+
 ```bash
 bun add shiki
 ```
 
 **chat-container:**
+
 ```bash
 bun add use-stick-to-bottom
 ```
@@ -311,7 +334,7 @@ export function AIChatWithFiles() {
     useChat({
       api: "/api/chat-files",
       body: {
-        files: files.map(f => ({
+        files: files.map((f) => ({
           name: f.name,
           type: f.type,
           size: f.size,
@@ -399,14 +422,16 @@ export const POST: APIRoute = async ({ request }) => {
 ```tsx
 import { Tool } from "@/components/ui/tool";
 
-{message.toolInvocations?.map((toolCall) => (
-  <Tool
-    key={toolCall.toolCallId}
-    name={toolCall.toolName}
-    arguments={toolCall.args}
-    result={toolCall.result}
-  />
-))}
+{
+  message.toolInvocations?.map((toolCall) => (
+    <Tool
+      key={toolCall.toolCallId}
+      name={toolCall.toolName}
+      arguments={toolCall.args}
+      result={toolCall.result}
+    />
+  ));
+}
 ```
 
 ---
@@ -475,7 +500,7 @@ export const sendMessage = mutation({
     // Get conversation history
     const messages = await ctx.db
       .query("messages")
-      .filter(q => q.eq(q.field("conversationId"), args.conversationId))
+      .filter((q) => q.eq(q.field("conversationId"), args.conversationId))
       .collect();
 
     // Note: Streaming requires special handling with Convex
@@ -518,10 +543,11 @@ import {
       <Button type="submit">Send</Button>
     </PromptInputAction>
   </PromptInputActions>
-</PromptInput>
+</PromptInput>;
 ```
 
 **Props:**
+
 - `isLoading?: boolean` - Disable input during loading
 - `value?: string` - Controlled value
 - `onValueChange?: (value: string) => void` - Change handler
@@ -542,14 +568,8 @@ import {
 } from "@/components/ui/message";
 
 <Message>
-  <MessageAvatar
-    src="/avatar.png"
-    alt="User"
-    fallback="U"
-  />
-  <MessageContent markdown={true}>
-    **Bold text** and `code`
-  </MessageContent>
+  <MessageAvatar src="/avatar.png" alt="User" fallback="U" />
+  <MessageContent markdown={true}>**Bold text** and `code`</MessageContent>
   <MessageActions>
     <MessageAction tooltip="Copy">
       <Button variant="ghost" size="icon">
@@ -557,10 +577,11 @@ import {
       </Button>
     </MessageAction>
   </MessageActions>
-</Message>
+</Message>;
 ```
 
 **Props:**
+
 - `markdown?: boolean` - Render content as markdown
 - `src: string` - Avatar image source
 - `alt: string` - Avatar alt text
@@ -579,12 +600,12 @@ import {
 
 <ChatContainerRoot className="h-[600px]">
   <ChatContainerContent>
-    {messages.map(msg => (
+    {messages.map((msg) => (
       <Message key={msg.id}>...</Message>
     ))}
     <ChatContainerScrollAnchor />
   </ChatContainerContent>
-</ChatContainerRoot>
+</ChatContainerRoot>;
 ```
 
 ### Markdown & CodeBlock
@@ -688,7 +709,7 @@ const result = streamText({
         { type: "text", text: "What's in this image?" },
         {
           type: "image",
-          image: new URL("https://example.com/image.jpg")
+          image: new URL("https://example.com/image.jpg"),
         },
       ],
     },
@@ -716,7 +737,7 @@ const suggestions = [
       {suggestion}
     </PromptSuggestion>
   ))}
-</div>
+</div>;
 ```
 
 ---
@@ -776,7 +797,7 @@ const AIChat = lazy(() => import("@/components/features/ai/AIChat"));
 
 <Suspense fallback={<Loader />}>
   <AIChat />
-</Suspense>
+</Suspense>;
 ```
 
 ### Memoization
@@ -820,21 +841,25 @@ wrangler pages deploy dist --project-name=astro-shadcn
 ### Common Issues
 
 **1. "Module not found: react-markdown"**
+
 ```bash
 bun add react-markdown remark-gfm remark-breaks
 ```
 
 **2. "Shiki syntax highlighting not working"**
+
 ```bash
 bun add shiki
 ```
 
 **3. "Auto-scroll not working"**
+
 ```bash
 bun add use-stick-to-bottom
 ```
 
 **4. "Type errors with Vercel AI SDK"**
+
 ```bash
 bun add -D @types/react @types/node
 ```
@@ -871,6 +896,7 @@ const result = streamText({
 ### Complete Chat Implementation
 
 See `src/components/features/ai/AIChat.tsx` for a full working example with:
+
 - Message history
 - Streaming responses
 - File uploads
@@ -882,6 +908,7 @@ See `src/components/features/ai/AIChat.tsx` for a full working example with:
 ### API Route Examples
 
 See `src/pages/api/` for:
+
 - `chat.ts` - Basic streaming chat
 - `chat-tools.ts` - Function calling
 - `chat-files.ts` - File upload handling

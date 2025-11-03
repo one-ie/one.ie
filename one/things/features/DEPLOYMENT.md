@@ -1,3 +1,21 @@
+---
+title: Deployment
+dimension: things
+category: features
+tags: ai, backend
+related_dimensions: connections
+scope: global
+created: 2025-11-03
+updated: 2025-11-03
+version: 1.0.0
+ai_context: |
+  This document is part of the things dimension in the features category.
+  Location: one/things/features/DEPLOYMENT.md
+  Purpose: Documents 🚀 deployment guide - one web platform
+  Related dimensions: connections
+  For AI agents: Read this to understand DEPLOYMENT.
+---
+
 # 🚀 Deployment Guide - ONE Web Platform
 
 **Status:** ✅ Production Ready
@@ -150,7 +168,7 @@ on:
   push:
     branches: [main]
     paths:
-      - 'web/**'
+      - "web/**"
 
 jobs:
   deploy:
@@ -322,10 +340,10 @@ export const onRequest = async (context) => {
   const response = await context.next();
 
   // Cache static assets
-  if (context.url.pathname.startsWith('/_astro/')) {
+  if (context.url.pathname.startsWith("/_astro/")) {
     response.headers.set(
-      'Cache-Control',
-      'public, max-age=31536000, immutable'
+      "Cache-Control",
+      "public, max-age=31536000, immutable",
     );
   }
 

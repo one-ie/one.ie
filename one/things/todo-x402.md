@@ -1,3 +1,22 @@
+---
+title: Todo X402
+dimension: things
+primary_dimension: things
+category: todo-x402.md
+tags: agent, ai, architecture, connections, groups, inference, ontology, people, protocol, things
+related_dimensions: connections, events, groups, knowledge, people
+scope: global
+created: 2025-11-03
+updated: 2025-11-03
+version: 1.0.0
+ai_context: |
+  This document is part of the things dimension in the todo-x402.md category.
+  Location: one/things/todo-x402.md
+  Purpose: Documents one platform: x402 integration roadmap v1.0.0
+  Related dimensions: connections, events, groups, knowledge, people
+  For AI agents: Read this to understand todo x402.
+---
+
 # ONE Platform: X402 Integration Roadmap v1.0.0
 
 **Focus:** Integrate X402 HTTP-native payments into the web platform
@@ -12,6 +31,7 @@
 **Purpose:** Validate architecture, map to 6-dimension ontology, plan implementation
 
 ### Infer 1: Validate X402 Protocol Alignment with Ontology
+
 - [ ] Read `/one/connections/x402.md` (protocol spec)
 - [ ] Map X402 payment flow to 6-dimension ontology:
   - [ ] **Groups:** Merchant group owns API service, customer group initiates payment
@@ -26,6 +46,7 @@
   - [ ] Bazar marketplace discovery + payment
 
 ### Infer 2: Review Existing Payment Infrastructure
+
 - [ ] Examine `backend/convex/schema.ts` for payment thing type
 - [ ] Check `web/src/components/` for any existing payment UI
 - [ ] Review `backend/convex/mutations/` for payment flows
@@ -36,6 +57,7 @@
 - [ ] Note: **Goal is X402 as PRIMARY payment, not replacement**
 
 ### Infer 3: Map X402 to Web Application Layers
+
 - [ ] **Frontend (Astro):**
   - [ ] X402 payment prompt components (402 handling)
   - [ ] Wallet connection UI (viem, wagmi)
@@ -54,6 +76,7 @@
   - [ ] transacted connection metadata
 
 ### Infer 4: Define X402 Integration Scope
+
 - [ ] **Phase 1 (Infer 1-100):** Core X402 infrastructure
   - [ ] HTTP 402 protocol implementation
   - [ ] Base network support (preferred for low fees)
@@ -70,6 +93,7 @@
   - [ ] Pay-per-request model (not subscriptions initially)
 
 ### Infer 5: Set Up Development Environment
+
 - [ ] Ensure `.env.local` in `/web` contains:
   - [ ] `PUBLIC_CONVEX_URL` (Convex endpoint)
   - [ ] `BETTER_AUTH_SECRET` (auth)
@@ -89,6 +113,7 @@
   - [ ] `effect` (Effect.ts already included)
 
 ### Infer 6: Review Convex Schema for Payment Thing Type
+
 - [ ] Open `backend/convex/schema.ts`
 - [ ] Verify payment thing type exists:
   ```typescript
@@ -116,6 +141,7 @@
   - [ ] by_protocol(protocol)
 
 ### Infer 7: Create X402 Protocol Type Definitions File
+
 - [ ] Create `backend/convex/protocols/x402.ts` with:
   - [ ] PaymentRequired interface (402 response)
   - [ ] PaymentRequirement interface (per-scheme/network)
@@ -129,6 +155,7 @@
 - [ ] Note: Copy from `/one/connections/x402.md` "TypeScript Protocol Interfaces" section
 
 ### Infer 8: Understand X402 Protocol Flow in Web Context
+
 - [ ] Study the 4-step HTTP 402 flow:
   1. Client requests protected resource
   2. Server responds 402 with PaymentRequired
@@ -148,6 +175,7 @@
   - [ ] Custom API: `/api/custom/[name]` (future)
 
 ### Infer 9: Plan Blockchain Integration
+
 - [ ] Choose primary network: **Base (Coinbase L2)**
   - [ ] Lowest fees (~$0.001 per transaction)
   - [ ] USDC natively supported
@@ -166,6 +194,7 @@
   - [ ] Facilitator: Coinbase CDP (pre-hosted)
 
 ### Infer 10: Define Success Metrics for X402 Phase
+
 - [ ] Integration complete when:
   - [ ] [ ] HTTP 402 responses sent from Astro API routes
   - [ ] [ ] X-PAYMENT header validation working
@@ -187,8 +216,10 @@
 **Purpose:** Implement Effect.ts payment services, update Convex schema
 
 ### Infer 11: Extend Payment Thing Type in Schema
+
 - [ ] Edit `backend/convex/schema.ts`
 - [ ] Update payment thing properties:
+
   ```typescript
   properties: {
     protocol: v.literal('x402'),  // X402-specific
@@ -236,6 +267,7 @@
     metadata: v.optional(v.any()),
   }
   ```
+
 - [ ] Add payment indexes:
   - [ ] by_type("payment")
   - [ ] by_status(status)
@@ -244,6 +276,7 @@
 - [ ] Create migration if needed (Convex migrations)
 
 ### Infer 12: Create X402PaymentService (Effect.ts)
+
 - [ ] Create `backend/convex/services/x402-payment.ts`
 - [ ] Implement X402PaymentService class:
   ```typescript
@@ -265,6 +298,7 @@
 - [ ] Note: Reference `/one/connections/x402.md` Part 2 for code
 
 ### Infer 13: Create X402FacilitatorService (Effect.ts)
+
 - [ ] Create `backend/convex/services/x402-facilitator.ts`
 - [ ] Implement X402FacilitatorService class:
   ```typescript
@@ -287,6 +321,7 @@
   - [ ] Unsupported scheme/network
 
 ### Infer 14: Create Blockchain Provider Service (Effect.ts)
+
 - [ ] Create `backend/convex/services/blockchain-provider.ts`
 - [ ] Implement BlockchainProviderService class:
   ```typescript
@@ -307,6 +342,7 @@
 - [ ] Cache provider instances for efficiency
 
 ### Infer 15: Implement Payment Event Logging
+
 - [ ] Ensure payment_event exists in events table (from ontology)
 - [ ] Create `backend/convex/services/payment-event-logger.ts`
 - [ ] Log event types:
@@ -337,6 +373,7 @@
 - [ ] Test event logging in dev environment
 
 ### Infer 16: Create X402Middleware for Astro API Routes
+
 - [ ] Create `web/src/middleware/x402-middleware.ts`
 - [ ] Implement middleware that:
   - [ ] Intercepts API route requests
@@ -348,13 +385,13 @@
   ```typescript
   export function x402Middleware(
     request: Request,
-    endpoint: X402ProtectedEndpoint
+    endpoint: X402ProtectedEndpoint,
   ): {
     requiresPayment: boolean;
     statusCode: number;
     paymentRequired?: PaymentRequired;
     xPaymentId?: string;
-  }
+  };
   ```
 - [ ] Handle edge cases:
   - [ ] Missing X-PAYMENT header
@@ -363,6 +400,7 @@
   - [ ] Payment already used (replay protection)
 
 ### Infer 17: Set Up X402 Configuration
+
 - [ ] Create `backend/convex/config/x402-config.ts`
 - [ ] Define configuration object:
   ```typescript
@@ -376,22 +414,22 @@
       base: {
         rpcUrl: process.env.VITE_BLOCKCHAIN_RPC_BASE,
         chainId: 8453,
-        usdcAddress: '0x833589fcd6edb6e08f4c7c32d4f71b54bda02913',
+        usdcAddress: "0x833589fcd6edb6e08f4c7c32d4f71b54bda02913",
         treasury: process.env.X402_PAYMENT_ADDRESS_BASE,
       },
       ethereum: {
         rpcUrl: process.env.VITE_BLOCKCHAIN_RPC_ETHEREUM,
         chainId: 1,
-        usdcAddress: '0xa0b86991c6218b36c1d19d4a2e9eb0ce3606eb48',
+        usdcAddress: "0xa0b86991c6218b36c1d19d4a2e9eb0ce3606eb48",
         treasury: process.env.X402_PAYMENT_ADDRESS_ETHEREUM,
       },
     },
     payments: {
-      minAmount: '0.001',  // $0.001 minimum
-      defaultAmount: '0.01',  // $0.01 default for API calls
-      defaultNetwork: 'base',
-      defaultScheme: 'permit',
-      expirationTime: 5 * 60 * 1000,  // 5 minutes
+      minAmount: "0.001", // $0.001 minimum
+      defaultAmount: "0.01", // $0.01 default for API calls
+      defaultNetwork: "base",
+      defaultScheme: "permit",
+      expirationTime: 5 * 60 * 1000, // 5 minutes
     },
   };
   ```
@@ -399,14 +437,15 @@
 - [ ] Document required env vars
 
 ### Infer 18: Implement Payment Verification Logic
+
 - [ ] Create `backend/convex/lib/x402-verify.ts`
 - [ ] Implement verification function:
   ```typescript
   export async function verifyX402Payment(
     paymentPayload: PaymentPayload,
     requirement: PaymentRequirement,
-    resource: string
-  ): Promise<{ valid: boolean; paymentId: string; error?: string }>
+    resource: string,
+  ): Promise<{ valid: boolean; paymentId: string; error?: string }>;
   ```
 - [ ] Verification steps:
   1. Validate payload structure (JSON schema)
@@ -421,13 +460,14 @@
 - [ ] Handle each error case with descriptive message
 
 ### Infer 19: Implement Payment Settlement
+
 - [ ] Create `backend/convex/lib/x402-settle.ts`
 - [ ] Implement settlement function:
   ```typescript
   export async function settleX402Payment(
     paymentPayload: PaymentPayload,
-    paymentId: string
-  ): Promise<{ settled: boolean; txHash: string; error?: string }>
+    paymentId: string,
+  ): Promise<{ settled: boolean; txHash: string; error?: string }>;
   ```
 - [ ] Settlement steps:
   1. Get verified payment from database
@@ -442,6 +482,7 @@
   - [ ] Network issues (queue for retry)
 
 ### Infer 20: Create Convex Mutations for Payment Handling
+
 - [ ] Create `backend/convex/mutations/payments.ts`
 - [ ] Implement mutations:
   - [ ] `createPaymentRequest(resource, amount)` → PaymentRequired
@@ -471,6 +512,7 @@
 **Purpose:** Build React components and Astro pages for payment flow
 
 ### Infer 21: Create PaymentRequired Component
+
 - [ ] Create `web/src/components/features/PaymentRequired.tsx`
 - [ ] Component displays:
   - [ ] Payment amount in USD + tokens
@@ -482,7 +524,7 @@
 - [ ] Props:
   ```typescript
   interface PaymentRequiredProps {
-    paymentRequired: PaymentRequired;  // 402 response
+    paymentRequired: PaymentRequired; // 402 response
     onPaymentComplete: (payload: PaymentPayload) => void;
     onCancel: () => void;
   }
@@ -494,6 +536,7 @@
   - [ ] Mobile wallet support
 
 ### Infer 22: Create WalletConnection Component
+
 - [ ] Create `web/src/components/features/WalletConnection.tsx`
 - [ ] Component handles:
   - [ ] Connecting wallet (MetaMask, Rainbow Kit, etc)
@@ -512,6 +555,7 @@
   - [ ] Error handling for network mismatch
 
 ### Infer 23: Create PaymentProcessor Component
+
 - [ ] Create `web/src/components/features/PaymentProcessor.tsx`
 - [ ] Component orchestrates:
   - [ ] Taking PaymentRequired + PaymentPayload
@@ -529,6 +573,7 @@
   - [ ] Timeout after 5 minutes
 
 ### Infer 24: Create PaymentPrompt Modal
+
 - [ ] Create `web/src/components/features/PaymentPromptModal.tsx`
 - [ ] Modal that combines:
   - [ ] PaymentRequired display
@@ -547,6 +592,7 @@
   - [ ] Cancel button to dismiss
 
 ### Infer 25: Create PaymentHistory Component
+
 - [ ] Create `web/src/components/features/PaymentHistory.tsx`
 - [ ] Component displays:
   - [ ] List of past payments
@@ -566,6 +612,7 @@
 - [ ] Pagination for many transactions
 
 ### Infer 26: Create BalanceDisplay Component
+
 - [ ] Create `web/src/components/features/BalanceDisplay.tsx`
 - [ ] Component shows:
   - [ ] Wallet USDC balance
@@ -583,6 +630,7 @@
   - [ ] Error message if balance fetch fails
 
 ### Infer 27: Create AgentExecutionFlow with X402
+
 - [ ] Create `web/src/components/features/AgentExecutionFlow.tsx`
 - [ ] Component orchestrates:
   - [ ] User selects agent + parameters
@@ -605,6 +653,7 @@
   ```
 
 ### Infer 28: Update ExternalProviderAccess Component
+
 - [ ] Modify `web/src/components/features/ExternalProviderAccess.tsx`
 - [ ] Add X402 payment flow:
   - [ ] Show provider listing from Bazar (future)
@@ -620,6 +669,7 @@
   - [ ] Success rate %
 
 ### Infer 29: Create X402 Demo Page
+
 - [ ] Create `web/src/pages/demo/x402-payments.astro`
 - [ ] Interactive demo showing:
   - [ ] Protected API endpoint (returns 402)
@@ -639,6 +689,7 @@
   - [ ] FAQ section
 
 ### Infer 30: Create X402 Documentation Page
+
 - [ ] Create `web/src/pages/docs/x402-integration.astro`
 - [ ] Document for developers:
   - [ ] X402 protocol overview
@@ -661,14 +712,15 @@
 **Purpose:** Implement X402-protected API routes in Astro
 
 ### Infer 31: Create X402 Astro API Route Handler
+
 - [ ] Create `web/src/lib/x402-route-handler.ts`
 - [ ] Export function:
   ```typescript
   export async function handleX402Request(
     request: Request,
     handler: (req: Request) => Promise<Response>,
-    options: X402RouteOptions
-  ): Promise<Response>
+    options: X402RouteOptions,
+  ): Promise<Response>;
   ```
 - [ ] Implements full X402 flow:
   1. Check if X-PAYMENT header exists
@@ -683,7 +735,7 @@
     requiresPayment: boolean;
     amount?: string;
     description?: string;
-    resource: string;  // endpoint path
+    resource: string; // endpoint path
   }
   ```
 - [ ] Error handling:
@@ -693,6 +745,7 @@
   - [ ] Payment expired
 
 ### Infer 32: Create Agent Execution API Route
+
 - [ ] Create `web/src/pages/api/agent/execute.ts`
 - [ ] Astro API route that:
   - [ ] Accepts POST request with agent config
@@ -714,7 +767,7 @@
     success: true;
     result: any;
     executionTime: number;
-    paymentId: string;  // X-PAYMENT-ID
+    paymentId: string; // X-PAYMENT-ID
   }
   ```
 - [ ] Response on payment required (402):
@@ -726,6 +779,7 @@
   ```
 
 ### Infer 33: Create Provider API Call Route
+
 - [ ] Create `web/src/pages/api/provider/[providerId]/call.ts`
 - [ ] Astro API route that:
   - [ ] Accepts POST request with provider method + params
@@ -746,6 +800,7 @@
   - [ ] Error forwarding from provider
 
 ### Infer 34: Create Workflow Trigger Route
+
 - [ ] Create `web/src/pages/api/workflow/[workflowId]/trigger.ts`
 - [ ] Astro API route that:
   - [ ] Accepts POST with workflow inputs
@@ -762,6 +817,7 @@
   - [ ] Track execution in Convex
 
 ### Infer 35: Create Payment Verification Route
+
 - [ ] Create `web/src/pages/api/payments/verify.ts`
 - [ ] POST route that:
   - [ ] Takes X-PAYMENT payload
@@ -785,6 +841,7 @@
   ```
 
 ### Infer 36: Create Payment Settlement Route
+
 - [ ] Create `web/src/pages/api/payments/settle.ts`
 - [ ] POST route that:
   - [ ] Takes verified payment
@@ -807,6 +864,7 @@
   ```
 
 ### Infer 37: Create Payment Query Route
+
 - [ ] Create `web/src/pages/api/payments/history.ts`
 - [ ] GET route that:
   - [ ] Requires authentication
@@ -826,6 +884,7 @@
   ```
 
 ### Infer 38: Create Payment Configuration Route
+
 - [ ] Create `web/src/pages/api/x402/config.ts`
 - [ ] GET route that returns:
   - [ ] Supported networks
@@ -851,6 +910,7 @@
   ```
 
 ### Infer 39: Add Error Handling Middleware
+
 - [ ] Create `web/src/middleware/error-handler.ts`
 - [ ] Handle X402-specific errors:
   - [ ] 402: Payment Required
@@ -868,6 +928,7 @@
   ```
 
 ### Infer 40: Test All API Routes
+
 - [ ] Write tests for each route:
   - [ ] Test without payment (expect 402)
   - [ ] Test with invalid payment (expect error)
@@ -888,20 +949,21 @@
 **Purpose:** Implement blockchain payment processing
 
 ### Infer 41: Implement Permit-Based Payment Flow
+
 - [ ] Create `backend/convex/lib/permit-payment.ts`
 - [ ] Implement permit generation:
   ```typescript
   export async function generatePermit(
-    token: string,  // USDC address
-    owner: string,  // User's wallet
-    spender: string,  // Treasury contract
-    amount: string,  // Amount in token units
-    deadline: number,  // Unix timestamp
-    nonce: number  // Permit nonce
+    token: string, // USDC address
+    owner: string, // User's wallet
+    spender: string, // Treasury contract
+    amount: string, // Amount in token units
+    deadline: number, // Unix timestamp
+    nonce: number, // Permit nonce
   ): Promise<{
     permit: PermitData;
     signature: string;
-  }>
+  }>;
   ```
 - [ ] Permit structure (ERC-2612):
   - [ ] Token holder (owner) can authorize transfer
@@ -915,6 +977,7 @@
   4. Backend calls facilitator to execute transfer
 
 ### Infer 42: Implement Transfer-Based Payment Flow
+
 - [ ] Create `backend/convex/lib/transfer-payment.ts`
 - [ ] For chains without permit support (Solana):
   - [ ] User approves spender in separate tx
@@ -933,13 +996,14 @@
   - [ ] Insufficient allowance (show error)
 
 ### Infer 43: Integrate with Coinbase CDP Facilitator
+
 - [ ] Create `backend/convex/lib/coinbase-facilitator.ts`
 - [ ] Implement facilitator client:
   ```typescript
   export class CoinbaseFacilitator {
-    async verifyPayment(payload: PaymentPayload): Promise<VerifyResponse>
-    async settlePayment(txHash: string): Promise<SettleResponse>
-    async getSupportedSchemes(): Promise<SupportedSchemesResponse>
+    async verifyPayment(payload: PaymentPayload): Promise<VerifyResponse>;
+    async settlePayment(txHash: string): Promise<SettleResponse>;
+    async getSupportedSchemes(): Promise<SupportedSchemesResponse>;
   }
   ```
 - [ ] API calls to Coinbase:
@@ -955,6 +1019,7 @@
   - [ ] Log all facilitator calls
 
 ### Infer 44: Implement Gas Estimation
+
 - [ ] Create `backend/convex/lib/gas-estimation.ts`
 - [ ] Estimate gas for:
   - [ ] Permit signature (no gas)
@@ -962,8 +1027,8 @@
   - [ ] Settlement on Base (gas cost)
 - [ ] Functions:
   ```typescript
-  async function estimateTransferGas(network: string): Promise<string>
-  async function estimateTxCost(network: string, gas: string): Promise<string>
+  async function estimateTransferGas(network: string): Promise<string>;
+  async function estimateTxCost(network: string, gas: string): Promise<string>;
   ```
 - [ ] Show to user:
   - [ ] Gas cost in USD
@@ -971,6 +1036,7 @@
 - [ ] On Base: Gas typically negligible (~$0.0001)
 
 ### Infer 45: Implement Transaction Verification
+
 - [ ] Create `backend/convex/lib/tx-verification.ts`
 - [ ] Verify on-chain transaction:
   ```typescript
@@ -978,13 +1044,13 @@
     txHash: string,
     network: string,
     expectedAmount: string,
-    expectedRecipient: string
+    expectedRecipient: string,
   ): Promise<{
     valid: boolean;
     blockNumber: number;
     confirmations: number;
     error?: string;
-  }>
+  }>;
   ```
 - [ ] Checks:
   - [ ] Tx exists on-chain
@@ -1000,12 +1066,13 @@
   - [ ] Insufficient amount (return error)
 
 ### Infer 46: Implement Replay Protection
+
 - [ ] Create `backend/convex/lib/replay-protection.ts`
 - [ ] Prevent using same payment twice:
   ```typescript
   async function checkReplayProtection(
-    paymentPayload: PaymentPayload
-  ): Promise<boolean>
+    paymentPayload: PaymentPayload,
+  ): Promise<boolean>;
   ```
 - [ ] Methods:
   - [ ] Check txHash not in used payments
@@ -1019,12 +1086,13 @@
   ```typescript
   const existing = await db
     .query("entities")
-    .withIndex("by_type", q => q.eq("type", "payment"))
-    .filter(q => q.eq(q.field("properties.txHash"), txHash))
+    .withIndex("by_type", (q) => q.eq("type", "payment"))
+    .filter((q) => q.eq(q.field("properties.txHash"), txHash))
     .first();
   ```
 
 ### Infer 47: Implement Rate Limiting per User
+
 - [ ] Create `backend/convex/lib/rate-limiter.ts`
 - [ ] Rate limit payment attempts:
   - [ ] Per user: 10 requests/minute (prevent spam)
@@ -1035,6 +1103,7 @@
 - [ ] Log rate limit violations
 
 ### Infer 48: Implement Payment Reconciliation
+
 - [ ] Create `backend/convex/services/payment-reconciliation.ts`
 - [ ] Scheduled job to:
   - [ ] Check pending payments (every minute)
@@ -1056,6 +1125,7 @@
   ```
 
 ### Infer 49: Implement Refund Logic (Future)
+
 - [ ] Create `backend/convex/lib/refund-handler.ts`
 - [ ] Handle refunds if:
   - [ ] Service fails after payment
@@ -1070,6 +1140,7 @@
 - [ ] Note: Implement in Phase 2+ (not required for MVP)
 
 ### Infer 50: Document Payment Architecture
+
 - [ ] Write `one/connections/x402-architecture.md`
 - [ ] Document:
   - [ ] Payment flow diagram
@@ -1087,6 +1158,7 @@
 **Purpose:** Test all payment flows end-to-end
 
 ### Infer 51: Write Unit Tests for X402 Services
+
 - [ ] Create `backend/convex/__tests__/x402-payment.test.ts`
 - [ ] Test X402PaymentService:
   - [ ] createPaymentRequest returns 402 structure
@@ -1102,6 +1174,7 @@
   - [ ] Mock blockchain calls
 
 ### Infer 52: Write Integration Tests
+
 - [ ] Create `backend/convex/__tests__/x402-integration.test.ts`
 - [ ] Test complete flow:
   1. Create payment request (get 402)
@@ -1117,6 +1190,7 @@
   - [ ] Network timeout
 
 ### Infer 53: Write Frontend Component Tests
+
 - [ ] Create `web/src/components/__tests__/PaymentRequired.test.tsx`
 - [ ] Test PaymentRequired component:
   - [ ] Renders correctly
@@ -1136,6 +1210,7 @@
   - [ ] Shows success message
 
 ### Infer 54: Write E2E Tests
+
 - [ ] Create `web/src/__tests__/x402-e2e.test.ts`
 - [ ] Test full user flow:
   1. Visit protected endpoint
@@ -1150,6 +1225,7 @@
 - [ ] Test retry flows
 
 ### Infer 55: Write API Route Tests
+
 - [ ] Create `web/src/pages/api/__tests__/agent-execute.test.ts`
 - [ ] Test agent execution endpoint:
   - [ ] Without payment → 402
@@ -1161,6 +1237,7 @@
   - [ ] Payment history
 
 ### Infer 56: Create Test Fixtures
+
 - [ ] Create `web/src/__fixtures__/x402-fixtures.ts`
 - [ ] Define test data:
   - [ ] Sample payment payloads
@@ -1171,6 +1248,7 @@
 - [ ] Reuse across all tests
 
 ### Infer 57: Test Error Scenarios
+
 - [ ] Create `web/src/__tests__/x402-error-scenarios.test.ts`
 - [ ] Test error handling:
   - [ ] Facilitator down (503)
@@ -1183,6 +1261,7 @@
 - [ ] Verify error messages are helpful
 
 ### Infer 58: Test Security
+
 - [ ] Create `web/src/__tests__/x402-security.test.ts`
 - [ ] Test security aspects:
   - [ ] Replay protection works
@@ -1194,6 +1273,7 @@
   - [ ] CSRF protection
 
 ### Infer 59: Test Performance
+
 - [ ] Create `web/src/__tests__/x402-performance.test.ts`
 - [ ] Measure:
   - [ ] Payment creation time (< 100ms)
@@ -1204,6 +1284,7 @@
 - [ ] Document results in metrics file
 
 ### Infer 60: Final Test Coverage Report
+
 - [ ] Run full test suite: `bun test`
 - [ ] Generate coverage report
 - [ ] Target: 80%+ coverage
@@ -1221,6 +1302,7 @@
 **Purpose:** Finalize UI/UX design for payment flow
 
 ### Infer 61: Design Payment Prompt Modal
+
 - [ ] Create wireframe: PaymentPromptModal
 - [ ] Layout:
   - [ ] Title: "Payment Required"
@@ -1238,6 +1320,7 @@
   - [ ] Error (show error message + retry)
 
 ### Infer 62: Design Payment History Page
+
 - [ ] Create wireframe: PaymentHistory
 - [ ] Components:
   - [ ] Header: "Payment History"
@@ -1254,6 +1337,7 @@
   - [ ] Error state (failed to load)
 
 ### Infer 63: Design Balance Display
+
 - [ ] Create wireframe: BalanceDisplay
 - [ ] Card layout:
   - [ ] Title: "Wallet Balance"
@@ -1265,6 +1349,7 @@
   - [ ] "Add Funds" link (future)
 
 ### Infer 64: Design Agent Execution Flow
+
 - [ ] Create wireframe: AgentExecutionFlow
 - [ ] States:
   - [ ] Initial: Agent selection + parameters
@@ -1280,6 +1365,7 @@
   - [ ] Cost in USD
 
 ### Infer 65: Design X402 Demo Page
+
 - [ ] Create wireframe: DemoPage (/demo/x402-payments)
 - [ ] Sections:
   - [ ] Hero: "Try X402 Payments"
@@ -1294,18 +1380,20 @@
   - [ ] Code snippets (copy-able)
 
 ### Infer 66: Create Design Tokens for X402
+
 - [ ] Update `web/src/styles/x402-tokens.css`:
+
   ```css
   :root {
-    --x402-primary: hsl(180, 82%, 50%);  /* X402 blue */
-    --x402-success: hsl(120, 100%, 50%);  /* Payment success */
-    --x402-warning: hsl(45, 100%, 50%);  /* Awaiting user */
-    --x402-error: hsl(0, 100%, 50%);  /* Payment failed */
-    --x402-pending: hsl(45, 100%, 50%);  /* Processing */
+    --x402-primary: hsl(180, 82%, 50%); /* X402 blue */
+    --x402-success: hsl(120, 100%, 50%); /* Payment success */
+    --x402-warning: hsl(45, 100%, 50%); /* Awaiting user */
+    --x402-error: hsl(0, 100%, 50%); /* Payment failed */
+    --x402-pending: hsl(45, 100%, 50%); /* Processing */
 
-    --blockchain-base: hsl(220, 90%, 50%);  /* Base blue */
-    --blockchain-ethereum: hsl(250, 60%, 50%);  /* Ethereum purple */
-    --blockchain-solana: hsl(280, 80%, 50%);  /* Solana pink */
+    --blockchain-base: hsl(220, 90%, 50%); /* Base blue */
+    --blockchain-ethereum: hsl(250, 60%, 50%); /* Ethereum purple */
+    --blockchain-solana: hsl(280, 80%, 50%); /* Solana pink */
 
     --x402-border-radius: 12px;
     --x402-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
@@ -1313,6 +1401,7 @@
   ```
 
 ### Infer 67: Ensure Accessibility (WCAG 2.1 AA)
+
 - [ ] Update components for accessibility:
   - [ ] PaymentPromptModal: Add aria-modal, role, keyboard nav
   - [ ] WalletConnection: Add labels, focus states
@@ -1326,6 +1415,7 @@
   - [ ] Focus indicators (visible)
 
 ### Infer 68: Test Mobile Responsiveness
+
 - [ ] Test PaymentPromptModal on:
   - [ ] iPhone 12 (390px)
   - [ ] iPad (768px)
@@ -1341,6 +1431,7 @@
   - [ ] Buttons (click area)
 
 ### Infer 69: Design Dark Mode Styles
+
 - [ ] Update CSS for dark mode:
   ```css
   @media (prefers-color-scheme: dark) {
@@ -1354,6 +1445,7 @@
 - [ ] Verify contrast ratios still valid
 
 ### Infer 70: Create Component Library Documentation
+
 - [ ] Document all X402 components:
   - [ ] PaymentPromptModal
   - [ ] WalletConnection
@@ -1374,6 +1466,7 @@
 **Purpose:** Optimize payment flow for speed + efficiency
 
 ### Infer 71: Optimize Frontend Bundle Size
+
 - [ ] Audit bundle:
   - [ ] Run `bun run build` with analysis
   - [ ] Identify large dependencies (wagmi, viem)
@@ -1385,6 +1478,7 @@
 - [ ] Target: Payment modal < 50KB gzipped
 
 ### Infer 72: Implement Payment Caching
+
 - [ ] Cache frequently accessed data:
   - [ ] X402 config (supported networks, amounts)
   - [ ] User payment history (first 50 records)
@@ -1396,6 +1490,7 @@
 - [ ] Use Convex caching + browser localStorage
 
 ### Infer 73: Implement Pagination for Payment History
+
 - [ ] Load payments in batches:
   - [ ] Initial load: 20 most recent
   - [ ] On scroll: Load next 20
@@ -1406,6 +1501,7 @@
   - [ ] Count total for pagination info
 
 ### Infer 74: Optimize Blockchain RPC Calls
+
 - [ ] Batch RPC requests:
   - [ ] Use eth_call for read-only operations
   - [ ] Batch multiple calls in single JSON-RPC batch
@@ -1419,6 +1515,7 @@
   - [ ] Alert if quota exceeded
 
 ### Infer 75: Implement Permit Caching
+
 - [ ] Cache permit data to avoid re-generating:
   - [ ] Store permit in localStorage + Convex
   - [ ] Reuse for 5 minutes (before expiry)
@@ -1435,6 +1532,7 @@
   ```
 
 ### Infer 76: Implement Progressive Enhancement
+
 - [ ] Website works without JavaScript (server-rendered):
   - [ ] Show payment form with standard HTML
   - [ ] POST to API endpoint
@@ -1447,6 +1545,7 @@
 - [ ] Goal: Graceful degradation
 
 ### Infer 77: Monitor Payment Latency
+
 - [ ] Add performance metrics:
   - [ ] Payment creation time
   - [ ] Verification time
@@ -1470,6 +1569,7 @@
 - [ ] Alert if > expected time
 
 ### Infer 78: Implement Connection Pooling
+
 - [ ] Reuse blockchain client connections:
   - [ ] Create single viem client per network
   - [ ] Share across multiple requests
@@ -1480,6 +1580,7 @@
   - [ ] Reuse for all requests
 
 ### Infer 79: Optimize Payment Settlement
+
 - [ ] Parallelize settlement tasks:
   - [ ] Verify payment on blockchain (parallel)
   - [ ] Update DB (parallel)
@@ -1489,6 +1590,7 @@
 - [ ] Goal: Settlement < 2 seconds on Base
 
 ### Infer 80: Performance Baseline & Regression Testing
+
 - [ ] Establish baseline metrics:
   - [ ] Payment creation: 50-100ms
   - [ ] Verification: 300-500ms
@@ -1507,6 +1609,7 @@
 **Purpose:** Deploy to production, document for users + developers
 
 ### Infer 81: Set Up Production Environment Variables
+
 - [ ] Update `.env` (root) with production values:
   - [ ] VITE_BLOCKCHAIN_RPC_BASE (Coinbase mainnet RPC)
   - [ ] VITE_BLOCKCHAIN_RPC_ETHEREUM (if needed)
@@ -1520,6 +1623,7 @@
 - [ ] Document in: `DEPLOYMENT.md`
 
 ### Infer 82: Deploy Backend to Convex
+
 - [ ] Ensure all backend changes committed:
   - [ ] `backend/convex/schema.ts` updated
   - [ ] `backend/convex/protocols/x402.ts` created
@@ -1534,6 +1638,7 @@
 - [ ] Verify in Convex dashboard
 
 ### Infer 83: Build + Deploy Frontend to Cloudflare
+
 - [ ] Build frontend:
   - [ ] `cd web && bun run build`
   - [ ] Type check: `bunx astro check`
@@ -1547,6 +1652,7 @@
   - [ ] Monitor Cloudflare logs
 
 ### Infer 84: Verify Production Endpoints
+
 - [ ] Test in production:
   - [ ] GET /api/agent/execute (without payment) → 402
   - [ ] POST /api/agent/execute (with payment) → 200
@@ -1563,6 +1669,7 @@
   - [ ] Failed payments
 
 ### Infer 85: Create User Documentation
+
 - [ ] Write `web/public/docs/x402-user-guide.md`:
   - [ ] How to connect wallet
   - [ ] How to approve payments
@@ -1578,6 +1685,7 @@
   - [ ] Payment history
 
 ### Infer 86: Create Developer Documentation
+
 - [ ] Write `one/connections/x402-developer-guide.md`:
   - [ ] X402 protocol overview
   - [ ] How to protect endpoints with X402
@@ -1591,6 +1699,7 @@
   - [ ] Rate limiting info
   - [ ] Security best practices
 - [ ] Code examples:
+
   ```bash
   # Request protected resource
   curl https://one.ie/api/agent/execute
@@ -1602,6 +1711,7 @@
   ```
 
 ### Infer 87: Create Integration Guide for Partners
+
 - [ ] Write `one/connections/x402-integration-guide.md`:
   - [ ] High-level overview
   - [ ] When to use X402
@@ -1621,6 +1731,7 @@
   - [ ] Support + troubleshooting
 
 ### Infer 88: Write Architecture Decision Record (ADR)
+
 - [ ] Create `one/events/adr-x402-integration.md`:
   - [ ] Context: Why X402?
   - [ ] Decision: Use X402 for micropayments
@@ -1636,6 +1747,7 @@
   - [ ] Status: APPROVED/IN PROGRESS
 
 ### Infer 89: Create Monitoring + Alerting
+
 - [ ] Set up monitoring for:
   - [ ] Payment success rate (target 99%+)
   - [ ] Settlement time (target < 2s)
@@ -1653,6 +1765,7 @@
   - [ ] Error rate by type
 
 ### Infer 90: Plan Maintenance + Updates
+
 - [ ] Document maintenance schedule:
   - [ ] Monthly: Security updates
   - [ ] Quarterly: Dependency updates
@@ -1671,6 +1784,7 @@
 **Purpose:** Document learnings, capture institutional knowledge
 
 ### Infer 91: Document Ontology Mapping
+
 - [ ] Write `one/knowledge/x402-ontology-mapping.md`:
   - [ ] **Groups:** Merchant group, customer group, platform
   - [ ] **People:** Platform owner, merchant, customer
@@ -1682,6 +1796,7 @@
 - [ ] Show examples of real data structures
 
 ### Infer 92: Create Payment Flow State Diagram
+
 - [ ] Create `one/events/x402-state-diagram.md` with diagram:
   ```
   [ initial ] --request_payment--> [ payment_required ]
@@ -1704,6 +1819,7 @@
   - [ ] Settlement: Happens automatically after verification
 
 ### Infer 93: Document Security Considerations
+
 - [ ] Write `one/connections/x402-security.md`:
   - [ ] **Signature Verification:** User signature proves authorization
   - [ ] **Replay Protection:** Each txHash used only once
@@ -1720,6 +1836,7 @@
   - [ ] Facilitator breach (trust issue)
 
 ### Infer 94: Document Blockchain Specifics
+
 - [ ] Write `one/connections/x402-blockchain.md`:
   - [ ] **Base Network:**
     - [ ] Chain ID: 8453
@@ -1738,6 +1855,7 @@
     - [ ] Transfer: state-changing transaction
 
 ### Infer 95: Capture Performance Benchmarks
+
 - [ ] Write `one/events/x402-performance-benchmarks.md`:
   - [ ] **Payment Creation:** 50-100ms
   - [ ] **Permit Generation:** 30-50ms
@@ -1754,6 +1872,7 @@
   - [ ] X402: 4-8s (includes blockchain settlement)
 
 ### Infer 96: Document Common Issues + Solutions
+
 - [ ] Write `one/connections/x402-troubleshooting.md`:
   - [ ] **Issue: Payment times out**
     - [ ] Cause: Facilitator slow or down
@@ -1775,6 +1894,7 @@
     - [ ] Solution: Create new payment request
 
 ### Infer 97: Create Cost Analysis Report
+
 - [ ] Write `one/events/x402-cost-analysis.md`:
   - [ ] **Blockchain Costs:**
     - [ ] Base: $0.0001 per payment
@@ -1794,6 +1914,7 @@
     - [ ] Need 10+ payments/day to offset costs
 
 ### Infer 98: Plan Future Enhancements
+
 - [ ] Document Phase 2+ features in `one/things/todo-x402-phase2.md`:
   - [ ] [ ] Bazar marketplace discovery layer
   - [ ] [ ] Multi-chain support (Ethereum, Solana, Polygon)
@@ -1810,6 +1931,7 @@
 - [ ] Prioritize by impact + effort
 
 ### Infer 99: Create Lessons Learned Document
+
 - [ ] Write `one/events/x402-lessons-learned.md`:
   - [ ] **What went well:**
     - [ ] Coinbase CDP integration smooth
@@ -1832,6 +1954,7 @@
     - [ ] What they learned
 
 ### Infer 100: Final Summary + Celebration
+
 - [ ] Create `one/events/x402-phase1-complete.md`:
   - [ ] **Project Status:** ✅ COMPLETE
   - [ ] **Timeline:** Infer 1-100 (100 inferences)
@@ -1882,6 +2005,7 @@ X402 integration is complete when:
 ## QUICK REFERENCE
 
 **Files Created:**
+
 - `backend/convex/protocols/x402.ts` - Type definitions
 - `backend/convex/services/x402-payment.ts` - Payment service
 - `backend/convex/services/x402-facilitator.ts` - Facilitator service
@@ -1901,12 +2025,14 @@ X402 integration is complete when:
 - `one/connections/x402-security.md` - Security docs
 
 **Environment Variables Required:**
+
 - `VITE_BLOCKCHAIN_RPC_BASE` - Base network RPC URL
 - `X402_PAYMENT_ADDRESS_BASE` - Treasury address
 - `FACILITATOR_URL` - Coinbase CDP endpoint
 - `FACILITATOR_API_KEY` - API key (if needed)
 
 **Tests to Write:**
+
 - Unit tests (payment services)
 - Integration tests (E2E payment flow)
 - Component tests (React components)
@@ -1919,4 +2045,3 @@ X402 integration is complete when:
 **Remember:** Plan in inferences, not days. Where in the sequence does each thing belong?
 
 **Status:** Ready for execution. Begin with Infer 1-10 (Foundation).
-

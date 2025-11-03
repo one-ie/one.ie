@@ -1,3 +1,21 @@
+---
+title: Ontology Education
+dimension: knowledge
+category: ontology-education.md
+tags: 6-dimensions, knowledge, ontology
+related_dimensions: events, groups, things
+scope: global
+created: 2025-11-03
+updated: 2025-11-03
+version: 1.0.0
+ai_context: |
+  This document is part of the knowledge dimension in the ontology-education.md category.
+  Location: one/knowledge/ontology-education.md
+  Purpose: Documents education ontology - universities, schools, teachers
+  Related dimensions: events, groups, things
+  For AI agents: Read this to understand ontology education.
+---
+
 # Education Ontology - Universities, Schools, Teachers
 
 **Version:** 1.0.0

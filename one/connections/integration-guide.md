@@ -1,3 +1,21 @@
+---
+title: Integration Guide
+dimension: connections
+category: integration-guide.md
+tags: ontology
+related_dimensions: events, groups, knowledge, people, things
+scope: global
+created: 2025-11-03
+updated: 2025-11-03
+version: 1.0.0
+ai_context: |
+  This document is part of the connections dimension in the integration-guide.md category.
+  Location: one/connections/integration-guide.md
+  Purpose: Documents one platform integration guide
+  Related dimensions: events, groups, knowledge, people, things
+  For AI agents: Read this to understand integration guide.
+---
+
 # ONE Platform Integration Guide
 
 **Version:** 1.0.0

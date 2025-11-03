@@ -1,3 +1,21 @@
+---
+title: Specifications
+dimension: knowledge
+category: specifications.md
+tags: agent, ai, protocol
+related_dimensions: people
+scope: global
+created: 2025-11-03
+updated: 2025-11-03
+version: 1.0.0
+ai_context: |
+  This document is part of the knowledge dimension in the specifications.md category.
+  Location: one/knowledge/specifications.md
+  Purpose: Documents protocol specifications - how one leverages open standards
+  Related dimensions: people
+  For AI agents: Read this to understand specifications.
+---
+
 # Protocol Specifications - How ONE Leverages Open Standards
 
 **Version:** 1.0.0

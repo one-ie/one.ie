@@ -1,3 +1,21 @@
+---
+title: Backend Structure
+dimension: things
+category: plans
+tags: architecture, backend, connections, convex, events, groups, knowledge, ontology, people, things
+related_dimensions: connections, events, groups, knowledge, people
+scope: global
+created: 2025-11-03
+updated: 2025-11-03
+version: 1.0.0
+ai_context: |
+  This document is part of the things dimension in the plans category.
+  Location: one/things/plans/backend-structure.md
+  Purpose: Documents backend structure: 6-dimension ontology
+  Related dimensions: connections, events, groups, knowledge, people
+  For AI agents: Read this to understand backend structure.
+---
+
 # Backend Structure: 6-Dimension Ontology
 
 **Status:** Production-Ready
@@ -25,6 +43,7 @@
 The ONE Platform backend is organized around the **6-dimension ontology** that models reality through groups, people, things, connections, events, and knowledge.
 
 Every file follows a consistent pattern:
+
 - **Dimension** (1-6) - Which dimension of the ontology it handles
 - **Operation Type** - mutation (write), query (read), action (async), or internal action (utility)
 - **Purpose** - What problems it solves
@@ -41,6 +60,7 @@ Groups partition the space (hierarchical containers from friend circles to gover
 ## 6-Dimension Foundation
 
 ### Dimension 1: GROUPS
+
 **Multi-tenant isolation boundary with hierarchical nesting**
 
 - **Purpose:** Create isolated data spaces for organizations, communities, friend circles, DAOs, governments
@@ -51,6 +71,7 @@ Groups partition the space (hierarchical containers from friend circles to gover
 - **Key Pattern:** Every mutation validates groupId; every query filters by groupId
 
 ### Dimension 2: PEOPLE
+
 **Authorization & governance: who can do what**
 
 - **Representation:** Things with type="creator" (not separate table)
@@ -60,6 +81,7 @@ Groups partition the space (hierarchical containers from friend circles to gover
 - **Key Pattern:** People operations in mutations/people.ts; people queries use entities queries with type filter
 
 ### Dimension 3: THINGS
+
 **All nouns in the system: users, agents, content, tokens, courses, etc.**
 
 - **Universal Table:** "entities" in database, referenced as "things" in code
@@ -70,6 +92,7 @@ Groups partition the space (hierarchical containers from friend circles to gover
 - **Key Pattern:** All operations preserve functionality, never hard delete
 
 ### Dimension 4: CONNECTIONS
+
 **All relationships between entities**
 
 - **Bidirectional:** Relationships with temporal validity (validFrom/validTo)
@@ -79,6 +102,7 @@ Groups partition the space (hierarchical containers from friend circles to gover
 - **Key Pattern:** Graph queries (from/to/between patterns)
 
 ### Dimension 5: EVENTS
+
 **Complete audit trail of all actions and state changes**
 
 - **Immutable:** Events created by mutations, never edited
@@ -88,6 +112,7 @@ Groups partition the space (hierarchical containers from friend circles to gover
 - **Key Pattern:** Events are read-only; logged via internalActions/events.ts
 
 ### Dimension 6: KNOWLEDGE
+
 **Labels, embeddings, and semantic search (RAG)**
 
 - **Knowledge Types:** label, document, chunk, vector_only
@@ -150,23 +175,23 @@ backend/convex/
 
 ### Ontology Mapping - Current State
 
-| Dimension | Queries | Mutations | Purpose |
-|-----------|---------|-----------|---------|
-| **1. Groups** | `queries/groups.ts` | `mutations/groups.ts` | Multi-tenant isolation, hierarchy |
-| **2. People** | (via entities) | `mutations/people.ts` | Authorization, roles, governance |
-| **3. Things** | `queries/entities.ts` | `mutations/entities.ts` | All nouns, flexible properties |
-| **4. Connections** | `queries/connections.ts` | `mutations/connections.ts` | Relationships, graph queries |
-| **5. Events** | `queries/events.ts` | (auto-logged) | Audit trail, immutable log |
-| **6. Knowledge** | `queries/knowledge.ts` | `mutations/knowledge.ts` | RAG, embeddings, search |
+| Dimension          | Queries                  | Mutations                  | Purpose                           |
+| ------------------ | ------------------------ | -------------------------- | --------------------------------- |
+| **1. Groups**      | `queries/groups.ts`      | `mutations/groups.ts`      | Multi-tenant isolation, hierarchy |
+| **2. People**      | (via entities)           | `mutations/people.ts`      | Authorization, roles, governance  |
+| **3. Things**      | `queries/entities.ts`    | `mutations/entities.ts`    | All nouns, flexible properties    |
+| **4. Connections** | `queries/connections.ts` | `mutations/connections.ts` | Relationships, graph queries      |
+| **5. Events**      | `queries/events.ts`      | (auto-logged)              | Audit trail, immutable log        |
+| **6. Knowledge**   | `queries/knowledge.ts`   | `mutations/knowledge.ts`   | RAG, embeddings, search           |
 
 ### Special Files (Ontology-Compliant)
 
-| File | Purpose | Maps To |
-|------|---------|---------|
-| `contact.ts` | Contact form submission | Creates **Things** (type="contact_submission") + **Events** |
-| `onboarding.ts` | Website analysis & setup | Works with **Groups**, creates **Things**, logs **Events** |
-| `ontology.ts` | Ontology metadata queries | Reads ontology structure from schema |
-| `init.ts` | Initialization & defaults | Creates default **Group**, initial **Things** |
+| File            | Purpose                   | Maps To                                                     |
+| --------------- | ------------------------- | ----------------------------------------------------------- |
+| `contact.ts`    | Contact form submission   | Creates **Things** (type="contact_submission") + **Events** |
+| `onboarding.ts` | Website analysis & setup  | Works with **Groups**, creates **Things**, logs **Events**  |
+| `ontology.ts`   | Ontology metadata queries | Reads ontology structure from schema                        |
+| `init.ts`       | Initialization & defaults | Creates default **Group**, initial **Things**               |
 
 ### HTTP Endpoints (25+ total)
 
@@ -287,6 +312,7 @@ convex/
 ### Perfect File Count
 
 **Core Ontology (6 dimensions):**
+
 ```
 Mutations:  5 files (groups, people, things, connections, knowledge)
 Queries:    6 files (groups, people, things, connections, events, knowledge)
@@ -296,6 +322,7 @@ Total:      18 core files
 ```
 
 **Infrastructure:**
+
 ```
 HTTP:       1 file  (http.ts - Hono with ontology-aligned routes)
 Schema:     1 file  (schema.ts - 6-dimension tables)
@@ -310,16 +337,16 @@ Total:      8 infrastructure files
 
 ### Perfect Function Count
 
-| Dimension | Mutations | Queries | Actions | Internal | Total |
-|-----------|-----------|---------|---------|----------|-------|
-| 1: Groups | 4 | 10+ | 6 | - | 20+ |
-| 2: People | 5 | 4 | - | - | 9 |
-| 3: Things | 4 | 8 | 6 | - | 18 |
-| 4: Connections | 3 | 4 | 6 | - | 13 |
-| 5: Events | - | 7 | - | 10 | 17 |
-| 6: Knowledge | 5 | 8 | 7 | - | 20 |
-| **Shared** | - | - | - | 19 | 19 |
-| **TOTAL** | **21** | **41** | **25** | **29** | **116** |
+| Dimension      | Mutations | Queries | Actions | Internal | Total   |
+| -------------- | --------- | ------- | ------- | -------- | ------- |
+| 1: Groups      | 4         | 10+     | 6       | -        | 20+     |
+| 2: People      | 5         | 4       | -       | -        | 9       |
+| 3: Things      | 4         | 8       | 6       | -        | 18      |
+| 4: Connections | 3         | 4       | 6       | -        | 13      |
+| 5: Events      | -         | 7       | -       | 10       | 17      |
+| 6: Knowledge   | 5         | 8       | 7       | -        | 20      |
+| **Shared**     | -         | -       | -       | 19       | 19      |
+| **TOTAL**      | **21**    | **41**  | **25**  | **29**   | **116** |
 
 ---
 
@@ -414,33 +441,33 @@ All validated in `lib/validation.ts`:
 
 ```typescript
 // Samples of valid THING_TYPES
-validateThingType("user")                 // ✅
-validateThingType("course")               // ✅
-validateThingType("blog_post")            // ✅
-validateThingType("contact_submission")   // ✅
-validateThingType("token")                // ✅
-validateThingType("creator")              // ✅ (people)
-validateThingType("invalid_type")         // ❌ ValidationError
+validateThingType("user"); // ✅
+validateThingType("course"); // ✅
+validateThingType("blog_post"); // ✅
+validateThingType("contact_submission"); // ✅
+validateThingType("token"); // ✅
+validateThingType("creator"); // ✅ (people)
+validateThingType("invalid_type"); // ❌ ValidationError
 ```
 
 ### Connection Type Validation (25+ types)
 
 ```typescript
-validateConnectionType("owns")             // ✅
-validateConnectionType("enrolled_in")      // ✅
-validateConnectionType("member_of")        // ✅
-validateConnectionType("authored")         // ✅
-validateConnectionType("invalid")          // ❌ ValidationError
+validateConnectionType("owns"); // ✅
+validateConnectionType("enrolled_in"); // ✅
+validateConnectionType("member_of"); // ✅
+validateConnectionType("authored"); // ✅
+validateConnectionType("invalid"); // ❌ ValidationError
 ```
 
 ### Event Type Validation (67+ types)
 
 ```typescript
-validateEventType("thing_created")         // ✅
-validateEventType("group_updated")         // ✅
-validateEventType("contact_submitted")     // ✅
-validateEventType("connection_created")    // ✅
-validateEventType("invalid")               // ❌ ValidationError
+validateEventType("thing_created"); // ✅
+validateEventType("group_updated"); // ✅
+validateEventType("contact_submitted"); // ✅
+validateEventType("connection_created"); // ✅
+validateEventType("invalid"); // ❌ ValidationError
 ```
 
 ---
@@ -453,7 +480,9 @@ All mutations follow this pattern:
 
 ```typescript
 export const create = mutation({
-  args: { /* typed arguments */ },
+  args: {
+    /* typed arguments */
+  },
   handler: async (ctx, args) => {
     // 1. AUTHENTICATE user via Better Auth
     const identity = await ctx.auth.getUserIdentity();
@@ -468,13 +497,20 @@ export const create = mutation({
     if (!isValidType(args.type)) throw new Error("Invalid type");
 
     // 4. GET ACTOR (user entity) for event logging
-    const actor = await ctx.db.query("entities")
-      .withIndex("group_type", q => q.eq("groupId", args.groupId).eq("type", "creator"))
-      .filter(q => q.eq(q.field("properties.userId"), identity.tokenIdentifier))
+    const actor = await ctx.db
+      .query("entities")
+      .withIndex("group_type", (q) =>
+        q.eq("groupId", args.groupId).eq("type", "creator"),
+      )
+      .filter((q) =>
+        q.eq(q.field("properties.userId"), identity.tokenIdentifier),
+      )
       .first();
 
     // 5. CREATE entity/connection/knowledge in database
-    const id = await ctx.db.insert("entities", { /* ... */ });
+    const id = await ctx.db.insert("entities", {
+      /* ... */
+    });
 
     // 6. LOG EVENT (audit trail)
     await ctx.db.insert("events", {
@@ -483,11 +519,13 @@ export const create = mutation({
       actorId: actor._id,
       targetId: id,
       timestamp: Date.now(),
-      metadata: { /* context */ }
+      metadata: {
+        /* context */
+      },
     });
 
     return id;
-  }
+  },
 });
 ```
 
@@ -503,13 +541,13 @@ export const list = query({
   },
   handler: async (ctx, args) => {
     // 1. Use appropriate index (critical for performance)
-    return await ctx.db.query("entities")
-      .withIndex("group_type", q =>
-        q.eq("groupId", args.groupId)
-         .eq("type", args.type)
+    return await ctx.db
+      .query("entities")
+      .withIndex("group_type", (q) =>
+        q.eq("groupId", args.groupId).eq("type", args.type),
       )
       .collect();
-  }
+  },
 });
 ```
 
@@ -537,9 +575,10 @@ const group = await ctx.db.get(args.groupId);
 if (!group) throw new Error("Group not found");
 
 // Queries MUST filter by groupId
-await ctx.db.query("entities")
+await ctx.db
+  .query("entities")
   .withIndex("group_type", (q) => q.eq("groupId", groupId).eq("type", type))
-  .collect()
+  .collect();
 ```
 
 ### Benefits
@@ -708,36 +747,43 @@ Don't duplicate validation or logging:
 ## Why This Structure Is Solid
 
 ### 1. Clear Organization
+
 - Files organized by ontology dimension
 - Easy to find what you need
 - Consistent naming patterns
 
 ### 2. 100% Ontology Compliance
+
 - Every file maps to dimensions
 - No special-case logic
 - Universal patterns
 
 ### 3. Extensible
+
 - Add new entity types → No new files needed
 - Add new connection types → No new files needed
 - Add new event types → Auto-logged
 
 ### 4. Maintainable
+
 - Clear separation of concerns
 - Validation in one place
 - Services orchestrate dimensions
 
 ### 5. Type-Safe
+
 - TypeScript throughout
 - Validated against ontology
 - Tagged error types
 
 ### 6. Auditable
+
 - All data changes logged consistently
 - Complete audit trail via events
 - No silent modifications
 
 ### 7. Secure
+
 - Multi-tenant isolation enforced everywhere
 - Role-based access via people
 - No data leaks between groups
@@ -759,6 +805,7 @@ Don't duplicate validation or logging:
 ### Testing Checklist
 
 Every mutation should test:
+
 - ✅ Authentication (logged in user)
 - ✅ Group exists and is active
 - ✅ Input validation (type, constraints)
@@ -785,6 +832,7 @@ Every mutation should test:
 ## References
 
 For more information:
+
 - **6-Dimension Specification:** `/one/knowledge/ontology.md` (Version 1.0.0)
 - **Platform Architecture:** `/one/knowledge/architecture.md`
 - **Development Workflow:** `/one/connections/workflow.md`

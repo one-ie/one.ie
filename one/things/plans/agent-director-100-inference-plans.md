@@ -1,3 +1,21 @@
+---
+title: Agent Director 100 Inference Plans
+dimension: things
+category: plans
+tags: agent, ai-agent, claude, frontend, inference
+related_dimensions: groups, knowledge, people
+scope: global
+created: 2025-11-03
+updated: 2025-11-03
+version: 1.0.0
+ai_context: |
+  This document is part of the things dimension in the plans category.
+  Location: one/things/plans/agent-director-100-inference-plans.md
+  Purpose: Documents agent director: 100-inference plan generation
+  Related dimensions: groups, knowledge, people
+  For AI agents: Read this to understand agent director 100 inference plans.
+---
+
 # Agent Director: 100-Inference Plan Generation
 
 **Version:** 2.0.0
@@ -21,34 +39,34 @@ The agent-director has been enhanced to generate complete 100-inference plans fr
 
 Complete library mapping every feature to specific inference ranges:
 
-| Feature | Inferences | Specialist | Duration | Cost |
-|---------|-----------|-----------|----------|------|
-| **Foundation** ||||
-| landing-page | 1-10 | agent-frontend | ~5 min | $0 |
-| authentication | 11-20 | existing | ~0 min | $0 |
-| multi-tenant-groups | 21-30 | agent-backend | ~10 min | $0 |
-| **Creator Features** ||||
-| content-publishing | 31-40 | agent-frontend | ~15 min | $0 |
-| membership-tiers | 41-50 | agent-backend | ~15 min | $0 |
-| revenue-tracking | 51-60 | agent-backend | ~10 min | $0 |
-| **Developer Features** ||||
-| project-management | 31-40 | agent-builder | ~15 min | $0 |
-| code-repositories | 41-50 | agent-integrator | ~15 min | $0 |
-| deployment-pipeline | 51-60 | agent-ops | ~20 min | $0 |
-| **AI Features** ||||
-| ai-agents | 61-70 | agent-builder | ~20 min | $0 |
-| rag-knowledge | 71-80 | agent-backend | ~15 min | $0.10-$1.00 |
-| semantic-search | 81-90 | agent-backend | ~10 min | $0 |
-| **Integration Features** ||||
-| stripe-payments | 31-40 | agent-integrator | ~15 min | $0 |
-| email-marketing | 41-50 | agent-integrator | ~10 min | $0 |
-| discord-community | 51-60 | agent-integrator | ~15 min | $0 |
-| **Design Features** ||||
-| design-system | 71-80 | agent-designer | ~15 min | $0 |
-| wireframes | 71-75 | agent-designer | ~10 min | $0 |
-| **Performance Features** ||||
-| performance-monitoring | 81-90 | agent-ops | ~10 min | $0 |
-| analytics-dashboard | 81-90 | agent-frontend | ~15 min | $0 |
+| Feature                  | Inferences | Specialist       | Duration | Cost        |
+| ------------------------ | ---------- | ---------------- | -------- | ----------- |
+| **Foundation**           |            |                  |          |
+| landing-page             | 1-10       | agent-frontend   | ~5 min   | $0          |
+| authentication           | 11-20      | existing         | ~0 min   | $0          |
+| multi-tenant-groups      | 21-30      | agent-backend    | ~10 min  | $0          |
+| **Creator Features**     |            |                  |          |
+| content-publishing       | 31-40      | agent-frontend   | ~15 min  | $0          |
+| membership-tiers         | 41-50      | agent-backend    | ~15 min  | $0          |
+| revenue-tracking         | 51-60      | agent-backend    | ~10 min  | $0          |
+| **Developer Features**   |            |                  |          |
+| project-management       | 31-40      | agent-builder    | ~15 min  | $0          |
+| code-repositories        | 41-50      | agent-integrator | ~15 min  | $0          |
+| deployment-pipeline      | 51-60      | agent-ops        | ~20 min  | $0          |
+| **AI Features**          |            |                  |          |
+| ai-agents                | 61-70      | agent-builder    | ~20 min  | $0          |
+| rag-knowledge            | 71-80      | agent-backend    | ~15 min  | $0.10-$1.00 |
+| semantic-search          | 81-90      | agent-backend    | ~10 min  | $0          |
+| **Integration Features** |            |                  |          |
+| stripe-payments          | 31-40      | agent-integrator | ~15 min  | $0          |
+| email-marketing          | 41-50      | agent-integrator | ~10 min  | $0          |
+| discord-community        | 51-60      | agent-integrator | ~15 min  | $0          |
+| **Design Features**      |            |                  |          |
+| design-system            | 71-80      | agent-designer   | ~15 min  | $0          |
+| wireframes               | 71-75      | agent-designer   | ~10 min  | $0          |
+| **Performance Features** |            |                  |          |
+| performance-monitoring   | 81-90      | agent-ops        | ~10 min  | $0          |
+| analytics-dashboard      | 81-90      | agent-frontend   | ~15 min  | $0          |
 
 Each feature includes complete ontology mapping (things, connections, events, knowledge).
 
@@ -74,12 +92,14 @@ Each feature includes complete ontology mapping (things, connections, events, kn
 5. Emit `phase_complete` event
 
 **Progress Tracking:**
+
 - Real-time updates to `.onboarding.json`
 - Completion percentage calculation
 - Current inference tracking
 - Phase status tracking (pending → in_progress → completed)
 
 **Error Handling:**
+
 - Retry with exponential backoff (max 3 attempts)
 - Delegate to problem-solver on final failure
 - Error logging to `.onboarding.json`
@@ -87,6 +107,7 @@ Each feature includes complete ontology mapping (things, connections, events, kn
 ### 4. Data Structures
 
 **ExecutionPlan:**
+
 ```typescript
 interface ExecutionPlan {
   version: string;
@@ -113,6 +134,7 @@ interface ExecutionPlan {
 ```
 
 **Phase:**
+
 ```typescript
 interface Phase {
   name: string;
@@ -221,26 +243,31 @@ Estimates:
 ## Benefits
 
 ### 1. Transparent Planning
+
 - Users see exactly what will be built
 - Clear inference count (e.g., 60/100)
 - Accurate time and cost estimates
 
 ### 2. Incremental Value
+
 - Each phase deploys immediately
 - User sees progress in real-time
 - Can stop/resume at any inference
 
 ### 3. Intelligent Dependencies
+
 - Automatic dependency resolution
 - No breaking changes from missing features
 - Optimized execution order
 
 ### 4. Multi-Agent Coordination
+
 - Event-driven workflow (no manual handoffs)
 - Parallel execution where possible
 - Automatic error recovery
 
 ### 5. Complete Tracking
+
 - `.onboarding.json` contains full history
 - Markdown summary for human readability
 - Progress events for real-time monitoring
@@ -276,9 +303,11 @@ Estimates:
 ## Files
 
 ### Modified
+
 - `/.claude/agents/agent-director.md` - Enhanced specification
 
 ### Created
+
 - `/one/events/agent-director-enhancement-summary.md` - Detailed summary
 - `/one/things/plans/agent-director-100-inference-plans.md` - This document
 - `/.onboarding-plan.json.example` - Example plan structure
@@ -288,6 +317,7 @@ Estimates:
 ## Implementation Checklist
 
 ### Phase 1: Core Algorithm
+
 - [ ] Implement feature library (20+ features)
 - [ ] Implement dependency resolution
 - [ ] Implement inference mapping
@@ -295,6 +325,7 @@ Estimates:
 - [ ] Test with various feature combinations
 
 ### Phase 2: Execution Coordination
+
 - [ ] Implement phase execution pattern
 - [ ] Implement progress tracking
 - [ ] Implement parallel execution detection
@@ -302,6 +333,7 @@ Estimates:
 - [ ] Test sequential and parallel execution
 
 ### Phase 3: CLI Integration
+
 - [ ] Add feature selection menu
 - [ ] Display real-time progress
 - [ ] Handle user interruption
@@ -309,6 +341,7 @@ Estimates:
 - [ ] Send notifications
 
 ### Phase 4: Testing & Validation
+
 - [ ] Test all 20+ features individually
 - [ ] Test various combinations
 - [ ] Verify estimates accuracy
@@ -316,6 +349,7 @@ Estimates:
 - [ ] Performance optimization
 
 ### Phase 5: Documentation
+
 - [ ] User guide for feature selection
 - [ ] Developer guide for adding features
 - [ ] API documentation
@@ -341,7 +375,9 @@ The enhancement is successful if:
 ## Future Enhancements
 
 ### 1. Custom Features
+
 Allow users to define custom features:
+
 ```json
 {
   "name": "Custom CRM",
@@ -356,25 +392,33 @@ Allow users to define custom features:
 ```
 
 ### 2. Feature Marketplace
+
 Share features across organizations:
+
 - Public feature library
 - Community-contributed features
 - Verified specialist implementations
 
 ### 3. A/B Testing
+
 Test different feature combinations:
+
 - Track completion rates
 - Measure user satisfaction
 - Optimize default selections
 
 ### 4. Cost Optimization
+
 Minimize inference costs:
+
 - Batch similar operations
 - Reuse computations
 - Cache common patterns
 
 ### 5. Predictive Planning
+
 AI-generated feature recommendations:
+
 - Analyze website to suggest features
 - Predict success likelihood
 - Estimate ROI per feature
@@ -386,6 +430,7 @@ AI-generated feature recommendations:
 The agent-director's 100-inference plan generation capability transforms the ONE Platform onboarding experience from manual planning to intelligent, automated execution. Users select features, the director generates a complete plan, and specialist agents coordinate to build and deploy everything automatically.
 
 **Key Benefits:**
+
 - Transparent (users see exactly what's being built)
 - Incremental (each phase deploys immediately)
 - Intelligent (automatic dependency resolution)
@@ -397,6 +442,7 @@ The agent-director's 100-inference plan generation capability transforms the ONE
 ---
 
 **Next Steps:**
+
 1. Implement core algorithm (6 steps)
 2. Test plan generation with feature library
 3. Integrate with CLI (`npx oneie init`)
@@ -406,5 +452,6 @@ The agent-director's 100-inference plan generation capability transforms the ONE
 ---
 
 **Version History:**
+
 - v2.0.0 (2025-10-20) - 100-inference plan generation added
 - v1.0.0 (2025-09-15) - Initial agent-director specification

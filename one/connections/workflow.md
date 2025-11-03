@@ -1,3 +1,21 @@
+---
+title: Workflow
+dimension: connections
+category: workflow.md
+tags: agent, ai, backend, connections, events, frontend, knowledge, ontology, people, things
+related_dimensions: events, groups, knowledge, people, things
+scope: global
+created: 2025-11-03
+updated: 2025-11-03
+version: 1.0.0
+ai_context: |
+  This document is part of the connections dimension in the workflow.md category.
+  Location: one/connections/workflow.md
+  Purpose: Documents workflow - ontology-driven development
+  Related dimensions: events, groups, knowledge, people, things
+  For AI agents: Read this to understand workflow.
+---
+
 # Workflow - Ontology-Driven Development
 
 **Version:** 1.0.0

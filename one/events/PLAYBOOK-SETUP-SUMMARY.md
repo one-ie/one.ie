@@ -1,3 +1,21 @@
+---
+title: Playbook Setup Summary
+dimension: events
+category: PLAYBOOK-SETUP-SUMMARY.md
+tags: ai, ontology
+related_dimensions: people, things
+scope: global
+created: 2025-11-03
+updated: 2025-11-03
+version: 1.0.0
+ai_context: |
+  This document is part of the events dimension in the PLAYBOOK-SETUP-SUMMARY.md category.
+  Location: one/events/PLAYBOOK-SETUP-SUMMARY.md
+  Purpose: Documents playbook stripe integration - setup summary
+  Related dimensions: people, things
+  For AI agents: Read this to understand PLAYBOOK SETUP SUMMARY.
+---
+
 # Playbook Stripe Integration - Setup Summary
 
 Complete summary of the playbook product integration with Stripe.

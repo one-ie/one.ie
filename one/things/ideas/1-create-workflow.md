@@ -1,3 +1,21 @@
+---
+title: 1 Create Workflow
+dimension: things
+category: ideas
+tags: agent, events, knowledge, ontology, testing, things
+related_dimensions: connections, events, knowledge, people
+scope: global
+created: 2025-11-03
+updated: 2025-11-03
+version: 1.0.0
+ai_context: |
+  This document is part of the things dimension in the ideas category.
+  Location: one/things/ideas/1-create-workflow.md
+  Purpose: Documents idea: agent-based ontology-driven workflow system
+  Related dimensions: connections, events, knowledge, people
+  For AI agents: Read this to understand 1 create workflow.
+---
+
 # Idea: Agent-Based Ontology-Driven Workflow System
 
 **Status:** Validated by Director Agent (bootstrapped - self-implementation)

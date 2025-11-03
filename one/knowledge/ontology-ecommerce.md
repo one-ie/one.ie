@@ -1,3 +1,21 @@
+---
+title: Ontology Ecommerce
+dimension: knowledge
+category: ontology-ecommerce.md
+tags: 6-dimensions, ai, ontology
+related_dimensions: events, groups, people, things
+scope: global
+created: 2025-11-03
+updated: 2025-11-03
+version: 1.0.0
+ai_context: |
+  This document is part of the knowledge dimension in the ontology-ecommerce.md category.
+  Location: one/knowledge/ontology-ecommerce.md
+  Purpose: Version: 1.0.
+  Related dimensions: events, groups, people, things
+  For AI agents: Read this to understand ontology ecommerce.
+---
+
 ##  E-commerce Ontology Specification
 
 Version: 1.0.0 (Intelligent Commerce Engine)

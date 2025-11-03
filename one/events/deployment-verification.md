@@ -1,3 +1,21 @@
+---
+title: Deployment Verification
+dimension: events
+category: deployment-verification.md
+tags: agent, events, installation, testing
+related_dimensions: groups, things
+scope: global
+created: 2025-11-03
+updated: 2025-11-03
+version: 1.0.0
+ai_context: |
+  This document is part of the events dimension in the deployment-verification.md category.
+  Location: one/events/deployment-verification.md
+  Purpose: Documents deployment automation - verification checklist
+  Related dimensions: groups, things
+  For AI agents: Read this to understand deployment verification.
+---
+
 # Deployment Automation - Verification Checklist
 
 **Date:** 2025-10-16

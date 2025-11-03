@@ -1,3 +1,21 @@
+---
+title: Cart Drawer Integration Guide
+dimension: events
+category: CART-DRAWER-INTEGRATION-GUIDE.md
+tags: 
+related_dimensions: things
+scope: global
+created: 2025-11-03
+updated: 2025-11-03
+version: 1.0.0
+ai_context: |
+  This document is part of the events dimension in the CART-DRAWER-INTEGRATION-GUIDE.md category.
+  Location: one/events/CART-DRAWER-INTEGRATION-GUIDE.md
+  Purpose: Documents cart drawer integration guide
+  Related dimensions: things
+  For AI agents: Read this to understand CART DRAWER INTEGRATION GUIDE.
+---
+
 # Cart Drawer Integration Guide
 
 ## ✨ Automatic Slide-Out Cart - Complete!

@@ -1,3 +1,21 @@
+---
+title: Convex Backend Specialist
+dimension: things
+category: agents
+tags: ai, architecture, auth, backend, convex
+related_dimensions: events, people
+scope: global
+created: 2025-11-03
+updated: 2025-11-03
+version: 1.0.0
+ai_context: |
+  This document is part of the things dimension in the agents category.
+  Location: one/things/claude/agents/convex-backend-specialist.md
+  Purpose: Documents convex backend specialist - real-time database architecture expert
+  Related dimensions: events, people
+  For AI agents: Read this to understand convex backend specialist.
+---
+
 # Convex Backend Specialist - Real-time Database Architecture Expert
 
 **Domain**: Convex Backend Development & Real-time Database Architecture
@@ -700,6 +718,7 @@ communication_framework:
 ### Advanced Convex Database Architecture
 
 #### Schema Design Excellence
+
 ```typescript
 // Complete schema design patterns with performance optimization
 export default defineSchema({
@@ -712,19 +731,25 @@ export default defineSchema({
       v.literal("admin"),
       v.literal("moderator"),
       v.literal("user"),
-      v.literal("guest")
+      v.literal("guest"),
     ),
     profile: v.object({
       avatar: v.optional(v.id("_storage")),
       bio: v.optional(v.string()),
       website: v.optional(v.string()),
-      socialLinks: v.optional(v.object({
-        twitter: v.optional(v.string()),
-        github: v.optional(v.string()),
-        linkedin: v.optional(v.string()),
-      })),
+      socialLinks: v.optional(
+        v.object({
+          twitter: v.optional(v.string()),
+          github: v.optional(v.string()),
+          linkedin: v.optional(v.string()),
+        }),
+      ),
       preferences: v.object({
-        theme: v.union(v.literal("light"), v.literal("dark"), v.literal("system")),
+        theme: v.union(
+          v.literal("light"),
+          v.literal("dark"),
+          v.literal("system"),
+        ),
         language: v.string(),
         timezone: v.string(),
         notifications: v.object({
@@ -744,14 +769,14 @@ export default defineSchema({
       verificationToken: v.optional(v.string()),
     }),
   })
-  .index("by_email", ["email"])
-  .index("by_role", ["role"])
-  .index("by_active", ["metadata.isActive"])
-  .index("by_verified", ["metadata.isVerified"])
-  .searchIndex("search_users", {
-    searchField: "name",
-    filterFields: ["role", "metadata.isActive"],
-  }),
+    .index("by_email", ["email"])
+    .index("by_role", ["role"])
+    .index("by_active", ["metadata.isActive"])
+    .index("by_verified", ["metadata.isVerified"])
+    .searchIndex("search_users", {
+      searchField: "name",
+      filterFields: ["role", "metadata.isActive"],
+    }),
 
   // Session management for authentication
   sessions: defineTable({
@@ -765,10 +790,10 @@ export default defineSchema({
     lastUsedAt: v.number(),
     isRevoked: v.boolean(),
   })
-  .index("by_user", ["userId"])
-  .index("by_token", ["token"])
-  .index("by_refresh_token", ["refreshToken"])
-  .index("by_expires", ["expiresAt"]),
+    .index("by_user", ["userId"])
+    .index("by_token", ["token"])
+    .index("by_refresh_token", ["refreshToken"])
+    .index("by_expires", ["expiresAt"]),
 
   // Organizations for multi-tenant architecture
   organizations: defineTable({
@@ -782,23 +807,25 @@ export default defineSchema({
       requireApproval: v.boolean(),
       defaultRole: v.union(v.literal("member"), v.literal("viewer")),
     }),
-    subscription: v.optional(v.object({
-      plan: v.string(),
-      status: v.union(
-        v.literal("active"),
-        v.literal("canceled"),
-        v.literal("past_due"),
-        v.literal("unpaid")
-      ),
-      currentPeriodEnd: v.number(),
-      customerId: v.string(),
-      subscriptionId: v.string(),
-    })),
+    subscription: v.optional(
+      v.object({
+        plan: v.string(),
+        status: v.union(
+          v.literal("active"),
+          v.literal("canceled"),
+          v.literal("past_due"),
+          v.literal("unpaid"),
+        ),
+        currentPeriodEnd: v.number(),
+        customerId: v.string(),
+        subscriptionId: v.string(),
+      }),
+    ),
     createdAt: v.number(),
     updatedAt: v.number(),
   })
-  .index("by_slug", ["slug"])
-  .index("by_subscription_status", ["subscription.status"]),
+    .index("by_slug", ["slug"])
+    .index("by_subscription_status", ["subscription.status"]),
 
   // Organization memberships
   memberships: defineTable({
@@ -808,7 +835,7 @@ export default defineSchema({
       v.literal("owner"),
       v.literal("admin"),
       v.literal("member"),
-      v.literal("viewer")
+      v.literal("viewer"),
     ),
     permissions: v.array(v.string()),
     invitedBy: v.optional(v.id("users")),
@@ -817,57 +844,89 @@ export default defineSchema({
     status: v.union(
       v.literal("active"),
       v.literal("pending"),
-      v.literal("suspended")
+      v.literal("suspended"),
     ),
   })
-  .index("by_user", ["userId"])
-  .index("by_organization", ["organizationId"])
-  .index("by_user_organization", ["userId", "organizationId"])
-  .index("by_status", ["status"]),
+    .index("by_user", ["userId"])
+    .index("by_organization", ["organizationId"])
+    .index("by_user_organization", ["userId", "organizationId"])
+    .index("by_status", ["status"]),
 });
 ```
 
 #### Real-time Query Patterns
+
 ```typescript
 // Advanced query patterns with real-time reactivity
 export const getOrganizationMembers = query({
   args: {
     organizationId: v.id("organizations"),
-    role: v.optional(v.union(v.literal("owner"), v.literal("admin"), v.literal("member"), v.literal("viewer"))),
-    status: v.optional(v.union(v.literal("active"), v.literal("pending"), v.literal("suspended"))),
+    role: v.optional(
+      v.union(
+        v.literal("owner"),
+        v.literal("admin"),
+        v.literal("member"),
+        v.literal("viewer"),
+      ),
+    ),
+    status: v.optional(
+      v.union(
+        v.literal("active"),
+        v.literal("pending"),
+        v.literal("suspended"),
+      ),
+    ),
     search: v.optional(v.string()),
     cursor: v.optional(v.string()),
     limit: v.optional(v.number()),
   },
   handler: async (ctx, args) => {
-    const { organizationId, role, status = "active", search, cursor, limit = 20 } = args;
+    const {
+      organizationId,
+      role,
+      status = "active",
+      search,
+      cursor,
+      limit = 20,
+    } = args;
 
     // Verify user has permission to view members
     const currentUser = await getCurrentUser(ctx);
-    await requireOrganizationAccess(ctx, organizationId, currentUser._id, "view_members");
+    await requireOrganizationAccess(
+      ctx,
+      organizationId,
+      currentUser._id,
+      "view_members",
+    );
 
     // Build query with proper indexing
     let membershipsQuery = ctx.db
       .query("memberships")
-      .withIndex("by_organization", (q) => q.eq("organizationId", organizationId));
+      .withIndex("by_organization", (q) =>
+        q.eq("organizationId", organizationId),
+      );
 
     // Apply filters
     if (role) {
-      membershipsQuery = membershipsQuery.filter((q) => q.eq(q.field("role"), role));
+      membershipsQuery = membershipsQuery.filter((q) =>
+        q.eq(q.field("role"), role),
+      );
     }
     if (status) {
-      membershipsQuery = membershipsQuery.filter((q) => q.eq(q.field("status"), status));
+      membershipsQuery = membershipsQuery.filter((q) =>
+        q.eq(q.field("status"), status),
+      );
     }
 
     // Apply cursor pagination
     if (cursor) {
-      membershipsQuery = membershipsQuery.filter((q) => q.gt(q.field("_id"), cursor as Id<"memberships">));
+      membershipsQuery = membershipsQuery.filter((q) =>
+        q.gt(q.field("_id"), cursor as Id<"memberships">),
+      );
     }
 
     // Get memberships with user data
-    const memberships = await membershipsQuery
-      .order("desc")
-      .take(limit + 1);
+    const memberships = await membershipsQuery.order("desc").take(limit + 1);
 
     const hasMore = memberships.length > limit;
     const results = hasMore ? memberships.slice(0, limit) : memberships;
@@ -879,8 +938,11 @@ export const getOrganizationMembers = query({
         if (!user) return null;
 
         // Filter search if provided
-        if (search && !user.name.toLowerCase().includes(search.toLowerCase()) &&
-            !user.email.toLowerCase().includes(search.toLowerCase())) {
+        if (
+          search &&
+          !user.name.toLowerCase().includes(search.toLowerCase()) &&
+          !user.email.toLowerCase().includes(search.toLowerCase())
+        ) {
           return null;
         }
 
@@ -893,7 +955,7 @@ export const getOrganizationMembers = query({
             profile: user.profile,
           },
         };
-      })
+      }),
     );
 
     // Filter out null results and apply search
@@ -909,6 +971,7 @@ export const getOrganizationMembers = query({
 ```
 
 #### Mutation Patterns with Validation
+
 ```typescript
 // Complex mutation patterns with comprehensive validation
 export const updateOrganizationSettings = mutation({
@@ -920,7 +983,9 @@ export const updateOrganizationSettings = mutation({
       isPublic: v.optional(v.boolean()),
       allowInvites: v.optional(v.boolean()),
       requireApproval: v.optional(v.boolean()),
-      defaultRole: v.optional(v.union(v.literal("member"), v.literal("viewer"))),
+      defaultRole: v.optional(
+        v.union(v.literal("member"), v.literal("viewer")),
+      ),
     }),
   },
   handler: async (ctx, args) => {
@@ -941,10 +1006,14 @@ export const updateOrganizationSettings = mutation({
 
     if (settings.name !== undefined) {
       if (settings.name.trim().length < 2) {
-        throw new ConvexError("Organization name must be at least 2 characters");
+        throw new ConvexError(
+          "Organization name must be at least 2 characters",
+        );
       }
       if (settings.name.trim().length > 100) {
-        throw new ConvexError("Organization name must be less than 100 characters");
+        throw new ConvexError(
+          "Organization name must be less than 100 characters",
+        );
       }
       validatedSettings.name = settings.name.trim();
 
@@ -968,20 +1037,34 @@ export const updateOrganizationSettings = mutation({
         ...validatedSettings,
         settings: {
           ...organization.settings,
-          ...(settings.isPublic !== undefined && { isPublic: settings.isPublic }),
-          ...(settings.allowInvites !== undefined && { allowInvites: settings.allowInvites }),
-          ...(settings.requireApproval !== undefined && { requireApproval: settings.requireApproval }),
-          ...(settings.defaultRole !== undefined && { defaultRole: settings.defaultRole }),
+          ...(settings.isPublic !== undefined && {
+            isPublic: settings.isPublic,
+          }),
+          ...(settings.allowInvites !== undefined && {
+            allowInvites: settings.allowInvites,
+          }),
+          ...(settings.requireApproval !== undefined && {
+            requireApproval: settings.requireApproval,
+          }),
+          ...(settings.defaultRole !== undefined && {
+            defaultRole: settings.defaultRole,
+          }),
         },
         updatedAt: Date.now(),
       });
     }
 
     // Log the change for audit trail
-    await logOrganizationChange(ctx, organizationId, currentUser, "settings_updated", {
-      changes: validatedSettings,
-      timestamp: Date.now(),
-    });
+    await logOrganizationChange(
+      ctx,
+      organizationId,
+      currentUser,
+      "settings_updated",
+      {
+        changes: validatedSettings,
+        timestamp: Date.now(),
+      },
+    );
 
     return { success: true };
   },
@@ -991,6 +1074,7 @@ export const updateOrganizationSettings = mutation({
 ### Authentication & Authorization Excellence
 
 #### JWT-Based Authentication System
+
 ```typescript
 // Comprehensive authentication system with refresh tokens
 export const signIn = mutation({
@@ -1044,7 +1128,9 @@ export const signIn = mutation({
       userId: user._id,
       token: accessToken,
       refreshToken,
-      expiresAt: Date.now() + (remember ? 30 * 24 * 60 * 60 * 1000 : 24 * 60 * 60 * 1000), // 30 days or 1 day
+      expiresAt:
+        Date.now() +
+        (remember ? 30 * 24 * 60 * 60 * 1000 : 24 * 60 * 60 * 1000), // 30 days or 1 day
       createdAt: Date.now(),
       lastUsedAt: Date.now(),
       isRevoked: false,
@@ -1066,7 +1152,9 @@ export const signIn = mutation({
       },
       accessToken,
       refreshToken,
-      expiresAt: Date.now() + (remember ? 30 * 24 * 60 * 60 * 1000 : 24 * 60 * 60 * 1000),
+      expiresAt:
+        Date.now() +
+        (remember ? 30 * 24 * 60 * 60 * 1000 : 24 * 60 * 60 * 1000),
     };
   },
 });
@@ -1117,6 +1205,7 @@ export const refreshAccessToken = mutation({
 ```
 
 #### Role-Based Access Control
+
 ```typescript
 // Comprehensive RBAC system with granular permissions
 export const PERMISSIONS = {
@@ -1197,9 +1286,14 @@ export async function requirePermission(
   ctx: QueryCtx | MutationCtx,
   organizationId: Id<"organizations">,
   userId: Id<"users">,
-  permission: string
+  permission: string,
 ): Promise<void> {
-  const hasPermission = await checkPermission(ctx, organizationId, userId, permission);
+  const hasPermission = await checkPermission(
+    ctx,
+    organizationId,
+    userId,
+    permission,
+  );
   if (!hasPermission) {
     throw new ConvexError(`Missing required permission: ${permission}`);
   }
@@ -1209,13 +1303,13 @@ export async function checkPermission(
   ctx: QueryCtx | MutationCtx,
   organizationId: Id<"organizations">,
   userId: Id<"users">,
-  permission: string
+  permission: string,
 ): Promise<boolean> {
   // Get user's membership in the organization
   const membership = await ctx.db
     .query("memberships")
     .withIndex("by_user_organization", (q) =>
-      q.eq("userId", userId).eq("organizationId", organizationId)
+      q.eq("userId", userId).eq("organizationId", organizationId),
     )
     .first();
 
@@ -1241,6 +1335,7 @@ export async function checkPermission(
 ### Performance Optimization Mastery
 
 #### Advanced Indexing Strategies
+
 ```typescript
 // Performance-optimized schema with strategic indexing
 export default defineSchema({
@@ -1257,7 +1352,7 @@ export default defineSchema({
     status: v.union(
       v.literal("draft"),
       v.literal("published"),
-      v.literal("archived")
+      v.literal("archived"),
     ),
     publishedAt: v.optional(v.number()),
     scheduledFor: v.optional(v.number()),
@@ -1277,35 +1372,35 @@ export default defineSchema({
     createdAt: v.number(),
     updatedAt: v.number(),
   })
-  // Single-field indexes for basic queries
-  .index("by_author", ["authorId"])
-  .index("by_organization", ["organizationId"])
-  .index("by_category", ["categoryId"])
-  .index("by_slug", ["slug"])
-  .index("by_status", ["status"])
-  .index("by_published", ["publishedAt"])
-  .index("by_scheduled", ["scheduledFor"])
+    // Single-field indexes for basic queries
+    .index("by_author", ["authorId"])
+    .index("by_organization", ["organizationId"])
+    .index("by_category", ["categoryId"])
+    .index("by_slug", ["slug"])
+    .index("by_status", ["status"])
+    .index("by_published", ["publishedAt"])
+    .index("by_scheduled", ["scheduledFor"])
 
-  // Compound indexes for common query patterns
-  .index("by_org_status", ["organizationId", "status"])
-  .index("by_org_published", ["organizationId", "status", "publishedAt"])
-  .index("by_author_published", ["authorId", "status", "publishedAt"])
-  .index("by_category_published", ["categoryId", "status", "publishedAt"])
+    // Compound indexes for common query patterns
+    .index("by_org_status", ["organizationId", "status"])
+    .index("by_org_published", ["organizationId", "status", "publishedAt"])
+    .index("by_author_published", ["authorId", "status", "publishedAt"])
+    .index("by_category_published", ["categoryId", "status", "publishedAt"])
 
-  // Performance indexes for analytics
-  .index("by_popularity", ["status", "metadata.likeCount", "publishedAt"])
-  .index("by_views", ["status", "metadata.viewCount", "publishedAt"])
-  .index("by_recent", ["status", "updatedAt"])
+    // Performance indexes for analytics
+    .index("by_popularity", ["status", "metadata.likeCount", "publishedAt"])
+    .index("by_views", ["status", "metadata.viewCount", "publishedAt"])
+    .index("by_recent", ["status", "updatedAt"])
 
-  // Full-text search index
-  .searchIndex("search_content", {
-    searchField: "content",
-    filterFields: ["organizationId", "status", "authorId", "categoryId"],
-  })
-  .searchIndex("search_title", {
-    searchField: "title",
-    filterFields: ["organizationId", "status", "tags"],
-  }),
+    // Full-text search index
+    .searchIndex("search_content", {
+      searchField: "content",
+      filterFields: ["organizationId", "status", "authorId", "categoryId"],
+    })
+    .searchIndex("search_title", {
+      searchField: "title",
+      filterFields: ["organizationId", "status", "tags"],
+    }),
 });
 
 // Optimized query leveraging proper indexes
@@ -1313,12 +1408,14 @@ export const getPopularPosts = query({
   args: {
     organizationId: v.id("organizations"),
     categoryId: v.optional(v.id("categories")),
-    timeRange: v.optional(v.union(
-      v.literal("day"),
-      v.literal("week"),
-      v.literal("month"),
-      v.literal("year")
-    )),
+    timeRange: v.optional(
+      v.union(
+        v.literal("day"),
+        v.literal("week"),
+        v.literal("month"),
+        v.literal("year"),
+      ),
+    ),
     limit: v.optional(v.number()),
     cursor: v.optional(v.string()),
   },
@@ -1328,7 +1425,7 @@ export const getPopularPosts = query({
       categoryId,
       timeRange = "month",
       limit = 20,
-      cursor
+      cursor,
     } = args;
 
     // Calculate time threshold
@@ -1347,16 +1444,18 @@ export const getPopularPosts = query({
     if (categoryId) {
       // Use category + published compound index
       query = query.withIndex("by_category_published", (q) =>
-        q.eq("categoryId", categoryId)
-         .eq("status", "published")
-         .gte("publishedAt", since)
+        q
+          .eq("categoryId", categoryId)
+          .eq("status", "published")
+          .gte("publishedAt", since),
       );
     } else {
       // Use organization + published compound index
       query = query.withIndex("by_org_published", (q) =>
-        q.eq("organizationId", organizationId)
-         .eq("status", "published")
-         .gte("publishedAt", since)
+        q
+          .eq("organizationId", organizationId)
+          .eq("status", "published")
+          .gte("publishedAt", since),
       );
     }
 
@@ -1366,9 +1465,7 @@ export const getPopularPosts = query({
     }
 
     // Sort by popularity metrics
-    const posts = await query
-      .order("desc")
-      .take(limit + 1);
+    const posts = await query.order("desc").take(limit + 1);
 
     // Sort by engagement score (combination of likes, views, comments)
     const sortedPosts = posts.sort((a, b) => {
@@ -1393,11 +1490,12 @@ export const getPopularPosts = query({
 function calculateEngagementScore(metadata: any): number {
   const { viewCount, likeCount, commentCount, shareCount } = metadata;
   // Weighted engagement score
-  return (viewCount * 0.1) + (likeCount * 2) + (commentCount * 5) + (shareCount * 10);
+  return viewCount * 0.1 + likeCount * 2 + commentCount * 5 + shareCount * 10;
 }
 ```
 
 #### Caching and Performance Patterns
+
 ```typescript
 // Advanced caching patterns for high-performance applications
 export const getCachedUserProfile = query({
@@ -1426,19 +1524,23 @@ export const getCachedUserProfile = query({
 // Batch operations for performance
 export const batchUpdatePosts = mutation({
   args: {
-    updates: v.array(v.object({
-      postId: v.id("posts"),
-      data: v.object({
-        title: v.optional(v.string()),
-        content: v.optional(v.string()),
-        tags: v.optional(v.array(v.string())),
-        status: v.optional(v.union(
-          v.literal("draft"),
-          v.literal("published"),
-          v.literal("archived")
-        )),
+    updates: v.array(
+      v.object({
+        postId: v.id("posts"),
+        data: v.object({
+          title: v.optional(v.string()),
+          content: v.optional(v.string()),
+          tags: v.optional(v.array(v.string())),
+          status: v.optional(
+            v.union(
+              v.literal("draft"),
+              v.literal("published"),
+              v.literal("archived"),
+            ),
+          ),
+        }),
       }),
-    })),
+    ),
   },
   handler: async (ctx, args) => {
     const { updates } = args;
@@ -1467,8 +1569,8 @@ export const batchUpdatePosts = mutation({
     // Execute all updates in batch
     await Promise.all(
       operations.map(({ postId, patchData }) =>
-        ctx.db.patch(postId, patchData)
-      )
+        ctx.db.patch(postId, patchData),
+      ),
     );
 
     return { updated: operations.length };
@@ -1479,6 +1581,7 @@ export const batchUpdatePosts = mutation({
 ### File Storage and Media Handling
 
 #### Complete File Management System
+
 ```typescript
 // Comprehensive file storage with processing pipeline
 export const generateUploadUrl = mutation({
@@ -1578,10 +1681,10 @@ export const processFile = internalMutation({
 
       // Process based on content type
       if (file.contentType.startsWith("image/")) {
-        variants.push(...await processImageVariants(ctx, file));
+        variants.push(...(await processImageVariants(ctx, file)));
         extractedMetadata = await extractImageMetadata(ctx, file);
       } else if (file.contentType.startsWith("video/")) {
-        variants.push(...await processVideoVariants(ctx, file));
+        variants.push(...(await processVideoVariants(ctx, file)));
         extractedMetadata = await extractVideoMetadata(ctx, file);
       } else if (file.contentType === "application/pdf") {
         extractedMetadata = await extractPDFMetadata(ctx, file);
@@ -1596,7 +1699,6 @@ export const processFile = internalMutation({
         "processing.extractedMetadata": extractedMetadata,
         updatedAt: Date.now(),
       });
-
     } catch (error) {
       console.error(`File processing failed for ${fileId}:`, error);
       await ctx.db.patch(fileId, {
@@ -1623,7 +1725,11 @@ async function processImageVariants(ctx: any, file: any) {
   for (const size of sizes) {
     try {
       // Process image (this would integrate with image processing service)
-      const variantStorageId = await processImageSize(ctx, file.storageId, size);
+      const variantStorageId = await processImageSize(
+        ctx,
+        file.storageId,
+        size,
+      );
 
       variants.push({
         name: size.name,
@@ -1645,6 +1751,7 @@ async function processImageVariants(ctx: any, file: any) {
 ### Integration Excellence with Frontend Frameworks
 
 #### Next.js Integration Patterns
+
 ```typescript
 // Complete Next.js integration with Convex
 // hooks/useRealTimeData.ts
@@ -1659,17 +1766,19 @@ export function useOrganization(organizationId: Id<"organizations">) {
   // Real-time organization data
   const organization = useQuery(
     api.organizations.getOrganization,
-    isAuthenticated ? { organizationId } : "skip"
+    isAuthenticated ? { organizationId } : "skip",
   );
 
   // Real-time members data
   const members = useQuery(
     api.organizations.getOrganizationMembers,
-    isAuthenticated ? { organizationId, limit: 50 } : "skip"
+    isAuthenticated ? { organizationId, limit: 50 } : "skip",
   );
 
   // Mutations for organization management
-  const updateOrganization = useMutation(api.organizations.updateOrganizationSettings);
+  const updateOrganization = useMutation(
+    api.organizations.updateOrganizationSettings,
+  );
   const inviteMember = useMutation(api.organizations.inviteMember);
   const updateMemberRole = useMutation(api.organizations.updateMemberRole);
   const removeMember = useMutation(api.organizations.removeMember);
@@ -1677,37 +1786,44 @@ export function useOrganization(organizationId: Id<"organizations">) {
   // Derived state
   const isOwner = useMemo(() => {
     if (!organization || !members) return false;
-    return members.members.some(m =>
-      m.user._id === organization.currentUserId && m.role === "owner"
+    return members.members.some(
+      (m) => m.user._id === organization.currentUserId && m.role === "owner",
     );
   }, [organization, members]);
 
   const canManageMembers = useMemo(() => {
     if (!organization || !members) return false;
-    return members.members.some(m =>
-      m.user._id === organization.currentUserId &&
-      (m.role === "owner" || m.role === "admin")
+    return members.members.some(
+      (m) =>
+        m.user._id === organization.currentUserId &&
+        (m.role === "owner" || m.role === "admin"),
     );
   }, [organization, members]);
 
   // Optimistic actions
-  const handleUpdateOrganization = useCallback(async (updates: any) => {
-    try {
-      await updateOrganization({ organizationId, settings: updates });
-    } catch (error) {
-      console.error("Failed to update organization:", error);
-      throw error;
-    }
-  }, [updateOrganization, organizationId]);
+  const handleUpdateOrganization = useCallback(
+    async (updates: any) => {
+      try {
+        await updateOrganization({ organizationId, settings: updates });
+      } catch (error) {
+        console.error("Failed to update organization:", error);
+        throw error;
+      }
+    },
+    [updateOrganization, organizationId],
+  );
 
-  const handleInviteMember = useCallback(async (email: string, role: string) => {
-    try {
-      await inviteMember({ organizationId, email, role: role as any });
-    } catch (error) {
-      console.error("Failed to invite member:", error);
-      throw error;
-    }
-  }, [inviteMember, organizationId]);
+  const handleInviteMember = useCallback(
+    async (email: string, role: string) => {
+      try {
+        await inviteMember({ organizationId, email, role: role as any });
+      } catch (error) {
+        console.error("Failed to invite member:", error);
+        throw error;
+      }
+    },
+    [inviteMember, organizationId],
+  );
 
   return {
     organization,
@@ -1727,17 +1843,20 @@ export function useOrganization(organizationId: Id<"organizations">) {
 }
 
 // Custom hook for real-time posts with optimistic updates
-export function usePosts(organizationId: Id<"organizations">, options: {
-  categoryId?: Id<"categories">;
-  status?: "draft" | "published" | "archived";
-  search?: string;
-  limit?: number;
-} = {}) {
+export function usePosts(
+  organizationId: Id<"organizations">,
+  options: {
+    categoryId?: Id<"categories">;
+    status?: "draft" | "published" | "archived";
+    search?: string;
+    limit?: number;
+  } = {},
+) {
   const { isAuthenticated } = useConvexAuth();
 
   const posts = useQuery(
     api.posts.getPosts,
-    isAuthenticated ? { organizationId, ...options } : "skip"
+    isAuthenticated ? { organizationId, ...options } : "skip",
   );
 
   const createPost = useMutation(api.posts.createPost);
@@ -1745,39 +1864,45 @@ export function usePosts(organizationId: Id<"organizations">, options: {
   const deletePost = useMutation(api.posts.deletePost);
   const publishPost = useMutation(api.posts.publishPost);
 
-  const handleCreatePost = useCallback(async (data: {
-    title: string;
-    content: string;
-    categoryId?: Id<"categories">;
-    tags?: string[];
-  }) => {
-    try {
-      return await createPost({
-        organizationId,
-        ...data,
-      });
-    } catch (error) {
-      console.error("Failed to create post:", error);
-      throw error;
-    }
-  }, [createPost, organizationId]);
-
-  const handleUpdatePost = useCallback(async (
-    postId: Id<"posts">,
-    updates: Partial<{
+  const handleCreatePost = useCallback(
+    async (data: {
       title: string;
       content: string;
-      tags: string[];
-      status: "draft" | "published" | "archived";
-    }>
-  ) => {
-    try {
-      await updatePost({ postId, ...updates });
-    } catch (error) {
-      console.error("Failed to update post:", error);
-      throw error;
-    }
-  }, [updatePost]);
+      categoryId?: Id<"categories">;
+      tags?: string[];
+    }) => {
+      try {
+        return await createPost({
+          organizationId,
+          ...data,
+        });
+      } catch (error) {
+        console.error("Failed to create post:", error);
+        throw error;
+      }
+    },
+    [createPost, organizationId],
+  );
+
+  const handleUpdatePost = useCallback(
+    async (
+      postId: Id<"posts">,
+      updates: Partial<{
+        title: string;
+        content: string;
+        tags: string[];
+        status: "draft" | "published" | "archived";
+      }>,
+    ) => {
+      try {
+        await updatePost({ postId, ...updates });
+      } catch (error) {
+        console.error("Failed to update post:", error);
+        throw error;
+      }
+    },
+    [updatePost],
+  );
 
   return {
     posts: posts?.posts || [],
@@ -1795,6 +1920,7 @@ export function usePosts(organizationId: Id<"organizations">, options: {
 ```
 
 #### React Component Integration
+
 ```typescript
 // components/OrganizationDashboard.tsx
 import { useOrganization, usePosts } from "../hooks/useRealTimeData";
@@ -1886,9 +2012,14 @@ function OrganizationStats({ organizationId }: { organizationId: Id<"organizatio
 ### Complete Convex Tools Utilization
 
 #### Environment Management Tools
+
 ```typescript
 // Comprehensive environment management using MCP tools
-import { mcp__convex__envList, mcp__convex__envGet, mcp__convex__envSet } from "./mcp-tools";
+import {
+  mcp__convex__envList,
+  mcp__convex__envGet,
+  mcp__convex__envSet,
+} from "./mcp-tools";
 
 export class ConvexEnvironmentManager {
   async checkEnvironmentHealth(): Promise<EnvironmentHealth> {
@@ -1928,7 +2059,7 @@ export class ConvexEnvironmentManager {
       // Add recommendations
       if (health.missingVariables.length > 0) {
         health.recommendations.push(
-          `Set missing environment variables: ${health.missingVariables.join(", ")}`
+          `Set missing environment variables: ${health.missingVariables.join(", ")}`,
         );
       }
 
@@ -1961,9 +2092,14 @@ export class ConvexEnvironmentManager {
 ```
 
 #### Database Management Tools
+
 ```typescript
 // Advanced database management using MCP tools
-import { mcp__convex__data, mcp__convex__tables, mcp__convex__functionSpec } from "./mcp-tools";
+import {
+  mcp__convex__data,
+  mcp__convex__tables,
+  mcp__convex__functionSpec,
+} from "./mcp-tools";
 
 export class ConvexDatabaseManager {
   async analyzeSchemaHealth(): Promise<SchemaHealth> {
@@ -1982,7 +2118,7 @@ export class ConvexDatabaseManager {
         // Analyze table structure and performance
         const tableData = await mcp__convex__data({
           table: tableName,
-          limit: 1000
+          limit: 1000,
         });
 
         health.tables[tableName] = {
@@ -1994,7 +2130,7 @@ export class ConvexDatabaseManager {
         // Generate recommendations
         if (!health.tables[tableName].hasProperIndexes) {
           health.recommendations.push(
-            `Consider adding indexes to table '${tableName}' for better query performance`
+            `Consider adding indexes to table '${tableName}' for better query performance`,
           );
         }
       }
@@ -2011,7 +2147,9 @@ export class ConvexDatabaseManager {
     }
   }
 
-  async optimizeQueryPerformance(tableName: string): Promise<OptimizationReport> {
+  async optimizeQueryPerformance(
+    tableName: string,
+  ): Promise<OptimizationReport> {
     // Analyze query patterns
     const functionSpecs = await mcp__convex__functionSpec();
     const tableQueries = this.extractTableQueries(functionSpecs, tableName);
@@ -2045,9 +2183,14 @@ export class ConvexDatabaseManager {
 ```
 
 #### Function Testing and Debugging Tools
+
 ```typescript
 // Complete function testing using MCP tools
-import { mcp__convex__run, mcp__convex__functionSpec, mcp__convex__status } from "./mcp-tools";
+import {
+  mcp__convex__run,
+  mcp__convex__functionSpec,
+  mcp__convex__status,
+} from "./mcp-tools";
 
 export class ConvexFunctionTester {
   async runComprehensiveTests(): Promise<TestResults> {
@@ -2077,7 +2220,10 @@ export class ConvexFunctionTester {
     return results;
   }
 
-  private async testFunction(spec: FunctionSpec, results: TestResults): Promise<void> {
+  private async testFunction(
+    spec: FunctionSpec,
+    results: TestResults,
+  ): Promise<void> {
     const testCases = this.generateTestCases(spec);
 
     for (const testCase of testCases) {
@@ -2168,6 +2314,7 @@ export class ConvexFunctionTester {
 ### 4-Level Quality Gate Validation
 
 #### Mission Level Quality (4.0+ stars)
+
 ```yaml
 mission_quality_standards:
   backend_architecture_completeness:
@@ -2190,6 +2337,7 @@ mission_quality_standards:
 ```
 
 #### Story Level Quality (4.0+ stars)
+
 ```yaml
 backend_story_quality:
   implementation_completeness:
@@ -2212,6 +2360,7 @@ backend_story_quality:
 ```
 
 #### Task Level Quality (4.0+ stars)
+
 ```yaml
 backend_task_quality:
   function_implementation:
@@ -2234,6 +2383,7 @@ backend_task_quality:
 ```
 
 #### Agent Level Quality (4.0+ stars)
+
 ```yaml
 convex_specialist_quality:
   technical_excellence:
@@ -2258,6 +2408,7 @@ convex_specialist_quality:
 ## Mission-3 Integration Readiness
 
 ### Multi-Platform Backend Foundation
+
 ```yaml
 mission_3_preparation:
   web_application_backend:
@@ -2286,6 +2437,7 @@ mission_3_preparation:
 ```
 
 ### Agent Builder System Backend Requirements
+
 ```yaml
 agent_builder_backend:
   agent_management:
@@ -2332,9 +2484,9 @@ As the **Convex Backend Specialist** with comprehensive R.O.C.K.E.T. framework i
 
 ---
 
-*Cascade Agent: BACKEND FOUNDATION*
-*Quality Standard: 4.0+ stars*
-*Mission-3 Ready: ✅ COMPLETE*
+_Cascade Agent: BACKEND FOUNDATION_
+_Quality Standard: 4.0+ stars_
+_Mission-3 Ready: ✅ COMPLETE_
 
 ## Test-Driven Vision CASCADE Integration
 
@@ -2346,24 +2498,28 @@ As the **Convex Backend Specialist** with comprehensive R.O.C.K.E.T. framework i
 **CASCADE Role**: Backend Architecture and Real-time Database Systems
 
 ### 1. Context Intelligence Engine Integration
+
 - **Backend Context Analysis**: Leverage architecture, product, and ontology context for backend architecture decisions
-- **Real-time Database Optimization**: Use real-time context for database design and performance optimization  
+- **Real-time Database Optimization**: Use real-time context for database design and performance optimization
 - **Cross-Functional Backend Coordination**: Maintain awareness of mission objectives and technical constraints for backend development
 - **Backend Impact Assessment**: Context-aware evaluation of backend architecture impact on overall system performance
 
-### 2. Story Generation Orchestrator Integration  
+### 2. Story Generation Orchestrator Integration
+
 - **Backend Expertise Input for Story Complexity**: Provide backend architecture and real-time database assessment for story development
 - **Resource Planning for Backend Development**: Context-informed backend resource allocation and database development
 - **Backend Feasibility Assessment**: Real-time database feasibility analysis based on technical complexity
 - **Cross-Team Backend Coordination Requirements**: Identify and communicate backend development needs with other teams
 
 ### 3. Agent ONE Coordination Protocol Integration
+
 - **Agent ONE Backend Coordination**: Seamless integration with Agent ONE for backend mission and story coordination
 - **Mission-to-Backend Workflow**: Support Agent ONE's Mission → Story → Task → Agent CASCADE workflow for backend development
 - **Backend Quality Gate Coordination**: Coordinate with Agent ONE's quality assurance for backend validation
 - **Context-Aware Backend Architecture**: Use Agent ONE's context intelligence for informed backend design decisions
 
 ### 4. Quality Assurance Controller Integration
+
 - **Backend Quality Metrics Monitoring**: Track and maintain 4.0+ star quality standards across all backend development outputs
 - **Database Standards Enforcement**: Ensure consistent backend architecture and real-time database standards
 - **Backend Quality Improvement Initiative**: Lead continuous quality improvement in backend development and database optimization
@@ -2372,18 +2528,21 @@ As the **Convex Backend Specialist** with comprehensive R.O.C.K.E.T. framework i
 ## CASCADE Performance Standards
 
 ### Context Intelligence Performance
+
 - **Context Loading**: <1 seconds for complete domain context discovery and analysis
 - **Real-time Context Updates**: <30 seconds for architecture and mission context reflection
 - **Context-Informed Decisions**: <30 seconds for optimization decisions
 - **Cross-Agent Context Sharing**: <5 seconds for context broadcasting to other agents
 
 ### Domain Optimization Performance
+
 - **Task Analysis**: <1 second for domain-specific task analysis
 - **Optimization Analysis**: <2 minutes for domain-specific optimization
 - **Cross-Agent Coordination**: <30 seconds for specialist coordination and progress synchronization
 - **Performance Optimization**: <5 minutes for domain performance analysis and optimization
 
 ### Quality Assurance Performance
+
 - **Quality Monitoring**: <1 minute for domain quality metrics assessment and tracking
 - **Quality Gate Enforcement**: <30 seconds for quality standard validation across specialist outputs
 - **Quality Improvement Coordination**: <3 minutes for quality enhancement initiative planning and coordination
@@ -2392,23 +2551,25 @@ As the **Convex Backend Specialist** with comprehensive R.O.C.K.E.T. framework i
 ## CASCADE Quality Gates
 
 ### Domain Specialization Quality Criteria
+
 - [ ] **Context Intelligence Mastery**: Complete awareness of architecture, product, and mission context for informed specialist decisions
 - [ ] **Domain Performance Optimization**: Demonstrated improvement in domain-specific performance and efficiency
 - [ ] **Quality Standards Leadership**: Consistent enforcement of 4.0+ star quality standards across all specialist outputs
 - [ ] **Cross-Functional Coordination Excellence**: Successful specialist coordination with team managers and other specialists
 
 ### Integration Quality Standards
+
 - [ ] **Context Intelligence Integration**: Domain context loading and real-time updates operational
 - [ ] **Story Generation Integration**: Domain expertise input and coordination requirements contribution functional
 - [ ] **Quality Assurance Integration**: Quality monitoring and cross-specialist coordination operational
 - [ ] **Quality Assurance Integration**: Domain quality monitoring and cross-specialist coordination validated
-
 
 ## CASCADE Integration & Quality Assurance
 
 ### R.O.C.K.E.T. Framework Excellence
 
 #### **R** - Role Definition
+
 ```yaml
 role_clarity:
   primary: "[Agent Primary Role]"
@@ -2418,6 +2579,7 @@ role_clarity:
 ```
 
 #### **O** - Objective Specification
+
 ```yaml
 objective_framework:
   primary_goals: "[Clear, measurable primary objectives]"
@@ -2427,6 +2589,7 @@ objective_framework:
 ```
 
 #### **C** - Context Integration
+
 ```yaml
 context_analysis:
   mission_alignment: "[How this agent supports current missions]"
@@ -2436,6 +2599,7 @@ context_analysis:
 ```
 
 #### **K** - Key Instructions
+
 ```yaml
 critical_requirements:
   quality_standards: "Maintain 4.5+ star quality across all deliverables"
@@ -2445,6 +2609,7 @@ critical_requirements:
 ```
 
 #### **E** - Examples Portfolio
+
 ```yaml
 exemplar_implementations:
   high_quality_example:
@@ -2461,6 +2626,7 @@ exemplar_implementations:
 ```
 
 #### **T** - Tone & Communication
+
 ```yaml
 communication_excellence:
   professional_tone: "Maintain expert-level professionalism with accessible communication"
@@ -2514,7 +2680,6 @@ quality_assurance:
     outcome_measurement: "Success criteria achievement verification"
 ```
 
-
 ## Advanced Capability Framework
 
 ### Expert-Level Competencies
@@ -2549,13 +2714,12 @@ learning_framework:
     best_practice_adoption: "Adopt and adapt best practices from ecosystem"
 ```
 
-
 ---
 
 **CASCADE Integration Status**: Context Intelligence integration complete, ready for Story Generation integration
 
-*CASCADE Agent: CONVEX_BACKEND_SPECIALIST_-_REAL-TIME_DATABASE_ARCHITECTURE_EXPERT with Context Intelligence*
-*Quality Standard: 4.0+ stars*
-*Story 1.6: CASCADE Integration Complete - Context Intelligence Phase*
+_CASCADE Agent: CONVEX*BACKEND_SPECIALIST*-\_REAL-TIME_DATABASE_ARCHITECTURE_EXPERT with Context Intelligence_
+_Quality Standard: 4.0+ stars_
+_Story 1.6: CASCADE Integration Complete - Context Intelligence Phase_
 
 _Ready to provide specialized expertise for CASCADE-enhanced performance optimization and context-intelligent innovation._

@@ -1,3 +1,21 @@
+---
+title: Ecommerce Demo Plan
+dimension: events
+category: ECOMMERCE-DEMO-PLAN.md
+tags: ai, connections, events, groups, inference, knowledge, ontology, people, things
+related_dimensions: connections, groups, knowledge, people, things
+scope: global
+created: 2025-11-03
+updated: 2025-11-03
+version: 1.0.0
+ai_context: |
+  This document is part of the events dimension in the ECOMMERCE-DEMO-PLAN.md category.
+  Location: one/events/ECOMMERCE-DEMO-PLAN.md
+  Purpose: Documents ecommerce demo application - 100-inference plan
+  Related dimensions: connections, groups, knowledge, people, things
+  For AI agents: Read this to understand ECOMMERCE DEMO PLAN.
+---
+
 # Ecommerce Demo Application - 100-Inference Plan
 
 **Version:** 1.0.0  

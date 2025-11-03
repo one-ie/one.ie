@@ -1,3 +1,21 @@
+---
+title: Backend Guide
+dimension: things
+category: implementation
+tags: backend, connections, convex, groups, knowledge, ontology, people, things
+related_dimensions: connections, events, groups, knowledge, people
+scope: global
+created: 2025-11-03
+updated: 2025-11-03
+version: 1.0.0
+ai_context: |
+  This document is part of the things dimension in the implementation category.
+  Location: one/things/implementation/backend-guide.md
+  Purpose: Documents backend implementation guide: complete 6-dimension ontology
+  Related dimensions: connections, events, groups, knowledge, people
+  For AI agents: Read this to understand backend guide.
+---
+
 # Backend Implementation Guide: Complete 6-Dimension Ontology
 
 ## Overview
@@ -138,6 +156,7 @@ action: entities.generateEmbeddings
 ## 📊 By The Numbers
 
 ### Mutations (Write Operations)
+
 - **groups.ts**: 4 functions (create, update, archive, restore)
 - **people.ts**: 5 functions (create, updateRole, updateProfile, removeFromGroup, addToGroups)
 - **entities.ts**: 4 functions (create, update, archive, restore)
@@ -150,6 +169,7 @@ action: entities.generateEmbeddings
 **Total: 26 mutations**
 
 ### Queries (Read Operations)
+
 - **groups.ts**: 13 functions (lookup, list, hierarchy, breadcrumbs, stats, search)
 - **entities.ts**: 8 functions (list, getById, search, getWithConnections, getActivity, countByType, countByStatus, recent, recentlyUpdated)
 - **connections.ts**: 4 functions (listFrom, listTo, listBetween, listByType)
@@ -163,6 +183,7 @@ action: entities.generateEmbeddings
 **Total: 51 queries**
 
 ### Actions (Async External Operations)
+
 - **groups.ts**: 6 functions (email, notifications, export, archive, directory sync, webhooks)
 - **entities.ts**: 6 functions (embeddings, file processing, analysis, export, publish, notify)
 - **connections.ts**: 6 functions (strength analysis, payments, recommendations, notify, export graph, verify)
@@ -171,6 +192,7 @@ action: entities.generateEmbeddings
 **Total: 25 actions**
 
 ### Internal Actions (Reusable Utilities)
+
 - **validation.ts**: 10 functions (entity/connection/knowledge validation, role checks, type validation, string/email validation)
 - **eventLogger.ts**: 10 functions (entity/connection/knowledge logging + group/user/error logging)
 - **search.ts**: 7 functions (entity/knowledge search, connection search, aggregations, event search, global search)
@@ -206,13 +228,20 @@ export const create = mutation({
     if (!isValidInput(args)) throw new Error("Invalid input");
 
     // 4. GET ACTOR
-    const actor = await ctx.db.query("entities")
-      .withIndex("group_type", q => q.eq("groupId", args.groupId).eq("type", "user"))
-      .filter(q => q.eq(q.field("properties.userId"), identity.tokenIdentifier))
+    const actor = await ctx.db
+      .query("entities")
+      .withIndex("group_type", (q) =>
+        q.eq("groupId", args.groupId).eq("type", "user"),
+      )
+      .filter((q) =>
+        q.eq(q.field("properties.userId"), identity.tokenIdentifier),
+      )
       .first();
 
     // 5. CREATE
-    const id = await ctx.db.insert("entities", { /* ... */ });
+    const id = await ctx.db.insert("entities", {
+      /* ... */
+    });
 
     // 6. LOG EVENT
     await ctx.runAction(api.internalActions.eventLogger.logEntityCreated, {
@@ -222,10 +251,12 @@ export const create = mutation({
     });
 
     // 7. ASYNC TASKS
-    ctx.runAction(api.actions.entities.generateEmbeddings, { /* ... */ });
+    ctx.runAction(api.actions.entities.generateEmbeddings, {
+      /* ... */
+    });
 
     return id;
-  }
+  },
 });
 ```
 
@@ -236,7 +267,7 @@ export const list = query({
   args: {
     groupId: v.id("groups"),
     type: v.optional(v.string()),
-    limit: v.optional(v.number())
+    limit: v.optional(v.number()),
   },
   handler: async (ctx, args) => {
     const limit = args.limit || 20;
@@ -244,19 +275,21 @@ export const list = query({
     // CRITICAL: Use index for efficiency
     let results;
     if (args.type) {
-      results = await ctx.db.query("entities")
-        .withIndex("group_type", q =>
-          q.eq("groupId", args.groupId).eq("type", args.type)
+      results = await ctx.db
+        .query("entities")
+        .withIndex("group_type", (q) =>
+          q.eq("groupId", args.groupId).eq("type", args.type),
         )
         .collect();
     } else {
-      results = await ctx.db.query("entities")
-        .withIndex("by_group", q => q.eq("groupId", args.groupId))
+      results = await ctx.db
+        .query("entities")
+        .withIndex("by_group", (q) => q.eq("groupId", args.groupId))
         .collect();
     }
 
     return results.slice(0, limit);
-  }
+  },
 });
 ```
 
@@ -268,7 +301,7 @@ export const sendEmail = action({
     groupId: v.id("groups"),
     toEmail: v.string(),
     subject: v.string(),
-    body: v.string()
+    body: v.string(),
   },
   handler: async (ctx, args) => {
     try {
@@ -276,7 +309,7 @@ export const sendEmail = action({
       const result = await emailService.send({
         to: args.toEmail,
         subject: args.subject,
-        body: args.body
+        body: args.body,
       });
 
       // Log success
@@ -284,7 +317,7 @@ export const sendEmail = action({
         userId: "system",
         groupId: args.groupId,
         action: "email_sent",
-        metadata: { to: args.toEmail }
+        metadata: { to: args.toEmail },
       });
 
       return { success: true, messageId: result.id };
@@ -294,11 +327,11 @@ export const sendEmail = action({
         groupId: args.groupId,
         errorType: error.name,
         errorMessage: error.message,
-        severity: "high"
+        severity: "high",
       });
       throw error;
     }
-  }
+  },
 });
 ```
 
@@ -307,35 +340,47 @@ export const sendEmail = action({
 ## 🔑 Key Principles
 
 ### 1. Multi-Tenant Isolation
+
 Every mutation and query includes `groupId` filtering:
+
 ```typescript
 // CRITICAL: Filter by groupId first
 .withIndex("group_type", q => q.eq("groupId", groupId).eq("type", type))
 ```
 
 ### 2. Audit Trail
+
 Every write operation logs events:
+
 ```typescript
 // Always log for compliance
 await ctx.runAction(api.internalActions.eventLogger.logEntityCreated, {...})
 ```
 
 ### 3. Input Validation
+
 Before operating on data:
+
 ```typescript
 // Validate group is active
-await ctx.runAction(api.internalActions.validation.validateGroupActive, {groupId})
+await ctx.runAction(api.internalActions.validation.validateGroupActive, {
+  groupId,
+});
 ```
 
 ### 4. Async Don't Block
+
 Long operations are fire-and-forget:
+
 ```typescript
 // Don't wait, mutation returns immediately
 ctx.runAction(api.actions.entities.generateEmbeddings, {...})
 ```
 
 ### 5. Type Safety
+
 Full TypeScript support with inference:
+
 ```typescript
 // IDE autocomplete works perfectly
 const result = await ctx.runAction(api.actions.entities.generateEmbeddings, {...})

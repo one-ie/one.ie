@@ -1,3 +1,21 @@
+---
+title: 2 4 React Hooks
+dimension: things
+category: features
+tags: ai, architecture, backend, connections, events, frontend, ontology, things
+related_dimensions: connections, events, knowledge, people
+scope: global
+created: 2025-11-03
+updated: 2025-11-03
+version: 1.0.0
+ai_context: |
+  This document is part of the things dimension in the features category.
+  Location: one/things/features/2-4-react-hooks.md
+  Purpose: Documents feature 2-4: react hooks layer
+  Related dimensions: connections, events, knowledge, people
+  For AI agents: Read this to understand 2 4 react hooks.
+---
+
 # Feature 2-4: React Hooks Layer
 
 **Feature ID:** `feature_2_4_react_hooks`
@@ -82,10 +100,10 @@ All query hooks follow this pattern:
 
 ```typescript
 const {
-  data,        // Query result (null during loading)
-  loading,     // Boolean loading state
-  error,       // Error object or null
-  refetch,     // Function to manually refetch
+  data, // Query result (null during loading)
+  loading, // Boolean loading state
+  error, // Error object or null
+  refetch, // Function to manually refetch
 } = useHookName(args, options);
 ```
 
@@ -93,10 +111,10 @@ All mutation hooks follow this pattern:
 
 ```typescript
 const {
-  mutate,      // Async mutation function
-  loading,     // Boolean loading state
-  error,       // Error object or null
-  reset,       // Clear error state
+  mutate, // Async mutation function
+  loading, // Boolean loading state
+  error, // Error object or null
+  reset, // Clear error state
 } = useMutationName(options);
 ```
 
@@ -106,7 +124,7 @@ Full TypeScript inference throughout:
 
 ```typescript
 // Type inference from arguments
-const { data: courses } = useThings({ type: 'course' });
+const { data: courses } = useThings({ type: "course" });
 // courses: Thing[] | null
 
 const { data: course } = useThing(courseId);
@@ -122,11 +140,11 @@ Query hooks support optional real-time updates:
 
 ```typescript
 const { data, loading, error } = useThings(
-  { type: 'course', status: 'published' },
+  { type: "course", status: "published" },
   {
-    realtime: true,     // Subscribe to updates
+    realtime: true, // Subscribe to updates
     refetchInterval: 0, // Disable polling (use subscriptions)
-  }
+  },
 );
 // data automatically updates when backend changes
 ```
@@ -178,15 +196,15 @@ return <div>{data.map(course => <CourseCard course={course} />)}</div>;
  * useOrganization - Get current organization
  */
 export function useOrganization(
-  organizationId?: Id<'organizations'>
+  organizationId?: Id<"organizations">,
 ): QueryResult<Organization> {
   const provider = useDataProvider();
   const currentOrgId = organizationId ?? provider.currentOrganizationId;
 
   return useQuery(
-    ['organization', currentOrgId],
+    ["organization", currentOrgId],
     () => provider.organizations.get(currentOrgId),
-    { enabled: !!currentOrgId }
+    { enabled: !!currentOrgId },
   );
 }
 
@@ -194,12 +212,11 @@ export function useOrganization(
  * useOrganizations - List all organizations (platform owner only)
  */
 export function useOrganizations(
-  filter?: OrganizationFilter
+  filter?: OrganizationFilter,
 ): QueryResult<Organization[]> {
   const provider = useDataProvider();
-  return useQuery(
-    ['organizations', filter],
-    () => provider.organizations.list(filter)
+  return useQuery(["organizations", filter], () =>
+    provider.organizations.list(filter),
   );
 }
 
@@ -214,7 +231,7 @@ export function useCreateOrganization(): MutationResult<Organization> {
     mutationFn: (args: CreateOrganizationArgs) =>
       provider.organizations.create(args),
     onSuccess: () => {
-      queryClient.invalidateQueries(['organizations']);
+      queryClient.invalidateQueries(["organizations"]);
     },
   });
 }
@@ -228,37 +245,25 @@ export function useCreateOrganization(): MutationResult<Organization> {
  */
 export function useCurrentUser(): QueryResult<Person> {
   const provider = useDataProvider();
-  return useQuery(
-    ['currentUser'],
-    () => provider.people.getCurrentUser()
-  );
+  return useQuery(["currentUser"], () => provider.people.getCurrentUser());
 }
 
 /**
  * usePerson - Get person by ID
  */
-export function usePerson(
-  personId: Id<'people'>
-): QueryResult<Person> {
+export function usePerson(personId: Id<"people">): QueryResult<Person> {
   const provider = useDataProvider();
-  return useQuery(
-    ['person', personId],
-    () => provider.people.get(personId),
-    { enabled: !!personId }
-  );
+  return useQuery(["person", personId], () => provider.people.get(personId), {
+    enabled: !!personId,
+  });
 }
 
 /**
  * usePeople - List people in organization
  */
-export function usePeople(
-  filter: PeopleFilter
-): QueryResult<Person[]> {
+export function usePeople(filter: PeopleFilter): QueryResult<Person[]> {
   const provider = useDataProvider();
-  return useQuery(
-    ['people', filter],
-    () => provider.people.list(filter)
-  );
+  return useQuery(["people", filter], () => provider.people.list(filter));
 }
 
 /**
@@ -272,8 +277,8 @@ export function useUpdatePerson(): MutationResult<Person> {
     mutationFn: ({ id, ...updates }: UpdatePersonArgs) =>
       provider.people.update(id, updates),
     onSuccess: (person) => {
-      queryClient.invalidateQueries(['person', person._id]);
-      queryClient.invalidateQueries(['currentUser']);
+      queryClient.invalidateQueries(["person", person._id]);
+      queryClient.invalidateQueries(["currentUser"]);
     },
   });
 }
@@ -287,15 +292,15 @@ export function useUpdatePerson(): MutationResult<Person> {
  */
 export function useThings<T extends Thing = Thing>(
   filter: ThingFilter,
-  options?: QueryOptions
+  options?: QueryOptions,
 ): QueryResult<T[]> {
   const provider = useDataProvider();
   const { organizationId } = useOrganizationContext();
 
   return useQuery(
-    ['things', { ...filter, organizationId }],
+    ["things", { ...filter, organizationId }],
     () => provider.things.list({ ...filter, organizationId }),
-    options
+    options,
   );
 }
 
@@ -303,16 +308,15 @@ export function useThings<T extends Thing = Thing>(
  * useThing - Get single entity by ID
  */
 export function useThing<T extends Thing = Thing>(
-  thingId: Id<'things'> | null,
-  options?: QueryOptions
+  thingId: Id<"things"> | null,
+  options?: QueryOptions,
 ): QueryResult<T> {
   const provider = useDataProvider();
 
-  return useQuery(
-    ['thing', thingId],
-    () => provider.things.get(thingId!),
-    { ...options, enabled: !!thingId }
-  );
+  return useQuery(["thing", thingId], () => provider.things.get(thingId!), {
+    ...options,
+    enabled: !!thingId,
+  });
 }
 
 /**
@@ -328,7 +332,7 @@ export function useCreateThing(): MutationResult<Thing> {
       provider.things.create({ ...args, organizationId }),
     onSuccess: (thing) => {
       // Invalidate list queries for this type
-      queryClient.invalidateQueries(['things', { type: thing.type }]);
+      queryClient.invalidateQueries(["things", { type: thing.type }]);
     },
   });
 }
@@ -345,9 +349,9 @@ export function useUpdateThing(): MutationResult<Thing> {
       provider.things.update(id, updates),
     onSuccess: (thing) => {
       // Update single entity cache
-      queryClient.setQueryData(['thing', thing._id], thing);
+      queryClient.setQueryData(["thing", thing._id], thing);
       // Invalidate list queries
-      queryClient.invalidateQueries(['things', { type: thing.type }]);
+      queryClient.invalidateQueries(["things", { type: thing.type }]);
     },
   });
 }
@@ -360,13 +364,12 @@ export function useDeleteThing(): MutationResult<void> {
   const queryClient = useQueryClient();
 
   return useMutation({
-    mutationFn: (thingId: Id<'things'>) =>
-      provider.things.delete(thingId),
+    mutationFn: (thingId: Id<"things">) => provider.things.delete(thingId),
     onSuccess: (_, thingId) => {
       // Remove from cache
-      queryClient.removeQueries(['thing', thingId]);
+      queryClient.removeQueries(["thing", thingId]);
       // Invalidate all thing lists
-      queryClient.invalidateQueries(['things']);
+      queryClient.invalidateQueries(["things"]);
     },
   });
 }
@@ -380,15 +383,15 @@ export function useDeleteThing(): MutationResult<void> {
  */
 export function useConnections(
   filter: ConnectionFilter,
-  options?: QueryOptions
+  options?: QueryOptions,
 ): QueryResult<Connection[]> {
   const provider = useDataProvider();
   const { organizationId } = useOrganizationContext();
 
   return useQuery(
-    ['connections', { ...filter, organizationId }],
+    ["connections", { ...filter, organizationId }],
     () => provider.connections.list({ ...filter, organizationId }),
-    options
+    options,
   );
 }
 
@@ -396,14 +399,14 @@ export function useConnections(
  * useConnection - Get single connection
  */
 export function useConnection(
-  connectionId: Id<'connections'> | null
+  connectionId: Id<"connections"> | null,
 ): QueryResult<Connection> {
   const provider = useDataProvider();
 
   return useQuery(
-    ['connection', connectionId],
+    ["connection", connectionId],
     () => provider.connections.get(connectionId!),
-    { enabled: !!connectionId }
+    { enabled: !!connectionId },
   );
 }
 
@@ -419,10 +422,10 @@ export function useCreateConnection(): MutationResult<Connection> {
       provider.connections.create(args),
     onSuccess: (connection) => {
       // Invalidate connection queries
-      queryClient.invalidateQueries(['connections']);
+      queryClient.invalidateQueries(["connections"]);
       // Invalidate related things
-      queryClient.invalidateQueries(['thing', connection.fromThingId]);
-      queryClient.invalidateQueries(['thing', connection.toThingId]);
+      queryClient.invalidateQueries(["thing", connection.fromThingId]);
+      queryClient.invalidateQueries(["thing", connection.toThingId]);
     },
   });
 }
@@ -438,8 +441,8 @@ export function useUpdateConnection(): MutationResult<Connection> {
     mutationFn: ({ id, ...updates }: UpdateConnectionArgs) =>
       provider.connections.update(id, updates),
     onSuccess: (connection) => {
-      queryClient.setQueryData(['connection', connection._id], connection);
-      queryClient.invalidateQueries(['connections']);
+      queryClient.setQueryData(["connection", connection._id], connection);
+      queryClient.invalidateQueries(["connections"]);
     },
   });
 }
@@ -452,11 +455,11 @@ export function useDeleteConnection(): MutationResult<void> {
   const queryClient = useQueryClient();
 
   return useMutation({
-    mutationFn: (connectionId: Id<'connections'>) =>
+    mutationFn: (connectionId: Id<"connections">) =>
       provider.connections.delete(connectionId),
     onSuccess: (_, connectionId) => {
-      queryClient.removeQueries(['connection', connectionId]);
-      queryClient.invalidateQueries(['connections']);
+      queryClient.removeQueries(["connection", connectionId]);
+      queryClient.invalidateQueries(["connections"]);
     },
   });
 }
@@ -470,31 +473,27 @@ export function useDeleteConnection(): MutationResult<void> {
  */
 export function useEvents(
   filter: EventFilter,
-  options?: QueryOptions
+  options?: QueryOptions,
 ): QueryResult<Event[]> {
   const provider = useDataProvider();
   const { organizationId } = useOrganizationContext();
 
   return useQuery(
-    ['events', { ...filter, organizationId }],
+    ["events", { ...filter, organizationId }],
     () => provider.events.list({ ...filter, organizationId }),
-    options
+    options,
   );
 }
 
 /**
  * useEvent - Get single event
  */
-export function useEvent(
-  eventId: Id<'events'> | null
-): QueryResult<Event> {
+export function useEvent(eventId: Id<"events"> | null): QueryResult<Event> {
   const provider = useDataProvider();
 
-  return useQuery(
-    ['event', eventId],
-    () => provider.events.get(eventId!),
-    { enabled: !!eventId }
-  );
+  return useQuery(["event", eventId], () => provider.events.get(eventId!), {
+    enabled: !!eventId,
+  });
 }
 
 /**
@@ -514,7 +513,7 @@ export function useLogEvent(): MutationResult<Event> {
       }),
     onSuccess: () => {
       // Invalidate event queries
-      queryClient.invalidateQueries(['events']);
+      queryClient.invalidateQueries(["events"]);
     },
   });
 }
@@ -528,15 +527,15 @@ export function useLogEvent(): MutationResult<Event> {
  */
 export function useKnowledge(
   filter: KnowledgeFilter,
-  options?: QueryOptions
+  options?: QueryOptions,
 ): QueryResult<Knowledge[]> {
   const provider = useDataProvider();
   const { organizationId } = useOrganizationContext();
 
   return useQuery(
-    ['knowledge', { ...filter, organizationId }],
+    ["knowledge", { ...filter, organizationId }],
     () => provider.knowledge.list({ ...filter, organizationId }),
-    options
+    options,
   );
 }
 
@@ -545,19 +544,20 @@ export function useKnowledge(
  */
 export function useSearch(
   query: string,
-  options?: SearchOptions
+  options?: SearchOptions,
 ): QueryResult<SearchResult[]> {
   const provider = useDataProvider();
   const { organizationId } = useOrganizationContext();
 
   return useQuery(
-    ['search', query, options],
-    () => provider.knowledge.search({
-      query,
-      organizationId,
-      ...options,
-    }),
-    { enabled: query.length > 0 }
+    ["search", query, options],
+    () =>
+      provider.knowledge.search({
+        query,
+        organizationId,
+        ...options,
+      }),
+    { enabled: query.length > 0 },
   );
 }
 
@@ -566,19 +566,20 @@ export function useSearch(
  */
 export function useRAG(
   query: string,
-  context?: RAGContext
+  context?: RAGContext,
 ): QueryResult<RAGResult> {
   const provider = useDataProvider();
   const { organizationId } = useOrganizationContext();
 
   return useQuery(
-    ['rag', query, context],
-    () => provider.knowledge.rag({
-      query,
-      organizationId,
-      ...context,
-    }),
-    { enabled: query.length > 0 }
+    ["rag", query, context],
+    () =>
+      provider.knowledge.rag({
+        query,
+        organizationId,
+        ...context,
+      }),
+    { enabled: query.length > 0 },
   );
 }
 
@@ -590,10 +591,9 @@ export function useCreateKnowledge(): MutationResult<Knowledge> {
   const queryClient = useQueryClient();
 
   return useMutation({
-    mutationFn: (args: CreateKnowledgeArgs) =>
-      provider.knowledge.create(args),
+    mutationFn: (args: CreateKnowledgeArgs) => provider.knowledge.create(args),
     onSuccess: () => {
-      queryClient.invalidateQueries(['knowledge']);
+      queryClient.invalidateQueries(["knowledge"]);
     },
   });
 }
@@ -755,6 +755,7 @@ export function useCreateKnowledge(): MutationResult<Knowledge> {
    - `frontend/src/providers/hooks/types.ts`
 
 2. **Define base hook types**
+
    ```typescript
    export interface QueryResult<T> {
      data: T | null;
@@ -772,38 +773,44 @@ export function useCreateKnowledge(): MutationResult<Knowledge> {
    ```
 
 3. **Create DataProvider context**
+
    ```typescript
    const DataProviderContext = createContext<DataProvider | null>(null);
 
    export function useDataProvider(): DataProvider {
      const provider = useContext(DataProviderContext);
      if (!provider) {
-       throw new Error('useDataProvider must be used within DataProviderProvider');
+       throw new Error(
+         "useDataProvider must be used within DataProviderProvider",
+       );
      }
      return provider;
    }
    ```
 
 4. **Create OrganizationContext**
+
    ```typescript
    const OrganizationContext = createContext<{
-     organizationId: Id<'organizations'>;
-     switchOrganization: (id: Id<'organizations'>) => void;
+     organizationId: Id<"organizations">;
+     switchOrganization: (id: Id<"organizations">) => void;
    } | null>(null);
 
    export function useOrganizationContext() {
      const context = useContext(OrganizationContext);
-     if (!context) throw new Error('Missing OrganizationContext');
+     if (!context) throw new Error("Missing OrganizationContext");
      return context;
    }
    ```
 
 5. **Install React Query dependencies**
+
    ```bash
    cd frontend && bun add @tanstack/react-query
    ```
 
 6. **Create QueryClient configuration**
+
    ```typescript
    export const queryClient = new QueryClient({
      defaultOptions: {
@@ -818,11 +825,12 @@ export function useCreateKnowledge(): MutationResult<Knowledge> {
    ```
 
 7. **Create base useQuery wrapper**
+
    ```typescript
    function useQuery<T>(
      queryKey: QueryKey,
      queryFn: () => Promise<T>,
-     options?: UseQueryOptions<T>
+     options?: UseQueryOptions<T>,
    ): QueryResult<T> {
      const query = useReactQuery(queryKey, queryFn, options);
      return {
@@ -835,10 +843,9 @@ export function useCreateKnowledge(): MutationResult<Knowledge> {
    ```
 
 8. **Create base useMutation wrapper**
+
    ```typescript
-   function useMutation<T>(
-     options: UseMutationOptions<T>
-   ): MutationResult<T> {
+   function useMutation<T>(options: UseMutationOptions<T>): MutationResult<T> {
      const mutation = useReactMutation(options);
      return {
        mutate: mutation.mutateAsync,
@@ -850,23 +857,25 @@ export function useCreateKnowledge(): MutationResult<Knowledge> {
    ```
 
 9. **Create error handling utilities**
+
    ```typescript
    export function formatError(error: unknown): AppError {
      if (error instanceof Error) {
-       return { _tag: 'UnknownError', message: error.message };
+       return { _tag: "UnknownError", message: error.message };
      }
-     return { _tag: 'UnknownError', message: 'An error occurred' };
+     return { _tag: "UnknownError", message: "An error occurred" };
    }
    ```
 
 10. **Create loading state utilities**
+
     ```typescript
     export function useLoadingState(queries: QueryResult<any>[]) {
-      return queries.some(q => q.loading);
+      return queries.some((q) => q.loading);
     }
 
     export function useErrorState(queries: QueryResult<any>[]) {
-      return queries.find(q => q.error)?.error ?? null;
+      return queries.find((q) => q.error)?.error ?? null;
     }
     ```
 
@@ -950,17 +959,19 @@ export function useCreateKnowledge(): MutationResult<Knowledge> {
     - Log deletion event
 
 26. **Add type-specific hooks**
+
     ```typescript
     export function useCourses(filter?) {
-      return useThings({ ...filter, type: 'course' });
+      return useThings({ ...filter, type: "course" });
     }
 
     export function useAgents(filter?) {
-      return useThings({ ...filter, type: 'ai_clone' });
+      return useThings({ ...filter, type: "ai_clone" });
     }
     ```
 
 27. **Add real-time subscription support**
+
     ```typescript
     export function useThings(filter, options) {
       const { realtime = false } = options ?? {};
@@ -980,18 +991,19 @@ export function useCreateKnowledge(): MutationResult<Knowledge> {
     ```
 
 28. **Add optimistic updates**
+
     ```typescript
     export function useUpdateThing() {
       return useMutation({
         onMutate: async (updates) => {
           // Cancel outgoing queries
-          await queryClient.cancelQueries(['thing', updates.id]);
+          await queryClient.cancelQueries(["thing", updates.id]);
 
           // Snapshot previous value
-          const previous = queryClient.getQueryData(['thing', updates.id]);
+          const previous = queryClient.getQueryData(["thing", updates.id]);
 
           // Optimistically update
-          queryClient.setQueryData(['thing', updates.id], {
+          queryClient.setQueryData(["thing", updates.id], {
             ...previous,
             ...updates,
           });
@@ -1000,13 +1012,14 @@ export function useCreateKnowledge(): MutationResult<Knowledge> {
         },
         onError: (err, updates, context) => {
           // Rollback on error
-          queryClient.setQueryData(['thing', updates.id], context.previous);
+          queryClient.setQueryData(["thing", updates.id], context.previous);
         },
       });
     }
     ```
 
 29. **Add batch operations**
+
     ```typescript
     export function useBatchCreateThings() {
       const provider = useDataProvider();
@@ -1014,9 +1027,9 @@ export function useCreateKnowledge(): MutationResult<Knowledge> {
 
       return useMutation({
         mutationFn: (things: CreateThingArgs[]) =>
-          Promise.all(things.map(t => provider.things.create(t))),
+          Promise.all(things.map((t) => provider.things.create(t))),
         onSuccess: () => {
-          queryClient.invalidateQueries(['things']);
+          queryClient.invalidateQueries(["things"]);
         },
       });
     }
@@ -1026,8 +1039,8 @@ export function useCreateKnowledge(): MutationResult<Knowledge> {
     ```typescript
     export function useValidateThing() {
       return (thing: Partial<Thing>): ValidationResult => {
-        if (!thing.type) return { valid: false, errors: ['type required'] };
-        if (!thing.name) return { valid: false, errors: ['name required'] };
+        if (!thing.type) return { valid: false, errors: ["type required"] };
+        if (!thing.name) return { valid: false, errors: ["name required"] };
         return { valid: true, errors: [] };
       };
     }
@@ -1061,18 +1074,19 @@ export function useCreateKnowledge(): MutationResult<Knowledge> {
     - Log disconnection event
 
 36. **Add relationship helper hooks**
+
     ```typescript
-    export function useOwnedThings(ownerId: Id<'things'>) {
+    export function useOwnedThings(ownerId: Id<"things">) {
       return useConnections({
         fromThingId: ownerId,
-        relationshipType: 'owns',
+        relationshipType: "owns",
       });
     }
 
-    export function useEnrollments(userId: Id<'things'>) {
+    export function useEnrollments(userId: Id<"things">) {
       return useConnections({
         fromThingId: userId,
-        relationshipType: 'enrolled_in',
+        relationshipType: "enrolled_in",
       });
     }
     ```
@@ -1093,22 +1107,23 @@ export function useCreateKnowledge(): MutationResult<Knowledge> {
     - Include actor automatically
 
 40. **Add event stream helpers**
+
     ```typescript
-    export function useAuditTrail(thingId: Id<'things'>) {
+    export function useAuditTrail(thingId: Id<"things">) {
       return useEvents({
         targetId: thingId,
         limit: 50,
-        orderBy: 'timestamp',
-        order: 'desc',
+        orderBy: "timestamp",
+        order: "desc",
       });
     }
 
-    export function useActivityFeed(actorId: Id<'things'>) {
+    export function useActivityFeed(actorId: Id<"things">) {
       return useEvents({
         actorId,
         limit: 20,
-        orderBy: 'timestamp',
-        order: 'desc',
+        orderBy: "timestamp",
+        order: "desc",
       });
     }
     ```
@@ -1136,6 +1151,7 @@ export function useCreateKnowledge(): MutationResult<Knowledge> {
     - Link to things
 
 45. **Add search debouncing**
+
     ```typescript
     export function useSearch(query: string, options?) {
       const [debouncedQuery, setDebouncedQuery] = useState(query);
@@ -1146,63 +1162,66 @@ export function useCreateKnowledge(): MutationResult<Knowledge> {
       }, [query]);
 
       return useQuery(
-        ['search', debouncedQuery, options],
+        ["search", debouncedQuery, options],
         () => provider.knowledge.search({ query: debouncedQuery, ...options }),
-        { enabled: debouncedQuery.length > 0 }
+        { enabled: debouncedQuery.length > 0 },
       );
     }
     ```
 
 46. **Add taxonomy helpers**
+
     ```typescript
     export function useLabels(category?: string) {
       return useKnowledge({
-        knowledgeType: 'label',
+        knowledgeType: "label",
         category,
       });
     }
 
-    export function useLabelThings(labelId: Id<'knowledge'>) {
+    export function useLabelThings(labelId: Id<"knowledge">) {
       return useConnections({
         fromThingId: labelId,
-        relationshipType: 'tagged_with',
+        relationshipType: "tagged_with",
       });
     }
     ```
 
 47. **Add caching strategies**
+
     ```typescript
     export function useSearch(query: string) {
       return useQuery(
-        ['search', query],
+        ["search", query],
         () => provider.knowledge.search({ query }),
         {
           staleTime: 60000, // Cache for 1 minute
           cacheTime: 300000, // Keep in memory for 5 minutes
           enabled: query.length > 2, // Only search if 3+ characters
-        }
+        },
       );
     }
     ```
 
 48. **Add prefetching utilities**
+
     ```typescript
     export function usePrefetchThing() {
       const queryClient = useQueryClient();
       const provider = useDataProvider();
 
-      return (thingId: Id<'things'>) => {
-        queryClient.prefetchQuery(
-          ['thing', thingId],
-          () => provider.things.get(thingId)
+      return (thingId: Id<"things">) => {
+        queryClient.prefetchQuery(["thing", thingId], () =>
+          provider.things.get(thingId),
         );
       };
     }
     ```
 
 49. **Add hook composition utilities**
+
     ```typescript
-    export function useThingWithConnections(thingId: Id<'things'>) {
+    export function useThingWithConnections(thingId: Id<"things">) {
       const thing = useThing(thingId);
       const connections = useConnections({ fromThingId: thingId });
 
@@ -1218,14 +1237,14 @@ export function useCreateKnowledge(): MutationResult<Knowledge> {
 50. **Create comprehensive hook exports**
     ```typescript
     // frontend/src/providers/hooks/index.ts
-    export * from './organizations';
-    export * from './people';
-    export * from './things';
-    export * from './connections';
-    export * from './events';
-    export * from './knowledge';
-    export * from './types';
-    export * from './utils';
+    export * from "./organizations";
+    export * from "./people";
+    export * from "./things";
+    export * from "./connections";
+    export * from "./events";
+    export * from "./knowledge";
+    export * from "./types";
+    export * from "./utils";
     ```
 
 ---
@@ -1367,31 +1386,30 @@ describe('useCreateThing', () => {
 **Test File:** `frontend/test/integration/hooks-convex.test.tsx`
 
 ```typescript
-import { renderHook, waitFor } from '@testing-library/react';
-import { ConvexProvider } from '@/providers/convex';
-import { useThings, useCreateThing } from '@/providers/hooks';
+import { renderHook, waitFor } from "@testing-library/react";
+import { ConvexProvider } from "@/providers/convex";
+import { useThings, useCreateThing } from "@/providers/hooks";
 
-describe('Hooks with Convex Backend', () => {
-  it('should create thing and query it back', async () => {
-    const { result: createResult } = renderHook(
-      () => useCreateThing(),
-      { wrapper }
-    );
+describe("Hooks with Convex Backend", () => {
+  it("should create thing and query it back", async () => {
+    const { result: createResult } = renderHook(() => useCreateThing(), {
+      wrapper,
+    });
 
     const newThing = await createResult.current.mutate({
-      type: 'course',
-      name: 'Integration Test Course',
-      properties: { description: 'Test' },
+      type: "course",
+      name: "Integration Test Course",
+      properties: { description: "Test" },
     });
 
     const { result: queryResult } = renderHook(
-      () => useThings({ type: 'course' }),
-      { wrapper }
+      () => useThings({ type: "course" }),
+      { wrapper },
     );
 
     await waitFor(() => {
       expect(queryResult.current.data).toContainEqual(
-        expect.objectContaining({ _id: newThing._id })
+        expect.objectContaining({ _id: newThing._id }),
       );
     });
   });
@@ -1401,11 +1419,11 @@ describe('Hooks with Convex Backend', () => {
 ### Real-Time Subscription Tests
 
 ```typescript
-describe('Real-time subscriptions', () => {
-  it('should update data when backend changes', async () => {
+describe("Real-time subscriptions", () => {
+  it("should update data when backend changes", async () => {
     const { result } = renderHook(
-      () => useThings({ type: 'course' }, { realtime: true }),
-      { wrapper }
+      () => useThings({ type: "course" }, { realtime: true }),
+      { wrapper },
     );
 
     await waitFor(() => {
@@ -1415,7 +1433,7 @@ describe('Real-time subscriptions', () => {
     const initialCount = result.current.data?.length ?? 0;
 
     // Simulate backend change
-    await createCourse({ name: 'New Course' });
+    await createCourse({ name: "New Course" });
 
     await waitFor(() => {
       expect(result.current.data?.length).toBe(initialCount + 1);
@@ -1427,31 +1445,28 @@ describe('Real-time subscriptions', () => {
 ### Optimistic Update Tests
 
 ```typescript
-describe('Optimistic updates', () => {
-  it('should update UI immediately and rollback on error', async () => {
-    const { result } = renderHook(
-      () => useUpdateThing(),
-      { wrapper }
-    );
+describe("Optimistic updates", () => {
+  it("should update UI immediately and rollback on error", async () => {
+    const { result } = renderHook(() => useUpdateThing(), { wrapper });
 
-    const thingId = 'thing_123';
-    const updates = { name: 'Updated Name' };
+    const thingId = "thing_123";
+    const updates = { name: "Updated Name" };
 
     // Start mutation
     const mutationPromise = result.current.mutate({ id: thingId, ...updates });
 
     // UI should update immediately (optimistic)
-    const cachedData = queryClient.getQueryData(['thing', thingId]);
-    expect(cachedData.name).toBe('Updated Name');
+    const cachedData = queryClient.getQueryData(["thing", thingId]);
+    expect(cachedData.name).toBe("Updated Name");
 
     // Simulate error
-    mockProvider.things.update = () => Promise.reject(new Error('Failed'));
+    mockProvider.things.update = () => Promise.reject(new Error("Failed"));
 
-    await expect(mutationPromise).rejects.toThrow('Failed');
+    await expect(mutationPromise).rejects.toThrow("Failed");
 
     // Should rollback
-    const rolledBackData = queryClient.getQueryData(['thing', thingId]);
-    expect(rolledBackData.name).not.toBe('Updated Name');
+    const rolledBackData = queryClient.getQueryData(["thing", thingId]);
+    expect(rolledBackData.name).not.toBe("Updated Name");
   });
 });
 ```
@@ -1513,6 +1528,7 @@ Hooks are additive and don't break existing code.
    - New hooks coexist with old patterns
 
 2. **Feature flag for gradual rollout**
+
    ```typescript
    const USE_NEW_HOOKS = import.meta.env.VITE_USE_NEW_HOOKS === 'true';
 
@@ -2043,10 +2059,10 @@ function CourseList() {
 ### useThings Hook (Full Implementation)
 
 ```typescript
-import { useQuery } from '@tanstack/react-query';
-import { useDataProvider } from '../context';
-import { useOrganizationContext } from '../context/organization';
-import type { Thing, ThingFilter, QueryOptions, QueryResult } from '../types';
+import { useQuery } from "@tanstack/react-query";
+import { useDataProvider } from "../context";
+import { useOrganizationContext } from "../context/organization";
+import type { Thing, ThingFilter, QueryOptions, QueryResult } from "../types";
 
 /**
  * useThings - List entities by type and filters
@@ -2067,14 +2083,14 @@ import type { Thing, ThingFilter, QueryOptions, QueryResult } from '../types';
  */
 export function useThings<T extends Thing = Thing>(
   filter: ThingFilter,
-  options?: QueryOptions
+  options?: QueryOptions,
 ): QueryResult<T[]> {
   const provider = useDataProvider();
   const { organizationId } = useOrganizationContext();
   const { realtime = false, ...queryOptions } = options ?? {};
 
   // Build query key
-  const queryKey = ['things', { ...filter, organizationId }];
+  const queryKey = ["things", { ...filter, organizationId }];
 
   // Query function
   const queryFn = async () => {
@@ -2097,10 +2113,10 @@ export function useThings<T extends Thing = Thing>(
     if (!realtime) return;
 
     const unsubscribe = provider.subscribe(
-      { table: 'things', filter: { ...filter, organizationId } },
+      { table: "things", filter: { ...filter, organizationId } },
       () => {
         queryClient.invalidateQueries({ queryKey });
-      }
+      },
     );
 
     return () => {

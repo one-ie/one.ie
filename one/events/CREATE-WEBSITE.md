@@ -1,3 +1,21 @@
+---
+title: Create Website
+dimension: events
+category: CREATE-WEBSITE.md
+tags: agent, ai, ontology
+related_dimensions: groups
+scope: global
+created: 2025-11-03
+updated: 2025-11-03
+version: 1.0.0
+ai_context: |
+  This document is part of the events dimension in the CREATE-WEBSITE.md category.
+  Location: one/events/CREATE-WEBSITE.md
+  Purpose: Documents create website with one platform cli
+  Related dimensions: groups
+  For AI agents: Read this to understand CREATE WEBSITE.
+---
+
 # Create Website with ONE Platform CLI
 
 **New in v3.6.1:** The CLI now includes a complete platform setup integrated directly into the onboarding flow. When you run `npx oneie`, the CLI will:

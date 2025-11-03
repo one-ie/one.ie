@@ -1,3 +1,21 @@
+---
+title: Crm Saas
+dimension: things
+category: examples
+tags: ai, architecture, knowledge, ontology
+related_dimensions: connections, events, groups, knowledge, people
+scope: global
+created: 2025-11-03
+updated: 2025-11-03
+version: 1.0.0
+ai_context: |
+  This document is part of the things dimension in the examples category.
+  Location: one/things/examples/enterprise/crm-saas.md
+  Purpose: Documents building enterprise saas with the 6-dimension ontology
+  Related dimensions: connections, events, groups, knowledge, people
+  For AI agents: Read this to understand crm saas.
+---
+
 # Building Enterprise SaaS with the 6-Dimension Ontology
 
 ## Introduction: Enterprise-Grade Architecture
@@ -90,21 +108,18 @@ People define who can do what within the system. In the 6-dimension architecture
 **Four Enterprise Roles:**
 
 1. **Platform Owner**
-
    - Owns the entire SaaS platform infrastructure
    - Can access all organizations (for support and debugging)
    - Manages platform-level services and billing
    - Revenue: 100% of platform fees + revenue share from organizations
 
 2. **Org Owner**
-
    - Owns and manages one or more customer organizations
    - Full control over users, permissions, and billing within their org
    - Can customize AI agents, branding, and features
    - Revenue: Percentage share of org subscription fees
 
 3. **Org User**
-
    - Works within a specific organization
    - Limited permissions defined by org owner
    - Can create content, manage leads, run AI agents (within quotas)
@@ -227,7 +242,7 @@ export const createOrganization = mutation({
     name: v.string(),
     ownerEmail: v.string(),
     plan: v.optional(
-      v.union(v.literal("starter"), v.literal("pro"), v.literal("enterprise"))
+      v.union(v.literal("starter"), v.literal("pro"), v.literal("enterprise")),
     ),
   },
   handler: async (ctx, args) => {
@@ -666,14 +681,14 @@ export const getLeads = query({
     let leadsQuery = ctx.db
       .query("things")
       .withIndex("by_org_type", (q) =>
-        q.eq("organizationId", args.orgId).eq("thingType", "creator")
+        q.eq("organizationId", args.orgId).eq("thingType", "creator"),
       )
       .filter((q) => q.eq(q.field("properties").role, "customer"));
 
     // Optional status filter
     if (args.status) {
       leadsQuery = leadsQuery.filter((q) =>
-        q.eq(q.field("properties").status, args.status)
+        q.eq(q.field("properties").status, args.status),
       );
     }
 
@@ -702,7 +717,7 @@ export const getLeads = query({
               }
             : null,
         };
-      })
+      }),
     );
 
     return leadsWithOwners;
@@ -726,7 +741,7 @@ export const getOrganizationStats = query({
     const leads = await ctx.db
       .query("things")
       .withIndex("by_org_type", (q) =>
-        q.eq("organizationId", args.orgId).eq("thingType", "creator")
+        q.eq("organizationId", args.orgId).eq("thingType", "creator"),
       )
       .filter((q) => q.eq(q.field("properties").role, "customer"))
       .collect();
@@ -734,7 +749,7 @@ export const getOrganizationStats = query({
     const agents = await ctx.db
       .query("things")
       .withIndex("by_org_type", (q) =>
-        q.eq("organizationId", args.orgId).eq("thingType", "sales_agent")
+        q.eq("organizationId", args.orgId).eq("thingType", "sales_agent"),
       )
       .collect();
 
@@ -745,7 +760,7 @@ export const getOrganizationStats = query({
 
     // Calculate conversion metrics
     const convertedLeads = leads.filter(
-      (lead) => lead.properties.status === "won"
+      (lead) => lead.properties.status === "won",
     ).length;
 
     const conversionRate =
@@ -792,7 +807,7 @@ export const getLeads = query({
       .withIndex("by_org_type", (q) =>
         q
           .eq("organizationId", args.orgId) // Enforces isolation
-          .eq("thingType", "creator")
+          .eq("thingType", "creator"),
       )
       .collect();
 
@@ -820,7 +835,7 @@ Each organization has independent quotas and billing.
 export const checkQuota = async (
   ctx: any,
   orgId: Id<"organizations">,
-  resourceType: "users" | "storage" | "apiCalls" | "inference"
+  resourceType: "users" | "storage" | "apiCalls" | "inference",
 ) => {
   const org = await ctx.db.get(orgId);
 
@@ -833,7 +848,7 @@ export const checkQuota = async (
 
   if (current >= limit) {
     throw new Error(
-      `${resourceType} quota exceeded. Current: ${current}, Limit: ${limit}`
+      `${resourceType} quota exceeded. Current: ${current}, Limit: ${limit}`,
     );
   }
 
@@ -849,7 +864,7 @@ export const incrementUsage = async (
   ctx: any,
   orgId: Id<"organizations">,
   resourceType: "users" | "storage" | "apiCalls" | "inference",
-  amount: number = 1
+  amount: number = 1,
 ) => {
   const org = await ctx.db.get(orgId);
 
@@ -1001,7 +1016,7 @@ export const calculateRevenue = query({
     // Calculate inference costs
     const totalInferenceCalls = orgs.reduce(
       (sum, org) => sum + org.usage.inference,
-      0
+      0,
     );
 
     const costPerInference = 0.01; // $0.01 per call
@@ -1010,7 +1025,7 @@ export const calculateRevenue = query({
     // Platform revenue = subscription fees + inference markup
     const subscriptionRevenue = Object.values(revenueByPlan).reduce(
       (sum, plan) => sum + plan.mrr,
-      0
+      0,
     );
 
     const inferenceRevenue = inferenceCosts * 0.3; // 30% markup
@@ -1070,7 +1085,7 @@ export const deleteOrganizationData = mutation({
 
     if (!isPlatformOwner && !isOrgOwner) {
       throw new Error(
-        "Unauthorized: Only platform or org owner can delete org data"
+        "Unauthorized: Only platform or org owner can delete org data",
       );
     }
 
@@ -1138,7 +1153,7 @@ export const deleteOrganizationData = mutation({
     // Log deletion (to a separate audit table not shown here)
     console.log(
       `Organization ${args.orgId} deleted by ${userId}`,
-      deletionCounts
+      deletionCounts,
     );
 
     return {
@@ -1177,25 +1192,25 @@ export const getAuditLog = query({
     // Apply filters
     if (args.eventType) {
       eventsQuery = eventsQuery.filter((q) =>
-        q.eq(q.field("eventType"), args.eventType)
+        q.eq(q.field("eventType"), args.eventType),
       );
     }
 
     if (args.actorId) {
       eventsQuery = eventsQuery.filter((q) =>
-        q.eq(q.field("actorId"), args.actorId)
+        q.eq(q.field("actorId"), args.actorId),
       );
     }
 
     if (args.startDate) {
       eventsQuery = eventsQuery.filter((q) =>
-        q.gte(q.field("timestamp"), args.startDate!)
+        q.gte(q.field("timestamp"), args.startDate!),
       );
     }
 
     if (args.endDate) {
       eventsQuery = eventsQuery.filter((q) =>
-        q.lte(q.field("timestamp"), args.endDate!)
+        q.lte(q.field("timestamp"), args.endDate!),
       );
     }
 
@@ -1225,7 +1240,7 @@ export const getAuditLog = query({
               }
             : null,
         };
-      })
+      }),
     );
 
     return enrichedEvents;
@@ -1242,7 +1257,7 @@ Implement fine-grained access control using the people dimension.
 export async function requireOrgAccess(
   ctx: any,
   orgId: Id<"organizations">,
-  requiredRole: "org_owner" | "org_user"
+  requiredRole: "org_owner" | "org_user",
 ) {
   const userId = await getUserId(ctx);
   const user = await ctx.db.get(userId);
@@ -1260,7 +1275,7 @@ export async function requireOrgAccess(
   const membership = await ctx.db
     .query("connections")
     .withIndex("from_type", (q) =>
-      q.eq("fromThingId", userId).eq("relationshipType", "member_of")
+      q.eq("fromThingId", userId).eq("relationshipType", "member_of"),
     )
     .filter((q) => q.eq(q.field("metadata").organizationId, orgId))
     .first();
@@ -1283,7 +1298,7 @@ export async function requireOrgAccess(
 export async function checkPermission(
   ctx: any,
   userId: Id<"things">,
-  permission: string
+  permission: string,
 ): Promise<boolean> {
   const user = await ctx.db.get(userId);
 
@@ -1330,7 +1345,7 @@ Implement organization-scoped encryption for sensitive data.
 export const encryptSensitiveData = async (
   ctx: any,
   orgId: Id<"organizations">,
-  data: string
+  data: string,
 ): Promise<string> => {
   // In production, use org-specific encryption keys
   // Stored securely in a key management service (KMS)
@@ -1345,7 +1360,7 @@ export const encryptSensitiveData = async (
 export const decryptSensitiveData = async (
   ctx: any,
   orgId: Id<"organizations">,
-  encryptedData: string
+  encryptedData: string,
 ): Promise<string> => {
   const orgKey = await getOrganizationEncryptionKey(orgId);
   const decrypted = await decrypt(encryptedData, orgKey);

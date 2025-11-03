@@ -1,3 +1,21 @@
+---
+title: Qa Checklist
+dimension: events
+category: QA-CHECKLIST.md
+tags: backend, groups, ontology, people, testing
+related_dimensions: connections, groups, knowledge, people, things
+scope: global
+created: 2025-11-03
+updated: 2025-11-03
+version: 1.0.0
+ai_context: |
+  This document is part of the events dimension in the QA-CHECKLIST.md category.
+  Location: one/events/QA-CHECKLIST.md
+  Purpose: Documents demo pages qa checklist (pre-production)
+  Related dimensions: connections, groups, knowledge, people, things
+  For AI agents: Read this to understand QA CHECKLIST.
+---
+
 # Demo Pages QA Checklist (Pre-Production)
 
 **Feature:** Beautiful, Interactive 6-Dimension Ontology Demos

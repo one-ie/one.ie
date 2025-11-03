@@ -1,3 +1,21 @@
+---
+title: Design
+dimension: things
+category: cascade
+tags: agent, ai
+related_dimensions: events, knowledge, people
+scope: global
+created: 2025-11-03
+updated: 2025-11-03
+version: 1.0.0
+ai_context: |
+  This document is part of the things dimension in the cascade category.
+  Location: one/things/cascade/docs/examples/1-5-quality-loops/design.md
+  Purpose: Documents design for feature 1-5: quality loops and problem solving
+  Related dimensions: events, knowledge, people
+  For AI agents: Read this to understand design.
+---
+
 # Design for Feature 1-5: Quality Loops and Problem Solving
 
 **Feature:** 1-5-quality-loops
@@ -15,6 +33,7 @@ Enable continuous quality improvement through test-driven validation and intelli
 ## CLI Context
 
 **Quality is a workflow, not infrastructure.** Claude:
+
 - Defines tests before implementation
 - Runs tests naturally (using Bash tool)
 - Analyzes failures with ultrathink mode
@@ -22,6 +41,7 @@ Enable continuous quality improvement through test-driven validation and intelli
 - Captures lessons automatically
 
 **Commands:**
+
 ```bash
 /one test 1-1                      # Define tests (Stage 4)
 /one implement 1-1                 # Implement + validate (Stage 6)
@@ -34,8 +54,10 @@ Enable continuous quality improvement through test-driven validation and intelli
 ## Design Decisions (Test-Driven)
 
 ### Decision 1: Tests ARE Markdown Files, Not Test Code
+
 **Test requirement:** Quality agent defines tests in < 5 minutes
 **Design solution:**
+
 - Test document: `one/things/features/{N}-{M}/tests.md`
 - Contains: User flows + acceptance criteria + technical tests
 - Claude reads this to know what success looks like
@@ -46,8 +68,10 @@ Enable continuous quality improvement through test-driven validation and intelli
 ---
 
 ### Decision 2: Quality Loop Visible to User
+
 **Test requirement:** User understands validation process
 **Design solution:**
+
 ```
 Claude Code (Backend Specialist):
 Implementing feature 1-1...
@@ -82,8 +106,10 @@ Capturing lesson learned...
 ---
 
 ### Decision 3: Problem Solver Uses Ultrathink Mode
+
 **Test requirement:** Root cause analysis in < 2 minutes
 **Design solution:**
+
 - Problem solver reads failure details
 - Activates deep thinking mode
 - Searches lessons learned for similar issues
@@ -91,6 +117,7 @@ Capturing lesson learned...
 - Proposes specific solution
 
 **Example ultrathink process:**
+
 ```
 1. What is the actual error?
    → "Expected event not found in events table"
@@ -115,8 +142,10 @@ Capturing lesson learned...
 ---
 
 ### Decision 4: Fix Loop Has Retry Limit
+
 **Test requirement:** Don't loop forever on persistent failures
 **Design solution:**
+
 ```
 Attempt 1: Test fails → Analyze → Fix → Retest
   ↓ Still failing
@@ -129,6 +158,7 @@ Escalate: Notify user, request human intervention
 
 **Limit:** 3 attempts per test failure
 **Escalation message:**
+
 ```
 ⚠️  Unable to resolve test failure after 3 attempts
 
@@ -152,8 +182,10 @@ Debug info: one/things/features/2-1-course-crud/debug.md
 ---
 
 ### Decision 5: Quality Improves Measurably Over Time
+
 **Test requirement:** Track improvement metrics
 **Design solution:**
+
 ```
 Month 1: 80% first-try pass rate (learning phase)
 Month 2: 87% first-try pass rate (patterns emerging)
@@ -220,45 +252,55 @@ After 3 failures → Escalate to human
 **File:** `one/things/features/{N}-{M}/tests.md`
 
 **Structure:**
+
 ```markdown
 # Tests for Feature {N}-{M}: {Name}
 
 ## User Flows
 
 ### Flow 1: {Goal}
+
 **User goal:** {What user wants to achieve}
 **Time budget:** {Expected completion time}
 **Steps:**
+
 1. {Action 1}
 2. {Action 2}
 3. {Expected result}
 
 **Acceptance Criteria:**
+
 - [ ] {Specific measurable criterion}
 - [ ] {Performance criterion with metric}
 
 ## Acceptance Criteria
 
 ### Functional
+
 - [ ] {Feature works correctly}
 - [ ] {Edge cases handled}
 
 ### Performance
+
 - [ ] {Operation completes in < X seconds}
 
 ### Quality
+
 - [ ] {Code follows ontology structure}
 - [ ] {All events logged}
 
 ## Technical Tests
 
 ### Unit Tests
+
 - [ ] {Service}.{method}() {expected behavior}
 
 ### Integration Tests
+
 - [ ] API: {METHOD} /{path} → {status} + {response}
 
 ### E2E Tests
+
 - [ ] Complete Flow 1 in < {time budget}
 ```
 
@@ -271,6 +313,7 @@ After 3 failures → Escalate to human
 **Created when tests fail:** `one/things/features/{N}-{M}/problem-{timestamp}.md`
 
 **Structure:**
+
 ```markdown
 # Problem: {Test Name} Failed
 
@@ -284,9 +327,11 @@ After 3 failures → Escalate to human
 {Detailed analysis of why it failed}
 
 ### Similar Issues Found
+
 {References to lessons learned if found}
 
 ### Pattern to Apply
+
 {Reference to relevant pattern if applicable}
 
 ## Proposed Solution
@@ -294,11 +339,13 @@ After 3 failures → Escalate to human
 {Specific fix with code examples}
 
 ### Expected Changes
+
 - File: {path}
 - Lines: {line numbers}
 - Change: {what to modify}
 
 ### Test After Fix
+
 {Which tests should pass after fix}
 
 ## Delegation
@@ -412,7 +459,7 @@ Writing documentation...
 
 ### Wireframe 3: Quality Loop with Fix (Test Failure)
 
-```
+````
 $ /one implement 2-1
 
 Claude Code (Backend Specialist):
@@ -465,36 +512,37 @@ Proposed Solution:
     targetId: id,
     metadata: { title: course.title }
   })
-  ```
+````
 
 Expected fix time: < 5 minutes
 
 Claude Code (Backend Specialist):
 Implementing fix...
-  ✓ Added event logging after course creation
-  ✓ Followed event-logging pattern
+✓ Added event logging after course creation
+✓ Followed event-logging pattern
 
 Re-running tests...
 
 🧪 Test Results:
-  ✓ CourseService.create() creates course ✅
-  ✓ CourseService.list() filters by creator ✅
-  ✓ CourseService.create() should log course_created event ✅
-  ✓ CourseService.delete() checks ownership ✅
+✓ CourseService.create() creates course ✅
+✓ CourseService.list() filters by creator ✅
+✓ CourseService.create() should log course_created event ✅
+✓ CourseService.delete() checks ownership ✅
 
 ✅ All tests passing (4/4)!
 
 Capturing lesson learned...
-  ✓ Appended to one/knowledge/lessons-learned.md
+✓ Appended to one/knowledge/lessons-learned.md
 
 Lesson: Always log events after entity creation (3rd occurrence)
 Note: This pattern should be promoted to default context
 
 ✅ Feature 2-1 complete!
-   Duration: 12 minutes
-   Tests: 4/4 passing (100%)
-   Fix time: 4 minutes
-   Lesson captured: Yes ✅
+Duration: 12 minutes
+Tests: 4/4 passing (100%)
+Fix time: 4 minutes
+Lesson captured: Yes ✅
+
 ```
 
 ---
@@ -502,6 +550,7 @@ Note: This pattern should be promoted to default context
 ### Wireframe 4: Multiple Fix Attempts
 
 ```
+
 $ /one implement 2-3
 
 Claude Code (Backend Specialist):
@@ -510,8 +559,8 @@ Implementing feature 2-3-course-ui...
 [Implementation]
 
 Running tests...
-  ✗ Flow 1: Create course in < 10 seconds
-      Observed: 15.3 seconds (53% over budget)
+✗ Flow 1: Create course in < 10 seconds
+Observed: 15.3 seconds (53% over budget)
 
 Claude Code (Problem Solver - Attempt 1/3):
 Analyzing performance issue...
@@ -521,10 +570,10 @@ Solution: Parallelize calls
 
 Claude Code (Frontend Specialist):
 Implementing fix (attempt 1)...
-  ✓ Parallelized API calls
+✓ Parallelized API calls
 
 Re-running tests...
-  ✗ Flow 1: 12.0 seconds (20% over budget)
+✗ Flow 1: 12.0 seconds (20% over budget)
 
 Claude Code (Problem Solver - Attempt 2/3):
 Deeper analysis...
@@ -534,10 +583,10 @@ Solution: Remove validation call, client-side only
 
 Claude Code (Frontend Specialist):
 Implementing fix (attempt 2)...
-  ✓ Moved validation to client side
+✓ Moved validation to client side
 
 Re-running tests...
-  ✗ Flow 1: 10.5 seconds (5% over budget - close!)
+✗ Flow 1: 10.5 seconds (5% over budget - close!)
 
 Claude Code (Problem Solver - Attempt 3/3):
 Final analysis...
@@ -547,20 +596,21 @@ Solution: Remove creator check
 
 Claude Code (Frontend Specialist):
 Implementing fix (attempt 3)...
-  ✓ Removed redundant creator check
+✓ Removed redundant creator check
 
 Re-running tests...
-  ✓ Flow 1: 8.7 seconds (13% under budget) ✅
+✓ Flow 1: 8.7 seconds (13% under budget) ✅
 
 ✅ All tests passing!
 
 Capturing lesson learned...
-  Lesson: Minimize API roundtrips for tight time budgets
-  Context: 3 calls → 1 call, 15s → 8.7s (42% improvement)
+Lesson: Minimize API roundtrips for tight time budgets
+Context: 3 calls → 1 call, 15s → 8.7s (42% improvement)
 
 ✅ Feature 2-3 complete!
-   Fix attempts: 3/3 (finally resolved)
-   Lesson: Validate client-side, minimize API calls
+Fix attempts: 3/3 (finally resolved)
+Lesson: Validate client-side, minimize API calls
+
 ```
 
 ---
@@ -568,47 +618,49 @@ Capturing lesson learned...
 ### Wireframe 5: Escalation After 3 Failures
 
 ```
+
 $ /one implement 2-5
 
 [Implementation and testing]
 
 Running tests...
-  ✗ Flow 1: Process payment in < 5 seconds
-      Observed: 8.2 seconds
+✗ Flow 1: Process payment in < 5 seconds
+Observed: 8.2 seconds
 
 Claude Code (Problem Solver - Attempt 1/3):
 [Analysis and fix]
 Re-running tests...
-  ✗ Still 7.8 seconds
+✗ Still 7.8 seconds
 
 Claude Code (Problem Solver - Attempt 2/3):
 [Deeper analysis and fix]
 Re-running tests...
-  ✗ Still 7.1 seconds
+✗ Still 7.1 seconds
 
 Claude Code (Problem Solver - Attempt 3/3):
 [Final analysis and fix]
 Re-running tests...
-  ✗ Still 6.9 seconds (better, but not < 5s)
+✗ Still 6.9 seconds (better, but not < 5s)
 
-⚠️  Unable to resolve after 3 attempts
+⚠️ Unable to resolve after 3 attempts
 
 Feature: 2-5-payment-processing
 Test: Flow 1 - Process payment in < 5 seconds
 Issue: Performance target not met
 
 Progress:
-  Initial: 8.2s
-  After attempt 1: 7.8s (-5%)
-  After attempt 2: 7.1s (-13%)
-  After attempt 3: 6.9s (-16%)
-  Target: 5.0s (still 38% over)
+Initial: 8.2s
+After attempt 1: 7.8s (-5%)
+After attempt 2: 7.1s (-13%)
+After attempt 3: 6.9s (-16%)
+Target: 5.0s (still 38% over)
 
 This may require:
-  - Payment API optimization (external dependency)
-  - Caching strategy
-  - Background processing
-  - Or relaxed time budget (consider 7s target?)
+
+- Payment API optimization (external dependency)
+- Caching strategy
+- Background processing
+- Or relaxed time budget (consider 7s target?)
 
 Manual review recommended.
 
@@ -616,9 +668,11 @@ Debug info saved: one/things/features/2-5-payment-processing/debug.md
 Lessons saved: one/knowledge/lessons-learned.md
 
 Next steps:
-  1. Review debug.md for analysis details
-  2. Decide: Optimize further OR adjust time budget
-  3. Continue: /one fix 2-5 (after manual changes)
+
+1. Review debug.md for analysis details
+2. Decide: Optimize further OR adjust time budget
+3. Continue: /one fix 2-5 (after manual changes)
+
 ```
 
 ---
@@ -626,56 +680,58 @@ Next steps:
 ### Wireframe 6: Quality Metrics Over Time
 
 ```
+
 $ /one quality stats
 
 Claude Code (Quality Agent):
 Quality Statistics
 
 Overall Quality (Quarter 1):
-  Features completed: 45
-  First-try pass rate: 91% (41/45)
-  Average test coverage: 97%
-  Average fix time: 6.2 minutes
+Features completed: 45
+First-try pass rate: 91% (41/45)
+Average test coverage: 97%
+Average fix time: 6.2 minutes
 
 Quality Improvement Over Time:
 
 Month 1 (Features 1-15):
-  First-try pass: 80% (12/15)
-  Average fix time: 14.3 minutes
-  Repeated issues: 8
-  Patterns applied: 2
+First-try pass: 80% (12/15)
+Average fix time: 14.3 minutes
+Repeated issues: 8
+Patterns applied: 2
 
 Month 2 (Features 16-30):
-  First-try pass: 93% (14/15)
-  Average fix time: 7.1 minutes
-  Repeated issues: 3
-  Patterns applied: 8
+First-try pass: 93% (14/15)
+Average fix time: 7.1 minutes
+Repeated issues: 3
+Patterns applied: 8
 
 Month 3 (Features 31-45):
-  First-try pass: 100% (15/15)
-  Average fix time: 0 minutes (no fixes needed!)
-  Repeated issues: 0
-  Patterns applied: 15
+First-try pass: 100% (15/15)
+Average fix time: 0 minutes (no fixes needed!)
+Repeated issues: 0
+Patterns applied: 15
 
 Learning Impact:
-  Lessons captured: 23
-  Patterns promoted: 11
-  Known issues avoided: 31 (via lessons)
+Lessons captured: 23
+Patterns promoted: 11
+Known issues avoided: 31 (via lessons)
 
 Test Failure Analysis:
-  Missing event logs: 5 failures → Pattern promoted (Month 1)
-  Ownership validation: 3 failures → Pattern promoted (Month 2)
-  Performance issues: 4 failures → Best practices documented
-  Other: 2 failures → Unique issues, lessons captured
+Missing event logs: 5 failures → Pattern promoted (Month 1)
+Ownership validation: 3 failures → Pattern promoted (Month 2)
+Performance issues: 4 failures → Best practices documented
+Other: 2 failures → Unique issues, lessons captured
 
 Velocity Impact:
-  Month 1: Avg 42 min/feature
-  Month 2: Avg 28 min/feature (-33%)
-  Month 3: Avg 18 min/feature (-57% from Month 1)
+Month 1: Avg 42 min/feature
+Month 2: Avg 28 min/feature (-33%)
+Month 3: Avg 18 min/feature (-57% from Month 1)
 
 Quality loop is working! 📈
 Every failure became knowledge.
 Knowledge became speed.
+
 ```
 
 ---
@@ -684,6 +740,7 @@ Knowledge became speed.
 
 ### Quality Status Icons
 ```
+
 🧪 Testing
 ✅ All tests passing
 ❌ Test failed
@@ -692,19 +749,22 @@ Knowledge became speed.
 🔧 Implementing fix
 🔄 Re-running tests
 📚 Capturing lesson
-⚠️  Escalation (after 3 attempts)
+⚠️ Escalation (after 3 attempts)
 📊 Quality metrics
 📈 Improvement trend
+
 ```
 
 ### Test Result Formatting
 ```
+
 Test Results:
-  ✓ {Test name} ✅
-  ✗ {Test name} ❌
-      {Error details}
+✓ {Test name} ✅
+✗ {Test name} ❌
+{Error details}
 
 Tests: {passed}/{total} passing ({percentage}%)
+
 ```
 
 ---
@@ -788,10 +848,13 @@ Ready for Level 6 (Implementation):
 
 **Quality loop in action:**
 ```
+
 Month 1: 80% first-try → 15 min fix time → Learning
 Month 2: 90% first-try → 7 min fix time → Patterns emerging
 Month 3: 95% first-try → 3 min fix time → Excellence
 Year 1: 97% first-try → 1 min fix time → Mastery
+
 ```
 
 **Every test failure makes the system smarter.** 🧠
+```

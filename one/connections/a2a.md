@@ -1,3 +1,21 @@
+---
+title: A2A
+dimension: connections
+category: a2a.md
+tags: agent, ai, architecture, protocol
+related_dimensions: events, knowledge, things
+scope: global
+created: 2025-11-03
+updated: 2025-11-03
+version: 1.0.0
+ai_context: |
+  This document is part of the connections dimension in the a2a.md category.
+  Location: one/connections/a2a.md
+  Purpose: Documents a2a protocol (agent-to-agent)
+  Related dimensions: events, knowledge, things
+  For AI agents: Read this to understand a2a.
+---
+
 # A2A Protocol (Agent-to-Agent)
 
 **Official Specification**: https://a2a-protocol.org/latest/

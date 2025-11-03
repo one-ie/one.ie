@@ -1,3 +1,21 @@
+---
+title: Service Template
+dimension: knowledge
+category: patterns
+tags: backend, things
+related_dimensions: events, groups, things
+scope: global
+created: 2025-11-03
+updated: 2025-11-03
+version: 1.0.0
+ai_context: |
+  This document is part of the knowledge dimension in the patterns category.
+  Location: one/knowledge/patterns/backend/service-template.md
+  Purpose: Documents pattern: effect.ts service template
+  Related dimensions: events, groups, things
+  For AI agents: Read this to understand service template.
+---
+
 # Pattern: Effect.ts Service Template
 
 **Category:** Backend

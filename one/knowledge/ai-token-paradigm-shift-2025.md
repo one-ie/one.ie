@@ -1,3 +1,21 @@
+---
+title: Ai Token Paradigm Shift 2025
+dimension: knowledge
+category: ai-token-paradigm-shift-2025.md
+tags: agent, ai, artificial-intelligence, protocol
+related_dimensions: events, people, things
+scope: global
+created: 2025-11-03
+updated: 2025-11-03
+version: 1.0.0
+ai_context: |
+  This document is part of the knowledge dimension in the ai-token-paradigm-shift-2025.md category.
+  Location: one/knowledge/ai-token-paradigm-shift-2025.md
+  Purpose: Documents the ai token paradigm shift (2025)
+  Related dimensions: events, people, things
+  For AI agents: Read this to understand ai token paradigm shift 2025.
+---
+
 # The AI Token Paradigm Shift (2025)
 
 **From "AI Tokens" to "AI That Creates Tokens" + "Every Company Has a Token"**

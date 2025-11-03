@@ -1,3 +1,21 @@
+---
+title: Cleanup Release V2.0.8
+dimension: events
+category: CLEANUP-RELEASE-V2.0.8.md
+tags: agent, ai
+related_dimensions: groups, things
+scope: global
+created: 2025-11-03
+updated: 2025-11-03
+version: 1.0.0
+ai_context: |
+  This document is part of the events dimension in the CLEANUP-RELEASE-V2.0.8.md category.
+  Location: one/events/CLEANUP-RELEASE-V2.0.8.md
+  Purpose: Documents 🧹 agent clean - release v2.0.8 cleanup report
+  Related dimensions: groups, things
+  For AI agents: Read this to understand CLEANUP RELEASE V2.0.8.
+---
+
 # 🧹 Agent Clean - Release v2.0.8 Cleanup Report
 
 **Date:** 2025-10-15 02:26 UTC

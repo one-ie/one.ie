@@ -1,3 +1,21 @@
+---
+title: One
+dimension: things
+category: plans
+tags: ai
+related_dimensions: connections, events, people
+scope: global
+created: 2025-11-03
+updated: 2025-11-03
+version: 1.0.0
+ai_context: |
+  This document is part of the things dimension in the plans category.
+  Location: one/things/plans/one.md
+  Purpose: Documents product: one
+  Related dimensions: connections, events, people
+  For AI agents: Read this to understand one.
+---
+
 # Product: ONE
 
 ## Overview

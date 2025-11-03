@@ -1,3 +1,21 @@
+---
+title: Test Index
+dimension: events
+category: test-index.md
+tags: ai, architecture, ontology, testing
+related_dimensions: knowledge, things
+scope: global
+created: 2025-11-03
+updated: 2025-11-03
+version: 1.0.0
+ai_context: |
+  This document is part of the events dimension in the test-index.md category.
+  Location: one/events/test-index.md
+  Purpose: Documents multi-ontology architecture: test documentation index
+  Related dimensions: knowledge, things
+  For AI agents: Read this to understand test index.
+---
+
 # Multi-Ontology Architecture: Test Documentation Index
 
 ## Quick Navigation

@@ -1,3 +1,21 @@
+---
+title: Connections_Demo
+dimension: events
+category: CONNECTIONS_DEMO.md
+tags: ai, connections, ontology, relationships, things
+related_dimensions: connections, knowledge, things
+scope: global
+created: 2025-11-03
+updated: 2025-11-03
+version: 1.0.0
+ai_context: |
+  This document is part of the events dimension in the CONNECTIONS_DEMO.md category.
+  Location: one/events/CONNECTIONS_DEMO.md
+  Purpose: Documents connections demo - interactive guide
+  Related dimensions: connections, knowledge, things
+  For AI agents: Read this to understand CONNECTIONS_DEMO.
+---
+
 # Connections Demo - Interactive Guide
 
 ## Overview

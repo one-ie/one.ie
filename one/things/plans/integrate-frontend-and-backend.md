@@ -1,3 +1,21 @@
+---
+title: Integrate Frontend And Backend
+dimension: things
+category: plans
+tags: ai, architecture, backend, convex, frontend, groups, ontology, ui
+related_dimensions: connections, events, groups, people
+scope: global
+created: 2025-11-03
+updated: 2025-11-03
+version: 1.0.0
+ai_context: |
+  This document is part of the things dimension in the plans category.
+  Location: one/things/plans/integrate-frontend-and-backend.md
+  Purpose: Documents integration plan: frontend & backend separation with effect-ts
+  Related dimensions: connections, events, groups, people
+  For AI agents: Read this to understand integrate frontend and backend.
+---
+
 # Integration Plan: Frontend & Backend Separation with Effect-TS
 
 **Status:** In Progress
@@ -97,15 +115,18 @@ Use Effect-TS for:
 
 ```typescript
 // web/src/lib/ontology/effects.ts
-import * as Effect from 'effect';
-import { IOntologyProvider } from './types';
+import * as Effect from "effect";
+import { IOntologyProvider } from "./types";
 
-export class OntologyService extends Effect.Service<OntologyService>()('OntologyService', {
-  dependencies: () => [Effect.Tag<IOntologyProvider>()],
-  accessors: {
-    provider: (self) => self._tag,
+export class OntologyService extends Effect.Service<OntologyService>()(
+  "OntologyService",
+  {
+    dependencies: () => [Effect.Tag<IOntologyProvider>()],
+    accessors: {
+      provider: (self) => self._tag,
+    },
   },
-}) {
+) {
   // Service methods build on provider
 }
 ```
@@ -220,6 +241,7 @@ if (!thing) {
 **Objective:** Integrate 6 ontology dimensions with features
 
 #### Groups Integration
+
 ```typescript
 // web/src/lib/ontology/services/groups.ts
 export const listGroups = Effect.fn(
@@ -228,67 +250,68 @@ export const listGroups = Effect.fn(
     const groups = await provider.groups.list();
     return groups;
   },
-  { concurrency: 5 }
+  { concurrency: 5 },
 );
 ```
 
 #### People Integration
+
 ```typescript
 // web/src/lib/ontology/services/people.ts
-export const getCurrentUser = Effect.fn(
-  async (ctx: OntologyContext) => {
-    const provider = ctx.provider;
-    const user = await provider.people.current();
-    if (!user) throw new UnauthorizedError();
-    return user;
-  }
-);
+export const getCurrentUser = Effect.fn(async (ctx: OntologyContext) => {
+  const provider = ctx.provider;
+  const user = await provider.people.current();
+  if (!user) throw new UnauthorizedError();
+  return user;
+});
 ```
 
 #### Things Integration
+
 ```typescript
 // web/src/lib/ontology/services/things.ts
 export const listThings = Effect.fn(
   async (filter: ThingFilter, ctx: OntologyContext) => {
     const things = await ctx.provider.things.list(filter);
-    return Effect.all(things.map(t => validateThing(t)));
-  }
+    return Effect.all(things.map((t) => validateThing(t)));
+  },
 );
 ```
 
 #### Connections Integration
+
 ```typescript
 // web/src/lib/ontology/services/connections.ts
 export const getConnections = Effect.fn(
   async (thingId: string, ctx: OntologyContext) => {
     const connections = await ctx.provider.connections.list({
-      sourceId: thingId
+      sourceId: thingId,
     });
     return connections;
-  }
+  },
 );
 ```
 
 #### Events Integration
+
 ```typescript
 // web/src/lib/ontology/services/events.ts
 export const recordEvent = Effect.fn(
   async (event: CreateEventInput, ctx: OntologyContext) => {
     const recorded = await ctx.provider.events.record(event);
     return recorded;
-  }
+  },
 );
 ```
 
 #### Knowledge Integration
+
 ```typescript
 // web/src/lib/ontology/services/knowledge.ts
-export const search = Effect.fn(
-  async (query: string, ctx: OntologyContext) => {
-    const results = await ctx.provider.knowledge.search(query, 10);
-    return results;
-  }
-);
+export const search = Effect.fn(async (query: string, ctx: OntologyContext) => {
+  const results = await ctx.provider.knowledge.search(query, 10);
+  return results;
+});
 ```
 
 ### Phase 5: Optional Features (Infer 41-50)
@@ -296,26 +319,28 @@ export const search = Effect.fn(
 **Objective:** Make auth, groups, permissions optional
 
 #### Feature Flags
+
 ```typescript
 // web/src/lib/ontology/features.ts
 export interface FeatureFlags {
-  auth: boolean;           // Require authentication
-  groups: boolean;         // Multi-tenant groups
-  permissions: boolean;    // Role-based access
-  realtime: boolean;       // WebSocket subscriptions
-  search: boolean;         // Vector search
+  auth: boolean; // Require authentication
+  groups: boolean; // Multi-tenant groups
+  permissions: boolean; // Role-based access
+  realtime: boolean; // WebSocket subscriptions
+  search: boolean; // Vector search
 }
 
 export const defaultFeatures: FeatureFlags = {
-  auth: false,           // Disabled by default
+  auth: false, // Disabled by default
   groups: false,
   permissions: false,
-  realtime: false,       // Only if Convex
+  realtime: false, // Only if Convex
   search: false,
 };
 ```
 
 #### Conditional Routes
+
 ```astro
 ---
 // src/pages/account/login.astro
@@ -344,16 +369,17 @@ if (!features.auth) {
 ```
 
 #### Example API Route
+
 ```typescript
 // web/src/pages/api/things/[id].ts
-import type { APIRoute } from 'astro';
-import { getProvider } from '@/lib/ontology/factory';
+import type { APIRoute } from "astro";
+import { getProvider } from "@/lib/ontology/factory";
 
 export const GET: APIRoute = async ({ params }) => {
   const provider = await getProvider();
   const thing = await provider.things.get(params.id);
   return new Response(JSON.stringify(thing), {
-    headers: { 'Content-Type': 'application/json' }
+    headers: { "Content-Type": "application/json" },
   });
 };
 ```
@@ -406,14 +432,12 @@ export const GET: APIRoute = async ({ params }) => {
 
 ```typescript
 // ❌ Direct (tightly coupled)
-const thing = await convex.query(api.things.get, { id: '123' });
+const thing = await convex.query(api.things.get, { id: "123" });
 
 // ✅ Effect-TS (loosely coupled)
-const getThing = Effect.fn(
-  async (id: string, ctx: OntologyContext) => {
-    return ctx.provider.things.get(id);
-  }
-);
+const getThing = Effect.fn(async (id: string, ctx: OntologyContext) => {
+  return ctx.provider.things.get(id);
+});
 ```
 
 ### 2. Unified Interface Over Adapter Pattern

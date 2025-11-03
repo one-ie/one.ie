@@ -1,3 +1,22 @@
+---
+title: Todo Sequence
+dimension: things
+primary_dimension: things
+category: todo-sequence.md
+tags: ontology, testing
+related_dimensions: things, events, knowledge, groups, people
+scope: global
+created: 2025-11-03
+updated: 2025-11-03
+version: 1.0.0
+ai_context: |
+  This document is part of the things dimension in the todo-sequence.md category.
+  Location: one/things/todo-sequence.md
+  Purpose: Documents one platform: safe & smart build sequence v1.0.0
+  Related dimensions: events, knowledge
+  For AI agents: Read this to understand todo sequence.
+---
+
 # ONE Platform: Safe & Smart Build Sequence v1.0.0
 
 **Purpose:** Define the safest, most intelligent way to build ONE so each code addition makes the system progressively smarter, stronger, and more reliable.
@@ -40,6 +59,7 @@ PHASE 4: INTELLIGENT OPERATIONS (Infer 301-400)
 
 **Total Inferences:** 400 (not 900)
 **Why Fewer?** We're building smarter with:
+
 - Reusable patterns (don't repeat)
 - Shared infrastructure (single source of truth)
 - Continuous optimization (fast iteration)
@@ -54,6 +74,7 @@ PHASE 4: INTELLIGENT OPERATIONS (Infer 301-400)
 ### Why This Matters
 
 80% of production issues come from:
+
 - Weak error handling
 - Inconsistent logging
 - Untested edge cases
@@ -69,6 +90,7 @@ Fix these FIRST, not last.
 **Purpose:** Understand current state before building on top
 
 #### Infer 1: Audit Authentication System
+
 ```
 DELIVERABLES:
   [ ] Review Better Auth setup in backend/convex/auth.ts
@@ -86,6 +108,7 @@ SUCCESS CRITERIA:
 ```
 
 #### Infer 2: Audit Database Schema (6-Dimension Ontology)
+
 ```
 DELIVERABLES:
   [ ] Review schema.ts groups table (check indexes, constraints)
@@ -105,6 +128,7 @@ SUCCESS CRITERIA:
 ```
 
 #### Infer 3: Audit Error Handling Strategy
+
 ```
 DELIVERABLES:
   [ ] Scan codebase for error handling patterns
@@ -122,6 +146,7 @@ SUCCESS CRITERIA:
 ```
 
 #### Infer 4: Audit Logging & Observability
+
 ```
 DELIVERABLES:
   [ ] Check existing logging (console.log usage, structure)
@@ -139,6 +164,7 @@ SUCCESS CRITERIA:
 ```
 
 #### Infer 5: Audit Testing Coverage
+
 ```
 DELIVERABLES:
   [ ] Run coverage report (web/ and backend/)
@@ -156,6 +182,7 @@ SUCCESS CRITERIA:
 ```
 
 #### Infer 6: Audit API Surface & Documentation
+
 ```
 DELIVERABLES:
   [ ] List all Convex queries (public + internal)
@@ -173,6 +200,7 @@ SUCCESS CRITERIA:
 ```
 
 #### Infer 7: Audit Performance Baselines
+
 ```
 DELIVERABLES:
   [ ] Measure page load times (Core Web Vitals)
@@ -190,6 +218,7 @@ SUCCESS CRITERIA:
 ```
 
 #### Infer 8: Audit Security Posture
+
 ```
 DELIVERABLES:
   [ ] Check authentication security (HTTPS, secure cookies)
@@ -208,6 +237,7 @@ SUCCESS CRITERIA:
 ```
 
 #### Infer 9: Audit Frontend Architecture
+
 ```
 DELIVERABLES:
   [ ] Review Astro + React islands architecture
@@ -225,6 +255,7 @@ SUCCESS CRITERIA:
 ```
 
 #### Infer 10: Audit Backend Architecture
+
 ```
 DELIVERABLES:
   [ ] Review service layer organization
@@ -1479,40 +1510,41 @@ At the end of 400 inferences (the complete 4-phase build):
 
 ### System Quality Metrics
 
-| Metric | Target | Actual |
-|--------|--------|--------|
-| Test Coverage (critical paths) | 80%+ | ___ |
-| Type Safety (any: any count) | 0 in core | ___ |
-| Performance (p95 latency) | < 500ms | ___ |
-| Uptime | 99.9% | ___ |
-| Error Rate | < 0.1% | ___ |
-| Security Vulnerabilities | 0 critical | ___ |
+| Metric                         | Target     | Actual |
+| ------------------------------ | ---------- | ------ |
+| Test Coverage (critical paths) | 80%+       | \_\_\_ |
+| Type Safety (any: any count)   | 0 in core  | \_\_\_ |
+| Performance (p95 latency)      | < 500ms    | \_\_\_ |
+| Uptime                         | 99.9%      | \_\_\_ |
+| Error Rate                     | < 0.1%     | \_\_\_ |
+| Security Vulnerabilities       | 0 critical | \_\_\_ |
 
 ### Development Metrics
 
-| Metric | Target | Actual |
-|--------|--------|--------|
-| Code Review Time | < 24 hours | ___ |
-| Deployment Frequency | Daily | ___ |
-| Mean Time to Recovery | < 15 min | ___ |
-| Time to Development | < 30 min (local) | ___ |
-| Documentation Coverage | 100% public API | ___ |
+| Metric                 | Target           | Actual |
+| ---------------------- | ---------------- | ------ |
+| Code Review Time       | < 24 hours       | \_\_\_ |
+| Deployment Frequency   | Daily            | \_\_\_ |
+| Mean Time to Recovery  | < 15 min         | \_\_\_ |
+| Time to Development    | < 30 min (local) | \_\_\_ |
+| Documentation Coverage | 100% public API  | \_\_\_ |
 
 ### Business Metrics
 
-| Metric | Target | Actual |
-|--------|--------|--------|
-| Onboarding Completion Rate | 80%+ | ___ |
-| Creator Retention (30d) | 70%+ | ___ |
-| Payment Success Rate | 99%+ | ___ |
-| Customer Satisfaction | 4.5+ / 5 | ___ |
-| Feature Adoption | 60%+ | ___ |
+| Metric                     | Target   | Actual |
+| -------------------------- | -------- | ------ |
+| Onboarding Completion Rate | 80%+     | \_\_\_ |
+| Creator Retention (30d)    | 70%+     | \_\_\_ |
+| Payment Success Rate       | 99%+     | \_\_\_ |
+| Customer Satisfaction      | 4.5+ / 5 | \_\_\_ |
+| Feature Adoption           | 60%+     | \_\_\_ |
 
 ---
 
 ## COMPARISON: 900 INFERENCES vs 400 INFERENCES
 
 **Old Approach (900 inferences):**
+
 - 9 separate todo files (x402, onboard, agents, skills, sell, ecommerce, api, features, one-ie)
 - Limited reuse (each team member implements patterns separately)
 - Testing often deferred (Phase 6)
@@ -1520,6 +1552,7 @@ At the end of 400 inferences (the complete 4-phase build):
 - Performance optimizations at the end
 
 **New Approach (400 inferences):**
+
 - 4 phases (Foundation, Layering, Integration, Operations)
 - Strong shared foundations (all features benefit from Phase 1)
 - Testing integrated (Phase 1-2 = 80%+ coverage)
@@ -1568,6 +1601,7 @@ At the end of 400 inferences (the complete 4-phase build):
 ## CONCLUSION: BUILDING WISELY
 
 **The Goal:** Every code addition makes the system:
+
 - ✅ Smarter (captures learnings)
 - ✅ Stronger (more resilient)
 - ✅ More Reliable (fewer bugs)

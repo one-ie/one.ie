@@ -1,3 +1,21 @@
+---
+title: Desktop
+dimension: things
+category: plans
+tags: agent, ai, architecture, connections, events, knowledge, ontology, people, things
+related_dimensions: connections, events, groups, knowledge, people
+scope: global
+created: 2025-11-03
+updated: 2025-11-03
+version: 1.0.0
+ai_context: |
+  This document is part of the things dimension in the plans category.
+  Location: one/things/plans/desktop.md
+  Purpose: Documents one desktop: multi-agent command center
+  Related dimensions: connections, events, groups, knowledge, people
+  For AI agents: Read this to understand desktop.
+---
+
 # ONE Desktop: Multi-Agent Command Center
 
 **Status:** Planning
@@ -674,7 +692,7 @@ indexer.on("file-changed", async (file) => {
       chunk_index: chunk.index,
       text: chunk.text,
       embedding: Buffer.from(
-        new Float32Array(embedding.data[0].embedding).buffer
+        new Float32Array(embedding.data[0].embedding).buffer,
       ),
       embedding_model: "text-embedding-3-large",
     });
@@ -699,7 +717,7 @@ async function getAgentContext(agent: Agent, query: string): Promise<string[]> {
   const localChunks = await searchLocalKnowledge(
     workspace.id,
     queryEmbedding.data[0].embedding,
-    { limit: 5 }
+    { limit: 5 },
   );
 
   // 3. Search backend knowledge (Convex vector search)
@@ -850,7 +868,7 @@ import keytar from "keytar";
 // Store Convex access token securely
 async function storeCredentials(
   deployment: Deployment,
-  token: string
+  token: string,
 ): Promise<void> {
   await keytar.setPassword("one-desktop", deployment.convex_url, token);
 }

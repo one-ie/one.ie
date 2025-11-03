@@ -1,8 +1,27 @@
+---
+title: Separate Copy 2
+dimension: things
+category: plans
+tags: architecture, auth, backend, frontend, knowledge, testing
+related_dimensions: connections, knowledge
+scope: global
+created: 2025-11-03
+updated: 2025-11-03
+version: 1.0.0
+ai_context: |
+  This document is part of the things dimension in the plans category.
+  Location: one/things/plans/separate-copy-2.md
+  Purpose: Documents frontend-backend separation plan
+  Related dimensions: connections, knowledge
+  For AI agents: Read this to understand separate copy 2.
+---
+
 # Frontend-Backend Separation Plan
 
 ## Executive Summary
 
 **Goal:** Transform the current tightly-coupled architecture into a fully headless, API-first architecture where:
+
 - Frontend: Pure Astro/React UI (no Convex dependency)
 - Backend: Hono API + Convex (standalone service)
 - Connection: REST API with API key authentication
@@ -52,6 +71,7 @@
 ```
 
 **Problems:**
+
 - ❌ Frontend tightly coupled to Convex
 - ❌ Can't swap backend without rewriting frontend
 - ❌ Hard to version API (breaking changes impact frontend immediately)
@@ -122,6 +142,7 @@
 ```
 
 **Benefits:**
+
 - ✅ Frontend can be swapped/rebuilt independently
 - ✅ Backend API can serve web, mobile, desktop, CLI
 - ✅ Clear API versioning (/api/v1, /api/v2)
@@ -136,6 +157,7 @@
 ### 1. Multi-Tenancy Support
 
 **Before:**
+
 ```
 Org A → Frontend A → Convex Deployment A
 Org B → Frontend B → Convex Deployment B
@@ -145,6 +167,7 @@ Org C → Frontend C → Convex Deployment C
 ```
 
 **After:**
+
 ```
 Org A → Frontend A ──┐
                      ├→ Single Backend API → Single Convex Deployment
@@ -158,6 +181,7 @@ Org C → Frontend C ──┘
 ### 2. Platform Independence
 
 **Before:**
+
 - Web: Must use Convex React hooks
 - Mobile: Must use Convex React Native SDK
 - Desktop: Must use Convex Electron SDK
@@ -166,6 +190,7 @@ Org C → Frontend C ──┘
 ❌ Each platform needs Convex SDK
 
 **After:**
+
 - Web: HTTP fetch() or axios
 - Mobile: HTTP client (works with any framework)
 - Desktop: HTTP client (works with any framework)
@@ -176,6 +201,7 @@ Org C → Frontend C ──┘
 ### 3. Team Organization
 
 **Before:**
+
 ```
 Full-stack developer needs to know:
 - Astro
@@ -188,6 +214,7 @@ Full-stack developer needs to know:
 ```
 
 **After:**
+
 ```
 Frontend developer needs to know:
 - Astro
@@ -206,12 +233,14 @@ Backend developer needs to know:
 ### 4. API Evolution
 
 **Before:**
+
 ```
 Change Convex schema → Frontend breaks immediately
 ❌ No versioning, no backwards compatibility
 ```
 
 **After:**
+
 ```
 /api/v1/tokens → Stable, never breaks
 /api/v2/tokens → New version with improvements
@@ -229,6 +258,7 @@ Frontend chooses which version to use
 **Goal:** Build standalone Hono API that mirrors current Convex functions
 
 **Tasks:**
+
 1. Create `/backend/api/` directory
 2. Implement Hono routes for all Convex queries/mutations
 3. Add API key authentication middleware
@@ -246,6 +276,7 @@ Frontend chooses which version to use
 **Goal:** Create abstraction layer in frontend that can switch between Convex and HTTP
 
 **Tasks:**
+
 1. Create `/frontend/src/lib/api/client.ts`
 2. Implement API client with same interface as Convex hooks
 3. Add environment variable toggle: `USE_API_BACKEND=true/false`
@@ -262,6 +293,7 @@ Frontend chooses which version to use
 **Goal:** Migrate frontend page by page from Convex hooks to API client
 
 **Tasks:**
+
 1. Migrate `/blog` pages first (low risk)
 2. Migrate `/tokens` pages
 3. Migrate `/agents` pages
@@ -278,6 +310,7 @@ Frontend chooses which version to use
 **Goal:** Delete `frontend/convex/*` and all Convex dependencies
 
 **Tasks:**
+
 1. Verify all pages use API client
 2. Remove Convex imports from `package.json`
 3. Delete `frontend/convex/` directory
@@ -294,12 +327,14 @@ Frontend chooses which version to use
 ### Key Types
 
 **1. Secret Keys (Backend-to-Backend)**
+
 ```
 sk_live_1234567890abcdef
 sk_test_1234567890abcdef
 ```
 
 **2. Publishable Keys (Frontend-Safe)**
+
 ```
 pk_live_1234567890abcdef
 pk_test_1234567890abcdef
@@ -371,7 +406,7 @@ export async function validateApiKey(c: Context, next: Next) {
   // Query Convex for matching key
   const convex = new ConvexHttpClient(process.env.CONVEX_URL!);
   const keyEntity = await convex.query(api.queries.apiKeys.validate, {
-    keyHash
+    keyHash,
   });
 
   if (!keyEntity) {
@@ -383,7 +418,10 @@ export async function validateApiKey(c: Context, next: Next) {
   }
 
   // Check expiration
-  if (keyEntity.properties.expiresAt && Date.now() > keyEntity.properties.expiresAt) {
+  if (
+    keyEntity.properties.expiresAt &&
+    Date.now() > keyEntity.properties.expiresAt
+  ) {
     return c.json({ error: "API key expired" }, 401);
   }
 
@@ -405,9 +443,11 @@ export async function validateApiKey(c: Context, next: Next) {
   await incrementRateLimit(rateLimitKey, keyEntity.properties.rateLimit.period);
 
   // Update last used timestamp (async, don't wait)
-  convex.mutation(api.mutations.apiKeys.updateLastUsed, {
-    keyId: keyEntity._id
-  }).catch(console.error);
+  convex
+    .mutation(api.mutations.apiKeys.updateLastUsed, {
+      keyId: keyEntity._id,
+    })
+    .catch(console.error);
 
   // Attach org context to request
   c.set("orgId", keyEntity.properties.orgId);
@@ -433,7 +473,7 @@ export class ApiClient {
 
   private async request<T>(
     endpoint: string,
-    options: RequestInit = {}
+    options: RequestInit = {},
   ): Promise<T> {
     const url = `${this.baseUrl}${endpoint}`;
 
@@ -441,7 +481,7 @@ export class ApiClient {
       ...options,
       headers: {
         "Content-Type": "application/json",
-        "Authorization": `Bearer ${this.apiKey}`,
+        Authorization: `Bearer ${this.apiKey}`,
         ...options.headers,
       },
     });
@@ -456,8 +496,7 @@ export class ApiClient {
 
   // Tokens API
   tokens = {
-    get: (id: string) =>
-      this.request<Token>(`/api/v1/tokens/${id}`),
+    get: (id: string) => this.request<Token>(`/api/v1/tokens/${id}`),
 
     list: (params?: { orgId?: string; limit?: number }) =>
       this.request<Token[]>(`/api/v1/tokens?${new URLSearchParams(params)}`),
@@ -477,11 +516,9 @@ export class ApiClient {
 
   // Agents API
   agents = {
-    get: (id: string) =>
-      this.request<Agent>(`/api/v1/agents/${id}`),
+    get: (id: string) => this.request<Agent>(`/api/v1/agents/${id}`),
 
-    list: () =>
-      this.request<Agent[]>("/api/v1/agents"),
+    list: () => this.request<Agent[]>("/api/v1/agents"),
 
     create: (data: CreateAgentInput) =>
       this.request<Agent>("/api/v1/agents", {
@@ -494,9 +531,7 @@ export class ApiClient {
 }
 
 // Export singleton with environment API key
-export const api = new ApiClient(
-  import.meta.env.PUBLIC_API_KEY || ""
-);
+export const api = new ApiClient(import.meta.env.PUBLIC_API_KEY || "");
 ```
 
 **Usage in Frontend:**
@@ -600,24 +635,26 @@ export default defineSchema({
   // ... existing entities table
 
   entities: defineTable({
-    type: v.string(),  // Add "api_key" as new type
+    type: v.string(), // Add "api_key" as new type
     name: v.string(),
     properties: v.any(),
-    status: v.optional(v.union(
-      v.literal("active"),
-      v.literal("inactive"),
-      v.literal("draft"),
-      v.literal("published"),
-      v.literal("archived"),
-      v.literal("revoked"),  // ✅ Add for API keys
-    )),
+    status: v.optional(
+      v.union(
+        v.literal("active"),
+        v.literal("inactive"),
+        v.literal("draft"),
+        v.literal("published"),
+        v.literal("archived"),
+        v.literal("revoked"), // ✅ Add for API keys
+      ),
+    ),
     createdAt: v.number(),
     updatedAt: v.number(),
     deletedAt: v.optional(v.number()),
   })
     .index("by_type", ["type"])
     .index("by_status", ["status"])
-    .index("by_key_hash", ["properties.keyHash"]),  // ✅ Add for fast lookup
+    .index("by_key_hash", ["properties.keyHash"]), // ✅ Add for fast lookup
 
   // ... rest of schema
 });
@@ -636,9 +673,7 @@ export const validate = query({
   handler: async (ctx, args) => {
     const apiKey = await ctx.db
       .query("entities")
-      .withIndex("by_key_hash", (q) =>
-        q.eq("properties.keyHash", args.keyHash)
-      )
+      .withIndex("by_key_hash", (q) => q.eq("properties.keyHash", args.keyHash))
       .filter((q) => q.eq(q.field("type"), "api_key"))
       .first();
 
@@ -656,12 +691,12 @@ export const listByOrg = query({
       .collect();
 
     // Don't return keyHash (security)
-    return keys.map(key => ({
+    return keys.map((key) => ({
       ...key,
       properties: {
         ...key.properties,
-        keyHash: undefined,  // Remove sensitive data
-      }
+        keyHash: undefined, // Remove sensitive data
+      },
     }));
   },
 });
@@ -718,7 +753,7 @@ export const create = mutation({
     // Return plaintext key ONLY this once
     return {
       id: keyId,
-      apiKey,  // ⚠️ Show user - never shown again!
+      apiKey, // ⚠️ Show user - never shown again!
       keyHint,
     };
   },
@@ -768,14 +803,17 @@ const app = new Hono();
 
 // Middleware
 app.use("*", logger());
-app.use("/api/*", cors({
-  origin: [
-    "http://localhost:4321",
-    "https://*.pages.dev",
-    process.env.FRONTEND_URL || "",
-  ].filter(Boolean),
-  credentials: true,
-}));
+app.use(
+  "/api/*",
+  cors({
+    origin: [
+      "http://localhost:4321",
+      "https://*.pages.dev",
+      process.env.FRONTEND_URL || "",
+    ].filter(Boolean),
+    credentials: true,
+  }),
+);
 
 // Health check (no auth required)
 app.get("/health", (c) => c.json({ status: "ok" }));
@@ -811,7 +849,7 @@ const convex = new ConvexHttpClient(process.env.CONVEX_URL!);
 // GET /api/v1/tokens/:id
 app.get("/:id", async (c) => {
   const tokenId = c.req.param("id");
-  const orgId = c.get("orgId");  // From API key middleware
+  const orgId = c.get("orgId"); // From API key middleware
 
   const token = await convex.query(api.queries.entities.get, { id: tokenId });
 
@@ -854,7 +892,10 @@ export default app;
 
 ```typescript
 export class ApiError extends Error {
-  constructor(message: string, public status: number) {
+  constructor(
+    message: string,
+    public status: number,
+  ) {
     super(message);
     this.name = "ApiError";
   }
@@ -871,7 +912,7 @@ export class ApiClient {
 
   private async request<T>(
     endpoint: string,
-    options: RequestInit = {}
+    options: RequestInit = {},
   ): Promise<T> {
     const url = `${this.baseUrl}${endpoint}`;
 
@@ -879,7 +920,7 @@ export class ApiClient {
       ...options,
       headers: {
         "Content-Type": "application/json",
-        "Authorization": `Bearer ${this.apiKey}`,
+        Authorization: `Bearer ${this.apiKey}`,
         ...options.headers,
       },
     });
@@ -893,8 +934,7 @@ export class ApiClient {
   }
 
   tokens = {
-    get: (id: string) =>
-      this.request<Token>(`/api/v1/tokens/${id}`),
+    get: (id: string) => this.request<Token>(`/api/v1/tokens/${id}`),
 
     purchase: (id: string, amount: number) =>
       this.request<PurchaseResult>(`/api/v1/tokens/${id}/purchase`, {
@@ -904,18 +944,14 @@ export class ApiClient {
   };
 
   agents = {
-    get: (id: string) =>
-      this.request<Agent>(`/api/v1/agents/${id}`),
+    get: (id: string) => this.request<Agent>(`/api/v1/agents/${id}`),
 
-    list: () =>
-      this.request<Agent[]>("/api/v1/agents"),
+    list: () => this.request<Agent[]>("/api/v1/agents"),
   };
 }
 
 // Singleton instance
-export const api = new ApiClient(
-  import.meta.env.PUBLIC_API_KEY || ""
-);
+export const api = new ApiClient(import.meta.env.PUBLIC_API_KEY || "");
 ```
 
 ### Step 6: Update Frontend Pages
@@ -947,12 +983,14 @@ const token = await api.tokens.get(Astro.params.id);
 ### Step 7: Remove Convex from Frontend
 
 **Delete:**
+
 ```bash
 rm -rf frontend/convex/
 rm frontend/convex.config.ts
 ```
 
 **Update `package.json`:**
+
 ```diff
 {
   "dependencies": {
@@ -1024,7 +1062,7 @@ describe("ApiClient", () => {
         headers: expect.objectContaining({
           Authorization: "Bearer sk_test_123",
         }),
-      })
+      }),
     );
   });
 
@@ -1079,12 +1117,14 @@ describe("ApiClient", () => {
 ### Environment Variables
 
 **Backend (`backend/api/.env`):**
+
 ```bash
 CONVEX_URL=https://your-deployment.convex.cloud
 FRONTEND_URL=https://yourdomain.com
 ```
 
 **Frontend (`frontend/.env`):**
+
 ```bash
 PUBLIC_API_URL=https://api.yourdomain.com
 PUBLIC_API_KEY=pk_live_1234567890abcdef
@@ -1097,12 +1137,14 @@ PUBLIC_API_KEY=pk_live_1234567890abcdef
 ### 1. API Key Storage
 
 **❌ Never:**
+
 - Store API keys in git
 - Use secret keys (`sk_*`) in frontend
 - Log API keys in console
 - Return key hash in API responses
 
 **✅ Always:**
+
 - Use publishable keys (`pk_*`) in frontend
 - Use secret keys (`sk_*`) only in backend
 - Hash keys before storing (SHA-256)
@@ -1112,6 +1154,7 @@ PUBLIC_API_KEY=pk_live_1234567890abcdef
 ### 2. Rate Limiting
 
 **Implementation:**
+
 ```typescript
 // backend/api/middleware/rateLimit.ts
 import { Context, Next } from "hono";
@@ -1133,7 +1176,7 @@ export async function rateLimit(c: Context, next: Next) {
           error: "Rate limit exceeded",
           resetAt: new Date(current.resetAt).toISOString(),
         },
-        429
+        429,
       );
     }
     current.count++;
@@ -1151,22 +1194,28 @@ export async function rateLimit(c: Context, next: Next) {
 ### 3. CORS Configuration
 
 **Backend:**
-```typescript
-app.use("/api/*", cors({
-  origin: (origin) => {
-    // Allow specific domains
-    const allowed = [
-      "http://localhost:4321",
-      "https://yourdomain.com",
-      "https://*.pages.dev",
-    ];
 
-    return allowed.some(pattern =>
-      new RegExp(pattern.replace("*", ".*")).test(origin)
-    ) ? origin : null;
-  },
-  credentials: true,
-}));
+```typescript
+app.use(
+  "/api/*",
+  cors({
+    origin: (origin) => {
+      // Allow specific domains
+      const allowed = [
+        "http://localhost:4321",
+        "https://yourdomain.com",
+        "https://*.pages.dev",
+      ];
+
+      return allowed.some((pattern) =>
+        new RegExp(pattern.replace("*", ".*")).test(origin),
+      )
+        ? origin
+        : null;
+    },
+    credentials: true,
+  }),
+);
 ```
 
 ---
@@ -1174,6 +1223,7 @@ app.use("/api/*", cors({
 ## Migration Checklist
 
 ### Backend Setup
+
 - [ ] Add `api_key` entity type to schema
 - [ ] Create API key queries in `backend/convex/queries/apiKeys.ts`
 - [ ] Create API key mutations in `backend/convex/mutations/apiKeys.ts`
@@ -1189,6 +1239,7 @@ app.use("/api/*", cors({
 - [ ] Set up monitoring and logging
 
 ### Frontend Setup
+
 - [ ] Create `frontend/src/lib/api/client.ts`
 - [ ] Create `frontend/src/lib/api/types.ts`
 - [ ] Create `frontend/src/lib/api/errors.ts`
@@ -1204,6 +1255,7 @@ app.use("/api/*", cors({
 - [ ] Test full frontend in production
 
 ### Documentation
+
 - [ ] Update `CLAUDE.md` with new architecture
 - [ ] Document API endpoints (OpenAPI/Swagger)
 - [ ] Create API key management guide
@@ -1218,6 +1270,7 @@ If separation fails, rollback is easy:
 
 1. Keep `frontend/convex/` in git (don't delete until verified)
 2. Use environment variable to toggle:
+
    ```typescript
    const USE_API_BACKEND = import.meta.env.PUBLIC_USE_API_BACKEND === "true";
 
@@ -1225,6 +1278,7 @@ If separation fails, rollback is easy:
      ? await api.tokens.get(id)
      : await convex.query(api.entities.get, { id });
    ```
+
 3. If issues arise, set `PUBLIC_USE_API_BACKEND=false`
 
 ---
@@ -1232,6 +1286,7 @@ If separation fails, rollback is easy:
 ## Success Metrics
 
 **Technical:**
+
 - [ ] Frontend has zero Convex dependencies
 - [ ] All API endpoints return < 200ms
 - [ ] Rate limiting enforces limits correctly
@@ -1240,6 +1295,7 @@ If separation fails, rollback is easy:
 - [ ] 100% test coverage on API routes
 
 **Business:**
+
 - [ ] Multiple frontends can use same backend
 - [ ] API versioning supports breaking changes gracefully
 - [ ] Multi-tenancy works (org isolation)

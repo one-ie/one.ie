@@ -1,3 +1,21 @@
+---
+title: Altcoin Cycle Trading Strategy
+dimension: knowledge
+category: altcoin-cycle-trading-strategy.md
+tags: ai, ontology, protocol
+related_dimensions: events
+scope: global
+created: 2025-11-03
+updated: 2025-11-03
+version: 1.0.0
+ai_context: |
+  This document is part of the knowledge dimension in the altcoin-cycle-trading-strategy.md category.
+  Location: one/knowledge/altcoin-cycle-trading-strategy.md
+  Purpose: Documents altcoin cycle trading strategy
+  Related dimensions: events
+  For AI agents: Read this to understand altcoin cycle trading strategy.
+---
+
 # Altcoin Cycle Trading Strategy
 
 **Actionable Implementation Guide for Capital Rotation Trading**

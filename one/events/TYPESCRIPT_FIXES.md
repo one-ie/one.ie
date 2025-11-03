@@ -1,3 +1,21 @@
+---
+title: Typescript_Fixes
+dimension: events
+category: TYPESCRIPT_FIXES.md
+tags: connections, events, groups, knowledge, testing, things
+related_dimensions: connections, groups, knowledge, things
+scope: global
+created: 2025-11-03
+updated: 2025-11-03
+version: 1.0.0
+ai_context: |
+  This document is part of the events dimension in the TYPESCRIPT_FIXES.md category.
+  Location: one/events/TYPESCRIPT_FIXES.md
+  Purpose: Documents typescript error fixes summary
+  Related dimensions: connections, groups, knowledge, things
+  For AI agents: Read this to understand TYPESCRIPT_FIXES.
+---
+
 # TypeScript Error Fixes Summary
 
 ## Overview

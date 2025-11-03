@@ -1,3 +1,21 @@
+---
+title: Implementation Examples
+dimension: knowledge
+category: implementation-examples.md
+tags: agent, ai, architecture, auth, backend, connections, events, frontend, knowledge, ontology
+related_dimensions: connections, events, people, things
+scope: global
+created: 2025-11-03
+updated: 2025-11-03
+version: 1.0.0
+ai_context: |
+  This document is part of the knowledge dimension in the implementation-examples.md category.
+  Location: one/knowledge/implementation-examples.md
+  Purpose: Documents one platform - implementation examples
+  Related dimensions: connections, events, people, things
+  For AI agents: Read this to understand implementation examples.
+---
+
 
 # ONE Platform - Implementation Examples
 

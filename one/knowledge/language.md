@@ -1,3 +1,21 @@
+---
+title: Language
+dimension: knowledge
+category: language.md
+tags: agent, ai
+related_dimensions: connections, events, people, things
+scope: global
+created: 2025-11-03
+updated: 2025-11-03
+version: 1.0.0
+ai_context: |
+  This document is part of the knowledge dimension in the language.md category.
+  Location: one/knowledge/language.md
+  Purpose: Documents one platform - plain english dsl
+  Related dimensions: connections, events, people, things
+  For AI agents: Read this to understand language.
+---
+
 # ONE Platform - Plain English DSL
 
 **For:** Creators, CEOs, Non-technical Founders, AI Agents  

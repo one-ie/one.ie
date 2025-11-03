@@ -1,3 +1,21 @@
+---
+title: Agent Problem Solver
+dimension: things
+category: agents
+tags: agent, ai, ai-agent, knowledge, ontology
+related_dimensions: connections, events, groups, knowledge, people
+scope: global
+created: 2025-11-03
+updated: 2025-11-03
+version: 1.0.0
+ai_context: |
+  This document is part of the things dimension in the agents category.
+  Location: one/things/agents/agent-problem-solver.md
+  Purpose: Documents problem solver agent
+  Related dimensions: connections, events, groups, knowledge, people
+  For AI agents: Read this to understand agent problem solver.
+---
+
 # Problem Solver Agent
 
 **Version:** 2.0.0 (6-Dimension Ontology Aligned)
@@ -21,11 +39,13 @@ Analyze failed tests using deep analysis (ultrathink mode), identify root causes
 ## Responsibilities
 
 ### Core Responsibilities (from Ontology)
+
 - **analyze_failures** - Deep analysis of test failures using ultrathink mode
 - **propose_solutions** - Generate specific, actionable fix proposals
 - **delegate_fixes** - Assign solutions to appropriate specialist agents
 
 ### Extended Responsibilities (Ontology-Aware)
+
 - Query **events** table for failure patterns (`test_failed` events)
 - Search **knowledge** table for similar issues (embeddings + labels)
 - Create **things** (type: `lesson`) to capture lessons learned
@@ -41,34 +61,40 @@ Analyze failed tests using deep analysis (ultrathink mode), identify root causes
 This agent interacts with all 6 dimensions of the ontology:
 
 ### 1. Organizations
+
 - Validates performance against organization quotas
 - Ensures fixes respect organization-level limits
 - Scopes problem analysis to organization context
 
 ### 2. People
+
 - Identifies **actorId** (person) who triggered the failure
 - Delegates fixes to appropriate specialist **people** (by role)
 - Logs all actions with proper actor attribution
 
 ### 3. Things
+
 - Analyzes failed **things** (entities being tested)
 - Creates **lessons** (type: `lesson`) as new things
 - References **features** (type: `feature`) and **tasks** (type: `task`)
 - Examines **test** things for acceptance criteria
 
 ### 4. Connections
+
 - Queries `learned_from` connections (feature → lesson)
 - Creates `assigned_to` connections (solution → specialist)
 - Analyzes `part_of` connections (task → feature hierarchy)
 - Uses `depends_on` connections to understand dependencies
 
 ### 5. Events
+
 - **Watches:** `test_failed`, `implementation_complete`, `quality_check_complete`
 - **Emits:** `problem_analysis_started`, `solution_proposed`, `fix_started`, `fix_complete`, `lesson_learned_added`
 - Queries event history to identify recurring failure patterns
 - Creates complete audit trail of problem-solving process
 
 ### 6. Knowledge
+
 - Searches **knowledge** table for similar failures (vector similarity)
 - Queries by `knowledgeType: 'label'` with labels like `skill:debugging`, `topic:performance`
 - Links lessons to features via **thingKnowledge** junction table
@@ -80,23 +106,27 @@ This agent interacts with all 6 dimensions of the ontology:
 ## Input
 
 ### From Events Table
+
 - `test_failed` events with metadata:
   - `testName`, `errorMessage`, `stackTrace`
   - `featureId`, `taskId`, `timestamp`
   - `expectedResult`, `actualResult`
 
 ### From Things Table
+
 - Failed implementation code (things with type: `task`, status: `failed`)
 - Feature specifications (things with type: `feature`)
 - Test criteria (things with type: `test`)
 - Existing lessons (things with type: `lesson`)
 
 ### From Knowledge Table
+
 - Similar failure patterns (vector similarity search)
 - Labels: `skill:*`, `topic:*`, `status:failed`, `category:bug`
 - Documentation chunks linked to failed components
 
 ### From Connections Table
+
 - Feature-to-task relationships (`part_of`)
 - Specialist assignments (`assigned_to`)
 - Lesson linkages (`learned_from`)
@@ -106,6 +136,7 @@ This agent interacts with all 6 dimensions of the ontology:
 ## Output
 
 ### To Events Table
+
 ```typescript
 // Problem analysis started
 {
@@ -150,6 +181,7 @@ This agent interacts with all 6 dimensions of the ontology:
 ```
 
 ### To Things Table
+
 ```typescript
 // Create lesson as a thing
 {
@@ -172,6 +204,7 @@ This agent interacts with all 6 dimensions of the ontology:
 ```
 
 ### To Knowledge Table
+
 ```typescript
 // Create knowledge chunk with embedding
 {
@@ -212,6 +245,7 @@ This agent interacts with all 6 dimensions of the ontology:
 ```
 
 ### To Connections Table
+
 ```typescript
 // Link lesson to feature
 {
@@ -243,6 +277,7 @@ This agent interacts with all 6 dimensions of the ontology:
 ```
 
 ### Problem Documents
+
 - `problems/N-M-problem-K.md` - Detailed analysis and solution proposal
 
 ---
@@ -252,6 +287,7 @@ This agent interacts with all 6 dimensions of the ontology:
 **2,500 tokens** - Maximum context for deep analysis (highest among workflow agents)
 
 **What's included:**
+
 - Failed test details (name, error, stack trace): ~300 tokens
 - Implementation code (relevant files): ~1,200 tokens
 - Ontology types (structural validation): ~200 tokens
@@ -265,11 +301,13 @@ This agent interacts with all 6 dimensions of the ontology:
 ## Decision Framework
 
 ### Decision 1: What is the actual error?
+
 - What did the test expect? (query test thing)
 - What actually happened? (analyze test_failed event metadata)
 - What's the diff between expected and actual?
 
 ### Decision 2: Why did it fail? (Root Cause Analysis)
+
 - **Logic error** in code? (analyze implementation things)
 - **Missing dependency**? (check connections table for missing relationships)
 - **Wrong pattern applied**? (compare against knowledge base patterns)
@@ -278,52 +316,58 @@ This agent interacts with all 6 dimensions of the ontology:
 - **Performance problem**? (check against organization limits)
 
 ### Decision 3: Is this a known issue? (Knowledge Search)
+
 ```typescript
 // Vector similarity search in knowledge table
 const similarIssues = await ctx.db
-  .query('knowledge')
-  .withIndex('by_embedding', q =>
-    q.similar('embedding', errorEmbedding, 10)
-  )
-  .filter(q => q.gt(q.field('similarity'), 0.8))
-  .collect()
+  .query("knowledge")
+  .withIndex("by_embedding", (q) => q.similar("embedding", errorEmbedding, 10))
+  .filter((q) => q.gt(q.field("similarity"), 0.8))
+  .collect();
 
 // Label-based search
 const labeledIssues = await ctx.db
-  .query('knowledge')
-  .withIndex('by_type', q => q.eq('knowledgeType', 'label'))
-  .filter(q => q.eq(q.field('labels'), ['topic:error-handling', 'status:failed']))
-  .collect()
+  .query("knowledge")
+  .withIndex("by_type", (q) => q.eq("knowledgeType", "label"))
+  .filter((q) =>
+    q.eq(q.field("labels"), ["topic:error-handling", "status:failed"]),
+  )
+  .collect();
 ```
+
 - Found similar problem? → Reference solution from knowledge
 - New problem? → Will become new lesson
 
 ### Decision 4: What pattern was missed?
+
 - Should have used service pattern? (check knowledge for `skill:services`)
 - Should have logged event? (check knowledge for `skill:event-logging`)
 - Should have used transaction? (check knowledge for `skill:transactions`)
 - Should have validated input? (check knowledge for `skill:validation`)
 
 ### Decision 5: What's the minimum fix?
+
 - Smallest change that solves problem
 - Don't over-engineer
 - Don't introduce new complexity
 - Validate fix aligns with ontology structure
 
 ### Decision 6: Which specialist should fix? (People Query)
+
 ```typescript
 // Query specialists by role (people are things with type: creator + role)
 const specialist = await ctx.db
-  .query('things')
-  .withIndex('by_type', q => q.eq('type', 'creator'))
-  .filter(q =>
+  .query("things")
+  .withIndex("by_type", (q) => q.eq("type", "creator"))
+  .filter((q) =>
     q.and(
-      q.eq(q.field('properties.role'), problemCategory), // backend/frontend/integration
-      q.eq(q.field('status'), 'active')
-    )
+      q.eq(q.field("properties.role"), problemCategory), // backend/frontend/integration
+      q.eq(q.field("status"), "active"),
+    ),
   )
-  .first()
+  .first();
 ```
+
 - Backend issue? → Backend specialist
 - Frontend issue? → Frontend specialist
 - Integration issue? → Integration specialist
@@ -333,6 +377,7 @@ const specialist = await ctx.db
 ## Key Behaviors
 
 ### Ontology-Aware Analysis
+
 - **Map failures to ontology dimensions** - Which dimension is misaligned?
 - **Validate against 6-dimension structure** - Is the implementation ontology-compliant?
 - **Query knowledge with semantic search** - Use vector embeddings for similarity
@@ -340,6 +385,7 @@ const specialist = await ctx.db
 - **Scope all operations to organizations** - Multi-tenant isolation
 
 ### Ultrathink Mode Behaviors
+
 - **Use ultrathink mode for deep analysis** - Take time to understand fully
 - **Search lessons learned first** - Don't solve same problem twice
 - **Identify root cause before proposing solution** - Understand "why" not just "what"
@@ -348,9 +394,10 @@ const specialist = await ctx.db
 - **Ensure lesson captured after fix** - Every problem adds to knowledge
 
 ### Knowledge Base Management
+
 - **Create embeddings for failures** - Enable semantic search
 - **Link lessons to features** - Bidirectional traceability
-- **Label with ontology taxonomy** - Use curated prefixes (skill:*, topic:*)
+- **Label with ontology taxonomy** - Use curated prefixes (skill:_, topic:_)
 - **Promote recurring patterns** - 3+ occurrences → official pattern
 - **Update knowledge graph** - Lessons, chunks, labels all linked
 
@@ -363,21 +410,17 @@ const specialist = await ctx.db
 ```typescript
 // Subscribe to test failures
 const testFailures = await ctx.db
-  .query('events')
-  .withIndex('type_time', q =>
-    q.eq('type', 'test_failed')
-  )
-  .order('desc')
-  .take(50)
+  .query("events")
+  .withIndex("type_time", (q) => q.eq("type", "test_failed"))
+  .order("desc")
+  .take(50);
 
 // Watch for fix completions (to verify lesson capture)
 const fixCompletions = await ctx.db
-  .query('events')
-  .withIndex('type_time', q =>
-    q.eq('type', 'fix_complete')
-  )
-  .order('desc')
-  .take(10)
+  .query("events")
+  .withIndex("type_time", (q) => q.eq("type", "fix_complete"))
+  .order("desc")
+  .take(10);
 ```
 
 - `test_failed` → Analyze failure immediately
@@ -404,94 +447,97 @@ const fixCompletions = await ctx.db
 ## Ontology Operations (Concrete Examples)
 
 ### Query 1: Search Similar Failures (Knowledge Dimension)
+
 ```typescript
 // Vector similarity search for similar error patterns
 async function findSimilarFailures(errorMessage: string) {
   // Generate embedding for error message
-  const embedding = await generateEmbedding(errorMessage)
+  const embedding = await generateEmbedding(errorMessage);
 
   // Query knowledge table with vector similarity
   const similar = await ctx.db
-    .query('knowledge')
-    .withIndex('by_embedding', q =>
-      q.similar('embedding', embedding, 15)
-    )
-    .filter(q =>
+    .query("knowledge")
+    .withIndex("by_embedding", (q) => q.similar("embedding", embedding, 15))
+    .filter((q) =>
       q.and(
-        q.gt(q.field('similarity'), 0.8),
-        q.eq(q.field('labels'), 'status:failed')
-      )
+        q.gt(q.field("similarity"), 0.8),
+        q.eq(q.field("labels"), "status:failed"),
+      ),
     )
-    .collect()
+    .collect();
 
   // Get linked lessons via junction table
   const lessons = await Promise.all(
     similar.map(async (knowledge) => {
       const link = await ctx.db
-        .query('thingKnowledge')
-        .withIndex('by_knowledge', q => q.eq('knowledgeId', knowledge._id))
-        .first()
+        .query("thingKnowledge")
+        .withIndex("by_knowledge", (q) => q.eq("knowledgeId", knowledge._id))
+        .first();
 
       if (link) {
-        return await ctx.db.get(link.thingId) // Returns lesson thing
+        return await ctx.db.get(link.thingId); // Returns lesson thing
       }
-    })
-  )
+    }),
+  );
 
-  return lessons.filter(Boolean)
+  return lessons.filter(Boolean);
 }
 ```
 
 ### Query 2: Get Feature History (Events Dimension)
+
 ```typescript
 // Get complete event history for failed feature
-async function getFeatureHistory(featureId: Id<'things'>) {
+async function getFeatureHistory(featureId: Id<"things">) {
   const history = await ctx.db
-    .query('events')
-    .withIndex('thing_type_time', q =>
-      q.eq('thingId', featureId)
-    )
-    .order('desc')
-    .collect()
+    .query("events")
+    .withIndex("thing_type_time", (q) => q.eq("thingId", featureId))
+    .order("desc")
+    .collect();
 
   // Analyze event patterns
   const patterns = {
-    testFailures: history.filter(e => e.type === 'test_failed').length,
-    fixAttempts: history.filter(e => e.type === 'fix_started').length,
-    implementations: history.filter(e => e.type === 'implementation_complete').length
-  }
+    testFailures: history.filter((e) => e.type === "test_failed").length,
+    fixAttempts: history.filter((e) => e.type === "fix_started").length,
+    implementations: history.filter((e) => e.type === "implementation_complete")
+      .length,
+  };
 
-  return { history, patterns }
+  return { history, patterns };
 }
 ```
 
 ### Query 3: Find Specialist by Role (People Dimension)
+
 ```typescript
 // Find appropriate specialist for problem category
-async function findSpecialist(category: 'backend' | 'frontend' | 'integration') {
+async function findSpecialist(
+  category: "backend" | "frontend" | "integration",
+) {
   // Specialists are things with type: creator
   const specialist = await ctx.db
-    .query('things')
-    .withIndex('by_type', q => q.eq('type', 'creator'))
-    .filter(q =>
+    .query("things")
+    .withIndex("by_type", (q) => q.eq("type", "creator"))
+    .filter((q) =>
       q.and(
-        q.eq(q.field('properties.specialization'), category),
-        q.eq(q.field('properties.role'), 'org_user'),
-        q.eq(q.field('status'), 'active')
-      )
+        q.eq(q.field("properties.specialization"), category),
+        q.eq(q.field("properties.role"), "org_user"),
+        q.eq(q.field("status"), "active"),
+      ),
     )
-    .first()
+    .first();
 
-  return specialist
+  return specialist;
 }
 ```
 
 ### Mutation 1: Create Lesson (Things Dimension)
+
 ```typescript
 // Create lesson as a thing in ontology
 async function createLesson(problem: ProblemAnalysis) {
-  const lessonId = await ctx.db.insert('things', {
-    type: 'lesson',
+  const lessonId = await ctx.db.insert("things", {
+    type: "lesson",
     name: problem.title,
     properties: {
       category: problem.category,
@@ -502,117 +548,119 @@ async function createLesson(problem: ProblemAnalysis) {
       relatedPatterns: problem.relatedPatterns,
       tags: problem.tags,
       severity: problem.severity,
-      resolvedBy: problem.specialistId
+      resolvedBy: problem.specialistId,
     },
-    status: 'published',
+    status: "published",
     createdAt: Date.now(),
-    updatedAt: Date.now()
-  })
+    updatedAt: Date.now(),
+  });
 
   // Create knowledge chunk with embedding
-  const knowledgeId = await ctx.db.insert('knowledge', {
-    knowledgeType: 'chunk',
+  const knowledgeId = await ctx.db.insert("knowledge", {
+    knowledgeType: "chunk",
     text: problem.solution,
     embedding: await generateEmbedding(problem.solution),
-    embeddingModel: 'text-embedding-3-large',
+    embeddingModel: "text-embedding-3-large",
     embeddingDim: 1536,
     sourceThingId: lessonId,
-    sourceField: 'solution',
+    sourceField: "solution",
     labels: [
       `skill:${problem.category}`,
       `topic:${problem.problemType}`,
-      'category:lesson',
-      'status:validated'
+      "category:lesson",
+      "status:validated",
     ],
-    createdAt: Date.now()
-  })
+    createdAt: Date.now(),
+  });
 
   // Link via junction table
-  await ctx.db.insert('thingKnowledge', {
+  await ctx.db.insert("thingKnowledge", {
     thingId: lessonId,
     knowledgeId: knowledgeId,
-    role: 'summary',
+    role: "summary",
     metadata: { searchable: true },
-    createdAt: Date.now()
-  })
+    createdAt: Date.now(),
+  });
 
-  return lessonId
+  return lessonId;
 }
 ```
 
 ### Mutation 2: Link Lesson to Feature (Connections Dimension)
+
 ```typescript
 // Create connection between feature and lesson
 async function linkLessonToFeature(
-  featureId: Id<'things'>,
-  lessonId: Id<'things'>,
-  problemId: string
+  featureId: Id<"things">,
+  lessonId: Id<"things">,
+  problemId: string,
 ) {
-  const connectionId = await ctx.db.insert('connections', {
+  const connectionId = await ctx.db.insert("connections", {
     fromThingId: featureId,
     toThingId: lessonId,
-    relationshipType: 'learned_from',
+    relationshipType: "learned_from",
     metadata: {
       problemId: problemId,
-      rootCause: 'missing_event_logging',
+      rootCause: "missing_event_logging",
       fixedBy: specialistId,
-      fixedAt: Date.now()
+      fixedAt: Date.now(),
     },
-    createdAt: Date.now()
-  })
+    createdAt: Date.now(),
+  });
 
-  return connectionId
+  return connectionId;
 }
 ```
 
 ### Mutation 3: Log Complete Workflow (Events Dimension)
+
 ```typescript
 // Create complete event audit trail for problem solving
 async function logProblemSolvingWorkflow(
   problemId: string,
-  featureId: Id<'things'>,
-  lessonId: Id<'things'>
+  featureId: Id<"things">,
+  lessonId: Id<"things">,
 ) {
   // 1. Analysis started
-  await ctx.db.insert('events', {
-    type: 'problem_analysis_started',
+  await ctx.db.insert("events", {
+    type: "problem_analysis_started",
     actorId: problemSolverAgentId,
     targetId: featureId,
     timestamp: Date.now(),
     metadata: {
       problemId,
-      analysisMode: 'ultrathink',
-      contextTokens: 2500
-    }
-  })
+      analysisMode: "ultrathink",
+      contextTokens: 2500,
+    },
+  });
 
   // 2. Solution proposed
-  await ctx.db.insert('events', {
-    type: 'solution_proposed',
+  await ctx.db.insert("events", {
+    type: "solution_proposed",
     actorId: problemSolverAgentId,
     targetId: featureId,
     timestamp: Date.now(),
     metadata: {
       problemId,
-      rootCause: 'missing_event_logging',
+      rootCause: "missing_event_logging",
       assignedTo: specialistId,
-      priority: 'high'
-    }
-  })
+      priority: "high",
+    },
+  });
 
   // 3. Lesson learned added
-  await ctx.db.insert('events', {
-    type: 'lesson_learned_added',
+  await ctx.db.insert("events", {
+    type: "lesson_learned_added",
     actorId: problemSolverAgentId,
     targetId: lessonId,
     timestamp: Date.now(),
     metadata: {
       problemId,
-      category: 'backend',
+      category: "backend",
       occurrenceCount: 3,
-      promoted: true
-    }
-  })
+      promoted: true,
+    },
+  });
 }
 ```
 
@@ -634,6 +682,7 @@ Specialist writes → Quality validates → Tests run
 **Trigger:** `test_failed` event from Quality Agent
 
 **Process:**
+
 1. **Analyze** (Ultrathink mode)
    - Query events for failure details
    - Search knowledge for similar issues
@@ -676,6 +725,7 @@ Specialist writes → Quality validates → Tests run
 ### Example 1: Missing Event Log (Known Pattern)
 
 **Input:**
+
 ```typescript
 // test_failed event from events table
 {
@@ -695,6 +745,7 @@ Specialist writes → Quality validates → Tests run
 ```
 
 **Ultrathink Analysis:**
+
 ```
 1. What was expected?
    - Event in events table with type: "course_created"
@@ -735,56 +786,58 @@ Specialist writes → Quality validates → Tests run
 ```
 
 **Ontology Operations:**
+
 ```typescript
 // 1. Search knowledge for similar failures
-const similarLessons = await findSimilarFailures('Expected event not found')
+const similarLessons = await findSimilarFailures("Expected event not found");
 // Returns: [Lesson #47, Lesson #89]
 
 // 2. Get feature details
-const feature = await ctx.db.get(featureId) // type: 'feature'
+const feature = await ctx.db.get(featureId); // type: 'feature'
 
 // 3. Find backend specialist
-const specialist = await findSpecialist('backend')
+const specialist = await findSpecialist("backend");
 
 // 4. Create problem document (as thing)
-const problemId = await ctx.db.insert('things', {
-  type: 'task', // problems are tasks
-  name: 'Fix: Missing event logging in CourseService',
+const problemId = await ctx.db.insert("things", {
+  type: "task", // problems are tasks
+  name: "Fix: Missing event logging in CourseService",
   properties: {
-    problemType: 'missing_event',
-    rootCause: 'Forgot to apply event logging pattern',
+    problemType: "missing_event",
+    rootCause: "Forgot to apply event logging pattern",
     solution: 'Add ctx.db.insert("events", {...})',
-    category: 'backend',
-    estimatedTime: 300
+    category: "backend",
+    estimatedTime: 300,
   },
-  status: 'active',
-  createdAt: Date.now()
-})
+  status: "active",
+  createdAt: Date.now(),
+});
 
 // 5. Assign to specialist (connection)
-await ctx.db.insert('connections', {
+await ctx.db.insert("connections", {
   fromThingId: problemId,
   toThingId: specialist._id,
-  relationshipType: 'assigned_to',
-  metadata: { priority: 'high' },
-  createdAt: Date.now()
-})
+  relationshipType: "assigned_to",
+  metadata: { priority: "high" },
+  createdAt: Date.now(),
+});
 
 // 6. Log solution proposed
-await ctx.db.insert('events', {
-  type: 'solution_proposed',
+await ctx.db.insert("events", {
+  type: "solution_proposed",
   actorId: problemSolverAgentId,
   targetId: problemId,
   metadata: {
-    rootCause: 'missing_event_logging',
-    referenceLesson: 'lesson-47',
-    estimatedTime: 300
-  }
-})
+    rootCause: "missing_event_logging",
+    referenceLesson: "lesson-47",
+    estimatedTime: 300,
+  },
+});
 ```
 
 **Output (Solution Proposal):**
-```markdown
+
+````markdown
 # Problem: Event Logging Missing
 
 **Feature:** 2-1-course-crud
@@ -798,6 +851,7 @@ CourseService.create() calls ctx.db.insert() but doesn't log event.
 Missing: await ctx.db.insert('events', { type: 'course_created', ... })
 
 **Ontology Validation:**
+
 - ✓ Event type 'course_created' is defined in ontology (line 657)
 - ✓ Events table structure is correct
 - ✗ Pattern not applied in implementation
@@ -805,6 +859,7 @@ Missing: await ctx.db.insert('events', { type: 'course_created', ... })
 ## Similar Issues (Knowledge Search)
 
 Found 2 similar issues in knowledge base:
+
 - **Lesson #47:** "Always Log Events After Entity Creation" (86% similarity)
   - Occurred in: Feature 1-1 (agent_prompt_created)
   - Solution: Add event logging immediately after entity creation
@@ -846,6 +901,7 @@ async create(course: Course) {
   return id
 }
 ```
+````
 
 **Minimal change:** 6 lines
 **Aligns with:** Ontology event structure (lines 577-584)
@@ -862,6 +918,7 @@ async create(course: Course) {
 ## Lesson Capture Required
 
 After fix, backend specialist must update lesson (thing with type: lesson):
+
 - **Title:** "Always Log Events After Entity Creation"
 - **Occurrence Count:** 3 → This is the 3rd occurrence
 - **Action:** Promote to official pattern in knowledge base
@@ -869,10 +926,12 @@ After fix, backend specialist must update lesson (thing with type: lesson):
 - **Event:** Emit `lesson_learned_added` with metadata.promoted = true
 
 **Knowledge Update:**
+
 - Update embedding with new context
 - Link lesson to feature 2-1-course-crud via `learned_from` connection
 - Add label: `feature:course-crud` for future reference
-```
+
+````
 
 ### Example 2: Performance Problem (New Issue)
 
@@ -901,9 +960,10 @@ After fix, backend specialist must update lesson (thing with type: lesson):
     }
   }
 }
-```
+````
 
 **Ultrathink Analysis:**
+
 ```
 1. What was expected?
    - Flow completion in < 10 seconds (organization limit)
@@ -950,100 +1010,102 @@ After fix, backend specialist must update lesson (thing with type: lesson):
 ```
 
 **Ontology Operations:**
+
 ```typescript
 // 1. Check organization performance limits
 const org = await ctx.db
-  .query('organizations')
-  .filter(q => q.eq(q.field('_id'), organizationId))
-  .first()
+  .query("organizations")
+  .filter((q) => q.eq(q.field("_id"), organizationId))
+  .first();
 
-const limits = org.limits
+const limits = org.limits;
 // { maxRequestTime: 10000, apiCallsPerMinute: 60 }
 
 // 2. Search for similar performance issues (returns empty - new issue)
 const similarPerformanceIssues = await ctx.db
-  .query('knowledge')
-  .withIndex('by_type', q => q.eq('knowledgeType', 'chunk'))
-  .filter(q =>
+  .query("knowledge")
+  .withIndex("by_type", (q) => q.eq("knowledgeType", "chunk"))
+  .filter((q) =>
     q.and(
-      q.eq(q.field('labels'), 'topic:performance'),
-      q.eq(q.field('labels'), 'status:failed')
-    )
+      q.eq(q.field("labels"), "topic:performance"),
+      q.eq(q.field("labels"), "status:failed"),
+    ),
   )
-  .collect()
+  .collect();
 // Returns: [] (no similar issues)
 
 // 3. Create NEW lesson since this is novel
-const lessonId = await ctx.db.insert('things', {
-  type: 'lesson',
-  name: 'Validate Client-Side Before API Calls',
+const lessonId = await ctx.db.insert("things", {
+  type: "lesson",
+  name: "Validate Client-Side Before API Calls",
   properties: {
-    category: 'integration',
-    problemType: 'performance_sequential_calls',
-    rootCause: 'Unnecessary API roundtrips',
-    solution: 'Client-side validation + minimal API calls',
-    impact: 'high', // 53% performance improvement
+    category: "integration",
+    problemType: "performance_sequential_calls",
+    rootCause: "Unnecessary API roundtrips",
+    solution: "Client-side validation + minimal API calls",
+    impact: "high", // 53% performance improvement
     occurrences: 1, // First time
     metrics: {
       before: 15300,
       after: 6000,
-      improvement: '60%'
+      improvement: "60%",
     },
-    codePattern: 'validate-before-api.md'
+    codePattern: "validate-before-api.md",
   },
-  status: 'draft', // Draft until validated by fix
-  createdAt: Date.now()
-})
+  status: "draft", // Draft until validated by fix
+  createdAt: Date.now(),
+});
 
 // 4. Create knowledge chunk with embedding
-const knowledgeId = await ctx.db.insert('knowledge', {
-  knowledgeType: 'chunk',
-  text: 'When making multiple API calls in sequence, evaluate each call: Is it necessary? Can it be client-side? Minimize roundtrips.',
-  embedding: await generateEmbedding('performance optimization sequential api calls'),
-  embeddingModel: 'text-embedding-3-large',
+const knowledgeId = await ctx.db.insert("knowledge", {
+  knowledgeType: "chunk",
+  text: "When making multiple API calls in sequence, evaluate each call: Is it necessary? Can it be client-side? Minimize roundtrips.",
+  embedding: await generateEmbedding(
+    "performance optimization sequential api calls",
+  ),
+  embeddingModel: "text-embedding-3-large",
   sourceThingId: lessonId,
   labels: [
-    'skill:integration',
-    'topic:performance',
-    'topic:optimization',
-    'category:pattern',
-    'status:draft' // Becomes validated after fix succeeds
+    "skill:integration",
+    "topic:performance",
+    "topic:optimization",
+    "category:pattern",
+    "status:draft", // Becomes validated after fix succeeds
   ],
   metadata: {
-    performanceGain: '60%',
-    pattern: 'validate-before-api',
-    firstOccurrence: true
+    performanceGain: "60%",
+    pattern: "validate-before-api",
+    firstOccurrence: true,
   },
-  createdAt: Date.now()
-})
+  createdAt: Date.now(),
+});
 
 // 5. Link lesson to feature
-await ctx.db.insert('connections', {
+await ctx.db.insert("connections", {
   fromThingId: featureId,
   toThingId: lessonId,
-  relationshipType: 'learned_from',
+  relationshipType: "learned_from",
   metadata: {
-    problemType: 'performance',
-    status: 'pending_fix'
+    problemType: "performance",
+    status: "pending_fix",
   },
-  createdAt: Date.now()
-})
+  createdAt: Date.now(),
+});
 
 // 6. Find integration specialist
 const specialist = await ctx.db
-  .query('things')
-  .withIndex('by_type', q => q.eq('type', 'creator'))
-  .filter(q =>
-    q.eq(q.field('properties.specialization'), 'integration')
-  )
-  .first()
+  .query("things")
+  .withIndex("by_type", (q) => q.eq("type", "creator"))
+  .filter((q) => q.eq(q.field("properties.specialization"), "integration"))
+  .first();
 
 // 7. Log complete problem-solving workflow
-await logProblemSolvingWorkflow(problemId, featureId, lessonId)
+await logProblemSolvingWorkflow(problemId, featureId, lessonId);
 ```
 
 **Output (Solution Proposal):**
-```markdown
+
+````markdown
 # Problem: Performance Target Missed
 
 **Feature:** 2-4-enrollment-flow
@@ -1075,6 +1137,7 @@ await logProblemSolvingWorkflow(problemId, featureId, lessonId)
 This is a **NEW pattern** that will be added to knowledge base.
 
 **Search performed:**
+
 - Labels: `topic:performance`, `skill:optimization`
 - Vector search: "performance sequential api calls"
 - Result: First occurrence of this performance anti-pattern
@@ -1141,48 +1204,50 @@ const handleEnroll = async () => {
 
 // Backend: enroll.ts mutation
 export const enroll = mutation({
-  args: { courseId: v.id('things') },
+  args: { courseId: v.id("things") },
   handler: async (ctx, args) => {
-    const identity = await ctx.auth.getUserIdentity()
-    if (!identity) throw new Error('Not authenticated')
+    const identity = await ctx.auth.getUserIdentity();
+    if (!identity) throw new Error("Not authenticated");
 
     // Server-side validation (authoritative)
-    const course = await ctx.db.get(args.courseId)
-    if (!course) throw new Error('Course not found')
+    const course = await ctx.db.get(args.courseId);
+    if (!course) throw new Error("Course not found");
 
     const existing = await ctx.db
-      .query('connections')
-      .withIndex('from_type', q =>
-        q.eq('fromThingId', identity.subject)
-         .eq('relationshipType', 'enrolled_in')
+      .query("connections")
+      .withIndex("from_type", (q) =>
+        q
+          .eq("fromThingId", identity.subject)
+          .eq("relationshipType", "enrolled_in"),
       )
-      .filter(q => q.eq(q.field('toThingId'), args.courseId))
-      .first()
+      .filter((q) => q.eq(q.field("toThingId"), args.courseId))
+      .first();
 
-    if (existing) throw new Error('Already enrolled')
+    if (existing) throw new Error("Already enrolled");
 
     // Create connection (dimension 4 - connections)
-    const connectionId = await ctx.db.insert('connections', {
+    const connectionId = await ctx.db.insert("connections", {
       fromThingId: identity.subject,
       toThingId: args.courseId,
-      relationshipType: 'enrolled_in',
+      relationshipType: "enrolled_in",
       metadata: { enrolledAt: Date.now() },
-      createdAt: Date.now()
-    })
+      createdAt: Date.now(),
+    });
 
     // Log event (dimension 5 - events)
-    await ctx.db.insert('events', {
-      type: 'course_enrolled',
+    await ctx.db.insert("events", {
+      type: "course_enrolled",
       actorId: identity.subject,
       targetId: args.courseId,
       timestamp: Date.now(),
-      metadata: { connectionId }
-    })
+      metadata: { connectionId },
+    });
 
-    return connectionId
-  }
-})
+    return connectionId;
+  },
+});
 ```
+````
 
 ## Delegation
 
@@ -1198,6 +1263,7 @@ export const enroll = mutation({
 This is a **NEW lesson**. Integration specialist must create lesson (thing with type: lesson):
 
 **Lesson Details:**
+
 - **Title:** "Validate Client-Side Before API Calls"
 - **Category:** integration
 - **Problem Type:** performance_sequential_calls
@@ -1206,12 +1272,14 @@ This is a **NEW lesson**. Integration specialist must create lesson (thing with 
 - **Status:** draft → published (after fix validation)
 
 **Knowledge Update:**
+
 - Create embedding: "performance optimization sequential api calls"
 - Labels: `skill:integration`, `topic:performance`, `topic:optimization`, `category:pattern`
 - Link to feature: `learned_from` connection
 - Create pattern doc: `validate-before-api.md`
 
 **Event to Emit:**
+
 ```typescript
 {
   type: 'lesson_learned_added',
@@ -1235,7 +1303,8 @@ This is a **NEW lesson**. Integration specialist must create lesson (thing with 
 - [ ] Lesson captured with embedding
 - [ ] Pattern doc created
 - [ ] Re-test passes
-```
+
+````
 
 ---
 
@@ -1295,13 +1364,14 @@ OR
 - Link to feature via `learned_from` connection
 - Add labels for taxonomy
 - Emit `lesson_learned_added` event
-```
+````
 
 ---
 
 ## Common Mistakes to Avoid
 
 ### Anti-Patterns
+
 - ❌ **Rushing to solutions** → Use ultrathink mode for deep analysis
 - ❌ **Not searching knowledge base** → Might solve same problem twice
 - ❌ **Ignoring ontology structure** → Solutions must align with 6 dimensions
@@ -1313,6 +1383,7 @@ OR
 - ❌ **Missing event logs** → All problem-solving must have audit trail
 
 ### Correct Approach (Ontology-Aligned)
+
 - ✅ Take time for deep analysis (ultrathink mode - highest context budget)
 - ✅ Search knowledge with vector similarity + labels
 - ✅ Validate against 6-dimension structure
@@ -1330,6 +1401,7 @@ OR
 ## Success Criteria
 
 ### Immediate (Per Problem)
+
 - [ ] Root cause correctly identified using ontology analysis
 - [ ] Solutions specific and minimal
 - [ ] Knowledge base always searched (vector + labels)
@@ -1339,6 +1411,7 @@ OR
 - [ ] Embeddings created for semantic search
 
 ### Near-term (Per Sprint)
+
 - [ ] Average analysis time < 2 minutes
 - [ ] 95%+ proposed solutions work on first attempt
 - [ ] Knowledge base grows with validated patterns
@@ -1346,6 +1419,7 @@ OR
 - [ ] Event logs enable workflow tracking
 
 ### Long-term (System-wide)
+
 - [ ] Knowledge graph enables autonomous problem-solving
 - [ ] Patterns promoted after 3+ occurrences
 - [ ] Zero repeated problems (knowledge base prevents)
@@ -1357,20 +1431,24 @@ OR
 ## Coordination with Other Agents
 
 ### With Quality Agent
+
 - **Receives:** `test_failed` events with complete metadata
 - **Sends:** `solution_proposed` events with root cause analysis
 - **Shared:** Test criteria (things with type: test)
 
 ### With Specialist Agents
+
 - **Receives:** `implementation_complete` events for pre-emptive analysis
 - **Sends:** `fix_delegated` events with specific solutions
 - **Shared:** Feature specifications, code, patterns
 
 ### With Documenter Agent
+
 - **Sends:** `lesson_learned_added` events to trigger documentation
 - **Shared:** Lessons (things with type: lesson) and knowledge chunks
 
 ### With Director Agent
+
 - **Sends:** Problem reports for recurring issues (escalation)
 - **Receives:** Priority changes based on business impact
 

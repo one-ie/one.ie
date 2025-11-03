@@ -1,3 +1,21 @@
+---
+title: Integration Orchestration
+dimension: events
+category: INTEGRATION-ORCHESTRATION.md
+tags: ai, architecture, backend, connections, events, frontend, knowledge, ontology, people, protocol
+related_dimensions: connections, groups, knowledge, people, things
+scope: global
+created: 2025-11-03
+updated: 2025-11-03
+version: 1.0.0
+ai_context: |
+  This document is part of the events dimension in the INTEGRATION-ORCHESTRATION.md category.
+  Location: one/events/INTEGRATION-ORCHESTRATION.md
+  Purpose: Documents integration orchestration plan
+  Related dimensions: connections, groups, knowledge, people, things
+  For AI agents: Read this to understand INTEGRATION ORCHESTRATION.
+---
+
 # Integration Orchestration Plan
 
 **Integration Specialist Deliverable**

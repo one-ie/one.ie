@@ -1,3 +1,21 @@
+---
+title: Wireframes Dashboard
+dimension: things
+category: designs
+tags: agent, backend, groups, things
+related_dimensions: events, groups, people
+scope: global
+created: 2025-11-03
+updated: 2025-11-03
+version: 1.0.0
+ai_context: |
+  This document is part of the things dimension in the designs category.
+  Location: one/things/designs/wireframes-dashboard.md
+  Purpose: Documents dashboard wireframes - one platform
+  Related dimensions: events, groups, people
+  For AI agents: Read this to understand wireframes dashboard.
+---
+
 # Dashboard Wireframes - ONE Platform
 
 **Version:** 1.0.0
@@ -60,17 +78,20 @@
 ```
 
 **Components:**
+
 - Card (shadcn/ui)
 - Button (shadcn/ui)
 - Badge (for counts)
 - Separator
 
 **Responsive:**
+
 - Mobile: Stack cards vertically
 - Tablet: 2 columns
 - Desktop: 3 columns
 
 **Accessibility:**
+
 - ARIA labels on stat cards
 - Keyboard navigation for buttons
 - Focus indicators on interactive elements
@@ -101,6 +122,7 @@
 ```
 
 **Components:**
+
 - Select (for filters)
 - Card (for each group)
 - Button (Edit, New Group)
@@ -108,12 +130,14 @@
 - Tree view indicator (└─ for hierarchy)
 
 **Interactions:**
+
 - Click group name → View group details
 - Click Edit → Open group settings dialog
 - Click "+ New Group" → Open create group dialog
 - Filter changes → Update list immediately
 
 **Empty State:**
+
 ```
 ┌──────────────────────────────────────────────────────────────┐
 │                                                                │
@@ -176,6 +200,7 @@
 ```
 
 **Components:**
+
 - Dialog (shadcn/ui)
 - Input (text fields)
 - Select (dropdowns)
@@ -184,6 +209,7 @@
 - Label (field labels)
 
 **Validation:**
+
 - Name: Required, max 100 chars
 - Slug: Required, lowercase, alphanumeric + hyphens
 - Type: Required, from enum
@@ -191,11 +217,13 @@
 - Real-time slug preview below input
 
 **Loading State:**
+
 - Disable all fields
 - Show spinner on submit button
 - Change button text to "Creating..."
 
 **Error State:**
+
 - Show error message above buttons
 - Highlight invalid fields in red
 - Display specific error (duplicate slug, invalid parent, etc.)
@@ -231,6 +259,7 @@
 ```
 
 **Components:**
+
 - Card (for each thing)
 - Select (filters)
 - Input (search)
@@ -238,6 +267,7 @@
 - Badge (status indicator)
 
 **Thing Card Structure:**
+
 ```
 ┌──────────┐
 │ [Icon]   │  ← Type indicator (blog, video, course, etc.)
@@ -248,6 +278,7 @@
 ```
 
 **Filter Behavior:**
+
 - All filters applied simultaneously (AND logic)
 - Real-time update as filters change
 - Search matches name and type
@@ -296,6 +327,7 @@
 ```
 
 **Tabs:**
+
 - **Details:** Name, type, status, timestamps
 - **Properties:** JSON editor for flexible properties
 - **Connections:** Related things (from/to)
@@ -303,6 +335,7 @@
 - **History:** Change log
 
 **Components:**
+
 - Tabs (shadcn/ui)
 - Input (name field)
 - Select (status dropdown)
@@ -311,6 +344,7 @@
 - AlertDialog (delete confirmation)
 
 **Delete Confirmation:**
+
 ```
 ┌──────────────────────────────────────────────────────────────┐
 │                      Delete Thing?                             │
@@ -359,6 +393,7 @@
 ```
 
 **Alternative: List View**
+
 ```
 ┌──────────────────────────────────────────────────────────────┐
 │ From Thing      │ Relationship │ To Thing        │ Actions   │
@@ -370,6 +405,7 @@
 ```
 
 **Components:**
+
 - Toggle (List/Graph view)
 - Custom graph component (React Flow or D3)
 - Table (list view)
@@ -414,12 +450,14 @@
 ```
 
 **Components:**
+
 - Card (for each event)
 - Badge (event type)
 - Button (View Details, Load More)
 - Select (filter dropdown)
 
 **Event Card Details:**
+
 - Timestamp
 - Event type (color-coded badge)
 - Actor (who did it)
@@ -463,12 +501,14 @@
 ```
 
 **Components:**
+
 - Input (search bar with icon)
 - Card (result cards)
 - Progress (similarity score)
 - Button (View Thing, Show More)
 
 **Search Features:**
+
 - Real-time search with debounce (300ms)
 - Semantic similarity score
 - Highlight matching text
@@ -479,6 +519,7 @@
 ### Colors (from global.css)
 
 **Light Mode:**
+
 - Primary: `hsl(216 55% 25%)` - Professional blue
 - Secondary: `hsl(219 14% 28%)` - Muted blue-gray
 - Accent: `hsl(105 22% 25%)` - Green accent
@@ -486,6 +527,7 @@
 - Foreground: `hsl(0 0% 13%)` - Near black
 
 **Dark Mode:**
+
 - Primary: `hsl(216 55% 25%)` - Same blue (consistent)
 - Background: `hsl(0 0% 13%)` - Near black
 - Foreground: `hsl(36 8% 96%)` - Near white
@@ -514,17 +556,20 @@
 ### Component Variants
 
 **Buttons:**
+
 - Primary: Solid primary color
 - Secondary: Outline with primary border
 - Ghost: Transparent with hover
 - Destructive: Red for delete actions
 
 **Cards:**
+
 - Default: Background with border
 - Elevated: Shadow for depth
 - Outlined: Border only
 
 **Badges:**
+
 - Active: Green
 - Draft: Yellow
 - Archived: Gray
@@ -541,29 +586,34 @@
 ### WCAG 2.1 AA Compliance
 
 **Color Contrast:**
+
 - Body text: ≥ 4.5:1
 - Large text (≥18px): ≥ 3:1
 - UI components: ≥ 3:1
 
 **Keyboard Navigation:**
+
 - All interactive elements: Tab order
 - Dialogs: Trap focus, Escape to close
 - Forms: Enter to submit
 - Lists: Arrow keys for selection
 
 **ARIA Labels:**
+
 - Buttons: `aria-label` for icon-only
 - Dialogs: `role="dialog"`, `aria-labelledby`
 - Forms: Associate labels with inputs
 - Status messages: `aria-live="polite"`
 
 **Focus Management:**
+
 - Visible focus indicators (ring)
 - Skip to main content link
 - Focus trap in modals
 - Return focus on close
 
 **Screen Readers:**
+
 - Semantic HTML (`<nav>`, `<main>`, `<section>`)
 - Alt text for icons/images
 - Error messages announced
@@ -572,6 +622,7 @@
 ## Loading States
 
 **Skeleton Screens:**
+
 ```
 ┌──────────────────────────────────────────────────────────────┐
 │ ░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░  │
@@ -581,6 +632,7 @@
 ```
 
 **Spinner (for actions):**
+
 - Small spinner for button actions
 - Full-page spinner for navigation
 - Progress bar for long operations
@@ -588,18 +640,21 @@
 ## Error States
 
 **Form Errors:**
+
 - Red border on invalid field
 - Error message below field
 - Icon indicator (X)
 - Focus invalid field
 
 **API Errors:**
+
 - Toast notification (top-right)
 - Alert component (in-page)
 - Retry button
 - Clear error message text
 
 **Empty States:**
+
 - Illustration or icon
 - Descriptive text
 - Call-to-action button
@@ -608,11 +663,13 @@
 ## Performance Targets
 
 **Core Web Vitals:**
+
 - LCP (Largest Contentful Paint): < 2.5s
 - FID (First Input Delay): < 100ms
 - CLS (Cumulative Layout Shift): < 0.1
 
 **Optimization Strategies:**
+
 - Lazy load images (native loading="lazy")
 - Code split by route (Astro automatic)
 - Skeleton screens during load
@@ -624,13 +681,13 @@
 
 ### Groups Test (backend/test/groups.test.ts)
 
-| Test User Flow | UI Component | Design Element |
-|---|---|---|
-| Create Organization | Create Group Dialog | Wireframe 3 |
-| Hierarchical Groups | Group List with Tree | Wireframe 2 |
-| List and Query | Group Filters | Wireframe 2 |
-| Update Group | Edit Group Dialog | Wireframe 3 |
-| Archive Group | Delete Confirmation | Wireframe 3 |
+| Test User Flow      | UI Component         | Design Element |
+| ------------------- | -------------------- | -------------- |
+| Create Organization | Create Group Dialog  | Wireframe 3    |
+| Hierarchical Groups | Group List with Tree | Wireframe 2    |
+| List and Query      | Group Filters        | Wireframe 2    |
+| Update Group        | Edit Group Dialog    | Wireframe 3    |
+| Archive Group       | Delete Confirmation  | Wireframe 3    |
 
 ### Things Test (backend/test/things.test.ts)
 

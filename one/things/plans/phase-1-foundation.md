@@ -1,3 +1,21 @@
+---
+title: Phase 1 Foundation
+dimension: things
+category: plans
+tags: agent, ai, architecture, inference, ontology
+related_dimensions: events, groups, knowledge
+scope: global
+created: 2025-11-03
+updated: 2025-11-03
+version: 1.0.0
+ai_context: |
+  This document is part of the things dimension in the plans category.
+  Location: one/things/plans/phase-1-foundation.md
+  Purpose: Documents phase 1: effect.ts + convex components foundation
+  Related dimensions: events, groups, knowledge
+  For AI agents: Read this to understand phase 1 foundation.
+---
+
 # Phase 1: Effect.ts + Convex Components Foundation
 
 **Feature:** Effect.ts + Convex Components Service Layer Architecture
@@ -56,12 +74,14 @@ Convex components (@convex-dev/workpool, @convex-dev/rate-limiter, etc.) provide
 #### 1. Groups (Service Organization)
 
 **Mapping:**
+
 - Each service layer scoped to `groupId`
 - Multi-tenant services: AgentService, RAGService, WorkflowService respect group isolation
 - Service discovery per group for isolation
 - Hierarchical access: Parent groups can access child group services (configurable)
 
 **Implementation:**
+
 ```typescript
 interface ServiceContext {
   groupId: Id<"groups">;
@@ -72,12 +92,13 @@ interface ServiceContext {
 // All service operations include groupId
 Effect.gen(function* () {
   const ctx = yield* ServiceContext;
-  const agents = yield* db.query("entities")
-    .withIndex("group_type", q =>
-      q.eq("groupId", ctx.groupId).eq("type", "strategy_agent")
+  const agents = yield* db
+    .query("entities")
+    .withIndex("group_type", (q) =>
+      q.eq("groupId", ctx.groupId).eq("type", "strategy_agent"),
     )
     .collect();
-})
+});
 ```
 
 **Validation:** ✅ Services properly scoped to groups
@@ -87,12 +108,14 @@ Effect.gen(function* () {
 #### 2. People (Service Authorization)
 
 **Mapping:**
+
 - Role-based service access (platform_owner, group_owner, group_user, customer)
 - All Effect service calls attributed to authenticated person
 - Permission checks via Effect Context
 - Service accounts represented as people with service permissions
 
 **Implementation:**
+
 ```typescript
 class AuthorizationError extends Data.TaggedError("AuthorizationError")<{
   actorId: Id<"entities">;
@@ -110,8 +133,8 @@ const requireRole = (role: string) =>
         new AuthorizationError({
           actorId: ctx.actorId,
           requiredRole: role,
-          actualRole: actor.properties.role
-        })
+          actualRole: actor.properties.role,
+        }),
       );
     }
   });
@@ -119,8 +142,10 @@ const requireRole = (role: string) =>
 // Usage in service
 Effect.gen(function* () {
   yield* requireRole("group_owner"); // Fails if not group_owner
-  yield* agentService.createAgent({ /* ... */ });
-})
+  yield* agentService.createAgent({
+    /* ... */
+  });
+});
 ```
 
 **Validation:** ✅ Authorization properly integrated with Effect.ts error handling
@@ -136,13 +161,14 @@ type ThingType =
   // ... existing 66 types ...
 
   // NEW: Service Layer Entities
-  | "service_definition"     // Effect service layer definitions
-  | "service_layer"          // Deployed service layer instances
-  | "effect_program"         // Reusable Effect programs
-  | "service_dependency";    // Service dependencies graph
+  | "service_definition" // Effect service layer definitions
+  | "service_layer" // Deployed service layer instances
+  | "effect_program" // Reusable Effect programs
+  | "service_dependency"; // Service dependencies graph
 ```
 
 **Example: Service Definition Entity**
+
 ```typescript
 {
   _id: "service-def-123",
@@ -180,13 +206,14 @@ type ConnectionType =
   // ... existing 25 types ...
 
   // NEW: Service Layer Connections
-  | "depends_on_service"     // Service → Service dependency
-  | "implements_interface"   // Service → Interface definition
-  | "provides_service"       // Layer → Service
-  | "consumes_service";      // Program → Service
+  | "depends_on_service" // Service → Service dependency
+  | "implements_interface" // Service → Interface definition
+  | "provides_service" // Layer → Service
+  | "consumes_service"; // Program → Service
 ```
 
 **Example: Service Dependency Connection**
+
 ```typescript
 {
   _id: "conn-456",
@@ -216,15 +243,16 @@ type EventType =
   // ... existing 67 types ...
 
   // NEW: Service Layer Events
-  | "service_initialized"      // Service layer started
-  | "service_call_started"     // Effect program execution began
-  | "service_call_completed"   // Effect program finished successfully
-  | "service_call_failed"      // Effect program failed with error
-  | "service_retried"          // Effect retry policy triggered
-  | "layer_composed";          // Multiple layers merged
+  | "service_initialized" // Service layer started
+  | "service_call_started" // Effect program execution began
+  | "service_call_completed" // Effect program finished successfully
+  | "service_call_failed" // Effect program failed with error
+  | "service_retried" // Effect retry policy triggered
+  | "layer_composed"; // Multiple layers merged
 ```
 
 **Event Metadata Tracked:**
+
 - Service name, function name, arguments (sanitized)
 - Duration (milliseconds)
 - Token usage (for AI services)
@@ -232,6 +260,7 @@ type EventType =
 - Dependency chain (which services were called)
 
 **Example: Service Call Event**
+
 ```typescript
 {
   _id: "event-789",
@@ -277,6 +306,7 @@ type EventType =
   - "This error usually means..." recommendations
 
 **Example: Pattern Knowledge**
+
 ```typescript
 {
   _id: "knowledge-abc",
@@ -315,14 +345,14 @@ type EventType =
 
 ### Ontology Validation Summary
 
-| Dimension | Mapping | Validation |
-|-----------|---------|------------|
-| **Groups** | Services scoped to groupId | ✅ VALID |
-| **People** | Authorization via Effect Context | ✅ VALID |
-| **Things** | 4 new entity types for services | ✅ VALID |
-| **Connections** | 4 new connection types for dependencies | ✅ VALID |
-| **Events** | 6 new event types for observability | ✅ VALID |
-| **Knowledge** | Patterns, errors, examples indexed | ✅ VALID |
+| Dimension       | Mapping                                 | Validation |
+| --------------- | --------------------------------------- | ---------- |
+| **Groups**      | Services scoped to groupId              | ✅ VALID   |
+| **People**      | Authorization via Effect Context        | ✅ VALID   |
+| **Things**      | 4 new entity types for services         | ✅ VALID   |
+| **Connections** | 4 new connection types for dependencies | ✅ VALID   |
+| **Events**      | 6 new event types for observability     | ✅ VALID   |
+| **Knowledge**   | Patterns, errors, examples indexed      | ✅ VALID   |
 
 **Golden Rule Check:** ✅ All features map to 6 dimensions
 
@@ -332,16 +362,16 @@ type EventType =
 
 ### 8 Convex Components + Effect Service Wrappers
 
-| Component | Effect Service | Dependencies | Priority |
-|-----------|---------------|--------------|----------|
-| **@convex-dev/agent** | `AgentService` | RateLimitService, RAGService | HIGH |
-| **@convex-dev/rag** | `RAGService` | (none - foundational) | HIGH |
-| **@convex-dev/rate-limiter** | `RateLimitService` | (none - foundational) | HIGH |
-| **@convex-dev/workflow** | `WorkflowService` | AgentService, RAGService | MEDIUM |
-| **@convex-dev/persistent-text-streaming** | `StreamingService` | RateLimitService | MEDIUM |
-| **@convex-dev/workpool** | `TaskQueueService` | (none - foundational) | MEDIUM |
-| **@convex-dev/retrier** | `ResilientExecutionService` | (none - foundational) | LOW |
-| **@convex-dev/crons** | `CronService` | (none - foundational) | LOW |
+| Component                                 | Effect Service              | Dependencies                 | Priority |
+| ----------------------------------------- | --------------------------- | ---------------------------- | -------- |
+| **@convex-dev/agent**                     | `AgentService`              | RateLimitService, RAGService | HIGH     |
+| **@convex-dev/rag**                       | `RAGService`                | (none - foundational)        | HIGH     |
+| **@convex-dev/rate-limiter**              | `RateLimitService`          | (none - foundational)        | HIGH     |
+| **@convex-dev/workflow**                  | `WorkflowService`           | AgentService, RAGService     | MEDIUM   |
+| **@convex-dev/persistent-text-streaming** | `StreamingService`          | RateLimitService             | MEDIUM   |
+| **@convex-dev/workpool**                  | `TaskQueueService`          | (none - foundational)        | MEDIUM   |
+| **@convex-dev/retrier**                   | `ResilientExecutionService` | (none - foundational)        | LOW      |
+| **@convex-dev/crons**                     | `CronService`               | (none - foundational)        | LOW      |
 
 ---
 
@@ -399,6 +429,7 @@ type EventType =
 ### Composition Order (Critical Path)
 
 **Phase 1: Foundational Services (Parallel)**
+
 - RateLimitService ← No dependencies
 - RAGService ← No dependencies
 - TaskQueueService ← No dependencies
@@ -406,10 +437,12 @@ type EventType =
 - CronService ← No dependencies
 
 **Phase 2: Dependent Services (Sequential after Phase 1)**
+
 - AgentService ← Requires: RateLimitService, RAGService
 - StreamingService ← Requires: RateLimitService
 
 **Phase 3: Workflow Services (Sequential after Phase 2)**
+
 - WorkflowService ← Requires: AgentService, RAGService
 
 ---
@@ -417,6 +450,7 @@ type EventType =
 ### What's Already Implemented vs. New
 
 **✅ Already Exists (from `/backend/convex/services/`):**
+
 - `entityService.ts` - CRUD operations for entities
 - `ontologyMapper.ts` - Maps features to ontology
 - `brandGuideGenerator.ts` - AI brand guide generation
@@ -425,6 +459,7 @@ type EventType =
 - `layers.ts` - Service layer composition (NEEDS EFFECT.TS UPDATE)
 
 **❌ NEW Services (to be created):**
+
 - `agent.service.ts` - @convex-dev/agent wrapper
 - `rag.service.ts` - @convex-dev/rag wrapper
 - `rate-limit.service.ts` - @convex-dev/rate-limiter wrapper
@@ -435,6 +470,7 @@ type EventType =
 - `crons.service.ts` - @convex-dev/crons wrapper
 
 **🔄 UPDATE Needed:**
+
 - `layers.ts` - Convert to Effect.ts Layer composition
 
 ---
@@ -558,6 +594,7 @@ class QuotaExceededError extends Data.TaggedError("QuotaExceededError")<{
 **Phase 1: Foundation is COMPLETE** ✅
 
 This document provides:
+
 1. ✅ **Architecture validation** - "Effect Wraps Components" philosophy is sound
 2. ✅ **6-dimension ontology mapping** - All services map to groups, people, things, connections, events, knowledge
 3. ✅ **Service dependency graph** - Clear dependency hierarchy and composition order

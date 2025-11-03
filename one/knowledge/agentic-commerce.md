@@ -1,3 +1,21 @@
+---
+title: Agentic Commerce
+dimension: knowledge
+category: agentic-commerce.md
+tags: agent, ai, ai-agent, protocol
+related_dimensions: connections, events, people
+scope: global
+created: 2025-11-03
+updated: 2025-11-03
+version: 1.0.0
+ai_context: |
+  This document is part of the knowledge dimension in the agentic-commerce.md category.
+  Location: one/knowledge/agentic-commerce.md
+  Purpose: Animated illustration of a supermarket carriage rolling from left to right, leaving a trail of spark
+  Related dimensions: connections, events, people
+  For AI agents: Read this to understand agentic commerce.
+---
+
 Google's new plan to build trust in AI agents as personal shoppers
 
 Scott Rosenberg

@@ -1,3 +1,21 @@
+---
+title: Ontology Video Script
+dimension: knowledge
+category: ontology-video-script.md
+tags: 6-dimensions, ai, architecture, ontology
+related_dimensions: connections, events, groups, people, things
+scope: global
+created: 2025-11-03
+updated: 2025-11-03
+version: 1.0.0
+ai_context: |
+  This document is part of the knowledge dimension in the ontology-video-script.md category.
+  Location: one/knowledge/ontology-video-script.md
+  Purpose: Documents multi-ontology tutorial video script
+  Related dimensions: connections, events, groups, people, things
+  For AI agents: Read this to understand ontology video script.
+---
+
 # Multi-Ontology Tutorial Video Script
 
 **Purpose:** Educational video series explaining the multi-ontology architecture

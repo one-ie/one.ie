@@ -1,11 +1,31 @@
+---
+title: Sidebar
+dimension: things
+category: plans
+tags: ai
+related_dimensions: events, people
+scope: global
+created: 2025-11-03
+updated: 2025-11-03
+version: 1.0.0
+ai_context: |
+  This document is part of the things dimension in the plans category.
+  Location: one/things/plans/sidebar.md
+  Purpose: Documents sidebar refactor plan
+  Related dimensions: events, people
+  For AI agents: Read this to understand sidebar.
+---
+
 # Sidebar Refactor Plan
 
 ## Objective
+
 Refactor the current layout to use shadcn's sidebar-07 pattern - a sidebar that collapses to icons with proper state management.
 
 ## Current State Analysis
 
 ### Existing Implementation
+
 - **Current Sidebar**: Custom `Sidebar.tsx` with hover-based expansion
   - Fixed at 64px width, expands to 256px on hover
   - Custom CSS transitions and state management
@@ -25,6 +45,7 @@ Refactor the current layout to use shadcn's sidebar-07 pattern - a sidebar that 
   - Collapsible variants: 'icon' | 'offcanvas' | 'none'
 
 ### Navigation Configuration
+
 - Site config at `src/config/site.ts` with navigation array
 - Icons mapped in current Sidebar.tsx: Home, Book, FileText, Scale
 - ModeToggle component in sidebar footer
@@ -32,6 +53,7 @@ Refactor the current layout to use shadcn's sidebar-07 pattern - a sidebar that 
 ## Refactor Plan
 
 ### Phase 1: Component Structure
+
 1. **Create New App Sidebar Component** (`src/components/app-sidebar.tsx`)
    - Use shadcn sidebar primitives (SidebarHeader, SidebarContent, SidebarFooter, SidebarMenu)
    - Import navigation from site config
@@ -42,6 +64,7 @@ Refactor the current layout to use shadcn's sidebar-07 pattern - a sidebar that 
    - Set `collapsible="icon"` variant
 
 ### Phase 2: Layout Integration
+
 2. **Update Layout.astro**
    - Wrap entire layout with SidebarProvider (client:load)
    - Replace current sidebar with new Sidebar component
@@ -51,6 +74,7 @@ Refactor the current layout to use shadcn's sidebar-07 pattern - a sidebar that 
    - Update responsive classes
 
 ### Phase 3: Styling & Theme
+
 3. **Update Global CSS** (`src/styles/global.css`)
    - Add sidebar color tokens to @theme block:
      - `--sidebar-background`
@@ -62,6 +86,7 @@ Refactor the current layout to use shadcn's sidebar-07 pattern - a sidebar that 
    - Add dark mode overrides in `.dark` class
 
 ### Phase 4: State & Behavior
+
 4. **Configure Sidebar Behavior**
    - Default state: expanded (`defaultOpen={true}`)
    - Keyboard shortcut: Cmd/Ctrl + B (built-in)
@@ -70,6 +95,7 @@ Refactor the current layout to use shadcn's sidebar-07 pattern - a sidebar that 
    - Desktop: Icon collapse with tooltips
 
 ### Phase 5: Cleanup
+
 5. **Remove Old Code**
    - Delete old `src/components/Sidebar.tsx`
    - Remove custom CSS variables from global.css
@@ -78,21 +104,23 @@ Refactor the current layout to use shadcn's sidebar-07 pattern - a sidebar that 
 ## Implementation Details
 
 ### Key Components to Use
+
 ```typescript
 // From shadcn sidebar.tsx
-- SidebarProvider       // Wrapper with context
-- Sidebar               // Main sidebar container
-- SidebarHeader         // Top section (logo)
-- SidebarContent        // Scrollable content area
-- SidebarFooter         // Bottom section (theme toggle)
-- SidebarMenu           // Navigation list
-- SidebarMenuItem       // List item
-- SidebarMenuButton     // Clickable nav button
-- SidebarTrigger        // Toggle button for header
-- SidebarInset          // Main content wrapper
+-SidebarProvider - // Wrapper with context
+  Sidebar - // Main sidebar container
+  SidebarHeader - // Top section (logo)
+  SidebarContent - // Scrollable content area
+  SidebarFooter - // Bottom section (theme toggle)
+  SidebarMenu - // Navigation list
+  SidebarMenuItem - // List item
+  SidebarMenuButton - // Clickable nav button
+  SidebarTrigger - // Toggle button for header
+  SidebarInset; // Main content wrapper
 ```
 
 ### Expected Structure
+
 ```astro
 <SidebarProvider client:load>
   <Sidebar collapsible="icon">
@@ -128,6 +156,7 @@ Refactor the current layout to use shadcn's sidebar-07 pattern - a sidebar that 
 ## Benefits of New Implementation
 
 ### User Experience
+
 - ✅ Persistent collapse state (cookies)
 - ✅ Keyboard shortcut (Cmd/Ctrl + B)
 - ✅ Icon tooltips when collapsed
@@ -136,6 +165,7 @@ Refactor the current layout to use shadcn's sidebar-07 pattern - a sidebar that 
 - ✅ Accessible (ARIA attributes, keyboard nav)
 
 ### Developer Experience
+
 - ✅ Uses battle-tested shadcn primitives
 - ✅ Less custom code to maintain
 - ✅ Better TypeScript types
@@ -143,12 +173,14 @@ Refactor the current layout to use shadcn's sidebar-07 pattern - a sidebar that 
 - ✅ Built-in state management
 
 ### Performance
+
 - ✅ No hover-based calculations
 - ✅ CSS-based transitions
 - ✅ Proper React state management
 - ✅ Optimized for SSR (Astro + React 19)
 
 ## Testing Checklist
+
 - [ ] Sidebar expands/collapses on toggle
 - [ ] Keyboard shortcut works (Cmd/Ctrl + B)
 - [ ] State persists on page reload
@@ -163,10 +195,12 @@ Refactor the current layout to use shadcn's sidebar-07 pattern - a sidebar that 
 - [ ] Dark mode styling looks correct
 
 ## Files to Modify
+
 1. `src/components/app-sidebar.tsx` (create new)
 2. `src/layouts/Layout.astro` (major refactor)
 3. `src/styles/global.css` (add sidebar tokens)
 4. `src/components/Sidebar.tsx` (delete after migration)
 
 ## Rollback Plan
+
 If issues occur, the git history contains the working hover-based sidebar implementation that can be restored.

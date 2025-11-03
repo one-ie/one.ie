@@ -1,3 +1,21 @@
+---
+title: Installation Folders
+dimension: knowledge
+category: installation-folders.md
+tags: architecture, backend, connections, customization, events, frontend, groups, installation, knowledge, ontology
+related_dimensions: connections, events, groups, people, things
+scope: global
+created: 2025-11-03
+updated: 2025-11-03
+version: 1.0.0
+ai_context: |
+  This document is part of the knowledge dimension in the installation-folders.md category.
+  Location: one/knowledge/installation-folders.md
+  Purpose: Documents installation folders guide
+  Related dimensions: connections, events, groups, people, things
+  For AI agents: Read this to understand installation folders.
+---
+
 # Installation Folders Guide
 
 **Version:** 1.0.0

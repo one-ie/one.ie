@@ -1,3 +1,21 @@
+---
+title: Master Workflow Plan
+dimension: things
+category: master-workflow-plan.md
+tags: agent, ai, architecture, inference, ontology
+related_dimensions: events, people
+scope: global
+created: 2025-11-03
+updated: 2025-11-03
+version: 1.0.0
+ai_context: |
+  This document is part of the things dimension in the master-workflow-plan.md category.
+  Location: one/things/master-workflow-plan.md
+  Purpose: Documents one platform: master workflow plan v1.0.0
+  Related dimensions: events, people
+  For AI agents: Read this to understand master workflow plan.
+---
+
 # ONE Platform: Master Workflow Plan v1.0.0
 
 **Status:** Complete architecture for 6-todo, 6-specialist, multi-wave execution
@@ -28,27 +46,27 @@ ONE Platform is a complete creator economy + AI agent marketplace built on a 6-d
 
 ### The Todos (Roadmap)
 
-| # | Todo | Infers | Purpose | Wave | Status |
-|---|------|--------|---------|------|--------|
-| 1 | todo-onboard | 100 | User registration + team management | Wave 1 | Critical Path |
-| 2 | todo-x402 | 100 | HTTP 402 micropayment protocol | Wave 1 | Critical Path |
-| 3 | todo-ecommerce | 100 | Products + checkout + subscriptions | Wave 2 | Depends on X402 |
-| 4 | todo-buy-chatgpt | 100 | Conversational commerce (LLM integration) | Wave 2.5 | Depends on E-commerce |
-| 5 | todo-acp-integration | 100 | Agent communication protocol | Wave 2 (EXTEND) | Parallel with agents |
-| 6 | todo-one-ie | 100 | Public launch site + marketing | Wave 4 | Depends on all |
-| | **Total** | **600** | **Foundation + Extension + Launch** | | |
+| #   | Todo                 | Infers  | Purpose                                   | Wave            | Status                |
+| --- | -------------------- | ------- | ----------------------------------------- | --------------- | --------------------- |
+| 1   | todo-onboard         | 100     | User registration + team management       | Wave 1          | Critical Path         |
+| 2   | todo-x402            | 100     | HTTP 402 micropayment protocol            | Wave 1          | Critical Path         |
+| 3   | todo-ecommerce       | 100     | Products + checkout + subscriptions       | Wave 2          | Depends on X402       |
+| 4   | todo-buy-chatgpt     | 100     | Conversational commerce (LLM integration) | Wave 2.5        | Depends on E-commerce |
+| 5   | todo-acp-integration | 100     | Agent communication protocol              | Wave 2 (EXTEND) | Parallel with agents  |
+| 6   | todo-one-ie          | 100     | Public launch site + marketing            | Wave 4          | Depends on all        |
+|     | **Total**            | **600** | **Foundation + Extension + Launch**       |                 |                       |
 
 ### The Specialists (6 Agents)
 
-| Agent | Role | Inferences | Expertise |
-|-------|------|-----------|-----------|
-| **agent-backend** | Convex schema, mutations, queries, Effect.ts services | ~1,200 | Database design, payment logic, event streaming |
-| **agent-frontend** | React components, Astro pages, UI/UX | ~850 | Component architecture, user flows, accessibility |
-| **agent-integrator** | External APIs, protocols, data flows | ~650 | X402 blockchain, ACP messaging, Stripe/email |
-| **agent-builder** | Agent framework, skills, deployments | ~500 | AgentKit, ElizaOS, skill discovery, testing |
-| **agent-quality** | Testing, validation, performance | ~600 | Unit/integration/E2E tests, security, benchmarks |
-| **agent-designer** | UI/UX, accessibility, design tokens | ~400 | Wireframes, dark mode, WCAG compliance, design systems |
-| | **Total** | **~4,200** | **Includes Q&A loops, refinement, documentation** |
+| Agent                | Role                                                  | Inferences | Expertise                                              |
+| -------------------- | ----------------------------------------------------- | ---------- | ------------------------------------------------------ |
+| **agent-backend**    | Convex schema, mutations, queries, Effect.ts services | ~1,200     | Database design, payment logic, event streaming        |
+| **agent-frontend**   | React components, Astro pages, UI/UX                  | ~850       | Component architecture, user flows, accessibility      |
+| **agent-integrator** | External APIs, protocols, data flows                  | ~650       | X402 blockchain, ACP messaging, Stripe/email           |
+| **agent-builder**    | Agent framework, skills, deployments                  | ~500       | AgentKit, ElizaOS, skill discovery, testing            |
+| **agent-quality**    | Testing, validation, performance                      | ~600       | Unit/integration/E2E tests, security, benchmarks       |
+| **agent-designer**   | UI/UX, accessibility, design tokens                   | ~400       | Wireframes, dark mode, WCAG compliance, design systems |
+|                      | **Total**                                             | **~4,200** | **Includes Q&A loops, refinement, documentation**      |
 
 ### Key Metrics
 
@@ -312,15 +330,15 @@ Final Path:
 
 ### Summary by Agent
 
-| Agent | Total Infers | % of Build | Focus Areas |
-|-------|--------------|-----------|-------------|
-| agent-backend | ~1,200 | 29% | Schema, services, queries, mutations |
-| agent-frontend | ~850 | 20% | Pages, components, UI/UX |
-| agent-integrator | ~650 | 15% | External APIs, protocols, data flows |
-| agent-builder | ~500 | 12% | Agent framework, skills, samples |
-| agent-quality | ~600 | 14% | Testing, validation, performance |
-| agent-designer | ~400 | 10% | UI/UX, design tokens, accessibility |
-| **TOTAL** | **~4,200** | **100%** | Complete platform |
+| Agent            | Total Infers | % of Build | Focus Areas                          |
+| ---------------- | ------------ | ---------- | ------------------------------------ |
+| agent-backend    | ~1,200       | 29%        | Schema, services, queries, mutations |
+| agent-frontend   | ~850         | 20%        | Pages, components, UI/UX             |
+| agent-integrator | ~650         | 15%        | External APIs, protocols, data flows |
+| agent-builder    | ~500         | 12%        | Agent framework, skills, samples     |
+| agent-quality    | ~600         | 14%        | Testing, validation, performance     |
+| agent-designer   | ~400         | 10%        | UI/UX, design tokens, accessibility  |
+| **TOTAL**        | **~4,200**   | **100%**   | Complete platform                    |
 
 ### Backend Specialist Assignments (~1,200 infers)
 
@@ -606,15 +624,15 @@ OUTPUTS:
 
 ### Critical Data Alignments
 
-| Item | Owner | Dependency | Status |
-|------|-------|-----------|--------|
-| creator thing | agent-backend (onboard) | All todos use creatorId | CRITICAL |
-| group/workspace | agent-backend (onboard) | Products, agents, subs | CRITICAL |
-| payment thing | agent-backend (x402) | E-commerce, ACP, agents | CRITICAL |
-| product thing | agent-backend (ecommerce) | Shop, chat, search | CRITICAL |
-| agent thing | agent-backend (acp) | Marketplace, discovery | CRITICAL |
-| order thing | agent-backend (ecommerce) | Analytics, payouts | CRITICAL |
-| event table | agent-backend (all) | Audit trail, analytics | CRITICAL |
+| Item            | Owner                     | Dependency              | Status   |
+| --------------- | ------------------------- | ----------------------- | -------- |
+| creator thing   | agent-backend (onboard)   | All todos use creatorId | CRITICAL |
+| group/workspace | agent-backend (onboard)   | Products, agents, subs  | CRITICAL |
+| payment thing   | agent-backend (x402)      | E-commerce, ACP, agents | CRITICAL |
+| product thing   | agent-backend (ecommerce) | Shop, chat, search      | CRITICAL |
+| agent thing     | agent-backend (acp)       | Marketplace, discovery  | CRITICAL |
+| order thing     | agent-backend (ecommerce) | Analytics, payouts      | CRITICAL |
+| event table     | agent-backend (all)       | Audit trail, analytics  | CRITICAL |
 
 ### Component Dependency Tree
 
@@ -722,14 +740,14 @@ TOTAL ELAPSED TIME:
 
 ### Risk Register
 
-| Risk | Probability | Impact | Mitigation |
-|------|-------------|--------|-----------|
-| X402 payment fails | Medium | Critical | Testnet first, Stripe fallback |
-| Schema breaking change | Low | Critical | Convex migrations, versioned APIs |
-| LLM API rate limits | Medium | Medium | Caching, fallback models, queue |
-| Wallet connection fails | Low | High | Multiple wallet support, email fallback |
-| DDoS on launch | Low | High | Cloudflare DDoS, rate limiting |
-| Creator dropout (onboarding) | High | High | UX optimization, email drip, A/B testing |
+| Risk                         | Probability | Impact   | Mitigation                               |
+| ---------------------------- | ----------- | -------- | ---------------------------------------- |
+| X402 payment fails           | Medium      | Critical | Testnet first, Stripe fallback           |
+| Schema breaking change       | Low         | Critical | Convex migrations, versioned APIs        |
+| LLM API rate limits          | Medium      | Medium   | Caching, fallback models, queue          |
+| Wallet connection fails      | Low         | High     | Multiple wallet support, email fallback  |
+| DDoS on launch               | Low         | High     | Cloudflare DDoS, rate limiting           |
+| Creator dropout (onboarding) | High        | High     | UX optimization, email drip, A/B testing |
 
 ### Dependency Risk Mitigation
 
@@ -786,4 +804,3 @@ TOTAL ELAPSED TIME:
 **Status:** Ready for execution. Begin Wave 1, Day 1.
 
 **Go Build!** 🚀
-

@@ -1,3 +1,21 @@
+---
+title: Backend
+dimension: things
+category: plans
+tags: agent, ai, architecture, auth, backend, connections, convex, events, frontend, groups
+related_dimensions: connections, events, groups, knowledge, people
+scope: global
+created: 2025-11-03
+updated: 2025-11-03
+version: 1.0.0
+ai_context: |
+  This document is part of the things dimension in the plans category.
+  Location: one/things/plans/backend.md
+  Purpose: Documents one backend api: complete ontology-driven backend
+  Related dimensions: connections, events, groups, knowledge, people
+  For AI agents: Read this to understand backend.
+---
+
 # ONE Backend API: Complete Ontology-Driven Backend
 
 **Version:** 1.0.0
@@ -134,12 +152,14 @@ Build a complete, production-ready backend API for ONE Platform that:
 **Where:** `/backend/convex/`
 
 **Current Status:**
+
 - ✅ Schema defined with 6-dimension ontology
 - ✅ Dynamic type generation from YAML ontologies
 - ✅ Groups, entities, connections, events, knowledge tables
 - ⚠️ Partial mutations/queries (needs completion)
 
 **Integration:**
+
 ```typescript
 // backend/convex/schema.ts
 export default defineSchema({
@@ -160,6 +180,7 @@ export default defineSchema({
 **Reference:** https://stack.convex.dev/hono-with-convex
 
 **Integration Pattern:**
+
 ```typescript
 // backend/convex/http.ts
 import { Hono } from "hono";
@@ -202,12 +223,14 @@ export default httpRouter({
 **Where:** `/backend/convex/actions/ai.ts`
 
 **Key Features:**
+
 - `generateText()` - Generate responses
 - `generateObject()` - Structured JSON outputs
 - `streamText()` - Real-time streaming
 - `embedMany()` - Vector embeddings for RAG
 
 **Integration:**
+
 ```typescript
 // backend/convex/actions/ai.ts
 import { generateText, embedMany } from "ai";
@@ -225,14 +248,14 @@ export const generateResponse = action({
     // 1. Search knowledge base for context
     const relevantChunks = await ctx.runQuery(
       internal.queries.knowledge.search,
-      { groupId: args.groupId, query: args.prompt, limit: 5 }
+      { groupId: args.groupId, query: args.prompt, limit: 5 },
     );
 
     // 2. Generate response with context
     const { text } = await generateText({
       model: openai("gpt-4o"),
       prompt: args.prompt,
-      system: `Context: ${relevantChunks.map(c => c.text).join("\n\n")}`,
+      system: `Context: ${relevantChunks.map((c) => c.text).join("\n\n")}`,
     });
 
     // 3. Log event
@@ -279,11 +302,13 @@ export const embedText = action({
 **Where:** `/backend/convex/auth.ts`
 
 **Current Status:**
+
 - ✅ Basic email/password auth implemented
 - ⚠️ Needs full 6-method integration
 - ⚠️ Needs group-scoped sessions
 
 **Integration:**
+
 ```typescript
 // backend/convex/auth.ts
 import { betterAuth } from "better-auth";
@@ -369,6 +394,7 @@ export const signUpWithGroup = mutation({
 **Reference:** https://github.com/rjdellecese/confect
 
 **Integration (Optional):**
+
 ```typescript
 // backend/convex/confect.ts (if using)
 import { makeConfect } from "@rjdellecese/confect";
@@ -506,11 +532,13 @@ POST   /api/auth/2fa/verify           # Verify 2FA
 ### API Key Authentication
 
 **Every request requires:**
+
 ```
 X-API-Key: gsk_abc123...
 ```
 
 **API Key Structure:**
+
 ```typescript
 {
   _id: Id<"apiKeys">,
@@ -530,6 +558,7 @@ X-API-Key: gsk_abc123...
 ```
 
 **API Key Generation:**
+
 ```typescript
 // backend/convex/mutations/apiKeys.ts
 export const createApiKey = mutation({
@@ -582,19 +611,20 @@ export const createApiKey = mutation({
 
 **Access Matrix:**
 
-| Role | Groups | People | Things | Connections | Events | Knowledge | API Keys |
-|------|--------|--------|--------|-------------|--------|-----------|----------|
-| **platform_owner** | All | All | All | All | All | All | All |
-| **group_owner** | Own | Own Group | Own Group | Own Group | Own Group | Own Group | Create |
-| **group_user** | Read | Read | Create/Edit Own | Create | Create | Create | None |
-| **customer** | None | Read Self | Read | Read | None | None | None |
+| Role               | Groups | People    | Things          | Connections | Events    | Knowledge | API Keys |
+| ------------------ | ------ | --------- | --------------- | ----------- | --------- | --------- | -------- |
+| **platform_owner** | All    | All       | All             | All         | All       | All       | All      |
+| **group_owner**    | Own    | Own Group | Own Group       | Own Group   | Own Group | Own Group | Create   |
+| **group_user**     | Read   | Read      | Create/Edit Own | Create      | Create    | Create    | None     |
+| **customer**       | None   | Read Self | Read            | Read        | None      | None      | None     |
 
 **Middleware:**
+
 ```typescript
 // backend/convex/lib/auth.ts
 export async function requireRole(
   ctx: QueryCtx | MutationCtx,
-  requiredRole: PersonRole
+  requiredRole: PersonRole,
 ) {
   const person = await getAuthenticatedPerson(ctx);
   const roleHierarchy = {
@@ -619,6 +649,7 @@ export async function requireRole(
 ### Perfect Data Isolation
 
 **Every table has `groupId`:**
+
 ```typescript
 entities: {
   groupId: Id<"groups">,  // REQUIRED
@@ -629,6 +660,7 @@ entities: {
 ```
 
 **All queries filtered by groupId:**
+
 ```typescript
 // backend/convex/queries/entities.ts
 export const list = query({
@@ -641,7 +673,7 @@ export const list = query({
     return await ctx.db
       .query("entities")
       .withIndex("by_group_and_type", (q) =>
-        q.eq("groupId", groupId).eq("type", args.type)
+        q.eq("groupId", groupId).eq("type", args.type),
       )
       .collect();
   },
@@ -681,6 +713,7 @@ export const listWithChildren = query({
 ### Resource Quotas
 
 **Enforce limits per group:**
+
 ```typescript
 export const create = mutation({
   args: { type: v.string(), name: v.string(), properties: v.any() },
@@ -692,8 +725,7 @@ export const create = mutation({
     const currentCount = await ctx.db
       .query("entities")
       .withIndex("by_group", (q) => q.eq("groupId", groupId))
-      .collect()
-      .length;
+      .collect().length;
 
     const limit = group.settings.limits?.entities || 1000;
     if (currentCount >= limit) {
@@ -779,7 +811,9 @@ export const answerQuestion = action({
   },
   handler: async (ctx, args) => {
     // 1. Embed question
-    const { embeddings: [questionEmbedding] } = await embedMany({
+    const {
+      embeddings: [questionEmbedding],
+    } = await embedMany({
       model: openai.embedding("text-embedding-3-small"),
       values: [args.question],
     });
@@ -791,7 +825,7 @@ export const answerQuestion = action({
         groupId: args.groupId,
         embedding: questionEmbedding,
         limit: 5,
-      }
+      },
     );
 
     // 3. Generate answer with context
@@ -880,7 +914,7 @@ export const extractEntities = action({
             name: z.string(),
             type: z.enum(["person", "organization", "location", "event"]),
             description: z.string(),
-          })
+          }),
         ),
       }),
       prompt: `Extract entities from this text: ${args.text}`,
@@ -910,6 +944,7 @@ export const extractEntities = action({
 **Goal:** Set up Hono with API key authentication
 
 **Tasks:**
+
 1. Install Hono: `npm install hono`
 2. Create `/backend/convex/http.ts` with Hono setup
 3. Implement API key middleware
@@ -924,6 +959,7 @@ export const extractEntities = action({
 **Goal:** Implement all CRUD endpoints for 6 dimensions
 
 **Tasks:**
+
 1. Groups endpoints (7 routes)
 2. People endpoints (6 routes)
 3. Things endpoints (6 routes)
@@ -938,6 +974,7 @@ export const extractEntities = action({
 **Goal:** Integrate AI SDK for RAG and generation
 
 **Tasks:**
+
 1. Install AI SDK: `npm install ai @ai-sdk/openai`
 2. Implement RAG pipeline (ingest, chunk, embed, search)
 3. Add generateText action
@@ -951,6 +988,7 @@ export const extractEntities = action({
 **Goal:** Full 6-method authentication
 
 **Tasks:**
+
 1. Complete email/password auth
 2. Add OAuth providers (Google, GitHub)
 3. Add magic links
@@ -966,6 +1004,7 @@ export const extractEntities = action({
 **Goal:** Production-ready with complete docs
 
 **Tasks:**
+
 1. Write integration tests (90% coverage)
 2. Generate OpenAPI spec
 3. Create API documentation site
@@ -980,6 +1019,7 @@ export const extractEntities = action({
 **Goal:** Deploy to production
 
 **Tasks:**
+
 1. Configure environment variables
 2. Set up monitoring (Sentry, LogTail)
 3. Configure rate limits per plan tier
@@ -1010,6 +1050,7 @@ curl -X POST https://api.one.ie/api/things \
 ```
 
 **Response:**
+
 ```json
 {
   "_id": "jd7x8y9z...",
@@ -1040,6 +1081,7 @@ curl -X POST https://api.one.ie/api/knowledge/search \
 ```
 
 **Response:**
+
 ```json
 {
   "results": [
@@ -1071,14 +1113,13 @@ curl -X POST https://api.one.ie/api/ai/generate \
 ```
 
 **Response:**
+
 ```json
 {
   "text": "The 6-dimension ontology consists of Groups, People, Things, Connections, Events, and Knowledge...",
   "model": "gpt-4o",
   "tokens": 245,
-  "sources": [
-    { "title": "Ontology Overview", "score": 0.89 }
-  ]
+  "sources": [{ "title": "Ontology Overview", "score": 0.89 }]
 }
 ```
 
@@ -1090,6 +1131,7 @@ curl "https://api.one.ie/api/things?type=course&status=published&limit=10" \
 ```
 
 **Response:**
+
 ```json
 {
   "results": [

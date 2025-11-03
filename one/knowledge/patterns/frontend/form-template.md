@@ -1,3 +1,21 @@
+---
+title: Form Template
+dimension: knowledge
+category: patterns
+tags: frontend, things
+related_dimensions: groups, things
+scope: global
+created: 2025-11-03
+updated: 2025-11-03
+version: 1.0.0
+ai_context: |
+  This document is part of the knowledge dimension in the patterns category.
+  Location: one/knowledge/patterns/frontend/form-template.md
+  Purpose: Documents pattern: react form template
+  Related dimensions: groups, things
+  For AI agents: Read this to understand form template.
+---
+
 # Pattern: React Form Template
 
 **Category:** Frontend

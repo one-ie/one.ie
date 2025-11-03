@@ -1,3 +1,21 @@
+---
+title: Lemonade Stand
+dimension: things
+category: examples
+tags: ai, connections, people, things
+related_dimensions: connections, events, groups, knowledge, people
+scope: global
+created: 2025-11-03
+updated: 2025-11-03
+version: 1.0.0
+ai_context: |
+  This document is part of the things dimension in the examples category.
+  Location: one/things/examples/children/lemonade-stand.md
+  Purpose: Documents building a lemonade stand with one platform 🍋
+  Related dimensions: connections, events, groups, knowledge, people
+  For AI agents: Read this to understand lemonade stand.
+---
+
 # Building a Lemonade Stand with ONE Platform 🍋
 
 ## Introduction
@@ -33,15 +51,15 @@ Let's build a real lemonade stand using code! Don't worry - we'll explain every 
 const myStand = await createOrganization({
   name: "Emma's Lemonade Stand",
   owner: "Emma",
-  plan: "starter",  // Just starting out!
+  plan: "starter", // Just starting out!
 });
 
 // Step 2: You are the owner! (Person)
 // This tells the computer that YOU are in charge
 const me = await createPerson({
   name: "Emma",
-  role: "org_owner",  // You're the boss!
-  organizationId: myStand._id,  // This is YOUR stand
+  role: "org_owner", // You're the boss!
+  organizationId: myStand._id, // This is YOUR stand
 });
 
 // Step 3: Make some lemonade! (Thing)
@@ -49,10 +67,10 @@ const me = await createPerson({
 const lemonade = await createThing({
   type: "product",
   name: "Fresh Lemonade",
-  organizationId: myStand._id,  // Belongs to your stand
+  organizationId: myStand._id, // Belongs to your stand
   properties: {
-    price: 1.00,      // $1 per cup
-    inventory: 20,    // You made 20 cups!
+    price: 1.0, // $1 per cup
+    inventory: 20, // You made 20 cups!
     flavor: "lemon",
     sweetness: "just right",
   },
@@ -65,7 +83,7 @@ const cups = await createThing({
   name: "Paper Cups",
   organizationId: myStand._id,
   properties: {
-    quantity: 50,  // You have 50 cups
+    quantity: 50, // You have 50 cups
     size: "medium",
   },
 });
@@ -84,7 +102,7 @@ await createConnection({
   type: "purchased",
   organizationId: myStand._id,
   metadata: {
-    payment: 1.00,
+    payment: 1.0,
     time: "2:30 PM",
     weather: "sunny",
   },
@@ -94,16 +112,16 @@ await createConnection({
 // This remembers that the sale happened
 await createEvent({
   type: "tokens_purchased",
-  actor: customer._id,          // WHO: Alex
-  target: lemonade._id,          // WHAT: bought lemonade
-  organizationId: myStand._id,   // WHERE: at your stand
+  actor: customer._id, // WHO: Alex
+  target: lemonade._id, // WHAT: bought lemonade
+  organizationId: myStand._id, // WHERE: at your stand
   metadata: {
-    amount: 1.00,
+    amount: 1.0,
     weather: "sunny",
     time: "2:30 PM",
     customerMood: "happy",
   },
-  timestamp: Date.now(),  // WHEN: right now!
+  timestamp: Date.now(), // WHEN: right now!
 });
 
 // Step 8: Update your inventory (Thing update)
@@ -111,7 +129,7 @@ await createEvent({
 await updateThing(lemonade._id, {
   properties: {
     ...lemonade.properties,
-    inventory: 19,  // One less cup!
+    inventory: 19, // One less cup!
   },
 });
 
@@ -127,6 +145,7 @@ await updateThing(lemonade._id, {
 After running your lemonade stand for a week, your AI has learned some cool things:
 
 ### Pattern 1: Weather Matters! ☀️
+
 - **Monday (sunny):** Sold 18 cups
 - **Tuesday (rainy):** Sold 3 cups
 - **Wednesday (sunny):** Sold 20 cups
@@ -134,6 +153,7 @@ After running your lemonade stand for a week, your AI has learned some cool thin
 - **AI's suggestion:** "Tomorrow is sunny - make 25 cups instead of 20!"
 
 ### Pattern 2: Time of Day 🕐
+
 - **Morning (9 AM - 12 PM):** Sold 5 cups
 - **Afternoon (12 PM - 3 PM):** Sold 8 cups
 - **After School (3 PM - 5 PM):** Sold 12 cups
@@ -141,6 +161,7 @@ After running your lemonade stand for a week, your AI has learned some cool thin
 - **AI's suggestion:** "Open at 3 PM on school days to save time!"
 
 ### Pattern 3: Taste Preferences 😋
+
 - **Customer feedback:**
   - "Too sour!" (3 customers)
   - "Too sweet!" (1 customer)
@@ -149,6 +170,7 @@ After running your lemonade stand for a week, your AI has learned some cool thin
 - **AI's suggestion:** "Add 2 more tablespoons of sugar to make it sweeter"
 
 ### Pattern 4: Price Testing 💰
+
 - **Week 1 ($1.00 per cup):** Sold 45 cups = $45
 - **Week 2 ($1.25 per cup):** Sold 40 cups = $50
 - **Week 3 ($1.50 per cup):** Sold 30 cups = $45
@@ -160,27 +182,32 @@ After running your lemonade stand for a week, your AI has learned some cool thin
 ## Your AI Can Now Help With... 🎯
 
 ### Daily Planning
+
 - "It's going to be sunny tomorrow - prepare 30 cups instead of 20!"
 - "Rain forecast for Friday - make only 10 cups or take the day off"
 - "Weekend coming up - you'll need extra inventory!"
 
 ### Making Better Lemonade
+
 - "Customer reviews say lemonade is too sour - add 2 more tablespoons of sugar"
 - "5 people asked for 'less ice' - adjust your recipe!"
 - "Someone suggested adding strawberries - want to try a new flavor?"
 
 ### Inventory Management
+
 - "You're running low on lemons - order more before the weekend rush"
 - "You have 12 cups left and usually sell 15 after school - need more cups!"
 - "You bought 50 cups last week but only used 35 - buy 40 this time"
 
 ### Money Smarts
+
 - "You made $45 this week - that's $10 more than last week!"
 - "Lemons cost $8, sugar costs $3, cups cost $5 - total expenses: $16"
 - "Revenue $45 - expenses $16 = profit $29! Great job!"
 - "You've saved enough to buy a bigger lemonade pitcher!"
 
 ### Customer Happiness
+
 - "Alex bought lemonade 3 times this week - give them a loyalty discount!"
 - "10 new customers this week - your stand is getting popular!"
 - "Sarah's birthday is tomorrow - make a special birthday lemonade flavor!"
@@ -232,6 +259,7 @@ Let's see how all 6 dimensions work together in your lemonade stand:
 ### Why This Is Powerful
 
 Every time something happens at your lemonade stand:
+
 1. **Organization** knows which stand it belongs to (yours!)
 2. **People** know who did it (you, a helper, or a customer)
 3. **Things** get created, updated, or used (lemonade, cups, money)
@@ -248,12 +276,14 @@ This is how your lemonade stand gets SMARTER every single day! 🎉
 Want to build your own AI lemonade stand? Here's what to do:
 
 ### For Kids Learning to Code:
+
 1. **Start Simple:** Use the code above to create your first stand
 2. **Add Customers:** Create 5 different customers with different names
 3. **Record Sales:** Log 10 sales throughout the day
 4. **Check the AI:** Ask "What patterns do you see?"
 
 ### For Slightly Older Kids:
+
 1. **Add New Features:**
    - Different lemonade flavors (strawberry, raspberry)
    - A loyalty program (buy 5, get 1 free)
@@ -268,7 +298,9 @@ Want to build your own AI lemonade stand? Here's what to do:
    - "Which flavor sells most?"
 
 ### For Parents & Teachers:
+
 This example teaches:
+
 - **Business basics:** Revenue, expenses, profit
 - **Data collection:** Recording what happens
 - **Pattern recognition:** Learning from data
@@ -294,6 +326,7 @@ Congratulations! You now understand the **6 dimensions** that power every app on
 These same 6 dimensions can build ANYTHING:
 
 **A Pet Care App:**
+
 - Organization: Pet Shelter
 - People: Pet owners, volunteers
 - Things: Dogs, cats, food, toys
@@ -302,6 +335,7 @@ These same 6 dimensions can build ANYTHING:
 - Knowledge: "Dogs need 2 walks per day"
 
 **A Homework Helper:**
+
 - Organization: Your School
 - People: Students, teachers
 - Things: Assignments, textbooks
@@ -310,6 +344,7 @@ These same 6 dimensions can build ANYTHING:
 - Knowledge: "Math homework takes 30 minutes"
 
 **A Garden Tracker:**
+
 - Organization: Emma's Garden
 - People: Gardeners
 - Things: Tomato plants, seeds
@@ -324,16 +359,19 @@ These same 6 dimensions can build ANYTHING:
 Ready to build more? Try these projects:
 
 ### Beginner Level:
+
 - 🍪 **Cookie Stand:** Sell cookies instead of lemonade
 - 🎨 **Art Gallery:** Track your drawings and who likes them
 - 📚 **Book Tracker:** Remember books you've read
 
 ### Intermediate Level:
+
 - 🎮 **Game Points:** Track scores in your favorite game
 - 🐕 **Pet Manager:** Take care of virtual pets
 - 🏆 **Chore Tracker:** Earn points for doing chores
 
 ### Advanced Level:
+
 - 🎵 **Music Playlist AI:** Learns your favorite songs
 - 🍕 **Restaurant Simulator:** Run a pizza shop
 - 🚀 **Space Explorer:** Manage a space station

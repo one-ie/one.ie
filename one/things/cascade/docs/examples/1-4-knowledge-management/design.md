@@ -1,3 +1,21 @@
+---
+title: Design
+dimension: things
+category: cascade
+tags: agent, ai, auth, backend, knowledge
+related_dimensions: knowledge, people
+scope: global
+created: 2025-11-03
+updated: 2025-11-03
+version: 1.0.0
+ai_context: |
+  This document is part of the things dimension in the cascade category.
+  Location: one/things/cascade/docs/examples/1-4-knowledge-management/design.md
+  Purpose: Documents design for feature 1-4: knowledge management
+  Related dimensions: knowledge, people
+  For AI agents: Read this to understand design.
+---
+
 # Design for Feature 1-4: Knowledge Management
 
 **Feature:** 1-4-knowledge-management
@@ -15,12 +33,14 @@ Enable continuous learning through markdown-based lessons learned and pattern li
 ## CLI Context
 
 **Knowledge is implicit** - No explicit commands needed. Claude:
+
 - Reads patterns when implementing features
 - Searches lessons when solving problems
 - Captures lessons after fixes
 - User can optionally query knowledge
 
 **Optional commands:**
+
 ```bash
 /one lessons                       # Show recent lessons learned
 /one lessons backend               # Filter by category
@@ -34,8 +54,10 @@ Enable continuous learning through markdown-based lessons learned and pattern li
 ## Design Decisions (Test-Driven)
 
 ### Decision 1: Markdown Files ARE the Knowledge Base
+
 **Test requirement:** Claude can search knowledge in < 100ms
 **Design solution:**
+
 - Lessons: `one/knowledge/lessons-learned.md` (append-only)
 - Patterns: `one/knowledge/patterns/{category}/*.md` (template files)
 - Claude uses Grep to search: `grep "authentication" one/knowledge/lessons-learned.md`
@@ -47,8 +69,10 @@ Enable continuous learning through markdown-based lessons learned and pattern li
 ---
 
 ### Decision 2: Lesson Capture Is Automatic After Fixes
+
 **Test requirement:** 100% lesson capture rate
 **Design solution:**
+
 ```
 Test fails → Problem solved → Fix implemented →
 Before marking complete: "Capture lesson learned" →
@@ -61,14 +85,17 @@ Lesson available for future searches
 ---
 
 ### Decision 3: Patterns Discovered From Repeated Lessons
+
 **Test requirement:** After 3 similar issues, promote to pattern
 **Design solution:**
+
 - Problem solver notices repeated lessons
 - Suggests pattern promotion
 - Integration specialist creates pattern template
 - Future features reference pattern
 
 **Example:**
+
 ```
 Month 1: 3 features forgot to log events after entity creation
 Month 2: Pattern created: backend/event-logging.md
@@ -80,8 +107,10 @@ Month 3+: All features use pattern, no more forgotten events
 ---
 
 ### Decision 4: Context Loading References Knowledge
+
 **Test requirement:** Specialists load relevant patterns in < 50ms
 **Design solution:**
+
 ```
 Claude Code (Backend Specialist):
 Implementing feature 2-1-course-crud...
@@ -105,8 +134,10 @@ Implementation with patterns applied...
 ---
 
 ### Decision 5: Knowledge Grows With Each Feature
+
 **Test requirement:** Measurable knowledge accumulation
 **Design solution:**
+
 ```
 Week 1:   0 lessons, 8 patterns (templates)
 Month 1:  20 lessons, 8 patterns
@@ -126,12 +157,14 @@ Year 1:   500 lessons, 50 patterns
 **File:** `one/knowledge/lessons-learned.md`
 
 **Structure:**
-```markdown
+
+````markdown
 # Lessons Learned
 
 ## Backend Patterns
 
 ### Always Log Events After Entity Creation
+
 **Date:** 2025-01-15
 **Feature:** 1-1-agent-prompts
 **Problem:** Forgot to log agent_prompt_created event
@@ -139,27 +172,32 @@ Year 1:   500 lessons, 50 patterns
 **Pattern:** Every entity creation must log corresponding event
 **Context:** All thing_created events are mandatory per ontology
 **Example:**
+
 ```typescript
 // Bad
-const id = await ctx.db.insert('entities', data)
-return id
+const id = await ctx.db.insert("entities", data);
+return id;
 
 // Good
-const id = await ctx.db.insert('entities', data)
-await ctx.db.insert('events', {
-  type: 'entity_created',
+const id = await ctx.db.insert("entities", data);
+await ctx.db.insert("events", {
+  type: "entity_created",
   actorId: ctx.userId,
   targetId: id,
-  metadata: { ...relevantFields }
-})
-return id
+  metadata: { ...relevantFields },
+});
+return id;
 ```
+````
+
 **Related:** See pattern backend/event-logging.md
 
 ### Validate Ownership Before Delete Operations
+
 **Date:** 2025-01-16
 **Feature:** 2-1-course-crud
 ...
+
 ```
 
 **Claude appends lessons using Edit tool** - No database writes needed.
@@ -170,24 +208,26 @@ return id
 
 **Directory structure:**
 ```
+
 one/knowledge/patterns/
 ├── backend/
-│   ├── service-template.md
-│   ├── mutation-template.md
-│   ├── query-template.md
-│   └── event-logging.md
+│ ├── service-template.md
+│ ├── mutation-template.md
+│ ├── query-template.md
+│ └── event-logging.md
 ├── frontend/
-│   ├── page-template.md
-│   ├── component-template.md
-│   └── form-template.md
+│ ├── page-template.md
+│ ├── component-template.md
+│ └── form-template.md
 ├── design/
-│   ├── wireframe-template.md
-│   └── component-architecture.md
+│ ├── wireframe-template.md
+│ └── component-architecture.md
 └── test/
-    ├── user-flow-template.md
-    ├── acceptance-criteria-template.md
-    └── unit-test-template.md
-```
+├── user-flow-template.md
+├── acceptance-criteria-template.md
+└── unit-test-template.md
+
+````
 
 **Pattern file format:**
 ```markdown
@@ -217,23 +257,27 @@ async create{Entity}(data: {Entity}Data) {
 
   return id
 }
-```
+````
 
 ## Usage
+
 1. Replace {Entity} with your entity name (capitalized)
 2. Replace {entity} with lowercase entity name
 3. Replace {entities} with table name
 4. Include relevant metadata fields
 
 ## Common Mistakes
+
 - Forgetting event log → Use this pattern
 - Wrong metadata structure → See event-coordination.md spec
 - Missing actorId → Default to ctx.userId
 
 ## Related Patterns
+
 - mutation-template.md - General mutation structure
 - event-coordination.md - Event metadata standards
-```
+
+````
 
 **Claude reads patterns using Read tool** - No pattern loader needed.
 
@@ -258,7 +302,7 @@ tail -50 one/knowledge/lessons-learned.md
 
 # Find patterns by category
 ls one/knowledge/patterns/backend/*.md
-```
+````
 
 **No search API to build** - Grep is fast and flexible.
 
@@ -502,6 +546,7 @@ Knowledge is compounding! 📈
 ## Design Tokens
 
 ### Knowledge Type Icons
+
 ```
 📚 Lessons learned
 🎯 Patterns
@@ -512,6 +557,7 @@ Knowledge is compounding! 📈
 ```
 
 ### Category Labels
+
 ```
 [Backend]     - Services, mutations, queries, schemas
 [Frontend]    - Components, pages, state management
@@ -526,17 +572,20 @@ Knowledge is compounding! 📈
 ## Accessibility
 
 ### Screen Reader Friendly
+
 - Lesson titles spoken clearly
 - Dates in readable format (not just timestamps)
 - Category labels explicit
 - Pattern names descriptive
 
 ### Keyboard Navigation
+
 - All knowledge commands text-based
 - No mouse required for searches
 - Tab completion for categories: `/one lessons [tab]`
 
 ### Error Recovery
+
 - No lessons found: "No lessons for category X yet"
 - Pattern doesn't exist: "Pattern X not found. Available: [list]"
 - Search no results: "No matches for 'keyword'. Try broader search?"
@@ -546,6 +595,7 @@ Knowledge is compounding! 📈
 ## Success Criteria from Tests
 
 ### User Flows
+
 - ✅ Claude captures lesson after every fix (< 50ms)
 - ✅ Claude searches lessons when solving problems (< 100ms)
 - ✅ Claude loads patterns when implementing (< 50ms)
@@ -553,6 +603,7 @@ Knowledge is compounding! 📈
 - ✅ Knowledge accumulates measurably over time
 
 ### Acceptance Criteria
+
 - ✅ Lesson capture: < 50ms (append to file)
 - ✅ Knowledge search: < 100ms (grep)
 - ✅ Pattern loading: < 50ms (read file)
@@ -564,12 +615,14 @@ Knowledge is compounding! 📈
 ## Implementation Notes
 
 **No knowledge system to build** - Just conventions:
+
 1. Lesson file format defined ✅ (in Feature 1-4 spec)
 2. Pattern directory structure ✅ (organized by category)
 3. Search patterns ✅ (grep examples)
 4. Capture workflow ✅ (append after fixes)
 
 **Claude Code handles knowledge** by:
+
 - Appending lessons using Edit tool
 - Searching using Grep tool
 - Loading patterns using Read tool
@@ -580,6 +633,7 @@ Knowledge is compounding! 📈
 ## Next Steps
 
 Ready for Level 6 (Implementation):
+
 - Lesson format documented ✅ (Feature 1-4 spec)
 - Pattern templates ready ✅ (8 initial templates)
 - Search patterns documented ✅ (grep examples)
@@ -591,6 +645,7 @@ Ready for Level 6 (Implementation):
 **Status:** ✅ Design Complete
 
 **Key Design Insights:**
+
 1. **Markdown is the database** - No knowledge system infrastructure
 2. **Automatic capture** - Lessons after every fix
 3. **Pattern emergence** - From repeated lessons (3x rule)
@@ -600,6 +655,7 @@ Ready for Level 6 (Implementation):
 **The design is append-only markdown + grep + pattern discovery from repetition.** 🎯
 
 **Knowledge impact:**
+
 ```
 Month 1: 20 lessons → 80% first-try pass → 45 min/feature
 Month 3: 60 lessons → 90% first-try pass → 32 min/feature (-29%)

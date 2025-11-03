@@ -1,3 +1,21 @@
+---
+title: 3 Groups
+dimension: things
+category: plans
+tags: connections, events, groups, knowledge, multi-tenant
+related_dimensions: connections, events, groups, knowledge, people
+scope: global
+created: 2025-11-03
+updated: 2025-11-03
+version: 1.0.0
+ai_context: |
+  This document is part of the things dimension in the plans category.
+  Location: one/things/plans/3-groups.md
+  Purpose: Documents 3. groups - organizations are groups
+  Related dimensions: connections, events, groups, knowledge, people
+  For AI agents: Read this to understand 3 groups.
+---
+
 # 3. Groups - Organizations ARE Groups
 
 **Key Insight:** Organizations don't disappear. They become a **type** of group.
@@ -9,12 +27,12 @@
 ```typescript
 // Organizations are just one type of group
 type GroupType =
-  | "friend_circle"   // Emma's Friends
-  | "business"        // Startup Inc
-  | "community"       // Crypto Enthusiasts
-  | "dao"             // CoolDAO
-  | "government"      // City Council
-  | "organization";   // ← Legacy "organizations" = group type
+  | "friend_circle" // Emma's Friends
+  | "business" // Startup Inc
+  | "community" // Crypto Enthusiasts
+  | "dao" // CoolDAO
+  | "government" // City Council
+  | "organization"; // ← Legacy "organizations" = group type
 ```
 
 **Everything that was an "organization" becomes a group with `type: "organization"`.**
@@ -28,39 +46,40 @@ Multi-tenancy preserved. Data isolation identical. Just more flexible.
 ### Before (4 tables scoped to organizations)
 
 ```typescript
-organizations: defineTable({ name, plan, limits, status })
-entities: defineTable({ organizationId, type, name, properties })
-connections: defineTable({ organizationId, fromId, toId, type })
-events: defineTable({ organizationId, type, actorId, targetId })
-knowledge: defineTable({ organizationId, type, text, embedding })
+organizations: defineTable({ name, plan, limits, status });
+entities: defineTable({ organizationId, type, name, properties });
+connections: defineTable({ organizationId, fromId, toId, type });
+events: defineTable({ organizationId, type, actorId, targetId });
+knowledge: defineTable({ organizationId, type, text, embedding });
 ```
 
 ### After (5 tables scoped to groups)
 
 ```typescript
 groups: defineTable({
-  slug,                    // NEW: URL identifier
+  slug, // NEW: URL identifier
   name,
-  type,                    // NEW: 6 types (including "organization")
-  parentGroupId,           // NEW: Hierarchical nesting!
+  type, // NEW: 6 types (including "organization")
+  parentGroupId, // NEW: Hierarchical nesting!
   description,
   metadata,
   settings: {
-    visibility,            // NEW: public/private
-    joinPolicy,            // NEW: open/invite/approval
-    plan,                  // Same as before
-    limits                 // Same as before
+    visibility, // NEW: public/private
+    joinPolicy, // NEW: open/invite/approval
+    plan, // Same as before
+    limits, // Same as before
   },
-  status
-})
+  status,
+});
 
-entities: defineTable({ groupId, type, name, properties })      // organizationId → groupId
-connections: defineTable({ groupId, fromId, toId, type })       // organizationId → groupId
-events: defineTable({ groupId, type, actorId, targetId })       // organizationId → groupId
-knowledge: defineTable({ groupId, type, text, embedding })      // organizationId → groupId
+entities: defineTable({ groupId, type, name, properties }); // organizationId → groupId
+connections: defineTable({ groupId, fromId, toId, type }); // organizationId → groupId
+events: defineTable({ groupId, type, actorId, targetId }); // organizationId → groupId
+knowledge: defineTable({ groupId, type, text, embedding }); // organizationId → groupId
 ```
 
 **Key changes:**
+
 1. `organizations` → `groups` (new table with 6 types)
 2. `organizationId` → `groupId` (everywhere)
 3. Add `parentGroupId` (enables nesting)
@@ -135,6 +154,7 @@ Agent 6-10: All other components using organizationId
 ```
 
 **Pattern:** Simple find/replace in each file:
+
 ```typescript
 - const data = useQuery(api.queries.entities.list, { organizationId });
 + const data = useQuery(api.queries.entities.list, { groupId });
@@ -201,7 +221,7 @@ export const migrate = mutation({
       const groupId = await ctx.db.insert("groups", {
         slug: slugify(org.name),
         name: org.name,
-        type: "organization",  // Legacy type
+        type: "organization", // Legacy type
         parentGroupId: undefined,
         description: undefined,
         metadata: {},
@@ -209,11 +229,11 @@ export const migrate = mutation({
           visibility: "private",
           joinPolicy: "invite_only",
           plan: org.plan,
-          limits: org.limits
+          limits: org.limits,
         },
         status: org.status === "active" ? "active" : "archived",
         createdAt: org.createdAt,
-        updatedAt: org.updatedAt
+        updatedAt: org.updatedAt,
       });
 
       // 3. Update all entities, connections, events, knowledge
@@ -221,7 +241,7 @@ export const migrate = mutation({
     }
 
     return { migrated: orgs.length };
-  }
+  },
 });
 ```
 
@@ -231,13 +251,13 @@ export const migrate = mutation({
 
 ## Timeline Summary
 
-| Phase | What | Duration | Parallel? |
-|-------|------|----------|-----------|
-| 0 | Schema update | 1 inference | No (blocks all) |
-| 1 | Backend (mutations + queries) | 1 inference | Yes (10 agents) |
-| 2 | Frontend (components + routes) | 4 inferences | Partial (components parallel) |
-| 3 | Documentation | 1 inference | Yes (44 agents) |
-| 4 | Migration script | 1 inference | Yes (with Phase 3) |
+| Phase | What                           | Duration     | Parallel?                     |
+| ----- | ------------------------------ | ------------ | ----------------------------- |
+| 0     | Schema update                  | 1 inference  | No (blocks all)               |
+| 1     | Backend (mutations + queries)  | 1 inference  | Yes (10 agents)               |
+| 2     | Frontend (components + routes) | 4 inferences | Partial (components parallel) |
+| 3     | Documentation                  | 1 inference  | Yes (44 agents)               |
+| 4     | Migration script               | 1 inference  | Yes (with Phase 3)            |
 
 **Total: ~7 inferences** (vs 100+ if sequential)
 
@@ -258,7 +278,7 @@ Once groups are live, you can nest them in **both database AND filesystem**:
 const acme = await createGroup({
   slug: "acme-corp",
   name: "Acme Corporation",
-  type: "business"
+  type: "business",
 });
 
 // Child: Engineering team
@@ -266,7 +286,7 @@ const engineering = await createGroup({
   slug: "acme-corp-engineering",
   name: "Engineering",
   type: "business",
-  parentGroupId: acme._id  // ← Nested!
+  parentGroupId: acme._id, // ← Nested!
 });
 
 // Grandchild: Backend team
@@ -274,7 +294,7 @@ const backend = await createGroup({
   slug: "acme-corp-engineering-backend",
   name: "Backend Team",
   type: "business",
-  parentGroupId: engineering._id  // ← Deeply nested!
+  parentGroupId: engineering._id, // ← Deeply nested!
 });
 ```
 
@@ -324,7 +344,7 @@ When AI or web app loads `practices.md` for backend team:
 const dao = await createGroup({
   slug: "cooldao",
   name: "Cool DAO",
-  type: "dao"
+  type: "dao",
 });
 
 // Children: Specialized committees
@@ -332,14 +352,14 @@ const treasury = await createGroup({
   slug: "cooldao-treasury",
   name: "Treasury Multisig",
   type: "dao",
-  parentGroupId: dao._id
+  parentGroupId: dao._id,
 });
 
 const governance = await createGroup({
   slug: "cooldao-governance",
   name: "Governance Committee",
   type: "dao",
-  parentGroupId: dao._id
+  parentGroupId: dao._id,
 });
 ```
 
@@ -360,6 +380,7 @@ const governance = await createGroup({
 ```
 
 **Query hierarchy:**
+
 ```typescript
 // Get all subgroups recursively
 const allSubgroups = await getGroupHierarchy({ rootGroupId: dao._id });
@@ -426,7 +447,7 @@ export const create = mutation({
     // Use groupId if provided, fallback to organizationId
     const actualGroupId = args.groupId || args.organizationId;
     // ... rest of implementation
-  }
+  },
 });
 ```
 
@@ -436,16 +457,16 @@ Remove backward compatibility in next major version.
 
 ## Key Differences: Organizations vs Groups
 
-| Aspect | Organizations | Groups |
-|--------|---------------|--------|
-| **Scope** | Business-oriented | Universal (friends, DAOs, communities, etc.) |
-| **Nesting** | Flat (no hierarchy) | Hierarchical (groups within groups) |
-| **Creation** | Manual only | URL-based + manual |
-| **Types** | One type | 6 types (friend_circle, business, community, dao, government, organization) |
-| **Visibility** | Always private | Public or private |
-| **Join Policy** | Always invite-only | Open, invite-only, or approval-required |
-| **URL** | `/org/:id` | `/group/:slug` |
-| **Multi-tenancy** | Perfect isolation | Perfect isolation (same guarantee) |
+| Aspect            | Organizations       | Groups                                                                      |
+| ----------------- | ------------------- | --------------------------------------------------------------------------- |
+| **Scope**         | Business-oriented   | Universal (friends, DAOs, communities, etc.)                                |
+| **Nesting**       | Flat (no hierarchy) | Hierarchical (groups within groups)                                         |
+| **Creation**      | Manual only         | URL-based + manual                                                          |
+| **Types**         | One type            | 6 types (friend_circle, business, community, dao, government, organization) |
+| **Visibility**    | Always private      | Public or private                                                           |
+| **Join Policy**   | Always invite-only  | Open, invite-only, or approval-required                                     |
+| **URL**           | `/org/:id`          | `/group/:slug`                                                              |
+| **Multi-tenancy** | Perfect isolation   | Perfect isolation (same guarantee)                                          |
 
 ---
 
@@ -457,13 +478,13 @@ Remove backward compatibility in next major version.
 // Emma's Lemonade Stand
 const myStand = await createOrganization({
   name: "Emma's Lemonade Stand",
-  plan: "starter"
+  plan: "starter",
 });
 
 const lemonade = await createThing({
   type: "product",
   name: "Fresh Lemonade",
-  organizationId: myStand._id
+  organizationId: myStand._id,
 });
 ```
 
@@ -476,15 +497,15 @@ const myStand = await createGroup({
   name: "Emma's Lemonade Stand",
   type: "business",
   settings: {
-    visibility: "public",  // NEW: Can be discovered
-    joinPolicy: "open"     // NEW: Anyone can join
-  }
+    visibility: "public", // NEW: Can be discovered
+    joinPolicy: "open", // NEW: Anyone can join
+  },
 });
 
 const lemonade = await createThing({
   type: "product",
   name: "Fresh Lemonade",
-  groupId: myStand._id  // organizationId → groupId
+  groupId: myStand._id, // organizationId → groupId
 });
 
 // NEW: Emma can now create subgroups
@@ -492,7 +513,7 @@ const summerPromo = await createGroup({
   slug: "emmas-lemonade-summer-2025",
   name: "Summer 2025 Promotion",
   type: "business",
-  parentGroupId: myStand._id  // Nested under main business!
+  parentGroupId: myStand._id, // Nested under main business!
 });
 ```
 
@@ -531,7 +552,7 @@ const myEntities = await ctx.db
 ```typescript
 // Get entities across group hierarchy
 const allEntities = await getEntitiesInHierarchy({
-  rootGroupId: myGroup
+  rootGroupId: myGroup,
 });
 // Returns: myGroup entities + all subgroup entities
 ```
@@ -543,6 +564,7 @@ const allEntities = await getEntitiesInHierarchy({
 **The Big Idea:** Organizations → Groups = Same multi-tenancy + Hierarchical nesting + URL-based creation + Universal applicability
 
 **The Change:**
+
 - Table: `organizations` → `groups` (with 6 types)
 - Field: `organizationId` → `groupId` (everywhere)
 - New fields: `slug`, `type`, `parentGroupId`, `settings`
@@ -550,6 +572,7 @@ const allEntities = await getEntitiesInHierarchy({
 **The Strategy:** Maximize parallelization (7 inferences vs 100+)
 
 **The Result:**
+
 - ✅ Multi-tenancy preserved (same isolation guarantees)
 - ✅ Hierarchical groups enabled (teams, committees, subgroups)
 - ✅ URL-based creation unlocked (viral growth)
@@ -605,6 +628,7 @@ groups: defineTable({
 ### Complete Workflow
 
 **Step 1: Initialize Installation**
+
 ```bash
 npx oneie init
 
@@ -623,6 +647,7 @@ npx oneie init
 ```
 
 **Step 2: Create Groups in Database**
+
 ```bash
 cd web && bun run dev
 # Visit /groups/new in browser
@@ -630,6 +655,7 @@ cd web && bun run dev
 ```
 
 **Step 3: Generate Group Documentation**
+
 ```bash
 npx oneie create-group-docs
 
@@ -641,6 +667,7 @@ npx oneie create-group-docs
 ```
 
 **Step 4: Add Custom Documentation**
+
 ```bash
 # Frontend-specific practices
 echo "# Frontend Practices" > /acme/groups/engineering/frontend/practices.md
@@ -661,7 +688,7 @@ When AI or web app loads `practices.md` for frontend group:
 const content = await resolveFile("practices.md", {
   installationName: "acme",
   groupId: frontendGroupId,
-  convexClient: convex
+  convexClient: convex,
 });
 
 // Checks in order:
@@ -674,21 +701,25 @@ const content = await resolveFile("practices.md", {
 ### Key Benefits
 
 **1. Multi-Tenancy**
+
 - One installation serves many database groups
 - Each group can have custom documentation
 - Perfect data isolation via `groupId`
 
 **2. Hierarchical Documentation**
+
 - Child groups inherit parent documentation
 - Override at any level (group, parent, installation, global)
 - Walk up hierarchy automatically
 
 **3. Private Customizations**
+
 - Installation folder = your private docs
 - Never released (stays in your repo)
 - Overrides global `/one/` templates
 
 **4. AI Context**
+
 - AI agents read group-specific docs
 - Hierarchical resolution provides context
 - Group practices inform feature generation

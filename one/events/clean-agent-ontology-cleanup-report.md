@@ -1,3 +1,21 @@
+---
+title: Clean Agent Ontology Cleanup Report
+dimension: events
+category: clean-agent-ontology-cleanup-report.md
+tags: 6-dimensions, agent, ai, ai-agent, backend, installation, ontology
+related_dimensions: groups, knowledge
+scope: global
+created: 2025-11-03
+updated: 2025-11-03
+version: 1.0.0
+ai_context: |
+  This document is part of the events dimension in the clean-agent-ontology-cleanup-report.md category.
+  Location: one/events/clean-agent-ontology-cleanup-report.md
+  Purpose: Documents clean agent: ontology cleanup report
+  Related dimensions: groups, knowledge
+  For AI agents: Read this to understand clean agent ontology cleanup report.
+---
+
 # Clean Agent: Ontology Cleanup Report
 
 **Date:** 2025-10-22

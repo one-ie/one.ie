@@ -1,3 +1,21 @@
+---
+title: Quality Loop
+dimension: knowledge
+category: quality-loop.md
+tags: agent, ai
+related_dimensions: people, things
+scope: global
+created: 2025-11-03
+updated: 2025-11-03
+version: 1.0.0
+ai_context: |
+  This document is part of the knowledge dimension in the quality-loop.md category.
+  Location: one/knowledge/quality-loop.md
+  Purpose: Documents quality loop process
+  Related dimensions: people, things
+  For AI agents: Read this to understand quality loop.
+---
+
 # Quality Loop Process
 
 **Version:** 1.0.0

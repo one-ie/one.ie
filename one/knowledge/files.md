@@ -1,3 +1,21 @@
+---
+title: Files
+dimension: knowledge
+category: files.md
+tags: agent, ai, backend, blockchain, frontend
+related_dimensions: events, things
+scope: global
+created: 2025-11-03
+updated: 2025-11-03
+version: 1.0.0
+ai_context: |
+  This document is part of the knowledge dimension in the files.md category.
+  Location: one/knowledge/files.md
+  Purpose: Documents one platform - file system map
+  Related dimensions: events, things
+  For AI agents: Read this to understand files.
+---
+
 # ONE Platform - File System Map
 
 **Version:** 1.0.0  

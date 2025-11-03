@@ -1,3 +1,21 @@
+---
+title: Communications
+dimension: connections
+category: communications.md
+tags: agent, architecture, protocol
+related_dimensions: events, things
+scope: global
+created: 2025-11-03
+updated: 2025-11-03
+version: 1.0.0
+ai_context: |
+  This document is part of the connections dimension in the communications.md category.
+  Location: one/connections/communications.md
+  Purpose: Documents agent communications
+  Related dimensions: events, things
+  For AI agents: Read this to understand communications.
+---
+
 # Agent Communications
 
 This document defines how our agents communicate with external agents using standardized protocols.

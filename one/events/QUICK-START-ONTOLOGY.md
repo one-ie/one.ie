@@ -1,3 +1,21 @@
+---
+title: Quick Start Ontology
+dimension: events
+category: QUICK-START-ONTOLOGY.md
+tags: 6-dimensions, backend, connections, events, frontend, groups, inference, knowledge, ontology
+related_dimensions: connections, groups, knowledge, people, things
+scope: global
+created: 2025-11-03
+updated: 2025-11-03
+version: 1.0.0
+ai_context: |
+  This document is part of the events dimension in the QUICK-START-ONTOLOGY.md category.
+  Location: one/events/QUICK-START-ONTOLOGY.md
+  Purpose: Documents quick start: ontology hooks & features
+  Related dimensions: connections, groups, knowledge, people, things
+  For AI agents: Read this to understand QUICK START ONTOLOGY.
+---
+
 # Quick Start: Ontology Hooks & Features
 
 Get started with the 6-dimension ontology integration in 5 minutes.

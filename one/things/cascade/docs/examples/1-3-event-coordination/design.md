@@ -1,3 +1,21 @@
+---
+title: Design
+dimension: things
+category: cascade
+tags: agent, ai, events
+related_dimensions: events, people
+scope: global
+created: 2025-11-03
+updated: 2025-11-03
+version: 1.0.0
+ai_context: |
+  This document is part of the things dimension in the cascade category.
+  Location: one/things/cascade/docs/examples/1-3-event-coordination/design.md
+  Purpose: Documents design for feature 1-3: event coordination
+  Related dimensions: events, people
+  For AI agents: Read this to understand design.
+---
+
 # Design for Feature 1-3: Event Coordination
 
 **Feature:** 1-3-event-coordination
@@ -15,6 +33,7 @@ Enable optional event logging for workflow coordination and audit trails. Design
 ## CLI Context
 
 **Events are optional** - workflow works without them, but they add value for:
+
 - Audit trails (who did what when)
 - Debugging (review sequence of operations)
 - Coordination (check if prerequisite completed)
@@ -27,8 +46,10 @@ Enable optional event logging for workflow coordination and audit trails. Design
 ## Design Decisions (Test-Driven)
 
 ### Decision 1: Events Are Markdown Files, Not Infrastructure
+
 **Test requirement:** Claude can create and query events in < 100ms
 **Design solution:**
+
 - Event file format: `{timestamp}-{type}-{targetId}.md`
 - Location: `one/events/workflow/`
 - Claude uses Write tool to create events
@@ -40,8 +61,10 @@ Enable optional event logging for workflow coordination and audit trails. Design
 ---
 
 ### Decision 2: Event Creation Is Invisible to User
+
 **Test requirement:** Events don't clutter CLI output
 **Design solution:**
+
 ```
 Claude Code (Backend Specialist):
 Implementing feature 1-1-agent-prompts...
@@ -59,8 +82,10 @@ Implementing feature 1-1-agent-prompts...
 ---
 
 ### Decision 3: Event Queries Are Tool-Based, Not Commands
+
 **Test requirement:** Claude can find relevant events when needed
 **Design solution:**
+
 - Claude uses Grep: `grep "test_failed" one/events/workflow/*.md`
 - Claude uses ls: `ls one/events/workflow/*-feature_started-*.md`
 - Claude uses Read: Reads specific event for details
@@ -71,9 +96,11 @@ Implementing feature 1-1-agent-prompts...
 ---
 
 ### Decision 4: Event Types Are Well-Defined
+
 **Test requirement:** Consistent event metadata across features
 **Design solution:**
 20+ event types documented with required metadata:
+
 - `feature_started` → `{featureId, planId, assignedTo}`
 - `test_failed` → `{testName, error, stackTrace, featureId}`
 - `solution_proposed` → `{problemId, rootCause, proposedSolution, assignedTo}`
@@ -84,8 +111,10 @@ Implementing feature 1-1-agent-prompts...
 ---
 
 ### Decision 5: Event Visualization Via CLI (Optional)
+
 **Test requirement:** User can optionally see event timeline
 **Design solution:**
+
 ```
 $ /one events 1-1
 
@@ -120,7 +149,7 @@ Issues: 1 (resolved in 7 minutes)
 
 ### 1. Event File Format (Markdown Template)
 
-```markdown
+````markdown
 # Event: feature_started
 
 **Type:** feature_started
@@ -138,6 +167,7 @@ Issues: 1 (resolved in 7 minutes)
   "assignedTo": "backend-specialist"
 }
 ```
+````
 
 ## Context
 
@@ -148,7 +178,8 @@ Feature is part of Plan 1 (Create Workflow System).
 
 - Previous: `feature_assigned` at 2025-01-15T10:25:00Z
 - Next: `feature_spec_complete` (expected)
-```
+
+````
 
 **Claude creates this using Write tool** - No code needed.
 
@@ -183,7 +214,7 @@ Documentation:
 
 Completion:
 - feature_complete, task_started, task_completed
-```
+````
 
 **No enum to define** - Claude knows these from documentation.
 
@@ -445,6 +476,7 @@ Event files: one/events/workflow/
 ## Design Tokens
 
 ### Event Type Icons
+
 ```
 📋 Planning events (idea_validated, plan_created, feature_assigned)
 🔄 Work started (feature_started, implementation_started)
@@ -460,6 +492,7 @@ Event files: one/events/workflow/
 ```
 
 ### Event Timeline Formatting
+
 ```
 [HH:MM] event_type
    Key detail 1: Value
@@ -471,17 +504,20 @@ Event files: one/events/workflow/
 ## Accessibility
 
 ### Screen Reader Friendly
+
 - Event types spoken clearly
 - Timestamps in readable format
 - Event details listed with labels
 - Timeline has logical structure
 
 ### Keyboard Navigation
+
 - Event commands text-based
 - No mouse required for event queries
 - Tab completion for `/one events [tab]`
 
 ### Error Recovery
+
 - Missing events: "No events found for feature X"
 - Invalid event format: Claude reads naturally, handles variations
 - Event query failures: Clear error with suggested fix
@@ -491,6 +527,7 @@ Event files: one/events/workflow/
 ## Success Criteria from Tests
 
 ### User Flows
+
 - ✅ Claude creates events naturally (< 50ms per event)
 - ✅ Claude queries events with grep (< 100ms)
 - ✅ User can view event timeline
@@ -498,6 +535,7 @@ Event files: one/events/workflow/
 - ✅ Events provide retrospective insights
 
 ### Acceptance Criteria
+
 - ✅ Event creation: < 50ms (file write)
 - ✅ Event queries: < 100ms (grep)
 - ✅ Event format: Markdown, human-readable
@@ -509,12 +547,14 @@ Event files: one/events/workflow/
 ## Implementation Notes
 
 **No event infrastructure to build** - Just conventions:
+
 1. Event file format defined ✅ (in Feature 1-3 spec)
 2. Event types documented ✅ (20+ types)
 3. Metadata standards ✅ (per event type)
 4. Query patterns ✅ (grep examples)
 
 **Claude Code handles events** by:
+
 - Writing markdown files when useful
 - Using grep/read for queries
 - Following event format template
@@ -525,6 +565,7 @@ Event files: one/events/workflow/
 ## Next Steps
 
 Ready for Level 6 (Implementation):
+
 - Event format documented ✅ (Feature 1-3 spec)
 - Event types defined ✅ (20+ types)
 - CLI patterns documented ✅ (this document)
@@ -535,6 +576,7 @@ Ready for Level 6 (Implementation):
 **Status:** ✅ Design Complete
 
 **Key Design Insights:**
+
 1. **Events are optional** - Workflow works without them
 2. **Invisible to user** - Events created behind the scenes
 3. **File-based simplicity** - No event system infrastructure

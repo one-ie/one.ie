@@ -1,3 +1,21 @@
+---
+title: Landing
+dimension: things
+category: plans
+tags: ai, auth, backend
+related_dimensions: connections, events, people
+scope: global
+created: 2025-11-03
+updated: 2025-11-03
+version: 1.0.0
+ai_context: |
+  This document is part of the things dimension in the plans category.
+  Location: one/things/plans/landing.md
+  Purpose: Documents one stack - complete feature list
+  Related dimensions: connections, events, people
+  For AI agents: Read this to understand landing.
+---
+
 # ONE Stack - Complete Feature List
 
 ## 🎯 Overview
@@ -7,6 +25,7 @@
 ## 🔐 Authentication System (6 Methods)
 
 ### 1. Email/Password Authentication
+
 - ✅ Secure password hashing (SHA-256, upgradeable to bcrypt)
 - ✅ Session management (30-day expiry)
 - ✅ HttpOnly cookies for XSS protection
@@ -17,6 +36,7 @@
 - 📍 **Components**: `SimpleSignInForm.tsx`, `SimpleSignUpForm.tsx`, `PasswordStrengthIndicator.tsx`
 
 ### 2. OAuth Social Login (GitHub & Google)
+
 - ✅ GitHub OAuth integration
 - ✅ Google OAuth integration
 - ✅ Automatic account creation on first OAuth login
@@ -27,6 +47,7 @@
 - 📍 **Components**: `SocialLoginButtons.tsx`
 
 ### 3. Password Reset Flow
+
 - ✅ Email-based password reset with secure tokens
 - ✅ Reset links expire after 1 hour
 - ✅ Email sending via Resend (@convex-dev/resend)
@@ -38,6 +59,7 @@
 - 📍 **Convex**: `requestPasswordReset`, `resetPassword`, `validateResetToken`
 
 ### 4. Email Verification
+
 - ✅ Automated verification emails on sign-up
 - ✅ Verification tokens expire after 24 hours
 - ✅ Email sending via Resend component
@@ -49,6 +71,7 @@
 - 📍 **Convex**: `verifyEmail`, `isEmailVerified`, `createEmailVerificationToken`
 
 ### 5. Magic Links (Passwordless Authentication)
+
 - ✅ One-click sign-in via email link
 - ✅ 15-minute expiry for security
 - ✅ One-time use only (token invalidated after use)
@@ -60,6 +83,7 @@
 - 📍 **Convex**: `requestMagicLink`, `signInWithMagicLink`, `createMagicLinkToken`
 
 ### 6. Two-Factor Authentication (TOTP)
+
 - ✅ Google Authenticator, Authy, 1Password compatible
 - ✅ QR code setup for easy configuration
 - ✅ 10 backup codes for account recovery
@@ -72,6 +96,7 @@
 - 📍 **Convex**: `setup2FA`, `verify2FA`, `disable2FA`, `get2FAStatus`
 
 ### 7. Rate Limiting & Security
+
 - ✅ **Sign-in**: 5 attempts per 15 minutes (per email)
 - ✅ **Sign-up**: 3 attempts per hour (per email)
 - ✅ **Password reset**: 3 attempts per hour (per email)
@@ -82,6 +107,7 @@
 - 📍 **Convex**: `RateLimiter` in `auth.ts`
 
 ### 8. Session Management
+
 - ✅ 30-day session expiry
 - ✅ HttpOnly cookies (XSS protection)
 - ✅ Automatic session cleanup on logout
@@ -93,9 +119,11 @@
 ## 🎨 UI Components (50+ shadcn/ui)
 
 ### Pre-installed Components
+
 All shadcn/ui components are pre-configured and ready to use:
 
 **Layout & Navigation:**
+
 - ✅ Sidebar (with collapsible state)
 - ✅ Navigation Menu
 - ✅ Breadcrumb
@@ -103,6 +131,7 @@ All shadcn/ui components are pre-configured and ready to use:
 - ✅ App Sidebar (dashboard)
 
 **Forms & Inputs:**
+
 - ✅ Button (with variants)
 - ✅ Input
 - ✅ Textarea
@@ -117,6 +146,7 @@ All shadcn/ui components are pre-configured and ready to use:
 - ✅ Form (with react-hook-form)
 
 **Data Display:**
+
 - ✅ Card
 - ✅ Table (@tanstack/react-table)
 - ✅ Badge
@@ -128,6 +158,7 @@ All shadcn/ui components are pre-configured and ready to use:
 - ✅ Skeleton
 
 **Feedback & Overlays:**
+
 - ✅ Dialog
 - ✅ Alert Dialog
 - ✅ Sheet
@@ -139,6 +170,7 @@ All shadcn/ui components are pre-configured and ready to use:
 - ✅ Alert
 
 **Interactive:**
+
 - ✅ Accordion
 - ✅ Collapsible
 - ✅ Dropdown Menu
@@ -149,6 +181,7 @@ All shadcn/ui components are pre-configured and ready to use:
 - ✅ Resizable Panels
 
 **Specialized:**
+
 - ✅ Scroll Area
 - ✅ Separator
 - ✅ Aspect Ratio
@@ -158,6 +191,7 @@ All shadcn/ui components are pre-configured and ready to use:
 ### Custom Components
 
 **Authentication:**
+
 - ✅ `AuthCard.tsx` - Wrapper for auth forms with consistent styling
 - ✅ `SimpleSignInForm.tsx` - Sign in with email/password
 - ✅ `SimpleSignUpForm.tsx` - Sign up with email/password
@@ -171,11 +205,13 @@ All shadcn/ui components are pre-configured and ready to use:
 - ✅ `TwoFactorSettings.tsx` - 2FA setup & management
 
 **Blog:**
+
 - ✅ `BlogSearch.tsx` - Real-time blog post filtering
 - ✅ `TableOfContents.tsx` - Auto-generated ToC with active tracking
 - ✅ `ShareButtons.tsx` - Native Web Share API + social media
 
 **Dashboard:**
+
 - ✅ `DashboardLayout.tsx` - Dashboard wrapper with sidebar
 - ✅ `AppSidebar.tsx` - Collapsible sidebar navigation
 - ✅ `SiteHeader.tsx` - Dashboard header with user menu
@@ -186,6 +222,7 @@ All shadcn/ui components are pre-configured and ready to use:
 - ✅ `SectionCards.tsx` - Dashboard section cards
 
 **Mail Demo:**
+
 - ✅ `MailLayout.tsx` - Gmail-style email UI
 - ✅ `MailList.tsx` - Email list with filtering
 - ✅ `MailDisplay.tsx` - Email detail view
@@ -194,6 +231,7 @@ All shadcn/ui components are pre-configured and ready to use:
 - ✅ `MobileSidebar.tsx` - Responsive sidebar
 
 **Utilities:**
+
 - ✅ `ModeToggle.tsx` - Dark/light theme switcher
 - ✅ `ErrorBoundary.tsx` - React error boundary with alert UI
 - ✅ `Chart.tsx` - Recharts wrapper
@@ -202,6 +240,7 @@ All shadcn/ui components are pre-configured and ready to use:
 ## 📝 Blog System
 
 ### Core Features
+
 - ✅ **Content Collections** - Type-safe blog posts with Zod validation
 - ✅ **Multi-view Layouts** - List, 2-column, 3-column, 4-column grid views
 - ✅ **View Switcher** - URL parameter-based view switching (`?view=grid&columns=3`)
@@ -215,6 +254,7 @@ All shadcn/ui components are pre-configured and ready to use:
 - 📍 **Pages**: `/blog`, `/blog/[slug]`
 
 ### Blog Schema
+
 ```typescript
 {
   title: string,
@@ -231,6 +271,7 @@ All shadcn/ui components are pre-configured and ready to use:
 ```
 
 ### Blog Features Breakdown
+
 - ✅ **Search**: Real-time client-side filtering with zero latency
 - ✅ **Categories**: Tutorial, News, Guide, Review, Article
 - ✅ **Tags**: Unlimited tags per post with filtering
@@ -242,11 +283,13 @@ All shadcn/ui components are pre-configured and ready to use:
 ## 🌐 Deployment
 
 ### Cloudflare Pages with React 19 SSR
+
 **The "Impossible" Achievement 🎉**
 
 This template successfully deploys **Astro 5 + React 19** with full server-side rendering on **Cloudflare Pages** - something previously considered impossible due to React 19's `MessageChannel` requirement in Cloudflare Workers runtime.
 
 **How We Solved It:**
+
 ```javascript
 // astro.config.mjs
 vite: {
@@ -259,12 +302,14 @@ vite: {
 ```
 
 **Why This Works:**
+
 - React 19's default `react-dom/server` uses `MessageChannel` (not available in Cloudflare Workers)
 - `react-dom/server.edge` is designed for edge runtimes with Web Streams support
 - The Vite alias tells the bundler to use the edge-compatible version
 - Result: Full React 19 SSR on Cloudflare's global edge network ⚡
 
 **Deployment Features:**
+
 - ✅ Global CDN with sub-100ms response times
 - ✅ Automatic HTTPS
 - ✅ Zero-config deployments
@@ -275,6 +320,7 @@ vite: {
 - ✅ `wrangler` CLI integration
 
 **Deploy Command:**
+
 ```bash
 bun run build
 wrangler pages deploy dist --project-name=one-stack --commit-dirty=true
@@ -283,6 +329,7 @@ wrangler pages deploy dist --project-name=one-stack --commit-dirty=true
 ## 🎯 SEO & Performance
 
 ### SEO Features
+
 - ✅ **Meta Tags** - Open Graph, Twitter Cards
 - ✅ **Canonical URLs** - Prevent duplicate content
 - ✅ **Sitemap** - Auto-generated with `@astrojs/sitemap`
@@ -294,6 +341,7 @@ wrangler pages deploy dist --project-name=one-stack --commit-dirty=true
 - ✅ **Semantic HTML** - Proper heading hierarchy and landmarks
 
 ### Performance Features
+
 - ✅ **Islands Architecture** - Only interactive components hydrate
 - ✅ **Minimal JavaScript** - ~30KB gzipped for the entire site
 - ✅ **CSS-First** - Tailwind v4 with zero runtime overhead
@@ -304,7 +352,9 @@ wrangler pages deploy dist --project-name=one-stack --commit-dirty=true
 - ✅ **Critical CSS** - Inlined critical styles
 
 ### Lighthouse Scores
+
 **Perfect 100/100 across all metrics:**
+
 - 🚀 Performance: 100
 - ♿ Accessibility: 100
 - 🔧 Best Practices: 100
@@ -313,6 +363,7 @@ wrangler pages deploy dist --project-name=one-stack --commit-dirty=true
 ## ♿ Accessibility
 
 ### WCAG 2.1 AA Compliant
+
 - ✅ **Skip to Content** - Keyboard-accessible skip link
 - ✅ **ARIA Labels** - Proper semantic markup throughout
 - ✅ **Focus Indicators** - Visible focus states on all interactive elements
@@ -327,6 +378,7 @@ wrangler pages deploy dist --project-name=one-stack --commit-dirty=true
 ## 🎨 Styling
 
 ### Tailwind CSS v4
+
 - ✅ **Modern CSS-based config** - No JavaScript config file
 - ✅ **`@theme` blocks** - Define theme in CSS
 - ✅ **Dark Mode** - Class-based dark mode with `@variant dark`
@@ -337,6 +389,7 @@ wrangler pages deploy dist --project-name=one-stack --commit-dirty=true
 - ✅ **Typography Plugin** - `@tailwindcss/typography` for prose styles
 
 ### Dark Mode
+
 - ✅ **Class-based** - `.dark` class on `<html>` element
 - ✅ **No Flash** - `ThemeInit.astro` prevents FOUC
 - ✅ **localStorage** - Preference persisted across sessions
@@ -347,6 +400,7 @@ wrangler pages deploy dist --project-name=one-stack --commit-dirty=true
 ## 🛠️ Developer Experience
 
 ### TypeScript
+
 - ✅ **Strict Mode** - Full type safety with no implicit any
 - ✅ **Path Aliases** - Clean imports with `@/` prefix
 - ✅ **Type Generation** - Auto-generated types for content collections
@@ -354,6 +408,7 @@ wrangler pages deploy dist --project-name=one-stack --commit-dirty=true
 - ✅ **React 19 Types** - Latest React types
 
 ### Code Quality
+
 - ✅ **ESLint** - Pre-configured with TypeScript and Astro rules
 - ✅ **Prettier** - Code formatting with Astro plugin
 - ✅ **VS Code Settings** - Optimized workspace configuration
@@ -361,6 +416,7 @@ wrangler pages deploy dist --project-name=one-stack --commit-dirty=true
 - ✅ **Type Checking** - `bunx astro check` for full type safety
 
 ### Hot Reload
+
 - ✅ **Fast Refresh** - Instant updates during development
 - ✅ **HMR** - Hot module replacement for React components
 - ✅ **Content Updates** - Blog posts update without full reload
@@ -370,7 +426,9 @@ wrangler pages deploy dist --project-name=one-stack --commit-dirty=true
 ONE Stack includes **3 pre-configured MCP servers** for AI-assisted development with Claude Code and other AI assistants.
 
 ### What are MCPs?
+
 Model Context Protocol enables AI assistants to interact with external tools and services. This means your AI assistant can automatically:
+
 - Install and configure components
 - Deploy your application
 - Access real-time documentation
@@ -379,45 +437,54 @@ Model Context Protocol enables AI assistants to interact with external tools and
 ### Configured MCP Servers
 
 #### 1. shadcn MCP - Component Management
+
 **Command:** `npx shadcn@latest mcp`
 
 **Features:**
+
 - 🔍 Search and discover shadcn/ui components
 - 📥 Add new components automatically
 - 📖 View documentation and examples
 - 🎨 Get usage patterns and best practices
 
 **Example Usage:**
+
 ```
 You: "Add the data-table component"
 Claude: [Uses MCP to search, install, and show you examples]
 ```
 
 #### 2. Cloudflare Builds MCP - Deployment Automation
+
 **Command:** `npx mcp-remote https://builds.mcp.cloudflare.com/sse`
 
 **Features:**
+
 - 🚀 Monitor deployment status in real-time
 - 📊 View build logs and analytics
 - 🔄 Trigger new deployments
 - ⚙️ Manage environment variables
 
 **Example Usage:**
+
 ```
 You: "Deploy to production and show me the logs"
 Claude: [Uses MCP to deploy and monitor progress]
 ```
 
 #### 3. Cloudflare Docs MCP - Documentation Access
+
 **Command:** `npx mcp-remote https://docs.mcp.cloudflare.com/sse`
 
 **Features:**
+
 - 📚 Search Cloudflare documentation
 - 💡 Get code examples for Workers, Pages, KV, R2
 - 🔧 Access API references
 - 📖 Learn deployment best practices
 
 **Example Usage:**
+
 ```
 You: "How do I set up KV storage for sessions?"
 Claude: [Uses MCP to fetch relevant docs and provide examples]
@@ -470,6 +537,7 @@ You can extend the `.mcp.json` with these popular MCPs:
 MCPs work automatically when using Claude Code or other MCP-compatible AI assistants. **No additional setup required!**
 
 Just ask your AI assistant to:
+
 - "Add the calendar component from shadcn"
 - "Deploy this to Cloudflare Pages"
 - "Show me Cloudflare Workers documentation for handling POST requests"
@@ -479,6 +547,7 @@ The MCP system handles the rest!
 ## 📊 Database (Convex)
 
 ### Schema
+
 ```typescript
 // users - User accounts
 {
@@ -536,6 +605,7 @@ The MCP system handles the rest!
 ```
 
 ### Convex Features
+
 - ✅ **Real-time Subscriptions** - Automatic UI updates when data changes
 - ✅ **Typed Functions** - Full TypeScript support
 - ✅ **Auto-generated API** - No manual API routes needed
@@ -546,6 +616,7 @@ The MCP system handles the rest!
 - ✅ **File Storage** - Built-in file upload/download
 
 ### Convex Components
+
 - ✅ **@convex-dev/resend** - Email sending component
 - ✅ **@convex-dev/rate-limiter** - Rate limiting component
 - ✅ **@convex-dev/better-auth** - Authentication integration
@@ -553,6 +624,7 @@ The MCP system handles the rest!
 ## 📧 Email System
 
 ### Resend Integration
+
 - ✅ **@convex-dev/resend** - Convex component for email
 - ✅ **Password Reset Emails** - Custom HTML templates
 - ✅ **Email Verification** - Welcome emails with verification links
@@ -562,6 +634,7 @@ The MCP system handles the rest!
 - ✅ **Environment Variables** - `RESEND_API_KEY`, `RESEND_FROM_EMAIL`
 
 ### Email Types
+
 1. **Password Reset** - Sent when user requests password reset
 2. **Email Verification** - Sent on sign-up to verify email
 3. **Magic Link** - Sent for passwordless authentication
@@ -569,6 +642,7 @@ The MCP system handles the rest!
 ## 🔒 Security Features
 
 ### Implemented
+
 - ✅ **HttpOnly Cookies** - Prevent XSS attacks
 - ✅ **Rate Limiting** - Prevent brute force attacks
 - ✅ **Secure Password Hashing** - SHA-256 (upgradeable to bcrypt)
@@ -580,6 +654,7 @@ The MCP system handles the rest!
 - ✅ **HTTPS** - Automatic with Cloudflare Pages
 
 ### Production Recommendations
+
 - ⚠️ Upgrade from SHA-256 to bcrypt for password hashing
 - ⚠️ Implement CAPTCHA for sign-up forms
 - ⚠️ Monitor authentication logs
@@ -590,6 +665,7 @@ The MCP system handles the rest!
 ## 🎯 Use Cases
 
 Perfect for:
+
 - 📝 **SaaS Applications** - Full authentication and user management out of the box
 - 🎨 **Blogs & Documentation** - Advanced blog system with search and SEO
 - 🚀 **Landing Pages** - Beautiful components and dark mode
@@ -602,6 +678,7 @@ Perfect for:
 ## 🚀 Getting Started
 
 ### Quick Start
+
 ```bash
 # Clone the repository
 git clone https://github.com/one-ie/stack.git
@@ -624,6 +701,7 @@ bun run dev
 Visit `http://localhost:4321` - You're ready to go! 🎉
 
 ### Environment Variables
+
 ```bash
 # Convex
 PUBLIC_CONVEX_URL=https://your-deployment.convex.cloud
@@ -649,6 +727,7 @@ RESEND_FROM_EMAIL=noreply@yourdomain.com
 ## 📦 What's Included Out of the Box
 
 ### Authentication Pages
+
 - ✅ `/signin` - Sign in page
 - ✅ `/signup` - Sign up page
 - ✅ `/forgot-password` - Password reset request
@@ -660,6 +739,7 @@ RESEND_FROM_EMAIL=noreply@yourdomain.com
 - ✅ `/dashboard` - Protected dashboard example
 
 ### Content Pages
+
 - ✅ `/` - Homepage
 - ✅ `/blog` - Blog index with search
 - ✅ `/blog/[slug]` - Dynamic blog posts
@@ -667,6 +747,7 @@ RESEND_FROM_EMAIL=noreply@yourdomain.com
 - ✅ `/404` - Custom 404 page
 
 ### Demo Pages
+
 - ✅ `/mail` - Gmail-style email UI demo
 - ✅ `/readme` - Project documentation viewer
 - ✅ `/install` - Installation guide
@@ -674,6 +755,7 @@ RESEND_FROM_EMAIL=noreply@yourdomain.com
 ## 📚 Documentation
 
 ### Project Documentation
+
 - **CLAUDE.md** - Complete AI assistant instructions (41 documentation files)
 - **README.md** - This file (getting started, features, deployment)
 - **CONVEX_SETUP_INSTRUCTIONS.md** - Convex setup guide
@@ -687,6 +769,7 @@ RESEND_FROM_EMAIL=noreply@yourdomain.com
   - Deployment guides
 
 ### External Resources
+
 - [Astro Documentation](https://docs.astro.build)
 - [shadcn/ui Components](https://ui.shadcn.com/docs/components/accordion)
 - [Tailwind CSS v4](https://tailwindcss.com/docs)
@@ -697,28 +780,37 @@ RESEND_FROM_EMAIL=noreply@yourdomain.com
 ## 🎉 What Makes ONE Stack Special
 
 ### 1. Most Comprehensive Authentication
+
 **6 authentication methods** implemented and production-ready:
+
 - Email/password, OAuth (GitHub/Google), password reset, email verification, magic links, 2FA
 
 ### 2. React 19 on Cloudflare Pages
+
 **The "impossible" achievement** - Full React 19 SSR on Cloudflare Workers using `react-dom/server.edge`
 
 ### 3. 50+ Pre-installed Components
+
 **Complete shadcn/ui library** ready to use with beautiful examples and demos
 
 ### 4. Real-time Backend
+
 **Convex** provides real-time subscriptions, typed functions, and zero-config API
 
 ### 5. Perfect Lighthouse Scores
+
 **100/100 across all metrics** - Performance, Accessibility, Best Practices, SEO
 
 ### 6. Production-Ready Security
+
 **Rate limiting**, session management, HttpOnly cookies, email verification, 2FA
 
 ### 7. Advanced Blog System
+
 **Multi-view layouts**, real-time search, ToC, social sharing, RSS feed
 
 ### 8. Enterprise-Grade Code Quality
+
 **TypeScript strict mode**, ESLint, Prettier, path aliases, comprehensive docs
 
 ---

@@ -1,3 +1,21 @@
+---
+title: 2 Tests
+dimension: things
+category: features
+tags: agent, ai, backend, frontend
+related_dimensions: knowledge
+scope: global
+created: 2025-11-03
+updated: 2025-11-03
+version: 1.0.0
+ai_context: |
+  This document is part of the things dimension in the features category.
+  Location: one/things/features/2-tests.md
+  Purpose: Documents feature 2: backend-agnostic frontend - test specification
+  Related dimensions: knowledge
+  For AI agents: Read this to understand 2 tests.
+---
+
 # Feature 2: Backend-Agnostic Frontend - Test Specification
 
 **Feature ID:** `feature_2_tests`
@@ -72,6 +90,7 @@ Please create a COMPREHENSIVE test specification covering:
 ### 1. Unit Tests (90%+ Coverage)
 
 **DataProvider Interface (Feature 2-1):**
+
 - [ ] Interface defines all 6-dimension operations
 - [ ] ConvexProvider implements all operations
 - [ ] ConvexProvider handles errors correctly
@@ -80,6 +99,7 @@ Please create a COMPREHENSIVE test specification covering:
 - [ ] Type safety enforced at compile time
 
 **Configuration System (Feature 2-2):**
+
 - [ ] Environment variables parsed correctly
 - [ ] Provider registry manages multiple providers
 - [ ] Provider switching works
@@ -88,6 +108,7 @@ Please create a COMPREHENSIVE test specification covering:
 - [ ] Invalid configurations rejected
 
 **Effect.ts Services (Feature 2-3):**
+
 - [ ] ThingService creates things
 - [ ] ThingService lists things with filters
 - [ ] ThingService updates things
@@ -98,6 +119,7 @@ Please create a COMPREHENSIVE test specification covering:
 - [ ] Business rules enforced
 
 **React Hooks (Feature 2-4):**
+
 - [ ] useThings hook fetches entities
 - [ ] useThing hook fetches single entity
 - [ ] useCreateThing hook creates entities
@@ -110,6 +132,7 @@ Please create a COMPREHENSIVE test specification covering:
 ### 2. Integration Tests (80%+ Coverage)
 
 **Auth Migration (Feature 2-5):**
+
 - [ ] Email/password login works end-to-end
 - [ ] Email/password signup works end-to-end
 - [ ] OAuth (Google) login works
@@ -124,6 +147,7 @@ Please create a COMPREHENSIVE test specification covering:
 - [ ] Logout works
 
 **Dashboard Migration (Feature 2-6):**
+
 - [ ] Dashboard loads with DataProvider
 - [ ] CourseList displays courses
 - [ ] CourseDetail shows course data
@@ -135,6 +159,7 @@ Please create a COMPREHENSIVE test specification covering:
 - [ ] Navigation works
 
 **Alternative Providers (Feature 2-7):**
+
 - [ ] WordPressProvider creates things
 - [ ] WordPressProvider lists things
 - [ ] WordPressProvider updates things
@@ -148,6 +173,7 @@ Please create a COMPREHENSIVE test specification covering:
 ### 3. End-to-End Tests
 
 **Complete User Flows:**
+
 - [ ] User signs up → creates course → adds lessons → publishes
 - [ ] User logs in → views dashboard → edits course → logs out
 - [ ] User resets password → receives email → sets new password → logs in
@@ -157,6 +183,7 @@ Please create a COMPREHENSIVE test specification covering:
 ### 4. Performance Tests
 
 **Baseline Metrics (Convex):**
+
 - [ ] Login: <500ms (p95)
 - [ ] Dashboard load: <1000ms (p95)
 - [ ] Entity list: <300ms (p95)
@@ -164,6 +191,7 @@ Please create a COMPREHENSIVE test specification covering:
 - [ ] Search: <500ms (p95)
 
 **Target Metrics (DataProvider):**
+
 - [ ] DataProvider overhead: <10ms (p95)
 - [ ] Login: <550ms (p95) - Within 10%
 - [ ] Dashboard load: <1100ms (p95) - Within 10%
@@ -172,6 +200,7 @@ Please create a COMPREHENSIVE test specification covering:
 - [ ] Search: <550ms (p95) - Within 10%
 
 **Load Testing:**
+
 - [ ] 100 concurrent users - response times acceptable
 - [ ] 1000 concurrent users - response times acceptable
 - [ ] 10,000 entities - query performance acceptable
@@ -180,6 +209,7 @@ Please create a COMPREHENSIVE test specification covering:
 ### 5. Security Tests
 
 **Authentication & Authorization:**
+
 - [ ] Unauthorized users cannot access protected routes
 - [ ] Role-based permissions enforced
 - [ ] SQL injection attempts blocked
@@ -189,6 +219,7 @@ Please create a COMPREHENSIVE test specification covering:
 - [ ] Sensitive data encrypted
 
 **Multi-Tenant Isolation:**
+
 - [ ] Org A cannot access Org B data
 - [ ] Provider switching doesn't leak data
 - [ ] Cross-org queries blocked
@@ -197,6 +228,7 @@ Please create a COMPREHENSIVE test specification covering:
 ### 6. Accessibility Tests
 
 **WCAG 2.1 AA Compliance:**
+
 - [ ] Keyboard navigation works
 - [ ] Screen reader compatible
 - [ ] Color contrast meets standards
@@ -211,6 +243,7 @@ Please create a COMPREHENSIVE test specification covering:
 ### Gate 1: Interface Complete (End of Week 1)
 
 **Checklist:**
+
 - [ ] All unit tests pass (Feature 2-1, 2-2)
 - [ ] TypeScript compiles with zero errors
 - [ ] Performance baseline established
@@ -218,6 +251,7 @@ Please create a COMPREHENSIVE test specification covering:
 - [ ] Code review approved
 
 **Approval Required From:**
+
 - Backend Specialist (implementation complete)
 - Quality Agent (tests pass)
 - Engineering Director (gate approval)
@@ -227,6 +261,7 @@ Please create a COMPREHENSIVE test specification covering:
 ### Gate 2: Services Complete (End of Week 2)
 
 **Checklist:**
+
 - [ ] All unit tests pass (Feature 2-3, 2-4)
 - [ ] Integration tests pass
 - [ ] Effect.ts error handling works
@@ -235,6 +270,7 @@ Please create a COMPREHENSIVE test specification covering:
 - [ ] Code review approved
 
 **Approval Required From:**
+
 - Backend Specialist (services complete)
 - Frontend Specialist (hooks complete)
 - Quality Agent (tests pass)
@@ -245,6 +281,7 @@ Please create a COMPREHENSIVE test specification covering:
 ### Gate 3: Auth Migration Complete (End of Week 3)
 
 **Checklist:**
+
 - [ ] **ALL 50+ auth tests pass** (NO EXCEPTIONS)
 - [ ] Zero functionality regression
 - [ ] Performance within 10% of baseline
@@ -254,6 +291,7 @@ Please create a COMPREHENSIVE test specification covering:
 - [ ] Code review approved
 
 **Approval Required From:**
+
 - Frontend Specialist (migration complete)
 - Quality Agent (ALL tests pass)
 - Engineering Director (gate approval)
@@ -265,6 +303,7 @@ Please create a COMPREHENSIVE test specification covering:
 ### Gate 4: Full Migration Complete (End of Week 4)
 
 **Checklist:**
+
 - [ ] All dashboard components migrated
 - [ ] All tests pass (unit, integration, e2e)
 - [ ] Performance maintained
@@ -275,6 +314,7 @@ Please create a COMPREHENSIVE test specification covering:
 - [ ] Code review approved
 
 **Approval Required From:**
+
 - Frontend Specialist (dashboard complete)
 - Quality Agent (all tests pass)
 - Engineering Director (gate approval)
@@ -284,6 +324,7 @@ Please create a COMPREHENSIVE test specification covering:
 ### Gate 5: Alternative Providers Working (End of Week 6)
 
 **Checklist:**
+
 - [ ] WordPress provider functional
 - [ ] Notion provider functional
 - [ ] Multi-backend tests pass
@@ -295,6 +336,7 @@ Please create a COMPREHENSIVE test specification covering:
 - [ ] Code review approved
 
 **Approval Required From:**
+
 - Integration Specialist (providers complete)
 - Quality Agent (all tests pass)
 - Engineering Director (gate approval)
@@ -393,17 +435,20 @@ deploy:
 ## Test Execution Schedule
 
 ### Daily (During Development)
+
 - Run unit tests after each code change
 - Run integration tests for affected features
 - Monitor test coverage (maintain 90%+ unit, 80%+ integration)
 
 ### Per Feature Completion
+
 - Run full test suite for completed feature
 - Run regression tests for all previous features
 - Performance benchmarks
 - Security scans
 
 ### Weekly
+
 - Full regression test suite
 - E2E test suite
 - Load testing
@@ -411,6 +456,7 @@ deploy:
 - Accessibility audit
 
 ### Before Release
+
 - Complete test suite (all categories)
 - Performance validation
 - Security audit
@@ -422,12 +468,14 @@ deploy:
 ## Test Environments
 
 ### Development
+
 - Local Convex deployment
 - Local frontend (localhost:4321)
 - Mock external services
 - Fast feedback loop
 
 ### Staging
+
 - Staging Convex deployment
 - Staging frontend (staging.one-platform.com)
 - Real WordPress instance (staging)
@@ -435,6 +483,7 @@ deploy:
 - Production-like environment
 
 ### Production
+
 - Production Convex deployment
 - Production frontend (one-platform.com)
 - Production external services
@@ -447,12 +496,14 @@ deploy:
 ### Auth Regression Suite (50+ Tests)
 
 **Must Run After:**
+
 - Any auth component change
 - Any DataProvider change
 - Any hook change
 - Feature 2-5 (Auth Migration)
 
 **Test Categories:**
+
 1. Email/password authentication (10 tests)
 2. OAuth authentication (15 tests)
 3. Magic link authentication (5 tests)
@@ -461,6 +512,7 @@ deploy:
 6. 2FA (10 tests)
 
 **Success Criteria:**
+
 - ALL 50+ tests MUST pass
 - Zero functionality regression
 - Performance within 10% of baseline
@@ -468,12 +520,14 @@ deploy:
 ### Dashboard Regression Suite (40+ Tests)
 
 **Must Run After:**
+
 - Any dashboard component change
 - Any DataProvider change
 - Any hook change
 - Feature 2-6 (Dashboard Migration)
 
 **Test Categories:**
+
 1. Entity lists (10 tests)
 2. Entity details (10 tests)
 3. Activity feed (5 tests)
@@ -483,10 +537,12 @@ deploy:
 ### E2E Regression Suite
 
 **Must Run After:**
+
 - Any major change
 - Before release
 
 **Test Scenarios:**
+
 1. Complete user signup → course creation → lesson addition → publish flow
 2. Complete login → dashboard → edit → logout flow
 3. Complete password reset flow

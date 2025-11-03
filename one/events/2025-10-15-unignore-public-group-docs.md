@@ -1,3 +1,21 @@
+---
+title: 2025 10 15 Unignore Public Group Docs
+dimension: events
+category: 2025-10-15-unignore-public-group-docs.md
+tags: agent, ai, groups
+related_dimensions: groups, things
+scope: global
+created: 2025-11-03
+updated: 2025-11-03
+version: 1.0.0
+ai_context: |
+  This document is part of the events dimension in the 2025-10-15-unignore-public-group-docs.md category.
+  Location: one/events/2025-10-15-unignore-public-group-docs.md
+  Purpose: Documents ✅ public group docs restored to git
+  Related dimensions: groups, things
+  For AI agents: Read this to understand 2025 10 15 unignore public group docs.
+---
+
 # ✅ Public Group Docs Restored to Git
 
 **Date:** 2025-10-15 03:45 UTC

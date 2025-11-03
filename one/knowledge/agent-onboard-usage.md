@@ -1,3 +1,21 @@
+---
+title: Agent Onboard Usage
+dimension: knowledge
+category: agent-onboard-usage.md
+tags: agent, ai, ai-agent, backend, installation, testing
+related_dimensions: events, groups, people, things
+scope: global
+created: 2025-11-03
+updated: 2025-11-03
+version: 1.0.0
+ai_context: |
+  This document is part of the knowledge dimension in the agent-onboard-usage.md category.
+  Location: one/knowledge/agent-onboard-usage.md
+  Purpose: Documents agent-onboard usage guide
+  Related dimensions: events, groups, people, things
+  For AI agents: Read this to understand agent onboard usage.
+---
+
 # Agent-Onboard Usage Guide
 
 **Version:** 1.0.0

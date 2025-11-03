@@ -1,15 +1,25 @@
 #!/usr/bin/env python3
 """
 ONE Platform - Clean Agent Pre-Inference Hook
-Validates cleanliness before starting each inference.
+Validates cleanliness and 6-dimension ontology compliance before starting each inference.
 
 This hook runs before UserPromptSubmit to ensure:
-- File structure is intact
+- File structure is intact and ontology-aligned
+- Root directory only contains approved markdown files
+- All other docs are properly organized in /one/<dimension>/ directories
 - No orphaned files exist
 - Naming conventions are followed
 - Documentation is up to date
 - No uncommitted critical changes
 - Metadata tags are present on all docs
+
+6-Dimension Ontology Structure:
+  1. groups - Hierarchical containers (multi-tenant isolation)
+  2. people - Authorization & governance (roles, permissions)
+  3. things - All entities (users, agents, content, tokens)
+  4. connections - Relationships between entities
+  5. events - Actions and state changes over time
+  6. knowledge - Labels, embeddings, semantic search
 """
 import json
 import sys
@@ -19,7 +29,7 @@ from typing import Dict, Any, List, Tuple
 import subprocess
 import re
 
-# Critical directories that must exist
+# 6-dimension ontology directories (MUST exist)
 REQUIRED_DIRS = [
     "one/connections",
     "one/events",
@@ -30,6 +40,15 @@ REQUIRED_DIRS = [
     ".claude/hooks",
     ".claude/state",
 ]
+
+# Root directory: ONLY these markdown files are allowed
+ALLOWED_ROOT_MARKDOWN = {
+    "README.md",
+    "LICENSE.md",
+    "SECURITY.md",
+    "CLAUDE.md",
+    "AGENTS.md",
+}
 
 # File naming conventions
 NAMING_PATTERNS = {
@@ -63,22 +82,76 @@ class CleanlinessValidator:
         self.warnings.append(message)
 
     def validate_directory_structure(self):
-        """Check that all required directories exist"""
+        """Check that all required 6-dimension ontology directories exist"""
         for dir_path in REQUIRED_DIRS:
             full_path = self.project_dir / dir_path
             if not full_path.exists():
-                self.add_issue("error", f"Missing required directory: {dir_path}")
+                self.add_issue("error", f"Missing required ontology directory: {dir_path}")
             elif not full_path.is_dir():
                 self.add_issue("error", f"Path exists but is not a directory: {dir_path}")
+
+    def validate_root_directory_compliance(self):
+        """Check that root directory only contains approved markdown files"""
+        violations = []
+
+        # Check all markdown files in root
+        for md_file in self.project_dir.glob("*.md"):
+            if md_file.name not in ALLOWED_ROOT_MARKDOWN:
+                violations.append(md_file.name)
+
+        if violations:
+            self.add_issue(
+                "error",
+                f"Root directory contains {len(violations)} unauthorized markdown files. "
+                f"Only {', '.join(sorted(ALLOWED_ROOT_MARKDOWN))} are allowed. "
+                f"Move these to /one/<dimension>/: {', '.join(sorted(violations))}"
+            )
+            self.metrics["root_violations"] = len(violations)
+        else:
+            self.metrics["root_violations"] = 0
+
+    def validate_ontology_dimensions(self):
+        """Check that /one/ directory properly contains all 6 dimensions"""
+        one_dir = self.project_dir / "one"
+        if not one_dir.exists():
+            self.add_issue("error", "Missing /one/ directory - ontology structure not found")
+            return
+
+        dimensions = ["groups", "people", "things", "connections", "events", "knowledge"]
+        missing_dimensions = []
+
+        for dimension in dimensions:
+            dim_path = one_dir / dimension
+            if not dim_path.exists():
+                missing_dimensions.append(dimension)
+
+        if missing_dimensions:
+            self.add_issue(
+                "error",
+                f"Missing ontology dimensions in /one/: {', '.join(missing_dimensions)}. "
+                f"The 6-dimension ontology requires all dimensions to be present."
+            )
+
+        # Check for unexpected top-level directories in /one/
+        expected_dirs = set(dimensions)
+        actual_dirs = {d.name for d in one_dir.iterdir() if d.is_dir() and not d.name.startswith(".")}
+        unexpected = actual_dirs - expected_dirs
+
+        if unexpected:
+            self.add_warning(
+                f"Unexpected directories in /one/: {', '.join(sorted(unexpected))}. "
+                f"Only the 6 dimensions are expected: {', '.join(sorted(dimensions))}"
+            )
 
     def validate_file_naming(self):
         """Check that files follow naming conventions"""
         problematic_files = []
 
         # Check markdown files in one/
-        for md_file in (self.project_dir / "one").rglob("*.md"):
-            if not re.match(NAMING_PATTERNS[".md"], md_file.name):
-                problematic_files.append(str(md_file.relative_to(self.project_dir)))
+        if (self.project_dir / "one").exists():
+            for md_file in (self.project_dir / "one").rglob("*.md"):
+                if not re.match(NAMING_PATTERNS[".md"], md_file.name):
+                    problematic_files.append(str(md_file.relative_to(self.project_dir)))
 
         if problematic_files:
             self.add_warning(f"Files not following kebab-case convention: {', '.join(problematic_files[:5])}")
@@ -178,8 +251,10 @@ class CleanlinessValidator:
         return max(0, min(100, score))
 
     def run_all_checks(self):
-        """Run all cleanliness validation checks"""
+        """Run all cleanliness and ontology validation checks"""
         self.validate_directory_structure()
+        self.validate_root_directory_compliance()
+        self.validate_ontology_dimensions()
         self.validate_file_naming()
         self.find_orphaned_files()
         self.check_metadata_tags()
@@ -206,7 +281,7 @@ def generate_report(validator: CleanlinessValidator) -> str:
 
     report = f"""
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-{color} CLEANLINESS VALIDATION - {status} ({score}/100)
+{color} ONTOLOGY COMPLIANCE & CLEANLINESS - {status} ({score}/100)
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 """
 
@@ -241,12 +316,22 @@ def generate_report(validator: CleanlinessValidator) -> str:
     # Add recommendations
     if score < 90:
         report += "\n💡 RECOMMENDATIONS:\n"
+        if validator.metrics.get("root_violations", 0) > 0:
+            report += "  • CRITICAL: Move unauthorized files from root to /one/<dimension>/\n"
+            report += "    Root should ONLY contain: README.md, LICENSE.md, SECURITY.md, CLAUDE.md, AGENTS.md\n"
         if validator.metrics.get("files_without_metadata", 0) > 0:
             report += "  • Run: Add metadata tags to documentation files\n"
         if validator.metrics.get("uncommitted_files", 0) > 0:
             report += "  • Run: git add . && git commit -m 'chore: clean up'\n"
         if any(issue[0] == "error" for issue in validator.issues):
-            report += "  • Fix critical errors before proceeding with inference\n"
+            report += "  • Fix critical ontology violations before proceeding\n"
+        report += "\n📚 6-DIMENSION ONTOLOGY:\n"
+        report += "  • groups - Hierarchical containers (multi-tenant isolation)\n"
+        report += "  • people - Authorization & governance (roles, permissions)\n"
+        report += "  • things - All entities (users, agents, content, tokens)\n"
+        report += "  • connections - Relationships between entities\n"
+        report += "  • events - Actions and state changes over time\n"
+        report += "  • knowledge - Labels, embeddings, semantic search\n"
         report += "\n━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\n"
 
     return report

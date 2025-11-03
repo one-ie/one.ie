@@ -1,3 +1,21 @@
+---
+title: Demo Design System
+dimension: things
+category: demo-design-system.md
+tags: ai
+related_dimensions: knowledge, people
+scope: global
+created: 2025-11-03
+updated: 2025-11-03
+version: 1.0.0
+ai_context: |
+  This document is part of the things dimension in the demo-design-system.md category.
+  Location: one/things/demo-design-system.md
+  Purpose: Documents one platform demo design system
+  Related dimensions: knowledge, people
+  For AI agents: Read this to understand demo design system.
+---
+
 # ONE Platform Demo Design System
 
 ## Version 1.0.0 - Foundation Specification
@@ -11,6 +29,7 @@ This document defines the complete design system for ONE Platform demo pages. Al
 ### Color Philosophy
 
 The ONE Platform uses a **warm, sophisticated palette** designed for:
+
 - Professional credibility (enterprise users)
 - Accessibility first (WCAG AAA contrast)
 - Dark mode supremacy (CSS variables auto-switch)
@@ -22,14 +41,14 @@ The ONE Platform uses a **warm, sophisticated palette** designed for:
 
 ```css
 @theme {
-  --color-background: 36 8% 88%;           /* Light warm gray (#E0D4C4) */
-  --color-foreground: 0 0% 13%;            /* Near black (#222222) */
-  --color-primary: 216 55% 25%;            /* Deep blue (#003D80) */
-  --color-primary-foreground: 36 8% 96%;   /* Light foreground */
-  --color-secondary: 219 14% 28%;          /* Slate blue (#3D4A61) */
+  --color-background: 36 8% 88%; /* Light warm gray (#E0D4C4) */
+  --color-foreground: 0 0% 13%; /* Near black (#222222) */
+  --color-primary: 216 55% 25%; /* Deep blue (#003D80) */
+  --color-primary-foreground: 36 8% 96%; /* Light foreground */
+  --color-secondary: 219 14% 28%; /* Slate blue (#3D4A61) */
   --color-secondary-foreground: 36 8% 96%; /* Light foreground */
-  --color-accent: 105 22% 25%;             /* Teal green (#2D5E3E) */
-  --color-accent-foreground: 36 8% 96%;    /* Light foreground */
+  --color-accent: 105 22% 25%; /* Teal green (#2D5E3E) */
+  --color-accent-foreground: 36 8% 96%; /* Light foreground */
 }
 ```
 
@@ -60,15 +79,15 @@ The ONE Platform uses a **warm, sophisticated palette** designed for:
 
 ### Semantic Color Meanings
 
-| Token | Use Case | Contrast Ratio |
-|-------|----------|-----------------|
-| `bg-background / text-foreground` | Main page background + body text | 8.5:1 (AAA) |
-| `bg-card / text-card-foreground` | Card surfaces, elevated containers | 8.5:1 (AAA) |
-| `bg-primary / text-primary-foreground` | Buttons, CTAs, primary actions | 10:1 (AAA+) |
-| `bg-secondary / text-secondary-foreground` | Secondary buttons, navigation | 9:1 (AAA) |
-| `bg-accent / text-accent-foreground` | Highlights, attention elements | 9.2:1 (AAA) |
-| `text-muted-foreground` | Helper text, descriptions, meta | 5:1+ (AAA) |
-| `bg-destructive / text-destructive-foreground` | Delete, error, danger states | 10:1 (AAA+) |
+| Token                                          | Use Case                           | Contrast Ratio |
+| ---------------------------------------------- | ---------------------------------- | -------------- |
+| `bg-background / text-foreground`              | Main page background + body text   | 8.5:1 (AAA)    |
+| `bg-card / text-card-foreground`               | Card surfaces, elevated containers | 8.5:1 (AAA)    |
+| `bg-primary / text-primary-foreground`         | Buttons, CTAs, primary actions     | 10:1 (AAA+)    |
+| `bg-secondary / text-secondary-foreground`     | Secondary buttons, navigation      | 9:1 (AAA)      |
+| `bg-accent / text-accent-foreground`           | Highlights, attention elements     | 9.2:1 (AAA)    |
+| `text-muted-foreground`                        | Helper text, descriptions, meta    | 5:1+ (AAA)     |
+| `bg-destructive / text-destructive-foreground` | Delete, error, danger states       | 10:1 (AAA+)    |
 
 ### Dark Mode Implementation
 
@@ -104,16 +123,17 @@ The ONE Platform uses a **warm, sophisticated palette** designed for:
 
 ### Accessibility Validation (All WCAG AAA)
 
-| Color Pair | Light | Dark | Type |
-|-----------|-------|------|------|
-| Foreground on Background | 8.5:1 | 9.2:1 | Body Text |
-| Secondary on Background | 7.8:1 | 8.1:1 | Secondary Text |
-| Muted on Background | 5.2:1 | 5.8:1 | Helper Text |
-| Primary on Foreground | 10.2:1 | 8.9:1 | Buttons |
-| Accent on Foreground | 9.1:1 | 8.7:1 | Highlights |
-| Destructive on Foreground | 10.5:1 | 9.3:1 | Danger States |
+| Color Pair                | Light  | Dark  | Type           |
+| ------------------------- | ------ | ----- | -------------- |
+| Foreground on Background  | 8.5:1  | 9.2:1 | Body Text      |
+| Secondary on Background   | 7.8:1  | 8.1:1 | Secondary Text |
+| Muted on Background       | 5.2:1  | 5.8:1 | Helper Text    |
+| Primary on Foreground     | 10.2:1 | 8.9:1 | Buttons        |
+| Accent on Foreground      | 9.1:1  | 8.7:1 | Highlights     |
+| Destructive on Foreground | 10.5:1 | 9.3:1 | Danger States  |
 
 **Verification Method:**
+
 - Use WebAIM Contrast Checker: https://webaim.org/resources/contrastchecker/
 - Validate before deployment with: `axe DevTools` or `WAVE`
 
@@ -133,25 +153,25 @@ The ONE Platform uses a **warm, sophisticated palette** designed for:
 
 ### Typography Scale (1.125x Modular Scale)
 
-| Class | Font Size | Line Height | Letter Spacing | Font Weight | Use Case |
-|-------|-----------|-------------|-----------------|------------|----------|
-| `text-xs` | 0.75rem (12px) | 1rem | 0.02em | 400 | Captions, labels |
-| `text-sm` | 0.875rem (14px) | 1.25rem | 0.01em | 400 | Small text, help |
-| `text-base` | 1rem (16px) | 1.5rem | 0 | 400 | Body text |
-| `text-lg` | 1.125rem (18px) | 1.75rem | -0.01em | 500 | Larger body, intro |
-| `text-xl` | 1.25rem (20px) | 1.75rem | -0.01em | 600 | Subheadings |
-| `text-2xl` | 1.5rem (24px) | 2rem | -0.02em | 600 | Section headers |
-| `text-3xl` | 1.875rem (30px) | 2.25rem | -0.02em | 700 | Page titles |
-| `text-4xl` | 2.25rem (36px) | 2.5rem | -0.03em | 700 | Hero headlines |
+| Class       | Font Size       | Line Height | Letter Spacing | Font Weight | Use Case           |
+| ----------- | --------------- | ----------- | -------------- | ----------- | ------------------ |
+| `text-xs`   | 0.75rem (12px)  | 1rem        | 0.02em         | 400         | Captions, labels   |
+| `text-sm`   | 0.875rem (14px) | 1.25rem     | 0.01em         | 400         | Small text, help   |
+| `text-base` | 1rem (16px)     | 1.5rem      | 0              | 400         | Body text          |
+| `text-lg`   | 1.125rem (18px) | 1.75rem     | -0.01em        | 500         | Larger body, intro |
+| `text-xl`   | 1.25rem (20px)  | 1.75rem     | -0.01em        | 600         | Subheadings        |
+| `text-2xl`  | 1.5rem (24px)   | 2rem        | -0.02em        | 600         | Section headers    |
+| `text-3xl`  | 1.875rem (30px) | 2.25rem     | -0.02em        | 700         | Page titles        |
+| `text-4xl`  | 2.25rem (36px)  | 2.5rem      | -0.03em        | 700         | Hero headlines     |
 
 ### Font Weight System
 
-| Class | Weight | Use Case |
-|-------|--------|----------|
-| `font-normal` | 400 | Body text, default |
-| `font-medium` | 500 | Emphasis, labels |
-| `font-semibold` | 600 | Subheadings, CTAs |
-| `font-bold` | 700 | Main headings, attention |
+| Class           | Weight | Use Case                 |
+| --------------- | ------ | ------------------------ |
+| `font-normal`   | 400    | Body text, default       |
+| `font-medium`   | 500    | Emphasis, labels         |
+| `font-semibold` | 600    | Subheadings, CTAs        |
+| `font-bold`     | 700    | Main headings, attention |
 
 ### Line Height Rules
 
@@ -186,33 +206,33 @@ The ONE Platform uses a **warm, sophisticated palette** designed for:
 @theme {
   /* Tailwind spacing (4px increments) */
   --spacing-0: 0;
-  --spacing-1: 0.25rem;    /* 4px */
-  --spacing-2: 0.5rem;     /* 8px */
-  --spacing-3: 0.75rem;    /* 12px */
-  --spacing-4: 1rem;       /* 16px */
-  --spacing-5: 1.25rem;    /* 20px */
-  --spacing-6: 1.5rem;     /* 24px */
-  --spacing-8: 2rem;       /* 32px */
-  --spacing-10: 2.5rem;    /* 40px */
-  --spacing-12: 3rem;      /* 48px */
-  --spacing-16: 4rem;      /* 64px */
-  --spacing-20: 5rem;      /* 80px */
-  --spacing-24: 6rem;      /* 96px */
-  --spacing-32: 8rem;      /* 128px */
+  --spacing-1: 0.25rem; /* 4px */
+  --spacing-2: 0.5rem; /* 8px */
+  --spacing-3: 0.75rem; /* 12px */
+  --spacing-4: 1rem; /* 16px */
+  --spacing-5: 1.25rem; /* 20px */
+  --spacing-6: 1.5rem; /* 24px */
+  --spacing-8: 2rem; /* 32px */
+  --spacing-10: 2.5rem; /* 40px */
+  --spacing-12: 3rem; /* 48px */
+  --spacing-16: 4rem; /* 64px */
+  --spacing-20: 5rem; /* 80px */
+  --spacing-24: 6rem; /* 96px */
+  --spacing-32: 8rem; /* 128px */
 }
 ```
 
 ### Spacing Scale Usage
 
-| Component | Padding | Example |
-|-----------|---------|---------|
-| Button (compact) | `px-3 py-2` | Small buttons |
-| Button (default) | `px-4 py-2.5` | Standard buttons |
-| Card | `p-6` | Card containers |
-| Section | `px-4 py-8 md:px-6 md:py-12` | Page sections |
-| Gap (grid) | `gap-4` | Card grids |
-| Gap (list) | `gap-2` | List items |
-| Margin (between sections) | `mb-12 md:mb-16` | Vertical rhythm |
+| Component                 | Padding                      | Example          |
+| ------------------------- | ---------------------------- | ---------------- |
+| Button (compact)          | `px-3 py-2`                  | Small buttons    |
+| Button (default)          | `px-4 py-2.5`                | Standard buttons |
+| Card                      | `p-6`                        | Card containers  |
+| Section                   | `px-4 py-8 md:px-6 md:py-12` | Page sections    |
+| Gap (grid)                | `gap-4`                      | Card grids       |
+| Gap (list)                | `gap-2`                      | List items       |
+| Margin (between sections) | `mb-12 md:mb-16`             | Vertical rhythm  |
 
 **Implementation Pattern:**
 
@@ -242,21 +262,21 @@ The ONE Platform uses a **warm, sophisticated palette** designed for:
 
 ```css
 @theme {
-  --radius-sm: 0.375rem;  /* 6px - small elements */
-  --radius-md: 0.75rem;   /* 12px - default */
-  --radius-lg: 1.5rem;    /* 24px - large containers */
+  --radius-sm: 0.375rem; /* 6px - small elements */
+  --radius-md: 0.75rem; /* 12px - default */
+  --radius-lg: 1.5rem; /* 24px - large containers */
 }
 ```
 
 ### Usage by Component
 
-| Component | Radius | Tailwind | Use Case |
-|-----------|--------|----------|----------|
-| Input fields | `--radius-md` | `rounded-md` | Forms |
-| Buttons | `--radius-md` | `rounded-md` | Primary CTAs |
-| Cards | `--radius-lg` | `rounded-lg` | Content containers |
-| Badges | `--radius-md` | `rounded-md` | Small labels |
-| Modals | `--radius-lg` | `rounded-lg` | Large dialogs |
+| Component    | Radius        | Tailwind     | Use Case           |
+| ------------ | ------------- | ------------ | ------------------ |
+| Input fields | `--radius-md` | `rounded-md` | Forms              |
+| Buttons      | `--radius-md` | `rounded-md` | Primary CTAs       |
+| Cards        | `--radius-lg` | `rounded-lg` | Content containers |
+| Badges       | `--radius-md` | `rounded-md` | Small labels       |
+| Modals       | `--radius-lg` | `rounded-lg` | Large dialogs      |
 
 ### Shadow System (Depth)
 
@@ -287,27 +307,27 @@ box-shadow-xl   /* Heavy, floating notifications */
 
 ### Button Sizes
 
-| Size | Padding | Font Size | Height | Use Case |
-|------|---------|-----------|--------|----------|
-| `sm` | `px-3 py-1.5` | `text-sm` | 32px | Compact buttons |
-| `md` | `px-4 py-2` | `text-base` | 40px | Default buttons |
-| `lg` | `px-6 py-3` | `text-lg` | 48px | Primary CTAs |
+| Size | Padding       | Font Size   | Height | Use Case        |
+| ---- | ------------- | ----------- | ------ | --------------- |
+| `sm` | `px-3 py-1.5` | `text-sm`   | 32px   | Compact buttons |
+| `md` | `px-4 py-2`   | `text-base` | 40px   | Default buttons |
+| `lg` | `px-6 py-3`   | `text-lg`   | 48px   | Primary CTAs    |
 
 ### Input Sizes
 
-| Component | Padding | Font Size | Height |
-|-----------|---------|-----------|--------|
-| Input text | `px-4 py-2.5` | `text-base` | 40px |
-| Input small | `px-3 py-1.5` | `text-sm` | 32px |
-| Textarea | `p-3` | `text-base` | Flexible |
+| Component   | Padding       | Font Size   | Height   |
+| ----------- | ------------- | ----------- | -------- |
+| Input text  | `px-4 py-2.5` | `text-base` | 40px     |
+| Input small | `px-3 py-1.5` | `text-sm`   | 32px     |
+| Textarea    | `p-3`         | `text-base` | Flexible |
 
 ### Card Sizes
 
-| Type | Padding | Max Width | Use Case |
-|------|---------|-----------|----------|
-| Compact | `p-4` | 100% | Lists, grids |
-| Default | `p-6` | 100% | Feature cards |
-| Large | `p-8` | 100% | Hero cards |
+| Type    | Padding | Max Width | Use Case      |
+| ------- | ------- | --------- | ------------- |
+| Compact | `p-4`   | 100%      | Lists, grids  |
+| Default | `p-6`   | 100%      | Feature cards |
+| Large   | `p-8`   | 100%      | Hero cards    |
 
 ---
 
@@ -326,8 +346,12 @@ transition-slow    /* 500ms - Page transitions */
 
 ```css
 @keyframes fadeIn {
-  from { opacity: 0; }
-  to { opacity: 1; }
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
 }
 
 @keyframes fadeInUp {
@@ -364,13 +388,23 @@ transition-slow    /* 500ms - Page transitions */
 }
 
 @keyframes float {
-  0%, 100% { transform: translateY(0px) scale(1); }
-  50% { transform: translateY(-15px) scale(1.02); }
+  0%,
+  100% {
+    transform: translateY(0px) scale(1);
+  }
+  50% {
+    transform: translateY(-15px) scale(1.02);
+  }
 }
 
 @keyframes pulse-soft {
-  0%, 100% { opacity: 1; }
-  50% { opacity: 0.7; }
+  0%,
+  100% {
+    opacity: 1;
+  }
+  50% {
+    opacity: 0.7;
+  }
 }
 ```
 
@@ -395,6 +429,7 @@ transition-slow    /* 500ms - Page transitions */
 ### Interaction Patterns
 
 **Button Hover/Active:**
+
 ```astro
 <button class="
   transition-all duration-200
@@ -406,11 +441,13 @@ transition-slow    /* 500ms - Page transitions */
 ```
 
 **Loading State:**
+
 ```astro
 <div class="animate-pulse bg-muted h-12 rounded-md"></div>
 ```
 
 **Card Hover:**
+
 ```astro
 <div class="
   transition-all duration-300
@@ -503,28 +540,28 @@ XL:        xl: 1280px+
 ### Theme Switching Component
 
 ```tsx
-import { useEffect, useState } from 'react';
+import { useEffect, useState } from "react";
 
 export function ThemeToggle() {
   const [isDark, setIsDark] = useState(false);
 
   useEffect(() => {
-    const isDarkMode = localStorage.getItem('theme') === 'dark';
+    const isDarkMode = localStorage.getItem("theme") === "dark";
     setIsDark(isDarkMode);
     if (isDarkMode) {
-      document.documentElement.classList.add('dark');
+      document.documentElement.classList.add("dark");
     }
   }, []);
 
   const toggle = () => {
     const newIsDark = !isDark;
     setIsDark(newIsDark);
-    localStorage.setItem('theme', newIsDark ? 'dark' : 'light');
+    localStorage.setItem("theme", newIsDark ? "dark" : "light");
 
     if (newIsDark) {
-      document.documentElement.classList.add('dark');
+      document.documentElement.classList.add("dark");
     } else {
-      document.documentElement.classList.remove('dark');
+      document.documentElement.classList.remove("dark");
     }
   };
 
@@ -542,11 +579,13 @@ export function ThemeToggle() {
 // src/components/ui/card.tsx
 export function Card({ children, className }: CardProps) {
   return (
-    <div className={cn(
-      'rounded-lg bg-card text-card-foreground border border-border shadow-sm',
-      'transition-all duration-300 hover:shadow-md',
-      className
-    )}>
+    <div
+      className={cn(
+        "rounded-lg bg-card text-card-foreground border border-border shadow-sm",
+        "transition-all duration-300 hover:shadow-md",
+        className,
+      )}
+    >
       {children}
     </div>
   );
@@ -554,6 +593,7 @@ export function Card({ children, className }: CardProps) {
 ```
 
 **Usage:**
+
 ```astro
 <Card>
   <div class="p-6">Card content</div>
@@ -564,27 +604,33 @@ export function Card({ children, className }: CardProps) {
 
 ```tsx
 // src/components/ui/button.tsx
-export function Button({ children, variant = 'default', size = 'md' }: ButtonProps) {
+export function Button({
+  children,
+  variant = "default",
+  size = "md",
+}: ButtonProps) {
   const variants = {
-    default: 'bg-primary text-primary-foreground hover:bg-primary/90',
-    secondary: 'bg-secondary text-secondary-foreground hover:bg-secondary/90',
-    outline: 'border border-input bg-background hover:bg-muted',
-    ghost: 'hover:bg-muted hover:text-muted-foreground',
+    default: "bg-primary text-primary-foreground hover:bg-primary/90",
+    secondary: "bg-secondary text-secondary-foreground hover:bg-secondary/90",
+    outline: "border border-input bg-background hover:bg-muted",
+    ghost: "hover:bg-muted hover:text-muted-foreground",
   };
 
   const sizes = {
-    sm: 'px-3 py-1.5 text-sm',
-    md: 'px-4 py-2 text-base',
-    lg: 'px-6 py-3 text-lg',
+    sm: "px-3 py-1.5 text-sm",
+    md: "px-4 py-2 text-base",
+    lg: "px-6 py-3 text-lg",
   };
 
   return (
-    <button className={cn(
-      'rounded-md font-medium transition-all duration-200',
-      'focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring',
-      variants[variant],
-      sizes[size],
-    )}>
+    <button
+      className={cn(
+        "rounded-md font-medium transition-all duration-200",
+        "focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring",
+        variants[variant],
+        sizes[size],
+      )}
+    >
       {children}
     </button>
   );
@@ -595,19 +641,22 @@ export function Button({ children, variant = 'default', size = 'md' }: ButtonPro
 
 ```tsx
 // src/components/ui/badge.tsx
-export function Badge({ children, variant = 'default' }: BadgeProps) {
+export function Badge({ children, variant = "default" }: BadgeProps) {
   const variants = {
-    default: 'bg-primary/10 text-primary border border-primary/20',
-    secondary: 'bg-secondary/10 text-secondary border border-secondary/20',
-    accent: 'bg-accent/10 text-accent border border-accent/20',
-    destructive: 'bg-destructive/10 text-destructive border border-destructive/20',
+    default: "bg-primary/10 text-primary border border-primary/20",
+    secondary: "bg-secondary/10 text-secondary border border-secondary/20",
+    accent: "bg-accent/10 text-accent border border-accent/20",
+    destructive:
+      "bg-destructive/10 text-destructive border border-destructive/20",
   };
 
   return (
-    <span className={cn(
-      'inline-flex items-center rounded-full px-2.5 py-0.5 text-xs font-medium',
-      variants[variant],
-    )}>
+    <span
+      className={cn(
+        "inline-flex items-center rounded-full px-2.5 py-0.5 text-xs font-medium",
+        variants[variant],
+      )}
+    >
       {children}
     </span>
   );
@@ -627,6 +676,7 @@ export function Badge({ children, variant = 'default' }: BadgeProps) {
 - [ ] Validate dark mode colors
 
 **Test Command:**
+
 ```bash
 # Use axe DevTools or WAVE browser extensions
 # Or programmatic: npm install axe-core
@@ -643,6 +693,7 @@ export function Badge({ children, variant = 'default' }: BadgeProps) {
 - [ ] Escape closes modals
 
 **Implementation:**
+
 ```astro
 <!-- Visible focus indicator -->
 <button class="focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-ring">
@@ -662,6 +713,7 @@ export function Badge({ children, variant = 'default' }: BadgeProps) {
 - [ ] Headings use proper h1-h6 hierarchy
 
 **Examples:**
+
 ```astro
 <!-- Proper form structure -->
 <form class="space-y-4">
@@ -707,6 +759,7 @@ export function Badge({ children, variant = 'default' }: BadgeProps) {
 - [ ] Loading states announced
 
 **Implementation:**
+
 ```astro
 <!-- Descriptive links -->
 <a href="/learn-more" class="text-primary">
@@ -733,6 +786,7 @@ export function Badge({ children, variant = 'default' }: BadgeProps) {
 - [ ] Zoom not disabled (no `user-scalable=no`)
 
 **Implementation:**
+
 ```astro
 <!-- 44px minimum height touch target -->
 <button class="px-4 py-2 h-11">
@@ -908,9 +962,9 @@ export function Badge({ children, variant = 'default' }: BadgeProps) {
 
 ## Version History
 
-| Version | Date | Changes |
-|---------|------|---------|
-| 1.0.0 | Oct 2024 | Initial design system foundation |
+| Version | Date     | Changes                          |
+| ------- | -------- | -------------------------------- |
+| 1.0.0   | Oct 2024 | Initial design system foundation |
 
 ---
 

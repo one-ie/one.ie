@@ -1,3 +1,21 @@
+---
+title: Templates
+dimension: things
+category: templates.md
+tags: ai
+related_dimensions: events, knowledge, people
+scope: global
+created: 2025-11-03
+updated: 2025-11-03
+version: 1.0.0
+ai_context: |
+  This document is part of the things dimension in the templates.md category.
+  Location: one/things/templates.md
+  Purpose: Documents templates - starter kits for one platform
+  Related dimensions: events, knowledge, people
+  For AI agents: Read this to understand templates.
+---
+
 # Templates - Starter Kits for ONE Platform
 
 **Version**: 1.0.0
@@ -17,6 +35,7 @@ Pre-built, polished starter templates for rapid deployment. Each template is a c
 **Use Case**: Sell physical/digital products
 
 **Features**:
+
 - Hero section with featured products
 - Product grid with filters
 - Individual product pages with cart
@@ -25,6 +44,7 @@ Pre-built, polished starter templates for rapid deployment. Each template is a c
 - Shopping cart with localStorage
 
 **Brand Customization**:
+
 - Color scheme (primary, secondary, accent)
 - Typography (font family, weights)
 - Logo and favicon
@@ -32,6 +52,7 @@ Pre-built, polished starter templates for rapid deployment. Each template is a c
 - Payment integration ready
 
 **Examples**:
+
 - Fashion store (SHOS, Nine Padel)
 - Electronics shop
 - Handmade goods marketplace
@@ -46,6 +67,7 @@ Pre-built, polished starter templates for rapid deployment. Each template is a c
 **Use Case**: Teach and sell online courses
 
 **Features**:
+
 - Course catalog with search/filter
 - Individual course pages with curriculum
 - Instructor profiles
@@ -54,12 +76,14 @@ Pre-built, polished starter templates for rapid deployment. Each template is a c
 - Certificate generation ready
 
 **Brand Customization**:
+
 - Course categories
 - Instructor branding
 - Learning pathways
 - Certification styling
 
 **Examples**:
+
 - Online academy
 - Corporate training
 - Skill-based learning
@@ -74,6 +98,7 @@ Pre-built, polished starter templates for rapid deployment. Each template is a c
 **Use Case**: Build and monetize creator audience
 
 **Features**:
+
 - Personal brand showcase
 - Content feed (blog/videos/podcasts)
 - Subscription tiers
@@ -82,12 +107,14 @@ Pre-built, polished starter templates for rapid deployment. Each template is a c
 - Newsletter signup
 
 **Brand Customization**:
+
 - Personal branding
 - Content types
 - Monetization models (tips, subscriptions, products)
 - Social integrations
 
 **Examples**:
+
 - YouTuber merchandise
 - Podcast subscriptions
 - Newsletter monetization
@@ -139,6 +166,7 @@ cp -r ecommerce/lib/* ../lib/
 ### Customization Checklist
 
 **Every template includes**:
+
 - [ ] Brand name and tagline
 - [ ] Color scheme (3 colors minimum)
 - [ ] Typography (font family + weights)
@@ -148,6 +176,7 @@ cp -r ecommerce/lib/* ../lib/
 - [ ] Sample content/products/courses
 
 **Template-specific**:
+
 - [ ] Product categories (e-commerce)
 - [ ] Course curriculum (LMS)
 - [ ] Content types (creator)
@@ -157,23 +186,27 @@ cp -r ecommerce/lib/* ../lib/
 ## Design Principles
 
 ### 1. Minimal but Complete
+
 - Only 3 pages per template
 - Each page serves a clear purpose
 - No unnecessary features
 
 ### 2. Polished and Professional
+
 - High-quality stock images
 - Consistent spacing and typography
 - Responsive design (mobile-first)
 - Smooth animations and transitions
 
 ### 3. Easy to Customize
+
 - Single config file for branding
 - Clear component structure
 - Well-documented code
 - TypeScript for type safety
 
 ### 4. Production-Ready
+
 - Performance optimized
 - SEO meta tags
 - Accessibility standards
@@ -184,6 +217,7 @@ cp -r ecommerce/lib/* ../lib/
 ## Technical Stack
 
 **Same across all templates**:
+
 - Astro 5+ (SSR)
 - React 19 (interactive components)
 - Tailwind v4 (styling)
@@ -196,16 +230,19 @@ cp -r ecommerce/lib/* ../lib/
 ## Color Schemes
 
 ### E-commerce Template Defaults
+
 - **Primary**: Dark navy `#1D1D1D`
 - **Secondary**: Warm tan `#CEA177`
 - **Accent**: Purple `#785499` / Teal `#6EC1E4`
 
 ### LMS Template Defaults
+
 - **Primary**: Deep blue `#1E40AF`
 - **Secondary**: Orange `#F59E0B`
 - **Accent**: Green `#10B981`
 
 ### Creator Template Defaults
+
 - **Primary**: Black `#000000`
 - **Secondary**: Pink `#EC4899`
 - **Accent**: Yellow `#FBBF24`
@@ -215,14 +252,17 @@ cp -r ecommerce/lib/* ../lib/
 ## Typography
 
 ### E-commerce
+
 - **Font**: Outfit (300, 400, 700, 900)
 - **Style**: Modern, clean, professional
 
 ### LMS
+
 - **Font**: Inter (400, 600, 700)
 - **Style**: Academic, trustworthy, clear
 
 ### Creator
+
 - **Font**: Poppins (400, 600, 800)
 - **Style**: Bold, personality-driven, engaging
 

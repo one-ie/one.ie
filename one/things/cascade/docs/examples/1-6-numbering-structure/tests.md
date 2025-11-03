@@ -1,3 +1,21 @@
+---
+title: Tests
+dimension: things
+category: cascade
+tags: agent
+related_dimensions: events, people
+scope: global
+created: 2025-11-03
+updated: 2025-11-03
+version: 1.0.0
+ai_context: |
+  This document is part of the things dimension in the cascade category.
+  Location: one/things/cascade/docs/examples/1-6-numbering-structure/tests.md
+  Purpose: Documents tests for feature 1-6: numbering and file structure
+  Related dimensions: events, people
+  For AI agents: Read this to understand tests.
+---
+
 # Tests for Feature 1-6: Numbering and File Structure
 
 **Feature:** 1-6-numbering-structure
@@ -9,9 +27,11 @@
 ## User Flows
 
 ### Flow 1: Assign Plan Number
+
 **User goal:** Director assigns unique plan number
 **Time budget:** < 1 second
 **Steps:**
+
 1. Idea validated
 2. Director queries existing plans
 3. Director assigns next number (maxPlanNumber + 1)
@@ -20,6 +40,7 @@
 6. Event logged
 
 **Acceptance Criteria:**
+
 - [ ] Plan number unique (no duplicates)
 - [ ] Plan number sequential (no gaps unless intentional)
 - [ ] File created in correct location
@@ -30,9 +51,11 @@
 ---
 
 ### Flow 2: Assign Feature Numbers
+
 **User goal:** Director assigns feature numbers within plan
 **Time budget:** < 2 seconds for 5 features
 **Steps:**
+
 1. Plan created with ID: `2-course-platform`
 2. Director breaks into 4 features
 3. Features numbered: `2-1`, `2-2`, `2-3`, `2-4`
@@ -40,6 +63,7 @@
 5. Events logged
 
 **Acceptance Criteria:**
+
 - [ ] Feature numbers inherit plan number
 - [ ] Feature numbers sequential within plan
 - [ ] Files created in correct location
@@ -50,9 +74,11 @@
 ---
 
 ### Flow 3: Create Task List
+
 **User goal:** Director creates numbered tasks for feature
 **Time budget:** < 3 seconds for 6 tasks
 **Steps:**
+
 1. Feature approved: `2-1-course-crud`
 2. Director creates task list
 3. Tasks numbered: `2-1-task-1`, `2-1-task-2`, ..., `2-1-task-6`
@@ -60,6 +86,7 @@
 5. Event logged
 
 **Acceptance Criteria:**
+
 - [ ] Task numbers inherit feature number
 - [ ] Task numbers sequential
 - [ ] Task list file in feature subdirectory
@@ -70,9 +97,11 @@
 ---
 
 ### Flow 4: Parse and Validate IDs
+
 **User goal:** System understands hierarchical IDs
 **Time budget:** < 10ms per ID
 **Steps:**
+
 1. System receives ID (e.g., `2-1-task-3`)
 2. System parses: plan=2, feature=1, task=3
 3. System validates format
@@ -80,6 +109,7 @@
 5. System uses for file operations
 
 **Acceptance Criteria:**
+
 - [ ] Parses plan IDs: `N-name`
 - [ ] Parses feature IDs: `N-M-name`
 - [ ] Parses task IDs: `N-M-task-K`
@@ -90,9 +120,11 @@
 ---
 
 ### Flow 5: Navigate Hierarchy via IDs
+
 **User goal:** Developer finds all related files quickly
 **Time budget:** < 5 seconds
 **Steps:**
+
 1. Developer has feature ID: `2-1-course-crud`
 2. Developer searches: `grep "2-1-" -r .`
 3. System returns all files:
@@ -104,6 +136,7 @@
 4. Developer navigates hierarchy
 
 **Acceptance Criteria:**
+
 - [ ] Search finds all related files
 - [ ] Hierarchy clear from IDs
 - [ ] Search time: < 5 seconds
@@ -118,6 +151,7 @@
 ### Unit Tests
 
 **Number Assignment:**
+
 - [ ] `assignPlanNumber()` returns next number
 - [ ] `assignPlanNumber()` increments correctly (1, 2, 3, ...)
 - [ ] `assignFeatureNumber(planId)` returns next feature number
@@ -126,12 +160,14 @@
 - [ ] `assignTaskNumber("2-1-*")` returns 2-1-task-1, 2-1-task-2, ...
 
 **ID Parsing:**
+
 - [ ] `parseId("1-workflow")` returns { type: "plan", planNumber: 1, name: "workflow" }
 - [ ] `parseId("2-1-course-crud")` returns { type: "feature", planNumber: 2, featureNumber: 1, name: "course-crud" }
 - [ ] `parseId("2-1-task-3")` returns { type: "task", planNumber: 2, featureNumber: 1, taskNumber: 3 }
 - [ ] `parseId("invalid")` throws error
 
 **ID Validation:**
+
 - [ ] `validateId("1-workflow", "plan")` returns true
 - [ ] `validateId("2-1-feature", "feature")` returns true
 - [ ] `validateId("2-1-task-1", "task")` returns true
@@ -139,6 +175,7 @@
 - [ ] `validateId("1-workflow", "feature")` returns false (wrong type)
 
 **File Creation:**
+
 - [ ] `createPlanFile(planId)` creates file in `plans/`
 - [ ] `createFeatureFile(featureId)` creates file in `features/`
 - [ ] `createTaskFile(featureId)` creates file in `features/{featureId}/`
@@ -150,6 +187,7 @@
 ### Integration Tests
 
 **Complete Numbering Flow:**
+
 - [ ] Idea validated → Plan number assigned (1)
 - [ ] Plan created → Features numbered (1-1, 1-2, 1-3)
 - [ ] Features approved → Tasks numbered (1-1-task-1, ...)
@@ -157,6 +195,7 @@
 - [ ] All events logged with numbers
 
 **Multiple Plans:**
+
 - [ ] Plan 1 created (features 1-1, 1-2, 1-3)
 - [ ] Plan 2 created (features 2-1, 2-2, 2-3, 2-4)
 - [ ] Plan 3 created (features 3-1, 3-2)
@@ -164,8 +203,9 @@
 - [ ] All hierarchies independent
 
 **Search and Navigation:**
+
 - [ ] Search "1-1-" finds all feature 1-1 files
-- [ ] Search "2-*" finds all plan 2 files
+- [ ] Search "2-\*" finds all plan 2 files
 - [ ] Files sort correctly (ls shows natural order)
 - [ ] Navigation clear and intuitive
 
@@ -174,6 +214,7 @@
 ### E2E Tests
 
 **Complete Workflow with Numbering:**
+
 - [ ] Idea → Plan 2 (`2-course-platform`)
 - [ ] Plan → Features (2-1, 2-2, 2-3, 2-4)
 - [ ] Feature 2-1 → Tasks (2-1-task-1, ..., 2-1-task-6)
@@ -182,6 +223,7 @@
 - [ ] Hierarchy clear from IDs
 
 **Scale Test:**
+
 - [ ] 10 plans created
 - [ ] 50 features total (varying per plan)
 - [ ] 200 tasks total
@@ -190,6 +232,7 @@
 - [ ] Search performance acceptable
 
 **Developer Experience:**
+
 - [ ] New developer understands hierarchy in < 5 minutes
 - [ ] ID reveals relationships (2-1-task-3 = Plan 2, Feature 1, Task 3)
 - [ ] Search finds files quickly

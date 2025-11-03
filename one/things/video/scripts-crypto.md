@@ -1,3 +1,21 @@
+---
+title: Scripts Crypto
+dimension: things
+category: video
+tags: agent, ai, protocol, things
+related_dimensions: events, knowledge
+scope: global
+created: 2025-11-03
+updated: 2025-11-03
+version: 1.0.0
+ai_context: |
+  This document is part of the things dimension in the video category.
+  Location: one/things/video/scripts-crypto.md
+  Purpose: Documents crypto short video scripts
+  Related dimensions: events, knowledge
+  For AI agents: Read this to understand scripts crypto.
+---
+
 # Crypto Short Video Scripts
 
 **Version**: 1.0.0
@@ -448,6 +466,7 @@ That's your edge.
 ## Viral Quote Cards (Static Images with Text)
 
 ### Quote 1: Speculation Evolution
+
 ```
 "Memecoins are Speculation 1.0.
 AI Agents are Speculation 2.0.
@@ -459,6 +478,7 @@ Better justification."
 ```
 
 ### Quote 2: Institutional Arrival
+
 ```
 "The tourists (retail) have left.
 The owners (institutions) have arrived.
@@ -472,6 +492,7 @@ This isn't your grandfather's crypto cycle."
 ```
 
 ### Quote 3: X402 Revolution
+
 ```
 "Before X402: AI agents were theoretical.
 After X402: AI agents ARE the economy.
@@ -486,6 +507,7 @@ It's here."
 ```
 
 ### Quote 4: Capital Flow
+
 ```
 "Money flows in patterns:
 
@@ -499,6 +521,7 @@ Win the cycle."
 ```
 
 ### Quote 5: Time Arbitrage
+
 ```
 "Institutions think in decades.
 You can think in years.
@@ -512,6 +535,7 @@ Position before they announce."
 ```
 
 ### Quote 6: The Upgrade
+
 ```
 "DOGE: -87% from peak
 VIRTUAL: +23,000% in 2024
@@ -524,6 +548,7 @@ Are you?"
 ```
 
 ### Quote 7: Paradigm Shift
+
 ```
 "We've gone from:
 'What can crypto do for AI?'
@@ -539,6 +564,7 @@ The game changed."
 ```
 
 ### Quote 8: Cycle Duration
+
 ```
 "Previous cycles: 2-3 years
 Current cycle: 10-year supercycle
@@ -553,6 +579,7 @@ Adapt your strategy or miss it."
 ```
 
 ### Quote 9: Risk Reduction
+
 ```
 "Old cycle: 80-95% crashes
 New cycle: 30-50% corrections
@@ -565,6 +592,7 @@ Neither should you."
 ```
 
 ### Quote 10: The Number
+
 ```
 "$30 trillion AI agent economy by 2030.
 
@@ -585,38 +613,45 @@ Position now."
 ## Scripting Guidelines
 
 ### Hook (First 3 Seconds)
+
 - Start with contrarian statement or shocking statistic
 - Create pattern interrupt
 - Make them NEED to keep watching
 
 **Good Hooks**:
+
 - "Memecoins are dead."
 - "This crypto cycle is different."
 - "Goldman Sachs doesn't trade like you."
 - "Money flows in patterns."
 
 **Bad Hooks**:
+
 - "Hey guys, today I want to talk about..."
 - "In this video I'll explain..."
 - "Let me tell you about crypto..."
 
 ### Body (Middle Sections)
+
 - One idea per 5-10 seconds
 - Use concrete numbers (no vague claims)
 - Show data, not opinions
 - Create logical progression
 
 ### Closer (Last 3-5 Seconds)
+
 - Memorable one-liner
 - Call to action
 - Rewatchable punch
 
 **Good Closers**:
+
 - "Adapt or miss it."
 - "Position now."
 - "The market is upgrading. Are you?"
 
 ### Visual Guidelines
+
 - Use real charts (TradingView, CoinGecko)
 - Animate numbers counting up
 - Split screens for comparisons
@@ -625,6 +660,7 @@ Position now."
 - Keep text large and readable on mobile
 
 ### Audio Guidelines
+
 - Fast pacing (no dead air)
 - Emphasize key numbers
 - Use dramatic pauses before big reveals
@@ -636,35 +672,45 @@ Position now."
 ## Video Series Ideas
 
 ### Series 1: "Cycle Tracker"
+
 Weekly updates on:
+
 - Current cycle position
 - Key indicators
 - Recommended allocation
 - Notable events
 
 ### Series 2: "AI Token Deep Dives"
+
 Each video covers one AI token:
+
 - What it does
 - Risk score
 - Investment thesis
 - Timeframe
 
 ### Series 3: "Institutional Watch"
+
 Tracking institutional activity:
+
 - ETF flows
 - Corporate purchases
 - Regulatory updates
 - Analyst ratings
 
 ### Series 4: "Pattern Recognition"
+
 Historical patterns + current setup:
+
 - Show historical chart
 - Overlay current market
 - Predict next move
 - Success probability
 
 ### Series 5: "Memecoin Obituaries"
+
 Document the death of memecoins:
+
 - Show peak vs current
 - Calculate losses
 - Compare to AI agents
@@ -675,6 +721,7 @@ Document the death of memecoins:
 ## Distribution Strategy
 
 ### Platforms
+
 1. **TikTok**: 15-30 second scripts (maximum virality)
 2. **YouTube Shorts**: 30-60 second scripts (better monetization)
 3. **Instagram Reels**: 15-30 seconds (visual-first)
@@ -682,12 +729,14 @@ Document the death of memecoins:
 5. **LinkedIn**: 60-second professional tone (institutional focus)
 
 ### Posting Schedule
+
 - Monday: Market update (Cycle Tracker)
 - Wednesday: Educational deep dive (AI Token or Pattern)
 - Friday: Institutional Watch or Memecoin Obituary
 - Daily: Quote cards on Twitter
 
 ### Engagement Tactics
+
 - Pin comment: "Want the full research? Link in bio"
 - Ask question: "Are you rotating to ETH yet?"
 - Create debate: "Memecoins or AI agents? Comment below."
@@ -728,6 +777,7 @@ Daily: Engagement-focused content
 ## Performance Metrics to Track
 
 ### Video Performance
+
 - Hook retention (% watching past 3 seconds)
 - Average watch time
 - Watch-through rate (% watching to end)
@@ -735,19 +785,24 @@ Daily: Engagement-focused content
 - Comments (engagement indicator)
 
 ### Goals by Platform
+
 **TikTok**:
+
 - Target: 100k views per video
 - Success: 1M+ views = viral
 
 **YouTube Shorts**:
+
 - Target: 50k views per video
 - Success: 500k+ views = viral
 
 **Instagram Reels**:
+
 - Target: 25k views per video
 - Success: 250k+ views = viral
 
 ### Content Testing
+
 - A/B test hooks (same content, different hook)
 - Test formats (talking head vs pure animation)
 - Test lengths (15s vs 30s vs 60s)
@@ -759,6 +814,7 @@ Daily: Engagement-focused content
 ## Legal Disclaimers
 
 **Include in description or end card**:
+
 ```
 Disclaimer: Not financial advice. Cryptocurrency investments
 carry significant risk. Do your own research. Past performance

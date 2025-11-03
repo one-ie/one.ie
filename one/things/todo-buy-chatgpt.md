@@ -1,3 +1,22 @@
+---
+title: Todo Buy Chatgpt
+dimension: things
+primary_dimension: things
+category: todo-buy-chatgpt.md
+tags: ai, inference, ontology
+related_dimensions: connections, events, groups, people, things, knowledge
+scope: global
+created: 2025-11-03
+updated: 2025-11-03
+version: 1.0.0
+ai_context: |
+  This document is part of the things dimension in the todo-buy-chatgpt.md category.
+  Location: one/things/todo-buy-chatgpt.md
+  Purpose: Documents one platform: conversational commerce via chatgpt/gemini/claude v1.0.0
+  Related dimensions: connections, events, groups, people
+  For AI agents: Read this to understand todo buy chatgpt.
+---
+
 # ONE Platform: Conversational Commerce via ChatGPT/Gemini/Claude v1.0.0
 
 **Focus:** "Buy it in ChatGPT" - Conversational shopping experiences through LLM chat interfaces
@@ -13,6 +32,7 @@
 **Purpose:** Understand conversational commerce landscape, map to ontology, plan implementation
 
 ### Infer 1: Understand the "Buy it in ChatGPT" Opportunity
+
 - [ ] Review market context:
   - [ ] OpenAI launched Instant Checkout (Sep 2025)
   - [ ] Users can purchase products within ChatGPT
@@ -30,6 +50,7 @@
 - [ ] Document in: `one/connections/conversational-commerce.md`
 
 ### Infer 2: Map Conversational Commerce to 6-Dimension Ontology
+
 - [ ] **Groups:** Creator's business group (via marketplace)
 - [ ] **People:**
   - [ ] Customer (asking questions in chat)
@@ -58,6 +79,7 @@
   - [ ] customer_preferences (inferred from conversation)
 
 ### Infer 3: Define Conversational Commerce User Flows
+
 - [ ] **Flow 1: Discovery via Chat**
   1. User opens ChatGPT: "I need a padel racket for beginners"
   2. AI understands intent (beginner level, price point, style preferences)
@@ -94,6 +116,7 @@
   5. Natural upselling without feeling pushy
 
 ### Infer 4: Identify AI Platforms to Integrate
+
 - [ ] **ChatGPT (OpenAI)**
   - [ ] GPT-4 Turbo (best reasoning)
   - [ ] Vision capabilities (product images)
@@ -115,7 +138,9 @@
   - [ ] Revenue model: CPC/CPA
 
 ### Infer 5: Define Product Metadata for AI
+
 - [ ] Enhance product schema (from todo-ecommerce) for AI:
+
   ```
   Product thing type additions:
   {
@@ -143,6 +168,7 @@
   ```
 
 ### Infer 6: Plan AI Integration Architecture
+
 - [ ] **Option 1: ChatGPT Custom Action**
   - [ ] Create OpenAI custom action that calls ONE API
   - [ ] ONE provides product search + purchase endpoints
@@ -165,6 +191,7 @@
   - [ ] Best of both worlds
 
 ### Infer 7: Define Conversational Commerce MVP Features
+
 - [ ] **Minimum Viable Product:**
   1. Standalone chat interface in /web
   2. Claude API (cheaper, good quality)
@@ -173,20 +200,11 @@
   5. One-click redirect to checkout
   6. Track conversation → purchase attribution
   7. Basic metrics (conversion rate, avg order value)
-- [ ] **First Extension (v1.1):**
-  8. ChatGPT custom action integration
-  9. Product images in chat
-  10. Price comparison in conversation
-  11. Review/rating display
-  12. Discount codes in chat
-- [ ] **Second Extension (v1.2):**
-  13. Gemini integration
-  14. Multi-language support
-  15. Post-purchase follow-up in chat
-  16. AI upsell recommendations
-  17. Chat history + personalization
+- [ ] **First Extension (v1.1):** 8. ChatGPT custom action integration 9. Product images in chat 10. Price comparison in conversation 11. Review/rating display 12. Discount codes in chat
+- [ ] **Second Extension (v1.2):** 13. Gemini integration 14. Multi-language support 15. Post-purchase follow-up in chat 16. AI upsell recommendations 17. Chat history + personalization
 
 ### Infer 8: Plan Data Collection for AI Training
+
 - [ ] Conversational commerce creates unique data:
   - [ ] How customers naturally ask about products
   - [ ] What questions matter most
@@ -205,6 +223,7 @@
   - [ ] Allow users to opt-out
 
 ### Infer 9: Identify Revenue Streams
+
 - [ ] **Direct Revenue:**
   - [ ] Commission on purchases via conversational commerce
   - [ ] Premium "Featured in Chat" listings
@@ -221,6 +240,7 @@
   - [ ] 3-5x higher customer lifetime value (repeat purchases)
 
 ### Infer 10: Define Success Metrics
+
 - [ ] Conversational commerce complete when:
   - [ ] [ ] Chat interface live and responsive
   - [ ] [ ] Claude API integration working
@@ -241,7 +261,9 @@
 **Purpose:** Extend Convex schema for conversations + AI
 
 ### Infer 11: Create Conversation Thing Type
+
 - [ ] New thing type: `conversation_session`
+
   ```typescript
   {
     type: 'conversation_session',
@@ -287,6 +309,7 @@
   ```
 
 ### Infer 12: Create Recommendation Thing Type
+
 - [ ] New thing type: `ai_recommendation`
   ```typescript
   {
@@ -307,7 +330,9 @@
   ```
 
 ### Infer 13: Create Conversational Order Thing Type
+
 - [ ] Extend order thing from todo-ecommerce:
+
   ```typescript
   {
     type: 'order',  // Reuse from ecommerce
@@ -328,6 +353,7 @@
   ```
 
 ### Infer 14: Create Conversation Service (Effect.ts)
+
 - [ ] Service: `backend/convex/services/conversation.ts`
 - [ ] Methods:
   - [ ] `createConversation(userId, platform)` → sessionId
@@ -339,6 +365,7 @@
   - [ ] `getConversationMetrics(sessionId)` → stats
 
 ### Infer 15: Create AI Integration Service (Effect.ts)
+
 - [ ] Service: `backend/convex/services/ai-integration.ts`
 - [ ] Methods:
   - [ ] `callClaudeAPI(messages, systemPrompt)` → response
@@ -350,6 +377,7 @@
   - [ ] `generateRecommendation(userNeeds, products)` → recommendation
 
 ### Infer 16: Create Convex Mutations
+
 - [ ] `mutations/conversations.ts`:
   - [ ] `startConversation(userId, platform)` → sessionId
   - [ ] `addMessage(sessionId, message)` → saved
@@ -360,6 +388,7 @@
   - [ ] `trackRecommendationReaction(recommendationId, reaction)` → tracked
 
 ### Infer 17: Create Convex Queries
+
 - [ ] `queries/conversations.ts`:
   - [ ] `getConversation(sessionId)` → full chat history
   - [ ] `getUserConversations(userId)` → all chats
@@ -370,7 +399,9 @@
   - [ ] `getCreatorMetrics(creatorId)` → conversational commerce stats
 
 ### Infer 18: Create Conversation Prompts (System)
+
 - [ ] Create `backend/convex/prompts/product-advisor.md`:
+
   ```
   You are a friendly, knowledgeable padel racket advisor.
   Your goal is to help customers find the perfect racket.
@@ -392,10 +423,12 @@
 
   Make recommendations personal, not pushy.
   ```
+
 - [ ] Create prompts for other categories
 - [ ] Make prompts dynamic based on creator/marketplace
 
 ### Infer 19: Set Up API Rate Limiting for AI Calls
+
 - [ ] Implement rate limiting:
   - [ ] Claude API: $0.003 per 1K input tokens, $0.015 per 1K output
   - [ ] Limit: 10 chats/min per user, 1 API call/second per session
@@ -407,6 +440,7 @@
   - [ ] Batch embeddings generation (off-peak)
 
 ### Infer 20: Create Conversation Indexing
+
 - [ ] Index conversations for later analysis:
   - [ ] by_userId(userId) - Find user's conversations
   - [ ] by_creatorId(creatorId) - Find where creator mentioned
@@ -422,6 +456,7 @@
 **Purpose:** Build conversational UI in React/Astro
 
 ### Infer 21: Create ChatInterface Component
+
 - [ ] Component: `web/src/components/conversational/ChatInterface.tsx`
 - [ ] Features:
   - [ ] Message history scrollable area
@@ -438,6 +473,7 @@
   - [ ] Links clickable (product details, checkout)
 
 ### Infer 22: Create ProductCard Component (Chat Version)
+
 - [ ] Component: `web/src/components/conversational/ProductCardChat.tsx`
 - [ ] Display in chat:
   - [ ] Product image (small, clickable)
@@ -451,6 +487,7 @@
 - [ ] Compact design (fits in chat)
 
 ### Infer 23: Create RecommendationSection Component
+
 - [ ] Component: `web/src/components/conversational/RecommendationSection.tsx`
 - [ ] Display when AI makes recommendation:
   - [ ] "Based on your needs, I recommend..."
@@ -461,6 +498,7 @@
   - [ ] "I'm interested" buttons
 
 ### Infer 24: Create PreferencesExtractor Component
+
 - [ ] Component: `web/src/components/conversational/PreferencesExtractor.tsx`
 - [ ] Shows inferred preferences:
   - [ ] Skill level: Beginner, Intermediate, Advanced
@@ -471,6 +509,7 @@
 - [ ] Used to refine recommendations
 
 ### Infer 25: Create ChatPage (Astro)
+
 - [ ] `web/src/pages/chat/index.astro`
 - [ ] Layout:
   - [ ] Chat interface on left (70%)
@@ -481,6 +520,7 @@
 - [ ] Require login (optional? Can chat as guest)
 
 ### Infer 26: Create ChatHistoryPage
+
 - [ ] `web/src/pages/chat/history.astro`
 - [ ] Show past conversations:
   - [ ] List of chats (date, platform, products, total spent)
@@ -490,6 +530,7 @@
   - [ ] Delete old chats
 
 ### Infer 27: Create OneClickCheckout Component
+
 - [ ] Component: `web/src/components/conversational/OneClickCheckout.tsx`
 - [ ] When user clicks "Check Out" in chat:
   1. Extract product from recommendation
@@ -501,6 +542,7 @@
 - [ ] Mobile: Full-screen checkout view
 
 ### Infer 28: Create SellerAnalyticsDashboard
+
 - [ ] Page: `/dashboard/conversational-metrics`
 - [ ] For product creators:
   - [ ] Mentions: How often product mentioned in chats
@@ -513,6 +555,7 @@
   - [ ] Recommendations to improve product description
 
 ### Infer 29: Create AdminMetricsPage
+
 - [ ] Page: `/admin/conversational-commerce`
 - [ ] For platform owner:
   - [ ] Total conversations today/week/month
@@ -526,6 +569,7 @@
   - [ ] Platform health (uptime, latency)
 
 ### Infer 30: Create Empty States + Onboarding
+
 - [ ] When user opens chat:
   - [ ] "Hi! I'm your product advisor"
   - [ ] "Tell me what you're looking for"
@@ -542,6 +586,7 @@
 **Purpose:** Connect chat to backends, LLM APIs, checkout
 
 ### Infer 31: Create Chat API Route
+
 - [ ] `web/src/pages/api/chat/message.ts`
 - [ ] POST endpoint:
   ```
@@ -562,6 +607,7 @@
 - [ ] Returns streamed response (optional)
 
 ### Infer 32: Create Product Search API Route
+
 - [ ] `web/src/pages/api/chat/search.ts`
 - [ ] POST endpoint:
   ```
@@ -579,12 +625,14 @@
 - [ ] Filters by availability + rating
 
 ### Infer 33: Create Conversation Session API Route
+
 - [ ] `web/src/pages/api/chat/session.ts` - POST (create)
 - [ ] `web/src/pages/api/chat/session/[sessionId].ts` - GET (retrieve)
 - [ ] POST creates new conversation in Convex
 - [ ] GET retrieves full chat history
 
 ### Infer 34: Create Checkout Redirect Route
+
 - [ ] `web/src/pages/api/chat/checkout.ts`
 - [ ] POST endpoint:
   ```
@@ -603,6 +651,7 @@
 - [ ] Checkout is pre-filled from conversation data
 
 ### Infer 35: Create Claude API Integration
+
 - [ ] `backend/convex/lib/claude-api.ts`
 - [ ] Wrapper around Anthropic SDK:
   ```typescript
@@ -610,17 +659,18 @@
     messages: Message[],
     systemPrompt: string,
     options?: {
-      model?: 'haiku' | 'sonnet' | 'opus',
-      temperature?: number,
-      maxTokens?: number,
-    }
-  ): Promise<string>
+      model?: "haiku" | "sonnet" | "opus";
+      temperature?: number;
+      maxTokens?: number;
+    },
+  ): Promise<string>;
   ```
 - [ ] Error handling (rate limits, timeouts)
 - [ ] Cost tracking (log tokens used)
 - [ ] Fallback to simpler model if expensive model overloaded
 
 ### Infer 36: Create OpenAI API Integration
+
 - [ ] `backend/convex/lib/openai-api.ts`
 - [ ] Similar wrapper for ChatGPT:
   ```typescript
@@ -634,6 +684,7 @@
 - [ ] Vision capabilities (analyze product images)
 
 ### Infer 37: Create Embedding Generation Route
+
 - [ ] `web/src/pages/api/embeddings/generate.ts`
 - [ ] Background job: Generate embeddings for all products
 - [ ] Called on product creation/update
@@ -641,6 +692,7 @@
 - [ ] Used for semantic search in conversations
 
 ### Infer 38: Create ChatGPT Custom Action Definition
+
 - [ ] File: `.openai/actions/one-marketplace.yaml`
 - [ ] OpenAI custom action definition:
   ```yaml
@@ -670,6 +722,7 @@
   ```
 
 ### Infer 39: Create Analytics Event Tracking
+
 - [ ] Track all conversational metrics:
   - [ ] conversation_started
   - [ ] message_sent
@@ -683,6 +736,7 @@
 - [ ] Create analytics queries
 
 ### Infer 40: Create Webhooks for External Platforms
+
 - [ ] ChatGPT action calls ONE API
 - [ ] On successful purchase: Send webhook back to ChatGPT
 - [ ] ChatGPT confirms: "Order placed! #ORD-123"
@@ -695,6 +749,7 @@
 **Purpose:** Build sophisticated product recommendation system
 
 ### Infer 41: Create Product Understanding Layer
+
 - [ ] Extract rich metadata from products:
   - [ ] Brand, model, specs
   - [ ] User reviews (sentiment analysis)
@@ -705,6 +760,7 @@
 - [ ] Used by AI to understand products deeply
 
 ### Infer 42: Create User Preference Extraction
+
 - [ ] From conversation, extract:
   - [ ] Budget range
   - [ ] Skill level
@@ -718,6 +774,7 @@
 - [ ] Refine with each message
 
 ### Infer 43: Create Semantic Search
+
 - [ ] Use embeddings for products:
   - [ ] Generate embedding for each product description
   - [ ] User query → embedding
@@ -728,6 +785,7 @@
 - [ ] Understands intent ("good for beginners" matches beginner-friendly rackets)
 
 ### Infer 44: Create Personalized Recommendation Engine
+
 - [ ] Algorithm:
   1. Extract user preferences from conversation
   2. Weight products by how well they match:
@@ -743,7 +801,9 @@
 - [ ] Explainability: Always explain WHY (user trust)
 
 ### Infer 45: Create Comparison Generation
+
 - [ ] When user asks to compare products:
+
   ```
   User: "How does the X1 compare to the Y2?"
   AI: "Great question! Here's a comparison:
@@ -763,11 +823,13 @@
   My recommendation for you: X1 is better because
   you mentioned you're starting out."
   ```
+
 - [ ] Extract products mentioned
 - [ ] Generate comparison table
 - [ ] Make recommendation based on user profile
 
 ### Infer 46: Create Objection Handling
+
 - [ ] Detect and address concerns:
   - [ ] "Is it durable?" → Mention warranty, materials
   - [ ] "Good for tournaments?" → Mention pros using it
@@ -778,6 +840,7 @@
 - [ ] Be honest about limitations
 
 ### Infer 47: Create Upsell Logic
+
 - [ ] Natural upselling:
   - [ ] After product selection: "Also popular with this: strings, grip"
   - [ ] Bundle offer: "Buy together, save 5%"
@@ -787,6 +850,7 @@
 - [ ] Only suggest if relevant to user profile
 
 ### Infer 48: Create Learning System
+
 - [ ] AI improves recommendations over time:
   - [ ] Track which recommendations → purchases (success)
   - [ ] Track which recommendations → abandoned (failure)
@@ -798,6 +862,7 @@
   - [ ] How to position product for conversation?
 
 ### Infer 49: Create Conversation Memory
+
 - [ ] AI remembers across sessions:
   - [ ] User: "I bought the X1 from your last recommendation"
   - [ ] AI: "Great! How are you enjoying it?"
@@ -807,6 +872,7 @@
 - [ ] Personalization deepens
 
 ### Infer 50: Create RAG (Retrieval-Augmented Generation)
+
 - [ ] Combine AI reasoning with product database:
   - [ ] User question → Search product database
   - [ ] Retrieve relevant products + reviews
@@ -823,6 +889,7 @@
 **Purpose:** Test all conversational flows end-to-end
 
 ### Infer 51: Write Unit Tests for Conversation Service
+
 - [ ] Test conversation service methods
 - [ ] Mock Convex database
 - [ ] Test preference extraction
@@ -830,12 +897,14 @@
 - [ ] Test comparison generation
 
 ### Infer 52: Write Unit Tests for AI Integration
+
 - [ ] Mock Claude API responses
 - [ ] Test message formatting
 - [ ] Test error handling (rate limits, timeouts)
 - [ ] Test cost tracking
 
 ### Infer 53: Write Integration Tests
+
 - [ ] Test full conversation flow:
   1. Create session
   2. Send message
@@ -853,6 +922,7 @@
   7. Verify order linked to conversation
 
 ### Infer 54: Write E2E Tests (Selenium/Playwright)
+
 - [ ] Test chat interface:
   - [ ] User opens chat
   - [ ] Types message
@@ -865,6 +935,7 @@
 - [ ] Test on mobile + desktop
 
 ### Infer 55: Test AI Recommendation Quality
+
 - [ ] Create test scenarios:
   - [ ] "I'm a beginner, budget €50"
   - [ ] "Advanced player, looking for speed"
@@ -878,6 +949,7 @@
 - [ ] Iterate on prompts + algorithm
 
 ### Infer 56: Test Conversation Accuracy
+
 - [ ] Does AI understand intent correctly?
   - [ ] Parse preferences accurately?
   - [ ] Remember context from previous messages?
@@ -890,6 +962,7 @@
   - [ ] Inappropriate requests
 
 ### Infer 57: Test Performance
+
 - [ ] Response time targets:
   - [ ] Chat message input → response: < 3 seconds
   - [ ] Product search: < 1 second
@@ -901,6 +974,7 @@
   - [ ] Monitor API costs
 
 ### Infer 58: Test Security
+
 - [ ] Prompt injection (can user trick AI?)
 - [ ] SQL injection in search
 - [ ] XSS in chat messages
@@ -908,6 +982,7 @@
 - [ ] Payment processing security
 
 ### Infer 59: Test Analytics Tracking
+
 - [ ] All events logged correctly
 - [ ] Conversion tracking accurate
 - [ ] Revenue attribution correct
@@ -915,6 +990,7 @@
 - [ ] Dashboards calculate metrics correctly
 
 ### Infer 60: User Acceptance Testing (UAT)
+
 - [ ] Test with real users:
   - [ ] Can they use the chat naturally?
   - [ ] Do recommendations feel relevant?
@@ -933,6 +1009,7 @@
 **Purpose:** Finalize UI/UX design for conversational commerce
 
 ### Infer 61: Design Chat Interface
+
 - [ ] Wireframe chat UI
 - [ ] Message bubbles, input, send button
 - [ ] Product cards inline
@@ -941,24 +1018,28 @@
 - [ ] Mobile layout
 
 ### Infer 62: Design Product Cards for Chat
+
 - [ ] Compact version (inline in chat)
 - [ ] Expanded version (modal or slide)
 - [ ] Show: Image, name, price, rating, buttons
 - [ ] Responsive scaling
 
 ### Infer 63: Design Preferences Display
+
 - [ ] How to show extracted preferences?
 - [ ] Editable chips/tags
 - [ ] Clear + concise layout
 - [ ] Mobile-friendly
 
 ### Infer 64: Design One-Click Checkout
+
 - [ ] Minimal friction
 - [ ] Show: Product, price, "Buy" button
 - [ ] Pre-fill from conversation
 - [ ] Fast confirmation
 
 ### Infer 65: Design Analytics Dashboards
+
 - [ ] Creator dashboard: Top metrics at a glance
 - [ ] Admin dashboard: Platform overview
 - [ ] Charts: Trends over time
@@ -966,6 +1047,7 @@
 - [ ] Filters: By date, product, creator
 
 ### Infer 66: Design Mobile Experience
+
 - [ ] Chat: Full-width messages
 - [ ] Products: Stacked cards
 - [ ] Buttons: Touch-friendly size (48px+)
@@ -973,12 +1055,14 @@
 - [ ] Scroll: Smooth, no jank
 
 ### Infer 67: Design Dark Mode
+
 - [ ] Chat bubbles visible in dark mode
 - [ ] Product cards readable
 - [ ] Good contrast (WCAG AA)
 - [ ] Consistent with ONE brand
 
 ### Infer 68: Design Accessibility
+
 - [ ] Chat history: Screen reader friendly
 - [ ] Products: Alt text on images
 - [ ] Buttons: Labeled + keyboard nav
@@ -986,12 +1070,14 @@
 - [ ] Font size: Readable (minimum 16px)
 
 ### Infer 69: Design Onboarding
+
 - [ ] Welcome message
 - [ ] Example prompts
 - [ ] Hint: "Try asking..."
 - [ ] Tutorial (skip-able)
 
 ### Infer 70: Create Design System + Component Library
+
 - [ ] Document all components
 - [ ] Color palette
 - [ ] Typography
@@ -1007,6 +1093,7 @@
 **Purpose:** Optimize for speed and cost
 
 ### Infer 71: Optimize Claude API Calls
+
 - [ ] Batch messages where possible
 - [ ] Use cheaper models (Haiku) for simple tasks
 - [ ] Cache embeddings (don't regenerate)
@@ -1014,12 +1101,14 @@
 - [ ] Stream responses (feels faster)
 
 ### Infer 72: Optimize Product Search
+
 - [ ] Index products by embedding (Pinecone or similar)
 - [ ] Fast semantic search (sub-second)
 - [ ] Cache popular searches
 - [ ] Limit results to top 10 (faster ranking)
 
 ### Infer 73: Optimize Chat UI
+
 - [ ] Virtual scrolling (don't render all messages)
 - [ ] Lazy load images
 - [ ] Debounce typing indicator
@@ -1027,6 +1116,7 @@
 - [ ] Code split chat component (lazy import)
 
 ### Infer 74: Optimize Database Queries
+
 - [ ] Index conversation table:
   - [ ] by_userId, by_creatorId, by_productId
   - [ ] by_date, by_status
@@ -1034,12 +1124,14 @@
 - [ ] Cache conversation summaries
 
 ### Infer 75: Implement Smart Caching
+
 - [ ] Cache product data (1 hour)
 - [ ] Cache embeddings (permanent, unless product updated)
 - [ ] Cache common search queries (8 hours)
 - [ ] Cache user preferences (per session)
 
 ### Infer 76: Monitor Cost
+
 - [ ] Track Claude API usage by conversation
 - [ ] Set budget alerts
 - [ ] Log tokens per message
@@ -1047,6 +1139,7 @@
 - [ ] Optimize expensive operations
 
 ### Infer 77: Implement Progressive Enhancement
+
 - [ ] Chat works without JavaScript:
   - [ ] Form-based chat (submit text, get response)
   - [ ] Slower but functional
@@ -1055,6 +1148,7 @@
   - [ ] Product cards + interactions
 
 ### Infer 78: Optimize for Mobile Networks
+
 - [ ] Compress images aggressively
 - [ ] Minimize JavaScript
 - [ ] Use service workers for offline support
@@ -1062,6 +1156,7 @@
 - [ ] Gzip compression
 
 ### Infer 79: Implement Rate Limiting
+
 - [ ] Per-user: 30 messages/hour
 - [ ] Per-session: 100 messages/day
 - [ ] Per-IP: 1000 messages/day
@@ -1069,6 +1164,7 @@
 - [ ] Clear limits in documentation
 
 ### Infer 80: Performance Baseline
+
 - [ ] Chat response: < 3 seconds
 - [ ] Product search: < 1 second
 - [ ] Page load: < 2 seconds
@@ -1083,6 +1179,7 @@
 **Purpose:** Deploy to production, document for users + creators
 
 ### Infer 81: Set Up Production Environment
+
 - [ ] Environment variables:
   - [ ] CLAUDE_API_KEY
   - [ ] OPENAI_API_KEY (for future)
@@ -1092,12 +1189,14 @@
 - [ ] Product embeddings generation (first run)
 
 ### Infer 82: Deploy Backend (Convex)
+
 - [ ] `npx convex deploy`
 - [ ] Verify all mutations/queries working
 - [ ] Test API endpoints
 - [ ] Monitor logs for errors
 
 ### Infer 83: Deploy Frontend (Cloudflare)
+
 - [ ] `bun run build`
 - [ ] `wrangler pages deploy dist`
 - [ ] Verify chat page loads
@@ -1105,6 +1204,7 @@
 - [ ] Smoke test checkout flow
 
 ### Infer 84: Set Up Monitoring
+
 - [ ] Alert on high latency (chat response > 5s)
 - [ ] Alert on API errors
 - [ ] Monitor API costs
@@ -1112,6 +1212,7 @@
 - [ ] Set up dashboards
 
 ### Infer 85: Create User Documentation
+
 - [ ] `/docs/chat-guide.md`:
   - [ ] How to use chat advisor
   - [ ] Example queries
@@ -1122,6 +1223,7 @@
 - [ ] Video tutorial (optional)
 
 ### Infer 86: Create Creator Documentation
+
 - [ ] `/docs/conversational-commerce.md`:
   - [ ] How to optimize products for AI
   - [ ] What makes a good description?
@@ -1131,6 +1233,7 @@
 - [ ] Webinar / training session
 
 ### Infer 87: Create Developer Documentation
+
 - [ ] `/docs/conversational-api.md`:
   - [ ] Custom action setup for ChatGPT
   - [ ] API endpoints reference
@@ -1140,6 +1243,7 @@
 - [ ] Swagger/OpenAPI definition
 
 ### Infer 88: Create Admin Guide
+
 - [ ] Setting up conversational commerce
 - [ ] Managing Claude API credentials
 - [ ] Monitoring costs + conversions
@@ -1147,6 +1251,7 @@
 - [ ] Scaling considerations
 
 ### Infer 89: Create Beta Announcement
+
 - [ ] Blog post: "Introducing Conversational Shopping"
 - [ ] Email to creators: How to benefit
 - [ ] Social media posts
@@ -1154,6 +1259,7 @@
 - [ ] Demo video (1-2 minutes)
 
 ### Infer 90: Create Feedback Loop
+
 - [ ] Survey users on chat experience
 - [ ] Gather feature requests
 - [ ] Track satisfaction scores
@@ -1167,6 +1273,7 @@
 **Purpose:** Document insights and plan future enhancements
 
 ### Infer 91: Document Conversational Commerce Patterns
+
 - [ ] Write: `one/connections/conversational-commerce-patterns.md`
 - [ ] Successful conversation flows
 - [ ] Common user questions + AI responses
@@ -1174,6 +1281,7 @@
 - [ ] Recommendation patterns that work
 
 ### Infer 92: Create Lessons Learned Document
+
 - [ ] What went well:
   - [ ] Claude API quality + speed
   - [ ] Users loved natural conversation
@@ -1188,6 +1296,7 @@
   - [ ] A/B test recommendation algorithms earlier
 
 ### Infer 93: Create Competitive Analysis
+
 - [ ] How does our implementation compare to:
   - [ ] ChatGPT's Instant Checkout
   - [ ] Amazon product discovery in Claude
@@ -1198,6 +1307,7 @@
   - [ ] Revenue sharing model (incentive alignment)
 
 ### Infer 94: Document Monetization Strategy
+
 - [ ] Revenue from conversational commerce:
   - [ ] Higher conversion rate (chat overcomes objections)
   - [ ] Higher AOV (AI upsells naturally)
@@ -1208,6 +1318,7 @@
   - [ ] Avg $20 per purchase → $2000/day
 
 ### Infer 95: Create Product Roadmap for v2
+
 - [ ] Planned features:
   - [ ] Multi-language support (Spanish, French, Portuguese)
   - [ ] Gemini integration
@@ -1219,6 +1330,7 @@
   - [ ] Referral rewards ("Tell a friend?")
 
 ### Infer 96: Create Platform Expansion Strategy
+
 - [ ] Extend beyond padel:
   - [ ] Any sports equipment
   - [ ] Fashion e-commerce
@@ -1228,6 +1340,7 @@
 - [ ] Cross-category: Show related products (curious buyer)
 
 ### Infer 97: Document AI Improvements
+
 - [ ] Fine-tuning opportunities:
   - [ ] Collect good conversations (with permission)
   - [ ] Fine-tune Claude on ONE marketplace style
@@ -1239,6 +1352,7 @@
   - [ ] How to anonymize safely?
 
 ### Infer 98: Create Analytics Deep Dive
+
 - [ ] Metrics that matter:
   - [ ] Conversion rate: Chat → Purchase
   - [ ] Average order value: Chat vs non-chat
@@ -1252,6 +1366,7 @@
   - [ ] Cost per acquisition
 
 ### Infer 99: Document Integration Playbook
+
 - [ ] How to integrate with new platforms:
   - [ ] Slack bot version (B2B)
   - [ ] Discord bot version (gaming/community)
@@ -1260,6 +1375,7 @@
 - [ ] Template for quick onboarding
 
 ### Infer 100: Final Reflection & Celebration
+
 - [ ] Conversational Commerce Complete! ✅
 - [ ] What we shipped:
   - [ ] Chat interface (beautiful, responsive)
@@ -1306,6 +1422,7 @@ Conversational commerce complete when:
 This todo file extends todo-ecommerce.md:
 
 **From todo-ecommerce:**
+
 - Shopping cart system ✓ (reuse)
 - Checkout flow ✓ (extend with pre-fill)
 - Order creation ✓ (add conversational_order flag)
@@ -1313,6 +1430,7 @@ This todo file extends todo-ecommerce.md:
 - Creator revenue tracking ✓ (add conversational metrics)
 
 **New in this file:**
+
 - Chat interface component
 - AI recommendation engine
 - Conversation tracking
@@ -1330,4 +1448,3 @@ All using existing payment infrastructure (X402 from todo-x402.md).
 **Timeline:** Can be built in parallel with Wave 2 (uses todo-ecommerce foundations)
 **Priority:** HIGH (immediate revenue impact)
 **Revenue Potential:** $10,000+ monthly at scale
-

@@ -1,3 +1,21 @@
+---
+title: Ontology
+dimension: knowledge
+category: ontology.md
+tags: 6-dimensions, ai, architecture, ontology
+related_dimensions: connections, events, groups, people, things
+scope: global
+created: 2025-11-03
+updated: 2025-11-03
+version: 1.0.0
+ai_context: |
+  This document is part of the knowledge dimension in the ontology.md category.
+  Location: one/knowledge/ontology.md
+  Purpose: Documents one platform - ontology specification
+  Related dimensions: connections, events, groups, people, things
+  For AI agents: Read this to understand ontology.
+---
+
 # ONE Platform - Ontology Specification
 
 **Version:** 3.0.0 (Reality as DSL - The Universal Code Generation Language)
@@ -15,6 +33,7 @@
 We flipped this. **The 6-dimension ontology models reality itself**. Applications map to it.
 
 This enables:
+
 - **98% AI code generation accuracy** (not 30-70%)
 - **Compound structure** (each feature makes the next MORE accurate, not less)
 - **Universal feature import** (clone ANY system into the ontology)
@@ -23,6 +42,7 @@ This enables:
 ### What AI Sees
 
 **Traditional Codebase (Pattern Divergence):**
+
 ```
 Feature 1: createUser(email) ────────┐
 Feature 2: addProduct(name) ─────────┼─→ 100 patterns
@@ -32,6 +52,7 @@ Feature 4: insertOrder(items) ───────┤   Accuracy: 30%
 ```
 
 **ONE Codebase (Pattern Convergence):**
+
 ```
 Feature 1: provider.things.create({ type: "user" }) ────┐
 Feature 2: provider.things.create({ type: "product" }) ─┼─→ 1 pattern
@@ -47,6 +68,7 @@ Feature 4: provider.things.create({ type: "order" }) ───┤   Accuracy: 98
 **Reality is stable. Technology changes.**
 
 The 6 dimensions model reality:
+
 1. **Groups** - Containers exist (friend circles → governments)
 2. **People** - Actors authorize (who can do what)
 3. **Things** - Entities exist (users, products, courses, agents)
@@ -57,6 +79,7 @@ The 6 dimensions model reality:
 These dimensions NEVER change because they model reality itself, not any specific technology.
 
 **Examples of systems that map perfectly:**
+
 - **Shopify** → Products (things), Orders (connections + events), Customers (people)
 - **Moodle** → Courses (things), Enrollments (connections), Completions (events)
 - **Stripe** → Payments (things), Transactions (connections + events), Customers (people)
@@ -163,12 +186,14 @@ This ontology is organized into 6 dimension files:
 **Why it never changes:** Containers always contain things. Whether it's a lemonade stand or a global government, the concept of "container" is universal.
 
 **Pattern for AI:**
+
 ```typescript
 // AI learns: Everything belongs to a group
-provider.things.create({ groupId, type, name, properties })
+provider.things.create({ groupId, type, name, properties });
 ```
 
 **Example mappings:**
+
 - Shopify Store → group (type: business)
 - Moodle School → group (type: organization)
 - DAO Treasury → group (type: dao)
@@ -181,12 +206,14 @@ provider.things.create({ groupId, type, name, properties })
 **Why it never changes:** Authorization is a universal concept. Someone always performs actions.
 
 **Pattern for AI:**
+
 ```typescript
 // AI learns: Every action has an actor
-events.log({ actorId: personId, type, targetId })
+events.log({ actorId: personId, type, targetId });
 ```
 
 **Example mappings:**
+
 - Shopify Admin → person (role: org_owner)
 - Moodle Student → person (role: customer)
 - Platform Owner → person (role: platform_owner)
@@ -199,12 +226,14 @@ events.log({ actorId: personId, type, targetId })
 **Why it never changes:** Entities exist. Users, products, courses, agents—these are all "things" with different types.
 
 **Pattern for AI:**
+
 ```typescript
 // AI learns: One pattern for all entities
 provider.things.create({ type: "product" | "course" | "user" | ..., name, properties })
 ```
 
 **Example mappings:**
+
 - Shopify Product → thing (type: product)
 - Moodle Course → thing (type: course)
 - Stripe Payment → thing (type: payment)
@@ -219,12 +248,19 @@ provider.things.create({ type: "product" | "course" | "user" | ..., name, proper
 **Why it never changes:** Relationships are universal. Things connect to other things.
 
 **Pattern for AI:**
+
 ```typescript
 // AI learns: One pattern for all relationships
-provider.connections.create({ fromThingId, toThingId, relationshipType, metadata })
+provider.connections.create({
+  fromThingId,
+  toThingId,
+  relationshipType,
+  metadata,
+});
 ```
 
 **Example mappings:**
+
 - Shopify Order → connection (type: purchased) + event (type: order_placed)
 - Moodle Enrollment → connection (type: enrolled_in)
 - GitHub Follows → connection (type: following)
@@ -237,12 +273,14 @@ provider.connections.create({ fromThingId, toThingId, relationshipType, metadata
 **Why it never changes:** Actions happen at specific times. This is universal.
 
 **Pattern for AI:**
+
 ```typescript
 // AI learns: All actions are logged the same way
-provider.events.log({ type, actorId, targetId, timestamp, metadata })
+provider.events.log({ type, actorId, targetId, timestamp, metadata });
 ```
 
 **Example mappings:**
+
 - Shopify Checkout → event (type: payment_processed)
 - Moodle Lesson View → event (type: content_viewed)
 - User Login → event (type: user_login)
@@ -255,12 +293,19 @@ provider.events.log({ type, actorId, targetId, timestamp, metadata })
 **Why it never changes:** Categorization and understanding are universal concepts.
 
 **Pattern for AI:**
+
 ```typescript
 // AI learns: Knowledge is linked to things
-provider.knowledge.create({ sourceThingId, knowledgeType: "label" | "chunk", text, embedding })
+provider.knowledge.create({
+  sourceThingId,
+  knowledgeType: "label" | "chunk",
+  text,
+  embedding,
+});
 ```
 
 **Example mappings:**
+
 - WordPress Categories → knowledge (type: label)
 - Course Content → knowledge (type: chunk, embedding: [...])
 - Product Tags → knowledge (type: label)
@@ -279,6 +324,7 @@ provider.knowledge.create({ sourceThingId, knowledgeType: "label" | "chunk", tex
 ### Traditional AI Code Generation (Pattern Divergence)
 
 **The death spiral:**
+
 ```
 Generation 1: Clean code → 95% accurate
 Generation 2: Slight drift → 90% accurate  (-5% - patterns starting to diverge)
@@ -292,6 +338,7 @@ Generation N: Unmaintainable mess → 30% accurate  (-20% - complete chaos)
 ### ONE's AI Code Generation (Pattern Convergence)
 
 **The virtuous cycle:**
+
 ```
 Generation 1: Maps to ontology → 85% accurate (learning the ontology)
 Generation 2: Follows patterns → 90% accurate  (+5% - recognizing service pattern)
@@ -305,6 +352,7 @@ Generation N: Perfect consistency → 98%+ accurate  (+2% - generalized patterns
 ### How Agents Learn the Ontology
 
 **Generation 1-5: Learning (85% accurate)**
+
 ```
 Agent thinks:
 "I see things being created with `type` field. Let me check..."
@@ -316,6 +364,7 @@ CONFIDENCE: 85% (still learning)
 ```
 
 **Generation 6-20: Recognizing (90% accurate)**
+
 ```
 Agent thinks:
 "Every create operation uses provider.things.create. 100% of the time."
@@ -326,6 +375,7 @@ CONFIDENCE: 90% (pattern recognized)
 ```
 
 **Generation 21-50: Composing (93% accurate)**
+
 ```
 Agent thinks:
 "I can reuse existing services:"
@@ -338,6 +388,7 @@ CONFIDENCE: 93% (composing existing patterns)
 ```
 
 **Generation 51-100: Mastering (96% accurate)**
+
 ```
 Agent thinks:
 "I've generated 50 services. All follow same structure:"
@@ -350,6 +401,7 @@ CONFIDENCE: 96% (mastered the structure)
 ```
 
 **Generation 100+: Generalizing (98%+ accurate)**
+
 ```
 Agent thinks:
 "I don't even need to think. The pattern IS the system."
@@ -364,26 +416,31 @@ CONFIDENCE: 98%+ (system internalized)
 ### What This Means for Development
 
 **Feature #1:**
+
 - Traditional: 8 hours (70% AI, 30% human)
 - ONE: 8 hours (70% AI, 30% human)
 - **No difference yet**
 
 **Feature #10:**
+
 - Traditional: 10 hours (60% AI, 40% human - patterns diverging)
 - ONE: 6 hours (85% AI, 15% human - patterns converging)
 - **ONE is 1.7x faster**
 
 **Feature #50:**
+
 - Traditional: 16 hours (40% AI, 60% human - technical debt)
 - ONE: 3 hours (95% AI, 5% human - pattern mastery)
 - **ONE is 5.3x faster**
 
 **Feature #100:**
+
 - Traditional: 24 hours (25% AI, 75% human - chaos)
 - ONE: 1.5 hours (98% AI, 2% human - generalized)
 - **ONE is 16x faster**
 
 **Cumulative for 100 features:**
+
 - Traditional: 1,400 hours
 - ONE: 350 hours
 - **ONE is 4x faster overall**
@@ -392,24 +449,28 @@ CONFIDENCE: 98%+ (system internalized)
 ### Why Schema Migrations Never Break This
 
 **New entity type?**
+
 ```typescript
 // NO schema migration needed
 { type: "new_thing", name: "...", properties: { ...custom } }
 ```
 
 **New field on existing type?**
+
 ```typescript
 // NO schema migration needed
 { type: "product", properties: { price, SKU, newField: "value" } }
 ```
 
 **New relationship?**
+
 ```typescript
 // NO schema migration needed
 { relationshipType: "new_connection", metadata: { ...custom } }
 ```
 
 **New protocol integration?**
+
 ```typescript
 // NO schema migration needed
 {
@@ -474,6 +535,7 @@ Purpose: Partition the system with perfect isolation and support nested groups (
 ### Hierarchical Group Examples by Domain
 
 **E-Commerce (Retail Chain):**
+
 ```
 Corporate Headquarters (group)
 ├─ North American Division (child group)
@@ -485,6 +547,7 @@ Corporate Headquarters (group)
 ```
 
 **Education (University System):**
+
 ```
 MIT (group)
 ├─ School of Engineering (child group)
@@ -498,6 +561,7 @@ MIT (group)
 ```
 
 **Creator (Multi-Channel Brand):**
+
 ```
 Creator Brand (group)
 ├─ YouTube Channel (child group)
@@ -508,6 +572,7 @@ Creator Brand (group)
 ```
 
 **Crypto (DAO Treasury):**
+
 ```
 DAO Treasury (group)
 ├─ Core Operations (child group)
@@ -590,6 +655,7 @@ Purpose: Define who can do what. People direct groups, customize AI agents, and 
 Purpose: unify taxonomy (“tags”) and retrieval‑augmented generation (RAG) under one table. A knowledge item can be a label (former tag), a document wrapper, or a chunk with an embedding.
 
 Design principles:
+
 - Protocol‑agnostic: store protocol details in `metadata`.
 - Many‑to‑many: link knowledge ⇄ things via `thingKnowledge` with optional context metadata.
 - Scalable: consolidated types minimize index fan‑out; embeddings enable semantic search.
@@ -598,10 +664,10 @@ Design principles:
 
 ```typescript
 type KnowledgeType =
-  | 'label'      // replaces legacy "tag"; lightweight categorical marker
-  | 'document'   // wrapper for a source text/blob (pre-chunking)
-  | 'chunk'      // atomic chunk of text with embedding
-  | 'vector_only'; // embedding without stored text (e.g., privacy)
+  | "label" // replaces legacy "tag"; lightweight categorical marker
+  | "document" // wrapper for a source text/blob (pre-chunking)
+  | "chunk" // atomic chunk of text with embedding
+  | "vector_only"; // embedding without stored text (e.g., privacy)
 ```
 
 ### Knowledge Structure
@@ -656,6 +722,7 @@ type KnowledgeType =
 ### How Domains Apply Knowledge
 
 **Education - Learning Objectives & Study Materials:**
+
 ```typescript
 // Knowledge: Learning objective chunk
 {
@@ -674,6 +741,7 @@ type KnowledgeType =
 ```
 
 **Creator - Content SEO & Discovery:**
+
 ```typescript
 // Knowledge: Video description chunk with embedded metadata
 {
@@ -686,6 +754,7 @@ type KnowledgeType =
 ```
 
 **E-Commerce - Product Categorization & Search:**
+
 ```typescript
 // Knowledge: Product description for semantic search
 {
@@ -698,6 +767,7 @@ type KnowledgeType =
 ```
 
 **Crypto - Risk Analysis & Token Intelligence:**
+
 ```typescript
 // Knowledge: Token risk assessment
 {
@@ -717,6 +787,7 @@ type KnowledgeType =
 ```
 
 **Notes:**
+
 - The legacy ThingType `embedding` is deprecated for operational vectors; use the `knowledge` table with `knowledgeType: 'chunk' | 'vector_only'`.
 - Labels (formerly tags) now live in `knowledge.labels` and via `thingKnowledge` relations. Use labels to curate taxonomy without enum churn.
 - Domain-specific labels follow `category:value` pattern for semantic organization (e.g., `subject:math`, `platform:youtube`, `risk:high`).
@@ -744,94 +815,95 @@ Examples:
 ```typescript
 type ThingType =
   // CORE (4)
-  | 'creator' // Human creator (role: platform_owner, org_owner, org_user, customer)
-  | 'ai_clone' // Digital twin of creator
-  | 'audience_member' // Fan/user (role: customer)
-  | 'organization' // Multi-tenant organization
+  | "creator" // Human creator (role: platform_owner, org_owner, org_user, customer)
+  | "ai_clone" // Digital twin of creator
+  | "audience_member" // Fan/user (role: customer)
+  | "organization" // Multi-tenant organization
 
   // BUSINESS AGENTS (10)
-  | 'strategy_agent' // Vision, planning, OKRs
-  | 'research_agent' // Market, trends, competitors
-  | 'marketing_agent' // Content strategy, SEO, distribution
-  | 'sales_agent' // Funnels, conversion, follow-up
-  | 'service_agent' // Support, onboarding, success
-  | 'design_agent' // Brand, UI/UX, assets
-  | 'engineering_agent' // Tech, integration, automation
-  | 'finance_agent' // Revenue, costs, forecasting
-  | 'legal_agent' // Compliance, contracts, IP
-  | 'intelligence_agent' // Analytics, insights, predictions
+  | "strategy_agent" // Vision, planning, OKRs
+  | "research_agent" // Market, trends, competitors
+  | "marketing_agent" // Content strategy, SEO, distribution
+  | "sales_agent" // Funnels, conversion, follow-up
+  | "service_agent" // Support, onboarding, success
+  | "design_agent" // Brand, UI/UX, assets
+  | "engineering_agent" // Tech, integration, automation
+  | "finance_agent" // Revenue, costs, forecasting
+  | "legal_agent" // Compliance, contracts, IP
+  | "intelligence_agent" // Analytics, insights, predictions
 
   // CONTENT (7)
-  | 'blog_post' // Written content (guides, newsletters, articles)
-  | 'video' // Video content (lectures, demos, shorts)
-  | 'podcast' // Audio content (episodes, interviews)
-  | 'social_post' // Social media post (all platforms)
-  | 'email' // Email content (campaigns, newsletters)
-  | 'course' // Educational course (programs, learning paths)
-  | 'lesson' // Individual lesson (units, modules, segments)
+  | "blog_post" // Written content (guides, newsletters, articles)
+  | "video" // Video content (lectures, demos, shorts)
+  | "podcast" // Audio content (episodes, interviews)
+  | "social_post" // Social media post (all platforms)
+  | "email" // Email content (campaigns, newsletters)
+  | "course" // Educational course (programs, learning paths)
+  | "lesson" // Individual lesson (units, modules, segments)
 
   // PRODUCTS (4)
-  | 'digital_product' // Templates, tools, assets
-  | 'membership' // Tiered membership (Patreon, Substack)
-  | 'consultation' // 1-on-1 session (coaching, support)
-  | 'nft' // NFT collectible (governance, utility)
+  | "digital_product" // Templates, tools, assets
+  | "membership" // Tiered membership (Patreon, Substack)
+  | "consultation" // 1-on-1 session (coaching, support)
+  | "nft" // NFT collectible (governance, utility)
 
   // COMMUNITY (3)
-  | 'community' // Community space (Discord, forums)
-  | 'conversation' // Thread/discussion (boards, channels)
-  | 'message' // Individual message (chat, DM)
+  | "community" // Community space (Discord, forums)
+  | "conversation" // Thread/discussion (boards, channels)
+  | "message" // Individual message (chat, DM)
 
   // TOKEN (2)
-  | 'token' // Actual token instance
-  | 'token_contract' // Smart contract
+  | "token" // Actual token instance
+  | "token_contract" // Smart contract
 
   // KNOWLEDGE (2)
-  | 'knowledge_item' // Piece of creator knowledge
-  | 'embedding' // Vector embedding
+  | "knowledge_item" // Piece of creator knowledge
+  | "embedding" // Vector embedding
 
   // PLATFORM (6)
-  | 'website' // Auto-generated creator site
-  | 'landing_page' // Custom landing pages (campaigns, sales)
-  | 'template' // Design templates (reusable components)
-  | 'livestream' // Live broadcast (streaming, webinars)
-  | 'recording' // Saved livestream content
-  | 'media_asset' // Images, videos, files
+  | "website" // Auto-generated creator site
+  | "landing_page" // Custom landing pages (campaigns, sales)
+  | "template" // Design templates (reusable components)
+  | "livestream" // Live broadcast (streaming, webinars)
+  | "recording" // Saved livestream content
+  | "media_asset" // Images, videos, files
 
   // BUSINESS (7)
-  | 'payment' // Payment transaction
-  | 'subscription' // Recurring subscription
-  | 'invoice' // Invoice record
-  | 'metric' // Tracked metric
-  | 'insight' // AI-generated insight
-  | 'prediction' // AI prediction
-  | 'report' // Analytics report
+  | "payment" // Payment transaction
+  | "subscription" // Recurring subscription
+  | "invoice" // Invoice record
+  | "metric" // Tracked metric
+  | "insight" // AI-generated insight
+  | "prediction" // AI prediction
+  | "report" // Analytics report
 
   // AUTHENTICATION & SESSION (5)
-  | 'session' // User session (Better Auth)
-  | 'oauth_account' // OAuth connection (GitHub, Google)
-  | 'verification_token' // Email/2FA verification token
-  | 'password_reset_token' // Password reset token
-  | 'ui_preferences' // User UI settings (theme, layout)
+  | "session" // User session (Better Auth)
+  | "oauth_account" // OAuth connection (GitHub, Google)
+  | "verification_token" // Email/2FA verification token
+  | "password_reset_token" // Password reset token
+  | "ui_preferences" // User UI settings (theme, layout)
 
   // MARKETING (6)
-  | 'notification' // System notification
-  | 'email_campaign' // Email marketing campaign
-  | 'announcement' // Platform announcement
-  | 'referral' // Referral record
-  | 'campaign' // Marketing campaign
-  | 'lead' // Potential customer/lead
+  | "notification" // System notification
+  | "email_campaign" // Email marketing campaign
+  | "announcement" // Platform announcement
+  | "referral" // Referral record
+  | "campaign" // Marketing campaign
+  | "lead" // Potential customer/lead
 
   // EXTERNAL INTEGRATIONS (3)
-  | 'external_agent' // External AI agent (ElizaOS)
-  | 'external_workflow' // External workflow (n8n, Zapier)
-  | 'external_connection' // Connection config
+  | "external_agent" // External AI agent (ElizaOS)
+  | "external_workflow" // External workflow (n8n, Zapier)
+  | "external_connection" // Connection config
 
   // PROTOCOL ENTITIES (2, protocol-agnostic)
-  | 'mandate' // Intent/cart (AP2, shopping)
-  | 'product'; // Sellable product (ACP marketplace)
+  | "mandate" // Intent/cart (AP2, shopping)
+  | "product"; // Sellable product (ACP marketplace)
 ```
 
 **How Domains Apply These Types:**
+
 - **E-Commerce**: Uses `product` (catalog items), `mandate` (shopping carts), `payment` (transactions), `subscription` (auto-renewals), `membership` (loyalty), `notification` (order updates), `email_campaign` (promotional)
 - **Education**: Uses `course` (programs), `lesson` (units), `community` (cohorts), `assignment` (assessments), `conversation` (discussion boards), `metric` (grades), `report` (transcripts)
 - **Creator**: Uses `video` (YouTube/TikTok), `podcast` (episodes), `blog_post` (newsletters), `membership` (tiers), `course` (products), `email_campaign` (outreach), `metric` (engagement), `insight` (analytics)
@@ -1326,51 +1398,51 @@ Examples:
 ```typescript
 type ConnectionType =
   // OWNERSHIP (2)
-  | 'owns'
-  | 'created_by'
+  | "owns"
+  | "created_by"
 
   // AI RELATIONSHIPS (3)
-  | 'clone_of'
-  | 'trained_on'
-  | 'powers'
+  | "clone_of"
+  | "trained_on"
+  | "powers"
 
   // CONTENT RELATIONSHIPS (5)
-  | 'authored'
-  | 'generated_by'
-  | 'published_to'
-  | 'part_of'
-  | 'references'
+  | "authored"
+  | "generated_by"
+  | "published_to"
+  | "part_of"
+  | "references"
 
   // COMMUNITY RELATIONSHIPS (4)
-  | 'member_of'
-  | 'following'
-  | 'moderates'
-  | 'participated_in'
+  | "member_of"
+  | "following"
+  | "moderates"
+  | "participated_in"
 
   // BUSINESS RELATIONSHIPS (3)
-  | 'manages'
-  | 'reports_to'
-  | 'collaborates_with'
+  | "manages"
+  | "reports_to"
+  | "collaborates_with"
 
   // TOKEN RELATIONSHIPS (3)
-  | 'holds_tokens'
-  | 'staked_in'
-  | 'earned_from'
+  | "holds_tokens"
+  | "staked_in"
+  | "earned_from"
 
   // PRODUCT RELATIONSHIPS (4)
-  | 'purchased'
-  | 'enrolled_in'
-  | 'completed'
-  | 'teaching'
+  | "purchased"
+  | "enrolled_in"
+  | "completed"
+  | "teaching"
 
   // CONSOLIDATED TYPES (use metadata for variants + protocol)
-  | 'transacted' // Payment/subscription/invoice (metadata.transactionType + protocol)
-  | 'notified' // Notifications (metadata.channel + notificationType)
-  | 'referred' // Referrals (metadata.referralType)
-  | 'communicated' // Agent/protocol communication (metadata.protocol + messageType)
-  | 'delegated' // Task/workflow delegation (metadata.protocol + taskType)
-  | 'approved' // Approvals (metadata.approvalType + protocol)
-  | 'fulfilled'; // Fulfillment (metadata.fulfillmentType + protocol)
+  | "transacted" // Payment/subscription/invoice (metadata.transactionType + protocol)
+  | "notified" // Notifications (metadata.channel + notificationType)
+  | "referred" // Referrals (metadata.referralType)
+  | "communicated" // Agent/protocol communication (metadata.protocol + messageType)
+  | "delegated" // Task/workflow delegation (metadata.protocol + taskType)
+  | "approved" // Approvals (metadata.approvalType + protocol)
+  | "fulfilled"; // Fulfillment (metadata.fulfillmentType + protocol)
 
 // Total: 25 connection types
 ```
@@ -1658,94 +1730,94 @@ Examples:
 ```typescript
 type EventType =
   // THING LIFECYCLE (3) - Consolidated with metadata.thingType
-  | 'thing_created'      // metadata: { thingType: "group" | "user" | "course" | etc. }
-  | 'thing_updated'      // metadata: { thingType, action: "updated" | "archived" | "restored" }
-  | 'thing_deleted'      // metadata: { thingType, action: "deleted" | "archived", deletionType: "soft" | "hard" }
+  | "thing_created" // metadata: { thingType: "group" | "user" | "course" | etc. }
+  | "thing_updated" // metadata: { thingType, action: "updated" | "archived" | "restored" }
+  | "thing_deleted" // metadata: { thingType, action: "deleted" | "archived", deletionType: "soft" | "hard" }
 
   // USER EVENTS (5)
-  | 'user_registered'
-  | 'user_verified'
-  | 'user_login'
-  | 'user_logout'
-  | 'profile_updated'
+  | "user_registered"
+  | "user_verified"
+  | "user_login"
+  | "user_logout"
+  | "profile_updated"
 
   // AUTHENTICATION EVENTS (6)
-  | 'password_reset_requested'
-  | 'password_reset_completed'
-  | 'email_verification_sent'
-  | 'email_verified'
-  | 'two_factor_enabled'
-  | 'two_factor_disabled'
+  | "password_reset_requested"
+  | "password_reset_completed"
+  | "email_verification_sent"
+  | "email_verified"
+  | "two_factor_enabled"
+  | "two_factor_disabled"
 
   // GROUP-SPECIFIC EVENTS (3) - Not lifecycle events (those use thing_*)
-  | 'user_invited_to_group'
-  | 'user_joined_group'
-  | 'user_removed_from_group'
+  | "user_invited_to_group"
+  | "user_joined_group"
+  | "user_removed_from_group"
 
   // DASHBOARD & UI EVENTS (4)
-  | 'dashboard_viewed'
-  | 'settings_updated'
-  | 'theme_changed'
-  | 'preferences_updated'
+  | "dashboard_viewed"
+  | "settings_updated"
+  | "theme_changed"
+  | "preferences_updated"
 
   // AI/CLONE EVENTS (2) - Creation uses thing_created with thingType: "clone"
-  | 'voice_cloned'
-  | 'appearance_cloned'
+  | "voice_cloned"
+  | "appearance_cloned"
 
   // AGENT EVENTS (3) - Creation uses thing_created with thingType: "agent"
-  | 'agent_executed'
-  | 'agent_completed'
-  | 'agent_failed'
+  | "agent_executed"
+  | "agent_completed"
+  | "agent_failed"
 
   // TOKEN EVENTS (6) - Creation uses thing_created with thingType: "token"
-  | 'token_minted'
-  | 'token_burned'
-  | 'tokens_purchased'
-  | 'tokens_staked'
-  | 'tokens_unstaked'
-  | 'tokens_transferred'
+  | "token_minted"
+  | "token_burned"
+  | "tokens_purchased"
+  | "tokens_staked"
+  | "tokens_unstaked"
+  | "tokens_transferred"
 
   // COURSE EVENTS (4) - Creation uses thing_created with thingType: "course"
-  | 'course_enrolled'
-  | 'lesson_completed'
-  | 'course_completed'
-  | 'certificate_earned'
+  | "course_enrolled"
+  | "lesson_completed"
+  | "course_completed"
+  | "certificate_earned"
 
   // ANALYTICS EVENTS (5)
-  | 'metric_calculated'
-  | 'insight_generated'
-  | 'prediction_made'
-  | 'optimization_applied'
-  | 'report_generated'
+  | "metric_calculated"
+  | "insight_generated"
+  | "prediction_made"
+  | "optimization_applied"
+  | "report_generated"
 
   // INFERENCE EVENTS (7) - NEW
-  | 'inference_request'         // User requests AI inference
-  | 'inference_completed'       // Inference result delivered
-  | 'inference_failed'          // Inference failed
-  | 'inference_quota_exceeded'  // Monthly limit hit
-  | 'inference_revenue_collected' // Daily revenue sweep
-  | 'org_revenue_generated'     // Group generates platform revenue
-  | 'revenue_share_distributed' // Revenue share paid out
+  | "inference_request" // User requests AI inference
+  | "inference_completed" // Inference result delivered
+  | "inference_failed" // Inference failed
+  | "inference_quota_exceeded" // Monthly limit hit
+  | "inference_revenue_collected" // Daily revenue sweep
+  | "org_revenue_generated" // Group generates platform revenue
+  | "revenue_share_distributed" // Revenue share paid out
 
   // BLOCKCHAIN EVENTS (5) - NEW
-  | 'nft_minted'               // NFT created on-chain
-  | 'nft_transferred'          // NFT ownership changed
-  | 'tokens_bridged'           // Cross-chain bridge
-  | 'contract_deployed'        // Smart contract deployed
-  | 'treasury_withdrawal'      // Platform owner withdraws revenue
+  | "nft_minted" // NFT created on-chain
+  | "nft_transferred" // NFT ownership changed
+  | "tokens_bridged" // Cross-chain bridge
+  | "contract_deployed" // Smart contract deployed
+  | "treasury_withdrawal" // Platform owner withdraws revenue
 
   // CONSOLIDATED EVENTS (use metadata for variants + protocol)
-  | 'content_event' // metadata.action: created|updated|deleted|viewed|shared|liked
-  | 'payment_event' // metadata.status: requested|verified|processed + protocol
-  | 'subscription_event' // metadata.action: started|renewed|cancelled
-  | 'commerce_event' // metadata.eventType + protocol (ACP, AP2)
-  | 'livestream_event' // metadata.status: started|ended + metadata.action: joined|left|chat|donation
-  | 'notification_event' // metadata.channel: email|sms|push|in_app + deliveryStatus
-  | 'referral_event' // metadata.action: created|completed|rewarded
-  | 'communication_event' // metadata.protocol (A2A, ACP, AG-UI) + messageType
-  | 'task_event' // metadata.action: delegated|completed|failed + protocol
-  | 'mandate_event' // metadata.mandateType: intent|cart + protocol (AP2)
-  | 'price_event'; // metadata.action: checked|changed
+  | "content_event" // metadata.action: created|updated|deleted|viewed|shared|liked
+  | "payment_event" // metadata.status: requested|verified|processed + protocol
+  | "subscription_event" // metadata.action: started|renewed|cancelled
+  | "commerce_event" // metadata.eventType + protocol (ACP, AP2)
+  | "livestream_event" // metadata.status: started|ended + metadata.action: joined|left|chat|donation
+  | "notification_event" // metadata.channel: email|sms|push|in_app + deliveryStatus
+  | "referral_event" // metadata.action: created|completed|rewarded
+  | "communication_event" // metadata.protocol (A2A, ACP, AG-UI) + messageType
+  | "task_event" // metadata.action: delegated|completed|failed + protocol
+  | "mandate_event" // metadata.mandateType: intent|cart + protocol (AP2)
+  | "price_event"; // metadata.action: checked|changed
 
 // Total: 52 event types (35 original + 7 inference + 5 blockchain + 5 NFT overlap)
 ```
@@ -2148,10 +2220,20 @@ Examples:
 Pattern: multi‑label entity
 
 ```typescript
-const labels = [ 'industry:fitness', 'skill:video-editing', 'technology:youtube', 'audience:beginners' ];
+const labels = [
+  "industry:fitness",
+  "skill:video-editing",
+  "technology:youtube",
+  "audience:beginners",
+];
 for (const label of labels) {
   const kid = await getOrCreateKnowledgeLabel(label);
-  await db.insert('thingKnowledge', { thingId: creatorId, knowledgeId: kid, role: 'label', createdAt: Date.now() });
+  await db.insert("thingKnowledge", {
+    thingId: creatorId,
+    knowledgeId: kid,
+    role: "label",
+    createdAt: Date.now(),
+  });
 }
 ```
 
@@ -2159,10 +2241,10 @@ Pattern: semantic search across chunks
 
 ```typescript
 // Given a query embedding, find top-k similar chunks for a group
-const topK = await vectorSearch('knowledge', {
-  vectorField: 'embedding',
+const topK = await vectorSearch("knowledge", {
+  vectorField: "embedding",
   query: queryEmbedding,
-  filter: { 'sourceThingId.groupId': groupId, knowledgeType: 'chunk' },
+  filter: { "sourceThingId.groupId": groupId, knowledgeType: "chunk" },
   k: 10,
 });
 ```
@@ -2264,21 +2346,25 @@ const topK = await vectorSearch('knowledge', {
 **E-Commerce: Shopping Cart Checkout**
 
 **Things Created/Used:**
+
 - `mandate` thing (shopping cart)
 - `product` thing (items in cart)
 - `payment` thing (transaction record)
 
 **Connections Created:**
+
 - customer → mandate (relationship: "owns" or "has_active_cart")
 - mandate → product items (relationship: "contains")
 - customer → payment (relationship: "transacted", metadata: { transactionType: "payment" })
 
 **Events Logged:**
+
 - `mandate_event` (cart created, items added, checkout started)
 - `payment_event` (payment processed)
 - `commerce_event` (order completed)
 
 **Knowledge Added:**
+
 - Order items tagged for analytics
 
 ---
@@ -2286,24 +2372,28 @@ const topK = await vectorSearch('knowledge', {
 **Education: Course Enrollment & Grading**
 
 **Things Created/Used:**
+
 - `course` thing
 - `lesson` things (modules, assignments)
 - `submission` thing (student work)
 - `metric` thing (grades)
 
 **Connections Created:**
+
 - student → course (relationship: "enrolled_in", metadata: { progress, grade })
 - student → submission (relationship: "submitted_for")
 - submission → lesson (relationship: "part_of")
 - teacher → submission (relationship: "graded_by")
 
 **Events Logged:**
+
 - `course_enrolled` (enrollment)
 - `content_event` (lesson viewed/completed)
 - `content_changed` (assignment submitted)
 - `metric_calculated` (grade calculated)
 
 **Knowledge Added:**
+
 - Competency labels (skills demonstrated)
 - Performance level tags
 
@@ -2312,22 +2402,26 @@ const topK = await vectorSearch('knowledge', {
 **Creator: Multi-Platform Publishing**
 
 **Things Created/Used:**
+
 - `video` thing (YouTube upload)
 - `podcast` thing (episode)
 - `blog_post` thing (newsletter)
 - `email_campaign` thing (broadcast)
 
 **Connections Created:**
+
 - creator → content (relationship: "authored")
 - content → platform (relationship: "published_to", metadata: { platform: "youtube" | "spotify" })
 - audience → content (relationship: "engaged_with")
 
 **Events Logged:**
+
 - `content_changed` (published, metadata: { platform, contentType })
 - `content_interacted` (viewed, listened, shared)
 - `metric_calculated` (engagement metrics)
 
 **Knowledge Added:**
+
 - Topic labels (subject matter)
 - Platform tags
 - Performance labels (trending, viral)
@@ -2337,24 +2431,28 @@ const topK = await vectorSearch('knowledge', {
 **Crypto: Token Staking & Yield Farming**
 
 **Things Created/Used:**
+
 - `token` thing (token instance)
 - `token_contract` thing (smart contract)
 - `metric` thing (TVL, APY)
 - `knowledge_item` thing (risk assessment)
 
 **Connections Created:**
+
 - user → token (relationship: "holds_tokens", metadata: { balance })
 - user → token (relationship: "staked_in", metadata: { amount, duration, earnings })
 - token → contract (relationship: "defined_by")
 - contract → dependencies (relationship: "depends_on", metadata: { critical: true })
 
 **Events Logged:**
+
 - `token_minted` / `token_burned`
 - `tokens_staked` / `tokens_unstaked`
 - `metric_calculated` (TVL, APY updates)
 - `price_event` (price changes)
 
 **Knowledge Added:**
+
 - Risk labels (audit status, vulnerability)
 - Protocol labels (type, chain)
 - Market labels (trend, momentum)
@@ -2373,8 +2471,8 @@ const thing = await db.get(thingId);
 
 ```typescript
 const creators = await db
-  .query('things')
-  .withIndex('by_type', (q) => q.eq('type', 'creator'))
+  .query("things")
+  .withIndex("by_type", (q) => q.eq("type", "creator"))
   .collect();
 ```
 
@@ -2383,14 +2481,14 @@ const creators = await db
 ```typescript
 // Get all entities this entity owns
 const owned = await db
-  .query('connections')
-  .withIndex('from_type', (q) =>
-    q.eq('fromThingId', thingId).eq('relationshipType', 'owns')
+  .query("connections")
+  .withIndex("from_type", (q) =>
+    q.eq("fromThingId", thingId).eq("relationshipType", "owns"),
   )
   .collect();
 
 const ownedThings = await Promise.all(
-  owned.map((conn) => db.get(conn.toThingId))
+  owned.map((conn) => db.get(conn.toThingId)),
 );
 ```
 
@@ -2399,9 +2497,9 @@ const ownedThings = await Promise.all(
 ```typescript
 // Get all events for this entity
 const history = await db
-  .query('events')
-  .withIndex('thing_type_time', (q) => q.eq('thingId', thingId))
-  .order('desc') // Most recent first
+  .query("events")
+  .withIndex("thing_type_time", (q) => q.eq("thingId", thingId))
+  .order("desc") // Most recent first
   .collect();
 ```
 
@@ -2409,12 +2507,12 @@ const history = await db
 
 ```typescript
 const knowledgeAssocs = await db
-  .query('thingKnowledge')
-  .withIndex('by_thing', (q) => q.eq('thingId', thingId))
+  .query("thingKnowledge")
+  .withIndex("by_thing", (q) => q.eq("thingId", thingId))
   .collect();
 
 const knowledgeItems = await Promise.all(
-  knowledgeAssocs.map((assoc) => db.get(assoc.knowledgeId))
+  knowledgeAssocs.map((assoc) => db.get(assoc.knowledgeId)),
 );
 ```
 
@@ -2423,14 +2521,14 @@ const knowledgeItems = await Promise.all(
 ```typescript
 // Find fitness creators with >10k followers
 const creators = await db
-  .query('things')
-  .withIndex('by_type', (q) => q.eq('type', 'creator'))
+  .query("things")
+  .withIndex("by_type", (q) => q.eq("type", "creator"))
   .collect();
 
 const fitnessCreators = creators.filter(
   (c) =>
     c.properties.totalFollowers > 10000 &&
-    c.properties.niche.includes('fitness')
+    c.properties.niche.includes("fitness"),
 );
 ```
 
@@ -2572,7 +2670,9 @@ events: -thing_type_time(thingId, eventType, timestamp) -
   type_time(eventType, timestamp) -
   session(sessionId, timestamp);
 
-knowledge: -by_type(knowledgeType) - by_source(sourceThingId) - by_created(createdAt);
+knowledge: -by_type(knowledgeType) -
+  by_source(sourceThingId) -
+  by_created(createdAt);
 ```
 
 ### Query Optimization
@@ -2781,22 +2881,22 @@ knowledge: -by_type(knowledgeType) - by_source(sourceThingId) - by_created(creat
 
 ```typescript
 const allPayments = await ctx.db
-  .query('events')
-  .filter((q) => q.eq(q.field('type'), 'payment_processed'))
+  .query("events")
+  .filter((q) => q.eq(q.field("type"), "payment_processed"))
   .collect();
 ```
 
 **Only X402 blockchain payments:**
 
 ```typescript
-const x402Payments = allPayments.filter((e) => e.metadata.protocol === 'x402');
+const x402Payments = allPayments.filter((e) => e.metadata.protocol === "x402");
 ```
 
 **Total revenue by protocol:**
 
 ```typescript
 const byProtocol = allPayments.reduce((acc, e) => {
-  const protocol = e.metadata.protocol || 'traditional';
+  const protocol = e.metadata.protocol || "traditional";
   acc[protocol] = (acc[protocol] || 0) + e.metadata.amount;
   return acc;
 }, {});
@@ -2882,6 +2982,7 @@ Principle: Users can add to any type without breaking the ontology.
 **Dimensions:** 6 total (groups, people, things, connections, events, knowledge)
 
 **Thing Types:** 66 total
+
 - Core: 4 (creator, ai_clone, audience_member, organization)
 - Business Agents: 10
 - Content: 7
@@ -2897,12 +2998,14 @@ Principle: Users can add to any type without breaking the ontology.
 - Protocol: 2
 
 **Connection Types:** 25 total (Hybrid approach)
+
 - 18 specific semantic types
 - 7 consolidated types with metadata variants
 - Protocol-agnostic via metadata.protocol
 - Includes group membership with role-based metadata
 
 **Event Types:** 67 total (Hybrid approach)
+
 - 4 Thing lifecycle
 - 5 User events
 - 6 Authentication events
@@ -2918,6 +3021,7 @@ Principle: Users can add to any type without breaking the ontology.
 - 11 consolidated types with metadata variants
 
 **Design Benefits:**
+
 - Six-dimension reality model
 - Multi-tenant by design
 - Clear ownership & governance
@@ -3038,12 +3142,14 @@ That's it. Everything else is just data.
 ### Why This Works for AI Agents
 
 **Traditional codebases:**
+
 - 100 different patterns for the same concept
 - AI sees chaos, accuracy degrades (95% → 30%)
 - Technical debt compounds
 - Each feature makes the next HARDER
 
 **ONE codebase:**
+
 - 1 universal pattern for each dimension
 - AI sees structure, accuracy compounds (85% → 98%)
 - Technical credit accumulates
@@ -3054,6 +3160,7 @@ That's it. Everything else is just data.
 ### Why Schema Migrations Never Happen
 
 **Other systems:**
+
 - Create new tables for every feature
 - Add protocol-specific columns
 - Pollute schema with temporary concepts
@@ -3062,6 +3169,7 @@ That's it. Everything else is just data.
 - Become unmaintainable nightmares
 
 **ONE's approach:**
+
 - Map every feature to 6 dimensions (reality model)
 - Groups partition the space (hierarchical containers)
 - People authorize and govern (role-based access)
@@ -3075,6 +3183,7 @@ That's it. Everything else is just data.
 ### The Economic Impact
 
 **Traditional Development:**
+
 - Developer writes 100 lines/day
 - AI assistance degrades over time
 - Technical debt compounds
@@ -3082,6 +3191,7 @@ That's it. Everything else is just data.
 - **Cost scales linearly with codebase size**
 
 **ONE Development:**
+
 - Agent generates 10,000 lines/day (100x)
 - AI accuracy improves over time (98%+)
 - Structure compounds (technical credit)
@@ -3105,22 +3215,27 @@ A system architecture that:
 ### What This Enables
 
 **1. Compound Velocity**
+
 - Traditional: Feature #100 takes LONGER than feature #1 (technical debt)
 - ONE: Feature #100 takes LESS TIME than feature #1 (pattern reuse)
 
 **2. Universal Feature Import**
+
 - Traditional: Want Shopify's checkout? Build from scratch (3 months)
 - ONE: Point agent-clone at Shopify. Clone checkout feature (20 minutes)
 
 **3. Backend Agnosticism**
+
 - Traditional: Migrating from WordPress to custom backend takes months
 - ONE: Switch `CONTENT_SOURCE` env var. Done in 1 minute.
 
 **4. AI-Native Development**
+
 - Traditional: AI is an assistant. Human is the driver (70% human work)
 - ONE: AI is the primary builder. Human is the architect (2% human work at scale)
 
 **5. No Breaking Changes**
+
 - Traditional: Major versions break everything
 - ONE: Technology changes (React → Svelte), ontology stays the same
 
@@ -3182,29 +3297,29 @@ export const requestPasswordReset = mutation({
   handler: async (ctx, { email }) => {
     // 1. Find user entity
     const user = await ctx.db
-      .query('entities')
-      .filter((q) => q.eq(q.field('properties.email'), email))
+      .query("entities")
+      .filter((q) => q.eq(q.field("properties.email"), email))
       .first();
 
     if (!user) return { success: true }; // Don't reveal if user exists
 
     // 2. Create password_reset_token entity
-    const tokenId = await ctx.db.insert('entities', {
-      type: 'password_reset_token',
+    const tokenId = await ctx.db.insert("entities", {
+      type: "password_reset_token",
       name: `Reset token for ${email}`,
       properties: {
         userId: user._id,
         token: hashedToken,
         expiresAt: Date.now() + 30 * 60 * 1000,
       },
-      status: 'active',
+      status: "active",
       createdAt: Date.now(),
       updatedAt: Date.now(),
     });
 
     // 3. Log event
-    await ctx.db.insert('events', {
-      type: 'password_reset_requested',
+    await ctx.db.insert("events", {
+      type: "password_reset_requested",
       actorId: user._id,
       targetId: tokenId,
       timestamp: Date.now(),
@@ -3220,7 +3335,7 @@ export const requestPasswordReset = mutation({
 });
 
 // Frontend usage
-import { useMutation } from 'convex/react';
+import { useMutation } from "convex/react";
 
 export function PasswordResetForm() {
   const requestReset = useMutation(api.auth.requestPasswordReset);
@@ -3237,32 +3352,35 @@ export function PasswordResetForm() {
 ```typescript
 // Check if user is group_owner (Middleware.md pattern)
 export const checkGroupOwner = query({
-  args: { userId: v.id('things'), groupId: v.id('groups') },
+  args: { userId: v.id("things"), groupId: v.id("groups") },
   handler: async (ctx, { userId, groupId }) => {
     // Query connection with role metadata
     const membership = await ctx.db
-      .query('connections')
-      .withIndex('from_type', (q) =>
+      .query("connections")
+      .withIndex("from_type", (q) =>
         q
-          .eq('fromThingId', userId)
-          .eq('toThingId', groupId)
-          .eq('relationshipType', 'member_of')
+          .eq("fromThingId", userId)
+          .eq("toThingId", groupId)
+          .eq("relationshipType", "member_of"),
       )
       .first();
 
-    return membership?.metadata?.role === 'group_owner';
+    return membership?.metadata?.role === "group_owner";
   },
 });
 
 // Frontend usage in middleware
-import { ConvexHttpClient } from 'convex/browser';
+import { ConvexHttpClient } from "convex/browser";
 
 export async function checkAccess(userId: string, groupId: string) {
   const convex = new ConvexHttpClient(env.CONVEX_URL);
-  const isOwner = await convex.query(api.auth.checkGroupOwner, { userId, groupId });
+  const isOwner = await convex.query(api.auth.checkGroupOwner, {
+    userId,
+    groupId,
+  });
 
   if (!isOwner) {
-    throw new Error('Forbidden: Group owner access required');
+    throw new Error("Forbidden: Group owner access required");
   }
 }
 ```
@@ -3272,26 +3390,26 @@ export async function checkAccess(userId: string, groupId: string) {
 ```typescript
 // Query events for analytics (Dashboard.md pattern)
 export const getGroupAnalytics = query({
-  args: { groupId: v.id('groups'), days: v.number() },
+  args: { groupId: v.id("groups"), days: v.number() },
   handler: async (ctx, { groupId, days }) => {
     const since = Date.now() - days * 24 * 60 * 60 * 1000;
 
     // Get all dashboard_viewed events for group users
     const groupMembers = await ctx.db
-      .query('connections')
-      .withIndex('to_type', (q) =>
-        q.eq('toThingId', groupId).eq('relationshipType', 'member_of')
+      .query("connections")
+      .withIndex("to_type", (q) =>
+        q.eq("toThingId", groupId).eq("relationshipType", "member_of"),
       )
       .collect();
 
     const memberIds = groupMembers.map((m) => m.fromThingId);
 
     const dashboardViews = await ctx.db
-      .query('events')
-      .withIndex('type_time', (q) =>
-        q.eq('type', 'dashboard_viewed').gte('timestamp', since)
+      .query("events")
+      .withIndex("type_time", (q) =>
+        q.eq("type", "dashboard_viewed").gte("timestamp", since),
       )
-      .filter((q) => memberIds.includes(q.field('actorId')))
+      .filter((q) => memberIds.includes(q.field("actorId")))
       .collect();
 
     return {
@@ -3300,7 +3418,7 @@ export const getGroupAnalytics = query({
       averageSessionDuration:
         dashboardViews.reduce(
           (sum, e) => sum + (e.metadata.sessionDuration || 0),
-          0
+          0,
         ) / dashboardViews.length,
     };
   },
@@ -3313,44 +3431,44 @@ export const getGroupAnalytics = query({
 // Update user preferences (creates ui_preferences thing if not exists)
 export const updatePreferences = mutation({
   args: {
-    userId: v.id('entities'),
+    userId: v.id("entities"),
     theme: v.optional(
-      v.union(v.literal('light'), v.literal('dark'), v.literal('system'))
+      v.union(v.literal("light"), v.literal("dark"), v.literal("system")),
     ),
     language: v.optional(v.string()),
   },
   handler: async (ctx, { userId, theme, language }) => {
     // Get or create ui_preferences entity
     let prefs = await ctx.db
-      .query('entities')
-      .withIndex('by_type', (q) => q.eq('type', 'ui_preferences'))
-      .filter((q) => q.eq(q.field('properties.userId'), userId))
+      .query("entities")
+      .withIndex("by_type", (q) => q.eq("type", "ui_preferences"))
+      .filter((q) => q.eq(q.field("properties.userId"), userId))
       .first();
 
     if (!prefs) {
       // Create new preferences entity
-      const prefsId = await ctx.db.insert('entities', {
-        type: 'ui_preferences',
+      const prefsId = await ctx.db.insert("entities", {
+        type: "ui_preferences",
         name: `Preferences for user ${userId}`,
         properties: {
           userId,
-          theme: theme || 'system',
-          language: language || 'en',
-          timezone: 'UTC',
+          theme: theme || "system",
+          language: language || "en",
+          timezone: "UTC",
           dashboardLayout: {
             sidebarCollapsed: false,
-            defaultView: 'grid',
+            defaultView: "grid",
             itemsPerPage: 20,
           },
           notifications: { email: true, push: false, sms: false, inApp: true },
           accessibility: {
             reducedMotion: false,
             highContrast: false,
-            fontSize: 'medium',
+            fontSize: "medium",
           },
           updatedAt: Date.now(),
         },
-        status: 'active',
+        status: "active",
         createdAt: Date.now(),
         updatedAt: Date.now(),
       });
@@ -3371,8 +3489,8 @@ export const updatePreferences = mutation({
 
     // Log preferences_updated event
     if (theme) {
-      await ctx.db.insert('events', {
-        type: 'theme_changed',
+      await ctx.db.insert("events", {
+        type: "theme_changed",
         actorId: userId,
         targetId: prefs._id,
         timestamp: Date.now(),
@@ -3403,11 +3521,11 @@ export function usePreferences(userId: string) {
 ```typescript
 // src/content/config.ts
 const agentsCollection = defineCollection({
-  type: 'data',
+  type: "data",
   loader: async () => {
     const convex = new ConvexHttpClient(env.CONVEX_URL);
     const agents = await convex.query(api.queries.entities.list, {
-      type: 'strategy_agent',
+      type: "strategy_agent",
     });
     return agents;
   },
@@ -3434,7 +3552,7 @@ export function AdminPanel({ userId, groupId }) {
     groupId,
   });
 
-  if (membership?.metadata?.role !== 'group_owner') {
+  if (membership?.metadata?.role !== "group_owner") {
     return <div>Access denied</div>;
   }
 
@@ -3508,6 +3626,7 @@ When implementing ANY feature, ask these 6 questions (maps to 6 dimensions):
 Your AI agents now have a complete, unambiguous data model. They will generate consistent database operations because they understand the underlying structure.
 
 **Key insights:**
+
 - The ontology models reality, not your app (that's why it never breaks)
 - Each feature AI generates makes the NEXT feature more accurate
 - You're not managing technical debt—you're accumulating technical credit
@@ -3518,18 +3637,21 @@ Your AI agents now have a complete, unambiguous data model. They will generate c
 **You have a schema that will never need major refactoring.**
 
 **Adding features:**
+
 - New entity type? → Add to `properties`, no schema migration
 - New relationship? → Use existing connection types + metadata
 - New protocol? → Add `metadata.protocol`, no new tables
 - New workflow? → Compose existing services via Effect.ts
 
 **What you DON'T do:**
+
 - ❌ Create custom tables (map to 6 dimensions instead)
 - ❌ Add protocol-specific columns (use metadata)
 - ❌ Schema migrations for new fields (use properties)
 - ❌ Hardcode patterns (use provider interface)
 
 **What you DO:**
+
 - ✅ Map features to 6 dimensions (groups, people, things, connections, events, knowledge)
 - ✅ Use flexible properties for type-specific data
 - ✅ Use metadata for protocol identity
@@ -3539,21 +3661,25 @@ Your AI agents now have a complete, unambiguous data model. They will generate c
 ### The Learning Curve
 
 **Generation 1-10: Learning the ontology (85% accuracy)**
+
 - You're teaching AI the 6 dimensions
 - Patterns are being established
 - Services are being created
 
 **Generation 11-50: Pattern recognition (90-93% accuracy)**
+
 - AI recognizes the universal patterns
 - Services are being reused
 - Composition is happening
 
 **Generation 51-100: Pattern mastery (96-98% accuracy)**
+
 - AI has internalized the structure
 - Generation is deterministic
 - You're reviewing, not debugging
 
 **Generation 100+: Generalized patterns (98%+ accuracy)**
+
 - AI doesn't need to think
 - Every decision is pattern-based
 - You're the architect, AI is the builder
@@ -3576,6 +3702,7 @@ Your AI agents now have a complete, unambiguous data model. They will generate c
 ### The Economic Result
 
 **Traditional Codebases:**
+
 ```
 100 files → 90% accurate
 1,000 files → 70% accurate
@@ -3584,6 +3711,7 @@ AI becomes a liability
 ```
 
 **ONE Codebase:**
+
 ```
 100 files → 85% accurate (learning)
 1,000 files → 92% accurate (mastering)
@@ -3607,6 +3735,7 @@ AI becomes more valuable
 8. Test with mocked layers
 
 **Remember:**
+
 - The ontology never changes (it's reality)
 - Effect.ts is for agents (predictable patterns)
 - Provider pattern is the universal adapter
@@ -3621,30 +3750,36 @@ AI becomes more valuable
 
 Objective: attach vectors to every relevant piece of content to enable high‑quality retrieval, while preserving ontology simplicity.
 
-1) Inventory sources (by thing type)
+1. Inventory sources (by thing type)
+
 - Text bodies: `blog_post.content`, `social_post.text`, `email.content`, `lesson.content`, `course.description`, `website.page.html (stripped)`
 - Transcripts: `video.transcript`, `podcast.transcript`, `livestream.recording.transcript`
 - Metadata: titles, summaries, captions
 
-2) Chunking standard
+2. Chunking standard
+
 - Window: ~800 tokens; overlap: ~200 tokens; language‑aware sentence boundaries when possible.
 - Store per‑chunk: `{ index, tokenCount, start, end, overlap }`.
 
-3) Embedding policy
+3. Embedding policy
+
 - Model: configurable via env (e.g., `text-embedding-3-large`). Store `embeddingModel` + `embeddingDim` per knowledge item.
 - PII/Privacy: use `knowledgeType: 'vector_only'` for sensitive texts; omit `text` and keep only embeddings + hashes.
 
-4) Ingestion pipeline
+4. Ingestion pipeline
+
 - Mutation: `scheduleEmbeddingForThing({ thingId, fields[] })` validates and enqueues work.
 - Internal action: `embedText({ text, model })` calls provider and returns `embedding`.
 - Internal mutation: `upsertKnowledgeChunks({ thingId, chunks[] })` writes `knowledge` items and links via `thingKnowledge` with role `chunk_of`.
 - Event log: `content_changed` on source updates triggers re‑embedding (debounced) via scheduler.
 
-5) Query + retrieval
+5. Query + retrieval
+
 - Vector search over `knowledge` filtered by group, creator, and content type; k‑NN approximate index when available, else provider‑side search.
 - Hybrid scoring: combine semantic similarity with lexical signals from `labels` and metadata.
 
-6) Governance + lifecycle
+6. Governance + lifecycle
+
 - Versioning: keep `metadata.hash` of source; if unchanged, skip.
 - Retention: archive old chunks on major edits; GC orphaned knowledge items.
 - Quality: track `metadata.qualityScore` and `feedback` for active learning.
@@ -3657,13 +3792,17 @@ export const embedText = internalAction({
   args: { text: v.string(), model: v.optional(v.string()) },
   handler: async (ctx, { text, model }) => {
     const embedding = await callEmbedProvider(text, model);
-    return { embedding, model: model || 'text-embedding-3-large', dim: embedding.length };
+    return {
+      embedding,
+      model: model || "text-embedding-3-large",
+      dim: embedding.length,
+    };
   },
 });
 
 // mutation: schedule embedding for a thing
 export const scheduleEmbeddingForThing = mutation({
-  args: { id: v.id('things'), fields: v.optional(v.array(v.string())) },
+  args: { id: v.id("things"), fields: v.optional(v.array(v.string())) },
   handler: async (ctx, { id, fields }) => {
     await ctx.scheduler.runAfter(0, internal.rag.ingestThing, { id, fields });
   },
@@ -3671,21 +3810,34 @@ export const scheduleEmbeddingForThing = mutation({
 
 // internal action: ingest a thing into knowledge
 export const ingestThing = internalAction({
-  args: { id: v.id('things'), fields: v.optional(v.array(v.string())) },
+  args: { id: v.id("things"), fields: v.optional(v.array(v.string())) },
   handler: async (ctx, { id, fields }) => {
     const thing = await ctx.runQuery(internal.entities.get, { id });
     const texts = extractTexts(thing, fields);
     let index = 0;
     for (const t of chunk(texts, { size: 800, overlap: 200 })) {
-      const { embedding, model, dim } = await ctx.runAction(internal.rag.embedText, { text: t.text });
+      const { embedding, model, dim } = await ctx.runAction(
+        internal.rag.embedText,
+        { text: t.text },
+      );
       const knowledgeId = await ctx.runMutation(internal.rag.upsertKnowledge, {
         item: {
-          knowledgeType: 'chunk', text: t.text, embedding, embeddingModel: model, embeddingDim: dim,
-          sourceThingId: id, sourceField: t.field, chunk: { index, tokenCount: t.tokens, overlap: 200 },
+          knowledgeType: "chunk",
+          text: t.text,
+          embedding,
+          embeddingModel: model,
+          embeddingDim: dim,
+          sourceThingId: id,
+          sourceField: t.field,
+          chunk: { index, tokenCount: t.tokens, overlap: 200 },
           labels: t.labels,
         },
       });
-      await ctx.runMutation(internal.rag.linkThingKnowledge, { thingId: id, knowledgeId, role: 'chunk_of' });
+      await ctx.runMutation(internal.rag.linkThingKnowledge, {
+        thingId: id,
+        knowledgeId,
+        role: "chunk_of",
+      });
       index++;
     }
   },

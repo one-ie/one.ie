@@ -1,3 +1,21 @@
+---
+title: Ontology Engineering Specification
+dimension: knowledge
+category: ontology-engineering-specification.md
+tags: 6-dimensions, agent, ai, architecture, backend, frontend, ontology
+related_dimensions: connections, events, people, things
+scope: global
+created: 2025-11-03
+updated: 2025-11-03
+version: 1.0.0
+ai_context: |
+  This document is part of the knowledge dimension in the ontology-engineering-specification.md category.
+  Location: one/knowledge/ontology-engineering-specification.md
+  Purpose: Documents one ontology engineering
+  Related dimensions: connections, events, people, things
+  For AI agents: Read this to understand ontology engineering specification.
+---
+
 # ONE Ontology Engineering
 
 **Version:** 1.0.0

@@ -1,3 +1,21 @@
+---
+title: Installation Folders Workflow Integration
+dimension: events
+category: installation-folders-workflow-integration.md
+tags: agent, architecture, customization, groups, installation
+related_dimensions: groups, things
+scope: global
+created: 2025-11-03
+updated: 2025-11-03
+version: 1.0.0
+ai_context: |
+  This document is part of the events dimension in the installation-folders-workflow-integration.md category.
+  Location: one/events/installation-folders-workflow-integration.md
+  Purpose: Documents installation folders workflow integration
+  Related dimensions: groups, things
+  For AI agents: Read this to understand installation folders workflow integration.
+---
+
 # Installation Folders Workflow Integration
 
 **Status:** ✅ Complete

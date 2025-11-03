@@ -1,3 +1,21 @@
+---
+title: 2 2 Config System
+dimension: things
+category: features
+tags: backend, frontend
+related_dimensions: connections, events, groups, knowledge, people
+scope: global
+created: 2025-11-03
+updated: 2025-11-03
+version: 1.0.0
+ai_context: |
+  This document is part of the things dimension in the features category.
+  Location: one/things/features/2-2-config-system.md
+  Purpose: Documents feature 2-2: configuration system
+  Related dimensions: connections, events, groups, knowledge, people
+  For AI agents: Read this to understand 2 2 config system.
+---
+
 # Feature 2-2: Configuration System
 
 **Feature ID:** `feature_2_2_config_system`
@@ -15,6 +33,7 @@
 The Configuration System enables ONE Platform to support multiple backend providers (Convex, WordPress, Notion, Supabase) with runtime provider switching, multi-tenant isolation, encrypted credential storage, and <30-second switchover times. Organizations configure their backend provider via environment variables or runtime API, with all credentials encrypted at rest and provider factories instantiating the correct implementation on demand.
 
 **Key Features:**
+
 - Environment-based configuration with Zod validation
 - Runtime provider switching per organization
 - Encrypted API key storage using AES-256-GCM
@@ -33,6 +52,7 @@ The Configuration System enables ONE Platform to support multiple backend provid
 **Purpose:** Each organization has independent backend provider configuration.
 
 **Schema Addition:**
+
 ```typescript
 // entities table (type: "organization")
 properties: {
@@ -47,6 +67,7 @@ properties: {
 ```
 
 **Usage:**
+
 - `org.properties.backendProvider.type` determines which provider to use
 - `org.properties.backendProvider.configId` links to encrypted credentials
 - Platform owner can switch providers for testing
@@ -57,12 +78,14 @@ properties: {
 **Purpose:** Only org_owner and platform_owner can change backend providers.
 
 **Roles with Config Access:**
+
 - `platform_owner`: Can configure ANY organization's provider (for support/migration)
 - `org_owner`: Can configure THEIR organization's provider
 - `org_user`: Read-only access to provider type (not credentials)
 - `customer`: No access to provider configuration
 
 **Permission Check Pattern:**
+
 ```typescript
 // Before allowing provider switch
 const person = await getPerson(userId);
@@ -132,6 +155,7 @@ updatedAt: number
 ```
 
 **Why This Design:**
+
 - Reuses existing `external_connection` entity type (no new type needed)
 - Encrypted credentials stored in properties (never in plaintext)
 - Supports multiple configs per organization (dev, staging, prod)
@@ -141,6 +165,7 @@ updatedAt: number
 ### 1.4 Connections
 
 **Organization → Backend Config:**
+
 ```typescript
 {
   fromEntityId: organizationId,
@@ -159,6 +184,7 @@ updatedAt: number
 ```
 
 **Person → Backend Config (Who Created):**
+
 ```typescript
 {
   fromEntityId: personId,
@@ -262,6 +288,7 @@ updatedAt: number
 ```
 
 **Why Labels:**
+
 - Enables capability-based provider discovery
 - Supports queries like "find backends with realtime capability"
 - Allows filtering in UI (show only providers with auth support)
@@ -278,6 +305,7 @@ updatedAt: number
 **So that** new organizations automatically use the configured backend
 
 **Acceptance Criteria:**
+
 - [ ] `.env.local` contains `BACKEND_PROVIDER=convex` variable
 - [ ] `.env.local` contains provider-specific credentials (e.g., `CONVEX_DEPLOYMENT_URL`)
 - [ ] Zod schema validates all required environment variables on startup
@@ -286,6 +314,7 @@ updatedAt: number
 - [ ] Provider switch creates `settings_updated` event with platform_owner actorId
 
 **Example Config:**
+
 ```bash
 # .env.local
 BACKEND_PROVIDER=convex
@@ -306,6 +335,7 @@ CONVEX_DEPLOYMENT_NAME=prod:shocking-falcon-870
 **So that** I can use my existing WordPress infrastructure
 
 **Acceptance Criteria:**
+
 - [ ] Org owner can access "Backend Settings" page
 - [ ] Page lists available provider types (Convex, WordPress, Notion, Supabase)
 - [ ] Org owner enters WordPress credentials in form
@@ -317,6 +347,7 @@ CONVEX_DEPLOYMENT_NAME=prod:shocking-falcon-870
 - [ ] Next API call uses new provider automatically
 
 **Security Requirements:**
+
 - [ ] API keys encrypted at rest using AES-256-GCM
 - [ ] Credentials never logged or exposed in events
 - [ ] Only org_owner and platform_owner can see credentials
@@ -329,6 +360,7 @@ CONVEX_DEPLOYMENT_NAME=prod:shocking-falcon-870
 **So that** Org A using WordPress doesn't affect Org B using Convex
 
 **Acceptance Criteria:**
+
 - [ ] Each organization has independent `backendProvider` config
 - [ ] Provider registry maintains per-org provider instances
 - [ ] Queries automatically route to correct provider based on org context
@@ -337,6 +369,7 @@ CONVEX_DEPLOYMENT_NAME=prod:shocking-falcon-870
 - [ ] Health checks run per organization, not globally
 
 **Example:**
+
 ```typescript
 // Org A uses Convex
 const orgAProvider = await getProviderForOrg("org_a");
@@ -354,6 +387,7 @@ await orgBProvider.query("entities", { type: "creator" }); // WordPress REST API
 **So that** I can detect and fix provider issues before users are affected
 
 **Acceptance Criteria:**
+
 - [ ] Health check runs every 5 minutes per active provider
 - [ ] Health check creates `communication_event` with status
 - [ ] Dashboard shows provider health status (online, degraded, offline)
@@ -362,6 +396,7 @@ await orgBProvider.query("entities", { type: "creator" }); // WordPress REST API
 - [ ] Admins can manually trigger health check
 
 **Health Check Endpoint Examples:**
+
 - Convex: `/_system/health`
 - WordPress: `/wp-json/`
 - Notion: `/v1/users/me`
@@ -374,6 +409,7 @@ await orgBProvider.query("entities", { type: "creator" }); // WordPress REST API
 **So that** users can choose from more backend options
 
 **Acceptance Criteria:**
+
 - [ ] Provider implements `DataProvider` interface
 - [ ] Provider registered via `registerProvider()` function
 - [ ] Factory creates provider instance with validated config
@@ -382,6 +418,7 @@ await orgBProvider.query("entities", { type: "creator" }); // WordPress REST API
 - [ ] Provider factory lazy-initializes (only creates instance when needed)
 
 **Registration Pattern:**
+
 ```typescript
 // backend/convex/providers/supabase.ts
 export const SupabaseProviderFactory: ProviderFactory = {
@@ -402,6 +439,7 @@ registerProvider(SupabaseProviderFactory);
 **So that** my organization isn't stuck with a broken backend
 
 **Acceptance Criteria:**
+
 - [ ] Organization properties store `previousProvider` reference
 - [ ] UI shows "Rollback to Convex" button when provider changed recently
 - [ ] Rollback creates new connection with `validFrom` = now
@@ -410,6 +448,7 @@ registerProvider(SupabaseProviderFactory);
 - [ ] Rollback creates `settings_updated` event with rollback metadata
 
 **Example Rollback:**
+
 ```typescript
 await rollbackProvider({
   orgId: "org_123",
@@ -437,6 +476,7 @@ await rollbackProvider({
 **So that** compromised database doesn't expose credentials
 
 **Acceptance Criteria:**
+
 - [ ] Encryption key stored in environment variable `ENCRYPTION_KEY`
 - [ ] AES-256-GCM used for encryption (authenticated encryption)
 - [ ] Each credential has unique IV (initialization vector)
@@ -446,6 +486,7 @@ await rollbackProvider({
 - [ ] Encryption key rotation supported (future feature)
 
 **Encryption Flow:**
+
 ```typescript
 // On save
 const encrypted = await encrypt(apiKey, process.env.ENCRYPTION_KEY);
@@ -455,7 +496,7 @@ await db.patch(externalConnectionId, {
     apiKey: encrypted.ciphertext,
     apiKeyIv: encrypted.iv,
     apiKeyAuthTag: encrypted.authTag,
-  }
+  },
 });
 
 // On load
@@ -474,6 +515,7 @@ const decrypted = await decrypt({
 **So that** invalid configs are caught early with helpful errors
 
 **Acceptance Criteria:**
+
 - [ ] Each provider type has dedicated Zod schema
 - [ ] Schema validates required fields (e.g., `CONVEX_DEPLOYMENT_URL`)
 - [ ] Schema validates field formats (URLs, API key patterns)
@@ -482,6 +524,7 @@ const decrypted = await decrypt({
 - [ ] Invalid config prevents provider initialization
 
 **Schema Examples:**
+
 ```typescript
 // Convex config schema
 export const ConvexConfigSchema = z.object({
@@ -506,6 +549,7 @@ export const WordPressConfigSchema = z.object({
 **So that** my team isn't waiting for backend changes
 
 **Acceptance Criteria:**
+
 - [ ] Provider switch completes in <30 seconds (99th percentile)
 - [ ] Switch includes: validate → encrypt → save → initialize → health check
 - [ ] Progress indicator shows switch steps in UI
@@ -514,6 +558,7 @@ export const WordPressConfigSchema = z.object({
 - [ ] Performance metrics tracked (P50, P95, P99)
 
 **Target Timings:**
+
 - Validate credentials: <2s
 - Encrypt and save: <1s
 - Initialize provider: <5s
@@ -527,6 +572,7 @@ export const WordPressConfigSchema = z.object({
 **So that** I don't need technical knowledge to switch providers
 
 **Acceptance Criteria:**
+
 - [ ] Settings page at `/org/[orgId]/settings/backend`
 - [ ] Current provider shown with status badge (online/offline)
 - [ ] Dropdown to select new provider type
@@ -534,9 +580,10 @@ export const WordPressConfigSchema = z.object({
 - [ ] "Test Connection" button validates credentials before saving
 - [ ] Success notification shows "Provider switched to WordPress"
 - [ ] Error messages are user-friendly (not raw error logs)
-- [ ] Credentials masked in UI (show ******* for API keys)
+- [ ] Credentials masked in UI (show **\*\*\*** for API keys)
 
 **UI Flow:**
+
 1. Org owner visits `/org/acme/settings/backend`
 2. Sees "Current Provider: Convex (Online)"
 3. Clicks "Change Provider"
@@ -555,6 +602,7 @@ export const WordPressConfigSchema = z.object({
 ### Phase 1: Schema and Types (Steps 1-10)
 
 **Step 1:** Define `ProviderConfig` type
+
 ```typescript
 // backend/convex/providers/types.ts
 export type ProviderType = "convex" | "wordpress" | "notion" | "supabase";
@@ -574,6 +622,7 @@ export interface EncryptedCredentials {
 ```
 
 **Step 2:** Add Zod schemas for each provider
+
 ```typescript
 // backend/convex/providers/schemas.ts
 import { z } from "zod";
@@ -613,6 +662,7 @@ export const ProviderConfigSchema = z.discriminatedUnion("type", [
 ```
 
 **Step 3:** Update organization schema
+
 ```typescript
 // backend/convex/schema.ts
 entities: defineTable({
@@ -622,18 +672,22 @@ entities: defineTable({
   status: v.optional(v.union(/* ... */)),
   createdAt: v.number(),
   updatedAt: v.number(),
-})
+});
 ```
 
 **Step 4:** Add indexes for external_connection queries
+
 ```typescript
 // backend/convex/schema.ts
-entities: defineTable({ /* ... */ })
+entities: defineTable({
+  /* ... */
+})
   .index("by_type", ["type"])
-  .index("by_type_status", ["type", "status"]) // NEW: Fast external_connection queries
+  .index("by_type_status", ["type", "status"]); // NEW: Fast external_connection queries
 ```
 
 **Step 5:** Define `ProviderFactory` interface
+
 ```typescript
 // backend/convex/providers/factory.ts
 import { z } from "zod";
@@ -649,18 +703,19 @@ export interface ProviderFactory {
 ```
 
 **Step 6:** Create encryption utility
+
 ```typescript
 // backend/convex/lib/encryption.ts
 import { createCipheriv, createDecipheriv, randomBytes } from "crypto";
 
 const ALGORITHM = "aes-256-gcm";
 const KEY_LENGTH = 32; // 256 bits
-const IV_LENGTH = 16;  // 128 bits
+const IV_LENGTH = 16; // 128 bits
 const AUTH_TAG_LENGTH = 16;
 
 export async function encrypt(
   plaintext: string,
-  key: string
+  key: string,
 ): Promise<EncryptedCredentials> {
   const keyBuffer = Buffer.from(key, "hex");
   if (keyBuffer.length !== KEY_LENGTH) {
@@ -683,7 +738,7 @@ export async function encrypt(
 
 export async function decrypt(
   encrypted: EncryptedCredentials,
-  key: string
+  key: string,
 ): Promise<string> {
   const keyBuffer = Buffer.from(key, "hex");
   const ivBuffer = Buffer.from(encrypted.iv, "hex");
@@ -700,6 +755,7 @@ export async function decrypt(
 ```
 
 **Step 7:** Create environment variable loader
+
 ```typescript
 // backend/convex/config/loader.ts
 import { ProviderConfigSchema } from "../providers/schemas";
@@ -739,6 +795,7 @@ export function loadProviderConfig(): ProviderConfig {
 ```
 
 **Step 8:** Add encryption key validation
+
 ```typescript
 // backend/convex/config/loader.ts (continued)
 export function validateEncryptionKey(): void {
@@ -761,6 +818,7 @@ export function generateEncryptionKey(): string {
 ```
 
 **Step 9:** Create provider configuration service
+
 ```typescript
 // backend/convex/services/config/provider.ts
 import { Effect, Context } from "effect";
@@ -769,7 +827,9 @@ import type { Id } from "../../_generated/dataModel";
 export class ProviderConfigService extends Context.Tag("ProviderConfigService")<
   ProviderConfigService,
   {
-    getForOrganization: (orgId: Id<"entities">) => Effect.Effect<
+    getForOrganization: (
+      orgId: Id<"entities">,
+    ) => Effect.Effect<
       ProviderConfig | null,
       ConfigNotFoundError | DecryptionError
     >;
@@ -777,13 +837,15 @@ export class ProviderConfigService extends Context.Tag("ProviderConfigService")<
     saveForOrganization: (
       orgId: Id<"entities">,
       config: ProviderConfig,
-      actorId: Id<"entities">
+      actorId: Id<"entities">,
     ) => Effect.Effect<
       Id<"entities">, // externalConnectionId
       ValidationError | EncryptionError | UnauthorizedError
     >;
 
-    testConnection: (config: ProviderConfig) => Effect.Effect<
+    testConnection: (
+      config: ProviderConfig,
+    ) => Effect.Effect<
       { success: true; responseTime: number },
       ConnectionTestError
     >;
@@ -792,6 +854,7 @@ export class ProviderConfigService extends Context.Tag("ProviderConfigService")<
 ```
 
 **Step 10:** Define error types
+
 ```typescript
 // backend/convex/services/config/errors.ts
 export class ConfigNotFoundError {
@@ -818,7 +881,7 @@ export class UnauthorizedError {
   readonly _tag = "UnauthorizedError";
   constructor(
     readonly userId: string,
-    readonly requiredRole: string
+    readonly requiredRole: string,
   ) {}
 }
 
@@ -827,7 +890,7 @@ export class ConnectionTestError {
   constructor(
     readonly provider: string,
     readonly reason: string,
-    readonly httpStatus?: number
+    readonly httpStatus?: number,
   ) {}
 }
 ```
@@ -835,6 +898,7 @@ export class ConnectionTestError {
 ### Phase 2: Provider Factory (Steps 11-20)
 
 **Step 11:** Create provider registry
+
 ```typescript
 // backend/convex/providers/registry.ts
 const registeredProviders = new Map<ProviderType, ProviderFactory>();
@@ -843,7 +907,9 @@ export function registerProvider(factory: ProviderFactory): void {
   registeredProviders.set(factory.type, factory);
 }
 
-export function getProviderFactory(type: ProviderType): ProviderFactory | undefined {
+export function getProviderFactory(
+  type: ProviderType,
+): ProviderFactory | undefined {
   return registeredProviders.get(type);
 }
 
@@ -857,6 +923,7 @@ export function getProviderCapabilities(type: ProviderType): string[] {
 ```
 
 **Step 12:** Implement Convex provider factory
+
 ```typescript
 // backend/convex/providers/convex/factory.ts
 import { ConvexProvider } from "./provider";
@@ -875,13 +942,7 @@ export const ConvexProviderFactory: ProviderFactory = {
 
   validate: ConvexConfigSchema,
 
-  capabilities: [
-    "auth",
-    "realtime",
-    "storage",
-    "functions",
-    "search",
-  ],
+  capabilities: ["auth", "realtime", "storage", "functions", "search"],
 
   healthCheckUrl: (config) => `${config.url}/_system/health`,
 };
@@ -891,6 +952,7 @@ registerProvider(ConvexProviderFactory);
 ```
 
 **Step 13:** Implement WordPress provider factory
+
 ```typescript
 // backend/convex/providers/wordpress/factory.ts
 import { WordPressProvider } from "./provider";
@@ -910,12 +972,7 @@ export const WordPressProviderFactory: ProviderFactory = {
 
   validate: WordPressConfigSchema,
 
-  capabilities: [
-    "cms",
-    "rest_api",
-    "plugins",
-    "media_library",
-  ],
+  capabilities: ["cms", "rest_api", "plugins", "media_library"],
 
   healthCheckUrl: (config) => config.baseUrl,
 };
@@ -924,6 +981,7 @@ registerProvider(WordPressProviderFactory);
 ```
 
 **Step 14:** Create provider instance cache
+
 ```typescript
 // backend/convex/providers/cache.ts
 const providerCache = new Map<string, DataProvider>();
@@ -946,6 +1004,7 @@ export function clearAllProviders(): void {
 ```
 
 **Step 15:** Implement lazy provider initialization
+
 ```typescript
 // backend/convex/providers/initializer.ts
 import { Effect } from "effect";
@@ -954,7 +1013,7 @@ import { getProviderFactory } from "./registry";
 
 export const initializeProvider = (
   orgId: Id<"entities">,
-  config: ProviderConfig
+  config: ProviderConfig,
 ): Effect.Effect<DataProvider, ProviderInitError> =>
   Effect.gen(function* () {
     // Check cache first
@@ -965,16 +1024,15 @@ export const initializeProvider = (
     const factory = getProviderFactory(config.type);
     if (!factory) {
       return yield* Effect.fail(
-        new ProviderInitError(`Unknown provider type: ${config.type}`)
+        new ProviderInitError(`Unknown provider type: ${config.type}`),
       );
     }
 
     // Create provider instance
     const provider = yield* Effect.tryPromise({
       try: () => factory.create(config),
-      catch: (error) => new ProviderInitError(
-        `Failed to initialize ${config.type}: ${error}`
-      ),
+      catch: (error) =>
+        new ProviderInitError(`Failed to initialize ${config.type}: ${error}`),
     });
 
     // Cache for future use
@@ -985,12 +1043,13 @@ export const initializeProvider = (
 ```
 
 **Step 16:** Create provider switcher service
+
 ```typescript
 // backend/convex/services/config/switcher.ts
 export const switchProvider = (
   orgId: Id<"entities">,
   newConfig: ProviderConfig,
-  actorId: Id<"entities">
+  actorId: Id<"entities">,
 ): Effect.Effect<
   { switchDuration: number; configId: Id<"entities"> },
   ValidationError | EncryptionError | UnauthorizedError | ConnectionTestError
@@ -1002,7 +1061,7 @@ export const switchProvider = (
     const factory = getProviderFactory(newConfig.type);
     if (!factory) {
       return yield* Effect.fail(
-        new ValidationError(`Unknown provider: ${newConfig.type}`)
+        new ValidationError(`Unknown provider: ${newConfig.type}`),
       );
     }
 
@@ -1032,10 +1091,11 @@ export const switchProvider = (
 ```
 
 **Step 17:** Implement connection test
+
 ```typescript
 // backend/convex/services/config/tester.ts
 export const testConnection = (
-  config: ProviderConfig
+  config: ProviderConfig,
 ): Effect.Effect<
   { success: true; responseTime: number },
   ConnectionTestError
@@ -1052,11 +1112,12 @@ export const testConnection = (
 
     const response = yield* Effect.tryPromise({
       try: () => fetch(url, { method: "GET", timeout: 5000 }),
-      catch: (error) => new ConnectionTestError(
-        config.type,
-        `Health check failed: ${error}`,
-        undefined
-      ),
+      catch: (error) =>
+        new ConnectionTestError(
+          config.type,
+          `Health check failed: ${error}`,
+          undefined,
+        ),
     });
 
     if (!response.ok) {
@@ -1064,8 +1125,8 @@ export const testConnection = (
         new ConnectionTestError(
           config.type,
           `Health check returned ${response.status}`,
-          response.status
-        )
+          response.status,
+        ),
       );
     }
 
@@ -1075,16 +1136,17 @@ export const testConnection = (
 ```
 
 **Step 18:** Implement credential encryption helper
+
 ```typescript
 // backend/convex/services/config/encryption.ts
 export const encryptCredentials = (
-  config: ProviderConfig
+  config: ProviderConfig,
 ): Effect.Effect<EncryptedConfig, EncryptionError> =>
   Effect.gen(function* () {
     const key = process.env.ENCRYPTION_KEY;
     if (!key) {
       return yield* Effect.fail(
-        new EncryptionError("ENCRYPTION_KEY not configured")
+        new EncryptionError("ENCRYPTION_KEY not configured"),
       );
     }
 
@@ -1094,9 +1156,8 @@ export const encryptCredentials = (
     for (const [field, value] of Object.entries(credentials)) {
       encrypted[field] = yield* Effect.tryPromise({
         try: () => encrypt(value, key),
-        catch: (error) => new EncryptionError(
-          `Failed to encrypt ${field}: ${error}`
-        ),
+        catch: (error) =>
+          new EncryptionError(`Failed to encrypt ${field}: ${error}`),
       });
     }
 
@@ -1123,6 +1184,7 @@ function extractCredentials(config: ProviderConfig): Record<string, string> {
 ```
 
 **Step 19:** Implement config save mutation
+
 ```typescript
 // backend/convex/mutations/config.ts
 export const saveProviderConfig = mutation({
@@ -1145,14 +1207,15 @@ export const saveProviderConfig = mutation({
     // Use Effect service
     return await Effect.runPromise(
       switchProvider(args.orgId, args.config, actor._id).pipe(
-        Effect.provide(ConfigServiceLayer)
-      )
+        Effect.provide(ConfigServiceLayer),
+      ),
     );
   },
 });
 ```
 
 **Step 20:** Register all provider factories on startup
+
 ```typescript
 // backend/convex/providers/index.ts
 import "./convex/factory";
@@ -1168,25 +1231,26 @@ export * from "./initializer";
 ### Phase 3: Multi-Tenant Provider Access (Steps 21-30)
 
 **Step 21:** Create organization context service
+
 ```typescript
 // backend/convex/services/context/organization.ts
 export class OrganizationContext extends Context.Tag("OrganizationContext")<
   OrganizationContext,
   {
     getCurrentOrg: () => Effect.Effect<Id<"entities">, OrgNotFoundError>;
-    getOrgProvider: (orgId: Id<"entities">) => Effect.Effect<
-      DataProvider,
-      ConfigNotFoundError | ProviderInitError
-    >;
+    getOrgProvider: (
+      orgId: Id<"entities">,
+    ) => Effect.Effect<DataProvider, ConfigNotFoundError | ProviderInitError>;
   }
 >() {}
 ```
 
 **Step 22:** Implement provider resolver
+
 ```typescript
 // backend/convex/services/context/resolver.ts
 export const resolveProviderForOrg = (
-  orgId: Id<"entities">
+  orgId: Id<"entities">,
 ): Effect.Effect<DataProvider, ConfigNotFoundError | ProviderInitError> =>
   Effect.gen(function* () {
     // Check cache
@@ -1214,10 +1278,11 @@ export const resolveProviderForOrg = (
 ```
 
 **Step 23:** Implement config loader from external_connection
+
 ```typescript
 // backend/convex/services/config/loader.ts
 export const loadExternalConnection = (
-  configId: Id<"entities">
+  configId: Id<"entities">,
 ): Effect.Effect<ProviderConfig, ConfigNotFoundError | DecryptionError> =>
   Effect.gen(function* () {
     const config = yield* Effect.tryPromise(() => db.get(configId));
@@ -1228,7 +1293,7 @@ export const loadExternalConnection = (
 
     if (config.status !== "active") {
       return yield* Effect.fail(
-        new ConfigNotFoundError(`Config ${configId} is inactive`)
+        new ConfigNotFoundError(`Config ${configId} is inactive`),
       );
     }
 
@@ -1244,14 +1309,11 @@ export const loadExternalConnection = (
 ```
 
 **Step 24:** Create scoped query wrapper
+
 ```typescript
 // backend/convex/queries/scoped.ts
 export const createScopedQuery = <Args, Result>(
-  fn: (
-    ctx: QueryCtx,
-    args: Args,
-    provider: DataProvider
-  ) => Promise<Result>
+  fn: (ctx: QueryCtx, args: Args, provider: DataProvider) => Promise<Result>,
 ) => {
   return query({
     handler: async (ctx, args) => {
@@ -1272,8 +1334,8 @@ export const createScopedQuery = <Args, Result>(
       // Resolve provider for org
       const provider = await Effect.runPromise(
         resolveProviderForOrg(user.properties.organizationId).pipe(
-          Effect.provide(ConfigServiceLayer)
-        )
+          Effect.provide(ConfigServiceLayer),
+        ),
       );
 
       // Execute query with scoped provider
@@ -1284,6 +1346,7 @@ export const createScopedQuery = <Args, Result>(
 ```
 
 **Step 25:** Example scoped query usage
+
 ```typescript
 // backend/convex/queries/entities.ts
 export const list = createScopedQuery(
@@ -1292,11 +1355,12 @@ export const list = createScopedQuery(
     return await provider.query("entities", {
       where: { type: args.type },
     });
-  }
+  },
 );
 ```
 
 **Step 26:** Create scoped mutation wrapper
+
 ```typescript
 // backend/convex/mutations/scoped.ts
 export const createScopedMutation = <Args, Result>(
@@ -1304,8 +1368,8 @@ export const createScopedMutation = <Args, Result>(
     ctx: MutationCtx,
     args: Args,
     provider: DataProvider,
-    orgId: Id<"entities">
-  ) => Promise<Result>
+    orgId: Id<"entities">,
+  ) => Promise<Result>,
 ) => {
   return mutation({
     handler: async (ctx, args) => {
@@ -1323,8 +1387,8 @@ export const createScopedMutation = <Args, Result>(
 
       const provider = await Effect.runPromise(
         resolveProviderForOrg(user.properties.organizationId).pipe(
-          Effect.provide(ConfigServiceLayer)
-        )
+          Effect.provide(ConfigServiceLayer),
+        ),
       );
 
       return await fn(ctx, args, provider, user.properties.organizationId);
@@ -1334,10 +1398,11 @@ export const createScopedMutation = <Args, Result>(
 ```
 
 **Step 27:** Implement provider health check
+
 ```typescript
 // backend/convex/services/health/checker.ts
 export const checkProviderHealth = (
-  configId: Id<"entities">
+  configId: Id<"entities">,
 ): Effect.Effect<
   { status: "online" | "offline"; responseTime: number },
   ConnectionTestError
@@ -1353,27 +1418,28 @@ export const checkProviderHealth = (
 ```
 
 **Step 28:** Create scheduled health check action
+
 ```typescript
 // backend/convex/crons/health.ts
 export const healthCheckCron = cronJobs.interval(
   "provider-health-check",
   { minutes: 5 },
-  internal.health.checkAllProviders
+  internal.health.checkAllProviders,
 );
 
 export const checkAllProviders = internalAction({
   handler: async (ctx) => {
     // Get all active external_connection entities
     const configs = await ctx.runQuery(
-      internal.queries.config.listActiveConfigs
+      internal.queries.config.listActiveConfigs,
     );
 
     for (const config of configs) {
       try {
         const health = await Effect.runPromise(
           checkProviderHealth(config._id).pipe(
-            Effect.provide(HealthCheckLayer)
-          )
+            Effect.provide(HealthCheckLayer),
+          ),
         );
 
         // Log health event
@@ -1396,12 +1462,13 @@ export const checkAllProviders = internalAction({
 ```
 
 **Step 29:** Implement provider usage tracking
+
 ```typescript
 // backend/convex/services/usage/tracker.ts
 export const trackProviderUsage = (
   orgId: Id<"entities">,
   operation: string,
-  duration: number
+  duration: number,
 ): Effect.Effect<void, never> =>
   Effect.gen(function* () {
     // Create usage event
@@ -1416,7 +1483,7 @@ export const trackProviderUsage = (
           operation,
           duration,
         },
-      })
+      }),
     );
 
     // Update organization usage metrics (if needed)
@@ -1425,6 +1492,7 @@ export const trackProviderUsage = (
 ```
 
 **Step 30:** Add provider metrics query
+
 ```typescript
 // backend/convex/queries/metrics.ts
 export const getProviderMetrics = query({
@@ -1439,8 +1507,8 @@ export const getProviderMetrics = query({
         q.and(
           q.eq(q.field("type"), "communication_event"),
           q.eq(q.field("actorId"), args.orgId),
-          q.eq(q.field("metadata.protocol"), "provider_usage")
-        )
+          q.eq(q.field("metadata.protocol"), "provider_usage"),
+        ),
       )
       .collect();
 
@@ -1458,6 +1526,7 @@ export const getProviderMetrics = query({
 ### Phase 4: Frontend Integration (Steps 31-40)
 
 **Step 31:** Create provider config form component
+
 ```typescript
 // frontend/src/components/features/config/ProviderConfigForm.tsx
 import { useState } from "react";
@@ -1564,6 +1633,7 @@ export function ProviderConfigForm({ orgId }: { orgId: Id<"entities"> }) {
 ```
 
 **Step 32:** Create provider status badge
+
 ```typescript
 // frontend/src/components/features/config/ProviderStatusBadge.tsx
 import { useQuery } from "convex/react";
@@ -1584,6 +1654,7 @@ export function ProviderStatusBadge({ orgId }: { orgId: Id<"entities"> }) {
 ```
 
 **Step 33:** Create settings page
+
 ```typescript
 // frontend/src/pages/org/[orgId]/settings/backend.astro
 ---
@@ -1607,6 +1678,7 @@ const { orgId } = Astro.params;
 ```
 
 **Step 34:** Add provider metrics dashboard
+
 ```typescript
 // frontend/src/components/features/config/ProviderMetrics.tsx
 import { useQuery } from "convex/react";
@@ -1649,6 +1721,7 @@ export function ProviderMetrics({ orgId }: { orgId: Id<"entities"> }) {
 ```
 
 **Step 35:** Implement rollback UI
+
 ```typescript
 // frontend/src/components/features/config/ProviderRollback.tsx
 import { useMutation, useQuery } from "convex/react";
@@ -1691,6 +1764,7 @@ export function ProviderRollback({ orgId }: { orgId: Id<"entities"> }) {
 ```
 
 **Step 36:** Add provider switch confirmation dialog
+
 ```typescript
 // frontend/src/components/features/config/SwitchConfirmDialog.tsx
 import { Dialog, DialogContent, DialogHeader, DialogTitle } from "@/components/ui/dialog";
@@ -1752,6 +1826,7 @@ export function SwitchConfirmDialog({
 ```
 
 **Step 37:** Create provider health monitoring page
+
 ```typescript
 // frontend/src/pages/admin/providers.astro
 ---
@@ -1774,6 +1849,7 @@ if (user?.role !== "platform_owner") {
 ```
 
 **Step 38:** Implement health list component
+
 ```typescript
 // frontend/src/components/features/config/ProviderHealthList.tsx
 import { useQuery } from "convex/react";
@@ -1821,6 +1897,7 @@ export function ProviderHealthList() {
 ```
 
 **Step 39:** Add loading state during switch
+
 ```typescript
 // frontend/src/components/features/config/SwitchProgress.tsx
 import { Progress } from "@/components/ui/progress";
@@ -1862,6 +1939,7 @@ export function SwitchProgress({ progress }: { progress: number }) {
 ```
 
 **Step 40:** Add error boundary for provider errors
+
 ```typescript
 // frontend/src/components/features/config/ProviderErrorBoundary.tsx
 import { Component, ReactNode } from "react";
@@ -1908,6 +1986,7 @@ export class ProviderErrorBoundary extends Component<Props, State> {
 ### Phase 5: Testing and Documentation (Steps 41-50)
 
 **Step 41:** Write unit tests for encryption
+
 ```typescript
 // backend/convex/lib/encryption.test.ts
 import { describe, it, expect } from "vitest";
@@ -1957,6 +2036,7 @@ describe("Encryption", () => {
 ```
 
 **Step 42:** Write integration tests for provider switching
+
 ```typescript
 // backend/convex/services/config/switcher.test.ts
 import { describe, it, expect, beforeEach } from "vitest";
@@ -1979,8 +2059,8 @@ describe("Provider Switching", () => {
           username: "admin",
           applicationPassword: "xxxx xxxx xxxx xxxx",
         },
-        "user_456"
-      ).pipe(Effect.provide(TestLayer))
+        "user_456",
+      ).pipe(Effect.provide(TestLayer)),
     );
 
     expect(result.switchDuration).toBeLessThan(30000);
@@ -1998,9 +2078,9 @@ describe("Provider Switching", () => {
             username: "admin",
             applicationPassword: "wrong",
           },
-          "user_456"
-        ).pipe(Effect.provide(TestLayer))
-      )
+          "user_456",
+        ).pipe(Effect.provide(TestLayer)),
+      ),
     ).rejects.toThrow("Connection test failed");
 
     // Verify org still using old provider
@@ -2018,12 +2098,14 @@ describe("Provider Switching", () => {
           username: "admin",
           applicationPassword: "plaintext-password",
         },
-        "user_456"
-      ).pipe(Effect.provide(TestLayer))
+        "user_456",
+      ).pipe(Effect.provide(TestLayer)),
     );
 
     const config = await getEntity(result.configId);
-    expect(config.properties.config.applicationPassword).not.toBe("plaintext-password");
+    expect(config.properties.config.applicationPassword).not.toBe(
+      "plaintext-password",
+    );
     expect(config.properties.apiKeyIv).toBeDefined();
     expect(config.properties.apiKeyAuthTag).toBeDefined();
   });
@@ -2031,6 +2113,7 @@ describe("Provider Switching", () => {
 ```
 
 **Step 43:** Write E2E test for provider switch UI
+
 ```typescript
 // frontend/tests/e2e/provider-switch.test.ts
 import { test, expect } from "@playwright/test";
@@ -2050,9 +2133,15 @@ test("org owner can switch backend provider", async ({ page }) => {
 
   // Change to WordPress
   await page.selectOption('select[name="providerType"]', "wordpress");
-  await page.fill('input[placeholder="WordPress URL"]', "https://example.com/wp-json");
+  await page.fill(
+    'input[placeholder="WordPress URL"]',
+    "https://example.com/wp-json",
+  );
   await page.fill('input[placeholder="Username"]', "admin");
-  await page.fill('input[placeholder="Application Password"]', "xxxx xxxx xxxx xxxx");
+  await page.fill(
+    'input[placeholder="Application Password"]',
+    "xxxx xxxx xxxx xxxx",
+  );
 
   // Test connection
   await page.click("button:has-text('Test Connection')");
@@ -2067,13 +2156,17 @@ test("org owner can switch backend provider", async ({ page }) => {
   });
 
   // Verify rollback button appears
-  await expect(page.locator("button:has-text('Rollback to Convex')")).toBeVisible();
+  await expect(
+    page.locator("button:has-text('Rollback to Convex')"),
+  ).toBeVisible();
 });
 ```
 
 **Step 44:** Document environment variables
+
 ```markdown
 <!-- /Users/toc/Server/ONE/one/things/features/2-2-config-env-vars.md -->
+
 # Backend Provider Environment Variables
 
 ## Encryption
@@ -2081,7 +2174,9 @@ test("org owner can switch backend provider", async ({ page }) => {
 Required for all configurations:
 
 \`\`\`bash
+
 # Generate with: node -e "console.log(require('crypto').randomBytes(32).toString('hex'))"
+
 ENCRYPTION_KEY=64-character-hex-string
 \`\`\`
 
@@ -2107,6 +2202,7 @@ WORDPRESS_APP_PASSWORD=xxxx-xxxx-xxxx-xxxx
 \`\`\`
 
 Generate WordPress Application Password:
+
 1. Login to WordPress admin
 2. Users → Profile
 3. Scroll to "Application Passwords"
@@ -2123,6 +2219,7 @@ NOTION_DATABASE_ID=xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
 \`\`\`
 
 Get Notion credentials:
+
 1. Go to https://www.notion.so/my-integrations
 2. Create new integration
 3. Copy "Internal Integration Token"
@@ -2146,13 +2243,16 @@ Runtime config stored in \`external_connection\` entities.
 ```
 
 **Step 45:** Create configuration guide
+
 ```markdown
 <!-- /Users/toc/Server/ONE/one/things/features/2-2-config-guide.md -->
+
 # Backend Provider Configuration Guide
 
 ## Overview
 
 ONE Platform supports multiple backend providers:
+
 - Convex (default, real-time database)
 - WordPress (REST API, existing sites)
 - Notion (databases as backend)
@@ -2203,26 +2303,31 @@ If new provider has issues:
 ### Troubleshooting
 
 **Provider shows "Offline":**
+
 - Check credentials are correct
 - Verify provider URL is accessible
 - Check provider service status (e.g., WordPress site up?)
 - View error details in provider settings
 
 **Switch takes >30 seconds:**
+
 - Check network connection
 - Verify provider responds to health checks
 - Contact support if persists
 
 **Can't save credentials:**
+
 - Verify you're org_owner (not org_user)
 - Check credentials match expected format
 - Ensure "Test Connection" passes first
-\`\`\`
+  \`\`\`
 ```
 
 **Step 46:** Add troubleshooting guide
+
 ```markdown
 <!-- /Users/toc/Server/ONE/one/things/features/2-2-troubleshooting.md -->
+
 # Provider Configuration Troubleshooting
 
 ## Common Issues
@@ -2232,6 +2337,7 @@ If new provider has issues:
 **Error:** "ENCRYPTION_KEY not configured"
 
 **Solution:**
+
 1. Generate key: \`node -e "console.log(require('crypto').randomBytes(32).toString('hex'))"\`
 2. Add to \`.env.local\`: \`ENCRYPTION_KEY=<generated-key>\`
 3. Restart Convex
@@ -2241,13 +2347,15 @@ If new provider has issues:
 **Error:** "Invalid WordPress URL"
 
 **Solution:**
+
 - WordPress URL must end with \`/wp-json\`
 - Example: \`https://example.com/wp-json\` (not \`https://example.com\`)
 
 **Error:** "Invalid Notion token"
 
 **Solution:**
-- Token must start with \`secret_\`
+
+- Token must start with \`secret\_\`
 - Regenerate token in Notion integrations if needed
 
 ### Connection Test Failed
@@ -2255,6 +2363,7 @@ If new provider has issues:
 **Error:** "Health check returned 404"
 
 **Solution (WordPress):**
+
 - Ensure WordPress site is accessible
 - Verify REST API enabled (not disabled by security plugin)
 - Test manually: \`curl https://example.com/wp-json/\`
@@ -2262,6 +2371,7 @@ If new provider has issues:
 **Error:** "Unauthorized"
 
 **Solution:**
+
 - Check credentials are correct
 - WordPress: Regenerate application password
 - Notion: Verify integration has database access
@@ -2272,6 +2382,7 @@ If new provider has issues:
 **Error:** "Provider switch exceeded 30 seconds"
 
 **Solution:**
+
 - Check network connection
 - Verify provider responds quickly
 - Try again (may be temporary network issue)
@@ -2298,16 +2409,18 @@ If new provider has issues:
 4. Check event logs:
    \`\`\`typescript
    const events = await ctx.db.query("events")
-     .withIndex("by_type", q => q.eq("type", "settings_updated"))
-     .order("desc")
-     .take(10);
+   .withIndex("by_type", q => q.eq("type", "settings_updated"))
+   .order("desc")
+   .take(10);
    \`\`\`
-\`\`\`
+   \`\`\`
 ```
 
 **Step 47:** Write API reference
+
 ```markdown
 <!-- /Users/toc/Server/ONE/one/things/features/2-2-api-reference.md -->
+
 # Provider Configuration API Reference
 
 ## Mutations
@@ -2319,23 +2432,24 @@ Save new provider configuration for organization.
 **Args:**
 \`\`\`typescript
 {
-  orgId: Id<"entities">,
-  config: {
-    type: "convex" | "wordpress" | "notion" | "supabase",
-    // Provider-specific fields
-  }
+orgId: Id<"entities">,
+config: {
+type: "convex" | "wordpress" | "notion" | "supabase",
+// Provider-specific fields
+}
 }
 \`\`\`
 
 **Returns:**
 \`\`\`typescript
 {
-  switchDuration: number, // milliseconds
-  configId: Id<"entities"> // external_connection entity
+switchDuration: number, // milliseconds
+configId: Id<"entities"> // external_connection entity
 }
 \`\`\`
 
 **Errors:**
+
 - UnauthorizedError: Not org_owner
 - ValidationError: Invalid config
 - ConnectionTestError: Connection failed
@@ -2348,15 +2462,15 @@ Rollback to previous provider configuration.
 **Args:**
 \`\`\`typescript
 {
-  orgId: Id<"entities">
+orgId: Id<"entities">
 }
 \`\`\`
 
 **Returns:**
 \`\`\`typescript
 {
-  configId: Id<"entities">, // Previous config entity
-  provider: string // Provider type
+configId: Id<"entities">, // Previous config entity
+provider: string // Provider type
 }
 \`\`\`
 
@@ -2369,18 +2483,18 @@ Get current provider status for organization.
 **Args:**
 \`\`\`typescript
 {
-  orgId: Id<"entities">
+orgId: Id<"entities">
 }
 \`\`\`
 
 **Returns:**
 \`\`\`typescript
 {
-  type: ProviderType,
-  online: boolean,
-  lastCheckedAt: number,
-  responseTime: number, // milliseconds
-  error?: string
+type: ProviderType,
+online: boolean,
+lastCheckedAt: number,
+responseTime: number, // milliseconds
+error?: string
 }
 \`\`\`
 
@@ -2391,12 +2505,12 @@ List all active provider configurations (platform_owner only).
 **Returns:**
 \`\`\`typescript
 Array<{
-  _id: Id<"entities">,
-  name: string,
-  platform: ProviderType,
-  status: "active" | "inactive" | "error",
-  lastConnectedAt: number,
-  lastError?: string
+\_id: Id<"entities">,
+name: string,
+platform: ProviderType,
+status: "active" | "inactive" | "error",
+lastConnectedAt: number,
+lastError?: string
 }>
 \`\`\`
 
@@ -2407,23 +2521,24 @@ Get usage metrics for organization's provider.
 **Args:**
 \`\`\`typescript
 {
-  orgId: Id<"entities">,
-  days: number // Look back period
+orgId: Id<"entities">,
+days: number // Look back period
 }
 \`\`\`
 
 **Returns:**
 \`\`\`typescript
 {
-  totalOperations: number,
-  averageDuration: number,
-  operationsByType: Record<string, number>
+totalOperations: number,
+averageDuration: number,
+operationsByType: Record<string, number>
 }
 \`\`\`
 \`\`\`
 ```
 
 **Step 48:** Create performance benchmarks
+
 ```typescript
 // backend/convex/benchmarks/provider-switch.bench.ts
 import { describe, bench } from "vitest";
@@ -2442,14 +2557,14 @@ describe("Provider Switch Performance", () => {
           username: "admin",
           applicationPassword: "xxxx xxxx xxxx xxxx",
         },
-        "user_bench"
-      ).pipe(Effect.provide(BenchmarkLayer))
+        "user_bench",
+      ).pipe(Effect.provide(BenchmarkLayer)),
     );
   });
 
   bench("encrypt 100 credentials", async () => {
     const promises = Array.from({ length: 100 }, (_, i) =>
-      encrypt(`api-key-${i}`, process.env.ENCRYPTION_KEY!)
+      encrypt(`api-key-${i}`, process.env.ENCRYPTION_KEY!),
     );
     await Promise.all(promises);
   });
@@ -2457,8 +2572,8 @@ describe("Provider Switch Performance", () => {
   bench("resolve provider for 100 orgs", async () => {
     const promises = Array.from({ length: 100 }, (_, i) =>
       Effect.runPromise(
-        resolveProviderForOrg(`org_${i}`).pipe(Effect.provide(BenchmarkLayer))
-      )
+        resolveProviderForOrg(`org_${i}`).pipe(Effect.provide(BenchmarkLayer)),
+      ),
     );
     await Promise.all(promises);
   });
@@ -2471,8 +2586,10 @@ describe("Provider Switch Performance", () => {
 ```
 
 **Step 49:** Add migration guide for existing users
+
 ```markdown
 <!-- /Users/toc/Server/ONE/one/things/features/2-2-migration-guide.md -->
+
 # Migrating to Configuration System
 
 ## For Existing ONE Platform Deployments
@@ -2487,7 +2604,9 @@ describe("Provider Switch Performance", () => {
 
 1. **Update environment variables**
    \`\`\`bash
+
    # Add to backend/.env.local
+
    ENCRYPTION_KEY=$(node -e "console.log(require('crypto').randomBytes(32).toString('hex'))")
    BACKEND_PROVIDER=convex
    CONVEX_DEPLOYMENT_URL=https://shocking-falcon-870.convex.cloud
@@ -2527,49 +2646,55 @@ Rollback time: <5 minutes
 ```
 
 **Step 50:** Create provider comparison matrix
+
 ```markdown
 <!-- /Users/toc/Server/ONE/one/things/features/2-2-provider-comparison.md -->
+
 # Backend Provider Comparison
 
-| Feature | Convex | WordPress | Notion | Supabase |
-|---------|--------|-----------|--------|----------|
-| **Real-time** | ✅ Native | ❌ Polling only | ❌ Polling only | ✅ Native |
-| **Authentication** | ✅ Built-in | ✅ Via plugins | ❌ External | ✅ Built-in |
-| **Storage** | ✅ Built-in | ✅ Media library | ✅ Files | ✅ Storage buckets |
-| **Functions** | ✅ Mutations/Actions | ✅ PHP endpoints | ❌ External | ✅ Edge Functions |
-| **Search** | ✅ Full-text | ✅ Via plugins | ✅ Database filters | ✅ PostgreSQL FTS |
-| **Cost** | Usage-based | Hosting + plugins | Per-seat | Usage-based |
-| **Setup Time** | Minutes | Hours (install) | Minutes | Minutes |
-| **Scalability** | Auto | Manual | Limited | Auto |
-| **Data Model** | JSON documents | MySQL tables | Databases | PostgreSQL |
-| **Best For** | Modern apps | Existing WP sites | Internal tools | SQL-heavy apps |
+| Feature            | Convex               | WordPress         | Notion              | Supabase           |
+| ------------------ | -------------------- | ----------------- | ------------------- | ------------------ |
+| **Real-time**      | ✅ Native            | ❌ Polling only   | ❌ Polling only     | ✅ Native          |
+| **Authentication** | ✅ Built-in          | ✅ Via plugins    | ❌ External         | ✅ Built-in        |
+| **Storage**        | ✅ Built-in          | ✅ Media library  | ✅ Files            | ✅ Storage buckets |
+| **Functions**      | ✅ Mutations/Actions | ✅ PHP endpoints  | ❌ External         | ✅ Edge Functions  |
+| **Search**         | ✅ Full-text         | ✅ Via plugins    | ✅ Database filters | ✅ PostgreSQL FTS  |
+| **Cost**           | Usage-based          | Hosting + plugins | Per-seat            | Usage-based        |
+| **Setup Time**     | Minutes              | Hours (install)   | Minutes             | Minutes            |
+| **Scalability**    | Auto                 | Manual            | Limited             | Auto               |
+| **Data Model**     | JSON documents       | MySQL tables      | Databases           | PostgreSQL         |
+| **Best For**       | Modern apps          | Existing WP sites | Internal tools      | SQL-heavy apps     |
 
 ## When to Use Each Provider
 
 ### Convex (Default)
+
 - New projects
 - Real-time features needed
 - Automatic scaling required
 - Simple data model (JSON)
 
 ### WordPress
+
 - Existing WordPress site
 - Content-heavy site
 - Need plugins ecosystem
 - Team familiar with WordPress
 
 ### Notion
+
 - Internal tools/dashboards
 - Simple CRUD operations
 - No real-time needed
 - Notion-first workflow
 
 ### Supabase
+
 - Complex SQL queries needed
 - PostgreSQL familiarity
 - Edge functions required
 - Full control over database
-\`\`\`
+  \`\`\`
 ```
 
 ---
@@ -2579,6 +2704,7 @@ Rollback time: <5 minutes
 ### Unit Tests
 
 **Encryption (10 tests):**
+
 - ✅ Encrypt and decrypt correctly
 - ✅ Different ciphertexts for same plaintext (unique IV)
 - ✅ Fail with wrong key
@@ -2591,12 +2717,13 @@ Rollback time: <5 minutes
 - ✅ Key generation produces valid keys
 
 **Config Validation (15 tests):**
+
 - ✅ Validate Convex config (valid)
 - ✅ Reject invalid Convex URL
 - ✅ Validate WordPress config (valid)
 - ✅ Reject WordPress URL without /wp-json
 - ✅ Validate Notion config (valid)
-- ✅ Reject Notion token without secret_ prefix
+- ✅ Reject Notion token without secret\_ prefix
 - ✅ Validate Supabase config (valid)
 - ✅ Reject invalid Supabase URL
 - ✅ Handle optional service key
@@ -2608,6 +2735,7 @@ Rollback time: <5 minutes
 - ✅ Provide helpful error messages
 
 **Provider Factory (8 tests):**
+
 - ✅ Register provider
 - ✅ Get provider factory
 - ✅ List provider types
@@ -2620,6 +2748,7 @@ Rollback time: <5 minutes
 ### Integration Tests
 
 **Provider Switching (12 tests):**
+
 - ✅ Switch from Convex to WordPress
 - ✅ Switch from WordPress to Notion
 - ✅ Rollback on connection failure
@@ -2634,6 +2763,7 @@ Rollback time: <5 minutes
 - ✅ Validate actor permissions
 
 **Multi-Tenant Isolation (6 tests):**
+
 - ✅ Each org has independent provider
 - ✅ Org A using WordPress doesn't affect Org B using Convex
 - ✅ Provider failure isolated to org
@@ -2642,6 +2772,7 @@ Rollback time: <5 minutes
 - ✅ Health checks per org
 
 **Health Monitoring (5 tests):**
+
 - ✅ Health check creates communication_event
 - ✅ Failed health check logs error
 - ✅ Health check runs every 5 minutes
@@ -2651,6 +2782,7 @@ Rollback time: <5 minutes
 ### E2E Tests
 
 **Provider Switch UI (8 tests):**
+
 - ✅ Org owner can access backend settings
 - ✅ Current provider displayed correctly
 - ✅ Select new provider from dropdown
@@ -2661,12 +2793,14 @@ Rollback time: <5 minutes
 - ✅ Success notification displayed
 
 **Rollback UI (4 tests):**
+
 - ✅ Rollback button appears after switch
 - ✅ Rollback confirmation dialog shown
 - ✅ Rollback completes quickly (<10s)
 - ✅ Previous provider restored
 
 **Error Handling (6 tests):**
+
 - ✅ Invalid credentials show error message
 - ✅ Network error handled gracefully
 - ✅ Provider timeout handled
@@ -2677,6 +2811,7 @@ Rollback time: <5 minutes
 ### Security Tests
 
 **Authorization (5 tests):**
+
 - ✅ platform_owner can configure any org
 - ✅ org_owner can configure their org only
 - ✅ org_user cannot configure provider
@@ -2684,6 +2819,7 @@ Rollback time: <5 minutes
 - ✅ Unauthorized access returns 403
 
 **Credential Protection (6 tests):**
+
 - ✅ API keys never logged
 - ✅ API keys never in event metadata
 - ✅ API keys never in error messages
@@ -2694,6 +2830,7 @@ Rollback time: <5 minutes
 ### Performance Tests
 
 **Benchmarks (5 tests):**
+
 - ✅ Provider switch <30s (P99)
 - ✅ Provider switch <15s (P50)
 - ✅ Encrypt 100 credentials <500ms
@@ -2701,6 +2838,7 @@ Rollback time: <5 minutes
 - ✅ Health check <3s per provider
 
 **Load Tests (3 tests):**
+
 - ✅ 100 concurrent provider switches
 - ✅ 1000 provider resolutions/second
 - ✅ Cache hit rate >90%
@@ -2733,18 +2871,21 @@ Before marking Feature 2-2 complete:
 ## 6. Dependencies
 
 **Required (Blocking):**
+
 - ✅ Feature 2-1: DataProvider Interface MUST be complete
   - All 4 providers implement DataProvider
   - query(), mutation(), healthCheck() methods
   - Type signatures match interface
 
 **Schema Changes:**
+
 - ✅ `external_connection` entity type exists
 - ✅ `configured_by` connection type defined
 - ✅ `settings_updated` event type defined
 - ✅ Organizations table includes `properties.backendProvider`
 
 **Environment:**
+
 - ✅ Node.js crypto module available
 - ✅ Convex supports environment variables
 - ✅ Frontend can call Convex mutations
@@ -2754,6 +2895,7 @@ Before marking Feature 2-2 complete:
 ## 7. Rollback Plan
 
 ### Pre-Rollback Checklist
+
 - [ ] Identify issue requiring rollback
 - [ ] Notify affected organizations
 - [ ] Backup current configs
@@ -2761,6 +2903,7 @@ Before marking Feature 2-2 complete:
 ### Rollback Steps (Target: <5 minutes)
 
 1. **Disable provider switching UI** (1 min)
+
    ```typescript
    // Hide provider config page
    // frontend/src/pages/org/[orgId]/settings/backend.astro
@@ -2768,6 +2911,7 @@ Before marking Feature 2-2 complete:
    ```
 
 2. **Revert to hardcoded provider** (2 min)
+
    ```typescript
    // backend/convex/providers/default.ts
    export function getProvider(): DataProvider {
@@ -2780,12 +2924,14 @@ Before marking Feature 2-2 complete:
    ```
 
 3. **Clear provider cache** (30 sec)
+
    ```typescript
    // backend/convex/providers/cache.ts
    clearAllProviders();
    ```
 
 4. **Deploy rollback** (1 min)
+
    ```bash
    cd backend
    npx convex deploy --prod
@@ -2797,12 +2943,14 @@ Before marking Feature 2-2 complete:
    - Verify no provider errors
 
 ### Post-Rollback
+
 - [ ] Document rollback reason
 - [ ] Fix root cause
 - [ ] Test fix on staging
 - [ ] Re-enable with fix
 
 ### Rollback Triggers
+
 - Provider switch failures >10%
 - P99 switch time >60s
 - Credential decryption errors
@@ -2814,6 +2962,7 @@ Before marking Feature 2-2 complete:
 ## 8. Documentation Requirements
 
 **User Documentation:**
+
 - [x] Configuration guide (Step 45)
 - [x] Environment variables reference (Step 44)
 - [x] Troubleshooting guide (Step 46)
@@ -2821,6 +2970,7 @@ Before marking Feature 2-2 complete:
 - [x] Migration guide (Step 49)
 
 **Developer Documentation:**
+
 - [x] API reference (Step 47)
 - [x] Provider registration guide
 - [x] Encryption implementation notes
@@ -2828,6 +2978,7 @@ Before marking Feature 2-2 complete:
 - [x] Architecture decision records
 
 **Examples:**
+
 - [x] WordPress setup example
 - [x] Notion setup example
 - [x] Supabase setup example
@@ -2838,6 +2989,7 @@ Before marking Feature 2-2 complete:
 ## 9. Success Criteria
 
 ### Functional Requirements
+
 - [x] Organizations configure backend via .env or UI
 - [x] Runtime provider switching works (<30s)
 - [x] Multi-tenant isolation maintained (each org independent)
@@ -2847,6 +2999,7 @@ Before marking Feature 2-2 complete:
 - [x] Support 4 provider types (Convex, WordPress, Notion, Supabase)
 
 ### Non-Functional Requirements
+
 - [x] Switch duration P99 <30s
 - [x] Switch duration P50 <15s
 - [x] Health check response time <3s
@@ -2857,6 +3010,7 @@ Before marking Feature 2-2 complete:
 - [x] Helpful error messages (not raw exceptions)
 
 ### Security Requirements
+
 - [x] API keys encrypted at rest
 - [x] Unique IV per encryption
 - [x] Authenticated encryption (GCM mode)
@@ -2866,6 +3020,7 @@ Before marking Feature 2-2 complete:
 - [x] Encryption key validation on startup
 
 ### Documentation Requirements
+
 - [x] 5 user guides written
 - [x] API reference complete
 - [x] Troubleshooting guide with solutions
@@ -2873,6 +3028,7 @@ Before marking Feature 2-2 complete:
 - [x] Provider comparison matrix
 
 ### Testing Requirements
+
 - [x] 80+ tests passing
 - [x] Unit tests (33 tests)
 - [x] Integration tests (23 tests)
@@ -2885,6 +3041,7 @@ Before marking Feature 2-2 complete:
 ## 10. Related Files
 
 **Implementation Files:**
+
 - `backend/convex/schema.ts` - Schema updates
 - `backend/convex/providers/factory.ts` - Provider factory
 - `backend/convex/providers/registry.ts` - Provider registration
@@ -2895,12 +3052,14 @@ Before marking Feature 2-2 complete:
 - `frontend/src/pages/org/[orgId]/settings/backend.astro` - Settings page
 
 **Test Files:**
+
 - `backend/convex/lib/encryption.test.ts` - Encryption tests
 - `backend/convex/services/config/switcher.test.ts` - Switch tests
 - `frontend/tests/e2e/provider-switch.test.ts` - E2E tests
 - `backend/convex/benchmarks/provider-switch.bench.ts` - Benchmarks
 
 **Documentation Files:**
+
 - `/Users/toc/Server/ONE/one/things/features/2-2-config-system.md` - This file
 - `/Users/toc/Server/ONE/one/things/features/2-2-config-env-vars.md` - Env vars
 - `/Users/toc/Server/ONE/one/things/features/2-2-config-guide.md` - User guide
@@ -2910,6 +3069,7 @@ Before marking Feature 2-2 complete:
 - `/Users/toc/Server/ONE/one/things/features/2-2-provider-comparison.md` - Comparison
 
 **Related Features:**
+
 - Feature 2-1: DataProvider Interface (dependency)
 - Feature 2-3: Convex Implementation (uses config system)
 - Feature 2-4: WordPress Implementation (uses config system)
@@ -2930,12 +3090,14 @@ Before marking Feature 2-2 complete:
 ### Example: Org Owner Switches to WordPress
 
 **Step 1: User visits settings**
+
 ```typescript
 // GET /org/acme/settings/backend
 // User sees: "Current Provider: Convex (Online)"
 ```
 
 **Step 2: User selects WordPress**
+
 ```typescript
 // Form shows WordPress-specific fields
 <Input placeholder="WordPress URL" />
@@ -2944,6 +3106,7 @@ Before marking Feature 2-2 complete:
 ```
 
 **Step 3: User tests connection**
+
 ```typescript
 // POST /api/config/test
 const result = await testConnection({
@@ -2956,6 +3119,7 @@ const result = await testConnection({
 ```
 
 **Step 4: User saves configuration**
+
 ```typescript
 // POST /api/config/save
 const { switchDuration, configId } = await saveProviderConfig({
@@ -2971,6 +3135,7 @@ const { switchDuration, configId } = await saveProviderConfig({
 ```
 
 **Step 5: Backend processes switch**
+
 ```typescript
 // 1. Validate config with Zod schema
 const validated = WordPressConfigSchema.parse(config);
@@ -3054,12 +3219,14 @@ await db.insert("events", {
 ```
 
 **Step 6: User sees success**
+
 ```typescript
 // UI updates: "Current Provider: WordPress (Online)"
 // Rollback button appears: "Rollback to Convex"
 ```
 
 **Step 7: Next query uses WordPress**
+
 ```typescript
 // GET /api/entities?type=creator
 const provider = await resolveProviderForOrg("org_acme");

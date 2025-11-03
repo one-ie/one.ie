@@ -1,3 +1,21 @@
+---
+title: Landing Page Quickstart
+dimension: events
+category: LANDING-PAGE-QUICKSTART.md
+tags: ai
+related_dimensions: connections, groups, people
+scope: global
+created: 2025-11-03
+updated: 2025-11-03
+version: 1.0.0
+ai_context: |
+  This document is part of the events dimension in the LANDING-PAGE-QUICKSTART.md category.
+  Location: one/events/LANDING-PAGE-QUICKSTART.md
+  Purpose: Documents landing page generator - quick start guide
+  Related dimensions: connections, groups, people
+  For AI agents: Read this to understand LANDING PAGE QUICKSTART.
+---
+
 # Landing Page Generator - Quick Start Guide
 
 Generate a beautiful, performant landing page in under 5 minutes using your brand colors and content.

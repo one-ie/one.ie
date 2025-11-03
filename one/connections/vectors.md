@@ -1,3 +1,21 @@
+---
+title: Vectors
+dimension: connections
+category: vectors.md
+tags: ai, knowledge, ontology, things
+related_dimensions: events, knowledge, people, things
+scope: global
+created: 2025-11-03
+updated: 2025-11-03
+version: 1.0.0
+ai_context: |
+  This document is part of the connections dimension in the vectors.md category.
+  Location: one/connections/vectors.md
+  Purpose: Documents one vectors — rag design and implementation guide
+  Related dimensions: events, knowledge, people, things
+  For AI agents: Read this to understand vectors.
+---
+
 # ONE Vectors — RAG Design and Implementation Guide
 
 Version: 1.0.0

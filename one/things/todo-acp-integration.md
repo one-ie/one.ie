@@ -1,3 +1,22 @@
+---
+title: Todo Acp Integration
+dimension: things
+primary_dimension: connections
+category: todo-acp-integration.md
+tags: agent, ai, inference, protocol
+related_dimensions: events, groups, people, connections, things
+scope: global
+created: 2025-11-03
+updated: 2025-11-03
+version: 1.0.0
+ai_context: |
+  This document is part of the things dimension in the todo-acp-integration.md category.
+  Location: one/things/todo-acp-integration.md
+  Purpose: Documents one platform: acp (agent communication protocol) integration v1.0.0
+  Related dimensions: events, groups, people
+  For AI agents: Read this to understand todo acp integration.
+---
+
 # ONE Platform: ACP (Agent Communication Protocol) Integration v1.0.0
 
 **Focus:** Enable agents to discover, communicate, and collaborate via ACP standard
@@ -27,6 +46,7 @@ ACP is the **lingua franca** for inter-agent communication. Integration enables:
 **Purpose:** Understand ACP, map to ONE ontology, plan integration
 
 ### Infer 1: Understand ACP Protocol Deeply
+
 - [ ] Read ACP spec: https://agentcommunicationprotocol.dev/
 - [ ] Key concepts:
   - [ ] REST-based (not proprietary)
@@ -45,6 +65,7 @@ ACP is the **lingua franca** for inter-agent communication. Integration enables:
   - [ ] GET /agents (discover agents)
 
 ### Infer 2: Map ACP to 6-Dimension Ontology
+
 - [ ] **Groups:** Agent network (group of agents that can communicate)
 - [ ] **People:** Agent metadata (provider, version, support contact)
 - [ ] **Things:**
@@ -74,6 +95,7 @@ ACP is the **lingua franca** for inter-agent communication. Integration enables:
   - [ ] agent_performance (rating, reliability, speed)
 
 ### Infer 3: Define ACP Integration Scope
+
 - [ ] **MVP (this todo file):**
   - [ ] ACP server implementation in /web + /backend
   - [ ] Agent registry (discover agents)
@@ -92,6 +114,7 @@ ACP is the **lingua franca** for inter-agent communication. Integration enables:
   - [ ] Multi-agent conversation (3+ agents)
 
 ### Infer 4: Identify Integration Points
+
 - [ ] **Chat agent** (from todo-buy-chatgpt):
   - [ ] Can delegate recommendations to expert agents
   - [ ] Example: "Padel expert agent" → recommends products
@@ -113,6 +136,7 @@ ACP is the **lingua franca** for inter-agent communication. Integration enables:
   - [ ] Revenue flows to service provider (creator)
 
 ### Infer 5: Define Agent Types on ONE Platform
+
 - [ ] **System Agents** (built by ONE):
   - [ ] Chat advisor agent (conversational commerce)
   - [ ] Product search agent (semantic search)
@@ -138,6 +162,7 @@ ACP is the **lingua franca** for inter-agent communication. Integration enables:
   - [ ] Human escalation for complex issues
 
 ### Infer 6: Plan Agent Registry
+
 - [ ] Central registry of all agents:
   - [ ] Endpoint URL
   - [ ] Capabilities (what it can do)
@@ -158,6 +183,7 @@ ACP is the **lingua franca** for inter-agent communication. Integration enables:
   - [ ] Reputation scoring (track success/failure)
 
 ### Infer 7: Define Message Routing
+
 - [ ] How messages get from Agent A → Agent B:
   1. Agent A sends POST to ONE /api/acp/agents/agent-b/messages
   2. ONE validates message (authentication, format)
@@ -178,6 +204,7 @@ ACP is the **lingua franca** for inter-agent communication. Integration enables:
   - [ ] Message idempotency (same message twice = same result)
 
 ### Infer 8: Plan Task Delegation
+
 - [ ] Task = async work assigned to agent
 - [ ] Lifecycle:
   1. Agent A creates task: POST /agents/agent-b/tasks
@@ -200,6 +227,7 @@ ACP is the **lingua franca** for inter-agent communication. Integration enables:
   - [ ] Error handling (retry or fail gracefully)
 
 ### Infer 9: Define Security & Authentication
+
 - [ ] Authentication:
   - [ ] API keys (simple: one per agent)
   - [ ] JWT tokens (scalable: signed tokens)
@@ -222,8 +250,9 @@ ACP is the **lingua franca** for inter-agent communication. Integration enables:
   - [ ] Resource limits (max message size, task timeout)
 
 ### Infer 10: Define Success Metrics
+
 - [ ] ACP integration complete when:
-  - [ ] [ ] ACP server endpoint live (/api/acp/*)
+  - [ ] [ ] ACP server endpoint live (/api/acp/\*)
   - [ ] [ ] Agent can register + discovery works
   - [ ] [ ] Message routing functional (sync + async)
   - [ ] [ ] Task delegation working
@@ -243,7 +272,9 @@ ACP is the **lingua franca** for inter-agent communication. Integration enables:
 **Purpose:** Extend Convex schema for ACP agents + messages
 
 ### Infer 11: Create Agent Thing Type
+
 - [ ] New thing type: `agent`
+
   ```typescript
   {
     type: 'agent',
@@ -307,7 +338,9 @@ ACP is the **lingua franca** for inter-agent communication. Integration enables:
   ```
 
 ### Infer 12: Create ACP Message Thing Type
+
 - [ ] New thing type: `acp_message`
+
   ```typescript
   {
     type: 'acp_message',
@@ -355,7 +388,9 @@ ACP is the **lingua franca** for inter-agent communication. Integration enables:
   ```
 
 ### Infer 13: Create ACP Task Thing Type
+
 - [ ] New thing type: `acp_task`
+
   ```typescript
   {
     type: 'acp_task',
@@ -419,6 +454,7 @@ ACP is the **lingua franca** for inter-agent communication. Integration enables:
   ```
 
 ### Infer 14: Create Agent Capability Relationship
+
 - [ ] New connection type: `has_capability`
   - [ ] Agent → Capability
   - [ ] Metadata:
@@ -434,6 +470,7 @@ ACP is the **lingua franca** for inter-agent communication. Integration enables:
     - [ ] successRate
 
 ### Infer 15: Create ACP Service (Effect.ts)
+
 - [ ] Service: `backend/convex/services/acp.ts`
 - [ ] Methods:
   - [ ] `registerAgent(agentId, endpoint, capabilities)` → registered
@@ -448,6 +485,7 @@ ACP is the **lingua franca** for inter-agent communication. Integration enables:
   - [ ] `logACPEvent(type, data)` → event recorded
 
 ### Infer 16: Implement Message Routing
+
 - [ ] Algorithm:
   1. Receive message for Agent B
   2. Validate sender (Agent A authenticated?)
@@ -466,6 +504,7 @@ ACP is the **lingua franca** for inter-agent communication. Integration enables:
   - [ ] Invalid format → Reject with error
 
 ### Infer 17: Implement Agent Discovery
+
 - [ ] Endpoints:
   - [ ] `GET /api/acp/agents` - List all agents
   - [ ] `GET /api/acp/agents?capability=image_generation` - Filter by capability
@@ -484,6 +523,7 @@ ACP is the **lingua franca** for inter-agent communication. Integration enables:
   - [ ] Use Redis for speed
 
 ### Infer 18: Implement Task Queue
+
 - [ ] Queue system for async tasks:
   - [ ] Tasks table ordered by priority + created time
   - [ ] Worker process pulls tasks from queue
@@ -501,6 +541,7 @@ ACP is the **lingua franca** for inter-agent communication. Integration enables:
   - [ ] Average latency
 
 ### Infer 19: Implement Health Checks
+
 - [ ] Background job (every 5 minutes):
   - [ ] Ping all registered agents
   - [ ] POST /agents/{id}/capabilities (lightweight)
@@ -515,6 +556,7 @@ ACP is the **lingua franca** for inter-agent communication. Integration enables:
   - [ ] Parallel pings (don't block on one agent)
 
 ### Infer 20: Create Convex Queries for ACP
+
 - [ ] `queries/acp.ts`:
   - [ ] `getAgent(agentId)` → agent details
   - [ ] `getAgentsByCapability(capability)` → agents[]
@@ -534,48 +576,56 @@ ACP is the **lingua franca** for inter-agent communication. Integration enables:
 ### Summary of Remaining Phases:
 
 **Phase 3 (Infer 21-30):** Frontend dashboard + admin UI
+
 - Agent registry browser
 - Message/task monitoring
 - Agent health dashboard
 - Test console (send messages manually)
 
 **Phase 4 (Infer 31-40):** API routes + middleware
+
 - `/api/acp/agents` - REST endpoints
 - `/api/acp/messages` - Message routing
 - `/api/acp/tasks` - Task delegation
 - Authentication + rate limiting
 
 **Phase 5 (Infer 41-50):** Integration points
+
 - Chat agent ↔ Expert agents
 - Payment agent ↔ Checkout system
 - Content agents ↔ Product descriptions
 - Analytics agent ↔ Dashboard
 
 **Phase 6 (Infer 51-60):** Testing
+
 - Unit tests (message routing, discovery)
 - Integration tests (multi-agent workflows)
 - E2E tests (chat → expert → payment)
 - Load tests (1000 concurrent agents)
 
 **Phase 7 (Infer 61-70):** Design + UX
+
 - Agent registry UI (search, filter, details)
 - Message monitoring dashboard
 - Task execution tracker
 - Performance metrics charts
 
 **Phase 8 (Infer 71-80):** Performance
+
 - Message batching
 - Agent caching
 - Connection pooling
 - Database query optimization
 
 **Phase 9 (Infer 81-90):** Deployment
+
 - Deploy ACP server
 - Load testing
 - Monitoring + alerts
 - Documentation
 
 **Phase 10 (Infer 91-100):** Knowledge capture
+
 - Lessons learned
 - Common patterns
 - Best practices guide
@@ -586,6 +636,7 @@ ACP is the **lingua franca** for inter-agent communication. Integration enables:
 ## KEY INTEGRATION POINTS
 
 ### 1. Chat Agent (from todo-buy-chatgpt)
+
 ```
 User: "What padel racket should I buy?"
    ↓
@@ -603,6 +654,7 @@ User sees recommendation
 ```
 
 ### 2. Payment Settlement
+
 ```
 Creator Agent needs to charge customer
    ↓
@@ -616,6 +668,7 @@ Creator Agent completes transaction
 ```
 
 ### 3. Multi-Creator Collaboration
+
 ```
 Creator A's Agent (Product Catalog)
    ↓
@@ -631,6 +684,7 @@ Shared revenue split
 ```
 
 ### 4. Content Generation
+
 ```
 Creator needs product descriptions
    ↓
@@ -651,7 +705,7 @@ Creator pays per task
 
 ACP integration complete when:
 
-- ✅ ACP server endpoint live (/api/acp/*)
+- ✅ ACP server endpoint live (/api/acp/\*)
 - ✅ Agent registration working
 - ✅ Agent discovery functional
 - ✅ Sync message routing < 500ms
@@ -688,4 +742,3 @@ ACP integration is the **unlocking mechanism** for:
 **Timeline:** Can start in parallel with Wave 1 (low dependency on onboarding)
 **Priority:** MAXIMUM (enables all subsequent features)
 **Revenue Impact:** HIGH (agent marketplaces, creator monetization, API fees)
-

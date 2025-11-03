@@ -1,3 +1,21 @@
+---
+title: Mail
+dimension: things
+category: plans
+tags: ai, architecture, artificial-intelligence
+related_dimensions: knowledge, people
+scope: global
+created: 2025-11-03
+updated: 2025-11-03
+version: 1.0.0
+ai_context: |
+  This document is part of the things dimension in the plans category.
+  Location: one/things/plans/mail.md
+  Purpose: Documents comprehensive prompt for claude code: recreating shadcn mail layout in astro
+  Related dimensions: knowledge, people
+  For AI agents: Read this to understand mail.
+---
+
 # COMPREHENSIVE PROMPT FOR CLAUDE CODE: Recreating shadcn Mail Layout in Astro
 
 ## Project Overview
@@ -27,8 +45,8 @@ Create an enhanced state management hook that tracks the active folder:
 
 ```typescript
 // src/components/mail/use-mail.ts
-import { atom, useAtom } from "jotai"
-import { Mail, mails } from "@/data/mail-data"
+import { atom, useAtom } from "jotai";
+import { Mail, mails } from "@/data/mail-data";
 
 export type MailFolder =
   | "inbox"
@@ -41,100 +59,105 @@ export type MailFolder =
   | "updates"
   | "forums"
   | "shopping"
-  | "promotions"
+  | "promotions";
 
 type Config = {
-  selected: Mail["id"] | null
-  activeFolder: MailFolder
-  searchQuery: string
-}
+  selected: Mail["id"] | null;
+  activeFolder: MailFolder;
+  searchQuery: string;
+};
 
 const configAtom = atom<Config>({
   selected: mails[0].id,
   activeFolder: "inbox",
   searchQuery: "",
-})
+});
 
 export function useMail() {
-  return useAtom(configAtom)
+  return useAtom(configAtom);
 }
 
 // Computed atom for filtered mails based on folder and search
 const filteredMailsAtom = atom((get) => {
-  const config = get(configAtom)
-  let filtered = mails
+  const config = get(configAtom);
+  let filtered = mails;
 
   // Filter by folder
   switch (config.activeFolder) {
     case "inbox":
-      filtered = mails.filter(m => !m.labels.includes("draft") && !m.labels.includes("sent"))
-      break
+      filtered = mails.filter(
+        (m) => !m.labels.includes("draft") && !m.labels.includes("sent"),
+      );
+      break;
     case "drafts":
-      filtered = mails.filter(m => m.labels.includes("draft"))
-      break
+      filtered = mails.filter((m) => m.labels.includes("draft"));
+      break;
     case "sent":
-      filtered = mails.filter(m => m.labels.includes("sent"))
-      break
+      filtered = mails.filter((m) => m.labels.includes("sent"));
+      break;
     case "junk":
-      filtered = mails.filter(m => m.labels.includes("junk"))
-      break
+      filtered = mails.filter((m) => m.labels.includes("junk"));
+      break;
     case "trash":
-      filtered = mails.filter(m => m.labels.includes("trash"))
-      break
+      filtered = mails.filter((m) => m.labels.includes("trash"));
+      break;
     case "archive":
-      filtered = mails.filter(m => m.labels.includes("archive"))
-      break
+      filtered = mails.filter((m) => m.labels.includes("archive"));
+      break;
     case "social":
-      filtered = mails.filter(m => m.labels.includes("social"))
-      break
+      filtered = mails.filter((m) => m.labels.includes("social"));
+      break;
     case "updates":
-      filtered = mails.filter(m => m.labels.includes("updates"))
-      break
+      filtered = mails.filter((m) => m.labels.includes("updates"));
+      break;
     case "forums":
-      filtered = mails.filter(m => m.labels.includes("forums"))
-      break
+      filtered = mails.filter((m) => m.labels.includes("forums"));
+      break;
     case "shopping":
-      filtered = mails.filter(m => m.labels.includes("shopping"))
-      break
+      filtered = mails.filter((m) => m.labels.includes("shopping"));
+      break;
     case "promotions":
-      filtered = mails.filter(m => m.labels.includes("promotions"))
-      break
+      filtered = mails.filter((m) => m.labels.includes("promotions"));
+      break;
   }
 
   // Filter by search query
   if (config.searchQuery) {
-    const query = config.searchQuery.toLowerCase()
-    filtered = filtered.filter(m =>
-      m.name.toLowerCase().includes(query) ||
-      m.email.toLowerCase().includes(query) ||
-      m.subject.toLowerCase().includes(query) ||
-      m.text.toLowerCase().includes(query)
-    )
+    const query = config.searchQuery.toLowerCase();
+    filtered = filtered.filter(
+      (m) =>
+        m.name.toLowerCase().includes(query) ||
+        m.email.toLowerCase().includes(query) ||
+        m.subject.toLowerCase().includes(query) ||
+        m.text.toLowerCase().includes(query),
+    );
   }
 
-  return filtered
-})
+  return filtered;
+});
 
 export function useFilteredMails() {
-  return useAtom(filteredMailsAtom)
+  return useAtom(filteredMailsAtom);
 }
 
 // Helper to calculate badge counts
 export function useBadgeCounts() {
   const counts = {
-    inbox: mails.filter(m => !m.labels.includes("draft") && !m.labels.includes("sent")).length,
-    drafts: mails.filter(m => m.labels.includes("draft")).length,
-    sent: mails.filter(m => m.labels.includes("sent")).length,
-    junk: mails.filter(m => m.labels.includes("junk")).length,
-    trash: mails.filter(m => m.labels.includes("trash")).length,
-    archive: mails.filter(m => m.labels.includes("archive")).length,
-    social: mails.filter(m => m.labels.includes("social")).length,
-    updates: mails.filter(m => m.labels.includes("updates")).length,
-    forums: mails.filter(m => m.labels.includes("forums")).length,
-    shopping: mails.filter(m => m.labels.includes("shopping")).length,
-    promotions: mails.filter(m => m.labels.includes("promotions")).length,
-  }
-  return counts
+    inbox: mails.filter(
+      (m) => !m.labels.includes("draft") && !m.labels.includes("sent"),
+    ).length,
+    drafts: mails.filter((m) => m.labels.includes("draft")).length,
+    sent: mails.filter((m) => m.labels.includes("sent")).length,
+    junk: mails.filter((m) => m.labels.includes("junk")).length,
+    trash: mails.filter((m) => m.labels.includes("trash")).length,
+    archive: mails.filter((m) => m.labels.includes("archive")).length,
+    social: mails.filter((m) => m.labels.includes("social")).length,
+    updates: mails.filter((m) => m.labels.includes("updates")).length,
+    forums: mails.filter((m) => m.labels.includes("forums")).length,
+    shopping: mails.filter((m) => m.labels.includes("shopping")).length,
+    promotions: mails.filter((m) => m.labels.includes("promotions")).length,
+  };
+  return counts;
 }
 ```
 
@@ -144,37 +167,37 @@ Update the Nav component to support click handlers and active states:
 
 ```tsx
 // src/components/mail/Nav.tsx
-import { LucideIcon } from "lucide-react"
-import { cn } from "@/lib/utils"
-import { buttonVariants } from "@/components/ui/button"
+import { LucideIcon } from "lucide-react";
+import { cn } from "@/lib/utils";
+import { buttonVariants } from "@/components/ui/button";
 import {
   Tooltip,
   TooltipContent,
   TooltipTrigger,
-} from "@/components/ui/tooltip"
-import { useMail, MailFolder } from "./use-mail"
+} from "@/components/ui/tooltip";
+import { useMail, MailFolder } from "./use-mail";
 
 interface NavProps {
-  isCollapsed: boolean
+  isCollapsed: boolean;
   links: {
-    title: string
-    label?: string
-    icon: LucideIcon
-    variant: "default" | "ghost"
-    folder: MailFolder
-  }[]
+    title: string;
+    label?: string;
+    icon: LucideIcon;
+    variant: "default" | "ghost";
+    folder: MailFolder;
+  }[];
 }
 
 export function Nav({ links, isCollapsed }: NavProps) {
-  const [mail, setMail] = useMail()
+  const [mail, setMail] = useMail();
 
   const handleFolderClick = (folder: MailFolder) => {
     setMail({
       ...mail,
       activeFolder: folder,
       selected: null, // Clear selection when switching folders
-    })
-  }
+    });
+  };
 
   return (
     <div
@@ -183,7 +206,7 @@ export function Nav({ links, isCollapsed }: NavProps) {
     >
       <nav className="grid gap-1 px-2 group-[[data-collapsed=true]]:justify-center group-[[data-collapsed=true]]:px-2">
         {links.map((link, index) => {
-          const isActive = mail.activeFolder === link.folder
+          const isActive = mail.activeFolder === link.folder;
 
           return isCollapsed ? (
             <Tooltip key={index} delayDuration={0}>
@@ -193,11 +216,11 @@ export function Nav({ links, isCollapsed }: NavProps) {
                   className={cn(
                     buttonVariants({
                       variant: isActive ? "default" : "ghost",
-                      size: "icon"
+                      size: "icon",
                     }),
                     "h-9 w-9 transition-all duration-200",
                     isActive &&
-                      "dark:bg-muted dark:text-muted-foreground dark:hover:bg-muted dark:hover:text-white"
+                      "dark:bg-muted dark:text-muted-foreground dark:hover:bg-muted dark:hover:text-white",
                   )}
                 >
                   <link.icon className="size-4" />
@@ -220,11 +243,11 @@ export function Nav({ links, isCollapsed }: NavProps) {
               className={cn(
                 buttonVariants({
                   variant: isActive ? "default" : "ghost",
-                  size: "sm"
+                  size: "sm",
                 }),
                 "justify-start transition-all duration-200 hover:translate-x-0.5",
                 isActive &&
-                  "dark:bg-muted dark:text-white dark:hover:bg-muted dark:hover:text-white"
+                  "dark:bg-muted dark:text-white dark:hover:bg-muted dark:hover:text-white",
               )}
             >
               <link.icon className="mr-2 size-4" />
@@ -233,19 +256,18 @@ export function Nav({ links, isCollapsed }: NavProps) {
                 <span
                   className={cn(
                     "ml-auto text-xs",
-                    isActive &&
-                      "text-background dark:text-white"
+                    isActive && "text-background dark:text-white",
                   )}
                 >
                   {link.label}
                 </span>
               )}
             </button>
-          )
+          );
         })}
       </nav>
     </div>
-  )
+  );
 }
 ```
 
@@ -321,23 +343,23 @@ Create a search component with debouncing:
 
 ```tsx
 // src/components/mail/MailSearch.tsx
-import * as React from "react"
-import { Search } from "lucide-react"
-import { Input } from "@/components/ui/input"
-import { useMail } from "./use-mail"
+import * as React from "react";
+import { Search } from "lucide-react";
+import { Input } from "@/components/ui/input";
+import { useMail } from "./use-mail";
 
 export function MailSearch() {
-  const [mail, setMail] = useMail()
-  const [localQuery, setLocalQuery] = React.useState(mail.searchQuery)
+  const [mail, setMail] = useMail();
+  const [localQuery, setLocalQuery] = React.useState(mail.searchQuery);
 
   // Debounce search updates
   React.useEffect(() => {
     const timer = setTimeout(() => {
-      setMail({ ...mail, searchQuery: localQuery })
-    }, 300)
+      setMail({ ...mail, searchQuery: localQuery });
+    }, 300);
 
-    return () => clearTimeout(timer)
-  }, [localQuery])
+    return () => clearTimeout(timer);
+  }, [localQuery]);
 
   return (
     <div className="relative">
@@ -349,7 +371,7 @@ export function MailSearch() {
         onChange={(e) => setLocalQuery(e.target.value)}
       />
     </div>
-  )
+  );
 }
 ```
 
@@ -357,11 +379,11 @@ Update MailLayout to use the search component:
 
 ```tsx
 // In MailLayout.tsx, replace the search form with:
-import { MailSearch } from "./MailSearch"
+import { MailSearch } from "./MailSearch";
 
 <div className="bg-background/95 p-4 backdrop-blur supports-[backdrop-filter]:bg-background/60">
   <MailSearch />
-</div>
+</div>;
 ```
 
 #### 2.2 Enhanced Mail List with Selection Highlighting
@@ -370,16 +392,16 @@ Update MailList to use filtered mails:
 
 ```tsx
 // src/components/mail/MailList.tsx
-import { formatDistanceToNow } from "date-fns"
-import { cn } from "@/lib/utils"
-import { Badge } from "@/components/ui/badge"
-import { ScrollArea } from "@/components/ui/scroll-area"
-import { Mail } from "@/data/mail-data"
-import { useMail, useFilteredMails } from "./use-mail"
+import { formatDistanceToNow } from "date-fns";
+import { cn } from "@/lib/utils";
+import { Badge } from "@/components/ui/badge";
+import { ScrollArea } from "@/components/ui/scroll-area";
+import { Mail } from "@/data/mail-data";
+import { useMail, useFilteredMails } from "./use-mail";
 
 export function MailList() {
-  const [mail, setMail] = useMail()
-  const [filteredMails] = useFilteredMails()
+  const [mail, setMail] = useMail();
+  const [filteredMails] = useFilteredMails();
 
   return (
     <ScrollArea className="h-screen">
@@ -394,7 +416,7 @@ export function MailList() {
               key={item.id}
               className={cn(
                 "flex flex-col items-start gap-2 rounded-lg border p-3 text-left text-sm transition-all hover:bg-accent active:scale-[0.99]",
-                mail.selected === item.id && "bg-muted ring-2 ring-primary/20"
+                mail.selected === item.id && "bg-muted ring-2 ring-primary/20",
               )}
               onClick={() =>
                 setMail({
@@ -406,10 +428,12 @@ export function MailList() {
               <div className="flex w-full flex-col gap-1">
                 <div className="flex items-center">
                   <div className="flex items-center gap-2">
-                    <div className={cn(
-                      "font-semibold",
-                      !item.read && "text-primary"
-                    )}>
+                    <div
+                      className={cn(
+                        "font-semibold",
+                        !item.read && "text-primary",
+                      )}
+                    >
                       {item.name}
                     </div>
                     {!item.read && (
@@ -421,7 +445,7 @@ export function MailList() {
                       "ml-auto text-xs",
                       mail.selected === item.id
                         ? "text-foreground"
-                        : "text-muted-foreground"
+                        : "text-muted-foreground",
                     )}
                   >
                     {formatDistanceToNow(new Date(item.date), {
@@ -429,10 +453,12 @@ export function MailList() {
                     })}
                   </div>
                 </div>
-                <div className={cn(
-                  "text-xs font-medium",
-                  !item.read && "text-primary"
-                )}>
+                <div
+                  className={cn(
+                    "text-xs font-medium",
+                    !item.read && "text-primary",
+                  )}
+                >
                   {item.subject}
                 </div>
               </div>
@@ -453,7 +479,7 @@ export function MailList() {
         )}
       </div>
     </ScrollArea>
-  )
+  );
 }
 ```
 
@@ -681,40 +707,39 @@ Create a mobile-responsive wrapper:
 
 ```tsx
 // src/components/mail/MailLayoutMobile.tsx
-"use client"
+"use client";
 
-import * as React from "react"
-import { Menu } from "lucide-react"
-import { Button } from "@/components/ui/button"
-import {
-  Sheet,
-  SheetContent,
-  SheetTrigger,
-} from "@/components/ui/sheet"
-import { AccountSwitcher } from "./AccountSwitcher"
-import { Nav } from "./Nav"
-import { Separator } from "@/components/ui/separator"
-import { accounts } from "@/data/mail-data"
+import * as React from "react";
+import { Menu } from "lucide-react";
+import { Button } from "@/components/ui/button";
+import { Sheet, SheetContent, SheetTrigger } from "@/components/ui/sheet";
+import { AccountSwitcher } from "./AccountSwitcher";
+import { Nav } from "./Nav";
+import { Separator } from "@/components/ui/separator";
+import { accounts } from "@/data/mail-data";
 
 interface MobileSidebarProps {
   navLinks: Array<{
-    title: string
-    label?: string
-    icon: any
-    variant: "default" | "ghost"
-    folder: any
-  }>
+    title: string;
+    label?: string;
+    icon: any;
+    variant: "default" | "ghost";
+    folder: any;
+  }>;
   secondaryLinks: Array<{
-    title: string
-    label?: string
-    icon: any
-    variant: "default" | "ghost"
-    folder: any
-  }>
+    title: string;
+    label?: string;
+    icon: any;
+    variant: "default" | "ghost";
+    folder: any;
+  }>;
 }
 
-export function MobileSidebar({ navLinks, secondaryLinks }: MobileSidebarProps) {
-  const [open, setOpen] = React.useState(false)
+export function MobileSidebar({
+  navLinks,
+  secondaryLinks,
+}: MobileSidebarProps) {
+  const [open, setOpen] = React.useState(false);
 
   return (
     <Sheet open={open} onOpenChange={setOpen}>
@@ -736,7 +761,7 @@ export function MobileSidebar({ navLinks, secondaryLinks }: MobileSidebarProps) 
         </div>
       </SheetContent>
     </Sheet>
-  )
+  );
 }
 ```
 
@@ -822,22 +847,22 @@ Create the media query hook:
 
 ```tsx
 // src/hooks/use-media-query.ts
-import * as React from "react"
+import * as React from "react";
 
 export function useMediaQuery(query: string) {
-  const [matches, setMatches] = React.useState(false)
+  const [matches, setMatches] = React.useState(false);
 
   React.useEffect(() => {
-    const media = window.matchMedia(query)
+    const media = window.matchMedia(query);
     if (media.matches !== matches) {
-      setMatches(media.matches)
+      setMatches(media.matches);
     }
-    const listener = () => setMatches(media.matches)
-    media.addEventListener("change", listener)
-    return () => media.removeEventListener("change", listener)
-  }, [matches, query])
+    const listener = () => setMatches(media.matches);
+    media.addEventListener("change", listener);
+    return () => media.removeEventListener("change", listener);
+  }, [matches, query]);
 
-  return matches
+  return matches;
 }
 ```
 
@@ -853,9 +878,9 @@ npm install @dnd-kit/core @dnd-kit/sortable @dnd-kit/utilities
 
 ```tsx
 // src/components/mail/DraggableMailList.tsx
-import { useSortable } from "@dnd-kit/sortable"
-import { CSS } from "@dnd-kit/utilities"
-import { Mail } from "@/data/mail-data"
+import { useSortable } from "@dnd-kit/sortable";
+import { CSS } from "@dnd-kit/utilities";
+import { Mail } from "@/data/mail-data";
 
 function DraggableMailItem({ mail }: { mail: Mail }) {
   const {
@@ -865,19 +890,19 @@ function DraggableMailItem({ mail }: { mail: Mail }) {
     transform,
     transition,
     isDragging,
-  } = useSortable({ id: mail.id })
+  } = useSortable({ id: mail.id });
 
   const style = {
     transform: CSS.Transform.toString(transform),
     transition,
     opacity: isDragging ? 0.5 : 1,
-  }
+  };
 
   return (
     <div ref={setNodeRef} style={style} {...attributes} {...listeners}>
       {/* Existing mail item UI */}
     </div>
-  )
+  );
 }
 ```
 
@@ -885,24 +910,27 @@ function DraggableMailItem({ mail }: { mail: Mail }) {
 
 ```tsx
 // src/components/mail/DroppableNav.tsx
-import { useDroppable } from "@dnd-kit/core"
+import { useDroppable } from "@dnd-kit/core";
 
-function DroppableFolder({ folder, children }: { folder: string, children: React.ReactNode }) {
+function DroppableFolder({
+  folder,
+  children,
+}: {
+  folder: string;
+  children: React.ReactNode;
+}) {
   const { isOver, setNodeRef } = useDroppable({
     id: folder,
-  })
+  });
 
   return (
     <div
       ref={setNodeRef}
-      className={cn(
-        "transition-colors",
-        isOver && "bg-accent"
-      )}
+      className={cn("transition-colors", isOver && "bg-accent")}
     >
       {children}
     </div>
-  )
+  );
 }
 ```
 
@@ -981,28 +1009,41 @@ Already implemented in the ResizablePanelGroup's `onLayout` callback.
 
 ```tsx
 // src/lib/use-url-state.ts
-import * as React from "react"
+import * as React from "react";
 
-export function useUrlState<T>(key: string, defaultValue: T): [T, (value: T) => void] {
+export function useUrlState<T>(
+  key: string,
+  defaultValue: T,
+): [T, (value: T) => void] {
   const [state, setState] = React.useState<T>(() => {
-    if (typeof window === 'undefined') return defaultValue
-    const params = new URLSearchParams(window.location.search)
-    const value = params.get(key)
-    return value ? (JSON.parse(value) as T) : defaultValue
-  })
+    if (typeof window === "undefined") return defaultValue;
+    const params = new URLSearchParams(window.location.search);
+    const value = params.get(key);
+    return value ? (JSON.parse(value) as T) : defaultValue;
+  });
 
-  const setUrlState = React.useCallback((value: T) => {
-    setState(value)
-    const params = new URLSearchParams(window.location.search)
-    params.set(key, JSON.stringify(value))
-    window.history.replaceState({}, '', `${window.location.pathname}?${params}`)
-  }, [key])
+  const setUrlState = React.useCallback(
+    (value: T) => {
+      setState(value);
+      const params = new URLSearchParams(window.location.search);
+      params.set(key, JSON.stringify(value));
+      window.history.replaceState(
+        {},
+        "",
+        `${window.location.pathname}?${params}`,
+      );
+    },
+    [key],
+  );
 
-  return [state, setUrlState]
+  return [state, setUrlState];
 }
 
 // Usage:
-const [activeFolder, setActiveFolder] = useUrlState<MailFolder>('folder', 'inbox')
+const [activeFolder, setActiveFolder] = useUrlState<MailFolder>(
+  "folder",
+  "inbox",
+);
 ```
 
 ### 7. PERFORMANCE OPTIMIZATIONS
@@ -1015,50 +1056,50 @@ npm install @tanstack/react-virtual
 
 ```tsx
 // src/components/mail/VirtualMailList.tsx
-import { useVirtualizer } from "@tanstack/react-virtual"
-import * as React from "react"
+import { useVirtualizer } from "@tanstack/react-virtual";
+import * as React from "react";
 
 export function VirtualMailList() {
-  const [filteredMails] = useFilteredMails()
-  const parentRef = React.useRef<HTMLDivElement>(null)
+  const [filteredMails] = useFilteredMails();
+  const parentRef = React.useRef<HTMLDivElement>(null);
 
   const virtualizer = useVirtualizer({
     count: filteredMails.length,
     getScrollElement: () => parentRef.current,
     estimateSize: () => 100,
     overscan: 5,
-  })
+  });
 
   return (
     <div ref={parentRef} className="h-screen overflow-auto">
       <div
         style={{
           height: `${virtualizer.getTotalSize()}px`,
-          width: '100%',
-          position: 'relative',
+          width: "100%",
+          position: "relative",
         }}
       >
         {virtualizer.getVirtualItems().map((virtualItem) => {
-          const mail = filteredMails[virtualItem.index]
+          const mail = filteredMails[virtualItem.index];
           return (
             <div
               key={virtualItem.key}
               style={{
-                position: 'absolute',
+                position: "absolute",
                 top: 0,
                 left: 0,
-                width: '100%',
+                width: "100%",
                 height: `${virtualItem.size}px`,
                 transform: `translateY(${virtualItem.start}px)`,
               }}
             >
               {/* Mail item UI */}
             </div>
-          )
+          );
         })}
       </div>
     </div>
-  )
+  );
 }
 ```
 
@@ -1068,19 +1109,19 @@ export function VirtualMailList() {
 // In MailList.tsx
 const MailItem = React.memo(({ mail, isSelected, onClick }: MailItemProps) => {
   // Mail item UI
-})
+});
 
 // In use-mail.ts
-import { useMemo } from "react"
+import { useMemo } from "react";
 
 export function useFilteredMails() {
-  const [mail] = useMail()
+  const [mail] = useMail();
 
   const filtered = useMemo(() => {
     // Expensive filtering logic
-  }, [mail.activeFolder, mail.searchQuery, mail.activeTab])
+  }, [mail.activeFolder, mail.searchQuery, mail.activeTab]);
 
-  return filtered
+  return filtered;
 }
 ```
 
@@ -1096,6 +1137,7 @@ Create a comprehensive test checklist:
 ## Interactive Features Test Checklist
 
 ### Navigation
+
 - [ ] Click each folder in primary nav
 - [ ] Verify active state highlights current folder
 - [ ] Check badge counts update correctly
@@ -1105,6 +1147,7 @@ Create a comprehensive test checklist:
 - [ ] Check persistence across page refreshes
 
 ### Mail List
+
 - [ ] Click mail items to select
 - [ ] Verify selection highlighting
 - [ ] Test unread indicator (blue dot)
@@ -1114,6 +1157,7 @@ Create a comprehensive test checklist:
 - [ ] Test smooth scrolling
 
 ### Search
+
 - [ ] Type in search box
 - [ ] Verify 300ms debounce (no lag)
 - [ ] Test search by name
@@ -1123,6 +1167,7 @@ Create a comprehensive test checklist:
 - [ ] Clear search and verify reset
 
 ### Mail Display
+
 - [ ] Click Archive button
 - [ ] Verify toast notification appears
 - [ ] Click Delete button
@@ -1136,6 +1181,7 @@ Create a comprehensive test checklist:
 - [ ] Verify snooze toast with date
 
 ### Mobile Responsive
+
 - [ ] Open on mobile viewport
 - [ ] Click hamburger menu
 - [ ] Verify sidebar slides in
@@ -1146,6 +1192,7 @@ Create a comprehensive test checklist:
 - [ ] Return to list view
 
 ### State Persistence
+
 - [ ] Collapse sidebar
 - [ ] Refresh page
 - [ ] Verify sidebar stays collapsed
@@ -1156,6 +1203,7 @@ Create a comprehensive test checklist:
 - [ ] Check URL updates (if implemented)
 
 ### Performance
+
 - [ ] Load page with 1000+ emails
 - [ ] Scroll through list smoothly
 - [ ] Type in search without lag
@@ -1237,20 +1285,20 @@ This comprehensive guide provides everything needed to make the mail app fully i
 ### 1. Astro Configuration (astro.config.mjs)
 
 ```javascript
-import { defineConfig } from 'astro/config';
-import react from '@astrojs/react';
-import tailwindcss from '@tailwindcss/vite';
+import { defineConfig } from "astro/config";
+import react from "@astrojs/react";
+import tailwindcss from "@tailwindcss/vite";
 
 export default defineConfig({
   integrations: [
     react({
       // Enable React children as React nodes (needed for shadcn/ui components)
       experimentalReactChildren: true,
-    })
+    }),
   ],
   vite: {
-    plugins: [tailwindcss()]
-  }
+    plugins: [tailwindcss()],
+  },
 });
 ```
 
@@ -1368,11 +1416,11 @@ npx shadcn@latest add select
 Create `src/lib/utils.ts` if not exists:
 
 ```typescript
-import { type ClassValue, clsx } from "clsx"
-import { twMerge } from "tailwind-merge"
+import { type ClassValue, clsx } from "clsx";
+import { twMerge } from "tailwind-merge";
 
 export function cn(...inputs: ClassValue[]) {
-  return twMerge(clsx(inputs))
+  return twMerge(clsx(inputs));
 }
 ```
 
@@ -1425,20 +1473,20 @@ src/
 
 ```typescript
 export interface Mail {
-  id: string
-  name: string
-  email: string
-  subject: string
-  text: string
-  date: string
-  read: boolean
-  labels: string[]
+  id: string;
+  name: string;
+  email: string;
+  subject: string;
+  text: string;
+  date: string;
+  read: boolean;
+  labels: string[];
 }
 
 export interface Account {
-  label: string
-  email: string
-  icon: React.ReactNode
+  label: string;
+  email: string;
+  icon: React.ReactNode;
 }
 
 export const accounts: Account[] = [
@@ -1457,7 +1505,7 @@ export const accounts: Account[] = [
     email: "alicia@me.com",
     icon: null,
   },
-]
+];
 
 export const mails: Mail[] = [
   {
@@ -1520,48 +1568,48 @@ export const mails: Mail[] = [
     read: true,
     labels: ["work"],
   },
-]
+];
 ```
 
 ### STEP 2: Create State Management Hook (src/components/mail/use-mail.ts)
 
 ```typescript
-import { atom, useAtom } from "jotai"
-import { Mail, mails } from "@/data/mail-data"
+import { atom, useAtom } from "jotai";
+import { Mail, mails } from "@/data/mail-data";
 
 type Config = {
-  selected: Mail["id"] | null
-}
+  selected: Mail["id"] | null;
+};
 
 const configAtom = atom<Config>({
   selected: mails[0].id,
-})
+});
 
 export function useMail() {
-  return useAtom(configAtom)
+  return useAtom(configAtom);
 }
 ```
 
 ### STEP 3: Create Navigation Component (src/components/mail/Nav.tsx)
 
 ```tsx
-import { LucideIcon } from "lucide-react"
-import { cn } from "@/lib/utils"
-import { buttonVariants } from "@/components/ui/button"
+import { LucideIcon } from "lucide-react";
+import { cn } from "@/lib/utils";
+import { buttonVariants } from "@/components/ui/button";
 import {
   Tooltip,
   TooltipContent,
   TooltipTrigger,
-} from "@/components/ui/tooltip"
+} from "@/components/ui/tooltip";
 
 interface NavProps {
-  isCollapsed: boolean
+  isCollapsed: boolean;
   links: {
-    title: string
-    label?: string
-    icon: LucideIcon
-    variant: "default" | "ghost"
-  }[]
+    title: string;
+    label?: string;
+    icon: LucideIcon;
+    variant: "default" | "ghost";
+  }[];
 }
 
 export function Nav({ links, isCollapsed }: NavProps) {
@@ -1581,7 +1629,7 @@ export function Nav({ links, isCollapsed }: NavProps) {
                     buttonVariants({ variant: link.variant, size: "icon" }),
                     "h-9 w-9",
                     link.variant === "default" &&
-                      "dark:bg-muted dark:text-muted-foreground dark:hover:bg-muted dark:hover:text-white"
+                      "dark:bg-muted dark:text-muted-foreground dark:hover:bg-muted dark:hover:text-white",
                   )}
                 >
                   <link.icon className="size-4" />
@@ -1605,7 +1653,7 @@ export function Nav({ links, isCollapsed }: NavProps) {
                 buttonVariants({ variant: link.variant, size: "sm" }),
                 link.variant === "default" &&
                   "dark:bg-muted dark:text-white dark:hover:bg-muted dark:hover:text-white",
-                "justify-start"
+                "justify-start",
               )}
             >
               <link.icon className="mr-2 size-4" />
@@ -1615,26 +1663,26 @@ export function Nav({ links, isCollapsed }: NavProps) {
                   className={cn(
                     "ml-auto",
                     link.variant === "default" &&
-                      "text-background dark:text-white"
+                      "text-background dark:text-white",
                   )}
                 >
                   {link.label}
                 </span>
               )}
             </a>
-          )
+          ),
         )}
       </nav>
     </div>
-  )
+  );
 }
 ```
 
 ### STEP 4: Create Account Switcher (src/components/mail/AccountSwitcher.tsx)
 
 ```tsx
-import * as React from "react"
-import { ChevronsUpDown, Plus } from "lucide-react"
+import * as React from "react";
+import { ChevronsUpDown, Plus } from "lucide-react";
 
 import {
   DropdownMenu,
@@ -1644,26 +1692,26 @@ import {
   DropdownMenuSeparator,
   DropdownMenuShortcut,
   DropdownMenuTrigger,
-} from "@/components/ui/dropdown-menu"
+} from "@/components/ui/dropdown-menu";
 import {
   SidebarMenu,
   SidebarMenuButton,
   SidebarMenuItem,
   useSidebar,
-} from "@/components/ui/sidebar"
+} from "@/components/ui/sidebar";
 
 export function AccountSwitcher({
   accounts,
   isCollapsed,
 }: {
   accounts: {
-    label: string
-    email: string
-    icon: React.ReactNode
-  }[]
-  isCollapsed: boolean
+    label: string;
+    email: string;
+    icon: React.ReactNode;
+  }[];
+  isCollapsed: boolean;
 }) {
-  const [selectedAccount, setSelectedAccount] = React.useState(accounts[0])
+  const [selectedAccount, setSelectedAccount] = React.useState(accounts[0]);
 
   return (
     <DropdownMenu>
@@ -1672,13 +1720,15 @@ export function AccountSwitcher({
           className={cn(
             "flex items-center gap-2 [&>span]:line-clamp-1 [&>span]:flex [&>span]:w-full [&>span]:items-center [&>span]:gap-1 [&>span]:truncate [&_svg]:h-4 [&_svg]:w-4 [&_svg]:shrink-0",
             "w-full px-2 py-1.5 text-left text-sm transition-colors hover:bg-accent hover:text-accent-foreground rounded-md",
-            isCollapsed && "justify-center px-2"
+            isCollapsed && "justify-center px-2",
           )}
         >
           {!isCollapsed && (
             <>
               <div className="flex flex-1 flex-col text-left text-sm leading-tight">
-                <span className="truncate font-semibold">{selectedAccount.label}</span>
+                <span className="truncate font-semibold">
+                  {selectedAccount.label}
+                </span>
                 <span className="truncate text-xs text-muted-foreground">
                   {selectedAccount.email}
                 </span>
@@ -1713,7 +1763,9 @@ export function AccountSwitcher({
             </div>
             <div className="flex flex-col">
               <div className="line-clamp-1 font-medium">{account.label}</div>
-              <div className="line-clamp-1 text-xs text-muted-foreground">{account.email}</div>
+              <div className="line-clamp-1 text-xs text-muted-foreground">
+                {account.email}
+              </div>
             </div>
           </DropdownMenuItem>
         ))}
@@ -1726,28 +1778,28 @@ export function AccountSwitcher({
         </DropdownMenuItem>
       </DropdownMenuContent>
     </DropdownMenu>
-  )
+  );
 }
 ```
 
 ### STEP 5: Create Mail List Component (src/components/mail/MailList.tsx)
 
 ```tsx
-import { formatDistanceToNow } from "date-fns"
-import { ComponentProps } from "react"
-import { cn } from "@/lib/utils"
-import { Badge } from "@/components/ui/badge"
-import { ScrollArea } from "@/components/ui/scroll-area"
-import { Separator } from "@/components/ui/separator"
-import { Mail } from "@/data/mail-data"
-import { useMail } from "./use-mail"
+import { formatDistanceToNow } from "date-fns";
+import { ComponentProps } from "react";
+import { cn } from "@/lib/utils";
+import { Badge } from "@/components/ui/badge";
+import { ScrollArea } from "@/components/ui/scroll-area";
+import { Separator } from "@/components/ui/separator";
+import { Mail } from "@/data/mail-data";
+import { useMail } from "./use-mail";
 
 interface MailListProps {
-  items: Mail[]
+  items: Mail[];
 }
 
 export function MailList({ items }: MailListProps) {
-  const [mail, setMail] = useMail()
+  const [mail, setMail] = useMail();
 
   return (
     <ScrollArea className="h-screen">
@@ -1757,7 +1809,7 @@ export function MailList({ items }: MailListProps) {
             key={item.id}
             className={cn(
               "flex flex-col items-start gap-2 rounded-lg border p-3 text-left text-sm transition-all hover:bg-accent",
-              mail.selected === item.id && "bg-muted"
+              mail.selected === item.id && "bg-muted",
             )}
             onClick={() =>
               setMail({
@@ -1779,7 +1831,7 @@ export function MailList({ items }: MailListProps) {
                     "ml-auto text-xs",
                     mail.selected === item.id
                       ? "text-foreground"
-                      : "text-muted-foreground"
+                      : "text-muted-foreground",
                   )}
                 >
                   {formatDistanceToNow(new Date(item.date), {
@@ -1805,14 +1857,14 @@ export function MailList({ items }: MailListProps) {
         ))}
       </div>
     </ScrollArea>
-  )
+  );
 }
 ```
 
 ### STEP 6: Create Mail Display Component (src/components/mail/MailDisplay.tsx)
 
 ```tsx
-import { addDays, addHours, format, nextSaturday } from "date-fns"
+import { addDays, addHours, format, nextSaturday } from "date-fns";
 import {
   Archive,
   ArchiveX,
@@ -1822,41 +1874,41 @@ import {
   Reply,
   ReplyAll,
   Trash2,
-} from "lucide-react"
+} from "lucide-react";
 
 import {
   DropdownMenuContent,
   DropdownMenuItem,
-} from "@/components/ui/dropdown-menu"
-import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar"
-import { Button } from "@/components/ui/button"
-import { Calendar } from "@/components/ui/calendar"
+} from "@/components/ui/dropdown-menu";
+import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
+import { Button } from "@/components/ui/button";
+import { Calendar } from "@/components/ui/calendar";
 import {
   DropdownMenu,
   DropdownMenuTrigger,
-} from "@/components/ui/dropdown-menu"
-import { Label } from "@/components/ui/label"
+} from "@/components/ui/dropdown-menu";
+import { Label } from "@/components/ui/label";
 import {
   Popover,
   PopoverContent,
   PopoverTrigger,
-} from "@/components/ui/popover"
-import { Separator } from "@/components/ui/separator"
-import { Switch } from "@/components/ui/switch"
-import { Textarea } from "@/components/ui/textarea"
+} from "@/components/ui/popover";
+import { Separator } from "@/components/ui/separator";
+import { Switch } from "@/components/ui/switch";
+import { Textarea } from "@/components/ui/textarea";
 import {
   Tooltip,
   TooltipContent,
   TooltipTrigger,
-} from "@/components/ui/tooltip"
-import { Mail } from "@/data/mail-data"
+} from "@/components/ui/tooltip";
+import { Mail } from "@/data/mail-data";
 
 interface MailDisplayProps {
-  mail: Mail | null
+  mail: Mail | null;
 }
 
 export function MailDisplay({ mail }: MailDisplayProps) {
-  const today = new Date()
+  const today = new Date();
 
   return (
     <div className="flex h-full flex-col">
@@ -2058,7 +2110,7 @@ export function MailDisplay({ mail }: MailDisplayProps) {
         </div>
       )}
     </div>
-  )
+  );
 }
 ```
 
@@ -2067,9 +2119,9 @@ export function MailDisplay({ mail }: MailDisplayProps) {
 **CRITICAL: This is the main wrapper that uses resizable panels and manages the entire layout. It MUST be used with `client:load` in Astro for full interactivity.**
 
 ```tsx
-"use client"
+"use client";
 
-import * as React from "react"
+import * as React from "react";
 import {
   AlertCircle,
   Archive,
@@ -2082,34 +2134,29 @@ import {
   ShoppingCart,
   Trash2,
   Users2,
-} from "lucide-react"
+} from "lucide-react";
 
-import { cn } from "@/lib/utils"
-import { Input } from "@/components/ui/input"
+import { cn } from "@/lib/utils";
+import { Input } from "@/components/ui/input";
 import {
   ResizableHandle,
   ResizablePanel,
   ResizablePanelGroup,
-} from "@/components/ui/resizable"
-import { Separator } from "@/components/ui/separator"
-import {
-  Tabs,
-  TabsContent,
-  TabsList,
-  TabsTrigger,
-} from "@/components/ui/tabs"
-import { TooltipProvider } from "@/components/ui/tooltip"
-import { AccountSwitcher } from "./AccountSwitcher"
-import { MailDisplay } from "./MailDisplay"
-import { MailList } from "./MailList"
-import { Nav } from "./Nav"
-import { type Mail, accounts, mails } from "@/data/mail-data"
-import { useMail } from "./use-mail"
+} from "@/components/ui/resizable";
+import { Separator } from "@/components/ui/separator";
+import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
+import { TooltipProvider } from "@/components/ui/tooltip";
+import { AccountSwitcher } from "./AccountSwitcher";
+import { MailDisplay } from "./MailDisplay";
+import { MailList } from "./MailList";
+import { Nav } from "./Nav";
+import { type Mail, accounts, mails } from "@/data/mail-data";
+import { useMail } from "./use-mail";
 
 interface MailLayoutProps {
-  defaultLayout?: number[] | undefined
-  defaultCollapsed?: boolean
-  navCollapsedSize?: number
+  defaultLayout?: number[] | undefined;
+  defaultCollapsed?: boolean;
+  navCollapsedSize?: number;
 }
 
 export function MailLayout({
@@ -2117,8 +2164,8 @@ export function MailLayout({
   defaultCollapsed = false,
   navCollapsedSize = 4,
 }: MailLayoutProps) {
-  const [isCollapsed, setIsCollapsed] = React.useState(defaultCollapsed)
-  const [mail] = useMail()
+  const [isCollapsed, setIsCollapsed] = React.useState(defaultCollapsed);
+  const [mail] = useMail();
 
   return (
     <TooltipProvider delayDuration={0}>
@@ -2127,8 +2174,8 @@ export function MailLayout({
         onLayout={(sizes: number[]) => {
           // You can save to localStorage here if needed
           document.cookie = `react-resizable-panels:layout=${JSON.stringify(
-            sizes
-          )}`
+            sizes,
+          )}`;
         }}
         className="h-full items-stretch"
       >
@@ -2139,32 +2186,29 @@ export function MailLayout({
           minSize={15}
           maxSize={20}
           onCollapse={() => {
-            setIsCollapsed(true)
+            setIsCollapsed(true);
             document.cookie = `react-resizable-panels:collapsed=${JSON.stringify(
-              true
-            )}`
+              true,
+            )}`;
           }}
           onExpand={() => {
-            setIsCollapsed(false)
+            setIsCollapsed(false);
             document.cookie = `react-resizable-panels:collapsed=${JSON.stringify(
-              false
-            )}`
+              false,
+            )}`;
           }}
           className={cn(
             isCollapsed &&
-              "min-w-[50px] transition-all duration-300 ease-in-out"
+              "min-w-[50px] transition-all duration-300 ease-in-out",
           )}
         >
           <div
             className={cn(
               "flex h-[52px] items-center justify-center",
-              isCollapsed ? "h-[52px]" : "px-2"
+              isCollapsed ? "h-[52px]" : "px-2",
             )}
           >
-            <AccountSwitcher
-              isCollapsed={isCollapsed}
-              accounts={accounts}
-            />
+            <AccountSwitcher isCollapsed={isCollapsed} accounts={accounts} />
           </div>
           <Separator />
           <Nav
@@ -2290,7 +2334,7 @@ export function MailLayout({
         </ResizablePanel>
       </ResizablePanelGroup>
     </TooltipProvider>
-  )
+  );
 }
 ```
 
@@ -2368,6 +2412,7 @@ import { MailLayout } from '@/components/mail/MailLayout'
 **Problem**: Components rendering at different times cause layout shifts.
 
 **Solution Applied**:
+
 1. Use `client:load` on the MailLayout component to ensure immediate hydration
 2. Wrapped entire interactive section in single React component
 3. All state management happens within React context (Jotai)
@@ -2411,6 +2456,7 @@ import { MailLayout } from '@/components/mail/MailLayout'
 ### Issue 4: CSS Not Applying to React Islands
 
 **Solution**: Already handled by:
+
 1. Using Tailwind classes directly in React components
 2. Global styles in `globals.css` apply to all components
 3. shadcn/ui components have styles built-in
@@ -2489,6 +2535,7 @@ After implementation, verify:
 ### Issue: "Cannot find module '@/components/ui/...'"
 
 **Solution**: Ensure shadcn/ui components are installed:
+
 ```bash
 npx shadcn@latest add [component-name]
 ```
@@ -2496,6 +2543,7 @@ npx shadcn@latest add [component-name]
 ### Issue: Icons not rendering
 
 **Solution**: Install lucide-react:
+
 ```bash
 npm install lucide-react
 ```
@@ -2503,6 +2551,7 @@ npm install lucide-react
 ### Issue: Date formatting errors
 
 **Solution**: Install date-fns:
+
 ```bash
 npm install date-fns
 ```
@@ -2514,6 +2563,7 @@ npm install date-fns
 ### Issue: Panels not resizing
 
 **Solution**: Verify that:
+
 1. Parent container has fixed height (`height: 100vh`)
 2. `overflow: hidden` is set on html and body
 3. ResizablePanelGroup has `className="h-full"`
@@ -2521,6 +2571,7 @@ npm install date-fns
 ### Issue: Sidebar not collapsing properly
 
 **Solution**: Check that:
+
 1. `collapsible={true}` is set on ResizablePanel
 2. `collapsedSize` prop is provided
 3. `onCollapse` and `onExpand` callbacks are present
@@ -2540,6 +2591,7 @@ npm install date-fns
 ### Optional Enhancements:
 
 **Add loading state**:
+
 ```astro
 <MailLayout client:load>
   <div slot="fallback" class="flex items-center justify-center h-screen">
@@ -2599,6 +2651,7 @@ if (!session) {
 ### Persist Sidebar State:
 
 Already implemented via cookies in MailLayout:
+
 - Panel sizes saved automatically
 - Collapsed state saved automatically
 
@@ -2617,7 +2670,7 @@ This implementation provides a **production-ready** mail layout that:
 ✅ Prevents all common layout issues  
 ✅ Uses proper hydration strategies  
 ✅ Follows shadcn/ui patterns exactly  
-✅ Is fully type-safe with TypeScript  
+✅ Is fully type-safe with TypeScript
 
 The key insight is that complex interactive layouts like this should be **wrapped in a single React component** and hydrated with `client:load` to ensure all interactive features work immediately and all child components can share React context properly.
 

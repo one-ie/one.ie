@@ -1,3 +1,21 @@
+---
+title: Auth_Hooks_Implementation
+dimension: things
+category: features
+tags: ai, auth, backend, frontend
+related_dimensions: connections, events, people
+scope: global
+created: 2025-11-03
+updated: 2025-11-03
+version: 1.0.0
+ai_context: |
+  This document is part of the things dimension in the features category.
+  Location: one/things/features/AUTH_HOOKS_IMPLEMENTATION.md
+  Purpose: Documents auth hooks infrastructure implementation report
+  Related dimensions: connections, events, people
+  For AI agents: Read this to understand AUTH_HOOKS_IMPLEMENTATION.
+---
+
 # Auth Hooks Infrastructure Implementation Report
 
 **Feature:** Feature 2-5 Auth Migration - Missing Infrastructure
@@ -17,9 +35,11 @@ Successfully implemented the complete auth hooks infrastructure required for Fea
 ## Files Created
 
 ### 1. Auth Hooks (`src/hooks/useAuth.ts`) - 520 lines
+
 **Location:** `/Users/toc/Server/ONE/frontend/src/hooks/useAuth.ts`
 
 **Hooks Implemented:**
+
 - ✅ `useLogin()` - Email/password authentication
 - ✅ `useSignup()` - Account registration
 - ✅ `useLogout()` - Sign out
@@ -31,6 +51,7 @@ Successfully implemented the complete auth hooks infrastructure required for Fea
 - ✅ `use2FA()` - Complete 2FA management (getStatus, setup, verify, disable)
 
 **Pattern:**
+
 ```typescript
 const { mutate, loading, error } = useLogin();
 
@@ -40,16 +61,18 @@ try {
     // Handle success
   }
 } catch (err) {
-  if (err._tag === 'InvalidCredentials') {
+  if (err._tag === "InvalidCredentials") {
     // Type-safe error handling
   }
 }
 ```
 
 ### 2. BetterAuthProvider (`src/providers/BetterAuthProvider.ts`) - 340 lines
+
 **Location:** `/Users/toc/Server/ONE/frontend/src/providers/BetterAuthProvider.ts`
 
 **Features:**
+
 - Wraps existing Convex auth backend (zero backend changes)
 - Maps auth mutations to typed Effect operations
 - Intelligent error parsing (string errors → typed AuthError)
@@ -57,6 +80,7 @@ try {
 - Maps to backend functions: `auth:signIn`, `auth:signUp`, `auth:signOut`, etc.
 
 **Error Mapping:**
+
 ```typescript
 function parseAuthError(error: unknown): AuthError {
   // Maps "invalid email or password" → InvalidCredentialsError
@@ -71,13 +95,16 @@ function parseAuthError(error: unknown): AuthError {
 ## Files Modified
 
 ### 1. DataProvider Interface (`src/providers/DataProvider.ts`)
+
 **Changes:**
+
 - Added 11 auth error types (InvalidCredentialsError, UserNotFoundError, etc.)
 - Added 8 auth input/output types (User, AuthResult, TwoFactorStatus, etc.)
 - Added auth interface with 12 methods
 - Updated DataProviderError union to include AuthError
 
 **New Auth Interface:**
+
 ```typescript
 auth: {
   login: (args: LoginArgs) => Effect.Effect<AuthResult, AuthError>;
@@ -86,7 +113,8 @@ auth: {
   getCurrentUser: () => Effect.Effect<User | null, AuthError>;
   magicLinkAuth: (args: MagicLinkArgs) => Effect.Effect<AuthResult, AuthError>;
   passwordReset: (args: PasswordResetArgs) => Effect.Effect<void, AuthError>;
-  passwordResetComplete: (args: PasswordResetCompleteArgs) => Effect.Effect<void, AuthError>;
+  passwordResetComplete: (args: PasswordResetCompleteArgs) =>
+    Effect.Effect<void, AuthError>;
   verifyEmail: (args: VerifyEmailArgs) => Effect.Effect<AuthResult, AuthError>;
   get2FAStatus: () => Effect.Effect<TwoFactorStatus, AuthError>;
   setup2FA: () => Effect.Effect<TwoFactorSetup, AuthError>;
@@ -96,16 +124,22 @@ auth: {
 ```
 
 ### 2. ConvexProvider (`src/providers/ConvexProvider.ts`)
+
 **Changes:**
+
 - Imported `createBetterAuthProvider`
 - Added auth section: `auth: createBetterAuthProvider(client)`
 
 ### 3. Hooks Index (`src/hooks/index.ts`)
+
 **Changes:**
+
 - Exported all 7 auth hooks under "AUTH DIMENSION" section
 
 ### 4. Providers Index (`src/providers/index.ts`)
+
 **Changes:**
+
 - Exported 19 auth-related types (errors, args, results)
 
 ---
@@ -113,22 +147,24 @@ auth: {
 ## Type Definitions
 
 ### Auth Errors (11 types)
+
 ```typescript
 type AuthError =
-  | InvalidCredentialsError      // Wrong password
-  | UserNotFoundError            // Email not registered
-  | EmailAlreadyExistsError      // Email already in use
-  | WeakPasswordError            // Password too short
-  | InvalidTokenError            // Invalid token
-  | TokenExpiredError            // Token expired
-  | NetworkError                 // Network/server error
-  | RateLimitExceededError       // Too many requests
-  | EmailNotVerifiedError        // Email not verified
-  | TwoFactorRequiredError       // 2FA code needed
-  | Invalid2FACodeError;         // Invalid 2FA code
+  | InvalidCredentialsError // Wrong password
+  | UserNotFoundError // Email not registered
+  | EmailAlreadyExistsError // Email already in use
+  | WeakPasswordError // Password too short
+  | InvalidTokenError // Invalid token
+  | TokenExpiredError // Token expired
+  | NetworkError // Network/server error
+  | RateLimitExceededError // Too many requests
+  | EmailNotVerifiedError // Email not verified
+  | TwoFactorRequiredError // 2FA code needed
+  | Invalid2FACodeError; // Invalid 2FA code
 ```
 
 ### Auth Types (8 types)
+
 ```typescript
 interface User {
   id: string;
@@ -166,20 +202,20 @@ interface TwoFactorSetup {
 
 The BetterAuthProvider maps to these existing backend functions:
 
-| Hook | Backend Mutation/Query | Location |
-|------|------------------------|----------|
-| `useLogin()` | `auth:signIn` mutation | `backend/convex/auth.ts:90` |
-| `useSignup()` | `auth:signUp` mutation | `backend/convex/auth.ts:24` |
-| `useLogout()` | `auth:signOut` mutation | `backend/convex/auth.ts:131` |
-| `useCurrentUser()` | `auth:getCurrentUser` query | `backend/convex/auth.ts:190` |
-| `useMagicLinkAuth()` | `auth:signInWithMagicLink` mutation | `backend/convex/auth.ts:597` |
-| `usePasswordReset()` | `auth:requestPasswordReset` mutation | `backend/convex/auth.ts:296` |
-| `usePasswordResetComplete()` | `auth:resetPassword` mutation | `backend/convex/auth.ts:348` |
-| `useVerifyEmail()` | `auth:verifyEmail` mutation | `backend/convex/auth.ts:447` |
-| `use2FA().getStatus` | `auth:get2FAStatus` query | `backend/convex/auth.ts:746` |
-| `use2FA().setup` | `auth:setup2FA` mutation | `backend/convex/auth.ts:641` |
-| `use2FA().verify` | `auth:verify2FA` mutation | `backend/convex/auth.ts:678` |
-| `use2FA().disable` | `auth:disable2FA` mutation | `backend/convex/auth.ts:707` |
+| Hook                         | Backend Mutation/Query               | Location                     |
+| ---------------------------- | ------------------------------------ | ---------------------------- |
+| `useLogin()`                 | `auth:signIn` mutation               | `backend/convex/auth.ts:90`  |
+| `useSignup()`                | `auth:signUp` mutation               | `backend/convex/auth.ts:24`  |
+| `useLogout()`                | `auth:signOut` mutation              | `backend/convex/auth.ts:131` |
+| `useCurrentUser()`           | `auth:getCurrentUser` query          | `backend/convex/auth.ts:190` |
+| `useMagicLinkAuth()`         | `auth:signInWithMagicLink` mutation  | `backend/convex/auth.ts:597` |
+| `usePasswordReset()`         | `auth:requestPasswordReset` mutation | `backend/convex/auth.ts:296` |
+| `usePasswordResetComplete()` | `auth:resetPassword` mutation        | `backend/convex/auth.ts:348` |
+| `useVerifyEmail()`           | `auth:verifyEmail` mutation          | `backend/convex/auth.ts:447` |
+| `use2FA().getStatus`         | `auth:get2FAStatus` query            | `backend/convex/auth.ts:746` |
+| `use2FA().setup`             | `auth:setup2FA` mutation             | `backend/convex/auth.ts:641` |
+| `use2FA().verify`            | `auth:verify2FA` mutation            | `backend/convex/auth.ts:678` |
+| `use2FA().disable`           | `auth:disable2FA` mutation           | `backend/convex/auth.ts:707` |
 
 **Zero backend changes required** - All functions already exist and are working.
 
@@ -188,15 +224,19 @@ The BetterAuthProvider maps to these existing backend functions:
 ## Testing Status
 
 ### TypeScript Compilation
+
 ```bash
 bunx astro check
 ```
+
 **Result:** ✅ **Zero auth-related errors** - 73 total errors in project are all in test files and unrelated components
 
 ### Existing Auth Tests
+
 **Location:** `/Users/toc/Server/ONE/frontend/test/auth/`
 
 **50+ existing auth tests remain intact:**
+
 - Email/password authentication (20 tests)
 - OAuth flows (10 tests)
 - Magic links (8 tests)
@@ -205,6 +245,7 @@ bunx astro check
 - Two-factor authentication (8 tests)
 
 **Test Command:**
+
 ```bash
 cd frontend/
 bun test test/auth
@@ -217,6 +258,7 @@ bun test test/auth
 ## Usage Examples
 
 ### Example 1: Login Form
+
 ```typescript
 import { useLogin } from '@/hooks';
 import { Button } from '@/components/ui/button';
@@ -281,6 +323,7 @@ export function SimpleSignInForm() {
 ```
 
 ### Example 2: 2FA Settings
+
 ```typescript
 import { use2FA } from '@/hooks';
 import { Button } from '@/components/ui/button';
@@ -323,6 +366,7 @@ export function TwoFactorSettings() {
 ```
 
 ### Example 3: Magic Link Authentication
+
 ```typescript
 import { useMagicLinkAuth } from '@/hooks';
 import { useEffect, useState } from 'react';
@@ -368,17 +412,18 @@ export function MagicLinkAuth({ token }: { token: string }) {
 
 From Feature 2-5 spec, these components can now be migrated:
 
-| Component | Current API | New Hook | Status |
-|-----------|-------------|----------|--------|
-| SimpleSignInForm | `authClient.signIn.email()` | `useLogin()` | ✅ Ready |
-| SimpleSignUpForm | `authClient.signUp.email()` | `useSignup()` | ✅ Ready |
-| MagicLinkAuth | Direct Convex mutation | `useMagicLinkAuth()` | ✅ Ready |
-| TwoFactorSettings | Multiple Convex calls | `use2FA()` | ✅ Ready |
-| VerifyEmailForm | Direct Convex mutation | `useVerifyEmail()` | ✅ Ready |
-| ForgotPasswordForm | Direct fetch call | `usePasswordReset()` | ✅ Ready |
-| ResetPasswordForm | Direct fetch call | `usePasswordResetComplete()` | ✅ Ready |
+| Component          | Current API                 | New Hook                     | Status   |
+| ------------------ | --------------------------- | ---------------------------- | -------- |
+| SimpleSignInForm   | `authClient.signIn.email()` | `useLogin()`                 | ✅ Ready |
+| SimpleSignUpForm   | `authClient.signUp.email()` | `useSignup()`                | ✅ Ready |
+| MagicLinkAuth      | Direct Convex mutation      | `useMagicLinkAuth()`         | ✅ Ready |
+| TwoFactorSettings  | Multiple Convex calls       | `use2FA()`                   | ✅ Ready |
+| VerifyEmailForm    | Direct Convex mutation      | `useVerifyEmail()`           | ✅ Ready |
+| ForgotPasswordForm | Direct fetch call           | `usePasswordReset()`         | ✅ Ready |
+| ResetPasswordForm  | Direct fetch call           | `usePasswordResetComplete()` | ✅ Ready |
 
 **Migration Pattern:**
+
 ```diff
 // BEFORE
 - import { authClient } from '@/lib/auth-client';
@@ -400,23 +445,27 @@ From Feature 2-5 spec, these components can now be migrated:
 ## Benefits
 
 ### 1. Type Safety
+
 - ✅ Typed errors with `_tag` discriminator
 - ✅ No string-based error detection
 - ✅ IntelliSense autocomplete for errors
 - ✅ Compiler catches missing cases
 
 ### 2. Cleaner Code
+
 - ✅ Hooks manage loading/error state automatically
 - ✅ No manual state management (`useState(false)`)
 - ✅ Consistent API across all auth methods
 - ✅ ~250 fewer lines of code after migration
 
 ### 3. Backend Agnostic
+
 - ✅ Can swap Convex for another backend
 - ✅ Same hooks work with any DataProvider
 - ✅ Zero component changes when backend changes
 
 ### 4. Better DX
+
 - ✅ Simple, predictable API
 - ✅ Automatic loading states
 - ✅ Built-in error handling
@@ -427,6 +476,7 @@ From Feature 2-5 spec, these components can now be migrated:
 ## Next Steps
 
 ### Phase 1: Incremental Migration (Steps 13-45)
+
 Follow Feature 2-5 specification:
 
 1. **Backup each component** before migration
@@ -436,6 +486,7 @@ Follow Feature 2-5 specification:
 5. **Commit after each successful migration** with git tags
 
 ### Phase 2: Final Validation (Steps 46-60)
+
 1. Remove all direct auth imports (authClient, ConvexHttpClient)
 2. Run full TypeScript check (`bunx astro check`)
 3. Run complete auth test suite (`bun test test/auth`)
@@ -443,6 +494,7 @@ Follow Feature 2-5 specification:
 5. Update documentation
 
 ### Phase 3: Cleanup
+
 1. Remove unused auth-client.ts (if fully migrated)
 2. Remove manual token management code
 3. Document new patterns in AGENTS.md
@@ -479,6 +531,7 @@ frontend/
 ## Success Metrics
 
 ### Implementation Phase ✅ COMPLETE
+
 - [x] Auth interface added to DataProvider
 - [x] BetterAuthProvider wraps existing auth
 - [x] 7 auth hooks implemented
@@ -488,6 +541,7 @@ frontend/
 - [x] Documentation written
 
 ### Migration Phase ⏳ READY TO BEGIN
+
 - [ ] 7 components migrated to hooks
 - [ ] 50+ auth tests passing
 - [ ] No direct authClient imports
@@ -501,6 +555,7 @@ frontend/
 ✅ **All infrastructure complete and ready for Feature 2-5 component migration.**
 
 The auth hooks infrastructure is production-ready with:
+
 - Complete DataProvider auth interface
 - BetterAuthProvider wrapping existing Convex auth
 - 7 React hooks for all auth methods

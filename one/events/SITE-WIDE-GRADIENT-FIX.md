@@ -1,3 +1,21 @@
+---
+title: Site Wide Gradient Fix
+dimension: events
+category: SITE-WIDE-GRADIENT-FIX.md
+tags: ai, connections, groups
+related_dimensions: connections, groups, knowledge, people
+scope: global
+created: 2025-11-03
+updated: 2025-11-03
+version: 1.0.0
+ai_context: |
+  This document is part of the events dimension in the SITE-WIDE-GRADIENT-FIX.md category.
+  Location: one/events/SITE-WIDE-GRADIENT-FIX.md
+  Purpose: Documents site-wide gradient text fix - complete ✅
+  Related dimensions: connections, groups, knowledge, people
+  For AI agents: Read this to understand SITE WIDE GRADIENT FIX.
+---
+
 # Site-Wide Gradient Text Fix - COMPLETE ✅
 
 ## Summary

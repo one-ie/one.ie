@@ -1,8 +1,26 @@
+---
+title: Npx
+dimension: things
+category: agents
+tags: agent, testing
+related_dimensions: events, people
+scope: global
+created: 2025-11-03
+updated: 2025-11-03
+version: 1.0.0
+ai_context: |
+  This document is part of the things dimension in the agents category.
+  Location: one/things/claude/commands/npx.md
+  Purpose: Documents /npx - fast npx publishing command
+  Related dimensions: events, people
+  For AI agents: Read this to understand npx.
+---
+
 # /npx - Fast NPX Publishing Command
 
 ⚡ **Rapid NPX Package Updates & Publishing**
 
-*Fast-track NPX package updates with automated version management, testing, and publishing through specialized NPX agent.*
+_Fast-track NPX package updates with automated version management, testing, and publishing through specialized NPX agent._
 
 ## Core Interface
 
@@ -37,8 +55,8 @@ When `/npx` is invoked, automatically launch the NPX specialist agent for superf
 🔧 **CONFIGURATION**
    C. Configure NPM Settings     → Setup registry, tokens, defaults
    S. Set Publishing Preferences → Automated testing, versioning rules
-   
-📊 **STATUS & MONITORING**  
+
+📊 **STATUS & MONITORING**
    V. View Current Versions      → See all published versions
    L. Publication Log           → Recent publishing history
    M. Metrics Dashboard         → Download stats, version adoption
@@ -71,6 +89,7 @@ workflow: |
 ## Fast Publishing Workflow
 
 ### 1. Instant Publish (Default Option)
+
 ```yaml
 instant_publish:
   detect: "Auto-detect changes and determine version bump needed"
@@ -84,6 +103,7 @@ instant_publish:
 ```
 
 ### 2. Quality-First Publish
+
 ```yaml
 quality_publish:
   analysis: "Deep code analysis and quality scoring"
@@ -101,7 +121,7 @@ quality_publish:
 The `/npx` command automatically launches the specialized NPX agent (`/Users/toc/Server/ONE/.claude/agents/npx.md`) which handles:
 
 - **Package Detection**: Auto-detect Node.js packages and current state
-- **Version Management**: Smart version bumping based on change analysis  
+- **Version Management**: Smart version bumping based on change analysis
 - **Quality Validation**: Automated testing and quality gates
 - **Build Optimization**: Optimized builds with performance monitoring
 - **Publishing Automation**: Reliable NPM publishing with retry logic
@@ -111,23 +131,26 @@ The `/npx` command automatically launches the specialized NPX agent (`/Users/toc
 ## Success Metrics
 
 **Publishing Performance Targets:**
+
 - Simple package update: <60 seconds
-- Full quality validation: <5 minutes  
+- Full quality validation: <5 minutes
 - Multi-package monorepo: <10 minutes
 - Emergency hotfix: <30 seconds
 
 **Quality Standards:**
+
 - 100% successful publish rate (with retry logic)
 - Automated rollback on critical failures
 - Comprehensive pre-publish validation
 - Real-time monitoring and alerting
 
 **Developer Experience:**
+
 - Zero-configuration setup for most packages
 - Intelligent defaults with override options
-- Clear progress indication and error messaging  
+- Clear progress indication and error messaging
 - Integration with existing development workflows
 
 ---
 
-*Designed for maximum speed and reliability in NPX package publishing workflows*
+_Designed for maximum speed and reliability in NPX package publishing workflows_

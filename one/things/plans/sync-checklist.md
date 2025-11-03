@@ -1,3 +1,21 @@
+---
+title: Sync Checklist
+dimension: things
+category: plans
+tags: architecture, connections, events, groups, knowledge, ontology, people, things
+related_dimensions: connections, events, groups, knowledge, people
+scope: global
+created: 2025-11-03
+updated: 2025-11-03
+version: 1.0.0
+ai_context: |
+  This document is part of the things dimension in the plans category.
+  Location: one/things/plans/sync-checklist.md
+  Purpose: Documents plan synchronization checklist
+  Related dimensions: connections, events, groups, knowledge, people
+  For AI agents: Read this to understand sync checklist.
+---
+
 # Plan Synchronization Checklist
 
 **Version:** 1.0.0
@@ -24,6 +42,7 @@ All planning documents MUST align with these principles from `one/knowledge/onto
 ```
 
 **Why "Groups" not "Organizations":**
+
 - Groups support hierarchical nesting (parent → child → grandchild...)
 - Groups scale from friend circles (2 people) to governments (billions)
 - "Organization" implies business context; "Groups" is universal
@@ -31,6 +50,7 @@ All planning documents MUST align with these principles from `one/knowledge/onto
 ### 2. Terminology Standards
 
 **✅ CORRECT:**
+
 ```typescript
 - group, groups, groupId
 - group_owner, group_user
@@ -41,6 +61,7 @@ All planning documents MUST align with these principles from `one/knowledge/onto
 ```
 
 **❌ INCORRECT:**
+
 ```typescript
 - organization, org, orgId
 - org_owner, org_user
@@ -63,6 +84,7 @@ Backend Providers (Convex, WordPress, Supabase, etc.)
 ```
 
 **Key Points:**
+
 - Services use `DataProvider` (NOT direct backend calls)
 - Change backend = edit ONE line in `astro.config.ts`
 - Frontend can run WITHOUT backend (demo mode)
@@ -82,6 +104,7 @@ git push → one-ie/web (website source)
 ```
 
 **Environment Configuration:**
+
 - Development: `ONE_BACKEND=on`, `ENABLE_ADMIN_FEATURES=true`
 - Production (one.ie): `ONE_BACKEND=on`, `ENABLE_ADMIN_FEATURES=false`
 - Demo (demo.one.ie): `ONE_BACKEND=off`, `ENABLE_ADMIN_FEATURES=false`
@@ -186,6 +209,7 @@ git push → one-ie/web (website source)
 ### When Updating Core Documents
 
 If you update any Tier 1 document:
+
 1. Review all Tier 2 documents for alignment
 2. Update version numbers and timestamps
 3. Add changelog entry
@@ -194,6 +218,7 @@ If you update any Tier 1 document:
 ### Monthly Review Cycle
 
 **First Monday of Each Month:**
+
 1. Review all Tier 1 documents (source of truth)
 2. Audit Tier 2 documents for drift
 3. Update this checklist with new documents
@@ -213,6 +238,7 @@ If you update any Tier 1 document:
 
 **Problem:** Plans listing 4 or 5 dimensions instead of 6
 **Fix:** Always list all 6 dimensions in order:
+
 1. Groups
 2. People
 3. Things
@@ -229,6 +255,7 @@ If you update any Tier 1 document:
 
 **Problem:** Plans describing different deployment targets
 **Fix:** Always reference the three targets:
+
 - one.ie (backend ON)
 - demo.one.ie (backend OFF)
 - npx oneie (backend OFF)
@@ -280,6 +307,7 @@ grep -L "DataProvider" one/things/plans/effect.md one/things/plans/backend-agnos
 ### 2025-10-24 Sync Update
 
 **Changed:**
+
 1. ❌ "Organizations" → ✅ "Groups" (everywhere)
 2. ❌ "org_owner" → ✅ "group_owner" (everywhere)
 3. ❌ "5 primitives" → ✅ "6 dimensions" (one.md)
@@ -287,12 +315,14 @@ grep -L "DataProvider" one/things/plans/effect.md one/things/plans/backend-agnos
 5. ✅ Deployment strategy unified (three targets)
 
 **Files Updated:**
+
 - `effect.md` - Complete rewrite for backend-agnostic architecture
 - `ontology-6-dimensions.md` - Groups terminology, status marked Complete
 - `backend-agnostic-frontend.md` - Groups terminology throughout
 - `one.md` - Added Groups dimension (was missing!)
 
 **Why Groups Not Organizations:**
+
 - Supports hierarchical nesting (parent → child → grandchild...)
 - Scales from friend circles to governments
 - Universal term (not business-specific)

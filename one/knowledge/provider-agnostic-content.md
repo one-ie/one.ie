@@ -1,3 +1,21 @@
+---
+title: Provider Agnostic Content
+dimension: knowledge
+category: provider-agnostic-content.md
+tags: ai, architecture, backend, frontend
+related_dimensions: things
+scope: global
+created: 2025-11-03
+updated: 2025-11-03
+version: 1.0.0
+ai_context: |
+  This document is part of the knowledge dimension in the provider-agnostic-content.md category.
+  Location: one/knowledge/provider-agnostic-content.md
+  Purpose: Documents provider-agnostic content: backend independence
+  Related dimensions: things
+  For AI agents: Read this to understand provider agnostic content.
+---
+
 # Provider-Agnostic Content: Backend Independence
 
 **Layer 4 of Astro Architecture** - Switch content backends with one environment variable

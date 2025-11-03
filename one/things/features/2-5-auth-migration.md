@@ -1,3 +1,21 @@
+---
+title: 2 5 Auth Migration
+dimension: things
+category: features
+tags: auth, backend, frontend
+related_dimensions: connections, events, people
+scope: global
+created: 2025-11-03
+updated: 2025-11-03
+version: 1.0.0
+ai_context: |
+  This document is part of the things dimension in the features category.
+  Location: one/things/features/2-5-auth-migration.md
+  Purpose: Documents feature 2-5: auth component migration to dataprovider
+  Related dimensions: connections, events, people
+  For AI agents: Read this to understand 2 5 auth migration.
+---
+
 # Feature 2-5: Auth Component Migration to DataProvider
 
 **Feature ID:** `feature_2_5_auth_migration`
@@ -31,15 +49,15 @@ This feature migrates **6 critical authentication components** from direct Bette
 
 ### Component Matrix
 
-| # | Component | Current API | New Hook | Lines | Risk | Test File |
-|---|-----------|-------------|----------|-------|------|-----------|
-| 1 | **SimpleSignInForm** | `authClient.signIn.email()` | `useLogin()` | 163 | **HIGH** | `email-password.test.ts` |
-| 2 | **SimpleSignUpForm** | `authClient.signUp.email()` | `useSignup()` | 157 | **HIGH** | `email-password.test.ts` |
-| 3 | **MagicLinkAuth** | `convex.mutation(api.auth.signInWithMagicLink)` | `useMagicLinkAuth()` | 151 | **MEDIUM** | `magic-link.test.ts` |
-| 4 | **TwoFactorSettings** | Multiple `convex.mutation(api.auth.*)` | `use2FA()` | 293 | **HIGH** | `auth.test.ts` |
-| 5 | **VerifyEmailForm** | `convex.mutation(api.auth.verifyEmail)` | `useVerifyEmail()` | 134 | **LOW** | `auth.test.ts` |
-| 6 | **ForgotPasswordForm** | `fetch("/api/auth/forgot-password")` | `usePasswordReset()` | 144 | **MEDIUM** | `password-reset.test.ts` |
-| 7 | **ResetPasswordForm** | `fetch("/api/auth/reset-password")` | `usePasswordResetComplete()` | 206 | **MEDIUM** | `password-reset.test.ts` |
+| #   | Component              | Current API                                     | New Hook                     | Lines | Risk       | Test File                |
+| --- | ---------------------- | ----------------------------------------------- | ---------------------------- | ----- | ---------- | ------------------------ |
+| 1   | **SimpleSignInForm**   | `authClient.signIn.email()`                     | `useLogin()`                 | 163   | **HIGH**   | `email-password.test.ts` |
+| 2   | **SimpleSignUpForm**   | `authClient.signUp.email()`                     | `useSignup()`                | 157   | **HIGH**   | `email-password.test.ts` |
+| 3   | **MagicLinkAuth**      | `convex.mutation(api.auth.signInWithMagicLink)` | `useMagicLinkAuth()`         | 151   | **MEDIUM** | `magic-link.test.ts`     |
+| 4   | **TwoFactorSettings**  | Multiple `convex.mutation(api.auth.*)`          | `use2FA()`                   | 293   | **HIGH**   | `auth.test.ts`           |
+| 5   | **VerifyEmailForm**    | `convex.mutation(api.auth.verifyEmail)`         | `useVerifyEmail()`           | 134   | **LOW**    | `auth.test.ts`           |
+| 6   | **ForgotPasswordForm** | `fetch("/api/auth/forgot-password")`            | `usePasswordReset()`         | 144   | **MEDIUM** | `password-reset.test.ts` |
+| 7   | **ResetPasswordForm**  | `fetch("/api/auth/reset-password")`             | `usePasswordResetComplete()` | 206   | **MEDIUM** | `password-reset.test.ts` |
 
 **Total:** 1,248 lines of code to migrate
 **Estimated Effort:** 8-12 hours of careful migration + testing
@@ -289,6 +307,7 @@ export function SimpleSignInForm() {
 ```
 
 **Key Changes:**
+
 - ❌ Removed `authClient` import
 - ✅ Added `useLogin()` hook import
 - ❌ Removed manual `loading` state
@@ -527,6 +546,7 @@ export function SimpleSignUpForm() {
 ```
 
 **Key Changes:**
+
 - 🔥 **42 fewer lines** (157 → 115)
 - ✅ Cleaner error handling with typed errors
 - ✅ Password strength indicator preserved
@@ -540,44 +560,46 @@ export function SimpleSignUpForm() {
 
 ```typescript
 // frontend/src/components/auth/MagicLinkAuth.tsx (BEFORE)
-import { useState, useEffect } from "react"
-import { Button } from "@/components/ui/button"
-import { toast } from "sonner"
-import { AuthCard } from "./AuthCard"
-import { CheckCircle2, Mail } from "lucide-react"
-import { Alert, AlertDescription } from "@/components/ui/alert"
-import { ConvexHttpClient } from "convex/browser"  // ❌ REMOVE
-import { api } from "../../../convex/_generated/api"  // ❌ REMOVE
+import { useState, useEffect } from "react";
+import { Button } from "@/components/ui/button";
+import { toast } from "sonner";
+import { AuthCard } from "./AuthCard";
+import { CheckCircle2, Mail } from "lucide-react";
+import { Alert, AlertDescription } from "@/components/ui/alert";
+import { ConvexHttpClient } from "convex/browser"; // ❌ REMOVE
+import { api } from "../../../convex/_generated/api"; // ❌ REMOVE
 
-const convex = new ConvexHttpClient(  // ❌ REMOVE
-  import.meta.env.PUBLIC_CONVEX_URL || import.meta.env.NEXT_PUBLIC_CONVEX_URL
-)
+const convex = new ConvexHttpClient( // ❌ REMOVE
+  import.meta.env.PUBLIC_CONVEX_URL || import.meta.env.NEXT_PUBLIC_CONVEX_URL,
+);
 
 interface MagicLinkAuthProps {
-  token: string
+  token: string;
 }
 
 export function MagicLinkAuth({ token }: MagicLinkAuthProps) {
-  const [loading, setLoading] = useState(false)  // ❌ Manual state
-  const [authSuccess, setAuthSuccess] = useState(false)
-  const [tokenValid, setTokenValid] = useState(true)
-  const [authenticating, setAuthenticating] = useState(true)
+  const [loading, setLoading] = useState(false); // ❌ Manual state
+  const [authSuccess, setAuthSuccess] = useState(false);
+  const [tokenValid, setTokenValid] = useState(true);
+  const [authenticating, setAuthenticating] = useState(true);
 
   useEffect(() => {
     const authenticateWithMagicLink = async () => {
       if (!token) {
-        setTokenValid(false)
-        setAuthenticating(false)
+        setTokenValid(false);
+        setAuthenticating(false);
         toast.error("No magic link token", {
-          description: "This link is missing a token."
-        })
-        return
+          description: "This link is missing a token.",
+        });
+        return;
       }
 
-      setLoading(true)
+      setLoading(true);
       try {
         // ❌ Direct Convex mutation call
-        const result = await convex.mutation(api.auth.signInWithMagicLink, { token })
+        const result = await convex.mutation(api.auth.signInWithMagicLink, {
+          token,
+        });
 
         if (result?.token) {
           // ❌ Manual cookie setting via API
@@ -585,34 +607,34 @@ export function MagicLinkAuth({ token }: MagicLinkAuthProps) {
             method: "POST",
             headers: { "Content-Type": "application/json" },
             body: JSON.stringify({ token: result.token }),
-          })
+          });
 
           if (response.ok) {
-            setAuthSuccess(true)
+            setAuthSuccess(true);
             toast.success("Signed in successfully!", {
-              description: "Redirecting to your dashboard..."
-            })
+              description: "Redirecting to your dashboard...",
+            });
 
             setTimeout(() => {
-              window.location.href = "/account"
-            }, 1500)
+              window.location.href = "/account";
+            }, 1500);
           } else {
-            throw new Error("Failed to set authentication cookie")
+            throw new Error("Failed to set authentication cookie");
           }
         }
       } catch (err: any) {
-        setTokenValid(false)
+        setTokenValid(false);
         toast.error("Authentication failed", {
-          description: err.message || "Invalid or expired link"
-        })
+          description: err.message || "Invalid or expired link",
+        });
       } finally {
-        setLoading(false)
-        setAuthenticating(false)
+        setLoading(false);
+        setAuthenticating(false);
       }
-    }
+    };
 
-    authenticateWithMagicLink()
-  }, [token])
+    authenticateWithMagicLink();
+  }, [token]);
 
   // ... render logic (unchanged)
 }
@@ -739,6 +761,7 @@ export function MagicLinkAuth({ token }: MagicLinkAuthProps) {
 ```
 
 **Key Changes:**
+
 - ❌ Removed ConvexHttpClient import
 - ❌ Removed api import
 - ✅ Added `useMagicLinkAuth()` hook
@@ -754,64 +777,78 @@ export function MagicLinkAuth({ token }: MagicLinkAuthProps) {
 
 ```typescript
 // frontend/src/components/auth/TwoFactorSettings.tsx (BEFORE)
-import { useState, useEffect } from "react"
-import { Button } from "@/components/ui/button"
-import { Input } from "@/components/ui/input"
-import { Label } from "@/components/ui/label"
-import { toast } from "sonner"
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card"
-import { Alert, AlertDescription } from "@/components/ui/alert"
-import { Shield, Key, Copy, CheckCircle2 } from "lucide-react"
-import { ConvexHttpClient } from "convex/browser"  // ❌ REMOVE
-import { api } from "../../../convex/_generated/api"  // ❌ REMOVE
-import * as OTPAuth from "otpauth"
-import QRCode from "qrcode"
+import { useState, useEffect } from "react";
+import { Button } from "@/components/ui/button";
+import { Input } from "@/components/ui/input";
+import { Label } from "@/components/ui/label";
+import { toast } from "sonner";
+import {
+  Card,
+  CardContent,
+  CardDescription,
+  CardHeader,
+  CardTitle,
+} from "@/components/ui/card";
+import { Alert, AlertDescription } from "@/components/ui/alert";
+import { Shield, Key, Copy, CheckCircle2 } from "lucide-react";
+import { ConvexHttpClient } from "convex/browser"; // ❌ REMOVE
+import { api } from "../../../convex/_generated/api"; // ❌ REMOVE
+import * as OTPAuth from "otpauth";
+import QRCode from "qrcode";
 
-const convex = new ConvexHttpClient(  // ❌ REMOVE
-  import.meta.env.PUBLIC_CONVEX_URL || import.meta.env.NEXT_PUBLIC_CONVEX_URL
-)
+const convex = new ConvexHttpClient( // ❌ REMOVE
+  import.meta.env.PUBLIC_CONVEX_URL || import.meta.env.NEXT_PUBLIC_CONVEX_URL,
+);
 
 export function TwoFactorSettings() {
-  const [loading, setLoading] = useState(false)  // ❌ Manual state
-  const [status, setStatus] = useState<{ enabled: boolean; hasSetup: boolean }>({ enabled: false, hasSetup: false })
-  const [showSetup, setShowSetup] = useState(false)
-  const [secret, setSecret] = useState("")
-  const [backupCodes, setBackupCodes] = useState<string[]>([])
-  const [qrCodeUrl, setQrCodeUrl] = useState("")
-  const [verificationCode, setVerificationCode] = useState("")
-  const [disablePassword, setDisablePassword] = useState("")
+  const [loading, setLoading] = useState(false); // ❌ Manual state
+  const [status, setStatus] = useState<{ enabled: boolean; hasSetup: boolean }>(
+    { enabled: false, hasSetup: false },
+  );
+  const [showSetup, setShowSetup] = useState(false);
+  const [secret, setSecret] = useState("");
+  const [backupCodes, setBackupCodes] = useState<string[]>([]);
+  const [qrCodeUrl, setQrCodeUrl] = useState("");
+  const [verificationCode, setVerificationCode] = useState("");
+  const [disablePassword, setDisablePassword] = useState("");
 
   useEffect(() => {
-    loadStatus()
-  }, [])
+    loadStatus();
+  }, []);
 
   const loadStatus = async () => {
     try {
       // ❌ Manual token extraction from cookies
-      const token = document.cookie.split('; ').find(row => row.startsWith('auth_token='))?.split('=')[1]
-      if (!token) return
+      const token = document.cookie
+        .split("; ")
+        .find((row) => row.startsWith("auth_token="))
+        ?.split("=")[1];
+      if (!token) return;
 
       // ❌ Direct Convex query
-      const result = await convex.query(api.auth.get2FAStatus, { token })
-      setStatus(result)
+      const result = await convex.query(api.auth.get2FAStatus, { token });
+      setStatus(result);
     } catch (err) {
-      console.error("Failed to load 2FA status:", err)
+      console.error("Failed to load 2FA status:", err);
     }
-  }
+  };
 
   const handleSetup = async () => {
-    setLoading(true)  // ❌ Manual state
+    setLoading(true); // ❌ Manual state
     try {
-      const token = document.cookie.split('; ').find(row => row.startsWith('auth_token='))?.split('=')[1]
+      const token = document.cookie
+        .split("; ")
+        .find((row) => row.startsWith("auth_token="))
+        ?.split("=")[1];
       if (!token) {
-        toast.error("Not authenticated")
-        return
+        toast.error("Not authenticated");
+        return;
       }
 
       // ❌ Direct Convex mutation
-      const result = await convex.mutation(api.auth.setup2FA, { token })
-      setSecret(result.secret)
-      setBackupCodes(result.backupCodes)
+      const result = await convex.mutation(api.auth.setup2FA, { token });
+      setSecret(result.secret);
+      setBackupCodes(result.backupCodes);
 
       // Generate TOTP URI
       const totp = new OTPAuth.TOTP({
@@ -820,33 +857,38 @@ export function TwoFactorSettings() {
         algorithm: "SHA1",
         digits: 6,
         period: 30,
-        secret: OTPAuth.Secret.fromBase32(result.secret.toUpperCase().padEnd(32, 'A')),
-      })
+        secret: OTPAuth.Secret.fromBase32(
+          result.secret.toUpperCase().padEnd(32, "A"),
+        ),
+      });
 
-      const uri = totp.toString()
-      const qrUrl = await QRCode.toDataURL(uri)
-      setQrCodeUrl(qrUrl)
-      setShowSetup(true)
+      const uri = totp.toString();
+      const qrUrl = await QRCode.toDataURL(uri);
+      setQrCodeUrl(qrUrl);
+      setShowSetup(true);
 
       toast.success("2FA setup initiated", {
-        description: "Scan the QR code with your authenticator app"
-      })
+        description: "Scan the QR code with your authenticator app",
+      });
     } catch (err: any) {
       toast.error("Setup failed", {
-        description: err.message || "Failed to setup 2FA"
-      })
+        description: err.message || "Failed to setup 2FA",
+      });
     } finally {
-      setLoading(false)  // ❌ Manual state
+      setLoading(false); // ❌ Manual state
     }
-  }
+  };
 
   const handleVerify = async () => {
-    setLoading(true)
+    setLoading(true);
     try {
-      const token = document.cookie.split('; ').find(row => row.startsWith('auth_token='))?.split('=')[1]
+      const token = document.cookie
+        .split("; ")
+        .find((row) => row.startsWith("auth_token="))
+        ?.split("=")[1];
       if (!token) {
-        toast.error("Not authenticated")
-        return
+        toast.error("Not authenticated");
+        return;
       }
 
       // Client-side TOTP verification
@@ -856,67 +898,74 @@ export function TwoFactorSettings() {
         algorithm: "SHA1",
         digits: 6,
         period: 30,
-        secret: OTPAuth.Secret.fromBase32(secret.toUpperCase().padEnd(32, 'A')),
-      })
+        secret: OTPAuth.Secret.fromBase32(secret.toUpperCase().padEnd(32, "A")),
+      });
 
-      const delta = totp.validate({ token: verificationCode, window: 1 })
+      const delta = totp.validate({ token: verificationCode, window: 1 });
       if (delta === null) {
         toast.error("Invalid code", {
-          description: "The verification code is incorrect. Please try again."
-        })
-        setLoading(false)
-        return
+          description: "The verification code is incorrect. Please try again.",
+        });
+        setLoading(false);
+        return;
       }
 
       // ❌ Direct Convex mutation
-      await convex.mutation(api.auth.verify2FA, { token })
+      await convex.mutation(api.auth.verify2FA, { token });
 
       toast.success("2FA enabled!", {
-        description: "Two-factor authentication has been enabled for your account"
-      })
+        description:
+          "Two-factor authentication has been enabled for your account",
+      });
 
-      setShowSetup(false)
-      loadStatus()
+      setShowSetup(false);
+      loadStatus();
     } catch (err: any) {
       toast.error("Verification failed", {
-        description: err.message || "Failed to verify code"
-      })
+        description: err.message || "Failed to verify code",
+      });
     } finally {
-      setLoading(false)
+      setLoading(false);
     }
-  }
+  };
 
   const handleDisable = async () => {
-    setLoading(true)
+    setLoading(true);
     try {
-      const token = document.cookie.split('; ').find(row => row.startsWith('auth_token='))?.split('=')[1]
+      const token = document.cookie
+        .split("; ")
+        .find((row) => row.startsWith("auth_token="))
+        ?.split("=")[1];
       if (!token) {
-        toast.error("Not authenticated")
-        return
+        toast.error("Not authenticated");
+        return;
       }
 
       // ❌ Direct Convex mutation
-      await convex.mutation(api.auth.disable2FA, { token, password: disablePassword })
+      await convex.mutation(api.auth.disable2FA, {
+        token,
+        password: disablePassword,
+      });
 
       toast.success("2FA disabled", {
-        description: "Two-factor authentication has been disabled"
-      })
+        description: "Two-factor authentication has been disabled",
+      });
 
-      setDisablePassword("")
-      loadStatus()
+      setDisablePassword("");
+      loadStatus();
     } catch (err: any) {
       toast.error("Failed to disable 2FA", {
-        description: err.message || "Incorrect password"
-      })
+        description: err.message || "Incorrect password",
+      });
     } finally {
-      setLoading(false)
+      setLoading(false);
     }
-  }
+  };
 
   const copyToClipboard = (text: string) => {
-    navigator.clipboard.writeText(text)
-    toast.success("Copied to clipboard")
-  }
+    navigator.clipboard.writeText(text);
+    toast.success("Copied to clipboard");
+  };
 
   // ... rest of component (render logic - 150+ lines unchanged)
 }
@@ -926,46 +975,54 @@ export function TwoFactorSettings() {
 
 ```typescript
 // frontend/src/components/auth/TwoFactorSettings.tsx (AFTER)
-import { useState, useEffect } from "react"
-import { Button } from "@/components/ui/button"
-import { Input } from "@/components/ui/input"
-import { Label } from "@/components/ui/label"
-import { toast } from "sonner"
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card"
-import { Alert, AlertDescription } from "@/components/ui/alert"
-import { Shield, Key, Copy, CheckCircle2 } from "lucide-react"
-import { use2FA } from "@/providers/hooks"  // ✅ DataProvider hook
-import * as OTPAuth from "otpauth"
-import QRCode from "qrcode"
+import { useState, useEffect } from "react";
+import { Button } from "@/components/ui/button";
+import { Input } from "@/components/ui/input";
+import { Label } from "@/components/ui/label";
+import { toast } from "sonner";
+import {
+  Card,
+  CardContent,
+  CardDescription,
+  CardHeader,
+  CardTitle,
+} from "@/components/ui/card";
+import { Alert, AlertDescription } from "@/components/ui/alert";
+import { Shield, Key, Copy, CheckCircle2 } from "lucide-react";
+import { use2FA } from "@/providers/hooks"; // ✅ DataProvider hook
+import * as OTPAuth from "otpauth";
+import QRCode from "qrcode";
 
 export function TwoFactorSettings() {
-  const { getStatus, setup, verify, disable, loading, error } = use2FA()  // ✅ Hook
-  const [status, setStatus] = useState<{ enabled: boolean; hasSetup: boolean }>({ enabled: false, hasSetup: false })
-  const [showSetup, setShowSetup] = useState(false)
-  const [secret, setSecret] = useState("")
-  const [backupCodes, setBackupCodes] = useState<string[]>([])
-  const [qrCodeUrl, setQrCodeUrl] = useState("")
-  const [verificationCode, setVerificationCode] = useState("")
-  const [disablePassword, setDisablePassword] = useState("")
+  const { getStatus, setup, verify, disable, loading, error } = use2FA(); // ✅ Hook
+  const [status, setStatus] = useState<{ enabled: boolean; hasSetup: boolean }>(
+    { enabled: false, hasSetup: false },
+  );
+  const [showSetup, setShowSetup] = useState(false);
+  const [secret, setSecret] = useState("");
+  const [backupCodes, setBackupCodes] = useState<string[]>([]);
+  const [qrCodeUrl, setQrCodeUrl] = useState("");
+  const [verificationCode, setVerificationCode] = useState("");
+  const [disablePassword, setDisablePassword] = useState("");
 
   useEffect(() => {
-    loadStatus()
-  }, [])
+    loadStatus();
+  }, []);
 
   const loadStatus = async () => {
     try {
-      const result = await getStatus()  // ✅ Simple hook call (no token needed)
-      setStatus(result)
+      const result = await getStatus(); // ✅ Simple hook call (no token needed)
+      setStatus(result);
     } catch (err) {
-      console.error("Failed to load 2FA status:", err)
+      console.error("Failed to load 2FA status:", err);
     }
-  }
+  };
 
   const handleSetup = async () => {
     try {
-      const result = await setup()  // ✅ Simple hook call
-      setSecret(result.secret)
-      setBackupCodes(result.backupCodes)
+      const result = await setup(); // ✅ Simple hook call
+      setSecret(result.secret);
+      setBackupCodes(result.backupCodes);
 
       // Generate TOTP URI (unchanged)
       const totp = new OTPAuth.TOTP({
@@ -974,23 +1031,25 @@ export function TwoFactorSettings() {
         algorithm: "SHA1",
         digits: 6,
         period: 30,
-        secret: OTPAuth.Secret.fromBase32(result.secret.toUpperCase().padEnd(32, 'A')),
-      })
+        secret: OTPAuth.Secret.fromBase32(
+          result.secret.toUpperCase().padEnd(32, "A"),
+        ),
+      });
 
-      const uri = totp.toString()
-      const qrUrl = await QRCode.toDataURL(uri)
-      setQrCodeUrl(qrUrl)
-      setShowSetup(true)
+      const uri = totp.toString();
+      const qrUrl = await QRCode.toDataURL(uri);
+      setQrCodeUrl(qrUrl);
+      setShowSetup(true);
 
       toast.success("2FA setup initiated", {
-        description: "Scan the QR code with your authenticator app"
-      })
+        description: "Scan the QR code with your authenticator app",
+      });
     } catch (err: any) {
       toast.error("Setup failed", {
-        description: err.message || "Failed to setup 2FA"
-      })
+        description: err.message || "Failed to setup 2FA",
+      });
     }
-  }
+  };
 
   const handleVerify = async () => {
     try {
@@ -1001,59 +1060,61 @@ export function TwoFactorSettings() {
         algorithm: "SHA1",
         digits: 6,
         period: 30,
-        secret: OTPAuth.Secret.fromBase32(secret.toUpperCase().padEnd(32, 'A')),
-      })
+        secret: OTPAuth.Secret.fromBase32(secret.toUpperCase().padEnd(32, "A")),
+      });
 
-      const delta = totp.validate({ token: verificationCode, window: 1 })
+      const delta = totp.validate({ token: verificationCode, window: 1 });
       if (delta === null) {
         toast.error("Invalid code", {
-          description: "The verification code is incorrect. Please try again."
-        })
-        return
+          description: "The verification code is incorrect. Please try again.",
+        });
+        return;
       }
 
-      await verify(verificationCode)  // ✅ Simple hook call
+      await verify(verificationCode); // ✅ Simple hook call
 
       toast.success("2FA enabled!", {
-        description: "Two-factor authentication has been enabled for your account"
-      })
+        description:
+          "Two-factor authentication has been enabled for your account",
+      });
 
-      setShowSetup(false)
-      loadStatus()
+      setShowSetup(false);
+      loadStatus();
     } catch (err: any) {
       toast.error("Verification failed", {
-        description: err.message || "Failed to verify code"
-      })
+        description: err.message || "Failed to verify code",
+      });
     }
-  }
+  };
 
   const handleDisable = async () => {
     try {
-      await disable(disablePassword)  // ✅ Simple hook call
+      await disable(disablePassword); // ✅ Simple hook call
 
       toast.success("2FA disabled", {
-        description: "Two-factor authentication has been disabled"
-      })
+        description: "Two-factor authentication has been disabled",
+      });
 
-      setDisablePassword("")
-      loadStatus()
+      setDisablePassword("");
+      loadStatus();
     } catch (err: any) {
       toast.error("Failed to disable 2FA", {
-        description: err.message || "Incorrect password"
-      })
+        description: err.message || "Incorrect password",
+      });
     }
-  }
+  };
 
   const copyToClipboard = (text: string) => {
-    navigator.clipboard.writeText(text)
-    toast.success("Copied to clipboard")
-  }
+    navigator.clipboard.writeText(text);
+    toast.success("Copied to clipboard");
+  };
 
   // ... render logic (unchanged - 100+ lines)
 }
 ```
 
 **Key Changes:**
+
 - ❌ Removed ConvexHttpClient
 - ❌ Removed manual token extraction
 - ✅ Added `use2FA()` hook with all operations
@@ -1069,64 +1130,65 @@ export function TwoFactorSettings() {
 
 ```typescript
 // frontend/src/components/auth/VerifyEmailForm.tsx (BEFORE)
-import { useState, useEffect } from "react"
-import { Button } from "@/components/ui/button"
-import { toast } from "sonner"
-import { AuthCard } from "./AuthCard"
-import { CheckCircle2, Mail } from "lucide-react"
-import { Alert, AlertDescription } from "@/components/ui/alert"
-import { ConvexHttpClient } from "convex/browser"  // ❌ REMOVE
-import { api } from "../../../convex/_generated/api"  // ❌ REMOVE
+import { useState, useEffect } from "react";
+import { Button } from "@/components/ui/button";
+import { toast } from "sonner";
+import { AuthCard } from "./AuthCard";
+import { CheckCircle2, Mail } from "lucide-react";
+import { Alert, AlertDescription } from "@/components/ui/alert";
+import { ConvexHttpClient } from "convex/browser"; // ❌ REMOVE
+import { api } from "../../../convex/_generated/api"; // ❌ REMOVE
 
-const convex = new ConvexHttpClient(  // ❌ REMOVE
-  import.meta.env.PUBLIC_CONVEX_URL || import.meta.env.NEXT_PUBLIC_CONVEX_URL
-)
+const convex = new ConvexHttpClient( // ❌ REMOVE
+  import.meta.env.PUBLIC_CONVEX_URL || import.meta.env.NEXT_PUBLIC_CONVEX_URL,
+);
 
 interface VerifyEmailFormProps {
-  token: string
+  token: string;
 }
 
 export function VerifyEmailForm({ token }: VerifyEmailFormProps) {
-  const [loading, setLoading] = useState(false)  // ❌ Manual state
-  const [verifySuccess, setVerifySuccess] = useState(false)
-  const [tokenValid, setTokenValid] = useState(true)
-  const [verifying, setVerifying] = useState(true)
+  const [loading, setLoading] = useState(false); // ❌ Manual state
+  const [verifySuccess, setVerifySuccess] = useState(false);
+  const [tokenValid, setTokenValid] = useState(true);
+  const [verifying, setVerifying] = useState(true);
 
   useEffect(() => {
     const verifyToken = async () => {
       if (!token) {
-        setTokenValid(false)
-        setVerifying(false)
+        setTokenValid(false);
+        setVerifying(false);
         toast.error("No verification token", {
-          description: "This verification link is missing a token."
-        })
-        return
+          description: "This verification link is missing a token.",
+        });
+        return;
       }
 
-      setLoading(true)
+      setLoading(true);
       try {
         // ❌ Direct Convex mutation
-        const result = await convex.mutation(api.auth.verifyEmail, { token })
+        const result = await convex.mutation(api.auth.verifyEmail, { token });
 
         if (result?.success) {
-          setVerifySuccess(true)
+          setVerifySuccess(true);
           toast.success("Email verified successfully!", {
-            description: "Your email has been verified. You can now access all features."
-          })
+            description:
+              "Your email has been verified. You can now access all features.",
+          });
         }
       } catch (err: any) {
-        setTokenValid(false)
+        setTokenValid(false);
         toast.error("Verification failed", {
-          description: err.message || "Invalid or expired link"
-        })
+          description: err.message || "Invalid or expired link",
+        });
       } finally {
-        setLoading(false)
-        setVerifying(false)
+        setLoading(false);
+        setVerifying(false);
       }
-    }
+    };
 
-    verifyToken()
-  }, [token])
+    verifyToken();
+  }, [token]);
 
   // ... render logic (unchanged)
 }
@@ -1249,6 +1311,7 @@ export function VerifyEmailForm({ token }: VerifyEmailFormProps) {
 ```
 
 **Key Changes:**
+
 - 🔥 **39 fewer lines** (134 → 95)
 - ✅ Simple hook-based verification
 - ✅ Automatic verification on mount
@@ -1261,23 +1324,23 @@ export function VerifyEmailForm({ token }: VerifyEmailFormProps) {
 
 ```typescript
 // frontend/src/components/auth/ForgotPasswordForm.tsx (BEFORE)
-import { useState } from "react"
-import { Button } from "@/components/ui/button"
-import { Input } from "@/components/ui/input"
-import { Label } from "@/components/ui/label"
-import { toast } from "sonner"
-import { AuthCard } from "./AuthCard"
-import { AlertCircle, CheckCircle2 } from "lucide-react"
-import { Alert, AlertDescription } from "@/components/ui/alert"
+import { useState } from "react";
+import { Button } from "@/components/ui/button";
+import { Input } from "@/components/ui/input";
+import { Label } from "@/components/ui/label";
+import { toast } from "sonner";
+import { AuthCard } from "./AuthCard";
+import { AlertCircle, CheckCircle2 } from "lucide-react";
+import { Alert, AlertDescription } from "@/components/ui/alert";
 
 export function ForgotPasswordForm() {
-  const [email, setEmail] = useState("")
-  const [loading, setLoading] = useState(false)  // ❌ Manual state
-  const [emailSent, setEmailSent] = useState(false)
+  const [email, setEmail] = useState("");
+  const [loading, setLoading] = useState(false); // ❌ Manual state
+  const [emailSent, setEmailSent] = useState(false);
 
   const handleSubmit = async (e: React.FormEvent) => {
-    e.preventDefault()
-    setLoading(true)  // ❌ Manual loading
+    e.preventDefault();
+    setLoading(true); // ❌ Manual loading
 
     try {
       // ❌ Direct fetch call
@@ -1285,32 +1348,32 @@ export function ForgotPasswordForm() {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ email }),
-      })
+      });
 
-      const data = await response.json()
+      const data = await response.json();
 
       if (!response.ok) {
-        const errorMessage = data.error || "Unable to send reset email"
+        const errorMessage = data.error || "Unable to send reset email";
         // ... string-based error handling
         toast.error("Unable to send reset email", {
-          description: errorMessage
-        })
-        setLoading(false)  // ❌ Manual state
-        return
+          description: errorMessage,
+        });
+        setLoading(false); // ❌ Manual state
+        return;
       }
 
-      setEmailSent(true)
+      setEmailSent(true);
       toast.success("Reset email sent!", {
-        description: "Check your inbox for password reset instructions."
-      })
-      setLoading(false)
+        description: "Check your inbox for password reset instructions.",
+      });
+      setLoading(false);
     } catch (err: any) {
       toast.error("Request failed", {
-        description: `Error: ${err.message}. Please try again later.`
-      })
-      setLoading(false)  // ❌ Manual state
+        description: `Error: ${err.message}. Please try again later.`,
+      });
+      setLoading(false); // ❌ Manual state
     }
-  }
+  };
 
   // ... render logic (unchanged)
 }
@@ -1424,6 +1487,7 @@ export function ForgotPasswordForm() {
 ```
 
 **Key Changes:**
+
 - 🔥 **39 fewer lines** (144 → 105)
 - ❌ Removed fetch call
 - ✅ Added hook-based request
@@ -1436,86 +1500,89 @@ export function ForgotPasswordForm() {
 
 ```typescript
 // frontend/src/components/auth/ResetPasswordForm.tsx (AFTER)
-import { useState, useEffect } from "react"
-import { Button } from "@/components/ui/button"
-import { Input } from "@/components/ui/input"
-import { Label } from "@/components/ui/label"
-import { toast } from "sonner"
-import { AuthCard } from "./AuthCard"
-import { PasswordStrengthIndicator } from "./PasswordStrengthIndicator"
-import { CheckCircle2 } from "lucide-react"
-import { Alert, AlertDescription } from "@/components/ui/alert"
-import { usePasswordResetComplete } from "@/providers/hooks"  // ✅ Hook
+import { useState, useEffect } from "react";
+import { Button } from "@/components/ui/button";
+import { Input } from "@/components/ui/input";
+import { Label } from "@/components/ui/label";
+import { toast } from "sonner";
+import { AuthCard } from "./AuthCard";
+import { PasswordStrengthIndicator } from "./PasswordStrengthIndicator";
+import { CheckCircle2 } from "lucide-react";
+import { Alert, AlertDescription } from "@/components/ui/alert";
+import { usePasswordResetComplete } from "@/providers/hooks"; // ✅ Hook
 
 interface ResetPasswordFormProps {
-  token: string
+  token: string;
 }
 
 export function ResetPasswordForm({ token }: ResetPasswordFormProps) {
-  const [password, setPassword] = useState("")
-  const [confirmPassword, setConfirmPassword] = useState("")
-  const { mutate: resetPassword, loading, error } = usePasswordResetComplete()  // ✅ Hook
-  const [resetSuccess, setResetSuccess] = useState(false)
-  const [tokenValid, setTokenValid] = useState(true)
+  const [password, setPassword] = useState("");
+  const [confirmPassword, setConfirmPassword] = useState("");
+  const { mutate: resetPassword, loading, error } = usePasswordResetComplete(); // ✅ Hook
+  const [resetSuccess, setResetSuccess] = useState(false);
+  const [tokenValid, setTokenValid] = useState(true);
 
   useEffect(() => {
     // Token validation can be done on mount if needed
     if (!token) {
-      setTokenValid(false)
+      setTokenValid(false);
       toast.error("Invalid or expired token", {
-        description: "This password reset link is invalid or has expired."
-      })
+        description: "This password reset link is invalid or has expired.",
+      });
     }
-  }, [token])
+  }, [token]);
 
   const handleSubmit = async (e: React.FormEvent) => {
-    e.preventDefault()
+    e.preventDefault();
 
     if (password !== confirmPassword) {
       toast.error("Passwords don't match", {
-        description: "Please make sure both password fields match."
-      })
-      return
+        description: "Please make sure both password fields match.",
+      });
+      return;
     }
 
     if (password.length < 8) {
       toast.error("Password too short", {
-        description: "Password must be at least 8 characters long."
-      })
-      return
+        description: "Password must be at least 8 characters long.",
+      });
+      return;
     }
 
     try {
-      await resetPassword({ token, newPassword: password })  // ✅ Simple hook call
+      await resetPassword({ token, newPassword: password }); // ✅ Simple hook call
 
-      setResetSuccess(true)
+      setResetSuccess(true);
       toast.success("Password reset successful!", {
-        description: "Your password has been updated. Redirecting to sign in..."
-      })
+        description:
+          "Your password has been updated. Redirecting to sign in...",
+      });
 
       setTimeout(() => {
-        window.location.href = "/account/signin"
-      }, 2000)
+        window.location.href = "/account/signin";
+      }, 2000);
     } catch (err: any) {
-      let title = "Unable to reset password"
-      let description = err.message || "Please try again."
+      let title = "Unable to reset password";
+      let description = err.message || "Please try again.";
 
       // ✅ Typed error handling
       if (err._tag === "InvalidToken" || err._tag === "TokenExpired") {
-        title = "Invalid or expired token"
-        description = "This password reset link is invalid or has expired. Please request a new one."
-        setTokenValid(false)
+        title = "Invalid or expired token";
+        description =
+          "This password reset link is invalid or has expired. Please request a new one.";
+        setTokenValid(false);
       } else if (err._tag === "WeakPassword") {
-        title = "Invalid password"
-        description = "Password must be at least 8 characters with letters and numbers."
+        title = "Invalid password";
+        description =
+          "Password must be at least 8 characters with letters and numbers.";
       } else if (err._tag === "NetworkError") {
-        title = "Network error"
-        description = "Unable to connect to the server."
+        title = "Network error";
+        description = "Unable to connect to the server.";
       }
 
-      toast.error(title, { description })
+      toast.error(title, { description });
     }
-  }
+  };
 
   // ... render logic (similar to BEFORE)
 }
@@ -1528,6 +1595,7 @@ export function ResetPasswordForm({ token }: ResetPasswordFormProps) {
 ### Phase 1: Pre-Migration Setup (Steps 1-12)
 
 **Step 1: Audit Current Implementation**
+
 ```bash
 cd /Users/toc/Server/ONE/frontend
 
@@ -1541,6 +1609,7 @@ grep -r "import.*convex" src/components/auth/
 ```
 
 **Expected Output:**
+
 ```
 163 SimpleSignInForm.tsx
 157 SimpleSignUpForm.tsx
@@ -1552,6 +1621,7 @@ grep -r "import.*convex" src/components/auth/
 ```
 
 **Step 2: Run Baseline Tests**
+
 ```bash
 # Save baseline results
 bun test test/auth > baseline-auth-tests.txt 2>&1
@@ -1563,12 +1633,14 @@ grep -c "PASS" baseline-auth-tests.txt
 **Expected:** 50+ passing tests
 
 **Step 3: Create Migration Branch**
+
 ```bash
 git checkout -b feature/auth-migration-2-5
 git push -u origin feature/auth-migration-2-5
 ```
 
 **Step 4: Create Rollback Tags**
+
 ```bash
 # Tag before any changes
 git tag rollback-pre-auth-migration
@@ -1576,6 +1648,7 @@ git push --tags
 ```
 
 **Step 5: Verify Dependencies**
+
 ```bash
 # Check DataProvider exists
 test -f src/providers/DataProvider.ts || echo "ERROR: DataProvider missing"
@@ -1596,6 +1669,7 @@ See full hook implementations in Appendix A.
 ### Phase 2: SimpleSignInForm Migration (Steps 13-17)
 
 **Step 13: Backup Current File**
+
 ```bash
 cp src/components/auth/SimpleSignInForm.tsx src/components/auth/SimpleSignInForm.tsx.backup
 ```
@@ -1605,6 +1679,7 @@ cp src/components/auth/SimpleSignInForm.tsx src/components/auth/SimpleSignInForm
 Apply BEFORE → AFTER changes shown in section 2.1 above.
 
 **Step 15: Test SimpleSignInForm**
+
 ```bash
 # Run login tests only
 bun test test/auth/email-password.test.ts -t "login"
@@ -1621,12 +1696,14 @@ bun test test/auth/email-password.test.ts -t "login"
 **Quality Gate:** ALL login tests must pass. If >5 tests fail → ROLLBACK.
 
 **Step 16: Compare Results**
+
 ```bash
 bun test test/auth > step16-results.txt 2>&1
 diff baseline-auth-tests.txt step16-results.txt
 ```
 
 **Step 17: Commit SimpleSignInForm**
+
 ```bash
 git add src/components/auth/SimpleSignInForm.tsx
 git add src/providers/hooks/auth.ts
@@ -1650,6 +1727,7 @@ git push --tags
 ### Phase 3: SimpleSignUpForm Migration (Steps 18-22)
 
 **Step 18: Backup**
+
 ```bash
 cp src/components/auth/SimpleSignUpForm.tsx src/components/auth/SimpleSignUpForm.tsx.backup
 ```
@@ -1659,6 +1737,7 @@ cp src/components/auth/SimpleSignUpForm.tsx src/components/auth/SimpleSignUpForm
 Apply BEFORE → AFTER changes from section 2.2.
 
 **Step 20: Test**
+
 ```bash
 bun test test/auth/email-password.test.ts -t "signup"
 bun test test/auth
@@ -1672,12 +1751,14 @@ bun test test/auth
 ```
 
 **Step 21: Compare**
+
 ```bash
 bun test test/auth > step21-results.txt 2>&1
 diff baseline-auth-tests.txt step21-results.txt
 ```
 
 **Step 22: Commit**
+
 ```bash
 git add src/components/auth/SimpleSignUpForm.tsx
 git commit -m "feat(auth): migrate SimpleSignUpForm to DataProvider
@@ -1730,6 +1811,7 @@ Migrate both ForgotPasswordForm and ResetPasswordForm.
 ### Phase 8: Final Validation (Steps 46-60)
 
 **Step 46: Remove Direct Imports**
+
 ```bash
 # Find remaining direct imports
 grep -r "authClient" src/components/auth/
@@ -1740,6 +1822,7 @@ grep -r "api\.auth" src/components/auth/
 ```
 
 **Step 47: TypeScript Check**
+
 ```bash
 bunx astro check
 
@@ -1747,6 +1830,7 @@ bunx astro check
 ```
 
 **Step 48: Full Test Suite**
+
 ```bash
 bun test test/auth > final-auth-tests.txt 2>&1
 
@@ -1760,6 +1844,7 @@ grep -c "PASS" final-auth-tests.txt
 **Expected:** 50+ tests passing, same as baseline.
 
 **Step 49: Performance Testing**
+
 ```bash
 # Measure login time
 time curl -X POST http://localhost:4321/api/auth/signin \
@@ -1837,6 +1922,7 @@ bun test test/auth  # Full suite
 ### Critical Test Cases (50+)
 
 **Email/Password (20 tests):**
+
 - ✅ Login with valid credentials
 - ✅ Login with invalid password
 - ✅ Login with non-existent email
@@ -1847,12 +1933,14 @@ bun test test/auth  # Full suite
 - ✅ Logout functionality
 
 **OAuth (10 tests):**
+
 - ✅ GitHub OAuth flow
 - ✅ Google OAuth flow
 - ✅ Account linking
 - ✅ OAuth error handling
 
 **Magic Links (8 tests):**
+
 - ✅ Request magic link
 - ✅ Authenticate with valid token
 - ✅ Expired token (>15 min)
@@ -1860,17 +1948,20 @@ bun test test/auth  # Full suite
 - ✅ Invalid token
 
 **Password Reset (8 tests):**
+
 - ✅ Request reset
 - ✅ Reset with valid token
 - ✅ Expired token (>1 hour)
 - ✅ New password works
 
 **Email Verification (4 tests):**
+
 - ✅ Verify with valid token
 - ✅ Expired token
 - ✅ Already verified
 
 **2FA (8 tests):**
+
 - ✅ Enable 2FA
 - ✅ QR code generation
 - ✅ Backup codes
@@ -1908,6 +1999,7 @@ bun test test/auth  # Full suite
 ✅ **Rollback plan tested**
 
 **Sign-Off Requirements:**
+
 1. Frontend Specialist approval
 2. Quality Agent validation
 3. All tests green
@@ -1959,7 +2051,10 @@ export function use2FA() {
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<Error | null>(null);
 
-  const getStatus = async (): Promise<{ enabled: boolean; hasSetup: boolean }> => {
+  const getStatus = async (): Promise<{
+    enabled: boolean;
+    hasSetup: boolean;
+  }> => {
     try {
       return await provider.auth.get2FAStatus();
     } catch (err) {
@@ -1967,7 +2062,10 @@ export function use2FA() {
     }
   };
 
-  const setup = async (): Promise<{ secret: string; backupCodes: string[] }> => {
+  const setup = async (): Promise<{
+    secret: string;
+    backupCodes: string[];
+  }> => {
     setLoading(true);
     setError(null);
 

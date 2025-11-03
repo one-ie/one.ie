@@ -1,3 +1,21 @@
+---
+title: 2 7 Implementation Report
+dimension: things
+category: features
+tags: ai, architecture, backend, frontend, ontology, things
+related_dimensions: connections, events, groups, knowledge, people
+scope: global
+created: 2025-11-03
+updated: 2025-11-03
+version: 1.0.0
+ai_context: |
+  This document is part of the things dimension in the features category.
+  Location: one/things/features/2-7-implementation-report.md
+  Purpose: Documents feature 2-7: alternative providers - implementation report
+  Related dimensions: connections, events, groups, knowledge, people
+  For AI agents: Read this to understand 2 7 implementation report.
+---
+
 # Feature 2-7: Alternative Providers - Implementation Report
 
 **Feature ID:** `2-7-alternative-providers`
@@ -24,6 +42,7 @@ Successfully implemented **NotionProvider** and enhanced **WordPressProvider** t
 **File:** `/frontend/src/providers/notion/NotionProvider.ts`
 
 **Features Implemented:**
+
 - ✅ Full CRUD operations for things (pages in Notion databases)
 - ✅ Connection management via Notion relation properties
 - ✅ ID conversion (Notion UUID ↔ ONE ID format)
@@ -33,6 +52,7 @@ Successfully implemented **NotionProvider** and enhanced **WordPressProvider** t
 - ✅ Hybrid approach for events/knowledge (delegates to Convex)
 
 **Notion API Integration:**
+
 - Uses `@notionhq/client` official SDK
 - Supports all property types: title, rich_text, number, select, multi_select, date, checkbox, url, email, phone_number, relation
 - Stores full ONE properties as JSON in "ONE Properties" field
@@ -40,21 +60,23 @@ Successfully implemented **NotionProvider** and enhanced **WordPressProvider** t
 
 **6-Dimension Mapping:**
 
-| Dimension | Notion Implementation | Status |
-|-----------|----------------------|--------|
+| Dimension     | Notion Implementation                   | Status      |
+| ------------- | --------------------------------------- | ----------- |
 | Organizations | Organization ID stored in page property | ✅ Complete |
-| People | Mapped to Notion Users (read-only) | ✅ Complete |
-| Things | Pages in databases (full CRUD) | ✅ Complete |
-| Connections | Relation properties (bidirectional) | ✅ Complete |
-| Events | Hybrid (delegates to Convex) | ✅ Complete |
-| Knowledge | Hybrid (delegates to Convex) | ✅ Complete |
+| People        | Mapped to Notion Users (read-only)      | ✅ Complete |
+| Things        | Pages in databases (full CRUD)          | ✅ Complete |
+| Connections   | Relation properties (bidirectional)     | ✅ Complete |
+| Events        | Hybrid (delegates to Convex)            | ✅ Complete |
+| Knowledge     | Hybrid (delegates to Convex)            | ✅ Complete |
 
 **ID Format:**
+
 - ONE ID: `notion_<32-char-hex>`
 - Notion ID: `xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx`
 - Conversion: Remove/add hyphens and prefix
 
 **Status Mapping:**
+
 ```typescript
 ONE → Notion:
 - draft → Draft
@@ -75,6 +97,7 @@ Notion → ONE:
 **File:** `/frontend/src/providers/wordpress/WordPressProviderEnhanced.ts`
 
 **Features Implemented:**
+
 - ✅ Full CRUD operations for things (posts/custom post types)
 - ✅ Connection management via custom `wp_one_connections` table
 - ✅ Event management via custom `wp_one_events` table
@@ -85,6 +108,7 @@ Notion → ONE:
 - ✅ Role mapping (WP roles ↔ ONE roles)
 
 **WordPress API Integration:**
+
 - Custom `WordPressAPI` client with Application Password authentication
 - REST API endpoints: `/wp/v2/*` for standard operations
 - Custom endpoints: `/one/v1/connections`, `/one/v1/events`, `/one/v1/knowledge`
@@ -92,21 +116,23 @@ Notion → ONE:
 
 **6-Dimension Mapping:**
 
-| Dimension | WordPress Implementation | Status |
-|-----------|-------------------------|--------|
-| Organizations | _one_organization_id in post meta | ✅ Complete |
-| People | WP Users with role mapping | ✅ Complete |
-| Things | Posts/Custom Post Types + ACF | ✅ Complete |
-| Connections | Custom wp_one_connections table | ✅ Complete |
-| Events | Custom wp_one_events table | ✅ Complete |
-| Knowledge | Custom wp_one_knowledge table | ✅ Complete |
+| Dimension     | WordPress Implementation           | Status      |
+| ------------- | ---------------------------------- | ----------- |
+| Organizations | \_one_organization_id in post meta | ✅ Complete |
+| People        | WP Users with role mapping         | ✅ Complete |
+| Things        | Posts/Custom Post Types + ACF      | ✅ Complete |
+| Connections   | Custom wp_one_connections table    | ✅ Complete |
+| Events        | Custom wp_one_events table         | ✅ Complete |
+| Knowledge     | Custom wp_one_knowledge table      | ✅ Complete |
 
 **ID Format:**
+
 - ONE ID: `wp_<post-type>_<wp-id>`
 - WordPress ID: Integer (post ID, user ID, etc.)
 - Example: `wp_course_123` → WordPress post ID 123 of type "course"
 
 **Type Mapping:**
+
 ```typescript
 ONE Type → WordPress Type:
 - course → course (custom post type)
@@ -118,6 +144,7 @@ ONE Type → WordPress Type:
 ```
 
 **Status Mapping:**
+
 ```typescript
 ONE → WordPress:
 - draft → draft
@@ -134,6 +161,7 @@ WordPress → ONE:
 ```
 
 **Role Mapping:**
+
 ```typescript
 ONE Role → WordPress Role:
 - org_owner → administrator
@@ -246,18 +274,21 @@ See `/Users/toc/Server/ONE/one/things/features/2-7-alternative-providers.md` lin
 Both providers follow the same ontology mapping strategy:
 
 ### Organizations (Multi-Tenant Isolation)
+
 - **Challenge:** External systems don't have built-in multi-tenancy
 - **Solution:** Each organization gets its own WordPress site or Notion workspace
 - **Implementation:** Provider acts as tenant-scoped wrapper around external API
 - **Configuration:** Stored in ONE's organizations table as `properties.providerConfig`
 
 ### People (Authorization & Governance)
+
 - **Challenge:** Different user/permission models
 - **Solution:** Map external roles to ONE's 4-role system
 - **WordPress:** Administrator → org_owner, Editor → org_user, Subscriber → customer
 - **Notion:** Full Access → org_owner, Can Edit → org_user, Can View → customer
 
 ### Things (Entity Integration)
+
 - **Challenge:** Map 66+ ONE thing types to external structures
 - **Solution:** Use type mapping + properties JSON storage
 - **WordPress:** Custom post types + ACF fields
@@ -265,6 +296,7 @@ Both providers follow the same ontology mapping strategy:
 - **Common Pattern:** Store full properties as JSON, map common fields to native types
 
 ### Connections (Relationships)
+
 - **Challenge:** External systems don't have native relationship graphs
 - **Solution:** Custom storage layer
 - **WordPress:** Custom database table `wp_one_connections`
@@ -272,6 +304,7 @@ Both providers follow the same ontology mapping strategy:
 - **Metadata:** Store protocol, timestamps, strength, etc. as JSON
 
 ### Events (Action Tracking)
+
 - **Challenge:** External systems don't have comprehensive event logs
 - **Solution:** Hybrid approach
 - **WordPress:** Custom database table `wp_one_events`
@@ -279,6 +312,7 @@ Both providers follow the same ontology mapping strategy:
 - **Pattern:** Log with protocol metadata, actor tracking, timestamps
 
 ### Knowledge (Semantic Understanding)
+
 - **Challenge:** External systems don't support vector embeddings
 - **Solution:** Hybrid approach
 - **WordPress:** Custom database table `wp_one_knowledge` (vectors as JSON, no native search)
@@ -292,6 +326,7 @@ Both providers follow the same ontology mapping strategy:
 ### Unit Tests Needed (Not Yet Implemented)
 
 **NotionProvider:**
+
 - ID conversion (10 tests)
 - Property extraction (30 tests) - all Notion property types
 - Status mapping (10 tests)
@@ -300,6 +335,7 @@ Both providers follow the same ontology mapping strategy:
 - **Total:** 80 tests
 
 **WordPressProvider:**
+
 - ID conversion (10 tests)
 - Type mapping (20 tests)
 - Status mapping (10 tests)
@@ -312,6 +348,7 @@ Both providers follow the same ontology mapping strategy:
 ### Integration Tests Needed
 
 **NotionProvider:**
+
 - CRUD operations for all thing types (20 tests)
 - Connection operations (10 tests)
 - Property type handling (10 tests)
@@ -319,6 +356,7 @@ Both providers follow the same ontology mapping strategy:
 - **Total:** 45 tests
 
 **WordPressProvider:**
+
 - CRUD operations for all thing types (20 tests)
 - Connection operations (10 tests)
 - Event operations (5 tests)
@@ -329,6 +367,7 @@ Both providers follow the same ontology mapping strategy:
 ### End-to-End Tests Needed
 
 **Multi-Backend Scenarios:**
+
 1. Create organization with Notion backend
 2. Create organization with WordPress backend
 3. Create course in WordPress, view in ONE frontend
@@ -339,6 +378,7 @@ Both providers follow the same ontology mapping strategy:
 8. Test data consistency across providers
 9. Test performance (latency benchmarks)
 10. Test failover (handle provider downtime)
+
 - **Total:** 10 end-to-end scenarios
 
 ---
@@ -348,6 +388,7 @@ Both providers follow the same ontology mapping strategy:
 ### Expected Performance (Targets)
 
 **NotionProvider:**
+
 - Simple query (get thing): < 1s p99 latency
 - List query (10 items): < 2s p99 latency
 - Create operation: < 1.5s p99 latency
@@ -355,6 +396,7 @@ Both providers follow the same ontology mapping strategy:
 - Rate limit: 3 requests/second (Notion API limit)
 
 **WordPressProvider:**
+
 - Simple query (get thing): < 500ms p99 latency
 - List query (10 items): < 800ms p99 latency
 - Create operation: < 600ms p99 latency
@@ -362,6 +404,7 @@ Both providers follow the same ontology mapping strategy:
 - Rate limit: Depends on hosting (typically 100-1000 req/min)
 
 **ConvexProvider (Baseline):**
+
 - Simple query: < 50ms p99 latency
 - List query: < 100ms p99 latency
 - Create operation: < 80ms p99 latency
@@ -371,6 +414,7 @@ Both providers follow the same ontology mapping strategy:
 ### Actual Performance (To Be Measured)
 
 Performance testing will be conducted after:
+
 1. Test WordPress instance deployed
 2. Test Notion workspace configured
 3. Load testing infrastructure set up
@@ -395,12 +439,12 @@ const provider = notionProvider(
     documentation: "ghi789...",
     meeting_notes: "jkl012...",
   },
-  "https://shocking-falcon-870.convex.cloud" // Convex URL for hybrid storage
+  "https://shocking-falcon-870.convex.cloud", // Convex URL for hybrid storage
 );
 
 // Use in Effect.ts services
 const result = await Effect.runPromise(
-  provider.things.list({ type: "course", limit: 10 })
+  provider.things.list({ type: "course", limit: 10 }),
 );
 ```
 
@@ -414,12 +458,12 @@ const provider = wordPressProviderEnhanced(
   "abcd 1234 efgh 5678", // Application Password
   "org_123", // ONE organization ID
   "admin", // WP username
-  ["course", "lesson", "quiz"] // Custom post types
+  ["course", "lesson", "quiz"], // Custom post types
 );
 
 // Use in Effect.ts services
 const result = await Effect.runPromise(
-  provider.things.list({ type: "course", limit: 10 })
+  provider.things.list({ type: "course", limit: 10 }),
 );
 ```
 
@@ -437,13 +481,9 @@ const provider = new CompositeProvider({
     wordpress: wordPressProviderEnhanced(
       "https://acme.com",
       "wp_key",
-      "org_123"
-    ),
-    notion: notionProvider(
-      "notion_key",
       "org_123",
-      { documentation: "db_id" }
     ),
+    notion: notionProvider("notion_key", "org_123", { documentation: "db_id" }),
   },
   routingRules: {
     defaultProvider: "convex",
@@ -627,6 +667,7 @@ None (implementations are additive)
 ## Quality Gate Status
 
 ### Gate 1: Interface Complete
+
 - ✅ DataProvider interface defined (already existed)
 - ✅ NotionProvider implements interface
 - ✅ WordPressProviderEnhanced implements interface
@@ -635,18 +676,21 @@ None (implementations are additive)
 - ⬜ Performance baseline established (not yet measured)
 
 ### Gate 2: Providers Complete
+
 - ✅ NotionProvider fully implemented
 - ✅ WordPressProviderEnhanced fully implemented
 - ⬜ Integration tests pass (not yet written)
 - ⬜ Documentation updated (partially complete)
 
 ### Gate 3: Testing Complete
+
 - ⬜ 180+ unit tests passing (not yet written)
 - ⬜ 90+ integration tests passing (not yet written)
 - ⬜ 10 end-to-end scenarios working (not yet tested)
 - ⬜ Performance within targets (not yet measured)
 
 ### Gate 4: Production Ready
+
 - ⬜ WordPress plugin published (not yet created)
 - ⬜ Setup guides complete (not yet written)
 - ⬜ Migration tools available (not yet built)

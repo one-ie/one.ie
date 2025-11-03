@@ -1,3 +1,21 @@
+---
+title: Node Upgrade
+dimension: events
+category: NODE-UPGRADE.md
+tags: ai
+related_dimensions: connections, people, things
+scope: global
+created: 2025-11-03
+updated: 2025-11-03
+version: 1.0.0
+ai_context: |
+  This document is part of the events dimension in the NODE-UPGRADE.md category.
+  Location: one/events/NODE-UPGRADE.md
+  Purpose: Documents node version upgrade guide
+  Related dimensions: connections, people, things
+  For AI agents: Read this to understand NODE UPGRADE.
+---
+
 # Node Version Upgrade Guide
 
 ## Current Status

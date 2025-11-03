@@ -1,3 +1,21 @@
+---
+title: Hono
+dimension: knowledge
+category: hono.md
+tags: architecture, backend
+related_dimensions: events, groups, people
+scope: global
+created: 2025-11-03
+updated: 2025-11-03
+version: 1.0.0
+ai_context: |
+  This document is part of the knowledge dimension in the hono.md category.
+  Location: one/knowledge/hono.md
+  Purpose: Documents hono.md - api backend architecture
+  Related dimensions: events, groups, people
+  For AI agents: Read this to understand hono.
+---
+
 # Hono.md - API Backend Architecture
 
 ## Overview

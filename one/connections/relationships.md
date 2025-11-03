@@ -1,3 +1,21 @@
+---
+title: Relationships
+dimension: connections
+category: relationships.md
+tags: ai, ontology
+related_dimensions: events, people, things
+scope: global
+created: 2025-11-03
+updated: 2025-11-03
+version: 1.0.0
+ai_context: |
+  This document is part of the connections dimension in the relationships.md category.
+  Location: one/connections/relationships.md
+  Purpose: Documents relationships
+  Related dimensions: events, people, things
+  For AI agents: Read this to understand relationships.
+---
+
 # Relationships
 
 This folder contains documentation about specific **connection types** in the ONE Platform ontology.

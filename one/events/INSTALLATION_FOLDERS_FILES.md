@@ -1,3 +1,21 @@
+---
+title: Installation_Folders_Files
+dimension: events
+category: INSTALLATION_FOLDERS_FILES.md
+tags: customization, frontend, installation
+related_dimensions: groups, people
+scope: global
+created: 2025-11-03
+updated: 2025-11-03
+version: 1.0.0
+ai_context: |
+  This document is part of the events dimension in the INSTALLATION_FOLDERS_FILES.md category.
+  Location: one/events/INSTALLATION_FOLDERS_FILES.md
+  Purpose: Documents installation folder multi-tenancy - file locations
+  Related dimensions: groups, people
+  For AI agents: Read this to understand INSTALLATION_FOLDERS_FILES.
+---
+
 # Installation Folder Multi-Tenancy - File Locations
 
 **Quick reference for all files created/modified during frontend implementation.**

@@ -1,3 +1,21 @@
+---
+title: Cascade
+dimension: things
+category: products
+tags: agent, ai, ontology
+related_dimensions: connections, events, groups, people
+scope: global
+created: 2025-11-03
+updated: 2025-11-03
+version: 1.0.0
+ai_context: |
+  This document is part of the things dimension in the products category.
+  Location: one/things/products/cascade.md
+  Purpose: Documents one cascade
+  Related dimensions: connections, events, groups, people
+  For AI agents: Read this to understand cascade.
+---
+
 # ONE Cascade
 
 **Plain English to Production Code via Agent Orchestration**
@@ -206,14 +224,17 @@ Generated TypeScript:
 AI coding tools face a fundamental challenge: they need relevant code to make intelligent suggestions, but can't load everything. Most tools use these approaches:
 
 **File-based loading:** Load current file + imports + similar files
+
 - Problem: Often loads too much (imports tree explodes) or too little (misses patterns)
 - Result: Slow, expensive, hit-or-miss relevance
 
 **Semantic search:** Embed codebase, search for relevant chunks
+
 - Problem: Requires pre-indexing, searches are fuzzy, results may not be what you need
 - Result: Better than file-based, but still generic and unfocused
 
 **Manual selection:** Developer chooses which files to include
+
 - Problem: Developer must know what's relevant, breaks flow
 - Result: Accurate but requires constant attention
 
@@ -224,6 +245,7 @@ The 6-dimension ontology is fundamentally different—it's not searching or gues
 **When you write:** `CREATE course WITH lessons`
 
 **The ontology knows deterministically:**
+
 1. You're creating a `course` (entity type #12)
 2. A course has `lessons` (related via `part_of` connection)
 3. This requires: course schema, lesson schema, part_of connection definition
@@ -232,6 +254,7 @@ The 6-dimension ontology is fundamentally different—it's not searching or gues
 **No search required. No guessing. Just type resolution.**
 
 **Stage 1: Ideas (Minimal Context)**
+
 ```
 User writes: CREATE course WITH lessons
              CONNECT creator to course as owner
@@ -247,6 +270,7 @@ Result: ~200 tokens instead of 150,000
 ```
 
 **Stage 2: Plans (Targeted Context)**
+
 ```
 Director sees: This plan uses course, lesson, creator, owns
 
@@ -260,6 +284,7 @@ Result: ~1,500 tokens (99% reduction from loading everything)
 ```
 
 **Stage 3: Features (Specialist Context)**
+
 ```
 Backend Specialist assigned: CREATE course WITH lessons
 
@@ -274,6 +299,7 @@ Result: ~1,500 tokens per agent (agents work in parallel)
 ```
 
 **Stage 4: Tests (Validation Context)**
+
 ```
 Quality Agent sees: Feature creates course with lessons
 
@@ -288,6 +314,7 @@ Result: ~2,000 tokens focused on quality
 ```
 
 **Stage 5: Design (UI Context)**
+
 ```
 Design Agent sees: User needs to CREATE and VIEW courses
 
@@ -302,6 +329,7 @@ Result: ~2,000 tokens focused on UI/UX
 ```
 
 **Stage 6: Implementation (Complete Feature Context)**
+
 ```
 Specialist implements: Course creation feature
 
@@ -319,6 +347,7 @@ Result: ~2,500 tokens (complete but focused)
 ### Why Ontology-as-Type-System is More Elegant
 
 **Other AI coding tools:**
+
 ```
 Developer: "I need to implement course creation"
 
@@ -331,6 +360,7 @@ Result: Generic code, might be right, might not
 ```
 
 **CASCADE with ontology:**
+
 ```
 Creator: "CREATE course WITH lessons"
 
@@ -344,12 +374,12 @@ Result: Precise code, guaranteed correct structure
 
 **The difference:**
 
-| Approach | Method | Accuracy | Speed | Context Size |
-|----------|--------|----------|-------|--------------|
-| File-based | Import tree traversal | 40-60% relevant | Slow (load many files) | 50-150k tokens |
-| Semantic search | Embedding similarity | 60-80% relevant | Medium (search + load) | 20-50k tokens |
-| Manual selection | Developer chooses | 90%+ relevant | Fast but manual | 10-30k tokens |
-| **CASCADE Ontology** | **Type resolution** | **100% relevant** | **Instant (no search)** | **1-3k tokens** |
+| Approach             | Method                | Accuracy          | Speed                   | Context Size    |
+| -------------------- | --------------------- | ----------------- | ----------------------- | --------------- |
+| File-based           | Import tree traversal | 40-60% relevant   | Slow (load many files)  | 50-150k tokens  |
+| Semantic search      | Embedding similarity  | 60-80% relevant   | Medium (search + load)  | 20-50k tokens   |
+| Manual selection     | Developer chooses     | 90%+ relevant     | Fast but manual         | 10-30k tokens   |
+| **CASCADE Ontology** | **Type resolution**   | **100% relevant** | **Instant (no search)** | **1-3k tokens** |
 
 **Why ontology wins:**
 
@@ -364,28 +394,32 @@ Result: Precise code, guaranteed correct structure
 **1. Types are stable** - The ontology types rarely change, so they're perfect indexes
 
 **2. Commands map to types** - Every user command references specific types:
-   - `CREATE course` → load course type definition
-   - `CONNECT student to course` → load student + course + enrolled_in types
-   - `GET lessons WHERE part_of course` → load lesson + course + part_of types
+
+- `CREATE course` → load course type definition
+- `CONNECT student to course` → load student + course + enrolled_in types
+- `GET lessons WHERE part_of course` → load lesson + course + part_of types
 
 **3. Patterns are reusable** - Implementation patterns are tagged by type:
-   - "How to CREATE entity" pattern
-   - "How to CONNECT two entities" pattern
-   - "How to query relationships" pattern
+
+- "How to CREATE entity" pattern
+- "How to CONNECT two entities" pattern
+- "How to query relationships" pattern
 
 **4. Context compounds progressively** - Each stage adds only what's new:
-   - Stage 1: Type names only
-   - Stage 2: Type definitions for plan
-   - Stage 3: Patterns for feature types
-   - Stage 4: Validation for feature types
-   - Stage 5: Design for feature types
-   - Stage 6: Everything for feature, nothing for other features
+
+- Stage 1: Type names only
+- Stage 2: Type definitions for plan
+- Stage 3: Patterns for feature types
+- Stage 4: Validation for feature types
+- Stage 5: Design for feature types
+- Stage 6: Everything for feature, nothing for other features
 
 ### Real-World Example: How Context Differs
 
 **Scenario:** Implement student enrollment in a course
 
 **Other AI tools approach:**
+
 ```
 1. Search codebase for "enroll" → 23 files
 2. Search codebase for "student" → 41 files
@@ -398,6 +432,7 @@ Result: Precise code, guaranteed correct structure
 ```
 
 **CASCADE ontology approach:**
+
 ```
 1. Parse command: CONNECT student TO course AS enrolled_in
 2. Ontology lookup:
@@ -413,8 +448,8 @@ Result: Precise code, guaranteed correct structure
 
 **Result comparison:**
 
-Other tools: "Here's code that *might* work, based on similar patterns in your codebase"
-CASCADE: "Here's code that *will* work, based on the exact types you specified"
+Other tools: "Here's code that _might_ work, based on similar patterns in your codebase"
+CASCADE: "Here's code that _will_ work, based on the exact types you specified"
 
 ### The Elegant Insight
 
@@ -542,6 +577,7 @@ Task(agent: backend-specialist, context: "FOR EACH video calculate duration", to
 ```
 
 **Benefits:**
+
 - Automatic parallelization from DSL structure
 - No manual dependency management
 - Agents coordinate via DSL semantics
@@ -618,6 +654,7 @@ Director watches DSL:
 ```
 
 **Benefits:**
+
 - Agents coordinate using same DSL users write
 - Events table IS the message bus
 - Complete audit trail in DSL semantics
@@ -686,10 +723,10 @@ RECORD course created BY creator WITH lesson count
 **Example:**
 const courseId = await db.insert('entities', courseData)
 await db.insert('events', {
-  type: 'course_created',
-  actorId: creatorId,
-  targetId: courseId,
-  metadata: { lessonCount: lessons.length }
+type: 'course_created',
+actorId: creatorId,
+targetId: courseId,
+metadata: { lessonCount: lessons.length }
 })
 ```
 
@@ -1092,153 +1129,153 @@ Decision: Import button (satisfies "GET YouTube videos" DSL)
 export const importYouTubeChannel = (params: ImportParams) =>
   Effect.gen(function* () {
     // Validate creator (DSL: CHECK creator exists)
-    const creator = yield* CreatorService.findById(params.creatorId)
+    const creator = yield* CreatorService.findById(params.creatorId);
     if (!creator) {
       return yield* Effect.fail({
-        tag: 'CreatorNotFound',
-        message: 'Creator account not found'
-      })
+        tag: "CreatorNotFound",
+        message: "Creator account not found",
+      });
     }
 
     // Get YouTube videos (DSL: GET my YouTube channel videos)
-    const videos = yield* YouTubeService.getChannelVideos(params.channelUrl)
+    const videos = yield* YouTubeService.getChannelVideos(params.channelUrl);
 
     if (videos.length < 3) {
       return yield* Effect.fail({
-        tag: 'InsufficientVideos',
-        message: 'Need at least 3 videos to create course'
-      })
+        tag: "InsufficientVideos",
+        message: "Need at least 3 videos to create course",
+      });
     }
 
     // Process videos in parallel (DSL: FOR EACH video)
     const lessons = yield* Effect.all(
-      videos.map(video =>
+      videos.map((video) =>
         Effect.gen(function* () {
           // Generate transcript (DSL: CALL OpenAI)
-          const transcript = yield* OpenAIService.transcribe(video.url)
+          const transcript = yield* OpenAIService.transcribe(video.url);
 
           // Create lesson (DSL: CREATE lesson)
-          const lessonId = yield* db.insert('entities', {
-            type: 'lesson',
+          const lessonId = yield* db.insert("entities", {
+            type: "lesson",
             properties: {
               title: video.title,
               videoUrl: video.url,
               transcript,
-              duration: video.duration
-            }
-          })
+              duration: video.duration,
+            },
+          });
 
           // Record lesson created (DSL: RECORD lesson created)
           yield* EventService.record({
-            type: 'lesson_created',
+            type: "lesson_created",
             actorId: params.creatorId,
             targetId: lessonId,
-            metadata: { videoId: video.id }
-          })
+            metadata: { videoId: video.id },
+          });
 
-          return lessonId
-        })
+          return lessonId;
+        }),
       ),
-      { concurrency: 5 } // Parallel processing
-    )
+      { concurrency: 5 }, // Parallel processing
+    );
 
     // Create course (DSL: CREATE course)
-    const courseId = yield* db.insert('entities', {
-      type: 'course',
+    const courseId = yield* db.insert("entities", {
+      type: "course",
       properties: {
-        title: 'YouTube Masterclass',
+        title: "YouTube Masterclass",
         price: 99,
-        lessonCount: lessons.length
-      }
-    })
+        lessonCount: lessons.length,
+      },
+    });
 
     // Connect lessons to course (DSL: CONNECT lessons part_of course)
     yield* Effect.all(
-      lessons.map(lessonId =>
-        db.insert('connections', {
-          type: 'part_of',
+      lessons.map((lessonId) =>
+        db.insert("connections", {
+          type: "part_of",
           fromId: lessonId,
-          toId: courseId
-        })
-      )
-    )
+          toId: courseId,
+        }),
+      ),
+    );
 
     // Connect creator to course (DSL: CONNECT creator to course as owner)
-    yield* db.insert('connections', {
-      type: 'owns',
+    yield* db.insert("connections", {
+      type: "owns",
       fromId: params.creatorId,
-      toId: courseId
-    })
+      toId: courseId,
+    });
 
     // Record course created (DSL: RECORD course created)
     yield* EventService.record({
-      type: 'course_created',
+      type: "course_created",
       actorId: params.creatorId,
       targetId: courseId,
-      metadata: { lessonCount: lessons.length }
-    })
+      metadata: { lessonCount: lessons.length },
+    });
 
-    return { courseId, lessonCount: lessons.length }
-  })
+    return { courseId, lessonCount: lessons.length };
+  });
 
 // From DSL: AI chat with video transcripts
 export const chatWithCourse = (params: ChatParams) =>
   Effect.gen(function* () {
     // Get course lessons (DSL: GET course lessons WHERE student enrolled)
     const enrollment = yield* db
-      .query('connections')
-      .withIndex('by_type', q => q.eq('type', 'enrolled_in'))
-      .filter(q =>
+      .query("connections")
+      .withIndex("by_type", (q) => q.eq("type", "enrolled_in"))
+      .filter((q) =>
         q.and(
-          q.eq(q.field('fromId'), params.studentId),
-          q.eq(q.field('toId'), params.courseId)
-        )
+          q.eq(q.field("fromId"), params.studentId),
+          q.eq(q.field("toId"), params.courseId),
+        ),
       )
-      .first()
+      .first();
 
     if (!enrollment) {
       return yield* Effect.fail({
-        tag: 'NotEnrolled',
-        message: 'Student not enrolled in course'
-      })
+        tag: "NotEnrolled",
+        message: "Student not enrolled in course",
+      });
     }
 
     const lessons = yield* db
-      .query('connections')
-      .withIndex('by_type', q => q.eq('type', 'part_of'))
-      .filter(q => q.eq(q.field('toId'), params.courseId))
-      .collect()
+      .query("connections")
+      .withIndex("by_type", (q) => q.eq("type", "part_of"))
+      .filter((q) => q.eq(q.field("toId"), params.courseId))
+      .collect();
 
     // Get transcripts from lessons
     const transcripts = yield* Effect.all(
-      lessons.map(lesson =>
-        db.get(lesson.fromId).then(l => l.properties.transcript)
-      )
-    )
+      lessons.map((lesson) =>
+        db.get(lesson.fromId).then((l) => l.properties.transcript),
+      ),
+    );
 
     // Search relevant transcripts (DSL: CALL OpenAI to search)
     const context = yield* OpenAIService.searchTranscripts({
       query: params.message,
-      transcripts
-    })
+      transcripts,
+    });
 
     // Generate response (DSL: CALL OpenAI to generate response)
     const response = yield* OpenAIService.generateResponse({
       context,
       message: params.message,
-      lessons
-    })
+      lessons,
+    });
 
     // Record interaction (DSL: RECORD chat interaction)
     yield* EventService.record({
-      type: 'chat_interaction',
+      type: "chat_interaction",
       actorId: params.studentId,
       targetId: params.courseId,
-      metadata: { message: params.message, response }
-    })
+      metadata: { message: params.message, response },
+    });
 
-    return { response, videoReferences: context.sources }
-  })
+    return { response, videoReferences: context.sources };
+  });
 ```
 
 **Generated Frontend Components:**
@@ -1308,48 +1345,56 @@ export function CourseDashboard({ courseId }: { courseId: string }) {
 **Generated Tests:**
 
 ```typescript
-describe('YouTube Course Platform', () => {
-  it('should import videos and create lessons', async () => {
-    const creator = await createCreator()
+describe("YouTube Course Platform", () => {
+  it("should import videos and create lessons", async () => {
+    const creator = await createCreator();
     const result = await importYouTubeChannel({
       creatorId: creator.id,
-      channelUrl: 'youtube.com/c/creator'
-    })
+      channelUrl: "youtube.com/c/creator",
+    });
 
-    expect(result.lessonCount).toBeGreaterThanOrEqual(3)
+    expect(result.lessonCount).toBeGreaterThanOrEqual(3);
 
-    const lessons = await getLessons(result.courseId)
-    expect(lessons).toHaveLength(result.lessonCount)
-    expect(lessons[0].properties.transcript).toBeDefined()
-  })
+    const lessons = await getLessons(result.courseId);
+    expect(lessons).toHaveLength(result.lessonCount);
+    expect(lessons[0].properties.transcript).toBeDefined();
+  });
 
-  it('should answer questions using video transcripts', async () => {
-    const student = await createStudent()
-    const course = await createCourseWithLessons(5)
-    await enrollStudent(student.id, course.id)
+  it("should answer questions using video transcripts", async () => {
+    const student = await createStudent();
+    const course = await createCourseWithLessons(5);
+    await enrollStudent(student.id, course.id);
 
     const result = await chatWithCourse({
       studentId: student.id,
       courseId: course.id,
-      message: 'What is the main concept?'
-    })
+      message: "What is the main concept?",
+    });
 
-    expect(result.response).toContain('Based on')
-    expect(result.videoReferences).toHaveLength.greaterThan(0)
-  })
+    expect(result.response).toContain("Based on");
+    expect(result.videoReferences).toHaveLength.greaterThan(0);
+  });
 
-  it('should track enrollment and chat interactions', async () => {
-    const student = await createStudent()
-    const course = await createCourse()
+  it("should track enrollment and chat interactions", async () => {
+    const student = await createStudent();
+    const course = await createCourse();
 
-    await enrollStudent(student.id, course.id)
-    await chatWithCourse({ studentId: student.id, courseId: course.id, message: 'Hi' })
+    await enrollStudent(student.id, course.id);
+    await chatWithCourse({
+      studentId: student.id,
+      courseId: course.id,
+      message: "Hi",
+    });
 
-    const events = await getEvents({ studentId: student.id })
-    expect(events).toContainEqual(expect.objectContaining({ type: 'enrollment' }))
-    expect(events).toContainEqual(expect.objectContaining({ type: 'chat_interaction' }))
-  })
-})
+    const events = await getEvents({ studentId: student.id });
+    expect(events).toContainEqual(
+      expect.objectContaining({ type: "enrollment" }),
+    );
+    expect(events).toContainEqual(
+      expect.objectContaining({ type: "chat_interaction" }),
+    );
+  });
+});
 ```
 
 ### Output: Production-Ready Application
@@ -1365,6 +1410,7 @@ describe('YouTube Course Platform', () => {
 - ✅ Dashboard UI with split-pane layout
 
 **Generated Files:**
+
 - `backend/services/YouTubeImportService.ts`
 - `backend/services/TranscriptService.ts`
 - `backend/services/CourseService.ts`
@@ -1448,38 +1494,42 @@ H. DSL Quick Reference
 
 ## Performance Metrics
 
-| Metric | Traditional | CASCADE with DSL |
-|--------|-------------|------------------|
-| Input format | Technical specifications | Plain English |
-| Validation | Manual code review | Automatic against ontology |
-| Context per stage | 150,000 tokens | 200-2,500 tokens |
-| Average context | 150,000 tokens | 3,000 tokens (98% reduction) |
-| Parallelization | Manual coordination | Automatic from DSL structure |
-| Error detection | Runtime failures | Compile-time validation |
-| Code quality | Variable | Consistent (validated against DSL) |
-| Knowledge retention | None | DSL patterns accumulate |
-| Time to production | 3-6 months | 2-3 weeks |
+| Metric              | Traditional              | CASCADE with DSL                   |
+| ------------------- | ------------------------ | ---------------------------------- |
+| Input format        | Technical specifications | Plain English                      |
+| Validation          | Manual code review       | Automatic against ontology         |
+| Context per stage   | 150,000 tokens           | 200-2,500 tokens                   |
+| Average context     | 150,000 tokens           | 3,000 tokens (98% reduction)       |
+| Parallelization     | Manual coordination      | Automatic from DSL structure       |
+| Error detection     | Runtime failures         | Compile-time validation            |
+| Code quality        | Variable                 | Consistent (validated against DSL) |
+| Knowledge retention | None                     | DSL patterns accumulate            |
+| Time to production  | 3-6 months               | 2-3 weeks                          |
 
 ---
 
 ## Technical Requirements
 
 **Backend:**
+
 - Effect.ts (functional programming, error handling)
 - Database with events table (message bus)
 - Service providers (OpenAI, ElevenLabs, Stripe, etc.)
 
 **Frontend:**
+
 - Astro 5 (static generation + SSR)
 - React 19 (islands architecture)
 - Tailwind v4 (styling)
 
 **AI:**
+
 - Claude Code (agent orchestration)
 - Task tool (parallel agent execution)
 - 8 specialized agent prompts (DSL processors)
 
 **Deployment:**
+
 - Edge platform (Cloudflare Pages, Vercel, etc.)
 - Database platform (supporting events table)
 

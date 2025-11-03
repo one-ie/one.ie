@@ -1,3 +1,21 @@
+---
+title: Demo_Quick_Reference
+dimension: events
+category: DEMO_QUICK_REFERENCE.md
+tags: knowledge
+related_dimensions: connections, groups, knowledge, things
+scope: global
+created: 2025-11-03
+updated: 2025-11-03
+version: 1.0.0
+ai_context: |
+  This document is part of the events dimension in the DEMO_QUICK_REFERENCE.md category.
+  Location: one/events/DEMO_QUICK_REFERENCE.md
+  Purpose: Documents demo infrastructure quick reference
+  Related dimensions: connections, groups, knowledge, things
+  For AI agents: Read this to understand DEMO_QUICK_REFERENCE.
+---
+
 # Demo Infrastructure Quick Reference
 
 Fast lookup guide for developers using the demo infrastructure.

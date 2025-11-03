@@ -1,3 +1,21 @@
+---
+title: Hooks Demo
+dimension: events
+category: HOOKS-DEMO.md
+tags: ontology
+related_dimensions: connections, groups, knowledge, things
+scope: global
+created: 2025-11-03
+updated: 2025-11-03
+version: 1.0.0
+ai_context: |
+  This document is part of the events dimension in the HOOKS-DEMO.md category.
+  Location: one/events/HOOKS-DEMO.md
+  Purpose: Documents react hooks demo guide
+  Related dimensions: connections, groups, knowledge, things
+  For AI agents: Read this to understand HOOKS DEMO.
+---
+
 # React Hooks Demo Guide
 
 ## Overview

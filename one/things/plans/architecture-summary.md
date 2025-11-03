@@ -1,3 +1,19 @@
+---
+title: Architecture Summary
+dimension: things
+category: plans
+tags: ai, architecture, system-design
+scope: global
+created: 2025-11-03
+updated: 2025-11-03
+version: 1.0.0
+ai_context: |
+  This document is part of the things dimension in the plans category.
+  Location: one/things/plans/architecture-summary.md
+  Purpose: Documents one platform deployment architecture - quick reference
+  For AI agents: Read this to understand architecture summary.
+---
+
 # ONE Platform Deployment Architecture - Quick Reference
 
 ## ✅ CORRECT Architecture
@@ -15,23 +31,25 @@
 
 ## Projects & Repositories
 
-| Purpose | Project Name | GitHub Repo | Cloudflare Project | Domain |
-|---------|-------------|-------------|-------------------|---------|
-| **Website Source** | web | one-ie/web | N/A | (source only) |
-| **Main Website** | oneie | one-ie/oneie | oneie | one.ie |
-| **Demo/Starter** | one | one-ie/one | one | demo.one.ie |
+| Purpose            | Project Name | GitHub Repo  | Cloudflare Project | Domain        |
+| ------------------ | ------------ | ------------ | ------------------ | ------------- |
+| **Website Source** | web          | one-ie/web   | N/A                | (source only) |
+| **Main Website**   | oneie        | one-ie/oneie | oneie              | one.ie        |
+| **Demo/Starter**   | one          | one-ie/one   | one                | demo.one.ie   |
 
 ---
 
 ## Key Mappings
 
 ### Website Source (one-ie/web)
+
 - **Source:** Local `/web` (development - single source of truth)
 - **Repo:** `one-ie/web` (website code only, git repo)
 - **Purpose:** Website source repository
 - **Usage:** Pushed from local `/web` development
 
 ### Main Website (one.ie)
+
 - **Source:** Local `/web`, `/one`, `/.claude` synced to `apps/oneie/`
 - **Repo:** `one-ie/oneie` (full structure: web/, one/, .claude/)
 - **Cloudflare:** `oneie` project
@@ -40,6 +58,7 @@
 - **Features:** Backend ON, Admin OFF, Full navigation
 
 ### Demo/Starter (demo.one.ie)
+
 - **Source:** Local `/web`, `/one`, `/.claude` synced to `apps/one/`
 - **Repo:** `one-ie/one` (full structure: web/, one/, .claude/)
 - **Cloudflare:** `one` project
@@ -139,6 +158,7 @@ one-ie/one/              # Demo/starter repo
 ## User Flows
 
 ### Flow 1: Visit Main Website
+
 ```
 User → one.ie
   → Full platform experience
@@ -148,6 +168,7 @@ User → one.ie
 ```
 
 ### Flow 2: Try Demo Online
+
 ```
 User → demo.one.ie
   → Starter template preview
@@ -157,6 +178,7 @@ User → demo.one.ie
 ```
 
 ### Flow 3: Download Starter
+
 ```
 Developer → npx oneie
   → Clones entire one-ie/one repo
@@ -219,6 +241,7 @@ Developer → npx oneie
 ## Quick Checklist
 
 **Setup:**
+
 - [ ] Create `one-ie/oneie` repo on GitHub
 - [ ] Create Cloudflare project `oneie` → one.ie
 - [ ] Create Cloudflare project `one` → demo.one.ie
@@ -226,11 +249,13 @@ Developer → npx oneie
 - [ ] Create feature flags config (`src/config/features.ts`)
 
 **Test:**
+
 - [ ] Build main site locally: `cp .env.main .env.local && bun run build`
 - [ ] Build demo locally: `cp .env.demo .env.local && bun run build`
 - [ ] Verify feature flags work correctly
 
 **Deploy:**
+
 - [ ] Deploy main: `./scripts/release.sh patch main`
 - [ ] Deploy demo: `./scripts/release.sh patch demo`
 - [ ] Verify one.ie works (full platform)
@@ -242,12 +267,14 @@ Developer → npx oneie
 ## Common Mistakes to Avoid
 
 ❌ **DON'T:**
+
 - Deploy development environment to production
 - Mix main site and demo features
 - Forget to sync demo to one-ie/one repo
 - Use wrong Cloudflare project for deployment
 
 ✅ **DO:**
+
 - Keep `/web` as single source of truth
 - Use environment files to control features
 - Test both builds before deploying
@@ -272,6 +299,7 @@ Developer → npx oneie
    - For: Developers
 
 **Single command to deploy both:**
+
 ```bash
 ./scripts/release.sh patch main && ./scripts/release.sh patch demo
 ```
@@ -279,5 +307,6 @@ Developer → npx oneie
 ---
 
 **For complete documentation, see:**
+
 - `separate-demo.md` - Full implementation guide
 - `deployment-architecture.md` - Visual architecture overview

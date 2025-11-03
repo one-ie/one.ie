@@ -1,3 +1,21 @@
+---
+title: Separate
+dimension: things
+category: plans
+tags: architecture, backend, frontend, groups, ontology
+related_dimensions: connections, events, groups
+scope: global
+created: 2025-11-03
+updated: 2025-11-03
+version: 1.0.0
+ai_context: |
+  This document is part of the things dimension in the plans category.
+  Location: one/things/plans/separate.md
+  Purpose: Documents frontend-backend separation plan
+  Related dimensions: connections, events, groups
+  For AI agents: Read this to understand separate.
+---
+
 # Frontend-Backend Separation Plan
 
 ## Executive Summary
@@ -469,7 +487,7 @@ export class CourseService extends Effect.Service<CourseService>()(
       };
     }),
     dependencies: [DataProvider],
-  }
+  },
 ) {}
 ```
 
@@ -549,7 +567,7 @@ export class ConvexProvider implements DataProvider {
 export const convexProvider = (config: { url: string }) =>
   Layer.succeed(
     DataProvider,
-    new ConvexProvider(new ConvexHttpClient(config.url))
+    new ConvexProvider(new ConvexHttpClient(config.url)),
   );
 ```
 
@@ -563,7 +581,7 @@ import { DataProvider } from "../DataProvider";
 export class CompositeProvider implements DataProvider {
   constructor(
     private defaultProvider: DataProvider,
-    private routes: Map<ThingType, DataProvider>
+    private routes: Map<ThingType, DataProvider>,
   ) {}
 
   // Route to appropriate provider based on thing type
@@ -1394,7 +1412,7 @@ export class SupabaseProvider implements DataProvider {
           },
           (payload) => {
             // Emit updates via Observable
-          }
+          },
         );
 
         yield* Effect.tryPromise({
@@ -1410,7 +1428,7 @@ export class SupabaseProvider implements DataProvider {
 export function supabaseProvider(config: { url: string; anonKey: string }) {
   return Layer.succeed(
     DataProvider,
-    new SupabaseProvider(config.url, config.anonKey)
+    new SupabaseProvider(config.url, config.anonKey),
   );
 }
 ```
@@ -1538,7 +1556,7 @@ describe("ApiClient", () => {
         headers: expect.objectContaining({
           Authorization: "Bearer sk_test_123",
         }),
-      })
+      }),
     );
   });
 

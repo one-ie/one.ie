@@ -1,3 +1,21 @@
+---
+title: Readme Archived
+dimension: events
+category: README-archived.md
+tags: agent, ai
+related_dimensions: groups, people, things
+scope: global
+created: 2025-11-03
+updated: 2025-11-03
+version: 1.0.0
+ai_context: |
+  This document is part of the events dimension in the README-archived.md category.
+  Location: one/events/README-archived.md
+  Purpose: Documents one
+  Related dimensions: groups, people, things
+  For AI agents: Read this to understand README archived.
+---
+
 # ONE
 
       ██████╗ ███╗   ██╗███████╗

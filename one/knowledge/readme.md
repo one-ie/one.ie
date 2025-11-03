@@ -1,3 +1,21 @@
+---
+title: Readme
+dimension: knowledge
+category: readme.md
+tags: ai, architecture, backend, frontend, knowledge
+related_dimensions: people, things
+scope: global
+created: 2025-11-03
+updated: 2025-11-03
+version: 1.0.0
+ai_context: |
+  This document is part of the knowledge dimension in the readme.md category.
+  Location: one/knowledge/readme.md
+  Purpose: Documents knowledge base
+  Related dimensions: people, things
+  For AI agents: Read this to understand readme.
+---
+
 # Knowledge Base
 
 This directory contains the institutional knowledge of the ONE Platform development workflow: lessons learned from problems solved and reusable patterns for common implementations.

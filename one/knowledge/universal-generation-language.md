@@ -1,3 +1,21 @@
+---
+title: Universal Generation Language
+dimension: knowledge
+category: universal-generation-language.md
+tags: ai, ontology, people
+related_dimensions: connections, events, groups, people, things
+scope: global
+created: 2025-11-03
+updated: 2025-11-03
+version: 1.0.0
+ai_context: |
+  This document is part of the knowledge dimension in the universal-generation-language.md category.
+  Location: one/knowledge/universal-generation-language.md
+  Purpose: Documents the universal code generation language
+  Related dimensions: connections, events, groups, people, things
+  For AI agents: Read this to understand universal generation language.
+---
+
 # The Universal Code Generation Language
 
 **Version**: 1.0.0

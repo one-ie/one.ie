@@ -1,3 +1,21 @@
+---
+title: Ontology_Discovery_Quickstart
+dimension: events
+category: ONTOLOGY_DISCOVERY_QUICKSTART.md
+tags: 6-dimensions, frontend, ontology
+related_dimensions: connections, things
+scope: global
+created: 2025-11-03
+updated: 2025-11-03
+version: 1.0.0
+ai_context: |
+  This document is part of the events dimension in the ONTOLOGY_DISCOVERY_QUICKSTART.md category.
+  Location: one/events/ONTOLOGY_DISCOVERY_QUICKSTART.md
+  Purpose: Documents ontology discovery - quick start
+  Related dimensions: connections, things
+  For AI agents: Read this to understand ONTOLOGY_DISCOVERY_QUICKSTART.
+---
+
 # Ontology Discovery - Quick Start
 
 ## 30-Second Overview

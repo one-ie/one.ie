@@ -1,3 +1,21 @@
+---
+title: Wave1 Specialist Assignments
+dimension: things
+category: plans
+tags: agent, ai, backend, frontend, inference, ontology, people, testing
+related_dimensions: events, groups, people
+scope: global
+created: 2025-11-03
+updated: 2025-11-03
+version: 1.0.0
+ai_context: |
+  This document is part of the things dimension in the plans category.
+  Location: one/things/plans/wave1-specialist-assignments.md
+  Purpose: Documents wave 1: creator onboarding - specialist assignments
+  Related dimensions: events, groups, people
+  For AI agents: Read this to understand wave1 specialist assignments.
+---
+
 # Wave 1: Creator Onboarding - Specialist Assignments
 
 **Version:** 1.0.0
@@ -11,6 +29,7 @@
 This document specifies exactly who does what, in what order, with what deliverables and dependencies.
 
 **Total Team:** 5 people
+
 - 1 Backend Specialist
 - 1 Frontend Specialist
 - 1 Quality Specialist
@@ -39,6 +58,7 @@ This document specifies exactly who does what, in what order, with what delivera
 **Task:** Update `/backend/convex/schema.ts` with creator properties
 
 **Deliverable:**
+
 ```typescript
 // Add to schema.ts entities table definition
 creator: {
@@ -76,6 +96,7 @@ creator: {
 **Task:** Add organization (workspace) properties to schema
 
 **Deliverable:**
+
 ```typescript
 // Add to schema.ts for organization/workspace type
 organization: {
@@ -104,6 +125,7 @@ organization: {
 **Task:** Add invitation_token entity type for team invitations
 
 **Deliverable:**
+
 ```typescript
 // Add to schema.ts
 invitation_token: {
@@ -132,6 +154,7 @@ invitation_token: {
 **File to Create:** `/backend/convex/services/onboarding.ts`
 
 **Deliverable:** Service with methods:
+
 - `registerUser(email, password)` → CreatorEntity
 - `sendVerificationEmail(userId, email)` → void
 - `verifyEmail(userId, code)` → { verified: boolean }
@@ -220,6 +243,7 @@ invitation_token: {
 **File to Create:** `/backend/convex/queries/onboarding.ts`
 
 **Queries:**
+
 - `getCurrentUser()` → Creator + workspace info
 - `getOnboardingStatus(userId)` → Step + completion %
 - `checkUsernameAvailable(username)` → boolean
@@ -238,6 +262,7 @@ invitation_token: {
 **Files to Create:** `/backend/convex/emails/*.email.tsx`
 
 **Templates:**
+
 1. `welcome.email.tsx` - "Welcome to ONE"
 2. `verify-email.email.tsx` - 6-digit code
 3. `team-invite.email.tsx` - Join workspace
@@ -254,6 +279,7 @@ invitation_token: {
 **File to Create:** `/backend/convex/lib/verification.ts`
 
 **Functions:**
+
 - `generateVerificationCode()` → "123456"
 - `generateVerificationLink()` → "https://one.ie/verify/TOKEN"
 - `verifyCode(code)` → boolean
@@ -271,6 +297,7 @@ invitation_token: {
 **Task:** Set up @convex-dev/rate-limiter rules
 
 **Rules:**
+
 - signUp: 5 per IP per hour
 - sendVerificationEmail: 5 per email per hour
 - inviteTeamMember: 20 per workspace per day
@@ -284,6 +311,7 @@ invitation_token: {
 **Infer 30: Backend Schema Complete**
 
 **Validation Checklist:**
+
 - [ ] All mutations working locally
 - [ ] All queries working locally
 - [ ] Email templates rendering
@@ -305,6 +333,7 @@ invitation_token: {
 **Infer 51-60: Create API Routes (10 inferences)**
 
 **Auth Routes:** `/api/auth/*`
+
 - `POST /api/auth/signup` → Create user
 - `POST /api/auth/verify-email` → Confirm email
 - `POST /api/auth/resend-verification` → Resend code
@@ -314,17 +343,20 @@ invitation_token: {
 - `POST /api/auth/reset-password` → Confirm reset
 
 **Profile Routes:** `/api/profile/*`
+
 - `GET /api/profile` → Get current user
 - `POST /api/profile` → Update profile
 - `POST /api/profile/avatar` → Upload avatar
 
 **Workspace Routes:** `/api/workspace/*`
+
 - `POST /api/workspace` → Create workspace
 - `GET /api/workspace` → List workspaces
 - `GET /api/workspace/[id]` → Get workspace
 - `PATCH /api/workspace/[id]` → Update workspace
 
 **Team Routes:** `/api/team/*`
+
 - `POST /api/team/invite` → Invite member
 - `POST /api/team/accept` → Accept invitation
 - `GET /api/team/[workspace]/members` → List members
@@ -333,14 +365,17 @@ invitation_token: {
 - `DELETE /api/team/[workspace]/members/[id]` → Remove member
 
 **Wallet Routes:** `/api/wallet/*`
+
 - `POST /api/wallet/connect` → Connect wallet
 - `POST /api/wallet/verify` → Verify signature
 
 **Skills Routes:** `/api/skills/*`
+
 - `POST /api/skills` → Add skills
 - `GET /api/skills` → List available skills
 
 **Onboarding Routes:** `/api/onboarding/*`
+
 - `GET /api/onboarding/status` → Get progress
 - `POST /api/onboarding/step` → Update step
 
@@ -354,6 +389,7 @@ invitation_token: {
 **Task:** Wire up email sending, configure Resend, test delivery
 
 **Activities:**
+
 1. **Configure Resend** (Infer 61)
    - Set API key
    - Verify sender domain
@@ -406,6 +442,7 @@ invitation_token: {
 **File:** `/web/src/components/onboarding/SignupForm.tsx`
 
 **Requirements:**
+
 - Email input + validation
 - Password input + strength meter
 - OAuth buttons (Google, GitHub, Discord)
@@ -424,6 +461,7 @@ invitation_token: {
 **File:** `/web/src/components/onboarding/EmailVerification.tsx`
 
 **Requirements:**
+
 - 6 separate input fields
 - Auto-focus between fields
 - Auto-submit when complete
@@ -441,6 +479,7 @@ invitation_token: {
 **File:** `/web/src/components/onboarding/ProfileForm.tsx`
 
 **Requirements:**
+
 - Avatar upload (preview + drag-drop)
 - Display name input
 - Username input (with slug preview: one.ie/@username)
@@ -459,6 +498,7 @@ invitation_token: {
 **File:** `/web/src/components/onboarding/WorkspaceSetup.tsx`
 
 **Requirements:**
+
 - Option A: "I'm solo" → Personal workspace
 - Option B: "I manage a team" → Team setup
 - Workspace name input
@@ -476,6 +516,7 @@ invitation_token: {
 **File:** `/web/src/components/onboarding/WalletConnection.tsx`
 
 **Requirements:**
+
 - Explanation of wallet benefits
 - "Connect Wallet" button
 - Wallet options (MetaMask, Rainbow Kit, WalletConnect)
@@ -494,6 +535,7 @@ invitation_token: {
 **File:** `/web/src/components/onboarding/SkillSelection.tsx`
 
 **Requirements:**
+
 - Grouped skill tags by category
 - Multi-select checkboxes
 - Add custom skill input
@@ -511,6 +553,7 @@ invitation_token: {
 **File:** `/web/src/components/onboarding/OnboardingTour.tsx`
 
 **Requirements:**
+
 - 6 interactive steps
 - Highlight UI elements
 - Progress indicator
@@ -529,6 +572,7 @@ invitation_token: {
 **File:** `/web/src/components/onboarding/OnboardingChecklist.tsx`
 
 **Requirements:**
+
 - 6 checklist items
 - Progress bar
 - Checkmarks for completed
@@ -544,6 +588,7 @@ invitation_token: {
 **Infer 39-40: Helper Components**
 
 **Files:**
+
 - `AvatarUpload.tsx` (Infer 42)
 - `NicheSelection.tsx` (Infer 43)
 - `LoadingStates.tsx` (Infer 44)
@@ -560,12 +605,14 @@ invitation_token: {
 **Infer 39: Onboarding Pages (Part 1)**
 
 **Files:**
+
 - `/web/src/pages/onboarding/index.astro` - Entry page
 - `/web/src/pages/onboarding/signup.astro` - Signup form
 - `/web/src/pages/onboarding/verify.astro` - Email verification
 - `/web/src/pages/onboarding/profile.astro` - Profile form
 
 **Requirements:**
+
 - All `client:load` (interactive)
 - Form validation
 - Redirect on auth failure
@@ -580,6 +627,7 @@ invitation_token: {
 **Infer 40: Onboarding Pages (Part 2)**
 
 **Files:**
+
 - `/web/src/pages/onboarding/workspace.astro`
 - `/web/src/pages/onboarding/wallet.astro`
 - `/web/src/pages/onboarding/skills.astro`
@@ -597,6 +645,7 @@ invitation_token: {
 **File:** `/web/src/pages/workspace/settings/team.astro`
 
 **Requirements:**
+
 - Members list (table)
 - Invite new member form
 - Pending invitations section
@@ -616,6 +665,7 @@ invitation_token: {
 **Task:** Ensure mobile-first responsive design
 
 **Checklist:**
+
 - [ ] All forms mobile-friendly
 - [ ] Avatar upload works on mobile
 - [ ] Code input optimized for mobile keyboard
@@ -634,6 +684,7 @@ invitation_token: {
 **Task:** WCAG 2.1 AA compliance
 
 **Checklist:**
+
 - [ ] Proper labels + aria-labels
 - [ ] Keyboard navigation (Tab key)
 - [ ] Color contrast (4.5:1 minimum)
@@ -652,6 +703,7 @@ invitation_token: {
 **Task:** Add dark theme support
 
 **Implementation:**
+
 - System preference detection
 - Toggle in settings
 - Tailwind dark mode utilities
@@ -665,6 +717,7 @@ invitation_token: {
 **Infer 50: Final Frontend Validation**
 
 **Validation Checklist:**
+
 - [ ] All 8 onboarding pages render
 - [ ] Team management page works
 - [ ] All components interactive
@@ -699,6 +752,7 @@ invitation_token: {
 **Task:** Test mutations, queries, services in isolation
 
 **Coverage:**
+
 - Onboarding service (all 10 methods)
 - Verification system (code generation, validation)
 - Email sending (template rendering)
@@ -718,6 +772,7 @@ invitation_token: {
 **Task:** Test React components in isolation
 
 **Coverage:**
+
 - SignupForm (validation, submit)
 - EmailVerification (input handling, auto-submit)
 - ProfileForm (validation, avatar upload)
@@ -738,6 +793,7 @@ invitation_token: {
 **Task:** Test full feature flows end-to-end
 
 **Scenarios:**
+
 1. Complete signup in < 10 minutes
 2. Email verification code delivery
 3. Profile + workspace creation
@@ -757,6 +813,7 @@ invitation_token: {
 **Task:** Test real user journeys in browser
 
 **Scenarios:**
+
 1. New user signup → dashboard access
 2. Team member invitation → acceptance
 3. Workspace creation + team setup
@@ -773,6 +830,7 @@ invitation_token: {
 **Task:** Verify security + accessibility compliance
 
 **Security Checklist:**
+
 - [ ] No SQL injection vulnerabilities
 - [ ] XSS protection working
 - [ ] CSRF tokens present
@@ -783,6 +841,7 @@ invitation_token: {
 - [ ] API input validation
 
 **Accessibility Checklist:**
+
 - [ ] WCAG 2.1 AA compliance
 - [ ] Keyboard navigation works
 - [ ] Screen reader compatible
@@ -799,6 +858,7 @@ invitation_token: {
 **Task:** Verify performance targets
 
 **Metrics to check:**
+
 - Page load: < 2s (target)
 - Form submit: < 1s (target)
 - Email delivery: < 30s (target)
@@ -832,6 +892,7 @@ invitation_token: {
 **Infer 41-45: Wireframes & Component Specs**
 
 **Deliverables:**
+
 - 8 onboarding page wireframes
 - Component specifications (layouts, spacing, colors)
 - Typography guide
@@ -850,6 +911,7 @@ invitation_token: {
 **Infer 46-50: Accessibility & Brand Guide**
 
 **Deliverables:**
+
 - Accessibility guidelines (WCAG 2.1 AA)
 - Brand color specifications
 - Typography sizes + weights
@@ -867,6 +929,7 @@ invitation_token: {
 **Infer 91-92: User Documentation**
 
 **Files to create:**
+
 - `/docs/getting-started.md` - New creator guide
 - `/docs/onboarding-guide.md` - Step-by-step walkthrough
 - `/docs/team-management.md` - Team features
@@ -874,6 +937,7 @@ invitation_token: {
 - `/docs/faq.md` - Frequently asked questions
 
 **Content:**
+
 - Screenshots/videos of each step
 - Common issues + solutions
 - Best practices
@@ -887,6 +951,7 @@ invitation_token: {
 **Infer 93-94: API Documentation**
 
 **Files to create:**
+
 - `/docs/api/overview.md` - API intro
 - `/docs/api/auth.md` - Auth endpoints
 - `/docs/api/profile.md` - Profile endpoints
@@ -897,6 +962,7 @@ invitation_token: {
 - `/docs/api/rate-limits.md` - Rate limiting
 
 **Content per endpoint:**
+
 - Description
 - HTTP method + path
 - Authentication required
@@ -916,6 +982,7 @@ invitation_token: {
 **File:** `/docs/developer-setup.md`
 
 **Content:**
+
 - Clone repository
 - Install dependencies (Node, Bun, npm)
 - Environment variables (.env.local)
@@ -935,6 +1002,7 @@ invitation_token: {
 **File:** `/DEPLOYMENT.md`
 
 **Content:**
+
 - Pre-deployment checklist
   - All tests passing
   - Security audit passed
@@ -961,6 +1029,7 @@ invitation_token: {
 **Task:** Support production deployment
 
 **Activities:**
+
 - Monitor deployment logs
 - Run smoke tests in production
 - Check error tracking
@@ -977,6 +1046,7 @@ invitation_token: {
 **Task:** Configure analytics + monitoring
 
 **Setup:**
+
 - Analytics dashboard (signup funnel)
 - Error tracking (Sentry or similar)
 - Performance monitoring
@@ -991,6 +1061,7 @@ invitation_token: {
 **Infer 100: Lessons Learned & Handoff**
 
 **Deliverable:** Documentation of:
+
 - What worked well
 - What was harder than expected
 - Team productivity notes
@@ -1028,30 +1099,35 @@ invitation_token: {
 ### Key Milestones to Validate
 
 **Day 2 (Infer 10):** Vision document approved + ontology validated
+
 - Verify all 6 dimensions mapped
 - Approve entity types + event types
 - Approve task breakdown
 - Gate: All specialists ready to start
 
 **Day 4 (Infer 30):** Backend schema complete
+
 - Verify schema valid
 - All mutations working locally
 - Convex types generated
 - Gate: Frontend can start integrating
 
 **Day 7 (Infer 70):** API routes + email ready
+
 - All routes responding
 - Email sending working
 - Rate limiting active
 - Gate: Integration testing can begin
 
 **Day 9 (Infer 80):** All code complete
+
 - Frontend + backend integrated
 - All features working
 - No critical bugs
 - Gate: Testing complete, ready for deployment
 
 **Day 10-12 (Infer 91-100):** Deployment + documentation
+
 - Production deployment successful
 - Monitoring active
 - Documentation complete
@@ -1060,26 +1136,31 @@ invitation_token: {
 ### Decision Gates
 
 **Gate 1 (Infer 10):** Can we proceed with implementation?
+
 - Decision: Approve vision doc + ontology mapping
 - If rejected: Rethink feature, return to Phase 1
 - If approved: Release all specialists
 
 **Gate 2 (Infer 30):** Is backend ready for frontend integration?
+
 - Decision: Validate mutations + queries + events
 - If not ready: Fix blockers in backend
 - If ready: Unblock frontend for API integration
 
 **Gate 3 (Infer 70):** Is everything integrated correctly?
+
 - Decision: Test full signup → dashboard flow
 - If not working: Debug integration issues
 - If working: Proceed to testing
 
 **Gate 4 (Infer 90):** Is quality acceptable for production?
+
 - Decision: Verify tests pass + security audit passed
 - If not ready: Fix failing tests + security issues
 - If ready: Approve for production
 
 **Gate 5 (Infer 100):** Is Wave 1 complete?
+
 - Decision: Validate all success criteria
 - If not met: Fix remaining issues
 - If met: Wave 1 complete, start Wave 2
@@ -1105,12 +1186,14 @@ Infer 91-100 (Deployment) ← Needs quality approval
 ```
 
 **Parallelization Opportunities:**
+
 - Backend + Frontend can run in parallel from Day 3 onward
 - Design can run in parallel with frontend
 - Documentation can start during testing
 - Quality testing can start as soon as code is available
 
 **Sequential Dependencies:**
+
 - Foundation (Infer 1-10) must complete before anything else
 - Backend schema (Infer 11-30) must complete before API routes
 - API routes (Infer 51-70) must complete before integration testing
@@ -1124,6 +1207,7 @@ Infer 91-100 (Deployment) ← Needs quality approval
 The Orchestrator must validate ALL of these before marking Wave 1 complete:
 
 **Functional Completeness:**
+
 - [ ] User can sign up with email + password
 - [ ] OAuth signup working (Google, GitHub, Discord)
 - [ ] Email verification works (code delivery + verification)
@@ -1136,6 +1220,7 @@ The Orchestrator must validate ALL of these before marking Wave 1 complete:
 - [ ] All events logged correctly
 
 **User Experience:**
+
 - [ ] 80%+ of test users complete flow
 - [ ] Average time < 15 minutes
 - [ ] Mobile responsive (70%+ desktop conversion)
@@ -1144,6 +1229,7 @@ The Orchestrator must validate ALL of these before marking Wave 1 complete:
 - [ ] Forms clear + intuitive
 
 **Quality:**
+
 - [ ] 90%+ backend test coverage
 - [ ] 85%+ frontend test coverage
 - [ ] All integration tests passing
@@ -1154,6 +1240,7 @@ The Orchestrator must validate ALL of these before marking Wave 1 complete:
 - [ ] No warnings in production logs
 
 **Documentation:**
+
 - [ ] User guides complete
 - [ ] API docs complete
 - [ ] Developer setup guide complete
@@ -1161,6 +1248,7 @@ The Orchestrator must validate ALL of these before marking Wave 1 complete:
 - [ ] Troubleshooting guide complete
 
 **Operations:**
+
 - [ ] Live in production
 - [ ] Monitoring active
 - [ ] Analytics tracking
@@ -1168,6 +1256,7 @@ The Orchestrator must validate ALL of these before marking Wave 1 complete:
 - [ ] Rollback plan ready
 
 **Ontology:**
+
 - [ ] All 6 dimensions properly implemented
 - [ ] No data scoping issues (group isolation)
 - [ ] Events logged for audit trail
@@ -1210,20 +1299,24 @@ NEXT 24 HOURS:
 ## Communication Plan
 
 **Daily Standup:** 15 minutes, 9am
+
 - Each specialist: What done? What blocked? What next?
 - Director: Flag risks + dependencies
 
 **Weekly Sync:** 1 hour, end of week
+
 - Review progress against 100-inference plan
 - Adjust timelines if needed
 - Plan next week's work
 
 **Blocker Resolution:** As needed
+
 - Slack channel: #wave1-onboarding
 - 15-minute huddle to resolve
 - Update plan if impact > 1 day
 
 **Final Approval:** Day 11
+
 - Director validates all success criteria
 - Specialist signoff (backend, frontend, quality)
 - Gate 5 decision: Wave 1 complete or continue
@@ -1233,6 +1326,7 @@ NEXT 24 HOURS:
 ## Deliverables Checklist
 
 **Backend Specialist Deliverables:**
+
 - [ ] Updated schema.ts (creator, organization, invitation_token)
 - [ ] `/backend/convex/services/onboarding.ts` (service)
 - [ ] `/backend/convex/mutations/auth.ts` (signup, verify, profile, wallet, skills)
@@ -1247,6 +1341,7 @@ NEXT 24 HOURS:
 - [ ] Email system configured
 
 **Frontend Specialist Deliverables:**
+
 - [ ] SignupForm, EmailVerification, ProfileForm components
 - [ ] WorkspaceSetup, WalletConnection, SkillSelection components
 - [ ] OnboardingTour, OnboardingChecklist components
@@ -1259,6 +1354,7 @@ NEXT 24 HOURS:
 - [ ] Dark mode support
 
 **Quality Specialist Deliverables:**
+
 - [ ] Backend unit tests (90%+ coverage)
 - [ ] Frontend unit tests (85%+ coverage)
 - [ ] Integration tests (full flows)
@@ -1269,6 +1365,7 @@ NEXT 24 HOURS:
 - [ ] Test coverage reports
 
 **Design/Documentation Specialist Deliverables:**
+
 - [ ] Wireframes (8 pages)
 - [ ] Component specifications
 - [ ] Brand guidelines
@@ -1283,6 +1380,7 @@ NEXT 24 HOURS:
 - [ ] Release notes
 
 **Director/Orchestrator Deliverables:**
+
 - [ ] Wave 1 Vision Document (complete)
 - [ ] 100-Inference Execution Plan (complete)
 - [ ] Specialist Assignments (complete)
@@ -1296,13 +1394,13 @@ NEXT 24 HOURS:
 
 ## Assignments Summary
 
-| Role | Inferences | Duration | Start | Blocks |
-|------|-----------|----------|-------|--------|
-| Backend | 40 (11-30, 51-70) | 10 days | Day 1 | Frontend API integration |
-| Frontend | 20 (31-50) | 5-6 days | Day 3 | API routes, deployment |
-| Quality | 10 (81-90) | 2-3 days | Day 8 | Deployment |
-| Design/Docs | 10 (41-50 design, 91-100 docs) | 5-7 days | Day 1 design, Day 9 docs | None |
-| Director | 100 (1-100) | 10 days | Day 1 | None |
+| Role        | Inferences                     | Duration | Start                    | Blocks                   |
+| ----------- | ------------------------------ | -------- | ------------------------ | ------------------------ |
+| Backend     | 40 (11-30, 51-70)              | 10 days  | Day 1                    | Frontend API integration |
+| Frontend    | 20 (31-50)                     | 5-6 days | Day 3                    | API routes, deployment   |
+| Quality     | 10 (81-90)                     | 2-3 days | Day 8                    | Deployment               |
+| Design/Docs | 10 (41-50 design, 91-100 docs) | 5-7 days | Day 1 design, Day 9 docs | None                     |
+| Director    | 100 (1-100)                    | 10 days  | Day 1                    | None                     |
 
 **Total Team Effort:** 38 person-days
 **Total Calendar Duration:** 10-12 days
@@ -1313,4 +1411,3 @@ NEXT 24 HOURS:
 **Status:** Ready for assignment and execution
 **Approved:** Wave 1 Vision Document + Ontology Validation
 **Next Step:** Release assignments to specialist agents
-

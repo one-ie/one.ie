@@ -1,3 +1,21 @@
+---
+title: Gradient Text Permanent Fix
+dimension: events
+category: GRADIENT-TEXT-PERMANENT-FIX.md
+tags: ai
+related_dimensions: groups
+scope: global
+created: 2025-11-03
+updated: 2025-11-03
+version: 1.0.0
+ai_context: |
+  This document is part of the events dimension in the GRADIENT-TEXT-PERMANENT-FIX.md category.
+  Location: one/events/GRADIENT-TEXT-PERMANENT-FIX.md
+  Purpose: Documents gradient text - permanent fix applied ✅
+  Related dimensions: groups
+  For AI agents: Read this to understand GRADIENT TEXT PERMANENT FIX.
+---
+
 # Gradient Text - Permanent Fix Applied ✅
 
 ## Problem Solved

@@ -1,3 +1,21 @@
+---
+title: Feature Template
+dimension: things
+category: cascade
+tags: agent, backend, connections, events, frontend, ontology, things
+related_dimensions: connections, events, people
+scope: global
+created: 2025-11-03
+updated: 2025-11-03
+version: 1.0.0
+ai_context: |
+  This document is part of the things dimension in the cascade category.
+  Location: one/things/cascade/templates/feature-template.md
+  Purpose: Documents feature {plan_number}-{feature_number}: {feature name}
+  Related dimensions: connections, events, people
+  For AI agents: Read this to understand feature template.
+---
+
 # Feature {plan_number}-{feature_number}: {Feature Name}
 
 **Assigned to:** {Specialist Type} Agent
@@ -130,25 +148,29 @@ export class {ServiceName} {
 **Mutations:** `{feature-name}.ts`
 
 ```typescript
-export const {mutationName} = mutation({
-  args: { /* args */ },
+export const { mutationName } = mutation({
+  args: {
+    /* args */
+  },
   handler: async (ctx, args) => {
     // Call service
     // Log events
     // Return result
-  }
+  },
 });
 ```
 
 **Queries:** `{feature-name}.ts`
 
 ```typescript
-export const {queryName} = query({
-  args: { /* args */ },
+export const { queryName } = query({
+  args: {
+    /* args */
+  },
   handler: async (ctx, args) => {
     // Fetch data
     // Return result
-  }
+  },
 });
 ```
 

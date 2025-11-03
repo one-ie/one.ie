@@ -1,3 +1,21 @@
+---
+title: Frontend Effects
+dimension: things
+category: plans
+tags: ai, backend, frontend, ui
+related_dimensions: events, people
+scope: global
+created: 2025-11-03
+updated: 2025-11-03
+version: 1.0.0
+ai_context: |
+  This document is part of the things dimension in the plans category.
+  Location: one/things/plans/frontend-effects.md
+  Purpose: Documents frontend effects.ts implementation plan
+  Related dimensions: events, people
+  For AI agents: Read this to understand frontend effects.
+---
+
 # Frontend Effects.ts Implementation Plan
 
 **Comprehensive guide for building backend-agnostic frontend services with Effect.ts, React, and Astro**
@@ -37,6 +55,7 @@ This document focuses exclusively on **frontend Effect.ts patterns** - how to st
 **What:** UI rendering, user interaction, form handling
 
 **Example:**
+
 ```tsx
 // src/pages/courses/[courseId].astro
 ---
@@ -58,6 +77,7 @@ const course = await CourseService.get(courseId);
 **What:** Generic, backend-agnostic operations using DataProvider
 
 **Example:**
+
 ```typescript
 // src/services/CourseService.ts
 import { Effect } from "effect";
@@ -79,14 +99,15 @@ export class CourseService extends Effect.Service<CourseService>()(...) {
 **What:** Universal contract that ANY backend must implement
 
 **Example:**
+
 ```typescript
 // src/providers/DataProvider.ts
 export interface DataProvider {
-  groups: { get, list, update };
-  people: { get, list, create };
-  things: { get, list, create, update, delete };  // Works with ANY backend
-  connections: { create, getRelated };
-  events: { log, query };
+  groups: { get; list; update };
+  people: { get; list; create };
+  things: { get; list; create; update; delete }; // Works with ANY backend
+  connections: { create; getRelated };
+  events: { log; query };
   knowledge: { search };
 }
 ```
@@ -104,27 +125,31 @@ import { DataProvider } from "@/providers/DataProvider";
 
 // Define error types (tagged unions)
 class ThingNotFoundError extends Data.TaggedError("ThingNotFoundError")<{
-  thingId: string
+  thingId: string;
 }> {}
 
 class ValidationError extends Data.TaggedError("ValidationError")<{
-  field: string
-  message: string
+  field: string;
+  message: string;
 }> {}
 
 // Define service interface
 class ThingService extends Context.Tag("ThingService")<
   ThingService,
   {
-    readonly get: (id: string) => Effect.Effect<Thing, ThingNotFoundError>
-    readonly list: (type: ThingType, groupId: string)
-      => Effect.Effect<Thing[], Error>
-    readonly create: (input: CreateThingInput)
-      => Effect.Effect<string, ValidationError>
-    readonly update: (id: string, updates: Partial<Thing>)
-      => Effect.Effect<void, Error>
-    readonly delete: (id: string)
-      => Effect.Effect<void, ThingNotFoundError>
+    readonly get: (id: string) => Effect.Effect<Thing, ThingNotFoundError>;
+    readonly list: (
+      type: ThingType,
+      groupId: string,
+    ) => Effect.Effect<Thing[], Error>;
+    readonly create: (
+      input: CreateThingInput,
+    ) => Effect.Effect<string, ValidationError>;
+    readonly update: (
+      id: string,
+      updates: Partial<Thing>,
+    ) => Effect.Effect<void, Error>;
+    readonly delete: (id: string) => Effect.Effect<void, ThingNotFoundError>;
   }
 >() {}
 
@@ -132,7 +157,7 @@ class ThingService extends Context.Tag("ThingService")<
 export const ThingServiceLive = Layer.effect(
   ThingService,
   Effect.gen(function* () {
-    const provider = yield* DataProvider;  // Inject provider
+    const provider = yield* DataProvider; // Inject provider
 
     return {
       get: (id: string) =>
@@ -145,7 +170,7 @@ export const ThingServiceLive = Layer.effect(
         Effect.gen(function* () {
           const things = yield* provider.things.list({
             type,
-            organizationId: groupId
+            organizationId: groupId,
           });
           return things;
         }),
@@ -193,7 +218,7 @@ export const ThingServiceLive = Layer.effect(
           });
         }),
     };
-  })
+  }),
 );
 
 // Export service class
@@ -239,7 +264,7 @@ export function useEffectRunner() {
   const run = useCallback(
     async <A, E>(
       effect: Effect.Effect<A, E>,
-      options?: UseEffectRunnerOptions<A>
+      options?: UseEffectRunnerOptions<A>,
     ): Promise<A | null> => {
       setLoading(true);
       setError(null);
@@ -247,7 +272,7 @@ export function useEffectRunner() {
       try {
         // Run effect with client layer (services + provider)
         const result = await Effect.runPromise(
-          effect.pipe(Effect.provide(ClientLayer))
+          effect.pipe(Effect.provide(ClientLayer)),
         );
 
         options?.onSuccess?.(result);
@@ -261,7 +286,7 @@ export function useEffectRunner() {
         options?.onFinally?.();
       }
     },
-    []
+    [],
   );
 
   return { run, loading, error };
@@ -334,9 +359,7 @@ import { ClientLayer } from "@/services/ClientLayer";
  * const thingService = useService(ThingService);
  * const course = thingService.get(courseId);
  */
-export function useService<S extends Effect.Service<any, any>>(
-  service: S
-) {
+export function useService<S extends Effect.Service<any, any>>(service: S) {
   return useCallback(
     (operation: (svc: S) => Effect.Effect<any, any>) => {
       const program = Effect.gen(function* () {
@@ -346,7 +369,7 @@ export function useService<S extends Effect.Service<any, any>>(
 
       return Effect.runPromise(program.pipe(Effect.provide(ClientLayer)));
     },
-    [service]
+    [service],
   );
 }
 ```
@@ -376,7 +399,7 @@ export const ClientLayer = Layer.mergeAll(
   EventServiceLive,
   KnowledgeServiceLive,
   GroupServiceLive,
-  PeopleServiceLive
+  PeopleServiceLive,
 );
 ```
 
@@ -394,15 +417,15 @@ class CourseService extends Context.Tag("CourseService")<
     readonly createWithInstructor: (
       courseData: CreateCourseInput,
       instructorId: string,
-      groupId: string
-    ) => Effect.Effect<string, Error>
+      groupId: string,
+    ) => Effect.Effect<string, Error>;
   }
 >() {}
 
 export const CourseServiceLive = Layer.effect(
   CourseService,
   Effect.gen(function* () {
-    const thingService = yield* ThingService;      // Dependency!
+    const thingService = yield* ThingService; // Dependency!
     const connectionService = yield* ConnectionService;
 
     return {
@@ -427,7 +450,7 @@ export const CourseServiceLive = Layer.effect(
           return courseId;
         }),
     };
-  })
+  }),
 );
 ```
 
@@ -530,7 +553,10 @@ interface EffectProviderProps {
 
 const EffectLayerContext = createContext<Layer<any>>(ClientLayer);
 
-export function EffectProvider({ layer = ClientLayer, children }: EffectProviderProps) {
+export function EffectProvider({
+  layer = ClientLayer,
+  children,
+}: EffectProviderProps) {
   return (
     <EffectLayerContext.Provider value={layer}>
       {children}
@@ -557,7 +583,10 @@ interface CreateCourseFormProps {
   onSuccess?: (courseId: string) => void;
 }
 
-export function CreateCourseForm({ groupId, onSuccess }: CreateCourseFormProps) {
+export function CreateCourseForm({
+  groupId,
+  onSuccess,
+}: CreateCourseFormProps) {
   const [formData, setFormData] = useState({
     name: "",
     description: "",
@@ -643,39 +672,41 @@ import { Data } from "effect";
 
 // Thing errors
 class ThingNotFoundError extends Data.TaggedError("ThingNotFoundError")<{
-  thingId: string
+  thingId: string;
 }> {}
 
 class InvalidThingTypeError extends Data.TaggedError("InvalidThingTypeError")<{
-  type: string
+  type: string;
 }> {}
 
 class ThingCreationError extends Data.TaggedError("ThingCreationError")<{
-  reason: string
+  reason: string;
 }> {}
 
 // Connection errors
-class ConnectionAlreadyExistsError extends Data.TaggedError("ConnectionAlreadyExistsError")<{
-  fromId: string
-  toId: string
+class ConnectionAlreadyExistsError extends Data.TaggedError(
+  "ConnectionAlreadyExistsError",
+)<{
+  fromId: string;
+  toId: string;
 }> {}
 
 // Validation errors
 class ValidationError extends Data.TaggedError("ValidationError")<{
-  field: string
-  message: string
+  field: string;
+  message: string;
 }> {}
 
 // Infrastructure errors (from provider)
 class ProviderError extends Data.TaggedError("ProviderError")<{
-  provider: string
-  message: string
+  provider: string;
+  message: string;
 }> {}
 
 // Network errors
 class NetworkError extends Data.TaggedError("NetworkError")<{
-  statusCode: number
-  message: string
+  statusCode: number;
+  message: string;
 }> {}
 
 export type FrontendError =
@@ -719,13 +750,14 @@ export function useThingWithErrorHandling(thingId: string) {
     const program = Effect.gen(function* () {
       const service = yield* ThingService;
       return yield* service.get(thingId).pipe(
-        Effect.catchTag("ThingNotFoundError", (error) =>
-          Effect.succeed(null as Thing | null) // Graceful fallback
+        Effect.catchTag(
+          "ThingNotFoundError",
+          (error) => Effect.succeed(null as Thing | null), // Graceful fallback
         ),
         Effect.catchAll((error) => {
           console.error("Error loading thing:", error);
           return Effect.succeed(null);
-        })
+        }),
       );
     });
 
@@ -773,7 +805,7 @@ export function useForm<T>(options: UseFormOptions<T>) {
 
       return await Effect.runPromise(program);
     },
-    [options.schema]
+    [options.schema],
   );
 
   const handleSubmit = useCallback(
@@ -792,7 +824,7 @@ export function useForm<T>(options: UseFormOptions<T>) {
 
       setIsSubmitting(false);
     },
-    [formData, validate, options]
+    [formData, validate, options],
   );
 
   return {
@@ -819,9 +851,7 @@ interface UseOptimisticUpdateOptions<T> {
   onError?: (error: unknown, rollback: T) => void;
 }
 
-export function useOptimisticUpdate<T>(
-  options: UseOptimisticUpdateOptions<T>
-) {
+export function useOptimisticUpdate<T>(options: UseOptimisticUpdateOptions<T>) {
   const [data, setData] = useState(options.initial);
   const [isUpdating, setIsUpdating] = useState(false);
   const { run } = useEffectRunner();
@@ -847,7 +877,7 @@ export function useOptimisticUpdate<T>(
 
       setIsUpdating(false);
     },
-    [data, run, options]
+    [data, run, options],
   );
 
   return { data, isUpdating, update };
@@ -866,15 +896,16 @@ import { Layer } from "effect";
 import { ThingService } from "../ThingService";
 
 export const MockThingService = Layer.succeed(ThingService, {
-  get: (id) => Effect.succeed({
-    _id: id,
-    type: "course",
-    name: "Test Course",
-    properties: {},
-    status: "active",
-    createdAt: Date.now(),
-    updatedAt: Date.now(),
-  }),
+  get: (id) =>
+    Effect.succeed({
+      _id: id,
+      type: "course",
+      name: "Test Course",
+      properties: {},
+      status: "active",
+      createdAt: Date.now(),
+      updatedAt: Date.now(),
+    }),
 
   list: (type, groupId) =>
     Effect.succeed([
@@ -974,7 +1005,9 @@ export const CreateThingInputSchema = Schema.Struct({
   properties: Schema.Record(Schema.String, Schema.Unknown),
 });
 
-export type CreateThingInput = Schema.Schema.Type<typeof CreateThingInputSchema>;
+export type CreateThingInput = Schema.Schema.Type<
+  typeof CreateThingInputSchema
+>;
 
 // Validation helper
 export const validateThing = (data: unknown) =>
@@ -991,10 +1024,7 @@ export const validateCreateThingInput = (data: unknown) =>
 import { useState, useEffect } from "react";
 import { Schema } from "effect";
 
-export function useValidatedData<T>(
-  data: unknown,
-  schema: Schema.Schema<T>
-) {
+export function useValidatedData<T>(data: unknown, schema: Schema.Schema<T>) {
   const [validated, setValidated] = useState<T | null>(null);
   const [validationError, setValidationError] = useState<string | null>(null);
 
@@ -1026,16 +1056,10 @@ import { useMemo } from "react";
 import { Effect } from "effect";
 import { ClientLayer } from "@/services/ClientLayer";
 
-export function useMemoEffect<A, E>(
-  effect: Effect.Effect<A, E>,
-  deps: any[]
-) {
+export function useMemoEffect<A, E>(effect: Effect.Effect<A, E>, deps: any[]) {
   return useMemo(
-    () =>
-      Effect.runPromise(
-        effect.pipe(Effect.provide(ClientLayer))
-      ),
-    deps
+    () => Effect.runPromise(effect.pipe(Effect.provide(ClientLayer))),
+    deps,
   );
 }
 ```
@@ -1167,31 +1191,37 @@ web/
 ## Migration Path: From Current Convex to Backend-Agnostic
 
 ### Phase 1: Create DataProvider Interface (3 days)
+
 - Define interface in `/web/src/providers/DataProvider.ts`
 - No component changes needed
 - Just type definitions
 
 ### Phase 2: Implement ConvexProvider (3-5 days)
+
 - Wrap existing Convex client
 - Implement all DataProvider methods
 - Keep existing Convex integration working
 
 ### Phase 3: Build Effect.ts Services (3-5 days)
+
 - Create `ThingService`, `ConnectionService`, etc.
 - Services delegate to DataProvider
 - No component changes yet
 
 ### Phase 4: Create React Hooks (2-3 days)
+
 - Implement `useEffectRunner`, `useThingService`, etc.
 - Provide as alternatives to Convex hooks
 - Both can coexist
 
 ### Phase 5: Migrate Components (2-4 weeks)
+
 - Page by page, replace Convex hooks with Effect services
 - Each component still works during migration
 - Minimal risk - can rollback any page
 
 ### Phase 6: Remove Convex Dependencies (1-2 days)
+
 - Remove `convex` from `package.json`
 - Delete `/web/convex/` directory
 - Frontend is now backend-agnostic!

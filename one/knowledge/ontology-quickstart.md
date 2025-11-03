@@ -1,3 +1,21 @@
+---
+title: Ontology Quickstart
+dimension: knowledge
+category: ontology-quickstart.md
+tags: 6-dimensions, architecture, connections, events, groups, knowledge, ontology, people, things
+related_dimensions: connections, events, groups, people, things
+scope: global
+created: 2025-11-03
+updated: 2025-11-03
+version: 1.0.0
+ai_context: |
+  This document is part of the knowledge dimension in the ontology-quickstart.md category.
+  Location: one/knowledge/ontology-quickstart.md
+  Purpose: Documents multi-ontology architecture: quick start guide
+  Related dimensions: connections, events, groups, people, things
+  For AI agents: Read this to understand ontology quickstart.
+---
+
 # Multi-Ontology Architecture: Quick Start Guide
 
 **Version:** 1.0.0

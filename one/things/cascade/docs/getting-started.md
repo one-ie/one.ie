@@ -1,3 +1,21 @@
+---
+title: Getting Started
+dimension: things
+category: cascade
+tags: agent, ai, ontology
+related_dimensions: connections, events, knowledge, people
+scope: global
+created: 2025-11-03
+updated: 2025-11-03
+version: 1.0.0
+ai_context: |
+  This document is part of the things dimension in the cascade category.
+  Location: one/things/cascade/docs/getting-started.md
+  Purpose: Documents getting started with one cascade
+  Related dimensions: connections, events, knowledge, people
+  For AI agents: Read this to understand getting started.
+---
+
 # Getting Started with ONE Cascade
 
 **Transform ideas into reality using 8 AI agents and a 6-dimension ontology**

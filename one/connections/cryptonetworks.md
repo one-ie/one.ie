@@ -1,3 +1,21 @@
+---
+title: Cryptonetworks
+dimension: connections
+category: cryptonetworks.md
+tags: agent, ai, architecture, blockchain, ontology, protocol
+related_dimensions: events, knowledge, things
+scope: global
+created: 2025-11-03
+updated: 2025-11-03
+version: 1.0.0
+ai_context: |
+  This document is part of the connections dimension in the cryptonetworks.md category.
+  Location: one/connections/cryptonetworks.md
+  Purpose: Documents crypto networks - ai agent architecture analysis
+  Related dimensions: events, knowledge, things
+  For AI agents: Read this to understand cryptonetworks.
+---
+
 # Crypto Networks - AI Agent Architecture Analysis
 
 **Version:** 1.0.0

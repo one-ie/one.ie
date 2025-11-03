@@ -1,3 +1,21 @@
+---
+title: Protocols
+dimension: connections
+category: protocols.md
+tags: agent, events, frontend, ontology, protocol, specification
+related_dimensions: events, groups, knowledge, people, things
+scope: global
+created: 2025-11-03
+updated: 2025-11-03
+version: 1.0.0
+ai_context: |
+  This document is part of the connections dimension in the protocols.md category.
+  Location: one/connections/protocols.md
+  Purpose: Documents protocol integration - quick reference
+  Related dimensions: events, groups, knowledge, people, things
+  For AI agents: Read this to understand protocols.
+---
+
 # Protocol Integration - Quick Reference
 
 **Last Updated:** 2025-01-05

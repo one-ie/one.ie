@@ -449,20 +449,42 @@ def main():
             for i, issue in enumerate(issues, 1):
                 error_msg += f"{i}. {issue}\n"
 
-            error_msg += f"\nONE Ontology Structure:\n"
-            error_msg += "Files in /one must follow the 6-dimension ontology:\n\n"
+            error_msg += f"\n{'='*70}\n"
+            error_msg += "ONE Platform - 6-Dimension Ontology Structure\n"
+            error_msg += f"{'='*70}\n\n"
+            error_msg += "Files in /one MUST be organized by these 6 dimensions:\n\n"
 
             for dim_name, dim_config in VALID_DIMENSIONS.items():
-                error_msg += f"• {dim_name}/\n"
-                error_msg += f"  {dim_config['description']}\n"
+                error_msg += f"📁 /one/{dim_name}/\n"
+                error_msg += f"   {dim_config['description']}\n"
+
+                if dim_config.get('example_files'):
+                    error_msg += f"   Examples: {', '.join(dim_config['example_files'][:3])}\n"
+
                 if dim_config.get('types'):
                     count = len(dim_config['types'])
-                    error_msg += f"  ({count} defined types)\n"
+                    error_msg += f"   ({count} defined types in schema)\n"
 
-            error_msg += f"\nCurrent dimension: {dimension}"
-            if canonical and canonical != dimension:
-                error_msg += f" (normalized to: {canonical})"
-            error_msg += "\n"
+                if dim_config.get('note'):
+                    error_msg += f"   Note: {dim_config['note']}\n"
+
+                error_msg += "\n"
+
+            error_msg += f"Current file location: {file_path}\n"
+            if dimension:
+                error_msg += f"Detected dimension: {dimension}"
+                if canonical and canonical != dimension:
+                    error_msg += f" (normalized to: {canonical})"
+                error_msg += "\n"
+
+            error_msg += f"\n{'='*70}\n"
+            error_msg += "Database Implementation (5 tables):\n"
+            error_msg += "• groups table → groups dimension\n"
+            error_msg += "• things table → things + people dimensions (people have type: 'creator')\n"
+            error_msg += "• connections table → connections dimension\n"
+            error_msg += "• events table → events dimension\n"
+            error_msg += "• knowledge table → knowledge dimension\n"
+            error_msg += f"{'='*70}\n"
 
             # For PreToolUse, block with exit code 2
             if hook_event == "PreToolUse":

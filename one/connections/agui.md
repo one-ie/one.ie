@@ -1,3 +1,21 @@
+---
+title: Agui
+dimension: connections
+category: agui.md
+tags: agent, ai, architecture, frontend, protocol
+related_dimensions: events, people, things
+scope: global
+created: 2025-11-03
+updated: 2025-11-03
+version: 1.0.0
+ai_context: |
+  This document is part of the connections dimension in the agui.md category.
+  Location: one/connections/agui.md
+  Purpose: Documents ag-ui protocol - agent-generated user interface
+  Related dimensions: events, people, things
+  For AI agents: Read this to understand agui.
+---
+
 # AG-UI Protocol - Agent-Generated User Interface
 
 **Version:** 1.0.0

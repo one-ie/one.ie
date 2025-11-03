@@ -1,3 +1,21 @@
+---
+title: Separate Implementation Status
+dimension: events
+category: separate-implementation-status.md
+tags: architecture, backend, connections, events, frontend, things
+related_dimensions: connections, groups, knowledge, people, things
+scope: global
+created: 2025-11-03
+updated: 2025-11-03
+version: 1.0.0
+ai_context: |
+  This document is part of the events dimension in the separate-implementation-status.md category.
+  Location: one/events/separate-implementation-status.md
+  Purpose: Documents frontend-backend separation: implementation status
+  Related dimensions: connections, groups, knowledge, people, things
+  For AI agents: Read this to understand separate implementation status.
+---
+
 # Frontend-Backend Separation: Implementation Status
 
 **Date:** 2025-10-20

@@ -1,3 +1,21 @@
+---
+title: Readme
+dimension: knowledge
+category: general
+tags: agent, ai, architecture, knowledge, ontology
+related_dimensions: connections, events, groups, people, things
+scope: global
+created: 2025-11-03
+updated: 2025-11-03
+version: 1.0.0
+ai_context: |
+  This document is part of the knowledge dimension in the general category.
+  Location: one/README.md
+  Purpose: Documents the one ontology
+  Related dimensions: connections, events, groups, people, things
+  For AI agents: Read this to understand README.
+---
+
 # The ONE Ontology
 
 > **Every intelligent system needs a coherent model of reality.**

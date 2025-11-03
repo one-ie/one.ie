@@ -1,3 +1,21 @@
+---
+title: Ecommerce Enhancements
+dimension: events
+category: ECOMMERCE-ENHANCEMENTS.md
+tags: 
+related_dimensions: people, things
+scope: global
+created: 2025-11-03
+updated: 2025-11-03
+version: 1.0.0
+ai_context: |
+  This document is part of the events dimension in the ECOMMERCE-ENHANCEMENTS.md category.
+  Location: one/events/ECOMMERCE-ENHANCEMENTS.md
+  Purpose: Documents ecommerce ui component enhancements - production demo ready
+  Related dimensions: people, things
+  For AI agents: Read this to understand ECOMMERCE ENHANCEMENTS.
+---
+
 # Ecommerce UI Component Enhancements - Production Demo Ready
 
 ## Overview

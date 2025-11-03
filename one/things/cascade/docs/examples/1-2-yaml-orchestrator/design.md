@@ -1,3 +1,21 @@
+---
+title: Design
+dimension: things
+category: cascade
+tags: agent
+related_dimensions: events, people
+scope: global
+created: 2025-11-03
+updated: 2025-11-03
+version: 1.0.0
+ai_context: |
+  This document is part of the things dimension in the cascade category.
+  Location: one/things/cascade/docs/examples/1-2-yaml-orchestrator/design.md
+  Purpose: Documents design for feature 1-2: workflow orchestration
+  Related dimensions: events, people
+  For AI agents: Read this to understand design.
+---
+
 # Design for Feature 1-2: Workflow Orchestration
 
 **Feature:** 1-2-yaml-orchestrator
@@ -17,6 +35,7 @@ Enable `/one` CLI command to orchestrate the 6-stage workflow naturally by havin
 **Command:** `/one [stage/action]`
 
 **Examples:**
+
 ```bash
 /one idea "Build a course platform"           # Stage 1: Validate idea
 /one plan 1                                    # Stage 2: Create plan
@@ -32,8 +51,10 @@ Enable `/one` CLI command to orchestrate the 6-stage workflow naturally by havin
 ## Design Decisions (Test-Driven)
 
 ### Decision 1: No Orchestrator Code - Claude Reads Instructions
+
 **Test requirement:** Claude must follow 6-stage workflow from documentation
 **Design solution:**
+
 - Workflow guide exists as markdown (Feature 1-2 spec)
 - Each stage references which agent prompt to read
 - Claude Code reads guide → reads agent → follows instructions
@@ -44,8 +65,10 @@ Enable `/one` CLI command to orchestrate the 6-stage workflow naturally by havin
 ---
 
 ### Decision 2: Stage Progression Visible to User
+
 **Test requirement:** User understands current stage and what's next
 **Design solution:**
+
 ```
 Claude Code (Engineering Director - Stage 1: Ideas):
 > Validating idea against ontology...
@@ -68,8 +91,10 @@ Claude Code (Engineering Director - Stage 2: Plans):
 ---
 
 ### Decision 3: Workflow Status at a Glance
+
 **Test requirement:** User can check workflow progress anytime
 **Design solution:**
+
 ```
 $ /one workflow
 
@@ -94,8 +119,10 @@ Next Actions:
 ---
 
 ### Decision 4: Parallel Execution Guidance
+
 **Test requirement:** User knows which tasks can run in parallel
 **Design solution:**
+
 ```
 Claude Code (Engineering Director):
 Stage 3 complete! All 6 feature specs written.
@@ -116,8 +143,10 @@ You can now work on Stage 4 (Tests) in parallel:
 ---
 
 ### Decision 5: Automatic Stage Detection
+
 **Test requirement:** Claude detects current stage automatically
 **Design solution:**
+
 - Claude checks existing files to determine stage
 - If `one/things/plans/1-*.md` exists → Stage 2 complete
 - If `one/things/features/1-*/tests.md` exists → Stage 4 complete
@@ -125,6 +154,7 @@ You can now work on Stage 4 (Tests) in parallel:
 - No need for user to specify stage explicitly
 
 **Example:**
+
 ```
 User: /one 1-1
 
@@ -166,14 +196,15 @@ Stage 6: Implement   → /one implement [N-M]   → agent-{specialist}.md (Code)
 User: /one feature 1-1
 
 Claude thinks:
+
 1. "User wants to work on feature 1-1"
-2. Check: Does one/things/features/1-1-*.md exist?
+2. Check: Does one/things/features/1-1-\*.md exist?
    - No → Create feature spec (Stage 3)
    - Yes → Move to next incomplete stage
-3. Check: Does one/things/features/1-1-*/tests.md exist?
+3. Check: Does one/things/features/1-1-\*/tests.md exist?
    - No → Create tests (Stage 4)
    - Yes → Check design
-4. Check: Does one/things/features/1-1-*/design.md exist?
+4. Check: Does one/things/features/1-1-\*/design.md exist?
    - No → Create design (Stage 5)
    - Yes → Check implementation
 5. Check: Is implementation complete?
@@ -190,6 +221,7 @@ Claude acts based on determination
 ### 3. Response Patterns
 
 **Stage Start:**
+
 ```
 🔄 [Agent Role - Stage N: Name]
 [What I'm doing]
@@ -197,6 +229,7 @@ Claude acts based on determination
 ```
 
 **Stage Complete:**
+
 ```
 ✅ [Stage name] complete!
 [Summary of what was created]
@@ -207,6 +240,7 @@ Command: [Suggested next command]
 ```
 
 **Workflow Complete:**
+
 ```
 🎉 Workflow Complete!
 
@@ -388,6 +422,7 @@ Feature complete! Moving to next feature automatically.
 ## Design Tokens
 
 ### Stage Indicators
+
 ```
 Stage 1: Ideas       → 💡
 Stage 2: Plans       → 📋
@@ -398,6 +433,7 @@ Stage 6: Implement   → 🔧
 ```
 
 ### Progress Indicators
+
 ```
 ✅ Complete
 🔄 In Progress
@@ -408,6 +444,7 @@ Stage 6: Implement   → 🔧
 ```
 
 ### Agent Role Indicators
+
 ```
 Claude Code (Engineering Director - Stage 1: Ideas):
 Claude Code (Backend Specialist - Stage 3: Features):
@@ -421,17 +458,20 @@ Claude Code (Backend Specialist - Stage 6: Implementation):
 ## Accessibility
 
 ### Screen Reader Friendly
+
 - Clear stage names in agent indicators
 - Status emojis have text equivalents
 - Progress explicitly stated ("2 of 4 complete")
 - File paths spoken clearly
 
 ### Keyboard Navigation
+
 - All commands text-based (fully keyboard accessible)
 - No mouse required
 - Tab completion friendly (`/one <tab>` shows options)
 
 ### Error Recovery
+
 - Clear error messages with stage context
 - Suggestions for fixes
 - Resume workflow from any stage
@@ -442,6 +482,7 @@ Claude Code (Backend Specialist - Stage 6: Implementation):
 ## Success Criteria from Tests
 
 ### User Flows
+
 - ✅ User completes full workflow (< 1 hour for simple feature)
 - ✅ User checks workflow status anytime
 - ✅ User resumes interrupted workflow
@@ -449,6 +490,7 @@ Claude Code (Backend Specialist - Stage 6: Implementation):
 - ✅ User understands next actions
 
 ### Acceptance Criteria
+
 - ✅ Stage detection: < 100ms (file existence checks)
 - ✅ Stage execution: Follows agent prompts correctly
 - ✅ Progress tracking: Accurate file-based status
@@ -460,12 +502,14 @@ Claude Code (Backend Specialist - Stage 6: Implementation):
 ## Implementation Notes
 
 **No orchestrator to build** - Just ensure workflow guide is clear:
+
 1. Stage sequence documented ✅ (in Feature 1-2 spec)
 2. Agent prompt references ✅ (each stage lists agent file)
 3. File structure conventions ✅ (Feature 1-6)
 4. CLI response patterns ✅ (this document)
 
 **Claude Code handles orchestration** by:
+
 - Reading workflow guide
 - Checking file existence for stage detection
 - Reading appropriate agent prompts
@@ -477,6 +521,7 @@ Claude Code (Backend Specialist - Stage 6: Implementation):
 ## Next Steps
 
 Ready for Level 6 (Implementation):
+
 - Workflow guide complete ✅ (Feature 1-2 spec)
 - Stage instructions clear ✅
 - Agent prompt references defined ✅
@@ -488,6 +533,7 @@ Ready for Level 6 (Implementation):
 **Status:** ✅ Design Complete
 
 **Key Design Insights:**
+
 1. **No UI to build** - CLI responses are natural conversation
 2. **Stage awareness** - User always knows where they are in workflow
 3. **Smart progression** - Claude detects stage from file existence

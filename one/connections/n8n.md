@@ -1,3 +1,21 @@
+---
+title: N8N
+dimension: connections
+category: n8n.md
+tags: agent, ai, architecture
+related_dimensions: events, people, things
+scope: global
+created: 2025-11-03
+updated: 2025-11-03
+version: 1.0.0
+ai_context: |
+  This document is part of the connections dimension in the n8n.md category.
+  Location: one/connections/n8n.md
+  Purpose: Documents n8n integration - ai agent tool integration
+  Related dimensions: events, people, things
+  For AI agents: Read this to understand n8n.
+---
+
 # N8N Integration - AI Agent Tool Integration
 
 **Version:** 1.0.0

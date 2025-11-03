@@ -1,3 +1,19 @@
+---
+title: Ai Agents Vs Memecoins Thesis
+dimension: knowledge
+category: ai-agents-vs-memecoins-thesis.md
+tags: agent, ai, ai-agent, artificial-intelligence
+scope: global
+created: 2025-11-03
+updated: 2025-11-03
+version: 1.0.0
+ai_context: |
+  This document is part of the knowledge dimension in the ai-agents-vs-memecoins-thesis.md category.
+  Location: one/knowledge/ai-agents-vs-memecoins-thesis.md
+  Purpose: Documents the ai agent token thesis: evolution beyond memecoins
+  For AI agents: Read this to understand ai agents vs memecoins thesis.
+---
+
 # The AI Agent Token Thesis: Evolution Beyond Memecoins
 
 **Why AI Agents Are Replacing Memecoins as the Speculative Asset Class of Choice**

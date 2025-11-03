@@ -1,3 +1,21 @@
+---
+title: 2 Backend Agnostic Frontend
+dimension: things
+category: ideas
+tags: agent, architecture, backend, connections, convex, events, frontend, ontology, things, ui
+related_dimensions: connections, events, groups
+scope: global
+created: 2025-11-03
+updated: 2025-11-03
+version: 1.0.0
+ai_context: |
+  This document is part of the things dimension in the ideas category.
+  Location: one/things/ideas/2-backend-agnostic-frontend.md
+  Purpose: Documents idea: backend-agnostic frontend architecture
+  Related dimensions: connections, events, groups
+  For AI agents: Read this to understand 2 backend agnostic frontend.
+---
+
 # Idea: Backend-Agnostic Frontend Architecture
 
 **Status:** Validated by Director Agent
@@ -14,6 +32,7 @@ Transform the tightly-coupled Astro/React frontend + Convex backend architecture
 **Core Concept:** Introduce a thin abstraction layer (DataProvider interface) that maps the 6-dimension ontology operations to ANY backend implementation. Frontend components use generic hooks (`useThings`, `useConnections`, `useEvents`) that work identically regardless of backend.
 
 **Strategic Value:**
+
 - Removes vendor lock-in (not tied to Convex)
 - Enables multi-backend federation (one org uses Convex, another uses WordPress)
 - Supports organizations with existing infrastructure
@@ -25,11 +44,13 @@ Transform the tightly-coupled Astro/React frontend + Convex backend architecture
 ## Problem Statement
 
 **Current Architecture:**
+
 ```
 Frontend Components → Convex Hooks (useQuery/useMutation) → Convex Backend
 ```
 
 **Issues:**
+
 1. Frontend tightly coupled to Convex SDK
 2. Cannot swap backends without rewriting components
 3. Organizations locked into Convex infrastructure
@@ -37,6 +58,7 @@ Frontend Components → Convex Hooks (useQuery/useMutation) → Convex Backend
 5. Hard to support enterprises with existing systems
 
 **Example Lock-in:**
+
 ```typescript
 // Current: Tightly coupled to Convex
 import { useQuery } from "convex/react";
@@ -53,6 +75,7 @@ function MyComponent() {
 ## Proposed Solution
 
 **New Architecture:**
+
 ```
 Frontend Components → DataProvider Interface → Backend Adapter → Any Backend
                                               ↓
@@ -62,6 +85,7 @@ Frontend Components → DataProvider Interface → Backend Adapter → Any Backe
 **Key Components:**
 
 ### 1. DataProvider Interface
+
 ```typescript
 interface DataProvider {
   // 6-dimension ontology operations
@@ -75,15 +99,17 @@ interface DataProvider {
 ```
 
 ### 2. Configuration System
+
 ```typescript
 // One line to configure backend
 export const dataProvider = createDataProvider({
-  type: "convex",  // or "wordpress" | "notion" | "supabase"
-  config: { url: process.env.BACKEND_URL }
+  type: "convex", // or "wordpress" | "notion" | "supabase"
+  config: { url: process.env.BACKEND_URL },
 });
 ```
 
 ### 3. Generic React Hooks
+
 ```typescript
 // Works with ANY backend
 function MyComponent() {
@@ -97,36 +123,42 @@ function MyComponent() {
 ## Ontology Validation
 
 ### 1. Organizations (Who owns what at org level)
+
 - ✅ Each organization configures `properties.backendProvider`
 - ✅ Multi-tenant isolation maintained across ALL providers
 - ✅ Organizations can swap providers independently
 - ✅ Example: `org_123` uses Convex, `org_456` uses WordPress
 
 ### 2. People (Who can do what)
+
 - ✅ Only `org_owner` role can configure backend providers
 - ✅ Authorization enforced at backend, NOT frontend
 - ✅ All 4 roles work identically across providers
 - ✅ Frontend never sees auth implementation details
 
 ### 3. Things (All entities)
+
 - ✅ New thing type: `external_connection` (backend configurations)
 - ✅ All 66 thing types work through DataProvider interface
 - ✅ Generic ThingService handles all types uniformly
 - ✅ Example: `creator`, `course`, `lesson` work on any backend
 
 ### 4. Connections (All relationships)
+
 - ✅ New relationship: `configured_by` (org → external_connection)
 - ✅ Uses consolidated type: `communicated` with `metadata.protocol`
 - ✅ Cross-backend connections supported (Convex course → WordPress user)
 - ✅ Example: `owns`, `enrolled_in`, `part_of` work identically
 
 ### 5. Events (All actions)
+
 - ✅ New event: `provider_changed` (when backend swaps)
 - ✅ Uses consolidated type: `communication_event` with protocol metadata
 - ✅ Complete audit trail preserved regardless of backend
 - ✅ Example: `course_created`, `lesson_completed` logged to events table
 
 ### 6. Knowledge (Labels + vectors)
+
 - ✅ Labels tag backend provider capabilities
 - ✅ Tags: `protocol:data_provider`, `provider:convex`, `status:active`
 - ✅ RAG can index provider documentation for help system
@@ -141,6 +173,7 @@ function MyComponent() {
 **Scope:** Medium-Large (4-6 weeks for full implementation)
 
 **Breakdown:**
+
 - Week 1-2: DataProvider interface + ConvexProvider + Config system
 - Week 2-3: Effect.ts service layer (ThingService, ConnectionService, etc.)
 - Week 3-4: Migrate auth components (50+ tests must pass)
@@ -151,12 +184,14 @@ function MyComponent() {
 **Risk:** Medium
 
 **Risks:**
+
 1. Auth tests break during migration (50+ test cases)
 2. Performance regression (additional abstraction layer)
 3. TypeScript errors proliferate across codebase
 4. Context budget explosion (more files to maintain)
 
 **Mitigation:**
+
 1. Run auth tests after EVERY component migration
 2. Benchmark performance, target <10ms overhead
 3. Strong interface types from day 1
@@ -167,6 +202,7 @@ function MyComponent() {
 ## Success Criteria
 
 ### Immediate (MVP - Week 2)
+
 - [ ] DataProvider interface defined and typed
 - [ ] ConvexProvider implemented and tested
 - [ ] Configuration system working
@@ -174,6 +210,7 @@ function MyComponent() {
 - [ ] All existing tests still pass
 
 ### Near-term (Month 1)
+
 - [ ] All auth components use DataProvider (50+ tests pass)
 - [ ] All dashboard components use DataProvider
 - [ ] Zero direct Convex imports in components
@@ -181,6 +218,7 @@ function MyComponent() {
 - [ ] TypeScript compiles with zero errors
 
 ### Long-term (Month 2)
+
 - [ ] WordPress provider functional
 - [ ] Notion provider functional
 - [ ] Organizations can swap backends via config
@@ -219,6 +257,7 @@ function MyComponent() {
 ## Technical Architecture
 
 ### Layer 1: DataProvider Interface (Protocol)
+
 ```typescript
 // Defines WHAT operations are possible (ontology operations)
 interface DataProvider {
@@ -230,6 +269,7 @@ interface DataProvider {
 ```
 
 ### Layer 2: Backend Adapters (Implementation)
+
 ```typescript
 // Defines HOW operations work for specific backends
 class ConvexProvider implements DataProvider { ... }
@@ -238,6 +278,7 @@ class NotionProvider implements DataProvider { ... }
 ```
 
 ### Layer 3: Effect.ts Services (Business Logic)
+
 ```typescript
 // Pure business logic, backend-agnostic
 class ThingService {
@@ -250,6 +291,7 @@ class ThingService {
 ```
 
 ### Layer 4: React Hooks (Frontend API)
+
 ```typescript
 // Simple, type-safe hooks for components
 function useThings(filter: ThingFilter): Thing[] {
@@ -259,6 +301,7 @@ function useThings(filter: ThingFilter): Thing[] {
 ```
 
 ### Layer 5: Components (UI)
+
 ```typescript
 // Clean, backend-agnostic components
 function EntityList({ type }: { type: string }) {
@@ -268,6 +311,7 @@ function EntityList({ type }: { type: string }) {
 ```
 
 **Separation of Concerns:**
+
 - Interface defines protocol (ontology operations)
 - Adapters handle backend specifics
 - Services implement business logic
@@ -279,6 +323,7 @@ function EntityList({ type }: { type: string }) {
 ## Migration Strategy
 
 ### Phase 1: Foundation (Non-breaking)
+
 1. Add DataProvider interface
 2. Implement ConvexProvider (wraps existing Convex hooks)
 3. Add configuration system
@@ -287,6 +332,7 @@ function EntityList({ type }: { type: string }) {
 **Rollback:** Easy - just don't use new provider
 
 ### Phase 2: Auth Migration (Breaking)
+
 1. Migrate auth components one by one
 2. Run auth tests after EACH component
 3. Keep rollback branch at each milestone
@@ -294,6 +340,7 @@ function EntityList({ type }: { type: string }) {
 **Rollback:** Revert to previous commit, restore Convex hooks
 
 ### Phase 3: Full Migration (Breaking)
+
 1. Migrate all remaining components
 2. Remove direct Convex dependencies
 3. Update documentation
@@ -301,6 +348,7 @@ function EntityList({ type }: { type: string }) {
 **Rollback:** Not possible after Feature 6 completes
 
 ### Phase 4: Alternative Providers (Additive)
+
 1. Implement WordPress provider
 2. Implement Notion provider
 3. Prove organizations can swap backends
@@ -332,36 +380,43 @@ function EntityList({ type }: { type: string }) {
 ## Feature Breakdown
 
 ### Feature 2-1: DataProvider Interface & ConvexProvider
+
 **Owner:** Backend Specialist
 **Duration:** 1 week
 **Dependencies:** None
 
 ### Feature 2-2: Configuration System
+
 **Owner:** Backend Specialist
 **Duration:** 3 days
 **Dependencies:** Feature 2-1
 
 ### Feature 2-3: Effect.ts Service Layer
+
 **Owner:** Backend Specialist
 **Duration:** 1 week
 **Dependencies:** Features 2-1, 2-2
 
 ### Feature 2-4: React Hooks
+
 **Owner:** Frontend Specialist
 **Duration:** 3 days
 **Dependencies:** Feature 2-1
 
 ### Feature 2-5: Auth Component Migration
+
 **Owner:** Frontend Specialist
 **Duration:** 1 week
 **Dependencies:** Features 2-1, 2-4
 
 ### Feature 2-6: Dashboard Component Migration
+
 **Owner:** Frontend Specialist
 **Duration:** 1 week
 **Dependencies:** Feature 2-5
 
 ### Feature 2-7: Alternative Providers (WordPress + Notion)
+
 **Owner:** Integration Specialist
 **Duration:** 2 weeks
 **Dependencies:** Feature 2-6

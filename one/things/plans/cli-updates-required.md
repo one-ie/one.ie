@@ -1,3 +1,21 @@
+---
+title: Cli Updates Required
+dimension: things
+category: plans
+tags: ai, architecture
+related_dimensions: events, people
+scope: global
+created: 2025-11-03
+updated: 2025-11-03
+version: 1.0.0
+ai_context: |
+  This document is part of the things dimension in the plans category.
+  Location: one/things/plans/cli-updates-required.md
+  Purpose: Documents cli status: working perfectly ✅
+  Related dimensions: events, people
+  For AI agents: Read this to understand cli updates required.
+---
+
 # CLI Status: Working Perfectly ✅
 
 ## No Changes Required!
@@ -7,11 +25,13 @@ The CLI is already correct. It clones from `one-ie/web` which is the single sour
 ## Current Architecture (Correct!)
 
 **Repository Structure:**
+
 1. `one-ie/web` - Website source (pushed from `/web`)
 2. `one-ie/one` - Demo assembly (web/, one/, .claude/)
 3. `one-ie/oneie` - Main site assembly (web/, one/, .claude/)
 
 **CLI flow (perfect as-is):**
+
 1. ✅ CLI bundles `/one` and `/.claude` in npm package
 2. ✅ CLI syncs these to user directory
 3. ✅ CLI optionally clones `web/` from `one-ie/web`
@@ -24,15 +44,16 @@ The CLI is already correct. It clones from `one-ie/web` which is the single sour
 **File:** `cli/src/clone-web.ts`
 
 **Current code (perfect):**
+
 ```typescript
 // Clone from one-ie/web (single source of truth)
-await execAsync(
-  "git clone https://github.com/one-ie/web.git web",
-  { cwd: process.cwd() }
-);
+await execAsync("git clone https://github.com/one-ie/web.git web", {
+  cwd: process.cwd(),
+});
 ```
 
 **Why this is correct:**
+
 - `one-ie/web` is the single source of truth for website
 - Pushed from local `/web` development
 - CLI clones the official website source
@@ -41,17 +62,20 @@ await execAsync(
 ### 2. Keep Sync Operations (NO CHANGES NEEDED)
 
 **Current Flow (PERFECT):**
+
 1. CLI syncs `/one` files from npm package ✅
 2. CLI syncs `/.claude` files from npm package ✅
 3. CLI optionally clones web from one-ie/one ✅
 
 **Why this works:**
+
 - Users who just want docs/ontology don't need to clone anything
 - Users who want web can opt-in
 - web/ is extracted from demo repo (one-ie/one)
 - Clean separation of concerns
 
 **Files to Keep:**
+
 - `cli/src/index.ts` - ✅ No changes needed
 - `cli/src/sync-ontology.ts` - ✅ Keep as-is
 - `cli/src/sync-agents.ts` - ✅ Keep as-is
@@ -62,6 +86,7 @@ await execAsync(
 **File:** `cli/package.json`
 
 **Current (lines 58-74) - KEEP AS-IS:**
+
 ```json
 "files": [
   "dist",
@@ -83,6 +108,7 @@ await execAsync(
 ```
 
 **Rationale:**
+
 - CLI bundles documentation and config
 - Users get instant access without cloning
 - Lightweight users (just want docs) don't need full repo
@@ -91,6 +117,7 @@ await execAsync(
 ### 4. index.ts Logic (NO CHANGES NEEDED)
 
 **Current flow is perfect:**
+
 ```typescript
 // Step 1: Sync ontology from npm package ✅
 syncOntologyFiles();
@@ -108,6 +135,7 @@ if (buildWebsite) {
 ```
 
 **Why this is better:**
+
 - Users without web still get docs/ontology
 - Flexible - opt-in to web
 - web/ comes from demo repo (one-ie/one)
@@ -120,6 +148,7 @@ if (buildWebsite) {
 **File:** `cli/package.json` (line 34)
 
 **Current:**
+
 ```json
 "repository": {
   "type": "git",
@@ -133,6 +162,7 @@ if (buildWebsite) {
 ### 6. Test the Updated CLI
 
 **Test locally:**
+
 ```bash
 # Build CLI
 cd cli
@@ -154,6 +184,7 @@ bun run dev
 ```
 
 **Test from npm:**
+
 ```bash
 # After publishing
 npx oneie@latest
@@ -166,12 +197,14 @@ npx oneie@latest
 ## Migration Checklist
 
 ### Phase 1: Update CLI Code
+
 - [x] Update `cli/src/clone-web.ts` to clone from one-ie/one ✅ DONE
 - [ ] ~~Simplify index.ts~~ - NO CHANGES NEEDED ✅
 - [ ] ~~Update package.json~~ - NO CHANGES NEEDED ✅
 - [ ] ~~Remove sync files~~ - KEEP THEM ✅
 
 ### Phase 2: Test Locally
+
 - [ ] Build CLI: `cd cli && bun run build`
 - [ ] Test in clean directory
 - [ ] Verify all files present (web/, one/, .claude/)
@@ -179,11 +212,13 @@ npx oneie@latest
 - [ ] Verify Claude Code config works
 
 ### Phase 3: Update Documentation
+
 - [ ] Update CLI README
 - [ ] Update main README
 - [ ] Update architecture docs
 
 ### Phase 4: Publish
+
 - [ ] Bump CLI version (major change)
 - [ ] Publish to npm
 - [ ] Test `npx oneie@latest`
@@ -196,11 +231,13 @@ npx oneie@latest
 This is a **major breaking change** (v3.x.x → v4.0.0):
 
 **Before:**
+
 - `npx oneie` cloned web from `one-ie/web`
 - Synced docs from npm package
 - Required separate steps
 
 **After:**
+
 - `npx oneie` clones everything from `one-ie/one`
 - Single operation
 - Complete starter kit immediately
@@ -208,6 +245,7 @@ This is a **major breaking change** (v3.x.x → v4.0.0):
 **Migration Guide for Users:**
 
 If users have existing projects:
+
 ```bash
 # Old way (v3)
 npx oneie@3
@@ -266,11 +304,13 @@ But this adds complexity. Better to just update to new architecture.
 **YES! ✅** No changes needed at all!
 
 **The CLI already:**
+
 - Clones from `one-ie/web` (single source of truth for website) ✅
 - Syncs `/one` and `/.claude` from npm package ✅
 - Gives users official website source ✅
 
 **Repository Structure:**
+
 1. `one-ie/web` - Website source (CLI clones this)
 2. `one-ie/one` - Demo assembly (has web/, one/, .claude/)
 3. `one-ie/oneie` - Main site assembly (has web/, one/, .claude/)

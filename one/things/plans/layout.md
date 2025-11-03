@@ -1,6 +1,25 @@
+---
+title: Layout
+dimension: things
+category: plans
+tags: ai
+related_dimensions: groups
+scope: global
+created: 2025-11-03
+updated: 2025-11-03
+version: 1.0.0
+ai_context: |
+  This document is part of the things dimension in the plans category.
+  Location: one/things/plans/layout.md
+  Purpose: Documents sidebar layout fix - comprehensive analysis
+  Related dimensions: groups
+  For AI agents: Read this to understand layout.
+---
+
 # Sidebar Layout Fix - Comprehensive Analysis
 
 ## Problem Statement
+
 The sidebar is overlapping the main content instead of pushing it to the right. Content is being hidden behind the fixed sidebar.
 
 ## Root Cause Analysis
@@ -10,6 +29,7 @@ The sidebar is overlapping the main content instead of pushing it to the right. 
 From analyzing the official dashboard-01 example, the shadcn sidebar uses a **three-part layout system**:
 
 1. **SidebarProvider** - Creates a flex container wrapper
+
    ```tsx
    <div className="group/sidebar-wrapper flex min-h-svh w-full">
    ```
@@ -46,13 +66,15 @@ From analyzing the official dashboard-01 example, the shadcn sidebar uses a **th
 ## Current Issues in Our Implementation
 
 ### Issue 1: Spacer Div Missing `flex-shrink: 0`
+
 **Location**: `src/components/ui/sidebar.tsx` line 234-243
 
 Current:
+
 ```tsx
 <div
   className={cn(
-    'relative h-svh w-[--sidebar-width] bg-transparent transition-[width] duration-200 ease-linear',
+    "relative h-svh w-[--sidebar-width] bg-transparent transition-[width] duration-200 ease-linear",
     // ...
   )}
 />
@@ -61,9 +83,11 @@ Current:
 **Problem**: Without `shrink-0`, the spacer can shrink to accommodate `SidebarInset`'s `w-full`, making it collapse to 0 width.
 
 ### Issue 2: SidebarInset Using Both `w-full` and `flex-1`
+
 **Location**: `src/components/ui/sidebar.tsx` line 334
 
 Current:
+
 ```tsx
 className={cn(
   'relative flex w-full flex-1 flex-col bg-background',
@@ -73,14 +97,17 @@ className={cn(
 ```
 
 **Problem**:
+
 1. `w-full` (width: 100%) conflicts with flex layout
 2. The padding-left I added is WRONG - the spacer should handle positioning, not padding
 3. CSS custom properties in arbitrary values `pl-[--sidebar-width]` don't work in Tailwind
 
 ### Issue 3: User Modifications to Sidebar Component
+
 **Location**: `src/components/ui/sidebar.tsx` line 227, 246
 
 The user (or formatter) changed:
+
 - Line 227: `hidden md:block` → `block`
 - Line 246: `hidden h-svh w-[--sidebar-width] transition-[left,right,width] duration-200 ease-linear md:flex` → `flex h-svh w-[--sidebar-width] transition-[left,right,width] duration-200 ease-linear`
 
@@ -89,17 +116,21 @@ This removes the mobile/desktop breakpoint behavior.
 ## Solution Plan
 
 ### Step 1: Fix Spacer Div - Add `shrink-0`
+
 The spacer MUST NOT shrink. It should hold its width to push content.
 
 **Change in `sidebar.tsx` line 236**:
+
 ```tsx
 'relative h-svh w-[--sidebar-width] shrink-0 bg-transparent transition-[width] duration-200 ease-linear',
 ```
 
 ### Step 2: Remove Incorrect Padding from SidebarInset
+
 The SidebarInset should NOT have padding-left. Let flex layout handle positioning.
 
 **Change in `sidebar.tsx` line 334**:
+
 ```tsx
 'relative flex min-w-0 flex-1 flex-col bg-background',
 // Remove: w-full (causes width issues)
@@ -108,13 +139,16 @@ The SidebarInset should NOT have padding-left. Let flex layout handle positionin
 ```
 
 ### Step 3: Restore Mobile Behavior (Optional)
+
 If we want proper mobile/desktop behavior, restore the breakpoints:
 
 **Line 227**: Change back to `hidden text-sidebar-foreground md:block`
 **Line 246**: Add `md:` prefix to `flex`
 
 ### Step 4: Verify CSS Variables Are Set
+
 Ensure SidebarProvider sets the CSS variables:
+
 ```tsx
 style={{
   '--sidebar-width': SIDEBAR_WIDTH,        // 16rem
@@ -125,6 +159,7 @@ style={{
 ## Expected Outcome
 
 After fixes:
+
 1. **Expanded**: Spacer is 16rem, content starts at 16rem from left
 2. **Collapsed**: Spacer is 3rem, content starts at 3rem from left
 3. **Mobile**: Sidebar is offcanvas overlay (if breakpoints restored)
@@ -156,37 +191,46 @@ After fixes:
 **`src/components/ui/sidebar.tsx`**
 
 #### Change 1: Sidebar Container (Line 229)
+
 ```tsx
 // Before: className="group peer block text-sidebar-foreground"
 // After:  className="group peer hidden text-sidebar-foreground md:block"
 ```
+
 Restores mobile responsiveness - sidebar hidden on mobile, uses Sheet component instead.
 
 #### Change 2: Spacer Div (Line 238)
+
 ```tsx
 // Before: 'relative h-svh w-[--sidebar-width] bg-transparent ...'
 // After:  'relative h-svh w-[--sidebar-width] shrink-0 bg-transparent ...'
 ```
+
 Added `shrink-0` to prevent the spacer from collapsing in flex layout.
 
 #### Change 3: Fixed Overlay (Line 248)
+
 ```tsx
 // Before: 'fixed inset-y-0 z-10 flex h-svh w-[--sidebar-width] ...'
 // After:  'fixed inset-y-0 z-10 hidden h-svh w-[--sidebar-width] ... md:flex'
 ```
+
 Restores mobile responsiveness - fixed overlay hidden on mobile.
 
 #### Change 4: SidebarInset (Line 336)
+
 ```tsx
 // Before: 'relative flex w-full flex-1 flex-col bg-background'
 //         'peer-data-[state=collapsed]:pl-[--sidebar-width-icon] ...'
 // After:  'relative flex min-w-0 flex-1 flex-col bg-background'
 ```
+
 - Removed `w-full` (conflicts with flex layout)
 - Removed incorrect padding classes
 - Added `min-w-0` (allows proper flex shrinking)
 
 ### CSS Variables Verified (Lines 143-144)
+
 ```tsx
 '--sidebar-width': SIDEBAR_WIDTH,        // 16rem
 '--sidebar-width-icon': SIDEBAR_WIDTH_ICON, // 3rem

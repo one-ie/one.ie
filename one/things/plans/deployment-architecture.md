@@ -1,3 +1,19 @@
+---
+title: Deployment Architecture
+dimension: things
+category: plans
+tags: architecture, system-design
+scope: global
+created: 2025-11-03
+updated: 2025-11-03
+version: 1.0.0
+ai_context: |
+  This document is part of the things dimension in the plans category.
+  Location: one/things/plans/deployment-architecture.md
+  Purpose: Documents one platform deployment architecture
+  For AI agents: Read this to understand deployment architecture.
+---
+
 # ONE Platform Deployment Architecture
 
 ## Current vs. New Architecture
@@ -92,6 +108,7 @@
 **Source:** `/web`, `/one`, `/.claude` → `apps/oneie/` → `one-ie/oneie` → Cloudflare `oneie`
 
 **Environment:** `.env.main`
+
 ```bash
 ORG_NAME=one
 ORG_WEBSITE=https://one.ie
@@ -102,6 +119,7 @@ SITE_TYPE=main
 ```
 
 **Features:**
+
 - ✅ Complete navigation
 - ✅ All marketing pages
 - ✅ Backend integration (Convex)
@@ -120,6 +138,7 @@ SITE_TYPE=main
 **Source:** `/web`, `/one`, `/.claude` → `apps/one/` → `one-ie/one` → Cloudflare `one`
 
 **Environment:** `.env.demo`
+
 ```bash
 ORG_NAME=one
 ORG_WEBSITE=https://demo.one.ie
@@ -130,6 +149,7 @@ SITE_TYPE=demo
 ```
 
 **Features:**
+
 - ✅ Minimal navigation (Blog + License only)
 - ✅ GetStartedPrompt component
 - ⬜ Backend disabled (frontend-only)
@@ -137,6 +157,7 @@ SITE_TYPE=demo
 - ⬜ Clean starter experience
 
 **Audience:**
+
 - Developers visiting to see the demo
 - Users who want to try before downloading
 - Matches exactly what they'll get from `npx oneie`
@@ -150,10 +171,12 @@ SITE_TYPE=demo
 **Source:** `one-ie/one` repository
 
 **Distribution:**
+
 1. **Via npm:** `npx oneie` clones entire `one-ie/one` repo
 2. **Via git:** `git clone one-ie/one`
 
 **What users get:**
+
 - `web/` - Complete website code (same as demo.one.ie)
 - `one/` - Full documentation
 - `.claude/` - Claude configuration
@@ -290,31 +313,37 @@ one-ie/one/                 # Demo/starter repo (what npx oneie clones)
 ## Key Benefits
 
 ### ✅ Single Codebase
+
 - Develop in one place (`/web`)
 - No duplicate code to maintain
 - Changes propagate to both sites
 
 ### ✅ Environment-Based
+
 - Simple `.env` files control features
 - No complex build configuration
 - Easy to test both versions locally
 
 ### ✅ Clean Separation
+
 - Main site has full features
 - Demo site is minimal starter
 - No development artifacts in production
 
 ### ✅ Consistent User Experience
+
 - `npx oneie` downloads exact same code as web.one.ie
 - Users can try online before downloading
 - No surprises when they clone locally
 
 ### ✅ Independent Deployments
+
 - Deploy main site without affecting demo
 - Update demo without touching main site
 - Test in production safely
 
 ### ✅ Version Control
+
 - Each site tracks its own history
 - `one-ie/one` for main site
 - `one-ie/oneie` for demo/starter
@@ -324,29 +353,31 @@ one-ie/one/                 # Demo/starter repo (what npx oneie clones)
 
 ## Comparison to Current Setup
 
-| Aspect | Before | After |
-|--------|--------|-------|
-| **Development** | `/web` | `/web` (unchanged) |
-| **Main Site** | ❌ N/A | ✅ `one.ie` (full platform) |
-| **Demo Site** | ❌ N/A or mixed | ✅ `demo.one.ie` (starter only) |
-| **Downloadable** | ❌ Mixed with main | ✅ `one-ie/one` (clean starter) |
-| **Deployments** | 1 (everything) | 2 (main + demo) |
-| **Repositories** | 1 (`one-ie/one`) | 2 (`one-ie/one` + `one-ie/oneie`) |
-| **Cloudflare** | 1 project | 2 projects (`oneie` + `one`) |
-| **Feature Control** | ❌ No separation | ✅ Environment flags |
-| **CLI Downloads** | Mixed content | Clean starter template |
+| Aspect              | Before             | After                             |
+| ------------------- | ------------------ | --------------------------------- |
+| **Development**     | `/web`             | `/web` (unchanged)                |
+| **Main Site**       | ❌ N/A             | ✅ `one.ie` (full platform)       |
+| **Demo Site**       | ❌ N/A or mixed    | ✅ `demo.one.ie` (starter only)   |
+| **Downloadable**    | ❌ Mixed with main | ✅ `one-ie/one` (clean starter)   |
+| **Deployments**     | 1 (everything)     | 2 (main + demo)                   |
+| **Repositories**    | 1 (`one-ie/one`)   | 2 (`one-ie/one` + `one-ie/oneie`) |
+| **Cloudflare**      | 1 project          | 2 projects (`oneie` + `one`)      |
+| **Feature Control** | ❌ No separation   | ✅ Environment flags              |
+| **CLI Downloads**   | Mixed content      | Clean starter template            |
 
 ---
 
 ## Implementation Checklist
 
 ### Phase 1: Setup (Week 1)
+
 - [ ] Create `web/.env.main` with main site config
 - [ ] Create `web/.env.demo` with demo config
 - [ ] Create `web/src/config/features.ts` with feature flags
 - [ ] Test both builds locally
 
 ### Phase 2: Infrastructure (Week 2)
+
 - [ ] Create GitHub repository: `one-ie/oneie` (main site)
 - [ ] `one-ie/one` already exists (demo/starter)
 - [ ] Create Cloudflare project: `oneie` (for one.ie)
@@ -354,18 +385,21 @@ one-ie/one/                 # Demo/starter repo (what npx oneie clones)
 - [ ] Configure custom domains
 
 ### Phase 3: Release Script (Week 3)
+
 - [ ] Update `scripts/release.sh` with multi-target support
 - [ ] Add logic to sync to `apps/oneie/`
 - [ ] Add logic to push to `one-ie/oneie`
 - [ ] Test sync without deployment
 
 ### Phase 4: Components (Week 3)
+
 - [ ] Update components to use feature flags
 - [ ] Gate admin features
 - [ ] Simplify navigation for demo
 - [ ] Test both versions
 
 ### Phase 5: Deploy (Week 4)
+
 - [ ] Deploy main site: `./scripts/release.sh patch main`
 - [ ] Verify one.ie works correctly
 - [ ] Deploy demo site: `./scripts/release.sh patch demo`
@@ -373,6 +407,7 @@ one-ie/one/                 # Demo/starter repo (what npx oneie clones)
 - [ ] Verify `one-ie/one` repo updated
 
 ### Phase 6: CLI (Week 4)
+
 - [ ] Update CLI to download from `one-ie/one`
 - [ ] Test `npx oneie` downloads correct version
 - [ ] Verify downloaded code matches demo.one.ie
@@ -382,41 +417,49 @@ one-ie/one/                 # Demo/starter repo (what npx oneie clones)
 ## Quick Reference
 
 **Develop:**
+
 ```bash
 cd web && bun run dev
 ```
 
 **Test main site build:**
+
 ```bash
 cp web/.env.main web/.env.local && cd web && bun run build
 ```
 
 **Test demo build:**
+
 ```bash
 cp web/.env.demo web/.env.local && cd web && bun run build
 ```
 
 **Deploy main site:**
+
 ```bash
 ./scripts/release.sh patch main
 ```
 
 **Deploy demo site:**
+
 ```bash
 ./scripts/release.sh patch demo
 ```
 
 **Deploy both:**
+
 ```bash
 ./scripts/release.sh patch main && ./scripts/release.sh patch demo
 ```
 
 **URLs:**
+
 - Main: https://one.ie
 - Demo: https://demo.one.ie
 - CLI: npx oneie (downloads from one-ie/one)
 
 **Repositories:**
+
 - Main: https://github.com/one-ie/oneie (main website)
 - Demo: https://github.com/one-ie/one (starter template)
 - CLI: https://github.com/one-ie/cli (downloads from one-ie/one)

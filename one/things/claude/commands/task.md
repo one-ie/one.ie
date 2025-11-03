@@ -1,14 +1,33 @@
+---
+title: Task
+dimension: things
+category: agents
+tags: agent, ai
+related_dimensions: events, people
+scope: global
+created: 2025-11-03
+updated: 2025-11-03
+version: 1.0.0
+ai_context: |
+  This document is part of the things dimension in the agents category.
+  Location: one/things/claude/commands/task.md
+  Purpose: Documents /task - task execution & management with real-time status
+  Related dimensions: events, people
+  For AI agents: Read this to understand task.
+---
+
 # /task - Task Execution & Management with Real-time Status
 
 ✅ **Direct access to task coordination with live progress tracking**
 
-*Alternative to `/one` > 3. Execute Tasks for immediate task management*
+_Alternative to `/one` > 3. Execute Tasks for immediate task management_
 
 💡 **TIP: Use `/one` for complete workflow with mission and story context**
 
 ## 📊 Real-time Task Status
 
 ### Agent Activity Tracking
+
 ```
 ✅ Task 3 of 8: "Database Schema Design" | 🤖 Data Architect
    Status: 🔄 ACTIVE | Progress: 60% | ETA: 15 minutes
@@ -16,6 +35,7 @@
 ```
 
 ### Live Coordination
+
 - **Task Queue**: Real-time task assignments and priorities
 - **Agent Status**: Current workload and availability
 - **Progress Tracking**: Completion percentages and time estimates

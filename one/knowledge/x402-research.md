@@ -1,3 +1,21 @@
+---
+title: X402 Research
+dimension: knowledge
+category: x402-research.md
+tags: agent, ai, blockchain, protocol
+related_dimensions: connections, events, groups
+scope: global
+created: 2025-11-03
+updated: 2025-11-03
+version: 1.0.0
+ai_context: |
+  This document is part of the knowledge dimension in the x402-research.md category.
+  Location: one/knowledge/x402-research.md
+  Purpose: In the crypto industry, most new concepts go through three phases: hype, infrastructure, and adoptio
+  Related dimensions: connections, events, groups
+  For AI agents: Read this to understand x402 research.
+---
+
 Hype, Infra, Adoption: Will x402 Make it?
 Written by @100y_eth
 Key Takeaways

@@ -1,3 +1,21 @@
+---
+title: 1 4 Knowledge Management
+dimension: things
+category: features
+tags: agent, knowledge, rag
+related_dimensions: events, groups, knowledge
+scope: global
+created: 2025-11-03
+updated: 2025-11-03
+version: 1.0.0
+ai_context: |
+  This document is part of the things dimension in the features category.
+  Location: one/things/features/1-4-knowledge-management.md
+  Purpose: Documents feature 1-4: knowledge management system
+  Related dimensions: events, groups, knowledge
+  For AI agents: Read this to understand 1 4 knowledge management.
+---
+
 # Feature 1-4: Knowledge Management System
 
 **Assigned to:** Integration Specialist Agent (agent-integration.md)
@@ -51,17 +69,20 @@ A knowledge organization approach where lessons and patterns are stored in markd
 ## Ontology Types
 
 ### Things
+
 - `lesson` - Captured knowledge from problem solving
   - Properties: `category`, `problem`, `solution`, `pattern`, `context`
 - `pattern` - Reusable implementation template
   - Properties: `category`, `name`, `description`, `template`, `examples`
 
 ### Connections
+
 - `learns_from` - Agent learns from lessons
 - `applies` - Agent applies pattern
 - `references` - Knowledge references other knowledge
 
 ### Events
+
 - `lesson_learned_added` - New lesson captured
   - Metadata: `lessonId`, `category`, `problem`, `solution`
 - `pattern_created` - New pattern defined
@@ -78,12 +99,14 @@ A knowledge organization approach where lessons and patterns are stored in markd
 **Purpose:** Capture problems and solutions for future reference
 
 **Structure:**
+
 ```markdown
 # Lessons Learned
 
 ## [Category] Patterns
 
 ### [Lesson Title]
+
 **Date:** YYYY-MM-DD
 **Feature:** [Feature ID]
 **Problem:** [What went wrong]
@@ -95,6 +118,7 @@ A knowledge organization approach where lessons and patterns are stored in markd
 ```
 
 **Categories:**
+
 - Backend (services, mutations, queries, schemas)
 - Frontend (components, pages, state management)
 - Integration (connections, data flows, APIs)
@@ -111,6 +135,7 @@ A knowledge organization approach where lessons and patterns are stored in markd
 **Purpose:** Provide reusable implementation templates
 
 **Directory structure:**
+
 ```
 one/knowledge/patterns/
 ├── backend/
@@ -135,6 +160,7 @@ one/knowledge/patterns/
 ```
 
 **Pattern structure:**
+
 ```markdown
 # Pattern: [Name]
 
@@ -148,6 +174,7 @@ one/knowledge/patterns/
 [Code or structure template with placeholders]
 
 ## Variables
+
 - `{variableName}` - [Description]
 - `{anotherVariable}` - [Description]
 
@@ -160,10 +187,12 @@ one/knowledge/patterns/
 [Step-by-step how to apply this pattern]
 
 ## Common Mistakes
+
 - [Mistake 1] → [Correct approach]
 - [Mistake 2] → [Correct approach]
 
 ## Related Patterns
+
 - [Pattern name] - [When to use instead]
 - [Pattern name] - [Combines well with]
 ```
@@ -175,44 +204,49 @@ one/knowledge/patterns/
 **Purpose:** Enable agents to search knowledge base
 
 **Query interface:**
+
 ```typescript
 interface KnowledgeQuery {
-  search(query: string, category?: string): Promise<KnowledgeResult[]>
-  getLessons(category?: string, limit?: number): Promise<Lesson[]>
-  getPattern(category: string, name: string): Promise<Pattern | null>
-  getRelated(knowledgeId: string): Promise<KnowledgeResult[]>
+  search(query: string, category?: string): Promise<KnowledgeResult[]>;
+  getLessons(category?: string, limit?: number): Promise<Lesson[]>;
+  getPattern(category: string, name: string): Promise<Pattern | null>;
+  getRelated(knowledgeId: string): Promise<KnowledgeResult[]>;
 }
 
 interface KnowledgeResult {
-  type: 'lesson' | 'pattern'
-  id: string
-  category: string
-  title: string
-  content: string
-  relevance: number  // 0-1 score
+  type: "lesson" | "pattern";
+  id: string;
+  category: string;
+  title: string;
+  content: string;
+  relevance: number; // 0-1 score
 }
 ```
 
 **Query methods:**
 
 #### `search(query, category?)`
+
 - Full-text search across lessons and patterns
 - Filter by category if provided
 - Return ranked results by relevance
 - Use for: "Have we solved this before?"
 
 #### `getLessons(category?, limit?)`
+
 - Get recent lessons learned
 - Filter by category if provided
 - Ordered by date (most recent first)
 - Use for: Context in agent prompts
 
 #### `getPattern(category, name)`
+
 - Get specific pattern by name
 - Returns full template
 - Use for: Applying known patterns
 
 #### `getRelated(knowledgeId)`
+
 - Find related lessons and patterns
 - Based on tags, categories, references
 - Use for: Exploring related knowledge
@@ -234,8 +268,10 @@ interface KnowledgeResult {
    - **Captures lesson learned**
 
 3. **Lesson structure:**
-   ```markdown
+
+   ````markdown
    ### [Descriptive Title]
+
    **Date:** 2025-01-15
    **Feature:** 1-2-yaml-orchestrator
    **Problem:** Orchestrator threw error when YAML file missing
@@ -243,17 +279,23 @@ interface KnowledgeResult {
    **Pattern:** Always validate file exists before reading
    **Context:** Applies to all file I/O operations
    **Example:**
+
    ```typescript
    // Bad
-   const content = fs.readFileSync(path, 'utf-8')
+   const content = fs.readFileSync(path, "utf-8");
 
    // Good
    if (!fs.existsSync(path)) {
-     throw new Error(`File not found: ${path}`)
+     throw new Error(`File not found: ${path}`);
    }
-   const content = fs.readFileSync(path, 'utf-8')
+   const content = fs.readFileSync(path, "utf-8");
    ```
+   ````
+
    **Related:** See pattern `backend/file-validation.md`
+
+   ```
+
    ```
 
 4. **Event logged:**
@@ -268,11 +310,13 @@ interface KnowledgeResult {
 **Over time, repeated lessons become patterns:**
 
 **Detection criteria:**
+
 - Same problem appears 3+ times across different features
 - Same solution applied consistently
 - Clear pattern emerges
 
 **Promotion process:**
+
 1. Notice repeated lesson in lessons-learned.md
 2. Extract common structure
 3. Create pattern template
@@ -290,15 +334,17 @@ After 3 features encountered "forgot to log event after entity creation":
    - Feature 2-2: Forgot to log lesson_created
 
 2. **Pattern created:**
-   ```markdown
+
+   ````markdown
    # Pattern: Event Logging After Entity Creation
 
    **Category:** backend
    **Context:** Every time you create an entity in the database
    **Problem:** Forgetting to log creation event breaks audit trail
-   **Solution:** Always log {entity}_created event after db.insert()
+   **Solution:** Always log {entity}\_created event after db.insert()
 
    ## Template
+
    ```typescript
    async create{Entity}(data: {Entity}Data) {
      // Create entity
@@ -317,12 +363,16 @@ After 3 features encountered "forgot to log event after entity creation":
      return id
    }
    ```
+   ````
 
    ## Usage
    1. Replace {Entity} with your entity name (capitalized)
    2. Replace {entity} with lowercase entity name
    3. Replace {entities} with table name
    4. Include relevant metadata fields
+
+   ```
+
    ```
 
 3. **Future features reference this pattern**
@@ -358,6 +408,7 @@ After 3 features encountered "forgot to log event after entity creation":
 ## Files to Create
 
 **Initial setup** (pattern templates):
+
 ```
 one/knowledge/
 ├── lessons-learned.md           # Empty initially, grows over time
@@ -389,22 +440,26 @@ one/knowledge/
 ## Integration Points (Convention-Based)
 
 ### With Feature 1-1 (Agent Prompts)
+
 - ✅ Agent prompts specify when to check patterns
 - ✅ agent-problem-solver.md: "Search lessons-learned.md for similar problems"
 - ✅ Specialists: "Read relevant patterns from one/knowledge/patterns/{category}/"
 - ✅ No code dependencies - just documentation references
 
 ### With Feature 1-3 (Events) - Optional
+
 - Could log `lesson_learned_added` events
 - Could log `pattern_created` events
 - Not required - lessons/patterns exist as files
 
 ### With Feature 1-5 (Quality Loops)
+
 - Problem solver appends lessons after fixes
 - Specialists read patterns during implementation
 - Quality agent could reference patterns in reviews
 
 ### With Feature 1-2 (Workflow Guide)
+
 - Workflow guide references knowledge base
 - Stage 6 (Implementation): "Read relevant patterns"
 - Stage 6 (Problem Solving): "Search lessons learned"
@@ -414,27 +469,32 @@ one/knowledge/
 ## Knowledge Accumulation Over Time
 
 ### Week 1 (Initial)
+
 - 0 lessons learned
 - 8 basic patterns (templates)
 - Agents work from scratch
 
 ### Month 1 (Learning)
+
 - 20+ lessons learned
 - 8 patterns (no new ones yet)
 - Agents reference lessons occasionally
 
 ### Month 3 (Patterns Emerging)
+
 - 60+ lessons learned
 - 15 patterns (7 promoted from lessons)
 - Agents prefer patterns, fewer mistakes
 
 ### Quarter 1 (Institutional Knowledge)
+
 - 150+ lessons learned
 - 25+ patterns
 - New features 3x faster (less figuring out)
 - Quality higher (known patterns applied)
 
 ### Year 1 (Expert System)
+
 - 500+ lessons learned
 - 50+ patterns
 - Rare to encounter new problems
@@ -446,6 +506,7 @@ one/knowledge/
 ## Success Criteria
 
 ### Immediate
+
 - [ ] lessons-learned.md structure defined
 - [ ] Pattern library organized
 - [ ] 8 basic patterns created (templates)
@@ -453,6 +514,7 @@ one/knowledge/
 - [ ] Lesson capture workflow documented
 
 ### Near-term (Month 1)
+
 - [ ] 20+ lessons captured
 - [ ] Agents search knowledge base
 - [ ] Problem solver references lessons
@@ -460,6 +522,7 @@ one/knowledge/
 - [ ] Knowledge prevents repeated mistakes
 
 ### Long-term (Quarter 1)
+
 - [ ] 3 patterns promoted from lessons
 - [ ] Features built 3x faster (less problem solving)
 - [ ] Quality improves with each feature
@@ -471,17 +534,20 @@ one/knowledge/
 ## Performance Requirements
 
 ### Knowledge Queries
+
 - Search query: < 100ms
 - Get lessons: < 50ms
 - Get pattern: < 20ms (cached)
 - Get related: < 100ms
 
 ### Lesson Capture
+
 - Add lesson: < 50ms
 - Update lessons-learned.md: < 100ms
 - Log event: < 10ms
 
 ### Pattern Loading
+
 - Load pattern: < 20ms
 - Parse template: < 10ms
 - Cache patterns in memory
@@ -491,18 +557,21 @@ one/knowledge/
 ## Testing Strategy
 
 ### Unit Tests
+
 - Lesson structure validates correctly
 - Pattern templates have required fields
 - Knowledge queries return correct results
 - Lesson capture creates proper format
 
 ### Integration Tests
+
 - Problem solver captures lessons after fixes
 - Specialists load and apply patterns
 - Knowledge queries integrate with agents
 - Events logged for knowledge operations
 
 ### Long-term Tests
+
 - Track knowledge accumulation over time
 - Measure impact on feature velocity
 - Measure reduction in repeated problems
@@ -513,16 +582,19 @@ one/knowledge/
 ## Error Handling
 
 ### Lesson Capture Errors
+
 - Missing fields → Validation error with required fields
 - Duplicate lesson → Append to existing or create new
 - File write fails → Retry 3x, then error
 
 ### Pattern Errors
+
 - Pattern not found → Return null, log warning
 - Invalid template → Validation error
 - Parse error → Clear error with line number
 
 ### Query Errors
+
 - Invalid query → Validation error
 - No results → Return empty array
 - Query timeout → Error after 5 seconds
@@ -532,6 +604,7 @@ one/knowledge/
 ## Next Steps
 
 **Create initial pattern templates** (8-12 markdown files):
+
 1. Backend: service-template.md, mutation-template.md, query-template.md
 2. Frontend: page-template.md, component-template.md, form-template.md
 3. Design: wireframe-template.md, component-architecture.md
@@ -540,6 +613,7 @@ one/knowledge/
 **Create lessons-learned.md** (empty file with template header)
 
 **Create README.md** with:
+
 - How to search for lessons (grep examples)
 - How to add lessons (edit instructions)
 - When to reference patterns (during implementation)
@@ -566,6 +640,7 @@ one/knowledge/
 5. **Patterns reduce reinvention** - Templates speed up implementation
 
 **How it works:**
+
 ```
 Claude implements feature → Problem occurs → Problem solver analyzes
 Problem solver → Searches lessons-learned.md (grep) → Finds similar issue

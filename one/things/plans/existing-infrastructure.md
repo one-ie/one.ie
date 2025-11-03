@@ -1,3 +1,21 @@
+---
+title: Existing Infrastructure
+dimension: things
+category: plans
+tags: backend, frontend, groups, ontology
+related_dimensions: connections, events, groups, knowledge, people
+scope: global
+created: 2025-11-03
+updated: 2025-11-03
+version: 1.0.0
+ai_context: |
+  This document is part of the things dimension in the plans category.
+  Location: one/things/plans/existing-infrastructure.md
+  Purpose: Documents existing infrastructure analysis
+  Related dimensions: connections, events, groups, knowledge, people
+  For AI agents: Read this to understand existing infrastructure.
+---
+
 # Existing Infrastructure Analysis
 
 **Date:** 2025-10-30
@@ -31,17 +49,18 @@ The ONE Platform has a **robust, well-architected foundation** with clear separa
 
 #### Implemented Tables
 
-| Dimension | Table | Purpose | Indexes | Status |
-|-----------|-------|---------|---------|--------|
-| 1. Groups | `groups` | Multi-tenant isolation + hierarchical nesting | 5 indexes | ✅ Complete |
-| 2. People | (via `entities` with role metadata) | Authorization + governance | - | ✅ Complete |
-| 3. Things | `entities` | 66+ entity types | 6 indexes | ✅ Complete |
-| 4. Connections | `connections` | 25+ relationship types | 7 indexes | ✅ Complete |
-| 5. Events | `events` | 67+ event types with audit trail | 7 indexes | ✅ Complete |
-| 6. Knowledge | `knowledge` + `thingKnowledge` | Labels, embeddings, RAG | 4 indexes | ✅ Complete |
-| Auth | `users`, `sessions`, `passwordResets`, `emailVerifications`, `magicLinks`, `twoFactorAuth` | Multi-method auth | 6 indexes | ✅ Complete |
+| Dimension      | Table                                                                                      | Purpose                                       | Indexes   | Status      |
+| -------------- | ------------------------------------------------------------------------------------------ | --------------------------------------------- | --------- | ----------- |
+| 1. Groups      | `groups`                                                                                   | Multi-tenant isolation + hierarchical nesting | 5 indexes | ✅ Complete |
+| 2. People      | (via `entities` with role metadata)                                                        | Authorization + governance                    | -         | ✅ Complete |
+| 3. Things      | `entities`                                                                                 | 66+ entity types                              | 6 indexes | ✅ Complete |
+| 4. Connections | `connections`                                                                              | 25+ relationship types                        | 7 indexes | ✅ Complete |
+| 5. Events      | `events`                                                                                   | 67+ event types with audit trail              | 7 indexes | ✅ Complete |
+| 6. Knowledge   | `knowledge` + `thingKnowledge`                                                             | Labels, embeddings, RAG                       | 4 indexes | ✅ Complete |
+| Auth           | `users`, `sessions`, `passwordResets`, `emailVerifications`, `magicLinks`, `twoFactorAuth` | Multi-method auth                             | 6 indexes | ✅ Complete |
 
 **Features:**
+
 - Dynamic type unions from ontology composition (currently: core, blog, portfolio, shop)
 - Status lifecycle: draft, active, inactive, published, archived
 - Soft deletes via `deletedAt` field
@@ -62,12 +81,14 @@ The ONE Platform has a **robust, well-architected foundation** with clear separa
 ### Authentication (COMPLETE - 100%)
 
 **Files:**
+
 - `/Users/toc/Server/ONE/backend/convex/auth.ts`
 - `/Users/toc/Server/ONE/backend/convex/auth.config.ts`
 
 **Status:** ✅ **PRODUCTION-READY**
 
 **Supported Methods:**
+
 - Email/password with hash verification
 - Magic links (token-based)
 - OAuth (via Better Auth)
@@ -76,6 +97,7 @@ The ONE Platform has a **robust, well-architected foundation** with clear separa
 - Two-factor authentication (TOTP)
 
 **Schema:**
+
 - `users` - Core identity with email verification
 - `sessions` - Session management with expiration
 - `passwordResets` - Password recovery tokens
@@ -91,18 +113,19 @@ The ONE Platform has a **robust, well-architected foundation** with clear separa
 
 **Files:**
 
-| File | Lines | Dimensions | Status | Notes |
-|------|-------|-----------|--------|-------|
-| `things.ts` | 387 | Things, Connections, Events | ✅ Complete | create, read, update, delete, list, changeStatus, batchCreate |
-| `connections.ts` | 369 | Connections, Events | ✅ Complete | create, delete, list, update, getRelated |
-| `groups.ts` | 361 | Groups, Events, People | ✅ Complete | create, update, delete, hierarchy operations |
-| `people.ts` | 345 | People, Groups, Events | ✅ Complete | create, invite, remove, role management |
-| `knowledge.ts` | 254 | Knowledge, Things, Events | ✅ Complete | create, link, chunk, embed, delete |
-| `contact.ts` | 103 | Things, Events | ✅ Complete | submitContactForm |
-| `onboarding.ts` | 171 | Groups, People, Things, Events | ✅ Complete | initializeGroup, addTeamMember |
-| `init.ts` | 44 | Foundational | ✅ Complete | bootstrapOntology |
+| File             | Lines | Dimensions                     | Status      | Notes                                                         |
+| ---------------- | ----- | ------------------------------ | ----------- | ------------------------------------------------------------- |
+| `things.ts`      | 387   | Things, Connections, Events    | ✅ Complete | create, read, update, delete, list, changeStatus, batchCreate |
+| `connections.ts` | 369   | Connections, Events            | ✅ Complete | create, delete, list, update, getRelated                      |
+| `groups.ts`      | 361   | Groups, Events, People         | ✅ Complete | create, update, delete, hierarchy operations                  |
+| `people.ts`      | 345   | People, Groups, Events         | ✅ Complete | create, invite, remove, role management                       |
+| `knowledge.ts`   | 254   | Knowledge, Things, Events      | ✅ Complete | create, link, chunk, embed, delete                            |
+| `contact.ts`     | 103   | Things, Events                 | ✅ Complete | submitContactForm                                             |
+| `onboarding.ts`  | 171   | Groups, People, Things, Events | ✅ Complete | initializeGroup, addTeamMember                                |
+| `init.ts`        | 44    | Foundational                   | ✅ Complete | bootstrapOntology                                             |
 
 **Pattern Compliance:**
+
 - ✅ All mutations authenticate via `ctx.auth.getUserIdentity()`
 - ✅ All mutations validate group context
 - ✅ All mutations check permissions
@@ -111,6 +134,7 @@ The ONE Platform has a **robust, well-architected foundation** with clear separa
 - ⚠️ **Gap:** Mutations don't use Effect.ts for business logic (see services section)
 
 **Missing Mutations:**
+
 - None identified for existing entities - coverage is comprehensive
 
 ---
@@ -121,20 +145,21 @@ The ONE Platform has a **robust, well-architected foundation** with clear separa
 
 **Files:**
 
-| File | Lines | Dimensions | Status | Notes |
-|------|-------|-----------|--------|-------|
-| `things.ts` | 399 | Things, Connections | ✅ Complete | get, list, search, listByType, listByStatus |
-| `groups.ts` | 525 | Groups, People | ✅ Complete | get, list, getHierarchy, getBySlug, listUserGroups |
-| `events.ts` | 284 | Events, Connections, Things | ✅ Complete | get, list, getTimeline, getAuditTrail, getStatistics |
-| `knowledge.ts` | 338 | Knowledge, Things | ✅ Complete | get, list, search, ragQuery, getGraph |
-| `connections.ts` | 165 | Connections, Things | ✅ Complete | get, list, listFrom, listTo, getGraph |
-| `people.ts` | 136 | People, Groups | ✅ Complete | getCurrentUser, listGroupMembers, getUserRoles |
-| `ontology.ts` | 148 | Metadata | ✅ Complete | getThingTypes, getConnectionTypes, getEventTypes, getOntologyMetadata |
-| `contact.ts` | 92 | Things, Events | ✅ Complete | listContactSubmissions, getContactSubmission |
-| `onboarding.ts` | 64 | Groups, People | ✅ Complete | getOnboardingStatus, listPendingInvites |
-| `init.ts` | 22 | Metadata | ✅ Complete | checkBootstrapStatus |
+| File             | Lines | Dimensions                  | Status      | Notes                                                                 |
+| ---------------- | ----- | --------------------------- | ----------- | --------------------------------------------------------------------- |
+| `things.ts`      | 399   | Things, Connections         | ✅ Complete | get, list, search, listByType, listByStatus                           |
+| `groups.ts`      | 525   | Groups, People              | ✅ Complete | get, list, getHierarchy, getBySlug, listUserGroups                    |
+| `events.ts`      | 284   | Events, Connections, Things | ✅ Complete | get, list, getTimeline, getAuditTrail, getStatistics                  |
+| `knowledge.ts`   | 338   | Knowledge, Things           | ✅ Complete | get, list, search, ragQuery, getGraph                                 |
+| `connections.ts` | 165   | Connections, Things         | ✅ Complete | get, list, listFrom, listTo, getGraph                                 |
+| `people.ts`      | 136   | People, Groups              | ✅ Complete | getCurrentUser, listGroupMembers, getUserRoles                        |
+| `ontology.ts`    | 148   | Metadata                    | ✅ Complete | getThingTypes, getConnectionTypes, getEventTypes, getOntologyMetadata |
+| `contact.ts`     | 92    | Things, Events              | ✅ Complete | listContactSubmissions, getContactSubmission                          |
+| `onboarding.ts`  | 64    | Groups, People              | ✅ Complete | getOnboardingStatus, listPendingInvites                               |
+| `init.ts`        | 22    | Metadata                    | ✅ Complete | checkBootstrapStatus                                                  |
 
 **Pattern Compliance:**
+
 - ✅ All queries filter by `groupId` for multi-tenant isolation
 - ✅ All queries check user permissions
 - ✅ All queries use appropriate indexes
@@ -149,18 +174,19 @@ The ONE Platform has a **robust, well-architected foundation** with clear separa
 
 **Files:**
 
-| File | Lines | Purpose | Effect.ts | Status |
-|------|-------|---------|-----------|--------|
-| `entityService.ts` | 10,933 | Entity business logic | ✅ **Yes** | ✅ Complete |
-| `layers.ts` | 10,489 | Effect.ts layer definitions | ✅ **Yes** | ✅ Complete |
-| `ontologyMapper.ts` | 9,152 | Ontology type mapping | ❌ No | ✅ Complete |
-| `featureRecommender.ts` | 7,453 | AI feature suggestions | ❌ No | ✅ Complete |
-| `brandGuideGenerator.ts` | 2,860 | Brand guide generation | ❌ No | ✅ Complete |
-| `websiteAnalyzer.ts` | 1,273 | Website analysis | ❌ No | ✅ Complete |
+| File                     | Lines  | Purpose                     | Effect.ts  | Status      |
+| ------------------------ | ------ | --------------------------- | ---------- | ----------- |
+| `entityService.ts`       | 10,933 | Entity business logic       | ✅ **Yes** | ✅ Complete |
+| `layers.ts`              | 10,489 | Effect.ts layer definitions | ✅ **Yes** | ✅ Complete |
+| `ontologyMapper.ts`      | 9,152  | Ontology type mapping       | ❌ No      | ✅ Complete |
+| `featureRecommender.ts`  | 7,453  | AI feature suggestions      | ❌ No      | ✅ Complete |
+| `brandGuideGenerator.ts` | 2,860  | Brand guide generation      | ❌ No      | ✅ Complete |
+| `websiteAnalyzer.ts`     | 1,273  | Website analysis            | ❌ No      | ✅ Complete |
 
 #### Service Coverage Analysis
 
 **entityService.ts (Effect.ts Service) - COMPLETE**
+
 - ✅ Entity validation (name, type, group, status)
 - ✅ Entity lifecycle (create, update, delete, archive)
 - ✅ Event logging patterns
@@ -168,12 +194,14 @@ The ONE Platform has a **robust, well-architected foundation** with clear separa
 - ✅ Composable with other services
 
 **layers.ts (Effect.ts Infrastructure) - COMPLETE**
+
 - ✅ Service layer definitions
 - ✅ Tagged error types (ValidationError, DatabaseError, RAGError, AgentService)
 - ✅ Database wrapper for Convex integration
 - ✅ Effect.ts dependency injection setup
 
 **Missing Services:**
+
 - ❌ ConnectionService (business logic for relationships)
 - ❌ EventService (business logic for audit trails)
 - ❌ KnowledgeService (business logic for embeddings/RAG)
@@ -202,23 +230,24 @@ The ONE Platform has a **robust, well-architected foundation** with clear separa
 
 **Files:**
 
-| File | Lines | Purpose | Effect.ts | Status |
-|------|-------|---------|-----------|--------|
-| `ThingService.ts` | 6,338 | Entity operations | ✅ Yes | ✅ Complete |
-| `ConnectionService.ts` | 8,361 | Relationship operations | ✅ Yes | ✅ Complete |
-| `EventService.ts` | 6,875 | Event management + audit | ✅ Yes | ✅ Complete |
-| `KnowledgeService.ts` | 8,326 | Embeddings + RAG | ✅ Yes | ✅ Complete |
-| `PeopleService.ts` | 12,092 | User + role management | ✅ Yes | ✅ Complete |
-| `OrganizationService.ts` | 10,563 | Organization + groups | ✅ Yes | ✅ Complete |
-| `CartService.ts` | 9,132 | Shopping cart operations | ✅ Yes | ✅ Complete |
-| `OrderService.ts` | 10,912 | Order management | ✅ Yes | ✅ Complete |
-| `ProductService.ts` | 8,862 | Product operations | ✅ Yes | ✅ Complete |
-| `ReviewService.ts` | 11,392 | Review + rating system | ✅ Yes | ✅ Complete |
-| `ConfigService.ts` | 14,154 | Configuration management | ✅ Yes | ✅ Complete |
-| `types.ts` | 5,061 | Service type definitions | ✅ Yes | ✅ Complete |
-| `constants.ts` | 7,815 | Service constants | - | ✅ Complete |
+| File                     | Lines  | Purpose                  | Effect.ts | Status      |
+| ------------------------ | ------ | ------------------------ | --------- | ----------- |
+| `ThingService.ts`        | 6,338  | Entity operations        | ✅ Yes    | ✅ Complete |
+| `ConnectionService.ts`   | 8,361  | Relationship operations  | ✅ Yes    | ✅ Complete |
+| `EventService.ts`        | 6,875  | Event management + audit | ✅ Yes    | ✅ Complete |
+| `KnowledgeService.ts`    | 8,326  | Embeddings + RAG         | ✅ Yes    | ✅ Complete |
+| `PeopleService.ts`       | 12,092 | User + role management   | ✅ Yes    | ✅ Complete |
+| `OrganizationService.ts` | 10,563 | Organization + groups    | ✅ Yes    | ✅ Complete |
+| `CartService.ts`         | 9,132  | Shopping cart operations | ✅ Yes    | ✅ Complete |
+| `OrderService.ts`        | 10,912 | Order management         | ✅ Yes    | ✅ Complete |
+| `ProductService.ts`      | 8,862  | Product operations       | ✅ Yes    | ✅ Complete |
+| `ReviewService.ts`       | 11,392 | Review + rating system   | ✅ Yes    | ✅ Complete |
+| `ConfigService.ts`       | 14,154 | Configuration management | ✅ Yes    | ✅ Complete |
+| `types.ts`               | 5,061  | Service type definitions | ✅ Yes    | ✅ Complete |
+| `constants.ts`           | 7,815  | Service constants        | -         | ✅ Complete |
 
 **Features:**
+
 - All services use Effect.ts for type-safe error handling
 - Tagged error unions for discriminated error handling
 - Service composition via Effect dependency injection
@@ -234,22 +263,23 @@ The ONE Platform has a **robust, well-architected foundation** with clear separa
 
 **Core Abstraction:**
 
-| Component | Purpose | Status |
-|-----------|---------|--------|
-| `DataProvider.ts` | Interface + types for all 6 dimensions | ✅ Complete (558 lines) |
-| `ConvexProvider.ts` | Convex backend implementation | ✅ Complete (393 lines) |
-| `BetterAuthProvider.ts` | Authentication implementation | ✅ Complete (396 lines) |
-| `factory.ts` | Provider factory pattern | ✅ Complete (127 lines) |
+| Component               | Purpose                                | Status                  |
+| ----------------------- | -------------------------------------- | ----------------------- |
+| `DataProvider.ts`       | Interface + types for all 6 dimensions | ✅ Complete (558 lines) |
+| `ConvexProvider.ts`     | Convex backend implementation          | ✅ Complete (393 lines) |
+| `BetterAuthProvider.ts` | Authentication implementation          | ✅ Complete (396 lines) |
+| `factory.ts`            | Provider factory pattern               | ✅ Complete (127 lines) |
 
 **Alternative Implementations:**
 
-| Provider | Status | Supported |
-|----------|--------|-----------|
-| WordPress REST API | ✅ Complete | Read-only (posts → things) |
-| Notion API | ✅ Complete | Read-only (pages → things) |
-| Composite Multi-Backend | ✅ Complete | Routes by type/prefix |
+| Provider                | Status      | Supported                  |
+| ----------------------- | ----------- | -------------------------- |
+| WordPress REST API      | ✅ Complete | Read-only (posts → things) |
+| Notion API              | ✅ Complete | Read-only (pages → things) |
+| Composite Multi-Backend | ✅ Complete | Routes by type/prefix      |
 
 **Key Features:**
+
 - ✅ Backend-agnostic data access layer
 - ✅ Effect.ts integration throughout
 - ✅ Context.Tag for dependency injection
@@ -265,47 +295,47 @@ The ONE Platform has a **robust, well-architected foundation** with clear separa
 
 **Core Effect.ts Hooks:**
 
-| Hook | Purpose | Status |
-|------|---------|--------|
-| `useEffectRunner.ts` | Run Effect.ts programs in React | ✅ Complete |
+| Hook                 | Purpose                          | Status      |
+| -------------------- | -------------------------------- | ----------- |
+| `useEffectRunner.ts` | Run Effect.ts programs in React  | ✅ Complete |
 | `useEffectAction.ts` | Simplified Effect action wrapper | ✅ Complete |
 
 **Ontology Hooks:**
 
-| Hook | Purpose | Status |
-|------|---------|--------|
-| `useGroup.ts` | Group operations | ✅ Complete |
-| `usePerson.ts` | Person operations | ✅ Complete |
-| `useThing.ts` | Thing operations | ✅ Complete |
+| Hook               | Purpose               | Status      |
+| ------------------ | --------------------- | ----------- |
+| `useGroup.ts`      | Group operations      | ✅ Complete |
+| `usePerson.ts`     | Person operations     | ✅ Complete |
+| `useThing.ts`      | Thing operations      | ✅ Complete |
 | `useConnection.ts` | Connection operations | ✅ Complete |
-| `useEvent.ts` | Event operations | ✅ Complete |
-| `useSearch.ts` | Search + RAG queries | ✅ Complete |
+| `useEvent.ts`      | Event operations      | ✅ Complete |
+| `useSearch.ts`     | Search + RAG queries  | ✅ Complete |
 
 **Domain Hooks:**
 
-| Hook | Purpose | Status |
-|------|---------|--------|
+| Hook                   | Purpose                 | Status      |
+| ---------------------- | ----------------------- | ----------- |
 | `useOrganizations.tsx` | Organization management | ✅ Complete |
-| `usePeople.ts` | User listing | ✅ Complete |
-| `useEvents.tsx` | Event subscription | ✅ Complete |
-| `useThingService.ts` | Thing service wrapper | ✅ Complete |
+| `usePeople.ts`         | User listing            | ✅ Complete |
+| `useEvents.tsx`        | Event subscription      | ✅ Complete |
+| `useThingService.ts`   | Thing service wrapper   | ✅ Complete |
 
 **Demo Hooks:**
 
-| Hook | Purpose | Status |
-|------|---------|--------|
-| `useDemoData.ts` | Mock data for development | ✅ Complete |
-| `useDemoMutation.ts` | Mock mutations | ✅ Complete |
-| `useDemoFilters.ts` | Mock filtering | ✅ Complete |
-| `useDebounce.ts` | Debounce utility | ✅ Complete |
-| `useBackendConnection.ts` | Backend connection test | ✅ Complete |
+| Hook                      | Purpose                   | Status      |
+| ------------------------- | ------------------------- | ----------- |
+| `useDemoData.ts`          | Mock data for development | ✅ Complete |
+| `useDemoMutation.ts`      | Mock mutations            | ✅ Complete |
+| `useDemoFilters.ts`       | Mock filtering            | ✅ Complete |
+| `useDebounce.ts`          | Debounce utility          | ✅ Complete |
+| `useBackendConnection.ts` | Backend connection test   | ✅ Complete |
 
 **Mobile Hooks:**
 
-| Hook | Purpose | Status |
-|------|---------|--------|
-| `use-mobile.tsx` | Mobile detection | ✅ Complete |
-| `use-mobile.ts` | Mobile detection (alt) | ✅ Complete |
+| Hook             | Purpose                | Status      |
+| ---------------- | ---------------------- | ----------- |
+| `use-mobile.tsx` | Mobile detection       | ✅ Complete |
+| `use-mobile.ts`  | Mobile detection (alt) | ✅ Complete |
 
 ---
 
@@ -315,15 +345,16 @@ The ONE Platform has a **robust, well-architected foundation** with clear separa
 
 **Core Types:**
 
-| File | Purpose | Status |
-|------|---------|--------|
+| File               | Purpose                      | Status      |
+| ------------------ | ---------------------------- | ----------- |
 | `data-provider.ts` | DataProvider interface types | ✅ Complete |
-| `products.ts` | Product-specific types | ✅ Complete |
-| `cart.ts` | Shopping cart types | ✅ Complete |
-| `orders.ts` | Order types | ✅ Complete |
-| And 11 more... | Various domain types | ✅ Complete |
+| `products.ts`      | Product-specific types       | ✅ Complete |
+| `cart.ts`          | Shopping cart types          | ✅ Complete |
+| `orders.ts`        | Order types                  | ✅ Complete |
+| And 11 more...     | Various domain types         | ✅ Complete |
 
 **Features:**
+
 - ✅ Full TypeScript inference
 - ✅ No `any` types (except in entity properties)
 - ✅ Discriminated unions for errors
@@ -337,17 +368,17 @@ The ONE Platform has a **robust, well-architected foundation** with clear separa
 
 **Tests Implemented:**
 
-| Test File | Coverage | Status |
-|-----------|----------|--------|
-| `providers/DataProvider.test.ts` | Provider interface | ✅ Complete |
-| `providers/ConvexProvider.test.ts` | Convex implementation | ✅ Complete |
-| `providers/Factory.test.ts` | Provider factory | ✅ Complete |
-| `people/useOrganizations.test.tsx` | Organizations hook | ✅ Complete |
-| `people/usePeople.test.tsx` | People hook | ✅ Complete |
-| `people/auth/STATUS.md` | Auth test status | ✅ Documented |
-| `things/entities/ThingService.test.ts` | Entity service | ✅ Complete |
-| `things/validation/validation.test.ts` | Input validation | ✅ Complete |
-| And 10 more... | Various features | ✅ Documented |
+| Test File                              | Coverage              | Status        |
+| -------------------------------------- | --------------------- | ------------- |
+| `providers/DataProvider.test.ts`       | Provider interface    | ✅ Complete   |
+| `providers/ConvexProvider.test.ts`     | Convex implementation | ✅ Complete   |
+| `providers/Factory.test.ts`            | Provider factory      | ✅ Complete   |
+| `people/useOrganizations.test.tsx`     | Organizations hook    | ✅ Complete   |
+| `people/usePeople.test.tsx`            | People hook           | ✅ Complete   |
+| `people/auth/STATUS.md`                | Auth test status      | ✅ Documented |
+| `things/entities/ThingService.test.ts` | Entity service        | ✅ Complete   |
+| `things/validation/validation.test.ts` | Input validation      | ✅ Complete   |
+| And 10 more...                         | Various features      | ✅ Documented |
 
 **Test Count:** 18+ test files identified
 **Coverage Status:** ⚠️ **Partial** - Foundation tests exist, but E2E coverage incomplete
@@ -391,6 +422,7 @@ The ONE Platform has a **robust, well-architected foundation** with clear separa
 **Gap:** Mutations and queries don't leverage Effect.ts layer fully
 
 **Missing Services:**
+
 - [ ] ConnectionService (currently: query/mutation only)
 - [ ] EventService (currently: query/mutation only)
 - [ ] KnowledgeService (currently: query/mutation only)
@@ -414,6 +446,7 @@ The ONE Platform has a **robust, well-architected foundation** with clear separa
 **Gap:** Schema designed, zero implementation
 
 **Missing:**
+
 - [ ] Product mutations (create, update, publish, archive)
 - [ ] Order mutations (create, update status, complete)
 - [ ] Cart mutations (add, remove, clear)
@@ -503,18 +536,21 @@ The ONE Platform has a **robust, well-architected foundation** with clear separa
 **Status:** ✅ **UNIQUE & WELL-DESIGNED**
 
 **Features:**
+
 - Dynamic feature composition (core, blog, portfolio, shop)
 - Automatic type generation from YAML ontologies
 - Zero runtime overhead for feature flags
 - Extensible to infinite features
 
 **Current Features:**
+
 - core (16+ types)
 - blog (blog_post, blog_category, etc.)
 - portfolio (project, case_study)
 - shop (product, order, payment, subscription)
 
 **Future Features:**
+
 - course (lesson, module, quiz, certificate)
 - community (group, conversation, message)
 - token (token, token_contract, stake)
@@ -665,6 +701,7 @@ The ONE Platform has **excellent architectural foundations**:
 **After That:** Implement e-commerce backend to unblock user-facing feature that's 75% complete on frontend.
 
 **Timeline:**
+
 - Backend Effect layer: 3-4 days
 - E-commerce MVP: 15-20 days
 - Total to production: 6-8 weeks

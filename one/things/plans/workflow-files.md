@@ -1,3 +1,21 @@
+---
+title: Workflow Files
+dimension: things
+category: plans
+tags: agent, architecture, events, knowledge, ontology, things
+related_dimensions: connections, events, knowledge, people
+scope: global
+created: 2025-11-03
+updated: 2025-11-03
+version: 1.0.0
+ai_context: |
+  This document is part of the things dimension in the plans category.
+  Location: one/things/plans/workflow-files.md
+  Purpose: Documents agent-based workflow implementation files
+  Related dimensions: connections, events, knowledge, people
+  For AI agents: Read this to understand workflow files.
+---
+
 # Agent-Based Workflow Implementation Files
 
 **Related Plan:** [one/things/plans/workflow.md](./workflow.md)
@@ -67,7 +85,7 @@ function loadOntology(): string {
 function loadPattern(category: string, patternName: string): string {
   return readFileSync(
     `one/knowledge/patterns/${category}/${patternName}.md`,
-    "utf-8"
+    "utf-8",
   );
 }
 
@@ -95,7 +113,7 @@ class FileEventLog {
       }) + "\n";
     writeFileSync(
       this.eventsFile,
-      readFileSync(this.eventsFile, "utf-8") + entry
+      readFileSync(this.eventsFile, "utf-8") + entry,
     );
   }
 
@@ -158,7 +176,7 @@ class AgentOrchestrator {
   async execute(userIdea: string) {
     console.log("🚀 Starting YAML-driven agent workflow...\n");
     console.log(
-      `📖 Workflow loaded from: one/knowledge/ontology-minimal.yaml\n`
+      `📖 Workflow loaded from: one/knowledge/ontology-minimal.yaml\n`,
     );
 
     // Get stages from YAML (1_ideas, 2_plans, 3_features, 4_tests, 5_design, 6_implementation)
@@ -232,8 +250,8 @@ class AgentOrchestrator {
           feature: f,
           ontology: loadOntology(),
           patterns: this.loadRelevantPatterns("backend"),
-        })
-      )
+        }),
+      ),
     );
     featureResults.forEach((f) => this.saveFeature(f.context));
     return { ...input, featureResults: featureResults.map((r) => r.context) };
@@ -352,8 +370,8 @@ Stay within your context token budget of ${agentConfig.context_tokens} tokens.
           task,
           patterns: this.loadRelevantPatterns(task.category),
           ontology: loadOntology(),
-        })
-      )
+        }),
+      ),
     );
   }
 
@@ -364,7 +382,7 @@ Stay within your context token budget of ${agentConfig.context_tokens} tokens.
     // If any test fails, run problem solver
     if (testResults.context.failed?.length > 0) {
       console.log(
-        "❌ Tests failed. Activating Problem Solver (ultrathink mode)..."
+        "❌ Tests failed. Activating Problem Solver (ultrathink mode)...",
       );
 
       const solutions = await this.runAgent(
@@ -374,7 +392,7 @@ Stay within your context token budget of ${agentConfig.context_tokens} tokens.
           failed: testResults.context.failed,
           implementation: tasks,
           ontology: loadOntology(),
-        }
+        },
       );
 
       // Specialists fix
@@ -493,7 +511,7 @@ Stay within your context token budget of ${agentConfig.context_tokens} tokens.
     return `# ${title}\n\n\`\`\`json\n${JSON.stringify(
       data,
       null,
-      2
+      2,
     )}\n\`\`\`\n`;
   }
 }
@@ -1052,14 +1070,12 @@ Documenter:
 ### Benefits of `one/` Structure
 
 1. **Single Source of Truth**
-
    - All workflow files organized by ontology dimensions
    - Easy to find: agents in `things/agents/`, patterns in `knowledge/`
    - Clear structure: follows the 6-dimension model
    - Agents are things (entities owned by people) ✅
 
 2. **Scalability**
-
    - Add new agents → `one/things/agents/`
    - Add new patterns → `one/knowledge/patterns/`
    - Add new plans → `one/things/plans/`
@@ -1067,14 +1083,12 @@ Documenter:
    - Everything has its place
 
 3. **AI-Native**
-
    - AI assistants understand ontology structure
    - Clear mental model: "agents are things"
    - Easy to reference: "Load from one/things/agents/"
    - Follows ontology semantics precisely
 
 4. **Git-Friendly**
-
    - All workflow files in one place
    - Easy to version control
    - Clear diff when things change

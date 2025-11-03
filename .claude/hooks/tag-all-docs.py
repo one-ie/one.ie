@@ -97,7 +97,11 @@ class MetadataTagger:
             print(f"Warning: {one_dir} does not exist")
 
         # Scan installation folders (any top-level dir except known dirs)
-        excluded_dirs = {"one", "web", "backend", "apps", ".claude", ".git", "node_modules", "dist", "build"}
+        excluded_dirs = {
+            "one", "web", "backend", "apps", ".claude", ".git",
+            "node_modules", "dist", "build", "cli", "import", "docs",
+            "scripts", "one-inc", "nine-padel", "onei-ie", "one.ie"
+        }
         for item in self.project_dir.iterdir():
             if item.is_dir() and item.name not in excluded_dirs and not item.name.startswith("."):
                 # This might be an installation folder

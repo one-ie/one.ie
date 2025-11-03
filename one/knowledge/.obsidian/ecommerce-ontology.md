@@ -1,3 +1,21 @@
+---
+title: Ecommerce Ontology
+dimension: knowledge
+category: .obsidian
+tags: 6-dimensions, ai, ontology
+related_dimensions: events, groups, people, things
+scope: global
+created: 2025-11-03
+updated: 2025-11-03
+version: 1.0.0
+ai_context: |
+  This document is part of the knowledge dimension in the .obsidian category.
+  Location: one/knowledge/.obsidian/ecommerce-ontology.md
+  Purpose: Here is the complete, universal ontology specification for e-commerce stores, designed to serve as a
+  Related dimensions: events, groups, people, things
+  For AI agents: Read this to understand ecommerce ontology.
+---
+
 Here is the complete, universal ontology specification for e-commerce stores, designed to serve as a blueprint for any modern retail business.
 
 ---

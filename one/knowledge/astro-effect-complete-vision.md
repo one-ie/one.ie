@@ -1,3 +1,21 @@
+---
+title: Astro Effect Complete Vision
+dimension: knowledge
+category: astro-effect-complete-vision.md
+tags: architecture
+related_dimensions: events, things
+scope: global
+created: 2025-11-03
+updated: 2025-11-03
+version: 1.0.0
+ai_context: |
+  This document is part of the knowledge dimension in the astro-effect-complete-vision.md category.
+  Location: one/knowledge/astro-effect-complete-vision.md
+  Purpose: Documents complete vision: astro + effect.ts in 5 layers
+  Related dimensions: events, things
+  For AI agents: Read this to understand astro effect complete vision.
+---
+
 # Complete Vision: Astro + Effect.ts in 5 Layers
 
 ## Overview: Progressive Enhancement Architecture

@@ -1,3 +1,21 @@
+---
+title: Tags
+dimension: knowledge
+category: tags.md
+tags: agent, ai, blockchain, ontology, protocol, things
+related_dimensions: connections, events, people, things
+scope: global
+created: 2025-11-03
+updated: 2025-11-03
+version: 1.0.0
+ai_context: |
+  This document is part of the knowledge dimension in the tags.md category.
+  Location: one/knowledge/tags.md
+  Purpose: Documents tags (categories)
+  Related dimensions: connections, events, people, things
+  For AI agents: Read this to understand tags.
+---
+
 # Tags (Categories)
 
 This folder contains documentation about **tag categories** in the ONE Platform ontology.

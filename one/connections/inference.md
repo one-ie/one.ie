@@ -1,3 +1,21 @@
+---
+title: Inference
+dimension: connections
+category: inference.md
+tags: agent, ai, claude, connections, inference, knowledge, ontology
+related_dimensions: events, knowledge, people, things
+scope: global
+created: 2025-11-03
+updated: 2025-11-03
+version: 1.0.0
+ai_context: |
+  This document is part of the connections dimension in the inference.md category.
+  Location: one/connections/inference.md
+  Purpose: Documents connection-driven inference workflow
+  Related dimensions: events, knowledge, people, things
+  For AI agents: Read this to understand inference.
+---
+
 # Connection-Driven Inference Workflow
 
 Purpose: Show how every integration in `one/connections/*` maps to ontology connections and how to use those connections to drive retrieval and tool routing for inference.

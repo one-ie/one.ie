@@ -1,3 +1,21 @@
+---
+title: Demo_Hooks_Index
+dimension: events
+category: DEMO_HOOKS_INDEX.md
+tags: ai, backend
+related_dimensions: connections, things
+scope: global
+created: 2025-11-03
+updated: 2025-11-03
+version: 1.0.0
+ai_context: |
+  This document is part of the events dimension in the DEMO_HOOKS_INDEX.md category.
+  Location: one/events/DEMO_HOOKS_INDEX.md
+  Purpose: Documents demo hooks index
+  Related dimensions: connections, things
+  For AI agents: Read this to understand DEMO_HOOKS_INDEX.
+---
+
 # Demo Hooks Index
 
 Quick navigation guide to all demo infrastructure documentation and code.

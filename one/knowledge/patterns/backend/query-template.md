@@ -1,3 +1,21 @@
+---
+title: Query Template
+dimension: knowledge
+category: patterns
+tags: ai, auth, backend, things
+related_dimensions: events, groups, people, things
+scope: global
+created: 2025-11-03
+updated: 2025-11-03
+version: 1.0.0
+ai_context: |
+  This document is part of the knowledge dimension in the patterns category.
+  Location: one/knowledge/patterns/backend/query-template.md
+  Purpose: Documents pattern: convex query template
+  Related dimensions: events, groups, people, things
+  For AI agents: Read this to understand query template.
+---
+
 # Pattern: Convex Query Template
 
 **Category:** Backend

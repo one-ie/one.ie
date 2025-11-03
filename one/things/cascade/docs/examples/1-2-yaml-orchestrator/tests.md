@@ -1,3 +1,21 @@
+---
+title: Tests
+dimension: things
+category: cascade
+tags: agent, ontology
+related_dimensions: events, people
+scope: global
+created: 2025-11-03
+updated: 2025-11-03
+version: 1.0.0
+ai_context: |
+  This document is part of the things dimension in the cascade category.
+  Location: one/things/cascade/docs/examples/1-2-yaml-orchestrator/tests.md
+  Purpose: Documents tests for feature 1-2: yaml-driven orchestrator
+  Related dimensions: events, people
+  For AI agents: Read this to understand tests.
+---
+
 # Tests for Feature 1-2: YAML-Driven Orchestrator
 
 **Feature:** 1-2-yaml-orchestrator
@@ -9,9 +27,11 @@
 ## User Flows
 
 ### Flow 1: Load Workflow Configuration
+
 **User goal:** Orchestrator reads YAML and understands workflow
 **Time budget:** < 100ms
 **Steps:**
+
 1. Orchestrator starts
 2. Reads `ontology-minimal.yaml`
 3. Parses workflow section
@@ -19,6 +39,7 @@
 5. Ready to execute
 
 **Acceptance Criteria:**
+
 - [ ] Reads YAML file successfully
 - [ ] Parses workflow.stages (6 levels)
 - [ ] Parses workflow.agents (8 agents)
@@ -29,9 +50,11 @@
 ---
 
 ### Flow 2: Execute Complete Workflow
+
 **User goal:** Orchestrator runs idea → implementation
 **Time budget:** < 1 hour for simple feature
 **Steps:**
+
 1. User provides idea
 2. Orchestrator executes Stage 1 (Ideas) - Director validates
 3. Orchestrator executes Stage 2 (Plans) - Director creates plan
@@ -42,6 +65,7 @@
 8. Feature complete
 
 **Acceptance Criteria:**
+
 - [ ] All 6 stages execute in order
 - [ ] Each stage produces expected output
 - [ ] Context passed correctly between stages
@@ -52,9 +76,11 @@
 ---
 
 ### Flow 3: Invoke Agent with Context
+
 **User goal:** Orchestrator loads agent and provides correct context
 **Time budget:** < 5 seconds per agent invocation
 **Steps:**
+
 1. Orchestrator determines which agent needed
 2. Loads agent prompt from file
 3. Assembles context within token budget
@@ -63,6 +89,7 @@
 6. Logs event
 
 **Acceptance Criteria:**
+
 - [ ] Correct agent selected for stage
 - [ ] Agent prompt loaded (< 100ms)
 - [ ] Context assembled within budget
@@ -74,9 +101,11 @@
 ---
 
 ### Flow 4: Handle Parallel Execution
+
 **User goal:** Multiple features execute simultaneously
 **Time budget:** Same as sequential (parallelization = free performance)
 **Steps:**
+
 1. Orchestrator reaches Stage 3 (Features)
 2. Multiple features assigned to specialists
 3. Specialists work in parallel
@@ -84,6 +113,7 @@
 5. Proceeds to next stage
 
 **Acceptance Criteria:**
+
 - [ ] Multiple agents invoked in parallel
 - [ ] All agents complete successfully
 - [ ] Results collected from all agents
@@ -93,9 +123,11 @@
 ---
 
 ### Flow 5: Recover from Errors
+
 **User goal:** Orchestrator handles failures gracefully
 **Time budget:** < 30 seconds to detect and respond
 **Steps:**
+
 1. Orchestrator invokes agent
 2. Agent throws error (network, timeout, invalid output)
 3. Orchestrator catches error
@@ -104,6 +136,7 @@
 6. User notified with helpful message
 
 **Acceptance Criteria:**
+
 - [ ] Errors caught and logged
 - [ ] Retry up to 3x
 - [ ] Exponential backoff between retries
@@ -118,12 +151,14 @@
 ### Unit Tests
 
 **Configuration Loading:**
+
 - [ ] `loadWorkflowConfig()` parses YAML correctly
 - [ ] `loadWorkflowConfig()` validates required fields
 - [ ] `loadWorkflowConfig()` returns error on invalid YAML
 - [ ] `loadWorkflowConfig()` caches configuration
 
 **Stage Execution:**
+
 - [ ] `executeStage("1_ideas", input)` calls director agent
 - [ ] `executeStage("2_plans", input)` calls director agent
 - [ ] `executeStage("3_features", input)` calls specialists (parallel)
@@ -132,6 +167,7 @@
 - [ ] `executeStage("6_implementation", input)` calls specialists + quality
 
 **Agent Invocation:**
+
 - [ ] `runAgent(role, task, context)` loads correct prompt
 - [ ] `runAgent(role, task, context)` assembles context
 - [ ] `runAgent(role, task, context)` invokes AI assistant
@@ -139,12 +175,14 @@
 - [ ] `runAgent(role, task, context)` returns output
 
 **Parallel Execution:**
+
 - [ ] `runAgentParallel(role, task, contexts)` invokes multiple agents
 - [ ] `runAgentParallel()` waits for all to complete
 - [ ] `runAgentParallel()` collects all results
 - [ ] `runAgentParallel()` handles partial failures
 
 **Context Assembly:**
+
 - [ ] `assembleContext(role, input)` loads ontology types
 - [ ] `assembleContext(role, input)` loads patterns
 - [ ] `assembleContext(role, input)` stays within budget
@@ -155,6 +193,7 @@
 ### Integration Tests
 
 **Complete Workflow Execution:**
+
 - [ ] Idea → Plan → Features → Tests → Design → Implementation
 - [ ] All stages execute successfully
 - [ ] Context passed correctly
@@ -162,18 +201,21 @@
 - [ ] Output files created in correct locations
 
 **Multi-Feature Parallel Execution:**
+
 - [ ] Plan with 3 features executes
 - [ ] Features execute in parallel at Stage 3
 - [ ] All features complete
 - [ ] Results collected correctly
 
 **Error Handling:**
+
 - [ ] Agent failure triggers retry
 - [ ] 3 retries attempted
 - [ ] Escalation after 3 failures
 - [ ] State saved for resume
 
 **Event Integration:**
+
 - [ ] All workflow events logged
 - [ ] Events contain correct metadata
 - [ ] Events enable coordination
@@ -184,6 +226,7 @@
 ### E2E Tests
 
 **Simple Feature (End-to-End):**
+
 - [ ] User provides: "Add password reset"
 - [ ] Orchestrator validates idea (Stage 1)
 - [ ] Orchestrator creates plan (Stage 2)
@@ -195,6 +238,7 @@
 - [ ] Total time: < 1 hour
 
 **Complex Feature (Multiple Specialists):**
+
 - [ ] User provides: "Build course platform"
 - [ ] Orchestrator creates plan with 4 features
 - [ ] Features execute in parallel
@@ -204,6 +248,7 @@
 - [ ] Total time: < 4 hours
 
 **Performance:**
+
 - [ ] Configuration load: < 100ms
 - [ ] Agent invocation: < 5 seconds
 - [ ] Stage execution: < 10 minutes per stage

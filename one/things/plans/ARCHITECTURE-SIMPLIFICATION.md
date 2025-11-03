@@ -1,3 +1,21 @@
+---
+title: Architecture Simplification
+dimension: things
+category: plans
+tags: ai, architecture, frontend, system-design, things
+related_dimensions: connections, events, groups
+scope: global
+created: 2025-11-03
+updated: 2025-11-03
+version: 1.0.0
+ai_context: |
+  This document is part of the things dimension in the plans category.
+  Location: one/things/plans/ARCHITECTURE-SIMPLIFICATION.md
+  Purpose: Documents architecture simplification analysis: one platform frontend
+  Related dimensions: connections, events, groups
+  For AI agents: Read this to understand ARCHITECTURE SIMPLIFICATION.
+---
+
 # Architecture Simplification Analysis: ONE Platform Frontend
 
 ## Executive Summary
@@ -19,25 +37,28 @@ This creates a **5-layer indirect call chain** for every operation. The analysis
 **File:** `web/src/providers/DataProvider.ts`
 
 **Problem:**
+
 - Defines 50+ error types using Effect.ts tagged unions
 - 411 lines of pure interface definitions
 - Expects all 6 dimensions to be swappable at runtime
 - **Reality:** Always uses Convex - never swapped
 
 **Metrics:**
+
 - 25+ error classes (each is 4-6 LOC)
 - Aliases for aliases (fromEntityId / fromThingId / fromPersonId)
 - Redundant query option types (ListThingsOptions, ListConnectionsOptions, etc.)
 
 **Example Redundancy:**
+
 ```typescript
 // 6 ways to say the same thing
 export interface ListConnectionsOptions {
   fromPersonId?: string;
   fromThingId?: string;
-  fromEntityId?: string;  // Alias
+  fromEntityId?: string; // Alias
   toThingId?: string;
-  toEntityId?: string;    // Alias
+  toEntityId?: string; // Alias
   relationshipType?: string;
   groupId?: string;
   limit?: number;
@@ -51,17 +72,20 @@ export interface ListConnectionsOptions {
 **File:** `web/src/providers/ConvexProvider.ts`
 
 **Problem:**
+
 - 363 lines of boilerplate
 - Each operation: `toEffect()` → `Effect.gen()` → `try/catch` → error conversion
 - Wraps queries/mutations that already work perfectly
 - No value added - just converts Promise to Effect
 
 **Metrics:**
+
 - 50+ identical patterns (one per operation)
 - ~10 lines per operation (get/list/create/update/delete)
 - Overhead: ~1ms per operation (measured)
 
 **Pattern Repetition:**
+
 ```typescript
 // This pattern repeats 50+ times:
 groups: {
@@ -70,7 +94,7 @@ groups: {
       () => client.query("groups:get" as any, { id }).then(...),
       (message) => new GroupNotFoundError(id, message)
     ),
-  
+
   list: (options?) =>
     toEffect(
       () => client.query("groups:list" as any, options || {}),
@@ -87,12 +111,14 @@ groups: {
 **File:** `web/src/services/ClientLayer.ts`
 
 **Problem:**
+
 - 76 lines of Effect.ts dependency injection setup
 - Uses Layer.provideMerge() to combine 6+ services
 - Stub provider that throws "not configured" errors
 - provideLayer() helper that duplicates Layer.mergeAll()
 
 **Reality Check:**
+
 - No tests using alternate providers
 - No production code swapping providers
 - Only ever used with Convex
@@ -104,6 +130,7 @@ groups: {
 **File:** `web/src/services/ThingService.ts`
 
 **Problem:**
+
 - 156 lines to wrap 5 CRUD operations
 - Every service is identical pattern:
   - Define Context.Tag
@@ -112,6 +139,7 @@ groups: {
   - Return object calling provider
 
 **Example - EventService:**
+
 ```typescript
 // 32 lines to do this:
 static log(event: CreateEventInput): Effect.Effect<void, Error, EventService> {
@@ -123,6 +151,7 @@ log: (event) => provider.events.log(event),  // Direct passthrough
 ```
 
 **Metrics:**
+
 - ThingService: 156 lines
 - ConnectionService: 46 lines
 - EventService: 32 lines
@@ -136,17 +165,19 @@ log: (event) => provider.events.log(event),  // Direct passthrough
 **File:** `web/src/hooks/useEffectRunner.ts`
 
 **Problem:**
+
 - Uses Effect.ts in React components (impedance mismatch)
 - 36 lines to solve a simple problem:
   ```typescript
   const run = async <A, E>(effect: Effect.Effect<A, E>) => {
     return await Effect.runPromise(effect.pipe(Effect.provide(ClientLayer)));
-  }
+  };
   ```
 - Provides loading/error state (React already has useState for this)
 - Callbacks unused in practice (see useThing.ts hooks)
 
 **Actual Usage in useThing.ts:**
+
 ```typescript
 // Sets up useEffectRunner but doesn't use callbacks
 const { run, loading, error } = useEffectRunner<unknown, any>();
@@ -162,6 +193,7 @@ return run(program, options);
 ```
 
 **Problems:**
+
 - All hooks return `null` (TODOs not implemented)
 - isProviderAvailable check is never false in practice
 - Effect.ts offers no advantage over native promises
@@ -201,10 +233,10 @@ The entire DataProvider abstraction exists to support swapping implementations. 
 
 ```typescript
 // ConvexProvider pattern repeats 50+ times:
-client.query("entities:get" as any, { id }).then(result => {
+client.query("entities:get" as any, { id }).then((result) => {
   if (!result) throw new Error(`Thing not found: ${id}`);
   return result as Thing;
-})
+});
 
 // Could be unified once:
 const handleNotFound = async (promise, entityType) => {
@@ -237,12 +269,12 @@ export const {Service}Live = Layer.effect(
 
 ### Effect.ts Claims vs Reality
 
-| Claimed Benefit | Reality | Evidence |
-|---|---|---|
-| Type-safe error handling | Errors not caught in practice | useThing.ts returns `null` not errors |
-| Composable effects | Used linearly, not composed | Each hook has single Effect.gen call |
-| Dependency injection | Only one provider ever used | ClientLayer never swapped |
-| Testability | No tests using DI | Tests not in codebase for these layers |
+| Claimed Benefit          | Reality                       | Evidence                               |
+| ------------------------ | ----------------------------- | -------------------------------------- |
+| Type-safe error handling | Errors not caught in practice | useThing.ts returns `null` not errors  |
+| Composable effects       | Used linearly, not composed   | Each hook has single Effect.gen call   |
+| Dependency injection     | Only one provider ever used   | ClientLayer never swapped              |
+| Testability              | No tests using DI             | Tests not in codebase for these layers |
 
 ### Performance Impact
 
@@ -266,16 +298,17 @@ This is acceptable but unnecessary - direct Convex is <1ms.
 const { run, loading, error } = useEffectRunner();
 const effect = Effect.gen(function* () {
   const provider = yield* DataProvider;
-  return yield* provider.things.list({ type: 'course' });
+  return yield* provider.things.list({ type: "course" });
 });
 const courses = await run(effect);
 
 // After (simplified):
-const courses = useQuery(api.queries.entities.list, { type: 'course' });
+const courses = useQuery(api.queries.entities.list, { type: "course" });
 const loading = courses === undefined;
 ```
 
 **Benefits:**
+
 - 80% fewer lines of code
 - 10x simpler to understand
 - Built-in caching (Convex automatically caches queries)
@@ -303,6 +336,7 @@ type Connection = Doc<"connections">;
 ```
 
 **Benefits:**
+
 - Single source of truth (backend schema)
 - Type stays in sync automatically
 - Eliminates 25+ error class definitions
@@ -319,18 +353,19 @@ type Connection = Doc<"connections">;
 // Keep only: Thin wrapper around Convex client initialization
 
 // Before:
-import { createConvexProvider } from '@/providers/ConvexProvider';
+import { createConvexProvider } from "@/providers/ConvexProvider";
 const provider = createConvexProvider({ client });
 
 // After:
-import { useQuery, useMutation } from 'convex/react';
-import { api } from '@/convex/_generated/api';
+import { useQuery, useMutation } from "convex/react";
+import { api } from "@/convex/_generated/api";
 
 const things = useQuery(api.queries.entities.list, params);
 const createThing = useMutation(api.mutations.entities.create);
 ```
 
 **Benefits:**
+
 - Eliminates 363 LOC of boilerplate
 - Moves to Convex's official patterns
 - Better React integration (automatic re-renders)
@@ -386,6 +421,7 @@ export function useThing() {
 ```
 
 **Benefits:**
+
 - 400+ LOC service boilerplate → 0
 - Business logic stays in hooks (near usage)
 - No DI ceremony
@@ -402,12 +438,13 @@ export function useThing() {
 // Remove: /context/EffectContext.tsx (28 lines)
 
 // Replace StubProvider error messages with direct imports:
-import { useQuery, useMutation } from 'convex/react';
-import { api } from '@/convex/_generated/api';
+import { useQuery, useMutation } from "convex/react";
+import { api } from "@/convex/_generated/api";
 // No provider context needed
 ```
 
 **Benefits:**
+
 - Eliminates Layer.provideMerge() complexity
 - No React context for DI
 - Simpler mental model
@@ -421,15 +458,15 @@ import { api } from '@/convex/_generated/api';
 
 ### Code Reduction
 
-| Component | Current LOC | Simplified LOC | Reduction |
-|---|---|---|---|
-| DataProvider | 411 | 0 (use Convex types) | -411 |
-| ConvexProvider | 363 | 0 (direct hooks) | -363 |
-| ClientLayer | 76 | 0 | -76 |
-| Services (6 files) | 400+ | 0 | -400 |
-| useEffectRunner | 36 | 0 | -36 |
-| EffectContext | 28 | 0 | -28 |
-| **Total** | **1,314+** | **Hooks only** | **-70%** |
+| Component          | Current LOC | Simplified LOC       | Reduction |
+| ------------------ | ----------- | -------------------- | --------- |
+| DataProvider       | 411         | 0 (use Convex types) | -411      |
+| ConvexProvider     | 363         | 0 (direct hooks)     | -363      |
+| ClientLayer        | 76          | 0                    | -76       |
+| Services (6 files) | 400+        | 0                    | -400      |
+| useEffectRunner    | 36          | 0                    | -36       |
+| EffectContext      | 28          | 0                    | -28       |
+| **Total**          | **1,314+**  | **Hooks only**       | **-70%**  |
 
 ### Hooks Expansion (Minor)
 
@@ -463,6 +500,7 @@ import { api } from '@/convex/_generated/api';
 ### 1. Replace useEffectRunner
 
 **Before:**
+
 ```typescript
 export function useEffectRunner() {
   const [loading, setLoading] = useState(false);
@@ -473,7 +511,9 @@ export function useEffectRunner() {
       setLoading(true);
       setError(null);
       try {
-        const result = await Effect.runPromise(effect.pipe(Effect.provide(ClientLayer)));
+        const result = await Effect.runPromise(
+          effect.pipe(Effect.provide(ClientLayer)),
+        );
         return result;
       } catch (err) {
         setError(err);
@@ -482,7 +522,7 @@ export function useEffectRunner() {
         setLoading(false);
       }
     },
-    []
+    [],
   );
 
   return { run, loading, error };
@@ -490,15 +530,16 @@ export function useEffectRunner() {
 ```
 
 **After:**
+
 ```typescript
 // For queries (read):
-const courses = useQuery(api.queries.entities.list, { type: 'course' });
+const courses = useQuery(api.queries.entities.list, { type: "course" });
 const loading = courses === undefined;
 const error = null; // Convex handles errors via error boundary
 
 // For mutations (write):
 const [createThing, { isPending: loading, error }] = useMutation(
-  api.mutations.entities.create
+  api.mutations.entities.create,
 );
 
 const handleCreate = async (input) => {
@@ -518,6 +559,7 @@ const handleCreate = async (input) => {
 ### 2. Consolidate Error Types
 
 **Before (411 LOC):**
+
 ```typescript
 export class NotFoundError extends Data.TaggedError("NotFoundError")<{
   entityType: string;
@@ -537,12 +579,13 @@ export class ConflictError extends Data.TaggedError("ConflictError")<{
 ```
 
 **After (one place):**
+
 ```typescript
 // In backend schema:
-type AppError = 
-  | { type: 'not_found'; entityType: string; id: string }
-  | { type: 'validation'; field: string; message: string }
-  | { type: 'conflict'; reason: string };
+type AppError =
+  | { type: "not_found"; entityType: string; id: string }
+  | { type: "validation"; field: string; message: string }
+  | { type: "conflict"; reason: string };
 
 // Convex mutations return structured errors automatically
 ```
@@ -554,6 +597,7 @@ type AppError =
 ### 3. Replace Service Layer with Hooks
 
 **Before (156 LOC ThingService):**
+
 ```typescript
 export class ThingService extends Context.Tag("ThingService")<...>() {
   static get(id: string): Effect.Effect<Thing, NotFoundError, ThingService> {
@@ -579,19 +623,23 @@ export const ThingServiceLive = Layer.effect(
 ```
 
 **After (40 LOC hook):**
+
 ```typescript
 export function useThings() {
-  const thingsList = useQuery(api.queries.entities.list, { type: 'course' });
+  const thingsList = useQuery(api.queries.entities.list, { type: "course" });
   const create = useMutation(api.mutations.entities.create);
   const update = useMutation(api.mutations.entities.update);
   const delete_ = useMutation(api.mutations.entities.delete);
 
   return {
     things: thingsList || [],
-    create: useCallback(async (input) => {
-      if (!input.name?.trim()) throw new Error('Name required');
-      return await create({ ...input });
-    }, [create]),
+    create: useCallback(
+      async (input) => {
+        if (!input.name?.trim()) throw new Error("Name required");
+        return await create({ ...input });
+      },
+      [create],
+    ),
     update,
     delete: delete_,
   };
@@ -605,6 +653,7 @@ export function useThings() {
 ### 4. Use Convex Queries for State Management
 
 **Before (Effect.gen composition):**
+
 ```typescript
 function useCourseEnrollment(courseId: string) {
   const { run } = useEffectRunner();
@@ -614,7 +663,9 @@ function useCourseEnrollment(courseId: string) {
     const program = Effect.gen(function* () {
       const provider = yield* DataProvider;
       const course = yield* provider.things.get(courseId);
-      const enrollments = yield* provider.connections.list({ toThingId: courseId });
+      const enrollments = yield* provider.connections.list({
+        toThingId: courseId,
+      });
       return { course, enrollments };
     });
 
@@ -626,6 +677,7 @@ function useCourseEnrollment(courseId: string) {
 ```
 
 **After (Convex queries):**
+
 ```typescript
 function useCourseEnrollment(courseId: string) {
   const course = useQuery(api.queries.entities.get, { id: courseId });
@@ -642,6 +694,7 @@ function useCourseEnrollment(courseId: string) {
 ```
 
 **Benefits:**
+
 - Automatic re-rendering on data changes
 - Built-in caching
 - Reactive to mutations
@@ -655,13 +708,14 @@ function useCourseEnrollment(courseId: string) {
 ### Simplified Testing
 
 **Before (Mock DataProvider):**
+
 ```typescript
 // Hard to mock (requires implementing full DataProvider interface)
 const mockProvider = {
   things: {
     get: () => Effect.succeed(mockThing),
     list: () => Effect.succeed([mockThing]),
-    create: () => Effect.succeed('123'),
+    create: () => Effect.succeed("123"),
     // ... 30+ more methods
   },
   // ... 5 more dimensions
@@ -669,15 +723,17 @@ const mockProvider = {
 ```
 
 **After (Mock Convex functions):**
+
 ```typescript
 // Easy - mock the actual functions being called
-vi.mock('convex/react', () => ({
+vi.mock("convex/react", () => ({
   useQuery: vi.fn(() => mockCourse),
   useMutation: vi.fn(() => mockCreateFn),
 }));
 ```
 
 **Testing improvements:**
+
 - 70% fewer mock definitions
 - Tests closer to actual usage patterns
 - Easier to test error cases
@@ -759,10 +815,10 @@ vi.mock('convex/react', () => ({
 **The current architecture over-engineers for flexibility that doesn't exist.** The DataProvider abstraction, Effect.ts services, and DI layer add 1,300+ LOC to support provider swapping that has never happened in production.
 
 **Recommended approach:**
+
 1. Migrate to Convex hooks (official pattern)
 2. Remove the abstraction layer
 3. Keep business logic in components/hooks (near usage)
 4. Use backend schema as source of truth for types
 
 This reduces code by 70%, improves maintainability, and aligns with Convex best practices.
-

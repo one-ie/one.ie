@@ -1,3 +1,21 @@
+---
+title: Ontology Core Universal
+dimension: knowledge
+category: ontology-core-universal.md
+tags: 6-dimensions, ai, groups, ontology
+related_dimensions: connections, events, groups, people, things
+scope: global
+created: 2025-11-03
+updated: 2025-11-03
+version: 1.0.0
+ai_context: |
+  This document is part of the knowledge dimension in the ontology-core-universal.md category.
+  Location: one/knowledge/ontology-core-universal.md
+  Purpose: Documents core universal ontology - what every website needs
+  Related dimensions: connections, events, groups, people, things
+  For AI agents: Read this to understand ontology core universal.
+---
+
 # Core Universal Ontology - What Every Website Needs
 
 **Version:** 1.0.0

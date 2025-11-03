@@ -1,12 +1,31 @@
+---
+title: Story
+dimension: things
+category: agents
+tags: agent
+related_dimensions: people
+scope: global
+created: 2025-11-03
+updated: 2025-11-03
+version: 1.0.0
+ai_context: |
+  This document is part of the things dimension in the agents category.
+  Location: one/things/claude/commands/story.md
+  Purpose: Documents /story - story creation & management with real-time status
+  Related dimensions: people
+  For AI agents: Read this to understand story.
+---
+
 # /story - Story Creation & Management with Real-time Status
 
 📖 **Direct access to story workflows with live progress tracking**
 
-*Alternative to `/one` > 2. Continue Story for quick story access*
+_Alternative to `/one` > 2. Continue Story for quick story access_
 
 ## 📊 Real-time Story Status
 
 ### Progress Tracking
+
 ```
 📖 Story 2 of 4: "Content Generation System" | 75% Complete
    ✅ Tasks: 6 of 8 Complete | 🤖 2 agents working | ⭐ 4.1⭐ Quality
@@ -14,9 +33,10 @@
 ```
 
 ### Live Status Updates
+
 - **Story Progress**: Task completion and quality tracking
 - **Agent Coordination**: Real-time agent assignments and status
-- **Quality Validation**: Live quality scores and gate status  
+- **Quality Validation**: Live quality scores and gate status
 - **Mission Integration**: How story contributes to mission progress
 
 When this command is used:
@@ -37,7 +57,7 @@ display:
   header: |
     📖 {{USER_NAME}} Story Studio
     Voice: {{USER_VOICE}} | Theme: {{USER_THEME}}
-    
+
     🎯 Active Missions:
     {{#each ACTIVE_MISSIONS}}
     • {{title}} - {{progress}}% complete
@@ -75,7 +95,7 @@ story_templates:
     **Key Characters**: {{USER_AGENTS}}
     **Setting**: {{USER_SPACE}}
     **Goal Alignment**: {{STORY_GOALS}}
-    
+
     ## Your Story
     {{STORY_CONTENT}}
 ```

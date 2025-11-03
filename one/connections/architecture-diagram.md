@@ -1,3 +1,21 @@
+---
+title: Architecture Diagram
+dimension: connections
+category: architecture-diagram.md
+tags: ai, architecture, blockchain, frontend, system-design
+related_dimensions: events, knowledge, people, things
+scope: global
+created: 2025-11-03
+updated: 2025-11-03
+version: 1.0.0
+ai_context: |
+  This document is part of the connections dimension in the architecture-diagram.md category.
+  Location: one/connections/architecture-diagram.md
+  Purpose: Provides information
+  Related dimensions: events, knowledge, people, things
+  For AI agents: Read this to understand architecture diagram.
+---
+
 graph TB
     subgraph "Frontend Layer"
         A[Astro Pages + React Islands]

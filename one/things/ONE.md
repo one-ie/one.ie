@@ -1,3 +1,21 @@
+---
+title: One
+dimension: things
+category: ONE.md
+tags: agent, architecture, connections, events, frontend, knowledge, ontology, people, things
+related_dimensions: connections, events, groups, knowledge, people
+scope: global
+created: 2025-11-03
+updated: 2025-11-03
+version: 1.0.0
+ai_context: |
+  This document is part of the things dimension in the ONE.md category.
+  Location: one/things/ONE.md
+  Purpose: Documents one
+  Related dimensions: connections, events, groups, knowledge, people
+  For AI agents: Read this to understand ONE.
+---
+
 # ONE
 
       ██████╗ ███╗   ██╗███████╗

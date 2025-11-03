@@ -1,3 +1,21 @@
+---
+title: Architecture Diagram
+dimension: knowledge
+category: architecture-diagram.md
+tags: ai, architecture, frontend, ontology, system-design
+related_dimensions: events
+scope: global
+created: 2025-11-03
+updated: 2025-11-03
+version: 1.0.0
+ai_context: |
+  This document is part of the knowledge dimension in the architecture-diagram.md category.
+  Location: one/knowledge/architecture-diagram.md
+  Purpose: Documents one platform architecture diagram
+  Related dimensions: events
+  For AI agents: Read this to understand architecture diagram.
+---
+
 # ONE Platform Architecture Diagram
 
 **Version:** 3.0.0

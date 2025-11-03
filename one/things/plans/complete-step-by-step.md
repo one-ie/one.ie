@@ -1,3 +1,21 @@
+---
+title: Complete Step By Step
+dimension: things
+category: plans
+tags: agent, ai, architecture, backend, frontend, things
+related_dimensions: events, groups, knowledge, people
+scope: global
+created: 2025-11-03
+updated: 2025-11-03
+version: 1.0.0
+ai_context: |
+  This document is part of the things dimension in the plans category.
+  Location: one/things/plans/complete-step-by-step.md
+  Purpose: Documents complete step-by-step build plan: one platform (revised)
+  Related dimensions: events, groups, knowledge, people
+  For AI agents: Read this to understand complete step by step.
+---
+
 # Complete Step-by-Step Build Plan: ONE Platform (REVISED)
 
 **Version:** 3.0.0 - Agent-Parallel Execution
@@ -8,6 +26,7 @@
 **Execution Model:** Agent-Director orchestrates parallel specialist agents
 
 **Using Convex Components:**
+
 - `@convex-dev/agent` - AI agents with threading
 - `@convex-dev/rag` - Retrieval-augmented generation
 - `@convex-dev/rate-limiter` - Per-user/org rate limiting
@@ -98,6 +117,7 @@ This plan is executed by the agent network, coordinated by **agent-director**:
 **THE GOAL:** 5x faster delivery by eliminating sequential wait times
 
 **CURRENT BOTTLENECKS (Sequential):**
+
 ```
 Phase 1: Backend implementation (10-12 hrs)
    → Wait for backend done
@@ -108,6 +128,7 @@ Total Sequential: 21-25 hours ❌
 ```
 
 **NEW APPROACH (Parallel):**
+
 ```
 Phase 1a: Backend coding + Phase 1b: Test definition (simultaneous)
    10-12 hrs (backend)  \
@@ -128,11 +149,13 @@ Result: ~18 hours total (vs. 25 sequential) = 28% time savings ✅
 **WHICH PHASES CAN RUN IN PARALLEL:**
 
 ✅ **Can Parallelize (Independent):**
+
 - Backend CRUD + Test definition (tests don't depend on implementation)
 - Backend code + Frontend code (different codebases)
 - Documentation + Quality checks (separate concerns)
 
 ❌ **Must Wait (Dependencies):**
+
 - Backend implementation MUST complete before integration tests
 - Schema design MUST complete before tests are written (defines what to test)
 - Quality approval MUST complete before documenter finalizes
@@ -224,22 +247,23 @@ Phase 5 - Deployment (Week 5+):
 
 ### Per-Phase Assignments:
 
-| Phase | Primary Agent | Secondary Agents | Duration | Dependencies |
-|-------|---------------|-----------------|----------|--------------|
-| 1a: Backend Code | agent-backend | agent-quality (tests) | 10-12h | None |
-| 1b: Test Definition | agent-quality | agent-backend (schema) | 3h | Schema done |
-| 1c: Validation | agent-quality | agent-backend (fixes) | 2-3h | 1a + 1b done |
-| 2a: Integration | agent-integrator | agent-backend | 2h | Phase 1 done |
-| 2b: HTTP Layer | agent-backend | agent-integrator | 2h | Phase 1 done |
-| 3: System Test | agent-quality | agent-ops | 3h | Phase 2 done |
-| 4a: Feature Backend | agent-backend | agent-quality | 2-3d | Feature spec |
-| 4b: Feature Frontend | agent-frontend | agent-quality | 2-3d | Schema done |
-| 4c: Feature Integration | agent-integrator | agent-quality | 1-2d | Schema done |
-| 5a: Deploy Staging | agent-ops | agent-quality | 1h | Phase 4 done |
-| 5b: Deploy Prod | agent-ops | agent-quality | 1h | Staging pass |
-| Docs & Knowledge | agent-documenter | agent-quality | 1h/phase | Phase done |
+| Phase                   | Primary Agent    | Secondary Agents       | Duration | Dependencies |
+| ----------------------- | ---------------- | ---------------------- | -------- | ------------ |
+| 1a: Backend Code        | agent-backend    | agent-quality (tests)  | 10-12h   | None         |
+| 1b: Test Definition     | agent-quality    | agent-backend (schema) | 3h       | Schema done  |
+| 1c: Validation          | agent-quality    | agent-backend (fixes)  | 2-3h     | 1a + 1b done |
+| 2a: Integration         | agent-integrator | agent-backend          | 2h       | Phase 1 done |
+| 2b: HTTP Layer          | agent-backend    | agent-integrator       | 2h       | Phase 1 done |
+| 3: System Test          | agent-quality    | agent-ops              | 3h       | Phase 2 done |
+| 4a: Feature Backend     | agent-backend    | agent-quality          | 2-3d     | Feature spec |
+| 4b: Feature Frontend    | agent-frontend   | agent-quality          | 2-3d     | Schema done  |
+| 4c: Feature Integration | agent-integrator | agent-quality          | 1-2d     | Schema done  |
+| 5a: Deploy Staging      | agent-ops        | agent-quality          | 1h       | Phase 4 done |
+| 5b: Deploy Prod         | agent-ops        | agent-quality          | 1h       | Staging pass |
+| Docs & Knowledge        | agent-documenter | agent-quality          | 1h/phase | Phase done   |
 
 ### Coordinator (Always agent-director):
+
 - Validates plan against 6-dimension ontology ✅
 - Emits feature assignments ✅
 - Monitors for blocking issues ✅
@@ -254,8 +278,10 @@ Phase 5 - Deployment (Week 5+):
 To execute this plan optimally, update agents as follows:
 
 ### agent-director
+
 **Current:** Validates ideas, creates plans, assigns features
 **Needed:**
+
 - Add `parallelExecutionOrchestration()` method to manage concurrent phases
 - Add `dependencyResolution()` to identify which tasks can run in parallel
 - Add `blockageDetection()` to identify stuck tasks waiting for dependencies
@@ -264,6 +290,7 @@ To execute this plan optimally, update agents as follows:
 - Enhance `featureAssignment()` to batch-assign multiple features to multiple agents simultaneously
 
 **Implementation:**
+
 ```typescript
 // In agent-director prompts:
 "You manage parallel execution across 5-8 agents simultaneously.
@@ -277,8 +304,10 @@ When assigning Phase 1 tasks:
 ```
 
 ### agent-backend
+
 **Current:** Implements mutations, queries, schema, Effect.ts
 **Needed:**
+
 - Add `parallelCRUDImplementation()` to parallelize Groups/Things/Connections implementation
 - Add `dependencyTracker()` to know which services are ready for Effect.ts wrapping
 - Add `testReadiness()` to emit `schema_ready` event when schema complete (so quality can start)
@@ -286,6 +315,7 @@ When assigning Phase 1 tasks:
 - Add `blockageHandling()` to detect when waiting on quality feedback
 
 **Implementation:**
+
 ```typescript
 // In agent-backend prompts:
 "Emit events to keep agent-quality informed:
@@ -296,8 +326,10 @@ When assigning Phase 1 tasks:
 ```
 
 ### agent-frontend
+
 **Current:** Implements components, pages, styling, performance
 **Needed:**
+
 - Add `waitForSchemaEvent()` to not start until backend emits `schema_ready`
 - Add `parallelComponentDevelopment()` to code multiple pages simultaneously
 - Add `designSystemAlignment()` to wait for agent-designer's component specs
@@ -305,6 +337,7 @@ When assigning Phase 1 tasks:
 - Add `performanceBudgeting()` to measure Core Web Vitals during development
 
 **Implementation:**
+
 ```typescript
 // In agent-frontend prompts:
 "Watch for these events to proceed:
@@ -315,8 +348,10 @@ When assigning Phase 1 tasks:
 ```
 
 ### agent-quality
+
 **Current:** Defines tests, validates implementations, generates insights
 **Needed:**
+
 - Add `parallelTestDefinition()` to define tests for multiple dimensions (Groups, Things, Connections, Events, Knowledge) simultaneously
 - Add `schemaAwarenessWaiting()` to emit `ready_to_define` when schema structure known
 - Add `continuousValidation()` to validate components as they complete (not waiting for all)
@@ -324,6 +359,7 @@ When assigning Phase 1 tasks:
 - Add `blockageRecovery()` to handle test failures by emitting `test_failed` for problem-solver
 
 **Implementation:**
+
 ```typescript
 // In agent-quality prompts:
 "Enable parallel test development:
@@ -336,8 +372,10 @@ When assigning Phase 1 tasks:
 ```
 
 ### agent-designer
+
 **Current:** Creates wireframes, component specs, design tokens
 **Needed:**
+
 - Add `testDrivenDesign()` to use agent-quality's test requirements to guide design
 - Add `parallelComponentDesign()` to design multiple components simultaneously
 - Add `accessibilityFirstDesign()` to ensure WCAG 2.1 AA from start (not retrofit)
@@ -345,6 +383,7 @@ When assigning Phase 1 tasks:
 - Add `performanceConsiderations()` to design for Core Web Vitals (LCP < 2.5s)
 
 **Implementation:**
+
 ```typescript
 // In agent-designer prompts:
 "Design components driven by test requirements:
@@ -356,8 +395,10 @@ When assigning Phase 1 tasks:
 ```
 
 ### agent-ops
+
 **Current:** Handles deployment, CI/CD, monitoring, releases
 **Needed:**
+
 - Add `deploymentPipelineSetup()` to prepare staging/production pipelines early
 - Add `releaseAutomation()` to automate version bumping, changelog generation
 - Add `productionReadiness()` to validate all quality gates before production deploy
@@ -365,6 +406,7 @@ When assigning Phase 1 tasks:
 - Add `incidentResponse()` to handle failures in production quickly
 
 **Implementation:**
+
 ```typescript
 // In agent-ops prompts:
 "Prepare deployment infrastructure early:
@@ -377,8 +419,10 @@ When assigning Phase 1 tasks:
 ```
 
 ### agent-documenter
+
 **Current:** Writes documentation, updates knowledge base
 **Needed:**
+
 - Add `parallelDocumentation()` to write different docs simultaneously (API, integration, architecture)
 - Add `knowledgeBaseUpdates()` to automatically extract lessons learned from test results
 - Add `semanticSearchOptimization()` to use knowledge embeddings for discovery
@@ -386,6 +430,7 @@ When assigning Phase 1 tasks:
 - Add `lessonsCapture()` to automatically capture and store insights
 
 **Implementation:**
+
 ```typescript
 // In agent-documenter prompts:
 "Document each completed phase:
@@ -397,8 +442,10 @@ When assigning Phase 1 tasks:
 ```
 
 ### agent-problem-solver
+
 **Current:** Analyzes failures, proposes solutions
 **Needed:**
+
 - Add `continuousMonitoring()` to watch `test_failed` events from all agents
 - Add `rootCauseAnalysisAutomation()` to automatically categorize failures
 - Add `solutionProposalSpeed()` to propose fixes within 10 minutes of failure
@@ -406,6 +453,7 @@ When assigning Phase 1 tasks:
 - Add `failurePatternDetection()` to identify recurring issues early
 
 **Implementation:**
+
 ```typescript
 // In agent-problem-solver prompts:
 "Monitor all test_failed events continuously:
@@ -423,6 +471,7 @@ When assigning Phase 1 tasks:
 ## ✅ What's ALREADY DONE
 
 **Frontend (COMPLETE):**
+
 - ✅ Astro 5 + React 19 with SSR on Cloudflare
 - ✅ shadcn/ui (50+ components pre-installed)
 - ✅ Tailwind CSS v4 with dark mode
@@ -433,17 +482,20 @@ When assigning Phase 1 tasks:
 - ✅ Stripe payment integration
 
 **Backend (MOSTLY COMPLETE):**
+
 - ✅ Convex schema (6-dimension ontology)
 - ✅ Better Auth (6 auth methods fully working)
 - ✅ Query/mutation stubs
 - ✅ Service layer structure
 
 **Testing (DONE):**
+
 - ✅ 50+ auth tests (all 6 methods)
 - ✅ Provider tests
 - ✅ Integration tests
 
 **Documentation (EXCELLENT):**
+
 - ✅ CLAUDE.md (2,500+ lines, comprehensive guidance)
 - ✅ AGENTS.md (Convex patterns)
 - ✅ /one/ directory (41 files, 8 layers)
@@ -489,6 +541,7 @@ Total: 4-6 weeks to production with SOLID foundation
 5. ✅ **Performance Baselines** - Know what to optimize
 
 **These 5 quick wins:**
+
 - Take ~2 hours each = 10 hours total
 - Unblock everything else
 - Make code generation 50% more accurate
@@ -504,6 +557,7 @@ Total: 4-6 weeks to production with SOLID foundation
 **Components:** Agent, RAG, Rate Limiter, Workflow, Retrier, Workpool, Streaming
 
 ### What's Already in Place:
+
 - ✅ Schema with all 6 tables defined
 - ✅ Query/mutation stubs
 - ✅ Service structure
@@ -540,6 +594,7 @@ backend/convex/
 ### Why This Architecture:
 
 **Convex Components handle:**
+
 - Agent thread management & streaming
 - Vector search for RAG
 - Rate limiting (per-user, per-org)
@@ -548,6 +603,7 @@ backend/convex/
 - Real-time persistent streaming
 
 **Effect.ts wraps them for:**
+
 - Type-safe error handling
 - Service composition
 - Dependency injection
@@ -555,6 +611,7 @@ backend/convex/
 - Business logic orchestration
 
 ### Step 1.1: Implement Groups Queries & Mutations
+
 **Time:** 2 hours
 **Deliverable:** Full CRUD for groups
 
@@ -564,15 +621,15 @@ backend/convex/
 export const get = query({
   args: { id: v.id("groups") },
   handler: async (ctx, args) => {
-    return await ctx.db.get(args.id)
-  }
-})
+    return await ctx.db.get(args.id);
+  },
+});
 
 export const list = query({
   handler: async (ctx) => {
-    return await ctx.db.query("groups").collect()
-  }
-})
+    return await ctx.db.query("groups").collect();
+  },
+});
 
 // backend/convex/mutations/groups.ts - Complete this
 
@@ -596,7 +653,7 @@ export const create = mutation({
       status: "active",
       createdAt: Date.now(),
       updatedAt: Date.now(),
-    })
+    });
     // Log creation event
     await ctx.db.insert("events", {
       groupId: id,
@@ -604,13 +661,14 @@ export const create = mutation({
       actorId: ctx.auth?.getUserIdentity()?.tokenIdentifier,
       targetId: id,
       timestamp: Date.now(),
-    })
-    return id
-  }
-})
+    });
+    return id;
+  },
+});
 ```
 
 **Check:**
+
 - [ ] Query returns correct group
 - [ ] Mutation creates with all fields
 - [ ] Events logged
@@ -619,6 +677,7 @@ export const create = mutation({
 ---
 
 ### Step 1.2: Implement Things Queries & Mutations
+
 **Time:** 2 hours
 **Deliverable:** Full CRUD for things with filtering and pagination (Ontology Dimension 3)
 
@@ -633,25 +692,29 @@ export const list = query({
     limit: v.optional(v.number()),
   },
   handler: async (ctx, args) => {
-    let query = ctx.db.query("entities")
-      .withIndex("group_type", q => q.eq("groupId", args.groupId))
+    let query = ctx.db
+      .query("entities")
+      .withIndex("group_type", (q) => q.eq("groupId", args.groupId));
 
-    if (args.type) query = query.filter(q => q.eq(q.field("type"), args.type))
-    if (args.status) query = query.filter(q => q.eq(q.field("status"), args.status))
+    if (args.type)
+      query = query.filter((q) => q.eq(q.field("type"), args.type));
+    if (args.status)
+      query = query.filter((q) => q.eq(q.field("status"), args.status));
 
-    return await query.take(args.limit ?? 100).collect()
-  }
-})
+    return await query.take(args.limit ?? 100).collect();
+  },
+});
 
 export const get = query({
   args: { id: v.id("entities") },
   handler: async (ctx, args) => {
-    return await ctx.db.get(args.id)
-  }
-})
+    return await ctx.db.get(args.id);
+  },
+});
 ```
 
 **Check:**
+
 - [ ] List returns items
 - [ ] Filtering works
 - [ ] Pagination works
@@ -660,6 +723,7 @@ export const get = query({
 ---
 
 ### Step 1.3: Implement Connections Queries & Mutations
+
 **Time:** 1.5 hours
 **Deliverable:** Query and create relationships
 
@@ -669,23 +733,26 @@ export const get = query({
 export const list = query({
   args: { groupId: v.id("groups") },
   handler: async (ctx, args) => {
-    return await ctx.db.query("connections")
-      .withIndex("by_group", q => q.eq("groupId", args.groupId))
-      .collect()
-  }
-})
+    return await ctx.db
+      .query("connections")
+      .withIndex("by_group", (q) => q.eq("groupId", args.groupId))
+      .collect();
+  },
+});
 
 export const fromEntity = query({
   args: { entityId: v.id("entities") },
   handler: async (ctx, args) => {
-    return await ctx.db.query("connections")
-      .filter(q => q.eq(q.field("fromEntityId"), args.entityId))
-      .collect()
-  }
-})
+    return await ctx.db
+      .query("connections")
+      .filter((q) => q.eq(q.field("fromEntityId"), args.entityId))
+      .collect();
+  },
+});
 ```
 
 **Check:**
+
 - [ ] List works
 - [ ] Filtering by source works
 - [ ] Bidirectional queries work
@@ -693,6 +760,7 @@ export const fromEntity = query({
 ---
 
 ### Step 1.4: Implement Events Queries
+
 **Time:** 1.5 hours
 **Deliverable:** Query event history and timeline
 
@@ -702,25 +770,28 @@ export const fromEntity = query({
 export const list = query({
   args: { groupId: v.id("groups") },
   handler: async (ctx, args) => {
-    return await ctx.db.query("events")
-      .withIndex("by_group", q => q.eq("groupId", args.groupId))
-      .order("desc")  // Most recent first
-      .collect()
-  }
-})
+    return await ctx.db
+      .query("events")
+      .withIndex("by_group", (q) => q.eq("groupId", args.groupId))
+      .order("desc") // Most recent first
+      .collect();
+  },
+});
 
 export const byActor = query({
   args: { actorId: v.id("entities") },
   handler: async (ctx, args) => {
-    return await ctx.db.query("events")
-      .filter(q => q.eq(q.field("actorId"), args.actorId))
+    return await ctx.db
+      .query("events")
+      .filter((q) => q.eq(q.field("actorId"), args.actorId))
       .order("desc")
-      .collect()
-  }
-})
+      .collect();
+  },
+});
 ```
 
 **Check:**
+
 - [ ] Timeline returns events in order
 - [ ] Filtering works
 - [ ] Pagination ready
@@ -728,6 +799,7 @@ export const byActor = query({
 ---
 
 ### Step 1.5: Implement Knowledge Queries
+
 **Time:** 1 hour
 **Deliverable:** Query and search knowledge base
 
@@ -737,11 +809,12 @@ export const byActor = query({
 export const list = query({
   args: { groupId: v.id("groups") },
   handler: async (ctx, args) => {
-    return await ctx.db.query("knowledge")
-      .withIndex("by_group", q => q.eq("groupId", args.groupId))
-      .collect()
-  }
-})
+    return await ctx.db
+      .query("knowledge")
+      .withIndex("by_group", (q) => q.eq("groupId", args.groupId))
+      .collect();
+  },
+});
 
 export const search = query({
   args: {
@@ -752,20 +825,22 @@ export const search = query({
   handler: async (ctx, args) => {
     // For now, basic text search
     // Later: vector similarity search
-    const all = await ctx.db.query("knowledge")
-      .withIndex("by_group", q => q.eq("groupId", args.groupId))
-      .collect()
+    const all = await ctx.db
+      .query("knowledge")
+      .withIndex("by_group", (q) => q.eq("groupId", args.groupId))
+      .collect();
 
-    const filtered = all.filter(k =>
-      k.text?.toLowerCase().includes(args.query.toLowerCase())
-    )
+    const filtered = all.filter((k) =>
+      k.text?.toLowerCase().includes(args.query.toLowerCase()),
+    );
 
-    return filtered.slice(0, args.limit ?? 10)
-  }
-})
+    return filtered.slice(0, args.limit ?? 10);
+  },
+});
 ```
 
 **Check:**
+
 - [ ] List works
 - [ ] Search returns results
 - [ ] Limit works
@@ -780,33 +855,46 @@ export const search = query({
 ```typescript
 // backend/convex/services/layers.ts
 
-import { Effect, Context, Layer, Data } from "effect"
-import { Agent } from "@convex-dev/agent"
-import { RAG } from "@convex-dev/rag"
+import { Effect, Context, Layer, Data } from "effect";
+import { Agent } from "@convex-dev/agent";
+import { RAG } from "@convex-dev/rag";
 
 // Error definitions
 class AgentError extends Data.TaggedError("AgentError")<{
-  cause: unknown
+  cause: unknown;
 }> {}
 
 class RAGError extends Data.TaggedError("RAGError")<{
-  cause: unknown
+  cause: unknown;
 }> {}
 
 // Service definitions
 class AgentService extends Context.Tag("AgentService")<
   AgentService,
   {
-    readonly createThread: (userId: string) => Effect.Effect<string, AgentError>
-    readonly generateResponse: (threadId: string, prompt: string) => Effect.Effect<string, AgentError>
+    readonly createThread: (
+      userId: string,
+    ) => Effect.Effect<string, AgentError>;
+    readonly generateResponse: (
+      threadId: string,
+      prompt: string,
+    ) => Effect.Effect<string, AgentError>;
   }
 >() {}
 
 class RAGService extends Context.Tag("RAGService")<
   RAGService,
   {
-    readonly addDocument: (namespace: string, text: string, metadata: any) => Effect.Effect<string, RAGError>
-    readonly search: (namespace: string, query: string, limit: number) => Effect.Effect<SearchResult[], RAGError>
+    readonly addDocument: (
+      namespace: string,
+      text: string,
+      metadata: any,
+    ) => Effect.Effect<string, RAGError>;
+    readonly search: (
+      namespace: string,
+      query: string,
+      limit: number,
+    ) => Effect.Effect<SearchResult[], RAGError>;
   }
 >() {}
 
@@ -818,61 +906,76 @@ const AgentServiceLive = Layer.effect(
     const agent = new Agent(components.agent, {
       name: "ONE Assistant",
       chat: openai.chat("gpt-4o-mini"),
-      instructions: "You are a helpful assistant for the ONE Platform."
-    })
+      instructions: "You are a helpful assistant for the ONE Platform.",
+    });
 
     return {
       createThread: (userId) =>
         Effect.tryPromise({
           try: async () => {
-            const { threadId } = await agent.createThread(ctx, { userId })
-            return threadId
+            const { threadId } = await agent.createThread(ctx, { userId });
+            return threadId;
           },
-          catch: (error) => new AgentError({ cause: error })
+          catch: (error) => new AgentError({ cause: error }),
         }),
 
       generateResponse: (threadId, prompt) =>
         Effect.tryPromise({
           try: async () => {
-            const { thread } = await agent.continueThread(ctx, { threadId })
-            const { text } = await thread.generateText({ prompt })
-            return text
+            const { thread } = await agent.continueThread(ctx, { threadId });
+            const { text } = await thread.generateText({ prompt });
+            return text;
           },
-          catch: (error) => new AgentError({ cause: error })
-        })
-    }
-  })
-)
+          catch: (error) => new AgentError({ cause: error }),
+        }),
+    };
+  }),
+);
 
 const RAGServiceLive = Layer.effect(
   RAGService,
   Effect.gen(function* () {
     const rag = new RAG(components.rag, {
       textEmbeddingModel: openai.embedding("text-embedding-3-small"),
-      embeddingDimension: 1536
-    })
+      embeddingDimension: 1536,
+    });
 
     return {
       addDocument: (namespace, text, metadata) =>
         Effect.tryPromise({
-          try: () => rag.add(ctx, { namespace, text, filterValues: Object.entries(metadata).map(([k, v]) => ({ name: k, value: v })) }),
-          catch: (error) => new RAGError({ cause: error })
+          try: () =>
+            rag.add(ctx, {
+              namespace,
+              text,
+              filterValues: Object.entries(metadata).map(([k, v]) => ({
+                name: k,
+                value: v,
+              })),
+            }),
+          catch: (error) => new RAGError({ cause: error }),
         }),
 
       search: (namespace, query, limit) =>
         Effect.tryPromise({
-          try: () => rag.search(ctx, { namespace, query, limit, vectorScoreThreshold: 0.6 }),
-          catch: (error) => new RAGError({ cause: error })
-        })
-    }
-  })
-)
+          try: () =>
+            rag.search(ctx, {
+              namespace,
+              query,
+              limit,
+              vectorScoreThreshold: 0.6,
+            }),
+          catch: (error) => new RAGError({ cause: error }),
+        }),
+    };
+  }),
+);
 
 // Export combined layer
-export const AllServicesLive = Layer.merge(AgentServiceLive, RAGServiceLive)
+export const AllServicesLive = Layer.merge(AgentServiceLive, RAGServiceLive);
 ```
 
 **Check:**
+
 - [ ] Services layer compiles
 - [ ] Effects properly typed
 - [ ] Layers can be composed
@@ -882,6 +985,7 @@ export const AllServicesLive = Layer.merge(AgentServiceLive, RAGServiceLive)
 ### Summary: Phase 1 Complete
 
 **After Phase 1:**
+
 - ✅ All basic CRUD operations implemented
 - ✅ Effect.ts service layer wrapping components
 - ✅ Tests verify everything
@@ -1004,6 +1108,7 @@ If you just want frontend + backend talking:
 ```
 
 **This works TODAY because:**
+
 - ✅ Frontend hooks use DataProvider (backend-agnostic)
 - ✅ Better Auth is fully configured
 - ✅ All Convex queries/mutations exist (or will after Phase 1)
@@ -1018,42 +1123,43 @@ If you want external API access (mobile apps, third-party integrations, etc.):
 ```typescript
 // backend/convex/http.ts - Create Hono HTTP layer
 
-import { Hono } from "hono"
-import { cors } from "hono/cors"
-import { handle } from "hono/vercel"
-import { httpRouter } from "convex/server"
+import { Hono } from "hono";
+import { cors } from "hono/cors";
+import { handle } from "hono/vercel";
+import { httpRouter } from "convex/server";
 
-const app = new Hono()
+const app = new Hono();
 
 // Middleware
-app.use("*", cors())
+app.use("*", cors());
 
 // Health check
 app.get("/api/health", (c) => {
-  return c.json({ status: "ok", timestamp: Date.now() })
-})
+  return c.json({ status: "ok", timestamp: Date.now() });
+});
 
 // Route to Convex queries
 app.get("/api/groups/:id", async (c) => {
-  const id = c.req.param("id")
+  const id = c.req.param("id");
   // Call Convex mutation/query
   // Return response
-})
+});
 
 app.post("/api/things", async (c) => {
-  const body = await c.req.json()
+  const body = await c.req.json();
   // Call Convex mutation
   // Return created ID
-})
+});
 
 // ... More routes
 
 export default httpRouter({
   "/": handle(app),
-})
+});
 ```
 
 **This lets you:**
+
 - ✅ Call ONE from mobile apps (API key auth)
 - ✅ Build third-party integrations
 - ✅ Use Zapier/Make integrations
@@ -1109,6 +1215,7 @@ cd web && bun run dev            # Terminal 2
 ```
 
 **Success Criteria:**
+
 - [ ] Signup/signin works
 - [ ] Data persists
 - [ ] Multi-tenant isolation works

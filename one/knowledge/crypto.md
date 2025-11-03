@@ -1,3 +1,21 @@
+---
+title: Crypto
+dimension: knowledge
+category: crypto.md
+tags: ai, blockchain, ontology, protocol, things
+related_dimensions: connections, events, people, things
+scope: global
+created: 2025-11-03
+updated: 2025-11-03
+version: 1.0.0
+ai_context: |
+  This document is part of the knowledge dimension in the crypto.md category.
+  Location: one/knowledge/crypto.md
+  Purpose: Documents sui move - smart contract integration
+  Related dimensions: connections, events, people, things
+  For AI agents: Read this to understand crypto.
+---
+
 # SUI Move - Smart Contract Integration
 
 **Version:** 1.0.0

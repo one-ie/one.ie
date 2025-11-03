@@ -1,3 +1,21 @@
+---
+title: Shadcn Integration Summary
+dimension: things
+category: plans
+tags: ai, connections, ontology, things
+related_dimensions: connections, events, groups, knowledge
+scope: global
+created: 2025-11-03
+updated: 2025-11-03
+version: 1.0.0
+ai_context: |
+  This document is part of the things dimension in the plans category.
+  Location: one/things/plans/shadcn-integration-summary.md
+  Purpose: Documents shadcn/ui integration summary
+  Related dimensions: connections, events, groups, knowledge
+  For AI agents: Read this to understand shadcn integration summary.
+---
+
 # shadcn/ui Integration Summary
 
 **Clean integration of ONE ontology with shadcn/ui - simple and beautiful**
@@ -50,12 +68,14 @@
 ## Key Benefits
 
 ### 1. Beautiful by Default
+
 - Professional design system (shadcn/ui)
 - Consistent across all 66 thing types
 - Dark mode included
 - Responsive mobile-first
 
 ### 2. Accessible by Default
+
 - Built on Radix UI (WAI-ARIA compliant)
 - Keyboard navigation
 - Screen reader support
@@ -63,12 +83,14 @@
 - Color contrast (WCAG AA)
 
 ### 3. Customizable
+
 - Full Tailwind CSS control
 - Theme colors via CSS variables
 - Component overrides per organization
 - Copy-paste code (you own it)
 
 ### 4. Type-Safe
+
 - Full TypeScript support
 - Ontology-driven props
 - IntelliSense everywhere
@@ -77,25 +99,25 @@
 
 ## Component Mapping
 
-| Ontology Field | shadcn/ui Component | Usage |
-|---------------|---------------------|-------|
-| `Heading` | Custom Typography | Headings with size variants |
-| `Text` | Custom Typography | Body text with truncation |
-| `Price` | `Badge` + formatting | `$99` or `Free` |
-| `Image` | Custom + `Skeleton` | Lazy-loaded images |
-| `Badge` | `Badge` | Status badges |
-| `TagList` | Multiple `Badge` + `Tooltip` | Tag collections with "more" |
-| `Avatar` | `Avatar` + `AvatarFallback` | User avatars with initials |
-| `Button` | `Button` | All button variants |
-| `Checkbox` | `Checkbox` | Checkboxes with labels |
-| `Switch` | `Switch` | Toggle switches |
-| `Select` | `Select` | Dropdowns |
-| `Progress` | `Progress` | Progress bars |
-| `Table` | `Table` | Data tables with sorting |
-| `Dialog` | `AlertDialog` | Confirmation dialogs |
-| `Tooltip` | `Tooltip` | Hover tooltips |
-| `Separator` | `Separator` | Dividers |
-| `Skeleton` | `Skeleton` | Loading placeholders |
+| Ontology Field | shadcn/ui Component          | Usage                       |
+| -------------- | ---------------------------- | --------------------------- |
+| `Heading`      | Custom Typography            | Headings with size variants |
+| `Text`         | Custom Typography            | Body text with truncation   |
+| `Price`        | `Badge` + formatting         | `$99` or `Free`             |
+| `Image`        | Custom + `Skeleton`          | Lazy-loaded images          |
+| `Badge`        | `Badge`                      | Status badges               |
+| `TagList`      | Multiple `Badge` + `Tooltip` | Tag collections with "more" |
+| `Avatar`       | `Avatar` + `AvatarFallback`  | User avatars with initials  |
+| `Button`       | `Button`                     | All button variants         |
+| `Checkbox`     | `Checkbox`                   | Checkboxes with labels      |
+| `Switch`       | `Switch`                     | Toggle switches             |
+| `Select`       | `Select`                     | Dropdowns                   |
+| `Progress`     | `Progress`                   | Progress bars               |
+| `Table`        | `Table`                      | Data tables with sorting    |
+| `Dialog`       | `AlertDialog`                | Confirmation dialogs        |
+| `Tooltip`      | `Tooltip`                    | Hover tooltips              |
+| `Separator`    | `Separator`                  | Dividers                    |
+| `Skeleton`     | `Skeleton`                   | Loading placeholders        |
 
 ---
 
@@ -154,6 +176,7 @@ import { Card } from '@/components/generic/Card'
 ## Example: Course Card
 
 **Before (Type-Specific, 200+ lines):**
+
 ```tsx
 // frontend/src/components/CourseCard.tsx
 export function CourseCard({ course }) {
@@ -166,41 +189,68 @@ export function CourseCard({ course }) {
       <Badge>{course.level}</Badge>
       <Button>Enroll</Button>
     </div>
-  )
+  );
 }
 ```
 
 **After (Generic, Works for ALL Types):**
+
 ```tsx
 // frontend/src/components/generic/Card.tsx
-import { Card, CardContent, CardFooter, CardHeader } from '@/components/ui/card'
+import {
+  Card,
+  CardContent,
+  CardFooter,
+  CardHeader,
+} from "@/components/ui/card";
 
 export function Card({ thing }) {
-  const config = useThingConfig(thing.type)
+  const config = useThingConfig(thing.type);
 
   return (
     <Card>
       <CardHeader>
         {/* Renders based on ontology UI config */}
-        <Field name="thumbnail" value={thing.properties.thumbnail} config={config.ui.fields.thumbnail} />
-        <Field name="title" value={thing.properties.title} config={config.ui.fields.title} />
+        <Field
+          name="thumbnail"
+          value={thing.properties.thumbnail}
+          config={config.ui.fields.thumbnail}
+        />
+        <Field
+          name="title"
+          value={thing.properties.title}
+          config={config.ui.fields.title}
+        />
       </CardHeader>
 
       <CardContent>
-        <Field name="description" value={thing.properties.description} config={config.ui.fields.description} />
-        <Field name="price" value={thing.properties.price} config={config.ui.fields.price} />
-        <Field name="level" value={thing.properties.level} config={config.ui.fields.level} />
+        <Field
+          name="description"
+          value={thing.properties.description}
+          config={config.ui.fields.description}
+        />
+        <Field
+          name="price"
+          value={thing.properties.price}
+          config={config.ui.fields.price}
+        />
+        <Field
+          name="level"
+          value={thing.properties.level}
+          config={config.ui.fields.level}
+        />
       </CardContent>
 
       <CardFooter>
         <Actions thing={thing} primary={config.ui.actions.primary} />
       </CardFooter>
     </Card>
-  )
+  );
 }
 ```
 
 **Usage:**
+
 ```tsx
 <Card thing={course} />      // Renders as course card
 <Card thing={product} />     // Renders as product card
@@ -239,6 +289,7 @@ export function Card({ thing }) {
 ### 2. Consistent Design Everywhere
 
 All 66 types use:
+
 - Same card styles
 - Same button styles
 - Same badge colors
@@ -259,6 +310,7 @@ shadcn/ui handles all the CSS variable switching automatically.
 ### 4. Accessible Everywhere
 
 Every component:
+
 - ✅ Keyboard navigable
 - ✅ Screen reader friendly
 - ✅ Focus visible
@@ -272,12 +324,12 @@ Every component:
 ### E-commerce Product Grid
 
 ```tsx
-import { Grid } from '@/components/generic/Grid'
-import { Input } from '@/components/ui/input'
-import { Select } from '@/components/ui/select'
+import { Grid } from "@/components/generic/Grid";
+import { Input } from "@/components/ui/input";
+import { Select } from "@/components/ui/select";
 
 export function ProductsPage() {
-  const { products } = useProducts()
+  const { products } = useProducts();
 
   return (
     <div className="container mx-auto py-8">
@@ -294,18 +346,18 @@ export function ProductsPage() {
 
       <Grid things={products} columns={4} />
     </div>
-  )
+  );
 }
 ```
 
 ### Course Catalog
 
 ```tsx
-import { Card } from '@/components/generic/Card'
-import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs'
+import { Card } from "@/components/generic/Card";
+import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 
 export function CoursesPage() {
-  const { courses } = useCourses()
+  const { courses } = useCourses();
 
   return (
     <div className="container mx-auto py-8">
@@ -321,27 +373,27 @@ export function CoursesPage() {
         </TabsContent>
       </Tabs>
     </div>
-  )
+  );
 }
 ```
 
 ### Blog with Featured Posts
 
 ```tsx
-import { CardFeatured } from '@/components/generic/Card.Featured'
-import { List } from '@/components/generic/List'
+import { CardFeatured } from "@/components/generic/Card.Featured";
+import { List } from "@/components/generic/List";
 
 export function BlogPage() {
-  const { posts } = usePosts()
-  const featured = posts.filter(p => p.properties.featured)
-  const recent = posts.filter(p => !p.properties.featured)
+  const { posts } = usePosts();
+  const featured = posts.filter((p) => p.properties.featured);
+  const recent = posts.filter((p) => !p.properties.featured);
 
   return (
     <div className="container mx-auto py-8">
       <section className="mb-12">
         <h2 className="text-2xl font-bold mb-6">Featured</h2>
         <div className="grid grid-cols-2 gap-8">
-          {featured.map(post => (
+          {featured.map((post) => (
             <CardFeatured key={post._id} thing={post} />
           ))}
         </div>
@@ -352,7 +404,7 @@ export function BlogPage() {
         <List things={recent} />
       </section>
     </div>
-  )
+  );
 }
 ```
 
@@ -361,6 +413,7 @@ export function BlogPage() {
 ## Next Steps
 
 ### Week 1: Setup & Core
+
 - [ ] Install shadcn/ui in frontend
 - [ ] Add all required components
 - [ ] Setup theme provider
@@ -368,18 +421,21 @@ export function BlogPage() {
 - [ ] Build Field component
 
 ### Week 2: Fields & Actions
+
 - [ ] Build all field components (Price, Image, TagList, etc.)
 - [ ] Build Actions component
 - [ ] Build ConnectionBadges component
 - [ ] Test with 5 thing types
 
 ### Week 3: Variants & Layouts
+
 - [ ] Build Grid, List, Table
 - [ ] Build variant cards (Compact, Horizontal, Featured)
 - [ ] Add loading states (Skeleton)
 - [ ] Add empty states
 
 ### Week 4: Polish & Deploy
+
 - [ ] Add dark mode support
 - [ ] Performance optimization
 - [ ] Accessibility audit
@@ -391,11 +447,13 @@ export function BlogPage() {
 ## Resources
 
 **Documentation:**
+
 - `one/things/features/ontology-ui.md` - Clean UI metadata specification (what to render)
 - `one/things/components/card.md` - Card implementation (how to render with shadcn/ui)
 - `one/things/plans/ontology-ui-approach.md` - Philosophy and approach explanation
 
 **External:**
+
 - [shadcn/ui](https://ui.shadcn.com) - Component library
 - [Radix UI](https://www.radix-ui.com) - Primitive components
 - [Tailwind CSS](https://tailwindcss.com) - Styling
@@ -432,6 +490,7 @@ export function BlogPage() {
    - Consistent across platform
 
 **Before:**
+
 - 66 type-specific components
 - 10,000+ lines of code
 - Inconsistent design
@@ -439,6 +498,7 @@ export function BlogPage() {
 - Complex documentation
 
 **After:**
+
 - 1 generic component
 - Ontology-driven rendering
 - shadcn/ui as implementation detail

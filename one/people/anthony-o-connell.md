@@ -1,3 +1,21 @@
+---
+title: Anthony O Connell
+dimension: people
+category: anthony-o-connell.md
+tags: ai, blockchain
+related_dimensions: groups, things
+scope: global
+created: 2025-11-03
+updated: 2025-11-03
+version: 1.0.0
+ai_context: |
+  This document is part of the people dimension in the anthony-o-connell.md category.
+  Location: one/people/anthony-o-connell.md
+  Purpose: Documents anthony o'connell: platform owner
+  Related dimensions: groups, things
+  For AI agents: Read this to understand anthony o connell.
+---
+
 # Anthony O'Connell: Platform Owner
 
 **Anthony O'Connell owns 100% of the ONE Platform.**
@@ -91,6 +109,7 @@
 ## Ownership Connections
 
 ### Owns ONE Organization
+
 `anthony` → `one-org` via `owns`
 
 ```typescript
@@ -107,6 +126,7 @@
 ```
 
 ### Member of ONE Organization
+
 `anthony` → `one-org` via `member_of`
 
 ```typescript
@@ -124,6 +144,7 @@
 ```
 
 ### Owns Smart Contracts
+
 `anthony` → `smart-contract` via `owns`
 
 ```typescript
@@ -171,6 +192,7 @@
 ```
 
 ### Controls Platform Treasury
+
 `anthony` → `treasury-wallet` via `controls`
 
 ```typescript
@@ -219,6 +241,7 @@
 ## Revenue Events
 
 ### Receives All Platform Revenue
+
 Every inference, subscription, and transaction flows to Anthony:
 
 ```typescript
@@ -274,6 +297,7 @@ Every inference, subscription, and transaction flows to Anthony:
 ## Smart Contract Events
 
 ### Contract Deployed
+
 When Anthony deploys new contracts:
 
 ```typescript
@@ -292,6 +316,7 @@ When Anthony deploys new contracts:
 ```
 
 ### Treasury Withdrawal
+
 When Anthony withdraws from platform treasury:
 
 ```typescript
@@ -326,7 +351,7 @@ export const isPlatformOwner = async (userId: Id<"things">) => {
 // Platform owner has ALL permissions
 export const hasPermission = async (
   userId: Id<"things">,
-  permission: string
+  permission: string,
 ) => {
   const user = await db.get(userId);
 
@@ -342,6 +367,7 @@ export const hasPermission = async (
 ```
 
 **Platform Owner Can:**
+
 - Create/delete/modify ANY organization
 - Access ANY user's data (with audit trail)
 - Modify ANY smart contract
@@ -356,58 +382,61 @@ export const hasPermission = async (
 ## Queries
 
 **Get Anthony's Organizations:**
+
 ```typescript
 const orgs = await db
   .query("connections")
-  .withIndex("from_type", q =>
-    q.eq("fromThingId", anthonyId)
-     .eq("relationshipType", "owns")
+  .withIndex("from_type", (q) =>
+    q.eq("fromThingId", anthonyId).eq("relationshipType", "owns"),
   )
   .collect();
 ```
 
 **Get Anthony's Smart Contracts:**
+
 ```typescript
 const contracts = await db
   .query("connections")
-  .withIndex("from_type", q =>
-    q.eq("fromThingId", anthonyId)
-     .eq("relationshipType", "owns")
+  .withIndex("from_type", (q) =>
+    q.eq("fromThingId", anthonyId).eq("relationshipType", "owns"),
   )
-  .filter(q =>
+  .filter((q) =>
     q.or(
       q.eq(q.field("metadata.contractType"), "inference_payment"),
       q.eq(q.field("metadata.contractType"), "token"),
-      q.eq(q.field("metadata.contractType"), "bridge")
-    )
+      q.eq(q.field("metadata.contractType"), "bridge"),
+    ),
   )
   .collect();
 ```
 
 **Get Platform Revenue:**
+
 ```typescript
 // Total platform revenue
 const revenueEvents = await db
   .query("events")
-  .withIndex("type_time", q =>
-    q.eq("type", "inference_revenue_collected")
-  )
+  .withIndex("type_time", (q) => q.eq("type", "inference_revenue_collected"))
   .collect();
 
 const totalRevenue = revenueEvents.reduce(
   (sum, e) => sum + (e.metadata.profit || 0),
-  0
+  0,
 );
 
 // Revenue by network
-const revenueByNetwork = revenueEvents.reduce((acc, e) => {
-  const network = e.metadata.network || "unknown";
-  acc[network] = (acc[network] || 0) + (e.metadata.profit || 0);
-  return acc;
-}, {} as Record<string, number>);
+const revenueByNetwork = revenueEvents.reduce(
+  (acc, e) => {
+    const network = e.metadata.network || "unknown";
+    acc[network] = (acc[network] || 0) + (e.metadata.profit || 0);
+    return acc;
+  },
+  {} as Record<string, number>,
+);
 ```
 
 **Get Treasury Balances:**
+
 ```typescript
 const treasuryBalances = {
   sui: await getSuiBalance(process.env.PLATFORM_TREASURY_SUI),

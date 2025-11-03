@@ -1,3 +1,21 @@
+---
+title: 2 6 Dashboard Migration
+dimension: things
+category: features
+tags: ai, backend, frontend
+related_dimensions: events, knowledge, people
+scope: global
+created: 2025-11-03
+updated: 2025-11-03
+version: 1.0.0
+ai_context: |
+  This document is part of the things dimension in the features category.
+  Location: one/things/features/2-6-dashboard-migration.md
+  Purpose: Documents feature 2-6: dashboard component migration
+  Related dimensions: events, knowledge, people
+  For AI agents: Read this to understand 2 6 dashboard migration.
+---
+
 # Feature 2-6: Dashboard Component Migration
 
 **Feature ID:** `feature_2_6_dashboard_migration`
@@ -53,12 +71,14 @@ Dashboard Component Tree:
 #### 1. Entity List Components (useThings)
 
 **Components:**
+
 - `CourseList.tsx` - Display all courses for org
 - `LessonList.tsx` - Display lessons for course
 - `StudentList.tsx` - Display enrolled students
 - `AICloneList.tsx` - Display AI agents
 
 **Hook Migration:**
+
 ```typescript
 // BEFORE: Direct Convex
 const courses = useQuery(api.queries.entities.list, { type: "course" });
@@ -68,6 +88,7 @@ const { data: courses, loading, error } = useThings({ type: "course" });
 ```
 
 **Features to Preserve:**
+
 - Filtering by status, organization
 - Sorting by createdAt, updatedAt, name
 - Pagination support
@@ -78,28 +99,31 @@ const { data: courses, loading, error } = useThings({ type: "course" });
 #### 2. Entity Detail Components (useThing, useConnections)
 
 **Components:**
+
 - `CourseDetail.tsx` - Display course details + relationships
 - `LessonDetail.tsx` - Display lesson details
 - `StudentProfile.tsx` - Display student profile
 
 **Hook Migration:**
+
 ```typescript
 // BEFORE: Direct Convex
 const course = useQuery(api.queries.entities.get, { id: courseId });
 const students = useQuery(api.queries.connections.getRelated, {
   fromThingId: courseId,
-  relationshipType: "enrolled_in"
+  relationshipType: "enrolled_in",
 });
 
 // AFTER: DataProvider
 const { data: course, loading, error } = useThing({ id: courseId });
 const { data: students, loading: studentsLoading } = useConnections({
   fromThingId: courseId,
-  relationshipType: "enrolled_in"
+  relationshipType: "enrolled_in",
 });
 ```
 
 **Features to Preserve:**
+
 - Display entity properties
 - Display related entities (connections)
 - Edit entity (useUpdateThing)
@@ -110,24 +134,27 @@ const { data: students, loading: studentsLoading } = useConnections({
 #### 3. Activity Feed Component (useEvents)
 
 **Component:**
+
 - `ActivityFeed.tsx` - Display audit trail
 
 **Hook Migration:**
+
 ```typescript
 // BEFORE: Direct Convex
 const events = useQuery(api.queries.events.getRecent, {
   actorId: userId,
-  limit: 20
+  limit: 20,
 });
 
 // AFTER: DataProvider
 const { data: events, loading } = useEvents({
   actorId: userId,
-  limit: 20
+  limit: 20,
 });
 ```
 
 **Features to Preserve:**
+
 - Filter by actor, target, event type
 - Real-time updates
 - Pagination (load more)
@@ -137,24 +164,27 @@ const { data: events, loading } = useEvents({
 #### 4. Search Components (useSearch)
 
 **Component:**
+
 - `SearchBar.tsx` - Full-text search with autocomplete
 
 **Hook Migration:**
+
 ```typescript
 // BEFORE: Direct Convex
 const results = useQuery(api.queries.search.fullText, {
   query: searchQuery,
-  types: ["course", "lesson"]
+  types: ["course", "lesson"],
 });
 
 // AFTER: DataProvider
 const { data: results, loading } = useSearch({
   query: searchQuery,
-  types: ["course", "lesson"]
+  types: ["course", "lesson"],
 });
 ```
 
 **Features to Preserve:**
+
 - Type-ahead suggestions
 - Filter by entity type
 - Debounced search
@@ -164,16 +194,22 @@ const { data: results, loading } = useSearch({
 #### 5. Analytics Components (Multiple Hooks)
 
 **Component:**
+
 - `DashboardOverview.tsx` - Main dashboard with stats
 - `StatsCards.tsx` - Aggregate metrics
 - `ActivityCharts.tsx` - Time-series charts
 - `RevenueCharts.tsx` - Revenue analytics
 
 **Hook Migration:**
+
 ```typescript
 // BEFORE: Direct Convex
-const courseCount = useQuery(api.queries.analytics.countByType, { type: "course" });
-const studentCount = useQuery(api.queries.analytics.countByType, { type: "student" });
+const courseCount = useQuery(api.queries.analytics.countByType, {
+  type: "course",
+});
+const studentCount = useQuery(api.queries.analytics.countByType, {
+  type: "student",
+});
 const recentActivity = useQuery(api.queries.events.getRecent, { limit: 10 });
 
 // AFTER: DataProvider
@@ -187,6 +223,7 @@ const studentCount = students?.length || 0;
 ```
 
 **Features to Preserve:**
+
 - Aggregate counts
 - Time-series data
 - Real-time updates
@@ -200,6 +237,7 @@ const studentCount = students?.length || 0;
 ### Organizations Dimension
 
 **Dashboard Isolation:**
+
 - All dashboard data is org-scoped
 - Queries automatically filter by `organizationId`
 - Sidebar shows current organization name/logo
@@ -207,15 +245,17 @@ const studentCount = students?.length || 0;
 - Org-level analytics and metrics
 
 **Implementation:**
+
 ```typescript
 // DataProvider automatically adds organizationId to all queries
 const { data: courses } = useThings({
-  type: "course"
+  type: "course",
   // organizationId: currentOrgId added automatically by DataProvider
 });
 ```
 
 **Org-Scoped Components:**
+
 - `DashboardOverview` - Shows org metrics
 - `CourseList` - Shows org courses
 - `StudentList` - Shows org students
@@ -225,12 +265,14 @@ const { data: courses } = useThings({
 ### People Dimension
 
 **Role-Based Dashboard:**
+
 - `platform_owner` - See all organizations, platform-wide metrics
 - `org_owner` - See org dashboard, admin controls
 - `org_user` - See limited dashboard, own courses
 - `customer` - See marketplace, enrolled courses
 
 **Permission-Based UI:**
+
 ```typescript
 function DashboardOverview() {
   const { user, role } = useAuth();
@@ -255,6 +297,7 @@ function DashboardOverview() {
 ```
 
 **People-Scoped Components:**
+
 - `ActivityFeed` - Filter by actorId (current user)
 - `CourseList` - Show courses owned by user
 - `StudentList` - Show students enrolled in user's courses
@@ -262,6 +305,7 @@ function DashboardOverview() {
 ### Things Dimension
 
 **Entity Types Displayed:**
+
 - `course` - Online courses
 - `lesson` - Course lessons
 - `ai_clone` - AI agents
@@ -272,6 +316,7 @@ function DashboardOverview() {
 - `organization` - Organizations
 
 **Entity Status Badges:**
+
 ```typescript
 function EntityStatusBadge({ status }: { status: ThingStatus }) {
   const statusStyles = {
@@ -290,6 +335,7 @@ function EntityStatusBadge({ status }: { status: ThingStatus }) {
 ```
 
 **Thing-Scoped Components:**
+
 - `CourseList` - Display course entities
 - `CourseDetail` - Display single course entity
 - `LessonList` - Display lesson entities
@@ -298,6 +344,7 @@ function EntityStatusBadge({ status }: { status: ThingStatus }) {
 ### Connections Dimension
 
 **Relationships Displayed:**
+
 - `owns` - Creator owns course
 - `enrolled_in` - Student enrolled in course
 - `authored` - Creator authored content
@@ -305,6 +352,7 @@ function EntityStatusBadge({ status }: { status: ThingStatus }) {
 - `holds_tokens` - User holds tokens
 
 **Connection Display:**
+
 ```typescript
 function CourseStudents({ courseId }: { courseId: Id<"things"> }) {
   const { data: enrollments, loading } = useConnections({
@@ -330,6 +378,7 @@ function CourseStudents({ courseId }: { courseId: Id<"things"> }) {
 ```
 
 **Connection-Scoped Components:**
+
 - `CourseDetail` - Show enrolled students (connections)
 - `StudentProfile` - Show enrolled courses (connections)
 - `ActivityFeed` - Show connection events (follow, enroll)
@@ -337,6 +386,7 @@ function CourseStudents({ courseId }: { courseId: Id<"things"> }) {
 ### Events Dimension
 
 **Event Types Displayed:**
+
 - `course_created` - Course created
 - `course_updated` - Course updated
 - `student_enrolled` - Student enrolled
@@ -345,6 +395,7 @@ function CourseStudents({ courseId }: { courseId: Id<"things"> }) {
 - `token_transferred` - Token transferred
 
 **Event Stream:**
+
 ```typescript
 function ActivityFeed({ actorId }: { actorId?: Id<"things"> }) {
   const { data: events, loading } = useEvents({
@@ -370,6 +421,7 @@ function ActivityFeed({ actorId }: { actorId?: Id<"things"> }) {
 ```
 
 **Event-Scoped Components:**
+
 - `ActivityFeed` - Display event stream
 - `DashboardOverview` - Show recent events
 - `CourseDetail` - Show course-specific events
@@ -377,12 +429,14 @@ function ActivityFeed({ actorId }: { actorId?: Id<"things"> }) {
 ### Knowledge Dimension
 
 **Search and Discovery:**
+
 - Full-text search across entities
 - RAG-powered content suggestions
 - Knowledge labels (tags) for categorization
 - Vector search for semantic similarity
 
 **Search Implementation:**
+
 ```typescript
 function SearchBar() {
   const [query, setQuery] = useState("");
@@ -409,6 +463,7 @@ function SearchBar() {
 ```
 
 **Knowledge-Scoped Components:**
+
 - `SearchBar` - Full-text search
 - `ContentRecommendations` - RAG suggestions
 - `TagFilter` - Filter by knowledge labels
@@ -424,6 +479,7 @@ function SearchBar() {
 **So that** the dashboard works with any backend and I can manage my courses
 
 **Acceptance Criteria:**
+
 - [ ] CourseList component uses `useThings` hook
 - [ ] Loading state displays skeleton
 - [ ] Courses display with name, thumbnail, status, student count
@@ -439,6 +495,7 @@ function SearchBar() {
 **So that** I can track org performance and growth
 
 **Acceptance Criteria:**
+
 - [ ] StatsCards component uses multiple DataProvider hooks
 - [ ] Displays course count, student count, revenue, engagement
 - [ ] Loading states for each metric
@@ -453,6 +510,7 @@ function SearchBar() {
 **So that** I can track enrollment and student progress
 
 **Acceptance Criteria:**
+
 - [ ] CourseDetail uses `useThing` and `useConnections` hooks
 - [ ] Displays course details and enrolled students
 - [ ] Student list shows name, email, enrollment date
@@ -467,6 +525,7 @@ function SearchBar() {
 **So that** I can stay updated on platform events
 
 **Acceptance Criteria:**
+
 - [ ] ActivityFeed component uses `useEvents` hook
 - [ ] Displays recent events with actor, action, timestamp
 - [ ] Loading state displays skeleton
@@ -482,6 +541,7 @@ function SearchBar() {
 **So that** I can quickly find what I need
 
 **Acceptance Criteria:**
+
 - [ ] SearchBar component uses `useSearch` hook
 - [ ] Type-ahead suggestions as I type
 - [ ] Filter by entity type (course, lesson, blog_post)
@@ -497,6 +557,7 @@ function SearchBar() {
 **So that** I can update course details
 
 **Acceptance Criteria:**
+
 - [ ] CourseDetail uses `useUpdateThing` hook
 - [ ] Displays course edit form
 - [ ] Optimistic update (UI updates immediately)
@@ -512,6 +573,7 @@ function SearchBar() {
 **So that** I can access my learning materials
 
 **Acceptance Criteria:**
+
 - [ ] StudentDashboard uses `useConnections` hook
 - [ ] Displays courses student is enrolled in
 - [ ] Shows course progress and completion
@@ -526,6 +588,7 @@ function SearchBar() {
 **So that** I can track financial performance
 
 **Acceptance Criteria:**
+
 - [ ] RevenueCharts uses `useEvents` hook for transaction events
 - [ ] Aggregates revenue by day/week/month
 - [ ] Displays line chart and bar chart
@@ -541,6 +604,7 @@ function SearchBar() {
 **So that** I can manage the platform
 
 **Acceptance Criteria:**
+
 - [ ] PlatformDashboard uses `useOrganizations` hook
 - [ ] Displays all organizations with stats
 - [ ] Shows org name, plan, user count, usage
@@ -556,6 +620,7 @@ function SearchBar() {
 **So that** I can access my data anywhere
 
 **Acceptance Criteria:**
+
 - [ ] DashboardLayout is fully responsive
 - [ ] Mobile menu works correctly
 - [ ] Charts render properly on small screens
@@ -810,6 +875,7 @@ export function DashboardOverview() {
 ```
 
 **Key Changes:**
+
 1. Replaced `useQuery` with `useThings` and `useEvents`
 2. Added granular loading states for each data source
 3. Added error handling with ErrorMessage component
@@ -957,6 +1023,7 @@ export function ActivityCharts({ events }: ActivityChartsProps) {
 ```
 
 **Key Changes:**
+
 1. Added memoization for expensive aggregation operations
 2. Added event type breakdown visualization
 3. Improved chart styling with theme colors
@@ -1145,6 +1212,7 @@ export function RevenueCharts({ transactions }: RevenueChartsProps) {
 ```
 
 **Key Changes:**
+
 1. Added time range selector (day/week/month)
 2. Added summary metrics (total, average, peak)
 3. Added dynamic bar coloring based on revenue amount
@@ -1325,6 +1393,7 @@ export function RecentTransactions({ transactions }: RecentTransactionsProps) {
 ```
 
 **Key Changes:**
+
 1. Added TransactionRow component with entity lookups
 2. Added sorting by timestamp
 3. Added total revenue calculation
@@ -1607,6 +1676,7 @@ test("dashboard loads within performance budget", async ({ page }) => {
 ### During Implementation Checklist
 
 **Component Migration:**
+
 - [ ] DashboardOverview migrated to DataProvider
 - [ ] StatsCards migrated to DataProvider
 - [ ] ActivityCharts migrated to DataProvider
@@ -1622,6 +1692,7 @@ test("dashboard loads within performance budget", async ({ page }) => {
 - [ ] SettingsPanel migrated to DataProvider
 
 **Code Quality:**
+
 - [ ] Zero direct Convex imports in dashboard components
 - [ ] Zero `import { api } from "@/convex/_generated/api"` in dashboard
 - [ ] All components use DataProvider hooks
@@ -1631,6 +1702,7 @@ test("dashboard loads within performance budget", async ({ page }) => {
 - [ ] ESLint warnings: 0
 
 **Testing:**
+
 - [ ] Unit tests for all migrated components
 - [ ] Integration tests for dashboard flow
 - [ ] Visual regression tests pass
@@ -1655,6 +1727,7 @@ test("dashboard loads within performance budget", async ({ page }) => {
 ### Rollback Strategy
 
 **Feature Flag:**
+
 ```typescript
 // frontend/src/lib/feature-flags.ts
 export const USE_NEW_DASHBOARD = import.meta.env.PUBLIC_USE_NEW_DASHBOARD === "true";
@@ -1671,11 +1744,13 @@ export function Dashboard() {
 ```
 
 **Git Rollback Points:**
+
 1. Tag before starting: `git tag -a dashboard-migration-start -m "Dashboard migration baseline"`
 2. Tag after each phase: `git tag -a dashboard-migration-phase-1 -m "Phase 1 complete"`
 3. Rollback command: `git reset --hard dashboard-migration-start`
 
 **Incremental Rollback:**
+
 - Each component can be rolled back independently
 - Keep old component files as `.legacy.tsx` during migration
 - Remove `.legacy.tsx` files only after QA validation
@@ -1683,6 +1758,7 @@ export function Dashboard() {
 **Rollback Time: < 5 minutes**
 
 Steps:
+
 1. Set `PUBLIC_USE_NEW_DASHBOARD=false` in `.env.local`
 2. Restart dev server: `bun run dev`
 3. If needed, git reset: `git reset --hard dashboard-migration-start`
@@ -1699,14 +1775,17 @@ Steps:
 # Dashboard Migration Guide
 
 ## Overview
+
 This guide explains how to migrate dashboard components from direct Convex integration to DataProvider.
 
 ## Before Migration
+
 - Component uses `useQuery` from `convex/react`
 - Component imports `api` from `@/convex/_generated/api`
 - Loading state is implicit (`data === undefined`)
 
 ## After Migration
+
 - Component uses `useThings`, `useThing`, `useEvents` from `@/providers/hooks`
 - Component uses backend-agnostic types from `@/types/ontology`
 - Loading state is explicit (`loading` boolean)
@@ -1714,16 +1793,18 @@ This guide explains how to migrate dashboard components from direct Convex integ
 ## Step-by-Step Migration
 
 ### 1. Replace Imports
+
 \`\`\`typescript
 // BEFORE
 import { useQuery, useMutation } from "convex/react";
-import { api } from "@/convex/_generated/api";
+import { api } from "@/convex/\_generated/api";
 
 // AFTER
 import { useThings, useCreateThing } from "@/providers/hooks";
 \`\`\`
 
 ### 2. Replace Hooks
+
 \`\`\`typescript
 // BEFORE
 const courses = useQuery(api.queries.entities.list, { type: "course" });
@@ -1733,6 +1814,7 @@ const { data: courses, loading, error } = useThings({ type: "course" });
 \`\`\`
 
 ### 3. Update Loading State
+
 \`\`\`typescript
 // BEFORE
 if (courses === undefined) return <LoadingSpinner />;
@@ -1742,18 +1824,20 @@ if (loading) return <LoadingSpinner />;
 \`\`\`
 
 ### 4. Add Error Handling
+
 \`\`\`typescript
 // NEW (add this)
 if (error) return <ErrorMessage error={error} />;
 \`\`\`
 
 ### 5. Update Tests
+
 \`\`\`typescript
 // Mock DataProvider hooks
 vi.spyOn(hooks, "useThings").mockReturnValue({
-  data: mockCourses,
-  loading: false,
-  error: null
+data: mockCourses,
+loading: false,
+error: null
 });
 \`\`\`
 ```
@@ -1766,18 +1850,22 @@ vi.spyOn(hooks, "useThings").mockReturnValue({
 # Dashboard Component API Changes
 
 ## DashboardOverview
+
 - **No breaking changes** - Props remain the same
 - Internal implementation changed to use DataProvider
 
 ## CourseList
+
 - **No breaking changes** - Props remain the same
 - Now supports `error` prop for external error display
 
 ## ActivityFeed
+
 - **New prop:** `onLoadMore` - Callback for pagination
 - **Changed:** Real-time updates now via DataProvider subscriptions
 
 ## SearchBar
+
 - **New prop:** `debounceMs` - Control search debounce timing (default: 300ms)
 - **Changed:** Search now backend-agnostic
 ```
@@ -1790,6 +1878,7 @@ vi.spyOn(hooks, "useThings").mockReturnValue({
 # Dashboard Performance Benchmarks
 
 ## Metrics (Before Migration)
+
 - Initial Load: 1.8s
 - LCP: 2.1s
 - FID: 45ms
@@ -1797,6 +1886,7 @@ vi.spyOn(hooks, "useThings").mockReturnValue({
 - Lighthouse Score: 92
 
 ## Metrics (After Migration)
+
 - Initial Load: 1.9s (+5.5%)
 - LCP: 2.2s (+4.8%)
 - FID: 48ms (+6.7%)
@@ -1804,6 +1894,7 @@ vi.spyOn(hooks, "useThings").mockReturnValue({
 - Lighthouse Score: 91 (-1 point)
 
 ## Analysis
+
 - Minimal performance impact (<10% for all metrics)
 - Additional abstraction layer adds negligible overhead
 - Real-time updates remain performant
@@ -1816,18 +1907,21 @@ vi.spyOn(hooks, "useThings").mockReturnValue({
 # Dashboard Migration Known Issues
 
 ## Issue 1: Chart Animation Delay
+
 **Severity:** Low
 **Description:** Charts have 100ms animation delay on initial render
 **Workaround:** Set `animationDuration={0}` in chart props
 **Fix Timeline:** Will be addressed in next optimization phase
 
 ## Issue 2: Search Debounce Configuration
+
 **Severity:** Low
 **Description:** Search debounce timing not configurable per-component
 **Workaround:** Modify global `SEARCH_DEBOUNCE_MS` constant
 **Fix Timeline:** Add per-component prop in v2
 
 ## Issue 3: Loading Skeleton Flash
+
 **Severity:** Medium
 **Description:** Loading skeleton flashes briefly on fast connections
 **Workaround:** Increase minimum loading time to 200ms
@@ -1936,28 +2030,33 @@ vi.spyOn(hooks, "useThings").mockReturnValue({
 ### Implementation Phase (Week 1)
 
 **Day 1: Preparation**
+
 - Set up feature branch
 - Create rollback points
 - Establish performance baseline
 - Set up monitoring
 
 **Day 2-3: Entity Components**
+
 - Migrate CourseList, LessonList, StudentList
 - Migrate CourseDetail, LessonDetail
 - Test each component after migration
 
 **Day 4-5: Analytics Components**
+
 - Migrate DashboardOverview
 - Migrate StatsCards, ActivityCharts, RevenueCharts
 - Migrate RecentTransactions
 - Test dashboard as a whole
 
 **Day 6: Activity & Search**
+
 - Migrate ActivityFeed
 - Migrate SearchBar
 - Test real-time updates
 
 **Day 7: Cleanup & Documentation**
+
 - Remove all Convex imports
 - Run full test suite
 - Write documentation

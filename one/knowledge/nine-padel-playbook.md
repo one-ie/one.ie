@@ -1,3 +1,21 @@
+---
+title: Nine Padel Playbook
+dimension: knowledge
+category: nine-padel-playbook.md
+tags: ai, ontology
+related_dimensions: connections, events, things
+scope: global
+created: 2025-11-03
+updated: 2025-11-03
+version: 1.0.0
+ai_context: |
+  This document is part of the knowledge dimension in the nine-padel-playbook.md category.
+  Location: one/knowledge/nine-padel-playbook.md
+  Purpose: Documents the nine padel playbook: your business, in plain english
+  Related dimensions: connections, events, things
+  For AI agents: Read this to understand nine padel playbook.
+---
+
 # The Nine Padel Playbook: Your Business, In Plain English
 
 Welcome to the new way of running your store. Forget needing a developer for every small change. This document is your playbook. It teaches you a simple English-based language to write "Plays"—automated strategies that your store will run for you.

@@ -1,3 +1,21 @@
+---
+title: Convex Query Pattern
+dimension: knowledge
+category: patterns
+tags: ai, backend, connections, events, ontology, people
+related_dimensions: connections, events, groups, people, things
+scope: global
+created: 2025-11-03
+updated: 2025-11-03
+version: 1.0.0
+ai_context: |
+  This document is part of the knowledge dimension in the patterns category.
+  Location: one/knowledge/patterns/backend/convex-query-pattern.md
+  Purpose: Documents convex query pattern
+  Related dimensions: connections, events, groups, people, things
+  For AI agents: Read this to understand convex query pattern.
+---
+
 # Convex Query Pattern
 
 **Category:** Backend

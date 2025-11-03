@@ -1,3 +1,21 @@
+---
+title: Ontology Ui
+dimension: things
+category: products
+tags: 6-dimensions, ai, frontend, ontology
+related_dimensions: connections, events, groups, knowledge, people
+scope: global
+created: 2025-11-03
+updated: 2025-11-03
+version: 1.0.0
+ai_context: |
+  This document is part of the things dimension in the products category.
+  Location: one/things/products/ontology-ui.md
+  Purpose: Documents ontology ui specification
+  Related dimensions: connections, events, groups, knowledge, people
+  For AI agents: Read this to understand ontology ui.
+---
+
 # Ontology UI Specification
 
 **Frontend-complete ontology: Data model + UI model = Complete specification**
@@ -9,6 +27,7 @@
 The ONE ontology extends beyond data modeling to include UI rendering instructions. For each thing type, we define not just **what data it contains**, but **how it should be displayed**.
 
 **Benefits:**
+
 - ✅ Generic components work for all 66 thing types
 - ✅ Consistent UI across entire platform
 - ✅ Add new type → UI updates automatically
@@ -16,6 +35,7 @@ The ONE ontology extends beyond data modeling to include UI rendering instructio
 - ✅ Customizable per organization
 
 **Implementation:**
+
 - Built on [shadcn/ui](https://ui.shadcn.com) - Beautiful, accessible components
 - Uses Radix UI primitives (WAI-ARIA compliant)
 - Styled with Tailwind CSS
@@ -31,86 +51,93 @@ For each thing type, add a `ui` object:
 ```typescript
 interface ThingTypeUI {
   // Primary component type
-  component: 'Card' | 'List' | 'Table' | 'Kanban' | 'Timeline' | 'Custom'
+  component: "Card" | "List" | "Table" | "Kanban" | "Timeline" | "Custom";
 
   // Layout configurations
   layouts: {
-    grid?: { columns: number; gap: string; responsive?: boolean }
-    list?: { orientation: 'horizontal' | 'vertical'; gap: string; compact?: boolean }
-    detail?: { width: string; centered?: boolean; sidebar?: boolean }
-    table?: { density: 'compact' | 'comfortable' | 'spacious'; sortable?: boolean }
-  }
+    grid?: { columns: number; gap: string; responsive?: boolean };
+    list?: {
+      orientation: "horizontal" | "vertical";
+      gap: string;
+      compact?: boolean;
+    };
+    detail?: { width: string; centered?: boolean; sidebar?: boolean };
+    table?: {
+      density: "compact" | "comfortable" | "spacious";
+      sortable?: boolean;
+    };
+  };
 
   // Field rendering instructions
-  fields: Record<string, FieldUI>
+  fields: Record<string, FieldUI>;
 
   // Available views
   views: {
-    card?: { default?: boolean; fields: string[] }
-    list?: { fields: string[] }
-    detail?: { fields: string[] | '*' }
-    table?: { fields: string[] }
-  }
+    card?: { default?: boolean; fields: string[] };
+    list?: { fields: string[] };
+    detail?: { fields: string[] | "*" };
+    table?: { fields: string[] };
+  };
 
   // User actions
   actions: {
-    primary?: ActionConfig
-    secondary?: ActionConfig[]
-    context?: ActionConfig[]  // Right-click/long-press menu
-  }
+    primary?: ActionConfig;
+    secondary?: ActionConfig[];
+    context?: ActionConfig[]; // Right-click/long-press menu
+  };
 
   // Connection display
-  connections?: Record<string, ConnectionUI>
+  connections?: Record<string, ConnectionUI>;
 
   // Empty state
-  empty?: EmptyStateConfig
+  empty?: EmptyStateConfig;
 
   // Search configuration
   search?: {
-    fields: string[]  // Which fields to search
-    placeholder: string
-    filters?: FilterConfig[]
-  }
+    fields: string[]; // Which fields to search
+    placeholder: string;
+    filters?: FilterConfig[];
+  };
 
   // Grouping/sorting
   organization?: {
-    groupBy?: string[]  // Fields that can group by
-    sortBy?: string[]   // Fields that can sort by
-    defaultSort?: { field: string; order: 'asc' | 'desc' }
-  }
+    groupBy?: string[]; // Fields that can group by
+    sortBy?: string[]; // Fields that can sort by
+    defaultSort?: { field: string; order: "asc" | "desc" };
+  };
 }
 
 interface FieldUI {
-  component: string  // 'Heading' | 'Text' | 'Price' | 'Image' | 'Badge' | etc.
-  label?: string     // Display label
-  required?: boolean
-  hidden?: boolean   // Hide in certain views
+  component: string; // 'Heading' | 'Text' | 'Price' | 'Image' | 'Badge' | etc.
+  label?: string; // Display label
+  required?: boolean;
+  hidden?: boolean; // Hide in certain views
   // Component-specific props
-  [key: string]: any
+  [key: string]: any;
 }
 
 interface ActionConfig {
-  action: string     // 'create' | 'edit' | 'delete' | 'enroll' | 'purchase' | etc.
-  label: string
-  icon?: string
-  variant?: 'primary' | 'secondary' | 'ghost' | 'danger'
-  confirm?: string   // Confirmation message
-  permission?: string // Required permission
+  action: string; // 'create' | 'edit' | 'delete' | 'enroll' | 'purchase' | etc.
+  label: string;
+  icon?: string;
+  variant?: "primary" | "secondary" | "ghost" | "danger";
+  confirm?: string; // Confirmation message
+  permission?: string; // Required permission
 }
 
 interface ConnectionUI {
-  label: string      // "{count} students" or "by {name}"
-  icon?: string
-  display: 'badge' | 'inline' | 'avatar' | 'list'
-  link?: boolean     // Make clickable
-  max?: number       // Max items to show
+  label: string; // "{count} students" or "by {name}"
+  icon?: string;
+  display: "badge" | "inline" | "avatar" | "list";
+  link?: boolean; // Make clickable
+  max?: number; // Max items to show
 }
 
 interface EmptyStateConfig {
-  icon: string
-  title: string
-  description: string
-  action?: ActionConfig
+  icon: string;
+  title: string;
+  description: string;
+  action?: ActionConfig;
 }
 ```
 
@@ -1228,12 +1255,14 @@ interface EmptyStateConfig {
 All field components are built with shadcn/ui for consistency and accessibility:
 
 ### Text Components
+
 - `Heading` - Headings (h1-h6)
 - `Text` - Body text
 - `Markdown` - Markdown content
 - `RichText` - Rich text editor output
 
 ### Media Components
+
 - `Image` - Single image
 - `ImageGallery` - Multiple images
 - `Video` - Video player
@@ -1241,6 +1270,7 @@ All field components are built with shadcn/ui for consistency and accessibility:
 - `Avatar` - User avatar
 
 ### Data Components
+
 - `Price` - Formatted price
 - `Date` - Formatted date/time
 - `Number` - Formatted number
@@ -1250,6 +1280,7 @@ All field components are built with shadcn/ui for consistency and accessibility:
 - `TagList` - Multiple tags
 
 ### Interactive Components
+
 - `Link` - Hyperlink
 - `Button` - Action button
 - `Checkbox` - Checkbox input
@@ -1258,6 +1289,7 @@ All field components are built with shadcn/ui for consistency and accessibility:
 - `Progress` - Progress bar
 
 ### Complex Components
+
 - `Table` - Data table
 - `List` - Item list
 - `Grid` - Item grid
@@ -1266,6 +1298,7 @@ All field components are built with shadcn/ui for consistency and accessibility:
 - `Map` - Geographic map
 
 ### Social Components
+
 - `SocialLinks` - Social media links
 - `ShareButtons` - Share buttons
 - `CommentList` - Comments
@@ -1291,19 +1324,23 @@ That's it! Components use shadcn/ui automatically.
 
 ```tsx
 // frontend/src/components/generic/Card.tsx
-import { useThingConfig } from '@/ontology/hooks'
-import { Card as ShadCard, CardContent, CardFooter } from '@/components/ui/card'
-import { Button } from '@/components/ui/button'
+import { useThingConfig } from "@/ontology/hooks";
+import {
+  Card as ShadCard,
+  CardContent,
+  CardFooter,
+} from "@/components/ui/card";
+import { Button } from "@/components/ui/button";
 
 export function Card({ thing }) {
   // Get UI config from ontology
-  const config = useThingConfig(thing.type)
-  const view = config.ui.views.card
+  const config = useThingConfig(thing.type);
+  const view = config.ui.views.card;
 
   return (
     <ShadCard>
       <CardContent className="pt-6">
-        {view.fields.map(fieldName => (
+        {view.fields.map((fieldName) => (
           <Field
             key={fieldName}
             name={fieldName}
@@ -1316,14 +1353,16 @@ export function Card({ thing }) {
       {config.ui.actions.primary && (
         <CardFooter>
           <Button
-            onClick={() => handleAction(thing, config.ui.actions.primary.action)}
+            onClick={() =>
+              handleAction(thing, config.ui.actions.primary.action)
+            }
           >
             {config.ui.actions.primary.label}
           </Button>
         </CardFooter>
       )}
     </ShadCard>
-  )
+  );
 }
 ```
 
@@ -1343,18 +1382,21 @@ export function Card({ thing }) {
 ## Next Steps
 
 ### Immediate (Week 1)
+
 - [ ] Complete UI specs for top 10 types
 - [ ] Build generic Card component
 - [ ] Build generic Field component
 - [ ] Test with 3 different types
 
 ### Short Term (Week 2-4)
+
 - [ ] Add UI specs for remaining 56 types
 - [ ] Build all field component types
 - [ ] Build ThingList, ThingDetail, ThingTable
 - [ ] Refactor existing type-specific components
 
 ### Long Term (Month 2+)
+
 - [ ] Add customization API (override UI config)
 - [ ] Add theme support (light/dark)
 - [ ] Add responsive breakpoints
@@ -1375,11 +1417,11 @@ const customCourseUI = {
     ...defaultCourseUI.fields,
     price: {
       ...defaultCourseUI.fields.price,
-      currency: "EUR",  // Override to EUR
-      badge: false       // Don't show as badge
-    }
-  }
-}
+      currency: "EUR", // Override to EUR
+      badge: false, // Don't show as badge
+    },
+  },
+};
 ```
 
 ---

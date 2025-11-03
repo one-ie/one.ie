@@ -1,3 +1,21 @@
+---
+title: Kyc
+dimension: connections
+category: kyc.md
+tags: ai, blockchain, connections, ontology, things
+related_dimensions: events, groups, knowledge, people, things
+scope: global
+created: 2025-11-03
+updated: 2025-11-03
+version: 1.0.0
+ai_context: |
+  This document is part of the connections dimension in the kyc.md category.
+  Location: one/connections/kyc.md
+  Purpose: Documents kyc (know your customer) - connection type
+  Related dimensions: events, groups, knowledge, people, things
+  For AI agents: Read this to understand kyc.
+---
+
 # KYC (Know Your Customer) - Connection Type
 
 **Version:** 1.0.0

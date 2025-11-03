@@ -1,3 +1,21 @@
+---
+title: Repos
+dimension: things
+category: plans
+tags: ai, backend
+related_dimensions: events
+scope: global
+created: 2025-11-03
+updated: 2025-11-03
+version: 1.0.0
+ai_context: |
+  This document is part of the things dimension in the plans category.
+  Location: one/things/plans/repos.md
+  Purpose: Documents 1. switch to stack branch
+  Related dimensions: events
+  For AI agents: Read this to understand repos.
+---
+
 Templates
 
 ONE one-ie/one
@@ -14,11 +32,13 @@ ONE Stack - Astro Convex Better Auth one-ie/stack
 ### Stack Branch → one-ie/stack → stack.one.ie
 
 **One-time setup:**
+
 ```bash
 git remote add stack git@github.com:one-ie/stack.git
 ```
 
 **Deploy workflow:**
+
 ```bash
 # 1. Switch to stack branch
 git checkout stack
@@ -31,12 +51,14 @@ wrangler pages deploy dist --project-name=stack
 ```
 
 **Cloudflare configuration:**
+
 - Project: `stack`
 - URL: https://stack.one.ie
 - Build: `bun run build`
 - Output: `dist`
 
 **Environment variables:**
+
 ```
 CONVEX_URL=https://YOUR_DEPLOYMENT.convex.cloud
 BETTER_AUTH_SECRET=xxx

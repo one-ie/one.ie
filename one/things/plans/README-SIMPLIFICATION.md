@@ -1,3 +1,21 @@
+---
+title: Readme Simplification
+dimension: things
+category: plans
+tags: ai, architecture, frontend
+related_dimensions: events
+scope: global
+created: 2025-11-03
+updated: 2025-11-03
+version: 1.0.0
+ai_context: |
+  This document is part of the things dimension in the plans category.
+  Location: one/things/plans/README-SIMPLIFICATION.md
+  Purpose: Documents frontend architecture simplification project
+  Related dimensions: events
+  For AI agents: Read this to understand README SIMPLIFICATION.
+---
+
 # Frontend Architecture Simplification Project
 
 ## Overview
@@ -11,9 +29,11 @@ Comprehensive analysis and simplification roadmap for the ONE Platform frontend 
 ## Documents in This Analysis
 
 ### 1. QUICK-START-SIMPLIFICATION.md
+
 **Start here.** 5-minute executive overview for decision makers.
 
 Contains:
+
 - TL;DR of the problem and solution
 - Before/after code patterns
 - Decision tree
@@ -25,9 +45,11 @@ Contains:
 ---
 
 ### 2. SIMPLIFICATION-SUMMARY.md
+
 **Executive summary.** 15-minute overview for technical leads.
 
 Contains:
+
 - Problem statement with visuals
 - What's being removed and why
 - Impact analysis by the numbers
@@ -41,9 +63,11 @@ Contains:
 ---
 
 ### 3. SIMPLIFICATION-EXAMPLES.md
+
 **Code walkthrough.** 20-minute deep dive with real examples.
 
 Contains:
+
 - Example 1: Creating a course (8 layers → 2 layers)
 - Example 2: Listing courses with filtering
 - Example 3: Testing (50+ LOC mocks → 5 LOC mocks)
@@ -55,9 +79,11 @@ Contains:
 ---
 
 ### 4. ARCHITECTURE-SIMPLIFICATION.md
+
 **Full analysis.** 45-minute comprehensive technical document.
 
 Contains:
+
 - Detailed analysis of each abstraction layer
 - What's redundant and why
 - Cross-file duplication patterns
@@ -74,11 +100,13 @@ Contains:
 ## Quick Navigation
 
 ### For Decision Makers
+
 1. Read QUICK-START-SIMPLIFICATION.md (5 min)
 2. Skim SIMPLIFICATION-SUMMARY.md (5 min)
 3. Decision: Proceed or defer?
 
 ### For Technical Leads
+
 1. Read SIMPLIFICATION-SUMMARY.md (15 min)
 2. Read ARCHITECTURE-SIMPLIFICATION.md sections on:
    - Impact Analysis
@@ -87,11 +115,13 @@ Contains:
 3. Plan implementation approach
 
 ### For Developers
+
 1. Read QUICK-START-SIMPLIFICATION.md (5 min)
 2. Review SIMPLIFICATION-EXAMPLES.md (20 min)
 3. Start with Phase 1 implementation tasks
 
 ### For Architects
+
 1. Read ARCHITECTURE-SIMPLIFICATION.md (full) (45 min)
 2. Review decision points section
 3. Plan long-term implications
@@ -101,6 +131,7 @@ Contains:
 ## Key Findings Summary
 
 ### Current State
+
 - **Abstraction layers:** 5+ deep (component → hook → Effect → DI → Provider → Convex → DB)
 - **Code overhead:** 1,314+ LOC of abstraction for 0 production features
 - **Call depth:** 8 layers to read a single item from database
@@ -110,6 +141,7 @@ Contains:
 - **Learning curve:** Must learn 7 frameworks to use data layer
 
 ### Proposed State
+
 - **Abstraction layers:** 2 deep (component → Convex → DB)
 - **Code overhead:** 0 LOC (use Convex types directly)
 - **Call depth:** 1 layer to read a single item
@@ -119,6 +151,7 @@ Contains:
 - **Learning curve:** Must learn 2 frameworks (React + Convex)
 
 ### Impact
+
 - **Code reduction:** 800-1,100 LOC deleted (70% of abstraction)
 - **Development speed:** 30-50% faster
 - **Cognitive load:** 50% reduction
@@ -129,20 +162,20 @@ Contains:
 
 ## What's Being Removed
 
-| File | LOC | Reason |
-|---|---|---|
-| DataProvider.ts | 411 | Interface for swappable backends (only Convex used) |
-| ConvexProvider.ts | 363 | Thin Promise → Effect wrapper (no value added) |
-| ClientLayer.ts | 76 | DI layer combining 6 services (never swapped) |
-| ThingService.ts | 156 | Passthrough to DataProvider |
-| ConnectionService.ts | 46 | Passthrough to DataProvider |
-| EventService.ts | 32 | Passthrough to DataProvider |
-| KnowledgeService.ts | ~50 | Passthrough to DataProvider |
-| GroupService.ts | ~60 | Passthrough to DataProvider |
-| PeopleService.ts | ~40 | Passthrough to DataProvider |
-| useEffectRunner.ts | 36 | Effect.ts wrapper (React handles loading) |
-| EffectContext.tsx | 28 | Context for DI (only ever provides ClientLayer) |
-| **Total** | **1,314+** | **All unused abstraction** |
+| File                 | LOC        | Reason                                              |
+| -------------------- | ---------- | --------------------------------------------------- |
+| DataProvider.ts      | 411        | Interface for swappable backends (only Convex used) |
+| ConvexProvider.ts    | 363        | Thin Promise → Effect wrapper (no value added)      |
+| ClientLayer.ts       | 76         | DI layer combining 6 services (never swapped)       |
+| ThingService.ts      | 156        | Passthrough to DataProvider                         |
+| ConnectionService.ts | 46         | Passthrough to DataProvider                         |
+| EventService.ts      | 32         | Passthrough to DataProvider                         |
+| KnowledgeService.ts  | ~50        | Passthrough to DataProvider                         |
+| GroupService.ts      | ~60        | Passthrough to DataProvider                         |
+| PeopleService.ts     | ~40        | Passthrough to DataProvider                         |
+| useEffectRunner.ts   | 36         | Effect.ts wrapper (React handles loading)           |
+| EffectContext.tsx    | 28         | Context for DI (only ever provides ClientLayer)     |
+| **Total**            | **1,314+** | **All unused abstraction**                          |
 
 ---
 
@@ -160,6 +193,7 @@ Contains:
 ## Implementation Approach
 
 ### Parallel Implementation (Recommended)
+
 1. **Week 1:** Create new simplified hooks alongside old ones
 2. **Week 2-3:** Migrate features one by one
 3. **Week 3-4:** Delete old implementations when confident
@@ -168,6 +202,7 @@ Contains:
 **Benefit:** Zero risk of breaking changes. Both implementations coexist during migration.
 
 ### Timeline
+
 - **Preparation:** 1 week (read docs, plan, setup)
 - **Migration:** 2-3 weeks (refactor hooks, update usages)
 - **Cleanup:** 1 week (delete abstraction layers)
@@ -175,6 +210,7 @@ Contains:
 - **Total:** 4-5 weeks
 
 ### ROI
+
 - **Cost:** 3-4 weeks engineering time
 - **Benefit:** 30-50% faster development forever
 - **Payback:** 2-3 weeks of future development
@@ -185,6 +221,7 @@ Contains:
 ## Success Criteria
 
 When complete:
+
 - [ ] Zero useEffectRunner imports
 - [ ] Zero DataProvider imports
 - [ ] All hooks using direct Convex
@@ -221,24 +258,29 @@ When complete:
 ## Reading Order by Role
 
 ### Product Manager
+
 1. QUICK-START-SIMPLIFICATION.md (5 min)
 2. Skip to "Why This Matters" section
 
 ### Engineering Manager
+
 1. QUICK-START-SIMPLIFICATION.md (5 min)
 2. SIMPLIFICATION-SUMMARY.md (10 min)
 3. Review "Implementation Timeline" and "ROI"
 
 ### Architect
+
 1. ARCHITECTURE-SIMPLIFICATION.md (full read) (45 min)
 2. Focus on "Recommendations" and "Open Questions"
 
 ### Developer
+
 1. QUICK-START-SIMPLIFICATION.md (5 min)
 2. SIMPLIFICATION-EXAMPLES.md sections (10 min)
 3. Pick a hook, start migrating
 
 ### QA/Testing
+
 1. SIMPLIFICATION-EXAMPLES.md "Testing" section (5 min)
 2. ARCHITECTURE-SIMPLIFICATION.md "Testing Impact" (5 min)
 
@@ -247,11 +289,13 @@ When complete:
 ## Files Analyzed
 
 ### Providers
+
 - `/web/src/providers/DataProvider.ts` (411 LOC)
 - `/web/src/providers/ConvexProvider.ts` (363 LOC)
 - `/web/src/providers/index.ts`
 
 ### Services
+
 - `/web/src/services/ClientLayer.ts` (76 LOC)
 - `/web/src/services/ThingService.ts` (156 LOC)
 - `/web/src/services/ConnectionService.ts` (46 LOC)
@@ -262,12 +306,14 @@ When complete:
 - `/web/src/services/index.ts`
 
 ### Hooks
+
 - `/web/src/hooks/useEffectRunner.ts` (36 LOC)
 - `/web/src/hooks/useService.ts`
 - `/web/src/hooks/ontology/useThing.ts`
 - `/web/src/hooks/index.ts`
 
 ### Context
+
 - `/web/src/context/EffectContext.tsx` (28 LOC)
 
 ---
@@ -301,4 +347,3 @@ See ARCHITECTURE-SIMPLIFICATION.md "Open Questions for Decision" section for str
 ## License
 
 These analysis documents are part of the ONE Platform documentation and follow the same license as the codebase.
-

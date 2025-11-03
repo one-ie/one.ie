@@ -1,3 +1,21 @@
+---
+title: Cascade 2 Backend Agnostic
+dimension: events
+category: CASCADE-2-BACKEND-AGNOSTIC.md
+tags: agent, ai, architecture, backend, convex, frontend, ontology, people, protocol, things
+related_dimensions: connections, groups, knowledge, people, things
+scope: global
+created: 2025-11-03
+updated: 2025-11-03
+version: 1.0.0
+ai_context: |
+  This document is part of the events dimension in the CASCADE-2-BACKEND-AGNOSTIC.md category.
+  Location: one/events/CASCADE-2-BACKEND-AGNOSTIC.md
+  Purpose: Documents cascade #2: backend-agnostic frontend architecture
+  Related dimensions: connections, groups, knowledge, people, things
+  For AI agents: Read this to understand CASCADE 2 BACKEND AGNOSTIC.
+---
+
 # CASCADE #2: Backend-Agnostic Frontend Architecture
 
 **Status:** Structure Complete - Awaiting Specialist Execution

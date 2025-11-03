@@ -1,3 +1,21 @@
+---
+title: Astro Integration Examples
+dimension: events
+category: ASTRO-INTEGRATION-EXAMPLES.md
+tags: ai, backend, connections, events, groups, knowledge, ontology, people, things
+related_dimensions: connections, groups, knowledge, people, things
+scope: global
+created: 2025-11-03
+updated: 2025-11-03
+version: 1.0.0
+ai_context: |
+  This document is part of the events dimension in the ASTRO-INTEGRATION-EXAMPLES.md category.
+  Location: one/events/ASTRO-INTEGRATION-EXAMPLES.md
+  Purpose: Documents astro integration examples
+  Related dimensions: connections, groups, knowledge, people, things
+  For AI agents: Read this to understand ASTRO INTEGRATION EXAMPLES.
+---
+
 # Astro Integration Examples
 
 This document provides practical examples of integrating the 6-dimension ontology with Astro pages and React components.

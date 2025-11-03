@@ -1,3 +1,21 @@
+---
+title: Demo_Setup
+dimension: events
+category: DEMO_SETUP.md
+tags: ai, architecture, backend, connections, groups, things
+related_dimensions: connections, groups, people, things
+scope: global
+created: 2025-11-03
+updated: 2025-11-03
+version: 1.0.0
+ai_context: |
+  This document is part of the events dimension in the DEMO_SETUP.md category.
+  Location: one/events/DEMO_SETUP.md
+  Purpose: Documents demo infrastructure setup
+  Related dimensions: connections, groups, people, things
+  For AI agents: Read this to understand DEMO_SETUP.
+---
+
 # Demo Infrastructure Setup
 
 Complete guide to the demo infrastructure, routing, and integration system for the ONE Platform.

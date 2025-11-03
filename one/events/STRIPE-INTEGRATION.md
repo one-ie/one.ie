@@ -1,3 +1,21 @@
+---
+title: Stripe Integration
+dimension: events
+category: STRIPE-INTEGRATION.md
+tags: architecture
+related_dimensions: things
+scope: global
+created: 2025-11-03
+updated: 2025-11-03
+version: 1.0.0
+ai_context: |
+  This document is part of the events dimension in the STRIPE-INTEGRATION.md category.
+  Location: one/events/STRIPE-INTEGRATION.md
+  Purpose: Documents stripe elements integration - summary
+  Related dimensions: things
+  For AI agents: Read this to understand STRIPE INTEGRATION.
+---
+
 # Stripe Elements Integration - Summary
 
 **Status:** ✅ Complete

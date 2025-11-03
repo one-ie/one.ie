@@ -1,3 +1,21 @@
+---
+title: 2 7 Alternative Providers
+dimension: things
+category: features
+tags: ai, architecture, backend, frontend, ontology
+related_dimensions: events, groups, knowledge, people
+scope: global
+created: 2025-11-03
+updated: 2025-11-03
+version: 1.0.0
+ai_context: |
+  This document is part of the things dimension in the features category.
+  Location: one/things/features/2-7-alternative-providers.md
+  Purpose: Documents feature 2-7: alternative providers (wordpress + notion)
+  Related dimensions: events, groups, knowledge, people
+  For AI agents: Read this to understand 2 7 alternative providers.
+---
+
 # Feature 2-7: Alternative Providers (WordPress + Notion)
 
 **Feature ID:** `feature_2_7_alternative_providers`
@@ -17,6 +35,7 @@ This feature implements **WordPressProvider** and **NotionProvider** to prove th
 **Strategic Value:** Demonstrates ONE Platform's flexibility and enables organizations to leverage existing infrastructure (WordPress, Notion) while gaining ONE's AI capabilities.
 
 **Key Deliverables:**
+
 1. Complete WordPressProvider implementation (REST API + ACF)
 2. Complete NotionProvider implementation (Notion API + webhooks)
 3. CompositeProvider for multi-backend routing
@@ -32,11 +51,13 @@ This feature implements **WordPressProvider** and **NotionProvider** to prove th
 **Challenge:** External systems (WordPress, Notion) don't have built-in multi-tenancy matching ONE's organization model.
 
 **Solution:**
+
 - Each organization gets its own WordPress site URL or Notion workspace
 - Provider configuration stored per-organization in ONE's organizations table
 - Provider acts as tenant-scoped wrapper around external API
 
 **Implementation:**
+
 ```typescript
 // organizations table stores provider config
 {
@@ -71,11 +92,13 @@ class ProviderRegistry {
 ```
 
 **WordPress Multi-Tenancy:**
+
 - Option 1: WordPress Multisite (one WP install, multiple sites)
 - Option 2: Separate WP installs per organization
 - Option 3: Custom tenant field in all tables
 
 **Notion Multi-Tenancy:**
+
 - Option 1: Separate Notion workspaces per organization
 - Option 2: Single workspace with database-level isolation
 - Option 3: Custom "Organization" property on all pages
@@ -101,6 +124,7 @@ class ProviderRegistry {
 | `customer` | Can View | Read-only |
 
 **Implementation:**
+
 ```typescript
 class WordPressProvider implements DataProvider {
   people: PeopleOperations = {
@@ -110,7 +134,7 @@ class WordPressProvider implements DataProvider {
       const wpUsers = await response.json();
 
       // Transform to ONE people (things with type: "creator")
-      return wpUsers.map(user => ({
+      return wpUsers.map((user) => ({
         _id: this.wpIdToOneId("user", user.id),
         type: "creator",
         name: user.name,
@@ -178,20 +202,20 @@ class WordPressProvider implements DataProvider {
 
   private mapWPRoleToONE(wpRole: string): string {
     const mapping: Record<string, string> = {
-      "administrator": "org_owner",
-      "editor": "org_user",
-      "author": "org_user",
-      "contributor": "org_user",
-      "subscriber": "customer",
+      administrator: "org_owner",
+      editor: "org_user",
+      author: "org_user",
+      contributor: "org_user",
+      subscriber: "customer",
     };
     return mapping[wpRole] || "customer";
   }
 
   private mapONERoleToWP(oneRole: string): string {
     const mapping: Record<string, string> = {
-      "org_owner": "administrator",
-      "org_user": "editor",
-      "customer": "subscriber",
+      org_owner: "administrator",
+      org_user: "editor",
+      customer: "subscriber",
     };
     return mapping[oneRole] || "subscriber";
   }
@@ -202,27 +226,27 @@ class WordPressProvider implements DataProvider {
 
 **WordPress Entity Mapping:**
 
-| ONE Thing Type | WordPress Equivalent | Implementation |
-|----------------|---------------------|----------------|
-| `course` | Custom Post Type: `course` | ACF fields for properties |
-| `lesson` | Custom Post Type: `lesson` | ACF fields for properties |
-| `creator` | WP User | Via `/wp/v2/users` |
-| `token` | WooCommerce Product | Via WooCommerce REST API |
-| `certificate` | Custom Post Type: `certificate` | ACF fields for properties |
-| `quiz` | Custom Post Type: `quiz` | ACF fields for properties |
-| `external_agent` | Custom Post Type: `agent` | ACF fields for configuration |
+| ONE Thing Type   | WordPress Equivalent            | Implementation               |
+| ---------------- | ------------------------------- | ---------------------------- |
+| `course`         | Custom Post Type: `course`      | ACF fields for properties    |
+| `lesson`         | Custom Post Type: `lesson`      | ACF fields for properties    |
+| `creator`        | WP User                         | Via `/wp/v2/users`           |
+| `token`          | WooCommerce Product             | Via WooCommerce REST API     |
+| `certificate`    | Custom Post Type: `certificate` | ACF fields for properties    |
+| `quiz`           | Custom Post Type: `quiz`        | ACF fields for properties    |
+| `external_agent` | Custom Post Type: `agent`       | ACF fields for configuration |
 
 **Notion Entity Mapping:**
 
-| ONE Thing Type | Notion Equivalent | Implementation |
-|----------------|-------------------|----------------|
-| `course` | Database: "Courses" | Properties: Name, Status, Description |
-| `lesson` | Database: "Lessons" | Properties: Name, Content, Duration |
-| `creator` | Database: "Users" | Properties: Name, Email, Role |
-| `token` | Database: "Tokens" | Properties: Symbol, Balance, Owner |
-| `certificate` | Database: "Certificates" | Properties: Recipient, Course, Date |
-| `quiz` | Database: "Quizzes" | Properties: Questions, Answers, Score |
-| `external_agent` | Database: "Agents" | Properties: Platform, Endpoint, Config |
+| ONE Thing Type   | Notion Equivalent        | Implementation                         |
+| ---------------- | ------------------------ | -------------------------------------- |
+| `course`         | Database: "Courses"      | Properties: Name, Status, Description  |
+| `lesson`         | Database: "Lessons"      | Properties: Name, Content, Duration    |
+| `creator`        | Database: "Users"        | Properties: Name, Email, Role          |
+| `token`          | Database: "Tokens"       | Properties: Symbol, Balance, Owner     |
+| `certificate`    | Database: "Certificates" | Properties: Recipient, Course, Date    |
+| `quiz`           | Database: "Quizzes"      | Properties: Questions, Answers, Score  |
+| `external_agent` | Database: "Agents"       | Properties: Platform, Endpoint, Config |
 
 **Complete WordPressProvider Things Implementation:**
 
@@ -243,7 +267,7 @@ class WordPressProvider implements DataProvider {
       // Build WordPress query parameters
       const params = new URLSearchParams({
         per_page: String(filter.limit || 10),
-        page: String(((filter.skip || 0) / (filter.limit || 10)) + 1),
+        page: String((filter.skip || 0) / (filter.limit || 10) + 1),
       });
 
       if (filter.status) {
@@ -257,13 +281,15 @@ class WordPressProvider implements DataProvider {
 
       // Make API request
       const response = await this.api.get(
-        `/wp/v2/${postType}?${params.toString()}`
+        `/wp/v2/${postType}?${params.toString()}`,
       );
       const wpPosts = await response.json();
 
       // Transform WordPress posts to ontology things
       return Promise.all(
-        wpPosts.map((post: any) => this.transformWPPostToThing(post, filter.type))
+        wpPosts.map((post: any) =>
+          this.transformWPPostToThing(post, filter.type),
+        ),
       );
     },
 
@@ -297,14 +323,15 @@ class WordPressProvider implements DataProvider {
       const wpUpdates: any = {};
 
       if (updates.name) wpUpdates.title = updates.name;
-      if (updates.status) wpUpdates.status = this.mapOntologyStatusToWP(updates.status);
+      if (updates.status)
+        wpUpdates.status = this.mapOntologyStatusToWP(updates.status);
       if (updates.properties) {
         wpUpdates.meta = this.transformPropertiesToACF(updates.properties);
       }
 
       const response = await this.api.post(
         `/wp/v2/${postType}/${wpId}`,
-        wpUpdates
+        wpUpdates,
       );
       const updated = await response.json();
 
@@ -327,7 +354,7 @@ class WordPressProvider implements DataProvider {
   // Transform WordPress post to ONE thing
   private async transformWPPostToThing(
     post: any,
-    thingType: string
+    thingType: string,
   ): Promise<Thing> {
     // Get ACF fields
     const acfFields = await this.getACFFields(post.id);
@@ -336,7 +363,8 @@ class WordPressProvider implements DataProvider {
       _id: this.wpIdToOneId(post.type, post.id),
       type: thingType,
       name: post.title.rendered || post.title,
-      organizationId: post.meta._one_organization_id || this.config.organizationId,
+      organizationId:
+        post.meta._one_organization_id || this.config.organizationId,
       status: this.mapWPStatusToOntology(post.status),
       properties: {
         content: post.content?.rendered || post.content,
@@ -503,7 +531,10 @@ class WordPressProvider implements DataProvider {
 
 // WordPress API client with authentication
 class WordPressAPI {
-  constructor(private baseUrl: string, private apiKey: string) {}
+  constructor(
+    private baseUrl: string,
+    private apiKey: string,
+  ) {}
 
   async get(path: string): Promise<Response> {
     return this.request("GET", path);
@@ -520,7 +551,7 @@ class WordPressAPI {
   private async request(
     method: string,
     path: string,
-    body?: any
+    body?: any,
   ): Promise<Response> {
     const url = `${this.baseUrl}${path}`;
 
@@ -544,7 +575,7 @@ class WordPressAPI {
       throw new WordPressAPIError(
         `WordPress API error: ${response.status} ${response.statusText}`,
         response.status,
-        await response.text()
+        await response.text(),
       );
     }
 
@@ -556,7 +587,7 @@ class WordPressAPIError extends Error {
   constructor(
     message: string,
     public status: number,
-    public responseBody: string
+    public responseBody: string,
   ) {
     super(message);
     this.name = "WordPressAPIError";
@@ -590,7 +621,9 @@ class NotionProvider implements DataProvider {
     list: async (filter) => {
       const databaseId = this.config.databaseIds[filter.type];
       if (!databaseId) {
-        throw new Error(`No Notion database configured for type: ${filter.type}`);
+        throw new Error(
+          `No Notion database configured for type: ${filter.type}`,
+        );
       }
 
       // Build Notion filter
@@ -614,8 +647,8 @@ class NotionProvider implements DataProvider {
       // Transform Notion pages to ontology things
       return Promise.all(
         response.results.map((page: any) =>
-          this.transformNotionPageToThing(page, filter.type)
-        )
+          this.transformNotionPageToThing(page, filter.type),
+        ),
       );
     },
 
@@ -657,7 +690,7 @@ class NotionProvider implements DataProvider {
       if (updates.properties) {
         Object.assign(
           properties,
-          this.transformPropertiesToNotionUpdate(updates.properties)
+          this.transformPropertiesToNotionUpdate(updates.properties),
         );
       }
 
@@ -695,14 +728,14 @@ class NotionProvider implements DataProvider {
   // Transform Notion page to ONE thing
   private async transformNotionPageToThing(
     page: any,
-    thingType: string
+    thingType: string,
   ): Promise<Thing> {
     const props = page.properties;
 
     // Extract name (usually the title property)
     let name = "Untitled";
     const titleProp = Object.values(props).find(
-      (p: any) => p.type === "title"
+      (p: any) => p.type === "title",
     ) as any;
     if (titleProp?.title?.[0]?.text?.content) {
       name = titleProp.title[0].text.content;
@@ -742,7 +775,9 @@ class NotionProvider implements DataProvider {
         title: [{ text: { content: thing.name } }],
       },
       Status: {
-        select: { name: this.mapOntologyStatusToNotion(thing.status || "draft") },
+        select: {
+          name: this.mapOntologyStatusToNotion(thing.status || "draft"),
+        },
       },
     };
 
@@ -825,7 +860,7 @@ class NotionProvider implements DataProvider {
       try {
         Object.assign(
           extracted,
-          JSON.parse(props["ONE Properties"].rich_text[0].text.content)
+          JSON.parse(props["ONE Properties"].rich_text[0].text.content),
         );
       } catch (e) {
         // Ignore parse errors
@@ -855,13 +890,15 @@ class NotionProvider implements DataProvider {
         case "multi_select":
           if (prop.multi_select) {
             extracted[this.camelCase(key)] = prop.multi_select.map(
-              (s: any) => s.name
+              (s: any) => s.name,
             );
           }
           break;
         case "date":
           if (prop.date?.start) {
-            extracted[this.camelCase(key)] = new Date(prop.date.start).getTime();
+            extracted[this.camelCase(key)] = new Date(
+              prop.date.start,
+            ).getTime();
           }
           break;
         case "checkbox":
@@ -884,8 +921,8 @@ class NotionProvider implements DataProvider {
           break;
         case "relation":
           if (prop.relation) {
-            extracted[this.camelCase(key)] = prop.relation.map(
-              (r: any) => this.notionIdToOneId(r.id)
+            extracted[this.camelCase(key)] = prop.relation.map((r: any) =>
+              this.notionIdToOneId(r.id),
             );
           }
           break;
@@ -933,7 +970,7 @@ class NotionProvider implements DataProvider {
     const id = match[1];
     return `${id.slice(0, 8)}-${id.slice(8, 12)}-${id.slice(12, 16)}-${id.slice(
       16,
-      20
+      20,
     )}-${id.slice(20)}`;
   }
 
@@ -949,7 +986,7 @@ class NotionProvider implements DataProvider {
   private camelCase(str: string): string {
     return str
       .replace(/(?:^\w|[A-Z]|\b\w)/g, (letter, index) =>
-        index === 0 ? letter.toLowerCase() : letter.toUpperCase()
+        index === 0 ? letter.toLowerCase() : letter.toUpperCase(),
       )
       .replace(/\s+/g, "");
   }
@@ -967,6 +1004,7 @@ interface NotionProviderConfig {
 **WordPress Connection Mapping:**
 
 WordPress doesn't have native relationships beyond `post_parent` and `post_author`. We'll use:
+
 1. **ACF Relationship Fields** - For complex relationships
 2. **Custom Tables** - For high-volume relationships (enrollments)
 3. **Post Meta** - For simple 1:1 relationships
@@ -986,7 +1024,7 @@ class WordPressProvider implements DataProvider {
       });
 
       const response = await this.api.get(
-        `/one/v1/connections?${params.toString()}`
+        `/one/v1/connections?${params.toString()}`,
       );
       const wpConnections = await response.json();
 
@@ -1176,14 +1214,15 @@ class NotionProvider implements DataProvider {
 
         if (prop.type === "relation" && prop.relation) {
           // Determine relationship type from property name
-          const relationshipType = this.mapNotionPropertyToRelationship(propName);
+          const relationshipType =
+            this.mapNotionPropertyToRelationship(propName);
 
           for (const rel of prop.relation) {
             connections.push({
               _id: this.generateConnectionId(
                 filter.fromThingId,
                 this.notionIdToOneId(rel.id),
-                relationshipType
+                relationshipType,
               ),
               fromThingId: filter.fromThingId,
               toThingId: this.notionIdToOneId(rel.id),
@@ -1205,7 +1244,7 @@ class NotionProvider implements DataProvider {
 
       // Determine which property to update
       const propertyName = this.mapRelationshipToNotionProperty(
-        args.relationshipType
+        args.relationshipType,
       );
 
       // Get existing relations
@@ -1230,7 +1269,7 @@ class NotionProvider implements DataProvider {
         _id: this.generateConnectionId(
           args.fromThingId,
           args.toThingId,
-          args.relationshipType
+          args.relationshipType,
         ),
         ...args,
         createdAt: Date.now(),
@@ -1246,7 +1285,8 @@ class NotionProvider implements DataProvider {
       const toNotionId = this.oneIdToNotionId(toThingId);
 
       // Determine which property to update
-      const propertyName = this.mapRelationshipToNotionProperty(relationshipType);
+      const propertyName =
+        this.mapRelationshipToNotionProperty(relationshipType);
 
       // Get existing relations
       const page = await this.notion.pages.retrieve({ page_id: fromNotionId });
@@ -1275,7 +1315,7 @@ class NotionProvider implements DataProvider {
       const connections = await this.connections.list({ fromThingId });
       const connection = connections.find(
         (c) =>
-          c.toThingId === toThingId && c.relationshipType === relationshipType
+          c.toThingId === toThingId && c.relationshipType === relationshipType,
       );
 
       if (!connection) {
@@ -1320,7 +1360,7 @@ class NotionProvider implements DataProvider {
   private generateConnectionId(
     fromThingId: string,
     toThingId: string,
-    relationshipType: string
+    relationshipType: string,
   ): string {
     return `notion_conn_${fromThingId}_${toThingId}_${relationshipType}`;
   }
@@ -1354,6 +1394,7 @@ class NotionProvider implements DataProvider {
 **Challenge:** WordPress and Notion don't have native event logs matching ONE's comprehensive event system.
 
 **Solution:**
+
 - **Option 1:** Store events in ONE's Convex backend (hybrid approach)
 - **Option 2:** Store events in external system's custom table/database
 - **Option 3:** Use external system's audit logs where available
@@ -1374,7 +1415,9 @@ class WordPressProvider implements DataProvider {
         per_page: String(filter.limit || 10),
       });
 
-      const response = await this.api.get(`/one/v1/events?${params.toString()}`);
+      const response = await this.api.get(
+        `/one/v1/events?${params.toString()}`,
+      );
       const wpEvents = await response.json();
 
       return wpEvents.map((event: any) => ({
@@ -1490,7 +1533,7 @@ class WordPressProvider implements DataProvider {
       }
 
       const response = await this.api.get(
-        `/one/v1/knowledge?${params.toString()}`
+        `/one/v1/knowledge?${params.toString()}`,
       );
       const wpKnowledge = await response.json();
 
@@ -1682,12 +1725,12 @@ class CompositeProvider implements DataProvider {
       // Cross-provider connections require querying all providers
       if (!filter.fromThingId && !filter.toThingId) {
         throw new Error(
-          "CompositeProvider connections.list requires fromThingId or toThingId"
+          "CompositeProvider connections.list requires fromThingId or toThingId",
         );
       }
 
       const providerName = this.routeByThingId(
-        filter.fromThingId || filter.toThingId!
+        filter.fromThingId || filter.toThingId!,
       );
       const provider = this.getProvider(providerName);
       return provider.connections.list(filter);
@@ -2112,7 +2155,7 @@ const docs = await compositeProvider.things.list({ type: "documentation" });
 97. Write end-to-end test: CompositeProvider routing
 98. Write end-to-end test: Multi-backend organization
 99. Run full test suite (expect 200+ tests)
-100. Fix any failing tests
+100.  Fix any failing tests
 
 **Step 101-110: Documentation & Guides**
 
@@ -2134,6 +2177,7 @@ const docs = await compositeProvider.things.list({ type: "documentation" });
 ### Unit Tests (100+ tests)
 
 **WordPress Provider:**
+
 - ID conversion (10 tests)
 - Type mapping (20 tests)
 - Status mapping (10 tests)
@@ -2142,6 +2186,7 @@ const docs = await compositeProvider.things.list({ type: "documentation" });
 - Error handling (10 tests)
 
 **Notion Provider:**
+
 - ID conversion (10 tests)
 - Property extraction (30 tests)
 - Status mapping (10 tests)
@@ -2149,6 +2194,7 @@ const docs = await compositeProvider.things.list({ type: "documentation" });
 - Error handling (10 tests)
 
 **CompositeProvider:**
+
 - Routing logic (30 tests)
 - Provider factory (10 tests)
 - Health checks (10 tests)
@@ -2156,24 +2202,28 @@ const docs = await compositeProvider.things.list({ type: "documentation" });
 ### Integration Tests (50+ tests)
 
 **WordPress Provider:**
+
 - CRUD operations for all thing types (20 tests)
 - Connection operations (10 tests)
 - Event operations (5 tests)
 - Authentication (5 tests)
 
 **Notion Provider:**
+
 - CRUD operations for all thing types (20 tests)
 - Connection operations (10 tests)
 - Property type handling (10 tests)
 - Authentication (5 tests)
 
 **CompositeProvider:**
+
 - Multi-backend routing (10 tests)
 - Cross-provider connections (5 tests)
 
 ### End-to-End Tests (20+ tests)
 
 **Scenarios:**
+
 1. Create organization with WordPress backend
 2. Create organization with Notion backend
 3. Create organization with CompositeProvider
@@ -2188,6 +2238,7 @@ const docs = await compositeProvider.things.list({ type: "documentation" });
 ### Performance Tests
 
 **Benchmarks:**
+
 - Compare WordPress provider vs Convex (latency, throughput)
 - Compare Notion provider vs Convex (latency, throughput)
 - Test CompositeProvider overhead (routing delay)
@@ -2196,6 +2247,7 @@ const docs = await compositeProvider.things.list({ type: "documentation" });
 - Test connection queries (complex relationship graphs)
 
 **Acceptance Criteria:**
+
 - WordPress provider: < 500ms p99 latency for simple queries
 - Notion provider: < 1s p99 latency for simple queries
 - CompositeProvider: < 50ms routing overhead
@@ -2213,6 +2265,7 @@ const docs = await compositeProvider.things.list({ type: "documentation" });
 **So that** I can leverage my existing content and avoid data migration
 
 **Acceptance Criteria:**
+
 - [ ] I can configure my organization to use WordPress provider
 - [ ] I provide my WordPress URL and API key
 - [ ] All course/lesson content is stored in WordPress
@@ -2229,6 +2282,7 @@ const docs = await compositeProvider.things.list({ type: "documentation" });
 **So that** my team can continue using familiar Notion workflows
 
 **Acceptance Criteria:**
+
 - [ ] I can configure my organization to use Notion provider
 - [ ] I provide my Notion integration token and database IDs
 - [ ] All documentation/notes are stored in Notion
@@ -2245,6 +2299,7 @@ const docs = await compositeProvider.things.list({ type: "documentation" });
 **So that** I can leverage the best tool for each use case
 
 **Acceptance Criteria:**
+
 - [ ] I can configure CompositeProvider with routing rules
 - [ ] I specify: courses→WordPress, docs→Notion, events→Convex
 - [ ] Content is routed to correct backend automatically
@@ -2260,6 +2315,7 @@ const docs = await compositeProvider.things.list({ type: "documentation" });
 **So that** I can use custom WordPress plugins
 
 **Acceptance Criteria:**
+
 - [ ] I can export all data from Convex
 - [ ] I can import all data to WordPress
 - [ ] I can switch provider configuration
@@ -2276,6 +2332,7 @@ const docs = await compositeProvider.things.list({ type: "documentation" });
 **So that** my organization can use ONE with our existing infrastructure
 
 **Acceptance Criteria:**
+
 - [ ] I have comprehensive provider creation guide
 - [ ] I have working examples (WordPress, Notion)
 - [ ] I understand all 6-dimension requirements
@@ -2311,18 +2368,21 @@ const docs = await compositeProvider.things.list({ type: "documentation" });
 **Risk:** Alternative providers introduce bugs or performance issues.
 
 **Mitigation:**
+
 - Providers are additive - ConvexProvider remains default
 - Organizations opt-in to alternative providers
 - Provider configuration stored per-organization
 - Easy to switch back to ConvexProvider
 
 **Rollback Steps:**
+
 1. Update organization's `properties.providerType` to `"convex"`
 2. Provider registry automatically uses ConvexProvider
 3. No code changes required
 4. **Rollback time: Instant** (configuration change only)
 
 **Data Preservation:**
+
 - External data (WordPress, Notion) remains intact
 - Events/knowledge in Convex remain intact
 - Can re-enable alternative provider at any time
@@ -2332,17 +2392,20 @@ const docs = await compositeProvider.things.list({ type: "documentation" });
 ## Dependencies
 
 **Required:**
+
 - Feature 2-6 (Dashboard Migration) MUST be complete
 - All frontend components MUST use DataProvider abstraction
 - No direct Convex imports in components
 
 **External:**
+
 - WordPress instance (6.4+)
 - WordPress plugins: ACF Pro, Custom Post Type UI
 - Notion workspace with API access
 - Notion integration token with full access permissions
 
 **Development:**
+
 - Docker for local WordPress testing
 - Notion test workspace
 - Integration test credentials (stored in 1Password)
@@ -2352,12 +2415,15 @@ const docs = await compositeProvider.things.list({ type: "documentation" });
 ## Related Files
 
 **Plan:**
+
 - `one/things/plans/2-backend-agnostic-frontend.md`
 
 **Dependencies:**
+
 - `one/things/features/2-6-dashboard-migration.md`
 
 **Implementation:**
+
 - `frontend/src/providers/DataProvider.ts` (interface)
 - `frontend/src/providers/wordpress/WordPressProvider.ts` (NEW)
 - `frontend/src/providers/wordpress/WordPressAPI.ts` (NEW)
@@ -2365,6 +2431,7 @@ const docs = await compositeProvider.things.list({ type: "documentation" });
 - `frontend/src/providers/composite/CompositeProvider.ts` (NEW)
 
 **WordPress Plugin:**
+
 - `wordpress/plugins/one-platform-connector/` (NEW - to be created)
 - `wordpress/plugins/one-platform-connector/includes/api/connections.php` (NEW)
 - `wordpress/plugins/one-platform-connector/includes/api/events.php` (NEW)
@@ -2372,6 +2439,7 @@ const docs = await compositeProvider.things.list({ type: "documentation" });
 - `wordpress/plugins/one-platform-connector/includes/schema.php` (NEW - SQL table creation)
 
 **Tests:**
+
 - `frontend/tests/unit/providers/wordpress.test.ts` (NEW)
 - `frontend/tests/unit/providers/notion.test.ts` (NEW)
 - `frontend/tests/unit/providers/composite.test.ts` (NEW)
@@ -2380,6 +2448,7 @@ const docs = await compositeProvider.things.list({ type: "documentation" });
 - `frontend/tests/e2e/multi-backend.test.ts` (NEW)
 
 **Documentation:**
+
 - `one/knowledge/providers/wordpress-setup.md` (NEW)
 - `one/knowledge/providers/notion-setup.md` (NEW)
 - `one/knowledge/providers/provider-creation-guide.md` (NEW)
@@ -2390,6 +2459,7 @@ const docs = await compositeProvider.things.list({ type: "documentation" });
 ## Success Metrics
 
 **Technical:**
+
 - [ ] 200+ tests passing
 - [ ] WordPress provider: < 500ms p99 latency
 - [ ] Notion provider: < 1s p99 latency
@@ -2398,18 +2468,21 @@ const docs = await compositeProvider.things.list({ type: "documentation" });
 - [ ] All 6 dimensions fully implemented
 
 **User Experience:**
+
 - [ ] Organizations can switch providers in < 5 minutes
 - [ ] No frontend code changes required
 - [ ] Seamless experience regardless of backend
 - [ ] Real-time updates working (polling/webhooks)
 
 **Documentation:**
+
 - [ ] 3 complete setup guides published
 - [ ] Provider creation guide with examples
 - [ ] API reference complete
 - [ ] Troubleshooting guide covers 10+ common issues
 
 **Strategic:**
+
 - [ ] Proves backend-agnostic architecture works
 - [ ] Demonstrates ONE's flexibility
 - [ ] Enables organizations with existing infrastructure to adopt ONE

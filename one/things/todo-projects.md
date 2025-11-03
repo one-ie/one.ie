@@ -1,3 +1,22 @@
+---
+title: Todo Projects
+dimension: things
+primary_dimension: things
+category: todo-projects.md
+tags: ai
+related_dimensions: events, groups, people
+scope: global
+created: 2025-11-03
+updated: 2025-11-03
+version: 1.0.0
+ai_context: |
+  This document is part of the things dimension in the todo-projects.md category.
+  Location: one/things/todo-projects.md
+  Purpose: Documents projects content collection & management system
+  Related dimensions: events, groups, people
+  For AI agents: Read this to understand todo projects.
+---
+
 # Projects Content Collection & Management System
 
 ## Overview
@@ -92,21 +111,21 @@ Each of the 6 core projects has its own markdown file:
 All projects follow the same schema structure with the following key fields:
 
 ```yaml
-title: "Project Name"           # Project title
-description: "Description"      # Brief overview
-project: "Project Name"         # Project identifier
-organization: "ONE Platform"    # Organization
-status: "active"                # Status (active, planning, completed, archived)
-priority: "high"                # Priority (low, medium, high, critical)
-startDate: 2025-10-30           # Start date
-targetEndDate: 2026-XX-XX       # Target completion
-progress: 0                     # Progress percentage (0-100)
-ontologyDimensions: [...]       # Mapped 6-dimension ontology
-assignedSpecialist: "agent-x"   # Assigned specialist/agent
-objectives: [...]               # Project objectives
-deliverables: [...]             # Expected deliverables
-createdAt: 2025-10-30           # Creation date
-draft: false                    # Draft status
+title: "Project Name" # Project title
+description: "Description" # Brief overview
+project: "Project Name" # Project identifier
+organization: "ONE Platform" # Organization
+status: "active" # Status (active, planning, completed, archived)
+priority: "high" # Priority (low, medium, high, critical)
+startDate: 2025-10-30 # Start date
+targetEndDate: 2026-XX-XX # Target completion
+progress: 0 # Progress percentage (0-100)
+ontologyDimensions: [...] # Mapped 6-dimension ontology
+assignedSpecialist: "agent-x" # Assigned specialist/agent
+objectives: [...] # Project objectives
+deliverables: [...] # Expected deliverables
+createdAt: 2025-10-30 # Creation date
+draft: false # Draft status
 ```
 
 ### Viewing Projects
@@ -151,6 +170,7 @@ ONE Platform Projects
 ```
 
 Each project:
+
 - Has independent development timeline
 - Maps to specific 6-dimension ontology dimensions
 - Assigned to specialized agents/teams
@@ -159,15 +179,15 @@ Each project:
 
 ## Benefits
 
-| Aspect | Benefit |
-|--------|---------|
-| Clarity | 6 clearly defined products with specific focus |
-| Organization | Each project organized by product offering |
-| Tracking | Real-time progress visibility for each product |
-| Planning | Defined scope, timeline, and deliverables |
+| Aspect         | Benefit                                           |
+| -------------- | ------------------------------------------------- |
+| Clarity        | 6 clearly defined products with specific focus    |
+| Organization   | Each project organized by product offering        |
+| Tracking       | Real-time progress visibility for each product    |
+| Planning       | Defined scope, timeline, and deliverables         |
 | Specialization | Each project assigned to specialized teams/agents |
-| Scalability | Each project independently scalable |
-| Portfolio | Complete product portfolio representation |
+| Scalability    | Each project independently scalable               |
+| Portfolio      | Complete product portfolio representation         |
 
 ## Related Files
 
@@ -179,36 +199,42 @@ Each project:
 ## Future Enhancements
 
 ### Pages Project
+
 - [ ] Advanced page template library (50+ templates)
 - [ ] Conditional content rendering
 - [ ] A/B testing framework
 - [ ] Advanced analytics integration
 
 ### Blog Project
+
 - [ ] Comment system and moderation
 - [ ] Social sharing optimization
 - [ ] Subscriber management
 - [ ] Paywall and membership features
 
 ### Shop Project
+
 - [ ] Advanced inventory management
 - [ ] Vendor/seller management system
 - [ ] Marketplace features
 - [ ] Advanced fraud detection
 
 ### Dashboard Project
+
 - [ ] Custom dashboard builder
 - [ ] Advanced forecasting models
 - [ ] Team performance analytics
 - [ ] Automated alert system
 
 ### Website Project
+
 - [ ] AI-powered content generation
 - [ ] Advanced form builder
 - [ ] Dynamic pricing engine
 - [ ] Multi-tenant website hosting
 
 ### Email Project
+
 - [ ] Advanced AI-powered subject line optimization
 - [ ] Predictive send time optimization
 - [ ] Dynamic content personalization

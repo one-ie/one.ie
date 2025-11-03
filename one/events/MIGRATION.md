@@ -1,3 +1,21 @@
+---
+title: Migration
+dimension: events
+category: MIGRATION.md
+tags: ai, backend, frontend, things
+related_dimensions: connections, people, things
+scope: global
+created: 2025-11-03
+updated: 2025-11-03
+version: 1.0.0
+ai_context: |
+  This document is part of the events dimension in the MIGRATION.md category.
+  Location: one/events/MIGRATION.md
+  Purpose: Documents quick start: backend convex migration
+  Related dimensions: connections, people, things
+  For AI agents: Read this to understand MIGRATION.
+---
+
 # Quick Start: Backend Convex Migration
 
 ## Test 1: Simple Backend Connection

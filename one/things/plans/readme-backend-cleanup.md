@@ -1,3 +1,21 @@
+---
+title: Readme Backend Cleanup
+dimension: things
+category: plans
+tags: ai, backend, connections, convex, events, groups, knowledge, ontology, people, things
+related_dimensions: connections, events, groups, knowledge, people
+scope: global
+created: 2025-11-03
+updated: 2025-11-03
+version: 1.0.0
+ai_context: |
+  This document is part of the things dimension in the plans category.
+  Location: one/things/plans/readme-backend-cleanup.md
+  Purpose: Documents backend ontology conformance - complete assessment & plan
+  Related dimensions: connections, events, groups, knowledge, people
+  For AI agents: Read this to understand readme backend cleanup.
+---
+
 # Backend Ontology Conformance - Complete Assessment & Plan
 
 **Status**: Assessment Complete ✅ | Ready for Execution 🚀
@@ -17,10 +35,12 @@ A complete assessment and execution plan to reorganize the `/backend/` directory
 ## The Four Documents (Read in This Order)
 
 ### 📋 Document 1: BACKEND-AUDIT-MANIFEST.md (`/backend/`)
+
 **What**: File-by-file assessment of all 33 backend files
 **Size**: ~500 lines
 **Time to read**: 10-15 minutes
 **Contains**:
+
 - Current status of every file in `/backend/`
 - Classification (keep, move, delete, consolidate)
 - Duplicate detection and analysis
@@ -32,10 +52,12 @@ A complete assessment and execution plan to reorganize the `/backend/` directory
 ---
 
 ### 🎯 Document 2: backend-target-structure.md (THIS DIRECTORY)
+
 **What**: Vision of what backend looks like after cleanup
 **Size**: ~450 lines
 **Time to read**: 15-20 minutes
 **Contains**:
+
 - Before/after directory structures (visual)
 - Complete file mapping to 6 dimensions
 - Where each dimension shows up in backend
@@ -48,10 +70,12 @@ A complete assessment and execution plan to reorganize the `/backend/` directory
 ---
 
 ### ⚙️ Document 3: backend-ontology-conformance.md (THIS DIRECTORY)
+
 **What**: Complete 100-inference execution plan
 **Size**: ~400 lines
 **Time to read**: 20-30 minutes
 **Contains**:
+
 - Detailed classification matrix (all 33 files)
 - 5 execution phases (Audit through Verification)
 - 60+ inference-based steps
@@ -65,10 +89,12 @@ A complete assessment and execution plan to reorganize the `/backend/` directory
 ---
 
 ### ⚡ Document 4: backend-cleanup-quickstart.md (THIS DIRECTORY)
+
 **What**: Quick reference for busy people
 **Size**: ~350 lines
 **Time to read**: 5-10 minutes
 **Contains**:
+
 - Quick summary tables
 - Files to keep vs. move at a glance
 - Exact commands to run
@@ -124,35 +150,41 @@ Result: Beautiful, organized, discoverable, 100% ontology-compliant
 
 ## Key Actions
 
-| Action | Count | Files | Effort |
-|--------|-------|-------|--------|
-| KEEP (no change) | 10 | convex/, lib/, test/, scripts/ | 0% |
-| DELETE | 4 | ONTOLOGY-FILE-STRUCTURE.md, PERFECT-ONTOLOGY-STRUCTURE.md, ONTOLOGY-INTEGRATION-TEST-SUMMARY.md, _tests_disabled/ | 5% |
-| CONSOLIDATE | 7 | Merge 3→1, 3→1, 2→1 (query, structure, test docs) | 20% |
-| MOVE | 12 | Documentation to /one/ (by dimension) | 30% |
-| UPDATE | 1 | README.md (change "4-table" to "6-dimension") | 5% |
-| VERIFY | All | TypeScript, links, schema | 40% |
+| Action           | Count | Files                                                                                                              | Effort |
+| ---------------- | ----- | ------------------------------------------------------------------------------------------------------------------ | ------ |
+| KEEP (no change) | 10    | convex/, lib/, test/, scripts/                                                                                     | 0%     |
+| DELETE           | 4     | ONTOLOGY-FILE-STRUCTURE.md, PERFECT-ONTOLOGY-STRUCTURE.md, ONTOLOGY-INTEGRATION-TEST-SUMMARY.md, \_tests_disabled/ | 5%     |
+| CONSOLIDATE      | 7     | Merge 3→1, 3→1, 2→1 (query, structure, test docs)                                                                  | 20%    |
+| MOVE             | 12    | Documentation to /one/ (by dimension)                                                                              | 30%    |
+| UPDATE           | 1     | README.md (change "4-table" to "6-dimension")                                                                      | 5%     |
+| VERIFY           | All   | TypeScript, links, schema                                                                                          | 40%    |
 
 ---
 
 ## Quick Decision Matrix
 
 ### "I just want to understand the problem"
+
 → Read: BACKEND-AUDIT-MANIFEST.md (15 mins)
 
 ### "Show me the vision"
+
 → Read: backend-target-structure.md (20 mins)
 
 ### "How do I do this?"
+
 → Read: backend-ontology-conformance.md (30 mins)
 
 ### "Just tell me what to do"
+
 → Read: backend-cleanup-quickstart.md (10 mins)
 
 ### "I want to understand everything"
+
 → Read all 4 in order (60 mins total)
 
 ### "I want someone else to do this"
+
 → Share backend-ontology-conformance.md with agent-clean
 
 ---
@@ -188,6 +220,7 @@ After execution, you should have:
 ## Risk Assessment: LOW ✅
 
 Why?
+
 - ✅ Only reorganizing documentation
 - ✅ Zero code changes
 - ✅ Source code stays exactly where it is
@@ -197,6 +230,7 @@ Why?
 - ✅ 100% reversible (git has everything)
 
 What could go wrong?
+
 - Broken markdown links (mitigated by grep search before moving)
 - Lost documentation (mitigated by copy-first-delete-later)
 - Missing targets (mitigated by creating directories first)
@@ -206,14 +240,17 @@ What could go wrong?
 ## What Gets Better
 
 **Before**: "Where's the query documentation?"
+
 - Answer: "QUERY_ONTOLOGY.md... or maybe QUERIES_ONTOLOGY_COMPLETE.md... or ONTOLOGY_QUERIES_EXAMPLE.md?"
 - Problem: 3 files, unclear which to use
 
 **After**: "Where's the query documentation?"
+
 - Answer: "/one/connections/api/queries-reference.md"
 - Solution: Single authoritative file, clear location
 
 **Overall Benefits**:
+
 - Faster discovery of documentation
 - Easier onboarding for new developers
 - Clear mapping to 6-dimension ontology
@@ -226,6 +263,7 @@ What could go wrong?
 ## How to Proceed
 
 ### Path A: Thorough Understanding (Recommended)
+
 ```
 1. Read BACKEND-AUDIT-MANIFEST.md (15 mins) - understand current state
 2. Read backend-target-structure.md (20 mins) - see vision
@@ -236,6 +274,7 @@ What could go wrong?
 ```
 
 ### Path B: Just Get It Done
+
 ```
 1. Read backend-cleanup-quickstart.md (10 mins)
 2. Run the commands listed
@@ -244,6 +283,7 @@ What could go wrong?
 ```
 
 ### Path C: Delegate
+
 ```
 1. Share backend-ontology-conformance.md with agent-clean
 2. Let agent-clean execute the plan
@@ -324,13 +364,13 @@ A: Very low risk. Only moving documentation, not changing code.
 ## Files in This Assessment
 
 Located in `/one/things/plans/`:
+
 1. **readme-backend-cleanup.md** (this file - index)
 2. **backend-ontology-conformance.md** (100-inference plan)
 3. **backend-target-structure.md** (vision document)
 4. **backend-cleanup-quickstart.md** (quick reference)
 
-Located in `/backend/`:
-5. **BACKEND-AUDIT-MANIFEST.md** (file assessment)
+Located in `/backend/`: 5. **BACKEND-AUDIT-MANIFEST.md** (file assessment)
 
 ---
 
@@ -339,6 +379,7 @@ Located in `/backend/`:
 You now have everything needed to transform a messy 20-file backend root into a beautifully organized structure that 100% maps to the 6-dimension ontology. The plan is low-risk, well-documented, and reversible.
 
 All you need to do is:
+
 1. Pick a time to execute
 2. Read the plan
 3. Follow the steps
@@ -356,6 +397,6 @@ Let's make the backend beautiful!
 
 ---
 
-*Assessment completed: 2025-10-25*
-*Ready for execution: Now*
-*Questions? Read the 4 documents above*
+_Assessment completed: 2025-10-25_
+_Ready for execution: Now_
+_Questions? Read the 4 documents above_

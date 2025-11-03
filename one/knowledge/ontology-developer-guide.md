@@ -1,3 +1,21 @@
+---
+title: Ontology Developer Guide
+dimension: knowledge
+category: ontology-developer-guide.md
+tags: 6-dimensions, architecture, installation, ontology, testing
+related_dimensions: connections, events, people, things
+scope: global
+created: 2025-11-03
+updated: 2025-11-03
+version: 1.0.0
+ai_context: |
+  This document is part of the knowledge dimension in the ontology-developer-guide.md category.
+  Location: one/knowledge/ontology-developer-guide.md
+  Purpose: Documents multi-ontology architecture: developer guide
+  Related dimensions: connections, events, people, things
+  For AI agents: Read this to understand ontology developer guide.
+---
+
 # Multi-Ontology Architecture: Developer Guide
 
 **Version:** 1.0.0

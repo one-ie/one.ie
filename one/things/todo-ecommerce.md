@@ -1,3 +1,22 @@
+---
+title: Todo Ecommerce
+dimension: things
+primary_dimension: things
+category: todo-ecommerce.md
+tags: agent, ai, blockchain, inference, ontology
+related_dimensions: connections, events, groups, knowledge, people
+scope: global
+created: 2025-11-03
+updated: 2025-11-03
+version: 1.0.0
+ai_context: |
+  This document is part of the things dimension in the todo-ecommerce.md category.
+  Location: one/things/todo-ecommerce.md
+  Purpose: Documents one platform: e-commerce & monetization v1.0.0
+  Related dimensions: connections, events, groups, knowledge, people
+  For AI agents: Read this to understand todo ecommerce.
+---
+
 # ONE Platform: E-Commerce & Monetization v1.0.0
 
 **Focus:** Product marketplace, shopping cart, X402 checkout, revenue tracking
@@ -12,6 +31,7 @@
 **Purpose:** Validate e-commerce requirements, map to ontology, plan implementation
 
 ### Infer 1: Define Product Types
+
 - [ ] **Courses:** Video lessons bundled (monthly/one-time)
 - [ ] **Digital Products:** Templates, assets, tools (one-time purchase)
 - [ ] **Memberships:** Tiered access + recurring revenue (monthly/yearly)
@@ -26,6 +46,7 @@
   - [ ] Digital vs physical
 
 ### Infer 2: Map E-Commerce to 6-Dimension Ontology
+
 - [ ] **Groups:** Creator's business group
 - [ ] **People:** Creator (seller), customer (buyer), platform (facilitator)
 - [ ] **Things:** product, shopping_cart, order, payment, subscription
@@ -42,6 +63,7 @@
 - [ ] **Knowledge:** product_category, price_tier, access_level labels
 
 ### Infer 3: Review X402 Integration (from todo-x402)
+
 - [ ] Understand X402 payment flow (402 → payment → settled)
 - [ ] Identify how X402 applies to checkout:
   - [ ] Primary: Crypto payments (USDC on Base)
@@ -51,6 +73,7 @@
 - [ ] Map payment to events: payment_processed → order_completed
 
 ### Infer 4: Define Shopping Cart Requirements
+
 - [ ] Cart functionality:
   - [ ] Add/remove items
   - [ ] Update quantities (for subscriptions, bundles)
@@ -67,6 +90,7 @@
   - [ ] Track in analytics
 
 ### Infer 5: Define Checkout Flow
+
 - [ ] Steps:
   1. Review cart + total
   2. Enter shipping/billing (if physical)
@@ -80,6 +104,7 @@
 - [ ] Mobile-optimized (80% of users on mobile)
 
 ### Infer 6: Define Subscription Model
+
 - [ ] Types:
   - [ ] **Monthly subscription** ($X/month, auto-renews)
   - [ ] **Yearly subscription** ($X/year, cheaper per month)
@@ -98,6 +123,7 @@
   - [ ] subscription_cancelled
 
 ### Infer 7: Define Refund + Dispute Policy
+
 - [ ] Refund policy:
   - [ ] 7-day money-back guarantee for courses
   - [ ] No refund for instantly downloadable digital products
@@ -110,6 +136,7 @@
   - [ ] Escalate to platform owner if needed
 
 ### Infer 8: Define Revenue Split
+
 - [ ] Creator earnings:
   - [ ] Product price - platform fee - payment processor fee
   - [ ] Platform fee: 5% (vs Stripe's ~3% + $0.30)
@@ -125,6 +152,7 @@
   - [ ] payout_failed (if wallet invalid)
 
 ### Infer 9: Identify Analytics Needs
+
 - [ ] For creators (seller view):
   - [ ] Total revenue (all-time, year, month, week)
   - [ ] Sales by product
@@ -142,6 +170,7 @@
   - [ ] Geographic distribution
 
 ### Infer 10: Define Success Metrics
+
 - [ ] E-commerce complete when:
   - [ ] [ ] Product creation working
   - [ ] [ ] Shopping cart functional
@@ -161,7 +190,9 @@
 **Purpose:** Create product + order schema in Convex
 
 ### Infer 11: Extend Product Thing Type
+
 - [ ] Update `backend/convex/schema.ts`:
+
   ```typescript
   {
     type: 'digital_product' | 'membership' | 'consultation' | 'nft',
@@ -219,6 +250,7 @@
   ```
 
 ### Infer 12: Create Shopping Cart Thing Type
+
 - [ ] New thing type:
   ```typescript
   {
@@ -243,6 +275,7 @@
   ```
 
 ### Infer 13: Create Order Thing Type
+
 - [ ] New thing type:
   ```typescript
   {
@@ -279,6 +312,7 @@
   ```
 
 ### Infer 14: Create Subscription Thing Type
+
 - [ ] New thing type:
   ```typescript
   {
@@ -306,7 +340,9 @@
   ```
 
 ### Infer 15: Create Payment Thing Type Extension
+
 - [ ] Extend payment thing from todo-x402:
+
   ```typescript
   {
     type: 'payment',
@@ -330,6 +366,7 @@
   ```
 
 ### Infer 16: Create E-Commerce Service (Effect.ts)
+
 - [ ] Service methods:
   - [ ] `createProduct(creator, productData)` → productId
   - [ ] `addToCart(customer, productId, quantity)` → cartId
@@ -341,6 +378,7 @@
   - [ ] `createSubscription(customer, productId, plan)` → subscriptionId
 
 ### Infer 17: Create Convex Mutations for Products
+
 - [ ] `mutations/products.ts`:
   - [ ] `createProduct(creatorId, data)` → productId
   - [ ] `updateProduct(productId, data)` → updated
@@ -349,6 +387,7 @@
   - [ ] `deleteProduct(productId)` → deleted
 
 ### Infer 18: Create Convex Mutations for Orders
+
 - [ ] `mutations/orders.ts`:
   - [ ] `createOrder(customerId, items)` → orderId
   - [ ] `updateOrderStatus(orderId, status)` → updated
@@ -357,6 +396,7 @@
   - [ ] `cancelOrder(orderId, reason)` → cancelled
 
 ### Infer 19: Create Convex Queries
+
 - [ ] `queries/products.ts`:
   - [ ] `listProductsForCreator(creatorId)` → products[]
   - [ ] `getProductBySlug(slug)` → product
@@ -368,6 +408,7 @@
   - [ ] `getOrder(orderId)` → order details
 
 ### Infer 20: Create Revenue Tracking Service
+
 - [ ] Service to track creator earnings:
   - [ ] `trackSale(orderId, amount)` → log event
   - [ ] `getCreatorRevenue(creatorId, period)` → total
@@ -381,6 +422,7 @@
 **Purpose:** Build shopping experience in React/Astro
 
 ### Infer 21: Create ProductCard Component
+
 - [ ] Reusable card showing:
   - [ ] Product image
   - [ ] Product name + creator name
@@ -391,6 +433,7 @@
 - [ ] Responsive: Works on mobile, tablet, desktop
 
 ### Infer 22: Create ProductGallery Component
+
 - [ ] Multi-image gallery:
   - [ ] Thumbnail strip on side/bottom
   - [ ] Click to view full size
@@ -398,6 +441,7 @@
   - [ ] Mobile: Swipe to change
 
 ### Infer 23: Create ShoppingCart Component
+
 - [ ] Display:
   - [ ] Items list (product name, price, qty)
   - [ ] Remove item button
@@ -408,6 +452,7 @@
 - [ ] Empty state: Suggest products
 
 ### Infer 24: Create CheckoutForm Component
+
 - [ ] Multi-step form:
   - [ ] Step 1: Cart review
   - [ ] Step 2: Email confirmation
@@ -419,6 +464,7 @@
 - [ ] Show payment processing spinner
 
 ### Infer 25: Create OrderConfirmation Component
+
 - [ ] Show:
   - [ ] Order number (ORD-202501-001)
   - [ ] Items purchased
@@ -432,6 +478,7 @@
   - [ ] Browse more products
 
 ### Infer 26: Create ProductPage (Astro)
+
 - [ ] Page: `/products/[slug]`
 - [ ] Sections:
   - [ ] Product image gallery
@@ -444,6 +491,7 @@
   - [ ] Related products
 
 ### Infer 27: Create MarketplaceListingPage
+
 - [ ] Page: `/marketplace` or `/shop`
 - [ ] Features:
   - [ ] Product grid
@@ -454,6 +502,7 @@
   - [ ] Cart icon (show count)
 
 ### Infer 28: Create CartPage (Astro)
+
 - [ ] Page: `/cart`
 - [ ] Show:
   - [ ] Shopping cart component
@@ -462,6 +511,7 @@
   - [ ] Saved cart (if returning user)
 
 ### Infer 29: Create CheckoutPage (Astro)
+
 - [ ] Page: `/checkout`
 - [ ] Multi-step form (from component)
 - [ ] Protect: Require items in cart
@@ -469,6 +519,7 @@
 - [ ] Show estimated delivery time
 
 ### Infer 30: Create OrderHistoryPage
+
 - [ ] Page: `/orders` (logged in only)
 - [ ] Show:
   - [ ] All orders (paginated)
@@ -484,6 +535,7 @@
 ## PHASE 4-10: CONTINUATION
 
 [Abbreviated for space - Full structure continues with:
+
 - Phase 4: API routes for checkout, orders, products
 - Phase 5: Testing (unit, integration, E2E payment flow)
 - Phase 6: Design + UX finalization
@@ -515,4 +567,3 @@ E-commerce is complete when:
 
 **Status:** Wave 3 - Monetization (Parallel with API + Features)
 **Next:** todo-api.md (Wave 3), todo-features.md (Wave 3)
-

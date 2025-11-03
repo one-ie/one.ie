@@ -1,3 +1,21 @@
+---
+title: 1 1 Agent Prompts
+dimension: things
+category: features
+tags: agent, ai, ai-agent, backend, connections, events, ontology, things
+related_dimensions: connections, events, people
+scope: global
+created: 2025-11-03
+updated: 2025-11-03
+version: 1.0.0
+ai_context: |
+  This document is part of the things dimension in the features category.
+  Location: one/things/features/1-1-agent-prompts.md
+  Purpose: Documents feature 1-1: agent prompts system
+  Related dimensions: connections, events, people
+  For AI agents: Read this to understand 1 1 agent prompts.
+---
+
 # Feature 1-1: Agent Prompts System
 
 **Assigned to:** Backend Specialist Agent (agent-backend.md)
@@ -22,15 +40,18 @@ A complete prompt system for 6 agent roles that enables autonomous collaboration
 ## Ontology Types
 
 ### Things
+
 - `agent` - Engineering units with specific roles
   - Properties: `role`, `responsibilities`, `contextTokens`, `inputTypes`, `outputTypes`
   - Validates: type structure is in ontology
 
 ### Connections
+
 - `coordinates_with` - How agents interact
   - Metadata: `eventTypes[]`, `communicationPattern`
 
 ### Events
+
 - `agent_prompt_created` - New agent prompt defined
   - Metadata: `role`, `responsibilities`, `contextTokens`
 - `agent_prompt_validated` - Prompt tested and approved
@@ -45,11 +66,13 @@ A complete prompt system for 6 agent roles that enables autonomous collaboration
 **Core responsibility:** Validates ideas, creates plans, assigns features, marks complete
 
 **Input:**
+
 - User ideas (raw text)
 - Feature status updates (from events)
 - Quality reports (from quality agent)
 
 **Output:**
+
 - Validated ideas → plans
 - Plans with feature assignments
 - Task lists for parallel execution
@@ -58,11 +81,13 @@ A complete prompt system for 6 agent roles that enables autonomous collaboration
 **Context budget:** 200 tokens (ontology type names only)
 
 **Decision framework:**
+
 - Is idea mappable to ontology types? → Valid or Invalid
 - Should idea be plan or single feature? → Plan if 3+ features
 - Which specialist for which feature? → Based on category (backend/frontend/integration)
 
 **Key behaviors:**
+
 - Always validate against ontology first
 - Break plans into parallel-executable features
 - Assign based on specialist expertise
@@ -76,16 +101,19 @@ A complete prompt system for 6 agent roles that enables autonomous collaboration
 **Core responsibility:** Write features, execute tasks, fix problems
 
 **Types:**
+
 - **Backend Specialist** - Services, mutations, queries, schemas
 - **Frontend Specialist** - Pages, components, UI/UX
 - **Integration Specialist** - Connections between systems, data flows
 
 **Input:**
+
 - Feature assignments (from director)
 - Solution proposals (from problem solver)
 - Design specifications (from design agent)
 
 **Output:**
+
 - Feature specifications (Level 3)
 - Working implementations (Level 6)
 - Fixed code (after problem solving)
@@ -94,12 +122,14 @@ A complete prompt system for 6 agent roles that enables autonomous collaboration
 **Context budget:** 1,500 tokens (types + patterns)
 
 **Decision framework:**
+
 - What ontology types does this feature use?
 - What patterns apply? (from knowledge/patterns/)
 - What tests must pass? (from quality agent)
 - Does design satisfy test criteria?
 
 **Key behaviors:**
+
 - Write feature specs before implementation
 - Reference patterns from knowledge base
 - Implement exactly to design specifications
@@ -113,10 +143,12 @@ A complete prompt system for 6 agent roles that enables autonomous collaboration
 **Core responsibility:** Define tests, validate implementations, ensure ontology alignment
 
 **Input:**
+
 - Feature specifications (from specialists)
 - Completed implementations (from specialists)
 
 **Output:**
+
 - User flows (what users must accomplish)
 - Acceptance criteria (how we know it works)
 - Technical tests (unit, integration, e2e)
@@ -125,12 +157,14 @@ A complete prompt system for 6 agent roles that enables autonomous collaboration
 **Context budget:** 2,000 tokens (ontology + feature + UX patterns)
 
 **Decision framework:**
+
 - Does feature align with ontology structure?
 - What user flows must work?
 - What acceptance criteria validate the flows?
 - What technical tests validate the implementation?
 
 **Key behaviors:**
+
 - Define user flows FIRST (user perspective)
 - Then acceptance criteria (specific, measurable)
 - Then technical tests (implementation validation)
@@ -146,10 +180,12 @@ A complete prompt system for 6 agent roles that enables autonomous collaboration
 **Philosophy:** Design exists to make tests pass (test-driven design)
 
 **Input:**
+
 - Feature specifications (from specialists)
 - Test criteria (user flows + acceptance criteria from quality)
 
 **Output:**
+
 - Wireframes (visual structure)
 - Component architecture (hierarchy and relationships)
 - Design tokens (colors, timing, spacing)
@@ -158,12 +194,14 @@ A complete prompt system for 6 agent roles that enables autonomous collaboration
 **Context budget:** 2,000 tokens (feature + tests + design patterns)
 
 **Decision framework:**
+
 - Which test criteria drive design decisions?
 - What component structure satisfies user flows?
 - What design tokens ensure acceptance criteria met?
 - Is design accessible and performant?
 
 **Key behaviors:**
+
 - Start from test requirements
 - Every design decision references a test criterion
 - Create wireframes that show user flows
@@ -180,11 +218,13 @@ A complete prompt system for 6 agent roles that enables autonomous collaboration
 **Mode:** Deep analysis (ultrathink)
 
 **Input:**
+
 - Failed test results (from quality agent)
 - Implementation code (that failed)
 - Ontology structure (for context)
 
 **Output:**
+
 - Root cause analysis (why it failed)
 - Solution proposals (specific code changes)
 - Delegation instructions (assign to specialist)
@@ -192,12 +232,14 @@ A complete prompt system for 6 agent roles that enables autonomous collaboration
 **Context budget:** 2,500 tokens (failed tests + implementation + ontology)
 
 **Decision framework:**
+
 - What is the root cause? (logic error, missing dependency, wrong pattern?)
 - What pattern was missed? (check lessons learned)
 - What is the minimum fix required?
 - Which specialist should implement the fix?
 
 **Key behaviors:**
+
 - Use ultrathink mode for deep analysis
 - Search lessons learned for similar issues
 - Identify root cause before proposing solution
@@ -212,11 +254,13 @@ A complete prompt system for 6 agent roles that enables autonomous collaboration
 **Core responsibility:** Write documentation after features complete
 
 **Input:**
+
 - Completed features (post-quality validation)
 - Implementation details (from specialists)
 - Test criteria (from quality)
 
 **Output:**
+
 - Feature documentation (what it does, how to use)
 - API documentation (if applicable)
 - User guides (if user-facing)
@@ -225,12 +269,14 @@ A complete prompt system for 6 agent roles that enables autonomous collaboration
 **Context budget:** 1,000 tokens (feature + tests + implementation)
 
 **Decision framework:**
+
 - What does user need to know?
 - What are the key features and benefits?
 - How do they use it?
 - What are common issues and solutions?
 
 **Key behaviors:**
+
 - Write for the target audience (users, developers, or both)
 - Include examples and code snippets
 - Link to related features and resources
@@ -250,6 +296,7 @@ Beyond the core 6 agents in the workflow, 4 additional specialized agents enhanc
 **Specialization:** Complex multi-layer implementations requiring coordination across backend, frontend, and integration layers.
 
 **Key capabilities:**
+
 - Full-stack feature implementation
 - Advanced Effect.ts patterns
 - Multi-agent coordination
@@ -266,6 +313,7 @@ Beyond the core 6 agents in the workflow, 4 additional specialized agents enhanc
 **Specialization:** Understanding customer needs and translating them into technical requirements.
 
 **Key capabilities:**
+
 - Customer needs analysis
 - Feature requirement translation
 - Business value articulation
@@ -282,6 +330,7 @@ Beyond the core 6 agents in the workflow, 4 additional specialized agents enhanc
 **Specialization:** Improving existing code without changing functionality.
 
 **Key capabilities:**
+
 - Code smell detection
 - Refactoring patterns
 - Performance optimization
@@ -298,6 +347,7 @@ Beyond the core 6 agents in the workflow, 4 additional specialized agents enhanc
 **Specialization:** Moving code between repositories while maintaining integrity.
 
 **Key capabilities:**
+
 - Repository cloning
 - Code migration
 - Git operations
@@ -315,39 +365,52 @@ Each agent prompt should follow this structure:
 # [Agent Role] Agent
 
 ## Role
+
 [One sentence role description]
 
 ## Responsibilities
+
 - [Bullet list of key responsibilities]
 
 ## Input
+
 - [What this agent receives]
 
 ## Output
+
 - [What this agent produces]
 
 ## Context Budget
+
 [Token limit]: [What's included in context]
 
 ## Decision Framework
+
 [How this agent makes decisions]
+
 - Question 1 → Decision logic
 - Question 2 → Decision logic
 
 ## Key Behaviors
+
 - [Critical behavior 1]
 - [Critical behavior 2]
 - [etc.]
 
 ## Communication Patterns
+
 ### Watches for (Events this agent monitors)
+
 - `event_type` - [Why and what action]
 
 ### Emits (Events this agent creates)
+
 - `event_type` - [When and what metadata]
 
 ## Examples
+
 ### Example 1: [Scenario]
+
 **Input:**
 [Example input]
 
@@ -358,10 +421,12 @@ Each agent prompt should follow this structure:
 [Example output]
 
 ## Common Mistakes to Avoid
+
 - [Mistake 1] → [Correct approach]
 - [Mistake 2] → [Correct approach]
 
 ## Success Criteria
+
 - [ ] [Measurable outcome 1]
 - [ ] [Measurable outcome 2]
 ```
@@ -371,6 +436,7 @@ Each agent prompt should follow this structure:
 ## Scope
 
 ### In Scope
+
 - ✅ 6 complete agent prompt files
 - ✅ Clear role definitions
 - ✅ Input/output specifications
@@ -381,6 +447,7 @@ Each agent prompt should follow this structure:
 - ✅ Success criteria
 
 ### Out of Scope
+
 - ❌ Orchestrator implementation (Feature 1-2)
 - ❌ Event system implementation (Feature 1-3)
 - ❌ Knowledge base setup (Feature 1-4)
@@ -413,6 +480,7 @@ one/things/agents/
 ## Success Criteria
 
 ### Immediate
+
 - [x] All 8 core prompt files created (director, backend, frontend, integration, quality, designer, problem-solver, documenter)
 - [x] 4 additional specialized agents created (builder, sales, clean, clone)
 - [x] Each follows prompt structure template
@@ -421,12 +489,14 @@ one/things/agents/
 - [x] Examples demonstrate behavior
 
 ### Near-term
+
 - [ ] Prompts tested with actual features
 - [ ] Agents coordinate successfully via events
 - [ ] Context budgets respected
 - [ ] Decisions align with specifications
 
 ### Long-term
+
 - [ ] Agents deliver quality features autonomously
 - [ ] Communication patterns enable parallel execution
 - [ ] Prompts require minimal refinement
@@ -437,21 +507,25 @@ one/things/agents/
 ## Integration Points
 
 ### With Feature 1-2 (Orchestrator)
+
 - Orchestrator reads these prompts
 - Routes work to appropriate agents
 - Provides context within token budgets
 
 ### With Feature 1-3 (Events)
+
 - Communication patterns become event subscriptions
 - Agents coordinate via events
 - No manual handoffs needed
 
 ### With Feature 1-4 (Knowledge)
+
 - Agents reference patterns from knowledge base
 - Problem solver searches lessons learned
 - Documenter updates knowledge base
 
 ### With Feature 1-5 (Quality)
+
 - Quality agent prompt defines test strategy
 - Problem solver prompt defines fix strategy
 - Specialists implement based on specifications
@@ -461,6 +535,7 @@ one/things/agents/
 ## Next Steps
 
 This feature will proceed to:
+
 1. **Level 4 (Tests):** Quality agent defines success criteria for prompts
 2. **Level 5 (Design):** Design agent structures prompt templates
 3. **Level 6 (Implementation):** Documentation specialist writes all 8 prompts
@@ -478,6 +553,7 @@ This feature will proceed to:
 **Status:** ✅ COMPLETE - All 12 agent prompt files created and implemented
 
 **Implementation Notes:**
+
 - Core 8 agents implemented as specified (director, backend, frontend, integration, quality, designer, problem-solver, documenter)
 - 4 additional specialized agents enhance capabilities (builder, sales, clean, clone)
 - All agents follow consistent `agent-{role}.md` naming convention

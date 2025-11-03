@@ -1,3 +1,21 @@
+---
+title: Convex Analysis Index
+dimension: events
+category: convex-analysis-index.md
+tags: ai, backend, ontology
+related_dimensions: connections, groups, knowledge, people, things
+scope: global
+created: 2025-11-03
+updated: 2025-11-03
+version: 1.0.0
+ai_context: |
+  This document is part of the events dimension in the convex-analysis-index.md category.
+  Location: one/events/convex-analysis-index.md
+  Purpose: Documents convex backend analysis - complete documentation index
+  Related dimensions: connections, groups, knowledge, people, things
+  For AI agents: Read this to understand convex analysis index.
+---
+
 # Convex Backend Analysis - Complete Documentation Index
 
 ## Overview

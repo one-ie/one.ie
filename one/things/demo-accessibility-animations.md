@@ -1,3 +1,21 @@
+---
+title: Demo Accessibility Animations
+dimension: things
+category: demo-accessibility-animations.md
+tags: ai
+related_dimensions: connections, events, knowledge
+scope: global
+created: 2025-11-03
+updated: 2025-11-03
+version: 1.0.0
+ai_context: |
+  This document is part of the things dimension in the demo-accessibility-animations.md category.
+  Location: one/things/demo-accessibility-animations.md
+  Purpose: Documents one platform demo - accessibility & animations
+  Related dimensions: connections, events, knowledge
+  For AI agents: Read this to understand demo accessibility animations.
+---
+
 # ONE Platform Demo - Accessibility & Animations
 
 ## Version 1.0.0 - Accessibility and Motion Specifications
@@ -14,16 +32,16 @@ This document defines accessibility requirements and animation patterns for all 
 
 #### Required HTML Elements
 
-| Element | Purpose | Example |
-|---------|---------|---------|
-| `<button>` | Interactive actions | CTAs, form submission |
-| `<a>` | Navigation links | Documentation links |
-| `<form>` | Form containers | Data input |
-| `<input>`, `<select>`, `<textarea>` | Form inputs | Playground forms |
-| `<label>` | Form field labels | Associated with inputs |
-| `<h1>` - `<h6>` | Headings | Page structure |
-| `<header>`, `<nav>`, `<main>`, `<section>`, `<footer>` | Page regions | Document outline |
-| `<article>` | Self-contained content | Blog posts, cards |
+| Element                                                | Purpose                | Example                |
+| ------------------------------------------------------ | ---------------------- | ---------------------- |
+| `<button>`                                             | Interactive actions    | CTAs, form submission  |
+| `<a>`                                                  | Navigation links       | Documentation links    |
+| `<form>`                                               | Form containers        | Data input             |
+| `<input>`, `<select>`, `<textarea>`                    | Form inputs            | Playground forms       |
+| `<label>`                                              | Form field labels      | Associated with inputs |
+| `<h1>` - `<h6>`                                        | Headings               | Page structure         |
+| `<header>`, `<nav>`, `<main>`, `<section>`, `<footer>` | Page regions           | Document outline       |
+| `<article>`                                            | Self-contained content | Blog posts, cards      |
 
 **EXAMPLE - CORRECT:**
 
@@ -105,14 +123,19 @@ npm install --save-dev axe-core jest-axe
 ```html
 <!-- Logical tab order (follow reading order) -->
 <nav>
-  <a href="/">Home</a>           <!-- Tab 1 -->
-  <a href="/docs">Docs</a>       <!-- Tab 2 -->
+  <a href="/">Home</a>
+  <!-- Tab 1 -->
+  <a href="/docs">Docs</a>
+  <!-- Tab 2 -->
 </nav>
 
 <main>
-  <input type="text" />          <!-- Tab 3 -->
-  <button>Submit</button>        <!-- Tab 4 -->
-  <a href="/learn">Learn more</a> <!-- Tab 5 -->
+  <input type="text" />
+  <!-- Tab 3 -->
+  <button>Submit</button>
+  <!-- Tab 4 -->
+  <a href="/learn">Learn more</a>
+  <!-- Tab 5 -->
 </main>
 
 <!-- Use tabindex sparingly for complex layouts -->
@@ -154,14 +177,14 @@ npm install --save-dev axe-core jest-axe
 
 #### Keyboard Shortcuts
 
-| Key | Action | Element |
-|-----|--------|---------|
-| Tab | Move focus forward | All interactive |
-| Shift+Tab | Move focus backward | All interactive |
-| Enter | Activate button | `<button>`, `<a>` |
-| Space | Activate button, toggle checkbox | `<button>`, `<checkbox>` |
-| Escape | Close modal/dropdown | `<dialog>`, `<menu>` |
-| Arrow Keys | Navigate menu items | `<nav>`, `<select>` |
+| Key        | Action                           | Element                  |
+| ---------- | -------------------------------- | ------------------------ |
+| Tab        | Move focus forward               | All interactive          |
+| Shift+Tab  | Move focus backward              | All interactive          |
+| Enter      | Activate button                  | `<button>`, `<a>`        |
+| Space      | Activate button, toggle checkbox | `<button>`, `<checkbox>` |
+| Escape     | Close modal/dropdown             | `<dialog>`, `<menu>`     |
+| Arrow Keys | Navigate menu items              | `<nav>`, `<select>`      |
 
 ### 1.4 ARIA Labels & Descriptions
 
@@ -182,9 +205,7 @@ npm install --save-dev axe-core jest-axe
   aria-describedby="email-error"
   aria-invalid="true"
 />
-<p id="email-error" role="alert">
-  Invalid email format
-</p>
+<p id="email-error" role="alert">Invalid email format</p>
 
 <!-- List of items -->
 <ul role="list">
@@ -209,12 +230,7 @@ npm install --save-dev axe-core jest-axe
 </div>
 
 <!-- Expandable section -->
-<button
-  aria-expanded="false"
-  aria-controls="details"
->
-  Show details
-</button>
+<button aria-expanded="false" aria-controls="details">Show details</button>
 <div id="details" hidden>
   <!-- Details content -->
 </div>
@@ -326,10 +342,12 @@ npm install --save-dev axe-core jest-axe
 #### Screen Reader Tools
 
 **Windows:**
+
 - NVDA (free) - https://www.nvaccess.org/
 - JAWS (paid) - https://www.freedomscientific.com/
 
 **Mac:**
+
 - VoiceOver (built-in) - Cmd+F5 to enable
 - JAWS (paid)
 
@@ -354,16 +372,19 @@ npm install --save-dev axe-core jest-axe
 
 ```html
 <!-- Minimum 44x44 pixels (11.2mm) -->
-<button class="px-4 py-2 h-11">  <!-- 44px height -->
+<button class="px-4 py-2 h-11">
+  <!-- 44px height -->
   Touch-friendly button
 </button>
 
-<a href="#" class="px-4 py-2.5 h-12">  <!-- 48px height -->
+<a href="#" class="px-4 py-2.5 h-12">
+  <!-- 48px height -->
   Touch-friendly link
 </a>
 
 <!-- Spacing between targets: minimum 8px -->
-<div class="flex gap-3">  <!-- 12px gap is safe -->
+<div class="flex gap-3">
+  <!-- 12px gap is safe -->
   <button class="h-11">Button 1</button>
   <button class="h-11">Button 2</button>
 </div>
@@ -431,6 +452,7 @@ Before shipping any page:
 ### 2.1 Animation Philosophy
 
 **PRINCIPLE:** Animations should enhance, not distract. All animations:
+
 - Are less than 300ms (except intentional long animations)
 - Use `prefers-reduced-motion` for accessibility
 - Don't autoplay audio or video
@@ -494,7 +516,8 @@ Before shipping any page:
 }
 
 @keyframes float {
-  0%, 100% {
+  0%,
+  100% {
     transform: translateY(0px) scale(1);
   }
   50% {
@@ -503,7 +526,8 @@ Before shipping any page:
 }
 
 @keyframes pulse {
-  0%, 100% {
+  0%,
+  100% {
     opacity: 1;
   }
   50% {
@@ -710,13 +734,13 @@ Before shipping any page:
 
 ### 2.4 Animation Timing
 
-| Duration | Use Case |
-|----------|----------|
-| 150ms | UI micro-interactions (hover, focus) |
-| 200ms | Button clicks, form interactions |
-| 300ms | Standard transitions, page sections |
-| 500ms | Modals, significant layout changes |
-| 800ms+ | Long-form animations, intentional delays |
+| Duration | Use Case                                 |
+| -------- | ---------------------------------------- |
+| 150ms    | UI micro-interactions (hover, focus)     |
+| 200ms    | Button clicks, form interactions         |
+| 300ms    | Standard transitions, page sections      |
+| 500ms    | Modals, significant layout changes       |
+| 800ms+   | Long-form animations, intentional delays |
 
 ```astro
 <!-- Micro-interaction: 150ms -->
@@ -964,9 +988,9 @@ Before shipping any page:
 
 ## Version History
 
-| Version | Date | Changes |
-|---------|------|---------|
-| 1.0.0 | Oct 2024 | Initial accessibility and animation specifications |
+| Version | Date     | Changes                                            |
+| ------- | -------- | -------------------------------------------------- |
+| 1.0.0   | Oct 2024 | Initial accessibility and animation specifications |
 
 ---
 
@@ -979,6 +1003,7 @@ Before shipping any page:
 ## Quick Reference
 
 ### Accessibility Checklist
+
 - [ ] Semantic HTML
 - [ ] WCAG AAA contrast (4.5:1 body, 3:1 large)
 - [ ] Keyboard navigation works
@@ -989,6 +1014,7 @@ Before shipping any page:
 - [ ] Mobile zoom not disabled
 
 ### Animation Checklist
+
 - [ ] All animations < 500ms (except intentional)
 - [ ] `prefers-reduced-motion` respected
 - [ ] No autoplay audio/video

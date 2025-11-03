@@ -1,3 +1,21 @@
+---
+title: Video Script Ontology
+dimension: things
+category: video-script-ontology.md
+tags: 6-dimensions, architecture, events, ontology
+related_dimensions: connections, events, groups, knowledge, people
+scope: global
+created: 2025-11-03
+updated: 2025-11-03
+version: 1.0.0
+ai_context: |
+  This document is part of the things dimension in the video-script-ontology.md category.
+  Location: one/things/video-script-ontology.md
+  Purpose: Documents video script: why the 6-dimension ontology is non-negotiable
+  Related dimensions: connections, events, groups, knowledge, people
+  For AI agents: Read this to understand video script ontology.
+---
+
 # Video Script: Why the 6-Dimension Ontology is Non-Negotiable
 
 ## Opening Hook (30 seconds)
@@ -6,7 +24,7 @@
 
 The problem isn't your tools. It's your **data model**.
 
-Every successful platform solves the same problem: scaling from idea to millions of users without chaos. The difference between platforms that scale and platforms that collapse isn't luck. It's *architecture*.
+Every successful platform solves the same problem: scaling from idea to millions of users without chaos. The difference between platforms that scale and platforms that collapse isn't luck. It's _architecture_.
 
 Today, we're showing you a data model that makes that architecture inevitable."
 
@@ -17,6 +35,7 @@ Today, we're showing you a data model that makes that architecture inevitable."
 ### Problem 1: Fragmented Thinking
 
 Most codebases evolve organically:
+
 - Users are in one place (auth service)
 - Content is scattered (blog tables, document tables, asset tables)
 - Relationships are implied (foreign keys everywhere)
@@ -28,6 +47,7 @@ Result: **Every feature adds complexity. Every team member has a different menta
 ### Problem 2: Estimation Catastrophe
 
 You estimate in days:
+
 - "This feature is 3 days" (no, it's 8)
 - "This bug fix is 2 hours" (you mean 6 hours)
 - "We can ship this quarter" (actually 2025)
@@ -35,6 +55,7 @@ You estimate in days:
 Why? Because you're estimating at the wrong level. **Time is a terrible unit for predicting software.**
 
 Time depends on:
+
 - Developer skill (varies 10x)
 - Context switching (varies 20x)
 - Unexpected dependencies (varies 50x)
@@ -79,6 +100,7 @@ That's it. Five tables. That's your entire data model.
 - Organization contains scale (groups)
 
 You can describe **any feature** using these dimensions:
+
 - A user following another user? Connection.
 - A team owning a project? Connection + Group.
 - A product sold to a customer? Thing + Event.
@@ -94,6 +116,7 @@ You can describe **any feature** using these dimensions:
 ### Benefit 1: Forced Clarity
 
 Before you code, you answer:
+
 - ✅ Which group owns this?
 - ✅ Who can access it (People/authorization)?
 - ✅ What entities are involved (Things)?
@@ -106,11 +129,13 @@ Before you code, you answer:
 ### Benefit 2: 98% Context Reduction
 
 Traditional approach: "I need to understand this entire feature."
+
 - 150,000 tokens of context
 - 45 minutes to onboard
 - One mistake costs 8 hours to debug
 
 Ontology approach: "I need to implement one inference pass."
+
 - 3,000 tokens of context
 - 5 minutes to understand
 - Errors are isolated to one dimension
@@ -132,6 +157,7 @@ Infer 91-100:  Deployment (production & docs)
 ```
 
 Why inference? Because:
+
 - **It's predictable.** Each inference is a concrete step (not "about 3 days").
 - **It's parallelizable.** Infer 11-20 (Backend) and Infer 21-30 (Frontend) run concurrently.
 - **It's error-isolated.** A bug in Infer 25 doesn't block Infer 50.
@@ -144,12 +170,14 @@ Why inference? Because:
 You build for users. Now you need it for teams.
 
 Traditional approach:
+
 - Refactor users → people
 - Refactor follows → connections
 - Refactor audit logs → event stream
 - Update 40+ queries
 
 Ontology approach:
+
 - **Nothing changes.** People are already Things with role metadata. Teams are already Groups. Follows are already Connections.
 
 Scale from 2 people (friend circle) to 8 billion (global government). Same schema.
@@ -157,6 +185,7 @@ Scale from 2 people (friend circle) to 8 billion (global government). Same schem
 ### Benefit 5: Complete Audit Trail
 
 Every action is logged as an Event:
+
 - Who did it (actor)
 - What they did (action type)
 - What changed (target)
@@ -178,6 +207,7 @@ Result: You get RAG (Retrieval-Augmented Generation) for free. Your AI features 
 ### Case Study: Creator Platform
 
 **Without ontology:**
+
 - Onboard creators: 2 weeks
 - Add team features: 4 weeks (refactor)
 - Add course marketplace: 6 weeks (new concept)
@@ -185,6 +215,7 @@ Result: You get RAG (Retrieval-Augmented Generation) for free. Your AI features 
 - Total: 20+ weeks
 
 **With ontology:**
+
 - Onboard creators: 3 days (10 inferences)
 - Add team features: 2 days (understand Groups)
 - Add course marketplace: 3 days (new Thing type)
@@ -211,7 +242,7 @@ Ontology: "Those are already in `properties` (flexible JSON)."
 
 ❌ False. Here's why:
 
-- If you build without it, your schema is *already wrong*.
+- If you build without it, your schema is _already wrong_.
 - Fixing it later costs 10x more (refactoring + data migration + testing).
 - Your team learns the wrong patterns.
 - Your codebase fragments further.
@@ -221,6 +252,7 @@ Ontology: "Those are already in `properties` (flexible JSON)."
 **Start with the 6 dimensions. Everything follows.**
 
 You don't have to implement all of it immediately:
+
 - Start with Groups, People, Things (simple CRUD)
 - Add Connections as you need relationships
 - Add Events when you need audit trails
@@ -233,6 +265,7 @@ But you need the **shape** of the ontology from day one.
 ## Part 6: The Competitive Advantage (45 seconds)
 
 ### Your competitors:
+
 - Ship slowly
 - Refactor constantly
 - Lose context switching
@@ -240,6 +273,7 @@ But you need the **shape** of the ontology from day one.
 - Scale painfully
 
 ### You (with ontology):
+
 - Ship 5x faster
 - Never refactor the core schema
 - 50x less context overhead
@@ -258,7 +292,7 @@ But you need the **shape** of the ontology from day one.
 
 **Path 2:** Start with the ontology. Clear thinking. Predictable inference-based planning. Scale without friction.
 
-The question isn't *whether* you'll have a data model. You always will.
+The question isn't _whether_ you'll have a data model. You always will.
 
 The question is: **Will you choose it deliberately, or will it choose itself through chaos?**
 
@@ -285,12 +319,14 @@ You can too."
 ## Implementation Notes
 
 **This script works best as:**
+
 1. **30-second elevator pitch** (Part 1 + Opening Hook)
 2. **5-minute technical talk** (Parts 1-4)
 3. **15-minute deep dive** (All parts + code examples)
 4. **Long-form article** (Expand each section with code, diagrams, testimonials)
 
 **Visual aids to include:**
+
 - 6-dimension diagram (groups → people → things → connections → events → knowledge)
 - Context reduction chart (150k → 3k)
 - Execution speed chart (115s → 20s)

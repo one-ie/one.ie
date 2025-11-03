@@ -1,3 +1,21 @@
+---
+title: 2 Cli
+dimension: things
+category: features
+tags: agent, ai, frontend, installation, ontology
+related_dimensions: connections, events, groups, knowledge, people
+scope: global
+created: 2025-11-03
+updated: 2025-11-03
+version: 1.0.0
+ai_context: |
+  This document is part of the things dimension in the features category.
+  Location: one/things/features/2-cli.md
+  Purpose: Documents feature 2: one cli - bootstrap & ontology sync
+  Related dimensions: connections, events, groups, knowledge, people
+  For AI agents: Read this to understand 2 cli.
+---
+
 # Feature 2: ONE CLI - Bootstrap & Ontology Sync
 
 **Version:** 2.0.0
@@ -204,6 +222,7 @@ Happy building! 🎉
 **Purpose:** Create installation folder with 6-dimension structure
 
 **Configuration:**
+
 ```yaml
 # ONE CLI - Installation Configuration
 # cli/config.yaml
@@ -220,12 +239,12 @@ one_folders:
 
 # Installation Folder Structure (created per installation)
 installation_structure:
-  - groups/          # Hierarchical group docs (supports nesting)
-  - people/          # People profiles
-  - things/          # Entity definitions
-  - connections/     # Relationship definitions
-  - events/          # Event specifications
-  - knowledge/       # RAG, AI, embeddings
+  - groups/ # Hierarchical group docs (supports nesting)
+  - people/ # People profiles
+  - things/ # Entity definitions
+  - connections/ # Relationship definitions
+  - events/ # Event specifications
+  - knowledge/ # RAG, AI, embeddings
 
 # File extensions to copy
 allowed_extensions:
@@ -247,8 +266,8 @@ exclude_patterns:
 
 # Environment variables
 env_vars:
-  - INSTALLATION_NAME  # Set during init
-  - INSTALLATION_ENV   # Optional: dev, staging, prod
+  - INSTALLATION_NAME # Set during init
+  - INSTALLATION_ENV # Optional: dev, staging, prod
 ```
 
 **Implementation:**
@@ -270,16 +289,18 @@ export async function initCommand() {
       type: "text",
       name: "orgName",
       message: "What is your organization name?",
-      validate: (value) => value.length > 0 ? true : "Organization name cannot be empty"
+      validate: (value) =>
+        value.length > 0 ? true : "Organization name cannot be empty",
     },
     {
       type: "text",
       name: "installationId",
       message: "Installation identifier (lowercase, hyphens only):",
-      validate: (value) => /^[a-z0-9]+(-[a-z0-9]+)*$/.test(value)
-        ? true
-        : "Must be lowercase letters, numbers, and hyphens only"
-    }
+      validate: (value) =>
+        /^[a-z0-9]+(-[a-z0-9]+)*$/.test(value)
+          ? true
+          : "Must be lowercase letters, numbers, and hyphens only",
+    },
   ]);
 
   // 2. Create installation folder
@@ -291,7 +312,9 @@ export async function initCommand() {
   await syncOntologyFiles();
 
   // 4. Update environment
-  console.log("\n✓ Updated .env.local with INSTALLATION_NAME=" + installationId);
+  console.log(
+    "\n✓ Updated .env.local with INSTALLATION_NAME=" + installationId,
+  );
   await updateEnvFile({ INSTALLATION_NAME: installationId });
 
   // 5. Update .gitignore
@@ -302,7 +325,9 @@ export async function initCommand() {
   console.log(`\nYour private docs go in /${installationId}/`);
   console.log("\nNext steps:");
   console.log("  1. Create your first group in the database (via web UI)");
-  console.log(`  2. Add group-specific docs: /${installationId}/groups/<group-slug>/`);
+  console.log(
+    `  2. Add group-specific docs: /${installationId}/groups/<group-slug>/`,
+  );
   console.log("  3. Run: npx oneie dev");
 }
 
@@ -316,12 +341,12 @@ const INSTALLATION_DIMENSIONS = [
   "things",
   "connections",
   "events",
-  "knowledge"
+  "knowledge",
 ];
 
 export async function createInstallationFolder(
   installationId: string,
-  orgName: string
+  orgName: string,
 ) {
   const installationPath = path.join(process.cwd(), installationId);
 
@@ -339,7 +364,7 @@ export async function createInstallationFolder(
   const readmeContent = `# ${orgName} - ONE Installation
 
 **Installation ID:** \`${installationId}\`
-**Created:** ${new Date().toISOString().split('T')[0]}
+**Created:** ${new Date().toISOString().split("T")[0]}
 
 ---
 
@@ -386,7 +411,7 @@ echo "# Frontend Practices" > /${installationId}/groups/engineering/frontend/pra
   await fs.writeFile(
     path.join(installationPath, "README.md"),
     readmeContent,
-    "utf-8"
+    "utf-8",
   );
 
   console.log(`✓ Created /${installationId}/README.md`);
@@ -435,7 +460,7 @@ export async function syncAgentDefinitions() {
 }
 ```
 
-**Also copy .claude/* to user:**
+**Also copy .claude/\* to user:**
 
 ```typescript
 // cli/src/copy-claude-config.ts
@@ -450,27 +475,22 @@ export async function copyClaudeConfig() {
   await fs.mkdir(targetDir, { recursive: true });
 
   // Copy hooks/
-  await fs.cp(
-    path.join(sourceDir, "hooks"),
-    path.join(targetDir, "hooks"),
-    { recursive: true }
-  );
+  await fs.cp(path.join(sourceDir, "hooks"), path.join(targetDir, "hooks"), {
+    recursive: true,
+  });
 
   // Copy commands/
   await fs.cp(
     path.join(sourceDir, "commands"),
     path.join(targetDir, "commands"),
-    { recursive: true }
+    { recursive: true },
   );
 
   // Copy agents/ (already done by syncAgentDefinitions)
   // Copy settings if exists
   const settingsPath = path.join(sourceDir, "settings.json");
   if (await fs.stat(settingsPath).catch(() => null)) {
-    await fs.copyFile(
-      settingsPath,
-      path.join(targetDir, "settings.json")
-    );
+    await fs.copyFile(settingsPath, path.join(targetDir, "settings.json"));
   }
 
   console.log("✓ Copied Claude Code configuration");
@@ -631,8 +651,8 @@ interface GroupProfile {
   ownerName: string;
   ownerUsername: string;
   installationName: string;
-  parentGroupSlug?: string;  // For hierarchical groups
-  groupType?: string;        // One of 6 group types
+  parentGroupSlug?: string; // For hierarchical groups
+  groupType?: string; // One of 6 group types
 }
 
 export async function createGroupProfile(profile: GroupProfile) {
@@ -644,7 +664,7 @@ export async function createGroupProfile(profile: GroupProfile) {
 
   const filePath = path.join(
     process.cwd(),
-    `${profile.installationName}/groups/${groupPath}.md`
+    `${profile.installationName}/groups/${groupPath}.md`,
   );
 
   // Create directory (supports nested hierarchies)
@@ -896,7 +916,7 @@ export async function createGroupDocsCommand() {
       installationName,
       "groups",
       groupPath,
-      "README.md"
+      "README.md",
     );
 
     await fs.mkdir(path.dirname(docsPath), { recursive: true });
@@ -962,7 +982,9 @@ echo "# Architecture" > ${docsPath.replace("README.md", "architecture.md")}
   }
 
   console.log("\n✅ Group documentation created!");
-  console.log("Add custom markdown files to these folders to override global templates.");
+  console.log(
+    "Add custom markdown files to these folders to override global templates.",
+  );
 }
 
 // Helper: Build hierarchical path for group
@@ -1015,12 +1037,12 @@ import { Id } from "../../convex/_generated/dataModel";
 interface ResolveOptions {
   installationName: string;
   groupId?: Id<"groups">;
-  convexClient: any;  // ConvexHttpClient
+  convexClient: any; // ConvexHttpClient
 }
 
 export async function resolveFile(
   relativePath: string,
-  options: ResolveOptions
+  options: ResolveOptions,
 ): Promise<string | null> {
   const { installationName, groupId, convexClient } = options;
 
@@ -1034,7 +1056,7 @@ export async function resolveFile(
       installationName,
       "groups",
       groupPath,
-      relativePath
+      relativePath,
     );
     if (await fileExists(groupFile)) {
       return await fs.readFile(groupFile, "utf-8");
@@ -1048,13 +1070,16 @@ export async function resolveFile(
       });
 
       if (group?.parentGroupId) {
-        const parentPath = await getGroupPath(group.parentGroupId, convexClient);
+        const parentPath = await getGroupPath(
+          group.parentGroupId,
+          convexClient,
+        );
         const parentFile = path.join(
           process.cwd(),
           installationName,
           "groups",
           parentPath,
-          relativePath
+          relativePath,
         );
         if (await fileExists(parentFile)) {
           return await fs.readFile(parentFile, "utf-8");
@@ -1067,11 +1092,7 @@ export async function resolveFile(
   }
 
   // 3. Check installation root (non-group-specific)
-  const installFile = path.join(
-    process.cwd(),
-    installationName,
-    relativePath
-  );
+  const installFile = path.join(process.cwd(), installationName, relativePath);
   if (await fileExists(installFile)) {
     return await fs.readFile(installFile, "utf-8");
   }
@@ -1089,9 +1110,11 @@ export async function resolveFile(
 // Helper: Get group's full path (e.g., "engineering/frontend")
 async function getGroupPath(
   groupId: Id<"groups">,
-  convexClient: any
+  convexClient: any,
 ): Promise<string> {
-  const group = await convexClient.query(api.queries.groups.get, { id: groupId });
+  const group = await convexClient.query(api.queries.groups.get, {
+    id: groupId,
+  });
   if (!group) throw new Error("Group not found");
 
   const segments: string[] = [group.properties.slug];
@@ -1165,12 +1188,9 @@ export async function cloneFrontend(orgProfile: {
 
   // Clone repository
   console.log("Cloning frontend repository...");
-  await execAsync(
-    "git clone https://github.com/one-ie/web.git web",
-    {
-      cwd: process.cwd(),
-    }
-  );
+  await execAsync("git clone https://github.com/one-ie/web.git web", {
+    cwd: process.cwd(),
+  });
 
   console.log("✓ Cloned frontend repository");
 
@@ -1319,9 +1339,7 @@ async function main() {
   displayBanner();
 
   console.log(chalk.cyan("\n✨ Welcome to ONE Platform!\n"));
-  console.log(
-    "Let's set up your environment with the 6-dimension ontology.\n"
-  );
+  console.log("Let's set up your environment with the 6-dimension ontology.\n");
 
   // Step 1: User profile
   console.log(chalk.bold("🧑 Step 1: Tell us about yourself\n"));
@@ -1331,8 +1349,7 @@ async function main() {
       type: "text",
       name: "name",
       message: "What's your name?",
-      validate: (value) =>
-        value.length > 0 ? true : "Name cannot be empty",
+      validate: (value) => (value.length > 0 ? true : "Name cannot be empty"),
     },
     {
       type: "text",
@@ -1394,11 +1411,10 @@ async function main() {
   const ontologyResult = await syncOntologyFiles();
   spinner.succeed(`Copied ${ontologyResult.filesCopied} ontology files`);
 
-
   spinner = ora("Syncing agent definitions...").start();
   const agentsResult = await syncAgentDefinitions();
   spinner.succeed(
-    `Synced ${agentsResult.agentsSynced} agent definitions to .claude/agents/`
+    `Synced ${agentsResult.agentsSynced} agent definitions to .claude/agents/`,
   );
 
   spinner = ora("Copying Claude Code configuration...").start();
@@ -1428,11 +1444,9 @@ async function main() {
   spinner.succeed(`Created ${groupProfilePath}`);
 
   spinner = ora("Linking user to group...").start();
+  spinner.succeed(`Linked ${userAnswers.username} → owns → ${orgAnswers.name}`);
   spinner.succeed(
-    `Linked ${userAnswers.username} → owns → ${orgAnswers.name}`
-  );
-  spinner.succeed(
-    `Linked ${userAnswers.username} → member_of → ${orgAnswers.name} (role: group_owner)`
+    `Linked ${userAnswers.username} → member_of → ${orgAnswers.name} (role: group_owner)`,
   );
 
   // Step 5: Website setup (optional)
@@ -1458,7 +1472,7 @@ async function main() {
     } else {
       spinner.succeed("Cloned and configured frontend");
       console.log(
-        chalk.gray("\nYour website is ready at: http://localhost:4321")
+        chalk.gray("\nYour website is ready at: http://localhost:4321"),
       );
       console.log(chalk.gray("Run: cd frontend && bun run dev\n"));
     }
@@ -1550,13 +1564,7 @@ main().catch((error) => {
     "dev": "tsc --watch",
     "prepublishOnly": "npm run build"
   },
-  "keywords": [
-    "one",
-    "ontology",
-    "cli",
-    "bootstrap",
-    "6-dimension"
-  ],
+  "keywords": ["one", "ontology", "cli", "bootstrap", "6-dimension"],
   "author": "Anthony O'Connell <anthony@one.ie>",
   "license": "MIT",
   "dependencies": {
@@ -1571,10 +1579,7 @@ main().catch((error) => {
     "@types/prompts": "^2.4.9",
     "typescript": "^5.3.3"
   },
-  "files": [
-    "dist",
-    "README.md"
-  ]
+  "files": ["dist", "README.md"]
 }
 ```
 
@@ -1585,6 +1590,7 @@ main().catch((error) => {
 ### Manual Test Plan
 
 1. **Test ontology sync:**
+
    ```bash
    npx oneie
    # Verify all /one/* files copied
@@ -1592,24 +1598,28 @@ main().catch((error) => {
    ```
 
 2. **Test agent sync:**
+
    ```bash
    ls .claude/agents/
    # Should see: agent-director.md, agent-backend.md, etc.
    ```
 
 3. **Test user profile creation:**
+
    ```bash
    cat one/people/anthony-o-connell.md
    # Verify correct formatting and connections
    ```
 
 4. **Test group profile creation:**
+
    ```bash
    cat one/groups/one.md
    # Verify correct formatting and connections
    ```
 
 5. **Test frontend clone:**
+
    ```bash
    cd frontend && bun run dev
    # Should start on localhost:4321
@@ -1690,12 +1700,14 @@ npx oneie sync --download # Pull from Cloudflare KV
 ## Key Differences from Legacy
 
 **OLD (Pre-v2.0.0):**
+
 - Created `one/groups/{name}.md` immediately
 - No installation folder concept
 - No hierarchical group documentation
 - Groups were filesystem folders only
 
 **NEW (v2.0.0+):**
+
 - Creates installation folder (e.g., `/acme/`) with 6-dimension structure
 - Groups are database entities with `groupId` and `parentGroupId`
 - Group documentation created AFTER groups exist in database

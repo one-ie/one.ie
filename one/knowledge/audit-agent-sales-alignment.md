@@ -1,3 +1,21 @@
+---
+title: Audit Agent Sales Alignment
+dimension: knowledge
+category: audit-agent-sales-alignment.md
+tags: agent, ai, ai-agent, architecture, knowledge, ontology
+related_dimensions: connections, events, groups, people, things
+scope: global
+created: 2025-11-03
+updated: 2025-11-03
+version: 1.0.0
+ai_context: |
+  This document is part of the knowledge dimension in the audit-agent-sales-alignment.md category.
+  Location: one/knowledge/audit-agent-sales-alignment.md
+  Purpose: Documents agent sales alignment audit report
+  Related dimensions: connections, events, groups, people, things
+  For AI agents: Read this to understand audit agent sales alignment.
+---
+
 # Agent Sales Alignment Audit Report
 
 **Date:** November 3, 2025

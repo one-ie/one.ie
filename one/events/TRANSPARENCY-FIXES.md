@@ -1,3 +1,21 @@
+---
+title: Transparency Fixes
+dimension: events
+category: TRANSPARENCY-FIXES.md
+tags: ai
+related_dimensions: groups, people
+scope: global
+created: 2025-11-03
+updated: 2025-11-03
+version: 1.0.0
+ai_context: |
+  This document is part of the events dimension in the TRANSPARENCY-FIXES.md category.
+  Location: one/events/TRANSPARENCY-FIXES.md
+  Purpose: Documents transparency & modal fixes - site-wide solution
+  Related dimensions: groups, people
+  For AI agents: Read this to understand TRANSPARENCY FIXES.
+---
+
 # Transparency & Modal Fixes - Site-Wide Solution
 
 ## Problem Overview

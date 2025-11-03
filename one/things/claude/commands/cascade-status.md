@@ -1,3 +1,21 @@
+---
+title: Cascade Status
+dimension: things
+category: agents
+tags: agent
+related_dimensions: events, people
+scope: global
+created: 2025-11-03
+updated: 2025-11-03
+version: 1.0.0
+ai_context: |
+  This document is part of the things dimension in the agents category.
+  Location: one/things/claude/commands/cascade-status.md
+  Purpose: Documents /cascade-status - real-time cascade progress tracking
+  Related dimensions: events, people
+  For AI agents: Read this to understand cascade status.
+---
+
 # /cascade-status - Real-time Cascade Progress Tracking
 
 Check the status of your Mission→Story→Task→Agent workflows with clear progress indicators and quality tracking.
@@ -11,18 +29,21 @@ Check the status of your Mission→Story→Task→Agent workflows with clear pro
 ## Features
 
 ### 📊 Progress Indicators
+
 - **Mission Progress**: "Mission 2 of 5 Complete"
-- **Story Progress**: "Story 3 of 8 In Progress" 
+- **Story Progress**: "Story 3 of 8 In Progress"
 - **Task Progress**: "Task 5 of 12 Pending"
 - **Agent Status**: "🤖 Engineering Agent: Active"
 
 ### ⭐ Quality Score Tracking
+
 - **Mission Quality**: "✅ Mission 1: Complete (4.5⭐)"
 - **Story Quality**: "🔄 Story 2: In Review (3.8⭐)"
 - **Task Quality**: "⏳ Task 3: Pending Review"
 - **Agent Quality**: "✅ Agent Output: Validated (4.2⭐)"
 
 ### 🔄 Real-time Status Updates
+
 - **Active Workflows**: Shows currently running cascades
 - **Queue Status**: Pending tasks and agent assignments
 - **Completion Timeline**: Estimated completion times
@@ -36,22 +57,22 @@ Check the status of your Mission→Story→Task→Agent workflows with clear pro
 
 🎯 Mission: "Build AI-Powered Marketing System" (Mission 2 of 3)
    Status: 🔄 IN PROGRESS | Quality: 4.1⭐ | 67% Complete
-   
+
    📖 Stories Progress:
    ✅ Story 1: "Marketing Agent Design" (4.5⭐) Complete
-   🔄 Story 2: "Content Generation System" (3.8⭐) In Progress  
+   🔄 Story 2: "Content Generation System" (3.8⭐) In Progress
    ⏳ Story 3: "Analytics Dashboard" Pending
-   
+
    ✅ Tasks Progress (5 of 8 Complete):
    ✅ Task 1: Agent Architecture → 🤖 Engineering Architect (4.2⭐)
    ✅ Task 2: UI Components → 🤖 UI Designer (4.4⭐)
    🔄 Task 3: Content Templates → 🤖 Content Creator (Loading...)
    ⏳ Task 4: Database Schema → 🤖 Data Architect (Queued)
    ⏳ Task 5: Testing Suite → 🤖 QA Engineer (Queued)
-   
+
    🤖 Agent Status:
    🟢 Engineering Architect: Ready
-   🟢 UI Designer: Ready  
+   🟢 UI Designer: Ready
    🟡 Content Creator: Working (ETA: 2 min)
    🔴 Data Architect: Waiting for Task 3
    🔴 QA Engineer: Waiting for Task 4
@@ -63,13 +84,15 @@ Check the status of your Mission→Story→Task→Agent workflows with clear pro
 ## Status Indicators
 
 ### Mission Status
+
 - 🎯 **PLANNING** - Mission being defined
-- 🔄 **IN PROGRESS** - Stories actively being executed  
+- 🔄 **IN PROGRESS** - Stories actively being executed
 - ⏳ **PENDING** - Waiting for dependencies
 - ✅ **COMPLETE** - All stories finished and validated
 - ❌ **BLOCKED** - Issues preventing progress
 
 ### Story Status
+
 - 📝 **DRAFT** - Story being written
 - 🔄 **IN PROGRESS** - Tasks being executed
 - 👀 **REVIEW** - Quality validation in progress
@@ -77,6 +100,7 @@ Check the status of your Mission→Story→Task→Agent workflows with clear pro
 - ❌ **FAILED** - Quality gate not met
 
 ### Task Status
+
 - ⏳ **QUEUED** - Waiting for agent assignment
 - 🔄 **ACTIVE** - Agent currently working
 - 👀 **REVIEW** - Output being validated
@@ -84,6 +108,7 @@ Check the status of your Mission→Story→Task→Agent workflows with clear pro
 - ❌ **FAILED** - Requires rework
 
 ### Agent Status
+
 - 🟢 **READY** - Available for new tasks
 - 🟡 **WORKING** - Currently executing task
 - 🔴 **BUSY** - Handling multiple tasks

@@ -1,3 +1,21 @@
+---
+title: Ontology Frontend
+dimension: knowledge
+category: ontology-frontend.md
+tags: 6-dimensions, agent, architecture, backend, frontend, ontology, testing, ui
+related_dimensions: connections, events, groups, people, things
+scope: global
+created: 2025-11-03
+updated: 2025-11-03
+version: 1.0.0
+ai_context: |
+  This document is part of the knowledge dimension in the ontology-frontend.md category.
+  Location: one/knowledge/ontology-frontend.md
+  Purpose: Documents frontend development ontology
+  Related dimensions: connections, events, groups, people, things
+  For AI agents: Read this to understand ontology frontend.
+---
+
 # Frontend Development Ontology
 
 **Version:** 2.0.0

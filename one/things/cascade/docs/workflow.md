@@ -1,3 +1,21 @@
+---
+title: Workflow
+dimension: things
+category: cascade
+tags: agent, ai, events, ontology
+related_dimensions: events, knowledge, people
+scope: global
+created: 2025-11-03
+updated: 2025-11-03
+version: 1.0.0
+ai_context: |
+  This document is part of the things dimension in the cascade category.
+  Location: one/things/cascade/docs/workflow.md
+  Purpose: Documents agent-based ontology-driven workflow
+  Related dimensions: events, knowledge, people
+  For AI agents: Read this to understand workflow.
+---
+
 # Agent-Based Ontology-Driven Workflow
 
 **Version:** 1.0.0
@@ -916,22 +934,18 @@ async create(course: Course) {
 **How agents coordinate autonomously:**
 
 1. **Director Agent:**
-
    - Logs: `plan_started`, `feature_assigned`, `tasks_created`, `feature_complete`
    - Watches: `quality_check_complete`, `documentation_complete`
 
 2. **Specialist Agents:**
-
    - Log: `feature_started`, `implementation_complete`, `task_started`, `task_completed`, `fix_started`, `fix_complete`, `lesson_learned_added`
    - Watch: `feature_assigned`, `task_created`, `solution_proposed`
 
 3. **Quality Agent:**
-
    - Logs: `quality_check_started`, `quality_check_complete`, `test_started`, `test_passed`, `test_failed`
    - Watches: `implementation_complete`, `task_completed`
 
 4. **Problem Solver Agent:**
-
    - Logs: `problem_analysis_started`, `solution_proposed`
    - Watches: `test_failed`
 
@@ -1262,14 +1276,12 @@ Coordination: Auto-derived
 ### Key Principles
 
 1. **Ontology IS the workflow**
-
    - Types define structure
    - Patterns define implementation
    - Events define coordination
    - Single source of truth
 
 2. **Agent collaboration**
-
    - Director orchestrates
    - Specialists execute in parallel
    - Quality ensures correctness
@@ -1277,7 +1289,6 @@ Coordination: Auto-derived
    - Documenter captures knowledge
 
 3. **Quality loops**
-
    - Tests defined up front
    - Tests run on completion
    - Failures trigger problem solver
@@ -1285,7 +1296,6 @@ Coordination: Auto-derived
    - Knowledge accumulates
 
 4. **Events = coordination**
-
    - No external coordination system
    - Events table IS message bus
    - Agents query events to coordinate
@@ -1328,7 +1338,6 @@ Coordination: Auto-derived
 ## Next Steps
 
 1. **Implement agent prompts**
-
    - Write director agent prompt
    - Write specialist agent prompts (backend, frontend, integration)
    - Write quality agent prompt
@@ -1336,21 +1345,18 @@ Coordination: Auto-derived
    - Write documenter agent prompt
 
 2. **Create event types**
-
    - Define all workflow event types in ontology
    - plan_started, feature_assigned, implementation_complete, etc.
    - quality_check_complete, test_passed, test_failed, etc.
    - solution_proposed, lesson_learned_added, etc.
 
 3. **Build orchestrator**
-
    - Ideas → Plans flow
    - Plans → Features delegation
    - Features → Tasks parallel execution
    - Event-driven coordination
 
 4. **Setup knowledge base**
-
    - Create `knowledge/lessons-learned.md`
    - Define lesson structure
    - Integrate with problem solver

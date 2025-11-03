@@ -1,3 +1,21 @@
+---
+title: Integration Checklist
+dimension: events
+category: INTEGRATION-CHECKLIST.md
+tags: agent, architecture, backend, connections, frontend, knowledge, ontology
+related_dimensions: connections, knowledge, people, things
+scope: global
+created: 2025-11-03
+updated: 2025-11-03
+version: 1.0.0
+ai_context: |
+  This document is part of the events dimension in the INTEGRATION-CHECKLIST.md category.
+  Location: one/events/INTEGRATION-CHECKLIST.md
+  Purpose: Documents integration implementation checklist
+  Related dimensions: connections, knowledge, people, things
+  For AI agents: Read this to understand INTEGRATION CHECKLIST.
+---
+
 # Integration Implementation Checklist
 
 **Integration Specialist Deliverable**

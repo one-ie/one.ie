@@ -1,3 +1,21 @@
+---
+title: Cli
+dimension: things
+category: cli
+tags: agent, ai, architecture, backend, frontend, installation, ontology
+related_dimensions: connections, events, groups, knowledge, people
+scope: global
+created: 2025-11-03
+updated: 2025-11-03
+version: 1.0.0
+ai_context: |
+  This document is part of the things dimension in the cli category.
+  Location: one/things/cli/cli.md
+  Purpose: Documents 1. start web app
+  Related dimensions: connections, events, groups, knowledge, people
+  For AI agents: Read this to understand cli.
+---
+
 <div align="center">
 
 ```
@@ -442,6 +460,7 @@ npx oneie
 ```
 
 **What it does:**
+
 1. Prompts for user profile (name, email)
 2. Prompts for organization (name, website)
 3. Syncs global ontology (`/one/`)
@@ -450,6 +469,7 @@ npx oneie
 6. Optionally clones third-party docs (`/docs/`)
 
 **Creates:**
+
 - `/one/` - Global ontology (100+ files)
 - `/web/` - Astro 5 + React 19 application
 - `/docs/` - Third-party documentation (optional)
@@ -470,6 +490,7 @@ npx oneie init
 ```
 
 **What it does:**
+
 1. Prompts for organization name
 2. Prompts for installation identifier (e.g., "acme")
 3. Creates installation folder structure
@@ -477,6 +498,7 @@ npx oneie init
 5. Optionally updates `.gitignore`
 
 **Creates:**
+
 - `/<installation-name>/` - Installation folder
   - `groups/` - Hierarchical group docs
   - `people/` - People profiles
@@ -499,6 +521,7 @@ npx oneie create-group-docs
 ```
 
 **Features:**
+
 - Fetches groups from Convex database
 - Creates hierarchical folder structure
 - Generates README with file resolution info
@@ -515,6 +538,7 @@ npx oneie generate features/token-purchase.english --dry-run
 ```
 
 **Options:**
+
 - `--validate-only` - Only validate
 - `--dry-run` - Show what would be generated
 - `--output <dir>` - Custom output directory
@@ -605,9 +629,9 @@ export default defineSchema({
       v.literal("community"),
       v.literal("dao"),
       v.literal("government"),
-      v.literal("organization")
+      v.literal("organization"),
     ),
-    parentGroupId: v.optional(v.id("groups")),  // Hierarchical nesting
+    parentGroupId: v.optional(v.id("groups")), // Hierarchical nesting
     properties: v.any(),
     status: v.string(),
     createdAt: v.number(),
@@ -619,8 +643,8 @@ export default defineSchema({
 
   // DIMENSION 3: THINGS (all entities)
   things: defineTable({
-    groupId: v.id("groups"),  // Scoped to group
-    type: v.string(),  // 66+ types
+    groupId: v.id("groups"), // Scoped to group
+    type: v.string(), // 66+ types
     name: v.string(),
     properties: v.any(),
     status: v.string(),
@@ -635,7 +659,7 @@ export default defineSchema({
     groupId: v.id("groups"),
     fromThingId: v.id("things"),
     toThingId: v.id("things"),
-    relationshipType: v.string(),  // 25+ types
+    relationshipType: v.string(), // 25+ types
     metadata: v.optional(v.any()),
     createdAt: v.number(),
   })
@@ -646,7 +670,7 @@ export default defineSchema({
   // DIMENSION 5: EVENTS (all behavior)
   events: defineTable({
     groupId: v.id("groups"),
-    type: v.string(),  // 67+ types
+    type: v.string(), // 67+ types
     actorId: v.optional(v.string()),
     targetId: v.optional(v.string()),
     timestamp: v.number(),

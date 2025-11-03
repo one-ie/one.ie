@@ -1,3 +1,21 @@
+---
+title: Architecture Any Backend
+dimension: knowledge
+category: architecture-any-backend.md
+tags: ai, architecture, backend, convex, frontend, groups, ontology, protocol, system-design
+related_dimensions: connections, events, groups, people, things
+scope: global
+created: 2025-11-03
+updated: 2025-11-03
+version: 1.0.0
+ai_context: |
+  This document is part of the knowledge dimension in the architecture-any-backend.md category.
+  Location: one/knowledge/architecture-any-backend.md
+  Purpose: Documents backend-agnostic architecture: use any database
+  Related dimensions: connections, events, groups, people, things
+  For AI agents: Read this to understand architecture any backend.
+---
+
 # Backend-Agnostic Architecture: Use Any Database
 
 **Version:** 3.0

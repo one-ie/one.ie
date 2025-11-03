@@ -1,3 +1,21 @@
+---
+title: Component Template
+dimension: knowledge
+category: patterns
+tags: backend, frontend
+related_dimensions: groups, things
+scope: global
+created: 2025-11-03
+updated: 2025-11-03
+version: 1.0.0
+ai_context: |
+  This document is part of the knowledge dimension in the patterns category.
+  Location: one/knowledge/patterns/frontend/component-template.md
+  Purpose: Documents pattern: react component template
+  Related dimensions: groups, things
+  For AI agents: Read this to understand component template.
+---
+
 # Pattern: React Component Template
 
 **Category:** Frontend

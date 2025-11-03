@@ -1,3 +1,21 @@
+---
+title: Demo_Components
+dimension: events
+category: DEMO_COMPONENTS.md
+tags: ai, backend
+related_dimensions: connections, groups, people, things
+scope: global
+created: 2025-11-03
+updated: 2025-11-03
+version: 1.0.0
+ai_context: |
+  This document is part of the events dimension in the DEMO_COMPONENTS.md category.
+  Location: one/events/DEMO_COMPONENTS.md
+  Purpose: Documents demo components - implementation complete
+  Related dimensions: connections, groups, people, things
+  For AI agents: Read this to understand DEMO_COMPONENTS.
+---
+
 # Demo Components - Implementation Complete
 
 **Status:** ✅ Production Ready

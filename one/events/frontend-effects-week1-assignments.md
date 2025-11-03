@@ -1,3 +1,21 @@
+---
+title: Frontend Effects Week1 Assignments
+dimension: events
+category: frontend-effects-week1-assignments.md
+tags: backend, frontend, inference, ui
+related_dimensions: connections, groups, knowledge, people, things
+scope: global
+created: 2025-11-03
+updated: 2025-11-03
+version: 1.0.0
+ai_context: |
+  This document is part of the events dimension in the frontend-effects-week1-assignments.md category.
+  Location: one/events/frontend-effects-week1-assignments.md
+  Purpose: Documents frontend effects.ts implementation: week 1 assignments & first tasks
+  Related dimensions: connections, groups, knowledge, people, things
+  For AI agents: Read this to understand frontend effects week1 assignments.
+---
+
 # Frontend Effects.ts Implementation: Week 1 Assignments & First Tasks
 
 **Project Status:** Completed and Deployed (Documented for Future Reference & Replication)

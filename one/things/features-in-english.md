@@ -1,3 +1,21 @@
+---
+title: Features In English
+dimension: things
+category: features-in-english.md
+tags: ai
+related_dimensions: connections, events, people
+scope: global
+created: 2025-11-03
+updated: 2025-11-03
+version: 1.0.0
+ai_context: |
+  This document is part of the things dimension in the features-in-english.md category.
+  Location: one/things/features-in-english.md
+  Purpose: This feature creates an intelligent content flywheel, maximizing the value of every video a creator 
+  Related dimensions: connections, events, people
+  For AI agents: Read this to understand features in english.
+---
+
 ### New Feature Examples, Written in Plain English
 
 #### 1. Automated Content Repurposing Engine
@@ -123,14 +141,11 @@ This is a premium, high-value feature that demonstrates the full power of the AI
 **INPUT:**
 
 - fan: who is the course for
-    
 - topic: what they want to learn
-    
 
 **OUTPUT:**
 
 - course ID: the new, personalized course
-    
 
 **FLOW:**
 
@@ -181,7 +196,5 @@ WITH the number of lessons created
 This Plain English DSL unlocks three transformative business capabilities:
 
 1. **The Creator App Store:** Creators can now write and package their own features. A power user could write a sophisticated "Automated Substack Newsletter" feature and _sell or share it_ with other creators on the ONE platform. The platform evolves from a tool into a self-sustaining ecosystem and marketplace.
-    
 2. **The Rise of the "AI Feature Engineer":** You can give a high-level business goal to an AI agent (e.g., "Increase fan-to-token-holder conversion by 10%"). The agent can analyze existing data, hypothesize a solution, write a new feature in Plain English (like a "first-time buyer discount"), and deploy it. The system becomes self-optimizing.
-    
 3. **Zero-Ambiguity Auditing and Governance:** When business logic is written in auditable, version-controlled English, compliance and governance become trivial. You can prove exactly how the system works for any given feature by simply reading its specification, which is always in sync with the live code.

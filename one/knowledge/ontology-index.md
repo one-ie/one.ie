@@ -1,3 +1,21 @@
+---
+title: Ontology Index
+dimension: knowledge
+category: ontology-index.md
+tags: 6-dimensions, architecture, ontology
+related_dimensions: connections, events, people, things
+scope: global
+created: 2025-11-03
+updated: 2025-11-03
+version: 1.0.0
+ai_context: |
+  This document is part of the knowledge dimension in the ontology-index.md category.
+  Location: one/knowledge/ontology-index.md
+  Purpose: Documents ontology documentation index
+  Related dimensions: connections, events, people, things
+  For AI agents: Read this to understand ontology index.
+---
+
 # Ontology Documentation Index
 
 **Complete navigation for all multi-ontology architecture documentation**

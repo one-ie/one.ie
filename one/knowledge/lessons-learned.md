@@ -1,3 +1,21 @@
+---
+title: Lessons Learned
+dimension: knowledge
+category: lessons-learned.md
+tags: backend, connections, frontend, groups, testing
+related_dimensions: connections, events, groups, things
+scope: global
+created: 2025-11-03
+updated: 2025-11-03
+version: 1.0.0
+ai_context: |
+  This document is part of the knowledge dimension in the lessons-learned.md category.
+  Location: one/knowledge/lessons-learned.md
+  Purpose: Documents lessons learned
+  Related dimensions: connections, events, groups, things
+  For AI agents: Read this to understand lessons learned.
+---
+
 # Lessons Learned
 
 This file captures problems encountered and solutions found during feature development. Every problem solved makes the system smarter.

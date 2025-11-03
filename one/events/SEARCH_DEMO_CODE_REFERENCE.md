@@ -1,3 +1,21 @@
+---
+title: Search_Demo_Code_Reference
+dimension: events
+category: SEARCH_DEMO_CODE_REFERENCE.md
+tags: ai, knowledge
+related_dimensions: connections, groups, knowledge, things
+scope: global
+created: 2025-11-03
+updated: 2025-11-03
+version: 1.0.0
+ai_context: |
+  This document is part of the events dimension in the SEARCH_DEMO_CODE_REFERENCE.md category.
+  Location: one/events/SEARCH_DEMO_CODE_REFERENCE.md
+  Purpose: Documents search/knowledge demo - code reference
+  Related dimensions: connections, groups, knowledge, things
+  For AI agents: Read this to understand SEARCH_DEMO_CODE_REFERENCE.
+---
+
 # Search/Knowledge Demo - Code Reference
 
 ## Page Structure

@@ -1,3 +1,21 @@
+---
+title: Deployment Ops Summary
+dimension: events
+category: deployment-ops-summary.md
+tags: agent, ai, backend, installation, testing
+related_dimensions: groups, things
+scope: global
+created: 2025-11-03
+updated: 2025-11-03
+version: 1.0.0
+ai_context: |
+  This document is part of the events dimension in the deployment-ops-summary.md category.
+  Location: one/events/deployment-ops-summary.md
+  Purpose: Documents deployment automation summary - installation folders
+  Related dimensions: groups, things
+  For AI agents: Read this to understand deployment ops summary.
+---
+
 # Deployment Automation Summary - Installation Folders
 
 **Date:** 2025-10-16

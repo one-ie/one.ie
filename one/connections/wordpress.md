@@ -1,3 +1,21 @@
+---
+title: Wordpress
+dimension: connections
+category: wordpress.md
+tags: architecture, backend, frontend, ontology
+related_dimensions: events, knowledge, people, things
+scope: global
+created: 2025-11-03
+updated: 2025-11-03
+version: 1.0.0
+ai_context: |
+  This document is part of the connections dimension in the wordpress.md category.
+  Location: one/connections/wordpress.md
+  Purpose: Documents connecting one to wordpress backend
+  Related dimensions: events, knowledge, people, things
+  For AI agents: Read this to understand wordpress.
+---
+
 # Connecting ONE to WordPress Backend
 
 **Using WordPress + WooCommerce as your ONE backend**

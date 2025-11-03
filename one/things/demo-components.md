@@ -1,3 +1,21 @@
+---
+title: Demo Components
+dimension: things
+category: demo-components.md
+tags: ai, architecture
+related_dimensions: connections, events, groups
+scope: global
+created: 2025-11-03
+updated: 2025-11-03
+version: 1.0.0
+ai_context: |
+  This document is part of the things dimension in the demo-components.md category.
+  Location: one/things/demo-components.md
+  Purpose: Documents one platform demo components
+  Related dimensions: connections, events, groups
+  For AI agents: Read this to understand demo components.
+---
+
 # ONE Platform Demo Components
 
 ## Version 1.0.0 - Component Definition Specification
@@ -52,7 +70,7 @@ Wrapper component that provides consistent max-width, padding, and spacing for a
 interface DemoContainerProps {
   children: ReactNode;
   className?: string;
-  variant?: 'light' | 'dark' | 'card'; // Background variant
+  variant?: "light" | "dark" | "card"; // Background variant
   noPadding?: boolean;
   tight?: boolean; // Reduces padding
 }
@@ -62,32 +80,32 @@ interface DemoContainerProps {
 
 ```tsx
 // src/components/demo/DemoContainer.tsx
-import { cn } from '@/lib/utils';
+import { cn } from "@/lib/utils";
 
 export function DemoContainer({
   children,
   className,
-  variant = 'light',
+  variant = "light",
   noPadding = false,
   tight = false,
 }: DemoContainerProps) {
   const variants = {
-    light: 'bg-background',
-    dark: 'bg-foreground/5',
-    card: 'bg-card border border-border',
+    light: "bg-background",
+    dark: "bg-foreground/5",
+    card: "bg-card border border-border",
   };
 
   return (
-    <div className={cn(
-      'relative',
-      variants[variant],
-      !noPadding && 'px-4 py-8 md:px-6 md:py-12 lg:px-8 lg:py-16',
-      tight && 'px-4 py-4 md:px-6 md:py-6',
-      className,
-    )}>
-      <div className="max-w-7xl mx-auto">
-        {children}
-      </div>
+    <div
+      className={cn(
+        "relative",
+        variants[variant],
+        !noPadding && "px-4 py-8 md:px-6 md:py-12 lg:px-8 lg:py-16",
+        tight && "px-4 py-4 md:px-6 md:py-6",
+        className,
+      )}
+    >
+      <div className="max-w-7xl mx-auto">{children}</div>
     </div>
   );
 }
@@ -136,8 +154,8 @@ interface DemoHeroProps {
 
 ```tsx
 // src/components/demo/DemoHero.tsx
-import { Button } from '@/components/ui/button';
-import { cn } from '@/lib/utils';
+import { Button } from "@/components/ui/button";
+import { cn } from "@/lib/utils";
 
 export function DemoHero({
   icon,
@@ -149,58 +167,62 @@ export function DemoHero({
   showScroll = true,
 }: DemoHeroProps) {
   return (
-    <section className="
+    <section
+      className="
       relative overflow-hidden
       px-4 py-20 sm:px-6 sm:py-24 md:px-8 md:py-32
       bg-gradient-to-br from-primary/5 via-background to-background
-    ">
+    "
+    >
       {/* Background blur */}
       <div className="absolute inset-0 -z-10">
-        <div className="absolute left-1/4 top-0 h-96 w-96 rounded-full
-          bg-primary/10 blur-[120px]"></div>
-        <div className="absolute right-1/3 bottom-0 h-80 w-80 rounded-full
-          bg-accent/10 blur-[120px]"></div>
+        <div
+          className="absolute left-1/4 top-0 h-96 w-96 rounded-full
+          bg-primary/10 blur-[120px]"
+        ></div>
+        <div
+          className="absolute right-1/3 bottom-0 h-80 w-80 rounded-full
+          bg-accent/10 blur-[120px]"
+        ></div>
       </div>
 
       {/* Content */}
       <div className="max-w-4xl mx-auto text-center">
         {/* Badge */}
         {badge && (
-          <div className="inline-flex items-center gap-2 mb-6
-            px-3 py-1.5 rounded-full bg-primary/10 text-primary">
+          <div
+            className="inline-flex items-center gap-2 mb-6
+            px-3 py-1.5 rounded-full bg-primary/10 text-primary"
+          >
             <span className="w-2 h-2 rounded-full bg-primary"></span>
             <span className="text-sm font-medium">{badge}</span>
           </div>
         )}
 
         {/* Icon */}
-        {icon && (
-          <div className="mb-6 flex justify-center">
-            {icon}
-          </div>
-        )}
+        {icon && <div className="mb-6 flex justify-center">{icon}</div>}
 
         {/* Title */}
-        <h1 className="text-4xl md:text-5xl lg:text-6xl
+        <h1
+          className="text-4xl md:text-5xl lg:text-6xl
           font-bold leading-tight tracking-tight
-          mb-6 text-foreground">
+          mb-6 text-foreground"
+        >
           {title}
         </h1>
 
         {/* Subtitle */}
-        <p className="text-xl md:text-2xl text-muted-foreground
-          mb-12 max-w-2xl mx-auto leading-relaxed">
+        <p
+          className="text-xl md:text-2xl text-muted-foreground
+          mb-12 max-w-2xl mx-auto leading-relaxed"
+        >
           {subtitle}
         </p>
 
         {/* CTAs */}
         <div className="flex flex-col sm:flex-row gap-4 justify-center">
           {primaryCta && (
-            <Button
-              variant="default"
-              size="lg"
-              asChild={!!primaryCta.href}
-            >
+            <Button variant="default" size="lg" asChild={!!primaryCta.href}>
               {primaryCta.href ? (
                 <a href={primaryCta.href}>
                   {primaryCta.label} <span className="ml-2">→</span>
@@ -214,19 +236,11 @@ export function DemoHero({
           )}
 
           {secondaryCta && (
-            <Button
-              variant="outline"
-              size="lg"
-              asChild={!!secondaryCta.href}
-            >
+            <Button variant="outline" size="lg" asChild={!!secondaryCta.href}>
               {secondaryCta.href ? (
-                <a href={secondaryCta.href}>
-                  {secondaryCta.label}
-                </a>
+                <a href={secondaryCta.href}>{secondaryCta.label}</a>
               ) : (
-                <span onClick={secondaryCta.onClick}>
-                  {secondaryCta.label}
-                </span>
+                <span onClick={secondaryCta.onClick}>{secondaryCta.label}</span>
               )}
             </Button>
           )}
@@ -237,8 +251,12 @@ export function DemoHero({
       {showScroll && (
         <div className="flex justify-center mt-12 text-muted-foreground animate-bounce">
           <svg className="w-6 h-6" fill="none" stroke="currentColor">
-            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2"
-              d="M19 14l-7 7m0 0l-7-7m7 7V3"></path>
+            <path
+              strokeLinecap="round"
+              strokeLinejoin="round"
+              strokeWidth="2"
+              d="M19 14l-7 7m0 0l-7-7m7 7V3"
+            ></path>
           </svg>
         </div>
       )}
@@ -291,7 +309,7 @@ interface DemoPlaygroundProps {
 interface FormField {
   name: string;
   label: string;
-  type: 'text' | 'select' | 'textarea' | 'number' | 'email';
+  type: "text" | "select" | "textarea" | "number" | "email";
   placeholder?: string;
   options?: Array<{ value: string; label: string }>;
   required?: boolean;
@@ -302,20 +320,20 @@ interface FormField {
 
 ```tsx
 // src/components/demo/DemoPlayground.tsx
-'use client';
+"use client";
 
-import { useState } from 'react';
-import { Button } from '@/components/ui/button';
-import { Input } from '@/components/ui/input';
-import { Label } from '@/components/ui/label';
-import { Textarea } from '@/components/ui/textarea';
+import { useState } from "react";
+import { Button } from "@/components/ui/button";
+import { Input } from "@/components/ui/input";
+import { Label } from "@/components/ui/label";
+import { Textarea } from "@/components/ui/textarea";
 import {
   Select,
   SelectContent,
   SelectItem,
   SelectTrigger,
   SelectValue,
-} from '@/components/ui/select';
+} from "@/components/ui/select";
 
 export function DemoPlayground({
   title,
@@ -339,9 +357,7 @@ export function DemoPlayground({
       {/* Header */}
       <div>
         <h2 className="text-3xl font-bold mb-2">{title}</h2>
-        {description && (
-          <p className="text-muted-foreground">{description}</p>
-        )}
+        {description && <p className="text-muted-foreground">{description}</p>}
       </div>
 
       {/* Main content */}
@@ -357,20 +373,22 @@ export function DemoPlayground({
                   {field.label}
                 </Label>
 
-                {field.type === 'text' || field.type === 'email' || field.type === 'number' ? (
+                {field.type === "text" ||
+                field.type === "email" ||
+                field.type === "number" ? (
                   <Input
                     id={field.name}
                     type={field.type}
                     placeholder={field.placeholder}
-                    value={formData[field.name] || ''}
+                    value={formData[field.name] || ""}
                     onChange={(e) =>
                       setFormData({ ...formData, [field.name]: e.target.value })
                     }
                     required={field.required}
                   />
-                ) : field.type === 'select' ? (
+                ) : field.type === "select" ? (
                   <Select
-                    value={formData[field.name] || ''}
+                    value={formData[field.name] || ""}
                     onValueChange={(value) =>
                       setFormData({ ...formData, [field.name]: value })
                     }
@@ -386,11 +404,11 @@ export function DemoPlayground({
                       ))}
                     </SelectContent>
                   </Select>
-                ) : field.type === 'textarea' ? (
+                ) : field.type === "textarea" ? (
                   <Textarea
                     id={field.name}
                     placeholder={field.placeholder}
-                    value={formData[field.name] || ''}
+                    value={formData[field.name] || ""}
                     onChange={(e) =>
                       setFormData({ ...formData, [field.name]: e.target.value })
                     }
@@ -401,12 +419,8 @@ export function DemoPlayground({
               </div>
             ))}
 
-            <Button
-              type="submit"
-              className="w-full"
-              disabled={isLoading}
-            >
-              {isLoading ? 'Creating...' : 'Create Entity'} →
+            <Button type="submit" className="w-full" disabled={isLoading}>
+              {isLoading ? "Creating..." : "Create Entity"} →
             </Button>
           </form>
         </div>
@@ -416,14 +430,16 @@ export function DemoPlayground({
           <div className="bg-background rounded-lg p-6 border border-border">
             <h3 className="text-lg font-semibold mb-4">Live Data (JSON)</h3>
 
-            <div className="
+            <div
+              className="
               bg-foreground/5 rounded-md p-4
               border border-border
               overflow-x-auto
               max-h-80 overflow-y-auto
               font-mono text-sm
               text-foreground/80
-            ">
+            "
+            >
               <pre>{JSON.stringify(liveData || {}, null, 2)}</pre>
             </div>
 
@@ -437,10 +453,13 @@ export function DemoPlayground({
           {stats && stats.length > 0 && (
             <div className="grid grid-cols-2 gap-4">
               {stats.map((stat) => (
-                <div key={stat.label} className="
+                <div
+                  key={stat.label}
+                  className="
                   bg-background rounded-lg p-4
                   border border-border text-center
-                ">
+                "
+                >
                   <p className="text-2xl font-bold text-primary">
                     {stat.value}
                   </p>
@@ -527,11 +546,11 @@ Syntax-highlighted code example with copy button and metadata.
 ```typescript
 interface DemoCodeBlockProps {
   code: string;
-  language?: 'typescript' | 'javascript' | 'sql' | 'json' | 'bash';
+  language?: "typescript" | "javascript" | "sql" | "json" | "bash";
   title?: string;
   filename?: string;
   showLineNumbers?: boolean;
-  height?: 'sm' | 'md' | 'lg' | 'auto';
+  height?: "sm" | "md" | "lg" | "auto";
   keyPoints?: string[];
   relatedDocs?: Array<{ label: string; href: string }>;
 }
@@ -541,19 +560,19 @@ interface DemoCodeBlockProps {
 
 ```tsx
 // src/components/demo/DemoCodeBlock.tsx
-'use client';
+"use client";
 
-import { useState } from 'react';
-import { Button } from '@/components/ui/button';
-import { Check, Copy } from 'lucide-react';
+import { useState } from "react";
+import { Button } from "@/components/ui/button";
+import { Check, Copy } from "lucide-react";
 
 export function DemoCodeBlock({
   code,
-  language = 'typescript',
+  language = "typescript",
   title,
   filename,
   showLineNumbers = false,
-  height = 'md',
+  height = "md",
   keyPoints,
   relatedDocs,
 }: DemoCodeBlockProps) {
@@ -566,21 +585,21 @@ export function DemoCodeBlock({
   };
 
   const heightClasses = {
-    sm: 'max-h-64',
-    md: 'max-h-96',
-    lg: 'max-h-screen',
-    auto: '',
+    sm: "max-h-64",
+    md: "max-h-96",
+    lg: "max-h-screen",
+    auto: "",
   };
 
   return (
     <div className="rounded-lg border border-border overflow-hidden">
       {/* Header */}
-      <div className="bg-muted px-6 py-4 border-b border-border
-        flex items-center justify-between">
+      <div
+        className="bg-muted px-6 py-4 border-b border-border
+        flex items-center justify-between"
+      >
         <div>
-          {title && (
-            <h3 className="font-semibold text-foreground">{title}</h3>
-          )}
+          {title && <h3 className="font-semibold text-foreground">{title}</h3>}
           {filename && (
             <p className="text-xs text-muted-foreground font-mono mt-1">
               {filename}
@@ -593,16 +612,20 @@ export function DemoCodeBlock({
       </div>
 
       {/* Code */}
-      <div className={`
+      <div
+        className={`
         relative
         overflow-hidden
         ${heightClasses[height]}
         overflow-y-auto
-      `}>
-        <pre className="p-6 bg-foreground/5 border-t border-border
+      `}
+      >
+        <pre
+          className="p-6 bg-foreground/5 border-t border-border
           overflow-x-auto
           text-sm font-mono text-foreground/80
-          whitespace-pre-wrap break-words">
+          whitespace-pre-wrap break-words"
+        >
           <code>{code}</code>
         </pre>
 
@@ -634,8 +657,10 @@ export function DemoCodeBlock({
       </div>
 
       {/* Footer */}
-      <div className="px-6 py-4 bg-background border-t border-border
-        space-y-4 text-sm">
+      <div
+        className="px-6 py-4 bg-background border-t border-border
+        space-y-4 text-sm"
+      >
         {keyPoints && keyPoints.length > 0 && (
           <div>
             <p className="font-semibold text-foreground mb-2">Key Points:</p>
@@ -721,7 +746,7 @@ interface DemoStatsProps {
     value: string | number;
     description?: string;
     icon?: ReactNode;
-    trend?: 'up' | 'down' | 'neutral';
+    trend?: "up" | "down" | "neutral";
     trendValue?: string;
   }>;
   columns?: 1 | 2 | 3 | 4;
@@ -732,22 +757,19 @@ interface DemoStatsProps {
 
 ```tsx
 // src/components/demo/DemoStats.tsx
-import { cn } from '@/lib/utils';
-import { TrendingUp, TrendingDown } from 'lucide-react';
+import { cn } from "@/lib/utils";
+import { TrendingUp, TrendingDown } from "lucide-react";
 
-export function DemoStats({
-  stats,
-  columns = 3,
-}: DemoStatsProps) {
+export function DemoStats({ stats, columns = 3 }: DemoStatsProps) {
   const gridClasses = {
-    1: 'grid-cols-1',
-    2: 'grid-cols-1 md:grid-cols-2',
-    3: 'grid-cols-1 md:grid-cols-2 lg:grid-cols-3',
-    4: 'grid-cols-2 lg:grid-cols-4',
+    1: "grid-cols-1",
+    2: "grid-cols-1 md:grid-cols-2",
+    3: "grid-cols-1 md:grid-cols-2 lg:grid-cols-3",
+    4: "grid-cols-2 lg:grid-cols-4",
   };
 
   return (
-    <div className={cn('grid gap-4', gridClasses[columns])}>
+    <div className={cn("grid gap-4", gridClasses[columns])}>
       {stats.map((stat, i) => (
         <div
           key={i}
@@ -758,37 +780,33 @@ export function DemoStats({
           "
         >
           {/* Icon */}
-          {stat.icon && (
-            <div className="mb-4 text-primary">
-              {stat.icon}
-            </div>
-          )}
+          {stat.icon && <div className="mb-4 text-primary">{stat.icon}</div>}
 
           {/* Value */}
-          <p className="text-3xl font-bold text-foreground">
-            {stat.value}
-          </p>
+          <p className="text-3xl font-bold text-foreground">{stat.value}</p>
 
           {/* Label */}
-          <p className="text-sm text-muted-foreground mt-1">
-            {stat.label}
-          </p>
+          <p className="text-sm text-muted-foreground mt-1">{stat.label}</p>
 
           {/* Trend */}
           {stat.trendValue && (
             <div className="mt-4 flex items-center gap-2">
-              {stat.trend === 'up' && (
+              {stat.trend === "up" && (
                 <TrendingUp className="w-4 h-4 text-green-500" />
               )}
-              {stat.trend === 'down' && (
+              {stat.trend === "down" && (
                 <TrendingDown className="w-4 h-4 text-red-500" />
               )}
-              <span className={cn(
-                'text-xs font-medium',
-                stat.trend === 'up' ? 'text-green-600' :
-                stat.trend === 'down' ? 'text-red-600' :
-                'text-muted-foreground'
-              )}>
+              <span
+                className={cn(
+                  "text-xs font-medium",
+                  stat.trend === "up"
+                    ? "text-green-600"
+                    : stat.trend === "down"
+                      ? "text-red-600"
+                      : "text-muted-foreground",
+                )}
+              >
                 {stat.trendValue}
               </span>
             </div>
@@ -862,20 +880,20 @@ interface DemoFormProps {
 
 ```tsx
 // src/components/demo/DemoForm.tsx
-'use client';
+"use client";
 
-import { useState } from 'react';
-import { Button } from '@/components/ui/button';
-import { Input } from '@/components/ui/input';
-import { Label } from '@/components/ui/label';
-import { AlertCircle, CheckCircle } from 'lucide-react';
+import { useState } from "react";
+import { Button } from "@/components/ui/button";
+import { Input } from "@/components/ui/input";
+import { Label } from "@/components/ui/label";
+import { AlertCircle, CheckCircle } from "lucide-react";
 
 export function DemoForm({
   fields,
   onSubmit,
   isLoading = false,
-  submitLabel = 'Submit',
-  successMessage = 'Form submitted successfully!',
+  submitLabel = "Submit",
+  successMessage = "Form submitted successfully!",
 }: DemoFormProps) {
   const [formData, setFormData] = useState<Record<string, any>>({});
   const [errors, setErrors] = useState<Record<string, string>>({});
@@ -892,7 +910,7 @@ export function DemoForm({
       setFormData({});
     } catch (error: any) {
       setErrors({
-        submit: error.message || 'An error occurred',
+        submit: error.message || "An error occurred",
       });
     }
   };
@@ -907,11 +925,11 @@ export function DemoForm({
             {field.required && <span className="text-destructive ml-1">*</span>}
           </Label>
 
-          {field.type === 'textarea' ? (
+          {field.type === "textarea" ? (
             <textarea
               id={field.name}
               placeholder={field.placeholder}
-              value={formData[field.name] || ''}
+              value={formData[field.name] || ""}
               onChange={(e) =>
                 setFormData({ ...formData, [field.name]: e.target.value })
               }
@@ -932,7 +950,7 @@ export function DemoForm({
               id={field.name}
               type={field.type}
               placeholder={field.placeholder}
-              value={formData[field.name] || ''}
+              value={formData[field.name] || ""}
               onChange={(e) =>
                 setFormData({ ...formData, [field.name]: e.target.value })
               }
@@ -952,8 +970,10 @@ export function DemoForm({
 
       {/* Submit error */}
       {errors.submit && (
-        <div className="p-4 rounded-lg bg-destructive/10 border border-destructive/20
-          text-destructive text-sm flex items-start gap-3">
+        <div
+          className="p-4 rounded-lg bg-destructive/10 border border-destructive/20
+          text-destructive text-sm flex items-start gap-3"
+        >
           <AlertCircle className="w-5 h-5 flex-shrink-0 mt-0.5" />
           <p>{errors.submit}</p>
         </div>
@@ -961,20 +981,18 @@ export function DemoForm({
 
       {/* Success message */}
       {success && (
-        <div className="p-4 rounded-lg bg-green-500/10 border border-green-500/20
-          text-green-700 text-sm flex items-start gap-3">
+        <div
+          className="p-4 rounded-lg bg-green-500/10 border border-green-500/20
+          text-green-700 text-sm flex items-start gap-3"
+        >
           <CheckCircle className="w-5 h-5 flex-shrink-0 mt-0.5" />
           <p>{successMessage}</p>
         </div>
       )}
 
       {/* Submit button */}
-      <Button
-        type="submit"
-        disabled={isLoading}
-        className="w-full"
-      >
-        {isLoading ? 'Submitting...' : submitLabel}
+      <Button type="submit" disabled={isLoading} className="w-full">
+        {isLoading ? "Submitting..." : submitLabel}
       </Button>
     </form>
   );
@@ -997,7 +1015,7 @@ interface DemoListProps<T> {
   renderItem: (item: T, index: number) => ReactNode;
   emptyMessage?: string;
   columns?: 1 | 2 | 3;
-  gap?: 'sm' | 'md' | 'lg';
+  gap?: "sm" | "md" | "lg";
 }
 ```
 
@@ -1005,25 +1023,25 @@ interface DemoListProps<T> {
 
 ```tsx
 // src/components/demo/DemoList.tsx
-import { cn } from '@/lib/utils';
+import { cn } from "@/lib/utils";
 
 export function DemoList<T>({
   items,
   renderItem,
-  emptyMessage = 'No items found',
+  emptyMessage = "No items found",
   columns = 1,
-  gap = 'md',
+  gap = "md",
 }: DemoListProps<T>) {
   const columnClasses = {
-    1: 'grid-cols-1',
-    2: 'grid-cols-1 md:grid-cols-2',
-    3: 'grid-cols-1 md:grid-cols-2 lg:grid-cols-3',
+    1: "grid-cols-1",
+    2: "grid-cols-1 md:grid-cols-2",
+    3: "grid-cols-1 md:grid-cols-2 lg:grid-cols-3",
   };
 
   const gapClasses = {
-    sm: 'gap-3',
-    md: 'gap-4',
-    lg: 'gap-6',
+    sm: "gap-3",
+    md: "gap-4",
+    lg: "gap-6",
   };
 
   if (items.length === 0) {
@@ -1035,10 +1053,8 @@ export function DemoList<T>({
   }
 
   return (
-    <div className={cn('grid', columnClasses[columns], gapClasses[gap])}>
-      {items.map((item, index) =>
-        renderItem(item, index)
-      )}
+    <div className={cn("grid", columnClasses[columns], gapClasses[gap])}>
+      {items.map((item, index) => renderItem(item, index))}
     </div>
   );
 }
@@ -1061,7 +1077,7 @@ interface DemoGraphProps {
   height?: string;
   enableZoom?: boolean;
   enablePan?: boolean;
-  theme?: 'light' | 'dark';
+  theme?: "light" | "dark";
 }
 
 interface GraphData {
@@ -1083,18 +1099,18 @@ interface GraphData {
 
 ```tsx
 // src/components/demo/DemoGraph.tsx
-'use client';
+"use client";
 
-import { useEffect, useRef } from 'react';
-import { cn } from '@/lib/utils';
+import { useEffect, useRef } from "react";
+import { cn } from "@/lib/utils";
 
 export function DemoGraph({
   data,
   onNodeClick,
-  height = '500px',
+  height = "500px",
   enableZoom = true,
   enablePan = true,
-  theme = 'light',
+  theme = "light",
 }: DemoGraphProps) {
   const containerRef = useRef<HTMLDivElement>(null);
 
@@ -1105,16 +1121,16 @@ export function DemoGraph({
     // (Vis.js, D3.js, or Three.js implementation)
     // This is a placeholder for the actual implementation
 
-    console.log('Graph data:', data);
+    console.log("Graph data:", data);
   }, [data, onNodeClick, enableZoom, enablePan, theme]);
 
   return (
     <div
       ref={containerRef}
       className={cn(
-        'rounded-lg border border-border bg-background',
-        'transition-all duration-300',
-        'overflow-hidden'
+        "rounded-lg border border-border bg-background",
+        "transition-all duration-300",
+        "overflow-hidden",
       )}
       style={{ height }}
     >
@@ -1151,7 +1167,7 @@ interface DemoCTAProps {
     onClick?: () => void;
   };
   stats?: Array<{ label: string; value: string }>;
-  bgGradient?: 'primary' | 'accent' | 'secondary';
+  bgGradient?: "primary" | "accent" | "secondary";
 }
 ```
 
@@ -1159,8 +1175,8 @@ interface DemoCTAProps {
 
 ```tsx
 // src/components/demo/DemoCTA.tsx
-import { Button } from '@/components/ui/button';
-import { cn } from '@/lib/utils';
+import { Button } from "@/components/ui/button";
+import { cn } from "@/lib/utils";
 
 export function DemoCTA({
   headline,
@@ -1169,26 +1185,28 @@ export function DemoCTA({
   primaryCta,
   secondaryCta,
   stats,
-  bgGradient = 'primary',
+  bgGradient = "primary",
 }: DemoCTAProps) {
   const bgClasses = {
-    primary: 'bg-gradient-to-br from-primary to-primary/80 text-primary-foreground',
-    accent: 'bg-gradient-to-br from-accent to-accent/80 text-accent-foreground',
-    secondary: 'bg-gradient-to-br from-secondary to-secondary/80 text-secondary-foreground',
+    primary:
+      "bg-gradient-to-br from-primary to-primary/80 text-primary-foreground",
+    accent: "bg-gradient-to-br from-accent to-accent/80 text-accent-foreground",
+    secondary:
+      "bg-gradient-to-br from-secondary to-secondary/80 text-secondary-foreground",
   };
 
   return (
-    <section className={cn(
-      'relative overflow-hidden',
-      'px-4 py-20 md:px-6 md:py-28',
-      bgClasses[bgGradient]
-    )}>
+    <section
+      className={cn(
+        "relative overflow-hidden",
+        "px-4 py-20 md:px-6 md:py-28",
+        bgClasses[bgGradient],
+      )}
+    >
       {/* Content */}
       <div className="max-w-4xl mx-auto text-center">
         {icon && (
-          <div className="mb-6 flex justify-center opacity-75">
-            {icon}
-          </div>
+          <div className="mb-6 flex justify-center opacity-75">{icon}</div>
         )}
 
         <h2 className="text-4xl md:text-5xl font-bold leading-tight mb-6">
@@ -1203,32 +1221,20 @@ export function DemoCTA({
 
         {/* CTAs */}
         <div className="flex flex-col sm:flex-row gap-4 justify-center mb-12">
-          <Button
-            variant="secondary"
-            size="lg"
-            asChild={!!primaryCta.href}
-          >
+          <Button variant="secondary" size="lg" asChild={!!primaryCta.href}>
             {primaryCta.href ? (
               <a href={primaryCta.href}>{primaryCta.label} →</a>
             ) : (
-              <span onClick={primaryCta.onClick}>
-                {primaryCta.label} →
-              </span>
+              <span onClick={primaryCta.onClick}>{primaryCta.label} →</span>
             )}
           </Button>
 
           {secondaryCta && (
-            <Button
-              variant="outline"
-              size="lg"
-              asChild={!!secondaryCta.href}
-            >
+            <Button variant="outline" size="lg" asChild={!!secondaryCta.href}>
               {secondaryCta.href ? (
                 <a href={secondaryCta.href}>{secondaryCta.label}</a>
               ) : (
-                <span onClick={secondaryCta.onClick}>
-                  {secondaryCta.label}
-                </span>
+                <span onClick={secondaryCta.onClick}>{secondaryCta.label}</span>
               )}
             </Button>
           )}
@@ -1258,11 +1264,11 @@ export function DemoCTA({
 ### Import Pattern
 
 ```tsx
-import { DemoHero } from '@/components/demo/DemoHero';
-import { DemoPlayground } from '@/components/demo/DemoPlayground';
-import { DemoCodeBlock } from '@/components/demo/DemoCodeBlock';
-import { DemoStats } from '@/components/demo/DemoStats';
-import { DemoCTA } from '@/components/demo/DemoCTA';
+import { DemoHero } from "@/components/demo/DemoHero";
+import { DemoPlayground } from "@/components/demo/DemoPlayground";
+import { DemoCodeBlock } from "@/components/demo/DemoCodeBlock";
+import { DemoStats } from "@/components/demo/DemoStats";
+import { DemoCTA } from "@/components/demo/DemoCTA";
 ```
 
 ### Composition Pattern
@@ -1293,9 +1299,9 @@ import { DemoCTA } from '@/components/demo/DemoCTA';
 
 ## Version History
 
-| Version | Date | Changes |
-|---------|------|---------|
-| 1.0.0 | Oct 2024 | Initial component specifications |
+| Version | Date     | Changes                          |
+| ------- | -------- | -------------------------------- |
+| 1.0.0   | Oct 2024 | Initial component specifications |
 
 ---
 

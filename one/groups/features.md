@@ -1,3 +1,21 @@
+---
+title: Features
+dimension: groups
+category: features.md
+tags: ai, auth
+related_dimensions: connections, events, knowledge, people, things
+scope: global
+created: 2025-11-03
+updated: 2025-11-03
+version: 1.0.0
+ai_context: |
+  This document is part of the groups dimension in the features.md category.
+  Location: one/groups/features.md
+  Purpose: Documents one creator platform features
+  Related dimensions: connections, events, knowledge, people, things
+  For AI agents: Read this to understand features.
+---
+
 # ONE Creator Platform Features
 
 **Version:** 1.0.0
@@ -113,6 +131,7 @@
 **Total Time: 59 minutes to fully operational platform**
 
 **Milestone Tracking:**
+
 - Progress bar showing completion %
 - "You're this close!" encouragement
 - Estimated time per step
@@ -202,6 +221,7 @@
 **Total Time: 9.5 minutes from landing to fully engaged**
 
 **Engagement Metrics:**
+
 - % completing each step
 - Dropout points
 - Time per step
@@ -2689,6 +2709,7 @@
 ### MVP (Phase 1: Months 1-3)
 
 **Must Have (CRITICAL):**
+
 1. **Creator Onboarding Wizard** (< 60 min to launch)
 2. **Fan Onboarding Experience** (< 10 min to engaged)
 3. Creator profile & landing page
@@ -2702,12 +2723,14 @@
 11. Email/password auth + OAuth
 
 **Should Have:**
+
 1. Email newsletter
 2. Social media scheduling (1 platform)
 3. SEO basics
 4. Team management (basic)
 
 **Could Have:**
+
 1. Podcast hosting
 2. Advanced analytics
 3. UGC features (basic)
@@ -2717,6 +2740,7 @@
 ### Phase 2 Beta (Months 4-6)
 
 **Must Have:**
+
 1. Full AI clone features (teaching, community management)
 2. **AI Clone Quality optimization** (A/B testing, continuous learning)
 3. Full course platform (assessments, certificates)
@@ -2727,6 +2751,7 @@
 8. Notifications system
 
 **Should Have:**
+
 1. Email automation
 2. UGC features (full)
 3. OAuth integrations
@@ -2734,6 +2759,7 @@
 5. Team management (full)
 
 **Could Have:**
+
 1. Video chat with AI
 2. Advanced AI insights
 3. Podcast hosting (advanced)

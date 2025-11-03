@@ -1,3 +1,21 @@
+---
+title: Audit Agent Onboard Alignment
+dimension: knowledge
+category: audit-agent-onboard-alignment.md
+tags: agent, ai-agent, architecture, connections, events, groups, knowledge, ontology, people, things
+related_dimensions: connections, events, groups, people, things
+scope: global
+created: 2025-11-03
+updated: 2025-11-03
+version: 1.0.0
+ai_context: |
+  This document is part of the knowledge dimension in the audit-agent-onboard-alignment.md category.
+  Location: one/knowledge/audit-agent-onboard-alignment.md
+  Purpose: Documents audit: agent-onboard alignment with 6-dimension ontology
+  Related dimensions: connections, events, groups, people, things
+  For AI agents: Read this to understand audit agent onboard alignment.
+---
+
 # Audit: agent-onboard Alignment with 6-Dimension Ontology
 
 **Date:** 2025-11-03

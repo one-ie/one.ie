@@ -1,3 +1,21 @@
+---
+title: Quick Wins
+dimension: things
+category: plans
+tags: ai, events
+related_dimensions: events, knowledge, people
+scope: global
+created: 2025-11-03
+updated: 2025-11-03
+version: 1.0.0
+ai_context: |
+  This document is part of the things dimension in the plans category.
+  Location: one/things/plans/quick-wins.md
+  Purpose: Documents quick wins: top 10 improvements (this week)
+  Related dimensions: events, knowledge, people
+  For AI agents: Read this to understand quick wins.
+---
+
 # Quick Wins: Top 10 Improvements (This Week)
 
 **Version:** 1.0.0
@@ -12,6 +30,7 @@
 ## 🎯 Why Quick Wins Matter
 
 We have a solid foundation. These 10 wins will:
+
 - **Prevent 80% of future bugs** (error handling + types)
 - **Make code generation 50% more accurate** (patterns + templates)
 - **Reduce debugging time by 60%** (better errors + monitoring)
@@ -23,6 +42,7 @@ We have a solid foundation. These 10 wins will:
 ## 📋 Top 10 Quick Wins
 
 ### Quick Win 1: Error Taxonomy Definition
+
 **Impact:** ⭐⭐⭐⭐⭐ (Prevents 30% of bugs)
 **Time:** 2 hours
 **Status:** Ready to execute
@@ -31,6 +51,7 @@ We have a solid foundation. These 10 wins will:
 Define every possible error in the system as a typed, discriminated union. Replace generic errors with specific, actionable ones.
 
 **Why:**
+
 - Right now: Generic errors hide root causes
 - Target: Every error tells you exactly what went wrong
 - Benefit: Code generation knows error types, better error handling
@@ -38,6 +59,7 @@ Define every possible error in the system as a typed, discriminated union. Repla
 **How to Execute:**
 
 1. **Create error types file:**
+
 ```typescript
 // backend/convex/types/errors.ts
 
@@ -47,31 +69,35 @@ export type AppError =
   | { _tag: "Unauthorized"; requiredRole: string; userRole?: string }
   | { _tag: "Conflict"; resource: string; reason: string }
   | { _tag: "RateLimited"; retryAfterMs: number }
-  | { _tag: "InternalServerError"; context: string; originalError?: Error }
-  // ... add 20+ more
+  | { _tag: "InternalServerError"; context: string; originalError?: Error };
+// ... add 20+ more
 
 export function createError(tag: AppError["_tag"], data: any): AppError {
-  return { _tag: tag, ...data } as AppError
+  return { _tag: tag, ...data } as AppError;
 }
 ```
 
 2. **Audit current errors:** Search for `throw new Error`, `throw Error`, etc.
 
 3. **Replace with typed errors:**
+
 ```typescript
 // Before
-throw new Error("User not found")
+throw new Error("User not found");
 
 // After
-return Effect.fail(createError("EntityNotFound", {
-  entityId: userId,
-  entityType: "user"
-}))
+return Effect.fail(
+  createError("EntityNotFound", {
+    entityId: userId,
+    entityType: "user",
+  }),
+);
 ```
 
 4. **Document in /one/knowledge/errors.md**
 
 **Success Criteria:**
+
 - [ ] All errors defined in types/errors.ts
 - [ ] Zero generic Error throws in new code
 - [ ] Error types exported and usable
@@ -83,6 +109,7 @@ return Effect.fail(createError("EntityNotFound", {
 ---
 
 ### Quick Win 2: Type Safety Audit (Zero `any`)
+
 **Impact:** ⭐⭐⭐⭐ (Improves type safety 40%)
 **Time:** 3 hours
 **Status:** Ready to execute
@@ -91,6 +118,7 @@ return Effect.fail(createError("EntityNotFound", {
 Find every `any` type, understand why it's there, replace with specific types.
 
 **Why:**
+
 - Right now: ~15 instances of `any` in codebase
 - Target: 0 (except in entity.properties which is intentional)
 - Benefit: Type errors caught at compile time, not runtime
@@ -98,6 +126,7 @@ Find every `any` type, understand why it's there, replace with specific types.
 **How to Execute:**
 
 1. **Find all `any` types:**
+
 ```bash
 grep -r "any" src/ backend/ --include="*.ts" --include="*.tsx"
 ```
@@ -109,31 +138,37 @@ grep -r "any" src/ backend/ --include="*.ts" --include="*.tsx"
    - Is it a library limitation? → Use type assertion with comment
 
 3. **Examples of fixes:**
+
 ```typescript
 // Before
-const data: any = JSON.parse(json)
+const data: any = JSON.parse(json);
 
 // After
-interface ParsedData { /* ... */ }
-const data = JSON.parse(json) as ParsedData
+interface ParsedData {
+  /* ... */
+}
+const data = JSON.parse(json) as ParsedData;
 
 // For truly unknown (but rare)
 function process(data: unknown) {
-  if (typeof data === 'object') { /* ... */ }
+  if (typeof data === "object") {
+    /* ... */
+  }
 }
 
 // Entity properties ONLY (intentional)
 type Thing = {
-  properties: any  // OK - type-specific data
-}
+  properties: any; // OK - type-specific data
+};
 ```
 
 4. **Update tsconfig.json:**
+
 ```json
 {
   "compilerOptions": {
     "noImplicitAny": true,
-    "noExplicitAny": false,  // Allow explicit `any` only
+    "noExplicitAny": false, // Allow explicit `any` only
     "strictPropertyInitialization": true,
     "strictNullChecks": true
   }
@@ -141,6 +176,7 @@ type Thing = {
 ```
 
 **Success Criteria:**
+
 - [ ] Audit complete, list all `any` with reasons
 - [ ] All replaceable `any` replaced with specific types
 - [ ] TypeScript compiles with strict settings
@@ -152,6 +188,7 @@ type Thing = {
 ---
 
 ### Quick Win 3: Service Layer Documentation
+
 **Impact:** ⭐⭐⭐⭐ (Enables faster development)
 **Time:** 2 hours
 **Status:** Ready to execute
@@ -160,6 +197,7 @@ type Thing = {
 Create comprehensive documentation of all Effect.ts services, their dependencies, their contracts.
 
 **Why:**
+
 - Right now: Services exist but not formally documented
 - Target: Every service documented with examples
 - Benefit: Code generation knows how to use services, developers know what exists
@@ -167,26 +205,31 @@ Create comprehensive documentation of all Effect.ts services, their dependencies
 **How to Execute:**
 
 1. **List all services:**
+
 ```bash
 find . -name "*.service.ts" -o -name "*Service.ts"
 ```
 
 2. **For each service, create documentation:**
+
 ```markdown
 ## UserService
 
 **Purpose:** Manage user creation, authentication, profile updates
 
 **Dependencies:**
+
 - DataProvider (database access)
 - EventService (event logging)
 
 **Methods:**
 
 ### create(user: CreateUserInput): Effect<UserId, EntityNotFound | InvalidInput>
+
 Creates a new user and logs creation event.
 
 **Parameters:**
+
 - user.email: string - User email (must be valid)
 - user.password: string - Hashed password
 - user.name: string - Display name (2-50 chars)
@@ -194,19 +237,21 @@ Creates a new user and logs creation event.
 **Returns:** UserId on success
 
 **Errors:**
+
 - InvalidInput: Email invalid, password weak, name too short
 - Conflict: Email already exists
 
 **Example:**
 \`\`\`typescript
-const result = yield* UserService.create({
-  email: "user@example.com",
-  password: hashedPassword,
-  name: "John Doe"
+const result = yield\* UserService.create({
+email: "user@example.com",
+password: hashedPassword,
+name: "John Doe"
 })
 \`\`\`
 
 **Tests:**
+
 - test/services/user.service.test.ts
 ```
 
@@ -215,6 +260,7 @@ const result = yield* UserService.create({
 4. **Create service composition guide** showing how services work together
 
 **Success Criteria:**
+
 - [ ] All services documented with contracts
 - [ ] Dependencies mapped for each service
 - [ ] Examples provided for each method
@@ -227,6 +273,7 @@ const result = yield* UserService.create({
 ---
 
 ### Quick Win 4: Pre-commit Hooks Setup
+
 **Impact:** ⭐⭐⭐⭐ (Prevents 20% of commits with issues)
 **Time:** 3 hours
 **Status:** Ready to execute
@@ -235,6 +282,7 @@ const result = yield* UserService.create({
 Set up Git pre-commit hooks that automatically validate code before committing.
 
 **Why:**
+
 - Right now: Bad code can be committed
 - Target: No commits without passing tests, types, linting
 - Benefit: Catch issues before CI, faster feedback loop
@@ -242,6 +290,7 @@ Set up Git pre-commit hooks that automatically validate code before committing.
 **How to Execute:**
 
 1. **Install Husky (Git hooks manager):**
+
 ```bash
 cd web/
 npm install husky --save-dev
@@ -250,6 +299,7 @@ npm install lint-staged --save-dev
 ```
 
 2. **Create .husky/pre-commit:**
+
 ```bash
 #!/bin/sh
 . "$(dirname "$0")/_/husky.sh"
@@ -268,6 +318,7 @@ echo "✅ All checks passed!"
 ```
 
 3. **Create .husky/commit-msg** (validate commit message):
+
 ```bash
 #!/bin/sh
 . "$(dirname "$0")/_/husky.sh"
@@ -284,6 +335,7 @@ echo "✅ Commit message format valid"
 ```
 
 4. **Configure lint-staged in package.json:**
+
 ```json
 {
   "lint-staged": {
@@ -294,6 +346,7 @@ echo "✅ Commit message format valid"
 ```
 
 5. **Test it:**
+
 ```bash
 git add .
 git commit -m "test: check hooks"  # Should succeed
@@ -301,6 +354,7 @@ git commit -m "bad message"         # Should fail
 ```
 
 **Success Criteria:**
+
 - [ ] Husky installed and initialized
 - [ ] Pre-commit hook prevents bad commits
 - [ ] Commit message validation working
@@ -312,6 +366,7 @@ git commit -m "bad message"         # Should fail
 ---
 
 ### Quick Win 5: Query Performance Baselines
+
 **Impact:** ⭐⭐⭐⭐ (Know what to optimize)
 **Time:** 2 hours
 **Status:** Ready to execute
@@ -320,6 +375,7 @@ git commit -m "bad message"         # Should fail
 Measure performance of all database queries and create baseline.
 
 **Why:**
+
 - Right now: Don't know if queries are fast or slow
 - Target: Know performance of every query, set targets
 - Benefit: Can track improvements, catch regressions
@@ -327,58 +383,64 @@ Measure performance of all database queries and create baseline.
 **How to Execute:**
 
 1. **Create performance test file:**
+
 ```typescript
 // backend/convex/tests/performance.test.ts
 
-import { describe, it, expect } from "vitest"
-import { testConvex } from "./helpers"
+import { describe, it, expect } from "vitest";
+import { testConvex } from "./helpers";
 
 describe("Query Performance", () => {
   it("entities.list should complete <100ms", async (ctx) => {
-    const start = performance.now()
+    const start = performance.now();
 
-    const result = await ctx.db.query("entities")
+    const result = await ctx.db
+      .query("entities")
       .withIndex("group_type", (q) =>
-        q.eq("groupId", testGroupId).eq("type", "user")
+        q.eq("groupId", testGroupId).eq("type", "user"),
       )
       .take(100)
-      .collect()
+      .collect();
 
-    const duration = performance.now() - start
-    console.log(`entities.list: ${duration.toFixed(2)}ms`)
+    const duration = performance.now() - start;
+    console.log(`entities.list: ${duration.toFixed(2)}ms`);
 
-    expect(duration).toBeLessThan(100)
-    expect(result.length).toBeGreaterThan(0)
-  })
+    expect(duration).toBeLessThan(100);
+    expect(result.length).toBeGreaterThan(0);
+  });
 
   // Test all other queries...
-})
+});
 ```
 
 2. **Run against production data snapshot:**
+
 ```bash
 npm run test:performance
 ```
 
 3. **Create baseline report:**
+
 ```markdown
 # Query Performance Baseline (2025-10-24)
 
 ## Measurements
 
-| Query | Time (ms) | Target | Status |
-|-------|-----------|--------|--------|
-| entities.list | 15 | <100 | ✅ |
-| entities.get | 5 | <50 | ✅ |
-| connections.list | 22 | <100 | ✅ |
-| events.list | 18 | <100 | ✅ |
+| Query            | Time (ms) | Target | Status |
+| ---------------- | --------- | ------ | ------ |
+| entities.list    | 15        | <100   | ✅     |
+| entities.get     | 5         | <50    | ✅     |
+| connections.list | 22        | <100   | ✅     |
+| events.list      | 18        | <100   | ✅     |
 
 ## Notes
+
 - All queries meet targets
 - entities.list is slowest, may need optimization as data grows
 - Recommend re-running monthly
 
 ## Optimization Priorities
+
 1. Index review needed for entities.list
 2. Consider caching for hot queries
 ```
@@ -386,6 +448,7 @@ npm run test:performance
 4. **Add to CI/CD** to catch regressions
 
 **Success Criteria:**
+
 - [ ] All queries benchmarked
 - [ ] Baseline report created
 - [ ] Performance targets documented
@@ -398,6 +461,7 @@ npm run test:performance
 ---
 
 ### Quick Win 6: API Documentation Auto-Generation
+
 **Impact:** ⭐⭐⭐ (Docs never go out of sync)
 **Time:** 3 hours
 **Status:** Ready to execute
@@ -406,6 +470,7 @@ npm run test:performance
 Create script that auto-generates API documentation from code comments.
 
 **Why:**
+
 - Right now: API docs must be updated manually (they go stale)
 - Target: Docs auto-generated from code
 - Benefit: Docs always accurate, developers see them in IDE
@@ -413,7 +478,8 @@ Create script that auto-generates API documentation from code comments.
 **How to Execute:**
 
 1. **Add JSDoc comments to all queries and mutations:**
-```typescript
+
+````typescript
 // backend/convex/queries/entities.ts
 
 /**
@@ -438,45 +504,53 @@ Create script that auto-generates API documentation from code comments.
  * ```
  */
 export const list = query({
-  args: { groupId: v.id("groups"), type: v.string(), limit: v.optional(v.number()) },
-  handler: async (ctx, args) => { /* ... */ }
-})
-```
+  args: {
+    groupId: v.id("groups"),
+    type: v.string(),
+    limit: v.optional(v.number()),
+  },
+  handler: async (ctx, args) => {
+    /* ... */
+  },
+});
+````
 
 2. **Create documentation generator:**
+
 ```typescript
 // scripts/generate-api-docs.ts
 
-import fs from "fs"
-import path from "path"
-import { parseTypescript } from "some-parser"
+import fs from "fs";
+import path from "path";
+import { parseTypescript } from "some-parser";
 
 function generateApiDocs() {
-  const docsDir = "backend/convex/queries"
-  const files = fs.readdirSync(docsDir)
+  const docsDir = "backend/convex/queries";
+  const files = fs.readdirSync(docsDir);
 
-  let markdown = "# API Documentation\n\n"
+  let markdown = "# API Documentation\n\n";
 
   for (const file of files) {
-    const source = fs.readFileSync(path.join(docsDir, file), "utf-8")
-    const exports = parseTypescript(source)
+    const source = fs.readFileSync(path.join(docsDir, file), "utf-8");
+    const exports = parseTypescript(source);
 
     for (const exp of exports) {
       if (exp.jsdoc) {
-        markdown += `## ${exp.name}\n`
-        markdown += exp.jsdoc + "\n\n"
+        markdown += `## ${exp.name}\n`;
+        markdown += exp.jsdoc + "\n\n";
       }
     }
   }
 
-  fs.writeFileSync("one/connections/api-generated.md", markdown)
-  console.log("✅ API docs generated")
+  fs.writeFileSync("one/connections/api-generated.md", markdown);
+  console.log("✅ API docs generated");
 }
 
-generateApiDocs()
+generateApiDocs();
 ```
 
 3. **Add to build process:**
+
 ```json
 {
   "scripts": {
@@ -486,6 +560,7 @@ generateApiDocs()
 ```
 
 4. **Create API reference page:**
+
 ```astro
 ---
 // web/src/pages/api-reference.astro
@@ -500,6 +575,7 @@ const apiDocs = await readFile("one/connections/api-generated.md", "utf-8")
 ```
 
 **Success Criteria:**
+
 - [ ] JSDoc added to all queries and mutations
 - [ ] Generator script created and working
 - [ ] API docs auto-generated on build
@@ -512,6 +588,7 @@ const apiDocs = await readFile("one/connections/api-generated.md", "utf-8")
 ---
 
 ### Quick Win 7: Component Pattern Library
+
 **Impact:** ⭐⭐⭐ (40% faster component development)
 **Time:** 4 hours
 **Status:** Ready to execute
@@ -520,6 +597,7 @@ const apiDocs = await readFile("one/connections/api-generated.md", "utf-8")
 Create a reusable component library with all patterns, with examples and stories.
 
 **Why:**
+
 - Right now: Each feature re-invents components
 - Target: Copy-paste templates for common patterns
 - Benefit: Faster development, consistency, accessibility guaranteed
@@ -527,98 +605,103 @@ Create a reusable component library with all patterns, with examples and stories
 **How to Execute:**
 
 1. **Create patterns documentation:**
+
 ```markdown
 # Component Patterns
 
 ## Form Component Pattern
 
 ### Basic Usage
+
 \`\`\`tsx
 export function UserForm({ onSubmit }: { onSubmit: (user: User) => Promise<void> }) {
-  const [loading, setLoading] = useState(false)
-  const [error, setError] = useState<AppError | null>(null)
+const [loading, setLoading] = useState(false)
+const [error, setError] = useState<AppError | null>(null)
 
-  async function handleSubmit(data: FormData) {
-    try {
-      setLoading(true)
-      setError(null)
-      await onSubmit(data)
-    } catch (e) {
-      setError(e as AppError)
-    } finally {
-      setLoading(false)
-    }
-  }
+async function handleSubmit(data: FormData) {
+try {
+setLoading(true)
+setError(null)
+await onSubmit(data)
+} catch (e) {
+setError(e as AppError)
+} finally {
+setLoading(false)
+}
+}
 
-  return (
-    <form onSubmit={handleSubmit}>
-      {error && <ErrorAlert error={error} />}
-      {/* form fields */}
-      <button disabled={loading}>
-        {loading ? "Saving..." : "Save"}
-      </button>
-    </form>
-  )
+return (
+<form onSubmit={handleSubmit}>
+{error && <ErrorAlert error={error} />}
+{/_ form fields _/}
+<button disabled={loading}>
+{loading ? "Saving..." : "Save"}
+</button>
+</form>
+)
 }
 \`\`\`
 
 ## List Component Pattern
+
 \`\`\`tsx
 export function UserList({ groupId }: { groupId: string }) {
-  const users = useQuery(api.queries.users.list, { groupId })
-  const [selected, setSelected] = useState<string | null>(null)
+const users = useQuery(api.queries.users.list, { groupId })
+const [selected, setSelected] = useState<string | null>(null)
 
-  if (users === undefined) return <Skeleton />
+if (users === undefined) return <Skeleton />
 
-  return (
-    <div>
-      {users.length === 0 ? (
-        <EmptyState />
-      ) : (
-        <ul>
-          {users.map(user => (
-            <li key={user._id} onClick={() => setSelected(user._id)}>
-              {user.name}
-            </li>
-          ))}
-        </ul>
-      )}
-    </div>
-  )
+return (
+<div>
+{users.length === 0 ? (
+<EmptyState />
+) : (
+<ul>
+{users.map(user => (
+<li key={user.\_id} onClick={() => setSelected(user.\_id)}>
+{user.name}
+</li>
+))}
+</ul>
+)}
+</div>
+)
 }
 \`\`\`
 
 ## Modal Component Pattern
+
 \`\`\`tsx
 export function ConfirmDialog({
-  open,
-  onConfirm,
-  onCancel,
-  title,
-  message,
-  loading = false
+open,
+onConfirm,
+onCancel,
+title,
+message,
+loading = false
 }: ConfirmDialogProps) {
-  return (
-    <Dialog open={open} onOpenChange={onCancel}>
-      <DialogContent>
-        <DialogTitle>{title}</DialogTitle>
-        <DialogDescription>{message}</DialogDescription>
-        <DialogFooter>
-          <Button variant="outline" onClick={onCancel} disabled={loading}>
-            Cancel
-          </Button>
-          <Button onClick={onConfirm} disabled={loading}>
-            {loading ? "Loading..." : "Confirm"}
-          </Button>
-        </DialogFooter>
-      </DialogContent>
-    </Dialog>
-  )
+return (
+<Dialog open={open} onOpenChange={onCancel}>
+<DialogContent>
+<DialogTitle>{title}</DialogTitle>
+<DialogDescription>{message}</DialogDescription>
+<DialogFooter>
+<Button variant="outline" onClick={onCancel} disabled={loading}>
+Cancel
+</Button>
+<Button onClick={onConfirm} disabled={loading}>
+{loading ? "Loading..." : "Confirm"}
+</Button>
+</DialogFooter>
+</DialogContent>
+</Dialog>
+)
 }
 \`\`\`
 ```
 
 2. **Create example components in components/patterns/:**
+
 ```
 src/components/patterns/
 ├── FormPattern.tsx
@@ -630,34 +713,39 @@ src/components/patterns/
 ```
 
 3. **Add Storybook stories:**
+
 ```typescript
 // src/components/patterns/FormPattern.stories.ts
 
-import type { Meta, StoryObj } from "@storybook/react"
-import { FormPattern } from "./FormPattern"
+import type { Meta, StoryObj } from "@storybook/react";
+import { FormPattern } from "./FormPattern";
 
 const meta: Meta<typeof FormPattern> = {
   component: FormPattern,
   tags: ["autodocs"],
-}
+};
 
-export default meta
-type Story = StoryObj<typeof meta>
+export default meta;
+type Story = StoryObj<typeof meta>;
 
-export const Default: Story = {}
+export const Default: Story = {};
 export const Loading: Story = {
-  args: { disabled: true }
-}
+  args: { disabled: true },
+};
 export const WithError: Story = {
-  args: { error: { _tag: "InvalidInput", field: "email", reason: "Invalid email" } }
-}
+  args: {
+    error: { _tag: "InvalidInput", field: "email", reason: "Invalid email" },
+  },
+};
 ```
 
 4. **Create component checklist:**
+
 ```markdown
 # Component Checklist
 
 Every component should have:
+
 - [ ] Type-safe props
 - [ ] Loading state
 - [ ] Error handling
@@ -671,6 +759,7 @@ Use patterns from /src/components/patterns/
 ```
 
 **Success Criteria:**
+
 - [ ] Pattern library documented in /one/knowledge/patterns/components.md
 - [ ] 5+ pattern examples in src/components/patterns/
 - [ ] Storybook stories created for all patterns
@@ -683,6 +772,7 @@ Use patterns from /src/components/patterns/
 ---
 
 ### Quick Win 8: Test Infrastructure Organization
+
 **Impact:** ⭐⭐⭐ (Makes testing 3x faster)
 **Time:** 3 hours
 **Status:** Ready to execute
@@ -691,6 +781,7 @@ Use patterns from /src/components/patterns/
 Organize test folders, create reusable test fixtures and utilities.
 
 **Why:**
+
 - Right now: Tests scattered, hard to find patterns
 - Target: Clear test organization, reusable fixtures
 - Benefit: Write tests 3x faster, consistent test style
@@ -698,6 +789,7 @@ Organize test folders, create reusable test fixtures and utilities.
 **How to Execute:**
 
 1. **Organize test directory:**
+
 ```
 web/test/
 ├── fixtures/                    # Reusable test data
@@ -729,6 +821,7 @@ web/test/
 ```
 
 2. **Create test fixtures:**
+
 ```typescript
 // test/fixtures/users.ts
 
@@ -741,57 +834,64 @@ export const TEST_USER = {
   status: "active" as const,
   createdAt: 1000000,
   updatedAt: 1000000,
-}
+};
 
 export const TEST_ADMIN = {
   ...TEST_USER,
   _id: "u_test_admin_1" as Id<"entities">,
   name: "Test Admin",
-  properties: { email: "admin@example.com", role: "admin" }
-}
+  properties: { email: "admin@example.com", role: "admin" },
+};
 
 export function createTestUser(overrides?: Partial<typeof TEST_USER>) {
-  return { ...TEST_USER, ...overrides }
+  return { ...TEST_USER, ...overrides };
 }
 ```
 
 3. **Create test helpers:**
+
 ```typescript
 // test/helpers/render.tsx
 
-import { render as rtlRender, RenderOptions } from "@testing-library/react"
-import { TestProvider } from "@/providers/test-provider"
+import { render as rtlRender, RenderOptions } from "@testing-library/react";
+import { TestProvider } from "@/providers/test-provider";
 
 export function render(ui: React.ReactElement, options?: RenderOptions) {
   return rtlRender(ui, {
     wrapper: TestProvider,
     ...options,
-  })
+  });
 }
 
-export * from "@testing-library/react"
+export * from "@testing-library/react";
 ```
 
 4. **Create reusable assertions:**
+
 ```typescript
 // test/helpers/assertions.ts
 
-import { expect } from "vitest"
+import { expect } from "vitest";
 
 export function expectError(error: unknown, tag: string) {
-  expect(error).toEqual(expect.objectContaining({
-    _tag: tag
-  }))
+  expect(error).toEqual(
+    expect.objectContaining({
+      _tag: tag,
+    }),
+  );
 }
 
 export function expectSuccess<T>(result: unknown, expectedValue?: T) {
-  expect(result).toEqual(expect.not.objectContaining({
-    _tag: expect.anything()
-  }))
+  expect(result).toEqual(
+    expect.not.objectContaining({
+      _tag: expect.anything(),
+    }),
+  );
 }
 ```
 
 5. **Create test template file:**
+
 ```markdown
 # Test Template
 
@@ -803,11 +903,11 @@ import { ExampleService } from "@/lib/services/example.service"
 import { TEST_USER } from "../fixtures"
 
 describe("ExampleService", () => {
-  describe("method()", () => {
-    it("should succeed with valid input", async () => {
-      const result = await ExampleService.method(TEST_USER)
-      expect(result).toBeDefined()
-    })
+describe("method()", () => {
+it("should succeed with valid input", async () => {
+const result = await ExampleService.method(TEST_USER)
+expect(result).toBeDefined()
+})
 
     it("should fail with invalid input", async () => {
       const result = await ExampleService.method(null as any)
@@ -817,12 +917,14 @@ describe("ExampleService", () => {
     it("should handle edge cases", async () => {
       // Test edge case
     })
-  })
+
+})
 })
 \`\`\`
 ```
 
 **Success Criteria:**
+
 - [ ] Test directory reorganized
 - [ ] Fixtures created for all entities
 - [ ] Test helpers created and exported
@@ -836,6 +938,7 @@ describe("ExampleService", () => {
 ---
 
 ### Quick Win 9: Convex Schema Validation Script
+
 **Impact:** ⭐⭐⭐ (Prevents schema drift)
 **Time:** 2 hours
 **Status:** Ready to execute
@@ -844,6 +947,7 @@ describe("ExampleService", () => {
 Create script that validates Convex schema against 6-dimension ontology specification.
 
 **Why:**
+
 - Right now: Schema changes manually, can drift from ontology
 - Target: Automated validation that schema matches spec
 - Benefit: Catch schema errors before they reach database
@@ -851,47 +955,48 @@ Create script that validates Convex schema against 6-dimension ontology specific
 **How to Execute:**
 
 1. **Create schema validator:**
+
 ```typescript
 // scripts/validate-schema.ts
 
-import fs from "fs"
-import { readFile } from "fs/promises"
+import fs from "fs";
+import { readFile } from "fs/promises";
 
 interface SchemaSpec {
   tables: {
     [name: string]: {
-      fields: { [field: string]: string }
-      indexes: string[]
-      required: string[]
-    }
-  }
+      fields: { [field: string]: string };
+      indexes: string[];
+      required: string[];
+    };
+  };
 }
 
 async function validateSchema() {
   // Read ontology spec
-  const ontologyMd = await readFile("one/knowledge/ontology.md", "utf-8")
+  const ontologyMd = await readFile("one/knowledge/ontology.md", "utf-8");
 
   // Extract schema requirements from ontology
-  const spec = parseOntologySpec(ontologyMd)
+  const spec = parseOntologySpec(ontologyMd);
 
   // Read actual schema
-  const schemaTs = await readFile("backend/convex/schema.ts", "utf-8")
-  const actualSchema = parseConvexSchema(schemaTs)
+  const schemaTs = await readFile("backend/convex/schema.ts", "utf-8");
+  const actualSchema = parseConvexSchema(schemaTs);
 
   // Validate
-  const errors: string[] = []
+  const errors: string[] = [];
 
   // Check all required tables exist
   for (const [tableName, tableSpec] of Object.entries(spec.tables)) {
     if (!actualSchema[tableName]) {
-      errors.push(`❌ Table "${tableName}" missing from schema`)
-      continue
+      errors.push(`❌ Table "${tableName}" missing from schema`);
+      continue;
     }
 
     // Check all required fields exist
     for (const field of tableSpec.required) {
       if (!actualSchema[tableName].fields[field]) {
-        errors.push(`❌ Field "${field}" missing from table "${tableName}"`)
+        errors.push(`❌ Field "${field}" missing from table "${tableName}"`);
       }
     }
   }
@@ -899,23 +1004,24 @@ async function validateSchema() {
   // Check all tables have groupId (except groups table)
   for (const tableName in actualSchema) {
     if (tableName !== "groups" && !actualSchema[tableName].fields.groupId) {
-      errors.push(`❌ Table "${tableName}" missing groupId for multi-tenancy`)
+      errors.push(`❌ Table "${tableName}" missing groupId for multi-tenancy`);
     }
   }
 
   if (errors.length > 0) {
-    console.error("❌ Schema validation failed:\n")
-    errors.forEach(e => console.error(e))
-    process.exit(1)
+    console.error("❌ Schema validation failed:\n");
+    errors.forEach((e) => console.error(e));
+    process.exit(1);
   }
 
-  console.log("✅ Schema validation passed!")
+  console.log("✅ Schema validation passed!");
 }
 
-validateSchema()
+validateSchema();
 ```
 
 2. **Add to build process:**
+
 ```json
 {
   "scripts": {
@@ -926,32 +1032,40 @@ validateSchema()
 ```
 
 3. **Create schema validation test:**
+
 ```typescript
 // backend/convex/schema.test.ts
 
-import { describe, it, expect } from "vitest"
-import { schema } from "./schema"
+import { describe, it, expect } from "vitest";
+import { schema } from "./schema";
 
 describe("Schema Validation", () => {
   it("should have all required tables", () => {
-    const requiredTables = ["groups", "entities", "connections", "events", "knowledge"]
+    const requiredTables = [
+      "groups",
+      "entities",
+      "connections",
+      "events",
+      "knowledge",
+    ];
     for (const table of requiredTables) {
-      expect(schema).toHaveProperty(table)
+      expect(schema).toHaveProperty(table);
     }
-  })
+  });
 
   it("should have groupId in all non-group tables", () => {
-    const tables = Object.entries(schema)
+    const tables = Object.entries(schema);
     for (const [name, table] of tables) {
       if (name !== "groups") {
-        expect(table._def.fields).toHaveProperty("groupId")
+        expect(table._def.fields).toHaveProperty("groupId");
       }
     }
-  })
-})
+  });
+});
 ```
 
 **Success Criteria:**
+
 - [ ] Validator script created
 - [ ] Script validates against ontology
 - [ ] Added to build process
@@ -965,6 +1079,7 @@ describe("Schema Validation", () => {
 ---
 
 ### Quick Win 10: Development Environment Documentation
+
 **Impact:** ⭐⭐⭐ (Onboards new developers in 30 min)
 **Time:** 2 hours
 **Status:** Ready to execute
@@ -973,6 +1088,7 @@ describe("Schema Validation", () => {
 Create comprehensive guide for setting up development environment locally.
 
 **Why:**
+
 - Right now: Setup takes hours, requires asking questions
 - Target: One-command setup, everything documented
 - Benefit: New developers productive in 30 minutes
@@ -980,6 +1096,7 @@ Create comprehensive guide for setting up development environment locally.
 **How to Execute:**
 
 1. **Create setup script:**
+
 ```bash
 #!/bin/bash
 # scripts/setup-dev.sh
@@ -1023,13 +1140,16 @@ echo "📚 Learn more: https://one.ie/docs"
 ```
 
 2. **Create comprehensive setup guide:**
-```markdown
+
+````markdown
 # Development Setup Guide
 
 ## Quick Start (5 minutes)
 
 \`\`\`bash
+
 # Clone and setup
+
 git clone https://github.com/one-ie/one.git
 cd one
 bash scripts/setup-dev.sh
@@ -1044,33 +1164,49 @@ bash scripts/setup-dev.sh
 ## Manual Setup (if automated setup fails)
 
 ### 1. Install Dependencies
+
 \`\`\`bash
 bun install
 \`\`\`
 
 ### 2. Setup Environment Files
+
 \`\`\`bash
+
 # Frontend
+
 cp web/.env.example web/.env.local
+
 # Update with your values
 
 # Backend
+
 cp backend/.env.example backend/.env.local
+
 # Update with your values
+
 \`\`\`
 
 ### 3. Start Development Servers
+
 \`\`\`bash
+
 # Terminal 1: Frontend
+
 cd web && bun run dev
+
 # Opens localhost:4321
 
 # Terminal 2: Backend
+
 cd backend && npx convex dev
+
 # Opens localhost:3210
+
 \`\`\`
 
 ### 4. Run Tests
+
 \`\`\`bash
 bun test
 \`\`\`
@@ -1078,21 +1214,28 @@ bun test
 ## Common Issues
 
 ### Port 4321 Already in Use
+
 \`\`\`bash
+
 # Find and kill process
+
 lsof -i :4321
 kill -9 <PID>
 \`\`\`
 
 ### Type Errors After Git Pull
+
 \`\`\`bash
 cd web && bun run type-check
 cd ../backend && npm run validate:schema
 \`\`\`
 
 ### Tests Failing
+
 \`\`\`bash
+
 # Clear test cache
+
 rm -rf .vitest
 bun test
 \`\`\`
@@ -1101,10 +1244,10 @@ bun test
 
 \`\`\`
 one/
-├── web/              # Frontend (Astro + React)
-├── backend/          # Backend (Convex)
-├── one/              # Documentation
-└── scripts/          # Automation scripts
+├── web/ # Frontend (Astro + React)
+├── backend/ # Backend (Convex)
+├── one/ # Documentation
+└── scripts/ # Automation scripts
 \`\`\`
 
 ## Development Workflow
@@ -1128,9 +1271,10 @@ one/
 - Read CLAUDE.md (1 hour)
 - Pick a quick win from /one/things/plans/quick-wins.md
 - Start building!
-\`\`\`
+  \`\`\`
 
 3. **Create .env.example files:**
+
 ```bash
 # web/.env.example
 PUBLIC_CONVEX_URL=https://shocking-falcon-870.convex.cloud
@@ -1143,8 +1287,10 @@ CONVEX_DEPLOYMENT=prod:shocking-falcon-870
 RESEND_API_KEY=your-resend-key
 RESEND_FROM_EMAIL=noreply@example.com
 ```
+````
 
 4. **Add to README.md:**
+
 ```markdown
 ## Quick Start
 
@@ -1157,6 +1303,7 @@ See [Development Setup Guide](one/knowledge/setup.md) for detailed instructions.
 ```
 
 **Success Criteria:**
+
 - [ ] Setup script created and tested
 - [ ] Setup guide documentation complete
 - [ ] .env.example files created
@@ -1172,6 +1319,7 @@ See [Development Setup Guide](one/knowledge/setup.md) for detailed instructions.
 ## 🎯 Execution Plan
 
 ### Today (Parallel Execution)
+
 ```
 Team A: Quick Win 1 (Error Taxonomy)      → 2 hours
 Team B: Quick Win 2 (Type Safety Audit)   → 3 hours
@@ -1180,6 +1328,7 @@ Team D: Quick Win 9 (Schema Validation)   → 2 hours
 ```
 
 ### Tomorrow (Parallel Execution)
+
 ```
 Team A: Quick Win 3 (Services Docs)       → 2 hours
 Team B: Quick Win 5 (Performance Baseline)→ 2 hours
@@ -1188,6 +1337,7 @@ Team D: Quick Win 8 (Test Infrastructure) → 3 hours
 ```
 
 ### Day 3 (Parallel Execution)
+
 ```
 Team A: Quick Win 7 (Components)          → 4 hours
 Team B: Quick Win 10 (Setup Guide)        → 2 hours
@@ -1203,24 +1353,28 @@ Team C/D: Integration & Testing           → 3 hours
 ## 📊 Expected Impact
 
 ### Code Quality
+
 - ✅ Type safety: +40%
 - ✅ Error handling: +60%
 - ✅ Documentation: +80%
 - ✅ Consistency: +50%
 
 ### Developer Experience
+
 - ✅ Setup time: 5 hours → 30 minutes
 - ✅ Time to first PR: 1 day → 2 hours
 - ✅ Testing speed: +300%
 - ✅ Confidence: +100%
 
 ### Platform Stability
+
 - ✅ Preventable bugs: -80%
 - ✅ Type errors: -100%
 - ✅ Runtime errors: -40%
 - ✅ Bad commits: -95%
 
 ### Team Velocity
+
 - ✅ Feature development: +40%
 - ✅ Debugging time: -60%
 - ✅ Code review time: -40%
@@ -1248,6 +1402,7 @@ After all 10 quick wins complete:
 ## 🚀 Next Phase
 
 After quick wins complete:
+
 - Move to `/one/things/plans/sequence.md` for 100-task strengthening plan
 - Each quick win unblocks multiple sequence tasks
 - Code generation becomes 2x more accurate

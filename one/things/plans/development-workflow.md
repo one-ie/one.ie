@@ -1,3 +1,21 @@
+---
+title: Development Workflow
+dimension: things
+category: plans
+tags: ai, architecture, backend
+related_dimensions: events
+scope: global
+created: 2025-11-03
+updated: 2025-11-03
+version: 1.0.0
+ai_context: |
+  This document is part of the things dimension in the plans category.
+  Location: one/things/plans/development-workflow.md
+  Purpose: Documents development workflow: managing /web and /oneie
+  Related dimensions: events
+  For AI agents: Read this to understand development workflow.
+---
+
 # Development Workflow: Managing /web and /oneie
 
 **Status:** Infer 46 - Active Development
@@ -126,6 +144,7 @@ bun run deploy
 ```
 
 **What `bun run build:starter` does:**
+
 - Copies `/oneie/src` → `/web/src`
 - Replaces homepage with template chooser
 - Simplifies sidebar (2 items only)
@@ -133,6 +152,7 @@ bun run deploy
 - Updates package.json name to "oneie-starter"
 
 **Key Points:**
+
 - `/oneie/` is the **authoritative source**
 - `/web/` is **generated** from `/oneie/`
 - Both have their own Git repos and deployments
@@ -140,6 +160,7 @@ bun run deploy
 - Changes in `/web/` will be OVERWRITTEN next time you generate
 
 **Don't do:**
+
 - ❌ Edit `/web/` directly (will be overwritten)
 - ❌ Edit `/apps/oneie/` (it's a copy for assembly)
 - ❌ Commit changes in `/web/` before generating (they get lost)
@@ -180,6 +201,7 @@ cd /Users/toc/Server/ONE
 ```
 
 **Flow:**
+
 1. Edit `/oneie/`
 2. Run `bun run build:starter` to generate `/web/`
 3. Commit both
@@ -245,6 +267,7 @@ bun run deploy
 ### Rule 1: Where to Edit (Choose ONE Pattern)
 
 #### **PATTERN A: Direct Development (RECOMMENDED)**
+
 Use this when developing features for **production-ready** `/web`
 
 ```bash
@@ -272,6 +295,7 @@ cd /Users/toc/Server/ONE
 ```
 
 #### **PATTERN B: Branch Development (For Complex Features)**
+
 Use this when developing **experimental features** that shouldn't break production yet
 
 ```bash
@@ -296,6 +320,7 @@ cd /Users/toc/Server/ONE
 ```
 
 #### **PATTERN C: Temporary Edits (For Quick Fixes)**
+
 Use this when fixing **urgent bugs** that need immediate testing
 
 ```bash
@@ -681,6 +706,7 @@ vim /one/knowledge/ontology.md
 ### Problem: I edited `/web` but changes didn't sync to `/apps/oneie/web`
 
 **Solution:**
+
 1. Verify you committed in `/web`: `cd /web && git log`
 2. Verify you pushed: `cd /web && git status` (should be clean)
 3. Run sync: `cd /Users/toc/Server/ONE && ./scripts/release.sh sync`
@@ -703,6 +729,7 @@ cp -r /web/ /apps/oneie/web/
 
 **Solution:**
 Install rsync:
+
 ```bash
 # macOS
 brew install rsync
@@ -714,6 +741,7 @@ sudo apt-get install rsync
 ### Problem: Changes in `/web` are committed but `release.sh` doesn't see them
 
 **Solution:**
+
 1. Check Git status: `cd /web && git status`
 2. Make sure branches are up to date: `cd /web && git pull origin main`
 3. Verify HEAD: `cd /web && git log -1`
@@ -759,41 +787,46 @@ What are you developing?
 
 ## Summary Table
 
-| What You're Building | Edit Where | Deploy | Syncing | Examples |
-|--------|------|--------|---------|----------|
-| **one.ie (Production)** | `/oneie/` | `bun run deploy` | None needed | New pages, features, bugs |
-| **Starter Template** | `/web/` | `./scripts/release.sh patch` | `./scripts/release.sh sync` | Reusable components, patterns |
-| **Both Simultaneously** | Both separately | Each has own deploy | Manual copy-paste | Shared components + production features |
-| **Backend Services** | `/backend/` | `npx convex deploy` | Shared by all | Mutations, queries, auth |
-| **Documentation** | `/one/` | Push to `one-ie/ontology` | `./scripts/release.sh sync` | Ontology, patterns, guides |
-| **CLI Tool** | `/cli/` | `npm publish` | `./scripts/release.sh sync` | oneie CLI commands |
+| What You're Building    | Edit Where      | Deploy                       | Syncing                     | Examples                                |
+| ----------------------- | --------------- | ---------------------------- | --------------------------- | --------------------------------------- |
+| **one.ie (Production)** | `/oneie/`       | `bun run deploy`             | None needed                 | New pages, features, bugs               |
+| **Starter Template**    | `/web/`         | `./scripts/release.sh patch` | `./scripts/release.sh sync` | Reusable components, patterns           |
+| **Both Simultaneously** | Both separately | Each has own deploy          | Manual copy-paste           | Shared components + production features |
+| **Backend Services**    | `/backend/`     | `npx convex deploy`          | Shared by all               | Mutations, queries, auth                |
+| **Documentation**       | `/one/`         | Push to `one-ie/ontology`    | `./scripts/release.sh sync` | Ontology, patterns, guides              |
+| **CLI Tool**            | `/cli/`         | `npm publish`                | `./scripts/release.sh sync` | oneie CLI commands                      |
 
 ---
 
 ## Golden Rules
 
 **Rule 1: Two Independent Projects**
+
 - `/oneie/` is independent (one.ie production)
 - `/web/` is independent (starter template)
 - **Syncing `/web` does NOT affect `/oneie`**
 
 **Rule 2: Edit at the Source**
+
 - Building one.ie? Edit `/oneie/` directly
 - Building starter? Edit `/web/` directly
 - **Never edit `/apps/*/web/` - it's auto-generated**
 
 **Rule 3: Deployment**
+
 - `/oneie/` deploys directly via `bun run deploy`
 - `/web/` deploys via `./scripts/release.sh patch`
 - `/backend/` deploys via `npx convex deploy`
 
 **Rule 4: Sharing Code Between Projects**
+
 - Commit to source (`/web/` or `/oneie/`)
 - Sync `/web/` with `./scripts/release.sh sync`
 - Manually copy between `/web/` and `/oneie/` as needed
 - Don't expect automatic syncing between them
 
 **Rule 5: Never Break the Flow**
+
 - Always commit before running release scripts
 - Always push to origin before syncing
 - Always test locally before deploying
@@ -898,6 +931,7 @@ A: No. They're intentionally independent. Copy code manually when needed, or use
 
 **Q: How do I share components between /web and /oneie?**
 A: Either:
+
 1. Copy from source to destination manually
 2. Use `./scripts/release.sh sync` to copy /web to /apps/ (but this doesn't affect /oneie)
 3. Create a shared package in `@oneie/components` and import from both projects
@@ -907,6 +941,7 @@ A: Yes! Always commit and push to Git before running release scripts.
 
 **Q: Can I merge /web and /oneie into one project?**
 A: Yes, but you'd lose the separation of concerns:
+
 - `/web/` = reusable for users
 - `/oneie/` = production-specific
 
@@ -914,6 +949,7 @@ Better to keep them separate and copy code between them explicitly.
 
 **Q: What if I break the sync process?**
 A: Start over:
+
 ```bash
 cd /Users/toc/Server/ONE
 ./scripts/release.sh sync  # Re-syncs everything
@@ -921,4 +957,3 @@ cd /Users/toc/Server/ONE
 
 **Q: Do I need to use /apps/ directories?**
 A: Only if you're releasing to multiple GitHub repos (`one-ie/oneie`, `one-ie/one`, etc.). For local development, you can ignore them.
-

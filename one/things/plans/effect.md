@@ -1,3 +1,21 @@
+---
+title: Effect
+dimension: things
+category: plans
+tags: architecture, backend, frontend, inference, ontology, testing
+related_dimensions: connections, events, people
+scope: global
+created: 2025-11-03
+updated: 2025-11-03
+version: 1.0.0
+ai_context: |
+  This document is part of the things dimension in the plans category.
+  Location: one/things/plans/effect.md
+  Purpose: Documents effect.ts integration plan: backend-agnostic architecture
+  Related dimensions: connections, events, people
+  For AI agents: Read this to understand effect.
+---
+
 # Effect.ts Integration Plan: Backend-Agnostic Architecture
 
 **Status:** ✅ Phase 1-2 Complete (DataProvider + Services) | 🚧 Phases 3-7 In Progress
@@ -74,21 +92,25 @@ Based on production patterns from 14.ai (AI customer support) and the unified im
 ### Key Architectural Decisions
 
 **1. Backend-Agnostic by Default**
+
 - Services use `DataProvider`, not direct backend calls
 - Frontend can work with Convex, WordPress, Supabase, etc.
 - Change backend = edit ONE line in `astro.config.ts`
 
 **2. 6-Dimension Ontology as Source of Truth**
+
 - Every feature maps to: groups, people, things, connections, events, knowledge
 - DataProvider interface enforces this structure
 - Backends implement the ontology their own way (see `one/knowledge/ontology.md`)
 
 **3. Effect.ts for Services, Not Everywhere**
+
 - Backend: Effect.ts services with typed errors
 - Frontend: Standard React hooks (useEffectRunner for complex flows)
 - Keep it simple: Effect where it adds value, standard TypeScript elsewhere
 
 **4. Separation Enables Installation**
+
 - When users run `npx oneie`, they get frontend only
 - Backend is OFF by default (users can connect their own)
 - Organizations can use existing infrastructure (WordPress, Notion, etc.)
@@ -100,12 +122,14 @@ Based on production patterns from 14.ai (AI customer support) and the unified im
 ### ✅ COMPLETED (Phases 1-2: 4 weeks)
 
 **Phase 1: DataProvider Foundation** ✅
+
 - DataProvider interface complete: `/web/src/providers/DataProvider.ts`
 - ConvexProvider implementation complete
 - Typed errors (ThingNotFoundError, etc.)
 - Backend swapping works (change ONE line)
 
 **Phase 2: Effect.ts Service Layer** ✅
+
 - All 6 dimension services complete:
   - `/web/src/services/ThingService.ts` (66 types)
   - `/web/src/services/ConnectionService.ts` (25 types)
@@ -120,30 +144,35 @@ Based on production patterns from 14.ai (AI customer support) and the unified im
 ### 🚧 REMAINING (Phases 3-7: 7 weeks)
 
 **Phase 3: Backend Implementation** (NOT STARTED)
+
 - Implement CRUD mutations for all 66 thing types
 - Add event logging to all mutations
 - Enforce group scoping
 - Add rate limiting
 
 **Phase 4: Frontend Integration** (NOT STARTED)
+
 - Multi-tenant dashboard
 - Entity management UI (all 66 types)
 - Connection visualization
 - Real-time event timeline
 
 **Phase 5: RAG & Knowledge** (NOT STARTED)
+
 - Chunking service (800 tokens, 200 overlap)
 - Embedding service (OpenAI integration)
 - RAG ingestion pipeline
 - Vector search
 
 **Phase 6: Testing** (PARTIAL - auth tests exist)
+
 - Backend service coverage (90%)
 - Frontend coverage (70%)
 - Multi-backend tests
 - CI/CD pipeline
 
 **Phase 7: Multi-Backend** (OPTIONAL)
+
 - WordPressProvider
 - SupabaseProvider
 - CompositeProvider (multi-backend routing)
@@ -211,6 +240,7 @@ ONE/
 ```
 
 **Key Differences from Standard Convex:**
+
 1. Services live in `/web/src/services/` (not backend)
 2. Services use `DataProvider` (not direct Convex calls)
 3. Backend is optional (users can bring their own)
@@ -238,14 +268,20 @@ export interface DataProvider {
   // Dimension 2: People
   people: {
     get: (id: string) => Effect.Effect<Person, PersonNotFoundError>;
-    list: (params: { groupId?: string; role?: string }) => Effect.Effect<Person[], Error>;
+    list: (params: {
+      groupId?: string;
+      role?: string;
+    }) => Effect.Effect<Person[], Error>;
     create: (input: CreatePersonInput) => Effect.Effect<string, Error>;
   };
 
   // Dimension 3: Things
   things: {
     get: (id: string) => Effect.Effect<Thing, ThingNotFoundError>;
-    list: (params: { type: ThingType; groupId?: string }) => Effect.Effect<Thing[], Error>;
+    list: (params: {
+      type: ThingType;
+      groupId?: string;
+    }) => Effect.Effect<Thing[], Error>;
     create: (input: CreateThingInput) => Effect.Effect<string, Error>;
     update: (id: string, updates: Partial<Thing>) => Effect.Effect<void, Error>;
     delete: (id: string) => Effect.Effect<void, Error>;
@@ -267,7 +303,9 @@ export interface DataProvider {
   // Dimension 6: Knowledge
   knowledge: {
     embed: (text: string) => Effect.Effect<number[], Error>;
-    search: (params: SearchKnowledgeInput) => Effect.Effect<KnowledgeChunk[], Error>;
+    search: (
+      params: SearchKnowledgeInput,
+    ) => Effect.Effect<KnowledgeChunk[], Error>;
   };
 }
 
@@ -285,7 +323,7 @@ export class ThingService extends Effect.Service<ThingService>()(
   "ThingService",
   {
     effect: Effect.gen(function* () {
-      const provider = yield* DataProvider;  // Backend-agnostic!
+      const provider = yield* DataProvider; // Backend-agnostic!
 
       return {
         // Create any of the 66 thing types
@@ -337,8 +375,8 @@ export class ThingService extends Effect.Service<ThingService>()(
           }),
       };
     }),
-    dependencies: [DataProvider],  // Inject provider
-  }
+    dependencies: [DataProvider], // Inject provider
+  },
 ) {}
 ```
 
@@ -375,7 +413,8 @@ export class ConvexProvider implements DataProvider {
 
     update: (id, updates) =>
       Effect.tryPromise({
-        try: () => this.client.mutation(api.mutations.things.update, { id, ...updates }),
+        try: () =>
+          this.client.mutation(api.mutations.things.update, { id, ...updates }),
         catch: (error) => new Error(String(error)),
       }),
 
@@ -392,7 +431,7 @@ export class ConvexProvider implements DataProvider {
 export const convexProvider = (config: { url: string }) =>
   Layer.succeed(
     DataProvider,
-    new ConvexProvider(new ConvexHttpClient(config.url))
+    new ConvexProvider(new ConvexHttpClient(config.url)),
   );
 ```
 
@@ -468,11 +507,13 @@ export function CreateCourseForm() {
 ### Benefits of This Architecture
 
 **1. True Backend Independence**
+
 - Frontend code never imports backend-specific modules
 - Services use DataProvider interface only
 - Swap backends without changing a single service or component
 
 **2. Testing Without Backend**
+
 ```typescript
 // web/src/services/__tests__/ThingService.test.ts
 import { Effect, Layer } from "effect";
@@ -505,20 +546,22 @@ test("should create course", async () => {
 ```
 
 **3. Organizations Use Existing Infrastructure**
+
 ```typescript
 // Organization A: Uses Convex (real-time)
-provider: convexProvider({ url: "..." })
+provider: convexProvider({ url: "..." });
 
 // Organization B: Uses WordPress (existing CMS)
-provider: wordpressProvider({ url: "https://blog.org", apiKey: "..." })
+provider: wordpressProvider({ url: "https://blog.org", apiKey: "..." });
 
 // Organization C: Uses Supabase (PostgreSQL)
-provider: supabaseProvider({ url: "...", key: "..." })
+provider: supabaseProvider({ url: "...", key: "..." });
 
 // Same frontend code works for all three!
 ```
 
 **4. Deployment Flexibility**
+
 ```bash
 # Development: Full stack
 ONE_BACKEND=on
@@ -560,37 +603,39 @@ export const confectSchema = defineSchema({
         Schema.Struct({
           tags: Schema.Array(Schema.String),
           lastActive: Schema.Number,
-        })
+        }),
       ),
-    })
+    }),
   )
     .index("by_user", ["userId"])
     .index("by_status", ["status"]),
-  
+
   threads: defineTable(
     Schema.Struct({
       agentId: Id.Id("agents"),
       userId: Id.Id("users"),
       title: Schema.optional(Schema.String),
-    })
+    }),
   )
     .index("by_agent", ["agentId"])
     .index("by_user", ["userId"]),
-  
+
   messages: defineTable(
     Schema.Struct({
       threadId: Id.Id("threads"),
       role: Schema.Literal("user", "assistant", "system", "tool"),
       content: Schema.String,
-      toolCalls: Schema.optional(Schema.Array(
-        Schema.Struct({
-          name: Schema.String,
-          args: Schema.Record(Schema.String, Schema.Unknown),
-          result: Schema.optional(Schema.Unknown),
-        })
-      )),
+      toolCalls: Schema.optional(
+        Schema.Array(
+          Schema.Struct({
+            name: Schema.String,
+            args: Schema.Record(Schema.String, Schema.Unknown),
+            result: Schema.optional(Schema.Unknown),
+          }),
+        ),
+      ),
       embedding: Schema.optional(Schema.Array(Schema.Number)),
-    })
+    }),
   )
     .index("by_thread", ["threadId"])
     .vectorIndex("embedding", {
@@ -632,7 +677,9 @@ export const {
   query,
 } = makeFunctions(confectSchema);
 
-type ConfectDataModel = ConfectDataModelFromConfectSchemaDefinition<typeof confectSchema>;
+type ConfectDataModel = ConfectDataModelFromConfectSchemaDefinition<
+  typeof confectSchema
+>;
 
 export type ConfectDoc<
   TableName extends TableNamesInConfectDataModel<ConfectDataModel>,
@@ -655,7 +702,12 @@ Queries, mutations, and actions now use Effect patterns:
 ```typescript
 // convex/functions.ts
 import { Effect } from "effect";
-import { ConfectMutationCtx, ConfectQueryCtx, mutation, query } from "./confect";
+import {
+  ConfectMutationCtx,
+  ConfectQueryCtx,
+  mutation,
+  query,
+} from "./confect";
 import { Schema } from "effect";
 
 // Query: Read agent threads (reactive)
@@ -675,29 +727,29 @@ export const listThreads = query({
 
 // Mutation: Create thread (transactional)
 export const createThread = mutation({
-  args: Schema.Struct({ 
-    agentId: Schema.String, 
+  args: Schema.Struct({
+    agentId: Schema.String,
     userId: Schema.String,
-    initialMessage: Schema.String 
+    initialMessage: Schema.String,
   }),
   returns: Schema.String,
   handler: ({ agentId, userId, initialMessage }) =>
     Effect.gen(function* () {
       const { db } = yield* ConfectMutationCtx;
-      
+
       // Create thread
       const threadId = yield* db.insert("threads", {
         agentId,
         userId,
       });
-      
+
       // Add first message
       yield* db.insert("messages", {
         threadId,
         role: "user",
         content: initialMessage,
       });
-      
+
       return threadId;
     }),
 });
@@ -728,15 +780,15 @@ import { api } from "../../convex/_generated/api";
 export function AgentChat({ userId }: { userId: string }) {
   const threads = useQuery(api.functions.listThreads, { userId });
   const createThread = useMutation(api.functions.createThread);
-  
+
   // Reactive updates happen automatically
   return (
     <div>
       {threads?.map(thread => (
         <ThreadItem key={thread._id} thread={thread} />
       ))}
-      <button onClick={() => createThread({ 
-        agentId: "agent123", 
+      <button onClick={() => createThread({
+        agentId: "agent123",
         userId,
         initialMessage: "Hello!"
       })}>
@@ -926,13 +978,13 @@ export const save = mutation({
   handler: (args) =>
     Effect.gen(function* () {
       const { db } = yield* ConfectMutationCtx;
-      
+
       // Validate thread exists
       const thread = yield* db.get(args.threadId);
       if (!thread) {
         return yield* Effect.fail(new Error("Thread not found"));
       }
-      
+
       // Insert message
       const messageId = yield* db.insert("messages", {
         threadId: args.threadId,
@@ -940,7 +992,7 @@ export const save = mutation({
         content: args.content,
         toolCalls: args.toolCalls,
       });
-      
+
       return messageId;
     }),
 });
@@ -956,9 +1008,9 @@ import { LLMProvider, VectorStore } from "../lib/services";
 import { Schema } from "effect";
 
 export const generateResponse = action({
-  args: Schema.Struct({ 
+  args: Schema.Struct({
     threadId: Schema.String,
-    prompt: Schema.String 
+    prompt: Schema.String,
   }),
   returns: Schema.String,
   handler: (args) =>
@@ -966,46 +1018,50 @@ export const generateResponse = action({
       const ctx = yield* ConfectActionCtx;
       const llm = yield* LLMProvider;
       const vectorStore = yield* VectorStore;
-      
+
       // 1. Retrieve conversation history (via query)
       const messages = yield* Effect.promise(() =>
-        ctx.runQuery(api.queries.messages.list, { threadId: args.threadId })
+        ctx.runQuery(api.queries.messages.list, { threadId: args.threadId }),
       );
-      
+
       // 2. Search for relevant context
       const context = yield* vectorStore.search(args.prompt).pipe(
         Effect.timeout("5 seconds"),
-        Effect.catchAll(() => Effect.succeed([]))  // Graceful degradation
+        Effect.catchAll(() => Effect.succeed([])), // Graceful degradation
       );
-      
+
       // 3. Generate response with retry logic
-      const response = yield* llm.generate({
-        messages: [...messages, { role: "user", content: args.prompt }],
-        context,
-      }).pipe(
-        Effect.retry({
-          times: 3,
-          schedule: Schedule.exponential("1 second"),
-        }),
-        Effect.catchTags({
-          RateLimitError: () => llm.generateWithFallback(args.prompt),
-          NetworkError: (error) => 
-            Effect.succeed("I'm having trouble connecting. Please try again."),
+      const response = yield* llm
+        .generate({
+          messages: [...messages, { role: "user", content: args.prompt }],
+          context,
         })
-      );
-      
+        .pipe(
+          Effect.retry({
+            times: 3,
+            schedule: Schedule.exponential("1 second"),
+          }),
+          Effect.catchTags({
+            RateLimitError: () => llm.generateWithFallback(args.prompt),
+            NetworkError: (error) =>
+              Effect.succeed(
+                "I'm having trouble connecting. Please try again.",
+              ),
+          }),
+        );
+
       // 4. Save response (via mutation)
       yield* Effect.promise(() =>
         ctx.runMutation(api.mutations.messages.save, {
           threadId: args.threadId,
           role: "assistant",
           content: response,
-        })
+        }),
       );
-      
+
       return response;
     }).pipe(
-      Effect.provide(AppLayer)  // Provide service implementations
+      Effect.provide(AppLayer), // Provide service implementations
     ),
 });
 ```
@@ -1025,7 +1081,7 @@ export const searchKnowledgeBase = (query: string) =>
   Effect.gen(function* () {
     const vectorStore = yield* VectorStore;
     const results = yield* vectorStore.search(query, { limit: 5 });
-    return results.map(r => r.content).join("\n\n");
+    return results.map((r) => r.content).join("\n\n");
   });
 ```
 
@@ -1042,21 +1098,21 @@ export const handleSupportQuery = (query: string) =>
     // Step 1: Search knowledge base
     const context = yield* searchKnowledgeBase(query).pipe(
       Effect.timeout("5 seconds"),
-      Effect.retry({ times: 2 })
+      Effect.retry({ times: 2 }),
     );
-    
+
     // Step 2: Generate response with context
     const response = yield* generateResponse({
       query,
       context,
       tone: "helpful and professional",
     });
-    
+
     // Step 3: If response is uncertain, escalate
     if (response.confidence < 0.7) {
       yield* escalateToHuman(query, response);
     }
-    
+
     return response;
   });
 ```
@@ -1073,10 +1129,10 @@ export class BillingAgent {
     Effect.gen(function* () {
       // Billing-specific preprocessing
       const normalized = normalizeBillingQuery(query);
-      
+
       // Delegate to support workflow
       const response = yield* handleSupportQuery(normalized);
-      
+
       // Billing-specific postprocessing
       return formatBillingResponse(response);
     });
@@ -1094,12 +1150,10 @@ export class AgentService extends Context.Tag("AgentService")<
   {
     readonly executeWorkflow: (
       workflowId: string,
-      input: unknown
+      input: unknown,
     ) => Effect.Effect<string, AgentError>;
-    
-    readonly registerTool: (
-      tool: AgentTool
-    ) => Effect.Effect<void, never>;
+
+    readonly registerTool: (tool: AgentTool) => Effect.Effect<void, never>;
   }
 >() {}
 
@@ -1113,7 +1167,7 @@ export const AgentLive = Layer.effect(
   Effect.gen(function* () {
     const llm = yield* LLMProvider;
     const tools = yield* ToolRegistry;
-    
+
     return {
       executeWorkflow: (workflowId, input) =>
         Effect.gen(function* () {
@@ -1121,11 +1175,10 @@ export const AgentLive = Layer.effect(
           const result = yield* workflow.run(input, { llm, tools });
           return result;
         }),
-      
-      registerTool: (tool) =>
-        tools.register(tool),
+
+      registerTool: (tool) => tools.register(tool),
     };
-  })
+  }),
 );
 ```
 
@@ -1146,7 +1199,10 @@ export class ToolRegistry extends Context.Tag("ToolRegistry")<
   ToolRegistry,
   {
     readonly register: (tool: AgentTool) => Effect.Effect<void, never>;
-    readonly execute: (name: string, args: unknown) => Effect.Effect<any, ToolError>;
+    readonly execute: (
+      name: string,
+      args: unknown,
+    ) => Effect.Effect<any, ToolError>;
     readonly list: () => Effect.Effect<AgentTool[], never>;
   }
 >() {}
@@ -1187,10 +1243,10 @@ import { AgentLive } from "./AgentLive";
 export const AppLayer = Layer.mergeAll(
   DatabaseLive,
   LLMProviderLive,
-  VectorStoreLive
+  VectorStoreLive,
 ).pipe(
-  Layer.provideMerge(ToolRegistryLive),  // ToolRegistry depends on above
-  Layer.provideMerge(AgentLive)           // AgentService depends on all
+  Layer.provideMerge(ToolRegistryLive), // ToolRegistry depends on above
+  Layer.provideMerge(AgentLive), // AgentService depends on all
 );
 
 // Usage in actions
@@ -1201,7 +1257,7 @@ export const myAction = action({
       const result = yield* agent.executeWorkflow("support", args);
       return result;
     }).pipe(
-      Effect.provide(AppLayer)  // Provide all services
+      Effect.provide(AppLayer), // Provide all services
     ),
 });
 ```
@@ -1220,7 +1276,7 @@ export const myAction = action({
 // Familiar async/await
 async function fetchUser(id: string) {
   const user = await db.query("users").get(id);
-  const posts = await db.query("posts").filter(p => p.userId === user._id);
+  const posts = await db.query("posts").filter((p) => p.userId === user._id);
   return { user, posts };
 }
 
@@ -1229,7 +1285,7 @@ const fetchUser = (id: string) =>
   Effect.gen(function* () {
     const { db } = yield* ConfectQueryCtx;
     const user = yield* db.query("users").get(id);
-    const posts = yield* db.query("posts").filter(p => p.userId === user._id);
+    const posts = yield* db.query("posts").filter((p) => p.userId === user._id);
     return { user, posts };
   });
 ```
@@ -1249,13 +1305,9 @@ const fetchUser = (id: string) =>
 **Agent-specific performance patterns:**
 
 1. **Cache embeddings aggressively.** Vector embedding generation is expensive. Store embeddings in Convex with the `vectorIndex` and reuse them.
-    
 2. **Limit concurrent LLM calls.** Use `Effect.all(calls, { concurrency: 3 })` to avoid rate limits and manage costs.
-    
 3. **Stream responses when possible.** For chat interfaces, stream LLM tokens as they arrive rather than waiting for complete responses. Effect's Stream module handles this efficiently.
-    
 4. **Denormalize for read performance.** Convex doesn't support joins. Denormalize frequently-accessed data rather than making multiple queries.
-    
 
 ### Debugging and tooling
 
@@ -1270,16 +1322,16 @@ import { Effect } from "effect";
 
 const agentWorkflow = Effect.gen(function* () {
   yield* Effect.log("Starting agent workflow", { userId, threadId });
-  
+
   const result = yield* generateResponse(prompt).pipe(
-    Effect.tap((response) => 
-      Effect.log("Generated response", { 
+    Effect.tap((response) =>
+      Effect.log("Generated response", {
         length: response.length,
-        model: "gpt-4o" 
-      })
-    )
+        model: "gpt-4o",
+      }),
+    ),
   );
-  
+
   yield* Effect.log("Workflow complete", { result });
   return result;
 });
@@ -1294,8 +1346,8 @@ import { Tracer } from "effect";
 
 const tracedGeneration = generateText(prompt).pipe(
   Effect.withSpan("llm-generation", {
-    attributes: { model: "gpt-4o", promptLength: prompt.length }
-  })
+    attributes: { model: "gpt-4o", promptLength: prompt.length },
+  }),
 );
 ```
 
@@ -1308,11 +1360,8 @@ Traces export to your observability platform (Datadog, Honeycomb, etc.) for prod
 **For existing Convex projects, adopt incrementally:**
 
 1. **Phase 1: Add confect and Effect to new features only.** Don't rewrite existing code. Implement new agent functionality using Effect patterns. This demonstrates value without disrupting working code.
-    
 2. **Phase 2: Wrap high-value existing code.** Identify error-prone areas—typically external API calls and complex multi-step workflows. Wrap these in Effect with proper error handling and retries.
-    
 3. **Phase 3: Migrate critical paths.** Once team is comfortable, migrate high-traffic or business-critical paths to Effect for improved reliability.
-    
 
 **Interoperability pattern** for gradual migration:
 
@@ -1329,12 +1378,10 @@ export const modernFunction = query({
   handler: (args) =>
     Effect.gen(function* () {
       const { runQuery } = yield* ConfectQueryCtx;
-      
+
       // Call legacy function via runQuery
-      const users = yield* Effect.promise(() =>
-        runQuery(api.legacyFunction)
-      );
-      
+      const users = yield* Effect.promise(() => runQuery(api.legacyFunction));
+
       // Apply Effect-based processing
       const processed = yield* processUsers(users);
       return processed;
@@ -1371,7 +1418,7 @@ const ConfigLive = Layer.effect(
     const openaiKey = yield* Config.string("OPENAI_API_KEY");
     const anthropicKey = yield* Config.string("ANTHROPIC_API_KEY");
     return { openaiKey, anthropicKey };
-  })
+  }),
 );
 
 // LLM provider with fallback
@@ -1379,30 +1426,35 @@ const LLMProviderLive = Layer.effect(
   LLMProvider,
   Effect.gen(function* () {
     const config = yield* ConfigService;
-    
+
     return {
       generate: (prompt) =>
         generateWithOpenAI(prompt, config.openaiKey).pipe(
           Effect.catchTags({
-            RateLimitError: () => generateWithAnthropic(prompt, config.anthropicKey),
-            InvalidKeyError: (error) => Effect.fail(new ConfigurationError({ cause: error })),
+            RateLimitError: () =>
+              generateWithAnthropic(prompt, config.anthropicKey),
+            InvalidKeyError: (error) =>
+              Effect.fail(new ConfigurationError({ cause: error })),
           }),
-          Effect.retry({ times: 3, schedule: Schedule.exponential("1 second") }),
-          Effect.timeout("30 seconds")
+          Effect.retry({
+            times: 3,
+            schedule: Schedule.exponential("1 second"),
+          }),
+          Effect.timeout("30 seconds"),
         ),
     };
-  })
+  }),
 );
 
 // Complete application layer
 export const AppLayer = Layer.mergeAll(
   ConfigLive,
   DatabaseLive,
-  VectorStoreLive
+  VectorStoreLive,
 ).pipe(
   Layer.provideMerge(LLMProviderLive),
   Layer.provideMerge(ToolRegistryLive),
-  Layer.provideMerge(AgentLive)
+  Layer.provideMerge(AgentLive),
 );
 
 // In production actions
@@ -1413,10 +1465,10 @@ export const production = action({
       Effect.catchAll((error) =>
         Effect.gen(function* () {
           yield* Effect.log("Agent workflow failed", { error });
-          yield* notifyOperations(error);  // Alert on-call
+          yield* notifyOperations(error); // Alert on-call
           return fallbackResponse;
-        })
-      )
+        }),
+      ),
     ),
 });
 ```
@@ -1427,31 +1479,35 @@ export const production = action({
 const robustAgentGeneration = (prompt: string) =>
   Effect.gen(function* () {
     // Try primary approach with full context
-    const fullResult = yield* generateWithContext(prompt, { 
-      contextLimit: 10000 
+    const fullResult = yield* generateWithContext(prompt, {
+      contextLimit: 10000,
     }).pipe(
       Effect.timeout("30 seconds"),
-      Effect.catchTag("TimeoutError", () => Effect.fail({ _tag: "SlowGeneration" }))
+      Effect.catchTag("TimeoutError", () =>
+        Effect.fail({ _tag: "SlowGeneration" }),
+      ),
     );
-    
+
     return fullResult;
   }).pipe(
     // Fallback 1: Reduce context size
     Effect.catchTag("SlowGeneration", () =>
-      generateWithContext(prompt, { contextLimit: 5000 })
+      generateWithContext(prompt, { contextLimit: 5000 }),
     ),
     // Fallback 2: Switch to faster model
     Effect.catchTag("RateLimitError", () =>
-      generateWithModel(prompt, "gpt-4o-mini")
+      generateWithModel(prompt, "gpt-4o-mini"),
     ),
     // Fallback 3: Cached response if available
     Effect.catchAll(() =>
       getCachedResponse(prompt).pipe(
-        Effect.catchAll(() => 
-          Effect.succeed("I'm experiencing technical difficulties. Please try again.")
-        )
-      )
-    )
+        Effect.catchAll(() =>
+          Effect.succeed(
+            "I'm experiencing technical difficulties. Please try again.",
+          ),
+        ),
+      ),
+    ),
   );
 ```
 
@@ -1540,24 +1596,28 @@ This integration of Effect.ts and confect into your Astro-shadcn-Convex stack pr
 ### Key Principles Realized
 
 **1. ONE Ontology = Universal Data Model**
+
 - Every feature maps to 6 dimensions
 - DataProvider interface enforces this structure
 - Backends implement the ontology their way (Convex uses 5 tables, WordPress uses posts/meta, Supabase uses PostgreSQL schema)
 - Frontend doesn't care HOW data is stored, only THAT it follows the ontology
 
 **2. Backend-Agnostic = Maximum Flexibility**
+
 - Services use `DataProvider` (not Convex directly)
 - Organizations can use existing infrastructure (WordPress, Notion, etc.)
 - Frontend can run standalone (demo mode, testing, development)
 - Change backend = edit ONE line in `astro.config.ts`
 
 **3. Effect.ts = Type-Safe Services**
+
 - Tagged errors replace try/catch throughout services
 - Dependency injection via Layer.mergeAll
 - Testable with mock providers (no backend required)
 - Optional: Deep Convex integration with confect for advanced use cases
 
 **4. Separation Enables Distribution**
+
 ```bash
 # When users run:
 npx oneie
@@ -1612,6 +1672,7 @@ ONE_BACKEND=off  # Default
 ### Implementation Status (unified-implementation-plan.md)
 
 **✅ COMPLETE (Phases 1-2: 4 weeks)**
+
 - DataProvider interface and ConvexProvider
 - All 6 Effect.ts services (Thing, Connection, Event, Knowledge, Group, People)
 - React hooks (useEffectRunner, useProvider)
@@ -1619,6 +1680,7 @@ ONE_BACKEND=off  # Default
 - Backend-agnostic architecture validated
 
 **🚧 IN PROGRESS (Phases 3-7: 7 weeks remaining)**
+
 - Phase 3: Backend implementation (66 thing types, event logging, group scoping)
 - Phase 4: Frontend integration (multi-tenant dashboard, entity management UI)
 - Phase 5: RAG & Knowledge (chunking, embedding, vector search)
@@ -1628,18 +1690,21 @@ ONE_BACKEND=off  # Default
 ### How to Use This Document
 
 **For AI Agents:**
+
 1. Read `one/knowledge/ontology.md` first (6-dimension model)
 2. Implement features using Effect.ts services (backend-agnostic)
 3. Services use DataProvider (never call backend directly)
 4. Follow the 100-inference sequence in `one/knowledge/todo.md`
 
 **For Developers:**
+
 1. Frontend development: Use Effect.ts services via hooks
 2. Backend development: Implement DataProvider for your backend
 3. Testing: Use mock providers (no backend required)
 4. Deployment: Configure provider in `astro.config.ts` (ONE LINE!)
 
 **For Organizations:**
+
 1. Install: `npx oneie` (gets frontend only, backend OFF)
 2. Choose backend: Convex, WordPress, Supabase, or custom
 3. Implement DataProvider for your chosen backend
@@ -1648,6 +1713,7 @@ ONE_BACKEND=off  # Default
 ### The Payoff
 
 **Before Backend-Agnostic Architecture:**
+
 - Frontend tightly coupled to Convex
 - Organizations must use Convex (no choice)
 - Can't test without backend
@@ -1655,6 +1721,7 @@ ONE_BACKEND=off  # Default
 - Hard to demo without signup
 
 **After Backend-Agnostic Architecture:**
+
 - Frontend works with ANY backend
 - Organizations use their existing systems
 - Test with mock providers (instant)
@@ -1670,6 +1737,7 @@ ONE_BACKEND=off  # Default
 ### For Immediate Implementation
 
 **1. Complete Phase 3: Backend Implementation**
+
 ```bash
 # Backend mutations for all 66 thing types
 cd backend/convex/mutations/things.ts
@@ -1679,6 +1747,7 @@ cd backend/convex/mutations/things.ts
 ```
 
 **2. Complete Phase 4: Frontend Integration**
+
 ```bash
 # Multi-tenant dashboard
 cd web/src/pages/admin/
@@ -1688,6 +1757,7 @@ cd web/src/pages/admin/
 ```
 
 **3. Complete Phase 5: RAG & Knowledge**
+
 ```bash
 # Implement KnowledgeService features
 cd web/src/services/KnowledgeService.ts
@@ -1699,16 +1769,19 @@ cd web/src/services/KnowledgeService.ts
 ### For Future Exploration
 
 **1. Multi-Backend Support (Phase 7)**
+
 - WordPressProvider (REST API + WP metadata)
 - SupabaseProvider (PostgreSQL queries)
 - CompositeProvider (route by feature)
 
 **2. Advanced Effect.ts Features**
+
 - Stream for real-time LLM responses
 - Fiber for advanced concurrency
 - STM for transactional memory
 
 **3. Optional Convex Enhancements**
+
 - confect integration (schema-first)
 - Effect.ts in Convex backend
 - Deep type safety end-to-end

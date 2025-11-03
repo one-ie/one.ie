@@ -1,3 +1,21 @@
+---
+title: Mcp
+dimension: connections
+category: mcp.md
+tags: agent, ai, connections, events, knowledge, ontology, people, protocol, things
+related_dimensions: events, groups, knowledge, people, things
+scope: global
+created: 2025-11-03
+updated: 2025-11-03
+version: 1.0.0
+ai_context: |
+  This document is part of the connections dimension in the mcp.md category.
+  Location: one/connections/mcp.md
+  Purpose: Documents model context protocol (mcp) - deep integration strategy
+  Related dimensions: events, groups, knowledge, people, things
+  For AI agents: Read this to understand mcp.
+---
+
 # Model Context Protocol (MCP) - Deep Integration Strategy
 
 **Version:** 2.0.0 (Ontology-Aligned)

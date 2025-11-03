@@ -1,3 +1,21 @@
+---
+title: Crypto Token Researcher
+dimension: things
+category: plans
+tags: agent, ai, blockchain, groups, ontology, protocol
+related_dimensions: events, groups, knowledge, people
+scope: global
+created: 2025-11-03
+updated: 2025-11-03
+version: 1.0.0
+ai_context: |
+  This document is part of the things dimension in the plans category.
+  Location: one/things/plans/crypto-token-researcher.md
+  Purpose: Documents crypto token researcher agent
+  Related dimensions: events, groups, knowledge, people
+  For AI agents: Read this to understand crypto token researcher.
+---
+
 # Crypto Token Researcher Agent
 
 A domain-specialized autonomous agent for cryptocurrency and token research. Extends the Deep Researcher Agent pattern with crypto-specific tools, data sources, and reasoning patterns for blockchain analysis, token evaluation, and market intelligence.
@@ -17,6 +35,7 @@ The Crypto Token Researcher Agent combines agentic reasoning with blockchain-nat
 ## 6-Dimension Ontology Mapping
 
 ### Groups
+
 - **Organization Level**: Crypto research firm, hedge fund, protocol DAO
 - **Parent-Child**: Investment firm → token research desk → chain-specific teams
 - **Data Scoping**: Research tasks and findings scoped per investment thesis group
@@ -26,6 +45,7 @@ The Crypto Token Researcher Agent combines agentic reasoning with blockchain-nat
   - `enterprise` (multi-chain with smart contract audits)
 
 ### People
+
 - **Roles**:
   - `platform_owner`: Chief research officer
   - `org_owner`: Crypto research director
@@ -41,6 +61,7 @@ The Crypto Token Researcher Agent combines agentic reasoning with blockchain-nat
 ### Things
 
 #### Crypto Token Entity
+
 ```typescript
 {
   type: "crypto_token",
@@ -64,6 +85,7 @@ The Crypto Token Researcher Agent combines agentic reasoning with blockchain-nat
 ```
 
 #### Smart Contract Entity
+
 ```typescript
 {
   type: "smart_contract",
@@ -87,6 +109,7 @@ The Crypto Token Researcher Agent combines agentic reasoning with blockchain-nat
 ```
 
 #### Token Research Report
+
 ```typescript
 {
   type: "token_research_report",
@@ -132,6 +155,7 @@ The Crypto Token Researcher Agent combines agentic reasoning with blockchain-nat
 ```
 
 #### Trading Signal
+
 ```typescript
 {
   type: "trading_signal",
@@ -220,69 +244,79 @@ The Crypto Token Researcher Agent combines agentic reasoning with blockchain-nat
 ### Specialized Tool Suite
 
 #### 1. On-Chain Data Tools
+
 ```typescript
 tools: [
-  "etherscan_api",        // Contract verification, transactions
-  "dune_analytics",       // Complex on-chain queries
-  "glassnode",           // On-chain metrics (holders, velocity, etc)
-  "nansen",              // Wallet labeling, smart money tracking
-  "flipside_crypto",     // Cryptocurrency analytics
-  "messari",             // Crypto asset research
-  "blockchain_rpc"       // Direct RPC calls for token data
-]
+  "etherscan_api", // Contract verification, transactions
+  "dune_analytics", // Complex on-chain queries
+  "glassnode", // On-chain metrics (holders, velocity, etc)
+  "nansen", // Wallet labeling, smart money tracking
+  "flipside_crypto", // Cryptocurrency analytics
+  "messari", // Crypto asset research
+  "blockchain_rpc", // Direct RPC calls for token data
+];
 ```
 
 #### 2. Smart Contract Tools
+
 ```typescript
 tools: [
-  "solidity_parser",     // Parse and analyze Solidity code
-  "mythril",            // Smart contract security analysis
-  "slither",            // Static analysis framework
-  "forge_test",         // Execute contract tests
-  "decompiler"          // Bytecode decompilation
-]
+  "solidity_parser", // Parse and analyze Solidity code
+  "mythril", // Smart contract security analysis
+  "slither", // Static analysis framework
+  "forge_test", // Execute contract tests
+  "decompiler", // Bytecode decompilation
+];
 ```
 
 #### 3. Market Data Tools
+
 ```typescript
 tools: [
-  "coingecko_api",      // Token market data
-  "dexscreener",        // DEX token liquidity
-  "cmc",                // CoinMarketCap data
-  "serum_dex",          // Solana DEX data
-  "uniswap_subgraph",   // Ethereum DEX analytics
-  "lifi_data"           // Cross-chain liquidity
-]
+  "coingecko_api", // Token market data
+  "dexscreener", // DEX token liquidity
+  "cmc", // CoinMarketCap data
+  "serum_dex", // Solana DEX data
+  "uniswap_subgraph", // Ethereum DEX analytics
+  "lifi_data", // Cross-chain liquidity
+];
 ```
 
 #### 4. Sentiment & Social Tools
+
 ```typescript
 tools: [
-  "twitter_api",        // Tweet volume, sentiment
-  "discord_analytics",  // Community engagement
-  "github_api",         // Developer activity
-  "reddit_search",      // Community discussion
-  "blockchain_news"     // Crypto news aggregation
-]
+  "twitter_api", // Tweet volume, sentiment
+  "discord_analytics", // Community engagement
+  "github_api", // Developer activity
+  "reddit_search", // Community discussion
+  "blockchain_news", // Crypto news aggregation
+];
 ```
 
 ### Execution Modes for Crypto
 
 #### QuickAnalysis Mode
+
 Fast token screening using public data and on-chain metrics.
+
 - Max 10 turns
 - Uses market data + basic holder analysis
 - ~30 second execution
 
 #### DeepDive Mode
+
 Comprehensive analysis with smart contract review.
+
 - Max 30 turns
 - Includes contract audit, token economics deep dive
 - On-chain behavior analysis
 - ~5 minute execution
 
 #### AuditMode
+
 Full smart contract security audit with RL-optimized patterns.
+
 - Max 50 turns
 - Vulnerability detection with historical vulnerability database
 - Code quality scoring
@@ -469,7 +503,8 @@ export const auditSmartContract = mutation({
       timestamp: Date.now(),
       metadata: {
         vulnerabilityCount: vulnerabilities.length,
-        criticalIssues: vulnerabilities.filter(v => v.severity === "critical").length,
+        criticalIssues: vulnerabilities.filter((v) => v.severity === "critical")
+          .length,
       },
     });
 
@@ -491,19 +526,19 @@ export const analyzeCryptoToken = (request: TokenAnalysisRequest) => {
     Effect.flatMap(analyzeSentiment),
     Effect.flatMap(calculateRiskScore),
     Effect.flatMap(generateRecommendation),
-    Effect.flatMap(createReport)
+    Effect.flatMap(createReport),
   );
 };
 
 export const generateTradingSignals = (
-  report: TokenResearchReport
+  report: TokenResearchReport,
 ): Effect.Effect<TradeSignal[], ResearchError> => {
   return pipe(
     analyzeOnChainBehavior(report),
     Effect.flatMap(detectAccumulation),
     Effect.flatMap(identifyWhaleActivity),
     Effect.flatMap(analyzeVolatilityCluster),
-    Effect.map(signals => filterHighConfidenceSignals(signals))
+    Effect.map((signals) => filterHighConfidenceSignals(signals)),
   );
 };
 ```
@@ -543,24 +578,28 @@ Final Score = min(100, Base Score + Red Flags)
 ## Real-World Applications
 
 ### DeFi Protocol Analysis
+
 - Liquidity pool risk assessment
 - Smart contract dependency mapping
 - Yield sustainability analysis
 - Governance token evaluation
 
 ### Token Launch Evaluation
+
 - Pre-launch vesting analysis
 - Initial distribution fairness
 - Team token lock verification
 - Liquidity pool initialization safety
 
 ### Regulatory Compliance
+
 - Securities law compliance check
 - KYC/AML requirements
 - Staking reward regulations
 - Tax implication analysis
 
 ### Portfolio Risk Management
+
 - Concentration risk assessment
 - Correlation analysis across holdings
 - Early warning signals

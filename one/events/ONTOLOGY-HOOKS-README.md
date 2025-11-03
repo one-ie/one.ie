@@ -1,3 +1,21 @@
+---
+title: Ontology Hooks Readme
+dimension: events
+category: ONTOLOGY-HOOKS-README.md
+tags: 6-dimensions, backend, frontend, groups, inference, ontology
+related_dimensions: groups, knowledge, people, things
+scope: global
+created: 2025-11-03
+updated: 2025-11-03
+version: 1.0.0
+ai_context: |
+  This document is part of the events dimension in the ONTOLOGY-HOOKS-README.md category.
+  Location: one/events/ONTOLOGY-HOOKS-README.md
+  Purpose: Documents ontology hooks & feature integration
+  Related dimensions: groups, knowledge, people, things
+  For AI agents: Read this to understand ONTOLOGY HOOKS README.
+---
+
 # Ontology Hooks & Feature Integration
 
 Complete React hooks and Astro integration for the 6-dimension ontology.

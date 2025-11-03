@@ -1,3 +1,21 @@
+---
+title: Merge Report
+dimension: knowledge
+category: merge-report.md
+tags: ai, knowledge, ontology, things
+related_dimensions: events, people, things
+scope: global
+created: 2025-11-03
+updated: 2025-11-03
+version: 1.0.0
+ai_context: |
+  This document is part of the knowledge dimension in the merge-report.md category.
+  Location: one/knowledge/merge-report.md
+  Purpose: Documents ontology merge report
+  Related dimensions: events, people, things
+  For AI agents: Read this to understand merge report.
+---
+
 # Ontology Merge Report
 
 **Date:** 2025-11-03

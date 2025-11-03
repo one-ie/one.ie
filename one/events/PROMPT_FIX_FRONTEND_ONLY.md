@@ -1,3 +1,21 @@
+---
+title: Prompt_Fix_Frontend_Only
+dimension: events
+category: PROMPT_FIX_FRONTEND_ONLY.md
+tags: backend, frontend, ui
+related_dimensions: people, things
+scope: global
+created: 2025-11-03
+updated: 2025-11-03
+version: 1.0.0
+ai_context: |
+  This document is part of the events dimension in the PROMPT_FIX_FRONTEND_ONLY.md category.
+  Location: one/events/PROMPT_FIX_FRONTEND_ONLY.md
+  Purpose: Documents prompt: fix frontend-only mode in npx oneie source
+  Related dimensions: people, things
+  For AI agents: Read this to understand PROMPT_FIX_FRONTEND_ONLY.
+---
+
 # PROMPT: Fix Frontend-Only Mode in npx oneie Source
 
 ## Context

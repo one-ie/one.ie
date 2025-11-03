@@ -1,3 +1,21 @@
+---
+title: Demo Design Summary
+dimension: things
+category: demo-design-summary.md
+tags: ai, frontend, things
+related_dimensions: connections, events, groups, knowledge
+scope: global
+created: 2025-11-03
+updated: 2025-11-03
+version: 1.0.0
+ai_context: |
+  This document is part of the things dimension in the demo-design-summary.md category.
+  Location: one/things/demo-design-summary.md
+  Purpose: Documents one platform demo design - implementation summary
+  Related dimensions: connections, events, groups, knowledge
+  For AI agents: Read this to understand demo design summary.
+---
+
 # ONE Platform Demo Design - Implementation Summary
 
 ## Version 1.0.0 - Complete Design Specification Index
@@ -13,9 +31,11 @@
 This design specification package contains **5 comprehensive documents** that define everything needed to implement the ONE Platform demo pages:
 
 ### 1. Design System Spec
+
 **File:** `/one/things/demo-design-system.md`
 **Size:** 3,500+ lines
 **Contents:**
+
 - Color palette with Tailwind v4 HSL variables
 - Typography scale (1.125x modular)
 - Spacing system (4px grid)
@@ -28,9 +48,11 @@ This design specification package contains **5 comprehensive documents** that de
 **Use:** Reference for all styling decisions
 
 ### 2. Page Layouts Spec
+
 **File:** `/one/things/demo-page-layouts.md`
 **Size:** 2,800+ lines
 **Contents:**
+
 - Standard 5-section demo page pattern
 - Hero section specifications
 - Playground section structure
@@ -43,9 +65,11 @@ This design specification package contains **5 comprehensive documents** that de
 **Use:** Guide for page structure and section organization
 
 ### 3. Component Definitions
+
 **File:** `/one/things/demo-components.md`
 **Size:** 2,400+ lines
 **Contents:**
+
 - DemoContainer wrapper component
 - DemoHero with headline and CTAs
 - DemoPlayground with form + live data
@@ -59,9 +83,11 @@ This design specification package contains **5 comprehensive documents** that de
 **Use:** Component APIs and implementation patterns
 
 ### 4. Accessibility & Animations
+
 **File:** `/one/things/demo-accessibility-animations.md`
 **Size:** 2,000+ lines
 **Contents:**
+
 - Semantic HTML requirements
 - WCAG 2.1 AA compliance checklist
 - Keyboard navigation patterns
@@ -75,8 +101,10 @@ This design specification package contains **5 comprehensive documents** that de
 **Use:** Accessibility validation and motion patterns
 
 ### 5. This Summary
+
 **File:** `/one/things/demo-design-summary.md`
 **Contents:**
+
 - Overview of all specifications
 - Implementation timeline
 - File organization
@@ -92,6 +120,7 @@ This design specification package contains **5 comprehensive documents** that de
 ### Color System
 
 **Primary Colors** (HSL Format):
+
 - Background: `36 8% 88%` (light warm gray)
 - Foreground: `0 0% 13%` (near black)
 - Primary: `216 55% 25%` (deep blue)
@@ -104,11 +133,11 @@ This design specification package contains **5 comprehensive documents** that de
 
 ### Typography Scale
 
-| Level | Size | Weight | Use Case |
-|-------|------|--------|----------|
-| Body | 16px | 400 | Main text |
-| Heading | 30px | 700 | Section titles |
-| Display | 36px+ | 700 | Page titles |
+| Level   | Size  | Weight | Use Case       |
+| ------- | ----- | ------ | -------------- |
+| Body    | 16px  | 400    | Main text      |
+| Heading | 30px  | 700    | Section titles |
+| Display | 36px+ | 700    | Page titles    |
 
 **Line Heights:** 1.5 body, 1.3 headings, 1.6 large
 
@@ -118,6 +147,7 @@ This design specification package contains **5 comprehensive documents** that de
 **Scale:** 4, 8, 12, 16, 20, 24, 32, 40, 48, 64, 96, 128px
 
 **Usage:**
+
 - Component padding: `p-4`, `p-6`, `p-8`
 - Section padding: `py-12` mobile → `py-20` desktop
 - Gap between items: `gap-4` (16px)
@@ -133,13 +163,13 @@ XL:      xl: 1280px+
 
 ### Component Sizes
 
-| Component | Height | Padding | Min Width |
-|-----------|--------|---------|-----------|
-| Button (sm) | 32px | px-3 py-1.5 | 64px |
-| Button (md) | 40px | px-4 py-2 | 80px |
-| Button (lg) | 48px | px-6 py-3 | 96px |
-| Input | 40px | px-4 py-2.5 | 200px |
-| Card | auto | p-6 | 256px |
+| Component   | Height | Padding     | Min Width |
+| ----------- | ------ | ----------- | --------- |
+| Button (sm) | 32px   | px-3 py-1.5 | 64px      |
+| Button (md) | 40px   | px-4 py-2   | 80px      |
+| Button (lg) | 48px   | px-6 py-3   | 96px      |
+| Input       | 40px   | px-4 py-2.5 | 200px     |
+| Card        | auto   | p-6         | 256px     |
 
 ### Dark Mode
 
@@ -181,6 +211,7 @@ Every demo page follows this structure:
 ## Component Library
 
 ### Base Components (from shadcn/ui)
+
 - `Button` - Interactive actions
 - `Card` - Content containers
 - `Input` - Text inputs
@@ -190,6 +221,7 @@ Every demo page follows this structure:
 - `Dialog` - Modals
 
 ### Demo Components (custom)
+
 - `DemoContainer` - Max-width wrapper with padding
 - `DemoHero` - Hero section with headline and CTAs
 - `DemoPlayground` - Interactive form + live data
@@ -204,11 +236,11 @@ Every demo page follows this structure:
 
 ```tsx
 // All server-side components (Astro)
-import { DemoHero } from '@/components/demo/DemoHero.astro';
-import { DemoContainer } from '@/components/demo/DemoContainer.astro';
+import { DemoHero } from "@/components/demo/DemoHero.astro";
+import { DemoContainer } from "@/components/demo/DemoContainer.astro";
 
 // Client components (React - need client:load)
-import { DemoPlayground } from '@/components/demo/DemoPlayground';
+import { DemoPlayground } from "@/components/demo/DemoPlayground";
 ```
 
 ---
@@ -229,6 +261,7 @@ import { DemoPlayground } from '@/components/demo/DemoPlayground';
 - [ ] **Screen Reader:** Test with NVDA or VoiceOver
 
 **Testing Tools:**
+
 - axe DevTools (browser extension - automated)
 - WAVE (browser extension - errors/alerts)
 - Lighthouse (Chrome DevTools - scores)
@@ -239,6 +272,7 @@ import { DemoPlayground } from '@/components/demo/DemoPlayground';
 ## Animations
 
 ### Core Animations
+
 - `fadeIn` - 300ms fade in from 0% to 100% opacity
 - `fadeInUp` - 300ms fade + slide up 30px
 - `slideInFromLeft` - 300ms slide in from -20px
@@ -247,22 +281,26 @@ import { DemoPlayground } from '@/components/demo/DemoPlayground';
 - `pulse` - 1.5s opacity pulse
 
 ### Timing Guidelines
+
 - Micro-interactions: 150ms (hover effects)
 - Standard transitions: 300ms (page sections)
 - Intentional delays: 500ms+ (modals)
 - **Motion preference:** Respect `prefers-reduced-motion` (disable animations)
 
 ### Animation Delays
+
 ```tsx
 // Stagger animations for list items
-{items.map((item, i) => (
-  <div
-    style={{ animationDelay: `${i * 100}ms` }}
-    className="animate-fadeInUp"
-  >
-    {item}
-  </div>
-))}
+{
+  items.map((item, i) => (
+    <div
+      style={{ animationDelay: `${i * 100}ms` }}
+      className="animate-fadeInUp"
+    >
+      {item}
+    </div>
+  ));
+}
 ```
 
 ---
@@ -315,6 +353,7 @@ import { DemoPlayground } from '@/components/demo/DemoPlayground';
 ## Implementation Timeline
 
 ### Phase 1: Setup (Infer 21)
+
 - [ ] Create `/web/src/pages/ontology/` directory
 - [ ] Create `/web/src/components/demo/` directory
 - [ ] Set up Tailwind v4 color tokens in `global.css`
@@ -323,6 +362,7 @@ import { DemoPlayground } from '@/components/demo/DemoPlayground';
 **Deliverable:** Directory structure ready
 
 ### Phase 2: Components (Infer 22-23)
+
 - [ ] Implement `DemoContainer` wrapper
 - [ ] Implement `DemoHero` component
 - [ ] Implement `DemoPlayground` (form + live data)
@@ -333,6 +373,7 @@ import { DemoPlayground } from '@/components/demo/DemoPlayground';
 **Deliverable:** All 9 demo components working
 
 ### Phase 3: Pages (Infer 24-25)
+
 - [ ] Implement `/ontology/` landing page (overview)
 - [ ] Implement `/ontology/groups` demo page
 - [ ] Implement `/ontology/people` demo page
@@ -344,6 +385,7 @@ import { DemoPlayground } from '@/components/demo/DemoPlayground';
 **Deliverable:** All 7 dimension pages functional
 
 ### Phase 4: Polish (Infer 26)
+
 - [ ] Add animations and transitions
 - [ ] Implement relationship graph visualization
 - [ ] Test responsive behavior (320px, 768px, 1024px)
@@ -354,6 +396,7 @@ import { DemoPlayground } from '@/components/demo/DemoPlayground';
 **Deliverable:** Production-ready, fully accessible
 
 ### Phase 5: Testing (Infer 27-28)
+
 - [ ] Cross-browser testing (Chrome, Firefox, Safari, Edge)
 - [ ] Mobile device testing (iOS, Android)
 - [ ] Screen reader testing (NVDA, VoiceOver)
@@ -369,6 +412,7 @@ import { DemoPlayground } from '@/components/demo/DemoPlayground';
 ### Tailwind v4 Setup
 
 **Already Configured in `astro.config.mjs`:**
+
 ```javascript
 vite: {
   plugins: [
@@ -380,8 +424,9 @@ vite: {
 ```
 
 **Global CSS Structure (in `src/styles/global.css`):**
+
 ```css
-@import 'tailwindcss';
+@import "tailwindcss";
 
 @theme {
   /* Color palette */
@@ -398,8 +443,12 @@ vite: {
 }
 
 /* Custom animations */
-@keyframes fadeIn { /* ... */ }
-@keyframes fadeInUp { /* ... */ }
+@keyframes fadeIn {
+  /* ... */
+}
+@keyframes fadeInUp {
+  /* ... */
+}
 ```
 
 ### Component Usage
@@ -438,6 +487,7 @@ const dimensionData = {
 ### 1. Why Tailwind v4 CSS Variables?
 
 **Advantages:**
+
 - No JavaScript config file (`tailwind.config.mjs` not needed)
 - Direct CSS control for design tokens
 - Perfect dark mode support via CSS variables
@@ -445,6 +495,7 @@ const dimensionData = {
 - Easy theme customization per organization
 
 **Implementation:**
+
 ```css
 @theme {
   --color-primary: 216 55% 25%;
@@ -457,6 +508,7 @@ const dimensionData = {
 ### 2. Why 4px Base Grid?
 
 **Advantages:**
+
 - Fine control for precise spacing
 - Accessible touch targets (44px = 11 x 4px)
 - Responsive scalability
@@ -467,6 +519,7 @@ const dimensionData = {
 ### 3. Why 5-Section Pattern?
 
 **Because:**
+
 - Teaches complete user journey (understand → explore → implement → visualize → act)
 - Consistent across all 6 dimension pages
 - Hero grabs attention
@@ -478,12 +531,14 @@ const dimensionData = {
 ### 4. Why HSL Colors?
 
 **Advantages:**
+
 - Easy to read: hue (0-360°) saturation (0-100%) lightness (0-100%)
 - Dark mode: modify lightness only
 - Accessible: easier to reason about contrast
 - Tailwind v4 standard format
 
 **Example:**
+
 ```
 216 55% 25%  = Blue (hue 216) with 55% saturation, 25% lightness
 CSS: hsl(216 55% 25%)
@@ -492,6 +547,7 @@ CSS: hsl(216 55% 25%)
 ### 5. Why 1.125x Modular Scale?
 
 **Typography harmony:**
+
 - 16px (body) → 18px → 20px → 23px → 26px → 29px → 33px → 37px → 42px
 - Visually balanced hierarchy
 - Accessible sizing (minimum 16px body text)
@@ -570,6 +626,7 @@ CSS: hsl(216 55% 25%)
 ## Contact & Support
 
 **Design Agent** maintains these specifications and can provide:
+
 - Clarification on any design detail
 - Additional wireframes or mockups
 - Design iterations based on feedback
@@ -577,6 +634,7 @@ CSS: hsl(216 55% 25%)
 - Animation guidance
 
 **Next Steps:**
+
 1. Frontend team reviews all 5 specification documents
 2. Frontend team sets up project structure
 3. Design Agent available for questions during implementation
@@ -587,6 +645,7 @@ CSS: hsl(216 55% 25%)
 ## Appendix: Specification Metrics
 
 ### Design System Spec
+
 - Lines: 3,500+
 - Sections: 12
 - Code examples: 50+
@@ -594,6 +653,7 @@ CSS: hsl(216 55% 25%)
 - Contrast ratios verified: All WCAG AAA
 
 ### Page Layouts Spec
+
 - Lines: 2,800+
 - Page patterns: 1 (5-section standard)
 - Dimension-specific pages: 6
@@ -601,6 +661,7 @@ CSS: hsl(216 55% 25%)
 - Code examples: 30+
 
 ### Component Definitions
+
 - Lines: 2,400+
 - Components defined: 9
 - Props documented: 100+
@@ -608,6 +669,7 @@ CSS: hsl(216 55% 25%)
 - Usage examples: 20+
 
 ### A11y & Animations Spec
+
 - Lines: 2,000+
 - Accessibility checklist items: 50+
 - Screen readers covered: 2 (NVDA, VoiceOver)
@@ -615,6 +677,7 @@ CSS: hsl(216 55% 25%)
 - Motion preferences: Covered
 
 ### Total Specification Package
+
 - Total lines: 10,700+
 - Total sections: 50+
 - Code examples: 150+

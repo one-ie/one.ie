@@ -1,22 +1,21 @@
 ---
-type: event
-eventType: test
-category: quality_assurance
-tags: [testing, npm, bun, pnpm, npx, compatibility]
+title: 2024 10 15 Package Manager Tests
+dimension: events
+category: 2024-10-15-package-manager-tests.md
+tags: bun, compatibility, npm, npx, pnpm, testing
+related_dimensions: groups, people, things
+scope: global
 created: 2024-10-15
-updated: 2024-10-15
-status: completed
-timestamp: 2024-10-15
-kpis:
-  complexity: 6
-  impact: 8
-  completeness: 10
-  quality: 10
-  documentation: 9
-score: 8.6
-groupId: platform
-actorRole: platform_owner
+updated: 2025-11-03
+version: 1.0.0
+ai_context: |
+  This document is part of the events dimension in the 2024-10-15-package-manager-tests.md category.
+  Location: one/events/2024-10-15-package-manager-tests.md
+  Purpose: Documents oneie package manager compatibility tests
+  Related dimensions: groups, people, things
+  For AI agents: Read this to understand 2024 10 15 package manager tests.
 ---
+
 
 # oneie Package Manager Compatibility Tests
 

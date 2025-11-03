@@ -1,3 +1,21 @@
+---
+title: Knowledge
+dimension: knowledge
+category: knowledge.md
+tags: ai, inference, knowledge, ontology, rag, things
+related_dimensions: connections, events, people, things
+scope: global
+created: 2025-11-03
+updated: 2025-11-03
+version: 1.0.0
+ai_context: |
+  This document is part of the knowledge dimension in the knowledge.md category.
+  Location: one/knowledge/knowledge.md
+  Purpose: Documents knowledge: vectors, embeddings & inference
+  Related dimensions: connections, events, people, things
+  For AI agents: Read this to understand knowledge.
+---
+
 # Knowledge: Vectors, Embeddings & Inference
 
 **The Intelligence Layer**

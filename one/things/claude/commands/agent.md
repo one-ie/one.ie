@@ -1,21 +1,41 @@
+---
+title: Agent
+dimension: things
+category: agents
+tags: agent, ai, ai-agent
+related_dimensions: connections, events, people
+scope: global
+created: 2025-11-03
+updated: 2025-11-03
+version: 1.0.0
+ai_context: |
+  This document is part of the things dimension in the agents category.
+  Location: one/things/claude/commands/agent.md
+  Purpose: Documents /agent - direct agent access with real-time status
+  Related dimensions: connections, events, people
+  For AI agents: Read this to understand agent.
+---
+
 # /agent - Direct Agent Access with Real-time Status
 
 🤖 **Quick access to AI specialists with live activity tracking**
 
-*Alternative to `/one` > 4. Get Agent Help for direct agent connection*
+_Alternative to `/one` > 4. Get Agent Help for direct agent connection_
 
 ## 📊 Real-time Agent Status
 
 ### Agent Activity Dashboard
+
 ```
 🤖 Agent Status Overview:
 🟢 Engineering Architect: Ready | Available for new tasks
-🟡 Content Creator: Working | "Blog Posts" (ETA: 5 min)  
+🟡 Content Creator: Working | "Blog Posts" (ETA: 5 min)
 🔴 UI Designer: Busy | 3 tasks queued
 ⚪ Data Analyst: Offline | Maintenance mode
 ```
 
 ### Live Coordination
+
 - **Availability Tracking**: Real-time agent status and workload
 - **Task Assignments**: Current tasks and completion estimates
 - **Performance Metrics**: Quality scores and success rates
@@ -38,7 +58,7 @@ activation:
 display:
   agent_roster: |
     🤖 {{USER_NAME}}'s AI Agent Team
-    
+
     Your Top 8 Agents:
     {{#each TOP_AGENTS}}
     [{{slot}}] {{name}} - {{role}}
@@ -46,7 +66,7 @@ display:
          Catchphrase: "{{catchphrase}}"
          Status: {{status}}
     {{/each}}
-    
+
     Available Commands:
     [1-8] Connect to agent by slot
     [list] Show all agents

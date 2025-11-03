@@ -1,3 +1,21 @@
+---
+title: Security Audit Fixes
+dimension: events
+category: SECURITY-AUDIT-FIXES.md
+tags: ai, auth
+related_dimensions: things
+scope: global
+created: 2025-11-03
+updated: 2025-11-03
+version: 1.0.0
+ai_context: |
+  This document is part of the events dimension in the SECURITY-AUDIT-FIXES.md category.
+  Location: one/events/SECURITY-AUDIT-FIXES.md
+  Purpose: Documents security audit fixes - october 2025
+  Related dimensions: things
+  For AI agents: Read this to understand SECURITY AUDIT FIXES.
+---
+
 # Security Audit Fixes - October 2025
 
 ## Overview

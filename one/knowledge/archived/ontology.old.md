@@ -1,3 +1,21 @@
+---
+title: Ontology.Old
+dimension: knowledge
+category: archived
+tags: 6-dimensions, ai, architecture, connections, events, inference, knowledge, ontology, people, protocol
+related_dimensions: connections, events, groups, people, things
+scope: global
+created: 2025-11-03
+updated: 2025-11-03
+version: 1.0.0
+ai_context: |
+  This document is part of the knowledge dimension in the archived category.
+  Location: one/knowledge/archived/ontology.old.md
+  Purpose: Documents one platform - ontology specification
+  Related dimensions: connections, events, groups, people, things
+  For AI agents: Read this to understand ontology.old.
+---
+
 # ONE Platform - Ontology Specification
 
 **Version:** 2.0.0 (6-Dimension Architecture)

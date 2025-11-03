@@ -1,3 +1,21 @@
+---
+title: Mail Backend
+dimension: things
+category: plans
+tags: ai, architecture, artificial-intelligence, backend, convex, frontend
+related_dimensions: events, knowledge
+scope: global
+created: 2025-11-03
+updated: 2025-11-03
+version: 1.0.0
+ai_context: |
+  This document is part of the things dimension in the plans category.
+  Location: one/things/plans/mail-backend.md
+  Purpose: Documents mail backend implementation plan
+  Related dimensions: events, knowledge
+  For AI agents: Read this to understand mail backend.
+---
+
 # Mail Backend Implementation Plan
 
 **Goal:** Add complete email functionality to `mail.astro` using Resend, Convex, and Effect.ts to create a fully functional email client.
@@ -49,6 +67,7 @@
 ### 1.1 Things (Entities)
 
 **Email Entity:**
+
 ```typescript
 // In things table
 {
@@ -92,6 +111,7 @@
 ```
 
 **Email Template Entity:**
+
 ```typescript
 {
   _id: Id<"things">,
@@ -113,6 +133,7 @@
 ### 1.2 Connections
 
 **Email Relationships:**
+
 ```typescript
 // Sender → Email (who sent it)
 {
@@ -142,6 +163,7 @@
 ### 1.3 Events
 
 **Email Lifecycle Events:**
+
 ```typescript
 // Email drafted
 {
@@ -212,6 +234,7 @@
 ### 1.4 Tags
 
 **Email Categories:**
+
 ```typescript
 // Tag for categorization
 {
@@ -239,318 +262,330 @@
 **File:** `convex/services/email/email.ts`
 
 ```typescript
-import { Effect } from "effect"
-import { ConvexDatabase } from "../providers/convex"
-import { ResendProvider } from "../providers/resend"
+import { Effect } from "effect";
+import { ConvexDatabase } from "../providers/convex";
+import { ResendProvider } from "../providers/resend";
 
-export class EmailService extends Effect.Service<EmailService>()("EmailService", {
-  effect: Effect.gen(function* () {
-    const db = yield* ConvexDatabase
-    const resend = yield* ResendProvider
+export class EmailService extends Effect.Service<EmailService>()(
+  "EmailService",
+  {
+    effect: Effect.gen(function* () {
+      const db = yield* ConvexDatabase;
+      const resend = yield* ResendProvider;
 
-    return {
-      // Create draft email
-      createDraft: (args: CreateDraftArgs) =>
-        Effect.gen(function* () {
-          // 1. Validate user
-          const user = yield* Effect.tryPromise(() => db.get(args.userId))
-          if (!user) {
-            return yield* Effect.fail({
-              _tag: "UserNotFound",
-              message: "User not found"
-            })
-          }
+      return {
+        // Create draft email
+        createDraft: (args: CreateDraftArgs) =>
+          Effect.gen(function* () {
+            // 1. Validate user
+            const user = yield* Effect.tryPromise(() => db.get(args.userId));
+            if (!user) {
+              return yield* Effect.fail({
+                _tag: "UserNotFound",
+                message: "User not found",
+              });
+            }
 
-          // 2. Create email entity
-          const emailId = yield* Effect.tryPromise(() =>
-            db.insert("things", {
-              type: "email",
-              name: args.subject,
-              status: "draft",
-              createdAt: Date.now(),
-              updatedAt: Date.now(),
-              properties: {
-                from: user.properties.email,
-                fromName: user.properties.name,
-                to: args.to,
-                cc: args.cc,
-                bcc: args.bcc,
-                subject: args.subject,
-                bodyHtml: args.bodyHtml,
-                bodyText: args.bodyText,
-                folder: "drafts",
-                read: true,
-                starred: false,
-                labels: args.labels || [],
-              }
-            })
-          )
+            // 2. Create email entity
+            const emailId = yield* Effect.tryPromise(() =>
+              db.insert("things", {
+                type: "email",
+                name: args.subject,
+                status: "draft",
+                createdAt: Date.now(),
+                updatedAt: Date.now(),
+                properties: {
+                  from: user.properties.email,
+                  fromName: user.properties.name,
+                  to: args.to,
+                  cc: args.cc,
+                  bcc: args.bcc,
+                  subject: args.subject,
+                  bodyHtml: args.bodyHtml,
+                  bodyText: args.bodyText,
+                  folder: "drafts",
+                  read: true,
+                  starred: false,
+                  labels: args.labels || [],
+                },
+              }),
+            );
 
-          // 3. Create connection (user authored email)
-          yield* Effect.tryPromise(() =>
-            db.insert("connections", {
-              fromThingId: args.userId,
-              toThingId: emailId,
-              relationshipType: "sent_email",
-              createdAt: Date.now()
-            })
-          )
+            // 3. Create connection (user authored email)
+            yield* Effect.tryPromise(() =>
+              db.insert("connections", {
+                fromThingId: args.userId,
+                toThingId: emailId,
+                relationshipType: "sent_email",
+                createdAt: Date.now(),
+              }),
+            );
 
-          // 4. Log event
-          yield* Effect.tryPromise(() =>
-            db.insert("events", {
-              thingId: emailId,
-              eventType: "email_drafted",
-              timestamp: Date.now(),
-              actorType: "user",
-              actorId: args.userId,
-              metadata: { folder: "drafts" }
-            })
-          )
+            // 4. Log event
+            yield* Effect.tryPromise(() =>
+              db.insert("events", {
+                thingId: emailId,
+                eventType: "email_drafted",
+                timestamp: Date.now(),
+                actorType: "user",
+                actorId: args.userId,
+                metadata: { folder: "drafts" },
+              }),
+            );
 
-          return emailId
-        }),
+            return emailId;
+          }),
 
-      // Send email
-      send: (args: SendEmailArgs) =>
-        Effect.gen(function* () {
-          // 1. Get email
-          const email = yield* Effect.tryPromise(() => db.get(args.emailId))
-          if (!email) {
-            return yield* Effect.fail({
-              _tag: "EmailNotFound",
-              message: "Email not found"
-            })
-          }
+        // Send email
+        send: (args: SendEmailArgs) =>
+          Effect.gen(function* () {
+            // 1. Get email
+            const email = yield* Effect.tryPromise(() => db.get(args.emailId));
+            if (!email) {
+              return yield* Effect.fail({
+                _tag: "EmailNotFound",
+                message: "Email not found",
+              });
+            }
 
-          // 2. Update status to sending
-          yield* Effect.tryPromise(() =>
-            db.patch(args.emailId, {
-              status: "sent",
-              updatedAt: Date.now(),
-              properties: {
-                ...email.properties,
-                folder: "sent"
-              }
-            })
-          )
+            // 2. Update status to sending
+            yield* Effect.tryPromise(() =>
+              db.patch(args.emailId, {
+                status: "sent",
+                updatedAt: Date.now(),
+                properties: {
+                  ...email.properties,
+                  folder: "sent",
+                },
+              }),
+            );
 
-          // 3. Schedule actual send via action (async)
-          yield* Effect.promise(() =>
-            db.scheduler.runAfter(0, internal.email.sendEmailAction, {
-              emailId: args.emailId
-            })
-          )
+            // 3. Schedule actual send via action (async)
+            yield* Effect.promise(() =>
+              db.scheduler.runAfter(0, internal.email.sendEmailAction, {
+                emailId: args.emailId,
+              }),
+            );
 
-          // 4. Log event
-          yield* Effect.tryPromise(() =>
-            db.insert("events", {
-              thingId: args.emailId,
-              eventType: "email_sent",
-              timestamp: Date.now(),
-              actorType: "user",
-              actorId: args.userId,
-              metadata: {
-                recipients: email.properties.to,
-                subject: email.properties.subject
-              }
-            })
-          )
+            // 4. Log event
+            yield* Effect.tryPromise(() =>
+              db.insert("events", {
+                thingId: args.emailId,
+                eventType: "email_sent",
+                timestamp: Date.now(),
+                actorType: "user",
+                actorId: args.userId,
+                metadata: {
+                  recipients: email.properties.to,
+                  subject: email.properties.subject,
+                },
+              }),
+            );
 
-          return { success: true, emailId: args.emailId }
-        }),
+            return { success: true, emailId: args.emailId };
+          }),
 
-      // List emails by folder
-      listByFolder: (args: ListByFolderArgs) =>
-        Effect.gen(function* () {
-          const emails = yield* Effect.tryPromise(() =>
-            db.query("things")
-              .withIndex("type", q => q.eq("type", "email"))
-              .filter(q =>
-                q.eq(q.field("properties.folder"), args.folder)
-              )
-              .order("desc")
-              .collect()
-          )
+        // List emails by folder
+        listByFolder: (args: ListByFolderArgs) =>
+          Effect.gen(function* () {
+            const emails = yield* Effect.tryPromise(() =>
+              db
+                .query("things")
+                .withIndex("type", (q) => q.eq("type", "email"))
+                .filter((q) => q.eq(q.field("properties.folder"), args.folder))
+                .order("desc")
+                .collect(),
+            );
 
-          return emails
-        }),
+            return emails;
+          }),
 
-      // Search emails
-      search: (args: SearchEmailArgs) =>
-        Effect.gen(function* () {
-          const allEmails = yield* Effect.tryPromise(() =>
-            db.query("things")
-              .withIndex("type", q => q.eq("type", "email"))
-              .collect()
-          )
+        // Search emails
+        search: (args: SearchEmailArgs) =>
+          Effect.gen(function* () {
+            const allEmails = yield* Effect.tryPromise(() =>
+              db
+                .query("things")
+                .withIndex("type", (q) => q.eq("type", "email"))
+                .collect(),
+            );
 
-          // Filter by search query
-          const query = args.query.toLowerCase()
-          const filtered = allEmails.filter(email =>
-            email.properties.subject.toLowerCase().includes(query) ||
-            email.properties.bodyText.toLowerCase().includes(query) ||
-            email.properties.fromName.toLowerCase().includes(query) ||
-            email.properties.from.toLowerCase().includes(query)
-          )
+            // Filter by search query
+            const query = args.query.toLowerCase();
+            const filtered = allEmails.filter(
+              (email) =>
+                email.properties.subject.toLowerCase().includes(query) ||
+                email.properties.bodyText.toLowerCase().includes(query) ||
+                email.properties.fromName.toLowerCase().includes(query) ||
+                email.properties.from.toLowerCase().includes(query),
+            );
 
-          return filtered
-        }),
+            return filtered;
+          }),
 
-      // Archive email
-      archive: (args: ArchiveEmailArgs) =>
-        Effect.gen(function* () {
-          const email = yield* Effect.tryPromise(() => db.get(args.emailId))
-          if (!email) {
-            return yield* Effect.fail({
-              _tag: "EmailNotFound",
-              message: "Email not found"
-            })
-          }
+        // Archive email
+        archive: (args: ArchiveEmailArgs) =>
+          Effect.gen(function* () {
+            const email = yield* Effect.tryPromise(() => db.get(args.emailId));
+            if (!email) {
+              return yield* Effect.fail({
+                _tag: "EmailNotFound",
+                message: "Email not found",
+              });
+            }
 
-          yield* Effect.tryPromise(() =>
-            db.patch(args.emailId, {
-              updatedAt: Date.now(),
-              properties: {
-                ...email.properties,
-                folder: "archive"
-              }
-            })
-          )
+            yield* Effect.tryPromise(() =>
+              db.patch(args.emailId, {
+                updatedAt: Date.now(),
+                properties: {
+                  ...email.properties,
+                  folder: "archive",
+                },
+              }),
+            );
 
-          // Log event
-          yield* Effect.tryPromise(() =>
-            db.insert("events", {
-              thingId: args.emailId,
-              eventType: "email_archived",
-              timestamp: Date.now(),
-              actorType: "user",
-              actorId: args.userId,
-              metadata: {}
-            })
-          )
+            // Log event
+            yield* Effect.tryPromise(() =>
+              db.insert("events", {
+                thingId: args.emailId,
+                eventType: "email_archived",
+                timestamp: Date.now(),
+                actorType: "user",
+                actorId: args.userId,
+                metadata: {},
+              }),
+            );
 
-          return { success: true }
-        }),
+            return { success: true };
+          }),
 
-      // Delete email (move to trash)
-      delete: (args: DeleteEmailArgs) =>
-        Effect.gen(function* () {
-          const email = yield* Effect.tryPromise(() => db.get(args.emailId))
-          if (!email) {
-            return yield* Effect.fail({
-              _tag: "EmailNotFound",
-              message: "Email not found"
-            })
-          }
+        // Delete email (move to trash)
+        delete: (args: DeleteEmailArgs) =>
+          Effect.gen(function* () {
+            const email = yield* Effect.tryPromise(() => db.get(args.emailId));
+            if (!email) {
+              return yield* Effect.fail({
+                _tag: "EmailNotFound",
+                message: "Email not found",
+              });
+            }
 
-          yield* Effect.tryPromise(() =>
-            db.patch(args.emailId, {
-              updatedAt: Date.now(),
-              properties: {
-                ...email.properties,
-                folder: "trash"
-              }
-            })
-          )
+            yield* Effect.tryPromise(() =>
+              db.patch(args.emailId, {
+                updatedAt: Date.now(),
+                properties: {
+                  ...email.properties,
+                  folder: "trash",
+                },
+              }),
+            );
 
-          return { success: true }
-        }),
+            return { success: true };
+          }),
 
-      // Mark as read/unread
-      markRead: (args: MarkReadArgs) =>
-        Effect.gen(function* () {
-          const email = yield* Effect.tryPromise(() => db.get(args.emailId))
-          if (!email) {
-            return yield* Effect.fail({
-              _tag: "EmailNotFound",
-              message: "Email not found"
-            })
-          }
+        // Mark as read/unread
+        markRead: (args: MarkReadArgs) =>
+          Effect.gen(function* () {
+            const email = yield* Effect.tryPromise(() => db.get(args.emailId));
+            if (!email) {
+              return yield* Effect.fail({
+                _tag: "EmailNotFound",
+                message: "Email not found",
+              });
+            }
 
-          yield* Effect.tryPromise(() =>
-            db.patch(args.emailId, {
-              updatedAt: Date.now(),
-              properties: {
-                ...email.properties,
-                read: args.read
-              }
-            })
-          )
+            yield* Effect.tryPromise(() =>
+              db.patch(args.emailId, {
+                updatedAt: Date.now(),
+                properties: {
+                  ...email.properties,
+                  read: args.read,
+                },
+              }),
+            );
 
-          return { success: true }
-        }),
+            return { success: true };
+          }),
 
-      // Get folder counts
-      getFolderCounts: (args: GetFolderCountsArgs) =>
-        Effect.gen(function* () {
-          const allEmails = yield* Effect.tryPromise(() =>
-            db.query("things")
-              .withIndex("type", q => q.eq("type", "email"))
-              .collect()
-          )
+        // Get folder counts
+        getFolderCounts: (args: GetFolderCountsArgs) =>
+          Effect.gen(function* () {
+            const allEmails = yield* Effect.tryPromise(() =>
+              db
+                .query("things")
+                .withIndex("type", (q) => q.eq("type", "email"))
+                .collect(),
+            );
 
-          const counts = {
-            inbox: allEmails.filter(e => e.properties.folder === "inbox").length,
-            sent: allEmails.filter(e => e.properties.folder === "sent").length,
-            drafts: allEmails.filter(e => e.properties.folder === "drafts").length,
-            trash: allEmails.filter(e => e.properties.folder === "trash").length,
-            archive: allEmails.filter(e => e.properties.folder === "archive").length,
-            junk: allEmails.filter(e => e.properties.folder === "junk").length,
-            unread: allEmails.filter(e => !e.properties.read).length,
-          }
+            const counts = {
+              inbox: allEmails.filter((e) => e.properties.folder === "inbox")
+                .length,
+              sent: allEmails.filter((e) => e.properties.folder === "sent")
+                .length,
+              drafts: allEmails.filter((e) => e.properties.folder === "drafts")
+                .length,
+              trash: allEmails.filter((e) => e.properties.folder === "trash")
+                .length,
+              archive: allEmails.filter(
+                (e) => e.properties.folder === "archive",
+              ).length,
+              junk: allEmails.filter((e) => e.properties.folder === "junk")
+                .length,
+              unread: allEmails.filter((e) => !e.properties.read).length,
+            };
 
-          return counts
-        })
-    }
-  }),
-  dependencies: [ConvexDatabase.Default, ResendProvider.Default]
-}) {}
+            return counts;
+          }),
+      };
+    }),
+    dependencies: [ConvexDatabase.Default, ResendProvider.Default],
+  },
+) {}
 
 // Type definitions
 interface CreateDraftArgs {
-  userId: Id<"things">
-  to: string[]
-  cc?: string[]
-  bcc?: string[]
-  subject: string
-  bodyHtml: string
-  bodyText: string
-  labels?: string[]
+  userId: Id<"things">;
+  to: string[];
+  cc?: string[];
+  bcc?: string[];
+  subject: string;
+  bodyHtml: string;
+  bodyText: string;
+  labels?: string[];
 }
 
 interface SendEmailArgs {
-  emailId: Id<"things">
-  userId: Id<"things">
+  emailId: Id<"things">;
+  userId: Id<"things">;
 }
 
 interface ListByFolderArgs {
-  folder: "inbox" | "sent" | "drafts" | "trash" | "archive" | "junk"
-  userId: Id<"things">
+  folder: "inbox" | "sent" | "drafts" | "trash" | "archive" | "junk";
+  userId: Id<"things">;
 }
 
 interface SearchEmailArgs {
-  query: string
-  userId: Id<"things">
+  query: string;
+  userId: Id<"things">;
 }
 
 interface ArchiveEmailArgs {
-  emailId: Id<"things">
-  userId: Id<"things">
+  emailId: Id<"things">;
+  userId: Id<"things">;
 }
 
 interface DeleteEmailArgs {
-  emailId: Id<"things">
-  userId: Id<"things">
+  emailId: Id<"things">;
+  userId: Id<"things">;
 }
 
 interface MarkReadArgs {
-  emailId: Id<"things">
-  read: boolean
+  emailId: Id<"things">;
+  read: boolean;
 }
 
 interface GetFolderCountsArgs {
-  userId: Id<"things">
+  userId: Id<"things">;
 }
 ```
 
@@ -559,49 +594,52 @@ interface GetFolderCountsArgs {
 **File:** `convex/services/providers/resend.ts`
 
 ```typescript
-import { Effect, Layer } from "effect"
-import { Resend } from "@convex-dev/resend"
-import { components } from "../../_generated/api"
+import { Effect, Layer } from "effect";
+import { Resend } from "@convex-dev/resend";
+import { components } from "../../_generated/api";
 
-export class ResendProvider extends Effect.Service<ResendProvider>()("ResendProvider", {
-  effect: Effect.gen(function* () {
-    const resend = new Resend(components.resend, { testMode: false })
+export class ResendProvider extends Effect.Service<ResendProvider>()(
+  "ResendProvider",
+  {
+    effect: Effect.gen(function* () {
+      const resend = new Resend(components.resend, { testMode: false });
 
-    return {
-      send: (args: ResendSendArgs) =>
-        Effect.tryPromise({
-          try: async () => {
-            const result = await resend.sendEmail(ctx, {
-              from: args.from,
-              to: args.to,
-              cc: args.cc,
-              bcc: args.bcc,
-              subject: args.subject,
-              html: args.html,
-              text: args.text,
-            })
-            return result
-          },
-          catch: (error) => ({
-            _tag: "ResendError" as const,
-            message: error instanceof Error ? error.message : "Unknown error"
-          })
-        })
-    }
-  })
-}) {}
+      return {
+        send: (args: ResendSendArgs) =>
+          Effect.tryPromise({
+            try: async () => {
+              const result = await resend.sendEmail(ctx, {
+                from: args.from,
+                to: args.to,
+                cc: args.cc,
+                bcc: args.bcc,
+                subject: args.subject,
+                html: args.html,
+                text: args.text,
+              });
+              return result;
+            },
+            catch: (error) => ({
+              _tag: "ResendError" as const,
+              message: error instanceof Error ? error.message : "Unknown error",
+            }),
+          }),
+      };
+    }),
+  },
+) {}
 
 interface ResendSendArgs {
-  from: string
-  to: string[]
-  cc?: string[]
-  bcc?: string[]
-  subject: string
-  html: string
-  text: string
+  from: string;
+  to: string[];
+  cc?: string[];
+  bcc?: string[];
+  subject: string;
+  html: string;
+  text: string;
 }
 
-export const ResendProviderLive = Layer.succeed(ResendProvider, ResendProvider)
+export const ResendProviderLive = Layer.succeed(ResendProvider, ResendProvider);
 ```
 
 ---
@@ -613,12 +651,12 @@ export const ResendProviderLive = Layer.succeed(ResendProvider, ResendProvider)
 **File:** `convex/queries/email.ts`
 
 ```typescript
-import { query } from "./_generated/server"
-import { v } from "convex/values"
-import { confect } from "convex-helpers/server/confect"
-import { Effect } from "effect"
-import { EmailService } from "./services/email/email"
-import { MainLayer } from "./services/layers"
+import { query } from "./_generated/server";
+import { v } from "convex/values";
+import { confect } from "convex-helpers/server/confect";
+import { Effect } from "effect";
+import { EmailService } from "./services/email/email";
+import { MainLayer } from "./services/layers";
 
 // List emails by folder
 export const list = confect.query({
@@ -629,26 +667,26 @@ export const list = confect.query({
       v.literal("drafts"),
       v.literal("trash"),
       v.literal("archive"),
-      v.literal("junk")
+      v.literal("junk"),
     ),
     userId: v.id("things"),
   },
   handler: (ctx, args) =>
     Effect.gen(function* () {
-      const emailService = yield* EmailService
-      return yield* emailService.listByFolder(args)
-    }).pipe(Effect.provide(MainLayer))
-})
+      const emailService = yield* EmailService;
+      return yield* emailService.listByFolder(args);
+    }).pipe(Effect.provide(MainLayer)),
+});
 
 // Get single email
 export const get = confect.query({
   args: { id: v.id("things") },
   handler: (ctx, args) =>
     Effect.gen(function* () {
-      const email = yield* Effect.tryPromise(() => ctx.db.get(args.id))
-      return email
-    }).pipe(Effect.provide(MainLayer))
-})
+      const email = yield* Effect.tryPromise(() => ctx.db.get(args.id));
+      return email;
+    }).pipe(Effect.provide(MainLayer)),
+});
 
 // Search emails
 export const search = confect.query({
@@ -658,20 +696,20 @@ export const search = confect.query({
   },
   handler: (ctx, args) =>
     Effect.gen(function* () {
-      const emailService = yield* EmailService
-      return yield* emailService.search(args)
-    }).pipe(Effect.provide(MainLayer))
-})
+      const emailService = yield* EmailService;
+      return yield* emailService.search(args);
+    }).pipe(Effect.provide(MainLayer)),
+});
 
 // Get folder counts
 export const folderCounts = confect.query({
   args: { userId: v.id("things") },
   handler: (ctx, args) =>
     Effect.gen(function* () {
-      const emailService = yield* EmailService
-      return yield* emailService.getFolderCounts(args)
-    }).pipe(Effect.provide(MainLayer))
-})
+      const emailService = yield* EmailService;
+      return yield* emailService.getFolderCounts(args);
+    }).pipe(Effect.provide(MainLayer)),
+});
 ```
 
 ### 3.2 Mutations
@@ -679,12 +717,12 @@ export const folderCounts = confect.query({
 **File:** `convex/mutations/email.ts`
 
 ```typescript
-import { mutation } from "./_generated/server"
-import { v } from "convex/values"
-import { confect } from "convex-helpers/server/confect"
-import { Effect } from "effect"
-import { EmailService } from "./services/email/email"
-import { MainLayer } from "./services/layers"
+import { mutation } from "./_generated/server";
+import { v } from "convex/values";
+import { confect } from "convex-helpers/server/confect";
+import { Effect } from "effect";
+import { EmailService } from "./services/email/email";
+import { MainLayer } from "./services/layers";
 
 // Create draft
 export const createDraft = confect.mutation({
@@ -700,10 +738,10 @@ export const createDraft = confect.mutation({
   },
   handler: (ctx, args) =>
     Effect.gen(function* () {
-      const emailService = yield* EmailService
-      return yield* emailService.createDraft(args)
-    }).pipe(Effect.provide(MainLayer))
-})
+      const emailService = yield* EmailService;
+      return yield* emailService.createDraft(args);
+    }).pipe(Effect.provide(MainLayer)),
+});
 
 // Send email
 export const send = confect.mutation({
@@ -713,10 +751,10 @@ export const send = confect.mutation({
   },
   handler: (ctx, args) =>
     Effect.gen(function* () {
-      const emailService = yield* EmailService
-      return yield* emailService.send(args)
-    }).pipe(Effect.provide(MainLayer))
-})
+      const emailService = yield* EmailService;
+      return yield* emailService.send(args);
+    }).pipe(Effect.provide(MainLayer)),
+});
 
 // Archive email
 export const archive = confect.mutation({
@@ -726,10 +764,10 @@ export const archive = confect.mutation({
   },
   handler: (ctx, args) =>
     Effect.gen(function* () {
-      const emailService = yield* EmailService
-      return yield* emailService.archive(args)
-    }).pipe(Effect.provide(MainLayer))
-})
+      const emailService = yield* EmailService;
+      return yield* emailService.archive(args);
+    }).pipe(Effect.provide(MainLayer)),
+});
 
 // Delete email
 export const deleteEmail = confect.mutation({
@@ -739,10 +777,10 @@ export const deleteEmail = confect.mutation({
   },
   handler: (ctx, args) =>
     Effect.gen(function* () {
-      const emailService = yield* EmailService
-      return yield* emailService.delete(args)
-    }).pipe(Effect.provide(MainLayer))
-})
+      const emailService = yield* EmailService;
+      return yield* emailService.delete(args);
+    }).pipe(Effect.provide(MainLayer)),
+});
 
 // Mark as read/unread
 export const markRead = confect.mutation({
@@ -752,10 +790,10 @@ export const markRead = confect.mutation({
   },
   handler: (ctx, args) =>
     Effect.gen(function* () {
-      const emailService = yield* EmailService
-      return yield* emailService.markRead(args)
-    }).pipe(Effect.provide(MainLayer))
-})
+      const emailService = yield* EmailService;
+      return yield* emailService.markRead(args);
+    }).pipe(Effect.provide(MainLayer)),
+});
 ```
 
 ### 3.3 Actions
@@ -763,10 +801,10 @@ export const markRead = confect.mutation({
 **File:** `convex/actions/email.ts`
 
 ```typescript
-import { internalAction } from "./_generated/server"
-import { v } from "convex/values"
-import { Resend } from "@convex-dev/resend"
-import { components, internal } from "./_generated/api"
+import { internalAction } from "./_generated/server";
+import { v } from "convex/values";
+import { Resend } from "@convex-dev/resend";
+import { components, internal } from "./_generated/api";
 
 // Actually send email via Resend
 export const sendEmailAction = internalAction({
@@ -774,15 +812,15 @@ export const sendEmailAction = internalAction({
   handler: async (ctx, args) => {
     // 1. Get email
     const email = await ctx.runQuery(internal.email.getEmail, {
-      id: args.emailId
-    })
+      id: args.emailId,
+    });
 
     if (!email) {
-      throw new Error("Email not found")
+      throw new Error("Email not found");
     }
 
     // 2. Send via Resend
-    const resend = new Resend(components.resend, { testMode: false })
+    const resend = new Resend(components.resend, { testMode: false });
 
     try {
       const result = await resend.sendEmail(ctx, {
@@ -793,36 +831,36 @@ export const sendEmailAction = internalAction({
         subject: email.properties.subject,
         html: email.properties.bodyHtml,
         text: email.properties.bodyText,
-      })
+      });
 
       // 3. Update email with Resend ID
       await ctx.runMutation(internal.email.updateResendId, {
         emailId: args.emailId,
         resendId: result.id,
-      })
+      });
 
       // 4. Log delivery event
       await ctx.runMutation(internal.email.logEvent, {
         emailId: args.emailId,
         eventType: "email_delivered",
-        metadata: { resendId: result.id }
-      })
+        metadata: { resendId: result.id },
+      });
 
-      return { success: true, resendId: result.id }
+      return { success: true, resendId: result.id };
     } catch (error) {
       // Log failure event
       await ctx.runMutation(internal.email.logEvent, {
         emailId: args.emailId,
         eventType: "email_failed",
         metadata: {
-          error: error instanceof Error ? error.message : "Unknown error"
-        }
-      })
+          error: error instanceof Error ? error.message : "Unknown error",
+        },
+      });
 
-      throw error
+      throw error;
     }
-  }
-})
+  },
+});
 ```
 
 ---
@@ -834,8 +872,8 @@ export const sendEmailAction = internalAction({
 **File:** `src/components/mail/use-mail.ts`
 
 ```typescript
-import { atom, useAtom } from "jotai"
-import { Id } from "@/convex/_generated/dataModel"
+import { atom, useAtom } from "jotai";
+import { Id } from "@/convex/_generated/dataModel";
 
 export type MailFolder =
   | "inbox"
@@ -843,24 +881,24 @@ export type MailFolder =
   | "sent"
   | "junk"
   | "trash"
-  | "archive"
+  | "archive";
 
 type Config = {
-  selected: Id<"things"> | null
-  activeFolder: MailFolder
-  searchQuery: string
-  activeTab: "all" | "unread"
-}
+  selected: Id<"things"> | null;
+  activeFolder: MailFolder;
+  searchQuery: string;
+  activeTab: "all" | "unread";
+};
 
 const configAtom = atom<Config>({
   selected: null,
   activeFolder: "inbox",
   searchQuery: "",
   activeTab: "all",
-})
+});
 
 export function useMail() {
-  return useAtom(configAtom)
+  return useAtom(configAtom);
 }
 ```
 
@@ -869,42 +907,44 @@ export function useMail() {
 **File:** `src/components/mail/MailList.tsx`
 
 ```tsx
-import { useQuery } from "convex/react"
-import { api } from "@/convex/_generated/api"
-import { formatDistanceToNow } from "date-fns"
-import { cn } from "@/lib/utils"
-import { Badge } from "@/components/ui/badge"
-import { ScrollArea } from "@/components/ui/scroll-area"
-import { useMail } from "./use-mail"
+import { useQuery } from "convex/react";
+import { api } from "@/convex/_generated/api";
+import { formatDistanceToNow } from "date-fns";
+import { cn } from "@/lib/utils";
+import { Badge } from "@/components/ui/badge";
+import { ScrollArea } from "@/components/ui/scroll-area";
+import { useMail } from "./use-mail";
 
 export function MailList({ userId }: { userId: string }) {
-  const [mail, setMail] = useMail()
+  const [mail, setMail] = useMail();
 
   // Real-time query from Convex
   const emails = useQuery(api.email.list, {
     folder: mail.activeFolder,
     userId: userId as any, // Type assertion for now
-  })
+  });
 
   // Filter by search query (client-side for now)
-  const filteredEmails = emails?.filter(email => {
-    if (!mail.searchQuery) return true
+  const filteredEmails =
+    emails?.filter((email) => {
+      if (!mail.searchQuery) return true;
 
-    const query = mail.searchQuery.toLowerCase()
-    return (
-      email.properties.subject.toLowerCase().includes(query) ||
-      email.properties.bodyText.toLowerCase().includes(query) ||
-      email.properties.fromName.toLowerCase().includes(query)
-    )
-  }) || []
+      const query = mail.searchQuery.toLowerCase();
+      return (
+        email.properties.subject.toLowerCase().includes(query) ||
+        email.properties.bodyText.toLowerCase().includes(query) ||
+        email.properties.fromName.toLowerCase().includes(query)
+      );
+    }) || [];
 
   // Filter by tab
-  const displayEmails = mail.activeTab === "unread"
-    ? filteredEmails.filter(e => !e.properties.read)
-    : filteredEmails
+  const displayEmails =
+    mail.activeTab === "unread"
+      ? filteredEmails.filter((e) => !e.properties.read)
+      : filteredEmails;
 
   if (!emails) {
-    return <div className="p-8 text-center">Loading...</div>
+    return <div className="p-8 text-center">Loading...</div>;
   }
 
   if (displayEmails.length === 0) {
@@ -912,7 +952,7 @@ export function MailList({ userId }: { userId: string }) {
       <div className="flex items-center justify-center p-8 text-center text-sm text-muted-foreground">
         No emails found
       </div>
-    )
+    );
   }
 
   return (
@@ -923,7 +963,7 @@ export function MailList({ userId }: { userId: string }) {
             key={email._id}
             className={cn(
               "flex flex-col items-start gap-2 rounded-lg border p-3 text-left text-sm transition-all hover:bg-accent active:scale-[0.99]",
-              mail.selected === email._id && "bg-muted ring-2 ring-primary/20"
+              mail.selected === email._id && "bg-muted ring-2 ring-primary/20",
             )}
             onClick={() =>
               setMail({
@@ -935,10 +975,12 @@ export function MailList({ userId }: { userId: string }) {
             <div className="flex w-full flex-col gap-1">
               <div className="flex items-center">
                 <div className="flex items-center gap-2">
-                  <div className={cn(
-                    "font-semibold",
-                    !email.properties.read && "text-primary"
-                  )}>
+                  <div
+                    className={cn(
+                      "font-semibold",
+                      !email.properties.read && "text-primary",
+                    )}
+                  >
                     {email.properties.fromName}
                   </div>
                   {!email.properties.read && (
@@ -950,7 +992,7 @@ export function MailList({ userId }: { userId: string }) {
                     "ml-auto text-xs",
                     mail.selected === email._id
                       ? "text-foreground"
-                      : "text-muted-foreground"
+                      : "text-muted-foreground",
                   )}
                 >
                   {formatDistanceToNow(new Date(email.createdAt), {
@@ -958,10 +1000,12 @@ export function MailList({ userId }: { userId: string }) {
                   })}
                 </div>
               </div>
-              <div className={cn(
-                "text-xs font-medium",
-                !email.properties.read && "text-primary"
-              )}>
+              <div
+                className={cn(
+                  "text-xs font-medium",
+                  !email.properties.read && "text-primary",
+                )}
+              >
                 {email.properties.subject}
               </div>
             </div>
@@ -981,7 +1025,7 @@ export function MailList({ userId }: { userId: string }) {
         ))}
       </div>
     </ScrollArea>
-  )
+  );
 }
 ```
 
@@ -990,60 +1034,60 @@ export function MailList({ userId }: { userId: string }) {
 **File:** `src/components/mail/MailDisplay.tsx`
 
 ```tsx
-import { useQuery, useMutation } from "convex/react"
-import { api } from "@/convex/_generated/api"
-import { toast } from "sonner"
-import { Archive, ArchiveX, Trash2, Reply } from "lucide-react"
-import { Button } from "@/components/ui/button"
-import { Textarea } from "@/components/ui/textarea"
-import { useMail } from "./use-mail"
-import { useState } from "react"
+import { useQuery, useMutation } from "convex/react";
+import { api } from "@/convex/_generated/api";
+import { toast } from "sonner";
+import { Archive, ArchiveX, Trash2, Reply } from "lucide-react";
+import { Button } from "@/components/ui/button";
+import { Textarea } from "@/components/ui/textarea";
+import { useMail } from "./use-mail";
+import { useState } from "react";
 
 export function MailDisplay({ userId }: { userId: string }) {
-  const [mail] = useMail()
-  const [replyText, setReplyText] = useState("")
+  const [mail] = useMail();
+  const [replyText, setReplyText] = useState("");
 
   // Get selected email
   const currentMail = useQuery(
     api.email.get,
-    mail.selected ? { id: mail.selected } : "skip"
-  )
+    mail.selected ? { id: mail.selected } : "skip",
+  );
 
   // Mutations
-  const archive = useMutation(api.email.archive)
-  const deleteEmail = useMutation(api.email.deleteEmail)
-  const markRead = useMutation(api.email.markRead)
+  const archive = useMutation(api.email.archive);
+  const deleteEmail = useMutation(api.email.deleteEmail);
+  const markRead = useMutation(api.email.markRead);
 
   const handleArchive = async () => {
-    if (!mail.selected) return
+    if (!mail.selected) return;
 
-    await archive({ emailId: mail.selected, userId: userId as any })
-    toast.success("Email archived")
-  }
+    await archive({ emailId: mail.selected, userId: userId as any });
+    toast.success("Email archived");
+  };
 
   const handleDelete = async () => {
-    if (!mail.selected) return
+    if (!mail.selected) return;
 
-    await deleteEmail({ emailId: mail.selected, userId: userId as any })
-    toast.success("Email deleted")
-  }
+    await deleteEmail({ emailId: mail.selected, userId: userId as any });
+    toast.success("Email deleted");
+  };
 
   const handleReply = async (e: React.FormEvent) => {
-    e.preventDefault()
-    if (!replyText.trim() || !currentMail) return
+    e.preventDefault();
+    if (!replyText.trim() || !currentMail) return;
 
     // Create draft reply
     // TODO: Implement reply functionality
-    toast.success("Reply sent")
-    setReplyText("")
-  }
+    toast.success("Reply sent");
+    setReplyText("");
+  };
 
   if (!currentMail) {
     return (
       <div className="flex h-full items-center justify-center p-8 text-center text-muted-foreground">
         No message selected
       </div>
-    )
+    );
   }
 
   return (
@@ -1062,7 +1106,8 @@ export function MailDisplay({ userId }: { userId: string }) {
           {currentMail.properties.subject}
         </div>
         <div className="text-sm text-muted-foreground mb-4">
-          From: {currentMail.properties.fromName} ({currentMail.properties.from})
+          From: {currentMail.properties.fromName} ({currentMail.properties.from}
+          )
         </div>
         <div
           className="prose prose-sm max-w-none"
@@ -1085,7 +1130,7 @@ export function MailDisplay({ userId }: { userId: string }) {
         </form>
       </div>
     </div>
-  )
+  );
 }
 ```
 
@@ -1135,14 +1180,14 @@ const userId = session.user.id
 **File:** `convex/http/webhooks/resend.ts`
 
 ```typescript
-import { Hono } from "hono"
-import { HonoWithConvex, HttpRouterWithHono } from "convex-helpers/server/hono"
-import { internal } from "../../_generated/api"
+import { Hono } from "hono";
+import { HonoWithConvex, HttpRouterWithHono } from "convex-helpers/server/hono";
+import { internal } from "../../_generated/api";
 
-const app: HonoWithConvex = new Hono()
+const app: HonoWithConvex = new Hono();
 
 app.post("/resend", async (c) => {
-  const body = await c.req.json()
+  const body = await c.req.json();
 
   // Verify webhook signature (Resend provides this)
   // const signature = c.req.header("resend-signature")
@@ -1150,58 +1195,58 @@ app.post("/resend", async (c) => {
   //   return c.json({ error: "Invalid signature" }, 401)
   // }
 
-  const { type, data } = body
+  const { type, data } = body;
 
   switch (type) {
     case "email.sent":
       await c.env.runMutation(internal.email.handleEmailSent, {
         resendId: data.email_id,
-        timestamp: Date.now()
-      })
-      break
+        timestamp: Date.now(),
+      });
+      break;
 
     case "email.delivered":
       await c.env.runMutation(internal.email.handleEmailDelivered, {
         resendId: data.email_id,
-        timestamp: Date.now()
-      })
-      break
+        timestamp: Date.now(),
+      });
+      break;
 
     case "email.opened":
       await c.env.runMutation(internal.email.handleEmailOpened, {
         resendId: data.email_id,
-        timestamp: Date.now()
-      })
-      break
+        timestamp: Date.now(),
+      });
+      break;
 
     case "email.clicked":
       await c.env.runMutation(internal.email.handleEmailClicked, {
         resendId: data.email_id,
         clickedLink: data.link,
-        timestamp: Date.now()
-      })
-      break
+        timestamp: Date.now(),
+      });
+      break;
 
     case "email.bounced":
       await c.env.runMutation(internal.email.handleEmailBounced, {
         resendId: data.email_id,
         reason: data.bounce_type,
-        timestamp: Date.now()
-      })
-      break
+        timestamp: Date.now(),
+      });
+      break;
 
     case "email.complained":
       await c.env.runMutation(internal.email.handleEmailComplained, {
         resendId: data.email_id,
-        timestamp: Date.now()
-      })
-      break
+        timestamp: Date.now(),
+      });
+      break;
   }
 
-  return c.json({ success: true })
-})
+  return c.json({ success: true });
+});
 
-export default new HttpRouterWithHono(app)
+export default new HttpRouterWithHono(app);
 ```
 
 ---
@@ -1209,6 +1254,7 @@ export default new HttpRouterWithHono(app)
 ## Implementation Checklist
 
 ### Phase 1: Database Setup
+
 - [ ] Add email entity type to things table
 - [ ] Add email_template entity type to things table
 - [ ] Add connection types: sent_email, received_email, reply_to
@@ -1216,18 +1262,21 @@ export default new HttpRouterWithHono(app)
 - [ ] Add tag categories: folder, label, status
 
 ### Phase 2: Backend Services
+
 - [ ] Create `convex/services/email/email.ts` (EmailService)
 - [ ] Create `convex/services/providers/resend.ts` (ResendProvider)
 - [ ] Implement createDraft, send, listByFolder, search, archive, delete, markRead
 - [ ] Add to MainLayer in `convex/services/layers.ts`
 
 ### Phase 3: Convex Layer
+
 - [ ] Create `convex/queries/email.ts` (list, get, search, folderCounts)
 - [ ] Create `convex/mutations/email.ts` (createDraft, send, archive, delete, markRead)
 - [ ] Create `convex/actions/email.ts` (sendEmailAction)
 - [ ] Create internal mutations for webhook handlers
 
 ### Phase 4: Frontend Integration
+
 - [ ] Update `src/components/mail/use-mail.ts` with proper types
 - [ ] Update `src/components/mail/MailList.tsx` with useQuery
 - [ ] Update `src/components/mail/MailDisplay.tsx` with useMutation
@@ -1236,12 +1285,14 @@ export default new HttpRouterWithHono(app)
 - [ ] Add Toaster component for notifications
 
 ### Phase 5: Webhooks
+
 - [ ] Create `convex/http/webhooks/resend.ts`
 - [ ] Configure Resend webhook URL in dashboard
 - [ ] Implement webhook signature verification
 - [ ] Test email tracking events
 
 ### Phase 6: Testing
+
 - [ ] Test draft creation
 - [ ] Test email sending (receives in real inbox)
 - [ ] Test folder navigation
@@ -1285,6 +1336,7 @@ RESEND_WEBHOOK_SECRET=whsec_...
 ## Success Criteria
 
 ### MVP (Minimum Viable Product)
+
 - ✅ Users can view emails in inbox
 - ✅ Users can compose and send emails
 - ✅ Emails deliver to real inboxes
@@ -1294,6 +1346,7 @@ RESEND_WEBHOOK_SECRET=whsec_...
 - ✅ Real-time updates when emails arrive
 
 ### Full Features
+
 - ✅ Reply/Forward functionality
 - ✅ Email threading (conversations)
 - ✅ Attachments support

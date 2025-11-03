@@ -1,3 +1,21 @@
+---
+title: Ontology Release
+dimension: knowledge
+category: ontology-release.md
+tags: 6-dimensions, backend, frontend, ontology
+related_dimensions: connections, events, groups, people, things
+scope: global
+created: 2025-11-03
+updated: 2025-11-03
+version: 1.0.0
+ai_context: |
+  This document is part of the knowledge dimension in the ontology-release.md category.
+  Location: one/knowledge/ontology-release.md
+  Purpose: Documents one platform release mapping v1.0.0
+  Related dimensions: connections, events, groups, people, things
+  For AI agents: Read this to understand ontology release.
+---
+
 # ONE Platform Release Mapping v1.0.0
 
 **What Gets Released | Where It Goes | How It Deploys**

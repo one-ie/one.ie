@@ -1,3 +1,21 @@
+---
+title: Multitenant
+dimension: connections
+category: multitenant.md
+tags: agent, ai, architecture, backend, connections, frontend, ontology
+related_dimensions: events, groups, knowledge, people
+scope: global
+created: 2025-11-03
+updated: 2025-11-03
+version: 1.0.0
+ai_context: |
+  This document is part of the connections dimension in the multitenant.md category.
+  Location: one/connections/multitenant.md
+  Purpose: Documents multitenant.md - multi-tenant architecture
+  Related dimensions: events, groups, knowledge, people
+  For AI agents: Read this to understand multitenant.
+---
+
 # Multitenant.md - Multi-Tenant Architecture
 
 ## Overview

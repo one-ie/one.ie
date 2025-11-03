@@ -1,3 +1,21 @@
+---
+title: Backend Status
+dimension: things
+category: plans
+tags: ai, auth, backend, convex, frontend
+related_dimensions: connections, events, groups, knowledge, people
+scope: global
+created: 2025-11-03
+updated: 2025-11-03
+version: 1.0.0
+ai_context: |
+  This document is part of the things dimension in the plans category.
+  Location: one/things/plans/backend-status.md
+  Purpose: Documents backend status: what's complete, what's next
+  Related dimensions: connections, events, groups, knowledge, people
+  For AI agents: Read this to understand backend status.
+---
+
 # Backend Status: What's Complete, What's Next
 
 **Date:** 2025-10-24
@@ -19,6 +37,7 @@ The ONE Platform backend is **fully functional with Better Auth integration**. T
 **Location:** `/backend/convex/auth.ts`
 
 **Implemented:**
+
 - ✅ Email/Password signup
 - ✅ Email/Password signin
 - ✅ Sign out
@@ -29,6 +48,7 @@ The ONE Platform backend is **fully functional with Better Auth integration**. T
 - ✅ Sessions table with token validation
 
 **Current Flow:**
+
 ```
 Frontend (Better Auth) → POST /auth/signup
   ↓
@@ -42,6 +62,7 @@ Frontend stores JWT → Uses for subsequent requests
 **Location:** `/backend/convex/schema.ts`
 
 **Tables:**
+
 - ✅ users (email, passwordHash, emailVerified)
 - ✅ sessions (userId, token, expiresAt)
 - ✅ groups (slug, name, type, parentGroupId, settings)
@@ -51,6 +72,7 @@ Frontend stores JWT → Uses for subsequent requests
 - ✅ knowledge (groupId, type, text, embedding, metadata)
 
 **Status:**
+
 - ✅ Schema defined
 - ✅ All 6 dimensions represented
 - ✅ Indexes created for common queries
@@ -61,6 +83,7 @@ Frontend stores JWT → Uses for subsequent requests
 **Location:** `/web/src/lib/auth-client.ts`
 
 **Components:**
+
 - ✅ Better Auth client configured
 - ✅ Auth hooks (useSession, useSignIn, useSignUp)
 - ✅ Auth page (`/account/auth.astro`)
@@ -68,6 +91,7 @@ Frontend stores JWT → Uses for subsequent requests
 - ✅ OAuth configuration (Google, GitHub)
 
 **Test Coverage:**
+
 - ✅ Email/password signup
 - ✅ Email/password signin
 - ✅ Session management
@@ -79,6 +103,7 @@ Frontend stores JWT → Uses for subsequent requests
 **Location:** `/backend/convex/mutations/`
 
 **Implemented:**
+
 - ✅ entities.ts (create, update, delete things)
 - ✅ groups.ts (create, update groups)
 - ✅ connections.ts (create, delete relationships)
@@ -86,6 +111,7 @@ Frontend stores JWT → Uses for subsequent requests
 - ✅ onboarding.ts (user onboarding)
 
 **Status:**
+
 - ✅ Basic CRUD for core entities
 - ⚠️ Missing: Full 66 thing types
 - ⚠️ Missing: Event logging on mutations
@@ -96,6 +122,7 @@ Frontend stores JWT → Uses for subsequent requests
 **Location:** `/backend/convex/queries/`
 
 **Implemented:**
+
 - ✅ entities.ts (list, get things)
 - ✅ groups.ts (list, get groups)
 - ✅ connections.ts (list connections)
@@ -103,6 +130,7 @@ Frontend stores JWT → Uses for subsequent requests
 - ✅ init.ts (initialization data)
 
 **Status:**
+
 - ✅ Basic read operations
 - ⚠️ Missing: Vector search for RAG
 - ⚠️ Missing: Complex filtering/sorting
@@ -112,12 +140,14 @@ Frontend stores JWT → Uses for subsequent requests
 **Location:** `/backend/convex/services/`
 
 **Implemented:**
+
 - ✅ ontologyMapper.ts (map features to ontology)
 - ✅ websiteAnalyzer.ts (analyze existing websites)
 - ✅ brandGuideGenerator.ts (generate brand guides)
 - ✅ featureRecommender.ts (recommend features)
 
 **Status:**
+
 - ✅ Specialized services working
 - ⚠️ Missing: General CRUD services
 - ⚠️ Missing: RAG service
@@ -132,6 +162,7 @@ Frontend stores JWT → Uses for subsequent requests
 **Needed:** Hono HTTP endpoints for external access
 
 **What's Missing:**
+
 - [ ] `/backend/convex/http.ts` - Hono setup
 - [ ] API key authentication middleware
 - [ ] REST endpoints for all 6 dimensions
@@ -148,6 +179,7 @@ Frontend stores JWT → Uses for subsequent requests
 **Needed:** API key generation and validation
 
 **What's Missing:**
+
 - [ ] apiKeys table in schema
 - [ ] createApiKey mutation
 - [ ] verifyApiKey query
@@ -163,6 +195,7 @@ Frontend stores JWT → Uses for subsequent requests
 **Current:** Events table exists, but not auto-logged
 
 **What's Missing:**
+
 - [ ] Auto-log events on all mutations
 - [ ] Event filtering/search
 - [ ] Timeline views
@@ -177,6 +210,7 @@ Frontend stores JWT → Uses for subsequent requests
 **Current:** Groups table exists, but not enforced
 
 **What's Missing:**
+
 - [ ] Middleware to extract groupId from auth
 - [ ] Enforce groupId on all queries/mutations
 - [ ] Hierarchical group access (parent → child)
@@ -191,6 +225,7 @@ Frontend stores JWT → Uses for subsequent requests
 **Needed:** RAG pipeline and AI features
 
 **What's Missing:**
+
 - [ ] Install AI SDK: `npm install ai @ai-sdk/openai`
 - [ ] RAG ingestion (document chunking)
 - [ ] Vector embeddings (OpenAI embedding model)
@@ -207,6 +242,7 @@ Frontend stores JWT → Uses for subsequent requests
 **Current:** Email/password + basic OAuth setup
 
 **What's Missing:**
+
 - [ ] Magic links
 - [ ] Email verification (UI/API)
 - [ ] Password reset flow
@@ -223,6 +259,7 @@ Frontend stores JWT → Uses for subsequent requests
 **Current:** Basic CRUD for ~5-10 entity types
 
 **What's Missing:**
+
 - [ ] CRUD mutations for all 66+ thing types
 - [ ] CRUD for 25 connection types
 - [ ] Bulk operations
@@ -235,6 +272,7 @@ Frontend stores JWT → Uses for subsequent requests
 ### 8. Production Hardening (NOT STARTED)
 
 **What's Missing:**
+
 - [ ] Use bcrypt instead of SHA-256 for password hashing
 - [ ] Input validation on all endpoints
 - [ ] SQL injection prevention (already handled by Convex)
@@ -276,6 +314,7 @@ Frontend stores JWT → Uses for subsequent requests
 ```
 
 **Gap:** Frontend currently uses Convex hooks directly. Need HTTP API for:
+
 - External clients (mobile, desktop, CLI)
 - Third-party integrations
 - Easier client library generation
@@ -289,6 +328,7 @@ Frontend stores JWT → Uses for subsequent requests
 **Goal:** Make backend accessible via REST API
 
 **Steps:**
+
 1. Install Hono: `npm install hono`
 2. Create `http.ts` with Hono app
 3. Add API key authentication
@@ -303,6 +343,7 @@ Frontend stores JWT → Uses for subsequent requests
 **Goal:** Enable API key-based authentication
 
 **Steps:**
+
 1. Add `apiKeys` table to schema
 2. Create `createApiKey` mutation
 3. Create `verifyApiKey` query
@@ -316,6 +357,7 @@ Frontend stores JWT → Uses for subsequent requests
 **Goal:** All 6 dimensions accessible via REST
 
 **Steps:**
+
 1. Implement 37 REST endpoints
 2. Add input validation
 3. Add error handling
@@ -329,6 +371,7 @@ Frontend stores JWT → Uses for subsequent requests
 **Goal:** RAG pipeline working
 
 **Steps:**
+
 1. Install AI SDK
 2. Implement ingestion (chunking)
 3. Add embeddings
@@ -342,6 +385,7 @@ Frontend stores JWT → Uses for subsequent requests
 **Goal:** Production-ready backend
 
 **Steps:**
+
 1. Use bcrypt for passwords
 2. Add input validation
 3. Tune rate limits
@@ -420,20 +464,24 @@ curl http://localhost:3000/api/health
 ## Key Files to Reference
 
 **Frontend Auth:**
+
 - `/web/src/lib/auth-client.ts` - Auth setup
 - `/web/src/pages/account/auth.astro` - Auth page
 - `/web/tests/auth/auth.test.ts` - Test examples
 
 **Backend Auth:**
+
 - `/backend/convex/auth.ts` - Auth mutations
 - `/backend/convex/auth.config.ts` - Auth config
 - `/backend/convex/lib/jwt.ts` - JWT utilities
 
 **Schema:**
+
 - `/backend/convex/schema.ts` - Complete 6-dimension schema
 - `/backend/convex/types/ontology.ts` - Generated types
 
 **CRUD Examples:**
+
 - `/backend/convex/mutations/entities.ts` - Example mutations
 - `/backend/convex/queries/entities.ts` - Example queries
 
@@ -442,26 +490,31 @@ curl http://localhost:3000/api/health
 ## Team Assignments (Inference-Based)
 
 **Phase 1 (HTTP API): Infer 101-120 (3 weeks)**
+
 - Agent-backend: Implement Hono routes
 - Agent-backend: Add middleware
 - Agent-quality: Write API tests
 
 **Phase 2 (API Keys): Infer 121-140 (2 weeks)**
+
 - Agent-backend: Schema + mutations
 - Agent-frontend: Generate API key UI
 - Agent-quality: Security testing
 
 **Phase 3 (CRUD): Infer 141-160 (2 weeks)**
+
 - Agent-backend: Implement endpoints
 - Agent-integrator: Generate OpenAPI
 - Agent-quality: Integration tests
 
 **Phase 4 (AI SDK): Infer 161-180 (2 weeks)**
+
 - Agent-backend: RAG pipeline
 - Agent-quality: RAG tests
 - Agent-documenter: API docs
 
 **Phase 5 (Production): Infer 181-200 (1 week)**
+
 - Agent-ops: Monitoring setup
 - Agent-clean: Code review
 - Agent-documenter: Final docs
@@ -471,26 +524,31 @@ curl http://localhost:3000/api/health
 ## Success Metrics
 
 After Phase 1 (HTTP API):
+
 - ✅ `/api/health` returns 200
 - ✅ External clients can query backend
 - ✅ Rate limiting working
 
 After Phase 2 (API Keys):
+
 - ✅ Can generate API key
 - ✅ API key authentication working
 - ✅ Group-scoped requests
 
 After Phase 3 (CRUD):
+
 - ✅ All 37 REST endpoints working
 - ✅ Input validation passing
 - ✅ Error handling consistent
 
 After Phase 4 (AI SDK):
+
 - ✅ Vector search working
 - ✅ Generation with context working
 - ✅ Streaming responses working
 
 After Phase 5 (Production):
+
 - ✅ bcrypt passwords
 - ✅ All tests passing
 - ✅ OpenAPI documentation

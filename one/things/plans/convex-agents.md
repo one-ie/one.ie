@@ -1,3 +1,21 @@
+---
+title: Convex Agents
+dimension: things
+category: plans
+tags: agent, ai, ai-agent, architecture
+related_dimensions: events, people
+scope: global
+created: 2025-11-03
+updated: 2025-11-03
+version: 1.0.0
+ai_context: |
+  This document is part of the things dimension in the plans category.
+  Location: one/things/plans/convex-agents.md
+  Purpose: Documents convex agents implementation plan
+  Related dimensions: events, people
+  For AI agents: Read this to understand convex agents.
+---
+
 # Convex Agents Implementation Plan
 
 **Version:** 1.0.0
@@ -14,13 +32,13 @@ Convex Agents component provides infrastructure (thread management, streaming, r
 ```typescript
 // Tagged error types for agent operations
 class AgentExecutionError extends Data.TaggedError("AgentExecutionError")<{
-  agentName: string
-  threadId: string
-  cause: unknown
+  agentName: string;
+  threadId: string;
+  cause: unknown;
 }> {}
 
 class ThreadNotFoundError extends Data.TaggedError("ThreadNotFoundError")<{
-  threadId: string
+  threadId: string;
 }> {}
 
 // Define AgentService with Context.Tag
@@ -30,18 +48,21 @@ class AgentService extends Context.Tag("AgentService")<
     readonly createThread: (
       ctx: ActionCtx,
       agentId: string,
-      initialMessage: string
-    ) => Effect.Effect<{ threadId: string }, AgentExecutionError>
+      initialMessage: string,
+    ) => Effect.Effect<{ threadId: string }, AgentExecutionError>;
 
     readonly continueThread: (
       ctx: ActionCtx,
       threadId: string,
-      message: string
-    ) => Effect.Effect<{ response: string; threadId: string }, AgentExecutionError | ThreadNotFoundError>
+      message: string,
+    ) => Effect.Effect<
+      { response: string; threadId: string },
+      AgentExecutionError | ThreadNotFoundError
+    >;
 
     readonly getThreadMessages: (
-      threadId: string
-    ) => Effect.Effect<Message[], ThreadNotFoundError>
+      threadId: string,
+    ) => Effect.Effect<Message[], ThreadNotFoundError>;
   }
 >() {}
 
@@ -55,21 +76,23 @@ const AgentServiceLive = Layer.effect(
       instructions: "You are a helpful AI assistant.",
       tools: {
         /* tools defined separately */
-      }
+      },
     });
 
     return {
       createThread: (ctx, agentId, initialMessage) =>
         Effect.gen(function* () {
           const result = yield* Effect.tryPromise({
-            try: () => agent.createThread(ctx, {
-              messages: [{ role: "user", content: initialMessage }]
-            }),
-            catch: (error) => new AgentExecutionError({
-              agentName: "Main Agent",
-              threadId: "unknown",
-              cause: error
-            })
+            try: () =>
+              agent.createThread(ctx, {
+                messages: [{ role: "user", content: initialMessage }],
+              }),
+            catch: (error) =>
+              new AgentExecutionError({
+                agentName: "Main Agent",
+                threadId: "unknown",
+                cause: error,
+              }),
           });
           return { threadId: result.threadId };
         }),
@@ -78,16 +101,17 @@ const AgentServiceLive = Layer.effect(
         Effect.gen(function* () {
           const { thread } = yield* Effect.tryPromise({
             try: () => agent.continueThread(ctx, { threadId }),
-            catch: (error) => new ThreadNotFoundError({ threadId })
+            catch: (error) => new ThreadNotFoundError({ threadId }),
           });
 
           const response = yield* Effect.tryPromise({
             try: () => thread.generateText({ prompt: message }),
-            catch: (error) => new AgentExecutionError({
-              agentName: "Main Agent",
-              threadId,
-              cause: error
-            })
+            catch: (error) =>
+              new AgentExecutionError({
+                agentName: "Main Agent",
+                threadId,
+                cause: error,
+              }),
           });
 
           return { response: response.text, threadId };
@@ -96,10 +120,10 @@ const AgentServiceLive = Layer.effect(
       getThreadMessages: (threadId) =>
         Effect.tryPromise({
           try: () => agent.getMessages(threadId),
-          catch: (error) => new ThreadNotFoundError({ threadId })
-        })
+          catch: (error) => new ThreadNotFoundError({ threadId }),
+        }),
     };
-  })
+  }),
 );
 ```
 
@@ -431,7 +455,7 @@ export const agentRuntime = defineAgent(async (ctx, params) => {
   // Filter tools based on agent.properties.tools array
   const allowedTools = agent.properties.tools || [];
   const tools = Object.fromEntries(
-    Object.entries(agentTools).filter(([name]) => allowedTools.includes(name))
+    Object.entries(agentTools).filter(([name]) => allowedTools.includes(name)),
   );
 
   return {
@@ -497,10 +521,7 @@ export const sendMessage = mutation({
       model: config.model,
       system: config.systemPrompt,
       tools: config.tools,
-      messages: [
-        ...messages,
-        { role: "user", content: args.message },
-      ],
+      messages: [...messages, { role: "user", content: args.message }],
     });
 
     // Log AI call
@@ -537,9 +558,15 @@ import { useMutation } from "convex/react";
 import { api } from "@/convex/_generated/api";
 import { useState } from "react";
 
-export function useAgentStream(groupId: string, agentId: string, threadId: string) {
+export function useAgentStream(
+  groupId: string,
+  agentId: string,
+  threadId: string,
+) {
   const sendMessage = useMutation(api.mutations.agentChat.sendMessage);
-  const [messages, setMessages] = useState<Array<{ role: string; content: string }>>([]);
+  const [messages, setMessages] = useState<
+    Array<{ role: string; content: string }>
+  >([]);
   const [isStreaming, setIsStreaming] = useState(false);
 
   const stream = async (userMessage: string) => {
@@ -642,7 +669,7 @@ export async function searchKnowledge(
     groupId: string;
     query: string;
     limit: number;
-  }
+  },
 ) {
   // 1. Embed query using AI SDK
   const queryEmbedding = await embedText(args.query);
@@ -667,8 +694,9 @@ export async function searchKnowledge(
 
 function cosineSimilarity(a: number[], b: number[]): number {
   const dotProduct = a.reduce((sum, val, i) => sum + val * b[i], 0);
-  const magnitude = Math.sqrt(a.reduce((sum, val) => sum + val * val, 0)) *
-                    Math.sqrt(b.reduce((sum, val) => sum + val * val, 0));
+  const magnitude =
+    Math.sqrt(a.reduce((sum, val) => sum + val * val, 0)) *
+    Math.sqrt(b.reduce((sum, val) => sum + val * val, 0));
   return dotProduct / magnitude;
 }
 
@@ -723,8 +751,8 @@ async function verifyGroupAccess(ctx: any, groupId: string) {
       q.and(
         q.eq(q.field("type"), "member_of"),
         q.eq(q.field("groupId"), groupId),
-        q.eq(q.field("from"), userId)
-      )
+        q.eq(q.field("from"), userId),
+      ),
     )
     .first();
 
@@ -751,7 +779,7 @@ export async function trackUsage(
     provider: string;
     inputTokens: number;
     outputTokens: number;
-  }
+  },
 ) {
   // Get group plan
   const group = await ctx.db.get(args.groupId);
@@ -764,7 +792,8 @@ export async function trackUsage(
   };
 
   const rate = rates[args.provider] || rates.openai;
-  const cost = (args.inputTokens * rate.input + args.outputTokens * rate.output) / 1000;
+  const cost =
+    (args.inputTokens * rate.input + args.outputTokens * rate.output) / 1000;
 
   // Log usage event
   await ctx.db.insert("events", {
@@ -869,7 +898,7 @@ export function useAgentRetry(maxRetries = 3) {
 
         // Exponential backoff
         await new Promise((resolve) =>
-          setTimeout(resolve, Math.pow(2, i) * 1000)
+          setTimeout(resolve, Math.pow(2, i) * 1000),
         );
       }
     }
@@ -881,13 +910,13 @@ export function useAgentRetry(maxRetries = 3) {
 
 ## Performance Optimization
 
-| Optimization | Impact | Implementation |
-|--------------|--------|-----------------|
+| Optimization       | Impact              | Implementation                       |
+| ------------------ | ------------------- | ------------------------------------ |
 | Message pagination | Reduce context size | Load 10 messages initially, paginate |
-| Embedding caching | Faster RAG | Cache query embeddings for 5 minutes |
-| Tool call batching | Reduce API calls | Group multiple tool executions |
-| Streaming chunking | Better UX | Stream 50-100 tokens at a time |
-| Index optimization | Faster queries | Use proper indexes on groupId |
+| Embedding caching  | Faster RAG          | Cache query embeddings for 5 minutes |
+| Tool call batching | Reduce API calls    | Group multiple tool executions       |
+| Streaming chunking | Better UX           | Stream 50-100 tokens at a time       |
+| Index optimization | Faster queries      | Use proper indexes on groupId        |
 
 ---
 
@@ -941,7 +970,7 @@ type AgentContext = {
 async function withAgentContext<T>(
   ctx: MutationCtx,
   args: any,
-  handler: (context: AgentContext) => Promise<T>
+  handler: (context: AgentContext) => Promise<T>,
 ): Promise<T> {
   const agent = await ctx.db.get(args.agentId);
   return handler({

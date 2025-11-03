@@ -1,3 +1,21 @@
+---
+title: Workflow Examples
+dimension: connections
+category: workflow-examples.md
+tags: agent, ai
+related_dimensions: events, people, things
+scope: global
+created: 2025-11-03
+updated: 2025-11-03
+version: 1.0.0
+ai_context: |
+  This document is part of the connections dimension in the workflow-examples.md category.
+  Location: one/connections/workflow-examples.md
+  Purpose: Provides information
+  Related dimensions: events, people, things
+  For AI agents: Read this to understand workflow examples.
+---
+
 // convex/workflows/creatorLaunch.ts
 // ============================================================================
 // COMPLETE FLOW: Creator uploads content → AI clone created → Business launched

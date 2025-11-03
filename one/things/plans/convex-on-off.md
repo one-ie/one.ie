@@ -1,3 +1,21 @@
+---
+title: Convex On Off
+dimension: things
+category: plans
+tags: architecture
+related_dimensions: events
+scope: global
+created: 2025-11-03
+updated: 2025-11-03
+version: 1.0.0
+ai_context: |
+  This document is part of the things dimension in the plans category.
+  Location: one/things/plans/convex-on-off.md
+  Purpose: Documents convex integration toggle plan
+  Related dimensions: events
+  For AI agents: Read this to understand convex on off.
+---
+
 # Convex Integration Toggle Plan
 
 ## Overview
@@ -16,17 +34,17 @@ Create a flexible architecture that allows the site to operate in three modes:
 
 ```typescript
 export const FEATURES = {
-  CONVEX_ENABLED: import.meta.env.CONVEX_ENABLED === 'true',
-  AUTH_ENABLED: import.meta.env.AUTH_ENABLED === 'true',
-  STATIC_MODE: import.meta.env.STATIC_MODE === 'true',
+  CONVEX_ENABLED: import.meta.env.CONVEX_ENABLED === "true",
+  AUTH_ENABLED: import.meta.env.AUTH_ENABLED === "true",
+  STATIC_MODE: import.meta.env.STATIC_MODE === "true",
 } as const;
 
-export type SiteMode = 'static' | 'database' | 'hybrid';
+export type SiteMode = "static" | "database" | "hybrid";
 
 export function getSiteMode(): SiteMode {
-  if (FEATURES.STATIC_MODE) return 'static';
-  if (FEATURES.CONVEX_ENABLED) return 'hybrid';
-  return 'static';
+  if (FEATURES.STATIC_MODE) return "static";
+  if (FEATURES.CONVEX_ENABLED) return "hybrid";
+  return "static";
 }
 ```
 
@@ -45,14 +63,14 @@ CONVEX_URL=                 # Only needed if CONVEX_ENABLED=true
 **Dynamic adapter selection in `astro.config.mjs`:**
 
 ```javascript
-import { defineConfig } from 'astro/config';
-import cloudflare from '@astrojs/cloudflare';
+import { defineConfig } from "astro/config";
+import cloudflare from "@astrojs/cloudflare";
 
-const isStatic = process.env.STATIC_MODE === 'true';
-const convexEnabled = process.env.CONVEX_ENABLED === 'true';
+const isStatic = process.env.STATIC_MODE === "true";
+const convexEnabled = process.env.CONVEX_ENABLED === "true";
 
 export default defineConfig({
-  output: isStatic ? 'static' : 'server',
+  output: isStatic ? "static" : "server",
   adapter: isStatic
     ? undefined
     : cloudflare({
@@ -67,8 +85,8 @@ export default defineConfig({
 **Create unified data interface in `src/lib/data/index.ts`:**
 
 ```typescript
-import type { CollectionEntry } from 'astro:content';
-import { FEATURES } from '@/config/features';
+import type { CollectionEntry } from "astro:content";
+import { FEATURES } from "@/config/features";
 
 export interface BlogPost {
   id: string;
@@ -90,28 +108,28 @@ export interface DataProvider {
 
 class StaticDataProvider implements DataProvider {
   async getBlogPosts(): Promise<BlogPost[]> {
-    const { getCollection } = await import('astro:content');
-    const posts = await getCollection('blog');
+    const { getCollection } = await import("astro:content");
+    const posts = await getCollection("blog");
     return posts.map(transformContentEntry);
   }
 
   async getBlogPost(slug: string): Promise<BlogPost | null> {
-    const { getEntry } = await import('astro:content');
-    const post = await getEntry('blog', slug);
+    const { getEntry } = await import("astro:content");
+    const post = await getEntry("blog", slug);
     return post ? transformContentEntry(post) : null;
   }
 }
 
 class ConvexDataProvider implements DataProvider {
   async getBlogPosts(): Promise<BlogPost[]> {
-    const { api } = await import('convex/_generated/api');
+    const { api } = await import("convex/_generated/api");
     const client = getConvexClient();
     const posts = await client.query(api.blog.list);
     return posts.map(transformConvexPost);
   }
 
   async getBlogPost(slug: string): Promise<BlogPost | null> {
-    const { api } = await import('convex/_generated/api');
+    const { api } = await import("convex/_generated/api");
     const client = getConvexClient();
     return await client.query(api.blog.getBySlug, { slug });
   }
@@ -127,7 +145,7 @@ class HybridDataProvider implements DataProvider {
       this.convex.getBlogPosts(),
     ]);
     return [...staticPosts, ...dbPosts].sort(
-      (a, b) => b.date.getTime() - a.date.getTime()
+      (a, b) => b.date.getTime() - a.date.getTime(),
     );
   }
 }
@@ -136,11 +154,11 @@ export function getDataProvider(): DataProvider {
   const mode = getSiteMode();
 
   switch (mode) {
-    case 'static':
+    case "static":
       return new StaticDataProvider();
-    case 'database':
+    case "database":
       return new ConvexDataProvider();
-    case 'hybrid':
+    case "hybrid":
       return new HybridDataProvider();
   }
 }
@@ -193,7 +211,7 @@ const post = await dataProvider.getBlogPost(slug);
 **Create conditional auth wrapper in `src/lib/auth/index.ts`:**
 
 ```typescript
-import { FEATURES } from '@/config/features';
+import { FEATURES } from "@/config/features";
 
 export interface AuthProvider {
   getUser(): Promise<User | null>;
@@ -206,10 +224,10 @@ class NoAuthProvider implements AuthProvider {
     return null;
   }
   async signIn() {
-    throw new Error('Auth disabled');
+    throw new Error("Auth disabled");
   }
   async signOut() {
-    throw new Error('Auth disabled');
+    throw new Error("Auth disabled");
   }
 }
 
@@ -273,10 +291,10 @@ const { fallback } = Astro.props;
 
 ```typescript
 // src/types/index.ts
-import type { FEATURES } from '@/config/features';
+import type { FEATURES } from "@/config/features";
 
 export type ConditionalConvexTypes = typeof FEATURES.CONVEX_ENABLED extends true
-  ? import('convex/react').ConvexReactClient
+  ? import("convex/react").ConvexReactClient
   : never;
 ```
 

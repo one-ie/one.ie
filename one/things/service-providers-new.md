@@ -1,3 +1,21 @@
+---
+title: Service Providers New
+dimension: things
+category: service-providers-new.md
+tags: ai, architecture, blockchain
+related_dimensions: knowledge, people
+scope: global
+created: 2025-11-03
+updated: 2025-11-03
+version: 1.0.0
+ai_context: |
+  This document is part of the things dimension in the service-providers-new.md category.
+  Location: one/things/service-providers-new.md
+  Purpose: Documents new service providers documentation
+  Related dimensions: knowledge, people
+  For AI agents: Read this to understand service providers new.
+---
+
 # New Service Providers Documentation
 
 **Added**: 2025-10-05
@@ -21,14 +39,17 @@
 ### Architecture Notes
 
 **Media Storage Strategy:**
+
 - **AWS S3 + CloudFront**: General media storage (images, videos, audio files, documents)
 - **Cloudflare Stream**: Livestreaming infrastructure ONLY (real-time RTMP/WebRTC streaming)
 
 **Payment Strategy:**
+
 - **Stripe**: Fiat currency payments ONLY (USD, credit cards, bank transfers)
 - **Blockchain tokens**: Handled via chain-specific providers (see Multi-Chain Architecture below)
 
 **Multi-Chain Architecture:**
+
 - Each blockchain gets its own dedicated provider (no consolidation)
 - Current: Base chain (Alchemy, Uniswap)
 - Future additions: Sui, Solana, Ethereum mainnet
@@ -39,9 +60,11 @@
 ## 1. D-ID Provider
 
 ### Purpose
+
 Create AI video avatars with cloned appearance for creator's digital twin.
 
 ### Service Interface
+
 ```typescript
 // convex/services/providers/did.ts
 export class DIDError extends Data.TaggedEnum<{
@@ -81,9 +104,7 @@ export class DIDProvider extends Context.Tag("DIDProvider")<
       DIDError
     >;
 
-    readonly getAvatar: (
-      avatarId: string
-    ) => Effect.Effect<
+    readonly getAvatar: (avatarId: string) => Effect.Effect<
       {
         id: string;
         status: string;
@@ -96,12 +117,14 @@ export class DIDProvider extends Context.Tag("DIDProvider")<
 ```
 
 ### Environment Variables
+
 ```bash
 D_ID_API_KEY=your_d_id_api_key
 D_ID_BASE_URL=https://api.d-id.com
 ```
 
 ### Use Cases
+
 - AI clone appearance creation
 - Video generation with cloned appearance
 - Livestream avatar mixing
@@ -112,9 +135,11 @@ D_ID_BASE_URL=https://api.d-id.com
 ## 2. HeyGen Provider
 
 ### Purpose
+
 Alternative AI video avatar creation with higher quality options.
 
 ### Service Interface
+
 ```typescript
 // convex/services/providers/heygen.ts
 export class HeyGenError extends Data.TaggedEnum<{
@@ -157,11 +182,13 @@ export class HeyGenProvider extends Context.Tag("HeyGenProvider")<
 ```
 
 ### Environment Variables
+
 ```bash
 HEYGEN_API_KEY=your_heygen_api_key
 ```
 
 ### Use Cases
+
 - Premium AI clone appearances
 - High-quality video generation
 - Professional livestreams
@@ -171,11 +198,13 @@ HEYGEN_API_KEY=your_heygen_api_key
 ## 3. Uniswap Provider (Base Chain)
 
 ### Purpose
+
 Decentralized exchange integration for creator token trading on Base chain.
 
 **Chain-Specific Note:** This provider is for Base chain only. Future chains (Sui, Solana) will have their own DEX providers (e.g., SuiDEXProvider, RaydiumProvider).
 
 ### Service Interface
+
 ```typescript
 // convex/services/providers/uniswap.ts
 export class UniswapError extends Data.TaggedEnum<{
@@ -200,9 +229,7 @@ export class UniswapProvider extends Context.Tag("UniswapProvider")<
       UniswapError
     >;
 
-    readonly getTokenPrice: (
-      tokenAddress: string
-    ) => Effect.Effect<
+    readonly getTokenPrice: (tokenAddress: string) => Effect.Effect<
       {
         price: number;
         volume24h: number;
@@ -228,12 +255,14 @@ export class UniswapProvider extends Context.Tag("UniswapProvider")<
 ```
 
 ### Environment Variables
+
 ```bash
 UNISWAP_ROUTER_ADDRESS=0x... # Base chain Uniswap V3 router
 BASE_RPC_URL=https://mainnet.base.org
 ```
 
 ### Use Cases
+
 - Creator token liquidity on Base
 - Token price discovery
 - Secondary market trading
@@ -244,14 +273,17 @@ BASE_RPC_URL=https://mainnet.base.org
 ## 4. Alchemy Provider (Base Chain)
 
 ### Purpose
+
 Blockchain infrastructure for token operations and NFTs on Base chain.
 
 **Chain-Specific Note:** This provider is for Base chain only. Future chains will have their own infrastructure providers:
+
 - Sui: SuiProvider (using Mysten Labs API)
 - Solana: SolanaProvider (using Helius or Alchemy Solana)
 - Each chain provider implements the same Effect.ts interface pattern
 
 ### Service Interface
+
 ```typescript
 // convex/services/providers/alchemy.ts
 export class AlchemyError extends Data.TaggedEnum<{
@@ -304,12 +336,14 @@ export class AlchemyProvider extends Context.Tag("AlchemyProvider")<
 ```
 
 ### Environment Variables
+
 ```bash
 ALCHEMY_API_KEY=your_alchemy_api_key
 ALCHEMY_NETWORK=base-mainnet  # Base chain only
 ```
 
 ### Use Cases
+
 - Token deployment on Base
 - Token transfers
 - NFT metadata
@@ -321,9 +355,11 @@ ALCHEMY_NETWORK=base-mainnet  # Base chain only
 ## 5. Twilio Provider
 
 ### Purpose
+
 SMS and voice communications for notifications and 2FA.
 
 ### Service Interface
+
 ```typescript
 // convex/services/providers/twilio.ts
 export class TwilioError extends Data.TaggedEnum<{
@@ -368,6 +404,7 @@ export class TwilioProvider extends Context.Tag("TwilioProvider")<
 ```
 
 ### Environment Variables
+
 ```bash
 TWILIO_ACCOUNT_SID=your_account_sid
 TWILIO_AUTH_TOKEN=your_auth_token
@@ -375,6 +412,7 @@ TWILIO_PHONE_NUMBER=+1234567890
 ```
 
 ### Use Cases
+
 - SMS notifications
 - 2FA verification
 - Voice notifications
@@ -385,9 +423,11 @@ TWILIO_PHONE_NUMBER=+1234567890
 ## 6. SendGrid Provider
 
 ### Purpose
+
 Alternative email service with advanced analytics.
 
 ### Service Interface
+
 ```typescript
 // convex/services/providers/sendgrid.ts
 export class SendGridError extends Data.TaggedEnum<{
@@ -424,9 +464,7 @@ export class SendGridProvider extends Context.Tag("SendGridProvider")<
       SendGridError
     >;
 
-    readonly getEmailStats: (
-      messageId: string
-    ) => Effect.Effect<
+    readonly getEmailStats: (messageId: string) => Effect.Effect<
       {
         delivered: boolean;
         opened: boolean;
@@ -439,12 +477,14 @@ export class SendGridProvider extends Context.Tag("SendGridProvider")<
 ```
 
 ### Environment Variables
+
 ```bash
 SENDGRID_API_KEY=your_sendgrid_api_key
 SENDGRID_FROM_EMAIL=noreply@yourdomain.com
 ```
 
 ### Use Cases
+
 - Transactional emails
 - Email campaigns
 - Email tracking
@@ -455,14 +495,17 @@ SENDGRID_FROM_EMAIL=noreply@yourdomain.com
 ## 7. AWS Provider
 
 ### Purpose
+
 **General media storage and CDN** via S3 and CloudFront. This handles ALL non-streaming media assets.
 
 **Important Distinction:**
+
 - **AWS (this provider)**: General media storage - images, videos, audio, documents, avatars, thumbnails
 - **Cloudflare Stream**: Livestreaming ONLY - real-time RTMP/WebRTC streaming infrastructure
 - AWS S3 + CloudFront provides the primary media infrastructure; Cloudflare Stream is a specialized supplement for live content
 
 ### Service Interface
+
 ```typescript
 // convex/services/providers/aws.ts
 export class AWSError extends Data.TaggedEnum<{
@@ -495,9 +538,7 @@ export class AWSProvider extends Context.Tag("AWSProvider")<
       expiresIn?: number;
     }) => Effect.Effect<string, AWSError>;
 
-    readonly deleteFile: (
-      key: string
-    ) => Effect.Effect<void, AWSError>;
+    readonly deleteFile: (key: string) => Effect.Effect<void, AWSError>;
 
     readonly listFiles: (params: {
       prefix: string;
@@ -515,6 +556,7 @@ export class AWSProvider extends Context.Tag("AWSProvider")<
 ```
 
 ### Environment Variables
+
 ```bash
 AWS_ACCESS_KEY_ID=your_access_key
 AWS_SECRET_ACCESS_KEY=your_secret_key
@@ -524,6 +566,7 @@ AWS_CLOUDFRONT_DOMAIN=d1234567890.cloudfront.net
 ```
 
 ### Use Cases
+
 - **All general media storage** (not livestreaming)
 - Video/audio file hosting
 - Image storage and optimization
@@ -537,15 +580,18 @@ AWS_CLOUDFRONT_DOMAIN=d1234567890.cloudfront.net
 ## 8. Cloudflare Provider
 
 ### Purpose
+
 **LIVESTREAMING ONLY** - Real-time RTMP/WebRTC streaming infrastructure via Cloudflare Stream.
 
 **CRITICAL DISTINCTION:**
+
 - **Cloudflare Stream (this provider)**: LIVESTREAMING ONLY - real-time streaming, RTMP ingest, WebRTC playback
 - **AWS S3 + CloudFront**: General media storage and CDN (images, videos, audio, documents)
 - This provider does NOT handle general video hosting - that's AWS S3
 - This provider ONLY handles live streaming infrastructure
 
 ### Service Interface
+
 ```typescript
 // convex/services/providers/cloudflare.ts
 export class CloudflareError extends Data.TaggedEnum<{
@@ -573,9 +619,7 @@ export class CloudflareProvider extends Context.Tag("CloudflareProvider")<
       CloudflareError
     >;
 
-    readonly getLivestreamStatus: (
-      streamId: string
-    ) => Effect.Effect<
+    readonly getLivestreamStatus: (streamId: string) => Effect.Effect<
       {
         status: "idle" | "live" | "ended";
         viewerCount: number;
@@ -584,9 +628,7 @@ export class CloudflareProvider extends Context.Tag("CloudflareProvider")<
       CloudflareError
     >;
 
-    readonly endLivestream: (
-      streamId: string
-    ) => Effect.Effect<
+    readonly endLivestream: (streamId: string) => Effect.Effect<
       {
         recordingUrl?: string; // Saved to AWS S3 after stream ends
       },
@@ -594,9 +636,7 @@ export class CloudflareProvider extends Context.Tag("CloudflareProvider")<
     >;
 
     // Note: For pre-recorded video uploads, use AWS Provider instead
-    readonly getStreamMetrics: (
-      streamId: string
-    ) => Effect.Effect<
+    readonly getStreamMetrics: (streamId: string) => Effect.Effect<
       {
         totalViews: number;
         peakViewers: number;
@@ -609,6 +649,7 @@ export class CloudflareProvider extends Context.Tag("CloudflareProvider")<
 ```
 
 ### Environment Variables
+
 ```bash
 CLOUDFLARE_ACCOUNT_ID=your_account_id
 CLOUDFLARE_API_TOKEN=your_api_token
@@ -616,6 +657,7 @@ CLOUDFLARE_STREAM_NAMESPACE=your_namespace
 ```
 
 ### Use Cases
+
 - **LIVESTREAMING ONLY:**
   - Creator livestreams (RTMP/WebRTC)
   - AI clone + human mixing in real-time
@@ -632,6 +674,7 @@ CLOUDFLARE_STREAM_NAMESPACE=your_namespace
 **Each blockchain gets its own dedicated provider - NO consolidation.**
 
 This architecture ensures:
+
 - Type safety per chain (different address formats, gas models, etc.)
 - Independent versioning and updates
 - Chain-specific optimizations
@@ -640,12 +683,14 @@ This architecture ensures:
 ### Current Chain: Base
 
 **Base Chain Providers:**
+
 - `AlchemyProvider` - Blockchain infrastructure (RPC, indexing, token operations)
 - `UniswapProvider` - DEX for token trading and liquidity
 
 ### Future Chain Additions
 
 **Sui Chain (Future):**
+
 ```typescript
 // convex/services/providers/sui.ts
 export class SuiProvider extends Context.Tag("SuiProvider")<...>() {}
@@ -653,6 +698,7 @@ export class SuiDEXProvider extends Context.Tag("SuiDEXProvider")<...>() {}
 ```
 
 **Solana Chain (Future):**
+
 ```typescript
 // convex/services/providers/solana.ts
 export class SolanaProvider extends Context.Tag("SolanaProvider")<...>() {}
@@ -660,6 +706,7 @@ export class RaydiumProvider extends Context.Tag("RaydiumProvider")<...>() {} //
 ```
 
 **Ethereum Mainnet (Future):**
+
 ```typescript
 // convex/services/providers/ethereum.ts
 export class EthereumProvider extends Context.Tag("EthereumProvider")<...>() {}
@@ -703,6 +750,7 @@ export class ChainDEXProvider extends Context.Tag("ChainDEXProvider")<
 ### Environment Variables Per Chain
 
 **Base:**
+
 ```bash
 ALCHEMY_API_KEY=...
 ALCHEMY_NETWORK=base-mainnet
@@ -711,6 +759,7 @@ BASE_RPC_URL=https://mainnet.base.org
 ```
 
 **Sui (Future):**
+
 ```bash
 SUI_RPC_URL=https://fullnode.mainnet.sui.io
 SUI_NETWORK=mainnet
@@ -718,6 +767,7 @@ SUI_DEX_PACKAGE_ID=0x...
 ```
 
 **Solana (Future):**
+
 ```bash
 SOLANA_RPC_URL=https://api.mainnet-beta.solana.com
 HELIUS_API_KEY=...
@@ -727,16 +777,19 @@ RAYDIUM_PROGRAM_ID=...
 ### Why No Consolidation?
 
 **Type Safety:**
+
 - Base addresses: `0x...` (20 bytes, hex)
 - Sui addresses: `0x...` (32 bytes, hex)
 - Solana addresses: base58 encoded (32 bytes)
 
 **Different Gas Models:**
+
 - Base: EVM gas (gwei, gas limits)
 - Sui: Object-based gas (MIST units)
 - Solana: Lamports per compute unit
 
 **Different Token Standards:**
+
 - Base: ERC-20
 - Sui: Coin<T> standard
 - Solana: SPL Token
@@ -748,14 +801,17 @@ Each chain's unique characteristics require dedicated providers to maintain type
 ## Stripe Provider Clarification
 
 ### Purpose
+
 **Fiat currency payments ONLY** - USD, credit cards, bank transfers.
 
 **Payment Architecture:**
+
 - **Stripe (this provider)**: Fiat payments ONLY (USD → platform)
 - **Blockchain providers**: Crypto payments (tokens → wallets)
 - Clear separation between fiat and crypto payment flows
 
 ### Use Cases
+
 - Subscription payments in USD
 - One-time purchases in fiat
 - Credit card processing
@@ -767,15 +823,18 @@ Each chain's unique characteristics require dedicated providers to maintain type
 ## Implementation Priority
 
 ### Phase 1: Critical (Week 1)
+
 1. **Alchemy** - Required for token operations
 2. **Twilio** - Required for 2FA and notifications
 3. **AWS** - Required for media storage
 
 ### Phase 2: AI Features (Week 2)
+
 4. **D-ID** - AI appearance cloning
 5. **HeyGen** - Premium AI avatars
 
 ### Phase 3: Advanced Features (Week 3)
+
 6. **Cloudflare** - Livestreaming
 7. **Uniswap** - Token trading
 8. **SendGrid** - Advanced email
@@ -849,6 +908,7 @@ export const AllProviders = Layer.mergeAll(
 ### Error Handling Best Practices
 
 **1. Use Data.TaggedEnum for all errors:**
+
 ```typescript
 export class ProviderError extends Data.TaggedEnum<{
   NetworkError: { message: string };
@@ -858,20 +918,22 @@ export class ProviderError extends Data.TaggedEnum<{
 ```
 
 **2. Pattern match on errors:**
+
 ```typescript
 const result = await Effect.runPromise(
   providerEffect.pipe(
     Effect.catchTag("RateLimitError", (error) =>
-      Effect.delay(`${error.retryAfter}ms`)(providerEffect)
+      Effect.delay(`${error.retryAfter}ms`)(providerEffect),
     ),
     Effect.catchTag("NetworkError", (error) =>
-      Effect.fail(new SystemError({ message: error.message }))
-    )
-  )
+      Effect.fail(new SystemError({ message: error.message })),
+    ),
+  ),
 );
 ```
 
 **3. Compose effects with proper error propagation:**
+
 ```typescript
 const workflow = Effect.gen(function* () {
   const didService = yield* DIDProvider;
@@ -929,22 +991,26 @@ Each provider file should include:
 ### Key Clarifications Added
 
 **1. Media Storage Architecture:**
+
 - **AWS S3 + CloudFront**: General media storage (images, videos, audio, documents, avatars)
 - **Cloudflare Stream**: LIVESTREAMING ONLY (real-time RTMP/WebRTC streaming)
 - Clear separation of concerns between static media and live streaming
 
 **2. Payment Architecture:**
+
 - **Stripe**: Fiat payments ONLY (USD, credit cards, bank transfers)
 - **Blockchain providers**: Crypto payments (tokens, on-chain transactions)
 - No overlap between fiat and crypto payment flows
 
 **3. Multi-Chain Architecture:**
+
 - Each blockchain gets its own dedicated provider (NO consolidation)
 - Current: Base chain (Alchemy + Uniswap)
 - Future: Sui (SuiProvider + SuiDEXProvider), Solana (SolanaProvider + RaydiumProvider)
 - Reason: Type safety, different address formats, gas models, and token standards
 
 **4. Effect.ts Error Handling:**
+
 - All providers now use `Data.TaggedEnum` for exhaustive error handling
 - Proper error types for each provider:
   - `DIDError`, `HeyGenError`, `UniswapError`, `AlchemyError`
@@ -953,6 +1019,7 @@ Each provider file should include:
 - Composable error handling across provider workflows
 
 **5. Provider-Specific Updates:**
+
 - **Uniswap**: Marked as Base chain only, noted DEX will vary per chain
 - **Alchemy**: Marked as Base chain only, noted infrastructure provider per chain
 - **AWS**: Added CloudFront URL in upload response, clarified non-streaming media
@@ -962,17 +1029,20 @@ Each provider file should include:
 ### Architecture Principles
 
 **No Consolidation:**
+
 - Each service provider is independent
 - Each blockchain gets dedicated providers
 - Type safety and chain-specific optimizations prioritized
 
 **Effect.ts First:**
+
 - All providers use Effect.ts patterns
 - Context.Tag for dependency injection
 - Data.TaggedEnum for type-safe errors
 - Layer composition for provider orchestration
 
 **Clear Separation:**
+
 - Media: AWS vs Cloudflare Stream
 - Payments: Stripe vs blockchain providers
 - Chains: Dedicated providers per blockchain

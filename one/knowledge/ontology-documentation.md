@@ -1,3 +1,21 @@
+---
+title: Ontology Documentation
+dimension: knowledge
+category: ontology-documentation.md
+tags: 6-dimensions, agent, ai, architecture, connections, events, groups, knowledge, ontology, people
+related_dimensions: connections, events, groups, people, things
+scope: global
+created: 2025-11-03
+updated: 2025-11-03
+version: 1.0.0
+ai_context: |
+  This document is part of the knowledge dimension in the ontology-documentation.md category.
+  Location: one/knowledge/ontology-documentation.md
+  Purpose: Documents one ontology documentation
+  Related dimensions: connections, events, groups, people, things
+  For AI agents: Read this to understand ontology documentation.
+---
+
 # ONE Ontology Documentation
 
 **Version 1.0 - 6-Dimension Architecture**

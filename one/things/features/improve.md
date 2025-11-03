@@ -1,3 +1,21 @@
+---
+title: Improve
+dimension: things
+category: features
+tags: ai
+related_dimensions: connections, events
+scope: global
+created: 2025-11-03
+updated: 2025-11-03
+version: 1.0.0
+ai_context: |
+  This document is part of the things dimension in the features category.
+  Location: one/things/features/improve.md
+  Purpose: Documents astro + shadcn/ui template - comprehensive improvement plan
+  Related dimensions: connections, events
+  For AI agents: Read this to understand improve.
+---
+
 # Astro + shadcn/ui Template - Comprehensive Improvement Plan
 
 ## Executive Summary
@@ -92,10 +110,10 @@ import {Image} from 'astro:assets';
 
 ```typescript
 // astro.config.mjs
-import sitemap from '@astrojs/sitemap';
+import sitemap from "@astrojs/sitemap";
 
 export default defineConfig({
-  site: 'https://your-domain.com',
+  site: "https://your-domain.com",
   integrations: [react(), sitemap()],
 });
 ```
@@ -104,14 +122,14 @@ export default defineConfig({
 
 ```typescript
 // src/pages/rss.xml.ts
-import rss from '@astrojs/rss';
-import { getCollection } from 'astro:content';
+import rss from "@astrojs/rss";
+import { getCollection } from "astro:content";
 
 export async function GET(context) {
-  const blog = await getCollection('blog');
+  const blog = await getCollection("blog");
   return rss({
-    title: 'Your Blog',
-    description: 'A beautiful blog',
+    title: "Your Blog",
+    description: "A beautiful blog",
     site: context.site,
     items: blog.map((post) => ({
       title: post.data.title,
@@ -214,9 +232,9 @@ const BlogSchema = z.object({
   date: z.date(),
   draft: z.boolean().default(false),
   image: z.string().optional(), // Remove duplicate picture/image
-  author: z.string().default('Default Author'),
+  author: z.string().default("Default Author"),
   tags: z.array(z.string()).default([]),
-  category: z.enum(['tutorial', 'news', 'guide', 'review']).default('tutorial'),
+  category: z.enum(["tutorial", "news", "guide", "review"]).default("tutorial"),
   readingTime: z.number().optional(), // Auto-calculate or manual
   featured: z.boolean().default(false),
   relatedPosts: z.array(z.string()).optional(), // Slugs of related posts
@@ -368,8 +386,8 @@ import { Button } from '@/components/ui/button';
 
 ```tsx
 // src/components/ErrorBoundary.tsx
-import { Component, type ReactNode } from 'react';
-import { Alert, AlertDescription, AlertTitle } from '@/components/ui/alert';
+import { Component, type ReactNode } from "react";
+import { Alert, AlertDescription, AlertTitle } from "@/components/ui/alert";
 
 interface Props {
   children: ReactNode;
@@ -392,7 +410,7 @@ export class ErrorBoundary extends Component<Props, State> {
         <Alert variant="destructive">
           <AlertTitle>Something went wrong</AlertTitle>
           <AlertDescription>
-            {this.state.error?.message || 'An unexpected error occurred'}
+            {this.state.error?.message || "An unexpected error occurred"}
           </AlertDescription>
         </Alert>
       );
@@ -474,14 +492,14 @@ echo "pnpm lint-staged" > .husky/pre-commit
 
 ```typescript
 // vitest.config.ts
-import { defineConfig } from 'vitest/config';
-import react from '@vitejs/plugin-react';
+import { defineConfig } from "vitest/config";
+import react from "@vitejs/plugin-react";
 
 export default defineConfig({
   plugins: [react()],
   test: {
-    environment: 'jsdom',
-    setupFiles: ['./src/test/setup.ts'],
+    environment: "jsdom",
+    setupFiles: ["./src/test/setup.ts"],
   },
 });
 ```
@@ -540,7 +558,7 @@ const MobileSidebar = () => {
 
 ```typescript
 // Add swipe-to-close for mobile sidebar
-import { useSwipeable } from 'react-swipeable';
+import { useSwipeable } from "react-swipeable";
 
 const handlers = useSwipeable({
   onSwipedLeft: () => setIsOpen(false),
@@ -556,7 +574,7 @@ const handlers = useSwipeable({
 
 ```typescript
 // src/env.ts
-import { z } from 'zod';
+import { z } from "zod";
 
 const envSchema = z.object({
   PUBLIC_SITE_URL: z.string().url(),
@@ -579,15 +597,15 @@ export const env = envSchema.parse(import.meta.env);
 ```typescript
 // src/config/navigation.ts
 export const siteConfig = {
-  name: 'Your Site',
+  name: "Your Site",
   navigation: [
-    { title: 'Home', path: '/', icon: 'Home' },
-    { title: 'Blog', path: '/blog', icon: 'Book' },
+    { title: "Home", path: "/", icon: "Home" },
+    { title: "Blog", path: "/blog", icon: "Book" },
     // ... more items
   ],
   social: {
-    github: 'https://github.com/yourusername',
-    twitter: 'https://twitter.com/yourusername',
+    github: "https://github.com/yourusername",
+    twitter: "https://twitter.com/yourusername",
   },
 };
 ```
@@ -623,7 +641,7 @@ export const siteConfig = {
 export function ShareButtons({ title, url }) {
   const shareData = {
     title,
-    url: typeof window !== 'undefined' ? window.location.href : url,
+    url: typeof window !== "undefined" ? window.location.href : url,
   };
 
   return (
@@ -685,12 +703,12 @@ export default defineConfig({
 export const onRequest = async (context, next) => {
   const response = await next();
   response.headers.set(
-    'Content-Security-Policy',
-    "default-src 'self'; script-src 'self' 'unsafe-inline'; style-src 'self' 'unsafe-inline';"
+    "Content-Security-Policy",
+    "default-src 'self'; script-src 'self' 'unsafe-inline'; style-src 'self' 'unsafe-inline';",
   );
-  response.headers.set('X-Frame-Options', 'DENY');
-  response.headers.set('X-Content-Type-Options', 'nosniff');
-  response.headers.set('Referrer-Policy', 'strict-origin-when-cross-origin');
+  response.headers.set("X-Frame-Options", "DENY");
+  response.headers.set("X-Content-Type-Options", "nosniff");
+  response.headers.set("Referrer-Policy", "strict-origin-when-cross-origin");
   return response;
 };
 ```

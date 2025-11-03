@@ -1,3 +1,21 @@
+---
+title: Middleware
+dimension: connections
+category: middleware.md
+tags: ai, architecture, auth, backend, frontend
+related_dimensions: events, things
+scope: global
+created: 2025-11-03
+updated: 2025-11-03
+version: 1.0.0
+ai_context: |
+  This document is part of the connections dimension in the middleware.md category.
+  Location: one/connections/middleware.md
+  Purpose: Documents middleware.md - the glue layer
+  Related dimensions: events, things
+  For AI agents: Read this to understand middleware.
+---
+
 # Middleware.md - The Glue Layer
 
 **Purpose:** Explain how middleware connects the frontend (Astro + React) to the backend (Hono + Convex) using Effect.ts as the primary glue mechanism.

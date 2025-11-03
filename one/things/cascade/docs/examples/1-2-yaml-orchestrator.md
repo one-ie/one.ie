@@ -1,3 +1,21 @@
+---
+title: 1 2 Yaml Orchestrator
+dimension: things
+category: cascade
+tags: agent, backend, things
+related_dimensions: events, people
+scope: global
+created: 2025-11-03
+updated: 2025-11-03
+version: 1.0.0
+ai_context: |
+  This document is part of the things dimension in the cascade category.
+  Location: one/things/cascade/docs/examples/1-2-yaml-orchestrator.md
+  Purpose: Documents feature 1-2: yaml-driven orchestrator
+  Related dimensions: events, people
+  For AI agents: Read this to understand 1 2 yaml orchestrator.
+---
+
 # Feature 1-2: YAML-Driven Orchestrator
 
 **Assigned to:** Backend Specialist Agent (agent-backend.md)
@@ -87,6 +105,7 @@ This guide tells Claude Code which agent prompt to read at each stage and what t
 ### How Claude Code Uses This Guide
 
 **When user provides an idea:**
+
 1. Read this guide to understand workflow stages
 2. For each stage, read the appropriate agent prompt
 3. Follow that agent's instructions
@@ -101,6 +120,7 @@ This guide tells Claude Code which agent prompt to read at each stage and what t
 ### Stage 1: Ideas (Validation)
 
 **What to do:**
+
 1. Read `one/things/agents/agent-director.md`
 2. Follow Director agent's "Validate Idea" instructions
 3. Check if idea maps to ontology types (organizations, people, things, connections, events, knowledge)
@@ -109,6 +129,7 @@ This guide tells Claude Code which agent prompt to read at each stage and what t
 **Input:** User's raw idea text
 
 **Output:**
+
 - Valid → Move to Stage 2 (Plans)
 - Invalid → Explain why, suggest ontology alignment
 
@@ -119,6 +140,7 @@ This guide tells Claude Code which agent prompt to read at each stage and what t
 ### Stage 2: Plans (Feature Breakdown)
 
 **What to do:**
+
 1. Read `one/things/agents/agent-director.md`
 2. Follow Director agent's "Create Plan" instructions
 3. Break validated idea into features
@@ -136,6 +158,7 @@ This guide tells Claude Code which agent prompt to read at each stage and what t
 ### Stage 3: Features (Specification)
 
 **What to do:**
+
 1. For each feature in plan, read appropriate specialist prompt:
    - Backend features → Read `one/things/agents/agent-backend.md`
    - Frontend features → Read `one/things/agents/agent-frontend.md`
@@ -158,6 +181,7 @@ This guide tells Claude Code which agent prompt to read at each stage and what t
 ### Stage 4: Tests (Quality Criteria)
 
 **What to do:**
+
 1. Read `one/things/agents/agent-quality.md`
 2. Follow Quality agent's "Define Tests" instructions
 3. Define three levels:
@@ -179,6 +203,7 @@ This guide tells Claude Code which agent prompt to read at each stage and what t
 ### Stage 5: Design (Wireframes)
 
 **What to do:**
+
 1. Read `one/things/agents/agent-designer.md`
 2. Follow Designer agent's "Create Design" instructions
 3. Design to make tests pass (test-driven design)
@@ -201,6 +226,7 @@ This guide tells Claude Code which agent prompt to read at each stage and what t
 ### Stage 6: Implementation (Code)
 
 **What to do:**
+
 1. Read appropriate specialist prompt (backend/frontend/integration)
 2. Follow specialist's "Implement Feature" instructions
 3. Write code according to design spec
@@ -218,6 +244,7 @@ This guide tells Claude Code which agent prompt to read at each stage and what t
 **Output:** Working implementation + documentation + lessons learned
 
 **Files to create:**
+
 - Implementation code (varies by feature)
 - `one/things/features/{N}-{M}-{feature-name}/lessons.md` (if problems solved)
 - Documentation (varies by feature)
@@ -254,14 +281,17 @@ This guide tells Claude Code which agent prompt to read at each stage and what t
 **None.** This is a workflow guide document, not an implementation.
 
 Claude Code uses this guide by:
+
 1. Reading this document when user provides an idea
 2. Following stage-by-stage instructions
 3. Reading agent prompts as directed
 4. Creating files using tools (Write, Edit, etc.)
 
 **Optional:** Simple reference card for quick lookup
+
 ```markdown
 # one/workflows/quick-reference.md
+
 Stage 1: Read agent-director.md → Validate idea
 Stage 2: Read agent-director.md → Create plan
 Stage 3: Read agent-{specialist}.md → Write specs
@@ -473,6 +503,7 @@ Workflow complete (no code executed, just Claude following instructions)
 **None.** This feature is complete as documentation.
 
 **Usage:**
+
 - User provides idea to Claude Code
 - Claude Code reads this guide
 - Claude Code follows 6-stage workflow
@@ -506,6 +537,7 @@ Workflow complete (no code executed, just Claude following instructions)
 5. **Simpler = Better** - Documentation beats code for AI-driven workflows
 
 **How it works:**
+
 ```
 User: "Build a course platform"
 Claude: Reads this guide → Reads agent-director.md → Validates idea →

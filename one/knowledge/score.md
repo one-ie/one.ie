@@ -1,3 +1,21 @@
+---
+title: Score
+dimension: knowledge
+category: score.md
+tags: agent, ai, architecture, inference, ontology
+related_dimensions: events
+scope: global
+created: 2025-11-03
+updated: 2025-11-03
+version: 1.0.0
+ai_context: |
+  This document is part of the knowledge dimension in the score.md category.
+  Location: one/knowledge/score.md
+  Purpose: Documents inference score
+  Related dimensions: events
+  For AI agents: Read this to understand score.
+---
+
 # Inference Score
 
 **Measures ontology stability. Lower is better.**

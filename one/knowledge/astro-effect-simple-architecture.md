@@ -1,3 +1,21 @@
+---
+title: Astro Effect Simple Architecture
+dimension: knowledge
+category: astro-effect-simple-architecture.md
+tags: architecture, system-design
+related_dimensions: events, things
+scope: global
+created: 2025-11-03
+updated: 2025-11-03
+version: 1.0.0
+ai_context: |
+  This document is part of the knowledge dimension in the astro-effect-simple-architecture.md category.
+  Location: one/knowledge/astro-effect-simple-architecture.md
+  Purpose: Documents astro + effect.ts + shadcn: the simplest possible architecture
+  Related dimensions: events, things
+  For AI agents: Read this to understand astro effect simple architecture.
+---
+
 # Astro + Effect.ts + shadcn: The Simplest Possible Architecture
 
 **START HERE:** This is the primary architecture document. Read this first before diving into complex patterns.

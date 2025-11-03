@@ -1,3 +1,21 @@
+---
+title: Search_Demo_Visual_Guide
+dimension: events
+category: SEARCH_DEMO_VISUAL_GUIDE.md
+tags: ai, backend, knowledge
+related_dimensions: knowledge, things
+scope: global
+created: 2025-11-03
+updated: 2025-11-03
+version: 1.0.0
+ai_context: |
+  This document is part of the events dimension in the SEARCH_DEMO_VISUAL_GUIDE.md category.
+  Location: one/events/SEARCH_DEMO_VISUAL_GUIDE.md
+  Purpose: Documents search/knowledge demo - visual structure guide
+  Related dimensions: knowledge, things
+  For AI agents: Read this to understand SEARCH_DEMO_VISUAL_GUIDE.
+---
+
 # Search/Knowledge Demo - Visual Structure Guide
 
 ## Page Layout

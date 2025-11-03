@@ -1,3 +1,21 @@
+---
+title: Install Components
+dimension: things
+category: plans
+tags: ai
+related_dimensions: events, groups, knowledge, people
+scope: global
+created: 2025-11-03
+updated: 2025-11-03
+version: 1.0.0
+ai_context: |
+  This document is part of the things dimension in the plans category.
+  Location: one/things/plans/install-components.md
+  Purpose: Documents convex components
+  Related dimensions: events, groups, knowledge, people
+  For AI agents: Read this to understand install components.
+---
+
 # Convex Components
 
 A comprehensive list of available Convex components from <https://www.convex.dev/components>
@@ -147,7 +165,6 @@ A comprehensive list of available Convex components from <https://www.convex.dev
 - Subscription management
 - Payment processing
 - Billing automation
-
 
 ### 16. Twilio SMS
 

@@ -1,3 +1,21 @@
+---
+title: Readme
+dimension: things
+category: cascade
+tags: agent, ai, ontology, protocol
+related_dimensions: events, knowledge, people
+scope: global
+created: 2025-11-03
+updated: 2025-11-03
+version: 1.0.0
+ai_context: |
+  This document is part of the things dimension in the cascade category.
+  Location: one/things/cascade/readme.md
+  Purpose: Documents one cascade - agent-orchestrated workflow system
+  Related dimensions: events, knowledge, people
+  For AI agents: Read this to understand readme.
+---
+
 # ONE Cascade - Agent-Orchestrated Workflow System
 
 **Transform ideas into production-ready code using 8 AI agents and a 6-dimension ontology**
@@ -29,6 +47,7 @@ CASCADE is a complete workflow system that turns your ideas into working code th
 ### 1. Run `/one` Command
 
 In Claude Code:
+
 ```bash
 /one
 ```
@@ -36,6 +55,7 @@ In Claude Code:
 ### 2. Choose "1. Start New Idea"
 
 Describe what you want to build:
+
 ```
 Example: "Creators sell courses, students enroll and track progress"
 ```
@@ -52,6 +72,7 @@ Example: "Creators sell courses, students enroll and track progress"
 ### 4. Get Working Code
 
 After 2-3 weeks:
+
 - ✅ Working backend (services, mutations, queries)
 - ✅ Working frontend (pages, components, UI/UX)
 - ✅ Passing tests (unit, integration, e2e)
@@ -63,7 +84,9 @@ After 2-3 weeks:
 ## Package Contents
 
 ### 📄 `cascade.yaml` (15.7 KB)
+
 Complete orchestrator configuration with:
+
 - 6-level workflow definition
 - 8 AI agent specifications
 - 20+ workflow event types
@@ -74,7 +97,9 @@ Complete orchestrator configuration with:
 ### 📚 `docs/`
 
 #### `getting-started.md` (8.5 KB)
+
 5-minute quick start guide with:
+
 - Complete 6-level workflow explanation
 - 8 AI agent descriptions
 - Event-driven coordination examples
@@ -82,7 +107,9 @@ Complete orchestrator configuration with:
 - File structure overview
 
 #### `workflow.md` (68 KB)
+
 Complete workflow specification with:
+
 - Detailed agent roles and responsibilities
 - 6-level flow with examples
 - Numbering system explanation
@@ -92,7 +119,9 @@ Complete workflow specification with:
 - Comparison with old system
 
 #### `examples/` (6 complete features)
+
 Real-world examples of CASCADE building itself:
+
 - **1-1: Agent Prompts** (12 agent files, 303KB)
 - **1-2: YAML Orchestrator** (cascade.yaml)
 - **1-3: Event Coordination** (20+ event types)
@@ -101,6 +130,7 @@ Real-world examples of CASCADE building itself:
 - **1-6: Numbering Structure** (hierarchical system)
 
 Each example includes:
+
 - Feature specification (what we're building)
 - Tests (user flows + acceptance criteria)
 - Design (wireframes + component architecture)
@@ -108,7 +138,9 @@ Each example includes:
 ### 🗂️ `templates/`
 
 #### `feature-template.md` (4.2 KB)
+
 Complete feature workflow template with:
+
 - All 6 workflow levels
 - Placeholder system for customization
 - Event logging tracking
@@ -120,21 +152,27 @@ Complete feature workflow template with:
 ## The 6-Level Workflow
 
 ### Level 1: IDEAS
+
 User describes what they want → Director validates against ontology
 
 ### Level 2: PLANS
+
 Director creates feature collection → Assigns to specialists
 
 ### Level 3: FEATURES
+
 Specialists write specifications → What to build (not how)
 
 ### Level 4: TESTS
+
 Quality Agent defines user flows → Acceptance criteria (definition of done)
 
 ### Level 5: DESIGN
+
 Design Agent creates wireframes → UI that enables tests to pass
 
 ### Level 6: IMPLEMENTATION
+
 Specialists build → Quality validates → Problem Solver fixes → Documenter writes docs
 
 ---
@@ -167,6 +205,7 @@ Agents coordinate autonomously via events (no handoff protocols):
 ```
 
 **Benefits:**
+
 - No handoff protocols
 - No dependency graphs
 - 0% coordination overhead
@@ -254,18 +293,21 @@ Run `/one` in Claude Code to access:
 ## Getting Started
 
 ### For First-Time Users
+
 1. Read `docs/getting-started.md` (5 minutes)
 2. Run `/one` command
 3. Choose "1. Start New Idea"
 4. Let CASCADE build it for you
 
 ### For Developers
+
 1. Read `docs/workflow.md` (complete specification)
 2. Study `docs/examples/` (6 real-world features)
 3. Use `templates/feature-template.md` for your features
 4. Reference agent prompts in `one/things/agents/`
 
 ### For System Designers
+
 1. Study `cascade.yaml` (complete configuration)
 2. Review event coordination patterns
 3. Understand quality loops and problem solving
@@ -291,6 +333,7 @@ Run `/one` in Claude Code to access:
 ### Universal Package
 
 Anyone can:
+
 1. `git clone` the ONE repository
 2. Run `/one` command in Claude Code
 3. Start building immediately

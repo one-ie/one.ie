@@ -1,3 +1,21 @@
+---
+title: Ontology Tutorial
+dimension: knowledge
+category: ontology-tutorial.md
+tags: 6-dimensions, agent, ai, architecture, ontology
+related_dimensions: connections, events, groups, people, things
+scope: global
+created: 2025-11-03
+updated: 2025-11-03
+version: 1.0.0
+ai_context: |
+  This document is part of the knowledge dimension in the ontology-tutorial.md category.
+  Location: one/knowledge/ontology-tutorial.md
+  Purpose: Documents multi-ontology architecture: interactive tutorial
+  Related dimensions: connections, events, groups, people, things
+  For AI agents: Read this to understand ontology tutorial.
+---
+
 # Multi-Ontology Architecture: Interactive Tutorial
 
 **Version:** 1.0.0

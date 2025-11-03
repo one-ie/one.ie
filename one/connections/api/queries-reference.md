@@ -1,3 +1,21 @@
+---
+title: Queries Reference
+dimension: connections
+category: api
+tags: backend, ontology
+related_dimensions: events, groups, knowledge, people, things
+scope: global
+created: 2025-11-03
+updated: 2025-11-03
+version: 1.0.0
+ai_context: |
+  This document is part of the connections dimension in the api category.
+  Location: one/connections/api/queries-reference.md
+  Purpose: Documents queries reference - 6-dimension ontology api
+  Related dimensions: events, groups, knowledge, people, things
+  For AI agents: Read this to understand queries reference.
+---
+
 # Queries Reference - 6-Dimension Ontology API
 
 ## Executive Summary

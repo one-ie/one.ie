@@ -1,3 +1,21 @@
+---
+title: Frontend Effects Risk Register
+dimension: events
+category: frontend-effects-risk-register.md
+tags: ai, frontend, ui
+related_dimensions: people, things
+scope: global
+created: 2025-11-03
+updated: 2025-11-03
+version: 1.0.0
+ai_context: |
+  This document is part of the events dimension in the frontend-effects-risk-register.md category.
+  Location: one/events/frontend-effects-risk-register.md
+  Purpose: Documents frontend effects.ts implementation: risk register & mitigation strategies
+  Related dimensions: people, things
+  For AI agents: Read this to understand frontend effects risk register.
+---
+
 # Frontend Effects.ts Implementation: Risk Register & Mitigation Strategies
 
 **Project:** Frontend Effects.ts Implementation

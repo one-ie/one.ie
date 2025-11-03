@@ -1,3 +1,21 @@
+---
+title: Ai Elements
+dimension: things
+category: plans
+tags: agent, ai, artificial-intelligence, installation
+related_dimensions: connections
+scope: global
+created: 2025-11-03
+updated: 2025-11-03
+version: 1.0.0
+ai_context: |
+  This document is part of the things dimension in the plans category.
+  Location: one/things/plans/ai-elements.md
+  Purpose: Documents ai elements implementation plan
+  Related dimensions: connections
+  For AI agents: Read this to understand ai elements.
+---
+
 # AI Elements Implementation Plan
 
 **Version:** 1.0.0
@@ -964,8 +982,9 @@ export function useCompleteChatFlow(groupId: string, agentId: string) {
 
   const createThread = useMutation(api.mutations.agentThreads.createThread);
   const sendMessage = useMutation(api.mutations.agentChat.sendMessage);
-  const getThreadMessages = useQuery(api.queries.agentMessages.getThreadMessages,
-    threadId ? { threadId } : "skip"
+  const getThreadMessages = useQuery(
+    api.queries.agentMessages.getThreadMessages,
+    threadId ? { threadId } : "skip",
   );
 
   const { messages, input, handleInputChange, isLoading } = useChat({

@@ -1,3 +1,21 @@
+---
+title: Deliverables
+dimension: events
+category: DELIVERABLES.md
+tags: backend
+related_dimensions: connections, people, things
+scope: global
+created: 2025-11-03
+updated: 2025-11-03
+version: 1.0.0
+ai_context: |
+  This document is part of the events dimension in the DELIVERABLES.md category.
+  Location: one/events/DELIVERABLES.md
+  Purpose: Documents demo infrastructure - complete deliverables
+  Related dimensions: connections, people, things
+  For AI agents: Read this to understand DELIVERABLES.
+---
+
 # Demo Infrastructure - Complete Deliverables
 
 **Infer 1-20: Foundation & Setup - COMPLETE**

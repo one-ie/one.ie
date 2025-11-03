@@ -1,3 +1,21 @@
+---
+title: Ontology Crypto
+dimension: knowledge
+category: ontology-crypto.md
+tags: 6-dimensions, ai, blockchain, connections, events, groups, knowledge, ontology, people, protocol
+related_dimensions: connections, events, groups, people, things
+scope: global
+created: 2025-11-03
+updated: 2025-11-03
+version: 1.0.0
+ai_context: |
+  This document is part of the knowledge dimension in the ontology-crypto.md category.
+  Location: one/knowledge/ontology-crypto.md
+  Purpose: Documents crypto token analysis ontology
+  Related dimensions: connections, events, groups, people, things
+  For AI agents: Read this to understand ontology crypto.
+---
+
 # Crypto Token Analysis Ontology
 
 An extension of the ONE Platform 6-dimension ontology specialized for cryptocurrency, DeFi, NFTs, and blockchain ecosystems. This ontology provides a comprehensive framework for modeling all aspects of crypto token analysis, from smart contracts to market dynamics.

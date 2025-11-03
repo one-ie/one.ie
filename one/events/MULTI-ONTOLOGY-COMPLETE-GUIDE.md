@@ -1,3 +1,21 @@
+---
+title: Multi Ontology Complete Guide
+dimension: events
+category: MULTI-ONTOLOGY-COMPLETE-GUIDE.md
+tags: 6-dimensions, architecture, backend, frontend, ontology
+related_dimensions: knowledge, people, things
+scope: global
+created: 2025-11-03
+updated: 2025-11-03
+version: 1.0.0
+ai_context: |
+  This document is part of the events dimension in the MULTI-ONTOLOGY-COMPLETE-GUIDE.md category.
+  Location: one/events/MULTI-ONTOLOGY-COMPLETE-GUIDE.md
+  Purpose: Documents multi-ontology architecture: complete guide
+  Related dimensions: knowledge, people, things
+  For AI agents: Read this to understand MULTI ONTOLOGY COMPLETE GUIDE.
+---
+
 # Multi-Ontology Architecture: Complete Guide
 
 **Version:** 1.0.0

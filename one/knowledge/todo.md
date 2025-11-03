@@ -1,3 +1,21 @@
+---
+title: Todo
+dimension: knowledge
+category: todo.md
+tags: ai, connections, events, groups, inference, knowledge, ontology, people, things
+related_dimensions: connections, events, groups, people, things
+scope: global
+created: 2025-11-03
+updated: 2025-11-03
+version: 1.0.0
+ai_context: |
+  This document is part of the knowledge dimension in the todo.md category.
+  Location: one/knowledge/todo.md
+  Purpose: Documents one platform - 100 inference-sequenced todo list
+  Related dimensions: connections, events, groups, people, things
+  For AI agents: Read this to understand todo.
+---
+
 # ONE Platform - 100 Inference-Sequenced Todo List
 
 **Planning Paradigm:** We don't plan in days. We plan in **inference passes** (Infer 1-100).

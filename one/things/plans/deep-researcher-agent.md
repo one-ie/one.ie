@@ -1,3 +1,21 @@
+---
+title: Deep Researcher Agent
+dimension: things
+category: plans
+tags: agent, ai, ai-agent, architecture, groups, ontology
+related_dimensions: events, groups, knowledge, people
+scope: global
+created: 2025-11-03
+updated: 2025-11-03
+version: 1.0.0
+ai_context: |
+  This document is part of the things dimension in the plans category.
+  Location: one/things/plans/deep-researcher-agent.md
+  Purpose: Documents deep researcher agent
+  Related dimensions: events, groups, knowledge, people
+  For AI agents: Read this to understand deep researcher agent.
+---
+
 # Deep Researcher Agent
 
 A fully autonomous agent that performs multi-step research, reasoning, and synthesis across complex information landscapes. Inspired by Tongyi DeepResearch architecture and adapted for the ONE Platform 6-dimension ontology.
@@ -15,12 +33,14 @@ The Deep Researcher Agent combines agentic continual pre-training, reinforcement
 ## 6-Dimension Ontology Mapping
 
 ### Groups
+
 - **Organization Level**: Research team or domain (legal, technical, domain-specific)
 - **Parent-Child**: Enterprise research department → domain teams
 - **Data Scoping**: All research tasks, findings, and reports scoped to `groupId`
 - **Plans**: `starter` (basic research), `pro` (advanced with synthesis), `enterprise` (multi-researcher parallel)
 
 ### People
+
 - **Role**: `org_owner` (research director), `org_user` (researcher), `customer` (requesting research)
 - **Permissions**:
   - View/create research tasks (all users)
@@ -29,6 +49,7 @@ The Deep Researcher Agent combines agentic continual pre-training, reinforcement
   - Publish reports (org_user+)
 
 ### Things
+
 - **Entity Type**: `researcher_agent` (the agent itself)
   - `properties.model`: "deepresearch-30b-moe" or variant
   - `properties.mode`: "react" | "heavy"
@@ -49,6 +70,7 @@ The Deep Researcher Agent combines agentic continual pre-training, reinforcement
   - `properties.timestamp`: completion time
 
 ### Connections
+
 - **`researches`**: researcher_agent → research_task
   - metadata: `{ executionMode: "react" | "heavy", duration: milliseconds }`
 
@@ -62,6 +84,7 @@ The Deep Researcher Agent combines agentic continual pre-training, reinforcement
   - metadata: `{ role: "director" | "researcher" | "requester" }`
 
 ### Events
+
 - **`research_started`**: Agent begins task
   - `metadata.taskId`, `metadata.mode`, `metadata.maxTurns`
 
@@ -75,6 +98,7 @@ The Deep Researcher Agent combines agentic continual pre-training, reinforcement
   - `metadata.taskId`, `metadata.researcherCount`, `metadata.synthesisTime`
 
 ### Knowledge
+
 - **Research Memory**: Vector embeddings of completed research patterns
   - Indexed by domain (academic, legal, technical)
   - Supports RAG for similar task discovery
@@ -109,6 +133,7 @@ Production Deep Researcher Agent
 ### Execution Modes
 
 #### 1. Native ReAct Mode
+
 Pure reasoning without prompt engineering. Simple `Thought → Action → Observation` cycle.
 
 ```
@@ -128,6 +153,7 @@ Turn 2:
 **Best for**: Straightforward research, time-sensitive tasks, baseline performance measurement.
 
 #### 2. Heavy Mode (IterResearch)
+
 Complex multi-step tasks with "cognitive focus" reconstruction.
 
 ```
@@ -226,13 +252,13 @@ export type ResearchRequest = {
 export type ResearchResult = {
   success: boolean;
   findings?: string;
-  sources?: Array<{citation: string; url: string; confidence: number}>;
+  sources?: Array<{ citation: string; url: string; confidence: number }>;
   turnsUsed: number;
   error?: string;
 };
 
 export const executeResearch = (
-  request: ResearchRequest
+  request: ResearchRequest,
 ): Effect.Effect<ResearchResult, ResearchError> => {
   return pipe(
     validateRequest(request),
@@ -242,23 +268,23 @@ export const executeResearch = (
       ? Effect.flatMap(executeHeavyMode)
       : Effect.flatMap(executeReActMode),
     Effect.flatMap(synthesizeReport),
-    Effect.tapError(handleResearchError)
+    Effect.tapError(handleResearchError),
   );
 };
 
 export const executeReActMode = (
-  state: ResearchState
+  state: ResearchState,
 ): Effect.Effect<ResearchState, ResearchError> => {
   return repeatTurns(state, state.request.maxTurns);
 };
 
 export const executeHeavyMode = (
-  state: ResearchState
+  state: ResearchState,
 ): Effect.Effect<ResearchState, ResearchError> => {
   return pipe(
     parallelResearch(state),
     Effect.flatMap(synthesizeFindings),
-    Effect.flatMap(iterateRounds)
+    Effect.flatMap(iterateRounds),
   );
 };
 ```
@@ -309,7 +335,7 @@ export const publishReport = mutation({
     groupId: v.id("groups"),
     taskId: v.id("things"),
     findings: v.string(),
-    sources: v.array(v.object({citation: v.string(), url: v.string()})),
+    sources: v.array(v.object({ citation: v.string(), url: v.string() })),
     confidence: v.number(),
   },
   handler: async (ctx, args) => {
@@ -342,7 +368,7 @@ export const publishReport = mutation({
     // Mark task complete
     await ctx.db.patch(args.taskId, {
       properties: {
-        ...await ctx.db.get(args.taskId),
+        ...(await ctx.db.get(args.taskId)),
         status: "completed",
       },
       updatedAt: Date.now(),
@@ -371,21 +397,25 @@ export const publishReport = mutation({
 ## Training Infrastructure
 
 ### Synthetic Training Environment
+
 - Offline Wikipedia database + custom tool suite
 - Cost-effective, fast, controllable
 - Decoupled from live web APIs
 
 ### Stable Tool Sandbox
+
 - Concurrency handling with caching
 - Automatic retries with fallback providers
 - Fast, deterministic tool execution
 
 ### Automatic Data Curation
+
 - Real-time optimization guided by training dynamics
 - Automated synthesis and filtering pipeline
 - Closes loop between data generation and training
 
 ### On-Policy Asynchronous RL Framework
+
 - Custom GRPO algorithm with token-level policy gradient
 - Leave-one-out advantage estimation
 - Conservative negative sample filtering
@@ -401,18 +431,21 @@ export const publishReport = mutation({
 ## Real-World Applications
 
 ### Legal Research Agent (Tongyi FaRui Pattern)
+
 - Autonomous case law retrieval
 - Statute cross-referencing
 - Multi-source legal synthesis
 - Verifiable citations with confidence scores
 
 ### Technical Research Agent
+
 - Complex system architecture analysis
 - Cross-domain knowledge integration
 - Performance benchmark synthesis
 - Implementation guidance generation
 
 ### Domain-Specific Variants
+
 - Medical literature review
 - Financial market analysis
 - Scientific hypothesis generation

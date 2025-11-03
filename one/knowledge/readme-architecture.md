@@ -1,3 +1,21 @@
+---
+title: Readme Architecture
+dimension: knowledge
+category: readme-architecture.md
+tags: architecture, backend, system-design
+related_dimensions: events, people, things
+scope: global
+created: 2025-11-03
+updated: 2025-11-03
+version: 1.0.0
+ai_context: |
+  This document is part of the knowledge dimension in the readme-architecture.md category.
+  Location: one/knowledge/readme-architecture.md
+  Purpose: Documents progressive complexity architecture: quick reference
+  Related dimensions: events, people, things
+  For AI agents: Read this to understand readme architecture.
+---
+
 # Progressive Complexity Architecture: Quick Reference
 
 **Philosophy:** Start simple. Add layers only when needed. Every component is optional.

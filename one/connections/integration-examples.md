@@ -1,3 +1,21 @@
+---
+title: Integration Examples
+dimension: connections
+category: integration-examples.md
+tags: agent, ai, backend, ontology, protocol
+related_dimensions: events, groups, things
+scope: global
+created: 2025-11-03
+updated: 2025-11-03
+version: 1.0.0
+ai_context: |
+  This document is part of the connections dimension in the integration-examples.md category.
+  Location: one/connections/integration-examples.md
+  Purpose: Documents external integration examples
+  Related dimensions: events, groups, things
+  For AI agents: Read this to understand integration examples.
+---
+
 # External Integration Examples
 
 **Purpose:** Reference implementations for integrating ONE Platform with external systems

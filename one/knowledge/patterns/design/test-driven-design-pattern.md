@@ -1,3 +1,21 @@
+---
+title: Test Driven Design Pattern
+dimension: knowledge
+category: patterns
+tags: agent, ai
+related_dimensions: events, people, things
+scope: global
+created: 2025-11-03
+updated: 2025-11-03
+version: 1.0.0
+ai_context: |
+  This document is part of the knowledge dimension in the patterns category.
+  Location: one/knowledge/patterns/design/test-driven-design-pattern.md
+  Purpose: Documents test-driven design pattern
+  Related dimensions: events, people, things
+  For AI agents: Read this to understand test driven design pattern.
+---
+
 # Test-Driven Design Pattern
 
 **Category:** Design

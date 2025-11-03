@@ -1,3 +1,21 @@
+---
+title: Tasks
+dimension: connections
+category: workflows
+tags: agent, connections, ontology, things
+related_dimensions: events, groups, knowledge, people, things
+scope: global
+created: 2025-11-03
+updated: 2025-11-03
+version: 1.0.0
+ai_context: |
+  This document is part of the connections dimension in the workflows category.
+  Location: one/connections/workflows/tasks.md
+  Purpose: Documents task organization system
+  Related dimensions: events, groups, knowledge, people, things
+  For AI agents: Read this to understand tasks.
+---
+
 # Task Organization System
 
 **Version:** 1.0.0

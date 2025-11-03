@@ -1,3 +1,21 @@
+---
+title: Lessons Website Building Focus
+dimension: knowledge
+category: lessons-website-building-focus.md
+tags: agent, ai, blockchain
+related_dimensions: connections, events, groups, people, things
+scope: global
+created: 2025-11-03
+updated: 2025-11-03
+version: 1.0.0
+ai_context: |
+  This document is part of the knowledge dimension in the lessons-website-building-focus.md category.
+  Location: one/knowledge/lessons-website-building-focus.md
+  Purpose: Documents lessons learned: website-building focus & agent skills
+  Related dimensions: connections, events, groups, people, things
+  For AI agents: Read this to understand lessons website building focus.
+---
+
 # Lessons Learned: Website-Building Focus & Agent Skills
 
 **Date:** 2025-10-18

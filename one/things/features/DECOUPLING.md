@@ -1,3 +1,21 @@
+---
+title: Decoupling
+dimension: things
+category: features
+tags: ai, architecture, backend, connections, frontend, groups, things
+related_dimensions: connections, groups
+scope: global
+created: 2025-11-03
+updated: 2025-11-03
+version: 1.0.0
+ai_context: |
+  This document is part of the things dimension in the features category.
+  Location: one/things/features/DECOUPLING.md
+  Purpose: Documents frontend/backend decoupling pattern
+  Related dimensions: connections, groups
+  For AI agents: Read this to understand DECOUPLING.
+---
+
 # Frontend/Backend Decoupling Pattern
 
 **Status:** ✅ Fully Implemented
@@ -44,8 +62,8 @@ This document explains the proper architecture for a fully decoupled frontend th
 
 ```typescript
 // ❌ BAD: Direct Convex imports
-import { useQuery } from 'convex/react';
-import { api } from 'convex/_generated/api';
+import { useQuery } from "convex/react";
+import { api } from "convex/_generated/api";
 
 function MyComponent() {
   const data = useQuery(api.queries.things.list);
@@ -57,10 +75,10 @@ function MyComponent() {
 
 ```typescript
 // ✅ GOOD: Domain hooks
-import { useThings } from '@/hooks/useThings';
+import { useThings } from "@/hooks/useThings";
 
 function MyComponent() {
-  const { data, loading, error } = useThings({ type: 'course' });
+  const { data, loading, error } = useThings({ type: "course" });
   // Works with ANY backend
 }
 ```
@@ -131,16 +149,16 @@ export function GroupCard({ groupId }: { groupId: string }) {
 ```typescript
 const { data, loading, error, refetch, refetching } = useGroups(
   {
-    type: 'community',
-    status: 'active',
-    visibility: 'public',
+    type: "community",
+    status: "active",
+    visibility: "public",
     limit: 50,
   },
   {
     enabled: true, // Conditional fetching
     staleTime: 5000, // Cache freshness
     refetchInterval: 10000, // Polling
-  }
+  },
 );
 ```
 
@@ -149,7 +167,7 @@ const { data, loading, error, refetch, refetching } = useGroups(
 ```typescript
 const createGroup = useCreateGroup({
   onSuccess: () => {
-    toast.success('Group created!');
+    toast.success("Group created!");
   },
   onError: (error) => {
     toast.error(error.message);
@@ -158,19 +176,19 @@ const createGroup = useCreateGroup({
 
 const handleCreate = async () => {
   const { data, error } = await createGroup.mutate({
-    name: 'My Group',
-    slug: 'my-group',
-    type: 'community',
+    name: "My Group",
+    slug: "my-group",
+    type: "community",
     settings: {
-      visibility: 'public',
-      joinPolicy: 'open',
+      visibility: "public",
+      joinPolicy: "open",
     },
   });
 
   if (error) {
-    console.error('Failed:', error);
+    console.error("Failed:", error);
   } else {
-    console.log('Created:', data);
+    console.log("Created:", data);
   }
 };
 ```
@@ -236,14 +254,14 @@ export function useCourses(filter?, options?) {
 
   const queryFn = async () => {
     const effect = provider.things.list({
-      type: 'course',
+      type: "course",
       ...filter,
     });
     return await Effect.runPromise(effect);
   };
 
   return useQuery({
-    queryKey: ['courses', filter],
+    queryKey: ["courses", filter],
     queryFn,
     ...options,
   });

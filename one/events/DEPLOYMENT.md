@@ -1,3 +1,21 @@
+---
+title: Deployment
+dimension: events
+category: DEPLOYMENT.md
+tags: ai, installation
+related_dimensions: groups, things
+scope: global
+created: 2025-11-03
+updated: 2025-11-03
+version: 1.0.0
+ai_context: |
+  This document is part of the events dimension in the DEPLOYMENT.md category.
+  Location: one/events/DEPLOYMENT.md
+  Purpose: Documents deployment quick reference
+  Related dimensions: groups, things
+  For AI agents: Read this to understand DEPLOYMENT.
+---
+
 # Deployment Quick Reference
 
 **ONE Platform - Installation Folder Multi-Tenancy**

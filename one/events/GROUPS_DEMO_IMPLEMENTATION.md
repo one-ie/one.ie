@@ -1,3 +1,21 @@
+---
+title: Groups_Demo_Implementation
+dimension: events
+category: GROUPS_DEMO_IMPLEMENTATION.md
+tags: backend, groups, multi-tenant, ontology
+related_dimensions: connections, groups, things
+scope: global
+created: 2025-11-03
+updated: 2025-11-03
+version: 1.0.0
+ai_context: |
+  This document is part of the events dimension in the GROUPS_DEMO_IMPLEMENTATION.md category.
+  Location: one/events/GROUPS_DEMO_IMPLEMENTATION.md
+  Purpose: Documents groups demo implementation (infer 21-25)
+  Related dimensions: connections, groups, things
+  For AI agents: Read this to understand GROUPS_DEMO_IMPLEMENTATION.
+---
+
 # Groups Demo Implementation (Infer 21-25)
 
 ## Overview

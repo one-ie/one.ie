@@ -1,3 +1,21 @@
+---
+title: Demo Page Layouts
+dimension: things
+category: demo-page-layouts.md
+tags: connections, ontology
+related_dimensions: connections, events, people
+scope: global
+created: 2025-11-03
+updated: 2025-11-03
+version: 1.0.0
+ai_context: |
+  This document is part of the things dimension in the demo-page-layouts.md category.
+  Location: one/things/demo-page-layouts.md
+  Purpose: Documents one platform demo page layouts
+  Related dimensions: connections, events, people
+  For AI agents: Read this to understand demo page layouts.
+---
+
 # ONE Platform Demo Page Layouts
 
 ## Version 1.0.0 - Page Structure Specification
@@ -107,20 +125,20 @@ Introduce the dimension with a compelling headline, description, and visual hier
 
 ### Responsive Behavior
 
-| Breakpoint | Width | Padding | Font Size |
-|-----------|-------|---------|-----------|
-| Mobile (320px) | 100% | px-4 py-20 | 28px title |
-| Tablet (768px) | 100% | px-6 py-24 | 36px title |
+| Breakpoint        | Width     | Padding    | Font Size  |
+| ----------------- | --------- | ---------- | ---------- |
+| Mobile (320px)    | 100%      | px-4 py-20 | 28px title |
+| Tablet (768px)    | 100%      | px-6 py-24 | 36px title |
 | Desktop (1024px+) | max-w-4xl | px-8 py-32 | 48px title |
 
 ### Hero Section Specifications
 
-| Element | Font Size | Line Height | Max Width |
-|---------|-----------|-------------|-----------|
-| Badge | text-sm | normal | auto |
-| Headline (h1) | text-4xl→6xl | 1.2 | 100% |
-| Subheading (p) | text-xl→2xl | 1.5 | 560px |
-| Button text | text-base | normal | auto |
+| Element        | Font Size    | Line Height | Max Width |
+| -------------- | ------------ | ----------- | --------- |
+| Badge          | text-sm      | normal      | auto      |
+| Headline (h1)  | text-4xl→6xl | 1.2         | 100%      |
+| Subheading (p) | text-xl→2xl  | 1.5         | 560px     |
+| Button text    | text-base    | normal      | auto      |
 
 ---
 
@@ -368,9 +386,9 @@ Provide **interactive, hands-on experience** with the dimension through a form +
 
 ### Responsive Grid
 
-| Breakpoint | Layout | Gap |
-|-----------|--------|-----|
-| Mobile (< 1024px) | 1 column | 6 spacing units |
+| Breakpoint        | Layout    | Gap             |
+| ----------------- | --------- | --------------- |
+| Mobile (< 1024px) | 1 column  | 6 spacing units |
 | Desktop (1024px+) | 2 columns | 8 spacing units |
 
 ---
@@ -670,7 +688,7 @@ interface GraphData {
   nodes: Array<{
     id: string;
     label: string;
-    type: 'thing' | 'connection' | 'event';
+    type: "thing" | "connection" | "event";
     color: string;
     size: number;
   }>;
@@ -678,7 +696,7 @@ interface GraphData {
     from: string;
     to: string;
     label: string;
-    relationship: 'owns' | 'authored' | 'holds' | 'connected';
+    relationship: "owns" | "authored" | "holds" | "connected";
   }>;
 }
 ```
@@ -794,18 +812,21 @@ Close with a clear **call to action** and next steps to encourage user engagemen
 ### CTA Variations
 
 **For "Groups" page:**
+
 ```
 "Ready to organize your community?"
 "Create your first group and start collaborating"
 ```
 
 **For "Things" page:**
+
 ```
 "Ready to model your domain?"
 "Define your first entity type and start building"
 ```
 
 **For "Connections" page:**
+
 ```
 "Ready to define relationships?"
 "Create your first connection and discover patterns"
@@ -822,6 +843,7 @@ Close with a clear **call to action** and next steps to encourage user engagemen
 **Playground:** Create hierarchical groups with parent-child relationships
 
 **Examples:**
+
 1. Create organization with child departments
 2. List all groups in hierarchy
 3. Move group between parents
@@ -837,6 +859,7 @@ Close with a clear **call to action** and next steps to encourage user engagemen
 **Playground:** Assign roles (org_owner, org_user, customer, platform_owner) to people
 
 **Examples:**
+
 1. Create user with role
 2. Update user permissions
 3. Query users by role
@@ -852,6 +875,7 @@ Close with a clear **call to action** and next steps to encourage user engagemen
 **Playground:** Create entities (66+ types) with custom properties
 
 **Examples:**
+
 1. Create course entity with metadata
 2. Create token with balance properties
 3. Create agent with capabilities
@@ -867,6 +891,7 @@ Close with a clear **call to action** and next steps to encourage user engagemen
 **Playground:** Create relationships (25+ types) between things
 
 **Examples:**
+
 1. Create "owns" connection with metadata
 2. Create "enrolled_in" with dates
 3. Create bidirectional "follows"
@@ -882,6 +907,7 @@ Close with a clear **call to action** and next steps to encourage user engagemen
 **Playground:** Create events (67+ types) logging all actions
 
 **Examples:**
+
 1. Log entity creation event
 2. Log transaction event with amount
 3. Log user action with timestamp
@@ -897,6 +923,7 @@ Close with a clear **call to action** and next steps to encourage user engagemen
 **Playground:** Create embeddings and semantic search
 
 **Examples:**
+
 1. Create knowledge chunk with embedding
 2. Search similar documents
 3. Build taxonomy of topics
@@ -944,13 +971,13 @@ const dimensionData = getDimensionData(dimension);
 
 ## Responsive Design Matrix
 
-| Section | Mobile | Tablet | Desktop |
-|---------|--------|--------|---------|
-| Hero | 1-col, 20px v-padding | 1-col, 24px | 1-col, 32px |
-| Playground | Stack (1 col) | Stack (1 col) | 2-col grid |
-| Code | 1-col, scroll-x | 1-col | 1-col |
-| Graph | Full width | Full width | 2/3 width |
-| CTA | 1-col buttons | 2-col buttons | 2-col buttons |
+| Section    | Mobile                | Tablet        | Desktop       |
+| ---------- | --------------------- | ------------- | ------------- |
+| Hero       | 1-col, 20px v-padding | 1-col, 24px   | 1-col, 32px   |
+| Playground | Stack (1 col)         | Stack (1 col) | 2-col grid    |
+| Code       | 1-col, scroll-x       | 1-col         | 1-col         |
+| Graph      | Full width            | Full width    | 2/3 width     |
+| CTA        | 1-col buttons         | 2-col buttons | 2-col buttons |
 
 ---
 
@@ -978,9 +1005,9 @@ const dimensionData = getDimensionData(dimension);
 
 ## Version History
 
-| Version | Date | Changes |
-|---------|------|---------|
-| 1.0.0 | Oct 2024 | Initial page layout specifications |
+| Version | Date     | Changes                            |
+| ------- | -------- | ---------------------------------- |
+| 1.0.0   | Oct 2024 | Initial page layout specifications |
 
 ---
 

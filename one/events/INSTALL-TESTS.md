@@ -1,3 +1,21 @@
+---
+title: Install Tests
+dimension: events
+category: INSTALL-TESTS.md
+tags: backend, frontend, groups, installation
+related_dimensions: groups, knowledge, people, things
+scope: global
+created: 2025-11-03
+updated: 2025-11-03
+version: 1.0.0
+ai_context: |
+  This document is part of the events dimension in the INSTALL-TESTS.md category.
+  Location: one/events/INSTALL-TESTS.md
+  Purpose: Documents test suite installation guide
+  Related dimensions: groups, knowledge, people, things
+  For AI agents: Read this to understand INSTALL TESTS.
+---
+
 # Test Suite Installation Guide
 
 Quick guide to install dependencies and run the comprehensive groups test suite.

@@ -1,3 +1,21 @@
+---
+title: Agentkit
+dimension: connections
+category: agentkit.md
+tags: agent, ai, ai-agent, connections, events, ontology, protocol, things
+related_dimensions: events, knowledge, people, things
+scope: global
+created: 2025-11-03
+updated: 2025-11-03
+version: 1.0.0
+ai_context: |
+  This document is part of the connections dimension in the agentkit.md category.
+  Location: one/connections/agentkit.md
+  Purpose: Documents agentkit (openai sdk)
+  Related dimensions: events, knowledge, people, things
+  For AI agents: Read this to understand agentkit.
+---
+
 # AgentKit (OpenAI SDK)
 
 Purpose: Define how we model and run OpenAI SDK–based agents (marketing, engineering, etc.) in the ONE ontology using the 4 primitives: things, connections, events, tags.

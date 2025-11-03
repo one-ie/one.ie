@@ -1,3 +1,21 @@
+---
+title: Card
+dimension: things
+category: components
+tags: architecture, ontology
+related_dimensions: connections, events, groups, people
+scope: global
+created: 2025-11-03
+updated: 2025-11-03
+version: 1.0.0
+ai_context: |
+  This document is part of the things dimension in the components category.
+  Location: one/things/components/card.md
+  Purpose: Documents card component
+  Related dimensions: connections, events, groups, people
+  For AI agents: Read this to understand card.
+---
+
 # Card Component
 
 **Generic card component that renders ANY thing type from the ontology**
@@ -7,6 +25,7 @@
 ## Overview
 
 `Card` is a universal component that:
+
 - ✅ Works with all 66 thing types
 - ✅ Reads rendering instructions from ontology UI spec
 - ✅ Eliminates need for type-specific components
@@ -14,6 +33,7 @@
 - ✅ Customizable per organization
 
 **Before (66 components):**
+
 ```tsx
 <CourseCard course={course} />
 <ProductCard product={product} />
@@ -22,6 +42,7 @@
 ```
 
 **After (1 component):**
+
 ```tsx
 <Card thing={course} />
 <Card thing={product} />
@@ -68,69 +89,72 @@
 
 ```tsx
 // frontend/src/components/generic/Card.tsx
-import { type Thing } from '@oneie/core'
-import { useThingConfig } from '@/ontology/hooks'
-import { Card as ShadCard, CardContent, CardFooter, CardHeader } from '@/components/ui/card'
-import { Separator } from '@/components/ui/separator'
-import { Field } from './Field'
-import { Actions } from './Actions'
-import { ConnectionBadges } from './ConnectionBadges'
+import { type Thing } from "@oneie/core";
+import { useThingConfig } from "@/ontology/hooks";
+import {
+  Card as ShadCard,
+  CardContent,
+  CardFooter,
+  CardHeader,
+} from "@/components/ui/card";
+import { Separator } from "@/components/ui/separator";
+import { Field } from "./Field";
+import { Actions } from "./Actions";
+import { ConnectionBadges } from "./ConnectionBadges";
 
 interface CardProps {
-  thing: Thing
-  view?: 'card' | 'list' | 'detail'
-  onClick?: (thing: Thing) => void
-  showActions?: boolean
-  showConnections?: boolean
-  className?: string
+  thing: Thing;
+  view?: "card" | "list" | "detail";
+  onClick?: (thing: Thing) => void;
+  showActions?: boolean;
+  showConnections?: boolean;
+  className?: string;
 }
 
 export function Card({
   thing,
-  view = 'card',
+  view = "card",
   onClick,
   showActions = true,
   showConnections = true,
-  className
+  className,
 }: CardProps) {
   // Get UI config from ontology
-  const config = useThingConfig(thing.type)
+  const config = useThingConfig(thing.type);
 
   // Get view configuration
-  const viewConfig = config.ui.views[view]
+  const viewConfig = config.ui.views[view];
   if (!viewConfig) {
-    console.warn(`View "${view}" not defined for type "${thing.type}"`)
-    return null
+    console.warn(`View "${view}" not defined for type "${thing.type}"`);
+    return null;
   }
 
   // Get fields to display
-  const fields = viewConfig.fields === '*'
-    ? Object.keys(config.properties)
-    : viewConfig.fields
+  const fields =
+    viewConfig.fields === "*"
+      ? Object.keys(config.properties)
+      : viewConfig.fields;
 
   // Handle click
   const handleClick = () => {
     if (onClick) {
-      onClick(thing)
+      onClick(thing);
     } else if (config.ui.actions.primary) {
       // Execute primary action by default
-      handleAction(config.ui.actions.primary.action, thing)
+      handleAction(config.ui.actions.primary.action, thing);
     }
-  }
+  };
 
   return (
     <ShadCard
-      className={cn(
-        'cursor-pointer transition-all hover:shadow-lg',
-        className
-      )}
+      className={cn("cursor-pointer transition-all hover:shadow-lg", className)}
       onClick={handleClick}
     >
       {/* Header: Typically thumbnail + title */}
       <CardHeader>
-        {fields.slice(0, 2).map(fieldName => {
-          const fieldConfig = config.ui.fields[fieldName]
-          if (fieldConfig?.hidden) return null
+        {fields.slice(0, 2).map((fieldName) => {
+          const fieldConfig = config.ui.fields[fieldName];
+          if (fieldConfig?.hidden) return null;
 
           return (
             <Field
@@ -140,16 +164,17 @@ export function Card({
               config={fieldConfig}
               thing={thing}
             />
-          )
+          );
         })}
       </CardHeader>
 
       {/* Body: Description, price, badges, etc. */}
       <CardContent className="space-y-3">
-        {fields.slice(2).map(fieldName => {
-          const fieldConfig = config.ui.fields[fieldName]
-          if (fieldConfig?.hidden) return null
-          if (fieldConfig?.showOnlyIf && !thing.properties[fieldName]) return null
+        {fields.slice(2).map((fieldName) => {
+          const fieldConfig = config.ui.fields[fieldName];
+          if (fieldConfig?.hidden) return null;
+          if (fieldConfig?.showOnlyIf && !thing.properties[fieldName])
+            return null;
 
           return (
             <Field
@@ -159,7 +184,7 @@ export function Card({
               config={fieldConfig}
               thing={thing}
             />
-          )
+          );
         })}
       </CardContent>
 
@@ -168,10 +193,7 @@ export function Card({
         <>
           <Separator />
           <CardContent className="pt-3">
-            <ConnectionBadges
-              thing={thing}
-              config={config.ui.connections}
-            />
+            <ConnectionBadges thing={thing} config={config.ui.connections} />
           </CardContent>
         </>
       )}
@@ -190,7 +212,7 @@ export function Card({
         </>
       )}
     </ShadCard>
-  )
+  );
 }
 ```
 
@@ -200,44 +222,42 @@ export function Card({
 
 ```tsx
 // frontend/src/components/generic/Field.tsx
-import { type FieldUI } from '@/ontology/types'
-import { type Thing } from '@oneie/core'
+import { type FieldUI } from "@/ontology/types";
+import { type Thing } from "@oneie/core";
 
 // shadcn/ui components
-import { Badge } from '@/components/ui/badge'
-import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar'
-import { Progress } from '@/components/ui/progress'
-import { Separator } from '@/components/ui/separator'
+import { Badge } from "@/components/ui/badge";
+import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
+import { Progress } from "@/components/ui/progress";
+import { Separator } from "@/components/ui/separator";
 
 // Custom field components
-import { Heading } from '@/components/fields/Heading'
-import { Text } from '@/components/fields/Text'
-import { Price } from '@/components/fields/Price'
-import { Image } from '@/components/fields/Image'
-import { TagList } from '@/components/fields/TagList'
-import { DateField } from '@/components/fields/DateField'
+import { Heading } from "@/components/fields/Heading";
+import { Text } from "@/components/fields/Text";
+import { Price } from "@/components/fields/Price";
+import { Image } from "@/components/fields/Image";
+import { TagList } from "@/components/fields/TagList";
+import { DateField } from "@/components/fields/DateField";
 
 interface FieldProps {
-  name: string
-  value: any
-  config: FieldUI
-  thing: Thing
+  name: string;
+  value: any;
+  config: FieldUI;
+  thing: Thing;
 }
 
 export function Field({ name, value, config, thing }: FieldProps) {
   // Handle null/undefined values
   if (value === null || value === undefined) {
-    return null
+    return null;
   }
 
   // Apply formatting function if provided
-  const formattedValue = config.format
-    ? config.format(value, thing)
-    : value
+  const formattedValue = config.format ? config.format(value, thing) : value;
 
   // Render appropriate component based on config.component
   switch (config.component) {
-    case 'Heading':
+    case "Heading":
       return (
         <Heading
           size={config.size}
@@ -246,9 +266,9 @@ export function Field({ name, value, config, thing }: FieldProps) {
         >
           {formattedValue}
         </Heading>
-      )
+      );
 
-    case 'Text':
+    case "Text":
       return (
         <Text
           size={config.size}
@@ -261,9 +281,9 @@ export function Field({ name, value, config, thing }: FieldProps) {
         >
           {formattedValue}
         </Text>
-      )
+      );
 
-    case 'Price':
+    case "Price":
       return (
         <Price
           value={formattedValue}
@@ -274,9 +294,9 @@ export function Field({ name, value, config, thing }: FieldProps) {
           strikethrough={config.strikethrough}
           free={config.free}
         />
-      )
+      );
 
-    case 'Image':
+    case "Image":
       return (
         <Image
           src={formattedValue}
@@ -287,18 +307,14 @@ export function Field({ name, value, config, thing }: FieldProps) {
           fallback={config.fallback}
           sizes={config.sizes}
         />
-      )
+      );
 
-    case 'Badge':
-      const badgeLabel = config.labels?.[value] || config.label || value
+    case "Badge":
+      const badgeLabel = config.labels?.[value] || config.label || value;
 
-      return (
-        <Badge variant="secondary">
-          {badgeLabel}
-        </Badge>
-      )
+      return <Badge variant="secondary">{badgeLabel}</Badge>;
 
-    case 'TagList':
+    case "TagList":
       return (
         <TagList
           tags={formattedValue}
@@ -306,18 +322,18 @@ export function Field({ name, value, config, thing }: FieldProps) {
           color={config.color}
           moreLabel={config.moreLabel}
         />
-      )
+      );
 
-    case 'Date':
+    case "Date":
       return (
         <Date
           value={formattedValue}
-          format={config.format}  // 'relative' | 'full' | 'short'
+          format={config.format} // 'relative' | 'full' | 'short'
           icon={config.icon}
         />
-      )
+      );
 
-    case 'Markdown':
+    case "Markdown":
       return (
         <Markdown
           content={formattedValue}
@@ -325,21 +341,25 @@ export function Field({ name, value, config, thing }: FieldProps) {
           lines={config.lines}
           expandable={config.expandable}
         />
-      )
+      );
 
-    case 'Avatar':
+    case "Avatar":
       return (
         <Avatar>
           <AvatarImage src={formattedValue} alt={thing.name} />
           <AvatarFallback>
-            {config.fallback === 'initials'
-              ? thing.name.split(' ').map(n => n[0]).join('').toUpperCase()
+            {config.fallback === "initials"
+              ? thing.name
+                  .split(" ")
+                  .map((n) => n[0])
+                  .join("")
+                  .toUpperCase()
               : config.fallback}
           </AvatarFallback>
         </Avatar>
-      )
+      );
 
-    case 'Link':
+    case "Link":
       return (
         <Link
           href={formattedValue}
@@ -349,9 +369,9 @@ export function Field({ name, value, config, thing }: FieldProps) {
         >
           {config.label || formattedValue}
         </Link>
-      )
+      );
 
-    case 'ImageGallery':
+    case "ImageGallery":
       return (
         <ImageGallery
           images={formattedValue}
@@ -360,9 +380,9 @@ export function Field({ name, value, config, thing }: FieldProps) {
           zoom={config.zoom}
           thumbnails={config.thumbnails}
         />
-      )
+      );
 
-    case 'Video':
+    case "Video":
       return (
         <Video
           src={formattedValue}
@@ -370,9 +390,9 @@ export function Field({ name, value, config, thing }: FieldProps) {
           autoplay={config.autoplay}
           muted={config.muted}
         />
-      )
+      );
 
-    case 'SocialLinks':
+    case "SocialLinks":
       return (
         <SocialLinks
           links={formattedValue}
@@ -380,9 +400,9 @@ export function Field({ name, value, config, thing }: FieldProps) {
           size={config.size}
           platforms={config.platforms}
         />
-      )
+      );
 
-    case 'Checkbox':
+    case "Checkbox":
       return (
         <Checkbox
           checked={formattedValue}
@@ -391,15 +411,15 @@ export function Field({ name, value, config, thing }: FieldProps) {
           uncheckedIcon={config.uncheckedIcon}
           onChange={(checked) => {
             // Update thing property
-            updateThing(thing._id, { [name]: checked })
+            updateThing(thing._id, { [name]: checked });
           }}
         />
-      )
+      );
 
     // Add more component types as needed
     default:
-      console.warn(`Unknown field component: ${config.component}`)
-      return <Text>{String(formattedValue)}</Text>
+      console.warn(`Unknown field component: ${config.component}`);
+      return <Text>{String(formattedValue)}</Text>;
   }
 }
 ```
@@ -410,43 +430,43 @@ export function Field({ name, value, config, thing }: FieldProps) {
 
 ```tsx
 // frontend/src/components/generic/Actions.tsx
-import { type Thing } from '@oneie/core'
-import { type ActionConfig } from '@/ontology/types'
-import { Button } from '@/components/ui/button'
-import { useAction } from '@/hooks/useAction'
+import { type Thing } from "@oneie/core";
+import { type ActionConfig } from "@/ontology/types";
+import { Button } from "@/components/ui/button";
+import { useAction } from "@/hooks/useAction";
 
 interface ActionsProps {
-  thing: Thing
-  primary?: ActionConfig
-  secondary?: ActionConfig[]
+  thing: Thing;
+  primary?: ActionConfig;
+  secondary?: ActionConfig[];
 }
 
 export function Actions({ thing, primary, secondary }: ActionsProps) {
-  const { executeAction, loading } = useAction()
+  const { executeAction, loading } = useAction();
 
   const handleAction = async (action: string) => {
-    await executeAction(action, thing)
-  }
+    await executeAction(action, thing);
+  };
 
   return (
     <div className="flex items-center gap-2 w-full">
       {/* Primary action */}
       {primary && (
         <Button
-          variant={primary.variant === 'danger' ? 'destructive' : 'default'}
+          variant={primary.variant === "danger" ? "destructive" : "default"}
           onClick={() => handleAction(primary.action)}
           disabled={loading}
           className="flex-1"
         >
-          {loading ? 'Loading...' : primary.label}
+          {loading ? "Loading..." : primary.label}
         </Button>
       )}
 
       {/* Secondary actions */}
-      {secondary?.map(action => (
+      {secondary?.map((action) => (
         <Button
           key={action.action}
-          variant={action.variant === 'ghost' ? 'outline' : 'secondary'}
+          variant={action.variant === "ghost" ? "outline" : "secondary"}
           onClick={() => handleAction(action.action)}
           disabled={loading}
         >
@@ -454,7 +474,7 @@ export function Actions({ thing, primary, secondary }: ActionsProps) {
         </Button>
       ))}
     </div>
-  )
+  );
 }
 ```
 
@@ -464,47 +484,49 @@ export function Actions({ thing, primary, secondary }: ActionsProps) {
 
 ```tsx
 // frontend/src/components/generic/ConnectionBadges.tsx
-import { type Thing } from '@oneie/core'
-import { type ConnectionUI } from '@/ontology/types'
-import { useConnections } from '@/hooks/useConnections'
-import { Badge } from '@/components/ui/Badge'
-import { Avatar } from '@/components/ui/Avatar'
+import { type Thing } from "@oneie/core";
+import { type ConnectionUI } from "@/ontology/types";
+import { useConnections } from "@/hooks/useConnections";
+import { Badge } from "@/components/ui/Badge";
+import { Avatar } from "@/components/ui/Avatar";
 
 interface ConnectionBadgesProps {
-  thing: Thing
-  config: Record<string, ConnectionUI>
+  thing: Thing;
+  config: Record<string, ConnectionUI>;
 }
 
 export function ConnectionBadges({ thing, config }: ConnectionBadgesProps) {
-  const connections = useConnections(thing._id)
+  const connections = useConnections(thing._id);
 
   return (
     <div className="flex flex-wrap gap-2 mt-3">
       {Object.entries(config).map(([type, connectionConfig]) => {
         // Get connections of this type
-        const items = connections.filter(c => c.relationshipType === type)
+        const items = connections.filter((c) => c.relationshipType === type);
 
-        if (items.length === 0) return null
+        if (items.length === 0) return null;
 
         // Format label with count or name
         const label = connectionConfig.label
-          .replace('{count}', items.length.toString())
-          .replace('{name}', items[0]?.name || '')
+          .replace("{count}", items.length.toString())
+          .replace("{name}", items[0]?.name || "");
 
         // Render based on display type
         switch (connectionConfig.display) {
-          case 'badge':
+          case "badge":
             return (
               <Badge
                 key={type}
                 icon={connectionConfig.icon}
-                link={connectionConfig.link ? `/connections/${type}` : undefined}
+                link={
+                  connectionConfig.link ? `/connections/${type}` : undefined
+                }
               >
                 {label}
               </Badge>
-            )
+            );
 
-          case 'avatar':
+          case "avatar":
             return (
               <div key={type} className="flex items-center gap-2">
                 <Avatar
@@ -512,37 +534,33 @@ export function ConnectionBadges({ thing, config }: ConnectionBadgesProps) {
                   name={items[0]?.name}
                   size="sm"
                 />
-                <span className="text-sm text-muted">
-                  {label}
-                </span>
+                <span className="text-sm text-muted">{label}</span>
               </div>
-            )
+            );
 
-          case 'inline':
+          case "inline":
             return (
               <span key={type} className="text-sm text-muted">
                 {connectionConfig.icon && <Icon name={connectionConfig.icon} />}
                 {label}
               </span>
-            )
+            );
 
-          case 'list':
+          case "list":
             return (
               <div key={type} className="space-y-1">
-                {items.slice(0, connectionConfig.max || 5).map(item => (
-                  <Badge key={item._id}>
-                    {item.name}
-                  </Badge>
+                {items.slice(0, connectionConfig.max || 5).map((item) => (
+                  <Badge key={item._id}>{item.name}</Badge>
                 ))}
               </div>
-            )
+            );
 
           default:
-            return null
+            return null;
         }
       })}
     </div>
-  )
+  );
 }
 ```
 
@@ -552,35 +570,35 @@ export function ConnectionBadges({ thing, config }: ConnectionBadgesProps) {
 
 ```tsx
 // frontend/src/ontology/hooks/useThingConfig.ts
-import { type ThingType } from '@oneie/core'
-import { ontologyUIConfig } from '@/ontology/config'
+import { type ThingType } from "@oneie/core";
+import { ontologyUIConfig } from "@/ontology/config";
 
 export function useThingConfig(type: ThingType) {
-  const config = ontologyUIConfig[type]
+  const config = ontologyUIConfig[type];
 
   if (!config) {
-    console.error(`No UI config found for thing type: ${type}`)
+    console.error(`No UI config found for thing type: ${type}`);
     // Return minimal fallback config
     return {
       type,
       properties: {},
       ui: {
-        component: 'Card',
-        layouts: { grid: { columns: 3, gap: 'md' } },
+        component: "Card",
+        layouts: { grid: { columns: 3, gap: "md" } },
         fields: {},
-        views: { card: { fields: ['name'] } },
+        views: { card: { fields: ["name"] } },
         actions: {},
         connections: {},
         empty: {
-          icon: 'box',
-          title: 'No items',
-          description: 'Get started by creating one'
-        }
-      }
-    }
+          icon: "box",
+          title: "No items",
+          description: "Get started by creating one",
+        },
+      },
+    };
   }
 
-  return config
+  return config;
 }
 ```
 
@@ -590,80 +608,80 @@ export function useThingConfig(type: ThingType) {
 
 ```tsx
 // frontend/src/hooks/useAction.ts
-import { useState } from 'react'
-import { type Thing } from '@oneie/core'
-import { Effect } from 'effect'
-import { ThingService } from '@/services/ThingService'
-import { useEffectRunner } from '@/hooks/useEffectRunner'
+import { useState } from "react";
+import { type Thing } from "@oneie/core";
+import { Effect } from "effect";
+import { ThingService } from "@/services/ThingService";
+import { useEffectRunner } from "@/hooks/useEffectRunner";
 
 export function useAction() {
-  const [loading, setLoading] = useState(false)
-  const { run } = useEffectRunner()
+  const [loading, setLoading] = useState(false);
+  const { run } = useEffectRunner();
 
   const executeAction = async (action: string, thing: Thing) => {
-    setLoading(true)
+    setLoading(true);
 
     const program = Effect.gen(function* () {
-      const service = yield* ThingService
+      const service = yield* ThingService;
 
       // Handle different action types
       switch (action) {
-        case 'enroll':
-          return yield* service.enroll(thing._id)
+        case "enroll":
+          return yield* service.enroll(thing._id);
 
-        case 'purchase':
-          return yield* service.purchase(thing._id)
+        case "purchase":
+          return yield* service.purchase(thing._id);
 
-        case 'preview':
+        case "preview":
           // Navigate to preview page
-          window.location.href = `/preview/${thing.type}/${thing._id}`
-          break
+          window.location.href = `/preview/${thing.type}/${thing._id}`;
+          break;
 
-        case 'share':
+        case "share":
           // Open share dialog
           await navigator.share({
             title: thing.name,
-            url: window.location.href
-          })
-          break
+            url: window.location.href,
+          });
+          break;
 
-        case 'bookmark':
-          return yield* service.bookmark(thing._id)
+        case "bookmark":
+          return yield* service.bookmark(thing._id);
 
-        case 'edit':
-          window.location.href = `/edit/${thing.type}/${thing._id}`
-          break
+        case "edit":
+          window.location.href = `/edit/${thing.type}/${thing._id}`;
+          break;
 
-        case 'delete':
-          if (confirm('Are you sure?')) {
-            return yield* service.delete(thing._id)
+        case "delete":
+          if (confirm("Are you sure?")) {
+            return yield* service.delete(thing._id);
           }
-          break
+          break;
 
-        case 'addToCart':
-          return yield* service.addToCart(thing._id)
+        case "addToCart":
+          return yield* service.addToCart(thing._id);
 
-        case 'wishlist':
-          return yield* service.addToWishlist(thing._id)
+        case "wishlist":
+          return yield* service.addToWishlist(thing._id);
 
         // Add more actions as needed
         default:
-          console.warn(`Unknown action: ${action}`)
+          console.warn(`Unknown action: ${action}`);
       }
-    })
+    });
 
     await run(program, {
       onSuccess: () => {
-        setLoading(false)
+        setLoading(false);
       },
       onError: (error) => {
-        console.error('Action failed:', error)
-        setLoading(false)
-      }
-    })
-  }
+        console.error("Action failed:", error);
+        setLoading(false);
+      },
+    });
+  };
 
-  return { executeAction, loading }
+  return { executeAction, loading };
 }
 ```
 
@@ -696,11 +714,7 @@ const courses = await getCourses()
 
 ```tsx
 // Use list view instead of card view
-<Card
-  thing={course}
-  view="list"
-  client:load
-/>
+<Card thing={course} view="list" client:load />
 ```
 
 ### Custom Click Handler
@@ -710,8 +724,8 @@ const courses = await getCourses()
 <Card
   thing={course}
   onClick={(thing) => {
-    console.log('Clicked:', thing)
-    router.push(`/courses/${thing._id}`)
+    console.log("Clicked:", thing);
+    router.push(`/courses/${thing._id}`);
   }}
   client:load
 />
@@ -721,22 +735,14 @@ const courses = await getCourses()
 
 ```tsx
 // Show card without actions
-<Card
-  thing={course}
-  showActions={false}
-  client:load
-/>
+<Card thing={course} showActions={false} client:load />
 ```
 
 ### Hide Connections
 
 ```tsx
 // Show card without connection badges
-<Card
-  thing={course}
-  showConnections={false}
-  client:load
-/>
+<Card thing={course} showConnections={false} client:load />
 ```
 
 ---
@@ -747,20 +753,16 @@ const courses = await getCourses()
 
 ```tsx
 // frontend/src/components/generic/ThingList.tsx
-export function ThingList({ things, view = 'list' }) {
-  const config = useThingConfig(things[0]?.type)
+export function ThingList({ things, view = "list" }) {
+  const config = useThingConfig(things[0]?.type);
 
   return (
     <div className="space-y-4">
-      {things.map(thing => (
-        <Card
-          key={thing._id}
-          thing={thing}
-          view={view}
-        />
+      {things.map((thing) => (
+        <Card key={thing._id} thing={thing} view={view} />
       ))}
     </div>
-  )
+  );
 }
 ```
 
@@ -769,25 +771,21 @@ export function ThingList({ things, view = 'list' }) {
 ```tsx
 // frontend/src/components/generic/ThingGrid.tsx
 export function ThingGrid({ things }) {
-  const config = useThingConfig(things[0]?.type)
-  const gridLayout = config.ui.layouts.grid
+  const config = useThingConfig(things[0]?.type);
+  const gridLayout = config.ui.layouts.grid;
 
   return (
     <div
       className="grid gap-6"
       style={{
-        gridTemplateColumns: `repeat(${gridLayout.columns}, 1fr)`
+        gridTemplateColumns: `repeat(${gridLayout.columns}, 1fr)`,
       }}
     >
-      {things.map(thing => (
-        <Card
-          key={thing._id}
-          thing={thing}
-          view="card"
-        />
+      {things.map((thing) => (
+        <Card key={thing._id} thing={thing} view="card" />
       ))}
     </div>
-  )
+  );
 }
 ```
 
@@ -796,7 +794,7 @@ export function ThingGrid({ things }) {
 ```tsx
 // frontend/src/components/generic/ThingDetail.tsx
 export function ThingDetail({ thing }) {
-  const config = useThingConfig(thing.type)
+  const config = useThingConfig(thing.type);
 
   return (
     <div className="max-w-prose mx-auto">
@@ -807,7 +805,7 @@ export function ThingDetail({ thing }) {
         showConnections={true}
       />
     </div>
-  )
+  );
 }
 ```
 
@@ -816,14 +814,14 @@ export function ThingDetail({ thing }) {
 ```tsx
 // frontend/src/components/generic/ThingTable.tsx
 export function ThingTable({ things }) {
-  const config = useThingConfig(things[0]?.type)
-  const tableView = config.ui.views.table
+  const config = useThingConfig(things[0]?.type);
+  const tableView = config.ui.views.table;
 
   return (
     <table className="w-full">
       <thead>
         <tr>
-          {tableView.fields.map(fieldName => (
+          {tableView.fields.map((fieldName) => (
             <th key={fieldName}>
               {config.ui.fields[fieldName]?.label || fieldName}
             </th>
@@ -831,9 +829,9 @@ export function ThingTable({ things }) {
         </tr>
       </thead>
       <tbody>
-        {things.map(thing => (
+        {things.map((thing) => (
           <tr key={thing._id}>
-            {tableView.fields.map(fieldName => (
+            {tableView.fields.map((fieldName) => (
               <td key={fieldName}>
                 <Field
                   name={fieldName}
@@ -847,7 +845,7 @@ export function ThingTable({ things }) {
         ))}
       </tbody>
     </table>
-  )
+  );
 }
 ```
 
@@ -857,29 +855,21 @@ export function ThingTable({ things }) {
 
 ```tsx
 // frontend/src/components/generic/EmptyState.tsx
-import { type EmptyStateConfig } from '@/ontology/types'
-import { Button } from '@/components/ui/Button'
-import { Icon } from '@/components/ui/Icon'
+import { type EmptyStateConfig } from "@/ontology/types";
+import { Button } from "@/components/ui/Button";
+import { Icon } from "@/components/ui/Icon";
 
 interface EmptyStateProps {
-  config: EmptyStateConfig
-  onAction?: () => void
+  config: EmptyStateConfig;
+  onAction?: () => void;
 }
 
 export function EmptyState({ config, onAction }: EmptyStateProps) {
   return (
     <div className="text-center py-12">
-      <Icon
-        name={config.icon}
-        size="3xl"
-        className="text-muted mb-4"
-      />
-      <h3 className="text-xl font-semibold mb-2">
-        {config.title}
-      </h3>
-      <p className="text-muted mb-6">
-        {config.description}
-      </p>
+      <Icon name={config.icon} size="3xl" className="text-muted mb-4" />
+      <h3 className="text-xl font-semibold mb-2">{config.title}</h3>
+      <p className="text-muted mb-6">{config.description}</p>
       {config.action && (
         <Button
           icon={config.action.icon}
@@ -890,7 +880,7 @@ export function EmptyState({ config, onAction }: EmptyStateProps) {
         </Button>
       )}
     </div>
-  )
+  );
 }
 ```
 
@@ -898,14 +888,16 @@ export function EmptyState({ config, onAction }: EmptyStateProps) {
 
 ```tsx
 // Show empty state when no things
-{things.length === 0 ? (
-  <EmptyState
-    config={config.ui.empty}
-    onAction={() => router.push('/courses/new')}
-  />
-) : (
-  <ThingGrid things={things} />
-)}
+{
+  things.length === 0 ? (
+    <EmptyState
+      config={config.ui.empty}
+      onAction={() => router.push("/courses/new")}
+    />
+  ) : (
+    <ThingGrid things={things} />
+  );
+}
 ```
 
 ---
@@ -916,61 +908,63 @@ export function EmptyState({ config, onAction }: EmptyStateProps) {
 
 ```tsx
 // frontend/src/components/generic/__tests__/Card.test.tsx
-import { describe, it, expect } from 'vitest'
-import { render, screen } from '@testing-library/react'
-import { Card } from '../Card'
+import { describe, it, expect } from "vitest";
+import { render, screen } from "@testing-library/react";
+import { Card } from "../Card";
 
-describe('Card', () => {
-  it('renders course card', () => {
+describe("Card", () => {
+  it("renders course card", () => {
     const course = {
-      _id: '123',
-      type: 'course',
-      name: 'Test Course',
+      _id: "123",
+      type: "course",
+      name: "Test Course",
       properties: {
-        title: 'Test Course',
-        description: 'A test course',
+        title: "Test Course",
+        description: "A test course",
         price: 99,
-        level: 'beginner'
-      }
-    }
+        level: "beginner",
+      },
+    };
 
-    render(<Card thing={course} />)
+    render(<Card thing={course} />);
 
-    expect(screen.getByText('Test Course')).toBeInTheDocument()
-    expect(screen.getByText('A test course')).toBeInTheDocument()
-    expect(screen.getByText('$99')).toBeInTheDocument()
-    expect(screen.getByText('beginner')).toBeInTheDocument()
-  })
+    expect(screen.getByText("Test Course")).toBeInTheDocument();
+    expect(screen.getByText("A test course")).toBeInTheDocument();
+    expect(screen.getByText("$99")).toBeInTheDocument();
+    expect(screen.getByText("beginner")).toBeInTheDocument();
+  });
 
-  it('renders product card', () => {
+  it("renders product card", () => {
     const product = {
-      _id: '456',
-      type: 'product',
-      name: 'Test Product',
+      _id: "456",
+      type: "product",
+      name: "Test Product",
       properties: {
-        name: 'Test Product',
+        name: "Test Product",
         price: 49,
-        inventory: 10
-      }
-    }
+        inventory: 10,
+      },
+    };
 
-    render(<Card thing={product} />)
+    render(<Card thing={product} />);
 
-    expect(screen.getByText('Test Product')).toBeInTheDocument()
-    expect(screen.getByText('$49')).toBeInTheDocument()
-    expect(screen.getByText('10 in stock')).toBeInTheDocument()
-  })
+    expect(screen.getByText("Test Product")).toBeInTheDocument();
+    expect(screen.getByText("$49")).toBeInTheDocument();
+    expect(screen.getByText("10 in stock")).toBeInTheDocument();
+  });
 
-  it('handles click', () => {
-    const onClick = vi.fn()
-    const course = { /* ... */ }
+  it("handles click", () => {
+    const onClick = vi.fn();
+    const course = {
+      /* ... */
+    };
 
-    render(<Card thing={course} onClick={onClick} />)
+    render(<Card thing={course} onClick={onClick} />);
 
-    fireEvent.click(screen.getByRole('article'))
-    expect(onClick).toHaveBeenCalledWith(course)
-  })
-})
+    fireEvent.click(screen.getByRole("article"));
+    expect(onClick).toHaveBeenCalledWith(course);
+  });
+});
 ```
 
 ---
@@ -981,13 +975,10 @@ describe('Card', () => {
 
 ```tsx
 // Memoize config lookup
-import { useMemo } from 'react'
+import { useMemo } from "react";
 
 export function Card({ thing, ...props }) {
-  const config = useMemo(
-    () => getThingConfig(thing.type),
-    [thing.type]
-  )
+  const config = useMemo(() => getThingConfig(thing.type), [thing.type]);
 
   // ... rest of component
 }
@@ -997,24 +988,20 @@ export function Card({ thing, ...props }) {
 
 ```tsx
 // Lazy load images
-<Image
-  src={thing.properties.thumbnail}
-  lazy={true}
-  loading="lazy"
-/>
+<Image src={thing.properties.thumbnail} lazy={true} loading="lazy" />
 ```
 
 ### Virtual Scrolling
 
 ```tsx
 // Use virtual scrolling for long lists
-import { VirtualList } from '@/components/ui/VirtualList'
+import { VirtualList } from "@/components/ui/VirtualList";
 
 <VirtualList
   items={things}
   renderItem={(thing) => <Card thing={thing} />}
   itemHeight={200}
-/>
+/>;
 ```
 
 ---
@@ -1022,24 +1009,28 @@ import { VirtualList } from '@/components/ui/VirtualList'
 ## Next Steps
 
 ### Week 1
+
 - [ ] Implement Card core component
 - [ ] Implement Field component with 10 field types
 - [ ] Implement Actions component
 - [ ] Test with 3 thing types
 
 ### Week 2
+
 - [ ] Add all field component types (20+)
 - [ ] Implement ConnectionBadges
 - [ ] Implement EmptyState
 - [ ] Add responsive layouts
 
 ### Week 3
+
 - [ ] Build ThingList variant
 - [ ] Build ThingGrid variant
 - [ ] Build ThingDetail variant
 - [ ] Build ThingTable variant
 
 ### Week 4
+
 - [ ] Add customization API
 - [ ] Add theme support
 - [ ] Add accessibility features

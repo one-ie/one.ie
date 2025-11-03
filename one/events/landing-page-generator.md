@@ -1,3 +1,21 @@
+---
+title: Landing Page Generator
+dimension: events
+category: landing-page-generator.md
+tags: ai, inference
+related_dimensions: connections, things
+scope: global
+created: 2025-11-03
+updated: 2025-11-03
+version: 1.0.0
+ai_context: |
+  This document is part of the events dimension in the landing-page-generator.md category.
+  Location: one/events/landing-page-generator.md
+  Purpose: Documents landing page generator - deployment summary
+  Related dimensions: connections, things
+  For AI agents: Read this to understand landing page generator.
+---
+
 # Landing Page Generator - Deployment Summary
 
 **Event Type**: `feature_deployed`

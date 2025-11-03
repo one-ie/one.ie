@@ -1,3 +1,21 @@
+---
+title: Elizaos
+dimension: connections
+category: elizaos.md
+tags: agent, ai, architecture, knowledge
+related_dimensions: events, knowledge
+scope: global
+created: 2025-11-03
+updated: 2025-11-03
+version: 1.0.0
+ai_context: |
+  This document is part of the connections dimension in the elizaos.md category.
+  Location: one/connections/elizaos.md
+  Purpose: Documents elizaos integration - multi-agent communication
+  Related dimensions: events, knowledge
+  For AI agents: Read this to understand elizaos.
+---
+
 # ElizaOS Integration - Multi-Agent Communication
 
 **Version:** 1.0.0

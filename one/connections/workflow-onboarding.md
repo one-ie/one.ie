@@ -1,3 +1,21 @@
+---
+title: Workflow Onboarding
+dimension: connections
+category: workflow-onboarding.md
+tags: ai, inference, ontology
+related_dimensions: events, groups, people, things
+scope: global
+created: 2025-11-03
+updated: 2025-11-03
+version: 1.0.0
+ai_context: |
+  This document is part of the connections dimension in the workflow-onboarding.md category.
+  Location: one/connections/workflow-onboarding.md
+  Purpose: Documents one platform onboarding workflow
+  Related dimensions: events, groups, people, things
+  For AI agents: Read this to understand workflow onboarding.
+---
+
 # ONE Platform Onboarding Workflow
 
 **Version:** 1.0.0

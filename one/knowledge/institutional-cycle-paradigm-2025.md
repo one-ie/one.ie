@@ -1,3 +1,21 @@
+---
+title: Institutional Cycle Paradigm 2025
+dimension: knowledge
+category: institutional-cycle-paradigm-2025.md
+tags: ai
+related_dimensions: people, things
+scope: global
+created: 2025-11-03
+updated: 2025-11-03
+version: 1.0.0
+ai_context: |
+  This document is part of the knowledge dimension in the institutional-cycle-paradigm-2025.md category.
+  Location: one/knowledge/institutional-cycle-paradigm-2025.md
+  Purpose: Documents the institutional cycle paradigm (2024-2026)
+  Related dimensions: people, things
+  For AI agents: Read this to understand institutional cycle paradigm 2025.
+---
+
 # The Institutional Cycle Paradigm (2024-2026)
 
 **Why This Crypto Cycle Is Fundamentally Different**

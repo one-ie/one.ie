@@ -1,3 +1,21 @@
+---
+title: Rules
+dimension: knowledge
+category: rules.md
+tags: agent, ai, connections, events, ontology
+related_dimensions: connections, events, people, things
+scope: global
+created: 2025-11-03
+updated: 2025-11-03
+version: 1.0.0
+ai_context: |
+  This document is part of the knowledge dimension in the rules.md category.
+  Location: one/knowledge/rules.md
+  Purpose: Documents one platform - ai development rules
+  Related dimensions: connections, events, people, things
+  For AI agents: Read this to understand rules.
+---
+
 # ONE Platform - AI Development Rules
 
 **Version:** 1.0.0  

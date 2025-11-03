@@ -1,3 +1,21 @@
+---
+title: Ai Token Crypto Analysis Framework
+dimension: knowledge
+category: ai-token-crypto-analysis-framework.md
+tags: ai, artificial-intelligence
+related_dimensions: connections, things
+scope: global
+created: 2025-11-03
+updated: 2025-11-03
+version: 1.0.0
+ai_context: |
+  This document is part of the knowledge dimension in the ai-token-crypto-analysis-framework.md category.
+  Location: one/knowledge/ai-token-crypto-analysis-framework.md
+  Purpose: Documents ai token crypto analysis framework
+  Related dimensions: connections, things
+  For AI agents: Read this to understand ai token crypto analysis framework.
+---
+
 # AI Token Crypto Analysis Framework
 
 **A Practical Guide for Evaluating AI-Related Cryptocurrencies**

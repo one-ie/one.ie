@@ -1,3 +1,21 @@
+---
+title: Context Engineering
+dimension: knowledge
+category: context-engineering.md
+tags: agent, ai
+related_dimensions: connections, events, groups
+scope: global
+created: 2025-11-03
+updated: 2025-11-03
+version: 1.0.0
+ai_context: |
+  This document is part of the knowledge dimension in the context-engineering.md category.
+  Location: one/knowledge/context-engineering.md
+  Purpose: Documents context engineering - documentation structure
+  Related dimensions: connections, events, groups
+  For AI agents: Read this to understand context engineering.
+---
+
 # Context Engineering - Documentation Structure
 
 **Version**: 1.0.0

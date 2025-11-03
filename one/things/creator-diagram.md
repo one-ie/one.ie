@@ -1,7 +1,25 @@
+---
+title: Creator Diagram
+dimension: things
+category: creator-diagram.md
+tags: agent, ai, knowledge
+related_dimensions: events, knowledge, people
+scope: global
+created: 2025-11-03
+updated: 2025-11-03
+version: 1.0.0
+ai_context: |
+  This document is part of the things dimension in the creator-diagram.md category.
+  Location: one/things/creator-diagram.md
+  Purpose: Provides information
+  Related dimensions: events, knowledge, people
+  For AI agents: Read this to understand creator diagram.
+---
+
 graph TB
-    subgraph "SOURCE: The Creator"
-        C[👤 CREATOR<br/>Identity · Voice · Knowledge · Style]
-    end
+subgraph "SOURCE: The Creator"
+C[👤 CREATOR<br/>Identity · Voice · Knowledge · Style]
+end
 
     subgraph "EXTRACTION: Knowledge Layer"
         KB[(📚 Knowledge Base<br/>RAG System)]
@@ -153,7 +171,7 @@ graph TB
     style T fill:#ffd93d,stroke:#f3a712,stroke-width:3px
     style A fill:#a8e6cf,stroke:#56ab91,stroke-width:2px
     style AN fill:#dfe4ea,stroke:#747d8c,stroke-width:2px
-    
+
     style BA1 fill:#e1bee7,stroke:#8e24aa,stroke-width:1px
     style BA2 fill:#e1bee7,stroke:#8e24aa,stroke-width:1px
     style BA3 fill:#e1bee7,stroke:#8e24aa,stroke-width:1px

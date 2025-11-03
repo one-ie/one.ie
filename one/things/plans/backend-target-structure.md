@@ -1,3 +1,21 @@
+---
+title: Backend Target Structure
+dimension: things
+category: plans
+tags: backend, convex, ontology
+related_dimensions: connections, events, groups, knowledge, people
+scope: global
+created: 2025-11-03
+updated: 2025-11-03
+version: 1.0.0
+ai_context: |
+  This document is part of the things dimension in the plans category.
+  Location: one/things/plans/backend-target-structure.md
+  Purpose: Documents backend target structure (after conformance)
+  Related dimensions: connections, events, groups, knowledge, people
+  For AI agents: Read this to understand backend target structure.
+---
+
 # Backend Target Structure (After Conformance)
 
 **Status**: Target Design
@@ -21,6 +39,7 @@ backend/
 ```
 
 **Problems**:
+
 - Documentation scattered across root
 - Duplicate files (3 copies of query docs, 3 copies of structure docs)
 - Outdated references ("4-table" instead of "6-dimension")
@@ -29,6 +48,7 @@ backend/
 - Disabled tests take up space
 
 **Impact**:
+
 - 33+ files to assess and organize
 - Context switching between `/backend/` and `/one/`
 - Unclear which files are current vs. archived
@@ -215,14 +235,18 @@ one/people/
 ## Organization by 6-Dimension
 
 ### 1. GROUPS Dimension
+
 **Files that document multi-tenant isolation**:
+
 - `one/things/plans/backend-structure.md` (groups table section)
 - `backend/convex/schema.ts` (groups table definition)
 - `backend/convex/queries/groups.ts` (read operations)
 - `backend/convex/mutations/groups.ts` (write operations)
 
 ### 2. PEOPLE Dimension
+
 **Files that document authorization & governance**:
+
 - `one/people/backend-auth-roles.md`
 - `one/people/better-auth-guide.md`
 - `backend/convex/auth.ts` (auth config)
@@ -230,7 +254,9 @@ one/people/
 - `backend/convex/queries/people.ts` (read people)
 
 ### 3. THINGS Dimension
+
 **Files that document entity definitions**:
+
 - `one/things/plans/backend-structure.md` (things table section)
 - `one/things/implementation/backend-guide.md`
 - `backend/convex/schema.ts` (things table + 66+ types)
@@ -241,7 +267,9 @@ one/people/
 - `one/knowledge/examples/backend-examples/` (usage examples)
 
 ### 4. CONNECTIONS Dimension
+
 **Files that document relationships**:
+
 - `one/connections/api/queries-reference.md`
 - `one/connections/api/mutations-reference.md`
 - `backend/convex/schema.ts` (connections table + 25+ types)
@@ -250,7 +278,9 @@ one/people/
 - `one/connections/api/ontology-queries.md` (query examples)
 
 ### 5. EVENTS Dimension
+
 **Files that document actions & audit trail**:
+
 - `one/events/backend-integration-tests.md`
 - `one/events/testing-summary.md`
 - `one/events/ontology-test-examples.md`
@@ -259,7 +289,9 @@ one/people/
 - `backend/convex/queries/events.ts` (read events)
 
 ### 6. KNOWLEDGE Dimension
+
 **Files that document embeddings & RAG**:
+
 - `one/knowledge/ontology-visual-guide.md`
 - `one/knowledge/examples/backend-examples/`
 - `backend/convex/schema.ts` (knowledge table)
@@ -272,6 +304,7 @@ one/people/
 ## File Movement Summary
 
 ### DELETE (4 files) ❌
+
 ```
 ONTOLOGY-FILE-STRUCTURE.md (duplicate)
 ONTOLOGY-INTEGRATION-TEST-SUMMARY.md (consolidate with report)
@@ -280,6 +313,7 @@ _tests_disabled/ (entire directory - obsolete)
 ```
 
 ### MOVE (12 files) 📋
+
 ```
 BACKEND-STRUCTURE.md → /one/things/plans/ (consolidate)
 CONVEX-ANALYSIS-INDEX.md → /one/events/
@@ -298,6 +332,7 @@ TESTING-SUMMARY.md → /one/events/
 ```
 
 ### CONSOLIDATE (3 groups) ⚠️
+
 ```
 Query docs: ONTOLOGY_QUERIES_EXAMPLE.md + QUERIES_ONTOLOGY_COMPLETE.md + QUERY_ONTOLOGY.md
   → one/connections/api/queries-reference.md
@@ -310,6 +345,7 @@ Test reports: ONTOLOGY-INTEGRATION-TEST-REPORT.md + ONTOLOGY-INTEGRATION-TEST-SU
 ```
 
 ### KEEP in `/backend/` (10 items) ✅
+
 ```
 convex/           (all - source code)
 lib/              (all - utilities)
@@ -327,15 +363,15 @@ bun.lock
 
 ## Quality Metrics
 
-| Metric | Before | After | Target |
-|--------|--------|-------|--------|
-| Markdown files in `/backend/` | 20 | 2 | <5 |
-| Duplicate documentation | 7 files (3+ copies) | 0 | 0 |
-| Files mapped to 6 dimensions | ~50% | 100% | 100% |
-| Discoverability (in /one/) | ~30% | ~95% | 100% |
-| TypeScript errors | 0 | 0 | 0 |
-| Broken links | Unknown | 0 | 0 |
-| Schema compliance | 6-dim ✅ | 6-dim ✅ | 6-dim ✅ |
+| Metric                        | Before              | After    | Target   |
+| ----------------------------- | ------------------- | -------- | -------- |
+| Markdown files in `/backend/` | 20                  | 2        | <5       |
+| Duplicate documentation       | 7 files (3+ copies) | 0        | 0        |
+| Files mapped to 6 dimensions  | ~50%                | 100%     | 100%     |
+| Discoverability (in /one/)    | ~30%                | ~95%     | 100%     |
+| TypeScript errors             | 0                   | 0        | 0        |
+| Broken links                  | Unknown             | 0        | 0        |
+| Schema compliance             | 6-dim ✅            | 6-dim ✅ | 6-dim ✅ |
 
 ---
 
@@ -344,7 +380,7 @@ bun.lock
 - [ ] All source code remains in `/backend/convex/`
 - [ ] All documentation moved to `/one/` (except README.md)
 - [ ] All duplicates consolidated (7 files → 3 consolidated files)
-- [ ] All deleted files archived (only _tests_disabled/ truly deleted)
+- [ ] All deleted files archived (only \_tests_disabled/ truly deleted)
 - [ ] Schema.ts verified - 6 dimensions intact
 - [ ] TypeScript compilation successful
 - [ ] All markdown links updated and valid
@@ -357,20 +393,24 @@ bun.lock
 ## Why This Matters
 
 ### Before: Hard to Navigate
+
 - Q: "Where's the query documentation?"
 - A: "It's in QUERY_ONTOLOGY.md... or maybe QUERIES_ONTOLOGY_COMPLETE.md... or ONTOLOGY_QUERIES_EXAMPLE.md"
 - Problem: 3 files, different content, unclear which to use
 
 ### After: Crystal Clear
+
 - Q: "Where's the query documentation?"
 - A: "Read `/one/connections/api/queries-reference.md`"
 - Problem solved: 1 file, consolidated, discoverable
 
 ### Before: Scattered Context
+
 - To understand backend: read `/backend/README.md`, then 20+ files, piecing it together
 - Hard to see 6-dimension mapping
 
 ### After: Organized by Dimension
+
 - To understand backend: navigate `/one/` by dimension
 - Groups → check `/one/things/plans/backend-structure.md` section 1
 - People → check `/one/people/backend-auth-roles.md`
@@ -384,23 +424,27 @@ bun.lock
 ## Implementation Phases
 
 ### Phase 1: Audit (✅ DONE)
+
 - [x] Create BACKEND-AUDIT-MANIFEST.md (file-by-file assessment)
 - [x] Create this document (target vision)
 - [x] Create backend-ontology-conformance.md (100-inference plan)
 
 ### Phase 2: Consolidation (Next)
+
 - [ ] Merge 3 query docs into 1
 - [ ] Merge 3 structure docs into 1
 - [ ] Merge 2 test reports into 1
 - [ ] Move consolidated files to `/one/`
 
 ### Phase 3: Migration (Then)
+
 - [ ] Move remaining documentation to `/one/`
 - [ ] Move examples to `/one/knowledge/examples/`
-- [ ] Delete _tests_disabled/
+- [ ] Delete \_tests_disabled/
 - [ ] Delete duplicate files
 
 ### Phase 4: Cleanup (Finally)
+
 - [ ] Update /backend/README.md
 - [ ] Verify TypeScript compilation
 - [ ] Test all markdown links
@@ -410,12 +454,12 @@ bun.lock
 
 ## Risk Mitigation
 
-| Risk | Mitigation |
-|------|-----------|
-| Breaking imports | Convex source code stays in `/backend/` - no import changes needed |
-| Losing documentation | Keep backups during migration, verify everything copied |
-| Broken links | Use grep to find all references before moving |
-| Schema validation fails | Don't touch schema.ts - only organize documentation |
+| Risk                    | Mitigation                                                         |
+| ----------------------- | ------------------------------------------------------------------ |
+| Breaking imports        | Convex source code stays in `/backend/` - no import changes needed |
+| Losing documentation    | Keep backups during migration, verify everything copied            |
+| Broken links            | Use grep to find all references before moving                      |
+| Schema validation fails | Don't touch schema.ts - only organize documentation                |
 
 ---
 

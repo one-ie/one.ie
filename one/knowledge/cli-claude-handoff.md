@@ -1,3 +1,21 @@
+---
+title: Cli Claude Handoff
+dimension: knowledge
+category: cli-claude-handoff.md
+tags: ai, installation
+related_dimensions: events, groups, people
+scope: global
+created: 2025-11-03
+updated: 2025-11-03
+version: 1.0.0
+ai_context: |
+  This document is part of the knowledge dimension in the cli-claude-handoff.md category.
+  Location: one/knowledge/cli-claude-handoff.md
+  Purpose: Documents cli → claude code handoff
+  Related dimensions: events, groups, people
+  For AI agents: Read this to understand cli claude handoff.
+---
+
 # CLI → Claude Code Handoff
 
 **Version:** 1.0.0

@@ -1,3 +1,21 @@
+---
+title: License
+dimension: events
+category: LICENSE.md
+tags: ai
+related_dimensions: connections, knowledge
+scope: global
+created: 2025-11-03
+updated: 2025-11-03
+version: 1.0.0
+ai_context: |
+  This document is part of the events dimension in the LICENSE.md category.
+  Location: one/events/LICENSE.md
+  Purpose: Documents one license (version 1.0)
+  Related dimensions: connections, knowledge
+  For AI agents: Read this to understand LICENSE.
+---
+
 # ONE License (Version 1.0)
 
 ## Maximum Freedom, Zero Restrictions

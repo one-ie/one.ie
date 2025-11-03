@@ -1,3 +1,21 @@
+---
+title: Ontology Test Examples
+dimension: events
+category: ontology-test-examples.md
+tags: 6-dimensions, ai, ontology
+related_dimensions: connections, people, things
+scope: global
+created: 2025-11-03
+updated: 2025-11-03
+version: 1.0.0
+ai_context: |
+  This document is part of the events dimension in the ontology-test-examples.md category.
+  Location: one/events/ontology-test-examples.md
+  Purpose: Documents ontology integration test examples
+  Related dimensions: connections, people, things
+  For AI agents: Read this to understand ontology test examples.
+---
+
 # Ontology Integration Test Examples
 
 Real examples of test execution and validation output from the integration test suite.

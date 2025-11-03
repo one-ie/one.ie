@@ -1,3 +1,21 @@
+---
+title: Effect
+dimension: connections
+category: effect.md
+tags: frontend, things
+related_dimensions: events, knowledge, people, things
+scope: global
+created: 2025-11-03
+updated: 2025-11-03
+version: 1.0.0
+ai_context: |
+  This document is part of the connections dimension in the effect.md category.
+  Location: one/connections/effect.md
+  Purpose: Documents effect.ts full-stack pipeline
+  Related dimensions: events, knowledge, people, things
+  For AI agents: Read this to understand effect.
+---
+
 # Effect.ts Full-Stack Pipeline
 
 **100% Effect.ts coverage throughout the entire stack**

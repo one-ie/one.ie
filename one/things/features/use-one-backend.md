@@ -1,3 +1,21 @@
+---
+title: Use One Backend
+dimension: things
+category: features
+tags: architecture, auth, backend, connections, convex, events, frontend, knowledge, ontology, people
+related_dimensions: connections, events, groups, knowledge, people
+scope: global
+created: 2025-11-03
+updated: 2025-11-03
+version: 1.0.0
+ai_context: |
+  This document is part of the things dimension in the features category.
+  Location: one/things/features/use-one-backend.md
+  Purpose: Documents use one backend - backend as a service
+  Related dimensions: connections, events, groups, knowledge, people
+  For AI agents: Read this to understand use one backend.
+---
+
 # Use ONE Backend - Backend as a Service
 
 **Enable any developer to use ONE's 6-dimension backend without building their own**
@@ -147,6 +165,7 @@ Dashboard toggle:
 **What Happens:**
 
 1. **Organization Thing Created** (if not exists):
+
    ```typescript
    {
      _id: "org_abc123",
@@ -170,6 +189,7 @@ Dashboard toggle:
    ```
 
 2. **Person Thing Created** (developer):
+
    ```typescript
    {
      _id: "person_john_123",
@@ -231,20 +251,20 @@ Configure SDK in app:
 
 ```typescript
 // src/services/ClientLayer.ts
-import { OneBackendProvider } from '@oneie/sdk'
-import { Layer } from 'effect'
+import { OneBackendProvider } from "@oneie/sdk";
+import { Layer } from "effect";
 
-const useOneBackend = import.meta.env.USE_ONE_BACKEND === 'true'
+const useOneBackend = import.meta.env.USE_ONE_BACKEND === "true";
 
 export const ClientLayer = useOneBackend
   ? OneBackendProvider({
       apiUrl: import.meta.env.PUBLIC_ONE_API_URL,
       apiKey: import.meta.env.PUBLIC_ONE_API_KEY,
-      organizationId: import.meta.env.PUBLIC_ONE_ORG_ID
+      organizationId: import.meta.env.PUBLIC_ONE_ORG_ID,
     })
   : LocalBackendProvider({
-      convexUrl: import.meta.env.PUBLIC_CONVEX_URL
-    })
+      convexUrl: import.meta.env.PUBLIC_CONVEX_URL,
+    });
 ```
 
 ### Step 6: Use Auth & Database
@@ -253,23 +273,21 @@ Developer uses same API, different backend:
 
 ```typescript
 // src/pages/signup.astro
-import { AuthService } from '@oneie/sdk'
-import { Effect } from 'effect'
+import { AuthService } from "@oneie/sdk";
+import { Effect } from "effect";
 
 const program = Effect.gen(function* () {
-  const auth = yield* AuthService
+  const auth = yield* AuthService;
 
   // Routes to ONE backend if USE_ONE_BACKEND=true
   return yield* auth.signUp({
-    email: 'user@example.com',
-    password: 'password123',
-    name: 'New User'
-  })
-})
+    email: "user@example.com",
+    password: "password123",
+    name: "New User",
+  });
+});
 
-const user = await Effect.runPromise(
-  program.pipe(Effect.provide(ClientLayer))
-)
+const user = await Effect.runPromise(program.pipe(Effect.provide(ClientLayer)));
 
 // User created in ONE backend → organizationId: org_abc123
 ```
@@ -339,10 +357,10 @@ The `@oneie/sdk` automatically injects API key into requests:
 ```typescript
 // SDK handles this internally
 const headers = {
-  'Authorization': `Bearer ${apiKey}`,
-  'X-Organization-ID': organizationId,
-  'Content-Type': 'application/json'
-}
+  Authorization: `Bearer ${apiKey}`,
+  "X-Organization-ID": organizationId,
+  "Content-Type": "application/json",
+};
 ```
 
 ---
@@ -522,27 +540,27 @@ Developers use the same **DataProvider** interface, but operations route to ONE 
 
 ```typescript
 // src/services/ProductService.ts
-import { ThingService } from '@oneie/sdk'
-import { Effect } from 'effect'
+import { ThingService } from "@oneie/sdk";
+import { Effect } from "effect";
 
 const createProduct = (name: string, price: number) =>
   Effect.gen(function* () {
-    const things = yield* ThingService
+    const things = yield* ThingService;
 
     // Routes to ONE backend if USE_ONE_BACKEND=true
     const productId = yield* things.create({
-      type: 'product',
+      type: "product",
       name,
       properties: {
         price,
-        currency: 'USD',
-        stock: 100
-      }
+        currency: "USD",
+        stock: 100,
+      },
       // organizationId auto-injected → org_abc123
-    })
+    });
 
-    return productId
-  })
+    return productId;
+  });
 ```
 
 **Result:**
@@ -557,18 +575,18 @@ const createProduct = (name: string, price: number) =>
 ```typescript
 // Get all products for this organization
 const listProducts = Effect.gen(function* () {
-  const things = yield* ThingService
+  const things = yield* ThingService;
 
   // Routes to ONE backend → filtered by org_abc123
   const products = yield* things.list({
-    type: 'product',
+    type: "product",
     filters: {
-      'properties.price': { $gte: 10, $lte: 100 }
-    }
-  })
+      "properties.price": { $gte: 10, $lte: 100 },
+    },
+  });
 
-  return products
-})
+  return products;
+});
 ```
 
 **Result:**
@@ -583,21 +601,21 @@ const listProducts = Effect.gen(function* () {
 // Connect user to product (e.g., purchase)
 const purchaseProduct = (userId: string, productId: string) =>
   Effect.gen(function* () {
-    const connections = yield* ConnectionService
+    const connections = yield* ConnectionService;
 
     const connectionId = yield* connections.create({
-      fromPersonId: userId,      // User (person)
-      toThingId: productId,      // Product (thing)
-      relationshipType: 'purchased',
+      fromPersonId: userId, // User (person)
+      toThingId: productId, // Product (thing)
+      relationshipType: "purchased",
       metadata: {
         purchaseDate: Date.now(),
         price: 49.99,
-        paymentMethod: 'stripe'
-      }
-    })
+        paymentMethod: "stripe",
+      },
+    });
 
-    return connectionId
-  })
+    return connectionId;
+  });
 ```
 
 **Result:**
@@ -612,19 +630,19 @@ const purchaseProduct = (userId: string, productId: string) =>
 // Query knowledge base with AI
 const searchDocs = (query: string) =>
   Effect.gen(function* () {
-    const knowledge = yield* KnowledgeService
+    const knowledge = yield* KnowledgeService;
 
     // Routes to ONE backend → uses Convex vector search
     const results = yield* knowledge.query({
       query,
-      k: 5,  // Top 5 results
+      k: 5, // Top 5 results
       filters: {
-        labels: ['docs', 'tutorial']
-      }
-    })
+        labels: ["docs", "tutorial"],
+      },
+    });
 
-    return results
-  })
+    return results;
+  });
 ```
 
 **Result:**
@@ -647,20 +665,20 @@ npm install @oneie/sdk effect
 
 ```typescript
 // src/services/ClientLayer.ts
-import { OneBackendProvider, LocalBackendProvider } from '@oneie/sdk'
-import { Layer } from 'effect'
+import { OneBackendProvider, LocalBackendProvider } from "@oneie/sdk";
+import { Layer } from "effect";
 
-const useOneBackend = import.meta.env.USE_ONE_BACKEND === 'true'
+const useOneBackend = import.meta.env.USE_ONE_BACKEND === "true";
 
 export const ClientLayer = useOneBackend
   ? OneBackendProvider({
       apiUrl: import.meta.env.PUBLIC_ONE_API_URL,
       apiKey: import.meta.env.PUBLIC_ONE_API_KEY,
-      organizationId: import.meta.env.PUBLIC_ONE_ORG_ID
+      organizationId: import.meta.env.PUBLIC_ONE_ORG_ID,
     })
   : LocalBackendProvider({
-      convexUrl: import.meta.env.PUBLIC_CONVEX_URL
-    })
+      convexUrl: import.meta.env.PUBLIC_CONVEX_URL,
+    });
 ```
 
 ### DataProvider Interface
@@ -669,27 +687,52 @@ export const ClientLayer = useOneBackend
 // Same interface for both ONE backend and local backend
 export interface DataProvider {
   things: {
-    get: (id: string) => Effect.Effect<Thing, ThingNotFoundError>
-    list: (params: { type: ThingType; filters?: any }) => Effect.Effect<Thing[], Error>
-    create: (input: { type: ThingType; name: string; properties: any }) => Effect.Effect<string, Error>
-    update: (id: string, updates: Partial<Thing>) => Effect.Effect<void, Error>
-    delete: (id: string) => Effect.Effect<void, Error>
-  }
+    get: (id: string) => Effect.Effect<Thing, ThingNotFoundError>;
+    list: (params: {
+      type: ThingType;
+      filters?: any;
+    }) => Effect.Effect<Thing[], Error>;
+    create: (input: {
+      type: ThingType;
+      name: string;
+      properties: any;
+    }) => Effect.Effect<string, Error>;
+    update: (id: string, updates: Partial<Thing>) => Effect.Effect<void, Error>;
+    delete: (id: string) => Effect.Effect<void, Error>;
+  };
 
   connections: {
-    create: (input: { fromPersonId: string; toThingId: string; relationshipType: string }) => Effect.Effect<string, Error>
-    list: (params: { relationshipType: string; filters?: any }) => Effect.Effect<Connection[], Error>
-    delete: (id: string) => Effect.Effect<void, Error>
-  }
+    create: (input: {
+      fromPersonId: string;
+      toThingId: string;
+      relationshipType: string;
+    }) => Effect.Effect<string, Error>;
+    list: (params: {
+      relationshipType: string;
+      filters?: any;
+    }) => Effect.Effect<Connection[], Error>;
+    delete: (id: string) => Effect.Effect<void, Error>;
+  };
 
   events: {
-    log: (event: { type: string; actorId: string; metadata?: any }) => Effect.Effect<void, Error>
-  }
+    log: (event: {
+      type: string;
+      actorId: string;
+      metadata?: any;
+    }) => Effect.Effect<void, Error>;
+  };
 
   knowledge: {
-    query: (params: { query: string; k: number; filters?: any }) => Effect.Effect<KnowledgeChunk[], Error>
-    create: (input: { text: string; sourcePersonId?: string }) => Effect.Effect<string, Error>
-  }
+    query: (params: {
+      query: string;
+      k: number;
+      filters?: any;
+    }) => Effect.Effect<KnowledgeChunk[], Error>;
+    create: (input: {
+      text: string;
+      sourcePersonId?: string;
+    }) => Effect.Effect<string, Error>;
+  };
 }
 ```
 
@@ -697,16 +740,16 @@ export interface DataProvider {
 
 ```typescript
 // @oneie/sdk/src/providers/OneBackendProvider.ts
-import { Effect, Layer } from 'effect'
-import { DataProvider } from './DataProvider'
+import { Effect, Layer } from "effect";
+import { DataProvider } from "./DataProvider";
 
 export class OneBackendProvider implements DataProvider {
   constructor(
     private config: {
-      apiUrl: string
-      apiKey: string
-      organizationId: string
-    }
+      apiUrl: string;
+      apiKey: string;
+      organizationId: string;
+    },
   ) {}
 
   things = {
@@ -714,70 +757,66 @@ export class OneBackendProvider implements DataProvider {
       Effect.tryPromise({
         try: async () => {
           const response = await fetch(`${this.config.apiUrl}/things`, {
-            method: 'POST',
+            method: "POST",
             headers: {
-              'Authorization': `Bearer ${this.config.apiKey}`,
-              'X-Organization-ID': this.config.organizationId,
-              'Content-Type': 'application/json'
+              Authorization: `Bearer ${this.config.apiKey}`,
+              "X-Organization-ID": this.config.organizationId,
+              "Content-Type": "application/json",
             },
             body: JSON.stringify({
               ...input,
-              organizationId: this.config.organizationId  // Auto-inject
-            })
-          })
+              organizationId: this.config.organizationId, // Auto-inject
+            }),
+          });
 
           if (!response.ok) {
-            throw new Error(`API error: ${response.statusText}`)
+            throw new Error(`API error: ${response.statusText}`);
           }
 
-          const data = await response.json()
-          return data.thingId
+          const data = await response.json();
+          return data.thingId;
         },
-        catch: (error) => new Error(String(error))
+        catch: (error) => new Error(String(error)),
       }),
 
     list: (params) =>
       Effect.tryPromise({
         try: async () => {
-          const url = new URL(`${this.config.apiUrl}/things`)
-          url.searchParams.set('type', params.type)
-          url.searchParams.set('organizationId', this.config.organizationId)
+          const url = new URL(`${this.config.apiUrl}/things`);
+          url.searchParams.set("type", params.type);
+          url.searchParams.set("organizationId", this.config.organizationId);
 
           if (params.filters) {
-            url.searchParams.set('filters', JSON.stringify(params.filters))
+            url.searchParams.set("filters", JSON.stringify(params.filters));
           }
 
           const response = await fetch(url.toString(), {
             headers: {
-              'Authorization': `Bearer ${this.config.apiKey}`
-            }
-          })
+              Authorization: `Bearer ${this.config.apiKey}`,
+            },
+          });
 
           if (!response.ok) {
-            throw new Error(`API error: ${response.statusText}`)
+            throw new Error(`API error: ${response.statusText}`);
           }
 
-          return response.json()
+          return response.json();
         },
-        catch: (error) => new Error(String(error))
+        catch: (error) => new Error(String(error)),
       }),
 
     // ... other methods
-  }
+  };
 
   // ... connections, events, knowledge
 }
 
 // Factory function
 export const OneBackendProvider = (config: {
-  apiUrl: string
-  apiKey: string
-  organizationId: string
-}) =>
-  Layer.succeed(
-    DataProvider,
-    new OneBackendProvider(config)
-  )
+  apiUrl: string;
+  apiKey: string;
+  organizationId: string;
+}) => Layer.succeed(DataProvider, new OneBackendProvider(config));
 ```
 
 **Key Points:**
@@ -854,19 +893,19 @@ X-RateLimit-Reset: 1696118400
 ```typescript
 // SDK automatically retries with exponential backoff
 const program = Effect.gen(function* () {
-  const things = yield* ThingService
+  const things = yield* ThingService;
 
   return yield* things.create({
-    type: 'product',
-    name: 'Widget'
-  })
+    type: "product",
+    name: "Widget",
+  });
 }).pipe(
   // Retry on rate limit (429)
   Effect.retry({
     times: 3,
-    schedule: Schedule.exponential(1000)  // 1s, 2s, 4s
-  })
-)
+    schedule: Schedule.exponential(1000), // 1s, 2s, 4s
+  }),
+);
 ```
 
 ---
@@ -939,29 +978,27 @@ PUBLIC_ONE_ORG_ID=org_abc123
 
 ```typescript
 // scripts/migrate-to-one-backend.ts
-import { Effect } from 'effect'
-import { ThingService } from '@oneie/sdk'
-import { ClientLayer } from './services/ClientLayer'
+import { Effect } from "effect";
+import { ThingService } from "@oneie/sdk";
+import { ClientLayer } from "./services/ClientLayer";
 
 const migrateData = Effect.gen(function* () {
-  const things = yield* ThingService
+  const things = yield* ThingService;
 
   // Read local backup
-  const localThings = readBackup('./backup-data.json')
+  const localThings = readBackup("./backup-data.json");
 
   // Upload to ONE backend
   for (const thing of localThings) {
     yield* things.create({
       type: thing.type,
       name: thing.name,
-      properties: thing.properties
-    })
+      properties: thing.properties,
+    });
   }
-})
+});
 
-await Effect.runPromise(
-  migrateData.pipe(Effect.provide(ClientLayer))
-)
+await Effect.runPromise(migrateData.pipe(Effect.provide(ClientLayer)));
 ```
 
 ### From ONE Backend → Local Backend
@@ -992,16 +1029,16 @@ export const listThings = query({
   args: { type: v.string() },
   handler: async (ctx, args) => {
     // Extract org from API key (validated middleware)
-    const organizationId = ctx.auth.organizationId
+    const organizationId = ctx.auth.organizationId;
 
     // ALWAYS filter by organizationId
     return await ctx.db
-      .query('things')
-      .withIndex('by_type', q => q.eq('type', args.type))
-      .filter(q => q.eq(q.field('organizationId'), organizationId))
-      .collect()
-  }
-})
+      .query("things")
+      .withIndex("by_type", (q) => q.eq("type", args.type))
+      .filter((q) => q.eq(q.field("organizationId"), organizationId))
+      .collect();
+  },
+});
 ```
 
 ### Row-Level Security
@@ -1014,12 +1051,12 @@ export default defineSchema({
   things: defineTable({
     // ... fields
   })
-    .index('by_organization', ['organizationId'])
-    .searchIndex('by_name', {
-      searchField: 'name',
-      filterFields: ['organizationId']  // Filter by org in search
-    })
-})
+    .index("by_organization", ["organizationId"])
+    .searchIndex("by_name", {
+      searchField: "name",
+      filterFields: ["organizationId"], // Filter by org in search
+    }),
+});
 ```
 
 ### API Key Security
@@ -1042,21 +1079,21 @@ export default defineSchema({
 // Create customer
 const createCustomer = (email: string, name: string) =>
   Effect.gen(function* () {
-    const things = yield* ThingService
+    const things = yield* ThingService;
 
     // Routes to ONE backend
     const customerId = yield* things.create({
-      type: 'customer',
+      type: "customer",
       name,
       properties: {
         email,
-        status: 'active',
-        createdAt: Date.now()
-      }
-    })
+        status: "active",
+        createdAt: Date.now(),
+      },
+    });
 
-    return customerId
-  })
+    return customerId;
+  });
 ```
 
 **Benefits:**
@@ -1072,29 +1109,29 @@ const createCustomer = (email: string, name: string) =>
 
 ```typescript
 // Mobile SDK usage
-import { OneBackendProvider } from '@oneie/sdk/native'
+import { OneBackendProvider } from "@oneie/sdk/native";
 
 const app = OneBackendProvider({
-  apiUrl: 'https://api.one.ie',
-  apiKey: 'ok_live_abc123',
-  organizationId: 'org_abc123'
-})
+  apiUrl: "https://api.one.ie",
+  apiKey: "ok_live_abc123",
+  organizationId: "org_abc123",
+});
 
 // Sign in
 const user = await app.auth.signIn({
-  email: 'user@example.com',
-  password: 'password123'
-})
+  email: "user@example.com",
+  password: "password123",
+});
 
 // Store data
 const postId = await app.things.create({
-  type: 'post',
-  name: 'My First Post',
+  type: "post",
+  name: "My First Post",
   properties: {
-    content: 'Hello world!',
-    likes: 0
-  }
-})
+    content: "Hello world!",
+    likes: 0,
+  },
+});
 ```
 
 **Benefits:**
@@ -1112,28 +1149,28 @@ const postId = await app.things.create({
 // Index documentation
 const indexDocs = (markdown: string) =>
   Effect.gen(function* () {
-    const knowledge = yield* KnowledgeService
+    const knowledge = yield* KnowledgeService;
 
     // Routes to ONE backend → embeds with OpenAI
     yield* knowledge.create({
       text: markdown,
-      labels: ['docs', 'tutorial']
-    })
-  })
+      labels: ["docs", "tutorial"],
+    });
+  });
 
 // Search with AI
 const searchDocs = (query: string) =>
   Effect.gen(function* () {
-    const knowledge = yield* KnowledgeService
+    const knowledge = yield* KnowledgeService;
 
     // Vector search on ONE backend
     const results = yield* knowledge.query({
       query,
-      k: 5
-    })
+      k: 5,
+    });
 
-    return results
-  })
+    return results;
+  });
 ```
 
 **Benefits:**

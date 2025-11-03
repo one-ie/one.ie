@@ -1,3 +1,21 @@
+---
+title: View Transitions
+dimension: events
+category: VIEW-TRANSITIONS.md
+tags: 
+related_dimensions: connections, people, things
+scope: global
+created: 2025-11-03
+updated: 2025-11-03
+version: 1.0.0
+ai_context: |
+  This document is part of the events dimension in the VIEW-TRANSITIONS.md category.
+  Location: one/events/VIEW-TRANSITIONS.md
+  Purpose: Documents view transitions guide
+  Related dimensions: connections, people, things
+  For AI agents: Read this to understand VIEW TRANSITIONS.
+---
+
 # View Transitions Guide
 
 ## Overview

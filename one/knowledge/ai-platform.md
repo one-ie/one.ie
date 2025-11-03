@@ -1,3 +1,21 @@
+---
+title: Ai Platform
+dimension: knowledge
+category: ai-platform.md
+tags: agent, ai, architecture, artificial-intelligence, connections, events, knowledge, ontology, protocol, things
+related_dimensions: connections, events, things
+scope: global
+created: 2025-11-03
+updated: 2025-11-03
+version: 1.0.0
+ai_context: |
+  This document is part of the knowledge dimension in the ai-platform.md category.
+  Location: one/knowledge/ai-platform.md
+  Purpose: Documents ai platform (provider‑agnostic)
+  Related dimensions: connections, events, things
+  For AI agents: Read this to understand ai platform.
+---
+
 # AI Platform (Provider‑Agnostic)
 
 Purpose: Adopt OpenAI SDK, AgentKit, and the new ChatKit without lock‑in by building on top of the Vercel AI SDK. Enable streaming of React components inside the chat UI. All modeling follows the ONE ontology (things, connections, events, knowledge).

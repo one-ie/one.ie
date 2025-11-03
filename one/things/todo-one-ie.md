@@ -1,3 +1,22 @@
+---
+title: Todo One Ie
+dimension: things
+primary_dimension: things
+category: todo-one-ie.md
+tags: ai, inference, knowledge
+related_dimensions: events, knowledge, people, groups, connections, things
+scope: global
+created: 2025-11-03
+updated: 2025-11-03
+version: 1.0.0
+ai_context: |
+  This document is part of the things dimension in the todo-one-ie.md category.
+  Location: one/things/todo-one-ie.md
+  Purpose: Documents one platform: public launch (https://one.ie) v1.0.0
+  Related dimensions: events, knowledge, people
+  For AI agents: Read this to understand todo one ie.
+---
+
 # ONE Platform: Public Launch (https://one.ie) v1.0.0
 
 **Focus:** Marketing site, creator dashboard, admin dashboard, public APIs, documentation
@@ -12,6 +31,7 @@
 **Purpose:** Define public platform vision, pages, and structure
 
 ### Infer 1: Define Brand Identity
+
 - [ ] Brand document:
   - [ ] Logo + wordmark (already exists?)
   - [ ] Color palette (primary, secondary, accents)
@@ -23,6 +43,7 @@
 - [ ] Document in Figma or Storybook
 
 ### Infer 2: Map Public Platform Structure
+
 - [ ] Site hierarchy:
   - [ ] `/` - Landing page (hero + features)
   - [ ] `/about` - About ONE + team
@@ -38,6 +59,7 @@
 - [ ] Each page maps to different owner
 
 ### Infer 3: Define Landing Page Content
+
 - [ ] Sections:
   1. **Hero:** Headline "Build AI-native Businesses"
      - [ ] Subheadline (unique value prop)
@@ -68,6 +90,7 @@
   8. **CTA:** Final call to action
 
 ### Infer 4: Define Creator Dashboard
+
 - [ ] After login, creators see dashboard with:
   - [ ] Welcome message + onboarding progress
   - [ ] Quick stats: revenue (week/month), customers, products
@@ -83,6 +106,7 @@
   - [ ] Profile menu (settings, docs, logout)
 
 ### Infer 5: Define Admin Dashboard
+
 - [ ] Platform owner sees:
   - [ ] Global stats: Total revenue, creators, customers, orders
   - [ ] Revenue charts (daily, weekly, monthly)
@@ -96,6 +120,7 @@
   - [ ] User management (ban, verify, support)
 
 ### Infer 6: Define Documentation Structure
+
 - [ ] Main sections:
   - [ ] **Getting Started:** Signup → create product → make sale
   - [ ] **Creators:** How to use dashboard, create products, manage team
@@ -107,6 +132,7 @@
 - [ ] All docs searchable + versioned
 
 ### Infer 7: Plan Blog Content
+
 - [ ] Content types:
   - [ ] **Tutorials:** How to create courses, sell products
   - [ ] **Case Studies:** Creator success stories
@@ -120,6 +146,7 @@
   - [ ] Archive in `/docs/blog`
 
 ### Infer 8: Define Public API Documentation
+
 - [ ] Sections:
   - [ ] **Authentication:** API keys, rate limits
   - [ ] **REST Endpoints:**
@@ -135,6 +162,7 @@
 - [ ] Live sandbox for testing
 
 ### Infer 9: Plan Status Page
+
 - [ ] Show system health:
   - [ ] Platform status (operational, maintenance, degraded)
   - [ ] Component statuses:
@@ -149,6 +177,7 @@
 - [ ] Use Statuspage.io or build custom
 
 ### Infer 10: Define Success Metrics for Public Launch
+
 - [ ] Pre-launch:
   - [ ] [ ] All pages designed + built
   - [ ] [ ] Content complete (landing, docs, blog)
@@ -174,6 +203,7 @@
 **Purpose:** Prepare backend for public access
 
 ### Infer 11: Create Admin User + Dashboard Routes
+
 - [ ] Create platform_owner user in DB
 - [ ] Protect admin routes:
   - [ ] `/admin/*` routes check role = platform_owner
@@ -186,6 +216,7 @@
   - [ ] `queries/admin/payments.ts`
 
 ### Infer 12: Create Public Read-Only API
+
 - [ ] Create public queries:
   - [ ] `queries/public/products.ts` - List published products
   - [ ] `queries/public/creators.ts` - List creators
@@ -195,6 +226,7 @@
 - [ ] Rate limit: 100 requests/minute per IP
 
 ### Infer 13: Create Analytics Events
+
 - [ ] Track user interactions:
   - [ ] Page views
   - [ ] Button clicks
@@ -210,6 +242,7 @@
   - [ ] User flow
 
 ### Infer 14: Set Up Email Newsletter
+
 - [ ] Create newsletter system:
   - [ ] Signup form on landing page
   - [ ] Welcome email on signup
@@ -219,6 +252,7 @@
 - [ ] Track opens/clicks
 
 ### Infer 15: Create Monitoring + Alerting
+
 - [ ] Monitor:
   - [ ] Page load times
   - [ ] API response times
@@ -232,6 +266,7 @@
 - [ ] Dashboard in Datadog/New Relic
 
 ### Infer 16: Set Up CDN + Caching
+
 - [ ] Cloudflare Pages caching:
   - [ ] HTML: 5 minutes (must revalidate)
   - [ ] CSS/JS: 1 year (long-lived)
@@ -240,12 +275,14 @@
 - [ ] Cache invalidation on deploy
 
 ### Infer 17: Create Robots.txt + Sitemap
+
 - [ ] `/robots.txt`: Allow search engines
 - [ ] `/sitemap.xml`: All pages for SEO
 - [ ] Register with Google Search Console
 - [ ] Register with Bing Webmaster Tools
 
 ### Infer 18: Set Up Analytics
+
 - [ ] Google Analytics 4:
   - [ ] Track pageviews
   - [ ] Track events (signup, purchase)
@@ -255,6 +292,7 @@
 - [ ] Custom dashboards per team
 
 ### Infer 19: Create API Rate Limiting
+
 - [ ] Implement per-user rate limiting:
   - [ ] Anonymous: 100 req/min
   - [ ] Authenticated: 1000 req/min
@@ -263,6 +301,7 @@
 - [ ] Include rate limit headers in response
 
 ### Infer 20: Create Security Headers
+
 - [ ] Add HTTP security headers:
   - [ ] Content-Security-Policy
   - [ ] X-Frame-Options: SAMEORIGIN
@@ -279,6 +318,7 @@
 **Purpose:** Build beautiful landing page + marketing site
 
 ### Infer 21: Create LandingPage Component
+
 - [ ] Full-page landing with sections from Infer 3
 - [ ] Hero section:
   - [ ] Animated gradient background
@@ -290,12 +330,14 @@
 - [ ] Performance: Lazy load below-fold content
 
 ### Infer 22: Create ProductCard for Marketplace
+
 - [ ] Same as todo-ecommerce but with creator name
 - [ ] Click → navigate to product page
 - [ ] Favorite button (heart icon)
 - [ ] Share button (social media)
 
 ### Infer 23: Create CreatorProfilePreview
+
 - [ ] Mini card showing:
   - [ ] Avatar
   - [ ] Creator name
@@ -305,6 +347,7 @@
 - [ ] Click → navigate to creator profile
 
 ### Infer 24: Create TestimonialSection
+
 - [ ] Carousel of creator testimonials:
   - [ ] Avatar + name
   - [ ] Quote
@@ -313,12 +356,14 @@
 - [ ] Video testimonials (if available)
 
 ### Infer 25: Create PricingSection
+
 - [ ] 3 plans: Free, Pro, Enterprise
 - [ ] For each: Price, features checklist, CTA
 - [ ] Comparison table (detailed features)
 - [ ] FAQ below
 
 ### Infer 26: Create DocumentationNav
+
 - [ ] Searchable sidebar:
   - [ ] Getting started
   - [ ] Creators guide
@@ -330,6 +375,7 @@
 - [ ] Breadcrumb navigation
 
 ### Infer 27: Create CreatorDashboardLayout
+
 - [ ] Sidebar with navigation
 - [ ] Header with user menu
 - [ ] Main content area (responsive)
@@ -338,12 +384,14 @@
 - [ ] Responsive: Collapses on mobile
 
 ### Infer 28: Create AdminDashboardLayout
+
 - [ ] Similar to creator dashboard but for platform owner
 - [ ] Sidebar: Creators, Customers, Orders, Payments, Settings
 - [ ] Main: Stats cards, charts, tables
 - [ ] Extra: User management, disputes, system health
 
 ### Infer 29: Create BlogListing
+
 - [ ] Blog post grid:
   - [ ] Post image
   - [ ] Category tag
@@ -355,6 +403,7 @@
 - [ ] Pagination
 
 ### Infer 30: Create BlogPostPage
+
 - [ ] Post content:
   - [ ] Featured image
   - [ ] Title + author + date
@@ -371,12 +420,14 @@
 **Purpose:** Create all marketing pages in Astro
 
 ### Infer 31: Create Landing Page
+
 - [ ] `src/pages/index.astro`
 - [ ] Use LandingPage component
 - [ ] SEO: Meta tags, OG image
 - [ ] Structured data (JSON-LD)
 
 ### Infer 32: Create About Page
+
 - [ ] `src/pages/about.astro`
 - [ ] Company story + mission
 - [ ] Team bios + photos
@@ -384,6 +435,7 @@
 - [ ] Hiring link (if recruiting)
 
 ### Infer 33: Create Creator Stories
+
 - [ ] `src/pages/creators.astro`
 - [ ] Featured creator profiles
 - [ ] Success metrics (revenue, customers)
@@ -391,6 +443,7 @@
 - [ ] Link to full marketplace
 
 ### Infer 34: Create Pricing Page
+
 - [ ] `src/pages/pricing.astro`
 - [ ] 3 plan cards
 - [ ] Comparison table
@@ -398,6 +451,7 @@
 - [ ] CTA for each plan
 
 ### Infer 35: Create Documentation Index
+
 - [ ] `src/pages/docs/index.astro`
 - [ ] List all doc categories
 - [ ] Quick links to popular docs
@@ -405,6 +459,7 @@
 - [ ] Getting started guide
 
 ### Infer 36: Create Markdown Doc Pages
+
 - [ ] `src/pages/docs/[...slug].astro`
 - [ ] Dynamic routing for all docs
 - [ ] Sidebar navigation
@@ -413,12 +468,14 @@
 - [ ] Previous/next links
 
 ### Infer 37: Create Blog Index
+
 - [ ] `src/pages/blog/index.astro`
 - [ ] Blog listing with filters
 - [ ] Search
 - [ ] Featured posts
 
 ### Infer 38: Create Blog Post Pages
+
 - [ ] `src/pages/blog/[slug].astro`
 - [ ] Dynamic routing
 - [ ] Full post content
@@ -426,6 +483,7 @@
 - [ ] Comments (Disqus or similar)
 
 ### Infer 39: Create Status Page
+
 - [ ] `src/pages/status.astro`
 - [ ] System components + statuses
 - [ ] Uptime history
@@ -433,6 +491,7 @@
 - [ ] Subscribe option
 
 ### Infer 40: Create 404 + 500 Pages
+
 - [ ] `src/pages/404.astro` - Not found (helpful, links to home/docs)
 - [ ] `src/pages/500.astro` - Server error (comforting, status page link)
 
@@ -441,6 +500,7 @@
 ## PHASE 5-10: CONTINUATION
 
 [Abbreviated for space - Full structure continues with:
+
 - Phase 5: Dashboard pages (creator + admin)
 - Phase 6: Testing + SEO optimization
 - Phase 7: Design finalization + brand compliance
@@ -476,4 +536,3 @@ Public platform launch complete when:
 
 **Status:** Wave 4 - Final Assembly & Public Launch
 **Follows:** todo-onboard (Wave 1), todo-agents/skills/sell (Wave 2), todo-ecommerce/api/features (Wave 3)
-

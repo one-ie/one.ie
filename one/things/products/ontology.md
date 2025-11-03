@@ -1,3 +1,21 @@
+---
+title: Ontology
+dimension: things
+category: products
+tags: 6-dimensions, agent, ai, architecture, connections, events, knowledge, ontology, things
+related_dimensions: connections, events, groups, knowledge, people
+scope: global
+created: 2025-11-03
+updated: 2025-11-03
+version: 1.0.0
+ai_context: |
+  This document is part of the things dimension in the products category.
+  Location: one/things/products/ontology.md
+  Purpose: Documents one ontology product
+  Related dimensions: connections, events, groups, knowledge, people
+  For AI agents: Read this to understand ontology.
+---
+
 # ONE Ontology Product
 
 > **The complete architecture for AI-native systems. Simple enough for children. Powerful enough for enterprises.**
@@ -17,6 +35,7 @@ Every intelligent system needs a coherent model of reality. Traditional systems 
 ## The Six Dimensions
 
 ### 1. Organizations
+
 **Multi-tenant isolation boundary**
 
 - Perfect data isolation for SaaS multi-tenancy
@@ -25,6 +44,7 @@ Every intelligent system needs a coherent model of reality. Traditional systems 
 - Plans: starter, pro, enterprise
 
 **Properties:**
+
 - Name and identity
 - Ownership chain
 - Subscription plan and billing
@@ -32,6 +52,7 @@ Every intelligent system needs a coherent model of reality. Traditional systems 
 - Status (active, suspended, trial)
 
 **Why it matters:**
+
 - Multi-tenant isolation
 - Resource limits
 - Billing boundaries
@@ -41,6 +62,7 @@ Every intelligent system needs a coherent model of reality. Traditional systems 
 ---
 
 ### 2. People
+
 **Authorization & governance layer**
 
 - **4 roles**: platform_owner, org_owner, org_user, customer
@@ -49,6 +71,7 @@ Every intelligent system needs a coherent model of reality. Traditional systems 
 - Represented as things with `type: 'creator'` and `properties.role`
 
 **Properties:**
+
 - Identity (name, email, wallet)
 - Authentication credentials
 - Role within organization
@@ -56,6 +79,7 @@ Every intelligent system needs a coherent model of reality. Traditional systems 
 - Preferences and settings
 
 **Why it matters:**
+
 - Human authorization required
 - Clear governance
 - Audit trails
@@ -67,6 +91,7 @@ Every intelligent system needs a coherent model of reality. Traditional systems 
 ---
 
 ### 3. Things
+
 **All nouns in your system**
 
 - **66+ entity types** defined in schema
@@ -76,6 +101,7 @@ Every intelligent system needs a coherent model of reality. Traditional systems 
 - Every thing belongs to an organization
 
 **Entity Categories:**
+
 - **Core** (8 types): creator, audience_member, ai_clone, clone_engine, content, token, etc.
 - **Business Agents** (7 types): sales_agent, support_agent, content_agent, research_agent, etc.
 - **Content** (8 types): video, audio, article, image, thread, newsletter, etc.
@@ -92,6 +118,7 @@ Every intelligent system needs a coherent model of reality. Traditional systems 
 ---
 
 ### 4. Connections
+
 **All relationships between entities**
 
 - **25+ connection types**: owns, authored, holds_tokens, enrolled_in, etc.
@@ -101,6 +128,7 @@ Every intelligent system needs a coherent model of reality. Traditional systems 
 - Make the implicit explicit
 
 **Connection Types:**
+
 - **Ownership**: owns, authored, created_by
 - **Access**: can_execute, can_read, governed_by
 - **Membership**: member_of, following, enrolled_in
@@ -114,6 +142,7 @@ Every intelligent system needs a coherent model of reality. Traditional systems 
 ---
 
 ### 5. Events
+
 **All actions and state changes over time**
 
 - **67+ event types** including inference and blockchain events
@@ -123,6 +152,7 @@ Every intelligent system needs a coherent model of reality. Traditional systems 
 - Immutable timeline for analytics, compliance, and automation
 
 **Event Categories:**
+
 - **Thing lifecycle**: thing_created, thing_updated, thing_published, thing_archived, thing_deleted
 - **User actions**: purchased, enrolled, completed, rated, shared, bookmarked
 - **AI/Agent**: clone_voice_created, inference_request, inference_completed, agent_trained
@@ -137,6 +167,7 @@ Every intelligent system needs a coherent model of reality. Traditional systems 
 ---
 
 ### 6. Knowledge
+
 **Labels, embeddings, and semantic search**
 
 - Vector storage for RAG (Retrieval-Augmented Generation)
@@ -146,6 +177,7 @@ Every intelligent system needs a coherent model of reality. Traditional systems 
 - Transforms raw events into queryable intelligence
 
 **Knowledge Types:**
+
 - Labels and categories
 - Chunks and embeddings
 - Relationships and provenance
@@ -161,22 +193,26 @@ Every intelligent system needs a coherent model of reality. Traditional systems 
 ### Use Case: Fan Purchases Creator Tokens
 
 **0. Organizations (Scope)**
+
 ```
 orgId: acme-corp → scope: all entities in this transaction
 ```
 
 **1. People (Authorization)**
+
 ```
 actorId: fan_123 → intent: purchase_tokens
 ```
 
 **2. Things (Entities Involved)**
+
 ```
 fan_123: type: audience_member
 token_456: type: token
 ```
 
 **3. Connections (Relationship Created)**
+
 ```
 fan_123 → token_456
 relationshipType: holds_tokens
@@ -184,6 +220,7 @@ metadata: { balance: 100 }
 ```
 
 **4. Events (Action Recorded)**
+
 ```
 type: tokens_purchased
 actorId: fan_123
@@ -192,6 +229,7 @@ metadata: { amount: 100, usd: 10 }
 ```
 
 **5. Knowledge (Context Added)**
+
 ```
 Labels: payment_method:stripe, status:completed, audience:engaged
 ```
@@ -233,6 +271,7 @@ When you ask your Strategy Agent a question, the system automatically enriches t
 6. **Mandates/constraints** - What rules apply?
 
 **The agent knows:**
+
 - WHO is asking
 - WHAT scope to operate in
 - WHAT it can access
@@ -250,27 +289,28 @@ The ONE Ontology isn't just a database schema—it's a **generative architecture
 
 ### 15 Core Commands
 
-| Command | Dimension | Purpose |
-|---------|-----------|---------|
-| `CREATE` | Things | Add typed entities to the graph |
-| `CONNECT` | Connections | Define relationships with metadata |
-| `RECORD` | Events | Append immutable action logs |
-| `CALL` | Integration | Invoke external services |
-| `CHECK` | Authorization | Enforce guardrails |
-| `GET` | Query | Retrieve entities/relationships |
-| `UPDATE` | Things | Modify properties |
-| `DELETE` | Things | Archive/remove entities |
-| `SEARCH` | Knowledge | Semantic vector search |
-| `LABEL` | Knowledge | Add categorization |
-| `WHEN` | Trigger | Event-driven automation |
-| `IF` | Condition | Conditional logic |
-| `FOR EACH` | Loop | Iteration |
-| `DO TOGETHER` | Parallel | Concurrent execution |
-| `GIVE` | Response | Return data to user |
+| Command       | Dimension     | Purpose                            |
+| ------------- | ------------- | ---------------------------------- |
+| `CREATE`      | Things        | Add typed entities to the graph    |
+| `CONNECT`     | Connections   | Define relationships with metadata |
+| `RECORD`      | Events        | Append immutable action logs       |
+| `CALL`        | Integration   | Invoke external services           |
+| `CHECK`       | Authorization | Enforce guardrails                 |
+| `GET`         | Query         | Retrieve entities/relationships    |
+| `UPDATE`      | Things        | Modify properties                  |
+| `DELETE`      | Things        | Archive/remove entities            |
+| `SEARCH`      | Knowledge     | Semantic vector search             |
+| `LABEL`       | Knowledge     | Add categorization                 |
+| `WHEN`        | Trigger       | Event-driven automation            |
+| `IF`          | Condition     | Conditional logic                  |
+| `FOR EACH`    | Loop          | Iteration                          |
+| `DO TOGETHER` | Parallel      | Concurrent execution               |
+| `GIVE`        | Response      | Return data to user                |
 
 ### Example: Chat with AI Clone
 
 **Plain English:**
+
 ```
 FEATURE: Let fans chat with my AI
 
@@ -284,12 +324,14 @@ WHEN a fan sends a message
 ```
 
 **What Maps to Ontology:**
+
 - **Things Touched**: fan, ai_clone, message, token (all typed rows)
 - **Connections Updated**: fan holds_tokens token, fan interacted_with clone with metadata
 - **Events Logged**: message_sent, tokens_earned, clone_interaction with timestamps
 - **Knowledge Indexed**: Clone personality, embeddings, conversation history for retrieval
 
 **System Generates:**
+
 - Backend API endpoints (Convex mutations/queries)
 - React UI components (with loading/error states)
 - Complete test suite (unit + integration)
@@ -302,18 +344,23 @@ WHEN a fan sends a message
 ## What This Unlocks
 
 ### 1. Zero-Trust Authorization
+
 Every action traces back through explicit connections to a person in an organization. Perfect auditability. No implicit permissions. Authorization is data, not code.
 
 ### 2. Identity-Aware Intelligence
+
 Agents don't just retrieve facts—they understand organizational context, provenance, licensing, governance, and strategic constraints.
 
 ### 3. Event-Driven Compounding
+
 Every action generates events that create knowledge that enriches future actions. The system gets smarter with every interaction.
 
 ### 4. Protocol-Agnostic Integration
+
 Same ontology, different protocols—all via metadata. Query across Stripe, SUI, and any future protocol with unified patterns.
 
 **Supported Protocols:**
+
 - **A2A** (Agent-to-Agent): Multi-agent coordination
 - **ACP** (Agent Communication Protocol): Standardized messaging
 - **AP2** (ActivityPub 2): Social graphs
@@ -322,9 +369,11 @@ Same ontology, different protocols—all via metadata. Query across Stripe, SUI,
 - **MCP** (Model Context Protocol): AI context sharing
 
 ### 5. Cross-Organization Collaboration
+
 Resources can be shared without transferring ownership. Perfect for knowledge marketplaces with trustless licensing.
 
 ### 6. Tokenization with SUI
+
 SUI's object-centric model maps naturally to ONE's thing-centric ontology. Knowledge as tradeable, licensable assets.
 
 ---
@@ -332,18 +381,21 @@ SUI's object-centric model maps naturally to ONE's thing-centric ontology. Knowl
 ## Scale & Performance
 
 ### Current Scale (Production-Ready)
+
 - **1M+ things** per organization
 - **10M+ connections** with optimized indexes
 - **100M+ events** with time-partitioned storage
 - **1M+ knowledge chunks** with vector search
 
 ### Performance Optimizations
+
 - **Graph caching** for ownership chains
 - **Materialized views** for common queries
 - **Event archival** to cold storage
 - **Token budgeting** for context-aware AI
 
 ### Future Scale (Enterprise-Ready)
+
 - **Shard by organization** (>10M things)
 - **Streaming events** via Kafka
 - **Distributed vectors** via Weaviate
@@ -445,11 +497,13 @@ vector_search: custom vector index
 ## Why This Works
 
 ### Traditional Approach (Fails)
+
 ```
 Hundreds of tables → Complex joins → N+1 queries → Technical debt
 ```
 
 ### ONE Ontology Approach (Scales)
+
 ```
 6 dimensions → 5 tables → Graph queries → Infinite composability
 ```
@@ -472,6 +526,7 @@ Hundreds of tables → Complex joins → N+1 queries → Technical debt
 ## Use Cases
 
 ### For Individual Creators
+
 - Clone your voice/personality
 - Automate content generation
 - Build token economy
@@ -479,6 +534,7 @@ Hundreds of tables → Complex joins → N+1 queries → Technical debt
 - Monetize knowledge
 
 ### For Businesses
+
 - Multi-agent workflows
 - Customer relationship management
 - Sales automation
@@ -486,6 +542,7 @@ Hundreds of tables → Complex joins → N+1 queries → Technical debt
 - Knowledge management
 
 ### For Enterprises
+
 - Multi-tenant SaaS
 - White-label deployment
 - Compliance & governance
@@ -493,6 +550,7 @@ Hundreds of tables → Complex joins → N+1 queries → Technical debt
 - Protocol integration
 
 ### For Developers
+
 - Type-safe development
 - Plain English DSL
 - Effect.ts services
@@ -521,6 +579,7 @@ cp .env.example .env.local
 ### 2. Understanding the Ontology
 
 Read these documents in order:
+
 1. **one/knowledge/ontology.md** - Complete 6-dimension specification
 2. **one/connections/workflow.md** - Development workflow
 3. **one/connections/patterns.md** - Proven code patterns
@@ -529,6 +588,7 @@ Read these documents in order:
 ### 3. Map Your Feature to Dimensions
 
 Ask yourself:
+
 - What **organizations** are involved? (scope)
 - What **people** need authorization? (who can do what)
 - What **things** exist? (entities)
@@ -554,6 +614,7 @@ WHEN lead sends message:
 ### 5. System Generates Code
 
 The compiler:
+
 1. Validates against ontology
 2. Generates TypeScript services
 3. Creates Convex functions
@@ -598,6 +659,7 @@ The ONE Ontology proves that you don't need hundreds of tables or complex schema
 ## Comparison with Alternatives
 
 ### Traditional Database Design
+
 - ❌ Hundreds of tables
 - ❌ Complex foreign keys
 - ❌ Technical debt accumulates
@@ -605,6 +667,7 @@ The ONE Ontology proves that you don't need hundreds of tables or complex schema
 - ❌ AI agents struggle
 
 ### ONE Ontology
+
 - ✅ 5 tables
 - ✅ Graph-based relationships
 - ✅ Quality improves with scale
@@ -612,10 +675,12 @@ The ONE Ontology proves that you don't need hundreds of tables or complex schema
 - ✅ AI agents thrive
 
 ### Traditional Development
+
 - Feature request → Design schema → Write code → Debug → Deploy
 - **Time to production:** Weeks/months
 
 ### ONE Development
+
 - Feature request → Map to ontology → Write plain English → Deploy
 - **Time to production:** Minutes/hours
 
@@ -624,6 +689,7 @@ The ONE Ontology proves that you don't need hundreds of tables or complex schema
 ## Support & Resources
 
 ### Documentation
+
 - **Complete Ontology Spec**: `/one/knowledge/ontology.md`
 - **Development Workflow**: `/one/connections/workflow.md`
 - **Code Patterns**: `/one/connections/patterns.md`
@@ -631,6 +697,7 @@ The ONE Ontology proves that you don't need hundreds of tables or complex schema
 - **Golden Rules**: `/one/knowledge/rules.md`
 
 ### Protocol Integration
+
 - **Protocol Overview**: `/one/connections/protocols.md`
 - **Integration Patterns**: `/one/knowledge/specifications.md`
 - **A2A Protocol**: `/one/connections/A2A.md`
@@ -638,11 +705,13 @@ The ONE Ontology proves that you don't need hundreds of tables or complex schema
 - **ActivityPub 2**: `/one/connections/AP2.md`
 
 ### External Integrations
+
 - **ElizaOS**: `/one/connections/ElizaOS.md`
 - **CopilotKit**: `/one/things/copilotkit.md`
 - **N8N**: `/one/connections/N8N.md`
 
 ### Community
+
 - GitHub: https://github.com/one-ie/stack
 - Documentation: https://one.ie/docs
 - Discord: https://discord.gg/one
@@ -668,6 +737,7 @@ Maximum freedom. Zero restrictions.
 ## Roadmap
 
 ### Current (v1.0.0)
+
 - ✅ 6-dimension ontology
 - ✅ 5-table implementation
 - ✅ 66 thing types
@@ -678,6 +748,7 @@ Maximum freedom. Zero restrictions.
 - ✅ Protocol-agnostic architecture
 
 ### Next (v1.1.0)
+
 - 🔄 Enhanced vector search
 - 🔄 Real-time collaboration
 - 🔄 Advanced permissions
@@ -685,6 +756,7 @@ Maximum freedom. Zero restrictions.
 - 🔄 Performance analytics
 
 ### Future (v2.0.0)
+
 - 📋 Distributed sharding
 - 📋 Multi-region deployment
 - 📋 Advanced AI reasoning
@@ -712,6 +784,6 @@ The ONE Ontology is more than a database schema—it's a **generative architectu
 
 ---
 
-*Built with clarity, simplicity, and infinite scale in mind.*
+_Built with clarity, simplicity, and infinite scale in mind._
 
 **Powered by ONE** • https://one.ie

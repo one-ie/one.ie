@@ -1,8 +1,26 @@
+---
+title: Start
+dimension: things
+category: agents
+tags: ai, architecture
+related_dimensions: people
+scope: global
+created: 2025-11-03
+updated: 2025-11-03
+version: 1.0.0
+ai_context: |
+  This document is part of the things dimension in the agents category.
+  Location: one/things/claude/commands/start.md
+  Purpose: Documents /start - quick mission start
+  Related dimensions: people
+  For AI agents: Read this to understand start.
+---
+
 # /start - Quick Mission Start
 
 🎯 **Fast-track entry to mission planning**
 
-*Quick alternative to `/one` > 1. Start New Mission for experienced users*
+_Quick alternative to `/one` > 1. Start New Mission for experienced users_
 
 When this command is used:
 
@@ -30,7 +48,7 @@ display:
 
   mission_planning: |
     🚀 MISSION-2: BUILDER AGENT DEVELOPMENT
-    
+
     ┌─────────────────────────────────────────────────────────────────────────┐
     │ 🎯 GOAL SETTING: What do you want to achieve with Mission-2?           │
     ├─────────────────────────────────────────────────────────────────────────┤
@@ -48,7 +66,7 @@ display:
 
   workflow_selection: |
     🌊 MISSION-2 WORKFLOW: Choose Your Path to Success
-    
+
     ┌─────────────────────────────────────────────────────────────────────────┐
     │ Based on Mission-1 success, select your Mission-2 execution strategy:  │
     ├─────────────────────────────────────────────────────────────────────────┤

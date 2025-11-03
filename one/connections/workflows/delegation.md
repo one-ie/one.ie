@@ -1,3 +1,21 @@
+---
+title: Delegation
+dimension: connections
+category: workflows
+tags: agent, ai, connections, events, ontology, protocol
+related_dimensions: events, knowledge, people, things
+scope: global
+created: 2025-11-03
+updated: 2025-11-03
+version: 1.0.0
+ai_context: |
+  This document is part of the connections dimension in the workflows category.
+  Location: one/connections/workflows/delegation.md
+  Purpose: Documents agent delegation patterns
+  Related dimensions: events, knowledge, people, things
+  For AI agents: Read this to understand delegation.
+---
+
 # Agent Delegation Patterns
 
 **Version:** 1.0.0

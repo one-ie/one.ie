@@ -1,3 +1,21 @@
+---
+title: Typescript Patterns
+dimension: knowledge
+category: typescript-patterns.md
+tags: ai
+related_dimensions: groups, things
+scope: global
+created: 2025-11-03
+updated: 2025-11-03
+version: 1.0.0
+ai_context: |
+  This document is part of the knowledge dimension in the typescript-patterns.md category.
+  Location: one/knowledge/typescript-patterns.md
+  Purpose: Documents typescript patterns & best practices
+  Related dimensions: groups, things
+  For AI agents: Read this to understand typescript patterns.
+---
+
 # TypeScript Patterns & Best Practices
 
 ## Common Type Issues & Fixes

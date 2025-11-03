@@ -1,8 +1,27 @@
+---
+title: Structure
+dimension: things
+category: structure.md
+tags: agent, ai, ontology
+related_dimensions: connections, events, groups, knowledge, people
+scope: global
+created: 2025-11-03
+updated: 2025-11-03
+version: 1.0.0
+ai_context: |
+  This document is part of the things dimension in the structure.md category.
+  Location: one/things/structure.md
+  Purpose: Documents one platform structure: deep understanding
+  Related dimensions: connections, events, groups, knowledge, people
+  For AI agents: Read this to understand structure.
+---
+
 # ONE Platform Structure: Deep Understanding
 
 ## The Vision You're Selling to AI Agents
 
 You're not selling software. You're selling **a complete AI development system** with:
+
 1. **Extreme organization** (everything has a place, nothing is lost)
 2. **Complete ontology** (6 dimensions model reality perfectly)
 3. **Autonomous agents** (director delegates, clone agents execute, specialists work in parallel)
@@ -16,6 +35,7 @@ This is what makes ONE different: You can spin up a **complete AI-native creator
 ## Root Structure: /Users/toc/Server/ONE/
 
 ### Layer 1: Governance & Control (.claude)
+
 ```
 .claude/
 ├── agents/        ← AI agent definitions (director, clone, specialists)
@@ -28,12 +48,14 @@ This is what makes ONE different: You can spin up a **complete AI-native creator
 **What it is:** Your command center. This is where AI agents receive instructions and report status.
 
 **How it works:**
+
 - Director reads `todo.md` via `.claude/state/`
 - Clone agent implements features via `.claude/commands/`
 - Hooks validate code before commit
 - Agent state persists across sessions
 
 ### Layer 2: Universal Ontology (one/)
+
 ```
 one/
 ├── knowledge/     ← 6-dimension specs (things, connections, events, knowledge, people, groups)
@@ -46,12 +68,14 @@ one/
 **What it is:** The "source of truth" for the entire platform.
 
 **Why it matters:**
+
 - Every feature starts here
 - Every AI agent reads this before coding
 - Changes here cascade everywhere
 - This is what you **license/sell** to customers
 
 **The 6 Dimensions Explained:**
+
 1. **Groups** (Groups.md): Hierarchical containers (org → department → team)
 2. **Things** (Things): All nouns (users, agents, courses, tokens)
 3. **Connections** (Relationships): All verbs (owns, authored, enrolled_in)
@@ -60,6 +84,7 @@ one/
 6. **People** (Authority): Who can do what (4 roles)
 
 ### Layer 3: Organization Customization (one-inc/)
+
 ```
 one-inc/
 ├── knowledge/     ← Brand guide, features, org-specific rules
@@ -70,13 +95,16 @@ one-inc/
 **What it is:** Organization-specific overrides.
 
 **How it works:**
+
 - Global defaults come from `one/`
 - Org customizations override from `one-inc/`
 - Example: Global brand is "ONE", your org brand might be "ACME Corp"
 - This lets one codebase serve infinite customers
 
 ### Layer 4: Application Layer
+
 #### Web (Frontend)
+
 ```
 web/
 ├── src/pages/        ← File-based routing (index, account/login, etc)
@@ -90,17 +118,20 @@ web/
 **What it is:** The user interface users interact with.
 
 **Technology:**
+
 - **Astro 5**: Static generation + server-side rendering
 - **React 19**: Islands architecture (selective hydration)
 - **Tailwind v4**: No JS config, CSS-based theming
 - **shadcn/ui**: 50+ pre-built accessible components
 
 **Key Concept - Islands Architecture:**
+
 - Most pages are static HTML (fast)
 - Only interactive parts use React (minimal JavaScript)
 - Result: Fast, accessible, SEO-optimized
 
 #### Backend (Headless API)
+
 ```
 backend/
 ├── convex/
@@ -116,12 +147,14 @@ backend/
 **What it is:** The data layer and business logic.
 
 **Architecture:**
+
 - **Convex**: Real-time database with typed functions
 - **Effect.ts**: Functional programming for type safety
 - **Hono**: Lightweight HTTP router
 - **Better Auth**: Multi-method authentication (6 methods)
 
 **Database Design (6 Dimensions):**
+
 ```
 groups       → Hierarchical containers (multi-tenancy)
 things       → All entities (66+ types)
@@ -131,6 +164,7 @@ knowledge    → Embeddings for RAG (unlimited vectors)
 ```
 
 #### CLI (Bootstrap Package)
+
 ```
 cli/
 ├── bin/oneie.js    ← NPM entry point
@@ -141,6 +175,7 @@ cli/
 **What it is:** The distribution mechanism.
 
 **Flow:**
+
 1. User runs: `npx oneie`
 2. CLI prompts for organization details
 3. CLI clones repos (web, backend, one)
@@ -153,6 +188,7 @@ cli/
 ## How Data Flows Through ONE
 
 ### Creation Flow
+
 ```
 ONE Ontology (one/knowledge/ontology.md)
        ↓
@@ -168,6 +204,7 @@ User Interface (web/src/pages/)
 ```
 
 ### Example: Create a Course
+
 1. **Ontology defines it:** `one/knowledge/ontology.md` defines "course" thing type
 2. **Schema supports it:** `backend/convex/schema.ts` has "course" in things table
 3. **Service implements it:** `backend/convex/services/courses/courseService.ts` has business logic
@@ -176,6 +213,7 @@ User Interface (web/src/pages/)
 6. **Page shows it:** `web/src/pages/courses/[courseId].astro` displays course
 
 ### Customization Flow
+
 ```
 Global Defaults (one/)
        ↓
@@ -185,6 +223,7 @@ Custom Implementation (web/, backend/, cli/)
 ```
 
 Example: Change brand color
+
 1. Define in `one-inc/knowledge/brand-guide.md`
 2. CSS reads it from `web/src/styles/global.css`
 3. Components use it automatically
@@ -195,18 +234,21 @@ Example: Change brand color
 ## What You're Selling: Three Products
 
 ### 1. The Ontology (IP Asset)
+
 - **File:** `one/` directory
 - **Value:** Complete data model + specifications
 - **Use:** Customers buy access to this to build apps
 - **License:** Your custom license (sell via npm)
 
 ### 2. The Infrastructure (SaaS)
+
 - **Files:** `web/`, `backend/`
 - **Value:** Ready-to-deploy application stack
 - **Use:** Customers host on their own infra (or yours)
 - **Revenue:** Subscription + usage fees
 
 ### 3. The Distribution (CLI)
+
 - **File:** `cli/` directory
 - **Value:** One-command setup for new customers
 - **Use:** `npx oneie init` gets them running in 5 minutes
@@ -217,6 +259,7 @@ Example: Change brand color
 ## Deployment Strategy
 
 ### Repository Structure
+
 ```
 github.com/one-ie/
 ├── one/       ← Monorepo (web, backend, cli, one, .claude)
@@ -226,6 +269,7 @@ github.com/one-ie/
 ```
 
 ### Deployment Targets
+
 ```
 WEB DEPLOYMENT
 root/.claude/commands/release.sh
@@ -268,7 +312,9 @@ Live ✓
 ```
 
 ### Release Command
+
 The `/release` command in `.claude/commands/release.md`:
+
 1. Bumps version in `cli/package.json`
 2. Syncs 518+ files from root to all target repos
 3. Commits and pushes to:
@@ -284,9 +330,11 @@ The `/release` command in `.claude/commands/release.md`:
 ## The AI Agent Workflow
 
 ### Director Agent
+
 **Job:** Manage work, delegate tasks, report progress
 
 **Daily flow:**
+
 1. Read `one/things/todo.md` (100-inference plan)
 2. Update statuses based on completed work
 3. Identify blockers and P0 decisions
@@ -295,15 +343,18 @@ The `/release` command in `.claude/commands/release.md`:
 6. Report daily summary to owner
 
 **Tools:**
+
 - ConvexDatabase service (read/write entities)
 - A2A protocol (agent communication)
 - Event logging (record decisions)
 - Email/Slack (human communication)
 
 ### Clone Agent
+
 **Job:** Execute delegated tasks, follow patterns exactly, report status
 
 **Task workflow:**
+
 1. Receive task from director
 2. Read relevant `one/connections/patterns.md` section
 3. Generate code following patterns
@@ -313,6 +364,7 @@ The `/release` command in `.claude/commands/release.md`:
 7. Report completion to director
 
 **Code generation rules:**
+
 - 100% Effect.ts for business logic (NO async/await)
 - Typed errors with `_tag` pattern
 - Dependency injection via Effect layers
@@ -320,6 +372,7 @@ The `/release` command in `.claude/commands/release.md`:
 - Follow patterns.md examples exactly
 
 ### Specialist Agents
+
 - **Designer:** Create UI/UX components
 - **Backend:** Implement Convex services
 - **Frontend:** Build Astro pages + React components
@@ -333,23 +386,27 @@ The `/release` command in `.claude/commands/release.md`:
 ## Critical Files Explained
 
 ### For Platform Owners
+
 - **`one/things/strategy.md`** → Vision + 8 core features
 - **`one/things/todo.md`** → 100-inference release plan
 - **`one-inc/groups/revenue.md`** → Revenue model + pricing
 
 ### For Developers
+
 - **`one/knowledge/ontology.md`** → 6-dimension model (read first)
 - **`one/connections/patterns.md`** → Code patterns (copy from here)
 - **`AGENTS.md`** → Convex quick reference
 - **`backend/convex/schema.ts`** → Database design
 
 ### For AI Agents
+
 - **`CLAUDE.md`** → Platform instructions
 - **`.claude/agents/`** → Agent definitions
 - **`one/knowledge/rules.md`** → Golden rules
 - **`one/things/todo.md`** → Task list to execute
 
 ### For Customers
+
 - **`one/knowledge/ontology.md`** → API documentation
 - **`README.md`** → Getting started
 - **`one/connections/workflow.md`** → Development guide
@@ -360,6 +417,7 @@ The `/release` command in `.claude/commands/release.md`:
 ## Environment Variables: The Switch Panel
 
 ### Root (`.env`) - Deployment Control
+
 ```bash
 CLOUDFLARE_GLOBAL_API_KEY=***     # Deploy to Cloudflare
 CLOUDFLARE_ACCOUNT_ID=***         # Which Cloudflare account
@@ -367,6 +425,7 @@ CLOUDFLARE_EMAIL=***              # Authentication
 ```
 
 ### Web (`.env.local`) - Frontend Config
+
 ```bash
 PUBLIC_CONVEX_URL=***             # Backend URL
 CONVEX_DEPLOYMENT=***             # Deployment ID
@@ -375,6 +434,7 @@ BETTER_AUTH_URL=***               # Auth domain
 ```
 
 ### Backend (`.env.local`) - API Config
+
 ```bash
 CONVEX_DEPLOYMENT=***             # Convex project
 RESEND_API_KEY=***                # Email provider
@@ -382,6 +442,7 @@ RESEND_FROM_EMAIL=***             # Email sender
 ```
 
 **Key concept:** Switch features on/off with environment variables
+
 - `backend=on` → Backend enabled
 - `auth=off` → Auth disabled
 - `tokens=on` → Token system enabled
@@ -391,6 +452,7 @@ RESEND_FROM_EMAIL=***             # Email sender
 ## Quick Navigation Map
 
 **I want to understand:**
+
 - The vision → `one/things/strategy.md`
 - The data model → `one/knowledge/ontology.md`
 - File organization → `one/things/files.yaml`
@@ -399,12 +461,14 @@ RESEND_FROM_EMAIL=***             # Email sender
 - How to customize → `one-inc/knowledge/brand-guide.md`
 
 **I want to build:**
+
 - A new feature → Start in `one/knowledge/ontology.md` (add thing, connection, or event)
 - A new component → Copy from `one/connections/patterns.md`
 - A new service → Use `backend/convex/services/` as template
 - A new page → Use `web/src/pages/` as template
 
 **I want to deploy:**
+
 - Frontend → `/release` command
 - Backend → `npx convex deploy`
 - CLI → `npm publish`
@@ -422,6 +486,7 @@ ONE works because **everything is modular**:
 5. **Multi-tenant** → Groups isolate data → infinite organizations
 
 You can:
+
 - Sell the ontology to one customer
 - Sell the infrastructure to another
 - Sell the CLI distribution to thousands
@@ -432,6 +497,7 @@ You can:
 ## Release Readiness Checklist
 
 Before `/release`, ensure:
+
 - [ ] All P0 tasks complete (schema, auth, services)
 - [ ] All tests passing (`bun test`, `npx convex dev`)
 - [ ] Types valid (`bunx astro check`)
@@ -441,11 +507,13 @@ Before `/release`, ensure:
 - [ ] Cloudflare/npm accounts authenticated
 
 Then:
+
 ```bash
 /release patch  # or minor/major
 ```
 
 This:
+
 1. Bumps version
 2. Commits and pushes
 3. Triggers deployments
@@ -461,4 +529,4 @@ You're not selling features. You're selling **the ability to build features at A
 
 ---
 
-_Last updated: 2025-10-30 by Claude Code - This document is your "instruction manual" for the entire ONE Platform. Read it first._ 
+_Last updated: 2025-10-30 by Claude Code - This document is your "instruction manual" for the entire ONE Platform. Read it first._

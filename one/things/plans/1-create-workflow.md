@@ -1,3 +1,21 @@
+---
+title: 1 Create Workflow
+dimension: things
+category: plans
+tags: agent, ai, backend, knowledge, ontology
+related_dimensions: connections, events, knowledge, people
+scope: global
+created: 2025-11-03
+updated: 2025-11-03
+version: 1.0.0
+ai_context: |
+  This document is part of the things dimension in the plans category.
+  Location: one/things/plans/1-create-workflow.md
+  Purpose: Documents plan 1: agent-based ontology-driven workflow system
+  Related dimensions: connections, events, knowledge, people
+  For AI agents: Read this to understand 1 create workflow.
+---
+
 # Plan 1: Agent-Based Ontology-Driven Workflow System
 
 **Director:** Engineering Director Agent (agent-director.md)
@@ -694,6 +712,7 @@ Each feature will have:
 - Implementation (working code)
 
 **Final Deliverable:** Complete ONE Cascade system that anyone can use by:
+
 1. `git clone` the repository
 2. Run `/one` command in Claude Code
 3. Start turning ideas into reality with 8 AI agents

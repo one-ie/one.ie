@@ -1,3 +1,21 @@
+---
+title: Convex Structure Analysis
+dimension: events
+category: convex-structure-analysis.md
+tags: backend, connections, events, groups, knowledge, ontology, people, things
+related_dimensions: connections, groups, knowledge, people, things
+scope: global
+created: 2025-11-03
+updated: 2025-11-03
+version: 1.0.0
+ai_context: |
+  This document is part of the events dimension in the convex-structure-analysis.md category.
+  Location: one/events/convex-structure-analysis.md
+  Purpose: Documents convex backend structure analysis - 6-dimension ontology mapping
+  Related dimensions: connections, groups, knowledge, people, things
+  For AI agents: Read this to understand convex structure analysis.
+---
+
 # Convex Backend Structure Analysis - 6-Dimension Ontology Mapping
 
 **Date:** October 25, 2025

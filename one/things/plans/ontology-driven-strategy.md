@@ -1,3 +1,21 @@
+---
+title: Ontology Driven Strategy
+dimension: things
+category: plans
+tags: 6-dimensions, ai, backend, connections, events, frontend, knowledge, ontology, people, things
+related_dimensions: connections, events, groups, knowledge, people
+scope: global
+created: 2025-11-03
+updated: 2025-11-03
+version: 1.0.0
+ai_context: |
+  This document is part of the things dimension in the plans category.
+  Location: one/things/plans/ontology-driven-strategy.md
+  Purpose: Documents ontology-driven strategy: build once, run anywhere
+  Related dimensions: connections, events, groups, knowledge, people
+  For AI agents: Read this to understand ontology driven strategy.
+---
+
 # Ontology-Driven Strategy: Build Once, Run Anywhere
 
 **Strategic Analysis: Your Two Core Assets**
@@ -468,14 +486,12 @@ npm run dev
 **What's Open Source (MIT License):**
 
 1. **`@oneie/ontology`** - The 6-dimension specification
-
    - Data model
    - UI metadata
    - TypeScript types
    - Anyone can implement it
 
 2. **`@oneie/frontend`** - Reference implementation
-
    - Generic components
    - Ontology-driven rendering
    - Works with any backend
@@ -678,7 +694,7 @@ export class OneBackendProvider implements DataProvider {
       apiKey: string;
       organizationId: string;
       apiUrl?: string; // default: https://api.one.ie
-    }
+    },
   ) {}
 
   things = {

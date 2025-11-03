@@ -1,3 +1,21 @@
+---
+title: System
+dimension: things
+category: system.md
+tags: agent, ai, architecture, ontology
+related_dimensions: connections, events, groups, knowledge, people
+scope: global
+created: 2025-11-03
+updated: 2025-11-03
+version: 1.0.0
+ai_context: |
+  This document is part of the things dimension in the system.md category.
+  Location: one/things/system.md
+  Purpose: Documents one cli system architecture
+  Related dimensions: connections, events, groups, knowledge, people
+  For AI agents: Read this to understand system.
+---
+
 # ONE CLI System Architecture
 
 **Version:** 2.0.3

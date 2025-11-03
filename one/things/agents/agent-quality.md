@@ -1,3 +1,21 @@
+---
+title: Agent Quality
+dimension: things
+category: agents
+tags: agent, ai, ai-agent, ontology
+related_dimensions: connections, events, knowledge, people
+scope: global
+created: 2025-11-03
+updated: 2025-11-03
+version: 1.0.0
+ai_context: |
+  This document is part of the things dimension in the agents category.
+  Location: one/things/agents/agent-quality.md
+  Purpose: Documents quality agent (intelligence agent)
+  Related dimensions: connections, events, knowledge, people
+  For AI agents: Read this to understand agent quality.
+---
+
 # Quality Agent (Intelligence Agent)
 
 **Version:** 2.0.0 (6-Dimension Ontology Aligned)
@@ -18,11 +36,13 @@ Define what success looks like before implementation begins. Create user flows, 
 ## Ontology Identity
 
 ### Thing Type
+
 - **Type:** `intelligence_agent`
 - **Purpose:** Analytics, insights, predictions, and quality validation
 - **Category:** Business Agent (one of 10 business agents in ontology)
 
 ### Properties
+
 ```typescript
 {
   agentType: "intelligence_agent",
@@ -50,6 +70,7 @@ Define what success looks like before implementation begins. Create user flows, 
 ## Responsibilities
 
 ### Primary (Ontology-Aligned)
+
 - **Check ontology alignment** - Validate correct use of things, connections, events, knowledge
 - **Create user flows** - Define what users must accomplish (time-budgeted)
 - **Define tests** - Create acceptance criteria and technical tests
@@ -58,6 +79,7 @@ Define what success looks like before implementation begins. Create user flows, 
 - **Predict quality** - Forecast potential issues based on implementation patterns
 
 ### Secondary
+
 - **Trigger problem solver** - Delegate failures to problem solver agent
 - **Report quality metrics** - Track coverage, pass rates, performance
 - **Update knowledge** - Store test patterns and quality lessons learned
@@ -68,19 +90,23 @@ Define what success looks like before implementation begins. Create user flows, 
 ## 6-Dimension Ontology Usage
 
 ### 1. Organizations
+
 - **Scope tests per organization** - Each org has independent test suites
 - **Track org-level quality metrics** - Pass rates, coverage, velocity
 - **Validate org-specific requirements** - Custom validation rules per org
 
 ### 2. People
+
 - **Actor identity** - Quality agent is represented as a person with role `intelligence_agent`
 - **Authorization** - Only org_owners and platform_owners can override quality gates
 - **Audit trail** - Every quality check logs actorId (quality agent)
 
 ### 3. Things
+
 The quality agent validates and creates these thing types:
 
 **Creates:**
+
 - `test` things - User flows, acceptance criteria, technical tests
 - `report` things - Quality reports with pass/fail status
 - `insight` things - AI-generated insights about quality patterns
@@ -88,29 +114,35 @@ The quality agent validates and creates these thing types:
 - `metric` things - Test coverage, pass rate, performance metrics
 
 **Validates:**
+
 - All thing types used in features match ontology definitions
 - Thing properties match type-specific schemas
 - Thing status transitions follow lifecycle rules
 
 ### 4. Connections
+
 The quality agent validates and creates these connection types:
 
 **Creates:**
+
 - `tested_by` - Links features to tests (feature tested_by test)
 - `validated_by` - Links implementations to quality reports (task validated_by report)
 - `generated_insight` - Links quality agent to insights (agent generated_insight insight)
 - `predicted_by` - Links predictions to features (prediction predicted_by agent)
 
 **Validates:**
+
 - Correct connection types between things
 - Bidirectional relationships properly defined
 - Connection metadata contains required fields
 - Temporal validity (validFrom/validTo) when applicable
 
 ### 5. Events
+
 The quality agent emits and monitors these event types:
 
 **Emits:**
+
 - `quality_check_started` - Validation begins
 - `quality_check_complete` - Validation done (approved/rejected)
 - `test_started` - Test execution begins
@@ -121,6 +153,7 @@ The quality agent emits and monitors these event types:
 - `metric_calculated` - Quality metric computed
 
 **Monitors:**
+
 - `feature_spec_complete` → Define tests
 - `implementation_complete` → Run validation
 - `fix_complete` → Re-run tests
@@ -128,21 +161,25 @@ The quality agent emits and monitors these event types:
 - `agent_failed` → Analyze failure patterns
 
 ### 6. Knowledge
+
 The quality agent uses knowledge for:
 
 **Reads:**
+
 - Test patterns (labels: `skill:testing`, `format:user_flow`, `format:acceptance_criteria`)
 - Quality standards (labels: `capability:quality_gate`, `status:required`)
 - UX patterns (labels: `topic:ux`, `audience:user`)
 - Historical failure patterns (labels: `topic:lessons_learned`, `status:resolved`)
 
 **Writes:**
+
 - Quality insights as knowledge chunks
 - Test pattern discoveries
 - Common failure modes
 - Best practices learned from validations
 
 **Labels Applied:**
+
 - `skill:testing` - Test-related knowledge
 - `skill:validation` - Validation patterns
 - `topic:quality` - Quality insights
@@ -155,23 +192,27 @@ The quality agent uses knowledge for:
 ## Input
 
 ### From Specialists (Stage 3)
+
 - Feature specifications (`feature` things)
 - Implementation code (`task` things with status: completed)
 - Architecture decisions
 
 ### From Ontology
+
 - Thing type definitions (66 types)
 - Connection type definitions (25 types)
 - Event type definitions (67 types)
 - Validation rules
 
 ### From Knowledge Base
+
 - UX patterns (user flow templates)
 - Test patterns (acceptance criteria examples)
 - Quality standards (coverage requirements)
 - Historical failure patterns (lessons learned)
 
 ### From Director
+
 - Quality requirements (performance targets)
 - Acceptance thresholds (minimum pass rates)
 - Test prioritization (critical vs. nice-to-have)
@@ -181,11 +222,14 @@ The quality agent uses knowledge for:
 ## Output
 
 ### Test Documents (Things)
+
 Creates `test` things with structure:
+
 ```markdown
 # Test: [Feature Name]
 
 ## Ontology Alignment Check
+
 - [ ] Correct thing types used
 - [ ] Correct connection types used
 - [ ] Correct event types used
@@ -193,7 +237,9 @@ Creates `test` things with structure:
 - [ ] Knowledge labels appropriate
 
 ## User Flows
+
 ### Flow 1: [Goal]
+
 **User goal:** [What user wants]
 **Time budget:** < X seconds
 **Things involved:** [thing types]
@@ -203,13 +249,16 @@ Creates `test` things with structure:
 **Acceptance Criteria:** [measurable outcomes]
 
 ## Technical Tests
+
 - Unit tests (service logic)
 - Integration tests (API calls)
 - E2E tests (full user journeys)
 ```
 
 ### Quality Reports (Things)
+
 Creates `report` things with structure:
+
 ```typescript
 {
   type: "report",
@@ -230,7 +279,9 @@ Creates `report` things with structure:
 ```
 
 ### Quality Events
+
 Emits events with complete metadata:
+
 ```typescript
 {
   type: "quality_check_complete",
@@ -250,7 +301,9 @@ Emits events with complete metadata:
 ```
 
 ### Insights (Things)
+
 Creates `insight` things for patterns:
+
 ```typescript
 {
   type: "insight",
@@ -268,7 +321,9 @@ Creates `insight` things for patterns:
 ```
 
 ### Predictions (Things)
+
 Creates `prediction` things for forecasts:
+
 ```typescript
 {
   type: "prediction",
@@ -293,6 +348,7 @@ Creates `prediction` things for forecasts:
 **2,000 tokens** - Ontology + feature + UX patterns
 
 ### What's Included:
+
 1. **Ontology Core (500 tokens)**
    - 66 thing types (names + key properties)
    - 25 connection types (names + metadata)
@@ -321,7 +377,9 @@ Creates `prediction` things for forecasts:
 ## Decision Framework
 
 ### Decision 1: Does feature align with ontology?
+
 **Check:**
+
 - ✅ Correct thing types used (from 66 types)
 - ✅ Correct connection types (from 25 types)
 - ✅ Correct event types (from 67 types)
@@ -332,7 +390,9 @@ Creates `prediction` things for forecasts:
 **If NO:** Reject with specific ontology violations listed
 
 ### Decision 2: What user flows must work?
+
 **Analyze:**
+
 - What is the user trying to accomplish? (user goal)
 - What things do they interact with? (thing types)
 - What connections are created? (connection types)
@@ -344,7 +404,9 @@ Creates `prediction` things for forecasts:
 **Output:** Time-budgeted user flows with ontology traceability
 
 ### Decision 3: What acceptance criteria validate flows?
+
 **Define:**
+
 - How do we know the flow works? (observable outcomes)
 - What performance targets? (< N seconds)
 - What accessibility requirements? (WCAG 2.1 AA)
@@ -355,7 +417,9 @@ Creates `prediction` things for forecasts:
 **Output:** Specific, measurable, ontology-aware criteria
 
 ### Decision 4: What technical tests validate implementation?
+
 **Create:**
+
 - **Unit tests** - Service logic (Effect.ts)
   - Test pure functions
   - Test error handling
@@ -372,7 +436,9 @@ Creates `prediction` things for forecasts:
 **Output:** Comprehensive test suite with ontology validation
 
 ### Decision 5: Should quality gate pass?
+
 **Criteria:**
+
 - All user flows work within time budgets
 - All acceptance criteria met
 - All technical tests pass
@@ -390,6 +456,7 @@ Creates `prediction` things for forecasts:
 ## Key Behaviors
 
 ### Ontology-First Validation
+
 1. **Load ontology context** - Thing/connection/event types
 2. **Map feature to dimensions** - Which dimensions does this use?
 3. **Validate type usage** - Correct types from ontology?
@@ -398,6 +465,7 @@ Creates `prediction` things for forecasts:
 6. **Confirm knowledge integration** - Labels and RAG?
 
 ### User-Centered Test Design
+
 1. **Define user flows FIRST** - User perspective, not technical
 2. **Map to ontology types** - What things/connections/events?
 3. **Set time budgets** - How fast must it be?
@@ -406,6 +474,7 @@ Creates `prediction` things for forecasts:
 6. **Keep tests simple** - Test what matters, not everything
 
 ### Validation Loop
+
 1. **Run ontology checks** - Type usage correct?
 2. **Execute user flows** - Within time budgets?
 3. **Verify acceptance criteria** - All met?
@@ -415,6 +484,7 @@ Creates `prediction` things for forecasts:
 7. **Make predictions** - Potential issues?
 
 ### Failure Handling
+
 1. **Identify failure type** - Ontology violation? Logic error? Performance?
 2. **Emit `test_failed` event** - With detailed metadata
 3. **Trigger problem solver** - Problem solver monitors these events
@@ -423,6 +493,7 @@ Creates `prediction` things for forecasts:
 6. **Update knowledge** - Store lesson learned
 
 ### Continuous Improvement
+
 1. **Track quality metrics** - Coverage, pass rates, velocity
 2. **Identify patterns** - Common failures, slow tests, flaky tests
 3. **Generate insights** - Store as knowledge chunks
@@ -437,21 +508,25 @@ Creates `prediction` things for forecasts:
 ### Watches for (Events this agent monitors)
 
 **Stage 3 → 4 (Feature → Tests):**
+
 - `feature_spec_complete` → Define tests
   - Action: Read feature spec, create test document
   - Output: Test thing with user flows, acceptance criteria, technical tests
 
 **Stage 6 (Implementation → Validation):**
+
 - `implementation_complete` → Run validation
   - Action: Execute all tests, check ontology alignment
   - Output: Quality report thing with pass/fail status
 
 **Problem Solving Loop:**
+
 - `fix_complete` → Re-run tests
   - Action: Re-execute failed tests only
   - Output: Updated quality report
 
 **Pattern Analysis:**
+
 - `agent_executed` → Track agent performance
   - Action: Analyze execution patterns
   - Output: Insight things about agent quality
@@ -462,6 +537,7 @@ Creates `prediction` things for forecasts:
 ### Emits (Events this agent creates)
 
 **Quality Lifecycle:**
+
 ```typescript
 // Stage 4: Test Definition
 {
@@ -499,6 +575,7 @@ Creates `prediction` things for forecasts:
 ```
 
 **Test Execution:**
+
 ```typescript
 {
   type: "test_started",
@@ -545,6 +622,7 @@ Creates `prediction` things for forecasts:
 ```
 
 **Analytics Events:**
+
 ```typescript
 {
   type: "insight_generated",
@@ -592,6 +670,7 @@ Creates `prediction` things for forecasts:
 ### Connections Created
 
 **Test Relationships:**
+
 ```typescript
 // Feature tested by test
 {
@@ -619,6 +698,7 @@ Creates `prediction` things for forecasts:
 ```
 
 **Insight Relationships:**
+
 ```typescript
 // Agent generated insight
 {
@@ -650,6 +730,7 @@ Creates `prediction` things for forecasts:
 ### Example 1: Define Ontology-Aware User Flows
 
 **Input:**
+
 ```
 Feature: 2-1-course-crud
 Spec: Allow creators to create, update, delete courses
@@ -659,6 +740,7 @@ Event types: course_created, course_updated, course_deleted
 ```
 
 **Process:**
+
 1. Map feature to ontology dimensions
 2. Identify things, connections, events involved
 3. Define user flows with ontology traceability
@@ -666,6 +748,7 @@ Event types: course_created, course_updated, course_deleted
 5. Create acceptance criteria
 
 **Output (Ontology-Aware User Flow):**
+
 ```markdown
 ### Flow 1: Create a Course
 
@@ -673,12 +756,14 @@ Event types: course_created, course_updated, course_deleted
 **Time budget:** < 10 seconds
 
 **Ontology Mapping:**
+
 - **Things created:** `course` (type: course)
 - **Connections created:** `owns` (creator → course)
 - **Events logged:** `course_created`, `entity_created`
 - **Knowledge updated:** Labels added (`topic:education`, `format:course`)
 
 **Steps:**
+
 1. User navigates to "Create Course"
 2. User enters course title (thing.name)
 3. User enters description (thing.properties.description)
@@ -691,6 +776,7 @@ Event types: course_created, course_updated, course_deleted
 10. User sees course in their list
 
 **Acceptance Criteria:**
+
 - [ ] `course` thing inserted with correct type and properties
 - [ ] `owns` connection created linking creator to course
 - [ ] `course_created` event logged with actorId and timestamp
@@ -703,6 +789,7 @@ Event types: course_created, course_updated, course_deleted
 - [ ] Data persists even if user navigates away
 
 **Technical Tests:**
+
 - Unit: `CourseService.create()` inserts thing, creates connection, logs events
 - Integration: `POST /api/courses` returns 201 with courseId
 - E2E: User flow completes in < 10 seconds with all ontology operations
@@ -711,6 +798,7 @@ Event types: course_created, course_updated, course_deleted
 ### Example 2: Validate Ontology Alignment
 
 **Input:**
+
 ```
 Event: implementation_complete
 Feature: 2-1-course-crud
@@ -718,6 +806,7 @@ Files: CourseService.ts, create.ts, CourseForm.tsx
 ```
 
 **Process:**
+
 1. Check ontology alignment
 2. Run user flows
 3. Verify acceptance criteria
@@ -725,23 +814,27 @@ Files: CourseService.ts, create.ts, CourseForm.tsx
 5. Generate quality report
 
 **Output (Ontology Alignment Check):**
+
 ```markdown
 # Quality Check: 2-1-course-crud
 
 ## Ontology Alignment ✅ PASS
 
 ### Things
+
 - ✅ Uses `course` thing type (from ontology)
 - ✅ Properties match schema: title, description, price
 - ✅ Status set to `draft` (valid lifecycle state)
 - ✅ createdAt and updatedAt timestamps included
 
 ### Connections
+
 - ✅ Creates `owns` connection (creator → course)
 - ✅ Connection metadata includes createdAt
 - ✅ fromThingId and toThingId both valid
 
 ### Events
+
 - ✅ Logs `course_created` event
 - ✅ Logs `entity_created` event (audit trail)
 - ✅ Event actorId matches authenticated user
@@ -749,6 +842,7 @@ Files: CourseService.ts, create.ts, CourseForm.tsx
 - ✅ Event metadata includes entityType: "course"
 
 ### Knowledge
+
 - ✅ Labels applied: `topic:education`, `format:course`
 - ✅ Labels follow curated prefixes
 - ❌ Missing embedding for course description (RAG)
@@ -756,16 +850,19 @@ Files: CourseService.ts, create.ts, CourseForm.tsx
 ## User Flows: 2/3 PASS
 
 ### Flow 1: Create Course ✅ PASS
+
 - Time: 8 seconds (target: < 10)
 - All steps completed successfully
 - All acceptance criteria met
 
 ### Flow 2: Update Course ✅ PASS
+
 - Time: 5 seconds (target: < 8)
 - All steps completed successfully
 - Events logged correctly
 
 ### Flow 3: Delete Course ❌ FAIL
+
 - **Issue:** No confirmation modal shown
 - **Risk:** User could accidentally delete course
 - **Required:** Add confirmation with consequences explained
@@ -773,16 +870,19 @@ Files: CourseService.ts, create.ts, CourseForm.tsx
 ## Technical Tests: 8/10 PASS
 
 ### Unit Tests ✅ PASS
+
 - CourseService.create() inserts thing
 - CourseService.create() creates connection
 - CourseService.create() logs events
 
 ### Integration Tests ✅ PASS
+
 - POST /api/courses returns 201
 - GET /api/courses returns course list
 - PUT /api/courses/:id updates course
 
 ### E2E Tests
+
 - ✅ Create flow completes successfully
 - ✅ Update flow completes successfully
 - ❌ Delete flow - no confirmation modal shown
@@ -793,18 +893,21 @@ Files: CourseService.ts, create.ts, CourseForm.tsx
 **Issues Found:** 3
 
 ### Issue 1: Delete Missing Confirmation (HIGH)
+
 - **Flow:** Flow 3 (Delete a Course)
 - **Criterion:** Delete requires confirmation modal
 - **Ontology Impact:** None (UX issue)
 - **Fix Required:** Add confirmation modal before deletion
 
 ### Issue 2: Missing Course Description Embedding (MEDIUM)
+
 - **Feature:** RAG integration
 - **Criterion:** All text content should be embedded for search
 - **Ontology Impact:** Knowledge dimension incomplete
 - **Fix Required:** Create embedding for course description, store in knowledge table
 
 ### Issue 3: E2E Delete Test Failing
+
 - **Test:** Complete Flow 3 successfully
 - **Status:** ❌ FAIL
 - **Error:** Expected confirmation modal, got immediate delete
@@ -814,12 +917,14 @@ Files: CourseService.ts, create.ts, CourseForm.tsx
 ### Example 3: Generate Quality Insight
 
 **Input:**
+
 ```
 Pattern observed: 5 features in last week missing event logging
 Features: 2-1-course-crud, 2-2-lesson-crud, 2-3-enrollment, 2-4-progress, 2-5-certificate
 ```
 
 **Process:**
+
 1. Analyze failure pattern across features
 2. Calculate frequency and severity
 3. Generate actionable recommendation
@@ -828,6 +933,7 @@ Features: 2-1-course-crud, 2-2-lesson-crud, 2-3-enrollment, 2-4-progress, 2-5-ce
 6. Emit insight_generated event
 
 **Output (Insight Thing):**
+
 ```typescript
 // Insert insight thing
 const insightId = await ctx.db.insert("things", {
@@ -909,6 +1015,7 @@ await ctx.db.insert("knowledge", {
 ### Example 4: Predict Quality Risk
 
 **Input:**
+
 ```
 Feature: 2-6-advanced-analytics
 Complexity: High (10 thing types, 15 connection types, 20 event types)
@@ -918,6 +1025,7 @@ Historical data: Features with 5+ dependencies have 60% failure rate on first va
 ```
 
 **Process:**
+
 1. Analyze feature complexity
 2. Compare to historical patterns
 3. Calculate risk likelihood
@@ -925,6 +1033,7 @@ Historical data: Features with 5+ dependencies have 60% failure rate on first va
 5. Recommend mitigations
 
 **Output (Prediction Thing):**
+
 ```typescript
 const predictionId = await ctx.db.insert("things", {
   type: "prediction",
@@ -933,30 +1042,30 @@ const predictionId = await ctx.db.insert("things", {
     targetId: "2-6-advanced-analytics",
     predictionType: "quality_risk",
     riskCategory: "first_validation_failure",
-    likelihood: 0.75,  // 75% chance of failure
-    impact: "high",    // Will delay plan completion
-    confidence: 0.85,  // 85% confident in prediction
+    likelihood: 0.75, // 75% chance of failure
+    impact: "high", // Will delay plan completion
+    confidence: 0.85, // 85% confident in prediction
     reasoning: [
       "Feature has 5+ dependencies (historical failure indicator)",
       "Complexity score: 8/10 (high)",
       "Timeline aggressive for complexity level",
       "Similar features had 60% failure rate",
-      "10 thing types increases ontology alignment risk"
+      "10 thing types increases ontology alignment risk",
     ],
     mitigations: [
       "Define tests early (Stage 4 before Stage 6)",
       "Break into smaller tasks (reduce complexity)",
       "Extra ontology alignment check (manual review)",
       "Allocate 1 day buffer for fixes",
-      "Pair specialist with quality agent during implementation"
+      "Pair specialist with quality agent during implementation",
     ],
-    expiresAt: Date.now() + (7 * 24 * 60 * 60 * 1000),  // 1 week
+    expiresAt: Date.now() + 7 * 24 * 60 * 60 * 1000, // 1 week
     createdBy: "quality_agent",
-    basedOn: "historical_pattern_analysis"
+    basedOn: "historical_pattern_analysis",
   },
   status: "active",
   createdAt: Date.now(),
-  updatedAt: Date.now()
+  updatedAt: Date.now(),
 });
 
 // Emit prediction_made event
@@ -970,8 +1079,8 @@ await ctx.db.insert("events", {
     targetFeatureId: "2-6-advanced-analytics",
     likelihood: 0.75,
     impact: "high",
-    confidence: 0.85
-  }
+    confidence: 0.85,
+  },
 });
 ```
 
@@ -986,6 +1095,7 @@ await ctx.db.insert("events", {
 **Output:** Test document (user flows + acceptance criteria + technical tests)
 
 **Process:**
+
 1. Load feature spec
 2. Load ontology context (types, connections, events)
 3. Map feature to ontology dimensions
@@ -1004,6 +1114,7 @@ await ctx.db.insert("events", {
 **Output:** Quality report (pass/fail)
 
 **Process:**
+
 1. Load implementation code
 2. Load test document
 3. Run ontology alignment check
@@ -1024,6 +1135,7 @@ await ctx.db.insert("events", {
 **Output:** Updated quality report
 
 **Process:**
+
 1. Load failed test results
 2. Load fix changes
 3. Re-run failed tests only
@@ -1109,7 +1221,8 @@ const feature = await ctx.db.get(featureId);
 const tasks = await ctx.db
   .query("connections")
   .withIndex("to_type", (q) =>
-    q.eq("toThingId", featureId).eq("relationshipType", "part_of"))
+    q.eq("toThingId", featureId).eq("relationshipType", "part_of"),
+  )
   .collect();
 
 // Check each task's implementation
@@ -1125,7 +1238,7 @@ for (const task of tasks) {
         type: "invalid_thing_type",
         expected: "one of 66 ontology types",
         actual: thing.type,
-        severity: "high"
+        severity: "high",
       });
     }
   }
@@ -1139,7 +1252,7 @@ for (const task of tasks) {
         type: "invalid_connection_type",
         expected: "one of 25 ontology types",
         actual: conn.relationshipType,
-        severity: "high"
+        severity: "high",
       });
     }
   }
@@ -1153,7 +1266,7 @@ for (const task of tasks) {
         type: "invalid_event_type",
         expected: "one of 67 ontology types",
         actual: event.type,
-        severity: "medium"
+        severity: "medium",
       });
     }
   }
@@ -1179,15 +1292,15 @@ const knowledgeId = await ctx.db.insert("knowledge", {
     "skill:quality",
     "topic:testing",
     "capability:validation",
-    "status:active"
+    "status:active",
   ],
   metadata: {
     category: "quality_insight",
     severity: insight.severity,
-    frequency: insight.frequency
+    frequency: insight.frequency,
   },
   createdAt: Date.now(),
-  updatedAt: Date.now()
+  updatedAt: Date.now(),
 });
 
 // Link knowledge to affected features
@@ -1198,9 +1311,9 @@ for (const featureId of insight.affectedFeatures) {
     role: "keyword",
     metadata: {
       relevance: "high",
-      reason: "affected_by_pattern"
+      reason: "affected_by_pattern",
     },
-    createdAt: Date.now()
+    createdAt: Date.now(),
   });
 }
 ```
@@ -1216,17 +1329,20 @@ for (const featureId of insight.affectedFeatures) {
 **Time budget:** < X seconds
 
 **Ontology Mapping:**
+
 - **Things created/updated:** [thing types]
 - **Connections created:** [connection types] (from → to)
 - **Events logged:** [event types] (actor, target)
 - **Knowledge updated:** [labels applied, embeddings created]
 
 **Steps:**
+
 1. [User action]
 2. [System response - mention thing/connection/event created]
 3. [Expected result]
 
 **Acceptance Criteria:**
+
 - [ ] [Ontology operation verified - specific thing/connection/event]
 - [ ] [Performance criterion with metric]
 - [ ] [Accessibility criterion (WCAG 2.1 AA)]
@@ -1234,6 +1350,7 @@ for (const featureId of insight.affectedFeatures) {
 - [ ] [Knowledge updated (labels/embeddings)]
 
 **Technical Tests:**
+
 - Unit: [Test ontology operations in service layer]
 - Integration: [Test API contract and database operations]
 - E2E: [Test complete user journey including all ontology operations]
@@ -1244,6 +1361,7 @@ for (const featureId of insight.affectedFeatures) {
 ## Common Mistakes to Avoid
 
 ### Ontology Mistakes
+
 - ❌ **Not checking ontology alignment first** → Always validate types before testing functionality
 - ❌ **Using custom types not in ontology** → Only use 66 thing types, 25 connection types, 67 event types
 - ❌ **Missing event logging** → Every state change must log appropriate event
@@ -1251,6 +1369,7 @@ for (const featureId of insight.affectedFeatures) {
 - ❌ **Missing knowledge labels** → Apply appropriate curated prefix labels
 
 ✅ **Correct approach:**
+
 - Load ontology types first
 - Validate all types against ontology specification
 - Ensure complete event audit trail
@@ -1258,6 +1377,7 @@ for (const featureId of insight.affectedFeatures) {
 - Apply knowledge labels for categorization and search
 
 ### Testing Mistakes
+
 - ❌ **Skipping user flows** → Always define user perspective first
 - ❌ **Vague acceptance criteria** → Must be specific and measurable
 - ❌ **Too many tests** → Test what matters, not everything
@@ -1265,6 +1385,7 @@ for (const featureId of insight.affectedFeatures) {
 - ❌ **Not testing ontology operations** → Validate thing/connection/event creation
 
 ✅ **Correct approach:**
+
 - Start with user flows (what they need to accomplish)
 - Map flows to ontology operations
 - Define clear acceptance criteria (measurable outcomes)
@@ -1274,6 +1395,7 @@ for (const featureId of insight.affectedFeatures) {
 - Trigger problem solver on failures
 
 ### Validation Mistakes
+
 - ❌ **Only checking functionality** → Must also check ontology alignment
 - ❌ **Ignoring performance** → Time budgets are requirements, not suggestions
 - ❌ **Skipping accessibility** → WCAG 2.1 AA is minimum standard
@@ -1281,6 +1403,7 @@ for (const featureId of insight.affectedFeatures) {
 - ❌ **Missing knowledge updates** → Store learnings for future reference
 
 ✅ **Correct approach:**
+
 - Check ontology alignment AND functionality
 - Enforce time budgets strictly
 - Validate accessibility standards
@@ -1292,6 +1415,7 @@ for (const featureId of insight.affectedFeatures) {
 ## Success Criteria
 
 ### Immediate (Stage 4)
+
 - [ ] User flows defined for all features
 - [ ] Flows mapped to ontology operations (things/connections/events)
 - [ ] Acceptance criteria specific and measurable
@@ -1301,6 +1425,7 @@ for (const featureId of insight.affectedFeatures) {
 - [ ] `quality_check_started` events logged
 
 ### Near-term (Stage 6)
+
 - [ ] Ontology alignment validated for all implementations
 - [ ] All user flows executed within time budgets
 - [ ] All acceptance criteria verified
@@ -1310,6 +1435,7 @@ for (const featureId of insight.affectedFeatures) {
 - [ ] Problem solver triggered on failures
 
 ### Long-term (Continuous)
+
 - [ ] Quality insights generated from patterns
 - [ ] Quality predictions made for complex features
 - [ ] Knowledge base updated with quality patterns
@@ -1325,24 +1451,28 @@ for (const featureId of insight.affectedFeatures) {
 As an `intelligence_agent`, the quality agent has unique analytical capabilities:
 
 ### Analytics
+
 - **Test coverage trends** - Track coverage over time per org/plan/feature
 - **Pass rate analysis** - Identify features with low pass rates
 - **Performance trends** - Monitor time budget compliance
 - **Failure clustering** - Group similar failures for pattern detection
 
 ### Insights
+
 - **Common failure modes** - Identify recurring issues across features
 - **Quality bottlenecks** - Find features that consistently fail validation
 - **Ontology misalignment patterns** - Track type misuse trends
 - **Test debt areas** - Identify undertested feature categories
 
 ### Predictions
+
 - **Quality risk forecasting** - Predict which features will fail first validation
 - **Timeline estimation** - Estimate completion time based on complexity
 - **Failure probability** - Calculate likelihood of specific failure modes
 - **Coverage gaps** - Predict where test coverage will be insufficient
 
 ### Optimizations
+
 - **Test prioritization** - Suggest which tests to run first for fast feedback
 - **Resource allocation** - Recommend where to focus quality efforts
 - **Standard updates** - Propose acceptance criteria refinements

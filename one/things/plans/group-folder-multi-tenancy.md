@@ -1,3 +1,21 @@
+---
+title: Group Folder Multi Tenancy
+dimension: things
+category: plans
+tags: agent, architecture, groups, installation, ontology
+related_dimensions: connections, events, groups, knowledge, people
+scope: global
+created: 2025-11-03
+updated: 2025-11-03
+version: 1.0.0
+ai_context: |
+  This document is part of the things dimension in the plans category.
+  Location: one/things/plans/group-folder-multi-tenancy.md
+  Purpose: Documents installation folder multi-tenancy architecture
+  Related dimensions: connections, events, groups, knowledge, people
+  For AI agents: Read this to understand group folder multi tenancy.
+---
+
 # Installation Folder Multi-Tenancy Architecture
 
 **Status:** Planning (Validated ⚠️ - Critical Changes Applied)
@@ -91,6 +109,7 @@ Simple enough for a single user. Powerful enough for enterprise customers with c
 ```
 
 **Key Principles:**
+
 1. Files in `/<installation-name>/` override files in `/one/`
 2. **Hierarchical resolution:** Most specific group wins (frontend → engineering → installation → global)
 3. Installation folder represents the **organization**, not a single database group
@@ -102,7 +121,10 @@ When loading documentation or configuration:
 ```typescript
 import { Id } from "convex/_generated/dataModel";
 
-async function resolveFile(relativePath: string, groupId?: Id<"groups">): Promise<string> {
+async function resolveFile(
+  relativePath: string,
+  groupId?: Id<"groups">,
+): Promise<string> {
   const installationName = getInstallationName(); // From .env: INSTALLATION_NAME
 
   // If groupId provided, resolve hierarchically
@@ -202,6 +224,7 @@ Next steps:
 ```
 
 **CLI Implementation:**
+
 - `cli/src/commands/init.ts` - Initialization command
 - `cli/src/utils/installation-setup.ts` - Folder creation logic
 - `cli/src/utils/file-resolver.ts` - Hierarchical file resolution
@@ -211,18 +234,19 @@ Next steps:
 
 **CRITICAL: These are complementary, not equivalent!**
 
-| Aspect | Database (Convex) | Filesystem (Installation Folder) |
-|--------|-------------------|----------------------------------|
-| **Purpose** | Runtime data per group | Documentation/config per installation |
-| **Scope** | Multi-tenant via `groupId` (many groups per installation) | Single-tenant per installation |
-| **Access** | Real-time queries, mutations | File reads, git version control |
-| **Examples** | User data, transactions, group membership | Custom workflows, AI prompts, private notes |
-| **Hierarchy** | `parentGroupId` for nested groups | Folder hierarchy mirrors database structure |
-| **Isolation** | Row-level security (RLS) via `groupId` | Filesystem-level isolation |
+| Aspect        | Database (Convex)                                         | Filesystem (Installation Folder)            |
+| ------------- | --------------------------------------------------------- | ------------------------------------------- |
+| **Purpose**   | Runtime data per group                                    | Documentation/config per installation       |
+| **Scope**     | Multi-tenant via `groupId` (many groups per installation) | Single-tenant per installation              |
+| **Access**    | Real-time queries, mutations                              | File reads, git version control             |
+| **Examples**  | User data, transactions, group membership                 | Custom workflows, AI prompts, private notes |
+| **Hierarchy** | `parentGroupId` for nested groups                         | Folder hierarchy mirrors database structure |
+| **Isolation** | Row-level security (RLS) via `groupId`                    | Filesystem-level isolation                  |
 
 **Example Scenario:**
 
 Installation: **Acme Corp** (`/acme/`)
+
 - Database groups:
   - `acme-engineering` (groupId: g1, parentGroupId: null)
   - `acme-frontend` (groupId: g2, parentGroupId: g1)
@@ -234,6 +258,7 @@ Installation: **Acme Corp** (`/acme/`)
   - `/acme/groups/marketing/campaign-playbook.md` (applies to g4 only)
 
 **Installation folder does NOT replace database multi-tenancy.** It complements it by providing:
+
 - Private markdown documentation per installation
 - Custom agent prompts and workflows
 - Hierarchical documentation matching database group structure
@@ -279,7 +304,10 @@ async function resolveFile(relativePath: string): Promise<string> {
   const globalBase = path.resolve("/one");
 
   // Must be within installation or /one/
-  if (!realPath.startsWith(installationBase) && !realPath.startsWith(globalBase)) {
+  if (
+    !realPath.startsWith(installationBase) &&
+    !realPath.startsWith(globalBase)
+  ) {
     throw new Error("Symlink points outside allowed directories");
   }
 
@@ -291,7 +319,10 @@ async function resolveFile(relativePath: string): Promise<string> {
 
 ```typescript
 // Log all file access via events table
-async function resolveFile(relativePath: string, groupId?: Id<"groups">): Promise<string> {
+async function resolveFile(
+  relativePath: string,
+  groupId?: Id<"groups">,
+): Promise<string> {
   const filePath = await resolveFileInternal(relativePath, groupId);
 
   // Log access
@@ -305,7 +336,7 @@ async function resolveFile(relativePath: string, groupId?: Id<"groups">): Promis
       resolvedPath: filePath,
       source: filePath.startsWith("/one/") ? "global" : "installation",
       installationName: getInstallationName(),
-    }
+    },
   });
 
   return filePath;
@@ -317,7 +348,10 @@ async function resolveFile(relativePath: string, groupId?: Id<"groups">): Promis
 ```typescript
 const fileCache = new Map<string, string>();
 
-async function resolveFile(relativePath: string, groupId?: Id<"groups">): Promise<string> {
+async function resolveFile(
+  relativePath: string,
+  groupId?: Id<"groups">,
+): Promise<string> {
   const cacheKey = `${getInstallationName()}:${groupId || "root"}:${relativePath}`;
 
   if (fileCache.has(cacheKey)) {
@@ -383,6 +417,7 @@ Update `.claude/` agents to check installation folder first:
 
 ```markdown
 When reading documentation, use this priority:
+
 1. /<installation-name>/groups/<group-path>/<dimension>/ (most specific)
 2. /<installation-name>/<dimension>/ (installation-wide)
 3. /one/<dimension>/ (global template)
@@ -397,7 +432,12 @@ Update MCP context resolution:
   "mcpServers": {
     "filesystem": {
       "command": "npx",
-      "args": ["-y", "@modelcontextprotocol/server-filesystem", "/one", "/${INSTALLATION_NAME}"]
+      "args": [
+        "-y",
+        "@modelcontextprotocol/server-filesystem",
+        "/one",
+        "/${INSTALLATION_NAME}"
+      ]
     }
   }
 }
@@ -424,29 +464,33 @@ https://one.ie/${INSTALLATION_NAME}/groups/engineering/practices.md
 
 ```typescript
 // astro.config.mjs
-import { defineConfig } from 'astro/config';
+import { defineConfig } from "astro/config";
 
 export default defineConfig({
-  integrations: [{
-    name: 'copy-installation-folders',
-    hooks: {
-      'astro:build:done': async ({ dir }) => {
-        const installationName = process.env.INSTALLATION_NAME;
-        if (installationName && fs.existsSync(`/${installationName}`)) {
-          await fs.copy(`/${installationName}`, `${dir}/_installation`);
-        }
-      }
-    }
-  }]
+  integrations: [
+    {
+      name: "copy-installation-folders",
+      hooks: {
+        "astro:build:done": async ({ dir }) => {
+          const installationName = process.env.INSTALLATION_NAME;
+          if (installationName && fs.existsSync(`/${installationName}`)) {
+            await fs.copy(`/${installationName}`, `${dir}/_installation`);
+          }
+        },
+      },
+    },
+  ],
 });
 ```
 
 **Pros:**
+
 - Fast (no runtime lookups)
 - Simple deployment
 - Works with static generation
 
 **Cons:**
+
 - Requires rebuild for doc updates
 - Larger bundle size
 
@@ -454,7 +498,10 @@ export default defineConfig({
 
 ```typescript
 // Load from Cloudflare KV at runtime
-async function resolveFile(relativePath: string, groupId?: Id<"groups">): Promise<string> {
+async function resolveFile(
+  relativePath: string,
+  groupId?: Id<"groups">,
+): Promise<string> {
   const installationName = env.INSTALLATION_NAME;
 
   // 1. Try KV storage (for premium customers)
@@ -472,11 +519,13 @@ async function resolveFile(relativePath: string, groupId?: Id<"groups">): Promis
 ```
 
 **Pros:**
+
 - Dynamic updates without rebuild
 - Smaller initial bundle
 - Premium tier monetization
 
 **Cons:**
+
 - Adds latency (~10-50ms per read)
 - Requires KV setup and sync
 - More complex
@@ -486,7 +535,10 @@ async function resolveFile(relativePath: string, groupId?: Id<"groups">): Promis
 ```typescript
 // Bake default installations at build time
 // Allow runtime overrides via KV for premium customers
-async function resolveFile(relativePath: string, groupId?: Id<"groups">): Promise<string> {
+async function resolveFile(
+  relativePath: string,
+  groupId?: Id<"groups">,
+): Promise<string> {
   // 1. Check KV for premium overrides
   if (isPremiumTier()) {
     const kvFile = await loadFromKV(relativePath, groupId);
@@ -528,6 +580,7 @@ INSTALLATION_NAME=acme INSTALLATION_ENV=prod npm run build
 ```
 
 File resolution checks:
+
 1. `/acme-prod/groups/...`
 2. `/acme/groups/...`
 3. `/one/groups/...`
@@ -758,35 +811,41 @@ This architecture provides **installation-based filesystem customization** that 
 ### Changes Made Based on Agent-Director Validation
 
 **Critical Change #1: Clarified Database vs Filesystem Scope**
+
 - ✅ Renamed "group folder" → "installation folder" throughout
 - ✅ Changed `GROUP_NAME` → `INSTALLATION_NAME` in env vars
 - ✅ Added explicit section explaining: Installation folder ≠ Database group
 - ✅ One installation serves many database groups (via `groupId`)
 
 **Critical Change #2: Added Hierarchical Groups Support**
+
 - ✅ Added nested folder structure: `/acme/groups/engineering/frontend/`
 - ✅ File resolution walks up parent hierarchy (most specific wins)
 - ✅ Matches database `parentGroupId` concept
 - ✅ Example: frontend → engineering → installation → global
 
 **Critical Change #3: Aligned Naming with Ontology**
+
 - ✅ Consistently use "groups" (plural) to match database table
 - ✅ Updated all terminology to align with 6-dimension ontology
 - ✅ Changed file references to use "installation" terminology
 
 **Recommended Enhancement #1: Cloudflare Pages Deployment Strategy**
+
 - ✅ Added 3 deployment strategies (baked, KV/R2, hybrid)
 - ✅ Documented pros/cons of each approach
 - ✅ Recommended MVP approach (baked) and scale approach (hybrid)
 - ✅ Defined deployment workflow
 
 **Recommended Enhancement #2: Enhanced Security**
+
 - ✅ Added symlink validation (prevent directory traversal)
 - ✅ Added audit logging (filesystem access → events table)
 - ✅ Added caching layer (performance optimization)
 - ✅ Updated access control documentation
 
 **Recommended Enhancement #3: Updated Implementation Plan**
+
 - ✅ Updated CLI implementation files (installation-setup.ts, file-resolver.ts)
 - ✅ Updated terminology in 100-inference plan
 - ✅ Clarified dependencies and cascade opportunities
@@ -797,6 +856,7 @@ This architecture provides **installation-based filesystem customization** that 
 **Validation Result:** ⚠️ APPROVED WITH CRITICAL CHANGES
 
 **Feedback Applied:**
+
 - All 3 critical issues addressed
 - 5 of 8 recommended improvements implemented
 - Core architecture validated against 6-dimension ontology
@@ -811,12 +871,14 @@ This architecture provides **installation-based filesystem customization** that 
 ### Next Steps (Cascade Execution)
 
 **Now:**
+
 1. Launch agent-backend - Implement CLI initialization and file resolution
 2. Launch agent-frontend - Implement UI integration and file loading
 3. Launch agent-clean - Update documentation and codebase organization
 4. Launch agent-ops - Automate deployment and CI/CD
 
 **Dependencies:**
+
 - Backend and Frontend can run in parallel (independent concerns)
 - Clean depends on backend/frontend implementation
 - Ops can start immediately (deployment scripts, CI/CD)
@@ -826,5 +888,6 @@ This architecture provides **installation-based filesystem customization** that 
 ---
 
 **Document History:**
+
 - v1.0.0 (2025-10-16): Initial plan created
 - v2.0.0 (2025-10-16): Critical changes applied after agent-director validation

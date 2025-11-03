@@ -1,3 +1,21 @@
+---
+title: Landing Page Implementation
+dimension: events
+category: LANDING-PAGE-IMPLEMENTATION.md
+tags: architecture, inference, testing
+related_dimensions: knowledge, things
+scope: global
+created: 2025-11-03
+updated: 2025-11-03
+version: 1.0.0
+ai_context: |
+  This document is part of the events dimension in the LANDING-PAGE-IMPLEMENTATION.md category.
+  Location: one/events/LANDING-PAGE-IMPLEMENTATION.md
+  Purpose: Documents landing page generator - implementation summary
+  Related dimensions: knowledge, things
+  For AI agents: Read this to understand LANDING PAGE IMPLEMENTATION.
+---
+
 # Landing Page Generator - Implementation Summary
 
 **Feature**: Automated Landing Page Generation with Brand Customization

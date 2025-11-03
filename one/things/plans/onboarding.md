@@ -1,3 +1,21 @@
+---
+title: Onboarding
+dimension: things
+category: plans
+tags: ai, inference, ontology
+related_dimensions: connections, events, knowledge, people
+scope: global
+created: 2025-11-03
+updated: 2025-11-03
+version: 1.0.0
+ai_context: |
+  This document is part of the things dimension in the plans category.
+  Location: one/things/plans/onboarding.md
+  Purpose: Documents one platform onboarding plan
+  Related dimensions: connections, events, knowledge, people
+  For AI agents: Read this to understand onboarding.
+---
+
 # ONE Platform Onboarding Plan
 
 **Version:** 1.0.0
@@ -24,7 +42,8 @@ This plan defines the **complete onboarding experience** for ONE Platform, where
 
 ---
 
-*For full details including all phases, implementation roadmap, and success metrics, see:*
+_For full details including all phases, implementation roadmap, and success metrics, see:_
+
 - `/one/connections/workflow-onboarding.md` - Complete workflow specification
 - `/one/knowledge/cli-claude-handoff.md` - CLI ↔ Claude coordination
 - `/.claude/agents/agent-onboard.md` - Website analyzer agent

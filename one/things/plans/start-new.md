@@ -1,3 +1,21 @@
+---
+title: Start New
+dimension: things
+category: plans
+tags: ai, backend, frontend
+related_dimensions: groups, people
+scope: global
+created: 2025-11-03
+updated: 2025-11-03
+version: 1.0.0
+ai_context: |
+  This document is part of the things dimension in the plans category.
+  Location: one/things/plans/start-new.md
+  Purpose: Documents frontend-first onboarding
+  Related dimensions: groups, people
+  For AI agents: Read this to understand start new.
+---
+
 # Frontend-First Onboarding
 
 **Status:** Planning
@@ -91,7 +109,7 @@ Run: cd web && bun run dev
 const RESERVED_NAMES = {
   name: ["one"],
   folder: ["onegroup", "one"],
-  website: ["https://one.ie", "http://one.ie", "one.ie"]
+  website: ["https://one.ie", "http://one.ie", "one.ie"],
 };
 
 if (RESERVED_NAMES.name.includes(orgName.toLowerCase())) {
@@ -102,7 +120,7 @@ if (RESERVED_NAMES.folder.includes(orgFolder.toLowerCase())) {
   throw new Error(`Folder name '${orgFolder}' is reserved`);
 }
 
-if (RESERVED_NAMES.website.some(url => orgWebsite.includes(url))) {
+if (RESERVED_NAMES.website.some((url) => orgWebsite.includes(url))) {
   throw new Error("Website 'one.ie' is reserved");
 }
 ```
@@ -180,9 +198,7 @@ export function GetStartedPrompt() {
   return (
     <div class="min-h-screen flex items-center justify-center">
       <div class="max-w-2xl w-full space-y-8 text-center">
-        <h1 class="text-6xl font-bold">
-          Welcome to {orgName}
-        </h1>
+        <h1 class="text-6xl font-bold">Welcome to {orgName}</h1>
 
         <p class="text-xl text-muted-foreground">
           What would you like to build?
@@ -235,8 +251,11 @@ export function MinimalSidebar({ orgWebsite }: { orgWebsite: string }) {
       <a href="/license" class="block p-2 hover:bg-accent rounded">
         License
       </a>
-      <a href={orgWebsite} class="block p-2 hover:bg-accent rounded text-xs text-muted-foreground">
-        {orgWebsite.replace('https://', '')}
+      <a
+        href={orgWebsite}
+        class="block p-2 hover:bg-accent rounded text-xs text-muted-foreground"
+      >
+        {orgWebsite.replace("https://", "")}
       </a>
     </nav>
   );
@@ -248,6 +267,7 @@ export function MinimalSidebar({ orgWebsite }: { orgWebsite: string }) {
 ### ONE_BACKEND=off (Default)
 
 **Behavior:**
+
 - No Convex connection attempts
 - No auth flows (signup, signin, etc.)
 - No database queries
@@ -284,6 +304,7 @@ if (!backendEnabled) {
 ### ONE_BACKEND=on (Optional)
 
 **When to enable:**
+
 - Need user authentication
 - Need database storage
 - Need real-time features
@@ -539,7 +560,7 @@ wrangler pages deploy dist
     "tests",
     "**/*.test.ts",
     "**/*.test.tsx",
-    "src/templates"  // ← Templates excluded from build
+    "src/templates" // ← Templates excluded from build
   ]
 }
 ```
@@ -626,6 +647,7 @@ User: "Add ecommerce store"
   - `ONE_BACKEND=off` (default)
 
 **Files Modified:**
+
 - `cli/src/utils/validation.ts` - Added reserved name validation
 - `cli/src/commands/init.ts` - Added validation to prompts
 - `cli/src/utils/installation-setup.ts` - Added `updateOrgEnvFile` function
@@ -640,10 +662,12 @@ User: "Add ecommerce store"
 - [x] Customer Org (ORG_NAME=acme): GetStartedPrompt
 
 **Files Created:**
+
 - `web/src/components/GetStartedPrompt.tsx` - Simple prompt interface
 - `web/src/components/MinimalSidebar.tsx` - Minimal navigation
 
 **Files Modified:**
+
 - `web/src/layouts/Layout.astro` - Conditional sidebar rendering
 - `web/src/pages/index.astro` - Conditional homepage rendering
 
@@ -655,6 +679,7 @@ User: "Add ecommerce store"
 - [x] `.env.local.example` template with comprehensive documentation
 
 **Files Created:**
+
 - `web/.env.local.example` - Complete configuration template with examples
 
 ### Phase 4: Documentation ✅ COMPLETE
@@ -718,6 +743,7 @@ Website: https://acme.com
 ## Next Steps
 
 1. **Test the flow:**
+
    ```bash
    cd cli && bun run build
    cd ../web && cp .env.local.example .env.local

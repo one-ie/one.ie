@@ -1,3 +1,22 @@
+---
+title: Todo Plans
+dimension: things
+primary_dimension: things
+category: todo-plans.md
+tags: agent, inference, ontology
+related_dimensions: events, groups, knowledge, people
+scope: global
+created: 2025-11-03
+updated: 2025-11-03
+version: 1.0.0
+ai_context: |
+  This document is part of the things dimension in the todo-plans.md category.
+  Location: one/things/todo-plans.md
+  Purpose: Documents plans content collection & 100-inference task management
+  Related dimensions: events, groups, knowledge, people
+  For AI agents: Read this to understand todo plans.
+---
+
 # Plans Content Collection & 100-Inference Task Management
 
 ## Overview
@@ -61,6 +80,7 @@ PlanSchema {
 Every feature follows this standard 100-inference sequence:
 
 ### **Infer 1-10: Foundation & Setup**
+
 - Understand requirements and constraints
 - Map feature to 6-dimension ontology (Groups, People, Things, Connections, Events, Knowledge)
 - Read relevant documentation and code patterns
@@ -68,54 +88,63 @@ Every feature follows this standard 100-inference sequence:
 - Identify dependencies and risks
 
 ### **Infer 11-20: Backend Schema & Services**
+
 - Design/update database schema (groups, things, connections, events, knowledge)
 - Create Effect.ts services (pure business logic)
 - Implement Convex mutations and queries
 - Add proper error handling and validation
 
 ### **Infer 21-30: Frontend Pages & Components**
+
 - Create React components with proper props/hooks
 - Build Astro pages with SSR data fetching
 - Implement loading and error states
 - Use shadcn/ui components for consistency
 
 ### **Infer 31-40: Integration & Connections**
+
 - Implement external system integrations
 - Connect protocols (A2A, ACP, AP2, X402, AG-UI)
 - Manage cross-platform data flows
 - Ensure bidirectional synchronization
 
 ### **Infer 41-50: Authentication & Authorization**
+
 - Implement security layers
 - Define role-based access control (RBAC)
 - Add permission validation
 - Audit logging for sensitive operations
 
 ### **Infer 51-60: Knowledge & RAG**
+
 - Create vector embeddings
 - Implement semantic search
 - Build RAG (Retrieval-Augmented Generation) features
 - Add knowledge categorization and tagging
 
 ### **Infer 61-70: Quality & Testing**
+
 - Write unit tests for services
 - Create integration tests for full flows
 - Implement end-to-end (E2E) tests
 - Achieve target code coverage (80%+)
 
 ### **Infer 71-80: Design & Wireframes**
+
 - Create UI/UX wireframes and mockups
 - Design component library additions
 - Ensure WCAG accessibility compliance
 - Apply brand identity and design tokens
 
 ### **Infer 81-90: Performance & Optimization**
+
 - Optimize database queries and indexes
 - Implement caching strategies
 - Reduce JavaScript bundle size
 - Profile and optimize rendering
 
 ### **Infer 91-100: Deployment & Documentation**
+
 - Write comprehensive documentation
 - Prepare changelog and release notes
 - Configure deployment pipelines
@@ -177,6 +206,7 @@ lessonsLearned:
 ### Viewing Plans
 
 Plans are available in the web application:
+
 - **Collection:** `/plans` - List all plans
 - **Individual:** `/plans/[slug]` - View specific plan with task breakdown
 - **Dashboard:** `/plans/dashboard` - Analytics and progress tracking
@@ -184,6 +214,7 @@ Plans are available in the web application:
 ### Integration with CLI Workflow
 
 Plans integrate with ONE CLI commands:
+
 - `/now` - Display current inference and context
 - `/next` - Advance to next inference
 - `/todo` - View complete plan
@@ -201,30 +232,35 @@ Plans integrate with ONE CLI commands:
 ## Examples
 
 ### Simple Linear Plan
+
 Inferences with no dependencies, sequential execution
 
 ### Complex Plan
+
 Inferences with dependencies enabling parallel work after foundation phase:
+
 - Infer 1-10: Foundation (sequential)
 - Infer 11-30: Backend + Frontend (parallel)
 - Infer 31+: Integration (depends on Backend + Frontend)
 
 ### Lightweight Plan
+
 Minimal tasks for well-understood features:
+
 - Skip irrelevant inferences
 - Combine related inferences
 - Mark as draft and iterate
 
 ## Benefits
 
-| Aspect | Traditional Planning | Inference-Based |
-|--------|----------------------|-----------------|
-| Unit | Days/weeks (variable) | Inference passes (fixed) |
-| Accuracy | Low (depends on estimation) | High (concrete steps) |
-| Parallelism | Sequential bias | Natural parallelism |
-| Context | Heavy (150k tokens) | Light (3k tokens) |
-| Speed | Slow (115s avg) | Fast (20s avg) |
-| Learning | Lost after project | Captured per inference |
+| Aspect      | Traditional Planning        | Inference-Based          |
+| ----------- | --------------------------- | ------------------------ |
+| Unit        | Days/weeks (variable)       | Inference passes (fixed) |
+| Accuracy    | Low (depends on estimation) | High (concrete steps)    |
+| Parallelism | Sequential bias             | Natural parallelism      |
+| Context     | Heavy (150k tokens)         | Light (3k tokens)        |
+| Speed       | Slow (115s avg)             | Fast (20s avg)           |
+| Learning    | Lost after project          | Captured per inference   |
 
 ## Related Files
 

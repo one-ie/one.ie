@@ -1,3 +1,21 @@
+---
+title: Integration Architecture
+dimension: events
+category: INTEGRATION-ARCHITECTURE.md
+tags: architecture, frontend, system-design
+related_dimensions: groups, knowledge, people, things
+scope: global
+created: 2025-11-03
+updated: 2025-11-03
+version: 1.0.0
+ai_context: |
+  This document is part of the events dimension in the INTEGRATION-ARCHITECTURE.md category.
+  Location: one/events/INTEGRATION-ARCHITECTURE.md
+  Purpose: Documents integration architecture - visual guide
+  Related dimensions: groups, knowledge, people, things
+  For AI agents: Read this to understand INTEGRATION ARCHITECTURE.
+---
+
 # Integration Architecture - Visual Guide
 
 **Integration Specialist Deliverable**

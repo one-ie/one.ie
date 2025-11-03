@@ -1,3 +1,21 @@
+---
+title: Api Reference
+dimension: connections
+category: api-reference.md
+tags: ai, auth, groups, knowledge
+related_dimensions: events, groups, knowledge, people, things
+scope: global
+created: 2025-11-03
+updated: 2025-11-03
+version: 1.0.0
+ai_context: |
+  This document is part of the connections dimension in the api-reference.md category.
+  Location: one/connections/api-reference.md
+  Purpose: Documents one platform api reference
+  Related dimensions: events, groups, knowledge, people, things
+  For AI agents: Read this to understand api reference.
+---
+
 # ONE Platform API Reference
 
 **Version:** 1.0.0

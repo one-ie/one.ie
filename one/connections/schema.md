@@ -1,3 +1,21 @@
+---
+title: Schema
+dimension: connections
+category: schema.md
+tags: ai, frontend
+related_dimensions: events, groups, knowledge, people, things
+scope: global
+created: 2025-11-03
+updated: 2025-11-03
+version: 1.0.0
+ai_context: |
+  This document is part of the connections dimension in the schema.md category.
+  Location: one/connections/schema.md
+  Purpose: Documents one platform - convex schema (plain convex)
+  Related dimensions: events, groups, knowledge, people, things
+  For AI agents: Read this to understand schema.
+---
+
 # ONE Platform - Convex Schema (Plain Convex)
 
 **Version**: 3.0.0 (Frontend Complete)

@@ -1,3 +1,21 @@
+---
+title: 1 3 Event Coordination
+dimension: things
+category: features
+tags: agent, ai, backend, events
+related_dimensions: connections, events, knowledge, people
+scope: global
+created: 2025-11-03
+updated: 2025-11-03
+version: 1.0.0
+ai_context: |
+  This document is part of the things dimension in the features category.
+  Location: one/things/features/1-3-event-coordination.md
+  Purpose: Documents feature 1-3: event coordination system
+  Related dimensions: connections, events, knowledge, people
+  For AI agents: Read this to understand 1 3 event coordination.
+---
+
 # Feature 1-3: Event Coordination System
 
 **Assigned to:** Backend Specialist Agent (agent-backend.md)
@@ -51,11 +69,13 @@ An event-driven coordination approach where agents create markdown event files w
 ## Ontology Types
 
 ### Things
+
 - `event` - State change in workflow
   - Properties: `type`, `actorId`, `targetId`, `metadata`, `timestamp`
   - Already exists in ontology
 
 ### Connections
+
 - `triggers` - Event triggers agent action
 - `logs` - Agent logs event
 - `monitors` - Agent monitors for events
@@ -63,24 +83,28 @@ An event-driven coordination approach where agents create markdown event files w
 ### Events (20+ workflow-specific event types)
 
 #### Workflow lifecycle
+
 - `workflow_started` - Orchestrator begins execution
 - `workflow_completed` - Full workflow finishes
 - `stage_started` - New workflow stage begins
 - `stage_completed` - Stage finishes
 
 #### Planning events
+
 - `idea_validated` - Director approved idea
 - `plan_started` - Director begins plan
 - `plan_completed` - Plan finished
 - `feature_assigned` - Specialist receives feature
 
 #### Feature development
+
 - `feature_started` - Specialist begins work
 - `feature_spec_complete` - Specification written
 - `implementation_started` - Code writing begins
 - `implementation_complete` - Code written
 
 #### Quality events
+
 - `quality_check_started` - Quality begins review
 - `quality_check_complete` - Review finished
 - `test_started` - Test execution begins
@@ -88,6 +112,7 @@ An event-driven coordination approach where agents create markdown event files w
 - `test_failed` - Test failed
 
 #### Problem solving
+
 - `problem_analysis_started` - Problem solver investigates
 - `solution_proposed` - Fix identified
 - `fix_started` - Specialist begins fix
@@ -95,10 +120,12 @@ An event-driven coordination approach where agents create markdown event files w
 - `lesson_learned_added` - Knowledge captured
 
 #### Documentation
+
 - `documentation_started` - Documenter begins
 - `documentation_complete` - Docs written
 
 #### Completion
+
 - `feature_complete` - Feature finished (milestone)
 - `task_started` - Individual task begins
 - `task_completed` - Individual task finishes
@@ -110,18 +137,21 @@ An event-driven coordination approach where agents create markdown event files w
 ### Creating Events (Simple Write)
 
 **When to create an event:**
+
 - After completing a significant workflow step
 - When an error occurs
 - When a milestone is reached
 - When another agent needs to know something happened
 
 **How Claude creates an event:**
+
 1. Determine event type from list below
 2. Create filename: `{timestamp}-{type}-{targetId}.md`
 3. Write markdown file using template (see Event File Format section)
 4. File goes to: `one/events/workflow/`
 
 **Example:**
+
 ```bash
 # Claude uses Write tool to create:
 # one/events/workflow/1736958600000-feature_started-1-1-agent-prompts.md
@@ -132,11 +162,13 @@ An event-driven coordination approach where agents create markdown event files w
 ### Querying Events (Simple Grep/Read)
 
 **When to check for events:**
+
 - Before starting work (check if prerequisites complete)
 - When deciding what to do next (check for pending work)
 - When debugging (review event sequence)
 
 **How Claude queries events:**
+
 ```bash
 # Find all test failures
 grep "test_failed" one/events/workflow/*.md
@@ -153,6 +185,7 @@ ls -t one/events/workflow/*-quality_check_complete-*.md | head -1
 ### Reacting to Events (Check & Act)
 
 **Agent prompts specify reactions:**
+
 - Example from agent-quality.md: "After implementation_complete event, start quality check"
 - Example from agent-problem-solver.md: "When test_failed event occurs, analyze failure"
 - Example from agent-documenter.md: "After feature_complete event, write documentation"
@@ -306,6 +339,7 @@ Director: feature_complete → feature:1-1
 **None.** This is a convention document for event files.
 
 Claude Code creates event files when needed:
+
 ```
 one/events/
 ├── workflow/                 # Event files (created by Claude as needed)
@@ -322,7 +356,7 @@ one/events/
 
 ## Event File Format
 
-```markdown
+````markdown
 # Event: feature_started
 
 **Type:** feature_started
@@ -340,6 +374,7 @@ one/events/
   "assignedTo": "backend-specialist"
 }
 ```
+````
 
 ## Context
 
@@ -350,6 +385,7 @@ Feature is part of Plan 1 (Create Workflow System).
 
 - Previous: `feature_assigned` at 2025-01-15T10:25:00Z
 - Next: `feature_spec_complete` (expected)
+
 ```
 
 ---
@@ -499,10 +535,13 @@ Feature is part of Plan 1 (Create Workflow System).
 
 **How it works:**
 ```
+
 Claude completes feature spec → Creates feature_spec_complete.md event
 Claude (as quality agent) → Greps for feature_spec_complete events
 Claude finds feature 1-1 ready → Reads event, starts quality check
 Claude logs quality_check_started.md → Audit trail complete
+
 ```
 
 **No event infrastructure code. Just markdown files + conventions.** 🎯
+```

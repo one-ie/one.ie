@@ -1,3 +1,21 @@
+---
+title: Patterns
+dimension: connections
+category: patterns.md
+tags: 
+related_dimensions: events, people, things
+scope: global
+created: 2025-11-03
+updated: 2025-11-03
+version: 1.0.0
+ai_context: |
+  This document is part of the connections dimension in the patterns.md category.
+  Location: one/connections/patterns.md
+  Purpose: Documents patterns (canonical)
+  Related dimensions: events, people, things
+  For AI agents: Read this to understand patterns.
+---
+
 # Patterns (Canonical)
 
 Canonical connection patterns for common platform behaviors.

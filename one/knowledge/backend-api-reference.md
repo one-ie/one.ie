@@ -1,3 +1,21 @@
+---
+title: Backend Api Reference
+dimension: knowledge
+category: backend-api-reference.md
+tags: ai, backend, convex, groups, ontology
+related_dimensions: events, groups, people, things
+scope: global
+created: 2025-11-03
+updated: 2025-11-03
+version: 1.0.0
+ai_context: |
+  This document is part of the knowledge dimension in the backend-api-reference.md category.
+  Location: one/knowledge/backend-api-reference.md
+  Purpose: Documents backend api reference - quick guide
+  Related dimensions: events, groups, people, things
+  For AI agents: Read this to understand backend api reference.
+---
+
 # Backend API Reference - Quick Guide
 
 **Status:** Production-Ready

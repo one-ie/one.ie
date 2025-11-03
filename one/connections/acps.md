@@ -1,3 +1,21 @@
+---
+title: Acps
+dimension: connections
+category: acps.md
+tags: agent, ai, ontology, protocol
+related_dimensions: events, people, things
+scope: global
+created: 2025-11-03
+updated: 2025-11-03
+version: 1.0.0
+ai_context: |
+  This document is part of the connections dimension in the acps.md category.
+  Location: one/connections/acps.md
+  Purpose: Documents acpayments - agent collaboration payment system
+  Related dimensions: events, people, things
+  For AI agents: Read this to understand acps.
+---
+
 # ACPayments - Agent Collaboration Payment System
 
 **Version:** 2.0.0

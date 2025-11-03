@@ -1,3 +1,19 @@
+---
+title: Integration Example
+dimension: things
+category: docs
+tags: ai
+scope: global
+created: 2025-11-03
+updated: 2025-11-03
+version: 1.0.0
+ai_context: |
+  This document is part of the things dimension in the docs category.
+  Location: one/things/docs/ecommerce/INTEGRATION-EXAMPLE.md
+  Purpose: Documents product page conversion elements - integration examples
+  For AI agents: Read this to understand INTEGRATION EXAMPLE.
+---
+
 # Product Page Conversion Elements - Integration Examples
 
 ## Quick Integration Guide
@@ -8,14 +24,14 @@ The QuickViewModal is already integrated into ProductCard.tsx. No additional wor
 
 ```tsx
 // ProductCard.tsx already includes:
-import { QuickViewModal } from './QuickViewModal';
+import { QuickViewModal } from "./QuickViewModal";
 
 // At the end of component:
 <QuickViewModal
   product={product}
   open={showQuickView}
   onOpenChange={setShowQuickView}
-/>
+/>;
 ```
 
 ### 2. Product Detail Page - Complete Example
@@ -200,6 +216,7 @@ const product = {
 ### 3. Size Guide Integration Options
 
 #### Option A: Trigger from Link
+
 ```tsx
 // In your component
 const [showSizeGuide, setShowSizeGuide] = useState(false);
@@ -219,6 +236,7 @@ const [showSizeGuide, setShowSizeGuide] = useState(false);
 ```
 
 #### Option B: Global Size Guide Link
+
 ```astro
 <!-- In your layout footer or header -->
 <button id="size-guide-trigger" data-product-type="apparel">
@@ -290,8 +308,8 @@ const handleQuickView = () => {
   setShowQuickView(true);
 
   // Track event
-  if (typeof window !== 'undefined' && window.gtag) {
-    window.gtag('event', 'quick_view', {
+  if (typeof window !== "undefined" && window.gtag) {
+    window.gtag("event", "quick_view", {
       product_id: product.id,
       product_name: product.name,
     });
@@ -303,9 +321,9 @@ const handleSizeGuideOpen = () => {
   setShowSizeGuide(true);
 
   // Track event
-  if (typeof window !== 'undefined' && window.gtag) {
-    window.gtag('event', 'size_guide_open', {
-      product_type: 'apparel',
+  if (typeof window !== "undefined" && window.gtag) {
+    window.gtag("event", "size_guide_open", {
+      product_type: "apparel",
     });
   }
 };
@@ -315,12 +333,12 @@ const handleSizeGuideOpen = () => {
   product={product}
   onAddToCart={() => {
     // Track conversion from sticky bar
-    window.gtag?.('event', 'add_to_cart_sticky', {
+    window.gtag?.("event", "add_to_cart_sticky", {
       product_id: product.id,
       value: product.price,
     });
   }}
-/>
+/>;
 ```
 
 ### 8. A/B Testing Setup
@@ -329,43 +347,41 @@ Test different trigger points and behaviors:
 
 ```tsx
 // Example: Test scroll threshold
-const stickyBarVariant = Math.random() > 0.5 ? 'early' : 'late';
+const stickyBarVariant = Math.random() > 0.5 ? "early" : "late";
 
 <StickyCartBar
   product={product}
   triggerElementId={
-    stickyBarVariant === 'early'
-      ? 'product-title'
-      : 'variant-selector'
+    stickyBarVariant === "early" ? "product-title" : "variant-selector"
   }
-/>
+/>;
 ```
 
 ### 9. Performance Optimization
 
 ```tsx
 // Lazy load modals
-import { lazy, Suspense } from 'react';
+import { lazy, Suspense } from "react";
 
 const SizeGuideModal = lazy(() =>
-  import('./SizeGuideModal').then(m => ({ default: m.SizeGuideModal }))
+  import("./SizeGuideModal").then((m) => ({ default: m.SizeGuideModal })),
 );
 
 // Use with Suspense
 <Suspense fallback={<div>Loading...</div>}>
   <SizeGuideModal {...props} />
-</Suspense>
+</Suspense>;
 ```
 
 ### 10. Error Handling
 
 ```tsx
 // Add error boundaries
-import { ErrorBoundary } from '@/components/ErrorBoundary';
+import { ErrorBoundary } from "@/components/ErrorBoundary";
 
 <ErrorBoundary fallback={<div>Something went wrong</div>}>
   <ProductGallery images={product.images} productName={product.name} />
-</ErrorBoundary>
+</ErrorBoundary>;
 ```
 
 ---
@@ -373,6 +389,7 @@ import { ErrorBoundary } from '@/components/ErrorBoundary';
 ## Common Patterns
 
 ### Pattern 1: Product Card Grid with Quick View
+
 ```astro
 ---
 const products = await fetchProducts();
@@ -386,11 +403,13 @@ const products = await fetchProducts();
 ```
 
 ### Pattern 2: Product Detail with All Features
+
 ```astro
 <!-- See complete example above in section 2 -->
 ```
 
 ### Pattern 3: Category Page with Filters
+
 ```astro
 ---
 import { FilterSidebar } from '@/components/ecommerce/interactive/FilterSidebar';
@@ -412,22 +431,26 @@ import { ProductGrid } from '@/components/ecommerce/static/ProductGrid';
 ## Troubleshooting
 
 ### Quick View Not Opening
+
 - Check that `showQuickView` state is managed correctly
 - Verify `client:load` is added to ProductCard
 - Check browser console for errors
 
 ### Sticky Bar Not Appearing
+
 - Verify `id="variant-selector"` exists on trigger element
 - Check that component has `client:load` directive
 - Test on mobile device or resize browser window
 - Ensure element is in the DOM before scroll
 
 ### Image Zoom Not Working
+
 - Verify `client:load` on ProductGallery
 - Check that images array is not empty
 - Test click events in browser console
 
 ### Size Guide Table Overflow
+
 - Add `overflow-x-auto` to table wrapper
 - Reduce font size on mobile
 - Consider horizontal scroll indicator
@@ -443,6 +466,7 @@ import { ProductGrid } from '@/components/ecommerce/static/ProductGrid';
 5. Monitor conversion rate improvements
 
 Expected results based on industry benchmarks:
+
 - 15-20% increase in add-to-cart rate (quick view)
 - 25-30% reduction in returns (size guide)
 - 10-15% increase in mobile conversions (sticky bar)

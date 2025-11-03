@@ -1,3 +1,21 @@
+---
+title: People
+dimension: people
+category: people.md
+tags: ai, people, roles
+related_dimensions: groups, things
+scope: global
+created: 2025-11-03
+updated: 2025-11-03
+version: 1.0.0
+ai_context: |
+  This document is part of the people dimension in the people.md category.
+  Location: one/people/people.md
+  Purpose: Documents people: creators, owners & users
+  Related dimensions: groups, things
+  For AI agents: Read this to understand people.
+---
+
 # People: Creators, Owners & Users
 
 **People customize AI generation within organizations.**
@@ -43,6 +61,7 @@ For details on the platform owner Anthony O'Connell, see **[Anthony O'Connell â†
 ## Platform Owner
 
 **Owner:** Anthony O'Connell
+
 - **Entity Type:** `creator` with `properties.role = "platform_owner"`
 - **Ownership:** 100% of ONE smart contracts, IP, and infrastructure
 - **URL:** https://one.ie
@@ -135,6 +154,7 @@ For details on the platform owner Anthony O'Connell, see **[Anthony O'Connell â†
 ## Org Owner
 
 **Role:** `"org_owner"`
+
 - Manages an organization
 - Full control over org settings, billing, members
 - Can invite org users
@@ -196,6 +216,7 @@ For details on the platform owner Anthony O'Connell, see **[Anthony O'Connell â†
 ## Org User
 
 **Role:** `"org_user"`
+
 - Works within an organization
 - Limited permissions (no billing access)
 - Can create content and use tools
@@ -250,6 +271,7 @@ For details on the platform owner Anthony O'Connell, see **[Anthony O'Connell â†
 ## Customer / Audience Member
 
 **Type:** `"audience_member"`
+
 - Consumes content created by creators
 - Purchases products and services
 - Interacts with AI clones
@@ -321,19 +343,19 @@ For details on the platform owner Anthony O'Connell, see **[Anthony O'Connell â†
 
 ```typescript
 type Permission =
-  | "*"           // All permissions (platform_owner only)
-  | "read"        // Read org resources
-  | "write"       // Create/edit org resources
-  | "admin"       // Manage org users
-  | "billing"     // Manage org billing & subscription
-  | "settings";   // Change org settings
+  | "*" // All permissions (platform_owner only)
+  | "read" // Read org resources
+  | "write" // Create/edit org resources
+  | "admin" // Manage org users
+  | "billing" // Manage org billing & subscription
+  | "settings"; // Change org settings
 
 // Role â†’ Permissions mapping
 const rolePermissions = {
   platform_owner: ["*"],
   org_owner: ["read", "write", "admin", "billing", "settings"],
   org_user: ["read", "write"],
-  customer: [],  // No org permissions
+  customer: [], // No org permissions
 };
 ```
 
@@ -344,7 +366,7 @@ const rolePermissions = {
 export const hasPermission = async (
   userId: Id<"things">,
   organizationId: Id<"things">,
-  required: Permission
+  required: Permission,
 ) => {
   // Get user
   const user = await db.get(userId);
@@ -357,10 +379,11 @@ export const hasPermission = async (
   // Get membership
   const membership = await db
     .query("connections")
-    .withIndex("from_type", q =>
-      q.eq("fromThingId", userId)
-       .eq("toThingId", organizationId)
-       .eq("relationshipType", "member_of")
+    .withIndex("from_type", (q) =>
+      q
+        .eq("fromThingId", userId)
+        .eq("toThingId", organizationId)
+        .eq("relationshipType", "member_of"),
     )
     .first();
 
@@ -391,7 +414,7 @@ await db.insert("events", {
     role: "org_user",
     permissions: ["read", "write"],
     inviteToken,
-    expiresAt: Date.now() + 7 * 24 * 60 * 60 * 1000,  // 7 days
+    expiresAt: Date.now() + 7 * 24 * 60 * 60 * 1000, // 7 days
   },
 });
 
@@ -453,58 +476,58 @@ await db.insert("events", {
 ## User Queries
 
 **Get user's organizations:**
+
 ```typescript
 const orgs = await db
   .query("connections")
-  .withIndex("from_type", q =>
-    q.eq("fromThingId", userId)
-     .eq("relationshipType", "member_of")
+  .withIndex("from_type", (q) =>
+    q.eq("fromThingId", userId).eq("relationshipType", "member_of"),
   )
   .collect();
 
-const orgEntities = await Promise.all(
-  orgs.map(c => db.get(c.toThingId))
-);
+const orgEntities = await Promise.all(orgs.map((c) => db.get(c.toThingId)));
 ```
 
 **Get organization members:**
+
 ```typescript
 const members = await db
   .query("connections")
-  .withIndex("to_type", q =>
-    q.eq("toThingId", organizationId)
-     .eq("relationshipType", "member_of")
+  .withIndex("to_type", (q) =>
+    q.eq("toThingId", organizationId).eq("relationshipType", "member_of"),
   )
   .collect();
 
 const memberEntities = await Promise.all(
-  members.map(c => db.get(c.fromThingId))
+  members.map((c) => db.get(c.fromThingId)),
 );
 ```
 
 **Get user's content:**
+
 ```typescript
 const content = await db
   .query("connections")
-  .withIndex("from_type", q =>
-    q.eq("fromThingId", userId)
-     .eq("relationshipType", "authored")
+  .withIndex("from_type", (q) =>
+    q.eq("fromThingId", userId).eq("relationshipType", "authored"),
   )
   .collect();
 
 const contentEntities = await Promise.all(
-  content.map(c => db.get(c.toThingId))
+  content.map((c) => db.get(c.toThingId)),
 );
 ```
 
 **Check if user is org owner:**
+
 ```typescript
 const membership = await db
   .query("connections")
-  .withIndex("from_type", q =>
-    q.eq("fromThingId", userId)
-     .eq("toThingId", organizationId)
-     .eq("relationshipType", "member_of")
+  .withIndex("from_type", (q) =>
+    q
+      .eq("fromThingId", userId)
+      .eq("toThingId", organizationId)
+      .eq("relationshipType", "member_of"),
   )
   .first();
 

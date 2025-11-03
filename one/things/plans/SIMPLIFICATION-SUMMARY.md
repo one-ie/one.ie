@@ -1,3 +1,21 @@
+---
+title: Simplification Summary
+dimension: things
+category: plans
+tags: architecture, frontend
+related_dimensions: connections, events
+scope: global
+created: 2025-11-03
+updated: 2025-11-03
+version: 1.0.0
+ai_context: |
+  This document is part of the things dimension in the plans category.
+  Location: one/things/plans/SIMPLIFICATION-SUMMARY.md
+  Purpose: Documents architecture simplification: executive summary
+  Related dimensions: connections, events
+  For AI agents: Read this to understand SIMPLIFICATION SUMMARY.
+---
+
 # Architecture Simplification: Executive Summary
 
 ## Problem Statement
@@ -37,36 +55,42 @@ Convex client API ← ACTUAL DATABASE
 ## What's Being Removed
 
 ### 1. DataProvider.ts (411 LOC)
+
 - **Problem:** Defines interface for swapping Convex/Mock/REST providers
 - **Reality:** Always uses Convex, never swapped
 - **Contains:** 30+ error classes (200 LOC of 411)
 - **Action:** Delete - use Convex types directly from `_generated`
 
 ### 2. ConvexProvider.ts (363 LOC)
+
 - **Problem:** Thin wrapper converting Convex Promises to Effect.Effect
 - **Reality:** ~1ms overhead per operation
 - **Contains:** 50+ identical toEffect() patterns
 - **Action:** Delete - direct Convex hooks in React components
 
 ### 3. ClientLayer.ts (76 LOC)
+
 - **Problem:** Effect.ts dependency injection combining 6 services
 - **Reality:** Never uses alternate providers
 - **Contains:** Layer.provideMerge() + StubProvider + provideLayer()
 - **Action:** Delete - no DI context needed
 
 ### 4. Services/ Directory (400+ LOC)
+
 - **Problem:** 6 service files (ThingService, ConnectionService, etc.)
 - **Reality:** Each is pure passthrough to DataProvider
 - **Contains:** Context.Tag + Layer.effect + static method wrappers
 - **Action:** Replace with utility functions in hooks
 
 ### 5. useEffectRunner.ts (36 LOC)
+
 - **Problem:** Wraps Effect.ts execution for React
 - **Reality:** Used in every hook, adds unnecessary complexity
 - **Contains:** Loading/error state management (React's job)
 - **Action:** Delete - use Convex hooks directly
 
 ### 6. EffectContext.tsx (28 LOC)
+
 - **Problem:** React context for Layer injection
 - **Reality:** Only ever provides ClientLayer
 - **Action:** Delete - no context needed
@@ -76,6 +100,7 @@ Convex client API ← ACTUAL DATABASE
 ## Impact by Numbers
 
 ### Code Reduction
+
 - **DataProvider.ts:** 411 LOC deleted
 - **ConvexProvider.ts:** 363 LOC deleted
 - **ClientLayer.ts:** 76 LOC deleted
@@ -85,11 +110,13 @@ Convex client API ← ACTUAL DATABASE
 - **Total:** 1,314+ LOC **deleted**
 
 ### Hooks Expansion (Minimal)
+
 - **Current hooks:** 300 LOC (mostly TODOs/stubs)
 - **Simplified hooks:** 400-500 LOC (full implementation)
 - **Net gain:** 100-200 LOC (worth the readability)
 
 ### Net Result
+
 - **Total code change:** -800 to -1,100 LOC (70% reduction)
 - **Cognitive load:** 50% reduction (2 frameworks instead of 7)
 - **Development speed:** 30-50% faster feature development
@@ -169,6 +196,7 @@ const handleCreate = async (input) => {
 **Good News:** This is a **non-breaking change** in phases.
 
 ### Migration Strategy
+
 1. **Phase 1:** Create new simplified hooks alongside old ones (1-2 weeks)
 2. **Phase 2:** Migrate features one-by-one (2-3 weeks)
 3. **Phase 3:** Delete old code when confident (1 week)
@@ -176,6 +204,7 @@ const handleCreate = async (input) => {
 **At each phase:** Both implementations coexist → zero risk
 
 ### Who's Affected?
+
 - Internal ONE Platform (web)
 - External apps (if using DataProvider directly)
   - Check `/apps/` for real usage
@@ -186,11 +215,13 @@ const handleCreate = async (input) => {
 ## Key Findings: Why This Over-Engineering Exists
 
 ### Original Intent
+
 - Support swappable backends (Convex, REST, Mock)
 - Enable testing with mock providers
 - Future-proof for multi-backend architecture
 
 ### Reality Check
+
 - ✅ **Interface exists:** DataProvider.ts (411 LOC)
 - ❌ **Mock provider:** Never implemented
 - ❌ **REST provider:** Never implemented
@@ -198,6 +229,7 @@ const handleCreate = async (input) => {
 - ❌ **Backend swapping:** Never happens in production
 
 ### Conclusion
+
 The abstraction saved development time for a feature that was never built.
 
 ---
@@ -205,6 +237,7 @@ The abstraction saved development time for a feature that was never built.
 ## Error Handling Improvement
 
 ### Current (30+ Error Classes)
+
 ```typescript
 export class ThingNotFoundError extends Data.TaggedError("ThingNotFoundError")<{
   id: string;
@@ -222,27 +255,30 @@ export class ThingUpdateError extends Data.TaggedError("ThingUpdateError")<{
 ```
 
 **Problems:**
+
 - 411 LOC of error definitions
 - Learning curve (Effect.ts tagged unions)
 - Hard to test (mock Data.TaggedError)
 - Scattered across codebase
 
 ### Simplified (Standard Error)
+
 ```typescript
 // Use standard JavaScript Error everywhere
 if (!input.name?.trim()) {
-  throw new Error('Name is required');
+  throw new Error("Name is required");
 }
 
 // Component handles errors
 try {
   await create(input);
 } catch (err) {
-  setError(err instanceof Error ? err.message : 'Unknown');
+  setError(err instanceof Error ? err.message : "Unknown");
 }
 ```
 
 **Benefits:**
+
 - 0 LOC of error definitions
 - Standard error handling (everyone knows Error)
 - Easy to test (mock Error)
@@ -253,6 +289,7 @@ try {
 ## Testing Improvements
 
 ### Current Approach
+
 1. Mock entire DataProvider interface (50+ LOC)
 2. Define Effect.succeed() for each method
 3. Create TestWrapper with Layer.succeed()
@@ -262,6 +299,7 @@ try {
 **Boilerplate-to-test ratio:** 50:5 (10:1)
 
 ### Simplified Approach
+
 1. Mock Convex hooks with vi.mock()
 2. Return mock data from useMutation/useQuery
 3. Render hook normally
@@ -274,6 +312,7 @@ try {
 ## Technology Stack Simplification
 
 ### Current Stack (7 Frameworks)
+
 - React 19
 - Convex
 - Effect.ts
@@ -285,6 +324,7 @@ try {
 **Learning burden:** 4 frameworks to learn just to use data layer
 
 ### Simplified Stack (2 Frameworks)
+
 - React 19
 - Convex
 - TypeScript
@@ -298,12 +338,14 @@ try {
 ## One-Time Cost vs Ongoing Benefit
 
 ### One-Time Migration Cost
+
 - Refactor 15-20 hooks: ~1-2 weeks
 - Delete abstraction layers: ~1 day
 - Update tests: ~1 week
 - **Total:** 3-4 weeks of engineering time
 
 ### Ongoing Benefit
+
 - 30-50% faster feature development (forever)
 - 50% lower cognitive load (forever)
 - Easier onboarding for new developers (forever)
@@ -316,6 +358,7 @@ try {
 ## Success Criteria
 
 ### Metrics to Track
+
 - **Code lines:** 1,300+ LOC → 500- LOC
 - **Hook implementation time:** 30 min → 10 min per hook
 - **Test setup time:** 20 min → 5 min per hook
@@ -323,6 +366,7 @@ try {
 - **Onboarding time:** New developer learning curve measured
 
 ### Definition of Done
+
 - [ ] All hooks migrated to direct Convex
 - [ ] No useEffectRunner usage in codebase
 - [ ] DataProvider, ConvexProvider, ClientLayer deleted
@@ -336,12 +380,14 @@ try {
 ## Implementation Timeline
 
 ### Week 1: Infrastructure (Infer 1-10)
+
 - Create new hook templates
 - Set up parallel implementations
 - Plan migration path
 - **Output:** Ready to migrate
 
 ### Weeks 2-3: Feature Migration (Infer 11-50)
+
 - Migrate Thing operations
 - Migrate Group operations
 - Migrate Connection operations
@@ -349,12 +395,14 @@ try {
 - **Output:** 50% of hooks converted
 
 ### Weeks 3-4: Completion (Infer 51-80)
+
 - Migrate remaining hooks
 - Flatten services
 - Delete abstraction layers
 - **Output:** 100% simplified, tests passing
 
 ### Week 4: Validation (Infer 81-100)
+
 - Confidence testing
 - Performance validation
 - Developer feedback
@@ -405,4 +453,3 @@ The current architecture is **over-engineered for a feature that doesn't exist.*
 3. **This document** - Executive summary
 
 All files in `/one/things/plans/` for centralized documentation.
-

@@ -1,3 +1,21 @@
+---
+title: Sdk
+dimension: things
+category: products
+tags: ai, backend, installation
+related_dimensions: groups, people
+scope: global
+created: 2025-11-03
+updated: 2025-11-03
+version: 1.0.0
+ai_context: |
+  This document is part of the things dimension in the products category.
+  Location: one/things/products/sdk.md
+  Purpose: Documents one platform sdk
+  Related dimensions: groups, people
+  For AI agents: Read this to understand sdk.
+---
+
 # ONE Platform SDK
 
 **Simple, type-safe access to the ONE platform from any JavaScript/TypeScript application**
@@ -12,19 +30,19 @@ npm install @oneie/sdk effect
 
 ```typescript
 // Configure once
-import { OneBackendProvider } from '@oneie/sdk'
+import { OneBackendProvider } from "@oneie/sdk";
 
 const app = OneBackendProvider({
-  apiUrl: 'https://api.one.ie',
+  apiUrl: "https://api.one.ie",
   apiKey: process.env.ONE_API_KEY,
-  organizationId: process.env.ONE_ORG_ID
-})
+  organizationId: process.env.ONE_ORG_ID,
+});
 
 // Use anywhere
 const user = await app.auth.signUp({
-  email: 'user@example.com',
-  password: 'secure-password'
-})
+  email: "user@example.com",
+  password: "secure-password",
+});
 ```
 
 That's it. Auth, database, real-time, and AI—all included.
@@ -38,6 +56,7 @@ npm install @oneie/sdk effect
 ```
 
 **Peer dependencies:**
+
 - `effect` - For type-safe operations
 
 ---
@@ -57,13 +76,13 @@ ONE_API_URL=https://api.one.ie  # Optional, defaults to production
 
 ```typescript
 // src/lib/one.ts
-import { OneBackendProvider } from '@oneie/sdk'
+import { OneBackendProvider } from "@oneie/sdk";
 
 export const one = OneBackendProvider({
-  apiUrl: process.env.ONE_API_URL || 'https://api.one.ie',
+  apiUrl: process.env.ONE_API_URL || "https://api.one.ie",
   apiKey: process.env.ONE_API_KEY!,
-  organizationId: process.env.ONE_ORG_ID!
-})
+  organizationId: process.env.ONE_ORG_ID!,
+});
 ```
 
 ---
@@ -73,52 +92,52 @@ export const one = OneBackendProvider({
 ### Sign Up
 
 ```typescript
-import { Effect } from 'effect'
-import { one } from './lib/one'
+import { Effect } from "effect";
+import { one } from "./lib/one";
 
 const signUp = Effect.gen(function* () {
-  const auth = yield* one.auth
+  const auth = yield* one.auth;
 
   return yield* auth.signUp({
-    email: 'user@example.com',
-    password: 'secure-password',
-    name: 'John Doe'
-  })
-})
+    email: "user@example.com",
+    password: "secure-password",
+    name: "John Doe",
+  });
+});
 
-const user = await Effect.runPromise(signUp)
+const user = await Effect.runPromise(signUp);
 ```
 
 ### Sign In
 
 ```typescript
 const signIn = Effect.gen(function* () {
-  const auth = yield* one.auth
+  const auth = yield* one.auth;
 
   return yield* auth.signIn({
-    email: 'user@example.com',
-    password: 'secure-password'
-  })
-})
+    email: "user@example.com",
+    password: "secure-password",
+  });
+});
 
-const user = await Effect.runPromise(signIn)
+const user = await Effect.runPromise(signIn);
 ```
 
 ### OAuth (Google, GitHub, Apple)
 
 ```typescript
 // Redirect to OAuth provider
-const oauthUrl = one.auth.getOAuthUrl('google', {
-  redirectUrl: 'https://yourapp.com/auth/callback'
-})
+const oauthUrl = one.auth.getOAuthUrl("google", {
+  redirectUrl: "https://yourapp.com/auth/callback",
+});
 
 // Handle callback
 const handleCallback = Effect.gen(function* () {
-  const auth = yield* one.auth
-  const code = new URLSearchParams(window.location.search).get('code')
+  const auth = yield* one.auth;
+  const code = new URLSearchParams(window.location.search).get("code");
 
-  return yield* auth.handleOAuthCallback('google', code)
-})
+  return yield* auth.handleOAuthCallback("google", code);
+});
 ```
 
 ---
@@ -130,50 +149,50 @@ const handleCallback = Effect.gen(function* () {
 ```typescript
 // Create
 const createProduct = Effect.gen(function* () {
-  const things = yield* one.things
+  const things = yield* one.things;
 
   return yield* things.create({
-    type: 'product',
-    name: 'Widget',
+    type: "product",
+    name: "Widget",
     properties: {
       price: 29.99,
-      stock: 100
-    }
-  })
-})
+      stock: 100,
+    },
+  });
+});
 
 // List
 const listProducts = Effect.gen(function* () {
-  const things = yield* one.things
+  const things = yield* one.things;
 
   return yield* things.list({
-    type: 'product',
+    type: "product",
     filters: {
-      'properties.price': { $lte: 50 }
-    }
-  })
-})
+      "properties.price": { $lte: 50 },
+    },
+  });
+});
 
 // Get
 const getProduct = (id: string) =>
   Effect.gen(function* () {
-    const things = yield* one.things
-    return yield* things.get(id)
-  })
+    const things = yield* one.things;
+    return yield* things.get(id);
+  });
 
 // Update
 const updateProduct = (id: string, updates: any) =>
   Effect.gen(function* () {
-    const things = yield* one.things
-    return yield* things.update(id, updates)
-  })
+    const things = yield* one.things;
+    return yield* things.update(id, updates);
+  });
 
 // Delete
 const deleteProduct = (id: string) =>
   Effect.gen(function* () {
-    const things = yield* one.things
-    return yield* things.delete(id)
-  })
+    const things = yield* one.things;
+    return yield* things.delete(id);
+  });
 ```
 
 ### Connections (Relationships)
@@ -182,29 +201,29 @@ const deleteProduct = (id: string) =>
 // Create connection
 const purchaseProduct = (userId: string, productId: string) =>
   Effect.gen(function* () {
-    const connections = yield* one.connections
+    const connections = yield* one.connections;
 
     return yield* connections.create({
       fromPersonId: userId,
       toThingId: productId,
-      relationshipType: 'purchased',
+      relationshipType: "purchased",
       metadata: {
         price: 29.99,
-        date: Date.now()
-      }
-    })
-  })
+        date: Date.now(),
+      },
+    });
+  });
 
 // List connections
 const getUserPurchases = (userId: string) =>
   Effect.gen(function* () {
-    const connections = yield* one.connections
+    const connections = yield* one.connections;
 
     return yield* connections.list({
       fromPersonId: userId,
-      relationshipType: 'purchased'
-    })
-  })
+      relationshipType: "purchased",
+    });
+  });
 ```
 
 ### Events (Audit Trail)
@@ -212,17 +231,17 @@ const getUserPurchases = (userId: string) =>
 ```typescript
 // Log event
 const logEvent = Effect.gen(function* () {
-  const events = yield* one.events
+  const events = yield* one.events;
 
   return yield* events.log({
-    type: 'page_view',
-    actorId: 'person_123',
+    type: "page_view",
+    actorId: "person_123",
     metadata: {
-      page: '/products',
-      duration: 5000
-    }
-  })
-})
+      page: "/products",
+      duration: 5000,
+    },
+  });
+});
 ```
 
 ### Knowledge (AI/Vector Search)
@@ -230,24 +249,24 @@ const logEvent = Effect.gen(function* () {
 ```typescript
 // Index content
 const indexContent = Effect.gen(function* () {
-  const knowledge = yield* one.knowledge
+  const knowledge = yield* one.knowledge;
 
   return yield* knowledge.create({
-    text: 'Product documentation for Widget...',
-    labels: ['docs', 'product']
-  })
-})
+    text: "Product documentation for Widget...",
+    labels: ["docs", "product"],
+  });
+});
 
 // Search
 const searchDocs = (query: string) =>
   Effect.gen(function* () {
-    const knowledge = yield* one.knowledge
+    const knowledge = yield* one.knowledge;
 
     return yield* knowledge.query({
       query,
-      k: 5  // Top 5 results
-    })
-  })
+      k: 5, // Top 5 results
+    });
+  });
 ```
 
 ---
@@ -256,15 +275,12 @@ const searchDocs = (query: string) =>
 
 ```typescript
 // Subscribe to changes
-const subscription = one.things.subscribe(
-  { type: 'product' },
-  (products) => {
-    console.log('Products updated:', products)
-  }
-)
+const subscription = one.things.subscribe({ type: "product" }, (products) => {
+  console.log("Products updated:", products);
+});
 
 // Unsubscribe
-subscription.unsubscribe()
+subscription.unsubscribe();
 ```
 
 ---
@@ -272,11 +288,11 @@ subscription.unsubscribe()
 ## Error Handling
 
 ```typescript
-import { Effect } from 'effect'
+import { Effect } from "effect";
 
 const program = Effect.gen(function* () {
-  const things = yield* one.things
-  return yield* things.get('product_123')
+  const things = yield* one.things;
+  return yield* things.get("product_123");
 }).pipe(
   // Retry on failure
   Effect.retry({ times: 3 }),
@@ -285,10 +301,10 @@ const program = Effect.gen(function* () {
   Effect.catchAll(() => Effect.succeed(null)),
 
   // Timeout
-  Effect.timeout('5 seconds')
-)
+  Effect.timeout("5 seconds"),
+);
 
-const result = await Effect.runPromise(program)
+const result = await Effect.runPromise(program);
 ```
 
 ---
@@ -297,28 +313,28 @@ const result = await Effect.runPromise(program)
 
 ```typescript
 // src/hooks/useOne.ts
-import { useEffect, useState } from 'react'
-import { Effect } from 'effect'
-import { one } from '../lib/one'
+import { useEffect, useState } from "react";
+import { Effect } from "effect";
+import { one } from "../lib/one";
 
 export function useThings<T>(type: string) {
-  const [data, setData] = useState<T[]>([])
-  const [loading, setLoading] = useState(true)
-  const [error, setError] = useState<Error | null>(null)
+  const [data, setData] = useState<T[]>([]);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState<Error | null>(null);
 
   useEffect(() => {
     const program = Effect.gen(function* () {
-      const things = yield* one.things
-      return yield* things.list({ type })
-    })
+      const things = yield* one.things;
+      return yield* things.list({ type });
+    });
 
     Effect.runPromise(program)
       .then(setData)
       .catch(setError)
-      .finally(() => setLoading(false))
-  }, [type])
+      .finally(() => setLoading(false));
+  }, [type]);
 
-  return { data, loading, error }
+  return { data, loading, error };
 }
 ```
 
@@ -347,9 +363,9 @@ function ProductList() {
 
 ```typescript
 interface Config {
-  apiUrl: string          // API endpoint
-  apiKey: string          // Your API key
-  organizationId: string  // Your organization ID
+  apiUrl: string; // API endpoint
+  apiKey: string; // Your API key
+  organizationId: string; // Your organization ID
 }
 ```
 
@@ -392,16 +408,16 @@ interface Config {
 Full TypeScript support with inferred types:
 
 ```typescript
-import type { Thing, Connection, Event } from '@oneie/sdk'
+import type { Thing, Connection, Event } from "@oneie/sdk";
 
 const product: Thing = {
-  _id: 'product_123',
-  type: 'product',
-  name: 'Widget',
+  _id: "product_123",
+  type: "product",
+  name: "Widget",
   properties: {
-    price: 29.99
-  }
-}
+    price: 29.99,
+  },
+};
 ```
 
 ---
@@ -411,19 +427,19 @@ const product: Thing = {
 Switch between local backend and ONE's managed backend:
 
 ```typescript
-import { OneBackendProvider, LocalBackendProvider } from '@oneie/sdk'
+import { OneBackendProvider, LocalBackendProvider } from "@oneie/sdk";
 
-const isLocal = process.env.USE_LOCAL_BACKEND === 'true'
+const isLocal = process.env.USE_LOCAL_BACKEND === "true";
 
 export const one = isLocal
   ? LocalBackendProvider({
-      convexUrl: process.env.CONVEX_URL
+      convexUrl: process.env.CONVEX_URL,
     })
   : OneBackendProvider({
       apiUrl: process.env.ONE_API_URL,
       apiKey: process.env.ONE_API_KEY,
-      organizationId: process.env.ONE_ORG_ID
-    })
+      organizationId: process.env.ONE_ORG_ID,
+    });
 ```
 
 Same API, different backend. No code changes required.
@@ -441,14 +457,14 @@ SDK automatically handles rate limiting:
 ```typescript
 // Automatic retry on rate limit
 const program = Effect.gen(function* () {
-  const things = yield* one.things
-  return yield* things.create({ type: 'product', name: 'Widget' })
+  const things = yield* one.things;
+  return yield* things.create({ type: "product", name: "Widget" });
 }).pipe(
   Effect.retry({
     times: 3,
-    schedule: Schedule.exponential('1 second')
-  })
-)
+    schedule: Schedule.exponential("1 second"),
+  }),
+);
 ```
 
 ---
@@ -461,32 +477,32 @@ const program = Effect.gen(function* () {
 // 1. Sign up
 const user = await Effect.runPromise(
   Effect.gen(function* () {
-    const auth = yield* one.auth
+    const auth = yield* one.auth;
     return yield* auth.signUp({
-      email: 'user@example.com',
-      password: 'secure123'
-    })
-  })
-)
+      email: "user@example.com",
+      password: "secure123",
+    });
+  }),
+);
 
 // 2. Verify email (send verification)
 await Effect.runPromise(
   Effect.gen(function* () {
-    const auth = yield* one.auth
-    return yield* auth.sendVerificationEmail(user.email)
-  })
-)
+    const auth = yield* one.auth;
+    return yield* auth.sendVerificationEmail(user.email);
+  }),
+);
 
 // 3. Sign in
 const session = await Effect.runPromise(
   Effect.gen(function* () {
-    const auth = yield* one.auth
+    const auth = yield* one.auth;
     return yield* auth.signIn({
-      email: 'user@example.com',
-      password: 'secure123'
-    })
-  })
-)
+      email: "user@example.com",
+      password: "secure123",
+    });
+  }),
+);
 ```
 
 ### E-commerce Example
@@ -495,50 +511,50 @@ const session = await Effect.runPromise(
 // Create product
 const productId = await Effect.runPromise(
   Effect.gen(function* () {
-    const things = yield* one.things
+    const things = yield* one.things;
     return yield* things.create({
-      type: 'product',
-      name: 'Widget',
+      type: "product",
+      name: "Widget",
       properties: {
         price: 29.99,
         stock: 100,
-        description: 'Amazing widget'
-      }
-    })
-  })
-)
+        description: "Amazing widget",
+      },
+    });
+  }),
+);
 
 // User purchases product
 const connectionId = await Effect.runPromise(
   Effect.gen(function* () {
-    const connections = yield* one.connections
+    const connections = yield* one.connections;
     return yield* connections.create({
       fromPersonId: userId,
       toThingId: productId,
-      relationshipType: 'purchased',
+      relationshipType: "purchased",
       metadata: {
         price: 29.99,
         date: Date.now(),
-        paymentMethod: 'stripe'
-      }
-    })
-  })
-)
+        paymentMethod: "stripe",
+      },
+    });
+  }),
+);
 
 // Log purchase event
 await Effect.runPromise(
   Effect.gen(function* () {
-    const events = yield* one.events
+    const events = yield* one.events;
     return yield* events.log({
-      type: 'purchase',
+      type: "purchase",
       actorId: userId,
       metadata: {
         productId,
-        price: 29.99
-      }
-    })
-  })
-)
+        price: 29.99,
+      },
+    });
+  }),
+);
 ```
 
 ---

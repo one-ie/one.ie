@@ -1,3 +1,21 @@
+---
+title: Agent Deploy
+dimension: things
+category: agents
+tags: agent, ai-agent, ontology
+related_dimensions: connections, events, groups, knowledge, people
+scope: global
+created: 2025-11-03
+updated: 2025-11-03
+version: 1.0.0
+ai_context: |
+  This document is part of the things dimension in the agents category.
+  Location: one/things/agents/agent-deploy.md
+  Purpose: Documents deploy agent
+  Related dimensions: connections, events, groups, knowledge, people
+  For AI agents: Read this to understand agent deploy.
+---
+
 # Deploy Agent
 
 **Thing Type:** `intelligence_agent`
@@ -257,21 +275,25 @@ Specialist agent responsible for deploying ONE Platform across all environments,
 ### When to Invoke Deploy Agent
 
 **Post-Implementation (After Quality Agent):**
+
 - After all tests pass and quality checks complete
 - When feature is ready for production release
 - For scheduled regular releases (weekly patches, monthly minors)
 
 **Version Management:**
+
 - When semantic version bump is needed
 - After significant feature completion
 - For emergency hotfixes
 
 **Documentation Sync:**
+
 - After ontology documentation updates
 - When .claude hooks or settings change
 - After CLAUDE.md or AGENTS.md updates
 
 **Emergency Response:**
+
 - When critical production bug detected
 - For rollback to previous stable version
 - During incident response
@@ -279,21 +301,25 @@ Specialist agent responsible for deploying ONE Platform across all environments,
 ### Coordination with Other Agents
 
 **With Director Agent:**
+
 - Receives deployment authorization
 - Reports deployment status and success
 - Requests approval for production releases
 
 **With Quality Agent:**
+
 - Waits for test suite to pass
 - Verifies build succeeds
 - Validates TypeScript types
 
 **With Clean Agent:**
+
 - Ensures clean pre-deployment state
 - Coordinates post-deployment cleanup
 - Validates metadata tags before release
 
 **With Problem Solver:**
+
 - Executes hotfix deployments
 - Performs emergency rollbacks
 - Applies critical patches
@@ -320,14 +346,14 @@ const reportId = await ctx.db.insert("things", {
         name: "Push Core Repositories",
         status: "completed",
         duration: 45000, // ms
-        repositories: ["one-ie/ontology", "one-ie/web", "one-ie/backend"]
+        repositories: ["one-ie/ontology", "one-ie/web", "one-ie/backend"],
       },
       {
         step: 4,
         name: "Sync Documentation",
         status: "completed",
         filesSync: 412,
-        targets: ["cli/one/", "apps/one/one/"]
+        targets: ["cli/one/", "apps/one/one/"],
       },
       // ... all 13 steps
     ],
@@ -336,27 +362,27 @@ const reportId = await ctx.db.insert("things", {
         published: true,
         package: "oneie",
         version: version,
-        url: `https://www.npmjs.com/package/oneie/v/${version}`
+        url: `https://www.npmjs.com/package/oneie/v/${version}`,
       },
       cloudflare: {
         deployed: true,
         project: "one-web",
         urls: {
           production: "https://web.one.ie",
-          preview: "https://a7b61736.one-web-eqz.pages.dev"
-        }
+          preview: "https://a7b61736.one-web-eqz.pages.dev",
+        },
       },
       github: {
         tagged: true,
         repositories: ["one-ie/cli", "one-ie/one"],
-        tag: `v${version}`
-      }
+        tag: `v${version}`,
+      },
     },
     validations: {
       testsPass: true,
       buildSuccess: true,
       typesValid: true,
-      workingDirClean: true
+      workingDirClean: true,
     },
     totalDuration: 892000, // ~15 minutes
   },
@@ -398,7 +424,7 @@ await ctx.db.insert("events", {
     affectedFiles: [
       "cli/package.json",
       "cli/folders.yaml",
-      "apps/one/package.json"
+      "apps/one/package.json",
     ],
     gitTagsCreated: ["v2.0.6"],
   },
@@ -420,7 +446,7 @@ const deployKnowledgeId = await ctx.db.insert("knowledge", {
     avg_duration_minutes: 15,
     prerequisites: ["tests_pass", "build_success", "types_valid"],
     steps: 13,
-    automation_level: "high"
+    automation_level: "high",
   },
   createdAt: Date.now(),
   updatedAt: Date.now(),
@@ -456,7 +482,7 @@ await ctx.db.insert("events", {
       "Unpublished oneie@2.0.6 from npm",
       "Deleted git tag v2.0.6",
       "Reverted commits in cli/ and apps/one/",
-      "Redeployed v2.0.5 to Cloudflare Pages"
+      "Redeployed v2.0.5 to Cloudflare Pages",
     ],
     duration: 180000, // 3 minutes
     success: true,
@@ -473,12 +499,14 @@ Deploy Agent orchestrates the complete release workflow defined in `scripts/rele
 ### Steps 0-3: Validation & Core Repos (Infer 81-82)
 
 **Step 0: Pre-Flight Validation**
+
 - Verify git installed
 - Check working directory status
 - Validate required directories (one, cli, apps/one)
 - Confirm required files (AGENTS.md, CLAUDE.md, README.md, LICENSE.md)
 
 **Steps 1-3: Push Core Repositories**
+
 - Push /one → one-ie/ontology
 - Push /web → one-ie/web
 - Push /backend → one-ie/backend
@@ -486,15 +514,18 @@ Deploy Agent orchestrates the complete release workflow defined in `scripts/rele
 ### Steps 4-6: Sync & Version (Infer 83-84)
 
 **Step 4: Sync via folders.yaml**
+
 - Sync /one → cli/one/ and apps/one/one/
 - Sync /.claude → cli/.claude/ and apps/one/.claude/
 - Copy core docs (AGENTS.md, CLAUDE.md, README.md, LICENSE.md)
 
 **Step 5: Update CLI README**
+
 - Generate CLI-specific documentation
 - Update version references
 
 **Step 6: Version Bump** (if requested)
+
 - Bump cli/package.json
 - Bump apps/one/package.json
 - Update cli/folders.yaml version
@@ -502,26 +533,31 @@ Deploy Agent orchestrates the complete release workflow defined in `scripts/rele
 ### Steps 7-9: Assembly & Status (Infer 85-86)
 
 **Step 7: Update Submodules**
+
 - Update git submodules in apps/one/
 - Ensure web/ and docs/ point to latest commits
 
 **Step 8: Update apps/one README**
+
 - Generate master assembly README
 - Include architecture diagram
 - Add version if bumped
 
 **Step 9: Git Status Summary**
+
 - Show changes in cli/
 - Show changes in apps/one/
 
 ### Steps 10-11: Commit & Push (Infer 87-88)
 
 **Step 10: Commit & Push CLI**
+
 - Commit changes to cli/
 - Push to one-ie/cli
 - Create and push git tag (if version bumped)
 
 **Step 11: Commit & Push apps/one**
+
 - Commit changes to apps/one/
 - Push to one-ie/one (with submodules)
 - Create and push git tag (if version bumped)
@@ -529,11 +565,13 @@ Deploy Agent orchestrates the complete release workflow defined in `scripts/rele
 ### Steps 12-13: Publish & Deploy (Infer 89-90)
 
 **Step 12: Publish to npm** (manual approval required)
+
 - Login to npm
 - Publish package with `--access public`
 - Verify installation with `npx oneie@latest --version`
 
 **Step 13: Deploy to Cloudflare Pages**
+
 - Build web frontend
 - Deploy to Cloudflare Pages
 - Verify production and preview URLs live
@@ -545,11 +583,13 @@ Deploy Agent orchestrates the complete release workflow defined in `scripts/rele
 ### Example 1: Patch Release
 
 **Input:**
+
 ```bash
 ./scripts/release.sh patch
 ```
 
 **Process:**
+
 1. Validate all prerequisites (tests, build, types)
 2. Push core repositories (ontology, web, backend)
 3. Sync documentation to cli/ and apps/one/
@@ -562,6 +602,7 @@ Deploy Agent orchestrates the complete release workflow defined in `scripts/rele
 10. Prompt for Cloudflare deployment
 
 **Output:**
+
 - Version bumped to 2.0.6
 - All repositories synced and pushed
 - Git tags created
@@ -571,11 +612,13 @@ Deploy Agent orchestrates the complete release workflow defined in `scripts/rele
 ### Example 2: Documentation Sync Only
 
 **Input:**
+
 ```bash
 ./scripts/release.sh  # No version bump
 ```
 
 **Process:**
+
 1. Validate prerequisites
 2. Sync /one → cli/one/ and apps/one/one/
 3. Sync /.claude configs
@@ -585,6 +628,7 @@ Deploy Agent orchestrates the complete release workflow defined in `scripts/rele
 7. Skip version bump, tags, npm publish
 
 **Output:**
+
 - Documentation synced across repositories
 - No version change
 - Faster deployment (~5 minutes vs ~15)
@@ -595,6 +639,7 @@ Deploy Agent orchestrates the complete release workflow defined in `scripts/rele
 Critical production bug detected in v2.0.6
 
 **Process:**
+
 1. Identify issue severity (critical)
 2. Unpublish from npm (if within 24 hours)
 3. Delete git tags v2.0.6
@@ -606,6 +651,7 @@ Critical production bug detected in v2.0.6
 9. Document issue in knowledge base
 
 **Output:**
+
 - Production restored to stable v2.0.5
 - Rollback completed in ~3 minutes
 - Incident documented
@@ -895,6 +941,7 @@ Track improvement over time:
 Deploy Agent maintains comprehensive knowledge of the ONE Platform repository structure:
 
 ### Development Monorepo
+
 ```
 ONE/
 ├── one/              # 6-dimension ontology docs → one-ie/ontology
@@ -907,6 +954,7 @@ ONE/
 ```
 
 ### Release Targets (6 Repositories)
+
 ```
 GitHub:
 ├── one-ie/ontology   (from /one)

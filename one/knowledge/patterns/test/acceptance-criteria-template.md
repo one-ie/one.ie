@@ -1,3 +1,21 @@
+---
+title: Acceptance Criteria Template
+dimension: knowledge
+category: patterns
+tags: agent, testing
+related_dimensions: events, people, things
+scope: global
+created: 2025-11-03
+updated: 2025-11-03
+version: 1.0.0
+ai_context: |
+  This document is part of the knowledge dimension in the patterns category.
+  Location: one/knowledge/patterns/test/acceptance-criteria-template.md
+  Purpose: Documents pattern: acceptance criteria template
+  Related dimensions: events, people, things
+  For AI agents: Read this to understand acceptance criteria template.
+---
+
 # Pattern: Acceptance Criteria Template
 
 **Category:** Testing

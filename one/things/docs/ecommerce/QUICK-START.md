@@ -1,3 +1,21 @@
+---
+title: Quick Start
+dimension: things
+category: docs
+tags: ai, installation
+related_dimensions: knowledge, people
+scope: global
+created: 2025-11-03
+updated: 2025-11-03
+version: 1.0.0
+ai_context: |
+  This document is part of the things dimension in the docs category.
+  Location: one/things/docs/ecommerce/QUICK-START.md
+  Purpose: Documents ecommerce conversion elements - quick start guide
+  Related dimensions: knowledge, people
+  For AI agents: Read this to understand QUICK START.
+---
+
 # Ecommerce Conversion Elements - Quick Start Guide
 
 ## Installation Complete ✅
@@ -13,6 +31,7 @@ All 4 conversion elements have been successfully implemented and integrated into
 **Where it appears:** Cart page, above cart items
 
 **How it works:**
+
 - Tracks cart subtotal in real-time
 - Shows progress bar from $0 to $50
 - Displays "Add $X more for free shipping!"
@@ -29,6 +48,7 @@ All 4 conversion elements have been successfully implemented and integrated into
 **Where it appears:** Cart page (triggered on exit intent)
 
 **How it works:**
+
 - Detects when user moves mouse to browser top (exit behavior)
 - Shows modal with 10% discount offer
 - Email capture form with validation
@@ -47,6 +67,7 @@ All 4 conversion elements have been successfully implemented and integrated into
 **Where it appears:** Checkout page, below page title
 
 **How it works:**
+
 - 3 steps: Shipping → Payment → Review
 - Visual progress with step numbers/checkmarks
 - Current step highlighted
@@ -64,6 +85,7 @@ All 4 conversion elements have been successfully implemented and integrated into
 **Where it appears:** Checkout page, in order summary sidebar
 
 **How it works:**
+
 - Payment method icons (Visa, Mastercard, Amex, PayPal)
 - Security badges (SSL, Norton, Money-Back, Free Returns)
 - Grayscale with color on hover
@@ -91,6 +113,7 @@ All 4 conversion elements have been successfully implemented and integrated into
 **File:** `/src/components/ecommerce/interactive/ExitIntentPopup.tsx`
 
 **Change discount percentage:**
+
 ```typescript
 // Line 98 - Change "10%" to desired percentage
 <span className="font-bold text-primary">10% off</span>
@@ -100,15 +123,17 @@ Get My 10% Discount
 ```
 
 **Change countdown duration:**
+
 ```typescript
 // Line 22 - Change from 10 minutes to 15 minutes
 const COUNTDOWN_MINUTES = 15;
 ```
 
 **Change discount code:**
+
 ```typescript
 // Line 57 - Change code from 'FIRST10' to 'WELCOME15'
-localStorage.setItem('discount-code', 'WELCOME15');
+localStorage.setItem("discount-code", "WELCOME15");
 ```
 
 ---
@@ -118,6 +143,7 @@ localStorage.setItem('discount-code', 'WELCOME15');
 **File:** `/src/pages/ecommerce/checkout.astro`
 
 **Change current step:**
+
 ```astro
 <!-- For payment step -->
 <CheckoutProgress currentStep="payment" />
@@ -127,6 +153,7 @@ localStorage.setItem('discount-code', 'WELCOME15');
 ```
 
 **Add step navigation:**
+
 ```astro
 <CheckoutProgress
   currentStep="payment"
@@ -144,6 +171,7 @@ localStorage.setItem('discount-code', 'WELCOME15');
 **File:** `/src/components/ecommerce/static/TrustBadges.tsx`
 
 **Add new payment method:**
+
 ```typescript
 // Add after PayPal (around line 90)
 <div className="group flex h-8 w-12 items-center justify-center rounded border border-border bg-card p-1 transition-all hover:border-primary">
@@ -154,6 +182,7 @@ localStorage.setItem('discount-code', 'WELCOME15');
 ```
 
 **Change variant:**
+
 ```astro
 <!-- Default variant (more spacing) -->
 <TrustBadges />
@@ -214,7 +243,7 @@ bun run dev
 All components automatically connect to the cart store at `/src/stores/cart.ts`:
 
 ```typescript
-import { $cartSubtotal } from '@/stores/cart';
+import { $cartSubtotal } from "@/stores/cart";
 ```
 
 No additional configuration needed - components are reactive to cart changes.
@@ -227,8 +256,8 @@ The exit intent popup stores the discount code in localStorage. To apply it at c
 
 ```typescript
 // In checkout form component
-const discountCode = localStorage.getItem('discount-code');
-if (discountCode === 'FIRST10') {
+const discountCode = localStorage.getItem("discount-code");
+if (discountCode === "FIRST10") {
   // Apply 10% discount
   const discount = subtotal * 0.1;
   const total = subtotal - discount;
@@ -263,16 +292,19 @@ const handleNext = () => {
 ## Performance Considerations
 
 ### Bundle Size
+
 - **Total Added:** ~17KB gzipped
 - **Interactive Components:** 11KB (FreeShippingProgress + ExitIntentPopup)
 - **Static Components:** 6KB (CheckoutProgress + TrustBadges)
 
 ### Hydration Strategy
+
 - Only 2 components use `client:load` (FreeShippingProgress, ExitIntentPopup)
 - Static components have zero JavaScript cost
 - No layout shift (components render with proper sizing)
 
 ### Optimization Tips
+
 1. Use `client:visible` instead of `client:load` for below-fold components
 2. Lazy load exit intent popup (only load after 5 seconds on page)
 3. Preload payment method SVGs for faster rendering
@@ -286,6 +318,7 @@ const handleNext = () => {
 **Issue:** Free shipping progress bar stuck at 0%
 
 **Solution:**
+
 - Check that cart store is properly imported
 - Verify items are being added to cart correctly
 - Check browser console for errors
@@ -297,6 +330,7 @@ const handleNext = () => {
 **Issue:** Modal doesn't appear when moving mouse to top
 
 **Solution:**
+
 - Check sessionStorage - clear 'exit-intent-shown' key
 - Verify mouse position detection (should be Y <= 10px)
 - Check browser console for errors
@@ -309,6 +343,7 @@ const handleNext = () => {
 **Issue:** Progress indicator missing on checkout page
 
 **Solution:**
+
 - Verify component is imported correctly
 - Check `currentStep` prop is valid: 'shipping', 'payment', or 'review'
 - Ensure component is not hidden by CSS
@@ -320,6 +355,7 @@ const handleNext = () => {
 **Issue:** Icons stay grayscale on hover
 
 **Solution:**
+
 - Check Tailwind classes are applied
 - Verify `group` and `group-hover:grayscale-0` classes present
 - Clear browser cache and rebuild
@@ -356,6 +392,7 @@ const handleNext = () => {
 ## Support
 
 For questions or issues:
+
 1. Check `CONVERSION-ELEMENTS-IMPLEMENTATION.md` for detailed technical docs
 2. Review `ECOMMERCE-HIGH-CONVERTING-ELEMENTS.md` for best practices
 3. Inspect browser console for errors

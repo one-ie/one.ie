@@ -1,3 +1,21 @@
+---
+title: Enhance Auth
+dimension: things
+category: plans
+tags: ai, architecture, auth, backend, frontend
+related_dimensions: connections, events, knowledge, people
+scope: global
+created: 2025-11-03
+updated: 2025-11-03
+version: 1.0.0
+ai_context: |
+  This document is part of the things dimension in the plans category.
+  Location: one/things/plans/enhance-auth.md
+  Purpose: Documents comprehensive phased implementation plan: better auth with convex & shadcn ui
+  Related dimensions: connections, events, knowledge, people
+  For AI agents: Read this to understand enhance auth.
+---
+
 # Comprehensive Phased Implementation Plan: Better Auth with Convex & Shadcn UI
 
 ## Implementation Status
@@ -5,6 +23,7 @@
 ### ✅ Better Auth IS Active (Hybrid Architecture)
 
 **Current Setup:**
+
 - ✅ Better Auth React Client (frontend)
 - ✅ Better Auth Convex Component (NOW configured in `convex/convex.config.ts`)
 - ✅ API bridge connecting Better Auth UI to custom backend
@@ -13,6 +32,7 @@
 **Architecture:** Hybrid approach using Better Auth UI/client but custom backend logic
 
 ### ✅ Completed Features
+
 - [x] Better Auth React client integration
 - [x] Better Auth Convex component configured
 - [x] Email/password authentication with custom Convex backend
@@ -22,6 +42,7 @@
 - [x] API bridge at `/api/auth/[...all]`
 
 ### 🚨 Current Limitations
+
 - [ ] Not using Better Auth's built-in auth functions (using custom mutations instead)
 - [ ] Using SHA-256 for passwords (should migrate to Better Auth's Argon2)
 - [ ] No rate limiting on auth endpoints
@@ -29,12 +50,14 @@
 - [ ] Social OAuth UI exists but not functional
 
 ### 🚧 Next Steps (Migrate from Custom to Full Better Auth)
+
 1. [ ] **Replace custom mutations with Better Auth functions** (1-2 days)
 2. [ ] **Set up Better Auth HTTP routes** in `convex/http.ts`
 3. [ ] **Enable Better Auth plugins** (OAuth, magic links, 2FA)
 4. [ ] **Migrate user data** to Better Auth schema
 
 ### 📋 Planned Features (Requires Better Auth)
+
 - [ ] Anonymous login
 - [ ] Account linking architecture
 - [ ] Magic links
@@ -57,7 +80,7 @@ This plan delivers a streamlined, high-converting auth system for your Astro + C
 
 ### **Phase 1: Foundation** (Week 1-2)
 
-- [ ] Anonymous login *Deferred - requires Better Auth*
+- [ ] Anonymous login _Deferred - requires Better Auth_
 - [ ] Enhanced account linking architecture
 - [x] Base component structure with Shadcn UI ✅
 - [x] Forgot password flow improvements ✅
@@ -69,7 +92,7 @@ This plan delivers a streamlined, high-converting auth system for your Astro + C
 ### **Phase 2: Passwordless Options** (Week 3-4)
 
 - [ ] Magic links (email-based)
-- [x] Enhanced email templates with React Email + Resend ✅ *Basic implementation*
+- [x] Enhanced email templates with React Email + Resend ✅ _Basic implementation_
 
 **Status**: Resend component integrated for password reset. Magic links require Better Auth plugin.
 
@@ -117,10 +140,10 @@ This plan delivers a streamlined, high-converting auth system for your Astro + C
 
 ```typescript
 // convex/auth.ts
-import { betterAuth } from 'better-auth';
-import { anonymous } from 'better-auth/plugins';
-import { convex } from '@convex-dev/better-auth/plugins';
-import { authComponent } from './auth-component';
+import { betterAuth } from "better-auth";
+import { anonymous } from "better-auth/plugins";
+import { convex } from "@convex-dev/better-auth/plugins";
+import { authComponent } from "./auth-component";
 
 export const createAuth = (ctx) => {
   return betterAuth({
@@ -131,7 +154,7 @@ export const createAuth = (ctx) => {
     account: {
       accountLinking: {
         enabled: true,
-        trustedProviders: ['google', 'github'],
+        trustedProviders: ["google", "github"],
         updateUserInfoOnLink: true,
       },
     },
@@ -139,7 +162,7 @@ export const createAuth = (ctx) => {
     // Anonymous authentication
     plugins: [
       anonymous({
-        emailDomainName: 'temp.yourapp.com',
+        emailDomainName: "temp.yourapp.com",
         onLinkAccount: async ({ anonymousUser, newUser }) => {
           // Migrate user data (cart, preferences, etc.)
           await migrateUserData(anonymousUser.id, newUser.id);
@@ -156,9 +179,9 @@ export const createAuth = (ctx) => {
 
 ```typescript
 // lib/auth-client.ts
-import { createAuthClient } from 'better-auth/react';
-import { anonymousClient } from 'better-auth/plugins/anonymous/client';
-import { convexClient } from '@convex-dev/better-auth/client/plugins';
+import { createAuthClient } from "better-auth/react";
+import { anonymousClient } from "better-auth/plugins/anonymous/client";
+import { convexClient } from "@convex-dev/better-auth/client/plugins";
 
 export const authClient = createAuthClient({
   plugins: [anonymousClient(), convexClient()],
@@ -540,9 +563,9 @@ npx convex env set RESEND_API_KEY "re_your_api_key"
 
 ```typescript
 // convex/convex.config.ts
-import { defineApp } from 'convex/server';
-import resend from '@convex-dev/resend/convex.config';
-import betterAuth from '@convex-dev/better-auth/convex.config';
+import { defineApp } from "convex/server";
+import resend from "@convex-dev/resend/convex.config";
+import betterAuth from "@convex-dev/better-auth/convex.config";
 
 const app = defineApp();
 app.use(resend);
@@ -585,7 +608,7 @@ export const sendMagicLink = internalMutation({
 
 ```typescript
 // convex/auth.ts - add magic link plugin
-import { magicLink } from 'better-auth/plugins';
+import { magicLink } from "better-auth/plugins";
 
 export const createAuth = (ctx) => {
   return betterAuth({
@@ -719,12 +742,12 @@ npx convex env set TWILIO_PHONE_NUMBER "+1234567890"
 **Better Auth Configuration**:
 
 ```typescript
-import { phoneNumber } from 'better-auth/plugins';
-import twilio from 'twilio';
+import { phoneNumber } from "better-auth/plugins";
+import twilio from "twilio";
 
 const twilioClient = twilio(
   process.env.TWILIO_ACCOUNT_SID,
-  process.env.TWILIO_AUTH_TOKEN
+  process.env.TWILIO_AUTH_TOKEN,
 );
 
 export const createAuth = (ctx) => {
@@ -788,14 +811,14 @@ export function PhoneVerifyForm() {
 **Server Configuration**:
 
 ```typescript
-import { twoFactor } from 'better-auth/plugins';
+import { twoFactor } from "better-auth/plugins";
 
 export const createAuth = (ctx) => {
   return betterAuth({
-    appName: 'Your App', // Used as TOTP issuer
+    appName: "Your App", // Used as TOTP issuer
     plugins: [
       twoFactor({
-        issuer: 'Your App',
+        issuer: "Your App",
         totpOptions: {
           period: 30,
           digits: 6,
@@ -920,20 +943,20 @@ export default function Verify2FAPage() {
 ### 4.1 Server Configuration
 
 ```typescript
-import { passkey } from 'better-auth/plugins';
+import { passkey } from "better-auth/plugins";
 
 export const createAuth = (ctx) => {
   return betterAuth({
     plugins: [
       passkey({
         rpID:
-          process.env.NODE_ENV === 'production' ? 'yourapp.com' : 'localhost',
-        rpName: 'Your App',
+          process.env.NODE_ENV === "production" ? "yourapp.com" : "localhost",
+        rpName: "Your App",
         origin: process.env.SITE_URL,
         authenticatorSelection: {
-          authenticatorAttachment: 'platform', // Touch ID, Face ID, Windows Hello
-          residentKey: 'preferred',
-          userVerification: 'preferred',
+          authenticatorAttachment: "platform", // Touch ID, Face ID, Windows Hello
+          residentKey: "preferred",
+          userVerification: "preferred",
         },
       }),
       // ... other plugins
@@ -1038,11 +1061,11 @@ npx convex env set STRIPE_WEBHOOK_SECRET "whsec_..."
 ### 5.2 Better Auth Configuration
 
 ```typescript
-import { stripe } from '@better-auth/stripe';
-import Stripe from 'stripe';
+import { stripe } from "@better-auth/stripe";
+import Stripe from "stripe";
 
 const stripeClient = new Stripe(process.env.STRIPE_SECRET_KEY!, {
-  apiVersion: '2024-06-20',
+  apiVersion: "2024-06-20",
 });
 
 export const createAuth = (ctx) => {
@@ -1057,14 +1080,14 @@ export const createAuth = (ctx) => {
           enabled: true,
           plans: [
             {
-              name: 'free',
-              priceId: 'price_free',
+              name: "free",
+              priceId: "price_free",
               limits: { projects: 3, storage: 1 },
             },
             {
-              name: 'pro',
-              priceId: 'price_pro_monthly',
-              annualDiscountPriceId: 'price_pro_annual',
+              name: "pro",
+              priceId: "price_pro_monthly",
+              annualDiscountPriceId: "price_pro_annual",
               limits: { projects: 100, storage: 100 },
               freeTrial: {
                 days: 14,
@@ -1090,8 +1113,8 @@ export const createAuth = (ctx) => {
 
 ```typescript
 // convex/http.ts
-import { httpRouter } from 'convex/server';
-import { authComponent, createAuth } from './auth';
+import { httpRouter } from "convex/server";
+import { authComponent, createAuth } from "./auth";
 
 const http = httpRouter();
 
@@ -1257,11 +1280,11 @@ export function useSubscription() {
 // If email already exists during social signup
 if (emailExists && !accountLinked) {
   showPrompt({
-    title: 'Account Found',
-    message: 'An account with this email already exists.',
+    title: "Account Found",
+    message: "An account with this email already exists.",
     actions: [
-      { label: 'Sign in to link accounts', href: '/login' },
-      { label: 'Use different email', action: 'retry' },
+      { label: "Sign in to link accounts", href: "/login" },
+      { label: "Use different email", action: "retry" },
     ],
   });
 }

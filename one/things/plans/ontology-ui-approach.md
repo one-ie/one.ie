@@ -1,3 +1,21 @@
+---
+title: Ontology Ui Approach
+dimension: things
+category: plans
+tags: 6-dimensions, ai, ontology
+related_dimensions: connections, events, knowledge
+scope: global
+created: 2025-11-03
+updated: 2025-11-03
+version: 1.0.0
+ai_context: |
+  This document is part of the things dimension in the plans category.
+  Location: one/things/plans/ontology-ui-approach.md
+  Purpose: Documents ontology ui: clean, simple approach
+  Related dimensions: connections, events, knowledge
+  For AI agents: Read this to understand ontology ui approach.
+---
+
 # Ontology UI: Clean, Simple Approach
 
 **The ontology UI spec is clean and implementation-agnostic. shadcn/ui is just how we build it.**

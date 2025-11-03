@@ -1,3 +1,21 @@
+---
+title: Ecommerce Setup Summary
+dimension: events
+category: ECOMMERCE-SETUP-SUMMARY.md
+tags: connections, events, groups, knowledge, ontology, people, things
+related_dimensions: connections, groups, knowledge, people, things
+scope: global
+created: 2025-11-03
+updated: 2025-11-03
+version: 1.0.0
+ai_context: |
+  This document is part of the events dimension in the ECOMMERCE-SETUP-SUMMARY.md category.
+  Location: one/events/ECOMMERCE-SETUP-SUMMARY.md
+  Purpose: Documents ecommerce content collections setup - summary
+  Related dimensions: connections, groups, knowledge, people, things
+  For AI agents: Read this to understand ECOMMERCE SETUP SUMMARY.
+---
+
 # Ecommerce Content Collections Setup - Summary
 
 ## Overview

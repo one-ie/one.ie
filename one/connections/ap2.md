@@ -1,3 +1,21 @@
+---
+title: Ap2
+dimension: connections
+category: ap2.md
+tags: agent, ai, blockchain, protocol
+related_dimensions: events, groups, people
+scope: global
+created: 2025-11-03
+updated: 2025-11-03
+version: 1.0.0
+ai_context: |
+  This document is part of the connections dimension in the ap2.md category.
+  Location: one/connections/ap2.md
+  Purpose: Documents agent payments protocol (ap2) integration
+  Related dimensions: events, groups, people
+  For AI agents: Read this to understand ap2.
+---
+
 # Agent Payments Protocol (AP2) Integration
 
 ## Overview

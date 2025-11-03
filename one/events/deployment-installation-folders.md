@@ -1,3 +1,21 @@
+---
+title: Deployment Installation Folders
+dimension: events
+category: deployment-installation-folders.md
+tags: ai, backend, customization, frontend, installation
+related_dimensions: things
+scope: global
+created: 2025-11-03
+updated: 2025-11-03
+version: 1.0.0
+ai_context: |
+  This document is part of the events dimension in the deployment-installation-folders.md category.
+  Location: one/events/deployment-installation-folders.md
+  Purpose: Documents deployment guide: installation folders
+  Related dimensions: things
+  For AI agents: Read this to understand deployment installation folders.
+---
+
 # Deployment Guide: Installation Folders
 
 **Version:** 1.0.0

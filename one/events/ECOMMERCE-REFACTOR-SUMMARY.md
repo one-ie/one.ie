@@ -1,3 +1,21 @@
+---
+title: Ecommerce Refactor Summary
+dimension: events
+category: ECOMMERCE-REFACTOR-SUMMARY.md
+tags: ai
+related_dimensions: groups, people
+scope: global
+created: 2025-11-03
+updated: 2025-11-03
+version: 1.0.0
+ai_context: |
+  This document is part of the events dimension in the ECOMMERCE-REFACTOR-SUMMARY.md category.
+  Location: one/events/ECOMMERCE-REFACTOR-SUMMARY.md
+  Purpose: Documents shop page refactoring summary
+  Related dimensions: groups, people
+  For AI agents: Read this to understand ECOMMERCE REFACTOR SUMMARY.
+---
+
 # Shop Page Refactoring Summary
 
 ## Overview

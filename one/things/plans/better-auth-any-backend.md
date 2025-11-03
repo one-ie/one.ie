@@ -1,3 +1,21 @@
+---
+title: Better Auth Any Backend
+dimension: things
+category: plans
+tags: architecture, auth, backend, connections, convex, events, frontend, groups, ontology, people
+related_dimensions: connections, events, groups, people
+scope: global
+created: 2025-11-03
+updated: 2025-11-03
+version: 1.0.0
+ai_context: |
+  This document is part of the things dimension in the plans category.
+  Location: one/things/plans/better-auth-any-backend.md
+  Purpose: Documents better auth + one ontology: universal authentication
+  Related dimensions: connections, events, groups, people
+  For AI agents: Read this to understand better auth any backend.
+---
+
 # Better Auth + ONE Ontology: Universal Authentication
 
 **Integrating Better Auth with the ONE 6-dimension ontology using Effect.ts**
@@ -11,6 +29,7 @@ Better Auth is already integrated in our `/frontend` with 6 authentication metho
 **Key Insight:** Auth maps perfectly to the 6 dimensions: groups partition auth data, people are the authorized users, sessions are connections, auth actions are events, and all operations use Effect.ts for type-safety.
 
 **Architecture:**
+
 ```
 ┌─────────────────────────────────────────────────────────┐
 │         Frontend (Astro + React)                        │
@@ -70,6 +89,7 @@ Better Auth is already integrated in our `/frontend` with 6 authentication metho
 ```
 
 **What This Achieves:**
+
 - ✅ Organizations → multi-tenant auth (perfect isolation)
 - ✅ People → users with roles (authorization built-in)
 - ✅ Things → optional device tracking
@@ -129,6 +149,7 @@ Better Auth is already integrated in our `/frontend` with 6 authentication metho
 ```
 
 **Benefits:**
+
 - ✅ Perfect multi-tenant isolation → users in Org A can't see Org B
 - ✅ Per-org auth settings → different signup rules per org
 - ✅ Per-org quotas → user limits, rate limits
@@ -192,6 +213,7 @@ Better Auth is already integrated in our `/frontend` with 6 authentication metho
    - **Things** → Created/deleted within org context
 
 **Benefits:**
+
 - ✅ People are first-class dimension → clear authorization model
 - ✅ Role-based access → platform_owner can access all orgs
 - ✅ Multi-org membership → same person, multiple organizations
@@ -223,6 +245,7 @@ Better Auth is already integrated in our `/frontend` with 6 authentication metho
 ```
 
 **Benefits:**
+
 - ✅ Track which devices user is logged in from
 - ✅ Security: Detect suspicious login locations
 - ✅ UX: "Sign out from all devices except this one"
@@ -255,6 +278,7 @@ Better Auth is already integrated in our `/frontend` with 6 authentication metho
 ```
 
 **Benefits:**
+
 - ✅ Sessions connect people to devices → clear actor model
 - ✅ Automatic cleanup → delete expired connections
 - ✅ Real-time sync → revoke session = instant logout everywhere
@@ -288,6 +312,7 @@ Better Auth is already integrated in our `/frontend` with 6 authentication metho
 ```
 
 **Benefits:**
+
 - ✅ OAuth accounts connect people to OAuth providers
 - ✅ Multiple providers → person can have Google + GitHub + Apple
 - ✅ Token refresh → update connection metadata
@@ -295,6 +320,7 @@ Better Auth is already integrated in our `/frontend` with 6 authentication metho
 
 **Note on Schema Design:**
 The connection schema may need to support both:
+
 - `fromPersonId: Id<'people'>` for people → thing connections
 - `fromThingId: Id<'things'>` for thing → thing connections
 
@@ -359,6 +385,7 @@ Or use a union type with discriminator for flexibility.
 ```
 
 **Benefits:**
+
 - ✅ Complete audit trail → every auth action logged with actorId
 - ✅ Security analytics → detect suspicious patterns (impossible travel, brute force)
 - ✅ User timeline → see complete login history
@@ -405,6 +432,7 @@ Or use a union type with discriminator for flexibility.
 ```
 
 **Benefits:**
+
 - ✅ AI learns normal auth patterns per user/org
 - ✅ Detect anomalies: "User always logs in from NYC, now trying from Russia"
 - ✅ Behavioral analysis: "User logs in Mon-Fri 9am-5pm, now 3am Sunday is suspicious"
@@ -414,6 +442,7 @@ Or use a union type with discriminator for flexibility.
 **Example Use Cases:**
 
 1. **Security Anomaly Detection:**
+
    ```typescript
    // Query knowledge for similar auth patterns
    const similarPatterns = await queryKnowledge({
@@ -421,27 +450,28 @@ Or use a union type with discriminator for flexibility.
      query: "user login from new location",
      filters: {
        behaviorType: "suspicious",
-       labels: ["security:anomaly"]
+       labels: ["security:anomaly"],
      },
-     k: 5
-   })
+     k: 5,
+   });
 
    // If similar patterns were flagged before → increase risk score
    if (similarPatterns.length > 3) {
-     riskScore += 30
+     riskScore += 30;
    }
    ```
 
 2. **Person Preference Learning:**
+
    ```typescript
    // AI learns: "This person prefers Google OAuth, dislikes email/password"
    const personPreferences = await queryKnowledge({
      sourcePersonId: personId,
-     labels: ["auth:preference"]
-   })
+     labels: ["auth:preference"],
+   });
 
    // Suggest preferred auth method in UI
-   suggestedMethod = personPreferences[0]?.chunk.preferredMethod || "email"
+   suggestedMethod = personPreferences[0]?.chunk.preferredMethod || "email";
    ```
 
 3. **Compliance & Audit:**
@@ -451,8 +481,8 @@ Or use a union type with discriminator for flexibility.
      organizationId,
      query: "admin login from outside US",
      labels: ["compliance:geographic_restriction"],
-     timeRange: { start: lastQuarter, end: now }
-   })
+     timeRange: { start: lastQuarter, end: now },
+   });
    ```
 
 ---
@@ -509,6 +539,7 @@ Or use a union type with discriminator for flexibility.
    - 2FA required ⚠️
 
 **Benefits of 6 Dimensions:**
+
 - ✅ Perfect multi-tenant isolation (organizations)
 - ✅ Clear authorization model (people with roles, NOT things)
 - ✅ Device tracking (things)
@@ -526,347 +557,344 @@ Or use a union type with discriminator for flexibility.
 
 ```typescript
 // frontend/src/services/AuthService.ts
-import { Effect, Context } from 'effect'
-import { DataProvider, ThingNotFoundError } from '@/providers/DataProvider'
+import { Effect, Context } from "effect";
+import { DataProvider, ThingNotFoundError } from "@/providers/DataProvider";
 
 // Auth-specific errors
 export class AuthenticationError {
-  readonly _tag = 'AuthenticationError'
+  readonly _tag = "AuthenticationError";
   constructor(readonly reason: string) {}
 }
 
 export class InvalidCredentialsError {
-  readonly _tag = 'InvalidCredentialsError'
+  readonly _tag = "InvalidCredentialsError";
 }
 
 export class EmailAlreadyExistsError {
-  readonly _tag = 'EmailAlreadyExistsError'
+  readonly _tag = "EmailAlreadyExistsError";
   constructor(readonly email: string) {}
 }
 
 // User type (thing with type: "person")
 export interface User {
-  id: string
-  email: string
-  name: string
-  emailVerified: boolean
-  image?: string
+  id: string;
+  email: string;
+  name: string;
+  emailVerified: boolean;
+  image?: string;
 }
 
 // Session type (connection with type: "session")
 export interface Session {
-  id: string
-  userId: string
-  token: string
-  expiresAt: number
-  method: "email" | "google" | "github"
+  id: string;
+  userId: string;
+  token: string;
+  expiresAt: number;
+  method: "email" | "google" | "github";
 }
 
 // AuthService interface
 export interface AuthServiceInterface {
   // Sign up → creates thing (type: person) + logs event
   signUp: (params: {
-    email: string
-    password: string
-    name: string
-    organizationId?: string
-  }) => Effect.Effect<User, EmailAlreadyExistsError | Error>
+    email: string;
+    password: string;
+    name: string;
+    organizationId?: string;
+  }) => Effect.Effect<User, EmailAlreadyExistsError | Error>;
 
   // Sign in → creates connection (type: session) + logs event
   signIn: (params: {
-    email: string
-    password: string
-    organizationId?: string
+    email: string;
+    password: string;
+    organizationId?: string;
   }) => Effect.Effect<
     { user: User; session: Session },
     InvalidCredentialsError | Error
-  >
+  >;
 
   // OAuth sign in → creates thing + connection (oauth_account) + connection (session)
   signInWithOAuth: (params: {
-    provider: "google" | "github" | "apple"
-    code: string
-    organizationId?: string
+    provider: "google" | "github" | "apple";
+    code: string;
+    organizationId?: string;
   }) => Effect.Effect<
     { user: User; session: Session },
     AuthenticationError | Error
-  >
+  >;
 
   // Sign out → deletes connection (session) + logs event
-  signOut: (sessionToken: string) => Effect.Effect<void, Error>
+  signOut: (sessionToken: string) => Effect.Effect<void, Error>;
 
   // Get current session → queries connection (type: session)
-  getSession: (sessionToken: string) => Effect.Effect<
-    { user: User; session: Session } | null,
-    Error
-  >
+  getSession: (
+    sessionToken: string,
+  ) => Effect.Effect<{ user: User; session: Session } | null, Error>;
 
   // Verify email → updates thing properties.emailVerified + logs event
-  verifyEmail: (token: string) => Effect.Effect<void, Error>
+  verifyEmail: (token: string) => Effect.Effect<void, Error>;
 
   // Reset password → creates event (verification_token) → updates thing password
-  requestPasswordReset: (email: string) => Effect.Effect<void, Error>
+  requestPasswordReset: (email: string) => Effect.Effect<void, Error>;
   resetPassword: (params: {
-    token: string
-    newPassword: string
-  }) => Effect.Effect<void, Error>
+    token: string;
+    newPassword: string;
+  }) => Effect.Effect<void, Error>;
 }
 
 // AuthService implementation (backend-agnostic via DataProvider)
-export class AuthService extends Effect.Service<AuthService>()(
-  'AuthService',
-  {
-    effect: Effect.gen(function* () {
-      const provider = yield* DataProvider
+export class AuthService extends Effect.Service<AuthService>()("AuthService", {
+  effect: Effect.gen(function* () {
+    const provider = yield* DataProvider;
 
-      return {
-        // Sign up: create user thing + log event
-        signUp: (params) =>
-          Effect.gen(function* () {
-            // 1. Check if email exists
-            const existing = yield* provider.things.list({
-              type: 'person',
+    return {
+      // Sign up: create user thing + log event
+      signUp: (params) =>
+        Effect.gen(function* () {
+          // 1. Check if email exists
+          const existing = yield* provider.things
+            .list({
+              type: "person",
               organizationId: params.organizationId,
-              filters: { 'properties.email': params.email }
-            }).pipe(
-              Effect.catchAll(() => Effect.succeed([]))
-            )
-
-            if (existing.length > 0) {
-              return yield* Effect.fail(
-                new EmailAlreadyExistsError(params.email)
-              )
-            }
-
-            // 2. Hash password (use bcrypt in real app)
-            const hashedPassword = yield* hashPassword(params.password)
-
-            // 3. Create user thing
-            const userId = yield* provider.things.create({
-              type: 'person',
-              name: params.name,
-              organizationId: params.organizationId,
-              properties: {
-                email: params.email,
-                emailVerified: false,
-                password: hashedPassword
-              }
+              filters: { "properties.email": params.email },
             })
+            .pipe(Effect.catchAll(() => Effect.succeed([])));
 
-            // 4. Log sign_up event
-            yield* provider.events.log({
-              type: 'sign_up',
-              actorId: userId,
-              organizationId: params.organizationId,
-              metadata: {
-                method: 'email',
-                success: true
-              }
-            })
+          if (existing.length > 0) {
+            return yield* Effect.fail(
+              new EmailAlreadyExistsError(params.email),
+            );
+          }
 
-            // 5. Return user
-            return {
-              id: userId,
+          // 2. Hash password (use bcrypt in real app)
+          const hashedPassword = yield* hashPassword(params.password);
+
+          // 3. Create user thing
+          const userId = yield* provider.things.create({
+            type: "person",
+            name: params.name,
+            organizationId: params.organizationId,
+            properties: {
               email: params.email,
-              name: params.name,
-              emailVerified: false
-            }
-          }),
+              emailVerified: false,
+              password: hashedPassword,
+            },
+          });
 
-        // Sign in: verify credentials + create session connection
-        signIn: (params) =>
-          Effect.gen(function* () {
-            // 1. Find user by email
-            const users = yield* provider.things.list({
-              type: 'person',
-              organizationId: params.organizationId,
-              filters: { 'properties.email': params.email }
-            })
+          // 4. Log sign_up event
+          yield* provider.events.log({
+            type: "sign_up",
+            actorId: userId,
+            organizationId: params.organizationId,
+            metadata: {
+              method: "email",
+              success: true,
+            },
+          });
 
-            if (users.length === 0) {
-              return yield* Effect.fail(new InvalidCredentialsError())
-            }
+          // 5. Return user
+          return {
+            id: userId,
+            email: params.email,
+            name: params.name,
+            emailVerified: false,
+          };
+        }),
 
-            const user = users[0]
+      // Sign in: verify credentials + create session connection
+      signIn: (params) =>
+        Effect.gen(function* () {
+          // 1. Find user by email
+          const users = yield* provider.things.list({
+            type: "person",
+            organizationId: params.organizationId,
+            filters: { "properties.email": params.email },
+          });
 
-            // 2. Verify password
-            const valid = yield* verifyPassword(
-              params.password,
-              user.properties.password
-            )
+          if (users.length === 0) {
+            return yield* Effect.fail(new InvalidCredentialsError());
+          }
 
-            if (!valid) {
-              // Log failed attempt
-              yield* provider.events.log({
-                type: 'sign_in',
-                actorId: user._id,
-                organizationId: params.organizationId,
-                metadata: {
-                  method: 'email',
-                  success: false,
-                  errorReason: 'invalid_credentials'
-                }
-              })
+          const user = users[0];
 
-              return yield* Effect.fail(new InvalidCredentialsError())
-            }
+          // 2. Verify password
+          const valid = yield* verifyPassword(
+            params.password,
+            user.properties.password,
+          );
 
-            // 3. Generate session token
-            const token = yield* generateSecureToken()
-
-            // 4. Create session connection
-            const sessionId = yield* provider.connections.create({
-              fromThingId: user._id,
-              toThingId: null, // No device tracking yet
-              relationshipType: 'session',
-              organizationId: params.organizationId,
-              metadata: {
-                token,
-                expiresAt: Date.now() + (7 * 24 * 60 * 60 * 1000), // 7 days
-                method: 'email'
-              }
-            })
-
-            // 5. Log successful sign_in event
+          if (!valid) {
+            // Log failed attempt
             yield* provider.events.log({
-              type: 'sign_in',
+              type: "sign_in",
               actorId: user._id,
-              targetId: sessionId,
               organizationId: params.organizationId,
               metadata: {
-                method: 'email',
-                success: true
-              }
-            })
-
-            return {
-              user: {
-                id: user._id,
-                email: user.properties.email,
-                name: user.name,
-                emailVerified: user.properties.emailVerified,
-                image: user.properties.image
+                method: "email",
+                success: false,
+                errorReason: "invalid_credentials",
               },
-              session: {
-                id: sessionId,
-                userId: user._id,
-                token,
-                expiresAt: Date.now() + (7 * 24 * 60 * 60 * 1000),
-                method: 'email'
-              }
-            }
-          }),
+            });
 
-        // Sign out: delete session connection + log event
-        signOut: (sessionToken) =>
-          Effect.gen(function* () {
-            // 1. Find session connection by token
-            const sessions = yield* provider.connections.list({
-              relationshipType: 'session',
-              filters: { 'metadata.token': sessionToken }
+            return yield* Effect.fail(new InvalidCredentialsError());
+          }
+
+          // 3. Generate session token
+          const token = yield* generateSecureToken();
+
+          // 4. Create session connection
+          const sessionId = yield* provider.connections.create({
+            fromThingId: user._id,
+            toThingId: null, // No device tracking yet
+            relationshipType: "session",
+            organizationId: params.organizationId,
+            metadata: {
+              token,
+              expiresAt: Date.now() + 7 * 24 * 60 * 60 * 1000, // 7 days
+              method: "email",
+            },
+          });
+
+          // 5. Log successful sign_in event
+          yield* provider.events.log({
+            type: "sign_in",
+            actorId: user._id,
+            targetId: sessionId,
+            organizationId: params.organizationId,
+            metadata: {
+              method: "email",
+              success: true,
+            },
+          });
+
+          return {
+            user: {
+              id: user._id,
+              email: user.properties.email,
+              name: user.name,
+              emailVerified: user.properties.emailVerified,
+              image: user.properties.image,
+            },
+            session: {
+              id: sessionId,
+              userId: user._id,
+              token,
+              expiresAt: Date.now() + 7 * 24 * 60 * 60 * 1000,
+              method: "email",
+            },
+          };
+        }),
+
+      // Sign out: delete session connection + log event
+      signOut: (sessionToken) =>
+        Effect.gen(function* () {
+          // 1. Find session connection by token
+          const sessions = yield* provider.connections.list({
+            relationshipType: "session",
+            filters: { "metadata.token": sessionToken },
+          });
+
+          if (sessions.length === 0) {
+            return; // Session already gone
+          }
+
+          const session = sessions[0];
+
+          // 2. Delete session connection
+          yield* provider.connections.delete(session._id);
+
+          // 3. Log sign_out event
+          yield* provider.events.log({
+            type: "sign_out",
+            actorId: session.fromThingId,
+            targetId: session._id,
+            metadata: {
+              method: session.metadata.method,
+              success: true,
+            },
+          });
+        }),
+
+      // Get session: query active session connection
+      getSession: (sessionToken) =>
+        Effect.gen(function* () {
+          // 1. Find session connection by token
+          const sessions = yield* provider.connections
+            .list({
+              relationshipType: "session",
+              filters: { "metadata.token": sessionToken },
             })
+            .pipe(Effect.catchAll(() => Effect.succeed([])));
 
-            if (sessions.length === 0) {
-              return // Session already gone
-            }
+          if (sessions.length === 0) {
+            return null;
+          }
 
-            const session = sessions[0]
+          const session = sessions[0];
 
-            // 2. Delete session connection
-            yield* provider.connections.delete(session._id)
+          // 2. Check expiration
+          if (session.metadata.expiresAt < Date.now()) {
+            // Session expired - delete it
+            yield* provider.connections.delete(session._id);
+            return null;
+          }
 
-            // 3. Log sign_out event
-            yield* provider.events.log({
-              type: 'sign_out',
-              actorId: session.fromThingId,
-              targetId: session._id,
-              metadata: {
-                method: session.metadata.method,
-                success: true
-              }
-            })
-          }),
+          // 3. Get user thing
+          const user = yield* provider.things.get(session.fromThingId);
 
-        // Get session: query active session connection
-        getSession: (sessionToken) =>
-          Effect.gen(function* () {
-            // 1. Find session connection by token
-            const sessions = yield* provider.connections.list({
-              relationshipType: 'session',
-              filters: { 'metadata.token': sessionToken }
-            }).pipe(
-              Effect.catchAll(() => Effect.succeed([]))
-            )
+          return {
+            user: {
+              id: user._id,
+              email: user.properties.email,
+              name: user.name,
+              emailVerified: user.properties.emailVerified,
+              image: user.properties.image,
+            },
+            session: {
+              id: session._id,
+              userId: user._id,
+              token: session.metadata.token,
+              expiresAt: session.metadata.expiresAt,
+              method: session.metadata.method,
+            },
+          };
+        }),
 
-            if (sessions.length === 0) {
-              return null
-            }
-
-            const session = sessions[0]
-
-            // 2. Check expiration
-            if (session.metadata.expiresAt < Date.now()) {
-              // Session expired - delete it
-              yield* provider.connections.delete(session._id)
-              return null
-            }
-
-            // 3. Get user thing
-            const user = yield* provider.things.get(session.fromThingId)
-
-            return {
-              user: {
-                id: user._id,
-                email: user.properties.email,
-                name: user.name,
-                emailVerified: user.properties.emailVerified,
-                image: user.properties.image
-              },
-              session: {
-                id: session._id,
-                userId: user._id,
-                token: session.metadata.token,
-                expiresAt: session.metadata.expiresAt,
-                method: session.metadata.method
-              }
-            }
-          }),
-
-        // Additional methods: verifyEmail, requestPasswordReset, etc.
-        // ... (similar pattern using provider.things, provider.events)
-      }
-    }),
-    dependencies: [DataProvider]
-  }
-) {}
+      // Additional methods: verifyEmail, requestPasswordReset, etc.
+      // ... (similar pattern using provider.things, provider.events)
+    };
+  }),
+  dependencies: [DataProvider],
+}) {}
 
 // Helper functions (use crypto libraries in production)
 const hashPassword = (password: string) =>
   Effect.tryPromise({
     try: async () => {
       // Use bcrypt or argon2 in production
-      return `hashed_${password}`
+      return `hashed_${password}`;
     },
-    catch: (error) => new Error(String(error))
-  })
+    catch: (error) => new Error(String(error)),
+  });
 
 const verifyPassword = (password: string, hash: string) =>
   Effect.tryPromise({
     try: async () => {
       // Use bcrypt.compare or argon2.verify in production
-      return hash === `hashed_${password}`
+      return hash === `hashed_${password}`;
     },
-    catch: (error) => new Error(String(error))
-  })
+    catch: (error) => new Error(String(error)),
+  });
 
 const generateSecureToken = () =>
   Effect.sync(() => {
     // Use crypto.randomBytes in production
-    return Math.random().toString(36).substring(2, 15)
-  })
+    return Math.random().toString(36).substring(2, 15);
+  });
 ```
 
 **Key Points:**
+
 - ✅ Uses `DataProvider` → backend-agnostic (works with Convex, Supabase, WordPress)
 - ✅ All operations wrapped in `Effect.gen` → type-safe, composable
 - ✅ Users stored as things (type: person)
@@ -884,35 +912,43 @@ const generateSecureToken = () =>
 // frontend/src/providers/DataProvider.ts
 export interface DataProvider {
   things: {
-    get: (id: string) => Effect.Effect<Thing, ThingNotFoundError>
-    list: (params: { type: ThingType; organizationId?: string; filters?: any })
-      => Effect.Effect<Thing[], Error>
-    create: (input: { type: ThingType; name: string; properties: any })
-      => Effect.Effect<string, Error>
-    update: (id: string, updates: Partial<Thing>) => Effect.Effect<void, Error>
-    delete: (id: string) => Effect.Effect<void, Error>
-  }
+    get: (id: string) => Effect.Effect<Thing, ThingNotFoundError>;
+    list: (params: {
+      type: ThingType;
+      organizationId?: string;
+      filters?: any;
+    }) => Effect.Effect<Thing[], Error>;
+    create: (input: {
+      type: ThingType;
+      name: string;
+      properties: any;
+    }) => Effect.Effect<string, Error>;
+    update: (id: string, updates: Partial<Thing>) => Effect.Effect<void, Error>;
+    delete: (id: string) => Effect.Effect<void, Error>;
+  };
 
   connections: {
     create: (input: {
-      fromThingId: string
-      toThingId: string | null
-      relationshipType: ConnectionType
-      metadata?: any
-    }) => Effect.Effect<string, Error>
-    list: (params: { relationshipType: ConnectionType; filters?: any })
-      => Effect.Effect<Connection[], Error>
-    delete: (id: string) => Effect.Effect<void, Error>
-  }
+      fromThingId: string;
+      toThingId: string | null;
+      relationshipType: ConnectionType;
+      metadata?: any;
+    }) => Effect.Effect<string, Error>;
+    list: (params: {
+      relationshipType: ConnectionType;
+      filters?: any;
+    }) => Effect.Effect<Connection[], Error>;
+    delete: (id: string) => Effect.Effect<void, Error>;
+  };
 
   events: {
     log: (event: {
-      type: EventType
-      actorId: string
-      targetId?: string
-      metadata?: any
-    }) => Effect.Effect<void, Error>
-  }
+      type: EventType;
+      actorId: string;
+      targetId?: string;
+      metadata?: any;
+    }) => Effect.Effect<void, Error>;
+  };
 }
 ```
 
@@ -922,10 +958,10 @@ export interface DataProvider {
 
 ```typescript
 // frontend/src/providers/convex/ConvexProvider.ts
-import { Effect, Layer } from 'effect'
-import { ConvexHttpClient } from 'convex/browser'
-import { DataProvider } from '../DataProvider'
-import { api } from './api'
+import { Effect, Layer } from "effect";
+import { ConvexHttpClient } from "convex/browser";
+import { DataProvider } from "../DataProvider";
+import { api } from "./api";
 
 export class ConvexProvider implements DataProvider {
   constructor(private client: ConvexHttpClient) {}
@@ -934,46 +970,47 @@ export class ConvexProvider implements DataProvider {
     create: (input) =>
       Effect.tryPromise({
         try: () => this.client.mutation(api.things.create, input),
-        catch: (error) => new Error(String(error))
+        catch: (error) => new Error(String(error)),
       }),
 
     list: (params) =>
       Effect.tryPromise({
         try: () => this.client.query(api.things.list, params),
-        catch: (error) => new Error(String(error))
+        catch: (error) => new Error(String(error)),
       }),
 
     // ... other methods
-  }
+  };
 
   connections = {
     create: (input) =>
       Effect.tryPromise({
         try: () => this.client.mutation(api.connections.create, input),
-        catch: (error) => new Error(String(error))
+        catch: (error) => new Error(String(error)),
       }),
 
     // ... other methods
-  }
+  };
 
   events = {
     log: (event) =>
       Effect.tryPromise({
         try: () => this.client.mutation(api.events.log, event),
-        catch: (error) => new Error(String(error))
-      })
-  }
+        catch: (error) => new Error(String(error)),
+      }),
+  };
 }
 
 // Factory function
 export const convexProvider = (config: { url: string }) =>
   Layer.succeed(
     DataProvider,
-    new ConvexProvider(new ConvexHttpClient(config.url))
-  )
+    new ConvexProvider(new ConvexHttpClient(config.url)),
+  );
 ```
 
 **Result:**
+
 - AuthService calls `provider.things.create()` → works with Convex
 - Change to `supabaseProvider()` → works with Supabase
 - Change to `wordpressProvider()` → works with WordPress
@@ -989,48 +1026,48 @@ export const convexProvider = (config: { url: string }) =>
 
 ```tsx
 // frontend/src/components/auth/SignUpForm.tsx
-import { useEffectRunner } from '@/hooks/useEffectRunner'
-import { AuthService } from '@/services/AuthService'
-import { Effect } from 'effect'
-import { useState } from 'react'
+import { useEffectRunner } from "@/hooks/useEffectRunner";
+import { AuthService } from "@/services/AuthService";
+import { Effect } from "effect";
+import { useState } from "react";
 
 export function SignUpForm({ organizationId }: { organizationId: string }) {
-  const { run, loading, error } = useEffectRunner()
+  const { run, loading, error } = useEffectRunner();
   const [formData, setFormData] = useState({
-    email: '',
-    password: '',
-    name: ''
-  })
+    email: "",
+    password: "",
+    name: "",
+  });
 
   const handleSubmit = async (e: React.FormEvent) => {
-    e.preventDefault()
+    e.preventDefault();
 
     // Define Effect program using AuthService
     const program = Effect.gen(function* () {
-      const auth = yield* AuthService
+      const auth = yield* AuthService;
 
       // Sign up → creates thing (type: person) + logs event
       const user = yield* auth.signUp({
         ...formData,
-        organizationId
-      })
+        organizationId,
+      });
 
-      return user
+      return user;
     }).pipe(
       // Handle specific errors
-      Effect.catchTag('EmailAlreadyExistsError', (err) =>
-        Effect.fail(new Error(`Email ${err.email} is already registered`))
-      )
-    )
+      Effect.catchTag("EmailAlreadyExistsError", (err) =>
+        Effect.fail(new Error(`Email ${err.email} is already registered`)),
+      ),
+    );
 
     // Run Effect program
     const user = await run(program, {
       onSuccess: (user) => {
         // Redirect to verify email page
-        window.location.href = '/verify-email'
-      }
-    })
-  }
+        window.location.href = "/verify-email";
+      },
+    });
+  };
 
   return (
     <form onSubmit={handleSubmit} className="space-y-4">
@@ -1058,15 +1095,13 @@ export function SignUpForm({ organizationId }: { organizationId: string }) {
         required
       />
 
-      {error && (
-        <div className="text-red-600">{error}</div>
-      )}
+      {error && <div className="text-red-600">{error}</div>}
 
       <button type="submit" disabled={loading}>
-        {loading ? 'Creating account...' : 'Sign Up'}
+        {loading ? "Creating account..." : "Sign Up"}
       </button>
     </form>
-  )
+  );
 }
 ```
 
@@ -1074,50 +1109,50 @@ export function SignUpForm({ organizationId }: { organizationId: string }) {
 
 ```tsx
 // frontend/src/components/auth/SignInForm.tsx
-import { useEffectRunner } from '@/hooks/useEffectRunner'
-import { AuthService } from '@/services/AuthService'
-import { Effect } from 'effect'
-import { useState } from 'react'
+import { useEffectRunner } from "@/hooks/useEffectRunner";
+import { AuthService } from "@/services/AuthService";
+import { Effect } from "effect";
+import { useState } from "react";
 
 export function SignInForm({ organizationId }: { organizationId: string }) {
-  const { run, loading, error } = useEffectRunner()
+  const { run, loading, error } = useEffectRunner();
   const [formData, setFormData] = useState({
-    email: '',
-    password: ''
-  })
+    email: "",
+    password: "",
+  });
 
   const handleSubmit = async (e: React.FormEvent) => {
-    e.preventDefault()
+    e.preventDefault();
 
     // Define Effect program
     const program = Effect.gen(function* () {
-      const auth = yield* AuthService
+      const auth = yield* AuthService;
 
       // Sign in → creates connection (type: session) + logs event
       const result = yield* auth.signIn({
         ...formData,
-        organizationId
-      })
+        organizationId,
+      });
 
-      return result
+      return result;
     }).pipe(
       // Handle invalid credentials
-      Effect.catchTag('InvalidCredentialsError', () =>
-        Effect.fail(new Error('Invalid email or password'))
-      )
-    )
+      Effect.catchTag("InvalidCredentialsError", () =>
+        Effect.fail(new Error("Invalid email or password")),
+      ),
+    );
 
     // Run Effect program
     await run(program, {
       onSuccess: ({ user, session }) => {
         // Store session token in cookie/localStorage
-        document.cookie = `session=${session.token}; path=/; max-age=${7 * 24 * 60 * 60}`
+        document.cookie = `session=${session.token}; path=/; max-age=${7 * 24 * 60 * 60}`;
 
         // Redirect to dashboard
-        window.location.href = '/dashboard'
-      }
-    })
-  }
+        window.location.href = "/dashboard";
+      },
+    });
+  };
 
   return (
     <form onSubmit={handleSubmit} className="space-y-4">
@@ -1137,19 +1172,17 @@ export function SignInForm({ organizationId }: { organizationId: string }) {
         required
       />
 
-      {error && (
-        <div className="text-red-600">{error}</div>
-      )}
+      {error && <div className="text-red-600">{error}</div>}
 
       <button type="submit" disabled={loading}>
-        {loading ? 'Signing in...' : 'Sign In'}
+        {loading ? "Signing in..." : "Sign In"}
       </button>
 
       <a href="/forgot-password" className="text-sm text-blue-600">
         Forgot password?
       </a>
     </form>
-  )
+  );
 }
 ```
 
@@ -1230,6 +1263,7 @@ try {
 ```
 
 **Key Points:**
+
 - ✅ Components use `useEffectRunner` hook
 - ✅ All auth operations wrapped in `Effect.gen`
 - ✅ Typed error handling with `catchTag`
@@ -1246,19 +1280,19 @@ try {
 
 ```typescript
 // backend/convex/schema.ts
-import { defineSchema, defineTable } from "convex/server"
-import { v } from "convex/values"
+import { defineSchema, defineTable } from "convex/server";
+import { v } from "convex/values";
 
 export default defineSchema({
   // Users = things with type: "person"
   things: defineTable({
-    type: v.string(),              // "person", "course", "product", etc.
+    type: v.string(), // "person", "course", "product", etc.
     name: v.string(),
     organizationId: v.string(),
     status: v.string(),
-    properties: v.any(),           // { email, emailVerified, password, ... }
+    properties: v.any(), // { email, emailVerified, password, ... }
     createdAt: v.number(),
-    updatedAt: v.number()
+    updatedAt: v.number(),
   })
     .index("by_type", ["type"])
     .index("by_organization", ["organizationId"])
@@ -1266,14 +1300,14 @@ export default defineSchema({
 
   // Sessions = connections with relationshipType: "session"
   connections: defineTable({
-    fromThingId: v.string(),       // User ID
-    toThingId: v.union(v.string(), v.null()),  // Device ID (optional)
-    relationshipType: v.string(),  // "session", "oauth_account", etc.
+    fromThingId: v.string(), // User ID
+    toThingId: v.union(v.string(), v.null()), // Device ID (optional)
+    relationshipType: v.string(), // "session", "oauth_account", etc.
     organizationId: v.string(),
     status: v.string(),
-    metadata: v.any(),             // { token, expiresAt, method, ... }
+    metadata: v.any(), // { token, expiresAt, method, ... }
     createdAt: v.number(),
-    updatedAt: v.number()
+    updatedAt: v.number(),
   })
     .index("by_type", ["relationshipType"])
     .index("by_from", ["fromThingId"])
@@ -1281,18 +1315,18 @@ export default defineSchema({
 
   // Auth events = events with type: "sign_up", "sign_in", etc.
   events: defineTable({
-    type: v.string(),              // "sign_up", "sign_in", "sign_out", etc.
+    type: v.string(), // "sign_up", "sign_in", "sign_out", etc.
     actorId: v.string(),
     targetId: v.optional(v.string()),
     organizationId: v.string(),
     metadata: v.any(),
     timestamp: v.number(),
-    createdAt: v.number()
+    createdAt: v.number(),
   })
     .index("by_type", ["type"])
     .index("by_actor", ["actorId"])
-    .index("by_timestamp", ["timestamp"])
-})
+    .index("by_timestamp", ["timestamp"]),
+});
 ```
 
 **Result:** Users, sessions, OAuth accounts all stored in the ontology!
@@ -1359,43 +1393,43 @@ CREATE INDEX idx_events_actor ON events("actorId");
 
 ```typescript
 // frontend/src/middleware.ts
-import { defineMiddleware } from 'astro:middleware'
-import { AuthService } from '@/services/AuthService'
-import { Effect } from 'effect'
-import { ClientLayer } from '@/services/ClientLayer'
+import { defineMiddleware } from "astro:middleware";
+import { AuthService } from "@/services/AuthService";
+import { Effect } from "effect";
+import { ClientLayer } from "@/services/ClientLayer";
 
 export const onRequest = defineMiddleware(async (context, next) => {
   // Get session token from cookie
-  const sessionToken = context.cookies.get('session')?.value
+  const sessionToken = context.cookies.get("session")?.value;
 
   if (!sessionToken) {
-    context.locals.user = null
-    context.locals.session = null
-    return next()
+    context.locals.user = null;
+    context.locals.session = null;
+    return next();
   }
 
   // Verify session using AuthService
   const program = Effect.gen(function* () {
-    const auth = yield* AuthService
-    return yield* auth.getSession(sessionToken)
-  })
+    const auth = yield* AuthService;
+    return yield* auth.getSession(sessionToken);
+  });
 
   try {
     const result = await Effect.runPromise(
-      program.pipe(Effect.provide(ClientLayer))
-    )
+      program.pipe(Effect.provide(ClientLayer)),
+    );
 
     if (result) {
-      context.locals.user = result.user
-      context.locals.session = result.session
+      context.locals.user = result.user;
+      context.locals.session = result.session;
     }
   } catch (error) {
     // Session invalid - clear cookie
-    context.cookies.delete('session')
+    context.cookies.delete("session");
   }
 
-  return next()
-})
+  return next();
+});
 ```
 
 ### Protected Routes
@@ -1417,6 +1451,7 @@ if (!user) {
 ```
 
 **Session Benefits:**
+
 - ✅ Stored as connections → query active sessions
 - ✅ Automatic expiration → status="expired" when expiresAt passed
 - ✅ Real-time revocation → delete connection = logged out everywhere
@@ -1452,6 +1487,7 @@ if (!org) {
 ```
 
 **How It Works:**
+
 1. User visits `fitnesspro.one.ie/signup`
 2. Middleware extracts `fitnesspro` → queries organization thing
 3. Sign up form passes `organizationId` to AuthService
@@ -1460,6 +1496,7 @@ if (!org) {
 6. All queries automatically filtered by `organizationId`
 
 **Benefits:**
+
 - ✅ Data isolation → users can't access other orgs
 - ✅ Automatic scoping → all auth operations org-scoped
 - ✅ Multi-org users → same email, different orgs
@@ -1475,77 +1512,81 @@ If you have existing Better Auth code and want to migrate gradually:
 
 ```typescript
 // frontend/src/auth/better-auth-compat.ts
-import { AuthService } from '@/services/AuthService'
-import { Effect } from 'effect'
-import { ClientLayer } from '@/services/ClientLayer'
+import { AuthService } from "@/services/AuthService";
+import { Effect } from "effect";
+import { ClientLayer } from "@/services/ClientLayer";
 
 // Better Auth API compatibility layer
 export const betterAuth = {
   api: {
     signUp: {
-      email: async (params: { email: string; password: string; name: string }) => {
+      email: async (params: {
+        email: string;
+        password: string;
+        name: string;
+      }) => {
         const program = Effect.gen(function* () {
-          const auth = yield* AuthService
+          const auth = yield* AuthService;
           return yield* auth.signUp({
             ...params,
-            organizationId: getCurrentOrgId()
-          })
-        })
+            organizationId: getCurrentOrgId(),
+          });
+        });
 
-        return Effect.runPromise(program.pipe(Effect.provide(ClientLayer)))
-      }
+        return Effect.runPromise(program.pipe(Effect.provide(ClientLayer)));
+      },
     },
 
     signIn: {
       email: async (params: { email: string; password: string }) => {
         const program = Effect.gen(function* () {
-          const auth = yield* AuthService
+          const auth = yield* AuthService;
           return yield* auth.signIn({
             ...params,
-            organizationId: getCurrentOrgId()
-          })
-        })
+            organizationId: getCurrentOrgId(),
+          });
+        });
 
-        return Effect.runPromise(program.pipe(Effect.provide(ClientLayer)))
-      }
+        return Effect.runPromise(program.pipe(Effect.provide(ClientLayer)));
+      },
     },
 
     signOut: async () => {
-      const sessionToken = getSessionToken()
-      if (!sessionToken) return
+      const sessionToken = getSessionToken();
+      if (!sessionToken) return;
 
       const program = Effect.gen(function* () {
-        const auth = yield* AuthService
-        return yield* auth.signOut(sessionToken)
-      })
+        const auth = yield* AuthService;
+        return yield* auth.signOut(sessionToken);
+      });
 
-      return Effect.runPromise(program.pipe(Effect.provide(ClientLayer)))
+      return Effect.runPromise(program.pipe(Effect.provide(ClientLayer)));
     },
 
     getSession: async () => {
-      const sessionToken = getSessionToken()
-      if (!sessionToken) return null
+      const sessionToken = getSessionToken();
+      if (!sessionToken) return null;
 
       const program = Effect.gen(function* () {
-        const auth = yield* AuthService
-        return yield* auth.getSession(sessionToken)
-      })
+        const auth = yield* AuthService;
+        return yield* auth.getSession(sessionToken);
+      });
 
-      return Effect.runPromise(program.pipe(Effect.provide(ClientLayer)))
-    }
-  }
-}
+      return Effect.runPromise(program.pipe(Effect.provide(ClientLayer)));
+    },
+  },
+};
 
 // Helper functions
 function getCurrentOrgId(): string {
   // Extract from subdomain or context
-  return globalThis.currentOrgId || ''
+  return globalThis.currentOrgId || "";
 }
 
 function getSessionToken(): string | null {
   // Read from cookie
-  const match = document.cookie.match(/session=([^;]+)/)
-  return match ? match[1] : null
+  const match = document.cookie.match(/session=([^;]+)/);
+  return match ? match[1] : null;
 }
 ```
 
@@ -1559,130 +1600,127 @@ function getSessionToken(): string | null {
 
 ```typescript
 // frontend/src/services/__tests__/AuthService.test.ts
-import { describe, it, expect } from 'vitest'
-import { Effect, Layer } from 'effect'
-import { AuthService } from '../AuthService'
-import { DataProvider } from '@/providers/DataProvider'
+import { describe, it, expect } from "vitest";
+import { Effect, Layer } from "effect";
+import { AuthService } from "../AuthService";
+import { DataProvider } from "@/providers/DataProvider";
 
 // Mock DataProvider
-const mockThings: any[] = []
-const mockConnections: any[] = []
-const mockEvents: any[] = []
+const mockThings: any[] = [];
+const mockConnections: any[] = [];
+const mockEvents: any[] = [];
 
 const MockDataProvider = Layer.succeed(DataProvider, {
   things: {
     list: (params) =>
-      Effect.succeed(
-        mockThings.filter(t => t.type === params.type)
-      ),
+      Effect.succeed(mockThings.filter((t) => t.type === params.type)),
 
     create: (input) =>
       Effect.sync(() => {
-        const id = `thing_${Date.now()}`
-        mockThings.push({ _id: id, ...input })
-        return id
+        const id = `thing_${Date.now()}`;
+        mockThings.push({ _id: id, ...input });
+        return id;
       }),
 
-    get: (id) =>
-      Effect.succeed(mockThings.find(t => t._id === id)!)
+    get: (id) => Effect.succeed(mockThings.find((t) => t._id === id)!),
   },
 
   connections: {
     create: (input) =>
       Effect.sync(() => {
-        const id = `conn_${Date.now()}`
-        mockConnections.push({ _id: id, ...input })
-        return id
+        const id = `conn_${Date.now()}`;
+        mockConnections.push({ _id: id, ...input });
+        return id;
       }),
 
     list: (params) =>
       Effect.succeed(
-        mockConnections.filter(c =>
-          c.relationshipType === params.relationshipType
-        )
+        mockConnections.filter(
+          (c) => c.relationshipType === params.relationshipType,
+        ),
       ),
 
     delete: (id) =>
       Effect.sync(() => {
-        const index = mockConnections.findIndex(c => c._id === id)
-        mockConnections.splice(index, 1)
-      })
+        const index = mockConnections.findIndex((c) => c._id === id);
+        mockConnections.splice(index, 1);
+      }),
   },
 
   events: {
     log: (event) =>
       Effect.sync(() => {
-        mockEvents.push(event)
-      })
-  }
-})
+        mockEvents.push(event);
+      }),
+  },
+});
 
-describe('AuthService', () => {
-  it('signs up a new user', async () => {
+describe("AuthService", () => {
+  it("signs up a new user", async () => {
     const program = Effect.gen(function* () {
-      const auth = yield* AuthService
+      const auth = yield* AuthService;
 
       const user = yield* auth.signUp({
-        email: 'test@example.com',
-        password: 'password123',
-        name: 'Test User',
-        organizationId: 'org_123'
-      })
+        email: "test@example.com",
+        password: "password123",
+        name: "Test User",
+        organizationId: "org_123",
+      });
 
-      return user
-    })
+      return user;
+    });
 
     const user = await Effect.runPromise(
       program.pipe(
         Effect.provide(AuthService.Default),
-        Effect.provide(MockDataProvider)
-      )
-    )
+        Effect.provide(MockDataProvider),
+      ),
+    );
 
-    expect(user.email).toBe('test@example.com')
-    expect(user.name).toBe('Test User')
-    expect(mockThings.length).toBe(1)
-    expect(mockEvents.length).toBe(1) // sign_up event logged
-  })
+    expect(user.email).toBe("test@example.com");
+    expect(user.name).toBe("Test User");
+    expect(mockThings.length).toBe(1);
+    expect(mockEvents.length).toBe(1); // sign_up event logged
+  });
 
-  it('signs in existing user', async () => {
+  it("signs in existing user", async () => {
     // Pre-populate mock user
     mockThings.push({
-      _id: 'user_1',
-      type: 'person',
-      name: 'Test User',
+      _id: "user_1",
+      type: "person",
+      name: "Test User",
       properties: {
-        email: 'test@example.com',
-        password: 'hashed_password123',
-        emailVerified: true
-      }
-    })
+        email: "test@example.com",
+        password: "hashed_password123",
+        emailVerified: true,
+      },
+    });
 
     const program = Effect.gen(function* () {
-      const auth = yield* AuthService
+      const auth = yield* AuthService;
 
       const result = yield* auth.signIn({
-        email: 'test@example.com',
-        password: 'password123',
-        organizationId: 'org_123'
-      })
+        email: "test@example.com",
+        password: "password123",
+        organizationId: "org_123",
+      });
 
-      return result
-    })
+      return result;
+    });
 
     const result = await Effect.runPromise(
       program.pipe(
         Effect.provide(AuthService.Default),
-        Effect.provide(MockDataProvider)
-      )
-    )
+        Effect.provide(MockDataProvider),
+      ),
+    );
 
-    expect(result.user.email).toBe('test@example.com')
-    expect(result.session.userId).toBe('user_1')
-    expect(mockConnections.length).toBe(1) // session connection created
-    expect(mockEvents.length).toBe(1) // sign_in event logged
-  })
-})
+    expect(result.user.email).toBe("test@example.com");
+    expect(result.session.userId).toBe("user_1");
+    expect(mockConnections.length).toBe(1); // session connection created
+    expect(mockEvents.length).toBe(1); // sign_in event logged
+  });
+});
 ```
 
 **Key Point:** No mocking libraries needed! Effect.ts test layers provide real implementations.
@@ -1700,12 +1738,12 @@ Keep existing Better Auth, add AuthService:
 
 // OLD: Better Auth (keep for now)
 export const betterAuth = betterAuth({
-  database: drizzleAdapter(db)
-})
+  database: drizzleAdapter(db),
+});
 
 // NEW: AuthService (add alongside)
-import { AuthService } from '@/services/AuthService'
-import { ClientLayer } from '@/services/ClientLayer'
+import { AuthService } from "@/services/AuthService";
+import { ClientLayer } from "@/services/ClientLayer";
 
 // Use both in parallel during migration
 ```
@@ -1714,18 +1752,18 @@ import { ClientLayer } from '@/services/ClientLayer'
 
 ```tsx
 // OLD: Better Auth
-import { useSession } from '@/auth/client'
-const session = useSession()
+import { useSession } from "@/auth/client";
+const session = useSession();
 
 // NEW: AuthService + Effect.ts
-import { useEffectRunner } from '@/hooks/useEffectRunner'
-import { AuthService } from '@/services/AuthService'
-const { run } = useEffectRunner()
+import { useEffectRunner } from "@/hooks/useEffectRunner";
+import { AuthService } from "@/services/AuthService";
+const { run } = useEffectRunner();
 const program = Effect.gen(function* () {
-  const auth = yield* AuthService
-  return yield* auth.getSession(token)
-})
-const session = await run(program)
+  const auth = yield* AuthService;
+  return yield* auth.getSession(token);
+});
+const session = await run(program);
 ```
 
 ### Phase 3: Remove Better Auth
@@ -1739,34 +1777,40 @@ Once all components migrated, remove Better Auth dependencies.
 ### What We Achieve
 
 ✅ **Users = Things (type: person)**
+
 - Works with all thing operations
 - Can have connections (relationships, org membership)
 - Can be actors in events (audit trail)
 - Can be embedded in knowledge (AI context)
 
 ✅ **Sessions = Connections (type: session)**
+
 - Real-time sync → revoke everywhere instantly
 - Automatic expiration → query only active
 - Analytics → count sessions, track patterns
 
 ✅ **Auth Events Logged**
+
 - Complete audit trail
 - Security analytics
 - User timeline
 
 ✅ **Effect.ts Integration**
+
 - Type-safe auth operations
 - Composable workflows
 - Consistent error handling
 - Easy testing with test layers
 
 ✅ **Backend-Agnostic**
+
 - AuthService uses DataProvider
 - Works with Convex, Supabase, WordPress, Notion
 - Swap backends by changing ONE line
 - Same auth code, different backend
 
 ✅ **Multi-Tenant by Default**
+
 - Users scoped to organizations
 - Sessions scoped to organizations
 - Data isolation automatic
@@ -1820,22 +1864,22 @@ frontend/src/
 
 ### Comparison
 
-| Aspect | Better Auth (Traditional) | ONE 6-Dimension |
-|--------|---------------------------|------------------|
-| **Architecture** | 4 separate tables | 6 dimensions |
-| **Multi-Tenancy** | Manual implementation | Organizations (dimension 1) |
-| **Authorization** | Basic roles | People with roles (dimension 2) |
-| **Users** | Separate `user` table | Things (type: creator) |
-| **Devices** | Not tracked | Things (type: device) - optional |
-| **Sessions** | Separate `session` table | Connections (type: session) |
-| **OAuth** | Separate `account` table | Connections (type: oauth_account) |
-| **Audit Trail** | Not logged | Events (dimension 5) - complete |
-| **Security AI** | None | Knowledge (dimension 6) - patterns |
-| **Backend** | Database-specific adapters | Universal DataProvider |
-| **Error Handling** | Try/catch | Typed Effect errors |
-| **Testing** | Mock database | Effect test layers |
-| **Data Isolation** | Manual queries | Automatic (groupId scoping) |
-| **Analytics** | External tool | Built-in (events + knowledge) |
+| Aspect             | Better Auth (Traditional)  | ONE 6-Dimension                    |
+| ------------------ | -------------------------- | ---------------------------------- |
+| **Architecture**   | 4 separate tables          | 6 dimensions                       |
+| **Multi-Tenancy**  | Manual implementation      | Organizations (dimension 1)        |
+| **Authorization**  | Basic roles                | People with roles (dimension 2)    |
+| **Users**          | Separate `user` table      | Things (type: creator)             |
+| **Devices**        | Not tracked                | Things (type: device) - optional   |
+| **Sessions**       | Separate `session` table   | Connections (type: session)        |
+| **OAuth**          | Separate `account` table   | Connections (type: oauth_account)  |
+| **Audit Trail**    | Not logged                 | Events (dimension 5) - complete    |
+| **Security AI**    | None                       | Knowledge (dimension 6) - patterns |
+| **Backend**        | Database-specific adapters | Universal DataProvider             |
+| **Error Handling** | Try/catch                  | Typed Effect errors                |
+| **Testing**        | Mock database              | Effect test layers                 |
+| **Data Isolation** | Manual queries             | Automatic (groupId scoping)        |
+| **Analytics**      | External tool              | Built-in (events + knowledge)      |
 
 ### Next Steps
 

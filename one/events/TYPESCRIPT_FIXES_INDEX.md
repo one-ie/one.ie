@@ -1,3 +1,21 @@
+---
+title: Typescript_Fixes_Index
+dimension: events
+category: TYPESCRIPT_FIXES_INDEX.md
+tags: ai, architecture
+related_dimensions: connections, knowledge, people, things
+scope: global
+created: 2025-11-03
+updated: 2025-11-03
+version: 1.0.0
+ai_context: |
+  This document is part of the events dimension in the TYPESCRIPT_FIXES_INDEX.md category.
+  Location: one/events/TYPESCRIPT_FIXES_INDEX.md
+  Purpose: Documents typescript fixes documentation index
+  Related dimensions: connections, knowledge, people, things
+  For AI agents: Read this to understand TYPESCRIPT_FIXES_INDEX.
+---
+
 # TypeScript Fixes Documentation Index
 
 ## Overview

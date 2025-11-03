@@ -1,3 +1,21 @@
+---
+title: Ecommerce Live Demo
+dimension: events
+category: ECOMMERCE-LIVE-DEMO.md
+tags: ai
+related_dimensions: people, things
+scope: global
+created: 2025-11-03
+updated: 2025-11-03
+version: 1.0.0
+ai_context: |
+  This document is part of the events dimension in the ECOMMERCE-LIVE-DEMO.md category.
+  Location: one/events/ECOMMERCE-LIVE-DEMO.md
+  Purpose: Documents 🛍️ ecommerce template - live demo guide
+  Related dimensions: people, things
+  For AI agents: Read this to understand ECOMMERCE LIVE DEMO.
+---
+
 # 🛍️ Ecommerce Template - Live Demo Guide
 
 **Status:** ✅ Live and Ready to View  

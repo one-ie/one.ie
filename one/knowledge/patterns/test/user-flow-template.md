@@ -1,3 +1,21 @@
+---
+title: User Flow Template
+dimension: knowledge
+category: patterns
+tags: agent, testing
+related_dimensions: connections, events, people, things
+scope: global
+created: 2025-11-03
+updated: 2025-11-03
+version: 1.0.0
+ai_context: |
+  This document is part of the knowledge dimension in the patterns category.
+  Location: one/knowledge/patterns/test/user-flow-template.md
+  Purpose: Documents pattern: user flow template
+  Related dimensions: connections, events, people, things
+  For AI agents: Read this to understand user flow template.
+---
+
 # Pattern: User Flow Template
 
 **Category:** Testing

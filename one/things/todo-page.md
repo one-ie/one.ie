@@ -1,3 +1,22 @@
+---
+title: Todo Page
+dimension: things
+primary_dimension: things
+category: todo-page.md
+tags: ai, architecture, frontend, inference
+related_dimensions: connections, events, groups, people, things, knowledge
+scope: global
+created: 2025-11-03
+updated: 2025-11-03
+version: 1.0.0
+ai_context: |
+  This document is part of the things dimension in the todo-page.md category.
+  Location: one/things/todo-page.md
+  Purpose: Documents one platform: landing page template v1.0.0
+  Related dimensions: connections, events, groups, people
+  For AI agents: Read this to understand todo page.
+---
+
 # ONE Platform: Landing Page Template v1.0.0
 
 **Focus:** Customizable landing page builder template with hero, features, testimonials, CTA, and responsive design
@@ -15,6 +34,7 @@
 **Purpose:** Define landing page template requirements, customization options, content structure
 
 ### Infer 1: Define Landing Page Features
+
 - [ ] **Core Sections:**
   - [ ] Hero section with headline, subheadline, CTA
   - [ ] Features/benefits grid (3-6 items)
@@ -45,6 +65,7 @@
   - [ ] Lighthouse 95+ score
 
 ### Infer 2: Map Landing Page to 6-Dimension Ontology
+
 - [ ] **Groups:** Creator's brand/organization
 - [ ] **People:**
   - [ ] Creator (page owner)
@@ -70,6 +91,7 @@
 - [ ] **Knowledge:** Landing page templates, conversion best practices, design patterns
 
 ### Infer 3: Design Template Structure
+
 - [ ] **Page Configuration:**
   ```
   {
@@ -127,6 +149,7 @@
   ```
 
 ### Infer 4: Design UI/UX Pattern
+
 - [ ] **Layout:**
   - [ ] Full-width hero with centered content
   - [ ] Grid-based sections (max-width: 6xl)
@@ -161,8 +184,9 @@
 **Purpose:** Define data model, create Convex schema, implement services
 
 ### Infer 5: Create Convex Schema
+
 - [ ] **Landing Page Table:**
-  - [ ] _id, creatorId, title, slug, description
+  - [ ] \_id, creatorId, title, slug, description
   - [ ] sections: Section[]
   - [ ] branding: BrandingConfig
   - [ ] metadata: PageMetadata
@@ -178,6 +202,7 @@
   - [ ] Section validation (correct types)
 
 ### Infer 6: Implement Landing Page Queries
+
 - [ ] **Query: listPages**
   - [ ] Args: creatorId, limit, offset
   - [ ] Returns: Page[] with metadata
@@ -196,6 +221,7 @@
   - [ ] Time range support
 
 ### Infer 7: Implement Landing Page Mutations
+
 - [ ] **Mutation: createPage**
   - [ ] Args: creatorId, title, sections
   - [ ] Create page with defaults
@@ -224,6 +250,7 @@
   - [ ] Log conversion event
 
 ### Infer 8: Create Landing Page Services
+
 - [ ] **PageService:**
   - [ ] validatePageData() - check sections, required fields
   - [ ] generateSlug() - create unique URL slug
@@ -246,6 +273,7 @@
 **Purpose:** Build reusable components, create template pages, implement interactions
 
 ### Infer 9: Create Landing Page Components
+
 - [ ] **HeroSection component**
   - [ ] Props: headline, subheadline, cta, image/video
   - [ ] Dynamic background image or video
@@ -283,6 +311,7 @@
   - [ ] Loading state during submit
 
 ### Infer 10: Create Landing Page Template Page
+
 - [ ] **pages/page.astro:**
   - [ ] Load page data by slug
   - [ ] Render hero section
@@ -310,6 +339,7 @@
 **Purpose:** Connect to backend, implement data flow, handle authentication
 
 ### Infer 11: Connect Frontend to Backend
+
 - [ ] **usePageData hook:**
   - [ ] Fetch page by slug
   - [ ] Handle loading/error states
@@ -327,6 +357,7 @@
   - [ ] Track user actions
 
 ### Infer 12: Implement Creator Dashboard
+
 - [ ] **pages/dashboard/pages.astro:**
   - [ ] List creator's landing pages
   - [ ] Create new page button
@@ -348,6 +379,7 @@
 **Purpose:** Secure pages, implement access control, protect forms
 
 ### Infer 13: Implement Access Control
+
 - [ ] **Page Publishing:**
   - [ ] Creator can edit own pages
   - [ ] Public can view published pages
@@ -370,6 +402,7 @@
 **Purpose:** Store best practices, enable AI recommendations
 
 ### Infer 14: Create Landing Page Knowledge Base
+
 - [ ] **Template Patterns:**
   - [ ] SaaS landing pages
   - [ ] Service-based landing pages
@@ -401,6 +434,7 @@
 **Purpose:** Write tests, validate functionality, ensure reliability
 
 ### Infer 15: Create Landing Page Tests
+
 - [ ] **Unit Tests:**
   - [ ] HeroSection component
   - [ ] FeaturesSection component
@@ -424,6 +458,7 @@
 **Purpose:** Finalize UI/UX, create design system, ensure accessibility
 
 ### Infer 16: Finalize Landing Page Design
+
 - [ ] **Component Variants:**
   - [ ] Hero: image, video, gradient backgrounds
   - [ ] Features: icon + text, cards, list
@@ -454,6 +489,7 @@
 **Purpose:** Optimize speed, improve Core Web Vitals, ensure scalability
 
 ### Infer 17: Optimize Landing Page Performance
+
 - [ ] **Image Optimization:**
   - [ ] Convert to WebP/AVIF formats
   - [ ] Responsive image sizes
@@ -484,6 +520,7 @@
 **Purpose:** Ship to production, document features, enable end-users
 
 ### Infer 18: Deploy and Document Landing Page
+
 - [ ] **Production Deployment:**
   - [ ] Build for production
   - [ ] Deploy to Cloudflare Pages
@@ -504,6 +541,7 @@
   - [ ] Schedule feature releases
 
 ### Infer 19: Create Landing Page Examples
+
 - [ ] **Template Examples:**
   - [ ] SaaS product launch
   - [ ] Creator portfolio
@@ -518,6 +556,7 @@
   - [ ] Color palettes
 
 ### Infer 20: Plan Future Enhancements
+
 - [ ] **Advanced Features:**
   - [ ] A/B testing
   - [ ] Email integration (ConvertKit, etc.)

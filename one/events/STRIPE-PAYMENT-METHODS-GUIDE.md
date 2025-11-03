@@ -1,3 +1,21 @@
+---
+title: Stripe Payment Methods Guide
+dimension: events
+category: STRIPE-PAYMENT-METHODS-GUIDE.md
+tags: ai
+related_dimensions: connections, people
+scope: global
+created: 2025-11-03
+updated: 2025-11-03
+version: 1.0.0
+ai_context: |
+  This document is part of the events dimension in the STRIPE-PAYMENT-METHODS-GUIDE.md category.
+  Location: one/events/STRIPE-PAYMENT-METHODS-GUIDE.md
+  Purpose: Documents stripe payment methods - complete guide
+  Related dimensions: connections, people
+  For AI agents: Read this to understand STRIPE PAYMENT METHODS GUIDE.
+---
+
 # Stripe Payment Methods - Complete Guide
 
 ## ✨ Payment Methods Enabled

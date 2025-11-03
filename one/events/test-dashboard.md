@@ -1,3 +1,21 @@
+---
+title: Test Dashboard
+dimension: events
+category: test-dashboard.md
+tags: ai, architecture, ontology
+related_dimensions: knowledge, things
+scope: global
+created: 2025-11-03
+updated: 2025-11-03
+version: 1.0.0
+ai_context: |
+  This document is part of the events dimension in the test-dashboard.md category.
+  Location: one/events/test-dashboard.md
+  Purpose: Documents multi-ontology architecture: test dashboard
+  Related dimensions: knowledge, things
+  For AI agents: Read this to understand test dashboard.
+---
+
 # Multi-Ontology Architecture: Test Dashboard
 
 ## Test Execution Summary

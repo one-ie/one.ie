@@ -1,3 +1,21 @@
+---
+title: 2 1 Dataprovider Interface
+dimension: things
+category: features
+tags: ai, architecture, backend, frontend, ontology
+related_dimensions: events, groups
+scope: global
+created: 2025-11-03
+updated: 2025-11-03
+version: 1.0.0
+ai_context: |
+  This document is part of the things dimension in the features category.
+  Location: one/things/features/2-1-dataprovider-interface.md
+  Purpose: Documents feature 2-1: dataprovider interface & convexprovider
+  Related dimensions: events, groups
+  For AI agents: Read this to understand 2 1 dataprovider interface.
+---
+
 # Feature 2-1: DataProvider Interface & ConvexProvider
 
 **Feature ID:** `feature_2_1_dataprovider_interface`
@@ -52,31 +70,42 @@ export interface DataProvider {
      * Get organization by ID
      * @returns Effect that succeeds with Organization or fails with OrganizationNotFoundError
      */
-    get: (id: Id<"organizations">) => Effect.Effect<Organization, OrganizationNotFoundError>;
+    get: (
+      id: Id<"organizations">,
+    ) => Effect.Effect<Organization, OrganizationNotFoundError>;
 
     /**
      * List organizations (platform owner only)
      * @returns Effect with array of organizations
      */
-    list: (params: ListOrganizationsParams) => Effect.Effect<Organization[], Error>;
+    list: (
+      params: ListOrganizationsParams,
+    ) => Effect.Effect<Organization[], Error>;
 
     /**
      * Create new organization
      * @returns Effect with organization ID
      */
-    create: (input: CreateOrganizationInput) => Effect.Effect<Id<"organizations">, Error>;
+    create: (
+      input: CreateOrganizationInput,
+    ) => Effect.Effect<Id<"organizations">, Error>;
 
     /**
      * Update organization settings
      * @returns Effect with updated organization
      */
-    update: (id: Id<"organizations">, updates: Partial<Organization>) => Effect.Effect<Organization, Error>;
+    update: (
+      id: Id<"organizations">,
+      updates: Partial<Organization>,
+    ) => Effect.Effect<Organization, Error>;
 
     /**
      * Get organization usage stats
      * @returns Effect with usage metrics
      */
-    getUsage: (id: Id<"organizations">) => Effect.Effect<OrganizationUsage, Error>;
+    getUsage: (
+      id: Id<"organizations">,
+    ) => Effect.Effect<OrganizationUsage, Error>;
   };
 
   /**
@@ -106,19 +135,27 @@ export interface DataProvider {
      * Update person profile
      * @returns Effect with updated person
      */
-    update: (id: Id<"people">, updates: Partial<Person>) => Effect.Effect<Person, Error>;
+    update: (
+      id: Id<"people">,
+      updates: Partial<Person>,
+    ) => Effect.Effect<Person, Error>;
 
     /**
      * Get person's organizations
      * @returns Effect with array of organizations
      */
-    getOrganizations: (id: Id<"people">) => Effect.Effect<Organization[], Error>;
+    getOrganizations: (
+      id: Id<"people">,
+    ) => Effect.Effect<Organization[], Error>;
 
     /**
      * Check person's permissions
      * @returns Effect with boolean
      */
-    checkPermission: (id: Id<"people">, permission: string) => Effect.Effect<boolean, Error>;
+    checkPermission: (
+      id: Id<"people">,
+      permission: string,
+    ) => Effect.Effect<boolean, Error>;
   };
 
   /**
@@ -148,7 +185,10 @@ export interface DataProvider {
      * Update thing
      * @returns Effect with updated thing
      */
-    update: (id: Id<"things">, updates: Partial<Thing>) => Effect.Effect<Thing, Error>;
+    update: (
+      id: Id<"things">,
+      updates: Partial<Thing>,
+    ) => Effect.Effect<Thing, Error>;
 
     /**
      * Delete thing (soft delete)
@@ -172,31 +212,42 @@ export interface DataProvider {
      * Get connection by ID
      * @returns Effect with Connection or ConnectionNotFoundError
      */
-    get: (id: Id<"connections">) => Effect.Effect<Connection, ConnectionNotFoundError>;
+    get: (
+      id: Id<"connections">,
+    ) => Effect.Effect<Connection, ConnectionNotFoundError>;
 
     /**
      * List connections from a thing
      * @returns Effect with array of connections
      */
-    listFrom: (params: ListConnectionsFromParams) => Effect.Effect<Connection[], Error>;
+    listFrom: (
+      params: ListConnectionsFromParams,
+    ) => Effect.Effect<Connection[], Error>;
 
     /**
      * List connections to a thing
      * @returns Effect with array of connections
      */
-    listTo: (params: ListConnectionsToParams) => Effect.Effect<Connection[], Error>;
+    listTo: (
+      params: ListConnectionsToParams,
+    ) => Effect.Effect<Connection[], Error>;
 
     /**
      * Create connection between things
      * @returns Effect with connection ID
      */
-    create: (input: CreateConnectionInput) => Effect.Effect<Id<"connections">, Error>;
+    create: (
+      input: CreateConnectionInput,
+    ) => Effect.Effect<Id<"connections">, Error>;
 
     /**
      * Update connection metadata
      * @returns Effect with updated connection
      */
-    update: (id: Id<"connections">, updates: Partial<Connection>) => Effect.Effect<Connection, Error>;
+    update: (
+      id: Id<"connections">,
+      updates: Partial<Connection>,
+    ) => Effect.Effect<Connection, Error>;
 
     /**
      * Delete connection
@@ -250,7 +301,9 @@ export interface DataProvider {
      * Get knowledge item by ID
      * @returns Effect with Knowledge or KnowledgeNotFoundError
      */
-    get: (id: Id<"knowledge">) => Effect.Effect<Knowledge, KnowledgeNotFoundError>;
+    get: (
+      id: Id<"knowledge">,
+    ) => Effect.Effect<Knowledge, KnowledgeNotFoundError>;
 
     /**
      * List knowledge items
@@ -262,7 +315,9 @@ export interface DataProvider {
      * Create knowledge item (label or chunk)
      * @returns Effect with knowledge ID
      */
-    create: (input: CreateKnowledgeInput) => Effect.Effect<Id<"knowledge">, Error>;
+    create: (
+      input: CreateKnowledgeInput,
+    ) => Effect.Effect<Id<"knowledge">, Error>;
 
     /**
      * Link knowledge to thing
@@ -274,13 +329,18 @@ export interface DataProvider {
      * Unlink knowledge from thing
      * @returns Effect with void
      */
-    unlink: (knowledgeId: Id<"knowledge">, thingId: Id<"things">) => Effect.Effect<void, Error>;
+    unlink: (
+      knowledgeId: Id<"knowledge">,
+      thingId: Id<"things">,
+    ) => Effect.Effect<void, Error>;
 
     /**
      * Vector search (semantic search)
      * @returns Effect with search results
      */
-    vectorSearch: (params: VectorSearchParams) => Effect.Effect<Knowledge[], Error>;
+    vectorSearch: (
+      params: VectorSearchParams,
+    ) => Effect.Effect<Knowledge[], Error>;
   };
 }
 
@@ -375,7 +435,15 @@ export interface Thing {
   updatedAt: number;
 }
 
-export type ThingType = "creator" | "ai_clone" | "course" | "lesson" | "token" | "external_agent" | "mandate" | "product";
+export type ThingType =
+  | "creator"
+  | "ai_clone"
+  | "course"
+  | "lesson"
+  | "token"
+  | "external_agent"
+  | "mandate"
+  | "product";
 
 export interface ListThingsParams {
   type?: ThingType;
@@ -412,7 +480,13 @@ export interface Connection {
   createdAt: number;
 }
 
-export type ConnectionType = "owns" | "created_by" | "clone_of" | "holds_tokens" | "enrolled_in" | "transacted";
+export type ConnectionType =
+  | "owns"
+  | "created_by"
+  | "clone_of"
+  | "holds_tokens"
+  | "enrolled_in"
+  | "transacted";
 
 export interface ListConnectionsFromParams {
   fromThingId: Id<"things">;
@@ -447,7 +521,12 @@ export interface Event {
   metadata?: Record<string, any>;
 }
 
-export type EventType = "entity_created" | "entity_updated" | "entity_deleted" | "payment_event" | "communication_event";
+export type EventType =
+  | "entity_created"
+  | "entity_updated"
+  | "entity_deleted"
+  | "payment_event"
+  | "communication_event";
 
 export interface ListEventsParams {
   type?: EventType;
@@ -610,19 +689,25 @@ export class ConvexProvider implements DataProvider {
 
     create: (input: CreateOrganizationInput) =>
       Effect.tryPromise({
-        try: () => this.convex.mutation(api.mutations.organizations.create, input),
+        try: () =>
+          this.convex.mutation(api.mutations.organizations.create, input),
         catch: (error) => new Error(String(error)),
       }),
 
     update: (id: Id<"organizations">, updates: Partial<Organization>) =>
       Effect.tryPromise({
-        try: () => this.convex.mutation(api.mutations.organizations.update, { id, ...updates }),
+        try: () =>
+          this.convex.mutation(api.mutations.organizations.update, {
+            id,
+            ...updates,
+          }),
         catch: (error) => new Error(String(error)),
       }),
 
     getUsage: (id: Id<"organizations">) =>
       Effect.tryPromise({
-        try: () => this.convex.query(api.queries.organizations.getUsage, { id }),
+        try: () =>
+          this.convex.query(api.queries.organizations.getUsage, { id }),
         catch: (error) => new Error(String(error)),
       }),
   };
@@ -648,19 +733,25 @@ export class ConvexProvider implements DataProvider {
 
     update: (id: Id<"people">, updates: Partial<Person>) =>
       Effect.tryPromise({
-        try: () => this.convex.mutation(api.mutations.people.update, { id, ...updates }),
+        try: () =>
+          this.convex.mutation(api.mutations.people.update, { id, ...updates }),
         catch: (error) => new Error(String(error)),
       }),
 
     getOrganizations: (id: Id<"people">) =>
       Effect.tryPromise({
-        try: () => this.convex.query(api.queries.people.getOrganizations, { id }),
+        try: () =>
+          this.convex.query(api.queries.people.getOrganizations, { id }),
         catch: (error) => new Error(String(error)),
       }),
 
     checkPermission: (id: Id<"people">, permission: string) =>
       Effect.tryPromise({
-        try: () => this.convex.query(api.queries.people.checkPermission, { id, permission }),
+        try: () =>
+          this.convex.query(api.queries.people.checkPermission, {
+            id,
+            permission,
+          }),
         catch: (error) => new Error(String(error)),
       }),
   };
@@ -686,7 +777,8 @@ export class ConvexProvider implements DataProvider {
 
     update: (id: Id<"things">, updates: Partial<Thing>) =>
       Effect.tryPromise({
-        try: () => this.convex.mutation(api.mutations.things.update, { id, ...updates }),
+        try: () =>
+          this.convex.mutation(api.mutations.things.update, { id, ...updates }),
         catch: (error) => new Error(String(error)),
       }),
 
@@ -724,19 +816,25 @@ export class ConvexProvider implements DataProvider {
 
     create: (input: CreateConnectionInput) =>
       Effect.tryPromise({
-        try: () => this.convex.mutation(api.mutations.connections.create, input),
+        try: () =>
+          this.convex.mutation(api.mutations.connections.create, input),
         catch: (error) => new Error(String(error)),
       }),
 
     update: (id: Id<"connections">, updates: Partial<Connection>) =>
       Effect.tryPromise({
-        try: () => this.convex.mutation(api.mutations.connections.update, { id, ...updates }),
+        try: () =>
+          this.convex.mutation(api.mutations.connections.update, {
+            id,
+            ...updates,
+          }),
         catch: (error) => new Error(String(error)),
       }),
 
     delete: (id: Id<"connections">) =>
       Effect.tryPromise({
-        try: () => this.convex.mutation(api.mutations.connections.delete, { id }),
+        try: () =>
+          this.convex.mutation(api.mutations.connections.delete, { id }),
         catch: (error) => new Error(String(error)),
       }),
   };
@@ -762,7 +860,8 @@ export class ConvexProvider implements DataProvider {
 
     getTimeline: (thingId: Id<"things">) =>
       Effect.tryPromise({
-        try: () => this.convex.query(api.queries.events.getTimeline, { thingId }),
+        try: () =>
+          this.convex.query(api.queries.events.getTimeline, { thingId }),
         catch: (error) => new Error(String(error)),
       }),
 
@@ -800,13 +899,18 @@ export class ConvexProvider implements DataProvider {
 
     unlink: (knowledgeId: Id<"knowledge">, thingId: Id<"things">) =>
       Effect.tryPromise({
-        try: () => this.convex.mutation(api.mutations.knowledge.unlink, { knowledgeId, thingId }),
+        try: () =>
+          this.convex.mutation(api.mutations.knowledge.unlink, {
+            knowledgeId,
+            thingId,
+          }),
         catch: (error) => new Error(String(error)),
       }),
 
     vectorSearch: (params: VectorSearchParams) =>
       Effect.tryPromise({
-        try: () => this.convex.query(api.queries.knowledge.vectorSearch, params),
+        try: () =>
+          this.convex.query(api.queries.knowledge.vectorSearch, params),
         catch: (error) => new Error(String(error)),
       }),
   };
@@ -815,7 +919,9 @@ export class ConvexProvider implements DataProvider {
 /**
  * Factory function to create ConvexProvider
  */
-export const createConvexProvider = (convex: ConvexReactClient): DataProvider => {
+export const createConvexProvider = (
+  convex: ConvexReactClient,
+): DataProvider => {
   return new ConvexProvider(convex);
 };
 
@@ -849,7 +955,9 @@ export class DataProviderService extends Context.Tag("DataProviderService")<
 /**
  * Create Layer from concrete DataProvider instance
  */
-export const DataProviderLayer = (provider: DataProvider): Layer.Layer<DataProviderService> =>
+export const DataProviderLayer = (
+  provider: DataProvider,
+): Layer.Layer<DataProviderService> =>
   Layer.succeed(DataProviderService, provider);
 
 /**
@@ -872,6 +980,7 @@ export const DataProviderLayer = (provider: DataProvider): Layer.Layer<DataProvi
 ## 2. Ontology Mapping
 
 ### Organizations (Dimension 1)
+
 **Role:** Multi-tenant isolation and backend provider configuration
 
 - **Thing Type:** `external_connection` (type for provider configs)
@@ -890,6 +999,7 @@ export const DataProviderLayer = (provider: DataProvider): Layer.Layer<DataProvi
 - **Backend Selection:** Organizations can configure which backend provider to use (stored in `organizations.properties.backendProvider`)
 
 ### People (Dimension 2)
+
 **Role:** Authorization - who can configure backend providers
 
 - **Permissions:** Only `platform_owner` and `org_owner` can configure backend providers
@@ -900,6 +1010,7 @@ export const DataProviderLayer = (provider: DataProvider): Layer.Layer<DataProvi
 - **Audit:** ALL provider configuration changes MUST log events with actorId
 
 ### Things (Dimension 3)
+
 **Role:** Provider configurations stored as things
 
 - **Thing Type:** `external_connection`
@@ -911,6 +1022,7 @@ export const DataProviderLayer = (provider: DataProvider): Layer.Layer<DataProvi
   - Organization → external_connection (`configured_by`)
 
 ### Connections (Dimension 4)
+
 **Role:** Link organizations to their backend provider configuration
 
 - **Connection Type:** `configured_by`
@@ -929,6 +1041,7 @@ export const DataProviderLayer = (provider: DataProvider): Layer.Layer<DataProvi
   ```
 
 ### Events (Dimension 5)
+
 **Role:** Log all provider configuration changes
 
 - **Event Types:**
@@ -952,6 +1065,7 @@ export const DataProviderLayer = (provider: DataProvider): Layer.Layer<DataProvi
   ```
 
 ### Knowledge (Dimension 6)
+
 **Role:** Labels and tags for provider capabilities
 
 - **Labels:**
@@ -968,11 +1082,13 @@ export const DataProviderLayer = (provider: DataProvider): Layer.Layer<DataProvi
 ## 3. User Stories
 
 ### Story 1: Developer Uses Interface
+
 **As a** frontend developer
 **I want** to use a single `DataProvider` interface for all backend operations
 **So that** I don't need to learn Convex-specific APIs
 
 **Acceptance Criteria:**
+
 1. Can import `DataProvider` interface from `@/providers/DataProvider`
 2. All operations return `Effect.Effect<T, Error>` (typed errors)
 3. No Convex imports needed in components (only `useDataProvider` hook)
@@ -980,11 +1096,13 @@ export const DataProviderLayer = (provider: DataProvider): Layer.Layer<DataProvi
 5. Documentation includes examples for each operation
 
 ### Story 2: Backend Developer Wraps Convex
+
 **As a** backend developer
 **I want** to implement `ConvexProvider` that wraps Convex SDK
 **So that** frontend can use Convex without coupling
 
 **Acceptance Criteria:**
+
 1. `ConvexProvider` implements ALL methods in `DataProvider` interface
 2. Each method wraps corresponding Convex query/mutation
 3. Convex errors are converted to typed errors (`ThingNotFoundError`, etc.)
@@ -992,11 +1110,13 @@ export const DataProviderLayer = (provider: DataProvider): Layer.Layer<DataProvi
 5. Performance overhead is <10ms per operation
 
 ### Story 3: Developer Tests in Isolation
+
 **As a** developer
 **I want** to mock `DataProvider` in tests
 **So that** I can test components without real backend
 
 **Acceptance Criteria:**
+
 1. Can create mock implementation of `DataProvider`
 2. Mock returns `Effect.succeed()` or `Effect.fail()` as needed
 3. Tests run without Convex connection
@@ -1004,11 +1124,13 @@ export const DataProviderLayer = (provider: DataProvider): Layer.Layer<DataProvi
 5. Test coverage >90% for all provider operations
 
 ### Story 4: Organization Configures Provider
+
 **As an** organization owner
 **I want** to configure which backend provider my organization uses
 **So that** I can choose the best solution for my needs
 
 **Acceptance Criteria:**
+
 1. Can view current backend provider in organization settings
 2. Can switch to different provider (Convex → Supabase)
 3. Provider change is logged as event with actorId
@@ -1016,11 +1138,13 @@ export const DataProviderLayer = (provider: DataProvider): Layer.Layer<DataProvi
 5. Application continues working after provider switch
 
 ### Story 5: Developer Uses Effect.ts
+
 **As a** developer
 **I want** to compose DataProvider operations using Effect.ts
 **So that** I can build complex workflows with proper error handling
 
 **Acceptance Criteria:**
+
 1. All operations return `Effect.Effect<T, Error>`
 2. Can use `Effect.gen()` to compose operations
 3. Can use `Effect.catchAll()` to handle errors
@@ -1034,33 +1158,51 @@ export const DataProviderLayer = (provider: DataProvider): Layer.Layer<DataProvi
 ### Phase 1: Interface Definition (Days 1-2)
 
 **Step 1:** Create DataProvider interface file
+
 ```bash
 mkdir -p frontend/src/providers
 touch frontend/src/providers/DataProvider.ts
 ```
 
 **Step 2:** Define base DataProvider interface with all 6 dimensions
+
 ```typescript
 // Copy complete interface from section 1.1
 ```
 
 **Step 3:** Define all type definitions (Organization, Person, Thing, etc.)
+
 ```typescript
 // Copy all type definitions from section 1.1
 ```
 
 **Step 4:** Define error classes with `_tag` pattern
+
 ```typescript
 // Copy all error classes from section 1.1
 ```
 
 **Step 5:** Export all types and interfaces
+
 ```typescript
-export type { DataProvider, Organization, Person, Thing, Connection, Event, Knowledge };
-export { OrganizationNotFoundError, PersonNotFoundError, ThingNotFoundError, /* etc */ };
+export type {
+  DataProvider,
+  Organization,
+  Person,
+  Thing,
+  Connection,
+  Event,
+  Knowledge,
+};
+export {
+  OrganizationNotFoundError,
+  PersonNotFoundError,
+  ThingNotFoundError /* etc */,
+};
 ```
 
 **Step 6:** Validate TypeScript compiles
+
 ```bash
 cd frontend && bunx astro check
 ```
@@ -1068,31 +1210,37 @@ cd frontend && bunx astro check
 ### Phase 2: ConvexProvider Implementation (Days 3-4)
 
 **Step 7:** Create ConvexProvider implementation file
+
 ```bash
 touch frontend/src/providers/ConvexProvider.ts
 ```
 
 **Step 8:** Implement ConvexProvider class
+
 ```typescript
 // Copy complete implementation from section 1.2
 ```
 
 **Step 9:** Implement factory function `createConvexProvider`
+
 ```typescript
 // Copy factory function from section 1.2
 ```
 
 **Step 10:** Implement React hook `useDataProvider`
+
 ```typescript
 // Copy React hook from section 1.2
 ```
 
 **Step 11:** Validate ConvexProvider implements DataProvider
+
 ```bash
 bunx astro check
 ```
 
 **Step 12:** Test ConvexProvider methods manually
+
 ```bash
 bun run dev
 # Visit http://localhost:4321/test-provider
@@ -1101,21 +1249,25 @@ bun run dev
 ### Phase 3: Effect.ts Integration (Day 5)
 
 **Step 13:** Create Layer definitions
+
 ```bash
 touch frontend/src/providers/layers.ts
 ```
 
 **Step 14:** Define DataProviderService context
+
 ```typescript
 // Copy from section 1.3
 ```
 
 **Step 15:** Create Layer factory function
+
 ```typescript
 // Copy from section 1.3
 ```
 
 **Step 16:** Test Effect.ts composition
+
 ```typescript
 // Create test program
 const program = Effect.gen(function* () {
@@ -1125,11 +1277,12 @@ const program = Effect.gen(function* () {
 });
 
 const result = await Effect.runPromise(
-  program.pipe(Effect.provide(DataProviderLayer(convexProvider)))
+  program.pipe(Effect.provide(DataProviderLayer(convexProvider))),
 );
 ```
 
 **Step 17:** Validate all Effect operations compile
+
 ```bash
 bunx astro check
 ```
@@ -1137,6 +1290,7 @@ bunx astro check
 ### Phase 4: Backend Queries Implementation (Days 6-7)
 
 **Step 18:** Create backend query files
+
 ```bash
 mkdir -p backend/convex/queries
 touch backend/convex/queries/organizations.ts
@@ -1148,6 +1302,7 @@ touch backend/convex/queries/knowledge.ts
 ```
 
 **Step 19:** Implement organizations queries
+
 ```typescript
 // backend/convex/queries/organizations.ts
 import { query } from "../_generated/server";
@@ -1194,12 +1349,14 @@ export const getUsage = query({
 ```
 
 **Step 20:** Implement people queries (similar pattern)
+
 ```typescript
 // backend/convex/queries/people.ts
 // Follow same pattern as organizations
 ```
 
 **Step 21:** Implement things queries (with search)
+
 ```typescript
 // backend/convex/queries/things.ts
 import { query } from "../_generated/server";
@@ -1260,24 +1417,28 @@ export const search = query({
 ```
 
 **Step 22:** Implement connections queries
+
 ```typescript
 // backend/convex/queries/connections.ts
 // Implement listFrom and listTo with indexes
 ```
 
 **Step 23:** Implement events queries
+
 ```typescript
 // backend/convex/queries/events.ts
 // Implement list, getTimeline, getStats
 ```
 
 **Step 24:** Implement knowledge queries
+
 ```typescript
 // backend/convex/queries/knowledge.ts
 // Implement list, vectorSearch
 ```
 
 **Step 25:** Test all queries from frontend
+
 ```bash
 cd frontend && bun run dev
 # Test each query type
@@ -1286,6 +1447,7 @@ cd frontend && bun run dev
 ### Phase 5: Backend Mutations Implementation (Days 8-9)
 
 **Step 26:** Create backend mutation files
+
 ```bash
 mkdir -p backend/convex/mutations
 touch backend/convex/mutations/organizations.ts
@@ -1297,6 +1459,7 @@ touch backend/convex/mutations/knowledge.ts
 ```
 
 **Step 27:** Implement organizations mutations
+
 ```typescript
 // backend/convex/mutations/organizations.ts
 import { mutation } from "../_generated/server";
@@ -1352,12 +1515,14 @@ export const update = mutation({
 ```
 
 **Step 28:** Implement people mutations
+
 ```typescript
 // backend/convex/mutations/people.ts
 // Follow same pattern
 ```
 
 **Step 29:** Implement things mutations (create, update, delete)
+
 ```typescript
 // backend/convex/mutations/things.ts
 import { mutation } from "../_generated/server";
@@ -1423,12 +1588,14 @@ export const delete = mutation({
 ```
 
 **Step 30:** Implement connections mutations
+
 ```typescript
 // backend/convex/mutations/connections.ts
 // Implement create, update, delete
 ```
 
 **Step 31:** Implement events mutations
+
 ```typescript
 // backend/convex/mutations/events.ts
 export const log = mutation({
@@ -1451,12 +1618,14 @@ export const log = mutation({
 ```
 
 **Step 32:** Implement knowledge mutations
+
 ```typescript
 // backend/convex/mutations/knowledge.ts
 // Implement create, link, unlink
 ```
 
 **Step 33:** Test all mutations from frontend
+
 ```bash
 cd frontend && bun run dev
 # Test each mutation type
@@ -1465,6 +1634,7 @@ cd frontend && bun run dev
 ### Phase 6: Testing (Day 10)
 
 **Step 34:** Create test directory
+
 ```bash
 mkdir -p frontend/test/providers
 touch frontend/test/providers/DataProvider.test.ts
@@ -1472,6 +1642,7 @@ touch frontend/test/providers/ConvexProvider.test.ts
 ```
 
 **Step 35:** Write DataProvider interface tests
+
 ```typescript
 // frontend/test/providers/DataProvider.test.ts
 import { describe, it, expect } from "vitest";
@@ -1495,6 +1666,7 @@ describe("DataProvider Interface", () => {
 ```
 
 **Step 36:** Write ConvexProvider unit tests
+
 ```typescript
 // frontend/test/providers/ConvexProvider.test.ts
 import { describe, it, expect, vi } from "vitest";
@@ -1514,7 +1686,7 @@ describe("ConvexProvider", () => {
 
     const provider = new ConvexProvider(mockConvex);
     const result = await Effect.runPromise(
-      provider.organizations.get("org_123" as any)
+      provider.organizations.get("org_123" as any),
     );
 
     expect(result.name).toBe("Test Org");
@@ -1527,7 +1699,7 @@ describe("ConvexProvider", () => {
 
     const provider = new ConvexProvider(mockConvex);
     const result = Effect.runPromiseExit(
-      provider.organizations.get("org_123" as any)
+      provider.organizations.get("org_123" as any),
     );
 
     await expect(result).rejects.toMatchObject({
@@ -1538,6 +1710,7 @@ describe("ConvexProvider", () => {
 ```
 
 **Step 37:** Write integration tests
+
 ```typescript
 // frontend/test/providers/integration.test.ts
 import { describe, it, expect } from "vitest";
@@ -1551,7 +1724,7 @@ describe("ConvexProvider Integration", () => {
 
   it("should list things", async () => {
     const result = await Effect.runPromise(
-      provider.things.list({ type: "course", limit: 10 })
+      provider.things.list({ type: "course", limit: 10 }),
     );
 
     expect(Array.isArray(result)).toBe(true);
@@ -1563,7 +1736,7 @@ describe("ConvexProvider Integration", () => {
         type: "course",
         name: "Test Course",
         properties: { description: "Test" },
-      })
+      }),
     );
 
     expect(createResult).toBeDefined();
@@ -1574,17 +1747,20 @@ describe("ConvexProvider Integration", () => {
 ```
 
 **Step 38:** Run all tests
+
 ```bash
 cd frontend && bun test test/providers
 ```
 
 **Step 39:** Measure test coverage
+
 ```bash
 bun test --coverage test/providers
 # Target: >90% coverage
 ```
 
 **Step 40:** Write performance tests
+
 ```typescript
 // frontend/test/providers/performance.test.ts
 import { describe, it, expect } from "vitest";
@@ -1597,7 +1773,7 @@ describe("ConvexProvider Performance", () => {
 
     const start = performance.now();
     await Effect.runPromise(
-      provider.things.list({ type: "course", limit: 100 })
+      provider.things.list({ type: "course", limit: 100 }),
     );
     const end = performance.now();
 
@@ -1614,6 +1790,7 @@ describe("ConvexProvider Performance", () => {
 ### Unit Tests (90%+ coverage)
 
 **Test 1: DataProvider Interface Type Checking**
+
 ```typescript
 // Ensures interface is complete
 import type { DataProvider } from "@/providers/DataProvider";
@@ -1630,6 +1807,7 @@ const validateInterface = (provider: DataProvider) => {
 ```
 
 **Test 2: ConvexProvider Method Wrapping**
+
 ```typescript
 describe("ConvexProvider.things.get", () => {
   it("should call convex.query with correct args", async () => {
@@ -1641,13 +1819,14 @@ describe("ConvexProvider.things.get", () => {
 
     expect(mockQuery).toHaveBeenCalledWith(
       expect.any(Function), // api.queries.things.get
-      { id: "thing_123" }
+      { id: "thing_123" },
     );
   });
 });
 ```
 
 **Test 3: Error Transformation**
+
 ```typescript
 describe("ConvexProvider Error Handling", () => {
   it("should transform 404 to ThingNotFoundError", async () => {
@@ -1657,7 +1836,7 @@ describe("ConvexProvider Error Handling", () => {
     const provider = new ConvexProvider(mockConvex);
 
     const result = await Effect.runPromiseExit(
-      provider.things.get("thing_123" as any)
+      provider.things.get("thing_123" as any),
     );
 
     expect(result._tag).toBe("Failure");
@@ -1667,6 +1846,7 @@ describe("ConvexProvider Error Handling", () => {
 ```
 
 **Test 4: Effect.ts Composition**
+
 ```typescript
 describe("Effect.ts Composition", () => {
   it("should compose multiple operations", async () => {
@@ -1680,7 +1860,7 @@ describe("Effect.ts Composition", () => {
     });
 
     const result = await Effect.runPromise(
-      program.pipe(Effect.provide(DataProviderLayer(mockProvider)))
+      program.pipe(Effect.provide(DataProviderLayer(mockProvider))),
     );
 
     expect(result.thing).toBeDefined();
@@ -1690,6 +1870,7 @@ describe("Effect.ts Composition", () => {
 ```
 
 **Test 5: All 6 Dimensions Covered**
+
 ```typescript
 describe("Full DataProvider Coverage", () => {
   const dimensions = [
@@ -1714,6 +1895,7 @@ describe("Full DataProvider Coverage", () => {
 ### Integration Tests (80%+ coverage)
 
 **Test 6: Create Thing Flow**
+
 ```typescript
 describe("Create Thing Integration", () => {
   it("should create thing, log event, return ID", async () => {
@@ -1724,7 +1906,7 @@ describe("Create Thing Integration", () => {
         type: "course",
         name: "Integration Test Course",
         properties: { description: "Test" },
-      })
+      }),
     );
 
     expect(thingId).toMatch(/^[a-z0-9]+$/);
@@ -1735,7 +1917,7 @@ describe("Create Thing Integration", () => {
 
     // Verify event was logged
     const events = await Effect.runPromise(
-      provider.events.list({ targetId: thingId })
+      provider.events.list({ targetId: thingId }),
     );
     expect(events.some((e) => e.type === "entity_created")).toBe(true);
 
@@ -1746,16 +1928,25 @@ describe("Create Thing Integration", () => {
 ```
 
 **Test 7: Connection Creation Flow**
+
 ```typescript
 describe("Create Connection Integration", () => {
   it("should create connection between two things", async () => {
     const provider = createConvexProvider(convex);
 
     const thing1Id = await Effect.runPromise(
-      provider.things.create({ type: "creator", name: "Creator 1", properties: {} })
+      provider.things.create({
+        type: "creator",
+        name: "Creator 1",
+        properties: {},
+      }),
     );
     const thing2Id = await Effect.runPromise(
-      provider.things.create({ type: "course", name: "Course 1", properties: {} })
+      provider.things.create({
+        type: "course",
+        name: "Course 1",
+        properties: {},
+      }),
     );
 
     const connectionId = await Effect.runPromise(
@@ -1763,14 +1954,14 @@ describe("Create Connection Integration", () => {
         fromThingId: thing1Id,
         toThingId: thing2Id,
         relationshipType: "owns",
-      })
+      }),
     );
 
     expect(connectionId).toBeDefined();
 
     // Verify connection exists
     const connection = await Effect.runPromise(
-      provider.connections.get(connectionId)
+      provider.connections.get(connectionId),
     );
     expect(connection.relationshipType).toBe("owns");
 
@@ -1783,13 +1974,18 @@ describe("Create Connection Integration", () => {
 ```
 
 **Test 8: Event Logging Flow**
+
 ```typescript
 describe("Event Logging Integration", () => {
   it("should log event with metadata", async () => {
     const provider = createConvexProvider(convex);
 
     const thingId = await Effect.runPromise(
-      provider.things.create({ type: "course", name: "Event Test", properties: {} })
+      provider.things.create({
+        type: "course",
+        name: "Event Test",
+        properties: {},
+      }),
     );
 
     const eventId = await Effect.runPromise(
@@ -1797,7 +1993,7 @@ describe("Event Logging Integration", () => {
         type: "entity_created",
         targetId: thingId,
         metadata: { source: "test" },
-      })
+      }),
     );
 
     expect(eventId).toBeDefined();
@@ -1816,6 +2012,7 @@ describe("Event Logging Integration", () => {
 ### Performance Tests
 
 **Test 9: Operation Overhead**
+
 ```typescript
 describe("Performance - Operation Overhead", () => {
   it("should add <10ms overhead per operation", async () => {
@@ -1830,7 +2027,7 @@ describe("Performance - Operation Overhead", () => {
     // Measure through DataProvider
     const providerStart = performance.now();
     await Effect.runPromise(
-      provider.things.list({ type: "course", limit: 10 })
+      provider.things.list({ type: "course", limit: 10 }),
     );
     const providerEnd = performance.now();
     const providerTime = providerEnd - providerStart;
@@ -1842,6 +2039,7 @@ describe("Performance - Operation Overhead", () => {
 ```
 
 **Test 10: Batch Operations**
+
 ```typescript
 describe("Performance - Batch Operations", () => {
   it("should handle 100 operations efficiently", async () => {
@@ -1849,7 +2047,7 @@ describe("Performance - Batch Operations", () => {
 
     const start = performance.now();
     const operations = Array.from({ length: 100 }, (_, i) =>
-      provider.things.list({ type: "course", limit: 10 })
+      provider.things.list({ type: "course", limit: 10 }),
     );
     await Promise.all(operations.map(Effect.runPromise));
     const end = performance.now();
@@ -1865,12 +2063,13 @@ describe("Performance - Batch Operations", () => {
 ### Auth Preservation Tests
 
 **Test 11: Authentication Context**
+
 ```typescript
 describe("Authentication Context", () => {
   it("should preserve auth through all operations", async () => {
     const authenticatedConvex = new ConvexReactClient(
       import.meta.env.PUBLIC_CONVEX_URL,
-      { auth: { token: "test_token" } }
+      { auth: { token: "test_token" } },
     );
     const provider = createConvexProvider(authenticatedConvex);
 
@@ -1888,7 +2087,9 @@ describe("Authentication Context", () => {
 ## 6. Quality Gates
 
 ### Gate 1: Interface Defined
+
 **Criteria:**
+
 - [ ] `DataProvider.ts` file exists at `frontend/src/providers/`
 - [ ] Interface defines all 6 dimensions (organizations, people, things, connections, events, knowledge)
 - [ ] All methods return `Effect.Effect<T, Error>`
@@ -1897,7 +2098,9 @@ describe("Authentication Context", () => {
 - [ ] TypeScript compiles with zero errors (`bunx astro check`)
 
 ### Gate 2: ConvexProvider Implemented
+
 **Criteria:**
+
 - [ ] `ConvexProvider.ts` file exists at `frontend/src/providers/`
 - [ ] ConvexProvider implements DataProvider interface (verified by TypeScript)
 - [ ] All 6 dimensions have method implementations
@@ -1907,7 +2110,9 @@ describe("Authentication Context", () => {
 - [ ] React hook `useDataProvider` works
 
 ### Gate 3: Tests Passing
+
 **Criteria:**
+
 - [ ] Unit tests: 90%+ coverage (`bun test --coverage`)
 - [ ] Integration tests: All 8 integration tests pass
 - [ ] Performance tests: <10ms overhead verified
@@ -1916,7 +2121,9 @@ describe("Authentication Context", () => {
 - [ ] All tests run in <30 seconds total
 
 ### Gate 4: Performance Validated
+
 **Criteria:**
+
 - [ ] Operation overhead: <10ms per operation (measured)
 - [ ] Batch operations: <50ms average per operation for 100 concurrent
 - [ ] Memory usage: No memory leaks (verified with profiler)
@@ -1928,16 +2135,20 @@ describe("Authentication Context", () => {
 ## 7. Dependencies
 
 ### Required Libraries (Already Installed)
+
 - ✅ **Effect.ts** (`effect` package) - Already in `frontend/package.json`
 - ✅ **Convex SDK** (`convex` package) - Already installed
 - ✅ **TypeScript 5.9+** - Already configured
 - ✅ **Vitest** - Already configured for testing
 
 ### No Blocking Features
+
 This is Feature 2-1 (first feature in Plan 2). It has **no dependencies** on other features.
 
 ### Enables These Features
+
 This feature BLOCKS:
+
 - Feature 2-2: React Hooks (uses DataProvider)
 - Feature 2-3: Effect.ts Services (uses DataProvider)
 - Feature 2-4: Error Boundaries (handles DataProvider errors)
@@ -1952,12 +2163,14 @@ This feature BLOCKS:
 ### Immediate Rollback (<5 minutes)
 
 **Step 1:** Revert frontend code
+
 ```bash
 cd frontend
 git checkout main -- src/providers/
 ```
 
 **Step 2:** Revert backend code
+
 ```bash
 cd backend
 git checkout main -- convex/queries/
@@ -1965,6 +2178,7 @@ git checkout main -- convex/mutations/
 ```
 
 **Step 3:** Restart dev servers
+
 ```bash
 # Terminal 1 (frontend)
 cd frontend && bun run dev
@@ -1974,12 +2188,14 @@ cd backend && npx convex dev
 ```
 
 **Step 4:** Verify application works
+
 ```bash
 # Visit http://localhost:4321
 # All existing functionality should work
 ```
 
 ### Files to Restore
+
 - `frontend/src/providers/DataProvider.ts` (DELETE)
 - `frontend/src/providers/ConvexProvider.ts` (DELETE)
 - `frontend/src/providers/layers.ts` (DELETE)
@@ -1987,12 +2203,14 @@ cd backend && npx convex dev
 - `backend/convex/mutations/*.ts` (RESTORE)
 
 ### Tests to Run After Rollback
+
 ```bash
 cd frontend && bun test test/auth
 # All 50+ auth tests should pass
 ```
 
 ### Rollback Validation
+
 - [ ] Application loads at `http://localhost:4321`
 - [ ] Authentication still works (signin/signup)
 - [ ] Existing components render correctly
@@ -2009,13 +2227,11 @@ cd frontend && bun test test/auth
 
 ```typescript
 // Get organization by ID
-const org = await Effect.runPromise(
-  provider.organizations.get(organizationId)
-);
+const org = await Effect.runPromise(provider.organizations.get(organizationId));
 
 // List organizations (platform owner only)
 const orgs = await Effect.runPromise(
-  provider.organizations.list({ plan: "pro", limit: 10 })
+  provider.organizations.list({ plan: "pro", limit: 10 }),
 );
 
 // Create organization
@@ -2025,18 +2241,16 @@ const orgId = await Effect.runPromise(
     slug: "acme",
     plan: "pro",
     ownerId: personId,
-  })
+  }),
 );
 
 // Update organization
 const updated = await Effect.runPromise(
-  provider.organizations.update(orgId, { plan: "enterprise" })
+  provider.organizations.update(orgId, { plan: "enterprise" }),
 );
 
 // Get usage stats
-const usage = await Effect.runPromise(
-  provider.organizations.getUsage(orgId)
-);
+const usage = await Effect.runPromise(provider.organizations.getUsage(orgId));
 ```
 
 #### DataProvider.people
@@ -2047,7 +2261,7 @@ const person = await Effect.runPromise(provider.people.get(personId));
 
 // List people in organization
 const people = await Effect.runPromise(
-  provider.people.list({ organizationId, role: "org_user" })
+  provider.people.list({ organizationId, role: "org_user" }),
 );
 
 // Create person
@@ -2058,12 +2272,12 @@ const personId = await Effect.runPromise(
     displayName: "User",
     role: "org_user",
     organizationId,
-  })
+  }),
 );
 
 // Check permission
 const canEdit = await Effect.runPromise(
-  provider.people.checkPermission(personId, "content:edit")
+  provider.people.checkPermission(personId, "content:edit"),
 );
 ```
 
@@ -2075,7 +2289,7 @@ const thing = await Effect.runPromise(provider.things.get(thingId));
 
 // List things
 const things = await Effect.runPromise(
-  provider.things.list({ type: "course", status: "published" })
+  provider.things.list({ type: "course", status: "published" }),
 );
 
 // Create thing
@@ -2084,12 +2298,12 @@ const thingId = await Effect.runPromise(
     type: "course",
     name: "My Course",
     properties: { description: "Course description" },
-  })
+  }),
 );
 
 // Update thing
 const updated = await Effect.runPromise(
-  provider.things.update(thingId, { status: "published" })
+  provider.things.update(thingId, { status: "published" }),
 );
 
 // Delete thing
@@ -2097,7 +2311,7 @@ await Effect.runPromise(provider.things.delete(thingId));
 
 // Search things
 const results = await Effect.runPromise(
-  provider.things.search({ query: "course", limit: 20 })
+  provider.things.search({ query: "course", limit: 20 }),
 );
 ```
 
@@ -2111,7 +2325,7 @@ const connectionId = await Effect.runPromise(
     toThingId: courseId,
     relationshipType: "owns",
     metadata: { revenueShare: 0.7 },
-  })
+  }),
 );
 
 // List connections from thing
@@ -2119,7 +2333,7 @@ const owned = await Effect.runPromise(
   provider.connections.listFrom({
     fromThingId: creatorId,
     relationshipType: "owns",
-  })
+  }),
 );
 
 // List connections to thing
@@ -2127,7 +2341,7 @@ const owners = await Effect.runPromise(
   provider.connections.listTo({
     toThingId: courseId,
     relationshipType: "owns",
-  })
+  }),
 );
 ```
 
@@ -2141,20 +2355,18 @@ const eventId = await Effect.runPromise(
     actorId: personId,
     targetId: thingId,
     metadata: { source: "frontend" },
-  })
+  }),
 );
 
 // Get event timeline
-const timeline = await Effect.runPromise(
-  provider.events.getTimeline(thingId)
-);
+const timeline = await Effect.runPromise(provider.events.getTimeline(thingId));
 
 // Get event stats
 const stats = await Effect.runPromise(
   provider.events.getStats({
     type: "entity_created",
     period: { start: Date.now() - 30 * 24 * 60 * 60 * 1000, end: Date.now() },
-  })
+  }),
 );
 ```
 
@@ -2167,7 +2379,7 @@ const labelId = await Effect.runPromise(
     knowledgeType: "label",
     text: "industry:fitness",
     labels: ["industry:fitness"],
-  })
+  }),
 );
 
 // Link knowledge to thing
@@ -2176,7 +2388,7 @@ await Effect.runPromise(
     knowledgeId: labelId,
     thingId: creatorId,
     role: "label",
-  })
+  }),
 );
 
 // Vector search
@@ -2184,13 +2396,14 @@ const results = await Effect.runPromise(
   provider.knowledge.vectorSearch({
     query: "fitness training",
     limit: 10,
-  })
+  }),
 );
 ```
 
 ### Implementation Guide for New Providers
 
 **Step 1:** Implement the DataProvider interface
+
 ```typescript
 import type { DataProvider } from "@/providers/DataProvider";
 
@@ -2200,6 +2413,7 @@ export class MyCustomProvider implements DataProvider {
 ```
 
 **Step 2:** Wrap your backend SDK in Effect.ts
+
 ```typescript
 organizations = {
   get: (id) =>
@@ -2212,6 +2426,7 @@ organizations = {
 ```
 
 **Step 3:** Test your implementation
+
 ```typescript
 const provider = new MyCustomProvider(backendClient);
 const org = await Effect.runPromise(provider.organizations.get(orgId));
@@ -2220,6 +2435,7 @@ const org = await Effect.runPromise(provider.organizations.get(orgId));
 ### Migration Guide (Convex → Other Backend)
 
 **Step 1:** Create new provider implementation
+
 ```typescript
 // frontend/src/providers/SupabaseProvider.ts
 export class SupabaseProvider implements DataProvider {
@@ -2228,13 +2444,17 @@ export class SupabaseProvider implements DataProvider {
 ```
 
 **Step 2:** Create factory function
+
 ```typescript
-export const createSupabaseProvider = (supabase: SupabaseClient): DataProvider => {
+export const createSupabaseProvider = (
+  supabase: SupabaseClient,
+): DataProvider => {
   return new SupabaseProvider(supabase);
 };
 ```
 
 **Step 3:** Update provider instantiation
+
 ```typescript
 // Change from:
 const provider = createConvexProvider(convex);
@@ -2305,30 +2525,35 @@ const provider = createSupabaseProvider(supabase);
 ### Validation Procedures
 
 **Validation 1: Type Safety**
+
 ```bash
 cd frontend && bunx astro check
 # Expected: 0 errors
 ```
 
 **Validation 2: Test Coverage**
+
 ```bash
 cd frontend && bun test --coverage test/providers
 # Expected: >90% coverage
 ```
 
 **Validation 3: Performance**
+
 ```bash
 cd frontend && bun test test/providers/performance.test.ts
 # Expected: All performance tests pass
 ```
 
 **Validation 4: Integration**
+
 ```bash
 cd frontend && bun test test/providers/integration.test.ts
 # Expected: All integration tests pass
 ```
 
 **Validation 5: Auth Compatibility**
+
 ```bash
 cd frontend && bun test test/auth
 # Expected: 50+ tests pass

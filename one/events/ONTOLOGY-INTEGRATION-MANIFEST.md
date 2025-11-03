@@ -1,3 +1,21 @@
+---
+title: Ontology Integration Manifest
+dimension: events
+category: ONTOLOGY-INTEGRATION-MANIFEST.md
+tags: 6-dimensions, ai, backend, groups, ontology
+related_dimensions: connections, groups, knowledge, people, things
+scope: global
+created: 2025-11-03
+updated: 2025-11-03
+version: 1.0.0
+ai_context: |
+  This document is part of the events dimension in the ONTOLOGY-INTEGRATION-MANIFEST.md category.
+  Location: one/events/ONTOLOGY-INTEGRATION-MANIFEST.md
+  Purpose: Documents ontology integration manifest
+  Related dimensions: connections, groups, knowledge, people, things
+  For AI agents: Read this to understand ONTOLOGY INTEGRATION MANIFEST.
+---
+
 # Ontology Integration Manifest
 
 **Date Created**: 2025-10-25

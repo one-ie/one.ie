@@ -1,3 +1,21 @@
+---
+title: Agent Director Enhancement Summary
+dimension: events
+category: agent-director-enhancement-summary.md
+tags: agent, ai-agent, auth, backend, frontend, groups, inference
+related_dimensions: groups, knowledge, people
+scope: global
+created: 2025-11-03
+updated: 2025-11-03
+version: 1.0.0
+ai_context: |
+  This document is part of the events dimension in the agent-director-enhancement-summary.md category.
+  Location: one/events/agent-director-enhancement-summary.md
+  Purpose: Documents agent director enhancement summary
+  Related dimensions: groups, knowledge, people
+  For AI agents: Read this to understand agent director enhancement summary.
+---
+
 # Agent Director Enhancement Summary
 
 **Date:** 2025-10-20

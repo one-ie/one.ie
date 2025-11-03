@@ -1,3 +1,21 @@
+---
+title: Altcoin Cycle Prediction Ontology
+dimension: knowledge
+category: altcoin-cycle-prediction-ontology.md
+tags: 6-dimensions, ai, ontology
+related_dimensions: events, groups, things
+scope: global
+created: 2025-11-03
+updated: 2025-11-03
+version: 1.0.0
+ai_context: |
+  This document is part of the knowledge dimension in the altcoin-cycle-prediction-ontology.md category.
+  Location: one/knowledge/altcoin-cycle-prediction-ontology.md
+  Purpose: Documents altcoin cycle prediction ontology
+  Related dimensions: events, groups, things
+  For AI agents: Read this to understand altcoin cycle prediction ontology.
+---
+
 # Altcoin Cycle Prediction Ontology
 
 **A 6-Dimension Framework for Predicting Cryptocurrency Market Cycles Through Capital Flow Analysis**

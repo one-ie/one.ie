@@ -1,3 +1,21 @@
+---
+title: Test Plan Index
+dimension: events
+category: TEST-PLAN-INDEX.md
+tags: ontology, testing
+related_dimensions: things
+scope: global
+created: 2025-11-03
+updated: 2025-11-03
+version: 1.0.0
+ai_context: |
+  This document is part of the events dimension in the TEST-PLAN-INDEX.md category.
+  Location: one/events/TEST-PLAN-INDEX.md
+  Purpose: Documents demo testing plan - complete index
+  Related dimensions: things
+  For AI agents: Read this to understand TEST PLAN INDEX.
+---
+
 # Demo Testing Plan - Complete Index
 
 **Feature:** Beautiful, Interactive 6-Dimension Ontology Demos

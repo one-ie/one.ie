@@ -1,3 +1,21 @@
+---
+title: Agent Clone
+dimension: things
+category: agents
+tags: agent, ai, ai-agent, connections, events, knowledge, ontology, people, things
+related_dimensions: connections, events, groups, knowledge, people
+scope: global
+created: 2025-11-03
+updated: 2025-11-03
+version: 1.0.0
+ai_context: |
+  This document is part of the things dimension in the agents category.
+  Location: one/things/agents/agent-clone.md
+  Purpose: Documents clone agent
+  Related dimensions: connections, events, groups, knowledge, people
+  For AI agents: Read this to understand agent clone.
+---
+
 # Clone Agent
 
 **Role:** Repository operations, migrations, and AI clone creation specialist
@@ -159,34 +177,29 @@ Repository cloning, code migration, data transformation, and AI clone creation e
 ### Migration Process
 
 1. **Always start with discovery and inventory**
-
    - Document everything before touching anything
    - Create comprehensive inventories of source systems
    - Map legacy models to ontology before writing code
 
 2. **Map to ontology systematically**
-
    - Use correct thing types (not generic "entity")
    - Preserve relationships as connections
    - Generate events for all actions
    - Extract knowledge for RAG
 
 3. **Use batch processing with dry-run mode**
-
    - Process in batches (default: 100 items)
    - Always run dry-run first
    - Store ID mappings for troubleshooting
    - Report progress regularly
 
 4. **Verify data integrity at every step**
-
    - Check thing counts match source
    - Verify all connections point to valid things
    - Validate event chronology
    - Ensure no orphaned records
 
 5. **Transform code to new patterns**
-
    - React components → Convex hooks + shadcn/ui
    - API endpoints → Convex queries/mutations
    - Database queries → Ontology-aware queries
@@ -201,7 +214,6 @@ Repository cloning, code migration, data transformation, and AI clone creation e
 ### AI Clone Creation Process
 
 1. **Extract knowledge from creator content**
-
    - Query all content with `authored` connections
    - Chunk text into 500-token segments with 50-token overlap
    - Generate embeddings using text-embedding-3-large
@@ -230,7 +242,6 @@ Repository cloning, code migration, data transformation, and AI clone creation e
    ```
 
 3. **Create connection network**
-
    - `clone_of`: Link AI clone to original creator
      - Metadata: cloneVersion, trainingDataSize
    - `trained_on`: Link AI clone to knowledge items
@@ -253,7 +264,6 @@ Repository cloning, code migration, data transformation, and AI clone creation e
    ```
 
 5. **Log all clone events**
-
    - `clone_created`: When AI clone thing created
    - `voice_cloned`: When voice successfully cloned
    - `appearance_cloned`: When appearance successfully cloned
@@ -272,17 +282,14 @@ Repository cloning, code migration, data transformation, and AI clone creation e
 ### Watches For (Events This Agent Monitors)
 
 - `migration_requested` - New migration project initiated
-
   - **Action:** Create inventory and mapping documents
   - **Metadata:** sourceSystem, targetDate, priority
 
 - `data_imported` - External data loaded for migration
-
   - **Action:** Begin transformation to ontology
   - **Metadata:** sourceType, recordCount, format
 
 - `creator_registered` - New creator added to system
-
   - **Action:** Prepare for AI clone creation (if requested)
   - **Metadata:** creatorId, contentCount, niche
 
@@ -293,35 +300,27 @@ Repository cloning, code migration, data transformation, and AI clone creation e
 ### Emits (Events This Agent Creates)
 
 - `migration_started` - Migration process begins
-
   - **Metadata:** sourceSystem, estimatedDuration, recordCount
 
 - `migration_batch_completed` - Batch of records migrated
-
   - **Metadata:** batchNumber, successCount, failedCount, entityType
 
 - `migration_completed` - Full migration finished
-
   - **Metadata:** totalRecords, successRate, duration, issuesFound
 
 - `migration_failed` - Migration encountered fatal error
-
   - **Metadata:** error, recordsProcessed, rollbackRequired
 
 - `clone_created` - AI clone thing created
-
   - **Metadata:** aiCloneId, creatorId, knowledgeChunks, contentSources, version
 
 - `voice_cloned` - Voice successfully cloned
-
   - **Metadata:** aiCloneId, voiceProvider, voiceId, sampleCount
 
 - `appearance_cloned` - Appearance successfully cloned
-
   - **Metadata:** aiCloneId, appearanceProvider, appearanceId, imageCount
 
 - `clone_trained` - AI clone knowledge base updated
-
   - **Metadata:** aiCloneId, newChunks, totalKnowledgeSize, trainingDuration
 
 - `verification_completed` - Data integrity checks finished
@@ -616,12 +615,12 @@ const creatorId = "k123abc456"; // Sarah Chen's thing ID
 const connections = await ctx.db
   .query("connections")
   .withIndex("from_type", (q) =>
-    q.eq("fromThingId", creatorId).eq("relationshipType", "authored")
+    q.eq("fromThingId", creatorId).eq("relationshipType", "authored"),
   )
   .collect();
 
 const content = await Promise.all(
-  connections.map((conn) => ctx.db.get(conn.toThingId))
+  connections.map((conn) => ctx.db.get(conn.toThingId)),
 );
 // Returns: 70 content items (50 blog posts + 20 videos)
 ```
@@ -808,7 +807,7 @@ const idMappings = new Map<string, Map<string, string>>();
 async function storeIdMapping(
   entityType: string,
   oldId: string,
-  newId: string
+  newId: string,
 ) {
   if (!idMappings.has(entityType)) {
     idMappings.set(entityType, new Map());
@@ -865,7 +864,7 @@ async function migrateUsers() {
         if (!DRY_RUN) {
           const newId = await convex.mutation(
             api.mutations.things.create,
-            newCreator
+            newCreator,
           );
 
           await storeIdMapping("users", oldUser.id, newId);
@@ -884,7 +883,7 @@ async function migrateUsers() {
   }
 
   console.log(
-    `✅ Users migration complete: ${results.success} success, ${results.failed} failed`
+    `✅ Users migration complete: ${results.success} success, ${results.failed} failed`,
   );
   return results;
 }
@@ -927,7 +926,7 @@ async function migrateContent() {
       if (!DRY_RUN) {
         const contentId = await convex.mutation(
           api.mutations.things.create,
-          newContent
+          newContent,
         );
 
         // Create authorship connection
@@ -949,7 +948,7 @@ async function migrateContent() {
   }
 
   console.log(
-    `✅ Content migration complete: ${results.success} success, ${results.failed} failed`
+    `✅ Content migration complete: ${results.success} success, ${results.failed} failed`,
   );
   return results;
 }
@@ -991,7 +990,7 @@ async function migrateRelationships() {
   }
 
   console.log(
-    `✅ Relationships migration complete: ${results.success} success, ${results.failed} failed`
+    `✅ Relationships migration complete: ${results.success} success, ${results.failed} failed`,
   );
   return results;
 }
@@ -1014,13 +1013,13 @@ async function main() {
     console.log("📊 MIGRATION SUMMARY");
     console.log("=".repeat(60));
     console.log(
-      `Users: ${userResults.success} success, ${userResults.failed} failed`
+      `Users: ${userResults.success} success, ${userResults.failed} failed`,
     );
     console.log(
-      `Content: ${contentResults.success} success, ${contentResults.failed} failed`
+      `Content: ${contentResults.success} success, ${contentResults.failed} failed`,
     );
     console.log(
-      `Relationships: ${relationshipResults.success} success, ${relationshipResults.failed} failed`
+      `Relationships: ${relationshipResults.success} success, ${relationshipResults.failed} failed`,
     );
 
     if (DRY_RUN) {
@@ -1108,7 +1107,7 @@ async function verifyConnectionIntegrity() {
       errors.push(
         `Broken connection: ${conn._id} (${from ? "✓" : "✗"} → ${
           to ? "✓" : "✗"
-        })`
+        })`,
       );
     }
   }
@@ -1127,7 +1126,7 @@ async function verifyEventChronology() {
   for (let i = 1; i < events.length; i++) {
     if (events[i].timestamp < events[i - 1].timestamp) {
       errors.push(
-        `Event chronology broken: ${events[i]._id} before ${events[i - 1]._id}`
+        `Event chronology broken: ${events[i]._id} before ${events[i - 1]._id}`,
       );
     }
   }
@@ -1148,12 +1147,12 @@ async function verifyKnowledgeLinks() {
   for (const clone of clones) {
     const knowledgeLinks = await convex.query(
       api.queries.thingKnowledge.getByThing,
-      { thingId: clone._id }
+      { thingId: clone._id },
     );
 
     if (knowledgeLinks.length !== clone.properties.knowledgeBaseSize) {
       errors.push(
-        `AI clone ${clone._id}: Expected ${clone.properties.knowledgeBaseSize} knowledge links, found ${knowledgeLinks.length}`
+        `AI clone ${clone._id}: Expected ${clone.properties.knowledgeBaseSize} knowledge links, found ${knowledgeLinks.length}`,
       );
     }
   }
@@ -1173,27 +1172,22 @@ async function verifyKnowledgeLinks() {
 ### Migration Mistakes
 
 1. **Migrating without inventory**
-
    - ❌ Start coding immediately
    - ✅ Document source system first, create comprehensive inventory
 
 2. **Using wrong thing types**
-
    - ❌ Generic "entity" or "user" type
    - ✅ Use specific types: "creator", "audience_member", "ai_clone"
 
 3. **Losing relationships**
-
    - ❌ Only migrate things, ignore connections
    - ✅ Create connections for all relationships, use proper connection types
 
 4. **Skipping verification**
-
    - ❌ Assume migration succeeded
    - ✅ Run full verification suite, check counts and integrity
 
 5. **No dry-run testing**
-
    - ❌ Run live migration first time
    - ✅ Always dry-run first, review output, fix errors
 
@@ -1204,27 +1198,22 @@ async function verifyKnowledgeLinks() {
 ### AI Clone Mistakes
 
 1. **Creating clone without knowledge**
-
    - ❌ Create ai_clone thing with empty knowledge base
    - ✅ Extract and chunk content first, then create clone with links
 
 2. **Missing connection types**
-
    - ❌ Only create the ai_clone thing
    - ✅ Create clone_of, trained_on, and powers connections
 
 3. **Not using thingKnowledge junction**
-
    - ❌ Only high-level trained_on connections
    - ✅ Create granular thingKnowledge links for each chunk
 
 4. **Poor system prompts**
-
    - ❌ Generic "You are an AI assistant" prompt
    - ✅ Generate from creator profile: niche, expertise, audience, bio
 
 5. **Forgetting events**
-
    - ❌ Create clone silently
    - ✅ Log clone_created, voice_cloned, appearance_cloned events
 
@@ -1287,32 +1276,26 @@ async function verifyKnowledgeLinks() {
 ### Required Files
 
 1. **Inventory Reports**
-
    - `scripts/migration/inventory-{source}.md`
    - Complete analysis of source system
 
 2. **Mapping Documents**
-
    - `scripts/migration/mappings.md`
    - Old schema → new ontology mappings
 
 3. **Migration Scripts**
-
    - `scripts/migration/migrate-{source}.ts`
    - Automated transformation code
 
 4. **Verification Scripts**
-
    - `scripts/migration/verify-migration.ts`
    - Data integrity validation
 
 5. **ID Mappings**
-
    - `scripts/migration/id-mappings.json`
    - Old ID → New ID reference
 
 6. **Migration Report**
-
    - `scripts/migration/report.md`
    - Success/failure summary, known issues
 

@@ -1,3 +1,21 @@
+---
+title: Groups
+dimension: groups
+category: groups.md
+tags: ai, groups, multi-tenant
+related_dimensions: events, knowledge, people, things
+scope: global
+created: 2025-11-03
+updated: 2025-11-03
+version: 1.0.0
+ai_context: |
+  This document is part of the groups dimension in the groups.md category.
+  Location: one/groups/groups.md
+  Purpose: Documents groups: multi-tenant platform structure
+  Related dimensions: events, knowledge, people, things
+  For AI agents: Read this to understand groups.
+---
+
 # Groups: Multi-Tenant Platform Structure
 
 **Groups are the hierarchical isolation boundary for multi-tenancy in the ONE Platform.**
@@ -7,6 +25,7 @@ For details on the ONE group (vision, strategy, revenue), see **[ONE Group →](
 ## Overview
 
 The ONE Platform operates as a multi-tenant system where:
+
 - **Platform Owner (Anthony)** owns the infrastructure and smart contracts (100%)
 - **Groups** are tenant containers for resources and users (with 6 types)
 - **Group Owners** manage their groups and members
@@ -15,6 +34,7 @@ The ONE Platform operates as a multi-tenant system where:
 ## Table: `groups`
 
 **Schema Structure:**
+
 ```typescript
 {
   _id: Id<"groups">,
@@ -84,37 +104,49 @@ The ONE Platform operates as a multi-tenant system where:
 ## Group Types
 
 ### 1. **friend_circle**
+
 Small groups of 2-10 people who know each other personally
+
 - Family groups
 - Close friend circles
 - Small social groups
 
 ### 2. **business**
+
 Commercial entities and teams
+
 - Startups
 - Small businesses
 - Teams and departments
 
 ### 3. **community**
+
 Open membership groups around shared interests
+
 - Online communities
 - Fan clubs
 - Special interest groups
 
 ### 4. **dao**
+
 Decentralized autonomous organizations
+
 - Token-gated groups
 - On-chain governance
 - Treasury management
 
 ### 5. **government**
+
 Public sector and civic groups
+
 - Municipal services
 - Public agencies
 - Civic organizations
 
 ### 6. **organization**
+
 Large-scale multi-tenant business entities
+
 - Enterprise customers
 - SaaS tenants
 - White-label deployments
@@ -122,24 +154,29 @@ Large-scale multi-tenant business entities
 ## Core Relationships (Connections)
 
 **Membership:** `creator` → `group` via `member_of`
+
 - `metadata.role`: `"group_owner"` | `"group_user"`
 - `metadata.permissions`: Array of permission strings
 
 **Ownership:** `creator` → `group` via `owns`
+
 - Platform owner (Anthony) owns the ONE group at 100%
 - Group owners may own their groups
 
 **Hierarchy:** `group` → `group` via `parentGroupId`
+
 - Groups can nest within groups
 - Parent groups can access child group data (configurable)
 
 **Resource Ownership:** `group` → resources via `owns`
+
 - Content, workflows, tokens, products, websites
 - All group resources link back to group via ownership connection
 
 ## Core Events
 
 **Group Lifecycle:**
+
 - `group_created` - When group is created
 - `group_updated` - Settings, plan, or limits changed
 - `user_invited_to_group` - Invitation sent
@@ -147,15 +184,18 @@ Large-scale multi-tenant business entities
 - `user_removed_from_group` - User removed from group
 
 **Billing Events (mainly for organizations):**
+
 - `payment_event` - Subscription payments (Stripe or crypto)
 - `subscription_event` - Plan changes (starter → pro → enterprise)
 
 **Inference Events:**
+
 - `inference_request` - Group member requests inference
 - `inference_completed` - Result delivered
 - `inference_quota_exceeded` - Monthly limit hit
 
 **Revenue Events:**
+
 - `group_revenue_generated` - When group's activity generates platform revenue
 - `revenue_share_distributed` - If group has revenue share agreement
 
@@ -168,16 +208,16 @@ Large-scale multi-tenant business entities
 const oneGroupId = await db.insert("groups", {
   name: "ONE Platform",
   type: "organization",
-  parentGroupId: undefined,  // Top-level group
+  parentGroupId: undefined, // Top-level group
   properties: {
     slug: "one",
     domain: "one.ie",
     plan: "enterprise",
     limits: {
-      users: 1000000,      // Unlimited for platform
-      storage: 1000000,    // 1PB
-      apiCalls: -1,        // Unlimited
-      inferences: -1,      // Unlimited
+      users: 1000000, // Unlimited for platform
+      storage: 1000000, // 1PB
+      apiCalls: -1, // Unlimited
+      inferences: -1, // Unlimited
     },
     usage: {
       users: 0,
@@ -200,7 +240,7 @@ const oneGroupId = await db.insert("groups", {
       inferenceEnabled: true,
       inferenceModels: ["gpt-4", "claude-3.5", "llama-3"],
     },
-    revenueShare: 0,  // Anthony keeps 100% of revenue
+    revenueShare: 0, // Anthony keeps 100% of revenue
   },
   status: "active",
   createdAt: Date.now(),
@@ -225,7 +265,7 @@ await db.insert("connections", {
   relationshipType: "member_of",
   metadata: {
     role: "group_owner",
-    permissions: ["*"],  // All permissions
+    permissions: ["*"], // All permissions
   },
   createdAt: Date.now(),
 });
@@ -253,16 +293,16 @@ await db.insert("events", {
 const customerGroupId = await db.insert("groups", {
   name: "Acme Corp",
   type: "organization",
-  parentGroupId: undefined,  // Top-level tenant
+  parentGroupId: undefined, // Top-level tenant
   properties: {
     slug: "acme",
     domain: "acme.one.ie",
     plan: "pro",
     limits: {
       users: 50,
-      storage: 100,        // GB
+      storage: 100, // GB
       apiCalls: 100000,
-      inferences: 10000,   // 10K inferences/month
+      inferences: 10000, // 10K inferences/month
     },
     usage: {
       users: 0,
@@ -282,7 +322,7 @@ const customerGroupId = await db.insert("groups", {
       inferenceEnabled: true,
       inferenceModels: ["gpt-4", "claude-3.5"],
     },
-    revenueShare: 0.1,  // Customer gets 10% revenue share if they refer users
+    revenueShare: 0.1, // Customer gets 10% revenue share if they refer users
   },
   status: "active",
   createdAt: Date.now(),
@@ -323,7 +363,7 @@ const orgId = await db.insert("groups", {
 const deptId = await db.insert("groups", {
   name: "Engineering Team",
   type: "business",
-  parentGroupId: orgId,  // Nest within parent
+  parentGroupId: orgId, // Nest within parent
   properties: {
     description: "Product engineering department",
   },
@@ -336,7 +376,7 @@ const deptId = await db.insert("groups", {
 const squadId = await db.insert("groups", {
   name: "Backend Squad",
   type: "friend_circle",
-  parentGroupId: deptId,  // Nest within department
+  parentGroupId: deptId, // Nest within department
   properties: {
     description: "Backend services team",
   },
@@ -359,7 +399,7 @@ await db.insert("events", {
   metadata: {
     model: "gpt-4",
     cost: 0.045,
-    price: 0.10,
+    price: 0.1,
   },
 });
 
@@ -400,12 +440,12 @@ await db.insert("events", {
   groupId: customerGroupId,
   type: "group_revenue_generated",
   actorId: customerGroupId,
-  targetId: anthonyId,  // Platform owner
+  targetId: anthonyId, // Platform owner
   timestamp: Date.now(),
   metadata: {
-    totalRevenue: 1000.00,     // $1K generated by group
-    groupShare: 100.00,        // 10% to group
-    platformShare: 900.00,     // 90% to Anthony
+    totalRevenue: 1000.0, // $1K generated by group
+    groupShare: 100.0, // 10% to group
+    platformShare: 900.0, // 90% to Anthony
     revenueSharePercentage: 0.1,
   },
 });
@@ -419,7 +459,7 @@ if (group.properties.revenueShare > 0) {
     targetId: customerId,
     timestamp: Date.now(),
     metadata: {
-      amount: 100.00,
+      amount: 100.0,
       percentage: 0.1,
       network: "sui",
       txDigest: "...",
@@ -431,40 +471,42 @@ if (group.properties.revenueShare > 0) {
 ## Queries
 
 **List group members:**
+
 ```typescript
 const members = await db
   .query("connections")
-  .withIndex("to_type", q =>
-    q.eq("toThingId", groupId)
-     .eq("relationshipType", "member_of")
+  .withIndex("to_type", (q) =>
+    q.eq("toThingId", groupId).eq("relationshipType", "member_of"),
   )
   .collect();
 
 const memberEntities = await Promise.all(
-  members.map(m => db.get(m.fromThingId))
+  members.map((m) => db.get(m.fromThingId)),
 );
 ```
 
 **List group resources:**
+
 ```typescript
 const resources = await db
   .query("connections")
-  .withIndex("from_type", q =>
-    q.eq("fromThingId", groupId)
-     .eq("relationshipType", "owns")
+  .withIndex("from_type", (q) =>
+    q.eq("fromThingId", groupId).eq("relationshipType", "owns"),
   )
   .collect();
 ```
 
 **Get child groups (hierarchical query):**
+
 ```typescript
 const childGroups = await db
   .query("groups")
-  .filter(q => q.eq(q.field("parentGroupId"), groupId))
+  .filter((q) => q.eq(q.field("parentGroupId"), groupId))
   .collect();
 ```
 
 **Get group inference usage:**
+
 ```typescript
 const group = await db.get(groupId);
 const usage = group.properties.usage?.inferences || 0;
@@ -473,51 +515,53 @@ const percentageUsed = (usage / limit) * 100;
 ```
 
 **Recent group activity:**
+
 ```typescript
 const events = await db
   .query("events")
-  .withIndex("group_time", q => q.eq("groupId", groupId))
+  .withIndex("group_time", (q) => q.eq("groupId", groupId))
   .order("desc")
   .take(100)
   .collect();
 ```
 
 **Calculate group revenue (for revenue share):**
+
 ```typescript
 const revenueEvents = await db
   .query("events")
-  .withIndex("type_time", q =>
-    q.eq("type", "group_revenue_generated")
-  )
-  .filter(q => q.eq(q.field("actorId"), groupId))
+  .withIndex("type_time", (q) => q.eq("type", "group_revenue_generated"))
+  .filter((q) => q.eq(q.field("actorId"), groupId))
   .collect();
 
 const totalRevenue = revenueEvents.reduce(
   (sum, e) => sum + e.metadata.totalRevenue,
-  0
+  0,
 );
 const groupShare = revenueEvents.reduce(
   (sum, e) => sum + e.metadata.groupShare,
-  0
+  0,
 );
 ```
 
 ## Multi-Tenant Isolation
 
 **Access Control Pattern:**
+
 ```typescript
 // Check if user can access group resource
 export const canAccess = async (
   userId: Id<"things">,
   groupId: Id<"groups">,
-  requiredPermission: string
+  requiredPermission: string,
 ) => {
   const membership = await db
     .query("connections")
-    .withIndex("from_type", q =>
-      q.eq("fromThingId", userId)
-       .eq("toThingId", groupId)
-       .eq("relationshipType", "member_of")
+    .withIndex("from_type", (q) =>
+      q
+        .eq("fromThingId", userId)
+        .eq("toThingId", groupId)
+        .eq("relationshipType", "member_of"),
     )
     .first();
 

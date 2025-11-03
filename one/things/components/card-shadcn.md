@@ -1,6 +1,25 @@
+---
+title: Card Shadcn
+dimension: things
+category: components
+tags: frontend, ontology, things
+related_dimensions: connections, events
+scope: global
+created: 2025-11-03
+updated: 2025-11-03
+version: 1.0.0
+ai_context: |
+  This document is part of the things dimension in the components category.
+  Location: one/things/components/card-shadcn.md
+  Purpose: Documents card component (shadcn/ui)
+  Related dimensions: connections, events
+  For AI agents: Read this to understand card shadcn.
+---
+
 # Card Component (shadcn/ui)
 
 > **⚠️ DEPRECATED:** This document has been superseded by a cleaner approach. Please use:
+>
 > - `one/things/components/card.md` - Card implementation (uses shadcn/ui naturally)
 > - `one/things/features/ontology-ui.md` - Clean UI metadata specification
 > - `one/things/plans/ontology-ui-approach.md` - Philosophy explanation
@@ -35,8 +54,8 @@ import { ThingCard } from '@/components/generic/ThingCard'
 
 ```tsx
 // frontend/src/components/generic/ThingCard.tsx
-import { type Thing } from '@one-platform/core'
-import { useThingConfig } from '@/ontology/hooks/useThingConfig'
+import { type Thing } from "@one-platform/core";
+import { useThingConfig } from "@/ontology/hooks/useThingConfig";
 import {
   Card,
   CardContent,
@@ -44,71 +63,73 @@ import {
   CardFooter,
   CardHeader,
   CardTitle,
-} from '@/components/ui/card'
-import { Separator } from '@/components/ui/separator'
-import { Field } from './Field'
-import { Actions } from './Actions'
-import { ConnectionBadges } from './ConnectionBadges'
-import { cn } from '@/lib/utils'
+} from "@/components/ui/card";
+import { Separator } from "@/components/ui/separator";
+import { Field } from "./Field";
+import { Actions } from "./Actions";
+import { ConnectionBadges } from "./ConnectionBadges";
+import { cn } from "@/lib/utils";
 
 interface ThingCardProps {
-  thing: Thing
-  view?: 'card' | 'list' | 'detail'
-  onClick?: (thing: Thing) => void
-  showActions?: boolean
-  showConnections?: boolean
-  className?: string
+  thing: Thing;
+  view?: "card" | "list" | "detail";
+  onClick?: (thing: Thing) => void;
+  showActions?: boolean;
+  showConnections?: boolean;
+  className?: string;
 }
 
 export function ThingCard({
   thing,
-  view = 'card',
+  view = "card",
   onClick,
   showActions = true,
   showConnections = true,
-  className
+  className,
 }: ThingCardProps) {
   // Get UI config from ontology
-  const config = useThingConfig(thing.type)
-  const viewConfig = config.ui.views[view]
+  const config = useThingConfig(thing.type);
+  const viewConfig = config.ui.views[view];
 
   if (!viewConfig) {
-    console.warn(`View "${view}" not defined for type "${thing.type}"`)
-    return null
+    console.warn(`View "${view}" not defined for type "${thing.type}"`);
+    return null;
   }
 
   // Get fields to display
-  const fields = viewConfig.fields === '*'
-    ? Object.keys(config.properties)
-    : viewConfig.fields
+  const fields =
+    viewConfig.fields === "*"
+      ? Object.keys(config.properties)
+      : viewConfig.fields;
 
   // Separate header fields (first 2) from body fields
-  const headerFields = fields.slice(0, 2)
-  const bodyFields = fields.slice(2)
+  const headerFields = fields.slice(0, 2);
+  const bodyFields = fields.slice(2);
 
   // Check if card should be clickable
-  const isClickable = onClick || config.ui.actions.primary
+  const isClickable = onClick || config.ui.actions.primary;
 
   return (
     <Card
       className={cn(
-        isClickable && 'cursor-pointer transition-all hover:shadow-lg hover:scale-[1.02]',
-        className
+        isClickable &&
+          "cursor-pointer transition-all hover:shadow-lg hover:scale-[1.02]",
+        className,
       )}
       onClick={() => {
         if (onClick) {
-          onClick(thing)
+          onClick(thing);
         } else if (config.ui.actions.primary && !showActions) {
           // Execute primary action if actions are hidden
-          handlePrimaryAction(thing, config.ui.actions.primary.action)
+          handlePrimaryAction(thing, config.ui.actions.primary.action);
         }
       }}
     >
       {/* Header: Typically thumbnail + title */}
       <CardHeader className="space-y-0 pb-3">
-        {headerFields.map(fieldName => {
-          const fieldConfig = config.ui.fields[fieldName]
-          if (fieldConfig?.hidden) return null
+        {headerFields.map((fieldName) => {
+          const fieldConfig = config.ui.fields[fieldName];
+          if (fieldConfig?.hidden) return null;
 
           return (
             <Field
@@ -118,22 +139,22 @@ export function ThingCard({
               config={fieldConfig}
               thing={thing}
             />
-          )
+          );
         })}
       </CardHeader>
 
       {/* Body: Description, price, badges, etc. */}
       {bodyFields.length > 0 && (
         <CardContent className="space-y-2 pb-3">
-          {bodyFields.map(fieldName => {
-            const fieldConfig = config.ui.fields[fieldName]
+          {bodyFields.map((fieldName) => {
+            const fieldConfig = config.ui.fields[fieldName];
 
             // Skip hidden fields
-            if (fieldConfig?.hidden) return null
+            if (fieldConfig?.hidden) return null;
 
             // Skip showOnlyIf fields that are false
             if (fieldConfig?.showOnlyIf && !thing.properties[fieldName]) {
-              return null
+              return null;
             }
 
             return (
@@ -144,7 +165,7 @@ export function ThingCard({
                 config={fieldConfig}
                 thing={thing}
               />
-            )
+            );
           })}
         </CardContent>
       )}
@@ -154,50 +175,48 @@ export function ThingCard({
         <>
           <Separator className="mb-3" />
           <CardContent className="pt-0 pb-3">
-            <ConnectionBadges
-              thing={thing}
-              config={config.ui.connections}
-            />
+            <ConnectionBadges thing={thing} config={config.ui.connections} />
           </CardContent>
         </>
       )}
 
       {/* Actions footer */}
-      {showActions && (config.ui.actions.primary || config.ui.actions.secondary) && (
-        <>
-          <Separator />
-          <CardFooter className="pt-3">
-            <Actions
-              thing={thing}
-              primary={config.ui.actions.primary}
-              secondary={config.ui.actions.secondary}
-              context={config.ui.actions.context}
-            />
-          </CardFooter>
-        </>
-      )}
+      {showActions &&
+        (config.ui.actions.primary || config.ui.actions.secondary) && (
+          <>
+            <Separator />
+            <CardFooter className="pt-3">
+              <Actions
+                thing={thing}
+                primary={config.ui.actions.primary}
+                secondary={config.ui.actions.secondary}
+                context={config.ui.actions.context}
+              />
+            </CardFooter>
+          </>
+        )}
     </Card>
-  )
+  );
 }
 
 // Helper function to handle primary action
 function handlePrimaryAction(thing: Thing, action: string) {
   // Route to appropriate handler
   switch (action) {
-    case 'enroll':
-    case 'purchase':
-    case 'addToCart':
+    case "enroll":
+    case "purchase":
+    case "addToCart":
       // Navigate to action page
-      window.location.href = `/${action}/${thing._id}`
-      break
-    case 'preview':
-    case 'read':
-    case 'viewProfile':
+      window.location.href = `/${action}/${thing._id}`;
+      break;
+    case "preview":
+    case "read":
+    case "viewProfile":
       // Navigate to detail page
-      window.location.href = `/${thing.type}/${thing._id}`
-      break
+      window.location.href = `/${thing.type}/${thing._id}`;
+      break;
     default:
-      console.warn(`Unhandled action: ${action}`)
+      console.warn(`Unhandled action: ${action}`);
   }
 }
 ```
@@ -211,7 +230,7 @@ function handlePrimaryAction(thing: Thing, action: string) {
 ```tsx
 // frontend/src/components/generic/ThingCard.Compact.tsx
 export function ThingCardCompact({ thing }: { thing: Thing }) {
-  const config = useThingConfig(thing.type)
+  const config = useThingConfig(thing.type);
 
   return (
     <Card className="hover:shadow-md transition-shadow">
@@ -226,9 +245,7 @@ export function ThingCardCompact({ thing }: { thing: Thing }) {
 
         {/* Title + description */}
         <div className="flex-1 min-w-0">
-          <CardTitle className="text-base truncate">
-            {thing.name}
-          </CardTitle>
+          <CardTitle className="text-base truncate">{thing.name}</CardTitle>
           <CardDescription className="text-sm truncate">
             {thing.properties.description}
           </CardDescription>
@@ -245,7 +262,7 @@ export function ThingCardCompact({ thing }: { thing: Thing }) {
         )}
       </CardContent>
     </Card>
-  )
+  );
 }
 ```
 
@@ -254,8 +271,8 @@ export function ThingCardCompact({ thing }: { thing: Thing }) {
 ```tsx
 // frontend/src/components/generic/ThingCard.Horizontal.tsx
 export function ThingCardHorizontal({ thing }: { thing: Thing }) {
-  const config = useThingConfig(thing.type)
-  const listView = config.ui.views.list
+  const config = useThingConfig(thing.type);
+  const listView = config.ui.views.list;
 
   return (
     <Card className="hover:shadow-md transition-shadow">
@@ -273,7 +290,7 @@ export function ThingCardHorizontal({ thing }: { thing: Thing }) {
         {/* Right: Content */}
         <div className="flex-1 p-6">
           <div className="space-y-3">
-            {listView.fields.slice(1).map(fieldName => (
+            {listView.fields.slice(1).map((fieldName) => (
               <Field
                 key={fieldName}
                 name={fieldName}
@@ -295,7 +312,7 @@ export function ThingCardHorizontal({ thing }: { thing: Thing }) {
         </div>
       </div>
     </Card>
-  )
+  );
 }
 ```
 
@@ -304,7 +321,7 @@ export function ThingCardHorizontal({ thing }: { thing: Thing }) {
 ```tsx
 // frontend/src/components/generic/ThingCard.Featured.tsx
 export function ThingCardFeatured({ thing }: { thing: Thing }) {
-  const config = useThingConfig(thing.type)
+  const config = useThingConfig(thing.type);
 
   return (
     <Card className="border-primary shadow-lg">
@@ -323,7 +340,7 @@ export function ThingCardFeatured({ thing }: { thing: Thing }) {
           value={thing.properties.thumbnail}
           config={{
             ...config.ui.fields.thumbnail,
-            aspect: 'wide'
+            aspect: "wide",
           }}
           thing={thing}
         />
@@ -363,7 +380,7 @@ export function ThingCardFeatured({ thing }: { thing: Thing }) {
         />
       </CardFooter>
     </Card>
-  )
+  );
 }
 ```
 
@@ -375,38 +392,34 @@ export function ThingCardFeatured({ thing }: { thing: Thing }) {
 
 ```tsx
 // frontend/src/components/generic/ThingGrid.tsx
-import { ThingCard } from './ThingCard'
+import { ThingCard } from "./ThingCard";
 
 interface ThingGridProps {
-  things: Thing[]
-  columns?: 2 | 3 | 4
-  gap?: 'sm' | 'md' | 'lg'
+  things: Thing[];
+  columns?: 2 | 3 | 4;
+  gap?: "sm" | "md" | "lg";
 }
 
-export function ThingGrid({
-  things,
-  columns = 3,
-  gap = 'md'
-}: ThingGridProps) {
+export function ThingGrid({ things, columns = 3, gap = "md" }: ThingGridProps) {
   const columnClasses = {
-    2: 'grid-cols-1 md:grid-cols-2',
-    3: 'grid-cols-1 md:grid-cols-2 lg:grid-cols-3',
-    4: 'grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4'
-  }
+    2: "grid-cols-1 md:grid-cols-2",
+    3: "grid-cols-1 md:grid-cols-2 lg:grid-cols-3",
+    4: "grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4",
+  };
 
   const gapClasses = {
-    sm: 'gap-4',
-    md: 'gap-6',
-    lg: 'gap-8'
-  }
+    sm: "gap-4",
+    md: "gap-6",
+    lg: "gap-8",
+  };
 
   return (
-    <div className={cn('grid', columnClasses[columns], gapClasses[gap])}>
-      {things.map(thing => (
+    <div className={cn("grid", columnClasses[columns], gapClasses[gap])}>
+      {things.map((thing) => (
         <ThingCard key={thing._id} thing={thing} />
       ))}
     </div>
-  )
+  );
 }
 ```
 
@@ -414,18 +427,18 @@ export function ThingGrid({
 
 ```tsx
 // frontend/src/components/generic/ThingMasonry.tsx
-import { ThingCard } from './ThingCard'
+import { ThingCard } from "./ThingCard";
 
 export function ThingMasonry({ things }: { things: Thing[] }) {
   return (
     <div className="columns-1 md:columns-2 lg:columns-3 gap-6">
-      {things.map(thing => (
+      {things.map((thing) => (
         <div key={thing._id} className="break-inside-avoid mb-6">
           <ThingCard thing={thing} />
         </div>
       ))}
     </div>
-  )
+  );
 }
 ```
 
@@ -437,8 +450,8 @@ export function ThingMasonry({ things }: { things: Thing[] }) {
 
 ```tsx
 // frontend/src/components/generic/ThingList.tsx
-import { ThingCard } from './ThingCard'
-import { Separator } from '@/components/ui/separator'
+import { ThingCard } from "./ThingCard";
+import { Separator } from "@/components/ui/separator";
 
 export function ThingList({ things }: { things: Thing[] }) {
   return (
@@ -450,7 +463,7 @@ export function ThingList({ things }: { things: Thing[] }) {
         </div>
       ))}
     </div>
-  )
+  );
 }
 ```
 
@@ -458,22 +471,25 @@ export function ThingList({ things }: { things: Thing[] }) {
 
 ```tsx
 // frontend/src/components/generic/ThingListGrouped.tsx
-import { ThingCard } from './ThingCard'
-import { Separator } from '@/components/ui/separator'
+import { ThingCard } from "./ThingCard";
+import { Separator } from "@/components/ui/separator";
 
 interface ThingListGroupedProps {
-  things: Thing[]
-  groupBy: string  // e.g., 'category', 'level'
+  things: Thing[];
+  groupBy: string; // e.g., 'category', 'level'
 }
 
 export function ThingListGrouped({ things, groupBy }: ThingListGroupedProps) {
   // Group things
-  const grouped = things.reduce((acc, thing) => {
-    const key = thing.properties[groupBy] || 'Other'
-    if (!acc[key]) acc[key] = []
-    acc[key].push(thing)
-    return acc
-  }, {} as Record<string, Thing[]>)
+  const grouped = things.reduce(
+    (acc, thing) => {
+      const key = thing.properties[groupBy] || "Other";
+      if (!acc[key]) acc[key] = [];
+      acc[key].push(thing);
+      return acc;
+    },
+    {} as Record<string, Thing[]>,
+  );
 
   return (
     <div className="space-y-8">
@@ -491,7 +507,7 @@ export function ThingListGrouped({ things, groupBy }: ThingListGroupedProps) {
         </div>
       ))}
     </div>
-  )
+  );
 }
 ```
 
@@ -503,21 +519,21 @@ export function ThingListGrouped({ things, groupBy }: ThingListGroupedProps) {
 
 ```tsx
 // frontend/src/components/generic/ThingCardSelectable.tsx
-import { Checkbox } from '@/components/ui/checkbox'
+import { Checkbox } from "@/components/ui/checkbox";
 
 interface ThingCardSelectableProps {
-  thing: Thing
-  selected: boolean
-  onSelectedChange: (selected: boolean) => void
+  thing: Thing;
+  selected: boolean;
+  onSelectedChange: (selected: boolean) => void;
 }
 
 export function ThingCardSelectable({
   thing,
   selected,
-  onSelectedChange
+  onSelectedChange,
 }: ThingCardSelectableProps) {
   return (
-    <Card className={cn(selected && 'ring-2 ring-primary')}>
+    <Card className={cn(selected && "ring-2 ring-primary")}>
       <div className="absolute top-4 right-4 z-10">
         <Checkbox
           checked={selected}
@@ -528,7 +544,7 @@ export function ThingCardSelectable({
 
       <ThingCard thing={thing} showActions={false} />
     </Card>
-  )
+  );
 }
 ```
 
@@ -536,9 +552,9 @@ export function ThingCardSelectable({
 
 ```tsx
 // frontend/src/components/generic/ThingCardDraggable.tsx
-import { useSortable } from '@dnd-kit/sortable'
-import { CSS } from '@dnd-kit/utilities'
-import { GripVertical } from 'lucide-react'
+import { useSortable } from "@dnd-kit/sortable";
+import { CSS } from "@dnd-kit/utilities";
+import { GripVertical } from "lucide-react";
 
 export function ThingCardDraggable({ thing }: { thing: Thing }) {
   const {
@@ -547,14 +563,14 @@ export function ThingCardDraggable({ thing }: { thing: Thing }) {
     setNodeRef,
     transform,
     transition,
-    isDragging
-  } = useSortable({ id: thing._id })
+    isDragging,
+  } = useSortable({ id: thing._id });
 
   const style = {
     transform: CSS.Transform.toString(transform),
     transition,
-    opacity: isDragging ? 0.5 : 1
-  }
+    opacity: isDragging ? 0.5 : 1,
+  };
 
   return (
     <div ref={setNodeRef} style={style}>
@@ -576,7 +592,7 @@ export function ThingCardDraggable({ thing }: { thing: Thing }) {
         </div>
       </Card>
     </div>
-  )
+  );
 }
 ```
 
@@ -588,8 +604,13 @@ export function ThingCardDraggable({ thing }: { thing: Thing }) {
 
 ```tsx
 // frontend/src/components/generic/ThingCard.Skeleton.tsx
-import { Card, CardContent, CardFooter, CardHeader } from '@/components/ui/card'
-import { Skeleton } from '@/components/ui/skeleton'
+import {
+  Card,
+  CardContent,
+  CardFooter,
+  CardHeader,
+} from "@/components/ui/card";
+import { Skeleton } from "@/components/ui/skeleton";
 
 export function ThingCardSkeleton() {
   return (
@@ -609,7 +630,7 @@ export function ThingCardSkeleton() {
         <Skeleton className="h-10 w-full" />
       </CardFooter>
     </Card>
-  )
+  );
 }
 ```
 
@@ -617,7 +638,7 @@ export function ThingCardSkeleton() {
 
 ```tsx
 export function ThingsPage() {
-  const { things, loading } = useThings()
+  const { things, loading } = useThings();
 
   if (loading) {
     return (
@@ -626,12 +647,10 @@ export function ThingsPage() {
           <ThingCardSkeleton key={i} />
         ))}
       </div>
-    )
+    );
   }
 
-  return (
-    <ThingGrid things={things} />
-  )
+  return <ThingGrid things={things} />;
 }
 ```
 
@@ -641,13 +660,13 @@ export function ThingsPage() {
 
 ```tsx
 // frontend/src/components/generic/ThingCard.Error.tsx
-import { Card, CardContent } from '@/components/ui/card'
-import { AlertCircle } from 'lucide-react'
-import { Button } from '@/components/ui/button'
+import { Card, CardContent } from "@/components/ui/card";
+import { AlertCircle } from "lucide-react";
+import { Button } from "@/components/ui/button";
 
 interface ThingCardErrorProps {
-  error: Error
-  onRetry?: () => void
+  error: Error;
+  onRetry?: () => void;
 }
 
 export function ThingCardError({ error, onRetry }: ThingCardErrorProps) {
@@ -665,7 +684,7 @@ export function ThingCardError({ error, onRetry }: ThingCardErrorProps) {
         )}
       </CardContent>
     </Card>
-  )
+  );
 }
 ```
 
@@ -677,16 +696,16 @@ export function ThingCardError({ error, onRetry }: ThingCardErrorProps) {
 
 ```tsx
 // frontend/src/pages/products.tsx
-import { ThingGrid } from '@/components/generic/ThingGrid'
-import { ThingCardSkeleton } from '@/components/generic/ThingCard.Skeleton'
-import { EmptyState } from '@/components/generic/EmptyState'
-import { Input } from '@/components/ui/input'
-import { Button } from '@/components/ui/button'
-import { Filter } from 'lucide-react'
+import { ThingGrid } from "@/components/generic/ThingGrid";
+import { ThingCardSkeleton } from "@/components/generic/ThingCard.Skeleton";
+import { EmptyState } from "@/components/generic/EmptyState";
+import { Input } from "@/components/ui/input";
+import { Button } from "@/components/ui/button";
+import { Filter } from "lucide-react";
 
 export function ProductsPage() {
-  const { products, loading, error } = useProducts()
-  const config = useThingConfig('product')
+  const { products, loading, error } = useProducts();
+  const config = useThingConfig("product");
 
   if (loading) {
     return (
@@ -697,15 +716,15 @@ export function ProductsPage() {
           ))}
         </div>
       </div>
-    )
+    );
   }
 
   if (error) {
-    return <ThingCardError error={error} />
+    return <ThingCardError error={error} />;
   }
 
   if (products.length === 0) {
-    return <EmptyState config={config.ui.empty} />
+    return <EmptyState config={config.ui.empty} />;
   }
 
   return (
@@ -714,10 +733,7 @@ export function ProductsPage() {
       <div className="flex items-center justify-between mb-8">
         <h1 className="text-3xl font-bold">Products</h1>
         <div className="flex items-center gap-4">
-          <Input
-            placeholder="Search products..."
-            className="w-64"
-          />
+          <Input placeholder="Search products..." className="w-64" />
           <Button variant="outline" size="icon">
             <Filter className="h-4 w-4" />
           </Button>
@@ -727,7 +743,7 @@ export function ProductsPage() {
       {/* Grid */}
       <ThingGrid things={products} columns={4} />
     </div>
-  )
+  );
 }
 ```
 
@@ -735,17 +751,18 @@ export function ProductsPage() {
 
 ```tsx
 // frontend/src/pages/courses.tsx
-import { ThingGrid } from '@/components/generic/ThingGrid'
-import { Badge } from '@/components/ui/badge'
-import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs'
+import { ThingGrid } from "@/components/generic/ThingGrid";
+import { Badge } from "@/components/ui/badge";
+import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 
 export function CoursesPage() {
-  const { courses } = useCourses()
-  const [level, setLevel] = useState('all')
+  const { courses } = useCourses();
+  const [level, setLevel] = useState("all");
 
-  const filtered = level === 'all'
-    ? courses
-    : courses.filter(c => c.properties.level === level)
+  const filtered =
+    level === "all"
+      ? courses
+      : courses.filter((c) => c.properties.level === level);
 
   return (
     <div className="container mx-auto py-8">
@@ -767,7 +784,7 @@ export function CoursesPage() {
       {/* Course grid */}
       <ThingGrid things={filtered} columns={3} />
     </div>
-  )
+  );
 }
 ```
 
@@ -775,15 +792,15 @@ export function CoursesPage() {
 
 ```tsx
 // frontend/src/pages/blog.tsx
-import { ThingCard } from '@/components/generic/ThingCard'
-import { ThingCardFeatured } from '@/components/generic/ThingCard.Featured'
-import { ThingList } from '@/components/generic/ThingList'
+import { ThingCard } from "@/components/generic/ThingCard";
+import { ThingCardFeatured } from "@/components/generic/ThingCard.Featured";
+import { ThingList } from "@/components/generic/ThingList";
 
 export function BlogPage() {
-  const { posts } = usePosts()
+  const { posts } = usePosts();
 
-  const featured = posts.filter(p => p.properties.featured)
-  const regular = posts.filter(p => !p.properties.featured)
+  const featured = posts.filter((p) => p.properties.featured);
+  const regular = posts.filter((p) => !p.properties.featured);
 
   return (
     <div className="container mx-auto py-8">
@@ -792,7 +809,7 @@ export function BlogPage() {
         <section className="mb-12">
           <h2 className="text-2xl font-bold mb-6">Featured</h2>
           <div className="grid grid-cols-2 gap-8">
-            {featured.map(post => (
+            {featured.map((post) => (
               <ThingCardFeatured key={post._id} thing={post} />
             ))}
           </div>
@@ -805,7 +822,7 @@ export function BlogPage() {
         <ThingList things={regular} />
       </section>
     </div>
-  )
+  );
 }
 ```
 
@@ -817,69 +834,74 @@ export function BlogPage() {
 
 ```tsx
 // For large lists, use virtualization
-import { useVirtualizer } from '@tanstack/react-virtual'
+import { useVirtualizer } from "@tanstack/react-virtual";
 
 export function VirtualizedThingGrid({ things }: { things: Thing[] }) {
-  const parentRef = useRef<HTMLDivElement>(null)
+  const parentRef = useRef<HTMLDivElement>(null);
 
   const rowVirtualizer = useVirtualizer({
     count: Math.ceil(things.length / 3),
     getScrollElement: () => parentRef.current,
     estimateSize: () => 400,
-    overscan: 5
-  })
+    overscan: 5,
+  });
 
   return (
     <div ref={parentRef} className="h-screen overflow-auto">
       <div
         style={{
           height: `${rowVirtualizer.getTotalSize()}px`,
-          width: '100%',
-          position: 'relative'
+          width: "100%",
+          position: "relative",
         }}
       >
-        {rowVirtualizer.getVirtualItems().map(virtualRow => {
-          const startIndex = virtualRow.index * 3
-          const rowThings = things.slice(startIndex, startIndex + 3)
+        {rowVirtualizer.getVirtualItems().map((virtualRow) => {
+          const startIndex = virtualRow.index * 3;
+          const rowThings = things.slice(startIndex, startIndex + 3);
 
           return (
             <div
               key={virtualRow.index}
               style={{
-                position: 'absolute',
+                position: "absolute",
                 top: 0,
                 left: 0,
-                width: '100%',
+                width: "100%",
                 height: `${virtualRow.size}px`,
-                transform: `translateY(${virtualRow.start}px)`
+                transform: `translateY(${virtualRow.start}px)`,
               }}
             >
               <div className="grid grid-cols-3 gap-6 p-6">
-                {rowThings.map(thing => (
+                {rowThings.map((thing) => (
                   <ThingCard key={thing._id} thing={thing} />
                 ))}
               </div>
             </div>
-          )
+          );
         })}
       </div>
     </div>
-  )
+  );
 }
 ```
 
 ### Memoization
 
 ```tsx
-import { memo } from 'react'
+import { memo } from "react";
 
-export const ThingCard = memo(function ThingCard({ thing }: ThingCardProps) {
-  // ... implementation
-}, (prevProps, nextProps) => {
-  // Custom comparison
-  return prevProps.thing._id === nextProps.thing._id &&
-         prevProps.thing.updatedAt === nextProps.thing.updatedAt
-})
+export const ThingCard = memo(
+  function ThingCard({ thing }: ThingCardProps) {
+    // ... implementation
+  },
+  (prevProps, nextProps) => {
+    // Custom comparison
+    return (
+      prevProps.thing._id === nextProps.thing._id &&
+      prevProps.thing.updatedAt === nextProps.thing.updatedAt
+    );
+  },
+);
 ```
 
 ---
@@ -888,40 +910,42 @@ export const ThingCard = memo(function ThingCard({ thing }: ThingCardProps) {
 
 ```tsx
 // frontend/src/components/generic/__tests__/ThingCard.test.tsx
-import { render, screen } from '@testing-library/react'
-import { ThingCard } from '../ThingCard'
+import { render, screen } from "@testing-library/react";
+import { ThingCard } from "../ThingCard";
 
-describe('ThingCard', () => {
-  it('renders course card correctly', () => {
+describe("ThingCard", () => {
+  it("renders course card correctly", () => {
     const course = {
-      _id: '1',
-      type: 'course',
-      name: 'Test Course',
+      _id: "1",
+      type: "course",
+      name: "Test Course",
       properties: {
-        title: 'Test Course',
-        description: 'A test course',
+        title: "Test Course",
+        description: "A test course",
         price: 99,
-        level: 'beginner'
-      }
-    }
+        level: "beginner",
+      },
+    };
 
-    render(<ThingCard thing={course} />)
+    render(<ThingCard thing={course} />);
 
-    expect(screen.getByText('Test Course')).toBeInTheDocument()
-    expect(screen.getByText('A test course')).toBeInTheDocument()
-    expect(screen.getByText('$99')).toBeInTheDocument()
-  })
+    expect(screen.getByText("Test Course")).toBeInTheDocument();
+    expect(screen.getByText("A test course")).toBeInTheDocument();
+    expect(screen.getByText("$99")).toBeInTheDocument();
+  });
 
-  it('handles click events', () => {
-    const onClick = vi.fn()
-    const thing = { /* ... */ }
+  it("handles click events", () => {
+    const onClick = vi.fn();
+    const thing = {
+      /* ... */
+    };
 
-    render(<ThingCard thing={thing} onClick={onClick} />)
+    render(<ThingCard thing={thing} onClick={onClick} />);
 
-    fireEvent.click(screen.getByRole('article'))
-    expect(onClick).toHaveBeenCalledWith(thing)
-  })
-})
+    fireEvent.click(screen.getByRole("article"));
+    expect(onClick).toHaveBeenCalledWith(thing);
+  });
+});
 ```
 
 ---

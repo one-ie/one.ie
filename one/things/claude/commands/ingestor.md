@@ -1,3 +1,19 @@
+---
+title: Ingestor
+dimension: things
+category: agents
+tags:
+scope: global
+created: 2025-11-03
+updated: 2025-11-03
+version: 1.0.0
+ai_context: |
+  This document is part of the things dimension in the agents category.
+  Location: one/things/claude/commands/ingestor.md
+  Purpose: Documents ingestor command
+  For AI agents: Read this to understand ingestor.
+---
+
 # Ingestor Command
 
 Intelligently crawl and import TypeScript/React code from local projects into your ONE framework project.
@@ -29,7 +45,7 @@ Intelligently crawl and import TypeScript/React code from local projects into yo
 - `--source`: Source directory to crawl for projects (required)
 - `--framework`: Target framework adaptation (nextjs, astro, vite, tanstack-start)
 - `--mission`: Current mission context for relevance scoring
-- `--story`: Current story context for relevance scoring  
+- `--story`: Current story context for relevance scoring
 - `--task`: Current task context for relevance scoring
 - `--dry-run`: Preview mode - show what would be imported
 - `--interactive`: Step-by-step selection of files to import
@@ -43,7 +59,7 @@ Intelligently crawl and import TypeScript/React code from local projects into yo
 The Ingestor Agent:
 
 1. **Discovers Projects**: Recursively scans source directory for TypeScript/React projects
-2. **Detects Frameworks**: Identifies Next.js, Astro, Vite, TanStack Start configurations  
+2. **Detects Frameworks**: Identifies Next.js, Astro, Vite, TanStack Start configurations
 3. **Maps Context**: Analyzes current missions/stories/tasks for relevance scoring
 4. **Classifies Files**: Categorizes files by type and required transformation
 5. **Smart Import**: Copies some files directly, modifies others for compatibility
@@ -54,23 +70,26 @@ The Ingestor Agent:
 
 - **Direct Copy**: Assets, configs, and standalone files copied as-is
 - **Smart Modify**: TypeScript/React files with import path updates and adaptations
-- **Config Adapt**: Framework configs adapted for target environment  
+- **Config Adapt**: Framework configs adapted for target environment
 - **Manual Review**: Complex files flagged for human review
 
 ## Framework Adaptations
 
 ### Next.js → Other Frameworks
+
 - Converts `next/image` → generic image components
 - Converts `next/link` → framework-appropriate routing
 - Removes Next.js specific hooks and utilities
 - Adapts App Router / Pages Router patterns
 
-### Astro → Other Frameworks  
+### Astro → Other Frameworks
+
 - Converts `.astro` components to JSX
 - Removes Astro frontmatter scripts
 - Adapts island architecture patterns
 
 ### Universal Adaptations
+
 - Updates import paths to match target project structure
 - Adapts Tailwind CSS configurations
 - Updates TypeScript configurations
@@ -93,7 +112,7 @@ Imported files are organized in your target project:
 your-project/
 ├── src/
 │   ├── components/     # UI components
-│   ├── hooks/          # React hooks  
+│   ├── hooks/          # React hooks
 │   ├── lib/utils/      # Utility functions
 │   ├── pages/          # Page components
 │   ├── styles/         # CSS/SCSS files
@@ -113,13 +132,15 @@ your-project/
 ## Example Workflows
 
 ### Dashboard Mission
+
 ```bash
 # Import components for dashboard mission
 /ingestor --source="/Users/dev/projects" --mission="dashboard" --components-only
 # Result: Chart components, data tables, dashboard layouts prioritized
 ```
 
-### UI Library Migration  
+### UI Library Migration
+
 ```bash
 # Interactive import of UI components
 /ingestor --source="/old-design-system" --interactive --include="components"
@@ -127,6 +148,7 @@ your-project/
 ```
 
 ### Cross-Framework Migration
+
 ```bash
 # Migrate Next.js project to Astro
 /ingestor --source="/nextjs-app" --framework="astro" --dry-run

@@ -1,22 +1,21 @@
 ---
-type: event
-eventType: agent_task
-category: agent_coordination
-tags: [handoff, agent-clean, typescript, refactoring, web-deployment]
+title: 2024 10 15 Handoff To Clean
+dimension: events
+category: 2024-10-15-handoff-to-clean.md
+tags: agent, agent-clean, ai, handoff, ontology, refactoring, typescript, web-deployment
+related_dimensions: connections, groups, people, things
+scope: global
 created: 2024-10-15
-updated: 2024-10-15
-status: completed
-timestamp: 2024-10-15
-kpis:
-  complexity: 8
-  impact: 8
-  completeness: 9
-  quality: 8
-  documentation: 9
-score: 8.4
-groupId: platform
-actorRole: platform_owner
+updated: 2025-11-03
+version: 1.0.0
+ai_context: |
+  This document is part of the events dimension in the 2024-10-15-handoff-to-clean.md category.
+  Location: one/events/2024-10-15-handoff-to-clean.md
+  Purpose: Documents handoff to agent clean
+  Related dimensions: connections, groups, people, things
+  For AI agents: Read this to understand 2024 10 15 handoff to clean.
 ---
+
 
 # Handoff to Agent Clean
 

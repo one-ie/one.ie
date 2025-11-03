@@ -1,3 +1,21 @@
+---
+title: Ontology Refine
+dimension: things
+category: plans
+tags: 6-dimensions, backend, connections, events, groups, knowledge, ontology, people, things
+related_dimensions: connections, events, groups, knowledge, people
+scope: global
+created: 2025-11-03
+updated: 2025-11-03
+version: 1.0.0
+ai_context: |
+  This document is part of the things dimension in the plans category.
+  Location: one/things/plans/ontology-refine.md
+  Purpose: Documents ontology refinement plan: critical flaws & fixes
+  Related dimensions: connections, events, groups, knowledge, people
+  For AI agents: Read this to understand ontology refine.
+---
+
 # Ontology Refinement Plan: Critical Flaws & Fixes
 
 **Version:** 1.0.0
@@ -13,6 +31,7 @@
 The 6-dimension ontology (groups, people, things, connections, events, knowledge) is architecturally sound but **lacks critical production safeguards** for referential integrity, multi-tenant isolation, and data validation. This document identifies 30 flaws and provides a phased implementation plan to fix them.
 
 **Critical Issues:**
+
 - Missing `groupId` enforcement in schemas → data leakage between tenants
 - Unvalidated `properties` JSON → invalid data stored
 - No cascade delete rules → orphaned references
@@ -25,79 +44,81 @@ The 6-dimension ontology (groups, people, things, connections, events, knowledge
 
 ### Category 1: Multi-Tenant Isolation (Critical)
 
-| # | Flaw | Impact | Severity |
-|---|------|--------|----------|
-| 1 | Missing `groupId` in table schemas | Cross-tenant data leakage | 🔴 Critical |
-| 2 | Missing `groupId` indexes | Inefficient/unsafe tenant queries | 🔴 Critical |
-| 12 | Hierarchical group permissions undefined | Unclear access control | 🔴 Critical |
-| 17 | No schema change audit trail | Can't track what changed | 🟠 High |
+| #   | Flaw                                     | Impact                            | Severity    |
+| --- | ---------------------------------------- | --------------------------------- | ----------- |
+| 1   | Missing `groupId` in table schemas       | Cross-tenant data leakage         | 🔴 Critical |
+| 2   | Missing `groupId` indexes                | Inefficient/unsafe tenant queries | 🔴 Critical |
+| 12  | Hierarchical group permissions undefined | Unclear access control            | 🔴 Critical |
+| 17  | No schema change audit trail             | Can't track what changed          | 🟠 High     |
 
 ### Category 2: Data Validation (High)
 
-| # | Flaw | Impact | Severity |
-|---|------|--------|----------|
-| 3 | Unvalidated metadata JSON | Protocol constraints ignored | 🟠 High |
-| 4 | No duplicate prevention in junctions | Multiple identical relationships | 🟠 High |
-| 9 | Protocol field not enforced | Cross-protocol queries fail | 🟠 High |
-| 13 | Untyped `properties` field | No compile-time safety | 🟠 High |
-| 26 | No data format validation | Invalid emails, URLs, etc stored | 🟠 High |
+| #   | Flaw                                 | Impact                           | Severity |
+| --- | ------------------------------------ | -------------------------------- | -------- |
+| 3   | Unvalidated metadata JSON            | Protocol constraints ignored     | 🟠 High  |
+| 4   | No duplicate prevention in junctions | Multiple identical relationships | 🟠 High  |
+| 9   | Protocol field not enforced          | Cross-protocol queries fail      | 🟠 High  |
+| 13  | Untyped `properties` field           | No compile-time safety           | 🟠 High  |
+| 26  | No data format validation            | Invalid emails, URLs, etc stored | 🟠 High  |
 
 ### Category 3: Referential Integrity (High)
 
-| # | Flaw | Impact | Severity |
-|---|------|--------|----------|
-| 5 | No cascade delete rules | Orphaned connections/events | 🟠 High |
-| 7 | Orphaned knowledge allowed | Lost context | 🟠 High |
-| 14 | Missing cascade delete rules | Data inconsistency | 🟠 High |
+| #   | Flaw                         | Impact                      | Severity |
+| --- | ---------------------------- | --------------------------- | -------- |
+| 5   | No cascade delete rules      | Orphaned connections/events | 🟠 High  |
+| 7   | Orphaned knowledge allowed   | Lost context                | 🟠 High  |
+| 14  | Missing cascade delete rules | Data inconsistency          | 🟠 High  |
 
 ### Category 4: Semantic Validation (Medium)
 
-| # | Flaw | Impact | Severity |
-|---|------|--------|----------|
-| 6 | No relationship direction validation | Semantic nonsense allowed | 🟡 Medium |
-| 8 | Thing type vs properties unchecked | Invalid data combinations | 🟡 Medium |
-| 29 | No event sourcing/replay | Can't rebuild state | 🟡 Medium |
+| #   | Flaw                                 | Impact                    | Severity  |
+| --- | ------------------------------------ | ------------------------- | --------- |
+| 6   | No relationship direction validation | Semantic nonsense allowed | 🟡 Medium |
+| 8   | Thing type vs properties unchecked   | Invalid data combinations | 🟡 Medium |
+| 29  | No event sourcing/replay             | Can't rebuild state       | 🟡 Medium |
 
 ### Category 5: Data Lifecycle (Medium)
 
-| # | Flaw | Impact | Severity |
-|---|------|--------|----------|
-| 10 | Soft deletes unforced | Orphans leak into queries | 🟡 Medium |
-| 18 | Temporal validation missing | `validTo` < `validFrom` allowed | 🟡 Medium |
-| 19 | No event archival implementation | Unbounded data growth | 🟡 Medium |
-| 24 | Junction tables lack updatedAt | Can't track association changes | 🟡 Medium |
-| 27 | No content versioning | Can't compare changes | 🟡 Medium |
+| #   | Flaw                             | Impact                          | Severity  |
+| --- | -------------------------------- | ------------------------------- | --------- |
+| 10  | Soft deletes unforced            | Orphans leak into queries       | 🟡 Medium |
+| 18  | Temporal validation missing      | `validTo` < `validFrom` allowed | 🟡 Medium |
+| 19  | No event archival implementation | Unbounded data growth           | 🟡 Medium |
+| 24  | Junction tables lack updatedAt   | Can't track association changes | 🟡 Medium |
+| 27  | No content versioning            | Can't compare changes           | 🟡 Medium |
 
 ### Category 6: Performance & Scale (Medium)
 
-| # | Flaw | Impact | Severity |
-|---|------|--------|----------|
-| 11 | No versioning strategy | Schema migration impossible | 🟡 Medium |
-| 15 | Missing usage tracking schema | Can't enforce quotas | 🟡 Medium |
-| 20 | Embedding dimension mismatch risk | Vector search breaks | 🟡 Medium |
-| 21 | No transaction boundaries | Partial corruption on failure | 🟡 Medium |
-| 25 | No batch operation support | Extremely inefficient imports | 🟡 Medium |
+| #   | Flaw                              | Impact                        | Severity  |
+| --- | --------------------------------- | ----------------------------- | --------- |
+| 11  | No versioning strategy            | Schema migration impossible   | 🟡 Medium |
+| 15  | Missing usage tracking schema     | Can't enforce quotas          | 🟡 Medium |
+| 20  | Embedding dimension mismatch risk | Vector search breaks          | 🟡 Medium |
+| 21  | No transaction boundaries         | Partial corruption on failure | 🟡 Medium |
+| 25  | No batch operation support        | Extremely inefficient imports | 🟡 Medium |
 
 ### Category 7: Feature Gaps (Low-Medium)
 
-| # | Flaw | Impact | Severity |
-|---|------|--------|----------|
-| 16 | Inconsistent naming (things vs entities) | Code confusion | 🟡 Medium |
-| 22 | No field-level permissions | Can't hide sensitive data | 🟡 Medium |
-| 23 | No computed fields pattern | Gets out of sync with reality | 🟡 Medium |
-| 28 | Unclear system event handling | No clear actor pattern | 🟡 Medium |
-| 30 | No real-time subscription schema | WebSocket model undefined | 🟡 Medium |
+| #   | Flaw                                     | Impact                        | Severity  |
+| --- | ---------------------------------------- | ----------------------------- | --------- |
+| 16  | Inconsistent naming (things vs entities) | Code confusion                | 🟡 Medium |
+| 22  | No field-level permissions               | Can't hide sensitive data     | 🟡 Medium |
+| 23  | No computed fields pattern               | Gets out of sync with reality | 🟡 Medium |
+| 28  | Unclear system event handling            | No clear actor pattern        | 🟡 Medium |
+| 30  | No real-time subscription schema         | WebSocket model undefined     | 🟡 Medium |
 
 ---
 
 ## Phase 1: Critical Schema Fixes (Week 1)
 
 ### Objective
+
 Make multi-tenant isolation bulletproof and add type safety to all data.
 
 ### Tasks
 
 #### 1.1 Add `groupId` to All Tables
+
 **Files to modify:** `backend/convex/schema.ts`
 
 ```typescript
@@ -171,21 +192,25 @@ thingKnowledge: defineTable({
 ```
 
 #### 1.2 Create Typed Properties Schemas
+
 **File to create:** `backend/convex/schemas/properties.ts`
 
 Define strict validation for each thing type's properties field.
 
 #### 1.3 Add Unique Constraints via Indexes
+
 **File to modify:** `backend/convex/schema.ts`
 
 Add `.index("unique_pair", ["thingId", "knowledgeId"])` to prevent duplicate junction records.
 
 #### 1.4 Enforce Temporal Constraints
+
 **File to create:** `backend/convex/validators/temporal.ts`
 
 Validate that `validFrom <= validTo` for all connections.
 
 **Deliverables:**
+
 - ✅ Updated schema with groupId everywhere
 - ✅ 12 new strategic indexes for multi-tenant queries
 - ✅ schemaVersion tracking on things
@@ -197,11 +222,13 @@ Validate that `validFrom <= validTo` for all connections.
 ## Phase 2: Data Integrity Layer (Week 2)
 
 ### Objective
+
 Ensure data consistency through validation, cascade operations, and group isolation.
 
 ### Tasks
 
 #### 2.1 Create Semantic Validation Service
+
 **File to create:** `backend/convex/services/validation.ts`
 
 ```typescript
@@ -210,26 +237,28 @@ const RelationshipRules = {
   owns: {
     validFromTypes: ["creator", "group", "organization"],
     validToTypes: ["*"],
-    description: "Creator/Group owns any entity"
+    description: "Creator/Group owns any entity",
   },
   member_of: {
     validFromTypes: ["creator", "audience_member"],
     validToTypes: ["group"],
-    description: "People are members of groups"
+    description: "People are members of groups",
   },
   part_of: {
     validFromTypes: ["*"],
     validToTypes: ["*"],
-    allowsCycles: false,  // NEW: Prevent A→B→A
+    allowsCycles: false, // NEW: Prevent A→B→A
   },
   // ... 23 more rules
 };
 ```
 
 #### 2.2 Implement Cascade Delete Handler
+
 **File to create:** `backend/convex/mutations/cascade.ts`
 
 When a thing is deleted:
+
 1. Mark as `deleted` (soft delete)
 2. Remove all connections (orphans would be invalid)
 3. Archive all events (preserve audit trail)
@@ -237,22 +266,29 @@ When a thing is deleted:
 5. Log cleanup event
 
 #### 2.3 Add Group Isolation Middleware
+
 **File to create:** `backend/convex/middleware/groupIsolation.ts`
 
 Wrap all queries to enforce:
+
 - `groupId` filter on every query
 - Cross-group references rejected
 - Hierarchical group access (parent can access child)
 
 #### 2.4 Create Metadata Validator
+
 **File to create:** `backend/convex/validators/metadata.ts`
 
 ```typescript
 // Enforce protocol-specific metadata structure
 const MetadataSchemas = {
   payment_event: v.object({
-    protocol: v.union(v.literal("x402"), v.literal("acp"), v.literal("ap2")),  // REQUIRED
-    status: v.union(v.literal("requested"), v.literal("verified"), v.literal("processed")),
+    protocol: v.union(v.literal("x402"), v.literal("acp"), v.literal("ap2")), // REQUIRED
+    status: v.union(
+      v.literal("requested"),
+      v.literal("verified"),
+      v.literal("processed"),
+    ),
     amount: v.number(),
     // ... protocol-specific fields
   }),
@@ -261,6 +297,7 @@ const MetadataSchemas = {
 ```
 
 **Deliverables:**
+
 - ✅ Validation service with 25+ relationship rules
 - ✅ Cascade delete with 4-step cleanup
 - ✅ Group isolation middleware applied to all queries
@@ -272,22 +309,26 @@ const MetadataSchemas = {
 ## Phase 3: Performance & Scale (Week 3)
 
 ### Objective
+
 Handle high-volume operations efficiently and maintain data health at scale.
 
 ### Tasks
 
 #### 3.1 Implement Batch Operations
+
 **File to create:** `backend/convex/mutations/batch.ts`
 
 ```typescript
 export const batchInsertThings = mutation({
   args: {
     groupId: v.id("groups"),
-    things: v.array(v.object({
-      type: v.string(),
-      name: v.string(),
-      properties: v.any(),
-    }))
+    things: v.array(
+      v.object({
+        type: v.string(),
+        name: v.string(),
+        properties: v.any(),
+      }),
+    ),
   },
   handler: async (ctx, { groupId, things }) => {
     const ids = [];
@@ -298,20 +339,23 @@ export const batchInsertThings = mutation({
     // Single event log
     await logEvent(ctx, groupId, "batch_import", { count: things.length });
     return ids;
-  }
+  },
 });
 ```
 
 #### 3.2 Add Event Archival System
+
 **File to create:** `backend/convex/crons/archival.ts`
 
 Daily job that:
+
 1. Finds events older than 365 days
 2. Exports to cold storage (S3, BigQuery)
 3. Marks as archived in database
 4. Removes from hot indexes
 
 #### 3.3 Implement Computed Fields Pattern
+
 **File to create:** `backend/convex/queries/computed.ts`
 
 ```typescript
@@ -329,28 +373,29 @@ export const getCreatorStats = query({
         totalRevenue: revenue,
         totalFollowers: followers,
         lastActive: await getLastActivity(ctx, creatorId),
-      }
+      },
     };
-  }
+  },
 });
 ```
 
 #### 3.4 Add Usage Quota Tracking
+
 **File to create:** `backend/convex/schemas/usage.ts`
 
 ```typescript
 usage: defineTable({
-  groupId: v.id("groups"),  // REQUIRED
-  metric: v.string(),  // "api_calls", "storage_gb", "users"
-  period: v.string(),  // "daily", "monthly"
+  groupId: v.id("groups"), // REQUIRED
+  metric: v.string(), // "api_calls", "storage_gb", "users"
+  period: v.string(), // "daily", "monthly"
   value: v.number(),
   limit: v.number(),
   timestamp: v.number(),
-})
-  .index("by_group_period", ["groupId", "period"])
+}).index("by_group_period", ["groupId", "period"]);
 ```
 
 **Deliverables:**
+
 - ✅ Batch import for 10,000+ records in one call
 - ✅ Event archival reducing hot data by 90%
 - ✅ Computed field queries (always accurate)
@@ -362,11 +407,13 @@ usage: defineTable({
 ## Phase 4: Migration & Monitoring (Week 4)
 
 ### Objective
+
 Safely migrate existing data and continuously monitor integrity.
 
 ### Tasks
 
 #### 4.1 Create Migration Script
+
 **File to create:** `scripts/migrate-ontology-v1.ts`
 
 ```typescript
@@ -381,6 +428,7 @@ Safely migrate existing data and continuously monitor integrity.
 ```
 
 #### 4.2 Implement Integrity Monitoring
+
 **File to create:** `backend/convex/queries/monitoring.ts`
 
 ```typescript
@@ -393,14 +441,16 @@ export const checkIntegrity = query({
       invalidMetadata: await findInvalidMetadata(ctx),
       malformedProperties: await findMalformedProperties(ctx),
     };
-  }
+  },
 });
 ```
 
 #### 4.3 Add Data Quality Dashboard
+
 **File to create:** `one/things/plans/data-quality-metrics.md`
 
 Track:
+
 - Referential integrity score (%)
 - Orphaned entity count
 - Cross-group violations
@@ -408,11 +458,13 @@ Track:
 - Event archival progress
 
 #### 4.4 Create Rollback Plan
+
 **File to create:** `scripts/rollback-ontology.ts`
 
 In case of issues, revert to pre-v1 state with full audit trail.
 
 **Deliverables:**
+
 - ✅ Zero-downtime migration script
 - ✅ Real-time integrity monitoring dashboard
 - ✅ Automated data quality alerts
@@ -453,23 +505,27 @@ Week 4: Phase 4 (Migration + Monitoring)
 ## Success Criteria
 
 ### Security
+
 - ✅ Zero cross-tenant data leakage
 - ✅ 100% groupId enforcement
 - ✅ Field-level access control ready
 
 ### Data Quality
+
 - ✅ 100% referential integrity
 - ✅ Zero orphaned references
 - ✅ All metadata validated
 - ✅ All properties type-checked
 
 ### Performance
+
 - ✅ < 50ms query time (p99)
 - ✅ Batch operations (10K+ records/call)
 - ✅ Event archival (365-day cutoff)
 - ✅ Computed fields (fresh data always)
 
 ### Observability
+
 - ✅ Real-time integrity monitoring
 - ✅ Data quality dashboard
 - ✅ Automated alerting
@@ -479,24 +535,24 @@ Week 4: Phase 4 (Migration + Monitoring)
 
 ## Risk Mitigation
 
-| Risk | Mitigation |
-|------|-----------|
-| Migration breaks production | 0-downtime strategy with parallel indexes |
-| Data loss during transition | Export all data before migration |
-| Backward compatibility | Version schema, support v0 and v1 |
-| Performance regression | Load test batch ops before rollout |
-| Deployment rollback | Keep pre-migration backup + rollback script |
+| Risk                        | Mitigation                                  |
+| --------------------------- | ------------------------------------------- |
+| Migration breaks production | 0-downtime strategy with parallel indexes   |
+| Data loss during transition | Export all data before migration            |
+| Backward compatibility      | Version schema, support v0 and v1           |
+| Performance regression      | Load test batch ops before rollout          |
+| Deployment rollback         | Keep pre-migration backup + rollback script |
 
 ---
 
 ## Timeline
 
-| Phase | Week | Tasks | Owner |
-|-------|------|-------|-------|
-| 1 | 1 | Schema fixes + indexes | Backend Specialists |
-| 2 | 2 | Validation + Cascade | Backend Specialists |
-| 3 | 3 | Batch + Archival + Computed | Backend Specialists |
-| 4 | 4 | Migration + Monitoring | Engineering Director |
+| Phase | Week | Tasks                       | Owner                |
+| ----- | ---- | --------------------------- | -------------------- |
+| 1     | 1    | Schema fixes + indexes      | Backend Specialists  |
+| 2     | 2    | Validation + Cascade        | Backend Specialists  |
+| 3     | 3    | Batch + Archival + Computed | Backend Specialists  |
+| 4     | 4    | Migration + Monitoring      | Engineering Director |
 
 **Total Effort:** ~80 backend engineer-hours
 **Start Date:** 2025-11-01
@@ -507,6 +563,7 @@ Week 4: Phase 4 (Migration + Monitoring)
 ## Documentation Requirements
 
 After implementation, update:
+
 - `one/knowledge/ontology.md` - Add groupId and validation details
 - `one/things/AGENTS.md` - Update Convex patterns section
 - `one/connections/patterns.md` - Add batch operation patterns

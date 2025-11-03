@@ -1,3 +1,21 @@
+---
+title: Test Plan
+dimension: events
+category: TEST-PLAN.md
+tags: backend, connections, events, frontend, groups, knowledge, ontology, people, testing, things
+related_dimensions: connections, groups, knowledge, people, things
+scope: global
+created: 2025-11-03
+updated: 2025-11-03
+version: 1.0.0
+ai_context: |
+  This document is part of the events dimension in the TEST-PLAN.md category.
+  Location: one/events/TEST-PLAN.md
+  Purpose: Documents demo testing plan - infer 15-20
+  Related dimensions: connections, groups, knowledge, people, things
+  For AI agents: Read this to understand TEST PLAN.
+---
+
 # Demo Testing Plan - Infer 15-20
 
 **Status:** Test Definition Phase

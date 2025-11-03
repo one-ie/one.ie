@@ -1,3 +1,21 @@
+---
+title: Test Report Ontology
+dimension: events
+category: test-report-ontology.md
+tags: 6-dimensions, ai, architecture, ontology
+related_dimensions: connections, knowledge, things
+scope: global
+created: 2025-11-03
+updated: 2025-11-03
+version: 1.0.0
+ai_context: |
+  This document is part of the events dimension in the test-report-ontology.md category.
+  Location: one/events/test-report-ontology.md
+  Purpose: Documents multi-ontology architecture: end-to-end test report
+  Related dimensions: connections, knowledge, things
+  For AI agents: Read this to understand test report ontology.
+---
+
 # Multi-Ontology Architecture: End-to-End Test Report
 
 **Test Date:** 2025-10-20

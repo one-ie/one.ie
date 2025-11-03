@@ -1,3 +1,21 @@
+---
+title: Architecture
+dimension: knowledge
+category: architecture.md
+tags: agent, ai, architecture, people, system-design
+related_dimensions: people, things
+scope: global
+created: 2025-11-03
+updated: 2025-11-03
+version: 1.0.0
+ai_context: |
+  This document is part of the knowledge dimension in the architecture.md category.
+  Location: one/knowledge/architecture.md
+  Purpose: Documents one platform - the universal code generation language
+  Related dimensions: people, things
+  For AI agents: Read this to understand architecture.
+---
+
 # ONE Platform - The Universal Code Generation Language
 
 **Version:** 3.0.0

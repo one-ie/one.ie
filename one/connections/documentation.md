@@ -1,3 +1,21 @@
+---
+title: Documentation
+dimension: connections
+category: documentation.md
+tags: architecture, ontology
+related_dimensions: events
+scope: global
+created: 2025-11-03
+updated: 2025-11-03
+version: 1.0.0
+ai_context: |
+  This document is part of the connections dimension in the documentation.md category.
+  Location: one/connections/documentation.md
+  Purpose: Documents one documentation
+  Related dimensions: events
+  For AI agents: Read this to understand documentation.
+---
+
 # ONE Documentation
 
 **Version:** 1.1.0

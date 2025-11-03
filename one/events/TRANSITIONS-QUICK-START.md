@@ -1,3 +1,21 @@
+---
+title: Transitions Quick Start
+dimension: events
+category: TRANSITIONS-QUICK-START.md
+tags: 
+related_dimensions: connections, people, things
+scope: global
+created: 2025-11-03
+updated: 2025-11-03
+version: 1.0.0
+ai_context: |
+  This document is part of the events dimension in the TRANSITIONS-QUICK-START.md category.
+  Location: one/events/TRANSITIONS-QUICK-START.md
+  Purpose: Documents view transitions - quick start guide
+  Related dimensions: connections, people, things
+  For AI agents: Read this to understand TRANSITIONS QUICK START.
+---
+
 # View Transitions - Quick Start Guide
 
 ## What You Get

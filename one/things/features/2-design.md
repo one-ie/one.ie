@@ -1,3 +1,21 @@
+---
+title: 2 Design
+dimension: things
+category: features
+tags: agent, auth, backend, frontend
+related_dimensions: events, people
+scope: global
+created: 2025-11-03
+updated: 2025-11-03
+version: 1.0.0
+ai_context: |
+  This document is part of the things dimension in the features category.
+  Location: one/things/features/2-design.md
+  Purpose: Documents feature 2: backend-agnostic frontend - design specification
+  Related dimensions: events, people
+  For AI agents: Read this to understand 2 design.
+---
+
 # Feature 2: Backend-Agnostic Frontend - Design Specification
 
 **Feature ID:** `feature_2_design`
@@ -162,7 +180,9 @@ Remove unnecessary visual elements:
 <div className="bg-background text-foreground">
   <div className="bg-card text-card-foreground border border-border">
     <Button className="bg-primary text-primary-foreground">Primary</Button>
-    <Button className="bg-destructive text-destructive-foreground">Delete</Button>
+    <Button className="bg-destructive text-destructive-foreground">
+      Delete
+    </Button>
   </div>
 </div>
 ```
@@ -172,20 +192,24 @@ Remove unnecessary visual elements:
 **Font Family:**
 
 ```css
-font-family: Inter, system-ui, -apple-system, sans-serif;
+font-family:
+  Inter,
+  system-ui,
+  -apple-system,
+  sans-serif;
 ```
 
 **Scale (Modular 1.25x):**
 
 ```css
---font-size-xs: 0.75rem;    /* 12px */
---font-size-sm: 0.875rem;   /* 14px */
---font-size-base: 1rem;     /* 16px */
---font-size-lg: 1.125rem;   /* 18px */
---font-size-xl: 1.25rem;    /* 20px */
---font-size-2xl: 1.5rem;    /* 24px */
---font-size-3xl: 1.875rem;  /* 30px */
---font-size-4xl: 2.25rem;   /* 36px */
+--font-size-xs: 0.75rem; /* 12px */
+--font-size-sm: 0.875rem; /* 14px */
+--font-size-base: 1rem; /* 16px */
+--font-size-lg: 1.125rem; /* 18px */
+--font-size-xl: 1.25rem; /* 20px */
+--font-size-2xl: 1.5rem; /* 24px */
+--font-size-3xl: 1.875rem; /* 30px */
+--font-size-4xl: 2.25rem; /* 36px */
 ```
 
 **Weights:**
@@ -206,16 +230,16 @@ font-family: Inter, system-ui, -apple-system, sans-serif;
 **Base Unit: 4px**
 
 ```css
---spacing-1: 0.25rem;  /* 4px */
---spacing-2: 0.5rem;   /* 8px */
---spacing-3: 0.75rem;  /* 12px */
---spacing-4: 1rem;     /* 16px */
---spacing-6: 1.5rem;   /* 24px */
---spacing-8: 2rem;     /* 32px */
---spacing-12: 3rem;    /* 48px */
---spacing-16: 4rem;    /* 64px */
---spacing-24: 6rem;    /* 96px */
---spacing-32: 8rem;    /* 128px */
+--spacing-1: 0.25rem; /* 4px */
+--spacing-2: 0.5rem; /* 8px */
+--spacing-3: 0.75rem; /* 12px */
+--spacing-4: 1rem; /* 16px */
+--spacing-6: 1.5rem; /* 24px */
+--spacing-8: 2rem; /* 32px */
+--spacing-12: 3rem; /* 48px */
+--spacing-16: 4rem; /* 64px */
+--spacing-24: 6rem; /* 96px */
+--spacing-32: 8rem; /* 128px */
 ```
 
 **Common Patterns:**
@@ -228,9 +252,9 @@ font-family: Inter, system-ui, -apple-system, sans-serif;
 ### Border Radius
 
 ```css
---radius-sm: 0.375rem;  /* 6px */
---radius-md: 0.75rem;   /* 12px */
---radius-lg: 1.5rem;    /* 24px */
+--radius-sm: 0.375rem; /* 6px */
+--radius-md: 0.75rem; /* 12px */
+--radius-lg: 1.5rem; /* 24px */
 ```
 
 **Usage:**
@@ -276,10 +300,10 @@ font-family: Inter, system-ui, -apple-system, sans-serif;
 
 ```typescript
 interface QueryResult<T> {
-  data: T | null;        // Query result (null during loading)
-  loading: boolean;      // Boolean loading state
-  error: Error | null;   // Error object or null
-  refetch: () => void;   // Manual refetch function
+  data: T | null; // Query result (null during loading)
+  loading: boolean; // Boolean loading state
+  error: Error | null; // Error object or null
+  refetch: () => void; // Manual refetch function
 }
 ```
 
@@ -287,10 +311,10 @@ interface QueryResult<T> {
 
 ```typescript
 interface MutationResult<T> {
-  mutate: (...args: any[]) => Promise<T>;  // Async mutation function
-  loading: boolean;                         // Boolean loading state
-  error: Error | null;                      // Error object or null
-  reset: () => void;                        // Clear error state
+  mutate: (...args: any[]) => Promise<T>; // Async mutation function
+  loading: boolean; // Boolean loading state
+  error: Error | null; // Error object or null
+  reset: () => void; // Clear error state
 }
 ```
 
@@ -315,8 +339,8 @@ const { mutate: createCourse, loading } = useCreateThing();
 
 async function handleSubmit(data) {
   try {
-    await createCourse({ type: 'course', ...data });
-    toast.success('Course created!');
+    await createCourse({ type: "course", ...data });
+    toast.success("Course created!");
   } catch (error) {
     toast.error(error.message);
   }
@@ -329,12 +353,15 @@ async function handleSubmit(data) {
 const { mutate: updateCourse } = useUpdateThing();
 
 // UI updates immediately, rollback on error
-await updateCourse({
-  id: courseId,
-  name: 'Updated Name'
-}, {
-  optimistic: true
-});
+await updateCourse(
+  {
+    id: courseId,
+    name: "Updated Name",
+  },
+  {
+    optimistic: true,
+  },
+);
 ```
 
 ### Error Message Taxonomy
@@ -380,7 +407,7 @@ useThings({
 
 ```typescript
 // TypeScript infers correct type from filter
-const { data: courses } = useThings({ type: 'course' });
+const { data: courses } = useThings({ type: "course" });
 // courses: Thing[] with properties specific to 'course'
 ```
 
@@ -422,7 +449,7 @@ if (loading) {
       Creating...
     </>
   ) : (
-    'Create Course'
+    "Create Course"
   )}
 </Button>
 ```
@@ -537,7 +564,7 @@ interface LoginFormState {
           required
           className={cn(
             "transition-colors",
-            error && "border-destructive focus:ring-destructive"
+            error && "border-destructive focus:ring-destructive",
           )}
         />
       </div>
@@ -576,7 +603,7 @@ interface LoginFormState {
             Signing in...
           </>
         ) : (
-          'Sign In'
+          "Sign In"
         )}
       </Button>
 
@@ -605,7 +632,7 @@ interface LoginFormState {
   </CardContent>
   <CardFooter className="flex justify-center">
     <p className="text-sm text-muted-foreground">
-      Don't have an account?{' '}
+      Don't have an account?{" "}
       <Link href="/account/signup" className="text-primary hover:underline">
         Sign up
       </Link>
@@ -661,10 +688,10 @@ interface LoginFormState {
       <div
         className={cn(
           "h-full transition-all duration-300",
-          strength === 'weak' && "w-1/4 bg-destructive",
-          strength === 'medium' && "w-2/4 bg-warning",
-          strength === 'strong' && "w-3/4 bg-success",
-          strength === 'very-strong' && "w-full bg-success"
+          strength === "weak" && "w-1/4 bg-destructive",
+          strength === "medium" && "w-2/4 bg-warning",
+          strength === "strong" && "w-3/4 bg-success",
+          strength === "very-strong" && "w-full bg-success",
         )}
       />
     </div>
@@ -718,7 +745,7 @@ interface LoginFormState {
   <Button
     variant="outline"
     className="w-full"
-    onClick={() => handleOAuth('github')}
+    onClick={() => handleOAuth("github")}
   >
     <Github className="mr-2 h-4 w-4" />
     Continue with GitHub
@@ -727,7 +754,7 @@ interface LoginFormState {
   <Button
     variant="outline"
     className="w-full"
-    onClick={() => handleOAuth('google')}
+    onClick={() => handleOAuth("google")}
   >
     <svg className="mr-2 h-4 w-4" viewBox="0 0 24 24">
       {/* Google logo SVG */}
@@ -738,7 +765,7 @@ interface LoginFormState {
   <Button
     variant="outline"
     className="w-full"
-    onClick={() => handleOAuth('apple')}
+    onClick={() => handleOAuth("apple")}
   >
     <Apple className="mr-2 h-4 w-4" />
     Continue with Apple
@@ -1091,12 +1118,14 @@ interface LoginFormState {
 ```tsx
 <Card>
   <CardContent className="flex items-start gap-4 p-4">
-    <div className={cn(
-      "rounded-full p-2",
-      eventType === 'enrolled' && "bg-primary/10 text-primary",
-      eventType === 'completed' && "bg-success/10 text-success",
-      eventType === 'created' && "bg-accent/10 text-accent"
-    )}>
+    <div
+      className={cn(
+        "rounded-full p-2",
+        eventType === "enrolled" && "bg-primary/10 text-primary",
+        eventType === "completed" && "bg-success/10 text-success",
+        eventType === "created" && "bg-accent/10 text-accent",
+      )}
+    >
       {getEventIcon(eventType)}
     </div>
     <div className="flex-1">
@@ -1148,7 +1177,7 @@ interface LoginFormState {
     <CommandEmpty>No results found.</CommandEmpty>
 
     <CommandGroup heading="Recent Searches">
-      {recentSearches.map(search => (
+      {recentSearches.map((search) => (
         <CommandItem key={search} onSelect={() => handleSearch(search)}>
           <Clock className="mr-2 h-4 w-4" />
           {search}
@@ -1159,8 +1188,11 @@ interface LoginFormState {
     <CommandSeparator />
 
     <CommandGroup heading="Courses">
-      {courses.map(course => (
-        <CommandItem key={course._id} onSelect={() => navigate(`/courses/${course._id}`)}>
+      {courses.map((course) => (
+        <CommandItem
+          key={course._id}
+          onSelect={() => navigate(`/courses/${course._id}`)}
+        >
           <BookOpen className="mr-2 h-4 w-4" />
           {course.name}
         </CommandItem>
@@ -1170,7 +1202,7 @@ interface LoginFormState {
     <CommandSeparator />
 
     <CommandGroup heading="Students">
-      {students.map(student => (
+      {students.map((student) => (
         <CommandItem key={student._id}>
           <User className="mr-2 h-4 w-4" />
           {student.name}
@@ -1276,22 +1308,24 @@ contrast-ratio: 13.5:1;       /* ✓ Pass */
 
 ```tsx
 // Toast notifications
-toast.success('Course created', {
-  role: 'status',
-  ariaLive: 'polite'
+toast.success("Course created", {
+  role: "status",
+  ariaLive: "polite",
 });
 
 // Error announcements
 <Alert role="alert" aria-live="assertive">
   <AlertDescription>{error.message}</AlertDescription>
-</Alert>
+</Alert>;
 
 // Loading announcements
-{loading && (
-  <span className="sr-only" role="status">
-    Loading courses...
-  </span>
-)}
+{
+  loading && (
+    <span className="sr-only" role="status">
+      Loading courses...
+    </span>
+  );
+}
 ```
 
 ---
@@ -1342,9 +1376,7 @@ toast.success('Course created', {
   <aside className="lg:w-64">
     {/* Sidebar: Full width on mobile, fixed width on desktop */}
   </aside>
-  <main className="flex-1">
-    {/* Main content */}
-  </main>
+  <main className="flex-1">{/* Main content */}</main>
 </div>
 ```
 
@@ -1371,9 +1403,7 @@ toast.success('Course created', {
 **Pattern 5: Responsive Spacing**
 
 ```tsx
-<div className="p-4 md:p-6 lg:p-8">
-  {/* More padding on larger screens */}
-</div>
+<div className="p-4 md:p-6 lg:p-8">{/* More padding on larger screens */}</div>
 ```
 
 ### Touch Targets
@@ -1477,13 +1507,15 @@ transition: all 350ms ease-in-out;
 // ✅ GOOD: Clear structure
 export function CourseList() {
   // 1. Hooks
-  const { data: courses, loading, error } = useThings({ type: 'course' });
+  const { data: courses, loading, error } = useThings({ type: "course" });
 
   // 2. Derived state
-  const publishedCourses = courses?.filter(c => c.status === 'published');
+  const publishedCourses = courses?.filter((c) => c.status === "published");
 
   // 3. Event handlers
-  const handleDelete = (id) => { /* ... */ };
+  const handleDelete = (id) => {
+    /* ... */
+  };
 
   // 4. Early returns
   if (loading) return <LoadingSkeleton />;
@@ -1493,7 +1525,7 @@ export function CourseList() {
   // 5. Main render
   return (
     <div className="space-y-4">
-      {courses.map(course => (
+      {courses.map((course) => (
         <CourseCard key={course._id} course={course} />
       ))}
     </div>

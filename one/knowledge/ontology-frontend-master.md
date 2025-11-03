@@ -1,3 +1,21 @@
+---
+title: Ontology Frontend Master
+dimension: knowledge
+category: ontology-frontend-master.md
+tags: 6-dimensions, architecture, backend, frontend, ontology, ui
+related_dimensions: events, groups, things
+scope: global
+created: 2025-11-03
+updated: 2025-11-03
+version: 1.0.0
+ai_context: |
+  This document is part of the knowledge dimension in the ontology-frontend-master.md category.
+  Location: one/knowledge/ontology-frontend-master.md
+  Purpose: Documents frontend development ontology - master reference
+  Related dimensions: events, groups, things
+  For AI agents: Read this to understand ontology frontend master.
+---
+
 # Frontend Development Ontology - Master Reference
 
 **Version:** 2.1.0

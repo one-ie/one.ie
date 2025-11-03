@@ -1,3 +1,21 @@
+---
+title: Improve Codebase
+dimension: things
+category: plans
+tags: backend, connections, events, frontend, ontology, protocol
+related_dimensions: connections, events, groups, knowledge, people
+scope: global
+created: 2025-11-03
+updated: 2025-11-03
+version: 1.0.0
+ai_context: |
+  This document is part of the things dimension in the plans category.
+  Location: one/things/plans/improve-codebase.md
+  Purpose: Documents codebase improvement plan: full integration & accuracy
+  Related dimensions: connections, events, groups, knowledge, people
+  For AI agents: Read this to understand improve codebase.
+---
+
 # Codebase Improvement Plan: Full Integration & Accuracy
 
 **Status:** Draft
@@ -12,11 +30,13 @@
 The ONE platform has a **world-class ontology** (6 dimensions, 66 thing types, 25 connections, 67 events) but **incomplete implementation**. This plan identifies 47 specific improvements across backend, frontend, integration, and operations to achieve 100% ontology coverage and production readiness.
 
 **Current State:**
+
 - ✅ Excellent: Ontology design, schema definition, documentation
 - ⚠️ Partial: Backend mutations/queries, frontend integration, auth linkage
 - ❌ Missing: Effect.ts glue layer, protocol integration, RAG implementation, multi-tenant UI
 
 **Target State:**
+
 - 100% ontology coverage in backend (all 66 thing types, 25 connections, 67 events)
 - Complete Effect.ts glue layer with typed errors and service composition
 - Full multi-tenant frontend with group hierarchy navigation
@@ -40,6 +60,7 @@ The ONE platform has a **world-class ontology** (6 dimensions, 66 thing types, 2
 <summary>📋 Click to expand: Missing Backend Operations</summary>
 
 **Priority 1 (Core Entities):**
+
 ```typescript
 // backend/convex/mutations/entities.ts
 export const createCreator = mutation({ ... })
@@ -49,6 +70,7 @@ export const updateCreator = mutation({ ... })
 ```
 
 **Priority 2 (Content & Products):**
+
 ```typescript
 // backend/convex/mutations/content.ts
 export const createBlogPost = mutation({ ... })
@@ -58,6 +80,7 @@ export const publishContent = mutation({ ... })
 ```
 
 **Priority 3 (Tokens & Commerce):**
+
 ```typescript
 // backend/convex/mutations/tokens.ts
 export const createToken = mutation({ ... })
@@ -66,6 +89,7 @@ export const transferTokens = mutation({ ... })
 ```
 
 **Priority 4 (Agents & AI):**
+
 ```typescript
 // backend/convex/mutations/agents.ts
 export const createStrategyAgent = mutation({ ... })
@@ -74,6 +98,7 @@ export const executeAgent = mutation({ ... })
 ```
 
 **Priority 5 (Auth & Session):**
+
 ```typescript
 // backend/convex/mutations/auth.ts
 export const createSession = mutation({ ... })
@@ -84,6 +109,7 @@ export const create2FA = mutation({ ... })
 </details>
 
 **Acceptance Criteria:**
+
 - [ ] All 66 thing types have create/update/archive mutations
 - [ ] All 25 connection types have create/update/delete mutations
 - [ ] All mutations log appropriate events
@@ -106,79 +132,83 @@ export const create2FA = mutation({ ... })
 <summary>📋 Click to expand: Effect.ts Architecture</summary>
 
 **Service Structure:**
+
 ```typescript
 // backend/convex/services/entities/creator.service.ts
-import { Effect, Layer } from "effect"
+import { Effect, Layer } from "effect";
 
-export class CreatorService extends Effect.Service<CreatorService>()("CreatorService", {
-  effect: Effect.gen(function* () {
-    const db = yield* DatabaseService
-    const events = yield* EventLogService
+export class CreatorService extends Effect.Service<CreatorService>()(
+  "CreatorService",
+  {
+    effect: Effect.gen(function* () {
+      const db = yield* DatabaseService;
+      const events = yield* EventLogService;
 
-    const create = (input: CreateCreatorInput) =>
-      Effect.gen(function* () {
-        // 1. Validate input
-        yield* validateCreatorInput(input)
+      const create = (input: CreateCreatorInput) =>
+        Effect.gen(function* () {
+          // 1. Validate input
+          yield* validateCreatorInput(input);
 
-        // 2. Check permissions
-        yield* checkGroupOwnership(input.groupId)
+          // 2. Check permissions
+          yield* checkGroupOwnership(input.groupId);
 
-        // 3. Create entity
-        const creatorId = yield* db.insert("entities", {
-          groupId: input.groupId,
-          type: "creator",
-          name: input.name,
-          properties: input.properties,
-          status: "active",
-          createdAt: Date.now(),
-          updatedAt: Date.now()
-        })
+          // 3. Create entity
+          const creatorId = yield* db.insert("entities", {
+            groupId: input.groupId,
+            type: "creator",
+            name: input.name,
+            properties: input.properties,
+            status: "active",
+            createdAt: Date.now(),
+            updatedAt: Date.now(),
+          });
 
-        // 4. Log event
-        yield* events.log({
-          groupId: input.groupId,
-          type: "entity_created",
-          actorId: input.actorId,
-          targetId: creatorId,
-          timestamp: Date.now(),
-          metadata: { entityType: "creator" }
-        })
+          // 4. Log event
+          yield* events.log({
+            groupId: input.groupId,
+            type: "entity_created",
+            actorId: input.actorId,
+            targetId: creatorId,
+            timestamp: Date.now(),
+            metadata: { entityType: "creator" },
+          });
 
-        return creatorId
-      }).pipe(
-        Effect.mapError(e => new CreatorCreationError(e))
-      )
+          return creatorId;
+        }).pipe(Effect.mapError((e) => new CreatorCreationError(e)));
 
-    return { create, update, archive, get, list } as const
-  })
-}) {}
+      return { create, update, archive, get, list } as const;
+    }),
+  },
+) {}
 ```
 
 **Error Hierarchy:**
+
 ```typescript
 // backend/convex/services/errors.ts
 export class EntityError extends Data.TaggedClass("EntityError")<{
-  message: string
-  entityType: string
+  message: string;
+  entityType: string;
 }> {}
 
 export class CreatorCreationError extends EntityError {
-  readonly _tag = "CreatorCreationError"
+  readonly _tag = "CreatorCreationError";
 }
 
 export class ValidationError extends Data.TaggedClass("ValidationError")<{
-  field: string
-  reason: string
+  field: string;
+  reason: string;
 }> {}
 
 export class PermissionError extends Data.TaggedClass("PermissionError")<{
-  userId: string
-  groupId: string
-  action: string
+  userId: string;
+  groupId: string;
+  action: string;
 }> {}
 ```
 
 **Service Composition:**
+
 ```typescript
 // backend/convex/services/layers.ts
 export const ServicesLayer = Layer.mergeAll(
@@ -209,6 +239,7 @@ export const createCreator = mutation({
 </details>
 
 **Acceptance Criteria:**
+
 - [ ] All 66 thing types have Effect.ts services
 - [ ] All services use tagged errors (no try/catch)
 - [ ] All services compose via Layer.mergeAll
@@ -231,73 +262,79 @@ export const createCreator = mutation({
 <summary>📋 Click to expand: Event Logging Strategy</summary>
 
 **EventLogService:**
+
 ```typescript
 // backend/convex/services/events/event-log.service.ts
-export class EventLogService extends Effect.Service<EventLogService>()("EventLogService", {
-  effect: Effect.gen(function* () {
-    const db = yield* DatabaseService
+export class EventLogService extends Effect.Service<EventLogService>()(
+  "EventLogService",
+  {
+    effect: Effect.gen(function* () {
+      const db = yield* DatabaseService;
 
-    const log = (event: EventInput) =>
-      Effect.gen(function* () {
-        // Validate event structure
-        yield* validateEvent(event)
+      const log = (event: EventInput) =>
+        Effect.gen(function* () {
+          // Validate event structure
+          yield* validateEvent(event);
 
-        // Insert event
-        const eventId = yield* db.insert("events", {
-          groupId: event.groupId,
-          type: event.type,
-          actorId: event.actorId,
-          targetId: event.targetId,
-          timestamp: event.timestamp,
-          metadata: event.metadata
-        })
+          // Insert event
+          const eventId = yield* db.insert("events", {
+            groupId: event.groupId,
+            type: event.type,
+            actorId: event.actorId,
+            targetId: event.targetId,
+            timestamp: event.timestamp,
+            metadata: event.metadata,
+          });
 
-        // Trigger real-time subscriptions (Convex handles this)
-        return eventId
-      })
+          // Trigger real-time subscriptions (Convex handles this)
+          return eventId;
+        });
 
-    const query = (filters: EventFilters) =>
-      Effect.gen(function* () {
-        const events = yield* db.query("events")
-          .withIndex("group_type", q =>
-            q.eq("groupId", filters.groupId)
-             .eq("type", filters.type)
-          )
-          .collect()
+      const query = (filters: EventFilters) =>
+        Effect.gen(function* () {
+          const events = yield* db
+            .query("events")
+            .withIndex("group_type", (q) =>
+              q.eq("groupId", filters.groupId).eq("type", filters.type),
+            )
+            .collect();
 
-        return events
-      })
+          return events;
+        });
 
-    return { log, query, getByActor, getByTarget } as const
-  })
-}) {}
+      return { log, query, getByActor, getByTarget } as const;
+    }),
+  },
+) {}
 ```
 
 **Automatic Event Logging:**
+
 ```typescript
 // Wrap every mutation with event logging
 const withEventLogging = <T>(
   operation: Effect.Effect<T, any, any>,
   eventType: EventType,
-  metadata?: Record<string, any>
+  metadata?: Record<string, any>,
 ) =>
   Effect.gen(function* () {
-    const result = yield* operation
-    const events = yield* EventLogService
+    const result = yield* operation;
+    const events = yield* EventLogService;
 
     yield* events.log({
       type: eventType,
       actorId: metadata.actorId,
       targetId: result,
       timestamp: Date.now(),
-      metadata
-    })
+      metadata,
+    });
 
-    return result
-  })
+    return result;
+  });
 ```
 
 **Coverage Matrix:**
+
 ```typescript
 // Ensure every mutation logs the right event
 const EVENT_COVERAGE = {
@@ -320,12 +357,13 @@ const EVENT_COVERAGE = {
   "tokens.transfer": "tokens_transferred",
 
   // ... (67 total event types)
-}
+};
 ```
 
 </details>
 
 **Acceptance Criteria:**
+
 - [ ] All 67 event types are logged automatically
 - [ ] EventLogService uses Effect.ts with typed errors
 - [ ] Events include proper groupId scoping
@@ -348,15 +386,16 @@ const EVENT_COVERAGE = {
 <summary>📋 Click to expand: Connection Services</summary>
 
 **Ownership Connections:**
+
 ```typescript
 // backend/convex/services/connections/ownership.service.ts
 export const createOwnership = (input: OwnershipInput) =>
   Effect.gen(function* () {
-    const connections = yield* ConnectionService
+    const connections = yield* ConnectionService;
 
     // Validate ownership rules
     if (input.metadata?.revenueShare) {
-      yield* validateRevenueShare(input.metadata.revenueShare)
+      yield* validateRevenueShare(input.metadata.revenueShare);
     }
 
     // Create connection
@@ -364,24 +403,25 @@ export const createOwnership = (input: OwnershipInput) =>
       fromEntityId: input.ownerId,
       toEntityId: input.ownedEntityId,
       relationshipType: "owns",
-      metadata: input.metadata
-    })
-  })
+      metadata: input.metadata,
+    });
+  });
 ```
 
 **Token Holdings:**
+
 ```typescript
 // backend/convex/services/connections/token-holdings.service.ts
 export const updateTokenBalance = (input: TokenBalanceInput) =>
   Effect.gen(function* () {
-    const connections = yield* ConnectionService
+    const connections = yield* ConnectionService;
 
     // Get existing holding connection
     const existing = yield* connections.getByType({
       fromEntityId: input.userId,
       toEntityId: input.tokenId,
-      relationshipType: "holds_tokens"
-    })
+      relationshipType: "holds_tokens",
+    });
 
     if (existing) {
       // Update balance
@@ -389,41 +429,42 @@ export const updateTokenBalance = (input: TokenBalanceInput) =>
         connectionId: existing._id,
         metadata: {
           ...existing.metadata,
-          balance: input.newBalance
-        }
-      })
+          balance: input.newBalance,
+        },
+      });
     } else {
       // Create new holding
       yield* connections.create({
         fromEntityId: input.userId,
         toEntityId: input.tokenId,
         relationshipType: "holds_tokens",
-        metadata: { balance: input.newBalance }
-      })
+        metadata: { balance: input.newBalance },
+      });
     }
-  })
+  });
 ```
 
 **Group Membership with Roles:**
+
 ```typescript
 // backend/convex/services/connections/membership.service.ts
 export const addGroupMember = (input: MembershipInput) =>
   Effect.gen(function* () {
-    const connections = yield* ConnectionService
-    const events = yield* EventLogService
+    const connections = yield* ConnectionService;
+    const events = yield* EventLogService;
 
     // Validate role
-    yield* validateGroupRole(input.role)
+    yield* validateGroupRole(input.role);
 
     // Check if already member
     const existing = yield* connections.getByType({
       fromEntityId: input.userId,
       toEntityId: input.groupId,
-      relationshipType: "member_of"
-    })
+      relationshipType: "member_of",
+    });
 
     if (existing) {
-      return yield* new MembershipError({ message: "Already a member" })
+      return yield* new MembershipError({ message: "Already a member" });
     }
 
     // Create membership connection
@@ -434,9 +475,9 @@ export const addGroupMember = (input: MembershipInput) =>
       metadata: {
         role: input.role,
         invitedBy: input.inviterId,
-        joinedAt: Date.now()
-      }
-    })
+        joinedAt: Date.now(),
+      },
+    });
 
     // Log event
     yield* events.log({
@@ -445,16 +486,17 @@ export const addGroupMember = (input: MembershipInput) =>
       actorId: input.userId,
       targetId: input.groupId,
       timestamp: Date.now(),
-      metadata: { role: input.role }
-    })
+      metadata: { role: input.role },
+    });
 
-    return connectionId
-  })
+    return connectionId;
+  });
 ```
 
 </details>
 
 **Acceptance Criteria:**
+
 - [ ] All 25 connection types have specialized services
 - [ ] Connection rules are enforced (revenue shares, balances, etc.)
 - [ ] Bidirectional queries work (fromEntity and toEntity)
@@ -477,135 +519,148 @@ export const addGroupMember = (input: MembershipInput) =>
 <summary>📋 Click to expand: RAG Implementation</summary>
 
 **Chunking Service:**
+
 ```typescript
 // backend/convex/services/knowledge/chunking.service.ts
-export class ChunkingService extends Effect.Service<ChunkingService>()("ChunkingService", {
-  effect: Effect.gen(function* () {
-    const chunk = (text: string, options: ChunkOptions) =>
-      Effect.gen(function* () {
-        const windowSize = options.windowSize || 800
-        const overlap = options.overlap || 200
+export class ChunkingService extends Effect.Service<ChunkingService>()(
+  "ChunkingService",
+  {
+    effect: Effect.gen(function* () {
+      const chunk = (text: string, options: ChunkOptions) =>
+        Effect.gen(function* () {
+          const windowSize = options.windowSize || 800;
+          const overlap = options.overlap || 200;
 
-        // Smart sentence-aware chunking
-        const sentences = text.split(/[.!?]+/)
-        const chunks: Chunk[] = []
-        let currentChunk = ""
-        let tokenCount = 0
+          // Smart sentence-aware chunking
+          const sentences = text.split(/[.!?]+/);
+          const chunks: Chunk[] = [];
+          let currentChunk = "";
+          let tokenCount = 0;
 
-        for (const sentence of sentences) {
-          const sentenceTokens = estimateTokens(sentence)
+          for (const sentence of sentences) {
+            const sentenceTokens = estimateTokens(sentence);
 
-          if (tokenCount + sentenceTokens > windowSize && currentChunk.length > 0) {
+            if (
+              tokenCount + sentenceTokens > windowSize &&
+              currentChunk.length > 0
+            ) {
+              chunks.push({
+                text: currentChunk.trim(),
+                tokenCount,
+                index: chunks.length,
+              });
+
+              // Keep overlap for context
+              const overlapText = currentChunk.slice(-overlap);
+              currentChunk = overlapText + sentence;
+              tokenCount = estimateTokens(currentChunk);
+            } else {
+              currentChunk += sentence;
+              tokenCount += sentenceTokens;
+            }
+          }
+
+          // Add final chunk
+          if (currentChunk.length > 0) {
             chunks.push({
               text: currentChunk.trim(),
               tokenCount,
-              index: chunks.length
-            })
-
-            // Keep overlap for context
-            const overlapText = currentChunk.slice(-overlap)
-            currentChunk = overlapText + sentence
-            tokenCount = estimateTokens(currentChunk)
-          } else {
-            currentChunk += sentence
-            tokenCount += sentenceTokens
+              index: chunks.length,
+            });
           }
-        }
 
-        // Add final chunk
-        if (currentChunk.length > 0) {
-          chunks.push({
-            text: currentChunk.trim(),
-            tokenCount,
-            index: chunks.length
-          })
-        }
+          return chunks;
+        });
 
-        return chunks
-      })
-
-    return { chunk } as const
-  })
-}) {}
+      return { chunk } as const;
+    }),
+  },
+) {}
 ```
 
 **Embedding Service:**
+
 ```typescript
 // backend/convex/services/knowledge/embedding.service.ts
-export class EmbeddingService extends Effect.Service<EmbeddingService>()("EmbeddingService", {
-  effect: Effect.gen(function* () {
-    const config = yield* ConfigService
+export class EmbeddingService extends Effect.Service<EmbeddingService>()(
+  "EmbeddingService",
+  {
+    effect: Effect.gen(function* () {
+      const config = yield* ConfigService;
 
-    const embed = (text: string) =>
-      Effect.gen(function* () {
-        const model = config.embeddingModel || "text-embedding-3-large"
+      const embed = (text: string) =>
+        Effect.gen(function* () {
+          const model = config.embeddingModel || "text-embedding-3-large";
 
-        // Call OpenAI API
-        const response = yield* Effect.tryPromise({
-          try: () => fetch("https://api.openai.com/v1/embeddings", {
-            method: "POST",
-            headers: {
-              "Authorization": `Bearer ${config.openaiApiKey}`,
-              "Content-Type": "application/json"
-            },
-            body: JSON.stringify({ model, input: text })
-          }),
-          catch: (e) => new EmbeddingError({ message: String(e) })
-        })
+          // Call OpenAI API
+          const response = yield* Effect.tryPromise({
+            try: () =>
+              fetch("https://api.openai.com/v1/embeddings", {
+                method: "POST",
+                headers: {
+                  Authorization: `Bearer ${config.openaiApiKey}`,
+                  "Content-Type": "application/json",
+                },
+                body: JSON.stringify({ model, input: text }),
+              }),
+            catch: (e) => new EmbeddingError({ message: String(e) }),
+          });
 
-        const data = yield* Effect.tryPromise({
-          try: () => response.json(),
-          catch: (e) => new EmbeddingError({ message: String(e) })
-        })
+          const data = yield* Effect.tryPromise({
+            try: () => response.json(),
+            catch: (e) => new EmbeddingError({ message: String(e) }),
+          });
 
-        return {
-          embedding: data.data[0].embedding,
-          model,
-          dim: data.data[0].embedding.length
-        }
-      })
+          return {
+            embedding: data.data[0].embedding,
+            model,
+            dim: data.data[0].embedding.length,
+          };
+        });
 
-    return { embed, embedBatch } as const
-  })
-}) {}
+      return { embed, embedBatch } as const;
+    }),
+  },
+) {}
 ```
 
 **RAG Ingestion Pipeline:**
+
 ```typescript
 // backend/convex/services/knowledge/rag-ingestion.service.ts
 export const ingestThing = (thingId: string, fields?: string[]) =>
   Effect.gen(function* () {
-    const entities = yield* EntityService
-    const chunking = yield* ChunkingService
-    const embedding = yield* EmbeddingService
-    const knowledge = yield* KnowledgeService
+    const entities = yield* EntityService;
+    const chunking = yield* ChunkingService;
+    const embedding = yield* EmbeddingService;
+    const knowledge = yield* KnowledgeService;
 
     // 1. Get thing
-    const thing = yield* entities.get(thingId)
+    const thing = yield* entities.get(thingId);
 
     // 2. Extract text from specified fields
-    const texts = yield* extractTexts(thing, fields)
+    const texts = yield* extractTexts(thing, fields);
 
     // 3. Chunk each text
-    const allChunks = []
+    const allChunks = [];
     for (const { field, text, labels } of texts) {
       const chunks = yield* chunking.chunk(text, {
         windowSize: 800,
-        overlap: 200
-      })
+        overlap: 200,
+      });
 
-      allChunks.push(...chunks.map(c => ({ ...c, field, labels })))
+      allChunks.push(...chunks.map((c) => ({ ...c, field, labels })));
     }
 
     // 4. Embed chunks (batch for efficiency)
     const embeddings = yield* embedding.embedBatch(
-      allChunks.map(c => c.text)
-    )
+      allChunks.map((c) => c.text),
+    );
 
     // 5. Store knowledge items
     for (let i = 0; i < allChunks.length; i++) {
-      const chunk = allChunks[i]
-      const { embedding: vector, model, dim } = embeddings[i]
+      const chunk = allChunks[i];
+      const { embedding: vector, model, dim } = embeddings[i];
 
       const knowledgeId = yield* knowledge.create({
         groupId: thing.groupId,
@@ -619,33 +674,34 @@ export const ingestThing = (thingId: string, fields?: string[]) =>
         chunk: {
           index: chunk.index,
           tokenCount: chunk.tokenCount,
-          overlap: 200
+          overlap: 200,
         },
-        labels: chunk.labels
-      })
+        labels: chunk.labels,
+      });
 
       // 6. Link to thing via junction table
       yield* knowledge.linkToThing({
         thingId,
         knowledgeId,
-        role: "chunk_of"
-      })
+        role: "chunk_of",
+      });
     }
 
-    return allChunks.length
-  })
+    return allChunks.length;
+  });
 ```
 
 **Vector Search:**
+
 ```typescript
 // backend/convex/services/knowledge/vector-search.service.ts
 export const search = (query: string, options: SearchOptions) =>
   Effect.gen(function* () {
-    const embedding = yield* EmbeddingService
-    const knowledge = yield* KnowledgeService
+    const embedding = yield* EmbeddingService;
+    const knowledge = yield* KnowledgeService;
 
     // 1. Embed query
-    const { embedding: queryVector } = yield* embedding.embed(query)
+    const { embedding: queryVector } = yield* embedding.embed(query);
 
     // 2. Vector search (use Convex vector search when available)
     const results = yield* knowledge.vectorSearch({
@@ -653,24 +709,25 @@ export const search = (query: string, options: SearchOptions) =>
       query: queryVector,
       filter: {
         groupId: options.groupId,
-        knowledgeType: "chunk"
+        knowledgeType: "chunk",
       },
-      k: options.k || 10
-    })
+      k: options.k || 10,
+    });
 
     // 3. Hybrid scoring with lexical signals
-    const scored = results.map(r => ({
+    const scored = results.map((r) => ({
       ...r,
-      hybridScore: r.similarity * 0.7 + lexicalScore(query, r.text) * 0.3
-    }))
+      hybridScore: r.similarity * 0.7 + lexicalScore(query, r.text) * 0.3,
+    }));
 
-    return scored.sort((a, b) => b.hybridScore - a.hybridScore)
-  })
+    return scored.sort((a, b) => b.hybridScore - a.hybridScore);
+  });
 ```
 
 </details>
 
 **Acceptance Criteria:**
+
 - [ ] Chunking service handles 800-token windows with 200-token overlap
 - [ ] Embedding service integrates with OpenAI API
 - [ ] RAG ingestion pipeline processes all content types
@@ -696,15 +753,16 @@ export const search = (query: string, options: SearchOptions) =>
 <summary>📋 Click to expand: Dashboard Components</summary>
 
 **Group Selector:**
+
 ```tsx
 // web/src/components/groups/GroupSelector.tsx
 export function GroupSelector() {
   const currentGroup = useQuery(api.queries.groups.getById, {
-    groupId: useGroupId()
-  })
+    groupId: useGroupId(),
+  });
   const hierarchy = useQuery(api.queries.groups.getHierarchy, {
-    rootGroupId: currentGroup?._id
-  })
+    rootGroupId: currentGroup?._id,
+  });
 
   return (
     <Select value={currentGroup?._id} onValueChange={switchGroup}>
@@ -714,43 +772,37 @@ export function GroupSelector() {
         </SelectValue>
       </SelectTrigger>
       <SelectContent>
-        {hierarchy?.map(group => (
+        {hierarchy?.map((group) => (
           <SelectItem key={group._id} value={group._id}>
-            {"  ".repeat(group.depth)}{group.name}
+            {"  ".repeat(group.depth)}
+            {group.name}
           </SelectItem>
         ))}
       </SelectContent>
     </Select>
-  )
+  );
 }
 ```
 
 **Ontology Browser:**
+
 ```tsx
 // web/src/components/ontology/OntologyBrowser.tsx
 export function OntologyBrowser({ groupId }: { groupId: string }) {
-  const [dimension, setDimension] = useState<Dimension>("things")
+  const [dimension, setDimension] = useState<Dimension>("things");
 
   return (
     <div className="grid grid-cols-[250px_1fr]">
       {/* Sidebar: 6 Dimensions */}
       <aside>
         <nav>
-          <button onClick={() => setDimension("groups")}>
-            1. Groups
-          </button>
-          <button onClick={() => setDimension("people")}>
-            2. People
-          </button>
-          <button onClick={() => setDimension("things")}>
-            3. Things
-          </button>
+          <button onClick={() => setDimension("groups")}>1. Groups</button>
+          <button onClick={() => setDimension("people")}>2. People</button>
+          <button onClick={() => setDimension("things")}>3. Things</button>
           <button onClick={() => setDimension("connections")}>
             4. Connections
           </button>
-          <button onClick={() => setDimension("events")}>
-            5. Events
-          </button>
+          <button onClick={() => setDimension("events")}>5. Events</button>
           <button onClick={() => setDimension("knowledge")}>
             6. Knowledge
           </button>
@@ -765,49 +817,39 @@ export function OntologyBrowser({ groupId }: { groupId: string }) {
         {/* ... */}
       </main>
     </div>
-  )
+  );
 }
 ```
 
 **Real-Time Stats:**
+
 ```tsx
 // web/src/components/dashboard/DashboardStats.tsx
 export function DashboardStats({ groupId }: { groupId: string }) {
   const stats = useQuery(api.queries.groups.getStats, {
     groupId,
-    includeSubgroups: true
-  })
+    includeSubgroups: true,
+  });
 
   return (
     <div className="grid grid-cols-4 gap-4">
-      <StatsCard
-        title="Members"
-        value={stats?.stats.members}
-        icon={Users}
-      />
-      <StatsCard
-        title="Entities"
-        value={stats?.stats.entities}
-        icon={Box}
-      />
+      <StatsCard title="Members" value={stats?.stats.members} icon={Users} />
+      <StatsCard title="Entities" value={stats?.stats.entities} icon={Box} />
       <StatsCard
         title="Connections"
         value={stats?.stats.connections}
         icon={Link}
       />
-      <StatsCard
-        title="Events"
-        value={stats?.stats.events}
-        icon={Activity}
-      />
+      <StatsCard title="Events" value={stats?.stats.events} icon={Activity} />
     </div>
-  )
+  );
 }
 ```
 
 </details>
 
 **Acceptance Criteria:**
+
 - [ ] Group selector shows full hierarchy with nesting
 - [ ] Dashboard scopes all data to selected group
 - [ ] Real-time stats update via Convex subscriptions
@@ -830,15 +872,12 @@ export function DashboardStats({ groupId }: { groupId: string }) {
 <summary>📋 Click to expand: Entity UI Components</summary>
 
 **Generic Entity Form:**
+
 ```tsx
 // web/src/components/entities/EntityForm.tsx
-export function EntityForm({
-  type,
-  groupId,
-  initialData
-}: EntityFormProps) {
-  const createEntity = useMutation(api.mutations.entities.create)
-  const schema = getSchemaForType(type)
+export function EntityForm({ type, groupId, initialData }: EntityFormProps) {
+  const createEntity = useMutation(api.mutations.entities.create);
+  const schema = getSchemaForType(type);
 
   return (
     <Form schema={schema} onSubmit={handleSubmit}>
@@ -863,21 +902,19 @@ export function EntityForm({
 
       <Button type="submit">Create {type}</Button>
     </Form>
-  )
+  );
 }
 ```
 
 **Entity List View:**
+
 ```tsx
 // web/src/components/entities/EntityList.tsx
-export function EntityList({
-  groupId,
-  type
-}: EntityListProps) {
+export function EntityList({ groupId, type }: EntityListProps) {
   const entities = useQuery(api.queries.entities.list, {
     groupId,
-    type
-  })
+    type,
+  });
 
   return (
     <Table>
@@ -891,7 +928,7 @@ export function EntityList({
         </TableRow>
       </TableHeader>
       <TableBody>
-        {entities?.map(entity => (
+        {entities?.map((entity) => (
           <TableRow key={entity._id}>
             <TableCell>{entity.name}</TableCell>
             <TableCell>
@@ -900,9 +937,7 @@ export function EntityList({
             <TableCell>
               <StatusBadge status={entity.status} />
             </TableCell>
-            <TableCell>
-              {formatDate(entity.createdAt)}
-            </TableCell>
+            <TableCell>{formatDate(entity.createdAt)}</TableCell>
             <TableCell>
               <EntityActions entity={entity} />
             </TableCell>
@@ -910,13 +945,14 @@ export function EntityList({
         ))}
       </TableBody>
     </Table>
-  )
+  );
 }
 ```
 
 </details>
 
 **Acceptance Criteria:**
+
 - [ ] Entity forms for all 66 thing types
 - [ ] Type-specific property editors (JSON + structured)
 - [ ] Entity list views with filtering and sorting
@@ -939,49 +975,47 @@ export function EntityList({
 <summary>📋 Click to expand: Connection Visualization</summary>
 
 **Graph View:**
+
 ```tsx
 // web/src/components/connections/ConnectionGraph.tsx
-import ReactFlow from 'reactflow'
+import ReactFlow from "reactflow";
 
 export function ConnectionGraph({ groupId }: { groupId: string }) {
-  const connections = useQuery(api.queries.connections.list, { groupId })
-  const entities = useQuery(api.queries.entities.list, { groupId })
+  const connections = useQuery(api.queries.connections.list, { groupId });
+  const entities = useQuery(api.queries.entities.list, { groupId });
 
-  const nodes = entities?.map(e => ({
+  const nodes = entities?.map((e) => ({
     id: e._id,
-    type: 'entity',
+    type: "entity",
     data: { label: e.name, type: e.type },
-    position: calculatePosition(e) // Use force-directed layout
-  }))
+    position: calculatePosition(e), // Use force-directed layout
+  }));
 
-  const edges = connections?.map(c => ({
+  const edges = connections?.map((c) => ({
     id: c._id,
     source: c.fromEntityId,
     target: c.toEntityId,
     label: c.relationshipType,
-    type: 'smoothstep'
-  }))
+    type: "smoothstep",
+  }));
 
   return (
-    <ReactFlow
-      nodes={nodes}
-      edges={edges}
-      fitView
-    >
+    <ReactFlow nodes={nodes} edges={edges} fitView>
       <Controls />
       <Background />
     </ReactFlow>
-  )
+  );
 }
 ```
 
 **Relationship Explorer:**
+
 ```tsx
 // web/src/components/connections/RelationshipExplorer.tsx
 export function RelationshipExplorer({ entityId }: { entityId: string }) {
-  const entity = useQuery(api.queries.entities.get, { entityId })
-  const outgoing = useQuery(api.queries.connections.getOutgoing, { entityId })
-  const incoming = useQuery(api.queries.connections.getIncoming, { entityId })
+  const entity = useQuery(api.queries.entities.get, { entityId });
+  const outgoing = useQuery(api.queries.connections.getOutgoing, { entityId });
+  const incoming = useQuery(api.queries.connections.getIncoming, { entityId });
 
   return (
     <div>
@@ -989,7 +1023,7 @@ export function RelationshipExplorer({ entityId }: { entityId: string }) {
 
       <section>
         <h3>Outgoing ({outgoing?.length})</h3>
-        {outgoing?.map(conn => (
+        {outgoing?.map((conn) => (
           <RelationshipCard
             key={conn._id}
             type={conn.relationshipType}
@@ -1001,7 +1035,7 @@ export function RelationshipExplorer({ entityId }: { entityId: string }) {
 
       <section>
         <h3>Incoming ({incoming?.length})</h3>
-        {incoming?.map(conn => (
+        {incoming?.map((conn) => (
           <RelationshipCard
             key={conn._id}
             type={conn.relationshipType}
@@ -1011,13 +1045,14 @@ export function RelationshipExplorer({ entityId }: { entityId: string }) {
         ))}
       </section>
     </div>
-  )
+  );
 }
 ```
 
 </details>
 
 **Acceptance Criteria:**
+
 - [ ] Interactive graph view with zoom/pan
 - [ ] Filter connections by relationship type
 - [ ] Click entity to see details
@@ -1044,12 +1079,12 @@ export function RelationshipExplorer({ entityId }: { entityId: string }) {
 export function EventTimeline({ groupId }: { groupId: string }) {
   const events = useQuery(api.queries.events.getRecent, {
     groupId,
-    limit: 100
-  })
+    limit: 100,
+  });
 
   return (
     <div className="space-y-4">
-      {events?.map(event => (
+      {events?.map((event) => (
         <EventCard
           key={event._id}
           type={event.type}
@@ -1060,12 +1095,18 @@ export function EventTimeline({ groupId }: { groupId: string }) {
         />
       ))}
     </div>
-  )
+  );
 }
 
-function EventCard({ type, actor, target, timestamp, metadata }: EventCardProps) {
-  const actorEntity = useQuery(api.queries.entities.get, { entityId: actor })
-  const targetEntity = useQuery(api.queries.entities.get, { entityId: target })
+function EventCard({
+  type,
+  actor,
+  target,
+  timestamp,
+  metadata,
+}: EventCardProps) {
+  const actorEntity = useQuery(api.queries.entities.get, { entityId: actor });
+  const targetEntity = useQuery(api.queries.entities.get, { entityId: target });
 
   return (
     <Card>
@@ -1078,7 +1119,8 @@ function EventCard({ type, actor, target, timestamp, metadata }: EventCardProps)
       </CardHeader>
       <CardContent>
         <p>
-          <EntityLink entity={actorEntity} /> {getEventVerb(type)} <EntityLink entity={targetEntity} />
+          <EntityLink entity={actorEntity} /> {getEventVerb(type)}{" "}
+          <EntityLink entity={targetEntity} />
         </p>
         {metadata && (
           <pre className="text-xs mt-2">
@@ -1087,13 +1129,14 @@ function EventCard({ type, actor, target, timestamp, metadata }: EventCardProps)
         )}
       </CardContent>
     </Card>
-  )
+  );
 }
 ```
 
 </details>
 
 **Acceptance Criteria:**
+
 - [ ] Real-time event stream (Convex subscription)
 - [ ] Filter by event type, actor, target
 - [ ] Group events by time period (hour, day, week)
@@ -1122,53 +1165,56 @@ function EventCard({ type, actor, target, timestamp, metadata }: EventCardProps)
 
 // Base protocol metadata
 export interface ProtocolMetadata {
-  protocol: "a2a" | "acp" | "ap2" | "x402" | "ag-ui"
+  protocol: "a2a" | "acp" | "ap2" | "x402" | "ag-ui";
 }
 
 // A2A: Agent-to-Agent Communication
 export interface A2AMetadata extends ProtocolMetadata {
-  protocol: "a2a"
-  messageType: "task_delegation" | "status_update" | "result"
-  agentPlatform: "elizaos" | "autogen" | "crewai" | "custom"
-  taskId?: string
-  conversationId?: string
+  protocol: "a2a";
+  messageType: "task_delegation" | "status_update" | "result";
+  agentPlatform: "elizaos" | "autogen" | "crewai" | "custom";
+  taskId?: string;
+  conversationId?: string;
 }
 
 // ACP: Agentic Commerce Protocol
 export interface ACPMetadata extends ProtocolMetadata {
-  protocol: "acp"
-  eventType: "purchase_initiated" | "merchant_approved" | "transaction_completed"
-  agentPlatform: "chatgpt" | "claude" | "gemini" | "custom"
-  productId: string
-  amount: number
-  currency: string
+  protocol: "acp";
+  eventType:
+    | "purchase_initiated"
+    | "merchant_approved"
+    | "transaction_completed";
+  agentPlatform: "chatgpt" | "claude" | "gemini" | "custom";
+  productId: string;
+  amount: number;
+  currency: string;
 }
 
 // AP2: Agent Payments Protocol
 export interface AP2Metadata extends ProtocolMetadata {
-  protocol: "ap2"
-  mandateType: "intent" | "cart"
-  autoExecute: boolean
-  maxBudget?: number
-  criteria?: Record<string, any>
+  protocol: "ap2";
+  mandateType: "intent" | "cart";
+  autoExecute: boolean;
+  maxBudget?: number;
+  criteria?: Record<string, any>;
 }
 
 // X402: HTTP Micropayments
 export interface X402Metadata extends ProtocolMetadata {
-  protocol: "x402"
-  scheme: "permit" | "invoice"
-  network: "base" | "ethereum" | "polygon"
-  txHash?: string
-  amount: string
-  resource: string
+  protocol: "x402";
+  scheme: "permit" | "invoice";
+  network: "base" | "ethereum" | "polygon";
+  txHash?: string;
+  amount: string;
+  resource: string;
 }
 
 // AG-UI: Generative UI (CopilotKit)
 export interface AGUIMetadata extends ProtocolMetadata {
-  protocol: "ag-ui"
-  messageType: "text" | "ui" | "action"
-  component?: string
-  props?: Record<string, any>
+  protocol: "ag-ui";
+  messageType: "text" | "ui" | "action";
+  component?: string;
+  props?: Record<string, any>;
 }
 
 // Union type for all protocols
@@ -1177,32 +1223,35 @@ export type AnyProtocolMetadata =
   | ACPMetadata
   | AP2Metadata
   | X402Metadata
-  | AGUIMetadata
+  | AGUIMetadata;
 
 // Validation function
-export const validateProtocolMetadata = (metadata: any): metadata is AnyProtocolMetadata => {
-  if (!metadata.protocol) return false
+export const validateProtocolMetadata = (
+  metadata: any,
+): metadata is AnyProtocolMetadata => {
+  if (!metadata.protocol) return false;
 
   switch (metadata.protocol) {
     case "a2a":
-      return !!metadata.messageType && !!metadata.agentPlatform
+      return !!metadata.messageType && !!metadata.agentPlatform;
     case "acp":
-      return !!metadata.eventType && !!metadata.productId
+      return !!metadata.eventType && !!metadata.productId;
     case "ap2":
-      return !!metadata.mandateType
+      return !!metadata.mandateType;
     case "x402":
-      return !!metadata.scheme && !!metadata.network
+      return !!metadata.scheme && !!metadata.network;
     case "ag-ui":
-      return !!metadata.messageType
+      return !!metadata.messageType;
     default:
-      return false
+      return false;
   }
-}
+};
 ```
 
 </details>
 
 **Acceptance Criteria:**
+
 - [ ] TypeScript schemas for all 5 protocols
 - [ ] Validation functions enforce schema compliance
 - [ ] Backend mutations reject invalid protocol metadata
@@ -1227,7 +1276,9 @@ export const validateProtocolMetadata = (metadata: any): metadata is AnyProtocol
 ```tsx
 // web/src/components/analytics/ProtocolDashboard.tsx
 export function ProtocolDashboard({ groupId }: { groupId: string }) {
-  const analytics = useQuery(api.queries.analytics.getProtocolStats, { groupId })
+  const analytics = useQuery(api.queries.analytics.getProtocolStats, {
+    groupId,
+  });
 
   return (
     <div className="grid grid-cols-2 gap-6">
@@ -1269,7 +1320,7 @@ export function ProtocolDashboard({ groupId }: { groupId: string }) {
         <CardContent>
           <Table>
             <TableBody>
-              {analytics?.topEntities.map(entity => (
+              {analytics?.topEntities.map((entity) => (
                 <TableRow key={entity._id}>
                   <TableCell>{entity.name}</TableCell>
                   <TableCell>${entity.revenue}</TableCell>
@@ -1280,11 +1331,12 @@ export function ProtocolDashboard({ groupId }: { groupId: string }) {
         </CardContent>
       </Card>
     </div>
-  )
+  );
 }
 ```
 
 **Backend Query:**
+
 ```typescript
 // backend/convex/queries/analytics.ts
 export const getProtocolStats = query({
@@ -1293,31 +1345,35 @@ export const getProtocolStats = query({
     // Get all payment events
     const paymentEvents = await ctx.db
       .query("events")
-      .withIndex("group_type", q =>
-        q.eq("groupId", groupId).eq("type", "payment_event")
+      .withIndex("group_type", (q) =>
+        q.eq("groupId", groupId).eq("type", "payment_event"),
       )
-      .collect()
+      .collect();
 
     // Aggregate by protocol
-    const revenueByProtocol = paymentEvents.reduce((acc, e) => {
-      const protocol = e.metadata?.protocol || "traditional"
-      acc[protocol] = (acc[protocol] || 0) + (e.metadata?.amount || 0)
-      return acc
-    }, {} as Record<string, number>)
+    const revenueByProtocol = paymentEvents.reduce(
+      (acc, e) => {
+        const protocol = e.metadata?.protocol || "traditional";
+        acc[protocol] = (acc[protocol] || 0) + (e.metadata?.amount || 0);
+        return acc;
+      },
+      {} as Record<string, number>,
+    );
 
     return {
       revenueByProtocol,
       volumeOverTime: groupByTime(paymentEvents),
       usageByProtocol: countByProtocol(paymentEvents),
-      topEntities: getTopRevenue(paymentEvents)
-    }
-  }
-})
+      topEntities: getTopRevenue(paymentEvents),
+    };
+  },
+});
 ```
 
 </details>
 
 **Acceptance Criteria:**
+
 - [ ] Revenue breakdown by protocol (X402, ACP, AP2, traditional)
 - [ ] Transaction volume over time (daily, weekly, monthly)
 - [ ] Protocol usage pie chart
@@ -1419,6 +1475,7 @@ describe("CreatorService", () => {
 ```
 
 **Coverage Goals:**
+
 - Unit tests: All Effect.ts services (90%+ coverage)
 - Integration tests: Mutations + queries (80%+ coverage)
 - E2E tests: Critical user flows (50%+ coverage)
@@ -1426,6 +1483,7 @@ describe("CreatorService", () => {
 </details>
 
 **Acceptance Criteria:**
+
 - [ ] 90%+ test coverage for services
 - [ ] All 66 thing types have create/update tests
 - [ ] All 25 connection types have tests
@@ -1492,6 +1550,7 @@ describe("EntityForm", () => {
 </details>
 
 **Acceptance Criteria:**
+
 - [ ] 70%+ test coverage for components
 - [ ] Mock Convex queries/mutations
 - [ ] Test real-time updates (subscriptions)
@@ -1516,71 +1575,79 @@ describe("EntityForm", () => {
 <summary>📋 Click to expand: Monitoring Setup</summary>
 
 **Error Tracking (Sentry):**
+
 ```typescript
 // backend/convex/lib/sentry.ts
-import * as Sentry from "@sentry/node"
+import * as Sentry from "@sentry/node";
 
 Sentry.init({
   dsn: process.env.SENTRY_DSN,
   environment: process.env.CONVEX_DEPLOYMENT,
-  integrations: [new Sentry.Integrations.Http({ tracing: true })]
-})
+  integrations: [new Sentry.Integrations.Http({ tracing: true })],
+});
 
-export const withErrorTracking = <T>(
-  operation: Effect.Effect<T, any, any>
-) =>
+export const withErrorTracking = <T>(operation: Effect.Effect<T, any, any>) =>
   operation.pipe(
-    Effect.tapError(error => {
-      Sentry.captureException(error)
-      return Effect.unit
-    })
-  )
+    Effect.tapError((error) => {
+      Sentry.captureException(error);
+      return Effect.unit;
+    }),
+  );
 ```
 
 **Metrics (Prometheus):**
+
 ```typescript
 // backend/convex/lib/metrics.ts
-import { Counter, Histogram } from "prom-client"
+import { Counter, Histogram } from "prom-client";
 
 export const entityCreationCounter = new Counter({
   name: "entity_created_total",
   help: "Total entities created",
-  labelNames: ["type", "groupId"]
-})
+  labelNames: ["type", "groupId"],
+});
 
 export const mutationDuration = new Histogram({
   name: "mutation_duration_seconds",
   help: "Mutation execution time",
-  labelNames: ["operation"]
-})
+  labelNames: ["operation"],
+});
 ```
 
 **Logging (Structured):**
+
 ```typescript
 // backend/convex/lib/logger.ts
-import pino from "pino"
+import pino from "pino";
 
 export const logger = pino({
   level: process.env.LOG_LEVEL || "info",
   formatters: {
     level: (label) => ({ level: label }),
-    bindings: (bindings) => ({ pid: bindings.pid, hostname: bindings.hostname })
-  }
-})
+    bindings: (bindings) => ({
+      pid: bindings.pid,
+      hostname: bindings.hostname,
+    }),
+  },
+});
 
 export const logEvent = (event: Event) => {
-  logger.info({
-    event: event.type,
-    groupId: event.groupId,
-    actorId: event.actorId,
-    timestamp: event.timestamp
-  }, "Event logged")
-}
+  logger.info(
+    {
+      event: event.type,
+      groupId: event.groupId,
+      actorId: event.actorId,
+      timestamp: event.timestamp,
+    },
+    "Event logged",
+  );
+};
 ```
 
 </details>
 
 **Acceptance Criteria:**
+
 - [ ] Sentry error tracking in production
 - [ ] Prometheus metrics exported
 - [ ] Structured logging to Cloudflare
@@ -1610,33 +1677,34 @@ export const migration001 = {
     // Get all entities without groupId
     const entities = await ctx.db
       .query("entities")
-      .filter(q => q.eq(q.field("groupId"), undefined))
-      .collect()
+      .filter((q) => q.eq(q.field("groupId"), undefined))
+      .collect();
 
     // Assign to default group
     const defaultGroup = await ctx.db
       .query("groups")
-      .withIndex("by_slug", q => q.eq("slug", "default"))
-      .first()
+      .withIndex("by_slug", (q) => q.eq("slug", "default"))
+      .first();
 
     for (const entity of entities) {
       await ctx.db.patch(entity._id, {
-        groupId: defaultGroup._id
-      })
+        groupId: defaultGroup._id,
+      });
     }
 
-    logger.info(`Migrated ${entities.length} entities to default group`)
+    logger.info(`Migrated ${entities.length} entities to default group`);
   },
 
   down: async (ctx: MigrationContext) => {
     // Rollback logic
-  }
-}
+  },
+};
 ```
 
 </details>
 
 **Acceptance Criteria:**
+
 - [ ] Versioned migration system
 - [ ] Automatic backups before migration
 - [ ] Rollback capability
@@ -1651,29 +1719,32 @@ export const migration001 = {
 
 ### Total Effort Estimate
 
-| Category | Tasks | Effort | Priority |
-|----------|-------|--------|----------|
-| Backend Integration | 1.1-1.5 | 236 hours (29.5 days) | P0 |
-| Frontend Integration | 2.1-2.4 | 156 hours (19.5 days) | P1 |
-| Protocol Integration | 3.1-3.2 | 40 hours (5 days) | P2 |
-| Testing & Quality | 4.1-4.2 | 120 hours (15 days) | P0 |
-| Operations | 5.1-5.2 | 40 hours (5 days) | P2 |
-| **TOTAL** | **47 tasks** | **592 hours (74 days)** | |
+| Category             | Tasks        | Effort                  | Priority |
+| -------------------- | ------------ | ----------------------- | -------- |
+| Backend Integration  | 1.1-1.5      | 236 hours (29.5 days)   | P0       |
+| Frontend Integration | 2.1-2.4      | 156 hours (19.5 days)   | P1       |
+| Protocol Integration | 3.1-3.2      | 40 hours (5 days)       | P2       |
+| Testing & Quality    | 4.1-4.2      | 120 hours (15 days)     | P0       |
+| Operations           | 5.1-5.2      | 40 hours (5 days)       | P2       |
+| **TOTAL**            | **47 tasks** | **592 hours (74 days)** |          |
 
 ### Recommended Phases
 
 **Phase 1: Core Backend (Weeks 1-4)**
+
 - Complete 1.1: Missing backend mutations/queries
 - Complete 1.2: Effect.ts glue layer
 - Complete 1.3: Event logging
 - **Deliverable:** All 66 thing types operational
 
 **Phase 2: Testing & Quality (Weeks 5-6)**
+
 - Complete 4.1: Backend test suite
 - Complete 4.2: Frontend integration tests
 - **Deliverable:** 90% test coverage
 
 **Phase 3: Frontend (Weeks 7-10)**
+
 - Complete 2.1: Multi-tenant dashboard
 - Complete 2.2: Entity management UI
 - Complete 2.3: Connection visualization
@@ -1681,12 +1752,14 @@ export const migration001 = {
 - **Deliverable:** Production-ready UI
 
 **Phase 4: Advanced Features (Weeks 11-12)**
+
 - Complete 1.4: Connection management
 - Complete 1.5: RAG implementation
 - Complete 3.1-3.2: Protocol integration
 - **Deliverable:** Full protocol support + RAG
 
 **Phase 5: Production Ready (Weeks 13-14)**
+
 - Complete 5.1: Monitoring
 - Complete 5.2: Migrations
 - Load testing
@@ -1698,24 +1771,28 @@ export const migration001 = {
 ## Key Metrics for Success
 
 **Backend Completeness:**
+
 - ✅ 66/66 thing types have CRUD operations
 - ✅ 25/25 connection types implemented
 - ✅ 67/67 event types logged
 - ✅ 100% Effect.ts coverage
 
 **Frontend Completeness:**
+
 - ✅ Multi-tenant dashboard with hierarchy
 - ✅ Entity forms for all types
 - ✅ Real-time subscriptions working
 - ✅ Graph visualization
 
 **Quality:**
+
 - ✅ 90%+ backend test coverage
 - ✅ 70%+ frontend test coverage
 - ✅ Zero TypeScript errors
 - ✅ Sub-200ms mutation latency
 
 **Production Readiness:**
+
 - ✅ Error tracking live
 - ✅ Metrics dashboards
 - ✅ Automated backups

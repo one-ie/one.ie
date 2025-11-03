@@ -1,3 +1,21 @@
+---
+title: Frontend Effects Orchestration
+dimension: events
+category: frontend-effects-orchestration.md
+tags: ai, backend, frontend, inference, ui
+related_dimensions: groups, knowledge, people, things
+scope: global
+created: 2025-11-03
+updated: 2025-11-03
+version: 1.0.0
+ai_context: |
+  This document is part of the events dimension in the frontend-effects-orchestration.md category.
+  Location: one/events/frontend-effects-orchestration.md
+  Purpose: Documents frontend effects.ts implementation: director orchestration & execution summary
+  Related dimensions: groups, knowledge, people, things
+  For AI agents: Read this to understand frontend effects orchestration.
+---
+
 # Frontend Effects.ts Implementation: Director Orchestration & Execution Summary
 
 **Date:** November 3, 2025

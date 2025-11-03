@@ -1,3 +1,21 @@
+---
+title: Demo_Integration_Checklist
+dimension: events
+category: DEMO_INTEGRATION_CHECKLIST.md
+tags: architecture, backend, knowledge
+related_dimensions: connections, groups, knowledge, people, things
+scope: global
+created: 2025-11-03
+updated: 2025-11-03
+version: 1.0.0
+ai_context: |
+  This document is part of the events dimension in the DEMO_INTEGRATION_CHECKLIST.md category.
+  Location: one/events/DEMO_INTEGRATION_CHECKLIST.md
+  Purpose: Documents demo integration checklist
+  Related dimensions: connections, groups, knowledge, people, things
+  For AI agents: Read this to understand DEMO_INTEGRATION_CHECKLIST.
+---
+
 # Demo Integration Checklist
 
 **Status:** COMPLETE (Infer 1-20)

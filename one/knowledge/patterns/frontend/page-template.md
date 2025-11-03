@@ -1,3 +1,21 @@
+---
+title: Page Template
+dimension: knowledge
+category: patterns
+tags: ai, architecture, frontend
+related_dimensions: connections, events, things
+scope: global
+created: 2025-11-03
+updated: 2025-11-03
+version: 1.0.0
+ai_context: |
+  This document is part of the knowledge dimension in the patterns category.
+  Location: one/knowledge/patterns/frontend/page-template.md
+  Purpose: Documents pattern: astro page template
+  Related dimensions: connections, events, things
+  For AI agents: Read this to understand page template.
+---
+
 # Pattern: Astro Page Template
 
 **Category:** Frontend

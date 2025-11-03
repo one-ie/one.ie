@@ -1,3 +1,21 @@
+---
+title: Ontology Creator
+dimension: knowledge
+category: ontology-creator.md
+tags: 6-dimensions, ai, groups, ontology
+related_dimensions: connections, events, groups, people, things
+scope: global
+created: 2025-11-03
+updated: 2025-11-03
+version: 1.0.0
+ai_context: |
+  This document is part of the knowledge dimension in the ontology-creator.md category.
+  Location: one/knowledge/ontology-creator.md
+  Purpose: Documents creator ontology
+  Related dimensions: connections, events, groups, people, things
+  For AI agents: Read this to understand ontology creator.
+---
+
 # Creator Ontology
 
 **Version:** 1.0.0

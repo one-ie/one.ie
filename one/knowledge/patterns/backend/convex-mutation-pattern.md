@@ -1,3 +1,21 @@
+---
+title: Convex Mutation Pattern
+dimension: knowledge
+category: patterns
+tags: ai, backend, ontology
+related_dimensions: connections, events, groups, people, things
+scope: global
+created: 2025-11-03
+updated: 2025-11-03
+version: 1.0.0
+ai_context: |
+  This document is part of the knowledge dimension in the patterns category.
+  Location: one/knowledge/patterns/backend/convex-mutation-pattern.md
+  Purpose: Documents convex mutation pattern
+  Related dimensions: connections, events, groups, people, things
+  For AI agents: Read this to understand convex mutation pattern.
+---
+
 # Convex Mutation Pattern
 
 **Category:** Backend

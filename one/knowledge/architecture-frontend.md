@@ -1,3 +1,21 @@
+---
+title: Architecture Frontend
+dimension: knowledge
+category: architecture-frontend.md
+tags: architecture, backend, frontend, ontology, system-design, ui
+related_dimensions: events, things
+scope: global
+created: 2025-11-03
+updated: 2025-11-03
+version: 1.0.0
+ai_context: |
+  This document is part of the knowledge dimension in the architecture-frontend.md category.
+  Location: one/knowledge/architecture-frontend.md
+  Purpose: Documents one frontend architecture
+  Related dimensions: events, things
+  For AI agents: Read this to understand architecture frontend.
+---
+
 # ONE Frontend Architecture
 
 **Building the Rendering Layer - Backend-Agnostic, Type-Safe, Composable**

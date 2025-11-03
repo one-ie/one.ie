@@ -1,3 +1,21 @@
+---
+title: Frontend
+dimension: connections
+category: workflows
+tags: ai, frontend, ontology, people, ui
+related_dimensions: events, groups, people, things
+scope: global
+created: 2025-11-03
+updated: 2025-11-03
+version: 1.0.0
+ai_context: |
+  This document is part of the connections dimension in the workflows category.
+  Location: one/connections/workflows/frontend.md
+  Purpose: Documents frontend development workflow
+  Related dimensions: events, groups, people, things
+  For AI agents: Read this to understand frontend.
+---
+
 # Frontend Development Workflow
 
 **Version:** 2.0.0

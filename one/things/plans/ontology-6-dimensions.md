@@ -1,3 +1,21 @@
+---
+title: Ontology 6 Dimensions
+dimension: things
+category: plans
+tags: 6-dimensions, ai, architecture, connections, events, groups, knowledge, ontology, people, things
+related_dimensions: connections, events, groups, knowledge, people
+scope: global
+created: 2025-11-03
+updated: 2025-11-03
+version: 1.0.0
+ai_context: |
+  This document is part of the things dimension in the plans category.
+  Location: one/things/plans/ontology-6-dimensions.md
+  Purpose: Documents migration plan: 4-table ontology → 6-dimension ontology
+  Related dimensions: connections, events, groups, knowledge, people
+  For AI agents: Read this to understand ontology 6 dimensions.
+---
+
 # Migration Plan: 4-Table Ontology → 6-Dimension Ontology
 
 **Version:** 2.0.0
@@ -306,7 +324,6 @@ The ONE Platform has been successfully upgraded from a "4-table ontology" (Thing
    ````
 
    ### Why Organizations Matter
-
    1. **Multi-Tenant Isolation:** Each org's data is completely separate
    2. **Resource Quotas:** Control costs and usage per organization
    3. **Custom Branding:** Each org can have unique frontend/domain
@@ -347,23 +364,19 @@ The ONE Platform has been successfully upgraded from a "4-table ontology" (Thing
    ```
 
    ### Four Roles
-
    1. **Platform Owner** (Anthony)
-
       - Owns the ONE Platform
       - 100% revenue from platform-level services
       - Can access all organizations (support/debugging)
       - Creates new organizations
 
    2. **Org Owner**
-
       - Owns/manages one or more organizations
       - Controls users, permissions, billing within org
       - Customizes AI agents and frontend
       - Revenue sharing with platform
 
    3. **Org User**
-
       - Works within an organization
       - Limited permissions (defined by org owner)
       - Can create content, run agents (within quotas)
@@ -374,7 +387,6 @@ The ONE Platform has been successfully upgraded from a "4-table ontology" (Thing
       - No admin access
 
    ### Why People Matter
-
    1. **Authorization:** Every action must have an actor (person)
    2. **Governance:** Org owners control who can do what
    3. **Audit Trail:** Events log who did what when
@@ -734,7 +746,6 @@ The ONE Platform has been successfully upgraded from a "4-table ontology" (Thing
    ````
 
    **Key Design Principles:**
-
    - Organizations partition ALL data (perfect multi-tenant isolation)
    - People are represented as things with `role` property (platform_owner, org_owner, org_user, customer)
    - Every thing, connection, event, and knowledge item is scoped to an organization
@@ -858,7 +869,6 @@ The ONE Platform has been successfully upgraded from a "4-table ontology" (Thing
 **Files to Update:**
 
 1. `one/connections/workflow.md`
-
    - Line 12: Update golden rule from "4 tables" to "6 dimensions"
    - Line 42: Update reference to "6-dimension universe"
    - Line 84: Map features to 6 dimensions
@@ -866,7 +876,6 @@ The ONE Platform has been successfully upgraded from a "4-table ontology" (Thing
    - Line 751: Understanding the 6-dimension model
 
 2. `one/connections/api.md`
-
    - Line 1244: Section header "6-Dimension Ontology"
    - Line 1246: Description of 6 dimensions
    - Line 1270: Golden rule update
@@ -882,7 +891,6 @@ The ONE Platform has been successfully upgraded from a "4-table ontology" (Thing
 **Files to Update:**
 
 1. `one/connections/mcp.md`
-
    - Title line 4: "6-dimension ontology"
    - Line 12: Description
    - Line 22: MCP server exposure
@@ -891,27 +899,22 @@ The ONE Platform has been successfully upgraded from a "4-table ontology" (Thing
    - Line 778: Access list
 
 2. `one/connections/multitenant.md`
-
    - Line 5: Architecture leverages 6-dimension ontology
    - Line 49: Section header
    - Line 1341: Result description
 
 3. `one/connections/middleware.md`
-
    - Line 32: Database comment
 
 4. `one/connections/membership.md`
-
    - Line 132: Section header
    - Line 1149: Reference link
 
 5. `one/connections/kyc.md`
-
    - Line 5: Purpose statement
    - Line 632: Reference link
 
 6. `one/connections/protocols.md`
-
    - Line 37: "Our 6-dimension ontology"
    - Line 230: Implementation checklist
 
@@ -936,39 +939,30 @@ The ONE Platform has been successfully upgraded from a "4-table ontology" (Thing
 **Files to Update:**
 
 1. `one/things/implementation-examples.md`
-
    - Lines 10, 18, 35, 62, 63, 86, 92, 116, 522, 1113: All "4 table" → "6 dimension"
 
 2. `one/things/sui.md`
-
    - Line 5, 17, 958: SUI Move mapping to 6 dimensions
 
 3. `one/things/agentsales.md`
-
    - Line 13, 967: Sales agents with 6-dimension ontology
 
 4. `one/things/frontend.md`
-
    - Line 829: Integration section
 
 5. `one/things/hono.md`
-
    - Lines 73, 97, 406, 1923, 2098: Hono + 6-dimension integration
 
 6. `one/things/todo.md`
-
    - Lines 100, 174, 481, 898, 1031: Todo list updates
 
 7. `one/things/revenue.md`
-
    - Line 520: Design composition
 
 8. `one/knowledge/rules.md`
-
    - Lines 22, 380, 575: Platform rules
 
 9. `one/things/vision.md`
-
    - Line 15: Vision statement
 
 10. `one/things/ai-platform.md`
@@ -979,11 +973,9 @@ The ONE Platform has been successfully upgraded from a "4-table ontology" (Thing
 **Files to Update:**
 
 1. `one/things/agents/director.md`
-
    - Lines 69, 82, 91, 105, 200, 379, 440, 648, 722, 1092, 1108: Director agent understanding
 
 2. `one/things/agents/agent-clean.md`
-
    - Lines 14, 47, 65: Cleanup agent ontology checks
 
 3. `one/things/agents/agent-clone.md`
@@ -1127,7 +1119,7 @@ const posts = await ctx.db
 const posts = await ctx.db
   .query("things")
   .withIndex("by_org_type", (q) =>
-    q.eq("organizationId", orgId).eq("thingType", "blog_post")
+    q.eq("organizationId", orgId).eq("thingType", "blog_post"),
   )
   .collect();
 ```
@@ -1149,7 +1141,7 @@ const posts = await ctx.db
 export async function requireOrgAccess(
   ctx: ConvexContext,
   orgId: Id<"organizations">,
-  requiredRole: "org_owner" | "org_user"
+  requiredRole: "org_owner" | "org_user",
 ) {
   const userId = await getUserId(ctx);
 
@@ -1171,7 +1163,7 @@ export async function requireOrgAccess(
       q
         .eq("fromThingId", userId)
         .eq("toThingId", orgId)
-        .eq("relationshipType", "member_of")
+        .eq("relationshipType", "member_of"),
     )
     .first();
 
@@ -1294,7 +1286,7 @@ export function OrganizationSelector() {
      const user = await createUser(org, "org_user");
 
      await expect(
-       createOrgSettings(org, user, { allowSignups: false })
+       createOrgSettings(org, user, { allowSignups: false }),
      ).rejects.toThrow("Org owner access required");
    });
    ```
@@ -1331,30 +1323,25 @@ export function OrganizationSelector() {
 ## The 6 Dimensions (Easy Version)
 
 1. **Organization** = Your Lemonade Stand Business
-
    - You own the stand
    - You decide the rules
 
 2. **People** = You, the Boss!
-
    - You're the owner
    - You can hire friends to help (users)
    - Customers buy lemonade
 
 3. **Things** = What You Have
-
    - Lemonade (product)
    - Cups (inventory)
    - Money (tokens)
 
 4. **Connections** = How Things Work Together
-
    - Customers buy lemonade
    - You own the stand
    - Lemonade is in a cup
 
 5. **Events** = What Happens
-
    - Customer buys lemonade
    - You make more lemonade
    - You count money at end of day
@@ -1571,19 +1558,16 @@ const aiResponse = await generateResponse({
 ## Multi-Tenancy Benefits
 
 1. **Data Isolation:**
-
    - Acme Corp cannot see Enterprise Inc's data
    - All queries automatically scoped to organizationId
    - Zero chance of cross-org data leaks
 
 2. **Independent Scaling:**
-
    - Each org has separate quotas and limits
    - Per-org billing and usage tracking
    - Can upgrade/downgrade plans independently
 
 3. **Customization:**
-
    - Each org can customize their AI agents
    - Different branding, features, workflows
    - Frontend customization per org
@@ -1804,7 +1788,7 @@ const posts = await ctx.db
 const posts = await ctx.db
   .query("things")
   .withIndex("by_org_type", (q) =>
-    q.eq("organizationId", orgId).eq("thingType", "blog_post")
+    q.eq("organizationId", orgId).eq("thingType", "blog_post"),
   )
   .collect();
 ```
@@ -1878,7 +1862,7 @@ test("org users cannot access other orgs", async () => {
   const userA = await createUser(orgA, "org_user");
 
   await expect(queryPosts(orgB, userA)).rejects.toThrow(
-    "User not member of organization"
+    "User not member of organization",
   );
 });
 ```
@@ -2102,18 +2086,15 @@ bun run scripts/validate-6-dimension-migration.ts
 ### Quantitative Metrics
 
 1. **Documentation Coverage:**
-
    - Target: 100% of files updated
    - Measure: Validation script reports 0 issues
 
 2. **Code Quality:**
-
    - Target: All queries include org scoping
    - Measure: 100% of mutations have authorization checks
    - Measure: 100% of events include actorId
 
 3. **Test Coverage:**
-
    - Target: Multi-tenant scenarios covered
    - Measure: Data isolation tests pass
    - Measure: Authorization tests pass
@@ -2126,13 +2107,11 @@ bun run scripts/validate-6-dimension-migration.ts
 ### Qualitative Metrics
 
 1. **Clarity:**
-
    - Developers understand 6 dimensions immediately
    - Children can explain the model
    - AI agents generate correct code
 
 2. **Completeness:**
-
    - All features map to 6 dimensions
    - No "special cases" or workarounds needed
    - Documentation is comprehensive

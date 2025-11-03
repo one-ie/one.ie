@@ -1,3 +1,21 @@
+---
+title: Strategy
+dimension: connections
+category: workflows
+tags: agent
+related_dimensions: events, groups, things
+scope: global
+created: 2025-11-03
+updated: 2025-11-03
+version: 1.0.0
+ai_context: |
+  This document is part of the connections dimension in the workflows category.
+  Location: one/connections/workflows/strategy.md
+  Purpose: Documents strategic planning workflow
+  Related dimensions: events, groups, things
+  For AI agents: Read this to understand strategy.
+---
+
 # Strategic Planning Workflow
 
 **Version:** 1.0.0

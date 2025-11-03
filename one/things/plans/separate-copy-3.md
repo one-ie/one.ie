@@ -1,3 +1,21 @@
+---
+title: Separate Copy 3
+dimension: things
+category: plans
+tags: architecture, backend, frontend, ontology
+related_dimensions: connections, events, groups
+scope: global
+created: 2025-11-03
+updated: 2025-11-03
+version: 1.0.0
+ai_context: |
+  This document is part of the things dimension in the plans category.
+  Location: one/things/plans/separate-copy-3.md
+  Purpose: Documents frontend-backend separation plan
+  Related dimensions: connections, events, groups
+  For AI agents: Read this to understand separate copy 3.
+---
+
 # Frontend-Backend Separation Plan
 
 ## Executive Summary
@@ -470,7 +488,7 @@ export class CourseService extends Effect.Service<CourseService>()(
       };
     }),
     dependencies: [DataProvider],
-  }
+  },
 ) {}
 ```
 
@@ -550,7 +568,7 @@ export class ConvexProvider implements DataProvider {
 export const convexProvider = (config: { url: string }) =>
   Layer.succeed(
     DataProvider,
-    new ConvexProvider(new ConvexHttpClient(config.url))
+    new ConvexProvider(new ConvexHttpClient(config.url)),
   );
 ```
 
@@ -564,7 +582,7 @@ import { DataProvider } from "../DataProvider";
 export class CompositeProvider implements DataProvider {
   constructor(
     private defaultProvider: DataProvider,
-    private routes: Map<ThingType, DataProvider>
+    private routes: Map<ThingType, DataProvider>,
   ) {}
 
   // Route to appropriate provider based on thing type
@@ -1413,7 +1431,7 @@ const searchResults =
       thingService.list("blog_post", { filters: { query: "fitness" } }),
       thingService.list("course", { filters: { query: "fitness" } }),
     ],
-    { concurrency: "unbounded" }
+    { concurrency: "unbounded" },
   );
 
 // CompositeProvider queries both backends in parallel
@@ -1513,7 +1531,7 @@ export function HomePage() {
           thingService.list("blog_post", orgId), // → WordPress (cached)
           thingService.list("course", orgId), // → Convex (default)
         ],
-        { concurrency: "unbounded" }
+        { concurrency: "unbounded" },
       );
 
       return { products, posts, courses };
@@ -1579,8 +1597,8 @@ export default defineSchema({
         v.literal("draft"),
         v.literal("published"),
         v.literal("archived"),
-        v.literal("revoked") // ✅ Add for API keys
-      )
+        v.literal("revoked"), // ✅ Add for API keys
+      ),
     ),
     createdAt: v.number(),
     updatedAt: v.number(),
@@ -1746,7 +1764,7 @@ app.use(
       process.env.FRONTEND_URL || "",
     ].filter(Boolean),
     credentials: true,
-  })
+  }),
 );
 
 // Health check (no auth required)
@@ -1826,7 +1844,10 @@ export default app;
 
 ```typescript
 export class ApiError extends Error {
-  constructor(message: string, public status: number) {
+  constructor(
+    message: string,
+    public status: number,
+  ) {
     super(message);
     this.name = "ApiError";
   }
@@ -1843,7 +1864,7 @@ export class ApiClient {
 
   private async request<T>(
     endpoint: string,
-    options: RequestInit = {}
+    options: RequestInit = {},
   ): Promise<T> {
     const url = `${this.baseUrl}${endpoint}`;
 
@@ -2023,7 +2044,7 @@ describe("ApiClient", () => {
         headers: expect.objectContaining({
           Authorization: "Bearer sk_test_123",
         }),
-      })
+      }),
     );
   });
 
@@ -2137,7 +2158,7 @@ export async function rateLimit(c: Context, next: Next) {
           error: "Rate limit exceeded",
           resetAt: new Date(current.resetAt).toISOString(),
         },
-        429
+        429,
       );
     }
     current.count++;
@@ -2169,13 +2190,13 @@ app.use(
       ];
 
       return allowed.some((pattern) =>
-        new RegExp(pattern.replace("*", ".*")).test(origin)
+        new RegExp(pattern.replace("*", ".*")).test(origin),
       )
         ? origin
         : null;
     },
     credentials: true,
-  })
+  }),
 );
 ```
 

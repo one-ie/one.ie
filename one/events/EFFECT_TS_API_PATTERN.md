@@ -1,3 +1,21 @@
+---
+title: Effect_Ts_Api_Pattern
+dimension: events
+category: EFFECT_TS_API_PATTERN.md
+tags: ai, connections
+related_dimensions: connections, things
+scope: global
+created: 2025-11-03
+updated: 2025-11-03
+version: 1.0.0
+ai_context: |
+  This document is part of the events dimension in the EFFECT_TS_API_PATTERN.md category.
+  Location: one/events/EFFECT_TS_API_PATTERN.md
+  Purpose: Documents effect.ts dataprovider pattern guide
+  Related dimensions: connections, things
+  For AI agents: Read this to understand EFFECT_TS_API_PATTERN.
+---
+
 # Effect.ts DataProvider Pattern Guide
 
 ## Quick Reference

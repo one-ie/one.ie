@@ -1,30 +1,52 @@
+---
+title: Smart Route
+dimension: things
+category: agents
+tags: agent, ai
+related_dimensions: knowledge, people
+scope: global
+created: 2025-11-03
+updated: 2025-11-03
+version: 1.0.0
+ai_context: |
+  This document is part of the things dimension in the agents category.
+  Location: one/things/claude/commands/smart-route.md
+  Purpose: Documents /smart-route - intelligent agent selection command
+  Related dimensions: knowledge, people
+  For AI agents: Read this to understand smart route.
+---
+
 # /smart-route - Intelligent Agent Selection Command
 
 🧠 **AI-powered agent matching for optimal task execution**
 
-*Automatically analyzes your task and routes to the most suitable agent based on skills, workload, and quality history*
+_Automatically analyzes your task and routes to the most suitable agent based on skills, workload, and quality history_
 
 ## 🎯 How Intelligent Routing Works
 
 ### 1. **Task Analysis**
+
 - Extracts key requirements and skill needs from your task description
 - Identifies domain (marketing, engineering, content, research, sales, service)
 - Determines complexity level and urgency
 - Maps requirements to agent capabilities
 
 ### 2. **Agent Skill Matching**
+
 - Cross-references task requirements with agent expertise profiles
 - Calculates match scores based on specialization alignment
 - Considers agent's core competencies and secondary skills
 - Filters for agents with proven success in similar tasks
 
 ### 3. **Workload Awareness**
+
 - Checks current agent workload and availability
 - Routes to less busy agents when skills overlap significantly
 - Provides estimated wait times for busy specialists
 - Suggests backup agents with equivalent capabilities
 
 ### 4. **Quality History**
+
 - Analyzes past performance on similar task types
 - Prefers agents with 4.0+ star track record
 - Considers success rate and completion times
@@ -33,6 +55,7 @@
 ## 🚀 Usage Patterns
 
 ### Simple Task Routing
+
 ```
 /smart-route "Create a viral social media post about our new product"
 
@@ -51,6 +74,7 @@ Alternatives:
 ```
 
 ### Complex Multi-Domain Tasks
+
 ```
 /smart-route "Build an e-commerce platform with payment integration"
 
@@ -69,6 +93,7 @@ engineering-architect (75% match, can handle solo)
 ```
 
 ### Urgent Task Routing
+
 ```
 /smart-route "Fix critical bug in production NOW" --urgent
 
@@ -89,17 +114,20 @@ Reason: Available now + excellent bug fix record
 ## 🎮 Interactive Commands
 
 ### Basic Routing
+
 - `/smart-route [task_description]` - Analyze and route task
 - `/smart-route --explain [task]` - Show detailed matching analysis
 - `/smart-route --options [task]` - Show top 3 agent options
 
 ### Advanced Options
+
 - `/smart-route [task] --urgent` - Priority routing for critical tasks
 - `/smart-route [task] --team` - Route to team managers for complex work
 - `/smart-route [task] --specialist` - Route directly to individual specialists
 - `/smart-route [task] --quality-first` - Prefer highest quality agents regardless of wait
 
 ### Learning & Feedback
+
 - `/smart-route --feedback [rating] [agent]` - Rate last agent performance
 - `/smart-route --learn [task] [best_agent]` - Teach system about good matches
 - `/smart-route --stats` - Show your routing performance statistics
@@ -107,6 +135,7 @@ Reason: Available now + excellent bug fix record
 ## 📊 Routing Intelligence Dashboard
 
 ### Match Quality Indicators
+
 ```
 🎯 Agent Match Breakdown:
 
@@ -120,6 +149,7 @@ Overall Match Score: 83% (Excellent)
 ```
 
 ### Performance Tracking
+
 ```
 📈 Your Routing Performance (Last 30 Days):
 
@@ -137,6 +167,7 @@ Top Performing Routes:
 ## 🧠 Smart Routing Rules
 
 ### Skill Priority Matrix
+
 1. **Exact Specialization Match** (100 points)
 2. **Domain Expertise** (80 points)
 3. **Secondary Skills** (60 points)
@@ -144,18 +175,21 @@ Top Performing Routes:
 5. **General Capabilities** (20 points)
 
 ### Workload Balancing
+
 - **Available** → Route immediately
 - **Light Load** (1-2 tasks) → Route with note
 - **Busy** (3+ tasks) → Suggest alternatives or wait time
 - **Overloaded** (5+ tasks) → Auto-redirect to alternatives
 
 ### Quality Weighting
+
 - **4.5+ stars** → +20% priority boost
 - **4.0-4.4 stars** → Standard routing
 - **3.5-3.9 stars** → Only if best available
 - **<3.5 stars** → Avoid unless no alternatives
 
 ### Emergency Routing Logic
+
 1. Find available agents with task expertise
 2. If none available, select shortest wait time
 3. If all busy >10min, escalate to team managers
@@ -164,18 +198,21 @@ Top Performing Routes:
 ## 🎯 Integration with Existing Commands
 
 ### Enhanced /agent Command
+
 ```
 /agent [name] → Check if optimal for pending task
 Shows: "⚡ This agent is 85% match for your last described task"
 ```
 
 ### Smart /one Integration
+
 ```
 /one → Includes smart routing suggestions
 "💡 Based on your recent activity, try marketing-viral-growth for content tasks"
 ```
 
 ### Task Command Enhancement
+
 ```
 /task → Auto-suggests optimal agents for each task
 "🤖 Recommended: engineering-architect (90% match)"
@@ -184,12 +221,14 @@ Shows: "⚡ This agent is 85% match for your last described task"
 ## 📈 Success Metrics
 
 ### Target Performance
+
 - **95% Optimal Agent Assignment** (up from 75%)
-- **40% Better Task Completion Rates** 
+- **40% Better Task Completion Rates**
 - **60% Faster Time to Resolution**
 - **25% Higher User Satisfaction**
 
 ### Quality Indicators
+
 - Average task quality: 4.0+ stars maintained
 - First-try success rate: 90%+
 - User routing override rate: <10%
@@ -198,11 +237,12 @@ Shows: "⚡ This agent is 85% match for your last described task"
 ## 💡 Pro Tips
 
 ### Task Description Best Practices
+
 ```
 ❌ Poor: "Help with marketing"
 ✅ Good: "Create email campaign for product launch targeting SMBs"
 
-❌ Poor: "Fix bug" 
+❌ Poor: "Fix bug"
 ✅ Good: "Debug payment processing error in checkout flow"
 
 ❌ Poor: "Make content"
@@ -210,6 +250,7 @@ Shows: "⚡ This agent is 85% match for your last described task"
 ```
 
 ### Routing Optimization
+
 - **Be Specific**: More detail = better agent matching
 - **Include Context**: Mention urgency, complexity, audience
 - **Trust the System**: Algorithm learns from your preferences

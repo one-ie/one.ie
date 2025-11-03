@@ -1,3 +1,21 @@
+---
+title: Simple_Fix_Frontend_Only
+dimension: events
+category: SIMPLE_FIX_FRONTEND_ONLY.md
+tags: backend, frontend, ui
+related_dimensions: people, things
+scope: global
+created: 2025-11-03
+updated: 2025-11-03
+version: 1.0.0
+ai_context: |
+  This document is part of the events dimension in the SIMPLE_FIX_FRONTEND_ONLY.md category.
+  Location: one/events/SIMPLE_FIX_FRONTEND_ONLY.md
+  Purpose: Documents simple fix: frontend-only mode (following sidebar.tsx pattern)
+  Related dimensions: people, things
+  For AI agents: Read this to understand SIMPLE_FIX_FRONTEND_ONLY.
+---
+
 # SIMPLE FIX: Frontend-Only Mode (Following Sidebar.tsx Pattern)
 
 ## Problem

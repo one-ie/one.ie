@@ -1,3 +1,21 @@
+---
+title: Agent Director
+dimension: things
+category: agents
+tags: agent, ai, ai-agent, connections, events, knowledge, ontology, people, things
+related_dimensions: connections, events, groups, knowledge, people
+scope: global
+created: 2025-11-03
+updated: 2025-11-03
+version: 1.0.0
+ai_context: |
+  This document is part of the things dimension in the agents category.
+  Location: one/things/agents/agent-director.md
+  Purpose: Documents engineering director agent
+  Related dimensions: connections, events, groups, knowledge, people
+  For AI agents: Read this to understand agent director.
+---
+
 # Engineering Director Agent
 
 **Version:** 3.0.0 (Ontology-Aligned)
@@ -468,7 +486,7 @@ const mapping = {
 
 // 3. Validate
 const isValid = Object.values(mapping).every(
-  (dimension) => dimension.length > 0
+  (dimension) => dimension.length > 0,
 );
 
 // 4. Decide
@@ -543,7 +561,7 @@ on("quality_check_complete", async (event) => {
     // Delegate to problem solver
     await delegateToProblemSolver(
       event.metadata.featureId,
-      event.metadata.issues
+      event.metadata.issues,
     );
 
     // Wait for fix

@@ -1,3 +1,21 @@
+---
+title: Custom Domain
+dimension: events
+category: CUSTOM-DOMAIN.md
+tags: ai, artificial-intelligence
+related_dimensions: groups, things
+scope: global
+created: 2025-11-03
+updated: 2025-11-03
+version: 1.0.0
+ai_context: |
+  This document is part of the events dimension in the CUSTOM-DOMAIN.md category.
+  Location: one/events/CUSTOM-DOMAIN.md
+  Purpose: Documents setting up web.one.ie custom domain
+  Related dimensions: groups, things
+  For AI agents: Read this to understand CUSTOM DOMAIN.
+---
+
 # Setting up web.one.ie Custom Domain
 
 **Domain**: web.one.ie

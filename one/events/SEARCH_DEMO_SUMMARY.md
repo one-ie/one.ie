@@ -1,3 +1,21 @@
+---
+title: Search_Demo_Summary
+dimension: events
+category: SEARCH_DEMO_SUMMARY.md
+tags: ai, backend, knowledge, ontology
+related_dimensions: connections, knowledge, things
+scope: global
+created: 2025-11-03
+updated: 2025-11-03
+version: 1.0.0
+ai_context: |
+  This document is part of the events dimension in the SEARCH_DEMO_SUMMARY.md category.
+  Location: one/events/SEARCH_DEMO_SUMMARY.md
+  Purpose: Documents search/knowledge demo page implementation
+  Related dimensions: connections, knowledge, things
+  For AI agents: Read this to understand SEARCH_DEMO_SUMMARY.
+---
+
 # Search/Knowledge Demo Page Implementation
 
 ## Overview

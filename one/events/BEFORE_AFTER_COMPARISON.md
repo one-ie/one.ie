@@ -1,3 +1,21 @@
+---
+title: Before_After_Comparison
+dimension: events
+category: BEFORE_AFTER_COMPARISON.md
+tags: connections
+related_dimensions: connections, groups, knowledge, things
+scope: global
+created: 2025-11-03
+updated: 2025-11-03
+version: 1.0.0
+ai_context: |
+  This document is part of the events dimension in the BEFORE_AFTER_COMPARISON.md category.
+  Location: one/events/BEFORE_AFTER_COMPARISON.md
+  Purpose: Documents before & after: api routes typescript fixes
+  Related dimensions: connections, groups, knowledge, things
+  For AI agents: Read this to understand BEFORE_AFTER_COMPARISON.
+---
+
 # Before & After: API Routes TypeScript Fixes
 
 This document shows the exact changes made to fix all TypeScript errors in the API routes.

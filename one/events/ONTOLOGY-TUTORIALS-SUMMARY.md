@@ -1,3 +1,21 @@
+---
+title: Ontology Tutorials Summary
+dimension: events
+category: ONTOLOGY-TUTORIALS-SUMMARY.md
+tags: 6-dimensions, architecture, knowledge, ontology
+related_dimensions: connections, knowledge, things
+scope: global
+created: 2025-11-03
+updated: 2025-11-03
+version: 1.0.0
+ai_context: |
+  This document is part of the events dimension in the ONTOLOGY-TUTORIALS-SUMMARY.md category.
+  Location: one/events/ONTOLOGY-TUTORIALS-SUMMARY.md
+  Purpose: Documents multi-ontology system: tutorials & examples - summary
+  Related dimensions: connections, knowledge, things
+  For AI agents: Read this to understand ONTOLOGY TUTORIALS SUMMARY.
+---
+
 # Multi-Ontology System: Tutorials & Examples - Summary
 
 **Created:** 2025-01-20

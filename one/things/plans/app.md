@@ -1,3 +1,21 @@
+---
+title: App
+dimension: things
+category: plans
+tags: ai, connections, events, things
+related_dimensions: connections, events, groups, knowledge, people
+scope: global
+created: 2025-11-03
+updated: 2025-11-03
+version: 1.0.0
+ai_context: |
+  This document is part of the things dimension in the plans category.
+  Location: one/things/plans/app.md
+  Purpose: Documents app interface plan: matching figma design
+  Related dimensions: connections, events, groups, knowledge, people
+  For AI agents: Read this to understand app.
+---
+
 # App Interface Plan: Matching Figma Design
 
 ## Vision
@@ -48,6 +66,7 @@ Transform the mail UI into `src/pages/app/index.astro` - matching the exact Figm
 ### 1. Left Sidebar (Narrow, Icon + Text)
 
 **Design:**
+
 - Fixed narrow width (~250px)
 - White background with subtle borders
 - Profile section at top with avatar + name + dropdown
@@ -59,6 +78,7 @@ Transform the mail UI into `src/pages/app/index.astro` - matching the exact Figm
   - Inactive: gray text, hover effect
 
 **Navigation Items:**
+
 ```
 - Messages (128)    [active: black bg]
 - Groups (9)
@@ -68,6 +88,7 @@ Transform the mail UI into `src/pages/app/index.astro` - matching the exact Figm
 ```
 
 **Ontology Mapping:**
+
 ```
 Messages → Things     (all entities)
 Groups   → Group View   (group-scoped)
@@ -79,11 +100,13 @@ People   → Users      (type: "user")
 ### 2. Middle Panel (List View)
 
 **Top Section:**
+
 - **Tabs:** `Now | Top | ToDo | Done` (horizontal tabs, subtle)
 - **Search:** Full-width search input with icon
 - **Filter Pills:** Black rounded pills (e.g., "Hook", "Gift")
 
 **List Items Design:**
+
 ```
 ┌─────────────────────────────────────┐
 │ Title                    timestamp  │
@@ -95,6 +118,7 @@ People   → Users      (type: "user")
 ```
 
 **Features:**
+
 - Blue dot (●) for unread/new items
 - White background cards with border
 - Hover effect
@@ -105,6 +129,7 @@ People   → Users      (type: "user")
 ### 3. Right Panel (Detail View)
 
 **Header:**
+
 ```
 ┌──────────────────────────────┐
 │ 📧 Title                     │
@@ -113,23 +138,27 @@ People   → Users      (type: "user")
 ```
 
 **Content Area:**
+
 - Avatar groups (overlapping circles)
 - Message threads/content
 - Clean typography
 - Spacious padding
 
 **Action Buttons:**
+
 - **Primary row:** `Add | Reply | Forward | Share | Save | Copy | Complete`
 - **Secondary row:** `Add | Invite | Share | Save | Complete`
 - All buttons are subtle, minimal style
 
 **@Mentions Section:**
+
 - Pills with @ symbol
 - e.g., `@Teacher One` `@Anthony O'Connell`
 
 ### 4. Bottom Categories
 
 **Design:**
+
 - Horizontal list of category names
 - Subtle text, minimal style
 - Categories: Hook, Gift, Identify, Engage, Sell, Nurture, Upsell, Educate, Share
@@ -196,50 +225,51 @@ src/data/mail-data.ts                 → src/data/app-data.ts
 ### Phase 2: Data Layer (Match Figma Design)
 
 **Card Data Structure:**
+
 ```typescript
-import { type Id } from "@/convex/_generated/dataModel"
+import { type Id } from "@/convex/_generated/dataModel";
 
 export interface EntityCard {
-  _id: Id<"things">
+  _id: Id<"things">;
 
   // Card display
-  title: string                    // e.g., "Company"
-  characterCode?: string            // e.g., "CHS" (Character High Status?)
-  subtitle: string                  // e.g., "Gather insight and data for your company"
-  preview: string                   // First line of content/description
+  title: string; // e.g., "Company"
+  characterCode?: string; // e.g., "CHS" (Character High Status?)
+  subtitle: string; // e.g., "Gather insight and data for your company"
+  preview: string; // First line of content/description
 
   // Metadata
-  timestamp: number                 // For "1 min ago", "2 days ago"
-  unread: boolean                   // Blue dot indicator
+  timestamp: number; // For "1 min ago", "2 days ago"
+  unread: boolean; // Blue dot indicator
 
   // Tags (black pills)
-  tags: string[]                    // e.g., ["Foundation", "Company"]
+  tags: string[]; // e.g., ["Foundation", "Company"]
 
   // Ontology data
-  type: string                      // "company", "agent", "course", etc.
-  status: "now" | "top" | "todo" | "done"
+  type: string; // "company", "agent", "course", etc.
+  status: "now" | "top" | "todo" | "done";
 
   // Full entity data
-  properties: Record<string, any>
-  createdAt: number
-  updatedAt: number
-  createdBy?: Id<"things">
+  properties: Record<string, any>;
+  createdAt: number;
+  updatedAt: number;
+  createdBy?: Id<"things">;
 
   // Computed fields
-  connectionCount?: number
-  recentActivityCount?: number
+  connectionCount?: number;
+  recentActivityCount?: number;
 }
 
 // Left sidebar navigation
 export type NavigationView =
-  | "messages"    // All things
-  | "groups"      // Org-scoped things
-  | "agents"      // type: "agent"
-  | "tools"       // Protocols/integrations
-  | "people"      // type: "user"
+  | "messages" // All things
+  | "groups" // Org-scoped things
+  | "agents" // type: "agent"
+  | "tools" // Protocols/integrations
+  | "people"; // type: "user"
 
 // Top tabs in middle panel
-export type StatusFilter = "now" | "top" | "todo" | "done"
+export type StatusFilter = "now" | "top" | "todo" | "done";
 
 // Customer journey stages (filter pills)
 export const JOURNEY_STAGES = [
@@ -251,35 +281,40 @@ export const JOURNEY_STAGES = [
   "Nurture",
   "Upsell",
   "Educate",
-  "Share"
-] as const
+  "Share",
+] as const;
 
-export type JourneyStage = typeof JOURNEY_STAGES[number]
+export type JourneyStage = (typeof JOURNEY_STAGES)[number];
 ```
 
 ### Phase 3: State Management (Figma-Aligned)
 
 **New:** `src/components/app/use-app.ts`
+
 ```typescript
-import { atom, useAtom } from "jotai"
-import { type Id } from "@/convex/_generated/dataModel"
-import { type NavigationView, type StatusFilter, type JourneyStage } from "@/data/app-data"
+import { atom, useAtom } from "jotai";
+import { type Id } from "@/convex/_generated/dataModel";
+import {
+  type NavigationView,
+  type StatusFilter,
+  type JourneyStage,
+} from "@/data/app-data";
 
 type AppState = {
   // Left sidebar navigation
-  activeView: NavigationView        // "messages" | "groups" | "agents" | "tools" | "people"
+  activeView: NavigationView; // "messages" | "groups" | "agents" | "tools" | "people"
 
   // Middle panel filters
-  statusFilter: StatusFilter        // "now" | "top" | "todo" | "done"
-  journeyStages: JourneyStage[]     // ["Hook", "Gift", ...] selected pills
-  searchQuery: string
+  statusFilter: StatusFilter; // "now" | "top" | "todo" | "done"
+  journeyStages: JourneyStage[]; // ["Hook", "Gift", ...] selected pills
+  searchQuery: string;
 
   // Selected entity
-  selectedEntityId: Id<"things"> | null
+  selectedEntityId: Id<"things"> | null;
 
   // UI state
-  showDetail: boolean               // Show right panel (mobile)
-}
+  showDetail: boolean; // Show right panel (mobile)
+};
 
 const appStateAtom = atom<AppState>({
   activeView: "messages",
@@ -288,10 +323,10 @@ const appStateAtom = atom<AppState>({
   searchQuery: "",
   selectedEntityId: null,
   showDetail: false,
-})
+});
 
 export function useApp() {
-  return useAtom(appStateAtom)
+  return useAtom(appStateAtom);
 }
 ```
 
@@ -300,6 +335,7 @@ export function useApp() {
 #### 4.1 ProfileHeader (Top of Left Sidebar)
 
 **Design from Figma:**
+
 ```
 ┌─────────────────────────┐
 │ M  Anthony O'Connell ▼  │  ← Avatar + Name + Dropdown
@@ -307,16 +343,17 @@ export function useApp() {
 ```
 
 **Component:** `src/components/app/ProfileHeader.tsx`
+
 ```typescript
 interface ProfileHeaderProps {
   user: {
-    name: string
-    avatar?: string
-    email: string
-  }
-  orgs: { id: string; name: string }[]
-  activeOrg?: string
-  onOrgChange: (orgId: string) => void
+    name: string;
+    avatar?: string;
+    email: string;
+  };
+  orgs: { id: string; name: string }[];
+  activeOrg?: string;
+  onOrgChange: (orgId: string) => void;
 }
 
 // Renders:
@@ -329,6 +366,7 @@ interface ProfileHeaderProps {
 #### 4.2 Navigation (Left Sidebar Items)
 
 **Design from Figma:**
+
 ```
 ● Messages      128   ← Active: black bg, white text
 □ Groups          9
@@ -338,40 +376,41 @@ interface ProfileHeaderProps {
 ```
 
 **Component:** `src/components/app/Navigation.tsx`
+
 ```typescript
 const navigationItems = [
   {
     id: "messages",
-    icon: MessageSquare,   // or custom message icon
+    icon: MessageSquare, // or custom message icon
     label: "Messages",
-    count: 128,            // Total things count
-    active: true,          // Black background style
+    count: 128, // Total things count
+    active: true, // Black background style
   },
   {
     id: "groups",
-    icon: Grid3x3,         // or folder icon
+    icon: Grid3x3, // or folder icon
     label: "Groups",
-    count: 9,              // Orgs/workspaces count
+    count: 9, // Orgs/workspaces count
   },
   {
     id: "agents",
-    icon: Bot,             // AI agent icon
+    icon: Bot, // AI agent icon
     label: "Agents",
-    count: 20,             // Agents count
+    count: 20, // Agents count
   },
   {
     id: "tools",
-    icon: Wrench,          // Tools/integrations icon
+    icon: Wrench, // Tools/integrations icon
     label: "Tools",
-    count: 10,             // Protocols count
+    count: 10, // Protocols count
   },
   {
     id: "people",
-    icon: Users,           // People icon
+    icon: Users, // People icon
     label: "People",
-    count: 128,            // Users count
+    count: 128, // Users count
   },
-]
+];
 
 // Styling:
 // Active: bg-black text-white rounded-lg
@@ -382,6 +421,7 @@ const navigationItems = [
 #### 4.3 EntityCard (Middle Panel List Items)
 
 **Design from Figma:**
+
 ```
 ┌──────────────────────────────────┐
 │ Company              1 min ago   │  ← Title + Timestamp
@@ -393,17 +433,18 @@ const navigationItems = [
 ```
 
 **Component:** `src/components/app/EntityCard.tsx`
+
 ```typescript
 interface EntityCardProps {
-  title: string              // "Company"
-  characterCode?: string      // "CHS"
-  subtitle: string           // "Gather insight and data for your company"
-  preview?: string           // First line of description
-  timestamp: number          // For "1 min ago"
-  tags: string[]             // ["Foundation", "Company"]
-  unread?: boolean           // Blue dot
-  selected?: boolean         // Background highlight
-  onClick: () => void
+  title: string; // "Company"
+  characterCode?: string; // "CHS"
+  subtitle: string; // "Gather insight and data for your company"
+  preview?: string; // First line of description
+  timestamp: number; // For "1 min ago"
+  tags: string[]; // ["Foundation", "Company"]
+  unread?: boolean; // Blue dot
+  selected?: boolean; // Background highlight
+  onClick: () => void;
 }
 
 // Styling:
@@ -420,6 +461,7 @@ interface EntityCardProps {
 #### 4.4 EntityDisplay (Right Panel)
 
 **Design from Figma:**
+
 ```
 ┌────────────────────────────────┐
 │ 📧 Company                     │  ← Icon + Title
@@ -443,9 +485,10 @@ interface EntityCardProps {
 ```
 
 **Component:** `src/components/app/EntityDisplay.tsx`
+
 ```typescript
 interface EntityDisplayProps {
-  entity: EntityCard | null
+  entity: EntityCard | null;
 }
 
 // Structure:
@@ -468,18 +511,20 @@ interface EntityDisplayProps {
 #### 4.5 StatusTabs (Middle Panel Top)
 
 **Design from Figma:**
+
 ```
 [Now] [Top] [ToDo] [Done]
 ```
 
 **Component:** `src/components/app/StatusTabs.tsx`
+
 ```typescript
 const statusTabs = [
   { value: "now", label: "Now" },
   { value: "top", label: "Top" },
   { value: "todo", label: "ToDo" },
   { value: "done", label: "Done" },
-]
+];
 
 // Renders:
 // - Horizontal tabs (subtle style)
@@ -490,16 +535,25 @@ const statusTabs = [
 #### 4.6 JourneyStageFilters (Black Pills)
 
 **Design from Figma:**
+
 ```
 [Hook] [Gift] [more pills...]
 ```
 
 **Component:** `src/components/app/JourneyStageFilters.tsx`
+
 ```typescript
 const JOURNEY_STAGES = [
-  "Hook", "Gift", "Identify", "Engage",
-  "Sell", "Nurture", "Upsell", "Educate", "Share"
-]
+  "Hook",
+  "Gift",
+  "Identify",
+  "Engage",
+  "Sell",
+  "Nurture",
+  "Upsell",
+  "Educate",
+  "Share",
+];
 
 // Renders:
 // - Horizontal scrollable list of pills
@@ -512,24 +566,28 @@ const JOURNEY_STAGES = [
 ## Implementation Phases (Figma-Aligned)
 
 ### Phase 1: Foundation (2 hours)
+
 - [ ] Clone mail files to `src/pages/app/`, `src/components/app/`
 - [ ] Create `app-data.ts` with EntityCard, NavigationView, StatusFilter types
 - [ ] Create `use-app.ts` with Jotai state management
 - [ ] Verify basic 3-panel layout renders
 
 ### Phase 2: Left Sidebar (2-3 hours)
+
 - [ ] Build ProfileHeader component (avatar + name + dropdown)
 - [ ] Build Navigation component with 5 items (Messages, Groups, Agents, Tools, People)
 - [ ] Style active/inactive states (black bg for active)
 - [ ] Wire up view switching
 
 ### Phase 3: Middle Panel - Top Section (2 hours)
+
 - [ ] Build StatusTabs component (Now, Top, ToDo, Done)
 - [ ] Add search bar with icon
 - [ ] Build JourneyStageFilters component (black pills)
 - [ ] Wire up all filters to state
 
 ### Phase 4: Middle Panel - Entity Cards (3-4 hours)
+
 - [ ] Build EntityCard component matching Figma design
   - Title + timestamp layout
   - Character code display
@@ -542,6 +600,7 @@ const JOURNEY_STAGES = [
 - [ ] Add filtering logic (status + journey stages + search)
 
 ### Phase 5: Right Panel - Entity Display (3-4 hours)
+
 - [ ] Build EntityDisplay header (icon + title + subtitle)
 - [ ] Add avatar group display
 - [ ] Add content/activity area
@@ -552,6 +611,7 @@ const JOURNEY_STAGES = [
 - [ ] Style to match Figma spacing and typography
 
 ### Phase 6: Convex Integration (3-4 hours)
+
 - [ ] Create queries for entities filtered by view + status + stages
 - [ ] Add count queries for navigation badges
 - [ ] Implement real-time subscriptions
@@ -559,12 +619,14 @@ const JOURNEY_STAGES = [
 - [ ] Add optimistic updates
 
 ### Phase 7: Mobile Responsiveness (2 hours)
+
 - [ ] Test mobile layout (show/hide panels)
 - [ ] Add back button on mobile detail view
 - [ ] Ensure touch-friendly tap targets
 - [ ] Test horizontal scroll for filter pills
 
 ### Phase 8: Polish (2-3 hours)
+
 - [ ] Perfect spacing to match Figma pixel-perfect
 - [ ] Add transitions and hover effects
 - [ ] Test dark mode
@@ -576,6 +638,7 @@ const JOURNEY_STAGES = [
 ### 1. Visual Hierarchy from Figma
 
 The design has 3 clear levels:
+
 1. **Navigation** (left sidebar) - 5 main views with counts
 2. **Filtering** (middle panel top) - Status tabs + journey stage pills + search
 3. **Content** (cards + detail) - Clean, minimal, action-oriented
@@ -583,6 +646,7 @@ The design has 3 clear levels:
 ### 2. Black Pills as Visual Anchor
 
 Black rounded pills appear in two key places:
+
 - **Filter pills** (Hook, Gift, etc.) - selectable journey stages
 - **Tag pills** (on cards) - entity categorization
 
@@ -591,6 +655,7 @@ This creates visual consistency and makes filtering/categorization intuitive.
 ### 3. Minimal Action Buttons
 
 Action buttons are text-only with subtle styling:
+
 - **Not** icon buttons with heavy backgrounds
 - **Simple** text labels with spacing
 - **Consistent** between primary and secondary action rows
@@ -606,6 +671,7 @@ Action buttons are text-only with subtle styling:
 ### 5. Three-Column Responsive Layout
 
 The mail UI's resizable 3-panel system is perfect:
+
 - **Left:** Fixed ~250px for navigation
 - **Middle:** Flexible for card list
 - **Right:** Flexible for detail view
@@ -704,6 +770,7 @@ convex/
 ## Critical Styling Details (Match Figma Exactly)
 
 ### Left Sidebar
+
 - Width: ~250px fixed
 - Active item: `bg-black text-white rounded-lg px-3 py-2`
 - Inactive item: `text-gray-600 hover:bg-gray-100 rounded-lg px-3 py-2`
@@ -711,6 +778,7 @@ convex/
 - Profile dropdown: subtle border, centered text
 
 ### Entity Cards
+
 - White background with subtle border
 - Padding: `p-4`
 - Title: `font-semibold text-base`
@@ -722,10 +790,12 @@ convex/
 - Selected: `bg-muted border-l-4 border-l-black`
 
 ### Filter Pills (Journey Stages)
+
 - Selected: `bg-black text-white px-3 py-1 rounded-full text-sm`
 - Unselected: `bg-white text-black border border-gray-300 px-3 py-1 rounded-full text-sm hover:bg-gray-50`
 
 ### Action Buttons
+
 - Simple text buttons with spacing
 - No heavy backgrounds or borders
 - `text-sm text-gray-700 hover:text-black px-2`
@@ -754,6 +824,7 @@ The mail UI is **the perfect foundation**:
 We're **adapting existing patterns**, not reinventing the wheel.
 
 **The genius move:** Using mail.astro as the base means we inherit all the polish and functionality for free. We just need to:
+
 1. Change the data shape (Mail → EntityCard)
 2. Update the styling (match Figma colors/spacing)
 3. Add ontology-specific features (journey stages, navigation views)

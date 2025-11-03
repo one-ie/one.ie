@@ -1,3 +1,21 @@
+---
+title: Async Ai Agents
+dimension: things
+category: plans
+tags: agent, ai, ai-agent, architecture, artificial-intelligence
+related_dimensions: people
+scope: global
+created: 2025-11-03
+updated: 2025-11-03
+version: 1.0.0
+ai_context: |
+  This document is part of the things dimension in the plans category.
+  Location: one/things/plans/async-ai-agents.md
+  Purpose: Documents 🧭 prompt: build async ai agents with convex
+  Related dimensions: people
+  For AI agents: Read this to understand async ai agents.
+---
+
 Here’s a **detailed and production-ready “build-agents” prompt** that you can give to **Claude Code, Codex, or any autonomous builder agent** to implement AI systems like those described by Ian from Convex.
 It’s written in a _mission / story / task_ structure optimized for your Codex + ElizaOS workflow.
 
@@ -54,7 +72,7 @@ export default defineSchema({
     role: v.union(
       v.literal("user"),
       v.literal("assistant"),
-      v.literal("system")
+      v.literal("system"),
     ),
     content: v.string(),
     status: v.optional(v.string()), // "pending" | "completed" | "error"

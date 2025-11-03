@@ -1,3 +1,21 @@
+---
+title: Mcp Simple
+dimension: things
+category: plans
+tags:
+related_dimensions: knowledge, people
+scope: global
+created: 2025-11-03
+updated: 2025-11-03
+version: 1.0.0
+ai_context: |
+  This document is part of the things dimension in the plans category.
+  Location: one/things/plans/mcp-simple.md
+  Purpose: Documents remove mcp context pollution (simplest approach)
+  Related dimensions: knowledge, people
+  For AI agents: Read this to understand mcp simple.
+---
+
 # Remove MCP Context Pollution (Simplest Approach)
 
 **Version:** 3.0.0
@@ -133,6 +151,7 @@ More tokens = Better code, deeper thinking, longer conversations
 ### Step 2: Run the One-Time Prompt
 
 Use the "One-Time Setup Prompt" above. Claude will:
+
 - ✓ Remember this instruction permanently
 - ✓ Automatically apply it to all future conversations
 - ✓ Save 10,000 tokens in every conversation
@@ -207,6 +226,7 @@ Copy this to your project's instructions:
 Available MCPs: [list your MCPs]
 
 Instructions:
+
 1. Don't keep MCP docs in active context
 2. Load only when user requests MCP tool usage
 3. Save ~10,000 tokens per conversation

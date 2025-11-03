@@ -1,3 +1,21 @@
+---
+title: Any Backend
+dimension: connections
+category: any-backend.md
+tags: ai, architecture, backend, convex, frontend
+related_dimensions: events
+scope: global
+created: 2025-11-03
+updated: 2025-11-03
+version: 1.0.0
+ai_context: |
+  This document is part of the connections dimension in the any-backend.md category.
+  Location: one/connections/any-backend.md
+  Purpose: Documents connecting one to any backend
+  Related dimensions: events
+  For AI agents: Read this to understand any backend.
+---
+
 # Connecting ONE to Any Backend
 
 **Universal backend adapter pattern for ONE platform**

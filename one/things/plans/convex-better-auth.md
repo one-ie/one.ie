@@ -1,3 +1,21 @@
+---
+title: Convex Better Auth
+dimension: things
+category: plans
+tags: ai, auth, backend, frontend
+related_dimensions: people
+scope: global
+created: 2025-11-03
+updated: 2025-11-03
+version: 1.0.0
+ai_context: |
+  This document is part of the things dimension in the plans category.
+  Location: one/things/plans/convex-better-auth.md
+  Purpose: Documents adding convex, better auth, and better auth ui to your astro project
+  Related dimensions: people
+  For AI agents: Read this to understand convex better auth.
+---
+
 # Adding Convex, Better Auth, and Better Auth UI to Your Astro Project
 
 **This guide shows you exactly what to add to your existing Astro project** that already has React 19, Tailwind CSS 4.x, and shadcn/ui configured. You'll integrate a fresh Convex database backend with Better Auth for complete authentication (GitHub OAuth, Google OAuth, and email/password) using Better Auth UI's pre-built components.
@@ -5,12 +23,14 @@
 ## 🎯 Implementation Status: Hybrid Approach
 
 This project uses a **hybrid authentication system** that combines:
+
 - **Custom Convex Backend**: Custom authentication mutations and queries for flexibility
 - **Better Auth UI Frontend**: Beautiful, pre-built React components for the user interface
 
 ### ✅ What's Implemented
 
 #### Custom Convex Authentication Backend
+
 - ✅ Convex database with custom schema (`users` and `sessions` tables)
 - ✅ Custom auth mutations: `signUp`, `signIn`, `signOut`, `signInWithOAuth`
 - ✅ Token-based session management with 30-day expiry
@@ -20,6 +40,7 @@ This project uses a **hybrid authentication system** that combines:
 - ✅ Google OAuth integration with custom handlers
 
 #### Better Auth UI Integration
+
 - ✅ Better Auth UI components library installed
 - ✅ `AuthView` component for unified sign-in/sign-up experience
 - ✅ `UserButton` component with dropdown menu
@@ -29,6 +50,7 @@ This project uses a **hybrid authentication system** that combines:
 - ✅ API bridge (`/api/auth/[...all].ts`) connecting UI to custom backend
 
 #### Authentication Flow
+
 - ✅ `/auth` - Unified authentication page with AuthView
 - ✅ `/dashboard` - Protected route example with UserButton
 - ✅ `/settings` - Account settings with SettingsCards
@@ -39,6 +61,7 @@ This project uses a **hybrid authentication system** that combines:
 ### 📁 Key Files
 
 **Frontend Components:**
+
 - `src/components/AuthUIProvider.tsx` - Better Auth UI configuration wrapper
 - `src/components/UserButton.tsx` - User button with Better Auth UI
 - `src/lib/auth-client.ts` - Better Auth client for UI components
@@ -47,6 +70,7 @@ This project uses a **hybrid authentication system** that combines:
 - `src/pages/dashboard.astro` - Example protected page
 
 **Backend/API:**
+
 - `convex/schema.ts` - Database schema (users, sessions)
 - `convex/auth.ts` - Custom authentication mutations and queries
 - `src/pages/api/auth/[...all].ts` - API bridge for Better Auth UI
@@ -89,6 +113,7 @@ The sections below describe the full Better Auth component integration. Our curr
 ## Prerequisites check
 
 Before starting, confirm your existing project has:
+
 - ✅ Astro with React 19 integration configured
 - ✅ Tailwind CSS 4.x working
 - ✅ shadcn/ui components installed with CSS variables enabled
@@ -103,6 +128,7 @@ npm install better-auth @daveyplate/better-auth-ui @convex-dev/better-auth conve
 ```
 
 **What these do:**
+
 - `better-auth` - Core authentication library (v1.3.23)
 - `@daveyplate/better-auth-ui` - Pre-built React auth UI components (v3.2.5)
 - `@convex-dev/better-auth` - Official Convex component for Better Auth (v0.8.6)
@@ -119,6 +145,7 @@ npx convex dev
 This command creates the Convex configuration files and starts a local dev server. Keep it running in a separate terminal—it auto-generates TypeScript types as you work.
 
 **Files created:**
+
 - `convex/` directory for backend functions
 - `.env.local` with your `CONVEX_DEPLOYMENT` and `NEXT_PUBLIC_CONVEX_URL`
 
@@ -128,17 +155,15 @@ Authentication middleware requires server-side rendering. Update your Astro conf
 
 ```javascript
 // astro.config.mjs
-import { defineConfig } from 'astro/config'
-import react from '@astrojs/react'
-import node from '@astrojs/node' // or vercel, netlify, cloudflare
+import { defineConfig } from "astro/config";
+import react from "@astrojs/react";
+import node from "@astrojs/node"; // or vercel, netlify, cloudflare
 
 export default defineConfig({
-  output: 'server', // Changed from 'static'
-  adapter: node({ mode: 'standalone' }),
-  integrations: [
-    react()
-  ]
-})
+  output: "server", // Changed from 'static'
+  adapter: node({ mode: "standalone" }),
+  integrations: [react()],
+});
 ```
 
 Install your adapter if not already present:
@@ -155,13 +180,13 @@ Create the Convex configuration file to register the Better Auth component:
 
 ```typescript
 // convex.config.ts
-import { defineApp } from "convex/server"
-import betterAuth from "@convex-dev/better-auth/convex.config"
+import { defineApp } from "convex/server";
+import betterAuth from "@convex-dev/better-auth/convex.config";
 
-const app = defineApp()
-app.use(betterAuth)
+const app = defineApp();
+app.use(betterAuth);
 
-export default app
+export default app;
 ```
 
 Configure the auth provider:
@@ -175,7 +200,7 @@ export default {
       applicationID: "convex",
     },
   ],
-}
+};
 ```
 
 ## Step 5: Set up OAuth providers
@@ -191,6 +216,7 @@ Navigate to https://github.com/settings/developers and click "New OAuth App":
 5. Generate a client secret and **save both Client ID and Client Secret immediately**
 
 **For production**, create a separate OAuth app with your production domain:
+
 - Callback URL: `https://yourdomain.com/api/auth/callback/github`
 
 ### Create Google OAuth Credentials
@@ -255,34 +281,34 @@ This file configures Better Auth on the Convex backend:
 
 ```typescript
 // convex/auth.ts
-import { createClient, type GenericCtx } from "@convex-dev/better-auth"
-import { convex } from "@convex-dev/better-auth/plugins"
-import { components } from "./_generated/api"
-import { DataModel } from "./_generated/dataModel"
-import { query } from "./_generated/server"
-import { betterAuth } from "better-auth"
+import { createClient, type GenericCtx } from "@convex-dev/better-auth";
+import { convex } from "@convex-dev/better-auth/plugins";
+import { components } from "./_generated/api";
+import { DataModel } from "./_generated/dataModel";
+import { query } from "./_generated/server";
+import { betterAuth } from "better-auth";
 
-const siteUrl = process.env.SITE_URL!
+const siteUrl = process.env.SITE_URL!;
 
 // Component client for Convex + Better Auth integration
-export const authComponent = createClient<DataModel>(components.betterAuth)
+export const authComponent = createClient<DataModel>(components.betterAuth);
 
 // Create Better Auth instance with Convex adapter
 export const createAuth = (
   ctx: GenericCtx<DataModel>,
-  { optionsOnly } = { optionsOnly: false }
+  { optionsOnly } = { optionsOnly: false },
 ) => {
   return betterAuth({
     logger: { disabled: optionsOnly },
     baseURL: siteUrl,
     database: authComponent.adapter(ctx),
-    
+
     // Email and password authentication
     emailAndPassword: {
       enabled: true,
       requireEmailVerification: false,
     },
-    
+
     // OAuth providers
     socialProviders: {
       github: {
@@ -296,19 +322,19 @@ export const createAuth = (
         prompt: "select_account", // Allow account selection
       },
     },
-    
+
     // REQUIRED: Convex plugin for compatibility
     plugins: [convex()],
-  })
-}
+  });
+};
 
 // Example query to get current authenticated user
 export const getCurrentUser = query({
   args: {},
   handler: async (ctx) => {
-    return authComponent.getAuthUser(ctx)
+    return authComponent.getAuthUser(ctx);
   },
-})
+});
 ```
 
 **Important note**: You'll see TypeScript errors until you save this file and Convex generates the types. Keep `npx convex dev` running.
@@ -319,15 +345,15 @@ Create the Convex HTTP router to handle Better Auth API endpoints:
 
 ```typescript
 // convex/http.ts
-import { httpRouter } from "convex/server"
-import { authComponent, createAuth } from "./auth"
+import { httpRouter } from "convex/server";
+import { authComponent, createAuth } from "./auth";
 
-const http = httpRouter()
+const http = httpRouter();
 
 // Register Better Auth routes
-authComponent.registerRoutes(http, createAuth)
+authComponent.registerRoutes(http, createAuth);
 
-export default http
+export default http;
 ```
 
 ## Step 9: Create auth API route handler
@@ -336,24 +362,25 @@ Astro needs an API route to proxy auth requests to Convex. Create a catch-all ro
 
 ```typescript
 // src/pages/api/auth/[...all].ts
-import type { APIRoute } from "astro"
+import type { APIRoute } from "astro";
 
-export const prerender = false // Disable static generation
+export const prerender = false; // Disable static generation
 
 export const ALL: APIRoute = async ({ request }) => {
-  const convexUrl = import.meta.env.NEXT_PUBLIC_CONVEX_URL || import.meta.env.PUBLIC_CONVEX_URL
-  
+  const convexUrl =
+    import.meta.env.NEXT_PUBLIC_CONVEX_URL || import.meta.env.PUBLIC_CONVEX_URL;
+
   // Forward auth requests to Convex
-  const url = new URL(request.url)
-  const convexAuthUrl = `${convexUrl}/api/auth${url.pathname.replace('/api/auth', '')}`
-  
+  const url = new URL(request.url);
+  const convexAuthUrl = `${convexUrl}/api/auth${url.pathname.replace("/api/auth", "")}`;
+
   return fetch(convexAuthUrl, {
     method: request.method,
     headers: request.headers,
     body: request.body,
-    duplex: 'half'
-  } as RequestInit)
-}
+    duplex: "half",
+  } as RequestInit);
+};
 ```
 
 ## Step 10: Create Better Auth client
@@ -362,12 +389,12 @@ Set up the client-side auth instance:
 
 ```typescript
 // src/lib/auth-client.ts
-import { createAuthClient } from "better-auth/react"
-import { convexClient } from "@convex-dev/better-auth/client/plugins"
+import { createAuthClient } from "better-auth/react";
+import { convexClient } from "@convex-dev/better-auth/client/plugins";
 
 export const authClient = createAuthClient({
   plugins: [convexClient()],
-})
+});
 ```
 
 ## Step 11: Set up Convex client provider
@@ -376,23 +403,24 @@ Create a Convex provider component that integrates with Better Auth:
 
 ```tsx
 // src/components/ConvexClientProvider.tsx
-"use client"
+"use client";
 
-import { ReactNode } from "react"
-import { ConvexReactClient } from "convex/react"
-import { ConvexBetterAuthProvider } from "@convex-dev/better-auth/react"
-import { authClient } from "@/lib/auth-client"
+import { ReactNode } from "react";
+import { ConvexReactClient } from "convex/react";
+import { ConvexBetterAuthProvider } from "@convex-dev/better-auth/react";
+import { authClient } from "@/lib/auth-client";
 
-const convexUrl = import.meta.env.PUBLIC_CONVEX_URL || import.meta.env.NEXT_PUBLIC_CONVEX_URL
+const convexUrl =
+  import.meta.env.PUBLIC_CONVEX_URL || import.meta.env.NEXT_PUBLIC_CONVEX_URL;
 
-const convex = new ConvexReactClient(convexUrl)
+const convex = new ConvexReactClient(convexUrl);
 
 export function ConvexClientProvider({ children }: { children: ReactNode }) {
   return (
     <ConvexBetterAuthProvider client={convex} authClient={authClient}>
       {children}
     </ConvexBetterAuthProvider>
-  )
+  );
 }
 ```
 
@@ -420,8 +448,8 @@ Create middleware to check authentication status on every request:
 
 ```typescript
 // src/middleware.ts
-import { defineMiddleware } from "astro:middleware"
-import { authClient } from "./lib/auth-client"
+import { defineMiddleware } from "astro:middleware";
+import { authClient } from "./lib/auth-client";
 
 export const onRequest = defineMiddleware(async (context, next) => {
   try {
@@ -430,24 +458,24 @@ export const onRequest = defineMiddleware(async (context, next) => {
       `${import.meta.env.PUBLIC_CONVEX_URL}/api/auth/get-session`,
       {
         headers: context.request.headers,
-      }
-    )
-    
+      },
+    );
+
     if (response.ok) {
-      const session = await response.json()
-      context.locals.user = session?.user || null
-      context.locals.session = session?.session || null
+      const session = await response.json();
+      context.locals.user = session?.user || null;
+      context.locals.session = session?.session || null;
     } else {
-      context.locals.user = null
-      context.locals.session = null
+      context.locals.user = null;
+      context.locals.session = null;
     }
   } catch (error) {
-    context.locals.user = null
-    context.locals.session = null
+    context.locals.user = null;
+    context.locals.session = null;
   }
-  
-  return next()
-})
+
+  return next();
+});
 ```
 
 Add TypeScript types for `Astro.locals`:
@@ -459,17 +487,17 @@ Add TypeScript types for `Astro.locals`:
 declare namespace App {
   interface Locals {
     user: {
-      id: string
-      email: string
-      name?: string
-      image?: string
-      emailVerified: boolean
-    } | null
+      id: string;
+      email: string;
+      name?: string;
+      image?: string;
+      emailVerified: boolean;
+    } | null;
     session: {
-      id: string
-      userId: string
-      expiresAt: Date
-    } | null
+      id: string;
+      userId: string;
+      expiresAt: Date;
+    } | null;
   }
 }
 ```
@@ -480,30 +508,28 @@ Set up the Better Auth UI provider with your configuration:
 
 ```tsx
 // src/components/AuthProviders.tsx
-"use client"
+"use client";
 
-import { ReactNode } from "react"
-import { AuthUIProvider } from "@daveyplate/better-auth-ui"
-import { authClient } from "@/lib/auth-client"
+import { ReactNode } from "react";
+import { AuthUIProvider } from "@daveyplate/better-auth-ui";
+import { authClient } from "@/lib/auth-client";
 
 // For Astro, we need to handle navigation differently
 // This component will be used inside Astro islands
 export function AuthProviders({ children }: { children: ReactNode }) {
   const navigate = (path: string) => {
-    window.location.href = path
-  }
-  
+    window.location.href = path;
+  };
+
   return (
     <AuthUIProvider
       authClient={authClient}
       navigate={navigate}
-      
       // Social login configuration
       social={{
         providers: ["github", "google"],
-        signIn: "optional" // or "required"
+        signIn: "optional", // or "required"
       }}
-      
       // Password requirements
       credentials={{
         passwordValidation: {
@@ -511,20 +537,17 @@ export function AuthProviders({ children }: { children: ReactNode }) {
           requireUppercase: true,
           requireNumbers: true,
         },
-        confirmPassword: true
+        confirmPassword: true,
       }}
-      
       // Sign up customization
       signUp={{
-        fields: ["name"]
+        fields: ["name"],
       }}
-      
       // Two-factor authentication
       twoFactor={{
         enabled: true,
-        methods: ["totp"]
+        methods: ["totp"],
       }}
-      
       // Custom view paths (optional)
       viewPaths={{
         SIGN_IN: "sign-in",
@@ -535,7 +558,7 @@ export function AuthProviders({ children }: { children: ReactNode }) {
     >
       {children}
     </AuthUIProvider>
-  )
+  );
 }
 ```
 
@@ -594,8 +617,8 @@ const { pathname } = Astro.params
 <Layout title="Authentication">
   <main class="min-h-screen flex items-center justify-center bg-gradient-to-br from-background to-secondary/10">
     <div class="w-full max-w-md px-4">
-      <AuthCard 
-        pathname={pathname} 
+      <AuthCard
+        pathname={pathname}
         client:load
         classNames={{
           base: "shadow-xl",
@@ -608,8 +631,9 @@ const { pathname } = Astro.params
 ```
 
 This single route handles all authentication flows:
+
 - `/auth/sign-in` - Sign in page
-- `/auth/sign-up` - Sign up page  
+- `/auth/sign-up` - Sign up page
 - `/auth/forgot-password` - Password reset request
 - `/auth/reset-password` - Password reset confirmation
 
@@ -619,15 +643,15 @@ Build components that use Better Auth UI and your auth state:
 
 ```tsx
 // src/components/UserButton.tsx
-import { authClient } from "@/lib/auth-client"
+import { authClient } from "@/lib/auth-client";
 
 export function UserButton() {
-  const { data: session, isPending } = authClient.useSession()
-  
+  const { data: session, isPending } = authClient.useSession();
+
   if (isPending) {
-    return <div className="h-9 w-9 rounded-full bg-muted animate-pulse" />
+    return <div className="h-9 w-9 rounded-full bg-muted animate-pulse" />;
   }
-  
+
   if (!session) {
     return (
       <a href="/auth/sign-in">
@@ -635,9 +659,9 @@ export function UserButton() {
           Sign In
         </button>
       </a>
-    )
+    );
   }
-  
+
   return (
     <div className="flex items-center gap-3">
       <span className="text-sm">{session.user.name || session.user.email}</span>
@@ -648,7 +672,7 @@ export function UserButton() {
         Sign Out
       </button>
     </div>
-  )
+  );
 }
 ```
 
@@ -668,7 +692,7 @@ import { UserButton } from "@/components/UserButton"
       <UserButton client:load />
     </div>
   </header>
-  
+
   <main class="container mx-auto py-8">
     <h2>Welcome!</h2>
   </main>
@@ -703,7 +727,7 @@ if (!session) {
       <UserButton client:load />
     </div>
   </header>
-  
+
   <main class="container mx-auto py-8">
     <h2>Welcome, {Astro.locals.user?.name}!</h2>
     <p>Email: {Astro.locals.user?.email}</p>
@@ -717,30 +741,32 @@ Enhance your middleware to protect entire route patterns:
 
 ```typescript
 // src/middleware.ts
-import { defineMiddleware, sequence } from "astro:middleware"
+import { defineMiddleware, sequence } from "astro:middleware";
 
 const authMiddleware = defineMiddleware(async (context, next) => {
   // ... your existing session fetch code
-  return next()
-})
+  return next();
+});
 
 const routeGuard = defineMiddleware(async ({ url, locals, redirect }, next) => {
   const protectedRoutes = [
     /^\/dashboard($|\/.*)/,
     /^\/profile($|\/.*)/,
-    /^\/settings($|\/.*)/
-  ]
-  
-  const isProtected = protectedRoutes.some(pattern => pattern.test(url.pathname))
-  
-  if (isProtected && !locals.session) {
-    return redirect(`/auth/sign-in?redirect=${url.pathname}`)
-  }
-  
-  return next()
-})
+    /^\/settings($|\/.*)/,
+  ];
 
-export const onRequest = sequence(authMiddleware, routeGuard)
+  const isProtected = protectedRoutes.some((pattern) =>
+    pattern.test(url.pathname),
+  );
+
+  if (isProtected && !locals.session) {
+    return redirect(`/auth/sign-in?redirect=${url.pathname}`);
+  }
+
+  return next();
+});
+
+export const onRequest = sequence(authMiddleware, routeGuard);
 ```
 
 ## Step 19: Create account settings page
@@ -770,6 +796,7 @@ if (!session) {
 ```
 
 The `SettingsCards` component automatically provides:
+
 - Avatar upload
 - Name and email changes
 - Password management
@@ -784,59 +811,59 @@ Access authenticated user data in Convex queries and mutations:
 
 ```typescript
 // convex/messages.ts
-import { query, mutation } from "./_generated/server"
-import { v } from "convex/values"
-import { authComponent } from "./auth"
+import { query, mutation } from "./_generated/server";
+import { v } from "convex/values";
+import { authComponent } from "./auth";
 
 // Protected query
 export const getMyMessages = query({
   args: {},
   handler: async (ctx) => {
-    const user = await authComponent.getAuthUser(ctx)
-    
+    const user = await authComponent.getAuthUser(ctx);
+
     if (!user) {
-      throw new Error("Not authenticated")
+      throw new Error("Not authenticated");
     }
-    
+
     return await ctx.db
       .query("messages")
       .filter((q) => q.eq(q.field("userId"), user.id))
-      .collect()
+      .collect();
   },
-})
+});
 
 // Protected mutation
 export const createMessage = mutation({
   args: { content: v.string() },
   handler: async (ctx, args) => {
-    const user = await authComponent.getAuthUser(ctx)
-    
+    const user = await authComponent.getAuthUser(ctx);
+
     if (!user) {
-      throw new Error("Not authenticated")
+      throw new Error("Not authenticated");
     }
-    
+
     await ctx.db.insert("messages", {
       content: args.content,
       userId: user.id,
       createdAt: Date.now(),
-    })
+    });
   },
-})
+});
 ```
 
 Use these queries in your React components:
 
 ```tsx
 // src/components/MessageList.tsx
-import { useQuery, useMutation } from "convex/react"
-import { api } from "../../convex/_generated/api"
+import { useQuery, useMutation } from "convex/react";
+import { api } from "../../convex/_generated/api";
 
 export function MessageList() {
-  const messages = useQuery(api.messages.getMyMessages)
-  const createMessage = useMutation(api.messages.createMessage)
-  
-  if (!messages) return <div>Loading...</div>
-  
+  const messages = useQuery(api.messages.getMyMessages);
+  const createMessage = useMutation(api.messages.createMessage);
+
+  if (!messages) return <div>Loading...</div>;
+
   return (
     <div>
       <ul>
@@ -848,7 +875,7 @@ export function MessageList() {
         Send Message
       </button>
     </div>
-  )
+  );
 }
 ```
 
@@ -875,13 +902,13 @@ Better Auth UI uses your existing shadcn/ui theme automatically. To customize fu
 Customize individual Better Auth UI components with classNames:
 
 ```tsx
-<AuthCard 
+<AuthCard
   pathname="sign-in"
   classNames={{
     base: "border-2 border-primary/20 shadow-2xl",
     header: "bg-gradient-to-r from-primary to-secondary",
     title: "text-2xl",
-    footerLink: "text-primary hover:text-primary/80"
+    footerLink: "text-primary hover:text-primary/80",
   }}
 />
 ```
@@ -899,12 +926,14 @@ Customize individual Better Auth UI components with classNames:
 ### Test OAuth flows
 
 **GitHub:**
+
 1. Navigate to `http://localhost:4321/auth/sign-in`
 2. Click "Sign in with GitHub"
 3. Authorize the application (first time only)
 4. You'll be redirected back and signed in
 
 **Google:**
+
 1. Navigate to `http://localhost:4321/auth/sign-in`
 2. Click "Sign in with Google"
 3. Select your Google account
@@ -937,9 +966,9 @@ Customize individual Better Auth UI components with classNames:
 ```javascript
 // astro.config.mjs
 export default defineConfig({
-  output: 'server', // Not 'static'
-  adapter: node()
-})
+  output: "server", // Not 'static'
+  adapter: node(),
+});
 ```
 
 ### Issue: Hydration mismatch errors
@@ -961,6 +990,7 @@ export default defineConfig({
 **Symptom**: OAuth redirects result in 404
 
 **Solution**: Verify your callback URLs match exactly:
+
 - In GitHub/Google OAuth settings
 - In your environment variables
 - Use `http://localhost:4321` for local dev (Astro's default port)
@@ -980,6 +1010,7 @@ npx convex env set SITE_URL http://localhost:4321
 **Symptom**: Users get signed out on page refresh
 
 **Solution**: Check that cookies are being set. Better Auth uses HTTP-only cookies by default. Ensure:
+
 1. Your site URL is configured correctly
 2. You're not blocking cookies in browser
 3. In production, ensure HTTPS is enabled
@@ -1086,6 +1117,7 @@ Now that you have authentication working, consider adding:
 **Two-factor authentication**: Already configured—users can enable it in settings
 
 **Email verification**: Update your auth config:
+
 ```typescript
 emailAndPassword: {
   enabled: true,

@@ -1,3 +1,21 @@
+---
+title: Data Quality Metrics
+dimension: things
+category: plans
+tags: ai, connections, events, groups, knowledge, ontology, people, things
+related_dimensions: connections, events, groups, knowledge, people
+scope: global
+created: 2025-11-03
+updated: 2025-11-03
+version: 1.0.0
+ai_context: |
+  This document is part of the things dimension in the plans category.
+  Location: one/things/plans/data-quality-metrics.md
+  Purpose: Documents data quality metrics & monitoring
+  Related dimensions: connections, events, groups, knowledge, people
+  For AI agents: Read this to understand data quality metrics.
+---
+
 # Data Quality Metrics & Monitoring
 
 **Version:** 1.0.0
@@ -22,11 +40,13 @@ Each organization has independent monitoring and alerting via the `groupId` scop
 **Definition:** Percentage of references that are valid (pointing to existing entities).
 
 **Formula:**
+
 ```
 Score = 100 - (orphanedCount + crossGroupViolations) / totalReferences * 100
 ```
 
 **What it measures:**
+
 - Connections with missing source/target entities (orphaned)
 - Connections between entities in different groups (cross-group violations)
 - Knowledge records with missing source entities
@@ -36,6 +56,7 @@ Score = 100 - (orphanedCount + crossGroupViolations) / totalReferences * 100
 **Critical Threshold:** < 95%
 
 **Example:**
+
 ```
 Total connections: 1000
 Orphaned: 3
@@ -50,20 +71,24 @@ Score = 100 - (3 + 1) / 1000 * 100 = 99.6% (HEALTHY)
 **Definition:** Number of connections that reference non-existent entities.
 
 **Detection:**
+
 - Connection `fromEntityId` doesn't exist in entities table
 - Connection `toEntityId` doesn't exist in entities table
 - Knowledge `sourceThingId` doesn't exist in entities table
 
 **Alert Thresholds:**
+
 - Any orphaned entities found = CRITICAL alert
 - Threshold: 0 (zero tolerance)
 
 **Root Causes:**
+
 - Entity deleted without cascade cleanup
 - Database corruption or race condition
 - Incomplete data import/migration
 
 **Resolution:**
+
 1. Run `/scripts/migrate-ontology-v1.ts` to validate
 2. Check event log for deletion/archival events
 3. Contact support with affected entity IDs
@@ -75,19 +100,23 @@ Score = 100 - (3 + 1) / 1000 * 100 = 99.6% (HEALTHY)
 **Definition:** Number of connections spanning different groups (multi-tenant isolation breach).
 
 **Detection:**
+
 - Connection where `fromEntity.groupId !== toEntity.groupId`
 - Event where actor and target belong to different groups
 
 **Alert Thresholds:**
+
 - Any cross-group violations found = CRITICAL alert
 - Threshold: 0 (zero tolerance)
 
 **Root Causes:**
+
 - Malicious query bypassing groupId filters
 - Dangling reference from deleted group
 - Application bug in connection creation
 
 **Resolution:**
+
 1. Immediately isolate connection via soft delete
 2. Investigate query logs for how violation occurred
 3. Contact security team
@@ -100,20 +129,24 @@ Score = 100 - (3 + 1) / 1000 * 100 = 99.6% (HEALTHY)
 **Definition:** Entities/connections/events without groupId field (schema non-compliance).
 
 **Detection:**
+
 - Entity where `groupId` is null or undefined
 - Connection where `groupId` is null or undefined
 - Event where `groupId` is null or undefined
 
 **Alert Thresholds:**
+
 - Pre-migration: Expected high count
 - Post-migration: Threshold is 0
 
 **Root Causes:**
+
 - Migration incomplete
 - Legacy code creating entities without groupId
 - Database schema mismatch
 
 **Resolution:**
+
 1. Run `/scripts/migrate-ontology-v1.ts` for full migration
 2. If new violations appear: find code creating entities
 3. Enforce groupId validation in all mutation handlers
@@ -125,6 +158,7 @@ Score = 100 - (3 + 1) / 1000 * 100 = 99.6% (HEALTHY)
 **Definition:** Entities with missing required properties or type mismatches.
 
 **Detection by Type:**
+
 ```
 creator:      requires "role" field
 organization: requires "plan" field
@@ -135,15 +169,18 @@ product:      requires "price", "currency"
 ```
 
 **Alert Thresholds:**
+
 - Malformed properties > 0.01% = WARNING
 - Malformed properties > 0.1% = CRITICAL
 
 **Root Causes:**
+
 - Data import without validation
 - Legacy data not conforming to schema
 - Incomplete entity creation (network error mid-mutation)
 
 **Resolution:**
+
 1. Query affected entities: `checkIntegrity(groupId, "malformed_properties")`
 2. Review and fix properties
 3. Add validation to mutation handlers
@@ -155,6 +192,7 @@ product:      requires "price", "currency"
 **Definition:** Percentage of entities with proper schema version tracking.
 
 **Measurement:**
+
 ```
 Score = (entitiesWithSchemaVersion / totalEntities) * 100
 ```
@@ -164,6 +202,7 @@ Score = (entitiesWithSchemaVersion / totalEntities) * 100
 **Critical Threshold:** < 90%
 
 **Purpose:**
+
 - Track migration progress from v0 to v1
 - Enable smooth schema upgrades in future
 
@@ -174,6 +213,7 @@ Score = (entitiesWithSchemaVersion / totalEntities) * 100
 **Definition:** Percentage of old events (> 365 days) that have been archived.
 
 **Measurement:**
+
 ```
 Progress = (archivedOldEvents / totalOldEvents) * 100
 ```
@@ -183,6 +223,7 @@ Progress = (archivedOldEvents / totalOldEvents) * 100
 **Warning Threshold:** 70% - 90%
 
 **Benefit:**
+
 - Reduces hot data size by ~90%
 - Improves query performance
 - Maintains audit trail in cold storage
@@ -193,29 +234,32 @@ Progress = (archivedOldEvents / totalOldEvents) * 100
 
 ### Alert Thresholds Table
 
-| Metric | Healthy | Warning | Critical |
-|--------|---------|---------|----------|
-| Referential Integrity | >= 99% | 95-99% | < 95% |
-| Orphaned Entities | 0 | 0 | 0 |
-| Cross-Group Violations | 0 | 0 | 0 |
-| Missing GroupIds | 0 | 0 | 0 |
-| Malformed Properties | 0.00% | 0.01% | 0.1% |
-| Schema Compliance | >= 95% | 90-95% | < 90% |
-| Event Archival | >= 90% | 70-90% | < 70% |
+| Metric                 | Healthy | Warning | Critical |
+| ---------------------- | ------- | ------- | -------- |
+| Referential Integrity  | >= 99%  | 95-99%  | < 95%    |
+| Orphaned Entities      | 0       | 0       | 0        |
+| Cross-Group Violations | 0       | 0       | 0        |
+| Missing GroupIds       | 0       | 0       | 0        |
+| Malformed Properties   | 0.00%   | 0.01%   | 0.1%     |
+| Schema Compliance      | >= 95%  | 90-95%  | < 90%    |
+| Event Archival         | >= 90%  | 70-90%  | < 70%    |
 
 ### Alert Channels
 
 **Immediate (CRITICAL):**
+
 - Slack #ops-critical channel
 - Email to ops-critical@company.com
 - PagerDuty incident creation
 
 **Escalation (WARNING):**
+
 - Slack #ops-warnings channel
 - Email to ops-team@company.com
 - Tracked in weekly report
 
 **Info (Healthy):**
+
 - Logged to events table
 - Included in weekly summary
 - Available in dashboard
@@ -227,6 +271,7 @@ Progress = (archivedOldEvents / totalOldEvents) * 100
 ### Real-Time View
 
 **Left Panel - Integrity Score Card:**
+
 ```
 Referential Integrity: 99.8%
 ├─ Orphaned Connections: 2
@@ -235,6 +280,7 @@ Referential Integrity: 99.8%
 ```
 
 **Center Panel - Recent Alerts:**
+
 ```
 Last 24 Hours
 ├─ Critical: 0
@@ -243,6 +289,7 @@ Last 24 Hours
 ```
 
 **Right Panel - Trend Charts:**
+
 ```
 Last 7 Days
 ├─ Integrity Score: 99.6% → 99.8% (↑ improving)
@@ -253,6 +300,7 @@ Last 7 Days
 ### Data Quality Tab
 
 **Metrics Summary:**
+
 - Referential Integrity Score
 - Orphaned Entity Count
 - Cross-Group Violations
@@ -261,11 +309,13 @@ Last 7 Days
 - Event Archival Progress
 
 **Historical Trend:**
+
 - Last 7 days: line chart of each metric
 - Last 30 days: aggregated view
 - Compare to baseline
 
 **Detailed Issue List:**
+
 - Filter by category (orphaned, cross-group, malformed, etc.)
 - Filter by severity (critical, warning, info)
 - Click to see affected records
@@ -274,12 +324,14 @@ Last 7 Days
 ### Group-Level Scoping
 
 **All metrics are per-organization:**
+
 - Dropdown to select group
 - Metrics auto-update for selected group
 - Alerts filtered by group
 - Snapshots only show that group's data
 
 **Platform-wide view (ops only):**
+
 - See all organizations' metrics
 - Identify patterns across groups
 - Spot systemic issues
@@ -289,9 +341,11 @@ Last 7 Days
 ## Monitoring Schedule
 
 ### Hourly (Fast Check)
+
 **Time:** Every hour at :00
 
 **What:**
+
 - Check for critical issues only
 - Count orphaned entities, cross-group refs, missing groupIds
 - Alert if any found
@@ -304,9 +358,11 @@ Last 7 Days
 ---
 
 ### Daily (Comprehensive)
+
 **Time:** 02:00 UTC
 
 **What:**
+
 1. Full integrity check across all dimensions
 2. Compute all 7 metrics
 3. Save snapshot to dataQualitySnapshots table
@@ -320,9 +376,11 @@ Last 7 Days
 ---
 
 ### Weekly (Summary Report)
+
 **Time:** Monday 06:00 UTC
 
 **What:**
+
 1. Aggregate daily snapshots from past 7 days
 2. Calculate trends (improving vs declining)
 3. Generate summary report
@@ -336,9 +394,11 @@ Last 7 Days
 ---
 
 ### Event Archival
+
 **Time:** Daily 03:00 UTC
 
 **What:**
+
 1. Find events older than 365 days
 2. Mark as archived (soft delete)
 3. Remove from hot indexes
@@ -504,6 +564,7 @@ await client.query("queries/monitoring:getSchemaVersionDistribution", {
 **Root Cause:** Entity was deleted without cascading cleanup
 
 **Remediation Steps:**
+
 1. Query the orphaned connection:
    ```
    connectionId = alert.metadata.connectionId
@@ -530,6 +591,7 @@ await client.query("queries/monitoring:getSchemaVersionDistribution", {
 **Root Cause:** Data isolation was bypassed
 
 **Remediation Steps:**
+
 1. **IMMEDIATE:** Contact security@company.com
 2. Query the violating connection:
    ```
@@ -555,6 +617,7 @@ await client.query("queries/monitoring:getSchemaVersionDistribution", {
 **Root Cause:** Data quality getting worse over time
 
 **Remediation Steps:**
+
 1. Review trend snapshots from last 7 days
    ```
    dataQualitySnapshots where timestamp >= (now - 7 days)
@@ -574,18 +637,21 @@ await client.query("queries/monitoring:getSchemaVersionDistribution", {
 ### For SOC 2 Compliance
 
 **Type II Data Integrity Controls:**
+
 - Real-time monitoring (hourly checks)
 - Documented thresholds and alerts
 - Audit trail for all issues found
 - Remediation tracking in events
 
 **Evidence:**
+
 - `dataQualitySnapshots` table (7+ years retention)
-- `events` table with monitoring_* types
+- `events` table with monitoring\_\* types
 - Weekly summary reports
 - Alert history in logs
 
 **Annual Audit:**
+
 - Review data integrity metrics year-over-year
 - Check orphaned entity count (should stay near 0)
 - Verify event archival compliance
@@ -594,6 +660,7 @@ await client.query("queries/monitoring:getSchemaVersionDistribution", {
 ### For GDPR Data Protection
 
 **Right to Be Forgotten:**
+
 - Integrity checks include orphaned knowledge
 - Data source tracking via `sourceThingId`
 - Deletion cascade prevents partial records

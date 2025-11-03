@@ -1,3 +1,21 @@
+---
+title: Development Plan
+dimension: things
+category: plans
+tags: agent, ai, architecture, backend, frontend
+related_dimensions: connections, events, groups, knowledge, people
+scope: global
+created: 2025-11-03
+updated: 2025-11-03
+version: 1.0.0
+ai_context: |
+  This document is part of the things dimension in the plans category.
+  Location: one/things/plans/development-plan.md
+  Purpose: Documents one platform: complete development plan
+  Related dimensions: connections, events, groups, knowledge, people
+  For AI agents: Read this to understand development plan.
+---
+
 # ONE Platform: Complete Development Plan
 
 **Version:** 2.0.0
@@ -141,14 +159,14 @@ Never:
 
 Everything in ONE maps to 6 dimensions:
 
-| Dimension | Purpose | Examples |
-|-----------|---------|----------|
-| **Groups** | Containers for collaboration | Orgs, teams, friend circles, DAOs |
-| **People** | Authorization & governance | Users, roles, permissions |
-| **Things** | All entities | Users, agents, products, tokens |
-| **Connections** | Relationships between things | Owns, follows, enrolled_in |
-| **Events** | Actions and state changes | Created, purchased, learned |
-| **Knowledge** | Embeddings and semantic search | Labels, vectors, chunks |
+| Dimension       | Purpose                        | Examples                          |
+| --------------- | ------------------------------ | --------------------------------- |
+| **Groups**      | Containers for collaboration   | Orgs, teams, friend circles, DAOs |
+| **People**      | Authorization & governance     | Users, roles, permissions         |
+| **Things**      | All entities                   | Users, agents, products, tokens   |
+| **Connections** | Relationships between things   | Owns, follows, enrolled_in        |
+| **Events**      | Actions and state changes      | Created, purchased, learned       |
+| **Knowledge**   | Embeddings and semantic search | Labels, vectors, chunks           |
 
 **Golden Rule:** If you can't map a feature to these 6 dimensions, rethink your approach.
 
@@ -158,13 +176,13 @@ Every table includes `groupId` for perfect data isolation:
 
 ```typescript
 // All queries automatically scoped to group
-query("things")
-  .withIndex("group_type", (q) =>
-    q.eq("groupId", orgId).eq("type", "blog_post")
-  )
+query("things").withIndex("group_type", (q) =>
+  q.eq("groupId", orgId).eq("type", "blog_post"),
+);
 ```
 
 **Benefits:**
+
 - Same schema for all customers
 - No data leakage between groups
 - Hierarchical nesting (parent → child access control)
@@ -188,6 +206,7 @@ Infer 91-100:  Deployment & Documentation
 ```
 
 **Why?**
+
 - More accurate than time estimates
 - Context-light (3k tokens per inference)
 - Parallel-friendly (independent inferences run together)
@@ -196,21 +215,22 @@ Infer 91-100:  Deployment & Documentation
 ### 4. Effect.ts for Business Logic
 
 All backend services use Effect.ts for:
+
 - Type safety without any runtime overhead
 - Composable dependencies via Layer.mergeAll
 - Tagged errors replacing try/catch
 - Testability with mock providers
 
 **Pattern:**
+
 ```typescript
 // Pure business logic
-const UserService = Effect.gen(function*() {
-  const db = yield* DataProvider
+const UserService = Effect.gen(function* () {
+  const db = yield* DataProvider;
   return {
-    create: (user: User) =>
-      Effect.tryPromise(() => db.people.create(user))
-  }
-})
+    create: (user: User) => Effect.tryPromise(() => db.people.create(user)),
+  };
+});
 ```
 
 ### 5. Backend-Agnostic Architecture
@@ -233,6 +253,7 @@ const provider = new SupabaseProvider(...)
 ### Layer 1: Frontend (Astro 5 + React 19)
 
 **Technology:**
+
 - Astro 5.14+ (static generation + SSR)
 - React 19 (islands architecture)
 - Tailwind CSS v4 (CSS-based, no config.js)
@@ -240,6 +261,7 @@ const provider = new SupabaseProvider(...)
 - TypeScript 5.9+ (strict mode)
 
 **Key Directories:**
+
 ```
 web/src/
 ├── pages/                  # File-based routing
@@ -256,6 +278,7 @@ web/src/
 ```
 
 **Development Commands:**
+
 ```bash
 cd web/
 bun run dev              # localhost:4321
@@ -271,6 +294,7 @@ bunx astro check        # Type checking
 **Purpose:** Pure business logic independent of backend
 
 **Key Services:**
+
 - ThingService (all 66 entity types)
 - ConnectionService (all 25 relationship types)
 - EventService (all 67 event types)
@@ -279,17 +303,16 @@ bunx astro check        # Type checking
 - PeopleService (authorization)
 
 **Pattern:**
+
 ```typescript
 // Effect.ts service - testable, composable, type-safe
 const create = (user: User) =>
-  Effect.gen(function*() {
-    const db = yield* DataProvider
-    const id = yield* Effect.tryPromise(() =>
-      db.people.create(user)
-    )
-    yield* EventService.log({ type: "user_created", targetId: id })
-    return id
-  })
+  Effect.gen(function* () {
+    const db = yield* DataProvider;
+    const id = yield* Effect.tryPromise(() => db.people.create(user));
+    yield* EventService.log({ type: "user_created", targetId: id });
+    return id;
+  });
 ```
 
 ### Layer 3: Backend (Convex Cloud)
@@ -297,6 +320,7 @@ const create = (user: User) =>
 **Purpose:** Real-time database + business logic execution
 
 **Key Components:**
+
 ```
 backend/convex/
 ├── schema.ts             # 6-dimension ontology (5 tables)
@@ -308,12 +332,14 @@ backend/convex/
 ```
 
 **Technology:**
+
 - Convex Cloud (production deployment)
 - Better Auth (6 authentication methods)
 - Convex Resend (transactional emails)
 - Convex rate-limiter (brute force protection)
 
 **Development Commands:**
+
 ```bash
 cd backend/
 npx convex dev           # Watch mode
@@ -328,6 +354,7 @@ npx convex run queries/entities:list  # Run from CLI
 ### Database Schema (5 Core Tables + Junction)
 
 #### 1. **groups** (Dimension 1: Containers)
+
 ```typescript
 {
   _id: Id<"groups">,
@@ -353,6 +380,7 @@ npx convex run queries/entities:list  # Run from CLI
 **Purpose:** Multi-tenant isolation with hierarchical organization
 
 #### 2. **entities** (Dimension 3: Things)
+
 ```typescript
 {
   _id: Id<"entities">,
@@ -377,6 +405,7 @@ npx convex run queries/entities:list  # Run from CLI
 **Purpose:** All nouns - users, products, agents, content, tokens
 
 #### 3. **connections** (Dimension 4: Relationships)
+
 ```typescript
 {
   _id: Id<"connections">,
@@ -403,6 +432,7 @@ npx convex run queries/entities:list  # Run from CLI
 **Purpose:** Express all relationships between entities
 
 #### 4. **events** (Dimension 5: Actions)
+
 ```typescript
 {
   _id: Id<"events">,
@@ -424,6 +454,7 @@ npx convex run queries/entities:list  # Run from CLI
 **Purpose:** Complete audit trail of all actions
 
 #### 5. **knowledge** (Dimension 6: Intelligence)
+
 ```typescript
 {
   _id: Id<"knowledge">,
@@ -447,6 +478,7 @@ npx convex run queries/entities:list  # Run from CLI
 **Purpose:** Semantic search and RAG context
 
 #### 6. **thing_knowledge** (Junction)
+
 ```typescript
 {
   thingId: Id<"entities">,
@@ -538,6 +570,7 @@ Create Effect.ts services with:
 Every feature follows this proven 100-inference sequence:
 
 ### Infer 1-10: Foundation & Setup
+
 - [ ] Validate feature with product team
 - [ ] Map to 6-dimension ontology
 - [ ] List all entity types needed
@@ -550,6 +583,7 @@ Every feature follows this proven 100-inference sequence:
 - [ ] Get stakeholder approval
 
 ### Infer 11-20: Backend Schema & Services
+
 - [ ] Update schema.ts with new tables/fields
 - [ ] Create schema indexes
 - [ ] Implement entity types in TypeScript
@@ -562,6 +596,7 @@ Every feature follows this proven 100-inference sequence:
 - [ ] Document service API
 
 ### Infer 21-30: Frontend Pages & Components
+
 - [ ] Create page layout (Astro)
 - [ ] Build form components (React + shadcn/ui)
 - [ ] Implement loading states
@@ -574,6 +609,7 @@ Every feature follows this proven 100-inference sequence:
 - [ ] Write component tests
 
 ### Infer 31-40: Integration & Connections
+
 - [ ] Connect frontend to services
 - [ ] Implement data fetching (useQuery)
 - [ ] Implement mutations (useMutation)
@@ -586,6 +622,7 @@ Every feature follows this proven 100-inference sequence:
 - [ ] Test with Supabase provider
 
 ### Infer 41-50: Authentication & Authorization
+
 - [ ] Define roles for feature
 - [ ] Implement permission checks
 - [ ] Add auth context to queries
@@ -598,6 +635,7 @@ Every feature follows this proven 100-inference sequence:
 - [ ] Document auth requirements
 
 ### Infer 51-60: Knowledge & RAG
+
 - [ ] Design knowledge chunks
 - [ ] Create embedding strategy
 - [ ] Implement vector search
@@ -610,6 +648,7 @@ Every feature follows this proven 100-inference sequence:
 - [ ] Document knowledge strategy
 
 ### Infer 61-70: Quality & Testing
+
 - [ ] Write unit tests (services)
 - [ ] Write integration tests (end-to-end)
 - [ ] Write component tests
@@ -622,6 +661,7 @@ Every feature follows this proven 100-inference sequence:
 - [ ] Get test coverage report
 
 ### Infer 71-80: Design & Wireframes
+
 - [ ] Review design consistency
 - [ ] Check WCAG accessibility
 - [ ] Test responsive design
@@ -634,6 +674,7 @@ Every feature follows this proven 100-inference sequence:
 - [ ] Document component library
 
 ### Infer 81-90: Performance & Optimization
+
 - [ ] Audit bundle size
 - [ ] Optimize images
 - [ ] Implement caching strategy
@@ -646,6 +687,7 @@ Every feature follows this proven 100-inference sequence:
 - [ ] Document performance targets
 
 ### Infer 91-100: Deployment & Documentation
+
 - [ ] Write user documentation
 - [ ] Create API documentation
 - [ ] Update architecture docs
@@ -665,37 +707,37 @@ Every feature follows this proven 100-inference sequence:
 
 ### Frontend
 
-| Purpose | Technology | Version | Notes |
-|---------|-----------|---------|-------|
-| **Build** | Astro | 5.14+ | Static gen + SSR |
-| **Runtime** | React | 19 | Islands architecture |
-| **Styling** | Tailwind CSS | v4 | CSS @theme blocks (no config.js) |
-| **Components** | shadcn/ui | Latest | 50+ pre-installed |
-| **Lang** | TypeScript | 5.9+ | Strict mode |
-| **Package Manager** | bun | Latest | Fast, reliable |
-| **Testing** | Vitest | Latest | Fast unit tests |
-| **Linting** | ESLint | Latest | With Astro support |
-| **Formatting** | Prettier | Latest | With Astro plugin |
+| Purpose             | Technology   | Version | Notes                            |
+| ------------------- | ------------ | ------- | -------------------------------- |
+| **Build**           | Astro        | 5.14+   | Static gen + SSR                 |
+| **Runtime**         | React        | 19      | Islands architecture             |
+| **Styling**         | Tailwind CSS | v4      | CSS @theme blocks (no config.js) |
+| **Components**      | shadcn/ui    | Latest  | 50+ pre-installed                |
+| **Lang**            | TypeScript   | 5.9+    | Strict mode                      |
+| **Package Manager** | bun          | Latest  | Fast, reliable                   |
+| **Testing**         | Vitest       | Latest  | Fast unit tests                  |
+| **Linting**         | ESLint       | Latest  | With Astro support               |
+| **Formatting**      | Prettier     | Latest  | With Astro plugin                |
 
 ### Backend
 
-| Purpose | Technology | Version | Notes |
-|---------|-----------|---------|-------|
-| **Database** | Convex | Cloud | Real-time + typed |
-| **Auth** | Better Auth | Latest | 6 methods supported |
-| **Email** | Resend | Latest | Convex component |
-| **Rate Limiting** | Convex | Built-in | Brute force protection |
-| **Business Logic** | Effect.ts | Latest | Type-safe, composable |
-| **Runtime** | Node.js | 18+ | In Convex functions |
+| Purpose            | Technology  | Version  | Notes                  |
+| ------------------ | ----------- | -------- | ---------------------- |
+| **Database**       | Convex      | Cloud    | Real-time + typed      |
+| **Auth**           | Better Auth | Latest   | 6 methods supported    |
+| **Email**          | Resend      | Latest   | Convex component       |
+| **Rate Limiting**  | Convex      | Built-in | Brute force protection |
+| **Business Logic** | Effect.ts   | Latest   | Type-safe, composable  |
+| **Runtime**        | Node.js     | 18+      | In Convex functions    |
 
 ### Infrastructure
 
-| Purpose | Technology | Version | Notes |
-|---------|-----------|---------|-------|
-| **Hosting (Frontend)** | Cloudflare Pages | - | React 19 SSR edge |
-| **Hosting (Backend)** | Convex Cloud | - | Production URL: shocking-falcon-870 |
-| **Payments** | Stripe | Latest | Fiat only |
-| **Blockchain** | Sui, Base, Solana | - | Via service providers |
+| Purpose                | Technology        | Version | Notes                               |
+| ---------------------- | ----------------- | ------- | ----------------------------------- |
+| **Hosting (Frontend)** | Cloudflare Pages  | -       | React 19 SSR edge                   |
+| **Hosting (Backend)**  | Convex Cloud      | -       | Production URL: shocking-falcon-870 |
+| **Payments**           | Stripe            | Latest  | Fiat only                           |
+| **Blockchain**         | Sui, Base, Solana | -       | Via service providers               |
 
 ---
 
@@ -704,54 +746,59 @@ Every feature follows this proven 100-inference sequence:
 ### Task 1: Add a New Entity Type (e.g., "Podcast")
 
 **1. Define the type in schema.ts:**
+
 ```typescript
 // backend/convex/schema.ts
 const thingType = v.union(
   v.literal("user"),
   v.literal("product"),
-  v.literal("podcast"),  // ADD THIS
+  v.literal("podcast"), // ADD THIS
   // ... 60+ other types
-)
+);
 ```
 
 **2. Create migrations/queries:**
+
 ```typescript
 // backend/convex/queries/podcasts.ts
 export const list = query({
   args: { groupId: v.id("groups") },
   handler: async (ctx, args) => {
-    return ctx.db.query("entities")
-      .withIndex("group_type", q =>
-        q.eq("groupId", args.groupId)
-         .eq("type", "podcast")
+    return ctx.db
+      .query("entities")
+      .withIndex("group_type", (q) =>
+        q.eq("groupId", args.groupId).eq("type", "podcast"),
       )
-      .collect()
-  }
-})
+      .collect();
+  },
+});
 ```
 
 **3. Create Effect.ts service:**
+
 ```typescript
 // web/src/lib/services/podcast.service.ts
-const PodcastService = Effect.gen(function*() {
-  const db = yield* DataProvider
+const PodcastService = Effect.gen(function* () {
+  const db = yield* DataProvider;
   return {
     create: (groupId: string, data: PodcastInput) =>
-      db.things.create({ groupId, type: "podcast", ...data })
-  }
-})
+      db.things.create({ groupId, type: "podcast", ...data }),
+  };
+});
 ```
 
 **4. Build React components:**
+
 ```typescript
 // web/src/components/features/PodcastList.tsx
 export function PodcastList({ groupId }: { groupId: string }) {
-  const podcasts = useQuery(api.queries.podcasts.list, { groupId })
+  const podcasts = useQuery(api.queries.podcasts.list, { groupId });
   // Render podcast list
 }
 ```
 
 **5. Create Astro pages:**
+
 ```astro
 ---
 // web/src/pages/groups/[groupId]/podcasts.astro
@@ -765,34 +812,38 @@ const podcasts = await convex.query(...)
 ### Task 2: Add a New Relationship Type (e.g., "hosts")
 
 **1. Define in schema.ts:**
+
 ```typescript
 const relationshipType = v.union(
   v.literal("owns"),
   v.literal("follows"),
-  v.literal("hosts"),  // ADD THIS (person hosts podcast)
+  v.literal("hosts"), // ADD THIS (person hosts podcast)
   // ... 20+ other types
-)
+);
 ```
 
 **2. Create queries to find relationships:**
+
 ```typescript
 // backend/convex/queries/connections.ts
 export const hosted_by = query({
   args: { podcastId: v.id("entities") },
   handler: async (ctx, args) => {
-    return ctx.db.query("connections")
-      .filter(q =>
+    return ctx.db
+      .query("connections")
+      .filter((q) =>
         q.and(
           q.eq(q.field("toEntityId"), args.podcastId),
-          q.eq(q.field("relationshipType"), "hosts")
-        )
+          q.eq(q.field("relationshipType"), "hosts"),
+        ),
       )
-      .collect()
-  }
-})
+      .collect();
+  },
+});
 ```
 
 **3. Create mutations:**
+
 ```typescript
 // backend/convex/mutations/connections.ts
 export const create_host = mutation({
@@ -808,29 +859,31 @@ export const create_host = mutation({
       toEntityId: args.podcastId,
       relationshipType: "hosts",
       createdAt: Date.now(),
-    })
-  }
-})
+    });
+  },
+});
 ```
 
 ### Task 3: Add an Event Type (e.g., "podcast_released")
 
 **1. Define in schema:**
+
 ```typescript
 const eventType = v.union(
   v.literal("entity_created"),
-  v.literal("podcast_released"),  // ADD THIS
+  v.literal("podcast_released"), // ADD THIS
   // ... 60+ other types
-)
+);
 ```
 
 **2. Log events in mutations:**
+
 ```typescript
 export const publish_podcast = mutation({
   args: { podcastId: v.id("entities"), groupId: v.id("groups") },
   handler: async (ctx, args) => {
     // Update podcast
-    await ctx.db.patch(args.podcastId, { status: "published" })
+    await ctx.db.patch(args.podcastId, { status: "published" });
 
     // Log event
     await ctx.db.insert("events", {
@@ -839,9 +892,9 @@ export const publish_podcast = mutation({
       actorId: ctx.auth.getUserIdentity().tokenIdentifier,
       targetId: args.podcastId,
       timestamp: Date.now(),
-    })
-  }
-})
+    });
+  },
+});
 ```
 
 ### Task 4: Implement Feature with All 6 Dimensions
@@ -865,49 +918,49 @@ Follow the 6-phase development workflow to implement all dimensions.
 
 ### Essential Reading (Start Here)
 
-| Document | Time | Why |
-|----------|------|-----|
-| `/one/knowledge/ontology.md` | 30min | Core 6-dimension model |
-| `CLAUDE.md` | 2 hours | Platform guidance (2,500 lines) |
-| `AGENTS.md` | 30min | Quick reference patterns |
-| `/one/knowledge/rules.md` | 20min | Golden development rules |
+| Document                     | Time    | Why                             |
+| ---------------------------- | ------- | ------------------------------- |
+| `/one/knowledge/ontology.md` | 30min   | Core 6-dimension model          |
+| `CLAUDE.md`                  | 2 hours | Platform guidance (2,500 lines) |
+| `AGENTS.md`                  | 30min   | Quick reference patterns        |
+| `/one/knowledge/rules.md`    | 20min   | Golden development rules        |
 
 ### Architecture (Understanding the System)
 
-| Document | Purpose |
-|----------|---------|
+| Document                         | Purpose                             |
+| -------------------------------- | ----------------------------------- |
 | `/one/knowledge/architecture.md` | Complete system architecture (74KB) |
-| `/one/knowledge/files.md` | File structure guide (127KB) |
-| `/one/connections/workflow.md` | 6-phase development workflow |
-| `/one/connections/patterns.md` | Proven code patterns |
+| `/one/knowledge/files.md`        | File structure guide (127KB)        |
+| `/one/connections/workflow.md`   | 6-phase development workflow        |
+| `/one/connections/patterns.md`   | Proven code patterns                |
 
 ### Implementation (How to Build)
 
-| Document | For... |
-|----------|--------|
+| Document                         | For...                          |
+| -------------------------------- | ------------------------------- |
 | `/one/connections/middleware.md` | Effect.ts services (glue layer) |
-| `/one/knowledge/frontend.md` | Astro + React patterns |
-| `/one/knowledge/hono.md` | Backend + Convex patterns |
-| `one/things/plans/effect.md` | Complete Effect.ts guide (71KB) |
+| `/one/knowledge/frontend.md`     | Astro + React patterns          |
+| `/one/knowledge/hono.md`         | Backend + Convex patterns       |
+| `one/things/plans/effect.md`     | Complete Effect.ts guide (71KB) |
 
 ### Integration (Connecting Systems)
 
-| Document | Purpose |
-|----------|---------|
-| `/one/connections/protocols.md` | Protocol overview (A2A, ACP, AP2) |
-| `/one/connections/elizaos.md` | ElizaOS integration |
-| `/one/connections/copilotkit.md` | CopilotKit integration |
-| `/one/connections/mcp.md` | MCP server integration |
+| Document                         | Purpose                           |
+| -------------------------------- | --------------------------------- |
+| `/one/connections/protocols.md`  | Protocol overview (A2A, ACP, AP2) |
+| `/one/connections/elizaos.md`    | ElizaOS integration               |
+| `/one/connections/copilotkit.md` | CopilotKit integration            |
+| `/one/connections/mcp.md`        | MCP server integration            |
 
 ### Specific Technologies
 
-| For... | Read... |
-|--------|---------|
+| For...                    | Read...                                           |
+| ------------------------- | ------------------------------------------------- |
 | Multi-tenant architecture | `/one/things/plans/group-folder-multi-tenancy.md` |
-| Authentication | `/one/things/plans/better-auth-any-backend.md` |
-| Email system | `/one/things/plans/mail.md` |
-| Deployment | `/one/things/plans/deploy-to-cloudflare.md` |
-| Performance | `/one/things/plans/performance.md` |
+| Authentication            | `/one/things/plans/better-auth-any-backend.md`    |
+| Email system              | `/one/things/plans/mail.md`                       |
+| Deployment                | `/one/things/plans/deploy-to-cloudflare.md`       |
+| Performance               | `/one/things/plans/performance.md`                |
 
 ### All 66 Plan Files
 
@@ -943,18 +996,21 @@ Misc              (3)    - Big plan, repos, sync
 ### Phase 2: Feature Development (Current)
 
 **Priority 1: Core Features**
+
 - [ ] Complete blog system (posts, comments, categories)
 - [ ] User profiles (avatars, bio, settings)
 - [ ] Group management (create, invite, manage)
 - [ ] Real-time notifications
 
 **Priority 2: Advanced Features**
+
 - [ ] RAG knowledge base (embeddings, search)
 - [ ] Payment integration (Stripe)
 - [ ] Content recommendations
 - [ ] Analytics dashboard
 
 **Priority 3: Platform Features**
+
 - [ ] Admin panel
 - [ ] Organization management
 - [ ] Audit logging
@@ -983,6 +1039,7 @@ Misc              (3)    - Big plan, repos, sync
 ### Q: How do I add a new feature?
 
 **A:** Follow the 6-phase workflow:
+
 1. Understand the ontology
 2. Map to 6 dimensions
 3. Design services
@@ -1023,6 +1080,7 @@ All services work with any backend implementing the DataProvider interface.
 ### Q: Why use inference-based planning instead of day estimates?
 
 **A:** Because:
+
 - Time estimates are wildly inaccurate
 - Context resets between days
 - Each inference is concrete and measurable
@@ -1034,6 +1092,7 @@ All services work with any backend implementing the DataProvider interface.
 ### Q: What's the deal with Effect.ts?
 
 **A:** Effect.ts provides:
+
 - Type safety without runtime overhead
 - Composable services via layers
 - Tagged errors (no throw/catch)
@@ -1100,24 +1159,25 @@ runTests(wpProvider)
 ```typescript
 // Instead of:
 try {
-  const user = await db.getUser(id)
-} catch(e) {
+  const user = await db.getUser(id);
+} catch (e) {
   // ???
 }
 
 // Do this:
-const result = yield* Effect.tryPromise(() =>
-  db.getUser(id)
-).pipe(
-  Effect.catchTag("InvalidInput", () =>
-    Effect.fail(new UserNotFound({ userId: id }))
-  )
-)
+const result =
+  yield *
+  Effect.tryPromise(() => db.getUser(id)).pipe(
+    Effect.catchTag("InvalidInput", () =>
+      Effect.fail(new UserNotFound({ userId: id })),
+    ),
+  );
 ```
 
 ### Q: How do I contribute?
 
 **A:**
+
 1. Claim an inference (use `/todo`)
 2. Read the inference context
 3. Execute the inference
@@ -1162,11 +1222,13 @@ const result = yield* Effect.tryPromise(() =>
 ### For Your Next Task:
 
 1. **Check current inference:**
+
    ```bash
    /todo
    ```
 
 2. **Read inference context** (if first time)
+
    ```bash
    /now
    ```
@@ -1180,6 +1242,7 @@ const result = yield* Effect.tryPromise(() =>
    - Phase 6: Test (quality)
 
 4. **Mark complete:**
+
    ```bash
    /done
    ```

@@ -1,3 +1,21 @@
+---
+title: Component Specifications
+dimension: things
+category: designs
+tags: ai, architecture, backend, connections, events, frontend, groups, knowledge, things
+related_dimensions: connections, events, groups, knowledge
+scope: global
+created: 2025-11-03
+updated: 2025-11-03
+version: 1.0.0
+ai_context: |
+  This document is part of the things dimension in the designs category.
+  Location: one/things/designs/component-specifications.md
+  Purpose: Documents component specifications - one platform
+  Related dimensions: connections, events, groups, knowledge
+  For AI agents: Read this to understand component specifications.
+---
+
 # Component Specifications - ONE Platform
 
 **Version:** 1.0.0
@@ -48,36 +66,51 @@ Pages (Astro .astro files)
 **Purpose:** Display a single group with metadata
 
 **Props:**
+
 ```typescript
 interface GroupCardProps {
   group: {
     _id: string;
     slug: string;
     name: string;
-    type: 'friend_circle' | 'business' | 'community' | 'dao' | 'government' | 'organization';
+    type:
+      | "friend_circle"
+      | "business"
+      | "community"
+      | "dao"
+      | "government"
+      | "organization";
     parentGroupId?: string;
     description?: string;
-    status: 'active' | 'archived';
+    status: "active" | "archived";
     settings: {
-      visibility: 'public' | 'private';
-      plan?: 'starter' | 'pro' | 'enterprise';
+      visibility: "public" | "private";
+      plan?: "starter" | "pro" | "enterprise";
     };
   };
-  onEdit?: (group: GroupCardProps['group']) => void;
+  onEdit?: (group: GroupCardProps["group"]) => void;
   onDelete?: (groupId: string) => void;
   showHierarchy?: boolean;
 }
 ```
 
 **Component Structure:**
+
 ```tsx
-export function GroupCard({ group, onEdit, onDelete, showHierarchy }: GroupCardProps) {
+export function GroupCard({
+  group,
+  onEdit,
+  onDelete,
+  showHierarchy,
+}: GroupCardProps) {
   return (
     <Card className="p-4">
       <CardHeader>
-        {showHierarchy && <HierarchyIndicator parentGroupId={group.parentGroupId} />}
+        {showHierarchy && (
+          <HierarchyIndicator parentGroupId={group.parentGroupId} />
+        )}
         <CardTitle>{group.name}</CardTitle>
-        <Badge variant={group.status === 'active' ? 'default' : 'secondary'}>
+        <Badge variant={group.status === "active" ? "default" : "secondary"}>
           {group.status}
         </Badge>
       </CardHeader>
@@ -98,7 +131,11 @@ export function GroupCard({ group, onEdit, onDelete, showHierarchy }: GroupCardP
           </Button>
         )}
         {onDelete && (
-          <Button variant="destructive" size="sm" onClick={() => onDelete(group._id)}>
+          <Button
+            variant="destructive"
+            size="sm"
+            onClick={() => onDelete(group._id)}
+          >
             Archive
           </Button>
         )}
@@ -109,11 +146,13 @@ export function GroupCard({ group, onEdit, onDelete, showHierarchy }: GroupCardP
 ```
 
 **Accessibility:**
+
 - Card has `role="article"`
 - Buttons have clear labels
 - Status badge has `aria-label`
 
 **States:**
+
 - Default: Normal display
 - Hover: Slight elevation
 - Focus: Ring outline
@@ -124,17 +163,23 @@ export function GroupCard({ group, onEdit, onDelete, showHierarchy }: GroupCardP
 **Purpose:** Display hierarchical group structure with tree view
 
 **Props:**
+
 ```typescript
 interface GroupHierarchyProps {
-  groups: Array<GroupCardProps['group']>;
+  groups: Array<GroupCardProps["group"]>;
   onSelect?: (groupId: string) => void;
   selectedGroupId?: string;
 }
 ```
 
 **Component Structure:**
+
 ```tsx
-export function GroupHierarchy({ groups, onSelect, selectedGroupId }: GroupHierarchyProps) {
+export function GroupHierarchy({
+  groups,
+  onSelect,
+  selectedGroupId,
+}: GroupHierarchyProps) {
   const groupTree = buildTree(groups); // Helper to create tree structure
 
   return (
@@ -161,7 +206,7 @@ function GroupTreeNode({ group, level, onSelect, isSelected }) {
         onClick={() => onSelect?.(group._id)}
         className={cn(
           "flex items-center gap-2 w-full p-2 rounded hover:bg-accent",
-          isSelected && "bg-accent"
+          isSelected && "bg-accent",
         )}
       >
         {group.children?.length > 0 && (
@@ -175,21 +220,23 @@ function GroupTreeNode({ group, level, onSelect, isSelected }) {
         )}
         <span>{group.name}</span>
       </button>
-      {isExpanded && group.children?.map((child) => (
-        <GroupTreeNode
-          key={child._id}
-          group={child}
-          level={level + 1}
-          onSelect={onSelect}
-          isSelected={selectedGroupId === child._id}
-        />
-      ))}
+      {isExpanded &&
+        group.children?.map((child) => (
+          <GroupTreeNode
+            key={child._id}
+            group={child}
+            level={level + 1}
+            onSelect={onSelect}
+            isSelected={selectedGroupId === child._id}
+          />
+        ))}
     </div>
   );
 }
 ```
 
 **Accessibility:**
+
 - Tree structure with `role="tree"`
 - Nodes have `role="treeitem"`
 - Arrow keys for navigation
@@ -200,10 +247,11 @@ function GroupTreeNode({ group, level, onSelect, isSelected }) {
 **Purpose:** Create or edit group with full form
 
 **Props:**
+
 ```typescript
 interface GroupDialogProps {
-  mode: 'create' | 'edit';
-  group?: GroupCardProps['group'];
+  mode: "create" | "edit";
+  group?: GroupCardProps["group"];
   onSave: (data: GroupFormData) => Promise<void>;
   onCancel: () => void;
   isOpen: boolean;
@@ -216,18 +264,25 @@ interface GroupFormData {
   parentGroupId?: string;
   description?: string;
   settings: {
-    visibility: 'public' | 'private';
-    joinPolicy: 'open' | 'invite_only' | 'approval_required';
-    plan?: 'starter' | 'pro' | 'enterprise';
+    visibility: "public" | "private";
+    joinPolicy: "open" | "invite_only" | "approval_required";
+    plan?: "starter" | "pro" | "enterprise";
   };
 }
 ```
 
 **Component Structure:**
+
 ```tsx
-export function GroupDialog({ mode, group, onSave, onCancel, isOpen }: GroupDialogProps) {
+export function GroupDialog({
+  mode,
+  group,
+  onSave,
+  onCancel,
+  isOpen,
+}: GroupDialogProps) {
   const [formData, setFormData] = useState<GroupFormData>(
-    group || getDefaultFormData()
+    group || getDefaultFormData(),
   );
   const [isLoading, setIsLoading] = useState(false);
   const [errors, setErrors] = useState<Record<string, string>>({});
@@ -255,7 +310,7 @@ export function GroupDialog({ mode, group, onSave, onCancel, isOpen }: GroupDial
       <DialogContent className="sm:max-w-[600px]">
         <DialogHeader>
           <DialogTitle>
-            {mode === 'create' ? 'Create Group' : 'Edit Group'}
+            {mode === "create" ? "Create Group" : "Edit Group"}
           </DialogTitle>
         </DialogHeader>
         <form onSubmit={handleSubmit} className="space-y-4">
@@ -265,7 +320,9 @@ export function GroupDialog({ mode, group, onSave, onCancel, isOpen }: GroupDial
             <Input
               id="name"
               value={formData.name}
-              onChange={(e) => setFormData({ ...formData, name: e.target.value })}
+              onChange={(e) =>
+                setFormData({ ...formData, name: e.target.value })
+              }
               placeholder="Acme Corporation"
               required
               aria-invalid={!!errors.name}
@@ -284,7 +341,9 @@ export function GroupDialog({ mode, group, onSave, onCancel, isOpen }: GroupDial
             <Input
               id="slug"
               value={formData.slug}
-              onChange={(e) => setFormData({ ...formData, slug: e.target.value })}
+              onChange={(e) =>
+                setFormData({ ...formData, slug: e.target.value })
+              }
               placeholder="acme-corp"
               required
               pattern="[a-z0-9-]+"
@@ -292,7 +351,7 @@ export function GroupDialog({ mode, group, onSave, onCancel, isOpen }: GroupDial
               aria-describedby="slug-preview"
             />
             <p id="slug-preview" className="text-xs text-muted-foreground">
-              one.ie/groups/{formData.slug || '...'}
+              one.ie/groups/{formData.slug || "..."}
             </p>
             {errors.slug && (
               <p className="text-sm text-destructive">{errors.slug}</p>
@@ -304,7 +363,9 @@ export function GroupDialog({ mode, group, onSave, onCancel, isOpen }: GroupDial
             <Label htmlFor="type">Type *</Label>
             <Select
               value={formData.type}
-              onValueChange={(value) => setFormData({ ...formData, type: value })}
+              onValueChange={(value) =>
+                setFormData({ ...formData, type: value })
+              }
             >
               <SelectTrigger id="type">
                 <SelectValue />
@@ -325,7 +386,9 @@ export function GroupDialog({ mode, group, onSave, onCancel, isOpen }: GroupDial
             <Label htmlFor="parentGroupId">Parent Group (optional)</Label>
             <GroupSelector
               value={formData.parentGroupId}
-              onChange={(value) => setFormData({ ...formData, parentGroupId: value })}
+              onChange={(value) =>
+                setFormData({ ...formData, parentGroupId: value })
+              }
               excludeGroupId={group?._id} // Can't be parent of itself
             />
           </div>
@@ -335,8 +398,10 @@ export function GroupDialog({ mode, group, onSave, onCancel, isOpen }: GroupDial
             <Label htmlFor="description">Description (optional)</Label>
             <Textarea
               id="description"
-              value={formData.description || ''}
-              onChange={(e) => setFormData({ ...formData, description: e.target.value })}
+              value={formData.description || ""}
+              onChange={(e) =>
+                setFormData({ ...formData, description: e.target.value })
+              }
               rows={3}
             />
           </div>
@@ -352,7 +417,7 @@ export function GroupDialog({ mode, group, onSave, onCancel, isOpen }: GroupDial
                   onValueChange={(value) =>
                     setFormData({
                       ...formData,
-                      settings: { ...formData.settings, visibility: value }
+                      settings: { ...formData.settings, visibility: value },
                     })
                   }
                 >
@@ -373,7 +438,7 @@ export function GroupDialog({ mode, group, onSave, onCancel, isOpen }: GroupDial
                   onValueChange={(value) =>
                     setFormData({
                       ...formData,
-                      settings: { ...formData.settings, joinPolicy: value }
+                      settings: { ...formData.settings, joinPolicy: value },
                     })
                   }
                 >
@@ -383,7 +448,9 @@ export function GroupDialog({ mode, group, onSave, onCancel, isOpen }: GroupDial
                   <SelectContent>
                     <SelectItem value="open">Open</SelectItem>
                     <SelectItem value="invite_only">Invite Only</SelectItem>
-                    <SelectItem value="approval_required">Approval Required</SelectItem>
+                    <SelectItem value="approval_required">
+                      Approval Required
+                    </SelectItem>
                   </SelectContent>
                 </Select>
               </div>
@@ -399,17 +466,24 @@ export function GroupDialog({ mode, group, onSave, onCancel, isOpen }: GroupDial
 
           {/* Actions */}
           <DialogFooter>
-            <Button type="button" variant="outline" onClick={onCancel} disabled={isLoading}>
+            <Button
+              type="button"
+              variant="outline"
+              onClick={onCancel}
+              disabled={isLoading}
+            >
               Cancel
             </Button>
             <Button type="submit" disabled={isLoading}>
               {isLoading ? (
                 <>
                   <Loader2 className="mr-2 h-4 w-4 animate-spin" />
-                  {mode === 'create' ? 'Creating...' : 'Saving...'}
+                  {mode === "create" ? "Creating..." : "Saving..."}
                 </>
+              ) : mode === "create" ? (
+                "Create Group"
               ) : (
-                mode === 'create' ? 'Create Group' : 'Save Changes'
+                "Save Changes"
               )}
             </Button>
           </DialogFooter>
@@ -421,26 +495,28 @@ export function GroupDialog({ mode, group, onSave, onCancel, isOpen }: GroupDial
 ```
 
 **Validation Rules:**
+
 ```typescript
 function validateForm(data: GroupFormData): Record<string, string> {
   const errors: Record<string, string> = {};
 
   if (!data.name || data.name.trim().length === 0) {
-    errors.name = 'Name is required';
+    errors.name = "Name is required";
   }
   if (data.name.length > 100) {
-    errors.name = 'Name must be 100 characters or less';
+    errors.name = "Name must be 100 characters or less";
   }
 
   if (!data.slug || data.slug.trim().length === 0) {
-    errors.slug = 'Slug is required';
+    errors.slug = "Slug is required";
   }
   if (!/^[a-z0-9-]+$/.test(data.slug)) {
-    errors.slug = 'Slug must contain only lowercase letters, numbers, and hyphens';
+    errors.slug =
+      "Slug must contain only lowercase letters, numbers, and hyphens";
   }
 
   if (!data.type) {
-    errors.type = 'Type is required';
+    errors.type = "Type is required";
   }
 
   return errors;
@@ -448,6 +524,7 @@ function validateForm(data: GroupFormData): Record<string, string> {
 ```
 
 **Accessibility:**
+
 - Form has `aria-labelledby`
 - Fields associated with labels
 - Validation errors announced
@@ -458,6 +535,7 @@ function validateForm(data: GroupFormData): Record<string, string> {
 **Purpose:** Display a single thing with type-specific icon and metadata
 
 **Props:**
+
 ```typescript
 interface ThingCardProps {
   thing: {
@@ -465,17 +543,18 @@ interface ThingCardProps {
     groupId: string;
     type: string; // One of 66 types
     name: string;
-    status: 'active' | 'inactive' | 'draft' | 'published' | 'archived';
+    status: "active" | "inactive" | "draft" | "published" | "archived";
     properties: Record<string, any>;
     createdAt: number;
     updatedAt: number;
   };
-  onEdit?: (thing: ThingCardProps['thing']) => void;
+  onEdit?: (thing: ThingCardProps["thing"]) => void;
   onDelete?: (thingId: string) => void;
 }
 ```
 
 **Component Structure:**
+
 ```tsx
 export function ThingCard({ thing, onEdit, onDelete }: ThingCardProps) {
   const Icon = getIconForType(thing.type); // Helper function
@@ -488,9 +567,7 @@ export function ThingCard({ thing, onEdit, onDelete }: ThingCardProps) {
           <CardTitle className="text-base">{thing.name}</CardTitle>
           <p className="text-xs text-muted-foreground">{thing.type}</p>
         </div>
-        <Badge variant={getStatusVariant(thing.status)}>
-          {thing.status}
-        </Badge>
+        <Badge variant={getStatusVariant(thing.status)}>{thing.status}</Badge>
       </CardHeader>
       <CardContent>
         <dl className="text-sm space-y-1">
@@ -511,7 +588,11 @@ export function ThingCard({ thing, onEdit, onDelete }: ThingCardProps) {
           </Button>
         )}
         {onDelete && (
-          <Button variant="destructive" size="sm" onClick={() => onDelete(thing._id)}>
+          <Button
+            variant="destructive"
+            size="sm"
+            onClick={() => onDelete(thing._id)}
+          >
             Delete
           </Button>
         )}
@@ -521,7 +602,9 @@ export function ThingCard({ thing, onEdit, onDelete }: ThingCardProps) {
 }
 
 // Helper: Get icon for thing type
-function getIconForType(type: string): React.ComponentType<{ className?: string }> {
+function getIconForType(
+  type: string,
+): React.ComponentType<{ className?: string }> {
   const iconMap: Record<string, React.ComponentType> = {
     creator: User,
     blog_post: FileText,
@@ -534,15 +617,15 @@ function getIconForType(type: string): React.ComponentType<{ className?: string 
 }
 
 // Helper: Get badge variant for status
-function getStatusVariant(status: string): 'default' | 'secondary' | 'outline' {
+function getStatusVariant(status: string): "default" | "secondary" | "outline" {
   const variantMap = {
-    active: 'default',
-    published: 'default',
-    draft: 'secondary',
-    archived: 'outline',
-    inactive: 'outline',
+    active: "default",
+    published: "default",
+    draft: "secondary",
+    archived: "outline",
+    inactive: "outline",
   };
-  return variantMap[status] || 'outline';
+  return variantMap[status] || "outline";
 }
 ```
 
@@ -551,6 +634,7 @@ function getStatusVariant(status: string): 'default' | 'secondary' | 'outline' {
 **Purpose:** Filter things by group, type, status with search
 
 **Props:**
+
 ```typescript
 interface ThingFilterProps {
   onFilterChange: (filters: ThingFilters) => void;
@@ -567,8 +651,13 @@ interface ThingFilters {
 ```
 
 **Component Structure:**
+
 ```tsx
-export function ThingFilter({ onFilterChange, availableGroups, availableTypes }: ThingFilterProps) {
+export function ThingFilter({
+  onFilterChange,
+  availableGroups,
+  availableTypes,
+}: ThingFilterProps) {
   const [filters, setFilters] = useState<ThingFilters>({});
   const debouncedSearch = useDebounce(filters.search, 300);
 
@@ -650,13 +739,13 @@ export function ThingFilter({ onFilterChange, availableGroups, availableTypes }:
           id="filter-search"
           type="search"
           placeholder="Search by name..."
-          value={filters.search || ''}
+          value={filters.search || ""}
           onChange={(e) => setFilters({ ...filters, search: e.target.value })}
         />
       </div>
 
       {/* Clear Filters */}
-      {Object.keys(filters).some(key => filters[key]) && (
+      {Object.keys(filters).some((key) => filters[key]) && (
         <Button
           variant="outline"
           size="sm"
@@ -676,6 +765,7 @@ export function ThingFilter({ onFilterChange, availableGroups, availableTypes }:
 **Purpose:** Display chronological event history
 
 **Props:**
+
 ```typescript
 interface EventTimelineProps {
   events: Array<{
@@ -692,8 +782,13 @@ interface EventTimelineProps {
 ```
 
 **Component Structure:**
+
 ```tsx
-export function EventTimeline({ events, onLoadMore, hasMore }: EventTimelineProps) {
+export function EventTimeline({
+  events,
+  onLoadMore,
+  hasMore,
+}: EventTimelineProps) {
   const groupedEvents = groupByDate(events);
 
   return (
@@ -726,6 +821,7 @@ export function EventTimeline({ events, onLoadMore, hasMore }: EventTimelineProp
 Each component must pass these test scenarios:
 
 ### GroupDialog Tests
+
 - [ ] Renders in create mode with empty form
 - [ ] Renders in edit mode with pre-filled data
 - [ ] Validates required fields (name, slug, type)
@@ -738,6 +834,7 @@ Each component must pass these test scenarios:
 - [ ] Keyboard navigation works (Tab, Enter, Escape)
 
 ### ThingCard Tests
+
 - [ ] Renders with correct icon for type
 - [ ] Shows status badge with correct color
 - [ ] Formats dates correctly
@@ -746,6 +843,7 @@ Each component must pass these test scenarios:
 - [ ] Accessible to screen readers
 
 ### ThingFilter Tests
+
 - [ ] Applies all filters simultaneously
 - [ ] Debounces search input (300ms)
 - [ ] Calls onFilterChange with updated filters

@@ -1,3 +1,21 @@
+---
+title: Stripe Setup Guide
+dimension: events
+category: STRIPE-SETUP-GUIDE.md
+tags: 
+related_dimensions: people
+scope: global
+created: 2025-11-03
+updated: 2025-11-03
+version: 1.0.0
+ai_context: |
+  This document is part of the events dimension in the STRIPE-SETUP-GUIDE.md category.
+  Location: one/events/STRIPE-SETUP-GUIDE.md
+  Purpose: Documents stripe integration setup guide
+  Related dimensions: people
+  For AI agents: Read this to understand STRIPE SETUP GUIDE.
+---
+
 # Stripe Integration Setup Guide
 
 Complete guide for setting up Stripe payments in the ONE Platform.

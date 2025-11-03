@@ -1,14 +1,33 @@
+---
+title: Mission
+dimension: things
+category: agents
+tags: agent, ai
+related_dimensions: knowledge, people
+scope: global
+created: 2025-11-03
+updated: 2025-11-03
+version: 1.0.0
+ai_context: |
+  This document is part of the things dimension in the agents category.
+  Location: one/things/claude/commands/mission.md
+  Purpose: Documents /mission - mission planning & management with real-time status
+  Related dimensions: knowledge, people
+  For AI agents: Read this to understand mission.
+---
+
 # /mission - Mission Planning & Management with Real-time Status
 
 🎯 **Direct access to strategic mission planning with live progress tracking**
 
-*Alternative to `/one` > 1. Start New Mission for advanced users*
+_Alternative to `/one` > 1. Start New Mission for advanced users_
 
 💡 **TIP: Use `/one` for guided experience with full dashboard context**
 
 ## 📊 Real-time Status Features
 
 ### Progress Indicators
+
 ```
 🎯 Mission 2 of 5: "AI Marketing System" | 67% Complete
    📖 Stories: 2 of 3 Complete | ✅ 4.2⭐ Average Quality
@@ -16,8 +35,9 @@
 ```
 
 ### Live Updates
+
 - **Mission Status**: Planning → Active → Review → Complete
-- **Story Progress**: Real-time task completion tracking  
+- **Story Progress**: Real-time task completion tracking
 - **Agent Activity**: Current assignments and availability
 - **Quality Gates**: Live score updates and validation status
 
@@ -39,7 +59,7 @@ display:
   header: |
     🎯 {{USER_NAME}} Mission Control
     {{USER_TAGLINE}}
-    
+
     📊 Your Goals:
     {{#each USER_GOALS}}
     • {{this}}

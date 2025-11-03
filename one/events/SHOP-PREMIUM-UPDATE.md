@@ -1,3 +1,19 @@
+---
+title: Shop Premium Update
+dimension: events
+category: SHOP-PREMIUM-UPDATE.md
+tags: ai
+scope: global
+created: 2025-11-03
+updated: 2025-11-03
+version: 1.0.0
+ai_context: |
+  This document is part of the events dimension in the SHOP-PREMIUM-UPDATE.md category.
+  Location: one/events/SHOP-PREMIUM-UPDATE.md
+  Purpose: Documents ultra-premium shop page - design upgrade summary
+  For AI agents: Read this to understand SHOP PREMIUM UPDATE.
+---
+
 # Ultra-Premium Shop Page - Design Upgrade Summary
 
 ## Overview

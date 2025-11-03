@@ -1,3 +1,21 @@
+---
+title: Remove Convex Deps
+dimension: things
+category: features
+tags: ai, backend, frontend
+related_dimensions: knowledge
+scope: global
+created: 2025-11-03
+updated: 2025-11-03
+version: 1.0.0
+ai_context: |
+  This document is part of the things dimension in the features category.
+  Location: one/things/features/remove-convex-deps.md
+  Purpose: Documents feature: remove direct convex dependencies
+  Related dimensions: knowledge
+  For AI agents: Read this to understand remove convex deps.
+---
+
 # Feature: Remove Direct Convex Dependencies
 
 **Feature ID:** `feature_remove_convex_deps`

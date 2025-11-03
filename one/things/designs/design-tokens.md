@@ -1,3 +1,19 @@
+---
+title: Design Tokens
+dimension: things
+category: designs
+tags: ai
+scope: global
+created: 2025-11-03
+updated: 2025-11-03
+version: 1.0.0
+ai_context: |
+  This document is part of the things dimension in the designs category.
+  Location: one/things/designs/design-tokens.md
+  Purpose: Documents design tokens - one platform
+  For AI agents: Read this to understand design tokens.
+---
+
 # Design Tokens - ONE Platform
 
 **Version:** 1.0.0
@@ -10,23 +26,25 @@
 ### Brand Colors (HSL Format)
 
 **Light Mode:**
+
 ```css
---color-primary: 216 55% 25%;           /* Professional blue #1e4069 */
---color-primary-foreground: 36 8% 96%;   /* Near white for contrast */
---color-secondary: 219 14% 28%;          /* Muted blue-gray #3a4249 */
+--color-primary: 216 55% 25%; /* Professional blue #1e4069 */
+--color-primary-foreground: 36 8% 96%; /* Near white for contrast */
+--color-secondary: 219 14% 28%; /* Muted blue-gray #3a4249 */
 --color-secondary-foreground: 36 8% 96%; /* Near white */
---color-accent: 105 22% 25%;             /* Green accent #32543e */
---color-accent-foreground: 36 8% 96%;    /* Near white */
+--color-accent: 105 22% 25%; /* Green accent #32543e */
+--color-accent-foreground: 36 8% 96%; /* Near white */
 ```
 
 **Dark Mode:**
+
 ```css
 .dark {
-  --color-primary: 216 55% 25%;           /* Same blue (consistency) */
-  --color-primary-foreground: 36 8% 96%;  /* Near white */
-  --color-secondary: 219 14% 32%;         /* Lighter in dark mode */
+  --color-primary: 216 55% 25%; /* Same blue (consistency) */
+  --color-primary-foreground: 36 8% 96%; /* Near white */
+  --color-secondary: 219 14% 32%; /* Lighter in dark mode */
   --color-secondary-foreground: 36 8% 96%;
-  --color-accent: 105 22% 35%;            /* Lighter green */
+  --color-accent: 105 22% 35%; /* Lighter green */
   --color-accent-foreground: 36 8% 96%;
 }
 ```
@@ -34,21 +52,23 @@
 ### Surface Colors
 
 **Light Mode:**
+
 ```css
---color-background: 36 8% 88%;      /* Warm off-white #e4dfd5 */
---color-foreground: 0 0% 13%;       /* Near black #212121 */
---color-card: 36 10% 74%;           /* Card surface #c8bfaf */
---color-card-foreground: 0 0% 13%;  /* Near black */
---color-popover: 36 10% 74%;        /* Popover surface */
+--color-background: 36 8% 88%; /* Warm off-white #e4dfd5 */
+--color-foreground: 0 0% 13%; /* Near black #212121 */
+--color-card: 36 10% 74%; /* Card surface #c8bfaf */
+--color-card-foreground: 0 0% 13%; /* Near black */
+--color-popover: 36 10% 74%; /* Popover surface */
 --color-popover-foreground: 0 0% 13%;
 ```
 
 **Dark Mode:**
+
 ```css
 .dark {
-  --color-background: 0 0% 13%;       /* Near black #212121 */
-  --color-foreground: 36 8% 96%;      /* Near white #f5f3f0 */
-  --color-card: 0 0% 10%;             /* Darker card #1a1a1a */
+  --color-background: 0 0% 13%; /* Near black #212121 */
+  --color-foreground: 36 8% 96%; /* Near white #f5f3f0 */
+  --color-card: 0 0% 10%; /* Darker card #1a1a1a */
   --color-card-foreground: 36 8% 96%; /* Near white */
   --color-popover: 0 0% 10%;
   --color-popover-foreground: 36 8% 96%;
@@ -58,36 +78,39 @@
 ### Utility Colors
 
 **Light Mode:**
+
 ```css
---color-muted: 219 14% 92%;             /* Muted background #ebecee */
+--color-muted: 219 14% 92%; /* Muted background #ebecee */
 --color-muted-foreground: 219 14% 30%; /* Muted text #434e5a */
---color-destructive: 0 84% 60%;         /* Error red #e63946 */
+--color-destructive: 0 84% 60%; /* Error red #e63946 */
 --color-destructive-foreground: 0 0% 100%; /* White */
---color-border: 0 0% 100% / 0.1;        /* Subtle border with alpha */
---color-input: 0 0% 100% / 0.1;         /* Input border */
---color-ring: 216 63% 17%;              /* Focus ring #0f2941 */
+--color-border: 0 0% 100% / 0.1; /* Subtle border with alpha */
+--color-input: 0 0% 100% / 0.1; /* Input border */
+--color-ring: 216 63% 17%; /* Focus ring #0f2941 */
 ```
 
 **Dark Mode:**
+
 ```css
 .dark {
-  --color-muted: 216 63% 17%;         /* Dark muted #0f2941 */
+  --color-muted: 216 63% 17%; /* Dark muted #0f2941 */
   --color-muted-foreground: 36 8% 80%; /* Light muted text #cdc8bf */
-  --color-destructive: 0 84% 60%;      /* Same red */
+  --color-destructive: 0 84% 60%; /* Same red */
   --color-destructive-foreground: 0 0% 98%; /* Near white */
   --color-border: 0 0% 100% / 0.1;
   --color-input: 0 0% 100% / 0.1;
-  --color-ring: 216 63% 68%;           /* Brighter focus in dark #4e88c7 */
+  --color-ring: 216 63% 68%; /* Brighter focus in dark #4e88c7 */
 }
 ```
 
 ### Sidebar Colors
 
 **Light Mode:**
+
 ```css
---color-sidebar-background: 36 8% 88%;  /* Same as background */
+--color-sidebar-background: 36 8% 88%; /* Same as background */
 --color-sidebar-foreground: 0 0% 13%;
---color-sidebar-primary: 216 55% 25%;   /* Same as primary */
+--color-sidebar-primary: 216 55% 25%; /* Same as primary */
 --color-sidebar-primary-foreground: 36 8% 96%;
 --color-sidebar-accent: 219 14% 28%;
 --color-sidebar-accent-foreground: 36 8% 96%;
@@ -96,11 +119,12 @@
 ```
 
 **Dark Mode:**
+
 ```css
 .dark {
-  --color-sidebar-background: 0 0% 10%;   /* Darker than main background */
+  --color-sidebar-background: 0 0% 10%; /* Darker than main background */
   --color-sidebar-foreground: 36 8% 96%;
-  --color-sidebar-primary: 216 63% 68%;   /* Brighter blue */
+  --color-sidebar-primary: 216 63% 68%; /* Brighter blue */
   --color-sidebar-primary-foreground: 0 0% 13%; /* Dark text on light bg */
   --color-sidebar-accent: 219 14% 32%;
   --color-sidebar-accent-foreground: 36 8% 96%;
@@ -112,22 +136,24 @@
 ### Chart Colors
 
 **Light Mode:**
+
 ```css
---color-chart-1: 216 55% 25%;   /* Primary blue */
---color-chart-2: 105 22% 32%;   /* Green */
---color-chart-3: 219 14% 40%;   /* Gray-blue */
---color-chart-4: 36 8% 55%;     /* Warm gray */
---color-chart-5: 0 0% 13%;      /* Near black */
+--color-chart-1: 216 55% 25%; /* Primary blue */
+--color-chart-2: 105 22% 32%; /* Green */
+--color-chart-3: 219 14% 40%; /* Gray-blue */
+--color-chart-4: 36 8% 55%; /* Warm gray */
+--color-chart-5: 0 0% 13%; /* Near black */
 ```
 
 **Dark Mode:**
+
 ```css
 .dark {
-  --color-chart-1: 216 63% 68%;   /* Brighter blue */
-  --color-chart-2: 105 22% 45%;   /* Brighter green */
-  --color-chart-3: 219 14% 38%;   /* Adjusted gray */
-  --color-chart-4: 36 8% 60%;     /* Lighter warm gray */
-  --color-chart-5: 0 0% 96%;      /* Near white */
+  --color-chart-1: 216 63% 68%; /* Brighter blue */
+  --color-chart-2: 105 22% 45%; /* Brighter green */
+  --color-chart-3: 219 14% 38%; /* Adjusted gray */
+  --color-chart-4: 36 8% 60%; /* Lighter warm gray */
+  --color-chart-5: 0 0% 96%; /* Near white */
 }
 ```
 
@@ -135,15 +161,15 @@
 
 ```css
 /* Success */
---color-success: 142 71% 45%;           /* Green #22c55e */
+--color-success: 142 71% 45%; /* Green #22c55e */
 --color-success-foreground: 0 0% 100%;
 
 /* Warning */
---color-warning: 38 92% 50%;            /* Orange #f59e0b */
+--color-warning: 38 92% 50%; /* Orange #f59e0b */
 --color-warning-foreground: 0 0% 0%;
 
 /* Info */
---color-info: 199 89% 48%;              /* Blue #0ea5e9 */
+--color-info: 199 89% 48%; /* Blue #0ea5e9 */
 --color-info-foreground: 0 0% 100%;
 ```
 
@@ -168,6 +194,7 @@
 | `--color-destructive-foreground` | `--color-destructive` | 4.8:1 | ✅ AA |
 
 **Minimum Requirements:**
+
 - Body text (< 18px): 4.5:1 ✅
 - Large text (≥ 18px): 3:1 ✅
 - UI components: 3:1 ✅
@@ -177,26 +204,28 @@
 ### Font Families
 
 ```css
---font-sans: ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont,
-  "Segoe UI", Roboto, "Helvetica Neue", Arial, "Noto Sans", sans-serif,
-  "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";
+--font-sans:
+  ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI",
+  Roboto, "Helvetica Neue", Arial, "Noto Sans", sans-serif, "Apple Color Emoji",
+  "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";
 
---font-mono: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas,
-  "Liberation Mono", "Courier New", monospace;
+--font-mono:
+  ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono",
+  "Courier New", monospace;
 ```
 
 ### Font Sizes (Modular Scale 1.25x)
 
 ```css
---text-xs: 0.75rem;      /* 12px */
---text-sm: 0.875rem;     /* 14px */
---text-base: 1rem;       /* 16px - body text */
---text-lg: 1.125rem;     /* 18px - large text threshold */
---text-xl: 1.25rem;      /* 20px */
---text-2xl: 1.5rem;      /* 24px */
---text-3xl: 1.875rem;    /* 30px */
---text-4xl: 2.25rem;     /* 36px */
---text-5xl: 3rem;        /* 48px */
+--text-xs: 0.75rem; /* 12px */
+--text-sm: 0.875rem; /* 14px */
+--text-base: 1rem; /* 16px - body text */
+--text-lg: 1.125rem; /* 18px - large text threshold */
+--text-xl: 1.25rem; /* 20px */
+--text-2xl: 1.5rem; /* 24px */
+--text-3xl: 1.875rem; /* 30px */
+--text-4xl: 2.25rem; /* 36px */
+--text-5xl: 3rem; /* 48px */
 ```
 
 ### Font Weights
@@ -213,7 +242,7 @@
 ```css
 --leading-none: 1;
 --leading-tight: 1.25;
---leading-normal: 1.5;     /* Body text */
+--leading-normal: 1.5; /* Body text */
 --leading-relaxed: 1.625;
 --leading-loose: 2;
 ```
@@ -224,56 +253,61 @@
 
 ```css
 --spacing-0: 0;
---spacing-1: 0.25rem;   /* 4px */
---spacing-2: 0.5rem;    /* 8px */
---spacing-3: 0.75rem;   /* 12px */
---spacing-4: 1rem;      /* 16px */
---spacing-5: 1.25rem;   /* 20px */
---spacing-6: 1.5rem;    /* 24px */
---spacing-8: 2rem;      /* 32px */
---spacing-10: 2.5rem;   /* 40px */
---spacing-12: 3rem;     /* 48px */
---spacing-16: 4rem;     /* 64px */
---spacing-20: 5rem;     /* 80px */
---spacing-24: 6rem;     /* 96px */
---spacing-32: 8rem;     /* 128px */
+--spacing-1: 0.25rem; /* 4px */
+--spacing-2: 0.5rem; /* 8px */
+--spacing-3: 0.75rem; /* 12px */
+--spacing-4: 1rem; /* 16px */
+--spacing-5: 1.25rem; /* 20px */
+--spacing-6: 1.5rem; /* 24px */
+--spacing-8: 2rem; /* 32px */
+--spacing-10: 2.5rem; /* 40px */
+--spacing-12: 3rem; /* 48px */
+--spacing-16: 4rem; /* 64px */
+--spacing-20: 5rem; /* 80px */
+--spacing-24: 6rem; /* 96px */
+--spacing-32: 8rem; /* 128px */
 ```
 
 ### Semantic Spacing
 
 ```css
---spacing-section: var(--spacing-16);     /* Between sections */
---spacing-container: var(--spacing-12);   /* Container padding */
---spacing-card: var(--spacing-4);         /* Card padding */
---spacing-inline: var(--spacing-2);       /* Inline elements */
+--spacing-section: var(--spacing-16); /* Between sections */
+--spacing-container: var(--spacing-12); /* Container padding */
+--spacing-card: var(--spacing-4); /* Card padding */
+--spacing-inline: var(--spacing-2); /* Inline elements */
 ```
 
 ## Border Radius
 
 ```css
---radius-sm: 0.375rem;  /* 6px - Small elements (badges, pills) */
---radius-md: 0.75rem;   /* 12px - Standard (buttons, inputs) */
---radius-lg: 1.5rem;    /* 24px - Large (cards, modals) */
---radius-full: 9999px;  /* Fully rounded (avatars, icons) */
+--radius-sm: 0.375rem; /* 6px - Small elements (badges, pills) */
+--radius-md: 0.75rem; /* 12px - Standard (buttons, inputs) */
+--radius-lg: 1.5rem; /* 24px - Large (cards, modals) */
+--radius-full: 9999px; /* Fully rounded (avatars, icons) */
 ```
 
 ## Shadows
 
 ### Light Mode
+
 ```css
 --shadow-sm: 0 1px 2px 0 rgb(0 0 0 / 0.05);
 --shadow-md: 0 4px 6px -1px rgb(0 0 0 / 0.1), 0 2px 4px -2px rgb(0 0 0 / 0.1);
 --shadow-lg: 0 10px 15px -3px rgb(0 0 0 / 0.1), 0 4px 6px -4px rgb(0 0 0 / 0.1);
---shadow-xl: 0 20px 25px -5px rgb(0 0 0 / 0.1), 0 8px 10px -6px rgb(0 0 0 / 0.1);
+--shadow-xl:
+  0 20px 25px -5px rgb(0 0 0 / 0.1), 0 8px 10px -6px rgb(0 0 0 / 0.1);
 ```
 
 ### Dark Mode
+
 ```css
 .dark {
   --shadow-sm: 0 1px 2px 0 rgb(0 0 0 / 0.8);
   --shadow-md: 0 4px 6px -1px rgb(0 0 0 / 0.8), 0 2px 4px -2px rgb(0 0 0 / 0.8);
-  --shadow-lg: 0 10px 15px -3px rgb(0 0 0 / 0.8), 0 4px 6px -4px rgb(0 0 0 / 0.8);
-  --shadow-xl: 0 20px 25px -5px rgb(0 0 0 / 0.8), 0 8px 10px -6px rgb(0 0 0 / 0.8);
+  --shadow-lg:
+    0 10px 15px -3px rgb(0 0 0 / 0.8), 0 4px 6px -4px rgb(0 0 0 / 0.8);
+  --shadow-xl:
+    0 20px 25px -5px rgb(0 0 0 / 0.8), 0 8px 10px -6px rgb(0 0 0 / 0.8);
 }
 ```
 
@@ -302,11 +336,11 @@
 ## Breakpoints (Mobile-First)
 
 ```css
---breakpoint-sm: 640px;    /* Small devices (landscape phones) */
---breakpoint-md: 768px;    /* Medium devices (tablets) */
---breakpoint-lg: 1024px;   /* Large devices (desktops) */
---breakpoint-xl: 1280px;   /* Extra large devices (large desktops) */
---breakpoint-2xl: 1536px;  /* 2X large devices (larger desktops) */
+--breakpoint-sm: 640px; /* Small devices (landscape phones) */
+--breakpoint-md: 768px; /* Medium devices (tablets) */
+--breakpoint-lg: 1024px; /* Large devices (desktops) */
+--breakpoint-xl: 1280px; /* Extra large devices (large desktops) */
+--breakpoint-2xl: 1536px; /* 2X large devices (larger desktops) */
 ```
 
 ## Component-Specific Tokens
@@ -315,9 +349,9 @@
 
 ```css
 /* Height */
---button-height-sm: 2rem;     /* 32px */
---button-height-md: 2.5rem;   /* 40px */
---button-height-lg: 3rem;     /* 48px */
+--button-height-sm: 2rem; /* 32px */
+--button-height-md: 2.5rem; /* 40px */
+--button-height-lg: 3rem; /* 48px */
 
 /* Padding */
 --button-padding-x-sm: var(--spacing-3);
@@ -329,9 +363,9 @@
 
 ```css
 /* Height */
---input-height-sm: 2rem;      /* 32px */
---input-height-md: 2.5rem;    /* 40px */
---input-height-lg: 3rem;      /* 48px */
+--input-height-sm: 2rem; /* 32px */
+--input-height-md: 2.5rem; /* 40px */
+--input-height-lg: 3rem; /* 48px */
 
 /* Padding */
 --input-padding-x: var(--spacing-3);

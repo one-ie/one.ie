@@ -1,3 +1,21 @@
+---
+title: Connections
+dimension: connections
+category: connections.md
+tags: ai, connections, knowledge, ontology, relationships, things
+related_dimensions: events, knowledge, people, things
+scope: global
+created: 2025-11-03
+updated: 2025-11-03
+version: 1.0.0
+ai_context: |
+  This document is part of the connections dimension in the connections.md category.
+  Location: one/connections/connections.md
+  Purpose: Documents connections: relationships between things
+  Related dimensions: events, knowledge, people, things
+  For AI agents: Read this to understand connections.
+---
+
 # Connections: Relationships Between Things
 
 **If you're describing how thing X relates to thing Y, it's a connection.**

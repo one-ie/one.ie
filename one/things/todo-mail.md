@@ -1,3 +1,22 @@
+---
+title: Todo Mail
+dimension: things
+primary_dimension: things
+category: todo-mail.md
+tags: ai, architecture, artificial-intelligence, frontend, inference
+related_dimensions: connections, events, groups, knowledge, people, things
+scope: global
+created: 2025-11-03
+updated: 2025-11-03
+version: 1.0.0
+ai_context: |
+  This document is part of the things dimension in the todo-mail.md category.
+  Location: one/things/todo-mail.md
+  Purpose: Documents one platform: mail application v1.0.0
+  Related dimensions: connections, events, groups, knowledge, people
+  For AI agents: Read this to understand todo mail.
+---
+
 # ONE Platform: Mail Application v1.0.0
 
 **Focus:** Full-featured email client application with inbox, compose, threads, and rich editor
@@ -14,6 +33,7 @@
 **Purpose:** Define mail app requirements, data model, UI patterns
 
 ### Infer 1: Define Mail App Features
+
 - [ ] **Core Features:**
   - [ ] Inbox with email list
   - [ ] Email detail view (threading)
@@ -44,6 +64,7 @@
   - [ ] Attachments preview
 
 ### Infer 2: Map Mail App to 6-Dimension Ontology
+
 - [ ] **Groups:** User's workspace/organization
 - [ ] **People:**
   - [ ] User (email owner)
@@ -69,6 +90,7 @@
 - [ ] **Knowledge:** Email search index, sender/recipient frequency
 
 ### Infer 3: Design Data Model
+
 - [ ] **Email Object:**
   ```
   {
@@ -124,6 +146,7 @@
   ```
 
 ### Infer 4: Design UI Layout
+
 - [ ] **Layout Structure:**
   - [ ] **Header (60px):**
     - [ ] Logo/title left
@@ -157,6 +180,7 @@
       - [ ] Related emails in thread
 
 ### Infer 5: Design Compose UI
+
 - [ ] **Compose Modal/Panel:**
   - [ ] To field (autocomplete)
   - [ ] Cc/Bcc toggle
@@ -180,6 +204,7 @@
   - [ ] Undo/redo
 
 ### Infer 6: Design Responsive Behavior
+
 - [ ] **Desktop (1024px+):**
   - [ ] Three-column layout (sidebar, list, detail)
   - [ ] All features visible
@@ -194,6 +219,7 @@
   - [ ] Full-width compose
 
 ### Infer 7: Design Search & Filtering
+
 - [ ] **Search Bar:**
   - [ ] Search query input
   - [ ] Search in (all, subject, from, to, body)
@@ -215,6 +241,7 @@
   - [ ] By date (today, week, month)
 
 ### Infer 8: Design Settings & Preferences
+
 - [ ] **Settings Panels:**
   - [ ] **General:**
     - [ ] Language
@@ -242,6 +269,7 @@
     - [ ] Delete (d)
 
 ### Infer 9: Design Empty States & Error States
+
 - [ ] **Empty States:**
   - [ ] No emails in inbox
   - [ ] Search returns no results
@@ -260,6 +288,7 @@
   - [ ] Sending indicator during compose
 
 ### Infer 10: Define Success Metrics
+
 - [ ] Mail app complete when:
   - [ ] [ ] Inbox loads and displays emails
   - [ ] [ ] Clicking email shows detail view
@@ -282,6 +311,7 @@
 **Purpose:** Build React state management and interactive components
 
 ### Infer 11: Create Email Store (Zustand)
+
 - [ ] **Store structure:**
   - [ ] emails: Email[]
   - [ ] contacts: Contact[]
@@ -301,6 +331,7 @@
   - [ ] addLabel(emailId, labelId)
 
 ### Infer 12: Create UI Store (Zustand)
+
 - [ ] **Store structure:**
   - [ ] theme: 'light' | 'dark'
   - [ ] sidebarOpen: boolean
@@ -318,6 +349,7 @@
   - [ ] updateUnreadCount(folderId, count)
 
 ### Infer 13: Create MailSidebar Component
+
 - [ ] **Content:**
   - [ ] Compose button (prominent blue button)
   - [ ] Folder list (Inbox, Starred, Sent, Drafts, Archive, Spam, Trash)
@@ -331,6 +363,7 @@
   - [ ] Show context menu on right-click
 
 ### Infer 14: Create EmailListItem Component
+
 - [ ] **Display:**
   - [ ] Avatar (initials or image)
   - [ ] Sender name
@@ -347,6 +380,7 @@
   - [ ] Long press → select multiple
 
 ### Infer 15: Create EmailList Component
+
 - [ ] **Structure:**
   - [ ] List of EmailListItem components
   - [ ] Checkbox to select all
@@ -363,6 +397,7 @@
     - [ ] Delete
 
 ### Infer 16: Create EmailDetail Component
+
 - [ ] **Header:**
   - [ ] Subject (H1)
   - [ ] From, To, Cc, Bcc (show only if present)
@@ -394,6 +429,7 @@
   - [ ] Scroll through thread
 
 ### Infer 17: Create ComposeForm Component
+
 - [ ] **Fields:**
   - [ ] To (autocomplete from contacts)
   - [ ] Cc (hidden by default)
@@ -419,6 +455,7 @@
   - [ ] onDiscard (callback)
 
 ### Infer 18: Create RichTextEditor Component
+
 - [ ] **Toolbar:**
   - [ ] Bold, italic, underline buttons
   - [ ] Font size dropdown
@@ -442,6 +479,7 @@
   - [ ] disabled (boolean)
 
 ### Infer 19: Create SearchBar Component
+
 - [ ] **Input:**
   - [ ] Searchable input
   - [ ] Clear button (when typing)
@@ -456,6 +494,7 @@
   - [ ] placeholder "Search emails..."
 
 ### Infer 20: Create AdvancedSearch Component
+
 - [ ] **Modal or Panel:**
   - [ ] From field (email input)
   - [ ] To field (email input)
@@ -471,6 +510,7 @@
   - [ ] onClose (callback)
 
 ### Infer 21: Create ContactAutoComplete Component
+
 - [ ] **Input field:**
   - [ ] Type to search contacts
   - [ ] Show suggestions below
@@ -483,6 +523,7 @@
   - [ ] allowMultiple (boolean)
 
 ### Infer 22: Create AttachmentUpload Component
+
 - [ ] **Area:**
   - [ ] Drag and drop zone
   - [ ] Click to upload button
@@ -495,6 +536,7 @@
   - [ ] accept (file types)
 
 ### Infer 23: Create EmailThread Component
+
 - [ ] **Display:**
   - [ ] Latest email at top (expanded)
   - [ ] Previous emails below (collapsed)
@@ -505,6 +547,7 @@
   - [ ] currentEmailId (highlight current)
 
 ### Infer 24: Create ContextMenu Component
+
 - [ ] **Menu items:**
   - [ ] Archive
   - [ ] Delete
@@ -520,6 +563,7 @@
   - [ ] Disabled items grayed out
 
 ### Infer 25: Create SettingsPanel Component
+
 - [ ] **Sections:**
   - [ ] General (language, timezone, theme)
   - [ ] Display (density, avatar size)
@@ -532,6 +576,7 @@
   - [ ] Reset to defaults button
 
 ### Infer 26: Create EmptyState Component
+
 - [ ] **Display:**
   - [ ] Icon (inbox empty, search no results, etc.)
   - [ ] Title ("No emails" / "No results")
@@ -542,6 +587,7 @@
   - [ ] onAction (callback for button)
 
 ### Infer 27: Create LoadingState Component
+
 - [ ] **Display:**
   - [ ] Skeleton loaders for email list
   - [ ] Skeleton for email detail
@@ -551,6 +597,7 @@
   - [ ] variant (list, detail, header)
 
 ### Infer 28: Create HeaderNav Component
+
 - [ ] **Content:**
   - [ ] Mail logo
   - [ ] SearchBar component
@@ -562,6 +609,7 @@
   - [ ] Hide profile menu
 
 ### Infer 29: Create FloatingComposeButton Component
+
 - [ ] **Display (Mobile):**
   - [ ] Large floating action button (FAB)
   - [ ] "+" icon or "Compose" text
@@ -572,6 +620,7 @@
   - [ ] Hide on scroll up
 
 ### Infer 30: Create EmailCard Component
+
 - [ ] **For detail view:**
   - [ ] Card layout with shadow
   - [ ] Email header
@@ -591,6 +640,7 @@
 **Purpose:** Create main Astro page structure
 
 ### Infer 31: Create Main Layout (MailLayout.astro)
+
 - [ ] **Structure:**
   - [ ] Header (HeaderNav)
   - [ ] Sidebar + Main area grid layout
@@ -605,6 +655,7 @@
   - [ ] Theme color tag
 
 ### Infer 32: Create Mail Index Page (mail/index.astro)
+
 - [ ] **Layout:**
   - [ ] Use MailLayout
   - [ ] Three-column or responsive layout
@@ -617,6 +668,7 @@
   - [ ] Pass to React components via props
 
 ### Infer 33: Create Mail Thread Page (mail/[threadId].astro)
+
 - [ ] **Purpose:**
   - [ ] Single thread view (for deep linking)
   - [ ] Shows full thread
@@ -634,6 +686,7 @@
 **Purpose:** Create realistic mock data and wire up components
 
 ### Infer 41: Create Mock Email Data
+
 - [ ] **Generate sample emails:**
   - [ ] 20-30 sample emails
   - [ ] Varied subjects (work, personal, newsletters)
@@ -645,6 +698,7 @@
 - [ ] **File:** `src/lib/mockData.ts`
 
 ### Infer 42: Create Mock Contact Data
+
 - [ ] **Sample contacts:**
   - [ ] 10-15 frequently contacted people
   - [ ] Full names
@@ -653,6 +707,7 @@
 - [ ] **File:** `src/lib/mockData.ts`
 
 ### Infer 43: Create Mock Label Data
+
 - [ ] **Sample labels:**
   - [ ] Work (red)
   - [ ] Personal (blue)
@@ -662,6 +717,7 @@
 - [ ] **File:** `src/lib/mockData.ts`
 
 ### Infer 44: Wire Up Email Store to Mock Data
+
 - [ ] **Initial state:**
   - [ ] Load mock emails on app init
   - [ ] Load mock contacts
@@ -671,6 +727,7 @@
   - [ ] Load on page refresh
 
 ### Infer 45: Wire Up UI Store to Settings
+
 - [ ] **Default theme:**
   - [ ] Check system preference
   - [ ] Check localStorage
@@ -681,6 +738,7 @@
   - [ ] Save sidebar state to localStorage
 
 ### Infer 46: Implement Email Actions
+
 - [ ] **Mark as read:**
   - [ ] Click email → mark as read
   - [ ] Update UI immediately
@@ -694,6 +752,7 @@
   - [ ] Mark as spam
 
 ### Infer 47: Implement Compose Draft System
+
 - [ ] **Create draft:**
   - [ ] On compose form open
   - [ ] Autosave every 10 seconds
@@ -707,6 +766,7 @@
   - [ ] Close compose
 
 ### Infer 48: Implement Search & Filters
+
 - [ ] **Search:**
   - [ ] Type in SearchBar
   - [ ] Filter emails by subject/body
@@ -718,6 +778,7 @@
   - [ ] Show "X results" text
 
 ### Infer 49: Implement Responsive Behavior
+
 - [ ] **Mobile < 768px:**
   - [ ] Hide sidebar by default
   - [ ] Show hamburger button
@@ -732,6 +793,7 @@
   - [ ] Three-column layout
 
 ### Infer 50: Implement Keyboard Shortcuts
+
 - [ ] **Shortcuts:**
   - [ ] `/` → focus search
   - [ ] `c` → compose
@@ -751,6 +813,7 @@
 **Purpose:** Refine UX, accessibility, performance
 
 ### Infer 51: Add Animations
+
 - [ ] **Transitions:**
   - [ ] Email fade-in when selected
   - [ ] Compose modal slide in
@@ -763,6 +826,7 @@
   - [ ] Icon color change
 
 ### Infer 52: Implement Accessibility
+
 - [ ] **Keyboard navigation:**
   - [ ] Tab through sidebar items
   - [ ] Tab through email list
@@ -779,6 +843,7 @@
   - [ ] No color-only indicators
 
 ### Infer 53: Optimize Performance
+
 - [ ] **Bundle size:**
   - [ ] Code split by route
   - [ ] Lazy load rich text editor
@@ -792,6 +857,7 @@
   - [ ] Lazy load avatars
 
 ### Infer 54: Add Error Handling
+
 - [ ] **Network errors:**
   - [ ] Show toast on failed load
   - [ ] Retry button
@@ -807,6 +873,7 @@
   - [ ] No search results (empty state)
 
 ### Infer 55: Add Toast Notifications
+
 - [ ] **Types:**
   - [ ] Success ("Email archived")
   - [ ] Error ("Failed to send")
@@ -818,6 +885,7 @@
   - [ ] Undo button for destructive actions
 
 ### Infer 56: Implement Dark Mode
+
 - [ ] **Theme colors:**
   - [ ] Dark backgrounds
   - [ ] Light text
@@ -829,6 +897,7 @@
   - [ ] Save preference to localStorage
 
 ### Infer 57: Add Print Styles
+
 - [ ] **Print layout:**
   - [ ] Hide sidebar
   - [ ] Hide actions
@@ -838,6 +907,7 @@
   - [ ] Hide signatures
 
 ### Infer 58: Test All Interactions
+
 - [ ] **Compose:**
   - [ ] Open form
   - [ ] Type email
@@ -860,6 +930,7 @@
   - [ ] Advanced search works
 
 ### Infer 59: Test Mobile Experience
+
 - [ ] **Devices:**
   - [ ] iPhone SE (375px)
   - [ ] iPhone 12 (390px)
@@ -873,6 +944,7 @@
   - [ ] No horizontal scroll
 
 ### Infer 60: Lighthouse Audit
+
 - [ ] **Targets:**
   - [ ] Performance > 85
   - [ ] Accessibility > 90
@@ -885,6 +957,7 @@
   - [ ] Add meta descriptions
 
 ### Infer 61: Add Loading Skeletons
+
 - [ ] **For:**
   - [ ] Email list
   - [ ] Email detail
@@ -895,6 +968,7 @@
   - [ ] Smooth transition to content
 
 ### Infer 62: Add Drag & Drop
+
 - [ ] **For:**
   - [ ] Drag email to folder/label
   - [ ] Drag attachment to compose
@@ -904,6 +978,7 @@
   - [ ] Show success toast
 
 ### Infer 63: Add Undo/Redo
+
 - [ ] **For:**
   - [ ] Delete email (3 sec undo window)
   - [ ] Archive email
@@ -913,6 +988,7 @@
   - [ ] Also undo via Ctrl+Z (in compose)
 
 ### Infer 64: Create Help Documentation
+
 - [ ] **Pages:**
   - [ ] Getting started
   - [ ] Keyboard shortcuts
@@ -925,6 +1001,7 @@
   - [ ] Help icons with popovers
 
 ### Infer 65: Add Analytics Events
+
 - [ ] **Track:**
   - [ ] View email
   - [ ] Compose email
@@ -935,6 +1012,7 @@
   - [ ] Feature usage
 
 ### Infer 66: Create Settings Page
+
 - [ ] **Options:**
   - [ ] Theme (light/dark)
   - [ ] Density (compact/comfortable/spacious)
@@ -949,6 +1027,7 @@
   - [ ] Apply immediately
 
 ### Infer 67: Add Contact Management (Future)
+
 - [ ] **Features:**
   - [ ] View contact details
   - [ ] Add/edit contact
@@ -960,6 +1039,7 @@
   - [ ] Contact card popup
 
 ### Infer 68: Add Snooze Feature (Future)
+
 - [ ] **Options:**
   - [ ] 1 hour, 3 hours, 8 hours
   - [ ] Tomorrow, next week, next month
@@ -970,6 +1050,7 @@
   - [ ] Notification when snoozed email returns
 
 ### Infer 69: Test Cross-Browser
+
 - [ ] **Browsers:**
   - [ ] Chrome
   - [ ] Firefox
@@ -982,6 +1063,7 @@
   - [ ] Animation smoothness
 
 ### Infer 70: Final Polish
+
 - [ ] **Details:**
   - [ ] Micro-interactions feel good
   - [ ] Animations are smooth

@@ -1,3 +1,21 @@
+---
+title: Membership
+dimension: connections
+category: membership.md
+tags: connections, ontology
+related_dimensions: events, groups, people, things
+scope: global
+created: 2025-11-03
+updated: 2025-11-03
+version: 1.0.0
+ai_context: |
+  This document is part of the connections dimension in the membership.md category.
+  Location: one/connections/membership.md
+  Purpose: Documents membership connections
+  Related dimensions: events, groups, people, things
+  For AI agents: Read this to understand membership.
+---
+
 # Membership Connections
 
 **Last Updated:** 2025-10-08

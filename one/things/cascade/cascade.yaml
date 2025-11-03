@@ -308,13 +308,30 @@ coordination:
 
   patterns:
     director_watches: [quality_check_complete, documentation_complete]
-    director_logs: [plan_started, feature_assigned, tasks_created, feature_complete]
+    director_logs:
+      [plan_started, feature_assigned, tasks_created, feature_complete]
 
     specialist_watches: [feature_assigned, task_created, solution_proposed]
-    specialist_logs: [feature_started, implementation_complete, task_started, task_completed, fix_started, fix_complete, lesson_learned_added]
+    specialist_logs:
+      [
+        feature_started,
+        implementation_complete,
+        task_started,
+        task_completed,
+        fix_started,
+        fix_complete,
+        lesson_learned_added,
+      ]
 
     quality_watches: [implementation_complete, task_completed]
-    quality_logs: [quality_check_started, quality_check_complete, test_started, test_passed, test_failed]
+    quality_logs:
+      [
+        quality_check_started,
+        quality_check_complete,
+        test_started,
+        test_passed,
+        test_failed,
+      ]
 
     problem_solver_watches: [test_failed]
     problem_solver_logs: [problem_analysis_started, solution_proposed]

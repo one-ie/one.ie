@@ -1,3 +1,21 @@
+---
+title: Integration Summary
+dimension: events
+category: INTEGRATION-SUMMARY.md
+tags: ai, architecture, backend, frontend
+related_dimensions: groups, people, things
+scope: global
+created: 2025-11-03
+updated: 2025-11-03
+version: 1.0.0
+ai_context: |
+  This document is part of the events dimension in the INTEGRATION-SUMMARY.md category.
+  Location: one/events/INTEGRATION-SUMMARY.md
+  Purpose: Documents integration orchestration - executive summary
+  Related dimensions: groups, people, things
+  For AI agents: Read this to understand INTEGRATION SUMMARY.
+---
+
 # Integration Orchestration - Executive Summary
 
 **Integration Specialist Deliverable**

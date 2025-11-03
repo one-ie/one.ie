@@ -1,3 +1,21 @@
+---
+title: One
+dimension: groups
+category: one.md
+tags: ai, blockchain, inference
+related_dimensions: events, knowledge, people, things
+scope: global
+created: 2025-11-03
+updated: 2025-11-03
+version: 1.0.0
+ai_context: |
+  This document is part of the groups dimension in the one.md category.
+  Location: one/groups/one.md
+  Purpose: Documents one: the platform organization
+  Related dimensions: events, knowledge, people, things
+  For AI agents: Read this to understand one.
+---
+
 # ONE: The Platform Organization
 
 **ONE is the platform organization owned by Anthony O'Connell.**
@@ -114,6 +132,7 @@
 ## Ownership Connections
 
 ### Anthony Owns ONE
+
 `anthony` → `one-org` via `owns`
 
 ```typescript
@@ -130,6 +149,7 @@
 ```
 
 ### Anthony is Member of ONE
+
 `anthony` → `one-org` via `member_of`
 
 ```typescript
@@ -151,6 +171,7 @@
 ## Platform Resources
 
 ### ONE Owns Smart Contracts
+
 `one-org` → `smart-contract` via `owns`
 
 ```typescript
@@ -198,6 +219,7 @@
 ```
 
 ### ONE Owns Platform Tokens
+
 `one-org` → `token` via `owns`
 
 ```typescript
@@ -230,6 +252,7 @@ const treasuryAddresses = {
 ```
 
 ### Treasury Connections
+
 `one-org` → `treasury-wallet` via `controls`
 
 ```typescript
@@ -409,15 +432,12 @@ Every customer org is isolated:
 export const getUserOrganizations = async (userId: Id<"things">) => {
   const memberships = await db
     .query("connections")
-    .withIndex("from_type", q =>
-      q.eq("fromThingId", userId)
-       .eq("relationshipType", "member_of")
+    .withIndex("from_type", (q) =>
+      q.eq("fromThingId", userId).eq("relationshipType", "member_of"),
     )
     .collect();
 
-  const orgs = await Promise.all(
-    memberships.map(m => db.get(m.toThingId))
-  );
+  const orgs = await Promise.all(memberships.map((m) => db.get(m.toThingId)));
 
   return orgs;
 };
@@ -425,14 +445,15 @@ export const getUserOrganizations = async (userId: Id<"things">) => {
 // Check if user can access org
 export const canAccessOrg = async (
   userId: Id<"things">,
-  organizationId: Id<"things">
+  organizationId: Id<"things">,
 ) => {
   const membership = await db
     .query("connections")
-    .withIndex("from_type", q =>
-      q.eq("fromThingId", userId)
-       .eq("toThingId", organizationId)
-       .eq("relationshipType", "member_of")
+    .withIndex("from_type", (q) =>
+      q
+        .eq("fromThingId", userId)
+        .eq("toThingId", organizationId)
+        .eq("relationshipType", "member_of"),
     )
     .first();
 
@@ -445,12 +466,13 @@ export const canAccessOrg = async (
 ## Queries
 
 **Get ONE organization:**
+
 ```typescript
 export const getOneOrg = async () => {
   const oneOrg = await db
     .query("things")
-    .withIndex("type", q => q.eq("type", "organization"))
-    .filter(q => q.eq(q.field("properties.slug"), "one"))
+    .withIndex("type", (q) => q.eq("type", "organization"))
+    .filter((q) => q.eq(q.field("properties.slug"), "one"))
     .first();
 
   return oneOrg;
@@ -458,50 +480,48 @@ export const getOneOrg = async () => {
 ```
 
 **Get ONE's smart contracts:**
+
 ```typescript
 const contracts = await db
   .query("connections")
-  .withIndex("from_type", q =>
-    q.eq("fromThingId", oneOrgId)
-     .eq("relationshipType", "owns")
+  .withIndex("from_type", (q) =>
+    q.eq("fromThingId", oneOrgId).eq("relationshipType", "owns"),
   )
-  .filter(q =>
-    q.neq(q.field("metadata.contractType"), undefined)
-  )
+  .filter((q) => q.neq(q.field("metadata.contractType"), undefined))
   .collect();
 ```
 
 **Get ONE's customer organizations:**
+
 ```typescript
 const customerOrgs = await db
   .query("connections")
-  .withIndex("to_type", q =>
-    q.eq("toThingId", oneOrgId)
-     .eq("relationshipType", "hosted_by")
+  .withIndex("to_type", (q) =>
+    q.eq("toThingId", oneOrgId).eq("relationshipType", "hosted_by"),
   )
   .collect();
 
 const orgEntities = await Promise.all(
-  customerOrgs.map(c => db.get(c.fromThingId))
+  customerOrgs.map((c) => db.get(c.fromThingId)),
 );
 ```
 
 **Get ONE's total revenue:**
+
 ```typescript
 const revenueEvents = await db
   .query("events")
-  .withIndex("type_time", q =>
-    q.eq("type", "inference_revenue_collected")
-  )
+  .withIndex("type_time", (q) => q.eq("type", "inference_revenue_collected"))
   .collect();
 
 const totalRevenue = revenueEvents.reduce(
   (sum, e) => sum + (e.metadata.profit || 0),
-  0
+  0,
 );
 ```
 
 **Get ONE's treasury balances:**
+
 ```typescript
 const treasuryBalances = {
   sui: await getSuiBalance(process.env.PLATFORM_TREASURY_SUI),

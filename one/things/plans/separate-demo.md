@@ -1,10 +1,30 @@
+---
+title: Separate Demo
+dimension: things
+category: plans
+tags: ai
+related_dimensions: people
+scope: global
+created: 2025-11-03
+updated: 2025-11-03
+version: 1.0.0
+ai_context: |
+  This document is part of the things dimension in the plans category.
+  Location: one/things/plans/separate-demo.md
+  Purpose: Documents separate development from customer releases
+  Related dimensions: people
+  For AI agents: Read this to understand separate demo.
+---
+
 # Separate Development from Customer Releases
 
 **Problem:** We develop the full ONE Platform in `/web` but need to release different versions:
+
 1. Main platform website (one.ie)
 2. Demo/starter template (web.one.ie) - same as what users download via `npx oneie`
 
 **Current Flow:**
+
 ```
 /web (development)
   → rsync →
@@ -14,6 +34,7 @@ Cloudflare Pages (one.ie)
 ```
 
 **New Flow:**
+
 ```
 /web (development - full features)
   ├→ rsync → apps/oneie/web → Deploy → one.ie (main site)
@@ -25,6 +46,7 @@ Cloudflare Pages (one.ie)
 ```
 
 **Requirement:**
+
 - one.ie = Full platform/marketing site (oneie project)
 - demo.one.ie = Demo/starter template (one project, matches `npx oneie` download)
 - Users get same code whether they visit demo.one.ie or run `npx oneie`
@@ -292,6 +314,7 @@ if (!features.adminPanel) {
 ```
 
 **Benefits:**
+
 - Development: See all features
 - Production: Features completely removed from bundle
 - No runtime overhead checking flags
@@ -406,7 +429,7 @@ Update `cli/index.js` (or wherever npx oneie is implemented):
 
 ```javascript
 // Instead of downloading from one-ie/one, download from one-ie/oneie
-const REPO_URL = 'https://github.com/one-ie/oneie.git';
+const REPO_URL = "https://github.com/one-ie/oneie.git";
 
 // Or use npm package distribution:
 // npx oneie downloads pre-built tarball
@@ -460,10 +483,12 @@ one-ie/one/              # Demo/starter (what npx oneie clones)
 ### Option A: Separate Branches
 
 **Pros:**
+
 - Clear separation
 - Git-based history
 
 **Cons:**
+
 - Merge conflicts
 - Duplicate code
 - Hard to keep in sync
@@ -473,10 +498,12 @@ one-ie/one/              # Demo/starter (what npx oneie clones)
 ### Option B: Monorepo with Workspaces
 
 **Pros:**
+
 - Shared code via packages
 - Independent deployments
 
 **Cons:**
+
 - Complex setup
 - Overhead for small differences
 
@@ -485,10 +512,12 @@ one-ie/one/              # Demo/starter (what npx oneie clones)
 ### Option C: Build-Time Code Stripping
 
 **Pros:**
+
 - No runtime overhead
 - Clean production builds
 
 **Cons:**
+
 - Complex build process
 - Hard to debug
 
@@ -663,8 +692,8 @@ export const deleteUser = mutation({
   handler: async (ctx, args) => {
     // Check user role in database
     const user = await getCurrentUser(ctx);
-    if (user.role !== 'platform_owner') {
-      throw new Error('Unauthorized');
+    if (user.role !== "platform_owner") {
+      throw new Error("Unauthorized");
     }
     // ... delete logic
   },
@@ -688,6 +717,7 @@ CUSTOM_BRANDING=true
 ```
 
 Deploy with:
+
 ```bash
 ./scripts/release.sh patch customer-acme
 ```
@@ -695,6 +725,7 @@ Deploy with:
 ### Multi-Tenant Deployments
 
 Each customer gets:
+
 - Separate Cloudflare Pages project
 - Own environment variables
 - Custom domain
@@ -721,6 +752,7 @@ Each customer gets:
 **Cause:** Wrong `.env` file used during build
 
 **Solution:**
+
 ```bash
 # Verify environment during release
 cd apps/one/web
@@ -733,6 +765,7 @@ cat .env.local | grep ENABLE_ADMIN
 **Cause:** `.env.production` copied over `.env.local`
 
 **Solution:**
+
 ```bash
 cd web
 rm .env.local
@@ -745,6 +778,7 @@ cp .env.local.backup .env.local
 **Cause:** Cloudflare Pages caches environment variables
 
 **Solution:**
+
 ```bash
 # Force rebuild
 wrangler pages deployment create --project-name=web web/dist

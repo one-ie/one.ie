@@ -1,3 +1,21 @@
+---
+title: Copilotkit
+dimension: connections
+category: copilotkit.md
+tags: agent, ai, backend, frontend, protocol
+related_dimensions: events, knowledge
+scope: global
+created: 2025-11-03
+updated: 2025-11-03
+version: 1.0.0
+ai_context: |
+  This document is part of the connections dimension in the copilotkit.md category.
+  Location: one/connections/copilotkit.md
+  Purpose: Documents generative ui and ag-ui protocol - building on promptkit
+  Related dimensions: events, knowledge
+  For AI agents: Read this to understand copilotkit.
+---
+
 # Generative UI and AG-UI Protocol - Building on PromptKit
 
 **Version:** 2.0.0

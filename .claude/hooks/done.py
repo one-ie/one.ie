@@ -120,9 +120,20 @@ def generate_completion_message(state: Dict[str, Any]) -> str:
     completed_count = len(state["completed_inferences"])
     progress_pct = (completed_count / 100) * 100
 
+    # Get info for next inference
     task = INFERENCE_TASKS.get(current, "Unknown task")
+    phase = get_phase_for_inference(current)
     dimensions = get_dimensions_for_inference(current)
     specialist = get_specialist_for_inference(current)
+    parallel_ops = get_parallel_opportunities(current)
+
+    # Get most recent lesson
+    recent_lesson = None
+    if state.get("lessons_learned"):
+        for lesson in reversed(state["lessons_learned"]):
+            if lesson["inference"] == previous and lesson["lesson"] != f"Completed Infer {previous}":
+                recent_lesson = lesson["lesson"]
+                break
 
     message = f"""
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
@@ -131,24 +142,41 @@ def generate_completion_message(state: Dict[str, Any]) -> str:
 
 **Progress:** {completed_count}/100 inferences complete ({progress_pct:.0f}%)
 **Feature:** {state["feature_name"]}
+"""
 
+    if recent_lesson:
+        message += f"\n💡 **Lesson Captured:** {recent_lesson[:150]}...\n"
+
+    message += f"""
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-🎯 NEXT INFERENCE: Infer {current}/100
+{phase['icon']} NEXT INFERENCE: Infer {current}/100
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
+**Phase {phase['number']}/10:** {phase['name']} ({phase['progress']})
 **Task:** {task}
-**Ontology Dimensions:** {", ".join(dimensions) if dimensions else "Foundation"}
-**Assigned Specialist:** {specialist if specialist else "Engineering Director"}
 
+**6-Dimension Ontology:** {", ".join(dimensions) if dimensions else "Foundation (all dimensions)"}
+**Assigned Specialist:** {specialist if specialist else "director"}
+"""
+
+    if parallel_ops:
+        message += f"\n⚡ **Parallel Opportunities:** {', '.join(parallel_ops)}\n"
+
+    message += """
 Ready to continue? Type your next prompt or use:
   /done     - Mark this inference complete (when finished)
   /next     - Skip to next inference (if not applicable)
+  /reset    - Start new feature (reset to Infer 1)
   /plan     - View complete 100-inference plan
 
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 """
 
+    # Special message when feature is complete
     if completed_count == 100:
+        meaningful_lessons = [l for l in state.get("lessons_learned", [])
+                            if l["lesson"] != f"Completed Infer {l['inference']}"]
+
         message = f"""
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 🎉 FEATURE COMPLETE: {state["feature_name"]}
@@ -159,12 +187,12 @@ Ready to continue? Type your next prompt or use:
 **Final Stats:**
 - Organization: {state["organization"]}
 - Person Role: {state["person_role"]}
-- Lessons Learned: {len(state.get("lessons_learned", []))}
+- Lessons Learned: {len(meaningful_lessons)} meaningful insights captured
 
 **Next Steps:**
-1. Review lessons learned: /lessons
-2. Start new feature: /one
-3. Generate documentation: /document
+1. Start new feature: /reset (or create new conversation)
+2. Review all lessons: Check .claude/state/inference.json
+3. Deploy to production: /release
 
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 Congratulations! 🎊 Your feature is production-ready.

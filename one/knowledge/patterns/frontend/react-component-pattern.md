@@ -1,3 +1,21 @@
+---
+title: React Component Pattern
+dimension: knowledge
+category: patterns
+tags: ai, backend, frontend
+related_dimensions: connections, groups, things
+scope: global
+created: 2025-11-03
+updated: 2025-11-03
+version: 1.0.0
+ai_context: |
+  This document is part of the knowledge dimension in the patterns category.
+  Location: one/knowledge/patterns/frontend/react-component-pattern.md
+  Purpose: Documents react component pattern
+  Related dimensions: connections, groups, things
+  For AI agents: Read this to understand react component pattern.
+---
+
 # React Component Pattern
 
 **Category:** Frontend

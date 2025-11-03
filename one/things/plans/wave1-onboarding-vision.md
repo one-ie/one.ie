@@ -1,3 +1,21 @@
+---
+title: Wave1 Onboarding Vision
+dimension: things
+category: plans
+tags: agent, ai, backend, frontend, groups, inference, ontology
+related_dimensions: connections, events, groups, people
+scope: global
+created: 2025-11-03
+updated: 2025-11-03
+version: 1.0.0
+ai_context: |
+  This document is part of the things dimension in the plans category.
+  Location: one/things/plans/wave1-onboarding-vision.md
+  Purpose: Documents wave 1: creator onboarding - vision document
+  Related dimensions: connections, events, groups, people
+  For AI agents: Read this to understand wave1 onboarding vision.
+---
+
 # Wave 1: Creator Onboarding - Vision Document
 
 **Version:** 1.0.0
@@ -31,6 +49,7 @@ This is **NOT** a standalone feature - it's the prerequisite that unblocks all d
 - **Data scoping:** All creator's content, team, and settings are scoped to this group
 
 **Example:**
+
 ```
 Creator "Jane" registers
   ↓ Creates workspace "Jane's Studio" (group)
@@ -51,6 +70,7 @@ Creator "Jane" registers
 - **Governance:** Creator controls who can access their workspace
 
 **Role Hierarchy:**
+
 ```
 Platform Owner (global)
 └─ Creator (group_owner)
@@ -102,6 +122,7 @@ Platform Owner (global)
    - Will be used for content ownership post-onboarding
 
 **Connection Pattern:**
+
 ```
 creator_jane → workspace_jane_studio (member_of, role: "group_owner")
 editor_bob   → workspace_jane_studio (member_of, role: "group_user", status: "pending/active")
@@ -134,6 +155,7 @@ editor_bob   → workspace_jane_studio (member_of, role: "group_user", status: "
 - **Platform Goals:** goal:income, goal:audience, goal:collaboration, goal:learning
 
 **Knowledge Pattern:**
+
 ```
 creator_jane links to knowledge items:
   ├─ skill:fitness-coaching
@@ -144,6 +166,7 @@ creator_jane links to knowledge items:
 ```
 
 These labels enable:
+
 - Smart recommendations (show relevant products/courses/agents)
 - Cohort discovery (find similar creators)
 - Personalized dashboard (show relevant features)
@@ -156,12 +179,14 @@ These labels enable:
 ### Persona 1: Solo Creator (YouTuber/Podcaster)
 
 **Why they join:**
+
 - Want to monetize existing audience
 - Need passive income stream
 - Interested in AI collaboration (avatars, agents)
 - Tired of platform dependence (YouTube, Spotify)
 
 **First 5 minutes:**
+
 1. Sign up with Google
 2. Verify email (auto-verify from Google)
 3. Enter name + bio (copy from YouTube description)
@@ -169,12 +194,14 @@ These labels enable:
 5. See "Ready to monetize" CTA
 
 **First day goal:**
+
 - Profile 100% complete
 - Wallet connected (to receive X402 payments)
 - First 3 skills tagged
 - See dashboard tour
 
 **First week goal:**
+
 - Create first content piece
 - Earn first tokens
 - Understand monetization model
@@ -183,12 +210,14 @@ These labels enable:
 ### Persona 2: Agency Owner (Team Leader)
 
 **Why they join:**
+
 - Manage multiple creators in one place
 - Coordinate team content production
 - Track earnings across team
 - Automate workflows
 
 **First 5 minutes:**
+
 1. Sign up with email
 2. Create workspace (e.g., "Creative Collective")
 3. Invite 3 team members via email
@@ -196,12 +225,14 @@ These labels enable:
 5. See team dashboard
 
 **First day goal:**
+
 - Workspace created and branded
 - Team invited (pending their acceptance)
 - Roles defined (who can publish, who can view)
 - Settings configured (brand colors, domain)
 
 **First week goal:**
+
 - All team members joined
 - First collaborative content created
 - Team earnings visible
@@ -210,12 +241,14 @@ These labels enable:
 ### Persona 3: AI Agent Developer
 
 **Why they join:**
+
 - Deploy custom AI agents that monetize
 - Earn from agent conversations
 - Integrate with their own systems
 - Use X402 for micropayments
 
 **First 5 minutes:**
+
 1. Sign up with GitHub OAuth
 2. Verify email
 3. Enter name + bio (copy from GitHub profile)
@@ -223,12 +256,14 @@ These labels enable:
 5. See "API Documentation" link
 
 **First day goal:**
+
 - Profile complete
 - Wallet connected (for X402 transactions)
 - API keys generated
 - Read API docs
 
 **First week goal:**
+
 - Deploy first agent
 - Make first API call
 - Receive first X402 payment
@@ -237,12 +272,14 @@ These labels enable:
 ### Persona 4: Product Merchant
 
 **Why they join:**
+
 - Sell digital products (templates, tools, courses)
 - Manage inventory + pricing
 - Receive payments automatically
 - Build customer relationships
 
 **First 5 minutes:**
+
 1. Sign up with email
 2. Create workspace (e.g., "Design Templates Store")
 3. Complete profile (store name, description)
@@ -250,12 +287,14 @@ These labels enable:
 5. Set pricing
 
 **First day goal:**
+
 - Store profile created
 - First 3 products listed
 - Wallet connected (for payouts)
 - Store visible to public
 
 **First week goal:**
+
 - Make first sale
 - Receive first payout
 - Get 10 customers
@@ -378,14 +417,14 @@ FULLY COMPLETE: 75%+
 
 ### Timing Metrics
 
-| Stage | Target Time | Upper Limit |
-|-------|-------------|-------------|
-| Signup → Email Verify | 2 min | 5 min |
-| Email Verify → Profile | 1 min | 3 min |
-| Profile → Workspace | 1 min | 2 min |
-| Workspace → Skills | 2 min | 5 min |
-| Skills → Complete | 1 min | 2 min |
-| **Total** | **7 min** | **15 min** |
+| Stage                  | Target Time | Upper Limit |
+| ---------------------- | ----------- | ----------- |
+| Signup → Email Verify  | 2 min       | 5 min       |
+| Email Verify → Profile | 1 min       | 3 min       |
+| Profile → Workspace    | 1 min       | 2 min       |
+| Workspace → Skills     | 2 min       | 5 min       |
+| Skills → Complete      | 1 min       | 2 min       |
+| **Total**              | **7 min**   | **15 min**  |
 
 ### Quality Metrics
 
@@ -447,6 +486,7 @@ Final Reward: "Welcome to ONE" achievement + 100 bonus tokens (for testing)
 ```
 
 Completion of all 6 items triggers:
+
 - Email: "You're all set! Here's what's next..."
 - Dashboard notification: "You're ready to create & earn"
 - Unlock beginner-friendly content (first course, first template, etc)
@@ -459,12 +499,14 @@ Completion of all 6 items triggers:
 
 **Current state:** Email/password + OAuth working in production
 **Onboarding adds:**
+
 - Email verification flow (6-digit code via Resend)
 - User creation in Better Auth
 - Session creation for authenticated requests
 - Login redirect after onboarding complete
 
 **API Integration:**
+
 ```
 signup → Create user in Better Auth
   ↓
@@ -478,6 +520,7 @@ login → Get session token
 ### 2. Convex (Database)
 
 **Creates:**
+
 - `creator` thing (in entities table)
 - `organization` thing (workspace, in entities table)
 - `member_of` connection (creator → workspace)
@@ -485,6 +528,7 @@ login → Get session token
 - Events for every transition
 
 **Tables touched:**
+
 - `entities` (creator, workspace things)
 - `connections` (team membership)
 - `events` (audit trail)
@@ -493,6 +537,7 @@ login → Get session token
 ### 3. Email (Resend)
 
 **Sends:**
+
 - Welcome email (after signup)
 - Verification code (6-digit, 10-min expiry)
 - Team invitation (if inviting others)
@@ -502,6 +547,7 @@ login → Get session token
 ### 4. Wallet (viem/wagmi) - Optional
 
 **For X402 protocol:**
+
 - Detect MetaMask, Rainbow Kit, WalletConnect
 - Request wallet connection
 - Sign message to verify ownership
@@ -511,6 +557,7 @@ login → Get session token
 ### 5. Analytics
 
 **Track every transition:**
+
 - Conversion funnel (which stage drops off?)
 - Time in each stage
 - Device/browser (mobile vs desktop)
@@ -524,6 +571,7 @@ login → Get session token
 ### Block Everything Until Ready
 
 **Wave 1 blocks:**
+
 - Wave 2 (Monetization) - Needs creators first
 - Wave 3 (Agents) - Needs authenticated creators
 - Wave 4 (API) - Needs API keys (requires creator)
@@ -586,12 +634,14 @@ Wave 1 is done when:
 ## What Happens After Onboarding
 
 **Day 1:**
+
 - Creator sees dashboard
 - Dashboard shows quick wins checklist (if not completed)
 - Suggestions for next steps (create content, connect wallet, invite team)
 - "Recommended for you" section (based on skills/interests)
 
 **Day 2-7:**
+
 - First content created (or first sale)
 - First X402 payment received (if wallet connected)
 - First team member joins (if invited)
@@ -599,6 +649,7 @@ Wave 1 is done when:
 - Email: "You earned X tokens!"
 
 **Week 2-4:**
+
 - Decide to upgrade to pro plan
 - Buy first AI agent or course
 - Publish second piece of content
@@ -606,6 +657,7 @@ Wave 1 is done when:
 - Build audience
 
 **Month 2+:**
+
 - Platform becomes primary revenue stream
 - Team grows
 - AI agents deployed
@@ -617,6 +669,7 @@ Wave 1 is done when:
 ## Architecture Notes
 
 ### Frontend Stack
+
 - **Pages:** Astro (SSR) - Fast, server-rendered, minimal JS
 - **Components:** React 19 (islands) - Interactive elements only
 - **Forms:** Shadcn/ui + Tailwind v4 - Accessible, beautiful
@@ -625,6 +678,7 @@ Wave 1 is done when:
 - **Auth:** Better Auth client library
 
 ### Backend Stack
+
 - **Database:** Convex (Real-time, schema-enforced)
 - **Services:** Effect.ts (pure business logic)
 - **Mutations:** Thin wrappers (validation + event logging)
@@ -633,6 +687,7 @@ Wave 1 is done when:
 - **Rate Limiting:** @convex-dev/rate-limiter (prevent abuse)
 
 ### Security
+
 - Email verification (prevents fake email signup)
 - Rate limiting (prevent brute force)
 - Password hashing (SHA-256 minimum, bcrypt recommended)
@@ -641,6 +696,7 @@ Wave 1 is done when:
 - Email validation (basic format + delivery check)
 
 ### Performance Targets
+
 - Signup page: <2s initial load
 - Form submit: <1s response
 - Email delivery: <30 seconds
@@ -686,4 +742,3 @@ Wave 1 is done when:
 **Status:** Ready for implementation
 **Approved:** Engineering Director (AI Agent)
 **Implementation Start:** Immediate (Infer 1)
-

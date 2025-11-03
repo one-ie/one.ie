@@ -1,3 +1,19 @@
+---
+title: Test Backend Connection
+dimension: things
+category: plans
+tags: backend, convex, frontend
+scope: global
+created: 2025-11-03
+updated: 2025-11-03
+version: 1.0.0
+ai_context: |
+  This document is part of the things dimension in the plans category.
+  Location: one/things/plans/test-backend-connection.md
+  Purpose: Documents test: switch frontend to backend convex
+  For AI agents: Read this to understand test backend connection.
+---
+
 # Test: Switch Frontend to Backend Convex
 
 ## Goal
@@ -165,23 +181,27 @@ console.log(import.meta.env.PUBLIC_CONVEX_URL);
 ### Step 5: Test Auth Flow
 
 **Sign Up Test:**
+
 1. Go to `http://localhost:4321/account/signup`
 2. Create new account with email/password
 3. Check that user is created
 
 **Verify in Convex Dashboard:**
+
 1. Go to https://dashboard.convex.dev
 2. Open **backend** deployment (not frontend)
 3. Click "Data" tab
 4. Check `users` table - new user should be there
 
 **Sign In Test:**
+
 1. Go to `http://localhost:4321/account/signin`
 2. Sign in with credentials from step 5.2
 3. Should redirect to `/account` (dashboard)
 4. Check `sessions` table in backend Convex - session should exist
 
 **Sign Out Test:**
+
 1. Click sign out button
 2. Should redirect to home
 3. Session should be marked as expired
@@ -196,6 +216,7 @@ const tokens = useQuery(api.queries.entities.list, { type: "token" });
 ```
 
 Verify that:
+
 - Queries return data from **backend** Convex
 - Mutations write to **backend** Convex
 - Real-time subscriptions work
@@ -222,11 +243,13 @@ Verify that:
 ### Issue 1: "Schema mismatch" Error
 
 **Error:**
+
 ```
 Error: Schema mismatch between client and server
 ```
 
 **Fix:**
+
 ```bash
 # Backend schema needs to match frontend schema exactly
 cp frontend/convex/schema.ts backend/convex/schema.ts
@@ -236,11 +259,13 @@ cd backend/ && convex deploy
 ### Issue 2: "Auth configuration not found"
 
 **Error:**
+
 ```
 Error: Better Auth not configured
 ```
 
 **Fix:**
+
 ```bash
 # Copy auth files from frontend to backend
 cp frontend/convex/auth.ts backend/convex/auth.ts
@@ -251,11 +276,13 @@ cd backend/ && convex deploy
 ### Issue 3: Old environment cached
 
 **Error:**
+
 ```
 Still connecting to old deployment
 ```
 
 **Fix:**
+
 ```bash
 # Clear all caches
 cd frontend/
@@ -269,11 +296,13 @@ bun run dev
 ### Issue 4: Missing environment variables
 
 **Error:**
+
 ```
 Error: CONVEX_URL is not defined
 ```
 
 **Fix:**
+
 ```bash
 # Make sure ALL Convex env vars are set
 cd frontend/
@@ -288,11 +317,13 @@ CONVEX_URL=https://backend-deployment.convex.cloud
 ### Issue 5: CORS errors
 
 **Error:**
+
 ```
 CORS policy blocked request to Convex
 ```
 
 **Fix:**
+
 ```bash
 # Make sure frontend URL is allowed in Convex dashboard
 # Go to dashboard.convex.dev → Settings → CORS
@@ -304,6 +335,7 @@ CORS policy blocked request to Convex
 ## Success Criteria
 
 ✅ **Test passes if:**
+
 1. Frontend connects to backend Convex deployment
 2. User can sign up (creates user in backend)
 3. User can sign in (creates session in backend)
@@ -312,6 +344,7 @@ CORS policy blocked request to Convex
 6. No console errors
 
 ❌ **Test fails if:**
+
 1. Frontend still connects to frontend Convex
 2. Auth doesn't work
 3. Queries return empty data
@@ -385,12 +418,14 @@ console.log(import.meta.env.PUBLIC_CONVEX_URL)
 ## What This Tests
 
 ✅ **Tests:**
+
 - Frontend can connect to different Convex deployment
 - Auth works across different deployments
 - Queries/mutations work across deployments
 - Real-time subscriptions work
 
 ❌ **Does NOT test:**
+
 - API key authentication (that's in `separate.md`)
 - REST API endpoints (that's in `separate.md`)
 - Multi-tenancy (that's in `separate.md`)
@@ -404,6 +439,7 @@ This is purely a **connection test** - making sure the plumbing works before we 
 ### Only 1 file changes:
 
 **`frontend/.env.local`:**
+
 ```diff
 - PUBLIC_CONVEX_URL=https://frontend-deployment.convex.cloud
 - CONVEX_DEPLOYMENT=frontend-deployment-name
@@ -421,12 +457,14 @@ No code changes. No schema changes. Just environment variables.
 ## Expected Console Output
 
 **Before (using frontend/convex):**
+
 ```
 [vite] connecting to Convex...
 [convex] Connected to https://frontend-deployment.convex.cloud
 ```
 
 **After (using backend/convex):**
+
 ```
 [vite] connecting to Convex...
 [convex] Connected to https://backend-deployment.convex.cloud

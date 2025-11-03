@@ -1,3 +1,21 @@
+---
+title: Email
+dimension: things
+category: plans
+tags: ai, artificial-intelligence, backend, frontend
+related_dimensions: connections, events, people
+scope: global
+created: 2025-11-03
+updated: 2025-11-03
+version: 1.0.0
+ai_context: |
+  This document is part of the things dimension in the plans category.
+  Location: one/things/plans/email.md
+  Purpose: Documents email client implementation plan
+  Related dimensions: connections, events, people
+  For AI agents: Read this to understand email.
+---
+
 # Email Client Implementation Plan
 
 **Goal:** Build a production-ready email system using Resend, starting with quick integration then evolving to a full-featured client with shadcn/ui Mail interface.
@@ -81,14 +99,12 @@ Implement minimal set:
 ### 2.3 Core Templates
 
 1. **Transactional:**
-
    - Password reset
    - Email verification
    - Purchase confirmation
    - Payment receipt
 
 2. **Notifications:**
-
    - Agent activity
    - Course progress
    - Content updates
@@ -350,7 +366,7 @@ export class ResendService extends Effect.Service<ResendService>()(
       };
     }),
     dependencies: [ConvexDatabase.Default, ResendProvider.Default],
-  }
+  },
 ) {}
 ```
 
@@ -375,7 +391,7 @@ export const send = confect.mutation({
         ctx.scheduler.runAfter(0, internal.email.sendAction, {
           emailId,
           ...args,
-        })
+        }),
       );
 
       return { emailId };
@@ -579,7 +595,7 @@ describe("ResendService", () => {
         return yield* service.renderTemplate(templateId, {
           name: "Alice",
         });
-      }).pipe(Effect.provide(TestLayer))
+      }).pipe(Effect.provide(TestLayer)),
     );
 
     expect(result).toContain("Hello Alice");
@@ -648,21 +664,18 @@ describe("Email Flow", () => {
 ## Security Considerations
 
 1. **API Key Management**
-
    - Store in environment variables
    - Rotate regularly
    - Use test mode for development
    - Never log API key
 
 2. **Data Privacy**
-
    - GDPR compliance (export/delete)
    - CAN-SPAM compliance (unsubscribe)
    - Encrypt sensitive data
    - Anonymize analytics
 
 3. **Rate Limiting**
-
    - Prevent abuse (limit per user)
    - Respect Resend limits
    - Queue system for overflow

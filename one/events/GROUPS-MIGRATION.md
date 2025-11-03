@@ -1,3 +1,21 @@
+---
+title: Groups Migration
+dimension: events
+category: GROUPS-MIGRATION.md
+tags: ai, architecture, connections, events, groups, knowledge, multi-tenant, ontology, people, things
+related_dimensions: connections, groups, knowledge, people, things
+scope: global
+created: 2025-11-03
+updated: 2025-11-03
+version: 1.0.0
+ai_context: |
+  This document is part of the events dimension in the GROUPS-MIGRATION.md category.
+  Location: one/events/GROUPS-MIGRATION.md
+  Purpose: Documents organizations → groups migration plan
+  Related dimensions: connections, groups, knowledge, people, things
+  For AI agents: Read this to understand GROUPS MIGRATION.
+---
+
 # Organizations → Groups Migration Plan
 
 **Version:** 2.0.0

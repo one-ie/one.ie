@@ -1,3 +1,21 @@
+---
+title: Migration Report
+dimension: events
+category: MIGRATION-REPORT.md
+tags: ai, architecture, backend, frontend
+related_dimensions: groups, things
+scope: global
+created: 2025-11-03
+updated: 2025-11-03
+version: 1.0.0
+ai_context: |
+  This document is part of the events dimension in the MIGRATION-REPORT.md category.
+  Location: one/events/MIGRATION-REPORT.md
+  Purpose: Documents 🚀 backend convex migration report
+  Related dimensions: groups, things
+  For AI agents: Read this to understand MIGRATION REPORT.
+---
+
 # 🚀 Backend Convex Migration Report
 
 **Date:** October 9, 2025

@@ -1,3 +1,21 @@
+---
+title: Crypto Analysis Strategy
+dimension: knowledge
+category: crypto-analysis-strategy.md
+tags: agent, ai, ontology, protocol
+related_dimensions: connections, events, people, things
+scope: global
+created: 2025-11-03
+updated: 2025-11-03
+version: 1.0.0
+ai_context: |
+  This document is part of the knowledge dimension in the crypto-analysis-strategy.md category.
+  Location: one/knowledge/crypto-analysis-strategy.md
+  Purpose: Documents crypto analysis strategy
+  Related dimensions: connections, events, people, things
+  For AI agents: Read this to understand crypto analysis strategy.
+---
+
 # Crypto Analysis Strategy
 
 A comprehensive strategic framework for analyzing cryptocurrencies and DeFi protocols using the ONE Platform's 6-dimension ontology. This document provides proven methodologies for token evaluation, risk assessment, and investment decision-making.

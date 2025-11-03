@@ -1,3 +1,21 @@
+---
+title: Service Layer
+dimension: connections
+category: service-layer.md
+tags: ai
+related_dimensions: events, people, things
+scope: global
+created: 2025-11-03
+updated: 2025-11-03
+version: 1.0.0
+ai_context: |
+  This document is part of the connections dimension in the service-layer.md category.
+  Location: one/connections/service-layer.md
+  Purpose: Provides information
+  Related dimensions: events, people, things
+  For AI agents: Read this to understand service layer.
+---
+
 // convex/services/aiClone.ts
 import { Effect, Layer } from "effect";
 import { ConvexDatabase } from "./database";

@@ -1,3 +1,21 @@
+---
+title: Design
+dimension: things
+category: cascade
+tags: agent, ai
+related_dimensions: groups, people
+scope: global
+created: 2025-11-03
+updated: 2025-11-03
+version: 1.0.0
+ai_context: |
+  This document is part of the things dimension in the cascade category.
+  Location: one/things/cascade/docs/examples/1-6-numbering-structure/design.md
+  Purpose: Documents design for feature 1-6: numbering structure and file organization
+  Related dimensions: groups, people
+  For AI agents: Read this to understand design.
+---
+
 # Design for Feature 1-6: Numbering Structure and File Organization
 
 **Feature:** 1-6-numbering-structure
@@ -15,11 +33,13 @@ Enable intuitive hierarchical organization using sequential numbering without bu
 ## CLI Context
 
 **Numbering is implicit** - Claude understands hierarchy naturally:
+
 - `1` = Plan 1
 - `1-1` = Feature 1 of Plan 1
 - `1-1-task-3` = Task 3 of Feature 1-1
 
 **Commands work with any level:**
+
 ```bash
 /one plan 1                        # Work on Plan 1
 /one feature 1-1                   # Work on Feature 1-1
@@ -33,8 +53,10 @@ Enable intuitive hierarchical organization using sequential numbering without bu
 ## Design Decisions (Test-Driven)
 
 ### Decision 1: Convention Over Code - AI Understands Numbers
+
 **Test requirement:** Claude parses IDs in < 10ms without code
 **Design solution:**
+
 - Numbering pattern: `{N}`, `{N}-{M}`, `{N}-{M}-task-{K}`
 - File paths follow pattern: `one/things/plans/{N}-{name}.md`
 - Claude understands pattern from documentation
@@ -45,8 +67,10 @@ Enable intuitive hierarchical organization using sequential numbering without bu
 ---
 
 ### Decision 2: Hierarchy Visible in File Paths
+
 **Test requirement:** Users can navigate filesystem intuitively
 **Design solution:**
+
 ```
 one/things/
 ├── plans/
@@ -72,8 +96,10 @@ one/things/
 ---
 
 ### Decision 3: Numbers Are Sequential and Auto-Assigned
+
 **Test requirement:** Users don't manually track numbers
 **Design solution:**
+
 ```
 User: /one plan "Create workflow system"
 
@@ -106,8 +132,10 @@ Creating Feature 1-2: Orchestrator...
 ---
 
 ### Decision 4: Hierarchy Commands Show Structure
+
 **Test requirement:** User can visualize plan/feature breakdown
 **Design solution:**
+
 ```
 $ /one show 1
 
@@ -146,20 +174,25 @@ Progress: 83% (5/6 features complete)
 ---
 
 ### Decision 5: Cross-References Use Numbering
+
 **Test requirement:** Easy to reference related work
 **Design solution:**
+
 ```markdown
 # Feature 1-2: YAML Orchestrator
 
 **Dependencies:**
+
 - Feature 1-1: Agent Prompts (must exist to orchestrate)
 
 **References:**
+
 - See Plan 1: one/things/plans/1-create-workflow.md
 - See Feature 1-3: Event coordination for event types
 - See Feature 1-6: Numbering structure for file paths
 
 **Related Tasks:**
+
 - 1-2-task-1: Document workflow stages
 - 1-2-task-2: Create workflow guide
 ```
@@ -230,7 +263,8 @@ one/things/
 User: /one plan "Course platform"
 
 Claude thinks:
-1. List existing plans: ls one/things/plans/*.md
+
+1. List existing plans: ls one/things/plans/\*.md
 2. Extract numbers: 1-create-workflow.md → 1
 3. Find highest: max(1) = 1
 4. Assign next: 1 + 1 = 2
@@ -239,8 +273,9 @@ Claude thinks:
 User: /one feature "Course CRUD"
 
 Claude thinks:
+
 1. Determine current plan: 2 (from context or user specified)
-2. List features for plan 2: ls one/things/features/2-*.md
+2. List features for plan 2: ls one/things/features/2-\*.md
 3. Extract numbers: None found (first feature)
 4. Assign: 2-1
 5. Create: 2-1-course-crud.md
@@ -248,8 +283,9 @@ Claude thinks:
 User: /one task "Create service"
 
 Claude thinks:
+
 1. Determine current feature: 2-1 (from context)
-2. List tasks: ls one/things/features/2-1-course-crud/tasks/*.md
+2. List tasks: ls one/things/features/2-1-course-crud/tasks/\*.md
 3. Extract numbers: None found (first task)
 4. Assign: 2-1-task-1
 5. Create: 2-1-task-1-create-service.md
@@ -494,6 +530,7 @@ Commands:
 ## Design Tokens
 
 ### Hierarchy Icons
+
 ```
 📋 Plan level (top level)
 📝 Feature level (plan breakdown)
@@ -501,6 +538,7 @@ Commands:
 ```
 
 ### Status Icons
+
 ```
 ✅ Complete
 🔄 In Progress
@@ -510,6 +548,7 @@ Commands:
 ```
 
 ### Tree Structure
+
 ```
 ├─ Branch continues
 └─ Last branch
@@ -521,17 +560,20 @@ Commands:
 ## Accessibility
 
 ### Screen Reader Friendly
+
 - Hierarchy levels spoken clearly
 - Numbers pronounced with context ("Plan 1", "Feature 1-1", "Task 1-1-task-1")
 - Tree structure described logically
 - Status indicators have text equivalents
 
 ### Keyboard Navigation
+
 - All numbering commands text-based
 - No mouse required for hierarchy navigation
 - Tab completion: `/one show [tab]` suggests valid IDs
 
 ### Error Recovery
+
 - Invalid ID: "Feature 1-9 not found. Valid features for Plan 1: 1-1, 1-2, 1-3, 1-4, 1-5, 1-6"
 - Missing plan: "Plan 5 doesn't exist. Existing plans: 1, 2, 3"
 - Suggestions for typos: "Did you mean 1-1 instead of 11?"
@@ -541,6 +583,7 @@ Commands:
 ## Success Criteria from Tests
 
 ### User Flows
+
 - ✅ User creates plan (auto-assigned number)
 - ✅ User creates features (sequential numbering)
 - ✅ User breaks down into tasks (nested numbering)
@@ -548,6 +591,7 @@ Commands:
 - ✅ User references work by number
 
 ### Acceptance Criteria
+
 - ✅ Number parsing: < 10ms (pattern matching)
 - ✅ Auto-assignment: Correct sequential numbers
 - ✅ File organization: Mirrors logical hierarchy
@@ -559,12 +603,14 @@ Commands:
 ## Implementation Notes
 
 **No numbering infrastructure to build** - Just conventions:
+
 1. Numbering pattern documented ✅ (in Feature 1-6 spec)
 2. File path convention ✅ (mirrors hierarchy)
 3. Auto-assignment logic ✅ (filesystem + AI)
 4. Hierarchy visualization ✅ (tree structure)
 
 **Claude Code handles numbering** by:
+
 - Checking filesystem for existing numbers (ls)
 - Understanding pattern from documentation
 - Assigning next sequential number
@@ -575,6 +621,7 @@ Commands:
 ## Next Steps
 
 Ready for Level 6 (Implementation):
+
 - Numbering convention documented ✅ (Feature 1-6 spec)
 - File organization structure ✅ (this document)
 - Hierarchy visualization ✅ (CLI wireframes)
@@ -585,6 +632,7 @@ Ready for Level 6 (Implementation):
 **Status:** ✅ Design Complete
 
 **Key Design Insights:**
+
 1. **Convention over code** - AI understands patterns without parsing
 2. **Filesystem mirrors logic** - Directory structure = hierarchy
 3. **Sequential auto-assignment** - No manual number tracking
@@ -594,6 +642,7 @@ Ready for Level 6 (Implementation):
 **The design is sequential numbering + filesystem organization + AI pattern understanding.** 🎯
 
 **Numbering in action:**
+
 ```
 User: /one plan "Build X"
 Claude: [Checks filesystem] → Assigns Plan 1

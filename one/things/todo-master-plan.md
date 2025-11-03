@@ -1,4 +1,24 @@
+---
+title: Todo Master Plan
+dimension: things
+primary_dimension: things
+category: todo-master-plan.md
+tags: agent, inference, protocol, things
+related_dimensions: connections, events, people
+scope: global
+created: 2025-11-03
+updated: 2025-11-03
+version: 1.0.0
+ai_context: |
+  This document is part of the things dimension in the todo-master-plan.md category.
+  Location: one/things/todo-master-plan.md
+  Purpose: Documents master build plan summary
+  Related dimensions: connections, events, people
+  For AI agents: Read this to understand todo master plan.
+---
+
 # MASTER BUILD PLAN SUMMARY
+
 ## ONE Platform: From Idea to v2.0.0 Public Launch
 
 **Status:** 🚀 **4 Core Todo Files Created + Master Orchestration Complete**
@@ -10,6 +30,7 @@
 ## 📊 WHAT'S BEEN DELIVERED
 
 ### Strategic Planning Documents (via agent-director)
+
 Located: `/Users/toc/Server/ONE/.claude/plans/`
 
 1. ✅ **README.md** - Quick start guide + file index
@@ -22,6 +43,7 @@ Located: `/Users/toc/Server/ONE/.claude/plans/`
 **Total:** ~122 KB, 3,865 lines of strategic documentation
 
 ### Core Todo Files (Foundation)
+
 Located: `/Users/toc/Server/ONE/one/things/`
 
 1. ✅ **todo-x402.md** - HTTP 402 micropayments (100 infers)
@@ -105,17 +127,17 @@ WAVE 4: LAUNCH (Week 7-8)
 
 ## 📋 THE 9 TODO FILES AT A GLANCE
 
-| File | Purpose | Wave | Specialists | Status |
-|------|---------|------|------------|--------|
-| **todo-x402.md** | HTTP 402 payments | 0 (Prerequisite) | backend, integrator | ✅ DONE |
-| **todo-onboard.md** | User registration, teams | 1 | backend, frontend | ✅ DONE |
-| **todo-agents.md** | Agent deployment | 2 | integrator | ⏳ To Create |
-| **todo-skills.md** | Skill marketplace | 2 | builder | ⏳ To Create |
-| **todo-sell.md** | Sell agent access | 2 | backend, integrator | ⏳ To Create |
-| **todo-ecommerce.md** | Products, checkout | 3 | backend, frontend | ✅ DONE |
-| **todo-api.md** | Public REST/GraphQL API | 3 | backend | ⏳ To Create |
-| **todo-features.md** | Analytics, search, social | 3 | frontend, quality | ⏳ To Create |
-| **todo-one-ie.md** | Public launch platform | 4 | frontend, designer | ✅ DONE |
+| File                  | Purpose                   | Wave             | Specialists         | Status       |
+| --------------------- | ------------------------- | ---------------- | ------------------- | ------------ |
+| **todo-x402.md**      | HTTP 402 payments         | 0 (Prerequisite) | backend, integrator | ✅ DONE      |
+| **todo-onboard.md**   | User registration, teams  | 1                | backend, frontend   | ✅ DONE      |
+| **todo-agents.md**    | Agent deployment          | 2                | integrator          | ⏳ To Create |
+| **todo-skills.md**    | Skill marketplace         | 2                | builder             | ⏳ To Create |
+| **todo-sell.md**      | Sell agent access         | 2                | backend, integrator | ⏳ To Create |
+| **todo-ecommerce.md** | Products, checkout        | 3                | backend, frontend   | ✅ DONE      |
+| **todo-api.md**       | Public REST/GraphQL API   | 3                | backend             | ⏳ To Create |
+| **todo-features.md**  | Analytics, search, social | 3                | frontend, quality   | ⏳ To Create |
+| **todo-one-ie.md**    | Public launch platform    | 4                | frontend, designer  | ✅ DONE      |
 
 **Progress:** 4/9 files complete (44%) | 400 inferences delivered | 500 inferences planned
 
@@ -196,6 +218,7 @@ Each todo file has 10 phases, 100 inferences:
 - **Phase 10 (Infer 91-100):** Knowledge & lessons learned
 
 This structure repeats for every feature, enabling:
+
 - Easy scaling (add more files, same pattern)
 - Consistency (all specialists know phases)
 - Parallelization (multiple specialists, multiple files)
@@ -207,17 +230,18 @@ This structure repeats for every feature, enabling:
 
 From `/claude/plans/specialist-assignments.md`:
 
-| Specialist | Primary Role | Workload | Key Files |
-|------------|-------------|----------|-----------|
-| **agent-backend** | Database + server logic | ~320 infers | onboard, ecommerce, api, sell |
-| **agent-frontend** | React + Astro UI | ~250 infers | onboard, ecommerce, one-ie, features |
-| **agent-integrator** | External systems | ~270 infers | x402, agents, sell, api |
-| **agent-builder** | Agent framework | ~200 infers | agents, skills, builder |
-| **agent-quality** | Testing + validation | ~150 infers | all (concurrent testing) |
-| **agent-designer** | UI/UX + accessibility | ~110 infers | one-ie, ecommerce (design tokens) |
-| **agent-ops** | DevOps + deployment | ~? infers | template, releases |
+| Specialist           | Primary Role            | Workload    | Key Files                            |
+| -------------------- | ----------------------- | ----------- | ------------------------------------ |
+| **agent-backend**    | Database + server logic | ~320 infers | onboard, ecommerce, api, sell        |
+| **agent-frontend**   | React + Astro UI        | ~250 infers | onboard, ecommerce, one-ie, features |
+| **agent-integrator** | External systems        | ~270 infers | x402, agents, sell, api              |
+| **agent-builder**    | Agent framework         | ~200 infers | agents, skills, builder              |
+| **agent-quality**    | Testing + validation    | ~150 infers | all (concurrent testing)             |
+| **agent-designer**   | UI/UX + accessibility   | ~110 infers | one-ie, ecommerce (design tokens)    |
+| **agent-ops**        | DevOps + deployment     | ~? infers   | template, releases                   |
 
 **Coordination Model:**
+
 - **Daily:** 15-min standup (what's blocking, need help)
 - **Weekly:** 1hr sync (wave planning, dependencies)
 - **Per-Wave:** Kickoff + retrospective
@@ -229,18 +253,18 @@ From `/claude/plans/specialist-assignments.md`:
 
 When all 900 inferences are executed:
 
-| Metric | Target |
-|--------|--------|
-| **Total Inferences** | 900 (9 × 100) |
-| **Test Coverage** | 80%+ across platform |
-| **Code Commits** | 200+ (git history) |
-| **Documents** | 50+ (planning + docs) |
-| **Features Shipped** | 40+ (across all areas) |
-| **First Creators** | 100+ registered |
-| **First Revenue** | $1000+ processed |
-| **Deployment Frequency** | Weekly releases (v1.1-v2.0) |
-| **Time to v2.0.0** | 8 weeks from start |
-| **Team Efficiency** | 100-112 infers per specialist per day |
+| Metric                   | Target                                |
+| ------------------------ | ------------------------------------- |
+| **Total Inferences**     | 900 (9 × 100)                         |
+| **Test Coverage**        | 80%+ across platform                  |
+| **Code Commits**         | 200+ (git history)                    |
+| **Documents**            | 50+ (planning + docs)                 |
+| **Features Shipped**     | 40+ (across all areas)                |
+| **First Creators**       | 100+ registered                       |
+| **First Revenue**        | $1000+ processed                      |
+| **Deployment Frequency** | Weekly releases (v1.1-v2.0)           |
+| **Time to v2.0.0**       | 8 weeks from start                    |
+| **Team Efficiency**      | 100-112 infers per specialist per day |
 
 ---
 
@@ -289,29 +313,34 @@ When all 900 inferences are executed:
 ## 🎓 KEY PRINCIPLES FOR SUCCESS
 
 ### 1. **Plan in Inferences, Not Days**
+
 - Ask "where does this belong in the sequence?" not "how long will it take?"
 - Each inference = concrete step forward
 - Medium-sized inferences = 30-120 minutes of work
 
 ### 2. **Execute in Parallel**
+
 - Never wait for other specialists
 - Identify dependencies upfront
 - Use interfaces/contracts between modules
 - Wave-based coordination (not per-task)
 
 ### 3. **Test Concurrent with Development**
+
 - Phase 6 is testing, but test in Phases 2-4 too
 - Don't defer quality
 - 80%+ coverage = minimum standard
 - Performance testing in Phase 8 (not last-minute)
 
 ### 4. **Release Early, Release Often**
+
 - Every 2 weeks: v1.1, v1.2, v1.3, v1.4 → v2.0
 - Each release ships a complete vertical (onboarding, agents, ecommerce, etc)
 - Users see progress + give feedback
 - Momentum maintained
 
 ### 5. **Document as You Go**
+
 - Phase 9 is documentation, but write as you code
 - Comments in code
 - Inline examples
@@ -323,31 +352,37 @@ When all 900 inferences are executed:
 ## 📖 STRATEGIC ADVANTAGES OF THIS APPROACH
 
 ✅ **Eliminates Ambiguity**
+
 - Each inference is specific, measurable, achievable
 - No "vague" work items
 - Clear definition of "done"
 
 ✅ **Enables Parallelization**
+
 - 6 specialists work simultaneously
 - No sequential bottlenecks
 - Wave-based synchronization (not daily)
 
 ✅ **Maintains Quality**
+
 - Testing integrated, not deferred
 - Performance measured early
 - Accessibility built-in (Phase 7)
 
 ✅ **Achieves Velocity**
+
 - Consistent pace: 100-112 inferences per specialist per day
 - Predictable timeline: 8 weeks to public launch
 - Release cadence: v1.1, v1.2, v1.3, v1.4, v2.0
 
 ✅ **Captures Knowledge**
+
 - Every inference documented
 - Lessons learned in Phase 10
 - Becomes training material for future features
 
 ✅ **Scales Infinitely**
+
 - Add feature? Create new 100-inference todo file
 - Same pattern repeats
 - New specialists learn quickly
@@ -436,6 +471,7 @@ At the end of 900 inferences (8 weeks):
 ## 💬 FINAL THOUGHTS
 
 We have now:
+
 - ✅ Created comprehensive master orchestration plan
 - ✅ Identified 6 specialist agents + their roles
 - ✅ Mapped 900 inferences across 9 vertical features
@@ -452,4 +488,3 @@ The remaining work is **execution at scale**: 5 more todo files in parallel, the
 **Prepared by:** Engineering Director (agent-director coordination)
 **Date:** 2025-10-30
 **Status:** READY FOR PARALLEL EXECUTION 🚀
-

@@ -1,3 +1,21 @@
+---
+title: Dsl
+dimension: knowledge
+category: dsl.md
+tags: ai, ontology
+related_dimensions: connections, events, things
+scope: global
+created: 2025-11-03
+updated: 2025-11-03
+version: 1.0.0
+ai_context: |
+  This document is part of the knowledge dimension in the dsl.md category.
+  Location: one/knowledge/dsl.md
+  Purpose: Provides information
+  Related dimensions: connections, events, things
+  For AI agents: Read this to understand dsl.
+---
+
 // ============================================================================
 // ONE DSL - Domain Specific Language
 // Purpose: Declare features in high-level syntax that compiles to Effect.ts

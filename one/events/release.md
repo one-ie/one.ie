@@ -1,3 +1,21 @@
+---
+title: Release
+dimension: events
+category: release.md
+tags: agent, ai, architecture, backend, inference, ontology
+related_dimensions: connections, groups, things
+scope: global
+created: 2025-11-03
+updated: 2025-11-03
+version: 1.0.0
+ai_context: |
+  This document is part of the events dimension in the release.md category.
+  Location: one/events/release.md
+  Purpose: Documents release process
+  Related dimensions: connections, groups, things
+  For AI agents: Read this to understand release.
+---
+
 # Release Process
 
 ## Current Release: v3.0.3

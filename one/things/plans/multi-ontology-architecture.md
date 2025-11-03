@@ -1,3 +1,21 @@
+---
+title: Multi Ontology Architecture
+dimension: things
+category: plans
+tags: 6-dimensions, ai, architecture, connections, events, groups, knowledge, ontology, people, system-design
+related_dimensions: connections, events, groups, knowledge, people
+scope: global
+created: 2025-11-03
+updated: 2025-11-03
+version: 1.0.0
+ai_context: |
+  This document is part of the things dimension in the plans category.
+  Location: one/things/plans/multi-ontology-architecture.md
+  Purpose: Documents multi-ontology architecture: feature-specific ontologies
+  Related dimensions: connections, events, groups, knowledge, people
+  For AI agents: Read this to understand multi ontology architecture.
+---
+
 # Multi-Ontology Architecture: Feature-Specific Ontologies
 
 **Status:** 🎯 Active Plan
@@ -34,12 +52,12 @@ Core Ontology (Universal)
 
 ```yaml
 dimensions:
-  1. groups:      # Who owns what (multi-tenant isolation)
-  2. people:      # Who can do what (authorization)
-  3. things:      # What exists (base types)
+  1. groups: # Who owns what (multi-tenant isolation)
+  2. people: # Who can do what (authorization)
+  3. things: # What exists (base types)
   4. connections: # How they relate (base relationships)
-  5. events:      # What happened (base actions)
-  6. knowledge:   # What it means (vectors, RAG)
+  5. events: # What happened (base actions)
+  6. knowledge: # What it means (vectors, RAG)
 ```
 
 ### Core Thing Types (Minimal)
@@ -47,11 +65,11 @@ dimensions:
 ```typescript
 // Always available
 type CoreThingType =
-  | 'page'           // Static pages
-  | 'user'           // User profiles
-  | 'file'           // Uploaded files
-  | 'link'           // External links
-  | 'note';          // Simple notes
+  | "page" // Static pages
+  | "user" // User profiles
+  | "file" // Uploaded files
+  | "link" // External links
+  | "note"; // Simple notes
 ```
 
 ### Core Connection Types (Minimal)
@@ -59,10 +77,10 @@ type CoreThingType =
 ```typescript
 // Always available
 type CoreConnectionType =
-  | 'created_by'
-  | 'updated_by'
-  | 'viewed_by'
-  | 'favorited_by';
+  | "created_by"
+  | "updated_by"
+  | "viewed_by"
+  | "favorited_by";
 ```
 
 ### Core Event Types (Minimal)
@@ -70,10 +88,10 @@ type CoreConnectionType =
 ```typescript
 // Always available
 type CoreEventType =
-  | 'thing_created'
-  | 'thing_updated'
-  | 'thing_deleted'
-  | 'thing_viewed';
+  | "thing_created"
+  | "thing_updated"
+  | "thing_deleted"
+  | "thing_viewed";
 ```
 
 ---
@@ -109,7 +127,7 @@ thing_types:
         description: string
 
 connection_types:
-  - posted_in:         # blog_post → blog_category
+  - posted_in: # blog_post → blog_category
       fromType: blog_post
       toType: blog_category
 
@@ -127,6 +145,7 @@ event_types:
 ```
 
 **Routes Enabled:**
+
 - `/blog`
 - `/blog/[slug]`
 - `/blog/category/[category]`
@@ -162,7 +181,7 @@ thing_types:
         metrics: Record<string, number>
 
 connection_types:
-  - belongs_to_portfolio:  # project → user
+  - belongs_to_portfolio: # project → user
       fromType: project
       toType: user
 
@@ -174,6 +193,7 @@ event_types:
 ```
 
 **Routes Enabled:**
+
 - `/portfolio`
 - `/portfolio/[slug]`
 
@@ -230,7 +250,7 @@ thing_types:
         paymentId: string
 
 connection_types:
-  - purchased:            # user → product
+  - purchased: # user → product
       fromType: user
       toType: product
       metadata:
@@ -238,7 +258,7 @@ connection_types:
         quantity: number
         price: number
 
-  - in_cart:             # user → product
+  - in_cart: # user → product
       fromType: user
       toType: product
       metadata:
@@ -252,6 +272,7 @@ event_types:
 ```
 
 **Routes Enabled:**
+
 - `/shop`
 - `/shop/[slug]`
 - `/cart`
@@ -343,6 +364,7 @@ event_types:
 ```
 
 **Routes Enabled:**
+
 - `/courses`
 - `/courses/[slug]`
 - `/courses/[slug]/lessons/[lesson]`
@@ -401,6 +423,7 @@ event_types:
 ```
 
 **Routes Enabled:**
+
 - `/community`
 - `/community/topics/[topic]`
 - `/community/members`
@@ -464,6 +487,7 @@ event_types:
 ```
 
 **Routes Enabled:**
+
 - `/tokens`
 - `/tokens/buy`
 - `/tokens/holders`
@@ -477,34 +501,43 @@ event_types:
 ```typescript
 // Core ontology (always present)
 const coreOntology = {
-  thingTypes: ['page', 'user', 'file', 'link', 'note'],
-  connectionTypes: ['created_by', 'updated_by', 'viewed_by', 'favorited_by'],
-  eventTypes: ['thing_created', 'thing_updated', 'thing_deleted', 'thing_viewed'],
+  thingTypes: ["page", "user", "file", "link", "note"],
+  connectionTypes: ["created_by", "updated_by", "viewed_by", "favorited_by"],
+  eventTypes: [
+    "thing_created",
+    "thing_updated",
+    "thing_deleted",
+    "thing_viewed",
+  ],
 };
 
 // Feature ontologies (conditionally added)
 const blogOntology = {
-  thingTypes: ['blog_post', 'blog_category'],
-  connectionTypes: ['posted_in'],
-  eventTypes: ['blog_post_published', 'blog_post_viewed'],
+  thingTypes: ["blog_post", "blog_category"],
+  connectionTypes: ["posted_in"],
+  eventTypes: ["blog_post_published", "blog_post_viewed"],
 };
 
 const shopOntology = {
-  thingTypes: ['product', 'product_variant', 'shopping_cart', 'order'],
-  connectionTypes: ['purchased', 'in_cart'],
-  eventTypes: ['product_added_to_cart', 'order_placed', 'order_fulfilled'],
+  thingTypes: ["product", "product_variant", "shopping_cart", "order"],
+  connectionTypes: ["purchased", "in_cart"],
+  eventTypes: ["product_added_to_cart", "order_placed", "order_fulfilled"],
 };
 
 // Compose based on enabled features
 const compositeOntology = composeOntologies(
   coreOntology,
-  hasFeature('blog') ? blogOntology : null,
-  hasFeature('shop') ? shopOntology : null,
-  hasFeature('courses') ? coursesOntology : null
+  hasFeature("blog") ? blogOntology : null,
+  hasFeature("shop") ? shopOntology : null,
+  hasFeature("courses") ? coursesOntology : null,
 );
 
 // Result: TypeScript types are generated for enabled features only
-type ThingType = CoreThingType | BlogThingType | ShopThingType | CoursesThingType;
+type ThingType =
+  | CoreThingType
+  | BlogThingType
+  | ShopThingType
+  | CoursesThingType;
 ```
 
 ---
@@ -515,51 +548,63 @@ type ThingType = CoreThingType | BlogThingType | ShopThingType | CoursesThingTyp
 
 ```typescript
 // backend/convex/schema.ts
-import { defineSchema, defineTable } from 'convex/server';
-import { v } from 'convex/values';
-import { loadOntologies } from './ontology-loader';
+import { defineSchema, defineTable } from "convex/server";
+import { v } from "convex/values";
+import { loadOntologies } from "./ontology-loader";
 
 // Load ontologies based on PUBLIC_FEATURES env var
 const ontologies = loadOntologies(process.env.PUBLIC_FEATURES);
 
 export default defineSchema({
   // Core tables (always present)
-  groups: defineTable({ /* ... */ }),
-  people: defineTable({ /* ... */ }),
+  groups: defineTable({
+    /* ... */
+  }),
+  people: defineTable({
+    /* ... */
+  }),
 
   // Things table with dynamic type validation
   things: defineTable({
-    groupId: v.id('groups'),
-    type: v.union(...ontologies.thingTypes.map(t => v.literal(t))),
+    groupId: v.id("groups"),
+    type: v.union(...ontologies.thingTypes.map((t) => v.literal(t))),
     name: v.string(),
     properties: v.any(),
-    status: v.union(v.literal('draft'), v.literal('active'), v.literal('archived')),
+    status: v.union(
+      v.literal("draft"),
+      v.literal("active"),
+      v.literal("archived"),
+    ),
     createdAt: v.number(),
     updatedAt: v.number(),
-  }).index('by_group_and_type', ['groupId', 'type']),
+  }).index("by_group_and_type", ["groupId", "type"]),
 
   // Connections table with dynamic type validation
   connections: defineTable({
-    groupId: v.id('groups'),
-    fromThingId: v.id('things'),
-    toThingId: v.id('things'),
-    relationshipType: v.union(...ontologies.connectionTypes.map(t => v.literal(t))),
+    groupId: v.id("groups"),
+    fromThingId: v.id("things"),
+    toThingId: v.id("things"),
+    relationshipType: v.union(
+      ...ontologies.connectionTypes.map((t) => v.literal(t)),
+    ),
     metadata: v.optional(v.any()),
     createdAt: v.number(),
-  }).index('by_group_and_type', ['groupId', 'relationshipType']),
+  }).index("by_group_and_type", ["groupId", "relationshipType"]),
 
   // Events table with dynamic type validation
   events: defineTable({
-    groupId: v.id('groups'),
-    eventType: v.union(...ontologies.eventTypes.map(t => v.literal(t))),
-    actorId: v.id('people'),
-    targetId: v.optional(v.id('things')),
+    groupId: v.id("groups"),
+    eventType: v.union(...ontologies.eventTypes.map((t) => v.literal(t))),
+    actorId: v.id("people"),
+    targetId: v.optional(v.id("things")),
     timestamp: v.number(),
     metadata: v.optional(v.any()),
-  }).index('by_group_and_type', ['groupId', 'eventType']),
+  }).index("by_group_and_type", ["groupId", "eventType"]),
 
   // Knowledge table (always present)
-  knowledge: defineTable({ /* ... */ }),
+  knowledge: defineTable({
+    /* ... */
+  }),
 });
 ```
 
@@ -607,11 +652,11 @@ const createBlogPost = (title: string, content: string) => {
 
 ```typescript
 // tools/validate-ontology.ts
-import { FEATURES } from '../src/config/features';
-import { loadOntologies } from '../backend/convex/ontology-loader';
+import { FEATURES } from "../src/config/features";
+import { loadOntologies } from "../backend/convex/ontology-loader";
 
 const validateOntology = () => {
-  const ontologies = loadOntologies(FEATURES.join(','));
+  const ontologies = loadOntologies(FEATURES.join(","));
 
   // Check for type conflicts
   const thingTypes = new Set();
@@ -631,7 +676,7 @@ const validateOntology = () => {
     connectionTypes.add(type);
   }
 
-  console.log('✓ Ontology validated successfully');
+  console.log("✓ Ontology validated successfully");
   console.log(`  Thing types: ${ontologies.thingTypes.length}`);
   console.log(`  Connection types: ${ontologies.connectionTypes.length}`);
   console.log(`  Event types: ${ontologies.eventTypes.length}`);
@@ -710,15 +755,15 @@ TypeScript knows which types are available:
 
 ```typescript
 // ✅ Valid if blog feature enabled
-const post = await db.insert('things', {
-  type: 'blog_post',
-  properties: { title, content }
+const post = await db.insert("things", {
+  type: "blog_post",
+  properties: { title, content },
 });
 
 // ❌ Error if shop feature NOT enabled
-const product = await db.insert('things', {
-  type: 'product',  // TypeScript error: Type 'product' not in ThingType union
-  properties: { name, price }
+const product = await db.insert("things", {
+  type: "product", // TypeScript error: Type 'product' not in ThingType union
+  properties: { name, price },
 });
 ```
 
@@ -728,7 +773,7 @@ Database only validates types that exist:
 
 ```typescript
 // If only blog feature enabled
-type ThingType = 'page' | 'user' | 'file' | 'blog_post' | 'blog_category';
+type ThingType = "page" | "user" | "file" | "blog_post" | "blog_category";
 
 // Not: 'product' | 'course' | 'token' | etc.
 ```
@@ -760,22 +805,26 @@ PUBLIC_FEATURES=blog,portfolio,courses,shop,community,tokens
 ## Implementation Plan
 
 ### Week 1: Core Infrastructure
+
 1. Create ontology loader system
 2. Update schema generator
 3. Test core + blog ontology
 
 ### Week 2: Feature Ontologies
+
 1. Extract blog ontology spec
 2. Extract shop ontology spec (already exists!)
 3. Create courses ontology spec
 4. Create community ontology spec
 
 ### Week 3: Type Generation
+
 1. Generate TypeScript types from ontology
 2. Validate ontology composition
 3. Test type safety
 
 ### Week 4: CLI Integration
+
 1. Update `npx oneie` to compose ontologies
 2. Add ontology validation
 3. Generate schema.ts automatically

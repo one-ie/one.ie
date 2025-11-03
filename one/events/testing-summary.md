@@ -1,3 +1,21 @@
+---
+title: Testing Summary
+dimension: events
+category: testing-summary.md
+tags: architecture, ontology, quality, testing
+related_dimensions: connections, knowledge, things
+scope: global
+created: 2025-11-03
+updated: 2025-11-03
+version: 1.0.0
+ai_context: |
+  This document is part of the events dimension in the testing-summary.md category.
+  Location: one/events/testing-summary.md
+  Purpose: Documents multi-ontology architecture: testing summary
+  Related dimensions: connections, knowledge, things
+  For AI agents: Read this to understand testing summary.
+---
+
 # Multi-Ontology Architecture: Testing Summary
 
 ## Overview

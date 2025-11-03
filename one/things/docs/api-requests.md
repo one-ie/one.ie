@@ -1,3 +1,21 @@
+---
+title: Api Requests
+dimension: things
+category: docs
+tags: ai, auth, backend, connections, events, frontend, groups, knowledge, ontology, things
+related_dimensions: connections, events, groups, knowledge
+scope: global
+created: 2025-11-03
+updated: 2025-11-03
+version: 1.0.0
+ai_context: |
+  This document is part of the things dimension in the docs category.
+  Location: one/things/docs/api-requests.md
+  Purpose: Documents api requests guide
+  Related dimensions: connections, events, groups, knowledge
+  For AI agents: Read this to understand api requests.
+---
+
 # API Requests Guide
 
 Complete reference for making HTTP requests to the ONE Platform APIs.
@@ -26,6 +44,7 @@ curl https://veracious-marlin-319.convex.site/health
 ```
 
 **Response:**
+
 ```json
 {
   "status": "ok",
@@ -47,17 +66,20 @@ curl https://veracious-marlin-319.convex.site/groups
 ```
 
 **Query Parameters:**
+
 - `type` - Filter by group type (organization, business, community, dao, friend_circle, government)
 - `status` - Filter by status (active, draft, archived)
 - `limit` - Results per page (default 50, max 1000)
 - `offset` - Pagination offset
 
 **Example:**
+
 ```bash
 curl "https://veracious-marlin-319.convex.site/groups?type=organization&status=active&limit=20"
 ```
 
 **Response:**
+
 ```json
 {
   "success": true,
@@ -96,6 +118,7 @@ curl -X POST https://veracious-marlin-319.convex.site/groups \
 ```
 
 **Response:**
+
 ```json
 {
   "success": true,
@@ -118,6 +141,7 @@ curl https://veracious-marlin-319.convex.site/things
 ```
 
 **Query Parameters:**
+
 - `groupId` - **Required** - Filter by group ID
 - `type` - Filter by thing type (user, course, product, blog_post, agent, token, etc.)
 - `status` - Filter by status (draft, active, published, archived)
@@ -130,21 +154,25 @@ curl https://veracious-marlin-319.convex.site/things
 **Examples:**
 
 List all things in a group:
+
 ```bash
 curl "https://veracious-marlin-319.convex.site/things?groupId=group_123"
 ```
 
 Filter by type:
+
 ```bash
 curl "https://veracious-marlin-319.convex.site/things?groupId=group_123&type=course&status=active"
 ```
 
 Search with pagination:
+
 ```bash
 curl "https://veracious-marlin-319.convex.site/things?groupId=group_123&search=python&limit=20&offset=0"
 ```
 
 **Response:**
+
 ```json
 {
   "success": true,
@@ -194,15 +222,18 @@ curl -X POST https://veracious-marlin-319.convex.site/things \
 ```
 
 **Required Fields:**
+
 - `type` - Thing type (string)
 - `name` - Thing name (string)
 - `groupId` - Group ID (string)
 
 **Optional Fields:**
+
 - `properties` - Flexible object for type-specific data
 - `status` - Status (default 'draft')
 
 **Response:**
+
 ```json
 {
   "success": true,
@@ -231,6 +262,7 @@ curl https://veracious-marlin-319.convex.site/connections
 ```
 
 **Query Parameters:**
+
 - `groupId` - **Required** - Filter by group ID
 - `relationshipType` - Filter by relationship type (owns, enrolled_in, follows, member_of, transacted, authored, part_of, etc.)
 - `fromThingId` - Filter by source entity
@@ -241,26 +273,31 @@ curl https://veracious-marlin-319.convex.site/connections
 **Examples:**
 
 List all connections in a group:
+
 ```bash
 curl "https://veracious-marlin-319.convex.site/connections?groupId=group_123"
 ```
 
 Filter by relationship type:
+
 ```bash
 curl "https://veracious-marlin-319.convex.site/connections?groupId=group_123&relationshipType=enrolled_in"
 ```
 
 Find connections from a specific entity:
+
 ```bash
 curl "https://veracious-marlin-319.convex.site/connections?groupId=group_123&fromThingId=user_123"
 ```
 
 Find connections to a specific entity:
+
 ```bash
 curl "https://veracious-marlin-319.convex.site/connections?groupId=group_123&toThingId=course_456"
 ```
 
 **Response:**
+
 ```json
 {
   "success": true,
@@ -306,15 +343,18 @@ curl -X POST https://veracious-marlin-319.convex.site/connections \
 ```
 
 **Required Fields:**
+
 - `fromThingId` - Source entity ID
 - `toThingId` - Target entity ID
 - `relationshipType` - Type of relationship
 - `groupId` - Group ID
 
 **Optional Fields:**
+
 - `metadata` - Flexible object for relationship-specific data
 
 **Common Relationship Types:**
+
 - `owns` - X owns Y
 - `enrolled_in` - X is enrolled in Y
 - `follows` - X follows Y
@@ -327,6 +367,7 @@ curl -X POST https://veracious-marlin-319.convex.site/connections \
 - `teaches` - X teaches Y
 
 **Response:**
+
 ```json
 {
   "success": true,
@@ -349,6 +390,7 @@ curl https://veracious-marlin-319.convex.site/events
 ```
 
 **Query Parameters:**
+
 - `groupId` - **Required** - Filter by group ID
 - `eventType` - Filter by event type (thing_created, thing_updated, connection_created, enrollment_completed, etc.)
 - `thingId` - Filter by thing ID
@@ -361,31 +403,37 @@ curl https://veracious-marlin-319.convex.site/events
 **Examples:**
 
 List all events in a group:
+
 ```bash
 curl "https://veracious-marlin-319.convex.site/events?groupId=group_123"
 ```
 
 Filter by event type:
+
 ```bash
 curl "https://veracious-marlin-319.convex.site/events?groupId=group_123&eventType=thing_created"
 ```
 
 Get event history for a specific thing:
+
 ```bash
 curl "https://veracious-marlin-319.convex.site/events?groupId=group_123&thingId=course_789&limit=100"
 ```
 
 Get events by a specific actor:
+
 ```bash
 curl "https://veracious-marlin-319.convex.site/events?groupId=group_123&actorId=user_456"
 ```
 
 Events in a time range:
+
 ```bash
 curl "https://veracious-marlin-319.convex.site/events?groupId=group_123&startTime=1729800000000&endTime=1729900000000"
 ```
 
 **Response:**
+
 ```json
 {
   "success": true,
@@ -413,6 +461,7 @@ curl "https://veracious-marlin-319.convex.site/events?groupId=group_123&startTim
 ```
 
 **Common Event Types:**
+
 - `thing_created` - Entity was created
 - `thing_updated` - Entity was updated
 - `thing_deleted` - Entity was deleted
@@ -443,6 +492,7 @@ curl -X POST https://veracious-marlin-319.convex.site/knowledge/search \
 ```
 
 **Request Fields:**
+
 - `query` - Search query (string) - **Required**
 - `groupId` - Group ID - **Required**
 - `limit` - Max results (default 10, max 100)
@@ -450,6 +500,7 @@ curl -X POST https://veracious-marlin-319.convex.site/knowledge/search \
 - `type` - Filter by thing type (optional)
 
 **Response:**
+
 ```json
 {
   "success": true,
@@ -553,8 +604,8 @@ When making requests from a browser, session cookies are automatically included:
 
 ```javascript
 // In browser JavaScript
-const response = await fetch('/api/things?groupId=group_123', {
-  credentials: 'include', // Include cookies
+const response = await fetch("/api/things?groupId=group_123", {
+  credentials: "include", // Include cookies
 });
 const data = await response.json();
 ```
@@ -644,15 +695,15 @@ curl "https://backend.api/connections?groupId=group_123&fromThingId=user_123&rel
 
 ### Common Error Codes
 
-| Code | Status | Description |
-|------|--------|-------------|
-| `VALIDATION_ERROR` | 400 | Invalid request parameters |
-| `UNAUTHORIZED` | 401 | Missing or invalid authentication |
-| `FORBIDDEN` | 403 | Insufficient permissions |
-| `NOT_FOUND` | 404 | Resource not found |
-| `CONFLICT` | 409 | Resource already exists |
-| `RATE_LIMITED` | 429 | Rate limit exceeded |
-| `INTERNAL_ERROR` | 500 | Server error |
+| Code               | Status | Description                       |
+| ------------------ | ------ | --------------------------------- |
+| `VALIDATION_ERROR` | 400    | Invalid request parameters        |
+| `UNAUTHORIZED`     | 401    | Missing or invalid authentication |
+| `FORBIDDEN`        | 403    | Insufficient permissions          |
+| `NOT_FOUND`        | 404    | Resource not found                |
+| `CONFLICT`         | 409    | Resource already exists           |
+| `RATE_LIMITED`     | 429    | Rate limit exceeded               |
+| `INTERNAL_ERROR`   | 500    | Server error                      |
 
 ### Example Error Response
 
@@ -663,6 +714,7 @@ curl -X POST https://backend.api/things \
 ```
 
 **Response (missing groupId):**
+
 ```json
 {
   "success": false,
@@ -680,6 +732,7 @@ curl -X POST https://backend.api/things \
 ### Create a Course and Enroll Users
 
 **Step 1: Create the course (thing)**
+
 ```bash
 curl -X POST https://backend.api/things \
   -H "Content-Type: application/json" \
@@ -697,6 +750,7 @@ curl -X POST https://backend.api/things \
 ```
 
 **Step 2: Create enrollment connections**
+
 ```bash
 curl -X POST https://backend.api/connections \
   -H "Content-Type: application/json" \
@@ -713,6 +767,7 @@ curl -X POST https://backend.api/connections \
 ```
 
 **Step 3: Track completion event**
+
 ```bash
 curl -X POST https://backend.api/events \
   -H "Content-Type: application/json" \
@@ -731,6 +786,7 @@ curl -X POST https://backend.api/events \
 ### Build a Product Catalog with Recommendations
 
 **Step 1: Create products**
+
 ```bash
 curl -X POST https://backend.api/things \
   -H "Content-Type: application/json" \
@@ -748,6 +804,7 @@ curl -X POST https://backend.api/things \
 ```
 
 **Step 2: Link related products**
+
 ```bash
 curl -X POST https://backend.api/connections \
   -H "Content-Type: application/json" \
@@ -763,6 +820,7 @@ curl -X POST https://backend.api/connections \
 ```
 
 **Step 3: Record purchases**
+
 ```bash
 curl -X POST https://backend.api/connections \
   -H "Content-Type: application/json" \
@@ -781,6 +839,7 @@ curl -X POST https://backend.api/connections \
 ### Search Content Recommendations
 
 **Index content**
+
 ```bash
 curl -X POST https://backend.api/knowledge/index \
   -H "Content-Type: application/json" \
@@ -793,6 +852,7 @@ curl -X POST https://backend.api/knowledge/index \
 ```
 
 **Search for recommendations**
+
 ```bash
 curl -X POST https://backend.api/knowledge/search \
   -H "Content-Type: application/json" \
@@ -807,16 +867,19 @@ curl -X POST https://backend.api/knowledge/search \
 ### Monitor User Activity
 
 **Get user's actions**
+
 ```bash
 curl "https://backend.api/events?groupId=group_123&actorId=user_456&limit=50"
 ```
 
 **Get entity's history**
+
 ```bash
 curl "https://backend.api/events?groupId=group_123&thingId=course_789&limit=100"
 ```
 
 **Get activity in time range**
+
 ```bash
 curl "https://backend.api/events?groupId=group_123&startTime=1729800000000&endTime=1729900000000&limit=100"
 ```
@@ -889,6 +952,7 @@ curl https://backend.api/things | jq '.success'
 ### 6. Handle Rate Limiting
 
 Respect rate limits:
+
 - Wait on 429 status
 - Use exponential backoff
 - Cache results when possible

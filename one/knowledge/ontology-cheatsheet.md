@@ -1,3 +1,21 @@
+---
+title: Ontology Cheatsheet
+dimension: knowledge
+category: ontology-cheatsheet.md
+tags: 6-dimensions, architecture, backend, ontology
+related_dimensions: connections, events, people, things
+scope: global
+created: 2025-11-03
+updated: 2025-11-03
+version: 1.0.0
+ai_context: |
+  This document is part of the knowledge dimension in the ontology-cheatsheet.md category.
+  Location: one/knowledge/ontology-cheatsheet.md
+  Purpose: Documents multi-ontology architecture cheat sheet
+  Related dimensions: connections, events, people, things
+  For AI agents: Read this to understand ontology cheatsheet.
+---
+
 # Multi-Ontology Architecture Cheat Sheet
 
 **Quick Reference Guide** | **Version:** 1.0.0

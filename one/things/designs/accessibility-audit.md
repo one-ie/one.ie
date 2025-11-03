@@ -1,3 +1,21 @@
+---
+title: Accessibility Audit
+dimension: things
+category: designs
+tags:
+related_dimensions: events, groups, knowledge, people
+scope: global
+created: 2025-11-03
+updated: 2025-11-03
+version: 1.0.0
+ai_context: |
+  This document is part of the things dimension in the designs category.
+  Location: one/things/designs/accessibility-audit.md
+  Purpose: Documents accessibility audit - one platform ui/ux
+  Related dimensions: events, groups, knowledge, people
+  For AI agents: Read this to understand accessibility audit.
+---
+
 # Accessibility Audit - ONE Platform UI/UX
 
 **Version:** 1.0.0
@@ -20,12 +38,14 @@ This document validates that all UI/UX designs for the ONE Platform meet WCAG 2.
 **Requirement:** Provide text alternatives for non-text content
 
 **Implementation:**
+
 - ✅ All icons have `aria-label` attributes
 - ✅ Type indicator icons have descriptive text
 - ✅ Status badges include accessible labels
 - ✅ Decorative elements marked with `aria-hidden="true"`
 
 **Example:**
+
 ```tsx
 // Icon with text alternative
 <Icon aria-label="Blog Post" className="h-6 w-6" />
@@ -44,6 +64,7 @@ This document validates that all UI/UX designs for the ONE Platform meet WCAG 2.
 **Requirement:** Provide alternatives for time-based media
 
 **Implementation:**
+
 - N/A - No video/audio in core UI
 - Future: Video things will require captions/transcripts
 
@@ -56,6 +77,7 @@ This document validates that all UI/UX designs for the ONE Platform meet WCAG 2.
 **Requirement:** Content can be presented in different ways without losing information
 
 **Implementation:**
+
 - ✅ Semantic HTML (`<nav>`, `<main>`, `<section>`, `<article>`)
 - ✅ Proper heading hierarchy (h1 → h2 → h3)
 - ✅ Lists use `<ul>`, `<ol>` elements
@@ -63,13 +85,14 @@ This document validates that all UI/UX designs for the ONE Platform meet WCAG 2.
 - ✅ Tables use `<table>` with headers
 
 **Example:**
+
 ```tsx
 <main>
   <h1>Dashboard</h1>
   <section aria-labelledby="groups-heading">
     <h2 id="groups-heading">Groups</h2>
     <ul role="list">
-      {groups.map(group => (
+      {groups.map((group) => (
         <li key={group._id}>
           <GroupCard group={group} />
         </li>
@@ -88,11 +111,13 @@ This document validates that all UI/UX designs for the ONE Platform meet WCAG 2.
 **Requirement:** Make it easier for users to see and hear content
 
 ##### 1.4.1 Use of Color (Level A)
+
 - ✅ Information not conveyed by color alone
 - ✅ Status badges use both color AND text
 - ✅ Error states use icon + text + border
 
 **Example:**
+
 ```tsx
 // Status badge with text + color
 <Badge variant={getStatusVariant(thing.status)}>
@@ -109,59 +134,64 @@ This document validates that all UI/UX designs for the ONE Platform meet WCAG 2.
 ```
 
 ##### 1.4.3 Contrast (Minimum) (Level AA)
+
 - ✅ Body text: 4.5:1 minimum (actual: 8.2:1 light, 11.2:1 dark)
 - ✅ Large text: 3:1 minimum (actual: 10.5:1)
 - ✅ UI components: 3:1 minimum (actual: 5.3:1+)
 
 **Validated Combinations:**
 
-| Element | Light Mode | Dark Mode | Pass |
-|---|---|---|---|
-| Body text | 8.2:1 | 11.2:1 | ✅ AAA |
-| Primary button | 10.5:1 | 10.5:1 | ✅ AAA |
-| Muted text | 5.3:1 | 6.1:1 | ✅ AA |
-| Error text | 4.8:1 | 4.8:1 | ✅ AA |
-| Border | 3.4:1 | 3.4:1 | ✅ AA |
+| Element        | Light Mode | Dark Mode | Pass   |
+| -------------- | ---------- | --------- | ------ |
+| Body text      | 8.2:1      | 11.2:1    | ✅ AAA |
+| Primary button | 10.5:1     | 10.5:1    | ✅ AAA |
+| Muted text     | 5.3:1      | 6.1:1     | ✅ AA  |
+| Error text     | 4.8:1      | 4.8:1     | ✅ AA  |
+| Border         | 3.4:1      | 3.4:1     | ✅ AA  |
 
 ##### 1.4.4 Resize Text (Level AA)
+
 - ✅ Text can scale to 200% without loss of content
 - ✅ Relative units (rem, em) used throughout
 - ✅ No fixed pixel widths for text containers
 
 ##### 1.4.5 Images of Text (Level AA)
+
 - ✅ No images of text used (except logos)
 - ✅ Text rendered with web fonts
 
 ##### 1.4.10 Reflow (Level AA)
+
 - ✅ Content reflows at 320px width (mobile)
 - ✅ No horizontal scrolling required
 - ✅ Responsive breakpoints: 320px, 768px, 1024px
 
 ##### 1.4.11 Non-text Contrast (Level AA)
+
 - ✅ UI components: 3:1 minimum contrast
 - ✅ Focus indicators: 3:1 minimum
 - ✅ Active states: 3:1 minimum
 
 ##### 1.4.12 Text Spacing (Level AA)
+
 - ✅ Line height: 1.5 (body text)
 - ✅ Paragraph spacing: 2em below headings
 - ✅ Letter spacing: Adjustable
 - ✅ Word spacing: Adjustable
 
 ##### 1.4.13 Content on Hover or Focus (Level AA)
+
 - ✅ Hover content dismissable (Escape key)
 - ✅ Hover content hoverable (pointer can move to it)
 - ✅ Hover content persistent (doesn't disappear immediately)
 
 **Example:**
+
 ```tsx
 // Tooltip with proper hover behavior
 <Tooltip>
   <TooltipTrigger>Hover me</TooltipTrigger>
-  <TooltipContent
-    onPointerEnter={keepOpen}
-    onPointerLeave={startCloseTimer}
-  >
+  <TooltipContent onPointerEnter={keepOpen} onPointerLeave={startCloseTimer}>
     Content stays visible when hovered
   </TooltipContent>
 </Tooltip>
@@ -178,11 +208,13 @@ This document validates that all UI/UX designs for the ONE Platform meet WCAG 2.
 **Requirement:** All functionality available via keyboard
 
 ##### 2.1.1 Keyboard (Level A)
+
 - ✅ All interactive elements keyboard accessible
 - ✅ Tab order logical and intuitive
 - ✅ No keyboard traps
 
 **Keyboard Navigation:**
+
 ```
 Tab         → Next focusable element
 Shift+Tab   → Previous focusable element
@@ -193,6 +225,7 @@ Arrow keys  → Navigate lists/menus
 ```
 
 **Example:**
+
 ```tsx
 // Button with keyboard support (native)
 <button onClick={handleClick}>
@@ -210,11 +243,13 @@ Arrow keys  → Navigate lists/menus
 ```
 
 ##### 2.1.2 No Keyboard Trap (Level A)
+
 - ✅ Focus can move out of all components
 - ✅ Dialogs trap focus intentionally (with Escape to exit)
 - ✅ No unintentional traps
 
 ##### 2.1.4 Character Key Shortcuts (Level A)
+
 - ✅ No single-character shortcuts implemented
 - Future: If added, will be turn-offable or remappable
 
@@ -227,11 +262,13 @@ Arrow keys  → Navigate lists/menus
 **Requirement:** Provide users enough time to read and use content
 
 ##### 2.2.1 Timing Adjustable (Level A)
+
 - ✅ No time limits on interactions
 - ✅ Search debounce (300ms) does not expire user input
 - ✅ Session timeout warnings (if implemented) will be adjustable
 
 ##### 2.2.2 Pause, Stop, Hide (Level A)
+
 - ✅ No auto-updating content
 - ✅ No auto-playing animations
 - Future: If animations added, will respect `prefers-reduced-motion`
@@ -245,6 +282,7 @@ Arrow keys  → Navigate lists/menus
 **Requirement:** Do not design content that causes seizures
 
 ##### 2.3.1 Three Flashes or Below Threshold (Level A)
+
 - ✅ No flashing content
 - ✅ No elements flash more than 3 times per second
 
@@ -257,11 +295,13 @@ Arrow keys  → Navigate lists/menus
 **Requirement:** Provide ways to help users navigate and find content
 
 ##### 2.4.1 Bypass Blocks (Level A)
+
 - ✅ "Skip to main content" link implemented
 - ✅ Landmark regions (`<main>`, `<nav>`) defined
 - ✅ Keyboard users can skip navigation
 
 **Example:**
+
 ```tsx
 <a href="#main-content" className="sr-only focus:not-sr-only">
   Skip to main content
@@ -275,24 +315,29 @@ Arrow keys  → Navigate lists/menus
 ```
 
 ##### 2.4.2 Page Titled (Level A)
+
 - ✅ All pages have descriptive `<title>` tags
 - ✅ Titles describe page purpose
 
 **Example:**
+
 ```astro
 <title>Groups - ONE Platform</title>
 <title>Edit Group: Acme Corp - ONE Platform</title>
 ```
 
 ##### 2.4.3 Focus Order (Level A)
+
 - ✅ Focus order follows visual order
 - ✅ Tab order logical (left-to-right, top-to-bottom)
 
 ##### 2.4.4 Link Purpose (in Context) (Level A)
+
 - ✅ Link text describes destination
 - ✅ No "click here" or "read more" without context
 
 **Example:**
+
 ```tsx
 // Good: Descriptive link text
 <a href="/groups/acme-corp">View Acme Corporation details</a>
@@ -302,6 +347,7 @@ Arrow keys  → Navigate lists/menus
 ```
 
 ##### 2.4.5 Multiple Ways (Level AA)
+
 - ✅ Multiple ways to find pages:
   - Navigation menu (sidebar)
   - Search functionality
@@ -309,16 +355,19 @@ Arrow keys  → Navigate lists/menus
   - Direct URL access
 
 ##### 2.4.6 Headings and Labels (Level AA)
+
 - ✅ Headings describe topic or purpose
 - ✅ Form labels describe purpose
 - ✅ Heading hierarchy logical (h1 → h2 → h3)
 
 ##### 2.4.7 Focus Visible (Level AA)
+
 - ✅ Focus indicator always visible (ring outline)
 - ✅ Focus indicator high contrast (3:1 minimum)
 - ✅ Focus indicator not obscured
 
 **Example:**
+
 ```css
 *:focus-visible {
   outline: 2px solid hsl(var(--color-ring));
@@ -336,18 +385,22 @@ Arrow keys  → Navigate lists/menus
 **Requirement:** Make it easier to operate functionality through various inputs
 
 ##### 2.5.1 Pointer Gestures (Level A)
+
 - ✅ All functionality works with single pointer click
 - ✅ No multipoint or path-based gestures required
 
 ##### 2.5.2 Pointer Cancellation (Level A)
+
 - ✅ Click actions on mouseup, not mousedown
 - ✅ Accidental activations preventable
 
 ##### 2.5.3 Label in Name (Level A)
+
 - ✅ Visible label matches accessible name
 - ✅ Icon buttons have matching aria-label
 
 **Example:**
+
 ```tsx
 // Button with visible text
 <button>Save Changes</button>  {/* aria-label matches */}
@@ -359,6 +412,7 @@ Arrow keys  → Navigate lists/menus
 ```
 
 ##### 2.5.4 Motion Actuation (Level A)
+
 - ✅ No device motion required
 - ✅ Alternative input methods provided
 
@@ -373,10 +427,12 @@ Arrow keys  → Navigate lists/menus
 **Requirement:** Make text content readable and understandable
 
 ##### 3.1.1 Language of Page (Level A)
+
 - ✅ `<html lang="en">` attribute set
 - ✅ Language changes indicated (if applicable)
 
 ##### 3.1.2 Language of Parts (Level AA)
+
 - ✅ Language changes marked with `lang` attribute
 - Example: `<span lang="es">Hola</span>`
 
@@ -389,20 +445,24 @@ Arrow keys  → Navigate lists/menus
 **Requirement:** Web pages appear and operate in predictable ways
 
 ##### 3.2.1 On Focus (Level A)
+
 - ✅ Focus does not trigger automatic actions
 - ✅ No context changes on focus
 
 ##### 3.2.2 On Input (Level A)
+
 - ✅ Changing input does not auto-submit
 - ✅ Search debounce prevents unexpected updates
 - ✅ Form submission requires explicit action (button click)
 
 ##### 3.2.3 Consistent Navigation (Level AA)
+
 - ✅ Navigation menu consistent across pages
 - ✅ Header/footer consistent
 - ✅ Breadcrumbs consistent
 
 ##### 3.2.4 Consistent Identification (Level AA)
+
 - ✅ Same functionality identified consistently
 - ✅ Icons used consistently (Edit = pencil, Delete = trash)
 - ✅ Button styles consistent (primary, secondary, destructive)
@@ -416,25 +476,31 @@ Arrow keys  → Navigate lists/menus
 **Requirement:** Help users avoid and correct mistakes
 
 ##### 3.3.1 Error Identification (Level A)
+
 - ✅ Errors identified in text
 - ✅ Error location indicated
 - ✅ Error correction instructions provided
 
 **Example:**
+
 ```tsx
-{errors.name && (
-  <p id="name-error" className="text-sm text-destructive">
-    Name is required and must be 100 characters or less
-  </p>
-)}
+{
+  errors.name && (
+    <p id="name-error" className="text-sm text-destructive">
+      Name is required and must be 100 characters or less
+    </p>
+  );
+}
 ```
 
 ##### 3.3.2 Labels or Instructions (Level A)
+
 - ✅ All form fields have labels
-- ✅ Required fields marked with *
+- ✅ Required fields marked with \*
 - ✅ Format instructions provided (e.g., slug format)
 
 **Example:**
+
 ```tsx
 <Label htmlFor="slug">
   Slug * (URL identifier)
@@ -452,11 +518,13 @@ Arrow keys  → Navigate lists/menus
 ```
 
 ##### 3.3.3 Error Suggestion (Level AA)
+
 - ✅ Specific error correction suggestions
 - ✅ Format examples provided
 - ✅ Validation messages helpful
 
 **Example:**
+
 ```tsx
 // Duplicate slug error
 <p className="text-destructive">
@@ -465,24 +533,24 @@ Arrow keys  → Navigate lists/menus
 ```
 
 ##### 3.3.4 Error Prevention (Legal, Financial, Data) (Level AA)
+
 - ✅ Delete actions require confirmation
 - ✅ Confirmation dialogs for destructive actions
 - ✅ Changes reviewable before submission
 
 **Example:**
+
 ```tsx
 <AlertDialog>
   <AlertDialogContent>
     <AlertDialogTitle>Delete Group?</AlertDialogTitle>
     <AlertDialogDescription>
-      Are you sure you want to delete "Acme Corp"?
-      This will soft-delete the group. It can be restored later.
+      Are you sure you want to delete "Acme Corp"? This will soft-delete the
+      group. It can be restored later.
     </AlertDialogDescription>
     <AlertDialogFooter>
       <AlertDialogCancel>Cancel</AlertDialogCancel>
-      <AlertDialogAction onClick={handleDelete}>
-        Delete
-      </AlertDialogAction>
+      <AlertDialogAction onClick={handleDelete}>Delete</AlertDialogAction>
     </AlertDialogFooter>
   </AlertDialogContent>
 </AlertDialog>
@@ -499,15 +567,18 @@ Arrow keys  → Navigate lists/menus
 **Requirement:** Maximize compatibility with current and future user agents
 
 ##### 4.1.1 Parsing (Level A - Deprecated in WCAG 2.2)
+
 - ✅ Valid HTML (no duplicate IDs, proper nesting)
 - ✅ React ensures valid JSX → HTML
 
 ##### 4.1.2 Name, Role, Value (Level A)
+
 - ✅ All UI components have accessible names
 - ✅ Roles defined for custom components
 - ✅ States and properties exposed
 
 **Example:**
+
 ```tsx
 // Button with name, role, state
 <button
@@ -533,11 +604,13 @@ Arrow keys  → Navigate lists/menus
 ```
 
 ##### 4.1.3 Status Messages (Level AA)
+
 - ✅ Status messages announced via `aria-live`
 - ✅ Success/error toasts accessible
 - ✅ Loading states announced
 
 **Example:**
+
 ```tsx
 // Success toast
 <div role="status" aria-live="polite">
@@ -560,6 +633,7 @@ Arrow keys  → Navigate lists/menus
 ### Test Scenarios
 
 **GroupDialog:**
+
 1. Open dialog → Hear "Create Group" dialog
 2. Tab through fields → Hear field labels and current values
 3. Enter invalid slug → Hear error message announced
@@ -567,12 +641,14 @@ Arrow keys  → Navigate lists/menus
 5. Press Escape → Dialog closes, focus returns to trigger
 
 **ThingList:**
+
 1. Navigate to list → Hear "Things, list with 42 items"
 2. Arrow down → Hear each thing's name, type, and status
 3. Press Enter on item → Hear "Edit Blog Post: How to Build..."
 4. Apply filter → Hear "Filtered to 12 items"
 
 **EventTimeline:**
+
 1. Navigate to timeline → Hear "Events, timeline"
 2. Arrow through events → Hear timestamp, type, and description
 3. Load more → Hear "Loading more events" then "Loaded 20 more events"
@@ -591,12 +667,14 @@ Arrow keys  → Navigate lists/menus
 ### Test Scenarios
 
 **Navigation:**
+
 1. Tab through all navigation links
 2. Verify Tab order follows visual order
 3. Verify focus visible at all times
 4. Press Enter to activate links
 
 **Forms:**
+
 1. Tab through all form fields
 2. Verify field labels announced
 3. Fill form and submit with Enter
@@ -604,6 +682,7 @@ Arrow keys  → Navigate lists/menus
 5. Navigate with arrow keys in dropdowns
 
 **Dialogs:**
+
 1. Open dialog with Enter
 2. Verify focus trapped inside
 3. Tab through all interactive elements
@@ -611,6 +690,7 @@ Arrow keys  → Navigate lists/menus
 5. Verify focus returns to trigger
 
 **Lists:**
+
 1. Tab to first item
 2. Arrow down/up to navigate
 3. Enter to activate item
@@ -623,16 +703,19 @@ Arrow keys  → Navigate lists/menus
 ### Metrics
 
 **Additional HTML Size:**
+
 - ARIA attributes: ~2-5 KB per page
 - Screen reader text: ~1-2 KB per page
 - **Total impact:** < 10 KB (negligible)
 
 **Additional JavaScript:**
+
 - Focus management: ~1 KB
 - Keyboard handlers: ~2 KB
 - **Total impact:** < 5 KB (minimal)
 
 **Runtime Performance:**
+
 - Focus trap: < 1ms overhead
 - ARIA updates: < 0.5ms per update
 - **Total impact:** Imperceptible
@@ -695,22 +778,26 @@ pa11y-ci --config .pa11yci.json
 ## Remediation Priority
 
 **Critical (Block Launch):**
+
 - ✅ Keyboard accessibility
 - ✅ Color contrast
 - ✅ Form labels
 - ✅ Focus indicators
 
 **High (Fix Before Launch):**
+
 - ✅ ARIA attributes
 - ✅ Heading hierarchy
 - ✅ Error identification
 - ✅ Screen reader testing
 
 **Medium (Fix Within 30 Days):**
+
 - Comprehensive screen reader testing
 - User testing with assistive technologies
 
 **Low (Ongoing):**
+
 - Enhanced keyboard shortcuts
 - Custom screen reader announcements
 
@@ -720,49 +807,49 @@ pa11y-ci --config .pa11yci.json
 
 ### WCAG 2.1 AA Scorecard
 
-| Criterion | Level | Status |
-|---|---|---|
-| 1.1.1 Non-text Content | A | ✅ Pass |
-| 1.3.1 Info and Relationships | A | ✅ Pass |
-| 1.3.2 Meaningful Sequence | A | ✅ Pass |
-| 1.3.3 Sensory Characteristics | A | ✅ Pass |
-| 1.3.4 Orientation | AA | ✅ Pass |
-| 1.3.5 Identify Input Purpose | AA | ✅ Pass |
-| 1.4.1 Use of Color | A | ✅ Pass |
-| 1.4.2 Audio Control | A | N/A |
-| 1.4.3 Contrast (Minimum) | AA | ✅ Pass |
-| 1.4.4 Resize Text | AA | ✅ Pass |
-| 1.4.5 Images of Text | AA | ✅ Pass |
-| 1.4.10 Reflow | AA | ✅ Pass |
-| 1.4.11 Non-text Contrast | AA | ✅ Pass |
-| 1.4.12 Text Spacing | AA | ✅ Pass |
-| 1.4.13 Content on Hover/Focus | AA | ✅ Pass |
-| 2.1.1 Keyboard | A | ✅ Pass |
-| 2.1.2 No Keyboard Trap | A | ✅ Pass |
-| 2.1.4 Character Key Shortcuts | A | ✅ Pass |
-| 2.4.1 Bypass Blocks | A | ✅ Pass |
-| 2.4.2 Page Titled | A | ✅ Pass |
-| 2.4.3 Focus Order | A | ✅ Pass |
-| 2.4.4 Link Purpose (In Context) | A | ✅ Pass |
-| 2.4.5 Multiple Ways | AA | ✅ Pass |
-| 2.4.6 Headings and Labels | AA | ✅ Pass |
-| 2.4.7 Focus Visible | AA | ✅ Pass |
-| 2.5.1 Pointer Gestures | A | ✅ Pass |
-| 2.5.2 Pointer Cancellation | A | ✅ Pass |
-| 2.5.3 Label in Name | A | ✅ Pass |
-| 2.5.4 Motion Actuation | A | ✅ Pass |
-| 3.1.1 Language of Page | A | ✅ Pass |
-| 3.1.2 Language of Parts | AA | ✅ Pass |
-| 3.2.1 On Focus | A | ✅ Pass |
-| 3.2.2 On Input | A | ✅ Pass |
-| 3.2.3 Consistent Navigation | AA | ✅ Pass |
-| 3.2.4 Consistent Identification | AA | ✅ Pass |
-| 3.3.1 Error Identification | A | ✅ Pass |
-| 3.3.2 Labels or Instructions | A | ✅ Pass |
-| 3.3.3 Error Suggestion | AA | ✅ Pass |
-| 3.3.4 Error Prevention | AA | ✅ Pass |
-| 4.1.2 Name, Role, Value | A | ✅ Pass |
-| 4.1.3 Status Messages | AA | ✅ Pass |
+| Criterion                       | Level | Status  |
+| ------------------------------- | ----- | ------- |
+| 1.1.1 Non-text Content          | A     | ✅ Pass |
+| 1.3.1 Info and Relationships    | A     | ✅ Pass |
+| 1.3.2 Meaningful Sequence       | A     | ✅ Pass |
+| 1.3.3 Sensory Characteristics   | A     | ✅ Pass |
+| 1.3.4 Orientation               | AA    | ✅ Pass |
+| 1.3.5 Identify Input Purpose    | AA    | ✅ Pass |
+| 1.4.1 Use of Color              | A     | ✅ Pass |
+| 1.4.2 Audio Control             | A     | N/A     |
+| 1.4.3 Contrast (Minimum)        | AA    | ✅ Pass |
+| 1.4.4 Resize Text               | AA    | ✅ Pass |
+| 1.4.5 Images of Text            | AA    | ✅ Pass |
+| 1.4.10 Reflow                   | AA    | ✅ Pass |
+| 1.4.11 Non-text Contrast        | AA    | ✅ Pass |
+| 1.4.12 Text Spacing             | AA    | ✅ Pass |
+| 1.4.13 Content on Hover/Focus   | AA    | ✅ Pass |
+| 2.1.1 Keyboard                  | A     | ✅ Pass |
+| 2.1.2 No Keyboard Trap          | A     | ✅ Pass |
+| 2.1.4 Character Key Shortcuts   | A     | ✅ Pass |
+| 2.4.1 Bypass Blocks             | A     | ✅ Pass |
+| 2.4.2 Page Titled               | A     | ✅ Pass |
+| 2.4.3 Focus Order               | A     | ✅ Pass |
+| 2.4.4 Link Purpose (In Context) | A     | ✅ Pass |
+| 2.4.5 Multiple Ways             | AA    | ✅ Pass |
+| 2.4.6 Headings and Labels       | AA    | ✅ Pass |
+| 2.4.7 Focus Visible             | AA    | ✅ Pass |
+| 2.5.1 Pointer Gestures          | A     | ✅ Pass |
+| 2.5.2 Pointer Cancellation      | A     | ✅ Pass |
+| 2.5.3 Label in Name             | A     | ✅ Pass |
+| 2.5.4 Motion Actuation          | A     | ✅ Pass |
+| 3.1.1 Language of Page          | A     | ✅ Pass |
+| 3.1.2 Language of Parts         | AA    | ✅ Pass |
+| 3.2.1 On Focus                  | A     | ✅ Pass |
+| 3.2.2 On Input                  | A     | ✅ Pass |
+| 3.2.3 Consistent Navigation     | AA    | ✅ Pass |
+| 3.2.4 Consistent Identification | AA    | ✅ Pass |
+| 3.3.1 Error Identification      | A     | ✅ Pass |
+| 3.3.2 Labels or Instructions    | A     | ✅ Pass |
+| 3.3.3 Error Suggestion          | AA    | ✅ Pass |
+| 3.3.4 Error Prevention          | AA    | ✅ Pass |
+| 4.1.2 Name, Role, Value         | A     | ✅ Pass |
+| 4.1.3 Status Messages           | AA    | ✅ Pass |
 
 **Total:** 46/46 applicable criteria pass
 

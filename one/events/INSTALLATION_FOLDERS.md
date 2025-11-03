@@ -1,3 +1,21 @@
+---
+title: Installation_Folders
+dimension: events
+category: INSTALLATION_FOLDERS.md
+tags: architecture, backend, connections, customization, events, frontend, groups, installation, knowledge, ontology
+related_dimensions: connections, groups, knowledge, people, things
+scope: global
+created: 2025-11-03
+updated: 2025-11-03
+version: 1.0.0
+ai_context: |
+  This document is part of the events dimension in the INSTALLATION_FOLDERS.md category.
+  Location: one/events/INSTALLATION_FOLDERS.md
+  Purpose: Documents installation folder multi-tenancy - frontend implementation
+  Related dimensions: connections, groups, knowledge, people, things
+  For AI agents: Read this to understand INSTALLATION_FOLDERS.
+---
+
 # Installation Folder Multi-Tenancy - Frontend Implementation
 
 **Version:** 1.0.0

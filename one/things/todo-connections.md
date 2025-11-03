@@ -1,3 +1,22 @@
+---
+title: Todo Connections
+dimension: things
+primary_dimension: connections
+category: todo-connections.md
+tags: ai, connections, ontology, protocol, relationships
+related_dimensions: connections, events, groups, knowledge, people
+scope: global
+created: 2025-11-03
+updated: 2025-11-03
+version: 1.0.0
+ai_context: |
+  This document is part of the things dimension in the todo-connections.md category.
+  Location: one/things/todo-connections.md
+  Purpose: Documents connections content collection & protocol documentation
+  Related dimensions: connections, events, groups, knowledge, people
+  For AI agents: Read this to understand todo connections.
+---
+
 # Connections Content Collection & Protocol Documentation
 
 ## Overview
@@ -74,6 +93,7 @@ ConnectionSchema {
 ## The Six Core Protocols
 
 ### 1. **ACP - Agent Communication Protocol**
+
 - **Category:** Communication
 - **Purpose:** REST-based protocol for AI agent communication
 - **Features:** Multimodal, Async-First, Message Delegation
@@ -82,6 +102,7 @@ ConnectionSchema {
 - **Ontology Mapping:** Events (communication_event), Things (agents)
 
 ### 2. **MCP - Model Context Protocol**
+
 - **Category:** Context
 - **Purpose:** Universal connectivity for AI systems
 - **Features:** RAG-Ready, Vector Search, Semantic Access
@@ -90,6 +111,7 @@ ConnectionSchema {
 - **Ontology Mapping:** Knowledge (embeddings, vectors), Things (resources)
 
 ### 3. **A2A - Agent-to-Agent Protocol**
+
 - **Category:** Coordination
 - **Purpose:** Universal language for AI agent collaboration
 - **Features:** Framework-agnostic, Multi-agent coordination, Task tracking
@@ -98,6 +120,7 @@ ConnectionSchema {
 - **Ontology Mapping:** Connections (delegated_to), Events (task_events)
 
 ### 4. **AP2 - Agent Payments Protocol**
+
 - **Category:** Payments
 - **Purpose:** Secure agent-led payments with cryptographic trust
 - **Features:** Verifiable credentials, Autonomous transactions, Multi-platform
@@ -106,6 +129,7 @@ ConnectionSchema {
 - **Ontology Mapping:** Things (intent_mandate), Events (payment_event), Knowledge (credentials)
 
 ### 5. **X402 - HTTP-Native Payments**
+
 - **Category:** Payments (Micropayments)
 - **Purpose:** Instant digital payments via HTTP 402
 - **Features:** Zero fees, ~2 second settlement, Blockchain-agnostic
@@ -114,6 +138,7 @@ ConnectionSchema {
 - **Ontology Mapping:** Events (payment_verified), Things (payment_ledger)
 
 ### 6. **AG-UI - Agent-Generated UI**
+
 - **Category:** Interface
 - **Purpose:** Dynamic interfaces from structured JSON
 - **Features:** Type-Safe, Real-Time, Composable
@@ -180,6 +205,7 @@ examples:
 ### Viewing Protocols
 
 Connections are available in the web application:
+
 - **Collection:** `/connections` - List all protocols
 - **Individual:** `/connections/[slug]` - View specific protocol
 - **Landing:** `/connections-landing` - Protocol overview and benefits
@@ -188,14 +214,14 @@ Connections are available in the web application:
 
 Each protocol maps to the 6-dimension ontology:
 
-| Dimension | Protocol Mapping |
-|-----------|------------------|
-| **Groups** | Data isolation per group (all protocols inherit) |
-| **People** | Role-based access control per protocol |
-| **Things** | Entity types: agents, mandates, resources, UI components |
-| **Connections** | Relationships: delegated_to, transacted, communicated |
-| **Events** | Protocol-specific events with metadata.protocol |
-| **Knowledge** | Embeddings, vectors, semantic search across protocols |
+| Dimension       | Protocol Mapping                                         |
+| --------------- | -------------------------------------------------------- |
+| **Groups**      | Data isolation per group (all protocols inherit)         |
+| **People**      | Role-based access control per protocol                   |
+| **Things**      | Entity types: agents, mandates, resources, UI components |
+| **Connections** | Relationships: delegated_to, transacted, communicated    |
+| **Events**      | Protocol-specific events with metadata.protocol          |
+| **Knowledge**   | Embeddings, vectors, semantic search across protocols    |
 
 ## Key Features
 
@@ -224,13 +250,13 @@ Result: Six protocols orchestrated through one ontology. Zero schema changes.
 
 ## Benefits
 
-| Aspect | Traditional | ONE Platform |
-|--------|-----------|--------------|
-| **Protocols** | Separate tables & APIs per protocol | Same 6 tables for all |
-| **Integration** | 6x cost and complexity | Zero integration cost |
-| **Maintenance** | Schema changes per protocol | Metadata-based configuration |
-| **Scalability** | Vendor lock-in | Open standards |
-| **Type Safety** | Protocol-specific types | Unified ontology types |
+| Aspect          | Traditional                         | ONE Platform                 |
+| --------------- | ----------------------------------- | ---------------------------- |
+| **Protocols**   | Separate tables & APIs per protocol | Same 6 tables for all        |
+| **Integration** | 6x cost and complexity              | Zero integration cost        |
+| **Maintenance** | Schema changes per protocol         | Metadata-based configuration |
+| **Scalability** | Vendor lock-in                      | Open standards               |
+| **Type Safety** | Protocol-specific types             | Unified ontology types       |
 
 ## Related Files
 

@@ -1,3 +1,21 @@
+---
+title: Api Docs
+dimension: connections
+category: api-docs.md
+tags: ai, architecture, auth, backend
+related_dimensions: events, groups, knowledge, people, things
+scope: global
+created: 2025-11-03
+updated: 2025-11-03
+version: 1.0.0
+ai_context: |
+  This document is part of the connections dimension in the api-docs.md category.
+  Location: one/connections/api-docs.md
+  Purpose: Documents one platform api documentation (openapi 3.1.0)
+  Related dimensions: events, groups, knowledge, people, things
+  For AI agents: Read this to understand api docs.
+---
+
 # ONE Platform API Documentation (OpenAPI 3.1.0)
 
 **Version:** 1.0.0

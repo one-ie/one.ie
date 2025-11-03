@@ -1,3 +1,21 @@
+---
+title: 100 Inference Quick Reference
+dimension: knowledge
+category: 100-inference-quick-reference.md
+tags: agent, ai, auth, claude, connections, events, groups, inference, knowledge, ontology
+related_dimensions: connections, events, groups, people, things
+scope: global
+created: 2025-11-03
+updated: 2025-11-03
+version: 1.0.0
+ai_context: |
+  This document is part of the knowledge dimension in the 100-inference-quick-reference.md category.
+  Location: one/knowledge/100-inference-quick-reference.md
+  Purpose: Documents 100-inference plan generation - quick reference
+  Related dimensions: connections, events, groups, people, things
+  For AI agents: Read this to understand 100 inference quick reference.
+---
+
 # 100-Inference Plan Generation - Quick Reference
 
 **For:** Developers extending agent-director

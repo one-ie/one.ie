@@ -1,3 +1,21 @@
+---
+title: Backend Integration Tests
+dimension: events
+category: backend-integration-tests.md
+tags: ai, backend, convex, ontology
+related_dimensions: knowledge, things
+scope: global
+created: 2025-11-03
+updated: 2025-11-03
+version: 1.0.0
+ai_context: |
+  This document is part of the events dimension in the backend-integration-tests.md category.
+  Location: one/events/backend-integration-tests.md
+  Purpose: Documents backend integration tests - ontology test report
+  Related dimensions: knowledge, things
+  For AI agents: Read this to understand backend integration tests.
+---
+
 # Backend Integration Tests - Ontology Test Report
 
 **Test Suite:** Ontology Integration Tests - Complete Workflow

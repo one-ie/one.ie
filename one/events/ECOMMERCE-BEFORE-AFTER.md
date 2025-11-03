@@ -1,3 +1,19 @@
+---
+title: Ecommerce Before After
+dimension: events
+category: ECOMMERCE-BEFORE-AFTER.md
+tags: ai
+scope: global
+created: 2025-11-03
+updated: 2025-11-03
+version: 1.0.0
+ai_context: |
+  This document is part of the events dimension in the ECOMMERCE-BEFORE-AFTER.md category.
+  Location: one/events/ECOMMERCE-BEFORE-AFTER.md
+  Purpose: Documents shop page: before vs after
+  For AI agents: Read this to understand ECOMMERCE BEFORE AFTER.
+---
+
 # Shop Page: Before vs After
 
 ## Hero Section

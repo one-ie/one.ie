@@ -1,3 +1,22 @@
+---
+title: Todo Ecommerce Frontend
+dimension: things
+primary_dimension: things
+category: todo-ecommerce-frontend.md
+tags: ai, backend, frontend, inference, ui
+related_dimensions: connections, events, groups, knowledge, people, things
+scope: global
+created: 2025-11-03
+updated: 2025-11-03
+version: 1.0.0
+ai_context: |
+  This document is part of the things dimension in the todo-ecommerce-frontend.md category.
+  Location: one/things/todo-ecommerce-frontend.md
+  Purpose: Documents one platform: e-commerce frontend store v1.0.0
+  Related dimensions: connections, events, groups, knowledge, people
+  For AI agents: Read this to understand todo ecommerce frontend.
+---
+
 # ONE Platform: E-Commerce Frontend Store v1.0.0
 
 **Focus:** Frontend-only ecommerce storefront with Stripe checkout, product catalog, shopping cart
@@ -14,6 +33,7 @@
 **Purpose:** Define storefront requirements, product categories, user flows, design system
 
 ### Infer 1: Define Storefront Structure
+
 - [ ] **Product Catalog:**
   - [ ] Featured products on homepage
   - [ ] All products listing page with filters
@@ -38,6 +58,7 @@
   - [ ] Account settings
 
 ### Infer 2: Map Storefront to 6-Dimension Ontology
+
 - [ ] **Groups:** Storefront's business group (e.g., "Acme Store")
 - [ ] **People:** Customer (buyer), admin (store manager)
 - [ ] **Things:**
@@ -54,6 +75,7 @@
 - [ ] **Knowledge:** product categories, price tiers, inventory levels
 
 ### Infer 3: Design Product Catalog Structure
+
 - [ ] **Product Data Model:**
   - [ ] ID, name, description, price, compareAtPrice (original)
   - [ ] Images (primary + gallery)
@@ -75,6 +97,7 @@
   - [ ] Related/recommended products
 
 ### Infer 4: Design Shopping Cart Experience
+
 - [ ] **Cart Page Shows:**
   - [ ] Product list with images
   - [ ] Quantity controls (increment/decrement)
@@ -93,6 +116,7 @@
   - [ ] Display item count in header
 
 ### Infer 5: Design Checkout Flow
+
 - [ ] **Step 1: Cart Review**
   - [ ] Show all items with quantities
   - [ ] Allow editing (change qty, remove items)
@@ -131,6 +155,7 @@
   - [ ] Track order link (future)
 
 ### Infer 6: Define Responsive Design Strategy
+
 - [ ] **Mobile-first (80% of users):**
   - [ ] Single column layout
   - [ ] Touch-friendly buttons (48px minimum)
@@ -148,6 +173,7 @@
   - [ ] Keyboard navigation support
 
 ### Infer 7: Plan Content Strategy
+
 - [ ] **Home Page:**
   - [ ] Hero banner with featured products/sale
   - [ ] Featured products section
@@ -172,6 +198,7 @@
   - [ ] Terms of service
 
 ### Infer 8: Design Visual System
+
 - [ ] **Color Palette:**
   - [ ] Primary: Brand color for CTAs, active states
   - [ ] Secondary: Accents, highlights
@@ -191,6 +218,7 @@
   - [ ] Stars: 5-star rating display
 
 ### Infer 9: Plan Performance & Analytics
+
 - [ ] **Performance Targets:**
   - [ ] Lighthouse: 90+ score
   - [ ] LCP (Largest Contentful Paint): < 2.5s
@@ -209,6 +237,7 @@
   - [ ] Email service for order confirmations
 
 ### Infer 10: Define Success Metrics
+
 - [ ] Frontend complete when:
   - [ ] Home page displays beautifully on all devices
   - [ ] Product catalog page loads with filters/search working
@@ -229,6 +258,7 @@
 **Purpose:** Create page structure and Astro components for static content
 
 ### Infer 11: Create Layout Components
+
 - [ ] **MainLayout.astro**
   - [ ] Header with logo, search, cart icon, account menu
   - [ ] Navigation (collections, sale, about, contact)
@@ -242,6 +272,7 @@
   - [ ] Order summary sidebar (desktop) / collapsed (mobile)
 
 ### Infer 12: Create Home Page (index.astro)
+
 - [ ] **Hero Section:**
   - [ ] Large background image
   - [ ] Bold headline
@@ -273,6 +304,7 @@
   - [ ] Browse all button, View sale button
 
 ### Infer 13: Create Products Listing Page (products/index.astro)
+
 - [ ] **Header:**
   - [ ] Page title "All Products"
   - [ ] Product count
@@ -297,6 +329,7 @@
   - [ ] Filter drawer with same options
 
 ### Infer 14: Create Product Detail Page (products/[slug].astro)
+
 - [ ] **Left Column (60%):**
   - [ ] ImageGallery component
     - [ ] Primary image display
@@ -335,6 +368,7 @@
     - [ ] 4-6 recently viewed products
 
 ### Infer 15: Create Shopping Cart Page (cart.astro)
+
 - [ ] **Page Title & Actions:**
   - [ ] "Shopping Cart" heading
   - [ ] "Continue Shopping" link
@@ -365,6 +399,7 @@
   - [ ] "Continue Shopping" button
 
 ### Infer 16: Create Checkout Pages (checkout/[step].astro)
+
 - [ ] **Shared Checkout Layout:**
   - [ ] Progress indicator (1 2 3 4 5 6 7)
   - [ ] Current step highlighted
@@ -424,6 +459,7 @@
   - [ ] "Download Invoice" button
 
 ### Infer 17: Create Account Pages (account/[page].astro)
+
 - [ ] **Orders Page (account/orders.astro)**
   - [ ] List of all orders (paginated, 10 per page)
   - [ ] Order number, date, total, status
@@ -447,6 +483,7 @@
   - [ ] Wishlist items
 
 ### Infer 18: Create Static Pages
+
 - [ ] **About (about.astro)**
   - [ ] Company story
   - [ ] Mission statement
@@ -474,6 +511,7 @@
   - [ ] Legal text
 
 ### Infer 19: Create Error Pages
+
 - [ ] **404 Not Found (404.astro)**
   - [ ] Friendly message
   - [ ] Search products
@@ -484,6 +522,7 @@
   - [ ] Support email
 
 ### Infer 20: Create Email Templates (Astro)
+
 - [ ] **Order Confirmation Email:**
   - [ ] Order number, date
   - [ ] Items purchased
@@ -509,6 +548,7 @@
 **Purpose:** Build interactive React components for client-side functionality
 
 ### Infer 21: Create ProductCard Component
+
 - [ ] **Props:**
   - [ ] product (id, image, name, price, rating, category)
   - [ ] onAddToCart (callback)
@@ -526,6 +566,7 @@
   - [ ] Click quick view: Open modal
 
 ### Infer 22: Create ProductQuickView Modal
+
 - [ ] **Content:**
   - [ ] Main product image (large)
   - [ ] Product name, rating, price
@@ -539,6 +580,7 @@
   - [ ] Smooth open/close animation
 
 ### Infer 23: Create ImageGallery Component
+
 - [ ] **Features:**
   - [ ] Main image display (large)
   - [ ] Thumbnail strip (clickable)
@@ -552,6 +594,7 @@
   - [ ] alt (product name for alt text)
 
 ### Infer 24: Create SizeSelector Component
+
 - [ ] **Display:**
   - [ ] Size options as buttons or chips
   - [ ] Show availability for each size
@@ -561,6 +604,7 @@
   - [ ] onSelect (callback)
 
 ### Infer 25: Create ColorSelector Component
+
 - [ ] **Display:**
   - [ ] Color swatches as circles
   - [ ] Color name on hover
@@ -570,6 +614,7 @@
   - [ ] onSelect (callback)
 
 ### Infer 26: Create QuantityPicker Component
+
 - [ ] **Display:**
   - [ ] Minus button, number input, plus button
   - [ ] Min 1, max based on inventory
@@ -578,6 +623,7 @@
   - [ ] onChange (callback)
 
 ### Infer 27: Create CartIcon Component
+
 - [ ] **Display:**
   - [ ] Shopping cart icon
   - [ ] Item count badge (if > 0)
@@ -587,6 +633,7 @@
   - [ ] Show tooltip with item count on hover
 
 ### Infer 28: Create AddToCartButton Component
+
 - [ ] **Display:**
   - [ ] "Add to Cart" text
   - [ ] Loading spinner while processing
@@ -597,6 +644,7 @@
   - [ ] className (for styling)
 
 ### Infer 29: Create ProductFilter Component
+
 - [ ] **Sections:**
   - [ ] Category filter (checkboxes)
   - [ ] Price range (slider)
@@ -608,6 +656,7 @@
   - [ ] Desktop: Sidebar
 
 ### Infer 30: Create SearchBar Component
+
 - [ ] **Features:**
   - [ ] Text input
   - [ ] Search icon
@@ -625,6 +674,7 @@
 **Purpose:** Integrate Stripe payment processing for checkout
 
 ### Infer 31: Set Up Stripe Environment
+
 - [ ] **Get Stripe Keys:**
   - [ ] Create Stripe account
   - [ ] Get publishable key (public)
@@ -637,6 +687,7 @@
   - [ ] `bun add @stripe/react-stripe-js`
 
 ### Infer 32: Create StripePaymentForm Component
+
 - [ ] **Structure:**
   - [ ] Elements provider (wraps form)
   - [ ] CardElement (Stripe hosted input)
@@ -650,6 +701,7 @@
   - [ ] clientSecret (from backend payment intent)
 
 ### Infer 33: Create StripeElements Configuration
+
 - [ ] **Initialize Stripe:**
   - [ ] Load Stripe.js with public key
   - [ ] Create Elements instance
@@ -661,6 +713,7 @@
   - [ ] Error state styling
 
 ### Infer 34: Create Payment Intent API Handler
+
 - [ ] **Frontend function:**
   - [ ] Call backend to create payment intent
   - [ ] Receive clientSecret
@@ -672,6 +725,7 @@
   - [ ] Return clientSecret
 
 ### Infer 35: Create Payment Confirmation Handler
+
 - [ ] **After form submit:**
   - [ ] Use Stripe.confirmCardPayment()
   - [ ] Pass clientSecret + payment details
@@ -680,6 +734,7 @@
   - [ ] Handle 3D Secure redirect (if needed)
 
 ### Infer 36: Create Order Submission Flow
+
 - [ ] **Sequence:**
   1. User completes checkout form
   2. Create payment intent on backend
@@ -694,6 +749,7 @@
   - [ ] Network error → retry option
 
 ### Infer 37: Create Cart State Management (Zustand)
+
 - [ ] **Store structure:**
   - [ ] items (array)
   - [ ] addItem (fn)
@@ -708,6 +764,7 @@
   - [ ] Sync across tabs
 
 ### Infer 38: Create Order State Management
+
 - [ ] **Store structure:**
   - [ ] currentOrder (object)
   - [ ] setOrder (fn)
@@ -719,6 +776,7 @@
   - [ ] Shipping address, tracking number
 
 ### Infer 39: Create Toast/Notification System
+
 - [ ] **Types:**
   - [ ] Success (green)
   - [ ] Error (red)
@@ -736,6 +794,7 @@
   - [ ] Form validation error
 
 ### Infer 40: Create Loading States
+
 - [ ] **Spinners:**
   - [ ] Full page loader (checkout)
   - [ ] Component loader (button, form)
@@ -752,6 +811,7 @@
 **Purpose:** Ensure flawless mobile experience (80% of users)
 
 ### Infer 41: Test Mobile Navigation
+
 - [ ] **Header changes:**
   - [ ] Logo (smaller on mobile)
   - [ ] Search (collapsible or moved to page)
@@ -764,6 +824,7 @@
   - [ ] Logout link
 
 ### Infer 42: Optimize Forms for Mobile
+
 - [ ] **Checkout form changes:**
   - [ ] Full-width inputs
   - [ ] Large labels
@@ -774,6 +835,7 @@
   - [ ] One field per line (no side-by-side on small screens)
 
 ### Infer 43: Optimize Product Pages for Mobile
+
 - [ ] **Image gallery:**
   - [ ] Swipe to change images
   - [ ] Touch-friendly thumbnails
@@ -787,6 +849,7 @@
   - [ ] Smooth scroll to quantity picker
 
 ### Infer 44: Optimize Checkout for Mobile
+
 - [ ] **Step-by-step:**
   - [ ] Show one step per screen
   - [ ] Progress indicator above content
@@ -797,6 +860,7 @@
   - [ ] Sticky at bottom with total
 
 ### Infer 45: Test Touch Interactions
+
 - [ ] **Size controls:**
   - [ ] Large, touchable buttons for size/color
   - [ ] Clear visual feedback (highlight on select)
@@ -807,6 +871,7 @@
   - [ ] Clear labels
 
 ### Infer 46: Optimize Image Loading
+
 - [ ] **Lazy loading:**
   - [ ] Load images as user scrolls
   - [ ] Use `loading="lazy"` attribute
@@ -821,6 +886,7 @@
   - [ ] Use CDN for fast delivery
 
 ### Infer 47: Optimize Performance on Mobile
+
 - [ ] **Reduce bundle size:**
   - [ ] Code split by route
   - [ ] Lazy load heavy components
@@ -835,6 +901,7 @@
   - [ ] Optimize React components
 
 ### Infer 48: Test on Real Devices
+
 - [ ] **Devices:**
   - [ ] iPhone SE (375px)
   - [ ] iPhone 12 (390px)
@@ -851,6 +918,7 @@
   - [ ] Battery saver mode
 
 ### Infer 49: Fix Mobile Issues
+
 - [ ] **Common issues:**
   - [ ] Fixed headers blocking content
   - [ ] Horizontal scrolling
@@ -864,6 +932,7 @@
   - [ ] Real device testing
 
 ### Infer 50: Add Mobile-Specific Features
+
 - [ ] **PWA features (optional):**
   - [ ] Install app prompt
   - [ ] Offline support
@@ -880,6 +949,7 @@
 **Purpose:** Comprehensive testing of all features
 
 ### Infer 51: Test Product Pages
+
 - [ ] **Functionality:**
   - [ ] Product loads correctly
   - [ ] Images display and zoom
@@ -895,6 +965,7 @@
   - [ ] Very long product names/descriptions
 
 ### Infer 52: Test Shopping Cart
+
 - [ ] **Functionality:**
   - [ ] Items persist in cart
   - [ ] Update quantity works
@@ -909,6 +980,7 @@
   - [ ] LocalStorage sync across tabs
 
 ### Infer 53: Test Checkout Flow
+
 - [ ] **Each step:**
   - [ ] Step 1: Cart review loads
   - [ ] Step 2: Shipping form validates
@@ -924,6 +996,7 @@
   - [ ] Can go back to previous step
 
 ### Infer 54: Test Form Validation
+
 - [ ] **Required fields:**
   - [ ] All required fields validated
   - [ ] Error messages displayed
@@ -939,6 +1012,7 @@
   - [ ] Suggest correction
 
 ### Infer 55: Test Stripe Integration
+
 - [ ] **Payment flow:**
   - [ ] Payment form loads
   - [ ] User can enter card
@@ -952,6 +1026,7 @@
   - [ ] Various error scenarios
 
 ### Infer 56: Test Search & Filters
+
 - [ ] **Search:**
   - [ ] Search by product name
   - [ ] Search by category
@@ -966,6 +1041,7 @@
   - [ ] Clear filters button works
 
 ### Infer 57: Test Cross-Browser
+
 - [ ] **Desktop browsers:**
   - [ ] Chrome
   - [ ] Firefox
@@ -982,6 +1058,7 @@
   - [ ] Form input issues
 
 ### Infer 58: Test Accessibility
+
 - [ ] **Keyboard navigation:**
   - [ ] Tab through form
   - [ ] Enter submits form
@@ -1000,6 +1077,7 @@
   - [ ] Check for violations
 
 ### Infer 59: Test Performance
+
 - [ ] **Lighthouse audit:**
   - [ ] Performance > 85
   - [ ] Accessibility > 90
@@ -1015,6 +1093,7 @@
   - [ ] Total < 200KB
 
 ### Infer 60: Test Edge Cases
+
 - [ ] **Scenarios:**
   - [ ] Network disconnection (checkout)
   - [ ] Browser back button during checkout
@@ -1032,6 +1111,7 @@
 **Purpose:** Deploy to Cloudflare Pages and optimize for production
 
 ### Infer 61: Prepare for Deployment
+
 - [ ] **Build optimization:**
   - [ ] Run `bun run build`
   - [ ] Check for build errors
@@ -1044,6 +1124,7 @@
   - [ ] Set up CORS properly
 
 ### Infer 62: Deploy to Cloudflare Pages
+
 - [ ] **Deployment steps:**
   - [ ] Connect GitHub repo
   - [ ] Set build command: `bunx astro build`
@@ -1058,6 +1139,7 @@
   - [ ] Stripe test mode active
 
 ### Infer 63: Set Up Analytics
+
 - [ ] **Google Analytics (or Plausible):**
   - [ ] Add tracking code
   - [ ] Track page views
@@ -1070,6 +1152,7 @@
   - [ ] Revenue reporting
 
 ### Infer 64: Monitor Site Health
+
 - [ ] **Error tracking (Sentry or similar):**
   - [ ] Set up error reporting
   - [ ] Monitor JavaScript errors
@@ -1081,6 +1164,7 @@
   - [ ] Alert on downtime
 
 ### Infer 65: Set Up Email Infrastructure
+
 - [ ] **Email service (Resend or SendGrid):**
   - [ ] Create account
   - [ ] Set up sender domain
@@ -1092,6 +1176,7 @@
   - [ ] Return confirmation
 
 ### Infer 66: Implement Security
+
 - [ ] **HTTPS:**
   - [ ] Verify SSL certificate
   - [ ] Force HTTPS redirect
@@ -1107,6 +1192,7 @@
   - [ ] Validate on backend
 
 ### Infer 67: Optimize Images for Production
+
 - [ ] **Image compression:**
   - [ ] Use TinyPNG or similar
   - [ ] Remove metadata
@@ -1119,6 +1205,7 @@
   - [ ] Use modern formats with fallback
 
 ### Infer 68: Implement Caching Strategy
+
 - [ ] **Browser caching:**
   - [ ] Cache static assets 1 year
   - [ ] Cache images 1 month
@@ -1130,6 +1217,7 @@
   - [ ] Purge cache on deploy
 
 ### Infer 69: Set Up Custom Domain
+
 - [ ] **Domain setup:**
   - [ ] Point domain to Cloudflare
   - [ ] Set up SSL/TLS
@@ -1141,6 +1229,7 @@
   - [ ] Set up DMARC
 
 ### Infer 70: Create Deployment Checklist
+
 - [ ] **Before going live:**
   - [ ] All tests passing
   - [ ] No console errors

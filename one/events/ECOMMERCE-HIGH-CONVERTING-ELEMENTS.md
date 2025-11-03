@@ -1,3 +1,21 @@
+---
+title: Ecommerce High Converting Elements
+dimension: events
+category: ECOMMERCE-HIGH-CONVERTING-ELEMENTS.md
+tags: 
+related_dimensions: connections, knowledge, people
+scope: global
+created: 2025-11-03
+updated: 2025-11-03
+version: 1.0.0
+ai_context: |
+  This document is part of the events dimension in the ECOMMERCE-HIGH-CONVERTING-ELEMENTS.md category.
+  Location: one/events/ECOMMERCE-HIGH-CONVERTING-ELEMENTS.md
+  Purpose: Documents highest converting elements for shopify/ecommerce stores (2025)
+  Related dimensions: connections, knowledge, people
+  For AI agents: Read this to understand ECOMMERCE HIGH CONVERTING ELEMENTS.
+---
+
 # Highest Converting Elements for Shopify/Ecommerce Stores (2025)
 
 ## Performance Benchmarks

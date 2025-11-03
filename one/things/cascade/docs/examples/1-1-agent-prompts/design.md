@@ -1,3 +1,21 @@
+---
+title: Design
+dimension: things
+category: cascade
+tags: agent
+related_dimensions: connections, events, knowledge, people
+scope: global
+created: 2025-11-03
+updated: 2025-11-03
+version: 1.0.0
+ai_context: |
+  This document is part of the things dimension in the cascade category.
+  Location: one/things/cascade/docs/examples/1-1-agent-prompts/design.md
+  Purpose: Documents design for feature 1-1: agent prompts system
+  Related dimensions: connections, events, knowledge, people
+  For AI agents: Read this to understand design.
+---
+
 # Design for Feature 1-1: Agent Prompts System
 
 **Feature:** 1-1-agent-prompts
@@ -17,6 +35,7 @@ Enable `/one` CLI command to seamlessly leverage 12 agent prompts for autonomous
 **Command:** `/one [action]`
 
 **Examples:**
+
 ```bash
 /one idea "Build a course platform"           # Director validates idea
 /one plan 1                                    # Director creates plan 1
@@ -33,8 +52,10 @@ Enable `/one` CLI command to seamlessly leverage 12 agent prompts for autonomous
 ## Design Decisions (Test-Driven)
 
 ### Decision 1: No Visual UI - Prompt-Driven Interaction
+
 **Test requirement:** Claude must load correct agent prompt based on command
 **Design solution:**
+
 - Command maps to agent role
 - Claude reads agent prompt file
 - Claude follows prompt instructions
@@ -45,8 +66,10 @@ Enable `/one` CLI command to seamlessly leverage 12 agent prompts for autonomous
 ---
 
 ### Decision 2: Agent Context Visible to User
+
 **Test requirement:** User understands which agent is "speaking"
 **Design solution:**
+
 ```
 Claude Code (as Engineering Director):
 > I've validated your idea against the ontology...
@@ -66,13 +89,16 @@ Claude Code (as Quality Agent):
 ---
 
 ### Decision 3: Prompt Loading is Invisible
+
 **Test requirement:** Agent prompt loads < 100ms, user doesn't wait
 **Design solution:**
+
 - Claude uses Read tool to load prompt
 - Happens instantly (prompts are small markdown files)
 - User sees result, not loading
 
 **Example:**
+
 ```
 User: /one idea "course platform"
 
@@ -92,8 +118,10 @@ Would you like me to create a plan? [Y/n]
 ---
 
 ### Decision 4: Context Budget Implicit
+
 **Test requirement:** Claude stays within context budgets (director: 200, specialist: 1500, etc.)
 **Design solution:**
+
 - Context budgets documented in agent prompts
 - Claude loads only what's needed
 - User doesn't see token counts (technical detail)
@@ -103,8 +131,10 @@ Would you like me to create a plan? [Y/n]
 ---
 
 ### Decision 5: Multi-Agent Coordination Transparent
+
 **Test requirement:** Multiple agents coordinate without user intervention
 **Design solution:**
+
 ```
 User: /one implement 1-1
 
@@ -156,24 +186,31 @@ Done! Feature 1-1 complete.
 # [Agent Role] Agent
 
 ## Role
+
 [One sentence]
 
 ## Responsibilities
+
 - [List]
 
 ## Input / Output
+
 - [Specifications]
 
 ## Decision Framework
+
 - [How to make decisions]
 
 ## Key Behaviors
+
 - [Critical behaviors]
 
 ## Communication Patterns
+
 - [Events to watch/emit]
 
 ## Examples
+
 - [Concrete examples]
 ```
 
@@ -184,6 +221,7 @@ Done! Feature 1-1 complete.
 ### 3. Response Patterns
 
 **Validation Response:**
+
 ```
 ✅ [Success indicator]
 [What was validated]
@@ -194,6 +232,7 @@ Done! Feature 1-1 complete.
 ```
 
 **Work In Progress:**
+
 ```
 🔄 [Agent role]
 [Current task]
@@ -202,6 +241,7 @@ Done! Feature 1-1 complete.
 ```
 
 **Completion Response:**
+
 ```
 ✅ [What completed]
 [Key results]
@@ -210,6 +250,7 @@ Done! Feature 1-1 complete.
 ```
 
 **Error Response:**
+
 ```
 ❌ [What failed]
 [Why it failed]
@@ -361,6 +402,7 @@ Next: /one docs 1-1
 ## Design Tokens
 
 ### Response Prefixes
+
 ```
 ✅ Success
 ❌ Error
@@ -374,6 +416,7 @@ Next: /one docs 1-1
 ```
 
 ### Agent Indicators
+
 ```
 Claude Code (Engineering Director):
 Claude Code (Backend Specialist):
@@ -386,6 +429,7 @@ Claude Code (Documenter):
 ```
 
 ### Timing
+
 - Response time: < 2 seconds for simple operations
 - Context loading: < 100ms (invisible to user)
 - Agent switching: Instant (just reading different prompt)
@@ -395,17 +439,20 @@ Claude Code (Documenter):
 ## Accessibility
 
 ### Screen Reader Friendly
+
 - Clear role indicators ("Engineering Director", "Backend Specialist")
 - Status emojis have text equivalents
 - File paths spoken clearly
 - Progress indicators explicit
 
 ### Keyboard Navigation
+
 - Commands are text-based (fully keyboard accessible)
 - No mouse required
 - Tab/autocomplete friendly
 
 ### Error Recovery
+
 - Clear error messages
 - Suggestions for fixes
 - Retry instructions
@@ -416,6 +463,7 @@ Claude Code (Documenter):
 ## Success Criteria from Tests
 
 ### User Flows
+
 - ✅ Agent loads correct prompt (< 5 seconds)
 - ✅ Agents coordinate via clear role indicators
 - ✅ Context stays within budget (invisible to user)
@@ -423,6 +471,7 @@ Claude Code (Documenter):
 - ✅ Examples inform behavior (responses match patterns)
 
 ### Acceptance Criteria
+
 - ✅ Prompt loading: < 100ms
 - ✅ Role switching: Instant
 - ✅ Context assembly: < 2 seconds
@@ -435,12 +484,14 @@ Claude Code (Documenter):
 ## Implementation Notes
 
 **No UI to build** - Just ensure agent prompts are:
+
 1. Well-structured (already done ✅)
 2. Easy for Claude to scan
 3. Include clear examples
 4. Specify decision frameworks
 
 **CLI responses** handled by Claude naturally:
+
 - Reads prompt
 - Follows instructions
 - Responds conversationally
@@ -451,6 +502,7 @@ Claude Code (Documenter):
 ## Next Steps
 
 Ready for Level 6 (Implementation):
+
 - Agent prompts already created ✅ (12 files, 303KB)
 - Design validates approach
 - CLI flow natural and clear
@@ -461,6 +513,7 @@ Ready for Level 6 (Implementation):
 **Status:** ✅ Design Complete
 
 **Key Design Insights:**
+
 1. **No UI needed** - CLI is text-based, agents respond conversationally
 2. **Role indicators** - User always knows which agent is "speaking"
 3. **Invisible complexity** - Context loading, prompt parsing happen instantly

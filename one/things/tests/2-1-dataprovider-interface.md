@@ -1,3 +1,21 @@
+---
+title: 2 1 Dataprovider Interface
+dimension: things
+category: tests
+tags: agent, ai, architecture, backend, frontend, ontology
+related_dimensions: connections, events, groups, knowledge, people
+scope: global
+created: 2025-11-03
+updated: 2025-11-03
+version: 1.0.0
+ai_context: |
+  This document is part of the things dimension in the tests category.
+  Location: one/things/tests/2-1-dataprovider-interface.md
+  Purpose: Documents test specification: feature 2-1 - dataprovider interface & convexprovider
+  Related dimensions: connections, events, groups, knowledge, people
+  For AI agents: Read this to understand 2 1 dataprovider interface.
+---
+
 # Test Specification: Feature 2-1 - DataProvider Interface & ConvexProvider
 
 **Feature ID:** `2-1-dataprovider-interface`
@@ -13,6 +31,7 @@
 This document defines comprehensive tests for the DataProvider interface and ConvexProvider implementation BEFORE implementation begins. The tests validate that the backend abstraction layer correctly implements all 6 ontology dimensions while maintaining zero functionality regression from current Convex SDK usage.
 
 **Success Criteria:**
+
 - [ ] 90%+ unit test coverage
 - [ ] 80%+ integration test coverage
 - [ ] All 6-dimension operations fully tested
@@ -25,35 +44,41 @@ This document defines comprehensive tests for the DataProvider interface and Con
 ## Test Categories
 
 ### Category 1: Interface Contract Tests (Unit)
+
 Tests the DataProvider interface definition and type contracts.
 
 ### Category 2: ConvexProvider Tests (Unit)
+
 Tests the ConvexProvider implementation wrapping Convex SDK.
 
 ### Category 3: Integration Tests
+
 Tests full data flow through provider with real backend.
 
 ### Category 4: Performance Tests
+
 Tests performance overhead of abstraction layer.
 
 ### Category 5: Error Handling Tests
+
 Tests typed error patterns and edge cases.
 
 ### Category 6: Real-time Subscription Tests
+
 Tests reactive data subscriptions through provider.
 
 ---
 
 ## Ontology Coverage Matrix
 
-| Dimension | CRUD Operations | Real-time | Auth | Multi-tenant |
-|-----------|----------------|-----------|------|--------------|
-| Organizations | ✅ | ✅ | ✅ | ✅ |
-| People | ✅ | ✅ | ✅ | ✅ |
-| Things | ✅ | ✅ | ✅ | ✅ |
-| Connections | ✅ | ✅ | ✅ | ✅ |
-| Events | ✅ | ✅ | ✅ | ✅ |
-| Knowledge | ✅ | ✅ | ✅ | ✅ |
+| Dimension     | CRUD Operations | Real-time | Auth | Multi-tenant |
+| ------------- | --------------- | --------- | ---- | ------------ |
+| Organizations | ✅              | ✅        | ✅   | ✅           |
+| People        | ✅              | ✅        | ✅   | ✅           |
+| Things        | ✅              | ✅        | ✅   | ✅           |
+| Connections   | ✅              | ✅        | ✅   | ✅           |
+| Events        | ✅              | ✅        | ✅   | ✅           |
+| Knowledge     | ✅              | ✅        | ✅   | ✅           |
 
 **Total Operations to Test:** 6 dimensions × 5 operations = 30+ test cases
 
@@ -64,6 +89,7 @@ Tests reactive data subscriptions through provider.
 ### 1.1 Type Safety Tests
 
 **Test:** DataProvider interface type definitions
+
 ```typescript
 describe("DataProvider Interface Types", () => {
   it("should define all 6-dimension operations", () => {
@@ -85,6 +111,7 @@ describe("DataProvider Interface Types", () => {
 ```
 
 **Expected Behavior:**
+
 - All operations return `Effect<T, E, never>`
 - All errors extend base `DataProviderError` with `_tag` field
 - Type inference works correctly (no `any` types)
@@ -98,6 +125,7 @@ describe("DataProvider Interface Types", () => {
 ### 1.2 Organizations Dimension Tests
 
 **Test Suite:** Organizations CRUD
+
 ```typescript
 describe("DataProvider.organizations", () => {
   it("should get organization by id", async () => {
@@ -128,6 +156,7 @@ describe("DataProvider.organizations", () => {
 ```
 
 **Expected Behavior:**
+
 - Organizations table correctly mapped to `things` with `type: "organization"`
 - Multi-tenant filtering automatic
 - Plan validation (starter/pro/enterprise)
@@ -141,6 +170,7 @@ describe("DataProvider.organizations", () => {
 ### 1.3 People Dimension Tests
 
 **Test Suite:** People CRUD & Roles
+
 ```typescript
 describe("DataProvider.people", () => {
   it("should get person by id", async () => {
@@ -171,6 +201,7 @@ describe("DataProvider.people", () => {
 ```
 
 **Expected Behavior:**
+
 - People represented as `things` with `type: "creator"` and `properties.role`
 - Role validation strict (4 roles only)
 - Organization membership via `connections`
@@ -184,6 +215,7 @@ describe("DataProvider.people", () => {
 ### 1.4 Things Dimension Tests
 
 **Test Suite:** Things CRUD for all 66 types
+
 ```typescript
 describe("DataProvider.things", () => {
   it("should create thing with correct type", async () => {
@@ -229,6 +261,7 @@ describe("DataProvider.things", () => {
 ```
 
 **Expected Behavior:**
+
 - All 66 thing types supported
 - Type validation strict
 - Properties flexible (any JSON)
@@ -243,6 +276,7 @@ describe("DataProvider.things", () => {
 ### 1.5 Connections Dimension Tests
 
 **Test Suite:** Connections CRUD for all 25 types
+
 ```typescript
 describe("DataProvider.connections", () => {
   it("should create connection between things", async () => {
@@ -298,6 +332,7 @@ describe("DataProvider.connections", () => {
 ```
 
 **Expected Behavior:**
+
 - All 25 connection types supported
 - Bidirectional queries efficient (indexes)
 - Metadata flexible (JSON)
@@ -312,6 +347,7 @@ describe("DataProvider.connections", () => {
 ### 1.6 Events Dimension Tests
 
 **Test Suite:** Events CRUD for all 67 types
+
 ```typescript
 describe("DataProvider.events", () => {
   it("should create event with actor and target", async () => {
@@ -362,6 +398,7 @@ describe("DataProvider.events", () => {
 ```
 
 **Expected Behavior:**
+
 - All 67 event types supported
 - Timestamps immutable
 - Metadata flexible (JSON)
@@ -376,6 +413,7 @@ describe("DataProvider.events", () => {
 ### 1.7 Knowledge Dimension Tests
 
 **Test Suite:** Knowledge CRUD & RAG
+
 ```typescript
 describe("DataProvider.knowledge", () => {
   it("should create knowledge item (label)", async () => {
@@ -421,6 +459,7 @@ describe("DataProvider.knowledge", () => {
 ```
 
 **Expected Behavior:**
+
 - All 4 knowledge types supported
 - Vector search efficient (ANN)
 - Junction table (thingKnowledge) managed
@@ -437,6 +476,7 @@ describe("DataProvider.knowledge", () => {
 ### 2.1 ConvexProvider Implementation Tests
 
 **Test Suite:** ConvexProvider wraps Convex SDK correctly
+
 ```typescript
 describe("ConvexProvider", () => {
   it("should implement DataProvider interface", () => {
@@ -472,6 +512,7 @@ describe("ConvexProvider", () => {
 ```
 
 **Expected Behavior:**
+
 - Zero functionality regression
 - All existing Convex queries work
 - All existing Convex mutations work
@@ -486,6 +527,7 @@ describe("ConvexProvider", () => {
 ### 2.2 ConvexProvider Auth Integration Tests
 
 **Test Suite:** Auth flows through ConvexProvider
+
 ```typescript
 describe("ConvexProvider Auth", () => {
   it("should pass all 50+ existing auth tests", async () => {
@@ -526,6 +568,7 @@ describe("ConvexProvider Auth", () => {
 ```
 
 **Expected Behavior:**
+
 - All 50+ auth tests pass
 - Zero regression in auth functionality
 - Better Auth integration unchanged
@@ -541,6 +584,7 @@ describe("ConvexProvider Auth", () => {
 ### 3.1 Full Data Flow Tests
 
 **Test Suite:** Complete user journeys through provider
+
 ```typescript
 describe("DataProvider Integration - Full Flows", () => {
   it("should complete user signup → create content → publish flow", async () => {
@@ -577,6 +621,7 @@ describe("DataProvider Integration - Full Flows", () => {
 ```
 
 **Expected Behavior:**
+
 - Multi-step flows work correctly
 - Transactions atomic (if supported)
 - Events logged completely
@@ -590,6 +635,7 @@ describe("DataProvider Integration - Full Flows", () => {
 ### 3.2 Multi-Tenant Isolation Tests
 
 **Test Suite:** Organization data isolation
+
 ```typescript
 describe("DataProvider Integration - Multi-Tenant", () => {
   it("should isolate organization data", async () => {
@@ -618,6 +664,7 @@ describe("DataProvider Integration - Multi-Tenant", () => {
 ```
 
 **Expected Behavior:**
+
 - Perfect data isolation between orgs
 - Platform owner has full access
 - Org owners have org-level access
@@ -631,6 +678,7 @@ describe("DataProvider Integration - Multi-Tenant", () => {
 ### 3.3 Real-time Subscription Tests
 
 **Test Suite:** Reactive data updates
+
 ```typescript
 describe("DataProvider Integration - Real-time", () => {
   it("should update when thing changes", async () => {
@@ -662,6 +710,7 @@ describe("DataProvider Integration - Real-time", () => {
 ```
 
 **Expected Behavior:**
+
 - Real-time updates work correctly
 - Subscriptions clean up properly
 - No memory leaks
@@ -677,6 +726,7 @@ describe("DataProvider Integration - Real-time", () => {
 ### 4.1 Operation Performance Tests
 
 **Test Suite:** Measure provider overhead
+
 ```typescript
 describe("DataProvider Performance", () => {
   it("should add <10ms overhead for get operations", async () => {
@@ -707,6 +757,7 @@ describe("DataProvider Performance", () => {
 ```
 
 **Performance Baseline (Direct Convex):**
+
 - Get: ~5ms
 - List: ~10ms
 - Create: ~15ms
@@ -714,6 +765,7 @@ describe("DataProvider Performance", () => {
 - Delete: ~8ms
 
 **Performance Target (ConvexProvider):**
+
 - Get: <15ms (<10ms overhead)
 - List: <20ms (<10ms overhead)
 - Create: <25ms (<10ms overhead)
@@ -727,6 +779,7 @@ describe("DataProvider Performance", () => {
 ### 4.2 Large Dataset Performance Tests
 
 **Test Suite:** Performance with scale
+
 ```typescript
 describe("DataProvider Performance - Scale", () => {
   it("should list 1000 things efficiently", async () => {
@@ -752,6 +805,7 @@ describe("DataProvider Performance - Scale", () => {
 ```
 
 **Performance Targets:**
+
 - 1000 items: <100ms
 - 10,000 items: <500ms
 - 100 concurrent requests: <1000ms total
@@ -765,6 +819,7 @@ describe("DataProvider Performance - Scale", () => {
 ### 5.1 Typed Error Tests
 
 **Test Suite:** Error handling patterns
+
 ```typescript
 describe("DataProvider Error Handling", () => {
   it("should throw ThingNotFoundError for missing thing", async () => {
@@ -800,6 +855,7 @@ describe("DataProvider Error Handling", () => {
 ```
 
 **Expected Behavior:**
+
 - All errors have `_tag` field
 - Error messages descriptive
 - Error types exported
@@ -812,6 +868,7 @@ describe("DataProvider Error Handling", () => {
 ### 5.2 Edge Case Tests
 
 **Test Suite:** Edge cases and failure modes
+
 ```typescript
 describe("DataProvider Edge Cases", () => {
   it("should handle network failures gracefully", async () => {
@@ -847,6 +904,7 @@ describe("DataProvider Edge Cases", () => {
 ```
 
 **Expected Behavior:**
+
 - Graceful degradation
 - Clear error messages
 - No silent failures
@@ -861,6 +919,7 @@ describe("DataProvider Edge Cases", () => {
 ### 6.1 React Hooks Tests
 
 **Test Suite:** useQuery and useMutation hooks
+
 ```typescript
 describe("DataProvider React Hooks", () => {
   it("should work with useQuery hook", async () => {
@@ -891,6 +950,7 @@ describe("DataProvider React Hooks", () => {
 ```
 
 **Expected Behavior:**
+
 - Hook API matches Convex hooks
 - Loading states accurate
 - Error states accurate
@@ -947,27 +1007,28 @@ PERFORMANCE_BASELINE_FILE=./tests/performance/baseline.json
 
 ## Coverage Targets by Category
 
-| Category | Unit Coverage | Integration Coverage | Total Tests |
-|----------|---------------|---------------------|-------------|
-| Interface Contract | 95% | N/A | 30+ |
-| Organizations | 95% | 85% | 10+ |
-| People | 95% | 85% | 12+ |
-| Things | 90% | 80% | 20+ |
-| Connections | 90% | 80% | 18+ |
-| Events | 90% | 80% | 15+ |
-| Knowledge | 85% | 75% | 12+ |
-| ConvexProvider | 95% | 90% | 15+ |
-| Integration Flows | N/A | 80% | 8+ |
-| Performance | 100% | 80% | 15+ |
-| Error Handling | 95% | 85% | 12+ |
-| Real-time | 90% | 85% | 10+ |
-| **TOTAL** | **90%+** | **80%+** | **177+** |
+| Category           | Unit Coverage | Integration Coverage | Total Tests |
+| ------------------ | ------------- | -------------------- | ----------- |
+| Interface Contract | 95%           | N/A                  | 30+         |
+| Organizations      | 95%           | 85%                  | 10+         |
+| People             | 95%           | 85%                  | 12+         |
+| Things             | 90%           | 80%                  | 20+         |
+| Connections        | 90%           | 80%                  | 18+         |
+| Events             | 90%           | 80%                  | 15+         |
+| Knowledge          | 85%           | 75%                  | 12+         |
+| ConvexProvider     | 95%           | 90%                  | 15+         |
+| Integration Flows  | N/A           | 80%                  | 8+          |
+| Performance        | 100%          | 80%                  | 15+         |
+| Error Handling     | 95%           | 85%                  | 12+         |
+| Real-time          | 90%           | 85%                  | 10+         |
+| **TOTAL**          | **90%+**      | **80%+**             | **177+**    |
 
 ---
 
 ## Test Execution Plan
 
 ### Phase 1: Unit Tests (Day 1-2)
+
 1. Interface contract tests (type-only)
 2. Mock provider tests
 3. Error handling tests
@@ -976,6 +1037,7 @@ PERFORMANCE_BASELINE_FILE=./tests/performance/baseline.json
 **Goal:** 90%+ unit coverage
 
 ### Phase 2: Integration Tests (Day 3-4)
+
 1. Full flow tests with real backend
 2. Multi-tenant isolation tests
 3. Auth integration tests (50+ existing)
@@ -984,6 +1046,7 @@ PERFORMANCE_BASELINE_FILE=./tests/performance/baseline.json
 **Goal:** 80%+ integration coverage
 
 ### Phase 3: Performance Tests (Day 5)
+
 1. Operation overhead tests
 2. Large dataset tests
 3. Concurrent request tests
@@ -992,6 +1055,7 @@ PERFORMANCE_BASELINE_FILE=./tests/performance/baseline.json
 **Goal:** <10ms overhead validated
 
 ### Phase 4: Edge Cases (Day 6-7)
+
 1. Error scenarios
 2. Network failures
 3. Concurrent updates
@@ -1022,14 +1086,14 @@ PERFORMANCE_BASELINE_FILE=./tests/performance/baseline.json
 
 ### Performance Benchmarks
 
-| Operation | Baseline (Convex) | Target (Provider) | Max Acceptable |
-|-----------|------------------|-------------------|----------------|
-| Get | 5ms | 10ms | 15ms |
-| List | 10ms | 15ms | 20ms |
-| Create | 15ms | 20ms | 25ms |
-| Update | 10ms | 15ms | 20ms |
-| Delete | 8ms | 13ms | 18ms |
-| Vector Search | 40ms | 50ms | 90ms |
+| Operation     | Baseline (Convex) | Target (Provider) | Max Acceptable |
+| ------------- | ----------------- | ----------------- | -------------- |
+| Get           | 5ms               | 10ms              | 15ms           |
+| List          | 10ms              | 15ms              | 20ms           |
+| Create        | 15ms              | 20ms              | 25ms           |
+| Update        | 10ms              | 15ms              | 20ms           |
+| Delete        | 8ms               | 13ms              | 18ms           |
+| Vector Search | 40ms              | 50ms              | 90ms           |
 
 **If ANY operation exceeds max acceptable, feature is REJECTED.**
 
@@ -1038,23 +1102,27 @@ PERFORMANCE_BASELINE_FILE=./tests/performance/baseline.json
 ## Quality Gates
 
 ### Gate 1: Unit Tests (End of Day 2)
+
 - [ ] All interface tests pass
 - [ ] All mock provider tests pass
 - [ ] 90%+ unit coverage
 - [ ] Zero TypeScript errors
 
 ### Gate 2: Integration Tests (End of Day 4)
+
 - [ ] All integration flows pass
 - [ ] All 50+ auth tests pass
 - [ ] 80%+ integration coverage
 - [ ] Multi-tenant isolation verified
 
 ### Gate 3: Performance Tests (End of Day 5)
+
 - [ ] All operations within acceptable range
 - [ ] Baseline established
 - [ ] Performance report generated
 
 ### Gate 4: Final Validation (End of Day 7)
+
 - [ ] All 177+ tests pass
 - [ ] All acceptance criteria met
 - [ ] Documentation complete
@@ -1087,6 +1155,7 @@ PERFORMANCE_BASELINE_FILE=./tests/performance/baseline.json
 ## Success Metrics
 
 ### Technical Quality
+
 - **Test Coverage:** 90%+ unit, 80%+ integration
 - **Performance:** <10ms overhead per operation
 - **Type Safety:** 100% typed (no `any`)
@@ -1094,6 +1163,7 @@ PERFORMANCE_BASELINE_FILE=./tests/performance/baseline.json
 - **Regression:** Zero functionality loss
 
 ### Ontology Alignment
+
 - **6 Dimensions:** All fully tested
 - **66 Thing Types:** All validated
 - **25 Connection Types:** All validated
@@ -1101,6 +1171,7 @@ PERFORMANCE_BASELINE_FILE=./tests/performance/baseline.json
 - **Multi-tenant:** Perfect isolation
 
 ### Developer Experience
+
 - **Hook API:** Matches Convex ergonomics
 - **Error Messages:** Clear and actionable
 - **Type Inference:** Full autocomplete
@@ -1124,6 +1195,7 @@ PERFORMANCE_BASELINE_FILE=./tests/performance/baseline.json
 **Context Budget:** This test spec is designed to fit within 2,000 token context when implementing.
 
 **Key Points:**
+
 1. Read this spec BEFORE writing any code
 2. Implement tests BEFORE implementation (TDD)
 3. Use existing test patterns from `/frontend/tests/auth/`

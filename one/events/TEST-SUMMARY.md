@@ -1,3 +1,21 @@
+---
+title: Test Summary
+dimension: events
+category: TEST-SUMMARY.md
+tags: ai, backend, frontend, groups, ontology
+related_dimensions: groups, knowledge, people, things
+scope: global
+created: 2025-11-03
+updated: 2025-11-03
+version: 1.0.0
+ai_context: |
+  This document is part of the events dimension in the TEST-SUMMARY.md category.
+  Location: one/events/TEST-SUMMARY.md
+  Purpose: Documents groups feature test suite - complete summary
+  Related dimensions: groups, knowledge, people, things
+  For AI agents: Read this to understand TEST SUMMARY.
+---
+
 # Groups Feature Test Suite - Complete Summary
 
 Comprehensive test coverage for the groups feature across backend and frontend.

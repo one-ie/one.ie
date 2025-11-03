@@ -1,3 +1,21 @@
+---
+title: Mutation Template
+dimension: knowledge
+category: patterns
+tags: ai, auth, backend, events
+related_dimensions: events, groups, people, things
+scope: global
+created: 2025-11-03
+updated: 2025-11-03
+version: 1.0.0
+ai_context: |
+  This document is part of the knowledge dimension in the patterns category.
+  Location: one/knowledge/patterns/backend/mutation-template.md
+  Purpose: Documents pattern: convex mutation template
+  Related dimensions: events, groups, people, things
+  For AI agents: Read this to understand mutation template.
+---
+
 # Pattern: Convex Mutation Template
 
 **Category:** Backend

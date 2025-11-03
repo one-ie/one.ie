@@ -1,3 +1,21 @@
+---
+title: Ai Sdk
+dimension: things
+category: plans
+tags: agent, ai, architecture, artificial-intelligence, backend, inference
+related_dimensions: people
+scope: global
+created: 2025-11-03
+updated: 2025-11-03
+version: 1.0.0
+ai_context: |
+  This document is part of the things dimension in the plans category.
+  Location: one/things/plans/ai-sdk.md
+  Purpose: Documents ai sdk implementation plan
+  Related dimensions: people
+  For AI agents: Read this to understand ai sdk.
+---
+
 # AI SDK Implementation Plan
 
 **Version:** 1.0.0
@@ -55,13 +73,13 @@ All AI operations are implemented as **Effect.ts services** for backend-agnostic
 ```typescript
 // Define domain errors as tagged classes
 class LLMError extends Data.TaggedError("LLMError")<{
-  model: string
-  provider: string
-  cause: unknown
+  model: string;
+  provider: string;
+  cause: unknown;
 }> {}
 
 class RateLimitError extends Data.TaggedError("RateLimitError")<{
-  retryAfter: number
+  retryAfter: number;
 }> {}
 
 // Define service with Context.Tag
@@ -70,18 +88,18 @@ class LLMService extends Context.Tag("LLMService")<
   {
     readonly generateText: (
       prompt: string,
-      options?: { model?: string; provider?: string }
-    ) => Effect.Effect<string, LLMError>
+      options?: { model?: string; provider?: string },
+    ) => Effect.Effect<string, LLMError>;
 
     readonly streamText: (
       prompt: string,
-      onChunk: (chunk: string) => void
-    ) => Effect.Effect<void, LLMError>
+      onChunk: (chunk: string) => void,
+    ) => Effect.Effect<void, LLMError>;
 
     readonly generateObject: <T extends Schema.Schema<any>>(
       prompt: string,
-      schema: T
-    ) => Effect.Effect<Schema.Type<T>, LLMError>
+      schema: T,
+    ) => Effect.Effect<Schema.Type<T>, LLMError>;
   }
 >() {}
 
@@ -95,11 +113,12 @@ const LLMServiceLive = Layer.effect(
           const model = selectModel(options?.provider || "openai", "powerful");
           const result = yield* Effect.tryPromise({
             try: () => generateText({ model, prompt }),
-            catch: (error) => new LLMError({
-              model: options?.model || "gpt-4-turbo",
-              provider: options?.provider || "openai",
-              cause: error
-            })
+            catch: (error) =>
+              new LLMError({
+                model: options?.model || "gpt-4-turbo",
+                provider: options?.provider || "openai",
+                cause: error,
+              }),
           });
           return result.text;
         }),
@@ -110,9 +129,9 @@ const LLMServiceLive = Layer.effect(
 
       generateObject: (prompt, schema) => {
         // Implementation with structured output
-      }
+      },
     };
-  })
+  }),
 );
 ```
 
@@ -135,6 +154,7 @@ npm install @ai-sdk/google
 #### Environment Variables
 
 **Backend (.env.local):**
+
 ```bash
 OPENAI_API_KEY=sk-...
 ANTHROPIC_API_KEY=sk-ant-...
@@ -142,6 +162,7 @@ GOOGLE_GENERATIVE_AI_API_KEY=...
 ```
 
 **Frontend (.env.local):**
+
 ```bash
 # Not needed for server-side calls
 # Only needed if calling AI SDK directly from browser
@@ -200,10 +221,12 @@ export default defineSchema({
     provider: v.string(),
     prompt: v.string(),
     result: v.string(),
-    tokensUsed: v.optional(v.object({
-      input: v.number(),
-      output: v.number(),
-    })),
+    tokensUsed: v.optional(
+      v.object({
+        input: v.number(),
+        output: v.number(),
+      }),
+    ),
     duration: v.number(),
     error: v.optional(v.string()),
     metadata: v.any(),
@@ -214,11 +237,17 @@ export default defineSchema({
     groupId: v.id("groups"),
     agentId: v.id("things"),
     title: v.string(),
-    status: v.union(v.literal("active"), v.literal("archived"), v.literal("completed")),
+    status: v.union(
+      v.literal("active"),
+      v.literal("archived"),
+      v.literal("completed"),
+    ),
     metadata: v.any(),
     createdAt: v.number(),
     updatedAt: v.number(),
-  }).index("by_groupId", ["groupId"]).index("by_agentId", ["agentId"]),
+  })
+    .index("by_groupId", ["groupId"])
+    .index("by_agentId", ["agentId"]),
 });
 ```
 
@@ -352,14 +381,15 @@ export function useAIChat(groupId: string, agentId: string) {
   const generateResponse = useMutation(api.mutations.ai.generateResponse);
   const streamResponse = useMutation(api.mutations.ai.streamAgentResponse);
 
-  const { messages, input, handleInputChange, handleSubmit, isLoading } = useChat({
-    api: "/api/chat", // Not used with Convex, but useChat requires it
-    id: `${groupId}-${agentId}`,
-    onFinish: async (message) => {
-      // Optional: Additional processing after generation
-      console.log("Message finished:", message);
-    },
-  });
+  const { messages, input, handleInputChange, handleSubmit, isLoading } =
+    useChat({
+      api: "/api/chat", // Not used with Convex, but useChat requires it
+      id: `${groupId}-${agentId}`,
+      onFinish: async (message) => {
+        // Optional: Additional processing after generation
+        console.log("Message finished:", message);
+      },
+    });
 
   return {
     messages,
@@ -500,7 +530,9 @@ const tools = {
   getWeather: tool({
     description: "Get the current weather in a location",
     parameters: z.object({
-      location: z.string().describe("The city and state, e.g. San Francisco, CA"),
+      location: z
+        .string()
+        .describe("The city and state, e.g. San Francisco, CA"),
     }),
     execute: async ({ location }) => {
       // Call weather API
@@ -567,7 +599,8 @@ export function useTokenUsage(groupId: string) {
     totalCalls: calls.length,
     totalTokens,
     estimatedCost: totalCost,
-    averageLatency: calls.reduce((sum, call) => sum + call.duration, 0) / calls.length,
+    averageLatency:
+      calls.reduce((sum, call) => sum + call.duration, 0) / calls.length,
   };
 }
 ```
@@ -598,14 +631,18 @@ export const getTokenUsageStats = query({
       .withIndex("by_groupId", (q) => q.eq("groupId", args.groupId))
       .collect();
 
-    const groupedByProvider = calls.reduce((acc, call) => {
-      if (!acc[call.provider]) {
-        acc[call.provider] = { calls: 0, tokens: 0 };
-      }
-      acc[call.provider].calls += 1;
-      acc[call.provider].tokens += (call.tokensUsed?.input || 0) + (call.tokensUsed?.output || 0);
-      return acc;
-    }, {} as Record<string, { calls: number; tokens: number }>);
+    const groupedByProvider = calls.reduce(
+      (acc, call) => {
+        if (!acc[call.provider]) {
+          acc[call.provider] = { calls: 0, tokens: 0 };
+        }
+        acc[call.provider].calls += 1;
+        acc[call.provider].tokens +=
+          (call.tokensUsed?.input || 0) + (call.tokensUsed?.output || 0);
+        return acc;
+      },
+      {} as Record<string, { calls: number; tokens: number }>,
+    );
 
     return groupedByProvider;
   },
@@ -652,13 +689,13 @@ export const getTokenUsageStats = query({
 
 ## Configuration Reference
 
-| Setting | Purpose | Default |
-|---------|---------|---------|
-| `model` | Which LLM model | `gpt-4-turbo` |
-| `provider` | Which LLM provider | `openai` |
-| `temperature` | Creativity (0-1) | `0.7` |
-| `maxTokens` | Max response length | `2000` |
-| `systemPrompt` | AI instructions | Generic |
+| Setting        | Purpose             | Default       |
+| -------------- | ------------------- | ------------- |
+| `model`        | Which LLM model     | `gpt-4-turbo` |
+| `provider`     | Which LLM provider  | `openai`      |
+| `temperature`  | Creativity (0-1)    | `0.7`         |
+| `maxTokens`    | Max response length | `2000`        |
+| `systemPrompt` | AI instructions     | Generic       |
 
 ---
 

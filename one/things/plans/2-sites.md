@@ -1,3 +1,21 @@
+---
+title: 2 Sites
+dimension: things
+category: plans
+tags: ai, architecture
+related_dimensions: events, people
+scope: global
+created: 2025-11-03
+updated: 2025-11-03
+version: 1.0.0
+ai_context: |
+  This document is part of the things dimension in the plans category.
+  Location: one/things/plans/2-sites.md
+  Purpose: Documents two-site architecture: the foolproof plan
+  Related dimensions: events, people
+  For AI agents: Read this to understand 2 sites.
+---
+
 # Two-Site Architecture: The Foolproof Plan
 
 **Last Updated:** 2025-01-27
@@ -15,6 +33,7 @@ We accidentally conflated two different products:
 2. **Starter Template** - Simple template users download via `npx oneie`
 
 **What went wrong:**
+
 - Replaced ONE.ie homepage with simple template chooser
 - Production site now looks like a starter template
 - Need complete separation
@@ -34,6 +53,7 @@ web/ (generated - NEVER edit directly)
 ```
 
 **Benefits:**
+
 - ✅ **Single source of truth** - Work only in `oneie/`
 - ✅ **Zero drift** - `web/` always matches `oneie/`
 - ✅ **One command** - `bun run build:starter`
@@ -45,6 +65,7 @@ web/ (generated - NEVER edit directly)
 ## 📂 Repository Structure
 
 ### Production Site (oneie/)
+
 ```
 github.com/one-ie/oneie
 ├── src/
@@ -65,6 +86,7 @@ github.com/one-ie/oneie
 **Wrangler project:** `oneie`
 
 ### Starter Template (web/)
+
 ```
 github.com/one-ie/web
 ├── src/
@@ -118,7 +140,7 @@ mkdir -p scripts
 
 Create `oneie/scripts/generate-starter.sh`:
 
-```bash
+````bash
 #!/bin/bash
 # oneie/scripts/generate-starter.sh
 # Transforms ONE.ie production site → Starter template
@@ -425,7 +447,7 @@ Get started building your next idea with ONE Platform.
 ```bash
 bun install
 bun run dev
-```
+````
 
 Visit http://localhost:4321 and choose a template.
 
@@ -452,11 +474,14 @@ Visit https://one.ie for complete documentation.
 READMEEOF
 
 # 8. Update package.json
+
 echo "📦 Updating package.json..."
 cd ../web
+
 # Use sed instead of jq (more portable)
-sed -i.bak 's/"name": ".*"/"name": "oneie-starter"/' package.json
-sed -i.bak 's/"description": ".*"/"description": "ONE Platform starter template"/' package.json
+
+sed -i.bak 's/"name": "._"/"name": "oneie-starter"/' package.json
+sed -i.bak 's/"description": "._"/"description": "ONE Platform starter template"/' package.json
 rm -f package.json.bak
 
 echo ""
@@ -464,26 +489,28 @@ echo "✅ Starter template generated successfully!"
 echo ""
 echo "📂 Location: ../web/"
 echo "📝 Files modified:"
-echo "   - src/pages/index.astro (replaced with simple chooser)"
-echo "   - src/components/Sidebar.tsx (simplified to 2 items)"
-echo "   - src/content/blog/ (reduced to 1 example)"
-echo "   - src/content/products/ (reduced to 3 examples)"
-echo "   - README.md (starter template version)"
-echo "   - package.json (updated name & description)"
+echo " - src/pages/index.astro (replaced with simple chooser)"
+echo " - src/components/Sidebar.tsx (simplified to 2 items)"
+echo " - src/content/blog/ (reduced to 1 example)"
+echo " - src/content/products/ (reduced to 3 examples)"
+echo " - README.md (starter template version)"
+echo " - package.json (updated name & description)"
 echo ""
 echo "🚀 Next steps:"
-echo "   cd ../web"
-echo "   git add ."
-echo "   git commit -m 'Generated from oneie'"
-echo "   git push"
-```
+echo " cd ../web"
+echo " git add ."
+echo " git commit -m 'Generated from oneie'"
+echo " git push"
+
+````
 
 Make it executable:
 ```bash
 chmod +x scripts/generate-starter.sh
-```
+````
 
 Add to `package.json`:
+
 ```bash
 # Edit oneie/package.json and add:
 "scripts": {
@@ -646,15 +673,15 @@ git push
 
 ## 🔍 What Gets Transformed
 
-| File/Directory | oneie/ | web/ | Change |
-|----------------|--------|------|--------|
-| `src/pages/index.astro` | Complex homepage | Simple chooser | **REPLACED** |
-| `src/components/Sidebar.tsx` | 9 nav items | 2 nav items | **REPLACED** |
-| `src/content/blog/` | All posts | 1 example | **REDUCED** |
-| `src/content/products/` | All products | 3 examples | **REDUCED** |
-| `README.md` | Production docs | Starter docs | **REPLACED** |
-| `package.json` | oneie | oneie-starter | **MODIFIED** |
-| Everything else | Identical | Identical | **COPIED** |
+| File/Directory               | oneie/           | web/           | Change       |
+| ---------------------------- | ---------------- | -------------- | ------------ |
+| `src/pages/index.astro`      | Complex homepage | Simple chooser | **REPLACED** |
+| `src/components/Sidebar.tsx` | 9 nav items      | 2 nav items    | **REPLACED** |
+| `src/content/blog/`          | All posts        | 1 example      | **REDUCED**  |
+| `src/content/products/`      | All products     | 3 examples     | **REDUCED**  |
+| `README.md`                  | Production docs  | Starter docs   | **REPLACED** |
+| `package.json`               | oneie            | oneie-starter  | **MODIFIED** |
+| Everything else              | Identical        | Identical      | **COPIED**   |
 
 ---
 
@@ -724,6 +751,7 @@ After implementation, you should have:
 6. ✅ **Zero manual sync** - Everything automated
 
 **Test:**
+
 - Make change in oneie/
 - Run `bun run build:starter`
 - Check web/ has the change
@@ -742,6 +770,7 @@ chmod +x oneie/scripts/generate-starter.sh
 ### Script fails: "No such file or directory"
 
 Make sure you're in the `oneie/` directory:
+
 ```bash
 cd oneie
 bun run build:starter
@@ -750,11 +779,13 @@ bun run build:starter
 ### web/ is empty after running script
 
 Check if ../web exists:
+
 ```bash
 ls -la ../ | grep web
 ```
 
 If missing, create it:
+
 ```bash
 mkdir ../web
 ```
@@ -762,6 +793,7 @@ mkdir ../web
 ### Changes in oneie/ not showing in web/
 
 You forgot to run the script:
+
 ```bash
 cd oneie
 bun run build:starter
@@ -770,10 +802,12 @@ bun run build:starter
 ### Accidentally edited web/ directly
 
 No problem! Just regenerate:
+
 ```bash
 cd oneie
 bun run build:starter
 ```
+
 (Your changes in web/ will be overwritten - this is intentional)
 
 ---
@@ -783,6 +817,7 @@ bun run build:starter
 ### Monthly: Review transform script
 
 Check if you want to:
+
 - Keep different files in web/
 - Remove different files from web/
 - Change the homepage template
@@ -803,6 +838,7 @@ Just edit `oneie/scripts/generate-starter.sh`
 ### Multiple Templates
 
 Edit script to generate different starters:
+
 ```bash
 bun run build:starter blog      # Blog-focused
 bun run build:starter ecommerce # Ecommerce-focused
@@ -812,6 +848,7 @@ bun run build:starter news      # News-focused
 ### Version-Specific Starters
 
 Tag specific oneie versions:
+
 ```bash
 bun run build:starter --from v2.1.0
 ```
@@ -819,6 +856,7 @@ bun run build:starter --from v2.1.0
 ### Custom Configurations
 
 Let users choose what to include:
+
 ```bash
 bun run build:starter --with-auth --with-stripe
 ```
@@ -828,30 +866,36 @@ bun run build:starter --with-auth --with-stripe
 ## ✅ Final Checklist
 
 Before starting:
+
 - [ ] Understand the workflow (oneie → script → web)
 - [ ] Accept that web/ is auto-generated
 - [ ] Commit to NEVER editing web/ directly
 - [ ] Bookmark this plan for reference
 
 After Phase 1:
+
 - [ ] oneie/ repository created and pushed
 - [ ] web/ directory exists (empty)
 
 After Phase 2:
+
 - [ ] Transform script created
 - [ ] Script is executable
 - [ ] package.json updated
 
 After Phase 3:
+
 - [ ] Script runs without errors
 - [ ] web/ contains generated files
 - [ ] Simple homepage visible at localhost:4321
 
 After Phase 4:
+
 - [ ] web/ repository created and pushed
 - [ ] Both repos visible on GitHub
 
 After Phase 5:
+
 - [ ] Release process updated
 - [ ] Both sites deployed
 - [ ] Everything working
@@ -861,6 +905,7 @@ After Phase 5:
 ## 💪 You've Got This
 
 **Remember:**
+
 - oneie/ = Your main workspace (ONLY place you edit)
 - web/ = Auto-generated (NEVER edit directly)
 - One command = `bun run build:starter`
@@ -869,12 +914,14 @@ After Phase 5:
 - No stress
 
 **After setup:**
+
 1. Work in oneie/ normally
 2. When releasing, run script
 3. Push both repos
 4. Done!
 
 **This eliminates:**
+
 - ❌ Manual syncing
 - ❌ Code drift
 - ❌ Double work
@@ -882,6 +929,7 @@ After Phase 5:
 - ❌ Wondering if they match
 
 **This gives you:**
+
 - ✅ Single source of truth
 - ✅ Automatic consistency
 - ✅ Half the maintenance

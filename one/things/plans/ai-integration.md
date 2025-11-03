@@ -1,3 +1,21 @@
+---
+title: Ai Integration
+dimension: things
+category: plans
+tags: agent, ai, architecture, artificial-intelligence
+related_dimensions: events, knowledge
+scope: global
+created: 2025-11-03
+updated: 2025-11-03
+version: 1.0.0
+ai_context: |
+  This document is part of the things dimension in the plans category.
+  Location: one/things/plans/ai-integration.md
+  Purpose: Documents ai integration architecture
+  Related dimensions: events, knowledge
+  For AI agents: Read this to understand ai integration.
+---
+
 # AI Integration Architecture
 
 **Complete integration of AI SDK + Convex Agents + AI Elements with Effect.ts**
@@ -16,36 +34,51 @@ All AI functionality is implemented as **Effect.ts services** using `Context.Tag
 ```typescript
 // Layer 1: Error types (tagged classes)
 class LLMError extends Data.TaggedError("LLMError")<{
-  model: string
-  provider: string
-  cause: unknown
+  model: string;
+  provider: string;
+  cause: unknown;
 }> {}
 
 class AgentError extends Data.TaggedError("AgentError")<{
-  agentName: string
-  cause: unknown
+  agentName: string;
+  cause: unknown;
 }> {}
 
 class RAGError extends Data.TaggedError("RAGError")<{
-  query: string
-  cause: unknown
+  query: string;
+  cause: unknown;
 }> {}
 
 // Layer 2: Service definitions
-class LLMService extends Context.Tag("LLMService")<LLMService, { /* ... */ }>() {}
-class AgentService extends Context.Tag("AgentService")<AgentService, { /* ... */ }>() {}
-class RAGService extends Context.Tag("RAGService")<RAGService, { /* ... */ }>() {}
+class LLMService extends Context.Tag("LLMService")<
+  LLMService,
+  {
+    /* ... */
+  }
+>() {}
+class AgentService extends Context.Tag("AgentService")<
+  AgentService,
+  {
+    /* ... */
+  }
+>() {}
+class RAGService extends Context.Tag("RAGService")<
+  RAGService,
+  {
+    /* ... */
+  }
+>() {}
 
 // Layer 3: Service implementations
-const LLMServiceLive = Layer.effect(LLMService, /* ... */);
-const AgentServiceLive = Layer.effect(AgentService, /* ... */);
-const RAGServiceLive = Layer.effect(RAGService, /* ... */);
+const LLMServiceLive = Layer.effect(LLMService /* ... */);
+const AgentServiceLive = Layer.effect(AgentService /* ... */);
+const RAGServiceLive = Layer.effect(RAGService /* ... */);
 
 // Layer 4: Composition
 const AppLayer = Layer.mergeAll(
   LLMServiceLive,
   AgentServiceLive,
-  RAGServiceLive
+  RAGServiceLive,
 );
 
 // Usage in mutations/actions
@@ -58,7 +91,11 @@ export const myAction = action({
 
       // Compose services with explicit error handling
       const context = yield* rag.search(args.query);
-      const response = yield* agent.generateResponse(ctx, args.message, context);
+      const response = yield* agent.generateResponse(
+        ctx,
+        args.message,
+        context,
+      );
 
       return response;
     }).pipe(
@@ -66,8 +103,8 @@ export const myAction = action({
       Effect.catchAll((error) => {
         // Handle errors explicitly
         return Effect.succeed({ error: true });
-      })
-    )
+      }),
+    ),
 });
 ```
 
@@ -82,6 +119,7 @@ This document describes how three powerful technologies integrate into a seamles
 3. **AI Elements** (Vercel) - Pre-built production-ready UI components
 
 **The Result:** A beautiful, type-safe, multi-tenant AI chat platform with:
+
 - Real-time streaming conversations
 - Tool execution with rich UI feedback
 - RAG-powered knowledge retrieval
@@ -161,6 +199,7 @@ This document describes how three powerful technologies integrate into a seamles
 ```
 
 **Key Innovation: Effect.ts Service Layer**
+
 - All business logic composed as Effect services
 - Components handle infrastructure (Agent, RAG, Rate-Limiter)
 - Service layer provides tagged errors, dependency injection, and testability
@@ -518,8 +557,10 @@ const { textStream, usage } = await streamText({
     searchKnowledge: {
       description: "Search knowledge base",
       parameters: z.object({ query: z.string() }),
-      execute: async ({ query }) => { /* RAG search */ }
-    }
+      execute: async ({ query }) => {
+        /* RAG search */
+      },
+    },
   },
 });
 ```
@@ -545,17 +586,17 @@ tables: {
 ```typescript
 // Supported providers via AI SDK
 providers: [
-  "openai",       // GPT-4, GPT-4o
-  "anthropic",    // Claude
-  "google",       // Gemini
-  "azure",        // OpenAI Azure
-  "cohere",       // Cohere
-  "deepseek",     // DeepSeek
-  "mistral",      // Mistral
-  "groq",         // Groq
-  "xai",          // xAI
+  "openai", // GPT-4, GPT-4o
+  "anthropic", // Claude
+  "google", // Gemini
+  "azure", // OpenAI Azure
+  "cohere", // Cohere
+  "deepseek", // DeepSeek
+  "mistral", // Mistral
+  "groq", // Groq
+  "xai", // xAI
   // ... and 10+ more
-]
+];
 ```
 
 ---
@@ -717,16 +758,16 @@ const result = await generateText({
 
 ## Performance Characteristics
 
-| Operation | Latency | Why |
-|-----------|---------|-----|
-| Chat send | ~100ms | Frontend → Convex (fast) |
-| LLM call | 2-5s | API call to provider |
-| Stream start | ~200ms | WebSocket handshake |
-| First token | 0.5-2s | Depends on model |
-| Tool execute | 50-500ms | Search/compute time |
-| UI update | <16ms | React re-render |
-| Message save | ~50ms | Convex DB insert |
-| Event log | ~50ms | Convex DB insert |
+| Operation    | Latency  | Why                      |
+| ------------ | -------- | ------------------------ |
+| Chat send    | ~100ms   | Frontend → Convex (fast) |
+| LLM call     | 2-5s     | API call to provider     |
+| Stream start | ~200ms   | WebSocket handshake      |
+| First token  | 0.5-2s   | Depends on model         |
+| Tool execute | 50-500ms | Search/compute time      |
+| UI update    | <16ms    | React re-render          |
+| Message save | ~50ms    | Convex DB insert         |
+| Event log    | ~50ms    | Convex DB insert         |
 
 **Total: 2-5 seconds for complete interaction** (dominated by LLM inference time)
 
@@ -735,23 +776,27 @@ const result = await generateText({
 ## Security Model
 
 ### Authentication
+
 - Convex Auth validates every mutation
 - User identity from auth context
 - Sessions managed by Better Auth
 
 ### Authorization
+
 - Group membership checked
 - User can only access own group's data
 - Agent access controlled per group
 - Tenant isolation enforced
 
 ### Data Protection
+
 - All LLM calls logged for audit
 - API keys never exposed to frontend
 - Encryption in transit (HTTPS/WSS)
 - Encryption at rest (Convex Cloud)
 
 ### Rate Limiting
+
 - Convex Rate Limiter on mutations
 - Per-user rate limits
 - Per-group quota enforcement
@@ -764,24 +809,28 @@ const result = await generateText({
 ```typescript
 // Graceful degradation
 try {
-  const response = await streamText({ /* ... */ });
+  const response = await streamText({
+    /* ... */
+  });
 } catch (error) {
-  if (error.code === 'rate_limit_exceeded') {
-    return { error: 'Please wait before trying again' };
+  if (error.code === "rate_limit_exceeded") {
+    return { error: "Please wait before trying again" };
   }
-  if (error.code === 'context_length_exceeded') {
-    return { error: 'Message too long for this model' };
+  if (error.code === "context_length_exceeded") {
+    return { error: "Message too long for this model" };
   }
-  if (error.code === 'api_error') {
-    return { error: 'Service temporarily unavailable' };
+  if (error.code === "api_error") {
+    return { error: "Service temporarily unavailable" };
   }
-  return { error: 'Unexpected error. Please try again.' };
+  return { error: "Unexpected error. Please try again." };
 }
 
 // Automatic retry
 for (let i = 0; i < maxRetries; i++) {
   try {
-    return await streamText({ /* ... */ });
+    return await streamText({
+      /* ... */
+    });
   } catch (error) {
     if (i === maxRetries - 1) throw error;
     await delay(Math.pow(2, i) * 1000); // Exponential backoff
@@ -790,9 +839,9 @@ for (let i = 0; i < maxRetries; i++) {
 
 // Fallback model
 try {
-  return await generateText({ model: primaryModel, /* ... */ });
+  return await generateText({ model: primaryModel /* ... */ });
 } catch {
-  return await generateText({ model: fallbackModel, /* ... */ });
+  return await generateText({ model: fallbackModel /* ... */ });
 }
 ```
 
@@ -932,15 +981,15 @@ CONVEX_DEPLOYMENT=prod:xxx
 
 ## Success Metrics
 
-| Metric | Target | Current |
-|--------|--------|---------|
-| Chat response latency | <3s | - |
-| Streaming start time | <500ms | - |
-| Tool execution accuracy | >95% | - |
-| RAG relevance score | >0.7 | - |
-| Error rate | <0.1% | - |
-| User satisfaction | >4.5/5 | - |
-| Token usage tracking | 100% | - |
+| Metric                  | Target | Current |
+| ----------------------- | ------ | ------- |
+| Chat response latency   | <3s    | -       |
+| Streaming start time    | <500ms | -       |
+| Tool execution accuracy | >95%   | -       |
+| RAG relevance score     | >0.7   | -       |
+| Error rate              | <0.1%  | -       |
+| User satisfaction       | >4.5/5 | -       |
+| Token usage tracking    | 100%   | -       |
 
 ---
 

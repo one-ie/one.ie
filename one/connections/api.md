@@ -1,3 +1,21 @@
+---
+title: Api
+dimension: connections
+category: api.md
+tags: auth, backend, frontend
+related_dimensions: people, things
+scope: global
+created: 2025-11-03
+updated: 2025-11-03
+version: 1.0.0
+ai_context: |
+  This document is part of the connections dimension in the api.md category.
+  Location: one/connections/api.md
+  Purpose: Documents one platform - api reference
+  Related dimensions: people, things
+  For AI agents: Read this to understand api.
+---
+
 # ONE Platform - API Reference
 
 **Version:** 1.0.0

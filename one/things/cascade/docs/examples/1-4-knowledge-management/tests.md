@@ -1,3 +1,21 @@
+---
+title: Tests
+dimension: things
+category: cascade
+tags: agent, ai, knowledge
+related_dimensions: knowledge, people
+scope: global
+created: 2025-11-03
+updated: 2025-11-03
+version: 1.0.0
+ai_context: |
+  This document is part of the things dimension in the cascade category.
+  Location: one/things/cascade/docs/examples/1-4-knowledge-management/tests.md
+  Purpose: Documents tests for feature 1-4: knowledge management system
+  Related dimensions: knowledge, people
+  For AI agents: Read this to understand tests.
+---
+
 # Tests for Feature 1-4: Knowledge Management System
 
 **Feature:** 1-4-knowledge-management
@@ -9,9 +27,11 @@
 ## User Flows
 
 ### Flow 1: Capture Lesson Learned
+
 **User goal:** Specialist adds lesson after fixing problem
 **Time budget:** < 2 minutes to write lesson
 **Steps:**
+
 1. Specialist fixes problem
 2. Specialist opens `lessons-learned.md`
 3. Specialist writes lesson with template
@@ -20,6 +40,7 @@
 6. Lesson searchable immediately
 
 **Acceptance Criteria:**
+
 - [ ] Lesson template clear and easy to follow
 - [ ] Required fields enforced (problem, solution, pattern)
 - [ ] Lesson written in < 2 minutes
@@ -30,9 +51,11 @@
 ---
 
 ### Flow 2: Search Knowledge Base
+
 **User goal:** Problem solver finds similar issues
 **Time budget:** < 5 seconds
 **Steps:**
+
 1. Problem solver analyzes test failure
 2. Problem solver searches lessons learned
 3. System returns relevant lessons
@@ -40,6 +63,7 @@
 5. Problem solver references similar issue or creates new
 
 **Acceptance Criteria:**
+
 - [ ] Search by keywords: < 5 seconds
 - [ ] Search by category: < 2 seconds
 - [ ] Results ranked by relevance
@@ -50,9 +74,11 @@
 ---
 
 ### Flow 3: Load Pattern Template
+
 **User goal:** Specialist applies pattern to implementation
 **Time budget:** < 3 seconds
 **Steps:**
+
 1. Specialist needs to implement feature
 2. Specialist loads relevant pattern
 3. Pattern template displayed
@@ -60,6 +86,7 @@
 5. Implementation follows pattern
 
 **Acceptance Criteria:**
+
 - [ ] Pattern loaded: < 1 second
 - [ ] Template includes placeholders
 - [ ] Variables documented
@@ -70,9 +97,11 @@
 ---
 
 ### Flow 4: Promote Lesson to Pattern
+
 **User goal:** System recognizes repeated lesson becomes pattern
 **Time budget:** < 10 minutes to create pattern
 **Steps:**
+
 1. Same lesson appears 3+ times
 2. System or human identifies repetition
 3. Extract common structure
@@ -81,6 +110,7 @@
 6. Future lessons reference pattern
 
 **Acceptance Criteria:**
+
 - [ ] Repeated lessons detected (3+ occurrences)
 - [ ] Pattern creation guided by template
 - [ ] Pattern includes all required sections
@@ -91,9 +121,11 @@
 ---
 
 ### Flow 5: Knowledge Accumulation Over Time
+
 **User goal:** System gets smarter with each problem solved
 **Time budget:** Ongoing
 **Steps:**
+
 1. Week 1: 0 lessons, 8 basic patterns
 2. Month 1: 20+ lessons, 8 patterns
 3. Month 3: 60+ lessons, 15 patterns (7 promoted)
@@ -101,6 +133,7 @@
 5. Features built faster (reference existing knowledge)
 
 **Acceptance Criteria:**
+
 - [ ] Lessons accumulate continuously
 - [ ] Patterns promoted from lessons
 - [ ] Knowledge referenced in new work
@@ -115,6 +148,7 @@
 ### Unit Tests
 
 **Lesson Capture:**
+
 - [ ] `addLesson(lesson)` validates structure
 - [ ] `addLesson()` requires problem, solution, pattern
 - [ ] `addLesson()` adds to correct category
@@ -122,6 +156,7 @@
 - [ ] `addLesson()` logs event
 
 **Knowledge Search:**
+
 - [ ] `search(query)` returns ranked results
 - [ ] `search(query, category)` filters by category
 - [ ] `getLessons(category, limit)` returns recent lessons
@@ -129,6 +164,7 @@
 - [ ] `getRelated(lessonId)` finds related lessons
 
 **Pattern Management:**
+
 - [ ] `createPattern(lesson)` extracts template
 - [ ] `createPattern()` identifies variables
 - [ ] `createPattern()` documents usage
@@ -139,6 +175,7 @@
 ### Integration Tests
 
 **Lesson to Pattern Promotion:**
+
 - [ ] Detect 3 similar lessons
 - [ ] Extract common structure
 - [ ] Create pattern template
@@ -146,6 +183,7 @@
 - [ ] Future work uses pattern
 
 **Knowledge in Workflow:**
+
 - [ ] Problem solver searches lessons
 - [ ] Problem solver references similar issues
 - [ ] Specialist loads patterns
@@ -153,6 +191,7 @@
 - [ ] Specialist captures new lessons
 
 **Knowledge Accumulation:**
+
 - [ ] Week 1: 5 lessons added
 - [ ] Month 1: 20 lessons total
 - [ ] Month 3: Pattern promoted
@@ -163,6 +202,7 @@
 ### E2E Tests
 
 **Complete Knowledge Cycle:**
+
 - [ ] Problem occurs (test fails)
 - [ ] Problem solver analyzes
 - [ ] Problem solver searches lessons (finds 0)
@@ -173,6 +213,7 @@
 - [ ] 3rd occurrence: pattern promoted
 
 **Knowledge Impact:**
+
 - [ ] Month 1: 20% problems repeat
 - [ ] Month 3: 10% problems repeat (lessons help)
 - [ ] Quarter 1: 5% problems repeat (patterns prevent)

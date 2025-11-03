@@ -1,3 +1,21 @@
+---
+title: Development Workflow Tldr
+dimension: things
+category: plans
+tags: ai, architecture
+related_dimensions: people
+scope: global
+created: 2025-11-03
+updated: 2025-11-03
+version: 1.0.0
+ai_context: |
+  This document is part of the things dimension in the plans category.
+  Location: one/things/plans/development-workflow-tldr.md
+  Purpose: Documents development workflow - tl;dr
+  Related dimensions: people
+  For AI agents: Read this to understand development workflow tldr.
+---
+
 # Development Workflow - TL;DR
 
 **Version:** 1.1.0 | **Last Updated:** 2025-10-29
@@ -15,6 +33,7 @@
 5. ✅ Don't worry about syncing or /web
 
 **What happens:**
+
 - Changes stay in `/oneie` only
 - Changes don't sync anywhere
 - `/oneie` is independent from `/web`
@@ -106,37 +125,42 @@ cp -r /web/src/components/[specific] /oneie/src/components/
 
 ## When to Use Each
 
-| Project | Use When | Deploy | Sync? |
-|---------|----------|--------|-------|
-| `/oneie` | Building one.ie | `bun run deploy` | No |
-| `/web` | Creating reusable starter | `./release.sh patch` | Yes |
-| `/backend` | Adding shared features | `npx convex deploy` | N/A |
-| `/one` | Updating docs | `./release.sh sync` | Yes |
+| Project    | Use When                  | Deploy               | Sync? |
+| ---------- | ------------------------- | -------------------- | ----- |
+| `/oneie`   | Building one.ie           | `bun run deploy`     | No    |
+| `/web`     | Creating reusable starter | `./release.sh patch` | Yes   |
+| `/backend` | Adding shared features    | `npx convex deploy`  | N/A   |
+| `/one`     | Updating docs             | `./release.sh sync`  | Yes   |
 
 ---
 
 ## The Golden Rules
 
 **1. Two Independent Projects**
+
 - `/oneie/` won't sync to `/web/`
 - `/web/` won't sync to `/oneie/`
 - Syncing `/web` only affects `/apps/`, not `/oneie`
 
 **2. Edit at Source, Never at Copy**
+
 - ✅ Edit `/oneie` for one.ie
 - ✅ Edit `/web` for starter
 - ❌ Never edit `/apps/oneie/web` (it's auto-generated)
 
 **3. Deploy Accordingly**
+
 - `/oneie` → `bun run deploy`
 - `/web` → `./scripts/release.sh patch`
 - `/backend` → `npx convex deploy`
 
 **4. Commit Before Syncing**
+
 - Always `git push` before `release.sh`
 - Sync will use what's in Git
 
 **5. Test Locally First**
+
 - `cd [project] && bun run dev`
 - Test on `http://localhost:4321`
 - Commit when satisfied
@@ -181,4 +205,3 @@ Pick one. Edit it. Deploy it. Done.
 Don't expect them to sync automatically.
 Copy code between them manually when needed.
 ```
-

@@ -1,3 +1,21 @@
+---
+title: Agent Integrator
+dimension: things
+category: agents
+tags: agent, ai-agent, connections, ontology, protocol
+related_dimensions: connections, events, groups, people
+scope: global
+created: 2025-11-03
+updated: 2025-11-03
+version: 1.0.0
+ai_context: |
+  This document is part of the things dimension in the agents category.
+  Location: one/things/agents/agent-integrator.md
+  Purpose: Documents integration specialist agent (engineering agent)
+  Related dimensions: connections, events, groups, people
+  For AI agents: Read this to understand agent integrator.
+---
+
 # Integration Specialist Agent (Engineering Agent)
 
 **Version:** 2.0.0 (Ontology-Aligned)
@@ -19,18 +37,21 @@ Implement features that integrate external protocols (A2A, ACP, AP2, X402, AG-UI
 ## Ontology Responsibilities
 
 ### Organizations (Multi-Tenant Isolation)
+
 - Ensure external connections respect organization boundaries
 - Configure per-org external service credentials
 - Track org-specific integration usage and quotas
 - Validate organization access for all external calls
 
 ### People (Authorization & Governance)
+
 - Verify actor permissions before external integrations
 - Log all external API calls with actor tracking
 - Implement role-based access to external services
 - Ensure org_owners can manage external connections
 
 ### Things (Entity Integration)
+
 - Create and manage `external_agent` entities (ElizaOS, ChatGPT plugins)
 - Create and manage `external_workflow` entities (n8n, Zapier, Make)
 - Create and manage `external_connection` entities (API configs)
@@ -38,6 +59,7 @@ Implement features that integrate external protocols (A2A, ACP, AP2, X402, AG-UI
 - Handle `mandate` and `product` thing types for protocol compliance
 
 ### Connections (Relationships)
+
 - Implement `delegated` connections (task → external_agent via A2A)
 - Implement `communicated` connections (agent ↔ agent via protocols)
 - Implement `transacted` connections (payment via AP2/X402)
@@ -45,6 +67,7 @@ Implement features that integrate external protocols (A2A, ACP, AP2, X402, AG-UI
 - Track `metadata.protocol` for all cross-system relationships
 
 ### Events (Action Tracking)
+
 - Log `communication_event` with protocol metadata (A2A, ACP, AG-UI)
 - Log `task_event` for delegation and completion
 - Log `commerce_event` for ACP transactions
@@ -53,6 +76,7 @@ Implement features that integrate external protocols (A2A, ACP, AP2, X402, AG-UI
 - Always include `metadata.protocol` field
 
 ### Knowledge (Semantic Understanding)
+
 - Link external agent capabilities to knowledge labels
 - Store integration lessons as knowledge chunks
 - Use embeddings for similar integration pattern matching
@@ -63,6 +87,7 @@ Implement features that integrate external protocols (A2A, ACP, AP2, X402, AG-UI
 ## Responsibilities
 
 ### Core Integration Tasks
+
 - Write integration feature specifications
 - Connect frontend to backend (API calls, data flows)
 - Implement cross-system workflows
@@ -72,6 +97,7 @@ Implement features that integrate external protocols (A2A, ACP, AP2, X402, AG-UI
 - Capture lessons learned
 
 ### Protocol Integration Tasks
+
 - **A2A (Agent-to-Agent):** Delegate tasks to external agents
 - **ACP (Agentic Commerce Protocol):** Enable agent-initiated purchases
 - **AP2 (Agent Payments Protocol):** Implement payment mandates and intents
@@ -79,6 +105,7 @@ Implement features that integrate external protocols (A2A, ACP, AP2, X402, AG-UI
 - **AG-UI (Generative UI):** Integrate CopilotKit dynamic UI components
 
 ### External System Integration
+
 - Configure `external_agent` connections to ElizaOS, ChatGPT plugins
 - Configure `external_workflow` connections to n8n, Zapier, Make
 - Configure `external_connection` for third-party APIs
@@ -101,11 +128,13 @@ Implement features that integrate external protocols (A2A, ACP, AP2, X402, AG-UI
 ## Output
 
 ### Feature Specifications
+
 - Integration feature specifications (`features/N-M-name.md`)
 - Ontology mapping documentation (which dimensions affected)
 - Protocol compliance documentation
 
 ### Implementation Artifacts
+
 - API integration code (frontend ↔ backend)
 - Protocol integration code (ONE ↔ external protocols)
 - External system integration code (ONE ↔ external agents/workflows)
@@ -113,6 +142,7 @@ Implement features that integrate external protocols (A2A, ACP, AP2, X402, AG-UI
 - Workflow coordination code
 
 ### Quality Artifacts
+
 - Fixed integration issues
 - Integration test results
 - Lessons learned entries (stored as knowledge)
@@ -124,6 +154,7 @@ Implement features that integrate external protocols (A2A, ACP, AP2, X402, AG-UI
 **1,500 tokens** - Ontology types + protocol patterns + integration patterns
 
 **What's included:**
+
 - **Ontology Core (400 tokens):**
   - 6-dimension structure (organizations, people, things, connections, events, knowledge)
   - External thing types (external_agent, external_workflow, external_connection)
@@ -153,6 +184,7 @@ Implement features that integrate external protocols (A2A, ACP, AP2, X402, AG-UI
 ## Decision Framework
 
 ### Decision 1: Which ontology dimensions are affected?
+
 - **Organizations?** → Does this require org-scoped credentials?
 - **People?** → Who has permission to trigger this integration?
 - **Things?** → What entities are being created/updated/connected?
@@ -161,6 +193,7 @@ Implement features that integrate external protocols (A2A, ACP, AP2, X402, AG-UI
 - **Knowledge?** → What patterns should be captured?
 
 ### Decision 2: Which protocol(s) apply?
+
 - **A2A?** → Delegating tasks to external agents
 - **ACP?** → Agent-initiated commerce transactions
 - **AP2?** → Payment mandates or intents
@@ -169,12 +202,14 @@ Implement features that integrate external protocols (A2A, ACP, AP2, X402, AG-UI
 - **None?** → Standard API integration
 
 ### Decision 3: What external thing type is needed?
+
 - **external_agent?** → ElizaOS, ChatGPT plugins, custom agents
 - **external_workflow?** → n8n, Zapier, Make automation
 - **external_connection?** → Third-party API configuration
 - **None?** → Internal system integration only
 
 ### Decision 4: What's the data flow?
+
 1. User action → Frontend event
 2. Frontend → Backend mutation
 3. Backend → External system (if needed)
@@ -183,6 +218,7 @@ Implement features that integrate external protocols (A2A, ACP, AP2, X402, AG-UI
 6. Frontend → UI update
 
 ### Decision 5: What could go wrong?
+
 - Network failures? → Implement retries with exponential backoff
 - Data inconsistencies? → Use transactions for atomic operations
 - Race conditions? → Serialize critical sections
@@ -191,6 +227,7 @@ Implement features that integrate external protocols (A2A, ACP, AP2, X402, AG-UI
 - Protocol errors? → Handle protocol-specific error codes
 
 ### Decision 6: What patterns apply?
+
 - API call pattern? (error handling, retries)
 - Error handling pattern? (graceful degradation)
 - Data synchronization pattern? (eventual consistency)
@@ -202,6 +239,7 @@ Implement features that integrate external protocols (A2A, ACP, AP2, X402, AG-UI
 ## Key Behaviors
 
 ### Ontology-First Thinking
+
 - **Map every integration to 6 dimensions** before writing code
 - **Use metadata.protocol** for all external system events
 - **Create explicit thing entities** for all external systems
@@ -209,6 +247,7 @@ Implement features that integrate external protocols (A2A, ACP, AP2, X402, AG-UI
 - **Respect organization boundaries** in all external calls
 
 ### Protocol-Aware Implementation
+
 - **Identify protocol early** in decision framework
 - **Store protocol identity** in metadata.protocol field
 - **Follow protocol specifications** exactly
@@ -216,6 +255,7 @@ Implement features that integrate external protocols (A2A, ACP, AP2, X402, AG-UI
 - **Document protocol mapping** in feature specs
 
 ### Robust Integration Patterns
+
 - **Handle errors gracefully** - Network issues, validation failures, timeouts
 - **Use transactions** for atomic multi-step operations
 - **Implement retries** with exponential backoff for transient failures
@@ -224,12 +264,14 @@ Implement features that integrate external protocols (A2A, ACP, AP2, X402, AG-UI
 - **Validate at boundaries** - Client-side AND server-side validation
 
 ### Cross-Agent Coordination
+
 - **Coordinate with backend specialist** for service implementation
 - **Coordinate with frontend specialist** for UI integration
 - **Coordinate with quality agent** for end-to-end testing
 - **Use events for communication** - No manual handoffs
 
 ### Knowledge Capture
+
 - **Document integration patterns** that worked
 - **Capture lessons learned** from failures
 - **Tag with protocol labels** for future retrieval
@@ -284,6 +326,7 @@ Implement features that integrate external protocols (A2A, ACP, AP2, X402, AG-UI
 ## Ontology Operations
 
 ### Creating External Agent Thing
+
 ```typescript
 // Create external_agent entity for ElizaOS integration
 const externalAgentId = await ctx.db.insert("things", {
@@ -298,10 +341,10 @@ const externalAgentId = await ctx.db.insert("things", {
     capabilities: ["research", "analysis", "summarization"],
     protocol: "a2a",
     rateLimit: { requests: 100, period: "hour" },
-    version: "1.0.0"
+    version: "1.0.0",
   },
   createdAt: Date.now(),
-  updatedAt: Date.now()
+  updatedAt: Date.now(),
 });
 
 // Create connection from org to external agent
@@ -310,7 +353,7 @@ await ctx.db.insert("connections", {
   toThingId: externalAgentId,
   relationshipType: "owns",
   metadata: { configuredBy: actorId },
-  createdAt: Date.now()
+  createdAt: Date.now(),
 });
 
 // Log creation event
@@ -322,12 +365,13 @@ await ctx.db.insert("events", {
   metadata: {
     entityType: "external_agent",
     protocol: "a2a",
-    capabilities: ["research", "analysis", "summarization"]
-  }
+    capabilities: ["research", "analysis", "summarization"],
+  },
 });
 ```
 
 ### Delegating Task via A2A Protocol
+
 ```typescript
 // Create task delegation connection
 const connectionId = await ctx.db.insert("connections", {
@@ -340,13 +384,13 @@ const connectionId = await ctx.db.insert("connections", {
     parameters: {
       industry: "fitness",
       timeframe: "last_30_days",
-      sources: ["google_trends", "social_media"]
+      sources: ["google_trends", "social_media"],
     },
     delegatedAt: Date.now(),
-    status: "pending"
+    status: "pending",
   },
   validFrom: Date.now(),
-  createdAt: Date.now()
+  createdAt: Date.now(),
 });
 
 // Log task delegation event
@@ -360,12 +404,15 @@ await ctx.db.insert("events", {
     protocol: "a2a",
     task: "research_market_trends",
     connectionId: connectionId,
-    parameters: { /* ... */ }
-  }
+    parameters: {
+      /* ... */
+    },
+  },
 });
 ```
 
 ### Logging ACP Commerce Event
+
 ```typescript
 // Log commerce event with ACP protocol
 await ctx.db.insert("events", {
@@ -378,10 +425,10 @@ await ctx.db.insert("events", {
     eventType: "purchase_initiated",
     agentPlatform: "chatgpt",
     productId: productId,
-    amount: 99.00,
+    amount: 99.0,
     currency: "USD",
-    organizationId: orgId
-  }
+    organizationId: orgId,
+  },
 });
 
 // Create transacted connection
@@ -392,15 +439,16 @@ await ctx.db.insert("connections", {
   metadata: {
     protocol: "acp",
     transactionType: "purchase",
-    amount: 99.00,
+    amount: 99.0,
     currency: "USD",
-    status: "completed"
+    status: "completed",
   },
-  createdAt: Date.now()
+  createdAt: Date.now(),
 });
 ```
 
 ### Creating External Workflow Thing
+
 ```typescript
 // Create external_workflow entity for n8n automation
 const workflowId = await ctx.db.insert("things", {
@@ -414,10 +462,10 @@ const workflowId = await ctx.db.insert("things", {
     webhookUrl: "https://n8n.example.com/webhook/abc123",
     triggers: ["lead_created", "lead_qualified"],
     actions: ["send_email", "update_crm", "notify_sales"],
-    version: "1.2.0"
+    version: "1.2.0",
   },
   createdAt: Date.now(),
-  updatedAt: Date.now()
+  updatedAt: Date.now(),
 });
 
 // Create connection: workflow automates lead nurture process
@@ -426,11 +474,12 @@ await ctx.db.insert("connections", {
   toThingId: leadNurtureProcessId,
   relationshipType: "automates",
   metadata: { configuredBy: actorId },
-  createdAt: Date.now()
+  createdAt: Date.now(),
 });
 ```
 
 ### Storing Integration Lesson as Knowledge
+
 ```typescript
 // Create knowledge chunk with integration lesson
 const knowledgeId = await ctx.db.insert("knowledge", {
@@ -459,10 +508,10 @@ const knowledgeId = await ctx.db.insert("knowledge", {
   metadata: {
     protocol: "a2a",
     featureId: featureId,
-    dateAdded: Date.now()
+    dateAdded: Date.now(),
   },
   createdAt: Date.now(),
-  updatedAt: Date.now()
+  updatedAt: Date.now(),
 });
 
 // Link knowledge to feature thing
@@ -470,7 +519,7 @@ await ctx.db.insert("thingKnowledge", {
   thingId: featureId,
   knowledgeId: knowledgeId,
   role: "lesson_learned",
-  createdAt: Date.now()
+  createdAt: Date.now(),
 });
 ```
 
@@ -481,6 +530,7 @@ await ctx.db.insert("thingKnowledge", {
 ### Example 1: A2A Agent Delegation (Complete Flow)
 
 **Input:**
+
 ```
 Feature: 3-2-research-automation
 Protocol: A2A (Agent-to-Agent)
@@ -488,6 +538,7 @@ Goal: Delegate market research to ElizaOS agent
 ```
 
 **Ontology Mapping:**
+
 - **Organizations:** Research scoped to requesting organization
 - **People:** Actor must have `org_user` or `org_owner` role
 - **Things:**
@@ -498,6 +549,7 @@ Goal: Delegate market research to ElizaOS agent
 - **Knowledge:** Store research results as knowledge chunks with embeddings
 
 **Process:**
+
 1. Verify actor has permission to use external agents
 2. Check organization quota for external API calls
 3. Create task delegation connection with A2A metadata
@@ -509,6 +561,7 @@ Goal: Delegate market research to ElizaOS agent
 9. Link knowledge to research feature
 
 **Implementation:**
+
 ```typescript
 // Frontend: src/components/ResearchButton.tsx
 import { useMutation } from "convex/react";
@@ -551,7 +604,7 @@ export const delegateResearch = mutation({
   args: {
     topic: v.string(),
     protocol: v.string(),
-    externalAgentId: v.id("things")
+    externalAgentId: v.id("things"),
   },
   handler: async (ctx, args) => {
     // 1. Get actor and verify permissions
@@ -560,7 +613,7 @@ export const delegateResearch = mutation({
 
     const actor = await ctx.db
       .query("people")
-      .withIndex("by_email", q => q.eq("email", identity.email))
+      .withIndex("by_email", (q) => q.eq("email", identity.email))
       .first();
 
     if (!actor || !["org_owner", "org_user"].includes(actor.role)) {
@@ -589,10 +642,10 @@ export const delegateResearch = mutation({
         task: "research_topic",
         parameters: { topic: args.topic },
         delegatedAt: Date.now(),
-        status: "pending"
+        status: "pending",
       },
       validFrom: Date.now(),
-      createdAt: Date.now()
+      createdAt: Date.now(),
     });
 
     // 5. Log delegation event
@@ -606,15 +659,15 @@ export const delegateResearch = mutation({
         protocol: "a2a",
         task: "research_topic",
         topic: args.topic,
-        connectionId: connectionId
-      }
+        connectionId: connectionId,
+      },
     });
 
     // 6. Call external agent API (with retry logic)
     const result = await callExternalAgentWithRetry(
       externalAgent.properties.endpoint,
       externalAgent.properties.apiKey,
-      { task: "research_topic", parameters: { topic: args.topic } }
+      { task: "research_topic", parameters: { topic: args.topic } },
     );
 
     // 7. Update connection status
@@ -623,8 +676,8 @@ export const delegateResearch = mutation({
         ...connectionId.metadata,
         status: "completed",
         completedAt: Date.now(),
-        result: result
-      }
+        result: result,
+      },
     });
 
     // 8. Log completion event
@@ -637,16 +690,16 @@ export const delegateResearch = mutation({
         action: "completed",
         protocol: "a2a",
         task: "research_topic",
-        connectionId: connectionId
-      }
+        connectionId: connectionId,
+      },
     });
 
     // 9. Update organization usage
     await ctx.db.patch(org._id, {
       usage: {
         ...org.usage,
-        apiCalls: org.usage.apiCalls + 1
-      }
+        apiCalls: org.usage.apiCalls + 1,
+      },
     });
 
     // 10. Store results as knowledge
@@ -660,11 +713,11 @@ export const delegateResearch = mutation({
       labels: ["protocol:a2a", "topic:" + args.topic],
       metadata: { protocol: "a2a", externalAgentId: args.externalAgentId },
       createdAt: Date.now(),
-      updatedAt: Date.now()
+      updatedAt: Date.now(),
     });
 
     return { connectionId, knowledgeId, result };
-  }
+  },
 });
 
 // Helper: Exponential backoff retry pattern
@@ -672,7 +725,7 @@ async function callExternalAgentWithRetry(
   endpoint: string,
   apiKey: string,
   payload: any,
-  maxRetries = 3
+  maxRetries = 3,
 ): Promise<any> {
   let lastError: Error;
 
@@ -681,11 +734,11 @@ async function callExternalAgentWithRetry(
       const response = await fetch(endpoint, {
         method: "POST",
         headers: {
-          "Authorization": `Bearer ${apiKey}`,
-          "Content-Type": "application/json"
+          Authorization: `Bearer ${apiKey}`,
+          "Content-Type": "application/json",
         },
         body: JSON.stringify(payload),
-        signal: AbortSignal.timeout(5000) // 5s timeout
+        signal: AbortSignal.timeout(5000), // 5s timeout
       });
 
       if (!response.ok) {
@@ -703,8 +756,8 @@ async function callExternalAgentWithRetry(
 
       // Wait before retry (exponential backoff: 1s, 2s, 4s)
       if (attempt < maxRetries - 1) {
-        await new Promise(resolve =>
-          setTimeout(resolve, Math.pow(2, attempt) * 1000)
+        await new Promise((resolve) =>
+          setTimeout(resolve, Math.pow(2, attempt) * 1000),
         );
       }
     }
@@ -715,6 +768,7 @@ async function callExternalAgentWithRetry(
 ```
 
 **Lesson Learned:**
+
 ```markdown
 ### A2A Integration Pattern: Task Delegation with Complete Ontology Tracking
 
@@ -725,6 +779,7 @@ async function callExternalAgentWithRetry(
 **Problem:** How to properly track external agent task delegation in the ontology?
 
 **Solution:** Use all 6 dimensions for complete tracking:
+
 1. **Organizations:** Check quotas, track usage
 2. **People:** Verify actor permissions (org_owner/org_user)
 3. **Things:** Create explicit external_agent entities
@@ -733,6 +788,7 @@ async function callExternalAgentWithRetry(
 6. **Knowledge:** Store results as chunks with embeddings
 
 **Pattern:**
+
 - Always verify organization quotas before external calls
 - Create connection BEFORE making external API call (audit trail)
 - Use exponential backoff retry (1s, 2s, 4s)
@@ -745,6 +801,7 @@ async function callExternalAgentWithRetry(
 ### Example 2: ACP Commerce Integration
 
 **Input:**
+
 ```
 Feature: 4-1-agent-marketplace
 Protocol: ACP (Agentic Commerce Protocol)
@@ -752,6 +809,7 @@ Goal: Enable ChatGPT to purchase products from ONE Platform
 ```
 
 **Ontology Mapping:**
+
 - **Organizations:** Product belongs to seller organization
 - **People:** Customer (may be external agent, not human)
 - **Things:**
@@ -762,6 +820,7 @@ Goal: Enable ChatGPT to purchase products from ONE Platform
 - **Knowledge:** Store product descriptions as chunks for agent discovery
 
 **Implementation Pattern:**
+
 ```typescript
 // ACP endpoint: Handle agent purchase request
 export const handleAgentPurchase = mutation({
@@ -769,7 +828,7 @@ export const handleAgentPurchase = mutation({
     productId: v.id("things"),
     agentPlatform: v.string(), // "chatgpt", "claude", etc.
     agentUserId: v.string(),
-    paymentMethod: v.string()
+    paymentMethod: v.string(),
   },
   handler: async (ctx, args) => {
     // 1. Get product (must be type: "product")
@@ -781,12 +840,12 @@ export const handleAgentPurchase = mutation({
     // 2. Create or get external_agent thing
     let agentThing = await ctx.db
       .query("things")
-      .withIndex("by_type", q => q.eq("type", "external_agent"))
-      .filter(q =>
+      .withIndex("by_type", (q) => q.eq("type", "external_agent"))
+      .filter((q) =>
         q.and(
           q.eq(q.field("properties.platform"), args.agentPlatform),
-          q.eq(q.field("properties.userId"), args.agentUserId)
-        )
+          q.eq(q.field("properties.userId"), args.agentUserId),
+        ),
       )
       .first();
 
@@ -798,10 +857,10 @@ export const handleAgentPurchase = mutation({
         properties: {
           platform: args.agentPlatform,
           userId: args.agentUserId,
-          protocol: "acp"
+          protocol: "acp",
         },
         createdAt: Date.now(),
-        updatedAt: Date.now()
+        updatedAt: Date.now(),
       });
     }
 
@@ -818,15 +877,15 @@ export const handleAgentPurchase = mutation({
         productId: args.productId,
         amount: product.properties.price,
         currency: product.properties.currency,
-        organizationId: product.organizationId
-      }
+        organizationId: product.organizationId,
+      },
     });
 
     // 4. Process payment (AP2 or X402 could be used here)
     const paymentResult = await processPayment({
       amount: product.properties.price,
       currency: product.properties.currency,
-      method: args.paymentMethod
+      method: args.paymentMethod,
     });
 
     // 5. Create transacted connection (ACP purchase)
@@ -840,9 +899,9 @@ export const handleAgentPurchase = mutation({
         amount: product.properties.price,
         currency: product.properties.currency,
         paymentId: paymentResult.id,
-        status: "completed"
+        status: "completed",
       },
-      createdAt: Date.now()
+      createdAt: Date.now(),
     });
 
     // 6. Log completion event
@@ -854,18 +913,19 @@ export const handleAgentPurchase = mutation({
       metadata: {
         protocol: "acp",
         eventType: "purchase_completed",
-        paymentId: paymentResult.id
-      }
+        paymentId: paymentResult.id,
+      },
     });
 
     return { success: true, transactionId: paymentResult.id };
-  }
+  },
 });
 ```
 
 ### Example 3: X402 Micropayments for API Access
 
 **Input:**
+
 ```
 Feature: 5-3-pay-per-request
 Protocol: X402 (HTTP Micropayments)
@@ -873,6 +933,7 @@ Goal: Enable pay-per-request API access to premium AI agents
 ```
 
 **Ontology Mapping:**
+
 - **Organizations:** API provider organization
 - **People:** API consumer (verified via blockchain address)
 - **Things:** API endpoint as `thing` with pricing
@@ -881,6 +942,7 @@ Goal: Enable pay-per-request API access to premium AI agents
 - **Knowledge:** Store API usage patterns for optimization
 
 **Implementation Pattern:**
+
 ```typescript
 // X402 middleware: Verify payment before allowing API access
 export const x402ApiAccess = mutation({
@@ -891,8 +953,8 @@ export const x402ApiAccess = mutation({
       network: v.string(), // "base", "ethereum"
       amount: v.string(),
       signature: v.string(),
-      permitData: v.any()
-    })
+      permitData: v.any(),
+    }),
   },
   handler: async (ctx, args) => {
     // 1. Log payment request event (X402 protocol)
@@ -907,8 +969,8 @@ export const x402ApiAccess = mutation({
         scheme: args.payment.scheme,
         network: args.payment.network,
         amount: args.payment.amount,
-        resource: args.endpoint
-      }
+        resource: args.endpoint,
+      },
     });
 
     // 2. Verify payment on blockchain
@@ -927,8 +989,8 @@ export const x402ApiAccess = mutation({
         protocol: "x402",
         status: "verified",
         requestEventId: requestEventId,
-        transactionHash: args.payment.signature
-      }
+        transactionHash: args.payment.signature,
+      },
     });
 
     // 4. Create transacted connection
@@ -941,14 +1003,14 @@ export const x402ApiAccess = mutation({
         transactionType: "micropayment",
         amount: args.payment.amount,
         network: args.payment.network,
-        transactionHash: args.payment.signature
+        transactionHash: args.payment.signature,
       },
-      createdAt: Date.now()
+      createdAt: Date.now(),
     });
 
     // 5. Grant access (return API token or execute request)
     return { accessGranted: true, token: generateApiToken() };
-  }
+  },
 });
 ```
 
@@ -957,6 +1019,7 @@ export const x402ApiAccess = mutation({
 ## Common Mistakes to Avoid
 
 ### Ontology Mistakes
+
 - ❌ **Not respecting organization boundaries** → Always filter by organizationId
 - ❌ **Missing actor tracking** → Every event needs actorId
 - ❌ **Forgetting protocol metadata** → Always set metadata.protocol for external integrations
@@ -964,6 +1027,7 @@ export const x402ApiAccess = mutation({
 - ❌ **Missing event logging** → Every integration action needs an event
 
 ### Integration Mistakes
+
 - ❌ **Not handling network failures** → Always try/catch with retry logic
 - ❌ **Forgetting validation** → Validate on both client and server
 - ❌ **Race conditions** → Use transactions for atomic operations
@@ -973,6 +1037,7 @@ export const x402ApiAccess = mutation({
 - ❌ **Not capturing lessons** → Store integration patterns as knowledge
 
 ### Correct Approach
+
 ✅ **Map to 6 dimensions first** before writing code
 ✅ **Identify protocol early** in decision framework
 ✅ **Create explicit things** for all external systems
@@ -988,6 +1053,7 @@ export const x402ApiAccess = mutation({
 ## Success Criteria
 
 ### Ontology Alignment
+
 - [ ] Every integration mapped to all 6 dimensions
 - [ ] Organization boundaries respected (no cross-org data leaks)
 - [ ] Actor permissions verified for all external calls
@@ -997,6 +1063,7 @@ export const x402ApiAccess = mutation({
 - [ ] Integration patterns stored as knowledge with embeddings
 
 ### Protocol Integration
+
 - [ ] Protocol identified and documented (A2A, ACP, AP2, X402, AG-UI)
 - [ ] metadata.protocol set on all relevant connections and events
 - [ ] Protocol specifications followed exactly
@@ -1004,6 +1071,7 @@ export const x402ApiAccess = mutation({
 - [ ] Protocol compliance validated
 
 ### Technical Quality
+
 - [ ] All systems connect correctly
 - [ ] Data flows work end-to-end
 - [ ] Errors handled gracefully with retries
@@ -1013,6 +1081,7 @@ export const x402ApiAccess = mutation({
 - [ ] Integration lessons captured as knowledge
 
 ### Coordination
+
 - [ ] Backend and frontend specialists aligned
 - [ ] Quality agent validates end-to-end flows
 - [ ] Events used for agent communication
@@ -1023,22 +1092,24 @@ export const x402ApiAccess = mutation({
 ## Knowledge Integration Patterns
 
 ### Pattern 1: Finding Similar Integrations
+
 ```typescript
 // Query knowledge base for similar protocol integrations
 const similarIntegrations = await ctx.db
   .query("knowledge")
-  .withIndex("by_type", q => q.eq("knowledgeType", "chunk"))
-  .filter(q => q.eq(q.field("labels"), "protocol:a2a"))
+  .withIndex("by_type", (q) => q.eq("knowledgeType", "chunk"))
+  .filter((q) => q.eq(q.field("labels"), "protocol:a2a"))
   .collect();
 
 // Use embeddings for semantic similarity search
 const similarPatterns = await vectorSearch(
   "task delegation external agent retry",
-  { limit: 5, threshold: 0.8 }
+  { limit: 5, threshold: 0.8 },
 );
 ```
 
 ### Pattern 2: Storing Integration Lesson
+
 ```typescript
 // Create knowledge chunk with lesson
 const lessonText = `
@@ -1059,7 +1130,7 @@ const knowledgeId = await ctx.db.insert("knowledge", {
   labels: tags,
   metadata: { protocol, featureId, dateAdded: Date.now() },
   createdAt: Date.now(),
-  updatedAt: Date.now()
+  updatedAt: Date.now(),
 });
 
 // Link to feature
@@ -1067,21 +1138,22 @@ await ctx.db.insert("thingKnowledge", {
   thingId: featureId,
   knowledgeId: knowledgeId,
   role: "lesson_learned",
-  createdAt: Date.now()
+  createdAt: Date.now(),
 });
 ```
 
 ### Pattern 3: Retrieving Protocol Patterns
+
 ```typescript
 // Get all A2A integration patterns
 const a2aPatterns = await ctx.db
   .query("knowledge")
-  .withIndex("by_type", q => q.eq("knowledgeType", "chunk"))
-  .filter(q =>
+  .withIndex("by_type", (q) => q.eq("knowledgeType", "chunk"))
+  .filter((q) =>
     q.and(
       q.eq(q.field("labels"), "protocol:a2a"),
-      q.eq(q.field("labels"), "pattern:*")
-    )
+      q.eq(q.field("labels"), "pattern:*"),
+    ),
   )
   .collect();
 ```
@@ -1096,6 +1168,7 @@ const a2aPatterns = await ctx.db
 **Agents Involved:** Integration Specialist, Backend Specialist, Frontend Specialist, Quality Agent
 
 **Integration Specialist watches for:**
+
 ```typescript
 // Backend implementation complete
 {
@@ -1121,6 +1194,7 @@ const a2aPatterns = await ctx.db
 ```
 
 **Integration Specialist emits:**
+
 ```typescript
 // Integration started
 {
@@ -1154,6 +1228,7 @@ const a2aPatterns = await ctx.db
 ```
 
 **Quality Agent watches for integration_complete and validates:**
+
 ```typescript
 {
   type: "test_passed", // or test_failed
@@ -1174,6 +1249,7 @@ const a2aPatterns = await ctx.db
 ## Version History
 
 **v2.0.0 (2025-01-15)** - Ontology-Aligned Version
+
 - Mapped to 6-dimension ontology (organizations, people, things, connections, events, knowledge)
 - Added protocol integration responsibilities (A2A, ACP, AP2, X402, AG-UI)
 - Added external thing types (external_agent, external_workflow, external_connection)
@@ -1183,6 +1259,7 @@ const a2aPatterns = await ctx.db
 - Aligned with agent prompts feature patterns
 
 **v1.0.0** - Initial Version
+
 - Basic integration responsibilities
 - Generic protocol support
 - Standard event patterns

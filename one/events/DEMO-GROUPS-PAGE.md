@@ -1,3 +1,21 @@
+---
+title: Demo Groups Page
+dimension: events
+category: DEMO-GROUPS-PAGE.md
+tags: ai, groups, multi-tenant, ontology
+related_dimensions: groups, people, things
+scope: global
+created: 2025-11-03
+updated: 2025-11-03
+version: 1.0.0
+ai_context: |
+  This document is part of the events dimension in the DEMO-GROUPS-PAGE.md category.
+  Location: one/events/DEMO-GROUPS-PAGE.md
+  Purpose: Documents groups demo page - complete implementation
+  Related dimensions: groups, people, things
+  For AI agents: Read this to understand DEMO GROUPS PAGE.
+---
+
 # Groups Demo Page - Complete Implementation
 
 ## Overview

@@ -1,3 +1,21 @@
+---
+title: Mcp Configuration
+dimension: events
+category: MCP-CONFIGURATION.md
+tags: ai, protocol
+related_dimensions: connections, knowledge, things
+scope: global
+created: 2025-11-03
+updated: 2025-11-03
+version: 1.0.0
+ai_context: |
+  This document is part of the events dimension in the MCP-CONFIGURATION.md category.
+  Location: one/events/MCP-CONFIGURATION.md
+  Purpose: Documents mcp server configuration
+  Related dimensions: connections, knowledge, things
+  For AI agents: Read this to understand MCP CONFIGURATION.
+---
+
 # MCP Server Configuration
 
 This document explains the Model Context Protocol (MCP) server configuration for the ONE Platform.

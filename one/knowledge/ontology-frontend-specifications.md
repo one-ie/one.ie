@@ -1,3 +1,21 @@
+---
+title: Ontology Frontend Specifications
+dimension: knowledge
+category: ontology-frontend-specifications.md
+tags: 6-dimensions, architecture, backend, frontend, ontology, ui
+related_dimensions: events, groups, people
+scope: global
+created: 2025-11-03
+updated: 2025-11-03
+version: 1.0.0
+ai_context: |
+  This document is part of the knowledge dimension in the ontology-frontend-specifications.md category.
+  Location: one/knowledge/ontology-frontend-specifications.md
+  Purpose: Documents one ontology: frontend implementation guide
+  Related dimensions: events, groups, people
+  For AI agents: Read this to understand ontology frontend specifications.
+---
+
 # ONE Ontology: Frontend Implementation Guide
 
 **Building /frontend/* - The Rendering Layer**

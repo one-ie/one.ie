@@ -1,3 +1,21 @@
+---
+title: Service Providers
+dimension: things
+category: service-providers.md
+tags: ai
+related_dimensions: events, knowledge, people
+scope: global
+created: 2025-11-03
+updated: 2025-11-03
+version: 1.0.0
+ai_context: |
+  This document is part of the things dimension in the service-providers.md category.
+  Location: one/things/service-providers.md
+  Purpose: Videos: ${content.videos.
+  Related dimensions: events, knowledge, people
+  For AI agents: Read this to understand service providers.
+---
+
 // ============================================================================
 // convex/services/providers/openai.ts
 // OpenAI Provider - LLM operations, embeddings, chat completions
@@ -8,42 +26,41 @@ import OpenAI from "openai";
 
 // Error Types
 export class OpenAIError {
-  readonly _tag = "OpenAIError";
-  constructor(readonly message: string, readonly code?: string) {}
+readonly \_tag = "OpenAIError";
+constructor(readonly message: string, readonly code?: string) {}
 }
 
 export class RateLimitError {
-  readonly _tag = "RateLimitError";
-  constructor(readonly retryAfter?: number) {}
+readonly \_tag = "RateLimitError";
+constructor(readonly retryAfter?: number) {}
 }
 
 export class InvalidResponseError {
-  readonly _tag = "InvalidResponseError";
-  constructor(readonly response: any) {}
+readonly \_tag = "InvalidResponseError";
+constructor(readonly response: any) {}
 }
 
 // Service Interface
 export class OpenAIProvider extends Context.Tag("OpenAIProvider")<
-  OpenAIProvider,
-  {
-    readonly chat: (params: {
-      systemPrompt: string;
-      messages: Array<{ role: string; content: string }>;
-      context?: string;
-      model?: string;
-      temperature?: number;
-      maxTokens?: number;
-    }) => Effect.Effect<
-      {
-        content: string;
-        usage: {
-          promptTokens: number;
-          completionTokens: number;
-          totalTokens: number;
-        };
-      },
-      OpenAIError | RateLimitError
-    >;
+OpenAIProvider,
+{
+readonly chat: (params: {
+systemPrompt: string;
+messages: Array<{ role: string; content: string }>;
+context?: string;
+model?: string;
+temperature?: number;
+maxTokens?: number;
+}) => Effect.Effect<
+{
+content: string;
+usage: {
+promptTokens: number;
+completionTokens: number;
+totalTokens: number;
+};
+},
+OpenAIError | RateLimitError >;
 
     readonly embed: (
       text: string,
@@ -68,14 +85,16 @@ export class OpenAIProvider extends Context.Tag("OpenAIProvider")<
       },
       OpenAIError
     >;
-  }
->() {}
+
+}
+
+> () {}
 
 // Implementation
 export const OpenAIProviderLive = Layer.effect(
-  OpenAIProvider,
-  Effect.gen(function* () {
-    const apiKey = yield* Effect.sync(() => process.env.OPENAI_API_KEY);
+OpenAIProvider,
+Effect.gen(function* () {
+const apiKey = yield* Effect.sync(() => process.env.OPENAI_API_KEY);
 
     if (!apiKey) {
       return yield* Effect.fail(
@@ -199,10 +218,10 @@ Interactions: ${content.interactions.join("\n")}
 
 Provide a JSON response with:
 {
-  "systemPrompt": "A detailed system prompt for the AI clone",
-  "traits": ["trait1", "trait2", ...],
-  "style": "communication style description",
-  "values": ["value1", "value2", ...]
+"systemPrompt": "A detailed system prompt for the AI clone",
+"traits": ["trait1", "trait2", ...],
+"style": "communication style description",
+"values": ["value1", "value2", ...]
 }`;
 
           const response = yield* Effect.gen(function* () {
@@ -222,28 +241,29 @@ Provide a JSON response with:
           return parsed;
         }),
     });
-  })
+
+})
 );
 
 // Mock for Testing
 export const OpenAIProviderTest = Layer.succeed(
-  OpenAIProvider,
-  OpenAIProvider.of({
-    chat: () =>
-      Effect.succeed({
-        content: "Mock AI response",
-        usage: { promptTokens: 10, completionTokens: 20, totalTokens: 30 },
-      }),
-    embed: () => Effect.succeed(Array(1536).fill(0.1)),
-    generateImage: () => Effect.succeed({ url: "https://mock-image.jpg" }),
-    analyzePersonality: () =>
-      Effect.succeed({
-        systemPrompt: "Mock system prompt",
-        traits: ["friendly", "knowledgeable"],
-        style: "casual and helpful",
-        values: ["authenticity", "growth"],
-      }),
-  })
+OpenAIProvider,
+OpenAIProvider.of({
+chat: () =>
+Effect.succeed({
+content: "Mock AI response",
+usage: { promptTokens: 10, completionTokens: 20, totalTokens: 30 },
+}),
+embed: () => Effect.succeed(Array(1536).fill(0.1)),
+generateImage: () => Effect.succeed({ url: "https://mock-image.jpg" }),
+analyzePersonality: () =>
+Effect.succeed({
+systemPrompt: "Mock system prompt",
+traits: ["friendly", "knowledgeable"],
+style: "casual and helpful",
+values: ["authenticity", "growth"],
+}),
+})
 );
 
 // ============================================================================
@@ -255,32 +275,31 @@ import { Effect, Context, Layer } from "effect";
 
 // Error Types
 export class ElevenLabsError {
-  readonly _tag = "ElevenLabsError";
-  constructor(readonly message: string) {}
+readonly \_tag = "ElevenLabsError";
+constructor(readonly message: string) {}
 }
 
 export class VoiceCloneFailedError {
-  readonly _tag = "VoiceCloneFailedError";
-  constructor(readonly reason: string) {}
+readonly \_tag = "VoiceCloneFailedError";
+constructor(readonly reason: string) {}
 }
 
 export class InsufficientSamplesError {
-  readonly _tag = "InsufficientSamplesError";
-  constructor(readonly provided: number, readonly required: number) {}
+readonly \_tag = "InsufficientSamplesError";
+constructor(readonly provided: number, readonly required: number) {}
 }
 
 // Service Interface
 export class ElevenLabsProvider extends Context.Tag("ElevenLabsProvider")<
-  ElevenLabsProvider,
-  {
-    readonly cloneVoice: (params: {
-      name: string;
-      samples: string[]; // Storage IDs or URLs
-      description?: string;
-    }) => Effect.Effect<
-      { voiceId: string },
-      ElevenLabsError | VoiceCloneFailedError | InsufficientSamplesError
-    >;
+ElevenLabsProvider,
+{
+readonly cloneVoice: (params: {
+name: string;
+samples: string[]; // Storage IDs or URLs
+description?: string;
+}) => Effect.Effect<
+{ voiceId: string },
+ElevenLabsError | VoiceCloneFailedError | InsufficientSamplesError >;
 
     readonly textToSpeech: (params: {
       voiceId: string;
@@ -296,14 +315,16 @@ export class ElevenLabsProvider extends Context.Tag("ElevenLabsProvider")<
     readonly deleteVoice: (
       voiceId: string
     ) => Effect.Effect<void, ElevenLabsError>;
-  }
->() {}
+
+}
+
+> () {}
 
 // Implementation
 export const ElevenLabsProviderLive = Layer.effect(
-  ElevenLabsProvider,
-  Effect.gen(function* () {
-    const apiKey = yield* Effect.sync(() => process.env.ELEVENLABS_API_KEY);
+ElevenLabsProvider,
+Effect.gen(function* () {
+const apiKey = yield* Effect.sync(() => process.env.ELEVENLABS_API_KEY);
 
     if (!apiKey) {
       return yield* Effect.fail(
@@ -451,23 +472,24 @@ export const ElevenLabsProviderLive = Layer.effect(
           });
         }),
     });
-  })
+
+})
 );
 
 // Mock for Testing
 export const ElevenLabsProviderTest = Layer.succeed(
-  ElevenLabsProvider,
-  ElevenLabsProvider.of({
-    cloneVoice: () => Effect.succeed({ voiceId: "mock-voice-id" }),
-    textToSpeech: () =>
-      Effect.succeed({ audioUrl: "https://mock-audio.mp3" }),
-    listVoices: () =>
-      Effect.succeed([
-        { id: "voice-1", name: "Mock Voice 1" },
-        { id: "voice-2", name: "Mock Voice 2" },
-      ]),
-    deleteVoice: () => Effect.succeed(undefined),
-  })
+ElevenLabsProvider,
+ElevenLabsProvider.of({
+cloneVoice: () => Effect.succeed({ voiceId: "mock-voice-id" }),
+textToSpeech: () =>
+Effect.succeed({ audioUrl: "https://mock-audio.mp3" }),
+listVoices: () =>
+Effect.succeed([
+{ id: "voice-1", name: "Mock Voice 1" },
+{ id: "voice-2", name: "Mock Voice 2" },
+]),
+deleteVoice: () => Effect.succeed(undefined),
+})
 );
 
 // ============================================================================
@@ -480,31 +502,30 @@ import Stripe from "stripe";
 
 // Error Types
 export class StripeError {
-  readonly _tag = "StripeError";
-  constructor(
-    readonly message: string,
-    readonly code?: string,
-    readonly declineCode?: string
-  ) {}
+readonly \_tag = "StripeError";
+constructor(
+readonly message: string,
+readonly code?: string,
+readonly declineCode?: string
+) {}
 }
 
 export class PaymentFailedError {
-  readonly _tag = "PaymentFailedError";
-  constructor(readonly reason: string) {}
+readonly \_tag = "PaymentFailedError";
+constructor(readonly reason: string) {}
 }
 
 // Service Interface
 export class StripeProvider extends Context.Tag("StripeProvider")<
-  StripeProvider,
-  {
-    readonly charge: (params: {
-      amount: number; // in cents
-      currency: string;
-      metadata?: Record<string, string>;
-    }) => Effect.Effect<
-      { id: string; amount: number; status: string },
-      StripeError | PaymentFailedError
-    >;
+StripeProvider,
+{
+readonly charge: (params: {
+amount: number; // in cents
+currency: string;
+metadata?: Record<string, string>;
+}) => Effect.Effect<
+{ id: string; amount: number; status: string },
+StripeError | PaymentFailedError >;
 
     readonly createCheckoutSession: (params: {
       amount: number;
@@ -533,14 +554,16 @@ export class StripeProvider extends Context.Tag("StripeProvider")<
       { status: string; amount: number },
       StripeError
     >;
-  }
->() {}
+
+}
+
+> () {}
 
 // Implementation
 export const StripeProviderLive = Layer.effect(
-  StripeProvider,
-  Effect.gen(function* () {
-    const apiKey = yield* Effect.sync(() => process.env.STRIPE_SECRET_KEY);
+StripeProvider,
+Effect.gen(function* () {
+const apiKey = yield* Effect.sync(() => process.env.STRIPE_SECRET_KEY);
 
     if (!apiKey) {
       return yield* Effect.fail(
@@ -661,30 +684,31 @@ export const StripeProviderLive = Layer.effect(
           };
         }),
     });
-  })
+
+})
 );
 
 // Mock for Testing
 export const StripeProviderTest = Layer.succeed(
-  StripeProvider,
-  StripeProvider.of({
-    charge: () =>
-      Effect.succeed({
-        id: "pi_mock123",
-        amount: 1000,
-        status: "succeeded",
-      }),
-    createCheckoutSession: () =>
-      Effect.succeed({
-        sessionId: "cs_mock123",
-        url: "https://checkout.stripe.com/mock",
-      }),
-    refund: () => Effect.succeed({ refundId: "re_mock123" }),
-    createConnectAccount: () =>
-      Effect.succeed({ accountId: "acct_mock123" }),
-    getPaymentStatus: () =>
-      Effect.succeed({ status: "succeeded", amount: 1000 }),
-  })
+StripeProvider,
+StripeProvider.of({
+charge: () =>
+Effect.succeed({
+id: "pi_mock123",
+amount: 1000,
+status: "succeeded",
+}),
+createCheckoutSession: () =>
+Effect.succeed({
+sessionId: "cs_mock123",
+url: "https://checkout.stripe.com/mock",
+}),
+refund: () => Effect.succeed({ refundId: "re_mock123" }),
+createConnectAccount: () =>
+Effect.succeed({ accountId: "acct_mock123" }),
+getPaymentStatus: () =>
+Effect.succeed({ status: "succeeded", amount: 1000 }),
+})
 );
 
 // ============================================================================
@@ -698,27 +722,26 @@ import { base } from "viem/chains";
 
 // Error Types
 export class BlockchainError {
-  readonly _tag = "BlockchainError";
-  constructor(readonly message: string) {}
+readonly \_tag = "BlockchainError";
+constructor(readonly message: string) {}
 }
 
 export class TransactionFailedError {
-  readonly _tag = "TransactionFailedError";
-  constructor(readonly txHash?: string, readonly reason?: string) {}
+readonly \_tag = "TransactionFailedError";
+constructor(readonly txHash?: string, readonly reason?: string) {}
 }
 
 // Service Interface
 export class BlockchainProvider extends Context.Tag("BlockchainProvider")<
-  BlockchainProvider,
-  {
-    readonly deployToken: (params: {
-      name: string;
-      symbol: string;
-      totalSupply: number;
-    }) => Effect.Effect<
-      { contractAddress: string; txHash: string },
-      BlockchainError | TransactionFailedError
-    >;
+BlockchainProvider,
+{
+readonly deployToken: (params: {
+name: string;
+symbol: string;
+totalSupply: number;
+}) => Effect.Effect<
+{ contractAddress: string; txHash: string },
+BlockchainError | TransactionFailedError >;
 
     readonly mint: (params: {
       contractAddress: string;
@@ -748,16 +771,18 @@ export class BlockchainProvider extends Context.Tag("BlockchainProvider")<
       contractAddress: string;
       address: string;
     }) => Effect.Effect<number, BlockchainError>;
-  }
->() {}
+
+}
+
+> () {}
 
 // Implementation
 export const BlockchainProviderLive = Layer.effect(
-  BlockchainProvider,
-  Effect.gen(function* () {
-    const privateKey = yield* Effect.sync(
-      () => process.env.WALLET_PRIVATE_KEY as `0x${string}`
-    );
+BlockchainProvider,
+Effect.gen(function* () {
+const privateKey = yield* Effect.sync(
+() => process.env.WALLET_PRIVATE_KEY as `0x${string}`
+);
 
     if (!privateKey) {
       return yield* Effect.fail(
@@ -856,23 +881,24 @@ export const BlockchainProviderLive = Layer.effect(
           return balance;
         }),
     });
-  })
+
+})
 );
 
 // Mock for Testing
 export const BlockchainProviderTest = Layer.succeed(
-  BlockchainProvider,
-  BlockchainProvider.of({
-    deployToken: () =>
-      Effect.succeed({
-        contractAddress: "0xmock-contract",
-        txHash: "0xmock-deploy",
-      }),
-    mint: () => Effect.succeed({ transactionHash: "0xmock-mint" }),
-    burn: () => Effect.succeed({ transactionHash: "0xmock-burn" }),
-    transfer: () => Effect.succeed({ transactionHash: "0xmock-transfer" }),
-    getBalance: () => Effect.succeed(1000),
-  })
+BlockchainProvider,
+BlockchainProvider.of({
+deployToken: () =>
+Effect.succeed({
+contractAddress: "0xmock-contract",
+txHash: "0xmock-deploy",
+}),
+mint: () => Effect.succeed({ transactionHash: "0xmock-mint" }),
+burn: () => Effect.succeed({ transactionHash: "0xmock-burn" }),
+transfer: () => Effect.succeed({ transactionHash: "0xmock-transfer" }),
+getBalance: () => Effect.succeed(1000),
+})
 );
 
 // ============================================================================
@@ -885,23 +911,23 @@ import { Resend } from "resend";
 
 // Error Types
 export class ResendError {
-  readonly _tag = "ResendError";
-  constructor(readonly message: string) {}
+readonly \_tag = "ResendError";
+constructor(readonly message: string) {}
 }
 
 export class EmailSendFailedError {
-  readonly _tag = "EmailSendFailedError";
-  constructor(readonly reason: string) {}
+readonly \_tag = "EmailSendFailedError";
+constructor(readonly reason: string) {}
 }
 
 // Service Interface
 export class ResendProvider extends Context.Tag("ResendProvider")<
-  ResendProvider,
-  {
-    readonly sendVerificationEmail: (params: {
-      to: string;
-      verificationUrl: string;
-    }) => Effect.Effect<{ messageId: string }, ResendError | EmailSendFailedError>;
+ResendProvider,
+{
+readonly sendVerificationEmail: (params: {
+to: string;
+verificationUrl: string;
+}) => Effect.Effect<{ messageId: string }, ResendError | EmailSendFailedError>;
 
     readonly sendPasswordReset: (params: {
       to: string;
@@ -918,14 +944,16 @@ export class ResendProvider extends Context.Tag("ResendProvider")<
       to: string;
       insights: any;
     }) => Effect.Effect<{ messageId: string }, ResendError | EmailSendFailedError>;
-  }
->() {}
+
+}
+
+> () {}
 
 // Implementation
 export const ResendProviderLive = Layer.effect(
-  ResendProvider,
-  Effect.gen(function* () {
-    const apiKey = yield* Effect.sync(() => process.env.RESEND_API_KEY);
+ResendProvider,
+Effect.gen(function* () {
+const apiKey = yield* Effect.sync(() => process.env.RESEND_API_KEY);
 
     if (!apiKey) {
       return yield* Effect.fail(new ResendError("RESEND_API_KEY not set"));
@@ -1042,20 +1070,21 @@ export const ResendProviderLive = Layer.effect(
           return { messageId: data!.id };
         }),
     });
-  })
+
+})
 );
 
 // Mock for Testing
 export const ResendProviderTest = Layer.succeed(
-  ResendProvider,
-  ResendProvider.of({
-    sendVerificationEmail: () =>
-      Effect.succeed({ messageId: "mock-verify-123" }),
-    sendPasswordReset: () => Effect.succeed({ messageId: "mock-reset-123" }),
-    sendNotification: () => Effect.succeed({ messageId: "mock-notif-123" }),
-    sendInsightsReport: () =>
-      Effect.succeed({ messageId: "mock-insights-123" }),
-  })
+ResendProvider,
+ResendProvider.of({
+sendVerificationEmail: () =>
+Effect.succeed({ messageId: "mock-verify-123" }),
+sendPasswordReset: () => Effect.succeed({ messageId: "mock-reset-123" }),
+sendNotification: () => Effect.succeed({ messageId: "mock-notif-123" }),
+sendInsightsReport: () =>
+Effect.succeed({ messageId: "mock-insights-123" }),
+})
 );
 
 // ============================================================================
@@ -1073,20 +1102,20 @@ import { ConvexDatabaseLive } from "./core/database";
 
 // Production Layer - All real providers
 export const MainLayer = Layer.mergeAll(
-  OpenAIProviderLive,
-  ElevenLabsProviderLive,
-  StripeProviderLive,
-  BlockchainProviderLive,
-  ResendProviderLive,
-  ConvexDatabaseLive
+OpenAIProviderLive,
+ElevenLabsProviderLive,
+StripeProviderLive,
+BlockchainProviderLive,
+ResendProviderLive,
+ConvexDatabaseLive
 );
 
 // Test Layer - All mock providers
 export const TestLayer = Layer.mergeAll(
-  OpenAIProviderTest,
-  ElevenLabsProviderTest,
-  StripeProviderTest,
-  BlockchainProviderTest,
-  ResendProviderTest,
-  ConvexDatabaseTest
+OpenAIProviderTest,
+ElevenLabsProviderTest,
+StripeProviderTest,
+BlockchainProviderTest,
+ResendProviderTest,
+ConvexDatabaseTest
 );

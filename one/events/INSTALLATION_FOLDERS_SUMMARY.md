@@ -1,3 +1,21 @@
+---
+title: Installation_Folders_Summary
+dimension: events
+category: INSTALLATION_FOLDERS_SUMMARY.md
+tags: agent, customization, frontend, installation, things
+related_dimensions: groups, things
+scope: global
+created: 2025-11-03
+updated: 2025-11-03
+version: 1.0.0
+ai_context: |
+  This document is part of the events dimension in the INSTALLATION_FOLDERS_SUMMARY.md category.
+  Location: one/events/INSTALLATION_FOLDERS_SUMMARY.md
+  Purpose: Documents installation folder multi-tenancy - frontend implementation summary
+  Related dimensions: groups, things
+  For AI agents: Read this to understand INSTALLATION_FOLDERS_SUMMARY.
+---
+
 # Installation Folder Multi-Tenancy - Frontend Implementation Summary
 
 **Status:** ✅ Complete

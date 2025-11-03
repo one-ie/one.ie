@@ -1,3 +1,21 @@
+---
+title: 1 5 Quality Loops
+dimension: things
+category: features
+tags: agent, ai
+related_dimensions: knowledge, people
+scope: global
+created: 2025-11-03
+updated: 2025-11-03
+version: 1.0.0
+ai_context: |
+  This document is part of the things dimension in the features category.
+  Location: one/things/features/1-5-quality-loops.md
+  Purpose: Documents feature 1-5: quality loops and problem solving
+  Related dimensions: knowledge, people
+  For AI agents: Read this to understand 1 5 quality loops.
+---
+
 # Feature 1-5: Quality Loops and Problem Solving
 
 **Assigned to:** Quality Agent (agent-quality.md) + Problem Solver (agent-problem-solver.md)
@@ -49,6 +67,7 @@
 ### What We're Documenting
 
 A quality validation and problem-solving workflow where Claude:
+
 1. Defines tests (reads quality agent prompt, creates tests.md)
 2. Runs tests (uses Bash tool)
 3. Analyzes failures (reads problem-solver prompt, uses ultrathink)
@@ -62,18 +81,21 @@ A quality validation and problem-solving workflow where Claude:
 ## Ontology Types
 
 ### Things
+
 - `test` - Validation criteria (user flow, acceptance, technical)
   - Properties: `type`, `name`, `criteria`, `status`
 - `problem` - Issue identified by quality agent
   - Properties: `testId`, `error`, `rootCause`, `solution`
 
 ### Connections
+
 - `tests_for` - Test validates feature
 - `validates` - Quality agent validates implementation
 - `solves` - Problem solver fixes issue
 - `learns_from` - Lesson captured from problem
 
 ### Events
+
 - `quality_check_started` - Quality begins review
 - `quality_check_complete` - Review finished
   - Metadata: `status` (approved/rejected), `testsCreated`, `issuesFound`
@@ -97,6 +119,7 @@ A quality validation and problem-solving workflow where Claude:
 **Purpose:** Define what success looks like before implementation
 
 **Process:**
+
 1. Receives feature specification
 2. Defines **user flows** (what users must accomplish)
 3. Defines **acceptance criteria** (how we know it works)
@@ -104,32 +127,40 @@ A quality validation and problem-solving workflow where Claude:
 5. Creates test document
 
 **User Flow Template:**
+
 ```markdown
 ### Flow [N]: [Goal]
+
 **User goal:** [What user wants to achieve]
 **Time budget:** [Expected completion time]
 **Steps:**
+
 1. [Action 1]
 2. [Action 2]
 3. [Expected result]
 
 **Acceptance Criteria:**
+
 - [ ] [Specific, measurable criterion]
 - [ ] [Another criterion]
 - [ ] [Performance criterion with metric]
 ```
 
 **Technical Test Template:**
+
 ```markdown
 ### Unit Tests
+
 - [ ] [ServiceName].[method]() [expected behavior]
 - [ ] [Another test case]
 
 ### Integration Tests
+
 - [ ] API: [METHOD] /[path] → [status code] + [response]
 - [ ] [Another API test]
 
 ### E2E Tests
+
 - [ ] Complete Flow [N] in < [time budget]
 - [ ] [Another flow]
 ```
@@ -143,6 +174,7 @@ A quality validation and problem-solving workflow where Claude:
 **Purpose:** Verify implementation meets all criteria
 
 **Process:**
+
 1. Receives implementation complete event
 2. Reviews code against ontology structure
 3. Runs user flows (manual or automated)
@@ -151,6 +183,7 @@ A quality validation and problem-solving workflow where Claude:
 6. Logs results
 
 **Validation checklist:**
+
 - [ ] Code follows ontology structure (correct types, connections, events)
 - [ ] All user flows work as specified
 - [ ] All acceptance criteria met
@@ -162,6 +195,7 @@ A quality validation and problem-solving workflow where Claude:
 - [ ] Performance targets achieved
 
 **Outcomes:**
+
 - **PASS:** Log `quality_check_complete` (status: approved) → Documenter writes docs
 - **FAIL:** Log `quality_check_complete` (status: rejected) → Problem Solver analyzes
 
@@ -196,6 +230,7 @@ A quality validation and problem-solving workflow where Claude:
    - Which specialist should fix
 
 4. **Create solution document:**
+
    ```markdown
    # Problem: [Test Name] Failed
 
@@ -237,6 +272,7 @@ A quality validation and problem-solving workflow where Claude:
 **Purpose:** Execute fixes and re-validate
 
 **Flow:**
+
 ```
 Test Failed
     ↓
@@ -259,6 +295,7 @@ Tests pass? → Yes: Continue to documentation
 ```
 
 **Retry limit:** 3 attempts per test
+
 - After 3 failures, escalate to human developer
 - Log escalation event
 
@@ -269,6 +306,7 @@ Tests pass? → Yes: Continue to documentation
 **Purpose:** Ensure every fix adds to knowledge base
 
 **Process:**
+
 1. Specialist implements fix
 2. Tests pass
 3. **Before marking fix_complete:**
@@ -279,6 +317,7 @@ Tests pass? → Yes: Continue to documentation
 5. Mark fix complete
 
 **Enforcement:**
+
 - Problem Solver checks for lesson in knowledge base
 - If lesson not added, remind specialist
 - Quality metrics track lesson capture rate
@@ -290,28 +329,35 @@ Tests pass? → Yes: Continue to documentation
 ### Example 1: Missing Event Log
 
 **Test fails:**
+
 ```
 Test: CourseService.create() should log course_created event
 Error: Expected event not found in events table
 ```
 
 **Problem Solver analyzes:**
-```markdown
+
+````markdown
 # Problem: Event Logging Missing
 
 ## Root Cause
+
 CourseService.create() calls db.insert() but doesn't log event.
 Missing: await ctx.db.insert('events', { type: 'course_created', ... })
 
 ## Similar Issues
+
 Found 2 similar issues in lessons learned:
+
 - Feature 1-1: Forgot agent_prompt_created event
 - Feature 2-1: Same issue with lesson_created
 
 ## Pattern to Apply
-backend/event-logging.md: Always log {entity}_created after db.insert()
+
+backend/event-logging.md: Always log {entity}\_created after db.insert()
 
 ## Proposed Solution
+
 Add event logging after line 15 in CourseService.create():
 
 ```typescript
@@ -329,12 +375,15 @@ async create(course: Course) {
   return id
 }
 ```
+````
 
 ## Delegation
+
 - Assigned to: Backend Specialist
 - Priority: High (blocking quality)
 - Expected fix time: 5 minutes
-```
+
+````
 
 **Specialist fixes:**
 1. Adds event logging code
@@ -350,10 +399,12 @@ async create(course: Course) {
    **Context:** All thing_created events are mandatory per ontology
    **Example:** See backend/event-logging.md pattern
    **Related:** Similar to features 1-1 and 2-1 issues
-   ```
+````
+
 4. Logs `fix_complete` and `lesson_learned_added` events
 
 **System now smarter:**
+
 - Lesson captured (3rd occurrence of same issue)
 - Pattern reinforced
 - Future features less likely to miss this
@@ -364,26 +415,31 @@ async create(course: Course) {
 ### Example 2: Performance Failure
 
 **Test fails:**
+
 ```
 Test: Complete Flow 1 (Create Course) in < 10 seconds
 Error: Flow took 15.3 seconds (53% over budget)
 ```
 
 **Problem Solver analyzes:**
+
 ```markdown
 # Problem: Performance Target Missed
 
 ## Root Cause
+
 1. Course form makes 3 sequential API calls (creator check, validation, create)
 2. Each call: 4-5 seconds = 15 seconds total
 3. Could be parallelized or eliminated
 
 ## Analysis
+
 - Creator check: Unnecessary (auth already validates)
 - Validation: Could be client-side
 - Create: Required
 
 ## Proposed Solution
+
 1. Remove creator check (already done by auth)
 2. Move validation to client side
 3. Single API call: Create course
@@ -391,14 +447,17 @@ Error: Flow took 15.3 seconds (53% over budget)
 Expected time: ~5 seconds (50% under budget)
 
 ## Delegation
+
 - Assigned to: Frontend Specialist
 - Priority: Medium (quality criterion not met)
 - Expected fix time: 20 minutes
 ```
 
 **Specialist fixes, captures lesson:**
+
 ```markdown
 ### Validate Client-Side Before API Calls
+
 **Date:** 2025-01-15
 **Feature:** 2-1-course-crud
 **Problem:** Sequential API calls caused 15s delay (10s budget)
@@ -437,6 +496,7 @@ Expected time: ~5 seconds (50% under budget)
 ## Files to Create
 
 **Test definition templates** (markdown):
+
 ```
 one/knowledge/patterns/test/
 ├── user-flow-template.md        # How to write user flows
@@ -445,6 +505,7 @@ one/knowledge/patterns/test/
 ```
 
 **Per-feature test files** (created by Claude):
+
 ```
 one/things/features/[featureId]/
 └── tests.md                     # Created by quality agent
@@ -457,23 +518,27 @@ one/things/features/[featureId]/
 ## Integration Points
 
 ### With Feature 1-1 (Agent Prompts)
+
 - Quality agent prompt defines validation criteria
 - Problem solver prompt defines analysis approach
 - Specialist prompts include fix responsibilities
 
 ### With Feature 1-3 (Events)
+
 - All quality events logged
 - Problem solver subscribes to test_failed
 - Specialists subscribe to solution_proposed
 - Quality subscribes to fix_complete
 
 ### With Feature 1-4 (Knowledge)
+
 - Problem solver searches lessons learned
 - Specialists apply patterns
 - Lesson capture after every fix
 - Pattern discovery from repeated lessons
 
 ### With Feature 1-2 (Orchestrator)
+
 - Orchestrator invokes quality at stages 4 and 6
 - Orchestrator manages fix loop retries
 - Orchestrator escalates after 3 failures
@@ -483,6 +548,7 @@ one/things/features/[featureId]/
 ## Success Criteria
 
 ### Immediate
+
 - [ ] Quality agent can define tests for features
 - [ ] Quality agent can validate implementations
 - [ ] Problem solver analyzes failures correctly
@@ -490,12 +556,14 @@ one/things/features/[featureId]/
 - [ ] Lessons captured after fixes
 
 ### Near-term (Month 1)
+
 - [ ] 90%+ tests pass on first try (learning effect)
 - [ ] Average fix time < 15 minutes
 - [ ] 100% lesson capture rate
 - [ ] Repeated problems decrease over time
 
 ### Long-term (Quarter 1)
+
 - [ ] 95%+ tests pass on first try
 - [ ] Average fix time < 5 minutes
 - [ ] Problems rarely repeat (3rd occurrence triggers pattern)
@@ -507,16 +575,19 @@ one/things/features/[featureId]/
 ## Performance Requirements
 
 ### Quality Validation
+
 - Test definition: < 5 minutes per feature
 - Validation execution: < 2 minutes per feature
 - Pass/fail determination: < 30 seconds
 
 ### Problem Solving
+
 - Analysis (ultrathink): < 2 minutes per problem
 - Solution proposal: < 1 minute
 - Total problem → solution: < 5 minutes
 
 ### Fix Loop
+
 - Average fix time: < 15 minutes (target)
 - Re-test time: < 2 minutes
 - Total loop: < 20 minutes
@@ -526,18 +597,21 @@ one/things/features/[featureId]/
 ## Testing Strategy
 
 ### Unit Tests
+
 - Quality agent creates valid test documents
 - Problem solver identifies root causes correctly
 - Fix loop coordinates events properly
 - Lesson capture validates format
 
 ### Integration Tests
+
 - Complete quality loop (fail → analyze → fix → re-test → pass)
 - Multiple failures handled correctly
 - Lessons integrated into knowledge base
 - Patterns referenced in solutions
 
 ### Long-term Tests
+
 - Track quality improvement over time
 - Measure repeated problem reduction
 - Measure fix time reduction
@@ -548,21 +622,25 @@ one/things/features/[featureId]/
 ## Error Handling
 
 ### Test Definition Errors
+
 - Invalid test format → Validation error
 - Missing criteria → Warning + default
 - Unclear criteria → Request clarification
 
 ### Validation Errors
+
 - Test execution fails → Log error, retry
 - Timeout → Escalate after 5 minutes
 - Unclear results → Request specialist review
 
 ### Problem Solving Errors
+
 - Can't determine root cause → Escalate to human
 - No similar lessons found → Document as new issue
 - Solution unclear → Propose investigation tasks
 
 ### Fix Loop Errors
+
 - Fix doesn't work (3x) → Escalate to human
 - Lesson not captured → Reminder + block completion
 - Re-test fails → Back to problem solver
@@ -572,18 +650,21 @@ one/things/features/[featureId]/
 ## Metrics to Track
 
 ### Quality Metrics
+
 - Tests passing on first try (% over time)
 - Average test definition time
 - Average validation time
 - Issues found per feature
 
 ### Problem Solving Metrics
+
 - Average analysis time
 - Average fix time
 - Fix success rate (1st attempt)
 - Repeated problems (count over time)
 
 ### Learning Metrics
+
 - Lessons captured per week
 - Patterns promoted from lessons
 - Knowledge search frequency
@@ -594,11 +675,13 @@ one/things/features/[featureId]/
 ## Next Steps
 
 **Create test templates** (3 markdown files):
+
 1. `one/knowledge/patterns/test/user-flow-template.md`
 2. `one/knowledge/patterns/test/acceptance-criteria-template.md`
 3. `one/knowledge/patterns/test/technical-test-template.md`
 
 **Already implemented:**
+
 - ✅ agent-quality.md (defines test creation + validation workflow)
 - ✅ agent-problem-solver.md (defines failure analysis + solution workflow)
 - ✅ Specialist agent prompts (implement fixes)
@@ -628,6 +711,7 @@ one/things/features/[featureId]/
 5. **Quality IS a workflow** - Not infrastructure, just following agent prompts
 
 **How the quality loop works:**
+
 ```
 Claude (as quality agent) → Creates tests.md → Defines pass criteria
 Claude (as specialist) → Implements feature → Runs tests (Bash)

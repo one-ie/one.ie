@@ -1,3 +1,21 @@
+---
+title: Events
+dimension: events
+category: events.md
+tags: actions, ai, auth, events, ontology, protocol, things
+related_dimensions: groups, people, things
+scope: global
+created: 2025-11-03
+updated: 2025-11-03
+version: 1.0.0
+ai_context: |
+  This document is part of the events dimension in the events.md category.
+  Location: one/events/events.md
+  Purpose: Documents events: actions & time-stamped logs
+  Related dimensions: groups, people, things
+  For AI agents: Read this to understand events.
+---
+
 # Events: Actions & Time-Stamped Logs
 
 **If something HAPPENED at a specific TIME, it's an event.**

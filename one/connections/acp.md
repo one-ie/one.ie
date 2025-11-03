@@ -1,3 +1,21 @@
+---
+title: Acp
+dimension: connections
+category: acp.md
+tags: agent, ai, architecture, protocol
+related_dimensions: events, groups, things
+scope: global
+created: 2025-11-03
+updated: 2025-11-03
+version: 1.0.0
+ai_context: |
+  This document is part of the connections dimension in the acp.md category.
+  Location: one/connections/acp.md
+  Purpose: Documents acp - agent communication protocol
+  Related dimensions: events, groups, things
+  For AI agents: Read this to understand acp.
+---
+
 # ACP - Agent Communication Protocol
 
 **Official Specification**: https://agentcommunicationprotocol.dev/

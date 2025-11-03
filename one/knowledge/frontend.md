@@ -1,3 +1,21 @@
+---
+title: Frontend
+dimension: knowledge
+category: frontend.md
+tags: ai, architecture, backend, frontend, ui
+related_dimensions: events, people, things
+scope: global
+created: 2025-11-03
+updated: 2025-11-03
+version: 1.0.0
+ai_context: |
+  This document is part of the knowledge dimension in the frontend.md category.
+  Location: one/knowledge/frontend.md
+  Purpose: Documents frontend.md - astro frontend architecture
+  Related dimensions: events, people, things
+  For AI agents: Read this to understand frontend.
+---
+
 # Frontend.md - Astro Frontend Architecture
 
 ## Overview

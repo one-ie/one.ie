@@ -1,6 +1,24 @@
+---
+title: Things
+dimension: things
+category: things.md
+tags: agent, ai, entities, ontology, things
+related_dimensions: events, groups, knowledge, people
+scope: global
+created: 2025-11-03
+updated: 2025-11-03
+version: 1.0.0
+ai_context: |
+  This document is part of the things dimension in the things.md category.
+  Location: one/things/things.md
+  Purpose: Documents things: all entities in one
+  Related dimensions: events, groups, knowledge, people
+  For AI agents: Read this to understand things.
+---
+
 # Things: All Entities in ONE
 
-**If you can point at it and say "this is a ___", it's a thing.**
+**If you can point at it and say "this is a \_\_\_", it's a thing.**
 
 For complete thing type definitions, see **[Ontology.md](./ontology.md#things-all-the-things)**
 
@@ -28,12 +46,14 @@ For complete thing type definitions, see **[Ontology.md](./ontology.md#things-al
 ## 66 Thing Types
 
 ### Core (4)
+
 - `creator` - Human creator with role (platform_owner, org_owner, org_user, customer)
 - `ai_clone` - Digital twin of creator
 - `audience_member` - Fan/user
 - `organization` - Multi-tenant container
 
 ### Business Agents (10)
+
 - `strategy_agent` - Vision, planning, OKRs
 - `research_agent` - Market, trends, competitors
 - `marketing_agent` - Content strategy, SEO
@@ -46,6 +66,7 @@ For complete thing type definitions, see **[Ontology.md](./ontology.md#things-al
 - `intelligence_agent` - Analytics, insights
 
 ### Content (7)
+
 - `blog_post` - Written content
 - `video` - Video content
 - `podcast` - Audio content
@@ -55,21 +76,25 @@ For complete thing type definitions, see **[Ontology.md](./ontology.md#things-al
 - `lesson` - Individual lesson
 
 ### Products (4)
+
 - `digital_product` - Templates, tools, assets
 - `membership` - Tiered membership
 - `consultation` - 1-on-1 session
 - `nft` - NFT collectible
 
 ### Community (3)
+
 - `community` - Community space
 - `conversation` - Thread/discussion
 - `message` - Individual message
 
 ### Token (2)
+
 - `token` - Token instance
 - `token_contract` - Smart contract
 
 ### Platform (6)
+
 - `website` - Auto-generated creator site
 - `landing_page` - Custom landing page
 - `template` - Design template
@@ -78,6 +103,7 @@ For complete thing type definitions, see **[Ontology.md](./ontology.md#things-al
 - `media_asset` - Images, videos, files
 
 ### Business (7)
+
 - `payment` - Payment transaction
 - `subscription` - Recurring subscription
 - `invoice` - Invoice record
@@ -87,6 +113,7 @@ For complete thing type definitions, see **[Ontology.md](./ontology.md#things-al
 - `report` - Analytics report
 
 ### Authentication & Session (5)
+
 - `session` - User session (Better Auth)
 - `oauth_account` - OAuth connection
 - `verification_token` - Email/2FA verification
@@ -94,6 +121,7 @@ For complete thing type definitions, see **[Ontology.md](./ontology.md#things-al
 - `ui_preferences` - User UI settings
 
 ### Marketing (6)
+
 - `notification` - System notification
 - `email_campaign` - Email marketing
 - `announcement` - Platform announcement
@@ -102,11 +130,13 @@ For complete thing type definitions, see **[Ontology.md](./ontology.md#things-al
 - `lead` - Potential customer
 
 ### External Integrations (3)
+
 - `external_agent` - External AI agent (ElizaOS, etc.)
 - `external_workflow` - External workflow (n8n, Zapier)
 - `external_connection` - Connection to external service
 
 ### Protocol Entities (2)
+
 - `mandate` - Intent or cart mandate (AP2)
 - `product` - Sellable product (ACP/marketplace)
 
@@ -126,7 +156,7 @@ const thingId = await db.insert("things", {
     description: "Learn the basics...",
     modules: 5,
     lessons: 25,
-    price: 199.00,
+    price: 199.0,
   },
   status: "draft",
   createdAt: Date.now(),
@@ -157,22 +187,21 @@ await db.insert("events", {
 // Get all courses
 const courses = await db
   .query("things")
-  .withIndex("by_type", q => q.eq("type", "course"))
+  .withIndex("by_type", (q) => q.eq("type", "course"))
   .collect();
 
 // Get active courses for organization
 const orgCourses = await db
   .query("connections")
-  .withIndex("from_type", q =>
-    q.eq("fromThingId", organizationId)
-     .eq("relationshipType", "owns")
+  .withIndex("from_type", (q) =>
+    q.eq("fromThingId", organizationId).eq("relationshipType", "owns"),
   )
   .collect();
 
 const courseEntities = await Promise.all(
   orgCourses
-    .filter(c => c.toThingId.type === "course")
-    .map(c => db.get(c.toThingId))
+    .filter((c) => c.toThingId.type === "course")
+    .map((c) => db.get(c.toThingId)),
 );
 ```
 
@@ -209,6 +238,7 @@ await db.insert("events", {
 Each thing type has specific properties. Examples:
 
 ### Creator Properties
+
 ```typescript
 {
   role: "platform_owner" | "org_owner" | "org_user" | "customer",
@@ -226,6 +256,7 @@ Each thing type has specific properties. Examples:
 ```
 
 ### Organization Properties
+
 ```typescript
 {
   slug: string,
@@ -240,6 +271,7 @@ Each thing type has specific properties. Examples:
 ```
 
 ### Course Properties
+
 ```typescript
 {
   title: string,
@@ -257,6 +289,7 @@ Each thing type has specific properties. Examples:
 ```
 
 ### Token Properties
+
 ```typescript
 {
   contractAddress: string,
@@ -301,6 +334,7 @@ draft → active → published → archived → deleted
 ```
 
 Every state change logs an event:
+
 - `entity_created`
 - `entity_updated`
 - `entity_archived`
@@ -321,15 +355,16 @@ Every state change logs an event:
 ## Performance
 
 ### Indexes
+
 ```typescript
-things:
-  - by_type(type)
-  - by_status(status)
-  - by_created(createdAt)
-  - search_things(name, type, status)
+things: -by_type(type) -
+  by_status(status) -
+  by_created(createdAt) -
+  search_things(name, type, status);
 ```
 
 ### Query Optimization
+
 - Always use indexes for filters
 - Limit results with `.take(n)`
 - Paginate large result sets

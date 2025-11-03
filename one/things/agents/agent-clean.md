@@ -1,3 +1,21 @@
+---
+title: Agent Clean
+dimension: things
+category: agents
+tags: agent, ai, ai-agent, architecture, ontology
+related_dimensions: connections, events, groups, knowledge, people
+scope: global
+created: 2025-11-03
+updated: 2025-11-03
+version: 1.0.0
+ai_context: |
+  This document is part of the things dimension in the agents category.
+  Location: one/things/agents/agent-clean.md
+  Purpose: Documents clean agent
+  Related dimensions: connections, events, groups, knowledge, people
+  For AI agents: Read this to understand agent clean.
+---
+
 # Clean Agent
 
 **Thing Type:** `intelligence_agent`
@@ -201,23 +219,18 @@ Specialist agent responsible for improving code quality without changing functio
 ### Watches for (Events this agent monitors)
 
 - **`technical_debt_identified`** → Triggered by any agent finding code quality issues
-
   - **Action:** Analyze debt, create remediation plan, assign priority
 
 - **`performance_issue_detected`** → From monitoring or Quality Agent
-
   - **Action:** Profile code, identify bottleneck, propose optimization
 
 - **`ontology_violation_found`** → From Director or Quality Agent
-
   - **Action:** Analyze violation, propose ontology-aligned refactoring
 
 - **`dependency_vulnerability_alert`** → From security scanning
-
   - **Action:** Assess impact, update dependencies, run regression tests
 
 - **`refactoring_requested`** → From Problem Solver or Director Agent
-
   - **Action:** Review request, create refactoring plan, execute changes
 
 - **`feature_complete`** → After new feature implementation
@@ -226,23 +239,18 @@ Specialist agent responsible for improving code quality without changing functio
 ### Emits (Events this agent creates)
 
 - **`agent_executed`** → When starting analysis or refactoring
-
   - **Metadata:** `{ action, targetFiles, analysisType }`
 
 - **`code_refactored`** → When refactoring is completed
-
   - **Metadata:** `{ filesChanged, linesChanged, pattern, testsPassed }`
 
 - **`technical_debt_resolved`** → When debt is remediated
-
   - **Metadata:** `{ debtType, impact, timeSpent }`
 
 - **`performance_optimized`** → When performance is improved
-
   - **Metadata:** `{ metric, before, after, improvement }`
 
 - **`report_generated`** → When creating quality reports
-
   - **Metadata:** `{ reportType, findings, recommendations }`
 
 - **`agent_completed`** → When cleanup cycle finishes
@@ -716,9 +724,10 @@ Clean Agent now integrates directly into the inference workflow via two automate
 **Purpose:** Validate cleanliness before starting work
 
 **Checks Performed:**
+
 - ✅ Directory structure integrity (all required dirs exist)
 - ✅ File naming conventions (kebab-case for .md, PascalCase for .tsx)
-- ✅ Orphaned temporary files (*.tmp, *.swp, *.bak, .DS_Store)
+- ✅ Orphaned temporary files (_.tmp, _.swp, \*.bak, .DS_Store)
 - ✅ Metadata tags presence on all documentation
 - ✅ Git status (uncommitted critical files)
 
@@ -727,6 +736,7 @@ Clean Agent now integrates directly into the inference workflow via two automate
 **Blocking:** Only blocks on critical errors (score < 30)
 
 **Example Output:**
+
 ```
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 🟢 CLEANLINESS VALIDATION - ✨ Excellent (95/100)
@@ -749,15 +759,17 @@ Clean Agent now integrates directly into the inference workflow via two automate
 **Purpose:** Clean up and organize after work
 
 **Actions Performed:**
-- 🧹 Remove temporary files (*.tmp, *.swp, *.bak)
-- 🗂️  Clean build artifacts (.astro, dist, caches)
+
+- 🧹 Remove temporary files (_.tmp, _.swp, \*.bak)
+- 🗂️ Clean build artifacts (.astro, dist, caches)
 - 📁 Organize misplaced files into correct directories
-- 🏷️  Add/update metadata tags on recently modified files
+- 🏷️ Add/update metadata tags on recently modified files
 - 📦 Archive old versions (.bak files → .claude/archive/)
 
 **Output:** Cleanup report with metrics
 
 **Example Output:**
+
 ```
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 🧹 CLEANUP COMPLETE - Agent Clean Post-Inference
@@ -794,16 +806,19 @@ Clean Agent now integrates directly into the inference workflow via two automate
 ### Benefits
 
 **98% Context Reduction:**
+
 - Pre-hook prevents loading irrelevant files
 - Metadata enables targeted document loading
 - Only 3k tokens loaded vs 150k before
 
 **5x Faster Execution:**
+
 - Clean environment = faster inference
 - No time wasted on orphaned files
 - Automatic organization saves manual work
 
 **Flawless Execution:**
+
 - Validate before starting (catch issues early)
 - Clean up after finishing (leave no mess)
 - Continuous improvement loop
@@ -889,21 +904,25 @@ ai_context: |
 ### Automation Tools
 
 **Tag all documentation:**
+
 ```bash
 python3 .claude/hooks/tag-all-docs.py
 ```
 
 **Tag in dry-run mode (preview changes):**
+
 ```bash
 python3 .claude/hooks/tag-all-docs.py --dry-run --verbose
 ```
 
 **Validate metadata:**
+
 ```bash
 python3 .claude/hooks/validate-metadata.py
 ```
 
 **Generate metadata report:**
+
 ```bash
 python3 .claude/hooks/metadata-report.py
 ```
@@ -911,6 +930,7 @@ python3 .claude/hooks/metadata-report.py
 ### Benefits
 
 **For AI Agents:**
+
 - 🧭 **Navigation**: Find relevant documents in <100ms
 - 🧠 **Context**: Understand purpose without reading full content
 - 🔗 **Relationships**: Build knowledge graphs connecting concepts
@@ -918,6 +938,7 @@ python3 .claude/hooks/metadata-report.py
 - 🎯 **Targeting**: Load only relevant docs into limited context windows
 
 **For Human Developers:**
+
 - 📚 **Organization**: Understand document hierarchy at a glance
 - 🔍 **Discovery**: Find related documents through tags
 - 📈 **Tracking**: See version history and update status
@@ -986,7 +1007,7 @@ Clean Agent learns from every cleanup cycle.
 Clean Agent automatically discovers and applies:
 
 - 📁 **File Organization Patterns**: Where specific file types belong
-- 🏷️  **Tag Patterns**: Which tags apply to which content types
+- 🏷️ **Tag Patterns**: Which tags apply to which content types
 - 🧹 **Cleanup Patterns**: What artifacts are safe to remove
 - 🔧 **Refactoring Patterns**: Common code improvements
 - ⚡ **Performance Patterns**: Optimization opportunities
@@ -1013,6 +1034,7 @@ Track improvement over time:
 Clean Agent maintains comprehensive knowledge of the ONE Platform file structure:
 
 ### Root Level
+
 ```
 ONE/
 ├── one/              # 6-dimension ontology docs (synced to cli/ and apps/one/)
@@ -1025,6 +1047,7 @@ ONE/
 ```
 
 ### Documentation Structure (`one/`)
+
 ```
 one/
 ├── groups/           # Hierarchical containers dimension
@@ -1036,6 +1059,7 @@ one/
 ```
 
 ### Hook Structure (`.claude/hooks/`)
+
 ```
 .claude/hooks/
 ├── clean-pre.py      # Pre-inference cleanliness validation
@@ -1047,6 +1071,7 @@ one/
 ```
 
 ### Release Artifacts
+
 ```
 cli/              # npm package source
 ├── one/          # (synced from /one)

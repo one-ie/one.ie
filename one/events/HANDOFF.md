@@ -1,3 +1,21 @@
+---
+title: Handoff
+dimension: events
+category: HANDOFF.md
+tags: agent, backend, ontology
+related_dimensions: knowledge, people, things
+scope: global
+created: 2025-11-03
+updated: 2025-11-03
+version: 1.0.0
+ai_context: |
+  This document is part of the events dimension in the HANDOFF.md category.
+  Location: one/events/HANDOFF.md
+  Purpose: Documents 🚀 development handoff - october 18, 2025
+  Related dimensions: knowledge, people, things
+  For AI agents: Read this to understand HANDOFF.
+---
+
 # 🚀 Development Handoff - October 18, 2025
 
 **Status:** ✅ Ready for Production

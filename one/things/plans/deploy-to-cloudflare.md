@@ -1,3 +1,21 @@
+---
+title: Deploy To Cloudflare
+dimension: things
+category: plans
+tags: frontend
+related_dimensions: events
+scope: global
+created: 2025-11-03
+updated: 2025-11-03
+version: 1.0.0
+ai_context: |
+  This document is part of the things dimension in the plans category.
+  Location: one/things/plans/deploy-to-cloudflare.md
+  Purpose: Documents deploy frontend to cloudflare pages
+  Related dimensions: events
+  For AI agents: Read this to understand deploy to cloudflare.
+---
+
 # Deploy Frontend to Cloudflare Pages
 
 **Project Name:** `frontend`
@@ -25,21 +43,25 @@ This guide covers deploying the ONE Platform frontend (Astro 5 + React 19) to Cl
 ### Build Settings
 
 **Build Command:**
+
 ```bash
 bun run build
 ```
 
 **Build Output Directory:**
+
 ```
 dist/
 ```
 
 **Root Directory:**
+
 ```
 / (repository root)
 ```
 
 **Node Version:**
+
 ```
 20.x or later
 ```
@@ -73,16 +95,19 @@ RESEND_FROM_EMAIL=noreply@yourdomain.com
 ### Initial Setup
 
 1. **Navigate to frontend directory:**
+
 ```bash
 cd /path/to/ONE/frontend
 ```
 
 2. **Build the project:**
+
 ```bash
 bun run build
 ```
 
 3. **Deploy to Cloudflare Pages:**
+
 ```bash
 wrangler pages deploy dist --project-name=frontend --commit-dirty=true
 ```
@@ -127,6 +152,7 @@ wrangler pages deploy dist --project-name=frontend --branch=preview
    - Click **Begin setup**
 
 4. **Configure Build Settings**
+
    ```
    Project name: frontend
    Production branch: main
@@ -149,12 +175,14 @@ wrangler pages deploy dist --project-name=frontend --branch=preview
 Once configured, deployments happen automatically:
 
 **Production Deployments:**
+
 ```bash
 # Any push to main branch triggers production deployment
 git push origin main
 ```
 
 **Preview Deployments:**
+
 ```bash
 # Any push to other branches triggers preview deployment
 git push origin dev
@@ -176,9 +204,11 @@ git push origin feat/new-feature
    - Click **Set up a custom domain**
 
 2. **Add Domain**
+
    ```
    Primary domain: frontend.one.ie
    ```
+
    - If domain is on Cloudflare, DNS records are added automatically
    - If external, add the CNAME record provided
 
@@ -235,15 +265,15 @@ Add to `astro.config.mjs`:
 
 ```javascript
 export default defineConfig({
-  output: 'server',
+  output: "server",
   adapter: cloudflare({
-    mode: 'advanced',
+    mode: "advanced",
     functionPerRoute: true,
     routes: {
-      strategy: 'auto',
-      include: ['/*'],
-      exclude: ['/assets/*', '/_astro/*']
-    }
+      strategy: "auto",
+      include: ["/*"],
+      exclude: ["/assets/*", "/_astro/*"],
+    },
   }),
   vite: {
     build: {
@@ -251,19 +281,20 @@ export default defineConfig({
       rollupOptions: {
         output: {
           manualChunks: {
-            'react-vendor': ['react', 'react-dom'],
-            'convex-vendor': ['convex', 'convex/react']
-          }
-        }
-      }
-    }
-  }
+            "react-vendor": ["react", "react-dom"],
+            "convex-vendor": ["convex", "convex/react"],
+          },
+        },
+      },
+    },
+  },
 });
 ```
 
 ### Asset Optimization
 
 Cloudflare automatically optimizes:
+
 - Image compression (WebP, AVIF)
 - Brotli compression for text assets
 - HTTP/3 and QUIC support
@@ -281,11 +312,13 @@ Cloudflare automatically optimizes:
 ### View Deployment Logs
 
 **Via Dashboard:**
+
 - Go to **Deployments** tab
 - Click on any deployment to view build logs
 - View real-time logs during deployment
 
 **Via Wrangler:**
+
 ```bash
 # View recent deployments
 wrangler pages deployments list --project-name=frontend
@@ -372,6 +405,7 @@ jobs:
 ```
 
 **Required Secrets:**
+
 - `CLOUDFLARE_API_TOKEN` - Cloudflare API token with Pages permissions
 - `CLOUDFLARE_ACCOUNT_ID` - Your Cloudflare account ID
 - `PUBLIC_CONVEX_URL` - Backend URL
@@ -382,6 +416,7 @@ jobs:
 ### Build Fails
 
 **Issue:** Build command fails
+
 ```bash
 # Check build locally first
 bun run build
@@ -391,6 +426,7 @@ bun install --frozen-lockfile
 ```
 
 **Issue:** TypeScript errors
+
 ```bash
 # Run type checking
 bunx astro check
@@ -401,6 +437,7 @@ bunx astro check
 ### Environment Variables
 
 **Issue:** Environment variables not working
+
 - Verify variables are set in Cloudflare Pages dashboard
 - Restart deployment after adding variables
 - Check variable names match exactly (case-sensitive)
@@ -408,6 +445,7 @@ bunx astro check
 ### React 19 Edge Runtime
 
 **Issue:** "MessageChannel is not defined"
+
 - Ensure `react-dom/server.edge` alias is set in `astro.config.mjs`:
 
 ```javascript
@@ -423,6 +461,7 @@ vite: {
 ### Function Size Limits
 
 **Issue:** "Functions bundle exceeds size limit"
+
 - Enable code splitting in Vite config
 - Use dynamic imports for large dependencies
 - Split routes into separate functions with `functionPerRoute: true`
@@ -430,6 +469,7 @@ vite: {
 ### Authentication Issues
 
 **Issue:** Auth not working after deployment
+
 - Verify `BETTER_AUTH_URL` matches your production domain
 - Check `PUBLIC_CONVEX_URL` is accessible from Cloudflare edge
 - Ensure all OAuth redirect URLs are updated in provider settings
@@ -460,6 +500,7 @@ Add cache headers for static assets in `public/_headers`:
 ### CDN Configuration
 
 Cloudflare automatically provides:
+
 - Global CDN with 330+ edge locations
 - DDoS protection
 - Bot management
@@ -529,6 +570,7 @@ Cloudflare automatically provides:
 ### Cleanup Old Project
 
 After successful migration:
+
 ```bash
 # Delete old project (via dashboard or API)
 # Keep old project for 30 days as backup (optional)

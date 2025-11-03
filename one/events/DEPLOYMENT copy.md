@@ -1,3 +1,21 @@
+---
+title: Deployment Copy
+dimension: events
+category: DEPLOYMENT copy.md
+tags: ai, frontend
+related_dimensions: connections, groups, knowledge, things
+scope: global
+created: 2025-11-03
+updated: 2025-11-03
+version: 1.0.0
+ai_context: |
+  This document is part of the events dimension in the DEPLOYMENT copy.md category.
+  Location: one/events/DEPLOYMENT copy.md
+  Purpose: Documents one web - cloudflare pages deployment
+  Related dimensions: connections, groups, knowledge, things
+  For AI agents: Read this to understand DEPLOYMENT copy.
+---
+
 # ONE Web - Cloudflare Pages Deployment
 
 **Date**: 2025-10-14

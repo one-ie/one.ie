@@ -1,3 +1,21 @@
+---
+title: Provider Creation Guide
+dimension: knowledge
+category: provider-creation-guide.md
+tags: auth, backend, connections, events, knowledge, ontology, people, testing, things
+related_dimensions: connections, events, groups, people, things
+scope: global
+created: 2025-11-03
+updated: 2025-11-03
+version: 1.0.0
+ai_context: |
+  This document is part of the knowledge dimension in the provider-creation-guide.md category.
+  Location: one/knowledge/provider-creation-guide.md
+  Purpose: Documents provider creation guide
+  Related dimensions: connections, events, groups, people, things
+  For AI agents: Read this to understand provider creation guide.
+---
+
 # Provider Creation Guide
 
 **Version:** 1.0.0

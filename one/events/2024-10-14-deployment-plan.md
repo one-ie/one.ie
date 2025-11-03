@@ -1,22 +1,21 @@
 ---
-type: event
-eventType: deployment
-category: infrastructure
-tags: [deployment, planning, release-management, infrastructure]
+title: 2024 10 14 Deployment Plan
+dimension: events
+category: 2024-10-14-deployment-plan.md
+tags: ai, auth, deployment, infrastructure, ontology, planning, release-management
+related_dimensions: groups, people, things
+scope: global
 created: 2024-10-14
-updated: 2024-10-14
-status: completed
-timestamp: 2024-10-14
-kpis:
-  complexity: 7
-  impact: 9
-  completeness: 10
-  quality: 9
-  documentation: 10
-score: 9.0
-groupId: platform
-actorRole: platform_owner
+updated: 2025-11-03
+version: 1.0.0
+ai_context: |
+  This document is part of the events dimension in the 2024-10-14-deployment-plan.md category.
+  Location: one/events/2024-10-14-deployment-plan.md
+  Purpose: Documents one platform full deployment plan
+  Related dimensions: groups, people, things
+  For AI agents: Read this to understand 2024 10 14 deployment plan.
 ---
+
 
 # ONE Platform Full Deployment Plan
 

@@ -1,3 +1,21 @@
+---
+title: Architecture Diagram
+dimension: things
+category: docs
+tags: architecture, system-design
+related_dimensions: events
+scope: global
+created: 2025-11-03
+updated: 2025-11-03
+version: 1.0.0
+ai_context: |
+  This document is part of the things dimension in the docs category.
+  Location: one/things/docs/ecommerce/ARCHITECTURE-DIAGRAM.md
+  Purpose: Documents product page conversion elements - architecture diagram
+  Related dimensions: events
+  For AI agents: Read this to understand ARCHITECTURE DIAGRAM.
+---
+
 # Product Page Conversion Elements - Architecture Diagram
 
 ## Component Architecture Flow
