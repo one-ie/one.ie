@@ -54,7 +54,7 @@ describe("{EntityName}Service", () => {
       const input: Create{EntityName}Input = {
         name: "Test {Entity}",
         properties: { description: "Test description" },
-        organizationId: "org_123" as Id<"organizations">,
+        groupId: "group_123" as Id<"groups">,
       };
 
       // Act
@@ -66,11 +66,11 @@ describe("{EntityName}Service", () => {
 
       // Assert
       expect(result).toBeDefined();
-      expect(mockDb.insert).toHaveBeenCalledWith("{entities}", {
+      expect(mockDb.insert).toHaveBeenCalledWith("things", {
         type: "{entityType}",
         name: "Test {Entity}",
         properties: { description: "Test description" },
-        organizationId: "org_123",
+        groupId: "group_123",
         status: "draft",
         createdAt: expect.any(Number),
         updatedAt: expect.any(Number),
@@ -83,7 +83,7 @@ describe("{EntityName}Service", () => {
       const input: Create{EntityName}Input = {
         name: "",
         properties: {},
-        organizationId: "org_123" as Id<"organizations">,
+        groupId: "group_123" as Id<"groups">,
       };
 
       // Act & Assert
@@ -100,13 +100,13 @@ describe("{EntityName}Service", () => {
     it("should return {entity} when exists", async () => {
       // Arrange
       const mockDb = createMockDb();
-      const entityId = "entity_123" as Id<"{entities}">;
+      const entityId = "thing_123" as Id<"things">;
       const mock{Entity} = {
         _id: entityId,
         name: "Test {Entity}",
         type: "{entityType}",
         properties: {},
-        organizationId: "org_123" as Id<"organizations">,
+        groupId: "group_123" as Id<"groups">,
         status: "active",
         createdAt: Date.now(),
         updatedAt: Date.now(),
@@ -130,7 +130,7 @@ describe("{EntityName}Service", () => {
       const mockDb = createMockDb();
       mockDb.get.mockResolvedValue(null);
       const service = {EntityName}ServiceLive;
-      const entityId = "entity_404" as Id<"{entities}">;
+      const entityId = "thing_404" as Id<"things">;
 
       // Act & Assert
       await expect(
@@ -179,13 +179,15 @@ describe("mutations.{entities}.create", () => {
         getUserIdentity: async () => ({
           tokenIdentifier: "user_123",
           email: "test@example.com",
-          orgId: "org_123" as Id<"organizations">,
+          groupId: "group_123" as Id<"groups">,
         }),
       };
 
       // Act
-      const entityId = await ctx.mutation(api.mutations.{entities}.create, {
+      const entityId = await ctx.mutation(api.mutations.things.create, {
+        type: "{entityType}",
         name: "Test {Entity}",
+        groupId: "group_123" as Id<"groups">,
         properties: { description: "Test" },
       });
 
@@ -196,7 +198,7 @@ describe("mutations.{entities}.create", () => {
       expect(entity).toMatchObject({
         name: "Test {Entity}",
         type: "{entityType}",
-        organizationId: "org_123",
+        groupId: "group_123",
         status: "draft",
       });
     });
@@ -210,8 +212,10 @@ describe("mutations.{entities}.create", () => {
 
       // Act & Assert
       await expect(
-        ctx.mutation(api.mutations.{entities}.create, {
+        ctx.mutation(api.mutations.things.create, {
+          type: "{entityType}",
           name: "Test",
+          groupId: "group_123" as Id<"groups">,
           properties: {},
         })
       ).rejects.toThrow("Unauthorized");
@@ -235,52 +239,52 @@ describe("mutations.{entities}.create", () => {
 #### Test: List {entities} with multi-tenancy
 
 ```typescript
-describe("queries.{entities}.list", () => {
-  it("should only return {entities} from user's organization", async () => {
+describe("queries.things.list", () => {
+  it("should only return {entities} from user's group", async () => {
     // Arrange
     const t = convexTest(schema);
     await t.run(async (ctx) => {
-      // Create {entities} in different orgs
-      const org1Id = await ctx.db.insert("organizations", { name: "Org 1" });
-      const org2Id = await ctx.db.insert("organizations", { name: "Org 2" });
+      // Create {entities} in different groups
+      const group1Id = await ctx.db.insert("groups", { name: "Group 1", slug: "group-1", type: "organization" });
+      const group2Id = await ctx.db.insert("groups", { name: "Group 2", slug: "group-2", type: "organization" });
 
-      await ctx.db.insert("{entities}", {
+      await ctx.db.insert("things", {
         name: "{Entity} 1",
         type: "{entityType}",
-        organizationId: org1Id,
+        groupId: group1Id,
         status: "active",
         properties: {},
         createdAt: Date.now(),
         updatedAt: Date.now(),
       });
 
-      await ctx.db.insert("{entities}", {
+      await ctx.db.insert("things", {
         name: "{Entity} 2",
         type: "{entityType}",
-        organizationId: org2Id,
+        groupId: group2Id,
         status: "active",
         properties: {},
         createdAt: Date.now(),
         updatedAt: Date.now(),
       });
 
-      // Set auth to org1
+      // Set auth to group1
       ctx.auth = {
         getUserIdentity: async () => ({
           tokenIdentifier: "user_123",
-          orgId: org1Id,
+          groupId: group1Id,
         }),
       };
 
       // Act
-      const results = await ctx.query(api.queries.{entities}.list, {
+      const results = await ctx.query(api.queries.things.list, {
         type: "{entityType}",
       });
 
       // Assert
       expect(results).toHaveLength(1);
       expect(results[0].name).toBe("{Entity} 1");
-      expect(results[0].organizationId).toBe(org1Id);
+      expect(results[0].groupId).toBe(group1Id);
     });
   });
 
@@ -436,13 +440,13 @@ export const valid{Entity}Data = {
     description: "Test description",
     // Add entity-specific fields
   },
-  organizationId: "org_test" as Id<"organizations">,
+  groupId: "group_test" as Id<"groups">,
 };
 
 export const invalid{Entity}Data = {
   name: "",  // Empty name (should fail)
   properties: {},
-  organizationId: "org_test" as Id<"organizations">,
+  groupId: "group_test" as Id<"groups">,
 };
 ```
 

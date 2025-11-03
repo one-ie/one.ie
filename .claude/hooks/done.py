@@ -12,11 +12,18 @@ This hook runs on Stop event to:
 import json
 import sys
 import os
+import time
 from pathlib import Path
 from typing import Dict, Any
 
-# Import task descriptions from todo hook
-from todo import INFERENCE_TASKS, get_dimensions_for_inference, get_specialist_for_inference
+# Import task descriptions and helpers from todo hook
+from todo import (
+    INFERENCE_TASKS,
+    get_dimensions_for_inference,
+    get_specialist_for_inference,
+    get_phase_for_inference,
+    get_parallel_opportunities
+)
 
 
 def load_state() -> Dict[str, Any]:
@@ -47,9 +54,35 @@ def save_state(state: Dict[str, Any]):
 
 def extract_lesson_from_transcript(transcript_path: str, inference: int) -> str:
     """Extract lesson learned from conversation transcript"""
-    # TODO: Parse transcript JSONL to extract key learnings
-    # For now, return a placeholder
-    return f"Completed inference {inference} successfully"
+    try:
+        if not transcript_path or not Path(transcript_path).exists():
+            return f"Completed Infer {inference}"
+
+        # Read transcript JSONL and extract key learnings
+        with open(transcript_path, 'r') as f:
+            lines = f.readlines()
+
+        # Look for key phrases in assistant responses
+        lessons = []
+        for line in lines[-10:]:  # Last 10 messages
+            try:
+                msg = json.loads(line)
+                if msg.get("role") == "assistant":
+                    content = msg.get("content", "")
+                    # Extract lessons (simple heuristic)
+                    if "learned" in content.lower() or "lesson" in content.lower():
+                        lessons.append(content[:200])  # First 200 chars
+                    elif "success" in content.lower() and len(content) < 300:
+                        lessons.append(content)
+            except json.JSONDecodeError:
+                continue
+
+        if lessons:
+            return lessons[-1]  # Most recent lesson
+        return f"Completed Infer {inference}"
+
+    except Exception as e:
+        return f"Completed Infer {inference} (lesson extraction failed: {str(e)[:50]})"
 
 
 def mark_complete_and_advance(state: Dict[str, Any], transcript_path: str) -> Dict[str, Any]:
@@ -66,7 +99,7 @@ def mark_complete_and_advance(state: Dict[str, Any], transcript_path: str) -> Di
     state["lessons_learned"].append({
         "inference": current,
         "lesson": lesson,
-        "timestamp": os.times().elapsed
+        "timestamp": int(time.time())  # Unix timestamp
     })
 
     # Advance to next inference (unless we're at 100)

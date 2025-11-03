@@ -2,41 +2,51 @@
 
 **Category:** Frontend
 **Context:** When creating React components with shadcn/ui for interactive features
-**Problem:** Need consistent component structure that uses Convex hooks, handles loading/error states, and follows accessibility guidelines
+**Problem:** Need consistent component structure that uses DataProvider pattern, handles loading/error states, and follows accessibility guidelines
 
 ## Solution
 
-Use shadcn/ui components, Convex React hooks for real-time data, proper loading/error states, and TypeScript for type safety.
+Use shadcn/ui components, Effect.ts services with DataProvider pattern for backend-agnostic data, proper loading/error states, and TypeScript for type safety.
 
 ## Template
 
 ```tsx
 // src/components/features/{EntityName}List.tsx
-import { useQuery } from "convex/react";
-import { api } from "@/convex/_generated/api";
+import { useEffectRunner } from "@/hooks/useEffectRunner";
+import { ThingClientService } from "@/services/ThingClientService";
 import { Card, CardHeader, CardTitle, CardDescription, CardContent } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Skeleton } from "@/components/ui/skeleton";
 import { Alert, AlertDescription } from "@/components/ui/alert";
 import { Plus } from "lucide-react";
-import { Link } from "@/components/ui/link";
+import { useEffect, useState } from "react";
+import { Effect } from "effect";
 
 interface {EntityName}ListProps {
-  type?: string;
+  type: string;
+  groupId?: string;
   status?: "draft" | "active" | "archived";
   limit?: number;
 }
 
-export function {EntityName}List({ type, status, limit }: {EntityName}ListProps) {
-  // Fetch data with Convex hook (real-time)
-  const {entities} = useQuery(api.queries.{entities}.list, {
-    type,
-    status,
-    limit,
-  });
+export function {EntityName}List({ type, groupId, status, limit }: {EntityName}ListProps) {
+  const { run, loading, error } = useEffectRunner();
+  const [items, setItems] = useState<any[]>([]);
+
+  // Fetch data on mount via Effect.ts service
+  useEffect(() => {
+    const program = Effect.gen(function* () {
+      const service = yield* ThingClientService;
+      return yield* service.list(type as any, groupId);
+    });
+
+    run(program, {
+      onSuccess: (results) => setItems(results || [])
+    });
+  }, [type, groupId]);
 
   // Loading state
-  if ({entities} === undefined) {
+  if (loading && items.length === 0) {
     return (
       <div className="space-y-4">
         <Skeleton className="h-24 w-full" />
@@ -46,18 +56,27 @@ export function {EntityName}List({ type, status, limit }: {EntityName}ListProps)
     );
   }
 
+  // Error state
+  if (error) {
+    return (
+      <Alert variant="destructive">
+        <AlertDescription>Failed to load items: {error}</AlertDescription>
+      </Alert>
+    );
+  }
+
   // Empty state
-  if ({entities}.length === 0) {
+  if (items.length === 0) {
     return (
       <Alert>
         <AlertDescription>
-          No {entities} found. Create your first {entity} to get started.
+          No {type}s found. Create your first {type} to get started.
         </AlertDescription>
         <Button asChild className="mt-4">
-          <Link href="/{entities}/new">
+          <a href={`/${type}s/new`}>
             <Plus className="mr-2 h-4 w-4" />
-            Create {EntityName}
-          </Link>
+            Create {type}
+          </a>
         </Button>
       </Alert>
     );
@@ -67,33 +86,31 @@ export function {EntityName}List({ type, status, limit }: {EntityName}ListProps)
   return (
     <div className="space-y-4">
       <div className="flex justify-between items-center">
-        <h2 className="text-2xl font-bold">{EntityName}s</h2>
+        <h2 className="text-2xl font-bold">{type}s</h2>
         <Button asChild>
-          <Link href="/{entities}/new">
+          <a href={`/${type}s/new`}>
             <Plus className="mr-2 h-4 w-4" />
-            New {EntityName}
-          </Link>
+            New {type}
+          </a>
         </Button>
       </div>
 
       <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-3">
-        {{entities}.map(({entity}) => (
-          <Card key={typeof {entity}._id === 'string' ? {entity}._id : JSON.stringify({entity}._id)}>
+        {items.map((item) => (
+          <Card key={item._id}>
             <CardHeader>
-              <CardTitle>{typeof {entity}.name === 'string' ? {entity}.name : 'Untitled'}</CardTitle>
+              <CardTitle>{item.name || "Untitled"}</CardTitle>
               <CardDescription>
-                {typeof {entity}.properties?.description === 'string' ? {entity}.properties.description : ''}
+                {item.properties?.description || ""}
               </CardDescription>
             </CardHeader>
             <CardContent>
               <div className="flex justify-between items-center">
                 <span className="text-sm text-muted-foreground">
-                  Status: {typeof {entity}.status === 'string' ? {entity}.status : 'unknown'}
+                  Status: {item.status || "unknown"}
                 </span>
                 <Button asChild variant="outline" size="sm">
-                  <Link href={`/{entities}/${typeof {entity}._id === 'string' ? {entity}._id : JSON.stringify({entity}._id)}`}>
-                    View
-                  </Link>
+                  <a href={`/${type}s/${item._id}`}>View</a>
                 </Button>
               </div>
             </CardContent>
@@ -123,19 +140,35 @@ export function {EntityName}List({ type, status, limit }: {EntityName}ListProps)
 
 ```tsx
 // src/components/features/CourseList.tsx
-import { useQuery } from "convex/react";
-import { api } from "@/convex/_generated/api";
+import { useEffectRunner } from "@/hooks/useEffectRunner";
+import { ThingClientService } from "@/services/ThingClientService";
 import { Card, CardHeader, CardTitle, CardContent } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { Skeleton } from "@/components/ui/skeleton";
+import { Button } from "@/components/ui/button";
+import { useEffect, useState } from "react";
+import { Effect } from "effect";
 
-export function CourseList() {
-  const courses = useQuery(api.queries.entities.list, {
-    type: "course",
-    status: "active",
-  });
+interface CourseListProps {
+  groupId?: string;
+}
 
-  if (courses === undefined) {
+export function CourseList({ groupId }: CourseListProps) {
+  const { run, loading } = useEffectRunner();
+  const [courses, setCourses] = useState<any[]>([]);
+
+  useEffect(() => {
+    const program = Effect.gen(function* () {
+      const service = yield* ThingClientService;
+      return yield* service.list("course" as any, groupId);
+    });
+
+    run(program, {
+      onSuccess: (results) => setCourses(results || [])
+    });
+  }, [groupId]);
+
+  if (loading && courses.length === 0) {
     return <div className="grid gap-4 md:grid-cols-3">
       {[1, 2, 3].map((i) => <Skeleton key={i} className="h-48" />)}
     </div>;
@@ -156,7 +189,7 @@ export function CourseList() {
             <div className="mt-4 flex justify-between">
               <span className="font-bold">${course.properties?.price}</span>
               <Button asChild size="sm">
-                <Link href={`/courses/${course._id}`}>View</Link>
+                <a href={`/courses/${course._id}`}>View</a>
               </Button>
             </div>
           </CardContent>

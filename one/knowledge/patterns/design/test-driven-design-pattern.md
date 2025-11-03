@@ -155,8 +155,24 @@ Before finalizing design, verify:
 - [ ] Empty states are designed for zero-data scenarios
 - [ ] Component hierarchy matches test structure
 
+## Ontology Integration
+
+This pattern aligns with the 6-dimension ontology:
+
+- **Things (Dimension 3):** Design, test, feature are all things
+- **Connections (Dimension 4):** tested_by (test → design), part_of (feature → design)
+- **Events (Dimension 5):** quality_check_complete triggers design work
+- **Knowledge (Dimension 6):** Design patterns captured and tagged with skill:design
+- **Multi-tenant:** All designs scoped to groupId (group isolation)
+
+## Agent Coordination
+
+- **Quality Agent (Stage 4):** Defines user flows and acceptance criteria
+- **Design Agent (Stage 5):** Creates wireframes that enable tests to pass
+- **Frontend Agent (Stage 6):** Implements designs based on component specs
+
 ## Related Patterns
 
-- [Design Agent Pattern](../../things/agents/agent-designer.md)
-- [Quality Agent Pattern](../../things/agents/agent-quality.md)
-- [Wireframe Template Pattern](./wireframe-template-pattern.md)
+- [Component Architecture Pattern](./component-architecture.md)
+- [Wireframe Template Pattern](./wireframe-template.md)
+- [Test-Driven Development Guide](../quality/test-driven-quality-pattern.md)

@@ -2,6 +2,30 @@
 """
 Ontology Structure Validator for ONE Platform
 Ensures all files in /one follow the 6-dimension ontology structure
+
+The 6-Dimension Ontology:
+1. groups - Hierarchical containers (friend circles → governments)
+2. people - Authorization & governance (who can do what)
+3. things - All entities (66 types: user, agent, content, etc.)
+4. connections - All relationships (25 types: owns, purchased, etc.)
+5. events - All actions (67 types: created, updated, logged, etc.)
+6. knowledge - AI understanding (embeddings, search, RAG)
+
+Database Implementation (5 tables):
+- groups table → groups dimension
+- things table → things dimension (includes people as type: 'creator')
+- connections table → connections dimension
+- events table → events dimension
+- knowledge table → knowledge dimension
+
+Directory Structure:
+/one/
+  groups/ - Group definitions and hierarchies
+  people/ - Roles, governance, organization (people are things with role metadata)
+  things/ - Entity specifications, plans, agent definitions
+  connections/ - Protocols, workflows, integrations
+  events/ - Deployment plans, release notes, test results
+  knowledge/ - Architecture, patterns, rules, guides
 """
 import json
 import sys
@@ -12,18 +36,22 @@ from pathlib import Path
 # ONE Platform 6-Dimension Ontology
 VALID_DIMENSIONS = {
     "groups": {
-        "aliases": ["groups", "group", "organisations", "organizations", "organisation", "organization"],
-        "description": "Hierarchical containers for collaboration - who belongs where and at what level"
+        "aliases": ["groups", "group"],
+        "description": "Hierarchical containers - friend circles → DAOs → governments",
+        "example_files": ["groups.md", "revenue.md", "vision.md", "strategy.md", "features.md"]
     },
     "people": {
         "aliases": ["people", "person"],
-        "description": "Authorization & governance - platform owner, org owners"
+        "description": "Authorization & governance - roles, permissions, organization",
+        "example_files": ["people.md", "roles.md", "governance.md", "team.md"],
+        "note": "People are stored as things (type: 'creator') with role metadata"
     },
     "things": {
         "aliases": ["things", "thing"],
-        "description": "Every 'thing' - users, agents, content, tokens, courses",
+        "description": "All entities - users, agents, content, tokens, courses (66 types)",
+        "example_files": ["agents/", "plans/", "specifications/", "components.md"],
         "types": [
-            # Core
+            # Core (People as Things)
             "creator", "ai_clone", "audience_member", "organization",
             # Business Agents
             "strategy_agent", "research_agent", "marketing_agent", "sales_agent",
@@ -59,7 +87,8 @@ VALID_DIMENSIONS = {
     },
     "connections": {
         "aliases": ["connections", "connection"],
-        "description": "Every relationship - owns, follows, taught_by, powers",
+        "description": "All relationships - owns, purchased, enrolled_in (25 types)",
+        "example_files": ["protocols.md", "workflow.md", "integrations/", "patterns.md"],
         "types": [
             # Ownership
             "owns", "created_by",
@@ -75,13 +104,14 @@ VALID_DIMENSIONS = {
             "holds_tokens", "staked_in", "earned_from",
             # Product Relationships
             "purchased", "enrolled_in", "completed", "teaching",
-            # Consolidated
+            # Consolidated (7 connection families)
             "transacted", "notified", "referred", "communicated", "delegated", "approved", "fulfilled"
         ]
     },
     "events": {
         "aliases": ["events", "event"],
-        "description": "Every action - purchased, created, viewed, completed",
+        "description": "All actions - created, updated, purchased, completed (67 types)",
+        "example_files": ["deployment/", "releases/", "test-results/", "agent-summaries/"],
         "types": [
             # Entity Lifecycle
             "entity_created", "entity_updated", "entity_deleted", "entity_archived",
@@ -113,7 +143,7 @@ VALID_DIMENSIONS = {
             "org_revenue_generated", "revenue_share_distributed",
             # Blockchain Events
             "nft_minted", "nft_transferred", "tokens_bridged", "contract_deployed", "treasury_withdrawal",
-            # Consolidated Events
+            # Consolidated Events (protocol-specific via metadata.protocol)
             "content_event", "payment_event", "subscription_event", "commerce_event",
             "livestream_event", "notification_event", "referral_event",
             "communication_event", "task_event", "mandate_event", "price_event",
@@ -128,9 +158,20 @@ VALID_DIMENSIONS = {
     },
     "knowledge": {
         "aliases": ["knowledge"],
-        "description": "Labels + chunks + vectors powering RAG & search",
+        "description": "AI understanding - embeddings, search, RAG (labels, chunks, vectors)",
+        "example_files": ["ontology.md", "architecture.md", "patterns/", "rules.md", "guides/"],
         "types": ["label", "document", "chunk", "vector_only"]
     }
+}
+
+# Expected directory structure for /one
+EXPECTED_STRUCTURE = {
+    "groups": "Group definitions, hierarchies, vision, strategy, revenue",
+    "people": "Roles, governance, team structure, organization (people are things with type: 'creator')",
+    "things": "Entity specifications, agent definitions, plans, components",
+    "connections": "Protocols, workflows, integrations, relationships, patterns",
+    "events": "Deployment plans, release notes, test results, agent execution summaries",
+    "knowledge": "Architecture docs, implementation guides, patterns, rules, tutorials"
 }
 
 # Protocol identifiers that should be in metadata

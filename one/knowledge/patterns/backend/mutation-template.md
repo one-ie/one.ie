@@ -29,17 +29,17 @@ export const create = mutation({
       throw new Error("Unauthorized");
     }
 
-    // 2. Get organization ID (multi-tenant)
-    const organizationId = identity.orgId;
-    if (!organizationId) {
-      throw new Error("No organization");
+    // 2. Get group ID (multi-tenant)
+    const groupId = identity.groupId;
+    if (!groupId) {
+      throw new Error("No group");
     }
 
     // 3. Call service
     const program = {EntityName}Service.create({
       name: args.name,
       properties: args.properties,
-      organizationId: organizationId,
+      groupId: groupId,
     });
 
     // 4. Run Effect program
@@ -80,9 +80,9 @@ export const update = mutation({
       throw new Error("Unauthorized");
     }
 
-    // 2. Check ownership (entity belongs to user's org)
+    // 2. Check ownership (entity belongs to user's group)
     const entity = await ctx.db.get(args.id);
-    if (!entity || entity.organizationId !== identity.orgId) {
+    if (!entity || entity.groupId !== identity.groupId) {
       throw new Error("Not found or unauthorized");
     }
 
@@ -181,7 +181,7 @@ export const createCourse = mutation({
         description: args.description,
         price: args.price,
       },
-      organizationId: identity.orgId,
+      groupId: identity.groupId,
     });
 
     return await Effect.runPromise(
@@ -217,8 +217,8 @@ export const publishCourse = mutation({
   - **Fix:** Move logic to service, keep mutation thin
 - **Mistake:** Not checking authentication
   - **Fix:** Always verify `ctx.auth.getUserIdentity()` first
-- **Mistake:** Not checking organization ownership
-  - **Fix:** Verify entity belongs to user's org (multi-tenancy)
+- **Mistake:** Not checking group ownership
+  - **Fix:** Verify entity belongs to user's group (multi-tenancy)
 - **Mistake:** Throwing raw service errors
   - **Fix:** Map service errors to user-friendly messages
 - **Mistake:** Not using Effect.catchAll

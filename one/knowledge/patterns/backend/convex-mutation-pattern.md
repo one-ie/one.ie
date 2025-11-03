@@ -37,50 +37,62 @@ export const create = mutation({
     // Check that type exists in ontology
     // Validate required fields based on type
 
-    // 3. Insert into entities table
-    const entityId = await ctx.db.insert("entities", {
+    // 3. Validate identity has group
+    const person = await ctx.db.query("people")
+      .withIndex("by_email", q => q.eq("email", identity.email))
+      .first();
+
+    if (!person || !person.groupId) {
+      throw new Error("User must belong to a group");
+    }
+
+    // 4. Insert into things table
+    const thingId = await ctx.db.insert("things", {
       type: args.type,
       name: args.name,
       properties: args.properties,
+      groupId: person.groupId,
       status: "draft",
       createdAt: Date.now(),
       updatedAt: Date.now(),
-      createdBy: identity.tokenIdentifier,
     });
 
-    // 4. Log creation event
+    // 5. Log creation event
     await ctx.db.insert("events", {
       type: "entity_created",
-      actorId: identity.tokenIdentifier,
-      targetId: entityId,
+      actorId: person._id,
+      targetId: thingId,
       timestamp: Date.now(),
       metadata: {
         entityType: args.type,
         entityName: args.name,
+        groupId: person.groupId,
       },
     });
 
-    // 5. Return result
-    return entityId;
+    // 6. Return result
+    return thingId;
   },
 });
 ```
 
 ## When to Use
 
-- Creating new entities (things)
-- Creating connections between entities
-- Recording events
-- Updating entity state or properties
-- Deleting entities (soft delete via status)
+- Creating new things (actors, content, products, tokens, etc.)
+- Creating connections between things
+- Recording events for the audit trail
+- Updating thing state or properties
+- Deleting things (soft delete via status = "archived")
 
 ## Best Practices
 
-1. **Always log events** - Every mutation should create an event record
-2. **Use soft deletes** - Change status to "archived" instead of deleting
-3. **Validate early** - Check inputs before making any changes
-4. **Return minimal data** - Return IDs or success indicators, not full objects
-5. **Use transactions** - Convex handles transactions automatically within a mutation
+1. **Always authenticate** - Get user identity and validate they belong to a group
+2. **Use groupId** - Scope all operations by groupId for multi-tenant isolation
+3. **Always log events** - Every mutation should create an event record with actorId and targetId
+4. **Use soft deletes** - Change status to "archived" instead of hard deleting
+5. **Use canonical types** - Use 66 thing types from ontology, not custom types
+6. **Return minimal data** - Return IDs only, let queries fetch full objects
+7. **Use transactions** - Convex handles transactions automatically within a mutation
 
 ## Common Mistakes
 

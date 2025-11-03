@@ -2,6 +2,8 @@
 
 **Building the Rendering Layer - Backend-Agnostic, Type-Safe, Composable**
 
+**Version:** 3.0.0 (Aligned with 6-Dimension Ontology)
+
 ---
 
 ## Executive Summary
@@ -41,12 +43,14 @@ The ONE frontend is **purely a rendering and interaction layer** with zero busin
 ```
 
 **Tech Stack:**
-- **Astro** - SSR/SSG (pages, layouts)
-- **React 19** - Interactive components (islands)
+- **Astro 5.14+** - SSR/SSG (pages, layouts)
+- **React 19** - Interactive components (islands) with `react-dom/server.edge` for Cloudflare
 - **Effect.ts** - Type-safe, composable operations
 - **DataProvider Pattern** - Backend-agnostic interface
-- **Tailwind + shadcn/ui** - Styling
-- **TypeScript** - End-to-end type safety
+- **Tailwind CSS v4** - CSS-based configuration (no JS config)
+- **shadcn/ui** - 50+ pre-installed accessible components
+- **Better Auth** - Multi-method authentication
+- **TypeScript 5.9+** - End-to-end type safety (strict mode)
 
 ---
 
@@ -186,52 +190,66 @@ export class ConnectionCreateError {
 
 // DataProvider interface - all backends implement this
 export interface DataProvider {
-  // Dimension 1: Organizations
-  organizations: {
-    get: (id: string) => Effect.Effect<Organization, OrganizationNotFoundError>
-    list: (params?: { status?: string }) => Effect.Effect<Organization[], Error>
-    update: (id: string, updates: Partial<Organization>) => Effect.Effect<void, Error>
+  // Dimension 1: Groups (Multi-tenant containers with hierarchical nesting)
+  groups: {
+    get: (id: string) => Effect.Effect<Group, GroupNotFoundError>
+    list: (params?: {
+      type?: 'friend_circle' | 'business' | 'community' | 'dao' | 'government' | 'organization'
+      parentGroupId?: string
+      status?: string
+    }) => Effect.Effect<Group[], Error>
+    create: (input: {
+      name: string
+      type: 'friend_circle' | 'business' | 'community' | 'dao' | 'government' | 'organization'
+      parentGroupId?: string
+      properties?: Record<string, any>
+    }) => Effect.Effect<string, Error>
+    update: (id: string, updates: Partial<Group>) => Effect.Effect<void, Error>
   }
 
-  // Dimension 2: People
+  // Dimension 2: People (Authorization & governance)
   people: {
     get: (id: string) => Effect.Effect<Person, PersonNotFoundError>
     list: (params: {
-      organizationId?: string
-      role?: string
+      groupId?: string
+      role?: 'platform_owner' | 'org_owner' | 'org_user' | 'customer'
     }) => Effect.Effect<Person[], Error>
     create: (input: {
       email: string
       displayName: string
-      role: string
-      organizationId: string
+      role: 'platform_owner' | 'org_owner' | 'org_user' | 'customer'
+      groupId: string  // Primary group
+      groups?: string[]  // Multi-group membership
     }) => Effect.Effect<string, Error>
   }
 
-  // Dimension 3: Things
+  // Dimension 3: Things (All entities - 66+ types)
   things: {
     get: (id: string) => Effect.Effect<Thing, ThingNotFoundError>
     list: (params: {
       type: ThingType
-      organizationId?: string
+      groupId?: string  // Scoped to group
       filters?: Record<string, any>
     }) => Effect.Effect<Thing[], Error>
     create: (input: {
       type: ThingType
       name: string
-      organizationId: string
+      groupId: string  // Every thing belongs to a group
       properties: Record<string, any>
     }) => Effect.Effect<string, Error>
     update: (id: string, updates: Partial<Thing>) => Effect.Effect<void, Error>
     delete: (id: string) => Effect.Effect<void, Error>
   }
 
-  // Dimension 4: Connections
+  // Dimension 4: Connections (All relationships - 25+ types)
   connections: {
     create: (input: {
-      fromThingId: string
-      toThingId: string
+      fromThingId?: string
+      toThingId?: string
+      fromPersonId?: string  // Can connect people → things
+      toPersonId?: string    // Or people → people
       relationshipType: ConnectionType
+      groupId: string  // Scoped to group
       metadata?: Record<string, any>
     }) => Effect.Effect<string, ConnectionCreateError>
     getRelated: (params: {
@@ -242,31 +260,46 @@ export interface DataProvider {
     getCount: (thingId: string, relationshipType: ConnectionType) => Effect.Effect<number, Error>
   }
 
-  // Dimension 5: Events
+  // Dimension 5: Events (Complete audit trail - 67+ types)
   events: {
     log: (event: {
       type: EventType
-      actorId: string
+      actorId: string  // REQUIRED: Who did it (person)
       targetId?: string
-      organizationId: string
+      groupId: string  // Scoped to group
       metadata?: Record<string, any>
     }) => Effect.Effect<void, Error>
+    list: (params: {
+      groupId?: string
+      actorId?: string
+      type?: EventType
+      limit?: number
+    }) => Effect.Effect<Event[], Error>
   }
 
-  // Dimension 6: Knowledge
+  // Dimension 6: Knowledge (Embeddings, vectors, RAG)
   knowledge: {
     search: (params: {
       query: string
-      organizationId?: string
+      groupId?: string  // Scoped to group
       limit?: number
     }) => Effect.Effect<KnowledgeMatch[], Error>
+    create: (input: {
+      type: 'embedding' | 'label' | 'category' | 'tag'
+      text?: string
+      embedding?: number[]
+      sourceThingId?: string
+      groupId: string
+    }) => Effect.Effect<string, Error>
   }
 }
 
 export const DataProvider = Context.GenericTag<DataProvider>('DataProvider')
 ```
 
-**Key Insight:** This interface IS the ONE ontology. Any backend that implements it can power ONE.
+**Key Insight:** This interface IS the 6-dimension ONE ontology. Any backend that implements it can power ONE.
+
+**Critical:** All dimensions (things, connections, events, knowledge) are scoped to `groupId`. Groups provide hierarchical multi-tenant isolation (friend circles → businesses → DAOs → governments → organizations).
 
 ---
 
@@ -733,7 +766,7 @@ const lessons = await convex.query(api.queries.connections.getRelated, {
 
 ## Multi-Tenant Routing
 
-### Middleware: Extract Org from Subdomain
+### Middleware: Extract Group from Subdomain
 
 ```typescript
 // frontend/src/middleware.ts
@@ -744,50 +777,50 @@ import { api } from './lib/api'
 export const onRequest = defineMiddleware(async (context, next) => {
   const url = new URL(context.request.url)
 
-  // Extract org slug from subdomain
+  // Extract group slug from subdomain
   // fitnesspro.one.ie → "fitnesspro"
   const hostname = url.hostname
-  const orgSlug = hostname.split('.')[0]
+  const groupSlug = hostname.split('.')[0]
 
-  if (['api', 'www', 'localhost'].includes(orgSlug)) {
+  if (['api', 'www', 'localhost'].includes(groupSlug)) {
     return next()
   }
 
-  // Fetch org from backend
+  // Fetch group from backend (groups table)
   const convex = getConvexClient()
-  const org = await convex.query(api.queries.orgs.getBySlug, {
-    slug: orgSlug
+  const group = await convex.query(api.queries.groups.getBySlug, {
+    slug: groupSlug
   })
 
-  if (org) {
-    context.locals.org = org
-    context.locals.orgId = org._id
+  if (group) {
+    context.locals.group = group
+    context.locals.groupId = group._id
   }
 
   return next()
 })
 ```
 
-### Use Org Context in Pages
+### Use Group Context in Pages
 
 ```astro
 ---
 // frontend/src/pages/courses/index.astro
-const org = Astro.locals.org
+const group = Astro.locals.group
 
-if (!org) {
+if (!group) {
   return Astro.redirect('/404')
 }
 
 const convex = getConvexClient()
 const courses = await convex.query(api.queries.things.list, {
   type: 'course',
-  organizationId: org._id
+  groupId: group._id  // All things scoped to groupId
 })
 ---
 
-<Layout title={`${org.name} - Courses`}>
-  <h1>{org.name} Courses</h1>
+<Layout title={`${group.name} - Courses`}>
+  <h1>{group.name} Courses</h1>
   {courses.map(course => (
     <Card thing={course} />
   ))}
@@ -842,8 +875,16 @@ frontend/
 ### Environment Setup
 
 ```bash
-# Frontend .env
-PUBLIC_CONVEX_URL=https://backend.convex.cloud
+# Frontend .env.local
+PUBLIC_CONVEX_URL=https://shocking-falcon-870.convex.cloud
+CONVEX_DEPLOYMENT=prod:shocking-falcon-870
+
+# Better Auth (Multi-method authentication)
+BETTER_AUTH_SECRET=your-secret-key
+BETTER_AUTH_URL=http://localhost:4321
+# OAuth credentials (optional)
+# GOOGLE_CLIENT_ID=...
+# GITHUB_CLIENT_ID=...
 
 # Or WordPress
 WORDPRESS_URL=https://yoursite.com
@@ -857,13 +898,33 @@ PUBLIC_SUPABASE_ANON_KEY=your-key
 ### Deploy Frontend
 
 ```bash
-cd frontend
-npm run build
+cd web
+bun run build
 
-# Deploy to:
-# - Cloudflare Pages (recommended)
-# - Vercel
-# - Netlify
+# Deploy to Cloudflare Pages (recommended for React 19)
+wrangler pages deploy dist --project-name=web
+
+# Or deploy to:
+# - Vercel (configure for React 19 edge runtime)
+# - Netlify (configure for React 19 edge runtime)
+```
+
+**Important for React 19:** Ensure `react-dom/server.edge` is configured in `astro.config.mjs`:
+
+```typescript
+import { defineConfig } from 'astro/config'
+import react from '@astrojs/react'
+
+export default defineConfig({
+  integrations: [react()],
+  vite: {
+    resolve: {
+      alias: {
+        'react-dom/server': 'react-dom/server.edge'  // Required for Cloudflare
+      }
+    }
+  }
+})
 ```
 
 ### Deploy Backend (Separate)
@@ -871,7 +932,7 @@ npm run build
 ```bash
 cd backend
 npx convex deploy
-# Deployed to: https://backend.convex.cloud
+# Deployed to: https://shocking-falcon-870.convex.cloud
 ```
 
 **Frontend and backend are completely separate deployments.**

@@ -17,17 +17,18 @@ Implement features that integrate external protocols (A2A, ACP, AP2, X402, AG-UI
 
 ## Ontology Integration (6 Dimensions)
 
-### Organizations (Multi-Tenant Isolation)
-- Ensure external connections respect organization boundaries
-- Configure per-org external service credentials
-- Track org-specific integration usage and quotas
-- Validate organization access for all external calls
+### Groups (Multi-Tenant Isolation)
+- Ensure external connections respect group boundaries
+- Configure per-group external service credentials
+- Track group-specific integration usage and quotas
+- Validate group access for all external calls
+- Support hierarchical group nesting (parentGroupId)
 
 ### People (Authorization & Governance)
 - Verify actor permissions before external integrations
 - Log all external API calls with actor tracking
 - Implement role-based access to external services
-- Ensure org_owners can manage external connections
+- Ensure group_owner role can manage external connections
 
 ### Things (Entity Integration)
 - Create and manage `external_agent` entities (ElizaOS, ChatGPT plugins)
@@ -83,7 +84,7 @@ Implement features that integrate external protocols (A2A, ACP, AP2, X402, AG-UI
 # Decision Framework
 
 ## Decision 1: Which ontology dimensions are affected?
-- **Organizations?** → Does this require org-scoped credentials?
+- **Groups?** → Does this require group-scoped credentials and hierarchical support?
 - **People?** → Who has permission to trigger this integration?
 - **Things?** → What entities are being created/updated/connected?
 - **Connections?** → What relationships are being established?
@@ -171,7 +172,7 @@ Implement features that integrate external protocols (A2A, ACP, AP2, X402, AG-UI
 const externalAgentId = await ctx.db.insert("things", {
   type: "external_agent",
   name: "ElizaOS Research Agent",
-  organizationId: orgId,
+  groupId: groupId,  // Multi-tenant scoping
   status: "active",
   properties: {
     platform: "elizaos",
@@ -200,6 +201,7 @@ await ctx.db.insert("events", {
   type: "entity_created",
   actorId: actorId,
   targetId: externalAgentId,
+  groupId: groupId,  // Multi-tenant scoping
   timestamp: Date.now(),
   metadata: {
     entityType: "external_agent",
@@ -236,6 +238,7 @@ await ctx.db.insert("events", {
   type: "task_event",
   actorId: oneAgentId,
   targetId: externalAgentId,
+  groupId: groupId,  // Multi-tenant scoping
   timestamp: Date.now(),
   metadata: {
     action: "delegated",
@@ -320,6 +323,7 @@ const knowledgeId = await ctx.db.insert("knowledge", {
   embeddingDim: 1536,
   sourceThingId: featureId,
   sourceField: "lesson_learned",
+  groupId: groupId,  // Multi-tenant scoping
   labels: ["protocol:a2a", "capability:retry", "pattern:exponential-backoff"],
   metadata: {
     protocol: "a2a",
@@ -388,6 +392,7 @@ export const handleAgentPurchase = mutation({
       type: "commerce_event",
       actorId: agentThing._id,
       targetId: product._id,
+      groupId: product.groupId,  // Multi-tenant scoping
       timestamp: Date.now(),
       metadata: {
         protocol: "acp",
@@ -395,8 +400,7 @@ export const handleAgentPurchase = mutation({
         agentPlatform: args.agentPlatform,
         productId: args.productId,
         amount: product.properties.price,
-        currency: product.properties.currency,
-        organizationId: product.organizationId
+        currency: product.properties.currency
       }
     });
 
@@ -428,6 +432,7 @@ export const handleAgentPurchase = mutation({
       type: "commerce_event",
       actorId: agentThing._id,
       targetId: product._id,
+      groupId: product.groupId,  // Multi-tenant scoping
       timestamp: Date.now(),
       metadata: {
         protocol: "acp",
@@ -461,6 +466,7 @@ export const x402ApiAccess = mutation({
       type: "payment_event",
       actorId: ctx.auth.userId,
       targetId: apiEndpointId,
+      groupId: userGroupId,  // Multi-tenant scoping
       timestamp: Date.now(),
       metadata: {
         protocol: "x402",
@@ -483,6 +489,7 @@ export const x402ApiAccess = mutation({
       type: "payment_event",
       actorId: ctx.auth.userId,
       targetId: apiEndpointId,
+      groupId: userGroupId,  // Multi-tenant scoping
       timestamp: Date.now(),
       metadata: {
         protocol: "x402",
@@ -516,11 +523,11 @@ export const x402ApiAccess = mutation({
 # Common Mistakes to Avoid
 
 ## Ontology Mistakes
-- ❌ **Not respecting organization boundaries** → Always filter by organizationId
+- ❌ **Not respecting group boundaries** → Always filter by groupId and validate hierarchical access
 - ❌ **Missing actor tracking** → Every event needs actorId
 - ❌ **Forgetting protocol metadata** → Always set metadata.protocol for external integrations
 - ❌ **Not using external thing types** → Create explicit external_agent/workflow/connection entities
-- ❌ **Missing event logging** → Every integration action needs an event
+- ❌ **Missing event logging** → Every integration action needs an event with groupId scoping
 
 ## Integration Mistakes
 - ❌ **Not handling network failures** → Always try/catch with retry logic
@@ -545,13 +552,13 @@ export const x402ApiAccess = mutation({
 # Success Criteria
 
 ## Ontology Alignment
-- [ ] Every integration mapped to all 6 dimensions
-- [ ] Organization boundaries respected (no cross-org data leaks)
+- [ ] Every integration mapped to all 6 dimensions (GROUPS, PEOPLE, THINGS, CONNECTIONS, EVENTS, KNOWLEDGE)
+- [ ] Group boundaries respected (no cross-group data leaks) with hierarchical nesting support
 - [ ] Actor permissions verified for all external calls
-- [ ] External systems represented as things (external_agent, external_workflow, external_connection)
-- [ ] All cross-system relationships use consolidated connection types
-- [ ] All integration actions logged as events with protocol metadata
-- [ ] Integration patterns stored as knowledge with embeddings
+- [ ] External systems represented as things (external_agent, external_workflow, external_connection) with groupId scoping
+- [ ] All cross-system relationships use consolidated connection types with groupId
+- [ ] All integration actions logged as events with protocol metadata and groupId scoping
+- [ ] Integration patterns stored as knowledge with embeddings and groupId scoping
 
 ## Protocol Integration
 - [ ] Protocol identified and documented (A2A, ACP, AP2, X402, AG-UI)
@@ -581,11 +588,11 @@ export const x402ApiAccess = mutation({
 
 **What's included:**
 - **Ontology Core (400 tokens):**
-  - 6-dimension structure (organizations, people, things, connections, events, knowledge)
-  - External thing types (external_agent, external_workflow, external_connection)
-  - Protocol thing types (mandate, product)
-  - Consolidated connection types (delegated, communicated, transacted, fulfilled)
-  - Consolidated event types (communication_event, task_event, commerce_event, mandate_event, payment_event)
+  - 6-dimension structure (GROUPS with hierarchical nesting, PEOPLE, THINGS, CONNECTIONS, EVENTS, KNOWLEDGE)
+  - External thing types (external_agent, external_workflow, external_connection) with groupId scoping
+  - Protocol thing types (mandate, product) with groupId scoping
+  - Consolidated connection types (delegated, communicated, transacted, fulfilled) with groupId
+  - Consolidated event types (communication_event, task_event, commerce_event, mandate_event, payment_event) with groupId
 
 - **Protocol Specifications (600 tokens):**
   - A2A: Agent-to-Agent communication patterns

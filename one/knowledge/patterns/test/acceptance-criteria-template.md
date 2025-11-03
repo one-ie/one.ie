@@ -182,9 +182,9 @@ These ensure the implementation follows the 6-dimension ontology.
 **Given:** User creates [entity]
 **When:** Data is saved
 **Then:**
-- Entity in `entities` table with correct `type`
+- Entity in `things` table with correct `type` (from 66 canonical types)
 - Properties in `properties` field (JSON)
-- `organizationId` is set correctly (multi-tenancy)
+- `groupId` is set correctly (multi-tenancy isolation)
 - `status` is set to "draft" initially
 - `createdAt` and `updatedAt` timestamps are set
 
@@ -200,10 +200,10 @@ These ensure the implementation follows the 6-dimension ontology.
 **When:** Relationship is saved
 **Then:**
 - Connection in `connections` table
-- `sourceId` and `targetId` are correct
-- `type` matches connection type in ontology
-- `metadata` contains relationship-specific data
-- Bidirectional if specified
+- `fromThingId` and `toThingId` are correct
+- `relationshipType` matches one of 25 canonical connection types
+- `metadata` contains relationship-specific data (protocol, variants)
+- Connection semantics align with ontology specification
 
 **Test Method:** Automated (Integration test)
 **Priority:** Critical
@@ -217,11 +217,11 @@ These ensure the implementation follows the 6-dimension ontology.
 **When:** Action completes
 **Then:**
 - Event in `events` table
-- `type` matches ontology event type
-- `actorId` is user who performed action
-- `targetId` is affected entity
+- `type` matches one of 67 canonical event types
+- `actorId` points to person who performed action
+- `targetId` is affected thing entity
 - `timestamp` is accurate
-- `metadata` contains action-specific data
+- `metadata` contains action-specific data (protocol, variants)
 
 **Test Method:** Automated (Integration test)
 **Priority:** Important

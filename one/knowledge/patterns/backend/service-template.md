@@ -19,10 +19,10 @@ import { Doc, Id } from "../_generated/dataModel";
 export class {EntityName}Service extends Context.Tag("{EntityName}Service")<
   {EntityName}Service,
   {
-    create: (data: Create{EntityName}Input) => Effect.Effect<Id<"{entities}">, {EntityName}Error>;
-    getById: (id: Id<"{entities}">) => Effect.Effect<Doc<"{entities}">, {EntityName}Error>;
-    update: (id: Id<"{entities}">, data: Update{EntityName}Input) => Effect.Effect<void, {EntityName}Error>;
-    delete: (id: Id<"{entities}">) => Effect.Effect<void, {EntityName}Error>;
+    create: (data: Create{EntityName}Input) => Effect.Effect<Id<"things">, {EntityName}Error>;
+    getById: (id: Id<"things">) => Effect.Effect<Doc<"things">, {EntityName}Error>;
+    update: (id: Id<"things">, data: Update{EntityName}Input) => Effect.Effect<void, {EntityName}Error>;
+    delete: (id: Id<"things">) => Effect.Effect<void, {EntityName}Error>;
   }
 >() {}
 
@@ -37,7 +37,7 @@ export type {EntityName}Error =
 export interface Create{EntityName}Input {
   name: string;
   properties: Record<string, any>;
-  organizationId: Id<"organizations">;
+  groupId: Id<"groups">;
 }
 
 export interface Update{EntityName}Input {
@@ -61,11 +61,11 @@ export const {EntityName}ServiceLive = {EntityName}Service.of({
       // Create entity
       const entityId = yield* _(
         Effect.tryPromise({
-          try: () => db.insert("{entities}", {
+          try: () => db.insert("things", {
             type: "{entityType}",
             name: data.name,
             properties: data.properties,
-            organizationId: data.organizationId,
+            groupId: data.groupId,
             status: "draft",
             createdAt: Date.now(),
             updatedAt: Date.now(),
@@ -171,9 +171,9 @@ export const {EntityName}ServiceLive = {EntityName}Service.of({
 ## Variables
 
 - `{EntityName}` - PascalCase entity name (e.g., `Course`, `Lesson`, `Enrollment`)
-- `{entities}` - Table name (always "entities" in our ontology)
-- `{entityType}` - Entity type value (e.g., "course", "lesson", "enrollment")
-- `{entity}` - Lowercase entity name for events (e.g., "course", "lesson")
+- `{things}` - Table name (always "things" in 6-dimension ontology)
+- `{entityType}` - Entity type value from 66 canonical types (e.g., "course", "lesson")
+- `{entity}` - Lowercase entity name for events (e.g., "course_created", "course_updated")
 
 ## Usage
 
@@ -190,9 +190,9 @@ export const {EntityName}ServiceLive = {EntityName}Service.of({
 export class CourseService extends Context.Tag("CourseService")<
   CourseService,
   {
-    create: (data: CreateCourseInput) => Effect.Effect<Id<"entities">, CourseError>;
-    getById: (id: Id<"entities">) => Effect.Effect<Doc<"entities">, CourseError>;
-    publish: (id: Id<"entities">) => Effect.Effect<void, CourseError>;
+    create: (data: CreateCourseInput) => Effect.Effect<Id<"things">, CourseError>;
+    getById: (id: Id<"things">) => Effect.Effect<Doc<"things">, CourseError>;
+    publish: (id: Id<"things">) => Effect.Effect<void, CourseError>;
   }
 >() {}
 
@@ -203,10 +203,13 @@ export const create = mutation({
     description: v.string(),
   },
   handler: async (ctx, args) => {
+    const identity = await ctx.auth.getUserIdentity();
+    if (!identity) throw new Error("Not authenticated");
+
     const program = CourseService.create({
       name: args.name,
       properties: { description: args.description },
-      organizationId: ctx.auth.orgId,
+      groupId: identity.groupId,
     });
 
     return await Effect.runPromise(

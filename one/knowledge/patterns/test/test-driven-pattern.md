@@ -30,8 +30,9 @@ describe("Feature 2-1: Course CRUD Operations", () => {
     it("should create a new course with valid data", async () => {
       // Arrange
       const courseData = {
-        type: "course",
+        type: "course",  // From 66 canonical thing types
         name: "Introduction to TypeScript",
+        groupId: "group_test" as Id<"groups">,
         properties: {
           description: "Learn TypeScript basics",
           duration: 120,
@@ -41,13 +42,13 @@ describe("Feature 2-1: Course CRUD Operations", () => {
 
       // Act
       const courseId = await convex.mutation(
-        api.mutations.entities.create,
+        api.mutations.things.create,
         courseData
       );
 
       // Assert
       expect(courseId).toBeDefined();
-      const course = await convex.query(api.queries.entities.getById, {
+      const course = await convex.query(api.queries.things.getById, {
         id: courseId,
       });
       expect(course?.name).toBe(courseData.name);
@@ -58,12 +59,13 @@ describe("Feature 2-1: Course CRUD Operations", () => {
       // Arrange
       const invalidData = {
         type: "course",
+        groupId: "group_test" as Id<"groups">,
         properties: {},
       };
 
       // Act & Assert
       await expect(async () => {
-        await convex.mutation(api.mutations.entities.create, invalidData);
+        await convex.mutation(api.mutations.things.create, invalidData);
       }).toThrow();
     });
   });
@@ -78,7 +80,7 @@ describe("Feature 2-1: Course CRUD Operations", () => {
     });
 
     it("AC3: Creation event is logged", async () => {
-      // Test that entity_created event exists
+      // Test that entity_created event (one of 67 canonical types) is logged
     });
   });
 });

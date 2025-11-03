@@ -2,69 +2,76 @@
 
 **Category:** Frontend
 **Context:** When creating Astro pages that fetch data server-side and render with islands architecture
-**Problem:** Need consistent page structure that leverages SSR, uses Convex for data, and adds interactivity selectively
+**Problem:** Need consistent page structure that leverages SSR, uses DataProvider pattern for data fetching, and adds interactivity selectively
 
 ## Solution
 
-Use Astro's SSR for initial page load, fetch data server-side with ConvexHttpClient, render static content, and add React islands for interactivity.
+Use Astro's SSR for initial page load, fetch data server-side via ConvexHttpClient (provider abstraction), render static content, and add React islands for interactivity.
 
 ## Template
 
 ```astro
 ---
-// src/pages/{entities}/[id].astro
+// src/pages/[thingType]/[id].astro
 import Layout from '@/layouts/Layout.astro';
 import { ConvexHttpClient } from 'convex/browser';
 import { api } from '@/convex/_generated/api';
-import type { Id } from '@/convex/_generated/dataModel';
 import {EntityName}Detail from '@/components/features/{EntityName}Detail';
 import {EntityName}Actions from '@/components/features/{EntityName}Actions';
 
 // Server-side data fetching
-const { id } = Astro.params;
+const { id, thingType } = Astro.params;
 
-if (!id) {
+if (!id || !thingType) {
   return Astro.redirect('/404');
 }
 
 const convex = new ConvexHttpClient(import.meta.env.PUBLIC_CONVEX_URL);
 
-// Fetch data server-side (no client auth needed for public data)
-const {entity} = await convex.query(api.queries.{entities}.getById, {
-  id: id as Id<"{entities}">
+// Fetch data server-side using provider (works with any backend)
+const thing = await convex.query(api.queries.things.get, {
+  id: id
 });
 
-if (!{entity}) {
+if (!thing) {
   return Astro.redirect('/404');
 }
 
 // Extract metadata for SEO
-const title = `${typeof {entity}.name === 'string' ? {entity}.name : 'Untitled'} | {EntityName}`;
-const description = {entity}.properties?.description || `View {entity} details`;
+const title = `${thing.name || 'Untitled'} | ${thingType}`;
+const description = thing.properties?.description || `View ${thingType} details`;
+
+// Optional: Fetch related things (e.g., lessons for a course)
+const relatedThings = await convex.query(api.queries.connections.getRelated, {
+  thingId: id,
+  relationshipType: "part_of",
+  direction: "to"
+}).catch(() => []);
 ---
 
 <Layout title={title} description={description}>
   <div class="container mx-auto px-4 py-8">
     <!-- Static header (no JS needed) -->
     <header class="mb-8">
-      <h1 class="text-4xl font-bold">{typeof {entity}.name === 'string' ? {entity}.name : 'Untitled'}</h1>
+      <h1 class="text-4xl font-bold">{thing.name || 'Untitled'}</h1>
       <p class="text-muted-foreground mt-2">
-        {typeof {entity}.properties?.description === 'string' ? {entity}.properties.description : ''}
+        {thing.properties?.description || ''}
       </p>
     </header>
 
     <!-- Interactive detail component (React island) -->
     <{EntityName}Detail
       client:load
-      {entity}={{entity}}
-      {entity}Id={id}
+      thing={thing}
+      thingId={id}
+      relatedThings={relatedThings}
     />
 
     <!-- Interactive actions (only if user interaction needed) -->
     <{EntityName}Actions
       client:visible
-      {entity}Id={id}
-      status={{entity}.status}
+      thingId={id}
+      status={thing.status}
     />
   </div>
 </Layout>
@@ -95,7 +102,7 @@ const description = {entity}.properties?.description || `View {entity} details`;
 
 ```astro
 ---
-// src/pages/courses/[id].astro
+// src/pages/course/[id].astro
 import Layout from '@/layouts/Layout.astro';
 import { ConvexHttpClient } from 'convex/browser';
 import { api } from '@/convex/_generated/api';
@@ -107,16 +114,18 @@ if (!id) return Astro.redirect('/404');
 
 const convex = new ConvexHttpClient(import.meta.env.PUBLIC_CONVEX_URL);
 
-const course = await convex.query(api.queries.entities.getById, {
-  id: id as Id<"entities">
+// Fetch course (generic thing pattern)
+const course = await convex.query(api.queries.things.get, {
+  id: id
 });
 
 if (!course) return Astro.redirect('/404');
 
-// Fetch related lessons
-const lessons = await convex.query(api.queries.entities.getByConnection, {
-  sourceId: id,
-  type: "contains"
+// Fetch related lessons using generic connection pattern
+const lessons = await convex.query(api.queries.connections.getRelated, {
+  thingId: id,
+  relationshipType: "part_of",
+  direction: "to"
 });
 
 const title = `${course.name} | Course`;
@@ -164,12 +173,16 @@ Choose the right directive for performance:
   - **Fix:** Use `client:visible` or `client:idle` for non-critical components
 - **Mistake:** Fetching data client-side that could be SSR
   - **Fix:** Use `ConvexHttpClient` in frontmatter for SSR data
-- **Mistake:** Not handling null/undefined entity
-  - **Fix:** Always check if entity exists, redirect to 404
+- **Mistake:** Not handling null/undefined thing
+  - **Fix:** Always check if thing exists, redirect to 404
 - **Mistake:** Hardcoding metadata
-  - **Fix:** Extract title/description from entity data
+  - **Fix:** Extract title/description from thing data
 - **Mistake:** Rendering sensitive data without auth check
   - **Fix:** Check auth server-side or use protected Convex queries
+- **Mistake:** Using deprecated `getById` or `getByConnection` patterns
+  - **Fix:** Use generic `api.queries.things.get` and `api.queries.connections.getRelated` that work with any thing type
+- **Mistake:** Creating type-specific pages instead of generic
+  - **Fix:** Use `[thingType]/[id].astro` pattern to handle all 66 thing types in one page
 
 ## Related Patterns
 

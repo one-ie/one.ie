@@ -274,12 +274,12 @@ function handleFilterChange(status: string) {
 - Grid gap: `gap-6` (1.5rem)
 - Section padding: `py-8` (2rem)
 
-**Colors:**
-- Primary: `hsl(var(--primary))`
-- Background: `hsl(var(--background))`
-- Card: `hsl(var(--card))`
+**Colors (from group brand settings):**
+- Primary: `hsl(var(--color-primary))`
+- Background: `hsl(var(--color-background))`
+- Card: `hsl(var(--color-card))`
 
-**Typography:**
+**Typography (from group preferences):**
 - Page title: `text-4xl font-bold`
 - Card title: `text-xl font-semibold`
 - Description: `text-sm text-muted-foreground`
@@ -289,24 +289,32 @@ function handleFilterChange(status: string) {
 - Modal: 200ms ease-in-out
 - Toast: 3000ms duration
 
+**Accessibility (WCAG AA):**
+- Body text contrast ratio ≥ 4.5:1
+- Large text (≥18px) contrast ratio ≥ 3:1
+- Focus states visible on all interactive elements
+
 ---
 
-## Accessibility
+## Accessibility (WCAG 2.1 AA Compliance)
 
 **ARIA Labels:**
-- All buttons have `aria-label`
+- All buttons have `aria-label` and semantic `<button>` elements
 - Modal has `role="dialog"` and `aria-modal="true"`
 - Grid has `role="list"`, cards have `role="listitem"`
+- Form inputs have associated `<label>` elements
 
 **Keyboard Navigation:**
 - Tab order: Create button → Filter → Search → Cards
 - Enter on card = View details
 - Escape closes modals
+- All interactive elements reachable via Tab key only
 
 **Screen Reader:**
 - Loading state announces "Loading {entities}"
 - Empty state announces "No {entities} found"
 - Success announces "{N} {entities} loaded"
+- Error states announced to screen reader with status role
 
 ---
 
@@ -392,8 +400,18 @@ function handleFilterChange(status: string) {
 - **Mistake:** No acceptance criteria mapping
   - **Fix:** Reference ACs in each component section
 
+## Ontology Integration
+
+This pattern maps to the 6-dimension ontology:
+
+- **Things (Dimension 3):** Design as thing type with designType property
+- **Connections (Dimension 4):** Component relationships form tree structure
+- **Knowledge (Dimension 6):** Design patterns stored as knowledge chunks
+- **Group Scoping:** All designs scoped to groupId for multi-tenant isolation
+
 ## Related Patterns
 
 - **wireframe-template.md** - Visual design reference
-- **component-template.md** - React implementation
-- **page-template.md** - Astro page implementation
+- **test-driven-design-pattern.md** - Design process
+- **component-template.md** - React implementation guide
+- **page-template.md** - Astro page implementation guide

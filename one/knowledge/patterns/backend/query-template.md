@@ -30,9 +30,9 @@ export const list = query({
 
     // 2. Build query with indexes
     let query = ctx.db
-      .query("{entities}")
-      .withIndex("by_organization", (q) =>
-        q.eq("organizationId", identity.orgId)
+      .query("things")
+      .withIndex("by_group_type", (q) =>
+        q.eq("groupId", identity.groupId).eq("type", args.type)
       );
 
     // 3. Apply filters
@@ -68,7 +68,7 @@ export const getById = query({
     const entity = await ctx.db.get(args.id);
 
     // 3. Check ownership (multi-tenancy)
-    if (!entity || entity.organizationId !== identity.orgId) {
+    if (!entity || entity.groupId !== identity.groupId) {
       return null;
     }
 
@@ -90,9 +90,9 @@ export const getByType = query({
 
     // 2. Query with compound index
     const entities = await ctx.db
-      .query("{entities}")
-      .withIndex("by_organization_and_type", (q) =>
-        q.eq("organizationId", identity.orgId).eq("type", args.type)
+      .query("things")
+      .withIndex("by_group_type", (q) =>
+        q.eq("groupId", identity.groupId).eq("type", args.type)
       )
       .order("desc")
       .take(args.limit ?? 100);
@@ -114,11 +114,11 @@ export const search = query({
       return [];
     }
 
-    // 2. Search by organization first (use index)
+    // 2. Search by group first (use index)
     let results = ctx.db
-      .query("{entities}")
-      .withIndex("by_organization", (q) =>
-        q.eq("organizationId", identity.orgId)
+      .query("things")
+      .withIndex("by_group_type", (q) =>
+        q.eq("groupId", identity.groupId).eq("type", "all")
       );
 
     // 3. Filter by type if provided
@@ -157,9 +157,9 @@ export const count = query({
 
     // 2. Build query
     let query = ctx.db
-      .query("{entities}")
-      .withIndex("by_organization", (q) =>
-        q.eq("organizationId", identity.orgId)
+      .query("things")
+      .withIndex("by_group_type", (q) =>
+        q.eq("groupId", identity.groupId)
       );
 
     // 3. Apply filters
@@ -186,7 +186,7 @@ export const count = query({
 
 1. Copy template to `backend/convex/queries/{entities}.ts`
 2. Add entity-specific query methods as needed
-3. Ensure indexes exist in schema (`by_organization`, `by_organization_and_type`)
+3. Ensure indexes exist in schema (`by_group_type` for groupId + type)
 4. Export from `backend/convex/_generated/api.ts`
 
 ## Example (Course Queries)
@@ -203,9 +203,9 @@ export const listCourses = query({
     if (!identity) return [];
 
     return await ctx.db
-      .query("entities")
-      .withIndex("by_organization_and_type", (q) =>
-        q.eq("organizationId", identity.orgId).eq("type", "course")
+      .query("things")
+      .withIndex("by_group_type", (q) =>
+        q.eq("groupId", identity.groupId).eq("type", "course")
       )
       .filter((q) =>
         args.status ? q.eq(q.field("status"), args.status) : true
@@ -224,19 +224,20 @@ export const getCourseWithLessons = query({
 
     // Get course
     const course = await ctx.db.get(args.courseId);
-    if (!course || course.organizationId !== identity.orgId) {
+    if (!course || course.groupId !== identity.groupId) {
       return null;
     }
 
     // Get lessons (via connections)
     const lessonConnections = await ctx.db
       .query("connections")
-      .withIndex("by_source", (q) => q.eq("sourceId", args.courseId))
-      .filter((q) => q.eq(q.field("type"), "contains"))
+      .withIndex("from_type", (q) =>
+        q.eq("fromThingId", args.courseId).eq("relationshipType", "part_of")
+      )
       .collect();
 
     const lessons = await Promise.all(
-      lessonConnections.map((conn) => ctx.db.get(conn.targetId))
+      lessonConnections.map((conn) => ctx.db.get(conn.toThingId))
     );
 
     return {
@@ -251,10 +252,10 @@ export const getCourseWithLessons = query({
 
 - **Mistake:** Not checking authentication
   - **Fix:** Always verify `ctx.auth.getUserIdentity()` first
-- **Mistake:** Not filtering by organization (multi-tenancy leak)
-  - **Fix:** Always use `by_organization` index first
+- **Mistake:** Not filtering by group (multi-tenancy leak)
+  - **Fix:** Always use `by_group_type` index first
 - **Mistake:** Not using indexes (slow queries)
-  - **Fix:** Use `withIndex()` for frequently queried fields
+  - **Fix:** Use `withIndex()` for frequently queried fields like groupId, type
 - **Mistake:** Returning too many results
   - **Fix:** Always apply `.take(limit)` or slice results
 - **Mistake:** Doing heavy computation in queries

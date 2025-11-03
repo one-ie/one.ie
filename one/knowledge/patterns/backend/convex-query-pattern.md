@@ -27,59 +27,96 @@ export const list = query({
     limit: v.optional(v.number()),
   },
   handler: async (ctx, args) => {
-    // 1. Build query with index
-    let q = ctx.db
-      .query("entities")
-      .withIndex("by_type", (q) => q.eq("type", args.type));
+    // 1. Authenticate
+    const identity = await ctx.auth.getUserIdentity();
+    if (!identity) return [];
 
-    // 2. Apply filters
+    // 2. Get user's group
+    const person = await ctx.db.query("people")
+      .withIndex("by_email", q => q.eq("email", identity.email))
+      .first();
+
+    if (!person?.groupId) return [];
+
+    // 3. Build query with compound index (groupId + type)
+    let q = ctx.db
+      .query("things")
+      .withIndex("by_group_type", (q) =>
+        q.eq("groupId", person.groupId).eq("type", args.type)
+      );
+
+    // 4. Apply status filter
     if (args.status) {
-      q = q.filter((entity) => entity.status === args.status);
+      q = q.filter((thing) => thing.status === args.status);
     }
 
-    // 3. Limit results
+    // 5. Limit results
     const limit = args.limit || 100;
-    const entities = await q.take(limit);
+    const things = await q.take(limit);
 
-    // 4. Return results
-    return entities;
+    // 6. Return results
+    return things;
   },
 });
 
 export const getById = query({
-  args: { id: v.id("entities") },
+  args: { id: v.id("things") },
   handler: async (ctx, args) => {
-    return await ctx.db.get(args.id);
+    // 1. Authenticate
+    const identity = await ctx.auth.getUserIdentity();
+    if (!identity) return null;
+
+    // 2. Get user's group
+    const person = await ctx.db.query("people")
+      .withIndex("by_email", q => q.eq("email", identity.email))
+      .first();
+
+    if (!person?.groupId) return null;
+
+    // 3. Get thing and verify group ownership
+    const thing = await ctx.db.get(args.id);
+    if (!thing || thing.groupId !== person.groupId) return null;
+
+    return thing;
   },
 });
 ```
 
 ## When to Use
 
-- Listing entities of a specific type
-- Fetching single entities by ID
-- Searching for entities with filters
-- Building relationship graphs (connections)
-- Retrieving event history
+- Listing things of a specific type
+- Fetching single things by ID
+- Searching for things with filters (status, type)
+- Building relationship graphs (querying connections)
+- Retrieving event history for audit trails
+- Fetching knowledge/labels for RAG
 
 ## Best Practices
 
-1. **Use indexes** - Always use indexed fields for queries
-2. **Limit results** - Default to 100 items max, use pagination
-3. **Filter server-side** - Don't fetch all data and filter client-side
-4. **Project fields** - Only return fields you need (coming in future Convex versions)
-5. **Cache-friendly** - Queries are automatically cached by Convex
+1. **Always authenticate** - Verify user identity before returning data
+2. **Scope by groupId** - Filter by user's groupId for multi-tenant isolation
+3. **Use compound indexes** - Use `by_group_type` (groupId + type) for efficient queries
+4. **Limit results** - Default to 100 items max, always paginate
+5. **Filter server-side** - Apply status/type filters in the query, not client-side
+6. **Return scoped data** - Only return things the user can access
+7. **Cache-friendly** - Queries are automatically cached by Convex
 
 ## Common Mistakes
 
+❌ **Don't:** Skip authentication
+✅ **Do:** Always verify `ctx.auth.getUserIdentity()` first
+
+❌ **Don't:** Query without groupId filter
+✅ **Do:** Always scope by `groupId` to prevent multi-tenant leaks
+
 ❌ **Don't:** Query without indexes
-✅ **Do:** Use `.withIndex()` for primary filters
+✅ **Do:** Use `.withIndex()` for groupId + type queries
 
 ❌ **Don't:** Return unlimited results
 ✅ **Do:** Always use `.take(limit)`
 
 ❌ **Don't:** Fetch then filter client-side
-✅ **Do:** Filter in the query
+✅ **Do:** Filter status/type in the query
 
 ## Related Patterns
 

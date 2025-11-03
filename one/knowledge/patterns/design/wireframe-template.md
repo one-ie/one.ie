@@ -209,8 +209,24 @@ Use ASCII/markdown wireframes for speed, show all interactive elements, annotate
 - **Mistake:** Design decisions not tied to tests
   - **Fix:** Explain every decision with test reference
 
+## Ontology Integration
+
+This pattern maps to the 6-dimension ontology:
+
+- **Things (Dimension 3):** Wireframe as design thing with wireframe properties
+- **Connections (Dimension 4):** Feature → design relationship (part_of)
+- **Events (Dimension 5):** Design creation logged as content_event
+- **Knowledge (Dimension 6):** Design patterns tagged with format:wireframe
+- **Group Scoping:** Wireframes scoped to groupId for multi-tenant isolation
+
+## Design System Alignment
+
+- **Brand Settings:** Colors/typography pulled from group properties
+- **Design Tokens:** WCAG AA accessibility compliance required
+- **Responsive:** Show behavior at 320px, 768px, 1024px, 1440px breakpoints
+
 ## Related Patterns
 
 - **component-architecture.md** - Component structure
-- **user-flow-template.md** - Test reference
-- **acceptance-criteria-template.md** - Criteria reference
+- **test-driven-design-pattern.md** - Design process
+- **component-template.md** - Component implementation

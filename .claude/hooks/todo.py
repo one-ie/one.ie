@@ -9,16 +9,31 @@ This hook runs on UserPromptSubmit to provide context about:
 - Required ontology dimensions
 - Dependencies from previous inferences
 - Organization and person context
+- Phase context and parallel execution opportunities
 """
 import json
 import sys
 import os
 from pathlib import Path
-from typing import Dict, Any, Optional
+from typing import Dict, Any, Optional, List
+
+# Phase definitions (10 phases of 10 inferences each)
+PHASES = {
+    1: {"name": "Foundation & Setup", "range": (1, 10), "icon": "🏗️"},
+    2: {"name": "Backend Schema & Services", "range": (11, 20), "icon": "⚙️"},
+    3: {"name": "Frontend Pages & Components", "range": (21, 30), "icon": "🎨"},
+    4: {"name": "Integration & Connections", "range": (31, 40), "icon": "🔗"},
+    5: {"name": "Authentication & Authorization", "range": (41, 50), "icon": "🔐"},
+    6: {"name": "Knowledge & RAG", "range": (51, 60), "icon": "🧠"},
+    7: {"name": "Quality & Testing", "range": (61, 70), "icon": "✅"},
+    8: {"name": "Design & Wireframes", "range": (71, 80), "icon": "🎨"},
+    9: {"name": "Performance & Optimization", "range": (81, 90), "icon": "⚡"},
+    10: {"name": "Deployment & Documentation", "range": (91, 100), "icon": "🚀"},
+}
 
 # Inference-to-dimension mapping
 INFERENCE_DIMENSIONS = {
-    "organizations": [6, 18, 43],
+    "groups": [6, 18, 43],
     "people": [7, 42, 43, 44, 45, 46, 47, 48, 49, 50],
     "things": [2, 11, 12, 21, 22, 23],
     "connections": [3, 31, 32, 33, 34, 35, 36, 37, 38, 39, 40],
@@ -28,13 +43,22 @@ INFERENCE_DIMENSIONS = {
 
 # Inference-to-specialist mapping
 INFERENCE_SPECIALISTS = {
+    "director": list(range(1, 11)),
     "backend": list(range(11, 21)) + list(range(41, 51)),
-    "frontend": list(range(21, 31)) + list(range(71, 81)),
+    "frontend": list(range(21, 31)),
     "integration": list(range(31, 41)),
     "quality": list(range(61, 71)),
-    "design": list(range(71, 81)),
-    "documenter": list(range(95, 100)),
+    "designer": list(range(71, 81)),
+    "ops": list(range(81, 100)),
+    "documenter": list(range(95, 101)),
 }
+
+# Parallel execution opportunities (inferences that can run concurrently)
+PARALLEL_GROUPS = [
+    {"inferences": list(range(11, 21)) + list(range(21, 31)), "note": "Backend + Frontend (after schema defined at Infer 12)"},
+    {"inferences": list(range(61, 71)) + list(range(71, 81)), "note": "Tests + Design (interdependent validation)"},
+    {"inferences": list(range(95, 101)), "note": "Documentation (can start earlier)"},
+]
 
 # The 100 inference tasks (abbreviated for context efficiency)
 INFERENCE_TASKS = {
@@ -164,7 +188,21 @@ def load_state() -> Dict[str, Any]:
     return json.loads(state_file.read_text())
 
 
-def get_dimensions_for_inference(inference: int) -> list:
+def get_phase_for_inference(inference: int) -> Dict[str, Any]:
+    """Get phase information for this inference"""
+    for phase_num, phase_info in PHASES.items():
+        start, end = phase_info["range"]
+        if start <= inference <= end:
+            return {
+                "number": phase_num,
+                "name": phase_info["name"],
+                "icon": phase_info["icon"],
+                "progress": f"{inference - start + 1}/{end - start + 1}"
+            }
+    return {"number": 0, "name": "Unknown", "icon": "❓", "progress": "0/0"}
+
+
+def get_dimensions_for_inference(inference: int) -> List[str]:
     """Get ontology dimensions relevant to this inference"""
     dimensions = []
     for dimension, inferences in INFERENCE_DIMENSIONS.items():
@@ -179,6 +217,15 @@ def get_specialist_for_inference(inference: int) -> Optional[str]:
         if inference in inferences:
             return specialist
     return None
+
+
+def get_parallel_opportunities(inference: int) -> List[str]:
+    """Get parallel execution opportunities for current inference"""
+    opportunities = []
+    for group in PARALLEL_GROUPS:
+        if inference in group["inferences"]:
+            opportunities.append(group["note"])
+    return opportunities
 
 
 def get_dependencies(inference: int) -> list:
@@ -200,58 +247,81 @@ def generate_context(state: Dict[str, Any]) -> str:
     """Generate context to inject into Claude's conversation"""
     current = state["current_inference"]
     task = INFERENCE_TASKS.get(current, "Unknown task")
+    phase = get_phase_for_inference(current)
     dimensions = get_dimensions_for_inference(current)
     specialist = get_specialist_for_inference(current)
+    parallel_ops = get_parallel_opportunities(current)
     dependencies = [d for d in get_dependencies(current) if d in state["completed_inferences"]]
+    total_deps = len(get_dependencies(current))
+    progress_pct = (len(state["completed_inferences"]) / 100) * 100
 
     context = f"""
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-📋 CURRENT INFERENCE: Infer {current}/100
+{phase['icon']} CURRENT INFERENCE: Infer {current}/100
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
 **Feature:** {state["feature_name"]}
 **Organization:** {state["organization"]}
 **Person Role:** {state["person_role"]}
 
+**Phase {phase['number']}/10:** {phase['name']} ({phase['progress']})
 **Task:** {task}
 
-**Ontology Dimensions:** {", ".join(dimensions) if dimensions else "Foundation"}
-**Assigned Specialist:** {specialist if specialist else "Engineering Director"}
+**6-Dimension Ontology:** {", ".join(dimensions) if dimensions else "Foundation (all dimensions)"}
+**Assigned Specialist:** {specialist if specialist else "director"}
 
-**Dependencies Met:** {len(dependencies)}/{len(get_dependencies(current))} completed
-**Progress:** {len(state["completed_inferences"])}/100 inferences complete ({len(state["completed_inferences"])}%)
+**Dependencies Met:** {len(dependencies)}/{total_deps} completed
+**Progress:** {len(state["completed_inferences"])}/100 inferences complete ({progress_pct:.0f}%)
+"""
 
+    # Add parallel execution opportunities
+    if parallel_ops:
+        context += f"\n**Parallel Opportunities:** {', '.join(parallel_ops)}\n"
+
+    context += """
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 🎯 NEXT 5 INFERENCES:
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 """
 
-    # Add next 5 inferences
+    # Add next 5 inferences with enhanced info
     for i in range(current, min(current + 5, 101)):
         task_desc = INFERENCE_TASKS.get(i, "Unknown")
         dims = get_dimensions_for_inference(i)
         spec = get_specialist_for_inference(i)
+        inf_phase = get_phase_for_inference(i)
         status = "✅" if i in state["completed_inferences"] else "⏸️ " if i == current else "⏹️ "
+
         context += f"{status} Infer {i}: {task_desc}\n"
-        if dims or spec:
-            context += f"   └─ Dimensions: {', '.join(dims) if dims else 'N/A'} | Specialist: {spec if spec else 'N/A'}\n"
+        if i == current:
+            # Show more detail for current inference
+            context += f"   {inf_phase['icon']} Phase: {inf_phase['name']}\n"
+            if dims:
+                context += f"   📊 Dimensions: {', '.join(dims)}\n"
+            if spec:
+                context += f"   👤 Specialist: {spec}\n"
+        else:
+            # Condensed info for upcoming inferences
+            if dims or spec:
+                context += f"   └─ {', '.join(dims) if dims else 'Foundation'} | {spec if spec else 'director'}\n"
 
     context += "\n━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\n"
 
-    # Add recent lessons learned
+    # Add recent lessons learned (only if meaningful)
     if state.get("lessons_learned"):
-        recent_lessons = state["lessons_learned"][-3:]  # Last 3 lessons
-        context += "💡 RECENT LESSONS LEARNED:\n━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\n"
-        for lesson in recent_lessons:
-            context += f"• Infer {lesson['inference']}: {lesson['lesson']}\n"
-        context += "\n"
+        recent_lessons = [l for l in state["lessons_learned"][-5:] if l["lesson"] != f"Completed inference {l['inference']} successfully"]
+        if recent_lessons:
+            context += "💡 RECENT LESSONS LEARNED:\n━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\n"
+            for lesson in recent_lessons[-3:]:  # Last 3 meaningful lessons
+                context += f"• Infer {lesson['inference']}: {lesson['lesson']}\n"
+            context += "\n"
 
     context += """
 🔄 WORKFLOW COMMANDS:
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 /done     - Mark current inference complete and advance
-/next     - Skip to next inference (use when current is not applicable)
-/infer N  - Jump to specific inference N (use sparingly)
+/next     - Skip to next inference (if not applicable)
+/reset    - Start new feature (reset to Infer 1)
 /plan     - View complete 100-inference plan
 
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━

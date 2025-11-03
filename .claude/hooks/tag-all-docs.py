@@ -7,10 +7,11 @@ Usage:
     python3 .claude/hooks/tag-all-docs.py [--dry-run] [--verbose]
 
 This script:
-- Scans all markdown files in one/ directory
+- Scans all markdown files in one/ directory and installation folders
 - Adds metadata frontmatter if missing
 - Infers dimension, category, and tags from file location and content
 - Updates existing metadata if incomplete
+- Supports installation-specific and group-specific documentation
 - Generates a comprehensive report
 """
 import argparse
@@ -19,8 +20,9 @@ from pathlib import Path
 from datetime import datetime
 from typing import Dict, List, Tuple, Optional
 import sys
+import os
 
-# Dimension inference from directory structure
+# 6-Dimension Ontology (Universal Reality Model)
 DIMENSION_MAP = {
     "groups": "groups",
     "people": "people",
@@ -30,7 +32,7 @@ DIMENSION_MAP = {
     "knowledge": "knowledge",
 }
 
-# Category inference from subdirectories
+# Category inference from subdirectories (ontology-aligned)
 CATEGORY_MAP = {
     "agents": "agents",
     "plans": "plans",
@@ -41,20 +43,33 @@ CATEGORY_MAP = {
     "claude": "agents",
     "protocols": "protocols",
     "workflows": "workflows",
+    "patterns": "patterns",
+    "architecture": "architecture",
+    "specifications": "specifications",
+    "guides": "guides",
+    "rules": "governance",
 }
 
-# Tag suggestions based on keywords in content
+# Tag suggestions based on keywords in content (ontology-aligned)
 TAG_KEYWORDS = {
     "ai": ["ai", "artificial-intelligence", "machine-learning"],
-    "agent": ["intelligence-agent", "ai-agent", "automation"],
-    "ontology": ["ontology", "data-model", "schema"],
+    "agent": ["agent", "ai-agent", "automation"],
+    "ontology": ["ontology", "6-dimensions", "reality-model"],
     "protocol": ["protocol", "specification", "interoperability"],
     "architecture": ["architecture", "system-design", "patterns"],
-    "frontend": ["frontend", "ui", "components", "react"],
-    "backend": ["backend", "convex", "database", "services"],
+    "frontend": ["frontend", "ui", "astro", "react"],
+    "backend": ["backend", "convex", "database", "effect"],
     "blockchain": ["blockchain", "crypto", "web3", "sui", "solana"],
-    "authentication": ["auth", "authentication", "authorization", "rbac"],
-    "testing": ["testing", "quality", "validation", "e2e"],
+    "authentication": ["auth", "better-auth", "authorization"],
+    "testing": ["testing", "quality", "validation"],
+    "groups": ["groups", "multi-tenant", "hierarchical"],
+    "people": ["people", "roles", "authorization", "governance"],
+    "things": ["things", "entities", "types"],
+    "connections": ["connections", "relationships", "graph"],
+    "events": ["events", "actions", "audit-trail"],
+    "knowledge": ["knowledge", "rag", "embeddings", "semantic-search"],
+    "inference": ["inference", "claude", "planning"],
+    "installation": ["installation", "customization", "organization"],
 }
 
 
@@ -69,14 +84,33 @@ class MetadataTagger:
         self.files_skipped = 0
 
     def scan_and_tag_all(self):
-        """Scan all markdown files and add/update metadata"""
+        """Scan all markdown files in /one/ and installation folders"""
+        markdown_files = []
+
+        # Scan global /one/ directory
         one_dir = self.project_dir / "one"
-        if not one_dir.exists():
-            print(f"Error: {one_dir} does not exist")
+        if one_dir.exists():
+            global_files = list(one_dir.rglob("*.md"))
+            markdown_files.extend(global_files)
+            print(f"Found {len(global_files)} files in /one/ (global)")
+        else:
+            print(f"Warning: {one_dir} does not exist")
+
+        # Scan installation folders (any top-level dir except known dirs)
+        excluded_dirs = {"one", "web", "backend", "apps", ".claude", ".git", "node_modules", "dist", "build"}
+        for item in self.project_dir.iterdir():
+            if item.is_dir() and item.name not in excluded_dirs and not item.name.startswith("."):
+                # This might be an installation folder
+                installation_files = list(item.rglob("*.md"))
+                if installation_files:
+                    markdown_files.extend(installation_files)
+                    print(f"Found {len(installation_files)} files in /{item.name}/ (installation)")
+
+        if not markdown_files:
+            print("No markdown files found to process")
             return
 
-        markdown_files = list(one_dir.rglob("*.md"))
-        print(f"Found {len(markdown_files)} markdown files to process\n")
+        print(f"\nTotal: {len(markdown_files)} markdown files to process\n")
 
         for md_file in markdown_files:
             self.files_processed += 1
@@ -169,14 +203,31 @@ class MetadataTagger:
         relative_path = file_path.relative_to(self.project_dir)
         parts = relative_path.parts
 
-        # Infer dimension from first directory level
-        dimension = parts[1] if len(parts) > 1 and parts[1] in DIMENSION_MAP else "knowledge"
+        # Detect if this is an installation-specific file
+        is_installation = parts[0] not in {"one", "web", "backend", "apps", ".claude"}
+        installation_name = parts[0] if is_installation else None
 
-        # Infer category from second directory level or filename
+        # Detect if this is group-specific
+        is_group = len(parts) > 2 and parts[1] == "groups" if is_installation else False
+        group_slug = parts[2] if is_group else None
+
+        # Infer dimension from directory structure
+        if is_installation:
+            # Installation folders mirror /one/ structure
+            dimension = parts[1] if len(parts) > 1 and parts[1] in DIMENSION_MAP else "knowledge"
+        else:
+            # Global /one/ structure
+            dimension = parts[1] if len(parts) > 1 and parts[1] in DIMENSION_MAP else "knowledge"
+
+        # Infer category from subdirectories
         category = "general"
-        if len(parts) > 2:
-            subdir = parts[2]
-            category = CATEGORY_MAP.get(subdir, subdir)
+        if is_group:
+            category = "group-specific"
+        elif len(parts) > 2:
+            subdir_idx = 3 if is_group else (2 if is_installation else 2)
+            if len(parts) > subdir_idx:
+                subdir = parts[subdir_idx]
+                category = CATEGORY_MAP.get(subdir, subdir)
 
         # Generate title from filename
         title = existing.get("title") or file_path.stem.replace("-", " ").title()
@@ -184,19 +235,38 @@ class MetadataTagger:
         # Extract/infer tags
         tags = self.infer_tags(content, file_path, existing)
 
-        # Generate AI context
-        ai_context = self.generate_ai_context(file_path, dimension, category, content)
+        # Infer related dimensions by analyzing content
+        related_dimensions = self.infer_related_dimensions(content, dimension)
 
-        return {
+        # Generate AI context
+        ai_context = self.generate_ai_context(
+            file_path, dimension, category, content,
+            installation_name, group_slug, related_dimensions
+        )
+
+        metadata = {
             "title": title,
             "dimension": dimension,
             "category": category,
-            "tags": tags,
+            "tags": ", ".join(tags),
+            "related_dimensions": ", ".join(related_dimensions),
             "created": existing.get("created", datetime.now().strftime("%Y-%m-%d")),
             "updated": datetime.now().strftime("%Y-%m-%d"),
             "version": existing.get("version", "1.0.0"),
             "ai_context": ai_context,
         }
+
+        # Add scope metadata
+        if is_installation:
+            metadata["scope"] = "installation"
+            metadata["installation"] = installation_name
+        else:
+            metadata["scope"] = "global"
+
+        if is_group:
+            metadata["group"] = group_slug
+
+        return metadata
 
     def infer_tags(self, content: str, file_path: Path, existing: Dict) -> List[str]:
         """Infer tags from content and context"""
@@ -205,7 +275,7 @@ class MetadataTagger:
         # Use existing tags if present
         if existing.get("tags"):
             existing_tags_str = existing["tags"].strip("[]")
-            tags.update(tag.strip() for tag in existing_tags_str.split(","))
+            tags.update(tag.strip().strip('"').strip("'") for tag in existing_tags_str.split(","))
 
         # Add tags based on filename
         filename_lower = file_path.stem.lower()
@@ -213,21 +283,46 @@ class MetadataTagger:
             if keyword in filename_lower:
                 tags.update(keyword_tags[:2])  # Add first 2 related tags
 
-        # Add tags based on content (first 500 chars)
-        content_sample = content[:500].lower()
+        # Add tags based on content (first 1000 chars)
+        content_sample = content[:1000].lower()
         for keyword, keyword_tags in TAG_KEYWORDS.items():
             if keyword in content_sample:
                 tags.add(keyword_tags[0])  # Add primary tag
 
-        # Limit to 7 tags
-        return sorted(list(tags))[:7]
+        # Limit to 10 tags
+        return sorted(list(tags))[:10]
+
+    def infer_related_dimensions(self, content: str, primary_dimension: str) -> List[str]:
+        """Infer which other dimensions this document relates to"""
+        related = set()
+        content_lower = content[:2000].lower()  # Check first 2000 chars
+
+        # Map dimension keywords to dimensions
+        dimension_keywords = {
+            "groups": ["group", "organization", "multi-tenant", "hierarchical", "parent", "child"],
+            "people": ["people", "user", "role", "authorization", "governance", "actor", "creator"],
+            "things": ["thing", "entity", "type", "properties", "status"],
+            "connections": ["connection", "relationship", "link", "relate", "junction"],
+            "events": ["event", "action", "timestamp", "audit", "log", "happened"],
+            "knowledge": ["knowledge", "embedding", "vector", "rag", "search", "semantic", "learn"],
+        }
+
+        for dimension, keywords in dimension_keywords.items():
+            if dimension != primary_dimension:  # Don't include self
+                if any(keyword in content_lower for keyword in keywords):
+                    related.add(dimension)
+
+        return sorted(list(related))
 
     def generate_ai_context(
         self,
         file_path: Path,
         dimension: str,
         category: str,
-        content: str
+        content: str,
+        installation_name: Optional[str] = None,
+        group_slug: Optional[str] = None,
+        related_dimensions: Optional[List[str]] = None
     ) -> str:
         """Generate AI context description"""
         relative_path = file_path.relative_to(self.project_dir)
@@ -242,29 +337,56 @@ class MetadataTagger:
             if first_para:
                 purpose = first_para.group(0)[:100]
 
-        return f"""This document is part of the {dimension} dimension in the {category} category.
-Location: {relative_path}
-Purpose: {purpose}
-For AI agents: Read this to understand {file_path.stem.replace("-", " ")}."""
+        # Build context string
+        context_parts = [
+            f"This document is part of the {dimension} dimension in the {category} category.",
+            f"Location: {relative_path}",
+            f"Purpose: {purpose}",
+        ]
+
+        if installation_name:
+            context_parts.append(f"Installation: {installation_name}")
+
+        if group_slug:
+            context_parts.append(f"Group: {group_slug}")
+
+        if related_dimensions:
+            context_parts.append(f"Related dimensions: {', '.join(related_dimensions)}")
+
+        context_parts.append(f"For AI agents: Read this to understand {file_path.stem.replace('-', ' ')}.")
+
+        return "\n".join(context_parts)
 
     def add_metadata(self, content: str, metadata: Dict) -> str:
         """Add metadata frontmatter to content"""
-        tags_str = ", ".join(metadata["tags"])
+        # Build frontmatter dynamically
+        frontmatter_lines = ["---"]
+        frontmatter_lines.append(f"title: {metadata['title']}")
+        frontmatter_lines.append(f"dimension: {metadata['dimension']}")
+        frontmatter_lines.append(f"category: {metadata['category']}")
+        frontmatter_lines.append(f"tags: {metadata['tags']}")
 
-        frontmatter = f"""---
-title: {metadata['title']}
-dimension: {metadata['dimension']}
-category: {metadata['category']}
-tags: [{tags_str}]
-created: {metadata['created']}
-updated: {metadata['updated']}
-version: {metadata['version']}
-ai_context: |
-  {metadata['ai_context']}
----
+        if metadata.get('related_dimensions'):
+            frontmatter_lines.append(f"related_dimensions: {metadata['related_dimensions']}")
 
-"""
-        return frontmatter + content
+        frontmatter_lines.append(f"scope: {metadata['scope']}")
+
+        if metadata.get('installation'):
+            frontmatter_lines.append(f"installation: {metadata['installation']}")
+
+        if metadata.get('group'):
+            frontmatter_lines.append(f"group: {metadata['group']}")
+
+        frontmatter_lines.append(f"created: {metadata['created']}")
+        frontmatter_lines.append(f"updated: {metadata['updated']}")
+        frontmatter_lines.append(f"version: {metadata['version']}")
+
+        # Format ai_context as multiline
+        ai_context_indented = "\n  ".join(metadata['ai_context'].split("\n"))
+        frontmatter_lines.append(f"ai_context: |\n  {ai_context_indented}")
+        frontmatter_lines.append("---\n")
+
+        return "\n".join(frontmatter_lines) + "\n" + content
 
     def update_metadata(self, content: str, metadata: Dict) -> str:
         """Update existing metadata frontmatter"""

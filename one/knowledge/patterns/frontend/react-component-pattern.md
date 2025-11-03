@@ -2,7 +2,7 @@
 
 **Category:** Frontend
 **Type:** UI Component
-**Used for:** Building reusable, accessible React components with Convex
+**Used for:** Building reusable, accessible React components with Effect.ts services and DataProvider pattern
 
 ---
 
@@ -10,35 +10,63 @@
 
 Every React component should:
 1. Use TypeScript for type safety
-2. Fetch data with Convex hooks
+2. Fetch data with Effect.ts services via useEffectRunner hook
 3. Handle loading and error states
 4. Follow accessibility best practices
 5. Use shadcn/ui components when available
+6. Use DataProvider pattern (backend-agnostic)
 
 ## Code Template
 
 ```typescript
-import { useQuery, useMutation } from "convex/react";
-import { api } from "@/convex/_generated/api";
+import { useEffectRunner } from "@/hooks/useEffectRunner";
+import { ThingClientService } from "@/services/ThingClientService";
+import { ConnectionClientService } from "@/services/ConnectionClientService";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import { useEffect, useState } from "react";
+import { Effect } from "effect";
 
 interface EntityListProps {
   type: string;
+  groupId?: string;
   status?: string;
 }
 
-export function EntityList({ type, status = "active" }: EntityListProps) {
-  // 1. Fetch data with Convex query
-  const entities = useQuery(api.queries.entities.list, { type, status });
-  const deleteEntity = useMutation(api.mutations.entities.delete);
+export function EntityList({ type, groupId, status = "active" }: EntityListProps) {
+  const { run, loading, error } = useEffectRunner();
+  const [entities, setEntities] = useState<any[]>([]);
+
+  // 1. Fetch data with Effect.ts service on mount
+  useEffect(() => {
+    const program = Effect.gen(function* () {
+      const service = yield* ThingClientService;
+      return yield* service.list(type as any, groupId);
+    });
+
+    run(program, {
+      onSuccess: (results) => setEntities(results || []),
+      onError: (err) => console.error("Failed to load:", err)
+    });
+  }, [type, groupId]);
 
   // 2. Handle loading state
-  if (entities === undefined) {
+  if (loading && entities.length === 0) {
     return (
       <div className="flex items-center justify-center p-8">
         <div className="text-muted-foreground">Loading...</div>
       </div>
+    );
+  }
+
+  // 2b. Handle error state
+  if (error) {
+    return (
+      <Card>
+        <CardContent className="p-8">
+          <p className="text-red-600">Error loading {type}s: {error}</p>
+        </CardContent>
+      </Card>
     );
   }
 
@@ -53,14 +81,20 @@ export function EntityList({ type, status = "active" }: EntityListProps) {
     );
   }
 
-  // 4. Handle action
-  const handleDelete = async (id: string) => {
-    try {
-      await deleteEntity({ id });
-    } catch (error) {
-      console.error("Failed to delete:", error);
-      // Show error toast/notification
-    }
+  // 4. Handle action (delete)
+  const handleDelete = () => {
+    const program = Effect.gen(function* () {
+      const service = yield* ThingClientService;
+      // Backend handles actual deletion
+      yield* service.delete("id");
+    });
+
+    run(program, {
+      onSuccess: () => {
+        // Refetch list after delete
+        window.location.reload();
+      }
+    });
   };
 
   // 5. Render list
@@ -79,7 +113,7 @@ export function EntityList({ type, status = "active" }: EntityListProps) {
               <Button
                 variant="destructive"
                 size="sm"
-                onClick={() => handleDelete(entity._id)}
+                onClick={() => handleDelete()}
               >
                 Delete
               </Button>
@@ -101,22 +135,30 @@ export function EntityList({ type, status = "active" }: EntityListProps) {
 
 ## Best Practices
 
-1. **Use Convex hooks** - `useQuery` for reads, `useMutation` for writes
-2. **Handle all states** - Loading, empty, error, and success states
-3. **Use shadcn/ui** - Leverage pre-built accessible components
-4. **Type everything** - Define interfaces for props and data
-5. **Accessibility first** - Use semantic HTML and ARIA attributes
+1. **Use Effect.ts services** - Compose operations with `Effect.gen()`, use `useEffectRunner` for React integration
+2. **Use DataProvider pattern** - Never import Convex directly, always use services
+3. **Handle all states** - Loading, empty, error, and success states
+4. **Use shadcn/ui** - Leverage pre-built accessible components
+5. **Type everything** - Define interfaces for props and data
+6. **Use groupId for scoping** - Always pass groupId to filter by group/organization
+7. **Accessibility first** - Use semantic HTML and ARIA attributes
 
 ## Common Mistakes
 
-❌ **Don't:** Skip loading states
-✅ **Do:** Always show loading UI while data fetches
+❌ **Don't:** Import Convex directly (`import { useQuery } from "convex/react"`)
+✅ **Do:** Use Effect.ts services with `useEffectRunner` hook
 
-❌ **Don't:** Ignore error handling
-✅ **Do:** Catch errors and show user-friendly messages
+❌ **Don't:** Skip error state handling
+✅ **Do:** Show error messages alongside loading/empty states
+
+❌ **Don't:** Duplicate server state in local useState
+✅ **Do:** Fetch once with Effect.ts service, store in local state
 
 ❌ **Don't:** Use `any` type
 ✅ **Do:** Define proper TypeScript interfaces
+
+❌ **Don't:** Forget groupId scoping
+✅ **Do:** Pass groupId to filter results by organization
 
 ❌ **Don't:** Forget accessibility
 ✅ **Do:** Use semantic HTML and ARIA labels

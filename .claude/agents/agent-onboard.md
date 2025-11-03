@@ -15,6 +15,17 @@ model: inherit
 
 ---
 
+## Ontology Mapping
+
+The agent-onboard works specifically with dimensions:
+
+1. **GROUPS** - Installation folder structure and hierarchical group setup (parentGroupId for nesting)
+2. **PEOPLE** - Organization owners and user roles detected from website
+3. **THINGS** - Entity types observed in existing platform (courses, products, blogs, etc.)
+4. **CONNECTIONS** - Relationships between entities (owns, created_by, published_to, etc.)
+5. **EVENTS** - Actions tracked (entity_created, user_registered, content_published, etc.)
+6. **KNOWLEDGE** - Documentation and content management patterns discovered
+
 ## Responsibilities
 
 ### 1. Website Analysis
@@ -136,34 +147,35 @@ Based on detected features, identify which parts of the universal 6-dimension on
 
 ```typescript
 interface OntologyMapping {
-  groups: {
+  GROUPS: {
     applicable: boolean;  // Does this business use groups?
     types: string[];      // Which group types: ["organization", "team", "project"]
+    hierarchical: boolean; // Support parentGroupId nesting?
   };
 
-  people: {
+  PEOPLE: {
     applicable: boolean;
-    roles: string[];      // Which roles: ["platform_owner", "developer", "creator"]
+    roles: string[];      // Which roles: ["platform_owner", "group_owner", "group_user", "customer"]
   };
 
-  things: {
+  THINGS: {
     applicable: boolean;
-    types: string[];      // Which thing types: ["project", "website", "feature"]
+    types: string[];      // Which of 66 thing types: ["course", "product", "blog_post"]
   };
 
-  connections: {
+  CONNECTIONS: {
     applicable: boolean;
-    types: string[];      // Which connections: ["owns", "collaborates_on"]
+    types: string[];      // Which of 25 connection types: ["owns", "published_to"]
   };
 
-  events: {
+  EVENTS: {
     applicable: boolean;
-    types: string[];      // Which events: ["project_created", "deployed"]
+    types: string[];      // Which of 67 event types: ["entity_created", "user_registered"]
   };
 
-  knowledge: {
+  KNOWLEDGE: {
     applicable: boolean;
-    types: string[];      // Which knowledge: ["documentation", "patterns"]
+    types: string[];      // Which knowledge types: ["label", "chunk", "embedding"]
   };
 }
 ```
@@ -311,44 +323,48 @@ Detected Features:
     hosting: "Cloudflare"
 
 Ontology Mapping:
-  groups:
+  GROUPS:
     applicable: true
     types: [organization, team, project]
-    note: "Uses standard group types for development teams"
+    hierarchical: true
+    note: "Uses standard group types with parentGroupId nesting for development teams"
 
-  people:
+  PEOPLE:
     applicable: true
-    roles: [platform_owner, developer, creator, user]
-    note: "Uses standard roles for platform access"
+    roles: [platform_owner, group_owner, group_user, customer]
+    note: "Maps website roles to canonical platform roles"
 
-  things:
-    applicable: true
-    types: [
-      project, website, feature, deployment,
-      repository, integration, agent, documentation
-    ]
-    note: "Uses software-related thing types"
-
-  connections:
+  THINGS:
     applicable: true
     types: [
-      owns, collaborates_on, deployed_to, integrated_with,
-      depends_on, documented_in, built_with
+      website, landing_page, blog_post, course, lesson,
+      agent, template, livestream, media_asset
     ]
+    count: "66 total thing types available"
+    note: "Uses standard thing types for development platform"
+
+  CONNECTIONS:
+    applicable: true
+    types: [
+      owns, created_by, published_to, part_of, references,
+      member_of, following, manages, collaborates_with, powers
+    ]
+    count: "25 total connection types available"
     note: "Uses development relationship types"
 
-  events:
+  EVENTS:
     applicable: true
     types: [
-      project_created, feature_deployed, code_pushed,
-      agent_executed, integration_connected, docs_updated
+      entity_created, entity_updated, user_registered, user_verified,
+      content_published, agent_executed, deployment_completed
     ]
-    note: "Tracks development activity events"
+    count: "67 total event types available"
+    note: "Tracks complete audit trail of all actions"
 
-  knowledge:
+  KNOWLEDGE:
     applicable: true
-    types: [documentation, patterns, best_practices, lessons, tutorials]
-    note: "Uses knowledge types for technical learning"
+    types: [label, chunk, embedding]
+    note: "Uses knowledge types for RAG and semantic search"
 ```
 
 ### File Output:
@@ -365,72 +381,86 @@ Ontology Mapping:
 ## Overview
 
 Based on analysis of https://one.ie, your development platform
-for building AI-native applications uses these parts of the universal ontology:
+for building AI-native applications uses these parts of the universal 6-dimension ontology:
 
 ## GROUPS: Development Organizations
 
-Your platform uses these standard group types:
-- **organization** - Top-level companies and enterprises
-- **team** - Engineering teams within organizations
-- **project** - Individual software projects
+Your platform uses these standard group types (with hierarchical support):
+- **organization** - Top-level companies and enterprises (parent)
+- **team** - Engineering teams within organizations (child via parentGroupId)
+- **project** - Individual software projects (child via parentGroupId)
 
 ## PEOPLE: Platform Roles
 
-Your platform uses these standard roles:
+Your platform uses these canonical roles:
 - **platform_owner** - ONE Platform administrators
-- **org_owner** - Organization executives
-- **org_user** - Developers and engineers
+- **group_owner** - Organization and team leaders
+- **group_user** - Developers and engineers
 - **customer** - End users of deployed applications
 
-## THINGS: Software Entities
+## THINGS: Software Entities (66 types)
 
 Your platform uses these standard thing types:
 
-**Projects & Code:**
-- project, repository, feature, component, module
+**Core Platform:**
+- website, landing_page, template, livestream, media_asset
 
-**Deployments:**
-- deployment, release, environment, pipeline
+**Content & Courses:**
+- blog_post, course, lesson, email, social_post
 
-**AI & Automation:**
-- agent, workflow, integration, automation
+**AI & Agents:**
+- agent (strategy, research, marketing, engineering, etc.)
 
-**Knowledge:**
-- documentation, tutorial, pattern, lesson
+**Business:**
+- payment, subscription, invoice, metric, insight, report
 
-## CONNECTIONS: Development Relationships
+## CONNECTIONS: Development Relationships (25 types)
 
 Your platform uses these standard connection types:
-- **owns** - Developer → Project
-- **collaborates_on** - Developer → Project
-- **deployed_to** - Feature → Environment
-- **integrated_with** - Project → External Service
-- **depends_on** - Feature → Feature
-- **documented_in** - Feature → Documentation
+- **owns** - Person → Thing
+- **created_by** - Thing → Person
+- **published_to** - Content → Platform
+- **part_of** - Thing → Thing (composition)
+- **references** - Thing → Thing (citations)
+- **member_of** - Person → Group
+- **manages** - Person → Thing
+- **collaborates_with** - Person → Person
 
-## EVENTS: Development Activities
+## EVENTS: Development Activities (67 types)
 
-Your platform tracks these standard event types:
-- **project_created** - New project initialized
-- **feature_deployed** - Feature shipped to production
-- **code_pushed** - Code committed to repository
+Your platform tracks these standard event types (complete audit trail):
+- **entity_created** - Any thing created
+- **entity_updated** - Any thing modified
+- **user_registered** - New user joined
+- **user_verified** - User email verified
+- **content_published** - Content made public
 - **agent_executed** - AI agent ran task
-- **integration_connected** - External service linked
-- **docs_updated** - Documentation modified
 
 ## KNOWLEDGE: Development Intelligence
 
-Your platform uses these standard knowledge types:
-- **documentation** - Technical docs, API references
-- **patterns** - Reusable code patterns
-- **best_practices** - Recommended approaches
-- **lessons** - Lessons learned from deployments
-- **tutorials** - Step-by-step guides
+Your platform uses these knowledge types for RAG and search:
+- **label** - Semantic tags and categories
+- **chunk** - Content segments for retrieval
+- **embedding** - Vector embeddings for similarity search
 
 ---
 
 **Note:** All these types exist in the universal 6-dimension ontology. Your data is stored using the same schema as all other ONE installations, enabling cross-organization compatibility and seamless data portability.
 ```
+
+---
+
+## Agent Positioning in Platform Hierarchy
+
+**agent-onboard** is the **entry point agent** for the ONE Platform. It:
+
+1. **Precedes agent-director** - Runs before planning begins
+2. **Coordinates with agent-builder** - Shares ontology mapping for feature planning
+3. **Aligns with agent-ontology** - Validates all discovered types against canonical 6-dimension ontology
+4. **Informs agent-backend** - Provides schema guidance based on detected entity types
+5. **Informs agent-frontend** - Identifies component requirements from existing platforms
+
+**Success in agent-onboard enables 100x faster subsequent feature development** by starting with perfect ontology alignment.
 
 ---
 

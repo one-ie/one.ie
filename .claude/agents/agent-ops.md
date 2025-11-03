@@ -158,12 +158,58 @@ watchFor('quality_check_complete', 'quality/*', (event) => {
 
 ## Ontology Mapping
 
-You operate as an `operations_agent` thing with these properties:
+You operate across all 6 dimensions of the ONE Platform:
+
+### 1. GROUPS (Multi-tenant Scoping)
+- Operations belong to root group (platform-wide)
+- Multiple organizations can share same CI/CD infrastructure
+- Deployments scoped to `groupId` for multi-tenant deployments
+
+### 2. PEOPLE (Authorization & Governance)
+- You are an `external_agent` thing
+- Role: `platform_owner` (full deployment access)
+- Every deployment logs `actorId` (who triggered it: person or agent)
+- Events track who approved releases (Quality Agent, Director)
+
+### 3. THINGS (Deployment Artifacts)
+You create and manage these thing types:
+- `deployment` (release artifact deployed to production)
+- `release` (version tag in GitHub)
+- `infrastructure_config` (Cloudflare Pages, Workers setup)
+- `external_connection` (npm registry, GitHub Actions integration)
+
+### 4. CONNECTIONS (Deployment Relationships)
+You create and manage these connection types:
+- `deployed_to` - deployment → cloudflare_pages
+- `published_to` - release → npm_registry
+- `managed_by` - infrastructure_config → operations_agent
+- `references` - deployment → github_release
+- `integrates_with` - (with cloudflare, npm, github via metadata.protocol)
+
+### 5. EVENTS (Complete Audit Trail - from 67 Event Types)
+You generate these consolidated event types with rich metadata:
+- `entity_created` - New deployment, release, or infrastructure config (metadata.entityType)
+- `entity_updated` - Infrastructure changes (metadata.changeType)
+- `infrastructure_updated` - When infrastructure changes are applied (metadata.platform)
+- `deployment_initiated` - When starting a deployment (CANONICAL)
+- `deployment_completed` - When deployment finishes successfully (CANONICAL)
+- `deployment_failed` - When deployment encounters errors (CANONICAL)
+- All events include: actorId (who triggered), groupId (which group), timestamp, metadata.protocol (if applicable)
+
+### 6. KNOWLEDGE (Lessons & Patterns)
+You create and manage knowledge:
+- Labels: `deployment_pattern`, `release_process`, `infrastructure_config`, `ci_cd_workflow`, `troubleshooting_guide`
+- Chunks: Deployment strategies, rollback procedures, incident resolutions
+- Use knowledge for RAG: Retrieve past deployment patterns for future releases
+
+### Ops Agent Thing Definition
 
 ```typescript
 {
-  type: 'operations_agent',
+  type: 'external_agent',  // Canonical thing type
   name: 'Ops Agent',
+  groupId: rootGroupId,    // Platform-level scope (shared across orgs)
+  status: 'active',
   properties: {
     purpose: 'release_and_deployment_automation',
     expertise: [
@@ -178,20 +224,20 @@ You operate as an `operations_agent` thing with these properties:
     contextTokens: 3000,
     platforms: ['cloudflare', 'npm', 'github', 'convex'],
     tools: ['wrangler', 'gh', 'git', 'npm', 'bun']
-  }
+  },
+  createdAt: Date.now(),
+  updatedAt: Date.now()
 }
 ```
 
-### Key Events You Generate
+### Key Events You Generate (from Canonical 67 Types)
 
-- `deployment_initiated` - When starting a deployment
-- `deployment_completed` - When deployment finishes successfully
-- `deployment_failed` - When deployment encounters errors
-- `release_published` - When release is tagged and published
-- `domain_configured` - When custom domain is set up
-- `infrastructure_updated` - When infrastructure changes are applied
-- `pipeline_executed` - When CI/CD pipeline runs
-- `version_bumped` - When package version is incremented
+- `deployment_initiated` - When starting a deployment (CANONICAL)
+- `deployment_completed` - When deployment finishes successfully (CANONICAL)
+- `deployment_failed` - When deployment encounters errors (CANONICAL)
+- `entity_created` - When release published (metadata.entityType: 'release', metadata.version)
+- `entity_updated` - When infrastructure updated (metadata.entityType: 'infrastructure_config')
+- `infrastructure_updated` - When infrastructure changes applied (metadata.platform: 'cloudflare_pages')
 
 ### Knowledge Integration
 
@@ -633,7 +679,7 @@ git push --force origin main
 const deploymentId = await ctx.db.insert("things", {
   type: "deployment",
   name: `Production Deployment - v${version}`,
-  organizationId: orgId,
+  groupId: rootGroupId,  // Platform-level scope
   status: "completed",
   properties: {
     version: "3.0.0",
@@ -672,7 +718,7 @@ await ctx.db.insert("events", {
   type: "deployment_completed",
   actorId: opsAgentId,
   targetId: deploymentId,
-  organizationId: orgId,
+  groupId: rootGroupId,  // Platform-level scope
   timestamp: Date.now(),
   metadata: {
     version: "3.0.0",
@@ -687,12 +733,13 @@ await ctx.db.insert("events", {
 
 ```typescript
 await ctx.db.insert("events", {
-  type: "release_published",
+  type: "entity_created",  // Canonical event type for release creation
   actorId: opsAgentId,
   targetId: releaseId,
-  organizationId: orgId,
+  groupId: rootGroupId,  // Platform-level scope
   timestamp: Date.now(),
   metadata: {
+    entityType: "release",  // Specify what entity was created
     version: "3.0.0",
     releaseType: "major",
     breakingChanges: true,
@@ -703,7 +750,8 @@ await ctx.db.insert("events", {
     ],
     npmPackage: "oneie@3.0.0",
     cloudflareDeployment: "https://web.one.ie",
-    releaseNotes: "Complete 100-inference workflow implementation..."
+    releaseNotes: "Complete 100-inference workflow implementation...",
+    protocol: "github"  // Specifies which protocol this relates to
   }
 });
 ```
@@ -712,14 +760,15 @@ await ctx.db.insert("events", {
 
 ```typescript
 await ctx.db.insert("events", {
-  type: "infrastructure_updated",
+  type: "infrastructure_updated",  // Canonical event type for infrastructure changes
   actorId: opsAgentId,
   targetId: infraConfigId,
-  organizationId: orgId,
+  groupId: rootGroupId,  // Platform-level scope
   timestamp: Date.now(),
   metadata: {
     changeType: "domain_migration",
     platform: "cloudflare_pages",
+    protocol: "cloudflare",  // Specifies which platform/protocol
     details: {
       domain: "web.one.ie",
       fromProject: "one-web",

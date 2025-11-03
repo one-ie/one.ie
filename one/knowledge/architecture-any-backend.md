@@ -1,16 +1,128 @@
 # Backend-Agnostic Architecture: Use Any Database
 
-**Version:** 2.0
+**Version:** 3.0
 **Status:** ✅ Production Ready
-**Last Updated:** 2025-10-13
+**Last Updated:** 2025-11-03
 
 ---
 
 ## Overview
 
-The ONE Platform implements a **backend-agnostic architecture** that allows organizations to choose ANY backend database or CMS without changing a single line of frontend code. Switch from Convex to WordPress to Notion with **one configuration change**.
+The ONE Platform implements a **backend-agnostic architecture** that allows any group to choose ANY backend database or CMS without changing a single line of frontend code. Switch from Convex to WordPress to Notion with **one configuration change**.
 
 This architecture proves that the 6-dimension ontology is truly protocol-agnostic and platform-independent.
+
+**Critical:** This document aligns with the 5-table implementation (groups table + 4 other tables with groupId scoping) as specified in the main architecture.
+
+---
+
+## The 6-Dimension Ontology: 5-Table Implementation
+
+The ONE Platform uses a **6-dimension ontology** implemented with **5 database tables**:
+
+### Database Schema
+
+```typescript
+// TABLE 1: groups (Dimension 1 - Multi-tenancy boundary)
+{
+  _id: Id<"groups">,
+  name: string,
+  type: "friend_circle" | "business" | "community" | "dao" | "government" | "organization",
+  parentGroupId?: Id<"groups">,  // Hierarchical nesting (groups contain groups)
+  properties: {
+    plan?: "starter" | "pro" | "enterprise",
+    backendProvider?: "convex" | "wordpress" | "notion" | "supabase",
+    // ... type-specific fields
+  },
+  status: "draft" | "active" | "archived",
+  createdAt: number,
+  updatedAt: number
+}
+
+// TABLE 2: things (Dimension 3 - All nouns)
+{
+  _id: Id<"things">,
+  type: ThingType, // 66 types
+  name: string,
+  groupId: Id<"groups">, // SCOPED TO GROUP
+  properties: any, // Flexible type-specific data
+  status: "draft" | "active" | "published" | "archived",
+  createdAt: number,
+  updatedAt: number
+}
+
+// TABLE 3: connections (Dimension 4 - All relationships)
+{
+  _id: Id<"connections">,
+  fromThingId?: Id<"things">,
+  toThingId?: Id<"things">,
+  fromPersonId?: Id<"people">,
+  toPersonId?: Id<"people">,
+  relationshipType: ConnectionType, // 25 types
+  groupId: Id<"groups">, // SCOPED TO GROUP
+  metadata: any,
+  createdAt: number
+}
+
+// TABLE 4: events (Dimension 5 - All actions)
+{
+  _id: Id<"events">,
+  type: EventType, // 67 types
+  actorId: Id<"people">, // Person who did it (REQUIRED)
+  targetId?: Id<"things"> | Id<"people"> | Id<"connections">,
+  groupId: Id<"groups">, // SCOPED TO GROUP
+  metadata: any,
+  timestamp: number
+}
+
+// TABLE 5: knowledge (Dimension 6 - AI understanding)
+{
+  _id: Id<"knowledge">,
+  type: "embedding" | "label" | "category" | "tag",
+  text?: string,
+  embedding?: number[], // Vector for semantic search
+  embeddingModel?: string,
+  sourceThingId?: Id<"things">,
+  sourcePersonId?: Id<"people">,
+  groupId: Id<"groups">, // SCOPED TO GROUP
+  labels?: string[],
+  metadata?: any,
+  createdAt: number,
+  updatedAt: number
+}
+```
+
+### Where is Dimension 2 (People)?
+
+**People are represented as things** with `type: 'creator'` and `properties.role` field, OR as a separate `people` table depending on backend requirements. The main architecture uses things, but some providers (like WordPress) may use a separate users table.
+
+**4 Roles:**
+- `platform_owner` - Full platform access
+- `org_owner` - Group owner (can manage group settings)
+- `org_user` - Group member (can use features)
+- `customer` - End user (limited access)
+
+### Multi-Tenancy Via groupId
+
+**Every dimension (except groups themselves) includes groupId for data scoping:**
+- Things → `groupId: Id<"groups">`
+- Connections → `groupId: Id<"groups">`
+- Events → `groupId: Id<"groups">`
+- Knowledge → `groupId: Id<"groups">`
+
+**This is how multi-tenancy works:** All queries filter by groupId, ensuring perfect data isolation between groups.
+
+### Hierarchical Groups
+
+Groups can contain other groups via `parentGroupId`:
+
+```
+Group: "Acme Corp" (organization)
+  └─ Group: "Engineering Dept" (business)
+      └─ Group: "Frontend Team" (friend_circle)
+```
+
+This enables infinite nesting from friend circles (2 people) to governments (billions of people).
 
 ---
 
@@ -72,16 +184,20 @@ The `DataProvider` interface defines ALL operations for the 6-dimension ontology
 ```typescript
 // frontend/src/providers/DataProvider.ts
 export interface DataProvider {
-  // ===== ORGANIZATIONS (Dimension 1) =====
-  organizations: {
-    get: (id: string) => Effect.Effect<Organization, OrganizationNotFoundError>;
-    list: (options?: ListOptions) => Effect.Effect<Organization[], QueryError>;
-    create: (input: CreateOrgInput) => Effect.Effect<string, OrgCreateError>;
-    update: (id: string, input: UpdateOrgInput) => Effect.Effect<void, OrgUpdateError>;
-    delete: (id: string) => Effect.Effect<void, OrgDeleteError>;
+  // ===== GROUPS (Dimension 1) =====
+  // Hierarchical containers that partition all other dimensions
+  // Scales from friend circles (2 people) to governments (billions)
+  groups: {
+    get: (id: string) => Effect.Effect<Group, GroupNotFoundError>;
+    list: (options?: ListOptions) => Effect.Effect<Group[], QueryError>;
+    create: (input: CreateGroupInput) => Effect.Effect<string, GroupCreateError>;
+    update: (id: string, input: UpdateGroupInput) => Effect.Effect<void, GroupUpdateError>;
+    delete: (id: string) => Effect.Effect<void, GroupDeleteError>;
+    getChildren: (parentId: string) => Effect.Effect<Group[], QueryError>; // Hierarchical nesting
   };
 
   // ===== PEOPLE (Dimension 2) =====
+  // Authorization & governance - who can do what
   people: {
     getCurrentUser: () => Effect.Effect<User, UserNotFoundError>;
     getByRole: (role: Role) => Effect.Effect<User[], QueryError>;
@@ -90,6 +206,8 @@ export interface DataProvider {
   };
 
   // ===== THINGS (Dimension 3) =====
+  // All nouns - users, agents, content, tokens, courses (66 types)
+  // Every thing belongs to a group (scoped via groupId)
   things: {
     get: (id: string) => Effect.Effect<Thing, ThingNotFoundError>;
     list: (options: ListThingsOptions) => Effect.Effect<Thing[], QueryError>;
@@ -99,6 +217,8 @@ export interface DataProvider {
   };
 
   // ===== CONNECTIONS (Dimension 4) =====
+  // All relationships - owns, follows, purchased, enrolled_in (25 types)
+  // Every connection belongs to a group (scoped via groupId)
   connections: {
     get: (id: string) => Effect.Effect<Connection, ConnectionNotFoundError>;
     list: (options: ListConnectionsOptions) => Effect.Effect<Connection[], QueryError>;
@@ -107,6 +227,8 @@ export interface DataProvider {
   };
 
   // ===== EVENTS (Dimension 5) =====
+  // All actions and state changes - created, updated, purchased (67 types)
+  // Every event belongs to a group (scoped via groupId)
   events: {
     create: (input: CreateEventInput) => Effect.Effect<string, EventCreateError>;
     list: (options: ListEventsOptions) => Effect.Effect<Event[], QueryError>;
@@ -114,6 +236,8 @@ export interface DataProvider {
   };
 
   // ===== KNOWLEDGE (Dimension 6) =====
+  // Labels, embeddings, and semantic search for AI
+  // Every knowledge entry belongs to a group (scoped via groupId)
   knowledge: {
     search: (options: SearchKnowledgeOptions) => Effect.Effect<Knowledge[], QueryError>;
     create: (input: CreateKnowledgeInput) => Effect.Effect<string, KnowledgeCreateError>;
@@ -224,12 +348,12 @@ Maps Notion databases and pages to the 6-dimension ontology.
 
 | Ontology | Notion |
 |----------|--------|
+| Groups | Page property: `groupId` or separate database |
+| People | Person properties + permissions |
 | Things | Pages in databases |
 | Connections | Relation properties |
 | Events | Page updates (delegated to Convex) |
 | Knowledge | Database properties as labels |
-| Organizations | Page property: `organizationId` |
-| People | Person properties + permissions |
 
 **Example:**
 
@@ -271,12 +395,12 @@ Maps WordPress posts and custom post types to the ontology.
 
 | Ontology | WordPress |
 |----------|-----------|
+| Groups | Custom `wp_groups` table (with parentGroupId) |
+| People | WordPress users + roles |
 | Things | Posts + Custom Post Types |
 | Connections | Custom `wp_connections` table |
 | Events | Custom `wp_events` table |
 | Knowledge | Custom `wp_knowledge` table |
-| Organizations | Post meta: `_organization_id` |
-| People | WordPress users + roles |
 
 **Requires:** Custom WordPress plugin `one-platform-connector` (creates tables + REST endpoints)
 
@@ -290,7 +414,7 @@ const wpPost = {
   status: "publish",
   type: "course",
   meta: {
-    _organization_id: "org_xyz",
+    _group_id: "group_xyz", // Scoped to group
     _properties: JSON.stringify({ price: 99 })
   }
 };
@@ -301,7 +425,7 @@ const thing = {
   type: "course",
   name: "My Course",
   status: "published",
-  organizationId: "org_xyz",
+  groupId: "group_xyz", // All things scoped to groups
   properties: { price: 99 }
 };
 ```
@@ -391,6 +515,8 @@ export class ThingService extends Effect.Service<ThingService>()('ThingService',
 | ConfigService | Provider configuration | 511 |
 
 **Total:** 2,503 lines of pure business logic
+
+**Note:** These services work with ANY backend because they only use the DataProvider interface, never backend-specific code.
 
 ---
 
@@ -551,14 +677,17 @@ PROVIDER_ENCRYPTION_KEY=your-32-byte-hex-key
 
 ### Multi-Tenant Configuration
 
-Organizations can have different backends:
+**Critical:** Groups (not organizations) are the multi-tenancy boundary. Each group can have different backends.
 
 ```typescript
-// Organization 1 uses Convex
+// Group 1 uses Convex (type: organization)
 {
-  _id: "org_1",
+  _id: "group_startup",
   name: "Startup Inc",
+  type: "organization",
+  parentGroupId: undefined, // Top-level group
   properties: {
+    plan: "pro",
     backendProvider: "convex",
     backendConfig: {
       deploymentUrl: "https://fast-startup-123.convex.cloud"
@@ -566,11 +695,14 @@ Organizations can have different backends:
   }
 }
 
-// Organization 2 uses WordPress
+// Group 2 uses WordPress (type: business)
 {
-  _id: "org_2",
+  _id: "group_enterprise",
   name: "Enterprise Corp",
+  type: "business",
+  parentGroupId: "group_holding", // Child of another group
   properties: {
+    plan: "enterprise",
     backendProvider: "wordpress",
     backendConfig: {
       url: "https://enterprise.com/wp-json",
@@ -583,9 +715,9 @@ Organizations can have different backends:
 ### Runtime Provider Switching
 
 ```typescript
-// Switch organization's backend
-await switchProviderForOrganization(
-  'org_123',
+// Switch group's backend
+await switchProviderForGroup(
+  'group_123',
   {
     type: 'notion',
     token: 'secret_xyz...',
@@ -597,7 +729,7 @@ await switchProviderForOrganization(
 // Takes <30 seconds
 // - Validates new config
 // - Tests connection
-- Saves config to database
+// - Saves config to groups table
 // - Clears cache
 // - Logs provider_switched event
 ```
@@ -721,14 +853,25 @@ function oneIdToSupabaseId(id: string): string {
 **Step 3: Map Database Schema**
 
 ```sql
--- Supabase tables
+-- Supabase tables (5-table implementation)
+CREATE TABLE groups (
+  id UUID PRIMARY KEY,
+  name VARCHAR(255),
+  type VARCHAR(50), -- friend_circle, business, community, dao, government, organization
+  parent_group_id UUID REFERENCES groups(id), -- Hierarchical nesting
+  properties JSONB,
+  status VARCHAR(20),
+  created_at TIMESTAMP,
+  updated_at TIMESTAMP
+);
+
 CREATE TABLE things (
   id UUID PRIMARY KEY,
   type VARCHAR(50),
   name TEXT,
-  status VARCHAR(20),
+  group_id UUID REFERENCES groups(id), -- Scoped to group
   properties JSONB,
-  organization_id VARCHAR(100),
+  status VARCHAR(20),
   created_at TIMESTAMP,
   updated_at TIMESTAMP
 );
@@ -738,16 +881,47 @@ CREATE TABLE connections (
   from_thing_id UUID REFERENCES things(id),
   to_thing_id UUID REFERENCES things(id),
   relationship_type VARCHAR(50),
+  group_id UUID REFERENCES groups(id), -- Scoped to group
   metadata JSONB,
   created_at TIMESTAMP
 );
 
--- ... events, knowledge tables
+CREATE TABLE events (
+  id UUID PRIMARY KEY,
+  type VARCHAR(50),
+  actor_id VARCHAR(255), -- Person ID
+  target_id VARCHAR(255), -- Thing/Person/Connection ID
+  group_id UUID REFERENCES groups(id), -- Scoped to group
+  metadata JSONB,
+  timestamp BIGINT
+);
+
+CREATE TABLE knowledge (
+  id UUID PRIMARY KEY,
+  type VARCHAR(50),
+  text TEXT,
+  embedding VECTOR(768), -- Vector for semantic search
+  source_thing_id UUID REFERENCES things(id),
+  group_id UUID REFERENCES groups(id), -- Scoped to group
+  labels JSONB,
+  metadata JSONB,
+  created_at TIMESTAMP,
+  updated_at TIMESTAMP
+);
 ```
 
 **Step 4: Implement All 6 Dimensions**
 
-Implement all methods for organizations, people, things, connections, events, knowledge, and auth.
+Implement all methods for groups, people, things, connections, events, knowledge, and auth.
+
+**Critical:** Remember that the 6-dimension ontology is implemented using 5 tables:
+1. **groups** table (multi-tenancy boundary, hierarchical nesting)
+2. **things** table (with groupId scoping)
+3. **connections** table (with groupId scoping)
+4. **events** table (with groupId scoping)
+5. **knowledge** table (with groupId scoping)
+
+People are represented as things with type: 'creator' and properties.role field, OR as a separate people table depending on backend requirements.
 
 **Step 5: Add to Factory**
 
@@ -906,12 +1080,14 @@ const org3 = {
 
 ### Data Isolation
 
-Perfect isolation between organizations:
+Perfect isolation between groups (multi-tenancy):
 
-1. **Convex:** Organization ID in every document
-2. **Notion:** Separate databases per org
-3. **WordPress:** Post meta `_organization_id` filter
-4. **Supabase:** Row-level security (RLS) policies
+1. **Convex:** groupId in every document (things, connections, events, knowledge all scoped)
+2. **Notion:** Separate databases per group OR groupId page property
+3. **WordPress:** Post meta `_group_id` filter OR separate wp_groups table
+4. **Supabase:** Row-level security (RLS) policies based on groupId
+
+**Key Principle:** ALL dimensions (except groups themselves) are scoped via groupId. This is the universal multi-tenancy pattern.
 
 ---
 
@@ -1092,9 +1268,10 @@ const decrypted = decryptCredentials(
 Only specific roles can switch providers:
 
 ```typescript
-// Check authorization
+// Check authorization (4 roles in the system)
+// platform_owner, org_owner, org_user, customer
 if (!hasRole(user, ['platform_owner', 'org_owner'])) {
-  throw new UnauthorizedError('Only org owners can switch providers');
+  throw new UnauthorizedError('Only group owners can switch providers');
 }
 ```
 
@@ -1117,14 +1294,16 @@ Log all provider switches:
 ```typescript
 await db.insert('events', {
   type: 'settings_updated',
-  actorId: userId,
-  targetId: organizationId,
+  actorId: userId, // Person who made the change
+  targetId: groupId, // Group whose provider was switched
+  groupId: groupId, // Events scoped to group
   metadata: {
     setting: 'backendProvider',
     oldValue: 'convex',
     newValue: 'wordpress',
     switchDuration: 28000 // ms
-  }
+  },
+  timestamp: Date.now()
 });
 ```
 
@@ -1356,11 +1535,37 @@ Organizations now have true freedom to choose their backend based on their needs
 
 ---
 
-**Related Documentation:**
-- `one/knowledge/ontology.md` - 6-dimension ontology specification
+## Summary: Key Alignment Points
+
+This document is now aligned with the main architecture specification:
+
+### ✅ Aligned Concepts
+
+1. **Groups (not Organizations)** - Dimension 1 is "groups" with 6 types (friend_circle, business, community, dao, government, organization)
+2. **5-Table Implementation** - Groups table + 4 other tables (things, connections, events, knowledge) with groupId scoping
+3. **Hierarchical Nesting** - Groups can contain groups via `parentGroupId` field
+4. **Multi-Tenancy via groupId** - ALL dimensions (except groups) are scoped to groupId for data isolation
+5. **People Representation** - People can be things with type: 'creator' OR a separate table (provider-dependent)
+6. **4 Roles** - platform_owner, org_owner, org_user, customer (as defined in main architecture)
+7. **Universal Ontology** - The 6 dimensions work with ANY backend (Convex, WordPress, Notion, Supabase, etc.)
+
+### 🎯 Critical Differences from Legacy
+
+This document **replaces** old 4-dimension terminology:
+- OLD: "organizations" table → NEW: "groups" table (with type field including "organization")
+- OLD: 4 dimensions → NEW: 6 dimensions (added groups and knowledge)
+- OLD: organizationId field → NEW: groupId field (consistent across all tables)
+- OLD: Flat hierarchy → NEW: Hierarchical groups (infinite nesting)
+
+### 📚 Related Documentation
+
+- `one/knowledge/architecture.md` - Main architecture reference (this document aligns with it)
+- `one/knowledge/ontology.md` - Complete 6-dimension ontology specification
 - `one/knowledge/provider-creation-guide.md` - How to build new providers
 - `one/things/features/2-1-dataprovider-interface.md` - DataProvider spec
 - `one/things/features/2-3-effectts-services.md` - Service layer patterns
 - `frontend/AGENTS.md` - Quick reference for development
 
 **Implementation Status:** ✅ **Production Ready** (Plan 2 Complete - 7/7 features)
+
+**Alignment Status:** ✅ **Fully Aligned** with main architecture.md (Version 3.0)
