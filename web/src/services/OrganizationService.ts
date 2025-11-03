@@ -16,6 +16,7 @@ import {
   type OrganizationPlan,
 } from "./constants";
 import type { CreateOrganizationArgs, OrganizationError } from "./types";
+import type { Person } from "../lib/ontology/types";
 
 // ============================================================================
 // ORGANIZATION SERVICE
@@ -343,12 +344,13 @@ export class OrganizationService {
       });
 
       // Get person things
-      const members = [];
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
+      const members: any[] = [];
       for (const conn of connections) {
         const person = yield* provider.things.get(conn.fromEntityId);
         members.push({
           ...person,
-          role: conn.metadata?.role || "org_user",
+          role: (conn.metadata?.role || "org_user") as Person["role"],
           joinedAt: conn.metadata?.joinedAt || conn.createdAt,
         });
       }

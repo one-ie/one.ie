@@ -19,5 +19,14 @@
 !/.mcp.json.backup
 !/scripts/push.sh
 
-# Ensure directories are tracked
+# Ensure directories are tracked for whitelisted paths
 !*/
+
+# Explicitly exclude unwanted directories (must come after !*/)
+/apps/
+/backend/
+/cli/
+/docs/
+/import/
+/one.ie/
+/onei-ie/
