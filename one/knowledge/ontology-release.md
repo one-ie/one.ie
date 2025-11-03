@@ -73,13 +73,13 @@
 
 ---
 
-## Organization Customization (`one-inc/`)
+## Installation Customization (`one-inc/`)
 
 **Flow:**
 ```
 Global (one/)
     ↓
-Organization Override (one-inc/)
+Installation Override (one-inc/)
     ↓
 Implementation (web/, backend/, cli/)
 ```
@@ -89,8 +89,8 @@ Implementation (web/, backend/, cli/)
 one-inc/
 ├── knowledge/
 │   ├── brand-guide.md      ← Custom branding (overrides global)
-│   ├── features.md         ← Organization features
-│   └── rules.md            ← Org-specific rules
+│   ├── features.md         ← Installation features
+│   └── rules.md            ← Installation-specific rules
 ├── things/
 │   └── features.md         ← Custom entity types
 └── groups/
@@ -197,7 +197,7 @@ https://web.one.ie (LIVE)
 - Vector search support
 
 ### 6. People - Authorization
-- 4 roles: platform_owner, org_owner, org_user, customer
+- 4 roles: platform_owner, group_owner, group_user, customer
 - Represented as things with `type: 'creator'`
 - Role metadata in `properties`
 
@@ -286,7 +286,7 @@ RESEND_API_KEY=your-resend-api-key
 2. Infrastructure (SaaS) - Host + run
 3. Distribution (CLI) - Easy onboarding
 
-**Organization Customization:** `one-inc/` lets one codebase serve infinite organizations without schema changes.
+**Installation Customization:** `one-inc/` lets one codebase serve infinite groups without schema changes.
 
 **Extreme Clarity:** If it's not in the release mapping, it doesn't get released.
 

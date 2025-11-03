@@ -685,6 +685,43 @@ Time to fix: 25 hours (minor tweaks)
 
 ## The Architecture: Layered Reality
 
+**Every single thing in ONE platform exists within one of these 6 dimensions:**
+
+```
+┌──────────────────────────────────────────────────────────────┐
+│                         1. GROUPS                             │
+│  Multi-tenant isolation with hierarchical nesting - who owns  │
+│  what at group level (friend circles → DAOs → governments)    │
+└──────────────────────────────────────────────────────────────┘
+                              ↓
+┌──────────────────────────────────────────────────────────────┐
+│                         2. PEOPLE                             │
+│  Authorization & governance - platform owner, group owners    │
+└──────────────────────────────────────────────────────────────┘
+                              ↓
+┌──────────────────────────────────────────────────────────────┐
+│                         3. THINGS                             │
+│  Every "thing" - users, agents, content, tokens, courses      │
+└──────────────────────────────────────────────────────────────┘
+                              ↓
+┌──────────────────────────────────────────────────────────────┐
+│                      4. CONNECTIONS                           │
+│  Every relationship - owns, follows, taught_by, powers        │
+└──────────────────────────────────────────────────────────────┘
+                              ↓
+┌──────────────────────────────────────────────────────────────┐
+│                         5. EVENTS                             │
+│  Every action - purchased, created, viewed, completed         │
+└──────────────────────────────────────────────────────────────┘
+                              ↓
+┌──────────────────────────────────────────────────────────────┐
+│                       6. KNOWLEDGE                            │
+│  Labels + chunks + vectors powering RAG & search              │
+└──────────────────────────────────────────────────────────────┘
+```
+
+**How Technology Layers Implement the 6-Dimension DSL:**
+
 ```
 ┌─────────────────────────────────────────────────────────────────────┐
 │                  LAYER 1: UNIVERSAL INTERFACE                       │

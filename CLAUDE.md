@@ -2,13 +2,82 @@
 
 This file provides guidance to Claude Code (claude.ai/code) when working with code in this repository.
 
+## Cascading Context System
+
+**You are reading the ROOT context file.** As you navigate deeper into the codebase, read directory-specific CLAUDE.md files:
+
+```
+/CLAUDE.md (this file - global)
+  ↓ Navigate to subdirectory
+/backend/CLAUDE.md (backend-specific, takes precedence in backend/)
+  ↓ Navigate deeper
+/backend/convex/CLAUDE.md (Convex-specific, highest precedence in convex/)
+```
+
+**Precedence rule:** Closer to the file you're editing = higher precedence.
+
+### Parallel Agent Execution
+
+**CRITICAL:** When tasks can be done independently, spawn agents in PARALLEL (not sequentially).
+
+**Send a SINGLE message with multiple Task tool calls** to execute agents concurrently:
+
+- Frontend + Backend agents working simultaneously
+- Multiple feature agents in parallel
+- Documentation + Implementation at the same time
+
+**Example:** If you need to create web/CLAUDE.md and backend/CLAUDE.md, spawn both agent-frontend and agent-backend in ONE message (not two sequential messages).
+
+**Result:** 2-5x faster execution through parallelization.
+
+---
+
 ## Architecture Overview
 
-**ONE Platform** is a multi-tenant AI-native platform built on a **6-dimension ontology** that models reality through: Groups, People, Things, Connections, Events, and Knowledge. The architecture separates concerns into three distinct layers:
+**ONE Platform** is a multi-tenant AI-native platform built on a **6-dimension ontology** that models reality itself (not just data).
+
+**Every single thing in ONE platform exists within one of these 6 dimensions:**
+
+```
+┌──────────────────────────────────────────────────────────────┐
+│                         1. GROUPS                             │
+│  Multi-tenant isolation with hierarchical nesting - who owns  │
+│  what at group level (friend circles → DAOs → governments)    │
+└──────────────────────────────────────────────────────────────┘
+                              ↓
+┌──────────────────────────────────────────────────────────────┐
+│                         2. PEOPLE                             │
+│  Authorization & governance - platform owner, group owners    │
+└──────────────────────────────────────────────────────────────┘
+                              ↓
+┌──────────────────────────────────────────────────────────────┐
+│                         3. THINGS                             │
+│  Every "thing" - users, agents, content, tokens, courses      │
+└──────────────────────────────────────────────────────────────┘
+                              ↓
+┌──────────────────────────────────────────────────────────────┐
+│                      4. CONNECTIONS                           │
+│  Every relationship - owns, follows, taught_by, powers        │
+└──────────────────────────────────────────────────────────────┘
+                              ↓
+┌──────────────────────────────────────────────────────────────┐
+│                         5. EVENTS                             │
+│  Every action - purchased, created, viewed, completed         │
+└──────────────────────────────────────────────────────────────┘
+                              ↓
+┌──────────────────────────────────────────────────────────────┐
+│                       6. KNOWLEDGE                            │
+│  Labels + chunks + vectors powering RAG & search              │
+└──────────────────────────────────────────────────────────────┘
+```
+
+**The architecture separates concerns into three layers:**
 
 ```
 Web (Astro + React) → Backend (Convex) → 6-Dimension Ontology
 ```
+
+**Why this architecture enables 98% AI code generation accuracy:** Each feature maps to the SAME 6 dimensions. Patterns converge (not diverge). Accuracy compounds over time (85% → 98%), not degrades (95% → 30%).
 
 **Key Repositories:**
 

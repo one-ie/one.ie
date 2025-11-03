@@ -24,15 +24,15 @@
 ### The 6 Dimensions
 
 ```typescript
-// Organizations: Multi-tenant isolation (1 table)
-organizations: {
-  _id, name, slug, domain, status, plan, limits, usage, billing, settings
+// Groups: Multi-tenant isolation with hierarchical nesting (1 table)
+groups: {
+  _id, slug, name, type, parentGroupId?, status, settings, metadata
 }
 
 // People: Authorization & governance (1 table)
 people: {
-  _id, email, username, role, organizationId, organizations[], permissions[]
-  // Roles: platform_owner, org_owner, org_user, customer
+  _id, email, username, role, groupId, groups[], permissions[]
+  // Roles: platform_owner, group_owner, group_user, customer
 }
 
 // Things: All entities (1 table, 66 types)
@@ -55,6 +55,12 @@ knowledge: {
   _id, knowledgeType, text, embedding, embeddingModel, sourceThingId, labels, metadata
 }
 
+// Knowledge: Labels, chunks, and embeddings (1 table)
+knowledge: {
+  _id, knowledgeType, text?, embedding?, sourceThingId?, labels?, metadata
+  // Types: label, document, chunk, vector_only
+}
+
 // ThingKnowledge: Many-to-many junction
 thingKnowledge: {
   _id, thingId, knowledgeId, role, metadata
@@ -66,10 +72,10 @@ thingKnowledge: {
 ```typescript
 type ThingType =
   // CORE (4)
-  | 'creator'              // Human creator (platform/org owners, users, customers)
+  | 'creator'              // Human creator (platform/group owners, users, customers)
   | 'ai_clone'             // Digital twin with voice + appearance
   | 'audience_member'      // Fan/customer consuming content
-  | 'organization'         // Multi-tenant org container
+  | 'organization'         // DEPRECATED: Legacy type (use groups table instead)
 
   // BUSINESS AGENTS (10) - The AI workforce
   | 'strategy_agent'       // Vision, planning, OKRs
@@ -514,16 +520,16 @@ export default defineSchema({
 // queries/[thingType].ts
 export const list = query({
   args: {
-    organizationId: v.optional(v.id('things')),
+    groupId: v.optional(v.id('groups')),
     limit: v.optional(v.number())
   },
-  handler: async (ctx, { organizationId, limit = 20 }) => {
+  handler: async (ctx, { groupId, limit = 20 }) => {
     let q = ctx.db.query('things').withIndex('by_type', q =>
       q.eq('type', 'course') // Example: course
     )
 
-    if (organizationId) {
-      q = q.filter(q => q.eq(q.field('properties.organizationId'), organizationId))
+    if (groupId) {
+      q = q.filter(q => q.eq(q.field('groupId'), groupId))
     }
 
     return await q.take(limit)
@@ -542,7 +548,7 @@ export const create = mutation({
   args: {
     name: v.string(),
     properties: v.any(),
-    organizationId: v.optional(v.id('things'))
+    groupId: v.optional(v.id('groups'))
   },
   handler: async (ctx, args) => {
     // Validate user permission
@@ -555,7 +561,7 @@ export const create = mutation({
       name: args.name,
       properties: {
         ...args.properties,
-        organizationId: args.organizationId,
+        groupId: args.groupId,
         createdBy: user._id
       },
       status: 'active',
@@ -564,9 +570,9 @@ export const create = mutation({
     })
 
     // Create ownership connection
-    if (args.organizationId) {
+    if (args.groupId) {
       await ctx.db.insert('connections', {
-        fromThingId: args.organizationId,
+        fromThingId: args.groupId,
         toThingId: id,
         relationshipType: 'owns',
         createdAt: Date.now()
@@ -644,8 +650,8 @@ export function CourseCard({ courseId }: CourseCardProps) {
 }
 
 // components/lists/CourseList.tsx
-export function CourseList({ organizationId }: { organizationId?: Id<'things'> }) {
-  const courses = useQuery(api.queries.course.list, { organizationId, limit: 20 })
+export function CourseList({ groupId }: { groupId?: Id<'groups'> }) {
+  const courses = useQuery(api.queries.course.list, { groupId, limit: 20 })
 
   return (
     <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
@@ -768,10 +774,10 @@ export const create = mutation({
 // queries/analytics/courseMetrics.ts
 export const getCourseMetrics = query({
   args: {
-    organizationId: v.id('things'),
+    groupId: v.id('groups'),
     period: v.union(v.literal('7d'), v.literal('30d'), v.literal('90d'))
   },
-  handler: async (ctx, { organizationId, period }) => {
+  handler: async (ctx, { groupId, period }) => {
     const since = Date.now() - getPeriodMs(period)
 
     // Count course creations
@@ -780,7 +786,7 @@ export const getCourseMetrics = query({
       .withIndex('type_time', q =>
         q.eq('type', 'course_created').gte('timestamp', since)
       )
-      .filter(q => q.eq(q.field('metadata.organizationId'), organizationId))
+      .filter(q => q.eq(q.field('groupId'), groupId))
       .collect()
       .then(events => events.length)
 
@@ -790,7 +796,7 @@ export const getCourseMetrics = query({
       .withIndex('type_time', q =>
         q.eq('type', 'course_enrolled').gte('timestamp', since)
       )
-      .filter(q => q.eq(q.field('metadata.organizationId'), organizationId))
+      .filter(q => q.eq(q.field('groupId'), groupId))
       .collect()
       .then(events => events.length)
 
@@ -800,7 +806,7 @@ export const getCourseMetrics = query({
       .withIndex('type_time', q =>
         q.eq('type', 'course_completed').gte('timestamp', since)
       )
-      .filter(q => q.eq(q.field('metadata.organizationId'), organizationId))
+      .filter(q => q.eq(q.field('groupId'), groupId))
       .collect()
       .then(events => events.length)
 
@@ -822,7 +828,7 @@ export const getCourseMetrics = query({
 // components/analytics/CourseMetricsDashboard.tsx
 export function CourseMetricsDashboard({ orgId }: { orgId: Id<'things'> }) {
   const metrics = useQuery(api.queries.analytics.getCourseMetrics, {
-    organizationId: orgId,
+    groupId: orgId,
     period: '30d'
   })
 
@@ -914,11 +920,11 @@ export const embedThing = internalAction({
 export const semanticSearch = query({
   args: {
     query: v.string(),
-    organizationId: v.optional(v.id('things')),
+    groupId: v.optional(v.id('groups')),
     thingType: v.optional(v.string()),
     limit: v.optional(v.number())
   },
-  handler: async (ctx, { query, organizationId, thingType, limit = 10 }) => {
+  handler: async (ctx, { query, groupId, thingType, limit = 10 }) => {
     // Generate query embedding
     const queryEmbedding = await embed(query)
 
@@ -929,8 +935,8 @@ export const semanticSearch = query({
       filter: q => {
         let filter = q.eq(q.field('knowledgeType'), 'chunk')
 
-        if (organizationId) {
-          filter = filter.eq(q.field('sourceThingId.properties.organizationId'), organizationId)
+        if (groupId) {
+          filter = filter.eq(q.field('sourceThingId.groupId'), groupId)
         }
 
         if (thingType) {
@@ -992,30 +998,30 @@ export const onThingCreated = internalMutation({
 // actions/website/generate.ts
 export const generateWebsite = internalAction({
   args: {
-    organizationId: v.id('things'),
+    groupId: v.id('groups'),
     template: v.union(v.literal('minimal'), v.literal('showcase'), v.literal('portfolio'))
   },
-  handler: async (ctx, { organizationId, template }) => {
-    // Get organization
-    const org = await ctx.runQuery(internal.queries.orgs.get, { id: organizationId })
+  handler: async (ctx, { groupId, template }) => {
+    // Get group
+    const group = await ctx.runQuery(internal.queries.groups.get, { id: groupId })
 
-    // Get org's creators
+    // Get group's creators
     const creators = await ctx.runQuery(internal.queries.things.list, {
       type: 'creator',
-      organizationId,
+      groupId,
       limit: 100
     })
 
-    // Get org's content (courses, posts, etc.)
+    // Get group's content (courses, posts, etc.)
     const courses = await ctx.runQuery(internal.queries.things.list, {
       type: 'course',
-      organizationId,
+      groupId,
       limit: 50
     })
 
     const posts = await ctx.runQuery(internal.queries.things.list, {
       type: 'blog_post',
-      organizationId,
+      groupId,
       limit: 50
     })
 
@@ -1071,12 +1077,12 @@ export const generateWebsite = internalAction({
     // Deploy to Cloudflare Pages
     await deployToCloudflare(pages, {
       domain: `${org.properties.slug}.one.ie`,
-      orgId: organizationId
+      groupId: groupId
     })
 
     // Update org website status
     await ctx.runMutation(internal.mutations.orgs.update, {
-      id: organizationId,
+      id: groupId,
       properties: {
         ...org.properties,
         websiteUrl: `https://${org.properties.slug}.one.ie`,
@@ -1385,13 +1391,13 @@ for (const conn of intent.connections) {
 // Step 6: Analytics Agent generates dashboards
 await analyticsAgent.generate({
   eventTypes: intent.events,
-  organizationId: org._id
+  groupId: group._id
 })
 // Output: Complete analytics dashboard with 4 metrics
 
 // Step 7: Website Agent generates marketing site
 await websiteAgent.generate({
-  organizationId: org._id,
+  groupId: group._id,
   template: 'showcase',
   features: intent.thingTypes
 })
@@ -1525,19 +1531,19 @@ const org = {
 // Step 1: Query org's content
 const creators = await db.query('things')
   .withIndex('by_type', q => q.eq('type', 'creator'))
-  .filter(q => q.eq(q.field('properties.organizationId'), org._id))
+  .filter(q => q.eq(q.field('groupId'), group._id))
   .collect()
 // Result: 3 fitness coaches
 
 const courses = await db.query('things')
   .withIndex('by_type', q => q.eq('type', 'course'))
-  .filter(q => q.eq(q.field('properties.organizationId'), org._id))
+  .filter(q => q.eq(q.field('groupId'), group._id))
   .collect()
 // Result: 12 fitness courses
 
 const posts = await db.query('things')
   .withIndex('by_type', q => q.eq('type', 'blog_post'))
-  .filter(q => q.eq(q.field('properties.organizationId'), org._id))
+  .filter(q => q.eq(q.field('groupId'), group._id))
   .collect()
 // Result: 24 blog posts
 

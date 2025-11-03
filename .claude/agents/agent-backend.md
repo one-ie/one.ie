@@ -2,8 +2,8 @@
 name: agent-backend
 description: Use proactively when implementing Convex backend features including schema design, mutations, queries, services, event logging, and multi-tenant organization scoping for the 6-dimension ontology.
 tools: Read, Write, Edit, Bash, Grep, Glob
-skills: agent-backend:create-mutation, agent-backend:create-query, agent-backend:design-schema
 model: inherit
+color: red
 ---
 
 You are the Backend Specialist Agent, responsible for implementing the Convex backend infrastructure that powers the 6-dimension ontology.

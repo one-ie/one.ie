@@ -45,12 +45,12 @@ This dimension defines every person who interacts with your store and their spec
 
 ### Person Roles
 
-1. **`owner`**: The business owner with full administrative privileges.
-    
-2. **`staff`**: Employees with specific permissions (e.g., order fulfillment, customer support).
-    
+1. **`group_owner`**: The business owner with full administrative privileges. Maps to store owner/admin.
+
+2. **`group_user`**: Employees with specific permissions (e.g., order fulfillment, customer support). Maps to staff members.
+
 3. **`customer`**: Any individual who browses or buys from the store, from anonymous visitor to loyal patron.
-    
+
 
 ### Person Structure
 
@@ -60,7 +60,7 @@ TypeScript
 {
   _id: Id<'people'>,
   email: string,
-  role: 'owner' | 'staff' | 'customer',
+  role: 'platform_owner' | 'group_owner' | 'group_user' | 'customer',
   displayName?: string,
   defaultShippingAddress?: { /* ... */ },
   createdAt: number

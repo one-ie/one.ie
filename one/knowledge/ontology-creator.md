@@ -77,16 +77,24 @@ Creators are **multi-platform businesses** that:
 ```typescript
 {
   _id: Id<'people'>,
+  email: string,
+  username: string,
+  displayName: string,
+
   role: 'platform_owner' | 'group_owner' | 'group_user' | 'customer',
 
-  // Mapped roles:
-  // group_owner → Creator/Founder
-  // group_user → Team Member
-  // customer → Fan/Member
+  // Creator role mapping:
+  // platform_owner → Platform administrator
+  // group_owner → Creator/Founder (owns creator brand group)
+  // group_user → Team Member (works within creator's group)
+  // customer → Fan/Member (subscribes or engages)
 
   permissions: string[],  // publish_content, manage_sponsorships, access_analytics, etc.
 
   profile: {
+    bio?: string,
+    avatar?: string,
+
     creatorProfile?: {
       expertise: string[],
       yearsCreating: number,

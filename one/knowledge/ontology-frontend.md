@@ -443,7 +443,7 @@ interface DataProviderInterface {
   // Dimension 3: Things
   things: {
     get: (id: string) → Effect<Thing, ThingNotFoundError | UnauthorizedError>
-    list: (params: { type: ThingType; organizationId?: string; filters?: any }) → Effect<Thing[], Error>
+    list: (params: { type: ThingType; groupId?: string; filters?: any }) → Effect<Thing[], Error>
     create: (input: CreateThingInput) → Effect<string, ThingCreateError>
     update: (id: string, updates: Partial<Thing>) → Effect<void, Error>
     delete: (id: string) → Effect<void, Error>
@@ -472,7 +472,7 @@ interface DataProviderInterface {
   // Optional: Real-time subscriptions (not all backends support)
   subscriptions?: {
     watchThing: (id: string) → Effect<Observable<Thing>, Error>
-    watchList: (type: ThingType, organizationId?: string) → Effect<Observable<Thing[]>, Error>
+    watchList: (type: ThingType, groupId?: string) → Effect<Observable<Thing[]>, Error>
   }
 }
 ```
@@ -532,7 +532,7 @@ type ThingService = GenericService & {
   // Delegates to configured provider
   implementation: (provider: DataProvider) => ({
     get: (id) => provider.things.get(id),
-    list: (type, orgId) => provider.things.list({ type, organizationId: orgId }),
+    list: (type, groupId) => provider.things.list({ type, groupId }),
     // ...
   })
 }
@@ -746,16 +746,16 @@ type ProviderConfig = Configuration & {
       // src/middleware.ts
       export function onRequest(context, next) {
         const subdomain = context.url.hostname.split('.')[0]
-        const org = await provider.organizations.get({ slug: subdomain })
+        const group = await provider.groups.get({ slug: subdomain })
 
-        context.locals.organizationId = org._id
-        context.locals.organization = org
+        context.locals.groupId = group._id
+        context.locals.group = group
 
         return next()
       }
     `,
 
-    // Provider auto-injects orgId in ALL queries
+    // Provider auto-injects groupId in ALL queries
     provider: `
       // Provider automatically scopes ALL queries
       class ConvexProvider implements DataProviderInterface {
@@ -766,7 +766,7 @@ type ProviderConfig = Configuration & {
             // Provider ALWAYS adds org filter (frontend never needs to)
             return this.client.query(api.things.list, {
               ...params,
-              organizationId: this.ctx.locals.organizationId // Auto-injected
+              groupId: this.ctx.locals.groupId // Auto-injected
             })
           },
 
@@ -776,7 +776,7 @@ type ProviderConfig = Configuration & {
               ...input,
               properties: {
                 ...input.properties,
-                organizationId: this.ctx.locals.organizationId // Auto-injected
+                groupId: this.ctx.locals.groupId // Auto-injected
               }
             })
           }
@@ -788,28 +788,28 @@ type ProviderConfig = Configuration & {
     frontend: `
       // ✅ Frontend code (same for all orgs)
       const courses = await provider.things.list({ type: 'course' })
-      // Provider adds organizationId automatically
+      // Provider adds groupId automatically
 
       // ❌ NEVER do this
       const courses = await provider.things.list({
         type: 'course',
-        organizationId: ctx.locals.organizationId // Provider handles this
+        groupId: ctx.locals.groupId // Provider handles this
       })
     `,
 
     invariants: [
       "Provider enforces isolation (not frontend)",
       "Frontend never knows about multi-tenancy",
-      "One frontend codebase for all orgs",
+      "One frontend codebase for all groups",
       "Data isolation enforced at provider level"
     ]
   },
 
   benefits: [
-    "Frontend code 100% org-agnostic",
+    "Frontend code 100% group-agnostic",
     "Security enforced by provider (not UI)",
-    "No org-specific frontend builds",
-    "Impossible to leak org data (provider enforces)"
+    "No group-specific frontend builds",
+    "Impossible to leak group data (provider enforces)"
   ]
 }
 ```
@@ -1297,14 +1297,14 @@ type ProviderConfig = Configuration & {
           const courseId = await testProvider.things.create({
             type: 'course',
             name: 'Integration Test Course',
-            properties: { organizationId: testOrgId }
+            properties: { /* thing properties */ }
           })
 
           // Create lessons (real mutations)
           const lesson1Id = await testProvider.things.create({
             type: 'lesson',
             name: 'Lesson 1',
-            properties: { organizationId: testOrgId }
+            properties: { /* thing properties */ }
           })
 
           await testProvider.connections.create({
@@ -2246,22 +2246,22 @@ type ProviderConfig = Configuration & {
     why: "Errors WILL happen. Always have UI for error states."
   },
 
-  // Mistake 6: Manual org filtering
+  // Mistake 6: Manual group filtering
   mistake6: {
-    problem: "Manually filtering by organizationId",
+    problem: "Manually filtering by groupId",
     bad: `
       // ❌ BAD
       const courses = await provider.things.list({
         type: 'course',
-        organizationId: ctx.locals.organizationId // Manual filtering
+        groupId: ctx.locals.groupId // Manual filtering
       })
     `,
     good: `
       // ✅ GOOD
       const courses = await provider.things.list({ type: 'course' })
-      // Provider auto-injects organizationId
+      // Provider auto-injects groupId
     `,
-    why: "Provider enforces multi-tenancy. Frontend shouldn't know about orgs."
+    why: "Provider enforces multi-tenancy. Frontend shouldn't know about groups."
   },
 
   // Mistake 7: Not caching type definitions

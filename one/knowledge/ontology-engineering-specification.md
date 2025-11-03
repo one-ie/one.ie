@@ -735,7 +735,7 @@ export async function generateWebsite(orgId: Id<'things'>) {
   // 2. Get org's things
   const things = await db
     .query('things')
-    .filter(q => q.eq(q.field('properties.organizationId'), orgId))
+    .filter(q => q.eq(q.field('groupId'), orgId))
     .collect()
 
   // 3. Generate pages
@@ -784,13 +784,13 @@ const org = await convex.query(api.queries.orgs.getBySlug, {
 // Get creators
 const creators = await convex.query(api.queries.things.list, {
   type: 'creator',
-  organizationId: org._id
+  groupId: org._id
 })
 
 // Get courses
 const courses = await convex.query(api.queries.things.list, {
   type: 'course',
-  organizationId: org._id,
+  groupId: org._id,
   limit: 6
 })
 ---
@@ -1045,7 +1045,7 @@ async function generateAnalyticsDashboard(orgId: Id<'things'>) {
   // Get all event types used by this org
   const eventTypes = await db
     .query('events')
-    .filter(q => q.eq(q.field('metadata.organizationId'), orgId))
+    .filter(q => q.eq(q.field('groupId'), orgId))
     .collect()
     .then(events => [...new Set(events.map(e => e.type))])
 

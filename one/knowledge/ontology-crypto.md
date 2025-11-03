@@ -4,8 +4,8 @@ An extension of the ONE Platform 6-dimension ontology specialized for cryptocurr
 
 ## Version
 
-- **Ontology Version**: 2.0.0
-- **Based On**: ONE Platform 6-Dimensions v1.0.0
+- **Ontology Version**: 1.0.0 (Domain-specific extension)
+- **Based On**: ONE Platform 6-Dimensions v3.0.0 (Reality as DSL)
 - **Domain**: Cryptocurrency and Blockchain Analysis (AI Token Specialization + Paradigm Shift 2025)
 - **Paradigm Shift**: X402 Protocol + CLARITY Act
 - **Last Updated**: 2025-11-03

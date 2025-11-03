@@ -29,8 +29,8 @@ Scope   Authorize  Create     Relate      Log &      Power
 2. **[people.md](./people.md)** - Creators, owners & users
 
    - Platform owner (Anthony - 100% ownership)
-   - Org owners (manage organizations)
-   - Org users (work within organizations)
+   - Group owners (manage groups)
+   - Group users (work within groups)
    - Customers (consume content)
 
 3. **[things.md](./things.md)** - 66 entity types
@@ -89,29 +89,31 @@ Scope   Authorize  Create     Relate      Log &      Power
 
 1. Read **[Ontology.md](./ontology.md)** (complete spec)
 2. Understand the 6-dimension universe:
-   - **Things** - entities
-   - **Connections** - relationships
-   - **Events** - actions
-   - **Knowledge** - vectors + inference
+   - **Groups** - multi-tenant isolation with hierarchical nesting
+   - **People** - authorization & governance (4 core roles)
+   - **Things** - 66 entity types
+   - **Connections** - 25 relationship types
+   - **Events** - 67 action types
+   - **Knowledge** - labels, chunks, vectors for RAG
 3. Follow patterns in consolidated files
-4. Everything maps to these 6 dimensions (organizations, people, things, connections, events, knowledge)
+4. Everything maps to these 6 dimensions (groups, people, things, connections, events, knowledge)
 
 ### For Developers
 
-1. Start with **[groups.md](../groups/groups.md)** - Understand multi-tenancy & hierarchical groups
-2. Read **[people.md](./people.md)** - Understand roles & permissions
-3. Skim **[things.md](./things.md)** - See what entities exist
-4. Review **[connections.md](./connections.md)** - See how things relate
-5. Check **[events.md](./events.md)** - See what gets logged
-6. Dive into **[knowledge.md](./knowledge.md)** - Understand the intelligence layer
-7. Reference **[Ontology.md](./ontology.md)** for complete details
+1. Start with **[ontology.md](./ontology.md)** - Complete 6-dimension specification
+2. Read the group dimension - Multi-tenancy & hierarchical groups
+3. Read the people dimension - Roles (platform_owner, group_owner, group_user, customer)
+4. Review things dimension (66 types) - What entities exist
+5. Review connections dimension (25 types) - How things relate
+6. Review events dimension (67 types) - What gets logged
+7. Review knowledge dimension - Vectors & RAG for understanding
 
 ### For Product Managers
 
-1. **[groups.md](../groups/groups.md)** - How customers are isolated
-2. **[people.md](./people.md)** - How users, roles & permissions work
-3. **[knowledge.md](./knowledge.md)** - How AI inference generates revenue
-4. **[events.md](./events.md)** - What gets tracked & analyzed
+1. **Groups** - How customers are isolated with hierarchical nesting
+2. **People** - How users, roles & permissions work (4 core roles)
+3. **Knowledge** - How AI inference generates revenue
+4. **Events** - What gets tracked & analyzed (67 types)
 
 ---
 
@@ -128,15 +130,16 @@ Everything in ONE exists in one of 6 dimensions:
 - **events** - actions (67 types)
 - **knowledge** - vectors + labels (4 types)
 
-### 2. Knowledge-Last
+### 2. Knowledge (Labels, Chunks, & Vectors)
 
-Knowledge is now the last primitive:
+Knowledge is the 6th dimension for understanding:
 
-- Tags
-- Describes
-- Adds vector embeddings for semantic search
-- Powers RAG for context-aware generation
-- Tracks inference usage & revenue
+- **Labels** - Categorization (skill:python, industry:fitness, topic:ai)
+- **Documents** - Source documents before chunking
+- **Chunks** - 800-token chunks with vector embeddings
+- **Vector-only** - Privacy-preserving embeddings without text
+- Powers RAG (Retrieval-Augmented Generation)
+- Enables semantic search and understanding
 
 ### 3. Protocol-Agnostic
 

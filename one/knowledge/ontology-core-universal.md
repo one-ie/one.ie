@@ -122,7 +122,7 @@ Every website, from a simple portfolio to a complex platform, needs these fundam
   username: string,          // URL identifier (/username)
   displayName: string,
 
-  // Auth
+  // Auth (role types: platform_owner, group_owner, group_user, customer)
   role: 'platform_owner' | 'group_owner' | 'group_user' | 'customer',
   groupId?: Id<'groups'>,   // Current/default group
   groups: Id<'groups'>[],   // All groups this person belongs to

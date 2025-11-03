@@ -151,8 +151,8 @@ dimensions:
     location: "one/knowledge/ontology.md - 'People' dimension"
     roles:
       - platform_owner: Owns the entire platform
-      - org_owner: Owns an organization group
-      - org_user: Member of an organization
+      - group_owner: Owns/manages groups (replaces org_owner)
+      - group_user: Member of a group (replaces org_user)
       - customer: End user/consumer
 
   groups:

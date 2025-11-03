@@ -25,8 +25,8 @@
          │
     ┌────▼────┐
     │  PEOPLE │  • platform_owner
-    │ (Roles) │  • org_owner
-    │         │  • org_user
+    │ (Roles) │  • group_owner
+    │         │  • group_user
     └────┬────┘  • customer
          │
          │ organized in

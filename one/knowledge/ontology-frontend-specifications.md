@@ -308,9 +308,9 @@ export class UnauthorizedError {
   readonly _tag = 'UnauthorizedError'
 }
 
-export class OrganizationNotFoundError {
-  readonly _tag = 'OrganizationNotFoundError'
-  constructor(readonly organizationId: string) {}
+export class GroupNotFoundError {
+  readonly _tag = 'GroupNotFoundError'
+  constructor(readonly groupId: string) {}
 }
 
 export class PersonNotFoundError {
@@ -324,28 +324,18 @@ export class PersonCreateError {
 }
 
 // Type definitions for 6 dimensions
-export interface Organization {
+export interface Group {
   _id: string
-  name: string
   slug: string
-  status: 'active' | 'suspended' | 'trial' | 'cancelled'
-  plan: 'starter' | 'pro' | 'enterprise'
+  name: string
+  type: 'friend_circle' | 'business' | 'community' | 'dao' | 'government' | 'organization'
+  parentGroupId?: string
+  description?: string
+  status: 'active' | 'archived'
   settings: {
-    allowSignups: boolean
-    requireEmailVerification: boolean
-    enableTwoFactor: boolean
-  }
-  limits: {
-    users: number
-    storage: number
-    apiCalls: number
-    inference: number
-  }
-  usage: {
-    users: number
-    storage: number
-    apiCalls: number
-    inference: number
+    visibility: 'public' | 'private'
+    joinPolicy: 'open' | 'invite_only' | 'approval_required'
+    plan?: 'starter' | 'pro' | 'enterprise'
   }
   createdAt: number
   updatedAt: number
@@ -357,9 +347,9 @@ export interface Person {
   username: string
   displayName: string
   emailVerified: boolean
-  role: 'platform_owner' | 'org_owner' | 'org_user' | 'customer'
-  organizationId: string
-  organizations: string[]  // All orgs this person belongs to
+  role: 'platform_owner' | 'group_owner' | 'group_user' | 'customer'
+  groupId?: string
+  groups: string[]  // All groups this person belongs to
   permissions?: string[]
   image?: string
   bio?: string
@@ -369,30 +359,30 @@ export interface Person {
 
 // DataProvider interface (every backend must implement this)
 export interface DataProvider {
-  // Dimension 1: Organizations operations
-  organizations: {
-    get: (id: string) => Effect.Effect<Organization, OrganizationNotFoundError>
+  // Dimension 1: Groups operations
+  groups: {
+    get: (id: string) => Effect.Effect<Group, GroupNotFoundError>
     list: (params: {
-      status?: 'active' | 'suspended' | 'trial' | 'cancelled'
+      status?: 'active' | 'archived'
       limit?: number
-    }) => Effect.Effect<Organization[], Error>
-    update: (id: string, updates: Partial<Organization>) => Effect.Effect<void, Error>
+    }) => Effect.Effect<Group[], Error>
+    update: (id: string, updates: Partial<Group>) => Effect.Effect<void, Error>
   }
 
   // Dimension 2: People operations
   people: {
     get: (id: string) => Effect.Effect<Person, PersonNotFoundError | UnauthorizedError>
     list: (params: {
-      organizationId?: string
-      role?: 'platform_owner' | 'org_owner' | 'org_user' | 'customer'
+      groupId?: string
+      role?: 'platform_owner' | 'group_owner' | 'group_user' | 'customer'
       filters?: Record<string, any>
       limit?: number
     }) => Effect.Effect<Person[], Error>
     create: (input: {
       email: string
       displayName: string
-      role: 'platform_owner' | 'org_owner' | 'org_user' | 'customer'
-      organizationId: string
+      role: 'platform_owner' | 'group_owner' | 'group_user' | 'customer'
+      groupId: string
       password?: string
     }) => Effect.Effect<string, PersonCreateError>
     update: (id: string, updates: Partial<Person>) => Effect.Effect<void, Error>
@@ -404,16 +394,16 @@ export interface DataProvider {
     get: (id: string) => Effect.Effect<Thing, ThingNotFoundError | UnauthorizedError>
     list: (params: {
       type: ThingType
-      organizationId?: string
+      groupId?: string
       filters?: Record<string, any>
       limit?: number
     }) => Effect.Effect<Thing[], Error>
     create: (input: {
       type: ThingType
       name: string
-      organizationId: string
+      groupId: string
       properties: Record<string, any>
-    }) => Effect.Effect<string, ConnectionCreateError>
+    }) => Effect.Effect<string, ThingCreateError>
     update: (id: string, updates: Partial<Thing>) => Effect.Effect<void, Error>
     delete: (id: string) => Effect.Effect<void, Error>
   }
@@ -441,14 +431,14 @@ export interface DataProvider {
       type: EventType
       actorId: string                    // Person ID (who did it)
       targetId?: string                  // Thing/Person/Connection ID (what was acted upon)
-      organizationId: string             // Org scope
+      groupId: string                    // Group scope
       metadata?: Record<string, any>
     }) => Effect.Effect<void, Error>
     query: (params: {
       type?: EventType
       actorId?: string                   // Person ID
       targetId?: string
-      organizationId?: string
+      groupId?: string
       from?: Date
       to?: Date
     }) => Effect.Effect<Event[], Error>
@@ -460,12 +450,12 @@ export interface DataProvider {
       text: string
       sourceThingId?: string             // Thing ID
       sourcePersonId?: string            // Person ID
-      organizationId: string
+      groupId: string
       labels?: string[]
     }) => Effect.Effect<string, Error>
     search: (params: {
       query: string
-      organizationId?: string
+      groupId?: string
       limit?: number
     }) => Effect.Effect<KnowledgeMatch[], Error>
   }
@@ -473,7 +463,7 @@ export interface DataProvider {
   // Real-time subscriptions (optional - not all backends support this)
   subscriptions?: {
     watchThing: (id: string) => Effect.Effect<Observable<Thing>, Error>
-    watchList: (type: ThingType, organizationId?: string) => Effect.Effect<Observable<Thing[]>, Error>
+    watchList: (type: ThingType, groupId?: string) => Effect.Effect<Observable<Thing[]>, Error>
   }
 }
 ```
@@ -864,8 +854,8 @@ export class SupabaseProvider implements DataProvider {
           .eq('type', params.type)
           .limit(params.limit || 10)
 
-        if (params.organizationId) {
-          query = query.eq('organizationId', params.organizationId)
+        if (params.groupId) {
+          query = query.eq('groupId', params.groupId)
         }
 
         const { data, error } = yield* Effect.tryPromise({
@@ -1200,8 +1190,8 @@ const course = yield* provider.things.get(courseId)
 const lesson = yield* provider.things.get(lessonId)
 
 // List any type
-const courses = yield* provider.things.list({ type: 'course', organizationId: orgId })
-const products = yield* provider.things.list({ type: 'product', organizationId: orgId })
+const courses = yield* provider.things.list({ type: 'course', groupId: orgId })
+const products = yield* provider.things.list({ type: 'product', groupId: orgId })
 
 // Create any type
 const courseId = yield* provider.things.create({
@@ -1239,7 +1229,7 @@ export class ThingService extends Effect.Service<ThingService>()(
         list: (type: ThingType, orgId?: string) =>
           provider.things.list({
             type,
-            organizationId: orgId
+            groupId: orgId
           }),
 
         create: (input: { type: ThingType; name: string; properties: any }) =>
@@ -2039,7 +2029,7 @@ if (!org) {
 const convex = getConvexClient()
 const courses = await convex.query(api.queries.things.list, {
   type: 'course',
-  organizationId: org._id  // Backend filters by org
+  groupId: org._id  // Backend filters by group
 })
 ---
 

@@ -8,17 +8,19 @@ golden_rule: "Everything maps to 6 dimensions. All complexity lives in metadata.
 # THE 6 DIMENSIONS
 # ======================================================================
 
-1_organizations:
-  purpose: Multi-tenant isolation
-  rule: "Every resource belongs to exactly one organization"
+1_groups:
+  purpose: Multi-tenant isolation with hierarchical nesting
+  rule: "Every resource belongs to exactly one group"
   structure:
     _id: Id
     name: string # REQUIRED: Display name
-    slug: string # REQUIRED: URL identifier (/org/slug)
-    status: enum # REQUIRED: active, suspended, trial, cancelled
+    slug: string # REQUIRED: URL identifier (/group/slug)
+    type: enum # REQUIRED: friend_circle, business, community, dao, government, organization
+    parentGroupId?: Id # OPTIONAL: Parent group for nesting
+    status: enum # REQUIRED: active, archived
     plan: enum # REQUIRED: starter, pro, enterprise
     domain?: string # OPTIONAL: Custom domain
-    logo?: string # OPTIONAL: Organization logo
+    logo?: string # OPTIONAL: Group logo
     description?: string # OPTIONAL: About text
     limits: {}
     usage: {}
@@ -37,9 +39,9 @@ golden_rule: "Everything maps to 6 dimensions. All complexity lives in metadata.
     email: string # REQUIRED: Auth identifier
     username: string # REQUIRED: URL identifier (/username)
     displayName: string # REQUIRED: Display name
-    role: enum[platform_owner, org_owner, org_user, customer]
-    organizationId?: Id # Current/default org
-    organizations: Id[] # All orgs person belongs to
+    role: enum[platform_owner, group_owner, group_user, customer]
+    groupId?: Id # Current/default group
+    groups: Id[] # All groups person belongs to
     permissions?: string[] # Additional permissions
     avatar?: string # OPTIONAL: Profile image
     bio?: string # OPTIONAL: About text
@@ -48,7 +50,7 @@ golden_rule: "Everything maps to 6 dimensions. All complexity lives in metadata.
     identity: [email, username, displayName]
     auth: [email, username, role, permissions]
     web: [username, displayName, avatar, bio]
-    governance: [role, organizationId, organizations, permissions]
+    governance: [role, groupId, groups, permissions]
 
 3_things:
   purpose: All entities
@@ -123,16 +125,16 @@ golden_rule: "Everything maps to 6 dimensions. All complexity lives in metadata.
 universal_fields:
   description: "Fields that EVERY person/org has for auth and web generation"
 
-  organizations_require:
+  groups_require:
     identity: [name, slug] # Who they are + URL
     web: [slug, logo?, description?, domain?]
-    operations: [status, plan, limits, usage]
+    operations: [status, plan, limits, usage, parentGroupId?]
 
   people_require:
     identity: [email, username, displayName] # Who they are + URL
     auth: [email, username, role] # Authentication
     web: [username, displayName, avatar?, bio?]
-    governance: [role, organizationId?, organizations]
+    governance: [role, groupId?, groups]
 
   things_require:
     identity: [type, name] # What it is
@@ -140,10 +142,10 @@ universal_fields:
     status: enum # Visibility/state
 
   web_generation_pattern: |
-    Every person/org can be a website:
-    - Organizations: /org/{slug} → generated from org data
+    Every person/group can be a website:
+    - Groups: /group/{slug} → generated from group data
     - People: /{username} → generated from person data
-    - Things: Rendered in context of their owner (org or person)
+    - Things: Rendered in context of their owner (group or person)
 
     Required for ANY web page:
     1. URL identifier (slug/username in properties)
