@@ -7,6 +7,7 @@ const BlogSchema = z.object({
   date: z.date(),
   draft: z.boolean().optional(),
   image: z.string().optional(),
+  picture: z.string().optional(), // Support oneieold blog posts
   author: z.string().default('ONE'),
   tags: z.array(z.string()).default([]),
   category: z
@@ -14,6 +15,7 @@ const BlogSchema = z.object({
     .default('article'),
   readingTime: z.number().optional(),
   featured: z.boolean().default(false),
+  type: z.string().optional(), // Support oneieold blog posts
 });
 
 // Define the Blog collection schema

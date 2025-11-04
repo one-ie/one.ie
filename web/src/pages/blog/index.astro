@@ -1,69 +1,112 @@
 ---
-import Layout from '../../layouts/Layout.astro';
-import { getCollection } from 'astro:content';
-import { Grid, List } from 'lucide-react';
-import { BlogSearch } from '@/components/BlogSearch';
+import Layout from "@/layouts/Layout.astro";
+import { getCollection } from "astro:content";
+import { Card } from "@/components/ui/card";
+import { Calendar, Clock } from "lucide-react";
+import type { CollectionEntry } from "astro:content";
 
-// Get all Blog entries
-const entries = await getCollection('blog');
+// Helper function to safely parse dates
+function safeParseDate(dateValue: any): Date {
+  if (!dateValue) return new Date();
+  if (dateValue instanceof Date) return dateValue;
+  const parsed = new Date(dateValue);
+  return isNaN(parsed.getTime()) ? new Date() : parsed;
+}
 
-// Get view mode from URL params, default to list
-const viewModeParam = Astro.url.searchParams.get('view') || 'list';
-const viewMode = (viewModeParam === 'list' || viewModeParam === 'grid') ? viewModeParam : 'list';
-const gridColumnsParam = Astro.url.searchParams.get('columns') || '2';
-const gridColumns = (gridColumnsParam === '2' || gridColumnsParam === '3' || gridColumnsParam === '4') ? gridColumnsParam : '2';
+// Get all Blog entries sorted by date
+const entries = (await getCollection("blog"))
+  .filter((entry: CollectionEntry<"blog">) =>
+    // Only include entries with valid frontmatter
+    entry.data && (entry.data.title || entry.data.description)
+  )
+  .sort((a: CollectionEntry<"blog">, b: CollectionEntry<"blog">) =>
+    safeParseDate(b.data.date).getTime() - safeParseDate(a.data.date).getTime()
+  );
+
+function formatDate(dateValue: any): string {
+  const date = safeParseDate(dateValue);
+  return new Intl.DateTimeFormat("en-US", {
+    year: "numeric",
+    month: "short",
+    day: "numeric",
+  }).format(date);
+}
+
+function estimateReadingTime(text: string | undefined): number {
+  if (!text) return 1;
+  const wordsPerMinute = 200;
+  const words = text.trim().split(/\s+/).length;
+  return Math.ceil(words / wordsPerMinute);
+}
+
+function getBlogImage(entry: CollectionEntry<"blog">): string {
+  // Try picture first (from oneieold), then image
+  let imageUrl = entry.data.picture || entry.data.image;
+
+  // Check if we have a valid image URL
+  if (imageUrl && typeof imageUrl === 'string' && imageUrl.trim() !== '') {
+    return imageUrl;
+  }
+
+  // Return placeholder if no image
+  return "/images/placeholders/blog-placeholder-3.jpg";
+}
 ---
 
-<Layout title="Blog" description="Browse all available lessons">
-  <div class="max-w-4xl mx-auto">
-    <div class="flex justify-between items-center mb-8">
-      <h1 class="text-4xl font-bold" data-usal="fade-right duration-700">Blog</h1>
-      <div class="flex gap-2 items-center" data-usal="fade-left duration-700 delay-100">
-        <a
-          href="/blogs?view=list"
-          class={`p-2 rounded-md hover:bg-accent hover:scale-110 transition-all duration-200 ${viewMode === 'list' ? 'bg-accent' : ''}`}
-          title="List view"
-        >
-          <List className="w-5 h-5" />
-        </a>
-        <a
-          href="/blogs?view=grid&columns=2"
-          class={`p-2 rounded-md hover:bg-accent hover:scale-110 transition-all duration-200 ${viewMode === 'grid' && gridColumns === '2' ? 'bg-accent' : ''}`}
-          title="2 columns grid"
-        >
-          <Grid className="w-5 h-5" />
-        </a>
-        <a
-          href="/blogs?view=grid&columns=3"
-          class={`p-2 rounded-md hover:bg-accent hover:scale-110 transition-all duration-200 ${viewMode === 'grid' && gridColumns === '3' ? 'bg-accent' : ''}`}
-          title="3 columns grid"
-        >
-          <div class="w-5 h-5 grid grid-cols-3 gap-0.5">
-            <div class="bg-current rounded-sm"></div>
-            <div class="bg-current rounded-sm"></div>
-            <div class="bg-current rounded-sm"></div>
-          </div>
-        </a>
-        <a
-          href="/blogs?view=grid&columns=4"
-          class={`p-2 rounded-md hover:bg-accent hover:scale-110 transition-all duration-200 ${viewMode === 'grid' && gridColumns === '4' ? 'bg-accent' : ''}`}
-          title="4 columns grid"
-        >
-          <div class="w-5 h-5 grid grid-cols-2 grid-rows-2 gap-0.5">
-            <div class="bg-current rounded-sm"></div>
-            <div class="bg-current rounded-sm"></div>
-            <div class="bg-current rounded-sm"></div>
-            <div class="bg-current rounded-sm"></div>
-          </div>
-        </a>
+<Layout
+  title="Blog - Latest Articles and Updates"
+  description="Explore our latest articles, tutorials, and insights"
+>
+  <div class="max-w-[1600px] mx-auto px-4 sm:px-6 lg:px-8 pt-16 sm:pt-24 lg:pt-32 relative z-[1]">
+    <!-- Hero -->
+    <section class="relative overflow-hidden rounded-3xl bg-gradient-to-br from-slate-900 via-slate-800 to-slate-950 text-white mb-12 sm:mb-16 lg:mb-24">
+      <div class="absolute inset-0 bg-[radial-gradient(circle_at_top,_rgba(99,102,241,0.25),_transparent_60%)]" aria-hidden="true" />
+      <div class="relative z-[1] px-6 py-12 sm:px-10 sm:py-16 lg:px-16 lg:py-20">
+        <div class="max-w-3xl space-y-4">
+          <span class="text-sm font-semibold uppercase tracking-[0.3em] text-indigo-300">Blog</span>
+          <h1 class="text-3xl sm:text-4xl lg:text-5xl font-bold !leading-tight">Latest Articles & Insights</h1>
+          <p class="text-lg sm:text-xl text-indigo-100">Explore our latest thoughts on AI, technology, and building with ONE</p>
+        </div>
       </div>
-    </div>
+    </section>
 
-    <BlogSearch
-      client:load
-      posts={entries}
-      viewMode={viewMode}
-      gridColumns={gridColumns}
-    />
+    <!-- Article Grid -->
+    <div class="grid gap-8 sm:grid-cols-2 lg:grid-cols-3 relative z-[10]" transition:animate="slide">
+      {entries.map((entry: CollectionEntry<"blog">) => (
+        <Card className="group overflow-hidden border-muted/50 transition-all duration-300 hover:shadow-lg hover:-translate-y-1">
+          <a href={`/blog/${entry.slug}`} class="block">
+            <div class="aspect-[16/9] w-full overflow-hidden bg-slate-200 dark:bg-slate-800">
+              <img
+                src={getBlogImage(entry)}
+                alt={entry.data.title || "Blog post image"}
+                class="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"
+                loading="lazy"
+              />
+            </div>
+            <div class="p-6">
+              <div class="flex flex-wrap items-center gap-3 mb-4 text-sm">
+                <div class="inline-flex items-center rounded-full border px-2.5 py-0.5 text-xs font-semibold bg-primary/10 text-primary border-transparent">
+                  {entry.data.category || entry.data.type || "Article"}
+                </div>
+                <span class="text-sm flex items-center text-muted-foreground">
+                  <Calendar className="w-4 h-4 mr-1.5 text-primary/60" />
+                  {formatDate(entry.data.date)}
+                </span>
+              </div>
+              <h2 class="text-xl font-bold mb-2 group-hover:text-primary transition-colors">
+                {entry.data.title}
+              </h2>
+              <p class="text-muted-foreground line-clamp-2 mb-4">
+                {entry.data.description}
+              </p>
+              <div class="flex items-center text-sm text-muted-foreground">
+                <Clock className="w-4 h-4 mr-1.5 text-primary/60" />
+                {estimateReadingTime(entry.data.description)} min read
+              </div>
+            </div>
+          </a>
+        </Card>
+      ))}
+    </div>
   </div>
 </Layout>
