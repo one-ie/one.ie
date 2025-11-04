@@ -1,0 +1,204 @@
+#!/bin/bash
+
+# ============================================================
+# ONE CLI Release Script
+# ============================================================
+# Syncs .claude/* and /one to cli/, publishes to npm
+# Usage: ./scripts/release-cli.sh [patch|minor|major|sync]
+#
+# Examples:
+#   ./scripts/release-cli.sh patch     # Bug fix release
+#   ./scripts/release-cli.sh minor     # New feature release
+#   ./scripts/release-cli.sh major     # Breaking change release
+#   ./scripts/release-cli.sh sync      # Sync files without version bump
+# ============================================================
+
+set -e
+
+# Colors
+GREEN='\033[0;32m'
+BLUE='\033[0;34m'
+YELLOW='\033[1;33m'
+RED='\033[0;31m'
+NC='\033[0m'
+
+# Version bump (default: sync)
+VERSION_BUMP="${1:-sync}"
+
+# Validate input
+if [[ ! "$VERSION_BUMP" =~ ^(patch|minor|major|sync)$ ]]; then
+    echo -e "${RED}Error: Invalid version bump. Use: patch, minor, major, or sync${NC}"
+    exit 1
+fi
+
+echo -e "${BLUE}━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━${NC}"
+echo -e "${BLUE}   ONE CLI Release (${VERSION_BUMP})${NC}"
+echo -e "${BLUE}━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━${NC}"
+echo ""
+
+# Get script directory and navigate to root
+SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
+ROOT_DIR="$(dirname "$SCRIPT_DIR")"
+cd "$ROOT_DIR" || exit 1
+
+# Step 1: Verify CLI directory exists
+echo -e "${BLUE}Step 1: Verify CLI directory${NC}"
+if [ ! -d "cli" ]; then
+    echo -e "${RED}✗ cli/ directory not found${NC}"
+    exit 1
+fi
+echo -e "${GREEN}✓ cli/ directory exists${NC}"
+echo ""
+
+# Step 2: Sync .claude/* to cli/.claude/
+echo -e "${BLUE}Step 2: Sync .claude/ to cli/.claude/${NC}"
+if [ -d ".claude" ]; then
+    mkdir -p cli/.claude
+    rsync -av --delete \
+        .claude/ \
+        cli/.claude/ \
+        2>&1 | grep -E "^(sending|receiving|deleting|\.)" | head -20
+    echo -e "${GREEN}✓ .claude/ synced${NC}"
+else
+    echo -e "${YELLOW}⚠ .claude/ directory not found, skipping${NC}"
+fi
+echo ""
+
+# Step 3: Sync /one to cli/one/
+echo -e "${BLUE}Step 3: Sync /one to cli/one/${NC}"
+if [ -d "one" ]; then
+    mkdir -p cli/one
+    rsync -av --delete \
+        one/ \
+        cli/one/ \
+        2>&1 | grep -E "^(sending|receiving|deleting|\.)" | head -20
+    echo -e "${GREEN}✓ /one synced${NC}"
+else
+    echo -e "${YELLOW}⚠ /one directory not found, skipping${NC}"
+fi
+echo ""
+
+# Step 4: Sync root markdown files to cli/
+echo -e "${BLUE}Step 4: Sync root markdown files${NC}"
+for file in CLAUDE.md README.md LICENSE.md SECURITY.md; do
+    if [ -f "$file" ]; then
+        cp "$file" "cli/$file"
+        echo -e "${GREEN}✓ Synced $file${NC}"
+    fi
+done
+echo ""
+
+# Step 5: Version bump (if not sync)
+if [[ "$VERSION_BUMP" != "sync" ]]; then
+    echo -e "${BLUE}Step 5: Version bump (${VERSION_BUMP})${NC}"
+    cd cli
+    OLD_VERSION=$(node -p "require('./package.json').version")
+    npm version "$VERSION_BUMP" --no-git-tag-version
+    NEW_VERSION=$(node -p "require('./package.json').version")
+    echo -e "${GREEN}✓ Version bumped: ${OLD_VERSION} → ${NEW_VERSION}${NC}"
+    cd ..
+    echo ""
+else
+    echo -e "${YELLOW}⚠ Skipping version bump${NC}"
+    echo ""
+fi
+
+# Step 6: Commit changes to cli/
+echo -e "${BLUE}Step 6: Commit cli/ changes${NC}"
+cd cli
+if [[ -n $(git status -s) ]]; then
+    git add .
+    git commit -m "chore: sync .claude and /one documentation
+
+Synced from root repository:
+- .claude/* → CLI configuration
+- /one/* → Platform documentation
+
+🤖 Generated with [Claude Code](https://claude.com/claude-code)
+
+Co-Authored-By: Claude <noreply@anthropic.com>"
+    echo -e "${GREEN}✓ Changes committed${NC}"
+else
+    echo -e "${YELLOW}⚠ No changes to commit${NC}"
+fi
+cd ..
+echo ""
+
+# Step 7: Build CLI
+echo -e "${BLUE}Step 7: Build CLI${NC}"
+cd cli
+if npm run build > /dev/null 2>&1; then
+    echo -e "${GREEN}✓ Build successful${NC}"
+else
+    echo -e "${RED}✗ Build failed${NC}"
+    exit 1
+fi
+cd ..
+echo ""
+
+# Step 8: Verify npm credentials
+echo -e "${BLUE}Step 8: Verify npm credentials${NC}"
+if npm whoami > /dev/null 2>&1; then
+    NPM_USER=$(npm whoami)
+    echo -e "${GREEN}✓ Logged in as: ${NPM_USER}${NC}"
+else
+    echo -e "${RED}✗ Not logged in to npm. Run: npm login${NC}"
+    exit 1
+fi
+echo ""
+
+# Step 9: Publish to npm
+echo -e "${BLUE}Step 9: Publish to npm${NC}"
+cd cli
+if npm publish --access public > /dev/null 2>&1; then
+    PUBLISHED_VERSION=$(node -p "require('./package.json').version")
+    echo -e "${GREEN}✓ Published to npm: oneie@${PUBLISHED_VERSION}${NC}"
+
+    # Verify publication
+    sleep 2
+    if npm view oneie@"$PUBLISHED_VERSION" > /dev/null 2>&1; then
+        echo -e "${GREEN}✓ Package verified on npm${NC}"
+    else
+        echo -e "${YELLOW}⚠ Package not immediately visible on npm (may take a few seconds)${NC}"
+    fi
+else
+    echo -e "${RED}✗ npm publish failed${NC}"
+    exit 1
+fi
+cd ..
+echo ""
+
+# Step 10: Push to GitHub
+echo -e "${BLUE}Step 10: Push to GitHub${NC}"
+read -p "Push cli/ to GitHub? (y/n) " -r response
+if [[ "$response" =~ ^[Yy]$ ]]; then
+    cd cli
+    git push origin main
+    echo -e "${GREEN}✓ Pushed to GitHub${NC}"
+    cd ..
+else
+    echo -e "${YELLOW}⚠ Skipped GitHub push${NC}"
+fi
+echo ""
+
+# Step 11: Summary
+echo -e "${GREEN}━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━${NC}"
+echo -e "${GREEN}✅ CLI Release Complete!${NC}"
+echo -e "${GREEN}━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━${NC}"
+echo ""
+
+if [[ "$VERSION_BUMP" != "sync" ]]; then
+    CURRENT_VERSION=$(node -p "require('./cli/package.json').version")
+    echo -e "${GREEN}📦 npm: oneie@${CURRENT_VERSION}${NC}"
+    echo -e "${GREEN}🔗 GitHub: https://github.com/one-ie/cli${NC}"
+    echo ""
+    echo -e "${BLUE}Test your release:${NC}"
+    echo "  npx oneie@latest --version"
+    echo ""
+fi
+
+echo -e "${BLUE}Synced:${NC}"
+echo "  ✓ .claude/* → cli/.claude/"
+echo "  ✓ /one/* → cli/one/"
+echo "  ✓ CLAUDE.md, README.md, LICENSE.md, SECURITY.md"
+echo ""

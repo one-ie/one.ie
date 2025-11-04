@@ -18,6 +18,7 @@
 !/.nvmrc
 !/.mcp.json.backup
 !/scripts/push.sh
+!/scripts/release-cli.sh
 
 # Ensure directories are tracked for whitelisted paths
 !*/
