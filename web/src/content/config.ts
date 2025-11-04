@@ -297,6 +297,156 @@ const connections = defineCollection({
   schema: ConnectionSchema,
 });
 
+// Define the Features schema (feature documentation and specifications)
+const FeatureSchema = z.object({
+  title: z.string(), // Feature name
+  description: z.string(), // Brief description
+  featureId: z.string(), // Unique feature identifier (e.g., "auth-magic-links", "ecommerce-cart")
+  category: z.enum([
+    'authentication',
+    'ecommerce',
+    'ai-agents',
+    'protocols',
+    'payments',
+    'analytics',
+    'content',
+    'communication',
+    'infrastructure',
+    'integrations',
+    'developer-tools',
+    'other'
+  ]).optional(), // Feature category
+
+  // Feature status and metadata
+  status: z.enum(['planned', 'in_development', 'beta', 'completed', 'deprecated']).default('planned'),
+  version: z.string().optional(), // Feature version (e.g., "1.0.0", "2.1.3")
+  releaseDate: z.date().optional(), // When feature was released
+  plannedDate: z.date().optional(), // When feature is planned for release
+
+  // Ontology alignment
+  organization: z.string().optional(), // Organization that owns/builds this feature
+  personRole: z.enum(['platform_owner', 'org_owner', 'org_user', 'customer']).optional(),
+  ontologyDimensions: z.array(z.string()).optional(), // Groups, People, Things, Connections, Events, Knowledge
+  assignedSpecialist: z.string().optional(), // Agent name (agent-backend, agent-frontend, etc.)
+
+  // Technical specification
+  specification: z.object({
+    complexity: z.enum(['simple', 'moderate', 'complex', 'expert']).optional(),
+    estimatedHours: z.number().optional(),
+    dependencies: z.array(z.string()).optional(), // Other features this depends on
+    technologies: z.array(z.string()).optional(), // Tech stack (React, Convex, Astro, etc.)
+    apiEndpoints: z.array(z.object({
+      method: z.enum(['GET', 'POST', 'PUT', 'PATCH', 'DELETE']),
+      path: z.string(),
+      description: z.string(),
+    })).optional(),
+  }).optional(),
+
+  // Ontology mapping (how this feature uses the 6 dimensions)
+  ontologyMapping: z.object({
+    groups: z.string().optional(),
+    people: z.string().optional(),
+    things: z.string().optional(),
+    connections: z.string().optional(),
+    events: z.string().optional(),
+    knowledge: z.string().optional(),
+  }).optional(),
+
+  // Use cases
+  useCases: z.array(z.object({
+    title: z.string(),
+    description: z.string(),
+    userType: z.string().optional(), // Who uses this (creator, customer, admin)
+    scenario: z.string().optional(), // Step-by-step scenario
+  })).optional(),
+
+  // Code examples
+  examples: z.array(z.object({
+    title: z.string(),
+    language: z.string(), // typescript, python, javascript
+    code: z.string(),
+    description: z.string().optional(),
+  })).optional(),
+
+  // Features (sub-features or capabilities)
+  features: z.array(z.object({
+    name: z.string(),
+    description: z.string(),
+    status: z.enum(['planned', 'in_development', 'completed']).optional(),
+  })).optional(),
+
+  // Marketing & positioning
+  marketingPosition: z.object({
+    tagline: z.string().optional(), // One-line positioning
+    valueProposition: z.string().optional(), // Why this matters
+    targetAudience: z.array(z.string()).optional(), // Who needs this
+    competitiveAdvantage: z.string().optional(), // What makes it better
+    pricingImpact: z.enum(['free', 'starter', 'pro', 'enterprise']).optional(),
+  }).optional(),
+
+  // Screenshots and media
+  media: z.object({
+    screenshot: z.string().optional(), // Main screenshot URL
+    video: z.string().optional(), // Demo video URL
+    demo: z.string().optional(), // Live demo URL
+    gallery: z.array(z.string()).optional(), // Additional images
+  }).optional(),
+
+  // Integration details
+  integrationLevel: z.enum(['basic', 'advanced', 'enterprise']).optional(),
+  prerequisites: z.array(z.string()).optional(),
+  relatedFeatures: z.array(z.string()).optional(), // IDs of related features
+
+  // Quality metrics
+  metrics: z.object({
+    testCoverage: z.number().optional(), // Percentage
+    performanceScore: z.number().optional(), // Lighthouse score
+    accessibilityScore: z.number().optional(), // WCAG compliance
+    securityAudit: z.boolean().optional(), // Has been audited
+  }).optional(),
+
+  // Documentation links
+  documentation: z.object({
+    userGuide: z.string().optional(),
+    apiReference: z.string().optional(),
+    videoTutorial: z.string().optional(),
+    blogPost: z.string().optional(),
+  }).optional(),
+
+  // Tags and categorization
+  tags: z.array(z.string()).optional(),
+  featured: z.boolean().default(false),
+  priority: z.enum(['low', 'medium', 'high', 'critical']).optional(),
+
+  // Timestamps
+  createdAt: z.date().optional(),
+  updatedAt: z.date().optional(),
+  draft: z.boolean().optional().default(false),
+});
+
+// Define the Features collection
+const features = defineCollection({
+  type: 'content',
+  schema: FeatureSchema,
+});
+
+// Define the Docs schema (documentation pages)
+const DocsSchema = z.object({
+  title: z.string(), // Document title
+  description: z.string(), // Brief description
+  section: z.string().optional(), // Docs section/category
+  order: z.number().optional(), // Display order within section
+  tags: z.array(z.string()).optional(), // Tags for filtering
+  date: z.date().optional(), // Publication date
+  draft: z.boolean().optional().default(false), // Hide if draft
+});
+
+// Define the Docs collection
+const docs = defineCollection({
+  type: 'content',
+  schema: DocsSchema,
+});
+
 // Note: Installation-specific documentation is handled via file-resolver utility
 // in Astro pages, not through content collections. This allows dynamic resolution
 // based on INSTALLATION_NAME environment variable at runtime.
@@ -310,6 +460,8 @@ export const collections = {
   plans: plans,
   projects: projects,
   connections: connections,
+  features: features,
+  docs: docs,
 };
 
 // Export schema types
@@ -321,3 +473,5 @@ export type ProductCollectionSchema = z.infer<typeof ProductCollectionSchema>;
 export type PlanSchema = z.infer<typeof PlanSchema>;
 export type ProjectSchema = z.infer<typeof ProjectSchema>;
 export type ConnectionSchema = z.infer<typeof ConnectionSchema>;
+export type FeatureSchema = z.infer<typeof FeatureSchema>;
+export type DocsSchema = z.infer<typeof DocsSchema>;

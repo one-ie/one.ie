@@ -1,0 +1,41 @@
+---
+// "Powered by ONE" footer component
+---
+
+<footer class="flex h-8 shrink-0 items-center justify-center border-t pt-8 pb-0 bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60">
+  <a
+    href="https://one.ie"
+    class="flex items-center gap-2 text-sm text-foreground/80 hover:text-foreground transition-colors"
+  >
+    <img
+      src="https://one.ie/icon.svg"
+      alt="ONE"
+      class="w-6 h-6"
+      loading="lazy"
+    />
+    <span>Powered by ONE</span>
+  </a>
+</footer>
+
+<style>
+  footer {
+    background-color: hsl(var(--color-background));
+    border-color: hsl(var(--color-border));
+  }
+
+  a {
+    color: hsl(var(--color-foreground) / 0.8);
+  }
+
+  a:hover {
+    color: hsl(var(--color-foreground));
+  }
+
+  img {
+    transition: transform 0.2s ease;
+  }
+
+  a:hover img {
+    transform: scale(1.1);
+  }
+</style>

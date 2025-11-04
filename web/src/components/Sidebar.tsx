@@ -386,7 +386,7 @@ export function Sidebar({ children, initialCollapsed = false }: SimpleSidebarLay
             </Button>
           </div>
           <a href="/" className="absolute left-1/2 -translate-x-1/2">
-            <img src="/logo.svg" alt="Logo" className="h-8" width="32" height="32" />
+            <img src="/logo.svg" alt="Logo" className="h-28" width="112" height="112" />
           </a>
         </header>
         <main id="main-content" className="flex-1 p-4 sm:p-6">{children}</main>

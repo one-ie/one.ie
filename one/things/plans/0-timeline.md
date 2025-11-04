@@ -4,6 +4,7 @@ Features
 Documentation
 Analysis of current tech we have
 Plan
+Files
 Implementation
 Agent Director
 Agent Clone

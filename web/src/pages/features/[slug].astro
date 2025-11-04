@@ -1,0 +1,457 @@
+---
+import Layout from '../../layouts/Layout.astro';
+import { getCollection } from 'astro:content';
+import {
+  Card,
+  CardHeader,
+  CardTitle,
+  CardDescription,
+  CardContent,
+} from '@/components/ui/card';
+import { Badge } from '@/components/ui/badge';
+import { Button } from '@/components/ui/button';
+import { ArrowLeft, Code, CheckCircle2, Clock, AlertCircle, Users, Database, FileText, Zap, Link as LinkIcon } from 'lucide-react';
+import { FeatureSidebarNav } from '@/components/features/FeatureSidebarNav';
+
+// Enable static pre-rendering for this dynamic route
+export const prerender = true;
+
+// Generate static paths
+export async function getStaticPaths() {
+  const features = await getCollection('features');
+  return features.map((feature) => ({
+    params: { slug: feature.slug },
+    props: { feature, allFeatures: features },
+  }));
+}
+
+interface Props {
+  feature: unknown;
+  allFeatures: unknown[];
+}
+
+const { feature, allFeatures } = Astro.props;
+const { Content } = await feature.render();
+
+const statusIcons = {
+  completed: CheckCircle2,
+  beta: Zap,
+  in_development: Clock,
+  planned: AlertCircle,
+  deprecated: AlertCircle,
+};
+
+const statusColors = {
+  completed: 'bg-green-50 text-green-700 border-green-200',
+  beta: 'bg-blue-50 text-blue-700 border-blue-200',
+  in_development: 'bg-yellow-50 text-yellow-700 border-yellow-200',
+  planned: 'bg-gray-50 text-gray-700 border-gray-200',
+  deprecated: 'bg-red-50 text-red-700 border-red-200',
+};
+
+const ontologyIcons = {
+  groups: Users,
+  people: Users,
+  things: Database,
+  connections: LinkIcon,
+  events: Zap,
+  knowledge: FileText,
+};
+
+const categoryColors = {
+  authentication: 'bg-purple-50 text-purple-700 border-purple-200',
+  ecommerce: 'bg-blue-50 text-blue-700 border-blue-200',
+  'ai-agents': 'bg-pink-50 text-pink-700 border-pink-200',
+  protocols: 'bg-indigo-50 text-indigo-700 border-indigo-200',
+  payments: 'bg-emerald-50 text-emerald-700 border-emerald-200',
+  analytics: 'bg-cyan-50 text-cyan-700 border-cyan-200',
+  content: 'bg-orange-50 text-orange-700 border-orange-200',
+  communication: 'bg-rose-50 text-rose-700 border-rose-200',
+  infrastructure: 'bg-slate-50 text-slate-700 border-slate-200',
+  integrations: 'bg-lime-50 text-lime-700 border-lime-200',
+  'developer-tools': 'bg-amber-50 text-amber-700 border-amber-200',
+  other: 'bg-gray-50 text-gray-700 border-gray-200',
+};
+---
+
+<Layout title={`${feature.data.title} | ONE Platform Features`}>
+  <!-- Header -->
+  <section class="relative overflow-hidden px-4 py-12 sm:px-6 sm:py-16 md:px-8 md:py-20 border-b">
+    <div class="mx-auto max-w-4xl">
+      <a href="/features" class="inline-flex items-center gap-2 text-primary hover:underline mb-6">
+        <ArrowLeft className="h-4 w-4" />
+        Back to Features
+      </a>
+
+      <div class="space-y-6">
+        <div class="space-y-3">
+          <div class="flex items-center gap-3 flex-wrap">
+            {feature.data.category && (
+              <Badge variant="outline" className={`capitalize ${categoryColors[feature.data.category as keyof typeof categoryColors] || categoryColors.other}`}>
+                {feature.data.category.replace('-', ' ')}
+              </Badge>
+            )}
+            <Badge className={statusColors[feature.data.status as keyof typeof statusColors]}>
+              {feature.data.status.replace('-', ' ').charAt(0).toUpperCase() + feature.data.status.replace('-', ' ').slice(1)}
+            </Badge>
+            {feature.data.version && (
+              <Badge variant="outline">v{feature.data.version}</Badge>
+            )}
+            {feature.data.priority && (
+              <Badge variant="secondary" className="capitalize">
+                {feature.data.priority} priority
+              </Badge>
+            )}
+          </div>
+          <h1 class="text-5xl font-bold leading-tight tracking-tight">
+            {feature.data.title}
+          </h1>
+          <p class="text-xl text-muted-foreground">
+            {feature.data.description}
+          </p>
+        </div>
+
+        {(feature.data.releaseDate || feature.data.plannedDate) && (
+          <div class="flex flex-wrap gap-4">
+            {feature.data.releaseDate && (
+              <div class="inline-flex items-center gap-2 px-4 py-2 rounded-lg bg-muted/50">
+                <span class="text-sm font-medium">Released:</span>
+                <span class="font-semibold">
+                  {new Date(feature.data.releaseDate).toLocaleDateString('en-US', {
+                    year: 'numeric',
+                    month: 'long',
+                    day: 'numeric'
+                  })}
+                </span>
+              </div>
+            )}
+            {feature.data.plannedDate && (
+              <div class="inline-flex items-center gap-2 px-4 py-2 rounded-lg bg-muted/50">
+                <span class="text-sm font-medium">Planned for:</span>
+                <span class="font-semibold">
+                  {new Date(feature.data.plannedDate).toLocaleDateString('en-US', {
+                    year: 'numeric',
+                    month: 'long',
+                    day: 'numeric'
+                  })}
+                </span>
+              </div>
+            )}
+          </div>
+        )}
+      </div>
+    </div>
+  </section>
+
+  <!-- Main Content -->
+  <section class="px-4 py-16 sm:px-6 sm:py-20 md:px-8 md:py-24">
+    <div class="mx-auto max-w-7xl">
+      <div class="grid gap-8 lg:grid-cols-[1fr_350px]">
+        <div class="min-w-0">
+      {/* Marketing Position */}
+      {feature.data.marketingPosition && (
+        <div class="bg-gradient-to-br from-primary/5 to-primary/10 rounded-lg p-8 mb-16 border border-primary/20">
+          <div class="space-y-4">
+            {feature.data.marketingPosition.tagline && (
+              <div>
+                <h3 class="text-sm font-semibold text-muted-foreground uppercase tracking-wide">Tagline</h3>
+                <p class="text-2xl font-bold mt-2">{feature.data.marketingPosition.tagline}</p>
+              </div>
+            )}
+            {feature.data.marketingPosition.valueProposition && (
+              <div>
+                <h3 class="text-sm font-semibold text-muted-foreground uppercase tracking-wide">Value Proposition</h3>
+                <p class="text-lg mt-2">{feature.data.marketingPosition.valueProposition}</p>
+              </div>
+            )}
+            {feature.data.marketingPosition.targetAudience && feature.data.marketingPosition.targetAudience.length > 0 && (
+              <div>
+                <h3 class="text-sm font-semibold text-muted-foreground uppercase tracking-wide">Who Uses This</h3>
+                <div class="flex flex-wrap gap-2 mt-2">
+                  {feature.data.marketingPosition.targetAudience.map(audience => (
+                    <Badge variant="secondary">{audience}</Badge>
+                  ))}
+                </div>
+              </div>
+            )}
+          </div>
+        </div>
+      )}
+
+      <!-- Markdown Content -->
+      <div class="prose prose-invert max-w-none mb-16">
+        <Content />
+      </div>
+
+      <!-- Ontology Mapping -->
+      {feature.data.ontologyMapping && Object.values(feature.data.ontologyMapping).some(v => v) && (
+        <div class="space-y-8 mb-16">
+          <div>
+            <h2 class="text-3xl font-bold mb-6">Ontology Alignment</h2>
+            <p class="text-muted-foreground mb-6">
+              How this feature maps to the 6-dimension ontology
+            </p>
+            <div class="grid gap-4 md:grid-cols-2">
+              {Object.entries(feature.data.ontologyMapping).map(([dimension, description]) => {
+                if (!description) return null;
+                const Icon = ontologyIcons[dimension as keyof typeof ontologyIcons] || FileText;
+                return (
+                  <Card className="border-border/50 bg-card/50">
+                    <CardHeader className="space-y-3">
+                      <div class="flex items-center gap-3">
+                        <div class="flex h-10 w-10 items-center justify-center rounded-lg bg-primary/10">
+                          <Icon className="h-5 w-5 text-primary" />
+                        </div>
+                        <CardTitle className="text-lg capitalize">{dimension}</CardTitle>
+                      </div>
+                    </CardHeader>
+                    <CardContent>
+                      <p class="text-sm text-muted-foreground">{description}</p>
+                    </CardContent>
+                  </Card>
+                );
+              })}
+            </div>
+          </div>
+        </div>
+      )}
+
+      <!-- Features/Capabilities -->
+      {feature.data.features && feature.data.features.length > 0 && (
+        <div class="space-y-8 mb-16">
+          <div>
+            <h2 class="text-3xl font-bold mb-6">Capabilities</h2>
+            <div class="space-y-3">
+              {feature.data.features.map((feature: any) => (
+                <Card className="border-border/50 bg-card/50">
+                  <CardContent className="pt-6">
+                    <div class="flex items-start justify-between gap-4">
+                      <div class="flex-1">
+                        <h3 class="font-semibold">{feature.name}</h3>
+                        <p class="text-sm text-muted-foreground mt-1">{feature.description}</p>
+                      </div>
+                      {feature.status && (
+                        <Badge variant="secondary" className="capitalize flex-shrink-0">
+                          {feature.status}
+                        </Badge>
+                      )}
+                    </div>
+                  </CardContent>
+                </Card>
+              ))}
+            </div>
+          </div>
+        </div>
+      )}
+
+      <!-- Use Cases -->
+      {feature.data.useCases && feature.data.useCases.length > 0 && (
+        <div class="space-y-8 mb-16">
+          <div>
+            <h2 class="text-3xl font-bold mb-6">Use Cases</h2>
+            <div class="space-y-4">
+              {feature.data.useCases.map((useCase: any) => (
+                <Card className="border-border/50 bg-card/50">
+                  <CardHeader>
+                    <div class="flex items-start justify-between">
+                      <div>
+                        <CardTitle className="text-lg">{useCase.title}</CardTitle>
+                        {useCase.userType && (
+                          <Badge variant="outline" className="mt-2">{useCase.userType}</Badge>
+                        )}
+                      </div>
+                    </div>
+                  </CardHeader>
+                  <CardContent class="space-y-3">
+                    <p className="text-sm text-muted-foreground">{useCase.description}</p>
+                    {useCase.scenario && (
+                      <div class="mt-3 p-3 bg-muted rounded-lg">
+                        <p class="text-xs font-semibold text-muted-foreground uppercase">Step by step:</p>
+                        <p class="text-sm mt-2">{useCase.scenario}</p>
+                      </div>
+                    )}
+                  </CardContent>
+                </Card>
+              ))}
+            </div>
+          </div>
+        </div>
+      )}
+
+      <!-- Code Examples -->
+      {feature.data.examples && feature.data.examples.length > 0 && (
+        <div class="space-y-8 mb-16">
+          <div>
+            <h2 class="text-3xl font-bold mb-6 flex items-center gap-2">
+              <Code className="h-8 w-8" />
+              Code Examples
+            </h2>
+            <div class="space-y-6">
+              {feature.data.examples.map((example: any) => (
+                <Card className="border-border/50 bg-card/50">
+                  <CardHeader>
+                    <div class="flex items-center justify-between">
+                      <div>
+                        <CardTitle className="text-lg">{example.title}</CardTitle>
+                        {example.description && (
+                          <p class="text-sm text-muted-foreground mt-2">{example.description}</p>
+                        )}
+                      </div>
+                      <Badge variant="outline" className="text-xs">
+                        {example.language}
+                      </Badge>
+                    </div>
+                  </CardHeader>
+                  <CardContent>
+                    <pre class="overflow-x-auto rounded-lg bg-muted/50 p-4 text-xs leading-relaxed">
+                      <code>{example.code}</code>
+                    </pre>
+                  </CardContent>
+                </Card>
+              ))}
+            </div>
+          </div>
+        </div>
+      )}
+
+      <!-- Specifications -->
+      {feature.data.specification && (
+        <div class="space-y-8 mb-16">
+          <div>
+            <h2 class="text-3xl font-bold mb-6">Technical Specifications</h2>
+            <div class="grid gap-4 md:grid-cols-2">
+              {feature.data.specification.complexity && (
+                <Card className="border-border/50 bg-card/50">
+                  <CardHeader>
+                    <CardTitle className="text-sm">Complexity</CardTitle>
+                  </CardHeader>
+                  <CardContent>
+                    <p className="text-lg font-semibold capitalize">{feature.data.specification.complexity}</p>
+                  </CardContent>
+                </Card>
+              )}
+              {feature.data.specification.estimatedHours && (
+                <Card className="border-border/50 bg-card/50">
+                  <CardHeader>
+                    <CardTitle className="text-sm">Estimated Hours</CardTitle>
+                  </CardHeader>
+                  <CardContent>
+                    <p className="text-lg font-semibold">{feature.data.specification.estimatedHours}h</p>
+                  </CardContent>
+                </Card>
+              )}
+              {feature.data.specification.technologies && feature.data.specification.technologies.length > 0 && (
+                <Card className="border-border/50 bg-card/50 md:col-span-2">
+                  <CardHeader>
+                    <CardTitle className="text-sm">Technologies</CardTitle>
+                  </CardHeader>
+                  <CardContent>
+                    <div class="flex flex-wrap gap-2">
+                      {feature.data.specification.technologies.map((tech: string) => (
+                        <Badge variant="secondary">{tech}</Badge>
+                      ))}
+                    </div>
+                  </CardContent>
+                </Card>
+              )}
+            </div>
+          </div>
+        </div>
+      )}
+
+      <!-- Quality Metrics -->
+      {feature.data.metrics && Object.values(feature.data.metrics).some(v => v !== undefined) && (
+        <div class="space-y-8 mb-16">
+          <div>
+            <h2 class="text-3xl font-bold mb-6">Quality Metrics</h2>
+            <div class="grid gap-4 md:grid-cols-2 lg:grid-cols-4">
+              {feature.data.metrics.testCoverage !== undefined && (
+                <Card className="border-border/50 bg-card/50">
+                  <CardHeader>
+                    <CardTitle className="text-sm">Test Coverage</CardTitle>
+                  </CardHeader>
+                  <CardContent>
+                    <p className="text-2xl font-bold">{feature.data.metrics.testCoverage}%</p>
+                  </CardContent>
+                </Card>
+              )}
+              {feature.data.metrics.performanceScore !== undefined && (
+                <Card className="border-border/50 bg-card/50">
+                  <CardHeader>
+                    <CardTitle className="text-sm">Performance</CardTitle>
+                  </CardHeader>
+                  <CardContent>
+                    <p className="text-2xl font-bold">{feature.data.metrics.performanceScore}/100</p>
+                  </CardContent>
+                </Card>
+              )}
+              {feature.data.metrics.accessibilityScore !== undefined && (
+                <Card className="border-border/50 bg-card/50">
+                  <CardHeader>
+                    <CardTitle className="text-sm">Accessibility</CardTitle>
+                  </CardHeader>
+                  <CardContent>
+                    <p className="text-2xl font-bold">{feature.data.metrics.accessibilityScore}/100</p>
+                  </CardContent>
+                </Card>
+              )}
+              {feature.data.metrics.securityAudit && (
+                <Card className="border-border/50 bg-card/50">
+                  <CardHeader>
+                    <CardTitle className="text-sm">Security</CardTitle>
+                  </CardHeader>
+                  <CardContent>
+                    <p className="text-lg font-bold text-green-600">✓ Audited</p>
+                  </CardContent>
+                </Card>
+              )}
+            </div>
+          </div>
+        </div>
+      )}
+
+      <!-- Related Features -->
+      {feature.data.relatedFeatures && feature.data.relatedFeatures.length > 0 && (
+        <div class="space-y-8 mb-16 pt-8 border-t">
+          <div>
+            <h2 class="text-3xl font-bold mb-6">Related Features</h2>
+            <div class="flex flex-wrap gap-3">
+              {feature.data.relatedFeatures.map((relatedId: string) => (
+                <a href={`/features/${relatedId}`}>
+                  <Badge variant="outline" className="cursor-pointer hover:bg-muted">
+                    {relatedId.replace('-', ' ')}
+                  </Badge>
+                </a>
+              ))}
+            </div>
+          </div>
+        </div>
+      )}
+        </div>
+
+        <!-- Sidebar Navigation -->
+        <aside class="hidden lg:block">
+          <FeatureSidebarNav
+            client:load
+            feature={feature}
+            allFeatures={allFeatures}
+          />
+        </aside>
+      </div>
+    </div>
+  </section>
+
+  <!-- Navigation -->
+  <section class="border-t bg-muted/50 px-4 py-12 sm:px-6 sm:py-16 md:px-8 md:py-20">
+    <div class="mx-auto max-w-4xl flex items-center justify-between">
+      <a href="/features" class="inline-flex items-center gap-2 text-primary hover:underline">
+        <ArrowLeft className="h-4 w-4" />
+        Back to All Features
+      </a>
+      <a href="/docs/features" class="inline-flex items-center gap-2 text-primary hover:underline">
+        Feature Documentation
+        <ArrowLeft className="h-4 w-4 rotate-180" />
+      </a>
+    </div>
+  </section>
+</Layout>
