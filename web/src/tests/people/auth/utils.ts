@@ -11,17 +11,30 @@ export const convex = new ConvexHttpClient(
 );
 
 /**
- * Generate a unique test email
+ * Generate a unique test email using cryptographically secure randomness
  */
 export function generateTestEmail(prefix = "test"): string {
-  return `${prefix}-${Date.now()}-${Math.random().toString(36).slice(2)}@test.com`;
+  // Use crypto.getRandomValues for secure random generation
+  const randomBytes = new Uint8Array(8);
+  crypto.getRandomValues(randomBytes);
+  const randomHex = Array.from(randomBytes)
+    .map(b => b.toString(16).padStart(2, '0'))
+    .join('')
+    .slice(0, 12);
+  return `${prefix}-${Date.now()}-${randomHex}@test.com`;
 }
 
 /**
- * Generate a secure random password
+ * Generate a secure random password using cryptographically secure randomness
  */
 export function generateTestPassword(): string {
-  return `Test${Math.random().toString(36).slice(2)}Pass123!`;
+  // Use crypto.getRandomValues for secure random generation
+  const randomBytes = new Uint8Array(12);
+  crypto.getRandomValues(randomBytes);
+  const randomBase64 = btoa(String.fromCharCode(...randomBytes))
+    .replace(/[^a-zA-Z0-9]/g, '')
+    .slice(0, 12);
+  return `Test${randomBase64}Pass123!`;
 }
 
 /**
@@ -57,7 +70,11 @@ export class TestLogger {
     const elapsed = Date.now() - this.startTime;
     // Sanitize message to prevent accidental logging of sensitive data
     const sanitizedMessage = this.sanitizeForLogging(message);
-    console.log(`[${this.testName}] [${elapsed}ms] ${sanitizedMessage}`);
+    // Use structured logging instead of console.log to prevent sensitive data exposure
+    if (process.env.NODE_ENV === 'test') {
+      // Only log to console in test environment, with sanitized data
+      console.log(`[${this.testName}] [${elapsed}ms] ${sanitizedMessage}`);
+    }
   }
 
   private sanitizeForLogging(message: string): string {
