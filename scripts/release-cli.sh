@@ -54,10 +54,7 @@ echo ""
 echo -e "${BLUE}Step 2: Sync .claude/ to cli/.claude/${NC}"
 if [ -d ".claude" ]; then
     mkdir -p cli/.claude
-    rsync -av --delete \
-        .claude/ \
-        cli/.claude/ \
-        2>&1 | grep -E "^(sending|receiving|deleting|\.)" | head -20
+    rsync -av --delete .claude/ cli/.claude/ 2>&1 | grep -E "^(sending|receiving|deleting)" | head -10
     echo -e "${GREEN}✓ .claude/ synced${NC}"
 else
     echo -e "${YELLOW}⚠ .claude/ directory not found, skipping${NC}"
@@ -68,10 +65,7 @@ echo ""
 echo -e "${BLUE}Step 3: Sync /one to cli/one/${NC}"
 if [ -d "one" ]; then
     mkdir -p cli/one
-    rsync -av --delete \
-        one/ \
-        cli/one/ \
-        2>&1 | grep -E "^(sending|receiving|deleting|\.)" | head -20
+    rsync -av --delete one/ cli/one/ 2>&1 | grep -E "^(sending|receiving|deleting)" | head -10
     echo -e "${GREEN}✓ /one synced${NC}"
 else
     echo -e "${YELLOW}⚠ /one directory not found, skipping${NC}"
@@ -80,7 +74,7 @@ echo ""
 
 # Step 4: Sync root markdown files to cli/
 echo -e "${BLUE}Step 4: Sync root markdown files${NC}"
-for file in CLAUDE.md README.md LICENSE.md SECURITY.md; do
+for file in CLAUDE.md README.md LICENSE.md SECURITY.md AGENTS.md; do
     if [ -f "$file" ]; then
         cp "$file" "cli/$file"
         echo -e "${GREEN}✓ Synced $file${NC}"
@@ -156,7 +150,7 @@ if npm publish --access public > /dev/null 2>&1; then
 
     # Verify publication
     sleep 2
-    if npm view oneie@"$PUBLISHED_VERSION" > /dev/null 2>&1; then
+    if npm view "oneie@${PUBLISHED_VERSION}" > /dev/null 2>&1; then
         echo -e "${GREEN}✓ Package verified on npm${NC}"
     else
         echo -e "${YELLOW}⚠ Package not immediately visible on npm (may take a few seconds)${NC}"
@@ -168,20 +162,7 @@ fi
 cd ..
 echo ""
 
-# Step 10: Push to GitHub
-echo -e "${BLUE}Step 10: Push to GitHub${NC}"
-read -p "Push cli/ to GitHub? (y/n) " -r response
-if [[ "$response" =~ ^[Yy]$ ]]; then
-    cd cli
-    git push origin main
-    echo -e "${GREEN}✓ Pushed to GitHub${NC}"
-    cd ..
-else
-    echo -e "${YELLOW}⚠ Skipped GitHub push${NC}"
-fi
-echo ""
-
-# Step 11: Summary
+# Step 10: Summary
 echo -e "${GREEN}━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━${NC}"
 echo -e "${GREEN}✅ CLI Release Complete!${NC}"
 echo -e "${GREEN}━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━${NC}"
@@ -200,5 +181,5 @@ fi
 echo -e "${BLUE}Synced:${NC}"
 echo "  ✓ .claude/* → cli/.claude/"
 echo "  ✓ /one/* → cli/one/"
-echo "  ✓ CLAUDE.md, README.md, LICENSE.md, SECURITY.md"
+echo "  ✓ CLAUDE.md, README.md, LICENSE.md, SECURITY.md, AGENTS.md"
 echo ""
