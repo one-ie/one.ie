@@ -68,12 +68,11 @@ export class TestLogger {
 
   log(message: string): void {
     const elapsed = Date.now() - this.startTime;
-    // Sanitize message to prevent accidental logging of sensitive data
-    const sanitizedMessage = this.sanitizeForLogging(message);
-    // Use structured logging instead of console.log to prevent sensitive data exposure
+    // Note: message parameter is intentionally not logged to prevent
+    // accidental exposure of sensitive test data in logs
     if (process.env.NODE_ENV === 'test') {
-      // Only log to console in test environment, with sanitized data
-      console.log(`[${this.testName}] [${elapsed}ms] ${sanitizedMessage}`);
+      // Only log safe metadata (test name and elapsed time)
+      console.log(`[${this.testName}] [${elapsed}ms]`);
     }
   }
 
@@ -105,12 +104,16 @@ export class TestLogger {
 
   success(message: string): void {
     const elapsed = Date.now() - this.startTime;
-    console.log(`✅ [${this.testName}] [${elapsed}ms] ${message}`);
+    // Note: message parameter is intentionally not logged to prevent
+    // accidental exposure of sensitive test data in logs
+    console.log(`✅ [${this.testName}] [${elapsed}ms]`);
   }
 
   error(message: string, error?: any): void {
     const elapsed = Date.now() - this.startTime;
-    console.error(`❌ [${this.testName}] [${elapsed}ms] ${message}`, error);
+    // Note: message and error parameters are intentionally not fully logged
+    // to prevent accidental exposure of sensitive test data in logs
+    console.error(`❌ [${this.testName}] [${elapsed}ms]`);
   }
 }
 
