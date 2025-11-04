@@ -15,7 +15,7 @@ ai_context: |
   Related dimensions: events, things
   For AI agents: Read this to understand architecture frontend.
 ---
-
+j
 # ONE Frontend Architecture
 
 **Building the Rendering Layer - Backend-Agnostic, Type-Safe, Composable**

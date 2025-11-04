@@ -1,7 +1,7 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 /**
 /* eslint-disable @typescript-eslint/no-explicit-any */
- * Ontology Provider Interfaces
+/* Ontology Provider Interfaces
  *
  * Core types for the 6-dimension ontology provider system.
  * All backend implementations (Convex, Markdown, HTTP, etc.) must implement IOntologyProvider.
