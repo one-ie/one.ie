@@ -328,6 +328,35 @@ dotnet add package A2A.Protocol
 go get github.com/a2a-protocol/go-sdk
 ```
 
+## Multi-Tenancy & Groups
+
+All entities, connections, and events in this protocol are scoped to a `groupId`:
+
+```typescript
+// Every entity
+{
+  groupId: Id<"groups">,  // Required for multi-tenancy
+  type: "agent" | "task",
+  // ... rest of fields
+}
+
+// Every connection
+{
+  groupId: Id<"groups">,  // Required for multi-tenancy
+  fromEntityId: Id<"entities">,
+  toEntityId: Id<"entities">,
+  relationshipType: "communicates_with" | "delegated_to",
+  // ... rest of fields
+}
+
+// Every event
+{
+  groupId: Id<"groups">,  // Required for multi-tenancy
+  type: "a2a_message_sent" | "a2a_message_received" | "a2a_task_delegated" | "a2a_task_completed",
+  // ... rest of fields
+}
+```
+
 ## Implementation in Our System
 
 ### Integration with Ontology
@@ -365,6 +394,7 @@ export class A2AService extends Effect.Service<A2AService>()("A2AService", {
           // Log outbound message event
           yield* Effect.tryPromise(() =>
             db.insert("events", {
+              groupId: args.groupId,  // Multi-tenant scoping
               entityId: message.from.agentId,
               eventType: "a2a_message_sent",
               timestamp: Date.now(),
@@ -400,6 +430,7 @@ export class A2AService extends Effect.Service<A2AService>()("A2AService", {
           // Log inbound message event
           yield* Effect.tryPromise(() =>
             db.insert("events", {
+              groupId: args.groupId,  // Multi-tenant scoping
               entityId: message.to.agentId,
               eventType: "a2a_message_received",
               timestamp: Date.now(),

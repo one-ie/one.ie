@@ -45,6 +45,20 @@ The frontend and backend are **already integrated** via Convex's native client. 
 - Dev: `veracious-marlin-319` (current development)
 - Prod: `shocking-falcon-870` (serving traffic at `https://shocking-falcon-870.convex.cloud`)
 
+**Schema (6-Dimension Ontology):**
+
+```typescript
+// backend/convex/schema.ts
+{
+  groups: defineTable({...})      // Dimension 1: Multi-tenant containers
+  entities: defineTable({...})    // Dimension 3: Things (66 types)
+  connections: defineTable({...}) // Dimension 4: Relationships (25 types)
+  events: defineTable({...})      // Dimension 5: Actions (67 types)
+  knowledge: defineTable({...})   // Dimension 6: Labels/embeddings
+  thingKnowledge: defineTable({...}) // Junction table
+}
+```
+
 **Implemented Functions:**
 
 ```
@@ -112,20 +126,6 @@ export const countByType = query({ ... });
 export const countByStatus = query({ ... });
 export const getRecent = query({ ... });
 export const getRecentlyUpdated = query({ ... });
-```
-
-**Schema (6-Dimension Ontology):**
-
-```typescript
-// backend/convex/schema.ts
-{
-  groups: defineTable({...})      // Dimension 1: Multi-tenant containers
-  entities: defineTable({...})    // Dimension 3: Things (66 types)
-  connections: defineTable({...}) // Dimension 4: Relationships (25 types)
-  events: defineTable({...})      // Dimension 5: Actions (67 types)
-  knowledge: defineTable({...})   // Dimension 6: Labels/embeddings
-  thingKnowledge: defineTable({...}) // Junction table
-}
 ```
 
 ### Frontend Layer ✅

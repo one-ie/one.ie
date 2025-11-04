@@ -129,7 +129,7 @@ export interface Thing {
   createdAt: number
   updatedAt: number
   createdBy?: string
-  organizationId?: string
+  groupId?: string
 }
 
 // Connection (universal relationship)
@@ -170,7 +170,7 @@ export interface DataProvider {
 
     list: (params: {
       type: ThingType
-      organizationId?: string
+      groupId?: string
       filters?: Record<string, any>
       limit?: number
       offset?: number
@@ -180,7 +180,7 @@ export interface DataProvider {
       type: ThingType
       name: string
       properties: Record<string, any>
-      organizationId?: string
+      groupId?: string
     }) => Effect.Effect<string, ConnectionCreateError>
 
     update: (
@@ -308,7 +308,7 @@ export class RestProvider implements DataProvider {
         const query = new URLSearchParams({
           type: params.type,
           limit: String(params.limit || 10),
-          ...(params.organizationId && { org: params.organizationId })
+          ...(params.groupId && { org: params.groupId })
         })
 
         const response = yield* Effect.tryPromise({
@@ -343,7 +343,7 @@ export class RestProvider implements DataProvider {
                 type: input.type,
                 name: input.name,
                 properties: input.properties,
-                organizationId: input.organizationId
+                groupId: input.groupId
               })
             }),
           catch: (error) => new Error(String(error))
@@ -417,7 +417,7 @@ export class RestProvider implements DataProvider {
       createdAt: new Date(data.created_at).getTime(),
       updatedAt: new Date(data.updated_at).getTime(),
       createdBy: data.created_by,
-      organizationId: data.organization_id
+      groupId: data.organization_id
     }
   }
 }
@@ -490,7 +490,7 @@ export class GraphQLProvider implements DataProvider {
       Effect.gen(this, function* () {
         const query = `
           query ListThings($type: String!, $limit: Int, $orgId: ID) {
-            things(type: $type, limit: $limit, organizationId: $orgId) {
+            things(type: $type, limit: $limit, groupId: $orgId) {
               nodes {
                 id
                 type
@@ -517,7 +517,7 @@ export class GraphQLProvider implements DataProvider {
                 variables: {
                   type: params.type,
                   limit: params.limit || 10,
-                  orgId: params.organizationId
+                  orgId: params.groupId
                 }
               })
             }),
@@ -559,7 +559,7 @@ export class GraphQLProvider implements DataProvider {
                     type: input.type,
                     name: input.name,
                     properties: input.properties,
-                    organizationId: input.organizationId
+                    groupId: input.groupId
                   }
                 }
               })
@@ -642,13 +642,13 @@ export class PostgresProvider implements DataProvider {
         const query = `
           SELECT * FROM things
           WHERE type = $1
-          ${params.organizationId ? 'AND organization_id = $2' : ''}
-          LIMIT $${params.organizationId ? '3' : '2'}
+          ${params.groupId ? 'AND organization_id = $2' : ''}
+          LIMIT $${params.groupId ? '3' : '2'}
         `
 
         const values = [
           params.type,
-          ...(params.organizationId ? [params.organizationId] : []),
+          ...(params.groupId ? [params.groupId] : []),
           params.limit || 10
         ]
 
@@ -672,7 +672,7 @@ export class PostgresProvider implements DataProvider {
                 input.type,
                 input.name,
                 JSON.stringify(input.properties),
-                input.organizationId,
+                input.groupId,
                 'active'
               ]
             ),
@@ -732,7 +732,7 @@ export class PostgresProvider implements DataProvider {
       status: row.status,
       createdAt: new Date(row.created_at).getTime(),
       updatedAt: new Date(row.updated_at).getTime(),
-      organizationId: row.organization_id
+      groupId: row.organization_id
     }
   }
 }
@@ -788,8 +788,8 @@ export class SupabaseProvider implements DataProvider {
           .select('*')
           .eq('type', params.type)
 
-        if (params.organizationId) {
-          query = query.eq('organization_id', params.organizationId)
+        if (params.groupId) {
+          query = query.eq('organization_id', params.groupId)
         }
 
         const { data, error } = yield* Effect.tryPromise({
@@ -879,7 +879,7 @@ export class NeonProvider implements DataProvider {
           try: () => this.sql`
             SELECT * FROM things
             WHERE type = ${params.type}
-            ${params.organizationId ? this.sql`AND organization_id = ${params.organizationId}` : this.sql``}
+            ${params.groupId ? this.sql`AND organization_id = ${params.groupId}` : this.sql``}
             LIMIT ${params.limit || 10}
           `,
           catch: (error) => new Error(String(error))
@@ -987,8 +987,8 @@ export class MongoProvider implements DataProvider {
       Effect.gen(this, function* () {
         const filter: any = { type: params.type }
 
-        if (params.organizationId) {
-          filter.organizationId = params.organizationId
+        if (params.groupId) {
+          filter.groupId = params.groupId
         }
 
         const things = yield* Effect.tryPromise({
@@ -1012,7 +1012,7 @@ export class MongoProvider implements DataProvider {
               type: input.type,
               name: input.name,
               properties: input.properties,
-              organizationId: input.organizationId,
+              groupId: input.groupId,
               status: 'active',
               createdAt: Date.now(),
               updatedAt: Date.now()
@@ -1503,7 +1503,7 @@ export class ThingClientService extends Effect.Service<ThingClientService>()(
           Effect.gen(function* () {
             // Similar routing logic
             const provider = this.selectProvider(type)
-            return yield* provider.things.list({ type, organizationId: orgId })
+            return yield* provider.things.list({ type, groupId: orgId })
           })
       }
     })

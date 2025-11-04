@@ -461,6 +461,35 @@ const taskId = await agent.createTask({
 });
 ```
 
+## Multi-Tenancy & Groups
+
+All entities, connections, and events in this protocol are scoped to a `groupId`:
+
+```typescript
+// Every entity
+{
+  groupId: Id<"groups">,  // Required for multi-tenancy
+  type: "agent" | "task",
+  // ... rest of fields
+}
+
+// Every connection
+{
+  groupId: Id<"groups">,  // Required for multi-tenancy
+  fromEntityId: Id<"entities">,
+  toEntityId: Id<"entities">,
+  relationshipType: "communicates_via_acp" | "task_assigned_to",
+  // ... rest of fields
+}
+
+// Every event
+{
+  groupId: Id<"groups">,  // Required for multi-tenancy
+  type: "acp_message_sent" | "acp_message_received" | "acp_task_created" | "acp_task_completed",
+  // ... rest of fields
+}
+```
+
 ## Implementation in Our System
 
 ### Integration with Ontology

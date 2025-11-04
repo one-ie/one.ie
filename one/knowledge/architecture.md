@@ -1001,55 +1001,104 @@ export const createAnything = <T extends Thing>(
 
 **Purpose:** Hierarchical spaces that partition all other dimensions.
 
+**For comprehensive documentation, see:** `/one/connections/groups.md`
+
 ```typescript
 interface Group {
   _id: Id<"groups">;
+  slug: string;                    // Unique identifier (URL-friendly)
   name: string;
   type: "friend_circle" | "business" | "community" | "dao" | "government" | "organization";
-  parentGroupId?: Id<"groups">;  // Infinite nesting
-  properties: {
-    description?: string;
+  parentGroupId?: Id<"groups">;    // CRITICAL: Infinite hierarchical nesting
+  description?: string;
+  metadata: any;
+  settings: {
+    visibility: "public" | "private";
+    joinPolicy: "open" | "invite_only" | "approval_required";
     plan?: "starter" | "pro" | "enterprise";
-    settings?: any;
+    limits?: {
+      users: number;
+      storage: number;
+      apiCalls: number;
+    };
   };
-  status: "draft" | "active" | "archived";
+  status: "active" | "archived";
   createdAt: number;
   updatedAt: number;
 }
 ```
 
 **Key insights:**
-- Every other dimension is scoped to a `groupId`
-- Groups can contain groups (hierarchical)
-- Scales from friend circles (2 people) to governments (billions)
-- Multi-tenancy: Each group has independent data, billing, quotas
+- **Every other dimension is scoped to a `groupId`** - This is the foundation of multi-tenancy
+- **Groups can contain groups** - Hierarchical via `parentGroupId` (infinite nesting)
+- **Scales infinitely** - From friend circles (2 people) to governments (billions)
+- **Multi-tenancy:** Each group has isolated data, billing, quotas, and customization
+- **6 group types:** friend_circle, business, community, dao, government, organization
+- **Access control:** Parent groups can access child groups (configurable)
+
+**Why groups are dimension #1:**
+- Without groups → single-tenant system
+- With groups → infinite multi-tenant scale
+- All queries MUST filter by `groupId` first
+- All entities MUST include `groupId` field
+
+**See `/one/connections/groups.md` for:**
+- Complete group lifecycle (create, update, archive)
+- Hierarchical query patterns (children, descendants, ancestors)
+- Multi-tenancy isolation guarantees
+- Access control patterns
+- Usage tracking & quotas
+- Real-world examples (lemonade stand → enterprise → DAO)
 
 ### Dimension 2: People (Authorization)
 
 **Purpose:** Actors who perform actions and control access.
 
+**Conceptual Model (for understanding):**
+
 ```typescript
 interface Person {
-  _id: Id<"people">;
-  email: string;
-  username: string;
-  displayName: string;
-  role: "platform_owner" | "org_owner" | "org_user" | "customer";
-  groupId: Id<"groups">;  // Primary organization
-  groups: Id<"groups">[];  // Multi-org membership
-  permissions?: string[];
-  image?: string;
-  bio?: string;
+  _id: Id<"entities">;  // NOTE: Stored in entities table
+  type: "creator" | "ai_clone" | "audience_member";
+  name: string;
+  groupId: Id<"groups">;
+  properties: {
+    email: string;
+    username?: string;
+    displayName?: string;
+    role: "platform_owner" | "org_owner" | "org_user" | "customer";
+    groups?: Id<"groups">[];  // Multi-org membership
+    permissions?: string[];
+    image?: string;
+    bio?: string;
+  };
+  status: "active" | "inactive" | "archived";
   createdAt: number;
   updatedAt: number;
 }
 ```
 
+**Implementation Note:**
+
+People are **conceptually a separate dimension** but **implemented as entities** with special types (`creator`, `ai_clone`, `audience_member`). This design choice provides:
+
+1. **Unified interface:** All dimensions use the same base structure (groupId, type, name, properties)
+2. **Flexible properties:** Role and permissions stored in `properties.role` field
+3. **Relationship simplicity:** Connections can link people ↔ things without special handling
+4. **Query efficiency:** Same index patterns work for people and things
+
+**Why not a separate table?**
+
+- Eliminates JOIN operations (people and things share connections)
+- Consistent query patterns (all entities use same indexes)
+- Simpler schema evolution (one entity type system)
+- Better agent code generation (one pattern to learn, not two)
+
 **Key insights:**
-- Every action has an `actorId` (person who did it)
-- Roles define permissions (authorization)
-- People can belong to multiple groups
-- Separate table (NOT things) for clear authorization
+- Every action has an `actorId` (entity with type="creator")
+- Roles define permissions (stored in `properties.role`)
+- People can belong to multiple groups (via `properties.groups` array)
+- Implementation uses entities table, but conceptually a separate dimension
 
 ### Dimension 3: Things (Entities)
 
@@ -1124,7 +1173,7 @@ interface Connection {
 ```typescript
 interface Event {
   _id: Id<"events">;
-  type: EventType;  // 67 types
+  type: EventType;  // 55 types (44 specific + 11 consolidated)
   actorId: Id<"people">;  // REQUIRED: Who did it
   targetId?: Id<"things"> | Id<"people"> | Id<"connections">;  // What was acted upon
   groupId: Id<"groups">;  // Scoped to group
@@ -1133,15 +1182,20 @@ interface Event {
 }
 ```
 
-**67 event types (consolidated):**
+**55 event types (44 specific + 11 consolidated):**
 
-**User Events (8):** user_registered, user_updated, user_deleted, profile_updated, preferences_changed, login, logout, password_reset
-**Content Events (10):** content_created, content_updated, content_deleted, published, unpublished, archived, viewed, liked, shared, commented
-**Token Events (8):** tokens_purchased, tokens_transferred, tokens_burned, tokens_staked, tokens_unstaked, tokens_earned, tokens_spent, tokens_claimed
-**Platform Events (5):** website_created, website_deployed, website_updated, livestream_started, livestream_ended
-**Business Events (7):** payment_processed, payment_failed, payment_refunded, subscription_started, subscription_cancelled, invoice_generated, invoice_paid
-**Inference Events (10):** inference_started, inference_completed, inference_failed, agent_assigned, test_passed, test_failed, deployment_started, deployment_completed
-**Blockchain Events (5):** transaction_sent, transaction_confirmed, contract_deployed, token_minted, nft_transferred
+**Entity Lifecycle (4):** entity_created, entity_updated, entity_deleted, entity_archived
+**User Events (5):** user_registered, user_verified, user_login, user_logout, profile_updated
+**Authentication Events (6):** password_reset_requested, password_reset_completed, email_verification_sent, email_verified, two_factor_enabled, two_factor_disabled
+**Organization Events (5):** organization_created, organization_updated, user_invited_to_org, user_joined_org, user_removed_from_org
+**Dashboard & UI Events (4):** dashboard_viewed, settings_updated, theme_changed, preferences_updated
+**AI/Clone Events (4):** clone_created, clone_updated, voice_cloned, appearance_cloned
+**Agent Events (4):** agent_created, agent_executed, agent_completed, agent_failed
+**Token Events (7):** token_created, token_minted, token_burned, tokens_purchased, tokens_staked, tokens_unstaked, tokens_transferred
+**Course Events (5):** course_created, course_enrolled, lesson_completed, course_completed, certificate_earned
+**Analytics Events (5):** metric_calculated, insight_generated, prediction_made, optimization_applied, report_generated
+
+**Consolidated Event Types (11):** content_event, payment_event, subscription_event, commerce_event, livestream_event, notification_event, referral_event, communication_event, task_event, mandate_event, price_event (use metadata.action for variants)
 
 **Key insights:**
 - Every event has an `actorId` (person)

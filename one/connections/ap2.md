@@ -254,6 +254,35 @@ Agent monitors:
 }
 ```
 
+## Multi-Tenancy & Groups
+
+All entities, connections, and events in this protocol are scoped to a `groupId`:
+
+```typescript
+// Every entity
+{
+  groupId: Id<"groups">,  // Required for multi-tenancy
+  type: "intent_mandate" | "cart_mandate" | "ap2_transaction",
+  // ... rest of fields
+}
+
+// Every connection
+{
+  groupId: Id<"groups">,  // Required for multi-tenancy
+  fromEntityId: Id<"entities">,
+  toEntityId: Id<"entities">,
+  relationshipType: "authorizes_payments" | "fulfills_intent" | "paid_via",
+  // ... rest of fields
+}
+
+// Every event
+{
+  groupId: Id<"groups">,  // Required for multi-tenancy
+  type: "ap2_intent_created" | "ap2_cart_created" | "ap2_payment_completed",
+  // ... rest of fields
+}
+```
+
 ## Integration with ONE Platform
 
 ### Ontology Mapping
@@ -265,6 +294,7 @@ Using our 6-dimension ontology:
 ```typescript
 // Intent Mandate (user instruction to agent)
 {
+  groupId: groupId,  // Multi-tenant scoping
   type: "intent_mandate",
   name: "Purchase laptop under $1500",
   properties: {
@@ -289,6 +319,7 @@ Using our 6-dimension ontology:
 
 // Cart Mandate (immutable purchase record)
 {
+  groupId: groupId,  // Multi-tenant scoping
   type: "cart_mandate",
   name: "Laptop purchase order",
   properties: {
@@ -315,6 +346,7 @@ Using our 6-dimension ontology:
 
 // Payment transaction
 {
+  groupId: groupId,  // Multi-tenant scoping
   type: "ap2_transaction",
   name: "AP2 Payment",
   properties: {
@@ -335,6 +367,7 @@ Using our 6-dimension ontology:
 ```typescript
 // User authorizes agent
 {
+  groupId: groupId,  // Multi-tenant scoping
   fromEntityId: userId,
   toEntityId: agentId,
   relationshipType: "authorizes_payments",
@@ -349,6 +382,7 @@ Using our 6-dimension ontology:
 
 // Intent Mandate → Cart Mandate
 {
+  groupId: groupId,  // Multi-tenant scoping
   fromEntityId: intentMandateId,
   toEntityId: cartMandateId,
   relationshipType: "fulfills_intent",
@@ -361,6 +395,7 @@ Using our 6-dimension ontology:
 
 // Cart Mandate → Payment
 {
+  groupId: groupId,  // Multi-tenant scoping
   fromEntityId: cartMandateId,
   toEntityId: transactionId,
   relationshipType: "paid_via",
@@ -373,6 +408,7 @@ Using our 6-dimension ontology:
 
 // Agent → Merchant
 {
+  groupId: groupId,  // Multi-tenant scoping
   fromEntityId: agentId,
   toEntityId: merchantId,
   relationshipType: "transacted_with",
@@ -390,6 +426,7 @@ Using our 6-dimension ontology:
 ```typescript
 // Intent Mandate created
 {
+  groupId: groupId,  // Multi-tenant scoping
   entityId: intentMandateId,
   eventType: "ap2_intent_created",
   timestamp: Date.now(),
@@ -404,6 +441,7 @@ Using our 6-dimension ontology:
 
 // Agent monitors market
 {
+  groupId: groupId,  // Multi-tenant scoping
   entityId: intentMandateId,
   eventType: "ap2_price_check",
   timestamp: Date.now(),
@@ -419,6 +457,7 @@ Using our 6-dimension ontology:
 
 // Cart Mandate generated
 {
+  groupId: groupId,  // Multi-tenant scoping
   entityId: cartMandateId,
   eventType: "ap2_cart_created",
   timestamp: Date.now(),
@@ -434,6 +473,7 @@ Using our 6-dimension ontology:
 
 // Human approves (since total > maxPrice after tax)
 {
+  groupId: groupId,  // Multi-tenant scoping
   entityId: cartMandateId,
   eventType: "ap2_cart_approved",
   timestamp: Date.now(),
@@ -447,6 +487,7 @@ Using our 6-dimension ontology:
 
 // Payment processed
 {
+  groupId: groupId,  // Multi-tenant scoping
   entityId: transactionId,
   eventType: "ap2_payment_completed",
   timestamp: Date.now(),
@@ -460,6 +501,7 @@ Using our 6-dimension ontology:
 
 // Product delivered
 {
+  groupId: groupId,  // Multi-tenant scoping
   entityId: cartMandateId,
   eventType: "ap2_fulfillment_complete",
   timestamp: Date.now(),
@@ -517,6 +559,7 @@ export class AP2Service extends Effect.Service<AP2Service>()(
       return {
         // User creates Intent Mandate
         createIntentMandate: (args: {
+          groupId: Id<"groups">;
           userId: Id<"entities">;
           agentId: Id<"entities">;
           intent: IntentSpec;
@@ -539,6 +582,7 @@ export class AP2Service extends Effect.Service<AP2Service>()(
             // 2. Create Intent Mandate entity
             const mandateId = yield* Effect.tryPromise(() =>
               db.insert("entities", {
+                groupId: args.groupId,  // Multi-tenant scoping
                 type: "intent_mandate",
                 name: `Intent: ${args.intent.action}`,
                 properties: {
@@ -559,6 +603,7 @@ export class AP2Service extends Effect.Service<AP2Service>()(
             // 3. Create authorization connection
             yield* Effect.tryPromise(() =>
               db.insert("connections", {
+                groupId: args.groupId,  // Multi-tenant scoping
                 fromEntityId: args.userId,
                 toEntityId: args.agentId,
                 relationshipType: "authorizes_payments",
@@ -573,6 +618,7 @@ export class AP2Service extends Effect.Service<AP2Service>()(
             // 4. Log event
             yield* Effect.tryPromise(() =>
               db.insert("events", {
+                groupId: args.groupId,  // Multi-tenant scoping
                 entityId: mandateId,
                 eventType: "ap2_intent_created",
                 timestamp: Date.now(),
@@ -590,6 +636,7 @@ export class AP2Service extends Effect.Service<AP2Service>()(
 
         // Agent creates Cart Mandate
         createCartMandate: (args: {
+          groupId: Id<"groups">;
           intentMandateId: Id<"entities">;
           agentId: Id<"entities">;
           merchantId: Id<"entities">;
@@ -636,6 +683,7 @@ export class AP2Service extends Effect.Service<AP2Service>()(
             // 5. Create Cart Mandate entity
             const cartId = yield* Effect.tryPromise(() =>
               db.insert("entities", {
+                groupId: args.groupId,  // Multi-tenant scoping
                 type: "cart_mandate",
                 name: `Cart for Intent ${args.intentMandateId}`,
                 properties: {
@@ -659,6 +707,7 @@ export class AP2Service extends Effect.Service<AP2Service>()(
             // 6. Create connection
             yield* Effect.tryPromise(() =>
               db.insert("connections", {
+                groupId: args.groupId,  // Multi-tenant scoping
                 fromEntityId: args.intentMandateId,
                 toEntityId: cartId,
                 relationshipType: "fulfills_intent",
@@ -673,6 +722,7 @@ export class AP2Service extends Effect.Service<AP2Service>()(
             // 7. Log event
             yield* Effect.tryPromise(() =>
               db.insert("events", {
+                groupId: args.groupId,  // Multi-tenant scoping
                 entityId: cartId,
                 eventType: "ap2_cart_created",
                 timestamp: Date.now(),
@@ -699,6 +749,7 @@ export class AP2Service extends Effect.Service<AP2Service>()(
 
         // Process payment
         processPayment: (args: {
+          groupId: Id<"groups">;
           cartMandateId: Id<"entities">;
           paymentMethod: string;
         }) =>
@@ -729,6 +780,7 @@ export class AP2Service extends Effect.Service<AP2Service>()(
             // 3. Create transaction entity
             const txId = yield* Effect.tryPromise(() =>
               db.insert("entities", {
+                groupId: args.groupId,  // Multi-tenant scoping
                 type: "ap2_transaction",
                 name: `AP2 Payment ${paymentResult.id}`,
                 properties: {
@@ -750,6 +802,7 @@ export class AP2Service extends Effect.Service<AP2Service>()(
             // 4. Create connection
             yield* Effect.tryPromise(() =>
               db.insert("connections", {
+                groupId: args.groupId,  // Multi-tenant scoping
                 fromEntityId: args.cartMandateId,
                 toEntityId: txId,
                 relationshipType: "paid_via",
@@ -763,6 +816,7 @@ export class AP2Service extends Effect.Service<AP2Service>()(
             // 5. Log event
             yield* Effect.tryPromise(() =>
               db.insert("events", {
+                groupId: args.groupId,  // Multi-tenant scoping
                 entityId: txId,
                 eventType: "ap2_payment_completed",
                 timestamp: Date.now(),
@@ -779,6 +833,7 @@ export class AP2Service extends Effect.Service<AP2Service>()(
 
         // Approve Cart Mandate (human in loop)
         approveCart: (args: {
+          groupId: Id<"groups">;
           cartMandateId: Id<"entities">;
           userId: Id<"entities">;
         }) =>
@@ -794,6 +849,7 @@ export class AP2Service extends Effect.Service<AP2Service>()(
             // Log approval
             yield* Effect.tryPromise(() =>
               db.insert("events", {
+                groupId: args.groupId,  // Multi-tenant scoping
                 entityId: args.cartMandateId,
                 eventType: "ap2_cart_approved",
                 timestamp: Date.now(),

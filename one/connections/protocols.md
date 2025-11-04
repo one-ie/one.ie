@@ -61,7 +61,7 @@ price_checked, commerce_event, payment_verified
 2. **people** - Authorization & governance
 3. **things** - All entities (66 types)
 4. **connections** - All relationships (25 connection types)
-5. **events** - All actions (67 event types)
+5. **events** - All actions (55 event types: 44 specific + 11 consolidated)
 6. **knowledge** - Labels, vectors, embeddings
 
 ---
@@ -208,7 +208,7 @@ const ap2Mandates = await ctx.db
 ## Benefits
 
 ### 1. Clean Ontology
-- **35 event types** (not 100+) - 24 specific + 11 consolidated
+- **55 event types** (not 100+) - 44 specific + 11 consolidated
 - **25 connection types** (not 80+) - 18 specific + 7 consolidated
 - No protocol pollution
 - Single source of truth
