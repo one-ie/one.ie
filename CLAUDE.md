@@ -949,6 +949,103 @@ npx convex deploy
 
 Convex automatically deploys on git push when connected to GitHub.
 
+## The English → Code → Reality Workflow
+
+**In Minutes, Not Months**
+
+Describe your feature in plain English. The system validates it against the ontology, compiles to TypeScript, generates tests, and deploys to the edge.
+
+### The Four-Step Workflow
+
+#### 1️⃣ Write in English
+
+Describe what you want: `"CREATE ai clone"`, `"CALL OpenAI"`, `"RECORD purchase"`. Use 15 simple commands anyone can understand.
+
+```
+Creator: "CREATE my AI clone"
+Seller: "RECORD purchase event"
+Engineer: "CONNECT to Stripe API"
+```
+
+#### 2️⃣ System Validates
+
+Checks against the ontology: Do these entity types exist? Are connections valid? Are services available? Instant feedback.
+
+```
+✓ ai_clone entity type exists
+✓ tokens_purchased event valid
+✓ Stripe service available
+```
+
+#### 3️⃣ Code Generated
+
+Compiles to production TypeScript with Effect.ts, Convex functions, React components, full test suite. Type-safe, tested, ready.
+
+```
+Backend          Frontend         Tests
+├─ Mutations    ├─ Components    └─ 50+ cases
+├─ Queries      └─ Pages
+└─ Services
+```
+
+#### 4️⃣ Deploy to Edge
+
+Push to Cloudflare's global network. Unlimited requests, instant updates, zero configuration. Live in 60 seconds.
+
+```
+330+ locations worldwide
+< 330ms average response time
+Free tier unlimited
+```
+
+### Why This Works
+
+Every feature follows this flow:
+
+1. **English → Ontology** - Validates intent against 6 dimensions
+2. **Ontology → Code** - Generates type-safe services
+3. **Code → Tests** - Creates 50+ test cases automatically
+4. **Tests → Deploy** - Pushes to edge with zero downtime
+
+The ontology ensures consistency. The compiler ensures quality. The edge ensures performance.
+
+## Plain English DSL
+
+### Write Features in English. The System Builds Everything.
+
+Describe what you want in plain English. The compiler checks every line against the ontology, generates TypeScript and tests, and deploys to the edge.
+
+**Example: Chat with AI Clone**
+
+```
+FEATURE: Let fans chat with my AI clone
+
+WHEN a fan sends a message
+  CHECK they own tokens
+  GET conversation history
+  CALL OpenAI with my personality
+  RECORD the interaction
+  REWARD fan with 10 tokens
+  GIVE AI response to fan
+```
+
+**What maps to ontology:**
+
+- **Things Touched:** fan, ai_clone, message, token — all typed rows
+- **Connections Updated:** fan `holds_tokens` token, fan `interacted_with` clone with metadata
+- **Events Logged:** message_sent, tokens_earned, clone_interaction with timestamps
+- **Knowledge Indexed:** Clone personality, embeddings, conversation history for retrieval
+
+**5 Core Commands:**
+
+| Command   | Purpose                             | Example                          |
+| --------- | ----------------------------------- | -------------------------------- |
+| `CREATE`  | Add typed Things into the graph     | `CREATE ai clone WITH voice ID`  |
+| `CONNECT` | Define relationships with metadata  | `CONNECT fan to token as holder` |
+| `RECORD`  | Append immutable Events             | `RECORD tokens purchased BY fan` |
+| `CALL`    | Invoke services and persist outputs | `CALL Stripe to charge payment`  |
+| `CHECK`   | Enforce guardrails before action    | `CHECK user has tokens`          |
+
 ## Philosophy
 
 **Simple enough for children. Powerful enough for enterprises.**
@@ -961,6 +1058,28 @@ Convex automatically deploys on git push when connected to GitHub.
 - Knowledge understands (embeddings and vectors)
 
 Everything else is just data. This ontology scales from friend circles (2 people) to global governments (billions) without schema changes.
+
+## 🤖 Claude Automation Stack
+
+### `.claude/agents/*`
+
+- **Director (`agent-director.md`)** validates ideas against the 6 dimensions, sequences numbered plans, and routes work to the right specialist.
+- **Builder squad (`agent-builder.md`, `agent-backend.md`, `agent-frontend.md`)** implements Convex services, Astro interfaces, and cross-cutting features while preserving multi-tenant boundaries and typed contracts.
+- **Integration lead (`agent-integrator.md`)** connects external protocols (A2A, ACP, AP2, X402, AG-UI) and reconciles third-party data so it lands in groups, people, things, connections, events, and knowledge.
+- **Quality loop (`agent-quality.md`, `agent-clean.md`, `agent-problem-solver.md`)** defines acceptance up front, enforces guardrails, diagnoses failures, and refactors without breaking ontology guarantees.
+- **Design + knowledge (`agent-designer.md`, `agent-documenter.md`)** translate specs into accessible UI systems, tokens, and documentation so the knowledge dimension stays queryable for future generations.
+- **Growth ops (`agent-clone.md`, `agent-sales.md`)** migrate legacy assets, build AI clones, manage trials, and tie revenue attribution back to event streams.
+
+**Cascade in practice:** Director validates → Quality defines tests → Designers supply artifacts → Specialists build → Clean and Problem Solver close gaps → Documenter updates knowledge. Every agent reads and writes to the same ontology, so each run leaves richer context for the next.
+
+### MCP Servers (`.mcp.json`)
+
+- **shadcn** (`npx shadcn@latest mcp`) gives UI agents instant access to audited component recipes without leaving Claude Code.
+- **cloudflare-builds** (`npx -y mcp-remote https://builds.mcp.cloudflare.com/sse`) lets release flows trigger deployments, inspect logs, and roll back while emitting auditable events.
+- **cloudflare-docs** (`npx -y mcp-remote https://docs.mcp.cloudflare.com/sse`) streams authoritative references so integrators and quality agents stay aligned with platform guidance.
+- **chrome-devtools** (`npx -y chrome-devtools-mcp@latest`) enables live performance profiling; findings roll into knowledge chunks for future optimizations.
+
+**How it fits:** `.claude/commands/*` orchestrate the workflow (plan → build → release), `.claude/hooks/*` enforce guardrails, agents execute the steps, and MCP servers provide live tool access—all grounded in the ONE ontology as the single source of truth.
 
 ## Getting Help
 

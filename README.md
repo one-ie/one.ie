@@ -15,8 +15,8 @@ https://one.ie • npx oneie
 
 ONE Ontology gives AI agents—and the humans who direct them—a complete, scalable architecture for understanding **who owns what, who can do what, what happened, and what it all means.**
 
-[![License](https://img.shields.io/badge/license-FREE-blue.svg)](../LICENSE.md)
-[![Version](https://img.shields.io/badge/version-1.0.0-green.svg)](./knowledge/ontology.md)
+[![License](https://img.shields.io/badge/license-FREE-blue.svg)](./LICENSE.md)
+[![Version](https://img.shields.io/badge/version-1.0.0-green.svg)](./one/knowledge/ontology.md)
 [![Dimensions](https://img.shields.io/badge/dimensions-6-orange.svg)](#the-6-dimensions)
 
 ---
@@ -612,7 +612,7 @@ WHEN a fan sends a message
 | `CALL`    | Invoke services and persist outputs | `CALL Stripe to charge payment`  |
 | `CHECK`   | Enforce guardrails before action    | `CHECK user has tokens`          |
 
-See [language.md](./knowledge/language.md) for complete DSL specification.
+See [language.md](./one/knowledge/language.md) for complete DSL specification.
 
 ---
 
@@ -675,43 +675,43 @@ This repository contains **41 documentation files** organized in **8 layers**:
 
 ### 1. Strategy Layer (Vision & Revenue)
 
-- [one.md](./groups/one.md) - Platform organization
+- [one.md](./one/groups/one.md) - Platform organization
 
 ### 2. Ontology Layer (Core Model)
 
-- [ontology.md](./knowledge/ontology.md) - Complete 6-dimension spec (Version 1.0.0)
-- [groups.md](./groups/groups.md) - Groups dimension
-- [things.md](./things/things.md) - Things dimension
-- [connections.md](./connections/connections.md) - Connections dimension
-- [events.md](./events/events.md) - Events dimension
-- [knowledge.md](./knowledge/knowledge.md) - Knowledge dimension
+- [ontology.md](./one/knowledge/ontology.md) - Complete 6-dimension spec (Version 1.0.0)
+- [groups.md](./one/groups/groups.md) - Groups dimension
+- [things.md](./one/things/things.md) - Things dimension
+- [connections.md](./one/connections/connections.md) - Connections dimension
+- [events.md](./one/events/events.md) - Events dimension
+- [knowledge.md](./one/knowledge/knowledge.md) - Knowledge dimension
 
 ### 3. Protocols Layer (A2A, ACP, AP2, X402, AG-UI)
 
-- [protocols.md](./connections/protocols.md) - Protocol overview
-- [a2a.md](./connections/a2a.md), [acp.md](./connections/acp.md), [ap2.md](./connections/ap2.md), [x402.md](./connections/x402.md), [agui.md](./connections/agui.md)
+- [protocols.md](./one/connections/protocols.md) - Protocol overview
+- [a2a.md](./one/connections/a2a.md), [acp.md](./one/connections/acp.md), [ap2.md](./one/connections/ap2.md), [x402.md](./one/connections/x402.md), [agui.md](./one/connections/agui.md)
 
 ### 4. Services Layer (Effect.ts)
 
-- [service-layer.md](./connections/service-layer.md) - Effect.ts patterns
-- [service-providers.md](./things/service-providers.md) - External API providers
+- [service-layer.md](./one/connections/service-layer.md) - Effect.ts patterns
+- [service-providers.md](./one/things/service-providers.md) - External API providers
 
 ### 5. Implementation Layer (Frontend, Patterns)
 
-- [frontend.md](./knowledge/frontend.md) - Frontend architecture
-- [architecture.md](./knowledge/architecture.md) - System architecture
-- [patterns.md](./connections/patterns.md) - Code patterns
+- [frontend.md](./one/knowledge/frontend.md) - Frontend architecture
+- [architecture.md](./one/knowledge/architecture.md) - System architecture
+- [patterns.md](./one/connections/patterns.md) - Code patterns
 
 ### 6. Integration Layer (ElizaOS, CopilotKit, MCP, N8N)
 
-- [elizaos.md](./connections/elizaos.md) - ElizaOS integration
-- [copilotkit.md](./connections/copilotkit.md) - CopilotKit integration
-- [mcp.md](./connections/mcp.md) - Model Context Protocol
-- [n8n.md](./connections/n8n.md) - N8N workflow automation
+- [elizaos.md](./one/connections/elizaos.md) - ElizaOS integration
+- [copilotkit.md](./one/connections/copilotkit.md) - CopilotKit integration
+- [mcp.md](./one/connections/mcp.md) - Model Context Protocol
+- [n8n.md](./one/connections/n8n.md) - N8N workflow automation
 
 ### 7. Examples Layer (Use Cases)
 
-- [lemonade-stand.md](./things/examples/children/lemonade-stand.md) - Simple for children
+- [lemonade-stand.md](./one/things/examples/children/lemonade-stand.md) - Simple for children
 - Enterprise CRM examples
 
 ### 8. Plans Layer (Future & Technical Debt)
@@ -720,7 +720,7 @@ This repository contains **41 documentation files** organized in **8 layers**:
 
 **Use targeted reading:** Don't read everything - follow the critical path for your specific feature type.
 
-See [files.md](./knowledge/files.md) for complete file location guide.
+See [files.md](./one/knowledge/files.md) for complete file location guide.
 
 ---
 
@@ -732,10 +732,10 @@ See [files.md](./knowledge/files.md) for complete file location guide.
 
    ```bash
    # Read these in order:
-   - knowledge/ontology.md (complete 6-dimension spec)
-   - knowledge/rules.md (golden rules)
-   - connections/workflow.md (development flow)
-   - connections/patterns.md (code patterns)
+   - one/knowledge/ontology.md (complete 6-dimension spec)
+   - one/knowledge/rules.md (golden rules)
+   - one/connections/workflow.md (development flow)
+   - one/connections/patterns.md (code patterns)
    ```
 
 2. **Map Your Feature**
@@ -756,9 +756,9 @@ See [files.md](./knowledge/files.md) for complete file location guide.
 
 **Before generating ANY code:**
 
-1. Read `knowledge/ontology.md` (understand the 6 dimensions)
-2. Read `knowledge/rules.md` (golden rules for AI agents)
-3. Read `connections/workflow.md` (6-phase development workflow)
+1. Read `one/knowledge/ontology.md` (understand the 6 dimensions)
+2. Read `one/knowledge/rules.md` (golden rules for AI agents)
+3. Read `one/connections/workflow.md` (6-phase development workflow)
 4. Map feature to: groups, people, things, connections, events, knowledge
 5. Design types and errors (tagged unions)
 6. Generate Effect.ts service (pure business logic)
@@ -792,7 +792,7 @@ FLOW:
   GIVE clone ID and voice ID
 ```
 
-See [language.md](./knowledge/language.md) for complete DSL reference.
+See [language.md](./one/knowledge/language.md) for complete DSL reference.
 
 ---
 
@@ -891,23 +891,23 @@ Tags, chunks, embeddings, and relationships give AI agents context to act intell
 
 ### Core Documentation
 
-- [📖 Complete Ontology Specification](./knowledge/ontology.md) - Version 1.0.0
-- [🎨 Plain English DSL](./knowledge/language.md) - Write features in English
-- [🏗️ Architecture Guide](./knowledge/architecture.md) - System architecture
-- [📝 Development Workflow](./connections/workflow.md) - 6-phase process
-- [🎯 Code Patterns](./connections/patterns.md) - Proven patterns
-- [⚡ Golden Rules](./knowledge/rules.md) - Rules for AI agents
-- [📁 File Locations](./knowledge/files.md) - Where everything goes
+- [📖 Complete Ontology Specification](./one/knowledge/ontology.md) - Version 1.0.0
+- [🎨 Plain English DSL](./one/knowledge/language.md) - Write features in English
+- [🏗️ Architecture Guide](./one/knowledge/architecture.md) - System architecture
+- [📝 Development Workflow](./one/connections/workflow.md) - 6-phase process
+- [🎯 Code Patterns](./one/connections/patterns.md) - Proven patterns
+- [⚡ Golden Rules](./one/knowledge/rules.md) - Rules for AI agents
+- [📁 File Locations](./one/knowledge/files.md) - Where everything goes
 
 ### Integrations
 
-- [🤖 ElizaOS](./connections/elizaos.md) - Multi-agent communication
-- [🔌 MCP](./connections/mcp.md) - Model Context Protocol
-- [⚙️ N8N](./connections/n8n.md) - Workflow automation
+- [🤖 ElizaOS](./one/connections/elizaos.md) - Multi-agent communication
+- [🔌 MCP](./one/connections/mcp.md) - Model Context Protocol
+- [⚙️ N8N](./one/connections/n8n.md) - Workflow automation
 
 ### Examples
 
-- [🍋 Lemonade Stand](./things/examples/children/lemonade-stand.md) - Simple for children
+- [🍋 Lemonade Stand](./one/things/examples/children/lemonade-stand.md) - Simple for children
 
 ---
 
@@ -915,10 +915,10 @@ Tags, chunks, embeddings, and relationships give AI agents context to act intell
 
 We welcome contributions! Before submitting:
 
-1. Read [knowledge/ontology.md](./knowledge/ontology.md) to understand the 6 dimensions
-2. Read [knowledge/rules.md](./knowledge/rules.md) for golden rules
+1. Read [knowledge/ontology.md](./one/knowledge/ontology.md) to understand the 6 dimensions
+2. Read [knowledge/rules.md](./one/knowledge/rules.md) for golden rules
 3. Map your contribution to the ontology
-4. Follow the patterns in [connections/patterns.md](./connections/patterns.md)
+4. Follow the patterns in [connections/patterns.md](./one/connections/patterns.md)
 5. Write tests
 6. Update documentation
 
