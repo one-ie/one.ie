@@ -45,17 +45,14 @@ CLOUDFLARE_EMAIL=your-email@domain.com           # Email associated with Cloudfl
 3. Falls back to CLOUDFLARE_API_TOKEN if Global Key not available
 4. All deployment scripts (`cloudflare-deploy.sh`, `release.sh`) support both methods
 
-**Deployment Command with Global Key:**
+**Deployment Command with Global Key (Optimized - Use /deploy):**
 
 ```bash
-# Automatic (loads from .env)
-./scripts/cloudflare-deploy.sh deploy web apps/one/web/dist production
+# RECOMMENDED: Use optimized /deploy command
+/deploy
 
-# Manual (explicit credentials)
-export CLOUDFLARE_GLOBAL_API_KEY=your-key
-export CLOUDFLARE_ACCOUNT_ID=your-id
-export CLOUDFLARE_EMAIL=your-email
-./scripts/cloudflare-deploy.sh deploy web apps/one/web/dist production
+# Manual equivalent (if needed):
+cd web && bun run build && wrangler pages deploy dist --project-name=oneie
 ```
 
 **Release with Global Key:**
@@ -528,29 +525,30 @@ cd cli && npm publish --access public
 # 2. Verify npm
 npm view oneie version
 
-# 3. Build frontend
-cd web && bun run build
+# 3. Deploy to Cloudflare Pages (Optimized)
+/deploy
 
-# 4. Deploy to Cloudflare Pages
-wrangler pages deploy dist --project-name=web
-
-# 5. Create GitHub releases
+# 4. Create GitHub releases
 gh release create v2.0.0 --title "Release v2.0.0" --generate-notes
 
-# 6. Test installation
+# 5. Test installation
 npx oneie@latest --version
 ```
 
-**Deployment Scripts** (located in `/scripts/`):
-- `release.sh` - Full release pipeline (version, sync, commit, push)
-- `pre-deployment-check.sh` - Validate environment before release
-- `cloudflare-deploy.sh` - Deploy to Cloudflare Pages (if needed)
+**Deployment Command (Optimized):**
 
-**Cloudflare Deployment (Automatic):**
+Use the `/deploy` command for fast, reliable Cloudflare Pages deployment:
+
+```bash
+/deploy
+```
+
+**What it does:**
+- Builds production bundle: `bun run build`
+- Deploys to Cloudflare Pages: `wrangler pages deploy dist --project-name=oneie`
 - Loads credentials from `.env` (CLOUDFLARE_GLOBAL_API_KEY, CLOUDFLARE_ACCOUNT_ID, CLOUDFLARE_EMAIL)
-- Builds the site: `bun run build`
-- Deploys via wrangler: `wrangler pages deploy dist --project-name=web`
-- Shows deployment status and URL
+- Shows deployment status and live URL
+- Total time: 35-45 seconds
 
 ### 2. Domain Management
 
@@ -651,10 +649,11 @@ npm publish --access public
 **Cloudflare Rollback:**
 ```bash
 # List deployments
-wrangler pages deployment list --project-name=one-web
+wrangler pages deployment list --project-name=oneie
 
-# Rollback to previous (via dashboard)
-# Cloudflare doesn't support CLI rollback yet
+# Rollback to previous (via Cloudflare dashboard)
+# Dashboard: https://dash.cloudflare.com → Pages → oneie → Deployments
+# Select previous deployment and promote to production
 ```
 
 **Git Rollback:**
@@ -856,25 +855,24 @@ await ctx.db.insert("events", {
 4. Auto-commit & push to github.com/one-ie/one
 5. Prompt for cli commit & push to github.com/one-ie/cli
 6. Publish to npm: `oneie@1.3.0`
-7. Build web application
-8. Deploy to Cloudflare Pages (project: web, domain: web.one.ie)
-9. Create GitHub release tags
-10. Verify all deployments
-11. Create deployment report (Thing + Event)
-12. Notify stakeholders
+7. Deploy to Cloudflare Pages (optimized): `/deploy`
+8. Create GitHub release tags
+9. Verify all deployments
+10. Create deployment report (Thing + Event)
+11. Notify stakeholders
 
 **Output:**
 ```
 ✅ Release v1.3.0 Complete!
 
 📦 npm: oneie@1.3.0 (live)
-🌐 Web: https://web.one.ie (deployed)
+🌐 Web: https://oneie.pages.dev (deployed)
 🏷️ GitHub: v1.3.0 tagged
-⏱️ Total time: ~12 minutes
+⏱️ Total time: ~15 minutes
 
 Live URLs:
 - npm: https://www.npmjs.com/package/oneie
-- Web: https://web.one.ie
+- Web: https://oneie.pages.dev
 - GitHub: https://github.com/one-ie/cli/releases/tag/v1.3.0
 ```
 
