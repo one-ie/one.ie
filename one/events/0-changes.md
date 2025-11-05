@@ -1,3 +1,14 @@
+### **b871c846** — template:2 custom:1 — `docs: Add frontend development guide to web documentation`` [customization]
+
+**Template:**
+  - .claude/state/inference.json
+  - web/src/content/docs/develop/website-development.md
+
+**Your Changes:**
+  - README.md
+
+
+
 ### **213374da** — template:3 custom:1 — `docs: add English → Code → Reality workflow section to README`` [customization]
 
 **Template:**
