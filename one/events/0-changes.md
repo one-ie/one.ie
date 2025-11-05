@@ -1,3 +1,53 @@
+### **e96bf4e5** — template:29 — `fix: Use macOS-compatible path display in cleanup hook``
+
+**Template:**
+  - .claude/hooks/clean-root-markdown.sh
+  - web/.archive/.code-quality-report-20251105-142351.md
+  - web/.archive/CLEANUP-REPORT-20251105-142350.md
+  - web/.archive/CODE-QUALITY-INDEX-20251105-142350.md
+  - web/.archive/COMPREHENSIVE-FEATURES-SYSTEM-20251105-142350.md
+  - web/.archive/DOCUMENTATION-CREATED-20251105-142350.md
+  - web/.archive/FEATURES-DOCUMENTATION-20251105-142350.md
+  - web/.archive/FEATURES-DOCUMENTATION-SUMMARY-20251105-142350.md
+  - web/.archive/FEATURES-QUALITY-CHECKLIST-20251105-142350.md
+  - web/.archive/FEATURES-TEST-SUITE-20251105-142350.md
+  - web/.archive/FEATURES_COMPONENTS-20251105-142351.md
+  - web/.archive/IMPLEMENTATION_SUMMARY-20251105-142350.md
+  - web/.archive/INDEX-20251105-142350.md
+  - web/.archive/QUALITY_IMPROVEMENTS-20251105-142351.md
+  - web/.archive/REFACTORING-SUMMARY-20251105-142350.md
+  - web/.code-quality-report.md
+  - web/CLEANUP-REPORT.md
+  - web/CODE-QUALITY-INDEX.md
+  - web/COMPREHENSIVE-FEATURES-SYSTEM.md
+  - web/DOCUMENTATION-CREATED.md
+  - web/FEATURES-DOCUMENTATION-SUMMARY.md
+  - web/FEATURES-DOCUMENTATION.md
+  - web/FEATURES-QUALITY-CHECKLIST.md
+  - web/FEATURES-TEST-SUITE.md
+  - web/FEATURES_COMPONENTS.md
+  - web/IMPLEMENTATION_SUMMARY.md
+  - web/INDEX.md
+  - web/QUALITY_IMPROVEMENTS.md
+  - web/REFACTORING-SUMMARY.md
+
+
+
+### **5c831ccc** — template:9 — `refactor: Move archive to .archive/ (root) and extend cleanup to /web/ directory``
+
+**Template:**
+  - .claude/hooks.log
+  - .claude/hooks/clean-root-markdown.sh
+  - .claude/state/inference.json
+  - one/events/0-changes.md
+  - one/events/archived/DOCS-SYSTEM-GUIDE-20251105-142103.md
+  - one/events/archived/FILE-REFERENCE-20251105-142103.md
+  - one/events/archived/IMPLEMENTATION-CHECKLIST-20251105-142103.md
+  - one/events/archived/IMPLEMENTATION-REPORT-DOCS-20251105-142102.md
+  - one/events/archived/readme.md
+
+
+
 ### **d4e20495** — template:1 — `docs: Add README for archived documents directory``
 
 **Template:**

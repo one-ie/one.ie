@@ -1,12 +1,13 @@
 #!/bin/bash
 
 # Clean Markdown Hook - ONE Platform
-# Moves unwanted markdown files from root and /web to .archive/
+# Moves unwanted markdown files to one/events/archived/
 # Root allowed: README.md, CLAUDE.md, AGENTS.md, LICENSE.md, SECURITY.md
 # /web allowed: README.md, CLAUDE.md, AGENTS.md, LICENSE.md, SECURITY.md
-# Everything else moves to respective .archive/ directories
+# Everything else moves to one/events/archived/ (6-dimension EVENTS tracking)
 
 PROJECT_DIR="${CLAUDE_PROJECT_DIR:-$(git rev-parse --show-toplevel)}"
+ARCHIVE_DIR="$PROJECT_DIR/one/events/archived"
 
 # Allowed files (same for both root and web)
 ALLOWED_FILES=(
@@ -17,17 +18,17 @@ ALLOWED_FILES=(
   "SECURITY.md"
 )
 
+# Create archive directory if it doesn't exist
+mkdir -p "$ARCHIVE_DIR"
+
 # Function to clean markdown files in a directory
 clean_directory() {
   local dir="$1"
-  local archive_dir="${dir}/.archive"
+  local dir_name=$(basename "$dir")
 
   if [ ! -d "$dir" ]; then
     return
   fi
-
-  # Create archive directory if it doesn't exist
-  mkdir -p "$archive_dir"
 
   # Find all markdown files in this directory (max depth 1)
   while IFS= read -r file; do
@@ -42,21 +43,23 @@ clean_directory() {
       fi
     done
 
-    # If not allowed, move it
+    # If not allowed, move it to events/archived
     if [ $is_allowed -eq 0 ]; then
-      # Add timestamp to avoid collisions
+      # Add timestamp and source directory to avoid collisions
       timestamp=$(date +%Y%m%d-%H%M%S)
-      new_name="${filename%.md}-${timestamp}.md"
 
-      # Display relative path (macOS compatible)
-      rel_file=${file#"$PROJECT_DIR/"}
-      rel_archive_dir=${archive_dir#"$PROJECT_DIR/"}
-      echo "Moving $rel_file → $rel_archive_dir/$new_name"
+      # If root, just use filename; if /web, prefix with "web-"
+      if [ "$dir_name" = "web" ]; then
+        new_name="web-${filename%.md}-${timestamp}.md"
+      else
+        new_name="${filename%.md}-${timestamp}.md"
+      fi
 
-      mv "$file" "$archive_dir/$new_name"
+      echo "Moving $(basename "$file") → one/events/archived/$new_name"
+      mv "$file" "$ARCHIVE_DIR/$new_name"
 
       # Stage the changes for git
-      git add -A "$file" "$archive_dir/$new_name" 2>/dev/null || true
+      git add -A "$file" "$ARCHIVE_DIR/$new_name" 2>/dev/null || true
     fi
   done < <(find "$dir" -maxdepth 1 -name "*.md" -type f)
 }
