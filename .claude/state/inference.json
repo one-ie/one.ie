@@ -1,5 +1,5 @@
 {
-  "current_inference": 40,
+  "current_inference": 36,
   "completed_inferences": [
     1,
     2,
@@ -35,11 +35,7 @@
     32,
     33,
     34,
-    35,
-    36,
-    37,
-    38,
-    39
+    35
   ],
   "feature_name": "New Feature",
   "organization": "Default Org",
@@ -213,32 +209,12 @@
     {
       "inference": 34,
       "lesson": "Completed Infer 34",
-      "timestamp": 1762372829
+      "timestamp": 1762372271
     },
     {
       "inference": 35,
       "lesson": "Completed Infer 35",
-      "timestamp": 1762372891
-    },
-    {
-      "inference": 36,
-      "lesson": "Completed Infer 36",
-      "timestamp": 1762372961
-    },
-    {
-      "inference": 37,
-      "lesson": "Completed Infer 37",
-      "timestamp": 1762372990
-    },
-    {
-      "inference": 38,
-      "lesson": "Completed Infer 38",
-      "timestamp": 1762374035
-    },
-    {
-      "inference": 39,
-      "lesson": "Completed Infer 39",
-      "timestamp": 1762375189
+      "timestamp": 1762372523
     }
   ]
 }
