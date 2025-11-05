@@ -1,3 +1,29 @@
+### **914eef93** — template:20 — `refactor: Flatten one/events/ directory and update cleanup hook to use flat structure``
+
+**Template:**
+  - .claude/NEWS-COMMANDS.md
+  - .claude/NEWS-SYSTEM-SUMMARY.md
+  - .claude/hooks.log
+  - .claude/hooks/clean-root-markdown.sh
+  - .claude/ontology-audit-agent-clone.md
+  - .claude/state/inference.json
+  - one/events/0-changes.md
+  - one/events/DOCS-SYSTEM-GUIDE-20251105-142103.md
+  - one/events/FILE-REFERENCE-20251105-142103.md
+  - one/events/IMPLEMENTATION-CHECKLIST-20251105-142103.md
+  - one/events/IMPLEMENTATION-REPORT-DOCS-20251105-142102.md
+  - one/events/NEWS-COMMANDS.md
+  - one/events/NEWS-SYSTEM-SUMMARY.md
+  - one/events/archived/DOCS-SYSTEM-GUIDE-20251105-142103.md
+  - one/events/archived/FILE-REFERENCE-20251105-142103.md
+  - one/events/archived/IMPLEMENTATION-CHECKLIST-20251105-142103.md
+  - one/events/archived/IMPLEMENTATION-REPORT-DOCS-20251105-142102.md
+  - one/events/archived/readme.md
+  - one/events/ontology-audit-agent-clone.md
+  - one/events/readme.md
+
+
+
 ### **b683c768** — template:10 — `refactor: Move cleanup archive to one/events/ (EVENTS dimension) and add event-driven documentation guide``
 
 **Template:**
