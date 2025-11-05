@@ -2,7 +2,7 @@
 title: Release
 dimension: events
 category: release.md
-tags: agent, ai, architecture, backend, inference, ontology
+tags: agent, ai, architecture, backend, cycle, ontology
 related_dimensions: connections, groups, things
 scope: global
 created: 2025-11-03
@@ -27,13 +27,13 @@ ai_context: |
 ## What's New in v3.0.0
 
 ### Breaking Changes
-- Complete 100-inference workflow implementation
+- Complete 100-cycle workflow implementation
 - 6-dimension ontology fully deployed
 - Multi-repo architecture (cli, web, backend, ontology, assembly)
 - New CLI structure with CASCADE interface
 
 ### New Features
-- ✅ Complete inference-based planning system (100 inferences)
+- ✅ Complete cycle-based planning system (100 cycles)
 - ✅ 412 ontology documentation files
 - ✅ 15 AI agents + 17 hooks + 10 commands
 - ✅ Full CASCADE menu interface (/one, /now, /next, /todo, /done)
@@ -102,8 +102,8 @@ For users upgrading from v2.x to v3.0:
 
 1. **CLI Changes:**
    - New CASCADE interface with /one menu
-   - Inference-based planning replaces day-based planning
-   - 100-inference workflow now standard
+   - Cycle-based planning replaces day-based planning
+   - 100-cycle workflow now standard
 
 2. **Breaking Changes:**
    - Multi-repo architecture (was monorepo)
@@ -268,5 +268,5 @@ const headers = import.meta.env.SSR ? Astro.request.headers : null;
 ---
 
 **Generated:** October 16, 2025
-**Inference:** 100/100 Complete
+**Cycle:** 100/100 Complete
 **Last Updated:** v3.0.3 Release (Security & TypeScript fixes)

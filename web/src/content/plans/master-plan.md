@@ -6,8 +6,8 @@ organization: "ONE Platform"
 personRole: "platform_owner"
 ontologyDimensions: ["Things", "Groups", "People", "Connections", "Events", "Knowledge"]
 assignedSpecialist: "Engineering Director"
-totalInferences: 900
-completedInferences: 400
+totalCycles: 900
+completedCycles: 400
 createdAt: 2025-10-30
 draft: false
 ---
@@ -17,7 +17,7 @@ draft: false
 
 **Status:** 🚀 **4 Core Todo Files Created + Master Orchestration Complete**
 **Date:** 2025-10-30
-**Total Deliverables:** 13 Strategic Documents + 4 Todo Files (900 inferences in flight)
+**Total Deliverables:** 13 Strategic Documents + 4 Todo Files (900 cycles in flight)
 
 ---
 
@@ -111,7 +111,7 @@ WAVE 4: LAUNCH (Week 7-8)
     └── Specialist: agent-ops
 ```
 
-**Total Inferences:** 900 (9 files × 100 inferences each)
+**Total Cycles:** 900 (9 files × 100 cycles each)
 **Total Specialists:** 6 (backend, frontend, integrator, builder, quality, designer + ops)
 **Timeline:** 8 weeks to v2.0.0 public launch
 
@@ -131,7 +131,7 @@ WAVE 4: LAUNCH (Week 7-8)
 | **todo-features.md** | Analytics, search, social | 3 | frontend, quality | ⏳ To Create |
 | **todo-one-ie.md** | Public launch platform | 4 | frontend, designer | ✅ DONE |
 
-**Progress:** 4/9 files complete (44%) | 400 inferences delivered | 500 inferences planned
+**Progress:** 4/9 files complete (44%) | 400 cycles delivered | 500 cycles planned
 
 ---
 
@@ -183,12 +183,12 @@ v2.0.0 (Week 8): PUBLIC LAUNCH
 
 ## 💡 THE INFERENCE-BASED PLANNING PARADIGM
 
-**Key Innovation:** Instead of time-based planning ("Day 1-3", "Week 2"), we use **sequence-based planning (100 inferences per feature)**
+**Key Innovation:** Instead of time-based planning ("Day 1-3", "Week 2"), we use **sequence-based planning (100 cycles per feature)**
 
 ### Why This Works
 
-1. **Precision:** Each inference is concrete + measurable
-2. **Context-Light:** Each specialist reads ~3-5KB per inference (not full codebase)
+1. **Precision:** Each cycle is concrete + measurable
+2. **Context-Light:** Each specialist reads ~3-5KB per cycle (not full codebase)
 3. **Parallel-Friendly:** Multiple specialists execute simultaneously
 4. **Dependency-Aware:** Critical path identified, blocker-free
 5. **Release-Ready:** Every phase is releasable
@@ -196,18 +196,18 @@ v2.0.0 (Week 8): PUBLIC LAUNCH
 
 ### The Pattern (Consistent Across All 9 Files)
 
-Each todo file has 10 phases, 100 inferences:
+Each todo file has 10 phases, 100 cycles:
 
-- **Phase 1 (Infer 1-10):** Foundation & setup
-- **Phase 2 (Infer 11-20):** Backend schema & services
-- **Phase 3 (Infer 21-30):** Frontend components & pages
-- **Phase 4 (Infer 31-40):** API routes & integration
-- **Phase 5 (Infer 41-50):** Payments/blockchain/core mechanics
-- **Phase 6 (Infer 51-60):** Quality & testing
-- **Phase 7 (Infer 61-70):** Design & wireframes
-- **Phase 8 (Infer 71-80):** Performance & optimization
-- **Phase 9 (Infer 81-90):** Deployment & documentation
-- **Phase 10 (Infer 91-100):** Knowledge & lessons learned
+- **Phase 1 (Cycle 1-10):** Foundation & setup
+- **Phase 2 (Cycle 11-20):** Backend schema & services
+- **Phase 3 (Cycle 21-30):** Frontend components & pages
+- **Phase 4 (Cycle 31-40):** API routes & integration
+- **Phase 5 (Cycle 41-50):** Payments/blockchain/core mechanics
+- **Phase 6 (Cycle 51-60):** Quality & testing
+- **Phase 7 (Cycle 61-70):** Design & wireframes
+- **Phase 8 (Cycle 71-80):** Performance & optimization
+- **Phase 9 (Cycle 81-90):** Deployment & documentation
+- **Phase 10 (Cycle 91-100):** Knowledge & lessons learned
 
 This structure repeats for every feature, enabling:
 - Easy scaling (add more files, same pattern)
@@ -241,11 +241,11 @@ From `/claude/plans/specialist-assignments.md`:
 
 ## 📊 KEY METRICS AT COMPLETION
 
-When all 900 inferences are executed:
+When all 900 cycles are executed:
 
 | Metric | Target |
 |--------|--------|
-| **Total Inferences** | 900 (9 × 100) |
+| **Total Cycles** | 900 (9 × 100) |
 | **Test Coverage** | 80%+ across platform |
 | **Code Commits** | 200+ (git history) |
 | **Documents** | 50+ (planning + docs) |
@@ -302,10 +302,10 @@ When all 900 inferences are executed:
 
 ## 🎓 KEY PRINCIPLES FOR SUCCESS
 
-### 1. **Plan in Inferences, Not Days**
+### 1. **Plan in Cycles, Not Days**
 - Ask "where does this belong in the sequence?" not "how long will it take?"
-- Each inference = concrete step forward
-- Medium-sized inferences = 30-120 minutes of work
+- Each cycle = concrete step forward
+- Medium-sized cycles = 30-120 minutes of work
 
 ### 2. **Execute in Parallel**
 - Never wait for other specialists
@@ -337,7 +337,7 @@ When all 900 inferences are executed:
 ## 📖 STRATEGIC ADVANTAGES OF THIS APPROACH
 
 ✅ **Eliminates Ambiguity**
-- Each inference is specific, measurable, achievable
+- Each cycle is specific, measurable, achievable
 - No "vague" work items
 - Clear definition of "done"
 
@@ -352,17 +352,17 @@ When all 900 inferences are executed:
 - Accessibility built-in (Phase 7)
 
 ✅ **Achieves Velocity**
-- Consistent pace: 100-112 inferences per specialist per day
+- Consistent pace: 100-112 cycles per specialist per day
 - Predictable timeline: 8 weeks to public launch
 - Release cadence: v1.1, v1.2, v1.3, v1.4, v2.0
 
 ✅ **Captures Knowledge**
-- Every inference documented
+- Every cycle documented
 - Lessons learned in Phase 10
 - Becomes training material for future features
 
 ✅ **Scales Infinitely**
-- Add feature? Create new 100-inference todo file
+- Add feature? Create new 100-cycle todo file
 - Same pattern repeats
 - New specialists learn quickly
 
@@ -370,7 +370,7 @@ When all 900 inferences are executed:
 
 ## 🎯 SUCCESS DEFINITION
 
-At the end of 900 inferences (8 weeks):
+At the end of 900 cycles (8 weeks):
 
 ```
 ✅ Platform fully functional
@@ -433,7 +433,7 @@ At the end of 900 inferences (8 weeks):
 
 ## 🚀 LET'S BUILD
 
-**Current Status:** 4/9 todo files complete | 400/900 inferences documented | Ready for parallel execution
+**Current Status:** 4/9 todo files complete | 400/900 cycles documented | Ready for parallel execution
 
 **Next Step:** Create 5 remaining todo files in parallel (recommended):
 
@@ -443,7 +443,7 @@ At the end of 900 inferences (8 weeks):
 4. **TODAY:** agent-frontend creates todo-features.md
 5. **TOMORROW:** Adjust + coordinate + start Wave 1
 
-**Then:** Execute 900 inferences → v2.0.0 public launch in 8 weeks
+**Then:** Execute 900 cycles → v2.0.0 public launch in 8 weeks
 
 ---
 
@@ -452,12 +452,12 @@ At the end of 900 inferences (8 weeks):
 We have now:
 - ✅ Created comprehensive master orchestration plan
 - ✅ Identified 6 specialist agents + their roles
-- ✅ Mapped 900 inferences across 9 vertical features
+- ✅ Mapped 900 cycles across 9 vertical features
 - ✅ Planned 4-wave execution + 5-release schedule
 - ✅ Documented strategic principles + success metrics
 - ✅ Built 4 foundational todo files (x402, onboard, ecommerce, one-ie)
 
-The remaining work is **execution at scale**: 5 more todo files in parallel, then 900 inferences of focused, high-velocity development.
+The remaining work is **execution at scale**: 5 more todo files in parallel, then 900 cycles of focused, high-velocity development.
 
 **This is the blueprint for ONE Platform's path to v2.0.0 public launch. Let's execute it with precision, velocity, and quality.**
 

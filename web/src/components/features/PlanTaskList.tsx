@@ -1,20 +1,20 @@
 /**
  * PlanTaskList Component
- * Beautiful, interactive task list for plan inferences with completion toggling
+ * Beautiful, interactive task list for plan cycles with completion toggling
  */
 
 import React, { useState, useMemo } from 'react';
 import { CheckCircle, AlertCircle, Clock, ChevronDown } from 'lucide-react';
 
 interface Task {
-  inferenceNumber: number;
+  cycleNumber: number;
   content: string;
   status: 'pending' | 'in_progress' | 'completed';
   activeForm: string;
   dependencies?: number[];
 }
 
-interface InferencePhase {
+interface CyclePhase {
   range: string;
   phase: string;
   description: string;
@@ -22,9 +22,9 @@ interface InferencePhase {
 
 interface PlanTaskListProps {
   tasks?: Task[];
-  phases?: InferencePhase[];
+  phases?: CyclePhase[];
   editable?: boolean;
-  onTaskToggle?: (inferenceNumber: number, newStatus: 'pending' | 'in_progress' | 'completed') => void;
+  onTaskToggle?: (cycleNumber: number, newStatus: 'pending' | 'in_progress' | 'completed') => void;
 }
 
 const DEFAULT_PHASES = [
@@ -99,24 +99,24 @@ export function PlanTaskList({
 }: PlanTaskListProps) {
   const [expandedPhases, setExpandedPhases] = useState<Set<string>>(new Set());
   const [taskStatuses, setTaskStatuses] = useState<Record<number, string>>(
-    tasks.reduce((acc, task) => ({ ...acc, [task.inferenceNumber]: task.status }), {})
+    tasks.reduce((acc, task) => ({ ...acc, [task.cycleNumber]: task.status }), {})
   );
 
   // Group tasks by phase
   const tasksByPhase = useMemo(() => {
     return phases.map((phase) => {
       const [start, end] = phase.range.split('-').map(Number);
-      const phaseTasks = tasks.filter((t) => t.inferenceNumber >= start && t.inferenceNumber <= end);
+      const phaseTasks = tasks.filter((t) => t.cycleNumber >= start && t.cycleNumber <= end);
       return {
         phase,
         tasks: phaseTasks,
-        completed: phaseTasks.filter((t) => taskStatuses[t.inferenceNumber] === 'completed').length,
+        completed: phaseTasks.filter((t) => taskStatuses[t.cycleNumber] === 'completed').length,
       };
     });
   }, [tasks, taskStatuses, phases]);
 
-  const handleTaskToggle = (inferenceNumber: number) => {
-    const currentStatus = taskStatuses[inferenceNumber];
+  const handleTaskToggle = (cycleNumber: number) => {
+    const currentStatus = taskStatuses[cycleNumber];
     const statusCycle: Record<string, 'pending' | 'in_progress' | 'completed'> = {
       pending: 'in_progress',
       in_progress: 'completed',
@@ -124,10 +124,10 @@ export function PlanTaskList({
     };
 
     const newStatus = statusCycle[currentStatus] || 'pending';
-    setTaskStatuses((prev) => ({ ...prev, [inferenceNumber]: newStatus }));
+    setTaskStatuses((prev) => ({ ...prev, [cycleNumber]: newStatus }));
 
     if (onTaskToggle) {
-      onTaskToggle(inferenceNumber, newStatus);
+      onTaskToggle(cycleNumber, newStatus);
     }
   };
 
@@ -171,7 +171,7 @@ export function PlanTaskList({
                       className={`w-5 h-5 transition-transform ${isExpanded ? 'rotate-0' : '-rotate-90'}`}
                     />
                     <h3 className="font-semibold text-lg">
-                      Infer {item.phase.range}: {item.phase.phase}
+                      Cycle {item.phase.range}: {item.phase.phase}
                     </h3>
                   </div>
                   <p className="text-sm text-muted-foreground mt-1">{item.phase.description}</p>
@@ -197,16 +197,16 @@ export function PlanTaskList({
             {isExpanded && (
               <div className="divide-y">
                 {item.tasks.map((task) => {
-                  const Icon = getStatusIcon(taskStatuses[task.inferenceNumber] || task.status);
-                  const currentStatus = taskStatuses[task.inferenceNumber] || task.status;
+                  const Icon = getStatusIcon(taskStatuses[task.cycleNumber] || task.status);
+                  const currentStatus = taskStatuses[task.cycleNumber] || task.status;
 
                   return (
                     <div
-                      key={task.inferenceNumber}
+                      key={task.cycleNumber}
                       className={`px-6 py-4 hover:bg-muted/50 transition-colors ${
                         editable ? 'cursor-pointer' : ''
                       }`}
-                      onClick={() => editable && handleTaskToggle(task.inferenceNumber)}
+                      onClick={() => editable && handleTaskToggle(task.cycleNumber)}
                     >
                       <div className="flex items-start gap-4">
                         {/* Status Icon */}
@@ -215,7 +215,7 @@ export function PlanTaskList({
                             <button
                               onClick={(e) => {
                                 e.stopPropagation();
-                                handleTaskToggle(task.inferenceNumber);
+                                handleTaskToggle(task.cycleNumber);
                               }}
                               className={`p-1 rounded-full hover:bg-muted transition-colors ${
                                 getStatusColor(currentStatus)
@@ -239,14 +239,14 @@ export function PlanTaskList({
                             {task.content}
                           </div>
                           <div className="text-xs text-muted-foreground mt-1">
-                            Infer {task.inferenceNumber} • {task.activeForm}
+                            Cycle {task.cycleNumber} • {task.activeForm}
                           </div>
 
                           {/* Dependencies */}
                           {task.dependencies && task.dependencies.length > 0 && (
                             <div className="mt-2 text-xs">
                               <div className="text-muted-foreground">
-                                Depends on: {task.dependencies.map((dep) => `Infer ${dep}`).join(', ')}
+                                Depends on: {task.dependencies.map((dep) => `Cycle ${dep}`).join(', ')}
                               </div>
                             </div>
                           )}
@@ -273,19 +273,19 @@ export function PlanTaskList({
         <div className="grid grid-cols-3 gap-4 mt-6 pt-4 border-t">
           <div className="text-center">
             <div className="text-2xl font-bold text-green-600">
-              {tasks.filter((t) => taskStatuses[t.inferenceNumber] === 'completed').length}
+              {tasks.filter((t) => taskStatuses[t.cycleNumber] === 'completed').length}
             </div>
             <div className="text-xs text-muted-foreground">Completed</div>
           </div>
           <div className="text-center">
             <div className="text-2xl font-bold text-blue-600">
-              {tasks.filter((t) => taskStatuses[t.inferenceNumber] === 'in_progress').length}
+              {tasks.filter((t) => taskStatuses[t.cycleNumber] === 'in_progress').length}
             </div>
             <div className="text-xs text-muted-foreground">In Progress</div>
           </div>
           <div className="text-center">
             <div className="text-2xl font-bold text-gray-600">
-              {tasks.filter((t) => taskStatuses[t.inferenceNumber] === 'pending').length}
+              {tasks.filter((t) => taskStatuses[t.cycleNumber] === 'pending').length}
             </div>
             <div className="text-xs text-muted-foreground">Pending</div>
           </div>

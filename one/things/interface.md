@@ -99,7 +99,7 @@ Current command interfaces overwhelm users with:
 1. Sees elegant logo and tagline: "Make Your Ideas Real"
 2. Understands instantly: 3 categories, 8 commands
 3. Types `/now` to start
-4. Guided through 100-inference sequence automatically
+4. Guided through 100-cycle sequence automatically
 
 ### Experienced User
 
@@ -184,7 +184,7 @@ Current command interfaces overwhelm users with:
 
 ## Technical Implementation
 
-### Phase 1: Foundation (Infer 1-10) ✅
+### Phase 1: Foundation (Cycle 1-10) ✅
 
 - ✅ Validated against 6-dimension ontology
 - ✅ Mapped to entity types (interface, command, documentation)
@@ -195,7 +195,7 @@ Current command interfaces overwhelm users with:
 - ✅ Defined people roles (4 roles with permissions)
 - ✅ Created high-level vision (this document)
 
-### Phase 2: Backend (Infer 11-20)
+### Phase 2: Backend (Cycle 11-20)
 
 - Update schema for command tracking
 - Create CommandService with Effect.ts
@@ -203,7 +203,7 @@ Current command interfaces overwhelm users with:
 - Add event logging for all commands
 - Create analytics queries for `/see`
 
-### Phase 3: Frontend (Infer 21-30)
+### Phase 3: Frontend (Cycle 21-30)
 
 - Redesign `/one` command output
 - Update README.md with elegant hero
@@ -211,14 +211,14 @@ Current command interfaces overwhelm users with:
 - Create interactive command palette
 - Implement keyboard shortcuts
 
-### Phase 4: Knowledge & Analytics (Infer 51-60)
+### Phase 4: Knowledge & Analytics (Cycle 51-60)
 
 - Generate embeddings for command descriptions
 - Build RAG pipeline for `/see` insights
 - Create recommendation engine
 - Implement semantic search for docs
 
-### Phase 5: Deployment (Infer 91-100)
+### Phase 5: Deployment (Cycle 91-100)
 
 - Deploy updated command interface
 - Update all documentation
@@ -252,6 +252,6 @@ This feature directly enables:
 ---
 
 **Created:** 2025-10-14
-**Status:** In Development (Infer 8/100)
+**Status:** In Development (Cycle 8/100)
 **Owner:** Engineering Director
-**Next:** Generate initial plan with feature breakdown (Infer 9)
+**Next:** Generate initial plan with feature breakdown (Cycle 9)

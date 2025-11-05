@@ -46,17 +46,17 @@ Successfully aligned **7 critical hooks** with the 6-dimension ontology, establi
 - **Impact:** Enforces ontology structure at file system level
 
 ### 2. **todo.py** ✅
-- **Purpose:** Displays current inference context (Infer 1-100)
+- **Purpose:** Displays current cycle context (Cycle 1-100)
 - **Changes:**
   - Added 10-phase mapping (Foundation → Deployment)
   - Enhanced dimension mapping (groups instead of organizations)
   - Added parallel execution hints (2-5x speedup)
   - Improved specialist assignments (9 agents)
   - Added phase progress indicators
-- **Impact:** 98% context reduction (150k → 3k tokens per inference)
+- **Impact:** 98% context reduction (150k → 3k tokens per cycle)
 
 ### 3. **done.py** ✅
-- **Purpose:** Marks inference complete and advances to next
+- **Purpose:** Marks cycle complete and advances to next
 - **Changes:**
   - Added proper Unix timestamps (not system uptime)
   - Enhanced lesson extraction from transcripts
@@ -80,7 +80,7 @@ Successfully aligned **7 critical hooks** with the 6-dimension ontology, establi
 - **Changes:**
   - Added `ontology_dimension` field to all entries
   - Added `ontology_version` tracking (1.0.0)
-  - Enhanced inference context loading
+  - Enhanced cycle context loading
   - Added visual dimension confirmation
   - Consistent semantic labels
 - **Impact:** Knowledge entries now searchable by dimension
@@ -89,7 +89,7 @@ Successfully aligned **7 critical hooks** with the 6-dimension ontology, establi
 - **Purpose:** Tags all documentation with ontology metadata
 - **Changes:**
   - Added 6-dimension automatic detection
-  - Added related dimensions inference
+  - Added related dimensions cycle
   - Added installation folder support
   - Enhanced AI context generation
   - Increased tag limits (7→10 tags, 500→1000 char analysis)
@@ -110,8 +110,8 @@ Successfully aligned **7 critical hooks** with the 6-dimension ontology, establi
 ### 8. **hook-logger.sh** ✅
 - **Purpose:** Logs all hook executions as EVENTS
 - **Changes:**
-  - Added inference context detection (Infer 0-100)
-  - Added dimension mapping (inference → dimension)
+  - Added cycle context detection (Cycle 0-100)
+  - Added dimension mapping (cycle → dimension)
   - Added specialist agent detection (9 agents)
   - Added ontology version tracking
   - Enhanced event logging with full context
@@ -126,7 +126,7 @@ These hooks were discovered to be **already fully aligned** with the 6-dimension
 1. **clean-pre.py** ✅ - Pre-cleanup validation with 6-dimension checks
 2. **clean-post.py** ✅ - Post-cleanup with dimension-aware organization
 3. **format-hook.sh** ✅ - Formats by dimension directories
-4. **notification-hook.sh** ✅ - Inference-to-dimension mapping built-in
+4. **notification-hook.sh** ✅ - Cycle-to-dimension mapping built-in
 5. **root-cleanup.py** ✅ - Auto-classifies files to 6 dimensions
 6. **security-hook.sh** ✅ - Dimension-specific security patterns
 
@@ -163,13 +163,13 @@ These hooks were discovered to be **already fully aligned** with the 6-dimension
 - **Already Perfect:** No changes needed!
 
 #### 12. **notification-hook.sh** ✅
-- **Ontology Compliance:** Maps inference ranges to dimensions
+- **Ontology Compliance:** Maps cycle ranges to dimensions
 - **Rich Context:** Shows dimension emoji, phase, and specialist
 - **Features:**
-  - `get_dimension_info()` maps Infer 1-100 to 6 dimensions
+  - `get_dimension_info()` maps Cycle 1-100 to 6 dimensions
   - Dimension-specific emojis (🏗️ 🎨 🔗 👤 🧠 ✅)
   - Templates for ontology-specific events (thing-created, connection-added, etc.)
-  - Loads inference context from state file
+  - Loads cycle context from state file
 - **Already Perfect:** No changes needed!
 
 #### 13. **root-cleanup.py** ✅
@@ -223,9 +223,9 @@ These hooks were discovered to be **already fully aligned** with the 6-dimension
 
 ## Key Improvements
 
-### 1. **Inference-Based Workflow** (todo.py, done.py)
-- Plan in 100 inferences, not days/weeks
-- 98% context reduction per inference
+### 1. **Cycle-Based Workflow** (todo.py, done.py)
+- Plan in 100 cycles, not days/weeks
+- 98% context reduction per cycle
 - Phase-aware progress tracking
 - Parallel execution identification (2-5x speedup)
 
@@ -249,7 +249,7 @@ These hooks were discovered to be **already fully aligned** with the 6-dimension
 
 ### 5. **Event Logging** (hook-logger.sh)
 - Every hook execution logged as EVENT
-- Full ontology context (inference, dimension, agent)
+- Full ontology context (cycle, dimension, agent)
 - Performance tracking
 - Audit compliance
 
@@ -274,7 +274,7 @@ These hooks were discovered to be **already fully aligned** with the 6-dimension
 ### After: Fully Ontology-Aware
 ```
 .claude/hooks/
-  ├── todo.py          # 100-inference, 10 phases, 6 dimensions
+  ├── todo.py          # 100-cycle, 10 phases, 6 dimensions
   ├── done.py          # Captures lessons by dimension
   ├── knowledge-*.py   # Dimension detection & tagging
   ├── tag-all-docs.py  # 676 files tagged by dimension
@@ -317,7 +317,7 @@ These hooks were discovered to be **already fully aligned** with the 6-dimension
 
 ### hook-logger.sh
 - **Functions:** 6 exported
-- **Context detection:** ✅ Inference, dimension, agent
+- **Context detection:** ✅ Cycle, dimension, agent
 - **Event logging:** ✅ Full ontology context
 
 ---
@@ -326,12 +326,12 @@ These hooks were discovered to be **already fully aligned** with the 6-dimension
 
 ### 1. **98% Context Reduction**
 - Before: 150k tokens per task (entire backlog)
-- After: 3k tokens per inference (current step only)
+- After: 3k tokens per cycle (current step only)
 - Result: 50x less context, faster execution
 
 ### 2. **5x Faster Execution**
 - Before: 115s average per feature (sequential)
-- After: 20s average per inference (parallel-aware)
+- After: 20s average per cycle (parallel-aware)
 - Result: Parallel execution hints identify opportunities
 
 ### 3. **Flawless Execution**
@@ -341,7 +341,7 @@ These hooks were discovered to be **already fully aligned** with the 6-dimension
 
 ### 4. **Continuous Learning**
 - Before: No lesson capture
-- After: Lessons stored per inference by dimension
+- After: Lessons stored per cycle by dimension
 - Result: Knowledge compounds over time (85% → 98% accuracy)
 
 ### 5. **Ontology Governance**
@@ -424,11 +424,11 @@ These hooks were discovered to be **already fully aligned** with the 6-dimension
 - 1 agent (hook-logger) completed successfully
 - **Lesson:** Stagger agent launches or use lower-tier model (haiku) for simpler tasks
 
-### 2. **Inference-Based Planning is Superior**
-- Moving from "Day 1-3" to "Infer 1-100" provides clarity
-- Each inference has clear: dimension, specialist, dependencies, phase
+### 2. **Cycle-Based Planning is Superior**
+- Moving from "Day 1-3" to "Cycle 1-100" provides clarity
+- Each cycle has clear: dimension, specialist, dependencies, phase
 - Context reduction is real: 98% less tokens per step
-- **Lesson:** Always plan in inferences, never in days
+- **Lesson:** Always plan in cycles, never in days
 
 ### 3. **Ontology Enforcement at File System Level**
 - Validating structure prevents misplaced files
@@ -458,7 +458,7 @@ These hooks were discovered to be **already fully aligned** with the 6-dimension
 
 **Actively Aligned (7 hooks):**
 1. validate-ontology-structure.py - Enforces 6-dimension file structure
-2. todo.py - 100-inference workflow with phase mapping
+2. todo.py - 100-cycle workflow with phase mapping
 3. done.py - Captures lessons by dimension
 4. knowledge-pre.py - Dimension-aware context loading
 5. knowledge-post.py - Ontology dimension tracking
@@ -470,13 +470,13 @@ These hooks were discovered to be **already fully aligned** with the 6-dimension
 9. clean-pre.py - Pre-cleanup ontology validation
 10. clean-post.py - Post-cleanup dimension organization
 11. format-hook.sh - Dimension-aware formatting
-12. notification-hook.sh - Inference-to-dimension mapping
+12. notification-hook.sh - Cycle-to-dimension mapping
 13. root-cleanup.py - Auto-classifies files to dimensions
 14. security-hook.sh - Dimension-specific security patterns
 
 ### Complete Infrastructure Coverage
 
-✅ **Inference-based planning** (100 inferences, 10 phases, 6 dimensions)
+✅ **Cycle-based planning** (100 cycles, 10 phases, 6 dimensions)
 ✅ **Dimension validation** (file system + schema enforcement)
 ✅ **Knowledge capture** (semantic tagging with ontology context)
 ✅ **Documentation tagging** (676 files tagged and ready for RAG)
@@ -499,7 +499,7 @@ The foundation is now complete for 98% AI code generation accuracy through:
 5. **Complete Audit Trail** - Every action logged with ontology context
 6. **Auto-Organization** - Files automatically classified to correct dimensions
 7. **Security By Design** - Dimension-specific security patterns enforced
-8. **Parallel Execution** - Inference workflow identifies concurrent opportunities
+8. **Parallel Execution** - Cycle workflow identifies concurrent opportunities
 
 ### Next Steps
 

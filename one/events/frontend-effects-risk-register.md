@@ -179,9 +179,9 @@ As the codebase grows with 63 components and 12 services, developers may take sh
    - Build fails if TypeScript errors detected
    - CI/CD blocks PRs with type errors
    - Cannot merge to main with errors
-5. **Type Safety Inferences:**
-   - Infer 64 (Component audit): Explicitly verify no `any` types
-   - Infer 76 (TypeScript validation): Full strict mode check
+5. **Type Safety Cycles:**
+   - Cycle 64 (Component audit): Explicitly verify no `any` types
+   - Cycle 76 (TypeScript validation): Full strict mode check
    - Report type safety metrics per phase
    - Surface trends in standup
 
@@ -261,7 +261,7 @@ Adding a new service layer (Effect.ts, DataProvider interface, hooks library) on
    - Import specific modules: `import { Effect } from "effect"`
    - Not: `import * as Effect from "effect"`
    - This allows bundler to drop unused exports
-5. **Bundle Analysis (Infer 49):**
+5. **Bundle Analysis (Cycle 49):**
    - Use webpack-bundle-analyzer to visualize bundle
    - Identify largest files and dependencies
    - Find opportunities to reduce imports
@@ -275,8 +275,8 @@ Adding a new service layer (Effect.ts, DataProvider interface, hooks library) on
 **Monitoring & Escalation:**
 - Weekly report: Current bundle size vs target
 - Daily check: ESLint unused import warnings
-- Infer 49: Formal bundle analysis
-- Infer 96: Final optimization phase
+- Cycle 49: Formal bundle analysis
+- Cycle 96: Final optimization phase
 - If bundle > 150kb:
   1. Run bundle analyzer
   2. Identify top 5 largest dependencies
@@ -338,10 +338,10 @@ Authentication is the foundation of the platform. If auth tests fail during migr
 1. **Auth Tests as Go/No-Go Criteria:**
    - Cannot merge any PR if auth tests failing
    - Cannot proceed to next phase if auth tests failing
-   - Phase 6 (Component migration) halted at Infer 60 to verify auth tests
-   - Final gate (Infer 100) includes auth test verification
+   - Phase 6 (Component migration) halted at Cycle 60 to verify auth tests
+   - Final gate (Cycle 100) includes auth test verification
 2. **12 Critical Auth Tests (Identified):**
-   - Infer 008: Identify critical auth components and tests
+   - Cycle 008: Identify critical auth components and tests
    - Document which auth tests are mandatory
    - Run them after every component migration
    - Track results in daily standup
@@ -352,7 +352,7 @@ Authentication is the foundation of the platform. If auth tests fail during migr
    - Can escalate to Frontend Lead for blocking issues
 4. **Canary Testing Approach:**
    - Test auth components FIRST (before other components)
-   - Infer 51-53: Migrate and test auth components
+   - Cycle 51-53: Migrate and test auth components
    - Only proceed with other components if auth components passing
    - Auth tests act as health check for entire system
 5. **Parallel Auth Validation:**
@@ -433,7 +433,7 @@ After completing component migration, some components might still have Convex im
    - ESLint blocks any import from "convex/*"
    - Build fails if Convex import detected
    - Cannot merge PR with Convex imports
-2. **Component Audit (Infer 70):**
+2. **Component Audit (Cycle 70):**
    - Formal infer specifically for removing Convex imports
    - Grep entire codebase: `find . -name "*.ts" -o -name "*.tsx" | xargs grep "from.*convex"`
    - List all components with Convex imports
@@ -444,7 +444,7 @@ After completing component migration, some components might still have Convex im
    - Create build step that checks: `grep -r "from.*convex" src/`
    - Fail build if any matches found
    - Document in CI/CD pipeline
-4. **Directory Cleanup (Infer 98):**
+4. **Directory Cleanup (Cycle 98):**
    - Delete `/web/convex/` directory (all Convex config)
    - Remove `convex` dependency from package.json
    - Remove Convex environment variables from .env.local
@@ -452,7 +452,7 @@ After completing component migration, some components might still have Convex im
 5. **Integration Test:**
    - Create test that imports all 63 migrated components
    - Verify each component works without Convex
-   - Run as part of final validation (Infer 99)
+   - Run as part of final validation (Cycle 99)
 
 **Monitoring & Escalation:**
 - ESLint runs on every file change
@@ -512,9 +512,9 @@ Tests are essential for confidence in the refactored code. If test coverage fall
    - Phase 1: Define targets (90% unit, 80% integration)
    - Phase 3: Services target 90%+ each
    - Phase 6: Components target 80%+ integrated
-   - Infer 78: Measure and report coverage
+   - Cycle 78: Measure and report coverage
 2. **Test Infrastructure First:**
-   - Phase 7 begins with test utilities (Infer 71)
+   - Phase 7 begins with test utilities (Cycle 71)
    - Mock provider factory created before writing tests
    - Test helpers available for all test writers
    - Reduces friction to writing tests
@@ -537,7 +537,7 @@ Tests are essential for confidence in the refactored code. If test coverage fall
 
 **Monitoring & Escalation:**
 - Weekly report: Coverage numbers
-- Infer 78: Formal coverage measurement
+- Cycle 78: Formal coverage measurement
 - If coverage < target:
   1. Identify uncovered code
   2. Determine why uncovered:
@@ -672,11 +672,11 @@ DataProvider interface is designed to support all 6 dimensions of the ontology. 
 - Hooks finding they need method not in DataProvider
 
 **Mitigations (Applied):**
-1. **Comprehensive Design Phase (Infer 11-20):**
+1. **Comprehensive Design Phase (Cycle 11-20):**
    - 10 full infers dedicated to DataProvider
    - Each dimension gets 2 infers to design
-   - Error types get full infer (Infer 18)
-   - Documentation + examples get full infer (Infer 19)
+   - Error types get full infer (Cycle 18)
+   - Documentation + examples get full infer (Cycle 19)
    - No rushing, thorough design
 2. **Review by All Stakeholders:**
    - Backend Specialist designs, Frontend Specialist reviews
@@ -684,15 +684,15 @@ DataProvider interface is designed to support all 6 dimensions of the ontology. 
    - Quality Specialist reviews for testability
    - At least 3 people see interface before coding
 3. **Dimension-by-Dimension Validation:**
-   - Infer 12: Groups dimension (validate complete)
-   - Infer 13: People dimension (validate complete)
-   - Infer 14: Things dimension (validate complete)
-   - Infer 15: Connections dimension (validate complete)
-   - Infer 16: Events dimension (validate complete)
-   - Infer 17: Knowledge dimension (validate complete)
+   - Cycle 12: Groups dimension (validate complete)
+   - Cycle 13: People dimension (validate complete)
+   - Cycle 14: Things dimension (validate complete)
+   - Cycle 15: Connections dimension (validate complete)
+   - Cycle 16: Events dimension (validate complete)
+   - Cycle 17: Knowledge dimension (validate complete)
    - Full checklist before proceeding
 4. **Real-World Use Case Testing:**
-   - Infer 19: Document with actual examples
+   - Cycle 19: Document with actual examples
    - 5+ use cases per dimension shown in examples
    - Examples must compile and run (not just psuedo-code)
    - If example can't work with interface, interface is wrong
@@ -712,7 +712,7 @@ DataProvider interface is designed to support all 6 dimensions of the ontology. 
   - If > 2 new methods discovered: Interface design was incomplete
   - Escalate to Frontend Lead + Backend Specialist
   - Consider extending Phase 2 to fix interface
-- Phase 6 check (Infer 60): Are hooks asking for methods not in interface?
+- Phase 6 check (Cycle 60): Are hooks asking for methods not in interface?
   - If yes: Interface is incomplete
   - These are late discoveries (high risk of schedule slip)
 
@@ -807,7 +807,7 @@ Adding layers of abstraction (DataProvider interface → Services → Hooks → 
   - Alert if any component > 500ms to render
   - Use React.memo if rendering slow
 - Phase 10: Final performance validation
-  - Infer 97: Runtime performance validation
+  - Cycle 97: Runtime performance validation
   - LCP target < 2.5s (must pass)
   - CLS target < 0.1 (must pass)
   - Service latency < 50ms typical case

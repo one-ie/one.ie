@@ -2,7 +2,7 @@
 title: Wave1 Specialist Assignments
 dimension: things
 category: plans
-tags: agent, ai, backend, frontend, inference, ontology, people, testing
+tags: agent, ai, backend, frontend, cycle, ontology, people, testing
 related_dimensions: events, groups, people
 scope: global
 created: 2025-11-03
@@ -45,14 +45,14 @@ This document specifies exactly who does what, in what order, with what delivera
 
 **Role:** Implement all backend mutations, queries, services, email, and verification logic
 
-**Total Inferences:** 40 (Infer 11-30 + 51-70)
-**Duration:** 10 days (typically 4 inferences per day)
-**Start:** Day 1, Infer 11
-**Blocks:** Frontend (needs API ready for Infer 51+), Integration testing (Infer 71+)
+**Total Cycles:** 40 (Cycle 11-30 + 51-70)
+**Duration:** 10 days (typically 4 cycles per day)
+**Start:** Day 1, Cycle 11
+**Blocks:** Frontend (needs API ready for Cycle 51+), Integration testing (Cycle 71+)
 
-### Phase 1: Schema & Services (Infer 11-30)
+### Phase 1: Schema & Services (Cycle 11-30)
 
-**Infer 11-12: Extend Creator Entity Type**
+**Cycle 11-12: Extend Creator Entity Type**
 
 **Input:** Ontology specification from vision doc
 **Task:** Update `/backend/convex/schema.ts` with creator properties
@@ -91,7 +91,7 @@ creator: {
 
 ---
 
-**Infer 13-14: Extend Organization Entity Type**
+**Cycle 13-14: Extend Organization Entity Type**
 
 **Task:** Add organization (workspace) properties to schema
 
@@ -120,7 +120,7 @@ organization: {
 
 ---
 
-**Infer 15-16: Create Invitation Token Type**
+**Cycle 15-16: Create Invitation Token Type**
 
 **Task:** Add invitation_token entity type for team invitations
 
@@ -147,7 +147,7 @@ invitation_token: {
 
 ---
 
-**Infer 17: Create Onboarding Service (Effect.ts)**
+**Cycle 17: Create Onboarding Service (Effect.ts)**
 
 **Task:** Build pure business logic layer
 
@@ -171,13 +171,13 @@ invitation_token: {
 
 ---
 
-**Infer 18-25: Create All Mutations (8 inferences)**
+**Cycle 18-25: Create All Mutations (8 cycles)**
 
 **Files to Create/Update:** `/backend/convex/mutations/auth.ts`, `/backend/convex/mutations/workspace.ts`
 
 **Mutations:**
 
-1. **signUp** (Infer 18)
+1. **signUp** (Cycle 18)
    - Email + password signup
    - Create user in Better Auth
    - Create creator entity
@@ -185,60 +185,60 @@ invitation_token: {
    - Log user_registered event
    - Duration: 1 day
 
-2. **verifyEmail** (Infer 19)
+2. **verifyEmail** (Cycle 19)
    - Validate 6-digit code
    - Mark email verified
    - Log email_verified event
    - Duration: 0.5 day
 
-3. **updateProfile** (Infer 20)
+3. **updateProfile** (Cycle 20)
    - Validate username unique
    - Handle avatar upload
    - Update creator properties
    - Log profile_updated event
    - Duration: 1 day
 
-4. **createWorkspace** (Infer 21)
+4. **createWorkspace** (Cycle 21)
    - Create organization entity
    - Create member_of connection
    - Update creator.workspaceId
    - Log thing_created event
    - Duration: 0.5 day
 
-5. **inviteTeamMember** (Infer 22)
+5. **inviteTeamMember** (Cycle 22)
    - Generate invitation token
    - Create invitation_token entity
    - Send invitation email
    - Log user_invited_to_group event
    - Duration: 1 day
 
-6. **acceptInvitation** (Infer 23)
+6. **acceptInvitation** (Cycle 23)
    - Validate token + expiry
    - Get or create user
    - Create member_of connection
    - Log user_joined_group event
    - Duration: 0.5 day
 
-7. **connectWallet** (Infer 24)
+7. **connectWallet** (Cycle 24)
    - Validate Ethereum address
    - Update creator.walletAddress
    - Log wallet_connected event
    - Duration: 0.5 day
 
-8. **addSkills** (Infer 25)
+8. **addSkills** (Cycle 25)
    - Create knowledge items for each skill
    - Link creator to knowledge
    - Update creator.expertise
    - Log thing_updated event
    - Duration: 0.5 day
 
-**Total Duration:** Infer 18-25 = 5.5 days
+**Total Duration:** Cycle 18-25 = 5.5 days
 
 **Status:** Ready for implementation
 
 ---
 
-**Infer 26: Create Onboarding Queries**
+**Cycle 26: Create Onboarding Queries**
 
 **File to Create:** `/backend/convex/queries/onboarding.ts`
 
@@ -257,7 +257,7 @@ invitation_token: {
 
 ---
 
-**Infer 27: Create Email Templates**
+**Cycle 27: Create Email Templates**
 
 **Files to Create:** `/backend/convex/emails/*.email.tsx`
 
@@ -274,7 +274,7 @@ invitation_token: {
 
 ---
 
-**Infer 28: Create Verification System**
+**Cycle 28: Create Verification System**
 
 **File to Create:** `/backend/convex/lib/verification.ts`
 
@@ -292,7 +292,7 @@ invitation_token: {
 
 ---
 
-**Infer 29: Configure Rate Limiting**
+**Cycle 29: Configure Rate Limiting**
 
 **Task:** Set up @convex-dev/rate-limiter rules
 
@@ -308,7 +308,7 @@ invitation_token: {
 
 ---
 
-**Infer 30: Backend Schema Complete**
+**Cycle 30: Backend Schema Complete**
 
 **Validation Checklist:**
 
@@ -328,9 +328,9 @@ invitation_token: {
 
 ---
 
-### Phase 2: API Routes & Integration (Infer 51-70)
+### Phase 2: API Routes & Integration (Cycle 51-70)
 
-**Infer 51-60: Create API Routes (10 inferences)**
+**Cycle 51-60: Create API Routes (10 cycles)**
 
 **Auth Routes:** `/api/auth/*`
 
@@ -379,38 +379,38 @@ invitation_token: {
 - `GET /api/onboarding/status` → Get progress
 - `POST /api/onboarding/step` → Update step
 
-**Duration:** Infer 51-60 = 5 days (2 routes per day)
+**Duration:** Cycle 51-60 = 5 days (2 routes per day)
 **Status:** Ready for implementation
 
 ---
 
-**Infer 61-70: Email System & Integration (10 inferences)**
+**Cycle 61-70: Email System & Integration (10 cycles)**
 
 **Task:** Wire up email sending, configure Resend, test delivery
 
 **Activities:**
 
-1. **Configure Resend** (Infer 61)
+1. **Configure Resend** (Cycle 61)
    - Set API key
    - Verify sender domain
    - Create email lists
    - Duration: 0.5 day
 
-2. **Implement email sending** (Infer 62-64)
+2. **Implement email sending** (Cycle 62-64)
    - Signup welcome email
    - Verification code email
    - Team invitation email
    - Password reset email
    - Duration: 1.5 days
 
-3. **Test email delivery** (Infer 65-67)
+3. **Test email delivery** (Cycle 65-67)
    - Send test emails
    - Verify delivery timing (< 30s)
    - Check template rendering
    - Test spam filter delivery
    - Duration: 1.5 days
 
-4. **Email tracking** (Infer 68-70)
+4. **Email tracking** (Cycle 68-70)
    - Track opens
    - Track clicks
    - Log email events
@@ -429,15 +429,15 @@ invitation_token: {
 
 **Role:** Implement all onboarding pages, components, and team management UI
 
-**Total Inferences:** 20 (Infer 31-50)
-**Duration:** 5-6 days (3-4 inferences per day)
-**Start:** Day 3, Infer 31 (can start while backend is on Infer 11-30)
-**Dependency:** Needs API routes ready by Infer 51+
-**Blocks:** Deployment (Infer 91+)
+**Total Cycles:** 20 (Cycle 31-50)
+**Duration:** 5-6 days (3-4 cycles per day)
+**Start:** Day 3, Cycle 31 (can start while backend is on Cycle 11-30)
+**Dependency:** Needs API routes ready by Cycle 51+
+**Blocks:** Deployment (Cycle 91+)
 
-### Component Development (Infer 31-43)
+### Component Development (Cycle 31-43)
 
-**Infer 31: SignupForm Component**
+**Cycle 31: SignupForm Component**
 
 **File:** `/web/src/components/onboarding/SignupForm.tsx`
 
@@ -456,7 +456,7 @@ invitation_token: {
 
 ---
 
-**Infer 32: EmailVerification Component**
+**Cycle 32: EmailVerification Component**
 
 **File:** `/web/src/components/onboarding/EmailVerification.tsx`
 
@@ -474,7 +474,7 @@ invitation_token: {
 
 ---
 
-**Infer 33: ProfileForm Component**
+**Cycle 33: ProfileForm Component**
 
 **File:** `/web/src/components/onboarding/ProfileForm.tsx`
 
@@ -493,7 +493,7 @@ invitation_token: {
 
 ---
 
-**Infer 34: WorkspaceSetup Component**
+**Cycle 34: WorkspaceSetup Component**
 
 **File:** `/web/src/components/onboarding/WorkspaceSetup.tsx`
 
@@ -511,7 +511,7 @@ invitation_token: {
 
 ---
 
-**Infer 35: WalletConnection Component**
+**Cycle 35: WalletConnection Component**
 
 **File:** `/web/src/components/onboarding/WalletConnection.tsx`
 
@@ -530,7 +530,7 @@ invitation_token: {
 
 ---
 
-**Infer 36: SkillSelection Component**
+**Cycle 36: SkillSelection Component**
 
 **File:** `/web/src/components/onboarding/SkillSelection.tsx`
 
@@ -548,7 +548,7 @@ invitation_token: {
 
 ---
 
-**Infer 37: OnboardingTour Component**
+**Cycle 37: OnboardingTour Component**
 
 **File:** `/web/src/components/onboarding/OnboardingTour.tsx`
 
@@ -567,7 +567,7 @@ invitation_token: {
 
 ---
 
-**Infer 38: OnboardingChecklist Component**
+**Cycle 38: OnboardingChecklist Component**
 
 **File:** `/web/src/components/onboarding/OnboardingChecklist.tsx`
 
@@ -585,24 +585,24 @@ invitation_token: {
 
 ---
 
-**Infer 39-40: Helper Components**
+**Cycle 39-40: Helper Components**
 
 **Files:**
 
-- `AvatarUpload.tsx` (Infer 42)
-- `NicheSelection.tsx` (Infer 43)
-- `LoadingStates.tsx` (Infer 44)
-- `ErrorHandling.tsx` (Infer 45)
-- `SuccessAnimations.tsx` (Infer 46)
+- `AvatarUpload.tsx` (Cycle 42)
+- `NicheSelection.tsx` (Cycle 43)
+- `LoadingStates.tsx` (Cycle 44)
+- `ErrorHandling.tsx` (Cycle 45)
+- `SuccessAnimations.tsx` (Cycle 46)
 
 **Total Duration:** 1 day
 **Status:** Ready
 
 ---
 
-### Page Development (Infer 39-41)
+### Page Development (Cycle 39-41)
 
-**Infer 39: Onboarding Pages (Part 1)**
+**Cycle 39: Onboarding Pages (Part 1)**
 
 **Files:**
 
@@ -624,7 +624,7 @@ invitation_token: {
 
 ---
 
-**Infer 40: Onboarding Pages (Part 2)**
+**Cycle 40: Onboarding Pages (Part 2)**
 
 **Files:**
 
@@ -640,7 +640,7 @@ invitation_token: {
 
 ---
 
-**Infer 41: Team Management Page**
+**Cycle 41: Team Management Page**
 
 **File:** `/web/src/pages/workspace/settings/team.astro`
 
@@ -658,9 +658,9 @@ invitation_token: {
 
 ---
 
-### Polish & Optimization (Infer 47-50)
+### Polish & Optimization (Cycle 47-50)
 
-**Infer 47: Mobile Responsive Design**
+**Cycle 47: Mobile Responsive Design**
 
 **Task:** Ensure mobile-first responsive design
 
@@ -679,7 +679,7 @@ invitation_token: {
 
 ---
 
-**Infer 48: Accessibility Compliance**
+**Cycle 48: Accessibility Compliance**
 
 **Task:** WCAG 2.1 AA compliance
 
@@ -698,7 +698,7 @@ invitation_token: {
 
 ---
 
-**Infer 49: Dark Mode Support**
+**Cycle 49: Dark Mode Support**
 
 **Task:** Add dark theme support
 
@@ -714,7 +714,7 @@ invitation_token: {
 
 ---
 
-**Infer 50: Final Frontend Validation**
+**Cycle 50: Final Frontend Validation**
 
 **Validation Checklist:**
 
@@ -732,7 +732,7 @@ invitation_token: {
 
 ---
 
-**Total Frontend Duration:** 5-6 days (Infer 31-50)
+**Total Frontend Duration:** 5-6 days (Cycle 31-50)
 **Status:** ✅ Ready to be assigned
 
 ---
@@ -741,13 +741,13 @@ invitation_token: {
 
 **Role:** Test all functionality, verify quality, security, accessibility, performance
 
-**Total Inferences:** 10 (Infer 81-90)
+**Total Cycles:** 10 (Cycle 81-90)
 **Duration:** 2-3 days
-**Start:** Day 8, Infer 81 (after backend + frontend complete)
+**Start:** Day 8, Cycle 81 (after backend + frontend complete)
 **Dependency:** Phase 4 (API routes) complete
-**Blocks:** Deployment (Infer 91+)
+**Blocks:** Deployment (Cycle 91+)
 
-### Infer 81-82: Backend Unit Tests
+### Cycle 81-82: Backend Unit Tests
 
 **Task:** Test mutations, queries, services in isolation
 
@@ -767,7 +767,7 @@ invitation_token: {
 
 ---
 
-### Infer 83-84: Frontend Unit Tests
+### Cycle 83-84: Frontend Unit Tests
 
 **Task:** Test React components in isolation
 
@@ -788,7 +788,7 @@ invitation_token: {
 
 ---
 
-### Infer 85-86: Integration Tests
+### Cycle 85-86: Integration Tests
 
 **Task:** Test full feature flows end-to-end
 
@@ -808,7 +808,7 @@ invitation_token: {
 
 ---
 
-### Infer 87-88: E2E Tests
+### Cycle 87-88: E2E Tests
 
 **Task:** Test real user journeys in browser
 
@@ -825,7 +825,7 @@ invitation_token: {
 
 ---
 
-### Infer 89: Security & Accessibility Audit
+### Cycle 89: Security & Accessibility Audit
 
 **Task:** Verify security + accessibility compliance
 
@@ -853,7 +853,7 @@ invitation_token: {
 
 ---
 
-### Infer 90: Performance Audit
+### Cycle 90: Performance Audit
 
 **Task:** Verify performance targets
 
@@ -874,7 +874,7 @@ invitation_token: {
 
 ---
 
-**Total Quality Duration:** 2-3 days (Infer 81-90)
+**Total Quality Duration:** 2-3 days (Cycle 81-90)
 **Status:** ✅ Ready to be assigned
 
 ---
@@ -883,13 +883,13 @@ invitation_token: {
 
 **Role:** Create wireframes, component specs, user guides, API documentation
 
-**Total Inferences:** 10 (Infer 41-50 design + 91-100 documentation)
+**Total Cycles:** 10 (Cycle 41-50 design + 91-100 documentation)
 **Duration:** 5-7 days (can run partially in parallel)
 **Start:** Day 1 design work, Day 9 documentation
 
-### Design Phase (Infer 41-50, parallel with frontend)
+### Design Phase (Cycle 41-50, parallel with frontend)
 
-**Infer 41-45: Wireframes & Component Specs**
+**Cycle 41-45: Wireframes & Component Specs**
 
 **Deliverables:**
 
@@ -908,7 +908,7 @@ invitation_token: {
 
 ---
 
-**Infer 46-50: Accessibility & Brand Guide**
+**Cycle 46-50: Accessibility & Brand Guide**
 
 **Deliverables:**
 
@@ -924,9 +924,9 @@ invitation_token: {
 
 ---
 
-### Documentation Phase (Infer 91-100)
+### Documentation Phase (Cycle 91-100)
 
-**Infer 91-92: User Documentation**
+**Cycle 91-92: User Documentation**
 
 **Files to create:**
 
@@ -948,7 +948,7 @@ invitation_token: {
 
 ---
 
-**Infer 93-94: API Documentation**
+**Cycle 93-94: API Documentation**
 
 **Files to create:**
 
@@ -977,7 +977,7 @@ invitation_token: {
 
 ---
 
-**Infer 95: Developer Setup Guide**
+**Cycle 95: Developer Setup Guide**
 
 **File:** `/docs/developer-setup.md`
 
@@ -997,7 +997,7 @@ invitation_token: {
 
 ---
 
-**Infer 96: Deployment Checklist**
+**Cycle 96: Deployment Checklist**
 
 **File:** `/DEPLOYMENT.md`
 
@@ -1024,7 +1024,7 @@ invitation_token: {
 
 ---
 
-**Infer 97-98: Deployment & Release Notes**
+**Cycle 97-98: Deployment & Release Notes**
 
 **Task:** Support production deployment
 
@@ -1041,7 +1041,7 @@ invitation_token: {
 
 ---
 
-**Infer 99: Analytics & Monitoring Setup**
+**Cycle 99: Analytics & Monitoring Setup**
 
 **Task:** Configure analytics + monitoring
 
@@ -1058,7 +1058,7 @@ invitation_token: {
 
 ---
 
-**Infer 100: Lessons Learned & Handoff**
+**Cycle 100: Lessons Learned & Handoff**
 
 **Deliverable:** Documentation of:
 
@@ -1083,13 +1083,13 @@ invitation_token: {
 **Role:** Coordinate all work, track progress, resolve blockers, validate completion
 
 **Total Duration:** 10 days (throughout project)
-**Start:** Day 1, Infer 1
+**Start:** Day 1, Cycle 1
 **Responsibilities:**
 
 ### Daily Responsibilities
 
 - Monitor progress across all 4 specialists
-- Track inference completion
+- Track cycle completion
 - Identify and resolve blockers
 - Ensure 6-dimension ontology alignment
 - Log events for audit trail
@@ -1098,35 +1098,35 @@ invitation_token: {
 
 ### Key Milestones to Validate
 
-**Day 2 (Infer 10):** Vision document approved + ontology validated
+**Day 2 (Cycle 10):** Vision document approved + ontology validated
 
 - Verify all 6 dimensions mapped
 - Approve entity types + event types
 - Approve task breakdown
 - Gate: All specialists ready to start
 
-**Day 4 (Infer 30):** Backend schema complete
+**Day 4 (Cycle 30):** Backend schema complete
 
 - Verify schema valid
 - All mutations working locally
 - Convex types generated
 - Gate: Frontend can start integrating
 
-**Day 7 (Infer 70):** API routes + email ready
+**Day 7 (Cycle 70):** API routes + email ready
 
 - All routes responding
 - Email sending working
 - Rate limiting active
 - Gate: Integration testing can begin
 
-**Day 9 (Infer 80):** All code complete
+**Day 9 (Cycle 80):** All code complete
 
 - Frontend + backend integrated
 - All features working
 - No critical bugs
 - Gate: Testing complete, ready for deployment
 
-**Day 10-12 (Infer 91-100):** Deployment + documentation
+**Day 10-12 (Cycle 91-100):** Deployment + documentation
 
 - Production deployment successful
 - Monitoring active
@@ -1135,31 +1135,31 @@ invitation_token: {
 
 ### Decision Gates
 
-**Gate 1 (Infer 10):** Can we proceed with implementation?
+**Gate 1 (Cycle 10):** Can we proceed with implementation?
 
 - Decision: Approve vision doc + ontology mapping
 - If rejected: Rethink feature, return to Phase 1
 - If approved: Release all specialists
 
-**Gate 2 (Infer 30):** Is backend ready for frontend integration?
+**Gate 2 (Cycle 30):** Is backend ready for frontend integration?
 
 - Decision: Validate mutations + queries + events
 - If not ready: Fix blockers in backend
 - If ready: Unblock frontend for API integration
 
-**Gate 3 (Infer 70):** Is everything integrated correctly?
+**Gate 3 (Cycle 70):** Is everything integrated correctly?
 
 - Decision: Test full signup → dashboard flow
 - If not working: Debug integration issues
 - If working: Proceed to testing
 
-**Gate 4 (Infer 90):** Is quality acceptable for production?
+**Gate 4 (Cycle 90):** Is quality acceptable for production?
 
 - Decision: Verify tests pass + security audit passed
 - If not ready: Fix failing tests + security issues
 - If ready: Approve for production
 
-**Gate 5 (Infer 100):** Is Wave 1 complete?
+**Gate 5 (Cycle 100):** Is Wave 1 complete?
 
 - Decision: Validate all success criteria
 - If not met: Fix remaining issues
@@ -1170,19 +1170,19 @@ invitation_token: {
 ## Dependency Matrix
 
 ```
-Infer 1-10 (Foundation)
+Cycle 1-10 (Foundation)
     ↓ (blocks)
-Infer 11-30 (Backend schema) ← Start alone
+Cycle 11-30 (Backend schema) ← Start alone
     ↓ (blocks)
-Infer 31-50 (Frontend) ← Can start day 3 (parallel)
+Cycle 31-50 (Frontend) ← Can start day 3 (parallel)
     ↓ (blocks)
-Infer 51-70 (API routes) ← Needs both above
+Cycle 51-70 (API routes) ← Needs both above
     ↓ (blocks)
-Infer 71-80 (Integration testing) ← Needs APIs
+Cycle 71-80 (Integration testing) ← Needs APIs
     ↓ (blocks)
-Infer 81-90 (Quality testing) ← Needs integration
+Cycle 81-90 (Quality testing) ← Needs integration
     ↓ (blocks)
-Infer 91-100 (Deployment) ← Needs quality approval
+Cycle 91-100 (Deployment) ← Needs quality approval
 ```
 
 **Parallelization Opportunities:**
@@ -1194,11 +1194,11 @@ Infer 91-100 (Deployment) ← Needs quality approval
 
 **Sequential Dependencies:**
 
-- Foundation (Infer 1-10) must complete before anything else
-- Backend schema (Infer 11-30) must complete before API routes
-- API routes (Infer 51-70) must complete before integration testing
-- Integration (Infer 71-80) must complete before quality
-- Quality (Infer 81-90) must complete before deployment
+- Foundation (Cycle 1-10) must complete before anything else
+- Backend schema (Cycle 11-30) must complete before API routes
+- API routes (Cycle 51-70) must complete before integration testing
+- Integration (Cycle 71-80) must complete before quality
+- Quality (Cycle 81-90) must complete before deployment
 
 ---
 
@@ -1273,24 +1273,24 @@ The Orchestrator must validate ALL of these before marking Wave 1 complete:
 Daily Standup Template:
 
 COMPLETED INFERENCES:
-├─ Backend: Infer 1-15 complete (14%)
-├─ Frontend: Infer 1-10 complete (0%, not started)
+├─ Backend: Cycle 1-15 complete (14%)
+├─ Frontend: Cycle 1-10 complete (0%, not started)
 ├─ Quality: Not started
-└─ Design: Infer 1-5 complete (design specs)
+└─ Design: Cycle 1-5 complete (design specs)
 
 BLOCKERS:
 ├─ Backend: None
-├─ Frontend: Waiting for API routes (unblocks Infer 71+)
-└─ Quality: Waiting for code (unblocks Infer 81)
+├─ Frontend: Waiting for API routes (unblocks Cycle 71+)
+└─ Quality: Waiting for code (unblocks Cycle 81)
 
 RISKS:
 ├─ Email delivery may need troubleshooting
 └─ Mobile responsiveness may need extra day
 
 NEXT 24 HOURS:
-├─ Backend: Complete mutations (Infer 18-25)
-├─ Frontend: Complete pages (Infer 39-50)
-├─ Design: Complete wireframes (Infer 41-45)
+├─ Backend: Complete mutations (Cycle 18-25)
+├─ Frontend: Complete pages (Cycle 39-50)
+├─ Design: Complete wireframes (Cycle 41-45)
 └─ Orchestrator: Validate Gate 2 criteria
 ```
 
@@ -1305,7 +1305,7 @@ NEXT 24 HOURS:
 
 **Weekly Sync:** 1 hour, end of week
 
-- Review progress against 100-inference plan
+- Review progress against 100-cycle plan
 - Adjust timelines if needed
 - Plan next week's work
 
@@ -1382,19 +1382,19 @@ NEXT 24 HOURS:
 **Director/Orchestrator Deliverables:**
 
 - [ ] Wave 1 Vision Document (complete)
-- [ ] 100-Inference Execution Plan (complete)
+- [ ] 100-Cycle Execution Plan (complete)
 - [ ] Specialist Assignments (complete)
 - [ ] Daily progress tracking
 - [ ] Blocker resolution logs
 - [ ] Gate approval decisions
-- [ ] Event logs (all inferences completed)
+- [ ] Event logs (all cycles completed)
 - [ ] Lessons learned document
 
 ---
 
 ## Assignments Summary
 
-| Role        | Inferences                     | Duration | Start                    | Blocks                   |
+| Role        | Cycles                     | Duration | Start                    | Blocks                   |
 | ----------- | ------------------------------ | -------- | ------------------------ | ------------------------ |
 | Backend     | 40 (11-30, 51-70)              | 10 days  | Day 1                    | Frontend API integration |
 | Frontend    | 20 (31-50)                     | 5-6 days | Day 3                    | API routes, deployment   |

@@ -1,24 +1,24 @@
 ---
-title: Inference
+title: Cycle
 dimension: connections
-category: inference.md
-tags: agent, ai, claude, connections, inference, knowledge, ontology
+category: cycle.md
+tags: agent, ai, claude, connections, cycle, knowledge, ontology
 related_dimensions: events, knowledge, people, things
 scope: global
 created: 2025-11-03
 updated: 2025-11-03
 version: 1.0.0
 ai_context: |
-  This document is part of the connections dimension in the inference.md category.
-  Location: one/connections/inference.md
-  Purpose: Documents connection-driven inference workflow
+  This document is part of the connections dimension in the cycle.md category.
+  Location: one/connections/cycle.md
+  Purpose: Documents connection-driven cycle workflow
   Related dimensions: events, knowledge, people, things
-  For AI agents: Read this to understand inference.
+  For AI agents: Read this to understand cycle.
 ---
 
-# Connection-Driven Inference Workflow
+# Connection-Driven Cycle Workflow
 
-Purpose: Show how every integration in `one/connections/*` maps to ontology connections and how to use those connections to drive retrieval and tool routing for inference.
+Purpose: Show how every integration in `one/connections/*` maps to ontology connections and how to use those connections to drive retrieval and tool routing for cycle.
 
 ## 1) Scope via Connections
 

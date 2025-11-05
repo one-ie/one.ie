@@ -4,9 +4,9 @@
 
 **INHERITED FROM ROOT `/CLAUDE.md` - NON-NEGOTIABLE:**
 
-1. **NEVER run `git rebase`** - ever, under any circumstances
-2. **NEVER run `git push --force`** - always ask first
-3. **NEVER run commands that delete files** - always ask first
+1. **NEVER run commands that delete files e.g. `rm`** without asking ask first
+2. **NEVER run `git rebase`** - ever, under any circumstances
+3. **NEVER run `git push --force`** without asking ask first
 4. **ALWAYS ask before any potentially destructive operation** - staged deletion, force push, rewriting history, etc.
 
 If you are about to run a command that could lose work, destroy commits, or overwrite history, STOP and ask the user for explicit approval first.
@@ -15,15 +15,17 @@ If you are about to run a command that could lose work, destroy commits, or over
 
 ## This is a Cascading Context File
 
-**You've already read `/CLAUDE.md` (root).** This file provides FRONTEND-SPECIFIC patterns.
+**You can go back to read `../CLAUDE.md` (root).** This file provides FRONTEND-SPECIFIC patterns.
 
 **What you learned from root:**
+
 - 6-dimension ontology (groups, people, things, connections, events, knowledge)
 - Compound structure accuracy (85% → 98%)
 - Cascading context system
 - Technology stack (Astro 5, React 19, Tailwind v4, shadcn/ui)
 
 **What this file adds:**
+
 - Frontend RENDERS the 6 dimensions
 - Progressive complexity (5 layers)
 - Provider pattern (backend-agnostic)
@@ -73,6 +75,7 @@ people (via role)    →         <PersonCard>, <RoleBadge>
 ### The 5 Layers
 
 **Layer 1: Content + Pages** (80% of features - START HERE)
+
 ```astro
 ---
 // Static content from content collections
@@ -88,11 +91,14 @@ const products = await getCollection("products");
 ```
 
 **Layer 2: + Validation** (15% of features - Add when needed)
+
 ```typescript
 // Effect.ts services for business logic
 import { Effect } from "effect";
 
-export const validateProduct = (data: unknown): Effect.Effect<Product, ProductError> =>
+export const validateProduct = (
+  data: unknown
+): Effect.Effect<Product, ProductError> =>
   Effect.gen(function* () {
     if (!data.name) {
       return yield* Effect.fail({
@@ -105,6 +111,7 @@ export const validateProduct = (data: unknown): Effect.Effect<Product, ProductEr
 ```
 
 **Layer 3: + State** (4% of features - Add when components need to share state)
+
 ```typescript
 // Nanostores for island communication
 import { atom } from "nanostores";
@@ -116,6 +123,7 @@ const cart = useStore(cart$);
 ```
 
 **Layer 4: + Multiple Sources** (1% of features - Add when switching between Markdown/API)
+
 ```typescript
 // Provider pattern enables source switching
 const provider = getContentProvider("products");
@@ -128,6 +136,7 @@ const products = await provider.list();
 ```
 
 **Layer 5: + Backend** (<1% of features - Coordinate with agent-backend)
+
 ```typescript
 // Backend provides REST API
 // Frontend uses via ApiProvider
@@ -641,6 +650,7 @@ export function ProductCard({ product }: { product: Thing }) {
 ### Implementation Techniques
 
 **1. Image Optimization:**
+
 ```astro
 import { Image } from "astro:assets";
 
@@ -656,6 +666,7 @@ import { Image } from "astro:assets";
 ```
 
 **2. Code Splitting:**
+
 ```typescript
 // Dynamic imports for heavy components
 const ProductBuilder = lazy(() => import('./ProductBuilder'));
@@ -668,6 +679,7 @@ const ProductBuilder = lazy(() => import('./ProductBuilder'));
 ```
 
 **3. Critical CSS Inlining:**
+
 ```astro
 ---
 // Astro automatically inlines critical CSS
@@ -675,6 +687,7 @@ const ProductBuilder = lazy(() => import('./ProductBuilder'));
 ```
 
 **4. Strategic Hydration:**
+
 ```astro
 <!-- Above fold: client:load -->
 <ShoppingCart client:load />

@@ -6,8 +6,8 @@ organization: "ONE Platform"
 personRole: "platform_owner"
 ontologyDimensions: ["Things", "Knowledge", "Connections"]
 assignedSpecialist: "agent-frontend"
-totalInferences: 100
-completedInferences: 0
+totalCycles: 100
+completedCycles: 0
 createdAt: 2025-10-30
 draft: false
 ---
@@ -17,17 +17,17 @@ draft: false
 **Focus:** Comprehensive website builder with visual editor, CMS, multi-language support, and SEO optimization
 **Type:** Complete platform implementation (Astro + React 19 + Tailwind v4)
 **Integration:** Content management, localization, version control, performance monitoring
-**Process:** `Infer 1-100 inference sequence`
-**Timeline:** 16-20 inferences per specialist per day
+**Process:** `Cycle 1-100 cycle sequence`
+**Timeline:** 16-20 cycles per specialist per day
 **Target:** Fully functional website builder with enterprise features
 
 ---
 
-## PHASE 1: FOUNDATION & ARCHITECTURE (Infer 1-10)
+## PHASE 1: FOUNDATION & ARCHITECTURE (Cycle 1-10)
 
 **Purpose:** Define website builder requirements, editor capabilities, CMS structure, design system
 
-### Infer 1: Define Website Builder Structure
+### Cycle 1: Define Website Builder Structure
 - [ ] **Core Features:**
   - [ ] Visual page builder (drag-and-drop)
   - [ ] Content management system (pages, posts, media)
@@ -60,7 +60,7 @@ draft: false
   - [ ] SSL certificates
   - [ ] CDN integration
 
-### Infer 2: Map Website Builder to 6-Dimension Ontology
+### Cycle 2: Map Website Builder to 6-Dimension Ontology
 - [ ] **Groups:** Website (organization), site (project)
 - [ ] **People:** Owner (admin), editor, contributor, viewer
 - [ ] **Things:**
@@ -85,7 +85,7 @@ draft: false
   - [ ] theme_changed, domain_configured
 - [ ] **Knowledge:** SEO keywords, performance metrics, visitor analytics
 
-### Infer 3: Design Page Builder Editor
+### Cycle 3: Design Page Builder Editor
 - [ ] **Editor Layout:**
   - [ ] **Left Sidebar: Component Library**
     - [ ] Sections (hero, features, testimonials, CTA)
@@ -119,7 +119,7 @@ draft: false
     - [ ] Publish button
     - [ ] Exit editor button
 
-### Infer 4: Design Component System
+### Cycle 4: Design Component System
 - [ ] **Layout Components:**
   - [ ] Container (max-width wrapper)
   - [ ] Grid (2-6 columns)
@@ -156,7 +156,7 @@ draft: false
   - [ ] Responsive settings (hide on mobile, etc.)
   - [ ] Animation settings
 
-### Infer 5: Design CMS Structure
+### Cycle 5: Design CMS Structure
 - [ ] **Content Management:**
   - [ ] **Pages Tab:**
     - [ ] List of all pages
@@ -183,7 +183,7 @@ draft: false
     - [ ] Domain configuration
     - [ ] Integrations (analytics, etc.)
 
-### Infer 6: Design Theme Customization
+### Cycle 6: Design Theme Customization
 - [ ] **Theme Settings:**
   - [ ] **Colors:**
     - [ ] Primary color (brand)
@@ -212,7 +212,7 @@ draft: false
     - [ ] Custom dark colors
     - [ ] Toggle position
 
-### Infer 7: Design Multi-Language Support
+### Cycle 7: Design Multi-Language Support
 - [ ] **Localization Features:**
   - [ ] **Language Management:**
     - [ ] Add languages (English, Spanish, French, etc.)
@@ -236,7 +236,7 @@ draft: false
   - [ ] Currency formats
   - [ ] Right-to-left (RTL) support
 
-### Infer 8: Design SEO Tools
+### Cycle 8: Design SEO Tools
 - [ ] **SEO Features:**
   - [ ] **Page-Level SEO:**
     - [ ] Meta title (with preview)
@@ -265,7 +265,7 @@ draft: false
     - [ ] Image optimization suggestions
     - [ ] Code minification
 
-### Infer 9: Design Version Control
+### Cycle 9: Design Version Control
 - [ ] **Version History:**
   - [ ] Auto-save every 30 seconds
   - [ ] List of all versions (timestamp, author)
@@ -283,7 +283,7 @@ draft: false
   - [ ] Comments on components
   - [ ] Change history with authors
 
-### Infer 10: Define Success Metrics
+### Cycle 10: Define Success Metrics
 - [ ] Website builder complete when:
   - [ ] Visual editor loads with drag-and-drop
   - [ ] Components can be added, moved, deleted
@@ -303,11 +303,11 @@ draft: false
 
 ---
 
-## PHASE 2: BACKEND SCHEMA & SERVICES (Infer 11-20)
+## PHASE 2: BACKEND SCHEMA & SERVICES (Cycle 11-20)
 
 **Purpose:** Define Convex schema, queries, mutations for website builder data
 
-### Infer 11: Define Website Builder Schema
+### Cycle 11: Define Website Builder Schema
 - [ ] **Tables:**
   - [ ] websites (domain, settings, theme)
   - [ ] pages (slug, content, layout, status)
@@ -318,14 +318,14 @@ draft: false
 - [ ] **Indexes:**
   - [ ] by_website, by_slug, by_status, by_locale
 
-### Infer 12: Create Page Queries
+### Cycle 12: Create Page Queries
 - [ ] **Convex queries:**
   - [ ] `pages.list` (all pages for website)
   - [ ] `pages.get` (single page by slug)
   - [ ] `pages.byStatus` (draft, published)
   - [ ] `pages.search` (search by title, content)
 
-### Infer 13: Create Page Mutations
+### Cycle 13: Create Page Mutations
 - [ ] **Convex mutations:**
   - [ ] `pages.create` (new page)
   - [ ] `pages.update` (update content, layout)
@@ -334,45 +334,45 @@ draft: false
   - [ ] `pages.delete` (remove page)
   - [ ] `pages.duplicate` (copy page)
 
-### Infer 14: Create Component Mutations
+### Cycle 14: Create Component Mutations
 - [ ] **Convex mutations:**
   - [ ] `components.add` (add to page)
   - [ ] `components.update` (update props, styles)
   - [ ] `components.move` (reorder on page)
   - [ ] `components.delete` (remove from page)
 
-### Infer 15: Create Media Mutations
+### Cycle 15: Create Media Mutations
 - [ ] **Convex mutations:**
   - [ ] `media.upload` (store file reference)
   - [ ] `media.delete` (remove file)
   - [ ] `media.organize` (move to folder)
 
-### Infer 16: Create Version Control Mutations
+### Cycle 16: Create Version Control Mutations
 - [ ] **Convex mutations:**
   - [ ] `versions.save` (create snapshot)
   - [ ] `versions.list` (get history)
   - [ ] `versions.restore` (rollback to version)
 
-### Infer 17: Create Translation Mutations
+### Cycle 17: Create Translation Mutations
 - [ ] **Convex mutations:**
   - [ ] `translations.create` (add translation)
   - [ ] `translations.update` (edit translation)
   - [ ] `translations.sync` (sync from default language)
 
-### Infer 18: Create Theme Mutations
+### Cycle 18: Create Theme Mutations
 - [ ] **Convex mutations:**
   - [ ] `theme.update` (save theme settings)
   - [ ] `theme.reset` (revert to defaults)
 
-### Infer 19-20: Continue with real-time subscriptions and optimization
+### Cycle 19-20: Continue with real-time subscriptions and optimization
 
 ---
 
-## PHASE 3: REACT COMPONENTS (Infer 21-50)
+## PHASE 3: REACT COMPONENTS (Cycle 21-50)
 
 **Purpose:** Build interactive React components for website builder
 
-### Infer 21: Create Page Editor Layout
+### Cycle 21: Create Page Editor Layout
 - [ ] **PageEditor component:**
   - [ ] Three-panel layout
   - [ ] Component library sidebar (left)
@@ -380,14 +380,14 @@ draft: false
   - [ ] Properties panel (right)
   - [ ] Top bar with controls
 
-### Infer 22: Create Component Library Sidebar
+### Cycle 22: Create Component Library Sidebar
 - [ ] **ComponentLibrary component:**
   - [ ] Categorized components
   - [ ] Search filter
   - [ ] Draggable component items
   - [ ] Component preview thumbnails
 
-### Infer 23: Create Visual Canvas
+### Cycle 23: Create Visual Canvas
 - [ ] **VisualCanvas component:**
   - [ ] Render page components
   - [ ] Drop zones for new components
@@ -396,7 +396,7 @@ draft: false
   - [ ] Inline editing for text
   - [ ] Context menu (right-click)
 
-### Infer 24: Create Properties Panel
+### Cycle 24: Create Properties Panel
 - [ ] **PropertiesPanel component:**
   - [ ] Content settings tab
   - [ ] Style settings tab
@@ -405,21 +405,21 @@ draft: false
   - [ ] Conditional logic
   - [ ] Component-specific controls
 
-### Infer 25: Create Component Renderer
+### Cycle 25: Create Component Renderer
 - [ ] **ComponentRenderer component:**
   - [ ] Dynamically render component by type
   - [ ] Apply styles from props
   - [ ] Handle responsive settings
   - [ ] Support nested components
 
-### Infer 26: Create Device Preview Switcher
+### Cycle 26: Create Device Preview Switcher
 - [ ] **DevicePreview component:**
   - [ ] Desktop, tablet, mobile buttons
   - [ ] Canvas resize animation
   - [ ] Orientation toggle (portrait/landscape)
   - [ ] Custom breakpoint preview
 
-### Infer 27: Create Media Library
+### Cycle 27: Create Media Library
 - [ ] **MediaLibrary component:**
   - [ ] Grid of uploaded files
   - [ ] Upload button with drag-and-drop
@@ -427,7 +427,7 @@ draft: false
   - [ ] Search and filter
   - [ ] Select mode for editor
 
-### Infer 28: Create Theme Customizer
+### Cycle 28: Create Theme Customizer
 - [ ] **ThemeCustomizer component:**
   - [ ] Color pickers
   - [ ] Font selectors
@@ -435,72 +435,72 @@ draft: false
   - [ ] Live preview of changes
   - [ ] Reset to defaults
 
-### Infer 29: Create Translation Manager
+### Cycle 29: Create Translation Manager
 - [ ] **TranslationManager component:**
   - [ ] Language selector
   - [ ] Translation status table
   - [ ] Edit translation modal
   - [ ] Export/import buttons
 
-### Infer 30: Create SEO Panel
+### Cycle 30: Create SEO Panel
 - [ ] **SEOPanel component:**
   - [ ] Meta title and description inputs
   - [ ] Preview snippets (Google, social)
   - [ ] Keyword suggestions
   - [ ] SEO score display
 
-### Infer 31-50: Continue with templates, publishing workflow, version control UI
+### Cycle 31-50: Continue with templates, publishing workflow, version control UI
 
 ---
 
-## PHASE 4: ASTRO PAGES & INTEGRATION (Infer 51-70)
+## PHASE 4: ASTRO PAGES & INTEGRATION (Cycle 51-70)
 
 **Purpose:** Create Astro pages and integrate builder components
 
-### Infer 51: Create Builder Dashboard
+### Cycle 51: Create Builder Dashboard
 - [ ] **`/builder/index.astro`:**
   - [ ] List of websites
   - [ ] Create new website button
   - [ ] Website cards with quick actions
 
-### Infer 52: Create Pages Manager
+### Cycle 52: Create Pages Manager
 - [ ] **`/builder/[websiteId]/pages.astro`:**
   - [ ] List of pages
   - [ ] Create, edit, delete actions
   - [ ] Status filters
 
-### Infer 53: Create Page Editor
+### Cycle 53: Create Page Editor
 - [ ] **`/builder/[websiteId]/edit/[pageId].astro`:**
   - [ ] Full page editor interface
   - [ ] Load page data via Convex
   - [ ] Save changes in real-time
 
-### Infer 54: Create Media Manager
+### Cycle 54: Create Media Manager
 - [ ] **`/builder/[websiteId]/media.astro`:**
   - [ ] Media library UI
   - [ ] Upload functionality
   - [ ] File management
 
-### Infer 55: Create Settings Page
+### Cycle 55: Create Settings Page
 - [ ] **`/builder/[websiteId]/settings.astro`:**
   - [ ] Site settings
   - [ ] Theme customization
   - [ ] Domain configuration
   - [ ] SEO defaults
 
-### Infer 56-70: Continue with templates, translations, analytics integration
+### Cycle 56-70: Continue with templates, translations, analytics integration
 
 ---
 
-## PHASE 5: POLISH & OPTIMIZATION (Infer 71-100)
+## PHASE 5: POLISH & OPTIMIZATION (Cycle 71-100)
 
 **Purpose:** Refine UX, performance, accessibility, testing
 
-### Infer 71-80: Animations, transitions, loading states
-### Infer 81-85: Accessibility, keyboard navigation
-### Infer 86-90: Performance optimization
-### Infer 91-95: Testing, cross-browser compatibility
-### Infer 96-100: Documentation, deployment, final polish
+### Cycle 71-80: Animations, transitions, loading states
+### Cycle 81-85: Accessibility, keyboard navigation
+### Cycle 86-90: Performance optimization
+### Cycle 91-95: Testing, cross-browser compatibility
+### Cycle 96-100: Documentation, deployment, final polish
 
 ---
 
@@ -528,6 +528,6 @@ Website builder is complete when:
 
 ---
 
-**Timeline:** 90-100 inferences for complete implementation
+**Timeline:** 90-100 cycles for complete implementation
 **Status:** Ready to build
-**Next:** Use Claude Code to implement step by step following inference sequence
+**Next:** Use Claude Code to implement step by step following cycle sequence

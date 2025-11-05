@@ -202,7 +202,7 @@ ai_context: |
    - ✅ Proper frontmatter
    - ✅ Executive Summary
    - ✅ "Core Philosophy" callout
-   - ✅ Infer 1-2 section (inference-driven)
+   - ✅ Cycle 1-2 section (cycle-driven)
    - ✅ 6-Dimension Ontology Mapping
    - **Structure Score:** 85%
 
@@ -224,7 +224,7 @@ Files: email.md, app.md, data-quality-metrics.md, update-demos.md, wave1-onboard
 #### GROUP C: MINIMAL/STUB FILES (18 files - 36%)
 **These are underdeveloped or incomplete**
 
-Files: big-plan.md, ontology-driven-strategy.md, components.md, desktop.md, test-backend-connection.md, deep-researcher-agent.md, 1-create-workflow.md, QUICK-START-SIMPLIFICATION.md, enhance-auth.md, feature-based-sites.md, phase-3-implementation.md, workflow-files.md, open-agent.md, complete-step-by-step.md, shadcn-integration-summary.md, agent-director-100-inference-plans.md, and others
+Files: big-plan.md, ontology-driven-strategy.md, components.md, desktop.md, test-backend-connection.md, deep-researcher-agent.md, 1-create-workflow.md, QUICK-START-SIMPLIFICATION.md, enhance-auth.md, feature-based-sites.md, phase-3-implementation.md, workflow-files.md, open-agent.md, complete-step-by-step.md, shadcn-integration-summary.md, agent-director-100-cycle-plans.md, and others
 
 **Common Issues:** Outline only, no Executive Summary, incomplete sections
 

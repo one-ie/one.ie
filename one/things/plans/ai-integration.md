@@ -241,7 +241,7 @@ Convex Agents Runtime
  └─ Re-includes results in context
     ↓
 LLM Provider API
- └─ Processes inference
+ └─ Processes cycle
     ↓
 Stream Returns to Frontend
  ├─ Chunks received via WebSocket
@@ -581,7 +581,7 @@ tables: {
 }
 ```
 
-### Layer 7: LLM Providers (Inference)
+### Layer 7: LLM Providers (Cycle)
 
 ```typescript
 // Supported providers via AI SDK
@@ -769,7 +769,7 @@ const result = await generateText({
 | Message save | ~50ms    | Convex DB insert         |
 | Event log    | ~50ms    | Convex DB insert         |
 
-**Total: 2-5 seconds for complete interaction** (dominated by LLM inference time)
+**Total: 2-5 seconds for complete interaction** (dominated by LLM cycle time)
 
 ---
 

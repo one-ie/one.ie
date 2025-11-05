@@ -1,8 +1,8 @@
-# Quality Agent TODO List - Write e2e tests for critical paths (Infer 65)
+# Quality Agent TODO List - Write e2e tests for critical paths (Cycle 65)
 
 **Feature:** New Feature (AI-powered recommendations)
-**Stage:** Quality & Testing (Infer 61-70)
-**Current:** Infer 65/100
+**Stage:** Quality & Testing (Cycle 61-70)
+**Current:** Cycle 65/100
 **Progress:** 64/100 inferences complete (64%)
 **Role:** Quality Intelligence Agent
 **Responsibility:** Define success criteria, create comprehensive tests, validate implementations against ontology
@@ -22,11 +22,11 @@ The Quality Agent orchestrates comprehensive testing for AI-powered recommendati
 
 **Scope:** 30+ test cases across 5 test layers
 **Success Metric:** 80%+ code coverage, all critical paths passing
-**Timeline:** Infer 65-70 (quality phase)
+**Timeline:** Cycle 65-70 (quality phase)
 
 ---
 
-## PHASE 1: TEST PLANNING & DESIGN (Infer 65)
+## PHASE 1: TEST PLANNING & DESIGN (Cycle 65)
 
 ### Task 1.1: Load Ontology Context & Feature Specification
 **Status:** 🎯 NEXT
@@ -37,7 +37,7 @@ The Quality Agent orchestrates comprehensive testing for AI-powered recommendati
 - [ ] Read `/one/knowledge/ontology.md` (6-dimension specification)
 - [ ] Read `/one/knowledge/rules.md` (golden rules for testing)
 - [ ] Read `/one/connections/workflow.md` (6-phase development)
-- [ ] Review feature specification from Infer 1-64
+- [ ] Review feature specification from Cycle 1-64
 - [ ] Identify feature's 6-dimension mapping:
   - Groups: Which organization/team owns recommendations?
   - People: Who creates/consumes/moderates recommendations?
@@ -657,7 +657,7 @@ For **Error Flows:**
 
 ---
 
-## PHASE 2: TEST IMPLEMENTATION (Infer 66)
+## PHASE 2: TEST IMPLEMENTATION (Cycle 66)
 
 ### Task 2.1: Implement Unit Tests
 **Status:** ⏹️ BLOCKED_ON_PHASE_1
@@ -814,7 +814,7 @@ test.describe('AI-Powered Recommendations E2E', () => {
 
 ---
 
-## PHASE 3: TEST EXECUTION & VALIDATION (Infer 67)
+## PHASE 3: TEST EXECUTION & VALIDATION (Cycle 67)
 
 ### Task 3.1: Run Unit Tests Locally
 **Status:** ⏹️ BLOCKED_ON_PHASE_2
@@ -966,7 +966,7 @@ test.describe('AI-Powered Recommendations E2E', () => {
 
 ---
 
-## PHASE 4: ANALYSIS & REPORTING (Infer 68-70)
+## PHASE 4: ANALYSIS & REPORTING (Cycle 68-70)
 
 ### Task 4.1: Investigate Test Failures
 **Status:** ⏹️ BLOCKED_ON_PHASE_3
@@ -1044,7 +1044,7 @@ test.describe('AI-Powered Recommendations E2E', () => {
   name: "Quality Report: AI-Powered Recommendations",
   groupId: featureGroupId,
   properties: {
-    phase: "Quality & Testing (Infer 65-70)",
+    phase: "Quality & Testing (Cycle 65-70)",
     testingStartDate: Date.now(),
     testingEndDate: Date.now(),
     totalTests: 40,  // unit + integration + e2e
@@ -1237,7 +1237,7 @@ IF (ontology ✓ AND coverage ✓ AND tests ✓ AND performance ✓
 - [ ] Update feature status: testing → ready_for_deployment
 - [ ] Create quality_passed event
 - [ ] Archive test artifacts
-- [ ] Ready for next phase (Infer 71 - Design & UX)
+- [ ] Ready for next phase (Cycle 71 - Design & UX)
 
 **Rejection Actions (if REJECTED):**
 - [ ] Emit event: test_failed
@@ -1257,7 +1257,7 @@ IF (ontology ✓ AND coverage ✓ AND tests ✓ AND performance ✓
 
 ---
 
-## PHASE 5: CONTINUOUS VALIDATION (Infer 68-100)
+## PHASE 5: CONTINUOUS VALIDATION (Cycle 68-100)
 
 ### Task 5.1: Monitor Test Flakiness
 **Status:** ⏹️ BLOCKED_ON_PHASE_3
@@ -1324,7 +1324,7 @@ IF (ontology ✓ AND coverage ✓ AND tests ✓ AND performance ✓
 
 ```
 ┌─────────────────────────────────────────────────────────────┐
-│ Phase 1: Test Planning & Design (Infer 65)                 │
+│ Phase 1: Test Planning & Design (Cycle 65)                 │
 │                                                             │
 │  1.1: Load Ontology ──→ 1.2: User Flows                   │
 │                           ↓                                │
@@ -1340,7 +1340,7 @@ IF (ontology ✓ AND coverage ✓ AND tests ✓ AND performance ✓
 └─────────────────────────────────────────────────────────────┘
                             ↓
 ┌─────────────────────────────────────────────────────────────┐
-│ Phase 2: Test Implementation (Infer 66)                    │
+│ Phase 2: Test Implementation (Cycle 66)                    │
 │                                                             │
 │  2.1: Unit Tests ─────────┐                               │
 │                           ├─→ 2.4: Fixtures                │
@@ -1351,7 +1351,7 @@ IF (ontology ✓ AND coverage ✓ AND tests ✓ AND performance ✓
 └─────────────────────────────────────────────────────────────┘
                             ↓
 ┌─────────────────────────────────────────────────────────────┐
-│ Phase 3: Test Execution & Validation (Infer 67)            │
+│ Phase 3: Test Execution & Validation (Cycle 67)            │
 │                                                             │
 │  3.1: Run Unit Tests ──────┐                              │
 │                            ├─→ 3.4: Ontology Validation    │
@@ -1362,7 +1362,7 @@ IF (ontology ✓ AND coverage ✓ AND tests ✓ AND performance ✓
 └─────────────────────────────────────────────────────────────┘
                             ↓
 ┌─────────────────────────────────────────────────────────────┐
-│ Phase 4: Analysis & Reporting (Infer 68-70)                │
+│ Phase 4: Analysis & Reporting (Cycle 68-70)                │
 │                                                             │
 │  4.1: Investigate Failures ────┐                          │
 │                                ├─→ 4.6: Quality Gate       │
@@ -1380,7 +1380,7 @@ IF (ontology ✓ AND coverage ✓ AND tests ✓ AND performance ✓
     APPROVED                              REJECTED
     ✓ Advance to                      ✓ Create fixes
       next phase                        ✓ Re-test
-      (Infer 71)                        ✓ Gate again
+      (Cycle 71)                        ✓ Gate again
 ```
 
 ---
@@ -1427,7 +1427,7 @@ IF (ontology ✓ AND coverage ✓ AND tests ✓ AND performance ✓
 - [ ] All critical paths covered
 - [ ] Ontology fully compliant
 - [ ] 5+ lessons learned documented
-- [ ] Ready for next phase (Infer 71)
+- [ ] Ready for next phase (Cycle 71)
 
 ---
 
@@ -1556,23 +1556,23 @@ IF (ontology ✓ AND coverage ✓ AND tests ✓ AND performance ✓
 
 ## NEXT ACTIONS
 
-**IMMEDIATE (Infer 65 - This Inference):**
+**IMMEDIATE (Cycle 65 - This Inference):**
 1. ✅ Create this TODO file (todo-agent-quality.md)
 2. 🎯 Start Task 1.1: Load Ontology Context
 3. 🎯 Complete Task 1.2: Define User Flows
 4. 🎯 Complete Task 1.3: Acceptance Criteria
 
-**SHORT-TERM (Infer 66):**
+**SHORT-TERM (Cycle 66):**
 5. Complete Task 1.4-1.6: Design all test cases
 6. Begin Phase 2: Implement all tests (agent-builder, agent-frontend)
 7. Prepare test fixtures and data
 
-**MID-TERM (Infer 67):**
+**MID-TERM (Cycle 67):**
 8. Execute all tests (Phase 3)
 9. Validate ontology alignment
 10. Analyze coverage
 
-**LONG-TERM (Infer 68-70):**
+**LONG-TERM (Cycle 68-70):**
 11. Investigate failures (if any)
 12. Generate quality metrics and insights
 13. Create quality report and decisions
@@ -1642,6 +1642,6 @@ When tests are executed, fill in this template:
 
 **Quality Agent: Orchestrating comprehensive testing for AI-powered recommendations. Validating against 6-dimension ontology. Ready to advance when all criteria met.**
 
-*Created: Infer 65*
-*Target Completion: Infer 70*
+*Created: Cycle 65*
+*Target Completion: Cycle 70*
 *Status: Ready for Phase 1 execution*

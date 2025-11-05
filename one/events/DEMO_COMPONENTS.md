@@ -383,7 +383,7 @@ import GroupsDemo from '@/components/demo/GroupsDemo';
 
 ---
 
-## Next Steps (Infer 21-30)
+## Next Steps (Cycle 21-30)
 
 With the foundation in place, proceed to Phase 2:
 

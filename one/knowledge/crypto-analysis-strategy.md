@@ -75,7 +75,7 @@ AI Token Value = Traditional Factors + AI Utility + Performance Metrics + Compet
    - Is usage growing independent of token price?
 
 **3. How does it compare to centralized alternatives?**
-   - Cost per inference vs OpenAI/Anthropic/Google?
+   - Cost per cycle vs OpenAI/Anthropic/Google?
    - Latency and throughput vs centralized providers?
    - What's the decentralization trade-off value?
 
@@ -112,7 +112,7 @@ function evaluateComputeToken(token: AIComputeToken): AITokenScore {
     }),
 
     performanceScore: calculatePerformanceScore({
-      avgInferenceTime: token.aiSpecific.performance.avgInferenceTime,
+      avgCycleTime: token.aiSpecific.performance.avgCycleTime,
       throughput: token.aiSpecific.performance.throughput,
       costVsCentralized: token.aiSpecific.performance.costVsCentralized,
       reliability: verifyComputeProof(token) ? 100 : 50
@@ -194,7 +194,7 @@ function evaluateAgentToken(token: AIAgentToken): AITokenScore {
 
 **Primary Metrics:**
 - Model benchmark scores
-- Inference requests per day
+- Cycle requests per day
 - Fine-tuning activity
 - Model diversity
 
@@ -210,7 +210,7 @@ function evaluateModelToken(token: AIModelNFT): AITokenScore {
     }),
 
     usageScore: calculateModelUsage({
-      totalInferences: token.usage.totalInferences,
+      totalCycles: token.usage.totalCycles,
       uniqueUsers: token.usage.uniqueUsers,
       revenueGenerated: parseFloat(token.usage.revenueGenerated),
       finetuneRequests: token.usage.finetuneRequests
@@ -218,7 +218,7 @@ function evaluateModelToken(token: AIModelNFT): AITokenScore {
 
     competitiveScore: compareToState OfArt({
       benchmarks: token.modelDetails.performance.benchmarkScores,
-      cost: calculateCostPerInference(token),
+      cost: calculateCostPerCycle(token),
       latency: token.modelDetails.performance.latency,
       openSourceAlternatives: findComparableModels(token)
     }),
@@ -233,7 +233,7 @@ function evaluateModelToken(token: AIModelNFT): AITokenScore {
 
 **Red Flags:**
 - Benchmark scores unverified or fabricated
-- No actual usage (zero inferences)
+- No actual usage (zero cycles)
 - Performance worse than open-source alternatives
 - Model trained on unlicensed data
 - No fine-tuning capability (limited utility)
@@ -347,7 +347,7 @@ Utility Metrics:
 └─ Revenue from Real Usage
 
 Performance Metrics:
-├─ Inference Latency (p50, p95, p99)
+├─ Cycle Latency (p50, p95, p99)
 ├─ Throughput (requests/sec)
 ├─ Model Accuracy (benchmarks)
 ├─ Node Uptime %
@@ -356,7 +356,7 @@ Performance Metrics:
 
 Growth Metrics:
 ├─ New Users (7d, 30d)
-├─ Inference Volume Growth
+├─ Cycle Volume Growth
 ├─ Agent Count Growth
 ├─ Revenue Growth (actual utility)
 ├─ Node/Provider Growth

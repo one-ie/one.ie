@@ -277,7 +277,7 @@ Successfully deleted `/Users/toc/Server/ONE/one/things/todo-release.md`
 
 ### 5. Future-Proofing
 - New structure supports automated queries and reporting
-- Primary dimension enables inference planning by dimension focus
+- Primary dimension enables cycle planning by dimension focus
 - Related dimensions support cross-dimension dependency analysis
 
 ---
@@ -341,9 +341,9 @@ Create tools to:
 - Validate related dimensions completeness
 - Generate cross-dimension dependency graphs
 
-### Integration with Inference Workflow
+### Integration with Cycle Workflow
 
-- Use `primary_dimension` to organize inference planning by dimension focus
+- Use `primary_dimension` to organize cycle planning by dimension focus
 - Enable agents to quickly find relevant TODO context by dimension
 - Support `one/knowledge/patterns/` reorganization by dimension
 
@@ -392,7 +392,7 @@ All 25 TODO files now have:
 - All 6 dimensions represented in ecosystem
 
 The refactored TODO system is now ready to support:
-- Automated inference planning by dimension
+- Automated cycle planning by dimension
 - Cross-dimension dependency analysis
 - Semantic folder reorganization (Phase 2)
 - Advanced agent discovery and routing

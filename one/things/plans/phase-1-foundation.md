@@ -2,7 +2,7 @@
 title: Phase 1 Foundation
 dimension: things
 category: plans
-tags: agent, ai, architecture, inference, ontology
+tags: agent, ai, architecture, cycle, ontology
 related_dimensions: events, groups, knowledge
 scope: global
 created: 2025-11-03
@@ -19,7 +19,7 @@ ai_context: |
 # Phase 1: Effect.ts + Convex Components Foundation
 
 **Feature:** Effect.ts + Convex Components Service Layer Architecture
-**Phase:** 1 - Foundation (Infer 1-10)
+**Phase:** 1 - Foundation (Cycle 1-10)
 **Version:** 1.0.0
 **Status:** Complete
 **Created:** 2025-10-30
@@ -29,7 +29,7 @@ ai_context: |
 
 ## Executive Summary
 
-This document provides the complete foundation blueprint for integrating Effect.ts with Convex Components, validating the architecture against the 6-dimension ontology, and creating a detailed 100-inference execution roadmap.
+This document provides the complete foundation blueprint for integrating Effect.ts with Convex Components, validating the architecture against the 6-dimension ontology, and creating a detailed 100-cycle execution roadmap.
 
 **Core Philosophy:** "Effect Wraps Components, Not Replaces"
 
@@ -37,7 +37,7 @@ Convex components (@convex-dev/workpool, @convex-dev/rate-limiter, etc.) provide
 
 ---
 
-## Infer 1-2: Architecture Validation
+## Cycle 1-2: Architecture Validation
 
 ### Philosophy Validation: "Effect Wraps Components, Not Replaces"
 
@@ -358,7 +358,7 @@ type EventType =
 
 ---
 
-## Infer 3-4: Service Dependencies Mapping
+## Cycle 3-4: Service Dependencies Mapping
 
 ### 8 Convex Components + Effect Service Wrappers
 
@@ -475,7 +475,7 @@ type EventType =
 
 ---
 
-## Infer 5-6: Error Hierarchy Design
+## Cycle 5-6: Error Hierarchy Design
 
 ### Error Taxonomy (4 Categories)
 
@@ -577,15 +577,15 @@ class QuotaExceededError extends Data.TaggedError("QuotaExceededError")<{
 
 ---
 
-## Infer 7-8: Service Layer Design (Complete patterns with 2500 lines available)
+## Cycle 7-8: Service Layer Design (Complete patterns with 2500 lines available)
 
 [Full service layer design patterns from original response included...]
 
 ---
 
-## Infer 9-10: Complete 100-Inference Roadmap
+## Cycle 9-10: Complete 100-Cycle Roadmap
 
-[Complete execution plan with all 100 inferences detailed...]
+[Complete execution plan with all 100 cycles detailed...]
 
 ---
 
@@ -600,7 +600,7 @@ This document provides:
 3. ✅ **Service dependency graph** - Clear dependency hierarchy and composition order
 4. ✅ **Error hierarchy** - 4 categories with 15+ typed error classes
 5. ✅ **Service layer design** - 4-layer architecture (Context, Implementation, Composition, Access)
-6. ✅ **Complete 100-inference roadmap** - Detailed plan with parallel execution opportunities
+6. ✅ **Complete 100-cycle roadmap** - Detailed plan with parallel execution opportunities
 
 **Key Insights:**
 
@@ -611,10 +611,10 @@ This document provides:
 - **Critical path:** ~77 hours (10 days @ 8 hours/day)
 - **Wall-clock estimate:** 15-20 days with 3-4 agents working in parallel
 
-**Validation:** ✅ Ready for execution starting Infer 11
+**Validation:** ✅ Ready for execution starting Cycle 11
 
 ---
 
 **Document Complete:** 2025-10-30
 **Status:** ✅ APPROVED FOR EXECUTION
-**Next Phase:** Infer 11-15 - Core Service Layers (RateLimitService + RAGService)
+**Next Phase:** Cycle 11-15 - Core Service Layers (RateLimitService + RAGService)

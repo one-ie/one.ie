@@ -1,4 +1,4 @@
-# Agent Orchestration Plans - Infer 65: Write e2e tests for critical paths
+# Agent Orchestration Plans - Cycle 65: Write e2e tests for critical paths
 
 ## Quick Start
 
@@ -97,7 +97,7 @@ All in `.claude/plans/` directory
 - [ ] Director validates completion
 
 ### Phase 5: Advancement
-- [ ] `/done` → Advance to Infer 66
+- [ ] `/done` → Advance to Cycle 66
 
 ## Success Metrics
 
@@ -183,7 +183,7 @@ Documentation to create:
 - ✅ Complete knowledge capture
 
 **Timeline:** 5-8 days with parallel execution
-**Completion:** Infer 70 (ready for Infer 71)
+**Completion:** Cycle 70 (ready for Cycle 71)
 
 **Status:** ✅ **READY FOR EXECUTION**
 

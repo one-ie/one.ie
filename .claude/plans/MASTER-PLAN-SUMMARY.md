@@ -13,7 +13,7 @@ This master coordination plan unifies **3 critical plans** into a single executi
 
 ### The Three Plans
 
-| Plan | Status | Role | Infer | Duration |
+| Plan | Status | Role | Cycle | Duration |
 |------|--------|------|-------|----------|
 | **Agent Director** | Spec Complete | Foundation (plan generation) | 1-10 | 2-3 days |
 | **Unified Implementation** | 36% Complete | Core platform (66 types, services) | 11-90 | 9 weeks |
@@ -24,24 +24,24 @@ This master coordination plan unifies **3 critical plans** into a single executi
 ## The Roadmap: 100 Inferences
 
 ```
-WEEK 1:       Agent Director Framework (Infer 1-10)
+WEEK 1:       Agent Director Framework (Cycle 1-10)
                 └─ Foundation for all downstream work
 
-WEEKS 2-4:    Parallel Backend CRUD (Infer 31-60)
-                ├─ Specialist 1: Core entities (Infer 31-40)
-                ├─ Specialist 2: Content entities (Infer 41-50) [PARALLEL]
-                └─ Specialist 3: Tokens/Agents (Infer 51-60) [PARALLEL]
+WEEKS 2-4:    Parallel Backend CRUD (Cycle 31-60)
+                ├─ Specialist 1: Core entities (Cycle 31-40)
+                ├─ Specialist 2: Content entities (Cycle 41-50) [PARALLEL]
+                └─ Specialist 3: Tokens/Agents (Cycle 51-60) [PARALLEL]
 
-WEEKS 3-5:    Frontend Dashboard (Infer 61-70) [PARALLEL with backend]
+WEEKS 3-5:    Frontend Dashboard (Cycle 61-70) [PARALLEL with backend]
                 └─ Uses mock providers, integrates real backend weekly
 
-WEEKS 5-6:    RAG & Knowledge System (Infer 71-80)
+WEEKS 5-6:    RAG & Knowledge System (Cycle 71-80)
                 └─ Embeddings, semantic search, 30+ more entity types
 
-WEEKS 7-9:    Comprehensive Testing (Infer 81-90)
+WEEKS 7-9:    Comprehensive Testing (Cycle 81-90)
                 └─ Multi-backend support, 90% test coverage
 
-WEEKS 10-11:  Production Deployment (Infer 91-100)
+WEEKS 10-11:  Production Deployment (Cycle 91-100)
                 └─ Staging setup (Week 10), go-live (Week 11)
 
 Total: 11 weeks vs 14-15 weeks sequential = 30-40% speedup
@@ -64,30 +64,30 @@ Role-specific guide for each of 6 specialists with implementation patterns
 
 ## Critical Success Factors
 
-### 1. Complete Agent Director Framework (Infer 1-10) by End of Week 1
+### 1. Complete Agent Director Framework (Cycle 1-10) by End of Week 1
 - Feature library (20+ features)
 - Dependency resolution
 - Inference mapping
 - Plan generation
 - Progress tracking
 
-### 2. Parallelize Backend CRUD (Infer 31-60) Starting Week 2
+### 2. Parallelize Backend CRUD (Cycle 31-60) Starting Week 2
 - 3 specialists work simultaneously
 - Each implements ~10 entity types
 - Share patterns via daily sync
 - **Saves 2-3 weeks**
 
-### 3. Use Mock Providers for Frontend (Infer 61-70)
+### 3. Use Mock Providers for Frontend (Cycle 61-70)
 - Frontend starts Week 3 with MockDataProvider
 - Real backend integration weekly
 - **Prevents frontend blocking**
 
-### 4. Test While Building (Infer 81-90)
+### 4. Test While Building (Cycle 81-90)
 - Unit tests per phase
 - Integration tests as phases complete
 - By week 9: 90% testing done
 
-### 5. Deploy Infrastructure During Testing (Infer 91-100)
+### 5. Deploy Infrastructure During Testing (Cycle 91-100)
 - Week 10: Staging setup, monitoring
 - Week 11: Production deployment (just execute)
 - **Reduces deployment time from 3 weeks to 1 week**
@@ -96,7 +96,7 @@ Role-specific guide for each of 6 specialists with implementation patterns
 
 ## Specialist Assignments
 
-| Specialist | Phase | Infer | When | Deliverable |
+| Specialist | Phase | Cycle | When | Deliverable |
 |-----------|-------|-------|------|-------------|
 | **agent-director** | Foundation | 1-10 | Week 1 | Plan generation framework |
 | **agent-backend** | Core CRUD | 31-40 | Weeks 2-3 | 4 core entity types |
@@ -203,7 +203,7 @@ If: blocker_detected → problem_solver → blocker_resolved → resume work
    - This saves 2-3 weeks alone
    - Critical for success
 
-3. **Start Agent Director implementation (Infer 1-10)**
+3. **Start Agent Director implementation (Cycle 1-10)**
    - This is blocking everything
    - Must complete by week 1
 

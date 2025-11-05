@@ -359,13 +359,13 @@ export interface Organization {
     users: number;
     storage: number;
     apiCalls: number;
-    inference: number;
+    cycle: number;
   };
   usage: {
     users: number;
     storage: number;
     apiCalls: number;
-    inference: number;
+    cycle: number;
   };
   createdAt: number;
   updatedAt: number;
@@ -390,7 +390,7 @@ export interface OrganizationUsage {
   users: number;
   storage: number;
   apiCalls: number;
-  inference: number;
+  cycle: number;
   period: { start: number; end: number };
 }
 
@@ -1341,7 +1341,7 @@ export const getUsage = query({
       users: org.usage.users,
       storage: org.usage.storage,
       apiCalls: org.usage.apiCalls,
-      inference: org.usage.inference,
+      cycle: org.usage.cycle,
       period: { start: Date.now() - 30 * 24 * 60 * 60 * 1000, end: Date.now() },
     };
   },
@@ -1478,8 +1478,8 @@ export const create = mutation({
       slug: args.slug,
       plan: args.plan as any,
       status: "trial",
-      limits: { users: 5, storage: 1, apiCalls: 1000, inference: 100 },
-      usage: { users: 1, storage: 0, apiCalls: 0, inference: 0 },
+      limits: { users: 5, storage: 1, apiCalls: 1000, cycle: 100 },
+      usage: { users: 1, storage: 0, apiCalls: 0, cycle: 0 },
       createdAt: Date.now(),
       updatedAt: Date.now(),
     });

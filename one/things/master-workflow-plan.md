@@ -2,7 +2,7 @@
 title: Master Workflow Plan
 dimension: things
 category: master-workflow-plan.md
-tags: agent, ai, architecture, inference, ontology
+tags: agent, ai, architecture, cycle, ontology
 related_dimensions: events, people
 scope: global
 created: 2025-11-03
@@ -19,8 +19,8 @@ ai_context: |
 # ONE Platform: Master Workflow Plan v1.0.0
 
 **Status:** Complete architecture for 6-todo, 6-specialist, multi-wave execution
-**Total Build:** ~3,600 inferences across 6 specialists
-**Timeline:** 8-12 inferences/specialist/day = 3-4 weeks critical path
+**Total Build:** ~3,600 cycles across 6 specialists
+**Timeline:** 8-12 cycles/specialist/day = 3-4 weeks critical path
 **Approach:** Parallel execution with strategic wave sequencing
 
 ---
@@ -58,7 +58,7 @@ ONE Platform is a complete creator economy + AI agent marketplace built on a 6-d
 
 ### The Specialists (6 Agents)
 
-| Agent                | Role                                                  | Inferences | Expertise                                              |
+| Agent                | Role                                                  | Cycles | Expertise                                              |
 | -------------------- | ----------------------------------------------------- | ---------- | ------------------------------------------------------ |
 | **agent-backend**    | Convex schema, mutations, queries, Effect.ts services | ~1,200     | Database design, payment logic, event streaming        |
 | **agent-frontend**   | React components, Astro pages, UI/UX                  | ~850       | Component architecture, user flows, accessibility      |
@@ -70,9 +70,9 @@ ONE Platform is a complete creator economy + AI agent marketplace built on a 6-d
 
 ### Key Metrics
 
-- **Critical Path:** todo-onboard (Wave 1) → todo-x402 (Wave 1) → todo-ecommerce (Wave 2) = **~300 inferences**
+- **Critical Path:** todo-onboard (Wave 1) → todo-x402 (Wave 1) → todo-ecommerce (Wave 2) = **~300 cycles**
 - **Parallel Opportunities:** 5+ todos can run simultaneously with proper dependency management
-- **Inference Density:** 8-12 inferences/specialist/day typical = 30-40 days elapsed time (with 5+ running in parallel)
+- **Cycle Density:** 8-12 cycles/specialist/day typical = 30-40 days elapsed time (with 5+ running in parallel)
 - **Wave Overlap:** Waves 2 and 2.5 overlap significantly; Wave 3 (launch) only needs Wave 1-2 complete
 
 ---
@@ -297,7 +297,7 @@ Final Path:
 ```
 ┌──────────────────┐          ┌──────────────────┐
 │  todo-onboard    │          │    todo-x402     │
-│ Infer 1-100      │  ◄──────►│  Infer 1-100     │
+│ Cycle 1-100      │  ◄──────►│  Cycle 1-100     │
 │ (Blocking time)  │ (async)  │ (Blocking time)  │
 └──────────────────┘          └──────────────────┘
   Backend: Schema creation
@@ -312,7 +312,7 @@ Final Path:
 
                 ┌───────────────────┐
                 │  todo-ecommerce   │ (depends: X402 + onboard)
-                │   Infer 1-100     │
+                │   Cycle 1-100     │
                 └───────────────────┘
                    ↓        ↓        ↓
          ┌─────────┴────────┴────────┴─────────┐
@@ -320,7 +320,7 @@ Final Path:
     ┌────────────────┐          ┌────────────────────┐
     │ Product CRUD   │          │ Checkout + Payment │
     │ (Backend)      │          │ (Backend + Frontend)
-    │ Infer 11-30    │          │ Infer 31-50         │
+    │ Cycle 11-30    │          │ Cycle 31-50         │
     └────────────────┘          └────────────────────┘
 ```
 
@@ -500,7 +500,7 @@ todo-one-ie (40 infers):
 
 **Todos:** todo-onboard, todo-x402
 **Specialists:** All 6 agents (parallel)
-**Inferences:** ~200 (100 per todo)
+**Cycles:** ~200 (100 per todo)
 **Elapsed Time:** 5-7 days (with full parallelization)
 
 ```
@@ -535,7 +535,7 @@ OUTPUTS:
 **Todos:** todo-ecommerce
 **Dependency:** Requires todo-onboard + todo-x402 (Wave 1 complete)
 **Specialists:** All 6 agents (parallel)
-**Inferences:** ~100
+**Cycles:** ~100
 **Elapsed Time:** 3-5 days
 
 ```
@@ -568,7 +568,7 @@ OUTPUTS:
 **Todos:** todo-buy-chatgpt, todo-acp-integration
 **Dependency:** Soft (products helpful, not required)
 **Specialists:** All 6 agents (focus: integrator, builder)
-**Inferences:** ~200 (100 per todo)
+**Cycles:** ~200 (100 per todo)
 **Elapsed Time:** 5-7 days (parallel, no blocking)
 
 ```
@@ -592,7 +592,7 @@ todo-acp-integration (Agent Network):
 **Todos:** todo-one-ie
 **Dependency:** Requires Waves 1-3 complete
 **Specialists:** All 6 agents (focus: frontend, designer, quality)
-**Inferences:** ~100
+**Cycles:** ~100
 **Elapsed Time:** 3-4 days
 
 ```
@@ -780,7 +780,7 @@ TOTAL ELAPSED TIME:
 - **6 Todos:** Foundation → Monetization → Advanced → Launch
 - **6 Specialists:** Each owns their domain
 - **4 Waves:** Sequential with significant parallelization
-- **3,600+ Inferences:** ~3-4 weeks critical path with parallelization
+- **3,600+ Cycles:** ~3-4 weeks critical path with parallelization
 - **100% Coverage:** Every feature mapped to ontology
 
 ### Key Success Factors
@@ -794,8 +794,8 @@ TOTAL ELAPSED TIME:
 ### Next Steps
 
 1. **Week 1:** Assign specialists to Wave 1 using this matrix
-2. **Day 1:** Begin Infer 1-10 of todo-onboard + todo-x402 (parallel)
-3. **Daily:** Update `.claude/state/inference.json` with progress
+2. **Day 1:** Begin Cycle 1-10 of todo-onboard + todo-x402 (parallel)
+3. **Daily:** Update `.claude/state/cycle.json` with progress
 4. **Weekly:** Team standup + risk review
 5. **Wave Complete:** Emit event, prepare next wave
 

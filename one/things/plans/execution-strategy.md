@@ -2,7 +2,7 @@
 title: Execution Strategy
 dimension: things
 category: plans
-tags: agent, ai, inference
+tags: agent, ai, cycle
 related_dimensions: events
 scope: global
 created: 2025-11-03
@@ -27,12 +27,12 @@ ai_context: |
 
 ## Executive Summary
 
-This document provides a detailed execution strategy for the 100-inference Effect.ts integration, optimizing for **parallel execution** across multiple specialist agents. Through careful dependency analysis, we've identified opportunities to reduce wall-clock time from **~16 weeks sequential** to **~8 weeks parallel** with 4-6 agents working simultaneously.
+This document provides a detailed execution strategy for the 100-cycle Effect.ts integration, optimizing for **parallel execution** across multiple specialist agents. Through careful dependency analysis, we've identified opportunities to reduce wall-clock time from **~16 weeks sequential** to **~8 weeks parallel** with 4-6 agents working simultaneously.
 
 **Key Findings:**
 
-- **58 inferences** can run in parallel after foundations complete (Infer 1-10)
-- **Critical path:** 42 inferences (minimum sequential dependencies)
+- **58 cycles** can run in parallel after foundations complete (Cycle 1-10)
+- **Critical path:** 42 cycles (minimum sequential dependencies)
 - **4 major quality gates** ensure coordination without blocking
 - **6 specialist agents** can work concurrently on independent tracks
 - **Estimated wall-clock time:** 8-10 weeks (vs 16 weeks sequential)
@@ -41,7 +41,7 @@ This document provides a detailed execution strategy for the 100-inference Effec
 
 ## 1. Dependency Analysis & DAG
 
-### Foundational Dependencies (Infer 1-10)
+### Foundational Dependencies (Cycle 1-10)
 
 **BLOCKING:** All other work depends on foundation completing.
 
@@ -67,7 +67,7 @@ INFER-008 (Component hierarchy)  ┘    [Parallel tracks begin]
 
 ---
 
-### Core Services Track (Infer 11-20)
+### Core Services Track (Cycle 11-20)
 
 **Dependencies:** Requires INFER-010 (specialist assignments)
 
@@ -118,7 +118,7 @@ INFER-008 (Component hierarchy)  ┘    [Parallel tracks begin]
 
 ---
 
-### DataProvider Track (Infer 21-30)
+### DataProvider Track (Cycle 21-30)
 
 **Dependencies:** Requires INFER-012 (service contexts defined)
 
@@ -167,7 +167,7 @@ INFER-008 (Component hierarchy)  ┘    [Parallel tracks begin]
 
 ---
 
-### Better Auth Track (Infer 31-40)
+### Better Auth Track (Cycle 31-40)
 
 **Dependencies:** Requires INFER-015 (AuthService defined), INFER-021 (DataProvider interface)
 
@@ -216,7 +216,7 @@ INFER-008 (Component hierarchy)  ┘    [Parallel tracks begin]
 
 ---
 
-### Astro Content Track (Infer 41-50)
+### Astro Content Track (Cycle 41-50)
 
 **Dependencies:** Requires INFER-018 (RAGService), INFER-007 (integration plan)
 
@@ -266,7 +266,7 @@ INFER-008 (Component hierarchy)  ┘    [Parallel tracks begin]
 
 ---
 
-### Frontend Components Track (Infer 51-60)
+### Frontend Components Track (Cycle 51-60)
 
 **Dependencies:** Requires INFER-013 (ThingService), INFER-015 (AuthService), INFER-008 (component hierarchy)
 
@@ -319,7 +319,7 @@ INFER-008 (Component hierarchy)  ┘    [Parallel tracks begin]
 
 ---
 
-### Convex Components Track (Infer 61-70)
+### Convex Components Track (Cycle 61-70)
 
 **Dependencies:** Requires INFER-011 through INFER-020 (all core services), GATE 2 complete.
 
@@ -370,7 +370,7 @@ INFER-008 (Component hierarchy)  ┘    [Parallel tracks begin]
 
 ---
 
-### Testing & Validation Track (Infer 71-80)
+### Testing & Validation Track (Cycle 71-80)
 
 **Dependencies:** Can START after INFER-020 (unit tests), but COMPLETE requires GATE 3 (all implementation done).
 
@@ -419,7 +419,7 @@ INFER-008 (Component hierarchy)  ┘    [Parallel tracks begin]
 
 ---
 
-### Performance Track (Infer 81-90)
+### Performance Track (Cycle 81-90)
 
 **Dependencies:** Requires GATE 3 (implementation complete), INFER-074 (E2E tests passing).
 
@@ -466,7 +466,7 @@ INFER-008 (Component hierarchy)  ┘    [Parallel tracks begin]
 
 ---
 
-### Deployment & Documentation Track (Infer 91-100)
+### Deployment & Documentation Track (Cycle 91-100)
 
 **Dependencies:** Requires GATE 4 (all validation passing).
 
@@ -515,38 +515,38 @@ INFER-008 (Component hierarchy)  ┘    [Parallel tracks begin]
 
 ### Critical Path (Minimum Sequential Dependencies)
 
-**42 inferences form the critical path:**
+**42 cycles form the critical path:**
 
 ```
-Foundation (10) → Core Services (8) → Integration (6) → Implementation (8) → Validation (5) → Deployment (5) = 42 inferences
+Foundation (10) → Core Services (8) → Integration (6) → Implementation (8) → Validation (5) → Deployment (5) = 42 cycles
 ```
 
 **Critical Path Detail:**
 
-1. INFER-001 to INFER-010: Foundation (10 inferences)
-2. INFER-011, INFER-012, INFER-013, INFER-014: ThingService (4 inferences)
-3. INFER-020: Service tests (1 inference)
-4. INFER-021: DataProvider interface (1 inference)
-5. INFER-026, INFER-027, INFER-029: Provider integration (3 inferences)
-6. INFER-031, INFER-035, INFER-040: Auth integration (3 inferences)
-7. INFER-051, INFER-052, INFER-054: Frontend hooks (3 inferences)
-8. INFER-055: Dashboard components (1 inference)
-9. INFER-060: Component tests (1 inference)
-10. INFER-074: E2E tests (1 inference)
-11. INFER-075: Ontology validation (1 inference)
-12. INFER-081 to INFER-085: Performance (5 inferences)
-13. INFER-091 to INFER-094: Deployment (4 inferences)
-14. INFER-100: Complete (1 inference)
+1. INFER-001 to INFER-010: Foundation (10 cycles)
+2. INFER-011, INFER-012, INFER-013, INFER-014: ThingService (4 cycles)
+3. INFER-020: Service tests (1 cycle)
+4. INFER-021: DataProvider interface (1 cycle)
+5. INFER-026, INFER-027, INFER-029: Provider integration (3 cycles)
+6. INFER-031, INFER-035, INFER-040: Auth integration (3 cycles)
+7. INFER-051, INFER-052, INFER-054: Frontend hooks (3 cycles)
+8. INFER-055: Dashboard components (1 cycle)
+9. INFER-060: Component tests (1 cycle)
+10. INFER-074: E2E tests (1 cycle)
+11. INFER-075: Ontology validation (1 cycle)
+12. INFER-081 to INFER-085: Performance (5 cycles)
+13. INFER-091 to INFER-094: Deployment (4 cycles)
+14. INFER-100: Complete (1 cycle)
 
-**Total critical path: 42 inferences**
+**Total critical path: 42 cycles**
 
 ---
 
 ### Parallel Tracks Summary
 
-**After GATE 1 (Infer 10), these tracks can run SIMULTANEOUSLY:**
+**After GATE 1 (Cycle 10), these tracks can run SIMULTANEOUSLY:**
 
-| Track               | Inferences | Agent                 | Can Start After                    | Dependencies              |
+| Track               | Cycles | Agent                 | Can Start After                    | Dependencies              |
 | ------------------- | ---------- | --------------------- | ---------------------------------- | ------------------------- |
 | Core Services       | 11-20      | Backend 1             | INFER-010                          | Foundation                |
 | DataProvider        | 21-30      | Integrator 1-4        | INFER-012                          | Service contexts          |
@@ -604,7 +604,7 @@ Week 11: Deployment
 
 Quality gates are synchronization points where all agents pause to verify the system is ready for the next phase.
 
-### GATE 1: Foundation Complete (After Infer 10)
+### GATE 1: Foundation Complete (After Cycle 10)
 
 **Blocking:** All parallel work
 **Owner:** agent-director
@@ -634,7 +634,7 @@ Quality gates are synchronization points where all agents pause to verify the sy
 
 ---
 
-### GATE 2: Core Services Complete (After Infer 20, 30, 40)
+### GATE 2: Core Services Complete (After Cycle 20, 30, 40)
 
 **Blocking:** Convex component integration (INFER-061), frontend component migration (INFER-051)
 **Owner:** agent-backend
@@ -665,7 +665,7 @@ Quality gates are synchronization points where all agents pause to verify the sy
 
 ---
 
-### GATE 3: Implementation Complete (After Infer 60, 70)
+### GATE 3: Implementation Complete (After Cycle 60, 70)
 
 **Blocking:** E2E testing (INFER-074), performance optimization (INFER-081)
 **Owner:** agent-frontend + agent-integrator
@@ -696,7 +696,7 @@ Quality gates are synchronization points where all agents pause to verify the sy
 
 ---
 
-### GATE 4: Validation Complete (After Infer 80, 90)
+### GATE 4: Validation Complete (After Cycle 80, 90)
 
 **Blocking:** Production deployment (INFER-091)
 **Owner:** agent-quality
@@ -731,7 +731,7 @@ Quality gates are synchronization points where all agents pause to verify the sy
 
 ---
 
-### GATE 5: Launch Complete (After Infer 100)
+### GATE 5: Launch Complete (After Cycle 100)
 
 **Blocking:** None (final gate)
 **Owner:** agent-director
@@ -773,7 +773,7 @@ Quality gates are synchronization points where all agents pause to verify the sy
 
 **Agent Backend 1:**
 
-- **Inferences:** 11-20, 81-83, 88
+- **Cycles:** 11-20, 81-83, 88
 - **Duration:** 4 weeks
 - **Focus:** Core Effect services, backend performance
 
@@ -795,7 +795,7 @@ Quality gates are synchronization points where all agents pause to verify the sy
 
 **Agent Backend 2:**
 
-- **Inferences:** 61-70
+- **Cycles:** 61-70
 - **Duration:** 2 weeks
 - **Focus:** Convex component integration
 
@@ -824,7 +824,7 @@ Quality gates are synchronization points where all agents pause to verify the sy
 
 **Agent Frontend 1:**
 
-- **Inferences:** 41-50, 84-87
+- **Cycles:** 41-50, 84-87
 - **Duration:** 3 weeks
 - **Focus:** Astro content integration, frontend performance
 
@@ -846,7 +846,7 @@ Quality gates are synchronization points where all agents pause to verify the sy
 
 **Agent Frontend 2:**
 
-- **Inferences:** 51-60
+- **Cycles:** 51-60
 - **Duration:** 2 weeks
 - **Focus:** Component migration to Effect hooks
 
@@ -877,19 +877,19 @@ Quality gates are synchronization points where all agents pause to verify the sy
 
 **Agent Integrator 1:**
 
-- **Inferences:** 21-25 (Convex + Notion providers)
+- **Cycles:** 21-25 (Convex + Notion providers)
 - **Duration:** 1 week
 - **Focus:** DataProvider implementations
 
 **Agent Integrator 2:**
 
-- **Inferences:** 22-23 (WordPress + Supabase providers)
+- **Cycles:** 22-23 (WordPress + Supabase providers)
 - **Duration:** 1 week
 - **Focus:** DataProvider implementations
 
 **Agent Integrator 3:**
 
-- **Inferences:** 26-30, 31-40
+- **Cycles:** 26-30, 31-40
 - **Duration:** 3 weeks
 - **Focus:** Provider factory + Better Auth adapters
 
@@ -911,7 +911,7 @@ Quality gates are synchronization points where all agents pause to verify the sy
 
 **Agent Integrator 4:**
 
-- **Inferences:** Support for 61-70 (Convex component testing)
+- **Cycles:** Support for 61-70 (Convex component testing)
 - **Duration:** 1 week
 - **Focus:** Integration testing and validation
 
@@ -928,7 +928,7 @@ Quality gates are synchronization points where all agents pause to verify the sy
 
 **Agent Quality 1:**
 
-- **Inferences:** 71-80 (continuous)
+- **Cycles:** 71-80 (continuous)
 - **Duration:** 6 weeks (parallel with implementation)
 - **Focus:** Continuous testing and validation
 
@@ -952,7 +952,7 @@ Quality gates are synchronization points where all agents pause to verify the sy
 
 **Agent Quality 2:**
 
-- **Inferences:** Support for critical test coverage
+- **Cycles:** Support for critical test coverage
 - **Duration:** 2 weeks
 - **Focus:** Deep testing of complex flows
 
@@ -969,7 +969,7 @@ Quality gates are synchronization points where all agents pause to verify the sy
 
 ### agent-documenter (1 agent)
 
-**Inferences:** 95-99
+**Cycles:** 95-99
 **Duration:** 1 week (can start during GATE 3)
 **Focus:** Comprehensive documentation
 
@@ -1008,7 +1008,7 @@ Quality gates are synchronization points where all agents pause to verify the sy
 
 ### agent-ops (1 agent)
 
-**Inferences:** 91-94, 89-90
+**Cycles:** 91-94, 89-90
 **Duration:** 1 week
 **Focus:** Deployment and monitoring
 
@@ -1054,7 +1054,7 @@ Quality gates are synchronization points where all agents pause to verify the sy
 
 ### agent-director (1 agent)
 
-**Inferences:** 1-10, 100
+**Cycles:** 1-10, 100
 **Duration:** 2 weeks (beginning + end)
 **Focus:** Planning and coordination
 
@@ -1089,7 +1089,7 @@ Quality gates are synchronization points where all agents pause to verify the sy
 
 - `/one/things/plans/components.md` (original document)
 - `/one/things/plans/execution-strategy.md` (this document)
-- `/one/things/todo-effects.md` (100-inference roadmap)
+- `/one/things/todo-effects.md` (100-cycle roadmap)
 - Quality gate reports (gate pass/fail with criteria checklist)
 - Launch announcement and metrics report
 
@@ -1101,7 +1101,7 @@ Quality gates are synchronization points where all agents pause to verify the sy
 
 **Total Duration: 125-150 days (20-25 weeks)**
 
-| Phase               | Inferences | Duration | Dependencies       |
+| Phase               | Cycles | Duration | Dependencies       |
 | ------------------- | ---------- | -------- | ------------------ |
 | Foundation          | 1-10       | 10 days  | None               |
 | Core Services       | 11-20      | 12 days  | Foundation         |
@@ -1114,8 +1114,8 @@ Quality gates are synchronization points where all agents pause to verify the sy
 | Performance         | 81-90      | 10 days  | Testing            |
 | Deployment          | 91-100     | 10 days  | Performance        |
 
-**Critical Path: 42 inferences × 1.5 days avg = 63 days**
-**Off-Path: 58 inferences × 1.5 days avg = 87 days**
+**Critical Path: 42 cycles × 1.5 days avg = 63 days**
+**Off-Path: 58 cycles × 1.5 days avg = 87 days**
 **Total: 63 + 87 = 150 days (no overlap)**
 
 ---
@@ -1202,11 +1202,11 @@ Add 20% buffer for:
 
 ### Velocity Metrics
 
-**Inference Completion Rate:**
+**Cycle Completion Rate:**
 
-- **Target:** 2-3 inferences per agent per day (average)
+- **Target:** 2-3 cycles per agent per day (average)
 - **Measurement:** Track actual completion vs planned
-- **Alert Threshold:** <1.5 inferences per day (falling behind)
+- **Alert Threshold:** <1.5 cycles per day (falling behind)
 
 **Quality Gate Pass Rate:**
 
@@ -1264,7 +1264,7 @@ Add 20% buffer for:
 **Action Items for all agents:**
 
 1. [ ] Read this execution strategy document
-2. [ ] Review assigned inferences
+2. [ ] Review assigned cycles
 3. [ ] Understand dependencies and quality gates
 4. [ ] Prepare for GATE 1 (Foundation)
 
@@ -1272,7 +1272,7 @@ Add 20% buffer for:
 
 ## Conclusion
 
-This execution strategy provides a **detailed roadmap for parallel execution** of the 100-inference Effect.ts integration. With 6 specialist agents working concurrently, we can reduce wall-clock time from **16 weeks (sequential) to 8-10 weeks (parallel)**, a **60% reduction**.
+This execution strategy provides a **detailed roadmap for parallel execution** of the 100-cycle Effect.ts integration. With 6 specialist agents working concurrently, we can reduce wall-clock time from **16 weeks (sequential) to 8-10 weeks (parallel)**, a **60% reduction**.
 
 **Key Success Factors:**
 

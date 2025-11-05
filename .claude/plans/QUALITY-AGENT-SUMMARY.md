@@ -1,4 +1,4 @@
-# Quality Agent TODO Summary - Infer 65
+# Quality Agent TODO Summary - Cycle 65
 
 **File Created:** `/Users/toc/Server/ONE/.claude/plans/todo-agent-quality.md`
 
@@ -8,7 +8,7 @@
 
 ## OVERVIEW
 
-Comprehensive quality assurance TODO list for **AI-Powered Recommendations** feature, covering all 6 dimensions of the ONE ontology. Structured as 4 major phases across Infer 65-70.
+Comprehensive quality assurance TODO list for **AI-Powered Recommendations** feature, covering all 6 dimensions of the ONE ontology. Structured as 4 major phases across Cycle 65-70.
 
 ---
 
@@ -17,7 +17,7 @@ Comprehensive quality assurance TODO list for **AI-Powered Recommendations** fea
 ### Document Structure (4,000+ lines)
 
 ```
-Phase 1: TEST PLANNING & DESIGN (Infer 65)
+Phase 1: TEST PLANNING & DESIGN (Cycle 65)
 ├─ Task 1.1: Load Ontology Context (30 min)
 ├─ Task 1.2: Define Critical User Flows (1 hour)
 ├─ Task 1.3: Create Acceptance Criteria (1.5 hours)
@@ -25,20 +25,20 @@ Phase 1: TEST PLANNING & DESIGN (Infer 65)
 ├─ Task 1.5: Design Integration Test Cases (1.5 hours)
 └─ Task 1.6: Design E2E Test Cases (2 hours)
 
-Phase 2: TEST IMPLEMENTATION (Infer 66)
+Phase 2: TEST IMPLEMENTATION (Cycle 66)
 ├─ Task 2.1: Implement Unit Tests (2 hours)
 ├─ Task 2.2: Implement Integration Tests (2 hours)
 ├─ Task 2.3: Implement E2E Tests (3 hours)
 └─ Task 2.4: Create Test Fixtures & Data (1 hour)
 
-Phase 3: TEST EXECUTION & VALIDATION (Infer 67)
+Phase 3: TEST EXECUTION & VALIDATION (Cycle 67)
 ├─ Task 3.1: Run Unit Tests Locally (30 min)
 ├─ Task 3.2: Run Integration Tests (45 min)
 ├─ Task 3.3: Run E2E Tests (1 hour)
 ├─ Task 3.4: Validate Ontology Alignment (1 hour)
 └─ Task 3.5: Analyze Coverage & Gaps (1 hour)
 
-Phase 4: ANALYSIS & REPORTING (Infer 68-70)
+Phase 4: ANALYSIS & REPORTING (Cycle 68-70)
 ├─ Task 4.1: Investigate Test Failures (variable)
 ├─ Task 4.2: Generate Metrics & Insights (1 hour)
 ├─ Task 4.3: Create Quality Report Thing (30 min)
@@ -51,7 +51,7 @@ Phase 4: ANALYSIS & REPORTING (Infer 68-70)
 
 ## KEY DELIVERABLES
 
-### Phase 1: Test Planning (Infer 65)
+### Phase 1: Test Planning (Cycle 65)
 **Deliverable:** Comprehensive test specification documents
 - 5 primary user flows with ontology mappings
 - 5 secondary (error handling) flows
@@ -66,7 +66,7 @@ Phase 4: ANALYSIS & REPORTING (Infer 68-70)
 - **Integration Tests (15 tests):** Mutations, queries, authorization, rate limiting
 - **E2E Tests (10 tests):** Complete user journeys, accessibility, mobile, performance
 
-### Phase 2: Test Implementation (Infer 66)
+### Phase 2: Test Implementation (Cycle 66)
 **Deliverable:** Fully implemented and passing tests
 - Unit test code (service layer, query logic, validation)
 - Integration test code (API contracts, database operations)
@@ -74,7 +74,7 @@ Phase 4: ANALYSIS & REPORTING (Infer 68-70)
 - Test fixtures and data seeding scripts
 - All tests compiling and ready to execute
 
-### Phase 3: Test Execution (Infer 67)
+### Phase 3: Test Execution (Cycle 67)
 **Deliverable:** Test results and validation reports
 - Unit test results: 15/15 PASS (< 30 seconds)
 - Integration test results: 15/15 PASS (< 1 minute)
@@ -83,7 +83,7 @@ Phase 4: ANALYSIS & REPORTING (Infer 68-70)
 - Ontology alignment: 100% verified
 - Coverage analysis: gaps identified and prioritized
 
-### Phase 4: Analysis & Reporting (Infer 68-70)
+### Phase 4: Analysis & Reporting (Cycle 68-70)
 **Deliverable:** Quality decision and documentation
 - Failure analysis (if any)
 - Quality metrics dashboard (coverage, pass rate, performance)
@@ -172,16 +172,16 @@ Phase 4: ANALYSIS & REPORTING (Infer 68-70)
 | Phase 3: Execution | 4.25 hours | agent-quality, agent-builder, agent-frontend |
 | Phase 4: Analysis | 6.0 hours | agent-quality, agent-problem-solver, agent-documenter |
 
-**Timeline:** Infer 65-70 (6 inferences, ~3 days estimated)
+**Timeline:** Cycle 65-70 (6 inferences, ~3 days estimated)
 
 ---
 
 ## PARALLELIZATION STRATEGY
 
 **Parallel Opportunities:**
-- Infer 65: Task 1.4 + 1.5 + 1.6 can run simultaneously (after 1.3)
-- Infer 66: Task 2.1 + 2.2 + 2.3 can run in parallel
-- Infer 67: Task 3.1 + 3.2 + 3.3 can run in parallel
+- Cycle 65: Task 1.4 + 1.5 + 1.6 can run simultaneously (after 1.3)
+- Cycle 66: Task 2.1 + 2.2 + 2.3 can run in parallel
+- Cycle 67: Task 3.1 + 3.2 + 3.3 can run in parallel
 
 **Sequential Must-Haves:**
 - Phase 1 completes before Phase 2 starts
@@ -191,7 +191,7 @@ Phase 4: ANALYSIS & REPORTING (Infer 68-70)
 **Estimated Parallel Timeline:**
 - If 5 agents working (agent-quality, agent-builder, agent-frontend, agent-problem-solver, agent-documenter)
 - Can reduce 27.75 hours to ~12 hours wall-clock time
-- Infer 65-70 timeline: 3-5 days (depending on parallelization)
+- Cycle 65-70 timeline: 3-5 days (depending on parallelization)
 
 ---
 
@@ -247,21 +247,21 @@ Phase 4: ANALYSIS & REPORTING (Infer 68-70)
 
 ## IMMEDIATE NEXT STEPS
 
-**NOW (Infer 65):**
+**NOW (Cycle 65):**
 1. Execute Task 1.1: Load Ontology Context (30 min)
 2. Execute Task 1.2: Define Critical User Flows (1 hour)
 3. Execute Task 1.3: Create Acceptance Criteria (1.5 hours)
 
-**PARALLEL (Infer 65):**
+**PARALLEL (Cycle 65):**
 - Task 1.4-1.6: Design all remaining test cases (5 hours)
 
-**Infer 66:**
+**Cycle 66:**
 - Task 2.1-2.4: Implement all tests (8 hours)
 
-**Infer 67:**
+**Cycle 67:**
 - Task 3.1-3.5: Execute and validate tests (4.25 hours)
 
-**Infer 68-70:**
+**Cycle 68-70:**
 - Task 4.1-4.6: Analyze, report, and make quality decision (6 hours)
 
 ---
@@ -283,7 +283,7 @@ QUALITY GATE CRITERIA (ALL MUST PASS):
 DECISION: [ ] APPROVED  [ ] REJECTED
 ```
 
-**If APPROVED:** Advance to Infer 71 (Design & UX)
+**If APPROVED:** Advance to Cycle 71 (Design & UX)
 **If REJECTED:** Create fixes, re-test, re-gate
 
 ---
@@ -317,13 +317,13 @@ When Phase 1 (Task 1.1-1.6) is complete, you should have:
 - ✅ Ontology mappings complete for all tests
 - ✅ Ready to hand off to Phase 2 (test implementation)
 
-When all phases complete (Infer 70), you should have:
+When all phases complete (Cycle 70), you should have:
 - ✅ 40 tests implemented and passing
 - ✅ 80%+ code coverage
 - ✅ Ontology compliance verified
 - ✅ Quality gate decision (APPROVED/REJECTED)
 - ✅ Lessons learned documented
-- ✅ Ready for next phase (Infer 71)
+- ✅ Ready for next phase (Cycle 71)
 
 ---
 

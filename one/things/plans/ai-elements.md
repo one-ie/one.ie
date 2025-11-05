@@ -45,7 +45,7 @@ ai_context: |
 
 ---
 
-## Installation & Setup (Infer 1-10)
+## Installation & Setup (Cycle 1-10)
 
 ### Prerequisites
 
@@ -109,7 +109,7 @@ OPENAI_API_KEY=sk-...
 
 ---
 
-## Components Library (Infer 11-30)
+## Components Library (Cycle 11-30)
 
 ### Core Chat Components
 
@@ -645,7 +645,7 @@ import { Toolbar } from "@/components/ui/ai-elements/toolbar";
 
 ---
 
-## Fully Functional Chat UI (Infer 31-50)
+## Fully Functional Chat UI (Cycle 31-50)
 
 ### Complete Chat Component
 
@@ -866,7 +866,7 @@ if (!thread) {
 
 ---
 
-## Styling & Theming (Infer 51-70)
+## Styling & Theming (Cycle 51-70)
 
 ### Tailwind Configuration
 
@@ -965,7 +965,7 @@ export function useAITheme() {
 
 ---
 
-## Integration with AI SDK & Convex (Infer 71-90)
+## Integration with AI SDK & Convex (Cycle 71-90)
 
 ### Hook for Complete Flow
 
@@ -1028,7 +1028,7 @@ export function useCompleteChatFlow(groupId: string, agentId: string) {
 
 ---
 
-## Performance Optimization (Infer 91-100)
+## Performance Optimization (Cycle 91-100)
 
 ### Message Virtualization
 
@@ -1094,7 +1094,7 @@ export function setCachedMessage(id: string, message: any) {
 
 ---
 
-## Testing (Infer 101+)
+## Testing (Cycle 101+)
 
 ### Component Tests
 

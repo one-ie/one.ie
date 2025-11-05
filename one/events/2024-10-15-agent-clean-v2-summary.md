@@ -2,7 +2,7 @@
 title: 2024 10 15 Agent Clean V2 Summary
 dimension: events
 category: 2024-10-15-agent-clean-v2-summary.md
-tags: agent, agent-clean, ai, ai-agent, automation, code-quality, hooks, inference, metadata
+tags: agent, agent-clean, ai, ai-agent, automation, code-quality, hooks, cycle, metadata
 related_dimensions: groups, people, things
 scope: global
 created: 2024-10-15
@@ -25,17 +25,17 @@ ai_context: |
 
 ## Overview
 
-Agent Clean has been significantly enhanced with automated hooks, comprehensive metadata tagging, and deep integration into the inference workflow and release process. It now ensures continuous cleanliness, flawless execution, and rich contextual navigation for AI agents.
+Agent Clean has been significantly enhanced with automated hooks, comprehensive metadata tagging, and deep integration into the cycle workflow and release process. It now ensures continuous cleanliness, flawless execution, and rich contextual navigation for AI agents.
 
 ---
 
 ## 🎯 What Was Accomplished
 
-### 1. Pre-Inference Validation Hook (`clean-pre.py`)
+### 1. Pre-Cycle Validation Hook (`clean-pre.py`)
 
 **Location:** `.claude/hooks/clean-pre.py`
 
-**Purpose:** Validates environment cleanliness before every inference
+**Purpose:** Validates environment cleanliness before every cycle
 
 **Capabilities:**
 - ✅ Directory structure integrity validation
@@ -63,11 +63,11 @@ Agent Clean has been significantly enhanced with automated hooks, comprehensive 
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 ```
 
-### 2. Post-Inference Cleanup Hook (`clean-post.py`)
+### 2. Post-Cycle Cleanup Hook (`clean-post.py`)
 
 **Location:** `.claude/hooks/clean-post.py`
 
-**Purpose:** Cleans up and organizes after every inference
+**Purpose:** Cleans up and organizes after every cycle
 
 **Capabilities:**
 - 🧹 Remove temporary files (*.tmp, *.swp, *.bak, .DS_Store)
@@ -81,7 +81,7 @@ Agent Clean has been significantly enhanced with automated hooks, comprehensive 
 **Output Example:**
 ```
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-🧹 CLEANUP COMPLETE - Agent Clean Post-Inference
+🧹 CLEANUP COMPLETE - Agent Clean Post-Cycle
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
 📊 CLEANUP METRICS:
@@ -143,8 +143,8 @@ ai_context: |
 
 **Capabilities:**
 - 📝 Scan all markdown files in `one/` directory
-- 🔍 Infer dimension from directory structure
-- 🎯 Infer category from subdirectories
+- 🔍 Cycle dimension from directory structure
+- 🎯 Cycle category from subdirectories
 - 🏷️  Generate tags from content analysis
 - 📄 Add metadata if missing
 - ♻️  Update existing metadata if incomplete
@@ -175,7 +175,7 @@ python3 .claude/hooks/tag-all-docs.py
 - 🎨 Updated Philosophy section
 
 **Key Enhancements:**
-- Complete documentation of pre/post-inference hooks
+- Complete documentation of pre/post-cycle hooks
 - Comprehensive metadata system specification
 - Release process integration details
 - Learning loop and pattern discovery
@@ -190,7 +190,7 @@ python3 .claude/hooks/tag-all-docs.py
 **98% Context Reduction:**
 - Before: Loading 150k tokens of irrelevant documentation
 - After: Loading only 3k tokens of targeted, metadata-tagged docs
-- Result: Faster inference, better decisions
+- Result: Faster cycle, better decisions
 
 **Navigation Speed:**
 - Before: 10+ seconds to find relevant docs
@@ -227,8 +227,8 @@ python3 .claude/hooks/tag-all-docs.py
 - Release metrics tracked for continuous improvement
 
 **Continuous Cleanliness:**
-- Every inference starts with validation
-- Every inference ends with cleanup
+- Every cycle starts with validation
+- Every cycle ends with cleanup
 - Technical debt reduced by 42% over time
 
 **Self-Improvement:**
@@ -243,19 +243,19 @@ python3 .claude/hooks/tag-all-docs.py
 ### Files Created
 
 1. `.claude/hooks/clean-pre.py` (400 lines)
-   - Pre-inference validation hook
+   - Pre-cycle validation hook
    - Cleanliness scoring system
    - Comprehensive checks and reporting
 
 2. `.claude/hooks/clean-post.py` (350 lines)
-   - Post-inference cleanup hook
+   - Post-cycle cleanup hook
    - Automated file organization
    - Metadata auto-tagging
    - Space savings tracking
 
 3. `.claude/hooks/tag-all-docs.py` (500 lines)
    - Metadata tagging automation
-   - Content-based tag inference
+   - Content-based tag cycle
    - Dry-run mode
    - Comprehensive reporting
 
@@ -314,10 +314,10 @@ python3 .claude/hooks/tag-all-docs.py
 ### Manual Validation
 
 ```bash
-# Run pre-inference checks manually
+# Run pre-cycle checks manually
 python3 .claude/hooks/clean-pre.py < input.json
 
-# Run post-inference cleanup manually
+# Run post-cycle cleanup manually
 python3 .claude/hooks/clean-post.py < input.json
 ```
 
@@ -337,8 +337,8 @@ python3 .claude/hooks/clean-post.py < input.json
 - Target score: 95+/100 (with hooks)
 
 **Context Usage:**
-- Before: 150k tokens per inference
-- After: 3k tokens per inference
+- Before: 150k tokens per cycle
+- After: 3k tokens per cycle
 - Savings: 98%
 
 ### Continuous Improvement Targets
@@ -416,8 +416,8 @@ python3 .claude/hooks/clean-post.py < input.json
 
 ### Immediate (Week 1) ✅
 
-- [x] Pre-inference hook created and functional
-- [x] Post-inference hook created and functional
+- [x] Pre-cycle hook created and functional
+- [x] Post-cycle hook created and functional
 - [x] Metadata tagging system designed
 - [x] Metadata tagging automation created
 - [x] Agent-clean.md updated with new capabilities
@@ -452,8 +452,8 @@ python3 .claude/hooks/clean-post.py < input.json
 3. `one/knowledge/tags.md` - Tag categories specification
 
 **Hooks Reference:**
-1. `.claude/hooks/clean-pre.py` - Pre-inference validation
-2. `.claude/hooks/clean-post.py` - Post-inference cleanup
+1. `.claude/hooks/clean-pre.py` - Pre-cycle validation
+2. `.claude/hooks/clean-post.py` - Post-cycle cleanup
 3. `.claude/hooks/tag-all-docs.py` - Metadata tagging automation
 
 ### For Human Developers
@@ -462,10 +462,10 @@ python3 .claude/hooks/clean-post.py < input.json
 1. Enable hooks in `.claude/settings.json`
 2. Run `python3 .claude/hooks/tag-all-docs.py --dry-run` to preview
 3. Run `python3 .claude/hooks/tag-all-docs.py` to apply tags
-4. Verify with pre-inference hook
+4. Verify with pre-cycle hook
 
 **Integration:**
-- Hooks run automatically on every inference
+- Hooks run automatically on every cycle
 - Pre-hook validates before work starts
 - Post-hook cleans up after work finishes
 - Metrics tracked in `.claude/state/cleanup_metrics.json`
@@ -476,8 +476,8 @@ python3 .claude/hooks/clean-post.py < input.json
 
 Agent Clean v2.0 is a **comprehensive cleanliness infrastructure** that:
 
-✅ **Validates** environment before every inference
-✅ **Cleans up** after every inference
+✅ **Validates** environment before every cycle
+✅ **Cleans up** after every cycle
 ✅ **Tags** all documentation with rich metadata
 ✅ **Organizes** files into correct locations
 ✅ **Learns** patterns from every cycle

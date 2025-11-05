@@ -496,7 +496,7 @@ await ctx.db.insert("events", {
 
 Deploy Agent orchestrates the complete release workflow defined in `scripts/release.sh`:
 
-### Steps 0-3: Validation & Core Repos (Infer 81-82)
+### Steps 0-3: Validation & Core Repos (Cycle 81-82)
 
 **Step 0: Pre-Flight Validation**
 
@@ -511,7 +511,7 @@ Deploy Agent orchestrates the complete release workflow defined in `scripts/rele
 - Push /web → one-ie/web
 - Push /backend → one-ie/backend
 
-### Steps 4-6: Sync & Version (Infer 83-84)
+### Steps 4-6: Sync & Version (Cycle 83-84)
 
 **Step 4: Sync via folders.yaml**
 
@@ -530,7 +530,7 @@ Deploy Agent orchestrates the complete release workflow defined in `scripts/rele
 - Bump apps/one/package.json
 - Update cli/folders.yaml version
 
-### Steps 7-9: Assembly & Status (Infer 85-86)
+### Steps 7-9: Assembly & Status (Cycle 85-86)
 
 **Step 7: Update Submodules**
 
@@ -548,7 +548,7 @@ Deploy Agent orchestrates the complete release workflow defined in `scripts/rele
 - Show changes in cli/
 - Show changes in apps/one/
 
-### Steps 10-11: Commit & Push (Infer 87-88)
+### Steps 10-11: Commit & Push (Cycle 87-88)
 
 **Step 10: Commit & Push CLI**
 
@@ -562,7 +562,7 @@ Deploy Agent orchestrates the complete release workflow defined in `scripts/rele
 - Push to one-ie/one (with submodules)
 - Create and push git tag (if version bumped)
 
-### Steps 12-13: Publish & Deploy (Infer 89-90)
+### Steps 12-13: Publish & Deploy (Cycle 89-90)
 
 **Step 12: Publish to npm** (manual approval required)
 
@@ -854,7 +854,7 @@ await ctx.db.insert("connections", {
 
 ## Release Integration
 
-Deploy Agent integrates with the inference workflow via hooks and scheduled releases.
+Deploy Agent integrates with the cycle workflow via hooks and scheduled releases.
 
 ### Pre-Release Validation (via Hooks)
 

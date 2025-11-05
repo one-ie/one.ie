@@ -98,7 +98,7 @@ Plus additional supporting documents for quick reference:
 - **6 dimensions:** All ontology dimensions covered
 - **5 agents:** Parallel execution ready
 - **4 phases:** Planning → Implementation → Testing → Validation
-- **6 quality gates:** Before advancement to Infer 66
+- **6 quality gates:** Before advancement to Cycle 66
 
 ---
 
@@ -169,7 +169,7 @@ TOTAL: 5-8 days with parallel execution
 
 ## What Success Looks Like
 
-### By End of Infer 65 (Day 2)
+### By End of Cycle 65 (Day 2)
 - ✅ All 6 agent TODOs created with clear scope
 - ✅ Parallel execution plan confirmed
 - ✅ Dependencies mapped and validated
@@ -177,13 +177,13 @@ TOTAL: 5-8 days with parallel execution
 - ✅ Critical paths identified
 - ✅ Team understands their roles
 
-### By End of Infer 66 (Day 5)
+### By End of Cycle 66 (Day 5)
 - ✅ 50%+ of tests written and passing
 - ✅ Coverage metrics calculated
 - ✅ Performance baselines established
 - ✅ No blocking issues
 
-### By End of Infer 70 (Day 8)
+### By End of Cycle 70 (Day 8)
 - ✅ 95%+ of tests passing (800+ tests)
 - ✅ 80%+ code coverage achieved
 - ✅ All 6 quality gates passing:
@@ -195,7 +195,7 @@ TOTAL: 5-8 days with parallel execution
   6. ✅ Accessibility (90%+ WCAG AA)
 - ✅ Lessons learned documented
 - ✅ Knowledge base created (50+ entries with embeddings)
-- ✅ Ready for /done → Infer 71 (Design & UX)
+- ✅ Ready for /done → Cycle 71 (Design & UX)
 
 ---
 
@@ -348,8 +348,8 @@ All planning complete. All agents have their TODO lists. All dependencies identi
 **Team Lead:** Create tracking spreadsheet
 **Management:** Monitor critical path
 
-**Target Completion:** Infer 70 (8 days)
-**Ready for Next Phase:** Infer 71 (Design & UX)
+**Target Completion:** Cycle 70 (8 days)
+**Ready for Next Phase:** Cycle 71 (Design & UX)
 
 ---
 

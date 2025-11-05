@@ -78,7 +78,7 @@ ai_context: |
          ▼
 ┌─────────────────────────────┐
 │ 7. Claude Builds Platform   │
-│    - 100-inference plan     │
+│    - 100-cycle plan     │
 │    - Specialized agents     │
 │    - Deploy iteratively     │
 └─────────────────────────────┘
@@ -202,7 +202,7 @@ This is the **key handoff mechanism** - CLI writes it, Claude reads it:
   },
 
   "plan": {
-    "inferences": [],
+    "cycles": [],
     "status": "not_started"
   }
 }
@@ -348,14 +348,14 @@ Starting website analysis...
 Based on https://one.ie analysis:
 
 FOUNDATION (Always recommended)
-  [x] Landing page (Infer 1-10, ~5 min)
-  [x] Authentication (Infer 11-20, ~10 min)
-  [x] Multi-tenant groups (Infer 21-30, ~10 min)
+  [x] Landing page (Cycle 1-10, ~5 min)
+  [x] Authentication (Cycle 11-20, ~10 min)
+  [x] Multi-tenant groups (Cycle 21-30, ~10 min)
 
 DETECTED FROM YOUR SITE
-  [ ] Real-time sync (Infer 31-40, ~15 min)
-  [ ] Project management (Infer 41-50, ~15 min)
-  [ ] AI agents (Infer 61-70, ~20 min)
+  [ ] Real-time sync (Cycle 31-40, ~15 min)
+  [ ] Project management (Cycle 41-50, ~15 min)
+  [ ] AI agents (Cycle 61-70, ~20 min)
 
 Which features would you like to build?
 ```
@@ -374,7 +374,7 @@ analyzing
 features_presented
   ↓ (after user selects features)
 plan_generated
-  ↓ (after agent-director creates 100-inference plan)
+  ↓ (after agent-director creates 100-cycle plan)
 building
   ↓ (during iterative builds)
 completed
@@ -436,28 +436,28 @@ completed
       {
         "id": "landing-page",
         "name": "Landing Page",
-        "inferences": [1, 10],
+        "cycles": [1, 10],
         "duration": "~5 min",
         "required": true
       },
       {
         "id": "authentication",
         "name": "Authentication",
-        "inferences": [11, 20],
+        "cycles": [11, 20],
         "duration": "~10 min",
         "required": true
       },
       {
         "id": "multi-tenant",
         "name": "Multi-Tenant Groups",
-        "inferences": [21, 30],
+        "cycles": [21, 30],
         "duration": "~10 min",
         "required": true
       },
       {
         "id": "real-time-sync",
         "name": "Real-Time Sync",
-        "inferences": [31, 40],
+        "cycles": [31, 40],
         "duration": "~15 min",
         "detected": true,
         "reason": "Detected Convex backend"
@@ -465,7 +465,7 @@ completed
       {
         "id": "project-management",
         "name": "Project Management",
-        "inferences": [41, 50],
+        "cycles": [41, 50],
         "duration": "~15 min",
         "detected": true,
         "reason": "Detected project-focused content"
@@ -473,7 +473,7 @@ completed
       {
         "id": "ai-agents",
         "name": "AI Agents",
-        "inferences": [61, 70],
+        "cycles": [61, 70],
         "duration": "~20 min",
         "detected": true,
         "reason": "Detected AI/agent mentions"
@@ -483,7 +483,7 @@ completed
   },
 
   "plan": {
-    "inferences": [],
+    "cycles": [],
     "status": "not_started"
   }
 }
@@ -518,36 +518,36 @@ I want: landing page, authentication, multi-tenant, and ai-agents
 
   "plan": {
     "status": "ready",
-    "totalInferences": 70,
+    "totalCycles": 70,
     "estimatedDuration": "~50 min",
     "phases": [
       {
         "name": "Landing Page",
-        "inferences": [1, 10],
+        "cycles": [1, 10],
         "specialist": "agent-frontend",
         "status": "pending"
       },
       {
         "name": "Authentication",
-        "inferences": [11, 20],
+        "cycles": [11, 20],
         "specialist": "agent-backend",
         "status": "pending"
       },
       {
         "name": "Multi-Tenant Groups",
-        "inferences": [21, 30],
+        "cycles": [21, 30],
         "specialist": "agent-backend",
         "status": "pending"
       },
       {
         "name": "AI Agents",
-        "inferences": [61, 70],
+        "cycles": [61, 70],
         "specialist": "agent-builder",
         "status": "pending"
       },
       {
         "name": "Deploy & Document",
-        "inferences": [91, 100],
+        "cycles": [91, 100],
         "specialist": "agent-ops",
         "status": "pending"
       }
@@ -564,7 +564,7 @@ I want: landing page, authentication, multi-tenant, and ai-agents
 
 1. **Reads plan** from `.onboarding.json`
 2. **Invokes specialists** for each phase
-3. **Updates status** after each inference
+3. **Updates status** after each cycle
 4. **Deploys iteratively** (landing page first, then features)
 5. **Notifies user** after each milestone
 
@@ -576,8 +576,8 @@ I want: landing page, authentication, multi-tenant, and ai-agents
 
   "plan": {
     "status": "in_progress",
-    "currentInference": 23,
-    "totalInferences": 70,
+    "currentCycle": 23,
+    "totalCycles": 70,
     "progress": 32.8,
 
     "phases": [
@@ -634,7 +634,7 @@ I want: landing page, authentication, multi-tenant, and ai-agents
 - Backwards compatible
 
 ### 4. Transparent Progress
-- User sees inference progress (23/70)
+- User sees cycle progress (23/70)
 - Status updates in `.onboarding.json`
 - URLs appear as features go live
 - Can check progress anytime
@@ -661,7 +661,7 @@ I want: landing page, authentication, multi-tenant, and ai-agents
 - [ ] Update `.onboarding.json` with results
 - [ ] Present recommended features
 - [ ] Accept user feature selection
-- [ ] Generate 100-inference plan
+- [ ] Generate 100-cycle plan
 - [ ] Invoke agent-director to execute plan
 
 ### Agent Side
@@ -707,24 +707,24 @@ Starting analysis...
 ✅ Analysis complete!
 
 Recommended features:
-  [x] Landing page (Infer 1-10)
-  [x] Authentication (Infer 11-20)
-  [x] Multi-tenant (Infer 21-30)
-  [ ] Real-time sync (Infer 31-40)
-  [ ] AI agents (Infer 61-70)
+  [x] Landing page (Cycle 1-10)
+  [x] Authentication (Cycle 11-20)
+  [x] Multi-tenant (Cycle 21-30)
+  [ ] Real-time sync (Cycle 31-40)
+  [ ] AI agents (Cycle 61-70)
 
 Which features? › landing page, authentication, multi-tenant, ai-agents
 
-✅ Plan generated: 70 inferences, ~50 min
+✅ Plan generated: 70 cycles, ~50 min
 
 Ready to build? › Yes
 
 🚀 Starting build...
 
-[Infer 1/70] Validate ontology
-[Infer 2/70] Map landing page
+[Cycle 1/70] Validate ontology
+[Cycle 2/70] Map landing page
 ...
-[Infer 10/70] Deploy landing page
+[Cycle 10/70] Deploy landing page
 
 ✨ Landing page LIVE: https://one-platform.pages.dev
 

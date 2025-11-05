@@ -421,7 +421,7 @@ backend/
 1. **Watch mode** - Auto-regenerate on YAML changes
 2. **Validation strictness** - Configurable validation levels
 3. **Custom type mappings** - Support for custom types per installation
-4. **Type inference** - Infer property types from YAML schemas
+4. **Type cycle** - Cycle property types from YAML schemas
 5. **Schema validation** - Validate YAML against JSON schema
 6. **Type documentation** - Generate docs from ontology descriptions
 

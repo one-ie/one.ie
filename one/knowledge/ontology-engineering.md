@@ -254,8 +254,8 @@ type EventType =
   | 'optimization_applied' | 'report_generated'
 
   // INFERENCE (7) - Revenue tracking
-  | 'inference_request' | 'inference_completed' | 'inference_failed'
-  | 'inference_quota_exceeded' | 'inference_revenue_collected'
+  | 'cycle_request' | 'cycle_completed' | 'cycle_failed'
+  | 'cycle_quota_exceeded' | 'cycle_revenue_collected'
   | 'org_revenue_generated' | 'revenue_share_distributed'
 
   // BLOCKCHAIN (5)
@@ -429,7 +429,7 @@ const orgEvents = [
 | `user_login` | Login analytics | Active users, sessions, retention |
 | `course_enrolled` | Enrollment analytics | Conversion rates, popular courses |
 | `tokens_purchased` | Revenue analytics | Sales, MRR, LTV |
-| `inference_request` | Usage analytics | API calls, costs, quotas |
+| `cycle_request` | Usage analytics | API calls, costs, quotas |
 | `content_event` | Content analytics | Views, engagement, virality |
 | `agent_executed` | Agent analytics | Task success rate, performance |
 

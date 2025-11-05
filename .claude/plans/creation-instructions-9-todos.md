@@ -20,65 +20,65 @@ Every file follows this exact structure:
 
 ---
 
-## PHASE 1: FOUNDATION & SETUP (Infer 1-10)
+## PHASE 1: FOUNDATION & SETUP (Cycle 1-10)
 
 **Purpose:** Validate architecture, map to 6-dimension ontology, plan implementation
 
-### Infer 1: Validate Against 6-Dimension Ontology
-### Infer 2: Review Existing Infrastructure
-### Infer 3-10: Planning & Setup Tasks
+### Cycle 1: Validate Against 6-Dimension Ontology
+### Cycle 2: Review Existing Infrastructure
+### Cycle 3-10: Planning & Setup Tasks
 
 ---
 
-## PHASE 2: [VERTICAL-SPECIFIC] (Infer 11-20)
+## PHASE 2: [VERTICAL-SPECIFIC] (Cycle 11-20)
 
 [Backend and schema work specific to vertical]
 
 ---
 
-## PHASE 3: FRONTEND COMPONENTS & PAGES (Infer 21-30)
+## PHASE 3: FRONTEND COMPONENTS & PAGES (Cycle 21-30)
 
 [React components and Astro pages]
 
 ---
 
-## PHASE 4: [VERTICAL-SPECIFIC] (Infer 31-40)
+## PHASE 4: [VERTICAL-SPECIFIC] (Cycle 31-40)
 
 [Integration or API work]
 
 ---
 
-## PHASE 5: [VERTICAL-SPECIFIC MECHANICS] (Infer 41-50)
+## PHASE 5: [VERTICAL-SPECIFIC MECHANICS] (Cycle 41-50)
 
 [Core business logic specific to vertical]
 
 ---
 
-## PHASE 6: QUALITY & TESTING (Infer 51-60)
+## PHASE 6: QUALITY & TESTING (Cycle 51-60)
 
 [Unit tests, integration tests, E2E tests]
 
 ---
 
-## PHASE 7: DESIGN & REFINEMENT (Infer 61-70)
+## PHASE 7: DESIGN & REFINEMENT (Cycle 61-70)
 
 [Wireframes, accessibility, responsive design]
 
 ---
 
-## PHASE 8: PERFORMANCE & OPTIMIZATION (Infer 71-80)
+## PHASE 8: PERFORMANCE & OPTIMIZATION (Cycle 71-80)
 
 [Speed, efficiency, caching]
 
 ---
 
-## PHASE 9: DEPLOYMENT & DOCUMENTATION (Infer 81-90)
+## PHASE 9: DEPLOYMENT & DOCUMENTATION (Cycle 81-90)
 
 [Production deployment, user + developer docs]
 
 ---
 
-## PHASE 10: KNOWLEDGE & LESSONS (Infer 91-100)
+## PHASE 10: KNOWLEDGE & LESSONS (Cycle 91-100)
 
 [Ontology mapping, architecture docs, lessons learned]
 
@@ -160,20 +160,20 @@ Every file follows this exact structure:
 - `web/src/pages/onboarding/index.astro`
 - `web/src/pages/account/settings.astro`
 
-**Infer 1 Tasks:**
+**Cycle 1 Tasks:**
 - [ ] Map onboarding to 6 dimensions
 - [ ] Identify 3 use cases: solo creator, agency team, enterprise
 - [ ] Review Better Auth setup
 - [ ] Note existing Convex auth integration
 
-**Infer 11 Tasks:**
+**Cycle 11 Tasks:**
 - [ ] Design user thing type (extend existing creator)
 - [ ] Design organization thing type (group with properties)
 - [ ] Design team thing type (nested group)
 - [ ] Create UserService (Effect.ts)
 - [ ] Create OrganizationService (Effect.ts)
 
-**Infer 21 Tasks:**
+**Cycle 21 Tasks:**
 - [ ] Create RegistrationForm component
 - [ ] Create WalletSetup component
 - [ ] Create OrganizationCreation page
@@ -236,19 +236,19 @@ Every file follows this exact structure:
 - `web/src/pages/agents/[agentId]/index.astro`
 - `web/src/pages/agents/marketplace.astro`
 
-**Infer 1 Tasks:**
+**Cycle 1 Tasks:**
 - [ ] Map agents to 6 dimensions
 - [ ] Identify 3 use cases: chatbot, autonomous worker, multi-agent system
 - [ ] Review ElizaOS architecture
 - [ ] Review CopilotKit documentation
 
-**Infer 11 Tasks:**
+**Cycle 11 Tasks:**
 - [ ] Design agent thing type
 - [ ] Design execution_result thing type
 - [ ] Create AgentExecutionService (Effect.ts)
 - [ ] Design state persistence schema
 
-**Infer 21 Tasks:**
+**Cycle 21 Tasks:**
 - [ ] Create AgentDeploymentForm
 - [ ] Create AgentExecutionPanel
 - [ ] Create AgentHistory display
@@ -308,19 +308,19 @@ Every file follows this exact structure:
 - `web/src/pages/skills/marketplace.astro`
 - `web/src/pages/skills/my-skills.astro`
 
-**Infer 1 Tasks:**
+**Cycle 1 Tasks:**
 - [ ] Map skills to 6 dimensions
 - [ ] Identify 3 use cases: skill endorsement, agent matching, hiring
 - [ ] Design skill categories and taxonomy
 - [ ] Note verification criteria
 
-**Infer 11 Tasks:**
+**Cycle 11 Tasks:**
 - [ ] Design skill thing type
 - [ ] Design verification_record thing type
 - [ ] Create SkillService (Effect.ts)
 - [ ] Create SkillVerificationService (Effect.ts)
 
-**Infer 21 Tasks:**
+**Cycle 21 Tasks:**
 - [ ] Create SkillCreationForm
 - [ ] Create SkillMarketplace with filtering
 - [ ] Create SkillCard component
@@ -381,19 +381,19 @@ Every file follows this exact structure:
 - `web/src/pages/sell/repositories.astro`
 - `web/src/pages/sell/marketplace.astro`
 
-**Infer 1 Tasks:**
+**Cycle 1 Tasks:**
 - [ ] Map repo selling to 6 dimensions
 - [ ] Identify 3 use cases: private course code, template library, tool access
 - [ ] Review GitHub OAuth + API
 - [ ] Note X402 payment integration
 
-**Infer 11 Tasks:**
+**Cycle 11 Tasks:**
 - [ ] Design repository thing type
 - [ ] Design access_grant thing type
 - [ ] Create GitHubIntegrationService (Effect.ts)
 - [ ] Create AccessControlService (Effect.ts)
 
-**Infer 21 Tasks:**
+**Cycle 21 Tasks:**
 - [ ] Create GitHubRepoSelector
 - [ ] Create RepoMarketplace with pricing
 - [ ] Create AccessManagement dashboard
@@ -459,20 +459,20 @@ Every file follows this exact structure:
 - `web/src/pages/shop/[productId].astro`
 - `web/src/pages/account/orders.astro`
 
-**Infer 1 Tasks:**
+**Cycle 1 Tasks:**
 - [ ] Map e-commerce to 6 dimensions
 - [ ] Identify 3 use cases: course sales, digital products, services
 - [ ] Review existing shop.astro
 - [ ] Note Stripe integration requirements
 
-**Infer 11 Tasks:**
+**Cycle 11 Tasks:**
 - [ ] Design product thing type
 - [ ] Design order thing type
 - [ ] Design inventory tracking
 - [ ] Create ProductService (Effect.ts)
 - [ ] Create OrderService (Effect.ts)
 
-**Infer 21 Tasks:**
+**Cycle 21 Tasks:**
 - [ ] Create ProductCard component
 - [ ] Create ProductListing page with filters
 - [ ] Create ShoppingCart component
@@ -538,25 +538,25 @@ Every file follows this exact structure:
 - `web/src/pages/docs/api.astro`
 - `sdk-js/src/client.ts` (JavaScript SDK)
 
-**Infer 1 Tasks:**
+**Cycle 1 Tasks:**
 - [ ] Map API to 6 dimensions
 - [ ] Design API versioning strategy
 - [ ] Identify 3 core use cases: product listing, agent execution, order creation
 - [ ] Define rate limit tiers (free, pro, enterprise)
 
-**Infer 11 Tasks:**
+**Cycle 11 Tasks:**
 - [ ] Design api_key thing type
 - [ ] Design rate_limit tracking
 - [ ] Create APIService (Effect.ts)
 - [ ] Create RateLimiter (Effect.ts)
 
-**Infer 31 Tasks:**
+**Cycle 31 Tasks:**
 - [ ] Implement REST endpoints for products
 - [ ] Implement REST endpoints for users
 - [ ] Implement REST endpoints for orders
 - [ ] Implement authentication middleware
 
-**Infer 51 Tasks:**
+**Cycle 51 Tasks:**
 - [ ] Write API contract tests
 - [ ] Test rate limiting
 - [ ] Test authentication schemes
@@ -624,19 +624,19 @@ Every file follows this exact structure:
 - `web/src/pages/discover/index.astro`
 - `web/src/pages/activity/feed.astro`
 
-**Infer 1 Tasks:**
+**Cycle 1 Tasks:**
 - [ ] Map features to 6 dimensions
 - [ ] Identify 3 use cases: creator insights, content discovery, community engagement
 - [ ] Review analytics requirements
 - [ ] Note notification delivery channels
 
-**Infer 11 Tasks:**
+**Cycle 11 Tasks:**
 - [ ] Design analytics data schema
 - [ ] Design notification thing type
 - [ ] Design social interaction schema
 - [ ] Create AnalyticsService (Effect.ts)
 
-**Infer 21 Tasks:**
+**Cycle 21 Tasks:**
 - [ ] Create AnalyticsDashboard component
 - [ ] Create SemanticSearch interface
 - [ ] Create RecommendationFeed
@@ -703,19 +703,19 @@ Every file follows this exact structure:
 - `web/src/pages/dashboard/admin/index.astro`
 - `/one/knowledge/brand-guide.md`
 
-**Infer 1 Tasks:**
+**Cycle 1 Tasks:**
 - [ ] Map ONE.IE to 6 dimensions
 - [ ] Identify 3 audiences: potential creators, existing creators, admins
 - [ ] Design brand identity (colors, typography, voice)
 - [ ] Outline marketing messaging
 
-**Infer 21 Tasks:**
+**Cycle 21 Tasks:**
 - [ ] Create design system (tokens, components)
 - [ ] Create landing page
 - [ ] Create features page
 - [ ] Create pricing page
 
-**Infer 31 Tasks:**
+**Cycle 31 Tasks:**
 - [ ] Create creator dashboard layout
 - [ ] Create admin dashboard
 - [ ] Create documentation site
@@ -750,8 +750,8 @@ Every file follows this exact structure:
 ### During Creation
 
 - [ ] 10 inferences per phase (100 total)
-- [ ] Each infer has checkboxes (3-5 tasks minimum)
-- [ ] Ontology mapping explicit in Infer 1
+- [ ] Each cycle has checkboxes (3-5 tasks minimum)
+- [ ] Ontology mapping explicit in Cycle 1
 - [ ] Phase-specific names (not generic)
 - [ ] Cross-references to other todo files
 - [ ] Code examples where relevant
@@ -774,10 +774,10 @@ Every file follows this exact structure:
 
 When one todo file depends on another, document like this:
 
-**In todo-agents.md Infer 5:**
+**In todo-agents.md Cycle 5:**
 ```
-### Infer 5: Review User Management
-- [ ] See todo-onboard.md Infer 11-20 (User thing type definition)
+### Cycle 5: Review User Management
+- [ ] See todo-onboard.md Cycle 11-20 (User thing type definition)
 - [ ] Understand role-based access from todo-onboard.md
 - [ ] Note: Users must exist before agents can be created
 - [ ] Note: X402 payments from todo-x402.md enable agent execution
@@ -785,10 +785,10 @@ When one todo file depends on another, document like this:
 
 **In todo-ecommerce.md Phase 4:**
 ```
-## PHASE 4: CHECKOUT & PAYMENT INTEGRATION (Infer 31-40)
+## PHASE 4: CHECKOUT & PAYMENT INTEGRATION (Cycle 31-40)
 
 **Dependencies:**
-- X402 payments: See todo-x402.md Infer 31-50 (payment routes)
+- X402 payments: See todo-x402.md Cycle 31-50 (payment routes)
 - Stripe integration: See todo-x402.md Phase 3 (alternative payment)
 - User authentication: See todo-onboard.md Phase 2 (Better Auth)
 ```
@@ -800,7 +800,7 @@ When one todo file depends on another, document like this:
 Every inference follows this pattern:
 
 ```markdown
-### Infer X: [Action Verb] [What Is Being Done]
+### Cycle X: [Action Verb] [What Is Being Done]
 - [ ] Subtask 1 (specific, actionable)
 - [ ] Subtask 2 (specific, actionable)
 - [ ] Subtask 3 (specific, actionable)
@@ -809,7 +809,7 @@ Every inference follows this pattern:
 
 Example from X402:
 ```markdown
-### Infer 12: Create X402PaymentService (Effect.ts)
+### Cycle 12: Create X402PaymentService (Effect.ts)
 - [ ] Create `backend/convex/services/x402-payment.ts`
 - [ ] Implement X402PaymentService class:
   ```typescript
@@ -851,16 +851,16 @@ Example from X402:
 
 | Phase | Typical Duration | Key Milestone |
 |-------|-----------------|---------------|
-| Phase 1 (Infer 1-10) | 2-3 days | Foundation validated |
-| Phase 2 (Infer 11-20) | 3-4 days | Schema + services done |
-| Phase 3 (Infer 21-30) | 4-5 days | UI components working |
-| Phase 4 (Infer 31-40) | 4-5 days | Integrations done |
-| Phase 5 (Infer 41-50) | 4-5 days | Business logic complete |
-| Phase 6 (Infer 51-60) | 3-4 days | Tests passing |
-| Phase 7 (Infer 61-70) | 3-4 days | Design finalized |
-| Phase 8 (Infer 71-80) | 2-3 days | Performance optimized |
-| Phase 9 (Infer 81-90) | 3-4 days | Deployed + documented |
-| Phase 10 (Infer 91-100) | 2-3 days | Lessons captured |
+| Phase 1 (Cycle 1-10) | 2-3 days | Foundation validated |
+| Phase 2 (Cycle 11-20) | 3-4 days | Schema + services done |
+| Phase 3 (Cycle 21-30) | 4-5 days | UI components working |
+| Phase 4 (Cycle 31-40) | 4-5 days | Integrations done |
+| Phase 5 (Cycle 41-50) | 4-5 days | Business logic complete |
+| Phase 6 (Cycle 51-60) | 3-4 days | Tests passing |
+| Phase 7 (Cycle 61-70) | 3-4 days | Design finalized |
+| Phase 8 (Cycle 71-80) | 2-3 days | Performance optimized |
+| Phase 9 (Cycle 81-90) | 3-4 days | Deployed + documented |
+| Phase 10 (Cycle 91-100) | 2-3 days | Lessons captured |
 | **TOTAL** | **2 weeks** | Feature complete |
 
 **Parallel execution:** With 3 specialists working on different phases, each file completes in 2 weeks.
@@ -872,12 +872,12 @@ Example from X402:
 **Recommended order (not strictly sequential, but dependencies matter):**
 
 1. **todo-onboard.md** ← Start immediately (no dependencies)
-2. **todo-agents.md** ← Can start when onboard Infer 11 done
-3. **todo-skills.md** ← Can start when agents Infer 11 done
+2. **todo-agents.md** ← Can start when onboard Cycle 11 done
+3. **todo-skills.md** ← Can start when agents Cycle 11 done
 4. **todo-sell.md** ← Can start when onboard + X402 done
 5. **todo-ecommerce.md** ← Can start when onboard + X402 done
 6. **todo-api.md** ← Can start when onboard done (but scope depends on features)
-7. **todo-features.md** ← Can start when ecommerce Infer 11 done
+7. **todo-features.md** ← Can start when ecommerce Cycle 11 done
 8. **todo-one-ie.md** ← Can start last (showcases all features)
 
 ---
@@ -890,7 +890,7 @@ Before declaring "all 9 todos created":
 - [ ] Each file has exactly 100 inferences (10 phases × 10 infers)
 - [ ] Each file follows todo-x402.md structure exactly
 - [ ] All cross-references between files documented
-- [ ] All ontology mappings explicit in Infer 1
+- [ ] All ontology mappings explicit in Cycle 1
 - [ ] All specialist agent assignments clear
 - [ ] All Success Criteria specific (not generic)
 - [ ] All Quick Reference sections complete

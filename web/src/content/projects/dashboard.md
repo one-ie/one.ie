@@ -18,8 +18,8 @@ levelColor: "text-blue-600"
 startDate: 2025-10-30
 targetEndDate: 2026-03-31
 progress: 0
-totalInferences: 100
-completedInferences: 0
+totalCycles: 100
+completedCycles: 0
 estimatedWeeks: 20
 features:
   - "Analytics dashboard with real-time metrics"
@@ -142,20 +142,20 @@ Ready to build this project? Choose your path:
 
 ## Implementation Plan
 
-This project follows a **100-inference implementation plan** for systematic development.
+This project follows a **100-cycle implementation plan** for systematic development.
 
 **📋 View Full Plan:** [Analytics Dashboard Platform v1.0.0](/plans/dashboard)
 
-**Progress:** 0/100 inferences complete (0%)
+**Progress:** 0/100 cycles complete (0%)
 
 ### Plan Overview
 
-- **Infer 1-10**: Foundation & Design (dashboard structure, metrics, design system)
-- **Infer 11-20**: Backend Schema & Services (Convex schema, queries, mutations)
-- **Infer 21-40**: React Components (metric cards, charts, team management)
-- **Infer 41-60**: Astro Pages & Integration (dashboard pages, real-time data)
-- **Infer 61-100**: Polish & Optimization (animations, accessibility, performance)
-- **Timeline**: 80-90 inferences for complete implementation
+- **Cycle 1-10**: Foundation & Design (dashboard structure, metrics, design system)
+- **Cycle 11-20**: Backend Schema & Services (Convex schema, queries, mutations)
+- **Cycle 21-40**: React Components (metric cards, charts, team management)
+- **Cycle 41-60**: Astro Pages & Integration (dashboard pages, real-time data)
+- **Cycle 61-100**: Polish & Optimization (animations, accessibility, performance)
+- **Timeline**: 80-90 cycles for complete implementation
 
 ### Quick Start
 
@@ -163,7 +163,7 @@ This project follows a **100-inference implementation plan** for systematic deve
 # 1. View the implementation plan
 /plan dashboard
 
-# 2. Start with first inference
+# 2. Start with first cycle
 /infer 1
 
 # 3. Mark complete and advance
@@ -173,8 +173,8 @@ This project follows a **100-inference implementation plan** for systematic deve
 ## How to Use
 
 1. Visit `/account` to see the live demo
-2. Review the [100-inference implementation plan](/plans/dashboard)
-3. Follow the inference sequence step-by-step
+2. Review the [100-cycle implementation plan](/plans/dashboard)
+3. Follow the cycle sequence step-by-step
 4. Configure your analytics metrics
 5. Invite team members and set permissions
 6. Customize dashboard layout and reports

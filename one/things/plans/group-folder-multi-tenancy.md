@@ -628,100 +628,100 @@ npx oneie
 #    - Add group-specific docs in /acme/groups/acme-engineering/
 ```
 
-## 100-Inference Implementation Plan
+## 100-Cycle Implementation Plan
 
-### Infer 1-10: Foundation & Setup
+### Cycle 1-10: Foundation & Setup
 
-- [x] Infer 1: Create plan document (this file)
-- [ ] Infer 2: Validate against 6-dimension ontology
-- [ ] Infer 3: Update CLAUDE.md with group folder guidelines
-- [ ] Infer 4: Update AGENTS.md with file resolution logic
-- [ ] Infer 5: Design CLI init command API
-- [ ] Infer 6: Design file resolution utility
-- [ ] Infer 7: Security audit (path traversal, access control)
-- [ ] Infer 8: Update .gitignore with group folder patterns
-- [ ] Infer 9: Create group folder README template
-- [ ] Infer 10: Dependency mapping (CLI, backend, frontend)
+- [x] Cycle 1: Create plan document (this file)
+- [ ] Cycle 2: Validate against 6-dimension ontology
+- [ ] Cycle 3: Update CLAUDE.md with group folder guidelines
+- [ ] Cycle 4: Update AGENTS.md with file resolution logic
+- [ ] Cycle 5: Design CLI init command API
+- [ ] Cycle 6: Design file resolution utility
+- [ ] Cycle 7: Security audit (path traversal, access control)
+- [ ] Cycle 8: Update .gitignore with group folder patterns
+- [ ] Cycle 9: Create group folder README template
+- [ ] Cycle 10: Dependency mapping (CLI, backend, frontend)
 
-### Infer 11-20: Backend (CLI Logic)
+### Cycle 11-20: Backend (CLI Logic)
 
-- [ ] Infer 11: Implement `cli/src/commands/init.ts`
-- [ ] Infer 12: Implement `cli/src/utils/group-setup.ts`
-- [ ] Infer 13: Implement `cli/src/utils/file-resolver.ts`
-- [ ] Infer 14: Add group name validation
-- [ ] Infer 15: Create folder structure generator
-- [ ] Infer 16: Create README template renderer
-- [ ] Infer 17: Add .env.local updater
-- [ ] Infer 18: Add .gitignore updater
-- [ ] Infer 19: Error handling and rollback
-- [ ] Infer 20: CLI unit tests
+- [ ] Cycle 11: Implement `cli/src/commands/init.ts`
+- [ ] Cycle 12: Implement `cli/src/utils/group-setup.ts`
+- [ ] Cycle 13: Implement `cli/src/utils/file-resolver.ts`
+- [ ] Cycle 14: Add group name validation
+- [ ] Cycle 15: Create folder structure generator
+- [ ] Cycle 16: Create README template renderer
+- [ ] Cycle 17: Add .env.local updater
+- [ ] Cycle 18: Add .gitignore updater
+- [ ] Cycle 19: Error handling and rollback
+- [ ] Cycle 20: CLI unit tests
 
-### Infer 21-30: Frontend Integration
+### Cycle 21-30: Frontend Integration
 
-- [ ] Infer 21: Update file loading in Astro pages
-- [ ] Infer 22: Update content collections to support group folders
-- [ ] Infer 23: Add group context provider (React)
-- [ ] Infer 24: Update navigation to show group-specific docs
-- [ ] Infer 25: Add group folder file browser component
-- [ ] Infer 26: Update search to index group folders
-- [ ] Infer 27: Add group-specific theming support
-- [ ] Infer 28: Update SSR to resolve group files
-- [ ] Infer 29: Frontend error handling (missing files)
-- [ ] Infer 30: Frontend unit tests
+- [ ] Cycle 21: Update file loading in Astro pages
+- [ ] Cycle 22: Update content collections to support group folders
+- [ ] Cycle 23: Add group context provider (React)
+- [ ] Cycle 24: Update navigation to show group-specific docs
+- [ ] Cycle 25: Add group folder file browser component
+- [ ] Cycle 26: Update search to index group folders
+- [ ] Cycle 27: Add group-specific theming support
+- [ ] Cycle 28: Update SSR to resolve group files
+- [ ] Cycle 29: Frontend error handling (missing files)
+- [ ] Cycle 30: Frontend unit tests
 
-### Infer 31-40: Integration
+### Cycle 31-40: Integration
 
-- [ ] Infer 31: Update `.claude/` agents with file resolution
-- [ ] Infer 32: Update MCP config for group folders
-- [ ] Infer 33: Update llms.txt generator
-- [ ] Infer 34: Add group folder to Convex file storage (optional)
-- [ ] Infer 35: Create migration script for existing users
-- [ ] Infer 36: Update onboarding flow
-- [ ] Infer 37: Integration tests (CLI + frontend)
-- [ ] Infer 38: Update deployment scripts
-- [ ] Infer 39: Add Cloudflare Pages compatibility check
-- [ ] Infer 40: Integration smoke tests
+- [ ] Cycle 31: Update `.claude/` agents with file resolution
+- [ ] Cycle 32: Update MCP config for group folders
+- [ ] Cycle 33: Update llms.txt generator
+- [ ] Cycle 34: Add group folder to Convex file storage (optional)
+- [ ] Cycle 35: Create migration script for existing users
+- [ ] Cycle 36: Update onboarding flow
+- [ ] Cycle 37: Integration tests (CLI + frontend)
+- [ ] Cycle 38: Update deployment scripts
+- [ ] Cycle 39: Add Cloudflare Pages compatibility check
+- [ ] Cycle 40: Integration smoke tests
 
-### Infer 41-50: Documentation
+### Cycle 41-50: Documentation
 
-- [ ] Infer 41: Update CLAUDE.md with group folder guidelines
-- [ ] Infer 42: Update AGENTS.md with examples
-- [ ] Infer 43: Update README.md with quick start
-- [ ] Infer 44: Create `/one/knowledge/group-folders.md` guide
-- [ ] Infer 45: Add examples to `/one/connections/patterns.md`
-- [ ] Infer 46: Update `/one/connections/workflow.md`
-- [ ] Infer 47: Create video tutorial script
-- [ ] Infer 48: Update API documentation
-- [ ] Infer 49: Add FAQ section
-- [ ] Infer 50: Documentation review and polish
+- [ ] Cycle 41: Update CLAUDE.md with group folder guidelines
+- [ ] Cycle 42: Update AGENTS.md with examples
+- [ ] Cycle 43: Update README.md with quick start
+- [ ] Cycle 44: Create `/one/knowledge/group-folders.md` guide
+- [ ] Cycle 45: Add examples to `/one/connections/patterns.md`
+- [ ] Cycle 46: Update `/one/connections/workflow.md`
+- [ ] Cycle 47: Create video tutorial script
+- [ ] Cycle 48: Update API documentation
+- [ ] Cycle 49: Add FAQ section
+- [ ] Cycle 50: Documentation review and polish
 
-### Infer 51-60: Quality & Testing
+### Cycle 51-60: Quality & Testing
 
-- [ ] Infer 51: Security audit (path traversal)
-- [ ] Infer 52: Performance testing (file resolution)
-- [ ] Infer 53: E2E tests (CLI init → frontend display)
-- [ ] Infer 54: Cross-platform tests (Windows, macOS, Linux)
-- [ ] Infer 55: Error scenario tests (invalid names, permission errors)
-- [ ] Infer 56: Regression tests (existing functionality)
-- [ ] Infer 57: Load testing (1000+ markdown files)
-- [ ] Infer 58: Accessibility audit (file browser UI)
-- [ ] Infer 59: Browser compatibility tests
-- [ ] Infer 60: Mobile responsiveness tests
+- [ ] Cycle 51: Security audit (path traversal)
+- [ ] Cycle 52: Performance testing (file resolution)
+- [ ] Cycle 53: E2E tests (CLI init → frontend display)
+- [ ] Cycle 54: Cross-platform tests (Windows, macOS, Linux)
+- [ ] Cycle 55: Error scenario tests (invalid names, permission errors)
+- [ ] Cycle 56: Regression tests (existing functionality)
+- [ ] Cycle 57: Load testing (1000+ markdown files)
+- [ ] Cycle 58: Accessibility audit (file browser UI)
+- [ ] Cycle 59: Browser compatibility tests
+- [ ] Cycle 60: Mobile responsiveness tests
 
-### Infer 61-70: Polish & Launch
+### Cycle 61-70: Polish & Launch
 
-- [ ] Infer 61: Update CLI version to 4.0.0
-- [ ] Infer 62: Create release notes
-- [ ] Infer 63: Update changelog
-- [ ] Infer 64: Prepare blog post
-- [ ] Infer 65: Record demo video
-- [ ] Infer 66: Update landing page with feature
-- [ ] Infer 67: Deploy to production
-- [ ] Infer 68: Monitor error logs
-- [ ] Infer 69: Gather user feedback
-- [ ] Infer 70: Mark complete and celebrate!
+- [ ] Cycle 61: Update CLI version to 4.0.0
+- [ ] Cycle 62: Create release notes
+- [ ] Cycle 63: Update changelog
+- [ ] Cycle 64: Prepare blog post
+- [ ] Cycle 65: Record demo video
+- [ ] Cycle 66: Update landing page with feature
+- [ ] Cycle 67: Deploy to production
+- [ ] Cycle 68: Monitor error logs
+- [ ] Cycle 69: Gather user feedback
+- [ ] Cycle 70: Mark complete and celebrate!
 
-### Infer 71-100: (Reserved for Expansion)
+### Cycle 71-100: (Reserved for Expansion)
 
 ## Success Metrics
 
@@ -847,7 +847,7 @@ This architecture provides **installation-based filesystem customization** that 
 **Recommended Enhancement #3: Updated Implementation Plan**
 
 - ✅ Updated CLI implementation files (installation-setup.ts, file-resolver.ts)
-- ✅ Updated terminology in 100-inference plan
+- ✅ Updated terminology in 100-cycle plan
 - ✅ Clarified dependencies and cascade opportunities
 - ✅ Added Cloudflare Pages compatibility tasks
 

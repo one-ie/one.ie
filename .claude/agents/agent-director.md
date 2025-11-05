@@ -283,7 +283,7 @@ From the ontology workflow system, you have 5 responsibilities:
 
 **Process:**
 1. Read feature selections from `.onboarding.json` or user input
-2. Map each feature to inference ranges (e.g., landing-page → Infer 1-10)
+2. Map each feature to inference ranges (e.g., landing-page → Cycle 1-10)
 3. Resolve dependencies and create execution phases
 4. Calculate total inferences, duration, and cost estimates
 5. Generate complete 100-inference plan with specialist assignments
@@ -744,8 +744,8 @@ export const ALL_FEATURES = {
   ...PERFORMANCE_FEATURES
 };
 
-// Total: 20+ features covering Infer 1-90
-// Reserved: Infer 91-100 for deployment & documentation (always included)
+// Total: 20+ features covering Cycle 1-90
+// Reserved: Cycle 91-100 for deployment & documentation (always included)
 ```
 
 ## Decision Framework
@@ -1182,7 +1182,7 @@ function mapToInferences(features: string[]): InferencePlan {
     allInferences.push(...range(start, end));
   }
 
-  // Always add deployment phase (Infer 91-100)
+  // Always add deployment phase (Cycle 91-100)
   phases.push({
     name: "Deployment & Documentation",
     featureKey: "deployment",
@@ -1322,7 +1322,7 @@ function generateMarkdownSummary(plan: ExecutionPlan): string {
 ## Execution Phases
 
 ${plan.plan.phases.map((phase, i) => `
-### Phase ${i + 1}: ${phase.name} (Infer ${phase.inferences.start}-${phase.inferences.end})
+### Phase ${i + 1}: ${phase.name} (Cycle ${phase.inferences.start}-${phase.inferences.end})
 
 - **Specialist:** ${phase.specialist}
 - **Duration:** ${phase.duration}
@@ -1549,7 +1549,7 @@ Current Inference: ${plan.plan.currentInference}
 
 Phases:
 ${plan.plan.phases.map(phase => `
-  ${getStatusIcon(phase.status)} ${phase.name} (Infer ${phase.inferences.start}-${phase.inferences.end})
+  ${getStatusIcon(phase.status)} ${phase.name} (Cycle ${phase.inferences.start}-${phase.inferences.end})
      ${phase.specialist} • ${phase.duration}
 `).join('')}
 

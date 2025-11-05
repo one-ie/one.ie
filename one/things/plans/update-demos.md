@@ -107,11 +107,11 @@ Each dimension page follows this structure:
 └─────────────────────────────────────────────────────────┘
 ```
 
-## Implementation Plan (100 Inferences)
+## Implementation Plan (100 Cycles)
 
-### Phase 1: Foundation (Infer 1-20)
+### Phase 1: Foundation (Cycle 1-20)
 
-**Infer 1-5: Create Shared Components**
+**Cycle 1-5: Create Shared Components**
 
 - `DemoContainer.tsx` - Wrapper with connection status
 - `DemoPlayground.tsx` - Interactive data manipulation
@@ -119,7 +119,7 @@ Each dimension page follows this structure:
 - `DemoStats.tsx` - Live statistics display
 - `DemoRelationshipGraph.tsx` - Visual relationship explorer
 
-**Infer 6-10: Update Demo Index Page**
+**Cycle 6-10: Update Demo Index Page**
 
 - Add live backend connection test
 - Show real statistics from all dimensions
@@ -127,7 +127,7 @@ Each dimension page follows this structure:
 - Improve navigation cards with counts
 - Add quick start guide
 
-**Infer 11-15: Create Demo Hooks**
+**Cycle 11-15: Create Demo Hooks**
 
 - `useBackendConnection.ts` - Manage connection state
 - `useDemoData.ts` - Fetch and cache demo data
@@ -135,7 +135,7 @@ Each dimension page follows this structure:
 - `useDemoRefresh.ts` - Auto-refresh data
 - Error handling utilities
 
-**Infer 16-20: Setup Demo State Management**
+**Cycle 16-20: Setup Demo State Management**
 
 - Nanostores for demo state
 - Cache layer for demo data
@@ -143,251 +143,251 @@ Each dimension page follows this structure:
 - Real-time sync
 - Toast notifications
 
-### Phase 2: Dimension 1 - Groups (Infer 21-30)
+### Phase 2: Dimension 1 - Groups (Cycle 21-30)
 
-**Infer 21-23: Groups List & Create**
+**Cycle 21-23: Groups List & Create**
 
 - Display all groups from backend
 - Create new group form (inline)
 - Group type selector (6 types)
 - Hierarchical display (parent → child)
 
-**Infer 24-26: Group Details**
+**Cycle 24-26: Group Details**
 
 - Click group to see details
 - Edit group properties
 - Group settings panel
 - Member count, usage stats
 
-**Infer 27-29: Group Hierarchy**
+**Cycle 27-29: Group Hierarchy**
 
 - Visual tree structure
 - Drag-and-drop to reparent
 - Create subgroup inline
 - Breadcrumb navigation
 
-**Infer 30: Groups Code Examples**
+**Cycle 30: Groups Code Examples**
 
 - `useGroups()` hook example
 - HTTP API examples
 - Create group mutation
 - List groups query
 
-### Phase 3: Dimension 2 - People (Infer 31-40)
+### Phase 3: Dimension 2 - People (Cycle 31-40)
 
-**Infer 31-33: Polish Existing Implementation**
+**Cycle 31-33: Polish Existing Implementation**
 
 - ✅ Already working! (Just fixed)
 - Add profile pictures (avatar component)
 - Role badges with colors
 - Better form validation
 
-**Infer 34-36: People Permissions**
+**Cycle 34-36: People Permissions**
 
 - Show what each role can do
 - Interactive permission matrix
 - Role hierarchy visualization
 - Try changing roles
 
-**Infer 37-39: People Relationships**
+**Cycle 37-39: People Relationships**
 
 - Show people's group memberships
 - Display created things
 - Activity timeline
 - Social graph
 
-**Infer 40: People Code Examples**
+**Cycle 40: People Code Examples**
 
 - All hooks documented
 - Complete API reference
 - Auth integration examples
 
-### Phase 4: Dimension 3 - Things (Infer 41-50)
+### Phase 4: Dimension 3 - Things (Cycle 41-50)
 
-**Infer 41-43: Things Gallery**
+**Cycle 41-43: Things Gallery**
 
 - Grid/list view toggle
 - Filter by type (66 types!)
 - Search by name
 - Sort by created/updated
 
-**Infer 44-46: Create Thing**
+**Cycle 44-46: Create Thing**
 
 - Type selector with icons
 - Dynamic form based on type
 - Property builder
 - Status selector
 
-**Infer 47-49: Thing Details**
+**Cycle 47-49: Thing Details**
 
 - Full property viewer
 - Connections to/from this thing
 - Events timeline for this thing
 - Edit inline
 
-**Infer 50: Things Code Examples**
+**Cycle 50: Things Code Examples**
 
 - Create/read/update examples
 - Type-safe property access
 - Advanced querying
 
-### Phase 5: Dimension 4 - Connections (Infer 51-60)
+### Phase 5: Dimension 4 - Connections (Cycle 51-60)
 
-**Infer 51-53: Connection Visualizer**
+**Cycle 51-53: Connection Visualizer**
 
 - D3.js force-directed graph
 - Click node to see connections
 - Filter by relationship type (25 types)
 - Zoom & pan
 
-**Infer 54-56: Create Connection**
+**Cycle 54-56: Create Connection**
 
 - Select from thing (autocomplete)
 - Select to thing (autocomplete)
 - Relationship type picker
 - Metadata editor
 
-**Infer 57-59: Connection Explorer**
+**Cycle 57-59: Connection Explorer**
 
 - List all connections
 - Bidirectional display
 - Strength indicator
 - Temporal validity
 
-**Infer 60: Connections Code Examples**
+**Cycle 60: Connections Code Examples**
 
 - Graph traversal patterns
 - Relationship queries
 - Connection mutations
 
-### Phase 6: Dimension 5 - Events (Infer 61-70)
+### Phase 6: Dimension 5 - Events (Cycle 61-70)
 
-**Infer 61-63: Event Timeline**
+**Cycle 61-63: Event Timeline**
 
 - Chronological list
 - Filter by type (67 types!)
 - Filter by actor/target
 - Time range selector
 
-**Infer 64-66: Event Details**
+**Cycle 64-66: Event Details**
 
 - Expand event to see metadata
 - Click actor/target to navigate
 - Event type explanation
 - Related events
 
-**Infer 67-69: Event Analytics**
+**Cycle 67-69: Event Analytics**
 
 - Event frequency chart
 - Popular event types
 - Activity heatmap
 - Export events (CSV/JSON)
 
-**Infer 70: Events Code Examples**
+**Cycle 70: Events Code Examples**
 
 - Subscribe to events
 - Query event history
 - Event logging patterns
 
-### Phase 7: Dimension 6 - Knowledge/Search (Infer 71-80)
+### Phase 7: Dimension 6 - Knowledge/Search (Cycle 71-80)
 
-**Infer 71-73: Semantic Search**
+**Cycle 71-73: Semantic Search**
 
 - Search box with instant results
 - Vector similarity display
 - Source highlighting
 - Relevance scoring
 
-**Infer 74-76: Knowledge Creation**
+**Cycle 74-76: Knowledge Creation**
 
 - Upload text/documents
 - Auto-chunking
 - Label selector
 - Embedding generation
 
-**Infer 77-79: Knowledge Graph**
+**Cycle 77-79: Knowledge Graph**
 
 - Visual knowledge connections
 - Topic clustering
 - Related knowledge
 - Knowledge lineage
 
-**Infer 80: Knowledge Code Examples**
+**Cycle 80: Knowledge Code Examples**
 
 - RAG implementation
 - Semantic search API
 - Knowledge creation
 
-### Phase 8: API Demo Enhancement (Infer 81-85)
+### Phase 8: API Demo Enhancement (Cycle 81-85)
 
-**Infer 81-82: Interactive API Tester**
+**Cycle 81-82: Interactive API Tester**
 
 - Select endpoint from dropdown
 - Fill parameters (autocomplete)
 - Execute request
 - View formatted response
 
-**Infer 83-84: API Documentation**
+**Cycle 83-84: API Documentation**
 
 - Complete endpoint list
 - Request/response schemas
 - cURL examples
 - SDKs (TypeScript, Python, Go)
 
-**Infer 85: API Playground**
+**Cycle 85: API Playground**
 
 - Multi-tab request builder
 - Save requests
 - Share API examples
 - Export as Postman collection
 
-### Phase 9: Polish & Performance (Infer 86-95)
+### Phase 9: Polish & Performance (Cycle 86-95)
 
-**Infer 86-88: Animations & Transitions**
+**Cycle 86-88: Animations & Transitions**
 
 - Framer Motion for smooth transitions
 - Loading skeletons
 - Success/error animations
 - Page transitions
 
-**Infer 89-91: Accessibility**
+**Cycle 89-91: Accessibility**
 
 - ARIA labels everywhere
 - Keyboard navigation
 - Screen reader testing
 - Focus management
 
-**Infer 92-94: Performance**
+**Cycle 92-94: Performance**
 
 - React.memo for heavy components
 - Virtualized lists for large datasets
 - Debounced search
 - Image lazy loading
 
-**Infer 95: Mobile Responsive**
+**Cycle 95: Mobile Responsive**
 
 - Touch-friendly controls
 - Mobile-optimized layouts
 - Hamburger menu for nav
 - Swipe gestures
 
-### Phase 10: Documentation & Testing (Infer 96-100)
+### Phase 10: Documentation & Testing (Cycle 96-100)
 
-**Infer 96-97: User Guide**
+**Cycle 96-97: User Guide**
 
 - Interactive tutorial
 - Video walkthrough
 - FAQ section
 - Troubleshooting
 
-**Infer 98-99: Testing**
+**Cycle 98-99: Testing**
 
 - E2E tests for each dimension
 - Visual regression tests
 - Performance benchmarks
 - Accessibility tests
 
-**Infer 100: Launch**
+**Cycle 100: Launch**
 
 - Deploy to production
 - Update main site links
@@ -536,8 +536,8 @@ What makes it perfect:
 ## Next Actions
 
 1. **Read this plan thoroughly**
-2. **Start with Infer 1: Create DemoContainer.tsx**
-3. **Follow the 100-inference sequence**
+2. **Start with Cycle 1: Create DemoContainer.tsx**
+3. **Follow the 100-cycle sequence**
 4. **Test each component as you build**
 5. **Deploy incrementally**
 
@@ -564,7 +564,7 @@ What makes it perfect:
 
 ## Conclusion
 
-This plan transforms demo pages from **static documentation** into **living, breathing showcases** of the ONE Platform's power. By following the 100-inference sequence, we'll create demos that are:
+This plan transforms demo pages from **static documentation** into **living, breathing showcases** of the ONE Platform's power. By following the 100-cycle sequence, we'll create demos that are:
 
 - 🎨 **Beautiful** - Delightful UX with smooth animations
 - 🔗 **Connected** - Real backend integration
@@ -577,5 +577,5 @@ This plan transforms demo pages from **static documentation** into **living, bre
 
 **Status:** Ready to implement
 **Assigned:** Frontend Specialist
-**Est. Time:** 100 inferences (not days - we plan in inferences!)
+**Est. Time:** 100 cycles (not days - we plan in cycles!)
 **Priority:** High - Demos are our best marketing

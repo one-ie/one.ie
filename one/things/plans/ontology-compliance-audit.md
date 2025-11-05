@@ -270,7 +270,7 @@ ai_context: |
 - Sync findings globally
 
 **Total Timeline:** 4-5 weeks
-**Estimated Effort:** 50-60 inferences
+**Estimated Effort:** 50-60 cycles
 
 ---
 

@@ -1,18 +1,18 @@
 ---
-title: "Effect.ts Integration: 100-Inference Roadmap"
+title: "Effect.ts Integration: 100-Cycle Roadmap"
 description: "Effect.ts + Convex Components + Backend-Agnostic Frontend with Better Auth"
 feature: "effects"
 organization: "ONE Platform"
 personRole: "platform_owner"
 ontologyDimensions: ["Things", "Connections", "Knowledge"]
 assignedSpecialist: "Engineering Director"
-totalInferences: 100
-completedInferences: 0
+totalCycles: 100
+completedCycles: 0
 createdAt: 2025-10-30
 draft: false
 ---
 
-# Effect.ts Integration: 100-Inference Roadmap
+# Effect.ts Integration: 100-Cycle Roadmap
 
 **Feature:** Effect.ts + Convex Components + Backend-Agnostic Frontend with Better Auth
 **Version:** 1.0.0
@@ -42,7 +42,7 @@ This roadmap sequences the complete integration of **Effect.ts** with the ONE Pl
 
 ---
 
-## Inference 1-10: Foundation & Setup
+## Cycle 1-10: Foundation & Setup
 
 **1. [INFER-001]** Validate Effect.ts + DataProvider against 6-dimension ontology
    - Things: Services (Context.Tag definitions)
@@ -98,16 +98,16 @@ This roadmap sequences the complete integration of **Effect.ts** with the ONE Pl
    - Services: Effect hooks for client-side state management
 
 **9. [INFER-009]** Create implementation plan breakdown
-   - Phase 1 (Infer 1-10): Foundation and design
-   - Phase 2 (Infer 11-20): Core Effect services
-   - Phase 3 (Infer 21-30): DataProvider implementations
-   - Phase 4 (Infer 31-40): Better Auth integration
-   - Phase 5 (Infer 41-50): Astro content integration
-   - Phase 6 (Infer 51-60): Frontend component migration
-   - Phase 7 (Infer 61-70): Convex component integration
-   - Phase 8 (Infer 71-80): Testing and validation
-   - Phase 9 (Infer 81-90): Performance optimization
-   - Phase 10 (Infer 91-100): Documentation and deployment
+   - Phase 1 (Cycle 1-10): Foundation and design
+   - Phase 2 (Cycle 11-20): Core Effect services
+   - Phase 3 (Cycle 21-30): DataProvider implementations
+   - Phase 4 (Cycle 31-40): Better Auth integration
+   - Phase 5 (Cycle 41-50): Astro content integration
+   - Phase 6 (Cycle 51-60): Frontend component migration
+   - Phase 7 (Cycle 61-70): Convex component integration
+   - Phase 8 (Cycle 71-80): Testing and validation
+   - Phase 9 (Cycle 81-90): Performance optimization
+   - Phase 10 (Cycle 91-100): Documentation and deployment
 
 **10. [INFER-010]** Assign specialists and dependencies
    - Backend specialist: Effect services, layers, error handling
@@ -118,7 +118,7 @@ This roadmap sequences the complete integration of **Effect.ts** with the ONE Pl
 
 ---
 
-## Inference 11-20: Core Effect Services
+## Cycle 11-20: Core Effect Services
 
 **11. [INFER-011]** Design error classes and tagged unions
    - UserNotFoundError, ValidationError (domain)
@@ -186,7 +186,7 @@ This roadmap sequences the complete integration of **Effect.ts** with the ONE Pl
 
 ---
 
-## Inference 21-30: DataProvider Implementations
+## Cycle 21-30: DataProvider Implementations
 
 **21. [INFER-021]** Design DataProvider<T> generic interface
    - T = resource type (Thing, User, Document, etc.)
@@ -250,7 +250,7 @@ This roadmap sequences the complete integration of **Effect.ts** with the ONE Pl
 
 ---
 
-## Inference 31-40: Better Auth Integration
+## Cycle 31-40: Better Auth Integration
 
 [Content continues with remaining phases...]
 

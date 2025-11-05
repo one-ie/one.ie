@@ -3,7 +3,7 @@ title: Todo Landing Page
 dimension: things
 primary_dimension: things
 category: todo-landing-page.md
-tags: agent, ai, inference
+tags: agent, ai, cycle
 related_dimensions: connections, events, people, groups, things
 scope: global
 created: 2025-11-03
@@ -20,8 +20,8 @@ ai_context: |
 # ONE Platform: Landing Page & Project Onboarding v1.0.0
 
 **Focus:** Entry point for new creators - "Start a Project" instead of "Pick a Template"
-**Process:** `Infer 1-100 inference sequence`
-**Timeline:** 8-12 inferences per specialist per day
+**Process:** `Cycle 1-100 cycle sequence`
+**Timeline:** 8-12 cycles per specialist per day
 **Target:** Zero-friction creator onboarding (Wave 0 - ENTRY POINT)
 **Integration:** Works with todo-onboard, todo-agents (via agent-clone)
 
@@ -66,11 +66,11 @@ First creator ready to earn
 
 ---
 
-## PHASE 1: FOUNDATION & SETUP (Infer 1-10)
+## PHASE 1: FOUNDATION & SETUP (Cycle 1-10)
 
 **Purpose:** Understand entry point landscape, map to ontology, plan implementation
 
-### Infer 1: Define "Start a Project" Concept
+### Cycle 1: Define "Start a Project" Concept
 
 - [ ] Not "Pick a Template" - too generic
 - [ ] Is "Start a Project" - guided journey
@@ -95,7 +95,7 @@ First creator ready to earn
   - [ ] Intermediate demo: Padel course example
   - [ ] Advanced demo: Creator dashboard with metrics
 
-### Infer 2: Map to 6-Dimension Ontology
+### Cycle 2: Map to 6-Dimension Ontology
 
 - [ ] **Groups:** Creator's project (group as container)
 - [ ] **People:**
@@ -122,7 +122,7 @@ First creator ready to earn
   - [ ] project_description (embedding for search)
   - [ ] creator_niche (what they teach/sell)
 
-### Infer 3: Define Project Templates
+### Cycle 3: Define Project Templates
 
 - [ ] **Starter Projects** (not templates - frameworks):
   1. **Blog/Portfolio**
@@ -167,7 +167,7 @@ First creator ready to earn
   - [ ] Onboarding guide (how to customize)
   - [ ] Success metrics (what to measure)
 
-### Infer 4: Plan AI Landing Page Generation (agent-clone)
+### Cycle 4: Plan AI Landing Page Generation (agent-clone)
 
 - [ ] **Flow:**
   1. User selects "I have a website/social"
@@ -193,7 +193,7 @@ First creator ready to earn
     - [ ] "What's your unique angle?"
   - [ ] Agent builds landing page from conversation
 
-### Infer 5: Define Demo Projects
+### Cycle 5: Define Demo Projects
 
 - [ ] **Live Demos** (working examples users can interact with):
   1. **Padel Course Demo**
@@ -244,7 +244,7 @@ First creator ready to earn
   - [ ] Has "Made with ONE" badge
   - [ ] Links back to "Create your own"
 
-### Infer 6: Plan Landing Page Layout (https://one.ie)
+### Cycle 6: Plan Landing Page Layout (https://one.ie)
 
 - [ ] **Hero Section:**
   - [ ] Headline: "Start Your Creator Project"
@@ -294,7 +294,7 @@ First creator ready to earn
   - [ ] Links: Docs, Blog, Discord, Twitter
   - [ ] Legal: Privacy, Terms, Security
 
-### Infer 7: Plan Authentication Gate
+### Cycle 7: Plan Authentication Gate
 
 - [ ] **When user clicks "Start a Project":**
   1. Check if logged in
@@ -307,7 +307,7 @@ First creator ready to earn
   - [ ] Show what's next: "Next, we'll create your project"
   - [ ] Privacy note: "We'll never spam you"
 
-### Infer 8: Plan Agent-Clone Integration
+### Cycle 8: Plan Agent-Clone Integration
 
 - [ ] **What is agent-clone?**
   - [ ] Described in CLAUDE.md as: "AI clones of creators using their content as training data"
@@ -327,7 +327,7 @@ First creator ready to earn
   - [ ] Uses agent-clone internally
   - [ ] Returns: Generated landing page HTML + metadata
 
-### Infer 9: Plan "Start a Project" Flow UX
+### Cycle 9: Plan "Start a Project" Flow UX
 
 - [ ] **Step 1: Choose Project Type**
   - [ ] 5 cards: Course, Service, Newsletter, Community, Portfolio
@@ -361,7 +361,7 @@ First creator ready to earn
   - [ ] Onboarding tutorials shown
   - [ ] Success! "Your project is live"
 
-### Infer 10: Define Success Metrics
+### Cycle 10: Define Success Metrics
 
 - [ ] Landing page complete when:
   - [ ] [ ] https://one.ie landing page live
@@ -379,11 +379,11 @@ First creator ready to earn
 
 ---
 
-## PHASE 2: BACKEND SCHEMA & SERVICES (Infer 11-20)
+## PHASE 2: BACKEND SCHEMA & SERVICES (Cycle 11-20)
 
 **Purpose:** Add project + landing page things to schema
 
-### Infer 11: Create Project Thing Type
+### Cycle 11: Create Project Thing Type
 
 - [ ] New thing type: `project`
 
@@ -417,7 +417,7 @@ First creator ready to earn
   }
   ```
 
-### Infer 12: Create Landing Page Thing Type
+### Cycle 12: Create Landing Page Thing Type
 
 - [ ] New thing type: `landing_page`
 
@@ -462,7 +462,7 @@ First creator ready to earn
   }
   ```
 
-### Infer 13: Create Landing Page Service (Effect.ts)
+### Cycle 13: Create Landing Page Service (Effect.ts)
 
 - [ ] Service: `backend/convex/services/landing-page.ts`
 - [ ] Methods:
@@ -473,7 +473,7 @@ First creator ready to earn
   - [ ] `publishLandingPage(id)` → published
   - [ ] `getLandingPageMetrics(id)` → views + conversions
 
-### Infer 14: Integrate agent-clone
+### Cycle 14: Integrate agent-clone
 
 - [ ] Service: `backend/convex/services/agent-clone-landing.ts`
 - [ ] Methods:
@@ -482,7 +482,7 @@ First creator ready to earn
   - [ ] `generateLandingPageInVoice(identity)` → HTML in THEIR voice
   - [ ] `createEmbedding(content)` → Vector for similarity search
 
-### Infer 15: Create Convex Mutations
+### Cycle 15: Create Convex Mutations
 
 - [ ] `mutations/projects.ts`:
   - [ ] `createProject(creatorId, name, category)` → projectId
@@ -494,7 +494,7 @@ First creator ready to earn
   - [ ] `updateLandingPage(pageId, content)` → updated
   - [ ] `publishLandingPage(pageId)` → published
 
-### Infer 16: Create Convex Queries
+### Cycle 16: Create Convex Queries
 
 - [ ] `queries/projects.ts`:
   - [ ] `getProject(projectId)` → project details
@@ -505,7 +505,7 @@ First creator ready to earn
   - [ ] `getLandingPage(pageId)` → page content
   - [ ] `getLandingPageMetrics(pageId)` → views + conversions
 
-### Infer 17: Create API Routes for Generation
+### Cycle 17: Create API Routes for Generation
 
 - [ ] `web/src/pages/api/projects/generate.ts`
   - [ ] POST with: url OR socialHandle + platform
@@ -516,7 +516,7 @@ First creator ready to earn
   - [ ] Creates project
   - [ ] Returns: projectId + dashboard link
 
-### Infer 18: Create Demo Projects (Seeding)
+### Cycle 18: Create Demo Projects (Seeding)
 
 - [ ] Script: `backend/convex/seed-demo-projects.ts`
 - [ ] Creates 5 demo projects:
@@ -531,7 +531,7 @@ First creator ready to earn
   - [ ] "Made with ONE" badge
   - [ ] Demo user account
 
-### Infer 19: Create Landing Page Templates
+### Cycle 19: Create Landing Page Templates
 
 - [ ] `backend/convex/seeds/templates.ts`
 - [ ] Each starter project has:
@@ -546,7 +546,7 @@ First creator ready to earn
   - [ ] Community
   - [ ] Portfolio
 
-### Infer 20: Implement Analytics for Landing Pages
+### Cycle 20: Implement Analytics for Landing Pages
 
 - [ ] Track:
   - [ ] Page views (via event)
@@ -558,11 +558,11 @@ First creator ready to earn
 
 ---
 
-## PHASE 3: FRONTEND - LANDING PAGE (Infer 21-30)
+## PHASE 3: FRONTEND - LANDING PAGE (Cycle 21-30)
 
 **Purpose:** Build beautiful landing page UI at https://one.ie
 
-### Infer 21: Create Hero Section Component
+### Cycle 21: Create Hero Section Component
 
 - [ ] Component: `web/src/components/landing/HeroSection.tsx`
 - [ ] Displays:
@@ -572,7 +572,7 @@ First creator ready to earn
   - [ ] Secondary CTA: "View Demos"
   - [ ] Background: Gradient or animated
 
-### Infer 22: Create Featured Creators Section
+### Cycle 22: Create Featured Creators Section
 
 - [ ] Component: `web/src/components/landing/FeaturedCreators.tsx`
 - [ ] Shows:
@@ -582,7 +582,7 @@ First creator ready to earn
   - [ ] "View their project" link
   - [ ] Carousel (swipeable on mobile)
 
-### Infer 23: Create Project Types Section
+### Cycle 23: Create Project Types Section
 
 - [ ] Component: `web/src/components/landing/ProjectTypes.tsx`
 - [ ] Shows:
@@ -592,7 +592,7 @@ First creator ready to earn
   - [ ] "Start This" button
   - [ ] Hover: Show preview image
 
-### Infer 24: Create How It Works Section
+### Cycle 24: Create How It Works Section
 
 - [ ] Component: `web/src/components/landing/HowItWorks.tsx`
 - [ ] Shows:
@@ -604,7 +604,7 @@ First creator ready to earn
   - [ ] Step 5: Earn (icon)
   - [ ] Animated connections between steps
 
-### Infer 25: Create FAQ Section
+### Cycle 25: Create FAQ Section
 
 - [ ] Component: `web/src/components/landing/FAQ.tsx`
 - [ ] Shows:
@@ -613,7 +613,7 @@ First creator ready to earn
   - [ ] Smooth animation
   - [ ] Search FAQ (optional)
 
-### Infer 26: Create Demo Project Links
+### Cycle 26: Create Demo Project Links
 
 - [ ] Component: `web/src/components/landing/DemoLinks.tsx`
 - [ ] Shows:
@@ -622,7 +622,7 @@ First creator ready to earn
   - [ ] Click: Opens demo in new tab
   - [ ] Or: Embedded iframe (sandboxed)
 
-### Infer 27: Create Start Project Modal
+### Cycle 27: Create Start Project Modal
 
 - [ ] Component: `web/src/components/landing/StartProjectModal.tsx`
 - [ ] Modal flow:
@@ -632,7 +632,7 @@ First creator ready to earn
   - [ ] Step 4: Generate (show spinner, call API)
   - [ ] Step 5: Preview (show generated landing page)
 
-### Infer 28: Create Project Generation Flow UI
+### Cycle 28: Create Project Generation Flow UI
 
 - [ ] Component: `web/src/components/landing/ProjectGenerationFlow.tsx`
 - [ ] Sub-components:
@@ -642,7 +642,7 @@ First creator ready to earn
   - [ ] GenerationSpinner (progress indicator)
   - [ ] LandingPagePreview (show draft)
 
-### Infer 29: Create Landing Page (Astro)
+### Cycle 29: Create Landing Page (Astro)
 
 - [ ] `web/src/pages/index.astro`
 - [ ] Sections (in order):
@@ -657,7 +657,7 @@ First creator ready to earn
 - [ ] All components use `client:load` (interactive)
 - [ ] Dark mode support
 
-### Infer 30: Create Demo Pages
+### Cycle 30: Create Demo Pages
 
 - [ ] `web/src/pages/demo/[project].astro`
 - [ ] Dynamic route for each demo:
@@ -674,11 +674,11 @@ First creator ready to earn
 
 ---
 
-## PHASE 4: API ROUTES & INTEGRATION (Infer 31-40)
+## PHASE 4: API ROUTES & INTEGRATION (Cycle 31-40)
 
 **Purpose:** Connect landing page to backend, enable project creation
 
-### Infer 31: Create Project Generation API Route
+### Cycle 31: Create Project Generation API Route
 
 - [ ] `web/src/pages/api/projects/generate.ts`
 - [ ] POST endpoint:
@@ -698,7 +698,7 @@ First creator ready to earn
   ```
 - [ ] Calls: landing-page generator service
 
-### Infer 32: Create Project Creation API Route
+### Cycle 32: Create Project Creation API Route
 
 - [ ] `web/src/pages/api/projects/create.ts`
 - [ ] POST endpoint:
@@ -716,7 +716,7 @@ First creator ready to earn
 - [ ] Requires: User authenticated + onboarded
 - [ ] Creates: Project thing + landing page thing
 
-### Infer 33: Create Auth Gate
+### Cycle 33: Create Auth Gate
 
 - [ ] Middleware: Check if user logged in
 - [ ] Route: POST /api/projects/\* requires auth
@@ -724,7 +724,7 @@ First creator ready to earn
 - [ ] Redirect: If not logged in → /auth/login
 - [ ] Redirect: If not onboarded → /onboarding
 
-### Infer 34: Create Landing Page Fetch Route
+### Cycle 34: Create Landing Page Fetch Route
 
 - [ ] `web/src/pages/api/landing-pages/fetch.ts`
 - [ ] GET endpoint:
@@ -735,7 +735,7 @@ First creator ready to earn
 - [ ] Uses: WebFetch to read URL
 - [ ] Returns: HTML content
 
-### Infer 35: Create Agent-Clone Integration Route
+### Cycle 35: Create Agent-Clone Integration Route
 
 - [ ] `web/src/pages/api/projects/ai-generate.ts`
 - [ ] POST endpoint (AI generation):
@@ -753,7 +753,7 @@ First creator ready to earn
 - [ ] Calls: agent-clone service
 - [ ] Generates: Landing page in creator's voice
 
-### Infer 36: Create Chat Conversation Route
+### Cycle 36: Create Chat Conversation Route
 
 - [ ] `web/src/pages/api/projects/chat.ts`
 - [ ] POST endpoint:
@@ -765,7 +765,7 @@ First creator ready to earn
 - [ ] Agent asks: "What do you teach?" → "Who's your audience?" → etc
 - [ ] Eventually: Generates landing page from conversation
 
-### Infer 37: Create Project Publishing Route
+### Cycle 37: Create Project Publishing Route
 
 - [ ] `web/src/pages/api/projects/publish.ts`
 - [ ] POST endpoint:
@@ -776,7 +776,7 @@ First creator ready to earn
 - [ ] Updates: project.visibility = 'published'
 - [ ] Logs: project_published event
 
-### Infer 38: Create Demo Projects API
+### Cycle 38: Create Demo Projects API
 
 - [ ] `web/src/pages/api/demo/projects.ts`
 - [ ] GET endpoint:
@@ -786,7 +786,7 @@ First creator ready to earn
 - [ ] Returns: All demo projects
 - [ ] Used by: Landing page to list demos
 
-### Infer 39: Create Demo Project Route
+### Cycle 39: Create Demo Project Route
 
 - [ ] `web/src/pages/api/demo/[projectId].ts`
 - [ ] GET endpoint:
@@ -796,7 +796,7 @@ First creator ready to earn
   ```
 - [ ] Returns: Full demo project content
 
-### Infer 40: Create Analytics Tracking Routes
+### Cycle 40: Create Analytics Tracking Routes
 
 - [ ] `web/src/pages/api/analytics/landing-page.ts`
 - [ ] Track: Page views, CTA clicks, conversions
@@ -805,11 +805,11 @@ First creator ready to earn
 
 ---
 
-## PHASE 5: AI AGENT-CLONE INTEGRATION (Infer 41-50)
+## PHASE 5: AI AGENT-CLONE INTEGRATION (Cycle 41-50)
 
 **Purpose:** Integrate agent-clone for voice-driven landing page generation
 
-### Infer 41: Design Agent-Clone Landing Page Generator
+### Cycle 41: Design Agent-Clone Landing Page Generator
 
 - [ ] What agent-clone does:
   - [ ] Reads creator's website/social (WebFetch)
@@ -825,7 +825,7 @@ First creator ready to earn
   - [ ] Agent generates: Landing page that SOUNDS like you
   - [ ] User: "Wow, that's exactly how I would say it!"
 
-### Infer 42: Implement URL Content Extraction
+### Cycle 42: Implement URL Content Extraction
 
 - [ ] Service method: `extractCreatorIdentity(url)`
 - [ ] Uses: WebFetch to read URL
@@ -838,7 +838,7 @@ First creator ready to earn
   - [ ] Text blocks (tone of voice?)
 - [ ] Returns: Structured identity object
 
-### Infer 43: Implement Social Profile Extraction
+### Cycle 43: Implement Social Profile Extraction
 
 - [ ] If user provides Twitter/LinkedIn/YouTube:
   - [ ] Fetch profile data (public info)
@@ -848,7 +848,7 @@ First creator ready to earn
   - [ ] Extract follower count (validation)
 - [ ] Returns: Social identity object
 
-### Infer 44: Implement Semantic Analysis
+### Cycle 44: Implement Semantic Analysis
 
 - [ ] Take extracted content
 - [ ] Use Claude to analyze:
@@ -859,7 +859,7 @@ First creator ready to earn
   - [ ] **Unique angle:** What makes them different?
 - [ ] Returns: Understanding object (used for generation)
 
-### Infer 45: Implement Vector Embedding
+### Cycle 45: Implement Vector Embedding
 
 - [ ] Create embedding of extracted content
 - [ ] Uses: OpenAI embeddings API
@@ -867,7 +867,7 @@ First creator ready to earn
 - [ ] Store: In Convex for later use
 - [ ] Use case: "Find creators like you" (future feature)
 
-### Infer 46: Implement Landing Page Generation
+### Cycle 46: Implement Landing Page Generation
 
 - [ ] Claude generates landing page HTML
 - [ ] System prompt: "You are a landing page designer. Create a landing page in the voice of [creator name]."
@@ -879,7 +879,7 @@ First creator ready to earn
   - [ ] Uses creator's tone (validated)
   - [ ] Mobile responsive (CSS checked)
 
-### Infer 47: Implement Conversation-Based Generation
+### Cycle 47: Implement Conversation-Based Generation
 
 - [ ] Alternative to URL: Chat with AI
 - [ ] Agent-clone asks questions:
@@ -891,7 +891,7 @@ First creator ready to earn
 - [ ] After 5 questions: Generate landing page
 - [ ] Can iterate: "Can you make it more [casual/professional]?"
 
-### Infer 48: Create Agent-Clone Service
+### Cycle 48: Create Agent-Clone Service
 
 - [ ] Service: `backend/convex/services/agent-clone-landing.ts`
 - [ ] Methods:
@@ -900,7 +900,7 @@ First creator ready to earn
   - [ ] `cloneFromConversation(messages)` → Analyze conversation, then generate
   - [ ] `refineGeneration(content, feedback)` → Re-generate with user feedback
 
-### Infer 49: Implement Human Review (Optional)
+### Cycle 49: Implement Human Review (Optional)
 
 - [ ] For safety, quality, or brand protection:
   - [ ] High-visibility projects (>100 followers)
@@ -913,7 +913,7 @@ First creator ready to earn
   4. Approves or requests changes
   5. Creator notified
 
-### Infer 50: Create Agent-Clone Examples
+### Cycle 50: Create Agent-Clone Examples
 
 - [ ] Document 3-5 success stories:
   1. "Website → Landing page" (URL extraction)
@@ -933,35 +933,35 @@ First creator ready to earn
 
 ### Summary:
 
-**Phase 6 (Infer 51-60):** Quality & Testing
+**Phase 6 (Cycle 51-60):** Quality & Testing
 
 - Unit tests (generation logic)
 - Integration tests (full flow)
 - E2E tests (user journey)
 - Agent-clone accuracy tests
 
-**Phase 7 (Infer 61-70):** Design & UX
+**Phase 7 (Cycle 61-70):** Design & UX
 
 - Landing page design tokens
 - Modal flow UX
 - Demo project layouts
 - Accessibility (WCAG)
 
-**Phase 8 (Infer 71-80):** Performance & Optimization
+**Phase 8 (Cycle 71-80):** Performance & Optimization
 
 - Image optimization (hero)
 - API caching (demo projects)
 - Generation speed (<3s)
 - Mobile optimization
 
-**Phase 9 (Infer 81-90):** Deployment & Documentation
+**Phase 9 (Cycle 81-90):** Deployment & Documentation
 
 - Deploy landing page
 - Create onboarding video
 - Write docs for creators
 - Set up analytics tracking
 
-**Phase 10 (Infer 91-100):** Knowledge & Lessons
+**Phase 10 (Cycle 91-100):** Knowledge & Lessons
 
 - Document agent-clone learnings
 - Capture success stories

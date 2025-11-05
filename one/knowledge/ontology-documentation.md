@@ -68,19 +68,19 @@ Scope   Authorize  Create     Relate      Log &      Power
 
    - Time-stamped actions
    - Complete audit trail
-   - Inference & revenue tracking
+   - Cycle & revenue tracking
    - Summary with patterns (full details in Ontology.md)
 
-6. **[knowledge.md](./knowledge.md)** - Vectors & inference
+6. **[knowledge.md](./knowledge.md)** - Vectors & cycle
    - **The intelligence layer**
    - Embeddings for semantic search
    - RAG (Retrieval-Augmented Generation)
-   - Inference quotas & revenue flows
+   - Cycle quotas & revenue flows
    - Labels replace legacy tags
 
 ### Knowledge Subdirectory
 
-- **[knowledge/score.md](./knowledge/score.md)** - Inference score tracker
+- **[knowledge/score.md](./knowledge/score.md)** - Cycle score tracker
   - Measures ontology stability
   - Lower is better
   - Goal: < 20 modifications per month
@@ -130,7 +130,7 @@ Scope   Authorize  Create     Relate      Log &      Power
 
 1. **Groups** - How customers are isolated with hierarchical nesting
 2. **People** - How users, roles & permissions work (4 core roles)
-3. **Knowledge** - How AI inference generates revenue
+3. **Knowledge** - How AI cycle generates revenue
 4. **Events** - What gets tracked & analyzed (67 types)
 
 ---
@@ -348,7 +348,7 @@ defineTable({
 - Convex schema migration
 - Embedding pipeline
 - Vector search
-- Inference tracking
+- Cycle tracking
 
 ### Phase 3: Scale
 
@@ -368,7 +368,7 @@ When adding features:
 3. **Metadata for variance** - Protocol/network in metadata, not new enums
 4. **Log events** - Every action creates an event
 5. **Embed content** - Text content → knowledge chunks
-6. **Update inference score** - Track ontology modifications
+6. **Update cycle score** - Track ontology modifications
 
 **Stability = Beauty**
 

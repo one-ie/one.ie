@@ -2,7 +2,7 @@
 title: Landing Page Generator
 dimension: events
 category: landing-page-generator.md
-tags: ai, inference
+tags: ai, cycle
 related_dimensions: connections, things
 scope: global
 created: 2025-11-03
@@ -20,7 +20,7 @@ ai_context: |
 
 **Event Type**: `feature_deployed`
 **Date**: 2025-10-20
-**Inference**: Infer 1-10
+**Cycle**: Cycle 1-10
 **Feature**: Landing Page Generator with Brand Customization
 
 ## Overview
@@ -416,19 +416,19 @@ const trackEvent = async (eventType: string) => {
 
 ## Future Enhancements
 
-### Phase 1 (Infer 11-20)
+### Phase 1 (Cycle 11-20)
 - [ ] A/B testing support
 - [ ] Multiple landing page templates
 - [ ] Dynamic content from Convex
 - [ ] Analytics integration
 
-### Phase 2 (Infer 21-30)
+### Phase 2 (Cycle 21-30)
 - [ ] Visual editor for customization
 - [ ] More icon options
 - [ ] Animation presets
 - [ ] Video hero support
 
-### Phase 3 (Infer 31-40)
+### Phase 3 (Cycle 31-40)
 - [ ] Multilingual support
 - [ ] Personalization based on UTM params
 - [ ] Lead capture forms
@@ -467,10 +467,10 @@ The landing page generator successfully delivers:
 - ✅ One-command generation and deployment
 - ✅ 90+ Lighthouse score target
 
-**Status**: Ready for production use in Infer 1-10 workflow.
+**Status**: Ready for production use in Cycle 1-10 workflow.
 
 ---
 
 **Event ID**: `landing-page-generator-v1`
 **Author**: Frontend Specialist Agent
-**Next**: Infer 11-20 - Analytics integration and A/B testing
+**Next**: Cycle 11-20 - Analytics integration and A/B testing

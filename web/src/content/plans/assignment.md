@@ -6,8 +6,8 @@ organization: "ONE Platform"
 personRole: "platform_owner"
 ontologyDimensions: ["People", "Things", "Events"]
 assignedSpecialist: "Engineering Director"
-totalInferences: 100
-completedInferences: 0
+totalCycles: 100
+completedCycles: 0
 createdAt: 2025-10-30
 draft: false
 ---
@@ -16,7 +16,7 @@ draft: false
 
 **Purpose:** Explicit task assignment for each specialist agent (who builds what, exactly)
 **Audience:** 6 specialist agents + engineering director
-**Format:** Assignment matrix with inference ranges + dependencies
+**Format:** Assignment matrix with cycle ranges + dependencies
 
 ---
 
@@ -32,7 +32,7 @@ draft: false
 | **agent-designer** | 400 | one-ie, ecommerce, buy-chatgpt (design tokens) | Day 2 | Day 11 |
 | **agent-ops** | TBD | one-ie (deployment), template | Day 10 | Day 14 |
 
-**Total Team Capacity:** ~4,200 inferences available (900 for each todo + 50% QA buffer)
+**Total Team Capacity:** ~4,200 cycles available (900 for each todo + 50% QA buffer)
 **Utilization:** ~85% (healthy margin for unknowns)
 **Critical Path:** onboard + x402 → ecommerce → one-ie (300 infers minimum)
 
@@ -42,13 +42,13 @@ draft: false
 
 ---
 
-## 🔵 AGENT-BACKEND (1,200 inferences total)
+## 🔵 AGENT-BACKEND (1,200 cycles total)
 
 **Role:** Database schema, Convex services, backend logic, all server-side implementation
 **Lead Specialist:** Primary owner of schema design + architecture
 **Teammates:** Coordinates with agent-frontend (API contracts), agent-integrator (external calls), agent-quality (test design)
 
-### todo-onboard: 80 inferences
+### todo-onboard: 80 cycles
 | Phase | Infers | Task | Dependency | Deliverable |
 |-------|--------|------|-----------|-------------|
 | Phase 2 | 40 | Schema: creator thing type + workspace setup | - | schema.ts updated |
@@ -57,7 +57,7 @@ draft: false
 | Phase 6 | 10 | Test: unit + integration tests | all phase 4 code | 80%+ coverage |
 | **Subtotal** | **80** | | | |
 
-### todo-x402: 240 inferences
+### todo-x402: 240 cycles
 | Phase | Infers | Task | Dependency | Deliverable |
 |-------|--------|------|-----------|-------------|
 | Phase 2 | 100 | Schema: payment, subscription, endorsement things + indexes | - | schema.ts extended |
@@ -67,7 +67,7 @@ draft: false
 | Phase 6 | 10 | Queries: getPaymentHistory, getCreatorRevenue | phase 5 complete | convex/queries/payments.ts |
 | **Subtotal** | **240** | | | |
 
-### todo-ecommerce: 200 inferences
+### todo-ecommerce: 200 cycles
 | Phase | Infers | Task | Dependency | Deliverable |
 |-------|--------|------|-----------|-------------|
 | Phase 2 | 80 | Schema: product, order, cart, subscription things | ecommerce phase 1 plan | schema.ts extended |
@@ -76,7 +76,7 @@ draft: false
 | Phase 6 | 20 | Mutations + Queries for products, orders | all phase 5 code | convex/mutations/*, queries/* |
 | **Subtotal** | **200** | | | |
 
-### todo-acp-integration: 180 inferences
+### todo-acp-integration: 180 cycles
 | Phase | Infers | Task | Dependency | Deliverable |
 |-------|--------|------|-----------|-------------|
 | Phase 2 | 80 | Schema: agent, acp_message, acp_task things | acp phase 1 complete | schema.ts extended |
@@ -85,7 +85,7 @@ draft: false
 | Phase 6 | 10 | Mutations + Queries for agent operations | phase 5 complete | convex/*acp* |
 | **Subtotal** | **180** | | | |
 
-### todo-api: 200 inferences
+### todo-api: 200 cycles
 | Phase | Infers | Task | Dependency | Deliverable |
 |-------|--------|------|-----------|-------------|
 | Phase 1 | 20 | API design: OpenAPI spec for all endpoints | agent-frontend input | api-contracts.openapi.yaml |
@@ -94,7 +94,7 @@ draft: false
 | Phase 6 | 20 | Queries + caching strategy | all phase 4 ready | query optimization |
 | **Subtotal** | **200** | | | |
 
-### todo-features: 100 inferences
+### todo-features: 100 cycles
 | Phase | Infers | Task | Dependency | Deliverable |
 |-------|--------|------|-----------|-------------|
 | Phase 2 | 30 | Schema: analytics event types + tables | ecommerce ready | schema.ts extended |
@@ -102,7 +102,7 @@ draft: false
 | Phase 6 | 20 | Queries: getCreatorMetrics, searchProducts | phase 4 ready | query functions |
 | **Subtotal** | **100** | | | |
 
-### **agent-backend TOTAL: 1,200 inferences**
+### **agent-backend TOTAL: 1,200 cycles**
 - **Week 1:** Schema + Phase 2 of all todos (240 infers) = 5 days
 - **Week 2:** Phase 4 API routes (200 infers) = 3 days
 - **Week 3:** Phase 5-6 services + testing (400 infers) = 5 days
@@ -110,13 +110,13 @@ draft: false
 
 ---
 
-## 🟢 AGENT-FRONTEND (850 inferences total)
+## 🟢 AGENT-FRONTEND (850 cycles total)
 
 **Role:** React components, Astro pages, UI/UX implementation, client-side logic
 **Lead Specialist:** Primary owner of user-facing features + component library
 **Teammates:** Coordinates with agent-backend (API contracts), agent-designer (design specs), agent-quality (component tests)
 
-### todo-onboard: 90 inferences
+### todo-onboard: 90 cycles
 | Phase | Infers | Task | Dependency | Deliverable |
 |-------|--------|------|-----------|-------------|
 | Phase 3 | 50 | Components: SignupForm, EmailVerification, ProfileForm, WorkspaceSetup | - | 4 components |
@@ -124,7 +124,7 @@ draft: false
 | Phase 4 | 20 | API integration: call /api/onboarding/* from components | backend routes ready | Components call API |
 | **Subtotal** | **90** | | | |
 
-### todo-ecommerce: 180 inferences
+### todo-ecommerce: 180 cycles
 | Phase | Infers | Task | Dependency | Deliverable |
 |-------|--------|------|-----------|-------------|
 | Phase 3 | 90 | Components: ProductCard, ShoppingCart, CheckoutForm, OrderConfirmation | - | 6 components |
@@ -133,7 +133,7 @@ draft: false
 | Phase 6 | 20 | Component testing: unit + integration tests | all code written | 80%+ coverage |
 | **Subtotal** | **180** | | | |
 
-### todo-buy-chatgpt: 150 inferences
+### todo-buy-chatgpt: 150 cycles
 | Phase | Infers | Task | Dependency | Deliverable |
 |-------|--------|------|-----------|-------------|
 | Phase 3 | 70 | Components: ChatInterface, ProductCard (chat version), RecommendationSection | - | 5 components |
@@ -142,7 +142,7 @@ draft: false
 | Phase 6 | 20 | Testing: chat interaction tests, payment flow | all code written | E2E tests pass |
 | **Subtotal** | **150** | | | |
 
-### todo-one-ie: 250 inferences
+### todo-one-ie: 250 cycles
 | Phase | Infers | Task | Dependency | Deliverable |
 |-------|--------|------|-----------|-------------|
 | Phase 3 | 100 | Components: LandingPage, ProductGrid, Dashboard layouts | - | 10+ components |
@@ -151,7 +151,7 @@ draft: false
 | Phase 6 | 20 | Testing: page loads, responsiveness, accessibility | all pages built | smoke tests pass |
 | **Subtotal** | **250** | | | |
 
-### todo-features: 100 inferences
+### todo-features: 100 cycles
 | Phase | Infers | Task | Dependency | Deliverable |
 |-------|--------|------|-----------|-------------|
 | Phase 3 | 50 | Components: AnalyticsDashboard, SearchBar, NotificationCenter | - | 3 components |
@@ -159,7 +159,7 @@ draft: false
 | Phase 4 | 20 | API integration: analytics, search, notifications | backend routes ready | live data showing |
 | **Subtotal** | **100** | | | |
 
-### **agent-frontend TOTAL: 850 inferences**
+### **agent-frontend TOTAL: 850 cycles**
 - **Week 1:** Phase 3 components (200 infers) = 3 days
 - **Week 2:** Phase 3 pages (120 infers) = 2 days
 - **Week 2-3:** Phase 4 API integration (150 infers) = 2 days
@@ -168,13 +168,13 @@ draft: false
 
 ---
 
-## 🟣 AGENT-INTEGRATOR (650 inferences total)
+## 🟣 AGENT-INTEGRATOR (650 cycles total)
 
 **Role:** External system integration (LLM APIs, Coinbase, GitHub, blockchain), protocols
 **Lead Specialist:** Primary owner of X402, Claude API, ACP, external integrations
 **Teammates:** Coordinates with agent-backend (service layer), agent-builder (ElizaOS), agent-ops (deployment)
 
-### todo-x402: 180 inferences
+### todo-x402: 180 cycles
 | Phase | Infers | Task | Dependency | Deliverable |
 |-------|--------|------|-----------|-------------|
 | Phase 2 | 40 | X402PaymentService: implement permit + transfer payment logic | - | Effect.ts services |
@@ -183,7 +183,7 @@ draft: false
 | Phase 6 | 20 | Testing: X402 flow with test payments | all code written | tests passing |
 | **Subtotal** | **180** | | | |
 
-### todo-buy-chatgpt: 120 inferences
+### todo-buy-chatgpt: 120 cycles
 | Phase | Infers | Task | Dependency | Deliverable |
 |-------|--------|------|-----------|-------------|
 | Phase 2 | 40 | Claude API integration: messages, embeddings, streaming | - | claude-api.ts |
@@ -192,7 +192,7 @@ draft: false
 | Phase 5 | 20 | LLM optimization: prompt tuning, cost tracking | phase 4 ready | prompts optimized |
 | **Subtotal** | **120** | | | |
 
-### todo-acp-integration: 150 inferences
+### todo-acp-integration: 150 cycles
 | Phase | Infers | Task | Dependency | Deliverable |
 |-------|--------|------|-----------|-------------|
 | Phase 2 | 50 | ACPService: message routing, task delegation | - | acp.ts services |
@@ -201,7 +201,7 @@ draft: false
 | Phase 6 | 10 | Testing: agent-to-agent communication | all code written | tests pass |
 | **Subtotal** | **150** | | | |
 
-### todo-agents: 100 inferences
+### todo-agents: 100 cycles
 | Phase | Infers | Task | Dependency | Deliverable |
 |-------|--------|------|-----------|-------------|
 | Phase 4 | 50 | ElizaOS integration: agent deployment, config | acp ready | agents deployable |
@@ -209,7 +209,7 @@ draft: false
 | Phase 6 | 20 | Testing: deploy + run test agents | all code written | agents working |
 | **Subtotal** | **100** | | | |
 
-### **agent-integrator TOTAL: 650 inferences**
+### **agent-integrator TOTAL: 650 cycles**
 - **Week 1:** Blockchain + LLM APIs + ACP (140 infers) = 2 days
 - **Week 2:** Agent integration + marketplace (150 infers) = 2 days
 - **Week 2-3:** External integrations (200 infers) = 3 days
@@ -217,13 +217,13 @@ draft: false
 
 ---
 
-## 🟠 AGENT-BUILDER (500 inferences total)
+## 🟠 AGENT-BUILDER (500 cycles total)
 
 **Role:** Agent framework, ElizaOS customization, skill system, sample agents
 **Lead Specialist:** Primary owner of agent marketplace + creator agent SDK
 **Teammates:** Coordinates with agent-integrator (ACP), agent-backend (schema), agent-quality (agent testing)
 
-### todo-agents: 180 inferences
+### todo-agents: 180 cycles
 | Phase | Infers | Task | Dependency | Deliverable |
 |-------|--------|------|-----------|-------------|
 | Phase 2 | 40 | Agent thing type + capability schema | agent-backend ready | schema extended |
@@ -232,7 +232,7 @@ draft: false
 | Phase 6 | 30 | Testing: agent creation, deployment, execution | all code written | E2E tests pass |
 | **Subtotal** | **180** | | | |
 
-### todo-skills: 150 inferences
+### todo-skills: 150 cycles
 | Phase | Infers | Task | Dependency | Deliverable |
 |-------|--------|------|-----------|-------------|
 | Phase 2 | 40 | Skill thing type + verification schema | agent-backend ready | schema extended |
@@ -241,7 +241,7 @@ draft: false
 | Phase 6 | 20 | Testing: skill matching, recommendations | all code written | tests pass |
 | **Subtotal** | **150** | | | |
 
-### todo-sell: 100 inferences
+### todo-sell: 100 cycles
 | Phase | Infers | Task | Dependency | Deliverable |
 |-------|--------|------|-----------|-------------|
 | Phase 2 | 30 | GitHub integration: OAuth + token generation | - | github.ts service |
@@ -250,7 +250,7 @@ draft: false
 | Phase 6 | 10 | Testing: full flow repo sale + access | all code written | tests pass |
 | **Subtotal** | **100** | | | |
 
-### **agent-builder TOTAL: 500 inferences**
+### **agent-builder TOTAL: 500 cycles**
 - **Week 2:** Agent + skill schema (80 infers) = 1 day
 - **Week 2-3:** UX + examples (150 infers) = 2 days
 - **Week 3:** Integrations (150 infers) = 2 days
@@ -258,7 +258,7 @@ draft: false
 
 ---
 
-## 🔴 AGENT-QUALITY (600 inferences total, distributed concurrent)
+## 🔴 AGENT-QUALITY (600 cycles total, distributed concurrent)
 
 **Role:** Testing (unit, integration, E2E, security, performance), quality gates, test infrastructure
 **Lead Specialist:** Primary owner of test suite + quality standards
@@ -290,14 +290,14 @@ draft: false
 - **todo-features:** 50 infers (analytics, search, social features)
 - **todo-one-ie:** 50 infers (page load, responsiveness, accessibility)
 
-### **agent-quality TOTAL: 600 inferences** (concurrent with all other specialists)
+### **agent-quality TOTAL: 600 cycles** (concurrent with all other specialists)
 - **Week 1-2:** Unit + integration tests (200 infers) = 3 days
 - **Week 2-3:** E2E + security tests (250 infers) = 4 days
 - **Week 3-4:** Performance + UAT (150 infers) = 2 days
 
 ---
 
-## 🎨 AGENT-DESIGNER (400 inferences total)
+## 🎨 AGENT-DESIGNER (400 cycles total)
 
 **Role:** UI/UX design, wireframes, design system, accessibility (WCAG), brand compliance
 **Lead Specialist:** Primary owner of design tokens + component library
@@ -324,7 +324,7 @@ draft: false
 | 60 | Dark mode: all colors + theme support | design tokens ready | dark mode CSS |
 | 30 | Responsive breakpoints: mobile, tablet, desktop | all components | responsive specs |
 
-### **agent-designer TOTAL: 400 inferences**
+### **agent-designer TOTAL: 400 cycles**
 - **Week 1-2:** Design system + tokens (130 infers) = 2 days
 - **Week 2:** Wireframes (80 infers) = 1.5 days
 - **Week 3:** Component design + accessibility (160 infers) = 3 days
@@ -332,7 +332,7 @@ draft: false
 
 ---
 
-## 🚀 AGENT-OPS (TBD, estimated 200 inferences)
+## 🚀 AGENT-OPS (TBD, estimated 200 cycles)
 
 **Role:** DevOps, CI/CD, deployment, infrastructure, monitoring
 **Lead Specialist:** Primary owner of deployment pipeline + production readiness
@@ -349,7 +349,7 @@ draft: false
 | Monitor | 30 | Monitoring: uptime, latency, errors | deployed | dashboard + alerts |
 | Optimize | 10 | Performance tuning: caching, CDN | monitoring live | optimized config |
 
-### **agent-ops TOTAL: 200 inferences** (weeks 3-4)
+### **agent-ops TOTAL: 200 cycles** (weeks 3-4)
 - **Week 3:** CI/CD setup + Docker (100 infers) = 2 days
 - **Week 4:** Deployment + monitoring (100 infers) = 2 days
 
@@ -360,8 +360,8 @@ draft: false
 ### Daily (15 minutes, async Slack OK)
 - **Time:** 9:00 AM start-of-day standup
 - **Each specialist reports:**
-  - Yesterday: X inferences completed, what's done
-  - Today: Y inferences planned, what's next
+  - Yesterday: X cycles completed, what's done
+  - Today: Y cycles planned, what's next
   - Blockers: What are you stuck on?
 - **Format:** Slack thread, 1-2 sentences each
 - **Owner:** agent-director (reads + summarizes)
@@ -483,7 +483,7 @@ draft: false
 
 ## PEAK CAPACITY PLANNING
 
-### Weekly Inferences by Specialist:
+### Weekly Cycles by Specialist:
 
 | Week | Backend | Frontend | Integrator | Builder | Quality | Designer | Ops | Total |
 |-----|---------|----------|-----------|---------|---------|----------|-----|--------|
@@ -533,4 +533,4 @@ draft: false
 
 ---
 
-**This assignment document is the single source of truth for who builds what, exactly. Each specialist knows their inferences, dependencies, and success criteria.**
+**This assignment document is the single source of truth for who builds what, exactly. Each specialist knows their cycles, dependencies, and success criteria.**

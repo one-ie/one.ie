@@ -18,8 +18,8 @@ levelColor: "text-green-600"
 startDate: 2025-10-30
 targetEndDate: 2026-03-31
 progress: 0
-totalInferences: 100
-completedInferences: 0
+totalCycles: 100
+completedCycles: 0
 features:
   - "Product showcase with images and descriptions"
   - "Shopping cart with quantity controls"
@@ -140,19 +140,19 @@ Ready to build this project? Choose your path:
 
 ## Implementation Plan
 
-This project follows a **100-inference implementation plan** for systematic development.
+This project follows a **100-cycle implementation plan** for systematic development.
 
 **📋 View Full Plan:** [E-Commerce Frontend Store v1.0.0](/plans/shop)
 
-**Progress:** 0/100 inferences complete (0%)
+**Progress:** 0/100 cycles complete (0%)
 
 ### Plan Overview
 
-- **Infer 1-10**: Foundation & Design (storefront structure, ontology mapping, design system)
-- **Infer 11-20**: Astro Pages & Layouts (home, products, cart, checkout)
-- **Infer 21-30**: React Components (product cards, cart, checkout flow)
-- **Infer 31-50**: Stripe Integration & Polish
-- **Timeline**: 70-80 inferences for complete implementation
+- **Cycle 1-10**: Foundation & Design (storefront structure, ontology mapping, design system)
+- **Cycle 11-20**: Astro Pages & Layouts (home, products, cart, checkout)
+- **Cycle 21-30**: React Components (product cards, cart, checkout flow)
+- **Cycle 31-50**: Stripe Integration & Polish
+- **Timeline**: 70-80 cycles for complete implementation
 
 ### Quick Start
 
@@ -160,7 +160,7 @@ This project follows a **100-inference implementation plan** for systematic deve
 # 1. View the implementation plan
 /plan shop
 
-# 2. Start with first inference
+# 2. Start with first cycle
 /infer 1
 
 # 3. Mark complete and advance
@@ -170,8 +170,8 @@ This project follows a **100-inference implementation plan** for systematic deve
 ## How to Use
 
 1. Visit `/shop` to see the live demo
-2. Review the [100-inference implementation plan](/plans/shop)
-3. Follow the inference sequence step-by-step
+2. Review the [100-cycle implementation plan](/plans/shop)
+3. Follow the cycle sequence step-by-step
 4. Add your products in `src/content/products/`
 5. Configure payment processing with Stripe
 6. Customize branding and checkout flow

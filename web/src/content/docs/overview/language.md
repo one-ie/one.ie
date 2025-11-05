@@ -1,7 +1,7 @@
 ---
-title: ONE Platform - Plain English DSL
+title: Language
 description: Write features in plain English that compiles to working code
-order: 5
+order: 2
 ---
 
 # ONE Platform - Plain English DSL

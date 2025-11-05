@@ -262,10 +262,10 @@ Each thing type has specific properties. Examples:
   slug: string,
   domain?: string,
   plan: "starter" | "pro" | "enterprise",
-  limits: { users: number; storage: number; apiCalls: number; inferences: number },
-  usage: { users: number; storage: number; apiCalls: number; inferences: number },
+  limits: { users: number; storage: number; apiCalls: number; cycles: number },
+  usage: { users: number; storage: number; apiCalls: number; cycles: number },
   billing: { customerId?: string; cryptoEnabled: boolean },
-  settings: { inferenceEnabled: boolean; inferenceModels: string[] },
+  settings: { cycleEnabled: boolean; cycleModels: string[] },
   revenueShare?: number,
 }
 ```

@@ -44,21 +44,21 @@ The ONE Platform consists of 9 interconnected verticals, each requiring 100-infe
 
 ```
 Foundation Layer:
-  ├─ todo-onboard.md (Infer 1-100) ← Users + auth flows
+  ├─ todo-onboard.md (Cycle 1-100) ← Users + auth flows
   └─ todo-x402.md (DONE) ← Payment infrastructure
        ↓
 Integration Layer:
-  ├─ todo-agents.md (Infer 1-100) ← Agent execution
-  ├─ todo-skills.md (Infer 1-100) ← Skill marketplace
-  └─ todo-sell.md (Infer 1-100) ← GitHub marketplace
+  ├─ todo-agents.md (Cycle 1-100) ← Agent execution
+  ├─ todo-skills.md (Cycle 1-100) ← Skill marketplace
+  └─ todo-sell.md (Cycle 1-100) ← GitHub marketplace
        ↓
 Platform Layer:
-  ├─ todo-ecommerce.md (Infer 1-100) ← Products + checkout
-  ├─ todo-api.md (Infer 1-100) ← Public APIs
-  └─ todo-features.md (Infer 1-100) ← Analytics, discovery, social
+  ├─ todo-ecommerce.md (Cycle 1-100) ← Products + checkout
+  ├─ todo-api.md (Cycle 1-100) ← Public APIs
+  └─ todo-features.md (Cycle 1-100) ← Analytics, discovery, social
        ↓
 Presentation Layer:
-  └─ todo-one-ie.md (Infer 1-100) ← Public website
+  └─ todo-one-ie.md (Cycle 1-100) ← Public website
 
 Parallel Execution Possible:
   • todo-agents.md + todo-skills.md (no dependencies, same layer)
@@ -233,16 +233,16 @@ Each file will have:
 
 ---
 
-## PHASE 1: FOUNDATION & SETUP (Infer 1-10)
-## PHASE 2: BACKEND SCHEMA & SERVICES (Infer 11-20)
-## PHASE 3: FRONTEND COMPONENTS & PAGES (Infer 21-30)
-## PHASE 4: INTEGRATION & APIS (Infer 31-40)
-## PHASE 5: CORE MECHANICS (Infer 41-50)
-## PHASE 6: QUALITY & TESTING (Infer 51-60)
-## PHASE 7: DESIGN & REFINEMENT (Infer 61-70)
-## PHASE 8: PERFORMANCE & OPTIMIZATION (Infer 71-80)
-## PHASE 9: DEPLOYMENT & DOCUMENTATION (Infer 81-90)
-## PHASE 10: KNOWLEDGE & LESSONS (Infer 91-100)
+## PHASE 1: FOUNDATION & SETUP (Cycle 1-10)
+## PHASE 2: BACKEND SCHEMA & SERVICES (Cycle 11-20)
+## PHASE 3: FRONTEND COMPONENTS & PAGES (Cycle 21-30)
+## PHASE 4: INTEGRATION & APIS (Cycle 31-40)
+## PHASE 5: CORE MECHANICS (Cycle 41-50)
+## PHASE 6: QUALITY & TESTING (Cycle 51-60)
+## PHASE 7: DESIGN & REFINEMENT (Cycle 61-70)
+## PHASE 8: PERFORMANCE & OPTIMIZATION (Cycle 71-80)
+## PHASE 9: DEPLOYMENT & DOCUMENTATION (Cycle 81-90)
+## PHASE 10: KNOWLEDGE & LESSONS (Cycle 91-100)
 
 SUCCESS CRITERIA
 QUICK REFERENCE
@@ -279,11 +279,11 @@ The 10 phases adapt to each vertical's nature:
 
 ---
 
-## PHASE 1: FOUNDATION & SETUP (Infer 1-10)
+## PHASE 1: FOUNDATION & SETUP (Cycle 1-10)
 
 **Purpose:** Validate architecture, map to 6-dimension ontology, plan implementation
 
-### Infer 1: Validate Against 6-Dimension Ontology
+### Cycle 1: Validate Against 6-Dimension Ontology
 - [ ] Map to groups: [how groups are involved]
 - [ ] Map to people: [roles involved]
 - [ ] Map to things: [entity types needed]
@@ -292,12 +292,12 @@ The 10 phases adapt to each vertical's nature:
 - [ ] Map to knowledge: [labels and vectors]
 - [ ] Identify 3 core use cases
 
-### Infer 2: Review Existing Infrastructure
+### Cycle 2: Review Existing Infrastructure
 - [ ] [Feature-specific review task]
 - [ ] Document current state
 - [ ] Note gaps
 
-### Infer 3-10: Planning & Setup
+### Cycle 3-10: Planning & Setup
 - [ ] Architecture mapping
 - [ ] Scope definition
 - [ ] Environment setup
@@ -309,11 +309,11 @@ The 10 phases adapt to each vertical's nature:
 
 ---
 
-## PHASE 2: BACKEND SCHEMA & SERVICES (Infer 11-20)
+## PHASE 2: BACKEND SCHEMA & SERVICES (Cycle 11-20)
 
 **Purpose:** [Implement core services, data models, business logic]
 
-### Infer 11-20: Service Implementation
+### Cycle 11-20: Service Implementation
 - [ ] [Service 1 design]
 - [ ] [Service 2 design]
 - [ ] Effect.ts implementation
@@ -327,11 +327,11 @@ The 10 phases adapt to each vertical's nature:
 
 ---
 
-## PHASE 3: FRONTEND COMPONENTS & PAGES (Infer 21-30)
+## PHASE 3: FRONTEND COMPONENTS & PAGES (Cycle 21-30)
 
 **Purpose:** [Build React components and Astro pages]
 
-### Infer 21-30: Component Implementation
+### Cycle 21-30: Component Implementation
 - [ ] [Component 1]
 - [ ] [Component 2]
 - [ ] [Modal/Form]
@@ -345,27 +345,27 @@ The 10 phases adapt to each vertical's nature:
 
 ---
 
-## PHASE 4: [FEATURE-SPECIFIC] (Infer 31-40)
+## PHASE 4: [FEATURE-SPECIFIC] (Cycle 31-40)
 
 **Purpose:** [Feature-specific integration or API implementation]
 
-### Infer 31-40: [Specific to vertical]
+### Cycle 31-40: [Specific to vertical]
 
 ---
 
-## PHASE 5: [FEATURE-SPECIFIC MECHANICS] (Infer 41-50)
+## PHASE 5: [FEATURE-SPECIFIC MECHANICS] (Cycle 41-50)
 
 **Purpose:** [Core business logic and mechanics]
 
-### Infer 41-50: [Specific to vertical]
+### Cycle 41-50: [Specific to vertical]
 
 ---
 
-## PHASE 6: QUALITY & TESTING (Infer 51-60)
+## PHASE 6: QUALITY & TESTING (Cycle 51-60)
 
 **Purpose:** Test all flows end-to-end
 
-### Infer 51-60: Test Coverage
+### Cycle 51-60: Test Coverage
 - [ ] Unit tests for services
 - [ ] Integration tests for flows
 - [ ] Component tests for React
@@ -379,11 +379,11 @@ The 10 phases adapt to each vertical's nature:
 
 ---
 
-## PHASE 7: DESIGN & REFINEMENT (Infer 61-70)
+## PHASE 7: DESIGN & REFINEMENT (Cycle 61-70)
 
 **Purpose:** Finalize UI/UX design
 
-### Infer 61-70: Design & Refinement
+### Cycle 61-70: Design & Refinement
 - [ ] Wireframes for key flows
 - [ ] Design tokens
 - [ ] Accessibility (WCAG 2.1 AA)
@@ -397,11 +397,11 @@ The 10 phases adapt to each vertical's nature:
 
 ---
 
-## PHASE 8: PERFORMANCE & OPTIMIZATION (Infer 71-80)
+## PHASE 8: PERFORMANCE & OPTIMIZATION (Cycle 71-80)
 
 **Purpose:** Optimize for speed and efficiency
 
-### Infer 71-80: Optimization
+### Cycle 71-80: Optimization
 - [ ] Bundle size analysis
 - [ ] Caching strategies
 - [ ] Database query optimization
@@ -415,11 +415,11 @@ The 10 phases adapt to each vertical's nature:
 
 ---
 
-## PHASE 9: DEPLOYMENT & DOCUMENTATION (Infer 81-90)
+## PHASE 9: DEPLOYMENT & DOCUMENTATION (Cycle 81-90)
 
 **Purpose:** Deploy to production, document for users + developers
 
-### Infer 81-90: Deployment & Documentation
+### Cycle 81-90: Deployment & Documentation
 - [ ] Production environment setup
 - [ ] Backend deployment
 - [ ] Frontend deployment
@@ -433,11 +433,11 @@ The 10 phases adapt to each vertical's nature:
 
 ---
 
-## PHASE 10: KNOWLEDGE & LESSONS (Infer 91-100)
+## PHASE 10: KNOWLEDGE & LESSONS (Cycle 91-100)
 
 **Purpose:** Document learnings, capture institutional knowledge
 
-### Infer 91-100: Knowledge & Documentation
+### Cycle 91-100: Knowledge & Documentation
 - [ ] Ontology mapping documentation
 - [ ] State diagram
 - [ ] Security considerations
@@ -479,7 +479,7 @@ The 10 phases adapt to each vertical's nature:
 
 **Remember:** Plan in inferences, not days. Where in the sequence does each thing belong?
 
-**Status:** Ready for execution. Begin with Infer 1-10 (Foundation).
+**Status:** Ready for execution. Begin with Cycle 1-10 (Foundation).
 ```
 
 ---
@@ -490,8 +490,8 @@ The 10 phases adapt to each vertical's nature:
 **Release: ONE Platform v1.1.0** (with X402)
 
 What ships:
-- ✅ X402 payments integration (Infer 1-100)
-- ✅ User onboarding flows (Infer 1-50 from todo-onboard.md)
+- ✅ X402 payments integration (Cycle 1-100)
+- ✅ User onboarding flows (Cycle 1-50 from todo-onboard.md)
 - ✅ Basic authentication (existing)
 
 Not yet:
@@ -505,10 +505,10 @@ Not yet:
 **Release: ONE Platform v1.2.0** (with Agents)
 
 What ships:
-- ✅ Complete onboarding (todo-onboard.md Infer 51-100)
-- ✅ Agent deployment framework (todo-agents.md Infer 1-100)
-- ✅ Skills marketplace (todo-skills.md Infer 1-100)
-- ✅ GitHub marketplace (todo-sell.md Infer 1-100)
+- ✅ Complete onboarding (todo-onboard.md Cycle 51-100)
+- ✅ Agent deployment framework (todo-agents.md Cycle 1-100)
+- ✅ Skills marketplace (todo-skills.md Cycle 1-100)
+- ✅ GitHub marketplace (todo-sell.md Cycle 1-100)
 
 First user-facing features:
 - Deploy and run AI agents
@@ -523,8 +523,8 @@ First user-facing features:
 **Release: ONE Platform v1.3.0** (with Commerce)
 
 What ships:
-- ✅ E-commerce platform (todo-ecommerce.md Infer 1-100)
-- ✅ Public REST API (todo-api.md Infer 1-100)
+- ✅ E-commerce platform (todo-ecommerce.md Cycle 1-100)
+- ✅ Public REST API (todo-api.md Cycle 1-100)
 - ✅ GraphQL schema (optional)
 - ✅ SDK generation
 
@@ -727,7 +727,7 @@ Expected Completion: Week 12 (full 900 inferences)
 | Documentation Complete | 100% | All sections written |
 | Code Review | Passed | GitHub PR approval |
 | Production Deployed | Yes | Deployment log |
-| Lessons Learned | Documented | Infer 99-100 section |
+| Lessons Learned | Documented | Cycle 99-100 section |
 
 ### Aggregate Platform Metrics
 
@@ -783,7 +783,7 @@ Expected Completion: Week 12 (full 900 inferences)
    - Schedule daily standups
 
 4. **Prepare Wave 1 completion**
-   - Finish todo-onboard.md Infer 1-50
+   - Finish todo-onboard.md Cycle 1-50
    - Ensure all tests passing
    - Prepare for Wave 2 start
 
@@ -853,16 +853,16 @@ ONE Platform: <VERTICAL> Roadmap v1.0.0
 **Tests to Write:**
 - List types of tests needed
 
-**Status:** Ready for execution. Begin with Infer 1-10 (Foundation).
+**Status:** Ready for execution. Begin with Cycle 1-10 (Foundation).
 ```
 
 ### Cross-Referencing Between Files
 ```
 When todo-A depends on todo-B:
-  "See todo-B Infer X-Y for [topic]"
+  "See todo-B Cycle X-Y for [topic]"
 
 When todo-A needs a feature from todo-B:
-  "Feature available after todo-B Infer Z"
+  "Feature available after todo-B Cycle Z"
 ```
 
 ---
@@ -894,7 +894,7 @@ When todo-A needs a feature from todo-B:
 
 This plan orchestrates 900 inferences of work across 9 verticals of the ONE Platform. By executing in parallel waves, specialists can deliver new capabilities every 2 weeks while maintaining code quality and test coverage.
 
-**Ready for execution. Begin with Wave 1: todo-onboard.md Infer 1-10.**
+**Ready for execution. Begin with Wave 1: todo-onboard.md Cycle 1-10.**
 
 Remember: Plan in inferences, not days. Execute in parallel, coordinate via events.
 

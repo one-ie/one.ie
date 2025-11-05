@@ -2,7 +2,7 @@
 title: Landing Page Implementation
 dimension: things
 category: landing-page-implementation.md
-tags: ai, architecture, inference, ontology
+tags: ai, architecture, cycle, ontology
 related_dimensions: connections, events, people
 scope: global
 created: 2025-11-03
@@ -21,7 +21,7 @@ ai_context: |
 **Status:** ✅ Phase 1-3 Complete
 **Build Status:** ✅ Successful (All tests passing)
 **Date:** October 30, 2025
-**Timeline:** 91/100 inferences (Phase 1-3 foundation complete)
+**Timeline:** 91/100 cycles (Phase 1-3 foundation complete)
 
 ---
 
@@ -273,7 +273,7 @@ web/src/
     └── date.ts (new utility functions)
 
 one/things/
-└── todo-page.md (comprehensive 100-inference plan)
+└── todo-page.md (comprehensive 100-cycle plan)
 ```
 
 ---
@@ -313,49 +313,49 @@ Components tested and verified on:
 
 ## What's Next (Phase 4-10)
 
-### Phase 4: Integration & Connections (Infer 31-40)
+### Phase 4: Integration & Connections (Cycle 31-40)
 
 - [ ] Connect to Convex backend
 - [ ] Implement data persistence
 - [ ] Add form submission handling
 - [ ] Create creator dashboard
 
-### Phase 5: Authentication & Authorization (Infer 41-50)
+### Phase 5: Authentication & Authorization (Cycle 41-50)
 
 - [ ] Access control (public/private pages)
 - [ ] Creator authentication
 - [ ] Form spam protection
 - [ ] Rate limiting
 
-### Phase 6: Knowledge & RAG (Infer 51-60)
+### Phase 6: Knowledge & RAG (Cycle 51-60)
 
 - [ ] Store landing page templates
 - [ ] AI recommendations
 - [ ] Design pattern library
 - [ ] Conversion best practices
 
-### Phase 7: Quality & Testing (Infer 61-70)
+### Phase 7: Quality & Testing (Cycle 61-70)
 
 - [ ] Unit tests for components
 - [ ] Integration tests
 - [ ] E2E tests
 - [ ] Performance benchmarks
 
-### Phase 8: Design & Wireframes (Infer 71-80)
+### Phase 8: Design & Wireframes (Cycle 71-80)
 
 - [ ] Component variants
 - [ ] Design tokens
 - [ ] Accessibility audit
 - [ ] Design system documentation
 
-### Phase 9: Performance & Optimization (Infer 81-90)
+### Phase 9: Performance & Optimization (Cycle 81-90)
 
 - [ ] Image optimization
 - [ ] Code splitting
 - [ ] Caching strategy
 - [ ] Core Web Vitals optimization
 
-### Phase 10: Deployment & Documentation (Infer 91-100)
+### Phase 10: Deployment & Documentation (Cycle 91-100)
 
 - [ ] Production deployment
 - [ ] User documentation

@@ -3,7 +3,7 @@ title: Todo Components
 dimension: things
 primary_dimension: things
 category: todo-components.md
-tags: agent, ai, architecture, inference
+tags: agent, ai, architecture, cycle
 related_dimensions: things, events, knowledge, groups, people, connections
 scope: global
 created: 2025-11-03
@@ -12,12 +12,12 @@ version: 1.0.0
 ai_context: |
   This document is part of the things dimension in the todo-components.md category.
   Location: one/things/todo-components.md
-  Purpose: Documents convex components + effect.ts integration - 100 inference todo list
+  Purpose: Documents convex components + effect.ts integration - 100 cycle todo list
   Related dimensions: events, knowledge
   For AI agents: Read this to understand todo components.
 ---
 
-# Convex Components + Effect.ts Integration - 100 Inference Todo List
+# Convex Components + Effect.ts Integration - 100 Cycle Todo List
 
 **Feature:** Effect.ts Service Layer Architecture with Convex Components
 **Status:** Planning Complete → Ready for Execution
@@ -25,18 +25,18 @@ ai_context: |
 
 ## Overview
 
-This document tracks all 100 inferences for implementing a production-ready service layer that combines Effect.ts functional programming patterns with Convex components (@convex-dev/agent, workflow, RAG, rate-limiter, etc.) to build sophisticated multi-agent AI systems.
+This document tracks all 100 cycles for implementing a production-ready service layer that combines Effect.ts functional programming patterns with Convex components (@convex-dev/agent, workflow, RAG, rate-limiter, etc.) to build sophisticated multi-agent AI systems.
 
 **Key Principle:** Effect wraps components, not replaces. Components handle infrastructure, Effect handles business logic composition.
 
 ---
 
-## Foundation Phase (Infer 1-10)
+## Foundation Phase (Cycle 1-10)
 
 **Agent:** agent-director
 **Goal:** Validate architecture, map components, create execution plan
 
-### ✅ Infer 1: Validate Effect + Convex Components Architecture
+### ✅ Cycle 1: Validate Effect + Convex Components Architecture
 
 **Status:** ✅ Complete
 **Task:** Ensure Effect.ts service layer pattern works with all Convex components
@@ -48,7 +48,7 @@ This document tracks all 100 inferences for implementing a production-ready serv
 - No performance regression vs direct component usage ✅
 - All 8 components compatible with Effect wrapper pattern ✅
 
-### ✅ Infer 2: Map 8 Convex Components to Effect Services
+### ✅ Cycle 2: Map 8 Convex Components to Effect Services
 
 **Status:** ✅ Complete
 **Component Mapping:**
@@ -85,7 +85,7 @@ This document tracks all 100 inferences for implementing a production-ready serv
    - Where Effect helps: Scheduled job logic composition, error handling, service orchestration
    - Where component shines: Dynamic cron registration, schedule management
 
-### ✅ Infer 3: Define Service Layer Structure
+### ✅ Cycle 3: Define Service Layer Structure
 
 **Status:** ✅ Complete
 **Directory Structure:**
@@ -104,7 +104,7 @@ backend/convex/
     └── monitoring.ts
 ```
 
-### ✅ Infer 4: Identify Error Types and Patterns
+### ✅ Cycle 4: Identify Error Types and Patterns
 
 **Status:** ✅ Complete
 **Error Categories:**
@@ -128,7 +128,7 @@ backend/convex/
 
 **Pattern:** Tagged error classes with `Data.TaggedError`
 
-### ✅ Infer 5: Plan Dependency Injection Strategy
+### ✅ Cycle 5: Plan Dependency Injection Strategy
 
 **Status:** ✅ Complete
 **Strategy:**
@@ -147,7 +147,7 @@ const AgentServiceLive = Layer.effect(AgentService, ...)
 const TestAgentServiceLive = Layer.succeed(AgentService, mockImpl)
 ```
 
-### ✅ Infer 6: Define Observability Requirements
+### ✅ Cycle 6: Define Observability Requirements
 
 **Status:** ✅ Complete
 **Requirements:**
@@ -161,7 +161,7 @@ const TestAgentServiceLive = Layer.succeed(AgentService, mockImpl)
 
 **Implementation:** MonitoringService with Effect.tap
 
-### ✅ Infer 7: Create Integration Patterns Document
+### ✅ Cycle 7: Create Integration Patterns Document
 
 **Status:** ✅ Complete
 **Patterns:**
@@ -174,7 +174,7 @@ const TestAgentServiceLive = Layer.succeed(AgentService, mockImpl)
 6. **Retry Logic:** `Effect.retry` + `Schedule.exponential`
 7. **Service Composition:** `Effect.gen` for sequential, `Effect.all` for parallel
 
-### ✅ Infer 8: Break Down Into 100 Inferences
+### ✅ Cycle 8: Break Down Into 100 Cycles
 
 **Status:** ✅ Complete
 **Breakdown:**
@@ -186,19 +186,19 @@ const TestAgentServiceLive = Layer.succeed(AgentService, mockImpl)
 - Observability & Testing: 71-90 (Monitoring, tests, error handling)
 - Advanced & Documentation: 91-100 (Confect, docs, optimization, launch)
 
-### ✅ Infer 9: Assign Agents to Phases
+### ✅ Cycle 9: Assign Agents to Phases
 
 **Status:** ✅ Complete
 **Agent Assignments:**
 
-- **agent-director:** Infer 1-10, 99-100 (planning, coordination, launch)
-- **agent-backend:** Infer 11-50, 91-93, 97-98 (service implementation, optimization)
-- **agent-builder:** Infer 51-70 (domain logic, multi-agent orchestration)
-- **agent-ops:** Infer 71-75, 81-85 (monitoring, resource management)
-- **agent-quality:** Infer 76-80, 86-90 (testing, error handling)
-- **agent-documenter:** Infer 94-96 (documentation, guides, examples)
+- **agent-director:** Cycle 1-10, 99-100 (planning, coordination, launch)
+- **agent-backend:** Cycle 11-50, 91-93, 97-98 (service implementation, optimization)
+- **agent-builder:** Cycle 51-70 (domain logic, multi-agent orchestration)
+- **agent-ops:** Cycle 71-75, 81-85 (monitoring, resource management)
+- **agent-quality:** Cycle 76-80, 86-90 (testing, error handling)
+- **agent-documenter:** Cycle 94-96 (documentation, guides, examples)
 
-### ✅ Infer 10: Create Complete Implementation Plan
+### ✅ Cycle 10: Create Complete Implementation Plan
 
 **Status:** ✅ Complete
 **Deliverable:** `/one/things/plans/components.md`
@@ -206,15 +206,15 @@ const TestAgentServiceLive = Layer.succeed(AgentService, mockImpl)
 
 ---
 
-## Core Service Layers Phase (Infer 11-30)
+## Core Service Layers Phase (Cycle 11-30)
 
 **Agent:** agent-backend
 **Goal:** Implement Effect service layers for core components
 
-### ⏳ Infer 11: Wrap @convex-dev/agent with Effect (Part 1: Setup)
+### ⏳ Cycle 11: Wrap @convex-dev/agent with Effect (Part 1: Setup)
 
 **Status:** Pending
-**Dependencies:** Infer 1-10 (Foundation complete)
+**Dependencies:** Cycle 1-10 (Foundation complete)
 **Task:** Create AgentService interface and basic structure
 **File:** `backend/convex/services/agent.service.ts`
 **Acceptance Criteria:**
@@ -228,10 +228,10 @@ const TestAgentServiceLive = Layer.succeed(AgentService, mockImpl)
   - `continueThread(ctx, threadId, message)`
 - [ ] Stub implementation (returns Effect.succeed with placeholder)
 
-### ⏳ Infer 12: Implement AgentServiceLive Layer
+### ⏳ Cycle 12: Implement AgentServiceLive Layer
 
 **Status:** Pending
-**Dependencies:** Infer 11
+**Dependencies:** Cycle 11
 **Task:** Full implementation of AgentService
 **File:** `backend/convex/services/agent.service.ts`
 **Acceptance Criteria:**
@@ -244,10 +244,10 @@ const TestAgentServiceLive = Layer.succeed(AgentService, mockImpl)
 - [ ] Return typed errors (AgentError, RateLimitError)
 - [ ] Add Effect.retry for transient failures
 
-### ⏳ Infer 13: Create Agent Tool Definitions with Effect
+### ⏳ Cycle 13: Create Agent Tool Definitions with Effect
 
 **Status:** Pending
-**Dependencies:** Infer 12
+**Dependencies:** Cycle 12
 **Task:** Define agent tools that use Effect services internally
 **File:** `backend/convex/services/agent.service.ts`
 **Acceptance Criteria:**
@@ -259,10 +259,10 @@ const TestAgentServiceLive = Layer.succeed(AgentService, mockImpl)
 - [ ] Handle errors gracefully (return error messages to agent)
 - [ ] Register tools with Agent component
 
-### ⏳ Infer 14: Add Agent Service Error Types
+### ⏳ Cycle 14: Add Agent Service Error Types
 
 **Status:** Pending
-**Dependencies:** Infer 13
+**Dependencies:** Cycle 13
 **Task:** Define comprehensive error types for AgentService
 **File:** `backend/convex/domain/agents/errors.ts`
 **Acceptance Criteria:**
@@ -275,10 +275,10 @@ const TestAgentServiceLive = Layer.succeed(AgentService, mockImpl)
 - [ ] All errors extend `Data.TaggedError`
 - [ ] All errors include helpful metadata
 
-### ⏳ Infer 15: Test AgentService with Effect
+### ⏳ Cycle 15: Test AgentService with Effect
 
 **Status:** Pending
-**Dependencies:** Infer 14
+**Dependencies:** Cycle 14
 **Task:** Create test layer for AgentService
 **File:** `backend/convex/services/agent.service.test.ts`
 **Acceptance Criteria:**
@@ -291,10 +291,10 @@ const TestAgentServiceLive = Layer.succeed(AgentService, mockImpl)
 - [ ] Test rate limit integration (mocked RateLimitService)
 - [ ] Test retry logic (transient errors recover)
 
-### ⏳ Infer 16: Wrap @convex-dev/rag with Effect (Part 1: Setup)
+### ⏳ Cycle 16: Wrap @convex-dev/rag with Effect (Part 1: Setup)
 
 **Status:** Pending
-**Dependencies:** Infer 15
+**Dependencies:** Cycle 15
 **Task:** Create RAGService interface and basic structure
 **File:** `backend/convex/services/rag.service.ts`
 **Acceptance Criteria:**
@@ -308,10 +308,10 @@ const TestAgentServiceLive = Layer.succeed(AgentService, mockImpl)
   - `deleteDocument(ctx, namespace, entryId)`
 - [ ] Stub implementation
 
-### ⏳ Infer 17: Implement RAGServiceLive Layer
+### ⏳ Cycle 17: Implement RAGServiceLive Layer
 
 **Status:** Pending
-**Dependencies:** Infer 16
+**Dependencies:** Cycle 16
 **Task:** Full implementation of RAGService
 **File:** `backend/convex/services/rag.service.ts`
 **Acceptance Criteria:**
@@ -324,10 +324,10 @@ const TestAgentServiceLive = Layer.succeed(AgentService, mockImpl)
 - [ ] Handle embedding generation failures gracefully
 - [ ] Add vector score threshold filtering
 
-### ⏳ Infer 18: Compose RAG with Agent Service
+### ⏳ Cycle 18: Compose RAG with Agent Service
 
 **Status:** Pending
-**Dependencies:** Infer 17
+**Dependencies:** Cycle 17
 **Task:** Use RAGService within AgentService for context retrieval
 **File:** `backend/convex/domain/agents/orchestration.ts`
 **Acceptance Criteria:**
@@ -340,10 +340,10 @@ const TestAgentServiceLive = Layer.succeed(AgentService, mockImpl)
 - [ ] Handle errors (RAGError, AgentError) gracefully
 - [ ] Add Effect.retry for robustness
 
-### ⏳ Infer 19: Add RAG Error Types
+### ⏳ Cycle 19: Add RAG Error Types
 
 **Status:** Pending
-**Dependencies:** Infer 18
+**Dependencies:** Cycle 18
 **Task:** Define comprehensive error types for RAGService
 **File:** `backend/convex/domain/agents/errors.ts`
 **Acceptance Criteria:**
@@ -355,10 +355,10 @@ const TestAgentServiceLive = Layer.succeed(AgentService, mockImpl)
 - [ ] `InvalidNamespaceError` - Namespace doesn't exist (includes namespace)
 - [ ] All errors extend `Data.TaggedError`
 
-### ⏳ Infer 20: Test RAGService with Effect
+### ⏳ Cycle 20: Test RAGService with Effect
 
 **Status:** Pending
-**Dependencies:** Infer 19
+**Dependencies:** Cycle 19
 **Task:** Create test layer for RAGService
 **File:** `backend/convex/services/rag.service.test.ts`
 **Acceptance Criteria:**
@@ -371,10 +371,10 @@ const TestAgentServiceLive = Layer.succeed(AgentService, mockImpl)
 - [ ] Test composition with AgentService (integration)
 - [ ] Test retry logic for transient failures
 
-### ⏳ Infer 21: Wrap @convex-dev/rate-limiter with Effect (Part 1: Setup)
+### ⏳ Cycle 21: Wrap @convex-dev/rate-limiter with Effect (Part 1: Setup)
 
 **Status:** Pending
-**Dependencies:** Infer 20
+**Dependencies:** Cycle 20
 **Task:** Create RateLimitService interface and basic structure
 **File:** `backend/convex/services/rate-limit.service.ts`
 **Acceptance Criteria:**
@@ -388,10 +388,10 @@ const TestAgentServiceLive = Layer.succeed(AgentService, mockImpl)
   - `checkGlobalLimit(ctx)`
 - [ ] Stub implementation
 
-### ⏳ Infer 22: Implement RateLimitServiceLive Layer
+### ⏳ Cycle 22: Implement RateLimitServiceLive Layer
 
 **Status:** Pending
-**Dependencies:** Infer 21
+**Dependencies:** Cycle 21
 **Task:** Full implementation of RateLimitService
 **File:** `backend/convex/services/rate-limit.service.ts`
 **Acceptance Criteria:**
@@ -404,10 +404,10 @@ const TestAgentServiceLive = Layer.succeed(AgentService, mockImpl)
 - [ ] Add reserve parameter for capacity reservation
 - [ ] Handle multiple rate limit tiers (starter, pro, enterprise)
 
-### ⏳ Infer 23: Multi-Level Rate Limiting with Effect
+### ⏳ Cycle 23: Multi-Level Rate Limiting with Effect
 
 **Status:** Pending
-**Dependencies:** Infer 22
+**Dependencies:** Cycle 22
 **Task:** Coordinate user and global rate limits in parallel
 **File:** `backend/convex/domain/agents/orchestration.ts`
 **Acceptance Criteria:**
@@ -420,10 +420,10 @@ const TestAgentServiceLive = Layer.succeed(AgentService, mockImpl)
 - [ ] Execute agent call only if both limits OK
 - [ ] Log rate limit events
 
-### ⏳ Infer 24: Add Rate Limit Error Types
+### ⏳ Cycle 24: Add Rate Limit Error Types
 
 **Status:** Pending
-**Dependencies:** Infer 23
+**Dependencies:** Cycle 23
 **Task:** Define comprehensive error types for rate limiting
 **File:** `backend/convex/domain/agents/errors.ts`
 **Acceptance Criteria:**
@@ -435,10 +435,10 @@ const TestAgentServiceLive = Layer.succeed(AgentService, mockImpl)
 - [ ] `ReservationFailedError` - Capacity reservation failed (includes requested, available)
 - [ ] All errors extend `Data.TaggedError`
 
-### ⏳ Infer 25: Test RateLimitService with Effect
+### ⏳ Cycle 25: Test RateLimitService with Effect
 
 **Status:** Pending
-**Dependencies:** Infer 24
+**Dependencies:** Cycle 24
 **Task:** Create test layer for RateLimitService
 **File:** `backend/convex/services/rate-limit.service.test.ts`
 **Acceptance Criteria:**
@@ -451,10 +451,10 @@ const TestAgentServiceLive = Layer.succeed(AgentService, mockImpl)
 - [ ] Test retry logic (Effect.retry with exponential backoff)
 - [ ] Test capacity reservation
 
-### ⏳ Infer 26: Wrap @convex-dev/workflow with Effect (Part 1: Setup)
+### ⏳ Cycle 26: Wrap @convex-dev/workflow with Effect (Part 1: Setup)
 
 **Status:** Pending
-**Dependencies:** Infer 25
+**Dependencies:** Cycle 25
 **Task:** Create WorkflowService interface and basic structure
 **File:** `backend/convex/services/workflow.service.ts`
 **Acceptance Criteria:**
@@ -468,10 +468,10 @@ const TestAgentServiceLive = Layer.succeed(AgentService, mockImpl)
   - `getWorkflowStatus(ctx, workflowId)`
 - [ ] Stub implementation
 
-### ⏳ Infer 27: Implement WorkflowServiceLive Layer
+### ⏳ Cycle 27: Implement WorkflowServiceLive Layer
 
 **Status:** Pending
-**Dependencies:** Infer 26
+**Dependencies:** Cycle 26
 **Task:** Full implementation of WorkflowService
 **File:** `backend/convex/services/workflow.service.ts`
 **Acceptance Criteria:**
@@ -484,10 +484,10 @@ const TestAgentServiceLive = Layer.succeed(AgentService, mockImpl)
 - [ ] Add retry policies per step
 - [ ] Support long-running workflows (hours/days)
 
-### ⏳ Infer 28: Create Effect Programs for Workflow Steps
+### ⏳ Cycle 28: Create Effect Programs for Workflow Steps
 
 **Status:** Pending
-**Dependencies:** Infer 27
+**Dependencies:** Cycle 27
 **Task:** Use Effect services within workflow steps
 **File:** `backend/convex/domain/workflows/research.ts`
 **Acceptance Criteria:**
@@ -501,10 +501,10 @@ const TestAgentServiceLive = Layer.succeed(AgentService, mockImpl)
 - [ ] All actions use Effect.runPromise internally
 - [ ] Error handling with Effect.catchAll
 
-### ⏳ Infer 29: Add Workflow Error Types
+### ⏳ Cycle 29: Add Workflow Error Types
 
 **Status:** Pending
-**Dependencies:** Infer 28
+**Dependencies:** Cycle 28
 **Task:** Define comprehensive error types for workflows
 **File:** `backend/convex/domain/workflows/errors.ts`
 **Acceptance Criteria:**
@@ -516,10 +516,10 @@ const TestAgentServiceLive = Layer.succeed(AgentService, mockImpl)
 - [ ] `InvalidWorkflowStateError` - Workflow in invalid state (includes currentState)
 - [ ] All errors extend `Data.TaggedError`
 
-### ⏳ Infer 30: Test WorkflowService with Effect
+### ⏳ Cycle 30: Test WorkflowService with Effect
 
 **Status:** Pending
-**Dependencies:** Infer 29
+**Dependencies:** Cycle 29
 **Task:** Create test layer for WorkflowService
 **File:** `backend/convex/services/workflow.service.test.ts`
 **Acceptance Criteria:**
@@ -534,15 +534,15 @@ const TestAgentServiceLive = Layer.succeed(AgentService, mockImpl)
 
 ---
 
-## Supporting Services Phase (Infer 31-50)
+## Supporting Services Phase (Cycle 31-50)
 
 **Agent:** agent-backend
 **Goal:** Implement remaining service layers
 
-### ⏳ Infer 31: Wrap @convex-dev/persistent-text-streaming with Effect
+### ⏳ Cycle 31: Wrap @convex-dev/persistent-text-streaming with Effect
 
 **Status:** Pending
-**Dependencies:** Infer 30
+**Dependencies:** Cycle 30
 **Task:** Create StreamingService interface and implementation
 **File:** `backend/convex/services/streaming.service.ts`
 **Acceptance Criteria:**
@@ -556,10 +556,10 @@ const TestAgentServiceLive = Layer.succeed(AgentService, mockImpl)
 - [ ] Wrap persistentTextStreaming.appendChunk with Effect.tryPromise
 - [ ] Handle stream lifecycle (start, chunk, complete, error)
 
-### ⏳ Infer 32: Implement Streaming Error Recovery
+### ⏳ Cycle 32: Implement Streaming Error Recovery
 
 **Status:** Pending
-**Dependencies:** Infer 31
+**Dependencies:** Cycle 31
 **Task:** Add retry logic for failed stream chunks
 **File:** `backend/convex/services/streaming.service.ts`
 **Acceptance Criteria:**
@@ -571,10 +571,10 @@ const TestAgentServiceLive = Layer.succeed(AgentService, mockImpl)
 - [ ] Store failed chunks for manual recovery
 - [ ] Log streaming errors as events
 
-### ⏳ Infer 33: Test StreamingService with Effect
+### ⏳ Cycle 33: Test StreamingService with Effect
 
 **Status:** Pending
-**Dependencies:** Infer 32
+**Dependencies:** Cycle 32
 **Task:** Create test layer for StreamingService
 **File:** `backend/convex/services/streaming.service.test.ts`
 **Acceptance Criteria:**
@@ -587,10 +587,10 @@ const TestAgentServiceLive = Layer.succeed(AgentService, mockImpl)
 - [ ] Test backpressure (slow consumer)
 - [ ] Test concurrent streams
 
-### ⏳ Infer 34: Add Streaming Error Types
+### ⏳ Cycle 34: Add Streaming Error Types
 
 **Status:** Pending
-**Dependencies:** Infer 33
+**Dependencies:** Cycle 33
 **Task:** Define comprehensive error types for streaming
 **File:** `backend/convex/domain/agents/errors.ts`
 **Acceptance Criteria:**
@@ -601,10 +601,10 @@ const TestAgentServiceLive = Layer.succeed(AgentService, mockImpl)
 - [ ] `StreamProcessingError` - Stream processing logic failed (includes cause)
 - [ ] All errors extend `Data.TaggedError`
 
-### ⏳ Infer 35: Integrate Streaming with Agent Component
+### ⏳ Cycle 35: Integrate Streaming with Agent Component
 
 **Status:** Pending
-**Dependencies:** Infer 34
+**Dependencies:** Cycle 34
 **Task:** Use Agent component's built-in streaming instead of persistent-text-streaming
 **File:** `backend/convex/services/agent.service.ts`
 **Acceptance Criteria:**
@@ -616,10 +616,10 @@ const TestAgentServiceLive = Layer.succeed(AgentService, mockImpl)
 - [ ] Document when to use each approach
 - [ ] Update tests to use Agent streaming
 
-### ⏳ Infer 36: Wrap @convex-dev/workpool with Effect
+### ⏳ Cycle 36: Wrap @convex-dev/workpool with Effect
 
 **Status:** Pending
-**Dependencies:** Infer 35
+**Dependencies:** Cycle 35
 **Task:** Create TaskQueueService interface and implementation
 **File:** `backend/convex/services/workpool.service.ts`
 **Acceptance Criteria:**
@@ -633,10 +633,10 @@ const TestAgentServiceLive = Layer.succeed(AgentService, mockImpl)
 - [ ] Support multiple workpools (high priority, low priority)
 - [ ] Handle task completion callbacks
 
-### ⏳ Infer 37: Batch Task Enqueuing with Effect
+### ⏳ Cycle 37: Batch Task Enqueuing with Effect
 
 **Status:** Pending
-**Dependencies:** Infer 36
+**Dependencies:** Cycle 36
 **Task:** Enqueue multiple tasks in parallel
 **File:** `backend/convex/domain/workflows/batch-processing.ts`
 **Acceptance Criteria:**
@@ -649,10 +649,10 @@ const TestAgentServiceLive = Layer.succeed(AgentService, mockImpl)
 - [ ] Log batch processing metrics
 - [ ] Add retry for failed enqueues
 
-### ⏳ Infer 38: Test TaskQueueService with Effect
+### ⏳ Cycle 38: Test TaskQueueService with Effect
 
 **Status:** Pending
-**Dependencies:** Infer 37
+**Dependencies:** Cycle 37
 **Task:** Create test layer for TaskQueueService
 **File:** `backend/convex/services/workpool.service.test.ts`
 **Acceptance Criteria:**
@@ -666,10 +666,10 @@ const TestAgentServiceLive = Layer.succeed(AgentService, mockImpl)
 - [ ] Test priority queuing (high vs low)
 - [ ] Test completion callbacks
 
-### ⏳ Infer 39: Add Workpool Error Types
+### ⏳ Cycle 39: Add Workpool Error Types
 
 **Status:** Pending
-**Dependencies:** Infer 38
+**Dependencies:** Cycle 38
 **Task:** Define comprehensive error types for task queues
 **File:** `backend/convex/domain/workflows/errors.ts`
 **Acceptance Criteria:**
@@ -680,10 +680,10 @@ const TestAgentServiceLive = Layer.succeed(AgentService, mockImpl)
 - [ ] `WorkpoolFullError` - Workpool at capacity (includes maxParallelism, current)
 - [ ] All errors extend `Data.TaggedError`
 
-### ⏳ Infer 40: Integrate Workpool with Workflow
+### ⏳ Cycle 40: Integrate Workpool with Workflow
 
 **Status:** Pending
-**Dependencies:** Infer 39
+**Dependencies:** Cycle 39
 **Task:** Use TaskQueueService within workflows for async operations
 **File:** `backend/convex/domain/workflows/research.ts`
 **Acceptance Criteria:**
@@ -695,10 +695,10 @@ const TestAgentServiceLive = Layer.succeed(AgentService, mockImpl)
 - [ ] Log task enqueue/complete events
 - [ ] Update workflow state based on task results
 
-### ⏳ Infer 41: Wrap @convex-dev/retrier with Effect
+### ⏳ Cycle 41: Wrap @convex-dev/retrier with Effect
 
 **Status:** Pending
-**Dependencies:** Infer 40
+**Dependencies:** Cycle 40
 **Task:** Create ResilientExecutionService interface and implementation
 **File:** `backend/convex/services/retrier.service.ts`
 **Acceptance Criteria:**
@@ -712,10 +712,10 @@ const TestAgentServiceLive = Layer.succeed(AgentService, mockImpl)
 - [ ] Return result or throw ExecutionFailed
 - [ ] Handle retrier-level and Effect-level retries
 
-### ⏳ Infer 42: Combine Retrier with Effect.retry
+### ⏳ Cycle 42: Combine Retrier with Effect.retry
 
 **Status:** Pending
-**Dependencies:** Infer 41
+**Dependencies:** Cycle 41
 **Task:** Hybrid retry strategy (component + Effect)
 **File:** `backend/convex/domain/workflows/reliable-execution.ts`
 **Acceptance Criteria:**
@@ -727,10 +727,10 @@ const TestAgentServiceLive = Layer.succeed(AgentService, mockImpl)
 - [ ] Add integration test for hybrid retries
 - [ ] Log retry attempts as events
 
-### ⏳ Infer 43: Test ResilientExecutionService with Effect
+### ⏳ Cycle 43: Test ResilientExecutionService with Effect
 
 **Status:** Pending
-**Dependencies:** Infer 42
+**Dependencies:** Cycle 42
 **Task:** Create test layer for ResilientExecutionService
 **File:** `backend/convex/services/retrier.service.test.ts`
 **Acceptance Criteria:**
@@ -743,10 +743,10 @@ const TestAgentServiceLive = Layer.succeed(AgentService, mockImpl)
 - [ ] Test timeout (throws ExecutionTimeout)
 - [ ] Test status polling (Effect.repeat)
 
-### ⏳ Infer 44: Add Retrier Error Types
+### ⏳ Cycle 44: Add Retrier Error Types
 
 **Status:** Pending
-**Dependencies:** Infer 43
+**Dependencies:** Cycle 43
 **Task:** Define comprehensive error types for retries
 **File:** `backend/convex/domain/workflows/errors.ts`
 **Acceptance Criteria:**
@@ -758,10 +758,10 @@ const TestAgentServiceLive = Layer.succeed(AgentService, mockImpl)
 - [ ] `ExecutionCanceled` - Execution manually canceled (includes runId)
 - [ ] All errors extend `Data.TaggedError`
 
-### ⏳ Infer 45: Integrate Retrier with Workflow
+### ⏳ Cycle 45: Integrate Retrier with Workflow
 
 **Status:** Pending
-**Dependencies:** Infer 44
+**Dependencies:** Cycle 44
 **Task:** Use ResilientExecutionService for critical workflow steps
 **File:** `backend/convex/domain/workflows/support.ts`
 **Acceptance Criteria:**
@@ -773,10 +773,10 @@ const TestAgentServiceLive = Layer.succeed(AgentService, mockImpl)
 - [ ] Log retry attempts and final outcomes
 - [ ] Test workflow with simulated failures
 
-### ⏳ Infer 46: Wrap @convex-dev/crons with Effect
+### ⏳ Cycle 46: Wrap @convex-dev/crons with Effect
 
 **Status:** Pending
-**Dependencies:** Infer 45
+**Dependencies:** Cycle 45
 **Task:** Create CronService interface and implementation
 **File:** `backend/convex/services/crons.service.ts`
 **Acceptance Criteria:**
@@ -790,10 +790,10 @@ const TestAgentServiceLive = Layer.succeed(AgentService, mockImpl)
 - [ ] Implement `list(ctx)` for registered crons
 - [ ] Support cron specs (e.g., "0 0 \* \* \*")
 
-### ⏳ Infer 47: Effect-Based Cron Job Logic
+### ⏳ Cycle 47: Effect-Based Cron Job Logic
 
 **Status:** Pending
-**Dependencies:** Infer 46
+**Dependencies:** Cycle 46
 **Task:** Use Effect in cron job handlers
 **File:** `backend/convex/domain/crons/daily-maintenance.ts`
 **Acceptance Criteria:**
@@ -807,10 +807,10 @@ const TestAgentServiceLive = Layer.succeed(AgentService, mockImpl)
 - [ ] Handle errors with Effect.catchAll (log + succeed)
 - [ ] Run with Effect.runPromise
 
-### ⏳ Infer 48: Test CronService with Effect
+### ⏳ Cycle 48: Test CronService with Effect
 
 **Status:** Pending
-**Dependencies:** Infer 47
+**Dependencies:** Cycle 47
 **Task:** Create test layer for CronService
 **File:** `backend/convex/services/crons.service.test.ts`
 **Acceptance Criteria:**
@@ -824,10 +824,10 @@ const TestAgentServiceLive = Layer.succeed(AgentService, mockImpl)
 - [ ] Test job errors (logged, job continues)
 - [ ] Test Effect-based job logic (services injected)
 
-### ⏳ Infer 49: Add Cron Error Types
+### ⏳ Cycle 49: Add Cron Error Types
 
 **Status:** Pending
-**Dependencies:** Infer 48
+**Dependencies:** Cycle 48
 **Task:** Define comprehensive error types for crons
 **File:** `backend/convex/domain/crons/errors.ts`
 **Acceptance Criteria:**
@@ -838,10 +838,10 @@ const TestAgentServiceLive = Layer.succeed(AgentService, mockImpl)
 - [ ] `CronNotFoundError` - Cron doesn't exist (includes cronName)
 - [ ] All errors extend `Data.TaggedError`
 
-### ⏳ Infer 50: Integrate Crons with Monitoring
+### ⏳ Cycle 50: Integrate Crons with Monitoring
 
 **Status:** Pending
-**Dependencies:** Infer 49
+**Dependencies:** Cycle 49
 **Task:** Track cron job executions via MonitoringService
 **File:** `backend/convex/domain/crons/daily-maintenance.ts`
 **Acceptance Criteria:**
@@ -856,15 +856,15 @@ const TestAgentServiceLive = Layer.succeed(AgentService, mockImpl)
 
 ---
 
-## Domain Logic Phase (Infer 51-70)
+## Domain Logic Phase (Cycle 51-70)
 
 **Agents:** agent-backend, agent-builder
 **Goal:** Build complex business logic using Effect services
 
-### ⏳ Infer 51: Multi-Agent Orchestration with Effect
+### ⏳ Cycle 51: Multi-Agent Orchestration with Effect
 
 **Status:** Pending
-**Dependencies:** Infer 50
+**Dependencies:** Cycle 50
 **Task:** Compose multiple agents in parallel and sequential flows
 **File:** `backend/convex/domain/agents/orchestration.ts`
 **Acceptance Criteria:**
@@ -877,10 +877,10 @@ const TestAgentServiceLive = Layer.succeed(AgentService, mockImpl)
 - [ ] Handle errors from multiple agents gracefully
 - [ ] Return combined result
 
-### ⏳ Infer 52: Parallel Agent Execution (Effect.all)
+### ⏳ Cycle 52: Parallel Agent Execution (Effect.all)
 
 **Status:** Pending
-**Dependencies:** Infer 51
+**Dependencies:** Cycle 51
 **Task:** Run multiple agents concurrently with concurrency control
 **File:** `backend/convex/domain/agents/orchestration.ts`
 **Acceptance Criteria:**
@@ -892,10 +892,10 @@ const TestAgentServiceLive = Layer.succeed(AgentService, mockImpl)
 - [ ] Return all results or fail fast
 - [ ] Log agent execution metrics
 
-### ⏳ Infer 53: Sequential Agent Pipelines (Effect.gen)
+### ⏳ Cycle 53: Sequential Agent Pipelines (Effect.gen)
 
 **Status:** Pending
-**Dependencies:** Infer 52
+**Dependencies:** Cycle 52
 **Task:** Chain agents where output of one feeds into next
 **File:** `backend/convex/domain/agents/orchestration.ts`
 **Acceptance Criteria:**
@@ -907,10 +907,10 @@ const TestAgentServiceLive = Layer.succeed(AgentService, mockImpl)
 - [ ] Add Effect.tap for logging intermediate results
 - [ ] Return final result
 
-### ⏳ Infer 54: Conditional Agent Routing
+### ⏳ Cycle 54: Conditional Agent Routing
 
 **Status:** Pending
-**Dependencies:** Infer 53
+**Dependencies:** Cycle 53
 **Task:** Route to different agents based on classification
 **File:** `backend/convex/domain/agents/orchestration.ts`
 **Acceptance Criteria:**
@@ -922,10 +922,10 @@ const TestAgentServiceLive = Layer.succeed(AgentService, mockImpl)
 - [ ] Log routing decisions as events
 - [ ] Test all routing paths
 
-### ⏳ Infer 55: Error Propagation Across Agents
+### ⏳ Cycle 55: Error Propagation Across Agents
 
 **Status:** Pending
-**Dependencies:** Infer 54
+**Dependencies:** Cycle 54
 **Task:** Handle errors from any agent in pipeline
 **File:** `backend/convex/domain/agents/orchestration.ts`
 **Acceptance Criteria:**
@@ -937,10 +937,10 @@ const TestAgentServiceLive = Layer.succeed(AgentService, mockImpl)
 - [ ] Log all errors as events
 - [ ] Graceful degradation (partial results)
 
-### ⏳ Infer 56: Research Workflow Implementation (Part 1: Structure)
+### ⏳ Cycle 56: Research Workflow Implementation (Part 1: Structure)
 
 **Status:** Pending
-**Dependencies:** Infer 55
+**Dependencies:** Cycle 55
 **Task:** Define research workflow structure
 **File:** `backend/convex/domain/workflows/research.ts`
 **Acceptance Criteria:**
@@ -952,10 +952,10 @@ const TestAgentServiceLive = Layer.succeed(AgentService, mockImpl)
 - [ ] Stub handler (async function with steps)
 - [ ] Plan 5 steps: Classify, Parallel Research, Synthesize, Generate Report, Save
 
-### ⏳ Infer 57: Research Workflow (Part 2: Parallel Research)
+### ⏳ Cycle 57: Research Workflow (Part 2: Parallel Research)
 
 **Status:** Pending
-**Dependencies:** Infer 56
+**Dependencies:** Cycle 56
 **Task:** Implement parallel research step
 **File:** `backend/convex/domain/workflows/research.ts`
 **Acceptance Criteria:**
@@ -967,10 +967,10 @@ const TestAgentServiceLive = Layer.succeed(AgentService, mockImpl)
 - [ ] Handle failures (log but continue)
 - [ ] Pass results to next step
 
-### ⏳ Infer 58: Research Workflow (Part 3: Synthesis with Effect)
+### ⏳ Cycle 58: Research Workflow (Part 3: Synthesis with Effect)
 
 **Status:** Pending
-**Dependencies:** Infer 57
+**Dependencies:** Cycle 57
 **Task:** Synthesize findings using Effect services
 **File:** `backend/convex/domain/workflows/research.ts`
 **Acceptance Criteria:**
@@ -984,10 +984,10 @@ const TestAgentServiceLive = Layer.succeed(AgentService, mockImpl)
 - [ ] Return synthesis result
 - [ ] Call from workflow step
 
-### ⏳ Infer 59: Research Workflow (Part 4: Report Generation)
+### ⏳ Cycle 59: Research Workflow (Part 4: Report Generation)
 
 **Status:** Pending
-**Dependencies:** Infer 58
+**Dependencies:** Cycle 58
 **Task:** Generate final report
 **File:** `backend/convex/domain/workflows/research.ts`
 **Acceptance Criteria:**
@@ -1000,10 +1000,10 @@ const TestAgentServiceLive = Layer.succeed(AgentService, mockImpl)
 - [ ] Add Effect error handling
 - [ ] Return formatted report
 
-### ⏳ Infer 60: Research Workflow (Part 5: Save and Notify)
+### ⏳ Cycle 60: Research Workflow (Part 5: Save and Notify)
 
 **Status:** Pending
-**Dependencies:** Infer 59
+**Dependencies:** Cycle 59
 **Task:** Save report and notify user
 **File:** `backend/convex/domain/workflows/research.ts`
 **Acceptance Criteria:**
@@ -1015,10 +1015,10 @@ const TestAgentServiceLive = Layer.succeed(AgentService, mockImpl)
 - [ ] Return final report
 - [ ] Test complete workflow end-to-end
 
-### ⏳ Infer 61: Support Ticket Workflow (Part 1: Structure)
+### ⏳ Cycle 61: Support Ticket Workflow (Part 1: Structure)
 
 **Status:** Pending
-**Dependencies:** Infer 60
+**Dependencies:** Cycle 60
 **Task:** Define support ticket workflow
 **File:** `backend/convex/domain/workflows/support.ts`
 **Acceptance Criteria:**
@@ -1029,10 +1029,10 @@ const TestAgentServiceLive = Layer.succeed(AgentService, mockImpl)
 - [ ] Plan 4 steps: Create thread, Generate response, Quality check, Save ticket
 - [ ] Stub handler
 
-### ⏳ Infer 62: Support Workflow (Part 2: Create Thread)
+### ⏳ Cycle 62: Support Workflow (Part 2: Create Thread)
 
 **Status:** Pending
-**Dependencies:** Infer 61
+**Dependencies:** Cycle 61
 **Task:** Create agent thread for support
 **File:** `backend/convex/domain/workflows/support.ts`
 **Acceptance Criteria:**
@@ -1045,10 +1045,10 @@ const TestAgentServiceLive = Layer.succeed(AgentService, mockImpl)
 - [ ] Create thread with context
 - [ ] Return threadId and initial response
 
-### ⏳ Infer 63: Support Workflow (Part 3: Quality Check)
+### ⏳ Cycle 63: Support Workflow (Part 3: Quality Check)
 
 **Status:** Pending
-**Dependencies:** Infer 62
+**Dependencies:** Cycle 62
 **Task:** Check response quality in parallel
 **File:** `backend/convex/domain/workflows/support.ts`
 **Acceptance Criteria:**
@@ -1060,10 +1060,10 @@ const TestAgentServiceLive = Layer.succeed(AgentService, mockImpl)
 - [ ] Return scores
 - [ ] Refine response if scores < 0.8
 
-### ⏳ Infer 64: Support Workflow (Part 4: Refine Response)
+### ⏳ Cycle 64: Support Workflow (Part 4: Refine Response)
 
 **Status:** Pending
-**Dependencies:** Infer 63
+**Dependencies:** Cycle 63
 **Task:** Refine response if quality checks fail
 **File:** `backend/convex/domain/workflows/support.ts`
 **Acceptance Criteria:**
@@ -1075,10 +1075,10 @@ const TestAgentServiceLive = Layer.succeed(AgentService, mockImpl)
 - [ ] Return refined response or original if retries fail
 - [ ] Log refinement attempts
 
-### ⏳ Infer 65: Support Workflow (Part 5: Save Ticket)
+### ⏳ Cycle 65: Support Workflow (Part 5: Save Ticket)
 
 **Status:** Pending
-**Dependencies:** Infer 64
+**Dependencies:** Cycle 64
 **Task:** Save support ticket to database
 **File:** `backend/convex/domain/workflows/support.ts`
 **Acceptance Criteria:**
@@ -1090,10 +1090,10 @@ const TestAgentServiceLive = Layer.succeed(AgentService, mockImpl)
 - [ ] Log ticket creation event
 - [ ] Return ticket result
 
-### ⏳ Infer 66: Tool Definition: Email Tool with Effect
+### ⏳ Cycle 66: Tool Definition: Email Tool with Effect
 
 **Status:** Pending
-**Dependencies:** Infer 65
+**Dependencies:** Cycle 65
 **Task:** Create email tool using Effect services
 **File:** `backend/convex/domain/agents/tools.ts`
 **Acceptance Criteria:**
@@ -1107,10 +1107,10 @@ const TestAgentServiceLive = Layer.succeed(AgentService, mockImpl)
 - [ ] Convert Effect to Promise (Effect.runPromise)
 - [ ] Return success/failure message
 
-### ⏳ Infer 67: Tool Definition: Database Query Tool with Effect
+### ⏳ Cycle 67: Tool Definition: Database Query Tool with Effect
 
 **Status:** Pending
-**Dependencies:** Infer 66
+**Dependencies:** Cycle 66
 **Task:** Create database query tool using Effect
 **File:** `backend/convex/domain/agents/tools.ts`
 **Acceptance Criteria:**
@@ -1124,10 +1124,10 @@ const TestAgentServiceLive = Layer.succeed(AgentService, mockImpl)
 - [ ] Return results as string (formatted)
 - [ ] Handle errors gracefully
 
-### ⏳ Infer 68: Tool Definition: External API Tool with Effect
+### ⏳ Cycle 68: Tool Definition: External API Tool with Effect
 
 **Status:** Pending
-**Dependencies:** Infer 67
+**Dependencies:** Cycle 67
 **Task:** Create external API tool using Effect
 **File:** `backend/convex/domain/agents/tools.ts`
 **Acceptance Criteria:**
@@ -1141,10 +1141,10 @@ const TestAgentServiceLive = Layer.succeed(AgentService, mockImpl)
 - [ ] Parse response
 - [ ] Return result to agent
 
-### ⏳ Infer 69: Error Handling in Agent Tools
+### ⏳ Cycle 69: Error Handling in Agent Tools
 
 **Status:** Pending
-**Dependencies:** Infer 68
+**Dependencies:** Cycle 68
 **Task:** Handle errors gracefully in all tools
 **File:** `backend/convex/domain/agents/tools.ts`
 **Acceptance Criteria:**
@@ -1156,10 +1156,10 @@ const TestAgentServiceLive = Layer.succeed(AgentService, mockImpl)
 - [ ] Return helpful error messages to agent (not exceptions)
 - [ ] Agent continues even if tool fails
 
-### ⏳ Infer 70: Register Tools with Agent
+### ⏳ Cycle 70: Register Tools with Agent
 
 **Status:** Pending
-**Dependencies:** Infer 69
+**Dependencies:** Cycle 69
 **Task:** Add all tools to Agent component
 **File:** `backend/convex/services/agent.service.ts`
 **Acceptance Criteria:**
@@ -1173,15 +1173,15 @@ const TestAgentServiceLive = Layer.succeed(AgentService, mockImpl)
 
 ---
 
-## Observability & Testing Phase (Infer 71-90)
+## Observability & Testing Phase (Cycle 71-90)
 
 **Agents:** agent-quality, agent-ops
 **Goal:** Monitoring, testing, error handling, resource management
 
-### ⏳ Infer 71: Create MonitoringService with Effect
+### ⏳ Cycle 71: Create MonitoringService with Effect
 
 **Status:** Pending
-**Dependencies:** Infer 70
+**Dependencies:** Cycle 70
 **Task:** Implement observability service
 **File:** `backend/convex/services/monitoring.service.ts`
 **Acceptance Criteria:**
@@ -1194,10 +1194,10 @@ const TestAgentServiceLive = Layer.succeed(AgentService, mockImpl)
 - [ ] Store metrics in database (events table)
 - [ ] Export metrics for external tools (Sentry, Datadog)
 
-### ⏳ Infer 72: Track Service Call Lifecycle
+### ⏳ Cycle 72: Track Service Call Lifecycle
 
 **Status:** Pending
-**Dependencies:** Infer 71
+**Dependencies:** Cycle 71
 **Task:** Log start, complete, fail for every service call
 **File:** `backend/convex/lib/monitoring.ts`
 **Acceptance Criteria:**
@@ -1209,10 +1209,10 @@ const TestAgentServiceLive = Layer.succeed(AgentService, mockImpl)
 - [ ] Include trace ID for distributed tracing
 - [ ] Store in events table with metadata
 
-### ⏳ Infer 73: Track Token Usage for AI Services
+### ⏳ Cycle 73: Track Token Usage for AI Services
 
 **Status:** Pending
-**Dependencies:** Infer 72
+**Dependencies:** Cycle 72
 **Task:** Monitor AI model token consumption
 **File:** `backend/convex/services/agent.service.ts`
 **Acceptance Criteria:**
@@ -1224,10 +1224,10 @@ const TestAgentServiceLive = Layer.succeed(AgentService, mockImpl)
 - [ ] Alert if usage exceeds quota
 - [ ] Display in usage dashboard (frontend)
 
-### ⏳ Infer 74: Error Tracking with Sentry Integration
+### ⏳ Cycle 74: Error Tracking with Sentry Integration
 
 **Status:** Pending
-**Dependencies:** Infer 73
+**Dependencies:** Cycle 73
 **Task:** Send errors to Sentry for debugging
 **File:** `backend/convex/lib/monitoring.ts`
 **Acceptance Criteria:**
@@ -1240,10 +1240,10 @@ const TestAgentServiceLive = Layer.succeed(AgentService, mockImpl)
 - [ ] Link Sentry issues to Convex functions
 - [ ] Test error capture
 
-### ⏳ Infer 75: Performance Metrics Tracking
+### ⏳ Cycle 75: Performance Metrics Tracking
 
 **Status:** Pending
-**Dependencies:** Infer 74
+**Dependencies:** Cycle 74
 **Task:** Track latency per service operation
 **File:** `backend/convex/lib/monitoring.ts`
 **Acceptance Criteria:**
@@ -1255,10 +1255,10 @@ const TestAgentServiceLive = Layer.succeed(AgentService, mockImpl)
 - [ ] Display in monitoring dashboard
 - [ ] Export to external APM (Application Performance Monitoring)
 
-### ⏳ Infer 76: Create Test Layers (Mock Implementations)
+### ⏳ Cycle 76: Create Test Layers (Mock Implementations)
 
 **Status:** Pending
-**Dependencies:** Infer 75
+**Dependencies:** Cycle 75
 **Task:** Build test implementations for all services
 **File:** `backend/convex/services/test-layers.ts`
 **Acceptance Criteria:**
@@ -1271,10 +1271,10 @@ const TestAgentServiceLive = Layer.succeed(AgentService, mockImpl)
 - [ ] Export all test layers for use in tests
 - [ ] Document how to use test layers
 
-### ⏳ Infer 77: Test AgentService with Mock Layer
+### ⏳ Cycle 77: Test AgentService with Mock Layer
 
 **Status:** Pending
-**Dependencies:** Infer 76
+**Dependencies:** Cycle 76
 **Task:** Write unit tests for AgentService using test layer
 **File:** `backend/convex/services/agent.service.test.ts`
 **Acceptance Criteria:**
@@ -1287,10 +1287,10 @@ const TestAgentServiceLive = Layer.succeed(AgentService, mockImpl)
 - [ ] All tests use `TestAgentServiceLive` layer
 - [ ] All tests pass
 
-### ⏳ Infer 78: Test RAGService with Mock Layer
+### ⏳ Cycle 78: Test RAGService with Mock Layer
 
 **Status:** Pending
-**Dependencies:** Infer 77
+**Dependencies:** Cycle 77
 **Task:** Write unit tests for RAGService
 **File:** `backend/convex/services/rag.service.test.ts`
 **Acceptance Criteria:**
@@ -1302,10 +1302,10 @@ const TestAgentServiceLive = Layer.succeed(AgentService, mockImpl)
 - [ ] Use `TestRAGServiceLive` layer
 - [ ] All tests pass
 
-### ⏳ Infer 79: Test Effect Error Handling (Effect.catchTag)
+### ⏳ Cycle 79: Test Effect Error Handling (Effect.catchTag)
 
 **Status:** Pending
-**Dependencies:** Infer 78
+**Dependencies:** Cycle 78
 **Task:** Validate error handling patterns
 **File:** `backend/convex/domain/agents/orchestration.test.ts`
 **Acceptance Criteria:**
@@ -1318,10 +1318,10 @@ const TestAgentServiceLive = Layer.succeed(AgentService, mockImpl)
 - [ ] All tests use test layers
 - [ ] All tests pass
 
-### ⏳ Infer 80: Integration Tests with Real Components
+### ⏳ Cycle 80: Integration Tests with Real Components
 
 **Status:** Pending
-**Dependencies:** Infer 79
+**Dependencies:** Cycle 79
 **Task:** Test with actual Convex components (not mocks)
 **File:** `backend/convex/integration/services.test.ts`
 **Acceptance Criteria:**
@@ -1334,10 +1334,10 @@ const TestAgentServiceLive = Layer.succeed(AgentService, mockImpl)
 - [ ] Test: Performance (latency within acceptable range)
 - [ ] All integration tests pass
 
-### ⏳ Infer 81: Layered Error Handling Pattern
+### ⏳ Cycle 81: Layered Error Handling Pattern
 
 **Status:** Pending
-**Dependencies:** Infer 80
+**Dependencies:** Cycle 80
 **Task:** Implement layered error handling strategy
 **File:** `backend/convex/lib/error-handling.ts`
 **Acceptance Criteria:**
@@ -1350,10 +1350,10 @@ const TestAgentServiceLive = Layer.succeed(AgentService, mockImpl)
 - [ ] Example implementation in orchestration.ts
 - [ ] Document pattern
 
-### ⏳ Infer 82: Retry Strategies (Schedule.exponential)
+### ⏳ Cycle 82: Retry Strategies (Schedule.exponential)
 
 **Status:** Pending
-**Dependencies:** Infer 81
+**Dependencies:** Cycle 81
 **Task:** Implement smart retry policies
 **File:** `backend/convex/lib/retry-strategies.ts`
 **Acceptance Criteria:**
@@ -1365,10 +1365,10 @@ const TestAgentServiceLive = Layer.succeed(AgentService, mockImpl)
 - [ ] Document when to use each strategy
 - [ ] Apply to agent, RAG, external API calls
 
-### ⏳ Infer 83: Circuit Breaker Pattern with Effect
+### ⏳ Cycle 83: Circuit Breaker Pattern with Effect
 
 **Status:** Pending
-**Dependencies:** Infer 82
+**Dependencies:** Cycle 82
 **Task:** Prevent cascading failures
 **File:** `backend/convex/lib/circuit-breaker.ts`
 **Acceptance Criteria:**
@@ -1381,10 +1381,10 @@ const TestAgentServiceLive = Layer.succeed(AgentService, mockImpl)
 - [ ] Implement with Effect.Ref for state management
 - [ ] Apply to external API calls
 
-### ⏳ Infer 84: Graceful Degradation Pattern
+### ⏳ Cycle 84: Graceful Degradation Pattern
 
 **Status:** Pending
-**Dependencies:** Infer 83
+**Dependencies:** Cycle 83
 **Task:** Return partial results on failure
 **File:** `backend/convex/domain/agents/orchestration.ts`
 **Acceptance Criteria:**
@@ -1396,10 +1396,10 @@ const TestAgentServiceLive = Layer.succeed(AgentService, mockImpl)
 - [ ] Log degradation event (service_degraded)
 - [ ] Test with mock failures
 
-### ⏳ Infer 85: Resource Management with Effect.Scope
+### ⏳ Cycle 85: Resource Management with Effect.Scope
 
 **Status:** Pending
-**Dependencies:** Infer 84
+**Dependencies:** Cycle 84
 **Task:** Implement resource acquisition/release
 **File:** `backend/convex/lib/resource-management.ts`
 **Acceptance Criteria:**
@@ -1411,10 +1411,10 @@ const TestAgentServiceLive = Layer.succeed(AgentService, mockImpl)
 - [ ] Test resource cleanup (no leaks)
 - [ ] Document pattern
 
-### ⏳ Infer 86: Connection Pooling for External APIs
+### ⏳ Cycle 86: Connection Pooling for External APIs
 
 **Status:** Pending
-**Dependencies:** Infer 85
+**Dependencies:** Cycle 85
 **Task:** Reuse connections for efficiency
 **File:** `backend/convex/lib/connection-pool.ts`
 **Acceptance Criteria:**
@@ -1426,10 +1426,10 @@ const TestAgentServiceLive = Layer.succeed(AgentService, mockImpl)
 - [ ] Close pool on shutdown (cleanup)
 - [ ] Test pool behavior (acquire, reuse, release)
 
-### ⏳ Infer 87: Agent Pool Lifecycle Management
+### ⏳ Cycle 87: Agent Pool Lifecycle Management
 
 **Status:** Pending
-**Dependencies:** Infer 86
+**Dependencies:** Cycle 86
 **Task:** Manage pool of agent instances
 **File:** `backend/convex/services/agent.service.ts`
 **Acceptance Criteria:**
@@ -1441,10 +1441,10 @@ const TestAgentServiceLive = Layer.succeed(AgentService, mockImpl)
 - [ ] Shutdown pool gracefully (finish in-flight requests)
 - [ ] Test pool under load
 
-### ⏳ Infer 88: Cleanup on Failure
+### ⏳ Cycle 88: Cleanup on Failure
 
 **Status:** Pending
-**Dependencies:** Infer 87
+**Dependencies:** Cycle 87
 **Task:** Ensure resources released on errors
 **File:** `backend/convex/lib/resource-management.ts`
 **Acceptance Criteria:**
@@ -1456,10 +1456,10 @@ const TestAgentServiceLive = Layer.succeed(AgentService, mockImpl)
 - [ ] All released if any operation fails
 - [ ] No resource leaks
 
-### ⏳ Infer 89: Resource Acquisition/Release Patterns
+### ⏳ Cycle 89: Resource Acquisition/Release Patterns
 
 **Status:** Pending
-**Dependencies:** Infer 88
+**Dependencies:** Cycle 88
 **Task:** Document common resource management patterns
 **File:** `backend/convex/lib/resource-management.md`
 **Acceptance Criteria:**
@@ -1472,10 +1472,10 @@ const TestAgentServiceLive = Layer.succeed(AgentService, mockImpl)
 - [ ] Code examples for each pattern
 - [ ] Best practices
 
-### ⏳ Infer 90: Resource Safety Tests
+### ⏳ Cycle 90: Resource Safety Tests
 
 **Status:** Pending
-**Dependencies:** Infer 89
+**Dependencies:** Cycle 89
 **Task:** Validate zero resource leaks
 **File:** `backend/convex/lib/resource-management.test.ts`
 **Acceptance Criteria:**
@@ -1489,15 +1489,15 @@ const TestAgentServiceLive = Layer.succeed(AgentService, mockImpl)
 
 ---
 
-## Advanced Patterns & Documentation Phase (Infer 91-100)
+## Advanced Patterns & Documentation Phase (Cycle 91-100)
 
 **Agents:** agent-documenter, agent-ops, agent-backend
 **Goal:** Confect evaluation, documentation, optimization, launch
 
-### ⏳ Infer 91: Evaluate Confect for Full Effect Integration
+### ⏳ Cycle 91: Evaluate Confect for Full Effect Integration
 
 **Status:** Pending
-**Dependencies:** Infer 90
+**Dependencies:** Cycle 90
 **Task:** Assess Confect vs manual integration
 **File:** `one/things/plans/confect-evaluation.md`
 **Acceptance Criteria:**
@@ -1510,10 +1510,10 @@ const TestAgentServiceLive = Layer.succeed(AgentService, mockImpl)
 - [ ] Cons: Learning curve, team adoption, migration effort
 - [ ] Recommendation: Manual integration (gradual adoption) vs Confect (new projects)
 
-### ⏳ Infer 92: Confect + Convex Components Pattern
+### ⏳ Cycle 92: Confect + Convex Components Pattern
 
 **Status:** Pending
-**Dependencies:** Infer 91
+**Dependencies:** Cycle 91
 **Task:** Test Confect compatibility with components
 **File:** `backend/convex/confect-test.ts`
 **Acceptance Criteria:**
@@ -1526,10 +1526,10 @@ const TestAgentServiceLive = Layer.succeed(AgentService, mockImpl)
 - [ ] Document integration pattern
 - [ ] Test end-to-end
 
-### ⏳ Infer 93: Migration Guide (Promise → Effect, Manual → Confect)
+### ⏳ Cycle 93: Migration Guide (Promise → Effect, Manual → Confect)
 
 **Status:** Pending
-**Dependencies:** Infer 92
+**Dependencies:** Cycle 92
 **Task:** Document migration strategies
 **File:** `one/things/plans/effect-migration-guide.md`
 **Acceptance Criteria:**
@@ -1542,10 +1542,10 @@ const TestAgentServiceLive = Layer.succeed(AgentService, mockImpl)
 - [ ] Timeline estimates (days per 1000 LOC)
 - [ ] Decision tree (when to migrate vs rewrite)
 
-### ⏳ Infer 94: Write Service Layer Guide
+### ⏳ Cycle 94: Write Service Layer Guide
 
 **Status:** Pending
-**Dependencies:** Infer 93
+**Dependencies:** Cycle 93
 **Task:** Comprehensive guide for Effect service layers
 **File:** `one/knowledge/effect-service-layer-guide.md`
 **Acceptance Criteria:**
@@ -1559,10 +1559,10 @@ const TestAgentServiceLive = Layer.succeed(AgentService, mockImpl)
 - [ ] Code examples for all patterns
 - [ ] Best practices
 
-### ⏳ Infer 95: Document All Effect Patterns
+### ⏳ Cycle 95: Document All Effect Patterns
 
 **Status:** Pending
-**Dependencies:** Infer 94
+**Dependencies:** Cycle 94
 **Task:** Create pattern library
 **File:** `one/knowledge/effect-patterns.md`
 **Acceptance Criteria:**
@@ -1577,10 +1577,10 @@ const TestAgentServiceLive = Layer.succeed(AgentService, mockImpl)
 - [ ] Pattern: Context.Tag + Layer (dependency injection)
 - [ ] Code examples for each
 
-### ⏳ Infer 96: Create Example Programs
+### ⏳ Cycle 96: Create Example Programs
 
 **Status:** Pending
-**Dependencies:** Infer 95
+**Dependencies:** Cycle 95
 **Task:** End-to-end examples using Effect services
 **File:** `one/knowledge/effect-examples.md`
 **Acceptance Criteria:**
@@ -1593,10 +1593,10 @@ const TestAgentServiceLive = Layer.succeed(AgentService, mockImpl)
 - [ ] All examples fully working (copy-paste ready)
 - [ ] Include test setup
 
-### ⏳ Infer 97: Troubleshooting Guide for Effect Errors
+### ⏳ Cycle 97: Troubleshooting Guide for Effect Errors
 
 **Status:** Pending
-**Dependencies:** Infer 96
+**Dependencies:** Cycle 96
 **Task:** Common errors and solutions
 **File:** `one/knowledge/effect-troubleshooting.md`
 **Acceptance Criteria:**
@@ -1609,10 +1609,10 @@ const TestAgentServiceLive = Layer.succeed(AgentService, mockImpl)
 - [ ] Solutions for each error
 - [ ] Debugging tips
 
-### ⏳ Infer 98: Performance Optimization
+### ⏳ Cycle 98: Performance Optimization
 
 **Status:** Pending
-**Dependencies:** Infer 97
+**Dependencies:** Cycle 97
 **Task:** Optimize Effect-based code for production
 **File:** `backend/convex/lib/optimization.ts`
 **Acceptance Criteria:**
@@ -1624,10 +1624,10 @@ const TestAgentServiceLive = Layer.succeed(AgentService, mockImpl)
 - [ ] Benchmark: Effect vs Promise-based (ensure no regression)
 - [ ] Optimize hot paths (< 5% overhead)
 
-### ⏳ Infer 99: Deploy to Convex Production
+### ⏳ Cycle 99: Deploy to Convex Production
 
 **Status:** Pending
-**Dependencies:** Infer 98
+**Dependencies:** Cycle 98
 **Task:** Deploy Effect service layer to production
 **File:** N/A
 **Acceptance Criteria:**
@@ -1640,15 +1640,15 @@ const TestAgentServiceLive = Layer.succeed(AgentService, mockImpl)
 - [ ] Monitor resource usage (memory, CPU)
 - [ ] Rollback plan ready (if issues detected)
 
-### ⏳ Infer 100: Mark Feature Complete and Train Team
+### ⏳ Cycle 100: Mark Feature Complete and Train Team
 
 **Status:** Pending
-**Dependencies:** Infer 99
+**Dependencies:** Cycle 99
 **Task:** Launch and knowledge transfer
 **File:** `one/events/components-feature-complete.md`
 **Acceptance Criteria:**
 
-- [ ] All 100 inferences complete ✅
+- [ ] All 100 cycles complete ✅
 - [ ] All tests passing (unit, integration, resource safety) ✅
 - [ ] Documentation complete (guides, patterns, examples, troubleshooting) ✅
 - [ ] Performance optimized (no regression) ✅
@@ -1662,7 +1662,7 @@ const TestAgentServiceLive = Layer.succeed(AgentService, mockImpl)
 
 ## Summary Statistics
 
-**Total Inferences:** 100
+**Total Cycles:** 100
 **Estimated Duration:** 45-60 days (with parallelization)
 **Agents Involved:** 6 (director, backend, builder, ops, quality, documenter)
 **New Service Layers:** 8 (Agent, RAG, RateLimit, Workflow, Streaming, Workpool, Retrier, Crons)
@@ -1675,9 +1675,9 @@ const TestAgentServiceLive = Layer.succeed(AgentService, mockImpl)
 
 ## Next Steps
 
-1. **Start Execution:** Run `/next` to begin Infer 11 (AgentService implementation)
+1. **Start Execution:** Run `/next` to begin Cycle 11 (AgentService implementation)
 2. **Review Plan:** Use `/plan` to see full breakdown
-3. **Track Progress:** Use `/now` to see current inference, `/done` to mark complete
+3. **Track Progress:** Use `/now` to see current cycle, `/done` to mark complete
 4. **Quality Checks:** agent-quality will continuously validate patterns
 
-**Ready to begin? Type `/next` to start Infer 11!**
+**Ready to begin? Type `/next` to start Cycle 11!**

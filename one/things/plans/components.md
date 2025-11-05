@@ -296,7 +296,7 @@ export const generateAgentResponse = action({
 
 ## Implementation Phases
 
-### Phase 1: Foundation (Infer 1-10)
+### Phase 1: Foundation (Cycle 1-10)
 
 **Agent:** agent-director
 
@@ -309,15 +309,15 @@ export const generateAgentResponse = action({
 5. Plan dependency injection strategy
 6. Define observability requirements
 7. Create integration patterns document
-8. Break down into 100 inferences
+8. Break down into 100 cycles
 9. Assign agents to phases
 10. Create complete implementation plan
 
-### Phase 2: Core Service Layers (Infer 11-30)
+### Phase 2: Core Service Layers (Cycle 11-30)
 
 **Agent:** agent-backend
 
-**Infer 11-15: Agent Service Layer**
+**Cycle 11-15: Agent Service Layer**
 
 - Wrap @convex-dev/agent with Effect
 - Define AgentService interface
@@ -325,7 +325,7 @@ export const generateAgentResponse = action({
 - Add error types (AgentError, ThreadNotFoundError)
 - Create agent tool definitions using Effect
 
-**Infer 16-20: RAG Service Layer**
+**Cycle 16-20: RAG Service Layer**
 
 - Wrap @convex-dev/rag with Effect
 - Define RAGService interface
@@ -333,7 +333,7 @@ export const generateAgentResponse = action({
 - Add error types (RAGError, EmbeddingError, SearchError)
 - Compose with Agent service
 
-**Infer 21-25: Rate Limiting Service Layer**
+**Cycle 21-25: Rate Limiting Service Layer**
 
 - Wrap @convex-dev/rate-limiter with Effect
 - Define RateLimitService interface
@@ -341,7 +341,7 @@ export const generateAgentResponse = action({
 - Add error types (RateLimitError, QuotaExceededError)
 - Integrate with Agent/RAG services
 
-**Infer 26-30: Workflow Service Layer**
+**Cycle 26-30: Workflow Service Layer**
 
 - Wrap @convex-dev/workflow with Effect
 - Define WorkflowService interface
@@ -349,11 +349,11 @@ export const generateAgentResponse = action({
 - Create Effect programs for workflow steps
 - Add error handling and retry logic
 
-### Phase 3: Supporting Services (Infer 31-50)
+### Phase 3: Supporting Services (Cycle 31-50)
 
 **Agent:** agent-backend
 
-**Infer 31-35: Streaming Service Layer**
+**Cycle 31-35: Streaming Service Layer**
 
 - Wrap @convex-dev/persistent-text-streaming with Effect
 - Define StreamingService interface
@@ -361,7 +361,7 @@ export const generateAgentResponse = action({
 - Handle backpressure with Effect.Stream
 - Add error recovery
 
-**Infer 36-40: Workpool Service Layer**
+**Cycle 36-40: Workpool Service Layer**
 
 - Wrap @convex-dev/workpool with Effect
 - Define TaskQueueService interface
@@ -369,7 +369,7 @@ export const generateAgentResponse = action({
 - Batch enqueuing with Effect.all
 - Add priority queuing
 
-**Infer 41-45: Retrier Service Layer**
+**Cycle 41-45: Retrier Service Layer**
 
 - Wrap @convex-dev/retrier with Effect
 - Define ResilientExecutionService interface
@@ -377,7 +377,7 @@ export const generateAgentResponse = action({
 - Combine with Effect.retry for hybrid approach
 - Poll for completion with Effect schedules
 
-**Infer 46-50: Crons Service Layer**
+**Cycle 46-50: Crons Service Layer**
 
 - Wrap @convex-dev/crons with Effect
 - Define CronService interface
@@ -385,11 +385,11 @@ export const generateAgentResponse = action({
 - Use Effect for cron job logic
 - Add monitoring and error handling
 
-### Phase 4: Domain Logic (Infer 51-70)
+### Phase 4: Domain Logic (Cycle 51-70)
 
 **Agents:** agent-backend, agent-builder
 
-**Infer 51-55: Multi-Agent Orchestration**
+**Cycle 51-55: Multi-Agent Orchestration**
 
 - Define multi-agent workflows with Effect
 - Parallel agent execution (Effect.all)
@@ -397,7 +397,7 @@ export const generateAgentResponse = action({
 - Conditional routing based on classification
 - Error propagation across agents
 
-**Infer 56-60: Research Workflow**
+**Cycle 56-60: Research Workflow**
 
 - Implement research workflow using Workflow component
 - Use Effect in workflow steps
@@ -405,7 +405,7 @@ export const generateAgentResponse = action({
 - Synthesis agent with RAG context
 - Report generation
 
-**Infer 61-65: Support Ticket Workflow**
+**Cycle 61-65: Support Ticket Workflow**
 
 - Implement support agent workflow
 - Use Effect for business logic
@@ -413,7 +413,7 @@ export const generateAgentResponse = action({
 - Automatic ticket creation
 - Response quality checks
 
-**Infer 66-70: Tool Definitions with Effect**
+**Cycle 66-70: Tool Definitions with Effect**
 
 - Create agent tools using Effect services
 - Email tool (Effect-based)
@@ -421,11 +421,11 @@ export const generateAgentResponse = action({
 - External API tool (Effect-based)
 - Error handling in tools
 
-### Phase 5: Observability & Testing (Infer 71-90)
+### Phase 5: Observability & Testing (Cycle 71-90)
 
 **Agents:** agent-quality, agent-ops
 
-**Infer 71-75: Monitoring Service**
+**Cycle 71-75: Monitoring Service**
 
 - Create MonitoringService with Effect
 - Track service calls (start, complete, fail)
@@ -433,7 +433,7 @@ export const generateAgentResponse = action({
 - Error tracking (Sentry integration)
 - Performance metrics
 
-**Infer 76-80: Testing Strategies**
+**Cycle 76-80: Testing Strategies**
 
 - Create test layers (mock implementations)
 - Test AgentService with TestAgentServiceLive
@@ -441,7 +441,7 @@ export const generateAgentResponse = action({
 - Test error handling (Effect.catchTag)
 - Integration tests with real components
 
-**Infer 81-85: Effect-Based Error Handling**
+**Cycle 81-85: Effect-Based Error Handling**
 
 - Layered error handling pattern
 - Domain errors vs infrastructure errors
@@ -449,7 +449,7 @@ export const generateAgentResponse = action({
 - Circuit breaker pattern (Effect)
 - Graceful degradation
 
-**Infer 86-90: Resource Management**
+**Cycle 86-90: Resource Management**
 
 - Scoped resources (Effect.Scope)
 - Connection pooling
@@ -457,11 +457,11 @@ export const generateAgentResponse = action({
 - Cleanup on failure
 - Resource acquisition/release patterns
 
-### Phase 6: Advanced Patterns & Documentation (Infer 91-100)
+### Phase 6: Advanced Patterns & Documentation (Cycle 91-100)
 
 **Agents:** agent-documenter, agent-ops
 
-**Infer 91-93: Confect Integration (Optional)**
+**Cycle 91-93: Confect Integration (Optional)**
 
 - Evaluate Confect for full Effect integration
 - Compare manual vs Confect approach
@@ -469,7 +469,7 @@ export const generateAgentResponse = action({
 - Test Confect + Components together
 - Document decision
 
-**Infer 94-96: Documentation**
+**Cycle 94-96: Documentation**
 
 - Write service layer guide
 - Document all Effect patterns
@@ -477,7 +477,7 @@ export const generateAgentResponse = action({
 - Troubleshooting guide for Effect errors
 - Migration guide from Promise-based to Effect
 
-**Infer 97-98: Performance Optimization**
+**Cycle 97-98: Performance Optimization**
 
 - Parallel execution with concurrency control (Effect.all)
 - Caching layer for service calls
@@ -485,7 +485,7 @@ export const generateAgentResponse = action({
 - Batch operations
 - Benchmarking
 
-**Infer 99-100: Deployment & Launch**
+**Cycle 99-100: Deployment & Launch**
 
 - Deploy to Convex production
 - Monitor service performance
@@ -581,7 +581,7 @@ export const generateAgentResponse = action({
 
 ## Agent Assignments
 
-| Phase               | Inferences | Agent                        | Role                           |
+| Phase               | Cycles | Agent                        | Role                           |
 | ------------------- | ---------- | ---------------------------- | ------------------------------ |
 | Foundation          | 1-10       | agent-director               | Validation, mapping, planning  |
 | Core Services       | 11-30      | agent-backend                | Service layer implementation   |
@@ -598,9 +598,9 @@ export const generateAgentResponse = action({
 
 **Test → Design → Implement → Validate**
 
-1. **Tests First (Infer 76-90):** Define test layers for all services
-2. **Design to Satisfy Tests (Infer 11-50):** Create services that pass tests
-3. **Implement Against Tests (Infer 51-70):** Write domain logic that validates
+1. **Tests First (Cycle 76-90):** Define test layers for all services
+2. **Design to Satisfy Tests (Cycle 11-50):** Create services that pass tests
+3. **Implement Against Tests (Cycle 51-70):** Write domain logic that validates
 4. **Fix Failures (Throughout):** agent-problem-solver analyzes, delegates fixes
 
 **Quality Gates:**
@@ -706,4 +706,4 @@ Effect.scoped(
 ---
 
 **Status:** Ready for Execution
-**Next Step:** Begin Infer 1 with agent-director for architecture validation
+**Next Step:** Begin Cycle 1 with agent-director for architecture validation

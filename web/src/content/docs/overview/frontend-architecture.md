@@ -1,7 +1,7 @@
 ---
-title: Frontend Architecture
+title: Website
 description: Building the rendering layer - backend-agnostic, type-safe, composable
-order: 3
+order: 5
 ---
 
 # ONE Frontend Architecture

@@ -18,8 +18,8 @@ levelColor: "text-pink-600"
 startDate: 2025-10-30
 targetEndDate: 2026-03-31
 progress: 0
-totalInferences: 100
-completedInferences: 0
+totalCycles: 100
+completedCycles: 0
 features:
   - "Real-time conversation threads"
   - "Advanced message search and filters"
@@ -143,20 +143,20 @@ Ready to build this project? Choose your path:
 
 ## Implementation Plan
 
-This project follows a **100-inference implementation plan** for systematic development.
+This project follows a **100-cycle implementation plan** for systematic development.
 
 **📋 View Full Plan:** [Website Builder with CMS v1.0.0](/plans/website)
 
-**Progress:** 0/100 inferences complete (0%)
+**Progress:** 0/100 cycles complete (0%)
 
 ### Plan Overview
 
-- **Infer 1-10**: Foundation & Architecture (website builder structure, editor design)
-- **Infer 11-20**: Backend Schema & Services (page builder data, CMS, version control)
-- **Infer 21-50**: React Components (visual editor, component library, properties panel)
-- **Infer 51-70**: Astro Pages & Integration (builder dashboard, page editor, settings)
-- **Infer 71-100**: Polish & Optimization (multi-language, SEO, performance)
-- **Timeline**: 90-100 inferences for complete implementation
+- **Cycle 1-10**: Foundation & Architecture (website builder structure, editor design)
+- **Cycle 11-20**: Backend Schema & Services (page builder data, CMS, version control)
+- **Cycle 21-50**: React Components (visual editor, component library, properties panel)
+- **Cycle 51-70**: Astro Pages & Integration (builder dashboard, page editor, settings)
+- **Cycle 71-100**: Polish & Optimization (multi-language, SEO, performance)
+- **Timeline**: 90-100 cycles for complete implementation
 
 ### Quick Start
 
@@ -164,7 +164,7 @@ This project follows a **100-inference implementation plan** for systematic deve
 # 1. View the implementation plan
 /plan website
 
-# 2. Start with first inference
+# 2. Start with first cycle
 /infer 1
 
 # 3. Mark complete and advance
@@ -174,8 +174,8 @@ This project follows a **100-inference implementation plan** for systematic deve
 ## How to Use
 
 1. Visit `/mail` to see the live demo
-2. Review the [100-inference implementation plan](/plans/website)
-3. Follow the inference sequence step-by-step
+2. Review the [100-cycle implementation plan](/plans/website)
+3. Follow the cycle sequence step-by-step
 4. Build pages with drag-and-drop visual editor
 5. Configure multi-language support and SEO
 6. Implement version control and rollback

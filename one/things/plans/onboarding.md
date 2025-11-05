@@ -2,7 +2,7 @@
 title: Onboarding
 dimension: things
 category: plans
-tags: ai, inference, ontology
+tags: ai, cycle, ontology
 related_dimensions: connections, events, knowledge, people
 scope: global
 created: 2025-11-03
@@ -22,7 +22,7 @@ ai_context: |
 **Status:** Planning Complete - Ready for Implementation
 **Type:** thing (plan)
 **Purpose:** Complete specification for `npx oneie init` → Live Platform workflow
-**Timeline:** Inference-based (not time-based)
+**Timeline:** Cycle-based (not time-based)
 **Goal:** From zero to deployed platform in 50-75 minutes
 
 ---

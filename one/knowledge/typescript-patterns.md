@@ -250,7 +250,7 @@ bunx astro check --minimumSeverity error
 ### Key Changes in React 19
 
 1. **Server Components** - Use `'use client'` directive when needed
-2. **Stricter Types** - More precise type inference
+2. **Stricter Types** - More precise type cycle
 3. **New Hooks** - `useFormStatus`, `useFormState`, `useOptimistic`
 4. **Async Components** - Server components can be async
 

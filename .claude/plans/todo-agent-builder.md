@@ -16,19 +16,19 @@
 This TODO list covers all backend testing requirements for validating the AI-powered recommendations feature. The testing strategy follows a 4-phase pyramid:
 
 ```
-Phase 4: Performance & Integration (Infer 68-70)
+Phase 4: Performance & Integration (Cycle 68-70)
   └─ Load testing, query optimization, cross-function flows
-Phase 3: Database & Schema Integrity (Infer 66-67)
+Phase 3: Database & Schema Integrity (Cycle 66-67)
   └─ Schema validation, constraints, indexing, data consistency
-Phase 2: Queries, Mutations & Validation (Infer 65-66)
+Phase 2: Queries, Mutations & Validation (Cycle 65-66)
   └─ Unit tests for Convex functions, input validation, error handling
-Phase 1: Service Layer Unit Tests (Infer 64-65)
+Phase 1: Service Layer Unit Tests (Cycle 64-65)
   └─ Effect.ts services, business logic, error composition
 ```
 
 ---
 
-## Phase 1: Service Layer Unit Tests (Infer 64-65)
+## Phase 1: Service Layer Unit Tests (Cycle 64-65)
 
 Service layer tests validate business logic in isolation using Effect.ts patterns.
 
@@ -314,7 +314,7 @@ Service layer tests validate business logic in isolation using Effect.ts pattern
 
 ---
 
-## Phase 2: Convex Queries, Mutations & Validation (Infer 65-66)
+## Phase 2: Convex Queries, Mutations & Validation (Cycle 65-66)
 
 Convex function tests validate the integration between HTTP layer and business logic.
 
@@ -533,7 +533,7 @@ Convex function tests validate the integration between HTTP layer and business l
 
 ---
 
-## Phase 3: Database & Schema Integrity (Infer 66-67)
+## Phase 3: Database & Schema Integrity (Cycle 66-67)
 
 Database tests validate schema, constraints, and data integrity.
 
@@ -734,7 +734,7 @@ Database tests validate schema, constraints, and data integrity.
 
 ---
 
-## Phase 4: Integration & Performance Testing (Infer 68-70)
+## Phase 4: Integration & Performance Testing (Cycle 68-70)
 
 Integration tests validate complete workflows and performance characteristics.
 
@@ -1158,9 +1158,9 @@ bun run test:coverage
 - **Phase 2 (Convex tests)**: 2-3 inferences
 - **Phase 3 (Database tests)**: 2-3 inferences
 - **Phase 4 (Integration tests)**: 2-3 inferences
-- **Total**: 8-12 inferences (Infer 65-76)
+- **Total**: 8-12 inferences (Cycle 65-76)
 
-Current progress: Infer 65/100 (ready to start Phase 1)
+Current progress: Cycle 65/100 (ready to start Phase 1)
 
 ---
 
@@ -1177,4 +1177,4 @@ Current progress: Infer 65/100 (ready to start Phase 1)
 ---
 
 **Status**: Ready for backend engineer to begin Phase 1 (service unit tests)
-**Estimated Completion**: Infer 76/100 with full backend coverage
+**Estimated Completion**: Cycle 76/100 with full backend coverage

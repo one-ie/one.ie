@@ -2,7 +2,7 @@
 title: One
 dimension: groups
 category: one.md
-tags: ai, blockchain, inference
+tags: ai, blockchain, cycle
 related_dimensions: events, knowledge, people, things
 scope: global
 created: 2025-11-03
@@ -55,13 +55,13 @@ ai_context: |
       users: 1000000,      // 1M users
       storage: 1000000,    // 1 PB
       apiCalls: -1,        // Unlimited
-      inferences: -1,      // Unlimited
+      cycles: -1,      // Unlimited
     },
     usage: {
       users: 0,
       storage: 0,
       apiCalls: 0,
-      inferences: 0,
+      cycles: 0,
     },
 
     // Billing (platform uses blockchain)
@@ -85,9 +85,9 @@ ai_context: |
       enableTwoFactor: true,
       allowedDomains: ["one.ie"],
 
-      // Inference settings
-      inferenceEnabled: true,
-      inferenceModels: [
+      // Cycle settings
+      cycleEnabled: true,
+      cycleModels: [
         "gpt-4-turbo",
         "gpt-4",
         "claude-3.5-sonnet",
@@ -102,7 +102,7 @@ ai_context: |
 
     // Platform metadata
     features: [
-      "inference",
+      "cycle",
       "ai_clones",
       "content_creation",
       "token_economy",
@@ -175,14 +175,14 @@ ai_context: |
 `one-org` → `smart-contract` via `owns`
 
 ```typescript
-// Sui Inference Payment Contract
+// Sui Cycle Payment Contract
 {
   fromThingId: oneOrgId,
-  toThingId: suiInferenceContractId,
+  toThingId: suiCycleContractId,
   relationshipType: "owns",
   metadata: {
     network: "sui",
-    contractType: "inference_payment",
+    contractType: "cycle_payment",
     packageId: process.env.SUI_INFERENCE_PACKAGE_ID,
     deployedBy: anthonyId,
   },
@@ -265,7 +265,7 @@ const treasuryAddresses = {
     network: "sui",
     address: process.env.PLATFORM_TREASURY_SUI,
     type: "platform_treasury",
-    purpose: "Collect all inference and subscription revenue",
+    purpose: "Collect all cycle and subscription revenue",
   },
   createdAt: Date.now(),
 }
@@ -327,9 +327,9 @@ const treasuryAddresses = {
   targetId: oneOrgId,
   timestamp: Date.now(),
   metadata: {
-    updatedFields: ["settings.inferenceModels"],
-    previousValues: { inferenceModels: ["gpt-4"] },
-    newValues: { inferenceModels: ["gpt-4", "claude-3.5-sonnet"] },
+    updatedFields: ["settings.cycleModels"],
+    previousValues: { cycleModels: ["gpt-4"] },
+    newValues: { cycleModels: ["gpt-4", "claude-3.5-sonnet"] },
   },
 }
 ```
@@ -337,9 +337,9 @@ const treasuryAddresses = {
 ### Revenue Events
 
 ```typescript
-// Platform collects inference revenue
+// Platform collects cycle revenue
 {
-  type: "inference_revenue_collected",
+  type: "cycle_revenue_collected",
   actorId: "system",
   targetId: anthonyId,
   timestamp: Date.now(),
@@ -386,9 +386,9 @@ const customerOrgId = await db.insert("things", {
       users: 50,
       storage: 100,
       apiCalls: 100000,
-      inferences: 10000,
+      cycles: 10000,
     },
-    usage: { users: 0, storage: 0, apiCalls: 0, inferences: 0 },
+    usage: { users: 0, storage: 0, apiCalls: 0, cycles: 0 },
     billing: {
       customerId: "cus_stripe123",
       subscriptionId: "sub_stripe456",
@@ -398,8 +398,8 @@ const customerOrgId = await db.insert("things", {
       allowSignups: false,
       requireEmailVerification: true,
       enableTwoFactor: false,
-      inferenceEnabled: true,
-      inferenceModels: ["gpt-4", "claude-3.5-sonnet"],
+      cycleEnabled: true,
+      cycleModels: ["gpt-4", "claude-3.5-sonnet"],
     },
     revenueShare: 0.1,  // 10% rev share if they refer users
   },
@@ -511,7 +511,7 @@ const orgEntities = await Promise.all(
 ```typescript
 const revenueEvents = await db
   .query("events")
-  .withIndex("type_time", (q) => q.eq("type", "inference_revenue_collected"))
+  .withIndex("type_time", (q) => q.eq("type", "cycle_revenue_collected"))
   .collect();
 
 const totalRevenue = revenueEvents.reduce(
@@ -536,7 +536,7 @@ const treasuryBalances = {
 
 ### 8 Core Features
 
-1. **Inference API** - Pay-per-use AI inference
+1. **Cycle API** - Pay-per-use AI cycle
 2. **AI Clones** - Voice & video clones of creators
 3. **Content Creation** - AI-powered content generation
 4. **Token Economy** - Creator tokens & NFTs
@@ -545,10 +545,10 @@ const treasuryBalances = {
 7. **Multi-Tenant** - Isolated organizations
 8. **Knowledge Integration** - RAG & vector search
 
-### Supported Inference Models
+### Supported Cycle Models
 
 ```typescript
-const inferenceModels = [
+const cycleModels = [
   // OpenAI
   "gpt-4-turbo",
   "gpt-4",
@@ -577,7 +577,7 @@ const supportedNetworks = [
     name: "Sui",
     chainId: "sui:mainnet",
     nativeToken: "SUI",
-    features: ["inference_payment", "token", "nft", "subscription"],
+    features: ["cycle_payment", "token", "nft", "subscription"],
   },
   {
     name: "Solana",
@@ -600,7 +600,7 @@ const supportedNetworks = [
 
 - **Platform Organization** - ONE is the parent org for all customer orgs
 - **100% Ownership** - Anthony owns 100% of ONE organization
-- **Unlimited Resources** - No limits on users, storage, API calls, inferences
+- **Unlimited Resources** - No limits on users, storage, API calls, cycles
 - **Blockchain-First** - All revenue collected via smart contracts
 - **Multi-Chain** - Supports Sui, Solana, and Base
 - **Multi-Tenant** - Hosts customer organizations with isolation

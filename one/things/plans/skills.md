@@ -349,11 +349,11 @@ Implement Claude Code agent skills for all ONE Platform agents in `.claude/agent
 
 ## Implementation Phases
 
-### Phase 1: Core Skills (Infer 1-20)
+### Phase 1: Core Skills (Cycle 1-20)
 
 **Goal:** Implement foundational skills used by all agents
 
-**Infer 1-5: Ontology Skills**
+**Cycle 1-5: Ontology Skills**
 
 - Create `skills/ontology/` directory structure
 - Implement `validate-schema.md`
@@ -361,7 +361,7 @@ Implement Claude Code agent skills for all ONE Platform agents in `.claude/agent
 - Test with agent-director and agent-quality
 - Document skill usage patterns
 
-**Infer 6-10: Convex Skills**
+**Cycle 6-10: Convex Skills**
 
 - Create `skills/convex/` directory
 - Implement `read-schema.md`
@@ -369,7 +369,7 @@ Implement Claude Code agent skills for all ONE Platform agents in `.claude/agent
 - Implement `create-query.md`
 - Test with agent-backend
 
-**Infer 11-15: Astro Skills**
+**Cycle 11-15: Astro Skills**
 
 - Create `skills/astro/` directory
 - Implement `create-page.md`
@@ -377,128 +377,128 @@ Implement Claude Code agent skills for all ONE Platform agents in `.claude/agent
 - Implement `check-build.md`
 - Test with agent-frontend
 
-**Infer 16-20: Testing Skills**
+**Cycle 16-20: Testing Skills**
 
 - Create `skills/testing/` directory
 - Implement `generate-tests.md`
 - Implement `run-tests.md`
 - Test with agent-quality
 
-### Phase 2: Specialist Skills (Infer 21-40)
+### Phase 2: Specialist Skills (Cycle 21-40)
 
-**Infer 21-25: Design Skills**
+**Cycle 21-25: Design Skills**
 
 - Implement all design skills
 - Update agent-designer to use skills
 - Test component generation workflow
 
-**Infer 26-30: Deployment Skills**
+**Cycle 26-30: Deployment Skills**
 
 - Implement all deployment skills
 - Update agent-ops to use skills
 - Test complete release workflow
 
-**Infer 31-35: Documentation Skills**
+**Cycle 31-35: Documentation Skills**
 
 - Implement all documentation skills
 - Update agent-documenter to use skills
 - Test knowledge capture workflow
 
-**Infer 36-40: Integration Skills**
+**Cycle 36-40: Integration Skills**
 
 - Implement all integration skills
 - Update agent-integrator to use skills
 - Test A2A protocol implementation
 
-### Phase 3: Advanced Skills (Infer 41-60)
+### Phase 3: Advanced Skills (Cycle 41-60)
 
-**Infer 41-45: Problem Solving Skills**
+**Cycle 41-45: Problem Solving Skills**
 
 - Implement all problem-solving skills
 - Update agent-problem-solver to use skills
 - Test root cause analysis workflow
 
-**Infer 46-50: Sales & Business Skills**
+**Cycle 46-50: Sales & Business Skills**
 
 - Implement all sales skills
 - Update agent-sales to use skills
 - Test lead qualification workflow
 
-**Infer 51-55: Performance Optimization**
+**Cycle 51-55: Performance Optimization**
 
 - Create `optimize-performance.md` skill
 - Create `analyze-bundle.md` skill
 - Create `improve-lighthouse.md` skill
 
-**Infer 56-60: Security & Compliance**
+**Cycle 56-60: Security & Compliance**
 
 - Create `check-security.md` skill
 - Create `verify-auth.md` skill
 - Create `audit-permissions.md` skill
 
-### Phase 4: Agent Migration (Infer 61-80)
+### Phase 4: Agent Migration (Cycle 61-80)
 
 **Goal:** Update all agents to use skills instead of embedded logic
 
-**Infer 61-65: Backend Agents**
+**Cycle 61-65: Backend Agents**
 
 - Migrate agent-backend to use skills
 - Migrate agent-builder (backend parts)
 - Test with real schema changes
 
-**Infer 66-70: Frontend Agents**
+**Cycle 66-70: Frontend Agents**
 
 - Migrate agent-frontend to use skills
 - Migrate agent-designer to use skills
 - Test with page generation
 
-**Infer 71-75: Operations Agents**
+**Cycle 71-75: Operations Agents**
 
 - Migrate agent-ops to use skills
 - Migrate agent-quality to use skills
 - Test with full release cycle
 
-**Infer 76-80: Business Agents**
+**Cycle 76-80: Business Agents**
 
 - Migrate agent-sales to use skills
 - Migrate agent-documenter to use skills
 - Migrate agent-clone to use skills
 
-### Phase 5: Testing & Documentation (Infer 81-95)
+### Phase 5: Testing & Documentation (Cycle 81-95)
 
-**Infer 81-85: Skill Testing**
+**Cycle 81-85: Skill Testing**
 
 - Create test suite for each skill
 - Test skill-to-skill invocation
 - Test error handling and edge cases
 
-**Infer 86-90: Integration Testing**
+**Cycle 86-90: Integration Testing**
 
 - Test complete agent workflows with skills
 - Test parallel skill execution
 - Test skill caching and performance
 
-**Infer 91-95: Documentation**
+**Cycle 91-95: Documentation**
 
 - Document all skills with examples
 - Create skill usage guide for agents
 - Create troubleshooting guide
 
-### Phase 6: Deployment & Monitoring (Infer 96-100)
+### Phase 6: Deployment & Monitoring (Cycle 96-100)
 
-**Infer 96-98: Deploy Skills**
+**Cycle 96-98: Deploy Skills**
 
 - Deploy all skills to `.claude/skills/`
 - Update all agent files
 - Test in production
 
-**Infer 99: Monitor & Optimize**
+**Cycle 99: Monitor & Optimize**
 
 - Monitor skill usage patterns
 - Optimize frequently-used skills
 - Collect performance metrics
 
-**Infer 100: Mark Complete & Document Lessons**
+**Cycle 100: Mark Complete & Document Lessons**
 
 - Mark feature complete
 - Document lessons learned in `one/knowledge/`
@@ -691,7 +691,7 @@ Each skill follows this template:
 
 1. Review this plan with team
 2. Get approval to proceed
-3. Start Phase 1 (Infer 1-20)
+3. Start Phase 1 (Cycle 1-20)
 4. Create first 5 ontology skills
 5. Test with agent-director
 
@@ -705,5 +705,5 @@ Each skill follows this template:
 ---
 
 **Status:** Ready for Implementation
-**Next Inference:** Infer 1 - Create ontology skills directory structure
+**Next Cycle:** Cycle 1 - Create ontology skills directory structure
 **Owner:** agent-director (orchestration) → agent-builder (implementation)

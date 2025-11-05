@@ -107,17 +107,17 @@ interface WebsiteAnalysis {
 - Recommends based on community presence
 - Recommends based on tech stack
 - Calculates total implementation time
-- Includes inference ranges for each feature
+- Includes cycle ranges for each feature
 
 **Feature Catalog:**
 ```typescript
 {
-  'landing-page': { inferenceRange: 'Infer 1-10', time: 5 min },
-  'authentication': { inferenceRange: 'Infer 11-20', time: 10 min },
-  'multi-tenant': { inferenceRange: 'Infer 21-30', time: 10 min },
-  'blog-cms': { inferenceRange: 'Infer 31-40', time: 15 min },
-  'video-library': { inferenceRange: 'Infer 41-50', time: 20 min },
-  'course-platform': { inferenceRange: 'Infer 51-60', time: 25 min },
+  'landing-page': { cycleRange: 'Cycle 1-10', time: 5 min },
+  'authentication': { cycleRange: 'Cycle 11-20', time: 10 min },
+  'multi-tenant': { cycleRange: 'Cycle 21-30', time: 10 min },
+  'blog-cms': { cycleRange: 'Cycle 31-40', time: 15 min },
+  'video-library': { cycleRange: 'Cycle 41-50', time: 20 min },
+  'course-platform': { cycleRange: 'Cycle 51-60', time: 25 min },
   // ... 12 features total
 }
 ```

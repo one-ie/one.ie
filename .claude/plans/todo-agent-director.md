@@ -1,4 +1,4 @@
-# Agent Director TODO List - Write e2e tests for critical paths (Infer 65)
+# Agent Director TODO List - Write e2e tests for critical paths (Cycle 65)
 
 ## Director Responsibilities
 
@@ -13,7 +13,7 @@ The Agent Director orchestrates the entire workflow, ensuring all specialists co
 - [ ] Document dependencies between agents
 
 **Task 1.2: Analyze Current Inference State**
-- [ ] Current: Infer 65 - Write e2e tests for critical paths
+- [ ] Current: Cycle 65 - Write e2e tests for critical paths
 - [ ] Progress: 64/100 complete (64%)
 - [ ] Specialist: quality
 - [ ] Task: Test critical user workflows
@@ -116,7 +116,7 @@ Aggregate Results (3.1)
     ↓
 Mark Inference Complete (3.2)
     ↓
-Advance to Infer 66 (3.3)
+Advance to Cycle 66 (3.3)
 ```
 
 ## Success Criteria

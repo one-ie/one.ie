@@ -242,9 +242,9 @@ Events are immutable records of every action in your system. They create an audi
 
 - `agent_created`, `agent_executed`, `agent_completed`, `agent_failed`, `clone_created`, `clone_interaction`, `voice_cloned`, `personality_analyzed`
 
-**Inference Events:**
+**Cycle Events:**
 
-- `inference_request`, `inference_completed`, `inference_failed`, `inference_quota_exceeded`, `inference_revenue_collected`, `org_revenue_generated`, `revenue_share_distributed`
+- `cycle_request`, `cycle_completed`, `cycle_failed`, `cycle_quota_exceeded`, `cycle_revenue_collected`, `org_revenue_generated`, `revenue_share_distributed`
 
 **Token/NFT:**
 
@@ -694,7 +694,7 @@ Tags, chunks, embeddings, and relationships give AI agents context to act intell
 - **4 Roles** (platform_owner, org_owner, org_user, customer)
 - **66 Thing Types** (across 13 categories)
 - **25 Connection Types** (18 specific + 7 consolidated)
-- **67 Event Types** (including inference & blockchain events)
+- **67 Event Types** (including cycle & blockchain events)
 - **12 Tag Categories** (industry, skill, topic, format, goal, audience, technology, status, capability, protocol, payment, network)
 
 ### Coverage

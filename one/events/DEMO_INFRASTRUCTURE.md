@@ -18,7 +18,7 @@ ai_context: |
 
 # Demo Infrastructure Implementation Guide
 
-Complete reference for demo page hooks, stores, and utilities supporting Infer 1-20.
+Complete reference for demo page hooks, stores, and utilities supporting Cycle 1-20.
 
 ## Overview
 
@@ -30,7 +30,7 @@ The demo infrastructure provides a complete set of TypeScript hooks and utilitie
 4. **Synchronize Filters** - URL-based filter state with debounced search
 5. **Centralize State** - Nanostores for shared global state
 
-## Files Created (Infer 1-20)
+## Files Created (Cycle 1-20)
 
 ### Hook Files
 

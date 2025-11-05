@@ -61,7 +61,7 @@ https://t.me/FourPillarsGlobal
    Currently, x402 is in both the hype phase and the infrastructure phase. In fact, even before x402 entered the hype phase, many Web2 and Web3 companies had already been building infrastructure for x402 and actively integrating it into their services. Therefore, it is more accurate to say that x402 started from the infrastructure phase.
    What is interesting is that unlike typical crypto narratives, x402 has attracted the attention of major Web2 big tech companies that are actively adopting it.
    2.3.1 Cloudflare
-   Cloudflare is a company that provides internet infrastructure and security solutions. Recently, it has also introduced services such as “Agents SDK,” which allows developers to easily create and deploy AI agents, and “Workers AI,” an environment for running AI model inference.
+   Cloudflare is a company that provides internet infrastructure and security solutions. Recently, it has also introduced services such as “Agents SDK,” which allows developers to easily create and deploy AI agents, and “Workers AI,” an environment for running AI model cycle.
    Cloudflare co-founded the x402 Foundation with Coinbase and has been highly active in the x402 ecosystem. Cloudflare supports x402 in its “Agents SDK” service, enabling AI agents to easily access payments over the internet.
    Notably, Cloudflare recently introduced a USD stablecoin called NET Dollar, designed for AI agents. AI agents built with “Agents SDK” are expected to perform agentic commerce using x402 and NET Dollar.
    2.3.2 Vercel

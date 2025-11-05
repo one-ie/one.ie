@@ -487,33 +487,33 @@ curl http://localhost:3000/api/health
 
 ---
 
-## Team Assignments (Inference-Based)
+## Team Assignments (Cycle-Based)
 
-**Phase 1 (HTTP API): Infer 101-120 (3 weeks)**
+**Phase 1 (HTTP API): Cycle 101-120 (3 weeks)**
 
 - Agent-backend: Implement Hono routes
 - Agent-backend: Add middleware
 - Agent-quality: Write API tests
 
-**Phase 2 (API Keys): Infer 121-140 (2 weeks)**
+**Phase 2 (API Keys): Cycle 121-140 (2 weeks)**
 
 - Agent-backend: Schema + mutations
 - Agent-frontend: Generate API key UI
 - Agent-quality: Security testing
 
-**Phase 3 (CRUD): Infer 141-160 (2 weeks)**
+**Phase 3 (CRUD): Cycle 141-160 (2 weeks)**
 
 - Agent-backend: Implement endpoints
 - Agent-integrator: Generate OpenAPI
 - Agent-quality: Integration tests
 
-**Phase 4 (AI SDK): Infer 161-180 (2 weeks)**
+**Phase 4 (AI SDK): Cycle 161-180 (2 weeks)**
 
 - Agent-backend: RAG pipeline
 - Agent-quality: RAG tests
 - Agent-documenter: API docs
 
-**Phase 5 (Production): Infer 181-200 (1 week)**
+**Phase 5 (Production): Cycle 181-200 (1 week)**
 
 - Agent-ops: Monitoring setup
 - Agent-clean: Code review

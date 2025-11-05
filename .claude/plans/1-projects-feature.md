@@ -36,35 +36,35 @@ Build a complete Projects feature following the 6-dimension ontology. Projects a
 
 ## Deliverables Overview
 
-### Phase 1: Schema Design (Infer 1-15)
+### Phase 1: Schema Design (Cycle 1-15)
 - Define `ProjectSchema` in `web/src/content/config.ts`
 - Create Zod validation rules
 - Design project property structure
 
-### Phase 2: Content Collection (Infer 16-30)
+### Phase 2: Content Collection (Cycle 16-30)
 - Create `/web/src/content/projects/` directory
 - Add example project entries
 - Create asset structure
 
-### Phase 3: Frontend Components (Infer 31-50)
+### Phase 3: Frontend Components (Cycle 31-50)
 - `ProjectCard.tsx` - Grid/list display component
 - `ProjectList.tsx` - Container with filtering/sorting
 - `ProjectDetail.tsx` - Detail page component
 - `ProjectSearch.tsx` - Search and filter logic
 - `ProjectFilters.tsx` - Filter UI component
 
-### Phase 4: Pages & Routing (Infer 51-70)
+### Phase 4: Pages & Routing (Cycle 51-70)
 - `/web/src/pages/projects/index.astro` - Listing page
 - `/web/src/pages/projects/[slug].astro` - Detail page
 - SSR data fetching
 - Dynamic routing
 
-### Phase 5: Backend (Optional, Infer 71-85)
+### Phase 5: Backend (Optional, Cycle 71-85)
 - Convex mutations for project CRUD
 - Convex queries for project retrieval
 - Event logging (project_viewed, etc.)
 
-### Phase 6: Testing & Docs (Infer 86-100)
+### Phase 6: Testing & Docs (Cycle 86-100)
 - Unit tests for components
 - Integration tests for pages
 - E2E tests for workflows
@@ -86,7 +86,7 @@ PROJECT DIRECTOR (You - Engineering Director)
 
 ---
 
-## Phase 1: Schema Design (Infer 1-15)
+## Phase 1: Schema Design (Cycle 1-15)
 
 **Responsible Agent:** `agent-designer`
 **Duration:** ~10 minutes
@@ -224,7 +224,7 @@ Create wireframes for:
 
 ---
 
-## Phase 2: Content Collection Setup (Infer 16-30)
+## Phase 2: Content Collection Setup (Cycle 16-30)
 
 **Responsible Agent:** `agent-frontend`
 **Duration:** ~10 minutes
@@ -459,7 +459,7 @@ This generates TypeScript types for the new content collection.
 
 ---
 
-## Phase 3: Frontend Components (Infer 31-50)
+## Phase 3: Frontend Components (Cycle 31-50)
 
 **Responsible Agent:** `agent-frontend`
 **Duration:** ~30 minutes
@@ -1272,7 +1272,7 @@ export default ProjectDetail;
 
 ---
 
-## Phase 4: Pages & Routing (Infer 51-70)
+## Phase 4: Pages & Routing (Cycle 51-70)
 
 **Responsible Agent:** `agent-frontend`
 **Duration:** ~20 minutes
@@ -1473,7 +1473,7 @@ const relatedProjects = allProjects
 
 ---
 
-## Phase 5: Backend Support (Optional, Infer 71-85)
+## Phase 5: Backend Support (Optional, Cycle 71-85)
 
 **Responsible Agent:** `agent-backend`
 **Duration:** ~15 minutes
@@ -1649,7 +1649,7 @@ export const delete_ = mutation({
 
 ---
 
-## Phase 6: Testing & Documentation (Infer 86-100)
+## Phase 6: Testing & Documentation (Cycle 86-100)
 
 **Responsible Agent:** `agent-quality`
 **Duration:** ~20 minutes
@@ -1884,7 +1884,7 @@ Projects support:
 ## Execution Roadmap
 
 ```
-PHASE 1: Schema Design (Infer 1-15)
+PHASE 1: Schema Design (Cycle 1-15)
 │
 ├─ Task 1-1: Define ProjectSchema in config.ts
 ├─ Task 1-2: Update collections export
@@ -1892,7 +1892,7 @@ PHASE 1: Schema Design (Infer 1-15)
 
    DELIVERABLE: ProjectSchema definition + wireframes
 
-PHASE 2: Content Collection (Infer 16-30)
+PHASE 2: Content Collection (Cycle 16-30)
 │
 ├─ Task 2-1: Create projects directory
 ├─ Task 2-2: Add 3 example projects
@@ -1900,7 +1900,7 @@ PHASE 2: Content Collection (Infer 16-30)
 
    DELIVERABLE: Astro content collection with examples
 
-PHASE 3: Frontend Components (Infer 31-50)
+PHASE 3: Frontend Components (Cycle 31-50)
 │
 ├─ Task 3-1: ProjectCard component
 ├─ Task 3-2: ProjectList component
@@ -1909,21 +1909,21 @@ PHASE 3: Frontend Components (Infer 31-50)
 
    DELIVERABLE: 4 React components (grid, filter, detail)
 
-PHASE 4: Pages & Routing (Infer 51-70)
+PHASE 4: Pages & Routing (Cycle 51-70)
 │
 ├─ Task 4-1: /projects index page
 └─ Task 4-2: /projects/[slug] detail page
 
    DELIVERABLE: Dynamic routing with SSR
 
-PHASE 5: Backend (Optional, Infer 71-85)
+PHASE 5: Backend (Optional, Cycle 71-85)
 │
 ├─ Task 5-1: Project queries
 └─ Task 5-2: Project mutations
 
    DELIVERABLE: Convex CRUD operations (optional)
 
-PHASE 6: Testing & Docs (Infer 86-100)
+PHASE 6: Testing & Docs (Cycle 86-100)
 │
 ├─ Task 6-1: Component unit tests
 ├─ Task 6-2: Page integration tests

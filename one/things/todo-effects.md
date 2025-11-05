@@ -3,7 +3,7 @@ title: Todo Effects
 dimension: things
 primary_dimension: things
 category: todo-effects.md
-tags: agent, architecture, auth, backend, connections, events, frontend, groups, inference, knowledge
+tags: agent, architecture, auth, backend, connections, events, frontend, groups, cycle, knowledge
 related_dimensions: connections, events, groups, knowledge, people, things
 scope: global
 created: 2025-11-03
@@ -12,12 +12,12 @@ version: 1.0.0
 ai_context: |
   This document is part of the things dimension in the todo-effects.md category.
   Location: one/things/todo-effects.md
-  Purpose: Documents effect.ts integration: 100-inference roadmap
+  Purpose: Documents effect.ts integration: 100-cycle roadmap
   Related dimensions: connections, events, groups, knowledge, people
   For AI agents: Read this to understand todo effects.
 ---
 
-# Effect.ts Integration: 100-Inference Roadmap
+# Effect.ts Integration: 100-Cycle Roadmap
 
 **Feature:** Effect.ts + Convex Components + Backend-Agnostic Frontend with Better Auth
 **Version:** 1.0.0
@@ -47,7 +47,7 @@ This roadmap sequences the complete integration of **Effect.ts** with the ONE Pl
 
 ---
 
-## Inference 1-10: Foundation & Setup
+## Cycle 1-10: Foundation & Setup
 
 **1. [INFER-001]** Validate Effect.ts + DataProvider against 6-dimension ontology
 
@@ -112,16 +112,16 @@ This roadmap sequences the complete integration of **Effect.ts** with the ONE Pl
 
 **9. [INFER-009]** Create implementation plan breakdown
 
-- Phase 1 (Infer 1-10): Foundation and design
-- Phase 2 (Infer 11-20): Core Effect services
-- Phase 3 (Infer 21-30): DataProvider implementations
-- Phase 4 (Infer 31-40): Better Auth integration
-- Phase 5 (Infer 41-50): Astro content integration
-- Phase 6 (Infer 51-60): Frontend component migration
-- Phase 7 (Infer 61-70): Convex component integration
-- Phase 8 (Infer 71-80): Testing and validation
-- Phase 9 (Infer 81-90): Performance optimization
-- Phase 10 (Infer 91-100): Documentation and deployment
+- Phase 1 (Cycle 1-10): Foundation and design
+- Phase 2 (Cycle 11-20): Core Effect services
+- Phase 3 (Cycle 21-30): DataProvider implementations
+- Phase 4 (Cycle 31-40): Better Auth integration
+- Phase 5 (Cycle 41-50): Astro content integration
+- Phase 6 (Cycle 51-60): Frontend component migration
+- Phase 7 (Cycle 61-70): Convex component integration
+- Phase 8 (Cycle 71-80): Testing and validation
+- Phase 9 (Cycle 81-90): Performance optimization
+- Phase 10 (Cycle 91-100): Documentation and deployment
 
 **10. [INFER-010]** Assign specialists and dependencies
 
@@ -133,7 +133,7 @@ This roadmap sequences the complete integration of **Effect.ts** with the ONE Pl
 
 ---
 
-## Inference 11-20: Core Effect Services
+## Cycle 11-20: Core Effect Services
 
 **11. [INFER-011]** Design error classes and tagged unions
 
@@ -211,7 +211,7 @@ This roadmap sequences the complete integration of **Effect.ts** with the ONE Pl
 
 ---
 
-## Inference 21-30: DataProvider Implementations
+## Cycle 21-30: DataProvider Implementations
 
 **21. [INFER-021]** Design DataProvider<T> generic interface
 
@@ -285,7 +285,7 @@ This roadmap sequences the complete integration of **Effect.ts** with the ONE Pl
 
 ---
 
-## Inference 31-40: Better Auth Integration
+## Cycle 31-40: Better Auth Integration
 
 **31. [INFER-031]** Create Better Auth adapter factory
 
@@ -359,7 +359,7 @@ This roadmap sequences the complete integration of **Effect.ts** with the ONE Pl
 
 ---
 
-## Inference 41-50: Astro Content Integration
+## Cycle 41-50: Astro Content Integration
 
 **41. [INFER-041]** Design content collection schema
 
@@ -433,7 +433,7 @@ This roadmap sequences the complete integration of **Effect.ts** with the ONE Pl
 
 ---
 
-## Inference 51-60: Frontend Component Migration
+## Cycle 51-60: Frontend Component Migration
 
 **51. [INFER-051]** Create Effect-based React hooks
 
@@ -507,7 +507,7 @@ This roadmap sequences the complete integration of **Effect.ts** with the ONE Pl
 
 ---
 
-## Inference 61-70: Convex Component Integration
+## Cycle 61-70: Convex Component Integration
 
 **61. [INFER-061]** Wrap Convex Agent component with Effect
 
@@ -581,7 +581,7 @@ This roadmap sequences the complete integration of **Effect.ts** with the ONE Pl
 
 ---
 
-## Inference 71-80: Testing & Validation
+## Cycle 71-80: Testing & Validation
 
 **71. [INFER-071]** Create test Effect layers
 
@@ -657,7 +657,7 @@ This roadmap sequences the complete integration of **Effect.ts** with the ONE Pl
 
 ---
 
-## Inference 81-90: Performance & Optimization
+## Cycle 81-90: Performance & Optimization
 
 **81. [INFER-081]** Optimize service layer caching
 
@@ -731,7 +731,7 @@ This roadmap sequences the complete integration of **Effect.ts** with the ONE Pl
 
 ---
 
-## Inference 91-100: Deployment & Documentation
+## Cycle 91-100: Deployment & Documentation
 
 **91. [INFER-091]** Prepare for production deployment
 
@@ -992,35 +992,35 @@ const createEntity = (
 
 ### Sequential Execution
 
-- Always do the next inference in sequence
+- Always do the next cycle in sequence
 - Each builds on previous work
 - Dependencies are implicit in ordering
 
 ### Parallel Opportunities
 
-After Infer 20 (services defined):
+After Cycle 20 (services defined):
 
-- **Backend:** Infer 21-30 (DataProvider) can run in parallel with Infer 31-40 (Better Auth)
-- **Frontend:** Infer 41-50 (content) and Infer 51-60 (components) can run in parallel
+- **Backend:** Cycle 21-30 (DataProvider) can run in parallel with Cycle 31-40 (Better Auth)
+- **Frontend:** Cycle 41-50 (content) and Cycle 51-60 (components) can run in parallel
 
-After Infer 60 (components ready):
+After Cycle 60 (components ready):
 
-- **Integration:** Infer 61-70 (Convex components) can proceed independently
-- **Testing:** Infer 71-80 can start concurrent with component work
+- **Integration:** Cycle 61-70 (Convex components) can proceed independently
+- **Testing:** Cycle 71-80 can start concurrent with component work
 
 ### Quality Gates
 
-- **Gate 1 (Infer 20):** All core services defined and tested
-- **Gate 2 (Infer 40):** DataProvider + Auth working with multiple backends
-- **Gate 3 (Infer 60):** All frontend components migrated to Effect services
-- **Gate 4 (Infer 80):** Full test suite passing, 85%+ coverage
-- **Gate 5 (Infer 100):** Production deployment complete, monitoring active
+- **Gate 1 (Cycle 20):** All core services defined and tested
+- **Gate 2 (Cycle 40):** DataProvider + Auth working with multiple backends
+- **Gate 3 (Cycle 60):** All frontend components migrated to Effect services
+- **Gate 4 (Cycle 80):** Full test suite passing, 85%+ coverage
+- **Gate 5 (Cycle 100):** Production deployment complete, monitoring active
 
 ---
 
 ## Specialist Assignments
 
-| Inferences | Specialist | Focus                        | Duration |
+| Cycles | Specialist | Focus                        | Duration |
 | ---------- | ---------- | ---------------------------- | -------- |
 | 1-10       | Director   | Planning and architecture    | 1 week   |
 | 11-30      | Backend    | Core services + DataProvider | 3 weeks  |

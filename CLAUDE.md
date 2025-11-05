@@ -99,25 +99,25 @@ Web (Astro + React) → Backend (Convex) → 6-Dimension Ontology
 - `/apps` - Example applications and integrations
 - `/one` - Comprehensive platform documentation (41 files, 8 layers)
 
-## Planning Paradigm: Inference-Based Execution
+## Planning Paradigm: Cycle-Based Execution
 
-**CRITICAL:** We don't plan in days. We plan in **inference passes** (Infer 1-100).
+**CRITICAL:** We don't plan in days. We plan in **cycle passes** (Infer 1-100).
 
-### Why Inference-Based Planning?
+### Why Cycle-Based Planning?
 
 Traditional planning uses time estimates ("Day 1-3", "Week 2"), which are:
 - Inaccurate (time varies wildly)
 - Context-heavy (requires re-planning)
 - Sequential (blocks parallel work)
 
-Inference-based planning uses **sequence positions** ("Infer 1-100"), which are:
-- Precise (each inference is a concrete step)
-- Context-light (< 3000 tokens per inference)
-- Parallel-friendly (inferences can run concurrently when dependencies allow)
+Cycle-based planning uses **sequence positions** ("Infer 1-100"), which are:
+- Precise (each cycle is a concrete step)
+- Context-light (< 3000 tokens per cycle)
+- Parallel-friendly (cycles can run concurrently when dependencies allow)
 
-### The 100-Inference Template
+### The 100-Cycle Template
 
-Every feature follows a **100-inference sequence** (see `one/knowledge/todo.md`):
+Every feature follows a **100-cycle sequence** (see `one/knowledge/todo.md`):
 
 ```
 Infer 1-10:    Foundation & Setup (validate, map, plan)
@@ -132,17 +132,17 @@ Infer 81-90:   Performance & Optimization (speed, efficiency)
 Infer 91-100:  Deployment & Documentation (production, guides)
 ```
 
-### How to Use Inference Planning
+### How to Use Cycle Planning
 
 1. **Start with the sequence:** Read `one/knowledge/todo.md` to understand the flow
-2. **Do the next thing:** Execute the next inference in sequence
+2. **Do the next thing:** Execute the next cycle in sequence
 3. **Use hooks for context:**
-   - `.claude/hooks/todo` loads current inference context automatically
+   - `.claude/hooks/todo` loads current cycle context automatically
    - `.claude/hooks/done` marks complete and advances to next
-4. **Adapt as needed:** Skip irrelevant inferences, add extras for complex features
-5. **Run in parallel:** Execute independent inferences concurrently (e.g., Backend + Frontend after schema defined)
+4. **Adapt as needed:** Skip irrelevant cycles, add extras for complex features
+5. **Run in parallel:** Execute independent cycles concurrently (e.g., Backend + Frontend after schema defined)
 
-### Commands for Inference Workflow
+### Commands for Cycle Workflow
 
 ```
      ██████╗ ███╗   ██╗███████╗
@@ -163,10 +163,10 @@ Infer 91-100:  Deployment & Documentation (production, guides)
 ```
 
 **Workflow Commands:**
-- `/now` - Display current inference and what you're working on
-- `/next` - Advance to next inference and load context
-- `/todo` - View complete task list (100-inference sequence)
-- `/done` - Mark current inference complete and advance
+- `/now` - Display current cycle and what you're working on
+- `/next` - Advance to next cycle and load context
+- `/todo` - View complete task list (100-cycle sequence)
+- `/done` - Mark current cycle complete and advance
 
 **Creation Commands:**
 - `/build` - Build features with AI specialists
@@ -178,13 +178,13 @@ Infer 91-100:  Deployment & Documentation (production, guides)
 
 ### Benefits
 
-- **98% context reduction:** 150k tokens → 3k tokens per inference
+- **98% context reduction:** 150k tokens → 3k tokens per cycle
 - **5x faster execution:** 115s → 20s per feature average
 - **Flawless execution:** "Do the next thing, perfectly"
-- **Continuous learning:** Lessons captured after each inference
-- **Parallel execution:** Multiple inferences running concurrently
+- **Continuous learning:** Lessons captured after each cycle
+- **Parallel execution:** Multiple cycles running concurrently
 
-**Golden Rule:** Plan in inferences, not days. Where in the sequence does each thing belong?
+**Golden Rule:** Plan in cycles, not days. Where in the sequence does each thing belong?
 
 ## The 6-Dimension Ontology (Core Data Model)
 
@@ -232,7 +232,7 @@ All relationships between entities
 
 All actions and state changes over time
 
-- **67+ event types** including inference and blockchain events
+- **67+ event types** including cycle and blockchain events
 - Complete audit trail with actor (person), target (thing), timestamp
 - **Consolidated event families** with metadata.protocol for multi-protocol support
 - Scoped to groups (via groupId)
@@ -870,7 +870,7 @@ Verify `react-dom/server.edge` alias is set in `astro.config.mjs` under `vite.re
 - **External integration**: `one/connections/communications.md` + specific integration doc
 - **Blockchain features**: `one/connections/cryptonetworks.md`
 - **Agent features**: `one/things/agentkit.md`, `one/things/copilotkit.md`
-- **Inference/AI**: `one/connections/inference.md`
+- **Cycle/AI**: `one/connections/cycle.md`
 
 ## Documentation Structure
 

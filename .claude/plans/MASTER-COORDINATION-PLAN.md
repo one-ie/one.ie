@@ -13,9 +13,9 @@
 
 This master plan unifies three critical plans into a single coordinated execution strategy:
 
-1. **Agent Director 100-Inference Plans** (infer 1-10) - Foundation for intelligent plan generation
-2. **Unified Implementation Plan** (infer 11-90) - 36% complete, provides architecture + complete ontology
-3. **Big Plan** (infer 31-80) - Design, content, agents, knowledge system
+1. **Agent Director 100-Inference Plans** (cycle 1-10) - Foundation for intelligent plan generation
+2. **Unified Implementation Plan** (cycle 11-90) - 36% complete, provides architecture + complete ontology
+3. **Big Plan** (cycle 31-80) - Design, content, agents, knowledge system
 
 **Key Finding:** All three plans complement each other perfectly. Implementing them together is faster (11 weeks) and less risky than any single plan alone.
 
@@ -23,7 +23,7 @@ This master plan unifies three critical plans into a single coordinated executio
 
 ## Three Plans: Analysis & Integration
 
-### Plan 1: Agent Director 100-Inference Plans (Infer 1-10)
+### Plan 1: Agent Director 100-Inference Plans (Cycle 1-10)
 
 **Status:** Specification Complete, Implementation Pending
 **Criticality:** CRITICAL - Blocks all other work
@@ -52,7 +52,7 @@ This master plan unifies three critical plans into a single coordinated executio
 
 ---
 
-### Plan 2: Unified Implementation Plan (Infer 11-90) - 36% Complete
+### Plan 2: Unified Implementation Plan (Cycle 11-90) - 36% Complete
 
 **Status:** Phases 1-2 Complete, Phases 3-7 Pending
 **Criticality:** CRITICAL - Core platform implementation
@@ -71,7 +71,7 @@ This master plan unifies three critical plans into a single coordinated executio
 
 **What's Remaining (64%):**
 
-| Phase | Week | Infer | Task | Effort | Status |
+| Phase | Week | Cycle | Task | Effort | Status |
 |-------|------|-------|------|--------|--------|
 | 3 | 2-3 | 31-40 | Core entity CRUD (4 types) | 30h | Not Started |
 | 3 | 2-3 | 41-50 | Content CRUD (5 types) | 30h | Not Started |
@@ -89,7 +89,7 @@ This master plan unifies three critical plans into a single coordinated executio
 
 ---
 
-### Plan 3: Big Plan (Infer 31-80) - Outline Complete
+### Plan 3: Big Plan (Cycle 31-80) - Outline Complete
 
 **Status:** High-level outline, implementation pending
 **Criticality:** HIGH - Parallel with backend implementation
@@ -97,14 +97,14 @@ This master plan unifies three critical plans into a single coordinated executio
 **Effort:** 120 hours (estimate)
 
 **What it covers:**
-- Design system & component library (infer 71-80)
+- Design system & component library (cycle 71-80)
 - Content types (blog, courses, products, podcasts, etc.)
 - Agents (9 business agents + user agents)
 - Knowledge system (RAG, embeddings, search)
 - UI/UX for multi-tenant dashboard
 
 **Integration Point:**
-- Overlaps with "Unified Plan" infer 31-80
+- Overlaps with "Unified Plan" cycle 31-80
 - Design should inform backend implementation
 - Agent framework built on top of backend services
 
@@ -135,24 +135,24 @@ This master plan unifies three critical plans into a single coordinated executio
 ## The 100-Inference Roadmap
 
 ```
-FOUNDATION (Infer 1-30) - SEQUENTIAL
-├─ Infer 1-10:   Agent Director framework (2-3 days)
-├─ Infer 11-20:  DataProvider architecture (DONE)
-└─ Infer 21-30:  Effect.ts services (DONE)
+FOUNDATION (Cycle 1-30) - SEQUENTIAL
+├─ Cycle 1-10:   Agent Director framework (2-3 days)
+├─ Cycle 11-20:  DataProvider architecture (DONE)
+└─ Cycle 21-30:  Effect.ts services (DONE)
 
-IMPLEMENTATION (Infer 31-80) - PARALLEL
-├─ Infer 31-60:  Backend CRUD for 66 types (PARALLEL: 3 specialists × 10 infer)
-│  ├─ Infer 31-40: Core entities (Week 2-3)
-│  ├─ Infer 41-50: Content entities (Week 2-3) [PARALLEL]
-│  └─ Infer 51-60: Tokens/Agents (Week 2-4) [PARALLEL]
-├─ Infer 61-70:  Frontend dashboard & UI (Week 3-5) [PARALLEL with backend]
-└─ Infer 71-80:  RAG, Knowledge, 30+ more types (Week 5-6)
+IMPLEMENTATION (Cycle 31-80) - PARALLEL
+├─ Cycle 31-60:  Backend CRUD for 66 types (PARALLEL: 3 specialists × 10 infer)
+│  ├─ Cycle 31-40: Core entities (Week 2-3)
+│  ├─ Cycle 41-50: Content entities (Week 2-3) [PARALLEL]
+│  └─ Cycle 51-60: Tokens/Agents (Week 2-4) [PARALLEL]
+├─ Cycle 61-70:  Frontend dashboard & UI (Week 3-5) [PARALLEL with backend]
+└─ Cycle 71-80:  RAG, Knowledge, 30+ more types (Week 5-6)
 
-QUALITY (Infer 81-90) - SEQUENTIAL
-└─ Infer 81-90:  Testing, Multi-backend support (Week 7-9)
+QUALITY (Cycle 81-90) - SEQUENTIAL
+└─ Cycle 81-90:  Testing, Multi-backend support (Week 7-9)
 
-DEPLOYMENT (Infer 91-100) - PARALLEL with testing
-└─ Infer 91-100: Production deployment & docs (Week 10-11)
+DEPLOYMENT (Cycle 91-100) - PARALLEL with testing
+└─ Cycle 91-100: Production deployment & docs (Week 10-11)
 
 Total: 11 weeks instead of 14-15 weeks
 Speedup: 30-40% through parallelization
@@ -163,7 +163,7 @@ Speedup: 30-40% through parallelization
 ## Parallel Execution Groups
 
 ### Group A: Foundation (Sequential) - Week 1
-- **Infer 1-10:** Agent Director framework
+- **Cycle 1-10:** Agent Director framework
 - **Duration:** 2-3 days
 - **Specialist:** agent-director
 - **Blocking:** All downstream work
@@ -173,20 +173,20 @@ Speedup: 30-40% through parallelization
 Execute **simultaneously** with 3 specialist agents:
 
 ```
-Specialist 1: Infer 31-40 (Core entities)
+Specialist 1: Cycle 31-40 (Core entities)
 ├─ creator
 ├─ ai_clone
 ├─ audience_member
 └─ organization
 
-Specialist 2: Infer 41-50 (Content entities)
+Specialist 2: Cycle 41-50 (Content entities)
 ├─ blog_post
 ├─ course
 ├─ lesson
 ├─ product
 └─ membership
 
-Specialist 3: Infer 51-60 (Tokens/Agents)
+Specialist 3: Cycle 51-60 (Tokens/Agents)
 ├─ token
 ├─ token_contract
 ├─ business_agent
@@ -204,7 +204,7 @@ Specialist 3: Infer 51-60 (Tokens/Agents)
 ### Group C: Frontend & Design (Parallel with Backend) - Week 3-5
 
 **Parallel with Group B:**
-- **Infer 61-70:** Frontend dashboard, entity forms, real-time UI
+- **Cycle 61-70:** Frontend dashboard, entity forms, real-time UI
 - **Specialist:** agent-frontend
 - **Approach:** Use mock providers while backend implements
 
@@ -213,7 +213,7 @@ Specialist 3: Infer 51-60 (Tokens/Agents)
 ### Group D: Advanced Features (Sequential) - Week 5-6
 
 **After Group B:**
-- **Infer 71-80:** RAG, knowledge system, 30+ remaining entity types
+- **Cycle 71-80:** RAG, knowledge system, 30+ remaining entity types
 - **Specialist:** agent-backend
 - **Duration:** 2 weeks
 - **Dependencies:** Complete backend CRUD (Group B)
@@ -221,7 +221,7 @@ Specialist 3: Infer 51-60 (Tokens/Agents)
 ### Group E: Testing & Multi-Backend (Sequential) - Week 7-9
 
 **After Group D:**
-- **Infer 81-90:** Comprehensive testing, provider swapping, optimization
+- **Cycle 81-90:** Comprehensive testing, provider swapping, optimization
 - **Specialist:** agent-quality
 - **Duration:** 3 weeks
 - **Dependencies:** All implementation complete
@@ -229,7 +229,7 @@ Specialist 3: Infer 51-60 (Tokens/Agents)
 ### Group F: Deployment Preparation (Parallel with Testing) - Week 10-11
 
 **Parallel with Group E:**
-- **Infer 91-100:** Infrastructure setup, production deployment, documentation
+- **Cycle 91-100:** Infrastructure setup, production deployment, documentation
 - **Specialist:** agent-ops
 - **Duration:** 2 weeks (1 week prep + 1 week go-live)
 
@@ -237,7 +237,7 @@ Specialist 3: Infer 51-60 (Tokens/Agents)
 
 ## Critical Success Factors
 
-### 1. Implement Agent Director Immediately (Infer 1-10)
+### 1. Implement Agent Director Immediately (Cycle 1-10)
 
 **Why:** It enables intelligent coordination of all downstream work.
 
@@ -269,7 +269,7 @@ function generatePlan(selections: object): ExecutionPlan {
 
 **Deliverable:** Execution plan that agent-director can use to coordinate all specialists.
 
-### 2. Parallelize Backend CRUD (Infer 31-60)
+### 2. Parallelize Backend CRUD (Cycle 31-60)
 
 **Why:** Single biggest time saving opportunity.
 
@@ -284,7 +284,7 @@ function generatePlan(selections: object): ExecutionPlan {
 - Parallel: 2-3 weeks (3 people implementing 10 each)
 - **Savings: 1-2 weeks**
 
-### 3. Use Mock Providers for Frontend (Infer 61-70)
+### 3. Use Mock Providers for Frontend (Cycle 61-70)
 
 **Why:** Frontend doesn't need to wait for complete backend.
 
@@ -308,17 +308,17 @@ const provider = createMockDataProvider({
 - Frontend proceeds in parallel: 2-3 weeks with mocks, merge real backend weekly
 - **Savings: 2-3 weeks**
 
-### 4. Test While Building (Infer 81-90)
+### 4. Test While Building (Cycle 81-90)
 
 **Why:** Don't wait until everything is done to test.
 
 **How:** Each phase includes tests:
-- Infer 31-40: Unit tests for core entities
-- Infer 41-50: Unit tests for content entities
-- Infer 51-60: Unit tests for tokens/agents
-- Infer 61-70: Component tests for UI
-- Infer 71-80: Integration tests for RAG
-- Infer 81-90: E2E tests, multi-backend tests, performance tests
+- Cycle 31-40: Unit tests for core entities
+- Cycle 41-50: Unit tests for content entities
+- Cycle 51-60: Unit tests for tokens/agents
+- Cycle 61-70: Component tests for UI
+- Cycle 71-80: Integration tests for RAG
+- Cycle 81-90: E2E tests, multi-backend tests, performance tests
 
 **Result:** By week 9, tests are essentially complete. Week 10-11 just deploys.
 
@@ -328,32 +328,32 @@ const provider = createMockDataProvider({
 
 ### Agent-Director
 **Role:** Orchestrator & Planner
-**Work:** Infer 1-10 (Agent Director framework)
+**Work:** Cycle 1-10 (Agent Director framework)
 **Responsibility:** Monitor all 6 specialists, detect blockers, emit events
 
 ### Agent-Backend (3x specialists)
 **Role:** CRUD Implementation
-**Work:** Infer 31-60 (Backend CRUD - divide 3 ways), Infer 71-80 (RAG & remaining types)
+**Work:** Cycle 31-60 (Backend CRUD - divide 3 ways), Cycle 71-80 (RAG & remaining types)
 **Responsibility:** Implement all entity types with services
 
 ### Agent-Frontend
 **Role:** UI Implementation
-**Work:** Infer 61-70 (Frontend dashboard & entity management)
+**Work:** Cycle 61-70 (Frontend dashboard & entity management)
 **Responsibility:** Build multi-tenant UI, real-time features
 
 ### Agent-Designer
 **Role:** Design & UX
-**Work:** Infer 61-70 (Design system, wireframes)
+**Work:** Cycle 61-70 (Design system, wireframes)
 **Responsibility:** Create design patterns, wireframes, accessibility
 
 ### Agent-Quality
 **Role:** Testing & QA
-**Work:** Infer 81-90 (Comprehensive testing suite)
+**Work:** Cycle 81-90 (Comprehensive testing suite)
 **Responsibility:** Achieve 90% test coverage, multi-backend tests
 
 ### Agent-Ops
 **Role:** Deployment & Infrastructure
-**Work:** Infer 91-100 (Production deployment)
+**Work:** Cycle 91-100 (Production deployment)
 **Responsibility:** Set up infrastructure, deploy, monitor
 
 ### Agent-Problem-Solver
@@ -384,13 +384,13 @@ const provider = createMockDataProvider({
 
 ## Timeline: Week-by-Week Breakdown
 
-### Week 1: Foundation (Infer 1-10)
+### Week 1: Foundation (Cycle 1-10)
 - Agent-director builds plan generation framework
 - All other specialists review and prepare assignments
 - Estimated hours: 16
 - Critical path items: Must complete
 
-### Week 2-3: Parallel Backend (Infer 31-60)
+### Week 2-3: Parallel Backend (Cycle 31-60)
 - **3x agent-backend specialists work in parallel**
   - Specialist 1: Core entities (creator, ai_clone, audience_member, org)
   - Specialist 2: Content entities (blog, course, lesson, product, membership)
@@ -400,7 +400,7 @@ const provider = createMockDataProvider({
 - Estimated hours: 30+30+35 = 95 hours (3 weeks for 1 person, but parallel means only 2-3 weeks total)
 - Critical path items: Started after infer1to10 complete
 
-### Week 3-4: Frontend Development Begins (Infer 61-70 starts)
+### Week 3-4: Frontend Development Begins (Cycle 61-70 starts)
 - Agent-frontend builds dashboard with mock providers
 - Agent-designer finalizes design system
 - Backend specialists continue CRUD implementation
@@ -408,7 +408,7 @@ const provider = createMockDataProvider({
 - Estimated hours: 40
 - Critical path items: Depends on schema (done) + services (done)
 
-### Week 5: Advanced Features (Infer 71-80 starts)
+### Week 5: Advanced Features (Cycle 71-80 starts)
 - Agent-backend starts RAG pipeline
 - Agent-backend implements remaining 30+ entity types
 - Agent-frontend continues dashboard integration
@@ -423,21 +423,21 @@ const provider = createMockDataProvider({
 - Estimated hours: 45 (backend) + 25 (quality)
 - Critical path items: Depends on infer71to80 complete
 
-### Week 7-9: Testing & Optimization (Infer 81-90)
+### Week 7-9: Testing & Optimization (Cycle 81-90)
 - Agent-quality: 90% backend coverage, multi-backend testing
 - Problem-solver: Fix any issues quality finds
 - Performance optimization
 - Estimated hours: 50
 - Critical path items: Sequential, must complete before deployment
 
-### Week 10: Pre-Production (Infer 91-100 prep)
+### Week 10: Pre-Production (Cycle 91-100 prep)
 - Agent-ops sets up staging environment
 - Agent-ops configures monitoring & alerting
 - Final quality checks
 - Documentation review
 - Estimated hours: 20
 
-### Week 11: Production Deployment (Infer 91-100)
+### Week 11: Production Deployment (Cycle 91-100)
 - Agent-ops deploys to production
 - Canary deployment (10% traffic first day)
 - 24-hour monitoring
@@ -503,26 +503,26 @@ MASTER COORDINATION PLAN - Real-Time Status
 Current Inference: 88/100 (88% complete)
 
 Groups A-C Progress:
-  ✅ Group A: Agent Director Foundation (Infer 1-10)
+  ✅ Group A: Agent Director Foundation (Cycle 1-10)
      └─ Status: Awaiting implementation
      └─ Timeline: Start Week 1
 
-  ✅ Group B: Backend CRUD (Infer 31-60)
-     ├─ Specialist 1: Infer 31-40 (Core entities)
-     ├─ Specialist 2: Infer 41-50 (Content) [PARALLEL]
-     └─ Specialist 3: Infer 51-60 (Tokens/Agents) [PARALLEL]
+  ✅ Group B: Backend CRUD (Cycle 31-60)
+     ├─ Specialist 1: Cycle 31-40 (Core entities)
+     ├─ Specialist 2: Cycle 41-50 (Content) [PARALLEL]
+     └─ Specialist 3: Cycle 51-60 (Tokens/Agents) [PARALLEL]
      └─ Timeline: Weeks 2-4
 
-  ⏳ Group C: Frontend & Design (Infer 61-70)
+  ⏳ Group C: Frontend & Design (Cycle 61-70)
      └─ Timeline: Weeks 3-5
 
-  ⏳ Group D: Advanced Features (Infer 71-80)
+  ⏳ Group D: Advanced Features (Cycle 71-80)
      └─ Timeline: Weeks 5-6
 
-  ⏳ Group E: Testing (Infer 81-90)
+  ⏳ Group E: Testing (Cycle 81-90)
      └─ Timeline: Weeks 7-9
 
-  ⏳ Group F: Deployment (Infer 91-100)
+  ⏳ Group F: Deployment (Cycle 91-100)
      └─ Timeline: Weeks 10-11
 
 Next Actions:
@@ -550,7 +550,7 @@ Estimated Completion: 11 weeks
    - This single decision saves 2-3 weeks
    - Critical for timeline success
 
-3. **Start Agent Director implementation (Infer 1-10)**
+3. **Start Agent Director implementation (Cycle 1-10)**
    - This is blocking everything else
    - Must complete by end of Week 1
 
@@ -569,12 +569,12 @@ Estimated Completion: 11 weeks
 
 ### Week 2
 
-1. **Start parallel backend CRUD (Infer 31-60)**
+1. **Start parallel backend CRUD (Cycle 31-60)**
    - 3 specialists divide work
    - Daily sync to share patterns
    - Weekly code review
 
-2. **Start frontend design & UI prep (Infer 61-70 prep)**
+2. **Start frontend design & UI prep (Cycle 61-70 prep)**
    - Create wireframes
    - Define design system
    - Begin React components

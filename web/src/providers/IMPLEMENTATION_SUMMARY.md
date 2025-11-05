@@ -504,7 +504,7 @@ Replace direct Convex calls with service calls over time. Both can coexist durin
 ## Success Metrics
 
 - ✅ **Code Organization:** Backend logic separated from data access
-- ✅ **Type Safety:** Full TypeScript inference with no `any` types
+- ✅ **Type Safety:** Full TypeScript cycle with no `any` types
 - ✅ **Testability:** Easy to mock providers for unit tests
 - ✅ **Flexibility:** Can switch backends without changing frontend
 - ✅ **Composability:** Services compose cleanly with Effect.gen

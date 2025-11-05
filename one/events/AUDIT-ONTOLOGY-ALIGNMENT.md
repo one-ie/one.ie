@@ -143,7 +143,7 @@ The event section defines events in TWO ways:
 - token_events: 7
 - course_events: 5
 - analytics_events: 5
-- inference_events: 7
+- cycle_events: 7
 - blockchain_events: 5
 **Subtotal: 61 specific types**
 
@@ -314,7 +314,7 @@ event_breakdown:
   token: 7
   course: 5
   analytics: 5
-  inference: 7
+  cycle: 7
   blockchain: 5
   consolidated: 11
 ```

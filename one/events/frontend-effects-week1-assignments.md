@@ -2,7 +2,7 @@
 title: Frontend Effects Week1 Assignments
 dimension: events
 category: frontend-effects-week1-assignments.md
-tags: backend, frontend, inference, ui
+tags: backend, frontend, cycle, ui
 related_dimensions: connections, groups, knowledge, people, things
 scope: global
 created: 2025-11-03
@@ -20,16 +20,16 @@ ai_context: |
 
 **Project Status:** Completed and Deployed (Documented for Future Reference & Replication)
 
-This document describes how Week 1 was executed for the Frontend Effects.ts implementation (Infer 1-20). Use this as a reference for running similar parallel-execution projects.
+This document describes how Week 1 was executed for the Frontend Effects.ts implementation (Cycle 1-20). Use this as a reference for running similar parallel-execution projects.
 
 ---
 
 ## Week 1 Overview
 
 **Duration:** October 28 - November 3 (Days 1-5)
-**Phases:** Phase 1 (Infer 1-10) + Phase 2 (Infer 11-20)
+**Phases:** Phase 1 (Cycle 1-10) + Phase 2 (Cycle 11-20)
 **Specialist Count:** 3 active (Frontend Lead, Backend Specialist, Frontend Specialist)
-**Inferences Completed:** 20/100
+**Cycles Completed:** 20/100
 **Progress:** 20% → Gate 2 approval
 
 ---
@@ -37,16 +37,16 @@ This document describes how Week 1 was executed for the Frontend Effects.ts impl
 ## Specialist Stream A: DataProvider Interface (Backend Specialist)
 
 ### Stream Lead: Backend Specialist (1 FTE)
-**Phase:** 2 (Infer 11-20)
+**Phase:** 2 (Cycle 11-20)
 **Duration:** Oct 28 - Nov 2 (Days 1-5)
 **Goal:** Complete DataProvider interface with all 6 dimensions, error types, documentation
 
 ---
 
-### Task A-1: Create `/web/src/providers/DataProvider.ts` Stub (Infer 11)
+### Task A-1: Create `/web/src/providers/DataProvider.ts` Stub (Cycle 11)
 **Assigned to:** Backend Specialist
 **Duration:** 45 min
-**Effort:** 5 Infer points
+**Effort:** 5 Cycle points
 **Dependencies:** None
 
 **Instructions:**
@@ -94,7 +94,7 @@ export type DataProviderError = unknown;
 - [ ] File created at correct path
 - [ ] Imports correct (Effect, Context)
 - [ ] Base interface structure defined
-- [ ] TODO comments guide next inferences
+- [ ] TODO comments guide next cycles
 - [ ] No TypeScript errors
 - [ ] Build passes: `bunx astro check`
 
@@ -102,10 +102,10 @@ export type DataProviderError = unknown;
 
 ---
 
-### Task A-2: Define Groups Interface (Infer 12)
+### Task A-2: Define Groups Interface (Cycle 12)
 **Assigned to:** Backend Specialist
 **Duration:** 1 hour
-**Effort:** 6 Infer points
+**Effort:** 6 Cycle points
 **Dependencies:** Task A-1 (DataProvider stub)
 
 **Instructions:**
@@ -150,10 +150,10 @@ export interface Group {
 
 ---
 
-### Task A-3: Define People Interface (Infer 13)
+### Task A-3: Define People Interface (Cycle 13)
 **Assigned to:** Backend Specialist
 **Duration:** 1 hour
-**Effort:** 6 Infer points
+**Effort:** 6 Cycle points
 **Dependencies:** Task A-2
 
 **Instructions:**
@@ -194,10 +194,10 @@ export interface Person {
 
 ---
 
-### Task A-4: Define Things Interface (Infer 14)
+### Task A-4: Define Things Interface (Cycle 14)
 **Assigned to:** Backend Specialist
 **Duration:** 1.5 hours
-**Effort:** 8 Infer points
+**Effort:** 8 Cycle points
 **Dependencies:** Task A-3
 
 **Instructions:**
@@ -245,10 +245,10 @@ export type ThingType = "creator" | "course" | "lesson" | "token" | ... // 66 ty
 
 ---
 
-### Task A-5: Define Connections Interface (Infer 15)
+### Task A-5: Define Connections Interface (Cycle 15)
 **Assigned to:** Backend Specialist
 **Duration:** 1 hour
-**Effort:** 6 Infer points
+**Effort:** 6 Cycle points
 **Dependencies:** Task A-4
 
 **Instructions:**
@@ -295,10 +295,10 @@ export type ConnectionType = "owns" | "part_of" | "enrolled_in" | ... // 25 type
 
 ---
 
-### Task A-6: Define Events Interface (Infer 16)
+### Task A-6: Define Events Interface (Cycle 16)
 **Assigned to:** Backend Specialist
 **Duration:** 45 min
-**Effort:** 5 Infer points
+**Effort:** 5 Cycle points
 **Dependencies:** Task A-5
 
 **Instructions:**
@@ -341,10 +341,10 @@ export type EventType =
 
 ---
 
-### Task A-7: Define Knowledge Interface (Infer 17)
+### Task A-7: Define Knowledge Interface (Cycle 17)
 **Assigned to:** Backend Specialist
 **Duration:** 1 hour
-**Effort:** 6 Infer points
+**Effort:** 6 Cycle points
 **Dependencies:** Task A-6
 
 **Instructions:**
@@ -391,10 +391,10 @@ export interface KnowledgeChunk {
 
 ---
 
-### Task A-8: Define Error Hierarchy (Infer 18)
+### Task A-8: Define Error Hierarchy (Cycle 18)
 **Assigned to:** Backend Specialist
 **Duration:** 1.5 hours
-**Effort:** 8 Infer points
+**Effort:** 8 Cycle points
 **Dependencies:** Tasks A-2 through A-7
 
 **Instructions:**
@@ -444,10 +444,10 @@ export type DataProviderError =
 
 ---
 
-### Task A-9: Document Interface with Examples (Infer 19)
+### Task A-9: Document Interface with Examples (Cycle 19)
 **Assigned to:** Backend Specialist
 **Duration:** 2 hours
-**Effort:** 8 Infer points
+**Effort:** 8 Cycle points
 **Dependencies:** All Tasks A-1 through A-8
 
 **Instructions:**
@@ -522,10 +522,10 @@ export interface GroupsAPI {
 
 ---
 
-### Task A-10: Create Context.Tag for Dependency Injection (Infer 20)
+### Task A-10: Create Context.Tag for Dependency Injection (Cycle 20)
 **Assigned to:** Backend Specialist
 **Duration:** 30 min
-**Effort:** 4 Infer points
+**Effort:** 4 Cycle points
 **Dependencies:** All Tasks A-1 through A-9
 
 **Instructions:**
@@ -577,16 +577,16 @@ export { DataProvider, DataProviderTag, DataProviderError } from "./DataProvider
 ## Specialist Stream B: Foundation & Planning (Frontend Lead)
 
 ### Stream Lead: Frontend Lead (0.5 FTE Week 1)
-**Phase:** 1 (Infer 1-10)
+**Phase:** 1 (Cycle 1-10)
 **Duration:** Oct 28 - Nov 2 (Days 1-5)
 **Goal:** Validate architecture, create task breakdown, assign specialists
 
 ---
 
-### Task B-1: Validate Ontology Mapping (Infer 001)
+### Task B-1: Validate Ontology Mapping (Cycle 001)
 **Assigned to:** Frontend Lead
 **Duration:** 1 hour
-**Effort:** 5 Infer points
+**Effort:** 5 Cycle points
 **Dependencies:** None
 
 **Instructions:**
@@ -615,10 +615,10 @@ export { DataProvider, DataProviderTag, DataProviderError } from "./DataProvider
 
 ---
 
-### Task B-2: Map Convex Hooks to DataProvider (Infer 002)
+### Task B-2: Map Convex Hooks to DataProvider (Cycle 002)
 **Assigned to:** Frontend Lead + Backend Specialist (30 min sync)
 **Duration:** 2 hours
-**Effort:** 6 Infer points
+**Effort:** 6 Cycle points
 **Dependencies:** Task B-1
 
 **Instructions:**
@@ -661,10 +661,10 @@ High-Risk Items: 3 (optimistic updates, nested mutations)
 
 ---
 
-### Task B-3: Design Service Dependency Graph (Infer 003)
+### Task B-3: Design Service Dependency Graph (Cycle 003)
 **Assigned to:** Frontend Lead + Backend Specialist (30 min sync)
 **Duration:** 1.5 hours
-**Effort:** 6 Infer points
+**Effort:** 6 Cycle points
 **Dependencies:** Task B-2
 
 **Instructions:**
@@ -732,10 +732,10 @@ No circular dependencies detected ✓
 
 ---
 
-### Task B-4: Define Error Handling Strategy (Infer 004)
+### Task B-4: Define Error Handling Strategy (Cycle 004)
 **Assigned to:** Backend Specialist + Frontend Lead (1 hour sync)
 **Duration:** 1.5 hours
-**Effort:** 6 Infer points
+**Effort:** 6 Cycle points
 **Dependencies:** Task B-3
 
 **Instructions:**
@@ -812,10 +812,10 @@ const run = (effect) =>
 
 ---
 
-### Task B-5: Plan React Hook Library (Infer 005)
+### Task B-5: Plan React Hook Library (Cycle 005)
 **Assigned to:** Frontend Specialist + Frontend Lead (45 min sync)
 **Duration:** 1.5 hours
-**Effort:** 6 Infer points
+**Effort:** 6 Cycle points
 **Dependencies:** Task B-4
 
 **Instructions:**
@@ -915,10 +915,10 @@ Total Planned: 18 hooks (3x minimum - allows rich functionality)
 
 ---
 
-### Task B-6: Design Test Strategy (Infer 006)
+### Task B-6: Design Test Strategy (Cycle 006)
 **Assigned to:** Quality Specialist + Frontend Lead (1 hour sync)
 **Duration:** 1.5 hours
-**Effort:** 6 Infer points
+**Effort:** 6 Cycle points
 **Dependencies:** Task B-5
 
 **Instructions:**
@@ -1015,10 +1015,10 @@ Total Planned: 18 hooks (3x minimum - allows rich functionality)
 
 ---
 
-### Task B-7: Create Rollback Plan (Infer 007)
+### Task B-7: Create Rollback Plan (Cycle 007)
 **Assigned to:** Frontend Lead
 **Duration:** 45 min
-**Effort:** 4 Infer points
+**Effort:** 4 Cycle points
 **Dependencies:** Task B-2
 
 **Instructions:**
@@ -1093,10 +1093,10 @@ Total Planned: 18 hooks (3x minimum - allows rich functionality)
 
 ---
 
-### Task B-8: Identify Critical Auth Components (Infer 008)
+### Task B-8: Identify Critical Auth Components (Cycle 008)
 **Assigned to:** Quality Specialist + Frontend Lead (30 min sync)
 **Duration:** 1 hour
-**Effort:** 5 Infer points
+**Effort:** 5 Cycle points
 **Dependencies:** Task B-2
 
 **Instructions:**
@@ -1162,7 +1162,7 @@ npm test -- web/src/tests/auth/session.test.ts
 ALL TESTS MUST PASS BEFORE CONTINUING
 
 ## Enforcement
-- Gate check in Phase 6: Infer 60 "Verify all auth tests STILL PASS"
+- Gate check in Phase 6: Cycle 60 "Verify all auth tests STILL PASS"
 - PR check: Cannot merge component unless auth tests pass
 - Daily check: Auth test results in standup
 ```
@@ -1179,10 +1179,10 @@ ALL TESTS MUST PASS BEFORE CONTINUING
 
 ---
 
-### Task B-9: Plan Parallel Work Streams (Infer 009)
+### Task B-9: Plan Parallel Work Streams (Cycle 009)
 **Assigned to:** Frontend Lead
 **Duration:** 1.5 hours
-**Effort:** 6 Infer points
+**Effort:** 6 Cycle points
 **Dependencies:** Tasks B-1 through B-8
 
 **Instructions:**
@@ -1193,7 +1193,7 @@ ALL TESTS MUST PASS BEFORE CONTINUING
    - Stream D: Component Migration (Frontend Specialist)
    - Stream E: Testing (Quality Specialist)
 2. For each stream:
-   - Start date (which inferences)
+   - Start date (which cycles)
    - Duration estimate
    - Key blockers
    - Gate it produces
@@ -1211,7 +1211,7 @@ ALL TESTS MUST PASS BEFORE CONTINUING
 # Parallel Work Streams
 
 ## Stream A: DataProvider Interface (Backend Specialist)
-- Phase: 2 (Infer 11-20)
+- Phase: 2 (Cycle 11-20)
 - Duration: Days 1-5 (5 days)
 - Start: Oct 28 (Monday)
 - End: Nov 2 (Friday)
@@ -1219,7 +1219,7 @@ ALL TESTS MUST PASS BEFORE CONTINUING
 - Critical Path: YES (blocks all services)
 
 ## Stream B: Effect Services (Backend Specialist)
-- Phase: 3 (Infer 21-40)
+- Phase: 3 (Cycle 21-40)
 - Duration: Days 5-12 (8 days)
 - Start: Nov 2 (when DataProvider done)
 - End: Nov 9 (blocked on Stream A)
@@ -1228,7 +1228,7 @@ ALL TESTS MUST PASS BEFORE CONTINUING
 - Depends On: Stream A (DataProvider)
 
 ## Stream C: React Hooks (Frontend Specialist)
-- Phase: 4 (Infer 31-40)
+- Phase: 4 (Cycle 31-40)
 - Duration: Days 8-12 (5 days)
 - Start: Nov 5 (can start early with stub DataProvider)
 - End: Nov 9
@@ -1238,7 +1238,7 @@ ALL TESTS MUST PASS BEFORE CONTINUING
 - Note: Can work in parallel with B once interface is clear
 
 ## Stream D: Component Migration (Frontend Specialist)
-- Phase: 6 (Infer 51-70)
+- Phase: 6 (Cycle 51-70)
 - Duration: Days 10-25 (16 days)
 - Start: Nov 9 (when hooks done)
 - End: Nov 24
@@ -1248,7 +1248,7 @@ ALL TESTS MUST PASS BEFORE CONTINUING
 - Parallel With: Stream E (testing)
 
 ## Stream E: Testing (Quality Specialist)
-- Phase: 7 (Infer 71-80)
+- Phase: 7 (Cycle 71-80)
 - Duration: Days 10-24 (15 days)
 - Start: Nov 9 (start with test framework)
 - End: Nov 23
@@ -1297,10 +1297,10 @@ Parallelization saves: ~30 days vs sequential
 
 ---
 
-### Task B-10: Assign Specialists & Create Schedule (Infer 010)
+### Task B-10: Assign Specialists & Create Schedule (Cycle 010)
 **Assigned to:** Frontend Lead
 **Duration:** 1 hour
-**Effort:** 5 Infer points
+**Effort:** 5 Cycle points
 **Dependencies:** Task B-9
 
 **Instructions:**
@@ -1311,7 +1311,7 @@ Parallelization saves: ~30 days vs sequential
    - Quality Specialist (1 FTE): Testing + Validation
    - Documenter (0.5 FTE): Docs (parallel)
 2. For each specialist:
-   - Assign phases/inferences
+   - Assign phases/cycles
    - Estimate effort per phase
    - Identify FTE allocation per week
 3. Create weekly schedule:
@@ -1332,10 +1332,10 @@ Parallelization saves: ~30 days vs sequential
 
 ### Frontend Lead (1 FTE)
 - Role: Director, blocker resolution, phase gates
-- Phases: 1, 10 (Infer 1-10, 96-100)
+- Phases: 1, 10 (Cycle 1-10, 96-100)
 - FTE by week: Week 1: 100%, Week 2-5: 10%, Week 6: 100%
 - Key activities:
-  - Architecture validation (Infer 1-10)
+  - Architecture validation (Cycle 1-10)
   - Phase gate reviews (weekly)
   - Blocker escalation (daily)
   - Performance validation (Week 6)
@@ -1343,34 +1343,34 @@ Parallelization saves: ~30 days vs sequential
 
 ### Backend Specialist (1 FTE)
 - Role: DataProvider + Services + Error handling
-- Phases: 2, 3, 8 (Infer 11-30, 81-85)
+- Phases: 2, 3, 8 (Cycle 11-30, 81-85)
 - FTE by week: Week 1: 100%, Week 2: 100%, Weeks 3-4: 30%, Week 5: 20%
 - Key deliverables:
-  - DataProvider interface (Week 1, Infer 11-20)
-  - 6 core services (Week 2, Infer 21-30)
-  - Error handling & resilience (Week 4, Infer 81-85)
+  - DataProvider interface (Week 1, Cycle 11-20)
+  - 6 core services (Week 2, Cycle 21-30)
+  - Error handling & resilience (Week 4, Cycle 81-85)
 
 ### Frontend Specialist (1 FTE)
 - Role: React hooks, component migration, Astro
-- Phases: 4, 5, 6 (Infer 31-70)
+- Phases: 4, 5, 6 (Cycle 31-70)
 - FTE by week: Week 2: 50%, Week 3: 100%, Week 4: 100%, Week 5: 10%
 - Key deliverables:
-  - React hooks (Week 2-3, Infer 31-40)
-  - Astro integration (Week 3, Infer 41-50)
-  - Component migration (Weeks 3-4, Infer 51-70)
+  - React hooks (Week 2-3, Cycle 31-40)
+  - Astro integration (Week 3, Cycle 41-50)
+  - Component migration (Weeks 3-4, Cycle 51-70)
 
 ### Quality Specialist (1 FTE)
 - Role: Testing, validation, quality gates
-- Phases: 7, 8, 10 (Infer 71-85, 99-100)
+- Phases: 7, 8, 10 (Cycle 71-85, 99-100)
 - FTE by week: Week 3: 30%, Week 4: 100%, Week 5: 50%, Week 6: 50%
 - Key deliverables:
-  - Test framework (Week 3, Infer 71-75)
-  - Service & component tests (Weeks 3-4, Infer 76-80)
-  - Final smoke tests (Week 6, Infer 99-100)
+  - Test framework (Week 3, Cycle 71-75)
+  - Service & component tests (Weeks 3-4, Cycle 76-80)
+  - Final smoke tests (Week 6, Cycle 99-100)
 
 ### Documenter (0.5 FTE)
 - Role: Documentation, guides, architecture
-- Phases: 9 (Infer 86-95) - PARALLEL with other phases
+- Phases: 9 (Cycle 86-95) - PARALLEL with other phases
 - FTE by week: Weeks 3-5: 0.5 FTE continuous
 - Key deliverables:
   - API docs, service guides (Week 4)
@@ -1388,7 +1388,7 @@ Parallelization saves: ~30 days vs sequential
 | Quality Spec. | 0% | 0% | 0% | 0% | 50% | Test plan |
 | Documenter | 0% | 0% | 0% | 0% | 0% | Wait for specs |
 
-Phase complete: Infer 1-20 (Foundation + DataProvider)
+Phase complete: Cycle 1-20 (Foundation + DataProvider)
 Gate 2 approval: Friday EOD
 
 ### Week 2: Services + Hooks (Nov 5-9)
@@ -1400,7 +1400,7 @@ Gate 2 approval: Friday EOD
 | Quality Spec. | 50% | 50% | 50% | 50% | 100% | Test setup |
 | Documenter | 0% | 0% | 0% | 0% | 0% | Wait |
 
-Phase complete: Infer 21-40 (Services + Hooks)
+Phase complete: Cycle 21-40 (Services + Hooks)
 Gate 3 & 4 approval: Friday EOD
 
 ### Week 3: Integration + Migration Start (Nov 12-16)
@@ -1412,7 +1412,7 @@ Gate 3 & 4 approval: Friday EOD
 | Quality Spec. | 50% | 50% | 50% | 50% | 100% | Testing |
 | Documenter | 50% | 50% | 50% | 50% | 50% | API docs |
 
-Phase progress: Infer 41-60 (Astro + 10 components)
+Phase progress: Cycle 41-60 (Astro + 10 components)
 Target: 50% of component migration done by Friday
 
 ### Week 4: Component Migration (Nov 19-23)
@@ -1424,7 +1424,7 @@ Target: 50% of component migration done by Friday
 | Quality Spec. | 100% | 100% | 100% | 100% | 100% | Testing |
 | Documenter | 50% | 50% | 50% | 50% | 50% | Migration guides |
 
-Phase progress: Infer 51-70 (Component migration)
+Phase progress: Cycle 51-70 (Component migration)
 Target: 100% of components migrated by Friday
 Gate 6 approval: Friday EOD
 
@@ -1437,7 +1437,7 @@ Gate 6 approval: Friday EOD
 | Quality Spec. | 50% | 50% | 50% | 50% | 100% | Final testing |
 | Documenter | 50% | 50% | 50% | 50% | 100% | Final docs |
 
-Phase progress: Infer 71-95 (Testing + Documentation)
+Phase progress: Cycle 71-95 (Testing + Documentation)
 Gate 7 & 9 approval: Friday EOD
 
 ### Week 6: Deployment (Dec 3-7)
@@ -1449,7 +1449,7 @@ Gate 7 & 9 approval: Friday EOD
 | Quality Spec. | 50% | 50% | 100% | 100% | 50% | Validation |
 | Documenter | 0% | 0% | 0% | 0% | 50% | Final review |
 
-Phase progress: Infer 96-100 (Performance + Deployment)
+Phase progress: Cycle 96-100 (Performance + Deployment)
 Gate 10 approval: Friday EOD
 Production deployment: Friday afternoon
 
@@ -1473,16 +1473,16 @@ Production deployment: Friday afternoon
 - Emergency contact: Frontend Lead (24 hours)
 
 ## Milestones & Gates
-- Gate 1 (Infer 10): Fri Oct 31 - Architecture approved
-- Gate 2 (Infer 20): Fri Nov 2 - DataProvider complete
-- Gate 3 (Infer 30): Fri Nov 9 - Services 92% coverage
-- Gate 4 (Infer 40): Fri Nov 9 - Hooks tested
-- Gate 5 (Infer 50): Fri Nov 16 - SSR working
-- Gate 6 (Infer 62): Fri Nov 23 - Components migrated, auth tests pass
-- Gate 7 (Infer 80): Fri Nov 23 - 92% coverage, zero TypeScript errors
-- Gate 8 (Infer 85): Fri Nov 23 - Error handling complete
-- Gate 9 (Infer 95): Fri Nov 30 - Documentation complete
-- Gate 10 (Infer 100): Fri Dec 7 - Production deployed
+- Gate 1 (Cycle 10): Fri Oct 31 - Architecture approved
+- Gate 2 (Cycle 20): Fri Nov 2 - DataProvider complete
+- Gate 3 (Cycle 30): Fri Nov 9 - Services 92% coverage
+- Gate 4 (Cycle 40): Fri Nov 9 - Hooks tested
+- Gate 5 (Cycle 50): Fri Nov 16 - SSR working
+- Gate 6 (Cycle 62): Fri Nov 23 - Components migrated, auth tests pass
+- Gate 7 (Cycle 80): Fri Nov 23 - 92% coverage, zero TypeScript errors
+- Gate 8 (Cycle 85): Fri Nov 23 - Error handling complete
+- Gate 9 (Cycle 95): Fri Nov 30 - Documentation complete
+- Gate 10 (Cycle 100): Fri Dec 7 - Production deployed
 ```
 
 **Acceptance Criteria:**
@@ -1504,7 +1504,7 @@ Production deployment: Friday afternoon
 
 **All tasks B-1 through B-10 completed = Gate 1 APPROVED**
 
-Before moving to Phase 2 (Infer 11-20), verify:
+Before moving to Phase 2 (Cycle 11-20), verify:
 
 - [ ] **Ontology Mapping:** All 6 dimensions mapped to services
 - [ ] **Convex Hooks:** 47 hooks identified and mapped to DataProvider

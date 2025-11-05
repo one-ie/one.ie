@@ -51,7 +51,7 @@ This document helps you evaluate AI-related cryptocurrencies and decide whether 
 
 AI tokens are cryptocurrencies that power decentralized AI infrastructure. Instead of centralized companies like OpenAI or Google controlling AI services, AI tokens enable:
 
-- **Decentralized compute networks**: Rent GPU power for AI training and inference
+- **Decentralized compute networks**: Rent GPU power for AI training and cycle
 - **Agent-to-agent economies**: AI agents transacting autonomously
 - **Model marketplaces**: Buy, sell, and license AI models
 - **Data exchanges**: Trade training data and datasets
@@ -87,7 +87,7 @@ If an AI token isn't being used for real AI work, it's just another speculative 
 | Aspect | Traditional Crypto | AI Tokens |
 |--------|-------------------|-----------|
 | **Value Driver** | Market sentiment, adoption | Real AI utility + market sentiment |
-| **Key Metrics** | Price, volume, holders | Compute utilization, inference count, agent activity |
+| **Key Metrics** | Price, volume, holders | Compute utilization, cycle count, agent activity |
 | **Competition** | Other cryptos | Centralized AI (OpenAI, Google, Anthropic) |
 | **Success Measure** | Price appreciation | Competitive pricing + growing usage |
 | **Verification** | On-chain transactions | Proof of AI work (zkML, TEE, sampling) |
@@ -97,7 +97,7 @@ If an AI token isn't being used for real AI work, it's just another speculative 
 
 Anyone can claim their token powers "decentralized AI." You need to verify:
 
-1. **Is real AI compute happening?** Not just blockchain transactions, but actual model training or inference
+1. **Is real AI compute happening?** Not just blockchain transactions, but actual model training or cycle
 2. **Are people paying for it?** Revenue from actual usage, not just token trading
 3. **Is it competitive?** Cheaper, faster, or more accessible than centralized alternatives
 4. **Is the token necessary?** Would the system work without it?
@@ -116,7 +116,7 @@ AI tokens are more diverse than traditional crypto. They can represent:
 ### The Nine Types of AI Tokens
 
 **Infrastructure (Decentralized Services)**:
-1. **Compute Tokens**: GPU/TPU networks for training and inference
+1. **Compute Tokens**: GPU/TPU networks for training and cycle
 2. **Agent Economy Tokens**: Platforms for agent-to-agent coordination
 3. **Model Access Tokens**: AI model marketplaces and licensing
 4. **Data Marketplace Tokens**: Traditional data trading platforms
@@ -136,7 +136,7 @@ AI tokens are more diverse than traditional crypto. They can represent:
 
 ### 1. Compute Tokens (GPU/TPU Networks)
 
-**What they do**: Rent out GPU power for AI training and inference
+**What they do**: Rent out GPU power for AI training and cycle
 
 **Examples**: Akash Network, Render Network, io.net
 
@@ -199,19 +199,19 @@ AI tokens are more diverse than traditional crypto. They can represent:
 **Key Questions**:
 - What models are available?
 - How do model performance benchmarks compare to open-source alternatives?
-- How many inferences are being run daily?
+- How many cycles are being run daily?
 - Can users fine-tune models?
 
 **Good Indicators**:
 - Competitive benchmark scores (vs Llama, Mistral, etc.)
-- High daily inference volume
+- High daily cycle volume
 - Growing fine-tuning requests
 - Models not available elsewhere
 - Reproducible benchmark results
 
 **Red Flags**:
 - Unverified or fabricated benchmarks
-- Zero actual usage (no inferences)
+- Zero actual usage (no cycles)
 - Worse performance than free open-source models
 - Models trained on stolen/unlicensed data
 - No way to verify model quality
@@ -468,17 +468,17 @@ Before investing in any AI token, answer these 10 questions honestly:
 ### 1. **Is the AI real?**
 Can you independently verify that AI compute, models, or services are actually being provided?
 
-✅ **Good**: Verifiable proof of compute, reproducible benchmarks, public inference APIs
+✅ **Good**: Verifiable proof of compute, reproducible benchmarks, public cycle APIs
 ❌ **Bad**: Just claims in whitepaper, no way to verify, closed-source
 
 ### 2. **Is there real demand?**
 Are people actively using the AI services, not just trading the token?
 
-✅ **Good**: Growing inference volume, increasing compute hours, active agents
+✅ **Good**: Growing cycle volume, increasing compute hours, active agents
 ❌ **Bad**: Zero usage metrics, only trading volume on exchanges
 
 ### 3. **Is it cheaper than centralized alternatives?**
-Compare the cost per inference/compute hour to OpenAI, AWS, or Google.
+Compare the cost per cycle/compute hour to OpenAI, AWS, or Google.
 
 ✅ **Good**: 30-70% cheaper than centralized options
 ❌ **Bad**: More expensive or same price as centralized
@@ -584,9 +584,9 @@ Do they have AI and crypto expertise?
 2. Check:
    - Models available
    - Benchmark scores vs open-source (Llama, Mistral)
-   - Inference volume
+   - Cycle volume
    - Fine-tuning options
-3. Try running inference yourself
+3. Try running cycle yourself
 4. Verify benchmarks are reproducible
 ```
 
@@ -628,7 +628,7 @@ If < 0.5: Price driven by speculation (risky)
 
 | Feature | Decentralized (Token) | Centralized (OpenAI/AWS) |
 |---------|----------------------|--------------------------|
-| Cost per inference | $X | $Y |
+| Cost per cycle | $X | $Y |
 | Latency (ms) | X | Y |
 | Uptime (%) | X | Y |
 | Censorship resistance | Yes/No | No |
@@ -1056,7 +1056,7 @@ Within AI Token Allocation:
 
 ❌ **Wrong**: "High trading volume on exchanges = successful project"
 
-✅ **Right**: "High inference volume / compute hours = real usage"
+✅ **Right**: "High cycle volume / compute hours = real usage"
 
 **Lesson**: Speculation ≠ Utility. Check actual AI usage metrics, not just token trading.
 

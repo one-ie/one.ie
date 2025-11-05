@@ -16,7 +16,7 @@ ai_context: |
   For AI agents: Read this to understand TEST PLAN.
 ---
 
-# Demo Testing Plan - Infer 15-20
+# Demo Testing Plan - Cycle 15-20
 
 **Status:** Test Definition Phase
 **Target:** Beautiful, Interactive 6-Dimension Demos

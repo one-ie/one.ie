@@ -3,7 +3,7 @@ title: Todo Onboard
 dimension: things
 primary_dimension: people
 category: todo-onboard.md
-tags: agent, ai, inference, ontology, people
+tags: agent, ai, cycle, ontology, people
 related_dimensions: connections, events, groups, knowledge, people
 scope: global
 created: 2025-11-03
@@ -20,17 +20,17 @@ ai_context: |
 # ONE Platform: Creator Onboarding & Team Management v1.0.0
 
 **Focus:** Seamless creator registration, wallet setup, team collaboration
-**Process:** `Infer 1-100 inference sequence`
-**Timeline:** 8-12 inferences per specialist per day
+**Process:** `Cycle 1-100 cycle sequence`
+**Timeline:** 8-12 cycles per specialist per day
 **Target:** Foundation for all platform features (Wave 1 - Critical Path)
 
 ---
 
-## PHASE 1: FOUNDATION & SETUP (Infer 1-10)
+## PHASE 1: FOUNDATION & SETUP (Cycle 1-10)
 
 **Purpose:** Understand onboarding landscape, map to ontology, plan implementation
 
-### Infer 1: Validate Onboarding Requirements
+### Cycle 1: Validate Onboarding Requirements
 
 - [ ] Define target personas:
   - [ ] **Solo Creator:** YouTuber, podcaster, author (want to sell content)
@@ -44,7 +44,7 @@ ai_context: |
   - [ ] First week goals
 - [ ] Document personas in: `one/people/onboard-personas.md`
 
-### Infer 2: Map Onboarding to 6-Dimension Ontology
+### Cycle 2: Map Onboarding to 6-Dimension Ontology
 
 - [ ] **Groups:** Creator's workspace group created
 - [ ] **People:** Creator registered as person, assigned role
@@ -54,7 +54,7 @@ ai_context: |
 - [ ] **Knowledge:** skill labels, expertise labels, interest labels
 - [ ] Design onboarding as journey through ontology
 
-### Infer 3: Review Existing Auth Infrastructure
+### Cycle 3: Review Existing Auth Infrastructure
 
 - [ ] Examine Better Auth setup in `/web` + `/backend`
 - [ ] Check existing auth methods:
@@ -67,7 +67,7 @@ ai_context: |
   - [ ] Phone verification (optional)
   - [ ] Social media verification (optional)
 
-### Infer 4: Define Onboarding Flow Stages
+### Cycle 4: Define Onboarding Flow Stages
 
 - [ ] **Stage 1 (Pre-Auth):** Landing page → Sign up form
 - [ ] **Stage 2 (Auth):** Email verification + password
@@ -80,7 +80,7 @@ ai_context: |
 - [ ] **Completion:** Creator ready to create/sell/earn
 - [ ] Each stage should take < 2 minutes
 
-### Infer 5: Define Team Management Requirements
+### Cycle 5: Define Team Management Requirements
 
 - [ ] Workspace = group with members
 - [ ] Roles in workspace:
@@ -95,7 +95,7 @@ ai_context: |
   - [ ] Change roles
   - [ ] Set member permissions
 
-### Infer 6: Define Wallet Connection Flow
+### Cycle 6: Define Wallet Connection Flow
 
 - [ ] Why wallet needed:
   - [ ] Receive X402 payments
@@ -111,7 +111,7 @@ ai_context: |
   7. Show success message
 - [ ] Make optional but encourage in tour
 
-### Infer 7: Plan Onboarding Tour (Guided Experience)
+### Cycle 7: Plan Onboarding Tour (Guided Experience)
 
 - [ ] Build interactive tour showing:
   - [ ] Where to create content
@@ -126,7 +126,7 @@ ai_context: |
   - [ ] Can skip at any time
 - [ ] Track completion in Convex
 
-### Infer 8: Design Quick Win for First Day
+### Cycle 8: Design Quick Win for First Day
 
 - [ ] First-day checklist:
   - [ ] [ ] Profile 80% complete
@@ -140,7 +140,7 @@ ai_context: |
   - [ ] 100 bonus tokens (for testing)
 - [ ] Goal: Creator feels successful + confident
 
-### Infer 9: Identify Integration Points
+### Cycle 9: Identify Integration Points
 
 - [ ] Onboarding touches:
   - [ ] **Convex:** User thing created, group created, connections
@@ -151,7 +151,7 @@ ai_context: |
   - [ ] **X402:** Optionally connect payment wallet
 - [ ] Ensure smooth handoff to each system
 
-### Infer 10: Define Success Metrics
+### Cycle 10: Define Success Metrics
 
 - [ ] Onboarding complete when:
   - [ ] [ ] Email verified
@@ -170,11 +170,11 @@ ai_context: |
 
 ---
 
-## PHASE 2: BACKEND SCHEMA & SERVICES (Infer 11-20)
+## PHASE 2: BACKEND SCHEMA & SERVICES (Cycle 11-20)
 
 **Purpose:** Update Convex schema for onboarding
 
-### Infer 11: Extend Creator Thing Type
+### Cycle 11: Extend Creator Thing Type
 
 - [ ] Update `backend/convex/schema.ts` creator properties:
 
@@ -230,7 +230,7 @@ ai_context: |
   }
   ```
 
-### Infer 12: Create Workspace (Group) Schema
+### Cycle 12: Create Workspace (Group) Schema
 
 - [ ] Workspaces are `groups` with type 'organization'
 - [ ] Update group schema for workspace features:
@@ -271,7 +271,7 @@ ai_context: |
   }
   ```
 
-### Infer 13: Create Team Member Connections
+### Cycle 13: Create Team Member Connections
 
 - [ ] Team member = person → group relationship
 - [ ] Connection type: `member_of` with metadata
@@ -288,7 +288,7 @@ ai_context: |
   }
   ```
 
-### Infer 14: Create Onboarding Event Types
+### Cycle 14: Create Onboarding Event Types
 
 - [ ] Add to events table:
   - [ ] `user_registered` - New user signup
@@ -306,7 +306,7 @@ ai_context: |
   - [ ] Capture metadata (source, device, etc)
   - [ ] Use for analytics + funnel tracking
 
-### Infer 15: Create Invite Token System
+### Cycle 15: Create Invite Token System
 
 - [ ] New thing type: `invitation_token`
 - [ ] Properties:
@@ -327,7 +327,7 @@ ai_context: |
   }
   ```
 
-### Infer 16: Create Onboarding Service (Effect.ts)
+### Cycle 16: Create Onboarding Service (Effect.ts)
 
 - [ ] Create `backend/convex/services/onboarding.ts`
 - [ ] Service methods:
@@ -342,7 +342,7 @@ ai_context: |
   - [ ] `addSkills()` → Tag expertise + interests
   - [ ] `completeOnboarding()` → Mark as complete
 
-### Infer 17: Create Convex Mutations
+### Cycle 17: Create Convex Mutations
 
 - [ ] `mutations/onboarding.ts`:
   - [ ] `registerUser(email, password)` → user created
@@ -357,7 +357,7 @@ ai_context: |
   - [ ] `removeTeamMember(workspaceId, memberId)` → removed
   - [ ] `updateMemberRole(workspaceId, memberId, role)` → role changed
 
-### Infer 18: Create Convex Queries
+### Cycle 18: Create Convex Queries
 
 - [ ] `queries/onboarding.ts`:
   - [ ] `getCurrentUser()` → current user + workspace
@@ -369,7 +369,7 @@ ai_context: |
   - [ ] `getPendingInvitations(workspaceId)` → list
   - [ ] `getUserWorkspaces(userId)` → list
 
-### Infer 19: Create Email Templates
+### Cycle 19: Create Email Templates
 
 - [ ] Create `backend/convex/emails/`
   - [ ] `welcome.email.tsx` - Welcome to ONE
@@ -380,7 +380,7 @@ ai_context: |
 - [ ] Use `@convex-dev/resend` for sending
 - [ ] Personalize with user name + workspace name
 
-### Infer 20: Set Up Verification System
+### Cycle 20: Set Up Verification System
 
 - [ ] Create `backend/convex/lib/verification.ts`
 - [ ] Functions:
@@ -392,11 +392,11 @@ ai_context: |
 
 ---
 
-## PHASE 3: FRONTEND COMPONENTS & PAGES (Infer 21-30)
+## PHASE 3: FRONTEND COMPONENTS & PAGES (Cycle 21-30)
 
 **Purpose:** Build signup → dashboard journey in React/Astro
 
-### Infer 21: Create SignupForm Component
+### Cycle 21: Create SignupForm Component
 
 - [ ] Component: `web/src/components/onboarding/SignupForm.tsx`
 - [ ] Fields:
@@ -411,7 +411,7 @@ ai_context: |
   - [ ] Handle errors (email exists, etc)
   - [ ] Success → Redirect to email verification
 
-### Infer 22: Create EmailVerification Component
+### Cycle 22: Create EmailVerification Component
 
 - [ ] Component: `web/src/components/onboarding/EmailVerification.tsx`
 - [ ] Display:
@@ -426,7 +426,7 @@ ai_context: |
   - [ ] Error → Show which digit is wrong
   - [ ] Expired → Show resend option
 
-### Infer 23: Create ProfileForm Component
+### Cycle 23: Create ProfileForm Component
 
 - [ ] Component: `web/src/components/onboarding/ProfileForm.tsx`
 - [ ] Form fields:
@@ -441,7 +441,7 @@ ai_context: |
   - [ ] Bio < 500 chars
   - [ ] Avatar < 5MB, image format
 
-### Infer 24: Create WorkspaceSetup Component
+### Cycle 24: Create WorkspaceSetup Component
 
 - [ ] Component: `web/src/components/onboarding/WorkspaceSetup.tsx`
 - [ ] Options:
@@ -452,7 +452,7 @@ ai_context: |
   - [ ] Invite team members (email list)
 - [ ] Success → Workspace created
 
-### Infer 25: Create WalletConnection Component
+### Cycle 25: Create WalletConnection Component
 
 - [ ] Component: `web/src/components/onboarding/WalletConnection.tsx`
 - [ ] Display:
@@ -466,7 +466,7 @@ ai_context: |
   - [ ] Button to disconnect
 - [ ] Uses wagmi hooks
 
-### Infer 26: Create SkillSelection Component
+### Cycle 26: Create SkillSelection Component
 
 - [ ] Component: `web/src/components/onboarding/SkillSelection.tsx`
 - [ ] Display:
@@ -478,7 +478,7 @@ ai_context: |
   - [ ] Pre-populate if user has niche selected
   - [ ] Show skill descriptions on hover
 
-### Infer 27: Create OnboardingTour Component
+### Cycle 27: Create OnboardingTour Component
 
 - [ ] Component: `web/src/components/onboarding/OnboardingTour.tsx`
 - [ ] Interactive steps:
@@ -494,7 +494,7 @@ ai_context: |
   - [ ] Show progress (step X of 6)
   - [ ] Next/Back buttons
 
-### Infer 28: Create OnboardingChecklist Component
+### Cycle 28: Create OnboardingChecklist Component
 
 - [ ] Component: `web/src/components/onboarding/OnboardingChecklist.tsx`
 - [ ] Checklist items:
@@ -510,7 +510,7 @@ ai_context: |
   - [ ] Links to incomplete items
   - [ ] Completion reward (badge)
 
-### Infer 29: Create Onboarding Pages (Astro)
+### Cycle 29: Create Onboarding Pages (Astro)
 
 - [ ] `web/src/pages/onboarding/index.astro` - Main entry
 - [ ] `web/src/pages/onboarding/signup.astro` - Signup form
@@ -526,7 +526,7 @@ ai_context: |
   - [ ] Redirect on auth failure
   - [ ] Redirect to dashboard when complete
 
-### Infer 30: Create Team Management Page
+### Cycle 30: Create Team Management Page
 
 - [ ] `web/src/pages/workspace/settings/team.astro`
 - [ ] Components:
@@ -543,11 +543,11 @@ ai_context: |
 
 ---
 
-## PHASE 4: INTEGRATION & API ROUTES (Infer 31-40)
+## PHASE 4: INTEGRATION & API ROUTES (Cycle 31-40)
 
 **Purpose:** Connect frontend to backend
 
-### Infer 31: Create Auth API Routes
+### Cycle 31: Create Auth API Routes
 
 - [ ] `web/src/pages/api/auth/signup.ts`
 - [ ] `web/src/pages/api/auth/verify.ts`
@@ -555,21 +555,21 @@ ai_context: |
 - [ ] Each validates + calls Convex mutation
 - [ ] Returns user object + auth token
 
-### Infer 32: Create Profile API Routes
+### Cycle 32: Create Profile API Routes
 
 - [ ] `web/src/pages/api/profile/update.ts`
 - [ ] `web/src/pages/api/profile/get.ts`
 - [ ] `web/src/pages/api/profile/upload-avatar.ts`
 - [ ] Avatar upload handling (multipart form data)
 
-### Infer 33: Create Workspace API Routes
+### Cycle 33: Create Workspace API Routes
 
 - [ ] `web/src/pages/api/workspace/create.ts`
 - [ ] `web/src/pages/api/workspace/list.ts`
 - [ ] `web/src/pages/api/workspace/[workspaceId]/get.ts`
 - [ ] `web/src/pages/api/workspace/[workspaceId]/update.ts`
 
-### Infer 34: Create Team API Routes
+### Cycle 34: Create Team API Routes
 
 - [ ] `web/src/pages/api/team/invite.ts`
 - [ ] `web/src/pages/api/team/accept-invitation.ts`
@@ -578,26 +578,26 @@ ai_context: |
 - [ ] `web/src/pages/api/team/[workspaceId]/update-role.ts`
 - [ ] `web/src/pages/api/team/[workspaceId]/remove.ts`
 
-### Infer 35: Create Wallet API Route
+### Cycle 35: Create Wallet API Route
 
 - [ ] `web/src/pages/api/wallet/connect.ts`
 - [ ] Verify wallet signature
 - [ ] Store wallet address
 - [ ] Return success
 
-### Infer 36: Create Skill API Routes
+### Cycle 36: Create Skill API Routes
 
 - [ ] `web/src/pages/api/skills/add.ts`
 - [ ] `web/src/pages/api/skills/list.ts`
 - [ ] `web/src/pages/api/skills/remove.ts`
 
-### Infer 37: Create Email Verification Route
+### Cycle 37: Create Email Verification Route
 
 - [ ] `web/src/pages/api/email/send-verification.ts`
 - [ ] `web/src/pages/api/email/verify-code.ts`
 - [ ] `web/src/pages/api/email/verify-link.ts`
 
-### Infer 38: Create Onboarding Status Route
+### Cycle 38: Create Onboarding Status Route
 
 - [ ] `web/src/pages/api/onboarding/status.ts` - GET
 - [ ] `web/src/pages/api/onboarding/step.ts` - POST (update step)
@@ -611,7 +611,7 @@ ai_context: |
   }
   ```
 
-### Infer 39: Create Redirect Logic
+### Cycle 39: Create Redirect Logic
 
 - [ ] Auth middleware for all dashboard routes
 - [ ] If not logged in → Redirect to /onboarding
@@ -619,7 +619,7 @@ ai_context: |
 - [ ] If not complete → Redirect to next step
 - [ ] If complete → Allow access
 
-### Infer 40: Create API Documentation
+### Cycle 40: Create API Documentation
 
 - [ ] Document all auth + onboarding endpoints
 - [ ] Curl examples
@@ -639,7 +639,7 @@ Each phase follows same pattern:
 - **Phase 9:** Documentation
 - **Phase 10:** Lessons learned
 
-[Abbreviated for space - Full 100 inferences follows same structure as todo-x402.md]
+[Abbreviated for space - Full 100 cycles follows same structure as todo-x402.md]
 
 ---
 

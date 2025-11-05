@@ -267,21 +267,21 @@ RESULT: v2.0.0 Public Launch
 
 ### 3. Ontology-First
 - Every feature maps to 6 dimensions (groups, people, things, connections, events, knowledge)
-- Ontology validated in Infer 1 of every file
+- Ontology validated in Cycle 1 of every file
 - Database schema derives from ontology
 - No schema-first, no feature-first
 
 ### 4. Consistent Structure
 - All files follow same 10-phase structure
-- Infer 1-10: Foundation & planning
-- Infer 11-20: Backend schema & services
-- Infer 21-30: Frontend components
-- Infer 31-40+: Feature-specific work
-- Infer 51-60: Quality & testing
-- Infer 61-70: Design & refinement
-- Infer 71-80: Performance & optimization
-- Infer 81-90: Deployment & documentation
-- Infer 91-100: Knowledge & lessons learned
+- Cycle 1-10: Foundation & planning
+- Cycle 11-20: Backend schema & services
+- Cycle 21-30: Frontend components
+- Cycle 31-40+: Feature-specific work
+- Cycle 51-60: Quality & testing
+- Cycle 61-70: Design & refinement
+- Cycle 71-80: Performance & optimization
+- Cycle 81-90: Deployment & documentation
+- Cycle 91-100: Knowledge & lessons learned
 
 ### 5. Quality by Default
 - Tests written during implementation (not Phase 6)

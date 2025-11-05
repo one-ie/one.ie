@@ -16,7 +16,7 @@ ai_context: |
   For AI agents: Read this to understand GROUPS_DEMO_IMPLEMENTATION.
 ---
 
-# Groups Demo Implementation (Infer 21-25)
+# Groups Demo Implementation (Cycle 21-25)
 
 ## Overview
 

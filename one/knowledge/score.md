@@ -2,7 +2,7 @@
 title: Score
 dimension: knowledge
 category: score.md
-tags: agent, ai, architecture, inference, ontology
+tags: agent, ai, architecture, cycle, ontology
 related_dimensions: events
 scope: global
 created: 2025-11-03
@@ -11,12 +11,12 @@ version: 1.0.0
 ai_context: |
   This document is part of the knowledge dimension in the score.md category.
   Location: one/knowledge/score.md
-  Purpose: Documents inference score
+  Purpose: Documents cycle score
   Related dimensions: events
   For AI agents: Read this to understand score.
 ---
 
-# Inference Score
+# Cycle Score
 
 **Measures ontology stability. Lower is better.**
 
@@ -28,7 +28,7 @@ Updated: **2025-10-07T18:38:31Z**
 
 ## What This Measures
 
-The inference score tracks how many times AI agents modify the core ontology files. Each modification increments the score.
+The cycle score tracks how many times AI agents modify the core ontology files. Each modification increments the score.
 
 **Goal:** Keep score < 20 per month.
 

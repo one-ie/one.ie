@@ -2,7 +2,7 @@
 
 🌟 **Turn Ideas into Production-Ready Code**
 
-*agent-director orchestrates your workflow through 15 specialized AI agents with the 6-dimension ontology. Inference-based execution optimized for speed and quality.*
+_agent-director orchestrates your workflow through 15 specialized AI agents with the 6-dimension ontology. Inference-based execution optimized for speed and quality._
 
 ## Core Interface
 
@@ -26,12 +26,12 @@ When the `/one` command is invoked, display this main menu:
    🧪 Quality Loops Enabled | 📊 Continuous Learning Active
    ⚡ Event-Driven Autonomy | 🎯 6-Dimension Ontology Aligned
 
-🚀 **INFERENCE WORKFLOW** (Infer 1-100: Plan → Implement → Learn)
+🚀 **INFERENCE WORKFLOW** (Cycle 1-100: Plan → Implement → Learn)
    1. /now              → Show current inference & task
    2. /next             → Advance to next inference
    3. /done             → Mark inference complete & advance
    4. /plan             → View complete 100-inference plan
-   5. /build            → Build feature with specialists
+   5. /create            → Build feature with specialists
 
 🤖 **AGENT COMMAND CENTER** (15 Specialized Agents, agent-director Orchestrates)
    6. agent-director      → Orchestrator: plans, validates, delegates
@@ -58,19 +58,23 @@ Enter your choice (1-9, A-D, T, W, S, H, ?): _
 ## Navigation Rules
 
 ### 1. Numbered Selection Pattern
+
 - **Primary options**: 1-9 (consistent across all menus)
 - **Advanced options**: Letters (A-Z)
 - **Help options**: H, ?
 - **Navigation**: B (Back), X (Exit)
 
 ### 2. Breadcrumb System
+
 Always show current location:
+
 ```
 ONE > Engineering Director > Create Plan > Course Platform
                                                 ↑ Current Location
 ```
 
 ### 3. Progressive Disclosure
+
 - **Level 1**: Show most common actions (1-5)
 - **Level 2**: Show AI agents (6-9, A-D)
 - **Level 3**: Show advanced features (T, W, S)
@@ -81,6 +85,7 @@ ONE > Engineering Director > Create Plan > Course Platform
 ### Quick Start Actions (1-5)
 
 #### 1. Start New Idea
+
 ```yaml
 action: launch_idea_creation_flow
 display: |
@@ -110,6 +115,7 @@ next_actions:
 ```
 
 #### 2. Build Your Plan
+
 ```yaml
 action: launch_plan_creation_flow
 display: |
@@ -133,6 +139,7 @@ display: |
 ```
 
 #### 3. Launch Big Feature
+
 ```yaml
 action: launch_feature_creation_flow
 display: |
@@ -156,6 +163,7 @@ display: |
 ```
 
 #### 4. Create Tests & Design
+
 ```yaml
 action: launch_test_design_flow
 display: |
@@ -179,6 +187,7 @@ display: |
 ```
 
 #### 5. Get Things Done
+
 ```yaml
 action: launch_task_execution_flow
 display: |
@@ -205,16 +214,17 @@ display: |
 ### AI Agents (6-9, A-D)
 
 #### 6. agent-director (The Orchestrator)
+
 ```yaml
 action: show_director_agent
 display: |
   🎯 **AGENT-DIRECTOR: THE ORCHESTRATOR**
 
   Central control: Plans features, validates ontology, delegates to 14 specialists
-  Works with inference-based execution (Infer 1-100) for precise planning.
+  Works with inference-based execution (Cycle 1-100) for precise planning.
 
   **Current Activity:**
-  - Infer 47/100: Validating backend schema design
+  - Cycle 47/100: Validating backend schema design
   - Delegated to: agent-backend (implementing mutations)
   - Delegated to: agent-frontend (building UI components)
   - Delegated to: agent-designer (creating wireframes)
@@ -225,13 +235,13 @@ display: |
   2. /next                 → Advance to next inference in plan
   3. /done                 → Mark inference complete, learn from it
   4. /plan                 → View complete 100-inference roadmap
-  5. Create Feature Plan   → Break idea into 100 inferences
+  5. Create Feature Plan   → Break idea into 100 cycles
   6. Assign to Specialist  → Delegate specific inference to agent
   7. Coordinate Parallel   → Run multiple agents concurrently
   8. Monitor Quality       → Watch tests, catch failures early
 
   **Delegation Pattern:**
-  - Infer N: Identifies what's needed
+  - Cycle N: Identifies what's needed
   - Assigns to specialist (backend, frontend, designer, etc.)
   - Specialist executes with skill(s) from .claude/skills/
   - Returns result to director for next inference
@@ -247,6 +257,7 @@ display: |
 ```
 
 #### 7. agent-backend (Backend Specialist)
+
 ```yaml
 action: show_backend_agent
 display: |
@@ -256,9 +267,9 @@ display: |
   Delegated by agent-director for inference tasks involving backend logic.
 
   **Currently Executing (via agent-director delegation):**
-  - Infer 15: Implement course creation mutation
-  - Infer 16: Create course list query with filtering
-  - Infer 17: Design schema for course relationships
+  - Cycle 15: Implement course creation mutation
+  - Cycle 16: Create course list query with filtering
+  - Cycle 17: Design schema for course relationships
 
   **Available Skills (from .claude/skills/):**
   - agent-backend:create-mutation (8.3 KB)
@@ -296,6 +307,7 @@ display: |
 ```
 
 #### 8. agent-frontend (Frontend Specialist)
+
 ```yaml
 action: show_frontend_agent
 display: |
@@ -305,9 +317,9 @@ display: |
   Delegated by agent-director for inference tasks involving frontend logic.
 
   **Currently Executing (via agent-director delegation):**
-  - Infer 25: Create course list page with SSR
-  - Infer 26: Build enrollment button component
-  - Infer 27: Optimize Lighthouse scores
+  - Cycle 25: Create course list page with SSR
+  - Cycle 26: Build enrollment button component
+  - Cycle 27: Optimize Lighthouse scores
 
   **Available Skills (from .claude/skills/):**
   - agent-frontend:create-page (10 KB) - Astro pages with islands
@@ -345,6 +357,7 @@ display: |
 ```
 
 #### 9. Integration Specialist
+
 ```yaml
 action: show_integration_specialist
 display: |
@@ -374,6 +387,7 @@ display: |
 ```
 
 #### A. agent-quality (Quality Specialist)
+
 ```yaml
 action: show_quality_agent
 display: |
@@ -383,9 +397,9 @@ display: |
   Delegated by agent-director for inference tasks involving quality gates.
 
   **Currently Executing (via agent-director delegation):**
-  - Infer 18: Define course creation user flows
-  - Infer 19: Create acceptance criteria for enrollment
-  - Infer 20: Run tests on backend mutations
+  - Cycle 18: Define course creation user flows
+  - Cycle 19: Create acceptance criteria for enrollment
+  - Cycle 20: Run tests on backend mutations
 
   **Available Skills (from .claude/skills/):**
   - agent-quality:define-tests (referenced) - User flows + criteria
@@ -433,6 +447,7 @@ display: |
 ```
 
 #### 9. agent-designer (Design Specialist)
+
 ```yaml
 action: show_designer_agent
 display: |
@@ -442,9 +457,9 @@ display: |
   Delegated by agent-director for inference tasks involving design and UX.
 
   **Currently Executing (via agent-director delegation):**
-  - Infer 28: Create course card wireframe
-  - Infer 29: Design enrollment form states
-  - Infer 30: Generate Tailwind design tokens from brand
+  - Cycle 28: Create course card wireframe
+  - Cycle 29: Design enrollment form states
+  - Cycle 30: Generate Tailwind design tokens from brand
 
   **Available Skills (from .claude/skills/):**
   - agent-designer:create-wireframe (11 KB) - Test-driven wireframes
@@ -484,6 +499,7 @@ display: |
 ```
 
 #### C. Problem Solver
+
 ```yaml
 action: show_problem_solver
 display: |
@@ -513,6 +529,7 @@ display: |
 ```
 
 #### D. Documenter
+
 ```yaml
 action: show_documenter
 display: |
@@ -543,6 +560,7 @@ display: |
 ### Advanced Options (T, W, S)
 
 #### T. Template Library
+
 ```yaml
 action: show_template_library
 display: |
@@ -564,6 +582,7 @@ display: |
 ```
 
 #### W. Workflow Builder
+
 ```yaml
 action: launch_workflow_builder
 display: |
@@ -582,6 +601,7 @@ display: |
 ```
 
 #### S. System Settings
+
 ```yaml
 action: show_system_settings
 display: |
@@ -605,6 +625,7 @@ display: |
 ### Help Options (H, ?)
 
 #### H. CASCADE Tutorials
+
 ```yaml
 action: show_help_system
 display: |
@@ -631,6 +652,7 @@ display: |
 ```
 
 #### ?. Command Reference
+
 ```yaml
 action: show_command_reference
 display: |
@@ -665,29 +687,34 @@ display: |
 ## Design Philosophy
 
 ### 1. Single Point of Entry
+
 - All CASCADE functionality accessible through `/one`
 - Eliminates need to remember multiple commands
 - Reduces cognitive load by 75%
 
 ### 2. Consistent Interface Pattern
+
 - Always numbered selections (1-9, A-Z)
 - Always show breadcrumbs
 - Always provide B (Back) and H (Help)
 - Predictable navigation experience
 
 ### 3. Progressive Disclosure
+
 - Most common actions shown first (1-5)
 - AI agents grouped logically (6-9, A-D)
 - Advanced features clearly separated (T, W, S)
 - Help always available (H, ?)
 
 ### 4. Clear Information Hierarchy
+
 - **Visual grouping** with headers and spacing
 - **Action-oriented labels** (verb + noun)
 - **Context descriptions** (what each option does)
 - **Status indicators** (numbers, progress)
 
 ### 5. Mobile-Optimized Design
+
 - Fixed 76-character width (works on 320px+ screens)
 - Vertical scrolling friendly
 - Thumb-accessible number keys
@@ -696,6 +723,7 @@ display: |
 ## Success Metrics
 
 **Expected Improvements with CASCADE:**
+
 - 98% context reduction (150k → 3k tokens)
 - 5x faster execution (115s → 20s per feature)
 - 100x simpler configuration (1 YAML vs 137 files)
@@ -703,6 +731,7 @@ display: |
 - Event-driven autonomy (0% coordination overhead)
 
 **Measurement Points:**
+
 - Time from command entry to action selection
 - Success rate of workflow completion
 - User satisfaction surveys
@@ -710,4 +739,4 @@ display: |
 
 ---
 
-*Designed with engineering precision and user-centered excellence*
+_Designed with engineering precision and user-centered excellence_

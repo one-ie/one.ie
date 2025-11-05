@@ -97,7 +97,7 @@ ai_context: |
 
 ### Advanced Features
 - `realtime` - WebSocket subscriptions
-- `inference` - AI/LLM integration
+- `cycle` - AI/LLM integration
 - `blockchain` - NFTs and smart contracts
 - `payments` - Payment processing
 - `marketplace` - Buy/sell functionality

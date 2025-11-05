@@ -2,7 +2,7 @@
 title: Agent Director Enhancement Summary
 dimension: events
 category: agent-director-enhancement-summary.md
-tags: agent, ai-agent, auth, backend, frontend, groups, inference
+tags: agent, ai-agent, auth, backend, frontend, groups, cycle
 related_dimensions: groups, knowledge, people
 scope: global
 created: 2025-11-03
@@ -20,53 +20,53 @@ ai_context: |
 
 **Date:** 2025-10-20
 **Version:** 2.0.0
-**Enhancement:** 100-Inference Plan Generation from Feature Selections
+**Enhancement:** 100-Cycle Plan Generation from Feature Selections
 
 ---
 
 ## What Was Added
 
-The agent-director has been enhanced with complete 100-inference plan generation capabilities, transforming it from a simple workflow orchestrator into an intelligent plan generator and execution coordinator.
+The agent-director has been enhanced with complete 100-cycle plan generation capabilities, transforming it from a simple workflow orchestrator into an intelligent plan generator and execution coordinator.
 
 ### 1. Feature Library (20+ Features)
 
-A comprehensive library mapping every feature to specific inference ranges:
+A comprehensive library mapping every feature to specific cycle ranges:
 
 **Foundation Features (Required):**
-- `landing-page` (Infer 1-10) - agent-frontend - ~5 min
-- `authentication` (Infer 11-20) - existing - ~0 min
-- `multi-tenant-groups` (Infer 21-30) - agent-backend - ~10 min
+- `landing-page` (Cycle 1-10) - agent-frontend - ~5 min
+- `authentication` (Cycle 11-20) - existing - ~0 min
+- `multi-tenant-groups` (Cycle 21-30) - agent-backend - ~10 min
 
 **Content & Creator Features:**
-- `content-publishing` (Infer 31-40) - agent-frontend - ~15 min
-- `membership-tiers` (Infer 41-50) - agent-backend - ~15 min
-- `revenue-tracking` (Infer 51-60) - agent-backend - ~10 min
+- `content-publishing` (Cycle 31-40) - agent-frontend - ~15 min
+- `membership-tiers` (Cycle 41-50) - agent-backend - ~15 min
+- `revenue-tracking` (Cycle 51-60) - agent-backend - ~10 min
 
 **Developer Features:**
-- `project-management` (Infer 31-40) - agent-builder - ~15 min
-- `code-repositories` (Infer 41-50) - agent-integrator - ~15 min
-- `deployment-pipeline` (Infer 51-60) - agent-ops - ~20 min
+- `project-management` (Cycle 31-40) - agent-builder - ~15 min
+- `code-repositories` (Cycle 41-50) - agent-integrator - ~15 min
+- `deployment-pipeline` (Cycle 51-60) - agent-ops - ~20 min
 
 **AI Features:**
-- `ai-agents` (Infer 61-70) - agent-builder - ~20 min
-- `rag-knowledge` (Infer 71-80) - agent-backend - ~15 min
-- `semantic-search` (Infer 81-90) - agent-backend - ~10 min
+- `ai-agents` (Cycle 61-70) - agent-builder - ~20 min
+- `rag-knowledge` (Cycle 71-80) - agent-backend - ~15 min
+- `semantic-search` (Cycle 81-90) - agent-backend - ~10 min
 
 **Integration Features:**
-- `stripe-payments` (Infer 31-40) - agent-integrator - ~15 min
-- `email-marketing` (Infer 41-50) - agent-integrator - ~10 min
-- `discord-community` (Infer 51-60) - agent-integrator - ~15 min
+- `stripe-payments` (Cycle 31-40) - agent-integrator - ~15 min
+- `email-marketing` (Cycle 41-50) - agent-integrator - ~10 min
+- `discord-community` (Cycle 51-60) - agent-integrator - ~15 min
 
 **Design & UX Features:**
-- `design-system` (Infer 71-80) - agent-designer - ~15 min
-- `wireframes` (Infer 71-75) - agent-designer - ~10 min
+- `design-system` (Cycle 71-80) - agent-designer - ~15 min
+- `wireframes` (Cycle 71-75) - agent-designer - ~10 min
 
 **Performance & Analytics Features:**
-- `performance-monitoring` (Infer 81-90) - agent-ops - ~10 min
-- `analytics-dashboard` (Infer 81-90) - agent-frontend - ~15 min
+- `performance-monitoring` (Cycle 81-90) - agent-ops - ~10 min
+- `analytics-dashboard` (Cycle 81-90) - agent-frontend - ~15 min
 
 Each feature includes:
-- Inference range (where it fits in 1-100)
+- Cycle range (where it fits in 1-100)
 - Specialist agent assignment
 - Duration estimate
 - Cost estimate
@@ -86,15 +86,15 @@ A 6-step algorithm for converting feature selections into executable plans:
 - Prevents breaking changes from missing dependencies
 - Example: Selecting "ai-agents" automatically includes "landing-page", "authentication", "multi-tenant-groups"
 
-**Step 3: Map to Inference Ranges**
-- Creates phases with specific inference ranges
+**Step 3: Map to Cycle Ranges**
+- Creates phases with specific cycle ranges
 - Assigns specialist agents
 - Maps to ontology dimensions
 
 **Step 4: Calculate Estimates**
 - Total duration (minutes + hours)
 - Total cost (sum of all features)
-- Total inference count (out of 100)
+- Total cycle count (out of 100)
 
 **Step 5: Generate Execution Plan**
 - Complete ExecutionPlan structure
@@ -119,7 +119,7 @@ Event-driven workflow coordination across all specialist agents:
 **Progress Tracking:**
 - Real-time updates to `.onboarding.json`
 - Completion percentage calculation
-- Current inference tracking
+- Current cycle tracking
 - Phase status tracking
 
 **Sequential vs Parallel Execution:**
@@ -135,7 +135,7 @@ Event-driven workflow coordination across all specialist agents:
 
 **Real-Time Status Display:**
 - Progress percentage
-- Current phase and inference
+- Current phase and cycle
 - Phase list with status icons
 - Estimates (duration, cost)
 
@@ -149,13 +149,13 @@ interface ExecutionPlan {
   createdAt: number;
   plan: {
     phases: Phase[];
-    totalInferences: number;
-    currentInference: number;
-    completedInferences: number[];
+    totalCycles: number;
+    currentCycle: number;
+    completedCycles: number[];
     estimates: {
       duration: string;
       cost: string;
-      inferences: number;
+      cycles: number;
     };
   };
   progress: {
@@ -172,7 +172,7 @@ interface ExecutionPlan {
 interface Phase {
   name: string;
   featureKey: string;
-  inferences: { start: number; end: number };
+  cycles: { start: number; end: number };
   specialist: string;
   duration: string;
   cost: string;
@@ -209,15 +209,15 @@ interface Phase {
 
 **Process:**
 1. **Resolve Dependencies**: All dependencies automatically included (none needed in this case)
-2. **Map to Inferences**:
-   - landing-page → Infer 1-10
-   - authentication → Infer 11-20 (existing, skip)
-   - multi-tenant-groups → Infer 21-30
-   - project-management → Infer 31-40
-   - ai-agents → Infer 61-70
-   - deployment → Infer 91-100 (always included)
+2. **Map to Cycles**:
+   - landing-page → Cycle 1-10
+   - authentication → Cycle 11-20 (existing, skip)
+   - multi-tenant-groups → Cycle 21-30
+   - project-management → Cycle 31-40
+   - ai-agents → Cycle 61-70
+   - deployment → Cycle 91-100 (always included)
 3. **Calculate Estimates**:
-   - Total: 50 inferences (out of 100)
+   - Total: 50 cycles (out of 100)
    - Duration: ~60 minutes (~1 hour)
    - Cost: $0
 4. **Generate Plan**: Complete ExecutionPlan with 6 phases
@@ -229,23 +229,23 @@ interface Phase {
 🤖 BUILDING Acme Corp
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
-Progress: 0.0% (0/50 inferences)
+Progress: 0.0% (0/50 cycles)
 
 Current Phase: Starting...
-Current Inference: 1
+Current Cycle: 1
 
 Phases:
-  ⏳ Landing Page (Infer 1-10)
+  ⏳ Landing Page (Cycle 1-10)
      agent-frontend • ~5 min
-  ⏳ Authentication (Infer 11-20)
+  ⏳ Authentication (Cycle 11-20)
      existing • ~0 min
-  ⏳ Multi-Tenant Groups (Infer 21-30)
+  ⏳ Multi-Tenant Groups (Cycle 21-30)
      agent-backend • ~10 min
-  ⏳ Project Management (Infer 31-40)
+  ⏳ Project Management (Cycle 31-40)
      agent-builder • ~15 min
-  ⏳ AI Agents (Infer 61-70)
+  ⏳ AI Agents (Cycle 61-70)
      agent-builder • ~20 min
-  ⏳ Deployment & Documentation (Infer 91-100)
+  ⏳ Deployment & Documentation (Cycle 91-100)
      agent-ops • ~10 min
 
 Estimates:
@@ -265,7 +265,7 @@ The enhanced agent-director integrates seamlessly with the existing onboarding w
 2. **User provides** organization name, website URL
 3. **agent-onboard** analyzes website, creates custom ontology
 4. **User selects** features from CLI menu
-5. **agent-director** generates 100-inference plan
+5. **agent-director** generates 100-cycle plan
 6. **agent-director** coordinates execution across specialists
 7. **Real-time progress** shown in terminal
 8. **Each phase completes** → Live deployment
@@ -277,13 +277,13 @@ The enhanced agent-director integrates seamlessly with the existing onboarding w
 
 ### 1. Transparent Planning
 - Users see exactly what will be built
-- Clear inference count (e.g., 50/100 inferences)
+- Clear cycle count (e.g., 50/100 cycles)
 - Accurate time and cost estimates
 
 ### 2. Incremental Value
 - Each phase deploys immediately
 - User sees progress in real-time
-- Can stop/resume at any inference
+- Can stop/resume at any cycle
 
 ### 3. Intelligent Dependencies
 - Automatic dependency resolution
@@ -355,7 +355,7 @@ The enhanced agent-director integrates seamlessly with the existing onboarding w
       {
         "name": "Landing Page",
         "featureKey": "landing-page",
-        "inferences": { "start": 1, "end": 10 },
+        "cycles": { "start": 1, "end": 10 },
         "specialist": "agent-frontend",
         "duration": "~5 min",
         "cost": "$0",
@@ -369,13 +369,13 @@ The enhanced agent-director integrates seamlessly with the existing onboarding w
       }
       // ... more phases
     ],
-    "totalInferences": 50,
-    "currentInference": 1,
-    "completedInferences": [],
+    "totalCycles": 50,
+    "currentCycle": 1,
+    "completedCycles": [],
     "estimates": {
       "duration": "60 minutes (~1 hours)",
       "cost": "$0.00",
-      "inferences": 50
+      "cycles": 50
     }
   },
   "progress": {
@@ -401,4 +401,4 @@ The enhancement is successful if:
 
 ---
 
-**Ready to generate 100-inference plans from feature selections!** 🚀
+**Ready to generate 100-cycle plans from feature selections!** 🚀

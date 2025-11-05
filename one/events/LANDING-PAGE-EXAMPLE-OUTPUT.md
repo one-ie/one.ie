@@ -654,7 +654,7 @@ SEO:             100/100
 ```bash
 $ bun scripts/generate-landing-page.ts
 
-🎨 Landing Page Generator - Infer 1-10
+🎨 Landing Page Generator - Cycle 1-10
 
 ⚠️  No .onboarding.json found, using defaults
 📋 Organization: ONE Platform

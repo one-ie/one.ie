@@ -114,7 +114,7 @@ describe("DataProvider Interface Types", () => {
 
 - All operations return `Effect<T, E, never>`
 - All errors extend base `DataProviderError` with `_tag` field
-- Type inference works correctly (no `any` types)
+- Type cycle works correctly (no `any` types)
 - Autocomplete works in IDE
 
 **Performance:** N/A (type-only)
@@ -1174,7 +1174,7 @@ PERFORMANCE_BASELINE_FILE=./tests/performance/baseline.json
 
 - **Hook API:** Matches Convex ergonomics
 - **Error Messages:** Clear and actionable
-- **Type Inference:** Full autocomplete
+- **Type Cycle:** Full autocomplete
 - **Documentation:** Complete examples
 - **Migration Path:** Straightforward
 

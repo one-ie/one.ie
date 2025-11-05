@@ -20,7 +20,7 @@ ai_context: |
 
 ## Version 1.0.0 - Complete Design Specification Index
 
-**Design Phase:** Infer 15-20 (Design & Wireframes)
+**Design Phase:** Cycle 15-20 (Design & Wireframes)
 **Status:** Ready for Frontend Implementation
 **Target:** Lighthouse 95+ • WCAG 2.1 AA • Zero Accessibility Issues
 
@@ -352,7 +352,7 @@ import { DemoPlayground } from "@/components/demo/DemoPlayground";
 
 ## Implementation Timeline
 
-### Phase 1: Setup (Infer 21)
+### Phase 1: Setup (Cycle 21)
 
 - [ ] Create `/web/src/pages/ontology/` directory
 - [ ] Create `/web/src/components/demo/` directory
@@ -361,7 +361,7 @@ import { DemoPlayground } from "@/components/demo/DemoPlayground";
 
 **Deliverable:** Directory structure ready
 
-### Phase 2: Components (Infer 22-23)
+### Phase 2: Components (Cycle 22-23)
 
 - [ ] Implement `DemoContainer` wrapper
 - [ ] Implement `DemoHero` component
@@ -372,7 +372,7 @@ import { DemoPlayground } from "@/components/demo/DemoPlayground";
 
 **Deliverable:** All 9 demo components working
 
-### Phase 3: Pages (Infer 24-25)
+### Phase 3: Pages (Cycle 24-25)
 
 - [ ] Implement `/ontology/` landing page (overview)
 - [ ] Implement `/ontology/groups` demo page
@@ -384,7 +384,7 @@ import { DemoPlayground } from "@/components/demo/DemoPlayground";
 
 **Deliverable:** All 7 dimension pages functional
 
-### Phase 4: Polish (Infer 26)
+### Phase 4: Polish (Cycle 26)
 
 - [ ] Add animations and transitions
 - [ ] Implement relationship graph visualization
@@ -395,7 +395,7 @@ import { DemoPlayground } from "@/components/demo/DemoPlayground";
 
 **Deliverable:** Production-ready, fully accessible
 
-### Phase 5: Testing (Infer 27-28)
+### Phase 5: Testing (Cycle 27-28)
 
 - [ ] Cross-browser testing (Chrome, Firefox, Safari, Edge)
 - [ ] Mobile device testing (iOS, Android)

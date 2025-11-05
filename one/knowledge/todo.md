@@ -2,7 +2,7 @@
 title: Todo
 dimension: knowledge
 category: todo.md
-tags: ai, connections, events, groups, inference, knowledge, ontology, people, things
+tags: ai, connections, events, groups, cycle, knowledge, ontology, people, things
 related_dimensions: connections, events, groups, people, things
 scope: global
 created: 2025-11-03
@@ -11,20 +11,20 @@ version: 1.0.0
 ai_context: |
   This document is part of the knowledge dimension in the todo.md category.
   Location: one/knowledge/todo.md
-  Purpose: Documents one platform - 100 inference-sequenced todo list
+  Purpose: Documents one platform - 100 cycle-sequenced todo list
   Related dimensions: connections, events, groups, people, things
   For AI agents: Read this to understand todo.
 ---
 
-# ONE Platform - 100 Inference-Sequenced Todo List
+# ONE Platform - 100 Cycle-Sequenced Todo List
 
-**Planning Paradigm:** We don't plan in days. We plan in **inference passes** (Infer 1-100).
+**Planning Paradigm:** We don't plan in days. We plan in **cycle passes** (Cycle 1-100).
 
-Each number represents the sequence position when data is sent for AI inference. This ensures flawless execution: "Do the next thing, perfectly."
+Each number represents the sequence position when data is sent for AI cycle. This ensures flawless execution: "Do the next thing, perfectly."
 
 ---
 
-## Inference 1-10: Foundation & Setup
+## Cycle 1-10: Foundation & Setup
 
 **1. [INFER-001]** Validate idea against 6-dimension ontology (groups, people, things, connections, events, knowledge)
 **2. [INFER-002]** Map idea to specific entity types (which of 66+ thing types are involved?)
@@ -39,7 +39,7 @@ Each number represents the sequence position when data is sent for AI inference.
 
 ---
 
-## Inference 11-20: Backend Schema & Services
+## Cycle 11-20: Backend Schema & Services
 
 **11. [INFER-011]** Design database schema changes (if any new entity types)
 **12. [INFER-012]** Update backend/convex/schema.ts with new types
@@ -54,7 +54,7 @@ Each number represents the sequence position when data is sent for AI inference.
 
 ---
 
-## Inference 21-30: Frontend Pages & Components
+## Cycle 21-30: Frontend Pages & Components
 
 **21. [INFER-021]** Create Astro page with SSR data fetching
 **22. [INFER-022]** Build React components for interactive UI
@@ -69,7 +69,7 @@ Each number represents the sequence position when data is sent for AI inference.
 
 ---
 
-## Inference 31-40: Integration & Connections
+## Cycle 31-40: Integration & Connections
 
 **31. [INFER-031]** Map external system to ontology dimensions
 **32. [INFER-032]** Create connection records for system relationships
@@ -84,7 +84,7 @@ Each number represents the sequence position when data is sent for AI inference.
 
 ---
 
-## Inference 41-50: Authentication & Authorization
+## Cycle 41-50: Authentication & Authorization
 
 **41. [INFER-041]** Configure Better Auth with 6 methods (email/password, OAuth, magic links, etc.)
 **42. [INFER-042]** Implement role-based access control (4 roles)
@@ -99,7 +99,7 @@ Each number represents the sequence position when data is sent for AI inference.
 
 ---
 
-## Inference 51-60: Knowledge & RAG
+## Cycle 51-60: Knowledge & RAG
 
 **51. [INFER-051]** Create knowledge records with labels
 **52. [INFER-052]** Generate embeddings for content (OpenAI, Anthropic, or local)
@@ -114,7 +114,7 @@ Each number represents the sequence position when data is sent for AI inference.
 
 ---
 
-## Inference 61-70: Quality & Testing
+## Cycle 61-70: Quality & Testing
 
 **61. [INFER-061]** Define user flows (what users must accomplish)
 **62. [INFER-062]** Create acceptance criteria (how we know it works)
@@ -129,7 +129,7 @@ Each number represents the sequence position when data is sent for AI inference.
 
 ---
 
-## Inference 71-80: Design & Wireframes
+## Cycle 71-80: Design & Wireframes
 
 **71. [INFER-071]** Create wireframes that satisfy acceptance criteria
 **72. [INFER-072]** Design component architecture (atoms, molecules, organisms)
@@ -144,7 +144,7 @@ Each number represents the sequence position when data is sent for AI inference.
 
 ---
 
-## Inference 81-90: Performance & Optimization
+## Cycle 81-90: Performance & Optimization
 
 **81. [INFER-081]** Optimize database queries (add indexes)
 **82. [INFER-082]** Implement pagination for large lists
@@ -159,7 +159,7 @@ Each number represents the sequence position when data is sent for AI inference.
 
 ---
 
-## Inference 91-100: Deployment & Documentation
+## Cycle 91-100: Deployment & Documentation
 
 **91. [INFER-091]** Build production bundle (bun run build)
 **92. [INFER-092]** Deploy backend to Convex Cloud (npx convex deploy)
@@ -177,61 +177,61 @@ Each number represents the sequence position when data is sent for AI inference.
 ## How to Use This List
 
 ### 1. Sequential Execution
-- Always do the **next inference** in sequence
+- Always do the **next cycle** in sequence
 - Never skip ahead unless dependencies are met
-- Each inference builds on previous ones
+- Each cycle builds on previous ones
 
 ### 2. Context Loading
-- Use `.claude/hooks/todo` to load current inference context
+- Use `.claude/hooks/todo` to load current cycle context
 - Hook automatically injects:
-  - Current inference number
+  - Current cycle number
   - Task description
   - Required ontology dimensions
-  - Dependencies from previous inferences
+  - Dependencies from previous cycles
 
 ### 3. Completion Tracking
-- Use `.claude/hooks/done` after completing each inference
+- Use `.claude/hooks/done` after completing each cycle
 - Hook automatically:
-  - Marks inference complete
+  - Marks cycle complete
   - Updates progress tracker
-  - Loads context for next inference
+  - Loads context for next cycle
   - Logs lessons learned
 
 ### 4. Filtering by Dimension
 View todos filtered by ontology dimension:
-- **Organizations:** Inferences 6, 18, 43
-- **People:** Inferences 7, 42-50
-- **Things:** Inferences 2, 11-12, 21-23
-- **Connections:** Inferences 3, 31-40
-- **Events:** Inferences 4, 17, 34, 39, 49
-- **Knowledge:** Inferences 5, 51-60, 98-99
+- **Organizations:** Cycles 6, 18, 43
+- **People:** Cycles 7, 42-50
+- **Things:** Cycles 2, 11-12, 21-23
+- **Connections:** Cycles 3, 31-40
+- **Events:** Cycles 4, 17, 34, 39, 49
+- **Knowledge:** Cycles 5, 51-60, 98-99
 
 ### 5. Filtering by Role
 View todos filtered by specialist:
-- **Backend Specialist:** Inferences 11-20, 41-50
-- **Frontend Specialist:** Inferences 21-30, 71-80
-- **Integration Specialist:** Inferences 31-40
-- **Quality Agent:** Inferences 61-70
-- **Design Agent:** Inferences 71-80
+- **Backend Specialist:** Cycles 11-20, 41-50
+- **Frontend Specialist:** Cycles 21-30, 71-80
+- **Integration Specialist:** Cycles 31-40
+- **Quality Agent:** Cycles 61-70
+- **Design Agent:** Cycles 71-80
 - **Problem Solver:** (Triggered by failures)
-- **Documenter:** Inferences 95-99
+- **Documenter:** Cycles 95-99
 
 ### 6. Parallel Execution
-Some inferences can run in parallel:
-- **Backend + Frontend:** Inferences 11-20 and 21-30 (after schema defined)
-- **Tests + Design:** Inferences 61-70 and 71-80 (interdependent)
-- **Documentation:** Inferences 95-99 (can start earlier)
+Some cycles can run in parallel:
+- **Backend + Frontend:** Cycles 11-20 and 21-30 (after schema defined)
+- **Tests + Design:** Cycles 61-70 and 71-80 (interdependent)
+- **Documentation:** Cycles 95-99 (can start earlier)
 
 ---
 
 ## Adaptive Planning
 
-This list is a **template**. Actual inference sequences adapt based on:
+This list is a **template**. Actual cycle sequences adapt based on:
 
-1. **Feature Complexity:** Simple features may skip 20-30 inferences
-2. **Integration Needs:** Complex integrations may add 10-20 inferences
-3. **Quality Requirements:** High-stakes features may add extra testing inferences
-4. **Team Size:** More specialists = more parallel inferences
+1. **Feature Complexity:** Simple features may skip 20-30 cycles
+2. **Integration Needs:** Complex integrations may add 10-20 cycles
+3. **Quality Requirements:** High-stakes features may add extra testing cycles
+4. **Team Size:** More specialists = more parallel cycles
 
 **Golden Rule:** The list guides you. Your judgment refines it.
 
@@ -240,30 +240,30 @@ This list is a **template**. Actual inference sequences adapt based on:
 ## Integration with Commands
 
 ### /one command
-Displays current inference and next 5 inferences with context
+Displays current cycle and next 5 cycles with context
 
 ### /next command
-Advances to next inference and loads context
+Advances to next cycle and loads context
 
 ### /done command
-Marks current inference complete and advances
+Marks current cycle complete and advances
 
 ### /infer N command
-Jumps to specific inference number (use sparingly)
+Jumps to specific cycle number (use sparingly)
 
 ### /plan command
-Shows complete inference plan with dependencies
+Shows complete cycle plan with dependencies
 
 ---
 
 ## Success Metrics
 
-- **Completion Rate:** % of inferences completed without failures
-- **Inference Time:** Average time per inference (target: 2-5 minutes)
-- **Quality Score:** % of inferences passing all tests first time
-- **Context Efficiency:** Token usage per inference (target: < 3000 tokens)
-- **Learning Rate:** % of inferences with lessons learned captured
+- **Completion Rate:** % of cycles completed without failures
+- **Cycle Time:** Average time per cycle (target: 2-5 minutes)
+- **Quality Score:** % of cycles passing all tests first time
+- **Context Efficiency:** Token usage per cycle (target: < 3000 tokens)
+- **Learning Rate:** % of cycles with lessons learned captured
 
 ---
 
-**Philosophy:** Planning in inferences (not days) creates rhythm. Each inference is a small, perfect step toward production. 100 inferences = 1 complete feature, flawlessly.
+**Philosophy:** Planning in cycles (not days) creates rhythm. Each cycle is a small, perfect step toward production. 100 cycles = 1 complete feature, flawlessly.

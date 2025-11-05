@@ -252,4 +252,4 @@ For questions or issues with ontology skills:
 ---
 
 **Status:** Production Ready (Phase 1 Complete)
-**Next:** Implement Convex skills (Phase 1, Infer 6-10)
+**Next:** Implement Convex skills (Phase 1, Cycle 6-10)

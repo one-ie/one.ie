@@ -182,39 +182,39 @@ These stay in backend (source code adjacent):
 
 ---
 
-## Execution Plan (100-Inference Sequence)
+## Execution Plan (100-Cycle Sequence)
 
-### Phase 1: AUDIT (Infer 1-10)
+### Phase 1: AUDIT (Cycle 1-10)
 
-**Infer 1**: Review all 200+ root files
+**Cycle 1**: Review all 200+ root files
 
 - Categorize by type (documentation, test, config, source)
 - List in classification matrix above
 
-**Infer 2**: Identify duplicates
+**Cycle 2**: Identify duplicates
 
 - `ONTOLOGY-FILE-STRUCTURE.md` ≈ `PERFECT-ONTOLOGY-STRUCTURE.md`
 - `ONTOLOGY-INTEGRATION-TEST-REPORT.md` ≈ `ONTOLOGY-INTEGRATION-TEST-SUMMARY.md`
 - `QUERY_ONTOLOGY.md` ≈ `QUERIES_ONTOLOGY_COMPLETE.md` ≈ `ONTOLOGY_QUERIES_EXAMPLE.md`
 
-**Infer 3**: Validate schema compliance
+**Cycle 3**: Validate schema compliance
 
 - Check `convex/schema.ts` maps to 6 dimensions
 - Verify all tables present: groups, people (if separate), things, connections, events, knowledge
 - Check indexes, relationships, constraints
 
-**Infer 4**: Review test coverage
+**Cycle 4**: Review test coverage
 
 - Assess test files: `/backend/test/`, `_tests_disabled/`
 - Determine if disabled tests should be deleted or re-enabled
 
-**Infer 5**: Audit documentation quality
+**Cycle 5**: Audit documentation quality
 
 - Check for outdated information (e.g., "4-table" vs actual 6-dimension)
 - Identify contradictions between files
 - List accuracy issues
 
-**Infer 6-10**: Plan-specific audits
+**Cycle 6-10**: Plan-specific audits
 
 - Services audit
 - Types audit
@@ -222,141 +222,141 @@ These stay in backend (source code adjacent):
 - Ontology definitions audit
 - Library utilities audit
 
-### Phase 2: CONSOLIDATION (Infer 11-20)
+### Phase 2: CONSOLIDATION (Cycle 11-20)
 
-**Infer 11**: Merge duplicate test reports
+**Cycle 11**: Merge duplicate test reports
 
 - Consolidate `ONTOLOGY-INTEGRATION-TEST-*.md` into single `/one/events/backend-integration-tests.md`
 
-**Infer 12**: Merge query documentation
+**Cycle 12**: Merge query documentation
 
 - Consolidate `QUERY_ONTOLOGY.md`, `QUERIES_ONTOLOGY_COMPLETE.md`, `ONTOLOGY_QUERIES_EXAMPLE.md`
 - Create single `/one/connections/api/queries-guide.md`
 
-**Infer 13**: Consolidate structure documentation
+**Cycle 13**: Consolidate structure documentation
 
 - Merge `ONTOLOGY-FILE-STRUCTURE.md`, `PERFECT-ONTOLOGY-STRUCTURE.md`, `BACKEND-STRUCTURE.md`
 - Create single `/one/things/plans/backend-structure.md`
 
-**Infer 14**: Audit ontology definitions
+**Cycle 14**: Audit ontology definitions
 
 - Review all files in `convex/ontologies/*.json`
 - Verify they're correctly referenced
 - Move or keep based on usage
 
-**Infer 15**: Review service layer
+**Cycle 15**: Review service layer
 
 - Audit each file in `convex/services/`
 - Ensure 100% ontology-aligned
 - Document patterns
 
-**Infer 16**: Audit types
+**Cycle 16**: Audit types
 
 - Review `convex/types/ontology.ts`
 - Verify auto-generation works
 - Document type generation process
 
-**Infer 17**: Assess examples
+**Cycle 17**: Assess examples
 
 - Review `backend/examples/`
 - Move to `/one/knowledge/examples/`
 
-**Infer 18**: Evaluate disabled tests
+**Cycle 18**: Evaluate disabled tests
 
 - Decide: re-enable, delete, or archive
 - Update `_tests_disabled/README.md` with decisions
 
-**Infer 19**: Review lib utilities
+**Cycle 19**: Review lib utilities
 
 - Document each utility
 - Determine if needed or obsolete
 
-**Infer 20**: Plan deletion candidates
+**Cycle 20**: Plan deletion candidates
 
 - List all files to delete
 - Verify no dependencies
 
-### Phase 3: REORGANIZATION (Infer 21-40)
+### Phase 3: REORGANIZATION (Cycle 21-40)
 
-**Infer 21-25**: Move documentation to `/one/`
+**Cycle 21-25**: Move documentation to `/one/`
 
 - Create target directories in `/one/things/`, `/one/events/`, `/one/connections/`
 - Move files per classification matrix
 
-**Infer 26-30**: Move examples to `/one/knowledge/`
+**Cycle 26-30**: Move examples to `/one/knowledge/`
 
 - Transfer `backend/examples/` content
 - Create index
 
-**Infer 31-35**: Clean up backend root
+**Cycle 31-35**: Clean up backend root
 
 - Delete moved files from `/backend/`
 - Verify no broken references
 
-**Infer 36-40**: Update all references
+**Cycle 36-40**: Update all references
 
 - Update links in remaining files
 - Verify docs build correctly
 - Test all cross-references
 
-### Phase 4: CLEANUP (Infer 41-50)
+### Phase 4: CLEANUP (Cycle 41-50)
 
-**Infer 41**: Delete disabled tests
+**Cycle 41**: Delete disabled tests
 
 - Remove `backend/_tests_disabled/` directory
 - Verify no other references
 
-**Infer 42**: Remove duplicate files
+**Cycle 42**: Remove duplicate files
 
 - Delete consolidated files
 - Create deprecation notices in `/one/events/`
 
-**Infer 43**: Update backend README
+**Cycle 43**: Update backend README
 
 - Reflect new documentation structure
 - Point to `/one/` for detailed guides
 
-**Infer 44**: Create index in `/one/things/`
+**Cycle 44**: Create index in `/one/things/`
 
 - List all backend-related documentation
 - Organize by dimension
 
-**Infer 45**: Validate 6-dimension compliance
+**Cycle 45**: Validate 6-dimension compliance
 
 - Run ontology validator
 - Confirm all tables present and properly indexed
 - Verify schema matches specification
 
-### Phase 5: VERIFICATION (Infer 51-60)
+### Phase 5: VERIFICATION (Cycle 51-60)
 
-**Infer 51**: Test all imports
+**Cycle 51**: Test all imports
 
 - Verify no broken imports in backend code
 - Check TypeScript compilation
 
-**Infer 52**: Validate documentation links
+**Cycle 52**: Validate documentation links
 
 - Test all markdown links work
 - Verify `/one/` references valid
 
-**Infer 53**: Review convex/schema.ts
+**Cycle 53**: Review convex/schema.ts
 
 - Ensure all 6 dimensions present
 - Check indexes match specification
 - Verify type unions correct
 
-**Infer 54**: Test convex operations
+**Cycle 54**: Test convex operations
 
 - Run sample queries
 - Run sample mutations
 - Verify auth flows
 
-**Infer 55**: Audit file permissions
+**Cycle 55**: Audit file permissions
 
 - Ensure secrets properly excluded (`.env.local` in `.gitignore`)
 - Check all source files readable
 
-**Infer 56-60**: Final QA
+**Cycle 56-60**: Final QA
 
 - Full build test
 - Type checking
@@ -466,10 +466,10 @@ cd /backend && npx tsc --noEmit
 
 1. Review this plan
 2. Approve high-level approach
-3. Execute Phase 1 (Audit) - Infer 1-10
+3. Execute Phase 1 (Audit) - Cycle 1-10
 4. Generate detailed file manifest
-5. Begin consolidation (Infer 11-20)
+5. Begin consolidation (Cycle 11-20)
 
 **Status**: Ready for execution
 **Owner**: Agent-clean / Agent-backend
-**Timeline**: 100 inferences (estimated 5-10 hours of focused work)
+**Timeline**: 100 cycles (estimated 5-10 hours of focused work)

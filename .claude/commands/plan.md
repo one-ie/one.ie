@@ -69,13 +69,13 @@ Generates:
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
 Idea: Course Platform with AI Tutors & Token Economy
-Status: ✅ Plan generated | 100 inferences | 15 agents assigned
+Status: ✅ Plan generated | 100 cycles | 15 agents assigned
 
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 📊 PLAN OVERVIEW
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
-Total Inferences:     100
+Total Cycles:     100
 Estimated Duration:   90 days
 Estimated Tokens:     ~500K
 Quality Loops:        4
@@ -96,33 +96,33 @@ Agent Teams:          15 specialists
 Lead Orchestrator:
   🤖 agent-director (infers 1-10, coordinates all specialists)
 
-Foundation Phase (Infer 1-10):
+Foundation Phase (Cycle 1-10):
   📊 Validation, mapping, planning with agent-director
   ✅ All done by orchestrator + planning
 
-Backend Phase (Infer 11-30):
+Backend Phase (Cycle 11-30):
   ⚙️ agent-backend: Schema, mutations, queries, services
-  - Infer 11-20: Convex schema design (groups, entities, connections, events)
-  - Infer 21-30: Core mutations (create, update, delete)
-  - Infer 41-50: Advanced queries (filtering, pagination, relationships)
+  - Cycle 11-20: Convex schema design (groups, entities, connections, events)
+  - Cycle 21-30: Core mutations (create, update, delete)
+  - Cycle 41-50: Advanced queries (filtering, pagination, relationships)
 
-Frontend Phase (Infer 31-50):
+Frontend Phase (Cycle 31-50):
   🎨 agent-frontend: Pages, components, UI/UX
-  - Infer 31-40: Astro pages (course list, detail, creator dashboard)
-  - Infer 51-60: React components (course card, lesson player, forum)
-  - Infer 71-80: Performance optimization
+  - Cycle 31-40: Astro pages (course list, detail, creator dashboard)
+  - Cycle 51-60: React components (course card, lesson player, forum)
+  - Cycle 71-80: Performance optimization
 
-Design Phase (Infer 21-40):
+Design Phase (Cycle 21-40):
   🎭 agent-designer: Wireframes, tokens, specs
-  - Infer 21-30: Wireframes (acceptance criteria → UI elements)
-  - Infer 31-40: Design tokens (brand colors, spacing, typography)
-  - Infer 41-50: Component specifications
+  - Cycle 21-30: Wireframes (acceptance criteria → UI elements)
+  - Cycle 31-40: Design tokens (brand colors, spacing, typography)
+  - Cycle 41-50: Component specifications
 
-Quality Phase (Infer 41-60):
+Quality Phase (Cycle 41-60):
   🧪 agent-quality: Tests, validation, requirements
-  - Infer 41-50: User flows & acceptance criteria
-  - Infer 51-60: Test suite execution
-  - Infer 61-70: Quality loop (test → fix → verify)
+  - Cycle 41-50: User flows & acceptance criteria
+  - Cycle 51-60: Test suite execution
+  - Cycle 61-70: Quality loop (test → fix → verify)
 
 Support Specialists (Throughout):
   🔧 agent-problem-solver: Analyzes test failures, proposes fixes
@@ -133,7 +133,7 @@ Support Specialists (Throughout):
 📈 PHASE BREAKDOWN (100 Inferences)
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
-Infer 1-10:   Foundation & Understanding
+Cycle 1-10:   Foundation & Understanding
   - Validate idea against 6-dimension ontology
   - Map entity types (courses, lessons, tokens, users)
   - Identify connection types (owns, enrolls, holds_tokens)
@@ -145,7 +145,7 @@ Infer 1-10:   Foundation & Understanding
   - Break down features
   - Create 100-inference plan ← You are here!
 
-Infer 11-20: Backend Schema & Services
+Cycle 11-20: Backend Schema & Services
   - Design Convex schema (groups, things, connections, events, knowledge)
   - Define entity types (course, lesson, quiz, token, user, ai_clone)
   - Create relationship types (owns, enrolled_in, holds_tokens)
@@ -153,7 +153,7 @@ Infer 11-20: Backend Schema & Services
   - Define mutations (createCourse, enrollStudent, earnToken)
   - Plan queries (listCourses, getStudent, checkTokenBalance)
 
-Infer 21-30: Frontend Pages & Wireframes
+Cycle 21-30: Frontend Pages & Wireframes
   - Design course list page (SSR with server data)
   - Design course detail page (interactive lessons)
   - Design creator dashboard (analytics, course management)
@@ -162,7 +162,7 @@ Infer 21-30: Frontend Pages & Wireframes
   - Plan component hierarchy
   - Design token system UI
 
-Infer 31-40: Design Tokens & System
+Cycle 31-40: Design Tokens & System
   - Extract brand colors (from onboarding)
   - Create typography scale
   - Define spacing system
@@ -170,42 +170,42 @@ Infer 31-40: Design Tokens & System
   - Ensure WCAG AA contrast
   - Create component specs with props
 
-Infer 41-50: Quality & Testing
+Cycle 41-50: Quality & Testing
   - Define user flows (creator: upload course, student: take course)
   - Create acceptance criteria (all features testable)
   - Define test suite (unit, integration, e2e)
   - Start test implementation
   - Run tests against schema
 
-Infer 51-60: Backend Implementation
+Cycle 51-60: Backend Implementation
   - Implement Convex mutations (createCourse, enrollStudent)
   - Implement queries (listCourses, getProgress)
   - Create Effect.ts services (business logic)
   - Add event logging (complete audit trail)
   - Implement multi-tenant isolation
 
-Infer 61-70: Frontend Implementation
+Cycle 61-70: Frontend Implementation
   - Implement Astro pages (SSR + React islands)
   - Build React components (course cards, lesson player)
   - Integrate Convex queries (useQuery, useMutation)
   - Add loading/error states
   - Optimize performance (90+ Lighthouse)
 
-Infer 71-80: AI Tutor Integration
+Cycle 71-80: AI Tutor Integration
   - Integrate Claude API for responses
   - Implement RAG (Retrieval-Augmented Generation)
   - Connect knowledge base (course content → embeddings)
   - Create AI personality system
   - Test tutor quality
 
-Infer 81-90: Quality Assurance
+Cycle 81-90: Quality Assurance
   - Run full test suite
   - Fix failing tests
   - Performance testing (Core Web Vitals)
   - Security testing
   - Accessibility audit (WCAG AA)
 
-Infer 91-100: Deployment & Documentation
+Cycle 91-100: Deployment & Documentation
   - Write user documentation
   - Create API documentation
   - Set up CI/CD pipeline
@@ -218,26 +218,26 @@ Infer 91-100: Deployment & Documentation
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
 agent-backend assigned:
-  - Infer 11-20: Schema design
-  - Infer 41-50: Queries design
-  - Infer 51-60: Mutation implementation
+  - Cycle 11-20: Schema design
+  - Cycle 41-50: Queries design
+  - Cycle 51-60: Mutation implementation
   - Skills: agent-backend:create-mutation, create-query, design-schema
 
 agent-frontend assigned:
-  - Infer 21-30: Page wireframes
-  - Infer 61-70: Component implementation
-  - Infer 81-90: Performance optimization
+  - Cycle 21-30: Page wireframes
+  - Cycle 61-70: Component implementation
+  - Cycle 81-90: Performance optimization
   - Skills: agent-frontend:create-page, create-component, optimize-performance
 
 agent-designer assigned:
-  - Infer 21-30: Wireframe generation
-  - Infer 31-40: Token & spec definition
+  - Cycle 21-30: Wireframe generation
+  - Cycle 31-40: Token & spec definition
   - Skills: agent-designer:create-wireframe, define-components, set-design-tokens
 
 agent-quality assigned:
-  - Infer 41-50: Test definition
-  - Infer 61-70: Test execution
-  - Infer 81-90: Full quality suite
+  - Cycle 41-50: Test definition
+  - Cycle 61-70: Test execution
+  - Cycle 81-90: Full quality suite
   - Skills: agent-quality:define-tests, run-tests, validate-ontology
 
 agent-problem-solver assigned:
@@ -246,7 +246,7 @@ agent-problem-solver assigned:
   - Delegate fixes to specialists
 
 agent-ops assigned:
-  - Infer 91-100: CI/CD setup
+  - Cycle 91-100: CI/CD setup
   - Deployment configuration
   - Production monitoring
 
@@ -258,11 +258,11 @@ Sequential (Cannot run in parallel):
   1-10 (Foundation) → All other phases
 
 Parallel Tracks (Can run simultaneously after Foundation):
-  Backend Track:   Infer 11-20 → 41-50 → 51-60
-  Frontend Track:  Infer 21-30 → 61-70
-  Design Track:    Infer 21-30 → 31-40
-  Quality Track:   Infer 41-50 → 61-70 → 81-90
-  Integration:     Infer 71-80 (after backend + frontend core)
+  Backend Track:   Cycle 11-20 → 41-50 → 51-60
+  Frontend Track:  Cycle 21-30 → 61-70
+  Design Track:    Cycle 21-30 → 31-40
+  Quality Track:   Cycle 41-50 → 61-70 → 81-90
+  Integration:     Cycle 71-80 (after backend + frontend core)
 
 Critical Path:
   Foundation → Backend Schema → Mutations → Frontend Implementation
@@ -279,7 +279,7 @@ Critical Path:
    /plan filter --agent=backend
 
 3. Start execution:
-   /now              - See Infer 1 context
+   /now              - See Cycle 1 context
    /next             - Move through plan
    /done             - Mark complete & advance
 
@@ -296,9 +296,9 @@ Critical Path:
 
 ```bash
 # Filter by agent
-/plan filter --agent=backend               # Shows backend inferences
-/plan filter --agent=frontend              # Shows frontend inferences
-/plan filter --agent=designer              # Shows design inferences
+/plan filter --agent=backend               # Shows backend cycles
+/plan filter --agent=frontend              # Shows frontend cycles
+/plan filter --agent=designer              # Shows design cycles
 
 # Filter by dimension
 /plan filter --dimension=things            # Entity-related tasks
@@ -322,7 +322,7 @@ Critical Path:
 
 # Get statistics
 /plan stats                               # Show plan metrics
-  - Total inferences: 100
+  - Total cycles: 100
   - Agents assigned: 15
   - Estimated duration: 90 days
   - Parallel tracks: 5
@@ -353,14 +353,14 @@ Each plan includes:
 - Determines event types
 
 ### 2. 100-Inference Breakdown
-- Foundation (Infer 1-10)
-- Backend (Infer 11-50)
-- Frontend (Infer 21-80)
-- Quality (Infer 41-90)
-- Operations (Infer 91-100)
+- Foundation (Cycle 1-10)
+- Backend (Cycle 11-50)
+- Frontend (Cycle 21-80)
+- Quality (Cycle 41-90)
+- Operations (Cycle 91-100)
 
 ### 3. Agent Assignments
-- Each agent gets specific inferences
+- Each agent gets specific cycles
 - Skills listed for each task
 - Dependencies documented
 
@@ -383,7 +383,7 @@ Each plan includes:
 /plan convert "Build an e-commerce store with product recommendations"
 
 Output:
-✅ Plan generated: 100 inferences
+✅ Plan generated: 100 cycles
 ✅ Agents assigned: 15 specialists
 ✅ Quality loops: 3
 ✅ Dependencies: 24
@@ -395,10 +395,10 @@ Output:
 /plan filter --agent=backend
 
 Output:
-Shows only backend inferences:
-- Infer 11-20: Schema design
-- Infer 41-50: Queries
-- Infer 51-60: Mutations
+Shows only backend cycles:
+- Cycle 11-20: Schema design
+- Cycle 41-50: Queries
+- Cycle 51-60: Mutations
 ```
 
 ### Example 3: Export and Share
@@ -408,7 +408,7 @@ Shows only backend inferences:
 
 Output:
 📄 Created: one/plans/ecommerce-store.md
-📊 Statistics: 100 inferences, 15 agents, 90 days
+📊 Statistics: 100 cycles, 15 agents, 90 days
 🔗 Share: /plan share
 ```
 
@@ -417,7 +417,7 @@ Output:
 Once plan is created, use these commands:
 
 ```bash
-/now                    # Show current inference (Infer 1)
+/now                    # Show current inference (Cycle 1)
 /next                   # Advance to next inference
 /done                   # Mark complete, capture lessons
 /goto [N]              # Jump to specific inference
@@ -438,5 +438,5 @@ Once plan is created, use these commands:
 ## See Also
 
 - [CASCADE System](./cascade.md) - Full agent orchestration
-- [Inference Workflow](../commands/done.md) - Mark inferences complete
+- [Inference Workflow](../commands/done.md) - Mark cycles complete
 - [Agent Dashboard](./one.md) - View all agents

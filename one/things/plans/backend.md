@@ -1155,7 +1155,7 @@ curl "https://api.one.ie/api/things?type=course&status=published&limit=10" \
 ## Related Documentation
 
 - **`one/knowledge/ontology.md`** - Complete 6-dimension specification
-- **`one/knowledge/todo.md`** - 100-inference execution template
+- **`one/knowledge/todo.md`** - 100-cycle execution template
 - **`one/things/plans/effect.md`** - Backend-agnostic Effect.ts integration
 - **`one/things/plans/separate.md`** - Frontend-backend separation
 - **`CLAUDE.md`** - Development workflow

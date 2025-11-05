@@ -380,7 +380,7 @@ PUBLIC_CONVEX_URL=https://your-deployment.convex.cloud
 
 ## Technical Implementation
 
-### Phase 1: CLI Enhancement (Infer 1-20)
+### Phase 1: CLI Enhancement (Cycle 1-20)
 
 1. Add org prompts to `npx oneie`
 2. Validate reserved names
@@ -388,7 +388,7 @@ PUBLIC_CONVEX_URL=https://your-deployment.convex.cloud
 4. Create org folder structure
 5. Generate brand guide template
 
-### Phase 2: Frontend Detection (Infer 21-40)
+### Phase 2: Frontend Detection (Cycle 21-40)
 
 1. Read `ORG_NAME` from env
 2. Conditionally render logo
@@ -396,7 +396,7 @@ PUBLIC_CONVEX_URL=https://your-deployment.convex.cloud
 4. Conditionally render homepage
 5. Add `GetStartedPrompt` component
 
-### Phase 3: Backend Control (Infer 41-60)
+### Phase 3: Backend Control (Cycle 41-60)
 
 1. Check `ONE_BACKEND` flag
 2. Disable Convex client if off
@@ -404,7 +404,7 @@ PUBLIC_CONVEX_URL=https://your-deployment.convex.cloud
 4. Show frontend-only mode indicator
 5. Document backend enablement
 
-### Phase 4: AI Prompt System (Infer 61-80)
+### Phase 4: AI Prompt System (Cycle 61-80)
 
 1. Create prompt input component
 2. Parse user intent
@@ -413,7 +413,7 @@ PUBLIC_CONVEX_URL=https://your-deployment.convex.cloud
 5. Apply org branding
 6. Show preview
 
-### Phase 5: Documentation (Infer 81-100)
+### Phase 5: Documentation (Cycle 81-100)
 
 1. Update README with flow
 2. Add CLI usage docs

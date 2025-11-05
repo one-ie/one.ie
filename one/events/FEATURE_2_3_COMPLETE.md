@@ -180,7 +180,7 @@ Ran 24 tests across 2 files. [790.00ms]
 | **Token** | 7 | token_created, token_minted, tokens_purchased |
 | **Course** | 5 | course_created, course_enrolled, lesson_completed |
 | **Analytics** | 5 | metric_calculated, insight_generated, prediction_made |
-| **Inference** | 7 | inference_request, inference_completed, quota_exceeded |
+| **Cycle** | 7 | cycle_request, cycle_completed, quota_exceeded |
 | **Blockchain** | 5 | nft_minted, nft_transferred, contract_deployed |
 | **Consolidated** | 11 | content_event, payment_event, subscription_event |
 

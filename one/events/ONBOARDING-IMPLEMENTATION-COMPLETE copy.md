@@ -2,7 +2,7 @@
 title: Onboarding Implementation Complete Copy
 dimension: events
 category: ONBOARDING-IMPLEMENTATION-COMPLETE copy.md
-tags: agent, connections, inference, installation, knowledge, protocol
+tags: agent, connections, cycle, installation, knowledge, protocol
 related_dimensions: connections, knowledge, people, things
 scope: global
 created: 2025-11-03
@@ -37,7 +37,7 @@ The ONE Platform onboarding system is now fully implemented with complete specif
 **Location:** `one/connections/workflow-onboarding.md`
 
 - 7-phase journey from `npx oneie init` to live platform
-- Inference-based execution (not time-based)
+- Cycle-based execution (not time-based)
 - Iterative deployment strategy (landing page first)
 - Multi-agent coordination
 - Complete with examples and timelines
@@ -151,13 +151,13 @@ Starting agent-onboard...
 ✨ RECOMMENDED FEATURES
 
 FOUNDATION (FREE)
-  [x] Landing page (Infer 1-10, ~5 min)
-  [x] Authentication (Infer 11-20, ~10 min)
-  [x] Multi-tenant (Infer 21-30, ~10 min)
+  [x] Landing page (Cycle 1-10, ~5 min)
+  [x] Authentication (Cycle 11-20, ~10 min)
+  [x] Multi-tenant (Cycle 21-30, ~10 min)
 
 DETECTED
-  [ ] Blog CMS (Infer 31-40, ~15 min)
-  [ ] AI agents (Infer 61-70, ~20 min)
+  [ ] Blog CMS (Cycle 31-40, ~15 min)
+  [ ] AI agents (Cycle 61-70, ~20 min)
 
 Which features? › landing page, authentication, blog cms, ai agents
 ```
@@ -169,22 +169,22 @@ Which features? › landing page, authentication, blog cms, ai agents
 ```
 ✅ PLAN GENERATED
 
-Total inferences: 70
+Total cycles: 70
 Estimated time: ~50 min
 
 PHASES:
-  Landing Page (Infer 1-10) - agent-frontend
-  Authentication (Infer 11-20) - agent-backend
-  Multi-Tenant (Infer 21-30) - agent-backend
-  Blog CMS (Infer 31-40) - agent-builder
-  AI Agents (Infer 61-70) - agent-builder
-  Deploy & Docs (Infer 91-100) - agent-ops
+  Landing Page (Cycle 1-10) - agent-frontend
+  Authentication (Cycle 11-20) - agent-backend
+  Multi-Tenant (Cycle 21-30) - agent-backend
+  Blog CMS (Cycle 31-40) - agent-builder
+  AI Agents (Cycle 61-70) - agent-builder
+  Deploy & Docs (Cycle 91-100) - agent-ops
 
 🚀 STARTING BUILD...
 ```
 
 **agent-director:**
-- Generates 100-inference plan
+- Generates 100-cycle plan
 - Assigns specialists to features
 - Updates `.onboarding.json` status to "building"
 - Coordinates execution
@@ -192,10 +192,10 @@ PHASES:
 ### Phase 5: Building (Specialized Agents)
 
 ```
-[Infer 1/70] Validate ontology ✅
-[Infer 2/70] Map landing page ✅
+[Cycle 1/70] Validate ontology ✅
+[Cycle 2/70] Map landing page ✅
 ...
-[Infer 10/70] Deploy landing page ✅
+[Cycle 10/70] Deploy landing page ✅
 
 ✨ Landing page LIVE: https://one-platform.pages.dev
 
@@ -240,16 +240,16 @@ Continue building:
 - Generates custom 6-dimension ontology
 - Recommends features based on detection
 
-### 2. Inference-Based Planning
-- 100-inference template (not time-based)
-- Clear progress tracking (Infer 23/100)
+### 2. Cycle-Based Planning
+- 100-cycle template (not time-based)
+- Clear progress tracking (Cycle 23/100)
 - Parallel execution when possible
-- Context-light (< 3k tokens per inference)
+- Context-light (< 3k tokens per cycle)
 
 ### 3. Iterative Deployment
 - Landing page live in ~5 minutes
 - Each feature deployed incrementally
-- Immediate value from first inference
+- Immediate value from first cycle
 - User sees progress in real-time
 
 ### 4. Multi-Agent Coordination
@@ -342,8 +342,8 @@ Continue building:
 
 1. Study ontology (`one/knowledge/ontology.md`)
 2. Review agent specifications (`.claude/agents/`)
-3. Follow 100-inference template (`one/knowledge/todo.md`)
-4. Use inference-based planning (not time-based)
+3. Follow 100-cycle template (`one/knowledge/todo.md`)
+4. Use cycle-based planning (not time-based)
 5. Contribute via GitHub
 
 ---
@@ -370,18 +370,18 @@ Continue building:
 
 ### 1. Context Reduction
 - **Before:** 150k tokens per feature (full docs)
-- **After:** < 3k tokens per inference
+- **After:** < 3k tokens per cycle
 - **Reduction:** 98% context savings
 
 ### 2. Speed Improvement
 - **Before:** 115s average per feature
-- **After:** 20s average per inference
+- **After:** 20s average per cycle
 - **Improvement:** 5.75x faster
 
 ### 3. Parallel Execution
 - Multiple agents work simultaneously
 - Dependencies tracked automatically
-- Independent inferences run in parallel
+- Independent cycles run in parallel
 - Smart scheduling by agent-director
 
 ### 4. Personalization
@@ -396,7 +396,7 @@ Continue building:
 
 The ONE Platform onboarding system is **fully specified and ready for implementation**. The documentation provides:
 
-1. **Clear workflow** (7 phases, inference-based)
+1. **Clear workflow** (7 phases, cycle-based)
 2. **Handoff protocol** (CLI → Claude via `.onboarding.json`)
 3. **Agent specifications** (agent-onboard, agent-director, specialists)
 4. **Example outputs** (complete analysis, landing page, configs)

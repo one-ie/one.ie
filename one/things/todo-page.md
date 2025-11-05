@@ -3,7 +3,7 @@ title: Todo Page
 dimension: things
 primary_dimension: things
 category: todo-page.md
-tags: ai, architecture, frontend, inference
+tags: ai, architecture, frontend, cycle
 related_dimensions: connections, events, groups, people, things, knowledge
 scope: global
 created: 2025-11-03
@@ -22,18 +22,18 @@ ai_context: |
 **Focus:** Customizable landing page builder template with hero, features, testimonials, CTA, and responsive design
 **Type:** Complete frontend template (Astro + React 19 + Tailwind v4)
 **UI Pattern:** Modern landing page with sections, animations, and conversion optimization
-**Process:** `Infer 1-100 inference sequence`
-**Timeline:** 12-16 inferences per specialist per day
+**Process:** `Cycle 1-100 cycle sequence`
+**Timeline:** 12-16 cycles per specialist per day
 **Target:** Fully functional landing page template with customizable sections
 **Source File:** `web/src/pages/page.astro`
 
 ---
 
-## PHASE 1: FOUNDATION & ARCHITECTURE (Infer 1-10)
+## PHASE 1: FOUNDATION & ARCHITECTURE (Cycle 1-10)
 
 **Purpose:** Define landing page template requirements, customization options, content structure
 
-### Infer 1: Define Landing Page Features
+### Cycle 1: Define Landing Page Features
 
 - [ ] **Core Sections:**
   - [ ] Hero section with headline, subheadline, CTA
@@ -64,7 +64,7 @@ ai_context: |
   - [ ] SEO optimization
   - [ ] Lighthouse 95+ score
 
-### Infer 2: Map Landing Page to 6-Dimension Ontology
+### Cycle 2: Map Landing Page to 6-Dimension Ontology
 
 - [ ] **Groups:** Creator's brand/organization
 - [ ] **People:**
@@ -90,7 +90,7 @@ ai_context: |
   - [ ] testimonial_added, feature_updated
 - [ ] **Knowledge:** Landing page templates, conversion best practices, design patterns
 
-### Infer 3: Design Template Structure
+### Cycle 3: Design Template Structure
 
 - [ ] **Page Configuration:**
   ```
@@ -148,7 +148,7 @@ ai_context: |
   }
   ```
 
-### Infer 4: Design UI/UX Pattern
+### Cycle 4: Design UI/UX Pattern
 
 - [ ] **Layout:**
   - [ ] Full-width hero with centered content
@@ -179,11 +179,11 @@ ai_context: |
 
 ---
 
-## PHASE 2: BACKEND SCHEMA & SERVICES (Infer 11-20)
+## PHASE 2: BACKEND SCHEMA & SERVICES (Cycle 11-20)
 
 **Purpose:** Define data model, create Convex schema, implement services
 
-### Infer 5: Create Convex Schema
+### Cycle 5: Create Convex Schema
 
 - [ ] **Landing Page Table:**
   - [ ] \_id, creatorId, title, slug, description
@@ -201,7 +201,7 @@ ai_context: |
   - [ ] Unique: slug per creator
   - [ ] Section validation (correct types)
 
-### Infer 6: Implement Landing Page Queries
+### Cycle 6: Implement Landing Page Queries
 
 - [ ] **Query: listPages**
   - [ ] Args: creatorId, limit, offset
@@ -220,7 +220,7 @@ ai_context: |
   - [ ] Returns: views, conversions, submits
   - [ ] Time range support
 
-### Infer 7: Implement Landing Page Mutations
+### Cycle 7: Implement Landing Page Mutations
 
 - [ ] **Mutation: createPage**
   - [ ] Args: creatorId, title, sections
@@ -249,7 +249,7 @@ ai_context: |
   - [ ] Send confirmation email
   - [ ] Log conversion event
 
-### Infer 8: Create Landing Page Services
+### Cycle 8: Create Landing Page Services
 
 - [ ] **PageService:**
   - [ ] validatePageData() - check sections, required fields
@@ -268,11 +268,11 @@ ai_context: |
 
 ---
 
-## PHASE 3: FRONTEND PAGES & COMPONENTS (Infer 21-30)
+## PHASE 3: FRONTEND PAGES & COMPONENTS (Cycle 21-30)
 
 **Purpose:** Build reusable components, create template pages, implement interactions
 
-### Infer 9: Create Landing Page Components
+### Cycle 9: Create Landing Page Components
 
 - [ ] **HeroSection component**
   - [ ] Props: headline, subheadline, cta, image/video
@@ -310,7 +310,7 @@ ai_context: |
   - [ ] Success/error states
   - [ ] Loading state during submit
 
-### Infer 10: Create Landing Page Template Page
+### Cycle 10: Create Landing Page Template Page
 
 - [ ] **pages/page.astro:**
   - [ ] Load page data by slug
@@ -334,11 +334,11 @@ ai_context: |
 
 ---
 
-## PHASE 4: INTEGRATION & CONNECTIONS (Infer 31-40)
+## PHASE 4: INTEGRATION & CONNECTIONS (Cycle 31-40)
 
 **Purpose:** Connect to backend, implement data flow, handle authentication
 
-### Infer 11: Connect Frontend to Backend
+### Cycle 11: Connect Frontend to Backend
 
 - [ ] **usePageData hook:**
   - [ ] Fetch page by slug
@@ -356,7 +356,7 @@ ai_context: |
   - [ ] Show conversion rate
   - [ ] Track user actions
 
-### Infer 12: Implement Creator Dashboard
+### Cycle 12: Implement Creator Dashboard
 
 - [ ] **pages/dashboard/pages.astro:**
   - [ ] List creator's landing pages
@@ -374,11 +374,11 @@ ai_context: |
 
 ---
 
-## PHASE 5: AUTHENTICATION & AUTHORIZATION (Infer 41-50)
+## PHASE 5: AUTHENTICATION & AUTHORIZATION (Cycle 41-50)
 
 **Purpose:** Secure pages, implement access control, protect forms
 
-### Infer 13: Implement Access Control
+### Cycle 13: Implement Access Control
 
 - [ ] **Page Publishing:**
   - [ ] Creator can edit own pages
@@ -397,11 +397,11 @@ ai_context: |
 
 ---
 
-## PHASE 6: KNOWLEDGE & RAG (Infer 51-60)
+## PHASE 6: KNOWLEDGE & RAG (Cycle 51-60)
 
 **Purpose:** Store best practices, enable AI recommendations
 
-### Infer 14: Create Landing Page Knowledge Base
+### Cycle 14: Create Landing Page Knowledge Base
 
 - [ ] **Template Patterns:**
   - [ ] SaaS landing pages
@@ -429,11 +429,11 @@ ai_context: |
 
 ---
 
-## PHASE 7: QUALITY & TESTING (Infer 61-70)
+## PHASE 7: QUALITY & TESTING (Cycle 61-70)
 
 **Purpose:** Write tests, validate functionality, ensure reliability
 
-### Infer 15: Create Landing Page Tests
+### Cycle 15: Create Landing Page Tests
 
 - [ ] **Unit Tests:**
   - [ ] HeroSection component
@@ -453,11 +453,11 @@ ai_context: |
 
 ---
 
-## PHASE 8: DESIGN & WIREFRAMES (Infer 71-80)
+## PHASE 8: DESIGN & WIREFRAMES (Cycle 71-80)
 
 **Purpose:** Finalize UI/UX, create design system, ensure accessibility
 
-### Infer 16: Finalize Landing Page Design
+### Cycle 16: Finalize Landing Page Design
 
 - [ ] **Component Variants:**
   - [ ] Hero: image, video, gradient backgrounds
@@ -484,11 +484,11 @@ ai_context: |
 
 ---
 
-## PHASE 9: PERFORMANCE & OPTIMIZATION (Infer 81-90)
+## PHASE 9: PERFORMANCE & OPTIMIZATION (Cycle 81-90)
 
 **Purpose:** Optimize speed, improve Core Web Vitals, ensure scalability
 
-### Infer 17: Optimize Landing Page Performance
+### Cycle 17: Optimize Landing Page Performance
 
 - [ ] **Image Optimization:**
   - [ ] Convert to WebP/AVIF formats
@@ -515,11 +515,11 @@ ai_context: |
 
 ---
 
-## PHASE 10: DEPLOYMENT & DOCUMENTATION (Infer 91-100)
+## PHASE 10: DEPLOYMENT & DOCUMENTATION (Cycle 91-100)
 
 **Purpose:** Ship to production, document features, enable end-users
 
-### Infer 18: Deploy and Document Landing Page
+### Cycle 18: Deploy and Document Landing Page
 
 - [ ] **Production Deployment:**
   - [ ] Build for production
@@ -540,7 +540,7 @@ ai_context: |
   - [ ] Plan improvements
   - [ ] Schedule feature releases
 
-### Infer 19: Create Landing Page Examples
+### Cycle 19: Create Landing Page Examples
 
 - [ ] **Template Examples:**
   - [ ] SaaS product launch
@@ -555,7 +555,7 @@ ai_context: |
   - [ ] Icon sets
   - [ ] Color palettes
 
-### Infer 20: Plan Future Enhancements
+### Cycle 20: Plan Future Enhancements
 
 - [ ] **Advanced Features:**
   - [ ] A/B testing
@@ -595,12 +595,12 @@ ai_context: |
 
 ## Next Steps
 
-1. **Infer 1-5:** Design and validate template structure
-2. **Infer 6-10:** Implement backend schema and queries
-3. **Infer 11-20:** Build frontend components and pages
-4. **Infer 21-30:** Integrate with backend and add features
-5. **Infer 31-50:** Security, authentication, access control
-6. **Infer 51-70:** Testing and quality assurance
-7. **Infer 71-80:** Design refinement and accessibility
-8. **Infer 81-90:** Performance optimization
-9. **Infer 91-100:** Deployment and documentation
+1. **Cycle 1-5:** Design and validate template structure
+2. **Cycle 6-10:** Implement backend schema and queries
+3. **Cycle 11-20:** Build frontend components and pages
+4. **Cycle 21-30:** Integrate with backend and add features
+5. **Cycle 31-50:** Security, authentication, access control
+6. **Cycle 51-70:** Testing and quality assurance
+7. **Cycle 71-80:** Design refinement and accessibility
+8. **Cycle 81-90:** Performance optimization
+9. **Cycle 91-100:** Deployment and documentation

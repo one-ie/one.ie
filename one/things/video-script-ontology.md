@@ -134,34 +134,34 @@ Traditional approach: "I need to understand this entire feature."
 - 45 minutes to onboard
 - One mistake costs 8 hours to debug
 
-Ontology approach: "I need to implement one inference pass."
+Ontology approach: "I need to implement one cycle pass."
 
 - 3,000 tokens of context
 - 5 minutes to understand
 - Errors are isolated to one dimension
 
-**We measured this:** Context reduction from 150k → 3k tokens per inference. That's **50x improvement**.
+**We measured this:** Context reduction from 150k → 3k tokens per cycle. That's **50x improvement**.
 
-### Benefit 3: Inference-Based Planning
+### Benefit 3: Cycle-Based Planning
 
-Stop estimating in days. Estimate in **inference passes**.
+Stop estimating in days. Estimate in **cycle passes**.
 
 ```
-Infer 1-10:    Foundation (understand the problem)
-Infer 11-20:   Backend (schema & services)
-Infer 21-30:   Frontend (UI & components)
-Infer 31-40:   Integration (external systems)
-Infer 41-50:   Auth (security & permissions)
+Cycle 1-10:    Foundation (understand the problem)
+Cycle 11-20:   Backend (schema & services)
+Cycle 21-30:   Frontend (UI & components)
+Cycle 31-40:   Integration (external systems)
+Cycle 41-50:   Auth (security & permissions)
 ...
-Infer 91-100:  Deployment (production & docs)
+Cycle 91-100:  Deployment (production & docs)
 ```
 
-Why inference? Because:
+Why cycle? Because:
 
-- **It's predictable.** Each inference is a concrete step (not "about 3 days").
-- **It's parallelizable.** Infer 11-20 (Backend) and Infer 21-30 (Frontend) run concurrently.
-- **It's error-isolated.** A bug in Infer 25 doesn't block Infer 50.
-- **It's learnable.** Each inference captures lessons that improve the next.
+- **It's predictable.** Each cycle is a concrete step (not "about 3 days").
+- **It's parallelizable.** Cycle 11-20 (Backend) and Cycle 21-30 (Frontend) run concurrently.
+- **It's error-isolated.** A bug in Cycle 25 doesn't block Cycle 50.
+- **It's learnable.** Each cycle captures lessons that improve the next.
 
 **Measured result:** 115 seconds → 20 seconds per feature average. **5.75x faster**.
 
@@ -216,7 +216,7 @@ Result: You get RAG (Retrieval-Augmented Generation) for free. Your AI features 
 
 **With ontology:**
 
-- Onboard creators: 3 days (10 inferences)
+- Onboard creators: 3 days (10 cycles)
 - Add team features: 2 days (understand Groups)
 - Add course marketplace: 3 days (new Thing type)
 - Add community features: 2 days (different Group structure)
@@ -277,7 +277,7 @@ But you need the **shape** of the ontology from day one.
 - Ship 5x faster
 - Never refactor the core schema
 - 50x less context overhead
-- Predictable inference-based planning
+- Predictable cycle-based planning
 - Scale infinitely without schema changes
 
 **That's not incremental improvement. That's a different category.**
@@ -290,7 +290,7 @@ But you need the **shape** of the ontology from day one.
 
 **Path 1:** Build organically. Refactor constantly. Estimate in days. Pray scaling works.
 
-**Path 2:** Start with the ontology. Clear thinking. Predictable inference-based planning. Scale without friction.
+**Path 2:** Start with the ontology. Clear thinking. Predictable cycle-based planning. Scale without friction.
 
 The question isn't _whether_ you'll have a data model. You always will.
 
@@ -307,9 +307,9 @@ You can too."
 ## Key Soundbites (for social/quotes)
 
 - "The ontology isn't theory. It's the shape of reality. Build against it."
-- "Estimation in days is guessing. Estimation in inferences is predicting."
+- "Estimation in days is guessing. Estimation in cycles is predicting."
 - "Scale from friend circles to governments without changing your schema."
-- "Context reduction: 150k tokens → 3k tokens per inference."
+- "Context reduction: 150k tokens → 3k tokens per cycle."
 - "The question isn't if you'll have a data model. It's: Will you choose it deliberately?"
 - "5x faster shipping. 0 refactoring on scale. Infinite audit trails."
 - "Every successful platform solves the same problem. We solved it once, universally."

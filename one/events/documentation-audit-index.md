@@ -224,7 +224,7 @@ ai_context: |
 ### 4. Acceptance Criteria Template
 **Purpose:** Define what "done" means before implementation starts
 
-**Use:** Add to Phase 1 Infer 10 of every TODO
+**Use:** Add to Phase 1 Cycle 10 of every TODO
 
 **Includes:**
 - Functional requirements
@@ -321,7 +321,7 @@ ai_context: |
 3. Complete incomplete files (40-50 hours, Week 2-3)
 4. Update master plan with complete TODOs
 
-**Outcome:** All critical TODOs complete, full 100-inference sequences
+**Outcome:** All critical TODOs complete, full 100-cycle sequences
 
 ---
 
@@ -452,7 +452,7 @@ Month 2:   Maintenance & continuous improvement
 
 You'll know the audit was successful when:
 
-1. ✅ All 25 TODO files have complete 100-inference sequences
+1. ✅ All 25 TODO files have complete 100-cycle sequences
 2. ✅ All TODO files include knowledge artifacts section
 3. ✅ All code examples show file paths
 4. ✅ All cross-references are bidirectional

@@ -58,7 +58,7 @@ ONE Platform is a **6-dimension AI-native operating system** for building infini
 - **Tests:** 50+ authentication tests + additional coverage
 - **Documentation:** 41+ files organized in 8 layers
 - **Plans:** 66 detailed plan files
-- **Inference Sequence:** 100 inference passes (all complete ✅)
+- **Cycle Sequence:** 100 cycle passes (all complete ✅)
 
 ### Scale
 
@@ -78,7 +78,7 @@ ONE Platform is a **6-dimension AI-native operating system** for building infini
 3. [Architecture Layers](#architecture-layers)
 4. [The 6-Dimension Ontology](#the-6-dimension-ontology)
 5. [Development Workflow](#development-workflow)
-6. [100-Inference Sequence](#100-inference-sequence)
+6. [100-Cycle Sequence](#100-cycle-sequence)
 7. [Technology Stack](#technology-stack)
 8. [Common Development Tasks](#common-development-tasks)
 9. [Documentation Quick Reference](#documentation-quick-reference)
@@ -123,25 +123,25 @@ If you know...           Work on...
 - DevOps           →    Deployment & CI/CD
 ```
 
-**Step 4: Start With Inference 1**
+**Step 4: Start With Cycle 1**
 
 ```bash
-# Use the inference-based workflow:
-/todo              # View current inference
+# Use the cycle-based workflow:
+/todo              # View current cycle
 /done              # Mark complete and advance
 /next              # Skip to next (if not applicable)
 ```
 
 ### For AI Agents Joining the Team
 
-**Your Role:** Execute inferences autonomously
+**Your Role:** Execute cycles autonomously
 
 ```
 What you do:
-1. Read the current inference context
-2. Execute the inference (code, tests, docs)
+1. Read the current cycle context
+2. Execute the cycle (code, tests, docs)
 3. Mark complete with /done
-4. Advance to next inference
+4. Advance to next cycle
 5. Repeat for entire 100-sequence
 
 Never:
@@ -188,28 +188,28 @@ query("things").withIndex("group_type", (q) =>
 - Hierarchical nesting (parent → child access control)
 - Zero refactoring when scaling
 
-### 3. Inference-Based Planning
+### 3. Cycle-Based Planning
 
-Instead of "Week 1-4", we use "Infer 1-100":
+Instead of "Week 1-4", we use "Cycle 1-100":
 
 ```
-Infer 1-10:    Foundation (plan, validate, map)
-Infer 11-20:   Backend (schema, services)
-Infer 21-30:   Frontend (pages, components)
-Infer 31-40:   Integration (external systems)
-Infer 41-50:   Auth & Security
-Infer 51-60:   Knowledge & RAG
-Infer 61-70:   Testing & Quality
-Infer 71-80:   Design & UX
-Infer 81-90:   Performance & Optimization
-Infer 91-100:  Deployment & Documentation
+Cycle 1-10:    Foundation (plan, validate, map)
+Cycle 11-20:   Backend (schema, services)
+Cycle 21-30:   Frontend (pages, components)
+Cycle 31-40:   Integration (external systems)
+Cycle 41-50:   Auth & Security
+Cycle 51-60:   Knowledge & RAG
+Cycle 61-70:   Testing & Quality
+Cycle 71-80:   Design & UX
+Cycle 81-90:   Performance & Optimization
+Cycle 91-100:  Deployment & Documentation
 ```
 
 **Why?**
 
 - More accurate than time estimates
-- Context-light (3k tokens per inference)
-- Parallel-friendly (independent inferences run together)
+- Context-light (3k tokens per cycle)
+- Parallel-friendly (independent cycles run together)
 - Lessons captured after each step
 
 ### 4. Effect.ts for Business Logic
@@ -565,11 +565,11 @@ Create Effect.ts services with:
 
 ---
 
-## 🔄 100-Inference Sequence
+## 🔄 100-Cycle Sequence
 
-Every feature follows this proven 100-inference sequence:
+Every feature follows this proven 100-cycle sequence:
 
-### Infer 1-10: Foundation & Setup
+### Cycle 1-10: Foundation & Setup
 
 - [ ] Validate feature with product team
 - [ ] Map to 6-dimension ontology
@@ -582,7 +582,7 @@ Every feature follows this proven 100-inference sequence:
 - [ ] Identify risk areas
 - [ ] Get stakeholder approval
 
-### Infer 11-20: Backend Schema & Services
+### Cycle 11-20: Backend Schema & Services
 
 - [ ] Update schema.ts with new tables/fields
 - [ ] Create schema indexes
@@ -595,7 +595,7 @@ Every feature follows this proven 100-inference sequence:
 - [ ] Write service tests
 - [ ] Document service API
 
-### Infer 21-30: Frontend Pages & Components
+### Cycle 21-30: Frontend Pages & Components
 
 - [ ] Create page layout (Astro)
 - [ ] Build form components (React + shadcn/ui)
@@ -608,7 +608,7 @@ Every feature follows this proven 100-inference sequence:
 - [ ] Create preview/preview
 - [ ] Write component tests
 
-### Infer 31-40: Integration & Connections
+### Cycle 31-40: Integration & Connections
 
 - [ ] Connect frontend to services
 - [ ] Implement data fetching (useQuery)
@@ -621,7 +621,7 @@ Every feature follows this proven 100-inference sequence:
 - [ ] Test with WordPress provider
 - [ ] Test with Supabase provider
 
-### Infer 41-50: Authentication & Authorization
+### Cycle 41-50: Authentication & Authorization
 
 - [ ] Define roles for feature
 - [ ] Implement permission checks
@@ -634,7 +634,7 @@ Every feature follows this proven 100-inference sequence:
 - [ ] Test 6 auth methods
 - [ ] Document auth requirements
 
-### Infer 51-60: Knowledge & RAG
+### Cycle 51-60: Knowledge & RAG
 
 - [ ] Design knowledge chunks
 - [ ] Create embedding strategy
@@ -647,7 +647,7 @@ Every feature follows this proven 100-inference sequence:
 - [ ] Test with knowledge
 - [ ] Document knowledge strategy
 
-### Infer 61-70: Quality & Testing
+### Cycle 61-70: Quality & Testing
 
 - [ ] Write unit tests (services)
 - [ ] Write integration tests (end-to-end)
@@ -660,7 +660,7 @@ Every feature follows this proven 100-inference sequence:
 - [ ] Run linting
 - [ ] Get test coverage report
 
-### Infer 71-80: Design & Wireframes
+### Cycle 71-80: Design & Wireframes
 
 - [ ] Review design consistency
 - [ ] Check WCAG accessibility
@@ -673,7 +673,7 @@ Every feature follows this proven 100-inference sequence:
 - [ ] Create design tokens
 - [ ] Document component library
 
-### Infer 81-90: Performance & Optimization
+### Cycle 81-90: Performance & Optimization
 
 - [ ] Audit bundle size
 - [ ] Optimize images
@@ -686,7 +686,7 @@ Every feature follows this proven 100-inference sequence:
 - [ ] Run Lighthouse audit
 - [ ] Document performance targets
 
-### Infer 91-100: Deployment & Documentation
+### Cycle 91-100: Deployment & Documentation
 
 - [ ] Write user documentation
 - [ ] Create API documentation
@@ -699,7 +699,7 @@ Every feature follows this proven 100-inference sequence:
 - [ ] Run smoke tests
 - [ ] Deploy to production
 
-**Current Status:** ✅ All 100 inferences complete for platform foundation. Ready for feature development using the same sequence.
+**Current Status:** ✅ All 100 cycles complete for platform foundation. Ready for feature development using the same sequence.
 
 ---
 
@@ -990,7 +990,7 @@ Misc              (3)    - Big plan, repos, sync
 - [x] Effect.ts services architecture
 - [x] Multi-tenant isolation (groupId scoping)
 - [x] Better Auth with 6 methods
-- [x] All 100 inferences completed
+- [x] All 100 cycles completed
 - [x] 50+ tests passing
 
 ### Phase 2: Feature Development (Current)
@@ -1047,7 +1047,7 @@ Misc              (3)    - Big plan, repos, sync
 5. Build frontend
 6. Test & document
 
-Use the 100-inference sequence for tracking.
+Use the 100-cycle sequence for tracking.
 
 ### Q: What if my feature doesn't fit the ontology?
 
@@ -1077,13 +1077,13 @@ const provider = new SupabaseProvider(...)
 
 All services work with any backend implementing the DataProvider interface.
 
-### Q: Why use inference-based planning instead of day estimates?
+### Q: Why use cycle-based planning instead of day estimates?
 
 **A:** Because:
 
 - Time estimates are wildly inaccurate
 - Context resets between days
-- Each inference is concrete and measurable
+- Each cycle is concrete and measurable
 - Parallel execution is easier to track
 - Lessons are captured systematically
 
@@ -1145,11 +1145,11 @@ runTests(wpProvider)
 
 ### Q: What's the development speed?
 
-**A:** Using inference-based planning:
+**A:** Using cycle-based planning:
 
-- Average feature: 20s per inference
-- 100 inferences = 33 minutes per feature
-- Foundation platform: 4 weeks (100 inferences complete ✅)
+- Average feature: 20s per cycle
+- 100 cycles = 33 minutes per feature
+- Foundation platform: 4 weeks (100 cycles complete ✅)
 - New features: 2-4 hours following sequence
 
 ### Q: How do I handle errors?
@@ -1178,9 +1178,9 @@ const result =
 
 **A:**
 
-1. Claim an inference (use `/todo`)
-2. Read the inference context
-3. Execute the inference
+1. Claim an cycle (use `/todo`)
+2. Read the cycle context
+3. Execute the cycle
 4. Run tests and type checking
 5. Mark complete with `/done`
 6. Advance to next with `/next`
@@ -1221,13 +1221,13 @@ const result =
 
 ### For Your Next Task:
 
-1. **Check current inference:**
+1. **Check current cycle:**
 
    ```bash
    /todo
    ```
 
-2. **Read inference context** (if first time)
+2. **Read cycle context** (if first time)
 
    ```bash
    /now

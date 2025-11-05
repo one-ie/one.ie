@@ -81,8 +81,8 @@ Execute on task events.
 - `edit` - After editing file
 - `glob` - After globbing files
 - `grep` - After grepping
-- `todo` - Load current inference context
-- `done` - Mark inference complete
+- `todo` - Load current cycle context
+- `done` - Mark cycle complete
 - `submit` - When user submits prompt
 - `error` - When operation fails
 

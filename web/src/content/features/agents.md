@@ -77,7 +77,7 @@ Specialized AI agents that work together to build the ONE Platform. Each agent h
 
 ### Agent Director
 - Validates feature ideas
-- Plans 100-inference sequences
+- Plans 100-cycle sequences
 - Assigns work to specialists
 - Orchestrates execution
 

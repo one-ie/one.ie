@@ -31,7 +31,7 @@ import { useEffectRunner } from '../useEffectRunner';
 import { useIsProviderAvailable } from './useProvider';
 
 /**
- * Event types (67+ types including inference and blockchain)
+ * Event types (67+ types including cycle and blockchain)
  */
 export type EventType =
   // Core entity events
@@ -64,11 +64,11 @@ export type EventType =
   | 'payment_received'
   | 'payment_failed'
   | 'refund_issued'
-  // Inference events
-  | 'inference_request'
-  | 'inference_completed'
-  | 'inference_failed'
-  | 'inference_quota_exceeded'
+  // Cycle events
+  | 'cycle_request'
+  | 'cycle_completed'
+  | 'cycle_failed'
+  | 'cycle_quota_exceeded'
   // Blockchain events
   | 'nft_minted'
   | 'nft_transferred'

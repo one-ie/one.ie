@@ -99,7 +99,7 @@ For details on the platform owner Anthony O'Connell, see **[Anthony O'Connell â†
     // Smart contract ownership
     contractOwnership: {
       sui: {
-        inferencePayment: "[package ID]",
+        cyclePayment: "[package ID]",
         tokenContract: "[package ID]",
         nftContract: "[package ID]",
         subscription: "[package ID]",

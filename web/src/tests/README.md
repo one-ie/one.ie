@@ -121,7 +121,7 @@ All relationships between entities.
 ### 5. Events
 All actions and state changes over time.
 
-**67+ Event Types** including inference and blockchain events.
+**67+ Event Types** including cycle and blockchain events.
 
 **Test Coverage:**
 - Event logging and retrieval

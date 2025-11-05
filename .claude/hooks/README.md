@@ -56,15 +56,15 @@ dimension=$(get_inference_dimension 15)
 ```
 
 **Dimension Mapping:**
-- Infer 1-10: `foundation` (setup and validation)
-- Infer 11-30: `things` (backend schema & frontend components)
-- Infer 31-40: `connections` (integration & relationships)
-- Infer 41-50: `people` (authentication & authorization)
-- Infer 51-60: `knowledge` (RAG & embeddings)
-- Infer 61-70: `quality` (testing & validation)
-- Infer 71-80: `design` (wireframes & UI)
-- Infer 81-90: `events` (performance & optimization)
-- Infer 91-100: `deployment` (deployment & documentation)
+- Cycle 1-10: `foundation` (setup and validation)
+- Cycle 11-30: `things` (backend schema & frontend components)
+- Cycle 31-40: `connections` (integration & relationships)
+- Cycle 41-50: `people` (authentication & authorization)
+- Cycle 51-60: `knowledge` (RAG & embeddings)
+- Cycle 61-70: `quality` (testing & validation)
+- Cycle 71-80: `design` (wireframes & UI)
+- Cycle 81-90: `events` (performance & optimization)
+- Cycle 91-100: `deployment` (deployment & documentation)
 
 #### get_specialist_agent(hook_name)
 Detects specialist agent from hook name patterns.
@@ -91,7 +91,7 @@ Logs a message with ontology context.
 
 ```bash
 log_message "INFO" "Processing user entities"
-# Output: [2025-11-03 21:32:23] [INFO] [Infer 15] [things] Processing user entities
+# Output: [2025-11-03 21:32:23] [INFO] [Cycle 15] [things] Processing user entities
 ```
 
 #### log_hook_execution(hook_name, command, start_time, end_time, exit_code)
@@ -107,7 +107,7 @@ log_hook_execution "backend-mutation" "test" "$start" "$end" 0
 **Output:**
 ```
 [2025-11-03 21:32:23] [EVENT] hook_executed | hook=backend-mutation | inference=15 | dimension=things | agent=agent-backend | duration=134ms | exit_code=0 | ontology_version=1.0.0
-[2025-11-03 21:32:23] [INFO] [Infer 15] [things] Hook completed successfully: backend-mutation
+[2025-11-03 21:32:23] [INFO] [Cycle 15] [things] Hook completed successfully: backend-mutation
 ```
 
 #### get_time_ms()
@@ -122,12 +122,12 @@ start=$(get_time_ms)
 
 ### Standard Log Entry
 ```
-[timestamp] [level] [Infer N] [dimension] message
+[timestamp] [level] [Cycle N] [dimension] message
 ```
 
 Example:
 ```
-[2025-11-03 21:32:23] [INFO] [Infer 15] [things] Hook completed successfully: backend-mutation
+[2025-11-03 21:32:23] [INFO] [Cycle 15] [things] Hook completed successfully: backend-mutation
 ```
 
 ### Event Log Entry

@@ -229,11 +229,11 @@ export const EVENT_TYPES = [
   "report_generated",
 
   // INFERENCE EVENTS (7)
-  "inference_request",
-  "inference_completed",
-  "inference_failed",
-  "inference_quota_exceeded",
-  "inference_revenue_collected",
+  "cycle_request",
+  "cycle_completed",
+  "cycle_failed",
+  "cycle_quota_exceeded",
+  "cycle_revenue_collected",
   "org_revenue_generated",
   "revenue_share_distributed",
 
@@ -301,7 +301,7 @@ export const DEFAULT_LIMITS: Record<
     users: number;
     storage: number; // GB
     apiCalls: number;
-    inference: number;
+    cycle: number;
     courses: number;
     clones: number;
   }
@@ -310,7 +310,7 @@ export const DEFAULT_LIMITS: Record<
     users: 3,
     storage: 5,
     apiCalls: 10000,
-    inference: 1000,
+    cycle: 1000,
     courses: 5,
     clones: 1,
   },
@@ -318,7 +318,7 @@ export const DEFAULT_LIMITS: Record<
     users: 25,
     storage: 100,
     apiCalls: 100000,
-    inference: 10000,
+    cycle: 10000,
     courses: 50,
     clones: 5,
   },
@@ -326,7 +326,7 @@ export const DEFAULT_LIMITS: Record<
     users: 1000,
     storage: 1000,
     apiCalls: 1000000,
-    inference: 100000,
+    cycle: 100000,
     courses: 1000,
     clones: 50,
   },

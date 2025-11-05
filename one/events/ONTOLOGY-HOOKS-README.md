@@ -2,7 +2,7 @@
 title: Ontology Hooks Readme
 dimension: events
 category: ONTOLOGY-HOOKS-README.md
-tags: 6-dimensions, backend, frontend, groups, inference, ontology
+tags: 6-dimensions, backend, frontend, groups, cycle, ontology
 related_dimensions: groups, knowledge, people, things
 scope: global
 created: 2025-11-03
@@ -27,7 +27,7 @@ This module provides a complete abstraction layer for ontology operations, enabl
 - **Backend independence**: Works with any provider (Convex, Notion, WordPress, etc.)
 - **Feature flags**: Selective feature enablement
 - **Graceful degradation**: Frontend-only fallback mode
-- **Type safety**: Full TypeScript inference
+- **Type safety**: Full TypeScript cycle
 - **Real-time data**: Live subscriptions via hooks
 - **Server-side rendering**: Astro integration with fallbacks
 
@@ -375,7 +375,7 @@ interface FeatureFlags {
   knowledge: boolean;      // Vector search/RAG
   connections: boolean;    // Relationships
   events: boolean;         // Activity logging
-  inference: boolean;      // AI/LLM integration
+  cycle: boolean;      // AI/LLM integration
   blockchain: boolean;     // NFTs/smart contracts
   payments: boolean;       // Payment processing
   marketplace: boolean;    // Buy/sell features

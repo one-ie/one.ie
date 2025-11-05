@@ -75,14 +75,14 @@ Transform the ONE Platform from a working foundation into an **unbreakable, self
 
 ## 🏗️ Architecture: Task Organization
 
-Each 20-task block (Infer 1-100) focuses on one strengthening dimension:
+Each 20-task block (Cycle 1-100) focuses on one strengthening dimension:
 
 ```
-Infer 1-20:   Foundation Strengthening
-Infer 21-40:  Code Quality & Generation
-Infer 41-60:  Testing & Validation
-Infer 61-80:  Performance & Optimization
-Infer 81-100: Automation & Intelligence
+Cycle 1-20:   Foundation Strengthening
+Cycle 21-40:  Code Quality & Generation
+Cycle 41-60:  Testing & Validation
+Cycle 61-80:  Performance & Optimization
+Cycle 81-100: Automation & Intelligence
 ```
 
 Within each block, tasks are organized to **enable parallel execution**:
@@ -109,9 +109,9 @@ Group A (4 parallel) → Group B (4 parallel) → Sync Point → Group C (12 rem
 │  FRONTEND  │  │  BACKEND      │ │ QUALITY  │ │ DOCUMENTER   │
 │  SPECIALIST│  │  SPECIALIST   │ │  AGENT   │ │              │
 │            │  │               │ │          │ │              │
-│ • Infer 21 │  │ • Infer 11    │ │ • Infer  │ │ • Infer 32   │
-│ • Infer 26 │  │ • Infer 15    │ │  41-60   │ │ • Infer 95   │
-│ • Infer 29 │  │ • Infer 18    │ │          │ │              │
+│ • Cycle 21 │  │ • Cycle 11    │ │ • Cycle  │ │ • Cycle 32   │
+│ • Cycle 26 │  │ • Cycle 15    │ │  41-60   │ │ • Cycle 95   │
+│ • Cycle 29 │  │ • Cycle 18    │ │          │ │              │
 └────────────┘  └───────────────┘ └──────────┘ └──────────────┘
 
 Task Distribution:
@@ -139,13 +139,13 @@ Task Distribution:
 
 ## 📋 100 TASKS IN DETAIL
 
-### BLOCK 1: Foundation Strengthening (Infer 1-20)
+### BLOCK 1: Foundation Strengthening (Cycle 1-20)
 
 **Goal:** Make core systems bullet-proof, document thoroughly, establish patterns
 
 #### Round 1: Core Infrastructure (4 parallel)
 
-**Infer 1: Establish Error Taxonomy** (5min)
+**Cycle 1: Establish Error Taxonomy** (5min)
 
 ```
 WHAT:  Define all possible errors in the system (tagged unions)
@@ -160,7 +160,7 @@ PARALLEL: YES (independent work)
 IMPACT: Code generation will know error types for better handling
 ```
 
-**Infer 2: Type Safety Audit** (5min)
+**Cycle 2: Type Safety Audit** (5min)
 
 ```
 WHAT:  Find and eliminate all remaining `any` types
@@ -172,10 +172,10 @@ HOW:
   4. Run type checker
 AGENT: agent-quality
 PARALLEL: YES (independent replacements)
-IMPACT: Better type inference for code generation
+IMPACT: Better type cycle for code generation
 ```
 
-**Infer 3: Schema Completeness Check** (5min)
+**Cycle 3: Schema Completeness Check** (5min)
 
 ```
 WHAT:  Validate schema against 6-dimension ontology
@@ -190,7 +190,7 @@ PARALLEL: YES (validation is parallel)
 IMPACT: Confidence that database structure is complete
 ```
 
-**Infer 4: Service Layer Architecture** (5min)
+**Cycle 4: Service Layer Architecture** (5min)
 
 ```
 WHAT:  Document all Effect.ts services and their relationships
@@ -207,7 +207,7 @@ IMPACT: Code generation knows how to compose services
 
 #### Round 2: Testing Infrastructure (4 parallel)
 
-**Infer 5: Auth Test Matrix** (8min)
+**Cycle 5: Auth Test Matrix** (8min)
 
 ```
 WHAT:  Create comprehensive auth test matrix
@@ -222,7 +222,7 @@ PARALLEL: YES (each auth method independent)
 IMPACT: 100+ new test cases, auth reliability proven
 ```
 
-**Infer 6: Multi-Tenant Isolation Tests** (8min)
+**Cycle 6: Multi-Tenant Isolation Tests** (8min)
 
 ```
 WHAT:  Comprehensive tests for groupId-based isolation
@@ -237,7 +237,7 @@ PARALLEL: YES (can test different tables in parallel)
 IMPACT: Proof that isolation is perfect
 ```
 
-**Infer 7: Effect.ts Error Handling Tests** (8min)
+**Cycle 7: Effect.ts Error Handling Tests** (8min)
 
 ```
 WHAT:  Test that all Effect.ts services handle errors correctly
@@ -252,7 +252,7 @@ PARALLEL: YES (services can be tested in parallel)
 IMPACT: No more unhandled exceptions
 ```
 
-**Infer 8: Frontend Component Tests** (8min)
+**Cycle 8: Frontend Component Tests** (8min)
 
 ```
 WHAT:  Create comprehensive component test suite
@@ -269,7 +269,7 @@ IMPACT: 50+ component tests, higher confidence
 
 #### Round 3: Documentation Alignment (4 parallel)
 
-**Infer 9: API Documentation Generation** (5min)
+**Cycle 9: API Documentation Generation** (5min)
 
 ```
 WHAT:  Auto-generate API docs from Convex functions
@@ -284,7 +284,7 @@ PARALLEL: YES (parsing and generation is parallel)
 IMPACT: Always-accurate API docs, no manual updates
 ```
 
-**Infer 10: Code Example Library** (10min)
+**Cycle 10: Code Example Library** (10min)
 
 ```
 WHAT:  Create example code for every common task
@@ -299,7 +299,7 @@ PARALLEL: YES (each feature independent)
 IMPACT: Code generation can copy patterns from examples
 ```
 
-**Infer 11: Architecture Decision Log** (5min)
+**Cycle 11: Architecture Decision Log** (5min)
 
 ```
 WHAT:  Document why each architecture decision was made
@@ -314,7 +314,7 @@ PARALLEL: YES (independent documentation)
 IMPACT: New agents understand "why" not just "what"
 ```
 
-**Infer 12: Ontology Completeness Guide** (5min)
+**Cycle 12: Ontology Completeness Guide** (5min)
 
 ```
 WHAT:  Document every entity type, connection type, event type
@@ -331,7 +331,7 @@ IMPACT: Code generation can choose appropriate types
 
 #### Round 4: Quality Baselines (4 parallel)
 
-**Infer 13: TypeScript Strictness Baseline** (10min)
+**Cycle 13: TypeScript Strictness Baseline** (10min)
 
 ```
 WHAT:  Configure TypeScript to maximum strictness
@@ -346,7 +346,7 @@ PARALLEL: YES (compilation, then fixes)
 IMPACT: Stricter types, fewer runtime errors
 ```
 
-**Infer 14: ESLint Configuration Hardening** (8min)
+**Cycle 14: ESLint Configuration Hardening** (8min)
 
 ```
 WHAT:  Add aggressive ESLint rules
@@ -361,7 +361,7 @@ PARALLEL: YES (rules can be added in batches)
 IMPACT: Fewer common mistakes, faster development
 ```
 
-**Infer 15: Performance Baseline Measurement** (10min)
+**Cycle 15: Performance Baseline Measurement** (10min)
 
 ```
 WHAT:  Establish baseline metrics
@@ -376,7 +376,7 @@ PARALLEL: YES (can measure multiple things)
 IMPACT: Benchmark for optimization efforts
 ```
 
-**Infer 16: Test Coverage Baseline** (8min)
+**Cycle 16: Test Coverage Baseline** (8min)
 
 ```
 WHAT:  Measure current test coverage
@@ -393,7 +393,7 @@ IMPACT: Know which areas need more tests
 
 #### Round 5: Integration Points (4 parallel)
 
-**Infer 17: Provider Interface Validation** (8min)
+**Cycle 17: Provider Interface Validation** (8min)
 
 ```
 WHAT:  Ensure DataProvider interface is complete and correct
@@ -408,7 +408,7 @@ PARALLEL: YES (interface validation)
 IMPACT: Any new provider can be implemented correctly
 ```
 
-**Infer 18: Convex Provider Implementation Review** (8min)
+**Cycle 18: Convex Provider Implementation Review** (8min)
 
 ```
 WHAT:  Audit ConvexProvider implementation against DataProvider
@@ -423,7 +423,7 @@ PARALLEL: YES (method-by-method review)
 IMPACT: ConvexProvider is bulletproof
 ```
 
-**Infer 19: Better Auth Integration Validation** (8min)
+**Cycle 19: Better Auth Integration Validation** (8min)
 
 ```
 WHAT:  Verify Better Auth configuration is complete
@@ -438,7 +438,7 @@ PARALLEL: YES (each auth method independent)
 IMPACT: Auth is fully configured, no missing pieces
 ```
 
-**Infer 20: Hook System Validation** (5min)
+**Cycle 20: Hook System Validation** (5min)
 
 ```
 WHAT:  Ensure .claude/hooks/ are working correctly
@@ -455,13 +455,13 @@ IMPACT: Automation is reliable
 
 ---
 
-### BLOCK 2: Code Quality & Generation (Infer 21-40)
+### BLOCK 2: Code Quality & Generation (Cycle 21-40)
 
 **Goal:** Make code generation more accurate, establish templates, improve patterns
 
 #### Round 1: Pattern Library (4 parallel)
 
-**Infer 21: Convex Query Pattern Generator** (10min)
+**Cycle 21: Convex Query Pattern Generator** (10min)
 
 ```
 WHAT:  Create template for every query pattern
@@ -476,7 +476,7 @@ PARALLEL: YES (each pattern independent)
 IMPACT: Code generation queries are consistent and correct
 ```
 
-**Infer 22: Convex Mutation Pattern Generator** (10min)
+**Cycle 22: Convex Mutation Pattern Generator** (10min)
 
 ```
 WHAT:  Create template for every mutation pattern
@@ -491,7 +491,7 @@ PARALLEL: YES (each pattern independent)
 IMPACT: Code generation mutations include proper error handling
 ```
 
-**Infer 23: Effect.ts Service Pattern Templates** (10min)
+**Cycle 23: Effect.ts Service Pattern Templates** (10min)
 
 ```
 WHAT:  Create templates for Effect.ts services
@@ -506,7 +506,7 @@ PARALLEL: YES (each service type independent)
 IMPACT: All new services follow proven pattern
 ```
 
-**Infer 24: React Component Pattern Templates** (10min)
+**Cycle 24: React Component Pattern Templates** (10min)
 
 ```
 WHAT:  Create templates for React components
@@ -524,7 +524,7 @@ IMPACT: Generated components are accessible and consistent
 
 #### Round 2: Testing Patterns (4 parallel)
 
-**Infer 25: Unit Test Pattern Library** (10min)
+**Cycle 25: Unit Test Pattern Library** (10min)
 
 ```
 WHAT:  Create templates for unit tests
@@ -540,7 +540,7 @@ PARALLEL: YES (each test type independent)
 IMPACT: Generated tests follow best practices
 ```
 
-**Infer 26: Integration Test Patterns** (10min)
+**Cycle 26: Integration Test Patterns** (10min)
 
 ```
 WHAT:  Create templates for integration tests
@@ -555,7 +555,7 @@ PARALLEL: YES (each pattern independent)
 IMPACT: Generated integration tests are comprehensive
 ```
 
-**Infer 27: Component Test Patterns** (8min)
+**Cycle 27: Component Test Patterns** (8min)
 
 ```
 WHAT:  Create templates for component tests (React Testing Library)
@@ -570,7 +570,7 @@ PARALLEL: YES (each pattern independent)
 IMPACT: Generated component tests are realistic
 ```
 
-**Infer 28: Error Scenario Test Patterns** (8min)
+**Cycle 28: Error Scenario Test Patterns** (8min)
 
 ```
 WHAT:  Create test patterns for all error scenarios
@@ -587,7 +587,7 @@ IMPACT: Generated tests cover all error paths
 
 #### Round 3: Documentation Patterns (4 parallel)
 
-**Infer 29: API Documentation Template** (8min)
+**Cycle 29: API Documentation Template** (8min)
 
 ```
 WHAT:  Create template for documenting APIs
@@ -602,7 +602,7 @@ PARALLEL: YES (independent)
 IMPACT: Generated API docs are consistent and complete
 ```
 
-**Infer 30: Architecture Pattern Documentation** (8min)
+**Cycle 30: Architecture Pattern Documentation** (8min)
 
 ```
 WHAT:  Create template for documenting architecture decisions
@@ -617,7 +617,7 @@ PARALLEL: YES (independent)
 IMPACT: All architecture decisions are documented consistently
 ```
 
-**Infer 31: Feature Documentation Template** (8min)
+**Cycle 31: Feature Documentation Template** (8min)
 
 ```
 WHAT:  Create template for documenting features
@@ -632,7 +632,7 @@ PARALLEL: YES (independent)
 IMPACT: All features are documented consistently
 ```
 
-**Infer 32: Code Example Template** (8min)
+**Cycle 32: Code Example Template** (8min)
 
 ```
 WHAT:  Create template for code examples
@@ -649,7 +649,7 @@ IMPACT: All code examples follow same pattern
 
 #### Round 4: Code Quality Improvements (4 parallel)
 
-**Infer 33: Common Bug Pattern Detection** (10min)
+**Cycle 33: Common Bug Pattern Detection** (10min)
 
 ```
 WHAT:  Identify and create guards against common bugs
@@ -664,7 +664,7 @@ PARALLEL: YES (pattern research and rule creation)
 IMPACT: Fewer instances of known bugs
 ```
 
-**Infer 34: Dependency Vulnerability Audit** (10min)
+**Cycle 34: Dependency Vulnerability Audit** (10min)
 
 ```
 WHAT:  Check all dependencies for known vulnerabilities
@@ -679,7 +679,7 @@ PARALLEL: YES (can audit multiple packages)
 IMPACT: No known vulnerabilities in dependencies
 ```
 
-**Infer 35: Code Duplication Reduction** (10min)
+**Cycle 35: Code Duplication Reduction** (10min)
 
 ```
 WHAT:  Find and eliminate code duplication
@@ -694,7 +694,7 @@ PARALLEL: YES (can deduplicate independently)
 IMPACT: Codebase is DRY, easier to maintain
 ```
 
-**Infer 36: Complexity Reduction** (10min)
+**Cycle 36: Complexity Reduction** (10min)
 
 ```
 WHAT:  Identify and simplify overly complex code
@@ -711,7 +711,7 @@ IMPACT: Code is easier to understand and maintain
 
 #### Round 5: Type System Enhancements (4 parallel)
 
-**Infer 37: Branded Types Implementation** (8min)
+**Cycle 37: Branded Types Implementation** (8min)
 
 ```
 WHAT:  Use branded types for IDs and important values
@@ -726,7 +726,7 @@ PARALLEL: YES (each type independent)
 IMPACT: Fewer type-related bugs
 ```
 
-**Infer 38: Error Type Completion** (8min)
+**Cycle 38: Error Type Completion** (8min)
 
 ```
 WHAT:  Ensure all errors are properly typed
@@ -741,7 +741,7 @@ PARALLEL: YES (each error type independent)
 IMPACT: All errors can be caught and handled properly
 ```
 
-**Infer 39: Generic Type Constraints** (8min)
+**Cycle 39: Generic Type Constraints** (8min)
 
 ```
 WHAT:  Use type constraints to prevent invalid types
@@ -756,7 +756,7 @@ PARALLEL: YES (independent)
 IMPACT: Type safety is stronger throughout
 ```
 
-**Infer 40: Const Assertion Audit** (8min)
+**Cycle 40: Const Assertion Audit** (8min)
 
 ```
 WHAT:  Use const assertions for literal types
@@ -773,13 +773,13 @@ IMPACT: Type system is more precise
 
 ---
 
-### BLOCK 3: Testing & Validation (Infer 41-60)
+### BLOCK 3: Testing & Validation (Cycle 41-60)
 
 **Goal:** Comprehensive test coverage, validation automation, quality gates
 
 #### Round 1: Test Coverage Expansion (4 parallel)
 
-**Infer 41: Comprehensive Query Tests** (15min)
+**Cycle 41: Comprehensive Query Tests** (15min)
 
 ```
 WHAT:  Create tests for all query functions
@@ -794,7 +794,7 @@ PARALLEL: YES (each query independent)
 IMPACT: All queries are tested and reliable
 ```
 
-**Infer 42: Comprehensive Mutation Tests** (15min)
+**Cycle 42: Comprehensive Mutation Tests** (15min)
 
 ```
 WHAT:  Create tests for all mutation functions
@@ -809,7 +809,7 @@ PARALLEL: YES (each mutation independent)
 IMPACT: All mutations are safe and tested
 ```
 
-**Infer 43: Service Layer Tests** (15min)
+**Cycle 43: Service Layer Tests** (15min)
 
 ```
 WHAT:  Create comprehensive tests for all Effect.ts services
@@ -824,7 +824,7 @@ PARALLEL: YES (each service independent)
 IMPACT: Business logic is proven correct
 ```
 
-**Infer 44: Hook Tests** (15min)
+**Cycle 44: Hook Tests** (15min)
 
 ```
 WHAT:  Create tests for all React hooks
@@ -841,7 +841,7 @@ IMPACT: Hooks are reliable and testable
 
 #### Round 2: Validation & Verification (4 parallel)
 
-**Infer 45: Data Validation Schema Tests** (12min)
+**Cycle 45: Data Validation Schema Tests** (12min)
 
 ```
 WHAT:  Create tests for all input validation
@@ -856,7 +856,7 @@ PARALLEL: YES (each entity type independent)
 IMPACT: No bad data can enter the system
 ```
 
-**Infer 46: Schema Integrity Tests** (12min)
+**Cycle 46: Schema Integrity Tests** (12min)
 
 ```
 WHAT:  Verify database schema is always correct
@@ -871,7 +871,7 @@ PARALLEL: YES (independent)
 IMPACT: Schema is guaranteed to be correct
 ```
 
-**Infer 47: Type-to-Database Consistency Tests** (12min)
+**Cycle 47: Type-to-Database Consistency Tests** (12min)
 
 ```
 WHAT:  Verify types match database schema
@@ -886,7 +886,7 @@ PARALLEL: YES (independent)
 IMPACT: Types and database always in sync
 ```
 
-**Infer 48: Permission & Authorization Tests** (12min)
+**Cycle 48: Permission & Authorization Tests** (12min)
 
 ```
 WHAT:  Verify all permission checks work correctly
@@ -903,7 +903,7 @@ IMPACT: Authorization is bulletproof
 
 #### Round 3: Performance Testing (4 parallel)
 
-**Infer 49: Query Performance Tests** (12min)
+**Cycle 49: Query Performance Tests** (12min)
 
 ```
 WHAT:  Create performance tests for database queries
@@ -918,7 +918,7 @@ PARALLEL: YES (each query independent)
 IMPACT: All queries meet performance targets
 ```
 
-**Infer 50: Component Rendering Performance Tests** (12min)
+**Cycle 50: Component Rendering Performance Tests** (12min)
 
 ```
 WHAT:  Test that components render quickly
@@ -933,7 +933,7 @@ PARALLEL: YES (each component independent)
 IMPACT: All components render in <100ms
 ```
 
-**Infer 51: Bundle Size Tests** (12min)
+**Cycle 51: Bundle Size Tests** (12min)
 
 ```
 WHAT:  Create tests to prevent bundle size bloat
@@ -948,7 +948,7 @@ PARALLEL: YES (independent)
 IMPACT: Bundle size stays within budget
 ```
 
-**Infer 52: Load Testing** (12min)
+**Cycle 52: Load Testing** (12min)
 
 ```
 WHAT:  Test system under realistic load
@@ -965,7 +965,7 @@ IMPACT: Know what load system can handle
 
 #### Round 4: Integration Testing (4 parallel)
 
-**Infer 53: Multi-Provider Integration Tests** (15min)
+**Cycle 53: Multi-Provider Integration Tests** (15min)
 
 ```
 WHAT:  Test system with multiple backend providers
@@ -980,7 +980,7 @@ PARALLEL: YES (each provider independent)
 IMPACT: Backend-agnostic architecture is proven
 ```
 
-**Infer 54: End-to-End User Flow Tests** (15min)
+**Cycle 54: End-to-End User Flow Tests** (15min)
 
 ```
 WHAT:  Test complete user journeys
@@ -995,7 +995,7 @@ PARALLEL: YES (each flow independent)
 IMPACT: Critical flows always work
 ```
 
-**Infer 55: Feature Interaction Tests** (15min)
+**Cycle 55: Feature Interaction Tests** (15min)
 
 ```
 WHAT:  Test that multiple features work together
@@ -1010,7 +1010,7 @@ PARALLEL: YES (each combination independent)
 IMPACT: Features don't break each other
 ```
 
-**Infer 56: Migration Tests** (15min)
+**Cycle 56: Migration Tests** (15min)
 
 ```
 WHAT:  Test database migrations work correctly
@@ -1027,7 +1027,7 @@ IMPACT: Migrations are safe and reversible
 
 #### Round 5: Continuous Validation (4 parallel)
 
-**Infer 57: Type Checking Automation** (10min)
+**Cycle 57: Type Checking Automation** (10min)
 
 ```
 WHAT:  Ensure type checking runs on every change
@@ -1042,7 +1042,7 @@ PARALLEL: YES (independent)
 IMPACT: No type errors in commits
 ```
 
-**Infer 58: Linting Automation** (10min)
+**Cycle 58: Linting Automation** (10min)
 
 ```
 WHAT:  Ensure linting passes on every change
@@ -1057,7 +1057,7 @@ PARALLEL: YES (independent)
 IMPACT: Code style is consistent
 ```
 
-**Infer 59: Test Automation** (10min)
+**Cycle 59: Test Automation** (10min)
 
 ```
 WHAT:  Ensure tests pass on every change
@@ -1072,7 +1072,7 @@ PARALLEL: YES (independent)
 IMPACT: No broken code gets committed
 ```
 
-**Infer 60: Security Checks** (10min)
+**Cycle 60: Security Checks** (10min)
 
 ```
 WHAT:  Automated security validation
@@ -1089,13 +1089,13 @@ IMPACT: Security issues caught early
 
 ---
 
-### BLOCK 4: Performance & Optimization (Infer 61-80)
+### BLOCK 4: Performance & Optimization (Cycle 61-80)
 
 **Goal:** Make system fast and scalable, optimize key paths, reduce waste
 
 #### Round 1: Database Optimization (4 parallel)
 
-**Infer 61: Query Optimization Audit** (15min)
+**Cycle 61: Query Optimization Audit** (15min)
 
 ```
 WHAT:  Profile and optimize slow queries
@@ -1110,7 +1110,7 @@ PARALLEL: YES (each query independent)
 IMPACT: All queries <100ms at p95
 ```
 
-**Infer 62: Index Strategy Optimization** (12min)
+**Cycle 62: Index Strategy Optimization** (12min)
 
 ```
 WHAT:  Ensure optimal indexes for all queries
@@ -1125,7 +1125,7 @@ PARALLEL: YES (index creation is parallel)
 IMPACT: Queries are fast and efficient
 ```
 
-**Infer 63: Data Duplication Strategy** (12min)
+**Cycle 63: Data Duplication Strategy** (12min)
 
 ```
 WHAT:  Decide what data to denormalize/duplicate
@@ -1140,7 +1140,7 @@ PARALLEL: YES (independent)
 IMPACT: Hot queries are even faster
 ```
 
-**Infer 64: Connection Pooling** (12min)
+**Cycle 64: Connection Pooling** (12min)
 
 ```
 WHAT:  Optimize database connection usage
@@ -1157,7 +1157,7 @@ IMPACT: Database connections are efficient
 
 #### Round 2: Frontend Optimization (4 parallel)
 
-**Infer 65: Code Splitting Strategy** (12min)
+**Cycle 65: Code Splitting Strategy** (12min)
 
 ```
 WHAT:  Split code to load only what's needed
@@ -1172,7 +1172,7 @@ PARALLEL: YES (independent)
 IMPACT: Initial load <2s on 4G
 ```
 
-**Infer 66: Image Optimization** (12min)
+**Cycle 66: Image Optimization** (12min)
 
 ```
 WHAT:  Optimize all images for web
@@ -1187,7 +1187,7 @@ PARALLEL: YES (each image independent)
 IMPACT: Images are 70% smaller
 ```
 
-**Infer 67: CSS Optimization** (12min)
+**Cycle 67: CSS Optimization** (12min)
 
 ```
 WHAT:  Minimize CSS and remove unused styles
@@ -1202,7 +1202,7 @@ PARALLEL: YES (independent)
 IMPACT: CSS is minimal and optimized
 ```
 
-**Infer 68: JavaScript Minification & Tree Shaking** (12min)
+**Cycle 68: JavaScript Minification & Tree Shaking** (12min)
 
 ```
 WHAT:  Remove unnecessary JavaScript
@@ -1219,7 +1219,7 @@ IMPACT: JavaScript bundle is minimal
 
 #### Round 3: Caching Strategy (4 parallel)
 
-**Infer 69: HTTP Caching Headers** (10min)
+**Cycle 69: HTTP Caching Headers** (10min)
 
 ```
 WHAT:  Configure proper cache headers
@@ -1234,7 +1234,7 @@ PARALLEL: YES (independent)
 IMPACT: Repeat visits are much faster
 ```
 
-**Infer 70: Service Worker Implementation** (12min)
+**Cycle 70: Service Worker Implementation** (12min)
 
 ```
 WHAT:  Implement service worker for offline/fast load
@@ -1249,7 +1249,7 @@ PARALLEL: YES (independent)
 IMPACT: App works offline, loads from cache
 ```
 
-**Infer 71: API Response Caching** (12min)
+**Cycle 71: API Response Caching** (12min)
 
 ```
 WHAT:  Cache API responses to prevent repeated requests
@@ -1264,7 +1264,7 @@ PARALLEL: YES (independent)
 IMPACT: Repeated requests are instant
 ```
 
-**Infer 72: Database Query Caching** (12min)
+**Cycle 72: Database Query Caching** (12min)
 
 ```
 WHAT:  Cache frequently-run queries
@@ -1281,7 +1281,7 @@ IMPACT: Database load is reduced
 
 #### Round 4: Rendering Optimization (4 parallel)
 
-**Infer 73: React Rendering Optimization** (12min)
+**Cycle 73: React Rendering Optimization** (12min)
 
 ```
 WHAT:  Prevent unnecessary React re-renders
@@ -1296,7 +1296,7 @@ PARALLEL: YES (independent)
 IMPACT: Rendering performance improves
 ```
 
-**Infer 74: Virtual Scrolling for Long Lists** (12min)
+**Cycle 74: Virtual Scrolling for Long Lists** (12min)
 
 ```
 WHAT:  Implement virtual scrolling for large lists
@@ -1311,7 +1311,7 @@ PARALLEL: YES (independent)
 IMPACT: Large lists are smooth
 ```
 
-**Infer 75: Astro Island Strategy** (10min)
+**Cycle 75: Astro Island Strategy** (10min)
 
 ```
 WHAT:  Optimize which components hydrate
@@ -1326,7 +1326,7 @@ PARALLEL: YES (independent)
 IMPACT: Less JavaScript ships to browser
 ```
 
-**Infer 76: Progressive Enhancement** (10min)
+**Cycle 76: Progressive Enhancement** (10min)
 
 ```
 WHAT:  Make features work without JavaScript
@@ -1343,7 +1343,7 @@ IMPACT: App is more resilient
 
 #### Round 5: Monitoring & Alerts (4 parallel)
 
-**Infer 77: Performance Monitoring Dashboard** (12min)
+**Cycle 77: Performance Monitoring Dashboard** (12min)
 
 ```
 WHAT:  Create dashboard to monitor performance metrics
@@ -1358,7 +1358,7 @@ PARALLEL: YES (independent)
 IMPACT: Performance issues caught immediately
 ```
 
-**Infer 78: Error Monitoring & Alerting** (12min)
+**Cycle 78: Error Monitoring & Alerting** (12min)
 
 ```
 WHAT:  Implement error tracking and alerts
@@ -1373,7 +1373,7 @@ PARALLEL: YES (independent)
 IMPACT: Production issues caught quickly
 ```
 
-**Infer 79: Database Monitoring** (12min)
+**Cycle 79: Database Monitoring** (12min)
 
 ```
 WHAT:  Monitor database health and performance
@@ -1388,7 +1388,7 @@ PARALLEL: YES (independent)
 IMPACT: Database issues caught early
 ```
 
-**Infer 80: User Experience Monitoring** (12min)
+**Cycle 80: User Experience Monitoring** (12min)
 
 ```
 WHAT:  Monitor real user experience metrics
@@ -1405,13 +1405,13 @@ IMPACT: Know actual user experience
 
 ---
 
-### BLOCK 5: Automation & Intelligence (Infer 81-100)
+### BLOCK 5: Automation & Intelligence (Cycle 81-100)
 
 **Goal:** Smarter workflows, better decisions, continuous improvement
 
 #### Round 1: Code Generation Intelligence (4 parallel)
 
-**Infer 81: Code Generation from Schema** (20min)
+**Cycle 81: Code Generation from Schema** (20min)
 
 ```
 WHAT:  Auto-generate code from database schema
@@ -1426,7 +1426,7 @@ PARALLEL: YES (independent)
 IMPACT: Boilerplate generation is automatic
 ```
 
-**Infer 82: API Documentation Generation** (20min)
+**Cycle 82: API Documentation Generation** (20min)
 
 ```
 WHAT:  Auto-generate API docs from code
@@ -1441,7 +1441,7 @@ PARALLEL: YES (independent)
 IMPACT: API docs always current
 ```
 
-**Infer 83: Type Definition Generation** (20min)
+**Cycle 83: Type Definition Generation** (20min)
 
 ```
 WHAT:  Auto-generate all type definitions
@@ -1456,7 +1456,7 @@ PARALLEL: YES (independent)
 IMPACT: Types never go out of sync with reality
 ```
 
-**Infer 84: Test Generation from Code** (20min)
+**Cycle 84: Test Generation from Code** (20min)
 
 ```
 WHAT:  Auto-generate basic tests from functions
@@ -1473,7 +1473,7 @@ IMPACT: Basic test coverage is automatic
 
 #### Round 2: Development Automation (4 parallel)
 
-**Infer 85: Commit Message Validation** (10min)
+**Cycle 85: Commit Message Validation** (10min)
 
 ```
 WHAT:  Validate commit messages follow conventions
@@ -1488,7 +1488,7 @@ PARALLEL: YES (independent)
 IMPACT: Commit history is clear and searchable
 ```
 
-**Infer 86: Changelog Generation** (10min)
+**Cycle 86: Changelog Generation** (10min)
 
 ```
 WHAT:  Auto-generate changelog from commits
@@ -1503,7 +1503,7 @@ PARALLEL: YES (independent)
 IMPACT: Changelog is always current
 ```
 
-**Infer 87: Release Automation** (15min)
+**Cycle 87: Release Automation** (15min)
 
 ```
 WHAT:  Automate the release process
@@ -1520,7 +1520,7 @@ PARALLEL: YES (independent)
 IMPACT: Releases are fast and reliable
 ```
 
-**Infer 88: Pull Request Automation** (10min)
+**Cycle 88: Pull Request Automation** (10min)
 
 ```
 WHAT:  Automate PR reviews and checks
@@ -1537,7 +1537,7 @@ IMPACT: PRs are higher quality
 
 #### Round 3: Documentation Intelligence (4 parallel)
 
-**Infer 89: Documentation Linking** (12min)
+**Cycle 89: Documentation Linking** (12min)
 
 ```
 WHAT:  Auto-link related documentation
@@ -1552,7 +1552,7 @@ PARALLEL: YES (independent)
 IMPACT: Documentation is discoverable
 ```
 
-**Infer 90: Example Code Validation** (12min)
+**Cycle 90: Example Code Validation** (12min)
 
 ```
 WHAT:  Validate that code examples actually work
@@ -1567,7 +1567,7 @@ PARALLEL: YES (independent)
 IMPACT: All examples work correctly
 ```
 
-**Infer 91: Documentation Freshness Check** (12min)
+**Cycle 91: Documentation Freshness Check** (12min)
 
 ```
 WHAT:  Detect outdated documentation
@@ -1582,7 +1582,7 @@ PARALLEL: YES (independent)
 IMPACT: Docs stay current
 ```
 
-**Infer 92: Search Index Updates** (12min)
+**Cycle 92: Search Index Updates** (12min)
 
 ```
 WHAT:  Keep documentation search index current
@@ -1599,7 +1599,7 @@ IMPACT: Documentation is searchable
 
 #### Round 4: Quality Intelligence (4 parallel)
 
-**Infer 93: Bug Pattern Detection** (15min)
+**Cycle 93: Bug Pattern Detection** (15min)
 
 ```
 WHAT:  Detect bugs before they reach production
@@ -1614,7 +1614,7 @@ PARALLEL: YES (independent)
 IMPACT: Bugs are prevented, not discovered
 ```
 
-**Infer 94: Code Quality Trends** (12min)
+**Cycle 94: Code Quality Trends** (12min)
 
 ```
 WHAT:  Track code quality metrics over time
@@ -1629,7 +1629,7 @@ PARALLEL: YES (independent)
 IMPACT: Know if code quality improving
 ```
 
-**Infer 95: Dependency Health Monitoring** (12min)
+**Cycle 95: Dependency Health Monitoring** (12min)
 
 ```
 WHAT:  Monitor health of all dependencies
@@ -1644,7 +1644,7 @@ PARALLEL: YES (independent)
 IMPACT: Dependencies are healthy
 ```
 
-**Infer 96: Architecture Compliance Checks** (12min)
+**Cycle 96: Architecture Compliance Checks** (12min)
 
 ```
 WHAT:  Verify code follows architecture rules
@@ -1661,7 +1661,7 @@ IMPACT: Architecture is enforced automatically
 
 #### Round 5: Continuous Learning (4 parallel)
 
-**Infer 97: Lessons Learned Capture** (10min)
+**Cycle 97: Lessons Learned Capture** (10min)
 
 ```
 WHAT:  Automatically capture lessons from all work
@@ -1676,7 +1676,7 @@ PARALLEL: YES (independent)
 IMPACT: Team learns from history
 ```
 
-**Infer 98: Code Review Insights** (10min)
+**Cycle 98: Code Review Insights** (10min)
 
 ```
 WHAT:  Analyze code review comments for patterns
@@ -1691,7 +1691,7 @@ PARALLEL: YES (independent)
 IMPACT: Code reviews focus on real issues
 ```
 
-**Infer 99: Performance Regression Testing** (12min)
+**Cycle 99: Performance Regression Testing** (12min)
 
 ```
 WHAT:  Automatically test for performance regressions
@@ -1706,7 +1706,7 @@ PARALLEL: YES (independent)
 IMPACT: Performance never regresses
 ```
 
-**Infer 100: Agent Self-Improvement** (20min)
+**Cycle 100: Agent Self-Improvement** (20min)
 
 ```
 WHAT:  Agents learn from feedback to improve code quality
@@ -1732,7 +1732,7 @@ IMPACT:
 
 ### Phase 1: Foundation Strengthening (Week 1)
 
-- Execute Infer 1-20 (4 parallel teams)
+- Execute Cycle 1-20 (4 parallel teams)
 - Deliverables:
   - Error taxonomy defined
   - Type safety complete
@@ -1742,7 +1742,7 @@ IMPACT:
 
 ### Phase 2: Code Quality (Week 2)
 
-- Execute Infer 21-40 (4 parallel teams)
+- Execute Cycle 21-40 (4 parallel teams)
 - Deliverables:
   - Pattern library created (queries, mutations, services, components)
   - Testing patterns established
@@ -1751,7 +1751,7 @@ IMPACT:
 
 ### Phase 3: Testing & Validation (Week 3)
 
-- Execute Infer 41-60 (4 parallel teams)
+- Execute Cycle 41-60 (4 parallel teams)
 - Deliverables:
   - Test coverage >80%
   - All scenarios tested
@@ -1761,7 +1761,7 @@ IMPACT:
 
 ### Phase 4: Performance (Week 4)
 
-- Execute Infer 61-80 (4 parallel teams)
+- Execute Cycle 61-80 (4 parallel teams)
 - Deliverables:
   - Queries optimized (<100ms p95)
   - Bundle size minimal
@@ -1771,7 +1771,7 @@ IMPACT:
 
 ### Phase 5: Automation & Intelligence (Week 5)
 
-- Execute Infer 81-100 (4 parallel teams)
+- Execute Cycle 81-100 (4 parallel teams)
 - Deliverables:
   - Code generation automated
   - Documentation generation automated
@@ -1874,7 +1874,7 @@ After all 100 tasks complete, the system is designed to continuously improve:
 
 ```
 Agent Director asks each specialist:
-1. What inferences did you complete?
+1. What cycles did you complete?
 2. Did you hit any blockers?
 3. What quality gates passed/failed?
 4. Any patterns to add to library?
@@ -1891,7 +1891,7 @@ All agents review:
 5. Adjustments for next week
 ```
 
-### Inference Completion Checklist
+### Cycle Completion Checklist
 
 ```
 Before marking infer complete:
@@ -1909,7 +1909,7 @@ Before marking infer complete:
 
 ## 🚀 Getting Started: First 4 Tasks
 
-**Today (Infer 1-4 in parallel):**
+**Today (Cycle 1-4 in parallel):**
 
 1. **Agent-Backend:** Establish Error Taxonomy (5 min)
 2. **Agent-Quality:** Type Safety Audit (5 min)
@@ -1957,16 +1957,16 @@ Before marking infer complete:
 
 - `/one/things/plans/sequence.md` (this file)
 - `/one/things/plans/development-plan.md` (updated with execution strategy)
-- `/one/knowledge/error-taxonomy.md` (Infer 1 output)
+- `/one/knowledge/error-taxonomy.md` (Cycle 1 output)
 - `/one/knowledge/patterns/` (grows with each block)
 - `/one/events/sequence-progress.md` (track progress)
 
 ### To Be Created During Execution
 
-- `/one/knowledge/patterns/queries.md` (Infer 21)
-- `/one/knowledge/patterns/mutations.md` (Infer 22)
-- `/one/knowledge/patterns/services.md` (Infer 23)
-- `/one/knowledge/patterns/components.md` (Infer 24)
+- `/one/knowledge/patterns/queries.md` (Cycle 21)
+- `/one/knowledge/patterns/mutations.md` (Cycle 22)
+- `/one/knowledge/patterns/services.md` (Cycle 23)
+- `/one/knowledge/patterns/components.md` (Cycle 24)
 - ... and 76 more deliverables
 
 ---
@@ -2037,4 +2037,4 @@ After completing 100-task sequence:
 
 **Version:** 1.0.0
 **Status:** Ready for Execution
-**Next:** Begin Infer 1 (Error Taxonomy)
+**Next:** Begin Cycle 1 (Error Taxonomy)

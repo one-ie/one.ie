@@ -1,8 +1,8 @@
 ---
-title: The 6-Dimension Ontology
+title: Ontology
 description: Understanding the fundamental data model that powers ONE
 section: Core Concepts
-order: 1
+order: 3
 tags:
   - architecture
   - ontology

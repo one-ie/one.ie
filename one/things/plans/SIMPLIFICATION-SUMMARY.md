@@ -379,14 +379,14 @@ try {
 
 ## Implementation Timeline
 
-### Week 1: Infrastructure (Infer 1-10)
+### Week 1: Infrastructure (Cycle 1-10)
 
 - Create new hook templates
 - Set up parallel implementations
 - Plan migration path
 - **Output:** Ready to migrate
 
-### Weeks 2-3: Feature Migration (Infer 11-50)
+### Weeks 2-3: Feature Migration (Cycle 11-50)
 
 - Migrate Thing operations
 - Migrate Group operations
@@ -394,14 +394,14 @@ try {
 - Migrate Event logging
 - **Output:** 50% of hooks converted
 
-### Weeks 3-4: Completion (Infer 51-80)
+### Weeks 3-4: Completion (Cycle 51-80)
 
 - Migrate remaining hooks
 - Flatten services
 - Delete abstraction layers
 - **Output:** 100% simplified, tests passing
 
-### Week 4: Validation (Infer 81-100)
+### Week 4: Validation (Cycle 81-100)
 
 - Confidence testing
 - Performance validation

@@ -2,7 +2,7 @@
 title: Ai Sdk
 dimension: things
 category: plans
-tags: agent, ai, architecture, artificial-intelligence, backend, inference
+tags: agent, ai, architecture, artificial-intelligence, backend, cycle
 related_dimensions: people
 scope: global
 created: 2025-11-03
@@ -34,7 +34,7 @@ The **AI SDK** (by Vercel) is a unified TypeScript toolkit for building AI-power
 - **Provider Agnostic**: One API works with OpenAI, Anthropic, Google, Azure, DeepSeek, etc.
 - **Unified Interface**: Generate text, objects, tool calls with consistent methods
 - **React Hooks**: Built-in hooks for chat, streaming, and state management
-- **Type-Safe**: Full TypeScript support with automatic type inference
+- **Type-Safe**: Full TypeScript support with automatic type cycle
 - **Framework Support**: Works with React, Vue, Svelte, Node.js, and more
 
 ---
@@ -62,7 +62,7 @@ LLM Providers (OpenAI, Anthropic, etc.)
 3. **AI SDK Hooks**: `useChat()`, `useCompletion()`, `useObject()` for real-time updates
 4. **Convex Backend**: Mutations that call AI SDK `generateText()` or stream to clients
 5. **Convex Agents**: Manage conversation threads, tool calls, message history
-6. **LLM Providers**: Process inference requests
+6. **LLM Providers**: Process cycle requests
 
 ---
 
@@ -139,7 +139,7 @@ const LLMServiceLive = Layer.effect(
 
 ## Implementation Phases
 
-### Phase 1: Setup & Configuration (Infer 1-10)
+### Phase 1: Setup & Configuration (Cycle 1-10)
 
 #### Dependencies
 
@@ -201,7 +201,7 @@ export const selectModel = (provider: string, tier: "fast" | "powerful") => {
 
 ---
 
-### Phase 2: Convex Mutations (Infer 11-20)
+### Phase 2: Convex Mutations (Cycle 11-20)
 
 #### Schema Extension
 
@@ -367,7 +367,7 @@ export const streamAgentResponse = mutation({
 
 ---
 
-### Phase 3: Frontend Integration (Infer 21-30)
+### Phase 3: Frontend Integration (Cycle 21-30)
 
 #### useChat Hook Integration
 
@@ -485,7 +485,7 @@ export function AIChat({ groupId, agentId, systemPrompt }: AIChatProps) {
 
 ---
 
-### Phase 4: Advanced Features (Infer 41-50)
+### Phase 4: Advanced Features (Cycle 41-50)
 
 #### Structured Output (Objects)
 
@@ -575,7 +575,7 @@ export const generateWithTools = mutation({
 
 ---
 
-### Phase 5: Monitoring & Observability (Infer 61-70)
+### Phase 5: Monitoring & Observability (Cycle 61-70)
 
 #### Token Usage Tracking
 

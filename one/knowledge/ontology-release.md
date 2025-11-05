@@ -52,7 +52,7 @@ ai_context: |
 - **What:** 41 documentation files (73,000+ lines)
 - **Includes:**
   - `one/knowledge/` - 6-dimension specs (groups, things, connections, events, knowledge, people)
-  - `one/things/` - Entity types, services, plans, todo.md (100-inference sequence)
+  - `one/things/` - Entity types, services, plans, todo.md (100-cycle sequence)
   - `one/connections/` - Protocols (A2A, ACP, AP2, X402, AG-UI), patterns, workflows
   - `one/events/` - Deployment history, logs
   - `one/people/` - Roles, governance
@@ -65,7 +65,7 @@ ai_context: |
   - `.claude/agents/` - Director, clone, specialists (7+ agents)
   - `.claude/hooks/` - Pre-commit, post-merge, submit-prompt handlers
   - `.claude/commands/` - `/release`, `/deploy`, `/design` slash commands
-  - `.claude/state/` - Agent memory and inference context
+  - `.claude/state/` - Agent memory and cycle context
 - **Purpose:** Control center for AI-driven development
 - **Distribution:** Synced to all repos
 
@@ -236,7 +236,7 @@ https://web.one.ie (LIVE)
 **For Development:**
 - `CLAUDE.md` - Platform instructions
 - `AGENTS.md` - Convex quick reference
-- `one/things/todo.md` - 100-inference release plan
+- `one/things/todo.md` - 100-cycle release plan
 
 ---
 

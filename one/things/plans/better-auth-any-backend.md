@@ -135,7 +135,7 @@ Better Auth is already integrated in our `/frontend` with 6 authentication metho
     users: number,                    // Max users in this org
     storage: number,
     apiCalls: number,
-    inference: number
+    cycle: number
   },
   settings: {
     allowSignups: boolean,            // Can users self-register?

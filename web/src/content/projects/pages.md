@@ -18,8 +18,8 @@ levelColor: "text-yellow-600"
 startDate: 2025-10-30
 targetEndDate: 2026-02-28
 progress: 0
-totalInferences: 100
-completedInferences: 0
+totalCycles: 100
+completedCycles: 0
 features:
   - "Hero section with strong headline"
   - "Feature highlights with icons"
@@ -128,19 +128,19 @@ Ready to build this project? Choose your path:
 
 ## Implementation Plan
 
-This project follows a **100-inference implementation plan** for systematic development.
+This project follows a **100-cycle implementation plan** for systematic development.
 
 **📋 View Full Plan:** [Landing Page Template v1.0.0](/plans/pages)
 
-**Progress:** 0/100 inferences complete (0%)
+**Progress:** 0/100 cycles complete (0%)
 
 ### Plan Overview
 
-- **Infer 1-10**: Foundation & Design (page structure, ontology mapping, visual system)
-- **Infer 11-20**: Component Library (hero, features, testimonials, CTAs)
-- **Infer 21-30**: Page Builder Interface (drag-and-drop, templates)
-- **Infer 31-50**: Static Site Generation & SEO
-- **Timeline**: 50-60 inferences for complete implementation
+- **Cycle 1-10**: Foundation & Design (page structure, ontology mapping, visual system)
+- **Cycle 11-20**: Component Library (hero, features, testimonials, CTAs)
+- **Cycle 21-30**: Page Builder Interface (drag-and-drop, templates)
+- **Cycle 31-50**: Static Site Generation & SEO
+- **Timeline**: 50-60 cycles for complete implementation
 
 ### Quick Start
 
@@ -148,7 +148,7 @@ This project follows a **100-inference implementation plan** for systematic deve
 # 1. View the implementation plan
 /plan pages
 
-# 2. Start with first inference
+# 2. Start with first cycle
 /infer 1
 
 # 3. Mark complete and advance
@@ -158,7 +158,7 @@ This project follows a **100-inference implementation plan** for systematic deve
 ## How to Use
 
 1. Visit `/landing` to see the live demo
-2. Review the [100-inference implementation plan](/plans/pages)
-3. Follow the inference sequence step-by-step
+2. Review the [100-cycle implementation plan](/plans/pages)
+3. Follow the cycle sequence step-by-step
 4. Customize colors, text, and images
 5. Deploy to Cloudflare Pages in one click

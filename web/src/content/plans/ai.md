@@ -6,13 +6,13 @@ organization: "ONE Platform"
 personRole: "platform_owner"
 ontologyDimensions: ["Things", "Knowledge", "Events", "Connections"]
 assignedSpecialist: "Engineering Director"
-totalInferences: 100
-completedInferences: 0
+totalCycles: 100
+completedCycles: 0
 createdAt: 2025-10-30
 draft: false
 ---
 
-# AI Implementation: 100-Inference Roadmap
+# AI Implementation: 100-Cycle Roadmap
 
 **Feature:** AI Chat with Vercel AI SDK + Prompt Kit
 **Version:** 1.0.0
@@ -33,11 +33,11 @@ This roadmap sequences the complete implementation of AI capabilities using **Ve
 - **Ontology Aligned**: Every AI interaction maps to 6 dimensions (Things, Connections, Events, Knowledge)
 - **Streaming Support**: Real-time responses with token tracking
 - **Multi-Tenant**: Each group has isolated AI quotas and configurations
-- **Type Safe**: Full TypeScript with automatic inference
+- **Type Safe**: Full TypeScript with automatic cycle
 
 ---
 
-## Inference 1-10: Foundation & Setup
+## Cycle 1-10: Foundation & Setup
 
 **1. [INFER-001]** Validate AI feature against 6-dimension ontology
    - Things: agents (type="agent")
@@ -90,14 +90,14 @@ This roadmap sequences the complete implementation of AI capabilities using **Ve
    - Support advanced features (tools, streaming, reasoning)
 
 **9. [INFER-009]** Generate initial plan with feature breakdown
-   - Phase 1 (Infer 1-10): Setup and dependencies
-   - Phase 2 (Infer 11-20): Backend schema and services
-   - Phase 3 (Infer 21-30): Frontend components and pages
-   - Phase 4 (Infer 41-50): Advanced features (tools, reasoning, streaming)
-   - Phase 5 (Infer 61-70): Monitoring and analytics
-   - Phase 6 (Infer 71-80): Design and polish
-   - Phase 7 (Infer 81-90): Performance optimization
-   - Phase 8 (Infer 91-100): Deployment and documentation
+   - Phase 1 (Cycle 1-10): Setup and dependencies
+   - Phase 2 (Cycle 11-20): Backend schema and services
+   - Phase 3 (Cycle 21-30): Frontend components and pages
+   - Phase 4 (Cycle 41-50): Advanced features (tools, reasoning, streaming)
+   - Phase 5 (Cycle 61-70): Monitoring and analytics
+   - Phase 6 (Cycle 71-80): Design and polish
+   - Phase 7 (Cycle 81-90): Performance optimization
+   - Phase 8 (Cycle 91-100): Deployment and documentation
 
 **10. [INFER-010]** Assign features to specialists
    - Backend specialist: schema, mutations, queries, services
@@ -108,7 +108,7 @@ This roadmap sequences the complete implementation of AI capabilities using **Ve
 
 ---
 
-## Inference 11-20: Backend Schema & Services
+## Cycle 11-20: Backend Schema & Services
 
 **11. [INFER-011]** Design database schema changes
    - aiCalls table: track all LLM API calls with tokens and costs
@@ -177,7 +177,7 @@ This roadmap sequences the complete implementation of AI capabilities using **Ve
 
 ---
 
-## Inference 21-30: Frontend Pages & Components
+## Cycle 21-30: Frontend Pages & Components
 
 **21. [INFER-021]** Create Astro chat page with SSR data fetching
    - `/chat` route with layout
@@ -241,7 +241,7 @@ This roadmap sequences the complete implementation of AI capabilities using **Ve
 
 ---
 
-## Inference 31-40: Integration & Connections
+## Cycle 31-40: Integration & Connections
 
 **31. [INFER-031]** Map Prompt Kit to ontology
    - UI components = presentation layer
@@ -301,7 +301,7 @@ This roadmap sequences the complete implementation of AI capabilities using **Ve
 
 ---
 
-## Inference 41-50: Advanced Features
+## Cycle 41-50: Advanced Features
 
 **41. [INFER-041]** Implement structured output (objects)
    - Use generateObject from AI SDK
@@ -365,7 +365,7 @@ This roadmap sequences the complete implementation of AI capabilities using **Ve
 
 ---
 
-## Inference 51-60: Knowledge & RAG
+## Cycle 51-60: Knowledge & RAG
 
 **51. [INFER-051]** Create knowledge records with labels
    - Extract topics from AI responses
@@ -431,7 +431,7 @@ This roadmap sequences the complete implementation of AI capabilities using **Ve
 
 ---
 
-## Inference 61-70: Quality & Testing
+## Cycle 61-70: Quality & Testing
 
 **61. [INFER-061]** Define user flows
    - Start conversation
@@ -499,7 +499,7 @@ This roadmap sequences the complete implementation of AI capabilities using **Ve
 
 ---
 
-## Inference 71-80: Design & Wireframes
+## Cycle 71-80: Design & Wireframes
 
 **71. [INFER-071]** Create wireframes for chat interface
    - Message list layout
@@ -566,7 +566,7 @@ This roadmap sequences the complete implementation of AI capabilities using **Ve
 
 ---
 
-## Inference 81-90: Performance & Optimization
+## Cycle 81-90: Performance & Optimization
 
 **81. [INFER-081]** Optimize database queries
    - Add indexes on frequently queried fields
@@ -630,7 +630,7 @@ This roadmap sequences the complete implementation of AI capabilities using **Ve
 
 ---
 
-## Inference 91-100: Deployment & Documentation
+## Cycle 91-100: Deployment & Documentation
 
 **91. [INFER-091]** Build production bundle
    - bun run build
@@ -697,34 +697,34 @@ This roadmap sequences the complete implementation of AI capabilities using **Ve
 ## How to Use This Roadmap
 
 ### Sequential Execution
-- Always do the **next inference** in sequence
-- Each inference builds on previous work
+- Always do the **next cycle** in sequence
+- Each cycle builds on previous work
 - Dependencies are implicit in ordering
 
 ### Context Loading
-- Use hooks to load current inference
+- Use hooks to load current cycle
 - Hooks provide:
-  - Inference number and task
+  - Cycle number and task
   - Required ontology dimensions
   - Specialist assignments
   - Dependencies
 
 ### Completion Tracking
-- Mark inference complete when done
+- Mark cycle complete when done
 - Update progress tracker
-- Load context for next inference
+- Load context for next cycle
 - Capture lessons learned
 
 ### Parallel Execution
-After schema is defined (Infer 12):
-- **Backend + Frontend:** Infer 11-20 and 21-30 in parallel
-- **Tests + Design:** Infer 61-70 and 71-80 interdependent
-- **Documentation:** Infer 95-99 can start earlier
+After schema is defined (Cycle 12):
+- **Backend + Frontend:** Cycle 11-20 and 21-30 in parallel
+- **Tests + Design:** Cycle 61-70 and 71-80 interdependent
+- **Documentation:** Cycle 95-99 can start earlier
 
 ### Adaptive Planning
 - Adjust based on complexity
-- Skip inferences if not applicable
-- Add inferences for special needs
+- Skip cycles if not applicable
+- Add cycles for special needs
 - Let judgment refine the list
 
 ---
@@ -767,7 +767,7 @@ After schema is defined (Infer 12):
 
 ## Specialist Assignments
 
-| Inference Range | Specialist | Focus |
+| Cycle Range | Specialist | Focus |
 |-----------------|-----------|-------|
 | 1-10 | Director | Planning and architecture |
 | 11-20 | Backend | Schema, services, mutations |
@@ -784,7 +784,7 @@ After schema is defined (Infer 12):
 
 ## Success Metrics
 
-- **Completion Rate:** 100% of inferences completed
+- **Completion Rate:** 100% of cycles completed
 - **Test Coverage:** > 85% code coverage
 - **Performance:** Lighthouse > 90 across metrics
 - **Accessibility:** WCAG AA compliance
@@ -793,7 +793,7 @@ After schema is defined (Infer 12):
 
 ---
 
-**Philosophy:** Plan in inferences (not days). 100 inferences = 1 complete feature, flawlessly executed.
+**Philosophy:** Plan in cycles (not days). 100 cycles = 1 complete feature, flawlessly executed.
 
 **Golden Rule:** Do the next thing, perfectly.
 

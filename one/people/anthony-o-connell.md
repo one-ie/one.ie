@@ -42,7 +42,7 @@ ai_context: |
   name: "Anthony O'Connell",
   properties: {
     role: "platform_owner",
-    email: "anthony@one.ie",
+    email: "tony@one.ie",
     username: "anthony",
     displayName: "Anthony",
     bio: "Founder & Platform Owner of ONE",
@@ -68,7 +68,7 @@ ai_context: |
     // Smart contract ownership (100% of all platform contracts)
     contractOwnership: {
       sui: {
-        inferencePayment: process.env.SUI_INFERENCE_PACKAGE_ID,
+        cyclePayment: process.env.SUI_INFERENCE_PACKAGE_ID,
         tokenContract: process.env.SUI_TOKEN_PACKAGE_ID,
         nftContract: process.env.SUI_NFT_PACKAGE_ID,
         subscription: process.env.SUI_SUBSCRIPTION_PACKAGE_ID,
@@ -148,14 +148,14 @@ ai_context: |
 `anthony` → `smart-contract` via `owns`
 
 ```typescript
-// Sui Inference Payment Contract
+// Sui Cycle Payment Contract
 {
   fromThingId: anthonyId,
-  toThingId: suiInferenceContractId,
+  toThingId: suiCycleContractId,
   relationshipType: "owns",
   metadata: {
     network: "sui",
-    contractType: "inference_payment",
+    contractType: "cycle_payment",
     packageId: process.env.SUI_INFERENCE_PACKAGE_ID,
     ownershipPercentage: 100,
   },
@@ -242,17 +242,17 @@ ai_context: |
 
 ### Receives All Platform Revenue
 
-Every inference, subscription, and transaction flows to Anthony:
+Every cycle, subscription, and transaction flows to Anthony:
 
 ```typescript
-// Inference revenue collected
+// Cycle revenue collected
 {
-  type: "inference_revenue_collected",
+  type: "cycle_revenue_collected",
   actorId: "system",
   targetId: anthonyId,
   timestamp: Date.now(),
   metadata: {
-    inferenceId: inferenceId,
+    cycleId: cycleId,
     customerId: customerId,
     organizationId: customerOrgId,
     amount: 0.10,        // Customer paid $0.10
@@ -308,7 +308,7 @@ When Anthony deploys new contracts:
   timestamp: Date.now(),
   metadata: {
     network: "sui",
-    contractType: "inference_payment",
+    contractType: "cycle_payment",
     packageId: process.env.SUI_INFERENCE_PACKAGE_ID,
     deployedBy: anthonyId,
   },
@@ -351,7 +351,7 @@ export const isPlatformOwner = async (userId: Id<"things">) => {
 // Platform owner has ALL permissions
 export const hasPermission = async (
   userId: Id<"things">,
-  permission: string,
+  permission: string
 ) => {
   const user = await db.get(userId);
 
@@ -387,7 +387,7 @@ export const hasPermission = async (
 const orgs = await db
   .query("connections")
   .withIndex("from_type", (q) =>
-    q.eq("fromThingId", anthonyId).eq("relationshipType", "owns"),
+    q.eq("fromThingId", anthonyId).eq("relationshipType", "owns")
   )
   .collect();
 ```
@@ -398,14 +398,14 @@ const orgs = await db
 const contracts = await db
   .query("connections")
   .withIndex("from_type", (q) =>
-    q.eq("fromThingId", anthonyId).eq("relationshipType", "owns"),
+    q.eq("fromThingId", anthonyId).eq("relationshipType", "owns")
   )
   .filter((q) =>
     q.or(
-      q.eq(q.field("metadata.contractType"), "inference_payment"),
+      q.eq(q.field("metadata.contractType"), "cycle_payment"),
       q.eq(q.field("metadata.contractType"), "token"),
-      q.eq(q.field("metadata.contractType"), "bridge"),
-    ),
+      q.eq(q.field("metadata.contractType"), "bridge")
+    )
   )
   .collect();
 ```
@@ -416,12 +416,12 @@ const contracts = await db
 // Total platform revenue
 const revenueEvents = await db
   .query("events")
-  .withIndex("type_time", (q) => q.eq("type", "inference_revenue_collected"))
+  .withIndex("type_time", (q) => q.eq("type", "cycle_revenue_collected"))
   .collect();
 
 const totalRevenue = revenueEvents.reduce(
   (sum, e) => sum + (e.metadata.profit || 0),
-  0,
+  0
 );
 
 // Revenue by network
@@ -431,7 +431,7 @@ const revenueByNetwork = revenueEvents.reduce(
     acc[network] = (acc[network] || 0) + (e.metadata.profit || 0);
     return acc;
   },
-  {} as Record<string, number>,
+  {} as Record<string, number>
 );
 ```
 

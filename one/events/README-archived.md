@@ -194,7 +194,7 @@ const acmeCorp = await createOrganization({
     users: 100,
     storage: 1000, // GB
     apiCalls: 1000000,
-    inference: 500000,
+    cycle: 500000,
   },
 });
 

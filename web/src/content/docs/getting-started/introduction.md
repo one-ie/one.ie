@@ -1,8 +1,8 @@
 ---
-title: Introduction to ONE
+title: Introduction
 description: Welcome to the ONE Platform documentation. Learn what ONE is and how to get started.
 section: Getting Started
-order: 1
+order: 0
 tags:
   - getting-started
   - introduction

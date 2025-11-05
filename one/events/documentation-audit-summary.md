@@ -31,7 +31,7 @@ ai_context: |
 | Aspect | Status | Score | Impact |
 |--------|--------|-------|--------|
 | Frontmatter Structure | ✅ Perfect | 100% | All files consistent YAML |
-| Inference Pattern | ✅ Excellent | 98% | 100-inference template well-used |
+| Cycle Pattern | ✅ Excellent | 98% | 100-cycle template well-used |
 | Ontology Alignment | ✅ Excellent | 98% | 6-dimension mapping universal |
 | Header Hierarchy | ✅ Strong | 96% | Clear H1→H2→H3 progression |
 | Cross-File Integration | ✅ Good | 94% | Dependencies mostly visible |
@@ -71,10 +71,10 @@ ai_context: |
 
 **Why It Matters:** AI agents can reliably parse metadata → automatic indexing
 
-### 2. Inference Structure (98%)
-**Almost all feature TODOs** follow 100-inference template:
-- Phase 1 (Infer 1-10): Foundation
-- Phase 2 (Infer 11-20): Backend
+### 2. Cycle Structure (98%)
+**Almost all feature TODOs** follow 100-cycle template:
+- Phase 1 (Cycle 1-10): Foundation
+- Phase 2 (Cycle 11-20): Backend
 - Phase 3-10: Features → Testing → Deployment
 
 **Why It Matters:** Predictable pacing → parallel execution possible
@@ -187,9 +187,9 @@ ai_context: |
 - Uncertainty for specialists on scope
 - Difficult to estimate effort
 
-**Solution:** Complete all 100-inference sequences with:
+**Solution:** Complete all 100-cycle sequences with:
 - Phase breakdown
-- Inference-level detail
+- Cycle-level detail
 - Implementation examples
 - Integration points
 
@@ -206,11 +206,11 @@ ai_context: |
 - todo-sell.md (product sales integration)
 
 **Impact:**
-- 300 inferences planned but unspecified
+- 300 cycles planned but unspecified
 - Uncertain specialist assignments
 - Difficult to estimate timeline
 
-**Solution:** Create 100-inference specifications for each:
+**Solution:** Create 100-cycle specifications for each:
 - Ontology mapping
 - Feature phases
 - Integration points
@@ -273,9 +273,9 @@ ai_context: |
 - todo-api.md (needs product endpoints)
 ```
 
-### 3. Add Status Badges to Inference Sections
+### 3. Add Status Badges to Cycle Sections
 **Current:** No visual indication of completion
-**Target:** Each inference marked ✅/⏳/☐
+**Target:** Each cycle marked ✅/⏳/☐
 **Time:** 1-2 hours
 **Benefit:** Easy to see progress during implementation
 
@@ -377,15 +377,15 @@ These files demonstrate exemplary documentation:
 1. Use `one/knowledge/rules.md` + `one/connections/workflow.md` for structure
 2. Reference `one/things/todo-onboard.md` as template (exemplary compliance)
 3. Include "Knowledge Artifacts" section in Phase 1
-4. Mark each inference ✅/⏳/☐ as you progress
+4. Mark each cycle ✅/⏳/☐ as you progress
 5. Capture lessons learned at end of each phase
 
 ### If reviewing documentation:
 1. Check frontmatter matches template (should be 100%)
-2. Verify ontology mapping in Phase 1 Infer 2
+2. Verify ontology mapping in Phase 1 Cycle 2
 3. Scan for code examples and verify file paths
 4. Look for cross-references to related TODOs
-5. Check for completeness (all 100 inferences addressed)
+5. Check for completeness (all 100 cycles addressed)
 
 ### If adding knowledge:
 1. Read `one/knowledge/knowledge.md` to understand chunk structure

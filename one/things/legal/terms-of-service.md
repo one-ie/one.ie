@@ -136,7 +136,7 @@ If you fail to complete required verification, we may:
 
 - Personal use only
 - Limited to 1 group
-- 100 AI inference calls per month
+- 100 AI cycle calls per month
 - 1 GB storage
 - Community support
 
@@ -144,7 +144,7 @@ If you fail to complete required verification, we may:
 
 - Commercial use permitted
 - Up to 10 groups
-- 10,000 AI inference calls per month
+- 10,000 AI cycle calls per month
 - 100 GB storage
 - Email support
 - Custom domain support
@@ -152,7 +152,7 @@ If you fail to complete required verification, we may:
 **Enterprise Plan (Custom pricing):**
 
 - Unlimited groups
-- Unlimited AI inference calls
+- Unlimited AI cycle calls
 - Unlimited storage
 - Priority support (SLA)
 - White-label options
@@ -231,10 +231,10 @@ Each plan specifies:
 
 ### 4.4 Overage Charges
 
-**AI Inference Overage:**
+**AI Cycle Overage:**
 
-- Free plan: $0.10 per inference over limit
-- Pro plan: $0.01 per inference over limit
+- Free plan: $0.10 per cycle over limit
+- Pro plan: $0.01 per cycle over limit
 - Enterprise: No overage (unlimited)
 
 **Storage Overage:**

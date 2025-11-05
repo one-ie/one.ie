@@ -1,4 +1,4 @@
-# Quality Agent Execution Checklist - Infer 65-70
+# Quality Agent Execution Checklist - Cycle 65-70
 
 **Quick Reference for executing the quality testing plan**
 
@@ -14,7 +14,7 @@ Status: 🎯 START HERE
 - [ ] Read /one/knowledge/ontology.md (6-dimension spec)
 - [ ] Read /one/knowledge/rules.md (golden rules)
 - [ ] Read /one/connections/workflow.md (6-phase)
-- [ ] Review feature spec from Infer 1-64
+- [ ] Review feature spec from Cycle 1-64
 - [ ] Map feature to 6 dimensions:
       [ ] Groups (org/team ownership)
       [ ] People (creators, consumers, roles)
@@ -155,7 +155,7 @@ Critical User Journeys
 - ✅ Integration test specifications (15 tests)
 - ✅ E2E test specifications (10 tests)
 
-**NEXT:** Proceed to Infer 66 when Phase 1 complete
+**NEXT:** Proceed to Cycle 66 when Phase 1 complete
 
 ---
 
@@ -238,7 +238,7 @@ Deliverable: /web/test/fixtures/recommendations-test-data.ts
 - ✅ Test fixtures and data seeding
 - ✅ All tests compiling without errors
 
-**NEXT:** Proceed to Infer 67 when Phase 2 complete
+**NEXT:** Proceed to Cycle 67 when Phase 2 complete
 
 ---
 
@@ -328,7 +328,7 @@ Status: ⏹️ BLOCKED_ON_PHASE_2
 - ✅ Ontology alignment: 100% verified
 - ✅ Performance metrics documented
 
-**NEXT:** Proceed to Infer 68-70 when Phase 3 complete
+**NEXT:** Proceed to Cycle 68-70 when Phase 3 complete
 
 ---
 
@@ -481,7 +481,7 @@ QUALITY GATE CRITERIA - ALL MUST PASS:
 DECISION LOGIC:
 IF (ontology ✓ AND coverage ✓ AND tests ✓ AND performance ✓
     AND accessibility ✓ AND security ✓)
-  THEN approve → Advance to Infer 71
+  THEN approve → Advance to Cycle 71
   ELSE reject → Create fixes, re-test, re-gate
 
 DECISION: [ ] ✅ APPROVED  [ ] ❌ REJECTED
@@ -497,7 +497,7 @@ DECISION: [ ] ✅ APPROVED  [ ] ❌ REJECTED
 
 ---
 
-## CONTINUOUS VALIDATION (Infer 68-100)
+## CONTINUOUS VALIDATION (Cycle 68-100)
 
 ### Task 5.1: Monitor Test Flakiness (weekly)
 ```
@@ -532,7 +532,7 @@ DECISION: [ ] ✅ APPROVED  [ ] ❌ REJECTED
 
 **Total Effort:** 27.75 hours
 
-| Infer | Phase | Effort | Status |
+| Cycle | Phase | Effort | Status |
 |-------|-------|--------|--------|
 | 65 | Planning | 9.5h | 🎯 NOW |
 | 66 | Implementation | 8.0h | ⏹️ NEXT |
@@ -586,7 +586,7 @@ DECISION: [ ] ✅ APPROVED  [ ] ❌ REJECTED
 
 **STATUS: READY FOR EXECUTION**
 
-Begin with Infer 65, Task 1.1: Load Ontology Context
+Begin with Cycle 65, Task 1.1: Load Ontology Context
 
 All specifications complete. All deliverables defined. All success criteria clear.
 

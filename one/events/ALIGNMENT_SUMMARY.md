@@ -72,7 +72,7 @@ Aligns with Pattern 2 from agent-ontology.md (Hierarchical Groups).
 #### 6. Added "Agent Positioning in Platform Hierarchy" Section (Lines 453-463)
 Clarifies where agent-onboard fits in the platform:
 1. **Entry point agent** - Runs before agent-director
-2. **Precedes planning** - Gets context before 100-inference plan
+2. **Precedes planning** - Gets context before 100-cycle plan
 3. **Validates with agent-ontology** - Checks types against canonical specification
 4. **Informs agent-backend** - Provides schema guidance
 5. **Informs agent-frontend** - Identifies component needs

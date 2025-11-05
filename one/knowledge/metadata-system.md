@@ -28,7 +28,7 @@ The ONE Platform uses a comprehensive metadata tagging system to enable AI agent
 - 🧭 **Navigation**: Find relevant documents quickly
 - 🧠 **Context**: Understand document purpose without reading full content
 - 🔗 **Relationships**: Build knowledge graphs connecting related concepts
-- 📊 **Inference**: Make better decisions with rich context
+- 📊 **Cycle**: Make better decisions with rich context
 - 🎯 **Targeting**: Load only relevant docs into limited context windows
 
 **For Humans:**
@@ -154,10 +154,10 @@ ai_context: |
     - knowledge/architecture.md
   ```
 
-#### `inference_usage`
+#### `cycle_usage`
 - **Type**: Array of integers
-- **Purpose**: Which inferences (1-100) use this document
-- **Example**: `inference_usage: [1, 2, 3, 5, 98, 99]`
+- **Purpose**: Which cycles (1-100) use this document
+- **Example**: `cycle_usage: [1, 2, 3, 5, 98, 99]`
 
 #### `specialist`
 - **Type**: Enum
@@ -297,12 +297,12 @@ Based on the [tags.md](tags.md) specification, use these 12 tag categories:
 
 The Clean Agent hooks automatically manage metadata:
 
-**Pre-Inference (`clean-pre.py`)**:
+**Pre-Cycle (`clean-pre.py`)**:
 - ✅ Validates metadata presence
 - ✅ Checks for required fields
 - ✅ Reports files missing metadata
 
-**Post-Inference (`clean-post.py`)**:
+**Post-Cycle (`clean-post.py`)**:
 - ✅ Adds metadata to new files
 - ✅ Updates `updated` field
 - ✅ Infers dimension/category from file location
@@ -338,7 +338,7 @@ status: published
 owner: Platform Team
 specialist: quality
 ontology_entities: [intelligence_agent, report, knowledge]
-inference_usage: [61, 62, 63, 64, 65, 66, 67, 68, 69, 70]
+cycle_usage: [61, 62, 63, 64, 65, 66, 67, 68, 69, 70]
 ai_context: |
   Specifies the Clean Agent responsible for code quality and refactoring.
   Reads code, detects smells, applies patterns, removes technical debt.
@@ -384,11 +384,11 @@ version: 1.0.0
 status: published
 specialist: frontend
 technology: [astro, react-19, tailwind-v4]
-inference_usage: [21, 22, 23, 24, 25, 26, 27, 28, 29, 30]
+cycle_usage: [21, 22, 23, 24, 25, 26, 27, 28, 29, 30]
 ai_context: |
   Comprehensive frontend architecture guide for ONE Platform.
   Covers Astro 5 + React 19 islands architecture, SSR, and deployment.
-  Read before implementing any frontend features (Infer 21-30).
+  Read before implementing any frontend features (Cycle 21-30).
   Related: Backend Architecture, Deployment Strategy.
 ---
 ```
@@ -450,8 +450,8 @@ VALID_DIMENSIONS = [
 - [ ] Achieve 100% metadata coverage
 
 ### Phase 4: Continuous Maintenance
-- [ ] Post-inference hook auto-tags new files
-- [ ] Pre-inference hook validates existing files
+- [ ] Post-cycle hook auto-tags new files
+- [ ] Pre-cycle hook validates existing files
 - [ ] Weekly audit reports
 
 ## Benefits Realized

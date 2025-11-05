@@ -56,13 +56,13 @@ The ONE Platform operates as a multi-tenant system where:
       users: number,
       storage: number,         // GB
       apiCalls: number,        // Per month
-      inferences: number,      // Per month
+      cycles: number,      // Per month
     },
     usage?: {
       users: number,
       storage: number,
       apiCalls: number,
-      inferences: number,
+      cycles: number,
     },
 
     // Billing (mainly for organizations)
@@ -85,9 +85,9 @@ The ONE Platform operates as a multi-tenant system where:
       requireEmailVerification?: boolean,
       enableTwoFactor?: boolean,
       allowedDomains?: string[],
-      // Inference settings
-      inferenceEnabled?: boolean,
-      inferenceModels?: string[],  // ["gpt-4", "claude-3.5", "llama-3"]
+      // Cycle settings
+      cycleEnabled?: boolean,
+      cycleModels?: string[],  // ["gpt-4", "claude-3.5", "llama-3"]
     },
 
     // Revenue share (if group generates platform revenue)
@@ -188,11 +188,11 @@ Large-scale multi-tenant business entities
 - `payment_event` - Subscription payments (Stripe or crypto)
 - `subscription_event` - Plan changes (starter → pro → enterprise)
 
-**Inference Events:**
+**Cycle Events:**
 
-- `inference_request` - Group member requests inference
-- `inference_completed` - Result delivered
-- `inference_quota_exceeded` - Monthly limit hit
+- `cycle_request` - Group member requests cycle
+- `cycle_completed` - Result delivered
+- `cycle_quota_exceeded` - Monthly limit hit
 
 **Revenue Events:**
 
@@ -217,13 +217,13 @@ const oneGroupId = await db.insert("groups", {
       users: 1000000, // Unlimited for platform
       storage: 1000000, // 1PB
       apiCalls: -1, // Unlimited
-      inferences: -1, // Unlimited
+      cycles: -1, // Unlimited
     },
     usage: {
       users: 0,
       storage: 0,
       apiCalls: 0,
-      inferences: 0,
+      cycles: 0,
     },
     billing: {
       cryptoEnabled: true,
@@ -237,8 +237,8 @@ const oneGroupId = await db.insert("groups", {
       allowSignups: true,
       requireEmailVerification: true,
       enableTwoFactor: true,
-      inferenceEnabled: true,
-      inferenceModels: ["gpt-4", "claude-3.5", "llama-3"],
+      cycleEnabled: true,
+      cycleModels: ["gpt-4", "claude-3.5", "llama-3"],
     },
     revenueShare: 0, // Anthony keeps 100% of revenue
   },
@@ -302,13 +302,13 @@ const customerGroupId = await db.insert("groups", {
       users: 50,
       storage: 100, // GB
       apiCalls: 100000,
-      inferences: 10000, // 10K inferences/month
+      cycles: 10000, // 10K cycles/month
     },
     usage: {
       users: 0,
       storage: 0,
       apiCalls: 0,
-      inferences: 0,
+      cycles: 0,
     },
     billing: {
       customerId: "cus_stripe123",
@@ -319,8 +319,8 @@ const customerGroupId = await db.insert("groups", {
       allowSignups: false,
       requireEmailVerification: true,
       enableTwoFactor: false,
-      inferenceEnabled: true,
-      inferenceModels: ["gpt-4", "claude-3.5"],
+      cycleEnabled: true,
+      cycleModels: ["gpt-4", "claude-3.5"],
     },
     revenueShare: 0.1, // Customer gets 10% revenue share if they refer users
   },
@@ -386,15 +386,15 @@ const squadId = await db.insert("groups", {
 });
 ```
 
-### Track Group Inference Usage
+### Track Group Cycle Usage
 
 ```typescript
-// User in group requests inference
+// User in group requests cycle
 await db.insert("events", {
   groupId: customerGroupId,
-  type: "inference_request",
+  type: "cycle_request",
   actorId: userId,
-  targetId: inferenceRequestId,
+  targetId: cycleRequestId,
   timestamp: Date.now(),
   metadata: {
     model: "gpt-4",
@@ -410,23 +410,23 @@ await db.patch(customerGroupId, {
     ...group.properties,
     usage: {
       ...group.properties.usage,
-      inferences: group.properties.usage.inferences + 1,
+      cycles: group.properties.usage.cycles + 1,
     },
   },
   updatedAt: Date.now(),
 });
 
 // Check if quota exceeded
-if (group.properties.usage.inferences >= group.properties.limits.inferences) {
+if (group.properties.usage.cycles >= group.properties.limits.cycles) {
   await db.insert("events", {
     groupId: customerGroupId,
-    type: "inference_quota_exceeded",
+    type: "cycle_quota_exceeded",
     actorId: "system",
     targetId: customerGroupId,
     timestamp: Date.now(),
     metadata: {
-      limit: group.properties.limits.inferences,
-      usage: group.properties.usage.inferences,
+      limit: group.properties.limits.cycles,
+      usage: group.properties.usage.cycles,
     },
   });
 }
@@ -505,12 +505,12 @@ const childGroups = await db
   .collect();
 ```
 
-**Get group inference usage:**
+**Get group cycle usage:**
 
 ```typescript
 const group = await db.get(groupId);
-const usage = group.properties.usage?.inferences || 0;
-const limit = group.properties.limits?.inferences || 0;
+const usage = group.properties.usage?.cycles || 0;
+const limit = group.properties.limits?.cycles || 0;
 const percentageUsed = (usage / limit) * 100;
 ```
 
@@ -579,9 +579,9 @@ export const canAccess = async (
 - **Hierarchical** - Groups can nest infinitely (friend circles → businesses → organizations)
 - **6 group types** - friend_circle, business, community, dao, government, organization
 - **Protocol-agnostic** - Blockchain interactions via `metadata.network`
-- **Inference quotas** - Monthly limits enforced per group (mainly organizations)
+- **Cycle quotas** - Monthly limits enforced per group (mainly organizations)
 - **Revenue share** - Optional revenue split for referring groups (configurable 0-100%)
 - **Blockchain billing** - Groups can pay via crypto (SUI/Solana/Base)
-- **Usage tracking** - All inference/API usage tracked in group properties
+- **Usage tracking** - All cycle/API usage tracked in group properties
 - **Event history** - Complete audit trail of group activity
 - **Flexible scale** - From friend circles (2 people) to governments (billions) without schema changes

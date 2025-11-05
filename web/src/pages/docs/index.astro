@@ -16,8 +16,8 @@ import { FileText } from 'lucide-react';
 type DocEntry = CollectionEntry<'docs'>;
 type DocFolder = Record<string, DocEntry[]>;
 
-// Get view preference from URL or default to list view
-const viewMode = (Astro.url.searchParams.get('view') || 'list') as
+// Get view preference from URL or default to compact view
+const viewMode = (Astro.url.searchParams.get('view') || 'compact') as
   | 'list'
   | 'compact'
   | 'grid2'

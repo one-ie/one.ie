@@ -1123,7 +1123,7 @@ typescript_config:
   type_checking: "noImplicitAny, noImplicitReturns, strictNullChecks"
 
 advanced_patterns:
-  generic_components: "Reusable components with proper type inference"
+  generic_components: "Reusable components with proper type cycle"
   discriminated_unions: "Type-safe state management and API responses"
   template_literals: "Type-safe routing and dynamic strings"
   conditional_types: "Advanced type transformations and utilities"

@@ -148,7 +148,7 @@ Architecture.md → Service Layer.md (Effect.ts patterns)
 
 **Core Concepts:**
 
-- **Standalone Mode**: Content collections (markdown) + AI inference + static site
+- **Standalone Mode**: Content collections (markdown) + AI cycle + static site
 - **API Mode**: Everything + authentication + agents + real-time + multi-tenant
 - Progressive enhancement from simple to full-featured
 - Environment-based feature switching

@@ -28,42 +28,42 @@ This document defines all frontend testing tasks for the ONE Platform. Frontend 
 ## Critical Path Diagram
 
 ```
-Phase 1: Test Setup (Infer 65-66)
+Phase 1: Test Setup (Cycle 65-66)
     ↓
-Phase 2: Component Unit Tests (Infer 67-72)
+Phase 2: Component Unit Tests (Cycle 67-72)
     ├── Demo Components (HooksDemo, SearchDemo, EventsDemo, etc.)
     ├── Feature Components (ContactForm, GroupTypeSelector, etc.)
     └── UI Components (High-coverage shadcn/ui)
     ↓
-Phase 3: Integration Tests (Infer 73-78)
+Phase 3: Integration Tests (Cycle 73-78)
     ├── Component Composition (Features within Demos)
     ├── Data Flow (useQuery → Display → useMutation)
     └── State Management (Jotai atoms, Nanostores)
     ↓
-Phase 4: User Interaction Tests (Infer 79-84)
+Phase 4: User Interaction Tests (Cycle 79-84)
     ├── Form Submission (ContactForm, GroupTypeSelector)
     ├── Button Interactions (Create, Update, Delete)
     └── Navigation (Route changes, Link clicks)
     ↓
-Phase 5: Edge Cases & Errors (Infer 85-88)
+Phase 5: Edge Cases & Errors (Cycle 85-88)
     ├── Loading States (Suspense, fallbacks)
     ├── Error Boundaries (Component failures)
     └── Empty States (No data, null checks)
     ↓
-Phase 6: Accessibility & Performance (Infer 89-95)
+Phase 6: Accessibility & Performance (Cycle 89-95)
     ├── Keyboard Navigation (Tab, Enter, Escape)
     ├── ARIA Labels & Roles
     ├── Dark Mode Support
     └── Responsive Design (Mobile, Tablet, Desktop)
     ↓
-Phase 7: E2E Flows (Infer 96-100)
+Phase 7: E2E Flows (Cycle 96-100)
     ├── Critical Paths (Auth → Groups → Things → Connections)
     └── Real-time Updates (Convex subscriptions)
 ```
 
 ---
 
-## Phase 1: Component Test Setup (Infer 65-66)
+## Phase 1: Component Test Setup (Cycle 65-66)
 
 ### Task 1.1: Establish Vitest Base Configuration
 
@@ -179,7 +179,7 @@ measureQueryTime(queryFn)
 
 ---
 
-## Phase 2: Component Unit Tests (Infer 67-72)
+## Phase 2: Component Unit Tests (Cycle 67-72)
 
 ### Task 2.1: Demo Component Tests
 
@@ -382,7 +382,7 @@ Select Tests:
 
 ---
 
-## Phase 3: Integration Tests (Infer 73-78)
+## Phase 3: Integration Tests (Cycle 73-78)
 
 ### Task 3.1: Convex Hook Integration Tests
 
@@ -517,7 +517,7 @@ Multi-step Form Flow (4 tests):
 
 ---
 
-## Phase 4: User Interaction Tests (Infer 79-84)
+## Phase 4: User Interaction Tests (Cycle 79-84)
 
 ### Task 4.1: Form Submission & Validation Tests
 
@@ -670,7 +670,7 @@ Query Parameter Tests (6 tests):
 
 ---
 
-## Phase 5: Edge Cases & Error Handling (Infer 85-88)
+## Phase 5: Edge Cases & Error Handling (Cycle 85-88)
 
 ### Task 5.1: Loading States & Async Operations
 
@@ -829,7 +829,7 @@ Edge Case Values (6 tests):
 
 ---
 
-## Phase 6: Accessibility & Responsive Design (Infer 89-95)
+## Phase 6: Accessibility & Responsive Design (Cycle 89-95)
 
 ### Task 6.1: Keyboard Navigation & ARIA Tests
 
@@ -1016,7 +1016,7 @@ Viewport Meta Tests (4 tests):
 
 ---
 
-## Phase 7: E2E Critical Path Tests (Infer 96-100)
+## Phase 7: E2E Critical Path Tests (Cycle 96-100)
 
 ### Task 7.1: Authentication Flow E2E Tests
 

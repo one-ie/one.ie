@@ -213,7 +213,7 @@ Autonomous sales agent that qualifies leads, guides org owner onboarding, assist
 - **Segment outreach** - Tailor messages by industry, company size, use case
 - **Time interventions** - Send reminders at optimal times based on timezone
 - **Escalate blockers** - Flag KYC issues or technical problems to service agent
-- **Celebrate wins** - Send congratulations on milestones (first inference, team member invited)
+- **Celebrate wins** - Send congratulations on milestones (first cycle, team member invited)
 
 ---
 
@@ -277,13 +277,13 @@ Autonomous sales agent that qualifies leads, guides org owner onboarding, assist
 
 ```typescript
 {
-  type: "inference_request",
+  type: "cycle_request",
   actorId: userId,
   metadata: { organizationId: orgId, model: "gpt-4" }
 }
 ```
 
-**Action:** Update engagement score, celebrate first inference, monitor usage patterns
+**Action:** Update engagement score, celebrate first cycle, monitor usage patterns
 
 #### Trial Expiry Events
 
@@ -549,7 +549,7 @@ const orgEvents = await ctx.db
 
 // Step 2: Calculate engagement score
 const engagementScore = calculateEngagement({
-  inferencesUsed: org.usage.inference,
+  cyclesUsed: org.usage.cycle,
   usersInvited: org.usage.users,
   featuresExplored: countUniqueFeatures(orgEvents),
   daysActive: countActiveDays(orgEvents),
@@ -748,7 +748,7 @@ await ctx.db.patch(orgId, {
   limits: {
     ...org.limits,
     // Unlock full trial limits
-    inference: 10000, // Increased from restricted 100
+    cycle: 10000, // Increased from restricted 100
   },
   updatedAt: Date.now(),
 });
@@ -765,7 +765,7 @@ await sendEmail({
     Next steps to maximize your trial:
     1. Create your first AI agent
     2. Invite team members
-    3. Run your first inference
+    3. Run your first cycle
 
     Need help? Reply to this email or chat with me in-app.
   `,

@@ -149,7 +149,7 @@ ontology:
 
       - "todo.md":
           size: "150 KB"
-          purpose: "100-inference release plan (P0, P1, P2 tasks)"
+          purpose: "100-cycle release plan (P0, P1, P2 tasks)"
           critical: true
 
       - "strategy.md":
@@ -212,8 +212,8 @@ ontology:
       - "dashboard.md":
           purpose: "Multi-tenant UI architecture"
 
-      - "inference.md":
-          purpose: "Inference-based planning system"
+      - "cycle.md":
+          purpose: "Cycle-based planning system"
 
   events:
     path: "one/events/"

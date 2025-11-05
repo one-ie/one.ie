@@ -123,13 +123,13 @@ git push → one-ie/web (website source)
    - ✅ Status: Complete and current
 
 2. **`one/knowledge/todo.md`** - Execution Template
-   - 100-inference sequence
-   - Planning paradigm (inferences, not days)
+   - 100-cycle sequence
+   - Planning paradigm (cycles, not days)
    - ✅ Status: Complete and current
 
 3. **`CLAUDE.md`** - Development Workflow
    - 6-phase workflow
-   - Inference-based planning
+   - Cycle-based planning
    - File structure policy
    - ✅ Status: Complete and current
 
@@ -342,7 +342,7 @@ grep -L "DataProvider" one/things/plans/effect.md one/things/plans/backend-agnos
 ## Related Documentation
 
 - **`one/knowledge/ontology.md`** - 6-dimension data model (SOURCE OF TRUTH)
-- **`one/knowledge/todo.md`** - 100-inference execution template
+- **`one/knowledge/todo.md`** - 100-cycle execution template
 - **`CLAUDE.md`** - Development workflow and patterns
 - **`web/AGENTS.md`** - Quick reference for Convex patterns
 

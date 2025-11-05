@@ -2,7 +2,7 @@
 title: Wave1 Orchestration Summary
 dimension: things
 category: plans
-tags: agent, ai, architecture, inference, ontology
+tags: agent, ai, architecture, cycle, ontology
 related_dimensions: events, groups, people
 scope: global
 created: 2025-11-03
@@ -27,7 +27,7 @@ ai_context: |
 
 ## What Was Just Done
 
-The Agent-Director has completed **Phase 1: Foundation & Validation (Infer 1-10)** for Wave 1 Creator Onboarding.
+The Agent-Director has completed **Phase 1: Foundation & Validation (Cycle 1-10)** for Wave 1 Creator Onboarding.
 
 ### Three Comprehensive Plans Generated
 
@@ -41,9 +41,9 @@ The Agent-Director has completed **Phase 1: Foundation & Validation (Infer 1-10)
    - Out of scope clarification
    - Dependencies identification
 
-2. **`wave1-onboarding-100-inferences.md`** (12,000+ words)
-   - Complete 100-inference breakdown (Infer 1-100)
-   - Each inference has: task, deliverable, duration, status
+2. **`wave1-onboarding-100-cycles.md`** (12,000+ words)
+   - Complete 100-cycle breakdown (Cycle 1-100)
+   - Each cycle has: task, deliverable, duration, status
    - Dependencies clearly marked
    - Parallel execution strategy (10-12 calendar days, 38 person-days)
    - Risk mitigation planning
@@ -51,11 +51,11 @@ The Agent-Director has completed **Phase 1: Foundation & Validation (Infer 1-10)
    - Resource requirements
 
 3. **`wave1-specialist-assignments.md`** (10,000+ words)
-   - Specialist 1 (Backend): 40 inferences (10 days)
-   - Specialist 2 (Frontend): 20 inferences (5-6 days)
-   - Specialist 3 (Quality): 10 inferences (2-3 days)
-   - Specialist 4 (Design/Documentation): 10 inferences (5-7 days)
-   - Specialist 5 (Director/Orchestrator): 100 inferences (10 days)
+   - Specialist 1 (Backend): 40 cycles (10 days)
+   - Specialist 2 (Frontend): 20 cycles (5-6 days)
+   - Specialist 3 (Quality): 10 cycles (2-3 days)
+   - Specialist 4 (Design/Documentation): 10 cycles (5-7 days)
+   - Specialist 5 (Director/Orchestrator): 100 cycles (10 days)
    - Detailed task breakdown for each specialist
    - Deliverables checklist
    - Gate decisions + blockers
@@ -118,9 +118,9 @@ The Agent-Director has completed **Phase 1: Foundation & Validation (Infer 1-10)
 
 ---
 
-## The 100-Inference Plan Overview
+## The 100-Cycle Plan Overview
 
-### Phase 1: Foundation (Infer 1-10) ✅ COMPLETE
+### Phase 1: Foundation (Cycle 1-10) ✅ COMPLETE
 
 - Ontology validation
 - Entity type definition
@@ -130,10 +130,10 @@ The Agent-Director has completed **Phase 1: Foundation & Validation (Infer 1-10)
 - Implementation checklist
 - **Status:** Ready for next phase
 
-### Phase 2: Backend Schema & Services (Infer 11-30)
+### Phase 2: Backend Schema & Services (Cycle 11-30)
 
 **Specialist:** Agent-Backend
-**Duration:** 10 days (20 inferences)
+**Duration:** 10 days (20 cycles)
 **Key Deliverables:**
 
 - Creator entity extended
@@ -146,13 +146,13 @@ The Agent-Director has completed **Phase 1: Foundation & Validation (Infer 1-10)
 - Verification system
 - Rate limiting configured
 
-**Blocker:** Unblocks Frontend API integration (Infer 51+)
+**Blocker:** Unblocks Frontend API integration (Cycle 51+)
 
-### Phase 3: Frontend Components & Pages (Infer 31-50)
+### Phase 3: Frontend Components & Pages (Cycle 31-50)
 
 **Specialist:** Agent-Frontend
-**Duration:** 5-6 days (20 inferences)
-**Can start:** Day 3 (while backend still working on Infer 11-30)
+**Duration:** 5-6 days (20 cycles)
+**Can start:** Day 3 (while backend still working on Cycle 11-30)
 **Key Deliverables:**
 
 - 8 reusable components (SignupForm, EmailVerification, ProfileForm, etc.)
@@ -163,12 +163,12 @@ The Agent-Director has completed **Phase 1: Foundation & Validation (Infer 1-10)
 - Accessibility compliance
 - Dark mode support
 
-**Blocker:** Needs API routes ready by Infer 51+
+**Blocker:** Needs API routes ready by Cycle 51+
 
-### Phase 4: API Routes & Integration (Infer 51-70)
+### Phase 4: API Routes & Integration (Cycle 51-70)
 
 **Specialist:** Agent-Backend + Agent-Integration
-**Duration:** 5-6 days (20 inferences)
+**Duration:** 5-6 days (20 cycles)
 **Key Deliverables:**
 
 - 25+ HTTP API routes (auth, profile, workspace, team, wallet, skills, onboarding)
@@ -176,12 +176,12 @@ The Agent-Director has completed **Phase 1: Foundation & Validation (Infer 1-10)
 - Email template integration
 - Integration testing
 
-**Blocker:** Unblocks integration testing (Infer 71+)
+**Blocker:** Unblocks integration testing (Cycle 71+)
 
-### Phase 5: Testing & Quality (Infer 81-90)
+### Phase 5: Testing & Quality (Cycle 81-90)
 
 **Specialist:** Agent-Quality
-**Duration:** 2-3 days (10 inferences)
+**Duration:** 2-3 days (10 cycles)
 **Key Deliverables:**
 
 - Unit tests (90%+ backend, 85%+ frontend coverage)
@@ -191,12 +191,12 @@ The Agent-Director has completed **Phase 1: Foundation & Validation (Infer 1-10)
 - Accessibility audit
 - Performance audit
 
-**Blocker:** Unblocks deployment (Infer 91+)
+**Blocker:** Unblocks deployment (Cycle 91+)
 
-### Phase 6: Deployment & Documentation (Infer 91-100)
+### Phase 6: Deployment & Documentation (Cycle 91-100)
 
 **Specialist:** Agent-Ops + Agent-Documenter
-**Duration:** 1-2 days (10 inferences)
+**Duration:** 1-2 days (10 cycles)
 **Key Deliverables:**
 
 - User guides (getting started, onboarding, team management, troubleshooting)
@@ -214,7 +214,7 @@ The Agent-Director has completed **Phase 1: Foundation & Validation (Infer 1-10)
 
 ## Specialist Team Assignments
 
-| Role         | Name           | Inferences         | Duration | Start Date               | Status |
+| Role         | Name           | Cycles         | Duration | Start Date               | Status |
 | ------------ | -------------- | ------------------ | -------- | ------------------------ | ------ |
 | Backend      | Agent-Backend  | 40 (11-30, 51-70)  | 10 days  | Day 1                    | Ready  |
 | Frontend     | Agent-Frontend | 20 (31-50)         | 5-6 days | Day 3                    | Ready  |
@@ -228,44 +228,44 @@ The Agent-Director has completed **Phase 1: Foundation & Validation (Infer 1-10)
 
 ```
 ┌─────────────────────────────────────────────────────────────┐
-│  DAY 1 (Infer 1-10):  Foundation & Ontology Validation      │
+│  DAY 1 (Cycle 1-10):  Foundation & Ontology Validation      │
 │  ✅ COMPLETE                                                │
 └─────────────────────────────────────────────────────────────┘
         ↓ (unblocks everything)
 ┌─────────────────────────────────────────────────────────────┐
-│  DAY 2-3 (Infer 11-20): Backend Schema & Services           │
+│  DAY 2-3 (Cycle 11-20): Backend Schema & Services           │
 │  Specialist: Agent-Backend                                  │
-│  Parallel: Design starts (Infer 41-45)                      │
+│  Parallel: Design starts (Cycle 41-45)                      │
 └─────────────────────────────────────────────────────────────┘
         ↓ (schema ready)
 ┌─────────────────────────────────────────────────────────────┐
-│  DAY 3-5 (Infer 21-30): Backend Mutations & Queries         │
+│  DAY 3-5 (Cycle 21-30): Backend Mutations & Queries         │
 │  Specialist: Agent-Backend                                  │
-│  Parallel: Frontend starts (Infer 31-50)                    │
-│  Parallel: Design continues (Infer 46-50)                   │
+│  Parallel: Frontend starts (Cycle 31-50)                    │
+│  Parallel: Design continues (Cycle 46-50)                   │
 └─────────────────────────────────────────────────────────────┘
         ↓ (backend complete)
 ┌─────────────────────────────────────────────────────────────┐
-│  DAY 6-7 (Infer 51-70): API Routes & Email Integration      │
+│  DAY 6-7 (Cycle 51-70): API Routes & Email Integration      │
 │  Specialist: Agent-Backend                                  │
 │  Frontend: Almost ready, waiting for API routes             │
 └─────────────────────────────────────────────────────────────┘
         ↓ (APIs ready)
 ┌─────────────────────────────────────────────────────────────┐
-│  DAY 7-8 (Infer 71-80): Integration Testing                 │
+│  DAY 7-8 (Cycle 71-80): Integration Testing                 │
 │  Specialist: Agent-Integration                              │
 │  Test: Frontend + Backend together                          │
 └─────────────────────────────────────────────────────────────┘
         ↓ (integration working)
 ┌─────────────────────────────────────────────────────────────┐
-│  DAY 8-9 (Infer 81-90): Quality Testing & Audits            │
+│  DAY 8-9 (Cycle 81-90): Quality Testing & Audits            │
 │  Specialist: Agent-Quality                                  │
 │  Unit tests, Integration tests, E2E tests                   │
 │  Security, Accessibility, Performance audits                │
 └─────────────────────────────────────────────────────────────┘
         ↓ (quality approved)
 ┌─────────────────────────────────────────────────────────────┐
-│  DAY 10-12 (Infer 91-100): Deploy & Document                │
+│  DAY 10-12 (Cycle 91-100): Deploy & Document                │
 │  Specialist: Agent-Ops + Agent-Documenter                   │
 │  Deploy to production, setup monitoring                     │
 │  Create user guides, API docs, release notes                │
@@ -321,31 +321,31 @@ All of these must be met before Wave 1 closes:
 
 ## Key Decisions & Gateways
 
-**Gate 1 (Infer 10):** APPROVED ✅
+**Gate 1 (Cycle 10):** APPROVED ✅
 
 - Decision: Is ontology mapping complete?
 - Result: **YES** - All 6 dimensions perfectly aligned
 - Action: Release all specialists
 
-**Gate 2 (Infer 30):**
+**Gate 2 (Cycle 30):**
 
 - Decision: Is backend schema production-ready?
 - Validation: All mutations + queries working, types generated
-- Action: Unblock frontend API integration (Infer 51)
+- Action: Unblock frontend API integration (Cycle 51)
 
-**Gate 3 (Infer 70):**
+**Gate 3 (Cycle 70):**
 
 - Decision: Is API integration working end-to-end?
 - Validation: Full signup → dashboard flow works
 - Action: Unblock quality testing
 
-**Gate 4 (Infer 90):**
+**Gate 4 (Cycle 90):**
 
 - Decision: Is quality acceptable for production?
 - Validation: Tests pass, audits complete, no critical issues
 - Action: Approve production deployment
 
-**Gate 5 (Infer 100):**
+**Gate 5 (Cycle 100):**
 
 - Decision: Is Wave 1 complete?
 - Validation: All success criteria met
@@ -360,16 +360,16 @@ All of these must be met before Wave 1 closes:
 ```
 Timeline with Parallelization:
 
-Day 1:    Backend Infer 11-15    +    Design Infer 41-45
-Day 2:    Backend Infer 16-20    +    Frontend Infer 31-35
-Day 3:    Backend Infer 21-25    +    Frontend Infer 36-40
-Day 4:    Backend Infer 26-30    +    Frontend Infer 41-45
-Day 5:    API Routes Infer 51-55 +    Frontend Infer 46-50
-Day 6:    API Routes Infer 56-60 +    Integration Infer 71
-Day 7:    Email Infer 61-65      +    Integration Infer 72-75
-Day 8:    Email Infer 66-70      +    Quality Infer 81-85
-Day 9:    Quality Infer 86-90    +    Docs Infer 91-95
-Day 10:   Deployment Infer 96-100
+Day 1:    Backend Cycle 11-15    +    Design Cycle 41-45
+Day 2:    Backend Cycle 16-20    +    Frontend Cycle 31-35
+Day 3:    Backend Cycle 21-25    +    Frontend Cycle 36-40
+Day 4:    Backend Cycle 26-30    +    Frontend Cycle 41-45
+Day 5:    API Routes Cycle 51-55 +    Frontend Cycle 46-50
+Day 6:    API Routes Cycle 56-60 +    Integration Cycle 71
+Day 7:    Email Cycle 61-65      +    Integration Cycle 72-75
+Day 8:    Email Cycle 66-70      +    Quality Cycle 81-85
+Day 9:    Quality Cycle 86-90    +    Docs Cycle 91-95
+Day 10:   Deployment Cycle 96-100
 Day 11:   Monitoring + Go-Live
 Day 12:   Buffer for issues
 
@@ -440,7 +440,7 @@ These features are **intentionally scoped to Wave 2+:**
 
 1. Read: `/wave1-onboarding-vision.md` (entity types + events)
 2. Read: `/wave1-specialist-assignments.md` (your responsibilities)
-3. Start: Infer 11 (Extend creator entity type in schema.ts)
+3. Start: Cycle 11 (Extend creator entity type in schema.ts)
 4. Goal: Schema ready by end of day
 
 ### For Agent-Frontend (Start Day 3)
@@ -449,7 +449,7 @@ These features are **intentionally scoped to Wave 2+:**
 2. Read: `/wave1-specialist-assignments.md` (your components)
 3. Review: `/one/knowledge/ontology.md` (understand thing types)
 4. Wait: Until backend schema is ready (day 2)
-5. Start: Infer 31 (SignupForm component)
+5. Start: Cycle 31 (SignupForm component)
 6. Goal: Components built by end of week
 
 ### For Agent-Quality (Start Day 8)
@@ -457,7 +457,7 @@ These features are **intentionally scoped to Wave 2+:**
 1. Read: `/wave1-specialist-assignments.md` (test strategy)
 2. Review: Completed backend code
 3. Review: Completed frontend code
-4. Start: Infer 81 (Backend unit tests)
+4. Start: Cycle 81 (Backend unit tests)
 5. Goal: All tests passing by day 10
 
 ### For Agent-Designer (Start Now - Design, Day 9 - Docs)
@@ -472,8 +472,8 @@ These features are **intentionally scoped to Wave 2+:**
 
 1. ✅ Complete Phase 1 validation (done)
 2. ✅ Generate 3 planning documents (done)
-3. ➜ Monitor Infer 11-30 (backend progress)
-4. ➜ Validate Gate 2 at Infer 30
+3. ➜ Monitor Cycle 11-30 (backend progress)
+4. ➜ Validate Gate 2 at Cycle 30
 5. ➜ Monitor all specialist progress daily
 6. ➜ Resolve blockers immediately
 7. ➜ Validate success at each gate
@@ -489,9 +489,9 @@ All planning documents are in `/one/things/plans/`:
    - Contains user personas + flow diagram + success metrics
    - Share with stakeholders for approval
 
-2. **`wave1-onboarding-100-inferences.md`** (12,000 words)
-   - Complete breakdown of all 100 inferences
-   - Each inference has task, deliverable, dependencies, time estimate
+2. **`wave1-onboarding-100-cycles.md`** (12,000 words)
+   - Complete breakdown of all 100 cycles
+   - Each cycle has task, deliverable, dependencies, time estimate
    - Reference throughout execution
 
 3. **`wave1-specialist-assignments.md`** (10,000 words)
@@ -533,16 +533,16 @@ All planning documents are in `/one/things/plans/`:
 
 **Daily (During Standup):**
 
-- Each specialist: "What inferences did I complete? What's blocking me?"
+- Each specialist: "What cycles did I complete? What's blocking me?"
 - Director: "Any risks or dependencies?"
 
 **Weekly (Friday):**
 
-- Review actual vs. planned inferences
+- Review actual vs. planned cycles
 - Adjust timeline if needed
 - Plan next week
 
-**Gateways (at Infer 10, 30, 70, 90, 100):**
+**Gateways (at Cycle 10, 30, 70, 90, 100):**
 
 - Director validates success criteria
 - Team meeting to celebrate + plan next phase
@@ -553,7 +553,7 @@ All planning documents are in `/one/things/plans/`:
 
 **Based on ontology alignment + straightforward CRUD work:**
 
-| Specialist  | Inferences/Day | Days | Total Inferences |
+| Specialist  | Cycles/Day | Days | Total Cycles |
 | ----------- | -------------- | ---- | ---------------- |
 | Backend     | 4              | 10   | 40               |
 | Frontend    | 3.5            | 6    | 20               |
@@ -599,6 +599,6 @@ All planning documents are in `/one/things/plans/`:
 ---
 
 **Status:** ✅ Ready for Implementation
-**Next Action:** Assign specialists and start Infer 11
+**Next Action:** Assign specialists and start Cycle 11
 **Expected Completion:** 10-12 calendar days from start
 **Wave 1 Success:** CERTAIN (all pieces aligned)

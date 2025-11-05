@@ -2,7 +2,7 @@
 title: Ecommerce Demo Plan
 dimension: events
 category: ECOMMERCE-DEMO-PLAN.md
-tags: ai, connections, events, groups, inference, knowledge, ontology, people, things
+tags: ai, connections, events, groups, cycle, knowledge, ontology, people, things
 related_dimensions: connections, groups, knowledge, people, things
 scope: global
 created: 2025-11-03
@@ -11,12 +11,12 @@ version: 1.0.0
 ai_context: |
   This document is part of the events dimension in the ECOMMERCE-DEMO-PLAN.md category.
   Location: one/events/ECOMMERCE-DEMO-PLAN.md
-  Purpose: Documents ecommerce demo application - 100-inference plan
+  Purpose: Documents ecommerce demo application - 100-cycle plan
   Related dimensions: connections, groups, knowledge, people, things
   For AI agents: Read this to understand ECOMMERCE DEMO PLAN.
 ---
 
-# Ecommerce Demo Application - 100-Inference Plan
+# Ecommerce Demo Application - 100-Cycle Plan
 
 **Version:** 1.0.0  
 **Status:** Executing  
@@ -63,157 +63,157 @@ ai_context: |
 
 ---
 
-## 100-Inference Execution Plan
+## 100-Cycle Execution Plan
 
-### Phase 1: Foundation (Infer 1-10)
+### Phase 1: Foundation (Cycle 1-10)
 **Specialist:** Engineering Director + Frontend  
 **Duration:** ~10 min
 
-- [x] Infer 1: Validate ontology mapping
-- [ ] Infer 2: Create product data structure
-- [ ] Infer 3: Setup content collections
-- [ ] Infer 4: Create 10+ sample products
-- [ ] Infer 5: Setup categories and collections
-- [ ] Infer 6: Configure Nanostores for cart
-- [ ] Infer 7: Create type definitions
-- [ ] Infer 8: Setup utility functions
-- [ ] Infer 9: Test data loading
-- [ ] Infer 10: Document data structure
+- [x] Cycle 1: Validate ontology mapping
+- [ ] Cycle 2: Create product data structure
+- [ ] Cycle 3: Setup content collections
+- [ ] Cycle 4: Create 10+ sample products
+- [ ] Cycle 5: Setup categories and collections
+- [ ] Cycle 6: Configure Nanostores for cart
+- [ ] Cycle 7: Create type definitions
+- [ ] Cycle 8: Setup utility functions
+- [ ] Cycle 9: Test data loading
+- [ ] Cycle 10: Document data structure
 
-### Phase 2: Product Display (Infer 11-20)
+### Phase 2: Product Display (Cycle 11-20)
 **Specialist:** Frontend  
 **Duration:** ~15 min
 
-- [ ] Infer 11: Build product grid component
-- [ ] Infer 12: Add product card with images
-- [ ] Infer 13: Implement quick view modal
-- [ ] Infer 14: Add price display with sale pricing
-- [ ] Infer 15: Build category navigation
-- [ ] Infer 16: Create product listing page
-- [ ] Infer 17: Add sorting options
-- [ ] Infer 18: Implement responsive grid
-- [ ] Infer 19: Add loading states
-- [ ] Infer 20: Test product display
+- [ ] Cycle 11: Build product grid component
+- [ ] Cycle 12: Add product card with images
+- [ ] Cycle 13: Implement quick view modal
+- [ ] Cycle 14: Add price display with sale pricing
+- [ ] Cycle 15: Build category navigation
+- [ ] Cycle 16: Create product listing page
+- [ ] Cycle 17: Add sorting options
+- [ ] Cycle 18: Implement responsive grid
+- [ ] Cycle 19: Add loading states
+- [ ] Cycle 20: Test product display
 
-### Phase 3: Product Details (Infer 21-30)
+### Phase 3: Product Details (Cycle 21-30)
 **Specialist:** Frontend  
 **Duration:** ~15 min
 
-- [ ] Infer 21: Build product detail page
-- [ ] Infer 22: Create image gallery
-- [ ] Infer 23: Add variant selector
-- [ ] Infer 24: Implement quantity picker
-- [ ] Infer 25: Build add to cart button
-- [ ] Infer 26: Show related products
-- [ ] Infer 27: Add product description
-- [ ] Infer 28: Display product specs
-- [ ] Infer 29: Add breadcrumbs
-- [ ] Infer 30: Test product details
+- [ ] Cycle 21: Build product detail page
+- [ ] Cycle 22: Create image gallery
+- [ ] Cycle 23: Add variant selector
+- [ ] Cycle 24: Implement quantity picker
+- [ ] Cycle 25: Build add to cart button
+- [ ] Cycle 26: Show related products
+- [ ] Cycle 27: Add product description
+- [ ] Cycle 28: Display product specs
+- [ ] Cycle 29: Add breadcrumbs
+- [ ] Cycle 30: Test product details
 
-### Phase 4: Shopping Cart (Infer 31-40)
+### Phase 4: Shopping Cart (Cycle 31-40)
 **Specialist:** Frontend  
 **Duration:** ~15 min
 
-- [ ] Infer 31: Build cart page layout
-- [ ] Infer 32: Create cart item component
-- [ ] Infer 33: Add quantity controls
-- [ ] Infer 34: Implement remove item
-- [ ] Infer 35: Calculate subtotal
-- [ ] Infer 36: Add shipping estimate
-- [ ] Infer 37: Calculate tax
-- [ ] Infer 38: Show cart total
-- [ ] Infer 39: Add empty cart state
-- [ ] Infer 40: Test cart operations
+- [ ] Cycle 31: Build cart page layout
+- [ ] Cycle 32: Create cart item component
+- [ ] Cycle 33: Add quantity controls
+- [ ] Cycle 34: Implement remove item
+- [ ] Cycle 35: Calculate subtotal
+- [ ] Cycle 36: Add shipping estimate
+- [ ] Cycle 37: Calculate tax
+- [ ] Cycle 38: Show cart total
+- [ ] Cycle 39: Add empty cart state
+- [ ] Cycle 40: Test cart operations
 
-### Phase 5: Filtering & Search (Infer 41-50)
+### Phase 5: Filtering & Search (Cycle 41-50)
 **Specialist:** Frontend  
 **Duration:** ~15 min
 
-- [ ] Infer 41: Build filter sidebar
-- [ ] Infer 42: Add category filters
-- [ ] Infer 43: Add price range slider
-- [ ] Infer 44: Add stock filter
-- [ ] Infer 45: Add tag filters
-- [ ] Infer 46: Implement search bar
-- [ ] Infer 47: Add search results
-- [ ] Infer 48: Clear filters button
-- [ ] Infer 49: Show active filters
-- [ ] Infer 50: Test filtering
+- [ ] Cycle 41: Build filter sidebar
+- [ ] Cycle 42: Add category filters
+- [ ] Cycle 43: Add price range slider
+- [ ] Cycle 44: Add stock filter
+- [ ] Cycle 45: Add tag filters
+- [ ] Cycle 46: Implement search bar
+- [ ] Cycle 47: Add search results
+- [ ] Cycle 48: Clear filters button
+- [ ] Cycle 49: Show active filters
+- [ ] Cycle 50: Test filtering
 
-### Phase 6: Checkout (Infer 51-60)
+### Phase 6: Checkout (Cycle 51-60)
 **Specialist:** Integrator  
 **Duration:** ~20 min
 
-- [ ] Infer 51: Build checkout page
-- [ ] Infer 52: Add shipping form
-- [ ] Infer 53: Integrate Stripe Elements
-- [ ] Infer 54: Create payment form
-- [ ] Infer 55: Add billing address
-- [ ] Infer 56: Build order summary
-- [ ] Infer 57: Create payment API
-- [ ] Infer 58: Add success page
-- [ ] Infer 59: Add error handling
-- [ ] Infer 60: Test checkout flow
+- [ ] Cycle 51: Build checkout page
+- [ ] Cycle 52: Add shipping form
+- [ ] Cycle 53: Integrate Stripe Elements
+- [ ] Cycle 54: Create payment form
+- [ ] Cycle 55: Add billing address
+- [ ] Cycle 56: Build order summary
+- [ ] Cycle 57: Create payment API
+- [ ] Cycle 58: Add success page
+- [ ] Cycle 59: Add error handling
+- [ ] Cycle 60: Test checkout flow
 
-### Phase 7: Sample Data (Infer 61-70)
+### Phase 7: Sample Data (Cycle 61-70)
 **Specialist:** Backend  
 **Duration:** ~10 min
 
-- [ ] Infer 61: Create apparel products
-- [ ] Infer 62: Create accessories
-- [ ] Infer 63: Create home goods
-- [ ] Infer 64: Add product images
-- [ ] Infer 65: Set variant options
-- [ ] Infer 66: Configure pricing
-- [ ] Infer 67: Add descriptions
-- [ ] Infer 68: Set stock levels
-- [ ] Infer 69: Add tags and metadata
-- [ ] Infer 70: Test product loading
+- [ ] Cycle 61: Create apparel products
+- [ ] Cycle 62: Create accessories
+- [ ] Cycle 63: Create home goods
+- [ ] Cycle 64: Add product images
+- [ ] Cycle 65: Set variant options
+- [ ] Cycle 66: Configure pricing
+- [ ] Cycle 67: Add descriptions
+- [ ] Cycle 68: Set stock levels
+- [ ] Cycle 69: Add tags and metadata
+- [ ] Cycle 70: Test product loading
 
-### Phase 8: Polish & UX (Infer 71-80)
+### Phase 8: Polish & UX (Cycle 71-80)
 **Specialist:** Designer  
 **Duration:** ~15 min
 
-- [ ] Infer 71: Add loading skeletons
-- [ ] Infer 72: Improve animations
-- [ ] Infer 73: Add toast notifications
-- [ ] Infer 74: Enhance mobile design
-- [ ] Infer 75: Add cart badge
-- [ ] Infer 76: Improve typography
-- [ ] Infer 77: Add hover effects
-- [ ] Infer 78: Polish spacing
-- [ ] Infer 79: Add focus states
-- [ ] Infer 80: Test accessibility
+- [ ] Cycle 71: Add loading skeletons
+- [ ] Cycle 72: Improve animations
+- [ ] Cycle 73: Add toast notifications
+- [ ] Cycle 74: Enhance mobile design
+- [ ] Cycle 75: Add cart badge
+- [ ] Cycle 76: Improve typography
+- [ ] Cycle 77: Add hover effects
+- [ ] Cycle 78: Polish spacing
+- [ ] Cycle 79: Add focus states
+- [ ] Cycle 80: Test accessibility
 
-### Phase 9: Testing (Infer 81-90)
+### Phase 9: Testing (Cycle 81-90)
 **Specialist:** Quality  
 **Duration:** ~15 min
 
-- [ ] Infer 81: Test add to cart
-- [ ] Infer 82: Test cart updates
-- [ ] Infer 83: Test variant selection
-- [ ] Infer 84: Test filters
-- [ ] Infer 85: Test search
-- [ ] Infer 86: Test checkout
-- [ ] Infer 87: Test Stripe integration
-- [ ] Infer 88: Test mobile experience
-- [ ] Infer 89: Test keyboard navigation
-- [ ] Infer 90: Accessibility audit
+- [ ] Cycle 81: Test add to cart
+- [ ] Cycle 82: Test cart updates
+- [ ] Cycle 83: Test variant selection
+- [ ] Cycle 84: Test filters
+- [ ] Cycle 85: Test search
+- [ ] Cycle 86: Test checkout
+- [ ] Cycle 87: Test Stripe integration
+- [ ] Cycle 88: Test mobile experience
+- [ ] Cycle 89: Test keyboard navigation
+- [ ] Cycle 90: Accessibility audit
 
-### Phase 10: Deploy (Infer 91-100)
+### Phase 10: Deploy (Cycle 91-100)
 **Specialist:** Ops  
 **Duration:** ~10 min
 
-- [ ] Infer 91: Build for production
-- [ ] Infer 92: Optimize images
-- [ ] Infer 93: Run Lighthouse
-- [ ] Infer 94: Fix performance issues
-- [ ] Infer 95: Create demo docs
-- [ ] Infer 96: Write README
-- [ ] Infer 97: Deploy to Cloudflare
-- [ ] Infer 98: Verify live URLs
-- [ ] Infer 99: Test production
-- [ ] Infer 100: Mark complete
+- [ ] Cycle 91: Build for production
+- [ ] Cycle 92: Optimize images
+- [ ] Cycle 93: Run Lighthouse
+- [ ] Cycle 94: Fix performance issues
+- [ ] Cycle 95: Create demo docs
+- [ ] Cycle 96: Write README
+- [ ] Cycle 97: Deploy to Cloudflare
+- [ ] Cycle 98: Verify live URLs
+- [ ] Cycle 99: Test production
+- [ ] Cycle 100: Mark complete
 
 ---
 
@@ -234,7 +234,7 @@ ai_context: |
 
 ## Estimated Completion
 
-**Total Inferences:** 100  
+**Total Cycles:** 100  
 **Estimated Time:** ~2 hours  
 **Agents:** 5 working in parallel  
 **Cost:** $0 (free tier)

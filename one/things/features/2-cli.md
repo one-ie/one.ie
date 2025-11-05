@@ -718,13 +718,13 @@ ${profile.parentGroupSlug ? `- **Parent Group:** ${profile.parentGroupSlug}` : "
       users: 1000,
       storage: 100000,
       apiCalls: -1,        // Unlimited
-      inferences: -1,      // Unlimited
+      cycles: -1,      // Unlimited
     },
     usage: {
       users: 0,
       storage: 0,
       apiCalls: 0,
-      inferences: 0,
+      cycles: 0,
     },
 
     // Settings
@@ -732,7 +732,7 @@ ${profile.parentGroupSlug ? `- **Parent Group:** ${profile.parentGroupSlug}` : "
       allowSignups: true,
       requireEmailVerification: true,
       enableTwoFactor: true,
-      inferenceEnabled: true,
+      cycleEnabled: true,
     },
 
     // Public info

@@ -548,45 +548,45 @@ const allAcmeProjects = await getEntitiesInHierarchy(acmeCorp._id);
 
 ---
 
-## Timeline (Inference-Based)
+## Timeline (Cycle-Based)
 
-**Infer 1-10: Foundation & Planning**
-- ✅ Infer 1: Map ontology changes (organizations → groups)
-- ✅ Infer 2: Design nested groups schema
-- ✅ Infer 3: Design URL → group creation flow
+**Cycle 1-10: Foundation & Planning**
+- ✅ Cycle 1: Map ontology changes (organizations → groups)
+- ✅ Cycle 2: Design nested groups schema
+- ✅ Cycle 3: Design URL → group creation flow
 - Current: Complete architecture document
 
-**Infer 11-30: Backend Migration**
-- Infer 11: Update `backend/convex/schema.ts`
-- Infer 12: Add hierarchical group queries
-- Infer 13-20: Update all mutations (orgId → groupId)
-- Infer 21-28: Update all queries (orgId → groupId)
-- Infer 29: Create data migration script
-- Infer 30: Test migration on dev data
+**Cycle 11-30: Backend Migration**
+- Cycle 11: Update `backend/convex/schema.ts`
+- Cycle 12: Add hierarchical group queries
+- Cycle 13-20: Update all mutations (orgId → groupId)
+- Cycle 21-28: Update all queries (orgId → groupId)
+- Cycle 29: Create data migration script
+- Cycle 30: Test migration on dev data
 
-**Infer 31-50: Frontend Updates**
-- Infer 31-35: Update components (organizationId → groupId)
-- Infer 36-40: Implement `/group/:slug` routing
-- Infer 41-45: Build group creation flow UI
-- Infer 46-50: Build group hierarchy navigation
+**Cycle 31-50: Frontend Updates**
+- Cycle 31-35: Update components (organizationId → groupId)
+- Cycle 36-40: Implement `/group/:slug` routing
+- Cycle 41-45: Build group creation flow UI
+- Cycle 46-50: Build group hierarchy navigation
 
-**Infer 51-70: Documentation**
-- Infer 51-65: Update 41 files in `one/` directory
-- Infer 66: Update `CLAUDE.md`
-- Infer 67: Update `README.md`
-- Infer 68: Update `AGENTS.md`
-- Infer 69-70: Create migration guide
+**Cycle 51-70: Documentation**
+- Cycle 51-65: Update 41 files in `one/` directory
+- Cycle 66: Update `CLAUDE.md`
+- Cycle 67: Update `README.md`
+- Cycle 68: Update `AGENTS.md`
+- Cycle 69-70: Create migration guide
 
-**Infer 71-90: Testing & Quality**
-- Infer 71-80: Write tests for nested groups
-- Infer 81-85: Test URL-based creation
-- Infer 86-90: Integration tests
+**Cycle 71-90: Testing & Quality**
+- Cycle 71-80: Write tests for nested groups
+- Cycle 81-85: Test URL-based creation
+- Cycle 86-90: Integration tests
 
-**Infer 91-100: Deployment**
-- Infer 91-95: Run migration on staging
-- Infer 96-98: Deploy backend
-- Infer 99: Deploy frontend
-- Infer 100: Verify production migration
+**Cycle 91-100: Deployment**
+- Cycle 91-95: Run migration on staging
+- Cycle 96-98: Deploy backend
+- Cycle 99: Deploy frontend
+- Cycle 100: Verify production migration
 
 ---
 
@@ -627,10 +627,10 @@ const allAcmeProjects = await getEntitiesInHierarchy(acmeCorp._id);
 ## Next Steps
 
 1. **Complete this architecture document** ✅
-2. **Update `backend/convex/schema.ts`** (Infer 4)
-3. **Create hierarchical query patterns** (Infer 5)
-4. **Update first mutation as example** (Infer 6)
-5. **Create migration script** (Infer 7)
+2. **Update `backend/convex/schema.ts`** (Cycle 4)
+3. **Create hierarchical query patterns** (Cycle 5)
+4. **Update first mutation as example** (Cycle 6)
+5. **Create migration script** (Cycle 7)
 
 ---
 

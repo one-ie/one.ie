@@ -355,7 +355,7 @@ The ONE Platform has a **robust, well-architected foundation** with clear separa
 
 **Features:**
 
-- ✅ Full TypeScript inference
+- ✅ Full TypeScript cycle
 - ✅ No `any` types (except in entity properties)
 - ✅ Discriminated unions for errors
 - ✅ Generic type parameters for flexibility

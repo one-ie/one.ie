@@ -38,7 +38,7 @@
   - todo-api.md (public REST/GraphQL API)
   - todo-features.md (analytics, notifications, search, social)
   - todo-one-ie.md (marketing + dashboards)
-- For each: focus statement, scope, ontology mapping, phase names, key files, infer tasks
+- For each: focus statement, scope, ontology mapping, phase names, key files, cycle tasks
 - Cross-reference patterns
 - Numbering consistency
 - Success criteria template

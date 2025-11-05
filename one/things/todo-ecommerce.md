@@ -3,7 +3,7 @@ title: Todo Ecommerce
 dimension: things
 primary_dimension: things
 category: todo-ecommerce.md
-tags: agent, ai, blockchain, inference, ontology
+tags: agent, ai, blockchain, cycle, ontology
 related_dimensions: connections, events, groups, knowledge, people
 scope: global
 created: 2025-11-03
@@ -20,17 +20,17 @@ ai_context: |
 # ONE Platform: E-Commerce & Monetization v1.0.0
 
 **Focus:** Product marketplace, shopping cart, X402 checkout, revenue tracking
-**Process:** `Infer 1-100 inference sequence`
-**Timeline:** 8-12 inferences per specialist per day
+**Process:** `Cycle 1-100 cycle sequence`
+**Timeline:** 8-12 cycles per specialist per day
 **Target:** Revenue generation (Wave 3 - Parallel with API + Features)
 
 ---
 
-## PHASE 1: FOUNDATION & SETUP (Infer 1-10)
+## PHASE 1: FOUNDATION & SETUP (Cycle 1-10)
 
 **Purpose:** Validate e-commerce requirements, map to ontology, plan implementation
 
-### Infer 1: Define Product Types
+### Cycle 1: Define Product Types
 
 - [ ] **Courses:** Video lessons bundled (monthly/one-time)
 - [ ] **Digital Products:** Templates, assets, tools (one-time purchase)
@@ -45,7 +45,7 @@ ai_context: |
   - [ ] Refund policy
   - [ ] Digital vs physical
 
-### Infer 2: Map E-Commerce to 6-Dimension Ontology
+### Cycle 2: Map E-Commerce to 6-Dimension Ontology
 
 - [ ] **Groups:** Creator's business group
 - [ ] **People:** Creator (seller), customer (buyer), platform (facilitator)
@@ -62,7 +62,7 @@ ai_context: |
   - [ ] subscription_started, subscription_renewed, subscription_cancelled
 - [ ] **Knowledge:** product_category, price_tier, access_level labels
 
-### Infer 3: Review X402 Integration (from todo-x402)
+### Cycle 3: Review X402 Integration (from todo-x402)
 
 - [ ] Understand X402 payment flow (402 → payment → settled)
 - [ ] Identify how X402 applies to checkout:
@@ -72,7 +72,7 @@ ai_context: |
 - [ ] Plan traditional payment for higher-value items (consultations)
 - [ ] Map payment to events: payment_processed → order_completed
 
-### Infer 4: Define Shopping Cart Requirements
+### Cycle 4: Define Shopping Cart Requirements
 
 - [ ] Cart functionality:
   - [ ] Add/remove items
@@ -89,7 +89,7 @@ ai_context: |
   - [ ] Email reminder after 24 hours (future)
   - [ ] Track in analytics
 
-### Infer 5: Define Checkout Flow
+### Cycle 5: Define Checkout Flow
 
 - [ ] Steps:
   1. Review cart + total
@@ -103,7 +103,7 @@ ai_context: |
 - [ ] Time limit: 15 minutes to complete
 - [ ] Mobile-optimized (80% of users on mobile)
 
-### Infer 6: Define Subscription Model
+### Cycle 6: Define Subscription Model
 
 - [ ] Types:
   - [ ] **Monthly subscription** ($X/month, auto-renews)
@@ -122,7 +122,7 @@ ai_context: |
   - [ ] subscription_resumed
   - [ ] subscription_cancelled
 
-### Infer 7: Define Refund + Dispute Policy
+### Cycle 7: Define Refund + Dispute Policy
 
 - [ ] Refund policy:
   - [ ] 7-day money-back guarantee for courses
@@ -135,7 +135,7 @@ ai_context: |
   - [ ] Platform mediates if disagreement
   - [ ] Escalate to platform owner if needed
 
-### Infer 8: Define Revenue Split
+### Cycle 8: Define Revenue Split
 
 - [ ] Creator earnings:
   - [ ] Product price - platform fee - payment processor fee
@@ -151,7 +151,7 @@ ai_context: |
   - [ ] payout_processed (weekly)
   - [ ] payout_failed (if wallet invalid)
 
-### Infer 9: Identify Analytics Needs
+### Cycle 9: Identify Analytics Needs
 
 - [ ] For creators (seller view):
   - [ ] Total revenue (all-time, year, month, week)
@@ -169,7 +169,7 @@ ai_context: |
   - [ ] Dispute rate
   - [ ] Geographic distribution
 
-### Infer 10: Define Success Metrics
+### Cycle 10: Define Success Metrics
 
 - [ ] E-commerce complete when:
   - [ ] [ ] Product creation working
@@ -185,11 +185,11 @@ ai_context: |
 
 ---
 
-## PHASE 2: BACKEND SCHEMA & SERVICES (Infer 11-20)
+## PHASE 2: BACKEND SCHEMA & SERVICES (Cycle 11-20)
 
 **Purpose:** Create product + order schema in Convex
 
-### Infer 11: Extend Product Thing Type
+### Cycle 11: Extend Product Thing Type
 
 - [ ] Update `backend/convex/schema.ts`:
 
@@ -249,7 +249,7 @@ ai_context: |
   }
   ```
 
-### Infer 12: Create Shopping Cart Thing Type
+### Cycle 12: Create Shopping Cart Thing Type
 
 - [ ] New thing type:
   ```typescript
@@ -274,7 +274,7 @@ ai_context: |
   }
   ```
 
-### Infer 13: Create Order Thing Type
+### Cycle 13: Create Order Thing Type
 
 - [ ] New thing type:
   ```typescript
@@ -311,7 +311,7 @@ ai_context: |
   }
   ```
 
-### Infer 14: Create Subscription Thing Type
+### Cycle 14: Create Subscription Thing Type
 
 - [ ] New thing type:
   ```typescript
@@ -339,7 +339,7 @@ ai_context: |
   }
   ```
 
-### Infer 15: Create Payment Thing Type Extension
+### Cycle 15: Create Payment Thing Type Extension
 
 - [ ] Extend payment thing from todo-x402:
 
@@ -365,7 +365,7 @@ ai_context: |
   }
   ```
 
-### Infer 16: Create E-Commerce Service (Effect.ts)
+### Cycle 16: Create E-Commerce Service (Effect.ts)
 
 - [ ] Service methods:
   - [ ] `createProduct(creator, productData)` → productId
@@ -377,7 +377,7 @@ ai_context: |
   - [ ] `cancelOrder(orderId, reason)` → process refund
   - [ ] `createSubscription(customer, productId, plan)` → subscriptionId
 
-### Infer 17: Create Convex Mutations for Products
+### Cycle 17: Create Convex Mutations for Products
 
 - [ ] `mutations/products.ts`:
   - [ ] `createProduct(creatorId, data)` → productId
@@ -386,7 +386,7 @@ ai_context: |
   - [ ] `archiveProduct(productId)` → archived
   - [ ] `deleteProduct(productId)` → deleted
 
-### Infer 18: Create Convex Mutations for Orders
+### Cycle 18: Create Convex Mutations for Orders
 
 - [ ] `mutations/orders.ts`:
   - [ ] `createOrder(customerId, items)` → orderId
@@ -395,7 +395,7 @@ ai_context: |
   - [ ] `refundOrder(orderId, reason)` → refunded
   - [ ] `cancelOrder(orderId, reason)` → cancelled
 
-### Infer 19: Create Convex Queries
+### Cycle 19: Create Convex Queries
 
 - [ ] `queries/products.ts`:
   - [ ] `listProductsForCreator(creatorId)` → products[]
@@ -407,7 +407,7 @@ ai_context: |
   - [ ] `getOrdersForCreator(creatorId)` → orders[]
   - [ ] `getOrder(orderId)` → order details
 
-### Infer 20: Create Revenue Tracking Service
+### Cycle 20: Create Revenue Tracking Service
 
 - [ ] Service to track creator earnings:
   - [ ] `trackSale(orderId, amount)` → log event
@@ -417,11 +417,11 @@ ai_context: |
 
 ---
 
-## PHASE 3: FRONTEND COMPONENTS & PAGES (Infer 21-30)
+## PHASE 3: FRONTEND COMPONENTS & PAGES (Cycle 21-30)
 
 **Purpose:** Build shopping experience in React/Astro
 
-### Infer 21: Create ProductCard Component
+### Cycle 21: Create ProductCard Component
 
 - [ ] Reusable card showing:
   - [ ] Product image
@@ -432,7 +432,7 @@ ai_context: |
   - [ ] "View Details" or "Add to Cart" button
 - [ ] Responsive: Works on mobile, tablet, desktop
 
-### Infer 22: Create ProductGallery Component
+### Cycle 22: Create ProductGallery Component
 
 - [ ] Multi-image gallery:
   - [ ] Thumbnail strip on side/bottom
@@ -440,7 +440,7 @@ ai_context: |
   - [ ] Keyboard nav (arrows)
   - [ ] Mobile: Swipe to change
 
-### Infer 23: Create ShoppingCart Component
+### Cycle 23: Create ShoppingCart Component
 
 - [ ] Display:
   - [ ] Items list (product name, price, qty)
@@ -451,7 +451,7 @@ ai_context: |
   - [ ] Continue shopping link
 - [ ] Empty state: Suggest products
 
-### Infer 24: Create CheckoutForm Component
+### Cycle 24: Create CheckoutForm Component
 
 - [ ] Multi-step form:
   - [ ] Step 1: Cart review
@@ -463,7 +463,7 @@ ai_context: |
   - [ ] Stripe (card) - fallback
 - [ ] Show payment processing spinner
 
-### Infer 25: Create OrderConfirmation Component
+### Cycle 25: Create OrderConfirmation Component
 
 - [ ] Show:
   - [ ] Order number (ORD-202501-001)
@@ -477,7 +477,7 @@ ai_context: |
   - [ ] Share with friend (referral)
   - [ ] Browse more products
 
-### Infer 26: Create ProductPage (Astro)
+### Cycle 26: Create ProductPage (Astro)
 
 - [ ] Page: `/products/[slug]`
 - [ ] Sections:
@@ -490,7 +490,7 @@ ai_context: |
   - [ ] "Add to Cart" button
   - [ ] Related products
 
-### Infer 27: Create MarketplaceListingPage
+### Cycle 27: Create MarketplaceListingPage
 
 - [ ] Page: `/marketplace` or `/shop`
 - [ ] Features:
@@ -501,7 +501,7 @@ ai_context: |
   - [ ] Pagination
   - [ ] Cart icon (show count)
 
-### Infer 28: Create CartPage (Astro)
+### Cycle 28: Create CartPage (Astro)
 
 - [ ] Page: `/cart`
 - [ ] Show:
@@ -510,7 +510,7 @@ ai_context: |
   - [ ] Checkout button
   - [ ] Saved cart (if returning user)
 
-### Infer 29: Create CheckoutPage (Astro)
+### Cycle 29: Create CheckoutPage (Astro)
 
 - [ ] Page: `/checkout`
 - [ ] Multi-step form (from component)
@@ -518,7 +518,7 @@ ai_context: |
 - [ ] Save form progress (localStorage)
 - [ ] Show estimated delivery time
 
-### Infer 30: Create OrderHistoryPage
+### Cycle 30: Create OrderHistoryPage
 
 - [ ] Page: `/orders` (logged in only)
 - [ ] Show:

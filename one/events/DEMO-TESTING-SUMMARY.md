@@ -19,7 +19,7 @@ ai_context: |
 # Demo Testing Plan - Executive Summary
 
 **Feature:** Beautiful, Interactive 6-Dimension Ontology Demos
-**Phase:** Infer 15-20 (Quality Definition & Testing Strategy)
+**Phase:** Cycle 15-20 (Quality Definition & Testing Strategy)
 **Status:** Specifications Complete - Ready for QA Implementation
 **Created:** 2025-10-25
 

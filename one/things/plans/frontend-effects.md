@@ -114,7 +114,7 @@ export interface DataProvider {
 
 ---
 
-## Part 1: Frontend Effect.ts Services (Infer 51-60 from todo-effects)
+## Part 1: Frontend Effect.ts Services (Cycle 51-60 from todo-effects)
 
 ### Service Definition Pattern
 
@@ -225,7 +225,7 @@ export const ThingServiceLive = Layer.effect(
 export { ThingService };
 ```
 
-### Complete Services (Infer 51-60)
+### Complete Services (Cycle 51-60)
 
 ```typescript
 // src/services/index.ts
@@ -239,7 +239,7 @@ export { PeopleService, PeopleServiceLive } from "./PeopleService";
 
 ---
 
-## Part 2: React Hooks Integration (Infer 52-60)
+## Part 2: React Hooks Integration (Cycle 52-60)
 
 ### useEffectRunner Hook (Core Pattern)
 
@@ -376,7 +376,7 @@ export function useService<S extends Effect.Service<any, any>>(service: S) {
 
 ---
 
-## Part 3: Service Layer Composition (Infer 53-60)
+## Part 3: Service Layer Composition (Cycle 53-60)
 
 ### ClientLayer (Dependency Injection)
 
@@ -456,7 +456,7 @@ export const CourseServiceLive = Layer.effect(
 
 ---
 
-## Part 4: Astro Integration (Infer 41-43)
+## Part 4: Astro Integration (Cycle 41-43)
 
 ### Server-Side Data Fetching
 
@@ -536,7 +536,7 @@ const relatedArticles = await Effect.runPromise(
 
 ---
 
-## Part 5: Frontend Components Architecture (Infer 54-60)
+## Part 5: Frontend Components Architecture (Cycle 54-60)
 
 ### Component Integration Layer
 
@@ -770,7 +770,7 @@ export function useThingWithErrorHandling(thingId: string) {
 
 ---
 
-## Part 7: State Management with Effect (Infer 55-57)
+## Part 7: State Management with Effect (Cycle 55-57)
 
 ### Form State with Effect Validation
 
@@ -886,7 +886,7 @@ export function useOptimisticUpdate<T>(options: UseOptimisticUpdateOptions<T>) {
 
 ---
 
-## Part 8: Testing Frontend Services (Infer 58-60)
+## Part 8: Testing Frontend Services (Cycle 58-60)
 
 ### Mock Services for Testing
 
@@ -977,7 +977,7 @@ describe("CreateCourseForm", () => {
 
 ---
 
-## Part 9: Type Safety and Validation (Infer 59-60)
+## Part 9: Type Safety and Validation (Cycle 59-60)
 
 ### Frontend Type Safety
 
@@ -1046,7 +1046,7 @@ export function useValidatedData<T>(data: unknown, schema: Schema.Schema<T>) {
 
 ---
 
-## Part 10: Performance Optimization (Infer 56-57)
+## Part 10: Performance Optimization (Cycle 56-57)
 
 ### Memoization with Effect
 

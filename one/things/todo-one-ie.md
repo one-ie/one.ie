@@ -3,7 +3,7 @@ title: Todo One Ie
 dimension: things
 primary_dimension: things
 category: todo-one-ie.md
-tags: ai, inference, knowledge
+tags: ai, cycle, knowledge
 related_dimensions: events, knowledge, people, groups, connections, things
 scope: global
 created: 2025-11-03
@@ -20,17 +20,17 @@ ai_context: |
 # ONE Platform: Public Launch (https://one.ie) v1.0.0
 
 **Focus:** Marketing site, creator dashboard, admin dashboard, public APIs, documentation
-**Process:** `Infer 1-100 inference sequence`
-**Timeline:** 8-12 inferences per specialist per day
+**Process:** `Cycle 1-100 cycle sequence`
+**Timeline:** 8-12 cycles per specialist per day
 **Target:** Public launch as platform (Wave 4 - Final assembly)
 
 ---
 
-## PHASE 1: FOUNDATION & SETUP (Infer 1-10)
+## PHASE 1: FOUNDATION & SETUP (Cycle 1-10)
 
 **Purpose:** Define public platform vision, pages, and structure
 
-### Infer 1: Define Brand Identity
+### Cycle 1: Define Brand Identity
 
 - [ ] Brand document:
   - [ ] Logo + wordmark (already exists?)
@@ -42,7 +42,7 @@ ai_context: |
 - [ ] Create `one/knowledge/brand-guide.md`
 - [ ] Document in Figma or Storybook
 
-### Infer 2: Map Public Platform Structure
+### Cycle 2: Map Public Platform Structure
 
 - [ ] Site hierarchy:
   - [ ] `/` - Landing page (hero + features)
@@ -58,7 +58,7 @@ ai_context: |
   - [ ] `/status` - System status
 - [ ] Each page maps to different owner
 
-### Infer 3: Define Landing Page Content
+### Cycle 3: Define Landing Page Content
 
 - [ ] Sections:
   1. **Hero:** Headline "Build AI-native Businesses"
@@ -89,7 +89,7 @@ ai_context: |
   7. **FAQ:** Common questions
   8. **CTA:** Final call to action
 
-### Infer 4: Define Creator Dashboard
+### Cycle 4: Define Creator Dashboard
 
 - [ ] After login, creators see dashboard with:
   - [ ] Welcome message + onboarding progress
@@ -105,7 +105,7 @@ ai_context: |
   - [ ] Sidebar navigation (content, sales, settings, team)
   - [ ] Profile menu (settings, docs, logout)
 
-### Infer 5: Define Admin Dashboard
+### Cycle 5: Define Admin Dashboard
 
 - [ ] Platform owner sees:
   - [ ] Global stats: Total revenue, creators, customers, orders
@@ -119,7 +119,7 @@ ai_context: |
   - [ ] Sidebar: Creators, customers, orders, payments, disputes, settings
   - [ ] User management (ban, verify, support)
 
-### Infer 6: Define Documentation Structure
+### Cycle 6: Define Documentation Structure
 
 - [ ] Main sections:
   - [ ] **Getting Started:** Signup → create product → make sale
@@ -131,7 +131,7 @@ ai_context: |
   - [ ] **Support:** Contact, Discord, email
 - [ ] All docs searchable + versioned
 
-### Infer 7: Plan Blog Content
+### Cycle 7: Plan Blog Content
 
 - [ ] Content types:
   - [ ] **Tutorials:** How to create courses, sell products
@@ -145,7 +145,7 @@ ai_context: |
   - [ ] Link from newsletter
   - [ ] Archive in `/docs/blog`
 
-### Infer 8: Define Public API Documentation
+### Cycle 8: Define Public API Documentation
 
 - [ ] Sections:
   - [ ] **Authentication:** API keys, rate limits
@@ -161,7 +161,7 @@ ai_context: |
 - [ ] Interactive: Swagger/OpenAPI UI
 - [ ] Live sandbox for testing
 
-### Infer 9: Plan Status Page
+### Cycle 9: Plan Status Page
 
 - [ ] Show system health:
   - [ ] Platform status (operational, maintenance, degraded)
@@ -176,7 +176,7 @@ ai_context: |
   - [ ] Subscribe to status updates
 - [ ] Use Statuspage.io or build custom
 
-### Infer 10: Define Success Metrics for Public Launch
+### Cycle 10: Define Success Metrics for Public Launch
 
 - [ ] Pre-launch:
   - [ ] [ ] All pages designed + built
@@ -198,11 +198,11 @@ ai_context: |
 
 ---
 
-## PHASE 2: BACKEND SETUP (Infer 11-20)
+## PHASE 2: BACKEND SETUP (Cycle 11-20)
 
 **Purpose:** Prepare backend for public access
 
-### Infer 11: Create Admin User + Dashboard Routes
+### Cycle 11: Create Admin User + Dashboard Routes
 
 - [ ] Create platform_owner user in DB
 - [ ] Protect admin routes:
@@ -215,7 +215,7 @@ ai_context: |
   - [ ] `queries/admin/orders.ts`
   - [ ] `queries/admin/payments.ts`
 
-### Infer 12: Create Public Read-Only API
+### Cycle 12: Create Public Read-Only API
 
 - [ ] Create public queries:
   - [ ] `queries/public/products.ts` - List published products
@@ -225,7 +225,7 @@ ai_context: |
 - [ ] Cache responses for performance
 - [ ] Rate limit: 100 requests/minute per IP
 
-### Infer 13: Create Analytics Events
+### Cycle 13: Create Analytics Events
 
 - [ ] Track user interactions:
   - [ ] Page views
@@ -241,7 +241,7 @@ ai_context: |
   - [ ] Conversion rate
   - [ ] User flow
 
-### Infer 14: Set Up Email Newsletter
+### Cycle 14: Set Up Email Newsletter
 
 - [ ] Create newsletter system:
   - [ ] Signup form on landing page
@@ -251,7 +251,7 @@ ai_context: |
 - [ ] Use Convex + Resend
 - [ ] Track opens/clicks
 
-### Infer 15: Create Monitoring + Alerting
+### Cycle 15: Create Monitoring + Alerting
 
 - [ ] Monitor:
   - [ ] Page load times
@@ -265,7 +265,7 @@ ai_context: |
   - [ ] Payment failures > 5%
 - [ ] Dashboard in Datadog/New Relic
 
-### Infer 16: Set Up CDN + Caching
+### Cycle 16: Set Up CDN + Caching
 
 - [ ] Cloudflare Pages caching:
   - [ ] HTML: 5 minutes (must revalidate)
@@ -274,14 +274,14 @@ ai_context: |
   - [ ] API responses: 1 minute
 - [ ] Cache invalidation on deploy
 
-### Infer 17: Create Robots.txt + Sitemap
+### Cycle 17: Create Robots.txt + Sitemap
 
 - [ ] `/robots.txt`: Allow search engines
 - [ ] `/sitemap.xml`: All pages for SEO
 - [ ] Register with Google Search Console
 - [ ] Register with Bing Webmaster Tools
 
-### Infer 18: Set Up Analytics
+### Cycle 18: Set Up Analytics
 
 - [ ] Google Analytics 4:
   - [ ] Track pageviews
@@ -291,7 +291,7 @@ ai_context: |
 - [ ] Alternative: Posthog (privacy-friendly)
 - [ ] Custom dashboards per team
 
-### Infer 19: Create API Rate Limiting
+### Cycle 19: Create API Rate Limiting
 
 - [ ] Implement per-user rate limiting:
   - [ ] Anonymous: 100 req/min
@@ -300,7 +300,7 @@ ai_context: |
 - [ ] Return 429 Too Many Requests if exceeded
 - [ ] Include rate limit headers in response
 
-### Infer 20: Create Security Headers
+### Cycle 20: Create Security Headers
 
 - [ ] Add HTTP security headers:
   - [ ] Content-Security-Policy
@@ -313,13 +313,13 @@ ai_context: |
 
 ---
 
-## PHASE 3: FRONTEND - MARKETING PAGES (Infer 21-30)
+## PHASE 3: FRONTEND - MARKETING PAGES (Cycle 21-30)
 
 **Purpose:** Build beautiful landing page + marketing site
 
-### Infer 21: Create LandingPage Component
+### Cycle 21: Create LandingPage Component
 
-- [ ] Full-page landing with sections from Infer 3
+- [ ] Full-page landing with sections from Cycle 3
 - [ ] Hero section:
   - [ ] Animated gradient background
   - [ ] Headline (large, bold)
@@ -329,14 +329,14 @@ ai_context: |
 - [ ] Responsive: Mobile-first design
 - [ ] Performance: Lazy load below-fold content
 
-### Infer 22: Create ProductCard for Marketplace
+### Cycle 22: Create ProductCard for Marketplace
 
 - [ ] Same as todo-ecommerce but with creator name
 - [ ] Click → navigate to product page
 - [ ] Favorite button (heart icon)
 - [ ] Share button (social media)
 
-### Infer 23: Create CreatorProfilePreview
+### Cycle 23: Create CreatorProfilePreview
 
 - [ ] Mini card showing:
   - [ ] Avatar
@@ -346,7 +346,7 @@ ai_context: |
   - [ ] "Follow" button
 - [ ] Click → navigate to creator profile
 
-### Infer 24: Create TestimonialSection
+### Cycle 24: Create TestimonialSection
 
 - [ ] Carousel of creator testimonials:
   - [ ] Avatar + name
@@ -355,14 +355,14 @@ ai_context: |
   - [ ] Auto-advance or manual nav
 - [ ] Video testimonials (if available)
 
-### Infer 25: Create PricingSection
+### Cycle 25: Create PricingSection
 
 - [ ] 3 plans: Free, Pro, Enterprise
 - [ ] For each: Price, features checklist, CTA
 - [ ] Comparison table (detailed features)
 - [ ] FAQ below
 
-### Infer 26: Create DocumentationNav
+### Cycle 26: Create DocumentationNav
 
 - [ ] Searchable sidebar:
   - [ ] Getting started
@@ -374,7 +374,7 @@ ai_context: |
 - [ ] Full-text search
 - [ ] Breadcrumb navigation
 
-### Infer 27: Create CreatorDashboardLayout
+### Cycle 27: Create CreatorDashboardLayout
 
 - [ ] Sidebar with navigation
 - [ ] Header with user menu
@@ -383,14 +383,14 @@ ai_context: |
 - [ ] Mobile sidebar toggle
 - [ ] Responsive: Collapses on mobile
 
-### Infer 28: Create AdminDashboardLayout
+### Cycle 28: Create AdminDashboardLayout
 
 - [ ] Similar to creator dashboard but for platform owner
 - [ ] Sidebar: Creators, Customers, Orders, Payments, Settings
 - [ ] Main: Stats cards, charts, tables
 - [ ] Extra: User management, disputes, system health
 
-### Infer 29: Create BlogListing
+### Cycle 29: Create BlogListing
 
 - [ ] Blog post grid:
   - [ ] Post image
@@ -402,7 +402,7 @@ ai_context: |
 - [ ] Filters: By category, author, date
 - [ ] Pagination
 
-### Infer 30: Create BlogPostPage
+### Cycle 30: Create BlogPostPage
 
 - [ ] Post content:
   - [ ] Featured image
@@ -415,18 +415,18 @@ ai_context: |
 
 ---
 
-## PHASE 4: ASTRO PAGES (Infer 31-40)
+## PHASE 4: ASTRO PAGES (Cycle 31-40)
 
 **Purpose:** Create all marketing pages in Astro
 
-### Infer 31: Create Landing Page
+### Cycle 31: Create Landing Page
 
 - [ ] `src/pages/index.astro`
 - [ ] Use LandingPage component
 - [ ] SEO: Meta tags, OG image
 - [ ] Structured data (JSON-LD)
 
-### Infer 32: Create About Page
+### Cycle 32: Create About Page
 
 - [ ] `src/pages/about.astro`
 - [ ] Company story + mission
@@ -434,7 +434,7 @@ ai_context: |
 - [ ] Values + culture
 - [ ] Hiring link (if recruiting)
 
-### Infer 33: Create Creator Stories
+### Cycle 33: Create Creator Stories
 
 - [ ] `src/pages/creators.astro`
 - [ ] Featured creator profiles
@@ -442,7 +442,7 @@ ai_context: |
 - [ ] Video testimonials
 - [ ] Link to full marketplace
 
-### Infer 34: Create Pricing Page
+### Cycle 34: Create Pricing Page
 
 - [ ] `src/pages/pricing.astro`
 - [ ] 3 plan cards
@@ -450,7 +450,7 @@ ai_context: |
 - [ ] FAQ section
 - [ ] CTA for each plan
 
-### Infer 35: Create Documentation Index
+### Cycle 35: Create Documentation Index
 
 - [ ] `src/pages/docs/index.astro`
 - [ ] List all doc categories
@@ -458,7 +458,7 @@ ai_context: |
 - [ ] Search box
 - [ ] Getting started guide
 
-### Infer 36: Create Markdown Doc Pages
+### Cycle 36: Create Markdown Doc Pages
 
 - [ ] `src/pages/docs/[...slug].astro`
 - [ ] Dynamic routing for all docs
@@ -467,14 +467,14 @@ ai_context: |
 - [ ] Table of contents
 - [ ] Previous/next links
 
-### Infer 37: Create Blog Index
+### Cycle 37: Create Blog Index
 
 - [ ] `src/pages/blog/index.astro`
 - [ ] Blog listing with filters
 - [ ] Search
 - [ ] Featured posts
 
-### Infer 38: Create Blog Post Pages
+### Cycle 38: Create Blog Post Pages
 
 - [ ] `src/pages/blog/[slug].astro`
 - [ ] Dynamic routing
@@ -482,7 +482,7 @@ ai_context: |
 - [ ] Related posts
 - [ ] Comments (Disqus or similar)
 
-### Infer 39: Create Status Page
+### Cycle 39: Create Status Page
 
 - [ ] `src/pages/status.astro`
 - [ ] System components + statuses
@@ -490,7 +490,7 @@ ai_context: |
 - [ ] Incident log
 - [ ] Subscribe option
 
-### Infer 40: Create 404 + 500 Pages
+### Cycle 40: Create 404 + 500 Pages
 
 - [ ] `src/pages/404.astro` - Not found (helpful, links to home/docs)
 - [ ] `src/pages/500.astro` - Server error (comforting, status page link)

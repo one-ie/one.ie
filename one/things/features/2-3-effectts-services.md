@@ -53,7 +53,7 @@ This layer ensures:
 **Responsibilities:**
 
 - Create/update organizations with default limits
-- Enforce resource quotas (users, storage, API calls, inference)
+- Enforce resource quotas (users, storage, API calls, cycle)
 - Track usage metrics (increment/decrement counters)
 - Validate plan eligibility (starter/pro/enterprise)
 - Manage billing relationships (Stripe integration)
@@ -402,12 +402,12 @@ traverseGraph(startId: string, maxDepth: number, types?: string[]): Effect<Graph
   "optimization_applied",
   "report_generated");
 
-// Inference Events (7)
-("inference_request",
-  "inference_completed",
-  "inference_failed",
-  "inference_quota_exceeded",
-  "inference_revenue_collected",
+// Cycle Events (7)
+("cycle_request",
+  "cycle_completed",
+  "cycle_failed",
+  "cycle_quota_exceeded",
+  "cycle_revenue_collected",
   "org_revenue_generated",
   "revenue_share_distributed");
 

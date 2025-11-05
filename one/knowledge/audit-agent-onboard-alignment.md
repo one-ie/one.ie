@@ -98,7 +98,7 @@ All alignment issues have been resolved. The agent now correctly uses:
 - Line 173: "Which of 67 event types"
 - Line 361: "67 total event types available"
 - Line 429-437: Example shows 6 from the 67 types
-- Aligned with canonical specification (entity_lifecycle 4 + user 5 + auth 6 + group 5 + dashboard 4 + clone 4 + agent 4 + token 7 + course 5 + analytics 5 + inference 7 + blockchain 5 + consolidated 11 = 67)
+- Aligned with canonical specification (entity_lifecycle 4 + user 5 + auth 6 + group 5 + dashboard 4 + clone 4 + agent 4 + token 7 + course 5 + analytics 5 + cycle 7 + blockchain 5 + consolidated 11 = 67)
 
 ---
 

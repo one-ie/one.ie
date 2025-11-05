@@ -117,7 +117,7 @@ const productCollections = defineCollection({
   schema: ProductCollectionSchema,
 });
 
-// Define the Plans schema (100-inference feature plans)
+// Define the Plans schema (100-cycle feature plans)
 const PlanSchema = z.object({
   title: z.string(),
   description: z.string(),
@@ -126,25 +126,25 @@ const PlanSchema = z.object({
   personRole: z.enum(['platform_owner', 'org_owner', 'org_user', 'customer']).optional(),
   ontologyDimensions: z.array(z.string()).optional(), // Groups, People, Things, Connections, Events, Knowledge
   assignedSpecialist: z.string().optional(), // Agent name
-  totalInferences: z.number().default(100),
-  completedInferences: z.number().default(0),
-  inferenceTemplate: z.array(z.object({
+  totalCycles: z.number().default(100),
+  completedCycles: z.number().default(0),
+  cycleTemplate: z.array(z.object({
     range: z.string(), // e.g., "1-10"
     phase: z.string(), // e.g., "Foundation & Setup"
     description: z.string(),
     tasks: z.array(z.string()).optional(),
   })).optional(),
   tasks: z.array(z.object({
-    inferenceNumber: z.number(),
+    cycleNumber: z.number(),
     content: z.string(), // Task description
     status: z.enum(['pending', 'in_progress', 'completed']).default('pending'),
     activeForm: z.string(), // Present continuous form of task
-    dependencies: z.array(z.number()).optional(), // Other inference numbers it depends on
+    dependencies: z.array(z.number()).optional(), // Other cycle numbers it depends on
   })).optional(),
   dependenciesMet: z.number().default(0),
   totalDependencies: z.number().default(0),
   lessonsLearned: z.array(z.object({
-    inference: z.number(),
+    cycle: z.number(),
     lesson: z.string(),
   })).optional(),
   createdAt: z.date().optional(),
@@ -192,8 +192,8 @@ const ProjectSchema = z.object({
   startDate: z.date(),
   targetEndDate: z.date().optional(),
   completedAt: z.date().optional(),
-  totalInferences: z.number().optional().default(100),
-  completedInferences: z.number().optional().default(0),
+  totalCycles: z.number().optional().default(100),
+  completedCycles: z.number().optional().default(0),
   estimatedWeeks: z.number().optional(),
 
   // Scope

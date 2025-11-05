@@ -42,7 +42,7 @@
 - `backend/convex/queries/users.ts`
 - `backend/convex/queries/organizations.ts`
 
-**Infer Focus:** 11-20 (backend services), 31-40 (wallet integration), 41-50 (preferences)
+**Cycle Focus:** 11-20 (backend services), 31-40 (wallet integration), 41-50 (preferences)
 
 #### Secondary: agent-frontend 🟡
 
@@ -63,7 +63,7 @@
 - `web/src/pages/onboarding/index.astro`
 - `web/src/pages/account/settings.astro`
 
-**Infer Focus:** 21-30 (frontend components), 61-70 (design/accessibility)
+**Cycle Focus:** 21-30 (frontend components), 61-70 (design/accessibility)
 
 #### Tertiary: agent-designer 🟢
 
@@ -82,7 +82,7 @@
 - Mobile responsive test report
 - Design tokens for onboarding screens
 
-**Infer Focus:** 61-70 (design refinement), 67 (accessibility)
+**Cycle Focus:** 61-70 (design refinement), 67 (accessibility)
 
 ---
 
@@ -111,7 +111,7 @@
 - `backend/convex/protocols/agent-protocol.ts`
 - `backend/convex/mutations/agents.ts`
 
-**Infer Focus:** 11-20 (framework), 31-50 (integrations + mechanics)
+**Cycle Focus:** 11-20 (framework), 31-50 (integrations + mechanics)
 
 #### Secondary: agent-integrator 🟡
 
@@ -130,7 +130,7 @@
 - `backend/convex/services/webhook-handler.ts`
 - Integration test suite
 
-**Infer Focus:** 31-50 (integrations), 51-60 (integration tests)
+**Cycle Focus:** 31-50 (integrations), 51-60 (integration tests)
 
 #### Tertiary: agent-ops 🟢
 
@@ -148,7 +148,7 @@
 - Deployment documentation
 - Resource limit configuration
 
-**Infer Focus:** 71-90 (optimization, deployment)
+**Cycle Focus:** 71-90 (optimization, deployment)
 
 ---
 
@@ -176,7 +176,7 @@
 - `backend/convex/mutations/skills.ts`
 - `backend/convex/queries/skills.ts`
 
-**Infer Focus:** 11-20 (schema + services), 41-50 (matching engine), 51-60 (tests)
+**Cycle Focus:** 11-20 (schema + services), 41-50 (matching engine), 51-60 (tests)
 
 #### Secondary: agent-quality 🟡
 
@@ -195,7 +195,7 @@
 - Rating algorithm
 - Endorsement logic
 
-**Infer Focus:** 51-60 (verification tests), 41-50 (verification logic)
+**Cycle Focus:** 51-60 (verification tests), 41-50 (verification logic)
 
 #### Tertiary: agent-backend 🟢
 
@@ -211,7 +211,7 @@
 - Query optimization
 - Caching configuration
 
-**Infer Focus:** 11-20 (schema), 71-80 (optimization)
+**Cycle Focus:** 11-20 (schema), 71-80 (optimization)
 
 ---
 
@@ -239,7 +239,7 @@
 - `backend/convex/queries/github-repos.ts`
 - GitHub OAuth callback handler
 
-**Infer Focus:** 11-20 (schema), 31-50 (GitHub integration), 71-80 (optimization)
+**Cycle Focus:** 11-20 (schema), 31-50 (GitHub integration), 71-80 (optimization)
 
 #### Secondary: agent-backend 🟡
 
@@ -258,7 +258,7 @@
 - `backend/convex/services/revenue-calculation-service.ts`
 - Convex mutations for access grants
 
-**Infer Focus:** 11-20 (schema), 41-50 (access control + revenue)
+**Cycle Focus:** 11-20 (schema), 41-50 (access control + revenue)
 
 #### Tertiary: agent-quality 🟡
 
@@ -275,7 +275,7 @@
 - GitHub integration test cases
 - Revenue calculation test fixtures
 
-**Infer Focus:** 51-60 (testing)
+**Cycle Focus:** 51-60 (testing)
 
 ---
 
@@ -305,7 +305,7 @@
 - `web/src/components/features/CheckoutFlow.tsx`
 - `web/src/pages/account/orders.astro`
 
-**Infer Focus:** 21-30 (components), 61-70 (design), 68 (mobile)
+**Cycle Focus:** 21-30 (components), 61-70 (design), 68 (mobile)
 
 #### Secondary: agent-backend 🟡
 
@@ -326,7 +326,7 @@
 - `backend/convex/mutations/products.ts`
 - `backend/convex/mutations/orders.ts`
 
-**Infer Focus:** 11-20 (schema), 31-40 (checkout), 41-50 (fulfillment)
+**Cycle Focus:** 11-20 (schema), 31-40 (checkout), 41-50 (fulfillment)
 
 #### Tertiary: agent-integrator 🟡
 
@@ -344,7 +344,7 @@
 - X402 payment handler
 - Email notification templates
 
-**Infer Focus:** 31-40 (payment integration), 41-50 (fulfillment)
+**Cycle Focus:** 31-40 (payment integration), 41-50 (fulfillment)
 
 ---
 
@@ -375,7 +375,7 @@
 - Webhook delivery service
 - OpenAPI schema file
 
-**Infer Focus:** 11-20 (auth), 31-40 (endpoints + rate limiting), 41-50 (webhooks)
+**Cycle Focus:** 11-20 (auth), 31-40 (endpoints + rate limiting), 41-50 (webhooks)
 
 #### Secondary: agent-quality 🟡
 
@@ -395,7 +395,7 @@
 - Rate limit test cases
 - Webhook reliability tests
 
-**Infer Focus:** 51-60 (quality testing), 59 (performance testing)
+**Cycle Focus:** 51-60 (quality testing), 59 (performance testing)
 
 #### Tertiary: agent-backend 🟡
 
@@ -412,7 +412,7 @@
 - Pagination helpers
 - Rate limit tracking schema
 
-**Infer Focus:** 11-20 (auth), 71-80 (optimization)
+**Cycle Focus:** 11-20 (auth), 71-80 (optimization)
 
 ---
 
@@ -443,7 +443,7 @@
 - `web/src/components/features/RecommendationFeed.tsx`
 - `web/src/components/features/SocialCard.tsx`
 
-**Infer Focus:** 21-30 (components), 61-70 (design), 81-90 (deployment)
+**Cycle Focus:** 21-30 (components), 61-70 (design), 81-90 (deployment)
 
 #### Secondary: agent-backend 🔴
 
@@ -466,7 +466,7 @@
 - Analytics event logging
 - Trending algorithm
 
-**Infer Focus:** 11-20 (schema), 31-40 (search/recs), 41-50 (algorithms)
+**Cycle Focus:** 11-20 (schema), 31-40 (search/recs), 41-50 (algorithms)
 
 #### Tertiary: agent-integrator 🟡
 
@@ -484,7 +484,7 @@
 - Notification delivery abstraction
 - Data export service
 
-**Infer Focus:** 31-40 (RAG), 41-50 (notifications + social)
+**Cycle Focus:** 31-40 (RAG), 41-50 (notifications + social)
 
 ---
 
@@ -514,7 +514,7 @@
 - Design tokens CSS
 - Accessibility audit checklist
 
-**Infer Focus:** 61-70 (design system), 67 (accessibility), 68 (mobile)
+**Cycle Focus:** 61-70 (design system), 67 (accessibility), 68 (mobile)
 
 #### Secondary: agent-frontend 🔴
 
@@ -542,7 +542,7 @@
 - `web/src/pages/dashboard/admin/index.astro`
 - Content structure and taxonomy
 
-**Infer Focus:** 21-30 (pages), 61-70 (design implementation), 81-90 (deployment)
+**Cycle Focus:** 21-30 (pages), 61-70 (design implementation), 81-90 (deployment)
 
 #### Tertiary: agent-ops 🟢
 
@@ -562,7 +562,7 @@
 - Monitoring dashboard
 - Performance report
 
-**Infer Focus:** 81-90 (deployment), 71-80 (optimization)
+**Cycle Focus:** 81-90 (deployment), 71-80 (optimization)
 
 ---
 
@@ -570,32 +570,32 @@
 
 ### Week 1-2: Wave 1 (Foundation)
 ```
-agent-backend:   todo-onboard.md Infer 1-50 ████████░░
-agent-frontend:  todo-onboard.md Infer 1-50 ████████░░
-agent-designer:  todo-onboard.md Infer 1-20 ██░░░░░░░░
+agent-backend:   todo-onboard.md Cycle 1-50 ████████░░
+agent-frontend:  todo-onboard.md Cycle 1-50 ████████░░
+agent-designer:  todo-onboard.md Cycle 1-20 ██░░░░░░░░
 ```
 
 ### Week 3-4: Wave 2 (Integration Layer)
 ```
-agent-builder:   todo-agents.md Infer 1-100 ██████████
-agent-integrator: todo-sell.md Infer 1-100 ██████████
-agent-builder:   todo-skills.md Infer 1-100 ██████████
-agent-backend:   todo-onboard.md Infer 51-100 ████████░░
+agent-builder:   todo-agents.md Cycle 1-100 ██████████
+agent-integrator: todo-sell.md Cycle 1-100 ██████████
+agent-builder:   todo-skills.md Cycle 1-100 ██████████
+agent-backend:   todo-onboard.md Cycle 51-100 ████████░░
 ```
 
 ### Week 5-6: Wave 3 (Platform Layer)
 ```
-agent-frontend:  todo-ecommerce.md Infer 1-100 ██████████
-agent-integrator: todo-api.md Infer 1-100 ██████████
-agent-frontend:  todo-features.md Infer 1-100 ██████████
-agent-backend:   todo-ecommerce.md Infer 11-50 ███░░░░░░░
+agent-frontend:  todo-ecommerce.md Cycle 1-100 ██████████
+agent-integrator: todo-api.md Cycle 1-100 ██████████
+agent-frontend:  todo-features.md Cycle 1-100 ██████████
+agent-backend:   todo-ecommerce.md Cycle 11-50 ███░░░░░░░
 ```
 
 ### Week 7-8: Wave 4 (Presentation)
 ```
-agent-designer:  todo-one-ie.md Infer 1-100 ██████████
-agent-frontend:  todo-one-ie.md Infer 21-100 ██████████
-agent-ops:       todo-one-ie.md Infer 81-100 ████████░░
+agent-designer:  todo-one-ie.md Cycle 1-100 ██████████
+agent-frontend:  todo-one-ie.md Cycle 21-100 ██████████
+agent-ops:       todo-one-ie.md Cycle 81-100 ████████░░
 ```
 
 ---

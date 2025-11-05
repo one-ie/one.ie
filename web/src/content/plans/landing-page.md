@@ -6,8 +6,8 @@ organization: "ONE Platform"
 personRole: "platform_owner"
 ontologyDimensions: ["Things", "People", "Connections", "Events"]
 assignedSpecialist: "Engineering Director"
-totalInferences: 100
-completedInferences: 0
+totalCycles: 100
+completedCycles: 0
 createdAt: 2025-10-30
 draft: false
 ---
@@ -15,8 +15,8 @@ draft: false
 # ONE Platform: Landing Page & Project Onboarding v1.0.0
 
 **Focus:** Entry point for new creators - "Start a Project" instead of "Pick a Template"
-**Process:** `Infer 1-100 inference sequence`
-**Timeline:** 8-12 inferences per specialist per day
+**Process:** `Cycle 1-100 cycle sequence`
+**Timeline:** 8-12 cycles per specialist per day
 **Target:** Zero-friction creator onboarding (Wave 0 - ENTRY POINT)
 **Integration:** Works with todo-onboard, todo-agents (via agent-clone)
 
@@ -58,11 +58,11 @@ First creator ready to earn
 
 ---
 
-## PHASE 1: FOUNDATION & SETUP (Infer 1-10)
+## PHASE 1: FOUNDATION & SETUP (Cycle 1-10)
 
 **Purpose:** Understand entry point landscape, map to ontology, plan implementation
 
-### Infer 1: Define "Start a Project" Concept
+### Cycle 1: Define "Start a Project" Concept
 - [ ] Not "Pick a Template" - too generic
 - [ ] Is "Start a Project" - guided journey
 - [ ] Three paths for users:
@@ -86,7 +86,7 @@ First creator ready to earn
   - [ ] Intermediate demo: Padel course example
   - [ ] Advanced demo: Creator dashboard with metrics
 
-### Infer 2: Map to 6-Dimension Ontology
+### Cycle 2: Map to 6-Dimension Ontology
 - [ ] **Groups:** Creator's project (group as container)
 - [ ] **People:**
   - [ ] Creator (initiates project)
@@ -112,7 +112,7 @@ First creator ready to earn
   - [ ] project_description (embedding for search)
   - [ ] creator_niche (what they teach/sell)
 
-### Infer 3: Define Project Templates
+### Cycle 3: Define Project Templates
 - [ ] **Starter Projects** (not templates - frameworks):
   1. **Blog/Portfolio**
      - Landing page
@@ -156,7 +156,7 @@ First creator ready to earn
   - [ ] Onboarding guide (how to customize)
   - [ ] Success metrics (what to measure)
 
-### Infer 4: Plan AI Landing Page Generation (agent-clone)
+### Cycle 4: Plan AI Landing Page Generation (agent-clone)
 - [ ] **Flow:**
   1. User selects "I have a website/social"
   2. Paste: Website URL OR Social profile (Twitter, LinkedIn, YouTube)
@@ -181,7 +181,7 @@ First creator ready to earn
     - [ ] "What's your unique angle?"
   - [ ] Agent builds landing page from conversation
 
-### Infer 5: Define Demo Projects
+### Cycle 5: Define Demo Projects
 - [ ] **Live Demos** (working examples users can interact with):
   1. **Padel Course Demo**
      - Landing page (full sales page)
@@ -231,7 +231,7 @@ First creator ready to earn
   - [ ] Has "Made with ONE" badge
   - [ ] Links back to "Create your own"
 
-### Infer 6: Plan Landing Page Layout (https://one.ie)
+### Cycle 6: Plan Landing Page Layout (https://one.ie)
 - [ ] **Hero Section:**
   - [ ] Headline: "Start Your Creator Project"
   - [ ] Subheadline: "Share your expertise, build your audience, earn money"
@@ -280,7 +280,7 @@ First creator ready to earn
   - [ ] Links: Docs, Blog, Discord, Twitter
   - [ ] Legal: Privacy, Terms, Security
 
-### Infer 7: Plan Authentication Gate
+### Cycle 7: Plan Authentication Gate
 - [ ] **When user clicks "Start a Project":**
   1. Check if logged in
   2. If not → Show login/signup modal
@@ -292,7 +292,7 @@ First creator ready to earn
   - [ ] Show what's next: "Next, we'll create your project"
   - [ ] Privacy note: "We'll never spam you"
 
-### Infer 8: Plan Agent-Clone Integration
+### Cycle 8: Plan Agent-Clone Integration
 - [ ] **What is agent-clone?**
   - [ ] Described in CLAUDE.md as: "AI clones of creators using their content as training data"
   - [ ] For landing pages: Custom AI that understands creator's voice + brand
@@ -311,7 +311,7 @@ First creator ready to earn
   - [ ] Uses agent-clone internally
   - [ ] Returns: Generated landing page HTML + metadata
 
-### Infer 9: Plan "Start a Project" Flow UX
+### Cycle 9: Plan "Start a Project" Flow UX
 - [ ] **Step 1: Choose Project Type**
   - [ ] 5 cards: Course, Service, Newsletter, Community, Portfolio
   - [ ] Each shows: Icon, name, description, demo button
@@ -344,7 +344,7 @@ First creator ready to earn
   - [ ] Onboarding tutorials shown
   - [ ] Success! "Your project is live"
 
-### Infer 10: Define Success Metrics
+### Cycle 10: Define Success Metrics
 - [ ] Landing page complete when:
   - [ ] https://one.ie landing page live
   - [ ] 5 demo projects functional (can click around)
@@ -361,7 +361,7 @@ First creator ready to earn
 
 ---
 
-## PHASE 2: BACKEND SCHEMA & SERVICES (Infer 11-20)
+## PHASE 2: BACKEND SCHEMA & SERVICES (Cycle 11-20)
 
 **Purpose:** Add project + landing page things to schema
 

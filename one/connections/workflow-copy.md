@@ -66,7 +66,7 @@ Phase 6: TEST & DOCUMENT
 **For specific features, also read:**
 
 - **Blockchain features:** `one/things/Sui.md`, `one/connections/cryptonetworks.md`
-- **Inference features:** `one/events/InferenceRevenue.md`
+- **Cycle features:** `one/events/CycleRevenue.md`
 - **Protocol features:** `one/connections/protocols.md` + specific protocol doc
 - **Integration features:** `one/connections/communications.md` + specific integration doc
 - **Agent features:** `one/things/AgentKit.md`, `one/things/CopilotKit.md`

@@ -416,5 +416,5 @@ npx convex run queries/problem-solving-metrics '{"timeRange": "week"}'
 ---
 
 **Problem Solver Agent v2.0.0**
-**Infer 65-70: E2E Testing & Failure Analysis**
+**Cycle 65-70: E2E Testing & Failure Analysis**
 **Next: Inference 71 - Write integration tests for all dimensions**

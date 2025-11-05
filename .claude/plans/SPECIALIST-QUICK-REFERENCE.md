@@ -7,7 +7,7 @@
 ## Agent-Director
 
 **Your Role:** Orchestrator & Plan Generator
-**Work:** Infer 1-10 (Agent Director Framework)
+**Work:** Cycle 1-10 (Agent Director Framework)
 **Duration:** 2-3 days
 **Effort:** 16 hours
 **Specialists Managed:** All 6 specialists
@@ -34,7 +34,7 @@
    - Delegate to problem-solver on blockers
    - Alert team to off-plan issues
 
-### Key Implementation (Infer 1-10)
+### Key Implementation (Cycle 1-10)
 
 ```typescript
 // Feature Library (20+ features)
@@ -76,7 +76,7 @@ function generatePlan(selections: string[]): ExecutionPlan {
 - `blocker_detected` - From any specialist
 - `quality_check_complete` - From agent-quality
 
-### Success Checklist (Infer 1-10)
+### Success Checklist (Cycle 1-10)
 - [ ] Feature library with 20+ features
 - [ ] Dependency resolution algorithm
 - [ ] Inference mapping working
@@ -89,26 +89,26 @@ function generatePlan(selections: string[]): ExecutionPlan {
 ## Agent-Backend (3x Specialists)
 
 **Your Role:** Backend CRUD Implementation (Divide work 3 ways)
-**Work:** Infer 31-60 (PARALLEL), Infer 71-80, Infer 11-20, Infer 21-30 (Already done)
+**Work:** Cycle 31-60 (PARALLEL), Cycle 71-80, Cycle 11-20, Cycle 21-30 (Already done)
 **Total Duration:** 8 weeks
 **Total Effort:** 195 hours (across 3 specialists)
 
 ### Division of Labor
 
-**Specialist 1: Core Entities (Infer 31-40)**
+**Specialist 1: Core Entities (Cycle 31-40)**
 - creator
 - ai_clone
 - audience_member
 - organization
 
-**Specialist 2: Content Entities (Infer 41-50)** [PARALLEL]
+**Specialist 2: Content Entities (Cycle 41-50)** [PARALLEL]
 - blog_post
 - course
 - lesson
 - product
 - membership
 
-**Specialist 3: Tokens & Agents (Infer 51-60)** [PARALLEL]
+**Specialist 3: Tokens & Agents (Cycle 51-60)** [PARALLEL]
 - token
 - token_contract
 - business_agent
@@ -144,7 +144,7 @@ export const createEntity = mutation({
 // Result: Backend CRUD for all types using consistent pattern
 ```
 
-### Weeks 5-6: Advanced (Infer 71-80)
+### Weeks 5-6: Advanced (Cycle 71-80)
 
 After CRUD complete, implement:
 - RAG chunking service (800 tokens, 200 overlap)
@@ -198,11 +198,11 @@ After CRUD complete, implement:
 ## Agent-Frontend
 
 **Your Role:** UI/UX Implementation
-**Work:** Infer 61-70 (Frontend Dashboard & Entity Management UI)
+**Work:** Cycle 61-70 (Frontend Dashboard & Entity Management UI)
 **Duration:** 2-3 weeks (parallel with backend)
 **Effort:** 40 hours
 
-### What You Build (Infer 61-70)
+### What You Build (Cycle 61-70)
 
 1. **Multi-Tenant Dashboard**
    - Group hierarchy selector (tree view)
@@ -309,7 +309,7 @@ const realProvider = createConvexProvider()
 ## Agent-Designer
 
 **Your Role:** Design & UX Strategy
-**Work:** Design System & Wireframes (Infer 61-70 prep)
+**Work:** Design System & Wireframes (Cycle 61-70 prep)
 **Duration:** 2-3 weeks (parallel)
 **Effort:** 20 hours
 
@@ -362,7 +362,7 @@ const realProvider = createConvexProvider()
 ## Agent-Quality
 
 **Your Role:** Testing & Quality Assurance
-**Work:** Infer 81-90 (Comprehensive Testing)
+**Work:** Cycle 81-90 (Comprehensive Testing)
 **Duration:** 3 weeks
 **Effort:** 50 hours
 
@@ -454,7 +454,7 @@ describe("ThingService", () => {
 ## Agent-Ops
 
 **Your Role:** Deployment & Infrastructure
-**Work:** Infer 91-100 (Production Deployment)
+**Work:** Cycle 91-100 (Production Deployment)
 **Duration:** 2 weeks
 **Effort:** 30 hours
 
@@ -657,7 +657,7 @@ When `blocker_detected` event arrives:
 
 ## Quick Links
 
-| Specialist | Phase | Infer | Duration | Effort | Status |
+| Specialist | Phase | Cycle | Duration | Effort | Status |
 |-----------|-------|-------|----------|--------|--------|
 | agent-director | Foundation | 1-10 | 2-3 days | 16h | To Start |
 | agent-backend | Core CRUD | 31-40 | 1-2 weeks | 30h | To Start |

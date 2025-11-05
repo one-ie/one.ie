@@ -3,7 +3,7 @@ title: Todo Frontend Effects
 dimension: things
 primary_dimension: things
 category: todo-frontend-effects.md
-tags: backend, frontend, inference, testing, ui
+tags: backend, frontend, cycle, testing, ui
 related_dimensions: connections, events, groups, knowledge, people, things
 scope: global
 created: 2025-11-03
@@ -12,12 +12,12 @@ version: 1.0.0
 ai_context: |
   This document is part of the things dimension in the todo-frontend-effects.md category.
   Location: one/things/todo-frontend-effects.md
-  Purpose: Documents frontend effects.ts implementation: 100-inference execution plan
+  Purpose: Documents frontend effects.ts implementation: 100-cycle execution plan
   Related dimensions: connections, events, groups, knowledge, people
   For AI agents: Read this to understand todo frontend effects.
 ---
 
-# Frontend Effects.ts Implementation: 100-Inference Execution Plan
+# Frontend Effects.ts Implementation: 100-Cycle Execution Plan
 
 **Building Backend-Agnostic Frontend Services with Type Safety & Composability**
 
@@ -29,24 +29,24 @@ ai_context: |
 
 ---
 
-## Overview: 10 Phases × 10 Inferences = 100 Steps
+## Overview: 10 Phases × 10 Cycles = 100 Steps
 
 ```
-Phase 1 (Infer 1-10):     Foundation & Planning
-Phase 2 (Infer 11-20):    DataProvider Interface
-Phase 3 (Infer 21-30):    Effect.ts Services Layer
-Phase 4 (Infer 31-40):    React Hooks & Context
-Phase 5 (Infer 41-50):    Astro Integration & SSR
-Phase 6 (Infer 51-60):    Component Migration
-Phase 7 (Infer 61-70):    Testing & Validation
-Phase 8 (Infer 71-80):    Error Handling & Resilience
-Phase 9 (Infer 81-90):    Performance Optimization
-Phase 10 (Infer 91-100):  Documentation & Deployment
+Phase 1 (Cycle 1-10):     Foundation & Planning
+Phase 2 (Cycle 11-20):    DataProvider Interface
+Phase 3 (Cycle 21-30):    Effect.ts Services Layer
+Phase 4 (Cycle 31-40):    React Hooks & Context
+Phase 5 (Cycle 41-50):    Astro Integration & SSR
+Phase 6 (Cycle 51-60):    Component Migration
+Phase 7 (Cycle 61-70):    Testing & Validation
+Phase 8 (Cycle 71-80):    Error Handling & Resilience
+Phase 9 (Cycle 81-90):    Performance Optimization
+Phase 10 (Cycle 91-100):  Documentation & Deployment
 ```
 
 ---
 
-## Phase 1: Foundation & Planning (Infer 1-10)
+## Phase 1: Foundation & Planning (Cycle 1-10)
 
 **Specialists:** Director, Frontend Lead
 **Duration:** 3-4 days
@@ -128,7 +128,7 @@ Phase 10 (Infer 91-100):  Documentation & Deployment
 
 ---
 
-## Phase 2: DataProvider Interface (Infer 11-20)
+## Phase 2: DataProvider Interface (Cycle 11-20)
 
 **Specialists:** Backend Specialist, Frontend Lead
 **Duration:** 3-5 days
@@ -226,7 +226,7 @@ export const DataProvider = Context.GenericTag<DataProvider>("DataProvider");
 
 ---
 
-## Phase 3: Effect.ts Services Layer (Infer 21-40)
+## Phase 3: Effect.ts Services Layer (Cycle 21-40)
 
 **Specialists:** Backend Specialist
 **Duration:** 5-7 days
@@ -299,7 +299,7 @@ export const DataProvider = Context.GenericTag<DataProvider>("DataProvider");
 
 ---
 
-## Phase 4: React Hooks & Context (Infer 31-40)
+## Phase 4: React Hooks & Context (Cycle 31-40)
 
 **Specialists:** Frontend Specialist
 **Duration:** 3-5 days
@@ -375,7 +375,7 @@ export const DataProvider = Context.GenericTag<DataProvider>("DataProvider");
 
 ---
 
-## Phase 5: Astro Integration & SSR (Infer 41-50)
+## Phase 5: Astro Integration & SSR (Cycle 41-50)
 
 **Specialists:** Frontend Specialist
 **Duration:** 3-4 days
@@ -454,7 +454,7 @@ export const DataProvider = Context.GenericTag<DataProvider>("DataProvider");
 
 ---
 
-## Phase 6: Component Migration (Infer 51-70)
+## Phase 6: Component Migration (Cycle 51-70)
 
 **Specialists:** Frontend Specialist
 **Duration:** 2-4 weeks
@@ -605,7 +605,7 @@ export const DataProvider = Context.GenericTag<DataProvider>("DataProvider");
 
 ---
 
-## Phase 7: Testing & Validation (Infer 71-80)
+## Phase 7: Testing & Validation (Cycle 71-80)
 
 **Specialists:** Quality Specialist (parallel with Phase 6)
 **Duration:** 2-3 weeks
@@ -685,7 +685,7 @@ export const DataProvider = Context.GenericTag<DataProvider>("DataProvider");
 
 ---
 
-## Phase 8: Error Handling & Resilience (Infer 81-85)
+## Phase 8: Error Handling & Resilience (Cycle 81-85)
 
 **Specialists:** Backend Specialist, Frontend Specialist (parallel)
 **Duration:** 1-2 weeks
@@ -730,7 +730,7 @@ export const DataProvider = Context.GenericTag<DataProvider>("DataProvider");
 
 ---
 
-## Phase 9: Documentation & Knowledge (Infer 86-95)
+## Phase 9: Documentation & Knowledge (Cycle 86-95)
 
 **Specialists:** Documenter
 **Duration:** 1-2 weeks
@@ -810,7 +810,7 @@ export const DataProvider = Context.GenericTag<DataProvider>("DataProvider");
 
 ---
 
-## Phase 10: Performance & Deployment (Infer 96-100)
+## Phase 10: Performance & Deployment (Cycle 96-100)
 
 **Specialists:** Frontend Lead, DevOps
 **Duration:** 1 week
@@ -938,7 +938,7 @@ export const DataProvider = Context.GenericTag<DataProvider>("DataProvider");
 
 ## Definition of Done
 
-**Inference is complete when:**
+**Cycle is complete when:**
 
 1. Code is written and committed
 2. Tests are passing (relevant phase target)

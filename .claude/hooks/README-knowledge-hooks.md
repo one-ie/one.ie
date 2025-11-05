@@ -7,7 +7,7 @@ The knowledge tagging hooks automatically map all created/modified artifacts to 
 - 📊 Automatic ontology dimension mapping (groups, people, things, connections, events, knowledge)
 - 🏷️ Semantic labeling aligned with Reality-as-DSL architecture
 - 🔍 RAG-ready artifact indexing for AI agent learning
-- 📈 Knowledge tracking per inference (Infer 1-100)
+- 📈 Knowledge tracking per inference (Cycle 1-100)
 - 🧠 Complete audit trail of created knowledge
 - 🎯 Guided documentation paths for each dimension
 
@@ -96,7 +96,7 @@ Runs **after** Write/Edit operations to create knowledge entries:
 
 1. 📝 Creates knowledge entry with ontology dimension mapping
 2. 🏷️ Tags with semantic labels (dimension:*, artifact:*, technology:*, etc.)
-3. 🔗 Links to current inference context (Infer 1-100)
+3. 🔗 Links to current inference context (Cycle 1-100)
 4. 💾 Saves to daily knowledge log (~/.claude/knowledge-log/)
 5. 🔐 Generates content hash for versioning
 6. 📊 Tracks ontology version (3.0.0)
@@ -374,7 +374,7 @@ These hooks implement **Dimension 6: Knowledge** while mapping all artifacts to 
 Every artifact created is:
 1. ✅ Mapped to correct **ontology dimension** (1-6)
 2. 🏷️ Tagged with **semantic labels** (dimension:*, artifact:*, etc.)
-3. 🔗 Linked to **inference context** (Infer 1-100)
+3. 🔗 Linked to **inference context** (Cycle 1-100)
 4. 📊 Indexed for **RAG search** (embeddings ready)
 5. 🎯 Guided to **dimension docs** (ontology alignment)
 
@@ -439,7 +439,7 @@ Remove from `.claude/settings.local.json`:
 ## See Also
 
 - **`validate-ontology-structure.py`**: Validates 6-dimension ontology structure
-- **`todo.py`**: Inference context tracking (Infer 1-100)
+- **`todo.py`**: Inference context tracking (Cycle 1-100)
 - **`done.py`**: Marks inferences complete
 - **`/one/knowledge/ontology.md`**: Complete 6-dimension ontology spec (Version 3.0.0)
 - **`/one/knowledge/todo.md`**: 100-inference execution sequence

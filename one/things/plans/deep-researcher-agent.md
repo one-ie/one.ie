@@ -53,7 +53,7 @@ The Deep Researcher Agent combines agentic continual pre-training, reinforcement
 - **Entity Type**: `researcher_agent` (the agent itself)
   - `properties.model`: "deepresearch-30b-moe" or variant
   - `properties.mode`: "react" | "heavy"
-  - `properties.maxTurns`: inference limit
+  - `properties.maxTurns`: cycle limit
   - `properties.tools`: ["web_search", "academic_retrieval", "python_exec", "knowledge_graph"]
 
 - **Research Task** (`research_task`):

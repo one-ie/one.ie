@@ -120,10 +120,10 @@ const {
 
 ### Type Safety
 
-Full TypeScript inference throughout:
+Full TypeScript cycle throughout:
 
 ```typescript
-// Type inference from arguments
+// Type cycle from arguments
 const { data: courses } = useThings({ type: "course" });
 // courses: Thing[] | null
 
@@ -1477,7 +1477,7 @@ describe("Optimistic updates", () => {
 
 - [x] Hooks match Convex API ergonomics (useQuery, useMutation patterns)
 - [x] Work with any DataProvider implementation
-- [x] Type-safe with full TypeScript inference
+- [x] Type-safe with full TypeScript cycle
 - [x] Loading/error states work correctly
 - [x] Real-time subscriptions functional
 - [x] Optimistic updates with rollback
@@ -2008,7 +2008,7 @@ function CourseList() {
 
 - [x] Hooks match Convex API ergonomics (familiar patterns)
 - [x] Work with any DataProvider (ConvexProvider, SupabaseProvider, etc.)
-- [x] Type-safe with full TypeScript inference
+- [x] Type-safe with full TypeScript cycle
 - [x] Loading/error states work correctly
 - [x] Real-time subscriptions functional
 - [x] Optimistic updates with automatic rollback

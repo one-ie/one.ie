@@ -65,7 +65,7 @@ interface Organization {
     users: number; // Max users in organization
     storage: number; // GB
     apiCalls: number; // Per month
-    inference: number; // LLM calls per month
+    cycle: number; // LLM calls per month
   };
 
   // Current Usage
@@ -73,7 +73,7 @@ interface Organization {
     users: number;
     storage: number;
     apiCalls: number;
-    inference: number;
+    cycle: number;
   };
 
   // Billing Integration
@@ -210,7 +210,7 @@ Events record every action in the system, providing compliance, analytics, and d
 - `deal_stage_changed` - Opportunity progressed
 - `task_completed` - Task marked done
 - `content_viewed` - User viewed content
-- `inference_request` - AI agent invoked
+- `cycle_request` - AI agent invoked
 
 ### 6. Knowledge - Intelligence Layer
 
@@ -248,13 +248,13 @@ export const createOrganization = mutation({
   handler: async (ctx, args) => {
     // Define plan limits
     const planLimits = {
-      starter: { users: 5, storage: 10, apiCalls: 10000, inference: 5000 },
-      pro: { users: 25, storage: 100, apiCalls: 100000, inference: 50000 },
+      starter: { users: 5, storage: 10, apiCalls: 10000, cycle: 5000 },
+      pro: { users: 25, storage: 100, apiCalls: 100000, cycle: 50000 },
       enterprise: {
         users: 1000,
         storage: 1000,
         apiCalls: 1000000,
-        inference: 500000,
+        cycle: 500000,
       },
     };
 
@@ -268,7 +268,7 @@ export const createOrganization = mutation({
       status: "trial",
       plan,
       limits: planLimits[plan],
-      usage: { users: 0, storage: 0, apiCalls: 0, inference: 0 },
+      usage: { users: 0, storage: 0, apiCalls: 0, cycle: 0 },
       billing: { billingEmail: args.ownerEmail },
       settings: {
         allowSignups: true,
@@ -322,7 +322,7 @@ export const createOrganization = mutation({
 
     // Increment usage
     await ctx.db.patch(orgId, {
-      usage: { users: 1, storage: 0, apiCalls: 0, inference: 0 },
+      usage: { users: 1, storage: 0, apiCalls: 0, cycle: 0 },
     });
 
     return { orgId, ownerId };
@@ -573,8 +573,8 @@ export const sendAIOutreach = mutation({
       timestamp: Date.now(),
     });
 
-    // Update inference usage
-    await incrementUsage(ctx, args.orgId, "inference", 1);
+    // Update cycle usage
+    await incrementUsage(ctx, args.orgId, "cycle", 1);
 
     return { emailId, emailContent };
   },
@@ -835,7 +835,7 @@ Each organization has independent quotas and billing.
 export const checkQuota = async (
   ctx: any,
   orgId: Id<"organizations">,
-  resourceType: "users" | "storage" | "apiCalls" | "inference",
+  resourceType: "users" | "storage" | "apiCalls" | "cycle",
 ) => {
   const org = await ctx.db.get(orgId);
 
@@ -863,7 +863,7 @@ export const checkQuota = async (
 export const incrementUsage = async (
   ctx: any,
   orgId: Id<"organizations">,
-  resourceType: "users" | "storage" | "apiCalls" | "inference",
+  resourceType: "users" | "storage" | "apiCalls" | "cycle",
   amount: number = 1,
 ) => {
   const org = await ctx.db.get(orgId);
@@ -1013,24 +1013,24 @@ export const calculateRevenue = query({
       revenueByPlan[org.plan].mrr += planPricing[org.plan];
     });
 
-    // Calculate inference costs
-    const totalInferenceCalls = orgs.reduce(
-      (sum, org) => sum + org.usage.inference,
+    // Calculate cycle costs
+    const totalCycleCalls = orgs.reduce(
+      (sum, org) => sum + org.usage.cycle,
       0,
     );
 
-    const costPerInference = 0.01; // $0.01 per call
-    const inferenceCosts = totalInferenceCalls * costPerInference;
+    const costPerCycle = 0.01; // $0.01 per call
+    const cycleCosts = totalCycleCalls * costPerCycle;
 
-    // Platform revenue = subscription fees + inference markup
+    // Platform revenue = subscription fees + cycle markup
     const subscriptionRevenue = Object.values(revenueByPlan).reduce(
       (sum, plan) => sum + plan.mrr,
       0,
     );
 
-    const inferenceRevenue = inferenceCosts * 0.3; // 30% markup
+    const cycleRevenue = cycleCosts * 0.3; // 30% markup
 
-    const totalRevenue = subscriptionRevenue + inferenceRevenue;
+    const totalRevenue = subscriptionRevenue + cycleRevenue;
 
     return {
       period: { startDate: args.startDate, endDate: args.endDate },
@@ -1040,13 +1040,13 @@ export const calculateRevenue = query({
       },
       revenue: {
         subscriptions: subscriptionRevenue,
-        inference: inferenceRevenue,
+        cycle: cycleRevenue,
         total: totalRevenue,
       },
       costs: {
-        inference: inferenceCosts,
+        cycle: cycleCosts,
       },
-      profit: totalRevenue - inferenceCosts,
+      profit: totalRevenue - cycleCosts,
     };
   },
 });
@@ -1055,7 +1055,7 @@ export const calculateRevenue = query({
 **Benefits:**
 
 - Clear revenue attribution per organization
-- Track costs (inference, storage, API calls)
+- Track costs (cycle, storage, API calls)
 - Revenue sharing between platform and org owners
 - Financial analytics for business decisions
 

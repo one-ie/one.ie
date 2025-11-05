@@ -1,8 +1,8 @@
 ---
-title: Quick Start Guide
+title: Quick Start
 description: Get up and running with ONE in 5 minutes
 section: Getting Started
-order: 2
+order: 1
 tags:
   - getting-started
   - setup

@@ -716,9 +716,9 @@ await ctx.db.insert("connections", {
 
 ## Infrastructure Hooks (NEW - v2.0)
 
-Clean Agent now integrates directly into the inference workflow via two automated hooks that run before and after every inference.
+Clean Agent now integrates directly into the cycle workflow via two automated hooks that run before and after every cycle.
 
-### Pre-Inference Hook (`clean-pre.py`)
+### Pre-Cycle Hook (`clean-pre.py`)
 
 **Runs:** Before UserPromptSubmit (automatic)
 **Purpose:** Validate cleanliness before starting work
@@ -753,9 +753,9 @@ Clean Agent now integrates directly into the inference workflow via two automate
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 ```
 
-### Post-Inference Hook (`clean-post.py`)
+### Post-Cycle Hook (`clean-post.py`)
 
-**Runs:** After inference completion (automatic)
+**Runs:** After cycle completion (automatic)
 **Purpose:** Clean up and organize after work
 
 **Actions Performed:**
@@ -772,7 +772,7 @@ Clean Agent now integrates directly into the inference workflow via two automate
 
 ```
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-🧹 CLEANUP COMPLETE - Agent Clean Post-Inference
+🧹 CLEANUP COMPLETE - Agent Clean Post-Cycle
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
 📊 CLEANUP METRICS:
@@ -813,7 +813,7 @@ Clean Agent now integrates directly into the inference workflow via two automate
 
 **5x Faster Execution:**
 
-- Clean environment = faster inference
+- Clean environment = faster cycle
 - No time wasted on orphaned files
 - Automatic organization saves manual work
 
@@ -891,7 +891,7 @@ status: published
 owner: Platform Team
 specialist: quality
 ontology_entities: [intelligence_agent, report, knowledge]
-inference_usage: [61, 62, 63, 64, 65, 66, 67, 68, 69, 70]
+cycle_usage: [61, 62, 63, 64, 65, 66, 67, 68, 69, 70]
 ai_context: |
   Specifies the Clean Agent responsible for code quality and refactoring.
   Reads code, detects smells, applies patterns, removes technical debt.
@@ -934,7 +934,7 @@ python3 .claude/hooks/metadata-report.py
 - 🧭 **Navigation**: Find relevant documents in <100ms
 - 🧠 **Context**: Understand purpose without reading full content
 - 🔗 **Relationships**: Build knowledge graphs connecting concepts
-- 📊 **Inference**: Make better decisions with rich context
+- 📊 **Cycle**: Make better decisions with rich context
 - 🎯 **Targeting**: Load only relevant docs into limited context windows
 
 **For Human Developers:**
@@ -996,9 +996,9 @@ Clean Agent learns from every cleanup cycle.
 
 ### Learning Loop
 
-1. **Pre-Inference**: Identify cleanliness issues
-2. **Inference**: Execute cleanup or refactoring
-3. **Post-Inference**: Document what was cleaned and why
+1. **Pre-Cycle**: Identify cleanliness issues
+2. **Cycle**: Execute cleanup or refactoring
+3. **Post-Cycle**: Document what was cleaned and why
 4. **Knowledge Update**: Store patterns in knowledge base
 5. **Next Cycle**: Apply learned patterns automatically
 
@@ -1022,7 +1022,7 @@ Track improvement over time:
   avgCleanlinessScore: 94,  // Up from 78 in week 1
   filesAutoTagged: 3250,
   patternsLearned: 47,
-  cleanupTimeReduced: "73%",  // From 15min to 4min per inference
+  cleanupTimeReduced: "73%",  // From 15min to 4min per cycle
   technicalDebtReduced: "42%"
 }
 ```
@@ -1062,10 +1062,10 @@ one/
 
 ```
 .claude/hooks/
-├── clean-pre.py      # Pre-inference cleanliness validation
-├── clean-post.py     # Post-inference cleanup
-├── todo.py           # Inference context injection
-├── done.py           # Inference completion
+├── clean-pre.py      # Pre-cycle cleanliness validation
+├── clean-post.py     # Post-cycle cleanup
+├── todo.py           # Cycle context injection
+├── done.py           # Cycle completion
 ├── tag-all-docs.py   # Metadata tagging automation
 └── validate-metadata.py  # Metadata validation
 ```

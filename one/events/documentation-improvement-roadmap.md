@@ -45,7 +45,7 @@ These artifacts are created during/after implementation phases.
 ### Knowledge Chunk 1: [Feature Name Overview]
 - **Type:** chunk
 - **Size:** 200-500 tokens
-- **Inference Created:** [Which inference captures this]
+- **Cycle Created:** [Which cycle captures this]
 - **Content Summary:** [One sentence]
 - **Embedding Model:** text-embedding-3-large
 - **Labels:**
@@ -64,7 +64,7 @@ These artifacts are created during/after implementation phases.
 ### Knowledge Chunk 1: Creator Onboarding Flow
 - **Type:** chunk
 - **Size:** 280 tokens
-- **Inference Created:** Infer 1-4 (Foundation)
+- **Cycle Created:** Cycle 1-4 (Foundation)
 - **Content Summary:** Step-by-step flow from signup to first earnings
 - **Labels:**
   - feature:creator_onboarding
@@ -107,7 +107,7 @@ Capture both problems encountered and solutions discovered.
 ### [Problem/Pattern Name]
 
 **Date Discovered:** YYYY-MM-DD
-**Inference Phase:** Infer [N] ([Phase Name])
+**Cycle Phase:** Cycle [N] ([Phase Name])
 **Category:** [Architecture|Integration|Testing|Performance|UX]
 **Severity:** [High|Medium|Low]
 
@@ -138,7 +138,7 @@ Capture both problems encountered and solutions discovered.
 ### Hierarchical Groups Enable Infinite Flexibility
 
 **Date Discovered:** 2025-01-25
-**Inference Phase:** Infer 2 (Map to Ontology)
+**Cycle Phase:** Cycle 2 (Map to Ontology)
 **Category:** Architecture
 **Severity:** High
 
@@ -181,7 +181,7 @@ const getGroupTree = async (groupId) => {
 ```
 
 **Prevention:**
-- Always ask: "Do we need hierarchical nesting?" during Infer 2
+- Always ask: "Do we need hierarchical nesting?" during Cycle 2
 - Model 3+ levels during design phase
 - Test with Org→Dept→Team→Project structure
 
@@ -462,7 +462,7 @@ todo-onboard
 
 ### Downstream (These Depend on This)
 - **todo-api.md** - API must expose /api/products, /api/orders endpoints
-  - Delay until ecommerce phase 3 completes (Infer 21-30)
+  - Delay until ecommerce phase 3 completes (Cycle 21-30)
 - **todo-one-ie.md** - Public site must showcase products
   - Delay until ecommerce fully tested
 - **todo-analytics.md** - Analytics need transaction events
@@ -559,10 +559,10 @@ todo-onboard (Wave 1)
 ### Task 3.1: Complete todo-api.md
 
 **Current State:** Truncated at phase 1-2
-**Missing:** Phases 3-10, full inference breakdown
+**Missing:** Phases 3-10, full cycle breakdown
 
 **Changes:**
-- [ ] Add full 100-inference sequence
+- [ ] Add full 100-cycle sequence
 - [ ] Phase 2: Backend schema & mutations
 - [ ] Phase 3: API endpoints & routes
 - [ ] Phase 4: Frontend integration
@@ -613,7 +613,7 @@ todo-onboard (Wave 1)
 **Missing:** Implementation, examples, patterns
 
 **Changes:**
-- [ ] Add full 100-inference sequence
+- [ ] Add full 100-cycle sequence
 - [ ] Phase 1: Connection types overview
 - [ ] Phase 2-4: Schema implementation
 - [ ] Phase 5-7: Query patterns
@@ -641,7 +641,7 @@ todo-onboard (Wave 1)
 
 ## Phase 4: Create Missing Wave 2 TODOs (Week 3-4)
 
-**Goal:** Create complete 100-inference specifications for Wave 2 features
+**Goal:** Create complete 100-cycle specifications for Wave 2 features
 
 ### Task 4.1: Create todo-agents.md
 
@@ -653,7 +653,7 @@ todo-onboard (Wave 1)
 - Phase 3: Frontend agent management UI
 - Phase 4-10: Deployment, testing, documentation
 
-**Content:** 100-inference full specification
+**Content:** 100-cycle full specification
 
 **Effort:** 8-10 hours
 **Owner:** Integrator specialist
@@ -668,7 +668,7 @@ todo-onboard (Wave 1)
 - Phase 3: Frontend skill management & marketplace
 - Phase 4-10: Discovery, search, testing, deployment
 
-**Content:** 100-inference full specification
+**Content:** 100-cycle full specification
 
 **Effort:** 8-10 hours
 **Owner:** Builder specialist
@@ -683,7 +683,7 @@ todo-onboard (Wave 1)
 - Phase 3: Frontend marketplace & checkout
 - Phase 4-10: Analytics, licensing, deployment
 
-**Content:** 100-inference full specification
+**Content:** 100-cycle full specification
 
 **Effort:** 8-10 hours
 **Owner:** Backend + Builder specialists
@@ -732,7 +732,7 @@ todo-onboard (Wave 1)
 ### After Feature Completion
 
 **Checklist for every completed TODO:**
-- [ ] All 100 inferences completed
+- [ ] All 100 cycles completed
 - [ ] Knowledge artifacts section filled
 - [ ] Lessons learned captured
 - [ ] Code examples all have file paths
@@ -756,7 +756,7 @@ todo-onboard (Wave 1)
 
 ### Week 2-3: Complete Incomplete Files (40-50 hours)
 - Finish 4-6 truncated TODOs
-- Add full 100-inference sequences
+- Add full 100-cycle sequences
 - Resolve uncertainty for specialists
 
 ### Week 3-4: Create Missing Wave 2 (24-30 hours)
@@ -784,7 +784,7 @@ todo-onboard (Wave 1)
 
 ### End of Week 2-3
 - [ ] All incomplete files finished (4-6 files)
-- [ ] 100% of TODOs have full 100-inference sequences
+- [ ] 100% of TODOs have full 100-cycle sequences
 - [ ] All acceptance criteria sections added
 - [ ] All cross-references bidirectional
 

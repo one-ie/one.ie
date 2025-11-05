@@ -335,7 +335,7 @@ The `/release` command in `.claude/commands/release.md`:
 
 **Daily flow:**
 
-1. Read `one/things/todo.md` (100-inference plan)
+1. Read `one/things/todo.md` (100-cycle plan)
 2. Update statuses based on completed work
 3. Identify blockers and P0 decisions
 4. Delegate tasks to Clone agents via A2A protocol
@@ -388,7 +388,7 @@ The `/release` command in `.claude/commands/release.md`:
 ### For Platform Owners
 
 - **`one/things/strategy.md`** → Vision + 8 core features
-- **`one/things/todo.md`** → 100-inference release plan
+- **`one/things/todo.md`** → 100-cycle release plan
 - **`one-inc/groups/revenue.md`** → Revenue model + pricing
 
 ### For Developers

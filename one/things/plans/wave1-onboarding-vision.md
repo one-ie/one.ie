@@ -2,7 +2,7 @@
 title: Wave1 Onboarding Vision
 dimension: things
 category: plans
-tags: agent, ai, backend, frontend, groups, inference, ontology
+tags: agent, ai, backend, frontend, groups, cycle, ontology
 related_dimensions: connections, events, groups, people
 scope: global
 created: 2025-11-03
@@ -30,7 +30,7 @@ Wave 1 Creator Onboarding is the **critical path foundation** for the ONE platfo
 
 This is **NOT** a standalone feature - it's the prerequisite that unblocks all downstream work (monetization, agents, API, e-commerce). Without creator onboarding, no one can use the platform.
 
-**Timeline:** Infer 1-100 (approximately 8-12 inferences per specialist per day)
+**Timeline:** Cycle 1-100 (approximately 8-12 cycles per specialist per day)
 **Team:** 4 specialists (backend, frontend, quality, designer) + documentation
 **Scope:** 8-stage signup flow + workspace management + team collaboration
 
@@ -707,25 +707,25 @@ Wave 1 is done when:
 
 ## Next Steps After Approval
 
-1. **Backend specialist** starts at Infer 11
+1. **Backend specialist** starts at Cycle 11
    - Extend creator entity type
    - Create onboarding mutations
    - Create verification system
    - Create email templates
 
-2. **Frontend specialist** starts at Infer 21
+2. **Frontend specialist** starts at Cycle 21
    - Build signup → verification → profile flow
    - Build workspace creation UI
    - Build team management UI
    - Build onboarding pages
 
-3. **Quality specialist** starts at Infer 31
+3. **Quality specialist** starts at Cycle 31
    - Define test cases
    - Build test infrastructure
    - Run integration tests
    - Create test user accounts
 
-4. **Designer specialist** starts at Infer 41
+4. **Designer specialist** starts at Cycle 41
    - Create wireframes (already have specs)
    - Design system review
    - Component specs
@@ -741,4 +741,4 @@ Wave 1 is done when:
 
 **Status:** Ready for implementation
 **Approved:** Engineering Director (AI Agent)
-**Implementation Start:** Immediate (Infer 1)
+**Implementation Start:** Immediate (Cycle 1)

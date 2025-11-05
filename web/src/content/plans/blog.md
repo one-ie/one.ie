@@ -6,8 +6,8 @@ organization: "ONE Platform"
 personRole: "platform_owner"
 ontologyDimensions: ["Things", "Connections", "Knowledge"]
 assignedSpecialist: "agent-frontend"
-totalInferences: 100
-completedInferences: 0
+totalCycles: 100
+completedCycles: 0
 createdAt: 2025-10-30
 draft: false
 ---
@@ -17,17 +17,17 @@ draft: false
 **Focus:** Article publishing with markdown support, categories, tags, and full-text search
 **Type:** Complete frontend implementation (Astro + React 19 + Tailwind v4)
 **Integration:** Content collections, RSS feed, SEO optimization
-**Process:** `Infer 1-100 inference sequence`
-**Timeline:** 8-12 inferences per specialist per day
+**Process:** `Cycle 1-100 cycle sequence`
+**Timeline:** 8-12 cycles per specialist per day
 **Target:** Fully functional blog platform with content discovery features
 
 ---
 
-## PHASE 1: FOUNDATION & DESIGN (Infer 1-10)
+## PHASE 1: FOUNDATION & DESIGN (Cycle 1-10)
 
 **Purpose:** Define blog structure, content model, user flows, design system
 
-### Infer 1: Define Blog Structure
+### Cycle 1: Define Blog Structure
 - [ ] **Content Organization:**
   - [ ] Article listing page with filters
   - [ ] Individual article pages with markdown rendering
@@ -53,7 +53,7 @@ draft: false
   - [ ] Sitemap generation
   - [ ] Social media meta tags
 
-### Infer 2: Map Blog to 6-Dimension Ontology
+### Cycle 2: Map Blog to 6-Dimension Ontology
 - [ ] **Groups:** Blog's publication group (e.g., "Tech Blog")
 - [ ] **People:** Author (writer), editor, reader
 - [ ] **Things:**
@@ -72,7 +72,7 @@ draft: false
   - [ ] article_searched, category_browsed, tag_clicked
 - [ ] **Knowledge:** Search index, article embeddings, popular topics
 
-### Infer 3: Design Article Data Model
+### Cycle 3: Design Article Data Model
 - [ ] **Article Schema:**
   - [ ] ID, slug, title, description
   - [ ] Content (markdown)
@@ -97,7 +97,7 @@ draft: false
   - [ ] Related articles
   - [ ] Newsletter signup
 
-### Infer 4: Design Blog Listing Experience
+### Cycle 4: Design Blog Listing Experience
 - [ ] **Blog Index Page Shows:**
   - [ ] Featured article (hero)
   - [ ] Recent articles grid (card layout)
@@ -118,7 +118,7 @@ draft: false
   - [ ] Pagination or infinite scroll
   - [ ] Load more button
 
-### Infer 5: Design Category & Tag Pages
+### Cycle 5: Design Category & Tag Pages
 - [ ] **Category Page:**
   - [ ] Category name and description
   - [ ] Article count
@@ -136,7 +136,7 @@ draft: false
   - [ ] Articles by author
   - [ ] Article count
 
-### Infer 6: Design Search & Filtering
+### Cycle 6: Design Search & Filtering
 - [ ] **Search Bar:**
   - [ ] Search input with icon
   - [ ] Real-time suggestions
@@ -154,7 +154,7 @@ draft: false
   - [ ] Clear filters button
   - [ ] No results state
 
-### Infer 7: Design Responsive Layout
+### Cycle 7: Design Responsive Layout
 - [ ] **Mobile-first (< 768px):**
   - [ ] Single column layout
   - [ ] Hamburger menu
@@ -169,7 +169,7 @@ draft: false
   - [ ] Fixed sidebar on scroll
   - [ ] Wider content area for articles
 
-### Infer 8: Design Visual System
+### Cycle 8: Design Visual System
 - [ ] **Color Palette:**
   - [ ] Primary: Brand color for links, CTAs
   - [ ] Secondary: Category colors
@@ -191,7 +191,7 @@ draft: false
   - [ ] Search bar with autocomplete
   - [ ] Table of contents (sticky)
 
-### Infer 9: Plan Content Strategy
+### Cycle 9: Plan Content Strategy
 - [ ] **Article Types:**
   - [ ] Tutorial/guide (step-by-step)
   - [ ] Opinion/analysis
@@ -212,7 +212,7 @@ draft: false
   - [ ] Code splitting
   - [ ] Markdown rendering optimization
 
-### Infer 10: Define Success Metrics
+### Cycle 10: Define Success Metrics
 - [ ] Blog complete when:
   - [ ] Article listing page displays beautifully
   - [ ] Individual articles render markdown correctly
@@ -231,11 +231,11 @@ draft: false
 
 ---
 
-## PHASE 2: CONTENT COLLECTIONS & DATA (Infer 11-20)
+## PHASE 2: CONTENT COLLECTIONS & DATA (Cycle 11-20)
 
 **Purpose:** Set up Astro content collections, schemas, and sample content
 
-### Infer 11: Create Blog Content Collection
+### Cycle 11: Create Blog Content Collection
 - [ ] **Define schema** (`src/content/config.ts`):
   - [ ] slug, title, description
   - [ ] heroImage, thumbnail
@@ -247,7 +247,7 @@ draft: false
   - [ ] draft (boolean)
   - [ ] seo (object)
 
-### Infer 12: Create Sample Articles
+### Cycle 12: Create Sample Articles
 - [ ] **Create 10-15 sample articles:**
   - [ ] Various categories
   - [ ] Different authors
@@ -256,7 +256,7 @@ draft: false
   - [ ] Images and diagrams
   - [ ] Realistic content
 
-### Infer 13: Create Authors Collection
+### Cycle 13: Create Authors Collection
 - [ ] **Define author schema:**
   - [ ] name, slug, bio
   - [ ] avatar, email
@@ -264,14 +264,14 @@ draft: false
   - [ ] website
 - [ ] **Create 3-5 sample authors**
 
-### Infer 14: Create Categories Data
+### Cycle 14: Create Categories Data
 - [ ] **Define categories:**
   - [ ] Technology, Design, Business, Marketing, etc.
   - [ ] Name, slug, description, color
   - [ ] Icon (optional)
 - [ ] **Store in data file** (`src/data/categories.ts`)
 
-### Infer 15: Implement Markdown Processing
+### Cycle 15: Implement Markdown Processing
 - [ ] **Configure markdown:**
   - [ ] Syntax highlighting (Shiki or Prism)
   - [ ] Custom components in MDX
@@ -279,26 +279,26 @@ draft: false
   - [ ] Heading IDs for table of contents
   - [ ] External link handling
 
-### Infer 16: Calculate Reading Time
+### Cycle 16: Calculate Reading Time
 - [ ] **Create utility function:**
   - [ ] Count words in markdown
   - [ ] Calculate average reading time (200-250 words/min)
   - [ ] Return formatted time ("5 min read")
 
-### Infer 17: Generate Table of Contents
+### Cycle 17: Generate Table of Contents
 - [ ] **Create TOC utility:**
   - [ ] Parse markdown headings (h2, h3)
   - [ ] Generate nested list with anchor links
   - [ ] Highlight active section on scroll
 
-### Infer 18: Implement Search Index
+### Cycle 18: Implement Search Index
 - [ ] **Create search data:**
   - [ ] Build JSON index of all articles
   - [ ] Include title, description, content, tags
   - [ ] Optimize for client-side search
   - [ ] Consider Fuse.js or Pagefind
 
-### Infer 19: Create RSS Feed
+### Cycle 19: Create RSS Feed
 - [ ] **Generate RSS XML:**
   - [ ] Use `@astrojs/rss`
   - [ ] Include all published articles
@@ -306,7 +306,7 @@ draft: false
   - [ ] Proper XML formatting
   - [ ] Served at `/rss.xml`
 
-### Infer 20: Implement Related Articles
+### Cycle 20: Implement Related Articles
 - [ ] **Algorithm:**
   - [ ] Match by shared tags (weighted)
   - [ ] Match by category
@@ -316,11 +316,11 @@ draft: false
 
 ---
 
-## PHASE 3: ASTRO PAGES & LAYOUTS (Infer 21-40)
+## PHASE 3: ASTRO PAGES & LAYOUTS (Cycle 21-40)
 
 **Purpose:** Build page templates and layouts
 
-### Infer 21: Create Blog Layout
+### Cycle 21: Create Blog Layout
 - [ ] **BlogLayout.astro:**
   - [ ] Header with logo, navigation, search
   - [ ] Main content area
@@ -328,7 +328,7 @@ draft: false
   - [ ] Footer with links, copyright
   - [ ] Dark mode toggle
 
-### Infer 22: Create Blog Index Page
+### Cycle 22: Create Blog Index Page
 - [ ] **`/blog/index.astro`:**
   - [ ] Featured article hero
   - [ ] Recent articles grid
@@ -336,7 +336,7 @@ draft: false
   - [ ] Pagination
   - [ ] SEO meta tags
 
-### Infer 23: Create Article Page
+### Cycle 23: Create Article Page
 - [ ] **`/blog/[...slug].astro`:**
   - [ ] Dynamic routing
   - [ ] Article header (title, author, date)
@@ -348,35 +348,35 @@ draft: false
   - [ ] Social sharing
   - [ ] SEO optimization
 
-### Infer 24: Create Category Page
+### Cycle 24: Create Category Page
 - [ ] **`/blog/category/[category].astro`:**
   - [ ] Category header
   - [ ] Filtered articles
   - [ ] Breadcrumbs
   - [ ] Pagination
 
-### Infer 25: Create Tag Page
+### Cycle 25: Create Tag Page
 - [ ] **`/blog/tag/[tag].astro`:**
   - [ ] Tag header
   - [ ] Filtered articles
   - [ ] Related tags
   - [ ] Pagination
 
-### Infer 26: Create Author Page
+### Cycle 26: Create Author Page
 - [ ] **`/blog/author/[author].astro`:**
   - [ ] Author profile
   - [ ] Social links
   - [ ] Articles by author
   - [ ] Pagination
 
-### Infer 27: Create Search Results Page
+### Cycle 27: Create Search Results Page
 - [ ] **`/blog/search.astro`:**
   - [ ] Search query display
   - [ ] Results list
   - [ ] No results state
   - [ ] Suggested articles
 
-### Infer 28-40: Continue with React components, styling, and polish
+### Cycle 28-40: Continue with React components, styling, and polish
 
 ---
 
@@ -402,6 +402,6 @@ Blog platform is complete when:
 
 ---
 
-**Timeline:** 60-70 inferences for complete implementation
+**Timeline:** 60-70 cycles for complete implementation
 **Status:** Ready to build
-**Next:** Use Claude Code to implement step by step following inference sequence
+**Next:** Use Claude Code to implement step by step following cycle sequence

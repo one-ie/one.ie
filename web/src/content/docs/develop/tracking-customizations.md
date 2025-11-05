@@ -1,8 +1,8 @@
 ---
-title: Tracking Your Customizations
+title: Tracking
 description: Understand how to track changes to your custom instance and manage upgrades with the automatic change tracking hook.
 section: Develop
-order: 1
+order: 6
 tags:
   - customizations
   - tracking

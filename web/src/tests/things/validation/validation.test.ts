@@ -107,7 +107,7 @@ describe("Validation Utilities", () => {
         "entity_updated",
         "user_registered",
         "payment_event",
-        "inference_request",
+        "cycle_request",
       ];
 
       for (const type of validTypes) {

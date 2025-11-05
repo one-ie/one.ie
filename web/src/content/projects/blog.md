@@ -18,8 +18,8 @@ levelColor: "text-purple-600"
 startDate: 2025-10-30
 targetEndDate: 2026-02-28
 progress: 0
-totalInferences: 100
-completedInferences: 0
+totalCycles: 100
+completedCycles: 0
 features:
   - "Article publishing with markdown support"
   - "Category and tag system for discovery"
@@ -133,19 +133,19 @@ Ready to build this project? Choose your path:
 
 ## Implementation Plan
 
-This project follows a **100-inference implementation plan** for systematic development.
+This project follows a **100-cycle implementation plan** for systematic development.
 
 **📋 View Full Plan:** [Blog Publishing Platform v1.0.0](/plans/blog)
 
-**Progress:** 0/100 inferences complete (0%)
+**Progress:** 0/100 cycles complete (0%)
 
 ### Plan Overview
 
-- **Infer 1-10**: Foundation & Design (blog structure, content model, design system)
-- **Infer 11-20**: Content Collections & Data (Astro collections, schemas, markdown processing)
-- **Infer 21-40**: Astro Pages & Layouts (blog index, article pages, category/tag pages)
-- **Infer 41-60**: Search, RSS, and Features (full-text search, RSS feed, related articles)
-- **Timeline**: 60-70 inferences for complete implementation
+- **Cycle 1-10**: Foundation & Design (blog structure, content model, design system)
+- **Cycle 11-20**: Content Collections & Data (Astro collections, schemas, markdown processing)
+- **Cycle 21-40**: Astro Pages & Layouts (blog index, article pages, category/tag pages)
+- **Cycle 41-60**: Search, RSS, and Features (full-text search, RSS feed, related articles)
+- **Timeline**: 60-70 cycles for complete implementation
 
 ### Quick Start
 
@@ -153,7 +153,7 @@ This project follows a **100-inference implementation plan** for systematic deve
 # 1. View the implementation plan
 /plan blog
 
-# 2. Start with first inference
+# 2. Start with first cycle
 /infer 1
 
 # 3. Mark complete and advance
@@ -163,8 +163,8 @@ This project follows a **100-inference implementation plan** for systematic deve
 ## How to Use
 
 1. Visit `/blog` to see the live demo
-2. Review the [100-inference implementation plan](/plans/blog)
-3. Follow the inference sequence step-by-step
+2. Review the [100-cycle implementation plan](/plans/blog)
+3. Follow the cycle sequence step-by-step
 4. Add your articles in `src/content/blog/`
 5. Customize categories, authors, and styling
 6. Deploy with automatic RSS feed generation

@@ -2,7 +2,7 @@
 title: Onboarding Implementation Complete
 dimension: events
 category: onboarding-implementation-complete.md
-tags: agent, ai, backend, inference, installation, ontology
+tags: agent, ai, backend, cycle, installation, ontology
 related_dimensions: groups, people, things
 scope: global
 created: 2025-11-03
@@ -21,7 +21,7 @@ ai_context: |
 **Date:** 2025-10-20
 **Event Type:** system_deployed
 **Status:** ✅ Complete
-**Inferences:** Planning (1-100) + Implementation (parallel agents)
+**Cycles:** Planning (1-100) + Implementation (parallel agents)
 
 ---
 
@@ -132,7 +132,7 @@ Recommendations: 10 features, 145 minutes total
 3. Wait for analysis completion
 4. Present brand + ontology + recommended features
 5. Accept user feature selection (natural language)
-6. Invoke agent-director to generate 100-inference plan
+6. Invoke agent-director to generate 100-cycle plan
 7. Show plan summary (phases, duration, cost)
 8. Start building and coordinate specialists
 
@@ -146,17 +146,17 @@ Recommendations: 10 features, 145 minutes total
 - `.claude/agents/agent-director.md` - Added plan generation
 
 **Files Created:**
-- `one/things/plans/agent-director-100-inference-plans.md` - Specification
-- `one/knowledge/100-inference-quick-reference.md` - Developer guide
+- `one/things/plans/agent-director-100-cycle-plans.md` - Specification
+- `one/knowledge/100-cycle-quick-reference.md` - Developer guide
 - `.onboarding-plan.json.example` - Example plan structure
 
 **Capabilities:**
-- ✅ Feature library with 20+ features mapped to inference ranges
+- ✅ Feature library with 20+ features mapped to cycle ranges
 - ✅ Automatic dependency resolution
-- ✅ 100-inference plan generation from selections
+- ✅ 100-cycle plan generation from selections
 - ✅ Specialist agent assignment per phase
 - ✅ Duration and cost estimation
-- ✅ Progress tracking (current inference, percentage)
+- ✅ Progress tracking (current cycle, percentage)
 - ✅ Event-driven execution coordination
 - ✅ Parallel execution detection
 - ✅ Error handling with retry logic
@@ -172,7 +172,7 @@ Recommendations: 10 features, 145 minutes total
 **Example Plan Output:**
 ```yaml
 Selected: landing-page, ai-agents, project-management
-Total: 40 inferences, ~45 minutes, $0
+Total: 40 cycles, ~45 minutes, $0
 Phases: 5 (foundation + features + finalization)
 Strategy: Iterative deployment (landing page first)
 ```
@@ -237,7 +237,7 @@ cd web && bun run dev                 # Test locally
 1. `LANDING-PAGE-QUICKSTART.md` - Quick start guide
 2. `LANDING-PAGE-IMPLEMENTATION.md` - Technical details
 3. `one/knowledge/agent-onboard-usage.md` - API reference
-4. `one/knowledge/100-inference-quick-reference.md` - Developer guide
+4. `one/knowledge/100-cycle-quick-reference.md` - Developer guide
 
 ### Examples (3)
 1. `.onboarding.json.example` - Handoff file example
@@ -259,12 +259,12 @@ User runs: /one
   ↓ (30 seconds - agent-onboard analyzes website)
 Website analyzed → Brand extracted → Ontology generated
   ↓ (2 minutes - user selects features)
-agent-director generates: 100-inference execution plan
-  ↓ (5 minutes - Infer 1-10)
+agent-director generates: 100-cycle execution plan
+  ↓ (5 minutes - Cycle 1-10)
 Landing page LIVE at: https://{org-slug}.pages.dev
-  ↓ (30-60 minutes - Infer 11-90)
+  ↓ (30-60 minutes - Cycle 11-90)
 Features built iteratively by specialized agents
-  ↓ (10 minutes - Infer 91-100)
+  ↓ (10 minutes - Cycle 91-100)
 Final deployment + docs + email notification
   ↓
 ✨ Complete platform running in production!
@@ -297,7 +297,7 @@ Claude Code
             ↓ user selects features
 ┌─────────────────────────────────────┐
 │ agent-director                      │
-│ • Generate 100-inference plan       │
+│ • Generate 100-cycle plan       │
 │ • Assign specialists                │
 │ • Coordinate execution              │
 │ • Track progress                    │
@@ -335,9 +335,9 @@ Each transition updates the handoff file, enabling:
 - Generates custom ontology matching YOUR business
 - Recommends features based on YOUR tech stack
 
-### 2. Inference-Based Progress
-- Transparent: "Infer 23/100 (23%)" not vague "deploying..."
-- Precise: Each inference is a concrete step
+### 2. Cycle-Based Progress
+- Transparent: "Cycle 23/100 (23%)" not vague "deploying..."
+- Precise: Each cycle is a concrete step
 - Resumable: Can pause and continue anytime
 
 ### 3. Iterative Deployment
@@ -463,7 +463,7 @@ Each transition updates the handoff file, enabling:
 ## Next Steps
 
 ### Immediate (This Week)
-1. ✅ Mark Infer 100 complete - DONE
+1. ✅ Mark Cycle 100 complete - DONE
 2. Integration test: Run `npx oneie init` end-to-end
 3. Fix any bugs discovered during testing
 4. Deploy CLI to npm as `oneie@1.0.0`
@@ -499,7 +499,7 @@ The ONE Platform onboarding system is **complete and ready for production**.
 - Complete CLI-to-Claude workflow
 - AI-powered website analysis and personalization
 - Custom ontology generation
-- 100-inference plan generation and execution
+- 100-cycle plan generation and execution
 - Landing page generation and deployment
 - 41 files of production code
 - 16 comprehensive documentation files
@@ -507,7 +507,7 @@ The ONE Platform onboarding system is **complete and ready for production**.
 **What makes it special:**
 - From zero to deployed platform in <60 minutes
 - Personalized based on user's existing brand
-- Transparent progress (inference-based)
+- Transparent progress (cycle-based)
 - Production quality from day one
 - Multi-agent AI collaboration
 - Complete automation

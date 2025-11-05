@@ -451,8 +451,8 @@ export const logEvent = mutation({
 // Analytics events
 "metric_calculated" | "insight_generated" | "prediction_made"
 
-// Inference events
-"inference_request" | "inference_completed" | "inference_failed"
+// Cycle events
+"cycle_request" | "cycle_completed" | "cycle_failed"
 
 // Consolidated events (with metadata.protocol)
 "content_event" | "payment_event" | "subscription_event" |
@@ -565,7 +565,7 @@ Implement Convex backend infrastructure that powers the 6-dimension ontology: sc
 
 - Create organization (with plan, limits, billing)
 - Update organization settings
-- Track usage (users, storage, API calls, inference)
+- Track usage (users, storage, API calls, cycle)
 - Enforce resource quotas
 
 **People:**
@@ -670,7 +670,7 @@ Ontology Types:
   Events:
     - entity_created: actorId, targetId, metadata.entityType
     - course_enrolled: actorId (student), targetId (course)
-    - inference_request: actorId (user), metadata.prompt, metadata.tokens
+    - cycle_request: actorId (user), metadata.prompt, metadata.tokens
 
 Backend Patterns:
   - Schema evolution (add fields without migration)

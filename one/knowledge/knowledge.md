@@ -2,7 +2,7 @@
 title: Knowledge
 dimension: knowledge
 category: knowledge.md
-tags: ai, inference, knowledge, ontology, rag, things
+tags: ai, cycle, knowledge, ontology, rag, things
 related_dimensions: connections, events, people, things
 scope: global
 created: 2025-11-03
@@ -11,19 +11,19 @@ version: 1.0.0
 ai_context: |
   This document is part of the knowledge dimension in the knowledge.md category.
   Location: one/knowledge/knowledge.md
-  Purpose: Documents knowledge: vectors, embeddings & inference
+  Purpose: Documents knowledge: vectors, embeddings & cycle
   Related dimensions: connections, events, people, things
   For AI agents: Read this to understand knowledge.
 ---
 
-# Knowledge: Vectors, Embeddings & Inference
+# Knowledge: Vectors, Embeddings & Cycle
 
 **The Intelligence Layer**
 
 Knowledge is the fourth primitive in ONE's ontology. It powers:
 - **Semantic search** via vector embeddings
 - **RAG** (Retrieval-Augmented Generation) for AI responses
-- **Inference** for content generation
+- **Cycle** for content generation
 - **Taxonomy** via labels (replaces legacy "tags")
 
 ---
@@ -179,7 +179,7 @@ Embedding without storing plaintext:
 
 ---
 
-## Inference Flow
+## Cycle Flow
 
 ### How Knowledge Powers Generation
 
@@ -205,7 +205,7 @@ Embedding without storing plaintext:
 ┌─────────────────────────────────────────────────────┐
 │  4. LLM Generation                                   │
 │     Context + Prompt → Generated content             │
-│     Track: inference_request event                   │
+│     Track: cycle_request event                   │
 └──────────────────────┬──────────────────────────────┘
                        ↓
 ┌─────────────────────────────────────────────────────┐
@@ -384,16 +384,16 @@ const answer = await llm.generate({
 
 ---
 
-## Inference Events
+## Cycle Events
 
 Track all AI generations in the ontology:
 
 ```typescript
-// 1. Inference requested
+// 1. Cycle requested
 await db.insert('events', {
-  type: 'inference_request',
+  type: 'cycle_request',
   actorId: userId,
-  targetId: inferenceRequestId,
+  targetId: cycleRequestId,
   timestamp: Date.now(),
   metadata: {
     organizationId,
@@ -405,11 +405,11 @@ await db.insert('events', {
   }
 });
 
-// 2. Inference completed
+// 2. Cycle completed
 await db.insert('events', {
-  type: 'inference_completed',
+  type: 'cycle_completed',
   actorId: 'system',
-  targetId: inferenceRequestId,
+  targetId: cycleRequestId,
   timestamp: Date.now(),
   metadata: {
     result: courseId,
@@ -426,21 +426,21 @@ await db.patch(organizationId, {
     ...org.properties,
     usage: {
       ...org.properties.usage,
-      inferences: org.properties.usage.inferences + 1
+      cycles: org.properties.usage.cycles + 1
     }
   }
 });
 
 // 4. Check quota
-if (org.properties.usage.inferences >= org.properties.limits.inferences) {
+if (org.properties.usage.cycles >= org.properties.limits.cycles) {
   await db.insert('events', {
-    type: 'inference_quota_exceeded',
+    type: 'cycle_quota_exceeded',
     actorId: 'system',
     targetId: organizationId,
     timestamp: Date.now(),
     metadata: {
-      limit: org.properties.limits.inferences,
-      usage: org.properties.usage.inferences
+      limit: org.properties.limits.cycles,
+      usage: org.properties.usage.cycles
     }
   });
 }
@@ -448,25 +448,25 @@ if (org.properties.usage.inferences >= org.properties.limits.inferences) {
 
 ---
 
-## Inference Revenue Model
+## Cycle Revenue Model
 
 ### Daily Revenue Collection
 
 ```typescript
-// Collect all inference revenue for the day
+// Collect all cycle revenue for the day
 const today = new Date().setHours(0, 0, 0, 0);
-const inferenceEvents = await db
+const cycleEvents = await db
   .query('events')
   .withIndex('type_time', q =>
-    q.eq('type', 'inference_completed')
+    q.eq('type', 'cycle_completed')
      .gte('timestamp', today)
   )
   .collect();
 
 const metrics = {
-  totalInferences: inferenceEvents.length,
-  totalRevenue: sum(inferenceEvents.map(e => e.metadata.revenue)),
-  totalCosts: sum(inferenceEvents.map(e => e.metadata.cost)),
+  totalCycles: cycleEvents.length,
+  totalRevenue: sum(cycleEvents.map(e => e.metadata.revenue)),
+  totalCosts: sum(cycleEvents.map(e => e.metadata.cost)),
   netProfit: 0,  // Calculated below
   profitMargin: 0
 };
@@ -476,7 +476,7 @@ metrics.profitMargin = (metrics.netProfit / metrics.totalRevenue) * 100;
 
 // Log revenue collection event
 await db.insert('events', {
-  type: 'inference_revenue_collected',
+  type: 'cycle_revenue_collected',
   actorId: 'system',
   targetId: platformOwnerId,
   timestamp: Date.now(),
@@ -532,12 +532,12 @@ if (org.properties.revenueShare > 0) {
 
 ---
 
-## Inference Score
+## Cycle Score
 
 Track how many times AI modifies the ontology:
 
 ```markdown
-# Inference Score
+# Cycle Score
 
 Measures ontology stability. Lower is better.
 

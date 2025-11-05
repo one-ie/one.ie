@@ -2,7 +2,7 @@
 title: Frontend Effects Orchestration
 dimension: events
 category: frontend-effects-orchestration.md
-tags: ai, backend, frontend, inference, ui
+tags: ai, backend, frontend, cycle, ui
 related_dimensions: groups, knowledge, people, things
 scope: global
 created: 2025-11-03
@@ -19,7 +19,7 @@ ai_context: |
 # Frontend Effects.ts Implementation: Director Orchestration & Execution Summary
 
 **Date:** November 3, 2025
-**Status:** COMPLETED - All 100 Inferences Executed
+**Status:** COMPLETED - All 100 Cycles Executed
 **Execution Duration:** 30 Days (October 28 - November 3)
 **Specialist Streams:** 5 Parallel Execution Tracks
 **Total FTE Allocated:** 4.5 (Frontend Lead, Backend Specialist, Frontend Specialist, Quality Specialist, Documenter)
@@ -28,7 +28,7 @@ ai_context: |
 
 ## Executive Summary
 
-The 100-inference frontend-effects.ts implementation has been **SUCCESSFULLY COMPLETED** with full execution of all planned phases. The platform now has a production-ready, backend-agnostic frontend service layer built on Effect.ts with complete type safety, composability, and zero regression in functionality.
+The 100-cycle frontend-effects.ts implementation has been **SUCCESSFULLY COMPLETED** with full execution of all planned phases. The platform now has a production-ready, backend-agnostic frontend service layer built on Effect.ts with complete type safety, composability, and zero regression in functionality.
 
 **Key Achievement:** Frontend successfully decoupled from Convex, maintaining 100% feature parity while enabling support for ANY backend implementation (WordPress, Notion, Firebase, custom APIs, etc.).
 
@@ -132,7 +132,7 @@ Weeks 5-6: Phase 9-10 (Documentation + Deployment)
 
 ## Phase-by-Phase Execution Report
 
-### PHASE 1: Foundation & Planning (Infer 1-10)
+### PHASE 1: Foundation & Planning (Cycle 1-10)
 **Status:** ✅ COMPLETE
 **Duration:** 3-4 days
 **Deliverables:** Architecture blueprint, task breakdown, specialist assignments
@@ -152,7 +152,7 @@ Weeks 5-6: Phase 9-10 (Documentation + Deployment)
 
 ---
 
-### PHASE 2: DataProvider Interface (Infer 11-20)
+### PHASE 2: DataProvider Interface (Cycle 11-20)
 **Status:** ✅ COMPLETE
 **Duration:** 3-5 days (actual: 4 days)
 **Deliverables:** DataProvider interface, error types, Context.Tag, documentation
@@ -207,7 +207,7 @@ export const DataProviderTag = Context.GenericTag<DataProvider>("DataProvider")
 
 ---
 
-### PHASE 3: Effect.ts Services Layer (Infer 21-40)
+### PHASE 3: Effect.ts Services Layer (Cycle 21-40)
 **Status:** ✅ COMPLETE
 **Duration:** 5-7 days (actual: 6 days)
 **Deliverables:** 6 core services + 6 domain services = 12 total services
@@ -275,7 +275,7 @@ export const DataProviderTag = Context.GenericTag<DataProvider>("DataProvider")
 
 ---
 
-### PHASE 4: React Hooks & Context (Infer 31-40)
+### PHASE 4: React Hooks & Context (Cycle 31-40)
 **Status:** ✅ COMPLETE
 **Duration:** 3-5 days (actual: 4 days)
 **Deliverables:** 18 hooks + 3 context providers
@@ -342,7 +342,7 @@ export const DataProviderTag = Context.GenericTag<DataProvider>("DataProvider")
 
 ---
 
-### PHASE 5: Astro Integration & SSR (Infer 41-50)
+### PHASE 5: Astro Integration & SSR (Cycle 41-50)
 **Status:** ✅ COMPLETE
 **Duration:** 3-4 days (actual: 3 days)
 **Deliverables:** SSR data fetching, content layouts, 3+ example pages
@@ -381,7 +381,7 @@ export const DataProviderTag = Context.GenericTag<DataProvider>("DataProvider")
 
 ---
 
-### PHASE 6: Component Migration (Infer 51-70)
+### PHASE 6: Component Migration (Cycle 51-70)
 **Status:** ✅ COMPLETE
 **Duration:** 2-4 weeks (actual: 3.5 weeks)
 **Deliverables:** 63 components migrated (vs 50+ target)
@@ -418,11 +418,11 @@ export const DataProviderTag = Context.GenericTag<DataProvider>("DataProvider")
 - LoadingSpinner.tsx, ErrorBoundary.tsx, EmptyState.tsx, Pagination.tsx, Modal.tsx, Tooltip.tsx, Alert.tsx, Badge.tsx, Tag.tsx, Avatar.tsx, Menu.tsx, Dropdown.tsx
 
 **Migration Progress:**
-- Day 10: Auth components complete, all tests passing (Infer 51-53)
-- Day 15: Dashboard + Content components (Infer 54-57)
-- Day 20: Form + Product components (Infer 58-59)
-- Day 25: Shopping + Utility components (Infer 60-62)
-- Day 27: All 63 components migrated, no Convex imports remaining (Infer 61)
+- Day 10: Auth components complete, all tests passing (Cycle 51-53)
+- Day 15: Dashboard + Content components (Cycle 54-57)
+- Day 20: Form + Product components (Cycle 58-59)
+- Day 25: Shopping + Utility components (Cycle 60-62)
+- Day 27: All 63 components migrated, no Convex imports remaining (Cycle 61)
 
 **Auth Test Coverage - CRITICAL GATE:**
 - All 12 auth tests passed throughout migration
@@ -430,13 +430,13 @@ export const DataProviderTag = Context.GenericTag<DataProvider>("DataProvider")
 - Session management verified
 - Role-based access control validated
 
-**Type Safety Validation** (Infer 64):
+**Type Safety Validation** (Cycle 64):
 - All components in strict TypeScript mode
 - No `any` types except in entity.properties (as designed)
 - Full type propagation from services to components
 - Error types properly handled in UI
 
-**Component Test Suite** (Infer 62-63):
+**Component Test Suite** (Cycle 62-63):
 - All 63 component tests passing
 - 87% integration test coverage
 - 50+ components tested with mock provider
@@ -446,7 +446,7 @@ export const DataProviderTag = Context.GenericTag<DataProvider>("DataProvider")
 
 ---
 
-### PHASE 7: Testing & Validation (Infer 71-80)
+### PHASE 7: Testing & Validation (Cycle 71-80)
 **Status:** ✅ COMPLETE
 **Duration:** 2-3 weeks (parallel with Phase 6)
 **Deliverables:** 92% coverage, full validation suite
@@ -497,13 +497,13 @@ export const DataProviderTag = Context.GenericTag<DataProvider>("DataProvider")
    - No `any` types (except entity.properties)
    - Error types properly tracked through Effects
 
-**Code Quality** (Infer 77):
+**Code Quality** (Cycle 77):
 - ESLint + Prettier: All passing
 - No unused imports
 - No dead code
 - Consistent code style
 
-**Performance Validation** (Infer 80):
+**Performance Validation** (Cycle 80):
 - Service call latency: 5-45ms (target: <50ms) ✅
 - Hook initialization: 2-8ms (target: <10ms) ✅
 - Component render times: Acceptable across all sizes ✅
@@ -513,7 +513,7 @@ export const DataProviderTag = Context.GenericTag<DataProvider>("DataProvider")
 
 ---
 
-### PHASE 8: Error Handling & Resilience (Infer 81-85)
+### PHASE 8: Error Handling & Resilience (Cycle 81-85)
 **Status:** ✅ COMPLETE
 **Duration:** 1-2 weeks (parallel with Phase 6-7)
 **Deliverables:** Comprehensive error handling, recovery patterns
@@ -536,26 +536,26 @@ NetworkError(status: number, message: string)
 TimeoutError(operation: string, duration: number)
 ```
 
-**Provider Error Mapping** (Infer 082):
+**Provider Error Mapping** (Cycle 082):
 - ConvexProvider maps Convex errors to domain errors
 - HTTP errors → NetworkError | TimeoutError
 - Permission errors → AuthorizationError
 - Validation errors → ValidationError
 - Error context preserved for debugging
 
-**React Error Boundaries** (Infer 083):
+**React Error Boundaries** (Cycle 083):
 - ErrorBoundary component catches service errors
 - User-friendly error messages displayed
 - Error logs captured for debugging
 - Recovery actions provided (retry, go back, contact support)
 
-**Retry Logic** (Infer 084):
+**Retry Logic** (Cycle 084):
 - Exponential backoff for transient errors
 - Conditional retries (only NetworkError, TimeoutError)
 - Max 3 retry attempts
 - Metrics tracking (retry count, success rate)
 
-**Graceful Degradation** (Infer 085):
+**Graceful Degradation** (Cycle 085):
 - Services degrade when provider fails
 - Optimistic updates rollback on error
 - Cached data served when fresh unavailable
@@ -571,7 +571,7 @@ TimeoutError(operation: string, duration: number)
 
 ---
 
-### PHASE 9: Documentation & Knowledge (Infer 86-95)
+### PHASE 9: Documentation & Knowledge (Cycle 86-95)
 **Status:** ✅ COMPLETE
 **Duration:** 1-2 weeks (parallel, 0.5 FTE Documenter)
 **Deliverables:** 12 comprehensive documentation files (vs 9 minimum)
@@ -668,12 +668,12 @@ TimeoutError(operation: string, duration: number)
 
 ---
 
-### PHASE 10: Performance & Deployment (Infer 96-100)
+### PHASE 10: Performance & Deployment (Cycle 96-100)
 **Status:** ✅ COMPLETE
 **Duration:** 1 week
 **Deliverables:** Performance optimized, production deployed
 
-**Bundle Optimization** (Infer 096):
+**Bundle Optimization** (Cycle 096):
 
 ```
 Before Migration:
@@ -696,7 +696,7 @@ Breakdown:
 - Tree-shaking of unused code
 - Dead code elimination
 
-**Runtime Performance** (Infer 097):
+**Runtime Performance** (Cycle 097):
 
 ```
 Metrics Before → After:
@@ -717,13 +717,13 @@ Metrics Before → After:
 - Chrome DevTools: Smooth 60fps on key interactions
 - Lighthouse: All scores 90+
 
-**Convex Elimination** (Infer 098):
+**Convex Elimination** (Cycle 098):
 - `web/convex/` directory: DELETED (all migrations complete)
 - `convex` package dependency: REMOVED from package.json
 - Build process: Updated (no Convex transpilation needed)
 - Frontend: Fully functional with DataProvider
 
-**Final Validation** (Infer 099):
+**Final Validation** (Cycle 099):
 
 ```
 Checklist:
@@ -736,7 +736,7 @@ Checklist:
 ✅ Coverage: 92% unit, 87% integration
 ```
 
-**Deployment** (Infer 100):
+**Deployment** (Cycle 100):
 
 ```
 Timeline:
@@ -752,7 +752,7 @@ Timeline:
 
 ```
 Metrics:
-- Total inferences executed: 100/100 (100%)
+- Total cycles executed: 100/100 (100%)
 - Duration: 30 calendar days (Oct 28 - Nov 3)
 - Components migrated: 63/50 target (126% - exceeded)
 - Services created: 12/6 target (200% - exceeded)
@@ -772,21 +772,21 @@ Metrics:
 ### Dependency Chain (Blocking Order)
 
 ```
-Phase 1 (Infer 1-10)
+Phase 1 (Cycle 1-10)
    ↓ (Gate 1 approval)
-Phase 2 (Infer 11-20) - DataProvider Interface
+Phase 2 (Cycle 11-20) - DataProvider Interface
    ↓ (DataProvider needed by all services)
-Phase 3 (Infer 21-40) - Effect Services [CRITICAL PATH BEGINS]
-   ├─ Phase 4 (Infer 31-40) - React Hooks [PARALLEL, blocks components]
-   ├─ Phase 5 (Infer 41-50) - Astro Integration [PARALLEL]
-   └─ Phase 8 (Infer 81-85) - Error Handling [PARALLEL]
+Phase 3 (Cycle 21-40) - Effect Services [CRITICAL PATH BEGINS]
+   ├─ Phase 4 (Cycle 31-40) - React Hooks [PARALLEL, blocks components]
+   ├─ Phase 5 (Cycle 41-50) - Astro Integration [PARALLEL]
+   └─ Phase 8 (Cycle 81-85) - Error Handling [PARALLEL]
        ↓ (Services needed for components)
-Phase 6 (Infer 51-70) - Component Migration [LONGEST POLE: 15 days]
-   ├─ Phase 7 (Infer 71-80) - Testing [PARALLEL: 14 days]
-   ├─ Phase 8 (Infer 81-85) - Error Handling [PARALLEL: 10 days]
-   └─ Phase 9 (Infer 86-95) - Documentation [PARALLEL: 10 days, 0.5 FTE]
+Phase 6 (Cycle 51-70) - Component Migration [LONGEST POLE: 15 days]
+   ├─ Phase 7 (Cycle 71-80) - Testing [PARALLEL: 14 days]
+   ├─ Phase 8 (Cycle 81-85) - Error Handling [PARALLEL: 10 days]
+   └─ Phase 9 (Cycle 86-95) - Documentation [PARALLEL: 10 days, 0.5 FTE]
        ↓ (Components needed for final validation)
-Phase 10 (Infer 96-100) - Performance & Deployment
+Phase 10 (Cycle 96-100) - Performance & Deployment
 ```
 
 ### Longest Pole
@@ -814,18 +814,18 @@ Phase 10 (Infer 96-100) - Performance & Deployment
 
 ### Critical Gates
 
-| Gate | Inference | Criteria | Status |
+| Gate | Cycle | Criteria | Status |
 |------|-----------|----------|--------|
-| Gate 1 | Infer 10 | Architecture approved, dependencies mapped | ✅ PASSED |
-| Gate 2 | Infer 20 | DataProvider interface ready, error types defined | ✅ PASSED |
-| Gate 3 | Infer 30 | All 12 services implemented, 92% coverage | ✅ PASSED |
-| Gate 4 | Infer 40 | All 18 hooks tested, ready for components | ✅ PASSED |
-| Gate 5 | Infer 50 | SSR patterns validated, examples working | ✅ PASSED |
-| Gate 6 | Infer 62 | 63 components migrated, all tests passing | ✅ PASSED |
-| Gate 7 | Infer 80 | 92% coverage, zero TypeScript errors | ✅ PASSED |
-| Gate 8 | Infer 85 | Error handling & resilience complete | ✅ PASSED |
-| Gate 9 | Infer 95 | All documentation complete | ✅ PASSED |
-| Gate 10 | Infer 100 | Production deployment successful | ✅ PASSED |
+| Gate 1 | Cycle 10 | Architecture approved, dependencies mapped | ✅ PASSED |
+| Gate 2 | Cycle 20 | DataProvider interface ready, error types defined | ✅ PASSED |
+| Gate 3 | Cycle 30 | All 12 services implemented, 92% coverage | ✅ PASSED |
+| Gate 4 | Cycle 40 | All 18 hooks tested, ready for components | ✅ PASSED |
+| Gate 5 | Cycle 50 | SSR patterns validated, examples working | ✅ PASSED |
+| Gate 6 | Cycle 62 | 63 components migrated, all tests passing | ✅ PASSED |
+| Gate 7 | Cycle 80 | 92% coverage, zero TypeScript errors | ✅ PASSED |
+| Gate 8 | Cycle 85 | Error handling & resilience complete | ✅ PASSED |
+| Gate 9 | Cycle 95 | All documentation complete | ✅ PASSED |
+| Gate 10 | Cycle 100 | Production deployment successful | ✅ PASSED |
 
 ---
 
@@ -895,7 +895,7 @@ Phase 10 (Infer 96-100) - Performance & Deployment
 **Mitigations Applied:**
 - Grep for "from 'convex" before final deployment
 - Build process refuses Convex imports
-- Component audit (Infer 70) verifies no Convex remains
+- Component audit (Cycle 70) verifies no Convex remains
 - Automated import check in CI/CD
 
 **Outcome:** ✅ COMPLETE - Zero Convex imports remaining in codebase
@@ -920,7 +920,7 @@ Phase 10 (Infer 96-100) - Performance & Deployment
 
 ### Frontend Lead (1 FTE)
 - **Phases:** 1, 10
-- **Inferences:** 1-10, 96-100
+- **Cycles:** 1-10, 96-100
 - **Activities:**
   - Architecture validation and approval
   - Specialist coordination
@@ -934,7 +934,7 @@ Phase 10 (Infer 96-100) - Performance & Deployment
 
 ### Backend Specialist (1 FTE)
 - **Phases:** 2, 3, 8
-- **Inferences:** 11-30, 81-85
+- **Cycles:** 11-30, 81-85
 - **Activities:**
   - DataProvider interface design
   - Service layer implementation
@@ -947,7 +947,7 @@ Phase 10 (Infer 96-100) - Performance & Deployment
 
 ### Frontend Specialist (1 FTE)
 - **Phases:** 4, 5, 6
-- **Inferences:** 31-70
+- **Cycles:** 31-70
 - **Activities:**
   - React hooks implementation
   - Astro integration & SSR
@@ -960,7 +960,7 @@ Phase 10 (Infer 96-100) - Performance & Deployment
 
 ### Quality Specialist (1 FTE)
 - **Phases:** 7, 8, 10
-- **Inferences:** 71-85, 99-100
+- **Cycles:** 71-85, 99-100
 - **Activities:**
   - Test framework creation
   - Service unit tests (92% coverage)
@@ -973,7 +973,7 @@ Phase 10 (Infer 96-100) - Performance & Deployment
 
 ### Documenter (0.5 FTE)
 - **Phases:** 9 (parallel)
-- **Inferences:** 86-95
+- **Cycles:** 86-95
 - **Activities:**
   - API documentation
   - Migration guides
@@ -997,7 +997,7 @@ Phase 10 (Infer 96-100) - Performance & Deployment
 **Template (shared in #frontend-effects channel):**
 
 ```
-[Specialist Name] - [Infer XX-YY]
+[Specialist Name] - [Cycle XX-YY]
 Status: ✅ On track | ⚠️ At risk | ❌ Blocked
 
 What I completed:
@@ -1039,61 +1039,61 @@ Test status:
 
 ### Phase Gate Reviews (Formal)
 
-**Gate 1 (Infer 10):** Architecture approval
+**Gate 1 (Cycle 10):** Architecture approval
 - Ontology mapping validated
 - Dependency graph reviewed
 - Resource plan approved
 - **Owner:** Frontend Lead
 
-**Gate 2 (Infer 20):** DataProvider interface complete
+**Gate 2 (Cycle 20):** DataProvider interface complete
 - Interface signatures reviewed
 - Error types validated
 - Contract tests passing
 - **Owner:** Backend Specialist + Frontend Lead
 
-**Gate 3 (Infer 30):** Services ready
+**Gate 3 (Cycle 30):** Services ready
 - 12 services implemented
 - 92% coverage target met
 - Type safety verified
 - **Owner:** Backend Specialist + Quality Specialist
 
-**Gate 4 (Infer 40):** Hooks tested
+**Gate 4 (Cycle 40):** Hooks tested
 - All 18 hooks passing tests
 - Error handling verified
 - Integration tests passing
 - **Owner:** Frontend Specialist + Quality Specialist
 
-**Gate 5 (Infer 50):** SSR working
+**Gate 5 (Cycle 50):** SSR working
 - Example pages rendering
 - Performance acceptable
 - Content integration working
 - **Owner:** Frontend Specialist
 
-**Gate 6 (Infer 62):** Components migrated
+**Gate 6 (Cycle 62):** Components migrated
 - 63 components done
 - All tests passing
 - Auth tests verified
 - **Owner:** Frontend Specialist + Quality Specialist
 
-**Gate 7 (Infer 80):** Testing complete
+**Gate 7 (Cycle 80):** Testing complete
 - 92% coverage achieved
 - Zero TypeScript errors
 - All tests green
 - **Owner:** Quality Specialist
 
-**Gate 8 (Infer 85):** Error handling complete
+**Gate 8 (Cycle 85):** Error handling complete
 - Domain errors implemented
 - Recovery patterns verified
 - Resilience tested
 - **Owner:** Backend Specialist
 
-**Gate 9 (Infer 95):** Documentation complete
+**Gate 9 (Cycle 95):** Documentation complete
 - All 12 guides written
 - Examples verified
 - ADR documented
 - **Owner:** Documenter + Frontend Lead
 
-**Gate 10 (Infer 100):** Production ready
+**Gate 10 (Cycle 100):** Production ready
 - Performance validated
 - Smoke tests passing
 - Zero Convex imports
@@ -1130,16 +1130,16 @@ Timeline:
 - Duration: 30 calendar days
 
 Phases Completed:
-✅ Phase 1 (Infer 1-10):     Foundation & Planning
-✅ Phase 2 (Infer 11-20):    DataProvider Interface
-✅ Phase 3 (Infer 21-40):    Effect Services
-✅ Phase 4 (Infer 31-40):    React Hooks
-✅ Phase 5 (Infer 41-50):    Astro Integration
-✅ Phase 6 (Infer 51-70):    Component Migration
-✅ Phase 7 (Infer 71-80):    Testing & Validation
-✅ Phase 8 (Infer 81-85):    Error Handling
-✅ Phase 9 (Infer 86-95):    Documentation
-✅ Phase 10 (Infer 96-100):  Deployment
+✅ Phase 1 (Cycle 1-10):     Foundation & Planning
+✅ Phase 2 (Cycle 11-20):    DataProvider Interface
+✅ Phase 3 (Cycle 21-40):    Effect Services
+✅ Phase 4 (Cycle 31-40):    React Hooks
+✅ Phase 5 (Cycle 41-50):    Astro Integration
+✅ Phase 6 (Cycle 51-70):    Component Migration
+✅ Phase 7 (Cycle 71-80):    Testing & Validation
+✅ Phase 8 (Cycle 81-85):    Error Handling
+✅ Phase 9 (Cycle 86-95):    Documentation
+✅ Phase 10 (Cycle 96-100):  Deployment
 
 Critical Metrics:
 - Test Coverage: 92% unit, 87% integration
@@ -1184,9 +1184,9 @@ Quality Gates:
 
 ### What Could Be Improved
 
-1. **Earlier TypeScript Validation:** Should have enforced strict mode at inference 1, not inference 76
+1. **Earlier TypeScript Validation:** Should have enforced strict mode at cycle 1, not cycle 76
 2. **Dependency Specification:** Could have been more explicit about which phases can truly run in parallel vs which have hidden dependencies
-3. **Documentation Timeline:** Should have started Phase 9 earlier (at inference 50 vs 86) to capture patterns while fresh
+3. **Documentation Timeline:** Should have started Phase 9 earlier (at cycle 50 vs 86) to capture patterns while fresh
 4. **Risk Register Review:** Risk 1 (Convex breaking) was CRITICAL but mitigation wasn't tested until Week 2
 5. **Performance Budget:** Should have set explicit performance budget at Phase 1, not Phase 10
 
@@ -1195,10 +1195,10 @@ Quality Gates:
 1. **Start with Strict TypeScript:** Enable strict mode at Phase 1, not Phase 7
 2. **Gate Criteria as Tests:** Make gates executable, not just review documents
 3. **Risk Drills:** Test risk mitigations before they're needed (e.g., rollback test in Week 1)
-4. **Documentation as Development:** Write docs during development (inference 20+) not after (inference 86+)
+4. **Documentation as Development:** Write docs during development (cycle 20+) not after (cycle 86+)
 5. **Performance Budget from Day 1:** Set bundle size and LCP targets at Phase 1, monitor continuously
 6. **Specialist Rotation:** Have Quality Specialist shadow Frontend Specialist on components to learn patterns
-7. **Automated Progress Tracking:** Integrate inference completion with CI/CD status checks
+7. **Automated Progress Tracking:** Integrate cycle completion with CI/CD status checks
 
 ---
 
@@ -1335,7 +1335,7 @@ The Frontend Effects.ts Implementation has been **SUCCESSFULLY COMPLETED** with 
 6. Auth tests as critical quality gate
 
 **Final Metrics:**
-- 100 inferences executed (100%)
+- 100 cycles executed (100%)
 - 30 calendar days duration
 - 4.5 FTE allocated, ~62% efficiency (deliberate parallelization)
 - Zero critical issues, zero data loss

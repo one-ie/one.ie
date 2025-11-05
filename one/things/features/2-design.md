@@ -289,7 +289,7 @@ font-family:
 **Core Principles:**
 
 1. **Familiar** - Match Convex hook ergonomics
-2. **Type-Safe** - Full TypeScript inference
+2. **Type-Safe** - Full TypeScript cycle
 3. **Consistent** - Same pattern everywhere
 4. **Predictable** - Loading/error states identical
 5. **Discoverable** - IntelliSense provides great suggestions
@@ -403,7 +403,7 @@ useThings({
 });
 ```
 
-**Type Inference on Results:**
+**Type Cycle on Results:**
 
 ```typescript
 // TypeScript infers correct type from filter

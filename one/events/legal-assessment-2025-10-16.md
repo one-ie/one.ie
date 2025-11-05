@@ -388,7 +388,7 @@ This legal assessment evaluates ONE Platform for compliance with GDPR, CCPA, PIP
 
 ### 3.2 AI Service Providers
 
-**OpenAI (AI Inference)**
+**OpenAI (AI Cycle)**
 - **Service:** GPT models for AI clones, content generation, business agents
 - **Data Shared:** User prompts, entity data for processing
 - **Location:** United States

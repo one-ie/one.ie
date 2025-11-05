@@ -22,7 +22,7 @@ export function DocList({ entries, onTagClick }: DocListProps) {
         .map((entry) => (
           <Card
             key={entry.id}
-            className="group hover:shadow-sm transition-all duration-300 border-muted/30 hover:border-primary/30 bg-background/80 backdrop-blur-sm py-2 px-3 cursor-pointer"
+            className="group hover:shadow-sm transition-all duration-300 border-muted/30 hover:border-primary/30 bg-[hsl(var(--color-sidebar-background))] backdrop-blur-sm py-2 px-3 cursor-pointer"
             onClick={() => {
               window.location.href = `/docs/${entry.slug}`;
             }}

@@ -32,32 +32,32 @@ ai_context: |
 ## EXECUTIVE SUMMARY: THE 4-PHASE STRATEGY
 
 ```
-PHASE 1: FOUNDATION HARDENING (Infer 1-100)
+PHASE 1: FOUNDATION HARDENING (Cycle 1-100)
 ├─ Strengthen existing systems (auth, schema, error handling)
 ├─ Build shared infrastructure (logging, monitoring, testing)
 ├─ Lock down data model (validate 6-dimension ontology)
 └─ Result: Bulletproof base for all future features
 
-PHASE 2: INTELLIGENT LAYERING (Infer 101-200)
+PHASE 2: INTELLIGENT LAYERING (Cycle 101-200)
 ├─ Add interconnected features (onboarding → teams → workspace)
 ├─ Build with continuous testing (80%+ coverage)
 ├─ Measure + optimize as you go (performance gates)
 └─ Result: Features that strengthen each other
 
-PHASE 3: SMART INTEGRATIONS (Infer 201-300)
+PHASE 3: SMART INTEGRATIONS (Cycle 201-300)
 ├─ Connect external systems safely (protocols, APIs, agents)
 ├─ Build adapter layers (minimize coupling)
 ├─ Comprehensive integration tests
 └─ Result: Extensible platform that doesn't break
 
-PHASE 4: INTELLIGENT OPERATIONS (Infer 301-400)
+PHASE 4: INTELLIGENT OPERATIONS (Cycle 301-400)
 ├─ Monitoring + alerting that prevents fires
 ├─ Progressive rollout (canary → blue-green)
 ├─ Knowledge capture + automation
 └─ Result: Self-improving operations
 ```
 
-**Total Inferences:** 400 (not 900)
+**Total Cycles:** 400 (not 900)
 **Why Fewer?** We're building smarter with:
 
 - Reusable patterns (don't repeat)
@@ -67,7 +67,7 @@ PHASE 4: INTELLIGENT OPERATIONS (Infer 301-400)
 
 ---
 
-## PHASE 1: FOUNDATION HARDENING (Infer 1-100)
+## PHASE 1: FOUNDATION HARDENING (Cycle 1-100)
 
 **Goal:** Build unshakeable foundation that all other features depend on
 
@@ -85,11 +85,11 @@ Fix these FIRST, not last.
 
 ---
 
-### Infer 1-10: AUDIT EXISTING SYSTEMS
+### Cycle 1-10: AUDIT EXISTING SYSTEMS
 
 **Purpose:** Understand current state before building on top
 
-#### Infer 1: Audit Authentication System
+#### Cycle 1: Audit Authentication System
 
 ```
 DELIVERABLES:
@@ -107,7 +107,7 @@ SUCCESS CRITERIA:
   ✅ Ready for auth additions (wallet, social verification)
 ```
 
-#### Infer 2: Audit Database Schema (6-Dimension Ontology)
+#### Cycle 2: Audit Database Schema (6-Dimension Ontology)
 
 ```
 DELIVERABLES:
@@ -127,7 +127,7 @@ SUCCESS CRITERIA:
   ✅ Constraint improvements (unique, required fields)
 ```
 
-#### Infer 3: Audit Error Handling Strategy
+#### Cycle 3: Audit Error Handling Strategy
 
 ```
 DELIVERABLES:
@@ -145,7 +145,7 @@ SUCCESS CRITERIA:
   ✅ Missing error cases identified
 ```
 
-#### Infer 4: Audit Logging & Observability
+#### Cycle 4: Audit Logging & Observability
 
 ```
 DELIVERABLES:
@@ -163,7 +163,7 @@ SUCCESS CRITERIA:
   ✅ Observability roadmap (monitoring, tracing)
 ```
 
-#### Infer 5: Audit Testing Coverage
+#### Cycle 5: Audit Testing Coverage
 
 ```
 DELIVERABLES:
@@ -181,7 +181,7 @@ SUCCESS CRITERIA:
   ✅ Mock data factory established
 ```
 
-#### Infer 6: Audit API Surface & Documentation
+#### Cycle 6: Audit API Surface & Documentation
 
 ```
 DELIVERABLES:
@@ -199,7 +199,7 @@ SUCCESS CRITERIA:
   ✅ Type generation working (convex/_generated/)
 ```
 
-#### Infer 7: Audit Performance Baselines
+#### Cycle 7: Audit Performance Baselines
 
 ```
 DELIVERABLES:
@@ -217,7 +217,7 @@ SUCCESS CRITERIA:
   ✅ Critical path identified
 ```
 
-#### Infer 8: Audit Security Posture
+#### Cycle 8: Audit Security Posture
 
 ```
 DELIVERABLES:
@@ -236,7 +236,7 @@ SUCCESS CRITERIA:
   ✅ Secrets rotation plan
 ```
 
-#### Infer 9: Audit Frontend Architecture
+#### Cycle 9: Audit Frontend Architecture
 
 ```
 DELIVERABLES:
@@ -254,7 +254,7 @@ SUCCESS CRITERIA:
   ✅ Accessibility audit (WCAG AA status)
 ```
 
-#### Infer 10: Audit Backend Architecture
+#### Cycle 10: Audit Backend Architecture
 
 ```
 DELIVERABLES:
@@ -274,11 +274,11 @@ SUCCESS CRITERIA:
 
 ---
 
-### Infer 11-30: BUILD SHARED INFRASTRUCTURE
+### Cycle 11-30: BUILD SHARED INFRASTRUCTURE
 
 **Purpose:** Create the foundations all features will build on
 
-#### Infer 11-15: Implement Structured Logging
+#### Cycle 11-15: Implement Structured Logging
 
 ```
 DELIVERABLES:
@@ -326,7 +326,7 @@ SUCCESS CRITERIA:
   ✅ 99th percentile query latency < 500ms
 ```
 
-#### Infer 16-20: Implement Error Handling Framework
+#### Cycle 16-20: Implement Error Handling Framework
 
 ```
 DELIVERABLES:
@@ -368,7 +368,7 @@ SUCCESS CRITERIA:
   ✅ No uncaught exceptions in logs (99.9%)
 ```
 
-#### Infer 21-25: Implement Validation Framework
+#### Cycle 21-25: Implement Validation Framework
 
 ```
 DELIVERABLES:
@@ -410,7 +410,7 @@ SUCCESS CRITERIA:
   ✅ File uploads validated (size, type, content scan)
 ```
 
-#### Infer 26-30: Implement Testing Infrastructure
+#### Cycle 26-30: Implement Testing Infrastructure
 
 ```
 DELIVERABLES:
@@ -455,11 +455,11 @@ SUCCESS CRITERIA:
 
 ---
 
-### Infer 31-50: HARDEN CORE DATA MODEL
+### Cycle 31-50: HARDEN CORE DATA MODEL
 
 **Purpose:** Ensure 6-dimension ontology is bulletproof
 
-#### Infer 31-35: Strengthen Schema Integrity
+#### Cycle 31-35: Strengthen Schema Integrity
 
 ```
 DELIVERABLES:
@@ -477,7 +477,7 @@ SUCCESS CRITERIA:
   ✅ No orphaned records possible
 ```
 
-#### Infer 36-40: Implement Type Safety
+#### Cycle 36-40: Implement Type Safety
 
 ```
 DELIVERABLES:
@@ -495,7 +495,7 @@ SUCCESS CRITERIA:
   ✅ Runtime type validation (zod or similar)
 ```
 
-#### Infer 41-45: Implement Data Consistency Rules
+#### Cycle 41-45: Implement Data Consistency Rules
 
 ```
 DELIVERABLES:
@@ -521,7 +521,7 @@ SUCCESS CRITERIA:
   ✅ Recovery procedure for violations documented
 ```
 
-#### Infer 46-50: Implement Access Control (AuthZ)
+#### Cycle 46-50: Implement Access Control (AuthZ)
 
 ```
 DELIVERABLES:
@@ -549,11 +549,11 @@ SUCCESS CRITERIA:
 
 ---
 
-### Infer 51-70: OPTIMIZE PERFORMANCE FOUNDATIONS
+### Cycle 51-70: OPTIMIZE PERFORMANCE FOUNDATIONS
 
 **Purpose:** Ensure system performs well BEFORE adding features
 
-#### Infer 51-55: Implement Query Optimization
+#### Cycle 51-55: Implement Query Optimization
 
 ```
 DELIVERABLES:
@@ -572,7 +572,7 @@ SUCCESS CRITERIA:
   ✅ Bundle size < 200KB (compressed)
 ```
 
-#### Infer 56-60: Implement Frontend Performance
+#### Cycle 56-60: Implement Frontend Performance
 
 ```
 DELIVERABLES:
@@ -591,7 +591,7 @@ SUCCESS CRITERIA:
   ✅ First Contentful Paint < 1.5s
 ```
 
-#### Infer 61-65: Implement Caching Strategy
+#### Cycle 61-65: Implement Caching Strategy
 
 ```
 DELIVERABLES:
@@ -609,7 +609,7 @@ SUCCESS CRITERIA:
   ✅ Staleness never exposed to users
 ```
 
-#### Infer 66-70: Implement Monitoring & Alerting
+#### Cycle 66-70: Implement Monitoring & Alerting
 
 ```
 DELIVERABLES:
@@ -630,11 +630,11 @@ SUCCESS CRITERIA:
 
 ---
 
-### Infer 71-90: BUILD DEVELOPMENT PRACTICES
+### Cycle 71-90: BUILD DEVELOPMENT PRACTICES
 
 **Purpose:** Ensure team can build safely and quickly
 
-#### Infer 71-75: Implement Testing Standards
+#### Cycle 71-75: Implement Testing Standards
 
 ```
 DELIVERABLES:
@@ -652,7 +652,7 @@ SUCCESS CRITERIA:
   ✅ Test failures block production deployment
 ```
 
-#### Infer 76-80: Implement Code Review Process
+#### Cycle 76-80: Implement Code Review Process
 
 ```
 DELIVERABLES:
@@ -670,7 +670,7 @@ SUCCESS CRITERIA:
   ✅ No merges with failing checks
 ```
 
-#### Infer 81-85: Implement Documentation Standards
+#### Cycle 81-85: Implement Documentation Standards
 
 ```
 DELIVERABLES:
@@ -688,7 +688,7 @@ SUCCESS CRITERIA:
   ✅ New team members can onboard via docs
 ```
 
-#### Infer 86-90: Implement Release Standards
+#### Cycle 86-90: Implement Release Standards
 
 ```
 DELIVERABLES:
@@ -709,11 +709,11 @@ SUCCESS CRITERIA:
 
 ---
 
-### Infer 91-100: DOCUMENT FOUNDATION
+### Cycle 91-100: DOCUMENT FOUNDATION
 
 **Purpose:** Capture what we've learned, so others can benefit
 
-#### Infer 91-95: Create System Documentation
+#### Cycle 91-95: Create System Documentation
 
 ```
 DELIVERABLES:
@@ -736,7 +736,7 @@ SUCCESS CRITERIA:
   ✅ Diagrams show component interactions
 ```
 
-#### Infer 96-100: Capture Lessons Learned
+#### Cycle 96-100: Capture Lessons Learned
 
 ```
 DELIVERABLES:
@@ -775,7 +775,7 @@ SUCCESS CRITERIA:
 
 ---
 
-## PHASE 2: INTELLIGENT LAYERING (Infer 101-200)
+## PHASE 2: INTELLIGENT LAYERING (Cycle 101-200)
 
 **Goal:** Add interconnected features that strengthen each other
 
@@ -783,18 +783,18 @@ SUCCESS CRITERIA:
 
 ---
 
-### Infer 101-130: BUILD CREATOR ONBOARDING
+### Cycle 101-130: BUILD CREATOR ONBOARDING
 
-**Prerequisite:** Foundation phase complete (Infer 1-100)
+**Prerequisite:** Foundation phase complete (Cycle 1-100)
 
-#### Infer 101-110: Define Onboarding Requirements
+#### Cycle 101-110: Define Onboarding Requirements
 
 ```
-(Same as todo-onboard.md Infer 1-10)
+(Same as todo-onboard.md Cycle 1-10)
 Define personas, map to ontology, review auth, define flow stages
 ```
 
-#### Infer 111-120: Implement Backend (Schema + Services)
+#### Cycle 111-120: Implement Backend (Schema + Services)
 
 ```
 DELIVERABLES:
@@ -822,7 +822,7 @@ SUCCESS CRITERIA:
   ✅ P95 query latency < 100ms
 ```
 
-#### Infer 121-130: Implement Frontend (Components + Pages)
+#### Cycle 121-130: Implement Frontend (Components + Pages)
 
 ```
 DELIVERABLES:
@@ -852,18 +852,18 @@ SUCCESS CRITERIA:
 
 ---
 
-### Infer 131-160: BUILD TEAM MANAGEMENT
+### Cycle 131-160: BUILD TEAM MANAGEMENT
 
 **Prerequisite:** Onboarding complete
 
-#### Infer 131-140: Define Team Requirements
+#### Cycle 131-140: Define Team Requirements
 
 ```
-(Same as todo-onboard.md Infer 5)
+(Same as todo-onboard.md Cycle 5)
 Define workspace as group, roles, team features
 ```
 
-#### Infer 141-150: Implement Backend (Schema + Services)
+#### Cycle 141-150: Implement Backend (Schema + Services)
 
 ```
 DELIVERABLES:
@@ -892,7 +892,7 @@ SUCCESS CRITERIA:
   ✅ Pending invitations work smoothly
 ```
 
-#### Infer 151-160: Implement Frontend (Components + Pages)
+#### Cycle 151-160: Implement Frontend (Components + Pages)
 
 ```
 DELIVERABLES:
@@ -919,13 +919,13 @@ SUCCESS CRITERIA:
 
 ---
 
-### Infer 161-200: BUILD ANALYTICS FOUNDATION
+### Cycle 161-200: BUILD ANALYTICS FOUNDATION
 
 **Prerequisite:** Onboarding + teams complete
 
 **Purpose:** Enable features to measure themselves
 
-#### Infer 161-170: Implement Event Tracking
+#### Cycle 161-170: Implement Event Tracking
 
 ```
 DELIVERABLES:
@@ -949,7 +949,7 @@ SUCCESS CRITERIA:
   ✅ Events queryable for analysis
 ```
 
-#### Infer 171-180: Implement Analytics Queries
+#### Cycle 171-180: Implement Analytics Queries
 
 ```
 DELIVERABLES:
@@ -971,7 +971,7 @@ SUCCESS CRITERIA:
   ✅ Queries return ready-to-chart data
 ```
 
-#### Infer 181-190: Implement Analytics UI
+#### Cycle 181-190: Implement Analytics UI
 
 ```
 DELIVERABLES:
@@ -994,7 +994,7 @@ SUCCESS CRITERIA:
   ✅ Mobile responsive
 ```
 
-#### Infer 191-200: Capture Learning & Metrics
+#### Cycle 191-200: Capture Learning & Metrics
 
 ```
 DELIVERABLES:
@@ -1025,17 +1025,17 @@ SUCCESS CRITERIA:
 
 ---
 
-## PHASE 3: SMART INTEGRATIONS (Infer 201-300)
+## PHASE 3: SMART INTEGRATIONS (Cycle 201-300)
 
 **Goal:** Connect external systems safely without breaking core platform
 
 ---
 
-### Infer 201-230: BUILD PAYMENT INFRASTRUCTURE (X402)
+### Cycle 201-230: BUILD PAYMENT INFRASTRUCTURE (X402)
 
 **Prerequisite:** Foundation + onboarding complete
 
-#### Infer 201-210: Design Payment Flow
+#### Cycle 201-210: Design Payment Flow
 
 ```
 DELIVERABLES:
@@ -1053,7 +1053,7 @@ SUCCESS CRITERIA:
   ✅ Payment verification reliable (99.9%)
 ```
 
-#### Infer 211-220: Implement Payment Mutations
+#### Cycle 211-220: Implement Payment Mutations
 
 ```
 DELIVERABLES:
@@ -1079,7 +1079,7 @@ SUCCESS CRITERIA:
   ✅ Audit log complete
 ```
 
-#### Infer 221-230: Implement Payment UI
+#### Cycle 221-230: Implement Payment UI
 
 ```
 DELIVERABLES:
@@ -1104,11 +1104,11 @@ SUCCESS CRITERIA:
 
 ---
 
-### Infer 231-260: BUILD PRODUCT MANAGEMENT
+### Cycle 231-260: BUILD PRODUCT MANAGEMENT
 
 **Prerequisite:** Payment infrastructure complete
 
-#### Infer 231-240: Design Product Schema
+#### Cycle 231-240: Design Product Schema
 
 ```
 DELIVERABLES:
@@ -1125,7 +1125,7 @@ SUCCESS CRITERIA:
   ✅ Products queryable by category
 ```
 
-#### Infer 241-250: Implement Product Operations
+#### Cycle 241-250: Implement Product Operations
 
 ```
 DELIVERABLES:
@@ -1150,7 +1150,7 @@ SUCCESS CRITERIA:
   ✅ Search performs < 500ms
 ```
 
-#### Infer 251-260: Implement Product UI
+#### Cycle 251-260: Implement Product UI
 
 ```
 DELIVERABLES:
@@ -1174,11 +1174,11 @@ SUCCESS CRITERIA:
 
 ---
 
-### Infer 261-290: BUILD CHECKOUT & ORDERS
+### Cycle 261-290: BUILD CHECKOUT & ORDERS
 
 **Prerequisite:** Products + payments complete
 
-#### Infer 261-270: Design Order Schema
+#### Cycle 261-270: Design Order Schema
 
 ```
 DELIVERABLES:
@@ -1195,7 +1195,7 @@ SUCCESS CRITERIA:
   ✅ Orders can be searched by customer/product
 ```
 
-#### Infer 271-280: Implement Order Operations
+#### Cycle 271-280: Implement Order Operations
 
 ```
 DELIVERABLES:
@@ -1221,7 +1221,7 @@ SUCCESS CRITERIA:
   ✅ Order reconciliation catches discrepancies
 ```
 
-#### Infer 281-290: Implement Checkout & Order UI
+#### Cycle 281-290: Implement Checkout & Order UI
 
 ```
 DELIVERABLES:
@@ -1247,7 +1247,7 @@ SUCCESS CRITERIA:
 
 ---
 
-### Infer 291-300: CAPTURE INTEGRATION LESSONS
+### Cycle 291-300: CAPTURE INTEGRATION LESSONS
 
 ```
 DELIVERABLES:
@@ -1283,15 +1283,15 @@ SUCCESS CRITERIA:
 
 ---
 
-## PHASE 4: INTELLIGENT OPERATIONS (Infer 301-400)
+## PHASE 4: INTELLIGENT OPERATIONS (Cycle 301-400)
 
 **Goal:** Build systems that prevent problems + enable growth
 
 ---
 
-### Infer 301-320: MONITORING & INCIDENT MANAGEMENT
+### Cycle 301-320: MONITORING & INCIDENT MANAGEMENT
 
-#### Infer 301-310: Build Comprehensive Monitoring
+#### Cycle 301-310: Build Comprehensive Monitoring
 
 ```
 DELIVERABLES:
@@ -1317,7 +1317,7 @@ SUCCESS CRITERIA:
   ✅ SLOs monitored + reported
 ```
 
-#### Infer 311-320: Implement Incident Response
+#### Cycle 311-320: Implement Incident Response
 
 ```
 DELIVERABLES:
@@ -1337,9 +1337,9 @@ SUCCESS CRITERIA:
 
 ---
 
-### Infer 321-340: SECURITY HARDENING
+### Cycle 321-340: SECURITY HARDENING
 
-#### Infer 321-330: Implement Security Best Practices
+#### Cycle 321-330: Implement Security Best Practices
 
 ```
 DELIVERABLES:
@@ -1357,7 +1357,7 @@ SUCCESS CRITERIA:
   ✅ User data encrypted at rest
 ```
 
-#### Infer 331-340: Implement Security Audit
+#### Cycle 331-340: Implement Security Audit
 
 ```
 DELIVERABLES:
@@ -1376,9 +1376,9 @@ SUCCESS CRITERIA:
 
 ---
 
-### Infer 341-360: SCALABILITY & PERFORMANCE
+### Cycle 341-360: SCALABILITY & PERFORMANCE
 
-#### Infer 341-350: Optimize for Growth
+#### Cycle 341-350: Optimize for Growth
 
 ```
 DELIVERABLES:
@@ -1396,7 +1396,7 @@ SUCCESS CRITERIA:
   ✅ Can add resources without code changes
 ```
 
-#### Infer 351-360: Build for Reliability
+#### Cycle 351-360: Build for Reliability
 
 ```
 DELIVERABLES:
@@ -1416,9 +1416,9 @@ SUCCESS CRITERIA:
 
 ---
 
-### Infer 361-380: DEVELOPER EXPERIENCE
+### Cycle 361-380: DEVELOPER EXPERIENCE
 
-#### Infer 361-370: Build Developer Tools
+#### Cycle 361-370: Build Developer Tools
 
 ```
 DELIVERABLES:
@@ -1435,7 +1435,7 @@ SUCCESS CRITERIA:
   ✅ Developer docs are current
 ```
 
-#### Infer 371-380: Build Deployment Tools
+#### Cycle 371-380: Build Deployment Tools
 
 ```
 DELIVERABLES:
@@ -1455,9 +1455,9 @@ SUCCESS CRITERIA:
 
 ---
 
-### Infer 381-400: KNOWLEDGE & CONTINUOUS IMPROVEMENT
+### Cycle 381-400: KNOWLEDGE & CONTINUOUS IMPROVEMENT
 
-#### Infer 381-390: Capture System Knowledge
+#### Cycle 381-390: Capture System Knowledge
 
 ```
 DELIVERABLES:
@@ -1480,7 +1480,7 @@ SUCCESS CRITERIA:
   ✅ New developers learn from knowledge base
 ```
 
-#### Infer 391-400: Plan Continuous Improvement
+#### Cycle 391-400: Plan Continuous Improvement
 
 ```
 DELIVERABLES:
@@ -1506,7 +1506,7 @@ SUCCESS CRITERIA:
 
 ## SUCCESS METRICS: MEASURING WHAT MATTERS
 
-At the end of 400 inferences (the complete 4-phase build):
+At the end of 400 cycles (the complete 4-phase build):
 
 ### System Quality Metrics
 
@@ -1543,7 +1543,7 @@ At the end of 400 inferences (the complete 4-phase build):
 
 ## COMPARISON: 900 INFERENCES vs 400 INFERENCES
 
-**Old Approach (900 inferences):**
+**Old Approach (900 cycles):**
 
 - 9 separate todo files (x402, onboard, agents, skills, sell, ecommerce, api, features, one-ie)
 - Limited reuse (each team member implements patterns separately)
@@ -1551,7 +1551,7 @@ At the end of 400 inferences (the complete 4-phase build):
 - Quality issues discovered late
 - Performance optimizations at the end
 
-**New Approach (400 inferences):**
+**New Approach (400 cycles):**
 
 - 4 phases (Foundation, Layering, Integration, Operations)
 - Strong shared foundations (all features benefit from Phase 1)
@@ -1565,9 +1565,9 @@ At the end of 400 inferences (the complete 4-phase build):
 2. **Quality**: Error handling framework prevents bugs in all features
 3. **Testing**: Shared test infrastructure reduces per-feature testing
 4. **Performance**: Monitoring + optimization happen early
-5. **Knowledge**: Captured systematically (inferences 91-100, 191-200, etc)
+5. **Knowledge**: Captured systematically (cycles 91-100, 191-200, etc)
 
-**Result**: ~55% fewer inferences to achieve same quality + reliability.
+**Result**: ~55% fewer cycles to achieve same quality + reliability.
 
 ---
 
@@ -1575,23 +1575,23 @@ At the end of 400 inferences (the complete 4-phase build):
 
 ### For Managers / Directors
 
-1. **Use as roadmap:** 4 phases, 100 inferences each
-2. **Track progress:** Mark inferences as complete
+1. **Use as roadmap:** 4 phases, 100 cycles each
+2. **Track progress:** Mark cycles as complete
 3. **Measure quality:** Track metrics in table above
-4. **Plan team capacity:** ~100-112 inferences per person per day
-5. **Identify blockers:** If one inference blocked, skip to next
+4. **Plan team capacity:** ~100-112 cycles per person per day
+5. **Identify blockers:** If one cycle blocked, skip to next
 
 ### For Engineers / Specialists
 
 1. **Read phase overview:** Understand what's being built
-2. **Read inference details:** "DELIVERABLES" section tells you what to do
+2. **Read cycle details:** "DELIVERABLES" section tells you what to do
 3. **Follow "SUCCESS CRITERIA":** These define "done"
 4. **Use "REQUIREMENTS FROM FOUNDATION":** Don't skip these
 5. **Capture lessons:** Document learnings (end of each phase)
 
 ### For New Team Members
 
-1. **Start with Phase 1:** Read all 100 inferences
+1. **Start with Phase 1:** Read all 100 cycles
 2. **Understand foundations:** Why error handling, logging, etc matter
 3. **See patterns:** Same patterns used in Phases 2-4
 4. **Know how to add features:** Follow the proven process

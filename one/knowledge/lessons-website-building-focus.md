@@ -234,7 +234,7 @@ Transformed the ONE Platform from abstract AI/blockchain messaging to concrete w
 
 ### ❌ Big Bang Releases
 
-**Anti-Pattern:** Wait until all 100 inferences complete before shipping
+**Anti-Pattern:** Wait until all 100 cycles complete before shipping
 **Why Bad:** No feedback, risk of wrong direction
 **Avoided By:** Ship skills as created, iterate based on usage
 

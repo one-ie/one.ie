@@ -50,7 +50,7 @@ These files demonstrate complete adherence to all standards and serve as referen
 #### `one/things/todo.md`
 - **Frontmatter:** Complete with ai_context block
 - **Headers:** Perfect H1→H2→H3 hierarchy
-- **Inference Structure:** Follows 100-inference template exactly
+- **Cycle Structure:** Follows 100-cycle template exactly
 - **Content Chunking:** Each phase clearly delineated
 - **Ontology Reference:** Explicit mapping (groups, people, things, connections, events, knowledge)
 - **Status Indicators:** Clear phase progression with checkboxes
@@ -60,17 +60,17 @@ These files demonstrate complete adherence to all standards and serve as referen
 
 #### `one/things/todo-onboard.md`
 - **Frontmatter:** Complete with all required fields
-- **Inference Breakdown:** Full 100-inference sequence with clear phases
-- **Ontology Mapping:** Excellent coverage of all 6 dimensions (Infer 2)
+- **Cycle Breakdown:** Full 100-cycle sequence with clear phases
+- **Ontology Mapping:** Excellent coverage of all 6 dimensions (Cycle 2)
 - **User Flows:** Multiple flows documented with step-by-step details
-- **Integration Points:** Clearly identified (Infer 9)
-- **Persona Definition:** Comprehensive (Infer 1)
+- **Integration Points:** Clearly identified (Cycle 9)
+- **Persona Definition:** Comprehensive (Cycle 1)
 - **Cross-References:** Links to related todos and features
 - **Quality Score:** ★★★★★ EXEMPLARY
 
 #### `one/things/todo-ecommerce.md`
 - **Frontmatter:** Complete with ai_context
-- **Ontology Mapping:** Explicit 6-dimension breakdown (Infer 2)
+- **Ontology Mapping:** Explicit 6-dimension breakdown (Cycle 2)
 - **Phase Progression:** Clear organization from foundation to deployment
 - **Business Rules:** Well-defined (refund policy, revenue split, pricing models)
 - **Integration Dependencies:** Clear references to todo-x402, todo-onboard
@@ -83,7 +83,7 @@ These files demonstrate complete adherence to all standards and serve as referen
 - **Architecture Explanation:** Clear overview of Effect.ts + DataProvider integration
 - **Service Mapping:** Detailed explanation of 6 services and their patterns
 - **Error Hierarchy:** Comprehensive categorization
-- **Inference Structure:** Well-organized 100-inference sequence
+- **Cycle Structure:** Well-organized 100-cycle sequence
 - **Dependency Clarity:** Explicit service dependencies outlined
 - **Quality Score:** ★★★★★ EXEMPLARY
 
@@ -146,7 +146,7 @@ These files demonstrate complete adherence to all standards and serve as referen
 These files are well-structured with minor gaps or areas for enhancement:
 
 #### `one/things/todo-ai.md`
-- **Strengths:** Complete frontmatter, 100-inference sequence, ontology mapping
+- **Strengths:** Complete frontmatter, 100-cycle sequence, ontology mapping
 - **Minor Gaps:** Limited cross-references, could expand RAG integration
 - **Quality Score:** ★★★★☆ STRONG
 
@@ -183,7 +183,7 @@ These files are well-structured with minor gaps or areas for enhancement:
 
 #### `one/things/todo-buy-chatgpt.md`
 - **Strengths:** Complete frontmatter, conversational commerce use cases, ontology mapping
-- **Issues:** File appears incomplete, full inference sequence not visible
+- **Issues:** File appears incomplete, full cycle sequence not visible
 - **Quality Score:** ★★★☆☆ INCOMPLETE
 
 #### `one/things/todo-api.md`
@@ -278,17 +278,17 @@ These files are well-structured with minor gaps or areas for enhancement:
 **Status:** 96% COMPLIANT - Excellent adherence with minor visual enhancements
 
 **Deviations:**
-- todo-components.md uses checkmark prefixes (✅ Infer 1) - enhances scanning
+- todo-components.md uses checkmark prefixes (✅ Cycle 1) - enhances scanning
 - todo-assignment.md uses color coding (🔵 AGENT-BACKEND) - visual enhancement
 - todo-master-plan.md uses emoji section markers - helps scanning
 
 **Assessment:** Header hierarchy is solid. Emoji enhancements are beneficial, not problematic.
 
-### Gap C: Inference Structure Consistency
+### Gap C: Cycle Structure Consistency
 
-**Status:** 98% COMPLIANT - Near-perfect adherence to 100-inference pattern
+**Status:** 98% COMPLIANT - Near-perfect adherence to 100-cycle pattern
 
-**Variations:** All follow 100-inference sequence with minor presentation differences (checklist vs narrative). All acceptable.
+**Variations:** All follow 100-cycle sequence with minor presentation differences (checklist vs narrative). All acceptable.
 
 ### Gap D: Ontology Alignment Presentation
 
@@ -419,8 +419,8 @@ These files are well-structured with minor gaps or areas for enhancement:
 **Observation:** Every file follows identical YAML structure
 **Action:** DO NOT CHANGE - This is perfect
 
-### 2. Clear Inference Structure (98% Compliant)
-**Observation:** 100-inference template enables predictable pacing
+### 2. Clear Cycle Structure (98% Compliant)
+**Observation:** 100-cycle template enables predictable pacing
 **Action:** Enforce this for all new feature TODOs
 
 ### 3. Ontology Alignment (98% Compliant)
@@ -446,7 +446,7 @@ These files are well-structured with minor gaps or areas for enhancement:
 
 ### Proposed State
 - 100% of TODO files include "Knowledge Artifacts" section
-- Every completed inference creates knowledge chunks with embeddings
+- Every completed cycle creates knowledge chunks with embeddings
 - Lessons learned automatically captured after implementation
 - Knowledge chunks linked to feature TODOs via sourceThingId
 
@@ -454,7 +454,7 @@ These files are well-structured with minor gaps or areas for enhancement:
 
 TODO File → Implementation → Knowledge Chunks
 
-todo-onboard.md → Infer 1-100 → 12 knowledge chunks
+todo-onboard.md → Cycle 1-100 → 12 knowledge chunks
 - 3 about patterns
 - 3 about UI
 - 3 about flow
@@ -504,7 +504,7 @@ Knowledge chunks include:
 
 1. **Strong Foundation:** Documentation standards are well-established and mostly compliant
 2. **Frontmatter Excellence:** 100% consistency in metadata structure
-3. **Inference Structure:** 98% adherence to 100-inference template
+3. **Cycle Structure:** 98% adherence to 100-cycle template
 4. **Ontology Alignment:** 98% of features map correctly to 6 dimensions
 5. **Knowledge Gap:** Only 20% of TODOs integrate with knowledge dimension
 6. **Completeness Gap:** 35% of planned TODO files not yet created
@@ -522,7 +522,7 @@ Knowledge chunks include:
 Documentation standards will be fully optimized when:
 
 1. All TODO files follow identical frontmatter (100%)
-2. All TODO files use 100-inference template (100%)
+2. All TODO files use 100-cycle template (100%)
 3. All TODO files map to 6-dimension ontology (100%)
 4. All TODO files include knowledge artifacts section (100%)
 5. All code examples follow standard format (100%)

@@ -3,7 +3,7 @@ title: Todo Buy Chatgpt
 dimension: things
 primary_dimension: things
 category: todo-buy-chatgpt.md
-tags: ai, inference, ontology
+tags: ai, cycle, ontology
 related_dimensions: connections, events, groups, people, things, knowledge
 scope: global
 created: 2025-11-03
@@ -20,18 +20,18 @@ ai_context: |
 # ONE Platform: Conversational Commerce via ChatGPT/Gemini/Claude v1.0.0
 
 **Focus:** "Buy it in ChatGPT" - Conversational shopping experiences through LLM chat interfaces
-**Process:** `Infer 1-100 inference sequence`
-**Timeline:** 8-12 inferences per specialist per day
+**Process:** `Cycle 1-100 cycle sequence`
+**Timeline:** 8-12 cycles per specialist per day
 **Target:** Conversational checkout + AI product discovery (Wave 2.5 - Strategic Addition)
 **Integration:** Works with todo-ecommerce.md (shopping cart, checkout, payments)
 
 ---
 
-## PHASE 1: FOUNDATION & SETUP (Infer 1-10)
+## PHASE 1: FOUNDATION & SETUP (Cycle 1-10)
 
 **Purpose:** Understand conversational commerce landscape, map to ontology, plan implementation
 
-### Infer 1: Understand the "Buy it in ChatGPT" Opportunity
+### Cycle 1: Understand the "Buy it in ChatGPT" Opportunity
 
 - [ ] Review market context:
   - [ ] OpenAI launched Instant Checkout (Sep 2025)
@@ -49,7 +49,7 @@ ai_context: |
   - [ ] Instant checkout reduces friction (higher conversion)
 - [ ] Document in: `one/connections/conversational-commerce.md`
 
-### Infer 2: Map Conversational Commerce to 6-Dimension Ontology
+### Cycle 2: Map Conversational Commerce to 6-Dimension Ontology
 
 - [ ] **Groups:** Creator's business group (via marketplace)
 - [ ] **People:**
@@ -78,7 +78,7 @@ ai_context: |
   - [ ] product_category, use_case, audience labels
   - [ ] customer_preferences (inferred from conversation)
 
-### Infer 3: Define Conversational Commerce User Flows
+### Cycle 3: Define Conversational Commerce User Flows
 
 - [ ] **Flow 1: Discovery via Chat**
   1. User opens ChatGPT: "I need a padel racket for beginners"
@@ -115,7 +115,7 @@ ai_context: |
   4. Offers relevant follow-up products (strings, grips, lessons)
   5. Natural upselling without feeling pushy
 
-### Infer 4: Identify AI Platforms to Integrate
+### Cycle 4: Identify AI Platforms to Integrate
 
 - [ ] **ChatGPT (OpenAI)**
   - [ ] GPT-4 Turbo (best reasoning)
@@ -137,7 +137,7 @@ ai_context: |
   - [ ] Massive reach (Google users)
   - [ ] Revenue model: CPC/CPA
 
-### Infer 5: Define Product Metadata for AI
+### Cycle 5: Define Product Metadata for AI
 
 - [ ] Enhance product schema (from todo-ecommerce) for AI:
 
@@ -167,7 +167,7 @@ ai_context: |
   }
   ```
 
-### Infer 6: Plan AI Integration Architecture
+### Cycle 6: Plan AI Integration Architecture
 
 - [ ] **Option 1: ChatGPT Custom Action**
   - [ ] Create OpenAI custom action that calls ONE API
@@ -190,7 +190,7 @@ ai_context: |
   - [ ] Expose API for ChatGPT integration (Option 1)
   - [ ] Best of both worlds
 
-### Infer 7: Define Conversational Commerce MVP Features
+### Cycle 7: Define Conversational Commerce MVP Features
 
 - [ ] **Minimum Viable Product:**
   1. Standalone chat interface in /web
@@ -203,7 +203,7 @@ ai_context: |
 - [ ] **First Extension (v1.1):** 8. ChatGPT custom action integration 9. Product images in chat 10. Price comparison in conversation 11. Review/rating display 12. Discount codes in chat
 - [ ] **Second Extension (v1.2):** 13. Gemini integration 14. Multi-language support 15. Post-purchase follow-up in chat 16. AI upsell recommendations 17. Chat history + personalization
 
-### Infer 8: Plan Data Collection for AI Training
+### Cycle 8: Plan Data Collection for AI Training
 
 - [ ] Conversational commerce creates unique data:
   - [ ] How customers naturally ask about products
@@ -222,7 +222,7 @@ ai_context: |
   - [ ] GDPR compliance
   - [ ] Allow users to opt-out
 
-### Infer 9: Identify Revenue Streams
+### Cycle 9: Identify Revenue Streams
 
 - [ ] **Direct Revenue:**
   - [ ] Commission on purchases via conversational commerce
@@ -239,7 +239,7 @@ ai_context: |
   - [ ] 15-25% higher average order value (recommendations)
   - [ ] 3-5x higher customer lifetime value (repeat purchases)
 
-### Infer 10: Define Success Metrics
+### Cycle 10: Define Success Metrics
 
 - [ ] Conversational commerce complete when:
   - [ ] [ ] Chat interface live and responsive
@@ -256,11 +256,11 @@ ai_context: |
 
 ---
 
-## PHASE 2: BACKEND SCHEMA & SERVICES (Infer 11-20)
+## PHASE 2: BACKEND SCHEMA & SERVICES (Cycle 11-20)
 
 **Purpose:** Extend Convex schema for conversations + AI
 
-### Infer 11: Create Conversation Thing Type
+### Cycle 11: Create Conversation Thing Type
 
 - [ ] New thing type: `conversation_session`
 
@@ -308,7 +308,7 @@ ai_context: |
   }
   ```
 
-### Infer 12: Create Recommendation Thing Type
+### Cycle 12: Create Recommendation Thing Type
 
 - [ ] New thing type: `ai_recommendation`
   ```typescript
@@ -329,7 +329,7 @@ ai_context: |
   }
   ```
 
-### Infer 13: Create Conversational Order Thing Type
+### Cycle 13: Create Conversational Order Thing Type
 
 - [ ] Extend order thing from todo-ecommerce:
 
@@ -352,7 +352,7 @@ ai_context: |
   }
   ```
 
-### Infer 14: Create Conversation Service (Effect.ts)
+### Cycle 14: Create Conversation Service (Effect.ts)
 
 - [ ] Service: `backend/convex/services/conversation.ts`
 - [ ] Methods:
@@ -364,7 +364,7 @@ ai_context: |
   - [ ] `completeConversation(sessionId)` → session archived
   - [ ] `getConversationMetrics(sessionId)` → stats
 
-### Infer 15: Create AI Integration Service (Effect.ts)
+### Cycle 15: Create AI Integration Service (Effect.ts)
 
 - [ ] Service: `backend/convex/services/ai-integration.ts`
 - [ ] Methods:
@@ -376,7 +376,7 @@ ai_context: |
   - [ ] `extractUserPreferences(messages)` → preferences object
   - [ ] `generateRecommendation(userNeeds, products)` → recommendation
 
-### Infer 16: Create Convex Mutations
+### Cycle 16: Create Convex Mutations
 
 - [ ] `mutations/conversations.ts`:
   - [ ] `startConversation(userId, platform)` → sessionId
@@ -387,7 +387,7 @@ ai_context: |
   - [ ] `logRecommendation(conversationId, productId, reason)` → logged
   - [ ] `trackRecommendationReaction(recommendationId, reaction)` → tracked
 
-### Infer 17: Create Convex Queries
+### Cycle 17: Create Convex Queries
 
 - [ ] `queries/conversations.ts`:
   - [ ] `getConversation(sessionId)` → full chat history
@@ -398,7 +398,7 @@ ai_context: |
   - [ ] `getProductRecommendations(productId)` → how often recommended
   - [ ] `getCreatorMetrics(creatorId)` → conversational commerce stats
 
-### Infer 18: Create Conversation Prompts (System)
+### Cycle 18: Create Conversation Prompts (System)
 
 - [ ] Create `backend/convex/prompts/product-advisor.md`:
 
@@ -427,7 +427,7 @@ ai_context: |
 - [ ] Create prompts for other categories
 - [ ] Make prompts dynamic based on creator/marketplace
 
-### Infer 19: Set Up API Rate Limiting for AI Calls
+### Cycle 19: Set Up API Rate Limiting for AI Calls
 
 - [ ] Implement rate limiting:
   - [ ] Claude API: $0.003 per 1K input tokens, $0.015 per 1K output
@@ -439,7 +439,7 @@ ai_context: |
   - [ ] Use Claude Sonnet for complex reasoning (expensive, accurate)
   - [ ] Batch embeddings generation (off-peak)
 
-### Infer 20: Create Conversation Indexing
+### Cycle 20: Create Conversation Indexing
 
 - [ ] Index conversations for later analysis:
   - [ ] by_userId(userId) - Find user's conversations
@@ -451,11 +451,11 @@ ai_context: |
 
 ---
 
-## PHASE 3: FRONTEND - CHAT INTERFACE (Infer 21-30)
+## PHASE 3: FRONTEND - CHAT INTERFACE (Cycle 21-30)
 
 **Purpose:** Build conversational UI in React/Astro
 
-### Infer 21: Create ChatInterface Component
+### Cycle 21: Create ChatInterface Component
 
 - [ ] Component: `web/src/components/conversational/ChatInterface.tsx`
 - [ ] Features:
@@ -472,7 +472,7 @@ ai_context: |
   - [ ] Product cards shown inline
   - [ ] Links clickable (product details, checkout)
 
-### Infer 22: Create ProductCard Component (Chat Version)
+### Cycle 22: Create ProductCard Component (Chat Version)
 
 - [ ] Component: `web/src/components/conversational/ProductCardChat.tsx`
 - [ ] Display in chat:
@@ -486,7 +486,7 @@ ai_context: |
   - [ ] "Check Out" button (one-click)
 - [ ] Compact design (fits in chat)
 
-### Infer 23: Create RecommendationSection Component
+### Cycle 23: Create RecommendationSection Component
 
 - [ ] Component: `web/src/components/conversational/RecommendationSection.tsx`
 - [ ] Display when AI makes recommendation:
@@ -497,7 +497,7 @@ ai_context: |
   - [ ] "Tell me more" buttons
   - [ ] "I'm interested" buttons
 
-### Infer 24: Create PreferencesExtractor Component
+### Cycle 24: Create PreferencesExtractor Component
 
 - [ ] Component: `web/src/components/conversational/PreferencesExtractor.tsx`
 - [ ] Shows inferred preferences:
@@ -508,7 +508,7 @@ ai_context: |
   - [ ] Edit buttons (let user correct AI)
 - [ ] Used to refine recommendations
 
-### Infer 25: Create ChatPage (Astro)
+### Cycle 25: Create ChatPage (Astro)
 
 - [ ] `web/src/pages/chat/index.astro`
 - [ ] Layout:
@@ -519,7 +519,7 @@ ai_context: |
 - [ ] Mobile: Full-width chat
 - [ ] Require login (optional? Can chat as guest)
 
-### Infer 26: Create ChatHistoryPage
+### Cycle 26: Create ChatHistoryPage
 
 - [ ] `web/src/pages/chat/history.astro`
 - [ ] Show past conversations:
@@ -529,7 +529,7 @@ ai_context: |
   - [ ] Export chat as PDF
   - [ ] Delete old chats
 
-### Infer 27: Create OneClickCheckout Component
+### Cycle 27: Create OneClickCheckout Component
 
 - [ ] Component: `web/src/components/conversational/OneClickCheckout.tsx`
 - [ ] When user clicks "Check Out" in chat:
@@ -541,7 +541,7 @@ ai_context: |
   6. After payment: Confirm in chat "Order #123 confirmed!"
 - [ ] Mobile: Full-screen checkout view
 
-### Infer 28: Create SellerAnalyticsDashboard
+### Cycle 28: Create SellerAnalyticsDashboard
 
 - [ ] Page: `/dashboard/conversational-metrics`
 - [ ] For product creators:
@@ -554,7 +554,7 @@ ai_context: |
   - [ ] Product embedding score (how well AI understands it)
   - [ ] Recommendations to improve product description
 
-### Infer 29: Create AdminMetricsPage
+### Cycle 29: Create AdminMetricsPage
 
 - [ ] Page: `/admin/conversational-commerce`
 - [ ] For platform owner:
@@ -568,7 +568,7 @@ ai_context: |
   - [ ] User satisfaction (chat rating)
   - [ ] Platform health (uptime, latency)
 
-### Infer 30: Create Empty States + Onboarding
+### Cycle 30: Create Empty States + Onboarding
 
 - [ ] When user opens chat:
   - [ ] "Hi! I'm your product advisor"
@@ -581,11 +581,11 @@ ai_context: |
 
 ---
 
-## PHASE 4: API ROUTES & INTEGRATIONS (Infer 31-40)
+## PHASE 4: API ROUTES & INTEGRATIONS (Cycle 31-40)
 
 **Purpose:** Connect chat to backends, LLM APIs, checkout
 
-### Infer 31: Create Chat API Route
+### Cycle 31: Create Chat API Route
 
 - [ ] `web/src/pages/api/chat/message.ts`
 - [ ] POST endpoint:
@@ -606,7 +606,7 @@ ai_context: |
 - [ ] Tracks message in conversation
 - [ ] Returns streamed response (optional)
 
-### Infer 32: Create Product Search API Route
+### Cycle 32: Create Product Search API Route
 
 - [ ] `web/src/pages/api/chat/search.ts`
 - [ ] POST endpoint:
@@ -624,14 +624,14 @@ ai_context: |
 - [ ] Uses semantic search (embeddings)
 - [ ] Filters by availability + rating
 
-### Infer 33: Create Conversation Session API Route
+### Cycle 33: Create Conversation Session API Route
 
 - [ ] `web/src/pages/api/chat/session.ts` - POST (create)
 - [ ] `web/src/pages/api/chat/session/[sessionId].ts` - GET (retrieve)
 - [ ] POST creates new conversation in Convex
 - [ ] GET retrieves full chat history
 
-### Infer 34: Create Checkout Redirect Route
+### Cycle 34: Create Checkout Redirect Route
 
 - [ ] `web/src/pages/api/chat/checkout.ts`
 - [ ] POST endpoint:
@@ -650,7 +650,7 @@ ai_context: |
 - [ ] Redirects to checkout page
 - [ ] Checkout is pre-filled from conversation data
 
-### Infer 35: Create Claude API Integration
+### Cycle 35: Create Claude API Integration
 
 - [ ] `backend/convex/lib/claude-api.ts`
 - [ ] Wrapper around Anthropic SDK:
@@ -669,7 +669,7 @@ ai_context: |
 - [ ] Cost tracking (log tokens used)
 - [ ] Fallback to simpler model if expensive model overloaded
 
-### Infer 36: Create OpenAI API Integration
+### Cycle 36: Create OpenAI API Integration
 
 - [ ] `backend/convex/lib/openai-api.ts`
 - [ ] Similar wrapper for ChatGPT:
@@ -683,7 +683,7 @@ ai_context: |
 - [ ] Support for GPT-4, GPT-4 Turbo, etc
 - [ ] Vision capabilities (analyze product images)
 
-### Infer 37: Create Embedding Generation Route
+### Cycle 37: Create Embedding Generation Route
 
 - [ ] `web/src/pages/api/embeddings/generate.ts`
 - [ ] Background job: Generate embeddings for all products
@@ -691,7 +691,7 @@ ai_context: |
 - [ ] Stores embedding in product properties
 - [ ] Used for semantic search in conversations
 
-### Infer 38: Create ChatGPT Custom Action Definition
+### Cycle 38: Create ChatGPT Custom Action Definition
 
 - [ ] File: `.openai/actions/one-marketplace.yaml`
 - [ ] OpenAI custom action definition:
@@ -721,7 +721,7 @@ ai_context: |
             description: Products found
   ```
 
-### Infer 39: Create Analytics Event Tracking
+### Cycle 39: Create Analytics Event Tracking
 
 - [ ] Track all conversational metrics:
   - [ ] conversation_started
@@ -735,7 +735,7 @@ ai_context: |
 - [ ] Log to Convex events table
 - [ ] Create analytics queries
 
-### Infer 40: Create Webhooks for External Platforms
+### Cycle 40: Create Webhooks for External Platforms
 
 - [ ] ChatGPT action calls ONE API
 - [ ] On successful purchase: Send webhook back to ChatGPT
@@ -744,11 +744,11 @@ ai_context: |
 
 ---
 
-## PHASE 5: AI & RECOMMENDATION ENGINE (Infer 41-50)
+## PHASE 5: AI & RECOMMENDATION ENGINE (Cycle 41-50)
 
 **Purpose:** Build sophisticated product recommendation system
 
-### Infer 41: Create Product Understanding Layer
+### Cycle 41: Create Product Understanding Layer
 
 - [ ] Extract rich metadata from products:
   - [ ] Brand, model, specs
@@ -759,7 +759,7 @@ ai_context: |
 - [ ] Store in product thing properties
 - [ ] Used by AI to understand products deeply
 
-### Infer 42: Create User Preference Extraction
+### Cycle 42: Create User Preference Extraction
 
 - [ ] From conversation, extract:
   - [ ] Budget range
@@ -773,7 +773,7 @@ ai_context: |
 - [ ] Store in conversation thing properties
 - [ ] Refine with each message
 
-### Infer 43: Create Semantic Search
+### Cycle 43: Create Semantic Search
 
 - [ ] Use embeddings for products:
   - [ ] Generate embedding for each product description
@@ -784,7 +784,7 @@ ai_context: |
 - [ ] Better than keyword search
 - [ ] Understands intent ("good for beginners" matches beginner-friendly rackets)
 
-### Infer 44: Create Personalized Recommendation Engine
+### Cycle 44: Create Personalized Recommendation Engine
 
 - [ ] Algorithm:
   1. Extract user preferences from conversation
@@ -800,7 +800,7 @@ ai_context: |
   7. Return: Top 3 products with explanations
 - [ ] Explainability: Always explain WHY (user trust)
 
-### Infer 45: Create Comparison Generation
+### Cycle 45: Create Comparison Generation
 
 - [ ] When user asks to compare products:
 
@@ -828,7 +828,7 @@ ai_context: |
 - [ ] Generate comparison table
 - [ ] Make recommendation based on user profile
 
-### Infer 46: Create Objection Handling
+### Cycle 46: Create Objection Handling
 
 - [ ] Detect and address concerns:
   - [ ] "Is it durable?" → Mention warranty, materials
@@ -839,7 +839,7 @@ ai_context: |
 - [ ] Use product reviews to address objections
 - [ ] Be honest about limitations
 
-### Infer 47: Create Upsell Logic
+### Cycle 47: Create Upsell Logic
 
 - [ ] Natural upselling:
   - [ ] After product selection: "Also popular with this: strings, grip"
@@ -849,7 +849,7 @@ ai_context: |
 - [ ] Not pushy, feels natural
 - [ ] Only suggest if relevant to user profile
 
-### Infer 48: Create Learning System
+### Cycle 48: Create Learning System
 
 - [ ] AI improves recommendations over time:
   - [ ] Track which recommendations → purchases (success)
@@ -861,7 +861,7 @@ ai_context: |
   - [ ] Which users like their products?
   - [ ] How to position product for conversation?
 
-### Infer 49: Create Conversation Memory
+### Cycle 49: Create Conversation Memory
 
 - [ ] AI remembers across sessions:
   - [ ] User: "I bought the X1 from your last recommendation"
@@ -871,7 +871,7 @@ ai_context: |
 - [ ] Cross-session continuity
 - [ ] Personalization deepens
 
-### Infer 50: Create RAG (Retrieval-Augmented Generation)
+### Cycle 50: Create RAG (Retrieval-Augmented Generation)
 
 - [ ] Combine AI reasoning with product database:
   - [ ] User question → Search product database
@@ -884,11 +884,11 @@ ai_context: |
 
 ---
 
-## PHASE 6: QUALITY & TESTING (Infer 51-60)
+## PHASE 6: QUALITY & TESTING (Cycle 51-60)
 
 **Purpose:** Test all conversational flows end-to-end
 
-### Infer 51: Write Unit Tests for Conversation Service
+### Cycle 51: Write Unit Tests for Conversation Service
 
 - [ ] Test conversation service methods
 - [ ] Mock Convex database
@@ -896,14 +896,14 @@ ai_context: |
 - [ ] Test recommendation ranking
 - [ ] Test comparison generation
 
-### Infer 52: Write Unit Tests for AI Integration
+### Cycle 52: Write Unit Tests for AI Integration
 
 - [ ] Mock Claude API responses
 - [ ] Test message formatting
 - [ ] Test error handling (rate limits, timeouts)
 - [ ] Test cost tracking
 
-### Infer 53: Write Integration Tests
+### Cycle 53: Write Integration Tests
 
 - [ ] Test full conversation flow:
   1. Create session
@@ -921,7 +921,7 @@ ai_context: |
   6. Complete purchase
   7. Verify order linked to conversation
 
-### Infer 54: Write E2E Tests (Selenium/Playwright)
+### Cycle 54: Write E2E Tests (Selenium/Playwright)
 
 - [ ] Test chat interface:
   - [ ] User opens chat
@@ -934,7 +934,7 @@ ai_context: |
   - [ ] Order confirmed
 - [ ] Test on mobile + desktop
 
-### Infer 55: Test AI Recommendation Quality
+### Cycle 55: Test AI Recommendation Quality
 
 - [ ] Create test scenarios:
   - [ ] "I'm a beginner, budget €50"
@@ -948,7 +948,7 @@ ai_context: |
 - [ ] Manual QA with domain experts
 - [ ] Iterate on prompts + algorithm
 
-### Infer 56: Test Conversation Accuracy
+### Cycle 56: Test Conversation Accuracy
 
 - [ ] Does AI understand intent correctly?
   - [ ] Parse preferences accurately?
@@ -961,7 +961,7 @@ ai_context: |
   - [ ] Questions about non-products
   - [ ] Inappropriate requests
 
-### Infer 57: Test Performance
+### Cycle 57: Test Performance
 
 - [ ] Response time targets:
   - [ ] Chat message input → response: < 3 seconds
@@ -973,7 +973,7 @@ ai_context: |
   - [ ] Measure latency + errors
   - [ ] Monitor API costs
 
-### Infer 58: Test Security
+### Cycle 58: Test Security
 
 - [ ] Prompt injection (can user trick AI?)
 - [ ] SQL injection in search
@@ -981,7 +981,7 @@ ai_context: |
 - [ ] Unauthorized checkout access
 - [ ] Payment processing security
 
-### Infer 59: Test Analytics Tracking
+### Cycle 59: Test Analytics Tracking
 
 - [ ] All events logged correctly
 - [ ] Conversion tracking accurate
@@ -989,7 +989,7 @@ ai_context: |
 - [ ] User behavior patterns make sense
 - [ ] Dashboards calculate metrics correctly
 
-### Infer 60: User Acceptance Testing (UAT)
+### Cycle 60: User Acceptance Testing (UAT)
 
 - [ ] Test with real users:
   - [ ] Can they use the chat naturally?
@@ -1004,11 +1004,11 @@ ai_context: |
 
 ---
 
-## PHASE 7: DESIGN & WIREFRAMES (Infer 61-70)
+## PHASE 7: DESIGN & WIREFRAMES (Cycle 61-70)
 
 **Purpose:** Finalize UI/UX design for conversational commerce
 
-### Infer 61: Design Chat Interface
+### Cycle 61: Design Chat Interface
 
 - [ ] Wireframe chat UI
 - [ ] Message bubbles, input, send button
@@ -1017,28 +1017,28 @@ ai_context: |
 - [ ] Scroll behavior
 - [ ] Mobile layout
 
-### Infer 62: Design Product Cards for Chat
+### Cycle 62: Design Product Cards for Chat
 
 - [ ] Compact version (inline in chat)
 - [ ] Expanded version (modal or slide)
 - [ ] Show: Image, name, price, rating, buttons
 - [ ] Responsive scaling
 
-### Infer 63: Design Preferences Display
+### Cycle 63: Design Preferences Display
 
 - [ ] How to show extracted preferences?
 - [ ] Editable chips/tags
 - [ ] Clear + concise layout
 - [ ] Mobile-friendly
 
-### Infer 64: Design One-Click Checkout
+### Cycle 64: Design One-Click Checkout
 
 - [ ] Minimal friction
 - [ ] Show: Product, price, "Buy" button
 - [ ] Pre-fill from conversation
 - [ ] Fast confirmation
 
-### Infer 65: Design Analytics Dashboards
+### Cycle 65: Design Analytics Dashboards
 
 - [ ] Creator dashboard: Top metrics at a glance
 - [ ] Admin dashboard: Platform overview
@@ -1046,7 +1046,7 @@ ai_context: |
 - [ ] Tables: Detailed breakdowns
 - [ ] Filters: By date, product, creator
 
-### Infer 66: Design Mobile Experience
+### Cycle 66: Design Mobile Experience
 
 - [ ] Chat: Full-width messages
 - [ ] Products: Stacked cards
@@ -1054,14 +1054,14 @@ ai_context: |
 - [ ] Keyboard: Auto-open on input
 - [ ] Scroll: Smooth, no jank
 
-### Infer 67: Design Dark Mode
+### Cycle 67: Design Dark Mode
 
 - [ ] Chat bubbles visible in dark mode
 - [ ] Product cards readable
 - [ ] Good contrast (WCAG AA)
 - [ ] Consistent with ONE brand
 
-### Infer 68: Design Accessibility
+### Cycle 68: Design Accessibility
 
 - [ ] Chat history: Screen reader friendly
 - [ ] Products: Alt text on images
@@ -1069,14 +1069,14 @@ ai_context: |
 - [ ] Color not only indicator
 - [ ] Font size: Readable (minimum 16px)
 
-### Infer 69: Design Onboarding
+### Cycle 69: Design Onboarding
 
 - [ ] Welcome message
 - [ ] Example prompts
 - [ ] Hint: "Try asking..."
 - [ ] Tutorial (skip-able)
 
-### Infer 70: Create Design System + Component Library
+### Cycle 70: Create Design System + Component Library
 
 - [ ] Document all components
 - [ ] Color palette
@@ -1088,11 +1088,11 @@ ai_context: |
 
 ---
 
-## PHASE 8: PERFORMANCE & OPTIMIZATION (Infer 71-80)
+## PHASE 8: PERFORMANCE & OPTIMIZATION (Cycle 71-80)
 
 **Purpose:** Optimize for speed and cost
 
-### Infer 71: Optimize Claude API Calls
+### Cycle 71: Optimize Claude API Calls
 
 - [ ] Batch messages where possible
 - [ ] Use cheaper models (Haiku) for simple tasks
@@ -1100,14 +1100,14 @@ ai_context: |
 - [ ] Compress context (remove old history)
 - [ ] Stream responses (feels faster)
 
-### Infer 72: Optimize Product Search
+### Cycle 72: Optimize Product Search
 
 - [ ] Index products by embedding (Pinecone or similar)
 - [ ] Fast semantic search (sub-second)
 - [ ] Cache popular searches
 - [ ] Limit results to top 10 (faster ranking)
 
-### Infer 73: Optimize Chat UI
+### Cycle 73: Optimize Chat UI
 
 - [ ] Virtual scrolling (don't render all messages)
 - [ ] Lazy load images
@@ -1115,7 +1115,7 @@ ai_context: |
 - [ ] Don't re-render full list on new message
 - [ ] Code split chat component (lazy import)
 
-### Infer 74: Optimize Database Queries
+### Cycle 74: Optimize Database Queries
 
 - [ ] Index conversation table:
   - [ ] by_userId, by_creatorId, by_productId
@@ -1123,14 +1123,14 @@ ai_context: |
 - [ ] Batch queries (fetch related products in 1 query)
 - [ ] Cache conversation summaries
 
-### Infer 75: Implement Smart Caching
+### Cycle 75: Implement Smart Caching
 
 - [ ] Cache product data (1 hour)
 - [ ] Cache embeddings (permanent, unless product updated)
 - [ ] Cache common search queries (8 hours)
 - [ ] Cache user preferences (per session)
 
-### Infer 76: Monitor Cost
+### Cycle 76: Monitor Cost
 
 - [ ] Track Claude API usage by conversation
 - [ ] Set budget alerts
@@ -1138,7 +1138,7 @@ ai_context: |
 - [ ] Analyze cost per purchase
 - [ ] Optimize expensive operations
 
-### Infer 77: Implement Progressive Enhancement
+### Cycle 77: Implement Progressive Enhancement
 
 - [ ] Chat works without JavaScript:
   - [ ] Form-based chat (submit text, get response)
@@ -1147,7 +1147,7 @@ ai_context: |
   - [ ] Real-time responses
   - [ ] Product cards + interactions
 
-### Infer 78: Optimize for Mobile Networks
+### Cycle 78: Optimize for Mobile Networks
 
 - [ ] Compress images aggressively
 - [ ] Minimize JavaScript
@@ -1155,7 +1155,7 @@ ai_context: |
 - [ ] Progressive image loading
 - [ ] Gzip compression
 
-### Infer 79: Implement Rate Limiting
+### Cycle 79: Implement Rate Limiting
 
 - [ ] Per-user: 30 messages/hour
 - [ ] Per-session: 100 messages/day
@@ -1163,7 +1163,7 @@ ai_context: |
 - [ ] Display remaining to user
 - [ ] Clear limits in documentation
 
-### Infer 80: Performance Baseline
+### Cycle 80: Performance Baseline
 
 - [ ] Chat response: < 3 seconds
 - [ ] Product search: < 1 second
@@ -1174,11 +1174,11 @@ ai_context: |
 
 ---
 
-## PHASE 9: DEPLOYMENT & DOCUMENTATION (Infer 81-90)
+## PHASE 9: DEPLOYMENT & DOCUMENTATION (Cycle 81-90)
 
 **Purpose:** Deploy to production, document for users + creators
 
-### Infer 81: Set Up Production Environment
+### Cycle 81: Set Up Production Environment
 
 - [ ] Environment variables:
   - [ ] CLAUDE_API_KEY
@@ -1188,14 +1188,14 @@ ai_context: |
 - [ ] Database migrations
 - [ ] Product embeddings generation (first run)
 
-### Infer 82: Deploy Backend (Convex)
+### Cycle 82: Deploy Backend (Convex)
 
 - [ ] `npx convex deploy`
 - [ ] Verify all mutations/queries working
 - [ ] Test API endpoints
 - [ ] Monitor logs for errors
 
-### Infer 83: Deploy Frontend (Cloudflare)
+### Cycle 83: Deploy Frontend (Cloudflare)
 
 - [ ] `bun run build`
 - [ ] `wrangler pages deploy dist`
@@ -1203,7 +1203,7 @@ ai_context: |
 - [ ] Test chat functionality
 - [ ] Smoke test checkout flow
 
-### Infer 84: Set Up Monitoring
+### Cycle 84: Set Up Monitoring
 
 - [ ] Alert on high latency (chat response > 5s)
 - [ ] Alert on API errors
@@ -1211,7 +1211,7 @@ ai_context: |
 - [ ] Track conversion metrics
 - [ ] Set up dashboards
 
-### Infer 85: Create User Documentation
+### Cycle 85: Create User Documentation
 
 - [ ] `/docs/chat-guide.md`:
   - [ ] How to use chat advisor
@@ -1222,7 +1222,7 @@ ai_context: |
 - [ ] In-app help (hover tooltips, help button)
 - [ ] Video tutorial (optional)
 
-### Infer 86: Create Creator Documentation
+### Cycle 86: Create Creator Documentation
 
 - [ ] `/docs/conversational-commerce.md`:
   - [ ] How to optimize products for AI
@@ -1232,7 +1232,7 @@ ai_context: |
   - [ ] Tips to increase conversational sales
 - [ ] Webinar / training session
 
-### Infer 87: Create Developer Documentation
+### Cycle 87: Create Developer Documentation
 
 - [ ] `/docs/conversational-api.md`:
   - [ ] Custom action setup for ChatGPT
@@ -1242,7 +1242,7 @@ ai_context: |
   - [ ] Rate limits + costs
 - [ ] Swagger/OpenAPI definition
 
-### Infer 88: Create Admin Guide
+### Cycle 88: Create Admin Guide
 
 - [ ] Setting up conversational commerce
 - [ ] Managing Claude API credentials
@@ -1250,7 +1250,7 @@ ai_context: |
 - [ ] Troubleshooting common issues
 - [ ] Scaling considerations
 
-### Infer 89: Create Beta Announcement
+### Cycle 89: Create Beta Announcement
 
 - [ ] Blog post: "Introducing Conversational Shopping"
 - [ ] Email to creators: How to benefit
@@ -1258,7 +1258,7 @@ ai_context: |
 - [ ] Press kit for coverage
 - [ ] Demo video (1-2 minutes)
 
-### Infer 90: Create Feedback Loop
+### Cycle 90: Create Feedback Loop
 
 - [ ] Survey users on chat experience
 - [ ] Gather feature requests
@@ -1268,11 +1268,11 @@ ai_context: |
 
 ---
 
-## PHASE 10: KNOWLEDGE & LESSONS LEARNED (Infer 91-100)
+## PHASE 10: KNOWLEDGE & LESSONS LEARNED (Cycle 91-100)
 
 **Purpose:** Document insights and plan future enhancements
 
-### Infer 91: Document Conversational Commerce Patterns
+### Cycle 91: Document Conversational Commerce Patterns
 
 - [ ] Write: `one/connections/conversational-commerce-patterns.md`
 - [ ] Successful conversation flows
@@ -1280,7 +1280,7 @@ ai_context: |
 - [ ] What makes good product descriptions for AI
 - [ ] Recommendation patterns that work
 
-### Infer 92: Create Lessons Learned Document
+### Cycle 92: Create Lessons Learned Document
 
 - [ ] What went well:
   - [ ] Claude API quality + speed
@@ -1295,7 +1295,7 @@ ai_context: |
   - [ ] More aggressive product metadata requirements
   - [ ] A/B test recommendation algorithms earlier
 
-### Infer 93: Create Competitive Analysis
+### Cycle 93: Create Competitive Analysis
 
 - [ ] How does our implementation compare to:
   - [ ] ChatGPT's Instant Checkout
@@ -1306,7 +1306,7 @@ ai_context: |
   - [ ] Open to all LLM platforms (not vendor-locked)
   - [ ] Revenue sharing model (incentive alignment)
 
-### Infer 94: Document Monetization Strategy
+### Cycle 94: Document Monetization Strategy
 
 - [ ] Revenue from conversational commerce:
   - [ ] Higher conversion rate (chat overcomes objections)
@@ -1317,7 +1317,7 @@ ai_context: |
   - [ ] 10% conversion → 100 purchases/day
   - [ ] Avg $20 per purchase → $2000/day
 
-### Infer 95: Create Product Roadmap for v2
+### Cycle 95: Create Product Roadmap for v2
 
 - [ ] Planned features:
   - [ ] Multi-language support (Spanish, French, Portuguese)
@@ -1329,7 +1329,7 @@ ai_context: |
   - [ ] Review + rating in conversation
   - [ ] Referral rewards ("Tell a friend?")
 
-### Infer 96: Create Platform Expansion Strategy
+### Cycle 96: Create Platform Expansion Strategy
 
 - [ ] Extend beyond padel:
   - [ ] Any sports equipment
@@ -1339,7 +1339,7 @@ ai_context: |
 - [ ] Per-category: Customize system prompt, product metadata, recommendations
 - [ ] Cross-category: Show related products (curious buyer)
 
-### Infer 97: Document AI Improvements
+### Cycle 97: Document AI Improvements
 
 - [ ] Fine-tuning opportunities:
   - [ ] Collect good conversations (with permission)
@@ -1351,7 +1351,7 @@ ai_context: |
   - [ ] Privacy + consent
   - [ ] How to anonymize safely?
 
-### Infer 98: Create Analytics Deep Dive
+### Cycle 98: Create Analytics Deep Dive
 
 - [ ] Metrics that matter:
   - [ ] Conversion rate: Chat → Purchase
@@ -1365,7 +1365,7 @@ ai_context: |
   - [ ] Creator adoption rate
   - [ ] Cost per acquisition
 
-### Infer 99: Document Integration Playbook
+### Cycle 99: Document Integration Playbook
 
 - [ ] How to integrate with new platforms:
   - [ ] Slack bot version (B2B)
@@ -1374,7 +1374,7 @@ ai_context: |
   - [ ] TikTok Shop integration
 - [ ] Template for quick onboarding
 
-### Infer 100: Final Reflection & Celebration
+### Cycle 100: Final Reflection & Celebration
 
 - [ ] Conversational Commerce Complete! ✅
 - [ ] What we shipped:

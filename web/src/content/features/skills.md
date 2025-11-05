@@ -90,7 +90,7 @@ Skills are specialized, reusable capabilities that extend platform functionality
 - XML parsing
 - YAML handling
 - Data validation
-- Schema inference
+- Schema cycle
 
 ### Video Skill
 - Frame extraction

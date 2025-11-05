@@ -18,8 +18,8 @@ levelColor: "text-pink-600"
 startDate: 2025-10-30
 targetEndDate: 2026-03-31
 progress: 0
-totalInferences: 100
-completedInferences: 0
+totalCycles: 100
+completedCycles: 0
 features:
   - "Email-like interface with conversation threads"
   - "Message search and filters"
@@ -134,20 +134,20 @@ Ready to build this project? Choose your path:
 
 ## Implementation Plan
 
-This project follows a **100-inference implementation plan** for systematic development.
+This project follows a **100-cycle implementation plan** for systematic development.
 
 **📋 Full Plan:** [Email Application v1.0.0](/plans/email)
 
-**Progress:** 0/100 inferences complete (0%)
+**Progress:** 0/100 cycles complete (0%)
 
 ### Plan Overview
 
-- **Infer 1-10**: Foundation & Architecture (data model, UI patterns)
-- **Infer 11-30**: React State & Components (email store, UI components)
-- **Infer 31-40**: Astro Pages (layouts, routes)
-- **Infer 41-50**: Mock Data & Integration (wire up components)
-- **Infer 51-70**: Polish & Optimization (animations, accessibility, performance)
-- **Timeline**: 70-75 inferences for complete implementation
+- **Cycle 1-10**: Foundation & Architecture (data model, UI patterns)
+- **Cycle 11-30**: React State & Components (email store, UI components)
+- **Cycle 31-40**: Astro Pages (layouts, routes)
+- **Cycle 41-50**: Mock Data & Integration (wire up components)
+- **Cycle 51-70**: Polish & Optimization (animations, accessibility, performance)
+- **Timeline**: 70-75 cycles for complete implementation
 
 ### Quick Start Commands
 
@@ -155,7 +155,7 @@ This project follows a **100-inference implementation plan** for systematic deve
 # 1. View the implementation plan
 /plan email
 
-# 2. Start with first inference
+# 2. Start with first cycle
 /infer 1
 
 # 3. Mark complete and advance
@@ -165,7 +165,7 @@ This project follows a **100-inference implementation plan** for systematic deve
 ## How to Use
 
 1. Visit `/mail` to see the live demo
-2. Review the [100-inference implementation plan](/plans/email)
-3. Follow the inference sequence step-by-step
-4. Track progress as you complete each inference
+2. Review the [100-cycle implementation plan](/plans/email)
+3. Follow the cycle sequence step-by-step
+4. Track progress as you complete each cycle
 5. Use real-time sync for instant updates across devices

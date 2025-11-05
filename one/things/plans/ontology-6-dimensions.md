@@ -295,14 +295,14 @@ The ONE Platform has been successfully upgraded from a "4-table ontology" (Thing
        users: number,
        storage: number,         // GB
        apiCalls: number,
-       inference: number,       // Monthly LLM calls
+       cycle: number,       // Monthly LLM calls
      },
 
      usage: {
        users: number,
        storage: number,
        apiCalls: number,
-       inference: number,
+       cycle: number,
      },
 
      billing: {
@@ -493,7 +493,7 @@ The ONE Platform has been successfully upgraded from a "4-table ontology" (Thing
    - 7 Token events
    - 5 Course events
    - 5 Analytics events
-   - 7 Inference events
+   - 7 Cycle events
    - 5 Blockchain events
    - 11 consolidated types with metadata variants
 
@@ -1033,9 +1033,9 @@ The ONE Platform has been successfully upgraded from a "4-table ontology" (Thing
        users: 1000,
        storage: 1000,
        apiCalls: 1000000,
-       inference: 1000000,
+       cycle: 1000000,
      },
-     usage: { users: 0, storage: 0, apiCalls: 0, inference: 0 },
+     usage: { users: 0, storage: 0, apiCalls: 0, cycle: 0 },
      billing: {},
      settings: {
        allowSignups: true,
@@ -1474,7 +1474,7 @@ const acmeCorp = await createOrganization({
     users: 100,
     storage: 1000, // GB
     apiCalls: 1000000, // per month
-    inference: 500000, // LLM calls per month
+    cycle: 500000, // LLM calls per month
   },
 });
 
@@ -1574,7 +1574,7 @@ const aiResponse = await generateResponse({
 
 4. **Platform Revenue:**
    - Org A pays $1000/month → $800 to org owner, $200 to platform
-   - Inference costs shared: org pays token costs + platform markup
+   - Cycle costs shared: org pays token costs + platform markup
    - Clear revenue attribution via events
 
 ## Security & Compliance

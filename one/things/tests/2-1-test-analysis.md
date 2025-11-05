@@ -114,7 +114,7 @@ ai_context: |
 
 5. **Type Safety** (Type-only)
    - Zero TypeScript errors
-   - Full type inference
+   - Full type cycle
    - No `any` types (except properties)
    - Effect.ts integration
 

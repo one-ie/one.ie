@@ -38,7 +38,7 @@ structure:
         - "one/knowledge/ontology-files.yaml": This file
         - "one/knowledge/rules.md": Golden rules for development
         - "one/knowledge/architecture.md": System architecture
-        - "one/things/todo.md": 100-inference release plan
+        - "one/things/todo.md": 100-cycle release plan
         - "one/things/structure.md": Codebase organization guide
 
     3_application_layer:
@@ -131,7 +131,7 @@ dimensions:
       - connection_formed: Relationship established
       - course_completed: User finished course
       - token_minted: New tokens created
-      - inference_executed: AI decision made
+      - cycle_executed: AI decision made
 
   knowledge:
     description: "Labels, embeddings, semantic search (RAG)"
@@ -288,7 +288,7 @@ critical_files:
     strategy:
       - "one/things/strategy.md": 8 core features, revenue model
       - "one-inc/groups/strategy.md": Organization strategy
-      - "one/things/todo.md": 100-inference release plan
+      - "one/things/todo.md": 100-cycle release plan
 
     monitoring:
       - "one/events/": Deployment logs and event history

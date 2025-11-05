@@ -95,11 +95,11 @@ The TODO documentation system has grown organically to support 25 files managing
 - **Effort:** 1 hour
 
 ### Issue 3: Inconsistent Planning Paradigms
-- **Pattern A:** 100-inference features (10 phases, standard)
-- **Pattern B:** 4-phase strategies (400 inferences, broader scope)
+- **Pattern A:** 100-cycle features (10 phases, standard)
+- **Pattern B:** 4-phase strategies (400 cycles, broader scope)
 - **Pattern C:** Freeform structures (no standard format)
 - **Problem:** Can't coordinate specialists across different paradigms
-- **Fix:** Standardize on 100-inference for all features
+- **Fix:** Standardize on 100-cycle for all features
 - **Effort:** 2-3 hours per non-standard file
 
 ### Issue 4: Patterns in Wrong Dimension
@@ -273,7 +273,7 @@ one/knowledge/ontology/
 
 ### File Type Breakdown
 
-**Feature Plans (100-inference):** 12 files
+**Feature Plans (100-cycle):** 12 files
 - Well-structured, follow standard pattern
 - Some duplication, some missing dependencies
 - Ready for specialist assignment
@@ -321,7 +321,7 @@ one/knowledge/ontology/
 When complete, the system should have:
 - [ ] No duplicate files
 - [ ] Clear taxonomy (features vs. strategies vs. operations vs. infrastructure)
-- [ ] All features follow 100-inference pattern
+- [ ] All features follow 100-cycle pattern
 - [ ] All files have dependency matrix
 - [ ] All files map to 6-dimension ontology
 - [ ] Patterns in knowledge/, protocols in connections/

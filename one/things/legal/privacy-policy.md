@@ -234,7 +234,7 @@ Relationships are retained as long as both entities exist and the relationship i
 
 **AI & Agent Events:**
 
-- clone_created, agent_executed, inference_request, inference_completed
+- clone_created, agent_executed, cycle_request, cycle_completed
 - Purpose: AI operation monitoring, usage billing, debugging
 - Retention: 30 days (execution logs), 1 year (creation records)
 
@@ -340,7 +340,7 @@ We use the following service providers to operate the Platform:
 
 ### 3.2 AI Service Providers
 
-**OpenAI (AI Inference)**
+**OpenAI (AI Cycle)**
 
 - Service: GPT models for AI agents and content generation
 - Data Shared: User prompts, entity data for AI processing

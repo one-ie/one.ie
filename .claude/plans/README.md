@@ -172,24 +172,24 @@ TOTAL: 900 inferences over 8 weeks with 4 specialist agents working in parallel
 ```
 ┌─ todo-x402.md (DONE - payments foundation)
 │
-├─ todo-onboard.md (Infer 1-100, Wave 1)
+├─ todo-onboard.md (Cycle 1-100, Wave 1)
 │  ├─ DEPENDENCY FOR: agents, skills, sell, ecommerce, api, features
 │  └─ KEY OUTCOME: Users + organizations created
 │
 ├─ WAVE 2 (start when onboard Phase 2 done)
-│  ├─ todo-agents.md (Infer 1-100)
-│  ├─ todo-skills.md (Infer 1-100)
-│  ├─ todo-sell.md (Infer 1-100)
+│  ├─ todo-agents.md (Cycle 1-100)
+│  ├─ todo-skills.md (Cycle 1-100)
+│  ├─ todo-sell.md (Cycle 1-100)
 │  └─ KEY OUTCOME: Agents deployable, skills verifiable, GitHub repos sellable
 │
 ├─ WAVE 3 (start when Wave 2 done)
-│  ├─ todo-ecommerce.md (Infer 1-100)
-│  ├─ todo-api.md (Infer 1-100)
-│  ├─ todo-features.md (Infer 1-100)
+│  ├─ todo-ecommerce.md (Cycle 1-100)
+│  ├─ todo-api.md (Cycle 1-100)
+│  ├─ todo-features.md (Cycle 1-100)
 │  └─ KEY OUTCOME: Products sellable, APIs public, analytics live
 │
 └─ WAVE 4 (start when Wave 3 done)
-   └─ todo-one-ie.md (Infer 1-100)
+   └─ todo-one-ie.md (Cycle 1-100)
       └─ KEY OUTCOME: Public site live, v2.0.0 released
 ```
 
@@ -225,9 +225,9 @@ v2.0.0 - Public Launch (Week 8)
 ### Week 1-2: Wave 1 Execution
 
 ```
-agent-backend:  [todo-onboard.md ████████████████] Infer 1-100
-agent-frontend: [todo-onboard.md ████████████████] Infer 1-100
-agent-designer: [todo-onboard.md ████░░░░░░░░░░░░] Infer 1-20
+agent-backend:  [todo-onboard.md ████████████████] Cycle 1-100
+agent-frontend: [todo-onboard.md ████████████████] Cycle 1-100
+agent-designer: [todo-onboard.md ████░░░░░░░░░░░░] Cycle 1-20
 
 CHECKPOINT: Users can register, create orgs, connect wallets
 ```
@@ -235,9 +235,9 @@ CHECKPOINT: Users can register, create orgs, connect wallets
 ### Week 3-4: Wave 2 Execution (3 PARALLEL TRACKS)
 
 ```
-agent-builder:    [todo-agents.md  ████████████████] Infer 1-100
-agent-builder:    [todo-skills.md  ████████████████] Infer 1-100 (parallel)
-agent-integrator: [todo-sell.md    ████████████████] Infer 1-100 (parallel)
+agent-builder:    [todo-agents.md  ████████████████] Cycle 1-100
+agent-builder:    [todo-skills.md  ████████████████] Cycle 1-100 (parallel)
+agent-integrator: [todo-sell.md    ████████████████] Cycle 1-100 (parallel)
 
 CHECKPOINT: Agents deployable, skills marketplace live, GitHub access working
 ```
@@ -245,9 +245,9 @@ CHECKPOINT: Agents deployable, skills marketplace live, GitHub access working
 ### Week 5-6: Wave 3 Execution (3 PARALLEL TRACKS)
 
 ```
-agent-frontend:   [todo-ecommerce.md ████████████████] Infer 1-100
-agent-integrator: [todo-api.md       ████████████████] Infer 1-100 (parallel)
-agent-frontend:   [todo-features.md  ████████████████] Infer 1-100 (parallel)
+agent-frontend:   [todo-ecommerce.md ████████████████] Cycle 1-100
+agent-integrator: [todo-api.md       ████████████████] Cycle 1-100 (parallel)
+agent-frontend:   [todo-features.md  ████████████████] Cycle 1-100 (parallel)
 
 CHECKPOINT: E-commerce checkout working, API documented, analytics dashboard live
 ```
@@ -255,9 +255,9 @@ CHECKPOINT: E-commerce checkout working, API documented, analytics dashboard liv
 ### Week 7-8: Wave 4 Execution
 
 ```
-agent-designer: [todo-one-ie.md ████████████████] Infer 1-100
-agent-frontend: [todo-one-ie.md ████████████████] Infer 1-100 (parallel)
-agent-ops:      [todo-one-ie.md ████████████████] Infer 81-100
+agent-designer: [todo-one-ie.md ████████████████] Cycle 1-100
+agent-frontend: [todo-one-ie.md ████████████████] Cycle 1-100 (parallel)
+agent-ops:      [todo-one-ie.md ████████████████] Cycle 81-100
 
 CHECKPOINT: Public site live, v2.0.0 released
 ```
@@ -359,8 +359,8 @@ The plan succeeds when:
 
 ### Week 1 (Wave 1 Execution Begins)
 1. Wave 1 kickoff meeting
-2. agent-backend starts todo-onboard.md Infer 1-10
-3. agent-frontend starts todo-onboard.md Infer 1-10
+2. agent-backend starts todo-onboard.md Cycle 1-10
+3. agent-frontend starts todo-onboard.md Cycle 1-10
 4. Daily standups begin
 5. Daily code reviews
 

@@ -2,7 +2,7 @@
 title: Quick Start Ontology
 dimension: events
 category: QUICK-START-ONTOLOGY.md
-tags: 6-dimensions, backend, connections, events, frontend, groups, inference, knowledge, ontology
+tags: 6-dimensions, backend, connections, events, frontend, groups, cycle, knowledge, ontology
 related_dimensions: connections, groups, knowledge, people, things
 scope: global
 created: 2025-11-03
@@ -48,7 +48,7 @@ VITE_FEATURE_CONNECTIONS=true
 VITE_FEATURE_EVENTS=true
 
 # OR Full platform
-VITE_FEATURES='{"auth":true,"groups":true,"permissions":true,"realtime":true,"search":true,"knowledge":true,"connections":true,"events":true,"inference":true,"payments":true,"marketplace":true,"community":true}'
+VITE_FEATURES='{"auth":true,"groups":true,"permissions":true,"realtime":true,"search":true,"knowledge":true,"connections":true,"events":true,"cycle":true,"payments":true,"marketplace":true,"community":true}'
 ```
 
 ## 3. Wrap App with Provider
@@ -303,7 +303,7 @@ Multi-Tenant (SaaS)
 
 Full Featured
 ├─ Everything enabled
-├─ AI/inference
+├─ AI/cycle
 ├─ Payments/marketplace
 ├─ Blockchain support
 └─ Enterprise platform

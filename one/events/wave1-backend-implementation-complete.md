@@ -2,7 +2,7 @@
 title: Wave1 Backend Implementation Complete
 dimension: events
 category: wave1-backend-implementation-complete.md
-tags: agent, ai, backend, convex, frontend, inference, ontology
+tags: agent, ai, backend, convex, frontend, cycle, ontology
 related_dimensions: connections, groups, people, things
 scope: global
 created: 2025-11-03
@@ -19,11 +19,11 @@ ai_context: |
 # Wave 1 Creator Onboarding - Backend Implementation Complete
 
 **Status:** ✅ COMPLETE
-**Inferences:** 11-30 (20 inferences)
+**Cycles:** 11-30 (20 cycles)
 **Duration:** 10-12 hours (estimated)
 **Date Completed:** 2025-11-01
 **Specialist:** Backend Specialist Agent
-**Next Phase:** Infer 31-50 (Frontend Development)
+**Next Phase:** Cycle 31-50 (Frontend Development)
 
 ---
 
@@ -43,7 +43,7 @@ Completed full backend infrastructure for Wave 1 Creator Onboarding (registratio
 
 ## Implementation Breakdown
 
-### Phase 1: Schema Design (Infer 11-16)
+### Phase 1: Schema Design (Cycle 11-16)
 
 **File:** `/Users/toc/Server/ONE/backend/convex/schema.ts`
 
@@ -92,7 +92,7 @@ FILTER INDEXES:
 
 ---
 
-### Phase 2: Business Logic Layer (Infer 17)
+### Phase 2: Business Logic Layer (Cycle 17)
 
 **File:** `/Users/toc/Server/ONE/backend/convex/services/onboardingService.ts`
 
@@ -129,11 +129,11 @@ type OnboardingError =
 
 ---
 
-### Phase 3: Mutations (Infer 18-25)
+### Phase 3: Mutations (Cycle 18-25)
 
 #### File 1: `/Users/toc/Server/ONE/backend/convex/mutations/auth.ts`
 
-**Infer 18: signup** ✅
+**Cycle 18: signup** ✅
 - Creates user entity with temp workspace
 - Generates 6-digit verification code
 - Sets onboarding step to "email_verification"
@@ -141,7 +141,7 @@ type OnboardingError =
 - Email: Welcome email template ready
 - Validation: Email format, password strength, terms agreement
 
-**Infer 19: verifyEmail** ✅
+**Cycle 19: verifyEmail** ✅
 - Validates code format (6 digits)
 - Checks expiry (15 minutes)
 - Rate limits: 5 attempts per 15 minutes
@@ -150,7 +150,7 @@ type OnboardingError =
 - Advances step to "profile"
 - Returns: userId, verified status
 
-**Infer 20: updateProfile** ✅
+**Cycle 20: updateProfile** ✅
 - Updates: username, bio, avatar, niche, expertise, interests
 - Validates: username uniqueness, character limits
 - Creates knowledge labels for niche items
@@ -165,7 +165,7 @@ type OnboardingError =
 
 #### File 2: `/Users/toc/Server/ONE/backend/convex/mutations/workspace.ts`
 
-**Infer 21: createWorkspace** ✅
+**Cycle 21: createWorkspace** ✅
 - Creates organization group (replaces temp group)
 - Validates: workspace name, slug uniqueness
 - Creates workspace entity (thing type: organization)
@@ -175,7 +175,7 @@ type OnboardingError =
 - Advances step to "team"
 - Returns: workspaceId, workspaceEntityId, slug
 
-**Infer 22: inviteTeamMember** ✅
+**Cycle 22: inviteTeamMember** ✅
 - Validates: User authorization (workspace owner only)
 - Checks: Team size limits, not already member
 - Generates unique invitation token
@@ -184,7 +184,7 @@ type OnboardingError =
 - Email: Team invite template ready
 - Returns: invitationId, token, expiresAt
 
-**Infer 23: acceptInvitation** ✅
+**Cycle 23: acceptInvitation** ✅
 - Finds token by unique identifier
 - Validates: expiry, status (pending only)
 - Creates or updates user in workspace
@@ -192,7 +192,7 @@ type OnboardingError =
 - Marks invitation as accepted
 - Returns: userId, workspaceId, role, message
 
-**Infer 24: connectWallet** ✅
+**Cycle 24: connectWallet** ✅
 - Validates: Ethereum address format (0x + 40 hex)
 - Checks: No duplicate wallet ownership
 - Normalizes: address to lowercase
@@ -202,7 +202,7 @@ type OnboardingError =
 - Advances step to "skills"
 - Returns: walletId, walletAddress, verified status
 
-**Infer 25: addSkills** ✅
+**Cycle 25: addSkills** ✅
 - Validates: 1-50 skills, non-empty
 - Creates knowledge labels for each skill
 - Links via thingKnowledge with role="label"
@@ -227,7 +227,7 @@ type OnboardingError =
 
 ---
 
-### Phase 4: Queries (Infer 26)
+### Phase 4: Queries (Cycle 26)
 
 **File:** `/Users/toc/Server/ONE/backend/convex/queries/onboardingQueries.ts`
 
@@ -258,7 +258,7 @@ type OnboardingError =
 
 ---
 
-### Phase 5: Email Templates (Infer 27)
+### Phase 5: Email Templates (Cycle 27)
 
 **Files:** `/Users/toc/Server/ONE/backend/convex/emails/`
 
@@ -281,7 +281,7 @@ type OnboardingError =
 
 ---
 
-### Phase 6: Verification System (Infer 28)
+### Phase 6: Verification System (Cycle 28)
 
 **File:** `/Users/toc/Server/ONE/backend/convex/lib/verification.ts`
 
@@ -320,7 +320,7 @@ type OnboardingError =
 
 ---
 
-### Phase 7: Rate Limiting (Infer 29)
+### Phase 7: Rate Limiting (Cycle 29)
 
 **File:** `/Users/toc/Server/ONE/backend/convex/lib/rateLimiter.ts`
 
@@ -356,7 +356,7 @@ if (!result.allowed) {
 
 ---
 
-### Phase 8: Schema Validation (Infer 30)
+### Phase 8: Schema Validation (Cycle 30)
 
 **File:** `/Users/toc/Server/ONE/backend/convex/WAVE1_BACKEND_VALIDATION.md`
 
@@ -504,7 +504,7 @@ one/events/
 
 ## Integration Points
 
-### Ready for Frontend (Infer 31-50)
+### Ready for Frontend (Cycle 31-50)
 
 ```
 Frontend can call:
@@ -539,7 +539,7 @@ Email integration ready:
 
 ## Known Limitations & Future Work
 
-### Short-term (Phase 2, Infer 31-70)
+### Short-term (Phase 2, Cycle 31-70)
 
 - [ ] Wallet signature verification (currently marked "unverified")
 - [ ] Avatar upload handler
@@ -547,7 +547,7 @@ Email integration ready:
 - [ ] Resend email integration
 - [ ] OAuth (Google, GitHub, Discord)
 
-### Medium-term (Phase 3, Infer 71-100)
+### Medium-term (Phase 3, Cycle 71-100)
 
 - [ ] Add "member_of" connection type to ontology
 - [ ] Team roles inheritance and permissions
@@ -643,18 +643,18 @@ Error cases:
 
 ### Ready for Phase 2 ✅
 
-**Frontend Team (Infer 31-50)** can start immediately:
+**Frontend Team (Cycle 31-50)** can start immediately:
 - All APIs ready
 - Response formats defined
 - Error handling clear
 - No blocking dependencies
 
-**Quality Team (Infer 81-90)** can write tests:
+**Quality Team (Cycle 81-90)** can write tests:
 - All code testable
 - Error cases documented
 - Integration points clear
 
-**Operations Team (Infer 51-70)** can configure:
+**Operations Team (Cycle 51-70)** can configure:
 - Email templates ready
 - Rate limiting rules set
 - Event logging active
@@ -665,7 +665,7 @@ Error cases:
 
 | Metric | Value |
 |--------|-------|
-| Total Inferences | 20 (Infer 11-30) |
+| Total Cycles | 20 (Cycle 11-30) |
 | Lines of Code | 2,500+ |
 | Mutations Created | 8 |
 | Queries Created | 13 |
@@ -695,4 +695,4 @@ The implementation provides:
 
 All code follows Convex patterns, includes proper validation, maintains security best practices, and is ready for immediate frontend integration.
 
-**Status:** Ready to proceed to Infer 31-50 (Frontend Development)
+**Status:** Ready to proceed to Cycle 31-50 (Frontend Development)

@@ -111,7 +111,7 @@ Use Effect-TS for:
 - **Error handling:** Typed errors per operation
 - **Dependency injection:** Swap providers without code changes
 - **Async operations:** Real-time subscriptions via Convex
-- **Type safety:** Full TypeScript inference
+- **Type safety:** Full TypeScript cycle
 
 ```typescript
 // web/src/lib/ontology/effects.ts
@@ -161,7 +161,7 @@ if (!thing) {
 
 ## Implementation Strategy
 
-### Phase 1: Foundation (Infer 1-10)
+### Phase 1: Foundation (Cycle 1-10)
 
 **Objective:** Create the Effect-TS ontology layer
 
@@ -188,7 +188,7 @@ if (!thing) {
        └── http.ts
    ```
 
-### Phase 2: Provider Implementations (Infer 11-20)
+### Phase 2: Provider Implementations (Cycle 11-20)
 
 **Objective:** Implement each provider following the unified interface
 
@@ -216,7 +216,7 @@ if (!thing) {
    - Chain multiple providers (fallback pattern)
    - Priority-based selection
 
-### Phase 3: Astro Integration (Infer 21-30)
+### Phase 3: Astro Integration (Cycle 21-30)
 
 **Objective:** Connect Astro content layer to providers
 
@@ -236,7 +236,7 @@ if (!thing) {
    - Incremental static regeneration (ISR)
    - Fallback for dynamic content
 
-### Phase 4: Feature-Specific Integration (Infer 31-40)
+### Phase 4: Feature-Specific Integration (Cycle 31-40)
 
 **Objective:** Integrate 6 ontology dimensions with features
 
@@ -314,7 +314,7 @@ export const search = Effect.fn(async (query: string, ctx: OntologyContext) => {
 });
 ```
 
-### Phase 5: Optional Features (Infer 41-50)
+### Phase 5: Optional Features (Cycle 41-50)
 
 **Objective:** Make auth, groups, permissions optional
 
@@ -355,7 +355,7 @@ if (!features.auth) {
 <LoginForm />
 ```
 
-### Phase 6: API Endpoints (Infer 51-60)
+### Phase 6: API Endpoints (Cycle 51-60)
 
 **Objective:** Create API routes following ontology structure
 
@@ -384,7 +384,7 @@ export const GET: APIRoute = async ({ params }) => {
 };
 ```
 
-### Phase 7: Testing (Infer 61-70)
+### Phase 7: Testing (Cycle 61-70)
 
 **Objective:** Verify all providers work correctly
 
@@ -403,7 +403,7 @@ export const GET: APIRoute = async ({ params }) => {
    - Dynamic routes
    - API endpoints
 
-### Phase 8: Documentation (Infer 71-80)
+### Phase 8: Documentation (Cycle 71-80)
 
 **Objective:** Document architecture and usage
 

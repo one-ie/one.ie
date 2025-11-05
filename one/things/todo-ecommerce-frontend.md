@@ -3,7 +3,7 @@ title: Todo Ecommerce Frontend
 dimension: things
 primary_dimension: things
 category: todo-ecommerce-frontend.md
-tags: ai, backend, frontend, inference, ui
+tags: ai, backend, frontend, cycle, ui
 related_dimensions: connections, events, groups, knowledge, people, things
 scope: global
 created: 2025-11-03
@@ -22,17 +22,17 @@ ai_context: |
 **Focus:** Frontend-only ecommerce storefront with Stripe checkout, product catalog, shopping cart
 **Type:** Complete frontend implementation (Astro + React 19 + Tailwind v4)
 **Integration:** Stripe for payment processing
-**Process:** `Infer 1-100 inference sequence`
-**Timeline:** 12-16 inferences per specialist per day
+**Process:** `Cycle 1-100 cycle sequence`
+**Timeline:** 12-16 cycles per specialist per day
 **Target:** Fully functional product storefront ready for integration with backend services
 
 ---
 
-## PHASE 1: FOUNDATION & DESIGN (Infer 1-10)
+## PHASE 1: FOUNDATION & DESIGN (Cycle 1-10)
 
 **Purpose:** Define storefront requirements, product categories, user flows, design system
 
-### Infer 1: Define Storefront Structure
+### Cycle 1: Define Storefront Structure
 
 - [ ] **Product Catalog:**
   - [ ] Featured products on homepage
@@ -57,7 +57,7 @@ ai_context: |
   - [ ] Saved addresses
   - [ ] Account settings
 
-### Infer 2: Map Storefront to 6-Dimension Ontology
+### Cycle 2: Map Storefront to 6-Dimension Ontology
 
 - [ ] **Groups:** Storefront's business group (e.g., "Acme Store")
 - [ ] **People:** Customer (buyer), admin (store manager)
@@ -74,7 +74,7 @@ ai_context: |
   - [ ] cart_abandoned, checkout_started, order_placed, payment_completed
 - [ ] **Knowledge:** product categories, price tiers, inventory levels
 
-### Infer 3: Design Product Catalog Structure
+### Cycle 3: Design Product Catalog Structure
 
 - [ ] **Product Data Model:**
   - [ ] ID, name, description, price, compareAtPrice (original)
@@ -96,7 +96,7 @@ ai_context: |
   - [ ] Product description + features
   - [ ] Related/recommended products
 
-### Infer 4: Design Shopping Cart Experience
+### Cycle 4: Design Shopping Cart Experience
 
 - [ ] **Cart Page Shows:**
   - [ ] Product list with images
@@ -115,7 +115,7 @@ ai_context: |
   - [ ] Save cart (localStorage for guests, database for users)
   - [ ] Display item count in header
 
-### Infer 5: Design Checkout Flow
+### Cycle 5: Design Checkout Flow
 
 - [ ] **Step 1: Cart Review**
   - [ ] Show all items with quantities
@@ -154,7 +154,7 @@ ai_context: |
   - [ ] Continue shopping button
   - [ ] Track order link (future)
 
-### Infer 6: Define Responsive Design Strategy
+### Cycle 6: Define Responsive Design Strategy
 
 - [ ] **Mobile-first (80% of users):**
   - [ ] Single column layout
@@ -172,7 +172,7 @@ ai_context: |
   - [ ] Hover effects on cards
   - [ ] Keyboard navigation support
 
-### Infer 7: Plan Content Strategy
+### Cycle 7: Plan Content Strategy
 
 - [ ] **Home Page:**
   - [ ] Hero banner with featured products/sale
@@ -197,7 +197,7 @@ ai_context: |
   - [ ] Privacy policy
   - [ ] Terms of service
 
-### Infer 8: Design Visual System
+### Cycle 8: Design Visual System
 
 - [ ] **Color Palette:**
   - [ ] Primary: Brand color for CTAs, active states
@@ -217,7 +217,7 @@ ai_context: |
   - [ ] Badges: Category, discount, new
   - [ ] Stars: 5-star rating display
 
-### Infer 9: Plan Performance & Analytics
+### Cycle 9: Plan Performance & Analytics
 
 - [ ] **Performance Targets:**
   - [ ] Lighthouse: 90+ score
@@ -236,7 +236,7 @@ ai_context: |
   - [ ] Google Analytics (or Plausible for privacy)
   - [ ] Email service for order confirmations
 
-### Infer 10: Define Success Metrics
+### Cycle 10: Define Success Metrics
 
 - [ ] Frontend complete when:
   - [ ] Home page displays beautifully on all devices
@@ -253,11 +253,11 @@ ai_context: |
 
 ---
 
-## PHASE 2: ASTRO PAGES & LAYOUTS (Infer 11-20)
+## PHASE 2: ASTRO PAGES & LAYOUTS (Cycle 11-20)
 
 **Purpose:** Create page structure and Astro components for static content
 
-### Infer 11: Create Layout Components
+### Cycle 11: Create Layout Components
 
 - [ ] **MainLayout.astro**
   - [ ] Header with logo, search, cart icon, account menu
@@ -271,7 +271,7 @@ ai_context: |
   - [ ] Form content area
   - [ ] Order summary sidebar (desktop) / collapsed (mobile)
 
-### Infer 12: Create Home Page (index.astro)
+### Cycle 12: Create Home Page (index.astro)
 
 - [ ] **Hero Section:**
   - [ ] Large background image
@@ -303,7 +303,7 @@ ai_context: |
   - [ ] "Discover More" heading
   - [ ] Browse all button, View sale button
 
-### Infer 13: Create Products Listing Page (products/index.astro)
+### Cycle 13: Create Products Listing Page (products/index.astro)
 
 - [ ] **Header:**
   - [ ] Page title "All Products"
@@ -328,7 +328,7 @@ ai_context: |
   - [ ] Filter button (opens drawer)
   - [ ] Filter drawer with same options
 
-### Infer 14: Create Product Detail Page (products/[slug].astro)
+### Cycle 14: Create Product Detail Page (products/[slug].astro)
 
 - [ ] **Left Column (60%):**
   - [ ] ImageGallery component
@@ -367,7 +367,7 @@ ai_context: |
   - [ ] **Recently Viewed (if user has history):**
     - [ ] 4-6 recently viewed products
 
-### Infer 15: Create Shopping Cart Page (cart.astro)
+### Cycle 15: Create Shopping Cart Page (cart.astro)
 
 - [ ] **Page Title & Actions:**
   - [ ] "Shopping Cart" heading
@@ -398,7 +398,7 @@ ai_context: |
   - [ ] Featured products grid
   - [ ] "Continue Shopping" button
 
-### Infer 16: Create Checkout Pages (checkout/[step].astro)
+### Cycle 16: Create Checkout Pages (checkout/[step].astro)
 
 - [ ] **Shared Checkout Layout:**
   - [ ] Progress indicator (1 2 3 4 5 6 7)
@@ -458,7 +458,7 @@ ai_context: |
   - [ ] "Continue Shopping" button
   - [ ] "Download Invoice" button
 
-### Infer 17: Create Account Pages (account/[page].astro)
+### Cycle 17: Create Account Pages (account/[page].astro)
 
 - [ ] **Orders Page (account/orders.astro)**
   - [ ] List of all orders (paginated, 10 per page)
@@ -482,7 +482,7 @@ ai_context: |
   - [ ] Notification preferences
   - [ ] Wishlist items
 
-### Infer 18: Create Static Pages
+### Cycle 18: Create Static Pages
 
 - [ ] **About (about.astro)**
   - [ ] Company story
@@ -510,7 +510,7 @@ ai_context: |
 - [ ] **Terms of Service (terms.astro)**
   - [ ] Legal text
 
-### Infer 19: Create Error Pages
+### Cycle 19: Create Error Pages
 
 - [ ] **404 Not Found (404.astro)**
   - [ ] Friendly message
@@ -521,7 +521,7 @@ ai_context: |
   - [ ] Suggest actions
   - [ ] Support email
 
-### Infer 20: Create Email Templates (Astro)
+### Cycle 20: Create Email Templates (Astro)
 
 - [ ] **Order Confirmation Email:**
   - [ ] Order number, date
@@ -543,11 +543,11 @@ ai_context: |
 
 ---
 
-## PHASE 3: REACT COMPONENTS (Infer 21-30)
+## PHASE 3: REACT COMPONENTS (Cycle 21-30)
 
 **Purpose:** Build interactive React components for client-side functionality
 
-### Infer 21: Create ProductCard Component
+### Cycle 21: Create ProductCard Component
 
 - [ ] **Props:**
   - [ ] product (id, image, name, price, rating, category)
@@ -565,7 +565,7 @@ ai_context: |
   - [ ] Click add: Trigger toast notification
   - [ ] Click quick view: Open modal
 
-### Infer 22: Create ProductQuickView Modal
+### Cycle 22: Create ProductQuickView Modal
 
 - [ ] **Content:**
   - [ ] Main product image (large)
@@ -579,7 +579,7 @@ ai_context: |
   - [ ] Escape key closes modal
   - [ ] Smooth open/close animation
 
-### Infer 23: Create ImageGallery Component
+### Cycle 23: Create ImageGallery Component
 
 - [ ] **Features:**
   - [ ] Main image display (large)
@@ -593,7 +593,7 @@ ai_context: |
   - [ ] images (array of image URLs)
   - [ ] alt (product name for alt text)
 
-### Infer 24: Create SizeSelector Component
+### Cycle 24: Create SizeSelector Component
 
 - [ ] **Display:**
   - [ ] Size options as buttons or chips
@@ -603,7 +603,7 @@ ai_context: |
   - [ ] sizes (array with availability)
   - [ ] onSelect (callback)
 
-### Infer 25: Create ColorSelector Component
+### Cycle 25: Create ColorSelector Component
 
 - [ ] **Display:**
   - [ ] Color swatches as circles
@@ -613,7 +613,7 @@ ai_context: |
   - [ ] colors (array with color codes/names)
   - [ ] onSelect (callback)
 
-### Infer 26: Create QuantityPicker Component
+### Cycle 26: Create QuantityPicker Component
 
 - [ ] **Display:**
   - [ ] Minus button, number input, plus button
@@ -622,7 +622,7 @@ ai_context: |
   - [ ] maxQuantity (inventory count)
   - [ ] onChange (callback)
 
-### Infer 27: Create CartIcon Component
+### Cycle 27: Create CartIcon Component
 
 - [ ] **Display:**
   - [ ] Shopping cart icon
@@ -632,7 +632,7 @@ ai_context: |
   - [ ] Click to go to cart page
   - [ ] Show tooltip with item count on hover
 
-### Infer 28: Create AddToCartButton Component
+### Cycle 28: Create AddToCartButton Component
 
 - [ ] **Display:**
   - [ ] "Add to Cart" text
@@ -643,7 +643,7 @@ ai_context: |
   - [ ] isLoading (boolean)
   - [ ] className (for styling)
 
-### Infer 29: Create ProductFilter Component
+### Cycle 29: Create ProductFilter Component
 
 - [ ] **Sections:**
   - [ ] Category filter (checkboxes)
@@ -655,7 +655,7 @@ ai_context: |
   - [ ] Mobile: Collapsible/drawer
   - [ ] Desktop: Sidebar
 
-### Infer 30: Create SearchBar Component
+### Cycle 30: Create SearchBar Component
 
 - [ ] **Features:**
   - [ ] Text input
@@ -669,11 +669,11 @@ ai_context: |
 
 ---
 
-## PHASE 4: STRIPE INTEGRATION (Infer 31-40)
+## PHASE 4: STRIPE INTEGRATION (Cycle 31-40)
 
 **Purpose:** Integrate Stripe payment processing for checkout
 
-### Infer 31: Set Up Stripe Environment
+### Cycle 31: Set Up Stripe Environment
 
 - [ ] **Get Stripe Keys:**
   - [ ] Create Stripe account
@@ -686,7 +686,7 @@ ai_context: |
   - [ ] `bun add @stripe/stripe-js`
   - [ ] `bun add @stripe/react-stripe-js`
 
-### Infer 32: Create StripePaymentForm Component
+### Cycle 32: Create StripePaymentForm Component
 
 - [ ] **Structure:**
   - [ ] Elements provider (wraps form)
@@ -700,7 +700,7 @@ ai_context: |
   - [ ] onSubmit (callback with payment method)
   - [ ] clientSecret (from backend payment intent)
 
-### Infer 33: Create StripeElements Configuration
+### Cycle 33: Create StripeElements Configuration
 
 - [ ] **Initialize Stripe:**
   - [ ] Load Stripe.js with public key
@@ -712,7 +712,7 @@ ai_context: |
   - [ ] Focus state styling
   - [ ] Error state styling
 
-### Infer 34: Create Payment Intent API Handler
+### Cycle 34: Create Payment Intent API Handler
 
 - [ ] **Frontend function:**
   - [ ] Call backend to create payment intent
@@ -724,7 +724,7 @@ ai_context: |
   - [ ] Create Stripe payment intent
   - [ ] Return clientSecret
 
-### Infer 35: Create Payment Confirmation Handler
+### Cycle 35: Create Payment Confirmation Handler
 
 - [ ] **After form submit:**
   - [ ] Use Stripe.confirmCardPayment()
@@ -733,7 +733,7 @@ ai_context: |
   - [ ] Handle error (show error message)
   - [ ] Handle 3D Secure redirect (if needed)
 
-### Infer 36: Create Order Submission Flow
+### Cycle 36: Create Order Submission Flow
 
 - [ ] **Sequence:**
   1. User completes checkout form
@@ -748,7 +748,7 @@ ai_context: |
   - [ ] Declined card → suggest retry
   - [ ] Network error → retry option
 
-### Infer 37: Create Cart State Management (Zustand)
+### Cycle 37: Create Cart State Management (Zustand)
 
 - [ ] **Store structure:**
   - [ ] items (array)
@@ -763,7 +763,7 @@ ai_context: |
   - [ ] Load from localStorage on init
   - [ ] Sync across tabs
 
-### Infer 38: Create Order State Management
+### Cycle 38: Create Order State Management
 
 - [ ] **Store structure:**
   - [ ] currentOrder (object)
@@ -775,7 +775,7 @@ ai_context: |
   - [ ] Order ID, date, items, total, status
   - [ ] Shipping address, tracking number
 
-### Infer 39: Create Toast/Notification System
+### Cycle 39: Create Toast/Notification System
 
 - [ ] **Types:**
   - [ ] Success (green)
@@ -793,7 +793,7 @@ ai_context: |
   - [ ] Payment error message
   - [ ] Form validation error
 
-### Infer 40: Create Loading States
+### Cycle 40: Create Loading States
 
 - [ ] **Spinners:**
   - [ ] Full page loader (checkout)
@@ -806,11 +806,11 @@ ai_context: |
 
 ---
 
-## PHASE 5: MOBILE OPTIMIZATION (Infer 41-50)
+## PHASE 5: MOBILE OPTIMIZATION (Cycle 41-50)
 
 **Purpose:** Ensure flawless mobile experience (80% of users)
 
-### Infer 41: Test Mobile Navigation
+### Cycle 41: Test Mobile Navigation
 
 - [ ] **Header changes:**
   - [ ] Logo (smaller on mobile)
@@ -823,7 +823,7 @@ ai_context: |
   - [ ] Settings link
   - [ ] Logout link
 
-### Infer 42: Optimize Forms for Mobile
+### Cycle 42: Optimize Forms for Mobile
 
 - [ ] **Checkout form changes:**
   - [ ] Full-width inputs
@@ -834,7 +834,7 @@ ai_context: |
   - [ ] Mobile keyboard types (email, tel, number)
   - [ ] One field per line (no side-by-side on small screens)
 
-### Infer 43: Optimize Product Pages for Mobile
+### Cycle 43: Optimize Product Pages for Mobile
 
 - [ ] **Image gallery:**
   - [ ] Swipe to change images
@@ -848,7 +848,7 @@ ai_context: |
   - [ ] Sticky "Add to Cart" button at bottom
   - [ ] Smooth scroll to quantity picker
 
-### Infer 44: Optimize Checkout for Mobile
+### Cycle 44: Optimize Checkout for Mobile
 
 - [ ] **Step-by-step:**
   - [ ] Show one step per screen
@@ -859,7 +859,7 @@ ai_context: |
   - [ ] Show on each step
   - [ ] Sticky at bottom with total
 
-### Infer 45: Test Touch Interactions
+### Cycle 45: Test Touch Interactions
 
 - [ ] **Size controls:**
   - [ ] Large, touchable buttons for size/color
@@ -870,7 +870,7 @@ ai_context: |
   - [ ] 16px padding
   - [ ] Clear labels
 
-### Infer 46: Optimize Image Loading
+### Cycle 46: Optimize Image Loading
 
 - [ ] **Lazy loading:**
   - [ ] Load images as user scrolls
@@ -885,7 +885,7 @@ ai_context: |
   - [ ] Remove EXIF data
   - [ ] Use CDN for fast delivery
 
-### Infer 47: Optimize Performance on Mobile
+### Cycle 47: Optimize Performance on Mobile
 
 - [ ] **Reduce bundle size:**
   - [ ] Code split by route
@@ -900,7 +900,7 @@ ai_context: |
   - [ ] Use `client:load` sparingly
   - [ ] Optimize React components
 
-### Infer 48: Test on Real Devices
+### Cycle 48: Test on Real Devices
 
 - [ ] **Devices:**
   - [ ] iPhone SE (375px)
@@ -917,7 +917,7 @@ ai_context: |
   - [ ] High latency (3000ms)
   - [ ] Battery saver mode
 
-### Infer 49: Fix Mobile Issues
+### Cycle 49: Fix Mobile Issues
 
 - [ ] **Common issues:**
   - [ ] Fixed headers blocking content
@@ -931,7 +931,7 @@ ai_context: |
   - [ ] Browser testing tools (BrowserStack)
   - [ ] Real device testing
 
-### Infer 50: Add Mobile-Specific Features
+### Cycle 50: Add Mobile-Specific Features
 
 - [ ] **PWA features (optional):**
   - [ ] Install app prompt
@@ -944,11 +944,11 @@ ai_context: |
 
 ---
 
-## PHASE 6: TESTING & QA (Infer 51-60)
+## PHASE 6: TESTING & QA (Cycle 51-60)
 
 **Purpose:** Comprehensive testing of all features
 
-### Infer 51: Test Product Pages
+### Cycle 51: Test Product Pages
 
 - [ ] **Functionality:**
   - [ ] Product loads correctly
@@ -964,7 +964,7 @@ ai_context: |
   - [ ] Missing images (fallback)
   - [ ] Very long product names/descriptions
 
-### Infer 52: Test Shopping Cart
+### Cycle 52: Test Shopping Cart
 
 - [ ] **Functionality:**
   - [ ] Items persist in cart
@@ -979,7 +979,7 @@ ai_context: |
   - [ ] Maximum inventory limit
   - [ ] LocalStorage sync across tabs
 
-### Infer 53: Test Checkout Flow
+### Cycle 53: Test Checkout Flow
 
 - [ ] **Each step:**
   - [ ] Step 1: Cart review loads
@@ -995,7 +995,7 @@ ai_context: |
   - [ ] Can't skip steps
   - [ ] Can go back to previous step
 
-### Infer 54: Test Form Validation
+### Cycle 54: Test Form Validation
 
 - [ ] **Required fields:**
   - [ ] All required fields validated
@@ -1011,7 +1011,7 @@ ai_context: |
   - [ ] Highlight invalid field
   - [ ] Suggest correction
 
-### Infer 55: Test Stripe Integration
+### Cycle 55: Test Stripe Integration
 
 - [ ] **Payment flow:**
   - [ ] Payment form loads
@@ -1025,7 +1025,7 @@ ai_context: |
   - [ ] 3782 822463 10005 (amex)
   - [ ] Various error scenarios
 
-### Infer 56: Test Search & Filters
+### Cycle 56: Test Search & Filters
 
 - [ ] **Search:**
   - [ ] Search by product name
@@ -1040,7 +1040,7 @@ ai_context: |
   - [ ] Multiple filters combine correctly
   - [ ] Clear filters button works
 
-### Infer 57: Test Cross-Browser
+### Cycle 57: Test Cross-Browser
 
 - [ ] **Desktop browsers:**
   - [ ] Chrome
@@ -1057,7 +1057,7 @@ ai_context: |
   - [ ] JavaScript errors
   - [ ] Form input issues
 
-### Infer 58: Test Accessibility
+### Cycle 58: Test Accessibility
 
 - [ ] **Keyboard navigation:**
   - [ ] Tab through form
@@ -1076,7 +1076,7 @@ ai_context: |
   - [ ] Use axe DevTools
   - [ ] Check for violations
 
-### Infer 59: Test Performance
+### Cycle 59: Test Performance
 
 - [ ] **Lighthouse audit:**
   - [ ] Performance > 85
@@ -1092,7 +1092,7 @@ ai_context: |
   - [ ] CSS < 50KB (gzipped)
   - [ ] Total < 200KB
 
-### Infer 60: Test Edge Cases
+### Cycle 60: Test Edge Cases
 
 - [ ] **Scenarios:**
   - [ ] Network disconnection (checkout)
@@ -1106,11 +1106,11 @@ ai_context: |
 
 ---
 
-## PHASE 7: DEPLOYMENT & OPTIMIZATION (Infer 61-70)
+## PHASE 7: DEPLOYMENT & OPTIMIZATION (Cycle 61-70)
 
 **Purpose:** Deploy to Cloudflare Pages and optimize for production
 
-### Infer 61: Prepare for Deployment
+### Cycle 61: Prepare for Deployment
 
 - [ ] **Build optimization:**
   - [ ] Run `bun run build`
@@ -1123,7 +1123,7 @@ ai_context: |
   - [ ] Enable security headers
   - [ ] Set up CORS properly
 
-### Infer 62: Deploy to Cloudflare Pages
+### Cycle 62: Deploy to Cloudflare Pages
 
 - [ ] **Deployment steps:**
   - [ ] Connect GitHub repo
@@ -1138,7 +1138,7 @@ ai_context: |
   - [ ] Images load
   - [ ] Stripe test mode active
 
-### Infer 63: Set Up Analytics
+### Cycle 63: Set Up Analytics
 
 - [ ] **Google Analytics (or Plausible):**
   - [ ] Add tracking code
@@ -1151,7 +1151,7 @@ ai_context: |
   - [ ] Track refunds
   - [ ] Revenue reporting
 
-### Infer 64: Monitor Site Health
+### Cycle 64: Monitor Site Health
 
 - [ ] **Error tracking (Sentry or similar):**
   - [ ] Set up error reporting
@@ -1163,7 +1163,7 @@ ai_context: |
   - [ ] Monitor site availability
   - [ ] Alert on downtime
 
-### Infer 65: Set Up Email Infrastructure
+### Cycle 65: Set Up Email Infrastructure
 
 - [ ] **Email service (Resend or SendGrid):**
   - [ ] Create account
@@ -1175,7 +1175,7 @@ ai_context: |
   - [ ] Shipping notification
   - [ ] Return confirmation
 
-### Infer 66: Implement Security
+### Cycle 66: Implement Security
 
 - [ ] **HTTPS:**
   - [ ] Verify SSL certificate
@@ -1191,7 +1191,7 @@ ai_context: |
   - [ ] Use Stripe.js
   - [ ] Validate on backend
 
-### Infer 67: Optimize Images for Production
+### Cycle 67: Optimize Images for Production
 
 - [ ] **Image compression:**
   - [ ] Use TinyPNG or similar
@@ -1204,7 +1204,7 @@ ai_context: |
   - [ ] Lazy load all images
   - [ ] Use modern formats with fallback
 
-### Infer 68: Implement Caching Strategy
+### Cycle 68: Implement Caching Strategy
 
 - [ ] **Browser caching:**
   - [ ] Cache static assets 1 year
@@ -1216,7 +1216,7 @@ ai_context: |
   - [ ] Set minimum cache TTL
   - [ ] Purge cache on deploy
 
-### Infer 69: Set Up Custom Domain
+### Cycle 69: Set Up Custom Domain
 
 - [ ] **Domain setup:**
   - [ ] Point domain to Cloudflare
@@ -1228,7 +1228,7 @@ ai_context: |
   - [ ] Set up DKIM
   - [ ] Set up DMARC
 
-### Infer 70: Create Deployment Checklist
+### Cycle 70: Create Deployment Checklist
 
 - [ ] **Before going live:**
   - [ ] All tests passing
@@ -1266,9 +1266,9 @@ Frontend ecommerce store is complete when:
 
 ---
 
-**Timeline:** 70-80 inferences for complete implementation
+**Timeline:** 70-80 cycles for complete implementation
 **Status:** Ready to build
-**Next:** Use Claude Code to implement step by step following inference sequence
+**Next:** Use Claude Code to implement step by step following cycle sequence
 
 ---
 

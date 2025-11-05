@@ -222,7 +222,7 @@ interface RateLimits {
 
 ## Implementation Phases
 
-### Phase 1: Foundation (Infer 1-10)
+### Phase 1: Foundation (Cycle 1-10)
 
 **Agent:** agent-director
 
@@ -237,15 +237,15 @@ interface RateLimits {
 7. ✅ Define people roles (api_consumer, service_account)
 8. ✅ Create vision document (this file)
 9. ✅ Break down features into 10 major components
-10. ✅ Create 100-inference plan
+10. ✅ Create 100-cycle plan
 
-### Phase 2: Backend Schema & Services (Infer 11-30)
+### Phase 2: Backend Schema & Services (Cycle 11-30)
 
 **Agents:** agent-backend, agent-quality
 
 **Deliverables:**
 
-**Infer 11-15: Schema Design**
+**Cycle 11-15: Schema Design**
 
 - Extend `things` schema with new entity types (api_key, api_application, service_account, api_quota)
 - Add indexes for fast API key lookup
@@ -253,7 +253,7 @@ interface RateLimits {
 - Plan event types for API audit trail
 - Create schema migration strategy
 
-**Infer 16-20: Authentication Service**
+**Cycle 16-20: Authentication Service**
 
 - Implement API key generation (cryptographically secure)
 - Create API key validation middleware
@@ -261,7 +261,7 @@ interface RateLimits {
 - Add rate limiting with @convex-dev/rate-limiter
 - Implement key rotation mechanism
 
-**Infer 21-25: Group Scoping Service**
+**Cycle 21-25: Group Scoping Service**
 
 - Create automatic groupId injection middleware
 - Implement organization isolation checks
@@ -269,7 +269,7 @@ interface RateLimits {
 - Add cross-group query prevention
 - Implement audit logging for all API requests
 
-**Infer 26-30: API Gateway Layer**
+**Cycle 26-30: API Gateway Layer**
 
 - Create public API endpoints (REST-style over Convex HTTP)
 - Implement request/response transformers
@@ -277,13 +277,13 @@ interface RateLimits {
 - Build response pagination system
 - Create webhook delivery system
 
-### Phase 3: Frontend Pages & Admin UI (Infer 31-50)
+### Phase 3: Frontend Pages & Admin UI (Cycle 31-50)
 
 **Agents:** agent-frontend, agent-designer
 
 **Deliverables:**
 
-**Infer 31-35: API Keys Management Page**
+**Cycle 31-35: API Keys Management Page**
 
 - Design page wireframe (acceptance criteria → UI elements)
 - Implement key generation UI
@@ -291,7 +291,7 @@ interface RateLimits {
 - Add key revocation interface
 - Show last used timestamp and IP
 
-**Infer 36-40: API Documentation Portal**
+**Cycle 36-40: API Documentation Portal**
 
 - Create interactive API explorer (like Swagger UI)
 - Add code examples in 5+ languages
@@ -299,7 +299,7 @@ interface RateLimits {
 - Show real-time usage stats
 - Add error code reference
 
-**Infer 41-45: Usage Dashboard**
+**Cycle 41-45: Usage Dashboard**
 
 - Design analytics page (requests/day, latency, errors)
 - Show quota consumption (% of limits)
@@ -307,7 +307,7 @@ interface RateLimits {
 - Create alert configuration UI
 - Display top endpoints by usage
 
-**Infer 46-50: Developer Onboarding Flow**
+**Cycle 46-50: Developer Onboarding Flow**
 
 - Create "Get Started" wizard (org setup → key generation → first API call)
 - Add SDK download options
@@ -315,13 +315,13 @@ interface RateLimits {
 - Show example applications
 - Add video tutorials
 
-### Phase 4: Quality & Testing (Infer 51-70)
+### Phase 4: Quality & Testing (Cycle 51-70)
 
 **Agents:** agent-quality, agent-problem-solver
 
 **Deliverables:**
 
-**Infer 51-55: Unit Tests**
+**Cycle 51-55: Unit Tests**
 
 - Test API key generation (collision resistance)
 - Test scope validation (permission checks)
@@ -329,7 +329,7 @@ interface RateLimits {
 - Test group isolation (data leakage prevention)
 - Test key rotation (seamless transition)
 
-**Infer 56-60: Integration Tests**
+**Cycle 56-60: Integration Tests**
 
 - Test full authentication flow (key → validation → scoped request)
 - Test multi-tenant isolation (org A can't access org B)
@@ -337,7 +337,7 @@ interface RateLimits {
 - Test webhook delivery (retries, failures)
 - Test concurrent requests (race conditions)
 
-**Infer 61-65: Security Tests**
+**Cycle 61-65: Security Tests**
 
 - Test key brute force protection
 - Test SQL injection attempts (though Convex is safe)
@@ -345,7 +345,7 @@ interface RateLimits {
 - Test expired key handling
 - Penetration testing against OWASP Top 10
 
-**Infer 66-70: Performance Tests**
+**Cycle 66-70: Performance Tests**
 
 - Load test (10K requests/minute)
 - Latency testing (p50, p95, p99)
@@ -353,13 +353,13 @@ interface RateLimits {
 - CDN caching strategy
 - Connection pooling validation
 
-### Phase 5: SDK & Developer Tools (Infer 71-80)
+### Phase 5: SDK & Developer Tools (Cycle 71-80)
 
 **Agents:** agent-builder, agent-documenter
 
 **Deliverables:**
 
-**Infer 71-75: Official SDKs**
+**Cycle 71-75: Official SDKs**
 
 - JavaScript/TypeScript SDK (npm package)
 - Python SDK (PyPI package)
@@ -367,7 +367,7 @@ interface RateLimits {
 - Ruby SDK (gem)
 - Add type definitions (full TypeScript support)
 
-**Infer 76-80: CLI Tool**
+**Cycle 76-80: CLI Tool**
 
 - Create `oneie` CLI for API management
 - Add commands: `oneie keys:create`, `oneie keys:list`, `oneie keys:revoke`
@@ -375,13 +375,13 @@ interface RateLimits {
 - Add `oneie logs` for request history
 - Create `oneie deploy` for webhook configuration
 
-### Phase 6: Operations & Deployment (Infer 81-100)
+### Phase 6: Operations & Deployment (Cycle 81-100)
 
 **Agents:** agent-ops, agent-documenter
 
 **Deliverables:**
 
-**Infer 81-85: Monitoring & Observability**
+**Cycle 81-85: Monitoring & Observability**
 
 - Set up API metrics dashboard (Grafana/Datadog)
 - Add error tracking (Sentry integration)
@@ -389,7 +389,7 @@ interface RateLimits {
 - Create alerting rules (quota exceeded, high error rate)
 - Implement distributed tracing
 
-**Infer 86-90: Documentation & Knowledge Base**
+**Cycle 86-90: Documentation & Knowledge Base**
 
 - Write comprehensive API reference (OpenAPI/Swagger spec)
 - Create developer guides (authentication, best practices)
@@ -397,7 +397,7 @@ interface RateLimits {
 - Generate SDK documentation
 - Create migration guides (v1 → v2)
 
-**Infer 91-95: Deployment & CI/CD**
+**Cycle 91-95: Deployment & CI/CD**
 
 - Configure Cloudflare Workers for API gateway
 - Set up Convex HTTP endpoints
@@ -405,7 +405,7 @@ interface RateLimits {
 - Add automated testing in CI
 - Create rollback procedures
 
-**Infer 96-100: Launch & Handoff**
+**Cycle 96-100: Launch & Handoff**
 
 - Conduct security audit (external firm)
 - Perform load testing at scale
@@ -496,7 +496,7 @@ interface RateLimits {
 
 ## Agent Assignments
 
-| Phase                | Inferences | Agent            | Role                          |
+| Phase                | Cycles | Agent            | Role                          |
 | -------------------- | ---------- | ---------------- | ----------------------------- |
 | Foundation           | 1-10       | agent-director   | Validation, mapping, planning |
 | Backend Schema       | 11-15      | agent-backend    | Schema design                 |
@@ -522,9 +522,9 @@ interface RateLimits {
 
 **Test → Design → Implement → Validate**
 
-1. **Tests First (Infer 51-70):** Define acceptance criteria and test cases
-2. **Design to Satisfy Tests (Infer 31-50):** Create UI/UX that passes tests
-3. **Implement Against Tests (Infer 11-30, 71-80):** Write code that validates
+1. **Tests First (Cycle 51-70):** Define acceptance criteria and test cases
+2. **Design to Satisfy Tests (Cycle 31-50):** Create UI/UX that passes tests
+3. **Implement Against Tests (Cycle 11-30, 71-80):** Write code that validates
 4. **Fix Failures (Throughout):** agent-problem-solver analyzes, delegates fixes
 
 **Quality Gates:**
@@ -569,4 +569,4 @@ interface RateLimits {
 ---
 
 **Status:** Ready for Execution
-**Next Step:** Begin Infer 1 with agent-director for ontology validation
+**Next Step:** Begin Cycle 1 with agent-director for ontology validation

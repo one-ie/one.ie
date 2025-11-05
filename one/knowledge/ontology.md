@@ -102,11 +102,11 @@ This ontology is organized into 6 dimension files:
 
 **Execution Guide:**
 
-7. **[todo.md](./todo.md)** - 100-inference execution sequence (plan in inferences, not days)
+7. **[todo.md](./todo.md)** - 100-cycle execution sequence (plan in cycles, not days)
 
 **This document (Ontology.md)** contains the complete technical specification. The consolidated files above provide focused summaries and patterns.
 
-**Planning Paradigm:** We don't plan in days. We plan in **inference passes** (Infer 1-100). See [todo.md](./todo.md) for the complete 100-inference template that guides feature implementation from idea to production.
+**Planning Paradigm:** We don't plan in days. We plan in **cycle passes** (Cycle 1-100). See [todo.md](./todo.md) for the complete 100-cycle template that guides feature implementation from idea to production.
 
 ## The 6-Dimension Reality Model
 
@@ -1791,11 +1791,11 @@ type EventType =
   | "report_generated"
 
   // INFERENCE EVENTS (7) - NEW
-  | "inference_request" // User requests AI inference
-  | "inference_completed" // Inference result delivered
-  | "inference_failed" // Inference failed
-  | "inference_quota_exceeded" // Monthly limit hit
-  | "inference_revenue_collected" // Daily revenue sweep
+  | "cycle_request" // User requests AI cycle
+  | "cycle_completed" // Cycle result delivered
+  | "cycle_failed" // Cycle failed
+  | "cycle_quota_exceeded" // Monthly limit hit
+  | "cycle_revenue_collected" // Daily revenue sweep
   | "org_revenue_generated" // Group generates platform revenue
   | "revenue_share_distributed" // Revenue share paid out
 
@@ -1819,7 +1819,7 @@ type EventType =
   | "mandate_event" // metadata.mandateType: intent|cart + protocol (AP2)
   | "price_event"; // metadata.action: checked|changed
 
-// Total: 52 event types (35 original + 7 inference + 5 blockchain + 5 NFT overlap)
+// Total: 52 event types (35 original + 7 cycle + 5 blockchain + 5 NFT overlap)
 ```
 
 ### Event Structure
@@ -3016,7 +3016,7 @@ Principle: Users can add to any type without breaking the ontology.
 - 7 Token events
 - 5 Course events
 - 5 Analytics events
-- 7 Inference events
+- 7 Cycle events
 - 5 Blockchain events
 - 11 consolidated types with metadata variants
 
@@ -3097,7 +3097,7 @@ Policy: Default is free-form, user-extensible knowledge labels for maximum flexi
 - 7 Token events
 - 5 Course events
 - 5 Analytics events
-- **7 Inference events** (NEW: inference_request, inference_completed, revenue_collected, quota_exceeded)
+- **7 Cycle events** (NEW: cycle_request, cycle_completed, revenue_collected, quota_exceeded)
 - **5 Blockchain events** (NEW: nft_minted, nft_transferred, tokens_bridged, contract_deployed, treasury_withdrawal)
 - 11 consolidated types with metadata variants
 - Protocol identification via metadata.protocol + metadata.network

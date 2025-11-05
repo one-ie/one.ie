@@ -178,7 +178,7 @@ Dashboard toggle:
        users: 100,
        apiCalls: 10000,
        storage: 1000000,  // 1 GB
-       inference: 100      // AI queries
+       cycle: 100      // AI queries
      },
      settings: {
        allowSignups: true,
@@ -853,7 +853,7 @@ export const OneBackendProvider = (config: {
     users: 100,            // Max 100 people
 
     // AI
-    inferenceTokens: 100000,  // 100K tokens/month
+    cycleTokens: 100000,  // 100K tokens/month
     embeddingTokens: 500000   // 500K tokens/month
   }
 }

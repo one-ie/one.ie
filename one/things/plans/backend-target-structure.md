@@ -427,7 +427,7 @@ bun.lock
 
 - [x] Create BACKEND-AUDIT-MANIFEST.md (file-by-file assessment)
 - [x] Create this document (target vision)
-- [x] Create backend-ontology-conformance.md (100-inference plan)
+- [x] Create backend-ontology-conformance.md (100-cycle plan)
 
 ### Phase 2: Consolidation (Next)
 
@@ -479,4 +479,4 @@ bun.lock
 
 **Status**: Ready for execution
 **Owner**: Agent-clean, Agent-backend
-**Timeline**: 60-100 inferences in 100-inference sequence
+**Timeline**: 60-100 cycles in 100-cycle sequence

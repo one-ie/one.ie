@@ -43,8 +43,8 @@ Comprehensive analysis of 25 TODO documentation files in the ONE Platform.
 - Effort: 1 hour
 
 ### 3. INCONSISTENT STRUCTURES (coordination blocker)
-- 100-inference pattern (12 files) vs. 4-phase pattern (3 files) vs. freeform (10 files)
-- Fix: Standardize on 100-inference for all features
+- 100-cycle pattern (12 files) vs. 4-phase pattern (3 files) vs. freeform (10 files)
+- Fix: Standardize on 100-cycle for all features
 - Impact: Enables parallel specialist execution
 
 ### 4. WRONG DIMENSION (ontology misalignment)
@@ -80,7 +80,7 @@ one/things/
 ### Recommended Structure
 ```
 one/things/
-├── features/              (100-inference feature plans)
+├── features/              (100-cycle feature plans)
 ├── strategies/            (multi-phase planning)
 ├── operations/            (release, assignments, coordination)
 └── infrastructure/        (services, mail, projects)
@@ -160,7 +160,7 @@ one/knowledge/ontology/    (MOVE todo-connections.md here)
 - **Affected:** 25 files use 3 different planning approaches
 - **Type:** Structural inconsistency
 - **Impact:** Can't coordinate specialists, reduces parallelization
-- **Fix:** Standardize on 100-inference for all features
+- **Fix:** Standardize on 100-cycle for all features
 - **Complexity:** Medium (2-3 hours per non-standard file)
 
 ### Issue 4: Files in Wrong Dimension
@@ -238,7 +238,7 @@ one/knowledge/ontology/    (MOVE todo-connections.md here)
 
 ## WHAT'S WORKING WELL
 
-✓ **100-Inference Pattern:** 12 feature files follow consistent structure
+✓ **100-Cycle Pattern:** 12 feature files follow consistent structure
 ✓ **Wave Planning:** 4-wave execution strategy clear and documented
 ✓ **Specialist Assignments:** Clear ownership documented in assignment file
 ✓ **Master Plan:** Good overview of platform trajectory
@@ -293,7 +293,7 @@ one/knowledge/ontology/    (MOVE todo-connections.md here)
 When complete, should achieve:
 - ✓ No duplicate files
 - ✓ Clear taxonomy (5 categories)
-- ✓ All features follow 100-inference pattern
+- ✓ All features follow 100-cycle pattern
 - ✓ All files have dependency matrix
 - ✓ All files map to 6-dimension ontology
 - ✓ Patterns in knowledge/, protocols in connections/

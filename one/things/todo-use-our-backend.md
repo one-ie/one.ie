@@ -3,7 +3,7 @@ title: Todo Use Our Backend
 dimension: things
 primary_dimension: things
 category: todo-use-our-backend.md
-tags: agent, ai, backend, connections, convex, events, groups, inference, knowledge, ontology
+tags: agent, ai, backend, connections, convex, events, groups, cycle, knowledge, ontology
 related_dimensions: connections, events, groups, knowledge, people
 scope: global
 created: 2025-11-03
@@ -12,12 +12,12 @@ version: 1.0.0
 ai_context: |
   This document is part of the things dimension in the todo-use-our-backend.md category.
   Location: one/things/todo-use-our-backend.md
-  Purpose: Documents backend api service - 100 inference todo list
+  Purpose: Documents backend api service - 100 cycle todo list
   Related dimensions: connections, events, groups, knowledge, people
   For AI agents: Read this to understand todo use our backend.
 ---
 
-# Backend API Service - 100 Inference Todo List
+# Backend API Service - 100 Cycle Todo List
 
 **Feature:** External API Access to ONE Platform Backend
 **Status:** Planning Complete → Ready for Execution
@@ -25,16 +25,16 @@ ai_context: |
 
 ## Overview
 
-This document tracks all 100 inferences for implementing the Backend-as-a-Service feature, allowing external developers to consume the ONE Platform backend via API keys with full 6-dimension ontology access and multi-tenant group isolation.
+This document tracks all 100 cycles for implementing the Backend-as-a-Service feature, allowing external developers to consume the ONE Platform backend via API keys with full 6-dimension ontology access and multi-tenant group isolation.
 
 ---
 
-## Foundation Phase (Infer 1-10)
+## Foundation Phase (Cycle 1-10)
 
 **Agent:** agent-director
 **Goal:** Validate idea, map to ontology, create execution plan
 
-### ✅ Infer 1: Validate Idea Against 6-Dimension Ontology
+### ✅ Cycle 1: Validate Idea Against 6-Dimension Ontology
 
 **Status:** ✅ Complete
 **Task:** Ensure API service maps cleanly to Groups, People, Things, Connections, Events, Knowledge
@@ -47,7 +47,7 @@ This document tracks all 100 inferences for implementing the Backend-as-a-Servic
 - Events: api_request_made, api_key_generated, quota_exceeded ✅
 - Knowledge: API docs via RAG, error message search ✅
 
-### ✅ Infer 2: Map Entity Types
+### ✅ Cycle 2: Map Entity Types
 
 **Status:** ✅ Complete
 **New Entity Types:**
@@ -61,7 +61,7 @@ This document tracks all 100 inferences for implementing the Backend-as-a-Servic
 
 - All 66+ entity types available through authenticated endpoints
 
-### ✅ Infer 3: Identify Connection Types
+### ✅ Cycle 3: Identify Connection Types
 
 **Status:** ✅ Complete
 **New Connection Types:**
@@ -71,7 +71,7 @@ This document tracks all 100 inferences for implementing the Backend-as-a-Servic
 - `belongs_to_org` - api_application → group
 - `has_quota` - api_application → api_quota
 
-### ✅ Infer 4: List Event Types
+### ✅ Cycle 4: List Event Types
 
 **Status:** ✅ Complete
 **New Event Types:**
@@ -83,7 +83,7 @@ This document tracks all 100 inferences for implementing the Backend-as-a-Servic
 - `api_auth_failed` - Invalid key used
 - `api_application_registered` - New app registered
 
-### ✅ Infer 5: Determine Knowledge Requirements
+### ✅ Cycle 5: Determine Knowledge Requirements
 
 **Status:** ✅ Complete
 **Knowledge Dimension Usage:**
@@ -93,7 +93,7 @@ This document tracks all 100 inferences for implementing the Backend-as-a-Servic
 - Usage pattern learning for UX improvements
 - Auto-completion suggestions based on context
 
-### ✅ Infer 6: Identify Organization Scope
+### ✅ Cycle 6: Identify Organization Scope
 
 **Status:** ✅ Complete
 **Multi-Tenant Strategy:**
@@ -103,7 +103,7 @@ This document tracks all 100 inferences for implementing the Backend-as-a-Servic
 - All API requests automatically scoped to authenticated org's groupId
 - Complete data isolation enforced by schema
 
-### ✅ Infer 7: Define People Roles
+### ✅ Cycle 7: Define People Roles
 
 **Status:** ✅ Complete
 **Roles:**
@@ -112,13 +112,13 @@ This document tracks all 100 inferences for implementing the Backend-as-a-Servic
 - `service_account` - Non-human actor representing API application
 - Permissions: read-only, read-write, admin (via API key scopes)
 
-### ✅ Infer 8: Create Vision Document
+### ✅ Cycle 8: Create Vision Document
 
 **Status:** ✅ Complete
 **Deliverable:** `/one/things/plans/use-our-backend.md`
 **Content:** Executive summary, architecture, implementation phases, success metrics
 
-### ✅ Infer 9: Break Down Features
+### ✅ Cycle 9: Break Down Features
 
 **Status:** ✅ Complete
 **10 Major Components:**
@@ -134,22 +134,22 @@ This document tracks all 100 inferences for implementing the Backend-as-a-Servic
 9. SDKs (JS, Python, Go, Ruby)
 10. Monitoring & Operations
 
-### ✅ Infer 10: Create 100-Inference Plan
+### ✅ Cycle 10: Create 100-Cycle Plan
 
 **Status:** ✅ Complete
 **Deliverable:** This file (`/one/things/todo-use-our-backend.md`)
 
 ---
 
-## Backend Phase: Schema Design (Infer 11-15)
+## Backend Phase: Schema Design (Cycle 11-15)
 
 **Agent:** agent-backend
 **Goal:** Design database schema for API entities
 
-### ⏳ Infer 11: Extend Things Schema with API Entity Types
+### ⏳ Cycle 11: Extend Things Schema with API Entity Types
 
 **Status:** Pending
-**Dependencies:** Infer 1-10 (Foundation complete)
+**Dependencies:** Cycle 1-10 (Foundation complete)
 **Task:** Add entity type definitions for api_key, api_application, service_account, api_quota
 **File:** `backend/convex/schema.ts`
 **Acceptance Criteria:**
@@ -160,10 +160,10 @@ This document tracks all 100 inferences for implementing the Backend-as-a-Servic
 - [ ] `api_quota` type with properties: tier (starter/pro/enterprise), limits, usage stats
 - [ ] All types inherit base fields: \_id, type, name, properties, status, groupId, createdAt, updatedAt
 
-### ⏳ Infer 12: Add Database Indexes for API Key Lookup
+### ⏳ Cycle 12: Add Database Indexes for API Key Lookup
 
 **Status:** Pending
-**Dependencies:** Infer 11
+**Dependencies:** Cycle 11
 **Task:** Create indexes for fast API key validation and lookup
 **File:** `backend/convex/schema.ts`
 **Acceptance Criteria:**
@@ -173,10 +173,10 @@ This document tracks all 100 inferences for implementing the Backend-as-a-Servic
 - [ ] Index on `things.type` + `things.status` for active key filtering
 - [ ] Index on `things.properties.expiresAt` for expired key cleanup
 
-### ⏳ Infer 13: Design Connection Types for API Relationships
+### ⏳ Cycle 13: Design Connection Types for API Relationships
 
 **Status:** Pending
-**Dependencies:** Infer 11
+**Dependencies:** Cycle 11
 **Task:** Add connection type definitions for API entity relationships
 **File:** `backend/convex/schema.ts`
 **Acceptance Criteria:**
@@ -187,10 +187,10 @@ This document tracks all 100 inferences for implementing the Backend-as-a-Servic
 - [ ] `has_quota` connection (api_application → api_quota)
 - [ ] All connections include bidirectional fields, validFrom/validTo, groupId
 
-### ⏳ Infer 14: Plan Event Types for API Audit Trail
+### ⏳ Cycle 14: Plan Event Types for API Audit Trail
 
 **Status:** Pending
-**Dependencies:** Infer 11
+**Dependencies:** Cycle 11
 **Task:** Define event schemas for API operations
 **File:** `backend/convex/schema.ts`
 **Acceptance Criteria:**
@@ -202,10 +202,10 @@ This document tracks all 100 inferences for implementing the Backend-as-a-Servic
 - [ ] `api_auth_failed` event with metadata: keyPrefix, reason, ipAddress
 - [ ] `api_application_registered` event with metadata: applicationId, initialScopes
 
-### ⏳ Infer 15: Create Schema Migration Strategy
+### ⏳ Cycle 15: Create Schema Migration Strategy
 
 **Status:** Pending
-**Dependencies:** Infer 11-14
+**Dependencies:** Cycle 11-14
 **Task:** Plan backward-compatible schema changes
 **File:** `backend/convex/migrations/add-api-entities.ts`
 **Acceptance Criteria:**
@@ -217,15 +217,15 @@ This document tracks all 100 inferences for implementing the Backend-as-a-Servic
 
 ---
 
-## Backend Phase: Authentication Service (Infer 16-20)
+## Backend Phase: Authentication Service (Cycle 16-20)
 
 **Agent:** agent-backend
 **Goal:** Implement API key generation, validation, and scoping
 
-### ⏳ Infer 16: Implement API Key Generation
+### ⏳ Cycle 16: Implement API Key Generation
 
 **Status:** Pending
-**Dependencies:** Infer 15 (Schema ready)
+**Dependencies:** Cycle 15 (Schema ready)
 **Task:** Create secure API key generation service
 **File:** `backend/convex/mutations/api-keys.ts`
 **Acceptance Criteria:**
@@ -252,10 +252,10 @@ export const generateApiKey = mutation({
 });
 ```
 
-### ⏳ Infer 17: Create API Key Validation Middleware
+### ⏳ Cycle 17: Create API Key Validation Middleware
 
 **Status:** Pending
-**Dependencies:** Infer 16
+**Dependencies:** Cycle 16
 **Task:** Build middleware to validate API keys on every request
 **File:** `backend/convex/lib/api-auth.ts`
 **Acceptance Criteria:**
@@ -279,10 +279,10 @@ export async function validateApiKey(
 }
 ```
 
-### ⏳ Infer 18: Build Scope Verification System
+### ⏳ Cycle 18: Build Scope Verification System
 
 **Status:** Pending
-**Dependencies:** Infer 17
+**Dependencies:** Cycle 17
 **Task:** Implement fine-grained permission checking based on API key scopes
 **File:** `backend/convex/lib/api-auth.ts`
 **Acceptance Criteria:**
@@ -302,10 +302,10 @@ export async function validateApiKey(
 - `groups:read`, `groups:write`
 - `api_keys:manage`, `quota:view`
 
-### ⏳ Infer 19: Add Rate Limiting
+### ⏳ Cycle 19: Add Rate Limiting
 
 **Status:** Pending
-**Dependencies:** Infer 17
+**Dependencies:** Cycle 17
 **Task:** Implement rate limiting per API key using @convex-dev/rate-limiter
 **File:** `backend/convex/lib/rate-limit.ts`
 **Acceptance Criteria:**
@@ -329,10 +329,10 @@ const rateLimiter = new RateLimiter(ctx.db, {
 await rateLimiter.limit(ctx, `api_key:${keyId}`);
 ```
 
-### ⏳ Infer 20: Implement Key Rotation Mechanism
+### ⏳ Cycle 20: Implement Key Rotation Mechanism
 
 **Status:** Pending
-**Dependencies:** Infer 16-19
+**Dependencies:** Cycle 16-19
 **Task:** Allow users to rotate API keys without downtime
 **File:** `backend/convex/mutations/api-keys.ts`
 **Acceptance Criteria:**
@@ -345,15 +345,15 @@ await rateLimiter.limit(ctx, `api_key:${keyId}`);
 
 ---
 
-## Backend Phase: Group Scoping Service (Infer 21-25)
+## Backend Phase: Group Scoping Service (Cycle 21-25)
 
 **Agent:** agent-backend
 **Goal:** Ensure complete multi-tenant data isolation
 
-### ⏳ Infer 21: Create Automatic GroupId Injection Middleware
+### ⏳ Cycle 21: Create Automatic GroupId Injection Middleware
 
 **Status:** Pending
-**Dependencies:** Infer 17 (API key validation complete)
+**Dependencies:** Cycle 17 (API key validation complete)
 **Task:** Automatically scope all API requests to authenticated organization's groupId
 **File:** `backend/convex/lib/group-scoping.ts`
 **Acceptance Criteria:**
@@ -380,10 +380,10 @@ export function withGroupScoping<T>(
 }
 ```
 
-### ⏳ Infer 22: Implement Organization Isolation Checks
+### ⏳ Cycle 22: Implement Organization Isolation Checks
 
 **Status:** Pending
-**Dependencies:** Infer 21
+**Dependencies:** Cycle 21
 **Task:** Verify queries/mutations only access data within authenticated organization
 **File:** `backend/convex/lib/group-scoping.ts`
 **Acceptance Criteria:**
@@ -394,10 +394,10 @@ export function withGroupScoping<T>(
 - [ ] Write operations enforce groupId constraint
 - [ ] Delete operations verify ownership before deletion
 
-### ⏳ Infer 23: Build Hierarchical Group Access Rules
+### ⏳ Cycle 23: Build Hierarchical Group Access Rules
 
 **Status:** Pending
-**Dependencies:** Infer 22
+**Dependencies:** Cycle 22
 **Task:** Allow parent groups to access child group data (configurable)
 **File:** `backend/convex/lib/group-scoping.ts`
 **Acceptance Criteria:**
@@ -408,10 +408,10 @@ export function withGroupScoping<T>(
 - [ ] Respect group settings (`allowParentAccess` boolean)
 - [ ] Log hierarchical access attempts
 
-### ⏳ Infer 24: Add Cross-Group Query Prevention
+### ⏳ Cycle 24: Add Cross-Group Query Prevention
 
 **Status:** Pending
-**Dependencies:** Infer 23
+**Dependencies:** Cycle 23
 **Task:** Prevent accidental data leakage via joins/relationships
 **File:** `backend/convex/lib/group-scoping.ts`
 **Acceptance Criteria:**
@@ -422,10 +422,10 @@ export function withGroupScoping<T>(
 - [ ] Validate webhook payloads don't leak cross-group data
 - [ ] Add integration tests for isolation
 
-### ⏳ Infer 25: Implement Audit Logging for API Requests
+### ⏳ Cycle 25: Implement Audit Logging for API Requests
 
 **Status:** Pending
-**Dependencies:** Infer 21-24
+**Dependencies:** Cycle 21-24
 **Task:** Log every API request as an event for security and analytics
 **File:** `backend/convex/lib/api-audit.ts`
 **Acceptance Criteria:**
@@ -438,15 +438,15 @@ export function withGroupScoping<T>(
 
 ---
 
-## Backend Phase: API Gateway Layer (Infer 26-30)
+## Backend Phase: API Gateway Layer (Cycle 26-30)
 
 **Agent:** agent-backend
 **Goal:** Create public REST-style endpoints over Convex HTTP
 
-### ⏳ Infer 26: Create Public API Endpoints
+### ⏳ Cycle 26: Create Public API Endpoints
 
 **Status:** Pending
-**Dependencies:** Infer 25 (Auth & scoping complete)
+**Dependencies:** Cycle 25 (Auth & scoping complete)
 **Task:** Implement RESTful HTTP endpoints for all operations
 **File:** `backend/convex/http.ts`
 **Acceptance Criteria:**
@@ -486,10 +486,10 @@ http.route({
 });
 ```
 
-### ⏳ Infer 27: Implement Request/Response Transformers
+### ⏳ Cycle 27: Implement Request/Response Transformers
 
 **Status:** Pending
-**Dependencies:** Infer 26
+**Dependencies:** Cycle 26
 **Task:** Transform Convex native types to/from JSON for HTTP
 **File:** `backend/convex/lib/transformers.ts`
 **Acceptance Criteria:**
@@ -500,10 +500,10 @@ http.route({
 - [ ] Transform `properties` field (preserve arbitrary JSON)
 - [ ] Validate request schemas (return 400 Bad Request for invalid)
 
-### ⏳ Infer 28: Add Error Handling with HTTP Status Codes
+### ⏳ Cycle 28: Add Error Handling with HTTP Status Codes
 
 **Status:** Pending
-**Dependencies:** Infer 26
+**Dependencies:** Cycle 26
 **Task:** Map errors to appropriate HTTP status codes with helpful messages
 **File:** `backend/convex/lib/error-handler.ts`
 **Acceptance Criteria:**
@@ -529,10 +529,10 @@ http.route({
 }
 ```
 
-### ⏳ Infer 29: Build Response Pagination System
+### ⏳ Cycle 29: Build Response Pagination System
 
 **Status:** Pending
-**Dependencies:** Infer 26
+**Dependencies:** Cycle 26
 **Task:** Add cursor-based pagination for list endpoints
 **File:** `backend/convex/lib/pagination.ts`
 **Acceptance Criteria:**
@@ -556,10 +556,10 @@ http.route({
 }
 ```
 
-### ⏳ Infer 30: Create Webhook Delivery System
+### ⏳ Cycle 30: Create Webhook Delivery System
 
 **Status:** Pending
-**Dependencies:** Infer 26-29
+**Dependencies:** Cycle 26-29
 **Task:** Deliver events to customer webhooks in real-time
 **File:** `backend/convex/lib/webhooks.ts`
 **Acceptance Criteria:**
@@ -574,15 +574,15 @@ http.route({
 
 ---
 
-## Frontend Phase: API Keys Management Page (Infer 31-35)
+## Frontend Phase: API Keys Management Page (Cycle 31-35)
 
 **Agent:** agent-frontend
 **Goal:** UI for developers to manage API keys
 
-### ⏳ Infer 31: Design API Keys Management Page Wireframe
+### ⏳ Cycle 31: Design API Keys Management Page Wireframe
 
 **Status:** Pending
-**Dependencies:** Infer 30 (Backend API complete)
+**Dependencies:** Cycle 30 (Backend API complete)
 **Task:** Create wireframe satisfying user stories
 **File:** `one/things/wireframes/api-keys-page.md`
 **Acceptance Criteria:**
@@ -593,10 +593,10 @@ http.route({
 - [ ] Actions: Copy key (if just created), Revoke, Edit scopes
 - [ ] Responsive design (mobile + desktop)
 
-### ⏳ Infer 32: Implement Key Generation UI
+### ⏳ Cycle 32: Implement Key Generation UI
 
 **Status:** Pending
-**Dependencies:** Infer 31
+**Dependencies:** Cycle 31
 **Task:** Build modal/form for creating new API keys
 **File:** `web/src/components/features/api-keys/GenerateKeyModal.tsx`
 **Acceptance Criteria:**
@@ -609,10 +609,10 @@ http.route({
 - [ ] Automatically copy to clipboard
 - [ ] Close modal after key saved/copied
 
-### ⏳ Infer 33: Create Key Listing with Usage Stats
+### ⏳ Cycle 33: Create Key Listing with Usage Stats
 
 **Status:** Pending
-**Dependencies:** Infer 32
+**Dependencies:** Cycle 32
 **Task:** Display all API keys with usage information
 **File:** `web/src/components/features/api-keys/ApiKeyList.tsx`
 **Acceptance Criteria:**
@@ -625,10 +625,10 @@ http.route({
 - [ ] Color-code status: green (active), red (revoked), yellow (expiring soon)
 - [ ] Loading skeleton while fetching
 
-### ⏳ Infer 34: Add Key Revocation Interface
+### ⏳ Cycle 34: Add Key Revocation Interface
 
 **Status:** Pending
-**Dependencies:** Infer 33
+**Dependencies:** Cycle 33
 **Task:** Allow users to revoke API keys with confirmation
 **File:** `web/src/components/features/api-keys/RevokeKeyDialog.tsx`
 **Acceptance Criteria:**
@@ -640,10 +640,10 @@ http.route({
 - [ ] Show success toast: "API key revoked"
 - [ ] Update key list (mark as revoked, gray out)
 
-### ⏳ Infer 35: Show Last Used Timestamp and IP
+### ⏳ Cycle 35: Show Last Used Timestamp and IP
 
 **Status:** Pending
-**Dependencies:** Infer 33
+**Dependencies:** Cycle 33
 **Task:** Display detailed usage info for security monitoring
 **File:** `web/src/components/features/api-keys/ApiKeyDetails.tsx`
 **Acceptance Criteria:**
@@ -656,15 +656,15 @@ http.route({
 
 ---
 
-## Frontend Phase: API Documentation Portal (Infer 36-40)
+## Frontend Phase: API Documentation Portal (Cycle 36-40)
 
 **Agent:** agent-frontend
 **Goal:** Interactive docs for developers
 
-### ⏳ Infer 36: Design Documentation Portal Wireframe
+### ⏳ Cycle 36: Design Documentation Portal Wireframe
 
 **Status:** Pending
-**Dependencies:** Infer 30 (Backend API complete)
+**Dependencies:** Cycle 30 (Backend API complete)
 **Task:** Create wireframe for API docs site
 **File:** `one/things/wireframes/api-docs-portal.md`
 **Acceptance Criteria:**
@@ -675,10 +675,10 @@ http.route({
 - [ ] Code examples in multiple languages (tabs for JS/Python/Go/Ruby)
 - [ ] Responsive (collapsible sidebar on mobile)
 
-### ⏳ Infer 37: Implement Interactive API Explorer
+### ⏳ Cycle 37: Implement Interactive API Explorer
 
 **Status:** Pending
-**Dependencies:** Infer 36
+**Dependencies:** Cycle 36
 **Task:** Build "Try It" console for testing endpoints
 **File:** `web/src/components/features/docs/ApiExplorer.tsx`
 **Acceptance Criteria:**
@@ -691,10 +691,10 @@ http.route({
 - [ ] Save request as cURL command
 - [ ] Generate code snippet in selected language
 
-### ⏳ Infer 38: Add Code Examples in 5+ Languages
+### ⏳ Cycle 38: Add Code Examples in 5+ Languages
 
 **Status:** Pending
-**Dependencies:** Infer 36
+**Dependencies:** Cycle 36
 **Task:** Provide copy-pasteable examples for common operations
 **File:** `web/src/content/docs/code-examples/`
 **Acceptance Criteria:**
@@ -725,10 +725,10 @@ const course = await client.entities.create({
 });
 ```
 
-### ⏳ Infer 39: Show Real-Time Usage Stats in Docs
+### ⏳ Cycle 39: Show Real-Time Usage Stats in Docs
 
 **Status:** Pending
-**Dependencies:** Infer 37
+**Dependencies:** Cycle 37
 **Task:** Display live API status and usage metrics
 **File:** `web/src/components/features/docs/ApiStatus.tsx`
 **Acceptance Criteria:**
@@ -740,10 +740,10 @@ const course = await client.entities.create({
 - [ ] Link to full analytics dashboard
 - [ ] Auto-refresh every 30 seconds
 
-### ⏳ Infer 40: Add Error Code Reference
+### ⏳ Cycle 40: Add Error Code Reference
 
 **Status:** Pending
-**Dependencies:** Infer 36
+**Dependencies:** Cycle 36
 **Task:** Comprehensive error documentation with solutions
 **File:** `web/src/content/docs/error-codes.md`
 **Acceptance Criteria:**
@@ -774,15 +774,15 @@ const course = await client.entities.create({
 
 ---
 
-## Frontend Phase: Usage Dashboard (Infer 41-45)
+## Frontend Phase: Usage Dashboard (Cycle 41-45)
 
 **Agent:** agent-frontend
 **Goal:** Analytics and monitoring for API consumers
 
-### ⏳ Infer 41: Design Usage Dashboard Wireframe
+### ⏳ Cycle 41: Design Usage Dashboard Wireframe
 
 **Status:** Pending
-**Dependencies:** Infer 30 (Backend API complete)
+**Dependencies:** Cycle 30 (Backend API complete)
 **Task:** Create wireframe for analytics page
 **File:** `one/things/wireframes/usage-dashboard.md`
 **Acceptance Criteria:**
@@ -793,10 +793,10 @@ const course = await client.entities.create({
 - [ ] Date range selector (Last 24h, 7 days, 30 days, Custom)
 - [ ] Responsive design
 
-### ⏳ Infer 42: Show Quota Consumption with Progress Bars
+### ⏳ Cycle 42: Show Quota Consumption with Progress Bars
 
 **Status:** Pending
-**Dependencies:** Infer 41
+**Dependencies:** Cycle 41
 **Task:** Visual representation of usage limits
 **File:** `web/src/components/features/analytics/QuotaUsage.tsx`
 **Acceptance Criteria:**
@@ -807,10 +807,10 @@ const course = await client.entities.create({
 - [ ] Show time until reset ("Resets in 15 minutes")
 - [ ] Warning if nearing limit: "You've used 90% of your daily quota"
 
-### ⏳ Infer 43: Add Billing Projection
+### ⏳ Cycle 43: Add Billing Projection
 
 **Status:** Pending
-**Dependencies:** Infer 42
+**Dependencies:** Cycle 42
 **Task:** Estimate costs based on current usage trends
 **File:** `web/src/components/features/analytics/BillingProjection.tsx`
 **Acceptance Criteria:**
@@ -821,10 +821,10 @@ const course = await client.entities.create({
 - [ ] Chart: Usage trend (last 30 days) + forecast (next 30 days)
 - [ ] Link to billing/upgrade page
 
-### ⏳ Infer 44: Create Alert Configuration UI
+### ⏳ Cycle 44: Create Alert Configuration UI
 
 **Status:** Pending
-**Dependencies:** Infer 42
+**Dependencies:** Cycle 42
 **Task:** Let users set up usage alerts
 **File:** `web/src/components/features/analytics/AlertConfig.tsx`
 **Acceptance Criteria:**
@@ -835,10 +835,10 @@ const course = await client.entities.create({
 - [ ] Test alert button (send sample notification)
 - [ ] Save alerts to database (new entity type: `api_alert`)
 
-### ⏳ Infer 45: Display Top Endpoints by Usage
+### ⏳ Cycle 45: Display Top Endpoints by Usage
 
 **Status:** Pending
-**Dependencies:** Infer 41
+**Dependencies:** Cycle 41
 **Task:** Show which endpoints are most frequently called
 **File:** `web/src/components/features/analytics/TopEndpoints.tsx`
 **Acceptance Criteria:**
@@ -851,15 +851,15 @@ const course = await client.entities.create({
 
 ---
 
-## Frontend Phase: Developer Onboarding Flow (Infer 46-50)
+## Frontend Phase: Developer Onboarding Flow (Cycle 46-50)
 
 **Agent:** agent-frontend
 **Goal:** Seamless first-time experience
 
-### ⏳ Infer 46: Create "Get Started" Wizard
+### ⏳ Cycle 46: Create "Get Started" Wizard
 
 **Status:** Pending
-**Dependencies:** Infer 35 (API key management complete)
+**Dependencies:** Cycle 35 (API key management complete)
 **Task:** Multi-step onboarding for new developers
 **File:** `web/src/components/features/onboarding/OnboardingWizard.tsx`
 **Acceptance Criteria:**
@@ -872,10 +872,10 @@ const course = await client.entities.create({
 - [ ] Skip option (save progress, resume later)
 - [ ] Confetti animation on completion 🎉
 
-### ⏳ Infer 47: Add SDK Download Options
+### ⏳ Cycle 47: Add SDK Download Options
 
 **Status:** Pending
-**Dependencies:** Infer 46
+**Dependencies:** Cycle 46
 **Task:** Provide easy access to official SDKs
 **File:** `web/src/components/features/onboarding/SdkDownload.tsx`
 **Acceptance Criteria:**
@@ -886,10 +886,10 @@ const course = await client.entities.create({
 - [ ] Copy button for install commands
 - [ ] Link to GitHub repositories
 
-### ⏳ Infer 48: Implement Quick Start Templates
+### ⏳ Cycle 48: Implement Quick Start Templates
 
 **Status:** Pending
-**Dependencies:** Infer 47
+**Dependencies:** Cycle 47
 **Task:** Provide boilerplate projects for common use cases
 **File:** `web/src/content/templates/`
 **Acceptance Criteria:**
@@ -900,10 +900,10 @@ const course = await client.entities.create({
 - [ ] Pre-configured API client with placeholder credentials
 - [ ] Example: List entities, Create entity, Update entity
 
-### ⏳ Infer 49: Show Example Applications
+### ⏳ Cycle 49: Show Example Applications
 
 **Status:** Pending
-**Dependencies:** Infer 48
+**Dependencies:** Cycle 48
 **Task:** Showcase real-world apps built on ONE Platform
 **File:** `web/src/components/features/onboarding/ExampleApps.tsx`
 **Acceptance Criteria:**
@@ -913,10 +913,10 @@ const course = await client.entities.create({
 - [ ] Filter by category: Education, Commerce, Productivity, Social
 - [ ] "Submit your app" form (user-generated examples)
 
-### ⏳ Infer 50: Add Video Tutorials
+### ⏳ Cycle 50: Add Video Tutorials
 
 **Status:** Pending
-**Dependencies:** Infer 46-49
+**Dependencies:** Cycle 46-49
 **Task:** Embed walkthrough videos for visual learners
 **File:** `web/src/components/features/onboarding/VideoTutorials.tsx`
 **Acceptance Criteria:**
@@ -929,15 +929,15 @@ const course = await client.entities.create({
 
 ---
 
-## Quality Phase: Unit Tests (Infer 51-55)
+## Quality Phase: Unit Tests (Cycle 51-55)
 
 **Agent:** agent-quality
 **Goal:** Test individual components
 
-### ⏳ Infer 51: Test API Key Generation
+### ⏳ Cycle 51: Test API Key Generation
 
 **Status:** Pending
-**Dependencies:** Infer 16-20 (Auth service complete)
+**Dependencies:** Cycle 16-20 (Auth service complete)
 **Task:** Validate key generation logic
 **File:** `backend/convex/mutations/api-keys.test.ts`
 **Acceptance Criteria:**
@@ -950,10 +950,10 @@ const course = await client.entities.create({
 - [ ] Test: Prefix stored in plaintext for display
 - [ ] All tests pass (100%)
 
-### ⏳ Infer 52: Test Scope Validation
+### ⏳ Cycle 52: Test Scope Validation
 
 **Status:** Pending
-**Dependencies:** Infer 18 (Scope system complete)
+**Dependencies:** Cycle 18 (Scope system complete)
 **Task:** Verify permission checks work correctly
 **File:** `backend/convex/lib/api-auth.test.ts`
 **Acceptance Criteria:**
@@ -965,10 +965,10 @@ const course = await client.entities.create({
 - [ ] Test: Invalid scope format rejected
 - [ ] All tests pass (100%)
 
-### ⏳ Infer 53: Test Rate Limiting
+### ⏳ Cycle 53: Test Rate Limiting
 
 **Status:** Pending
-**Dependencies:** Infer 19 (Rate limiter complete)
+**Dependencies:** Cycle 19 (Rate limiter complete)
 **Task:** Ensure quotas enforced correctly
 **File:** `backend/convex/lib/rate-limit.test.ts`
 **Acceptance Criteria:**
@@ -981,10 +981,10 @@ const course = await client.entities.create({
 - [ ] Test: `Retry-After` header present in 429 response
 - [ ] All tests pass (100%)
 
-### ⏳ Infer 54: Test Group Isolation
+### ⏳ Cycle 54: Test Group Isolation
 
 **Status:** Pending
-**Dependencies:** Infer 21-24 (Group scoping complete)
+**Dependencies:** Cycle 21-24 (Group scoping complete)
 **Task:** Validate no data leakage between organizations
 **File:** `backend/convex/lib/group-scoping.test.ts`
 **Acceptance Criteria:**
@@ -997,10 +997,10 @@ const course = await client.entities.create({
 - [ ] Test: Knowledge search scoped to org
 - [ ] All tests pass (100%) - CRITICAL for security
 
-### ⏳ Infer 55: Test Key Rotation
+### ⏳ Cycle 55: Test Key Rotation
 
 **Status:** Pending
-**Dependencies:** Infer 20 (Key rotation complete)
+**Dependencies:** Cycle 20 (Key rotation complete)
 **Task:** Verify seamless key rotation
 **File:** `backend/convex/mutations/api-keys.test.ts`
 **Acceptance Criteria:**
@@ -1014,15 +1014,15 @@ const course = await client.entities.create({
 
 ---
 
-## Quality Phase: Integration Tests (Infer 56-60)
+## Quality Phase: Integration Tests (Cycle 56-60)
 
 **Agent:** agent-quality
 **Goal:** Test end-to-end flows
 
-### ⏳ Infer 56: Test Full Authentication Flow
+### ⏳ Cycle 56: Test Full Authentication Flow
 
 **Status:** Pending
-**Dependencies:** Infer 51-55 (Unit tests complete)
+**Dependencies:** Cycle 51-55 (Unit tests complete)
 **Task:** Validate complete auth flow from key to scoped request
 **File:** `backend/convex/integration/auth-flow.test.ts`
 **Acceptance Criteria:**
@@ -1035,10 +1035,10 @@ const course = await client.entities.create({
 - [ ] Test: Valid request logs event
 - [ ] All tests pass (100%)
 
-### ⏳ Infer 57: Test Multi-Tenant Isolation
+### ⏳ Cycle 57: Test Multi-Tenant Isolation
 
 **Status:** Pending
-**Dependencies:** Infer 56
+**Dependencies:** Cycle 56
 **Task:** Comprehensive cross-org security tests
 **File:** `backend/convex/integration/multi-tenant.test.ts`
 **Acceptance Criteria:**
@@ -1051,10 +1051,10 @@ const course = await client.entities.create({
 - [ ] Test: Event queries don't leak cross-org data
 - [ ] All tests pass (100%) - CRITICAL for security
 
-### ⏳ Infer 58: Test Rate Limit Enforcement
+### ⏳ Cycle 58: Test Rate Limit Enforcement
 
 **Status:** Pending
-**Dependencies:** Infer 56
+**Dependencies:** Cycle 56
 **Task:** Validate rate limiting under real load
 **File:** `backend/convex/integration/rate-limits.test.ts`
 **Acceptance Criteria:**
@@ -1067,10 +1067,10 @@ const course = await client.entities.create({
 - [ ] Test: `quota_exceeded` event logged
 - [ ] All tests pass (100%)
 
-### ⏳ Infer 59: Test Webhook Delivery
+### ⏳ Cycle 59: Test Webhook Delivery
 
 **Status:** Pending
-**Dependencies:** Infer 30 (Webhook system complete)
+**Dependencies:** Cycle 30 (Webhook system complete)
 **Task:** Validate event delivery to customer endpoints
 **File:** `backend/convex/integration/webhooks.test.ts`
 **Acceptance Criteria:**
@@ -1082,10 +1082,10 @@ const course = await client.entities.create({
 - [ ] Test: Webhook logs show delivery attempts
 - [ ] All tests pass (100%)
 
-### ⏳ Infer 60: Test Concurrent Requests
+### ⏳ Cycle 60: Test Concurrent Requests
 
 **Status:** Pending
-**Dependencies:** Infer 56-59
+**Dependencies:** Cycle 56-59
 **Task:** Ensure no race conditions or deadlocks
 **File:** `backend/convex/integration/concurrency.test.ts`
 **Acceptance Criteria:**
@@ -1099,15 +1099,15 @@ const course = await client.entities.create({
 
 ---
 
-## Quality Phase: Security Tests (Infer 61-65)
+## Quality Phase: Security Tests (Cycle 61-65)
 
 **Agent:** agent-quality
 **Goal:** Penetration testing and vulnerability scanning
 
-### ⏳ Infer 61: Test Key Brute Force Protection
+### ⏳ Cycle 61: Test Key Brute Force Protection
 
 **Status:** Pending
-**Dependencies:** Infer 56-60 (Integration tests complete)
+**Dependencies:** Cycle 56-60 (Integration tests complete)
 **Task:** Validate resistance to key guessing attacks
 **File:** `backend/convex/security/brute-force.test.ts`
 **Acceptance Criteria:**
@@ -1119,10 +1119,10 @@ const course = await client.entities.create({
 - [ ] Test: Admin notification if >100 failed attempts from single IP
 - [ ] All tests pass (100%)
 
-### ⏳ Infer 62: Test SQL Injection Attempts
+### ⏳ Cycle 62: Test SQL Injection Attempts
 
 **Status:** Pending
-**Dependencies:** Infer 61
+**Dependencies:** Cycle 61
 **Task:** Verify Convex's built-in protection (should be safe by design)
 **File:** `backend/convex/security/injection.test.ts`
 **Acceptance Criteria:**
@@ -1134,10 +1134,10 @@ const course = await client.entities.create({
 - [ ] Test: Inputs sanitized/escaped in responses
 - [ ] All tests pass (100%)
 
-### ⏳ Infer 63: Test Unauthorized Scope Escalation
+### ⏳ Cycle 63: Test Unauthorized Scope Escalation
 
 **Status:** Pending
-**Dependencies:** Infer 61-62
+**Dependencies:** Cycle 61-62
 **Task:** Ensure users can't grant themselves additional scopes
 **File:** `backend/convex/security/scope-escalation.test.ts`
 **Acceptance Criteria:**
@@ -1149,10 +1149,10 @@ const course = await client.entities.create({
 - [ ] Test: Scope tampering in request headers ignored
 - [ ] All tests pass (100%)
 
-### ⏳ Infer 64: Test Expired Key Handling
+### ⏳ Cycle 64: Test Expired Key Handling
 
 **Status:** Pending
-**Dependencies:** Infer 61-63
+**Dependencies:** Cycle 61-63
 **Task:** Validate expired keys immediately rejected
 **File:** `backend/convex/security/expiration.test.ts`
 **Acceptance Criteria:**
@@ -1164,10 +1164,10 @@ const course = await client.entities.create({
 - [ ] Test: Renewal flow works (extend expiration)
 - [ ] All tests pass (100%)
 
-### ⏳ Infer 65: Penetration Testing (OWASP Top 10)
+### ⏳ Cycle 65: Penetration Testing (OWASP Top 10)
 
 **Status:** Pending
-**Dependencies:** Infer 61-64
+**Dependencies:** Cycle 61-64
 **Task:** External security audit against OWASP Top 10
 **File:** `one/events/security-audit-report.md`
 **Acceptance Criteria:**
@@ -1182,15 +1182,15 @@ const course = await client.entities.create({
 
 ---
 
-## Quality Phase: Performance Tests (Infer 66-70)
+## Quality Phase: Performance Tests (Cycle 66-70)
 
 **Agent:** agent-quality
 **Goal:** Validate performance under load
 
-### ⏳ Infer 66: Load Test (10K Requests/Minute)
+### ⏳ Cycle 66: Load Test (10K Requests/Minute)
 
 **Status:** Pending
-**Dependencies:** Infer 61-65 (Security tests complete)
+**Dependencies:** Cycle 61-65 (Security tests complete)
 **Task:** Simulate high traffic and measure performance
 **File:** `backend/convex/performance/load-test.ts`
 **Acceptance Criteria:**
@@ -1203,10 +1203,10 @@ const course = await client.entities.create({
 - [ ] Test: Convex functions scale automatically
 - [ ] Pass: 99.9% success rate
 
-### ⏳ Infer 67: Latency Testing (p50, p95, p99)
+### ⏳ Cycle 67: Latency Testing (p50, p95, p99)
 
 **Status:** Pending
-**Dependencies:** Infer 66
+**Dependencies:** Cycle 66
 **Task:** Measure response times at different percentiles
 **File:** `backend/convex/performance/latency-test.ts`
 **Acceptance Criteria:**
@@ -1218,10 +1218,10 @@ const course = await client.entities.create({
 - [ ] Compare: Cold start vs warm cache performance
 - [ ] Pass: All targets met
 
-### ⏳ Infer 68: Database Query Optimization
+### ⏳ Cycle 68: Database Query Optimization
 
 **Status:** Pending
-**Dependencies:** Infer 67
+**Dependencies:** Cycle 67
 **Task:** Optimize slow queries identified in latency tests
 **File:** `backend/convex/queries/` (various files)
 **Acceptance Criteria:**
@@ -1233,10 +1233,10 @@ const course = await client.entities.create({
 - [ ] Use Convex's `withIndex()` for fast lookups
 - [ ] Re-run latency tests → 20% improvement
 
-### ⏳ Infer 69: CDN Caching Strategy
+### ⏳ Cycle 69: CDN Caching Strategy
 
 **Status:** Pending
-**Dependencies:** Infer 68
+**Dependencies:** Cycle 68
 **Task:** Implement edge caching for static/semi-static data
 **File:** `backend/convex/http.ts` (add cache headers)
 **Acceptance Criteria:**
@@ -1248,10 +1248,10 @@ const course = await client.entities.create({
 - [ ] Test: Cached requests return instantly (<10ms)
 - [ ] Pass: 50% cache hit rate for eligible requests
 
-### ⏳ Infer 70: Connection Pooling Validation
+### ⏳ Cycle 70: Connection Pooling Validation
 
 **Status:** Pending
-**Dependencies:** Infer 66-69
+**Dependencies:** Cycle 66-69
 **Task:** Ensure efficient connection reuse
 **File:** `backend/convex/lib/connection-pool.ts`
 **Acceptance Criteria:**
@@ -1265,15 +1265,15 @@ const course = await client.entities.create({
 
 ---
 
-## SDK Phase: Official SDKs (Infer 71-75)
+## SDK Phase: Official SDKs (Cycle 71-75)
 
 **Agent:** agent-builder
 **Goal:** Create client libraries for popular languages
 
-### ⏳ Infer 71: JavaScript/TypeScript SDK
+### ⏳ Cycle 71: JavaScript/TypeScript SDK
 
 **Status:** Pending
-**Dependencies:** Infer 30 (API Gateway complete)
+**Dependencies:** Cycle 30 (API Gateway complete)
 **Task:** Build npm package for Node.js and browsers
 **File:** `sdk/javascript/`
 **Acceptance Criteria:**
@@ -1305,10 +1305,10 @@ const course = await client.entities.create({
 });
 ```
 
-### ⏳ Infer 72: Python SDK
+### ⏳ Cycle 72: Python SDK
 
 **Status:** Pending
-**Dependencies:** Infer 71
+**Dependencies:** Cycle 71
 **Task:** Build PyPI package for Python developers
 **File:** `sdk/python/`
 **Acceptance Criteria:**
@@ -1339,10 +1339,10 @@ course = client.entities.create(
 )
 ```
 
-### ⏳ Infer 73: Go SDK
+### ⏳ Cycle 73: Go SDK
 
 **Status:** Pending
-**Dependencies:** Infer 72
+**Dependencies:** Cycle 72
 **Task:** Build Go module for Go developers
 **File:** `sdk/go/`
 **Acceptance Criteria:**
@@ -1373,10 +1373,10 @@ course, err := client.Entities.Create(ctx, &onesdk.Entity{
 })
 ```
 
-### ⏳ Infer 74: Ruby SDK
+### ⏳ Cycle 74: Ruby SDK
 
 **Status:** Pending
-**Dependencies:** Infer 73
+**Dependencies:** Cycle 73
 **Task:** Build gem for Ruby developers
 **File:** `sdk/ruby/`
 **Acceptance Criteria:**
@@ -1407,10 +1407,10 @@ course = client.entities.create(
 )
 ```
 
-### ⏳ Infer 75: Add Type Definitions (Full TypeScript Support)
+### ⏳ Cycle 75: Add Type Definitions (Full TypeScript Support)
 
 **Status:** Pending
-**Dependencies:** Infer 71-74
+**Dependencies:** Cycle 71-74
 **Task:** Generate TypeScript definitions for all SDKs
 **File:** `sdk/types/` (shared type definitions)
 **Acceptance Criteria:**
@@ -1425,15 +1425,15 @@ course = client.entities.create(
 
 ---
 
-## SDK Phase: CLI Tool (Infer 76-80)
+## SDK Phase: CLI Tool (Cycle 76-80)
 
 **Agent:** agent-builder
 **Goal:** Command-line tool for API management
 
-### ⏳ Infer 76: Create `oneie` CLI for API Management
+### ⏳ Cycle 76: Create `oneie` CLI for API Management
 
 **Status:** Pending
-**Dependencies:** Infer 71 (JS SDK complete)
+**Dependencies:** Cycle 71 (JS SDK complete)
 **Task:** Build command-line tool using Node.js
 **File:** `cli/`
 **Acceptance Criteria:**
@@ -1446,10 +1446,10 @@ course = client.entities.create(
 - [ ] Tests: CLI integration tests
 - [ ] Docs: `oneie help api`
 
-### ⏳ Infer 77: Add Commands (keys:create, keys:list, keys:revoke)
+### ⏳ Cycle 77: Add Commands (keys:create, keys:list, keys:revoke)
 
 **Status:** Pending
-**Dependencies:** Infer 76
+**Dependencies:** Cycle 76
 **Task:** Implement API key management commands
 **File:** `cli/commands/api/keys.ts`
 **Acceptance Criteria:**
@@ -1472,10 +1472,10 @@ $ oneie api:keys:create
 ⚠️  Save this key now. You won't see it again.
 ```
 
-### ⏳ Infer 78: Implement `oneie test` for Endpoint Testing
+### ⏳ Cycle 78: Implement `oneie test` for Endpoint Testing
 
 **Status:** Pending
-**Dependencies:** Infer 77
+**Dependencies:** Cycle 77
 **Task:** Interactive endpoint tester in CLI
 **File:** `cli/commands/api/test.ts`
 **Acceptance Criteria:**
@@ -1499,10 +1499,10 @@ $ oneie api:test
 }
 ```
 
-### ⏳ Infer 79: Add `oneie logs` for Request History
+### ⏳ Cycle 79: Add `oneie logs` for Request History
 
 **Status:** Pending
-**Dependencies:** Infer 78
+**Dependencies:** Cycle 78
 **Task:** View API request logs from CLI
 **File:** `cli/commands/api/logs.ts`
 **Acceptance Criteria:**
@@ -1523,10 +1523,10 @@ $ oneie api:logs --tail
 [12:34:58] POST /api/v1/connections 403 (30ms) ❌
 ```
 
-### ⏳ Infer 80: Create `oneie deploy` for Webhook Configuration
+### ⏳ Cycle 80: Create `oneie deploy` for Webhook Configuration
 
 **Status:** Pending
-**Dependencies:** Infer 79
+**Dependencies:** Cycle 79
 **Task:** Manage webhook subscriptions from CLI
 **File:** `cli/commands/api/webhooks.ts`
 **Acceptance Criteria:**
@@ -1551,15 +1551,15 @@ $ oneie api:webhooks:add
 
 ---
 
-## Operations Phase: Monitoring & Observability (Infer 81-85)
+## Operations Phase: Monitoring & Observability (Cycle 81-85)
 
 **Agent:** agent-ops
 **Goal:** Production monitoring setup
 
-### ⏳ Infer 81: Set Up API Metrics Dashboard
+### ⏳ Cycle 81: Set Up API Metrics Dashboard
 
 **Status:** Pending
-**Dependencies:** Infer 70 (Performance tests complete)
+**Dependencies:** Cycle 70 (Performance tests complete)
 **Task:** Create real-time monitoring dashboard
 **Tool:** Grafana or Datadog
 **Acceptance Criteria:**
@@ -1570,10 +1570,10 @@ $ oneie api:webhooks:add
 - [ ] Alerts: High error rate (>5%), high latency (p95 >500ms), downtime
 - [ ] Dashboard accessible to internal team + customers (separate views)
 
-### ⏳ Infer 82: Add Error Tracking (Sentry Integration)
+### ⏳ Cycle 82: Add Error Tracking (Sentry Integration)
 
 **Status:** Pending
-**Dependencies:** Infer 81
+**Dependencies:** Cycle 81
 **Task:** Track and triage backend errors
 **Tool:** Sentry
 **Acceptance Criteria:**
@@ -1586,10 +1586,10 @@ $ oneie api:webhooks:add
 - [ ] Alert: Slack notification for critical errors
 - [ ] Integration: Link Sentry issues to GitHub issues
 
-### ⏳ Infer 83: Configure Uptime Monitoring (Status Page)
+### ⏳ Cycle 83: Configure Uptime Monitoring (Status Page)
 
 **Status:** Pending
-**Dependencies:** Infer 81-82
+**Dependencies:** Cycle 81-82
 **Task:** Public status page for API health
 **Tool:** Statuspage.io or custom
 **Acceptance Criteria:**
@@ -1601,10 +1601,10 @@ $ oneie api:webhooks:add
 - [ ] Subscribe: Email/SMS/Slack notifications
 - [ ] History: Past incidents with postmortems
 
-### ⏳ Infer 84: Create Alerting Rules
+### ⏳ Cycle 84: Create Alerting Rules
 
 **Status:** Pending
-**Dependencies:** Infer 81-83
+**Dependencies:** Cycle 81-83
 **Task:** Define when to notify team of issues
 **File:** `infrastructure/alerts.yml`
 **Acceptance Criteria:**
@@ -1616,10 +1616,10 @@ $ oneie api:webhooks:add
 - [ ] Alert: Quota exceeded by enterprise customer → Notify sales team
 - [ ] Escalation: If not acknowledged in 15 minutes, escalate to manager
 
-### ⏳ Infer 85: Implement Distributed Tracing
+### ⏳ Cycle 85: Implement Distributed Tracing
 
 **Status:** Pending
-**Dependencies:** Infer 81-84
+**Dependencies:** Cycle 81-84
 **Task:** Trace requests across services for debugging
 **Tool:** OpenTelemetry + Jaeger/Zipkin
 **Acceptance Criteria:**
@@ -1633,15 +1633,15 @@ $ oneie api:webhooks:add
 
 ---
 
-## Operations Phase: Documentation & Knowledge Base (Infer 86-90)
+## Operations Phase: Documentation & Knowledge Base (Cycle 86-90)
 
 **Agent:** agent-documenter
 **Goal:** Comprehensive documentation for developers
 
-### ⏳ Infer 86: Write Comprehensive API Reference
+### ⏳ Cycle 86: Write Comprehensive API Reference
 
 **Status:** Pending
-**Dependencies:** Infer 30 (API Gateway complete)
+**Dependencies:** Cycle 30 (API Gateway complete)
 **Task:** Generate OpenAPI/Swagger spec from code
 **File:** `backend/convex/openapi.yaml`
 **Acceptance Criteria:**
@@ -1654,10 +1654,10 @@ $ oneie api:webhooks:add
 - [ ] Generate from code comments (annotations)
 - [ ] Validate: No broken links, all examples valid
 
-### ⏳ Infer 87: Create Developer Guides
+### ⏳ Cycle 87: Create Developer Guides
 
 **Status:** Pending
-**Dependencies:** Infer 86
+**Dependencies:** Cycle 86
 **Task:** Write prose guides for common workflows
 **File:** `web/src/content/docs/guides/`
 **Acceptance Criteria:**
@@ -1669,10 +1669,10 @@ $ oneie api:webhooks:add
 - [ ] Guide: "Rate Limiting & Quotas" (understanding limits, upgrading tiers)
 - [ ] All guides: Step-by-step, code examples, troubleshooting section
 
-### ⏳ Infer 88: Add Troubleshooting Runbook
+### ⏳ Cycle 88: Add Troubleshooting Runbook
 
 **Status:** Pending
-**Dependencies:** Infer 87
+**Dependencies:** Cycle 87
 **Task:** Solutions for common issues
 **File:** `web/src/content/docs/troubleshooting.md`
 **Acceptance Criteria:**
@@ -1684,10 +1684,10 @@ $ oneie api:webhooks:add
 - [ ] Issue: "Webhook not receiving events" → Verify URL, check logs, test endpoint
 - [ ] Each issue: Symptoms, causes, step-by-step solution
 
-### ⏳ Infer 89: Generate SDK Documentation
+### ⏳ Cycle 89: Generate SDK Documentation
 
 **Status:** Pending
-**Dependencies:** Infer 71-75 (SDKs complete)
+**Dependencies:** Cycle 71-75 (SDKs complete)
 **Task:** Auto-generate docs from code comments
 **File:** `sdk/docs/`
 **Acceptance Criteria:**
@@ -1699,10 +1699,10 @@ $ oneie api:webhooks:add
 - [ ] Hosted: `docs.one.ie/sdk/javascript`, `/python`, `/go`, `/ruby`
 - [ ] Searchable: Full-text search across all SDK docs
 
-### ⏳ Infer 90: Create Migration Guides (v1 → v2)
+### ⏳ Cycle 90: Create Migration Guides (v1 → v2)
 
 **Status:** Pending
-**Dependencies:** Infer 86-89
+**Dependencies:** Cycle 86-89
 **Task:** Future-proofing for API versioning
 **File:** `web/src/content/docs/migrations/`
 **Acceptance Criteria:**
@@ -1716,15 +1716,15 @@ $ oneie api:webhooks:add
 
 ---
 
-## Operations Phase: Deployment & CI/CD (Infer 91-95)
+## Operations Phase: Deployment & CI/CD (Cycle 91-95)
 
 **Agent:** agent-ops
 **Goal:** Automated deployment pipeline
 
-### ⏳ Infer 91: Configure Cloudflare Workers for API Gateway
+### ⏳ Cycle 91: Configure Cloudflare Workers for API Gateway
 
 **Status:** Pending
-**Dependencies:** Infer 85 (Monitoring setup complete)
+**Dependencies:** Cycle 85 (Monitoring setup complete)
 **Task:** Deploy API Gateway to Cloudflare's edge network
 **File:** `backend/wrangler.toml`
 **Acceptance Criteria:**
@@ -1736,10 +1736,10 @@ $ oneie api:webhooks:add
 - [ ] SSL/TLS: HTTPS enforced, TLS 1.3
 - [ ] Deploy: `wrangler deploy` from CI/CD
 
-### ⏳ Infer 92: Set Up Convex HTTP Endpoints
+### ⏳ Cycle 92: Set Up Convex HTTP Endpoints
 
 **Status:** Pending
-**Dependencies:** Infer 91
+**Dependencies:** Cycle 91
 **Task:** Configure Convex to handle HTTP traffic
 **File:** `backend/convex/http.ts`
 **Acceptance Criteria:**
@@ -1751,10 +1751,10 @@ $ oneie api:webhooks:add
 - [ ] Error handling: Proper HTTP status codes
 - [ ] Deploy: `npx convex deploy` from CI/CD
 
-### ⏳ Infer 93: Implement Blue-Green Deployment
+### ⏳ Cycle 93: Implement Blue-Green Deployment
 
 **Status:** Pending
-**Dependencies:** Infer 92
+**Dependencies:** Cycle 92
 **Task:** Zero-downtime deployment strategy
 **File:** `.github/workflows/deploy-api.yml`
 **Acceptance Criteria:**
@@ -1766,10 +1766,10 @@ $ oneie api:webhooks:add
 - [ ] Monitor: If error rate spikes, rollback to Blue
 - [ ] Rollback: Automated, <1 minute to revert
 
-### ⏳ Infer 94: Add Automated Testing in CI
+### ⏳ Cycle 94: Add Automated Testing in CI
 
 **Status:** Pending
-**Dependencies:** Infer 93
+**Dependencies:** Cycle 93
 **Task:** Run all tests on every commit
 **File:** `.github/workflows/test-api.yml`
 **Acceptance Criteria:**
@@ -1781,10 +1781,10 @@ $ oneie api:webhooks:add
 - [ ] Build: Ensure `npx convex deploy --dry-run` succeeds
 - [ ] Notify: Slack notification if tests fail
 
-### ⏳ Infer 95: Create Rollback Procedures
+### ⏳ Cycle 95: Create Rollback Procedures
 
 **Status:** Pending
-**Dependencies:** Infer 93-94
+**Dependencies:** Cycle 93-94
 **Task:** Define process for reverting bad deployments
 **File:** `one/knowledge/rollback-procedures.md`
 **Acceptance Criteria:**
@@ -1798,15 +1798,15 @@ $ oneie api:webhooks:add
 
 ---
 
-## Launch Phase: Final Steps (Infer 96-100)
+## Launch Phase: Final Steps (Cycle 96-100)
 
 **Agent:** agent-director
 **Goal:** Security audit, load testing, launch
 
-### ⏳ Infer 96: Conduct Security Audit (External Firm)
+### ⏳ Cycle 96: Conduct Security Audit (External Firm)
 
 **Status:** Pending
-**Dependencies:** Infer 61-65 (Security tests complete)
+**Dependencies:** Cycle 61-65 (Security tests complete)
 **Task:** Hire external security firm for audit
 **File:** `one/events/security-audit-final-report.md`
 **Acceptance Criteria:**
@@ -1818,10 +1818,10 @@ $ oneie api:webhooks:add
 - [ ] Re-test: Verify fixes with auditors
 - [ ] Certificate: Security audit badge for marketing
 
-### ⏳ Infer 97: Perform Load Testing at Scale
+### ⏳ Cycle 97: Perform Load Testing at Scale
 
 **Status:** Pending
-**Dependencies:** Infer 66-70 (Performance tests complete)
+**Dependencies:** Cycle 66-70 (Performance tests complete)
 **Task:** Validate production capacity with realistic traffic
 **File:** `one/events/load-test-production-report.md`
 **Acceptance Criteria:**
@@ -1833,10 +1833,10 @@ $ oneie api:webhooks:add
 - [ ] Capacity planning: Document max capacity and scaling thresholds
 - [ ] Auto-scaling: Convex scales automatically (verify)
 
-### ⏳ Infer 98: Create Onboarding Materials for First 10 Customers
+### ⏳ Cycle 98: Create Onboarding Materials for First 10 Customers
 
 **Status:** Pending
-**Dependencies:** Infer 46-50 (Onboarding flow complete)
+**Dependencies:** Cycle 46-50 (Onboarding flow complete)
 **Task:** Personalized onboarding for early adopters
 **File:** `one/events/early-customer-onboarding.md`
 **Acceptance Criteria:**
@@ -1848,10 +1848,10 @@ $ oneie api:webhooks:add
 - [ ] Success metrics: All 10 customers make >100 API calls within 1 week
 - [ ] Case studies: Write 2-3 case studies from early customers
 
-### ⏳ Infer 99: Write Launch Announcement
+### ⏳ Cycle 99: Write Launch Announcement
 
 **Status:** Pending
-**Dependencies:** Infer 96-98 (All pre-launch tasks complete)
+**Dependencies:** Cycle 96-98 (All pre-launch tasks complete)
 **Task:** Create launch announcement and marketing materials
 **File:** `one/events/api-launch-announcement.md`
 **Acceptance Criteria:**
@@ -1863,15 +1863,15 @@ $ oneie api:webhooks:add
 - [ ] Press release: Send to tech publications (TechCrunch, The Verge, etc.)
 - [ ] Launch date: Announce date and countdown
 
-### ⏳ Infer 100: Mark Feature Complete and Notify Stakeholders
+### ⏳ Cycle 100: Mark Feature Complete and Notify Stakeholders
 
 **Status:** Pending
-**Dependencies:** Infer 99 (Launch announcement complete)
+**Dependencies:** Cycle 99 (Launch announcement complete)
 **Task:** Final sign-off and handoff
 **File:** `one/events/api-feature-complete.md`
 **Acceptance Criteria:**
 
-- [ ] All 100 inferences complete ✅
+- [ ] All 100 cycles complete ✅
 - [ ] All tests passing (unit, integration, security, performance) ✅
 - [ ] Documentation complete (API reference, guides, SDKs) ✅
 - [ ] Monitoring setup (dashboards, alerts, status page) ✅
@@ -1885,7 +1885,7 @@ $ oneie api:webhooks:add
 
 ## Summary Statistics
 
-**Total Inferences:** 100
+**Total Cycles:** 100
 **Estimated Duration:** 60-90 days (with parallelization)
 **Agents Involved:** 7 (director, backend, frontend, designer, quality, builder, ops, documenter, problem-solver)
 **New Entity Types:** 4 (api_key, api_application, service_account, api_quota)
@@ -1899,10 +1899,10 @@ $ oneie api:webhooks:add
 
 ## Next Steps
 
-1. **Start Execution:** Run `/next` to begin Infer 1
+1. **Start Execution:** Run `/next` to begin Cycle 1
 2. **Review Plan:** Use `/plan` to see full breakdown
-3. **Assign Agents:** Agents will be automatically assigned based on inference type
-4. **Track Progress:** Use `/now` to see current inference, `/done` to mark complete
+3. **Assign Agents:** Agents will be automatically assigned based on cycle type
+4. **Track Progress:** Use `/now` to see current cycle, `/done` to mark complete
 5. **Monitor Quality:** agent-quality will continuously validate ontology alignment
 
-**Ready to begin? Type `/next` to start Infer 1!**
+**Ready to begin? Type `/next` to start Cycle 1!**

@@ -18,7 +18,7 @@ Release the CLI to npm registry.
 
 ## What It Does
 
-Runs `/Users/toc/Server/ONE/scripts/release-cli.sh [type]` which:
+Runs `./.claude/hooks/release-cli.sh [type]` which:
 
 1. Syncs `.claude/*` to `cli/.claude/`
 2. Syncs `/one/*` to `cli/one/`
@@ -35,7 +35,7 @@ Delegate to agent-ops to run the script:
 Task({
   subagent_type: "agent-ops",
   description: "Release CLI to npm",
-  prompt: `Run: /Users/toc/Server/ONE/scripts/release-cli.sh ${releaseType}
+  prompt: `Run: ./.claude/hooks/release-cli.sh ${releaseType}
 
 Wait for completion and report success with the new version.`,
 });

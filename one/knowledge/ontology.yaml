@@ -988,12 +988,12 @@ events:
       - optimization_applied # Optimization applied
       - report_generated # Report generated
 
-    inference_events:
-      - inference_request # User requests AI inference
-      - inference_completed # Inference result delivered
-      - inference_failed # Inference failed
-      - inference_quota_exceeded # Monthly limit hit
-      - inference_revenue_collected # Daily revenue sweep
+    cycle_events:
+      - cycle_request # User requests AI cycle
+      - cycle_completed # Cycle result delivered
+      - cycle_failed # Cycle failed
+      - cycle_quota_exceeded # Monthly limit hit
+      - cycle_revenue_collected # Daily revenue sweep
       - org_revenue_generated # Group generates platform revenue
       - revenue_share_distributed # Revenue share paid out
 
@@ -1384,7 +1384,7 @@ statistics:
     token: 7
     course: 5
     analytics: 5
-    inference: 7
+    cycle: 7
     blockchain: 5
     consolidated: 11
 

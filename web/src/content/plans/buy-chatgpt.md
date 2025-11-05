@@ -6,8 +6,8 @@ organization: "ONE Platform"
 personRole: "platform_owner"
 ontologyDimensions: ["Things", "Connections", "Knowledge"]
 assignedSpecialist: "Engineering Director"
-totalInferences: 100
-completedInferences: 0
+totalCycles: 100
+completedCycles: 0
 createdAt: 2025-10-30
 draft: false
 ---
@@ -15,18 +15,18 @@ draft: false
 # ONE Platform: Conversational Commerce via ChatGPT/Gemini/Claude v1.0.0
 
 **Focus:** "Buy it in ChatGPT" - Conversational shopping experiences through LLM chat interfaces
-**Process:** `Infer 1-100 inference sequence`
-**Timeline:** 8-12 inferences per specialist per day
+**Process:** `Cycle 1-100 cycle sequence`
+**Timeline:** 8-12 cycles per specialist per day
 **Target:** Conversational checkout + AI product discovery (Wave 2.5 - Strategic Addition)
 **Integration:** Works with todo-ecommerce.md (shopping cart, checkout, payments)
 
 ---
 
-## PHASE 1: FOUNDATION & SETUP (Infer 1-10)
+## PHASE 1: FOUNDATION & SETUP (Cycle 1-10)
 
 **Purpose:** Understand conversational commerce landscape, map to ontology, plan implementation
 
-### Infer 1: Understand the "Buy it in ChatGPT" Opportunity
+### Cycle 1: Understand the "Buy it in ChatGPT" Opportunity
 - [ ] Review market context:
   - [ ] OpenAI launched Instant Checkout (Sep 2025)
   - [ ] Users can purchase products within ChatGPT
@@ -43,7 +43,7 @@ draft: false
   - [ ] Instant checkout reduces friction (higher conversion)
 - [ ] Document in: `one/connections/conversational-commerce.md`
 
-### Infer 2: Map Conversational Commerce to 6-Dimension Ontology
+### Cycle 2: Map Conversational Commerce to 6-Dimension Ontology
 - [ ] **Groups:** Creator's business group (via marketplace)
 - [ ] **People:**
   - [ ] Customer (asking questions in chat)
@@ -71,7 +71,7 @@ draft: false
   - [ ] product_category, use_case, audience labels
   - [ ] customer_preferences (inferred from conversation)
 
-### Infer 3: Define Conversational Commerce User Flows
+### Cycle 3: Define Conversational Commerce User Flows
 - [ ] **Flow 1: Discovery via Chat**
   1. User opens ChatGPT: "I need a padel racket for beginners"
   2. AI understands intent (beginner level, price point, style preferences)
@@ -107,7 +107,7 @@ draft: false
   4. Offers relevant follow-up products (strings, grips, lessons)
   5. Natural upselling without feeling pushy
 
-### Infer 4: Identify AI Platforms to Integrate
+### Cycle 4: Identify AI Platforms to Integrate
 - [ ] **ChatGPT (OpenAI)**
   - [ ] GPT-4 Turbo (best reasoning)
   - [ ] Vision capabilities (product images)
@@ -128,7 +128,7 @@ draft: false
   - [ ] Massive reach (Google users)
   - [ ] Revenue model: CPC/CPA
 
-### Infer 5: Define Product Metadata for AI
+### Cycle 5: Define Product Metadata for AI
 - [ ] Enhance product schema (from todo-ecommerce) for AI:
   ```
   Product thing type additions:
@@ -156,7 +156,7 @@ draft: false
   }
   ```
 
-### Infer 6: Plan AI Integration Architecture
+### Cycle 6: Plan AI Integration Architecture
 - [ ] **Option 1: ChatGPT Custom Action**
   - [ ] Create OpenAI custom action that calls ONE API
   - [ ] ONE provides product search + purchase endpoints
@@ -178,7 +178,7 @@ draft: false
   - [ ] Expose API for ChatGPT integration (Option 1)
   - [ ] Best of both worlds
 
-### Infer 7: Define Conversational Commerce MVP Features
+### Cycle 7: Define Conversational Commerce MVP Features
 - [ ] **Minimum Viable Product:**
   1. Standalone chat interface in /web
   2. Claude API (cheaper, good quality)
@@ -200,7 +200,7 @@ draft: false
   16. AI upsell recommendations
   17. Chat history + personalization
 
-### Infer 8: Plan Data Collection for AI Training
+### Cycle 8: Plan Data Collection for AI Training
 - [ ] Conversational commerce creates unique data:
   - [ ] How customers naturally ask about products
   - [ ] What questions matter most
@@ -218,7 +218,7 @@ draft: false
   - [ ] GDPR compliance
   - [ ] Allow users to opt-out
 
-### Infer 9: Identify Revenue Streams
+### Cycle 9: Identify Revenue Streams
 - [ ] **Direct Revenue:**
   - [ ] Commission on purchases via conversational commerce
   - [ ] Premium "Featured in Chat" listings
@@ -234,7 +234,7 @@ draft: false
   - [ ] 15-25% higher average order value (recommendations)
   - [ ] 3-5x higher customer lifetime value (repeat purchases)
 
-### Infer 10: Define Success Metrics
+### Cycle 10: Define Success Metrics
 - [ ] Conversational commerce complete when:
   - [ ] [ ] Chat interface live and responsive
   - [ ] [ ] Claude API integration working
@@ -250,11 +250,11 @@ draft: false
 
 ---
 
-## PHASE 2: BACKEND SCHEMA & SERVICES (Infer 11-20)
+## PHASE 2: BACKEND SCHEMA & SERVICES (Cycle 11-20)
 
 **Purpose:** Extend Convex schema for conversations + AI
 
-### Infer 11: Create Conversation Thing Type
+### Cycle 11: Create Conversation Thing Type
 - [ ] New thing type: `conversation_session`
   ```typescript
   {
@@ -300,7 +300,7 @@ draft: false
   }
   ```
 
-### Infer 12: Create Recommendation Thing Type
+### Cycle 12: Create Recommendation Thing Type
 - [ ] New thing type: `ai_recommendation`
   ```typescript
   {
@@ -320,7 +320,7 @@ draft: false
   }
   ```
 
-### Infer 13: Create Conversational Order Thing Type
+### Cycle 13: Create Conversational Order Thing Type
 - [ ] Extend order thing from todo-ecommerce:
   ```typescript
   {
@@ -341,7 +341,7 @@ draft: false
   }
   ```
 
-### Infer 14: Create Conversation Service (Effect.ts)
+### Cycle 14: Create Conversation Service (Effect.ts)
 - [ ] Service: `backend/convex/services/conversation.ts`
 - [ ] Methods:
   - [ ] `createConversation(userId, platform)` → sessionId
@@ -352,7 +352,7 @@ draft: false
   - [ ] `completeConversation(sessionId)` → session archived
   - [ ] `getConversationMetrics(sessionId)` → stats
 
-### Infer 15: Create AI Integration Service (Effect.ts)
+### Cycle 15: Create AI Integration Service (Effect.ts)
 - [ ] Service: `backend/convex/services/ai-integration.ts`
 - [ ] Methods:
   - [ ] `callClaudeAPI(messages, systemPrompt)` → response
@@ -363,7 +363,7 @@ draft: false
   - [ ] `extractUserPreferences(messages)` → preferences object
   - [ ] `generateRecommendation(userNeeds, products)` → recommendation
 
-### Infer 16: Create Convex Mutations
+### Cycle 16: Create Convex Mutations
 - [ ] `mutations/conversations.ts`:
   - [ ] `startConversation(userId, platform)` → sessionId
   - [ ] `addMessage(sessionId, message)` → saved
@@ -373,7 +373,7 @@ draft: false
   - [ ] `logRecommendation(conversationId, productId, reason)` → logged
   - [ ] `trackRecommendationReaction(recommendationId, reaction)` → tracked
 
-### Infer 17: Create Convex Queries
+### Cycle 17: Create Convex Queries
 - [ ] `queries/conversations.ts`:
   - [ ] `getConversation(sessionId)` → full chat history
   - [ ] `getUserConversations(userId)` → all chats
@@ -383,7 +383,7 @@ draft: false
   - [ ] `getProductRecommendations(productId)` → how often recommended
   - [ ] `getCreatorMetrics(creatorId)` → conversational commerce stats
 
-### Infer 18: Create Conversation Prompts (System)
+### Cycle 18: Create Conversation Prompts (System)
 - [ ] Create `backend/convex/prompts/product-advisor.md`:
   ```
   You are a friendly, knowledgeable padel racket advisor.
@@ -409,7 +409,7 @@ draft: false
 - [ ] Create prompts for other categories
 - [ ] Make prompts dynamic based on creator/marketplace
 
-### Infer 19: Set Up API Rate Limiting for AI Calls
+### Cycle 19: Set Up API Rate Limiting for AI Calls
 - [ ] Implement rate limiting:
   - [ ] Claude API: $0.003 per 1K input tokens, $0.015 per 1K output
   - [ ] Limit: 10 chats/min per user, 1 API call/second per session
@@ -420,7 +420,7 @@ draft: false
   - [ ] Use Claude Sonnet for complex reasoning (expensive, accurate)
   - [ ] Batch embeddings generation (off-peak)
 
-### Infer 20: Create Conversation Indexing
+### Cycle 20: Create Conversation Indexing
 - [ ] Index conversations for later analysis:
   - [ ] by_userId(userId) - Find user's conversations
   - [ ] by_creatorId(creatorId) - Find where creator mentioned

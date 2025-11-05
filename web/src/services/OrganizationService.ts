@@ -60,7 +60,7 @@ export class OrganizationService {
             users: 0,
             storage: 0,
             apiCalls: 0,
-            inference: 0,
+            cycle: 0,
             courses: 0,
             clones: 0,
           },

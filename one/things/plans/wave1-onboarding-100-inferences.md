@@ -1,8 +1,8 @@
 ---
-title: Wave1 Onboarding 100 Inferences
+title: Wave1 Onboarding 100 Cycles
 dimension: things
 category: plans
-tags: agent, ai, backend, claude, frontend, inference, ontology, testing
+tags: agent, ai, backend, claude, frontend, cycle, ontology, testing
 related_dimensions: connections, events, groups, knowledge, people
 scope: global
 created: 2025-11-03
@@ -10,47 +10,47 @@ updated: 2025-11-03
 version: 1.0.0
 ai_context: |
   This document is part of the things dimension in the plans category.
-  Location: one/things/plans/wave1-onboarding-100-inferences.md
-  Purpose: Documents wave 1: creator onboarding - 100-inference execution plan
+  Location: one/things/plans/wave1-onboarding-100-cycles.md
+  Purpose: Documents wave 1: creator onboarding - 100-cycle execution plan
   Related dimensions: connections, events, groups, knowledge, people
-  For AI agents: Read this to understand wave1 onboarding 100 inferences.
+  For AI agents: Read this to understand wave1 onboarding 100 cycles.
 ---
 
-# Wave 1: Creator Onboarding - 100-Inference Execution Plan
+# Wave 1: Creator Onboarding - 100-Cycle Execution Plan
 
 **Version:** 1.0.0
-**Total Inferences:** 100 (Infer 1-100)
-**Estimated Duration:** 10-12 days (8-10 inferences per specialist per day)
+**Total Cycles:** 100 (Cycle 1-100)
+**Estimated Duration:** 10-12 days (8-10 cycles per specialist per day)
 **Team:** 4 specialists + 1 orchestrator (director)
 
 ---
 
-## Overview: The 100-Inference Breakdown
+## Overview: The 100-Cycle Breakdown
 
 ```
-Infer 1-10:     FOUNDATION & ONTOLOGY VALIDATION
-Infer 11-20:    BACKEND SCHEMA & SERVICES
-Infer 21-30:    BACKEND MUTATIONS & QUERIES
-Infer 31-40:    FRONTEND PAGES & COMPONENTS (Part 1)
-Infer 41-50:    FRONTEND PAGES & COMPONENTS (Part 2)
-Infer 51-60:    API ROUTES & INTEGRATIONS
-Infer 61-70:    EMAIL & VERIFICATION SYSTEM
-Infer 71-80:    TEAM MANAGEMENT & WORKSPACE
-Infer 81-90:    TESTING & QUALITY ASSURANCE
-Infer 91-100:   DEPLOYMENT & DOCUMENTATION
+Cycle 1-10:     FOUNDATION & ONTOLOGY VALIDATION
+Cycle 11-20:    BACKEND SCHEMA & SERVICES
+Cycle 21-30:    BACKEND MUTATIONS & QUERIES
+Cycle 31-40:    FRONTEND PAGES & COMPONENTS (Part 1)
+Cycle 41-50:    FRONTEND PAGES & COMPONENTS (Part 2)
+Cycle 51-60:    API ROUTES & INTEGRATIONS
+Cycle 61-70:    EMAIL & VERIFICATION SYSTEM
+Cycle 71-80:    TEAM MANAGEMENT & WORKSPACE
+Cycle 81-90:    TESTING & QUALITY ASSURANCE
+Cycle 91-100:   DEPLOYMENT & DOCUMENTATION
 ```
 
 Each phase has dependencies clearly marked. **Bold dependencies** block downstream work.
 
 ---
 
-## PHASE 1: FOUNDATION & VALIDATION (Infer 1-10)
+## PHASE 1: FOUNDATION & VALIDATION (Cycle 1-10)
 
 **Specialist:** Agent-Director (Orchestration)
 **Duration:** 1-2 days
 **Output:** Approved vision, ontology mapping, task lists
 
-### Infer 1: Confirm 6-Dimension Ontology Alignment
+### Cycle 1: Confirm 6-Dimension Ontology Alignment
 
 **Task:** Validate onboarding maps to ALL 6 dimensions
 
@@ -69,11 +69,11 @@ Each phase has dependencies clearly marked. **Bold dependencies** block downstre
 **Decision Gate:**
 
 - If ANY dimension missing → Rethink feature
-- If all aligned → Proceed to Infer 2
+- If all aligned → Proceed to Cycle 2
 
 ---
 
-### Infer 2: Define Complete Entity Types
+### Cycle 2: Define Complete Entity Types
 
 **Task:** Specify exact properties for creator, workspace, invitation tokens
 
@@ -181,7 +181,7 @@ Each phase has dependencies clearly marked. **Bold dependencies** block downstre
 
 ---
 
-### Infer 3: Define Event Types to Log
+### Cycle 3: Define Event Types to Log
 
 **Task:** List all events that need logging during onboarding
 
@@ -210,7 +210,7 @@ Each phase has dependencies clearly marked. **Bold dependencies** block downstre
 
 ---
 
-### Infer 4: Define Connection Types
+### Cycle 4: Define Connection Types
 
 **Task:** Specify relationships that onboarding creates
 
@@ -252,7 +252,7 @@ Each phase has dependencies clearly marked. **Bold dependencies** block downstre
 
 ---
 
-### Infer 5: Define Knowledge Labels
+### Cycle 5: Define Knowledge Labels
 
 **Task:** Specify skill + interest taxonomy for tagging
 
@@ -325,11 +325,11 @@ Prefix: interest:*
 
 ---
 
-### Infer 6: Create Implementation Checklist
+### Cycle 6: Create Implementation Checklist
 
 **Task:** Break down into manageable tasks for specialists
 
-**Backend Tasks (Infer 11-30):**
+**Backend Tasks (Cycle 11-30):**
 
 - [ ] Extend creator entity type
 - [ ] Extend organization entity type
@@ -348,7 +348,7 @@ Prefix: interest:*
 - [ ] Create verification system (codes, tokens, expiry)
 - [ ] Create rate limiting rules
 
-**Frontend Tasks (Infer 31-50):**
+**Frontend Tasks (Cycle 31-50):**
 
 - [ ] Create SignupForm component
 - [ ] Create EmailVerification component
@@ -364,7 +364,7 @@ Prefix: interest:*
 - [ ] Create auth middleware
 - [ ] Create redirect logic
 
-**Quality Tasks (Infer 81-90):**
+**Quality Tasks (Cycle 81-90):**
 
 - [ ] Write unit tests (mutations, services)
 - [ ] Write integration tests (full flows)
@@ -374,14 +374,14 @@ Prefix: interest:*
 - [ ] Run performance audit
 - [ ] Run security audit
 
-**Designer Tasks (Infer 41-60 parallel):**
+**Designer Tasks (Cycle 41-60 parallel):**
 
 - [ ] Create wireframes for 8 stages
 - [ ] Design component specs
 - [ ] Create accessibility guide
 - [ ] Design mobile layouts
 
-**Documentation Tasks (Infer 91-100):**
+**Documentation Tasks (Cycle 91-100):**
 
 - [ ] User guide
 - [ ] API documentation
@@ -393,7 +393,7 @@ Prefix: interest:*
 
 ---
 
-### Infer 7-10: Reserve for Blockers/Contingency
+### Cycle 7-10: Reserve for Blockers/Contingency
 
 **Task:** Leave buffer for unexpected issues
 
@@ -407,18 +407,18 @@ Prefix: interest:*
 - Performance optimization
 - Mobile responsiveness issues
 
-**Reserve:** 4 inferences (4 days of buffer)
+**Reserve:** 4 cycles (4 days of buffer)
 
 ---
 
-## PHASE 2: BACKEND SCHEMA & SERVICES (Infer 11-30)
+## PHASE 2: BACKEND SCHEMA & SERVICES (Cycle 11-30)
 
 **Specialist:** Agent-Backend
-**Duration:** 3-4 days (20 inferences)
+**Duration:** 3-4 days (20 cycles)
 **Dependency:** ✅ Phase 1 complete
 **Blocks:** Phase 3 (can't build frontend without backend mutations)
 
-### Infer 11-12: Extend Creator Entity Type
+### Cycle 11-12: Extend Creator Entity Type
 
 **Task:** Update `schema.ts` to include all creator properties
 
@@ -430,7 +430,7 @@ Prefix: interest:*
 **Output file:** `/backend/convex/schema.ts`
 **Status:** Ready for implementation
 
-### Infer 13-14: Extend Organization Entity Type
+### Cycle 13-14: Extend Organization Entity Type
 
 **Task:** Add organization properties (workspace)
 
@@ -441,7 +441,7 @@ Prefix: interest:*
 **Deliverable:** Updated schema with organization type
 **Status:** Ready for implementation
 
-### Infer 15-16: Create Invitation Token Type
+### Cycle 15-16: Create Invitation Token Type
 
 **Task:** Add invitation_token entity type
 
@@ -452,7 +452,7 @@ Prefix: interest:*
 **Deliverable:** Updated schema with invitation_token type
 **Status:** Ready for implementation
 
-### Infer 17: Create Onboarding Service (Effect.ts)
+### Cycle 17: Create Onboarding Service (Effect.ts)
 
 **Task:** Build pure business logic service
 
@@ -492,7 +492,7 @@ export interface OnboardingService {
 **Deliverable:** Onboarding service with all business logic
 **Status:** Ready for implementation
 
-### Infer 18: Create Signup Mutation
+### Cycle 18: Create Signup Mutation
 
 **Task:** Implement `signUp` mutation (call Better Auth + Convex)
 
@@ -520,7 +520,7 @@ export const signUp = mutation({
 **Deliverable:** Working signup mutation
 **Status:** Ready for implementation
 
-### Infer 19: Create Email Verification Mutation
+### Cycle 19: Create Email Verification Mutation
 
 **Task:** Implement `verifyEmail` mutation
 
@@ -544,7 +544,7 @@ export const verifyEmail = mutation({
 **Deliverable:** Email verification mutation
 **Status:** Ready for implementation
 
-### Infer 20: Create Profile Update Mutation
+### Cycle 20: Create Profile Update Mutation
 
 **Task:** Implement `updateProfile` mutation
 
@@ -572,7 +572,7 @@ export const updateProfile = mutation({
 **Deliverable:** Profile update mutation
 **Status:** Ready for implementation
 
-### Infer 21: Create Workspace Creation Mutation
+### Cycle 21: Create Workspace Creation Mutation
 
 **Task:** Implement `createWorkspace` mutation
 
@@ -599,7 +599,7 @@ export const createWorkspace = mutation({
 **Deliverable:** Workspace creation mutation
 **Status:** Ready for implementation
 
-### Infer 22: Create Team Invitation Mutation
+### Cycle 22: Create Team Invitation Mutation
 
 **Task:** Implement `inviteTeamMember` mutation
 
@@ -626,7 +626,7 @@ export const inviteTeamMember = mutation({
 **Deliverable:** Team invitation mutation
 **Status:** Ready for implementation
 
-### Infer 23: Create Invitation Acceptance Mutation
+### Cycle 23: Create Invitation Acceptance Mutation
 
 **Task:** Implement `acceptInvitation` mutation
 
@@ -652,7 +652,7 @@ export const acceptInvitation = mutation({
 **Deliverable:** Invitation acceptance mutation
 **Status:** Ready for implementation
 
-### Infer 24: Create Wallet Connection Mutation
+### Cycle 24: Create Wallet Connection Mutation
 
 **Task:** Implement `connectWallet` mutation
 
@@ -678,7 +678,7 @@ export const connectWallet = mutation({
 **Deliverable:** Wallet connection mutation
 **Status:** Ready for implementation
 
-### Infer 25: Create Skill Tagging Mutation
+### Cycle 25: Create Skill Tagging Mutation
 
 **Task:** Implement `addSkills` mutation
 
@@ -703,7 +703,7 @@ export const addSkills = mutation({
 **Deliverable:** Skill tagging mutation
 **Status:** Ready for implementation
 
-### Infer 26: Create Onboarding Status Queries
+### Cycle 26: Create Onboarding Status Queries
 
 **Task:** Implement queries for onboarding data
 
@@ -722,7 +722,7 @@ export const getUserWorkspaces = query({ ... })  // List user's workspaces
 **Deliverable:** All onboarding queries
 **Status:** Ready for implementation
 
-### Infer 27: Create Email Templates
+### Cycle 27: Create Email Templates
 
 **Task:** Build email templates with Resend
 
@@ -743,7 +743,7 @@ export const getUserWorkspaces = query({ ... })  // List user's workspaces
 **Deliverable:** All email templates
 **Status:** Ready for implementation
 
-### Infer 28: Create Verification System
+### Cycle 28: Create Verification System
 
 **Task:** Build verification code + token system
 
@@ -761,7 +761,7 @@ export function generateInvitationToken(): string; // for team invites
 **Deliverable:** Verification utilities
 **Status:** Ready for implementation
 
-### Infer 29: Set Up Rate Limiting
+### Cycle 29: Set Up Rate Limiting
 
 **Task:** Configure rate limiting for signup, verification
 
@@ -775,7 +775,7 @@ export function generateInvitationToken(): string; // for team invites
 **Deliverable:** Rate limiting configured
 **Status:** Ready for implementation
 
-### Infer 30: Setup Complete - Backend Ready
+### Cycle 30: Setup Complete - Backend Ready
 
 **Task:** Final backend validation before frontend starts
 
@@ -789,18 +789,18 @@ export function generateInvitationToken(): string; // for team invites
 - [ ] Schema validated
 
 **Deliverable:** Backend production-ready
-**Status:** ✅ Frontend can now start (parallel from Infer 31)
+**Status:** ✅ Frontend can now start (parallel from Cycle 31)
 
 ---
 
-## PHASE 3: FRONTEND COMPONENTS & PAGES (Infer 31-50)
+## PHASE 3: FRONTEND COMPONENTS & PAGES (Cycle 31-50)
 
 **Specialist:** Agent-Frontend
-**Duration:** 3-4 days (20 inferences)
+**Duration:** 3-4 days (20 cycles)
 **Dependency:** ✅ Phase 2 (backend mutations/queries complete)
-**Blocks:** API routes (Infer 51-60)
+**Blocks:** API routes (Cycle 51-60)
 
-### Infer 31: Create SignupForm Component
+### Cycle 31: Create SignupForm Component
 
 **Task:** Build signup form with email/password + OAuth
 
@@ -819,7 +819,7 @@ export function generateInvitationToken(): string; // for team invites
 **Deliverable:** Working signup form component
 **Status:** Ready for implementation
 
-### Infer 32: Create EmailVerification Component
+### Cycle 32: Create EmailVerification Component
 
 **Task:** Build 6-digit code input
 
@@ -837,7 +837,7 @@ export function generateInvitationToken(): string; // for team invites
 **Deliverable:** Email verification component
 **Status:** Ready for implementation
 
-### Infer 33: Create ProfileForm Component
+### Cycle 33: Create ProfileForm Component
 
 **Task:** Build profile completion form
 
@@ -856,7 +856,7 @@ export function generateInvitationToken(): string; // for team invites
 **Deliverable:** Profile form component
 **Status:** Ready for implementation
 
-### Infer 34: Create WorkspaceSetup Component
+### Cycle 34: Create WorkspaceSetup Component
 
 **Task:** Build workspace creation UI
 
@@ -872,7 +872,7 @@ export function generateInvitationToken(): string; // for team invites
 **Deliverable:** Workspace setup component
 **Status:** Ready for implementation
 
-### Infer 35: Create WalletConnection Component
+### Cycle 35: Create WalletConnection Component
 
 **Task:** Build optional wallet connection UI
 
@@ -890,7 +890,7 @@ export function generateInvitationToken(): string; // for team invites
 **Deliverable:** Wallet connection component
 **Status:** Ready for implementation
 
-### Infer 36: Create SkillSelection Component
+### Cycle 36: Create SkillSelection Component
 
 **Task:** Build skill/expertise tagging UI
 
@@ -907,7 +907,7 @@ export function generateInvitationToken(): string; // for team invites
 **Deliverable:** Skill selection component
 **Status:** Ready for implementation
 
-### Infer 37: Create OnboardingTour Component
+### Cycle 37: Create OnboardingTour Component
 
 **Task:** Build interactive guided tour
 
@@ -933,7 +933,7 @@ export function generateInvitationToken(): string; // for team invites
 **Deliverable:** Onboarding tour component
 **Status:** Ready for implementation
 
-### Infer 38: Create OnboardingChecklist Component
+### Cycle 38: Create OnboardingChecklist Component
 
 **Task:** Build first-day quick wins checklist
 
@@ -958,7 +958,7 @@ export function generateInvitationToken(): string; // for team invites
 **Deliverable:** Onboarding checklist component
 **Status:** Ready for implementation
 
-### Infer 39: Create Onboarding Pages (Part 1)
+### Cycle 39: Create Onboarding Pages (Part 1)
 
 **Task:** Build 4 Astro pages for onboarding flow
 
@@ -980,7 +980,7 @@ export function generateInvitationToken(): string; // for team invites
 **Deliverable:** 4 onboarding pages
 **Status:** Ready for implementation
 
-### Infer 40: Create Onboarding Pages (Part 2)
+### Cycle 40: Create Onboarding Pages (Part 2)
 
 **Task:** Build remaining 4 Astro pages
 
@@ -1002,7 +1002,7 @@ export function generateInvitationToken(): string; // for team invites
 **Deliverable:** 4 more onboarding pages
 **Status:** Ready for implementation
 
-### Infer 41: Create Team Management Page
+### Cycle 41: Create Team Management Page
 
 **Task:** Build workspace settings page for team management
 
@@ -1027,7 +1027,7 @@ export function generateInvitationToken(): string; // for team invites
 **Deliverable:** Team management page
 **Status:** Ready for implementation
 
-### Infer 42: Create Avatar Upload Component
+### Cycle 42: Create Avatar Upload Component
 
 **Task:** Build avatar upload with preview
 
@@ -1045,7 +1045,7 @@ export function generateInvitationToken(): string; // for team invites
 **Deliverable:** Avatar upload component
 **Status:** Ready for implementation
 
-### Infer 43: Create Niche Selection Component
+### Cycle 43: Create Niche Selection Component
 
 **Task:** Build niche/category multi-select
 
@@ -1062,7 +1062,7 @@ export function generateInvitationToken(): string; // for team invites
 **Deliverable:** Niche selection component
 **Status:** Ready for implementation
 
-### Infer 44: Create Loading States
+### Cycle 44: Create Loading States
 
 **Task:** Add loading spinners + skeleton screens
 
@@ -1076,7 +1076,7 @@ export function generateInvitationToken(): string; // for team invites
 **Deliverable:** Loading components
 **Status:** Ready for implementation
 
-### Infer 45: Create Error Handling
+### Cycle 45: Create Error Handling
 
 **Task:** Build error display + recovery UI
 
@@ -1091,7 +1091,7 @@ export function generateInvitationToken(): string; // for team invites
 **Deliverable:** Error handling components
 **Status:** Ready for implementation
 
-### Infer 46: Create Success Animations
+### Cycle 46: Create Success Animations
 
 **Task:** Add celebration animations
 
@@ -1105,7 +1105,7 @@ export function generateInvitationToken(): string; // for team invites
 **Deliverable:** Success animation components
 **Status:** Ready for implementation
 
-### Infer 47: Create Mobile Responsive Design
+### Cycle 47: Create Mobile Responsive Design
 
 **Task:** Optimize all components for mobile
 
@@ -1121,7 +1121,7 @@ export function generateInvitationToken(): string; // for team invites
 **Deliverable:** Mobile-optimized components
 **Status:** Ready for implementation
 
-### Infer 48: Create Accessibility Features
+### Cycle 48: Create Accessibility Features
 
 **Task:** Add WCAG 2.1 AA compliance
 
@@ -1137,7 +1137,7 @@ export function generateInvitationToken(): string; // for team invites
 **Deliverable:** Accessible components
 **Status:** Ready for implementation
 
-### Infer 49: Create Dark Mode Support
+### Cycle 49: Create Dark Mode Support
 
 **Task:** Add dark theme support
 
@@ -1151,7 +1151,7 @@ export function generateInvitationToken(): string; // for team invites
 **Deliverable:** Dark mode theme
 **Status:** Ready for implementation
 
-### Infer 50: Frontend Complete - Ready for API
+### Cycle 50: Frontend Complete - Ready for API
 
 **Task:** Final frontend validation
 
@@ -1165,18 +1165,18 @@ export function generateInvitationToken(): string; // for team invites
 - [ ] Ready to connect to API routes
 
 **Deliverable:** Production-ready frontend
-**Status:** ✅ Ready for API routes (Infer 51)
+**Status:** ✅ Ready for API routes (Cycle 51)
 
 ---
 
-## PHASE 4: API ROUTES & INTEGRATION (Infer 51-80)
+## PHASE 4: API ROUTES & INTEGRATION (Cycle 51-80)
 
 **Specialist:** Agent-Integration / Agent-Backend
-**Duration:** 3-4 days (30 inferences)
+**Duration:** 3-4 days (30 cycles)
 **Dependency:** ✅ Phase 2 (backend) + Phase 3 (frontend) complete
-**Blocks:** Testing (Infer 81-90)
+**Blocks:** Testing (Cycle 81-90)
 
-### Infer 51-60: Create API Routes
+### Cycle 51-60: Create API Routes
 
 **Task:** Build HTTP endpoints connecting frontend to backend
 
@@ -1225,7 +1225,7 @@ Each route:
 **Deliverable:** All API routes functional
 **Status:** Ready for implementation
 
-### Infer 61-70: Email System Setup
+### Cycle 61-70: Email System Setup
 
 **Task:** Configure email sending with Resend
 
@@ -1248,7 +1248,7 @@ Each route:
 **Deliverable:** Email system ready
 **Status:** Ready for implementation
 
-### Infer 71-80: Integration Testing
+### Cycle 71-80: Integration Testing
 
 **Task:** Test frontend → API → backend → database flow
 
@@ -1277,14 +1277,14 @@ Each route:
 
 ---
 
-## PHASE 5: TESTING & QUALITY (Infer 81-90)
+## PHASE 5: TESTING & QUALITY (Cycle 81-90)
 
 **Specialist:** Agent-Quality
-**Duration:** 2-3 days (10 inferences)
+**Duration:** 2-3 days (10 cycles)
 **Dependency:** ✅ Phase 4 complete
-**Blocks:** Documentation (Infer 91-100)
+**Blocks:** Documentation (Cycle 91-100)
 
-### Infer 81-82: Unit Tests (Backend)
+### Cycle 81-82: Unit Tests (Backend)
 
 **Task:** Test mutations, queries, services in isolation
 
@@ -1300,7 +1300,7 @@ Each route:
 **Deliverable:** Unit tests passing
 **Status:** Ready for implementation
 
-### Infer 83-84: Unit Tests (Frontend)
+### Cycle 83-84: Unit Tests (Frontend)
 
 **Task:** Test React components in isolation
 
@@ -1317,7 +1317,7 @@ Each route:
 **Deliverable:** Frontend unit tests passing
 **Status:** Ready for implementation
 
-### Infer 85-86: Integration Tests
+### Cycle 85-86: Integration Tests
 
 **Task:** Test full signup → dashboard flow
 
@@ -1332,7 +1332,7 @@ Each route:
 **Deliverable:** Integration tests passing
 **Status:** Ready for implementation
 
-### Infer 87-88: E2E Tests
+### Cycle 87-88: E2E Tests
 
 **Task:** Test full user journey in browser
 
@@ -1348,7 +1348,7 @@ Each route:
 **Deliverable:** E2E tests passing
 **Status:** Ready for implementation
 
-### Infer 89: Security + Accessibility Audit
+### Cycle 89: Security + Accessibility Audit
 
 **Task:** Verify security + accessibility compliance
 
@@ -1371,7 +1371,7 @@ Each route:
 **Deliverable:** Audit report + fixes
 **Status:** Ready for implementation
 
-### Infer 90: Performance Audit
+### Cycle 90: Performance Audit
 
 **Task:** Verify performance targets met
 
@@ -1388,13 +1388,13 @@ Each route:
 
 ---
 
-## PHASE 6: DEPLOYMENT & DOCUMENTATION (Infer 91-100)
+## PHASE 6: DEPLOYMENT & DOCUMENTATION (Cycle 91-100)
 
 **Specialist:** Agent-Ops + Agent-Documenter
-**Duration:** 1-2 days (10 inferences)
+**Duration:** 1-2 days (10 cycles)
 **Dependency:** ✅ Phase 5 complete
 
-### Infer 91-92: Create User Documentation
+### Cycle 91-92: Create User Documentation
 
 **Files:**
 
@@ -1406,7 +1406,7 @@ Each route:
 **Deliverable:** User guides complete
 **Status:** Ready for implementation
 
-### Infer 93-94: Create API Documentation
+### Cycle 93-94: Create API Documentation
 
 **Files:**
 
@@ -1427,7 +1427,7 @@ Each route:
 **Deliverable:** API docs complete
 **Status:** Ready for implementation
 
-### Infer 95: Create Developer Setup Guide
+### Cycle 95: Create Developer Setup Guide
 
 **File:** `/docs/developer-setup.md`
 
@@ -1443,7 +1443,7 @@ Each route:
 **Deliverable:** Setup guide complete
 **Status:** Ready for implementation
 
-### Infer 96: Create Deployment Checklist
+### Cycle 96: Create Deployment Checklist
 
 **File:** `/DEPLOYMENT.md`
 
@@ -1462,7 +1462,7 @@ Each route:
 **Deliverable:** Deployment ready
 **Status:** Ready for implementation
 
-### Infer 97-98: Deploy to Production
+### Cycle 97-98: Deploy to Production
 
 **Task:** Deploy backend + frontend to production
 
@@ -1477,7 +1477,7 @@ Each route:
 **Deliverable:** Live production deployment
 **Status:** Ready for implementation
 
-### Infer 99: Monitor + Optimize
+### Cycle 99: Monitor + Optimize
 
 **Task:** Monitor production for issues
 
@@ -1498,7 +1498,7 @@ Each route:
 **Deliverable:** Monitoring active
 **Status:** Ready for implementation
 
-### Infer 100: Wave 1 Complete - Lessons Learned
+### Cycle 100: Wave 1 Complete - Lessons Learned
 
 **Task:** Document lessons for Wave 2
 
@@ -1522,29 +1522,29 @@ Some phases can run **simultaneously** (not sequentially):
 ```
 Timeline:
 
-Day 1-2:   Infer 1-10 (Foundation)
+Day 1-2:   Cycle 1-10 (Foundation)
            └─ All specialists align on ontology
 
-Day 3:     Infer 11-20 (Backend schema)
+Day 3:     Cycle 11-20 (Backend schema)
            └─ Only backend specialist
 
-Day 4-5:   Infer 21-30 (Backend mutations + Infer 31-50 (Frontend components)
+Day 4-5:   Cycle 21-30 (Backend mutations + Cycle 31-50 (Frontend components)
            └─ Backend + Frontend IN PARALLEL
            ├─ Backend: Finish mutations/queries
            └─ Frontend: Build components
 
-Day 6:     Infer 51-70 (API routes + Email)
+Day 6:     Cycle 51-70 (API routes + Email)
            └─ Integration specialist starts
            └─ Backend: API route creation
            └─ Frontend: Component completion
 
-Day 7:     Infer 71-80 (Integration testing)
+Day 7:     Cycle 71-80 (Integration testing)
            └─ All work tested together
 
-Day 8:     Infer 81-90 (Quality + Security)
+Day 8:     Cycle 81-90 (Quality + Security)
            └─ Quality specialist validates
 
-Day 9-10:  Infer 91-100 (Deployment + Docs)
+Day 9-10:  Cycle 91-100 (Deployment + Docs)
            └─ Deploy to production
            └─ Create user/API documentation
 
@@ -1557,59 +1557,59 @@ TOTAL: 10 days (more like 1.5 weeks with buffers)
 
 ## Specialist Assignments
 
-### Agent-Backend (Infer 11-30 + 51-70)
+### Agent-Backend (Cycle 11-30 + 51-70)
 
-**40 inferences total**
+**40 cycles total**
 
-- Schema updates (Infer 11-16)
-- Onboarding service (Infer 17)
-- All mutations (Infer 18-25)
-- All queries (Infer 26)
-- Email templates (Infer 27)
-- Verification system (Infer 28)
-- Rate limiting (Infer 29)
-- API route creation (Infer 51-60)
-- Email system setup (Infer 61-70)
+- Schema updates (Cycle 11-16)
+- Onboarding service (Cycle 17)
+- All mutations (Cycle 18-25)
+- All queries (Cycle 26)
+- Email templates (Cycle 27)
+- Verification system (Cycle 28)
+- Rate limiting (Cycle 29)
+- API route creation (Cycle 51-60)
+- Email system setup (Cycle 61-70)
 
-### Agent-Frontend (Infer 31-50)
+### Agent-Frontend (Cycle 31-50)
 
-**20 inferences total**
+**20 cycles total**
 
-- All 8 onboarding components (Infer 31-38)
-- 8 onboarding pages (Infer 39-40)
-- Team management page (Infer 41)
-- Avatar upload (Infer 42)
-- Niche selection (Infer 43)
-- Loading states (Infer 44)
-- Error handling (Infer 45)
-- Success animations (Infer 46)
-- Mobile responsive (Infer 47)
-- Accessibility (Infer 48)
-- Dark mode (Infer 49)
-- Final validation (Infer 50)
+- All 8 onboarding components (Cycle 31-38)
+- 8 onboarding pages (Cycle 39-40)
+- Team management page (Cycle 41)
+- Avatar upload (Cycle 42)
+- Niche selection (Cycle 43)
+- Loading states (Cycle 44)
+- Error handling (Cycle 45)
+- Success animations (Cycle 46)
+- Mobile responsive (Cycle 47)
+- Accessibility (Cycle 48)
+- Dark mode (Cycle 49)
+- Final validation (Cycle 50)
 
-### Agent-Quality (Infer 81-90)
+### Agent-Quality (Cycle 81-90)
 
-**10 inferences total**
+**10 cycles total**
 
-- Backend unit tests (Infer 81-82)
-- Frontend unit tests (Infer 83-84)
-- Integration tests (Infer 85-86)
-- E2E tests (Infer 87-88)
-- Security + accessibility audit (Infer 89)
-- Performance audit (Infer 90)
+- Backend unit tests (Cycle 81-82)
+- Frontend unit tests (Cycle 83-84)
+- Integration tests (Cycle 85-86)
+- E2E tests (Cycle 87-88)
+- Security + accessibility audit (Cycle 89)
+- Performance audit (Cycle 90)
 
-### Agent-Ops / Agent-Documenter (Infer 91-100)
+### Agent-Ops / Agent-Documenter (Cycle 91-100)
 
-**10 inferences total**
+**10 cycles total**
 
-- User documentation (Infer 91-92)
-- API documentation (Infer 93-94)
-- Developer setup (Infer 95)
-- Deployment checklist (Infer 96)
-- Production deployment (Infer 97-98)
-- Monitoring (Infer 99)
-- Lessons learned (Infer 100)
+- User documentation (Cycle 91-92)
+- API documentation (Cycle 93-94)
+- Developer setup (Cycle 95)
+- Deployment checklist (Cycle 96)
+- Production deployment (Cycle 97-98)
+- Monitoring (Cycle 99)
+- Lessons learned (Cycle 100)
 
 ### Agent-Director (Orchestrator)
 
@@ -1682,5 +1682,5 @@ All of these must be ✅ before Wave 1 is marked done:
 
 **Status:** Ready for implementation
 **Approved:** Engineering Director
-**Start Date:** Immediate (Infer 1)
+**Start Date:** Immediate (Cycle 1)
 **Expected Completion:** +10-12 calendar days

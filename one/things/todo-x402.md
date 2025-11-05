@@ -3,7 +3,7 @@ title: Todo X402
 dimension: things
 primary_dimension: things
 category: todo-x402.md
-tags: agent, ai, architecture, connections, groups, inference, ontology, people, protocol, things
+tags: agent, ai, architecture, connections, groups, cycle, ontology, people, protocol, things
 related_dimensions: connections, events, groups, knowledge, people
 scope: global
 created: 2025-11-03
@@ -21,16 +21,16 @@ ai_context: |
 
 **Focus:** Integrate X402 HTTP-native payments into the web platform
 **Protocol:** https://www.x402.org/ (HTTP 402 Payment Required)
-**Timeline:** 100 inferences (inference-based planning, not time-based)
+**Timeline:** 100 cycles (cycle-based planning, not time-based)
 **Target:** AI agent micropayments, API monetization, provider discovery via Bazar
 
 ---
 
-## PHASE 1: FOUNDATION & SETUP (Infer 1-10)
+## PHASE 1: FOUNDATION & SETUP (Cycle 1-10)
 
 **Purpose:** Validate architecture, map to 6-dimension ontology, plan implementation
 
-### Infer 1: Validate X402 Protocol Alignment with Ontology
+### Cycle 1: Validate X402 Protocol Alignment with Ontology
 
 - [ ] Read `/one/connections/x402.md` (protocol spec)
 - [ ] Map X402 payment flow to 6-dimension ontology:
@@ -45,7 +45,7 @@ ai_context: |
   - [ ] External provider access (ElizaOS agents via A2A)
   - [ ] Bazar marketplace discovery + payment
 
-### Infer 2: Review Existing Payment Infrastructure
+### Cycle 2: Review Existing Payment Infrastructure
 
 - [ ] Examine `backend/convex/schema.ts` for payment thing type
 - [ ] Check `web/src/components/` for any existing payment UI
@@ -56,7 +56,7 @@ ai_context: |
   - [ ] Invoice/subscription patterns
 - [ ] Note: **Goal is X402 as PRIMARY payment, not replacement**
 
-### Infer 3: Map X402 to Web Application Layers
+### Cycle 3: Map X402 to Web Application Layers
 
 - [ ] **Frontend (Astro):**
   - [ ] X402 payment prompt components (402 handling)
@@ -75,9 +75,9 @@ ai_context: |
   - [ ] payment_event event types
   - [ ] transacted connection metadata
 
-### Infer 4: Define X402 Integration Scope
+### Cycle 4: Define X402 Integration Scope
 
-- [ ] **Phase 1 (Infer 1-100):** Core X402 infrastructure
+- [ ] **Phase 1 (Cycle 1-100):** Core X402 infrastructure
   - [ ] HTTP 402 protocol implementation
   - [ ] Base network support (preferred for low fees)
   - [ ] Permit + Transfer payment schemes
@@ -92,7 +92,7 @@ ai_context: |
   - [ ] Coinbase facilitator for verification
   - [ ] Pay-per-request model (not subscriptions initially)
 
-### Infer 5: Set Up Development Environment
+### Cycle 5: Set Up Development Environment
 
 - [ ] Ensure `.env.local` in `/web` contains:
   - [ ] `PUBLIC_CONVEX_URL` (Convex endpoint)
@@ -112,7 +112,7 @@ ai_context: |
   - [ ] `@coinbase/cdp-sdk` (facilitator)
   - [ ] `effect` (Effect.ts already included)
 
-### Infer 6: Review Convex Schema for Payment Thing Type
+### Cycle 6: Review Convex Schema for Payment Thing Type
 
 - [ ] Open `backend/convex/schema.ts`
 - [ ] Verify payment thing type exists:
@@ -140,7 +140,7 @@ ai_context: |
   - [ ] by_status(status)
   - [ ] by_protocol(protocol)
 
-### Infer 7: Create X402 Protocol Type Definitions File
+### Cycle 7: Create X402 Protocol Type Definitions File
 
 - [ ] Create `backend/convex/protocols/x402.ts` with:
   - [ ] PaymentRequired interface (402 response)
@@ -154,7 +154,7 @@ ai_context: |
 - [ ] Document TypeScript patterns for each interface
 - [ ] Note: Copy from `/one/connections/x402.md` "TypeScript Protocol Interfaces" section
 
-### Infer 8: Understand X402 Protocol Flow in Web Context
+### Cycle 8: Understand X402 Protocol Flow in Web Context
 
 - [ ] Study the 4-step HTTP 402 flow:
   1. Client requests protected resource
@@ -174,7 +174,7 @@ ai_context: |
   - [ ] N8N workflows: `/api/workflow/[workflowId]/trigger`
   - [ ] Custom API: `/api/custom/[name]` (future)
 
-### Infer 9: Plan Blockchain Integration
+### Cycle 9: Plan Blockchain Integration
 
 - [ ] Choose primary network: **Base (Coinbase L2)**
   - [ ] Lowest fees (~$0.001 per transaction)
@@ -193,7 +193,7 @@ ai_context: |
   - [ ] Decimals: 6
   - [ ] Facilitator: Coinbase CDP (pre-hosted)
 
-### Infer 10: Define Success Metrics for X402 Phase
+### Cycle 10: Define Success Metrics for X402 Phase
 
 - [ ] Integration complete when:
   - [ ] [ ] HTTP 402 responses sent from Astro API routes
@@ -211,11 +211,11 @@ ai_context: |
 
 ---
 
-## PHASE 2: BACKEND SCHEMA & SERVICES (Infer 11-20)
+## PHASE 2: BACKEND SCHEMA & SERVICES (Cycle 11-20)
 
 **Purpose:** Implement Effect.ts payment services, update Convex schema
 
-### Infer 11: Extend Payment Thing Type in Schema
+### Cycle 11: Extend Payment Thing Type in Schema
 
 - [ ] Edit `backend/convex/schema.ts`
 - [ ] Update payment thing properties:
@@ -275,7 +275,7 @@ ai_context: |
   - [ ] by_payto(payTo)
 - [ ] Create migration if needed (Convex migrations)
 
-### Infer 12: Create X402PaymentService (Effect.ts)
+### Cycle 12: Create X402PaymentService (Effect.ts)
 
 - [ ] Create `backend/convex/services/x402-payment.ts`
 - [ ] Implement X402PaymentService class:
@@ -297,7 +297,7 @@ ai_context: |
   - [ ] Blockchain interaction
 - [ ] Note: Reference `/one/connections/x402.md` Part 2 for code
 
-### Infer 13: Create X402FacilitatorService (Effect.ts)
+### Cycle 13: Create X402FacilitatorService (Effect.ts)
 
 - [ ] Create `backend/convex/services/x402-facilitator.ts`
 - [ ] Implement X402FacilitatorService class:
@@ -320,7 +320,7 @@ ai_context: |
   - [ ] Invalid payment (return error)
   - [ ] Unsupported scheme/network
 
-### Infer 14: Create Blockchain Provider Service (Effect.ts)
+### Cycle 14: Create Blockchain Provider Service (Effect.ts)
 
 - [ ] Create `backend/convex/services/blockchain-provider.ts`
 - [ ] Implement BlockchainProviderService class:
@@ -341,7 +341,7 @@ ai_context: |
   - [ ] `getGasPrice(network)` → current gas price
 - [ ] Cache provider instances for efficiency
 
-### Infer 15: Implement Payment Event Logging
+### Cycle 15: Implement Payment Event Logging
 
 - [ ] Ensure payment_event exists in events table (from ontology)
 - [ ] Create `backend/convex/services/payment-event-logger.ts`
@@ -372,7 +372,7 @@ ai_context: |
 - [ ] Create helper function to log events
 - [ ] Test event logging in dev environment
 
-### Infer 16: Create X402Middleware for Astro API Routes
+### Cycle 16: Create X402Middleware for Astro API Routes
 
 - [ ] Create `web/src/middleware/x402-middleware.ts`
 - [ ] Implement middleware that:
@@ -399,7 +399,7 @@ ai_context: |
   - [ ] Payment amount < required
   - [ ] Payment already used (replay protection)
 
-### Infer 17: Set Up X402 Configuration
+### Cycle 17: Set Up X402 Configuration
 
 - [ ] Create `backend/convex/config/x402-config.ts`
 - [ ] Define configuration object:
@@ -436,7 +436,7 @@ ai_context: |
 - [ ] Load config from env vars in both `.env` files
 - [ ] Document required env vars
 
-### Infer 18: Implement Payment Verification Logic
+### Cycle 18: Implement Payment Verification Logic
 
 - [ ] Create `backend/convex/lib/x402-verify.ts`
 - [ ] Implement verification function:
@@ -459,7 +459,7 @@ ai_context: |
   9. Return validation result
 - [ ] Handle each error case with descriptive message
 
-### Infer 19: Implement Payment Settlement
+### Cycle 19: Implement Payment Settlement
 
 - [ ] Create `backend/convex/lib/x402-settle.ts`
 - [ ] Implement settlement function:
@@ -481,7 +481,7 @@ ai_context: |
   - [ ] Insufficient gas (recommend amount)
   - [ ] Network issues (queue for retry)
 
-### Infer 20: Create Convex Mutations for Payment Handling
+### Cycle 20: Create Convex Mutations for Payment Handling
 
 - [ ] Create `backend/convex/mutations/payments.ts`
 - [ ] Implement mutations:
@@ -507,11 +507,11 @@ ai_context: |
 
 ---
 
-## PHASE 3: FRONTEND COMPONENTS & PAGES (Infer 21-30)
+## PHASE 3: FRONTEND COMPONENTS & PAGES (Cycle 21-30)
 
 **Purpose:** Build React components and Astro pages for payment flow
 
-### Infer 21: Create PaymentRequired Component
+### Cycle 21: Create PaymentRequired Component
 
 - [ ] Create `web/src/components/features/PaymentRequired.tsx`
 - [ ] Component displays:
@@ -535,7 +535,7 @@ ai_context: |
   - [ ] Accessibility (WCAG)
   - [ ] Mobile wallet support
 
-### Infer 22: Create WalletConnection Component
+### Cycle 22: Create WalletConnection Component
 
 - [ ] Create `web/src/components/features/WalletConnection.tsx`
 - [ ] Component handles:
@@ -554,7 +554,7 @@ ai_context: |
   - [ ] Display balance in USD + tokens
   - [ ] Error handling for network mismatch
 
-### Infer 23: Create PaymentProcessor Component
+### Cycle 23: Create PaymentProcessor Component
 
 - [ ] Create `web/src/components/features/PaymentProcessor.tsx`
 - [ ] Component orchestrates:
@@ -572,7 +572,7 @@ ai_context: |
   - [ ] Polls for confirmation (~2 seconds on Base)
   - [ ] Timeout after 5 minutes
 
-### Infer 24: Create PaymentPrompt Modal
+### Cycle 24: Create PaymentPrompt Modal
 
 - [ ] Create `web/src/components/features/PaymentPromptModal.tsx`
 - [ ] Modal that combines:
@@ -591,7 +591,7 @@ ai_context: |
   - [ ] Clear instructions for user
   - [ ] Cancel button to dismiss
 
-### Infer 25: Create PaymentHistory Component
+### Cycle 25: Create PaymentHistory Component
 
 - [ ] Create `web/src/components/features/PaymentHistory.tsx`
 - [ ] Component displays:
@@ -611,7 +611,7 @@ ai_context: |
 - [ ] Fetches data from Convex query
 - [ ] Pagination for many transactions
 
-### Infer 26: Create BalanceDisplay Component
+### Cycle 26: Create BalanceDisplay Component
 
 - [ ] Create `web/src/components/features/BalanceDisplay.tsx`
 - [ ] Component shows:
@@ -629,7 +629,7 @@ ai_context: |
   - [ ] Loading skeleton
   - [ ] Error message if balance fetch fails
 
-### Infer 27: Create AgentExecutionFlow with X402
+### Cycle 27: Create AgentExecutionFlow with X402
 
 - [ ] Create `web/src/components/features/AgentExecutionFlow.tsx`
 - [ ] Component orchestrates:
@@ -652,7 +652,7 @@ ai_context: |
   Agent Selection → Execute → [Payment Modal if 402] → Agent Results
   ```
 
-### Infer 28: Update ExternalProviderAccess Component
+### Cycle 28: Update ExternalProviderAccess Component
 
 - [ ] Modify `web/src/components/features/ExternalProviderAccess.tsx`
 - [ ] Add X402 payment flow:
@@ -668,7 +668,7 @@ ai_context: |
   - [ ] Network availability badge
   - [ ] Success rate %
 
-### Infer 29: Create X402 Demo Page
+### Cycle 29: Create X402 Demo Page
 
 - [ ] Create `web/src/pages/demo/x402-payments.astro`
 - [ ] Interactive demo showing:
@@ -688,7 +688,7 @@ ai_context: |
   - [ ] Integration for developers
   - [ ] FAQ section
 
-### Infer 30: Create X402 Documentation Page
+### Cycle 30: Create X402 Documentation Page
 
 - [ ] Create `web/src/pages/docs/x402-integration.astro`
 - [ ] Document for developers:
@@ -707,11 +707,11 @@ ai_context: |
 
 ---
 
-## PHASE 4: API ROUTES & ASTRO INTEGRATION (Infer 31-40)
+## PHASE 4: API ROUTES & ASTRO INTEGRATION (Cycle 31-40)
 
 **Purpose:** Implement X402-protected API routes in Astro
 
-### Infer 31: Create X402 Astro API Route Handler
+### Cycle 31: Create X402 Astro API Route Handler
 
 - [ ] Create `web/src/lib/x402-route-handler.ts`
 - [ ] Export function:
@@ -744,7 +744,7 @@ ai_context: |
   - [ ] Facilitator error (return 502)
   - [ ] Payment expired
 
-### Infer 32: Create Agent Execution API Route
+### Cycle 32: Create Agent Execution API Route
 
 - [ ] Create `web/src/pages/api/agent/execute.ts`
 - [ ] Astro API route that:
@@ -778,7 +778,7 @@ ai_context: |
   }
   ```
 
-### Infer 33: Create Provider API Call Route
+### Cycle 33: Create Provider API Call Route
 
 - [ ] Create `web/src/pages/api/provider/[providerId]/call.ts`
 - [ ] Astro API route that:
@@ -799,7 +799,7 @@ ai_context: |
   - [ ] Timeout handling
   - [ ] Error forwarding from provider
 
-### Infer 34: Create Workflow Trigger Route
+### Cycle 34: Create Workflow Trigger Route
 
 - [ ] Create `web/src/pages/api/workflow/[workflowId]/trigger.ts`
 - [ ] Astro API route that:
@@ -816,7 +816,7 @@ ai_context: |
   - [ ] Include payment ID in headers
   - [ ] Track execution in Convex
 
-### Infer 35: Create Payment Verification Route
+### Cycle 35: Create Payment Verification Route
 
 - [ ] Create `web/src/pages/api/payments/verify.ts`
 - [ ] POST route that:
@@ -840,7 +840,7 @@ ai_context: |
   }
   ```
 
-### Infer 36: Create Payment Settlement Route
+### Cycle 36: Create Payment Settlement Route
 
 - [ ] Create `web/src/pages/api/payments/settle.ts`
 - [ ] POST route that:
@@ -863,7 +863,7 @@ ai_context: |
   }
   ```
 
-### Infer 37: Create Payment Query Route
+### Cycle 37: Create Payment Query Route
 
 - [ ] Create `web/src/pages/api/payments/history.ts`
 - [ ] GET route that:
@@ -883,7 +883,7 @@ ai_context: |
   }
   ```
 
-### Infer 38: Create Payment Configuration Route
+### Cycle 38: Create Payment Configuration Route
 
 - [ ] Create `web/src/pages/api/x402/config.ts`
 - [ ] GET route that returns:
@@ -909,7 +909,7 @@ ai_context: |
   }
   ```
 
-### Infer 39: Add Error Handling Middleware
+### Cycle 39: Add Error Handling Middleware
 
 - [ ] Create `web/src/middleware/error-handler.ts`
 - [ ] Handle X402-specific errors:
@@ -927,7 +927,7 @@ ai_context: |
   }
   ```
 
-### Infer 40: Test All API Routes
+### Cycle 40: Test All API Routes
 
 - [ ] Write tests for each route:
   - [ ] Test without payment (expect 402)
@@ -944,11 +944,11 @@ ai_context: |
 
 ---
 
-## PHASE 5: BLOCKCHAIN & PAYMENT MECHANICS (Infer 41-50)
+## PHASE 5: BLOCKCHAIN & PAYMENT MECHANICS (Cycle 41-50)
 
 **Purpose:** Implement blockchain payment processing
 
-### Infer 41: Implement Permit-Based Payment Flow
+### Cycle 41: Implement Permit-Based Payment Flow
 
 - [ ] Create `backend/convex/lib/permit-payment.ts`
 - [ ] Implement permit generation:
@@ -976,7 +976,7 @@ ai_context: |
   3. Signature sent to backend
   4. Backend calls facilitator to execute transfer
 
-### Infer 42: Implement Transfer-Based Payment Flow
+### Cycle 42: Implement Transfer-Based Payment Flow
 
 - [ ] Create `backend/convex/lib/transfer-payment.ts`
 - [ ] For chains without permit support (Solana):
@@ -995,7 +995,7 @@ ai_context: |
   - [ ] Approval expires (re-generate)
   - [ ] Insufficient allowance (show error)
 
-### Infer 43: Integrate with Coinbase CDP Facilitator
+### Cycle 43: Integrate with Coinbase CDP Facilitator
 
 - [ ] Create `backend/convex/lib/coinbase-facilitator.ts`
 - [ ] Implement facilitator client:
@@ -1018,7 +1018,7 @@ ai_context: |
   - [ ] Propagate validation errors
   - [ ] Log all facilitator calls
 
-### Infer 44: Implement Gas Estimation
+### Cycle 44: Implement Gas Estimation
 
 - [ ] Create `backend/convex/lib/gas-estimation.ts`
 - [ ] Estimate gas for:
@@ -1035,7 +1035,7 @@ ai_context: |
   - [ ] Total cost = amount + gas
 - [ ] On Base: Gas typically negligible (~$0.0001)
 
-### Infer 45: Implement Transaction Verification
+### Cycle 45: Implement Transaction Verification
 
 - [ ] Create `backend/convex/lib/tx-verification.ts`
 - [ ] Verify on-chain transaction:
@@ -1065,7 +1065,7 @@ ai_context: |
   - [ ] Wrong recipient (return error)
   - [ ] Insufficient amount (return error)
 
-### Infer 46: Implement Replay Protection
+### Cycle 46: Implement Replay Protection
 
 - [ ] Create `backend/convex/lib/replay-protection.ts`
 - [ ] Prevent using same payment twice:
@@ -1091,7 +1091,7 @@ ai_context: |
     .first();
   ```
 
-### Infer 47: Implement Rate Limiting per User
+### Cycle 47: Implement Rate Limiting per User
 
 - [ ] Create `backend/convex/lib/rate-limiter.ts`
 - [ ] Rate limit payment attempts:
@@ -1102,7 +1102,7 @@ ai_context: |
 - [ ] Return 429 Too Many Requests if exceeded
 - [ ] Log rate limit violations
 
-### Infer 48: Implement Payment Reconciliation
+### Cycle 48: Implement Payment Reconciliation
 
 - [ ] Create `backend/convex/services/payment-reconciliation.ts`
 - [ ] Scheduled job to:
@@ -1124,7 +1124,7 @@ ai_context: |
   }
   ```
 
-### Infer 49: Implement Refund Logic (Future)
+### Cycle 49: Implement Refund Logic (Future)
 
 - [ ] Create `backend/convex/lib/refund-handler.ts`
 - [ ] Handle refunds if:
@@ -1139,7 +1139,7 @@ ai_context: |
   5. Log refund event
 - [ ] Note: Implement in Phase 2+ (not required for MVP)
 
-### Infer 50: Document Payment Architecture
+### Cycle 50: Document Payment Architecture
 
 - [ ] Write `one/connections/x402-architecture.md`
 - [ ] Document:
@@ -1153,11 +1153,11 @@ ai_context: |
 
 ---
 
-## PHASE 6: QUALITY & TESTING (Infer 51-60)
+## PHASE 6: QUALITY & TESTING (Cycle 51-60)
 
 **Purpose:** Test all payment flows end-to-end
 
-### Infer 51: Write Unit Tests for X402 Services
+### Cycle 51: Write Unit Tests for X402 Services
 
 - [ ] Create `backend/convex/__tests__/x402-payment.test.ts`
 - [ ] Test X402PaymentService:
@@ -1173,7 +1173,7 @@ ai_context: |
   - [ ] Mock HTTP calls to facilitator
   - [ ] Mock blockchain calls
 
-### Infer 52: Write Integration Tests
+### Cycle 52: Write Integration Tests
 
 - [ ] Create `backend/convex/__tests__/x402-integration.test.ts`
 - [ ] Test complete flow:
@@ -1189,7 +1189,7 @@ ai_context: |
   - [ ] Replay attack
   - [ ] Network timeout
 
-### Infer 53: Write Frontend Component Tests
+### Cycle 53: Write Frontend Component Tests
 
 - [ ] Create `web/src/components/__tests__/PaymentRequired.test.tsx`
 - [ ] Test PaymentRequired component:
@@ -1209,7 +1209,7 @@ ai_context: |
   - [ ] Retries on failure
   - [ ] Shows success message
 
-### Infer 54: Write E2E Tests
+### Cycle 54: Write E2E Tests
 
 - [ ] Create `web/src/__tests__/x402-e2e.test.ts`
 - [ ] Test full user flow:
@@ -1224,7 +1224,7 @@ ai_context: |
 - [ ] Verify in block explorer
 - [ ] Test retry flows
 
-### Infer 55: Write API Route Tests
+### Cycle 55: Write API Route Tests
 
 - [ ] Create `web/src/pages/api/__tests__/agent-execute.test.ts`
 - [ ] Test agent execution endpoint:
@@ -1236,7 +1236,7 @@ ai_context: |
   - [ ] Workflow trigger
   - [ ] Payment history
 
-### Infer 56: Create Test Fixtures
+### Cycle 56: Create Test Fixtures
 
 - [ ] Create `web/src/__fixtures__/x402-fixtures.ts`
 - [ ] Define test data:
@@ -1247,7 +1247,7 @@ ai_context: |
   - [ ] Test amounts
 - [ ] Reuse across all tests
 
-### Infer 57: Test Error Scenarios
+### Cycle 57: Test Error Scenarios
 
 - [ ] Create `web/src/__tests__/x402-error-scenarios.test.ts`
 - [ ] Test error handling:
@@ -1260,7 +1260,7 @@ ai_context: |
   - [ ] Insufficient gas
 - [ ] Verify error messages are helpful
 
-### Infer 58: Test Security
+### Cycle 58: Test Security
 
 - [ ] Create `web/src/__tests__/x402-security.test.ts`
 - [ ] Test security aspects:
@@ -1272,7 +1272,7 @@ ai_context: |
   - [ ] XSS protection (payment modal)
   - [ ] CSRF protection
 
-### Infer 59: Test Performance
+### Cycle 59: Test Performance
 
 - [ ] Create `web/src/__tests__/x402-performance.test.ts`
 - [ ] Measure:
@@ -1283,7 +1283,7 @@ ai_context: |
   - [ ] Load test: 100 concurrent payments
 - [ ] Document results in metrics file
 
-### Infer 60: Final Test Coverage Report
+### Cycle 60: Final Test Coverage Report
 
 - [ ] Run full test suite: `bun test`
 - [ ] Generate coverage report
@@ -1297,11 +1297,11 @@ ai_context: |
 
 ---
 
-## PHASE 7: DESIGN & WIREFRAMES (Infer 61-70)
+## PHASE 7: DESIGN & WIREFRAMES (Cycle 61-70)
 
 **Purpose:** Finalize UI/UX design for payment flow
 
-### Infer 61: Design Payment Prompt Modal
+### Cycle 61: Design Payment Prompt Modal
 
 - [ ] Create wireframe: PaymentPromptModal
 - [ ] Layout:
@@ -1319,7 +1319,7 @@ ai_context: |
   - [ ] Success (show checkmark + close)
   - [ ] Error (show error message + retry)
 
-### Infer 62: Design Payment History Page
+### Cycle 62: Design Payment History Page
 
 - [ ] Create wireframe: PaymentHistory
 - [ ] Components:
@@ -1336,7 +1336,7 @@ ai_context: |
   - [ ] Empty state (no payments)
   - [ ] Error state (failed to load)
 
-### Infer 63: Design Balance Display
+### Cycle 63: Design Balance Display
 
 - [ ] Create wireframe: BalanceDisplay
 - [ ] Card layout:
@@ -1348,7 +1348,7 @@ ai_context: |
   - [ ] Low balance warning (if < $0.05)
   - [ ] "Add Funds" link (future)
 
-### Infer 64: Design Agent Execution Flow
+### Cycle 64: Design Agent Execution Flow
 
 - [ ] Create wireframe: AgentExecutionFlow
 - [ ] States:
@@ -1364,7 +1364,7 @@ ai_context: |
   - [ ] Network used
   - [ ] Cost in USD
 
-### Infer 65: Design X402 Demo Page
+### Cycle 65: Design X402 Demo Page
 
 - [ ] Create wireframe: DemoPage (/demo/x402-payments)
 - [ ] Sections:
@@ -1379,7 +1379,7 @@ ai_context: |
   - [ ] Live payment example
   - [ ] Code snippets (copy-able)
 
-### Infer 66: Create Design Tokens for X402
+### Cycle 66: Create Design Tokens for X402
 
 - [ ] Update `web/src/styles/x402-tokens.css`:
 
@@ -1400,7 +1400,7 @@ ai_context: |
   }
   ```
 
-### Infer 67: Ensure Accessibility (WCAG 2.1 AA)
+### Cycle 67: Ensure Accessibility (WCAG 2.1 AA)
 
 - [ ] Update components for accessibility:
   - [ ] PaymentPromptModal: Add aria-modal, role, keyboard nav
@@ -1414,7 +1414,7 @@ ai_context: |
   - [ ] Color contrast (ratio 4.5:1 minimum)
   - [ ] Focus indicators (visible)
 
-### Infer 68: Test Mobile Responsiveness
+### Cycle 68: Test Mobile Responsiveness
 
 - [ ] Test PaymentPromptModal on:
   - [ ] iPhone 12 (390px)
@@ -1430,7 +1430,7 @@ ai_context: |
   - [ ] Scheme selector (radio buttons)
   - [ ] Buttons (click area)
 
-### Infer 69: Design Dark Mode Styles
+### Cycle 69: Design Dark Mode Styles
 
 - [ ] Update CSS for dark mode:
   ```css
@@ -1444,7 +1444,7 @@ ai_context: |
 - [ ] Test all components in dark mode
 - [ ] Verify contrast ratios still valid
 
-### Infer 70: Create Component Library Documentation
+### Cycle 70: Create Component Library Documentation
 
 - [ ] Document all X402 components:
   - [ ] PaymentPromptModal
@@ -1461,11 +1461,11 @@ ai_context: |
 
 ---
 
-## PHASE 8: PERFORMANCE & OPTIMIZATION (Infer 71-80)
+## PHASE 8: PERFORMANCE & OPTIMIZATION (Cycle 71-80)
 
 **Purpose:** Optimize payment flow for speed + efficiency
 
-### Infer 71: Optimize Frontend Bundle Size
+### Cycle 71: Optimize Frontend Bundle Size
 
 - [ ] Audit bundle:
   - [ ] Run `bun run build` with analysis
@@ -1477,7 +1477,7 @@ ai_context: |
   - [ ] Remove unused shadcn/ui components
 - [ ] Target: Payment modal < 50KB gzipped
 
-### Infer 72: Implement Payment Caching
+### Cycle 72: Implement Payment Caching
 
 - [ ] Cache frequently accessed data:
   - [ ] X402 config (supported networks, amounts)
@@ -1489,7 +1489,7 @@ ai_context: |
   - [ ] Facilitator: 5 minutes (health check)
 - [ ] Use Convex caching + browser localStorage
 
-### Infer 73: Implement Pagination for Payment History
+### Cycle 73: Implement Pagination for Payment History
 
 - [ ] Load payments in batches:
   - [ ] Initial load: 20 most recent
@@ -1500,7 +1500,7 @@ ai_context: |
   - [ ] Limit + offset in query
   - [ ] Count total for pagination info
 
-### Infer 74: Optimize Blockchain RPC Calls
+### Cycle 74: Optimize Blockchain RPC Calls
 
 - [ ] Batch RPC requests:
   - [ ] Use eth_call for read-only operations
@@ -1514,7 +1514,7 @@ ai_context: |
   - [ ] Track calls per second
   - [ ] Alert if quota exceeded
 
-### Infer 75: Implement Permit Caching
+### Cycle 75: Implement Permit Caching
 
 - [ ] Cache permit data to avoid re-generating:
   - [ ] Store permit in localStorage + Convex
@@ -1531,7 +1531,7 @@ ai_context: |
   }
   ```
 
-### Infer 76: Implement Progressive Enhancement
+### Cycle 76: Implement Progressive Enhancement
 
 - [ ] Website works without JavaScript (server-rendered):
   - [ ] Show payment form with standard HTML
@@ -1544,7 +1544,7 @@ ai_context: |
   - [ ] Wallet integration
 - [ ] Goal: Graceful degradation
 
-### Infer 77: Monitor Payment Latency
+### Cycle 77: Monitor Payment Latency
 
 - [ ] Add performance metrics:
   - [ ] Payment creation time
@@ -1568,7 +1568,7 @@ ai_context: |
   ```
 - [ ] Alert if > expected time
 
-### Infer 78: Implement Connection Pooling
+### Cycle 78: Implement Connection Pooling
 
 - [ ] Reuse blockchain client connections:
   - [ ] Create single viem client per network
@@ -1579,7 +1579,7 @@ ai_context: |
   - [ ] Base client created on startup
   - [ ] Reuse for all requests
 
-### Infer 79: Optimize Payment Settlement
+### Cycle 79: Optimize Payment Settlement
 
 - [ ] Parallelize settlement tasks:
   - [ ] Verify payment on blockchain (parallel)
@@ -1589,7 +1589,7 @@ ai_context: |
 - [ ] Use Convex's scheduler for batch operations
 - [ ] Goal: Settlement < 2 seconds on Base
 
-### Infer 80: Performance Baseline & Regression Testing
+### Cycle 80: Performance Baseline & Regression Testing
 
 - [ ] Establish baseline metrics:
   - [ ] Payment creation: 50-100ms
@@ -1604,11 +1604,11 @@ ai_context: |
 
 ---
 
-## PHASE 9: DEPLOYMENT & DOCUMENTATION (Infer 81-90)
+## PHASE 9: DEPLOYMENT & DOCUMENTATION (Cycle 81-90)
 
 **Purpose:** Deploy to production, document for users + developers
 
-### Infer 81: Set Up Production Environment Variables
+### Cycle 81: Set Up Production Environment Variables
 
 - [ ] Update `.env` (root) with production values:
   - [ ] VITE_BLOCKCHAIN_RPC_BASE (Coinbase mainnet RPC)
@@ -1622,7 +1622,7 @@ ai_context: |
   - [ ] Audit access logs monthly
 - [ ] Document in: `DEPLOYMENT.md`
 
-### Infer 82: Deploy Backend to Convex
+### Cycle 82: Deploy Backend to Convex
 
 - [ ] Ensure all backend changes committed:
   - [ ] `backend/convex/schema.ts` updated
@@ -1637,7 +1637,7 @@ ai_context: |
 - [ ] Deploy: `npx convex deploy`
 - [ ] Verify in Convex dashboard
 
-### Infer 83: Build + Deploy Frontend to Cloudflare
+### Cycle 83: Build + Deploy Frontend to Cloudflare
 
 - [ ] Build frontend:
   - [ ] `cd web && bun run build`
@@ -1651,7 +1651,7 @@ ai_context: |
   - [ ] Check DevTools console
   - [ ] Monitor Cloudflare logs
 
-### Infer 84: Verify Production Endpoints
+### Cycle 84: Verify Production Endpoints
 
 - [ ] Test in production:
   - [ ] GET /api/agent/execute (without payment) → 402
@@ -1668,7 +1668,7 @@ ai_context: |
   - [ ] Slow requests
   - [ ] Failed payments
 
-### Infer 85: Create User Documentation
+### Cycle 85: Create User Documentation
 
 - [ ] Write `web/public/docs/x402-user-guide.md`:
   - [ ] How to connect wallet
@@ -1684,7 +1684,7 @@ ai_context: |
   - [ ] Payment confirmation
   - [ ] Payment history
 
-### Infer 86: Create Developer Documentation
+### Cycle 86: Create Developer Documentation
 
 - [ ] Write `one/connections/x402-developer-guide.md`:
   - [ ] X402 protocol overview
@@ -1710,7 +1710,7 @@ ai_context: |
   # → 200 OK (with X-PAYMENT-ID header)
   ```
 
-### Infer 87: Create Integration Guide for Partners
+### Cycle 87: Create Integration Guide for Partners
 
 - [ ] Write `one/connections/x402-integration-guide.md`:
   - [ ] High-level overview
@@ -1730,7 +1730,7 @@ ai_context: |
     - [ ] Settlement times
   - [ ] Support + troubleshooting
 
-### Infer 88: Write Architecture Decision Record (ADR)
+### Cycle 88: Write Architecture Decision Record (ADR)
 
 - [ ] Create `one/events/adr-x402-integration.md`:
   - [ ] Context: Why X402?
@@ -1746,7 +1746,7 @@ ai_context: |
     - [ ] Custom payment solution
   - [ ] Status: APPROVED/IN PROGRESS
 
-### Infer 89: Create Monitoring + Alerting
+### Cycle 89: Create Monitoring + Alerting
 
 - [ ] Set up monitoring for:
   - [ ] Payment success rate (target 99%+)
@@ -1764,7 +1764,7 @@ ai_context: |
   - [ ] Revenue tracked
   - [ ] Error rate by type
 
-### Infer 90: Plan Maintenance + Updates
+### Cycle 90: Plan Maintenance + Updates
 
 - [ ] Document maintenance schedule:
   - [ ] Monthly: Security updates
@@ -1779,11 +1779,11 @@ ai_context: |
 
 ---
 
-## PHASE 10: KNOWLEDGE & LESSONS LEARNED (Infer 91-100)
+## PHASE 10: KNOWLEDGE & LESSONS LEARNED (Cycle 91-100)
 
 **Purpose:** Document learnings, capture institutional knowledge
 
-### Infer 91: Document Ontology Mapping
+### Cycle 91: Document Ontology Mapping
 
 - [ ] Write `one/knowledge/x402-ontology-mapping.md`:
   - [ ] **Groups:** Merchant group, customer group, platform
@@ -1795,7 +1795,7 @@ ai_context: |
 - [ ] Use 6-dimension framework throughout
 - [ ] Show examples of real data structures
 
-### Infer 92: Create Payment Flow State Diagram
+### Cycle 92: Create Payment Flow State Diagram
 
 - [ ] Create `one/events/x402-state-diagram.md` with diagram:
   ```
@@ -1818,7 +1818,7 @@ ai_context: |
   - [ ] Retry: User can retry on failure
   - [ ] Settlement: Happens automatically after verification
 
-### Infer 93: Document Security Considerations
+### Cycle 93: Document Security Considerations
 
 - [ ] Write `one/connections/x402-security.md`:
   - [ ] **Signature Verification:** User signature proves authorization
@@ -1835,7 +1835,7 @@ ai_context: |
   - [ ] Blockchain reorg (very unlikely on Base)
   - [ ] Facilitator breach (trust issue)
 
-### Infer 94: Document Blockchain Specifics
+### Cycle 94: Document Blockchain Specifics
 
 - [ ] Write `one/connections/x402-blockchain.md`:
   - [ ] **Base Network:**
@@ -1854,7 +1854,7 @@ ai_context: |
     - [ ] Balance queries: eth_call (read-only)
     - [ ] Transfer: state-changing transaction
 
-### Infer 95: Capture Performance Benchmarks
+### Cycle 95: Capture Performance Benchmarks
 
 - [ ] Write `one/events/x402-performance-benchmarks.md`:
   - [ ] **Payment Creation:** 50-100ms
@@ -1871,7 +1871,7 @@ ai_context: |
   - [ ] PayPal: 2-5s (no blockchain wait)
   - [ ] X402: 4-8s (includes blockchain settlement)
 
-### Infer 96: Document Common Issues + Solutions
+### Cycle 96: Document Common Issues + Solutions
 
 - [ ] Write `one/connections/x402-troubleshooting.md`:
   - [ ] **Issue: Payment times out**
@@ -1893,7 +1893,7 @@ ai_context: |
     - [ ] Cause: User tried same payment twice
     - [ ] Solution: Create new payment request
 
-### Infer 97: Create Cost Analysis Report
+### Cycle 97: Create Cost Analysis Report
 
 - [ ] Write `one/events/x402-cost-analysis.md`:
   - [ ] **Blockchain Costs:**
@@ -1913,7 +1913,7 @@ ai_context: |
   - [ ] **Break-even Analysis:**
     - [ ] Need 10+ payments/day to offset costs
 
-### Infer 98: Plan Future Enhancements
+### Cycle 98: Plan Future Enhancements
 
 - [ ] Document Phase 2+ features in `one/things/todo-x402-phase2.md`:
   - [ ] [ ] Bazar marketplace discovery layer
@@ -1930,7 +1930,7 @@ ai_context: |
   - [ ] [ ] Stablecoin alternatives (USDT, DAI)
 - [ ] Prioritize by impact + effort
 
-### Infer 99: Create Lessons Learned Document
+### Cycle 99: Create Lessons Learned Document
 
 - [ ] Write `one/events/x402-lessons-learned.md`:
   - [ ] **What went well:**
@@ -1953,11 +1953,11 @@ ai_context: |
     - [ ] Quotes from team members
     - [ ] What they learned
 
-### Infer 100: Final Summary + Celebration
+### Cycle 100: Final Summary + Celebration
 
 - [ ] Create `one/events/x402-phase1-complete.md`:
   - [ ] **Project Status:** ✅ COMPLETE
-  - [ ] **Timeline:** Infer 1-100 (100 inferences)
+  - [ ] **Timeline:** Cycle 1-100 (100 cycles)
   - [ ] **Delivered:**
     - [ ] [x] HTTP 402 protocol implementation
     - [ ] [x] X402PaymentService (Effect.ts)
@@ -2042,6 +2042,6 @@ X402 integration is complete when:
 
 ---
 
-**Remember:** Plan in inferences, not days. Where in the sequence does each thing belong?
+**Remember:** Plan in cycles, not days. Where in the sequence does each thing belong?
 
-**Status:** Ready for execution. Begin with Infer 1-10 (Foundation).
+**Status:** Ready for execution. Begin with Cycle 1-10 (Foundation).

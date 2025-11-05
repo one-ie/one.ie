@@ -6,8 +6,8 @@ organization: "ONE Platform"
 personRole: "platform_owner"
 ontologyDimensions: ["Things", "People", "Events", "Knowledge"]
 assignedSpecialist: "agent-frontend"
-totalInferences: 100
-completedInferences: 0
+totalCycles: 100
+completedCycles: 0
 createdAt: 2025-10-30
 draft: false
 ---
@@ -17,17 +17,17 @@ draft: false
 **Focus:** Comprehensive analytics dashboard with real-time metrics, team management, and data visualization
 **Type:** Complete frontend implementation (Astro + React 19 + Tailwind v4 + Recharts)
 **Integration:** Convex for real-time data, role-based access control
-**Process:** `Infer 1-100 inference sequence`
-**Timeline:** 12-16 inferences per specialist per day
+**Process:** `Cycle 1-100 cycle sequence`
+**Timeline:** 12-16 cycles per specialist per day
 **Target:** Fully functional analytics and team management dashboard
 
 ---
 
-## PHASE 1: FOUNDATION & DESIGN (Infer 1-10)
+## PHASE 1: FOUNDATION & DESIGN (Cycle 1-10)
 
 **Purpose:** Define dashboard requirements, metrics, user flows, design system
 
-### Infer 1: Define Dashboard Structure
+### Cycle 1: Define Dashboard Structure
 - [ ] **Core Dashboards:**
   - [ ] Overview dashboard (key metrics at a glance)
   - [ ] Analytics dashboard (detailed charts and graphs)
@@ -55,7 +55,7 @@ draft: false
   - [ ] Report sharing
   - [ ] Report history
 
-### Infer 2: Map Dashboard to 6-Dimension Ontology
+### Cycle 2: Map Dashboard to 6-Dimension Ontology
 - [ ] **Groups:** Organization (company), team, department
 - [ ] **People:** Admin (owner), manager, member, viewer
 - [ ] **Things:**
@@ -76,7 +76,7 @@ draft: false
   - [ ] widget_added, layout_changed, export_completed
 - [ ] **Knowledge:** Metric trends, insights, anomalies, predictions
 
-### Infer 3: Design Metrics & KPIs
+### Cycle 3: Design Metrics & KPIs
 - [ ] **Key Metrics:**
   - [ ] Revenue (total, MRR, ARR)
   - [ ] Growth (users, revenue, engagement)
@@ -93,7 +93,7 @@ draft: false
   - [ ] Target progress bar (if applicable)
   - [ ] Link to detailed view
 
-### Infer 4: Design Chart Types
+### Cycle 4: Design Chart Types
 - [ ] **Chart Library: Recharts**
 - [ ] **Chart Types:**
   - [ ] Line chart (trends over time)
@@ -112,7 +112,7 @@ draft: false
   - [ ] Export chart as image
   - [ ] Responsive sizing
 
-### Infer 5: Design Team Management UI
+### Cycle 5: Design Team Management UI
 - [ ] **Team Page Shows:**
   - [ ] Team member list (cards or table)
   - [ ] Each member shows:
@@ -137,7 +137,7 @@ draft: false
   - [ ] Member: View own data, create content
   - [ ] Viewer: Read-only access
 
-### Infer 6: Design Reports Builder
+### Cycle 6: Design Reports Builder
 - [ ] **Report Builder UI:**
   - [ ] Step 1: Select report type (template or custom)
   - [ ] Step 2: Choose metrics and dimensions
@@ -160,7 +160,7 @@ draft: false
   - [ ] Email delivery
   - [ ] Scheduled exports (daily, weekly, monthly)
 
-### Infer 7: Design Responsive Layout
+### Cycle 7: Design Responsive Layout
 - [ ] **Mobile-first (< 768px):**
   - [ ] Single column metric cards
   - [ ] Stacked charts
@@ -179,7 +179,7 @@ draft: false
   - [ ] Resizable charts
   - [ ] Multi-panel views
 
-### Infer 8: Design Visual System
+### Cycle 8: Design Visual System
 - [ ] **Color Palette:**
   - [ ] Primary: Blue (#3B82F6) for metrics, CTAs
   - [ ] Success: Green (#10B981) for positive trends
@@ -202,7 +202,7 @@ draft: false
   - [ ] Date range picker
   - [ ] Filter controls
 
-### Infer 9: Plan Real-time Updates
+### Cycle 9: Plan Real-time Updates
 - [ ] **Convex Integration:**
   - [ ] Subscribe to metrics changes
   - [ ] Real-time data streaming
@@ -220,7 +220,7 @@ draft: false
   - [ ] Report completion alerts
   - [ ] System notifications
 
-### Infer 10: Define Success Metrics
+### Cycle 10: Define Success Metrics
 - [ ] Dashboard complete when:
   - [ ] Overview dashboard displays key metrics
   - [ ] Charts render with real-time data
@@ -237,11 +237,11 @@ draft: false
 
 ---
 
-## PHASE 2: BACKEND SCHEMA & SERVICES (Infer 11-20)
+## PHASE 2: BACKEND SCHEMA & SERVICES (Cycle 11-20)
 
 **Purpose:** Define Convex schema, queries, mutations for dashboard data
 
-### Infer 11: Define Dashboard Schema
+### Cycle 11: Define Dashboard Schema
 - [ ] **Tables:**
   - [ ] dashboards (user configs, layouts)
   - [ ] metrics (tracked values, targets)
@@ -251,7 +251,7 @@ draft: false
 - [ ] **Indexes:**
   - [ ] by_user, by_organization, by_date
 
-### Infer 12: Create Metrics Queries
+### Cycle 12: Create Metrics Queries
 - [ ] **Convex queries:**
   - [ ] `metrics.list` (get all metrics for user/org)
   - [ ] `metrics.get` (get single metric)
@@ -259,7 +259,7 @@ draft: false
   - [ ] `metrics.compare` (compare periods)
   - [ ] `metrics.trends` (calculate trends)
 
-### Infer 13: Create Dashboard Mutations
+### Cycle 13: Create Dashboard Mutations
 - [ ] **Convex mutations:**
   - [ ] `dashboard.create` (new dashboard)
   - [ ] `dashboard.update` (update layout, widgets)
@@ -267,36 +267,36 @@ draft: false
   - [ ] `dashboard.addWidget` (add widget)
   - [ ] `dashboard.removeWidget` (remove widget)
 
-### Infer 14: Create Team Management Mutations
+### Cycle 14: Create Team Management Mutations
 - [ ] **Convex mutations:**
   - [ ] `team.invite` (send invitation)
   - [ ] `team.updateRole` (change role)
   - [ ] `team.updatePermissions` (change permissions)
   - [ ] `team.removeMember` (remove from team)
 
-### Infer 15: Create Reports Mutations
+### Cycle 15: Create Reports Mutations
 - [ ] **Convex mutations:**
   - [ ] `reports.create` (save report config)
   - [ ] `reports.generate` (generate report data)
   - [ ] `reports.schedule` (set up recurring reports)
   - [ ] `reports.export` (export to format)
 
-### Infer 16-20: Continue with real-time subscriptions, caching, and optimization
+### Cycle 16-20: Continue with real-time subscriptions, caching, and optimization
 
 ---
 
-## PHASE 3: REACT COMPONENTS (Infer 21-40)
+## PHASE 3: REACT COMPONENTS (Cycle 21-40)
 
 **Purpose:** Build interactive React components for dashboard UI
 
-### Infer 21: Create Dashboard Layout
+### Cycle 21: Create Dashboard Layout
 - [ ] **DashboardLayout component:**
   - [ ] Sidebar navigation
   - [ ] Top bar (search, notifications, profile)
   - [ ] Main content area (grid)
   - [ ] Mobile navigation drawer
 
-### Infer 22: Create Metric Card Component
+### Cycle 22: Create Metric Card Component
 - [ ] **MetricCard component:**
   - [ ] Metric name, value, unit
   - [ ] Trend indicator (arrow, percentage)
@@ -306,7 +306,7 @@ draft: false
   - [ ] Loading skeleton
   - [ ] Error state
 
-### Infer 23: Create Chart Components
+### Cycle 23: Create Chart Components
 - [ ] **LineChart component** (Recharts)
 - [ ] **BarChart component** (Recharts)
 - [ ] **PieChart component** (Recharts)
@@ -318,7 +318,7 @@ draft: false
   - [ ] Export button
   - [ ] Loading state
 
-### Infer 24: Create Data Table Component
+### Cycle 24: Create Data Table Component
 - [ ] **DataTable component:**
   - [ ] Column sorting
   - [ ] Row filtering
@@ -328,7 +328,7 @@ draft: false
   - [ ] Empty state
   - [ ] Loading skeleton
 
-### Infer 25: Create Team Member Card
+### Cycle 25: Create Team Member Card
 - [ ] **TeamMemberCard component:**
   - [ ] Avatar, name, email
   - [ ] Role badge
@@ -337,7 +337,7 @@ draft: false
   - [ ] Actions menu (edit, remove)
   - [ ] Hover state
 
-### Infer 26: Create Invite Member Modal
+### Cycle 26: Create Invite Member Modal
 - [ ] **InviteModal component:**
   - [ ] Email input (with validation)
   - [ ] Role selector
@@ -347,7 +347,7 @@ draft: false
   - [ ] Loading state
   - [ ] Success/error feedback
 
-### Infer 27: Create Report Builder
+### Cycle 27: Create Report Builder
 - [ ] **ReportBuilder component:**
   - [ ] Multi-step wizard
   - [ ] Metric selector (multi-select)
@@ -358,7 +358,7 @@ draft: false
   - [ ] Export options
   - [ ] Save button
 
-### Infer 28: Create Date Range Picker
+### Cycle 28: Create Date Range Picker
 - [ ] **DateRangePicker component:**
   - [ ] Preset ranges (today, week, month, year)
   - [ ] Custom range selector
@@ -366,43 +366,43 @@ draft: false
   - [ ] Apply button
   - [ ] Clear button
 
-### Infer 29-40: Continue with filters, settings, notifications, and polish
+### Cycle 29-40: Continue with filters, settings, notifications, and polish
 
 ---
 
-## PHASE 4: ASTRO PAGES & INTEGRATION (Infer 41-60)
+## PHASE 4: ASTRO PAGES & INTEGRATION (Cycle 41-60)
 
 **Purpose:** Create Astro pages and integrate React components
 
-### Infer 41: Create Dashboard Index Page
+### Cycle 41: Create Dashboard Index Page
 - [ ] **`/account/index.astro`:**
   - [ ] Overview dashboard
   - [ ] Key metrics grid
   - [ ] Recent activity feed
   - [ ] Quick actions
 
-### Infer 42: Create Analytics Page
+### Cycle 42: Create Analytics Page
 - [ ] **`/account/analytics.astro`:**
   - [ ] Detailed charts
   - [ ] Time series data
   - [ ] Metric deep dives
   - [ ] Custom date ranges
 
-### Infer 43: Create Team Page
+### Cycle 43: Create Team Page
 - [ ] **`/account/team.astro`:**
   - [ ] Team member list
   - [ ] Invite button
   - [ ] Role management
   - [ ] Activity logs
 
-### Infer 44: Create Reports Page
+### Cycle 44: Create Reports Page
 - [ ] **`/account/reports.astro`:**
   - [ ] Saved reports list
   - [ ] Report templates
   - [ ] Report builder
   - [ ] Export history
 
-### Infer 45: Create Settings Page
+### Cycle 45: Create Settings Page
 - [ ] **`/account/settings.astro`:**
   - [ ] Profile settings
   - [ ] Notification preferences
@@ -410,18 +410,18 @@ draft: false
   - [ ] Integrations
   - [ ] Billing (optional)
 
-### Infer 46-60: Continue with real-time integration, error handling, and optimization
+### Cycle 46-60: Continue with real-time integration, error handling, and optimization
 
 ---
 
-## PHASE 5: POLISH & OPTIMIZATION (Infer 61-100)
+## PHASE 5: POLISH & OPTIMIZATION (Cycle 61-100)
 
 **Purpose:** Refine UX, performance, accessibility, testing
 
-### Infer 61-70: Animations, transitions, loading states
-### Infer 71-80: Accessibility, keyboard navigation, screen reader support
-### Infer 81-90: Performance optimization, caching, lazy loading
-### Infer 91-100: Testing, documentation, deployment
+### Cycle 61-70: Animations, transitions, loading states
+### Cycle 71-80: Accessibility, keyboard navigation, screen reader support
+### Cycle 81-90: Performance optimization, caching, lazy loading
+### Cycle 91-100: Testing, documentation, deployment
 
 ---
 
@@ -447,6 +447,6 @@ Dashboard platform is complete when:
 
 ---
 
-**Timeline:** 80-90 inferences for complete implementation
+**Timeline:** 80-90 cycles for complete implementation
 **Status:** Ready to build
-**Next:** Use Claude Code to implement step by step following inference sequence
+**Next:** Use Claude Code to implement step by step following cycle sequence

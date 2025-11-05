@@ -59,8 +59,8 @@ export interface FeatureFlags {
   /** Event logging (audit trail and activity feed) */
   events: boolean;
 
-  /** Inference (AI/LLM integration) */
-  inference: boolean;
+  /** Cycle (AI/LLM integration) */
+  cycle: boolean;
 
   /** Blockchain integration (NFTs, tokens, smart contracts) */
   blockchain: boolean;
@@ -93,7 +93,7 @@ export const defaultFeatures: FeatureFlags = {
   knowledge: false,
   connections: false,
   events: false,
-  inference: false,
+  cycle: false,
   blockchain: false,
   payments: false,
   marketplace: false,
@@ -395,7 +395,7 @@ export const FEATURE_PRESETS = {
     knowledge: false,
     connections: false,
     events: false,
-    inference: false,
+    cycle: false,
     blockchain: false,
     payments: false,
     marketplace: false,
@@ -414,7 +414,7 @@ export const FEATURE_PRESETS = {
     knowledge: false,
     connections: false,
     events: false,
-    inference: false,
+    cycle: false,
     blockchain: false,
     payments: false,
     marketplace: false,
@@ -433,7 +433,7 @@ export const FEATURE_PRESETS = {
     knowledge: false,
     connections: true,
     events: true,
-    inference: false,
+    cycle: false,
     blockchain: false,
     payments: true,
     marketplace: false,
@@ -452,7 +452,7 @@ export const FEATURE_PRESETS = {
     knowledge: true,
     connections: true,
     events: true,
-    inference: true,
+    cycle: true,
     blockchain: true,
     payments: true,
     marketplace: true,
@@ -471,7 +471,7 @@ export const FEATURE_PRESETS = {
     knowledge: false,
     connections: true,
     events: true,
-    inference: false,
+    cycle: false,
     blockchain: false,
     payments: true,
     marketplace: true,

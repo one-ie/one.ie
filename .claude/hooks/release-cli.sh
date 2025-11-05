@@ -38,7 +38,7 @@ echo ""
 
 # Get script directory and navigate to root
 SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
-ROOT_DIR="$(dirname "$SCRIPT_DIR")"
+ROOT_DIR="$(dirname "$(dirname "$SCRIPT_DIR")")"  # Up two levels: hooks -> .claude -> root
 cd "$ROOT_DIR" || exit 1
 
 # Step 1: Verify CLI directory exists

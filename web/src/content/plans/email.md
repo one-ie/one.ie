@@ -6,8 +6,8 @@ organization: "ONE Platform"
 personRole: "platform_owner"
 ontologyDimensions: ["Things", "Connections", "Events"]
 assignedSpecialist: "Engineering Director"
-totalInferences: 100
-completedInferences: 0
+totalCycles: 100
+completedCycles: 0
 createdAt: 2025-10-30
 draft: false
 ---
@@ -17,17 +17,17 @@ draft: false
 **Focus:** Full-featured email client application with inbox, compose, threads, and rich editor
 **Type:** Complete frontend application (Astro + React 19 + Tailwind v4)
 **UI Pattern:** Gmail-like interface with sidebar, email list, and detail view
-**Process:** `Infer 1-100 inference sequence`
-**Timeline:** 12-16 inferences per specialist per day
+**Process:** `Cycle 1-100 cycle sequence`
+**Timeline:** 12-16 cycles per specialist per day
 **Target:** Fully functional mail app UI and state management
 
 ---
 
-## PHASE 1: FOUNDATION & ARCHITECTURE (Infer 1-10)
+## PHASE 1: FOUNDATION & ARCHITECTURE (Cycle 1-10)
 
 **Purpose:** Define mail app requirements, data model, UI patterns
 
-### Infer 1: Define Mail App Features
+### Cycle 1: Define Mail App Features
 - [ ] **Core Features:**
   - [ ] Inbox with email list
   - [ ] Email detail view (threading)
@@ -57,7 +57,7 @@ draft: false
   - [ ] Settings sidebar
   - [ ] Attachments preview
 
-### Infer 2: Map Mail App to 6-Dimension Ontology
+### Cycle 2: Map Mail App to 6-Dimension Ontology
 - [ ] **Groups:** User's workspace/organization
 - [ ] **People:**
   - [ ] User (email owner)
@@ -82,7 +82,7 @@ draft: false
   - [ ] contact_added, contact_updated
 - [ ] **Knowledge:** Email search index, sender/recipient frequency
 
-### Infer 3: Design Data Model
+### Cycle 3: Design Data Model
 - [ ] **Email Object:**
   ```
   {
@@ -137,7 +137,7 @@ draft: false
   }
   ```
 
-### Infer 4: Design UI Layout
+### Cycle 4: Design UI Layout
 - [ ] **Layout Structure:**
   - [ ] **Header (60px):**
     - [ ] Logo/title left
@@ -170,7 +170,7 @@ draft: false
       - [ ] Actions (reply, reply all, forward, archive, delete, spam)
       - [ ] Related emails in thread
 
-### Infer 5: Design Compose UI
+### Cycle 5: Design Compose UI
 - [ ] **Compose Modal/Panel:**
   - [ ] To field (autocomplete)
   - [ ] Cc/Bcc toggle
@@ -193,7 +193,7 @@ draft: false
   - [ ] Quote formatting
   - [ ] Undo/redo
 
-### Infer 6: Design Responsive Behavior
+### Cycle 6: Design Responsive Behavior
 - [ ] **Desktop (1024px+):**
   - [ ] Three-column layout (sidebar, list, detail)
   - [ ] All features visible
@@ -207,7 +207,7 @@ draft: false
   - [ ] Bottom bar with actions
   - [ ] Full-width compose
 
-### Infer 7: Design Search & Filtering
+### Cycle 7: Design Search & Filtering
 - [ ] **Search Bar:**
   - [ ] Search query input
   - [ ] Search in (all, subject, from, to, body)
@@ -228,7 +228,7 @@ draft: false
   - [ ] From specific contact
   - [ ] By date (today, week, month)
 
-### Infer 8: Design Settings & Preferences
+### Cycle 8: Design Settings & Preferences
 - [ ] **Settings Panels:**
   - [ ] **General:**
     - [ ] Language
@@ -255,7 +255,7 @@ draft: false
     - [ ] Snooze (s)
     - [ ] Delete (d)
 
-### Infer 9: Design Empty States & Error States
+### Cycle 9: Design Empty States & Error States
 - [ ] **Empty States:**
   - [ ] No emails in inbox
   - [ ] Search returns no results
@@ -273,7 +273,7 @@ draft: false
   - [ ] Loading spinner for detail view
   - [ ] Sending indicator during compose
 
-### Infer 10: Define Success Metrics
+### Cycle 10: Define Success Metrics
 - [ ] Mail app complete when:
   - [ ] [ ] Inbox loads and displays emails
   - [ ] [ ] Clicking email shows detail view
@@ -291,11 +291,11 @@ draft: false
 
 ---
 
-## PHASE 2: REACT STATE & COMPONENTS (Infer 11-30)
+## PHASE 2: REACT STATE & COMPONENTS (Cycle 11-30)
 
 **Purpose:** Build React state management and interactive components
 
-### Infer 11: Create Email Store (Zustand)
+### Cycle 11: Create Email Store (Zustand)
 - [ ] **Store structure:**
   - [ ] emails: Email[]
   - [ ] contacts: Contact[]
@@ -314,7 +314,7 @@ draft: false
   - [ ] delete(emailId)
   - [ ] addLabel(emailId, labelId)
 
-### Infer 12: Create UI Store (Zustand)
+### Cycle 12: Create UI Store (Zustand)
 - [ ] **Store structure:**
   - [ ] theme: 'light' | 'dark'
   - [ ] sidebarOpen: boolean
@@ -331,7 +331,7 @@ draft: false
   - [ ] setDensity(density)
   - [ ] updateUnreadCount(folderId, count)
 
-### Infer 13: Create MailSidebar Component
+### Cycle 13: Create MailSidebar Component
 - [ ] **Content:**
   - [ ] Compose button (prominent blue button)
   - [ ] Folder list (Inbox, Starred, Sent, Drafts, Archive, Spam, Trash)
@@ -344,7 +344,7 @@ draft: false
   - [ ] Highlight active folder
   - [ ] Show context menu on right-click
 
-### Infer 14: Create EmailListItem Component
+### Cycle 14: Create EmailListItem Component
 - [ ] **Display:**
   - [ ] Avatar (initials or image)
   - [ ] Sender name
@@ -360,7 +360,7 @@ draft: false
   - [ ] Hover state background highlight
   - [ ] Long press → select multiple
 
-### Infer 15: Create EmailList Component
+### Cycle 15: Create EmailList Component
 - [ ] **Structure:**
   - [ ] List of EmailListItem components
   - [ ] Checkbox to select all
@@ -376,7 +376,7 @@ draft: false
     - [ ] Move to folder
     - [ ] Delete
 
-### Infer 16: Create EmailDetail Component
+### Cycle 16: Create EmailDetail Component
 - [ ] **Header:**
   - [ ] Subject (H1)
   - [ ] From, To, Cc, Bcc (show only if present)
@@ -407,7 +407,7 @@ draft: false
   - [ ] Collapse/expand previous emails
   - [ ] Scroll through thread
 
-### Infer 17: Create ComposeForm Component
+### Cycle 17: Create ComposeForm Component
 - [ ] **Fields:**
   - [ ] To (autocomplete from contacts)
   - [ ] Cc (hidden by default)
@@ -432,7 +432,7 @@ draft: false
   - [ ] onSave (callback)
   - [ ] onDiscard (callback)
 
-### Infer 18: Create RichTextEditor Component
+### Cycle 18: Create RichTextEditor Component
 - [ ] **Toolbar:**
   - [ ] Bold, italic, underline buttons
   - [ ] Font size dropdown
@@ -455,7 +455,7 @@ draft: false
   - [ ] placeholder (text)
   - [ ] disabled (boolean)
 
-### Infer 19: Create SearchBar Component
+### Cycle 19: Create SearchBar Component
 - [ ] **Input:**
   - [ ] Searchable input
   - [ ] Clear button (when typing)
@@ -469,7 +469,7 @@ draft: false
   - [ ] onFilter (callback with filter params)
   - [ ] placeholder "Search emails..."
 
-### Infer 20: Create AdvancedSearch Component
+### Cycle 20: Create AdvancedSearch Component
 - [ ] **Modal or Panel:**
   - [ ] From field (email input)
   - [ ] To field (email input)
@@ -484,7 +484,7 @@ draft: false
   - [ ] onSearch (callback with filters)
   - [ ] onClose (callback)
 
-### Infer 21: Create ContactAutoComplete Component
+### Cycle 21: Create ContactAutoComplete Component
 - [ ] **Input field:**
   - [ ] Type to search contacts
   - [ ] Show suggestions below
@@ -496,7 +496,7 @@ draft: false
   - [ ] placeholder
   - [ ] allowMultiple (boolean)
 
-### Infer 22: Create AttachmentUpload Component
+### Cycle 22: Create AttachmentUpload Component
 - [ ] **Area:**
   - [ ] Drag and drop zone
   - [ ] Click to upload button
@@ -508,7 +508,7 @@ draft: false
   - [ ] maxSize (bytes)
   - [ ] accept (file types)
 
-### Infer 23: Create EmailThread Component
+### Cycle 23: Create EmailThread Component
 - [ ] **Display:**
   - [ ] Latest email at top (expanded)
   - [ ] Previous emails below (collapsed)
@@ -518,7 +518,7 @@ draft: false
   - [ ] threadId (to load related emails)
   - [ ] currentEmailId (highlight current)
 
-### Infer 24: Create ContextMenu Component
+### Cycle 24: Create ContextMenu Component
 - [ ] **Menu items:**
   - [ ] Archive
   - [ ] Delete
@@ -533,7 +533,7 @@ draft: false
   - [ ] Keyboard navigation
   - [ ] Disabled items grayed out
 
-### Infer 25: Create SettingsPanel Component
+### Cycle 25: Create SettingsPanel Component
 - [ ] **Sections:**
   - [ ] General (language, timezone, theme)
   - [ ] Display (density, avatar size)
@@ -545,7 +545,7 @@ draft: false
   - [ ] Save button
   - [ ] Reset to defaults button
 
-### Infer 26: Create EmptyState Component
+### Cycle 26: Create EmptyState Component
 - [ ] **Display:**
   - [ ] Icon (inbox empty, search no results, etc.)
   - [ ] Title ("No emails" / "No results")
@@ -555,7 +555,7 @@ draft: false
   - [ ] type (inbox-empty, search-empty, folder-empty, etc.)
   - [ ] onAction (callback for button)
 
-### Infer 27: Create LoadingState Component
+### Cycle 27: Create LoadingState Component
 - [ ] **Display:**
   - [ ] Skeleton loaders for email list
   - [ ] Skeleton for email detail
@@ -564,7 +564,7 @@ draft: false
   - [ ] count (how many skeletons)
   - [ ] variant (list, detail, header)
 
-### Infer 28: Create HeaderNav Component
+### Cycle 28: Create HeaderNav Component
 - [ ] **Content:**
   - [ ] Mail logo
   - [ ] SearchBar component
@@ -575,7 +575,7 @@ draft: false
   - [ ] Hamburger menu button
   - [ ] Hide profile menu
 
-### Infer 29: Create FloatingComposeButton Component
+### Cycle 29: Create FloatingComposeButton Component
 - [ ] **Display (Mobile):**
   - [ ] Large floating action button (FAB)
   - [ ] "+" icon or "Compose" text
@@ -585,7 +585,7 @@ draft: false
   - [ ] Show on scroll down
   - [ ] Hide on scroll up
 
-### Infer 30: Create EmailCard Component
+### Cycle 30: Create EmailCard Component
 - [ ] **For detail view:**
   - [ ] Card layout with shadow
   - [ ] Email header
@@ -600,11 +600,11 @@ draft: false
 
 ---
 
-## PHASE 3: ASTRO PAGES (Infer 31-40)
+## PHASE 3: ASTRO PAGES (Cycle 31-40)
 
 **Purpose:** Create main Astro page structure
 
-### Infer 31: Create Main Layout (MailLayout.astro)
+### Cycle 31: Create Main Layout (MailLayout.astro)
 - [ ] **Structure:**
   - [ ] Header (HeaderNav)
   - [ ] Sidebar + Main area grid layout
@@ -618,7 +618,7 @@ draft: false
   - [ ] Set favicon
   - [ ] Theme color tag
 
-### Infer 32: Create Mail Index Page (mail/index.astro)
+### Cycle 32: Create Mail Index Page (mail/index.astro)
 - [ ] **Layout:**
   - [ ] Use MailLayout
   - [ ] Three-column or responsive layout
@@ -630,7 +630,7 @@ draft: false
   - [ ] Load emails from mock data
   - [ ] Pass to React components via props
 
-### Infer 33: Create Mail Thread Page (mail/[threadId].astro)
+### Cycle 33: Create Mail Thread Page (mail/[threadId].astro)
 - [ ] **Purpose:**
   - [ ] Single thread view (for deep linking)
   - [ ] Shows full thread
@@ -643,11 +643,11 @@ draft: false
 
 ---
 
-## PHASE 4: MOCK DATA & INTEGRATION (Infer 41-50)
+## PHASE 4: MOCK DATA & INTEGRATION (Cycle 41-50)
 
 **Purpose:** Create realistic mock data and wire up components
 
-### Infer 41: Create Mock Email Data
+### Cycle 41: Create Mock Email Data
 - [ ] **Generate sample emails:**
   - [ ] 20-30 sample emails
   - [ ] Varied subjects (work, personal, newsletters)
@@ -658,7 +658,7 @@ draft: false
   - [ ] Some threaded
 - [ ] **File:** `src/lib/mockData.ts`
 
-### Infer 42: Create Mock Contact Data
+### Cycle 42: Create Mock Contact Data
 - [ ] **Sample contacts:**
   - [ ] 10-15 frequently contacted people
   - [ ] Full names
@@ -666,7 +666,7 @@ draft: false
   - [ ] Avatar initials
 - [ ] **File:** `src/lib/mockData.ts`
 
-### Infer 43: Create Mock Label Data
+### Cycle 43: Create Mock Label Data
 - [ ] **Sample labels:**
   - [ ] Work (red)
   - [ ] Personal (blue)
@@ -675,7 +675,7 @@ draft: false
   - [ ] Unread count
 - [ ] **File:** `src/lib/mockData.ts`
 
-### Infer 44: Wire Up Email Store to Mock Data
+### Cycle 44: Wire Up Email Store to Mock Data
 - [ ] **Initial state:**
   - [ ] Load mock emails on app init
   - [ ] Load mock contacts
@@ -684,7 +684,7 @@ draft: false
   - [ ] Save state to localStorage
   - [ ] Load on page refresh
 
-### Infer 45: Wire Up UI Store to Settings
+### Cycle 45: Wire Up UI Store to Settings
 - [ ] **Default theme:**
   - [ ] Check system preference
   - [ ] Check localStorage
@@ -694,7 +694,7 @@ draft: false
   - [ ] Save density to localStorage
   - [ ] Save sidebar state to localStorage
 
-### Infer 46: Implement Email Actions
+### Cycle 46: Implement Email Actions
 - [ ] **Mark as read:**
   - [ ] Click email → mark as read
   - [ ] Update UI immediately
@@ -707,7 +707,7 @@ draft: false
   - [ ] Delete
   - [ ] Mark as spam
 
-### Infer 47: Implement Compose Draft System
+### Cycle 47: Implement Compose Draft System
 - [ ] **Create draft:**
   - [ ] On compose form open
   - [ ] Autosave every 10 seconds
@@ -720,7 +720,7 @@ draft: false
   - [ ] Clear from localStorage
   - [ ] Close compose
 
-### Infer 48: Implement Search & Filters
+### Cycle 48: Implement Search & Filters
 - [ ] **Search:**
   - [ ] Type in SearchBar
   - [ ] Filter emails by subject/body
@@ -731,7 +731,7 @@ draft: false
   - [ ] Filter starred → only starred emails
   - [ ] Show "X results" text
 
-### Infer 49: Implement Responsive Behavior
+### Cycle 49: Implement Responsive Behavior
 - [ ] **Mobile < 768px:**
   - [ ] Hide sidebar by default
   - [ ] Show hamburger button
@@ -745,7 +745,7 @@ draft: false
   - [ ] Always show sidebar
   - [ ] Three-column layout
 
-### Infer 50: Implement Keyboard Shortcuts
+### Cycle 50: Implement Keyboard Shortcuts
 - [ ] **Shortcuts:**
   - [ ] `/` → focus search
   - [ ] `c` → compose
@@ -760,11 +760,11 @@ draft: false
 
 ---
 
-## PHASE 5: POLISH & OPTIMIZATION (Infer 51-70)
+## PHASE 5: POLISH & OPTIMIZATION (Cycle 51-70)
 
 **Purpose:** Refine UX, accessibility, performance
 
-### Infer 51: Add Animations
+### Cycle 51: Add Animations
 - [ ] **Transitions:**
   - [ ] Email fade-in when selected
   - [ ] Compose modal slide in
@@ -776,7 +776,7 @@ draft: false
   - [ ] Button scale on hover
   - [ ] Icon color change
 
-### Infer 52: Implement Accessibility
+### Cycle 52: Implement Accessibility
 - [ ] **Keyboard navigation:**
   - [ ] Tab through sidebar items
   - [ ] Tab through email list
@@ -792,7 +792,7 @@ draft: false
   - [ ] 3:1 for UI components
   - [ ] No color-only indicators
 
-### Infer 53: Optimize Performance
+### Cycle 53: Optimize Performance
 - [ ] **Bundle size:**
   - [ ] Code split by route
   - [ ] Lazy load rich text editor
@@ -805,7 +805,7 @@ draft: false
   - [ ] Avatar images cached
   - [ ] Lazy load avatars
 
-### Infer 54: Add Error Handling
+### Cycle 54: Add Error Handling
 - [ ] **Network errors:**
   - [ ] Show toast on failed load
   - [ ] Retry button
@@ -820,7 +820,7 @@ draft: false
   - [ ] No emails (empty state)
   - [ ] No search results (empty state)
 
-### Infer 55: Add Toast Notifications
+### Cycle 55: Add Toast Notifications
 - [ ] **Types:**
   - [ ] Success ("Email archived")
   - [ ] Error ("Failed to send")
@@ -831,7 +831,7 @@ draft: false
   - [ ] Stack multiple toasts
   - [ ] Undo button for destructive actions
 
-### Infer 56: Implement Dark Mode
+### Cycle 56: Implement Dark Mode
 - [ ] **Theme colors:**
   - [ ] Dark backgrounds
   - [ ] Light text
@@ -842,7 +842,7 @@ draft: false
   - [ ] Toggle button to override
   - [ ] Save preference to localStorage
 
-### Infer 57: Add Print Styles
+### Cycle 57: Add Print Styles
 - [ ] **Print layout:**
   - [ ] Hide sidebar
   - [ ] Hide actions
@@ -851,7 +851,7 @@ draft: false
   - [ ] Show all email details
   - [ ] Hide signatures
 
-### Infer 58: Test All Interactions
+### Cycle 58: Test All Interactions
 - [ ] **Compose:**
   - [ ] Open form
   - [ ] Type email
@@ -873,7 +873,7 @@ draft: false
   - [ ] Clear search
   - [ ] Advanced search works
 
-### Infer 59: Test Mobile Experience
+### Cycle 59: Test Mobile Experience
 - [ ] **Devices:**
   - [ ] iPhone SE (375px)
   - [ ] iPhone 12 (390px)
@@ -886,7 +886,7 @@ draft: false
   - [ ] Touch targets large enough
   - [ ] No horizontal scroll
 
-### Infer 60: Lighthouse Audit
+### Cycle 60: Lighthouse Audit
 - [ ] **Targets:**
   - [ ] Performance > 85
   - [ ] Accessibility > 90
@@ -898,7 +898,7 @@ draft: false
   - [ ] Remove unused code
   - [ ] Add meta descriptions
 
-### Infer 61: Add Loading Skeletons
+### Cycle 61: Add Loading Skeletons
 - [ ] **For:**
   - [ ] Email list
   - [ ] Email detail
@@ -908,7 +908,7 @@ draft: false
   - [ ] Animated pulse
   - [ ] Smooth transition to content
 
-### Infer 62: Add Drag & Drop
+### Cycle 62: Add Drag & Drop
 - [ ] **For:**
   - [ ] Drag email to folder/label
   - [ ] Drag attachment to compose
@@ -917,7 +917,7 @@ draft: false
   - [ ] Visual drop zone highlight
   - [ ] Show success toast
 
-### Infer 63: Add Undo/Redo
+### Cycle 63: Add Undo/Redo
 - [ ] **For:**
   - [ ] Delete email (3 sec undo window)
   - [ ] Archive email
@@ -926,7 +926,7 @@ draft: false
   - [ ] Toast with undo button
   - [ ] Also undo via Ctrl+Z (in compose)
 
-### Infer 64: Create Help Documentation
+### Cycle 64: Create Help Documentation
 - [ ] **Pages:**
   - [ ] Getting started
   - [ ] Keyboard shortcuts
@@ -938,7 +938,7 @@ draft: false
   - [ ] Placeholder text in inputs
   - [ ] Help icons with popovers
 
-### Infer 65: Add Analytics Events
+### Cycle 65: Add Analytics Events
 - [ ] **Track:**
   - [ ] View email
   - [ ] Compose email
@@ -948,7 +948,7 @@ draft: false
   - [ ] Settings change
   - [ ] Feature usage
 
-### Infer 66: Create Settings Page
+### Cycle 66: Create Settings Page
 - [ ] **Options:**
   - [ ] Theme (light/dark)
   - [ ] Density (compact/comfortable/spacious)
@@ -962,7 +962,7 @@ draft: false
   - [ ] Show success toast
   - [ ] Apply immediately
 
-### Infer 67: Add Contact Management (Future)
+### Cycle 67: Add Contact Management (Future)
 - [ ] **Features:**
   - [ ] View contact details
   - [ ] Add/edit contact
@@ -973,7 +973,7 @@ draft: false
   - [ ] Contact sidebar
   - [ ] Contact card popup
 
-### Infer 68: Add Snooze Feature (Future)
+### Cycle 68: Add Snooze Feature (Future)
 - [ ] **Options:**
   - [ ] 1 hour, 3 hours, 8 hours
   - [ ] Tomorrow, next week, next month
@@ -983,7 +983,7 @@ draft: false
   - [ ] Show snoozed folder
   - [ ] Notification when snoozed email returns
 
-### Infer 69: Test Cross-Browser
+### Cycle 69: Test Cross-Browser
 - [ ] **Browsers:**
   - [ ] Chrome
   - [ ] Firefox
@@ -995,7 +995,7 @@ draft: false
   - [ ] JavaScript errors
   - [ ] Animation smoothness
 
-### Infer 70: Final Polish
+### Cycle 70: Final Polish
 - [ ] **Details:**
   - [ ] Micro-interactions feel good
   - [ ] Animations are smooth
@@ -1032,6 +1032,6 @@ Mail app is complete when:
 
 ---
 
-**Timeline:** 70-75 inferences for complete implementation
+**Timeline:** 70-75 cycles for complete implementation
 **Status:** Ready to build
-**Next:** Use Claude Code to implement step by step following inference sequence
+**Next:** Use Claude Code to implement step by step following cycle sequence

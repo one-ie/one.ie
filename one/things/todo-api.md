@@ -3,7 +3,7 @@ title: Todo Api
 dimension: things
 primary_dimension: things
 category: todo-api.md
-tags: ai, events, groups, inference, knowledge, ontology, people
+tags: ai, events, groups, cycle, knowledge, ontology, people
 related_dimensions: connections, events, groups, knowledge, people
 scope: global
 created: 2025-11-03
@@ -12,12 +12,12 @@ version: 1.0.0
 ai_context: |
   This document is part of the things dimension in the todo-api.md category.
   Location: one/things/todo-api.md
-  Purpose: Documents todo api - 100 inference plan
+  Purpose: Documents todo api - 100 cycle plan
   Related dimensions: connections, events, groups, knowledge, people
   For AI agents: Read this to understand todo api.
 ---
 
-# TODO API - 100 Inference Plan
+# TODO API - 100 Cycle Plan
 
 ## Overview
 
@@ -104,74 +104,74 @@ Complete specification for building a comprehensive TODO API using the 6-dimensi
 └─────────────────────────────────────────────────────┘
 ```
 
-## 100-Inference Sequence
+## 100-Cycle Sequence
 
-### Phase 1: Foundation & Setup (Infer 1-10)
+### Phase 1: Foundation & Setup (Cycle 1-10)
 
-**Infer 1**: Validate TODO API requirements against ontology
+**Cycle 1**: Validate TODO API requirements against ontology
 
 - [ ] Read this spec thoroughly
 - [ ] Verify mapping to 6 dimensions
 - [ ] Identify dependencies (auth, groups, people)
 - [ ] Check for conflicts with existing API
 
-**Infer 2**: Create schema design document
+**Cycle 2**: Create schema design document
 
 - [ ] Document all entity types and fields
 - [ ] Define all connection types
 - [ ] Define all event types
 - [ ] Define knowledge/embedding structure
 
-**Infer 3**: Plan database indexes for performance
+**Cycle 3**: Plan database indexes for performance
 
 - [ ] List all query patterns
 - [ ] Identify hot fields (groupId, assigneeId, dueDate)
 - [ ] Plan composite indexes (group_status, assignee_priority)
 - [ ] Document query optimization strategy
 
-**Infer 4**: Design API endpoint structure
+**Cycle 4**: Design API endpoint structure
 
 - [ ] Document all REST endpoints (CRUD + actions)
 - [ ] Define request/response schemas
 - [ ] Plan error codes and messages
 - [ ] Define rate limiting strategy
 
-**Infer 5**: Create error handling specification
+**Cycle 5**: Create error handling specification
 
 - [ ] Define custom error types for TODO domain
 - [ ] Document validation rules
 - [ ] Plan error recovery flows
 - [ ] Define error messages
 
-**Infer 6**: Document authentication & authorization rules
+**Cycle 6**: Document authentication & authorization rules
 
 - [ ] Define role permissions (who can create tasks)
 - [ ] Document task visibility rules
 - [ ] Plan group-based access control
 - [ ] Define sharing capabilities
 
-**Infer 7**: Plan testing strategy
+**Cycle 7**: Plan testing strategy
 
 - [ ] Document unit test coverage goals
 - [ ] Plan integration test scenarios
 - [ ] Define e2e test user flows
 - [ ] Create test data fixtures
 
-**Infer 8**: Create project structure and file organization
+**Cycle 8**: Create project structure and file organization
 
 - [ ] Plan backend directory layout
 - [ ] Plan frontend directory layout
 - [ ] Define naming conventions
 - [ ] Create folder structure
 
-**Infer 9**: Document deployment requirements
+**Cycle 9**: Document deployment requirements
 
 - [ ] Database migrations (if needed)
 - [ ] Environment variables required
 - [ ] Deployment checklist
 - [ ] Monitoring and alerting setup
 
-**Infer 10**: Establish success metrics
+**Cycle 10**: Establish success metrics
 
 - [ ] Define performance SLAs (response times)
 - [ ] Set correctness metrics (test coverage)
@@ -180,16 +180,16 @@ Complete specification for building a comprehensive TODO API using the 6-dimensi
 
 ---
 
-### Phase 2: Backend Schema & Services (Infer 11-20)
+### Phase 2: Backend Schema & Services (Cycle 11-20)
 
-**Infer 11**: Define schema.ts updates for TODO entities
+**Cycle 11**: Define schema.ts updates for TODO entities
 
 - [ ] Add task entity type definition
 - [ ] Add project entity type definition
 - [ ] Add label entity type definition
 - [ ] Add all required fields and indexes
 
-**Infer 12**: Create task creation service (Effect.ts pattern)
+**Cycle 12**: Create task creation service (Effect.ts pattern)
 
 - [ ] Validate task data
 - [ ] Create task entity in database
@@ -197,7 +197,7 @@ Complete specification for building a comprehensive TODO API using the 6-dimensi
 - [ ] Log creation event
 - [ ] Return created task with ID
 
-**Infer 13**: Create task update service
+**Cycle 13**: Create task update service
 
 - [ ] Validate update data (partial fields)
 - [ ] Apply updates to task entity
@@ -205,7 +205,7 @@ Complete specification for building a comprehensive TODO API using the 6-dimensi
 - [ ] Log modification event
 - [ ] Return updated task
 
-**Infer 14**: Create task completion & archive services
+**Cycle 14**: Create task completion & archive services
 
 - [ ] Implement task completion (status: completed)
 - [ ] Implement soft delete via archival
@@ -213,7 +213,7 @@ Complete specification for building a comprehensive TODO API using the 6-dimensi
 - [ ] Log state change events
 - [ ] Return updated task
 
-**Infer 15**: Create project management services
+**Cycle 15**: Create project management services
 
 - [ ] Implement project CRUD operations
 - [ ] Handle hierarchical projects (nested projects)
@@ -221,7 +221,7 @@ Complete specification for building a comprehensive TODO API using the 6-dimensi
 - [ ] Create project-level permissions
 - [ ] Log all project changes
 
-**Infer 16**: Create task assignment service
+**Cycle 16**: Create task assignment service
 
 - [ ] Implement task → person assignment
 - [ ] Handle reassignment (remove old, add new)
@@ -229,7 +229,7 @@ Complete specification for building a comprehensive TODO API using the 6-dimensi
 - [ ] Send assignment notifications
 - [ ] Log assignment events
 
-**Infer 17**: Create label management service
+**Cycle 17**: Create label management service
 
 - [ ] Implement label CRUD
 - [ ] Handle label → task relationships
@@ -237,7 +237,7 @@ Complete specification for building a comprehensive TODO API using the 6-dimensi
 - [ ] Implement label suggestions based on history
 - [ ] Log label changes
 
-**Infer 18**: Create task search service
+**Cycle 18**: Create task search service
 
 - [ ] Implement full-text search on task title + description
 - [ ] Support filter by: status, assignee, project, label, priority, dueDate
@@ -245,7 +245,7 @@ Complete specification for building a comprehensive TODO API using the 6-dimensi
 - [ ] Optimize queries with indexes
 - [ ] Return paginated results
 
-**Infer 19**: Create knowledge/embedding service
+**Cycle 19**: Create knowledge/embedding service
 
 - [ ] Plan embedding generation for task descriptions
 - [ ] Implement semantic search
@@ -253,7 +253,7 @@ Complete specification for building a comprehensive TODO API using the 6-dimensi
 - [ ] Generate task recommendations
 - [ ] Update knowledge base on task changes
 
-**Infer 20**: Create event logging service
+**Cycle 20**: Create event logging service
 
 - [ ] Log all task mutations (created, updated, completed, archived)
 - [ ] Log all project mutations
@@ -263,9 +263,9 @@ Complete specification for building a comprehensive TODO API using the 6-dimensi
 
 ---
 
-### Phase 3: Convex Queries & Mutations (Infer 21-30)
+### Phase 3: Convex Queries & Mutations (Cycle 21-30)
 
-**Infer 21**: Implement task queries (list, getById, search)
+**Cycle 21**: Implement task queries (list, getById, search)
 
 - [ ] Query: listTasks(groupId, filters)
 - [ ] Query: getTask(taskId)
@@ -275,7 +275,7 @@ Complete specification for building a comprehensive TODO API using the 6-dimensi
 - [ ] Add proper indexes for each query
 - [ ] Return paginated results
 
-**Infer 22**: Implement task mutations (create, update, delete)
+**Cycle 22**: Implement task mutations (create, update, delete)
 
 - [ ] Mutation: createTask(groupId, data)
 - [ ] Mutation: updateTask(taskId, data)
@@ -284,7 +284,7 @@ Complete specification for building a comprehensive TODO API using the 6-dimensi
 - [ ] Implement soft delete behavior
 - [ ] Log all mutations as events
 
-**Infer 23**: Implement task completion mutations
+**Cycle 23**: Implement task completion mutations
 
 - [ ] Mutation: completeTask(taskId)
 - [ ] Mutation: uncompleteTask(taskId)
@@ -293,7 +293,7 @@ Complete specification for building a comprehensive TODO API using the 6-dimensi
 - [ ] Trigger notifications
 - [ ] Log completion event
 
-**Infer 24**: Implement project queries & mutations
+**Cycle 24**: Implement project queries & mutations
 
 - [ ] Query: listProjects(groupId)
 - [ ] Query: getProject(projectId)
@@ -303,7 +303,7 @@ Complete specification for building a comprehensive TODO API using the 6-dimensi
 - [ ] Support hierarchical projects
 - [ ] Log all changes
 
-**Infer 25**: Implement assignment mutations
+**Cycle 25**: Implement assignment mutations
 
 - [ ] Mutation: assignTask(taskId, personId)
 - [ ] Mutation: unassignTask(taskId)
@@ -312,7 +312,7 @@ Complete specification for building a comprehensive TODO API using the 6-dimensi
 - [ ] Update task metadata
 - [ ] Log assignment events
 
-**Infer 26**: Implement label queries & mutations
+**Cycle 26**: Implement label queries & mutations
 
 - [ ] Query: listLabels(groupId)
 - [ ] Query: getLabel(labelId)
@@ -322,7 +322,7 @@ Complete specification for building a comprehensive TODO API using the 6-dimensi
 - [ ] Mutation: addLabelToTask(taskId, labelId)
 - [ ] Mutation: removeLabelFromTask(taskId, labelId)
 
-**Infer 27**: Implement batch operations
+**Cycle 27**: Implement batch operations
 
 - [ ] Mutation: bulkUpdateTasks(taskIds, updates)
 - [ ] Mutation: bulkArchive(taskIds)
@@ -331,7 +331,7 @@ Complete specification for building a comprehensive TODO API using the 6-dimensi
 - [ ] Log each change individually
 - [ ] Return updated tasks
 
-**Infer 28**: Implement due date & reminder system
+**Cycle 28**: Implement due date & reminder system
 
 - [ ] Add due date field to task schema
 - [ ] Implement due date validation
@@ -340,7 +340,7 @@ Complete specification for building a comprehensive TODO API using the 6-dimensi
 - [ ] Create overdue task query
 - [ ] Schedule reminder notifications
 
-**Infer 29**: Implement task dependencies & relationships
+**Cycle 29**: Implement task dependencies & relationships
 
 - [ ] Add depends_on connection type
 - [ ] Implement dependency validation (prevent cycles)
@@ -349,7 +349,7 @@ Complete specification for building a comprehensive TODO API using the 6-dimensi
 - [ ] Create related_to connection for cross-references
 - [ ] Log dependency changes
 
-**Infer 30**: Implement subtasks system
+**Cycle 30**: Implement subtasks system
 
 - [ ] Design subtask structure (parent → child tasks)
 - [ ] Implement createSubtask mutation
@@ -360,9 +360,9 @@ Complete specification for building a comprehensive TODO API using the 6-dimensi
 
 ---
 
-### Phase 4: HTTP API Layer (Infer 31-40)
+### Phase 4: HTTP API Layer (Cycle 31-40)
 
-**Infer 31**: Create task HTTP endpoints structure
+**Cycle 31**: Create task HTTP endpoints structure
 
 - [ ] Update http.ts with task routes
 - [ ] `GET /api/tasks` - List tasks
@@ -371,7 +371,7 @@ Complete specification for building a comprehensive TODO API using the 6-dimensi
 - [ ] Define request/response schemas
 - [ ] Add proper routing
 
-**Infer 32**: Implement task CRUD endpoints
+**Cycle 32**: Implement task CRUD endpoints
 
 - [ ] `PATCH /api/tasks/:id` - Update task
 - [ ] `DELETE /api/tasks/:id` - Archive task
@@ -379,7 +379,7 @@ Complete specification for building a comprehensive TODO API using the 6-dimensi
 - [ ] Implement proper status codes
 - [ ] Return full task object
 
-**Infer 33**: Implement task action endpoints
+**Cycle 33**: Implement task action endpoints
 
 - [ ] `POST /api/tasks/:id/complete` - Complete task
 - [ ] `POST /api/tasks/:id/uncomplete` - Reopen task
@@ -387,7 +387,7 @@ Complete specification for building a comprehensive TODO API using the 6-dimensi
 - [ ] `POST /api/tasks/:id/unassign` - Unassign task
 - [ ] Implement proper state validation
 
-**Infer 34**: Implement search & filtering endpoints
+**Cycle 34**: Implement search & filtering endpoints
 
 - [ ] `GET /api/tasks/search` - Search tasks
 - [ ] Support query string filters
@@ -396,7 +396,7 @@ Complete specification for building a comprehensive TODO API using the 6-dimensi
 - [ ] `GET /api/me/tasks` - Get my tasks
 - [ ] Implement pagination
 
-**Infer 35**: Implement project endpoints
+**Cycle 35**: Implement project endpoints
 
 - [ ] `GET /api/projects` - List projects
 - [ ] `GET /api/projects/:id` - Get project
@@ -405,7 +405,7 @@ Complete specification for building a comprehensive TODO API using the 6-dimensi
 - [ ] `DELETE /api/projects/:id` - Archive project
 - [ ] Support hierarchical operations
 
-**Infer 36**: Implement label endpoints
+**Cycle 36**: Implement label endpoints
 
 - [ ] `GET /api/labels` - List labels
 - [ ] `POST /api/labels` - Create label
@@ -414,7 +414,7 @@ Complete specification for building a comprehensive TODO API using the 6-dimensi
 - [ ] `POST /api/tasks/:id/labels` - Add label to task
 - [ ] `DELETE /api/tasks/:id/labels/:labelId` - Remove label
 
-**Infer 37**: Implement assignment endpoints
+**Cycle 37**: Implement assignment endpoints
 
 - [ ] `POST /api/tasks/:id/assign/:personId` - Assign task
 - [ ] `DELETE /api/tasks/:id/assign` - Unassign task
@@ -422,7 +422,7 @@ Complete specification for building a comprehensive TODO API using the 6-dimensi
 - [ ] `GET /api/me/assigned` - My assigned tasks
 - [ ] `GET /api/team/:personId/assigned` - Get person's tasks
 
-**Infer 38**: Implement batch operation endpoints
+**Cycle 38**: Implement batch operation endpoints
 
 - [ ] `PATCH /api/tasks/bulk` - Bulk update
 - [ ] `POST /api/tasks/bulk-archive` - Bulk archive
@@ -430,7 +430,7 @@ Complete specification for building a comprehensive TODO API using the 6-dimensi
 - [ ] Implement transaction semantics
 - [ ] Return results summary
 
-**Infer 39**: Implement advanced query endpoints
+**Cycle 39**: Implement advanced query endpoints
 
 - [ ] `GET /api/tasks/overdue` - Overdue tasks
 - [ ] `GET /api/tasks/upcoming` - Due soon tasks
@@ -439,7 +439,7 @@ Complete specification for building a comprehensive TODO API using the 6-dimensi
 - [ ] `GET /api/dashboard/timeline` - Timeline view
 - [ ] Implement date range filtering
 
-**Infer 40**: Implement event history endpoints
+**Cycle 40**: Implement event history endpoints
 
 - [ ] `GET /api/tasks/:id/events` - Task event history
 - [ ] `GET /api/projects/:id/events` - Project event history
@@ -449,9 +449,9 @@ Complete specification for building a comprehensive TODO API using the 6-dimensi
 
 ---
 
-### Phase 5: Search & Knowledge (Infer 41-50)
+### Phase 5: Search & Knowledge (Cycle 41-50)
 
-**Infer 41**: Design semantic search strategy
+**Cycle 41**: Design semantic search strategy
 
 - [ ] Plan embedding model (use Convex/OpenAI)
 - [ ] Define embedding dimensions and strategy
@@ -459,7 +459,7 @@ Complete specification for building a comprehensive TODO API using the 6-dimensi
 - [ ] Plan vector storage and retrieval
 - [ ] Design fallback to full-text search
 
-**Infer 42**: Implement task embedding generation
+**Cycle 42**: Implement task embedding generation
 
 - [ ] Generate embeddings on task creation
 - [ ] Generate embeddings on task update
@@ -467,7 +467,7 @@ Complete specification for building a comprehensive TODO API using the 6-dimensi
 - [ ] Implement embedding update on task change
 - [ ] Handle embedding deletion on task archival
 
-**Infer 43**: Implement semantic search endpoint
+**Cycle 43**: Implement semantic search endpoint
 
 - [ ] `POST /api/tasks/search/semantic` - Semantic search
 - [ ] Accept text query and filters
@@ -475,7 +475,7 @@ Complete specification for building a comprehensive TODO API using the 6-dimensi
 - [ ] Combine with full-text search
 - [ ] Return ranked results with relevance scores
 
-**Infer 44**: Implement task insight generation
+**Cycle 44**: Implement task insight generation
 
 - [ ] Generate AI insights on task creation
 - [ ] Analyze task description and metadata
@@ -483,7 +483,7 @@ Complete specification for building a comprehensive TODO API using the 6-dimensi
 - [ ] Identify potential duplicates
 - [ ] Store insights in knowledge table
 
-**Infer 45**: Implement recommendation engine
+**Cycle 45**: Implement recommendation engine
 
 - [ ] `GET /api/tasks/:id/recommendations` - Related tasks
 - [ ] Find similar tasks via embeddings
@@ -491,7 +491,7 @@ Complete specification for building a comprehensive TODO API using the 6-dimensi
 - [ ] Suggest related labels
 - [ ] Suggest related people to assign
 
-**Infer 46**: Implement pattern learning
+**Cycle 46**: Implement pattern learning
 
 - [ ] Analyze task completion patterns
 - [ ] Identify common task sequences
@@ -499,7 +499,7 @@ Complete specification for building a comprehensive TODO API using the 6-dimensi
 - [ ] Suggest task templates based on history
 - [ ] Provide completion time estimates
 
-**Infer 47**: Implement task analytics
+**Cycle 47**: Implement task analytics
 
 - [ ] `GET /api/analytics/tasks` - Task metrics
 - [ ] Calculate average completion time
@@ -507,7 +507,7 @@ Complete specification for building a comprehensive TODO API using the 6-dimensi
 - [ ] Track productivity trends
 - [ ] Generate team insights
 
-**Infer 48**: Implement knowledge update service
+**Cycle 48**: Implement knowledge update service
 
 - [ ] Batch update embeddings
 - [ ] Implement vector similarity indexing
@@ -515,7 +515,7 @@ Complete specification for building a comprehensive TODO API using the 6-dimensi
 - [ ] Handle knowledge cleanup (archived tasks)
 - [ ] Maintain knowledge consistency
 
-**Infer 49**: Implement RAG system for task insights
+**Cycle 49**: Implement RAG system for task insights
 
 - [ ] Combine task context with knowledge base
 - [ ] Generate contextual insights
@@ -523,7 +523,7 @@ Complete specification for building a comprehensive TODO API using the 6-dimensi
 - [ ] Suggest improvements
 - [ ] Track insight usage
 
-**Infer 50**: Implement caching for search results
+**Cycle 50**: Implement caching for search results
 
 - [ ] Cache frequent search queries
 - [ ] Invalidate cache on mutations
@@ -533,9 +533,9 @@ Complete specification for building a comprehensive TODO API using the 6-dimensi
 
 ---
 
-### Phase 6: Frontend Pages & Components (Infer 51-60)
+### Phase 6: Frontend Pages & Components (Cycle 51-60)
 
-**Infer 51**: Create task list page (Astro + React)
+**Cycle 51**: Create task list page (Astro + React)
 
 - [ ] Page: `/src/pages/tasks/index.astro`
 - [ ] Component: TaskList with client-side rendering
@@ -543,7 +543,7 @@ Complete specification for building a comprehensive TODO API using the 6-dimensi
 - [ ] Implement sorting and filtering UI
 - [ ] Add pagination controls
 
-**Infer 52**: Create task detail page
+**Cycle 52**: Create task detail page
 
 - [ ] Page: `/src/pages/tasks/[id].astro`
 - [ ] Component: TaskDetail (full task information)
@@ -551,7 +551,7 @@ Complete specification for building a comprehensive TODO API using the 6-dimensi
 - [ ] Action buttons: edit, complete, assign, delete
 - [ ] Display related tasks
 
-**Infer 53**: Create task creation form
+**Cycle 53**: Create task creation form
 
 - [ ] Component: TaskForm (create/edit)
 - [ ] Fields: title, description, project, assignee, labels, priority, dueDate
@@ -559,7 +559,7 @@ Complete specification for building a comprehensive TODO API using the 6-dimensi
 - [ ] Submit handling with error retry
 - [ ] Auto-save draft capability
 
-**Infer 54**: Create project board page
+**Cycle 54**: Create project board page
 
 - [ ] Page: `/src/pages/projects/[id].astro`
 - [ ] Component: ProjectBoard (kanban-style)
@@ -567,7 +567,7 @@ Complete specification for building a comprehensive TODO API using the 6-dimensi
 - [ ] Drag-and-drop task movement
 - [ ] Filter and group controls
 
-**Infer 55**: Create project management page
+**Cycle 55**: Create project management page
 
 - [ ] Page: `/src/pages/projects/index.astro`
 - [ ] Component: ProjectList
@@ -575,7 +575,7 @@ Complete specification for building a comprehensive TODO API using the 6-dimensi
 - [ ] Quick actions: edit, archive
 - [ ] Sorting and filtering
 
-**Infer 56**: Create team view page
+**Cycle 56**: Create team view page
 
 - [ ] Page: `/src/pages/team/index.astro`
 - [ ] Component: TeamView
@@ -583,7 +583,7 @@ Complete specification for building a comprehensive TODO API using the 6-dimensi
 - [ ] Show task distribution
 - [ ] Identify overloaded team members
 
-**Infer 57**: Create dashboard page
+**Cycle 57**: Create dashboard page
 
 - [ ] Page: `/src/pages/dashboard/index.astro`
 - [ ] Component: Dashboard with multiple sections
@@ -592,7 +592,7 @@ Complete specification for building a comprehensive TODO API using the 6-dimensi
 - [ ] Upcoming deadlines
 - [ ] Recent activity feed
 
-**Infer 58**: Create search interface
+**Cycle 58**: Create search interface
 
 - [ ] Component: SearchBar (in header)
 - [ ] Implement real-time search suggestions
@@ -600,7 +600,7 @@ Complete specification for building a comprehensive TODO API using the 6-dimensi
 - [ ] Display results with filters
 - [ ] Show search analytics
 
-**Infer 59**: Create advanced filters UI
+**Cycle 59**: Create advanced filters UI
 
 - [ ] Component: FilterPanel
 - [ ] Filter by: status, assignee, project, label, priority, dueDate range
@@ -608,7 +608,7 @@ Complete specification for building a comprehensive TODO API using the 6-dimensi
 - [ ] Quick filter presets
 - [ ] Clear filters option
 
-**Infer 60**: Create analytics dashboard
+**Cycle 60**: Create analytics dashboard
 
 - [ ] Page: `/src/pages/analytics/index.astro`
 - [ ] Chart: Task completion trends
@@ -619,9 +619,9 @@ Complete specification for building a comprehensive TODO API using the 6-dimensi
 
 ---
 
-### Phase 7: Integration & Connections (Infer 61-70)
+### Phase 7: Integration & Connections (Cycle 61-70)
 
-**Infer 61**: Implement email notifications
+**Cycle 61**: Implement email notifications
 
 - [ ] Send on task assignment
 - [ ] Send on task completion (if assigned)
@@ -629,7 +629,7 @@ Complete specification for building a comprehensive TODO API using the 6-dimensi
 - [ ] Send weekly summary
 - [ ] User email preferences
 
-**Infer 62**: Implement task reminders
+**Cycle 62**: Implement task reminders
 
 - [ ] Due date reminders (1 day before)
 - [ ] Overdue reminders (daily)
@@ -637,7 +637,7 @@ Complete specification for building a comprehensive TODO API using the 6-dimensi
 - [ ] Reminder preferences per user
 - [ ] Snooze functionality
 
-**Infer 63**: Implement webhook support
+**Cycle 63**: Implement webhook support
 
 - [ ] Task created event webhook
 - [ ] Task updated event webhook
@@ -645,7 +645,7 @@ Complete specification for building a comprehensive TODO API using the 6-dimensi
 - [ ] Support external integrations (Slack, Teams, etc.)
 - [ ] Webhook authentication and delivery
 
-**Infer 64**: Implement Slack integration
+**Cycle 64**: Implement Slack integration
 
 - [ ] Create task from Slack message
 - [ ] Send task notifications to Slack
@@ -653,7 +653,7 @@ Complete specification for building a comprehensive TODO API using the 6-dimensi
 - [ ] Slack command: /task create
 - [ ] Slack command: /task list
 
-**Infer 65**: Implement calendar integration
+**Cycle 65**: Implement calendar integration
 
 - [ ] Export tasks as calendar events
 - [ ] iCal feed for due dates
@@ -661,7 +661,7 @@ Complete specification for building a comprehensive TODO API using the 6-dimensi
 - [ ] Show task calendar view
 - [ ] Drag-and-drop to change due dates
 
-**Infer 66**: Implement team collaboration features
+**Cycle 66**: Implement team collaboration features
 
 - [ ] Comments on tasks (connections)
 - [ ] Task mentions (@person)
@@ -669,7 +669,7 @@ Complete specification for building a comprehensive TODO API using the 6-dimensi
 - [ ] Comment history and reactions
 - [ ] Export task discussions
 
-**Infer 67**: Implement activity feed
+**Cycle 67**: Implement activity feed
 
 - [ ] Real-time task updates
 - [ ] Show who did what and when
@@ -677,7 +677,7 @@ Complete specification for building a comprehensive TODO API using the 6-dimensi
 - [ ] Subscribe to task updates
 - [ ] Mark activity as read
 
-**Infer 68**: Implement task import/export
+**Cycle 68**: Implement task import/export
 
 - [ ] Export tasks as JSON
 - [ ] Export tasks as CSV
@@ -685,7 +685,7 @@ Complete specification for building a comprehensive TODO API using the 6-dimensi
 - [ ] Import from other systems (migration)
 - [ ] Handle data validation and errors
 
-**Infer 69**: Implement API integrations
+**Cycle 69**: Implement API integrations
 
 - [ ] OpenAI integration for insights
 - [ ] Embedding service integration
@@ -693,7 +693,7 @@ Complete specification for building a comprehensive TODO API using the 6-dimensi
 - [ ] Rate limiting for external calls
 - [ ] Error handling and retries
 
-**Infer 70**: Implement cross-tenant sharing
+**Cycle 70**: Implement cross-tenant sharing
 
 - [ ] Share task with external person
 - [ ] Generate share links
@@ -703,9 +703,9 @@ Complete specification for building a comprehensive TODO API using the 6-dimensi
 
 ---
 
-### Phase 8: Authentication & Authorization (Infer 71-80)
+### Phase 8: Authentication & Authorization (Cycle 71-80)
 
-**Infer 71**: Implement role-based access control
+**Cycle 71**: Implement role-based access control
 
 - [ ] Define roles: admin, manager, member, viewer
 - [ ] Admin: all operations
@@ -713,7 +713,7 @@ Complete specification for building a comprehensive TODO API using the 6-dimensi
 - [ ] Member: create own, view assigned
 - [ ] Viewer: read-only access
 
-**Infer 72**: Implement group-based permissions
+**Cycle 72**: Implement group-based permissions
 
 - [ ] All tasks scoped to groupId
 - [ ] Users must be in group to access tasks
@@ -721,7 +721,7 @@ Complete specification for building a comprehensive TODO API using the 6-dimensi
 - [ ] Document permission inheritance
 - [ ] Implement permission checks in queries
 
-**Infer 73**: Implement task-level permissions
+**Cycle 73**: Implement task-level permissions
 
 - [ ] Creator can always modify own tasks
 - [ ] Assigned person can modify assignment details
@@ -729,7 +729,7 @@ Complete specification for building a comprehensive TODO API using the 6-dimensi
 - [ ] Viewer can only read
 - [ ] Document permission matrix
 
-**Infer 74**: Implement permission checks in mutations
+**Cycle 74**: Implement permission checks in mutations
 
 - [ ] Check authorization before create
 - [ ] Check authorization before update
@@ -737,7 +737,7 @@ Complete specification for building a comprehensive TODO API using the 6-dimensi
 - [ ] Check authorization before assign
 - [ ] Return 403 Forbidden on denied access
 
-**Infer 75**: Implement audit logging
+**Cycle 75**: Implement audit logging
 
 - [ ] Log all permission-sensitive operations
 - [ ] Include actor, action, target, timestamp
@@ -745,7 +745,7 @@ Complete specification for building a comprehensive TODO API using the 6-dimensi
 - [ ] Create access report queries
 - [ ] Archive audit logs
 
-**Infer 76**: Implement rate limiting
+**Cycle 76**: Implement rate limiting
 
 - [ ] Rate limit by user and endpoint
 - [ ] Limits: 100 requests/minute for reads
@@ -753,7 +753,7 @@ Complete specification for building a comprehensive TODO API using the 6-dimensi
 - [ ] Limits: 1 request/minute for bulk operations
 - [ ] Return 429 Too Many Requests
 
-**Infer 77**: Implement data privacy
+**Cycle 77**: Implement data privacy
 
 - [ ] Mask archived task data
 - [ ] Support GDPR data deletion
@@ -761,7 +761,7 @@ Complete specification for building a comprehensive TODO API using the 6-dimensi
 - [ ] Log consent acceptance
 - [ ] Document privacy policies
 
-**Infer 78**: Implement session management
+**Cycle 78**: Implement session management
 
 - [ ] Invalidate old sessions on logout
 - [ ] Implement session timeout
@@ -769,7 +769,7 @@ Complete specification for building a comprehensive TODO API using the 6-dimensi
 - [ ] Track active sessions
 - [ ] Allow session revocation
 
-**Infer 79**: Implement 2FA for sensitive operations
+**Cycle 79**: Implement 2FA for sensitive operations
 
 - [ ] Require 2FA for bulk delete operations
 - [ ] Require 2FA for permission changes
@@ -777,7 +777,7 @@ Complete specification for building a comprehensive TODO API using the 6-dimensi
 - [ ] Support backup codes
 - [ ] Recovery options
 
-**Infer 80**: Implement API key authentication
+**Cycle 80**: Implement API key authentication
 
 - [ ] Generate API keys for integrations
 - [ ] Support scoped API keys (read-only, specific groups)
@@ -787,9 +787,9 @@ Complete specification for building a comprehensive TODO API using the 6-dimensi
 
 ---
 
-### Phase 9: Quality & Testing (Infer 81-90)
+### Phase 9: Quality & Testing (Cycle 81-90)
 
-**Infer 81**: Write unit tests for services
+**Cycle 81**: Write unit tests for services
 
 - [ ] Test TaskService.create()
 - [ ] Test TaskService.update()
@@ -797,7 +797,7 @@ Complete specification for building a comprehensive TODO API using the 6-dimensi
 - [ ] Test SearchService.search()
 - [ ] Achieve 80% code coverage
 
-**Infer 82**: Write integration tests for queries
+**Cycle 82**: Write integration tests for queries
 
 - [ ] Test listTasks with filters
 - [ ] Test searchTasks
@@ -805,7 +805,7 @@ Complete specification for building a comprehensive TODO API using the 6-dimensi
 - [ ] Test query performance
 - [ ] Test with real database
 
-**Infer 83**: Write integration tests for mutations
+**Cycle 83**: Write integration tests for mutations
 
 - [ ] Test createTask → event creation
 - [ ] Test updateTask → event creation
@@ -813,7 +813,7 @@ Complete specification for building a comprehensive TODO API using the 6-dimensi
 - [ ] Test cascading updates
 - [ ] Test transaction rollback on error
 
-**Infer 84**: Write e2e tests for task flows
+**Cycle 84**: Write e2e tests for task flows
 
 - [ ] Create task → complete task → archive flow
 - [ ] Create project → add task → assign → complete flow
@@ -821,7 +821,7 @@ Complete specification for building a comprehensive TODO API using the 6-dimensi
 - [ ] Team collaboration flow
 - [ ] Test with actual users
 
-**Infer 85**: Write frontend component tests
+**Cycle 85**: Write frontend component tests
 
 - [ ] Test TaskForm validation
 - [ ] Test TaskList rendering
@@ -829,7 +829,7 @@ Complete specification for building a comprehensive TODO API using the 6-dimensi
 - [ ] Test FilterPanel interactions
 - [ ] Test loading and error states
 
-**Infer 86**: Implement error scenario testing
+**Cycle 86**: Implement error scenario testing
 
 - [ ] Test permission denied scenarios
 - [ ] Test rate limiting
@@ -837,7 +837,7 @@ Complete specification for building a comprehensive TODO API using the 6-dimensi
 - [ ] Test concurrent updates (race conditions)
 - [ ] Test data validation errors
 
-**Infer 87**: Performance testing
+**Cycle 87**: Performance testing
 
 - [ ] Test search performance (1000+ tasks)
 - [ ] Test bulk operations (1000+ tasks)
@@ -845,7 +845,7 @@ Complete specification for building a comprehensive TODO API using the 6-dimensi
 - [ ] Measure API response times
 - [ ] Identify and fix bottlenecks
 
-**Infer 88**: Load testing
+**Cycle 88**: Load testing
 
 - [ ] Test API with 1000 concurrent users
 - [ ] Test database with 1M+ tasks
@@ -853,7 +853,7 @@ Complete specification for building a comprehensive TODO API using the 6-dimensi
 - [ ] Monitor database query times
 - [ ] Identify scaling issues
 
-**Infer 89**: Security testing
+**Cycle 89**: Security testing
 
 - [ ] Test SQL injection prevention
 - [ ] Test XSS prevention
@@ -861,7 +861,7 @@ Complete specification for building a comprehensive TODO API using the 6-dimensi
 - [ ] Test permission bypasses
 - [ ] Test rate limiting bypass attempts
 
-**Infer 90**: Accessibility testing
+**Cycle 90**: Accessibility testing
 
 - [ ] Test keyboard navigation
 - [ ] Test screen reader compatibility
@@ -871,9 +871,9 @@ Complete specification for building a comprehensive TODO API using the 6-dimensi
 
 ---
 
-### Phase 10: Deployment & Documentation (Infer 91-100)
+### Phase 10: Deployment & Documentation (Cycle 91-100)
 
-**Infer 91**: Create API documentation
+**Cycle 91**: Create API documentation
 
 - [ ] Document all endpoints (path, method, params)
 - [ ] Document request/response schemas
@@ -881,7 +881,7 @@ Complete specification for building a comprehensive TODO API using the 6-dimensi
 - [ ] Provide curl/JavaScript examples
 - [ ] Document authentication
 
-**Infer 92**: Create user documentation
+**Cycle 92**: Create user documentation
 
 - [ ] Getting started guide
 - [ ] Task creation guide
@@ -889,7 +889,7 @@ Complete specification for building a comprehensive TODO API using the 6-dimensi
 - [ ] Team collaboration guide
 - [ ] Troubleshooting guide
 
-**Infer 93**: Create developer documentation
+**Cycle 93**: Create developer documentation
 
 - [ ] Architecture overview
 - [ ] Schema documentation
@@ -897,7 +897,7 @@ Complete specification for building a comprehensive TODO API using the 6-dimensi
 - [ ] Deployment instructions
 - [ ] Contributing guidelines
 
-**Infer 94**: Create operation procedures
+**Cycle 94**: Create operation procedures
 
 - [ ] Database backup procedures
 - [ ] Rollback procedures
@@ -905,7 +905,7 @@ Complete specification for building a comprehensive TODO API using the 6-dimensi
 - [ ] Alert configuration
 - [ ] Incident response plan
 
-**Infer 95**: Prepare production environment
+**Cycle 95**: Prepare production environment
 
 - [ ] Migrate database schema to production
 - [ ] Set environment variables
@@ -913,7 +913,7 @@ Complete specification for building a comprehensive TODO API using the 6-dimensi
 - [ ] Enable monitoring and logging
 - [ ] Setup alerting
 
-**Infer 96**: Create deployment checklist
+**Cycle 96**: Create deployment checklist
 
 - [ ] Code review complete
 - [ ] All tests passing
@@ -922,7 +922,7 @@ Complete specification for building a comprehensive TODO API using the 6-dimensi
 - [ ] Documentation updated
 - [ ] Runbook prepared
 
-**Infer 97**: Execute deployment
+**Cycle 97**: Execute deployment
 
 - [ ] Deploy backend to Convex Cloud
 - [ ] Deploy frontend to Cloudflare Pages
@@ -930,7 +930,7 @@ Complete specification for building a comprehensive TODO API using the 6-dimensi
 - [ ] Test critical user flows
 - [ ] Monitor for errors
 
-**Infer 98**: Create release notes
+**Cycle 98**: Create release notes
 
 - [ ] Document new features
 - [ ] Document bug fixes
@@ -938,7 +938,7 @@ Complete specification for building a comprehensive TODO API using the 6-dimensi
 - [ ] Document migration instructions
 - [ ] Document known issues
 
-**Infer 99**: Plan future enhancements
+**Cycle 99**: Plan future enhancements
 
 - [ ] Recurring tasks / templates
 - [ ] Time tracking / estimation
@@ -946,7 +946,7 @@ Complete specification for building a comprehensive TODO API using the 6-dimensi
 - [ ] Advanced analytics / forecasting
 - [ ] Mobile app native features
 
-**Infer 100**: Post-deployment review
+**Cycle 100**: Post-deployment review
 
 - [ ] Analyze usage metrics
 - [ ] Collect user feedback

@@ -113,14 +113,14 @@ For complete event type definitions, see **[Ontology.md](./ontology.md#events-al
 - `optimization_applied` - Optimization applied
 - `report_generated` - Report created
 
-### Inference Events (7) ⚡
+### Cycle Events (7) ⚡
 **Powers the knowledge layer**
 
-- `inference_request` - User requests AI inference
-- `inference_completed` - Result delivered
-- `inference_failed` - Inference failed
-- `inference_quota_exceeded` - Monthly limit hit
-- `inference_revenue_collected` - Daily revenue sweep
+- `cycle_request` - User requests AI cycle
+- `cycle_completed` - Result delivered
+- `cycle_failed` - Cycle failed
+- `cycle_quota_exceeded` - Monthly limit hit
+- `cycle_revenue_collected` - Daily revenue sweep
 - `org_revenue_generated` - Org generates platform revenue
 - `revenue_share_distributed` - Revenue share paid out
 
@@ -171,14 +171,14 @@ Uses `metadata` for variants + protocol identity:
 }
 ```
 
-### Pattern 2: Inference Request → Completion
+### Pattern 2: Cycle Request → Completion
 
 ```typescript
-// 1. User requests inference
+// 1. User requests cycle
 {
-  type: "inference_request",
+  type: "cycle_request",
   actorId: userId,
-  targetId: inferenceRequestId,
+  targetId: cycleRequestId,
   timestamp: Date.now(),
   metadata: {
     organizationId,
@@ -189,11 +189,11 @@ Uses `metadata` for variants + protocol identity:
   }
 }
 
-// 2. Inference completes
+// 2. Cycle completes
 {
-  type: "inference_completed",
+  type: "cycle_completed",
   actorId: "system",
-  targetId: inferenceRequestId,
+  targetId: cycleRequestId,
   timestamp: Date.now(),
   metadata: {
     result: courseId,
@@ -319,26 +319,26 @@ Uses `metadata` for variants + protocol identity:
 
 ---
 
-## The Inference Revenue Flow
+## The Cycle Revenue Flow
 
 ### Daily Revenue Collection
 
 ```typescript
-// Collect all inference revenue for the day
+// Collect all cycle revenue for the day
 const today = new Date().setHours(0, 0, 0, 0);
-const inferenceEvents = await db
+const cycleEvents = await db
   .query("events")
   .withIndex("type_time", q =>
-    q.eq("type", "inference_completed")
+    q.eq("type", "cycle_completed")
      .gte("timestamp", today)
   )
   .collect();
 
 // Calculate metrics
 const metrics = {
-  totalInferences: inferenceEvents.length,
-  totalRevenue: sum(inferenceEvents.map(e => e.metadata.revenue)),
-  totalCosts: sum(inferenceEvents.map(e => e.metadata.cost)),
+  totalCycles: cycleEvents.length,
+  totalRevenue: sum(cycleEvents.map(e => e.metadata.revenue)),
+  totalCosts: sum(cycleEvents.map(e => e.metadata.cost)),
   netProfit: 0,
   profitMargin: 0
 };
@@ -348,7 +348,7 @@ metrics.profitMargin = (metrics.netProfit / metrics.totalRevenue) * 100;
 
 // Log revenue collection
 await db.insert("events", {
-  type: "inference_revenue_collected",
+  type: "cycle_revenue_collected",
   actorId: "system",
   targetId: platformOwnerId,
   timestamp: Date.now(),
@@ -469,10 +469,10 @@ const history = await db
 ### Get Events by Type
 
 ```typescript
-const inferenceEvents = await db
+const cycleEvents = await db
   .query("events")
   .withIndex("type_time", q =>
-    q.eq("type", "inference_completed")
+    q.eq("type", "cycle_completed")
      .gte("timestamp", startDate)
   )
   .collect();

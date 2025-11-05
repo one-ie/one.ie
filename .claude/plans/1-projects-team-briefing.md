@@ -43,7 +43,7 @@ DIRECTOR (You)
 
 ## Phase-by-Phase Breakdown
 
-### PHASE 1: Schema Design (Infer 1-15) - AGENT-DESIGNER
+### PHASE 1: Schema Design (Cycle 1-15) - AGENT-DESIGNER
 
 **Duration:** ~10 minutes
 **Deliverables:** ProjectSchema + wireframes
@@ -67,7 +67,7 @@ DIRECTOR (You)
 
 ---
 
-### PHASE 2: Content Collection (Infer 16-30) - AGENT-FRONTEND
+### PHASE 2: Content Collection (Cycle 16-30) - AGENT-FRONTEND
 
 **Duration:** ~10 minutes
 **Deliverables:** Astro content collection + 3 examples
@@ -96,7 +96,7 @@ DIRECTOR (You)
 
 ---
 
-### PHASE 3: Components (Infer 31-50) - AGENT-FRONTEND
+### PHASE 3: Components (Cycle 31-50) - AGENT-FRONTEND
 
 **Duration:** ~30 minutes
 **Deliverables:** 4 React components
@@ -138,7 +138,7 @@ DIRECTOR (You)
 
 ---
 
-### PHASE 4: Pages & Routing (Infer 51-70) - AGENT-FRONTEND
+### PHASE 4: Pages & Routing (Cycle 51-70) - AGENT-FRONTEND
 
 **Duration:** ~20 minutes
 **Deliverables:** 2 Astro pages with SSR
@@ -179,7 +179,7 @@ DIRECTOR (You)
 
 ---
 
-### PHASE 5: Backend (OPTIONAL, Infer 71-85) - AGENT-BACKEND
+### PHASE 5: Backend (OPTIONAL, Cycle 71-85) - AGENT-BACKEND
 
 **Duration:** ~15 minutes
 **Deliverables:** Convex mutations/queries (optional)
@@ -211,7 +211,7 @@ DIRECTOR (You)
 
 ---
 
-### PHASE 6: Testing & Documentation (Infer 86-100) - AGENT-QUALITY
+### PHASE 6: Testing & Documentation (Cycle 86-100) - AGENT-QUALITY
 
 **Duration:** ~20 minutes
 **Deliverables:** Tests + documentation

@@ -200,13 +200,13 @@ export function useCreateOrganization(
             users: 5,
             storage: 1000,
             apiCalls: 10000,
-            inference: 1000,
+            cycle: 1000,
           },
           usage: {
             users: 0,
             storage: 0,
             apiCalls: 0,
-            inference: 0,
+            cycle: 0,
           },
           settings: {
             allowSignups: true,

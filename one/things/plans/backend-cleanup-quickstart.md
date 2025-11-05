@@ -72,11 +72,11 @@ ai_context: |
 
 ### 2. `/one/things/plans/backend-ontology-conformance.md`
 
-**What**: Complete 100-inference execution plan
+**What**: Complete 100-cycle execution plan
 **Content**:
 
 - 5 phases (Audit, Consolidation, Reorganization, Cleanup, Verification)
-- 60 detailed inference steps (Infer 1-100)
+- 60 detailed cycle steps (Cycle 1-100)
 - Execution timeline
 - Success criteria
   **Use this to**: Follow the step-by-step execution plan
@@ -355,7 +355,7 @@ echo "Backend cleanup complete! 🎉"
 
 **Pick one of these**:
 
-1. **Read full plan**: `/one/things/plans/backend-ontology-conformance.md` (100-inference sequence)
+1. **Read full plan**: `/one/things/plans/backend-ontology-conformance.md` (100-cycle sequence)
 2. **See the vision**: `/one/things/plans/backend-target-structure.md` (before/after)
 3. **Just execute it**: Follow "Quick Cleanup (Just Fix It)" section above
 

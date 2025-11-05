@@ -52,9 +52,9 @@ This ontology has been enhanced with specific support for **AI-related tokens**,
 
 ### AI Token Categories
 
-**1. Compute Tokens**: Payment for GPU/TPU resources and inference
+**1. Compute Tokens**: Payment for GPU/TPU resources and cycle
    - Examples: Akash, Render Network, io.net
-   - Metrics: GPU utilization, inference throughput, cost per compute unit
+   - Metrics: GPU utilization, cycle throughput, cost per compute unit
 
 **2. Agent Economy Tokens**: Enable autonomous agent transactions
    - Examples: Fetch.ai, Ocean Protocol, SingularityNET
@@ -194,7 +194,7 @@ Decentralized AI infrastructure and compute networks.
 type AINetworkGroup = {
   type: "compute_network" | "model_marketplace" | "data_dao" | "agent_collective" | "ai_protocol";
   properties: {
-    networkType: "gpu_compute" | "inference" | "training" | "data_labeling" | "agent_hosting";
+    networkType: "gpu_compute" | "cycle" | "training" | "data_labeling" | "agent_hosting";
 
     capacity: {
       totalNodes: number;
@@ -206,7 +206,7 @@ type AINetworkGroup = {
     };
 
     performance: {
-      avgInferenceTime: number; // milliseconds
+      avgCycleTime: number; // milliseconds
       throughput: number; // requests per second
       uptime: number; // percentage
       latency: number; // milliseconds
@@ -218,13 +218,13 @@ type AINetworkGroup = {
       maxModelSize: string; // "70B parameters"
       trainingSupport: boolean;
       finetuningSupport: boolean;
-      inferenceOnly: boolean;
+      cycleOnly: boolean;
     };
 
     economics: {
       tokenAddress: string;
       pricePerComputeUnit: number; // in tokens
-      pricePerInference: number;
+      pricePerCycle: number;
       pricePerTrainingHour?: number;
       revenueSharing: number; // percentage to node operators
       stakingRequired: string; // minimum stake for operators
@@ -586,7 +586,7 @@ type YieldStrategy = {
 ### AI-Specific Entities
 
 #### AI Compute Tokens
-Tokens for decentralized AI computation and inference.
+Tokens for decentralized AI computation and cycle.
 
 ```typescript
 type AIComputeToken = {
@@ -597,19 +597,19 @@ type AIComputeToken = {
 
     aiSpecific: {
       computeType: "gpu" | "tpu" | "asic" | "general";
-      pricingModel: "per_inference" | "per_hour" | "per_epoch" | "per_token";
+      pricingModel: "per_cycle" | "per_hour" | "per_epoch" | "per_token";
 
       usage: {
-        totalInferences: number;
+        totalCycles: number;
         totalComputeHours: number;
         uniqueUsers: number;
         utilization: number; // 0-100%
       };
 
       performance: {
-        avgInferenceTime: number; // ms
-        throughput: number; // inferences/sec
-        costPerInference: number; // in USD
+        avgCycleTime: number; // ms
+        throughput: number; // cycles/sec
+        costPerCycle: number; // in USD
         costVsCentralized: number; // percentage vs AWS/GCP
       };
 
@@ -706,7 +706,7 @@ type AIModelNFT = {
     };
 
     usage: {
-      totalInferences: number;
+      totalCycles: number;
       uniqueUsers: number;
       revenueGenerated: string;
       finetuneRequests: number;
@@ -931,8 +931,8 @@ type ModelAccessConnection = {
   sourceId: Id<"things">; // user or agent
   targetId: Id<"things">; // AI model NFT
   metadata: {
-    accessType: "inference" | "training" | "finetuning" | "ownership";
-    totalInferences: number;
+    accessType: "cycle" | "training" | "finetuning" | "ownership";
+    totalCycles: number;
     totalCost: string;
     subscription?: {
       plan: string;
@@ -1154,12 +1154,12 @@ type MarketEvent = {
 
 ### AI-Specific Events
 
-#### Inference Events
-AI model inference requests and results.
+#### Cycle Events
+AI model cycle requests and results.
 
 ```typescript
-type InferenceEvent = {
-  type: "inference_request" | "inference_complete" | "inference_failed";
+type CycleEvent = {
+  type: "cycle_request" | "cycle_complete" | "cycle_failed";
   properties: {
     modelId: string;
     userId: string;

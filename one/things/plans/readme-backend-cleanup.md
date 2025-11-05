@@ -71,14 +71,14 @@ A complete assessment and execution plan to reorganize the `/backend/` directory
 
 ### ⚙️ Document 3: backend-ontology-conformance.md (THIS DIRECTORY)
 
-**What**: Complete 100-inference execution plan
+**What**: Complete 100-cycle execution plan
 **Size**: ~400 lines
 **Time to read**: 20-30 minutes
 **Contains**:
 
 - Detailed classification matrix (all 33 files)
 - 5 execution phases (Audit through Verification)
-- 60+ inference-based steps
+- 60+ cycle-based steps
 - Phase-by-phase breakdown
 - Timeline estimates
 - Risk mitigation strategies
@@ -366,7 +366,7 @@ A: Very low risk. Only moving documentation, not changing code.
 Located in `/one/things/plans/`:
 
 1. **readme-backend-cleanup.md** (this file - index)
-2. **backend-ontology-conformance.md** (100-inference plan)
+2. **backend-ontology-conformance.md** (100-cycle plan)
 3. **backend-target-structure.md** (vision document)
 4. **backend-cleanup-quickstart.md** (quick reference)
 

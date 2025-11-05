@@ -22,7 +22,7 @@ export function DocCompact({ entries, onTagClick }: DocCompactProps) {
           .map((entry) => (
             <div
               key={entry.id}
-              className="grid grid-cols-[auto_1fr_auto] items-center hover:bg-muted/20 cursor-pointer transition-colors"
+              className="grid grid-cols-[auto_1fr_auto] items-center bg-[hsl(var(--color-sidebar-background))] hover:opacity-80 cursor-pointer transition-opacity"
               onClick={() => {
                 window.location.href = `/docs/${entry.slug}`;
               }}

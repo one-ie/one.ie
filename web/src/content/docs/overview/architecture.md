@@ -1,5 +1,5 @@
 ---
-title: Architecture - Universal Code Generation
+title: Architecture
 description: The 6-dimension ontology that enables 98% AI code generation accuracy
 order: 4
 ---

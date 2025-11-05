@@ -3,7 +3,7 @@ title: Todo Mail
 dimension: things
 primary_dimension: things
 category: todo-mail.md
-tags: ai, architecture, artificial-intelligence, frontend, inference
+tags: ai, architecture, artificial-intelligence, frontend, cycle
 related_dimensions: connections, events, groups, knowledge, people, things
 scope: global
 created: 2025-11-03
@@ -22,17 +22,17 @@ ai_context: |
 **Focus:** Full-featured email client application with inbox, compose, threads, and rich editor
 **Type:** Complete frontend application (Astro + React 19 + Tailwind v4)
 **UI Pattern:** Gmail-like interface with sidebar, email list, and detail view
-**Process:** `Infer 1-100 inference sequence`
-**Timeline:** 12-16 inferences per specialist per day
+**Process:** `Cycle 1-100 cycle sequence`
+**Timeline:** 12-16 cycles per specialist per day
 **Target:** Fully functional mail app UI and state management
 
 ---
 
-## PHASE 1: FOUNDATION & ARCHITECTURE (Infer 1-10)
+## PHASE 1: FOUNDATION & ARCHITECTURE (Cycle 1-10)
 
 **Purpose:** Define mail app requirements, data model, UI patterns
 
-### Infer 1: Define Mail App Features
+### Cycle 1: Define Mail App Features
 
 - [ ] **Core Features:**
   - [ ] Inbox with email list
@@ -63,7 +63,7 @@ ai_context: |
   - [ ] Settings sidebar
   - [ ] Attachments preview
 
-### Infer 2: Map Mail App to 6-Dimension Ontology
+### Cycle 2: Map Mail App to 6-Dimension Ontology
 
 - [ ] **Groups:** User's workspace/organization
 - [ ] **People:**
@@ -89,7 +89,7 @@ ai_context: |
   - [ ] contact_added, contact_updated
 - [ ] **Knowledge:** Email search index, sender/recipient frequency
 
-### Infer 3: Design Data Model
+### Cycle 3: Design Data Model
 
 - [ ] **Email Object:**
   ```
@@ -145,7 +145,7 @@ ai_context: |
   }
   ```
 
-### Infer 4: Design UI Layout
+### Cycle 4: Design UI Layout
 
 - [ ] **Layout Structure:**
   - [ ] **Header (60px):**
@@ -179,7 +179,7 @@ ai_context: |
       - [ ] Actions (reply, reply all, forward, archive, delete, spam)
       - [ ] Related emails in thread
 
-### Infer 5: Design Compose UI
+### Cycle 5: Design Compose UI
 
 - [ ] **Compose Modal/Panel:**
   - [ ] To field (autocomplete)
@@ -203,7 +203,7 @@ ai_context: |
   - [ ] Quote formatting
   - [ ] Undo/redo
 
-### Infer 6: Design Responsive Behavior
+### Cycle 6: Design Responsive Behavior
 
 - [ ] **Desktop (1024px+):**
   - [ ] Three-column layout (sidebar, list, detail)
@@ -218,7 +218,7 @@ ai_context: |
   - [ ] Bottom bar with actions
   - [ ] Full-width compose
 
-### Infer 7: Design Search & Filtering
+### Cycle 7: Design Search & Filtering
 
 - [ ] **Search Bar:**
   - [ ] Search query input
@@ -240,7 +240,7 @@ ai_context: |
   - [ ] From specific contact
   - [ ] By date (today, week, month)
 
-### Infer 8: Design Settings & Preferences
+### Cycle 8: Design Settings & Preferences
 
 - [ ] **Settings Panels:**
   - [ ] **General:**
@@ -268,7 +268,7 @@ ai_context: |
     - [ ] Snooze (s)
     - [ ] Delete (d)
 
-### Infer 9: Design Empty States & Error States
+### Cycle 9: Design Empty States & Error States
 
 - [ ] **Empty States:**
   - [ ] No emails in inbox
@@ -287,7 +287,7 @@ ai_context: |
   - [ ] Loading spinner for detail view
   - [ ] Sending indicator during compose
 
-### Infer 10: Define Success Metrics
+### Cycle 10: Define Success Metrics
 
 - [ ] Mail app complete when:
   - [ ] [ ] Inbox loads and displays emails
@@ -306,11 +306,11 @@ ai_context: |
 
 ---
 
-## PHASE 2: REACT STATE & COMPONENTS (Infer 11-30)
+## PHASE 2: REACT STATE & COMPONENTS (Cycle 11-30)
 
 **Purpose:** Build React state management and interactive components
 
-### Infer 11: Create Email Store (Zustand)
+### Cycle 11: Create Email Store (Zustand)
 
 - [ ] **Store structure:**
   - [ ] emails: Email[]
@@ -330,7 +330,7 @@ ai_context: |
   - [ ] delete(emailId)
   - [ ] addLabel(emailId, labelId)
 
-### Infer 12: Create UI Store (Zustand)
+### Cycle 12: Create UI Store (Zustand)
 
 - [ ] **Store structure:**
   - [ ] theme: 'light' | 'dark'
@@ -348,7 +348,7 @@ ai_context: |
   - [ ] setDensity(density)
   - [ ] updateUnreadCount(folderId, count)
 
-### Infer 13: Create MailSidebar Component
+### Cycle 13: Create MailSidebar Component
 
 - [ ] **Content:**
   - [ ] Compose button (prominent blue button)
@@ -362,7 +362,7 @@ ai_context: |
   - [ ] Highlight active folder
   - [ ] Show context menu on right-click
 
-### Infer 14: Create EmailListItem Component
+### Cycle 14: Create EmailListItem Component
 
 - [ ] **Display:**
   - [ ] Avatar (initials or image)
@@ -379,7 +379,7 @@ ai_context: |
   - [ ] Hover state background highlight
   - [ ] Long press → select multiple
 
-### Infer 15: Create EmailList Component
+### Cycle 15: Create EmailList Component
 
 - [ ] **Structure:**
   - [ ] List of EmailListItem components
@@ -396,7 +396,7 @@ ai_context: |
     - [ ] Move to folder
     - [ ] Delete
 
-### Infer 16: Create EmailDetail Component
+### Cycle 16: Create EmailDetail Component
 
 - [ ] **Header:**
   - [ ] Subject (H1)
@@ -428,7 +428,7 @@ ai_context: |
   - [ ] Collapse/expand previous emails
   - [ ] Scroll through thread
 
-### Infer 17: Create ComposeForm Component
+### Cycle 17: Create ComposeForm Component
 
 - [ ] **Fields:**
   - [ ] To (autocomplete from contacts)
@@ -454,7 +454,7 @@ ai_context: |
   - [ ] onSave (callback)
   - [ ] onDiscard (callback)
 
-### Infer 18: Create RichTextEditor Component
+### Cycle 18: Create RichTextEditor Component
 
 - [ ] **Toolbar:**
   - [ ] Bold, italic, underline buttons
@@ -478,7 +478,7 @@ ai_context: |
   - [ ] placeholder (text)
   - [ ] disabled (boolean)
 
-### Infer 19: Create SearchBar Component
+### Cycle 19: Create SearchBar Component
 
 - [ ] **Input:**
   - [ ] Searchable input
@@ -493,7 +493,7 @@ ai_context: |
   - [ ] onFilter (callback with filter params)
   - [ ] placeholder "Search emails..."
 
-### Infer 20: Create AdvancedSearch Component
+### Cycle 20: Create AdvancedSearch Component
 
 - [ ] **Modal or Panel:**
   - [ ] From field (email input)
@@ -509,7 +509,7 @@ ai_context: |
   - [ ] onSearch (callback with filters)
   - [ ] onClose (callback)
 
-### Infer 21: Create ContactAutoComplete Component
+### Cycle 21: Create ContactAutoComplete Component
 
 - [ ] **Input field:**
   - [ ] Type to search contacts
@@ -522,7 +522,7 @@ ai_context: |
   - [ ] placeholder
   - [ ] allowMultiple (boolean)
 
-### Infer 22: Create AttachmentUpload Component
+### Cycle 22: Create AttachmentUpload Component
 
 - [ ] **Area:**
   - [ ] Drag and drop zone
@@ -535,7 +535,7 @@ ai_context: |
   - [ ] maxSize (bytes)
   - [ ] accept (file types)
 
-### Infer 23: Create EmailThread Component
+### Cycle 23: Create EmailThread Component
 
 - [ ] **Display:**
   - [ ] Latest email at top (expanded)
@@ -546,7 +546,7 @@ ai_context: |
   - [ ] threadId (to load related emails)
   - [ ] currentEmailId (highlight current)
 
-### Infer 24: Create ContextMenu Component
+### Cycle 24: Create ContextMenu Component
 
 - [ ] **Menu items:**
   - [ ] Archive
@@ -562,7 +562,7 @@ ai_context: |
   - [ ] Keyboard navigation
   - [ ] Disabled items grayed out
 
-### Infer 25: Create SettingsPanel Component
+### Cycle 25: Create SettingsPanel Component
 
 - [ ] **Sections:**
   - [ ] General (language, timezone, theme)
@@ -575,7 +575,7 @@ ai_context: |
   - [ ] Save button
   - [ ] Reset to defaults button
 
-### Infer 26: Create EmptyState Component
+### Cycle 26: Create EmptyState Component
 
 - [ ] **Display:**
   - [ ] Icon (inbox empty, search no results, etc.)
@@ -586,7 +586,7 @@ ai_context: |
   - [ ] type (inbox-empty, search-empty, folder-empty, etc.)
   - [ ] onAction (callback for button)
 
-### Infer 27: Create LoadingState Component
+### Cycle 27: Create LoadingState Component
 
 - [ ] **Display:**
   - [ ] Skeleton loaders for email list
@@ -596,7 +596,7 @@ ai_context: |
   - [ ] count (how many skeletons)
   - [ ] variant (list, detail, header)
 
-### Infer 28: Create HeaderNav Component
+### Cycle 28: Create HeaderNav Component
 
 - [ ] **Content:**
   - [ ] Mail logo
@@ -608,7 +608,7 @@ ai_context: |
   - [ ] Hamburger menu button
   - [ ] Hide profile menu
 
-### Infer 29: Create FloatingComposeButton Component
+### Cycle 29: Create FloatingComposeButton Component
 
 - [ ] **Display (Mobile):**
   - [ ] Large floating action button (FAB)
@@ -619,7 +619,7 @@ ai_context: |
   - [ ] Show on scroll down
   - [ ] Hide on scroll up
 
-### Infer 30: Create EmailCard Component
+### Cycle 30: Create EmailCard Component
 
 - [ ] **For detail view:**
   - [ ] Card layout with shadow
@@ -635,11 +635,11 @@ ai_context: |
 
 ---
 
-## PHASE 3: ASTRO PAGES (Infer 31-40)
+## PHASE 3: ASTRO PAGES (Cycle 31-40)
 
 **Purpose:** Create main Astro page structure
 
-### Infer 31: Create Main Layout (MailLayout.astro)
+### Cycle 31: Create Main Layout (MailLayout.astro)
 
 - [ ] **Structure:**
   - [ ] Header (HeaderNav)
@@ -654,7 +654,7 @@ ai_context: |
   - [ ] Set favicon
   - [ ] Theme color tag
 
-### Infer 32: Create Mail Index Page (mail/index.astro)
+### Cycle 32: Create Mail Index Page (mail/index.astro)
 
 - [ ] **Layout:**
   - [ ] Use MailLayout
@@ -667,7 +667,7 @@ ai_context: |
   - [ ] Load emails from mock data
   - [ ] Pass to React components via props
 
-### Infer 33: Create Mail Thread Page (mail/[threadId].astro)
+### Cycle 33: Create Mail Thread Page (mail/[threadId].astro)
 
 - [ ] **Purpose:**
   - [ ] Single thread view (for deep linking)
@@ -681,11 +681,11 @@ ai_context: |
 
 ---
 
-## PHASE 4: MOCK DATA & INTEGRATION (Infer 41-50)
+## PHASE 4: MOCK DATA & INTEGRATION (Cycle 41-50)
 
 **Purpose:** Create realistic mock data and wire up components
 
-### Infer 41: Create Mock Email Data
+### Cycle 41: Create Mock Email Data
 
 - [ ] **Generate sample emails:**
   - [ ] 20-30 sample emails
@@ -697,7 +697,7 @@ ai_context: |
   - [ ] Some threaded
 - [ ] **File:** `src/lib/mockData.ts`
 
-### Infer 42: Create Mock Contact Data
+### Cycle 42: Create Mock Contact Data
 
 - [ ] **Sample contacts:**
   - [ ] 10-15 frequently contacted people
@@ -706,7 +706,7 @@ ai_context: |
   - [ ] Avatar initials
 - [ ] **File:** `src/lib/mockData.ts`
 
-### Infer 43: Create Mock Label Data
+### Cycle 43: Create Mock Label Data
 
 - [ ] **Sample labels:**
   - [ ] Work (red)
@@ -716,7 +716,7 @@ ai_context: |
   - [ ] Unread count
 - [ ] **File:** `src/lib/mockData.ts`
 
-### Infer 44: Wire Up Email Store to Mock Data
+### Cycle 44: Wire Up Email Store to Mock Data
 
 - [ ] **Initial state:**
   - [ ] Load mock emails on app init
@@ -726,7 +726,7 @@ ai_context: |
   - [ ] Save state to localStorage
   - [ ] Load on page refresh
 
-### Infer 45: Wire Up UI Store to Settings
+### Cycle 45: Wire Up UI Store to Settings
 
 - [ ] **Default theme:**
   - [ ] Check system preference
@@ -737,7 +737,7 @@ ai_context: |
   - [ ] Save density to localStorage
   - [ ] Save sidebar state to localStorage
 
-### Infer 46: Implement Email Actions
+### Cycle 46: Implement Email Actions
 
 - [ ] **Mark as read:**
   - [ ] Click email → mark as read
@@ -751,7 +751,7 @@ ai_context: |
   - [ ] Delete
   - [ ] Mark as spam
 
-### Infer 47: Implement Compose Draft System
+### Cycle 47: Implement Compose Draft System
 
 - [ ] **Create draft:**
   - [ ] On compose form open
@@ -765,7 +765,7 @@ ai_context: |
   - [ ] Clear from localStorage
   - [ ] Close compose
 
-### Infer 48: Implement Search & Filters
+### Cycle 48: Implement Search & Filters
 
 - [ ] **Search:**
   - [ ] Type in SearchBar
@@ -777,7 +777,7 @@ ai_context: |
   - [ ] Filter starred → only starred emails
   - [ ] Show "X results" text
 
-### Infer 49: Implement Responsive Behavior
+### Cycle 49: Implement Responsive Behavior
 
 - [ ] **Mobile < 768px:**
   - [ ] Hide sidebar by default
@@ -792,7 +792,7 @@ ai_context: |
   - [ ] Always show sidebar
   - [ ] Three-column layout
 
-### Infer 50: Implement Keyboard Shortcuts
+### Cycle 50: Implement Keyboard Shortcuts
 
 - [ ] **Shortcuts:**
   - [ ] `/` → focus search
@@ -808,11 +808,11 @@ ai_context: |
 
 ---
 
-## PHASE 5: POLISH & OPTIMIZATION (Infer 51-70)
+## PHASE 5: POLISH & OPTIMIZATION (Cycle 51-70)
 
 **Purpose:** Refine UX, accessibility, performance
 
-### Infer 51: Add Animations
+### Cycle 51: Add Animations
 
 - [ ] **Transitions:**
   - [ ] Email fade-in when selected
@@ -825,7 +825,7 @@ ai_context: |
   - [ ] Button scale on hover
   - [ ] Icon color change
 
-### Infer 52: Implement Accessibility
+### Cycle 52: Implement Accessibility
 
 - [ ] **Keyboard navigation:**
   - [ ] Tab through sidebar items
@@ -842,7 +842,7 @@ ai_context: |
   - [ ] 3:1 for UI components
   - [ ] No color-only indicators
 
-### Infer 53: Optimize Performance
+### Cycle 53: Optimize Performance
 
 - [ ] **Bundle size:**
   - [ ] Code split by route
@@ -856,7 +856,7 @@ ai_context: |
   - [ ] Avatar images cached
   - [ ] Lazy load avatars
 
-### Infer 54: Add Error Handling
+### Cycle 54: Add Error Handling
 
 - [ ] **Network errors:**
   - [ ] Show toast on failed load
@@ -872,7 +872,7 @@ ai_context: |
   - [ ] No emails (empty state)
   - [ ] No search results (empty state)
 
-### Infer 55: Add Toast Notifications
+### Cycle 55: Add Toast Notifications
 
 - [ ] **Types:**
   - [ ] Success ("Email archived")
@@ -884,7 +884,7 @@ ai_context: |
   - [ ] Stack multiple toasts
   - [ ] Undo button for destructive actions
 
-### Infer 56: Implement Dark Mode
+### Cycle 56: Implement Dark Mode
 
 - [ ] **Theme colors:**
   - [ ] Dark backgrounds
@@ -896,7 +896,7 @@ ai_context: |
   - [ ] Toggle button to override
   - [ ] Save preference to localStorage
 
-### Infer 57: Add Print Styles
+### Cycle 57: Add Print Styles
 
 - [ ] **Print layout:**
   - [ ] Hide sidebar
@@ -906,7 +906,7 @@ ai_context: |
   - [ ] Show all email details
   - [ ] Hide signatures
 
-### Infer 58: Test All Interactions
+### Cycle 58: Test All Interactions
 
 - [ ] **Compose:**
   - [ ] Open form
@@ -929,7 +929,7 @@ ai_context: |
   - [ ] Clear search
   - [ ] Advanced search works
 
-### Infer 59: Test Mobile Experience
+### Cycle 59: Test Mobile Experience
 
 - [ ] **Devices:**
   - [ ] iPhone SE (375px)
@@ -943,7 +943,7 @@ ai_context: |
   - [ ] Touch targets large enough
   - [ ] No horizontal scroll
 
-### Infer 60: Lighthouse Audit
+### Cycle 60: Lighthouse Audit
 
 - [ ] **Targets:**
   - [ ] Performance > 85
@@ -956,7 +956,7 @@ ai_context: |
   - [ ] Remove unused code
   - [ ] Add meta descriptions
 
-### Infer 61: Add Loading Skeletons
+### Cycle 61: Add Loading Skeletons
 
 - [ ] **For:**
   - [ ] Email list
@@ -967,7 +967,7 @@ ai_context: |
   - [ ] Animated pulse
   - [ ] Smooth transition to content
 
-### Infer 62: Add Drag & Drop
+### Cycle 62: Add Drag & Drop
 
 - [ ] **For:**
   - [ ] Drag email to folder/label
@@ -977,7 +977,7 @@ ai_context: |
   - [ ] Visual drop zone highlight
   - [ ] Show success toast
 
-### Infer 63: Add Undo/Redo
+### Cycle 63: Add Undo/Redo
 
 - [ ] **For:**
   - [ ] Delete email (3 sec undo window)
@@ -987,7 +987,7 @@ ai_context: |
   - [ ] Toast with undo button
   - [ ] Also undo via Ctrl+Z (in compose)
 
-### Infer 64: Create Help Documentation
+### Cycle 64: Create Help Documentation
 
 - [ ] **Pages:**
   - [ ] Getting started
@@ -1000,7 +1000,7 @@ ai_context: |
   - [ ] Placeholder text in inputs
   - [ ] Help icons with popovers
 
-### Infer 65: Add Analytics Events
+### Cycle 65: Add Analytics Events
 
 - [ ] **Track:**
   - [ ] View email
@@ -1011,7 +1011,7 @@ ai_context: |
   - [ ] Settings change
   - [ ] Feature usage
 
-### Infer 66: Create Settings Page
+### Cycle 66: Create Settings Page
 
 - [ ] **Options:**
   - [ ] Theme (light/dark)
@@ -1026,7 +1026,7 @@ ai_context: |
   - [ ] Show success toast
   - [ ] Apply immediately
 
-### Infer 67: Add Contact Management (Future)
+### Cycle 67: Add Contact Management (Future)
 
 - [ ] **Features:**
   - [ ] View contact details
@@ -1038,7 +1038,7 @@ ai_context: |
   - [ ] Contact sidebar
   - [ ] Contact card popup
 
-### Infer 68: Add Snooze Feature (Future)
+### Cycle 68: Add Snooze Feature (Future)
 
 - [ ] **Options:**
   - [ ] 1 hour, 3 hours, 8 hours
@@ -1049,7 +1049,7 @@ ai_context: |
   - [ ] Show snoozed folder
   - [ ] Notification when snoozed email returns
 
-### Infer 69: Test Cross-Browser
+### Cycle 69: Test Cross-Browser
 
 - [ ] **Browsers:**
   - [ ] Chrome
@@ -1062,7 +1062,7 @@ ai_context: |
   - [ ] JavaScript errors
   - [ ] Animation smoothness
 
-### Infer 70: Final Polish
+### Cycle 70: Final Polish
 
 - [ ] **Details:**
   - [ ] Micro-interactions feel good
@@ -1100,9 +1100,9 @@ Mail app is complete when:
 
 ---
 
-**Timeline:** 70-75 inferences for complete implementation
+**Timeline:** 70-75 cycles for complete implementation
 **Status:** Ready to build
-**Next:** Use Claude Code to implement step by step following inference sequence
+**Next:** Use Claude Code to implement step by step following cycle sequence
 
 ---
 

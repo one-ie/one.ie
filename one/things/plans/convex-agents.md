@@ -174,7 +174,7 @@ LLM Providers (OpenAI, Anthropic, etc.)
 
 ---
 
-## Installation & Setup (Infer 1-10)
+## Installation & Setup (Cycle 1-10)
 
 ### Install Package
 
@@ -251,7 +251,7 @@ async function loadAgentTools(ctx: any, groupId: string, agentId: string) {
 
 ---
 
-## Thread Management (Infer 11-20)
+## Thread Management (Cycle 11-20)
 
 ### Create Agent Thread
 
@@ -376,7 +376,7 @@ export const getThreadContext = query({
 
 ---
 
-## Tool Integration (Infer 21-30)
+## Tool Integration (Cycle 21-30)
 
 ### Define Agent Tools
 
@@ -479,7 +479,7 @@ Convex Agents automatically executes tool calls and manages the agentic loop. Wh
 
 ---
 
-## Streaming Setup (Infer 31-40)
+## Streaming Setup (Cycle 31-40)
 
 ### Streaming Mutation
 
@@ -622,7 +622,7 @@ export function useAgentStream(
 
 ---
 
-## RAG Integration (Infer 51-60)
+## RAG Integration (Cycle 51-60)
 
 ### Connect Agent to Knowledge
 
@@ -709,7 +709,7 @@ async function embedText(text: string): Promise<number[]> {
 
 ---
 
-## Multi-Tenant Isolation (Infer 71-80)
+## Multi-Tenant Isolation (Cycle 71-80)
 
 ### Group Scoping
 
@@ -763,7 +763,7 @@ async function verifyGroupAccess(ctx: any, groupId: string) {
 
 ---
 
-## Usage Tracking & Billing (Infer 81-90)
+## Usage Tracking & Billing (Cycle 81-90)
 
 ### Token Tracking
 
@@ -844,7 +844,7 @@ export const getGroupUsage = query({
 
 ---
 
-## Error Handling & Recovery (Infer 91-100)
+## Error Handling & Recovery (Cycle 91-100)
 
 ### Graceful Error Handling
 

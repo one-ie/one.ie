@@ -379,7 +379,7 @@ ctx.runAction(api.actions.entities.generateEmbeddings, {...})
 
 ### 5. Type Safety
 
-Full TypeScript support with inference:
+Full TypeScript support with cycle:
 
 ```typescript
 // IDE autocomplete works perfectly

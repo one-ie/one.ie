@@ -145,7 +145,7 @@ Every intelligent system needs a coherent model of reality. Traditional systems 
 
 **All actions and state changes over time**
 
-- **67+ event types** including inference and blockchain events
+- **67+ event types** including cycle and blockchain events
 - Complete audit trail with actor (person), target (thing), timestamp
 - **Consolidated event families** with metadata.protocol for multi-protocol support
 - Scoped to organizations
@@ -155,7 +155,7 @@ Every intelligent system needs a coherent model of reality. Traditional systems 
 
 - **Thing lifecycle**: thing_created, thing_updated, thing_published, thing_archived, thing_deleted
 - **User actions**: purchased, enrolled, completed, rated, shared, bookmarked
-- **AI/Agent**: clone_voice_created, inference_request, inference_completed, agent_trained
+- **AI/Agent**: clone_voice_created, cycle_request, cycle_completed, agent_trained
 - **Token/NFT**: tokens_purchased, tokens_earned, tokens_transferred, nft_minted, nft_transferred
 - **Content**: content_viewed, content_liked, content_commented, scheduled, published
 - **Knowledge**: knowledge_indexed, knowledge_linked, prompt_template_created

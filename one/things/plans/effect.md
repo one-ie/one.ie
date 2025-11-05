@@ -2,7 +2,7 @@
 title: Effect
 dimension: things
 category: plans
-tags: architecture, backend, frontend, inference, ontology, testing
+tags: architecture, backend, frontend, cycle, ontology, testing
 related_dimensions: connections, events, people
 scope: global
 created: 2025-11-03
@@ -27,7 +27,7 @@ ai_context: |
 **Effect.ts powers the backend-agnostic architecture of ONE Platform** by providing type-safe, composable services that work with ANY backend (Convex, WordPress, Supabase, Notion, etc.). This document describes how Effect.ts integrates with the DataProvider pattern to enable:
 
 1. **Backend Independence**: Frontend works with any backend that implements the 6-dimension ontology
-2. **Type Safety**: Complete type inference from database to UI with zero runtime overhead
+2. **Type Safety**: Complete type cycle from database to UI with zero runtime overhead
 3. **Composability**: Services compose via Layer.mergeAll for dependency injection
 4. **Error Handling**: Tagged errors replace try/catch throughout the stack
 5. **Testing**: Mock providers enable isolated service testing
@@ -228,7 +228,7 @@ ONE/
 ├── one/                         # Platform documentation (41 files)
 │   ├── knowledge/
 │   │   ├── ontology.md         # ✅ 6-dimension data model (source of truth)
-│   │   └── todo.md             # 100-inference execution template
+│   │   └── todo.md             # 100-cycle execution template
 │   └── things/plans/
 │       ├── effect.md           # This file
 │       ├── separate.md         # Backend separation plan
@@ -865,7 +865,7 @@ Critical TypeScript settings for confect compatibility:
 
 **Resource management prevents leaks in long-running agents.** Effect's Scope system automatically releases resources (database connections, WebSocket streams, file handles) regardless of success, failure, or interruption. For streaming LLM responses, wrap in `Effect.scoped` with `addFinalizer` to abort streams on user cancellation. For RAG agents processing documents, ensure file handles close even when errors occur mid-processing. Effect handles cleanup correctly across concurrent operations—critical for production systems running 24/7.
 
-**Schema validation provides type-safe data transformation.** Effect's Schema library validates and transforms data with full type inference. For AI agents, validate LLM function call outputs match expected schemas, parse structured responses, and enforce business rules. Schemas compose—define a base tool schema and extend it for specific tools. Transformations convert between API shapes and domain models. Combined with confect, your entire stack has end-to-end type safety from database to frontend.
+**Schema validation provides type-safe data transformation.** Effect's Schema library validates and transforms data with full type cycle. For AI agents, validate LLM function call outputs match expected schemas, parse structured responses, and enforce business rules. Schemas compose—define a base tool schema and extend it for specific tools. Transformations convert between API shapes and domain models. Combined with confect, your entire stack has end-to-end type safety from database to frontend.
 
 ### confect-specific benefits for Convex
 
@@ -1694,7 +1694,7 @@ ONE_BACKEND=off  # Default
 1. Read `one/knowledge/ontology.md` first (6-dimension model)
 2. Implement features using Effect.ts services (backend-agnostic)
 3. Services use DataProvider (never call backend directly)
-4. Follow the 100-inference sequence in `one/knowledge/todo.md`
+4. Follow the 100-cycle sequence in `one/knowledge/todo.md`
 
 **For Developers:**
 
@@ -1791,7 +1791,7 @@ cd web/src/services/KnowledgeService.ts
 ## Related Documentation
 
 - **`one/knowledge/ontology.md`** - 6-dimension data model (SOURCE OF TRUTH)
-- **`one/knowledge/todo.md`** - 100-inference execution template
+- **`one/knowledge/todo.md`** - 100-cycle execution template
 - **`one/things/plans/separate.md`** - Backend separation strategy
 - **`one/things/plans/unified-implementation-plan.md`** - Complete 11-week plan
 - **`one/things/plans/improve-codebase.md`** - Alternative 14-week plan (backend-first)

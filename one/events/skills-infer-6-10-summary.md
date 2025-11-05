@@ -1,5 +1,5 @@
 ---
-title: Skills Infer 6 10 Summary
+title: Skills Cycle 6 10 Summary
 dimension: events
 category: skills-infer-6-10-summary.md
 tags: agent, ai, auth, backend, ontology
@@ -16,10 +16,10 @@ ai_context: |
   For AI agents: Read this to understand skills infer 6 10 summary.
 ---
 
-# Skills Implementation: Infer 6-10 Summary
+# Skills Implementation: Cycle 6-10 Summary
 
 **Date:** 2025-10-18
-**Phase:** 1 - Convex Skills (Infer 6-10)
+**Phase:** 1 - Convex Skills (Cycle 6-10)
 **Status:** ✅ In Progress (2/5 complete)
 
 ## Completed Skills
@@ -64,7 +64,7 @@ ai_context: |
 
 ## Next Steps
 
-Complete remaining 3 Convex skills to finish Infer 6-10, then proceed to Astro skills (Infer 11-15).
+Complete remaining 3 Convex skills to finish Cycle 6-10, then proceed to Astro skills (Cycle 11-15).
 
-**Progress:** 7/100 inferences (7%)
+**Progress:** 7/100 cycles (7%)
 **Status:** On track

@@ -28,13 +28,13 @@ useCases:
     userType: "Designer"
 features:
   - name: "/now"
-    description: "Show current inference and task"
+    description: "Show current cycle and task"
     status: "completed"
   - name: "/next"
-    description: "Advance to next inference"
+    description: "Advance to next cycle"
     status: "completed"
   - name: "/done"
-    description: "Mark inference complete"
+    description: "Mark cycle complete"
     status: "completed"
   - name: "/build"
     description: "Trigger feature build workflow"
@@ -49,7 +49,7 @@ features:
     description: "Release new version to npm"
     status: "completed"
   - name: "/plan"
-    description: "Convert idea to 100-inference plan"
+    description: "Convert idea to 100-cycle plan"
     status: "completed"
 marketingPosition:
   tagline: "One command. All the power."
@@ -74,16 +74,16 @@ Slash commands are shortcuts that trigger complex workflows. They orchestrate ag
 ## Workflow Commands
 
 ### /now
-Show current inference and what you're working on
+Show current cycle and what you're working on
 
 ### /next
-Advance to next inference in the sequence
+Advance to next cycle in the sequence
 
 ### /done
-Mark current inference complete and advance
+Mark current cycle complete and advance
 
 ### /plan
-Convert an idea into a complete 100-inference plan
+Convert an idea into a complete 100-cycle plan
 
 ## Build Commands
 

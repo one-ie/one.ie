@@ -592,18 +592,18 @@ Detected colors:
 Based on https://one.ie analysis:
 
 FOUNDATION (Always recommended)
-  [x] Landing page (Infer 1-10, ~5 min)
-  [x] Authentication (Infer 11-20, ~10 min)
-  [x] Multi-tenant groups (Infer 21-30, ~10 min)
+  [x] Landing page (Cycle 1-10, ~5 min)
+  [x] Authentication (Cycle 11-20, ~10 min)
+  [x] Multi-tenant groups (Cycle 21-30, ~10 min)
 
 DETECTED FROM YOUR SITE
-  [ ] Blog CMS (Infer 31-40, ~15 min)
-  [ ] Real-time sync (Infer 41-50, ~15 min)
-  [ ] Discord integration (Infer 51-60, ~10 min)
+  [ ] Blog CMS (Cycle 31-40, ~15 min)
+  [ ] Real-time sync (Cycle 41-50, ~15 min)
+  [ ] Discord integration (Cycle 51-60, ~10 min)
 
 AI & AUTOMATION
-  [ ] AI agents (Infer 61-70, ~20 min)
-  [ ] RAG knowledge base (Infer 71-80, ~15 min)
+  [ ] AI agents (Cycle 61-70, ~20 min)
+  [ ] RAG knowledge base (Cycle 71-80, ~15 min)
 
 ? Select features to build: › (Space to toggle, Enter to continue)
 ```
