@@ -1,3 +1,14 @@
+### **606065bd** — template:5 — `docs: Add "pull before push" rule to prevent branch divergence``
+
+**Template:**
+  - .claude/agents/agent-ops.md
+  - .claude/commands/push.md
+  - .claude/hooks.log
+  - .claude/state/inference.json
+  - one/events/0-changes.md
+
+
+
 ### **76ba3b79** — custom:1 — `Merge remote changes - resolve conflicts in state files`` [customization]
 
 **Your Changes:**
