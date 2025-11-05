@@ -1,3 +1,17 @@
+### **64e20559** — template:1 — `docs: Add tracking customizations guide to web docs``
+
+**Template:**
+  - web/src/content/docs/develop/tracking-customizations.md
+
+
+
+### **0dd7dc9c** — template:1 — `docs: Update change tracking to focus on file paths``
+
+**Template:**
+  - one/events/0-changes.md
+
+
+
 ### **9f06e4b1** — template:1 — `refactor: Track file paths and names for customizations``
 
 **Template:**
