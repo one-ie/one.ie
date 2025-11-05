@@ -1,5 +1,9 @@
 ---
 import Layout from './Layout.astro';
+import { getCollection } from 'astro:content';
+import { SidebarDocs } from '@/components/docs/SidebarDocs';
+import type { CollectionEntry } from 'astro:content';
+import { ChevronRight, FileText } from 'lucide-react';
 
 interface Props {
   title: string;
@@ -7,366 +11,396 @@ interface Props {
 }
 
 const { title, description } = Astro.props;
+
+// Get all docs for sidebar
+const allDocs = (await getCollection('docs')) as CollectionEntry<'docs'>[];
+
+// Get current slug from URL
+const currentSlug = Astro.url.pathname.replace(/^\/docs\//, '').replace(/\/$/, '');
 ---
 
-<Layout title={title} description={description}>
-  <div class="container mx-auto max-w-4xl px-4 py-8">
-    {/* Page Header with Copy Button */}
-    <div class="flex items-start justify-between gap-4 mb-8">
-      <div class="flex-1">
-        <h1>{title}</h1>
-        {description && <p class="lead text-muted-foreground">{description}</p>}
+<Layout title={title} description={description} sidebarInitialCollapsed={true}>
+  <div class="flex gap-0">
+    <div class="flex gap-0">
+  {/* Sidebar */}
+  <SidebarDocs client:only="react" entries={allDocs} currentSlug={currentSlug} />
+
+  {/* Main Content */}
+  <div class="flex-1 overflow-y-auto">
+    <div class="container mx-auto max-w-4xl px-4 py-8">
+      {/* Breadcrumbs */}
+      <nav class="flex items-center gap-2 text-sm text-muted-foreground mb-6 p-0">
+        <a href="/docs" class="hover:text-foreground transition-colors flex items-center gap-1">
+          <FileText className="w-4 h-4" />
+          <span>Docs</span>
+        </a>
+        {currentSlug && (
+          <>
+            <ChevronRight className="w-4 h-4" />
+            <span class="text-foreground font-medium truncate">{title}</span>
+          </>
+        )}
+      </nav>
+
+      {/* Page Header with Copy Button */}
+      <div class="flex items-start justify-between gap-4 mb-8">
+        <div class="flex-1">
+          <h1>{title}</h1>
+          {description && <p class="lead text-muted-foreground">{description}</p>}
+        </div>
+        <button
+          id="page-copy-btn"
+          class="copy-page-btn"
+          type="button"
+          title="Copy entire page"
+          aria-label="Copy page content"
+        >
+          <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <rect width="14" height="14" x="8" y="8" rx="2" ry="2"/>
+            <path d="M4 16c-1.1 0-2-.9-2-2V4c0-1.1.9-2 2-2h10c1.1 0 2 .9 2 2"/>
+          </svg>
+          <span>Copy Page</span>
+        </button>
       </div>
-      <button
-        id="page-copy-btn"
-        class="copy-page-btn"
-        type="button"
-        title="Copy entire page"
-        aria-label="Copy page content"
-      >
-        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-          <rect width="14" height="14" x="8" y="8" rx="2" ry="2"/>
-          <path d="M4 16c-1.1 0-2-.9-2-2V4c0-1.1.9-2 2-2h10c1.1 0 2 .9 2 2"/>
-        </svg>
-        <span>Copy Page</span>
-      </button>
+
+      <article class="prose dark:prose-invert max-w-none" id="doc-content">
+        <slot />
+      </article>
     </div>
-
-    <article class="prose dark:prose-invert max-w-none" id="doc-content">
-      <slot />
-    </article>
   </div>
+    </div>
+  </div>
+</Layout>
 
-  <style>
-    /* Code block styling */
-    :global(pre) {
-      position: relative;
-      background-color: hsl(var(--color-muted));
-      color: hsl(var(--color-foreground));
-      border-radius: 0.5rem;
-      padding: 1rem;
-      overflow-x: auto;
+<style>
+  /* Code block styling */
+  :global(pre) {
+    position: relative;
+    background-color: hsl(var(--color-muted));
+    color: hsl(var(--color-foreground));
+    border-radius: 0.5rem;
+    padding: 1rem;
+    overflow-x: auto;
+  }
+
+  :global(pre code) {
+    font-size: 0.875rem;
+  }
+
+  :global(code:not(pre > code)) {
+    background-color: hsl(var(--color-muted));
+    padding: 0.375rem 0.75rem;
+    border-radius: 0.25rem;
+    font-size: 0.875rem;
+    font-family: monospace;
+  }
+
+  /* Code block wrapper for copy button */
+  :global(.code-block-wrapper) {
+    position: relative;
+    margin: 1rem 0;
+  }
+
+  :global(.code-block-wrapper:hover .copy-button-container) {
+    opacity: 1;
+  }
+
+  :global(.copy-button-container) {
+    position: absolute;
+    top: 0.5rem;
+    right: 0.5rem;
+    opacity: 1;
+    transition: opacity 0.2s ease-in-out;
+    z-index: 10;
+  }
+
+  :global(.copy-button-container button) {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0;
+    padding: 0.5rem;
+    background-color: hsl(var(--color-muted) / 0.5);
+    color: hsl(var(--color-muted-foreground));
+    border: 1px solid hsl(var(--color-border));
+    border-radius: 0.375rem;
+    font-size: 0.875rem;
+    cursor: pointer;
+    transition: all 0.2s ease-in-out;
+    min-width: 2.5rem;
+    height: 2.5rem;
+  }
+
+  :global(.copy-button-container button span) {
+    display: none;
+    margin-left: 0.25rem;
+  }
+
+  :global(.copy-button-container button:hover) {
+    background-color: hsl(var(--color-muted) / 0.75);
+    color: hsl(var(--color-foreground));
+    border-color: hsl(var(--color-primary));
+    gap: 0.5rem;
+    padding: 0.5rem 0.75rem;
+    min-width: auto;
+  }
+
+  :global(.copy-button-container button:hover span) {
+    display: inline;
+  }
+
+  :global(.copy-tooltip) {
+    position: absolute;
+    bottom: calc(100% + 8px);
+    left: 50%;
+    transform: translateX(-50%);
+    background-color: #22c55e;
+    color: white;
+    padding: 0.25rem 0.75rem;
+    border-radius: 0.375rem;
+    font-size: 0.75rem;
+    white-space: nowrap;
+    pointer-events: none;
+    animation: tooltip-slide 0.2s ease-in-out;
+  }
+
+  :global(.copy-tooltip::after) {
+    content: '';
+    position: absolute;
+    top: 100%;
+    left: 50%;
+    margin-left: -4px;
+    border-width: 4px;
+    border-style: solid;
+    border-color: #22c55e transparent transparent transparent;
+  }
+
+  @keyframes tooltip-slide {
+    from {
+      opacity: 0;
+      transform: translateX(-50%) translateY(4px);
     }
-
-    :global(pre code) {
-      font-size: 0.875rem;
-    }
-
-    :global(code:not(pre > code)) {
-      background-color: hsl(var(--color-muted));
-      padding: 0.375rem 0.75rem;
-      border-radius: 0.25rem;
-      font-size: 0.875rem;
-      font-family: monospace;
-    }
-
-    /* Code block wrapper for copy button */
-    :global(.code-block-wrapper) {
-      position: relative;
-      margin: 1rem 0;
-    }
-
-    :global(.code-block-wrapper:hover .copy-button-container) {
+    to {
       opacity: 1;
+      transform: translateX(-50%) translateY(0);
     }
+  }
 
-    :global(.copy-button-container) {
-      position: absolute;
-      top: 0.5rem;
-      right: 0.5rem;
+
+  /* Heading styling */
+  :global(h2) {
+    font-size: 1.5rem;
+    font-weight: bold;
+    margin-top: 2rem;
+    margin-bottom: 1rem;
+    border-bottom: 1px solid hsl(var(--color-border));
+    padding-bottom: 0.5rem;
+  }
+
+  :global(h3) {
+    font-size: 1.25rem;
+    font-weight: 600;
+    margin-top: 1.5rem;
+    margin-bottom: 0.75rem;
+  }
+
+  /* List styling */
+  :global(ul, ol) {
+    margin-left: 1rem;
+  }
+
+  :global(ul > li, ol > li) {
+    margin-bottom: 0.5rem;
+  }
+
+  :global(li) {
+    color: hsl(var(--color-foreground));
+  }
+
+  /* Table styling */
+  :global(table) {
+    width: 100%;
+    border-collapse: collapse;
+    border: 1px solid hsl(var(--color-border));
+  }
+
+  :global(th, td) {
+    border: 1px solid hsl(var(--color-border));
+    padding: 1rem;
+    text-align: left;
+  }
+
+  :global(th) {
+    background-color: hsl(var(--color-muted));
+    font-weight: 600;
+  }
+
+  /* Blockquote styling */
+  :global(blockquote) {
+    border-left: 4px solid hsl(var(--color-primary));
+    padding-left: 1rem;
+    font-style: italic;
+    color: hsl(var(--color-muted-foreground));
+    margin: 1rem 0;
+  }
+
+  /* Page copy button styling */
+  .copy-page-btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    padding: 0.75rem 1rem;
+    background-color: hsl(var(--color-muted) / 0.5);
+    color: hsl(var(--color-foreground));
+    border: 1px solid hsl(var(--color-border));
+    border-radius: 0.5rem;
+    font-size: 0.875rem;
+    font-weight: 500;
+    cursor: pointer;
+    transition: all 0.2s ease-in-out;
+    flex-shrink: 0;
+    margin-top: 0.5rem;
+  }
+
+  .copy-page-btn:hover {
+    background-color: hsl(var(--color-muted) / 0.75);
+    border-color: hsl(var(--color-primary));
+    color: hsl(var(--color-primary));
+  }
+
+  .copy-page-btn:active {
+    transform: scale(0.95);
+  }
+
+  .copy-page-btn svg {
+    transition: color 0.2s ease-in-out;
+  }
+
+  .copy-page-btn.copied svg {
+    color: #22c55e;
+  }
+
+  .copy-page-tooltip {
+    position: fixed;
+    bottom: 2rem;
+    right: 2rem;
+    background-color: #22c55e;
+    color: white;
+    padding: 0.75rem 1rem;
+    border-radius: 0.5rem;
+    font-size: 0.875rem;
+    font-weight: 500;
+    pointer-events: none;
+    animation: slide-up 0.3s ease-in-out;
+    z-index: 50;
+  }
+
+  @keyframes slide-up {
+    from {
+      opacity: 0;
+      transform: translateY(10px);
+    }
+    to {
       opacity: 1;
-      transition: opacity 0.2s ease-in-out;
-      z-index: 10;
+      transform: translateY(0);
     }
+  }
+</style>
 
-    :global(.copy-button-container button) {
-      display: inline-flex;
-      align-items: center;
-      justify-content: center;
-      gap: 0;
-      padding: 0.5rem;
-      background-color: hsl(var(--color-muted) / 0.5);
-      color: hsl(var(--color-muted-foreground));
-      border: 1px solid hsl(var(--color-border));
-      border-radius: 0.375rem;
-      font-size: 0.875rem;
-      cursor: pointer;
-      transition: all 0.2s ease-in-out;
-      min-width: 2.5rem;
-      height: 2.5rem;
-    }
+<script>
+  function wrapCodeBlocks() {
+    document.querySelectorAll('pre').forEach(pre => {
+      // Only wrap if not already wrapped
+      if (!pre.parentElement?.classList.contains('code-block-wrapper')) {
+        const wrapper = document.createElement('div');
+        wrapper.className = 'code-block-wrapper';
+        pre.parentNode?.insertBefore(wrapper, pre);
+        wrapper.appendChild(pre);
 
-    :global(.copy-button-container button span) {
-      display: none;
-      margin-left: 0.25rem;
-    }
+        // Add copy button container
+        const copyContainer = document.createElement('div');
+        copyContainer.className = 'copy-button-container';
+        copyContainer.innerHTML = `
+          <button type="button" title="Copy code">
+            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <rect width="14" height="14" x="8" y="8" rx="2" ry="2"/>
+              <path d="M4 16c-1.1 0-2-.9-2-2V4c0-1.1.9-2 2-2h10c1.1 0 2 .9 2 2"/>
+            </svg>
+            <span>Copy</span>
+          </button>
+        `;
+        wrapper.appendChild(copyContainer);
 
-    :global(.copy-button-container button:hover) {
-      background-color: hsl(var(--color-muted) / 0.75);
-      color: hsl(var(--color-foreground));
-      border-color: hsl(var(--color-primary));
-      gap: 0.5rem;
-      padding: 0.5rem 0.75rem;
-      min-width: auto;
-    }
+        // Add click handler
+        const button = copyContainer.querySelector('button');
+        if (button) {
+          button.addEventListener('click', () => {
+            const code = pre.textContent || '';
+            navigator.clipboard.writeText(code).then(() => {
+              // Show tooltip
+              const tooltip = document.createElement('span');
+              tooltip.className = 'copy-tooltip';
+              tooltip.textContent = 'Copied!';
+              button.appendChild(tooltip);
 
-    :global(.copy-button-container button:hover span) {
-      display: inline;
-    }
+              // Change icon and text
+              const svg = button.querySelector('svg');
+              const span = button.querySelector('span');
+              if (svg) svg.style.color = '#22c55e';
+              if (span) span.textContent = 'Copied';
 
-    :global(.copy-tooltip) {
-      position: absolute;
-      bottom: calc(100% + 8px);
-      left: 50%;
-      transform: translateX(-50%);
-      background-color: #22c55e;
-      color: white;
-      padding: 0.25rem 0.75rem;
-      border-radius: 0.375rem;
-      font-size: 0.75rem;
-      white-space: nowrap;
-      pointer-events: none;
-      animation: tooltip-slide 0.2s ease-in-out;
-    }
-
-    :global(.copy-tooltip::after) {
-      content: '';
-      position: absolute;
-      top: 100%;
-      left: 50%;
-      margin-left: -4px;
-      border-width: 4px;
-      border-style: solid;
-      border-color: #22c55e transparent transparent transparent;
-    }
-
-    @keyframes tooltip-slide {
-      from {
-        opacity: 0;
-        transform: translateX(-50%) translateY(4px);
-      }
-      to {
-        opacity: 1;
-        transform: translateX(-50%) translateY(0);
-      }
-    }
-
-
-    /* Heading styling */
-    :global(h2) {
-      font-size: 1.5rem;
-      font-weight: bold;
-      margin-top: 2rem;
-      margin-bottom: 1rem;
-      border-bottom: 1px solid hsl(var(--color-border));
-      padding-bottom: 0.5rem;
-    }
-
-    :global(h3) {
-      font-size: 1.25rem;
-      font-weight: 600;
-      margin-top: 1.5rem;
-      margin-bottom: 0.75rem;
-    }
-
-    /* List styling */
-    :global(ul, ol) {
-      margin-left: 1rem;
-    }
-
-    :global(ul > li, ol > li) {
-      margin-bottom: 0.5rem;
-    }
-
-    :global(li) {
-      color: hsl(var(--color-foreground));
-    }
-
-    /* Table styling */
-    :global(table) {
-      width: 100%;
-      border-collapse: collapse;
-      border: 1px solid hsl(var(--color-border));
-    }
-
-    :global(th, td) {
-      border: 1px solid hsl(var(--color-border));
-      padding: 1rem;
-      text-align: left;
-    }
-
-    :global(th) {
-      background-color: hsl(var(--color-muted));
-      font-weight: 600;
-    }
-
-    /* Blockquote styling */
-    :global(blockquote) {
-      border-left: 4px solid hsl(var(--color-primary));
-      padding-left: 1rem;
-      font-style: italic;
-      color: hsl(var(--color-muted-foreground));
-      margin: 1rem 0;
-    }
-
-    /* Page copy button styling */
-    .copy-page-btn {
-      display: inline-flex;
-      align-items: center;
-      gap: 0.5rem;
-      padding: 0.75rem 1rem;
-      background-color: hsl(var(--color-muted) / 0.5);
-      color: hsl(var(--color-foreground));
-      border: 1px solid hsl(var(--color-border));
-      border-radius: 0.5rem;
-      font-size: 0.875rem;
-      font-weight: 500;
-      cursor: pointer;
-      transition: all 0.2s ease-in-out;
-      flex-shrink: 0;
-      margin-top: 0.5rem;
-    }
-
-    .copy-page-btn:hover {
-      background-color: hsl(var(--color-muted) / 0.75);
-      border-color: hsl(var(--color-primary));
-      color: hsl(var(--color-primary));
-    }
-
-    .copy-page-btn:active {
-      transform: scale(0.95);
-    }
-
-    .copy-page-btn svg {
-      transition: color 0.2s ease-in-out;
-    }
-
-    .copy-page-btn.copied svg {
-      color: #22c55e;
-    }
-
-    .copy-page-tooltip {
-      position: fixed;
-      bottom: 2rem;
-      right: 2rem;
-      background-color: #22c55e;
-      color: white;
-      padding: 0.75rem 1rem;
-      border-radius: 0.5rem;
-      font-size: 0.875rem;
-      font-weight: 500;
-      pointer-events: none;
-      animation: slide-up 0.3s ease-in-out;
-      z-index: 50;
-    }
-
-    @keyframes slide-up {
-      from {
-        opacity: 0;
-        transform: translateY(10px);
-      }
-      to {
-        opacity: 1;
-        transform: translateY(0);
-      }
-    }
-  </style>
-
-  <script>
-    function wrapCodeBlocks() {
-      document.querySelectorAll('pre').forEach(pre => {
-        // Only wrap if not already wrapped
-        if (!pre.parentElement?.classList.contains('code-block-wrapper')) {
-          const wrapper = document.createElement('div');
-          wrapper.className = 'code-block-wrapper';
-          pre.parentNode?.insertBefore(wrapper, pre);
-          wrapper.appendChild(pre);
-
-          // Add copy button container
-          const copyContainer = document.createElement('div');
-          copyContainer.className = 'copy-button-container';
-          copyContainer.innerHTML = `
-            <button type="button" title="Copy code">
-              <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                <rect width="14" height="14" x="8" y="8" rx="2" ry="2"/>
-                <path d="M4 16c-1.1 0-2-.9-2-2V4c0-1.1.9-2 2-2h10c1.1 0 2 .9 2 2"/>
-              </svg>
-              <span>Copy</span>
-            </button>
-          `;
-          wrapper.appendChild(copyContainer);
-
-          // Add click handler
-          const button = copyContainer.querySelector('button');
-          if (button) {
-            button.addEventListener('click', () => {
-              const code = pre.textContent || '';
-              navigator.clipboard.writeText(code).then(() => {
-                // Show tooltip
-                const tooltip = document.createElement('span');
-                tooltip.className = 'copy-tooltip';
-                tooltip.textContent = 'Copied!';
-                button.appendChild(tooltip);
-
-                // Change icon and text
-                const svg = button.querySelector('svg');
-                const span = button.querySelector('span');
-                if (svg) svg.style.color = '#22c55e';
-                if (span) span.textContent = 'Copied';
-
-                // Reset after animation
-                setTimeout(() => {
-                  if (svg) svg.style.color = '';
-                  if (span) span.textContent = 'Copy';
-                  tooltip.remove();
-                }, 2000);
-              }).catch(err => {
-                console.error('Failed to copy:', err);
-              });
+              // Reset after animation
+              setTimeout(() => {
+                if (svg) svg.style.color = '';
+                if (span) span.textContent = 'Copy';
+                tooltip.remove();
+              }, 2000);
+            }).catch(err => {
+              console.error('Failed to copy:', err);
             });
-          }
+          });
         }
+      }
+    });
+  }
+
+  function setupPageCopyButton() {
+    const pageBtn = document.getElementById('page-copy-btn');
+    if (!pageBtn) return;
+
+    pageBtn.addEventListener('click', () => {
+      const content = document.getElementById('doc-content');
+      if (!content) return;
+
+      // Extract text content from the article
+      const text = content.innerText || '';
+
+      navigator.clipboard.writeText(text).then(() => {
+        // Visual feedback
+        pageBtn.classList.add('copied');
+
+        // Show toast notification
+        const toast = document.createElement('div');
+        toast.className = 'copy-page-tooltip';
+        toast.textContent = 'Page copied to clipboard!';
+        document.body.appendChild(toast);
+
+        // Reset button after animation
+        setTimeout(() => {
+          pageBtn.classList.remove('copied');
+          toast.remove();
+        }, 2000);
+      }).catch(err => {
+        console.error('Failed to copy page:', err);
       });
-    }
+    });
+  }
 
-    function setupPageCopyButton() {
-      const pageBtn = document.getElementById('page-copy-btn');
-      if (!pageBtn) return;
-
-      pageBtn.addEventListener('click', () => {
-        const content = document.getElementById('doc-content');
-        if (!content) return;
-
-        // Extract text content from the article
-        const text = content.innerText || '';
-
-        navigator.clipboard.writeText(text).then(() => {
-          // Visual feedback
-          pageBtn.classList.add('copied');
-
-          // Show toast notification
-          const toast = document.createElement('div');
-          toast.className = 'copy-page-tooltip';
-          toast.textContent = 'Page copied to clipboard!';
-          document.body.appendChild(toast);
-
-          // Reset button after animation
-          setTimeout(() => {
-            pageBtn.classList.remove('copied');
-            toast.remove();
-          }, 2000);
-        }).catch(err => {
-          console.error('Failed to copy page:', err);
-        });
-      });
-    }
-
-    // Run on page load and after navigation
+  // Run on page load and after navigation
+  wrapCodeBlocks();
+  setupPageCopyButton();
+  document.addEventListener('astro:page-load', () => {
     wrapCodeBlocks();
     setupPageCopyButton();
-    document.addEventListener('astro:page-load', () => {
-      wrapCodeBlocks();
-      setupPageCopyButton();
-    });
-  </script>
-</Layout>
+  });
+</script>

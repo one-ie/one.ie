@@ -54,7 +54,7 @@ const navItems: NavItem[] = [
       { title: 'AG-UI', url: '/connections/agui' },
     ]
   },
-  { title: 'Plans', url: '/plans', icon: FileText },
+  { title: 'Docs', url: '/docs', icon: FileText },
   { title: 'Download', url: '/download', icon: Download },
   { title: 'Deploy', url: '/deploy', icon: Rocket },
   { title: 'License', url: '/free-license', icon: Shield },
@@ -68,7 +68,7 @@ interface SimpleSidebarLayoutProps {
   initialCollapsed?: boolean
 }
 
-export function Sidebar({ children, initialCollapsed = false }: SimpleSidebarLayoutProps) {
+export function Sidebar({ children, initialCollapsed = true }: SimpleSidebarLayoutProps) {
   const [collapsed, setCollapsed] = React.useState(initialCollapsed)
   const [mobileOpen, setMobileOpen] = React.useState(false)
   const [currentPath, setCurrentPath] = React.useState('')

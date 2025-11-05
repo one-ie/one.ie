@@ -18,8 +18,10 @@ export function DocFolderNav({ folders, currentFolder }: DocFolderNavProps) {
     switch (folder.toLowerCase()) {
       case 'getting-started':
         return Rocket;
-      case 'core-concepts':
+      case 'overview':
         return Layers;
+      case 'develop':
+        return Zap;
       case 'advanced':
       case 'ai-sdk':
         return Zap;
@@ -33,13 +35,31 @@ export function DocFolderNav({ folders, currentFolder }: DocFolderNavProps) {
   };
 
   const formatFolderName = (folder: string): string => {
-    if (folder === 'root') return 'Get Started';
+    const folderNameMap: Record<string, string> = {
+      'root': 'Root',
+      'getting-started': 'Quick Start',
+      'overview': 'Overview',
+      'develop': 'Develop',
+    };
+
+    if (folderNameMap[folder]) {
+      return folderNameMap[folder];
+    }
 
     return folder
       .replace(/-/g, ' ')
       .split(' ')
       .map((word) => word.charAt(0).toUpperCase() + word.slice(1))
       .join(' ');
+  };
+
+  const getFolderOrder = (folder: string): number => {
+    const orderMap: Record<string, number> = {
+      'getting-started': 1,
+      'overview': 2,
+      'develop': 3,
+    };
+    return orderMap[folder] ?? 999;
   };
 
   const createFolderUrl = (folder: string) => `/docs?folder=${encodeURIComponent(folder)}`;
@@ -49,8 +69,9 @@ export function DocFolderNav({ folders, currentFolder }: DocFolderNavProps) {
       <div className="flex gap-2 flex-nowrap">
         {Object.entries(folders)
           .sort(([a], [b]) => {
-            if (a === 'root') return -1;
-            if (b === 'root') return 1;
+            const orderA = getFolderOrder(a);
+            const orderB = getFolderOrder(b);
+            if (orderA !== orderB) return orderA - orderB;
             return a.localeCompare(b);
           })
           .map(([folder, count]) => {

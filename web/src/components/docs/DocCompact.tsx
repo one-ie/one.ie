@@ -1,3 +1,5 @@
+'use client';
+
 import { Badge } from '@/components/ui/badge';
 import { FileText, Tag } from 'lucide-react';
 import type { CollectionEntry } from 'astro:content';
@@ -20,7 +22,10 @@ export function DocCompact({ entries, onTagClick }: DocCompactProps) {
           .map((entry) => (
             <div
               key={entry.id}
-              className="grid grid-cols-[auto_1fr_auto] items-center hover:bg-muted/20"
+              className="grid grid-cols-[auto_1fr_auto] items-center hover:bg-muted/20 cursor-pointer transition-colors"
+              onClick={() => {
+                window.location.href = `/docs/${entry.slug}`;
+              }}
             >
               <div className="p-2">
                 <div className="p-1.5 rounded-md bg-muted/40 flex items-center justify-center">
@@ -28,11 +33,9 @@ export function DocCompact({ entries, onTagClick }: DocCompactProps) {
                 </div>
               </div>
               <div className="p-2">
-                <a href={`/docs/${entry.slug}`} className="group">
-                  <h3 className="text-base font-medium group-hover:text-primary transition-colors no-underline">
-                    {entry.data.title}
-                  </h3>
-                </a>
+                <h3 className="text-base font-medium hover:text-primary transition-colors">
+                  {entry.data.title}
+                </h3>
               </div>
               <div className="p-2 flex flex-wrap gap-1 justify-end">
                 {entry.data.tags ? (
@@ -40,9 +43,10 @@ export function DocCompact({ entries, onTagClick }: DocCompactProps) {
                     <a
                       key={tag}
                       href={createTagUrl(tag)}
-                      className="no-underline"
+                      className="no-underline hover:no-underline"
+                      onClick={(e) => e.stopPropagation()}
                     >
-                      <Badge className="text-base px-2 py-0.5 bg-primary/10 hover:bg-primary/20 text-primary border-none flex items-center gap-1">
+                      <Badge className="text-base px-2 py-0.5 bg-primary/10 hover:bg-primary/20 text-primary border-none flex items-center gap-1 cursor-pointer">
                         <Tag className="w-3 h-3" />
                         <span>{tag}</span>
                       </Badge>

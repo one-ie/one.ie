@@ -1,3 +1,27 @@
+### **8f176916** — template:2 — `chore: Cleanup hook successfully moved test file``
+
+**Template:**
+  - one/events/web-TEST-CLEANUP-20251105-143205.md
+  - web/TEST-CLEANUP.md
+
+
+
+### **f86b8dc8** — template:1 — `test: Create file to test cleanup hook``
+
+**Template:**
+  - web/TEST-CLEANUP.md
+
+
+
+### **4c5578cf** — template:3 — `chore: Test hooks - all systems working``
+
+**Template:**
+  - .claude/hooks.log
+  - .claude/state/inference.json
+  - one/events/0-changes.md
+
+
+
 ### **914eef93** — template:20 — `refactor: Flatten one/events/ directory and update cleanup hook to use flat structure``
 
 **Template:**

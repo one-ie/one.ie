@@ -1,11 +1,13 @@
-import { Button } from '@/components/ui/button';
+'use client';
+
 import { List, Table, Grid2X2, Grid3X3, Grid } from 'lucide-react';
+import { useEffect } from 'react';
 
 type ViewMode = 'list' | 'compact' | 'grid2' | 'grid3' | 'grid4';
 
 interface DocViewToggleProps {
   currentView: ViewMode;
-  onViewChange: (view: ViewMode) => void;
+  onViewChange?: (view: ViewMode) => void;
   preserveParams?: {
     search?: string;
     tag?: string;
@@ -20,11 +22,11 @@ export function DocViewToggle({
 }: DocViewToggleProps) {
   const buildUrl = (view: ViewMode) => {
     const params = new URLSearchParams();
-    params.set('view', view);
+    if (view !== 'list') params.set('view', view);
     if (preserveParams.search) params.set('search', preserveParams.search);
     if (preserveParams.tag) params.set('tag', preserveParams.tag);
     if (preserveParams.folder) params.set('folder', preserveParams.folder);
-    return `?${params.toString()}`;
+    return params.toString() ? `?${params.toString()}` : '/docs';
   };
 
   const views: Array<{
@@ -40,22 +42,30 @@ export function DocViewToggle({
     { id: 'grid4', icon: <Grid className="w-4 h-4" />, label: 'Grid 4', title: 'Grid view (4 columns)' },
   ];
 
+  const handleViewChange = (view: ViewMode) => {
+    if (onViewChange) {
+      onViewChange(view);
+    }
+    window.location.href = buildUrl(view);
+  };
+
   return (
     <div className="flex gap-1 bg-muted/50 p-0.5 rounded-lg">
       {views.map((view) => (
-        <a
+        <button
           key={view.id}
-          href={buildUrl(view.id)}
-          className={`p-2 rounded-md transition-all ${
+          onClick={() => handleViewChange(view.id)}
+          className={`p-2 rounded-md transition-all cursor-pointer ${
             currentView === view.id
-              ? 'bg-background shadow-sm'
-              : 'hover:bg-background/50'
+              ? 'bg-background shadow-sm text-primary'
+              : 'hover:bg-background/50 text-muted-foreground hover:text-foreground'
           }`}
           aria-label={view.label}
           title={view.title}
+          type="button"
         >
           {view.icon}
-        </a>
+        </button>
       ))}
     </div>
   );

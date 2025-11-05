@@ -2,9 +2,9 @@ import { Badge } from '@/components/ui/badge';
 import { Search, Tag, Folder } from 'lucide-react';
 
 interface DocFilterResultsProps {
-  searchQuery?: string;
-  tagFilter?: string;
-  folderFilter?: string;
+  searchQuery: string;
+  tagFilter: string;
+  folderFilter: string;
   resultCount: number;
 }
 
@@ -15,7 +15,16 @@ export function DocFilterResults({
   resultCount,
 }: DocFilterResultsProps) {
   const formatFolderName = (folder: string): string => {
-    if (folder === 'root') return 'Get Started';
+    const folderNameMap: Record<string, string> = {
+      'root': 'Root',
+      'getting-started': 'Quick Start',
+      'overview': 'Overview',
+      'develop': 'Develop',
+    };
+
+    if (folderNameMap[folder]) {
+      return folderNameMap[folder];
+    }
 
     return folder
       .replace(/-/g, ' ')

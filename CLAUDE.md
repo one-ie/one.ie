@@ -2,6 +2,19 @@
 
 This file provides guidance to Claude Code (claude.ai/code) when working with code in this repository.
 
+## ⚠️ CRITICAL RULES - NEVER BREAK THESE
+
+**THESE RULES ARE NON-NEGOTIABLE:**
+
+1. **NEVER run `git rebase`** - ever, under any circumstances
+2. **NEVER run `git push --force`** - always ask first
+3. **NEVER run commands that delete files** - always ask first
+4. **ALWAYS ask before any potentially destructive operation** - staged deletion, force push, rewriting history, etc.
+
+If you are about to run a command that could lose work, destroy commits, or overwrite history, STOP and ask the user for explicit approval first.
+
+---
+
 ## Cascading Context System
 
 **You are reading the ROOT context file.** As you navigate deeper into the codebase, read directory-specific CLAUDE.md files:

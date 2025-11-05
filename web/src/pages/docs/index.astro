@@ -1,5 +1,5 @@
 ---
-export const prerender = true;
+export const prerender = false;
 
 import Layout from '../../layouts/Layout.astro';
 import { getCollection } from 'astro:content';
@@ -77,11 +77,12 @@ const folders = filteredEntries.reduce((acc: DocFolder, entry: DocEntry) => {
   return acc;
 }, {});
 
-// Sort folders alphabetically with 'root' at the top
+// Sort folders by custom order: Quick Start, Overview, Develop
 const orderedFolders = Object.entries(folders)
   .sort(([a, _a]: [string, DocEntry[]], [b, _b]: [string, DocEntry[]]) => {
-    if (a === 'root') return -1;
-    if (b === 'root') return 1;
+    const orderA = getFolderOrder(a);
+    const orderB = getFolderOrder(b);
+    if (orderA !== orderB) return orderA - orderB;
     return a.localeCompare(b);
   })
   .reduce((acc, [key, value]) => ({ ...acc, [key]: value }), {}) as Record<
@@ -93,7 +94,8 @@ const orderedFolders = Object.entries(folders)
 function getFolderIcon(folder: string) {
   const iconMap: Record<string, string> = {
     'getting-started': '🚀',
-    'core-concepts': '🏗️',
+    'overview': '🏗️',
+    'develop': '⚡',
     advanced: '⚡',
     'ai-sdk': '⚡',
     tutorials: '📚',
@@ -104,7 +106,16 @@ function getFolderIcon(folder: string) {
 
 // Format folder name for display
 function formatFolderName(folder: string): string {
-  if (folder === 'root') return 'Get Started';
+  const folderNameMap: Record<string, string> = {
+    'root': 'Root',
+    'getting-started': 'Quick Start',
+    'overview': 'Overview',
+    'develop': 'Develop',
+  };
+
+  if (folderNameMap[folder]) {
+    return folderNameMap[folder];
+  }
 
   // Replace hyphens with spaces and capitalize each word
   return folder
@@ -112,6 +123,16 @@ function formatFolderName(folder: string): string {
     .split(' ')
     .map((word) => word.charAt(0).toUpperCase() + word.slice(1))
     .join(' ');
+}
+
+// Get folder sort order
+function getFolderOrder(folder: string): number {
+  const orderMap: Record<string, number> = {
+    'getting-started': 1,
+    'overview': 2,
+    'develop': 3,
+  };
+  return orderMap[folder] ?? 999;
 }
 
 // Get folder counts for navigation
