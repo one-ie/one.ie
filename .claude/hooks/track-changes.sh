@@ -1,9 +1,9 @@
 #!/bin/bash
 
 # Track Changes Hook - ONE Platform
-# Groups commit changes by directory for managing customizations
-# Helps users track their own changes for upgrades and diffing
-# Works with: /web, /one, /.claude, /one.ie, /cli (optional)
+# Helps users of the template track their customizations
+# Groups changes by: template (/web, /one, /.claude) vs custom (everything else)
+# Works regardless of what the user names their custom directories
 
 PROJECT_DIR="${CLAUDE_PROJECT_DIR:-$(git rev-parse --show-toplevel)}"
 CHANGES_LOG="$PROJECT_DIR/one/events/0-changes.md"
@@ -19,35 +19,54 @@ count_dir_changes() {
   echo "$COMMIT_FILES" | grep "^$dir/" | wc -l | xargs
 }
 
-# Get changes per directory
+# Count template changes (these are in every clone)
 CHANGES_WEB=$(count_dir_changes "web")
 CHANGES_ONE=$(count_dir_changes "one")
 CHANGES_CLAUDE=$(count_dir_changes ".claude")
+
+# Count known custom directories
 CHANGES_ONE_IE=$(count_dir_changes "one.ie")
 CHANGES_CLI=$(count_dir_changes "cli")
 
-# Determine change type (template vs customization)
-TOTAL_CHANGES=$((CHANGES_WEB + CHANGES_ONE + CHANGES_CLAUDE + CHANGES_ONE_IE + CHANGES_CLI))
+# Count unknown directories (user's custom directories)
+CHANGES_CUSTOM=0
+while IFS= read -r file; do
+  # Skip template directories
+  if [[ ! "$file" =~ ^(web|one|\.claude)/ ]]; then
+    # Skip known custom dirs too
+    if [[ ! "$file" =~ ^(one\.ie|cli)/ ]]; then
+      CHANGES_CUSTOM=$((CHANGES_CUSTOM + 1))
+    fi
+  fi
+done <<< "$COMMIT_FILES"
 
-# Build summary (only show non-zero dirs)
+# Build summary (template first, then custom)
 SUMMARY=""
 [ "$CHANGES_WEB" -gt 0 ] && SUMMARY+="web:$CHANGES_WEB "
 [ "$CHANGES_ONE" -gt 0 ] && SUMMARY+="one:$CHANGES_ONE "
 [ "$CHANGES_CLAUDE" -gt 0 ] && SUMMARY+=".claude:$CHANGES_CLAUDE "
-[ "$CHANGES_ONE_IE" -gt 0 ] && SUMMARY+="one.ie:$CHANGES_ONE_IE "
-[ "$CHANGES_CLI" -gt 0 ] && SUMMARY+="cli:$CHANGES_CLI "
 
-# Trim whitespace
+CUSTOM_SUMMARY=""
+[ "$CHANGES_ONE_IE" -gt 0 ] && CUSTOM_SUMMARY+="one.ie:$CHANGES_ONE_IE "
+[ "$CHANGES_CLI" -gt 0 ] && CUSTOM_SUMMARY+="cli:$CHANGES_CLI "
+[ "$CHANGES_CUSTOM" -gt 0 ] && CUSTOM_SUMMARY+="custom:$CHANGES_CUSTOM "
+
 SUMMARY=$(echo "$SUMMARY" | xargs)
+CUSTOM_SUMMARY=$(echo "$CUSTOM_SUMMARY" | xargs)
 
-# Tag if this is a customization (changes to one.ie, cli, or web overrides)
-TAG=""
-if [ "$CHANGES_ONE_IE" -gt 0 ] || [ "$CHANGES_CLI" -gt 0 ]; then
-  TAG=" [customization]"
+# Format: template changes | custom changes (if any)
+if [ -n "$CUSTOM_SUMMARY" ]; then
+  if [ -n "$SUMMARY" ]; then
+    FULL_SUMMARY="$SUMMARY | $CUSTOM_SUMMARY [customization]"
+  else
+    FULL_SUMMARY="$CUSTOM_SUMMARY [customization]"
+  fi
+else
+  FULL_SUMMARY="$SUMMARY"
 fi
 
 # Create compact markdown entry
-ENTRY="**$COMMIT_SHORT** — $SUMMARY —\`$COMMIT_MSG\`$TAG
+ENTRY="**$COMMIT_SHORT** — $FULL_SUMMARY — \`$COMMIT_MSG\`
 
 "
 
@@ -59,12 +78,19 @@ if [ ! -f "$CHANGES_LOG" ]; then
   cat > "$CHANGES_LOG" << 'EOF'
 # Change Tracking
 
-Track your customizations and upgrades. Updated on each commit.
+Track template upgrades vs your customizations. Updated on each commit.
 
-| Symbol | Meaning |
-|--------|---------|
-| `[customization]` | Changes to your custom instance (one.ie, cli) |
-| No tag | Template or documentation changes |
+**Format:** `template-changes | your-custom-changes [customization] — message`
+
+| Tag | Meaning |
+|-----|---------|
+| `[customization]` | Your custom directories changed |
+| No tag | Only template or documentation changes |
+
+**Examples:**
+- `web:2 one:1 — Add new component` — Template only
+- `one.ie:3 [customization] — Update home page` — Your customizations
+- `web:1 | one.ie:2 [customization] — Sync with template + update site` — Both
 
 ---
 
