@@ -1,14 +1,14 @@
 #!/bin/bash
 
-# Clean Root Markdown Hook - ONE Platform
-# Moves unwanted markdown files from root to one/events/archived/
-# Allowed files: README.md, CLAUDE.md, AGENTS.md, LICENSE.md, SECURITY.md
-# Everything else moves to one/events/
+# Clean Markdown Hook - ONE Platform
+# Moves unwanted markdown files from root and /web to .archive/
+# Root allowed: README.md, CLAUDE.md, AGENTS.md, LICENSE.md, SECURITY.md
+# /web allowed: README.md, CLAUDE.md, AGENTS.md, LICENSE.md, SECURITY.md
+# Everything else moves to respective .archive/ directories
 
 PROJECT_DIR="${CLAUDE_PROJECT_DIR:-$(git rev-parse --show-toplevel)}"
-ARCHIVE_DIR="$PROJECT_DIR/one/events/archived"
 
-# Allowed files in root (only these are permitted)
+# Allowed files (same for both root and web)
 ALLOWED_FILES=(
   "README.md"
   "CLAUDE.md"
@@ -17,34 +17,50 @@ ALLOWED_FILES=(
   "SECURITY.md"
 )
 
-# Create archive directory if it doesn't exist
-mkdir -p "$ARCHIVE_DIR"
+# Function to clean markdown files in a directory
+clean_directory() {
+  local dir="$1"
+  local archive_dir="${dir}/.archive"
 
-# Find all markdown files in root (max depth 1)
-while IFS= read -r file; do
-  filename=$(basename "$file")
-
-  # Check if file is in allowed list
-  is_allowed=0
-  for allowed in "${ALLOWED_FILES[@]}"; do
-    if [ "$filename" = "$allowed" ]; then
-      is_allowed=1
-      break
-    fi
-  done
-
-  # If not allowed, move it
-  if [ $is_allowed -eq 0 ]; then
-    # Add timestamp to avoid collisions
-    timestamp=$(date +%Y%m%d-%H%M%S)
-    new_name="${filename%.md}-${timestamp}.md"
-
-    echo "Moving $filename → one/events/archived/$new_name"
-    mv "$file" "$ARCHIVE_DIR/$new_name"
-
-    # Stage the changes for git
-    git add -A "$file" "$ARCHIVE_DIR/$new_name" 2>/dev/null || true
+  if [ ! -d "$dir" ]; then
+    return
   fi
-done < <(find "$PROJECT_DIR" -maxdepth 1 -name "*.md" -type f)
+
+  # Create archive directory if it doesn't exist
+  mkdir -p "$archive_dir"
+
+  # Find all markdown files in this directory (max depth 1)
+  while IFS= read -r file; do
+    filename=$(basename "$file")
+
+    # Check if file is in allowed list
+    is_allowed=0
+    for allowed in "${ALLOWED_FILES[@]}"; do
+      if [ "$filename" = "$allowed" ]; then
+        is_allowed=1
+        break
+      fi
+    done
+
+    # If not allowed, move it
+    if [ $is_allowed -eq 0 ]; then
+      # Add timestamp to avoid collisions
+      timestamp=$(date +%Y%m%d-%H%M%S)
+      new_name="${filename%.md}-${timestamp}.md"
+
+      echo "Moving $(realpath --relative-to="$PROJECT_DIR" "$file") → $(realpath --relative-to="$PROJECT_DIR" "$archive_dir")/$new_name"
+      mv "$file" "$archive_dir/$new_name"
+
+      # Stage the changes for git
+      git add -A "$file" "$archive_dir/$new_name" 2>/dev/null || true
+    fi
+  done < <(find "$dir" -maxdepth 1 -name "*.md" -type f)
+}
+
+# Clean root directory
+clean_directory "$PROJECT_DIR"
+
+# Clean /web directory
+clean_directory "$PROJECT_DIR/web"
 
 exit 0

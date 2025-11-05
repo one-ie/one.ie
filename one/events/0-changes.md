@@ -1,3 +1,24 @@
+### **d4e20495** — template:1 — `docs: Add README for archived documents directory``
+
+**Template:**
+  - one/events/archived/readme.md
+
+
+
+### **c2547401** — template:8 — `refactor: Add hook to move unwanted markdown files to one/events/archived/ and archive existing docs``
+
+**Template:**
+  - .claude/hooks.log
+  - .claude/hooks/clean-root-markdown.sh
+  - .claude/state/inference.json
+  - one/events/0-changes.md
+  - one/events/archived/DOCS-SYSTEM-GUIDE-20251105-142103.md
+  - one/events/archived/FILE-REFERENCE-20251105-142103.md
+  - one/events/archived/IMPLEMENTATION-CHECKLIST-20251105-142103.md
+  - one/events/archived/IMPLEMENTATION-REPORT-DOCS-20251105-142102.md
+
+
+
 ### **64e20559** — template:1 — `docs: Add tracking customizations guide to web docs``
 
 **Template:**
