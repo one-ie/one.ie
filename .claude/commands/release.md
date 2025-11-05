@@ -12,6 +12,7 @@ description: Execute full ONE Platform release via agent-ops specialist
 ## How It Works
 
 This command **MUST** delegate to the `agent-ops` specialist agent, which has the expertise and tools to handle:
+
 1. Pre-deployment validation
 2. Version bumping
 3. File synchronization
@@ -27,9 +28,10 @@ This command **MUST** delegate to the `agent-ops` specialist agent, which has th
 - **oneie/** - Production site (source of truth) deployed to https://one.ie
 - **web/** - Starter template (AUTO-GENERATED) distributed via `npx oneie`
 
-**Golden Rule:** NEVER edit web/ directly. It is generated from oneie/ via transform script.
+**Golden Rule:** /is the single source of truth. It contains /one and web/ which are thei single source of truth. It is generated from oneie/ via transform script.
 
 **Workflow:**
+
 ```
 oneie/ (edit here)
    ↓
@@ -56,7 +58,7 @@ Task({
   prompt: `Execute a ${releaseType} release for ONE Platform:
 
 1. Run pre-deployment validation
-2. Execute release script: ./scripts/release.sh ${releaseType}
+2. Execute release script: /Users/toc/Server/ONE/scripts/release-cli.sh ${releaseType}
 3. Publish to npm: cd cli && npm publish --access public
 4. Verify deployment:
    - npm: npx oneie@latest --version
@@ -64,19 +66,21 @@ Task({
    - GitHub: Verify tags created
 5. Report summary with all live URLs
 
-IMPORTANT: The CLOUDFLARE_GLOBAL_API_KEY is set in .env and provides FULL ACCESS to Cloudflare API for automated deployments.`
-})
+IMPORTANT: The CLOUDFLARE_GLOBAL_API_KEY is set in .env and provides FULL ACCESS to Cloudflare API for automated deployments.`,
+});
 ```
 
 ## Agent-Ops Responsibilities
 
 ### Step 1: Pre-Deployment Validation
+
 1. Run `./scripts/pre-deployment-check.sh`
 2. Verify all checks pass (0 errors)
 3. If errors found, report to user and STOP
 4. If warnings only, continue
 
 ### Step 2: Generate Starter Template
+
 1. Generate web/ from oneie/ source:
    ```bash
    cd oneie
@@ -93,7 +97,8 @@ IMPORTANT: The CLOUDFLARE_GLOBAL_API_KEY is set in .env and provides FULL ACCESS
 3. Commit generated web/ changes
 
 ### Step 3: Version Bump & Sync
-1. Run `./scripts/release.sh [patch|minor|major]`
+
+1. Run `/Users/toc/Server/ONE/scripts/release-cli.sh [patch|minor|major]`
 2. This will:
    - Bump version in cli/package.json
    - Sync 518+ files to distribution repos:
@@ -111,6 +116,7 @@ IMPORTANT: The CLOUDFLARE_GLOBAL_API_KEY is set in .env and provides FULL ACCESS
 4. When prompted "Create tag?", answer 'y'
 
 ### Step 4: npm Publish
+
 1. `cd cli`
 2. Run `npm publish --access public`
 3. Wait for completion
@@ -120,12 +126,14 @@ IMPORTANT: The CLOUDFLARE_GLOBAL_API_KEY is set in .env and provides FULL ACCESS
 ### Step 5: Build & Deploy to Cloudflare
 
 **Two-Site Architecture:**
+
 - **oneie/** → https://one.ie (Wrangler project: oneie) - Full production site
 - **web/** → https://web.one.ie (Wrangler project: web) - Starter template
 
 **Deployment Process:**
 
 1. **Deploy Production Site (oneie/):**
+
    ```bash
    cd oneie
    bun run build
@@ -142,12 +150,14 @@ IMPORTANT: The CLOUDFLARE_GLOBAL_API_KEY is set in .env and provides FULL ACCESS
    ```
 
 **Automatic Mode (if CLOUDFLARE_GLOBAL_API_KEY is set):**
+
 - Scripts automatically use global API key from `.env`
 - Deploys via Cloudflare API without confirmation
 - Shows deployment status and URLs
 - **Zero manual intervention needed**
 
 **Standalone Deployment:**
+
 ```bash
 # Deploy production site (oneie)
 scripts/cloudflare-deploy.sh deploy oneie oneie/dist production
@@ -165,6 +175,7 @@ scripts/cloudflare-deploy.sh list web 5
 ```
 
 ### Step 6: Verification
+
 1. Test npm package: `npx oneie@latest --version`
 2. Report all live URLs:
    - npm: https://www.npmjs.com/package/oneie
@@ -175,7 +186,9 @@ scripts/cloudflare-deploy.sh list web 5
    - GitHub CLI: https://github.com/one-ie/cli
 
 ### Step 7: Summary Report
+
 Provide a concise summary:
+
 ```
 ✅ Release v2.0.X Complete!
 
@@ -199,6 +212,7 @@ Next steps:
 ## Important Notes
 
 **You MUST:**
+
 - ✅ Run pre-deployment checks first
 - ✅ Stop if critical errors found
 - ✅ Build web before deploying
@@ -207,6 +221,7 @@ Next steps:
 - ✅ Provide clear success/failure status
 
 **You MUST NOT:**
+
 - ❌ Skip pre-deployment validation
 - ❌ Deploy without building first
 - ❌ Continue if npm publish fails
@@ -215,16 +230,19 @@ Next steps:
 ## Error Handling
 
 ### If pre-deployment check fails:
+
 1. Report specific errors to user
 2. Suggest fixes
 3. STOP - do not proceed
 
 ### If npm publish fails:
+
 1. Check if already published: `npm view oneie@X.X.X`
 2. If version exists, bump patch and retry
 3. Report to user
 
 ### If Cloudflare deploy fails:
+
 1. Check if build succeeded
 2. Report wrangler error
 3. Suggest: Check environment variables
@@ -233,6 +251,7 @@ Next steps:
 ## When to Use
 
 Use `/release` when you want to:
+
 - ✅ Deploy a new version to production
 - ✅ Publish CLI updates to npm
 - ✅ Update web frontend on Cloudflare
@@ -242,6 +261,7 @@ Use `/release` when you want to:
 ## When NOT to Use
 
 Do NOT use `/release` if:
+
 - ❌ You're still developing/testing
 - ❌ There are failing tests
 - ❌ You haven't committed changes
@@ -254,6 +274,7 @@ Do NOT use `/release` if:
 **User:** `/release patch`
 
 **Claude:**
+
 1. Runs pre-deployment check
 2. Validates (0 errors, 7 warnings)
 3. Runs release.sh patch
@@ -268,6 +289,7 @@ Do NOT use `/release` if:
 ## Prerequisites
 
 Before running `/release`, ensure:
+
 - ✅ You're in the ONE root directory
 - ✅ All changes are committed (or acceptable)
 - ✅ You're logged in to npm (`npm whoami`)
@@ -277,6 +299,7 @@ Before running `/release`, ensure:
 **For Automated Cloudflare Deployment:**
 
 **Option 1: Global API Key (FULL ACCESS - Recommended for automated deployments):**
+
 - ✅ Set `CLOUDFLARE_GLOBAL_API_KEY` in root `.env`
 - ✅ Set `CLOUDFLARE_ACCOUNT_ID` in root `.env`
 - ✅ Set `CLOUDFLARE_EMAIL` in root `.env`
@@ -284,10 +307,12 @@ Before running `/release`, ensure:
 - ✅ Zero manual intervention needed
 
 **Option 2: API Token (Scoped access):**
+
 - ✅ Set `CLOUDFLARE_API_TOKEN` environment variable
 - ✅ Set `CLOUDFLARE_ACCOUNT_ID` environment variable
 
 **Without these credentials:**
+
 - The script falls back to interactive wrangler CLI deployment
 - Still fully functional, just requires manual confirmation
 
@@ -306,12 +331,14 @@ ONE_BACKEND=off                 # "off" = frontend-only, "on" = full platform
 ```
 
 **How it works:**
+
 - `ORG_NAME=one` → Full ONE Platform homepage with complete navigation
 - `ORG_NAME=acme` → Customer org homepage with GetStartedPrompt interface
 - `ONE_BACKEND=off` → Frontend-only mode (no Convex, no auth)
 - `ONE_BACKEND=on` → Full platform with backend features
 
 **Reserved values** (protected in CLI via validation):
+
 - Name: `one`
 - Folders: `onegroup`, `one`
 - Website: `https://one.ie`, `one.ie`
@@ -338,16 +365,19 @@ See `TESTING-ONBOARDING.md` for complete test guide.
 ```
 
 **What it provides:**
+
 - **shadcn MCP:** Access to shadcn/ui component library via MCP
 - **Stripe MCP:** Stripe API integration via Model Context Protocol
 
 **Synced to:**
+
 - `cli/.mcp.json` - For CLI MCP server access
 - `apps/one/one/.mcp.json` - For assembly repo MCP access
 
 ## Post-Release Tasks
 
 After `/release` succeeds, remind user to:
+
 1. Create GitHub releases (manual)
 2. Test installation: `npx oneie@latest`
 3. Verify web deployment
@@ -357,6 +387,7 @@ After `/release` succeeds, remind user to:
 ## Installation Folder Sync (Optional)
 
 **Note:** `INSTALLATION_NAME` is different from `ORG_NAME`:
+
 - `INSTALLATION_NAME` - Backend/filesystem identifier for org-specific documentation
 - `ORG_NAME` - Frontend environment variable controlling UI/branding
 - Both can have the same value (e.g., "acme") but serve different purposes
