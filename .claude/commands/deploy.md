@@ -1,98 +1,72 @@
 ---
 allowed-tools: Bash(*), Read(*), Edit(*)
-description: Deploy web to Cloudflare Pages
+description: Deploy web to Cloudflare Pages (oneie project)
 ---
 
-# /deploy - Deploy Sites to Cloudflare Pages
+# /deploy - Deploy Web to Cloudflare Pages
 
-**Purpose:** Build and deploy ONE Platform sites to Cloudflare Pages with automated deployment scripts.
+**Purpose:** Build and deploy the web application to Cloudflare Pages using wrangler CLI.
 
-## Two-Site Architecture
+## One-Command Deployment
 
-- **oneie/** → https://one.ie (production site - source of truth)
-- **web/** → https://web.one.ie (starter template - AUTO-GENERATED)
-
-## Quick Deploy
-
-**Deploy Production Site (oneie):**
 ```bash
-./scripts/deploy-oneie.sh
+cd /Users/toc/Server/ONE/web && bun run build && wrangler pages deploy dist --project-name=oneie
 ```
 
-**Deploy Starter Template (web):**
+**What happens:**
+1. ✅ Build production bundle with Astro + React 19 edge support
+2. ✅ Deploy `/web/dist/` to Cloudflare Pages `oneie` project
+3. ✅ Automatic global CDN distribution
+4. ✅ Live URL generated instantly
+
+## Deployment URL
+
+After deployment completes, the site is live at:
+- **Primary:** https://oneie.pages.dev
+- **With subdomain:** https://[deployment-hash].oneie.pages.dev
+
+View all deployments:
 ```bash
-./scripts/deploy-web.sh
+wrangler pages deployment list --project-name=oneie
 ```
 
-**Deploy Both:**
+## Requirements
+
+**Before deploying:**
+- ✅ Wrangler CLI installed: `npm install -g wrangler`
+- ✅ Cloudflare Global API Key: `$CLOUDFLARE_GLOBAL_API_KEY`
+- ✅ Cloudflare Account ID: `$CLOUDFLARE_ACCOUNT_ID`
+- ✅ React 19 edge alias configured in `astro.config.mjs`
+
+**Environment Setup:**
 ```bash
-./scripts/deploy-oneie.sh && ./scripts/deploy-web.sh
+# Root .env must contain:
+CLOUDFLARE_GLOBAL_API_KEY=your-api-key
+CLOUDFLARE_ACCOUNT_ID=your-account-id
+CLOUDFLARE_EMAIL=your-email@example.com
 ```
 
 ## How It Works
 
-The deployment scripts:
-1. Load credentials from `.env`
-2. Navigate to site directory (oneie/ or web/)
-3. Build production bundle (`bun run build`)
-4. Deploy to Cloudflare Pages using wrangler
-5. Report deployment URL and status
+1. **Build Phase:** `bun run build`
+   - Compiles Astro + React 19 to static files + edge functions
+   - Outputs to `/web/dist/`
+   - Time: ~25-30 seconds
 
-**Deployment Flow:**
-1. Check credentials (CLOUDFLARE_GLOBAL_API_KEY, CLOUDFLARE_ACCOUNT_ID, CLOUDFLARE_EMAIL)
-2. Build site with React 19 edge support
-3. Clear CLOUDFLARE_API_TOKEN (avoid conflicts)
-4. Export required credentials
-5. Deploy via wrangler
-6. Confirm success
+2. **Deploy Phase:** `wrangler pages deploy dist --project-name=oneie`
+   - Uploads 600+ files to Cloudflare Pages
+   - Provisions edge runtime
+   - Propagates to 330+ global data centers
+   - Time: ~10-15 seconds
 
-## Requirements
+3. **Activation Phase:** Auto-live
+   - URL immediately accessible
+   - Cache warming across regions
+   - Real-time analytics enabled
 
-**Before deploying, ensure:**
-- ✅ Cloudflare Global API Key configured: `export CLOUDFLARE_GLOBAL_API_KEY=your-key`
-- ✅ Cloudflare Account ID set: `export CLOUDFLARE_ACCOUNT_ID=your-account-id`
-- ✅ Cloudflare Email set: `export CLOUDFLARE_EMAIL=your-email@domain.com`
-- ✅ React 19 edge alias is configured in `astro.config.mjs`
-- ✅ Environment variables set in `wrangler.toml`
+## React 19 + Cloudflare Edge
 
-## Deployment URLs
-
-**Production:**
-- Primary: https://web.one.ie (custom domain)
-- Cloudflare: https://web-d3d.pages.dev
-
-**Preview:**
-- Auto-generated: https://[commit-hash].web-d3d.pages.dev
-
-## Environment Configuration
-
-### For ONE Platform (Default)
-
-```toml
-# wrangler.toml
-ORG_NAME = "one"
-ORG_WEBSITE = "https://one.ie"
-ORG_FOLDER = "onegroup"
-ONE_BACKEND = "on"
-```
-
-**Result:** Full ONE Platform homepage
-
-### For Customer Organizations
-
-```toml
-# wrangler.toml (customer config)
-ORG_NAME = "acme"
-ORG_WEBSITE = "https://acme.com"
-ORG_FOLDER = "acme"
-ONE_BACKEND = "off"  # Frontend-only
-```
-
-**Result:** Customer homepage with GetStartedPrompt
-
-## React 19 + Cloudflare Edge Fix
-
-**Critical:** Ensure `astro.config.mjs` has:
+**Critical Config:** `astro.config.mjs` must have:
 
 ```javascript
 resolve: {
@@ -104,58 +78,62 @@ resolve: {
 
 Without this, deployment fails with `MessageChannel is not defined`.
 
-## Common Issues
+## Troubleshooting
 
-**Authentication failed:**
+**Authentication Failed**
 ```bash
-# Make sure all Cloudflare variables are set:
+# Verify credentials are set:
 echo $CLOUDFLARE_GLOBAL_API_KEY
 echo $CLOUDFLARE_ACCOUNT_ID
 echo $CLOUDFLARE_EMAIL
 
-# Or fallback to API Token if Global Key not available:
-export CLOUDFLARE_API_TOKEN=your-scoped-token
+# Check wrangler auth:
+wrangler auth login
 ```
 
-**MessageChannel error:**
+**Build Errors**
 ```bash
-# Fix: Add edge alias to astro.config.mjs
-'react-dom/server': 'react-dom/server.edge'
-```
-
-**Build errors:**
-```bash
+# Check Astro build:
 cd web && bun run check
+
+# View detailed errors:
+cd web && bun run build --verbose
 ```
 
-**Credentials not recognized:**
+**Deploy Timeout**
 ```bash
-# Ensure the root .env file has these exact variables:
-# (These are automatically loaded by scripts)
-CLOUDFLARE_GLOBAL_API_KEY=...
-CLOUDFLARE_ACCOUNT_ID=...
-CLOUDFLARE_EMAIL=...
+# Retry deployment:
+wrangler pages deploy dist --project-name=oneie
+
+# Or use direct git integration for auto-deploy on push
 ```
 
-## Customer Deployment
+## Rollback
 
-For customers deploying their own sites:
+To rollback to a previous deployment:
 
 ```bash
-# 1. Install CLI
-npx oneie
+# View deployment history
+wrangler pages deployment list --project-name=oneie
 
-# 2. Configure (edit web/.env.local)
-ORG_NAME=acme
-ORG_WEBSITE=https://acme.com
-ONE_BACKEND=off
-
-# 3. Deploy
-cd web
-bun run build
-wrangler pages deploy dist --project-name=acme-web
+# Promote previous deployment to production
+wrangler pages deployments rollback --project-name=oneie
 ```
+
+## Performance Metrics
+
+**Typical Deployment:**
+- Build time: 25-30s
+- Upload time: 10-15s
+- Total time: 35-45s
+- Files deployed: 600+
+- Global rollout: <2 minutes
+
+**Monitoring:**
+- View live logs: `wrangler pages tail --project-name=oneie`
+- Check analytics: Cloudflare Dashboard → Pages → oneie
+- Status page: https://www.cloudflarestatus.com
 
 ---
 
-**Deployment ready** 🚀
+**Ready to deploy!** 🚀
