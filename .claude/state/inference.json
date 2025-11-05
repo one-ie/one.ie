@@ -1,5 +1,5 @@
 {
-  "current_inference": 34,
+  "current_inference": 36,
   "completed_inferences": [
     1,
     2,
@@ -33,7 +33,9 @@
     30,
     31,
     32,
-    33
+    33,
+    34,
+    35
   ],
   "feature_name": "New Feature",
   "organization": "Default Org",
@@ -203,6 +205,16 @@
       "inference": 33,
       "lesson": "Completed Infer 33",
       "timestamp": 1762370182
+    },
+    {
+      "inference": 34,
+      "lesson": "Completed Infer 34",
+      "timestamp": 1762372271
+    },
+    {
+      "inference": 35,
+      "lesson": "Completed Infer 35",
+      "timestamp": 1762372523
     }
   ]
 }
