@@ -2,7 +2,7 @@
 
 **Delivery Date:** 2025-10-30
 **Status:** ✅ COMPLETE AND READY FOR EXECUTION
-**Inference Position:** 65/100
+**Cycle Position:** 65/100
 
 ---
 
@@ -309,7 +309,7 @@ Quality Agent Timeline          Documenter Agent Timeline
 └─ Cycle 70: Complete        →  Cycle 70: Finalize KB ✓
 ```
 
-**Key:** Documenter starts Cycle 65, lags Quality by 1 inference, both complete Cycle 70
+**Key:** Documenter starts Cycle 65, lags Quality by 1 cycle, both complete Cycle 70
 
 ---
 

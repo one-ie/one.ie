@@ -1,7 +1,7 @@
 # Quality Agent (Cycle 65) - Complete Documentation Index
 
 **Created:** October 30, 2024
-**Inference:** 65/100 (Quality & Testing Phase)
+**Cycle:** 65/100 (Quality & Testing Phase)
 **Feature:** AI-Powered Recommendations
 **Status:** READY FOR EXECUTION
 
@@ -156,7 +156,7 @@ This package contains 3 comprehensive documents totaling 84KB and 2,300+ lines:
 | **Total Tests** | 40 (15+15+10) | By layer |
 | **Code Coverage Target** | >= 80% | Success criterion |
 | **Test Pass Rate Target** | 100% (40/40) | Success criterion |
-| **Timeline** | Cycle 65-70 | 6 inferences |
+| **Timeline** | Cycle 65-70 | 6 cycles |
 | **Quality Dimensions** | 6 (groups, people, things, connections, events, knowledge) | Ontology-aligned |
 | **User Flows Tested** | 5 primary + 5 secondary | Critical paths |
 | **Performance Targets** | Multiple (< 2s, < 1s, < 500ms) | Time budgets |
@@ -298,7 +298,7 @@ Evening:
 ```
 Weekly:
 1. Open QUALITY-AGENT-SUMMARY.md
-2. Report current inference and phase
+2. Report current cycle and phase
 3. Share success criteria status
 4. Report metrics (coverage, pass rate)
 
@@ -336,7 +336,7 @@ To Leadership:
 
 5. **agent-director (Orchestrator)**
    - Monitors: Quality gate decision (Phase 4)
-   - Advances: To next inference (Cycle 71) if approved
+   - Advances: To next cycle (Cycle 71) if approved
    - Blocks: If rejected, triggers problem solver
 
 ---
@@ -356,13 +356,13 @@ To Leadership:
 6. ✅ **Execute** Task 1.2: Define Critical User Flows (1 hour)
 7. ✅ **Execute** Task 1.3: Create Acceptance Criteria (1.5 hours)
 
-**BY END OF INFER 65:**
+**BY END OF CYCLE 65:**
 
 8. ✅ **Execute** Task 1.4: Design Unit Test Cases (1.5 hours)
 9. ✅ **Execute** Task 1.5: Design Integration Test Cases (1.5 hours)
 10. ✅ **Execute** Task 1.6: Design E2E Test Cases (2 hours)
 
-**READY FOR INFER 66:**
+**READY FOR CYCLE 66:**
 - All test specifications complete
 - 40 test cases fully designed
 - 6-dimension mappings complete
@@ -411,7 +411,7 @@ To Leadership:
 │   └── Executive summary and quick reference
 ├── QUALITY-EXECUTION-CHECKLIST.md (17KB, 2,000+ lines)
 │   └── Detailed execution checklist with all tasks
-└── INDEX-QUALITY-AGENT-INFER65.md (this file)
+└── INDEX-QUALITY-AGENT-CYCLE65.md (this file)
     └── Navigation and cross-reference guide
 ```
 
@@ -451,5 +451,5 @@ All tasks have:
 **Next Action:** Task 1.1 (Load Ontology Context)
 
 *Created: October 30, 2024*
-*Inference: 65/100*
-*Progress: 64/100 inferences complete (64%)*
+*Cycle: 65/100*
+*Progress: 64/100 cycles complete (64%)*

@@ -22,7 +22,7 @@ draft: false
 
 ## ASSIGNMENT SUMMARY (At A Glance)
 
-| Specialist | Total Infers | Primary Todos | Start | End |
+| Specialist | Total Cycles | Primary Todos | Start | End |
 |-----------|-------------|---------------|-------|-----|
 | **agent-backend** | 1,200 | onboard, x402, ecommerce, acp, api, features | Day 1 | Day 14 |
 | **agent-frontend** | 850 | onboard, ecommerce, buy-chatgpt, one-ie, features | Day 1 | Day 12 |
@@ -49,7 +49,7 @@ draft: false
 **Teammates:** Coordinates with agent-frontend (API contracts), agent-integrator (external calls), agent-quality (test design)
 
 ### todo-onboard: 80 cycles
-| Phase | Infers | Task | Dependency | Deliverable |
+| Phase | Cycles | Task | Dependency | Deliverable |
 |-------|--------|------|-----------|-------------|
 | Phase 2 | 40 | Schema: creator thing type + workspace setup | - | schema.ts updated |
 | Phase 4 | 20 | API routes: signup, verify, update profile | onboard phase 3 UI ready | /api/auth/* routes |
@@ -58,7 +58,7 @@ draft: false
 | **Subtotal** | **80** | | | |
 
 ### todo-x402: 240 cycles
-| Phase | Infers | Task | Dependency | Deliverable |
+| Phase | Cycles | Task | Dependency | Deliverable |
 |-------|--------|------|-----------|-------------|
 | Phase 2 | 100 | Schema: payment, subscription, endorsement things + indexes | - | schema.ts extended |
 | Phase 4 | 60 | API routes: payments/verify, payments/settle | all x402 service layer | /api/payments/* routes |
@@ -68,7 +68,7 @@ draft: false
 | **Subtotal** | **240** | | | |
 
 ### todo-ecommerce: 200 cycles
-| Phase | Infers | Task | Dependency | Deliverable |
+| Phase | Cycles | Task | Dependency | Deliverable |
 |-------|--------|------|-----------|-------------|
 | Phase 2 | 80 | Schema: product, order, cart, subscription things | ecommerce phase 1 plan | schema.ts extended |
 | Phase 4 | 60 | API routes: products/*, orders/*, checkout | ecommerce phase 3 ready | /api/products/*, /api/orders/* |
@@ -77,7 +77,7 @@ draft: false
 | **Subtotal** | **200** | | | |
 
 ### todo-acp-integration: 180 cycles
-| Phase | Infers | Task | Dependency | Deliverable |
+| Phase | Cycles | Task | Dependency | Deliverable |
 |-------|--------|------|-----------|-------------|
 | Phase 2 | 80 | Schema: agent, acp_message, acp_task things | acp phase 1 complete | schema.ts extended |
 | Phase 4 | 60 | API routes: /api/acp/agents/*, /api/acp/messages, /api/acp/tasks | phase 2 schema ready | /api/acp/* routes |
@@ -86,7 +86,7 @@ draft: false
 | **Subtotal** | **180** | | | |
 
 ### todo-api: 200 cycles
-| Phase | Infers | Task | Dependency | Deliverable |
+| Phase | Cycles | Task | Dependency | Deliverable |
 |-------|--------|------|-----------|-------------|
 | Phase 1 | 20 | API design: OpenAPI spec for all endpoints | agent-frontend input | api-contracts.openapi.yaml |
 | Phase 4 | 120 | API routes: GET/POST all public endpoints | all todo schemas ready | /api/products, /api/creators, /api/agents |
@@ -95,7 +95,7 @@ draft: false
 | **Subtotal** | **200** | | | |
 
 ### todo-features: 100 cycles
-| Phase | Infers | Task | Dependency | Deliverable |
+| Phase | Cycles | Task | Dependency | Deliverable |
 |-------|--------|------|-----------|-------------|
 | Phase 2 | 30 | Schema: analytics event types + tables | ecommerce ready | schema.ts extended |
 | Phase 4 | 50 | API routes: /api/analytics/*, /api/search/* | phase 2 schema + x402 ready | routes working |
@@ -117,7 +117,7 @@ draft: false
 **Teammates:** Coordinates with agent-backend (API contracts), agent-designer (design specs), agent-quality (component tests)
 
 ### todo-onboard: 90 cycles
-| Phase | Infers | Task | Dependency | Deliverable |
+| Phase | Cycles | Task | Dependency | Deliverable |
 |-------|--------|------|-----------|-------------|
 | Phase 3 | 50 | Components: SignupForm, EmailVerification, ProfileForm, WorkspaceSetup | - | 4 components |
 | Phase 3 | 20 | Pages: /onboarding/*, complete flow | phase 3 components | 6 Astro pages |
@@ -125,7 +125,7 @@ draft: false
 | **Subtotal** | **90** | | | |
 
 ### todo-ecommerce: 180 cycles
-| Phase | Infers | Task | Dependency | Deliverable |
+| Phase | Cycles | Task | Dependency | Deliverable |
 |-------|--------|------|-----------|-------------|
 | Phase 3 | 90 | Components: ProductCard, ShoppingCart, CheckoutForm, OrderConfirmation | - | 6 components |
 | Phase 3 | 40 | Pages: /products/*, /cart, /checkout, /orders | phase 3 components ready | 4 Astro pages |
@@ -134,7 +134,7 @@ draft: false
 | **Subtotal** | **180** | | | |
 
 ### todo-buy-chatgpt: 150 cycles
-| Phase | Infers | Task | Dependency | Deliverable |
+| Phase | Cycles | Task | Dependency | Deliverable |
 |-------|--------|------|-----------|-------------|
 | Phase 3 | 70 | Components: ChatInterface, ProductCard (chat version), RecommendationSection | - | 5 components |
 | Phase 3 | 30 | Pages: /chat/index, /chat/history | phase 3 components | 2 Astro pages |
@@ -143,7 +143,7 @@ draft: false
 | **Subtotal** | **150** | | | |
 
 ### todo-one-ie: 250 cycles
-| Phase | Infers | Task | Dependency | Deliverable |
+| Phase | Cycles | Task | Dependency | Deliverable |
 |-------|--------|------|-----------|-------------|
 | Phase 3 | 100 | Components: LandingPage, ProductGrid, Dashboard layouts | - | 10+ components |
 | Phase 3 | 80 | Pages: /, /about, /creators, /pricing, /docs, /blog, /dashboard, /admin | components ready | 8+ Astro pages |
@@ -152,7 +152,7 @@ draft: false
 | **Subtotal** | **250** | | | |
 
 ### todo-features: 100 cycles
-| Phase | Infers | Task | Dependency | Deliverable |
+| Phase | Cycles | Task | Dependency | Deliverable |
 |-------|--------|------|-----------|-------------|
 | Phase 3 | 50 | Components: AnalyticsDashboard, SearchBar, NotificationCenter | - | 3 components |
 | Phase 3 | 30 | Pages: /dashboard/analytics, /search | components ready | 2 pages |
@@ -175,7 +175,7 @@ draft: false
 **Teammates:** Coordinates with agent-backend (service layer), agent-builder (ElizaOS), agent-ops (deployment)
 
 ### todo-x402: 180 cycles
-| Phase | Infers | Task | Dependency | Deliverable |
+| Phase | Cycles | Task | Dependency | Deliverable |
 |-------|--------|------|-----------|-------------|
 | Phase 2 | 40 | X402PaymentService: implement permit + transfer payment logic | - | Effect.ts services |
 | Phase 5 | 80 | Blockchain integration: viem client, Base network, USDC handling | agent-backend schema | blockchain utils |
@@ -184,7 +184,7 @@ draft: false
 | **Subtotal** | **180** | | | |
 
 ### todo-buy-chatgpt: 120 cycles
-| Phase | Infers | Task | Dependency | Deliverable |
+| Phase | Cycles | Task | Dependency | Deliverable |
 |-------|--------|------|-----------|-------------|
 | Phase 2 | 40 | Claude API integration: messages, embeddings, streaming | - | claude-api.ts |
 | Phase 2 | 30 | OpenAI API integration (future): GPT support | - | openai-api.ts |
@@ -193,7 +193,7 @@ draft: false
 | **Subtotal** | **120** | | | |
 
 ### todo-acp-integration: 150 cycles
-| Phase | Infers | Task | Dependency | Deliverable |
+| Phase | Cycles | Task | Dependency | Deliverable |
 |-------|--------|------|-----------|-------------|
 | Phase 2 | 50 | ACPService: message routing, task delegation | - | acp.ts services |
 | Phase 4 | 60 | Agent registry: discovery, health checks, capability matching | agent-backend schema ready | registry working |
@@ -202,7 +202,7 @@ draft: false
 | **Subtotal** | **150** | | | |
 
 ### todo-agents: 100 cycles
-| Phase | Infers | Task | Dependency | Deliverable |
+| Phase | Cycles | Task | Dependency | Deliverable |
 |-------|--------|------|-----------|-------------|
 | Phase 4 | 50 | ElizaOS integration: agent deployment, config | acp ready | agents deployable |
 | Phase 5 | 30 | Agent marketplace: list, search, deploy | registry ready | marketplace UX ready |
@@ -224,7 +224,7 @@ draft: false
 **Teammates:** Coordinates with agent-integrator (ACP), agent-backend (schema), agent-quality (agent testing)
 
 ### todo-agents: 180 cycles
-| Phase | Infers | Task | Dependency | Deliverable |
+| Phase | Cycles | Task | Dependency | Deliverable |
 |-------|--------|------|-----------|-------------|
 | Phase 2 | 40 | Agent thing type + capability schema | agent-backend ready | schema extended |
 | Phase 3 | 60 | Agent deployment UI: creator can deploy agents | - | components + pages |
@@ -233,7 +233,7 @@ draft: false
 | **Subtotal** | **180** | | | |
 
 ### todo-skills: 150 cycles
-| Phase | Infers | Task | Dependency | Deliverable |
+| Phase | Cycles | Task | Dependency | Deliverable |
 |-------|--------|------|-----------|-------------|
 | Phase 2 | 40 | Skill thing type + verification schema | agent-backend ready | schema extended |
 | Phase 3 | 50 | Skill marketplace UI: browse, rate, purchase | - | skill components |
@@ -242,7 +242,7 @@ draft: false
 | **Subtotal** | **150** | | | |
 
 ### todo-sell: 100 cycles
-| Phase | Infers | Task | Dependency | Deliverable |
+| Phase | Cycles | Task | Dependency | Deliverable |
 |-------|--------|------|-----------|-------------|
 | Phase 2 | 30 | GitHub integration: OAuth + token generation | - | github.ts service |
 | Phase 3 | 40 | UI: creator lists repo for sale, buyers request access | - | sell components |
@@ -315,7 +315,7 @@ draft: false
 
 ### Design Deliverables:
 
-| Infers | Task | Dependency | Deliverable |
+| Cycles | Task | Dependency | Deliverable |
 |--------|------|-----------|-------------|
 | 50 | Design tokens: colors, typography, spacing, shadows | - | tokens.css |
 | 80 | Wireframes: all user-facing pages (30+ pages) | - | Figma file |
@@ -340,7 +340,7 @@ draft: false
 
 ### Deployment Phases:
 
-| Phase | Infers | Task | Dependency | Deliverable |
+| Phase | Cycles | Task | Dependency | Deliverable |
 |-------|--------|------|-----------|-------------|
 | Setup | 30 | CI/CD pipeline: GitHub Actions, tests, linting | - | .github/workflows/* |
 | Setup | 20 | Secrets management: env vars, API keys | - | .env setup guides |

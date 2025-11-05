@@ -2,7 +2,7 @@
 
 **Status:** ✅ All 6 Agent TODO Lists Created & Ready
 **Date:** 2025-10-30
-**Inference:** 65/100 (Write e2e tests for critical paths)
+**Cycle:** 65/100 (Write e2e tests for critical paths)
 
 ---
 
@@ -47,7 +47,7 @@
 
 ### 📊 Master Orchestration Documents
 
-7. **`MASTER-ORCHESTRATION-INFER65.md`** (Major Control Document)
+7. **`MASTER-ORCHESTRATION-CYCLE65.md`** (Major Control Document)
    - Executive summary
    - Parallel execution strategy
    - Dependency map
@@ -68,7 +68,7 @@
 Plus additional supporting documents for quick reference:
 - `QUALITY-AGENT-SUMMARY.md` - Quality agent quick reference
 - `QUALITY-EXECUTION-CHECKLIST.md` - Quality agent execution checklist
-- `INDEX-QUALITY-AGENT-INFER65.md` - Quality agent navigation
+- `INDEX-QUALITY-AGENT-CYCLE65.md` - Quality agent navigation
 - `QUICK-REFERENCE-FRONTEND-TESTING.md` - Frontend quick start
 - `INDEX-FRONTEND-TESTING.md` - Frontend navigation
 - `PROBLEM-SOLVER-QUICKSTART.md` - Problem solver quick start
@@ -134,7 +134,7 @@ TOTAL: 5-8 days with parallel execution
 ## How to Start Right Now
 
 ### For Team Lead (Next 10 minutes)
-1. Open: `/Users/toc/Server/ONE/.claude/plans/MASTER-ORCHESTRATION-INFER65.md`
+1. Open: `/Users/toc/Server/ONE/.claude/plans/MASTER-ORCHESTRATION-CYCLE65.md`
 2. Read the executive summary (5 minutes)
 3. Review the task matrix and timeline
 4. Check the 6 quality gates
@@ -152,7 +152,7 @@ TOTAL: 5-8 days with parallel execution
 4. Ready to start when director gives signal
 
 ### For Director (Next 30 minutes)
-1. Read: `MASTER-ORCHESTRATION-INFER65.md` (full document)
+1. Read: `MASTER-ORCHESTRATION-CYCLE65.md` (full document)
 2. Read: All 5 agent TODO files (skim for dependencies)
 3. Create task tracking spreadsheet with columns:
    - Agent
@@ -203,7 +203,7 @@ TOTAL: 5-8 days with parallel execution
 
 ### Start Here
 ```
-/Users/toc/Server/ONE/.claude/plans/MASTER-ORCHESTRATION-INFER65.md
+/Users/toc/Server/ONE/.claude/plans/MASTER-ORCHESTRATION-CYCLE65.md
 ```
 
 ### Navigation
@@ -321,7 +321,7 @@ All 6 specialized agents have comprehensive TODO lists that enable:
 ```
 .claude/plans/
 ├── EXECUTION-READY.md (this file - 📍 YOU ARE HERE)
-├── MASTER-ORCHESTRATION-INFER65.md (Master control)
+├── MASTER-ORCHESTRATION-CYCLE65.md (Master control)
 ├── INDEX-ALL-AGENTS.md (Navigation)
 │
 ├── todo-agent-director.md (Agent 1)

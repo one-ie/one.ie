@@ -279,22 +279,22 @@ From the ontology workflow system, you have 5 responsibilities:
 
 **Output:** Validated idea document (`ideas/N-name.md`)
 
-### 2. Generate 100-Inference Plans (NEW)
+### 2. Generate 100-Cycle Plans (NEW)
 
 **Process:**
 1. Read feature selections from `.onboarding.json` or user input
-2. Map each feature to inference ranges (e.g., landing-page → Cycle 1-10)
+2. Map each feature to cycle ranges (e.g., landing-page → Cycle 1-10)
 3. Resolve dependencies and create execution phases
-4. Calculate total inferences, duration, and cost estimates
-5. Generate complete 100-inference plan with specialist assignments
+4. Calculate total cycles, duration, and cost estimates
+5. Generate complete 100-cycle plan with specialist assignments
 6. Write plan back to `.onboarding.json` for tracking
 
 **Output:**
-- Complete inference plan in `.onboarding.json`
+- Complete cycle plan in `.onboarding.json`
 - Execution roadmap with phases and specialists
-- Progress tracking structure (currentInference, completedInferences)
+- Progress tracking structure (currentCycle, completedCycles)
 
-**Key Innovation:** Plans are inference-based (not time-based), enabling precise execution and transparent progress tracking.
+**Key Innovation:** Plans are cycle-based (not time-based), enabling precise execution and transparent progress tracking.
 
 ### 3. Create Plans (Feature Collections)
 
@@ -351,10 +351,10 @@ From the ontology workflow system, you have 5 responsibilities:
 - Dependency resolution allowing safe parallelization
 - 30-50% faster delivery through parallel execution
 
-## Feature Library (100-Inference Mapping)
+## Feature Library (100-Cycle Mapping)
 
-The feature library maps every possible feature to specific inference ranges. Each feature includes:
-- **Inference range**: Where it fits in the 100-inference sequence
+The feature library maps every possible feature to specific cycle ranges. Each feature includes:
+- **Cycle range**: Where it fits in the 100-cycle sequence
 - **Specialist**: Which agent executes it
 - **Duration**: Estimated time to complete
 - **Dependencies**: Required features that must complete first
@@ -367,7 +367,7 @@ const FOUNDATION_FEATURES = {
   "landing-page": {
     name: "Landing Page",
     description: "Beautiful landing page with hero, features, CTA",
-    inferences: [1, 10],
+    cycles: [1, 10],
     specialist: "agent-frontend",
     duration: "~5 min",
     cost: "$0",
@@ -385,7 +385,7 @@ const FOUNDATION_FEATURES = {
   "authentication": {
     name: "Authentication System",
     description: "Email/password + OAuth + Magic Links (6 methods)",
-    inferences: [11, 20],
+    cycles: [11, 20],
     specialist: "existing", // Already implemented
     duration: "~0 min",
     cost: "$0",
@@ -403,7 +403,7 @@ const FOUNDATION_FEATURES = {
   "multi-tenant-groups": {
     name: "Multi-Tenant Groups",
     description: "Hierarchical groups with data scoping (organizations → teams → projects)",
-    inferences: [21, 30],
+    cycles: [21, 30],
     specialist: "agent-backend",
     duration: "~10 min",
     cost: "$0",
@@ -427,7 +427,7 @@ const CREATOR_FEATURES = {
   "content-publishing": {
     name: "Content Publishing",
     description: "Blog posts, articles, courses, lessons",
-    inferences: [31, 40],
+    cycles: [31, 40],
     specialist: "agent-frontend",
     duration: "~15 min",
     cost: "$0",
@@ -444,7 +444,7 @@ const CREATOR_FEATURES = {
   "membership-tiers": {
     name: "Membership Tiers",
     description: "Subscription plans with tiered access",
-    inferences: [41, 50],
+    cycles: [41, 50],
     specialist: "agent-backend",
     duration: "~15 min",
     cost: "$0",
@@ -461,7 +461,7 @@ const CREATOR_FEATURES = {
   "revenue-tracking": {
     name: "Revenue Tracking",
     description: "Track payments, subscriptions, and revenue metrics",
-    inferences: [51, 60],
+    cycles: [51, 60],
     specialist: "agent-backend",
     duration: "~10 min",
     cost: "$0",
@@ -484,7 +484,7 @@ const DEVELOPER_FEATURES = {
   "project-management": {
     name: "Project Management",
     description: "Projects, tasks, milestones, kanban boards",
-    inferences: [31, 40],
+    cycles: [31, 40],
     specialist: "agent-builder", // Full-stack
     duration: "~15 min",
     cost: "$0",
@@ -501,7 +501,7 @@ const DEVELOPER_FEATURES = {
   "code-repositories": {
     name: "Code Repositories",
     description: "Git repository integration and management",
-    inferences: [41, 50],
+    cycles: [41, 50],
     specialist: "agent-integrator",
     duration: "~15 min",
     cost: "$0",
@@ -518,7 +518,7 @@ const DEVELOPER_FEATURES = {
   "deployment-pipeline": {
     name: "Deployment Pipeline",
     description: "CI/CD automation with Cloudflare Pages + Convex",
-    inferences: [51, 60],
+    cycles: [51, 60],
     specialist: "agent-ops",
     duration: "~20 min",
     cost: "$0",
@@ -541,7 +541,7 @@ const AI_FEATURES = {
   "ai-agents": {
     name: "AI Agent Framework",
     description: "9 specialist agents for development, design, quality",
-    inferences: [61, 70],
+    cycles: [61, 70],
     specialist: "agent-builder",
     duration: "~20 min",
     cost: "$0",
@@ -561,7 +561,7 @@ const AI_FEATURES = {
   "rag-knowledge": {
     name: "RAG Knowledge Base",
     description: "Vector embeddings + semantic search + retrieval",
-    inferences: [71, 80],
+    cycles: [71, 80],
     specialist: "agent-backend",
     duration: "~15 min",
     cost: "$0.10 - $1.00", // Embedding costs
@@ -578,7 +578,7 @@ const AI_FEATURES = {
   "semantic-search": {
     name: "Semantic Search",
     description: "Natural language search across all content",
-    inferences: [81, 90],
+    cycles: [81, 90],
     specialist: "agent-backend",
     duration: "~10 min",
     cost: "$0",
@@ -601,7 +601,7 @@ const INTEGRATION_FEATURES = {
   "stripe-payments": {
     name: "Stripe Payments",
     description: "Stripe integration for payments and subscriptions",
-    inferences: [31, 40],
+    cycles: [31, 40],
     specialist: "agent-integrator",
     duration: "~15 min",
     cost: "$0",
@@ -618,7 +618,7 @@ const INTEGRATION_FEATURES = {
   "email-marketing": {
     name: "Email Marketing",
     description: "Resend integration for transactional + marketing emails",
-    inferences: [41, 50],
+    cycles: [41, 50],
     specialist: "agent-integrator",
     duration: "~10 min",
     cost: "$0",
@@ -635,7 +635,7 @@ const INTEGRATION_FEATURES = {
   "discord-community": {
     name: "Discord Community",
     description: "Discord bot integration for community engagement",
-    inferences: [51, 60],
+    cycles: [51, 60],
     specialist: "agent-integrator",
     duration: "~15 min",
     cost: "$0",
@@ -658,7 +658,7 @@ const DESIGN_FEATURES = {
   "design-system": {
     name: "Design System",
     description: "Component library with brand tokens and Tailwind config",
-    inferences: [71, 80],
+    cycles: [71, 80],
     specialist: "agent-designer",
     duration: "~15 min",
     cost: "$0",
@@ -675,7 +675,7 @@ const DESIGN_FEATURES = {
   "wireframes": {
     name: "Wireframes & Mockups",
     description: "Auto-generated wireframes from feature specs",
-    inferences: [71, 75],
+    cycles: [71, 75],
     specialist: "agent-designer",
     duration: "~10 min",
     cost: "$0",
@@ -698,7 +698,7 @@ const PERFORMANCE_FEATURES = {
   "performance-monitoring": {
     name: "Performance Monitoring",
     description: "Real-time performance metrics and Lighthouse scores",
-    inferences: [81, 90],
+    cycles: [81, 90],
     specialist: "agent-ops",
     duration: "~10 min",
     cost: "$0",
@@ -715,7 +715,7 @@ const PERFORMANCE_FEATURES = {
   "analytics-dashboard": {
     name: "Analytics Dashboard",
     description: "User analytics, revenue metrics, engagement tracking",
-    inferences: [81, 90],
+    cycles: [81, 90],
     specialist: "agent-frontend",
     duration: "~15 min",
     cost: "$0",
@@ -1102,7 +1102,7 @@ The Director enforces consistent numbering:
 
 ## Plan Generation Algorithm
 
-When generating a 100-inference plan from feature selections, follow this algorithm:
+When generating a 100-cycle plan from feature selections, follow this algorithm:
 
 ### Step 1: Read Feature Selections
 
@@ -1157,21 +1157,21 @@ function resolveDependencies(selectedFeatures: string[]): string[] {
 // Output: ["landing-page", "authentication", "multi-tenant-groups", "project-management", "ai-agents"]
 ```
 
-### Step 3: Map to Inference Ranges
+### Step 3: Map to Cycle Ranges
 
 ```typescript
-function mapToInferences(features: string[]): InferencePlan {
+function mapToCycles(features: string[]): CyclePlan {
   const phases: Phase[] = [];
-  const allInferences = [];
+  const allCycles = [];
 
   for (const featureKey of features) {
     const feature = ALL_FEATURES[featureKey];
-    const [start, end] = feature.inferences;
+    const [start, end] = feature.cycles;
 
     phases.push({
       name: feature.name,
       featureKey: featureKey,
-      inferences: { start, end },
+      cycles: { start, end },
       specialist: feature.specialist,
       duration: feature.duration,
       cost: feature.cost,
@@ -1179,14 +1179,14 @@ function mapToInferences(features: string[]): InferencePlan {
       ontology: feature.ontology
     });
 
-    allInferences.push(...range(start, end));
+    allCycles.push(...range(start, end));
   }
 
   // Always add deployment phase (Cycle 91-100)
   phases.push({
     name: "Deployment & Documentation",
     featureKey: "deployment",
-    inferences: { start: 91, end: 100 },
+    cycles: { start: 91, end: 100 },
     specialist: "agent-ops",
     duration: "~10 min",
     cost: "$0",
@@ -1198,9 +1198,9 @@ function mapToInferences(features: string[]): InferencePlan {
 
   return {
     phases,
-    totalInferences: allInferences.length + 10, // Include deployment
-    currentInference: 1,
-    completedInferences: []
+    totalCycles: allCycles.length + 10, // Include deployment
+    currentCycle: 1,
+    completedCycles: []
   };
 }
 ```
@@ -1208,7 +1208,7 @@ function mapToInferences(features: string[]): InferencePlan {
 ### Step 4: Calculate Estimates
 
 ```typescript
-function calculateEstimates(plan: InferencePlan) {
+function calculateEstimates(plan: CyclePlan) {
   let totalMinutes = 0;
   let totalCost = 0;
 
@@ -1228,7 +1228,7 @@ function calculateEstimates(plan: InferencePlan) {
   return {
     estimatedDuration: `${totalMinutes} minutes (~${Math.ceil(totalMinutes / 60)} hours)`,
     estimatedCost: `$${totalCost.toFixed(2)}`,
-    inferenceCount: plan.totalInferences
+    cycleCount: plan.totalCycles
   };
 }
 ```
@@ -1242,13 +1242,13 @@ interface ExecutionPlan {
   createdAt: number;
   plan: {
     phases: Phase[];
-    totalInferences: number;
-    currentInference: number;
-    completedInferences: number[];
+    totalCycles: number;
+    currentCycle: number;
+    completedCycles: number[];
     estimates: {
       duration: string;
       cost: string;
-      inferences: number;
+      cycles: number;
     };
   };
   progress: {
@@ -1269,7 +1269,7 @@ const executionPlan: ExecutionPlan = {
       {
         name: "Landing Page",
         featureKey: "landing-page",
-        inferences: { start: 1, end: 10 },
+        cycles: { start: 1, end: 10 },
         specialist: "agent-frontend",
         duration: "~5 min",
         cost: "$0",
@@ -1278,13 +1278,13 @@ const executionPlan: ExecutionPlan = {
       },
       // ... more phases
     ],
-    totalInferences: 70,
-    currentInference: 1,
-    completedInferences: [],
+    totalCycles: 70,
+    currentCycle: 1,
+    completedCycles: [],
     estimates: {
       duration: "60 minutes (~1 hours)",
       cost: "$0.10",
-      inferences: 70
+      cycles: 70
     }
   },
   progress: {
@@ -1315,14 +1315,14 @@ function generateMarkdownSummary(plan: ExecutionPlan): string {
 
 ## Overview
 
-- **Total Inferences:** ${plan.plan.totalInferences}/100
+- **Total Cycles:** ${plan.plan.totalCycles}/100
 - **Estimated Duration:** ${plan.plan.estimates.duration}
 - **Estimated Cost:** ${plan.plan.estimates.cost}
 
 ## Execution Phases
 
 ${plan.plan.phases.map((phase, i) => `
-### Phase ${i + 1}: ${phase.name} (Cycle ${phase.inferences.start}-${phase.inferences.end})
+### Phase ${i + 1}: ${phase.name} (Cycle ${phase.cycles.start}-${phase.cycles.end})
 
 - **Specialist:** ${phase.specialist}
 - **Duration:** ${phase.duration}
@@ -1335,8 +1335,8 @@ ${JSON.stringify(phase.ontology, null, 2)}
 
 ## Progress Tracking
 
-Current Inference: ${plan.plan.currentInference}/${plan.plan.totalInferences}
-Completed: ${plan.plan.completedInferences.length} inferences
+Current Cycle: ${plan.plan.currentCycle}/${plan.plan.totalCycles}
+Completed: ${plan.plan.completedCycles.length} cycles
 `;
 }
 ```
@@ -1355,7 +1355,7 @@ async function executePhase(phase: Phase): Promise<void> {
     targetId: phase.featureKey,
     metadata: {
       phaseName: phase.name,
-      inferences: phase.inferences,
+      cycles: phase.cycles,
       specialist: phase.specialist
     }
   });
@@ -1364,7 +1364,7 @@ async function executePhase(phase: Phase): Promise<void> {
   const specialist = getSpecialistAgent(phase.specialist);
   await specialist.execute({
     featureKey: phase.featureKey,
-    inferenceRange: phase.inferences,
+    cycleRange: phase.cycles,
     ontology: phase.ontology
   });
 
@@ -1377,8 +1377,8 @@ async function executePhase(phase: Phase): Promise<void> {
 
   // 4. Update .onboarding.json progress
   updateProgress({
-    currentInference: phase.inferences.end,
-    completedInferences: range(phase.inferences.start, phase.inferences.end),
+    currentCycle: phase.cycles.end,
+    completedCycles: range(phase.cycles.start, phase.cycles.end),
     currentPhase: phase.name,
     status: "in_progress"
   });
@@ -1401,8 +1401,8 @@ async function executePhase(phase: Phase): Promise<void> {
 
 ```typescript
 interface ProgressUpdate {
-  currentInference: number;
-  completedInferences: number[];
+  currentCycle: number;
+  completedCycles: number[];
   currentPhase: string;
   status: "pending" | "in_progress" | "completed" | "failed";
   startedAt?: number;
@@ -1421,7 +1421,7 @@ function updateProgress(update: Partial<ProgressUpdate>): void {
   };
 
   // Calculate completion percentage
-  const percentage = (plan.plan.completedInferences.length / plan.plan.totalInferences) * 100;
+  const percentage = (plan.plan.completedCycles.length / plan.plan.totalCycles) * 100;
 
   // Write back to file
   writeOnboardingJson(plan);
@@ -1431,8 +1431,8 @@ function updateProgress(update: Partial<ProgressUpdate>): void {
     type: "progress_updated",
     metadata: {
       percentage,
-      currentInference: plan.plan.currentInference,
-      totalInferences: plan.plan.totalInferences,
+      currentCycle: plan.plan.currentCycle,
+      totalCycles: plan.plan.totalCycles,
       currentPhase: plan.progress.currentPhase
     }
   });
@@ -1463,20 +1463,20 @@ async function executeAllPhases(plan: ExecutionPlan): Promise<void> {
   updateProgress({
     status: "completed",
     completedAt: Date.now(),
-    currentInference: 100
+    currentCycle: 100
   });
 }
 
 function findParallelPhases(phase: Phase, allPhases: Phase[]): Phase[] {
   // Phases can run in parallel if:
   // 1. They have no shared dependencies
-  // 2. They don't overlap in inference ranges
+  // 2. They don't overlap in cycle ranges
   // 3. They use different specialists (optional optimization)
 
   return allPhases.filter(p =>
     p !== phase &&
     !hasSharedDependencies(p, phase) &&
-    !overlapsInferences(p.inferences, phase.inferences)
+    !overlapsCycles(p.cycles, phase.cycles)
   );
 }
 ```
@@ -1535,21 +1535,21 @@ async function executePhaseWithRetry(phase: Phase, maxRetries = 3): Promise<void
 
 ```typescript
 function displayProgress(plan: ExecutionPlan): void {
-  const percentage = (plan.plan.completedInferences.length / plan.plan.totalInferences) * 100;
+  const percentage = (plan.plan.completedCycles.length / plan.plan.totalCycles) * 100;
 
   console.log(`
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 🤖 BUILDING ${plan.organizationName}
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
-Progress: ${percentage.toFixed(1)}% (${plan.plan.completedInferences.length}/${plan.plan.totalInferences} inferences)
+Progress: ${percentage.toFixed(1)}% (${plan.plan.completedCycles.length}/${plan.plan.totalCycles} cycles)
 
 Current Phase: ${plan.progress.currentPhase || 'Starting...'}
-Current Inference: ${plan.plan.currentInference}
+Current Cycle: ${plan.plan.currentCycle}
 
 Phases:
 ${plan.plan.phases.map(phase => `
-  ${getStatusIcon(phase.status)} ${phase.name} (Cycle ${phase.inferences.start}-${phase.inferences.end})
+  ${getStatusIcon(phase.status)} ${phase.name} (Cycle ${phase.cycles.start}-${phase.cycles.end})
      ${phase.specialist} • ${phase.duration}
 `).join('')}
 

@@ -1,14 +1,14 @@
 # Frontend Testing Quick Reference
 
 **File:** `.claude/plans/todo-agent-frontend.md`
-**Status:** Complete - Ready for Inference 65-100
+**Status:** Complete - Ready for Cycle 65-100
 **Total Tests:** 646+ cases across 7 phases
 
 ---
 
 ## At-A-Glance Summary
 
-| Phase | Name | Inferences | Tests | Focus |
+| Phase | Name | Cycles | Tests | Focus |
 |-------|------|-----------|-------|-------|
 | 1 | Setup | 65-66 | 0 | Configuration, mocks, utils |
 | 2 | Components | 67-72 | 162 | Demo, features, UI components |
@@ -373,45 +373,45 @@ await waitFor(() => expect(mockMutation).toHaveBeenCalled())
 
 ## Execution Timeline
 
-### Inference 65-66 (Phase 1: Setup)
+### Cycle 65-66 (Phase 1: Setup)
 - Create vitest.config.ts
 - Build mock factory system
 - Setup test utilities and helpers
 
-### Inference 67-72 (Phase 2: Components - Can Parallelize)
+### Cycle 67-72 (Phase 2: Components - Can Parallelize)
 ```
 Branch A: Demo tests      (HooksDemo, SearchDemo, etc.)
 Branch B: Feature tests   (ContactForm, GroupSelector, etc.)
 Branch C: UI tests        (Button, Input, Card, etc.)
 ```
 
-### Inference 73-78 (Phase 3: Integration - Can Parallelize)
+### Cycle 73-78 (Phase 3: Integration - Can Parallelize)
 ```
 Branch A: Convex hooks    (useQuery/useMutation patterns)
 Branch B: Composition     (Component trees and props)
 Branch C: Forms           (Submission flows)
 ```
 
-### Inference 79-84 (Phase 4: Interactions - Can Parallelize)
+### Cycle 79-84 (Phase 4: Interactions - Can Parallelize)
 ```
 Branch A: Form UX         (Input, validation, submission)
 Branch B: Button flows    (Click handlers, loading states)
 Branch C: Navigation      (Routing, URL params)
 ```
 
-### Inference 85-88 (Phase 5: Edge Cases - Sequential)
+### Cycle 85-88 (Phase 5: Edge Cases - Sequential)
 - Loading states and Suspense
 - Error boundaries and recovery
 - Empty and null states
 
-### Inference 89-95 (Phase 6: A11y & Responsive - Can Parallelize)
+### Cycle 89-95 (Phase 6: A11y & Responsive - Can Parallelize)
 ```
 Branch A: Keyboard        (Tab, Enter, Escape, Arrow keys)
 Branch B: Theme           (Dark mode, colors, contrast)
 Branch C: Responsive      (Mobile, tablet, desktop)
 ```
 
-### Inference 96-100 (Phase 7: E2E - Sequential)
+### Cycle 96-100 (Phase 7: E2E - Sequential)
 - Authentication flows (6 methods)
 - Group/organization hierarchy
 - Thing CRUD operations
@@ -469,7 +469,7 @@ Sections in detail:
 
 ---
 
-**Ready for Inference 65 Execution**
+**Ready for Cycle 65 Execution**
 
 All tasks defined, dependencies identified, and execution plan clear.
 Start with Task 1.1 (Vitest Configuration) immediately.

@@ -610,7 +610,7 @@ Each specialist reports:
 
 ### Weekly Sync (30 min)
 All specialists review:
-- Progress against inference targets
+- Progress against cycle targets
 - Cross-file dependencies
 - Test coverage metrics
 - Deployment readiness
@@ -622,7 +622,7 @@ All specialists review:
 - Set success metrics
 
 ### Wave Completion Review
-- Verify all inferences complete
+- Verify all cycles complete
 - Code review sign-off
 - Test coverage confirmation
 - Deployment approval
@@ -641,14 +641,14 @@ agent-backend:
 ├─ todo-sell.md (40% of work, Wave 2)
 ├─ todo-ecommerce.md (50% of work, Wave 3)
 └─ todo-api.md (30% of work, Wave 3)
-   TOTAL: 320 inferences across 6 files
+   TOTAL: 320 cycles across 6 files
 
 agent-frontend:
 ├─ todo-onboard.md (50% of work, Waves 1-2)
 ├─ todo-ecommerce.md (100 infers, Wave 3)
 ├─ todo-features.md (100 infers, Wave 3)
 └─ todo-one-ie.md (100 infers, Wave 4)
-   TOTAL: 250 inferences across 4 files
+   TOTAL: 250 cycles across 4 files
 
 agent-integrator:
 ├─ todo-agents.md (40% of work, Wave 2)
@@ -656,26 +656,26 @@ agent-integrator:
 ├─ todo-ecommerce.md (30% of work, Wave 3)
 ├─ todo-api.md (100 infers, Wave 3)
 └─ todo-features.md (40% of work, Wave 3)
-   TOTAL: 270 inferences across 5 files
+   TOTAL: 270 cycles across 5 files
 
 agent-builder:
 ├─ todo-agents.md (100 infers, Wave 2)
 └─ todo-skills.md (100 infers, Wave 2)
-   TOTAL: 200 inferences across 2 files (parallel)
+   TOTAL: 200 cycles across 2 files (parallel)
 
 agent-quality:
 ├─ todo-skills.md (30% of work, Wave 2)
 ├─ todo-sell.md (30% of work, Wave 2)
 ├─ todo-ecommerce.md (20% of work, Wave 3)
 └─ todo-api.md (100 infers, Wave 3)
-   TOTAL: 150 inferences across 4 files
+   TOTAL: 150 cycles across 4 files
 
 agent-designer:
 ├─ todo-onboard.md (20% of work, Wave 1)
 └─ todo-one-ie.md (100 infers, Wave 4)
-   TOTAL: 110 inferences across 2 files
+   TOTAL: 110 cycles across 2 files
 
-TOTAL PLATFORM WORK: 900 inferences across 9 files
+TOTAL PLATFORM WORK: 900 cycles across 9 files
 ```
 
 ---
@@ -684,7 +684,7 @@ TOTAL PLATFORM WORK: 900 inferences across 9 files
 
 | Issue | Owner | Next | Escalate |
 |-------|-------|------|----------|
-| Inference target missed | Specialist | Extend deadline or reduce scope | Director |
+| Cycle target missed | Specialist | Extend deadline or reduce scope | Director |
 | Cross-file dependency blocked | Specialist A | Contact Specialist B, coordinate | Director |
 | Test coverage < 80% | Specialist | Fix code + tests | Director |
 | Performance baseline missed | Specialist | Optimize or adjust target | Director |
@@ -696,42 +696,42 @@ TOTAL PLATFORM WORK: 900 inferences across 9 files
 ## SUCCESS METRICS PER SPECIALIST
 
 ### agent-backend
-- [ ] 320 inferences completed across 6 files
+- [ ] 320 cycles completed across 6 files
 - [ ] 80%+ test coverage on all services
 - [ ] All schema migrations deployed
 - [ ] Convex production validated
 - [ ] Performance baselines met
 
 ### agent-frontend
-- [ ] 250 inferences completed across 4 files
+- [ ] 250 cycles completed across 4 files
 - [ ] All pages load < 3s on 4G
 - [ ] 100 Lighthouse score on 3+ pages
 - [ ] Mobile responsive (all breakpoints)
 - [ ] Accessibility (WCAG 2.1 AA)
 
 ### agent-integrator
-- [ ] 270 inferences completed across 5 files
+- [ ] 270 cycles completed across 5 files
 - [ ] All external APIs integrated
 - [ ] Rate limiting working
 - [ ] Webhook delivery > 99% reliable
 - [ ] SDK generation functional
 
 ### agent-builder
-- [ ] 200 inferences completed across 2 files (parallel)
+- [ ] 200 cycles completed across 2 files (parallel)
 - [ ] ElizaOS agents deployable
 - [ ] Skill matching algorithm working
 - [ ] Agent orchestration functional
 - [ ] Performance < 500ms per agent execution
 
 ### agent-quality
-- [ ] 150 inferences completed across 4 files
+- [ ] 150 cycles completed across 4 files
 - [ ] 80%+ coverage across platform
 - [ ] All critical paths E2E tested
 - [ ] Security tests passing
 - [ ] Performance tests baseline established
 
 ### agent-designer
-- [ ] 110 inferences completed across 2 files
+- [ ] 110 cycles completed across 2 files
 - [ ] Design system documented
 - [ ] All pages WCAG 2.1 AA compliant
 - [ ] Mobile responsive tested
@@ -760,7 +760,7 @@ Between waves, each specialist confirms:
 
 **ASSIGNMENTS CONFIRMED AND READY FOR EXECUTION**
 
-Each specialist knows their role, files, inferences, and deliverables. Coordination happens via daily standups and weekly syncs. Escalation path is clear to Engineering Director.
+Each specialist knows their role, files, cycles, and deliverables. Coordination happens via daily standups and weekly syncs. Escalation path is clear to Engineering Director.
 
 Begin Wave 1 immediately. ✓
 

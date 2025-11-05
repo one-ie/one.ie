@@ -137,16 +137,16 @@ Weeks 5-6: Phase 9-10 (Documentation + Deployment)
 **Duration:** 3-4 days
 **Deliverables:** Architecture blueprint, task breakdown, specialist assignments
 
-- [INFER-001] Ontology validation against 6 dimensions: Groups, People, Things, Connections, Events, Knowledge
-- [INFER-002] Convex hook mapping completed: 47 hooks identified, migration risk assessed as LOW
-- [INFER-003] Service dependency graph designed: Acyclic, 6 core services + 6 domain services
-- [INFER-004] Error hierarchy defined: 12 error types across domain/provider/component layers
-- [INFER-005] React hook library planned: 18 hooks designed (vs 6 minimum)
-- [INFER-006] Test strategy defined: Unit (90%+), Integration (80%+), E2E for critical paths
-- [INFER-007] Rollback plan created: Component migration is opt-in, provider swappable
-- [INFER-008] Auth tests identified: 12 critical auth tests in `web/src/tests/auth/*`
-- [INFER-009] 5 parallel work streams defined with dependencies and gates
-- [INFER-010] Specialists assigned: Frontend Lead (1 FTE), Backend Specialist (1 FTE), Frontend Specialist (1 FTE), Quality Specialist (1 FTE), Documenter (0.5 FTE)
+- [CYCLE-001] Ontology validation against 6 dimensions: Groups, People, Things, Connections, Events, Knowledge
+- [CYCLE-002] Convex hook mapping completed: 47 hooks identified, migration risk assessed as LOW
+- [CYCLE-003] Service dependency graph designed: Acyclic, 6 core services + 6 domain services
+- [CYCLE-004] Error hierarchy defined: 12 error types across domain/provider/component layers
+- [CYCLE-005] React hook library planned: 18 hooks designed (vs 6 minimum)
+- [CYCLE-006] Test strategy defined: Unit (90%+), Integration (80%+), E2E for critical paths
+- [CYCLE-007] Rollback plan created: Component migration is opt-in, provider swappable
+- [CYCLE-008] Auth tests identified: 12 critical auth tests in `web/src/tests/auth/*`
+- [CYCLE-009] 5 parallel work streams defined with dependencies and gates
+- [CYCLE-010] Specialists assigned: Frontend Lead (1 FTE), Backend Specialist (1 FTE), Frontend Specialist (1 FTE), Quality Specialist (1 FTE), Documenter (0.5 FTE)
 
 **Gate 1 Status:** ✅ PASSED - Architecture approved, all dependencies mapped
 
@@ -166,7 +166,7 @@ Weeks 5-6: Phase 9-10 (Documentation + Deployment)
 **Implementation:**
 
 ```typescript
-// [INFER-011] DataProvider base interface with 6 dimensions
+// [CYCLE-011] DataProvider base interface with 6 dimensions
 export interface DataProvider {
   groups: GroupsAPI;      // Dimension 1
   people: PeopleAPI;      // Dimension 2
@@ -176,7 +176,7 @@ export interface DataProvider {
   knowledge: KnowledgeAPI; // Dimension 6
 }
 
-// [INFER-012-017] All 6 dimensions with Effect signatures
+// [CYCLE-012-017] All 6 dimensions with Effect signatures
 // Groups: get, list, update
 // People: get, list, create, update, delete, getCurrentUser
 // Things: get, list, create, update, delete (CRUD)
@@ -184,14 +184,14 @@ export interface DataProvider {
 // Events: log, query
 // Knowledge: embed, search
 
-// [INFER-018] Error union type
+// [CYCLE-018] Error union type
 export type DataProviderError =
   | ThingNotFoundError | ThingCreateError | ThingUpdateError
   | ConnectionNotFoundError | ConnectionCreateError
   | EventCreateError | KnowledgeNotFoundError
   | ProviderError | NetworkError;
 
-// [INFER-020] Context.Tag for DI
+// [CYCLE-020] Context.Tag for DI
 export const DataProviderTag = Context.GenericTag<DataProvider>("DataProvider")
 ```
 

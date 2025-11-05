@@ -4,7 +4,7 @@
 **Agent Type:** Problem-Solving Specialist
 **Context Budget:** 2,500 tokens (Ultrathink Mode)
 **Workflow Stage:** Stage 6 (Quality Loop)
-**Inferences Covered:** 65-70 (E2E Testing & Failure Analysis)
+**Cycles Covered:** 65-70 (E2E Testing & Failure Analysis)
 
 ---
 
@@ -1364,7 +1364,7 @@ When escalating, include:
 
 ### Test Execution Checklist
 
-Before marking inference 65-70 complete:
+Before marking cycle 65-70 complete:
 
 - [ ] **Phase 1 Tests** (Failure Detection) - All passing
   - Failure detection E2E tests
@@ -1527,19 +1527,19 @@ const successCriteria = {
 
 ## Next Steps (After Phase 6)
 
-### Inference 71-80: Design & Refinement
+### Cycle 71-80: Design & Refinement
 - Refine UI/UX for dashboards
 - Optimize metric queries
 - Create coaching AI (suggests best patterns)
 - Build knowledge search UI
 
-### Inference 81-90: Performance Optimization
+### Cycle 81-90: Performance Optimization
 - Optimize vector search (batch index)
 - Cache frequent queries (1-hour TTL)
 - Parallel analysis (analyze 10 failures simultaneously)
 - Reduce analysis time from 10min → 2min
 
-### Inference 91-100: Deployment & Documentation
+### Cycle 91-100: Deployment & Documentation
 - Deploy all services to Convex
 - Create operator guide
 - Write runbook for common issues
@@ -1679,4 +1679,4 @@ Checklist to prevent this:
 **Problem Solver Agent v2.0.0**
 **Deep analysis. Root causes via 6 dimensions. Specific solutions. Every problem grows the knowledge graph.**
 
-Created for Inference 65-70 (E2E Testing & Failure Analysis)
+Created for Cycle 65-70 (E2E Testing & Failure Analysis)

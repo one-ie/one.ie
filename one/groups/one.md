@@ -183,7 +183,7 @@ ai_context: |
   metadata: {
     network: "sui",
     contractType: "cycle_payment",
-    packageId: process.env.SUI_INFERENCE_PACKAGE_ID,
+    packageId: process.env.SUI_CYCLEENCE_PACKAGE_ID,
     deployedBy: anthonyId,
   },
   createdAt: Date.now(),

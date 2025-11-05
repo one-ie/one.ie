@@ -16,7 +16,7 @@
 
 1. **Generate intelligent execution plans** from feature selections
    - Resolve dependencies automatically
-   - Map features to 100-inference sequence
+   - Map features to 100-cycle sequence
    - Calculate accurate time/cost estimates
    - Track real-time progress in `.onboarding.json`
 
@@ -39,9 +39,9 @@
 ```typescript
 // Feature Library (20+ features)
 const FEATURES = {
-  "landing-page": { inferences: [1, 10], specialist: "agent-frontend" },
-  "authentication": { inferences: [11, 20], specialist: "existing" },
-  "multi-tenant-groups": { inferences: [21, 30], specialist: "agent-backend" },
+  "landing-page": { cycles: [1, 10], specialist: "agent-frontend" },
+  "authentication": { cycles: [11, 20], specialist: "existing" },
+  "multi-tenant-groups": { cycles: [21, 30], specialist: "agent-backend" },
   // ... 17 more features
 }
 
@@ -50,8 +50,8 @@ function generatePlan(selections: string[]): ExecutionPlan {
   // 1. Resolve dependencies
   const resolved = resolveDependencies(selections)
 
-  // 2. Map to inferences
-  const phases = mapToInferences(resolved)
+  // 2. Map to cycles
+  const phases = mapToCycles(resolved)
 
   // 3. Calculate estimates
   const estimates = calculateEstimates(phases)
@@ -59,9 +59,9 @@ function generatePlan(selections: string[]): ExecutionPlan {
   // 4. Create ExecutionPlan structure
   return {
     phases,
-    totalInferences: calculateTotal(phases),
+    totalCycles: calculateTotal(phases),
     estimates,
-    progress: { status: "pending", currentInference: 1 }
+    progress: { status: "pending", currentCycle: 1 }
   }
 }
 ```
@@ -79,7 +79,7 @@ function generatePlan(selections: string[]): ExecutionPlan {
 ### Success Checklist (Cycle 1-10)
 - [ ] Feature library with 20+ features
 - [ ] Dependency resolution algorithm
-- [ ] Inference mapping working
+- [ ] Cycle mapping working
 - [ ] Estimate calculation accurate (±10%)
 - [ ] Real-time progress tracking functional
 - [ ] Parallel execution detection working
@@ -639,7 +639,7 @@ When `blocker_detected` event arrives:
 
 ### Plans
 - **Master Coordination Plan:** `/Users/toc/Server/ONE/.claude/plans/MASTER-COORDINATION-PLAN.md`
-- **Agent Director Plan:** `/Users/toc/Server/ONE/one/things/plans/agent-director-100-inference-plans.md`
+- **Agent Director Plan:** `/Users/toc/Server/ONE/one/things/plans/agent-director-100-cycle-plans.md`
 - **Unified Implementation:** `/Users/toc/Server/ONE/one/things/plans/unified-implementation-plan.md`
 - **Big Plan:** `/Users/toc/Server/ONE/one/things/plans/big-plan.md`
 
@@ -650,7 +650,7 @@ When `blocker_detected` event arrives:
 - **Workflow:** `/Users/toc/Server/ONE/one/connections/workflow.md`
 
 ### State Tracking
-- **Inference State:** `/.claude/state/inference.json` (real-time updates)
+- **Cycle State:** `/.claude/state/cycle.json` (real-time updates)
 - **Agent Definitions:** `/.claude/agents/*.md`
 
 ---

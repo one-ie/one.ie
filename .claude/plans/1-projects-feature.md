@@ -5,7 +5,7 @@
 **Plan ID:** 1-projects-feature
 **Feature ID:** 1-projects
 **Total Features:** 4
-**Target Inferences:** 1-100
+**Target Cycles:** 1-100
 
 ---
 

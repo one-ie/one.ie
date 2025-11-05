@@ -40,16 +40,16 @@ log_message "INFO" "notification-hook: $EVENT ($TYPE) via $CHANNEL"
 START_TIME=$(get_time_ms)
 
 # Load cycle context if available
-INFERENCE_STATE="$CLAUDE_PROJECT_DIR/.claude/state/cycle.json"
+CYCLEENCE_STATE="$CLAUDE_PROJECT_DIR/.claude/state/cycle.json"
 CURRENT_CYCLE="Unknown"
 FEATURE_NAME="Unknown Feature"
 ORGANIZATION="Unknown Org"
 
-if [ -f "$INFERENCE_STATE" ]; then
+if [ -f "$CYCLEENCE_STATE" ]; then
   if command -v jq &> /dev/null; then
-    CURRENT_CYCLE=$(jq -r '.current_cycle // "Unknown"' "$INFERENCE_STATE" 2>/dev/null || echo "Unknown")
-    FEATURE_NAME=$(jq -r '.feature_name // "Unknown Feature"' "$INFERENCE_STATE" 2>/dev/null || echo "Unknown Feature")
-    ORGANIZATION=$(jq -r '.organization // "Unknown Org"' "$INFERENCE_STATE" 2>/dev/null || echo "Unknown Org")
+    CURRENT_CYCLE=$(jq -r '.current_cycle // "Unknown"' "$CYCLEENCE_STATE" 2>/dev/null || echo "Unknown")
+    FEATURE_NAME=$(jq -r '.feature_name // "Unknown Feature"' "$CYCLEENCE_STATE" 2>/dev/null || echo "Unknown Feature")
+    ORGANIZATION=$(jq -r '.organization // "Unknown Org"' "$CYCLEENCE_STATE" 2>/dev/null || echo "Unknown Org")
   fi
 fi
 

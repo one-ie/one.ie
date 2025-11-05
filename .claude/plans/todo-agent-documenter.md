@@ -2,7 +2,7 @@
 
 **Status:** READY FOR EXECUTION
 **Created:** 2025-10-30
-**Inference Position:** 65/100 (Write e2e tests for critical paths)
+**Cycle Position:** 65/100 (Write e2e tests for critical paths)
 **Focus:** Document test specifications, results, and lessons learned
 **Timeline:** Concurrent with quality agent testing (Cycle 61-70)
 
@@ -478,7 +478,7 @@ Run 5: 95% ▰▰▰
 ```markdown
 ## Lesson: [Title]
 
-**Inference:** [65-70]
+**Cycle:** [65-70]
 **Component:** [What it's about]
 **What we discovered:** [The insight]
 
@@ -534,12 +534,12 @@ Run 5: 95% ▰▰▰
   "labels": [
     "lesson_learned",
     "testing",
-    "inference:67",
+    "cycle:67",
     "pattern:test_data_setup",
     "technology:vitest"
   ],
   "metadata": {
-    "inferenceNumber": 67,
+    "cycleNumber": 67,
     "component": "testing",
     "severity": "high",
     "preventsFutureIssues": true
@@ -1186,7 +1186,7 @@ describe('MyComponent', () => {
     "skill:test_writing",
     "pattern:unit_testing",
     "documentation_type:specification",
-    "inference:65-70"
+    "cycle:65-70"
   ],
   "metadata": {
     "documentType": "test_specification",
@@ -1217,7 +1217,7 @@ describe('MyComponent', () => {
 - **Skill:** test_writing, mocking, assertion, async_testing
 - **Pattern:** test_pyramid, arrange_act_assert, builder_pattern, page_object_model
 - **Feature area:** groups, agents, skills, ecommerce, api
-- **Inference:** 65, 66, 67, 68, 69, 70
+- **Cycle:** 65, 66, 67, 68, 69, 70
 
 **Success Criteria:**
 - [ ] 50+ knowledge entries created

@@ -3,7 +3,7 @@
 **Created:** 2025-10-30  
 **Version:** 2.0.0 (Ontology-Aligned)  
 **Status:** Ready for Implementation  
-**Inference:** 65-70 (E2E Testing & Failure Analysis)
+**Cycle:** 65-70 (E2E Testing & Failure Analysis)
 
 ## Quick Overview
 
@@ -322,7 +322,7 @@ Week 5: Phase 6 - Testing & Validation
 
 ## Success Checklist
 
-Before marking inference complete:
+Before marking cycle complete:
 
 ### Phase 1 ✓
 - [ ] Failure monitoring operational

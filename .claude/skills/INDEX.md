@@ -244,7 +244,7 @@ Generate design tokens from brand guidelines:
 ### Director Agent Skills (Planned)
 - `agent-director:plan-feature` - Feature planning and sequencing
 - `agent-director:coordinate-agents` - Agent orchestration
-- `agent-director:manage-inference` - Inference workflow management
+- `agent-director:manage-cycle` - Cycle workflow management
 
 ### Operations Agent Skills (Planned)
 - `agent-ops:deploy-web` - Cloudflare Pages deployment

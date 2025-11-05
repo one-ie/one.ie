@@ -46,22 +46,22 @@ This document provides a detailed execution strategy for the 100-cycle Effect.ts
 **BLOCKING:** All other work depends on foundation completing.
 
 ```
-INFER-001 (Validate ontology) ───┐
-INFER-002 (Map services)         ├──→ INFER-009 (Create plan)
-INFER-003 (List dependencies)    │         ↓
-INFER-004 (Design errors)        │    INFER-010 (Assign specialists)
-INFER-005 (Define layers)        │         ↓
-INFER-006 (DataProvider plan)    │    [GATE 1: Foundation Complete]
-INFER-007 (Astro integration)    │         ↓
-INFER-008 (Component hierarchy)  ┘    [Parallel tracks begin]
+CYCLE-001 (Validate ontology) ───┐
+CYCLE-002 (Map services)         ├──→ CYCLE-009 (Create plan)
+CYCLE-003 (List dependencies)    │         ↓
+CYCLE-004 (Design errors)        │    CYCLE-010 (Assign specialists)
+CYCLE-005 (Define layers)        │         ↓
+CYCLE-006 (DataProvider plan)    │    [GATE 1: Foundation Complete]
+CYCLE-007 (Astro integration)    │         ↓
+CYCLE-008 (Component hierarchy)  ┘    [Parallel tracks begin]
 ```
 
 **Hard Dependencies:**
 
-- INFER-001 → INFER-002 (must validate ontology before mapping)
-- INFER-002 → INFER-003 (must map services before listing dependencies)
-- INFER-009 depends on INFER-001 through INFER-008 (all foundation work)
-- INFER-010 depends on INFER-009 (can't assign until plan exists)
+- CYCLE-001 → CYCLE-002 (must validate ontology before mapping)
+- CYCLE-002 → CYCLE-003 (must map services before listing dependencies)
+- CYCLE-009 depends on CYCLE-001 through CYCLE-008 (all foundation work)
+- CYCLE-010 depends on CYCLE-009 (can't assign until plan exists)
 
 **Completion Criteria:** Foundation document created, service architecture validated, specialists assigned.
 
@@ -69,50 +69,50 @@ INFER-008 (Component hierarchy)  ┘    [Parallel tracks begin]
 
 ### Core Services Track (Cycle 11-20)
 
-**Dependencies:** Requires INFER-010 (specialist assignments)
+**Dependencies:** Requires CYCLE-010 (specialist assignments)
 
 **Parallel Opportunities:**
 
-- INFER-11 to INFER-14 (error classes + contexts + ThingService) → Can work simultaneously
-- INFER-15 to INFER-16 (AuthService) → Parallel with INFER-17 to INFER-18 (WorkflowService + RAGService)
-- INFER-19 (MonitoringService) → Parallel with all service implementations
-- INFER-20 (unit tests) → Depends on INFER-11 through INFER-19
+- CYCLE-11 to CYCLE-14 (error classes + contexts + ThingService) → Can work simultaneously
+- CYCLE-15 to CYCLE-16 (AuthService) → Parallel with CYCLE-17 to CYCLE-18 (WorkflowService + RAGService)
+- CYCLE-19 (MonitoringService) → Parallel with all service implementations
+- CYCLE-20 (unit tests) → Depends on CYCLE-11 through CYCLE-19
 
 ```
                     [GATE 1 Complete]
                            ↓
         ┌──────────────────┴──────────────────┐
         │                                      │
-  INFER-11 (Errors)                   INFER-19 (Monitoring)
+  CYCLE-11 (Errors)                   CYCLE-19 (Monitoring)
         ↓                                      │
-  INFER-12 (Contexts) ──┐                     │
-        ↓                ├──→ INFER-20 (Tests)
-  INFER-13 (ThingService)│                     │
+  CYCLE-12 (Contexts) ──┐                     │
+        ↓                ├──→ CYCLE-20 (Tests)
+  CYCLE-13 (ThingService)│                     │
         ↓                │                     │
-  INFER-14 (ThingLayers)┘                     │
+  CYCLE-14 (ThingLayers)┘                     │
         ↓                                      │
-  INFER-15 (AuthService)───────────────────────┤
+  CYCLE-15 (AuthService)───────────────────────┤
         ↓                                      │
-  INFER-16 (AuthLayers)                       │
+  CYCLE-16 (AuthLayers)                       │
         ↓                                      │
-  INFER-17 (WorkflowService)──────────────────┤
+  CYCLE-17 (WorkflowService)──────────────────┤
         ↓                                      │
-  INFER-18 (RAGService)───────────────────────┘
+  CYCLE-18 (RAGService)───────────────────────┘
         ↓
   [GATE 2: Core Services Complete]
 ```
 
 **Hard Dependencies:**
 
-- INFER-12 depends on INFER-11 (contexts need error definitions)
-- INFER-13 depends on INFER-12 (services need contexts)
-- INFER-14 depends on INFER-13 (layers implement services)
-- INFER-20 depends on INFER-11 through INFER-19 (test all services)
+- CYCLE-12 depends on CYCLE-11 (contexts need error definitions)
+- CYCLE-13 depends on CYCLE-12 (services need contexts)
+- CYCLE-14 depends on CYCLE-13 (layers implement services)
+- CYCLE-20 depends on CYCLE-11 through CYCLE-19 (test all services)
 
 **Soft Dependencies:**
 
-- INFER-19 can start anytime after INFER-11 (monitoring needs error types)
-- INFER-15 to INFER-18 are independent of each other
+- CYCLE-19 can start anytime after CYCLE-11 (monitoring needs error types)
+- CYCLE-15 to CYCLE-18 are independent of each other
 
 **Parallelization:** 2 backend agents can split: Agent A (Thing + Auth), Agent B (Workflow + RAG + Monitoring)
 
@@ -120,48 +120,48 @@ INFER-008 (Component hierarchy)  ┘    [Parallel tracks begin]
 
 ### DataProvider Track (Cycle 21-30)
 
-**Dependencies:** Requires INFER-012 (service contexts defined)
+**Dependencies:** Requires CYCLE-012 (service contexts defined)
 
 **HIGH PARALLELIZATION:** Almost entirely independent work per provider.
 
 ```
-                [INFER-12 Complete]
+                [CYCLE-12 Complete]
                         ↓
-                  INFER-21 (Design interface)
+                  CYCLE-21 (Design interface)
                         ↓
         ┌───────────────┼───────────────┐
         │               │               │               │
-  INFER-22        INFER-23        INFER-24        INFER-25
+  CYCLE-22        CYCLE-23        CYCLE-24        CYCLE-25
   (Convex)        (WordPress)     (Notion)        (Supabase)
         │               │               │               │
         └───────────────┼───────────────┘               │
                         ↓                               │
-                  INFER-26 (Factory)                   │
+                  CYCLE-26 (Factory)                   │
                         ↓                               │
-                  INFER-27 (Detection)                 │
+                  CYCLE-27 (Detection)                 │
                         ↓                               │
-                  INFER-28 (Error mapping)             │
+                  CYCLE-28 (Error mapping)             │
                         ↓                               │
         ┌───────────────┴───────────────────────────────┘
         ↓
-  INFER-29 (Integration tests)
+  CYCLE-29 (Integration tests)
         ↓
-  INFER-30 (Documentation)
+  CYCLE-30 (Documentation)
         ↓
   [GATE 2A: DataProvider Complete]
 ```
 
 **Hard Dependencies:**
 
-- INFER-21 must complete before INFER-22 through INFER-25 (interface design)
-- INFER-26 depends on INFER-22 through INFER-25 (factory needs implementations)
-- INFER-27 depends on INFER-26 (detection needs factory)
-- INFER-29 depends on INFER-22 through INFER-28 (test everything)
+- CYCLE-21 must complete before CYCLE-22 through CYCLE-25 (interface design)
+- CYCLE-26 depends on CYCLE-22 through CYCLE-25 (factory needs implementations)
+- CYCLE-27 depends on CYCLE-26 (detection needs factory)
+- CYCLE-29 depends on CYCLE-22 through CYCLE-28 (test everything)
 
 **Soft Dependencies:**
 
-- INFER-22 to INFER-25 are fully independent (4 parallel tracks)
-- INFER-28 can overlap with INFER-26 to INFER-27
+- CYCLE-22 to CYCLE-25 are fully independent (4 parallel tracks)
+- CYCLE-28 can overlap with CYCLE-26 to CYCLE-27
 
 **Parallelization:** 4 integration agents can each own a provider implementation.
 
@@ -169,48 +169,48 @@ INFER-008 (Component hierarchy)  ┘    [Parallel tracks begin]
 
 ### Better Auth Track (Cycle 31-40)
 
-**Dependencies:** Requires INFER-015 (AuthService defined), INFER-021 (DataProvider interface)
+**Dependencies:** Requires CYCLE-015 (AuthService defined), CYCLE-021 (DataProvider interface)
 
 **PARALLEL WITH DataProvider:** These two tracks (21-30 and 31-40) can run simultaneously.
 
 ```
-            [INFER-15 + INFER-21 Complete]
+            [CYCLE-15 + CYCLE-21 Complete]
                         ↓
-                  INFER-31 (Adapter factory)
+                  CYCLE-31 (Adapter factory)
                         ↓
         ┌───────────────┼───────────────┐
         │               │               │
-  INFER-32        INFER-33        INFER-34
+  CYCLE-32        CYCLE-33        CYCLE-34
   (Convex)        (WordPress)     (Notion)
         │               │               │
         └───────────────┼───────────────┘
                         ↓
-                  INFER-35 (Effect wrapper)
+                  CYCLE-35 (Effect wrapper)
                         ↓
-                  INFER-36 (Multi-provider)
+                  CYCLE-36 (Multi-provider)
                         ↓
-                  INFER-37 (RBAC)
+                  CYCLE-37 (RBAC)
                         ↓
-                  INFER-38 (Session mgmt)
+                  CYCLE-38 (Session mgmt)
                         ↓
-                  INFER-39 (2FA + Passkey)
+                  CYCLE-39 (2FA + Passkey)
                         ↓
-                  INFER-40 (Tests)
+                  CYCLE-40 (Tests)
                         ↓
               [GATE 2B: Auth Complete]
 ```
 
 **Hard Dependencies:**
 
-- INFER-31 waits for INFER-15 (AuthService interface must exist)
-- INFER-35 depends on INFER-32 through INFER-34 (wrapper needs adapters)
-- INFER-36 through INFER-39 form a sequential chain
-- INFER-40 depends on INFER-31 through INFER-39 (test all auth)
+- CYCLE-31 waits for CYCLE-15 (AuthService interface must exist)
+- CYCLE-35 depends on CYCLE-32 through CYCLE-34 (wrapper needs adapters)
+- CYCLE-36 through CYCLE-39 form a sequential chain
+- CYCLE-40 depends on CYCLE-31 through CYCLE-39 (test all auth)
 
 **Soft Dependencies:**
 
-- INFER-32 to INFER-34 are independent (3 parallel tracks)
-- INFER-37 (RBAC) can partially overlap with INFER-36
+- CYCLE-32 to CYCLE-34 are independent (3 parallel tracks)
+- CYCLE-37 (RBAC) can partially overlap with CYCLE-36
 
 **Parallelization:** 3 integration agents split adapter implementations.
 
@@ -218,49 +218,49 @@ INFER-008 (Component hierarchy)  ┘    [Parallel tracks begin]
 
 ### Astro Content Track (Cycle 41-50)
 
-**Dependencies:** Requires INFER-018 (RAGService), INFER-007 (integration plan)
+**Dependencies:** Requires CYCLE-018 (RAGService), CYCLE-007 (integration plan)
 
 **PARALLEL WITH Frontend Components:** These two tracks (41-50 and 51-60) are independent.
 
 ```
-            [INFER-18 + INFER-7 Complete]
+            [CYCLE-18 + CYCLE-7 Complete]
                         ↓
-                  INFER-41 (Schema design)
+                  CYCLE-41 (Schema design)
                         ↓
-                  INFER-42 (Content loader)
+                  CYCLE-42 (Content loader)
                         ↓
         ┌───────────────┼───────────────┐
         │               │               │
-  INFER-43        INFER-44        INFER-45
+  CYCLE-43        CYCLE-44        CYCLE-45
   (Layout)        (Connections)   (RAG search)
         │               │               │
         └───────────────┼───────────────┘
                         ↓
         ┌───────────────┼───────────────┐
         │               │               │
-  INFER-46        INFER-47        INFER-48
+  CYCLE-46        CYCLE-47        CYCLE-48
   (Metrics)       (Versioning)    (Collab)
         │               │               │
         └───────────────┼───────────────┘
                         ↓
-                  INFER-49 (Dynamic)
+                  CYCLE-49 (Dynamic)
                         ↓
-                  INFER-50 (E2E tests)
+                  CYCLE-50 (E2E tests)
                         ↓
               [GATE 3A: Content Complete]
 ```
 
 **Hard Dependencies:**
 
-- INFER-42 depends on INFER-41 (loader needs schema)
-- INFER-43 to INFER-45 depend on INFER-42 (need loader)
-- INFER-49 depends on INFER-43 (dynamic rendering needs layout)
-- INFER-50 depends on INFER-41 through INFER-49 (test everything)
+- CYCLE-42 depends on CYCLE-41 (loader needs schema)
+- CYCLE-43 to CYCLE-45 depend on CYCLE-42 (need loader)
+- CYCLE-49 depends on CYCLE-43 (dynamic rendering needs layout)
+- CYCLE-50 depends on CYCLE-41 through CYCLE-49 (test everything)
 
 **Soft Dependencies:**
 
-- INFER-43 to INFER-45 can run in parallel (3 tracks)
-- INFER-46 to INFER-48 can run in parallel (3 tracks)
+- CYCLE-43 to CYCLE-45 can run in parallel (3 tracks)
+- CYCLE-46 to CYCLE-48 can run in parallel (3 tracks)
 
 **Parallelization:** 1 frontend agent with support from integration agent for RAG.
 
@@ -268,52 +268,52 @@ INFER-008 (Component hierarchy)  ┘    [Parallel tracks begin]
 
 ### Frontend Components Track (Cycle 51-60)
 
-**Dependencies:** Requires INFER-013 (ThingService), INFER-015 (AuthService), INFER-008 (component hierarchy)
+**Dependencies:** Requires CYCLE-013 (ThingService), CYCLE-015 (AuthService), CYCLE-008 (component hierarchy)
 
 **PARALLEL WITH Astro Content:** Independent tracks.
 
 ```
-        [INFER-13 + INFER-15 + INFER-8 Complete]
+        [CYCLE-13 + CYCLE-15 + CYCLE-8 Complete]
                         ↓
         ┌───────────────┼───────────────┐
         │               │               │
-  INFER-51        INFER-52        INFER-53
+  CYCLE-51        CYCLE-52        CYCLE-53
   (Effect hooks)  (useThing)      (useAuth)
         │               │               │
         └───────────────┼───────────────┘
                         ↓
-                  INFER-54 (Integration layer)
+                  CYCLE-54 (Integration layer)
                         ↓
         ┌───────────────┼───────────────┐
         │               │               │
-  INFER-55        INFER-56        INFER-57
+  CYCLE-55        CYCLE-56        CYCLE-57
   (Dashboard)     (Auth pages)    (Forms)
         │               │               │
         └───────────────┼───────────────┘
                         ↓
         ┌───────────────┴───────────────┐
         │                               │
-  INFER-58 (Design tokens)      INFER-59 (A11y)
+  CYCLE-58 (Design tokens)      CYCLE-59 (A11y)
         │                               │
         └───────────────┬───────────────┘
                         ↓
-                  INFER-60 (Tests)
+                  CYCLE-60 (Tests)
                         ↓
               [GATE 3B: Components Complete]
 ```
 
 **Hard Dependencies:**
 
-- INFER-52 and INFER-53 depend on INFER-51 (hooks need base implementation)
-- INFER-54 depends on INFER-52 and INFER-53 (layer needs hooks)
-- INFER-55 to INFER-57 depend on INFER-54 (components need integration layer)
-- INFER-60 depends on INFER-51 through INFER-59 (test all components)
+- CYCLE-52 and CYCLE-53 depend on CYCLE-51 (hooks need base implementation)
+- CYCLE-54 depends on CYCLE-52 and CYCLE-53 (layer needs hooks)
+- CYCLE-55 to CYCLE-57 depend on CYCLE-54 (components need integration layer)
+- CYCLE-60 depends on CYCLE-51 through CYCLE-59 (test all components)
 
 **Soft Dependencies:**
 
-- INFER-52 and INFER-53 can run in parallel
-- INFER-55 to INFER-57 can run in parallel (3 tracks)
-- INFER-58 and INFER-59 can run in parallel
+- CYCLE-52 and CYCLE-53 can run in parallel
+- CYCLE-55 to CYCLE-57 can run in parallel (3 tracks)
+- CYCLE-58 and CYCLE-59 can run in parallel
 
 **Parallelization:** 1 frontend agent, potentially split dashboard/auth/forms to 2 agents.
 
@@ -321,7 +321,7 @@ INFER-008 (Component hierarchy)  ┘    [Parallel tracks begin]
 
 ### Convex Components Track (Cycle 61-70)
 
-**Dependencies:** Requires INFER-011 through INFER-020 (all core services), GATE 2 complete.
+**Dependencies:** Requires CYCLE-011 through CYCLE-020 (all core services), GATE 2 complete.
 
 **SEQUENTIAL:** Wrapping components requires careful coordination.
 
@@ -330,41 +330,41 @@ INFER-008 (Component hierarchy)  ┘    [Parallel tracks begin]
                         ↓
         ┌───────────────┼───────────────┐
         │               │               │
-  INFER-61        INFER-62        INFER-63
+  CYCLE-61        CYCLE-62        CYCLE-63
   (Agent wrap)    (Tools)         (Workflow)
         │               │               │
         └───────────────┼───────────────┘
                         ↓
         ┌───────────────┼───────────────┐
         │               │               │
-  INFER-64        INFER-65        INFER-66
+  CYCLE-64        CYCLE-65        CYCLE-66
   (RAG wrap)      (Rate limit)    (Retry logic)
         │               │               │
         └───────────────┼───────────────┘
                         ↓
-                  INFER-67 (Workpool)
+                  CYCLE-67 (Workpool)
                         ↓
-                  INFER-68 (Monitoring)
+                  CYCLE-68 (Monitoring)
                         ↓
-                  INFER-69 (Integration tests)
+                  CYCLE-69 (Integration tests)
                         ↓
-                  INFER-70 (Benchmarks)
+                  CYCLE-70 (Benchmarks)
                         ↓
               [GATE 3C: Convex Complete]
 ```
 
 **Hard Dependencies:**
 
-- INFER-62 depends on INFER-61 (tools need agent wrapper)
-- INFER-64 depends on INFER-18 (RAG wrapper needs RAGService)
-- INFER-68 depends on INFER-61 through INFER-67 (monitor all)
-- INFER-69 depends on INFER-61 through INFER-68 (test all)
-- INFER-70 depends on INFER-69 (benchmark after tests pass)
+- CYCLE-62 depends on CYCLE-61 (tools need agent wrapper)
+- CYCLE-64 depends on CYCLE-18 (RAG wrapper needs RAGService)
+- CYCLE-68 depends on CYCLE-61 through CYCLE-67 (monitor all)
+- CYCLE-69 depends on CYCLE-61 through CYCLE-68 (test all)
+- CYCLE-70 depends on CYCLE-69 (benchmark after tests pass)
 
 **Soft Dependencies:**
 
-- INFER-61 to INFER-63 can partially overlap (but coordination needed)
-- INFER-64 to INFER-66 can partially overlap
+- CYCLE-61 to CYCLE-63 can partially overlap (but coordination needed)
+- CYCLE-64 to CYCLE-66 can partially overlap
 
 **Parallelization:** 2 integration agents can split work, but requires tight coordination.
 
@@ -372,48 +372,48 @@ INFER-008 (Component hierarchy)  ┘    [Parallel tracks begin]
 
 ### Testing & Validation Track (Cycle 71-80)
 
-**Dependencies:** Can START after INFER-020 (unit tests), but COMPLETE requires GATE 3 (all implementation done).
+**Dependencies:** Can START after CYCLE-020 (unit tests), but COMPLETE requires GATE 3 (all implementation done).
 
 **PARALLEL WITH Implementation:** Testing can run continuously alongside implementation.
 
 ```
-                  [INFER-20 Complete]
+                  [CYCLE-20 Complete]
                         ↓
-  INFER-71 (Test layers) ──→ [Ongoing: create mocks as services defined]
+  CYCLE-71 (Test layers) ──→ [Ongoing: create mocks as services defined]
         ↓
-  INFER-72 (Service tests) ──→ [Test each service after implementation]
+  CYCLE-72 (Service tests) ──→ [Test each service after implementation]
         ↓
-  INFER-73 (Integration tests) ──→ [Test flows after components ready]
+  CYCLE-73 (Integration tests) ──→ [Test flows after components ready]
         ↓
-  INFER-74 (E2E tests) ──→ [Waits for GATE 3]
+  CYCLE-74 (E2E tests) ──→ [Waits for GATE 3]
         ↓
-  INFER-75 (Ontology validation) ──→ [Verify mapping]
+  CYCLE-75 (Ontology validation) ──→ [Verify mapping]
         ↓
-  INFER-76 (Type safety) ──→ [Run type checks]
+  CYCLE-76 (Type safety) ──→ [Run type checks]
         ↓
-  INFER-77 (Code quality) ──→ [Run linter]
+  CYCLE-77 (Code quality) ──→ [Run linter]
         ↓
-  INFER-78 (Coverage) ──→ [Measure coverage]
+  CYCLE-78 (Coverage) ──→ [Measure coverage]
         ↓
-  INFER-79 (Performance) ──→ [Benchmark]
+  CYCLE-79 (Performance) ──→ [Benchmark]
         ↓
-  INFER-80 (Security) ──→ [Security audit]
+  CYCLE-80 (Security) ──→ [Security audit]
         ↓
   [GATE 4: Quality Complete]
 ```
 
 **Hard Dependencies:**
 
-- INFER-71 can start after INFER-11 (need error definitions)
-- INFER-72 runs incrementally as services complete
-- INFER-73 waits for INFER-54 (need integration layer)
-- INFER-74 waits for GATE 3 (all features implemented)
-- INFER-75 through INFER-80 are sequential validation steps
+- CYCLE-71 can start after CYCLE-11 (need error definitions)
+- CYCLE-72 runs incrementally as services complete
+- CYCLE-73 waits for CYCLE-54 (need integration layer)
+- CYCLE-74 waits for GATE 3 (all features implemented)
+- CYCLE-75 through CYCLE-80 are sequential validation steps
 
 **Soft Dependencies:**
 
-- INFER-71 to INFER-73 can overlap with implementation tracks
-- INFER-76 to INFER-80 can run in parallel (different validation types)
+- CYCLE-71 to CYCLE-73 can overlap with implementation tracks
+- CYCLE-76 to CYCLE-80 can run in parallel (different validation types)
 
 **Parallelization:** 1 quality agent runs continuous validation, 1 additional agent for deep testing.
 
@@ -421,32 +421,32 @@ INFER-008 (Component hierarchy)  ┘    [Parallel tracks begin]
 
 ### Performance Track (Cycle 81-90)
 
-**Dependencies:** Requires GATE 3 (implementation complete), INFER-074 (E2E tests passing).
+**Dependencies:** Requires GATE 3 (implementation complete), CYCLE-074 (E2E tests passing).
 
 **SEQUENTIAL:** Performance optimizations build on each other.
 
 ```
                     [GATE 3 Complete]
                            ↓
-  INFER-81 (Service caching) ──→ [Optimize hot paths]
+  CYCLE-81 (Service caching) ──→ [Optimize hot paths]
         ↓
-  INFER-82 (Query optimization) ──→ [Batch and dedupe]
+  CYCLE-82 (Query optimization) ──→ [Batch and dedupe]
         ↓
-  INFER-83 (Connection pooling) ──→ [Reuse connections]
+  CYCLE-83 (Connection pooling) ──→ [Reuse connections]
         ↓
-  INFER-84 (React optimization) ──→ [Minimize re-renders]
+  CYCLE-84 (React optimization) ──→ [Minimize re-renders]
         ↓
-  INFER-85 (Bundle optimization) ──→ [Reduce bundle size]
+  CYCLE-85 (Bundle optimization) ──→ [Reduce bundle size]
         ↓
-  INFER-86 (Streaming) ──→ [Stream responses]
+  CYCLE-86 (Streaming) ──→ [Stream responses]
         ↓
-  INFER-87 (Cache headers) ──→ [CDN caching]
+  CYCLE-87 (Cache headers) ──→ [CDN caching]
         ↓
-  INFER-88 (DB optimization) ──→ [Indexes and pagination]
+  CYCLE-88 (DB optimization) ──→ [Indexes and pagination]
         ↓
-  INFER-89 (Monitoring) ──→ [Track metrics]
+  CYCLE-89 (Monitoring) ──→ [Track metrics]
         ↓
-  INFER-90 (Baselines) ──→ [Set targets]
+  CYCLE-90 (Baselines) ──→ [Set targets]
         ↓
   [GATE 4A: Performance Complete]
 ```
@@ -454,13 +454,13 @@ INFER-008 (Component hierarchy)  ┘    [Parallel tracks begin]
 **Hard Dependencies:**
 
 - Sequential chain: each optimization builds on previous
-- INFER-89 depends on INFER-81 through INFER-88 (monitor after optimizing)
-- INFER-90 depends on INFER-89 (baseline after monitoring)
+- CYCLE-89 depends on CYCLE-81 through CYCLE-88 (monitor after optimizing)
+- CYCLE-90 depends on CYCLE-89 (baseline after monitoring)
 
 **Soft Dependencies:**
 
-- INFER-84 and INFER-85 can overlap (both frontend)
-- INFER-81 to INFER-83 can partially overlap (different layers)
+- CYCLE-84 and CYCLE-85 can overlap (both frontend)
+- CYCLE-81 to CYCLE-83 can partially overlap (different layers)
 
 **Parallelization:** 1 backend agent (81-83, 88), 1 frontend agent (84-87), shared monitoring (89-90).
 
@@ -477,35 +477,35 @@ INFER-008 (Component hierarchy)  ┘    [Parallel tracks begin]
                            ↓
         ┌──────────────────┴──────────────────┐
         │                                      │
-  INFER-91 (Prep)                      INFER-95 (Arch docs)
+  CYCLE-91 (Prep)                      CYCLE-95 (Arch docs)
         ↓                                      ↓
-  INFER-92 (Backend deploy)            INFER-96 (API docs)
+  CYCLE-92 (Backend deploy)            CYCLE-96 (API docs)
         ↓                                      ↓
-  INFER-93 (Frontend deploy)           INFER-97 (Impl guides)
+  CYCLE-93 (Frontend deploy)           CYCLE-97 (Impl guides)
         ↓                                      ↓
-  INFER-94 (Smoke tests)               INFER-98 (Lessons)
+  CYCLE-94 (Smoke tests)               CYCLE-98 (Lessons)
         │                                      │
         └──────────────────┬───────────────────┘
                            ↓
-                     INFER-99 (Knowledge base)
+                     CYCLE-99 (Knowledge base)
                            ↓
-                     INFER-100 (Complete)
+                     CYCLE-100 (Complete)
                            ↓
                    [GATE 5: Launch]
 ```
 
 **Hard Dependencies:**
 
-- INFER-92 depends on INFER-91 (prep before deploy)
-- INFER-93 depends on INFER-92 (backend before frontend)
-- INFER-94 depends on INFER-93 (test after deploy)
-- INFER-99 depends on INFER-95 through INFER-98 (consolidate docs)
-- INFER-100 depends on INFER-94 and INFER-99 (all done)
+- CYCLE-92 depends on CYCLE-91 (prep before deploy)
+- CYCLE-93 depends on CYCLE-92 (backend before frontend)
+- CYCLE-94 depends on CYCLE-93 (test after deploy)
+- CYCLE-99 depends on CYCLE-95 through CYCLE-98 (consolidate docs)
+- CYCLE-100 depends on CYCLE-94 and CYCLE-99 (all done)
 
 **Soft Dependencies:**
 
-- INFER-95 to INFER-98 can start during GATE 3 or GATE 4
-- INFER-95 to INFER-98 fully parallel (different doc types)
+- CYCLE-95 to CYCLE-98 can start during GATE 3 or GATE 4
+- CYCLE-95 to CYCLE-98 fully parallel (different doc types)
 
 **Parallelization:** 1 ops agent (deployment), 1 documenter agent (documentation).
 
@@ -523,20 +523,20 @@ Foundation (10) → Core Services (8) → Integration (6) → Implementation (8)
 
 **Critical Path Detail:**
 
-1. INFER-001 to INFER-010: Foundation (10 cycles)
-2. INFER-011, INFER-012, INFER-013, INFER-014: ThingService (4 cycles)
-3. INFER-020: Service tests (1 cycle)
-4. INFER-021: DataProvider interface (1 cycle)
-5. INFER-026, INFER-027, INFER-029: Provider integration (3 cycles)
-6. INFER-031, INFER-035, INFER-040: Auth integration (3 cycles)
-7. INFER-051, INFER-052, INFER-054: Frontend hooks (3 cycles)
-8. INFER-055: Dashboard components (1 cycle)
-9. INFER-060: Component tests (1 cycle)
-10. INFER-074: E2E tests (1 cycle)
-11. INFER-075: Ontology validation (1 cycle)
-12. INFER-081 to INFER-085: Performance (5 cycles)
-13. INFER-091 to INFER-094: Deployment (4 cycles)
-14. INFER-100: Complete (1 cycle)
+1. CYCLE-001 to CYCLE-010: Foundation (10 cycles)
+2. CYCLE-011, CYCLE-012, CYCLE-013, CYCLE-014: ThingService (4 cycles)
+3. CYCLE-020: Service tests (1 cycle)
+4. CYCLE-021: DataProvider interface (1 cycle)
+5. CYCLE-026, CYCLE-027, CYCLE-029: Provider integration (3 cycles)
+6. CYCLE-031, CYCLE-035, CYCLE-040: Auth integration (3 cycles)
+7. CYCLE-051, CYCLE-052, CYCLE-054: Frontend hooks (3 cycles)
+8. CYCLE-055: Dashboard components (1 cycle)
+9. CYCLE-060: Component tests (1 cycle)
+10. CYCLE-074: E2E tests (1 cycle)
+11. CYCLE-075: Ontology validation (1 cycle)
+12. CYCLE-081 to CYCLE-085: Performance (5 cycles)
+13. CYCLE-091 to CYCLE-094: Deployment (4 cycles)
+14. CYCLE-100: Complete (1 cycle)
 
 **Total critical path: 42 cycles**
 
@@ -548,13 +548,13 @@ Foundation (10) → Core Services (8) → Integration (6) → Implementation (8)
 
 | Track               | Cycles | Agent                 | Can Start After                    | Dependencies              |
 | ------------------- | ---------- | --------------------- | ---------------------------------- | ------------------------- |
-| Core Services       | 11-20      | Backend 1             | INFER-010                          | Foundation                |
-| DataProvider        | 21-30      | Integrator 1-4        | INFER-012                          | Service contexts          |
-| Better Auth         | 31-40      | Integrator 1-3        | INFER-015, INFER-021               | AuthService, DataProvider |
-| Astro Content       | 41-50      | Frontend 1            | INFER-018, INFER-007               | RAGService, plan          |
-| Frontend Components | 51-60      | Frontend 2            | INFER-013, INFER-015, INFER-008    | Services, plan            |
+| Core Services       | 11-20      | Backend 1             | CYCLE-010                          | Foundation                |
+| DataProvider        | 21-30      | Integrator 1-4        | CYCLE-012                          | Service contexts          |
+| Better Auth         | 31-40      | Integrator 1-3        | CYCLE-015, CYCLE-021               | AuthService, DataProvider |
+| Astro Content       | 41-50      | Frontend 1            | CYCLE-018, CYCLE-007               | RAGService, plan          |
+| Frontend Components | 51-60      | Frontend 2            | CYCLE-013, CYCLE-015, CYCLE-008    | Services, plan            |
 | Convex Components   | 61-70      | Backend 2, Integrator | GATE 2                             | All core services         |
-| Testing             | 71-80      | Quality 1-2           | INFER-020 (start), GATE 3 (finish) | Continuous                |
+| Testing             | 71-80      | Quality 1-2           | CYCLE-020 (start), GATE 3 (finish) | Continuous                |
 | Performance         | 81-90      | Backend 1, Frontend 1 | GATE 3                             | Implementation done       |
 | Deployment          | 91-94      | Ops                   | GATE 4                             | Validation done           |
 | Documentation       | 95-99      | Documenter            | GATE 3 (can start during)          | Implementation visible    |
@@ -567,33 +567,33 @@ Foundation (10) → Core Services (8) → Integration (6) → Implementation (8)
 
 ```
 Week 1-2: Foundation (All agents participate in planning)
-└─→ INFER-001 to INFER-010 (Sequential, but collaborative)
+└─→ CYCLE-001 to CYCLE-010 (Sequential, but collaborative)
 
 Week 3-5: Parallel Implementation Phase 1
-├─→ Backend Agent 1: INFER-011 to INFER-020 (Core Services)
-├─→ Integrator Agent 1: INFER-021 to INFER-025 (Convex + Notion providers)
-├─→ Integrator Agent 2: INFER-022, INFER-023 (WordPress + Supabase providers)
-├─→ Frontend Agent 1: INFER-041 to INFER-045 (Astro content start)
-└─→ Quality Agent: INFER-071 to INFER-073 (Test infrastructure)
+├─→ Backend Agent 1: CYCLE-011 to CYCLE-020 (Core Services)
+├─→ Integrator Agent 1: CYCLE-021 to CYCLE-025 (Convex + Notion providers)
+├─→ Integrator Agent 2: CYCLE-022, CYCLE-023 (WordPress + Supabase providers)
+├─→ Frontend Agent 1: CYCLE-041 to CYCLE-045 (Astro content start)
+└─→ Quality Agent: CYCLE-071 to CYCLE-073 (Test infrastructure)
 
 Week 6-8: Parallel Implementation Phase 2
-├─→ Backend Agent 1: INFER-061 to INFER-070 (Convex components)
-├─→ Integrator Agent 1: INFER-031 to INFER-040 (Better Auth)
-├─→ Integrator Agent 2: INFER-026 to INFER-030 (Provider factory + tests)
-├─→ Frontend Agent 1: INFER-046 to INFER-050 (Astro content finish)
-├─→ Frontend Agent 2: INFER-051 to INFER-060 (Frontend components)
-└─→ Quality Agent: INFER-072 to INFER-074 (Integration + E2E tests)
+├─→ Backend Agent 1: CYCLE-061 to CYCLE-070 (Convex components)
+├─→ Integrator Agent 1: CYCLE-031 to CYCLE-040 (Better Auth)
+├─→ Integrator Agent 2: CYCLE-026 to CYCLE-030 (Provider factory + tests)
+├─→ Frontend Agent 1: CYCLE-046 to CYCLE-050 (Astro content finish)
+├─→ Frontend Agent 2: CYCLE-051 to CYCLE-060 (Frontend components)
+└─→ Quality Agent: CYCLE-072 to CYCLE-074 (Integration + E2E tests)
 
 Week 9-10: Validation & Optimization
-├─→ Backend Agent 1: INFER-081 to INFER-083, INFER-088 (Backend perf)
-├─→ Frontend Agent 1: INFER-084 to INFER-087 (Frontend perf)
-├─→ Quality Agent: INFER-075 to INFER-080 (Full validation)
-└─→ Documenter Agent: INFER-095 to INFER-098 (Documentation)
+├─→ Backend Agent 1: CYCLE-081 to CYCLE-083, CYCLE-088 (Backend perf)
+├─→ Frontend Agent 1: CYCLE-084 to CYCLE-087 (Frontend perf)
+├─→ Quality Agent: CYCLE-075 to CYCLE-080 (Full validation)
+└─→ Documenter Agent: CYCLE-095 to CYCLE-098 (Documentation)
 
 Week 11: Deployment
-├─→ Ops Agent: INFER-091 to INFER-094 (Deployment)
-├─→ Documenter Agent: INFER-099 (Knowledge base update)
-└─→ All: INFER-100 (Launch coordination)
+├─→ Ops Agent: CYCLE-091 to CYCLE-094 (Deployment)
+├─→ Documenter Agent: CYCLE-099 (Knowledge base update)
+└─→ All: CYCLE-100 (Launch coordination)
 ```
 
 **Total wall-clock time: 8-10 weeks** (vs 16+ weeks sequential)
@@ -636,7 +636,7 @@ Quality gates are synchronization points where all agents pause to verify the sy
 
 ### GATE 2: Core Services Complete (After Cycle 20, 30, 40)
 
-**Blocking:** Convex component integration (INFER-061), frontend component migration (INFER-051)
+**Blocking:** Convex component integration (CYCLE-061), frontend component migration (CYCLE-051)
 **Owner:** agent-backend
 **Duration:** 1 day
 
@@ -667,7 +667,7 @@ Quality gates are synchronization points where all agents pause to verify the sy
 
 ### GATE 3: Implementation Complete (After Cycle 60, 70)
 
-**Blocking:** E2E testing (INFER-074), performance optimization (INFER-081)
+**Blocking:** E2E testing (CYCLE-074), performance optimization (CYCLE-081)
 **Owner:** agent-frontend + agent-integrator
 **Duration:** 1 day
 
@@ -698,7 +698,7 @@ Quality gates are synchronization points where all agents pause to verify the sy
 
 ### GATE 4: Validation Complete (After Cycle 80, 90)
 
-**Blocking:** Production deployment (INFER-091)
+**Blocking:** Production deployment (CYCLE-091)
 **Owner:** agent-quality
 **Duration:** 0.5 days
 
@@ -779,16 +779,16 @@ Quality gates are synchronization points where all agents pause to verify the sy
 
 **Detailed Breakdown:**
 
-- Week 1-2: INFER-011 to INFER-020 (Core Services)
+- Week 1-2: CYCLE-011 to CYCLE-020 (Core Services)
   - Define error classes and service contexts
   - Implement ThingService, AuthService, WorkflowService, RAGService
   - Create service layers (Live implementations)
   - Write unit tests for all services
-- Week 3: INFER-081 to INFER-083 (Backend Performance)
+- Week 3: CYCLE-081 to CYCLE-083 (Backend Performance)
   - Service-level caching (in-memory, TTL-based)
   - DataProvider query optimization (batching, deduplication)
   - Connection pooling for external services
-- Week 4: INFER-088 (Database Optimization)
+- Week 4: CYCLE-088 (Database Optimization)
   - Add database indexes
   - Implement pagination
   - Optimize query patterns
@@ -801,11 +801,11 @@ Quality gates are synchronization points where all agents pause to verify the sy
 
 **Detailed Breakdown:**
 
-- Week 1: INFER-061 to INFER-067
+- Week 1: CYCLE-061 to CYCLE-067
   - Wrap Agent, Workflow, RAG components with Effect
   - Implement Effect-based tool definitions
   - Add rate limiting, retry logic, workpool
-- Week 2: INFER-068 to INFER-070
+- Week 2: CYCLE-068 to CYCLE-070
   - Create monitoring and observability layer
   - Write integration tests for all wrapped components
   - Benchmark Effect overhead vs direct Convex calls
@@ -830,7 +830,7 @@ Quality gates are synchronization points where all agents pause to verify the sy
 
 **Detailed Breakdown:**
 
-- Week 1-2: INFER-041 to INFER-050 (Astro Content)
+- Week 1-2: CYCLE-041 to CYCLE-050 (Astro Content)
   - Design content collection schemas
   - Implement content loader service with Effect
   - Create layout wrappers with Effect context
@@ -838,7 +838,7 @@ Quality gates are synchronization points where all agents pause to verify the sy
   - Implement content versioning and collaboration
   - Add dynamic content rendering
   - Write E2E tests for content integration
-- Week 3: INFER-084 to INFER-087 (Frontend Performance)
+- Week 3: CYCLE-084 to CYCLE-087 (Frontend Performance)
   - React rendering optimization (memo, virtual lists)
   - Bundle size optimization (code splitting, lazy loading)
   - Streaming responses implementation
@@ -852,11 +852,11 @@ Quality gates are synchronization points where all agents pause to verify the sy
 
 **Detailed Breakdown:**
 
-- Week 1: INFER-051 to INFER-054
+- Week 1: CYCLE-051 to CYCLE-054
   - Create Effect-based React hooks
   - Implement useThingService, useAuthService
   - Create component integration layer (Effect context in React)
-- Week 2: INFER-055 to INFER-060
+- Week 2: CYCLE-055 to CYCLE-060
   - Migrate dashboard components
   - Migrate auth components
   - Migrate form components
@@ -895,13 +895,13 @@ Quality gates are synchronization points where all agents pause to verify the sy
 
 **Detailed Breakdown:**
 
-- Week 1: INFER-026 to INFER-030 (Provider Infrastructure)
+- Week 1: CYCLE-026 to CYCLE-030 (Provider Infrastructure)
   - Create provider factory pattern
   - Implement provider detection and initialization
   - Add provider error mapping
   - Write provider integration tests
   - Document provider integration guide
-- Week 2-3: INFER-031 to INFER-040 (Better Auth)
+- Week 2-3: CYCLE-031 to CYCLE-040 (Better Auth)
   - Create Better Auth adapter factory
   - Implement Convex, WordPress, Notion adapters
   - Wrap Better Auth with Effect service
@@ -934,19 +934,19 @@ Quality gates are synchronization points where all agents pause to verify the sy
 
 **Detailed Breakdown:**
 
-- Week 1-2: INFER-071 to INFER-073 (Test Infrastructure)
+- Week 1-2: CYCLE-071 to CYCLE-073 (Test Infrastructure)
   - Create test Effect layers (mocks)
   - Write unit tests for services as they're implemented
   - Write integration tests as flows become available
-- Week 3-4: INFER-074 to INFER-075 (E2E + Ontology)
+- Week 3-4: CYCLE-074 to CYCLE-075 (E2E + Ontology)
   - Wait for GATE 3 (implementation complete)
   - Write end-to-end tests for full user flows
   - Validate ontology mapping across all 6 dimensions
-- Week 5: INFER-076 to INFER-078 (Quality Checks)
+- Week 5: CYCLE-076 to CYCLE-078 (Quality Checks)
   - Run type safety checks (bunx astro check)
   - Run code quality checks (ESLint, Prettier)
   - Measure test coverage (>85% unit, >70% integration)
-- Week 6: INFER-079 to INFER-080 (Performance + Security)
+- Week 6: CYCLE-079 to CYCLE-080 (Performance + Security)
   - Performance testing (service latency, load testing)
   - Security testing (RBAC, injection, data isolation)
 
@@ -975,22 +975,22 @@ Quality gates are synchronization points where all agents pause to verify the sy
 
 **Detailed Breakdown:**
 
-- Day 1-2: INFER-095 (Architecture Documentation)
+- Day 1-2: CYCLE-095 (Architecture Documentation)
   - System design overview
   - Service dependencies diagram
   - DataProvider abstraction explanation
   - Error handling patterns
-- Day 3: INFER-096 (API Documentation)
+- Day 3: CYCLE-096 (API Documentation)
   - Service interface docs (all Effect services)
   - Effect context documentation
   - Error types reference
   - Code examples for common patterns
-- Day 4: INFER-097 (Implementation Guides)
+- Day 4: CYCLE-097 (Implementation Guides)
   - How to add new Effect service
   - How to add new DataProvider implementation
   - How to add new Better Auth adapter
   - How to test locally with mock layers
-- Day 5: INFER-098 to INFER-099 (Lessons + Knowledge Base)
+- Day 5: CYCLE-098 to CYCLE-099 (Lessons + Knowledge Base)
   - Capture lessons learned (what worked, what didn't)
   - Document design decisions and tradeoffs
   - Update knowledge base with new patterns
@@ -1014,28 +1014,28 @@ Quality gates are synchronization points where all agents pause to verify the sy
 
 **Detailed Breakdown:**
 
-- Day 1: INFER-091 (Deployment Prep)
+- Day 1: CYCLE-091 (Deployment Prep)
   - Set up CI/CD pipeline (GitHub Actions)
   - Configure environment variables (Cloudflare, Convex)
   - Set up secrets management (env vars, API keys)
   - Plan rollout strategy (blue-green deployment)
-- Day 2: INFER-092 (Backend Deployment)
+- Day 2: CYCLE-092 (Backend Deployment)
   - Deploy Convex backend (npx convex deploy)
   - Deploy Better Auth service
   - Deploy DataProvider implementations
   - Test connectivity and health checks
-- Day 3: INFER-093 (Frontend Deployment)
+- Day 3: CYCLE-093 (Frontend Deployment)
   - Build Astro production bundle (bun run build)
   - Deploy to Cloudflare Pages
   - Configure CDN (cache rules, redirects)
   - Set up custom domain and SSL
-- Day 4: INFER-094, INFER-089 (Smoke Tests + Monitoring)
+- Day 4: CYCLE-094, CYCLE-089 (Smoke Tests + Monitoring)
   - Run smoke tests in production
   - Verify all critical user flows
   - Check performance metrics (LCP, FID, CLS)
   - Monitor error rates (Sentry integration)
   - Set up alerts (Slack, email)
-- Day 5: INFER-090 (Performance Baselines)
+- Day 5: CYCLE-090 (Performance Baselines)
   - Measure baseline performance metrics
   - Set performance targets (SLAs)
   - Track performance over time (dashboards)
@@ -1060,7 +1060,7 @@ Quality gates are synchronization points where all agents pause to verify the sy
 
 **Detailed Breakdown:**
 
-- Week 1: INFER-001 to INFER-010 (Foundation)
+- Week 1: CYCLE-001 to CYCLE-010 (Foundation)
   - Validate Effect.ts + DataProvider against 6-dimension ontology
   - Map service architecture
   - List service dependencies
@@ -1071,7 +1071,7 @@ Quality gates are synchronization points where all agents pause to verify the sy
   - Design frontend component hierarchy
   - Create implementation plan breakdown
   - Assign specialists and dependencies
-- Week 11: INFER-100 (Launch Coordination)
+- Week 11: CYCLE-100 (Launch Coordination)
   - Wait for GATE 5 (all deployment + documentation complete)
   - Update feature status to "complete"
   - Notify stakeholders (team, users, leadership)
@@ -1126,44 +1126,44 @@ Quality gates are synchronization points where all agents pause to verify the sy
 
 **Week 1-2: Foundation (10 days)**
 
-- All agents: INFER-001 to INFER-010
+- All agents: CYCLE-001 to CYCLE-010
 - Collaborative planning and architecture
 
 **Week 3-4: Core Services + DataProvider Start (10 days)**
 
-- Backend Agent 1: INFER-011 to INFER-020 (Core Services)
-- Integrator Agents 1-4: INFER-021 to INFER-025 (Provider implementations)
-- Quality Agent: INFER-071 to INFER-073 (Test infrastructure)
+- Backend Agent 1: CYCLE-011 to CYCLE-020 (Core Services)
+- Integrator Agents 1-4: CYCLE-021 to CYCLE-025 (Provider implementations)
+- Quality Agent: CYCLE-071 to CYCLE-073 (Test infrastructure)
 
 **Week 5: DataProvider + Auth (5 days)**
 
-- Integrator Agent 3: INFER-026 to INFER-030 (Provider factory)
-- Integrator Agents 1-3: INFER-031 to INFER-034 (Auth adapters start)
+- Integrator Agent 3: CYCLE-026 to CYCLE-030 (Provider factory)
+- Integrator Agents 1-3: CYCLE-031 to CYCLE-034 (Auth adapters start)
 
 **Week 6-7: Frontend + Convex Components (10 days)**
 
-- Backend Agent 2: INFER-061 to INFER-070 (Convex components)
-- Frontend Agent 1: INFER-041 to INFER-050 (Astro content)
-- Frontend Agent 2: INFER-051 to INFER-060 (Frontend components)
-- Integrator Agent 3: INFER-035 to INFER-040 (Auth finish)
-- Quality Agent: INFER-074 (E2E tests start)
+- Backend Agent 2: CYCLE-061 to CYCLE-070 (Convex components)
+- Frontend Agent 1: CYCLE-041 to CYCLE-050 (Astro content)
+- Frontend Agent 2: CYCLE-051 to CYCLE-060 (Frontend components)
+- Integrator Agent 3: CYCLE-035 to CYCLE-040 (Auth finish)
+- Quality Agent: CYCLE-074 (E2E tests start)
 
 **Week 8: Validation (5 days)**
 
-- Quality Agent: INFER-075 to INFER-080 (Full validation)
-- Documenter: INFER-095 to INFER-098 (Documentation start)
+- Quality Agent: CYCLE-075 to CYCLE-080 (Full validation)
+- Documenter: CYCLE-095 to CYCLE-098 (Documentation start)
 
 **Week 9: Performance (5 days)**
 
-- Backend Agent 1: INFER-081 to INFER-083, INFER-088
-- Frontend Agent 1: INFER-084 to INFER-087
-- Ops Agent: INFER-089 to INFER-090 (Monitoring setup)
+- Backend Agent 1: CYCLE-081 to CYCLE-083, CYCLE-088
+- Frontend Agent 1: CYCLE-084 to CYCLE-087
+- Ops Agent: CYCLE-089 to CYCLE-090 (Monitoring setup)
 
 **Week 10: Deployment (5 days)**
 
-- Ops Agent: INFER-091 to INFER-094
-- Documenter: INFER-099
-- Director: INFER-100
+- Ops Agent: CYCLE-091 to CYCLE-094
+- Documenter: CYCLE-099
+- Director: CYCLE-100
 
 **Total: 50-60 days with 6 agents working in parallel**
 
@@ -1233,7 +1233,7 @@ Add 20% buffer for:
 **Performance:**
 
 - **Target:** <50ms average service call latency
-- **Measurement:** Benchmark results from INFER-070, INFER-079
+- **Measurement:** Benchmark results from CYCLE-070, CYCLE-079
 - **Alert Threshold:** >100ms average (user-facing impact)
 
 **Type Safety:**
@@ -1245,7 +1245,7 @@ Add 20% buffer for:
 **Ontology Compliance:**
 
 - **Target:** 100% of features mapped to 6 dimensions
-- **Measurement:** Ontology validation report (INFER-075)
+- **Measurement:** Ontology validation report (CYCLE-075)
 - **Alert Threshold:** <95% compliance
 
 ---
@@ -1257,7 +1257,7 @@ Add 20% buffer for:
 **Action Items for agent-director:**
 
 1. [ ] Review and approve this execution strategy
-2. [ ] Begin INFER-001 (Validate ontology mapping)
+2. [ ] Begin CYCLE-001 (Validate ontology mapping)
 3. [ ] Recruit specialist agents if additional capacity needed
 4. [ ] Set up coordination infrastructure (shared docs, standups)
 
@@ -1282,7 +1282,7 @@ This execution strategy provides a **detailed roadmap for parallel execution** o
 4. **Balanced specialist allocation** to avoid bottlenecks
 5. **Continuous testing** to catch issues early
 
-**Next Step:** Begin INFER-001 (Validate Effect.ts + DataProvider against 6-dimension ontology).
+**Next Step:** Begin CYCLE-001 (Validate Effect.ts + DataProvider against 6-dimension ontology).
 
 ---
 

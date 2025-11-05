@@ -1,10 +1,10 @@
-# Backend Testing TODO List (Inference 65/100)
+# Backend Testing TODO List (Cycle 65/100)
 
 **Mission**: Create comprehensive e2e tests for critical backend paths in AI-powered recommendations feature.
 
-**Status**: Inference 65/100 - Write e2e tests for critical paths
+**Status**: Cycle 65/100 - Write e2e tests for critical paths
 **Feature**: AI-powered recommendations system
-**Progress**: 64/100 inferences complete
+**Progress**: 64/100 cycles complete
 
 **Updated**: 2025-10-30
 **Scope**: Complete service layer, Convex queries/mutations, database integrity, error handling, and performance validation
@@ -1154,11 +1154,11 @@ bun run test:coverage
 
 ## Timeline Estimation
 
-- **Phase 1 (Service tests)**: 2-3 inferences
-- **Phase 2 (Convex tests)**: 2-3 inferences
-- **Phase 3 (Database tests)**: 2-3 inferences
-- **Phase 4 (Integration tests)**: 2-3 inferences
-- **Total**: 8-12 inferences (Cycle 65-76)
+- **Phase 1 (Service tests)**: 2-3 cycles
+- **Phase 2 (Convex tests)**: 2-3 cycles
+- **Phase 3 (Database tests)**: 2-3 cycles
+- **Phase 4 (Integration tests)**: 2-3 cycles
+- **Total**: 8-12 cycles (Cycle 65-76)
 
 Current progress: Cycle 65/100 (ready to start Phase 1)
 

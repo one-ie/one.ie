@@ -228,7 +228,7 @@ If creating custom entity or connection types, document in ontology.
 
 ### v1.2.0 (Planned)
 - ML-based entity type suggestions
-- Relationship inference from descriptions
+- Relationship cycle from descriptions
 - Schema optimization recommendations
 
 ## Contributing

@@ -28,7 +28,7 @@ Implement Convex backend infrastructure: schema design, mutations, queries, Effe
 - Every mutation MUST validate organization context
 - Every query MUST filter by organizationId
 - Enforce resource quotas at mutation level
-- Track usage: users, courses, storage, API calls, inference
+- Track usage: users, courses, storage, API calls, cycle
 
 ### 2. People (Authorization & Governance)
 - Every mutation MUST identify actor (person)
@@ -385,7 +385,7 @@ watchFor('test_passed', 'quality/all', () => {
 - **Agent**: agent_created, agent_executed, agent_completed, agent_failed
 - **Workflow**: task_completed, implementation_complete, fix_started, fix_complete
 - **Analytics**: metric_calculated, insight_generated, prediction_made
-- **Inference**: inference_request, inference_completed, inference_failed
+- **Cycle**: cycle_request, cycle_completed, cycle_failed
 - **Consolidated**: content_event, payment_event, subscription_event, commerce_event, communication_event, task_event
 
 # Critical Mistakes to Avoid

@@ -1,10 +1,67 @@
+### **4f2ba022** — template:22 custom:1 — `refactor: Rename Cycle to Cycle throughout codebase`` [customization]
+
+**Template:**
+  - .claude/agents/NEWS-QUICKSTART.md
+  - .claude/agents/NEWS-README.md
+  - .claude/commands/cascade.md
+  - .claude/commands/create.md
+  - .claude/commands/one.md
+  - .claude/commands/plan.md
+  - .claude/commands/release.md
+  - .claude/hooks.log
+  - .claude/hooks/README-knowledge-hooks.md
+  - .claude/hooks/README.md
+  - .claude/hooks/clean-post.py
+  - .claude/hooks/clean-pre.py
+  - .claude/hooks/done.py
+  - .claude/hooks/hook-logger.sh
+  - .claude/hooks/knowledge-post.py
+  - .claude/hooks/notification-hook.sh
+  - .claude/hooks/release-cli.sh
+  - .claude/hooks/tag-all-docs.py
+  - .claude/hooks/todo.py
+  - .claude/hooks/validate-ontology-structure.py
+  - .claude/state/cycle.json
+  - .claude/state/cycle.json
+
+**Your Changes:**
+  - CLAUDE.md
+
+
+
+### **a7faf65b** — custom:2 — `fix: correct all documentation links in README and enhance CLAUDE.md with workflow documentation`` [customization]
+
+**Your Changes:**
+  - CLAUDE.md
+  - README.md
+
+
+
+### **c01ebbd2** — template:1 — `docs: Add comprehensive pull-before-push guide to .claude/hooks``
+
+**Template:**
+  - .claude/hooks/PULL-BEFORE-PUSH-GUIDE.md
+
+
+
+### **bd88c9b2** — template:5 — `feat: Enforce "pull before push" rule in all git hooks``
+
+**Template:**
+  - .claude/hooks.log
+  - .claude/hooks/commit-push.sh
+  - .claude/hooks/push.sh
+  - .claude/state/cycle.json
+  - one/events/0-changes.md
+
+
+
 ### **606065bd** — template:5 — `docs: Add "pull before push" rule to prevent branch divergence``
 
 **Template:**
   - .claude/agents/agent-ops.md
   - .claude/commands/push.md
   - .claude/hooks.log
-  - .claude/state/inference.json
+  - .claude/state/cycle.json
   - one/events/0-changes.md
 
 
@@ -45,10 +102,10 @@
   - .claude/plans/EXECUTION-SUMMARY.md
   - .claude/plans/INDEX-ALL-AGENTS.md
   - .claude/plans/INDEX-FRONTEND-TESTING.md
-  - .claude/plans/INDEX-QUALITY-AGENT-INFER65.md
+  - .claude/plans/INDEX-QUALITY-AGENT-CYCLE65.md
   - .claude/plans/INDEX.md
   - .claude/plans/MASTER-COORDINATION-PLAN.md
-  - .claude/plans/MASTER-ORCHESTRATION-INFER65.md
+  - .claude/plans/MASTER-ORCHESTRATION-CYCLE65.md
   - .claude/plans/MASTER-PLAN-SUMMARY.md
   - .claude/plans/PLAN-COMPLETE.md
   - .claude/plans/PROBLEM-SOLVER-QUICKSTART.md
@@ -67,10 +124,10 @@
   - .claude/plans/todo-agent-quality.md
   - .claude/skills/ontology/README.md
   - .claude/state/cycle.json
-  - .claude/state/inference.json
+  - .claude/state/cycle.json
   - one/README.md
   - one/connections/documentation.md
-  - one/connections/inference.md
+  - one/connections/cycle.md
   - one/connections/workflow-copy.md
   - one/connections/workflow-onboarding.md
   - one/connections/workflow.md
@@ -126,7 +183,7 @@
   - one/events/wave1-backend-implementation-complete.md
   - one/groups/groups.md
   - one/groups/one.md
-  - one/knowledge/100-inference-quick-reference.md
+  - one/knowledge/100-cycle-quick-reference.md
   - one/knowledge/ai-token-crypto-analysis-framework.md
   - one/knowledge/archived/ontology.old.md
   - one/knowledge/audit-agent-onboard-alignment.md
@@ -203,7 +260,7 @@
   - one/things/plans/unified-implementation-plan.md
   - one/things/plans/update-demos.md
   - one/things/plans/use-our-backend.md
-  - one/things/plans/wave1-onboarding-100-inferences.md
+  - one/things/plans/wave1-onboarding-100-cycles.md
   - one/things/plans/wave1-onboarding-vision.md
   - one/things/plans/wave1-orchestration-summary.md
   - one/things/plans/wave1-specialist-assignments.md
@@ -253,7 +310,7 @@
   - web/src/content/features/commands.md
   - web/src/content/features/hooks.md
   - web/src/content/features/skills.md
-  - web/src/content/plans/100-inference-template.md
+  - web/src/content/plans/100-cycle-template.md
   - web/src/content/plans/acp-integration.md
   - web/src/content/plans/ai.md
   - web/src/content/plans/api.md
@@ -307,7 +364,7 @@
 
 **Template:**
   - .claude/hooks.log
-  - .claude/state/inference.json
+  - .claude/state/cycle.json
   - one/events/0-changes.md
 
 **Your Changes:**
@@ -329,7 +386,7 @@
   - .claude/commands/commit.md
   - .claude/hooks.log
   - .claude/hooks/commit-push.sh
-  - .claude/state/inference.json
+  - .claude/state/cycle.json
   - one/events/0-changes.md
 
 **Your Changes:**
@@ -341,7 +398,7 @@
 
 **Template:**
   - .claude/hooks.log
-  - .claude/state/inference.json
+  - .claude/state/cycle.json
   - one/events/0-changes.md
 
 **Your Changes:**
@@ -377,11 +434,11 @@
 
 
 
-### **edea327b** — template:3 — `chore: Update inference state and hook logs``
+### **edea327b** — template:3 — `chore: Update cycle state and hook logs``
 
 **Template:**
   - .claude/hooks.log
-  - .claude/state/inference.json
+  - .claude/state/cycle.json
   - one/events/0-changes.md
 
 
@@ -439,10 +496,10 @@
   - .claude/plans/EXECUTION-SUMMARY.md
   - .claude/plans/INDEX-ALL-AGENTS.md
   - .claude/plans/INDEX-FRONTEND-TESTING.md
-  - .claude/plans/INDEX-QUALITY-AGENT-INFER65.md
+  - .claude/plans/INDEX-QUALITY-AGENT-CYCLE65.md
   - .claude/plans/INDEX.md
   - .claude/plans/MASTER-COORDINATION-PLAN.md
-  - .claude/plans/MASTER-ORCHESTRATION-INFER65.md
+  - .claude/plans/MASTER-ORCHESTRATION-CYCLE65.md
   - .claude/plans/MASTER-PLAN-SUMMARY.md
   - .claude/plans/PLAN-COMPLETE.md
   - .claude/plans/PROBLEM-SOLVER-QUICKSTART.md
@@ -461,10 +518,10 @@
   - .claude/plans/todo-agent-quality.md
   - .claude/skills/ontology/README.md
   - .claude/state/cycle.json
-  - .claude/state/inference.json
+  - .claude/state/cycle.json
   - one/README.md
   - one/connections/documentation.md
-  - one/connections/inference.md
+  - one/connections/cycle.md
   - one/connections/workflow-copy.md
   - one/connections/workflow-onboarding.md
   - one/connections/workflow.md
@@ -548,7 +605,7 @@
   - one/events/wave1-backend-implementation-complete.md
   - one/groups/groups.md
   - one/groups/one.md
-  - one/knowledge/100-inference-quick-reference.md
+  - one/knowledge/100-cycle-quick-reference.md
   - one/knowledge/ai-token-crypto-analysis-framework.md
   - one/knowledge/archived/ontology.old.md
   - one/knowledge/audit-agent-onboard-alignment.md
@@ -625,7 +682,7 @@
   - one/things/plans/unified-implementation-plan.md
   - one/things/plans/update-demos.md
   - one/things/plans/use-our-backend.md
-  - one/things/plans/wave1-onboarding-100-inferences.md
+  - one/things/plans/wave1-onboarding-100-cycles.md
   - one/things/plans/wave1-onboarding-vision.md
   - one/things/plans/wave1-orchestration-summary.md
   - one/things/plans/wave1-specialist-assignments.md
@@ -675,7 +732,7 @@
   - web/src/content/features/commands.md
   - web/src/content/features/hooks.md
   - web/src/content/features/skills.md
-  - web/src/content/plans/100-inference-template.md
+  - web/src/content/plans/100-cycle-template.md
   - web/src/content/plans/acp-integration.md
   - web/src/content/plans/ai.md
   - web/src/content/plans/api.md

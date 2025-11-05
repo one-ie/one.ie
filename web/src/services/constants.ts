@@ -228,7 +228,7 @@ export const EVENT_TYPES = [
   "optimization_applied",
   "report_generated",
 
-  // INFERENCE EVENTS (7)
+  // CYCLEENCE EVENTS (7)
   "cycle_request",
   "cycle_completed",
   "cycle_failed",

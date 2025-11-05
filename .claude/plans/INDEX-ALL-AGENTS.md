@@ -2,7 +2,7 @@
 
 ## Quick Start
 
-**Current Inference:** 65/100 (64% Complete)
+**Current Cycle:** 65/100 (64% Complete)
 **Current Task:** Write e2e tests for critical paths
 **Feature:** AI-powered recommendations
 **Team:** 6 agents (Director + 5 specialists) operating in parallel
@@ -10,7 +10,7 @@
 ## All Agent TODO Files
 
 ### Start Here 👈
-**File:** `MASTER-ORCHESTRATION-INFER65.md`
+**File:** `MASTER-ORCHESTRATION-CYCLE65.md`
 - Master coordination plan
 - Parallel execution strategy
 - Critical path diagram
@@ -34,7 +34,7 @@
 All in `.claude/plans/` directory
 
 **Core Orchestration:**
-- `MASTER-ORCHESTRATION-INFER65.md` - Master plan (start here)
+- `MASTER-ORCHESTRATION-CYCLE65.md` - Master plan (start here)
 - `INDEX-ALL-AGENTS.md` - Navigation guide (this file)
 
 **Agent TODO Lists:**
@@ -65,13 +65,13 @@ All in `.claude/plans/` directory
                             ↓
                     DIRECTOR VALIDATES
                             ↓
-                    /done → INFER 66
+                    /done → CYCLE 66
 ```
 
 ## Execution Checklist
 
 ### Phase 1: Planning (Day 1-2)
-- [ ] Read `MASTER-ORCHESTRATION-INFER65.md`
+- [ ] Read `MASTER-ORCHESTRATION-CYCLE65.md`
 - [ ] All agents read their TODO files
 - [ ] Confirm dependencies are clear
 - [ ] Create task tracking
@@ -119,12 +119,12 @@ All in `.claude/plans/` directory
 ## How to Use These Documents
 
 ### For Leadership
-1. Read `MASTER-ORCHESTRATION-INFER65.md` (executive summary)
+1. Read `MASTER-ORCHESTRATION-CYCLE65.md` (executive summary)
 2. Review success metrics and timeline
 3. Check quality gates for go/no-go
 
 ### For Team Lead (Director)
-1. Read `MASTER-ORCHESTRATION-INFER65.md` (full)
+1. Read `MASTER-ORCHESTRATION-CYCLE65.md` (full)
 2. Review all agent TODO files
 3. Create task tracking spreadsheet
 4. Monitor parallel execution
@@ -140,7 +140,7 @@ All in `.claude/plans/` directory
 All planning documents:
 ```
 /Users/toc/Server/ONE/.claude/plans/
-├── MASTER-ORCHESTRATION-INFER65.md
+├── MASTER-ORCHESTRATION-CYCLE65.md
 ├── INDEX-ALL-AGENTS.md (this file)
 ├── todo-agent-director.md
 ├── todo-agent-quality.md
@@ -159,7 +159,7 @@ Documentation to create:
 ## Next Immediate Actions
 
 1. **RIGHT NOW (5 minutes)**
-   - Read `MASTER-ORCHESTRATION-INFER65.md` (executive)
+   - Read `MASTER-ORCHESTRATION-CYCLE65.md` (executive)
    - Review agent assignments
    - Confirm team ready
 
@@ -187,4 +187,4 @@ Documentation to create:
 
 **Status:** ✅ **READY FOR EXECUTION**
 
-Start with: `MASTER-ORCHESTRATION-INFER65.md`
+Start with: `MASTER-ORCHESTRATION-CYCLE65.md`

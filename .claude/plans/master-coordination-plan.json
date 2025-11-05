@@ -1,14 +1,14 @@
 {
   "version": "1.0.0",
   "createdAt": "2025-10-30T00:00:00Z",
-  "currentInference": 88,
-  "completedInferences": 87,
+  "currentCycle": 88,
+  "completedCycles": 87,
   "masterPlan": {
     "title": "ONE Platform: Master Coordination Plan",
-    "subtitle": "Unified execution of 3 critical plans across 100+ inferences",
+    "subtitle": "Unified execution of 3 critical plans across 100+ cycles",
     "scope": "Complete 6-dimension ontology implementation with backend-agnostic architecture",
     "timeline": "11 weeks (77 business days)",
-    "totalInferences": 100,
+    "totalCycles": 100,
     "estimatedCost": "$1000-$5000",
     "complexity": "High",
     "riskLevel": "Medium",
@@ -17,9 +17,9 @@
   "executiveSummary": {
     "threePlans": [
       {
-        "name": "Agent Director 100-Inference Plans",
+        "name": "Agent Director 100-Cycle Plans",
         "status": "Specification Complete",
-        "inferences": "1-10",
+        "cycles": "1-10",
         "criticality": "High",
         "blocks": ["Unified Implementation Plan", "Big Plan"],
         "summary": "Foundation for intelligent plan generation and execution coordination"
@@ -27,7 +27,7 @@
       {
         "name": "Unified Implementation Plan",
         "status": "Phases 1-2 Complete (36%)",
-        "inferences": "11-90",
+        "cycles": "11-90",
         "criticality": "Critical",
         "blocks": ["Agent Director", "Big Plan"],
         "summary": "Backend-agnostic architecture + complete 66-type ontology implementation"
@@ -35,7 +35,7 @@
       {
         "name": "Big Plan",
         "status": "Outline Complete",
-        "inferences": "31-80",
+        "cycles": "31-80",
         "criticality": "High",
         "blocks": ["None (parallel)"],
         "summary": "UI/UX design, content layer, agent framework, knowledge system"
@@ -44,15 +44,15 @@
     "criticalPath": "Agent Director → DataProvider → Services → Backend CRUD → Frontend UI → RAG → Multi-Backend",
     "parallelGroups": 4,
     "estimatedParallelSpeedup": "40-50%",
-    "nextInference": 89
+    "nextCycle": 89
   },
-  "inferenceMappingStrategy": {
-    "description": "Maps all work to 100-inference sequence for precise execution tracking",
+  "cycleMappingStrategy": {
+    "description": "Maps all work to 100-cycle sequence for precise execution tracking",
     "foundationPhases": {
       "infer1to10": {
         "phase": "Agent Director Foundation",
         "name": "Plan Generation & Execution Framework",
-        "inferences": "1-10",
+        "cycles": "1-10",
         "status": "Specification Complete, Implementation Pending",
         "specialist": "agent-director",
         "duration": "2-3 days",
@@ -61,7 +61,7 @@
         "tasks": [
           "Implement feature library (20+ features)",
           "Implement dependency resolution algorithm",
-          "Implement inference mapping (features → ranges)",
+          "Implement cycle mapping (features → ranges)",
           "Implement estimate calculation",
           "Create execution plan generator",
           "Write to .onboarding.json with progress tracking"
@@ -84,7 +84,7 @@
       "infer11to20": {
         "phase": "Unified: DataProvider Architecture",
         "name": "Backend-Agnostic Interface Design",
-        "inferences": "11-20",
+        "cycles": "11-20",
         "status": "Complete (from Unified Plan Phase 1)",
         "specialist": "agent-backend",
         "duration": "0 days (already done)",
@@ -113,7 +113,7 @@
       "infer21to30": {
         "phase": "Unified: Effect.ts Service Layer",
         "name": "Business Logic & Dependency Injection",
-        "inferences": "21-30",
+        "cycles": "21-30",
         "status": "Complete (from Unified Plan Phase 2)",
         "specialist": "agent-backend",
         "duration": "0 days (already done)",
@@ -146,7 +146,7 @@
       "infer31to40": {
         "phase": "Backend Implementation Phase 1",
         "name": "Core Entity CRUD (Creators, AI Clones, Audiences, Organizations)",
-        "inferences": "31-40",
+        "cycles": "31-40",
         "status": "Not Started",
         "specialist": "agent-backend",
         "duration": "3-4 days",
@@ -183,7 +183,7 @@
       "infer41to50": {
         "phase": "Backend Implementation Phase 2",
         "name": "Content & Products (Blog, Courses, Products, Memberships)",
-        "inferences": "41-50",
+        "cycles": "41-50",
         "status": "Not Started",
         "specialist": "agent-backend",
         "duration": "3-4 days",
@@ -220,7 +220,7 @@
       "infer51to60": {
         "phase": "Backend Implementation Phase 3",
         "name": "Tokens, Agents & Advanced (Tokens, 10 Agents, Workflows)",
-        "inferences": "51-60",
+        "cycles": "51-60",
         "status": "Not Started",
         "specialist": "agent-backend",
         "duration": "3-4 days",
@@ -257,7 +257,7 @@
       "infer61to70": {
         "phase": "Frontend Implementation Phase 1",
         "name": "Multi-Tenant Dashboard & Entity Management UI",
-        "inferences": "61-70",
+        "cycles": "61-70",
         "status": "Not Started",
         "specialist": "agent-frontend",
         "duration": "4-5 days",
@@ -294,7 +294,7 @@
       "infer71to80": {
         "phase": "Backend Implementation Phase 4 + RAG",
         "name": "Advanced Features, RAG, Knowledge System",
-        "inferences": "71-80",
+        "cycles": "71-80",
         "status": "Not Started",
         "specialist": "agent-backend",
         "duration": "4-5 days",
@@ -331,7 +331,7 @@
       "infer81to90": {
         "phase": "Testing, Multi-Backend, Performance",
         "name": "Comprehensive Testing & Alternative Backends",
-        "inferences": "81-90",
+        "cycles": "81-90",
         "status": "Not Started",
         "specialist": "agent-quality",
         "duration": "4-5 days",
@@ -370,7 +370,7 @@
       "infer91to100": {
         "phase": "Deployment & Documentation",
         "name": "Production Deployment & Complete Documentation",
-        "inferences": "91-100",
+        "cycles": "91-100",
         "status": "Not Started",
         "specialist": "agent-ops",
         "duration": "3-4 days",
@@ -412,7 +412,7 @@
       {
         "groupName": "Group A: Foundation (Sequential)",
         "phases": ["infer1to10", "infer11to20", "infer21to30"],
-        "inferences": "1-30",
+        "cycles": "1-30",
         "duration": "2 weeks",
         "specialists": ["agent-director", "agent-backend"],
         "canRunParallel": false,
@@ -423,7 +423,7 @@
       {
         "groupName": "Group B: Backend CRUD Implementation (Parallel)",
         "phases": ["infer31to40", "infer41to50", "infer51to60"],
-        "inferences": "31-60",
+        "cycles": "31-60",
         "duration": "2 weeks (instead of 3-4 weeks sequential)",
         "specialists": ["agent-backend", "agent-backend", "agent-backend"],
         "canRunParallel": true,
@@ -442,7 +442,7 @@
       {
         "groupName": "Group C: Frontend & Design (Parallel with Backend)",
         "phases": ["infer61to70"],
-        "inferences": "61-70",
+        "cycles": "61-70",
         "duration": "2 weeks (parallel with Group B)",
         "specialists": ["agent-frontend", "agent-designer"],
         "canRunParallel": true,
@@ -458,7 +458,7 @@
       {
         "groupName": "Group D: Advanced Features & Testing (Sequential)",
         "phases": ["infer71to80", "infer81to90"],
-        "inferences": "71-90",
+        "cycles": "71-90",
         "duration": "3 weeks",
         "specialists": ["agent-backend", "agent-quality"],
         "canRunParallel": false,
@@ -469,7 +469,7 @@
       {
         "groupName": "Group E: Deployment Preparation (Parallel with Testing)",
         "phases": ["infer91to100"],
-        "inferences": "91-100",
+        "cycles": "91-100",
         "duration": "1 week (parallel with final testing)",
         "specialists": ["agent-ops"],
         "canRunParallel": true,
@@ -549,7 +549,7 @@
         "workAssigned": [
           {
             "phase": "infer1to10",
-            "task": "Implement 100-inference plan generation framework",
+            "task": "Implement 100-cycle plan generation framework",
             "effort": "16 hours",
             "timeline": "Week 1"
           }
@@ -559,7 +559,7 @@
           "Monitor all specialist progress",
           "Detect and resolve blockers",
           "Emit coordination events",
-          "Track inference progress",
+          "Track cycle progress",
           "Manage parallel execution groups"
         ]
       },
@@ -784,9 +784,9 @@
   "successMetrics": {
     "technical": [
       {
-        "metric": "Inferences tracked correctly",
-        "target": "100% (all 100 inferences mapped, tracked, completed)",
-        "measurement": "Verify inference.json updates with each phase"
+        "metric": "Cycles tracked correctly",
+        "target": "100% (all 100 cycles mapped, tracked, completed)",
+        "measurement": "Verify cycle.json updates with each phase"
       },
       {
         "metric": "Ontology completeness",
@@ -900,8 +900,8 @@
       },
       "progressTracking": {
         "frequency": "Hourly from specialists",
-        "format": "Event emitted with current inference, tasks completed, blockers",
-        "dashboard": ".claude/state/inference.json (real-time updates)"
+        "format": "Event emitted with current cycle, tasks completed, blockers",
+        "dashboard": ".claude/state/cycle.json (real-time updates)"
       },
       "weeklyReview": {
         "time": "End of week",
@@ -997,7 +997,7 @@
   },
   "documentationReferences": {
     "plans": {
-      "agent_director_100_inference_plans": "/one/things/plans/agent-director-100-inference-plans.md",
+      "agent_director_100_cycle_plans": "/one/things/plans/agent-director-100-cycle-plans.md",
       "unified_implementation_plan": "/one/things/plans/unified-implementation-plan.md",
       "big_plan": "/one/things/plans/big-plan.md"
     },
@@ -1008,7 +1008,7 @@
     },
     "coordination": {
       "workflow": "/one/connections/workflow.md",
-      "inference_tracking": "/.claude/state/inference.json"
+      "cycle_tracking": "/.claude/state/cycle.json"
     }
   },
   "conclusionAndRecommendations": {
@@ -1062,7 +1062,7 @@
       "phase5": "Post-mortems on any incidents, document lessons learned"
     },
     "successLooks": [
-      "All 100 inferences tracked, completed, documented in inference.json",
+      "All 100 cycles tracked, completed, documented in cycle.json",
       "Agent Director framework enables intelligent plan generation",
       "All 66 entity types implemented with CRUD operations",
       "Complete 6-dimension ontology implemented",

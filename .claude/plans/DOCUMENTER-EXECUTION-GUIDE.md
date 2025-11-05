@@ -78,7 +78,7 @@ Create embeddings and enable semantic search
 ## Key Features of This TODO
 
 ### 1. Structured by Phase (Cycle 65-70)
-Each inference has specific, bounded tasks:
+Each cycle has specific, bounded tasks:
 - Task descriptions with success criteria
 - Templates to follow
 - Clear deliverables per phase
@@ -235,7 +235,7 @@ Quality Agent Tests          Documenter Captures
 └─ Complete             ──→  (Cycle 70 finalize)
 ```
 
-**No blocking:** Documenter works in parallel, docs lag tests by ~1 inference.
+**No blocking:** Documenter works in parallel, docs lag tests by ~1 cycle.
 
 ---
 
@@ -379,7 +379,7 @@ When complete, any future AI agent can:
 Refer to `todo-agent-documenter.md` for:
 - Detailed task descriptions (all 30+ tasks)
 - Template structures (for all 13 documentation types)
-- Success criteria (checkpoints at each inference)
+- Success criteria (checkpoints at each cycle)
 - Knowledge entry structures (embeddings, labels, chunk size)
 - Execution timeline (Cycle 65-70 breakdown)
 

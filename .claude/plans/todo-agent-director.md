@@ -12,7 +12,7 @@ The Agent Director orchestrates the entire workflow, ensuring all specialists co
 - [ ] Plan orchestration sequence
 - [ ] Document dependencies between agents
 
-**Task 1.2: Analyze Current Inference State**
+**Task 1.2: Analyze Current Cycle State**
 - [ ] Current: Cycle 65 - Write e2e tests for critical paths
 - [ ] Progress: 64/100 complete (64%)
 - [ ] Specialist: quality
@@ -75,20 +75,20 @@ The Agent Director orchestrates the entire workflow, ensuring all specialists co
 - [ ] Create unified timeline
 - [ ] Document interdependencies
 
-**Task 3.2: Mark Inference Complete**
+**Task 3.2: Mark Cycle Complete**
 - [ ] All tests written and passing
 - [ ] All validations complete
 - [ ] Documentation updated
 - [ ] Lessons captured
 - [ ] Ready for /done command
 
-**Task 3.3: Plan Next Inference (66)**
+**Task 3.3: Plan Next Cycle (66)**
 - [ ] Run tests and capture results
 - [ ] Monitor test execution
 - [ ] Collect metrics
 - [ ] Prepare for validation
 
-**Task 3.4: Prepare for Future Inferences**
+**Task 3.4: Prepare for Future Cycles**
 - [ ] Document what works well
 - [ ] Identify improvements
 - [ ] Plan refinements
@@ -114,7 +114,7 @@ Validate Quality Gates (2.1-2.4)
     ↓
 Aggregate Results (3.1)
     ↓
-Mark Inference Complete (3.2)
+Mark Cycle Complete (3.2)
     ↓
 Advance to Cycle 66 (3.3)
 ```

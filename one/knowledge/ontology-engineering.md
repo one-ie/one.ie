@@ -253,7 +253,7 @@ type EventType =
   | 'metric_calculated' | 'insight_generated' | 'prediction_made'
   | 'optimization_applied' | 'report_generated'
 
-  // INFERENCE (7) - Revenue tracking
+  // CYCLEENCE (7) - Revenue tracking
   | 'cycle_request' | 'cycle_completed' | 'cycle_failed'
   | 'cycle_quota_exceeded' | 'cycle_revenue_collected'
   | 'org_revenue_generated' | 'revenue_share_distributed'

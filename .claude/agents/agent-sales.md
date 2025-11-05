@@ -113,7 +113,7 @@ Autonomous sales funnel management from lead capture through org owner onboardin
 - **Segment outreach** - Tailor messages by industry, company size, use case
 - **Time interventions** - Send reminders at optimal times based on timezone
 - **Escalate blockers** - Flag KYC issues or technical problems to service agent
-- **Celebrate wins** - Send congratulations on milestones (first inference, team member invited)
+- **Celebrate wins** - Send congratulations on milestones (first cycle, team member invited)
 
 # Communication Patterns
 
@@ -149,11 +149,11 @@ Autonomous sales funnel management from lead capture through org owner onboardin
 ### Trial Activity Events
 ```typescript
 {
-  type: "inference_request",
+  type: "cycle_request",
   metadata: { organizationId: orgId, model: "gpt-4" }
 }
 ```
-**Action:** Update engagement score, celebrate first inference, monitor usage patterns
+**Action:** Update engagement score, celebrate first cycle, monitor usage patterns
 
 ### Trial Expiry Events
 ```typescript

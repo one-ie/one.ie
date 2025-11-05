@@ -2,7 +2,7 @@
 
 **Status:** ✅ COMPLETE AND READY FOR EXECUTION
 **Date Completed:** October 30, 2025
-**Scope:** 900 inferences of development work across 9 platform verticals
+**Scope:** 900 cycles of development work across 9 platform verticals
 **Files Created:** 5 comprehensive planning documents
 
 ---
@@ -51,7 +51,7 @@
 
 ### 4. Quick Reference
 - 8-week timeline with wave transitions
-- 900-inference breakdown across 9 files
+- 900-cycle breakdown across 9 files
 - Parallel execution tracks (Waves 2-3 have 3 parallel files each)
 - Release schedule (v1.1.0 → v2.0.0)
 - Critical success factors
@@ -73,7 +73,7 @@
 | 8 | Analytics & Social | todo-features.md | 3 | READY |
 | 9 | Marketing Site | todo-one-ie.md | 4 | READY |
 
-**Total:** 900 inferences (100 per file × 9 files)
+**Total:** 900 cycles (100 per file × 9 files)
 
 ---
 
@@ -103,7 +103,7 @@ RESULT: v2.0.0 Public Launch
 
 ## SPECIALIST AGENTS ASSIGNED
 
-| Specialist | Primary Files | Inferences | Timeline |
+| Specialist | Primary Files | Cycles | Timeline |
 |-----------|--------------|-----------|----------|
 | agent-backend | onboard, agents, skills, sell, ecommerce, api | ~320 | Weeks 1-6 |
 | agent-frontend | onboard, ecommerce, features, one-ie | ~250 | Weeks 1-8 |
@@ -112,13 +112,13 @@ RESULT: v2.0.0 Public Launch
 | agent-quality | skills, sell, ecommerce, api | ~150 | Weeks 2-6 |
 | agent-designer | onboard, one-ie | ~110 | Weeks 1, 7-8 |
 
-**Total Work:** 900 inferences across 6 specialists (parallel execution)
+**Total Work:** 900 cycles across 6 specialists (parallel execution)
 
 ---
 
 ## RELEASES PLANNED
 
-| Version | Timing | Contents | Inferences |
+| Version | Timing | Contents | Cycles |
 |---------|--------|----------|-----------|
 | v1.1.0 | Week 0 | X402 payments + onboarding foundation | 100 |
 | v1.2.0 | Week 4 | Agents + skills + marketplace | 300 |
@@ -174,7 +174,7 @@ RESULT: v2.0.0 Public Launch
    - [ ] Create `/one/things/todo-one-ie.md`
 
 3. **Create GitHub Issues**
-   - [ ] One issue per file (Wave assignment, specialist assignment, 100 inferences)
+   - [ ] One issue per file (Wave assignment, specialist assignment, 100 cycles)
    - [ ] Link to specialist agent
    - [ ] Link to relevant creation instructions
    - [ ] Set milestone for wave completion
@@ -214,7 +214,7 @@ RESULT: v2.0.0 Public Launch
 - [ ] Documentation updated
 
 ### Before Wave Complete
-- [ ] All 100 inferences done
+- [ ] All 100 cycles done
 - [ ] 80%+ test coverage
 - [ ] Code review complete
 - [ ] Deployed to production
@@ -225,7 +225,7 @@ RESULT: v2.0.0 Public Launch
 ## SUCCESS METRICS
 
 ### For Each File (Todo)
-- ✅ 100 inferences completed
+- ✅ 100 cycles completed
 - ✅ 80%+ test coverage
 - ✅ All tests passing
 - ✅ Performance baselines established
@@ -241,7 +241,7 @@ RESULT: v2.0.0 Public Launch
 - ✅ Ready for next wave
 
 ### For the Platform (v2.0.0)
-- ✅ All 900 inferences complete
+- ✅ All 900 cycles complete
 - ✅ 80%+ overall test coverage
 - ✅ v2.0.0 shipped
 - ✅ Public site live
@@ -253,17 +253,17 @@ RESULT: v2.0.0 Public Launch
 
 ## KEY CHARACTERISTICS OF THIS PLAN
 
-### 1. Inference-Based Planning
+### 1. Cycle-Based Planning
 - Not time-based ("2 weeks per file")
-- Sequence-based (100 inferences per file)
-- Precise (each inference is a step)
+- Sequence-based (100 cycles per file)
+- Precise (each cycle is a step)
 - Context-light (can execute independently)
 
 ### 2. Parallel Execution
 - Waves 1-2: Sequential (Wave 1 → Wave 2)
 - Within Wave: Parallel (3 files at once)
 - Maximum 6 agents working simultaneously
-- Estimated 900 inferences in 8 weeks
+- Estimated 900 cycles in 8 weeks
 
 ### 3. Ontology-First
 - Every feature maps to 6 dimensions (groups, people, things, connections, events, knowledge)
@@ -354,7 +354,7 @@ This plan does NOT include:
 
 This plan ONLY includes:
 - ✅ Strategic overview
-- ✅ Detailed planning for 900 inferences
+- ✅ Detailed planning for 900 cycles
 - ✅ Specialist assignments
 - ✅ Timeline and dependencies
 - ✅ Release schedule
@@ -367,7 +367,7 @@ This plan ONLY includes:
 The plan is complete when:
 
 - [x] Strategic overview documented
-- [x] All 9 files planned (9 × 100 inferences = 900)
+- [x] All 9 files planned (9 × 100 cycles = 900)
 - [x] Ontology mapping designed for each file
 - [x] Dependencies explicitly documented
 - [x] Critical path identified
@@ -386,7 +386,7 @@ The plan is complete when:
 
 ## FINAL SUMMARY
 
-**What:** Comprehensive orchestration plan for 900 inferences of development work across 9 platform verticals
+**What:** Comprehensive orchestration plan for 900 cycles of development work across 9 platform verticals
 
 **Why:** ONE Platform needs structured, parallel execution with clear dependencies and role assignments
 
@@ -419,11 +419,11 @@ The plan is complete when:
 ---
 
 **Created:** October 30, 2025
-**Duration:** Comprehensive 900-inference plan across 9 files
+**Duration:** Comprehensive 900-cycle plan across 9 files
 **Timeline:** 8 weeks to v2.0.0 public launch
 **Team:** 6 specialist agents + Engineering Director
 
-Remember: Plan in inferences, not days. Execute in parallel, coordinate via events.
+Remember: Plan in cycles, not days. Execute in parallel, coordinate via events.
 
 **Let's build the ONE Platform.**
 

@@ -2,7 +2,7 @@
 
 **Date Created:** October 30, 2025
 **Status:** Planning Complete - Ready for Execution
-**Total Scope:** 900 inferences (9 files × 100 inferences each)
+**Total Scope:** 900 cycles (9 files × 100 cycles each)
 **Timeline:** 8 weeks to complete all files (Wave 1 → Wave 4)
 **Team:** 6 specialist agents (backend, frontend, integrator, builder, quality, designer)
 
@@ -59,7 +59,7 @@
   - Secondary specialist and responsibilities
   - Tertiary specialist and responsibilities
   - Exact deliverables for each
-  - Inference ranges for focus
+  - Cycle ranges for focus
 - Execution schedule (Week 1-8)
 - Coordination points (daily standup, weekly sync, wave meetings)
 - Monitoring dashboard (workload per specialist)
@@ -149,7 +149,7 @@
 
 ## RELEASE SCHEDULE
 
-| Release | Infers | Files | Timeline | Contents |
+| Release | Cycles | Files | Timeline | Contents |
 |---------|--------|-------|----------|----------|
 | v1.1.0 | 100 | todo-x402.md (done) | Week 0 | X402 payments + onboarding foundation |
 | v1.2.0 | 300 | onboard, agents, skills, sell | Week 4 | Agentic features + skills + marketplace |
@@ -187,8 +187,8 @@ LIVE: v2.0.0 Public Launch
 - **Wave 4:** 3 agents (designer, frontend, ops)
 
 ### Estimated Velocity
-- **8-12 inferences per agent per day** (depends on complexity)
-- **100 inferences = 8-12 days per file** (single specialist)
+- **8-12 cycles per agent per day** (depends on complexity)
+- **100 cycles = 8-12 days per file** (single specialist)
 - **Parallel execution: 2-3 files complete per week**
 
 ### Bottlenecks to Avoid
@@ -203,37 +203,37 @@ LIVE: v2.0.0 Public Launch
 
 ### agent-backend
 - **Files:** onboard (100%), agents (30%), skills (20%), sell (40%), ecommerce (50%), api (30%)
-- **Total:** ~320 inferences
+- **Total:** ~320 cycles
 - **Timeline:** Weeks 1-6 (continuous)
 - **Critical Path:** User management → organization management → wallet setup
 
 ### agent-frontend
 - **Files:** onboard (50%), ecommerce (100%), features (100%), one-ie (100%)
-- **Total:** ~250 inferences
+- **Total:** ~250 cycles
 - **Timeline:** Weeks 1-8 (continuous)
 - **Critical Path:** Forms → product catalog → dashboards → marketing
 
 ### agent-integrator
 - **Files:** agents (40%), sell (100%), ecommerce (30%), api (100%), features (40%)
-- **Total:** ~270 inferences
+- **Total:** ~270 cycles
 - **Timeline:** Weeks 2-6 (concentrated)
 - **Critical Path:** ElizaOS → GitHub → Payment → APIs → RAG
 
 ### agent-builder
 - **Files:** agents (100%), skills (100%)
-- **Total:** ~200 inferences
+- **Total:** ~200 cycles
 - **Timeline:** Weeks 3-4 (concentrated, parallel)
 - **Critical Path:** Agent framework → agent state → agent execution → matching
 
 ### agent-quality
 - **Files:** skills (30%), sell (30%), ecommerce (20%), api (100%)
-- **Total:** ~150 inferences
+- **Total:** ~150 cycles
 - **Timeline:** Weeks 2-6 (distributed)
 - **Critical Path:** Skill verification tests → API contract tests → integration tests
 
 ### agent-designer
 - **Files:** onboard (20%), one-ie (100%)
-- **Total:** ~110 inferences
+- **Total:** ~110 cycles
 - **Timeline:** Weeks 1 + 7-8 (with gap for Wave 2-3)
 - **Critical Path:** Design system → brand tokens → marketing design
 
@@ -295,7 +295,7 @@ All 3 documents = Complete visibility
 2. **Create GitHub issues** for each file
    - Link to specialist agent
    - Set Wave number
-   - Estimate 100 inferences
+   - Estimate 100 cycles
 
 3. **Schedule kickoff meetings**
    - Wave 1 kickoff: immediately (onboard)
@@ -319,7 +319,7 @@ All 3 documents = Complete visibility
 
 ### Phase 3: Wrap-up (Week 9+)
 
-- All 900 inferences complete
+- All 900 cycles complete
 - Public launch v2.0.0
 - Celebrate + learn
 - Plan Phase 2 enhancements
@@ -328,7 +328,7 @@ All 3 documents = Complete visibility
 
 ## CRITICAL SUCCESS FACTORS
 
-1. **Respect 100-inference boundaries** (no additions mid-file)
+1. **Respect 100-cycle boundaries** (no additions mid-file)
 2. **Complete Phases 1-6 before Phase 7** (foundation → testing → design)
 3. **Test every phase** (don't defer testing to Phase 6)
 4. **Document as you go** (don't defer docs to Phase 9)
@@ -343,7 +343,7 @@ All 3 documents = Complete visibility
 ### Metrics That Matter
 
 **For Each File:**
-- ✅ 100 inferences completed
+- ✅ 100 cycles completed
 - ✅ 80%+ test coverage
 - ✅ All tests passing
 - ✅ Performance baselines met
@@ -359,7 +359,7 @@ All 3 documents = Complete visibility
 - ✅ Ready for next wave
 
 **For the Platform:**
-- ✅ 900 inferences complete
+- ✅ 900 cycles complete
 - ✅ 80%+ overall test coverage
 - ✅ v2.0.0 shipped
 - ✅ Public site live
@@ -373,7 +373,7 @@ All 3 documents = Complete visibility
 ```
 📋 MASTER PLAN (strategic overview)
    ├─ Why: 9 files organized by ontology dimension
-   ├─ What: 900 inferences across 8 new files + 1 existing
+   ├─ What: 900 cycles across 8 new files + 1 existing
    ├─ When: 8 weeks in 4 waves
    ├─ Who: 6 specialist agents
    ├─ How: Parallel execution with dependencies
@@ -384,7 +384,7 @@ All 3 documents = Complete visibility
    ├─ Customization: Phase names per vertical
    ├─ Ontology: 6-dimension mapping required
    ├─ Files: Key deliverables listed
-   ├─ Infers: Detailed tasks for each inference
+   ├─ Cycles: Detailed tasks for each cycle
    └─ Checklists: Before/during/after creation
 
 👥 SPECIALIST ASSIGNMENTS (who does what)
@@ -416,7 +416,7 @@ A: Yes, but prioritize: Primary assignment is main focus, secondary/tertiary are
 A: Communicate early. Have stubs ready. Can usually proceed with mocks.
 
 **Q: How do we handle scope creep?**
-A: Strict: 100 inferences per file, no additions. Anything extra goes in Phase 2.
+A: Strict: 100 cycles per file, no additions. Anything extra goes in Phase 2.
 
 **Q: When do we deploy?**
 A: After Phase 6 complete and tests passing. Phase 9 handles production deployment.
@@ -457,7 +457,7 @@ A: After Phase 6 complete and tests passing. Phase 9 handles production deployme
 
 **This plan succeeds when:**
 
-1. All 9 files complete with 100 inferences each
+1. All 9 files complete with 100 cycles each
 2. 80%+ test coverage across platform
 3. All features deployed to production
 4. Documentation complete and comprehensive
@@ -470,7 +470,7 @@ A: After Phase 6 complete and tests passing. Phase 9 handles production deployme
 
 ---
 
-**Remember the golden rule:** Plan in inferences, not days. Execute in parallel, coordinate via events.
+**Remember the golden rule:** Plan in cycles, not days. Execute in parallel, coordinate via events.
 
 Waves launch from this master plan. Specialists build from creation instructions. Director orchestrates via assignments.
 

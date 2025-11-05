@@ -26,7 +26,7 @@ When the `/one` command is invoked, display this main menu:
    🧪 Quality Loops Enabled | 📊 Continuous Learning Active
    ⚡ Event-Driven Autonomy | 🎯 6-Dimension Ontology Aligned
 
-🚀 **INFERENCE WORKFLOW** (Cycle 1-100: Plan → Implement → Learn)
+🚀 **CYCLEENCE WORKFLOW** (Cycle 1-100: Plan → Implement → Learn)
    1. /now              → Show current cycle & task
    2. /next             → Advance to next cycle
    3. /done             → Mark cycle complete & advance

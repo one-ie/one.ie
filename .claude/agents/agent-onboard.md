@@ -472,7 +472,7 @@ After agent-onboard completes:
 2. Reads ontology mapping from installation folder
 3. Recommends features based on detected patterns
 4. User selects features to build
-5. agent-director generates 100-inference plan
+5. agent-director generates 100-cycle plan
 6. Specialized agents execute (agent-backend, agent-frontend, etc.)
 
 ---

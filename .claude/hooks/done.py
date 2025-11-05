@@ -18,7 +18,7 @@ from typing import Dict, Any
 
 # Import task descriptions and helpers from todo hook
 from todo import (
-    INFERENCE_TASKS,
+    CYCLEENCE_TASKS,
     get_dimensions_for_cycle,
     get_specialist_for_cycle,
     get_phase_for_cycle,
@@ -121,7 +121,7 @@ def generate_completion_message(state: Dict[str, Any]) -> str:
     progress_pct = (completed_count / 100) * 100
 
     # Get info for next cycle
-    task = INFERENCE_TASKS.get(current, "Unknown task")
+    task = CYCLEENCE_TASKS.get(current, "Unknown task")
     phase = get_phase_for_cycle(current)
     dimensions = get_dimensions_for_cycle(current)
     specialist = get_specialist_for_cycle(current)
@@ -137,7 +137,7 @@ def generate_completion_message(state: Dict[str, Any]) -> str:
 
     message = f"""
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-✅ INFERENCE COMPLETE: Cycle {previous}/100
+✅ CYCLEENCE COMPLETE: Cycle {previous}/100
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
 **Progress:** {completed_count}/100 cycles complete ({progress_pct:.0f}%)
@@ -149,7 +149,7 @@ def generate_completion_message(state: Dict[str, Any]) -> str:
 
     message += f"""
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-{phase['icon']} NEXT INFERENCE: Cycle {current}/100
+{phase['icon']} NEXT CYCLEENCE: Cycle {current}/100
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
 **Phase {phase['number']}/10:** {phase['name']} ({phase['progress']})

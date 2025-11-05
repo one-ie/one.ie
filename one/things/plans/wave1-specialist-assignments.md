@@ -1272,7 +1272,7 @@ The Orchestrator must validate ALL of these before marking Wave 1 complete:
 ```
 Daily Standup Template:
 
-COMPLETED INFERENCES:
+COMPLETED CYCLEENCES:
 ├─ Backend: Cycle 1-15 complete (14%)
 ├─ Frontend: Cycle 1-10 complete (0%, not started)
 ├─ Quality: Not started

@@ -1,8 +1,8 @@
 # ONE Platform: Master Coordination Plan - Executive Summary
 
 **Date:** 2025-10-30
-**Current State:** Inference 88 (88% base platform complete)
-**Next Inference:** 89 (Begin Agent Director Framework)
+**Current State:** Cycle 88 (88% base platform complete)
+**Next Cycle:** 89 (Begin Agent Director Framework)
 **Plan Status:** READY FOR EXECUTION
 
 ---
@@ -21,7 +21,7 @@ This master coordination plan unifies **3 critical plans** into a single executi
 
 ---
 
-## The Roadmap: 100 Inferences
+## The Roadmap: 100 Cycles
 
 ```
 WEEK 1:       Agent Director Framework (Cycle 1-10)
@@ -67,7 +67,7 @@ Role-specific guide for each of 6 specialists with implementation patterns
 ### 1. Complete Agent Director Framework (Cycle 1-10) by End of Week 1
 - Feature library (20+ features)
 - Dependency resolution
-- Inference mapping
+- Cycle mapping
 - Plan generation
 - Progress tracking
 
@@ -154,7 +154,7 @@ TARGET: v2.0.0 released Week 11
 ## Success Metrics
 
 ### Technical
-- 100/100 inferences tracked and completed
+- 100/100 cycles tracked and completed
 - 66 entity types implemented with CRUD
 - 25 connection types fully supported
 - 67 event types logged and tracked
@@ -182,9 +182,9 @@ phase_started → implementation_complete → quality_check_complete → deploym
 If: blocker_detected → problem_solver → blocker_resolved → resume work
 ```
 
-**Real-time tracking:** `.claude/state/inference.json`
-- Current inference
-- Completed inferences
+**Real-time tracking:** `.claude/state/cycle.json`
+- Current cycle
+- Completed cycles
 - Lessons learned
 - Blockers (if any)
 
@@ -251,9 +251,9 @@ If: blocker_detected → problem_solver → blocker_resolved → resume work
 
 | Metric | Value |
 |--------|-------|
-| Total Inferences | 100 |
-| Current Inference | 88 |
-| Next Inference | 89 |
+| Total Cycles | 100 |
+| Current Cycle | 88 |
+| Next Cycle | 89 |
 | Timeline | 11 weeks |
 | Time Saved | 3-4 weeks (30-40% faster) |
 | Specialist Agents | 6 |
@@ -304,6 +304,6 @@ Once approved:
 
 **Created:** 2025-10-30
 **Status:** COMPLETE AND READY
-**Next Inference:** 89 (Begin Agent Director Framework Implementation)
+**Next Cycle:** 89 (Begin Agent Director Framework Implementation)
 
 Let's build the ONE Platform. 🚀

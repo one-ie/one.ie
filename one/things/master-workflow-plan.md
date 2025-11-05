@@ -46,7 +46,7 @@ ONE Platform is a complete creator economy + AI agent marketplace built on a 6-d
 
 ### The Todos (Roadmap)
 
-| #   | Todo                 | Infers  | Purpose                                   | Wave            | Status                |
+| #   | Todo                 | Cycles  | Purpose                                   | Wave            | Status                |
 | --- | -------------------- | ------- | ----------------------------------------- | --------------- | --------------------- |
 | 1   | todo-onboard         | 100     | User registration + team management       | Wave 1          | Critical Path         |
 | 2   | todo-x402            | 100     | HTTP 402 micropayment protocol            | Wave 1          | Critical Path         |
@@ -330,7 +330,7 @@ Final Path:
 
 ### Summary by Agent
 
-| Agent            | Total Infers | % of Build | Focus Areas                          |
+| Agent            | Total Cycles | % of Build | Focus Areas                          |
 | ---------------- | ------------ | ---------- | ------------------------------------ |
 | agent-backend    | ~1,200       | 29%        | Schema, services, queries, mutations |
 | agent-frontend   | ~850         | 20%        | Pages, components, UI/UX             |

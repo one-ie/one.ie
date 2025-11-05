@@ -1,7 +1,7 @@
 # Frontend Testing Plan - Complete Index
 
 **Created:** 2025-10-30
-**Inference:** 65/100 (E2E Tests for Critical Paths)
+**Cycle:** 65/100 (E2E Tests for Critical Paths)
 **Status:** Ready for Execution
 **Total Tests:** 646+ cases across 7 phases
 
@@ -29,11 +29,11 @@
 
 ## Phase Breakdown
 
-### Phase 1: Test Setup (Inference 65-66)
+### Phase 1: Test Setup (Cycle 65-66)
 **File Section:** todo-agent-frontend.md → "Phase 1: Component Test Setup"
 **Tasks:** 3 (vitest config, mock factory, test utilities)
 **Tests:** 0 (foundation layer)
-**Estimated Time:** 2 inferences
+**Estimated Time:** 2 cycles
 
 **Key Files to Create:**
 - `/Users/toc/Server/ONE/web/vitest.config.ts`
@@ -57,14 +57,14 @@
 
 ---
 
-### Phase 2: Component Unit Tests (Inference 67-72)
+### Phase 2: Component Unit Tests (Cycle 67-72)
 **File Section:** todo-agent-frontend.md → "Phase 2: Component Unit Tests"
 **Tasks:** 3 (demo, feature, UI components)
 **Tests:** 162 total
   - Demo Components: 64 tests
   - Feature Components: 48 tests
   - UI Components: 50 tests
-**Estimated Time:** 6 inferences
+**Estimated Time:** 6 cycles
 **Can Parallelize:** 3 branches (demo/features/ui)
 
 **Components to Test:**
@@ -107,14 +107,14 @@ UI (10 components sampled):
 
 ---
 
-### Phase 3: Integration Tests (Inference 73-78)
+### Phase 3: Integration Tests (Cycle 73-78)
 **File Section:** todo-agent-frontend.md → "Phase 3: Integration Tests"
 **Tasks:** 3 (Convex hooks, composition, forms)
 **Tests:** 62 total
   - Convex Hooks: 22 tests
   - Component Composition: 18 tests
   - Form Integration: 22 tests
-**Estimated Time:** 6 inferences
+**Estimated Time:** 6 cycles
 **Can Parallelize:** 3 branches
 
 **Test Scenarios:**
@@ -131,14 +131,14 @@ UI (10 components sampled):
 
 ---
 
-### Phase 4: User Interaction Tests (Inference 79-84)
+### Phase 4: User Interaction Tests (Cycle 79-84)
 **File Section:** todo-agent-frontend.md → "Phase 4: User Interaction Tests"
 **Tasks:** 3 (form submission, buttons, navigation)
 **Tests:** 76 total
   - Form Submission: 26 tests
   - Button Interactions: 26 tests
   - Navigation: 24 tests
-**Estimated Time:** 6 inferences
+**Estimated Time:** 6 cycles
 **Can Parallelize:** 3 branches
 
 **Test Focus:**
@@ -157,14 +157,14 @@ UI (10 components sampled):
 
 ---
 
-### Phase 5: Edge Cases & Errors (Inference 85-88)
+### Phase 5: Edge Cases & Errors (Cycle 85-88)
 **File Section:** todo-agent-frontend.md → "Phase 5: Edge Cases & Error Handling"
 **Tasks:** 3 (loading states, errors, empty states)
 **Tests:** 82 total
   - Loading States: 26 tests
   - Error Boundaries: 30 tests
   - Empty/Null States: 26 tests
-**Estimated Time:** 4 inferences
+**Estimated Time:** 4 cycles
 **Sequential Only** (depends on previous phases)
 
 **Test Coverage:**
@@ -185,14 +185,14 @@ UI (10 components sampled):
 
 ---
 
-### Phase 6: Accessibility & Responsive (Inference 89-95)
+### Phase 6: Accessibility & Responsive (Cycle 89-95)
 **File Section:** todo-agent-frontend.md → "Phase 6: Accessibility & Responsive Design"
 **Tasks:** 3 (keyboard navigation, dark mode, responsive)
 **Tests:** 104 total
   - Keyboard Navigation: 40 tests
   - Dark Mode & Theme: 30 tests
   - Responsive Design: 34 tests
-**Estimated Time:** 7 inferences
+**Estimated Time:** 7 cycles
 **Can Parallelize:** 3 branches
 
 **Test Coverage:**
@@ -215,7 +215,7 @@ UI (10 components sampled):
 
 ---
 
-### Phase 7: E2E Critical Paths (Inference 96-100)
+### Phase 7: E2E Critical Paths (Cycle 96-100)
 **File Section:** todo-agent-frontend.md → "Phase 7: E2E Critical Path Tests"
 **Tasks:** 4 (auth, groups, things, real-time)
 **Tests:** 160 total
@@ -223,7 +223,7 @@ UI (10 components sampled):
   - Groups/Organizations: 40 tests
   - Things & Connections: 50 tests
   - Real-time & Events: 36 tests
-**Estimated Time:** 5 inferences
+**Estimated Time:** 5 cycles
 **Sequential Only** (final validation)
 
 **Critical Path Coverage:**
@@ -500,7 +500,7 @@ web/src/tests/
 ### Related Files
 - `/Users/toc/Server/ONE/CLAUDE.md` (Project guidelines)
 - `/Users/toc/Server/ONE/web/package.json` (Dependencies)
-- `/Users/toc/Server/ONE/.claude/state/inference.json` (Current state)
+- `/Users/toc/Server/ONE/.claude/state/cycle.json` (Current state)
 
 ### External References
 - **Vitest Documentation:** https://vitest.dev
@@ -513,12 +513,12 @@ web/src/tests/
 ## Contact & Notes
 
 **Created by:** Agent Frontend
-**Current Inference:** 65/100
+**Current Cycle:** 65/100
 **Status:** Ready for Execution
 **Last Updated:** 2025-10-30
 
 ---
 
-**Quick Start:** Begin with Phase 1 (Tasks 1.1-1.3) in inference 65-66.
+**Quick Start:** Begin with Phase 1 (Tasks 1.1-1.3) in cycle 65-66.
 **Full Details:** See todo-agent-frontend.md for comprehensive specifications.
 **Fast Reference:** Use QUICK-REFERENCE-FRONTEND-TESTING.md for quick lookups.

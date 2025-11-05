@@ -1,7 +1,7 @@
 # ONE Platform: Master Plan for 9 Todo Files v1.0.0
 
-**Purpose:** Orchestrate creation of 9 comprehensive 100-inference todo files for ONE Platform verticals
-**Scope:** 900 total inferences (9 files × 100 inferences each)
+**Purpose:** Orchestrate creation of 9 comprehensive 100-cycle todo files for ONE Platform verticals
+**Scope:** 900 total cycles (9 files × 100 cycles each)
 **Timeline:** Parallel execution across specialist agents
 **Status:** Planning phase - ready for execution
 
@@ -11,7 +11,7 @@
 
 ### Why 9 Todo Files?
 
-The ONE Platform consists of 9 interconnected verticals, each requiring 100-inference planning:
+The ONE Platform consists of 9 interconnected verticals, each requiring 100-cycle planning:
 
 1. **todo-x402.md** ✅ DONE - X402 HTTP payments integration
 2. **todo-sell.md** - Agent marketplace for private GitHub repos
@@ -23,7 +23,7 @@ The ONE Platform consists of 9 interconnected verticals, each requiring 100-infe
 8. **todo-api.md** - Public REST/GraphQL API + SDK
 9. **todo-features.md** - High-priority platform features
 
-**Total:** 900 inferences of planned work across the entire platform
+**Total:** 900 cycles of planned work across the entire platform
 
 ### Mapping to 6-Dimension Ontology
 
@@ -228,7 +228,7 @@ Each file will have:
 
 **Focus:** [What this vertical accomplishes]
 **Scope:** [Key features/capabilities]
-**Timeline:** 100 inferences
+**Timeline:** 100 cycles
 **Target:** [Who benefits and how]
 
 ---
@@ -274,7 +274,7 @@ The 10 phases adapt to each vertical's nature:
 
 **Focus:** [Single sentence what this vertical does]
 **Scope:** [2-3 key outcomes]
-**Timeline:** 100 inferences (inference-based planning)
+**Timeline:** 100 cycles (cycle-based planning)
 **Target:** [Who benefits: creators, users, agents, etc.]
 
 ---
@@ -477,7 +477,7 @@ The 10 phases adapt to each vertical's nature:
 
 ---
 
-**Remember:** Plan in inferences, not days. Where in the sequence does each thing belong?
+**Remember:** Plan in cycles, not days. Where in the sequence does each thing belong?
 
 **Status:** Ready for execution. Begin with Cycle 1-10 (Foundation).
 ```
@@ -606,16 +606,16 @@ Wave 4 (Presentation) ░░░░░░░░░░░░░░░░░░░�
 └─ todo-one-ie.md ░░░░░░░░░░░░░░░░░░ 0%
 
 Parallel Execution: 3 tracks active + 1 planning = 4 agents working
-Total Inferences: 0/900 complete (0%)
+Total Cycles: 0/900 complete (0%)
 Current Phase: Foundation Layer
-Expected Completion: Week 12 (full 900 inferences)
+Expected Completion: Week 12 (full 900 cycles)
 ```
 
 ### Coordination Events to Track
 
 - `todo_created` - File created and ready for work
 - `phase_complete_X` - Phase X of todo complete (per file)
-- `file_complete` - All 100 inferences of a todo done
+- `file_complete` - All 100 cycles of a todo done
 - `wave_complete` - All files in wave done
 - `release_ready` - Feature set ready for release
 - `deployment_complete` - Deployed to production
@@ -657,7 +657,7 @@ Expected Completion: Week 12 (full 900 inferences)
 
 ### Public Launch Readiness
 
-- [ ] All 900 inferences complete
+- [ ] All 900 cycles complete
 - [ ] 80%+ test coverage across all
 - [ ] Performance benchmarks met
 - [ ] Documentation complete
@@ -721,7 +721,7 @@ Expected Completion: Week 12 (full 900 inferences)
 
 | Metric | Target | How Measured |
 |--------|--------|--------------|
-| Inferences Completed | 100/100 | Checklist in each file |
+| Cycles Completed | 100/100 | Checklist in each file |
 | Test Coverage | 80%+ | Coverage reports |
 | Performance Baseline | Established | Benchmarks documented |
 | Documentation Complete | 100% | All sections written |
@@ -733,7 +733,7 @@ Expected Completion: Week 12 (full 900 inferences)
 
 | Metric | Target | Current |
 |--------|--------|---------|
-| Total Inferences | 900 | 0 |
+| Total Cycles | 900 | 0 |
 | Files Complete | 9 | 1 |
 | Waves Complete | 4 | 0 |
 | Test Coverage | 80%+ | N/A |
@@ -753,7 +753,7 @@ Expected Completion: Week 12 (full 900 inferences)
 | E-commerce payment integration | MEDIUM | X402 already done, only Stripe pending |
 | Performance degradation | MEDIUM | Establish baselines early, CI/CD checks |
 | Team capacity limitations | HIGH | Assign specialists early, parallel tracks |
-| Scope creep | HIGH | Enforce 100-inference boundaries, no additions |
+| Scope creep | HIGH | Enforce 100-cycle boundaries, no additions |
 
 ### Contingency Plans
 
@@ -805,7 +805,7 @@ Expected Completion: Week 12 (full 900 inferences)
 
 ## 15. SUMMARY TABLE
 
-| File | Infers | Lead Agent | Status | Wave | Duration | Release |
+| File | Cycles | Lead Agent | Status | Wave | Duration | Release |
 |------|--------|-----------|--------|------|----------|---------|
 | todo-x402.md | 100 | - | DONE ✓ | 0 | Complete | v1.0.0 |
 | todo-onboard.md | 100 | agent-backend | READY | 1 | 2 weeks | v1.1.0 |
@@ -881,7 +881,7 @@ When todo-A needs a feature from todo-B:
 - Anything blocking next wave
 
 ### Release Planning (Monthly)
-- Consolidate completed inferences
+- Consolidate completed cycles
 - Prioritize for next release
 - Update versioning
 - Announce shipping date
@@ -892,9 +892,9 @@ When todo-A needs a feature from todo-B:
 
 **MASTER PLAN COMPLETE**
 
-This plan orchestrates 900 inferences of work across 9 verticals of the ONE Platform. By executing in parallel waves, specialists can deliver new capabilities every 2 weeks while maintaining code quality and test coverage.
+This plan orchestrates 900 cycles of work across 9 verticals of the ONE Platform. By executing in parallel waves, specialists can deliver new capabilities every 2 weeks while maintaining code quality and test coverage.
 
 **Ready for execution. Begin with Wave 1: todo-onboard.md Cycle 1-10.**
 
-Remember: Plan in inferences, not days. Execute in parallel, coordinate via events.
+Remember: Plan in cycles, not days. Execute in parallel, coordinate via events.
 

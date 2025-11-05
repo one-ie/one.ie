@@ -32,7 +32,7 @@ PHASES = {
 }
 
 # Cycle-to-dimension mapping
-INFERENCE_DIMENSIONS = {
+CYCLEENCE_DIMENSIONS = {
     "groups": [6, 18, 43],
     "people": [7, 42, 43, 44, 45, 46, 47, 48, 49, 50],
     "things": [2, 11, 12, 21, 22, 23],
@@ -42,7 +42,7 @@ INFERENCE_DIMENSIONS = {
 }
 
 # Cycle-to-specialist mapping
-INFERENCE_SPECIALISTS = {
+CYCLEENCE_SPECIALISTS = {
     "director": list(range(1, 11)),
     "backend": list(range(11, 21)) + list(range(41, 51)),
     "frontend": list(range(21, 31)),
@@ -61,7 +61,7 @@ PARALLEL_GROUPS = [
 ]
 
 # The 100 cycle tasks (abbreviated for context efficiency)
-INFERENCE_TASKS = {
+CYCLEENCE_TASKS = {
     1: "Validate idea against 6-dimension ontology",
     2: "Map idea to specific entity types (66+ thing types)",
     3: "Identify connection types needed (25+ relationship types)",
@@ -205,7 +205,7 @@ def get_phase_for_cycle(cycle: int) -> Dict[str, Any]:
 def get_dimensions_for_cycle(cycle: int) -> List[str]:
     """Get ontology dimensions relevant to this cycle"""
     dimensions = []
-    for dimension, cycles in INFERENCE_DIMENSIONS.items():
+    for dimension, cycles in CYCLEENCE_DIMENSIONS.items():
         if cycle in cycles:
             dimensions.append(dimension)
     return dimensions
@@ -213,7 +213,7 @@ def get_dimensions_for_cycle(cycle: int) -> List[str]:
 
 def get_specialist_for_cycle(cycle: int) -> Optional[str]:
     """Get specialist agent responsible for this cycle"""
-    for specialist, cycles in INFERENCE_SPECIALISTS.items():
+    for specialist, cycles in CYCLEENCE_SPECIALISTS.items():
         if cycle in cycles:
             return specialist
     return None
@@ -246,7 +246,7 @@ def get_dependencies(cycle: int) -> list:
 def generate_context(state: Dict[str, Any]) -> str:
     """Generate context to inject into Claude's conversation"""
     current = state["current_cycle"]
-    task = INFERENCE_TASKS.get(current, "Unknown task")
+    task = CYCLEENCE_TASKS.get(current, "Unknown task")
     phase = get_phase_for_cycle(current)
     dimensions = get_dimensions_for_cycle(current)
     specialist = get_specialist_for_cycle(current)
@@ -257,7 +257,7 @@ def generate_context(state: Dict[str, Any]) -> str:
 
     context = f"""
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-{phase['icon']} CURRENT INFERENCE: Cycle {current}/100
+{phase['icon']} CURRENT CYCLEENCE: Cycle {current}/100
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
 **Feature:** {state["feature_name"]}
@@ -280,13 +280,13 @@ def generate_context(state: Dict[str, Any]) -> str:
 
     context += """
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-🎯 NEXT 5 INFERENCES:
+🎯 NEXT 5 CYCLEENCES:
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 """
 
     # Add next 5 cycles with enhanced info
     for i in range(current, min(current + 5, 101)):
-        task_desc = INFERENCE_TASKS.get(i, "Unknown")
+        task_desc = CYCLEENCE_TASKS.get(i, "Unknown")
         dims = get_dimensions_for_cycle(i)
         spec = get_specialist_for_cycle(i)
         inf_phase = get_phase_for_cycle(i)

@@ -44,7 +44,7 @@ This roadmap sequences the complete integration of **Effect.ts** with the ONE Pl
 
 ## Cycle 1-10: Foundation & Setup
 
-**1. [INFER-001]** Validate Effect.ts + DataProvider against 6-dimension ontology
+**1. [CYCLE-001]** Validate Effect.ts + DataProvider against 6-dimension ontology
    - Things: Services (Context.Tag definitions)
    - Connections: Service dependencies (Effect.provide)
    - Events: Error tracking and monitoring
@@ -52,7 +52,7 @@ This roadmap sequences the complete integration of **Effect.ts** with the ONE Pl
    - Groups: Isolated Effect contexts per group
    - People: Role-based service access (Effect.guard)
 
-**2. [INFER-002]** Map service architecture
+**2. [CYCLE-002]** Map service architecture
    - LLMService (generative AI with providers)
    - ThingService (entity CRUD via DataProvider)
    - AuthService (Better Auth adapter abstraction)
@@ -60,44 +60,44 @@ This roadmap sequences the complete integration of **Effect.ts** with the ONE Pl
    - RAGService (retrieval-augmented generation)
    - MonitoringService (usage tracking and errors)
 
-**3. [INFER-003]** List service dependencies
+**3. [CYCLE-003]** List service dependencies
    - DataProvider (Convex, WordPress, Notion implementations)
    - Better Auth adapters (ConvexAdapter, WordPressAdapter, etc.)
    - Convex components (Agent, Workflow, RAG, etc.)
    - External services (OpenAI, Stripe, Sendgrid, etc.)
 
-**4. [INFER-004]** Design error hierarchy
+**4. [CYCLE-004]** Design error hierarchy
    - Domain errors (UserNotFound, ValidationError)
    - Infrastructure errors (AgentError, DatabaseError)
    - Authorization errors (UnauthorizedError, ForbiddenError)
    - Rate limit errors (RateLimitError, QuotaExceededError)
    - Tagged unions with full type safety
 
-**5. [INFER-005]** Define service layers
+**5. [CYCLE-005]** Define service layers
    - Context Layer: Define service interfaces (Context.Tag)
    - Implementation Layer: Provide concrete implementations (Layer.effect)
    - Composition Layer: Combine services (Layer.merge)
    - Access Layer: Guard services by role/group
 
-**6. [INFER-006]** Plan DataProvider connection to Effects
+**6. [CYCLE-006]** Plan DataProvider connection to Effects
    - DataProvider<T> interface for backend agnosticism
    - Effect.tryPromise wrapper for async DataProvider calls
    - Service layer abstracts specific provider implementations
    - Frontend components use Effect services, not providers directly
 
-**7. [INFER-007]** Identify Astro content integration points
+**7. [CYCLE-007]** Identify Astro content integration points
    - Static content loaded via Astro collections
    - Effect services handle dynamic data fetching
    - Content connections (relationships between content)
    - Server-side rendering (SSR) with Effect context
 
-**8. [INFER-008]** Design frontend component hierarchy
+**8. [CYCLE-008]** Design frontend component hierarchy
    - Islands: React components requiring hydration (client:load)
    - Layouts: Astro pages using Effect services server-side
    - Content: Static markdown with dynamic data augmentation
    - Services: Effect hooks for client-side state management
 
-**9. [INFER-009]** Create implementation plan breakdown
+**9. [CYCLE-009]** Create implementation plan breakdown
    - Phase 1 (Cycle 1-10): Foundation and design
    - Phase 2 (Cycle 11-20): Core Effect services
    - Phase 3 (Cycle 21-30): DataProvider implementations
@@ -109,7 +109,7 @@ This roadmap sequences the complete integration of **Effect.ts** with the ONE Pl
    - Phase 9 (Cycle 81-90): Performance optimization
    - Phase 10 (Cycle 91-100): Documentation and deployment
 
-**10. [INFER-010]** Assign specialists and dependencies
+**10. [CYCLE-010]** Assign specialists and dependencies
    - Backend specialist: Effect services, layers, error handling
    - Frontend specialist: Components, hooks, client state
    - Integration specialist: DataProvider, Better Auth, Convex components
@@ -120,65 +120,65 @@ This roadmap sequences the complete integration of **Effect.ts** with the ONE Pl
 
 ## Cycle 11-20: Core Effect Services
 
-**11. [INFER-011]** Design error classes and tagged unions
+**11. [CYCLE-011]** Design error classes and tagged unions
    - UserNotFoundError, ValidationError (domain)
    - AgentError, DatabaseError (infrastructure)
    - RateLimitError, QuotaExceededError (quota)
    - AuthorizationError, ForbiddenError (security)
    - All as Data.TaggedError for type safety
 
-**12. [INFER-012]** Create service context definitions
+**12. [CYCLE-012]** Create service context definitions
    - `class ThingService extends Context.Tag("ThingService")`
    - `class AuthService extends Context.Tag("AuthService")`
    - `class WorkflowService extends Context.Tag("WorkflowService")`
    - `class RAGService extends Context.Tag("RAGService")`
    - Each with typed interface and operations
 
-**13. [INFER-013]** Implement ThingService (CRUD via DataProvider)
+**13. [CYCLE-013]** Implement ThingService (CRUD via DataProvider)
    - create: (groupId, type, data) → Effect<Id, ValidationError>
    - getById: (groupId, id) → Effect<Thing, NotFoundError>
    - list: (groupId, type, filter) → Effect<Thing[], DatabaseError>
    - update: (groupId, id, data) → Effect<Thing, NotFoundError | ValidationError>
    - delete: (groupId, id) → Effect<void, NotFoundError>
 
-**14. [INFER-014]** Create ThingService layer implementations
+**14. [CYCLE-014]** Create ThingService layer implementations
    - ConvexThingServiceLive (via Convex API)
    - WordPressThingServiceLive (via WordPress REST API)
    - NotionThingServiceLive (via Notion API)
    - CompositeThingServiceLive (multi-provider fallback)
 
-**15. [INFER-015]** Implement AuthService with Better Auth
+**15. [CYCLE-015]** Implement AuthService with Better Auth
    - signUp: (email, password) → Effect<User, ValidationError>
    - signIn: (email, password) → Effect<Session, InvalidCredentialsError>
    - signOut: (sessionId) → Effect<void>
    - getCurrentUser: () → Effect<User | null>
    - changePassword: (oldPassword, newPassword) → Effect<void>
 
-**16. [INFER-016]** Create AuthService layer with Better Auth adapters
+**16. [CYCLE-016]** Create AuthService layer with Better Auth adapters
    - ConvexAuthServiceLive (via ConvexAdapter)
    - WordPressAuthServiceLive (via WordPressAdapter)
    - NotionAuthServiceLive (via NotionAdapter)
    - SupabaseAuthServiceLive (via Drizzle adapter)
 
-**17. [INFER-017]** Implement WorkflowService (Convex workflows)
+**17. [CYCLE-017]** Implement WorkflowService (Convex workflows)
    - execute: <A>(workflow, args) → Effect<A, ExecutionError>
    - getStatus: (runId) → Effect<WorkflowStatus>
    - cancel: (runId) → Effect<void>
    - list: (filter) → Effect<Workflow[]>
 
-**18. [INFER-018]** Implement RAGService (retrieval + augmentation)
+**18. [CYCLE-018]** Implement RAGService (retrieval + augmentation)
    - addDocument: (namespace, content) → Effect<DocumentId, IndexingError>
    - search: (namespace, query, limit) → Effect<SearchResults, SearchError>
    - delete: (namespace, docId) → Effect<void>
    - listNamespaces: () → Effect<Namespace[]>
 
-**19. [INFER-019]** Implement MonitoringService (observability)
+**19. [CYCLE-019]** Implement MonitoringService (observability)
    - trackUsage: (data) → Effect<void>
    - trackError: (error) → Effect<void>
    - getMetrics: (groupId, period) → Effect<Metrics>
    - reportHealth: () → Effect<HealthStatus>
 
-**20. [INFER-020]** Write unit tests for all service interfaces
+**20. [CYCLE-020]** Write unit tests for all service interfaces
    - Mock implementations for testing
    - Verify Effect type signatures
    - Test error handling paths
@@ -188,61 +188,61 @@ This roadmap sequences the complete integration of **Effect.ts** with the ONE Pl
 
 ## Cycle 21-30: DataProvider Implementations
 
-**21. [INFER-021]** Design DataProvider<T> generic interface
+**21. [CYCLE-021]** Design DataProvider<T> generic interface
    - T = resource type (Thing, User, Document, etc.)
    - Methods: create, read, update, delete, list
    - Returns: Effect<T, DataProviderError>
    - Handles provider-specific implementation details
 
-**22. [INFER-022]** Implement ConvexProvider
+**22. [CYCLE-022]** Implement ConvexProvider
    - Wrap ConvexHttpClient in DataProvider interface
    - Convert Convex queries/mutations to Effect
    - Handle Convex-specific errors
    - Support streaming responses
 
-**23. [INFER-023]** Implement WordPressProvider
+**23. [CYCLE-023]** Implement WordPressProvider
    - Use WordPress REST API
    - Map custom post types to Thing types
    - Handle WordPress authentication (JWT tokens)
    - Cache responses efficiently
 
-**24. [INFER-024]** Implement NotionProvider
+**24. [CYCLE-024]** Implement NotionProvider
    - Use Notion API for database access
    - Map properties to Thing properties
    - Handle rich text content
    - Support filtering and sorting
 
-**25. [INFER-025]** Implement SupabaseProvider
+**25. [CYCLE-025]** Implement SupabaseProvider
    - Use Supabase PostgREST API
    - Leverage Supabase Auth for sessions
    - Support real-time subscriptions
    - Handle RLS (Row-Level Security)
 
-**26. [INFER-026]** Create provider factory pattern
+**26. [CYCLE-026]** Create provider factory pattern
    - Detect provider from environment/config
    - Return appropriate DataProvider implementation
    - Support provider switching at runtime
    - Fallback to local mock provider in tests
 
-**27. [INFER-027]** Add provider detection and initialization
+**27. [CYCLE-027]** Add provider detection and initialization
    - Read GROUP_PROVIDER config
    - Load provider-specific credentials
    - Initialize provider client
    - Validate connectivity
 
-**28. [INFER-028]** Implement provider error mapping
+**28. [CYCLE-028]** Implement provider error mapping
    - Map provider-specific errors to domain errors
    - Standardize error messages
    - Preserve error context
    - Enable provider-agnostic error handling
 
-**29. [INFER-029]** Write provider integration tests
+**29. [CYCLE-029]** Write provider integration tests
    - Test with actual providers (integration env)
    - Test error scenarios
    - Test performance
    - Test provider switching
 
-**30. [INFER-030]** Document provider integration guide
+**30. [CYCLE-030]** Document provider integration guide
    - How to add new provider
    - Provider-specific configuration
    - Supported features per provider

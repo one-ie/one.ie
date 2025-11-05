@@ -1,6 +1,6 @@
 # Frontend Testing TODO - Agent Frontend
 
-**Inference:** 65/100 (E2E Tests for Critical Paths)
+**Cycle:** 65/100 (E2E Tests for Critical Paths)
 **Feature:** AI-powered Recommendations
 **Status:** Phase 1 Setup & Component Testing
 **Last Updated:** 2025-10-30
@@ -1472,24 +1472,24 @@ web/src/tests/
 
 ## Execution Timeline
 
-**Inference-Based (Parallel Execution)**
+**Cycle-Based (Parallel Execution)**
 
 ```
-Inference 65: Create this TODO file
-Inference 66: Implement Tasks 1.1-1.3 (Setup)
+Cycle 65: Create this TODO file
+Cycle 66: Implement Tasks 1.1-1.3 (Setup)
 
 Parallel Execution:
-  Branch A: Inferences 67-72 (Phase 2: Component Tests)
-  Branch B: Inferences 73-78 (Phase 3: Integration Tests)
-  Branch C: Inferences 79-84 (Phase 4: Interactions)
+  Branch A: Cycles 67-72 (Phase 2: Component Tests)
+  Branch B: Cycles 73-78 (Phase 3: Integration Tests)
+  Branch C: Cycles 79-84 (Phase 4: Interactions)
 
 Sequential Merge:
-  Inference 85-88 (Phase 5: Edge Cases)
-  Inference 89-95 (Phase 6: A11y & Responsive)
-  Inference 96-100 (Phase 7: E2E Tests)
+  Cycle 85-88 (Phase 5: Edge Cases)
+  Cycle 89-95 (Phase 6: A11y & Responsive)
+  Cycle 96-100 (Phase 7: E2E Tests)
 ```
 
-**Completion Target:** Inference 100
+**Completion Target:** Cycle 100
 
 ---
 
@@ -1536,7 +1536,7 @@ Sequential Merge:
 
 ---
 
-**Status:** Ready for Inference 65 Execution
+**Status:** Ready for Cycle 65 Execution
 **Owner:** Agent Frontend
 **Last Updated:** 2025-10-30
-**Target Completion:** Inference 100
+**Target Completion:** Cycle 100

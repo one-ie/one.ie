@@ -305,7 +305,7 @@ The Clean Agent hooks automatically manage metadata:
 **Post-Cycle (`clean-post.py`)**:
 - ✅ Adds metadata to new files
 - ✅ Updates `updated` field
-- ✅ Infers dimension/category from file location
+- ✅ Cycles dimension/category from file location
 
 ### Manual Tagging
 

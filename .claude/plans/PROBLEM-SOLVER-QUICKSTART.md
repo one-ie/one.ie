@@ -1,6 +1,6 @@
 # Problem Solver Agent - Quick Start Guide
 
-**Inference:** 65-70 (E2E Testing & Failure Analysis)
+**Cycle:** 65-70 (E2E Testing & Failure Analysis)
 **Total Tasks:** 24 major tasks across 6 phases
 **Test Cases:** 32 E2E test scenarios
 **Estimated Time:** 2-3 sprints
@@ -417,4 +417,4 @@ npx convex run queries/problem-solving-metrics '{"timeRange": "week"}'
 
 **Problem Solver Agent v2.0.0**
 **Cycle 65-70: E2E Testing & Failure Analysis**
-**Next: Inference 71 - Write integration tests for all dimensions**
+**Next: Cycle 71 - Write integration tests for all dimensions**

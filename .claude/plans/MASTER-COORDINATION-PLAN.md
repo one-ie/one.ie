@@ -2,8 +2,8 @@
 
 **Version:** 1.0.0
 **Created:** 2025-10-30
-**Current Inference:** 88 (Next: 89)
-**Total Inferences:** 100
+**Current Cycle:** 88 (Next: 89)
+**Total Cycles:** 100
 **Estimated Timeline:** 11 weeks (77 business days)
 **Parallelization Speedup:** 30-40% (saves 3-4 weeks vs sequential)
 
@@ -13,7 +13,7 @@
 
 This master plan unifies three critical plans into a single coordinated execution strategy:
 
-1. **Agent Director 100-Inference Plans** (cycle 1-10) - Foundation for intelligent plan generation
+1. **Agent Director 100-Cycle Plans** (cycle 1-10) - Foundation for intelligent plan generation
 2. **Unified Implementation Plan** (cycle 11-90) - 36% complete, provides architecture + complete ontology
 3. **Big Plan** (cycle 31-80) - Design, content, agents, knowledge system
 
@@ -23,7 +23,7 @@ This master plan unifies three critical plans into a single coordinated executio
 
 ## Three Plans: Analysis & Integration
 
-### Plan 1: Agent Director 100-Inference Plans (Cycle 1-10)
+### Plan 1: Agent Director 100-Cycle Plans (Cycle 1-10)
 
 **Status:** Specification Complete, Implementation Pending
 **Criticality:** CRITICAL - Blocks all other work
@@ -32,7 +32,7 @@ This master plan unifies three critical plans into a single coordinated executio
 
 **What it delivers:**
 - Feature library (20+ features with metadata)
-- Plan generation algorithm (resolve dependencies, map inferences, estimate duration)
+- Plan generation algorithm (resolve dependencies, map cycles, estimate duration)
 - Execution coordination framework
 - Real-time progress tracking in `.onboarding.json`
 
@@ -44,7 +44,7 @@ This master plan unifies three critical plans into a single coordinated executio
 **Implementation Checklist:**
 - [ ] Feature library (20+ features)
 - [ ] Dependency resolution algorithm
-- [ ] Inference mapping (features → ranges)
+- [ ] Cycle mapping (features → ranges)
 - [ ] Estimate calculation
 - [ ] Execution plan generator
 - [ ] `.onboarding.json` progress tracking
@@ -132,7 +132,7 @@ This master plan unifies three critical plans into a single coordinated executio
 
 ---
 
-## The 100-Inference Roadmap
+## The 100-Cycle Roadmap
 
 ```
 FOUNDATION (Cycle 1-30) - SEQUENTIAL
@@ -245,9 +245,9 @@ Specialist 3: Cycle 51-60 (Tokens/Agents)
 ```typescript
 // Feature Library (20+ features)
 const features = {
-  "landing-page": { inferences: [1, 10], specialist: "agent-frontend" },
-  "authentication": { inferences: [11, 20], specialist: "existing" },
-  "multi-tenant-groups": { inferences: [21, 30], specialist: "agent-backend" },
+  "landing-page": { cycles: [1, 10], specialist: "agent-frontend" },
+  "authentication": { cycles: [11, 20], specialist: "existing" },
+  "multi-tenant-groups": { cycles: [21, 30], specialist: "agent-backend" },
   // ... 17 more features
 };
 
@@ -256,14 +256,14 @@ function resolveDependencies(selected: string[]): string[] {
   // Include all required dependencies
 }
 
-// Inference Mapping
-function mapToInferences(features: string[]): Phase[] {
-  // Assign each feature to inference range
+// Cycle Mapping
+function mapToCycles(features: string[]): Phase[] {
+  // Assign each feature to cycle range
 }
 
 // Plan Generator
 function generatePlan(selections: object): ExecutionPlan {
-  // Create complete 100-inference execution plan
+  // Create complete 100-cycle execution plan
 }
 ```
 
@@ -454,7 +454,7 @@ const provider = createMockDataProvider({
 
 | Metric | Target | Measurement |
 |--------|--------|-------------|
-| Inferences tracked | 100/100 | Verify in inference.json |
+| Cycles tracked | 100/100 | Verify in cycle.json |
 | Ontology completeness | 100% (66+25+67) | Count implemented types |
 | Backend flexibility | 3+ providers | Successfully swap backends |
 | Test coverage | Backend 90%, Frontend 70% | Run coverage reports |
@@ -500,7 +500,7 @@ All coordination happens through events in the database, not manual handoffs:
 ```
 MASTER COORDINATION PLAN - Real-Time Status
 
-Current Inference: 88/100 (88% complete)
+Current Cycle: 88/100 (88% complete)
 
 Groups A-C Progress:
   ✅ Group A: Agent Director Foundation (Cycle 1-10)
@@ -559,7 +559,7 @@ Estimated Completion: 11 weeks
 1. **Complete Agent Director framework**
    - Feature library (20+ features)
    - Dependency resolution
-   - Inference mapping
+   - Cycle mapping
    - Plan generation
 
 2. **Prepare all specialists**
@@ -585,18 +585,18 @@ Estimated Completion: 11 weeks
 
 This master coordination plan combines three powerful plans into a single coherent strategy that:
 
-✅ **Completes all 100 inferences** with clear mapping and tracking
+✅ **Completes all 100 cycles** with clear mapping and tracking
 ✅ **Delivers complete ontology** (66 things, 25 connections, 67 events)
 ✅ **Enables backend flexibility** (support multiple backends)
 ✅ **Creates beautiful UI** (multi-tenant dashboard, real-time features)
 ✅ **Implements AI agents** (9 business agents + framework)
 ✅ **Speeds up delivery** (11 weeks instead of 14-15 weeks)
 ✅ **Manages risk** (medium risk with clear mitigation)
-✅ **Tracks progress** (100-inference paradigm with real-time updates)
+✅ **Tracks progress** (100-cycle paradigm with real-time updates)
 
 **The key to success:** Parallelize the work. Three backend specialists working in parallel saves 2-3 weeks. Frontend with mock providers saves another 2-3 weeks. Combined = 30-40% speedup at no additional risk.
 
-**Next inference:** 89 - Begin Agent Director framework implementation
+**Next cycle:** 89 - Begin Agent Director framework implementation
 
 ---
 
@@ -604,7 +604,7 @@ This master coordination plan combines three powerful plans into a single cohere
 - JSON Plan: `/Users/toc/Server/ONE/.claude/plans/master-coordination-plan.json`
 - This Document: `/Users/toc/Server/ONE/.claude/plans/MASTER-COORDINATION-PLAN.md`
 - Reference Plans:
-  - `/Users/toc/Server/ONE/one/things/plans/agent-director-100-inference-plans.md`
+  - `/Users/toc/Server/ONE/one/things/plans/agent-director-100-cycle-plans.md`
   - `/Users/toc/Server/ONE/one/things/plans/unified-implementation-plan.md`
   - `/Users/toc/Server/ONE/one/things/plans/big-plan.md`
 

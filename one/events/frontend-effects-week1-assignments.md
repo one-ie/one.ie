@@ -75,18 +75,18 @@ This document describes how Week 1 was executed for the Frontend Effects.ts impl
 import { Effect, Context } from "effect";
 
 export interface DataProvider {
-  groups: GroupsAPI;      // TODO: Define in Infer-012
-  people: PeopleAPI;      // TODO: Define in Infer-013
-  things: ThingsAPI;      // TODO: Define in Infer-014
-  connections: ConnectionsAPI; // TODO: Define in Infer-015
-  events: EventsAPI;      // TODO: Define in Infer-016
-  knowledge: KnowledgeAPI; // TODO: Define in Infer-017
+  groups: GroupsAPI;      // TODO: Define in Cycle-012
+  people: PeopleAPI;      // TODO: Define in Cycle-013
+  things: ThingsAPI;      // TODO: Define in Cycle-014
+  connections: ConnectionsAPI; // TODO: Define in Cycle-015
+  events: EventsAPI;      // TODO: Define in Cycle-016
+  knowledge: KnowledgeAPI; // TODO: Define in Cycle-017
 }
 
-// Placeholder for error types (to be defined in Infer-018)
+// Placeholder for error types (to be defined in Cycle-018)
 export type DataProviderError = unknown;
 
-// Placeholder for Context.Tag (to be defined in Infer-020)
+// Placeholder for Context.Tag (to be defined in Cycle-020)
 // export const DataProviderTag = ...
 ```
 

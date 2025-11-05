@@ -75,7 +75,7 @@ Every feature, every service, every line of code must map cleanly to these 6 dim
 **Use Hooks to Validate:**
 - `.claude/hooks/validate-ontology-structure.py` - Structural validation
 - `.claude/hooks/check-filenames.py` - File naming validation
-- `.claude/hooks/todo.sh` - Inference workflow validation
+- `.claude/hooks/todo.sh` - Cycle workflow validation
 
 **Validation Checklist:**
 - [ ] All features map to 6 dimensions
@@ -233,7 +233,7 @@ await db.insert('connections', {
 
 **Analytics (5):** metric_calculated, insight_generated, prediction_made, optimization_applied, report_generated
 
-**Inference (7):** inference_request, inference_completed, inference_failed, inference_quota_exceeded, inference_revenue_collected, org_revenue_generated, revenue_share_distributed
+**Cycle (7):** cycle_request, cycle_completed, cycle_failed, cycle_quota_exceeded, cycle_revenue_collected, org_revenue_generated, revenue_share_distributed
 
 **Blockchain (5):** nft_minted, nft_transferred, tokens_bridged, contract_deployed, treasury_withdrawal
 

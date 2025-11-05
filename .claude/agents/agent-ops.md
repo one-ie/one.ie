@@ -811,7 +811,7 @@ await ctx.db.insert("events", {
     ],
     npmPackage: "oneie@3.0.0",
     cloudflareDeployment: "https://web.one.ie",
-    releaseNotes: "Complete 100-inference workflow implementation...",
+    releaseNotes: "Complete 100-cycle workflow implementation...",
     protocol: "github"  // Specifies which protocol this relates to
   }
 });

@@ -172,7 +172,7 @@ Phase 4: ANALYSIS & REPORTING (Cycle 68-70)
 | Phase 3: Execution | 4.25 hours | agent-quality, agent-builder, agent-frontend |
 | Phase 4: Analysis | 6.0 hours | agent-quality, agent-problem-solver, agent-documenter |
 
-**Timeline:** Cycle 65-70 (6 inferences, ~3 days estimated)
+**Timeline:** Cycle 65-70 (6 cycles, ~3 days estimated)
 
 ---
 
@@ -300,7 +300,7 @@ DECISION: [ ] APPROVED  [ ] REJECTED
 - `/Users/toc/Server/ONE/.claude/plans/specialist-assignments.md` - Agent assignments
 
 **Current State:**
-- Inference: 65/100 (current)
+- Cycle: 65/100 (current)
 - Progress: 64/100 complete (64%)
 - Status: Ready for Phase 1 execution
 - Owner: agent-quality

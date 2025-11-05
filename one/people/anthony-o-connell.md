@@ -68,7 +68,7 @@ ai_context: |
     // Smart contract ownership (100% of all platform contracts)
     contractOwnership: {
       sui: {
-        cyclePayment: process.env.SUI_INFERENCE_PACKAGE_ID,
+        cyclePayment: process.env.SUI_CYCLEENCE_PACKAGE_ID,
         tokenContract: process.env.SUI_TOKEN_PACKAGE_ID,
         nftContract: process.env.SUI_NFT_PACKAGE_ID,
         subscription: process.env.SUI_SUBSCRIPTION_PACKAGE_ID,
@@ -156,7 +156,7 @@ ai_context: |
   metadata: {
     network: "sui",
     contractType: "cycle_payment",
-    packageId: process.env.SUI_INFERENCE_PACKAGE_ID,
+    packageId: process.env.SUI_CYCLEENCE_PACKAGE_ID,
     ownershipPercentage: 100,
   },
   createdAt: Date.now(),
@@ -309,7 +309,7 @@ When Anthony deploys new contracts:
   metadata: {
     network: "sui",
     contractType: "cycle_payment",
-    packageId: process.env.SUI_INFERENCE_PACKAGE_ID,
+    packageId: process.env.SUI_CYCLEENCE_PACKAGE_ID,
     deployedBy: anthonyId,
   },
 }

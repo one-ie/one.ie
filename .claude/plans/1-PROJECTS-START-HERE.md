@@ -331,7 +331,7 @@ This is NOT a "read this someday" document. It's a "copy this code, fill in this
 This is one feature. But it demonstrates the system:
 
 - **Ontology-first** thinking (project = thing type)
-- **100-inference model** (6 phases × ~15 inferences each)
+- **100-cycle model** (6 phases × ~15 cycles each)
 - **Parallel execution** (4 people, 90 minutes)
 - **Content + Code** (reusable patterns)
 - **Full stack** (frontend + backend + tests + docs)

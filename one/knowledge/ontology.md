@@ -1790,7 +1790,7 @@ type EventType =
   | "optimization_applied"
   | "report_generated"
 
-  // INFERENCE EVENTS (7) - NEW
+  // CYCLEENCE EVENTS (7) - NEW
   | "cycle_request" // User requests AI cycle
   | "cycle_completed" // Cycle result delivered
   | "cycle_failed" // Cycle failed

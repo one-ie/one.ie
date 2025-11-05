@@ -189,7 +189,7 @@ v2.0.0 (Week 8): PUBLIC LAUNCH
 
 ---
 
-## 💡 THE INFERENCE-BASED PLANNING PARADIGM
+## 💡 THE CYCLEENCE-BASED PLANNING PARADIGM
 
 **Key Innovation:** Instead of time-based planning ("Day 1-3", "Week 2"), we use **sequence-based planning (100 cycles per feature)**
 

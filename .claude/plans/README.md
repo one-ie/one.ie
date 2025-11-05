@@ -3,7 +3,7 @@
 **Status:** Multiple Active Plans - Ready for Execution
 **Created:** October 30, 2025
 **Current Focus:** Projects Feature (Plan 1)
-**All Plans:** 900+ inferences planned across multiple features
+**All Plans:** 900+ cycles planned across multiple features
 
 ---
 
@@ -57,7 +57,7 @@
 
 ### 1. **EXECUTION-SUMMARY.md** ⭐ START HERE
 **15 min read** - High-level overview of the entire plan
-- What's being built (9 files, 900 inferences)
+- What's being built (9 files, 900 cycles)
 - When (8-week timeline with 4 waves)
 - Who (6 specialist agents)
 - Why (6-dimension ontology)
@@ -96,7 +96,7 @@
   - todo-api.md (public REST/GraphQL API)
   - todo-features.md (analytics, notifications, search, social)
   - todo-one-ie.md (marketing site + dashboards)
-- For each file: focus statement, scope, ontology mapping, phase names, key files, inference tasks
+- For each file: focus statement, scope, ontology mapping, phase names, key files, cycle tasks
 - Cross-reference patterns between files
 - Naming conventions and file locations
 - Success criteria templates
@@ -164,7 +164,7 @@ Wave 3: Platform (2 weeks)
 Wave 4: Presentation (2 weeks)
   └─ todo-one-ie.md (100 infers) - Marketing site + dashboards
 
-TOTAL: 900 inferences over 8 weeks with 4 specialist agents working in parallel
+TOTAL: 900 cycles over 8 weeks with 4 specialist agents working in parallel
 ```
 
 ### Dependencies Graph
@@ -216,7 +216,7 @@ v2.0.0 - Public Launch (Week 8)
 | **agent-quality** | skills, sell, ecommerce, api | ~150 infers | Weeks 2-6 |
 | **agent-designer** | onboard, one-ie | ~110 infers | Weeks 1 + 7-8 |
 
-**Total:** 900 inferences across 6 agents over 8 weeks
+**Total:** 900 cycles across 6 agents over 8 weeks
 
 ---
 
@@ -283,7 +283,7 @@ CHECKPOINT: Public site live, v2.0.0 released
 
 The plan succeeds when:
 
-1. ✅ All 9 files complete (100 inferences each)
+1. ✅ All 9 files complete (100 cycles each)
 2. ✅ 80%+ test coverage across platform
 3. ✅ All code reviewed and deployed
 4. ✅ All documentation complete
@@ -386,10 +386,10 @@ The plan succeeds when:
 
 ## 💡 KEY PRINCIPLES
 
-1. **Plan in inferences, not days** - Each inference is a concrete step
+1. **Plan in cycles, not days** - Each cycle is a concrete step
 2. **Execute in parallel** - Multiple specialists working simultaneously
 3. **Coordinate via events** - State changes trigger next actions
-4. **100 inferences per file** - Strict boundaries, no scope creep
+4. **100 cycles per file** - Strict boundaries, no scope creep
 5. **Test early + often** - Not deferred to Phase 6
 6. **Document as you go** - Not deferred to Phase 9
 7. **Daily communication** - Blockers surface immediately
@@ -415,7 +415,7 @@ Great! The plan is a living document. Update it and inform the team.
 
 ## 🎉 Ready?
 
-All planning is complete. Specialist agents know their roles. The path to 900 inferences is clear.
+All planning is complete. Specialist agents know their roles. The path to 900 cycles is clear.
 
 **Let's execute.**
 
@@ -426,7 +426,7 @@ All planning is complete. Specialist agents know their roles. The path to 900 in
 **Next:** Begin Wave 1 (todo-onboard.md)
 **Target:** v2.0.0 release in 8 weeks
 
-Remember: Every feature maps to the 6-dimension ontology. The plan is inference-based. Execution happens in parallel, coordinated via events.
+Remember: Every feature maps to the 6-dimension ontology. The plan is cycle-based. Execution happens in parallel, coordinated via events.
 
 Let's build the ONE Platform.
 

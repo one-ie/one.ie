@@ -15,7 +15,7 @@ Every file follows this exact structure:
 
 **Focus:** [Single sentence describing the vertical's core purpose]
 **Scope:** [2-3 key outcomes that define success]
-**Timeline:** 100 inferences (inference-based planning, not time-based)
+**Timeline:** 100 cycles (cycle-based planning, not time-based)
 **Target:** [Who benefits: creators, agents, users, etc.]
 
 ---
@@ -749,7 +749,7 @@ Every file follows this exact structure:
 
 ### During Creation
 
-- [ ] 10 inferences per phase (100 total)
+- [ ] 10 cycles per phase (100 total)
 - [ ] Each cycle has checkboxes (3-5 tasks minimum)
 - [ ] Ontology mapping explicit in Cycle 1
 - [ ] Phase-specific names (not generic)
@@ -760,7 +760,7 @@ Every file follows this exact structure:
 ### After Creation
 
 - [ ] Read through for completeness
-- [ ] Check for 100-inference total
+- [ ] Check for 100-cycle total
 - [ ] Verify all phases present
 - [ ] Confirm Success Criteria section complete
 - [ ] Verify Quick Reference section
@@ -797,7 +797,7 @@ When one todo file depends on another, document like this:
 
 ## NUMBERING CONSISTENCY
 
-Every inference follows this pattern:
+Every cycle follows this pattern:
 
 ```markdown
 ### Cycle X: [Action Verb] [What Is Being Done]
@@ -887,7 +887,7 @@ Example from X402:
 Before declaring "all 9 todos created":
 
 - [ ] All 8 files created in `/one/things/`
-- [ ] Each file has exactly 100 inferences (10 phases × 10 infers)
+- [ ] Each file has exactly 100 cycles (10 phases × 10 infers)
 - [ ] Each file follows todo-x402.md structure exactly
 - [ ] All cross-references between files documented
 - [ ] All ontology mappings explicit in Cycle 1

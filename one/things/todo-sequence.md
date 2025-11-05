@@ -1541,7 +1541,7 @@ At the end of 400 cycles (the complete 4-phase build):
 
 ---
 
-## COMPARISON: 900 INFERENCES vs 400 INFERENCES
+## COMPARISON: 900 CYCLEENCES vs 400 CYCLEENCES
 
 **Old Approach (900 cycles):**
 
