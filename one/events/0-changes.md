@@ -1,3 +1,19 @@
+### **b683c768** — template:10 — `refactor: Move cleanup archive to one/events/ (EVENTS dimension) and add event-driven documentation guide``
+
+**Template:**
+  - .claude/hooks.log
+  - .claude/hooks/clean-root-markdown.sh
+  - .claude/state/inference.json
+  - one/events/0-changes.md
+  - one/events/archived/DOCS-SYSTEM-GUIDE-20251105-142103.md
+  - one/events/archived/FILE-REFERENCE-20251105-142103.md
+  - one/events/archived/IMPLEMENTATION-CHECKLIST-20251105-142103.md
+  - one/events/archived/IMPLEMENTATION-REPORT-DOCS-20251105-142102.md
+  - one/events/archived/readme.md
+  - one/knowledge/event-driven-documentation.md
+
+
+
 ### **e96bf4e5** — template:29 — `fix: Use macOS-compatible path display in cleanup hook``
 
 **Template:**

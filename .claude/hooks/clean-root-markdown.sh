@@ -1,13 +1,13 @@
 #!/bin/bash
 
 # Clean Markdown Hook - ONE Platform
-# Moves unwanted markdown files to one/events/archived/
+# Moves unwanted markdown files to one/events/
 # Root allowed: README.md, CLAUDE.md, AGENTS.md, LICENSE.md, SECURITY.md
 # /web allowed: README.md, CLAUDE.md, AGENTS.md, LICENSE.md, SECURITY.md
-# Everything else moves to one/events/archived/ (6-dimension EVENTS tracking)
+# Everything else moves to one/events/ (6-dimension EVENTS dimension)
 
 PROJECT_DIR="${CLAUDE_PROJECT_DIR:-$(git rev-parse --show-toplevel)}"
-ARCHIVE_DIR="$PROJECT_DIR/one/events/archived"
+EVENTS_DIR="$PROJECT_DIR/one/events"
 
 # Allowed files (same for both root and web)
 ALLOWED_FILES=(
@@ -18,8 +18,8 @@ ALLOWED_FILES=(
   "SECURITY.md"
 )
 
-# Create archive directory if it doesn't exist
-mkdir -p "$ARCHIVE_DIR"
+# Create events directory if it doesn't exist
+mkdir -p "$EVENTS_DIR"
 
 # Function to clean markdown files in a directory
 clean_directory() {
@@ -43,7 +43,7 @@ clean_directory() {
       fi
     done
 
-    # If not allowed, move it to events/archived
+    # If not allowed, move it to one/events/
     if [ $is_allowed -eq 0 ]; then
       # Add timestamp and source directory to avoid collisions
       timestamp=$(date +%Y%m%d-%H%M%S)
@@ -55,11 +55,11 @@ clean_directory() {
         new_name="${filename%.md}-${timestamp}.md"
       fi
 
-      echo "Moving $(basename "$file") → one/events/archived/$new_name"
-      mv "$file" "$ARCHIVE_DIR/$new_name"
+      echo "Moving $(basename "$file") → one/events/$new_name"
+      mv "$file" "$EVENTS_DIR/$new_name"
 
       # Stage the changes for git
-      git add -A "$file" "$ARCHIVE_DIR/$new_name" 2>/dev/null || true
+      git add -A "$file" "$EVENTS_DIR/$new_name" 2>/dev/null || true
     fi
   done < <(find "$dir" -maxdepth 1 -name "*.md" -type f)
 }
