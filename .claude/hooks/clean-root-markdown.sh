@@ -48,7 +48,11 @@ clean_directory() {
       timestamp=$(date +%Y%m%d-%H%M%S)
       new_name="${filename%.md}-${timestamp}.md"
 
-      echo "Moving $(realpath --relative-to="$PROJECT_DIR" "$file") → $(realpath --relative-to="$PROJECT_DIR" "$archive_dir")/$new_name"
+      # Display relative path (macOS compatible)
+      rel_file=${file#"$PROJECT_DIR/"}
+      rel_archive_dir=${archive_dir#"$PROJECT_DIR/"}
+      echo "Moving $rel_file → $rel_archive_dir/$new_name"
+
       mv "$file" "$archive_dir/$new_name"
 
       # Stage the changes for git
