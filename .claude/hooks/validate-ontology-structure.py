@@ -137,9 +137,9 @@ VALID_DIMENSIONS = {
             "course_created", "course_enrolled", "lesson_completed", "course_completed", "certificate_earned",
             # Analytics Events
             "metric_calculated", "insight_generated", "prediction_made", "optimization_applied", "report_generated",
-            # Inference Events
-            "inference_request", "inference_completed", "inference_failed",
-            "inference_quota_exceeded", "inference_revenue_collected",
+            # Cycle Events
+            "cycle_request", "cycle_completed", "cycle_failed",
+            "cycle_quota_exceeded", "cycle_revenue_collected",
             "org_revenue_generated", "revenue_share_distributed",
             # Blockchain Events
             "nft_minted", "nft_transferred", "tokens_bridged", "contract_deployed", "treasury_withdrawal",

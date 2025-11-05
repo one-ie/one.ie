@@ -2,7 +2,7 @@
 
 🌟 **Turn Ideas into Production-Ready Code**
 
-_agent-director orchestrates your workflow through 15 specialized AI agents with the 6-dimension ontology. Inference-based execution optimized for speed and quality._
+_agent-director orchestrates your workflow through 15 specialized AI agents with the 6-dimension ontology. Cycle-based execution optimized for speed and quality._
 
 ## Core Interface
 
@@ -21,16 +21,16 @@ When the `/one` command is invoked, display this main menu:
 ╚══════════════════════════════════════════════════════════════════╝
 
 🏆 **ORCHESTRATION STATUS** - agent-director in control ✅
-   ✨ ONE Platform v1.0.0 | 15 AI Agents | Inference-Based (1-100)
+   ✨ ONE Platform v1.0.0 | 15 AI Agents | Cycle-Based (1-100)
    🤖 98% Context Reduction | 🚀 5x Faster Execution
    🧪 Quality Loops Enabled | 📊 Continuous Learning Active
    ⚡ Event-Driven Autonomy | 🎯 6-Dimension Ontology Aligned
 
 🚀 **INFERENCE WORKFLOW** (Cycle 1-100: Plan → Implement → Learn)
-   1. /now              → Show current inference & task
-   2. /next             → Advance to next inference
-   3. /done             → Mark inference complete & advance
-   4. /plan             → View complete 100-inference plan
+   1. /now              → Show current cycle & task
+   2. /next             → Advance to next cycle
+   3. /done             → Mark cycle complete & advance
+   4. /plan             → View complete 100-cycle plan
    5. /create            → Build feature with specialists
 
 🤖 **AGENT COMMAND CENTER** (15 Specialized Agents, agent-director Orchestrates)
@@ -221,7 +221,7 @@ display: |
   🎯 **AGENT-DIRECTOR: THE ORCHESTRATOR**
 
   Central control: Plans features, validates ontology, delegates to 14 specialists
-  Works with inference-based execution (Cycle 1-100) for precise planning.
+  Works with cycle-based execution (Cycle 1-100) for precise planning.
 
   **Current Activity:**
   - Cycle 47/100: Validating backend schema design
@@ -231,12 +231,12 @@ display: |
   - Monitoring: agent-quality running tests in parallel
 
   **What agent-director Does:**
-  1. /now                  → Show current inference & context
-  2. /next                 → Advance to next inference in plan
-  3. /done                 → Mark inference complete, learn from it
-  4. /plan                 → View complete 100-inference roadmap
+  1. /now                  → Show current cycle & context
+  2. /next                 → Advance to next cycle in plan
+  3. /done                 → Mark cycle complete, learn from it
+  4. /plan                 → View complete 100-cycle roadmap
   5. Create Feature Plan   → Break idea into 100 cycles
-  6. Assign to Specialist  → Delegate specific inference to agent
+  6. Assign to Specialist  → Delegate specific cycle to agent
   7. Coordinate Parallel   → Run multiple agents concurrently
   8. Monitor Quality       → Watch tests, catch failures early
 
@@ -244,7 +244,7 @@ display: |
   - Cycle N: Identifies what's needed
   - Assigns to specialist (backend, frontend, designer, etc.)
   - Specialist executes with skill(s) from .claude/skills/
-  - Returns result to director for next inference
+  - Returns result to director for next cycle
   - agent-director learns and advances plan
 
   **Context Budget:** 43,000 tokens (largest context)
@@ -264,7 +264,7 @@ display: |
   ⚙️  **AGENT-BACKEND: BACKEND SPECIALIST**
 
   Convex backend implementation: mutations, queries, schema, services, 6D ontology
-  Delegated by agent-director for inference tasks involving backend logic.
+  Delegated by agent-director for cycle tasks involving backend logic.
 
   **Currently Executing (via agent-director delegation):**
   - Cycle 15: Implement course creation mutation
@@ -289,7 +289,7 @@ display: |
   - agent-backend executes: Creates mutation with all 8 steps
   - Uses skill: agent-backend:create-mutation for guidance
   - Returns: Mutation code + event logging + quota checks
-  - agent-director: Marks inference complete, advances to next
+  - agent-director: Marks cycle complete, advances to next
 
   **Integration Pattern:**
   - Receives requests from: agent-director (via delegation)
@@ -314,7 +314,7 @@ display: |
   🎨 **AGENT-FRONTEND: FRONTEND SPECIALIST**
 
   Astro 5 + React 19 UI implementation: pages, components, islands, performance
-  Delegated by agent-director for inference tasks involving frontend logic.
+  Delegated by agent-director for cycle tasks involving frontend logic.
 
   **Currently Executing (via agent-director delegation):**
   - Cycle 25: Create course list page with SSR
@@ -339,7 +339,7 @@ display: |
   - agent-frontend executes: Builds Astro page with React islands
   - Uses skill: agent-frontend:create-page for guidance
   - Returns: Page code + component specs + performance metrics
-  - agent-director: Marks inference complete, advances to next
+  - agent-director: Marks cycle complete, advances to next
 
   **Integration Pattern:**
   - Receives requests from: agent-director (via delegation)
@@ -394,7 +394,7 @@ display: |
   🧪 **AGENT-QUALITY: QUALITY SPECIALIST**
 
   Test-driven requirements: user flows, acceptance criteria, test validation
-  Delegated by agent-director for inference tasks involving quality gates.
+  Delegated by agent-director for cycle tasks involving quality gates.
 
   **Currently Executing (via agent-director delegation):**
   - Cycle 18: Define course creation user flows
@@ -454,7 +454,7 @@ display: |
   🎨 **AGENT-DESIGNER: DESIGN SPECIALIST**
 
   Test-driven design: wireframes, components, tokens aligned to acceptance criteria
-  Delegated by agent-director for inference tasks involving design and UX.
+  Delegated by agent-director for cycle tasks involving design and UX.
 
   **Currently Executing (via agent-director delegation):**
   - Cycle 28: Create course card wireframe
@@ -480,7 +480,7 @@ display: |
   - Uses skill: agent-designer:create-wireframe for guidance
   - Returns: Wireframe + component specs + design tokens
   - agent-frontend uses wireframe for implementation
-  - agent-director: Marks inference complete, advances to next
+  - agent-director: Marks cycle complete, advances to next
 
   **Integration Pattern:**
   - Receives requests from: agent-director (via delegation)

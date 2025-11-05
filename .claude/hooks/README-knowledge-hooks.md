@@ -7,7 +7,7 @@ The knowledge tagging hooks automatically map all created/modified artifacts to 
 - 📊 Automatic ontology dimension mapping (groups, people, things, connections, events, knowledge)
 - 🏷️ Semantic labeling aligned with Reality-as-DSL architecture
 - 🔍 RAG-ready artifact indexing for AI agent learning
-- 📈 Knowledge tracking per inference (Cycle 1-100)
+- 📈 Knowledge tracking per cycle (Cycle 1-100)
 - 🧠 Complete audit trail of created knowledge
 - 🎯 Guided documentation paths for each dimension
 
@@ -96,7 +96,7 @@ Runs **after** Write/Edit operations to create knowledge entries:
 
 1. 📝 Creates knowledge entry with ontology dimension mapping
 2. 🏷️ Tags with semantic labels (dimension:*, artifact:*, technology:*, etc.)
-3. 🔗 Links to current inference context (Cycle 1-100)
+3. 🔗 Links to current cycle context (Cycle 1-100)
 4. 💾 Saves to daily knowledge log (~/.claude/knowledge-log/)
 5. 🔐 Generates content hash for versioning
 6. 📊 Tracks ontology version (3.0.0)
@@ -108,7 +108,7 @@ Runs **after** Write/Edit operations to create knowledge entries:
    Type: code
    Dimension: THINGS
    Labels: dimension:things, components, ui, frontend
-   Inference: 22/100
+   Cycle: 22/100
    Hash: a3f9d2c1b4e5f6a7
    → Logged to: knowledge-2025-11-03.jsonl
 
@@ -143,7 +143,7 @@ Each knowledge entry is saved as JSON with ontology dimension mapping:
   ],
   "content_hash": "a3f9d2c1b4e5f6a7",
   "created_at": "2025-11-03T21:30:45.123456",
-  "inference_number": 22,
+  "cycle_number": 22,
   "feature": "Entity Management",
   "organization": "Default Org",
   "created_by_role": "platform_owner",
@@ -249,19 +249,19 @@ Each line is a complete JSON knowledge entry. This format enables:
 - 🧠 RAG corpus building for AI agents
 - 🎯 Ontology dimension coverage metrics
 
-## Inference Context Integration
+## Cycle Context Integration
 
-The hooks integrate with the inference tracking system:
+The hooks integrate with the cycle tracking system:
 
-- 📍 Current inference number (1-100)
+- 📍 Current cycle number (1-100)
 - 🎯 Feature being implemented
 - 🏢 Organization context
 - 👤 Person role (platform_owner, org_owner, etc.)
 
-**State File:** `.claude/state/inference.json`
+**State File:** `.claude/state/cycle.json`
 
 This links every knowledge artifact back to:
-1. The inference that created it (1-100)
+1. The cycle that created it (1-100)
 2. The feature being implemented
 3. The organization context
 4. The person role (authorization dimension)
@@ -313,7 +313,7 @@ export function TokenBalance({ userId }) { ... }
    Type: code
    Dimension: THINGS
    Labels: dimension:things, components, ui, frontend
-   Inference: 22/100
+   Cycle: 22/100
    Hash: b8c3d4e5f6a7b8c9
    → Logged to: knowledge-2025-11-03.jsonl
 
@@ -345,8 +345,8 @@ cat ~/.claude/knowledge-log/*.jsonl | jq 'select(.ontology_dimension == "groups"
 # All code artifacts
 cat ~/.claude/knowledge-log/*.jsonl | jq 'select(.artifact_type == "code")'
 
-# All artifacts for inference 22
-cat ~/.claude/knowledge-log/*.jsonl | jq 'select(.inference_number == 22)'
+# All artifacts for cycle 22
+cat ~/.claude/knowledge-log/*.jsonl | jq 'select(.cycle_number == 22)'
 
 # All frontend components (THINGS dimension)
 cat ~/.claude/knowledge-log/*.jsonl | jq 'select(.labels | contains(["dimension:things", "components", "frontend"]))'
@@ -374,7 +374,7 @@ These hooks implement **Dimension 6: Knowledge** while mapping all artifacts to 
 Every artifact created is:
 1. ✅ Mapped to correct **ontology dimension** (1-6)
 2. 🏷️ Tagged with **semantic labels** (dimension:*, artifact:*, etc.)
-3. 🔗 Linked to **inference context** (Cycle 1-100)
+3. 🔗 Linked to **cycle context** (Cycle 1-100)
 4. 📊 Indexed for **RAG search** (embeddings ready)
 5. 🎯 Guided to **dimension docs** (ontology alignment)
 
@@ -439,10 +439,10 @@ Remove from `.claude/settings.local.json`:
 ## See Also
 
 - **`validate-ontology-structure.py`**: Validates 6-dimension ontology structure
-- **`todo.py`**: Inference context tracking (Cycle 1-100)
-- **`done.py`**: Marks inferences complete
+- **`todo.py`**: Cycle context tracking (Cycle 1-100)
+- **`done.py`**: Marks cycles complete
 - **`/one/knowledge/ontology.md`**: Complete 6-dimension ontology spec (Version 3.0.0)
-- **`/one/knowledge/todo.md`**: 100-inference execution sequence
+- **`/one/knowledge/todo.md`**: 100-cycle execution sequence
 
 ---
 

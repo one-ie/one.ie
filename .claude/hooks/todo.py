@@ -1,13 +1,13 @@
 #!/usr/bin/env python3
 """
 ONE Platform - Todo Context Hook
-Loads current inference context and injects it into Claude's conversation.
+Loads current cycle context and injects it into Claude's conversation.
 
 This hook runs on UserPromptSubmit to provide context about:
-- Current inference number (Infer 1-100)
+- Current cycle number (Cycle 1-100)
 - Task description
 - Required ontology dimensions
-- Dependencies from previous inferences
+- Dependencies from previous cycles
 - Organization and person context
 - Phase context and parallel execution opportunities
 """
@@ -17,7 +17,7 @@ import os
 from pathlib import Path
 from typing import Dict, Any, Optional, List
 
-# Phase definitions (10 phases of 10 inferences each)
+# Phase definitions (10 phases of 10 cycles each)
 PHASES = {
     1: {"name": "Foundation & Setup", "range": (1, 10), "icon": "🏗️"},
     2: {"name": "Backend Schema & Services", "range": (11, 20), "icon": "⚙️"},
@@ -31,7 +31,7 @@ PHASES = {
     10: {"name": "Deployment & Documentation", "range": (91, 100), "icon": "🚀"},
 }
 
-# Inference-to-dimension mapping
+# Cycle-to-dimension mapping
 INFERENCE_DIMENSIONS = {
     "groups": [6, 18, 43],
     "people": [7, 42, 43, 44, 45, 46, 47, 48, 49, 50],
@@ -41,7 +41,7 @@ INFERENCE_DIMENSIONS = {
     "knowledge": [5, 51, 52, 53, 54, 55, 56, 57, 58, 59, 60, 98, 99],
 }
 
-# Inference-to-specialist mapping
+# Cycle-to-specialist mapping
 INFERENCE_SPECIALISTS = {
     "director": list(range(1, 11)),
     "backend": list(range(11, 21)) + list(range(41, 51)),
@@ -53,14 +53,14 @@ INFERENCE_SPECIALISTS = {
     "documenter": list(range(95, 101)),
 }
 
-# Parallel execution opportunities (inferences that can run concurrently)
+# Parallel execution opportunities (cycles that can run concurrently)
 PARALLEL_GROUPS = [
-    {"inferences": list(range(11, 21)) + list(range(21, 31)), "note": "Backend + Frontend (after schema defined at Infer 12)"},
-    {"inferences": list(range(61, 71)) + list(range(71, 81)), "note": "Tests + Design (interdependent validation)"},
-    {"inferences": list(range(95, 101)), "note": "Documentation (can start earlier)"},
+    {"cycles": list(range(11, 21)) + list(range(21, 31)), "note": "Backend + Frontend (after schema defined at Cycle 12)"},
+    {"cycles": list(range(61, 71)) + list(range(71, 81)), "note": "Tests + Design (interdependent validation)"},
+    {"cycles": list(range(95, 101)), "note": "Documentation (can start earlier)"},
 ]
 
-# The 100 inference tasks (abbreviated for context efficiency)
+# The 100 cycle tasks (abbreviated for context efficiency)
 INFERENCE_TASKS = {
     1: "Validate idea against 6-dimension ontology",
     2: "Map idea to specific entity types (66+ thing types)",
@@ -166,8 +166,8 @@ INFERENCE_TASKS = {
 
 
 def load_state() -> Dict[str, Any]:
-    """Load current inference state from .claude/state/inference.json"""
-    state_file = Path(os.environ.get("CLAUDE_PROJECT_DIR", ".")) / ".claude" / "state" / "inference.json"
+    """Load current cycle state from .claude/state/cycle.json"""
+    state_file = Path(os.environ.get("CLAUDE_PROJECT_DIR", ".")) / ".claude" / "state" / "cycle.json"
 
     # Create state directory if it doesn't exist
     state_file.parent.mkdir(parents=True, exist_ok=True)
@@ -175,8 +175,8 @@ def load_state() -> Dict[str, Any]:
     # Initialize default state if file doesn't exist
     if not state_file.exists():
         default_state = {
-            "current_inference": 1,
-            "completed_inferences": [],
+            "current_cycle": 1,
+            "completed_cycles": [],
             "feature_name": "New Feature",
             "organization": "Default Org",
             "person_role": "platform_owner",
@@ -188,76 +188,76 @@ def load_state() -> Dict[str, Any]:
     return json.loads(state_file.read_text())
 
 
-def get_phase_for_inference(inference: int) -> Dict[str, Any]:
-    """Get phase information for this inference"""
+def get_phase_for_cycle(cycle: int) -> Dict[str, Any]:
+    """Get phase information for this cycle"""
     for phase_num, phase_info in PHASES.items():
         start, end = phase_info["range"]
-        if start <= inference <= end:
+        if start <= cycle <= end:
             return {
                 "number": phase_num,
                 "name": phase_info["name"],
                 "icon": phase_info["icon"],
-                "progress": f"{inference - start + 1}/{end - start + 1}"
+                "progress": f"{cycle - start + 1}/{end - start + 1}"
             }
     return {"number": 0, "name": "Unknown", "icon": "❓", "progress": "0/0"}
 
 
-def get_dimensions_for_inference(inference: int) -> List[str]:
-    """Get ontology dimensions relevant to this inference"""
+def get_dimensions_for_cycle(cycle: int) -> List[str]:
+    """Get ontology dimensions relevant to this cycle"""
     dimensions = []
-    for dimension, inferences in INFERENCE_DIMENSIONS.items():
-        if inference in inferences:
+    for dimension, cycles in INFERENCE_DIMENSIONS.items():
+        if cycle in cycles:
             dimensions.append(dimension)
     return dimensions
 
 
-def get_specialist_for_inference(inference: int) -> Optional[str]:
-    """Get specialist agent responsible for this inference"""
-    for specialist, inferences in INFERENCE_SPECIALISTS.items():
-        if inference in inferences:
+def get_specialist_for_cycle(cycle: int) -> Optional[str]:
+    """Get specialist agent responsible for this cycle"""
+    for specialist, cycles in INFERENCE_SPECIALISTS.items():
+        if cycle in cycles:
             return specialist
     return None
 
 
-def get_parallel_opportunities(inference: int) -> List[str]:
-    """Get parallel execution opportunities for current inference"""
+def get_parallel_opportunities(cycle: int) -> List[str]:
+    """Get parallel execution opportunities for current cycle"""
     opportunities = []
     for group in PARALLEL_GROUPS:
-        if inference in group["inferences"]:
+        if cycle in group["cycles"]:
             opportunities.append(group["note"])
     return opportunities
 
 
-def get_dependencies(inference: int) -> list:
-    """Get inference dependencies (what must be completed first)"""
+def get_dependencies(cycle: int) -> list:
+    """Get cycle dependencies (what must be completed first)"""
     # Simple linear dependencies for now
-    if inference <= 10:
-        return list(range(1, inference))
-    elif inference <= 20:
-        return [1, 2, 3, 4, 5, 6, 7, 8, 9, 10] + list(range(11, inference))
-    elif inference <= 30:
-        return list(range(1, 11)) + [12, 13] + list(range(21, inference))  # Need schema first
-    elif inference <= 40:
-        return list(range(1, 11)) + list(range(31, inference))
+    if cycle <= 10:
+        return list(range(1, cycle))
+    elif cycle <= 20:
+        return [1, 2, 3, 4, 5, 6, 7, 8, 9, 10] + list(range(11, cycle))
+    elif cycle <= 30:
+        return list(range(1, 11)) + [12, 13] + list(range(21, cycle))  # Need schema first
+    elif cycle <= 40:
+        return list(range(1, 11)) + list(range(31, cycle))
     else:
         return list(range(1, 11))  # Foundation always required
 
 
 def generate_context(state: Dict[str, Any]) -> str:
     """Generate context to inject into Claude's conversation"""
-    current = state["current_inference"]
+    current = state["current_cycle"]
     task = INFERENCE_TASKS.get(current, "Unknown task")
-    phase = get_phase_for_inference(current)
-    dimensions = get_dimensions_for_inference(current)
-    specialist = get_specialist_for_inference(current)
+    phase = get_phase_for_cycle(current)
+    dimensions = get_dimensions_for_cycle(current)
+    specialist = get_specialist_for_cycle(current)
     parallel_ops = get_parallel_opportunities(current)
-    dependencies = [d for d in get_dependencies(current) if d in state["completed_inferences"]]
+    dependencies = [d for d in get_dependencies(current) if d in state["completed_cycles"]]
     total_deps = len(get_dependencies(current))
-    progress_pct = (len(state["completed_inferences"]) / 100) * 100
+    progress_pct = (len(state["completed_cycles"]) / 100) * 100
 
     context = f"""
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-{phase['icon']} CURRENT INFERENCE: Infer {current}/100
+{phase['icon']} CURRENT INFERENCE: Cycle {current}/100
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
 **Feature:** {state["feature_name"]}
@@ -271,7 +271,7 @@ def generate_context(state: Dict[str, Any]) -> str:
 **Assigned Specialist:** {specialist if specialist else "director"}
 
 **Dependencies Met:** {len(dependencies)}/{total_deps} completed
-**Progress:** {len(state["completed_inferences"])}/100 inferences complete ({progress_pct:.0f}%)
+**Progress:** {len(state["completed_cycles"])}/100 cycles complete ({progress_pct:.0f}%)
 """
 
     # Add parallel execution opportunities
@@ -284,24 +284,24 @@ def generate_context(state: Dict[str, Any]) -> str:
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 """
 
-    # Add next 5 inferences with enhanced info
+    # Add next 5 cycles with enhanced info
     for i in range(current, min(current + 5, 101)):
         task_desc = INFERENCE_TASKS.get(i, "Unknown")
-        dims = get_dimensions_for_inference(i)
-        spec = get_specialist_for_inference(i)
-        inf_phase = get_phase_for_inference(i)
-        status = "✅" if i in state["completed_inferences"] else "⏸️ " if i == current else "⏹️ "
+        dims = get_dimensions_for_cycle(i)
+        spec = get_specialist_for_cycle(i)
+        inf_phase = get_phase_for_cycle(i)
+        status = "✅" if i in state["completed_cycles"] else "⏸️ " if i == current else "⏹️ "
 
-        context += f"{status} Infer {i}: {task_desc}\n"
+        context += f"{status} Cycle {i}: {task_desc}\n"
         if i == current:
-            # Show more detail for current inference
+            # Show more detail for current cycle
             context += f"   {inf_phase['icon']} Phase: {inf_phase['name']}\n"
             if dims:
                 context += f"   📊 Dimensions: {', '.join(dims)}\n"
             if spec:
                 context += f"   👤 Specialist: {spec}\n"
         else:
-            # Condensed info for upcoming inferences
+            # Condensed info for upcoming cycles
             if dims or spec:
                 context += f"   └─ {', '.join(dims) if dims else 'Foundation'} | {spec if spec else 'director'}\n"
 
@@ -309,20 +309,20 @@ def generate_context(state: Dict[str, Any]) -> str:
 
     # Add recent lessons learned (only if meaningful)
     if state.get("lessons_learned"):
-        recent_lessons = [l for l in state["lessons_learned"][-5:] if l["lesson"] != f"Completed inference {l['inference']} successfully"]
+        recent_lessons = [l for l in state["lessons_learned"][-5:] if l["lesson"] != f"Completed cycle {l['cycle']} successfully"]
         if recent_lessons:
             context += "💡 RECENT LESSONS LEARNED:\n━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\n"
             for lesson in recent_lessons[-3:]:  # Last 3 meaningful lessons
-                context += f"• Infer {lesson['inference']}: {lesson['lesson']}\n"
+                context += f"• Cycle {lesson['cycle']}: {lesson['lesson']}\n"
             context += "\n"
 
     context += """
 🔄 WORKFLOW COMMANDS:
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-/done     - Mark current inference complete and advance
-/next     - Skip to next inference (if not applicable)
-/reset    - Start new feature (reset to Infer 1)
-/plan     - View complete 100-inference plan
+/done     - Mark current cycle complete and advance
+/next     - Skip to next cycle (if not applicable)
+/reset    - Start new feature (reset to Cycle 1)
+/plan     - View complete 100-cycle plan
 
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 """

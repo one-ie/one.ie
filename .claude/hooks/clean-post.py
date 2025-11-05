@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 """
-ONE Platform - Clean Agent Post-Inference Hook
+ONE Platform - Clean Agent Post-Cycle Hook
 Validates cleanup and 6-dimension ontology alignment.
 
 This hook runs after agent-clean operations to verify:
@@ -211,7 +211,7 @@ class CleanupAgent:
 
     def update_metadata_tags(self):
         """Update metadata tags on recently modified files"""
-        # Find markdown files modified in last inference
+        # Find markdown files modified in last cycle
         recent_files = []
         cutoff_time = datetime.now().timestamp() - 3600  # Last hour
 
@@ -237,7 +237,7 @@ class CleanupAgent:
             if content.startswith("---\n"):
                 return False
 
-            # Infer metadata from file location
+            # Cycle metadata from file location
             relative_path = file_path.relative_to(self.project_dir)
             parts = relative_path.parts
 
@@ -350,7 +350,7 @@ def generate_report(agent: CleanupAgent) -> str:
 
     report = f"""
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-🧹 CLEANUP VALIDATION - Agent Clean Post-Inference
+🧹 CLEANUP VALIDATION - Agent Clean Post-Cycle
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
 {ontology_icon} ONTOLOGY STATUS: {ontology_status}
@@ -401,9 +401,9 @@ def generate_report(agent: CleanupAgent) -> str:
   ✅ Root directory contains only approved files
   ✅ Documentation organized by ontology dimensions
   ✅ Temporary artifacts removed
-  ✅ Ready for next inference
+  ✅ Ready for next cycle
 
-🔄 Run /done to advance to next inference
+🔄 Run /done to advance to next cycle
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 """
     else:

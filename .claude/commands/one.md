@@ -99,7 +99,7 @@ Dev Server: http://localhost:4321 [✓ Running / ⭕ Stopped]
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   /onboard               - Get on board and configure your environment
-  /plan [idea]           - Plan your next moves (100-inference sequence)
+  /plan [idea]           - Plan your next moves (100-cycle sequence)
   /create                - Create your web app from scratch
   /deploy                - Deploy from your computer to the edge
   /push                  - Push to GitHub
@@ -137,6 +137,6 @@ Dev Server: http://localhost:4321 [✓ Running / ⭕ Stopped]
 **Key Integration Points:**
 
 - `/plan convert` merges CASCADE planning into plan command
-- Agent assignments are automatic based on inference type
+- Agent assignments are automatic based on cycle type
 - Dependencies are calculated and shown
 - Quality loop is visualized in task breakdown

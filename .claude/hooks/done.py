@@ -1,12 +1,12 @@
 #!/usr/bin/env python3
 """
 ONE Platform - Done Hook
-Marks current inference complete and advances to next inference.
+Marks current cycle complete and advances to next cycle.
 
 This hook runs on Stop event to:
-- Mark current inference as complete
+- Mark current cycle as complete
 - Capture lessons learned (if any)
-- Advance to next inference
+- Advance to next cycle
 - Save updated state
 """
 import json
@@ -19,22 +19,22 @@ from typing import Dict, Any
 # Import task descriptions and helpers from todo hook
 from todo import (
     INFERENCE_TASKS,
-    get_dimensions_for_inference,
-    get_specialist_for_inference,
-    get_phase_for_inference,
+    get_dimensions_for_cycle,
+    get_specialist_for_cycle,
+    get_phase_for_cycle,
     get_parallel_opportunities
 )
 
 
 def load_state() -> Dict[str, Any]:
-    """Load current inference state from .claude/state/inference.json"""
-    state_file = Path(os.environ.get("CLAUDE_PROJECT_DIR", ".")) / ".claude" / "state" / "inference.json"
+    """Load current cycle state from .claude/state/cycle.json"""
+    state_file = Path(os.environ.get("CLAUDE_PROJECT_DIR", ".")) / ".claude" / "state" / "cycle.json"
 
     if not state_file.exists():
         # Initialize default state
         default_state = {
-            "current_inference": 1,
-            "completed_inferences": [],
+            "current_cycle": 1,
+            "completed_cycles": [],
             "feature_name": "New Feature",
             "organization": "Default Org",
             "person_role": "platform_owner",
@@ -46,17 +46,17 @@ def load_state() -> Dict[str, Any]:
 
 
 def save_state(state: Dict[str, Any]):
-    """Save inference state to .claude/state/inference.json"""
-    state_file = Path(os.environ.get("CLAUDE_PROJECT_DIR", ".")) / ".claude" / "state" / "inference.json"
+    """Save cycle state to .claude/state/cycle.json"""
+    state_file = Path(os.environ.get("CLAUDE_PROJECT_DIR", ".")) / ".claude" / "state" / "cycle.json"
     state_file.parent.mkdir(parents=True, exist_ok=True)
     state_file.write_text(json.dumps(state, indent=2))
 
 
-def extract_lesson_from_transcript(transcript_path: str, inference: int) -> str:
+def extract_lesson_from_transcript(transcript_path: str, cycle: int) -> str:
     """Extract lesson learned from conversation transcript"""
     try:
         if not transcript_path or not Path(transcript_path).exists():
-            return f"Completed Infer {inference}"
+            return f"Completed Cycle {cycle}"
 
         # Read transcript JSONL and extract key learnings
         with open(transcript_path, 'r') as f:
@@ -79,35 +79,35 @@ def extract_lesson_from_transcript(transcript_path: str, inference: int) -> str:
 
         if lessons:
             return lessons[-1]  # Most recent lesson
-        return f"Completed Infer {inference}"
+        return f"Completed Cycle {cycle}"
 
     except Exception as e:
-        return f"Completed Infer {inference} (lesson extraction failed: {str(e)[:50]})"
+        return f"Completed Cycle {cycle} (lesson extraction failed: {str(e)[:50]})"
 
 
 def mark_complete_and_advance(state: Dict[str, Any], transcript_path: str) -> Dict[str, Any]:
-    """Mark current inference complete and advance to next"""
-    current = state["current_inference"]
+    """Mark current cycle complete and advance to next"""
+    current = state["current_cycle"]
 
-    # Mark current inference as complete
-    if current not in state["completed_inferences"]:
-        state["completed_inferences"].append(current)
-        state["completed_inferences"].sort()
+    # Mark current cycle as complete
+    if current not in state["completed_cycles"]:
+        state["completed_cycles"].append(current)
+        state["completed_cycles"].sort()
 
     # Extract lesson learned
     lesson = extract_lesson_from_transcript(transcript_path, current)
     state["lessons_learned"].append({
-        "inference": current,
+        "cycle": current,
         "lesson": lesson,
         "timestamp": int(time.time())  # Unix timestamp
     })
 
-    # Advance to next inference (unless we're at 100)
+    # Advance to next cycle (unless we're at 100)
     if current < 100:
-        state["current_inference"] = current + 1
+        state["current_cycle"] = current + 1
     else:
         # Feature complete!
-        state["current_inference"] = 100
+        state["current_cycle"] = 100
         state["feature_complete"] = True
 
     return state
@@ -115,32 +115,32 @@ def mark_complete_and_advance(state: Dict[str, Any], transcript_path: str) -> Di
 
 def generate_completion_message(state: Dict[str, Any]) -> str:
     """Generate message shown after marking complete"""
-    previous = state["current_inference"] - 1 if state["current_inference"] > 1 else 1
-    current = state["current_inference"]
-    completed_count = len(state["completed_inferences"])
+    previous = state["current_cycle"] - 1 if state["current_cycle"] > 1 else 1
+    current = state["current_cycle"]
+    completed_count = len(state["completed_cycles"])
     progress_pct = (completed_count / 100) * 100
 
-    # Get info for next inference
+    # Get info for next cycle
     task = INFERENCE_TASKS.get(current, "Unknown task")
-    phase = get_phase_for_inference(current)
-    dimensions = get_dimensions_for_inference(current)
-    specialist = get_specialist_for_inference(current)
+    phase = get_phase_for_cycle(current)
+    dimensions = get_dimensions_for_cycle(current)
+    specialist = get_specialist_for_cycle(current)
     parallel_ops = get_parallel_opportunities(current)
 
     # Get most recent lesson
     recent_lesson = None
     if state.get("lessons_learned"):
         for lesson in reversed(state["lessons_learned"]):
-            if lesson["inference"] == previous and lesson["lesson"] != f"Completed Infer {previous}":
+            if lesson["cycle"] == previous and lesson["lesson"] != f"Completed Cycle {previous}":
                 recent_lesson = lesson["lesson"]
                 break
 
     message = f"""
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-✅ INFERENCE COMPLETE: Infer {previous}/100
+✅ INFERENCE COMPLETE: Cycle {previous}/100
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
-**Progress:** {completed_count}/100 inferences complete ({progress_pct:.0f}%)
+**Progress:** {completed_count}/100 cycles complete ({progress_pct:.0f}%)
 **Feature:** {state["feature_name"]}
 """
 
@@ -149,7 +149,7 @@ def generate_completion_message(state: Dict[str, Any]) -> str:
 
     message += f"""
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-{phase['icon']} NEXT INFERENCE: Infer {current}/100
+{phase['icon']} NEXT INFERENCE: Cycle {current}/100
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
 **Phase {phase['number']}/10:** {phase['name']} ({phase['progress']})
@@ -164,10 +164,10 @@ def generate_completion_message(state: Dict[str, Any]) -> str:
 
     message += """
 Ready to continue? Type your next prompt or use:
-  /done     - Mark this inference complete (when finished)
-  /next     - Skip to next inference (if not applicable)
-  /reset    - Start new feature (reset to Infer 1)
-  /plan     - View complete 100-inference plan
+  /done     - Mark this cycle complete (when finished)
+  /next     - Skip to next cycle (if not applicable)
+  /reset    - Start new feature (reset to Cycle 1)
+  /plan     - View complete 100-cycle plan
 
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 """
@@ -175,14 +175,14 @@ Ready to continue? Type your next prompt or use:
     # Special message when feature is complete
     if completed_count == 100:
         meaningful_lessons = [l for l in state.get("lessons_learned", [])
-                            if l["lesson"] != f"Completed Infer {l['inference']}"]
+                            if l["lesson"] != f"Completed Cycle {l['cycle']}"]
 
         message = f"""
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 🎉 FEATURE COMPLETE: {state["feature_name"]}
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
-**All 100 inferences completed successfully!**
+**All 100 cycles completed successfully!**
 
 **Final Stats:**
 - Organization: {state["organization"]}
@@ -191,7 +191,7 @@ Ready to continue? Type your next prompt or use:
 
 **Next Steps:**
 1. Start new feature: /reset (or create new conversation)
-2. Review all lessons: Check .claude/state/inference.json
+2. Review all lessons: Check .claude/state/cycle.json
 3. Deploy to production: /release
 
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━

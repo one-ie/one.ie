@@ -61,18 +61,18 @@
 
 ## What's Already Built
 
-Based on your inference.json state (Cycle 100/100 complete):
+Based on your cycle.json state (Cycle 100/100 complete):
 
 **Current Feature:** New Feature
 **Organization:** Default Org
 **Role:** platform_owner
 **Status:** ✅ Complete (100 cycles executed)
 
-**Lessons Learned:** 100+ successful inference cycles documented
+**Lessons Learned:** 100+ successful cycle cycles documented
 
 To start a NEW feature, run:
 ```bash
-/create [new-feature-name]        # Begin new 100-inference plan
+/create [new-feature-name]        # Begin new 100-cycle plan
 /reset                            # Start fresh (clears current state)
 ```
 
@@ -191,31 +191,31 @@ To start a NEW feature, run:
 
 1. **Check existing /web components**
 2. **Decide: Frontend-only or Backend-required?**
-3. **Create 100-inference plan** with cycle breakdown
+3. **Create 100-cycle plan** with cycle breakdown
 4. **Assign to specialist(s)** (agent-frontend, agent-backend, etc.)
-5. **Load dependencies** from inference context
+5. **Load dependencies** from cycle context
 
 ### Step 3: See Your Plan
 
 ```bash
 /plan show
 # Shows:
-# - 100-inference breakdown
+# - 100-cycle breakdown
 # - Phase descriptions (1-10 through 91-100)
 # - Agent assignments
 # - Dependencies & parallel opportunities
 ```
 
-### Step 4: Execute Inferences
+### Step 4: Execute Cycles
 
-Follow the inference workflow:
+Follow the cycle workflow:
 ```bash
-/now                               # See current inference (1-100)
-/next                              # Advance to next inference
+/now                               # See current cycle (1-100)
+/next                              # Advance to next cycle
 /done                              # Mark complete & capture lesson
 ```
 
-Each inference ~5-20 minutes depending on complexity.
+Each cycle ~5-20 minutes depending on complexity.
 
 ---
 
@@ -329,7 +329,7 @@ Quick feature building:
 - Social proof (reviews, numbers)
 - Footer with links
 
-## Inference Cycle Estimates
+## Cycle Cycle Estimates
 
 | Type | Cycles | Typical | Agents |
 |------|--------|---------|--------|
@@ -368,30 +368,30 @@ Quick feature building:
 /onboard                          # Analyze website & extract brand (first time)
 
 # During execution:
-/now                              # See current inference (1-100)
-/next                             # Advance to next inference
+/now                              # See current cycle (1-100)
+/next                             # Advance to next cycle
 /done                             # Mark complete, capture lesson, advance
-/plan show                        # View your 100-inference plan
+/plan show                        # View your 100-cycle plan
 /reset                            # Start new feature (clear current state)
 ```
 
 ## Workflow Integration
 
-The `/create` command integrates with the inference workflow:
+The `/create` command integrates with the cycle workflow:
 
 ```
 /create [feature]   →   agent-director plans   →   /now shows progress
-                        (100-inference breakdown)
+                        (100-cycle breakdown)
                                ↓
                         /next / /done execute
-                        each inference cycle
+                        each cycle cycle
 ```
 
 ---
 
 **Golden Rule:** Always ask "Can I solve this with existing components?" before choosing backend.
 
-**Inference comparison:**
+**Cycle comparison:**
 - Frontend feature: 20-40 cycles (typically 20-30 minutes each)
 - Backend service: 60-90 cycles (typically 10-20 minutes each)
 - Integration: 30-60 cycles (typically 15-25 minutes each)

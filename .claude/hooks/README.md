@@ -1,11 +1,11 @@
 # Claude Code Hooks - ONE Platform
 
-Hooks for Claude Code that align with the 6-dimension ontology and inference-based execution.
+Hooks for Claude Code that align with the 6-dimension ontology and cycle-based execution.
 
 ## Overview
 
 The hook system logs all hook executions as EVENTS with full ontology context tracking:
-- **Inference number** - Current position in 100-inference sequence
+- **Cycle number** - Current position in 100-cycle sequence
 - **Dimension** - Which dimension is being worked on (groups, people, things, connections, events, knowledge)
 - **Specialist agent** - Which AI agent is responsible
 - **Duration** - Execution time in milliseconds
@@ -18,7 +18,7 @@ Central logging system that all hooks use.
 
 ### Key Features
 
-1. **Ontology-Aware Logging**: Every log entry includes inference number and dimension
+1. **Ontology-Aware Logging**: Every log entry includes cycle number and dimension
 2. **Agent Detection**: Automatically identifies specialist agent from hook name
 3. **Event Tracking**: Logs hook execution as structured EVENTS
 4. **Performance Monitoring**: Warns if hooks take >5 seconds
@@ -33,26 +33,26 @@ CLAUDE_PROJECT_DIR=/path/to/project  # Project root directory
 # Optional
 LOG_FILE=$CLAUDE_PROJECT_DIR/.claude/hooks.log  # Log file location
 DEBUG_MODE=false  # Enable verbose logging to stderr
-INFERENCE_STATE_FILE=$CLAUDE_PROJECT_DIR/.claude/state/inference.json  # Inference state
+CYCLE_STATE_FILE=$CLAUDE_PROJECT_DIR/.claude/state/cycle.json  # Cycle state
 ONTOLOGY_VERSION=1.0.0  # Ontology specification version
 ```
 
 ### Functions
 
-#### get_inference_context()
-Reads current inference number from `.claude/state/inference.json`.
+#### get_cycle_context()
+Reads current cycle number from `.claude/state/cycle.json`.
 
 ```bash
-inference=$(get_inference_context)
-# Returns: 0-100 (current inference number)
+cycle=$(get_cycle_context)
+# Returns: 0-100 (current cycle number)
 ```
 
-#### get_inference_dimension(inference_number)
-Maps inference number to ontology dimension based on 100-inference sequence.
+#### get_cycle_dimension(cycle_number)
+Maps cycle number to ontology dimension based on 100-cycle sequence.
 
 ```bash
-dimension=$(get_inference_dimension 15)
-# Returns: "things" (inference 11-30 = things dimension)
+dimension=$(get_cycle_dimension 15)
+# Returns: "things" (cycle 11-30 = things dimension)
 ```
 
 **Dimension Mapping:**
@@ -106,7 +106,7 @@ log_hook_execution "backend-mutation" "test" "$start" "$end" 0
 
 **Output:**
 ```
-[2025-11-03 21:32:23] [EVENT] hook_executed | hook=backend-mutation | inference=15 | dimension=things | agent=agent-backend | duration=134ms | exit_code=0 | ontology_version=1.0.0
+[2025-11-03 21:32:23] [EVENT] hook_executed | hook=backend-mutation | cycle=15 | dimension=things | agent=agent-backend | duration=134ms | exit_code=0 | ontology_version=1.0.0
 [2025-11-03 21:32:23] [INFO] [Cycle 15] [things] Hook completed successfully: backend-mutation
 ```
 
@@ -132,12 +132,12 @@ Example:
 
 ### Event Log Entry
 ```
-[timestamp] [EVENT] hook_executed | hook=name | inference=N | dimension=X | agent=Y | duration=Nms | exit_code=N | ontology_version=X.Y.Z
+[timestamp] [EVENT] hook_executed | hook=name | cycle=N | dimension=X | agent=Y | duration=Nms | exit_code=N | ontology_version=X.Y.Z
 ```
 
 Example:
 ```
-[2025-11-03 21:32:23] [EVENT] hook_executed | hook=backend-mutation | inference=15 | dimension=things | agent=agent-backend | duration=134ms | exit_code=0 | ontology_version=1.0.0
+[2025-11-03 21:32:23] [EVENT] hook_executed | hook=backend-mutation | cycle=15 | dimension=things | agent=agent-backend | duration=134ms | exit_code=0 | ontology_version=1.0.0
 ```
 
 ## Usage in Hooks
@@ -171,7 +171,7 @@ The hook logger aligns with the 6-dimension ontology:
    - `type: hook_executed`
    - `actorId: <agent_id>`
    - `timestamp: <unix_ms>`
-   - `metadata: { hook, inference, dimension, agent, duration, exit_code, ontology_version }`
+   - `metadata: { hook, cycle, dimension, agent, duration, exit_code, ontology_version }`
 
 2. **PEOPLE** - Agent detection identifies which specialist agent (person role) executed the hook
 
@@ -188,14 +188,14 @@ The hook logger aligns with the 6-dimension ontology:
 Test the logger:
 
 ```bash
-# Test inference context
+# Test cycle context
 export CLAUDE_PROJECT_DIR=/path/to/project
 source .claude/hooks/hook-logger.sh
-get_inference_context
-# Should return: 100 (or current inference)
+get_cycle_context
+# Should return: 100 (or current cycle)
 
 # Test dimension mapping
-get_inference_dimension 15
+get_cycle_dimension 15
 # Should return: things
 
 # Test agent detection
@@ -245,12 +245,12 @@ grep "\[ERROR\]" .claude/hooks.log
 7. **Monitor performance** - Review logs for slow hooks (>5s)
 8. **Use debug mode** - Enable DEBUG_MODE for troubleshooting
 
-## Integration with Inference System
+## Integration with Cycle System
 
-The hook logger integrates with the inference-based execution system:
+The hook logger integrates with the cycle-based execution system:
 
-1. Reads current inference from `.claude/state/inference.json`
-2. Maps inference to dimension (based on 100-inference sequence in `one/knowledge/todo.md`)
+1. Reads current cycle from `.claude/state/cycle.json`
+2. Maps cycle to dimension (based on 100-cycle sequence in `one/knowledge/todo.md`)
 3. Logs all hook executions with full context
 4. Enables tracking of which dimensions are being worked on
 5. Provides audit trail for entire feature development
@@ -258,7 +258,7 @@ The hook logger integrates with the inference-based execution system:
 ## Version History
 
 - **1.0.0** (2025-11-03) - Initial release with 6-dimension ontology alignment
-  - Inference context tracking
+  - Cycle context tracking
   - Dimension mapping (foundation → deployment)
   - Agent detection (9 specialist agents)
   - Event logging with structured metadata
@@ -275,9 +275,9 @@ The hook logger integrates with the inference-based execution system:
 ## References
 
 - **6-Dimension Ontology**: `/one/knowledge/ontology.md`
-- **100-Inference Sequence**: `/one/knowledge/todo.md`
+- **100-Cycle Sequence**: `/one/knowledge/todo.md`
 - **Agent Definitions**: `/.claude/agents/`
-- **Inference State**: `/.claude/state/inference.json`
+- **Cycle State**: `/.claude/state/cycle.json`
 
 ---
 

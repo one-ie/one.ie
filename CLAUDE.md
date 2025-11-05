@@ -101,7 +101,7 @@ Web (Astro + React) → Backend (Convex) → 6-Dimension Ontology
 
 ## Planning Paradigm: Cycle-Based Execution
 
-**CRITICAL:** We don't plan in days. We plan in **cycle passes** (Infer 1-100).
+**CRITICAL:** We don't plan in days. We plan in **cycle passes** (Cycle 1-100).
 
 ### Why Cycle-Based Planning?
 
@@ -110,7 +110,7 @@ Traditional planning uses time estimates ("Day 1-3", "Week 2"), which are:
 - Context-heavy (requires re-planning)
 - Sequential (blocks parallel work)
 
-Cycle-based planning uses **sequence positions** ("Infer 1-100"), which are:
+Cycle-based planning uses **sequence positions** ("Cycle 1-100"), which are:
 - Precise (each cycle is a concrete step)
 - Context-light (< 3000 tokens per cycle)
 - Parallel-friendly (cycles can run concurrently when dependencies allow)
@@ -120,16 +120,16 @@ Cycle-based planning uses **sequence positions** ("Infer 1-100"), which are:
 Every feature follows a **100-cycle sequence** (see `one/knowledge/todo.md`):
 
 ```
-Infer 1-10:    Foundation & Setup (validate, map, plan)
-Infer 11-20:   Backend Schema & Services (database, business logic)
-Infer 21-30:   Frontend Pages & Components (UI, interactions)
-Infer 31-40:   Integration & Connections (external systems)
-Infer 41-50:   Authentication & Authorization (security)
-Infer 51-60:   Knowledge & RAG (embeddings, search)
-Infer 61-70:   Quality & Testing (unit, integration, e2e)
-Infer 71-80:   Design & Wireframes (UI/UX, accessibility)
-Infer 81-90:   Performance & Optimization (speed, efficiency)
-Infer 91-100:  Deployment & Documentation (production, guides)
+Cycle 1-10:    Foundation & Setup (validate, map, plan)
+Cycle 11-20:   Backend Schema & Services (database, business logic)
+Cycle 21-30:   Frontend Pages & Components (UI, interactions)
+Cycle 31-40:   Integration & Connections (external systems)
+Cycle 41-50:   Authentication & Authorization (security)
+Cycle 51-60:   Knowledge & RAG (embeddings, search)
+Cycle 61-70:   Quality & Testing (unit, integration, e2e)
+Cycle 71-80:   Design & Wireframes (UI/UX, accessibility)
+Cycle 81-90:   Performance & Optimization (speed, efficiency)
+Cycle 91-100:  Deployment & Documentation (production, guides)
 ```
 
 ### How to Use Cycle Planning

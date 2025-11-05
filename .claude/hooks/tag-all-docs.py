@@ -32,7 +32,7 @@ DIMENSION_MAP = {
     "knowledge": "knowledge",
 }
 
-# Category inference from subdirectories (ontology-aligned)
+# Category cycle from subdirectories (ontology-aligned)
 CATEGORY_MAP = {
     "agents": "agents",
     "plans": "plans",
@@ -68,7 +68,7 @@ TAG_KEYWORDS = {
     "connections": ["connections", "relationships", "graph"],
     "events": ["events", "actions", "audit-trail"],
     "knowledge": ["knowledge", "rag", "embeddings", "semantic-search"],
-    "inference": ["inference", "claude", "planning"],
+    "cycle": ["cycle", "claude", "planning"],
     "installation": ["installation", "customization", "organization"],
 }
 
@@ -215,7 +215,7 @@ class MetadataTagger:
         is_group = len(parts) > 2 and parts[1] == "groups" if is_installation else False
         group_slug = parts[2] if is_group else None
 
-        # Infer dimension from directory structure
+        # Cycle dimension from directory structure
         if is_installation:
             # Installation folders mirror /one/ structure
             dimension = parts[1] if len(parts) > 1 and parts[1] in DIMENSION_MAP else "knowledge"
@@ -223,7 +223,7 @@ class MetadataTagger:
             # Global /one/ structure
             dimension = parts[1] if len(parts) > 1 and parts[1] in DIMENSION_MAP else "knowledge"
 
-        # Infer category from subdirectories
+        # Cycle category from subdirectories
         category = "general"
         if is_group:
             category = "group-specific"
@@ -239,7 +239,7 @@ class MetadataTagger:
         # Extract/infer tags
         tags = self.infer_tags(content, file_path, existing)
 
-        # Infer related dimensions by analyzing content
+        # Cycle related dimensions by analyzing content
         related_dimensions = self.infer_related_dimensions(content, dimension)
 
         # Generate AI context
@@ -273,7 +273,7 @@ class MetadataTagger:
         return metadata
 
     def infer_tags(self, content: str, file_path: Path, existing: Dict) -> List[str]:
-        """Infer tags from content and context"""
+        """Cycle tags from content and context"""
         tags = set()
 
         # Use existing tags if present
@@ -297,7 +297,7 @@ class MetadataTagger:
         return sorted(list(tags))[:10]
 
     def infer_related_dimensions(self, content: str, primary_dimension: str) -> List[str]:
-        """Infer which other dimensions this document relates to"""
+        """Cycle which other dimensions this document relates to"""
         related = set()
         content_lower = content[:2000].lower()  # Check first 2000 chars
 

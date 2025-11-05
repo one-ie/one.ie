@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 """
-ONE Platform - Clean Agent Pre-Inference Hook
-Validates cleanliness and 6-dimension ontology compliance before starting each inference.
+ONE Platform - Clean Agent Pre-Cycle Hook
+Validates cleanliness and 6-dimension ontology compliance before starting each cycle.
 
 This hook runs before UserPromptSubmit to ensure:
 - File structure is intact and ontology-aligned

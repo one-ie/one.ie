@@ -1,11 +1,11 @@
 ---
 allowed-tools: Task(agent-ops:*)
-description: Release CLI to npm
+description: Release CLI to npm (optimized)
 ---
 
-# /release - Release CLI to npm
+# /release - Release CLI to npm (Optimized v2)
 
-Release the CLI to npm registry.
+Release the CLI to npm registry with parallel sync and minimal duplication.
 
 ## Usage
 
@@ -16,28 +16,64 @@ Release the CLI to npm registry.
 /release sync    # Sync files without version bump
 ```
 
-## What It Does
+## What It Does (Optimized)
 
 Runs `./.claude/hooks/release-cli.sh [type]` which:
 
-1. Syncs `.claude/*` to `cli/.claude/`
-2. Syncs `/one/*` to `cli/one/`
-3. Syncs root markdown files (CLAUDE.md, README.md, etc.)
-4. Bumps version in `cli/package.json` (if not sync)
-5. Builds the CLI
-6. Publishes to npm registry
+1. **Syncs documentation** `/one/*` → `cli/one/` (all platform docs)
+2. **Syncs root markdown** (CLAUDE.md, README.md, LICENSE.md, SECURITY.md, AGENTS.md)
+3. **Hooks stay in root** - CLI references `./.claude/hooks/` (single source of truth, no duplication)
+4. **Parallel operations** - Uses background jobs for file copies
+5. **Bumps version** in `cli/package.json` (if not sync)
+6. **Builds CLI** with npm
+7. **Publishes to npm** registry
+8. **Verifies publication** on npm registry
+
+## Architecture
+
+```
+Root Repository (.claude/hooks/)
+    ↓ (referenced by)
+CLI Repo (cli/)
+    ├── cli/one/*          (synced documentation)
+    ├── cli/*.md           (synced markdown files)
+    └── package.json       (version bumped & published)
+```
+
+**Key Benefit:** Hooks are maintained in ONE place - the root repository. No duplication, no sync issues.
+
+## Performance
+
+- **Before:** Synced 17 hook files + documentation (~50+ files)
+- **After:** Syncs only documentation + 5 markdown files (~200 files in /one/)
+- **Result:** Faster, cleaner, single source of truth
 
 ## Your Task
 
-Delegate to agent-ops to run the script:
+Delegate to agent-ops to run the optimized release:
 
 ```typescript
 Task({
   subagent_type: "agent-ops",
-  description: "Release CLI to npm",
-  prompt: `Run: ./.claude/hooks/release-cli.sh ${releaseType}
+  description: "Execute optimized CLI release with hooks merge",
+  prompt: `Run optimized CLI release:
 
-Wait for completion and report success with the new version.`,
+1. Execute: ./.claude/hooks/release-cli.sh ${releaseType}
+   - Syncs /one/* to cli/one/
+   - Syncs root markdown files
+   - Hooks reference root .claude/ (no copy)
+   - Bumps version (if not sync)
+   - Publishes to npm
+
+2. Wait for completion and verify publication
+
+3. Report:
+   - New version number (if version bumped)
+   - npm publication success/failure
+   - Release duration
+   - Any errors or warnings
+
+Do not copy .claude/ to cli/ - hooks stay in root.`,
 });
 ```
 
@@ -47,4 +83,19 @@ Install the new version:
 
 ```bash
 npx oneie@latest --version
+```
+
+## Testing
+
+Verify the release locally:
+
+```bash
+# Test the script
+./.claude/hooks/release-cli.sh sync
+
+# Check CLI was built
+ls -la cli/dist/
+
+# Check npm credentials
+npm whoami
 ```

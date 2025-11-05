@@ -1,6 +1,6 @@
 # /plan - Convert Ideas to Implementation Plans with CASCADE
 
-**Purpose:** Transform ideas into detailed 100-inference plans with automatic agent assignment and task breakdown.
+**Purpose:** Transform ideas into detailed 100-cycle plans with automatic agent assignment and task breakdown.
 
 ## Core Functionality
 
@@ -11,7 +11,7 @@
 ```
 
 Generates:
-- ✅ 100-inference execution plan
+- ✅ 100-cycle execution plan
 - ✅ Automatic agent assignments
 - ✅ Task dependencies & timeline
 - ✅ 6-dimension ontology mapping
@@ -31,10 +31,10 @@ Generates:
 ### Execution Management
 
 ```bash
-/now                                    # Show current inference & task
-/next                                   # Advance to next inference
+/now                                    # Show current cycle & task
+/next                                   # Advance to next cycle
 /done                                   # Mark complete & advance
-/goto [N]                              # Jump to inference N
+/goto [N]                              # Jump to cycle N
 ```
 
 ### Plan Filtering & Analysis
@@ -130,7 +130,7 @@ Support Specialists (Throughout):
   🚀 agent-ops: Sets up CI/CD, prepares deployment
 
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-📈 PHASE BREAKDOWN (100 Inferences)
+📈 PHASE BREAKDOWN (100 Cycles)
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
 Cycle 1-10:   Foundation & Understanding
@@ -143,7 +143,7 @@ Cycle 1-10:   Foundation & Understanding
   - Define people roles (creator, student, admin)
   - Create vision document
   - Break down features
-  - Create 100-inference plan ← You are here!
+  - Create 100-cycle plan ← You are here!
 
 Cycle 11-20: Backend Schema & Services
   - Design Convex schema (groups, things, connections, events, knowledge)
@@ -352,7 +352,7 @@ Each plan includes:
 - Lists required connections
 - Determines event types
 
-### 2. 100-Inference Breakdown
+### 2. 100-Cycle Breakdown
 - Foundation (Cycle 1-10)
 - Backend (Cycle 11-50)
 - Frontend (Cycle 21-80)
@@ -412,31 +412,31 @@ Output:
 🔗 Share: /plan share
 ```
 
-## Inference Workflow Integration
+## Cycle Workflow Integration
 
 Once plan is created, use these commands:
 
 ```bash
-/now                    # Show current inference (Cycle 1)
-/next                   # Advance to next inference
+/now                    # Show current cycle (Cycle 1)
+/next                   # Advance to next cycle
 /done                   # Mark complete, capture lessons
-/goto [N]              # Jump to specific inference
+/goto [N]              # Jump to specific cycle
 /build                 # Start building with agents
 ```
 
 ## Key Principles
 
-1. **Ideas → Plans:** Convert any idea into actionable 100-inference plan
-2. **Automatic Assignment:** Agent assignments happen automatically based on inference type
+1. **Ideas → Plans:** Convert any idea into actionable 100-cycle plan
+2. **Automatic Assignment:** Agent assignments happen automatically based on cycle type
 3. **Quality First:** Tests defined before implementation
 4. **Parallel Execution:** Maximize agent parallelization
-5. **Complete Tracking:** Every inference tracked with status, dependencies, lessons
-6. **Continuous Learning:** Capture lessons after each inference
+5. **Complete Tracking:** Every cycle tracked with status, dependencies, lessons
+6. **Continuous Learning:** Capture lessons after each cycle
 
 ---
 
 ## See Also
 
 - [CASCADE System](./cascade.md) - Full agent orchestration
-- [Inference Workflow](../commands/done.md) - Mark cycles complete
+- [Cycle Workflow](../commands/done.md) - Mark cycles complete
 - [Agent Dashboard](./one.md) - View all agents

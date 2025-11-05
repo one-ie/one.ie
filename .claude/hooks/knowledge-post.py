@@ -7,7 +7,7 @@ This hook runs on PostToolUse to:
 - Create knowledge entries for new artifacts
 - Tag with semantic labels based on ontology dimensions
 - Link knowledge to related things (features, tasks, designs)
-- Track inference context and lessons learned
+- Track cycle context and lessons learned
 - Build searchable knowledge base for AI agents
 
 6-Dimension Ontology:
@@ -132,16 +132,16 @@ def get_knowledge_labels(file_path: str) -> List[str]:
 
     return list(set(labels))  # Remove duplicates
 
-def get_inference_context() -> Dict[str, Any]:
-    """Load current inference context from state file"""
+def get_cycle_context() -> Dict[str, Any]:
+    """Load current cycle context from state file"""
     try:
         # Try project-specific state first
-        state_file = Path("/Users/toc/Server/ONE/.claude/state/inference.json")
+        state_file = Path("/Users/toc/Server/ONE/.claude/state/cycle.json")
         if state_file.exists():
             with open(state_file, 'r') as f:
                 state = json.load(f)
                 return {
-                    "inference_number": state.get("current_inference", 0),
+                    "cycle_number": state.get("current_cycle", 0),
                     "feature": state.get("feature_name", "New Feature"),
                     "organization": state.get("organization", "Default Org"),
                     "person_role": state.get("person_role", "platform_owner"),
@@ -156,7 +156,7 @@ def get_inference_context() -> Dict[str, Any]:
             with open(todo_state_path, 'r') as f:
                 state = json.load(f)
                 return {
-                    "inference_number": state.get("current_inference", 0),
+                    "cycle_number": state.get("current_cycle", 0),
                     "feature": state.get("feature", "New Feature"),
                     "organization": state.get("organization", "Default Org"),
                     "person_role": state.get("person_role", "platform_owner"),
@@ -165,7 +165,7 @@ def get_inference_context() -> Dict[str, Any]:
         pass
 
     return {
-        "inference_number": 0,
+        "cycle_number": 0,
         "feature": "New Feature",
         "organization": "Default Org",
         "person_role": "platform_owner",
@@ -206,7 +206,7 @@ def create_knowledge_entry(file_path: str, content: Optional[str] = None) -> Dic
     artifact_type = get_artifact_type(file_path)
     labels = get_knowledge_labels(file_path)
     dimension = get_ontology_dimension(file_path)
-    inference_ctx = get_inference_context()
+    cycle_ctx = get_cycle_context()
     content_hash = generate_content_hash(file_path)
 
     # Build knowledge entry
@@ -219,10 +219,10 @@ def create_knowledge_entry(file_path: str, content: Optional[str] = None) -> Dic
         "labels": labels,
         "content_hash": content_hash,
         "created_at": datetime.now().isoformat(),
-        "inference_number": inference_ctx["inference_number"],
-        "feature": inference_ctx["feature"],
-        "organization": inference_ctx["organization"],
-        "created_by_role": inference_ctx["person_role"],
+        "cycle_number": cycle_ctx["cycle_number"],
+        "feature": cycle_ctx["feature"],
+        "organization": cycle_ctx["organization"],
+        "created_by_role": cycle_ctx["person_role"],
         "metadata": {
             "file_size": path.stat().st_size if path.exists() else 0,
             "directory": str(path.parent),
@@ -317,7 +317,7 @@ def main():
         # Output post-hook message
         artifact_type = entry["artifact_type"]
         labels = entry["labels"]
-        inference_num = entry["inference_number"]
+        cycle_num = entry["cycle_number"]
         dimension = entry["ontology_dimension"]
 
         msg = f"✨ Knowledge Tagged - 6-Dimension Ontology\n"
@@ -331,8 +331,8 @@ def main():
         if len(labels) > 5:
             msg += f" (+{len(labels) - 5} more)"
 
-        if inference_num > 0:
-            msg += f"\n   Inference: {inference_num}/100"
+        if cycle_num > 0:
+            msg += f"\n   Cycle: {cycle_num}/100"
 
         msg += f"\n   Hash: {entry['content_hash']}"
         msg += f"\n   → Logged to: {Path(log_file).name}"

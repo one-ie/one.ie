@@ -4,17 +4,17 @@
 # Sends development notifications via console, system, or file
 # Aligned with 6-dimension ontology
 #
-# DIMENSION MAPPING (by inference range):
-#   Infer 1-10:   🏗️  Foundation & Setup
-#   Infer 11-20:  📦  Backend Schema (things)
-#   Infer 21-30:  🎨  Frontend UI (things)
-#   Infer 31-40:  🔗  Integration (connections)
-#   Infer 41-50:  👤  Auth & Authorization (people)
-#   Infer 51-60:  🧠  Knowledge & RAG (knowledge)
-#   Infer 61-70:  ✅  Quality & Testing (events)
-#   Infer 71-80:  🎭  Design & Wireframes (things)
-#   Infer 81-90:  ⚡  Performance (events)
-#   Infer 91-100: 🚀  Deployment (groups)
+# DIMENSION MAPPING (by cycle range):
+#   Cycle 1-10:   🏗️  Foundation & Setup
+#   Cycle 11-20:  📦  Backend Schema (things)
+#   Cycle 21-30:  🎨  Frontend UI (things)
+#   Cycle 31-40:  🔗  Integration (connections)
+#   Cycle 41-50:  👤  Auth & Authorization (people)
+#   Cycle 51-60:  🧠  Knowledge & RAG (knowledge)
+#   Cycle 61-70:  ✅  Quality & Testing (events)
+#   Cycle 71-80:  🎭  Design & Wireframes (things)
+#   Cycle 81-90:  ⚡  Performance (events)
+#   Cycle 91-100: 🚀  Deployment (groups)
 #
 # ONTOLOGY DIMENSIONS:
 #   - groups: Multi-tenant containers (friend circles → governments)
@@ -39,70 +39,70 @@ CHANNEL="${4:-console}"  # console, system, file, all
 log_message "INFO" "notification-hook: $EVENT ($TYPE) via $CHANNEL"
 START_TIME=$(get_time_ms)
 
-# Load inference context if available
-INFERENCE_STATE="$CLAUDE_PROJECT_DIR/.claude/state/inference.json"
-CURRENT_INFERENCE="Unknown"
+# Load cycle context if available
+INFERENCE_STATE="$CLAUDE_PROJECT_DIR/.claude/state/cycle.json"
+CURRENT_CYCLE="Unknown"
 FEATURE_NAME="Unknown Feature"
 ORGANIZATION="Unknown Org"
 
 if [ -f "$INFERENCE_STATE" ]; then
   if command -v jq &> /dev/null; then
-    CURRENT_INFERENCE=$(jq -r '.current_inference // "Unknown"' "$INFERENCE_STATE" 2>/dev/null || echo "Unknown")
+    CURRENT_CYCLE=$(jq -r '.current_cycle // "Unknown"' "$INFERENCE_STATE" 2>/dev/null || echo "Unknown")
     FEATURE_NAME=$(jq -r '.feature_name // "Unknown Feature"' "$INFERENCE_STATE" 2>/dev/null || echo "Unknown Feature")
     ORGANIZATION=$(jq -r '.organization // "Unknown Org"' "$INFERENCE_STATE" 2>/dev/null || echo "Unknown Org")
   fi
 fi
 
-# Map inference to dimension and emoji
+# Map cycle to dimension and emoji
 get_dimension_info() {
-  local inference=$1
+  local cycle=$1
   local dimension=""
   local emoji=""
   local phase=""
 
-  if [ "$inference" = "Unknown" ]; then
+  if [ "$cycle" = "Unknown" ]; then
     echo "❓|unknown|General"
     return
   fi
 
-  # Map inference ranges to 6-dimension ontology
-  if [ "$inference" -ge 1 ] && [ "$inference" -le 10 ]; then
+  # Map cycle ranges to 6-dimension ontology
+  if [ "$cycle" -ge 1 ] && [ "$cycle" -le 10 ]; then
     dimension="foundation"
     emoji="🏗️"
     phase="Foundation & Setup"
-  elif [ "$inference" -ge 11 ] && [ "$inference" -le 20 ]; then
+  elif [ "$cycle" -ge 11 ] && [ "$cycle" -le 20 ]; then
     dimension="things"
     emoji="📦"
     phase="Backend Schema (things)"
-  elif [ "$inference" -ge 21 ] && [ "$inference" -le 30 ]; then
+  elif [ "$cycle" -ge 21 ] && [ "$cycle" -le 30 ]; then
     dimension="things"
     emoji="🎨"
     phase="Frontend UI (things)"
-  elif [ "$inference" -ge 31 ] && [ "$inference" -le 40 ]; then
+  elif [ "$cycle" -ge 31 ] && [ "$cycle" -le 40 ]; then
     dimension="connections"
     emoji="🔗"
     phase="Integration (connections)"
-  elif [ "$inference" -ge 41 ] && [ "$inference" -le 50 ]; then
+  elif [ "$cycle" -ge 41 ] && [ "$cycle" -le 50 ]; then
     dimension="people"
     emoji="👤"
     phase="Auth & Authorization (people)"
-  elif [ "$inference" -ge 51 ] && [ "$inference" -le 60 ]; then
+  elif [ "$cycle" -ge 51 ] && [ "$cycle" -le 60 ]; then
     dimension="knowledge"
     emoji="🧠"
     phase="Knowledge & RAG"
-  elif [ "$inference" -ge 61 ] && [ "$inference" -le 70 ]; then
+  elif [ "$cycle" -ge 61 ] && [ "$cycle" -le 70 ]; then
     dimension="events"
     emoji="✅"
     phase="Quality & Testing (events)"
-  elif [ "$inference" -ge 71 ] && [ "$inference" -le 80 ]; then
+  elif [ "$cycle" -ge 71 ] && [ "$cycle" -le 80 ]; then
     dimension="things"
     emoji="🎭"
     phase="Design & Wireframes (things)"
-  elif [ "$inference" -ge 81 ] && [ "$inference" -le 90 ]; then
+  elif [ "$cycle" -ge 81 ] && [ "$cycle" -le 90 ]; then
     dimension="events"
     emoji="⚡"
     phase="Performance (events)"
-  elif [ "$inference" -ge 91 ] && [ "$inference" -le 100 ]; then
+  elif [ "$cycle" -ge 91 ] && [ "$cycle" -le 100 ]; then
     dimension="groups"
     emoji="🚀"
     phase="Deployment (groups)"
@@ -121,13 +121,13 @@ send_console() {
   local type="$2"
 
   # Get dimension info
-  local dim_info=$(get_dimension_info "$CURRENT_INFERENCE")
+  local dim_info=$(get_dimension_info "$CURRENT_CYCLE")
   local dim_emoji=$(echo "$dim_info" | cut -d'|' -f1)
   local dimension=$(echo "$dim_info" | cut -d'|' -f2)
   local phase=$(echo "$dim_info" | cut -d'|' -f3)
 
   # Build context line
-  local context="[Infer $CURRENT_INFERENCE] $dim_emoji $phase"
+  local context="[Cycle $CURRENT_CYCLE] $dim_emoji $phase"
 
   case "$type" in
     "success") echo "✅ $msg" ;;
@@ -146,7 +146,7 @@ send_system() {
   local msg="$2"
 
   # Get dimension info
-  local dim_info=$(get_dimension_info "$CURRENT_INFERENCE")
+  local dim_info=$(get_dimension_info "$CURRENT_CYCLE")
   local dim_emoji=$(echo "$dim_info" | cut -d'|' -f1)
   local dimension=$(echo "$dim_info" | cut -d'|' -f2)
   local phase=$(echo "$dim_info" | cut -d'|' -f3)
@@ -155,7 +155,7 @@ send_system() {
   local full_title="$dim_emoji ONE: $title"
   local full_msg="$msg
 
-Infer $CURRENT_INFERENCE: $phase
+Cycle $CURRENT_CYCLE: $phase
 Feature: $FEATURE_NAME
 Org: $ORGANIZATION"
 
@@ -178,7 +178,7 @@ send_file() {
   local type="$2"
 
   # Get dimension info
-  local dim_info=$(get_dimension_info "$CURRENT_INFERENCE")
+  local dim_info=$(get_dimension_info "$CURRENT_CYCLE")
   local dim_emoji=$(echo "$dim_info" | cut -d'|' -f1)
   local dimension=$(echo "$dim_info" | cut -d'|' -f2)
   local phase=$(echo "$dim_info" | cut -d'|' -f3)
@@ -188,14 +188,14 @@ send_file() {
 
   # Log with full ontology context
   echo "[$timestamp] [$type] $msg" >> "$notif_file"
-  echo "  → Inference: $CURRENT_INFERENCE | Dimension: $dimension | Phase: $phase" >> "$notif_file"
+  echo "  → Cycle: $CURRENT_CYCLE | Dimension: $dimension | Phase: $phase" >> "$notif_file"
   echo "  → Feature: $FEATURE_NAME | Organization: $ORGANIZATION" >> "$notif_file"
 }
 
 # Notification templates with ontology awareness
 get_template() {
   # Get dimension info for context
-  local dim_info=$(get_dimension_info "$CURRENT_INFERENCE")
+  local dim_info=$(get_dimension_info "$CURRENT_CYCLE")
   local dimension=$(echo "$dim_info" | cut -d'|' -f2)
 
   case "$1" in
@@ -224,9 +224,9 @@ get_template() {
     "session-start")      echo "Claude Code session started" ;;
     "session-end")        echo "Claude Code session ended" ;;
 
-    # Inference progress
-    "inference-complete") echo "Completed Infer $CURRENT_INFERENCE ($dimension)" ;;
-    "inference-start")    echo "Starting Infer $CURRENT_INFERENCE ($dimension)" ;;
+    # Cycle progress
+    "cycle-complete") echo "Completed Cycle $CURRENT_CYCLE ($dimension)" ;;
+    "cycle-start")    echo "Starting Cycle $CURRENT_CYCLE ($dimension)" ;;
 
     # Agent events
     "agent-invoked")      echo "AI agent invoked for $dimension work" ;;
