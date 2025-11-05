@@ -1,3 +1,13 @@
+### **9f06e4b1** — template:1 — `refactor: Track file paths and names for customizations``
+
+**Template:**
+  - .claude/hooks/track-changes.sh
+
+
+
+**10e2d69f** — one:1 — `docs: Update tracking header with template-agnostic guide`
+
+
 **e2e1d8c6** — .claude:1 — `refactor: Make tracking template-agnostic for any user customizations`
 
 
@@ -12,19 +22,25 @@
 
 # Change Tracking
 
-Track template upgrades vs your customizations. Updated on each commit.
+Track your customizations with file paths. Updated on each commit.
 
-**Format:** `template-changes | your-custom-changes [customization] — message`
+**What's tracked:**
+- All file names and relative paths
+- Which changes are template upgrades vs your customizations
+- Easy to export for diffs, upgrades, or documentation
 
-| Tag | Meaning |
-|-----|---------|
-| `[customization]` | Your custom directories changed |
-| No tag | Only template or documentation changes |
+**Format:**
+```
+### hash — template:N custom:M — `message` [customization]
 
-**Examples:**
-- `web:2 one:1 — Add new component` — Template only
-- `one.ie:3 [customization] — Update home page` — Your customizations
-- `web:1 | one.ie:2 [customization] — Sync with template + update site` — Both
+**Template:**
+  - path/to/file1
+  - path/to/file2
+
+**Your Changes:**
+  - custom/path/file1
+  - custom/path/file2
+```
 
 ---
 
