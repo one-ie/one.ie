@@ -447,6 +447,44 @@ git push origin main
 - **Is it documented?** → Update infrastructure docs
 - **Is it automated?** → Prefer IaC over manual changes
 
+## Git Workflow: Pull Before Push (Critical)
+
+### ⚠️ RULE: Always Pull Before Push
+
+**This prevents branch divergence permanently.**
+
+```bash
+# CORRECT sequence:
+git add -A
+git commit -m "Your message"
+git pull origin main        # ← ALWAYS pull first
+git push origin main        # ← Then push
+
+# Set git config to enforce this:
+git config pull.ff only     # Forces fast-forward only
+```
+
+**Why this matters:**
+- Remote may have commits you don't have locally
+- Pushing without pulling causes divergence
+- Divergence requires manual conflict resolution
+- Prevention is 100x easier than recovery
+
+**Branch divergence symptoms:**
+```
+error: failed to push some refs
+hint: Updates were rejected because the tip of your current branch is behind
+```
+
+**If divergence occurs:**
+```bash
+git pull origin main        # Merge remote changes
+# Resolve conflicts if needed
+git push origin main        # Try again
+```
+
+---
+
 ## Key Behaviors
 
 ### 1. Release Pipeline Execution
@@ -459,10 +497,13 @@ git push origin main
 # 2. Check git status
 git status --short
 
-# 3. Verify tests pass
+# 3. Pull latest (prevents divergence)
+git pull origin main
+
+# 4. Verify tests pass
 bun test
 
-# 4. Check build succeeds
+# 5. Check build succeeds
 cd web && bun run build
 ```
 
@@ -670,6 +711,26 @@ git push --force origin main
 - Escalates deployment failures
 - Implements rollback strategies
 - Documents incident resolutions
+
+### Preventing Branch Divergence in Multi-Agent Scenarios
+
+**Rule:** Only ONE agent should push at a time. No simultaneous push operations.
+
+**If multiple agents are configured to auto-push:**
+1. Disable auto-push in hooks: Comment out lines in `.git/hooks/post-commit`
+2. Use manual, coordinated push operations
+3. Always: pull → push (strictly enforced)
+
+**Configuration:**
+```bash
+# Check if auto-push is enabled
+cat .git/hooks/post-commit | grep -i push
+
+# If found, comment it out:
+# ./scripts/push.sh
+```
+
+**Result:** No more divergence, even with multiple agents.
 
 ## Ontology Operations
 

@@ -2,6 +2,28 @@
 
 **Purpose:** Push changes to all ONE Platform repositories using the unified push script.
 
+## ⚠️ CRITICAL RULE: Always Pull Before Push
+
+**Every push MUST be preceded by a pull.** This prevents branch divergence.
+
+```bash
+# CORRECT workflow:
+git add -A
+git commit -m "Your message"
+git pull origin main       # ← ALWAYS pull first
+git push origin main       # ← Then push
+```
+
+**Branch divergence happens when:**
+- Remote has commits you don't have locally
+- You try to push without pulling first
+- Multiple processes push simultaneously without coordination
+
+**Prevention:**
+- Always run `git pull origin main` before `git push origin main`
+- Configure git: `git config pull.ff only` (forces fast-forward only)
+- This makes it impossible to accidentally diverge
+
 ## How It Works
 
 This command uses `./.claude/hooks/push.sh` to intelligently push to:
@@ -13,7 +35,7 @@ This command uses `./.claude/hooks/push.sh` to intelligently push to:
 ## Usage
 
 ```bash
-# Push to all remotes
+# Push to all remotes (after pulling!)
 /push all
 
 # Push to specific remote
@@ -23,12 +45,34 @@ This command uses `./.claude/hooks/push.sh` to intelligently push to:
 /push oneie         # one.ie directory only
 ```
 
+## Workflow: Safe Push (No Divergence)
+
+**Always follow this sequence:**
+
+```bash
+# 1. Make changes
+git add -A
+git commit -m "Your message"
+
+# 2. Pull latest from remote (CRITICAL)
+git pull origin main
+
+# 3. Now push safely
+/push main
+
+# Or push to all:
+/push all
+```
+
+**Result:** Zero divergence, always in sync with remote.
+
 ## What the Script Does
 
-1. **Analyzes changes** across all repositories
-2. **Commits with generated messages** based on file changes
-3. **Pushes to each remote** with appropriate branch handling
-4. **Reports summary** of all pushed repositories
+1. **Pulls latest changes** from remote first (prevent divergence)
+2. **Analyzes changes** across all repositories
+3. **Commits with generated messages** based on file changes
+4. **Pushes to each remote** with appropriate branch handling
+5. **Reports summary** of all pushed repositories
 
 ## Your Task
 
@@ -85,20 +129,68 @@ User: /push main
 - Each push operation is isolated - failures in one don't block others
 - Run from the project root directory
 
-## Error Handling
+## Common Issues & Solutions
 
-If push fails:
-```
-❌ Push failed for [remote]
-Reason: [git error message]
+### Issue: "Rejected - non-fast-forward"
 
-Suggested action:
-- Check git status: git status
-- Pull latest: git pull [remote] main
-- Resolve conflicts if any
-- Retry push
+**Cause:** Remote is ahead of your local branch (you didn't pull first).
+
+**Fix:**
+```bash
+# Pull the latest changes
+git pull origin main
+
+# Now push safely
+/push main
 ```
+
+### Issue: "Branches have diverged"
+
+**Cause:** Remote and local have different commits (push without pull happened).
+
+**Fix:**
+```bash
+# Pull and merge (or rebase)
+git pull origin main
+
+# Resolve any conflicts if they occur
+# Then push
+/push main
+```
+
+**Prevention:** Always pull before push.
+
+### Issue: Multiple Processes Pushing Simultaneously
+
+**Cause:** Background hooks, slash commands, and manual operations running at once.
+
+**Fix:**
+1. **Wait for all background operations to complete**
+2. **Run one operation at a time**
+3. **Follow the pull-before-push rule strictly**
+
+**Prevention:**
+- Disable auto-push hooks: Comment out lines in `.git/hooks/post-commit`
+- Use one unified push command, not multiple parallel operations
+- Always: pull → push sequence
 
 ---
 
-**Simple, unified push to all repositories! 🚀**
+## Setup: Prevent Divergence Permanently
+
+**Configure git to reject pushes without pull:**
+
+```bash
+# This forces fast-forward only (prevents divergence)
+git config pull.ff only
+
+# Verify it worked
+git config --get pull.ff
+# Should output: only
+```
+
+**Result:** If you try to push without pulling, git will refuse.
+
+---
+
+**Safe, reliable push to all repositories! 🚀**
