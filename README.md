@@ -13,7 +13,7 @@
 
 https://one.ie • npx oneie
 
-The ONE Ontology gives AI agents—and the humans who direct them—a complete, scalable architecture for understanding **who owns what, who can do what, what happened, and what it all means.**
+ONE Ontology gives AI agents—and the humans who direct them—a complete, scalable architecture for understanding **who owns what, who can do what, what happened, and what it all means.**
 
 [![License](https://img.shields.io/badge/license-FREE-blue.svg)](../LICENSE.md)
 [![Version](https://img.shields.io/badge/version-1.0.0-green.svg)](./knowledge/ontology.md)
@@ -21,9 +21,44 @@ The ONE Ontology gives AI agents—and the humans who direct them—a complete, 
 
 ---
 
-## 🌟 Why?
+## 📦 Quick Start
 
-Traditional systems create tables for features, pollute schemas with temporary concepts, and end up with hundreds of entities nobody understands. The ONE Ontology takes a different approach:
+```bash
+# Option 1: Bootstrap new project
+npx oneie # Install
+claude # Start Claude Code
+/one
+
+# Option 2: Clone and develop
+git clone https://github.com/one-ie/one
+cd web
+bun install
+bun dev
+```
+
+**Development Commands:**
+
+```bash
+# Claude Code
+claude # Start Claude
+/one        # Run /one Claude command
+```
+
+```bash
+# Frontend
+cd web/
+bun run dev        # localhost:4321
+bun run build      # Production build
+bunx astro check   # Type checking
+
+# Testing
+cd web/
+bun test           # All tests
+```
+
+# ONE
+
+Make your ideas real
 
 **Model reality in six core dimensions and map everything to them.**
 
@@ -37,9 +72,59 @@ Traditional systems create tables for features, pollute schemas with temporary c
 └─────────────────────────────────────────────────────────────┘
 ```
 
----
+**Every single thing in ONE exists within one of these 6 dimensions:**
 
-## 🎯 The 6 Dimensions
+```
+┌──────────────────────────────────────────────────────────────┐
+│                         1. GROUPS                             │
+│  Multi-tenant isolation with hierarchical nesting - who owns  │
+│  what at group level (friend circles → DAOs → governments)    │
+└──────────────────────────────────────────────────────────────┘
+                              ↓
+┌──────────────────────────────────────────────────────────────┐
+│                         2. PEOPLE                             │
+│  Authorization & governance - platform owner, group owners    │
+└──────────────────────────────────────────────────────────────┘
+                              ↓
+┌──────────────────────────────────────────────────────────────┐
+│                         3. THINGS                             │
+│  Every "thing" - users, agents, content, tokens, courses      │
+└──────────────────────────────────────────────────────────────┘
+                              ↓
+┌──────────────────────────────────────────────────────────────┐
+│                      4. CONNECTIONS                           │
+│  Every relationship - owns, follows, taught_by, powers        │
+└──────────────────────────────────────────────────────────────┘
+                              ↓
+┌──────────────────────────────────────────────────────────────┐
+│                         5. EVENTS                             │
+│  Every action - purchased, created, viewed, completed         │
+└──────────────────────────────────────────────────────────────┘
+                              ↓
+┌──────────────────────────────────────────────────────────────┐
+│                       6. KNOWLEDGE                            │
+│  Labels + chunks + vectors powering RAG & search              │
+└──────────────────────────────────────────────────────────────┘
+```
+
+**The Universal Interface (How Technology Implements the Ontology):**
+
+```
+┌─────────────────────────────────────────────────────────────────────┐
+│                  LAYER 1: UNIVERSAL INTERFACE                       │
+│                    (The 6-Dimension DSL)                            │
+├─────────────────────────────────────────────────────────────────────┤
+│  groups     → Hierarchical containers (friend circles → governments)│
+│  people     → Authorization & governance (who can do what)          │
+│  things     → All entities (66 types: user, product, course...)     │
+│  connections → All relationships (25 types: owns, purchased...)     │
+│  events     → All actions (67 types: created, updated, logged...)   │
+│  knowledge  → AI understanding (embeddings, search, RAG)            │
+│                                                                     │
+│  This layer NEVER changes. It models reality.                      │
+└──────────────────┬──────────────────────────────────────────────────┘
+                   │
+                   ↓ Technology changes, ontology stays the same
 
 ### 1. 👥 Groups
 
@@ -59,29 +144,33 @@ Groups can nest infinitely—from intimate friend circles to massive organizatio
 **URL-Based Creation:**
 
 ```
+
 one.ie/group/cooldao → creates "cooldao" group
 one.ie/group/cooldao/treasury → creates nested "treasury" group
 one.ie/group/emmas-birthday → creates "emmas-birthday" group
+
 ```
 
 **Hierarchical Nesting Example:**
 
 ```
+
 groups/acme-corp (business)
-  ├─ groups/engineering (organization)
-  │   ├─ groups/backend-team (organization)
-  │   └─ groups/frontend-team (organization)
-  ├─ groups/marketing (organization)
-  └─ groups/sales (organization)
+├─ groups/engineering (organization)
+│ ├─ groups/backend-team (organization)
+│ └─ groups/frontend-team (organization)
+├─ groups/marketing (organization)
+└─ groups/sales (organization)
 
 groups/emmas-friends (friend_circle)
-  ├─ groups/birthday-party (friend_circle)
-  └─ groups/game-night (friend_circle)
+├─ groups/birthday-party (friend_circle)
+└─ groups/game-night (friend_circle)
 
 groups/cool-dao (dao)
-  ├─ groups/treasury (dao)
-  └─ groups/governance (dao)
-```
+├─ groups/treasury (dao)
+└─ groups/governance (dao)
+
+````
 
 ---
 
@@ -298,7 +387,7 @@ Let's see how all six dimensions work together in a real feature:
 groupId: "acme-corp";
 // Transaction happens within this group boundary
 // All entities belong to this group (can be nested)
-```
+````
 
 #### Step 1: **People** (Authorization)
 
