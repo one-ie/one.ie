@@ -1,149 +1,717 @@
 ---
 import Layout from '../layouts/Layout.astro';
-import { getCollection } from 'astro:content';
-import { ProjectSearch } from '@/components/ProjectSearch';
-import { ClientProjectsManager } from '@/components/ClientProjectsManager';
-import {
-  Grid,
-  List
-} from 'lucide-react';
-
-// Load projects from content collection
-const allProjects = await getCollection('projects');
-const contentProjects = allProjects
-  .filter(p => !p.data.draft)
-  .map((project) => ({
-    id: project.slug,
-    title: project.data.title,
-    description: project.data.description,
-    prompt: generateProjectPrompt(project.data, project.slug),
-    demoUrl: project.data.demoUrl || '/landing',
-    iconName: 'Rocket' as const,
-    borderColor: project.data.borderColor || 'border-l-primary',
-    bgColor: project.data.bgColor || 'bg-primary/20',
-    level: (project.data.level || 'Beginner') as "Beginner" | "Intermediate" | "Advanced",
-    levelColor: project.data.levelColor || 'text-primary',
-  }));
-
-function generateProjectPrompt(data: any, slug: string): string {
-  const features = (data.features || []).map((f: string) => `- ${f}`).join('\n');
-  const technologies = (data.technologies || []).map((t: string) => `- ${t}`).join('\n');
-  const learningObjectives = (data.learningPath || []).map((item: string) => `- ${item}`).join('\n');
-
-  return `# ${data.title} Project
-
-**Level:** ${data.level || 'Beginner'}
-**Estimated Time:** ${data.estimatedHours || 40} hours
-**Demo:** ${data.demoUrl || '/landing'}
-
-## Description
-${data.description}
-
-## Key Features
-${features || '- Professional UI/UX\n- Responsive design\n- Dark mode support'}
-
-## Technologies
-${technologies || '- Astro 5\n- React 19\n- Tailwind CSS v4\n- TypeScript'}
-
-${learningObjectives ? `## Learning Objectives\n${learningObjectives}` : ''}
-
-## Getting Started
-1. Review the project structure at /projects/${slug}
-2. Copy this prompt into Claude Code
-3. Implement following the architecture
-4. Test thoroughly
-5. Deploy to production
-
-Visit /projects/${slug} for full project details and step-by-step guide.`;
-}
-
-// Get view mode from URL params, default to 3-column grid (all projects above fold)
-const viewModeParam = Astro.url.searchParams.get('view') || 'grid';
-const viewMode = (viewModeParam === 'list' || viewModeParam === 'grid') ? viewModeParam : 'grid';
-const gridColumnsParam = Astro.url.searchParams.get('columns') || '3';
-const gridColumns = (gridColumnsParam === '2' || gridColumnsParam === '3') ? gridColumnsParam : '3';
-
-const projects = contentProjects;
+import { GitSection } from '@/components/GitSection';
+import { PerformanceChart } from '@/components/features/PerformanceChart';
+import OrbitingCircles from '@/components/magicui/orbiting-circles';
 ---
 
-<Layout title="Start a Project | Learn to Build | ONE Platform" description="Learn web development with progressive projects. Beginner to Advanced. Shareable demos + code templates.">
-  <div class="min-h-screen bg-background">
-    <!-- Header with Search - Optimized for Above the Fold -->
-    <section class="relative overflow-hidden px-4 py-6 sm:px-6 sm:py-7 md:px-8 md:py-8">
-      <div class="absolute inset-0 -z-10">
-        <div class="absolute inset-0 bg-gradient-to-b from-background via-primary/5 to-background"></div>
+<Layout
+  title="ONE - Build AI Agents, Applications, and Your Audience"
+  description="A beautiful dashboard built with Astro and shadcn/ui"
+  sidebarInitialCollapsed={true}
+>
+  <!-- Main Content -->
+  <GitSection client:load />
+
+  <!-- Who Is ONE For Section -->
+  <section class="border-y bg-muted/50 px-4 py-20 sm:px-6 sm:py-24 md:px-8 md:py-32">
+    <div class="mx-auto max-w-full sm:max-w-6xl">
+      <div class="mb-20 space-y-4 text-center">
+        <div class="rounded-md border px-2.5 py-0.5 text-xs font-semibold transition-colors focus:outline-none focus:ring-2 focus:ring-ring focus:ring-offset-2 text-foreground mb-2 inline-flex items-center gap-2" data-usal="fade-down duration-600">
+          <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-users h-4 w-4" aria-hidden="true"><path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"></path><path d="M16 3.128a4 4 0 0 1 0 7.744"></path><path d="M22 21v-2a4 4 0 0 0-3-3.87"></path><circle cx="9" cy="7" r="4"></circle></svg>
+          Built For Everyone
+        </div>
+        <h2 class="text-4xl font-bold leading-tight tracking-tight sm:text-5xl" data-usal="fade-up duration-700 delay-100">
+          Who Is ONE For?<br><span class="text-muted-foreground">You. Right Now.</span>
+        </h2>
+        <p class="mx-auto max-w-3xl text-lg leading-relaxed text-muted-foreground" data-usal="fade-up duration-700 delay-200">
+          From kids learning to code to enterprises managing billions in revenue—the same 6-dimension ontology scales to your needs.
+        </p>
       </div>
 
-      <div class="mx-auto max-w-2xl space-y-4 text-center">
-        <h1 class="text-3xl sm:text-4xl font-bold leading-tight">
-          Start a Project
-        </h1>
-        <p class="text-sm text-muted-foreground">
-          Pick any project, copy the prompt, build with Claude.
-        </p>
-
-        <!-- Search Bar -->
-        <div class="pt-2">
-          <ProjectSearch client:load onSearch={(query) => {
-            const event = new CustomEvent('projectSearch', { detail: { query } });
-            window.dispatchEvent(event);
-          }} />
-        </div>
-
-        <!-- View Mode Toggle - Large with Hover Effects -->
-        <div class="flex gap-3 items-center justify-center flex-shrink-0 pt-4">
-          <a
-            href="/?view=list"
-            class={`p-3 rounded-lg transition-all duration-200 ${viewMode === 'list' ? 'bg-primary/20 text-primary scale-110' : 'hover:bg-accent/50 hover:scale-110 text-muted-foreground'}`}
-            title="List view"
-          >
-            <List className="w-6 h-6" />
-          </a>
-          <a
-            href="/?view=grid&columns=2"
-            class={`p-3 rounded-lg transition-all duration-200 ${viewMode === 'grid' && gridColumns === '2' ? 'bg-primary/20 text-primary scale-110' : 'hover:bg-accent/50 hover:scale-110 text-muted-foreground'}`}
-            title="2 columns grid"
-          >
-            <Grid className="w-6 h-6" />
-          </a>
-          <a
-            href="/?view=grid&columns=3"
-            class={`p-3 rounded-lg transition-all duration-200 ${viewMode === 'grid' && gridColumns === '3' ? 'bg-primary/20 text-primary scale-110' : 'hover:bg-accent/50 hover:scale-110 text-muted-foreground'}`}
-            title="3 columns grid (default)"
-          >
-            <div class="w-5 h-5 grid grid-cols-3 gap-1">
-              <div class="bg-current rounded-sm"></div>
-              <div class="bg-current rounded-sm"></div>
-              <div class="bg-current rounded-sm"></div>
-              <div class="bg-current rounded-sm"></div>
-              <div class="bg-current rounded-sm"></div>
-              <div class="bg-current rounded-sm"></div>
-              <div class="bg-current rounded-sm"></div>
-              <div class="bg-current rounded-sm"></div>
-              <div class="bg-current rounded-sm"></div>
+      <!-- Segment Grid -->
+      <div class="grid gap-6 md:grid-cols-2 lg:grid-cols-4">
+        <div class="rounded-xl border text-card-foreground shadow group border-border/50 bg-card/50 backdrop-blur transition-all hover:scale-[1.02] hover:border-primary/20 hover:bg-card hover:shadow-lg hover:shadow-primary/5 cursor-pointer" data-usal="fade-up duration-600 delay-100">
+          <div class="flex flex-col p-6 space-y-4">
+            <div class="flex h-12 w-12 items-center justify-center rounded-lg bg-primary/10 transition-colors group-hover:bg-primary/15">
+              <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-users h-6 w-6 text-primary" aria-hidden="true"><path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"></path><path d="M16 3.128a4 4 0 0 1 0 7.744"></path><path d="M22 21v-2a4 4 0 0 0-3-3.87"></path><circle cx="9" cy="7" r="4"></circle></svg>
             </div>
+            <div class="font-semibold tracking-tight text-xl">For Kids 🧒</div>
+            <div class="text-sm text-muted-foreground leading-relaxed">
+              Create, share, and play safely. Learn to build your first AI agent or community.
+            </div>
+            <div class="flex flex-wrap gap-2 pt-2">
+              <div class="inline-flex items-center rounded-md border px-2.5 py-0.5 font-semibold transition-colors focus:outline-none focus:ring-2 focus:ring-ring focus:ring-offset-2 border-transparent bg-secondary text-secondary-foreground hover:bg-secondary/80 text-xs">Communities</div>
+              <div class="inline-flex items-center rounded-md border px-2.5 py-0.5 font-semibold transition-colors focus:outline-none focus:ring-2 focus:ring-ring focus:ring-offset-2 border-transparent bg-secondary text-secondary-foreground hover:bg-secondary/80 text-xs">Content</div>
+              <div class="inline-flex items-center rounded-md border px-2.5 py-0.5 font-semibold transition-colors focus:outline-none focus:ring-2 focus:ring-ring focus:ring-offset-2 border-transparent bg-secondary text-secondary-foreground hover:bg-secondary/80 text-xs">Safe</div>
+            </div>
+          </div>
+        </div>
+
+        <div class="rounded-xl border text-card-foreground shadow group border-border/50 bg-card/50 backdrop-blur transition-all hover:scale-[1.02] hover:border-primary/20 hover:bg-card hover:shadow-lg hover:shadow-primary/5 cursor-pointer" data-usal="fade-up duration-600 delay-150">
+          <div class="flex flex-col p-6 space-y-4">
+            <div class="flex h-12 w-12 items-center justify-center rounded-lg bg-primary/10 transition-colors group-hover:bg-primary/15">
+              <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-code h-6 w-6 text-primary" aria-hidden="true"><path d="m16 18 6-6-6-6"></path><path d="m8 6-6 6 6 6"></path></svg>
+            </div>
+            <div class="font-semibold tracking-tight text-xl">For Young People 🧑‍💻</div>
+            <div class="text-sm text-muted-foreground leading-relaxed">
+              Learn skills, build projects, start your first side hustle. Launch your career.
+            </div>
+            <div class="flex flex-wrap gap-2 pt-2">
+              <div class="inline-flex items-center rounded-md border px-2.5 py-0.5 font-semibold transition-colors focus:outline-none focus:ring-2 focus:ring-ring focus:ring-offset-2 border-transparent bg-secondary text-secondary-foreground hover:bg-secondary/80 text-xs">Courses</div>
+              <div class="inline-flex items-center rounded-md border px-2.5 py-0.5 font-semibold transition-colors focus:outline-none focus:ring-2 focus:ring-ring focus:ring-offset-2 border-transparent bg-secondary text-secondary-foreground hover:bg-secondary/80 text-xs">Projects</div>
+              <div class="inline-flex items-center rounded-md border px-2.5 py-0.5 font-semibold transition-colors focus:outline-none focus:ring-2 focus:ring-ring focus:ring-offset-2 border-transparent bg-secondary text-secondary-foreground hover:bg-secondary/80 text-xs">Monetize</div>
+            </div>
+          </div>
+        </div>
+
+        <div class="rounded-xl border text-card-foreground shadow group border-border/50 bg-card/50 backdrop-blur transition-all hover:scale-[1.02] hover:border-primary/20 hover:bg-card hover:shadow-lg hover:shadow-primary/5 cursor-pointer" data-usal="fade-up duration-600 delay-200">
+          <div class="flex flex-col p-6 space-y-4">
+            <div class="flex h-12 w-12 items-center justify-center rounded-lg bg-primary/10 transition-colors group-hover:bg-primary/15">
+              <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-wand-sparkles h-6 w-6 text-primary" aria-hidden="true"><path d="m21.64 3.64-1.28-1.28a1.21 1.21 0 0 0-1.72 0L2.36 18.64a1.21 1.21 0 0 0 0 1.72l1.28 1.28a1.2 1.2 0 0 0 1.72 0L21.64 5.36a1.2 1.2 0 0 0 0-1.72"></path><path d="m14 7 3 3"></path><path d="M5 6v4"></path><path d="M19 14v4"></path><path d="M10 2v2"></path><path d="M7 8H3"></path><path d="M21 16h-4"></path><path d="M11 3H9"></path></svg>
+            </div>
+            <div class="font-semibold tracking-tight text-xl">For Creators 🧑‍🎨</div>
+            <div class="text-sm text-muted-foreground leading-relaxed">
+              Build your audience, clone yourself, monetize your passion. AI works for you 24/7.
+            </div>
+            <div class="flex flex-wrap gap-2 pt-2">
+              <div class="inline-flex items-center rounded-md border px-2.5 py-0.5 font-semibold transition-colors focus:outline-none focus:ring-2 focus:ring-ring focus:ring-offset-2 border-transparent bg-secondary text-secondary-foreground hover:bg-secondary/80 text-xs">AI Clones</div>
+              <div class="inline-flex items-center rounded-md border px-2.5 py-0.5 font-semibold transition-colors focus:outline-none focus:ring-2 focus:ring-ring focus:ring-offset-2 border-transparent bg-secondary text-secondary-foreground hover:bg-secondary/80 text-xs">Tokens</div>
+              <div class="inline-flex items-center rounded-md border px-2.5 py-0.5 font-semibold transition-colors focus:outline-none focus:ring-2 focus:ring-ring focus:ring-offset-2 border-transparent bg-secondary text-secondary-foreground hover:bg-secondary/80 text-xs">Courses</div>
+            </div>
+          </div>
+        </div>
+
+        <div class="rounded-xl border text-card-foreground shadow group border-border/50 bg-card/50 backdrop-blur transition-all hover:scale-[1.02] hover:border-primary/20 hover:bg-card hover:shadow-lg hover:shadow-primary/5 cursor-pointer" data-usal="fade-up duration-600 delay-250">
+          <div class="flex flex-col p-6 space-y-4">
+            <div class="flex h-12 w-12 items-center justify-center rounded-lg bg-primary/10 transition-colors group-hover:bg-primary/15">
+              <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-dollar-sign h-6 w-6 text-primary" aria-hidden="true"><line x1="12" x2="12" y1="2" y2="22"></line><path d="M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"></path></svg>
+            </div>
+            <div class="font-semibold tracking-tight text-xl">For Sellers 🛒</div>
+            <div class="text-sm text-muted-foreground leading-relaxed">
+              Sell products, manage customers, automate sales. AI agents handle the funnel.
+            </div>
+            <div class="flex flex-wrap gap-2 pt-2">
+              <div class="inline-flex items-center rounded-md border px-2.5 py-0.5 font-semibold transition-colors focus:outline-none focus:ring-2 focus:ring-ring focus:ring-offset-2 border-transparent bg-secondary text-secondary-foreground hover:bg-secondary/80 text-xs">Products</div>
+              <div class="inline-flex items-center rounded-md border px-2.5 py-0.5 font-semibold transition-colors focus:outline-none focus:ring-2 focus:ring-ring focus:ring-offset-2 border-transparent bg-secondary text-secondary-foreground hover:bg-secondary/80 text-xs">Sales Agents</div>
+              <div class="inline-flex items-center rounded-md border px-2.5 py-0.5 font-semibold transition-colors focus:outline-none focus:ring-2 focus:ring-ring focus:ring-offset-2 border-transparent bg-secondary text-secondary-foreground hover:bg-secondary/80 text-xs">Analytics</div>
+            </div>
+          </div>
+        </div>
+
+        <div class="rounded-xl border text-card-foreground shadow group border-border/50 bg-card/50 backdrop-blur transition-all hover:scale-[1.02] hover:border-primary/20 hover:bg-card hover:shadow-lg hover:shadow-primary/5 cursor-pointer" data-usal="fade-up duration-600 delay-100">
+          <div class="flex flex-col p-6 space-y-4">
+            <div class="flex h-12 w-12 items-center justify-center rounded-lg bg-primary/10 transition-colors group-hover:bg-primary/15">
+              <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-trending-up h-6 w-6 text-primary" aria-hidden="true"><path d="M16 7h6v6"></path><path d="m22 7-8.5 8.5-5-5L2 17"></path></svg>
+            </div>
+            <div class="font-semibold tracking-tight text-xl">For Marketers 📈</div>
+            <div class="text-sm text-muted-foreground leading-relaxed">
+              Launch campaigns, generate leads, analyze performance. Data-driven automation.
+            </div>
+            <div class="flex flex-wrap gap-2 pt-2">
+              <div class="inline-flex items-center rounded-md border px-2.5 py-0.5 font-semibold transition-colors focus:outline-none focus:ring-2 focus:ring-ring focus:ring-offset-2 border-transparent bg-secondary text-secondary-foreground hover:bg-secondary/80 text-xs">Campaigns</div>
+              <div class="inline-flex items-center rounded-md border px-2.5 py-0.5 font-semibold transition-colors focus:outline-none focus:ring-2 focus:ring-ring focus:ring-offset-2 border-transparent bg-secondary text-secondary-foreground hover:bg-secondary/80 text-xs">Leads</div>
+              <div class="inline-flex items-center rounded-md border px-2.5 py-0.5 font-semibold transition-colors focus:outline-none focus:ring-2 focus:ring-ring focus:ring-offset-2 border-transparent bg-secondary text-secondary-foreground hover:bg-secondary/80 text-xs">Insights</div>
+            </div>
+          </div>
+        </div>
+
+        <div class="rounded-xl border text-card-foreground shadow group border-border/50 bg-card/50 backdrop-blur transition-all hover:scale-[1.02] hover:border-primary/20 hover:bg-card hover:shadow-lg hover:shadow-primary/5 cursor-pointer" data-usal="fade-up duration-600 delay-150">
+          <div class="flex flex-col p-6 space-y-4">
+            <div class="flex h-12 w-12 items-center justify-center rounded-lg bg-primary/10 transition-colors group-hover:bg-primary/15">
+              <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-sparkles h-6 w-6 text-primary" aria-hidden="true"><path d="M11.017 2.814a1 1 0 0 1 1.966 0l1.051 5.558a2 2 0 0 0 1.594 1.594l5.558 1.051a1 1 0 0 1 0 1.966l-5.558 1.051a2 2 0 0 0-1.594 1.594l-1.051 5.558a1 1 0 0 1-1.966 0l-1.051-5.558a2 2 0 0 0-1.594-1.594l-5.558-1.051a1 1 0 0 1 0-1.966l5.558-1.051a2 2 0 0 0 1.594-1.594z"></path><path d="M20 2v4"></path><path d="M22 4h-4"></path><circle cx="4" cy="20" r="2"></circle></svg>
+            </div>
+            <div class="font-semibold tracking-tight text-xl">For Designers 🎨</div>
+            <div class="text-sm text-muted-foreground leading-relaxed">
+              Create assets, build templates, maintain brand consistency. Design at scale.
+            </div>
+            <div class="flex flex-wrap gap-2 pt-2">
+              <div class="inline-flex items-center rounded-md border px-2.5 py-0.5 font-semibold transition-colors focus:outline-none focus:ring-2 focus:ring-ring focus:ring-offset-2 border-transparent bg-secondary text-secondary-foreground hover:bg-secondary/80 text-xs">Templates</div>
+              <div class="inline-flex items-center rounded-md border px-2.5 py-0.5 font-semibold transition-colors focus:outline-none focus:ring-2 focus:ring-ring focus:ring-offset-2 border-transparent bg-secondary text-secondary-foreground hover:bg-secondary/80 text-xs">Assets</div>
+              <div class="inline-flex items-center rounded-md border px-2.5 py-0.5 font-semibold transition-colors focus:outline-none focus:ring-2 focus:ring-ring focus:ring-offset-2 border-transparent bg-secondary text-secondary-foreground hover:bg-secondary/80 text-xs">Branding</div>
+            </div>
+          </div>
+        </div>
+
+        <div class="rounded-xl border text-card-foreground shadow group border-border/50 bg-card/50 backdrop-blur transition-all hover:scale-[1.02] hover:border-primary/20 hover:bg-card hover:shadow-lg hover:shadow-primary/5 cursor-pointer" data-usal="fade-up duration-600 delay-200">
+          <div class="flex flex-col p-6 space-y-4">
+            <div class="flex h-12 w-12 items-center justify-center rounded-lg bg-primary/10 transition-colors group-hover:bg-primary/15">
+              <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-code h-6 w-6 text-primary" aria-hidden="true"><path d="m16 18 6-6-6-6"></path><path d="m8 6-6 6 6 6"></path></svg>
+            </div>
+            <div class="font-semibold tracking-tight text-xl">For Engineers ⚙️</div>
+            <div class="text-sm text-muted-foreground leading-relaxed">
+              Connect systems, automate workflows, build integrations. APIs that just work.
+            </div>
+            <div class="flex flex-wrap gap-2 pt-2">
+              <div class="inline-flex items-center rounded-md border px-2.5 py-0.5 font-semibold transition-colors focus:outline-none focus:ring-2 focus:ring-ring focus:ring-offset-2 border-transparent bg-secondary text-secondary-foreground hover:bg-secondary/80 text-xs">Integrations</div>
+              <div class="inline-flex items-center rounded-md border px-2.5 py-0.5 font-semibold transition-colors focus:outline-none focus:ring-2 focus:ring-ring focus:ring-offset-2 border-transparent bg-secondary text-secondary-foreground hover:bg-secondary/80 text-xs">Workflows</div>
+              <div class="inline-flex items-center rounded-md border px-2.5 py-0.5 font-semibold transition-colors focus:outline-none focus:ring-2 focus:ring-ring focus:ring-offset-2 border-transparent bg-secondary text-secondary-foreground hover:bg-secondary/80 text-xs">APIs</div>
+            </div>
+          </div>
+        </div>
+
+        <div class="rounded-xl border text-card-foreground shadow group border-border/50 bg-card/50 backdrop-blur transition-all hover:scale-[1.02] hover:border-primary/20 hover:bg-card hover:shadow-lg hover:shadow-primary/5 cursor-pointer" data-usal="fade-up duration-600 delay-250">
+          <div class="flex flex-col p-6 space-y-4">
+            <div class="flex h-12 w-12 items-center justify-center rounded-lg bg-primary/10 transition-colors group-hover:bg-primary/15">
+              <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-building2 lucide-building-2 h-6 w-6 text-primary" aria-hidden="true"><path d="M10 12h4"></path><path d="M10 8h4"></path><path d="M14 21v-3a2 2 0 0 0-4 0v3"></path><path d="M6 10H4a2 2 0 0 0-2 2v7a2 2 0 0 0 2 2h16a2 2 0 0 0 2-2V9a2 2 0 0 0-2-2h-2"></path><path d="M6 21V5a2 2 0 0 1 2-2h8a2 2 0 0 1 2 2v16"></path></svg>
+            </div>
+            <div class="font-semibold tracking-tight text-xl">For Executives 🤵</div>
+            <div class="text-sm text-muted-foreground leading-relaxed">
+              Monitor performance, make data-driven decisions, oversee strategy. Business intelligence.
+            </div>
+            <div class="flex flex-wrap gap-2 pt-2">
+              <div class="inline-flex items-center rounded-md border px-2.5 py-0.5 font-semibold transition-colors focus:outline-none focus:ring-2 focus:ring-ring focus:ring-offset-2 border-transparent bg-secondary text-secondary-foreground hover:bg-secondary/80 text-xs">Analytics</div>
+              <div class="inline-flex items-center rounded-md border px-2.5 py-0.5 font-semibold transition-colors focus:outline-none focus:ring-2 focus:ring-ring focus:ring-offset-2 border-transparent bg-secondary text-secondary-foreground hover:bg-secondary/80 text-xs">Strategy</div>
+              <div class="inline-flex items-center rounded-md border px-2.5 py-0.5 font-semibold transition-colors focus:outline-none focus:ring-2 focus:ring-ring focus:ring-offset-2 border-transparent bg-secondary text-secondary-foreground hover:bg-secondary/80 text-xs">Insights</div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="mt-16 rounded-lg border border-primary/20 bg-primary/5 p-8 backdrop-blur text-center">
+        <p class="text-lg leading-relaxed"><strong class="text-foreground">Same platform. Same 6 dimensions. Infinite possibilities.</strong><br class="hidden sm:block"><span class="text-muted-foreground">The ontology adapts to YOUR world, not the other way around.</span></p>
+        <div class="mt-6">
+          <a href="/ontology">
+            <button class="inline-flex items-center justify-center gap-2 whitespace-nowrap text-sm font-medium transition-all disabled:pointer-events-none disabled:opacity-50 [&_svg]:pointer-events-none [&_svg:not([class*='size-'])]:size-4 shrink-0 [&_svg]:shrink-0 outline-none focus-visible:border-ring focus-visible:ring-ring/50 focus-visible:ring-[3px] aria-invalid:ring-destructive/20 dark:aria-invalid:ring-destructive/40 aria-invalid:border-destructive border bg-background shadow-xs hover:bg-accent hover:text-accent-foreground dark:bg-input/30 dark:border-input dark:hover:bg-input/50 h-10 rounded-md px-6 has-[>svg]:px-4">
+              Explore The Ontology
+              <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-arrow-right ml-2 h-5 w-5" aria-hidden="true"><path d="M5 12h14"></path><path d="m12 5 7 7-7 7"></path></svg>
+            </button>
           </a>
         </div>
       </div>
-    </section>
+    </div>
+  </section>
 
-    <!-- Project Grid - Featured Projects Above the Fold -->
-    <section class="px-4 py-4 sm:px-6 md:px-8">
-      <ClientProjectsManager client:load projects={projects as any} viewMode={viewMode} gridColumns={gridColumns} />
-    </section>
-
-    <!-- Minimal Footer -->
-    <section class="border-t px-4 py-8 sm:px-6 md:px-8 text-center">
-      <div class="mx-auto max-w-2xl space-y-2">
-        <p class="text-sm text-muted-foreground">
-          Pick any project, copy the prompt, paste into Claude/ChatGPT, build with AI.
-        </p>
-        <p class="text-xs text-muted-foreground">
-          MIT licensed • Production-ready • Built to teach
+  <!-- AI Agents Section -->
+  <section class="border-y bg-muted/50 px-4 py-20 sm:px-6 sm:py-24 md:px-8 md:py-32">
+    <div class="mx-auto max-w-full sm:max-w-6xl">
+      <div class="mb-20 space-y-4 text-center">
+        <div class="rounded-md border px-2.5 py-0.5 text-xs font-semibold transition-colors focus:outline-none focus:ring-2 focus:ring-ring focus:ring-offset-2 text-foreground mb-2 inline-flex items-center gap-2" data-usal="fade-down duration-600">
+          <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-bot h-4 w-4" aria-hidden="true"><path d="M12 8V4H8"></path><rect width="16" height="12" x="4" y="8" rx="2"></rect><path d="M2 14h2"></path><path d="M20 14h2"></path><path d="M15 13v2"></path><path d="M9 13v2"></path></svg>
+          AI Agents in English
+        </div>
+        <h2 class="text-4xl font-bold leading-tight tracking-tight sm:text-5xl" data-usal="fade-up duration-700 delay-100">
+          Build Autonomous Agents<br><span class="text-muted-foreground">With Plain English Commands</span>
+        </h2>
+        <p class="mx-auto max-w-3xl text-lg leading-relaxed text-muted-foreground" data-usal="fade-up duration-700 delay-200">
+          Define AI agents that work like teammates—specialized, coordinated, and always learning. No AI expertise required.
         </p>
       </div>
-    </section>
-  </div>
+
+      <div class="grid gap-8 lg:grid-cols-2">
+        <div class="rounded-xl border text-card-foreground shadow border-border/50 bg-card/50 backdrop-blur">
+          <div class="flex flex-col space-y-1.5 p-6">
+            <div class="flex items-center justify-between mb-2">
+              <div class="font-semibold tracking-tight text-2xl">Sales Agent</div>
+              <div class="flex gap-2">
+                <div class="inline-flex items-center rounded-md border px-2.5 py-0.5 font-semibold transition-colors focus:outline-none focus:ring-2 focus:ring-ring focus:ring-offset-2 text-foreground text-xs">For Sellers</div>
+                <div class="inline-flex items-center rounded-md border px-2.5 py-0.5 font-semibold transition-colors focus:outline-none focus:ring-2 focus:ring-ring focus:ring-offset-2 text-foreground text-xs">For Executives</div>
+              </div>
+            </div>
+            <div class="text-sm text-muted-foreground">Qualifies leads, answers questions, books meetings</div>
+          </div>
+          <div class="p-6 pt-0">
+            <pre class="overflow-x-auto rounded bg-muted/50 p-4 text-sm leading-relaxed"><code>AGENT: Sales Agent
+
+WHEN lead sends message:
+  GET lead's history
+  CALL OpenAI to qualify intent
+
+  IF interested in demo:
+    CALL Calendar API to find slots
+    GIVE 3 available times
+
+  IF asking about pricing:
+    GET pricing for their size
+    CALL OpenAI to explain value
+
+  RECORD interaction
+  NOTIFY me if hot lead</code></pre>
+            <div class="mt-4 flex flex-wrap gap-2">
+              <div class="inline-flex items-center rounded-md border px-2.5 py-0.5 text-xs font-semibold transition-colors focus:outline-none focus:ring-2 focus:ring-ring focus:ring-offset-2 border-transparent bg-secondary text-secondary-foreground hover:bg-secondary/80">Auto-qualifies</div>
+              <div class="inline-flex items-center rounded-md border px-2.5 py-0.5 text-xs font-semibold transition-colors focus:outline-none focus:ring-2 focus:ring-ring focus:ring-offset-2 border-transparent bg-secondary text-secondary-foreground hover:bg-secondary/80">Books meetings</div>
+              <div class="inline-flex items-center rounded-md border px-2.5 py-0.5 text-xs font-semibold transition-colors focus:outline-none focus:ring-2 focus:ring-ring focus:ring-offset-2 border-transparent bg-secondary text-secondary-foreground hover:bg-secondary/80">24/7 available</div>
+            </div>
+          </div>
+        </div>
+
+        <div class="rounded-xl border text-card-foreground shadow border-border/50 bg-card/50 backdrop-blur">
+          <div class="flex flex-col space-y-1.5 p-6">
+            <div class="flex items-center justify-between mb-2">
+              <div class="font-semibold tracking-tight text-2xl">Content Agent</div>
+              <div class="flex gap-2">
+                <div class="inline-flex items-center rounded-md border px-2.5 py-0.5 font-semibold transition-colors focus:outline-none focus:ring-2 focus:ring-ring focus:ring-offset-2 text-foreground text-xs">For Creators</div>
+                <div class="inline-flex items-center rounded-md border px-2.5 py-0.5 font-semibold transition-colors focus:outline-none focus:ring-2 focus:ring-ring focus:ring-offset-2 text-foreground text-xs">For Marketers</div>
+              </div>
+            </div>
+            <div class="text-sm text-muted-foreground">Generates posts, schedules publishing, analyzes performance</div>
+          </div>
+          <div class="p-6 pt-0">
+            <pre class="overflow-x-auto rounded bg-muted/50 p-4 text-sm leading-relaxed"><code>AGENT: Content Agent
+
+EVERY DAY at 8am:
+  GET my writing style
+  GET trending topics in my niche
+  GET top performing posts
+
+  FOR EACH platform:
+    CALL OpenAI to generate post
+    CALL OpenAI to generate image
+    SCHEDULE post for peak time
+
+  TRACK performance
+  LEARN from engagement
+  ADJUST strategy weekly</code></pre>
+            <div class="mt-4 flex flex-wrap gap-2">
+              <div class="inline-flex items-center rounded-md border px-2.5 py-0.5 text-xs font-semibold transition-colors focus:outline-none focus:ring-2 focus:ring-ring focus:ring-offset-2 border-transparent bg-secondary text-secondary-foreground hover:bg-secondary/80">Daily automation</div>
+              <div class="inline-flex items-center rounded-md border px-2.5 py-0.5 text-xs font-semibold transition-colors focus:outline-none focus:ring-2 focus:ring-ring focus:ring-offset-2 border-transparent bg-secondary text-secondary-foreground hover:bg-secondary/80">Multi-platform</div>
+              <div class="inline-flex items-center rounded-md border px-2.5 py-0.5 text-xs font-semibold transition-colors focus:outline-none focus:ring-2 focus:ring-ring focus:ring-offset-2 border-transparent bg-secondary text-secondary-foreground hover:bg-secondary/80">Self-improving</div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="mt-16 rounded-lg border border-primary/20 bg-primary/5 p-8 backdrop-blur">
+        <h3 class="mb-4 text-center text-2xl font-bold">Agents Work Together</h3>
+        <p class="mx-auto max-w-2xl text-lg text-muted-foreground text-center">
+          Sales Agent books a demo → Content Agent creates follow-up → Support Agent answers questions → Research Agent finds their pain points.
+          <br class="mt-2 block"><strong class="text-foreground">They coordinate through the shared ontology, learning from every interaction.</strong>
+        </p>
+      </div>
+    </div>
+  </section>
+
+  <!-- Universal Protocols Section -->
+  <section class="px-4 py-20 sm:px-6 sm:py-24 md:px-8 md:py-32">
+    <div class="mx-auto max-w-full sm:max-w-6xl">
+      <div class="mb-20 space-y-4 text-center">
+        <div class="rounded-md border px-2.5 py-0.5 text-xs font-semibold transition-colors focus:outline-none focus:ring-2 focus:ring-ring focus:ring-offset-2 text-foreground mb-2 inline-flex items-center gap-2" data-usal="fade-down duration-600">
+          <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-network h-4 w-4" aria-hidden="true"><rect x="16" y="16" width="6" height="6" rx="1"></rect><rect x="2" y="16" width="6" height="6" rx="1"></rect><rect x="9" y="2" width="6" height="6" rx="1"></rect><path d="M5 16v-3a1 1 0 0 1 1-1h12a1 1 0 0 1 1 1v3"></path><path d="M12 12V8"></path></svg>
+          Universal Connectivity
+        </div>
+        <h2 class="text-4xl font-bold leading-tight tracking-tight sm:text-5xl" data-usal="fade-up duration-700 delay-100">
+          Six Protocols<br><span class="text-muted-foreground">Infinite Connections</span>
+        </h2>
+        <p class="mx-auto max-w-3xl text-lg leading-relaxed text-muted-foreground" data-usal="fade-up duration-700 delay-200">
+          Built on open standards. Connect to any AI framework, payment system, or communication platform. No vendor lock-in.
+        </p>
+      </div>
+
+      <div class="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
+        <div class="rounded-xl border text-card-foreground shadow group border-border/50 bg-card/50 backdrop-blur transition-all hover:scale-[1.02] hover:border-primary/20 hover:bg-card hover:shadow-lg hover:shadow-primary/5">
+          <div class="flex flex-col p-6 space-y-4">
+            <div class="flex h-12 w-12 items-center justify-center rounded-lg bg-primary/10 transition-colors group-hover:bg-primary/15">
+              <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-network h-6 w-6 text-primary" aria-hidden="true"><rect x="16" y="16" width="6" height="6" rx="1"></rect><rect x="2" y="16" width="6" height="6" rx="1"></rect><rect x="9" y="2" width="6" height="6" rx="1"></rect><path d="M5 16v-3a1 1 0 0 1 1-1h12a1 1 0 0 1 1 1v3"></path><path d="M12 12V8"></path></svg>
+            </div>
+            <div class="font-semibold tracking-tight text-xl">ACP</div>
+            <div class="text-sm text-muted-foreground leading-relaxed">
+              Agent Communication Protocol. REST-based messaging, task delegation, and multi-agent coordination. Linux Foundation standard.
+            </div>
+          </div>
+        </div>
+
+        <div class="rounded-xl border text-card-foreground shadow group border-border/50 bg-card/50 backdrop-blur transition-all hover:scale-[1.02] hover:border-primary/20 hover:bg-card hover:shadow-lg hover:shadow-primary/5">
+          <div class="flex flex-col p-6 space-y-4">
+            <div class="flex h-12 w-12 items-center justify-center rounded-lg bg-primary/10 transition-colors group-hover:bg-primary/15">
+              <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-globe h-6 w-6 text-primary" aria-hidden="true"><circle cx="12" cy="12" r="10"></circle><path d="M12 2a14.5 14.5 0 0 0 0 20 14.5 14.5 0 0 0 0-20"></path><path d="M2 12h20"></path></svg>
+            </div>
+            <div class="font-semibold tracking-tight text-xl">MCP</div>
+            <div class="text-sm text-muted-foreground leading-relaxed">
+              Model Context Protocol. Universal AI connectivity. Access ontology, semantic search, and RAG pipelines. Anthropic standard.
+            </div>
+          </div>
+        </div>
+
+        <div class="rounded-xl border text-card-foreground shadow group border-border/50 bg-card/50 backdrop-blur transition-all hover:scale-[1.02] hover:border-primary/20 hover:bg-card hover:shadow-lg hover:shadow-primary/5">
+          <div class="flex flex-col p-6 space-y-4">
+            <div class="flex h-12 w-12 items-center justify-center rounded-lg bg-primary/10 transition-colors group-hover:bg-primary/15">
+              <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-bot h-6 w-6 text-primary" aria-hidden="true"><path d="M12 8V4H8"></path><rect width="16" height="12" x="4" y="8" rx="2"></rect><path d="M2 14h2"></path><path d="M20 14h2"></path><path d="M15 13v2"></path><path d="M9 13v2"></path></svg>
+            </div>
+            <div class="font-semibold tracking-tight text-xl">A2A</div>
+            <div class="text-sm text-muted-foreground leading-relaxed">
+              Agent-to-Agent Protocol. Framework-agnostic collaboration across LangGraph, CrewAI, and custom systems. Google + Linux Foundation.
+            </div>
+          </div>
+        </div>
+
+        <div class="rounded-xl border text-card-foreground shadow group border-border/50 bg-card/50 backdrop-blur transition-all hover:scale-[1.02] hover:border-primary/20 hover:bg-card hover:shadow-lg hover:shadow-primary/5">
+          <div class="flex flex-col p-6 space-y-4">
+            <div class="flex h-12 w-12 items-center justify-center rounded-lg bg-primary/10 transition-colors group-hover:bg-primary/15">
+              <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-dollar-sign h-6 w-6 text-primary" aria-hidden="true"><line x1="12" x2="12" y1="2" y2="22"></line><path d="M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"></path></svg>
+            </div>
+            <div class="font-semibold tracking-tight text-xl">AP2</div>
+            <div class="text-sm text-muted-foreground leading-relaxed">
+              Agent Payments Protocol. Secure autonomous transactions with verifiable credentials. Credit cards, crypto, bank transfers. 60+ partners.
+            </div>
+          </div>
+        </div>
+
+        <div class="rounded-xl border text-card-foreground shadow group border-border/50 bg-card/50 backdrop-blur transition-all hover:scale-[1.02] hover:border-primary/20 hover:bg-card hover:shadow-lg hover:shadow-primary/5">
+          <div class="flex flex-col p-6 space-y-4">
+            <div class="flex h-12 w-12 items-center justify-center rounded-lg bg-primary/10 transition-colors group-hover:bg-primary/15">
+              <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-zap h-6 w-6 text-primary" aria-hidden="true"><path d="M4 14a1 1 0 0 1-.78-1.63l9.9-10.2a.5.5 0 0 1 .86.46l-1.92 6.02A1 1 0 0 0 13 10h7a1 1 0 0 1 .78 1.63l-9.9 10.2a.5.5 0 0 1-.86-.46l1.92-6.02A1 1 0 0 0 11 14z"></path></svg>
+            </div>
+            <div class="font-semibold tracking-tight text-xl">X402</div>
+            <div class="text-sm text-muted-foreground leading-relaxed">
+              HTTP-Native Payments. Instant micropayments via HTTP 402. Zero fees, 2-second settlement, blockchain-agnostic. Pay-per-API-call.
+            </div>
+          </div>
+        </div>
+
+        <div class="rounded-xl border text-card-foreground shadow group border-border/50 bg-card/50 backdrop-blur transition-all hover:scale-[1.02] hover:border-primary/20 hover:bg-card hover:shadow-lg hover:shadow-primary/5">
+          <div class="flex flex-col p-6 space-y-4">
+            <div class="flex h-12 w-12 items-center justify-center rounded-lg bg-primary/10 transition-colors group-hover:bg-primary/15">
+              <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-code h-6 w-6 text-primary" aria-hidden="true"><path d="m16 18 6-6-6-6"></path><path d="m8 6-6 6 6 6"></path></svg>
+            </div>
+            <div class="font-semibold tracking-tight text-xl">AG-UI</div>
+            <div class="text-sm text-muted-foreground leading-relaxed">
+              Agent-Generated UI. Dynamic interfaces from structured JSON. Charts, tables, forms—all type-safe and composable. Real-time rendering.
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="mt-16 rounded-lg border border-primary/20 bg-primary/5 p-8 backdrop-blur text-center">
+        <p class="text-lg leading-relaxed"><strong class="text-foreground">One ontology. Six protocols. Universal interoperability.</strong><br class="hidden sm:block"><span class="text-muted-foreground">Connect anything to everything with type-safe, open standards.</span></p>
+      </div>
+    </div>
+  </section>
+
+  <!-- Tech Stack Section -->
+  <section class="border-t bg-muted/50 px-6 py-24 md:px-8 md:py-32">
+    <div class="mx-auto max-w-6xl">
+      <div class="mb-16 space-y-4 text-center">
+        <h2 class="text-4xl font-bold leading-tight tracking-tight sm:text-5xl" data-usal="fade-up duration-700">
+          Built on the Edge
+        </h2>
+        <p class="text-lg text-muted-foreground" data-usal="fade-up duration-700 delay-100">
+          Modern stack designed for AI-native applications
+        </p>
+      </div>
+      <div class="grid gap-6 sm:grid-cols-2 lg:grid-cols-4">
+        <div class="rounded-xl border text-card-foreground shadow group border-border/50 bg-card/50 backdrop-blur text-center transition-all hover:scale-[1.02] hover:border-primary/20 hover:bg-card hover:shadow-lg hover:shadow-primary/5">
+          <div class="flex flex-col p-6 space-y-2">
+            <div class="font-semibold tracking-tight text-lg transition-colors group-hover:text-primary">Astro 5.14+</div>
+            <div class="text-sm text-muted-foreground leading-relaxed">Lightning-fast SSR</div>
+          </div>
+        </div>
+        <div class="rounded-xl border text-card-foreground shadow group border-border/50 bg-card/50 backdrop-blur text-center transition-all hover:scale-[1.02] hover:border-primary/20 hover:bg-card hover:shadow-lg hover:shadow-primary/5">
+          <div class="flex flex-col p-6 space-y-2">
+            <div class="font-semibold tracking-tight text-lg transition-colors group-hover:text-primary">React 19</div>
+            <div class="text-sm text-muted-foreground leading-relaxed">Edge-compatible</div>
+          </div>
+        </div>
+        <div class="rounded-xl border text-card-foreground shadow group border-border/50 bg-card/50 backdrop-blur text-center transition-all hover:scale-[1.02] hover:border-primary/20 hover:bg-card hover:shadow-lg hover:shadow-primary/5">
+          <div class="flex flex-col p-6 space-y-2">
+            <div class="font-semibold tracking-tight text-lg transition-colors group-hover:text-primary">shadcn/ui</div>
+            <div class="text-sm text-muted-foreground leading-relaxed">50+ components</div>
+          </div>
+        </div>
+        <div class="rounded-xl border text-card-foreground shadow group border-border/50 bg-card/50 backdrop-blur text-center transition-all hover:scale-[1.02] hover:border-primary/20 hover:bg-card hover:shadow-lg hover:shadow-primary/5">
+          <div class="flex flex-col p-6 space-y-2">
+            <div class="font-semibold tracking-tight text-lg transition-colors group-hover:text-primary">Tailwind v4</div>
+            <div class="text-sm text-muted-foreground leading-relaxed">CSS-based config</div>
+          </div>
+        </div>
+        <div class="rounded-xl border text-card-foreground shadow group border-border/50 bg-card/50 backdrop-blur text-center transition-all hover:scale-[1.02] hover:border-primary/20 hover:bg-card hover:shadow-lg hover:shadow-primary/5">
+          <div class="flex flex-col p-6 space-y-2">
+            <div class="font-semibold tracking-tight text-lg transition-colors group-hover:text-primary">Convex</div>
+            <div class="text-sm text-muted-foreground leading-relaxed">Real-time backend</div>
+          </div>
+        </div>
+        <div class="rounded-xl border text-card-foreground shadow group border-border/50 bg-card/50 backdrop-blur text-center transition-all hover:scale-[1.02] hover:border-primary/20 hover:bg-card hover:shadow-lg hover:shadow-primary/5">
+          <div class="flex flex-col p-6 space-y-2">
+            <div class="font-semibold tracking-tight text-lg transition-colors group-hover:text-primary">Better Auth</div>
+            <div class="text-sm text-muted-foreground leading-relaxed">6 auth methods</div>
+          </div>
+        </div>
+        <div class="rounded-xl border text-card-foreground shadow group border-border/50 bg-card/50 backdrop-blur text-center transition-all hover:scale-[1.02] hover:border-primary/20 hover:bg-card hover:shadow-lg hover:shadow-primary/5">
+          <div class="flex flex-col p-6 space-y-2">
+            <div class="font-semibold tracking-tight text-lg transition-colors group-hover:text-primary">TypeScript 5.9+</div>
+            <div class="text-sm text-muted-foreground leading-relaxed">Strict mode</div>
+          </div>
+        </div>
+        <div class="rounded-xl border text-card-foreground shadow group border-border/50 bg-card/50 backdrop-blur text-center transition-all hover:scale-[1.02] hover:border-primary/20 hover:bg-card hover:shadow-lg hover:shadow-primary/5">
+          <div class="flex flex-col p-6 space-y-2">
+            <div class="font-semibold tracking-tight text-lg transition-colors group-hover:text-primary">Cloudflare Pages</div>
+            <div class="text-sm text-muted-foreground leading-relaxed">Global edge network</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Integrations with Orbiting Circles -->
+  <section class="px-4 py-20 sm:px-6 sm:py-24 md:px-8 md:py-32">
+    <div class="mx-auto max-w-full sm:max-w-6xl">
+      <div class="mb-20 space-y-4 text-center">
+        <h2 class="text-4xl font-bold leading-tight tracking-tight sm:text-5xl" data-usal="fade-up duration-700">
+          Integrations & Partnerships
+        </h2>
+        <p class="text-lg text-muted-foreground" data-usal="fade-up duration-700 delay-100">
+          Connect with the tools you already use
+        </p>
+      </div>
+
+      <div class="relative mx-auto mb-20 flex h-[500px] sm:h-[600px] w-full max-w-[360px] sm:max-w-[500px] items-center justify-center origin-center scale-[0.85] sm:scale-100">
+        <div class="absolute inset-0 flex items-center justify-center">
+          <svg class="absolute size-full" viewBox="0 0 900 900">
+            <circle cx="450" cy="450" r="240" fill="none" stroke="currentColor" stroke-opacity="0.12" stroke-width="1.5" stroke-dasharray="6 4"></circle>
+            <circle cx="450" cy="450" r="360" fill="none" stroke="currentColor" stroke-opacity="0.1" stroke-width="1.5" stroke-dasharray="6 4"></circle>
+          </svg>
+        </div>
+
+        <div class="relative flex h-60 w-60 items-center justify-center rounded-full bg-primary/10 shadow-inner">
+          <div class="flex h-28 w-28 items-center justify-center rounded-full bg-primary text-xl font-semibold text-primary-foreground shadow-lg">
+            <img src="/logo.svg" alt="ONE" class="h-16 w-16" loading="lazy" />
+          </div>
+        </div>
+
+        <!-- Inner Circle: E-commerce Integrations -->
+        <div class="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2" style="width:480px;height:480px">
+          <svg xmlns="http://www.w3.org/2000/svg" version="1.1" width="480" height="480" viewBox="0 0 480 480" class="pointer-events-none absolute inset-0">
+            <circle class="stroke-black/10 stroke-1 dark:stroke-white/10" cx="240" cy="240" r="240" fill="none"></circle>
+          </svg>
+          <!-- Shopify -->
+          <div style="--duration:36;--radius:240;--start-angle:0;transform-origin:center" class="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 animate-orbit">
+            <div class="flex flex-col items-center text-center">
+              <div class="flex h-14 w-14 items-center justify-center rounded-full bg-background/90 p-2 shadow-sm backdrop-blur">
+                <img src="/logos/shopify.svg" alt="Shopify" class="h-full w-full object-contain" loading="lazy" />
+              </div>
+              <span class="mt-2 text-sm font-medium text-foreground">Shopify</span>
+              <span class="text-xs text-muted-foreground whitespace-nowrap">Storefront</span>
+            </div>
+          </div>
+          <!-- WooCommerce -->
+          <div style="--duration:36;--radius:240;--start-angle:90;transform-origin:center" class="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 animate-orbit">
+            <div class="flex flex-col items-center text-center">
+              <div class="flex h-14 w-14 items-center justify-center rounded-full bg-background/90 p-2 shadow-sm backdrop-blur">
+                <img src="/logos/woocommerce.svg" alt="WooCommerce" class="h-full w-full object-contain" loading="lazy" />
+              </div>
+              <span class="mt-2 text-sm font-medium text-foreground">WooCommerce</span>
+              <span class="text-xs text-muted-foreground whitespace-nowrap">Commerce</span>
+            </div>
+          </div>
+          <!-- Magento -->
+          <div style="--duration:36;--radius:240;--start-angle:180;transform-origin:center" class="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 animate-orbit">
+            <div class="flex flex-col items-center text-center">
+              <div class="flex h-14 w-14 items-center justify-center rounded-full bg-background/90 p-2 shadow-sm backdrop-blur">
+                <img src="/logos/magento.svg" alt="Magento" class="h-full w-full object-contain" loading="lazy" />
+              </div>
+              <span class="mt-2 text-sm font-medium text-foreground">Magento</span>
+              <span class="text-xs text-muted-foreground whitespace-nowrap">Enterprise</span>
+            </div>
+          </div>
+          <!-- Stripe -->
+          <div style="--duration:36;--radius:240;--start-angle:270;transform-origin:center" class="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 animate-orbit">
+            <div class="flex flex-col items-center text-center">
+              <div class="flex h-14 w-14 items-center justify-center rounded-full bg-background/90 p-2 shadow-sm backdrop-blur">
+                <img src="/logos/stripe.svg" alt="Stripe" class="h-full w-full object-contain" loading="lazy" />
+              </div>
+              <span class="mt-2 text-sm font-medium text-foreground">Stripe</span>
+              <span class="text-xs text-muted-foreground whitespace-nowrap">Billing</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- Outer Circle: AI Model Integrations -->
+        <div class="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2" style="width:720px;height:720px">
+          <svg xmlns="http://www.w3.org/2000/svg" version="1.1" width="720" height="720" viewBox="0 0 720 720" class="pointer-events-none absolute inset-0">
+            <circle class="stroke-black/10 stroke-1 dark:stroke-white/10" cx="360" cy="360" r="360" fill="none"></circle>
+          </svg>
+          <!-- OpenAI -->
+          <div style="--duration:48;--radius:360;--start-angle:0;transform-origin:center" class="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 animate-orbit">
+            <div class="flex flex-col items-center text-center">
+              <div class="flex h-16 w-16 items-center justify-center rounded-full bg-card/70 p-3 shadow-md backdrop-blur">
+                <img src="/logos/openai.svg" alt="OpenAI" class="h-full w-full object-contain" loading="lazy" />
+              </div>
+              <span class="mt-2 text-sm font-semibold text-foreground">OpenAI</span>
+              <span class="text-xs text-muted-foreground whitespace-nowrap">GPT-4</span>
+            </div>
+          </div>
+          <!-- Anthropic -->
+          <div style="--duration:48;--radius:360;--start-angle:72;transform-origin:center" class="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 animate-orbit">
+            <div class="flex flex-col items-center text-center">
+              <div class="flex h-16 w-16 items-center justify-center rounded-full bg-card/70 p-3 shadow-md backdrop-blur">
+                <img src="/logos/anthropic.svg" alt="Anthropic" class="h-full w-full object-contain" loading="lazy" />
+              </div>
+              <span class="mt-2 text-sm font-semibold text-foreground">Anthropic</span>
+              <span class="text-xs text-muted-foreground whitespace-nowrap">Claude 3</span>
+            </div>
+          </div>
+          <!-- Google Gemini -->
+          <div style="--duration:48;--radius:360;--start-angle:144;transform-origin:center" class="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 animate-orbit">
+            <div class="flex flex-col items-center text-center">
+              <div class="flex h-16 w-16 items-center justify-center rounded-full bg-card/70 p-3 shadow-md backdrop-blur">
+                <img src="/logos/gemini.svg" alt="Google Gemini" class="h-full w-full object-contain" loading="lazy" />
+              </div>
+              <span class="mt-2 text-sm font-semibold text-foreground">Google Gemini</span>
+              <span class="text-xs text-muted-foreground whitespace-nowrap">Multimodal</span>
+            </div>
+          </div>
+          <!-- Mistral AI -->
+          <div style="--duration:48;--radius:360;--start-angle:216;transform-origin:center" class="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 animate-orbit">
+            <div class="flex flex-col items-center text-center">
+              <div class="flex h-16 w-16 items-center justify-center rounded-full bg-card/70 p-3 shadow-md backdrop-blur">
+                <img src="/logos/mistral.svg" alt="Mistral AI" class="h-full w-full object-contain" loading="lazy" />
+              </div>
+              <span class="mt-2 text-sm font-semibold text-foreground">Mistral AI</span>
+              <span class="text-xs text-muted-foreground whitespace-nowrap">Open-Weight</span>
+            </div>
+          </div>
+          <!-- DeepSeek -->
+          <div style="--duration:48;--radius:360;--start-angle:288;transform-origin:center" class="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 animate-orbit">
+            <div class="flex flex-col items-center text-center">
+              <div class="flex h-16 w-16 items-center justify-center rounded-full bg-card/70 p-3 shadow-md backdrop-blur">
+                <img src="/logos/deepseek.svg" alt="DeepSeek" class="h-full w-full object-contain" loading="lazy" />
+              </div>
+              <span class="mt-2 text-sm font-semibold text-foreground">DeepSeek</span>
+              <span class="text-xs text-muted-foreground whitespace-nowrap">Optimized</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- How It Works Section -->
+  <section class="px-4 py-20 sm:px-6 sm:py-24 md:px-8 md:py-32">
+    <div class="mx-auto max-w-full sm:max-w-6xl">
+      <div class="mb-20 space-y-4 text-center">
+        <div class="rounded-md border px-2.5 py-0.5 text-xs font-semibold transition-colors focus:outline-none focus:ring-2 focus:ring-ring focus:ring-offset-2 text-foreground mb-2 inline-flex items-center gap-2" data-usal="fade-down duration-600">
+          <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-zap h-4 w-4" aria-hidden="true"><path d="M4 14a1 1 0 0 1-.78-1.63l9.9-10.2a.5.5 0 0 1 .86.46l-1.92 6.02A1 1 0 0 0 13 10h7a1 1 0 0 1 .78 1.63l-9.9 10.2a.5.5 0 0 1-.86-.46l1.92-6.02A1 1 0 0 0 11 14z"></path></svg>
+          How It Works
+        </div>
+        <h2 class="text-4xl font-bold leading-tight tracking-tight sm:text-5xl" data-usal="fade-up duration-700 delay-100">
+          English → Code → Reality<br><span class="text-muted-foreground">In Minutes, Not Months</span>
+        </h2>
+        <p class="mx-auto max-w-3xl text-lg leading-relaxed text-muted-foreground" data-usal="fade-up duration-700 delay-200">
+          Describe your feature in plain English. The system validates it against the ontology, compiles to TypeScript, generates tests, and deploys to the edge.
+        </p>
+      </div>
+
+      <div class="grid gap-8 md:grid-cols-2 lg:grid-cols-4">
+        <div class="rounded-xl border text-card-foreground shadow border-border/50 bg-card/50 backdrop-blur" data-usal="fade-up duration-600 delay-100">
+          <div class="flex flex-col p-6 space-y-4">
+            <div class="flex h-12 w-12 items-center justify-center rounded-lg bg-primary/10 text-2xl font-bold text-primary">1</div>
+            <div class="font-semibold tracking-tight text-xl">Write in English</div>
+            <div class="text-sm text-muted-foreground leading-relaxed">
+              Describe what you want: "CREATE ai clone", "CALL OpenAI", "RECORD purchase". Use 15 simple commands anyone can understand.
+            </div>
+            <div class="space-y-2 pt-2">
+              <div class="text-xs text-muted-foreground"><span class="font-semibold text-foreground">Creator:</span> "CREATE my AI clone"</div>
+              <div class="text-xs text-muted-foreground"><span class="font-semibold text-foreground">Seller:</span> "RECORD purchase event"</div>
+              <div class="text-xs text-muted-foreground"><span class="font-semibold text-foreground">Engineer:</span> "CONNECT to Stripe API"</div>
+            </div>
+          </div>
+        </div>
+
+        <div class="rounded-xl border text-card-foreground shadow border-border/50 bg-card/50 backdrop-blur" data-usal="fade-up duration-600 delay-200">
+          <div class="flex flex-col p-6 space-y-4">
+            <div class="flex h-12 w-12 items-center justify-center rounded-lg bg-primary/10 text-2xl font-bold text-primary">2</div>
+            <div class="font-semibold tracking-tight text-xl">System Validates</div>
+            <div class="text-sm text-muted-foreground leading-relaxed">
+              Checks against the ontology: Do these entity types exist? Are connections valid? Are services available? Instant feedback.
+            </div>
+            <div class="space-y-2 pt-2">
+              <div class="text-xs text-muted-foreground"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-check inline h-3 w-3 text-green-500" aria-hidden="true"><path d="M20 6 9 17l-5-5"></path></svg><span class="font-semibold text-foreground">ai_clone</span> entity type exists</div>
+              <div class="text-xs text-muted-foreground"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-check inline h-3 w-3 text-green-500" aria-hidden="true"><path d="M20 6 9 17l-5-5"></path></svg><span class="font-semibold text-foreground">tokens_purchased</span> event valid</div>
+              <div class="text-xs text-muted-foreground"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-check inline h-3 w-3 text-green-500" aria-hidden="true"><path d="M20 6 9 17l-5-5"></path></svg><span class="font-semibold text-foreground">Stripe</span> service available</div>
+            </div>
+          </div>
+        </div>
+
+        <div class="rounded-xl border text-card-foreground shadow border-border/50 bg-card/50 backdrop-blur" data-usal="fade-up duration-600 delay-300">
+          <div class="flex flex-col p-6 space-y-4">
+            <div class="flex h-12 w-12 items-center justify-center rounded-lg bg-primary/10 text-2xl font-bold text-primary">3</div>
+            <div class="font-semibold tracking-tight text-xl">Code Generated</div>
+            <div class="text-sm text-muted-foreground leading-relaxed">
+              Compiles to production TypeScript with Effect.ts, Convex functions, React components, full test suite. Type-safe, tested, ready.
+            </div>
+            <div class="space-y-2 pt-2">
+              <div class="flex items-center gap-2">
+                <div class="inline-flex items-center rounded-md border px-2.5 py-0.5 font-semibold transition-colors focus:outline-none focus:ring-2 focus:ring-ring focus:ring-offset-2 border-transparent bg-secondary text-secondary-foreground hover:bg-secondary/80 text-xs">Backend</div>
+                <span class="text-xs text-muted-foreground">Mutations + Queries</span>
+              </div>
+              <div class="flex items-center gap-2">
+                <div class="inline-flex items-center rounded-md border px-2.5 py-0.5 font-semibold transition-colors focus:outline-none focus:ring-2 focus:ring-ring focus:ring-offset-2 border-transparent bg-secondary text-secondary-foreground hover:bg-secondary/80 text-xs">Frontend</div>
+                <span class="text-xs text-muted-foreground">React Components</span>
+              </div>
+              <div class="flex items-center gap-2">
+                <div class="inline-flex items-center rounded-md border px-2.5 py-0.5 font-semibold transition-colors focus:outline-none focus:ring-2 focus:ring-ring focus:ring-offset-2 border-transparent bg-secondary text-secondary-foreground hover:bg-secondary/80 text-xs">Tests</div>
+                <span class="text-xs text-muted-foreground">50+ test cases</span>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="rounded-xl border text-card-foreground shadow border-border/50 bg-card/50 backdrop-blur" data-usal="fade-up duration-600 delay-400">
+          <div class="flex flex-col p-6 space-y-4">
+            <div class="flex h-12 w-12 items-center justify-center rounded-lg bg-primary/10 text-2xl font-bold text-primary">4</div>
+            <div class="font-semibold tracking-tight text-xl">Deploy to Edge</div>
+            <div class="text-sm text-muted-foreground leading-relaxed">
+              Push to Cloudflare's global network. Unlimited requests, instant updates, zero configuration. Live in 60 seconds.
+            </div>
+            <div class="space-y-2 pt-2">
+              <div class="text-xs text-muted-foreground"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-globe inline h-3 w-3 text-primary" aria-hidden="true"><circle cx="12" cy="12" r="10"></circle><path d="M12 2a14.5 14.5 0 0 0 0 20 14.5 14.5 0 0 0 0-20"></path><path d="M2 12h20"></path></svg><span class="font-semibold text-foreground">330+ locations</span> worldwide</div>
+              <div class="text-xs text-muted-foreground"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-zap inline h-3 w-3 text-primary" aria-hidden="true"><path d="M4 14a1 1 0 0 1-.78-1.63l9.9-10.2a.5.5 0 0 1 .86.46l-1.92 6.02A1 1 0 0 0 13 10h7a1 1 0 0 1 .78 1.63l-9.9 10.2a.5.5 0 0 1-.86-.46l1.92-6.02A1 1 0 0 0 11 14z"></path></svg><span class="font-semibold text-foreground">&lt; 330ms</span> average response</div>
+              <div class="text-xs text-muted-foreground"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-check inline h-3 w-3 text-green-500" aria-hidden="true"><path d="M20 6 9 17l-5-5"></path></svg><span class="font-semibold text-foreground">Free tier</span> unlimited</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Performance Chart -->
+  <PerformanceChart client:only="react" />
+
+  <!-- Final CTA Section -->
+  <section class="relative overflow-hidden px-4 py-24 sm:px-6 sm:py-32 md:px-8 md:py-40">
+    <div class="absolute inset-0 -z-10">
+      <div class="absolute inset-0 bg-gradient-to-b from-background via-primary/10 to-background"></div>
+      <div class="absolute inset-0 bg-[radial-gradient(circle_at_50%_50%,hsl(var(--primary)/0.15),transparent_50%)]"></div>
+    </div>
+    <div class="mx-auto max-w-full sm:max-w-4xl md:max-w-5xl space-y-12 sm:space-y-16 text-center">
+      <div class="space-y-8">
+        <div class="rounded-md border transition-colors focus:outline-none focus:ring-2 focus:ring-ring focus:ring-offset-2 border-transparent bg-secondary text-secondary-foreground hover:bg-secondary/80 inline-flex items-center gap-2 text-base font-medium px-6 py-2" data-usal="fade-down duration-600">
+          <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-sparkles h-5 w-5" aria-hidden="true"><path d="M11.017 2.814a1 1 0 0 1 1.966 0l1.051 5.558a2 2 0 0 0 1.594 1.594l5.558 1.051a1 1 0 0 1 0 1.966l-5.558 1.051a2 2 0 0 0-1.594 1.594l-1.051 5.558a1 1 0 0 1-1.966 0l-1.051-5.558a2 2 0 0 0-1.594-1.594l-5.558-1.051a1 1 0 0 1 0-1.966l5.558-1.051a2 2 0 0 0 1.594-1.594z"></path><path d="M20 2v4"></path><path d="M22 4h-4"></path><circle cx="4" cy="20" r="2"></circle></svg>
+          Your Next 10 Minutes Could Change Everything
+        </div>
+        <h2 class="text-5xl font-bold leading-[1.1] tracking-tight sm:text-6xl md:text-7xl" data-usal="fade-up duration-700">
+          <span class="block">Download Free.</span>
+          <span class="block gradient-text">Deploy Now.</span>
+          <span class="block">Own Forever.</span>
+        </h2>
+        <p class="mx-auto max-w-3xl text-xl sm:text-2xl leading-relaxed text-muted-foreground" data-usal="fade-up duration-700 delay-200">
+          No credit card. No trial limits. No vendor lock-in.
+          <br><strong class="text-foreground">Just you, your ideas, and infinite possibilities.</strong>
+        </p>
+      </div>
+
+      <!-- Primary CTAs -->
+      <div class="flex flex-col gap-4 sm:flex-row sm:justify-center" data-usal="fade-up duration-700 delay-300">
+        <a href="/download" class="group">
+          <button class="inline-flex items-center justify-center gap-2 whitespace-nowrap disabled:pointer-events-none disabled:opacity-50 [&_svg]:pointer-events-none [&_svg:not([class*='size-'])]:size-4 shrink-0 [&_svg]:shrink-0 outline-none focus-visible:border-ring focus-visible:ring-ring/50 focus-visible:ring-[3px] aria-invalid:ring-destructive/20 dark:aria-invalid:ring-destructive/40 aria-invalid:border-destructive bg-primary text-primary-foreground hover:bg-primary/90 rounded-md has-[>svg]:px-4 h-18 w-full sm:w-auto px-12 text-lg font-bold shadow-2xl shadow-primary/30 transition-all hover:scale-105 hover:shadow-primary/50">
+            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-github mr-3 h-7 w-7 transition-transform group-hover:rotate-12" aria-hidden="true"><path d="M15 22v-4a4.8 4.8 0 0 0-1-3.5c3 0 6-2 6-5.5.08-1.25-.27-2.48-1-3.5.28-1.15.28-2.35 0-3.5 0 0-1 0-3 1.5-2.64-.5-5.36-.5-8 0C6 2 5 2 5 2c-.3 1.15-.3 2.35 0 3.5A5.403 5.403 0 0 0 4 9c0 3.5 3 5.5 6 5.5-.39.49-.68 1.05-.85 1.65-.17.6-.22 1.23-.15 1.85v4"></path><path d="M9 18c-4.51 2-5-2-7-2"></path></svg>
+            <span>
+              Download Free
+              <span class="block text-xs font-normal opacity-90">Start building in 30 seconds</span>
+            </span>
+          </button>
+        </a>
+        <a href="/deploy" class="group">
+          <button class="inline-flex items-center justify-center gap-2 whitespace-nowrap disabled:pointer-events-none disabled:opacity-50 [&_svg]:pointer-events-none [&_svg:not([class*='size-'])]:size-4 shrink-0 [&_svg]:shrink-0 outline-none focus-visible:border-ring focus-visible:ring-ring/50 focus-visible:ring-[3px] aria-invalid:ring-destructive/20 dark:aria-invalid:ring-destructive/40 aria-invalid:border-destructive bg-background shadow-xs hover:text-accent-foreground dark:bg-input/30 dark:border-input dark:hover:bg-input/50 rounded-md has-[>svg]:px-4 h-18 w-full sm:w-auto px-12 text-lg font-bold border-2 transition-all hover:scale-105 hover:border-primary hover:bg-primary/10">
+            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-rocket mr-3 h-7 w-7 transition-transform group-hover:translate-y-[-4px]" aria-hidden="true"><path d="M4.5 16.5c-1.5 1.26-2 5-2 5s3.74-.5 5-2c.71-.84.7-2.13-.09-2.91a2.18 2.18 0 0 0-2.91-.09z"></path><path d="m12 15-3-3a22 22 0 0 1 2-3.95A12.88 12.88 0 0 1 22 2c0 2.72-.78 7.5-6 11a22.35 22.35 0 0 1-4 2z"></path><path d="M9 12H4s.55-3.03 2-4c1.62-1.08 5 0 5 0"></path><path d="M12 15v5s3.03-.55 4-2c1.08-1.62 0-5 0-5"></path></svg>
+            <span>
+              Deploy to Edge
+              <span class="block text-xs font-normal opacity-90">Go live in minutes</span>
+            </span>
+          </button>
+        </a>
+      </div>
+    </div>
+  </section>
 </Layout>
 
 <style>
