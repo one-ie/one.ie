@@ -1,64 +1,55 @@
 #!/bin/bash
 
 # Track Changes Hook - ONE Platform
-# Tracks file changes and commits, stores them in one/events/0-changes.md
-# Triggered on post-commit to capture what was just committed
+# Groups commit changes by directory (/web, /one, /.claude, /one.ie, /cli)
+# Minimal context output, graceful fallbacks
 
 PROJECT_DIR="${CLAUDE_PROJECT_DIR:-$(git rev-parse --show-toplevel)}"
 CHANGES_LOG="$PROJECT_DIR/one/events/0-changes.md"
-HOOK_LOG_FILE="${HOOK_LOG_FILE:-$PROJECT_DIR/.claude/hooks.log}"
 
-# Source hook logger for logging functions
-if [ -f "$PROJECT_DIR/.claude/hooks/hook-logger.sh" ]; then
-  source "$PROJECT_DIR/.claude/hooks/hook-logger.sh"
-fi
-
-# Create one/events directory if it doesn't exist
-mkdir -p "$(dirname "$CHANGES_LOG")"
-
-# Get the latest commit info
-COMMIT_HASH=$(git rev-parse HEAD)
+# Get commit info
 COMMIT_SHORT=$(git rev-parse --short HEAD)
-COMMIT_MSG=$(git log -1 --pretty=%B)
-COMMIT_AUTHOR=$(git log -1 --pretty=%an)
-COMMIT_DATE=$(git log -1 --pretty=%ai)
+COMMIT_MSG=$(git log -1 --pretty=%B | head -1)
 COMMIT_FILES=$(git diff-tree --no-commit-id --name-only -r HEAD)
-COMMIT_STATS=$(git diff --stat HEAD~1..HEAD 2>/dev/null)
 
-# Count files changed
-FILE_COUNT=$(echo "$COMMIT_FILES" | wc -l | xargs)
+# Function to count changes in a directory
+count_dir_changes() {
+  local dir="$1"
+  echo "$COMMIT_FILES" | grep "^$dir/" | wc -l | xargs
+}
 
-# Create markdown entry for this commit
-ENTRY="## $COMMIT_SHORT - $(date '+%Y-%m-%d %H:%M:%S')
+# Get changes per directory
+CHANGES_WEB=$(count_dir_changes "web")
+CHANGES_ONE=$(count_dir_changes "one")
+CHANGES_CLAUDE=$(count_dir_changes ".claude")
+CHANGES_ONE_IE=$(count_dir_changes "one.ie")
+CHANGES_CLI=$(count_dir_changes "cli")
 
-**Author:** $COMMIT_AUTHOR
-**Date:** $COMMIT_DATE
-**Message:** $COMMIT_MSG
-**Files Changed:** $FILE_COUNT
+# Build summary (only show non-zero dirs)
+SUMMARY=""
+[ "$CHANGES_WEB" -gt 0 ] && SUMMARY+="web: +$CHANGES_WEB "
+[ "$CHANGES_ONE" -gt 0 ] && SUMMARY+="one: +$CHANGES_ONE "
+[ "$CHANGES_CLAUDE" -gt 0 ] && SUMMARY+=".claude: +$CHANGES_CLAUDE "
+[ "$CHANGES_ONE_IE" -gt 0 ] && SUMMARY+="one.ie: +$CHANGES_ONE_IE "
+[ "$CHANGES_CLI" -gt 0 ] && SUMMARY+="cli: +$CHANGES_CLI "
 
-### Changed Files
+# Trim whitespace
+SUMMARY=$(echo "$SUMMARY" | xargs)
 
-\`\`\`
-$COMMIT_FILES
-\`\`\`
-
-### Statistics
-
-\`\`\`
-$COMMIT_STATS
-\`\`\`
-
----
+# Create compact markdown entry
+ENTRY="**$COMMIT_SHORT** — $SUMMARY — \`$COMMIT_MSG\`
 
 "
+
+# Create one/events directory if it doesn't exist
+mkdir -p "$(dirname "$CHANGES_LOG")" 2>/dev/null
 
 # Initialize changes log if it doesn't exist
 if [ ! -f "$CHANGES_LOG" ]; then
   cat > "$CHANGES_LOG" << 'EOF'
-# Change Tracking Log
+# Change Tracking
 
-This file automatically tracks all commits to the ONE Platform repository.
-Updated on each commit via `.claude/hooks/track-changes.sh`.
+Grouped by directory. Updated on each commit.
 
 ---
 
@@ -69,13 +60,6 @@ fi
 {
   echo "$ENTRY"
   cat "$CHANGES_LOG"
-} > "$CHANGES_LOG.tmp" && mv "$CHANGES_LOG.tmp" "$CHANGES_LOG"
-
-# Log to hook logger if available
-if [ -n "$log_message" ]; then
-  log_message "INFO" "Tracked commit $COMMIT_SHORT with $FILE_COUNT files to one/events/0-changes.md"
-else
-  echo "[$(date '+%Y-%m-%d %H:%M:%S')] [INFO] Tracked commit $COMMIT_SHORT with $FILE_COUNT files" >> "$HOOK_LOG_FILE"
-fi
+} > "$CHANGES_LOG.tmp" && mv "$CHANGES_LOG.tmp" "$CHANGES_LOG" 2>/dev/null
 
 exit 0
