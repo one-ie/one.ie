@@ -18,9 +18,18 @@ type Props = {
 };
 
 const { entry } = Astro.props;
-const { Content } = await entry.render();
+const { Content, headings } = await entry.render();
+
+// Transform headings to the format expected by TableOfContents component
+const tocHeadings = headings
+  .filter((heading) => heading.depth >= 2 && heading.depth <= 4)
+  .map((heading) => ({
+    depth: heading.depth,
+    slug: heading.slug,
+    text: heading.text,
+  }));
 ---
 
-<DocsDetail title={entry.data.title} description={entry.data.description}>
+<DocsDetail title={entry.data.title} description={entry.data.description} headings={tocHeadings}>
   <Content />
 </DocsDetail>

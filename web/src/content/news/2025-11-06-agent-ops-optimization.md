@@ -10,7 +10,8 @@ featured: true
 
 # Agent-Ops Optimization: Smarter Deployments & Token Management
 
-**Released**: November 6, 2025
+**November 6, 2025**
+
 **Type**: DevOps Optimization
 **Impact**: Faster deployments, 10k tokens saved, simplified workflows
 

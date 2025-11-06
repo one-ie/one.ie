@@ -2,15 +2,23 @@
 import Layout from './Layout.astro';
 import { getCollection } from 'astro:content';
 import { SidebarDocs } from '@/components/docs/SidebarDocs';
+import { TableOfContents } from '@/components/TableOfContents';
 import type { CollectionEntry } from 'astro:content';
 import { ChevronRight, FileText } from 'lucide-react';
+
+interface Heading {
+  depth: number;
+  slug: string;
+  text: string;
+}
 
 interface Props {
   title: string;
   description?: string;
+  headings?: Heading[];
 }
 
-const { title, description } = Astro.props;
+const { title, description, headings = [] } = Astro.props;
 
 // Get all docs for sidebar
 const allDocs = (await getCollection('docs')) as CollectionEntry<'docs'>[];
@@ -20,14 +28,17 @@ const currentSlug = Astro.url.pathname.replace(/^\/docs\//, '').replace(/\/$/, '
 ---
 
 <Layout title={title} description={description} sidebarInitialCollapsed={true}>
-  <div class="flex gap-0">
-    <div class="flex gap-0">
-  {/* Sidebar */}
-  <SidebarDocs client:only="react" entries={allDocs} currentSlug={currentSlug} />
+  <div class="flex gap-0 h-full">
+    {/* Left Sidebar */}
+    <SidebarDocs client:only="react" entries={allDocs} currentSlug={currentSlug} />
 
-  {/* Main Content */}
-  <div class="flex-1 overflow-y-auto">
-    <div class="container mx-auto max-w-4xl px-4 py-8">
+    {/* Main Content Area - Three Column Layout */}
+    <div class="flex-1 overflow-y-auto bg-gradient-to-b from-background/95 to-background">
+      <div class="mx-auto w-full px-4 sm:px-6 lg:px-8 py-8 sm:py-12">
+        <div class="grid grid-cols-1 lg:grid-cols-4 gap-8 max-w-7xl mx-auto">
+          {/* Center Content - 2 columns on lg screens */}
+          <div class="lg:col-span-3">
+            <div class="max-w-3xl mx-auto">
       {/* Breadcrumbs */}
       <nav class="flex items-center gap-2 text-sm text-muted-foreground mb-6 p-0">
         <a href="/docs" class="hover:text-foreground transition-colors flex items-center gap-1">
@@ -43,10 +54,10 @@ const currentSlug = Astro.url.pathname.replace(/^\/docs\//, '').replace(/\/$/, '
       </nav>
 
       {/* Page Header with Copy Button */}
-      <div class="flex items-start justify-between gap-4 mb-8">
+      <div class="flex items-start justify-between gap-4 mb-10 sm:mb-12">
         <div class="flex-1">
-          <h1>{title}</h1>
-          {description && <p class="lead text-muted-foreground">{description}</p>}
+          <h1 class="text-3xl sm:text-4xl font-bold mb-2 text-foreground">{title}</h1>
+          {description && <p class="text-lg text-muted-foreground leading-relaxed">{description}</p>}
         </div>
         <button
           id="page-copy-btn"
@@ -54,6 +65,7 @@ const currentSlug = Astro.url.pathname.replace(/^\/docs\//, '').replace(/\/$/, '
           type="button"
           title="Copy entire page"
           aria-label="Copy page content"
+          style="margin-top: -0.5rem;"
         >
           <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
             <rect width="14" height="14" x="8" y="8" rx="2" ry="2"/>
@@ -63,11 +75,28 @@ const currentSlug = Astro.url.pathname.replace(/^\/docs\//, '').replace(/\/$/, '
         </button>
       </div>
 
-      <article class="prose dark:prose-invert max-w-none" id="doc-content">
+      <article class="prose dark:prose-invert max-w-none prose-sm sm:prose-base" id="doc-content">
         <slot />
       </article>
-    </div>
-  </div>
+
+              {/* Footer spacing for better scroll experience */}
+              <div class="mt-16 pt-8 border-t border-border/50">
+                <a href="/docs" class="inline-flex items-center gap-2 text-primary hover:underline text-sm font-medium">
+                  <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <path d="M15 18l-6-6 6-6"/>
+                  </svg>
+                  Back to Documentation
+                </a>
+              </div>
+            </div>
+          </div>
+
+          {/* Right Sidebar - Table of Contents */}
+          <div class="hidden lg:block lg:col-span-1">
+            <TableOfContents client:only="react" headings={headings} />
+          </div>
+        </div>
+      </div>
     </div>
   </div>
 </Layout>
@@ -188,33 +217,59 @@ const currentSlug = Astro.url.pathname.replace(/^\/docs\//, '').replace(/\/$/, '
 
 
   /* Heading styling */
+  :global(h1) {
+    font-size: 2rem;
+    font-weight: 700;
+    margin-bottom: 1rem;
+    color: hsl(var(--color-foreground));
+  }
+
   :global(h2) {
     font-size: 1.5rem;
-    font-weight: bold;
-    margin-top: 2rem;
+    font-weight: 700;
+    margin-top: 2.5rem;
     margin-bottom: 1rem;
     border-bottom: 1px solid hsl(var(--color-border));
-    padding-bottom: 0.5rem;
+    padding-bottom: 0.75rem;
+    color: hsl(var(--color-foreground));
   }
 
   :global(h3) {
     font-size: 1.25rem;
     font-weight: 600;
-    margin-top: 1.5rem;
+    margin-top: 2rem;
     margin-bottom: 0.75rem;
+    color: hsl(var(--color-foreground));
+  }
+
+  :global(h4) {
+    font-size: 1.1rem;
+    font-weight: 600;
+    margin-top: 1.5rem;
+    margin-bottom: 0.5rem;
+  }
+
+  /* Paragraph styling */
+  :global(p) {
+    color: hsl(var(--color-foreground));
+    line-height: 1.7;
+    margin-bottom: 1rem;
   }
 
   /* List styling */
   :global(ul, ol) {
-    margin-left: 1rem;
+    margin-left: 1.5rem;
+    margin-bottom: 1rem;
   }
 
   :global(ul > li, ol > li) {
-    margin-bottom: 0.5rem;
+    margin-bottom: 0.75rem;
+    color: hsl(var(--color-foreground));
+    line-height: 1.6;
   }
 
-  :global(li) {
-    color: hsl(var(--color-foreground));
+  :global(li > p) {
+    margin-bottom: 0.5rem;
   }
 
   /* Table styling */
@@ -250,22 +305,22 @@ const currentSlug = Astro.url.pathname.replace(/^\/docs\//, '').replace(/\/$/, '
     align-items: center;
     gap: 0.5rem;
     padding: 0.75rem 1rem;
-    background-color: hsl(var(--color-muted) / 0.5);
-    color: hsl(var(--color-foreground));
-    border: 1px solid hsl(var(--color-border));
+    background-color: hsl(var(--sidebar));
+    color: hsl(var(--sidebar-foreground));
+    border: 1px solid hsl(var(--sidebar-border));
     border-radius: 0.5rem;
     font-size: 0.875rem;
     font-weight: 500;
     cursor: pointer;
     transition: all 0.2s ease-in-out;
     flex-shrink: 0;
-    margin-top: 0.5rem;
   }
 
   .copy-page-btn:hover {
-    background-color: hsl(var(--color-muted) / 0.75);
-    border-color: hsl(var(--color-primary));
-    color: hsl(var(--color-primary));
+    background-color: hsl(var(--sidebar));
+    opacity: 0.8;
+    border-color: hsl(var(--primary));
+    color: hsl(var(--primary));
   }
 
   .copy-page-btn:active {
@@ -305,9 +360,11 @@ const currentSlug = Astro.url.pathname.replace(/^\/docs\//, '').replace(/\/$/, '
       transform: translateY(0);
     }
   }
+
 </style>
 
 <script>
+
   function wrapCodeBlocks() {
     document.querySelectorAll('pre').forEach(pre => {
       // Only wrap if not already wrapped
@@ -376,19 +433,23 @@ const currentSlug = Astro.url.pathname.replace(/^\/docs\//, '').replace(/\/$/, '
       const text = content.innerText || '';
 
       navigator.clipboard.writeText(text).then(() => {
-        // Visual feedback
-        pageBtn.classList.add('copied');
+        // Create tooltip (same as copy code button)
+        const tooltip = document.createElement('span');
+        tooltip.className = 'copy-tooltip';
+        tooltip.textContent = 'Copied!';
+        pageBtn.appendChild(tooltip);
 
-        // Show toast notification
-        const toast = document.createElement('div');
-        toast.className = 'copy-page-tooltip';
-        toast.textContent = 'Page copied to clipboard!';
-        document.body.appendChild(toast);
+        // Change icon and text (same as copy code button)
+        const svg = pageBtn.querySelector('svg');
+        const span = pageBtn.querySelector('span');
+        if (svg) svg.style.color = '#22c55e';
+        if (span) span.textContent = 'Copied';
 
-        // Reset button after animation
+        // Reset after animation (same as copy code button)
         setTimeout(() => {
-          pageBtn.classList.remove('copied');
-          toast.remove();
+          if (svg) svg.style.color = '';
+          if (span) span.textContent = 'Copy Page';
+          tooltip.remove();
         }, 2000);
       }).catch(err => {
         console.error('Failed to copy page:', err);

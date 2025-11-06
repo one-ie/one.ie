@@ -1,3 +1,133 @@
+### **685dc5f3** — template:1 — `news: Document agent-ops optimization, mcp-on script, and deployment improvements``
+
+**Template:**
+  - web/src/content/news/2025-11-06-agent-ops-optimization.md
+
+
+
+### **be2aab9b** — template:1 — `docs: Add mcp-on documentation to agent-ops``
+
+**Template:**
+  - .claude/agents/agent-ops.md
+
+
+
+### **31043a17** — template:3 — `feat: Add mcp-on script for toggling MCP servers - saves ~10k context tokens when off``
+
+**Template:**
+  - .claude/commands/mcp-on.md
+  - .claude/commands/mcp-toggle.md
+  - .claude/hooks/mcp-on.sh
+
+
+
+### **8f011b3f** — template:2 — `chore: Update agent-ops and commands to use optimized /deploy instead of deprecated scripts``
+
+**Template:**
+  - .claude/agents/agent-ops.md
+  - .claude/commands/mcp-toggle.md
+
+
+
+### **e3a144e0** — template:1 — `chore: Optimize /deploy command to use wrangler directly for oneie project``
+
+**Template:**
+  - .claude/commands/deploy.md
+
+
+
+### **f9b48ce4** — template:1 — `restore: Restore rich /one command with agent orchestration, planning, and execution features``
+
+**Template:**
+  - .claude/commands/one.md
+
+
+
+### **967a35ea** — template:79 — `refactor: Complete Infer → Cycle rename across entire codebase``
+
+**Template:**
+  - .claude/agents/agent-backend.md
+  - .claude/agents/agent-director.md
+  - .claude/agents/agent-onboard.md
+  - .claude/agents/agent-ontology.md
+  - .claude/agents/agent-ops.md
+  - .claude/agents/agent-sales.md
+  - .claude/commands/cascade.md
+  - .claude/hooks.log
+  - .claude/hooks/__pycache__/todo.cpython-313.pyc
+  - .claude/hooks/done.py
+  - .claude/hooks/notification-hook.sh
+  - .claude/hooks/todo.py
+  - .claude/plans/1-PROJECTS-START-HERE.md
+  - .claude/plans/1-projects-feature.md
+  - .claude/plans/DOCUMENTER-DELIVERY-SUMMARY.md
+  - .claude/plans/DOCUMENTER-EXECUTION-GUIDE.md
+  - .claude/plans/DOCUMENTER-TASK-BREAKDOWN.md
+  - .claude/plans/EXECUTION-READY.md
+  - .claude/plans/EXECUTION-SUMMARY.md
+  - .claude/plans/INDEX-ALL-AGENTS.md
+  - .claude/plans/INDEX-FRONTEND-TESTING.md
+  - .claude/plans/INDEX-PROBLEM-SOLVER.md
+  - .claude/plans/INDEX-QUALITY-AGENT-INFER65.md
+  - .claude/plans/INDEX.md
+  - .claude/plans/MASTER-COORDINATION-PLAN.md
+  - .claude/plans/MASTER-ORCHESTRATION-INFER65.md
+  - .claude/plans/MASTER-PLAN-SUMMARY.md
+  - .claude/plans/PLAN-COMPLETE.md
+  - .claude/plans/PROBLEM-SOLVER-EXECUTIVE-SUMMARY.md
+  - .claude/plans/PROBLEM-SOLVER-QUICKSTART.md
+  - .claude/plans/QUALITY-AGENT-SUMMARY.md
+  - .claude/plans/QUALITY-EXECUTION-CHECKLIST.md
+  - .claude/plans/QUICK-REFERENCE-FRONTEND-TESTING.md
+  - .claude/plans/README-PROBLEM-SOLVER.md
+  - .claude/plans/README.md
+  - .claude/plans/SPECIALIST-QUICK-REFERENCE.md
+  - .claude/plans/creation-instructions-9-todos.md
+  - .claude/plans/master-coordination-plan.json
+  - .claude/plans/master-plan-9-todos.md
+  - .claude/plans/specialist-assignments.md
+  - .claude/plans/todo-agent-builder.md
+  - .claude/plans/todo-agent-director.md
+  - .claude/plans/todo-agent-documenter.md
+  - .claude/plans/todo-agent-frontend.md
+  - .claude/plans/todo-agent-problem-solver.md
+  - .claude/plans/todo-agent-quality.md
+  - .claude/skills/INDEX.md
+  - .claude/skills/ontology/README.md
+  - .claude/state/cycle.json
+  - one/.obsidian/workspace.json
+  - one/events/0-changes.md
+  - one/events/DEMO_COMPONENTS.md
+  - one/events/frontend-effects-orchestration.md
+  - one/events/frontend-effects-risk-register.md
+  - one/events/frontend-effects-week1-assignments.md
+  - one/groups/one.md
+  - one/knowledge/archived/ontology.old.md
+  - one/knowledge/metadata-system.md
+  - one/knowledge/ontology-engineering.md
+  - one/knowledge/ontology.md
+  - one/knowledge/todo-template.md
+  - one/knowledge/todo.md
+  - one/people/anthony-o-connell.md
+  - one/things/master-workflow-plan.md
+  - one/things/plans/execution-strategy.md
+  - one/things/plans/wave1-specialist-assignments.md
+  - one/things/todo-ai.md
+  - one/things/todo-assignment.md
+  - one/things/todo-effects.md
+  - one/things/todo-frontend-effects.md
+  - one/things/todo-master-plan.md
+  - one/things/todo-sequence.md
+  - web/src/content/plans/ai.md
+  - web/src/content/plans/assignment.md
+  - web/src/content/plans/effects.md
+  - web/src/content/plans/master-plan.md
+  - web/src/content/plans/shop.md
+  - web/src/pages/ontology-specification.md
+  - web/src/services/constants.ts
+
+
+
 ### **4f2ba022** — template:22 custom:1 — `refactor: Rename Cycle to Cycle throughout codebase`` [customization]
 
 **Template:**

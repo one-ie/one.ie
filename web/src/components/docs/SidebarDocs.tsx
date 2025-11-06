@@ -73,8 +73,8 @@ export function SidebarDocs({ entries, currentSlug }: SidebarDocsProps) {
   };
 
   return (
-    <aside className="w-64 border-r border-border/40 bg-muted/20 h-screen overflow-y-auto sticky top-0">
-      <nav className="p-4 space-y-1">
+    <aside className="w-64 border-r border-border/40 bg-muted/20 sticky top-0 h-screen flex flex-col">
+      <nav className="p-4 space-y-1 overflow-y-auto flex-1">
         {sortedFolders.map((folder) => {
           const displayName =
             (folderDisplayNames as Record<string, string>)[folder] || folder;

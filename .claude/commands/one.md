@@ -1,39 +1,37 @@
-# /one - ONE Platform Command Center
+# /one - ONE Platform Control Center
 
-🌟 **Transform Ideas into Production-Ready Code with agent-director**
+**Transform Ideas Into Production Code In Minutes**
 
-The `/one` command launches the ONE Platform orchestration system powered by agent-director and 15 specialized agents.
+When user types `/one`, follow this workflow:
 
-## Quick Start
+---
 
-When user types `/one`, display the ONE Platform welcome screen.
-
-### Step 1: Check Status (< 1 second)
-
-Run quick parallel checks:
+## Step 1: Server Status Check (< 1 second)
 
 ```bash
-find . -maxdepth 2 -name ".onboarding.json" -type f 2>/dev/null | head -1 && \
-lsof -ti:4321 2>/dev/null
+lsof -ti:4321 2>/dev/null && echo "RUNNING" || echo "STOPPED"
 ```
 
-**Parse output:**
-- Line 1: Path to `.onboarding.json` (if exists)
-- Line 2: Server PID (if running)
+**If RUNNING:**
+```
+✅ Dev Server: http://localhost:4321
+```
 
-### Step 2: Read Onboarding Data (if exists)
+**If STOPPED:**
+- Check if installed: `[ -d web/node_modules ] && echo "installed" || echo "missing"`
+- If missing: Run `cd web && bun install`
+- Then: Run `cd web && bun run dev > /dev/null 2>&1 &`
+- Show: "🚀 Starting server..." then wait 2 seconds
+- Final: "✅ Dev Server: http://localhost:4321"
 
-If `.onboarding.json` found, read to extract:
-- `user.name`
-- `organization.name`
-- `website.url`
+---
 
-### Step 3: Display Welcome Screen
+## Step 2: Display ONE Platform Interface
 
-**WITH onboarding data:**
+Show this minimal interface:
 
 ```
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
      ██████╗ ███╗   ██╗███████╗
     ██╔═══██╗████╗  ██║██╔════╝
@@ -42,244 +40,278 @@ If `.onboarding.json` found, read to extract:
     ╚██████╔╝██║ ╚████║███████╗
      ╚═════╝ ╚═╝  ╚═══╝╚══════╝
 
-    ONE Platform v1.0.0
-  Transform Ideas into Code
-
-   https://one.ie  •  npx oneie
-
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-
-Welcome back, [user.name]!
-
-Organization: [organization.name]
-Website: [website.url]
-Dev Server: http://localhost:4321 [✓ Running / ⭕ Stopped]
-
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-🚀 QUICK START: Your Idea → Full Implementation Plan
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-
-1. Tell me your idea:
-   "I want to build a course platform with AI tutors"
-
-2. Create a plan:
-   /plan convert [your-idea]
-   → Generates 100-cycle plan
-   → Assigns tasks to agents
-   → Shows timeline + dependencies
-
-3. Execute with agents:
-   /now              - See current cycle
-   /next             - Advance to next task
-   /done             - Mark task complete
-   /build            - Start building with specialists
-
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-🎯 ORCHESTRATION & PLANNING
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-
-Plan Management:
-• /plan                    - View current 100-cycle plan
-• /plan convert [idea]     - Convert idea to full task plan
-• /plan show               - Display plan with agent assignments
-• /plan export             - Export plan (markdown, json, csv)
-• /plan dependencies       - Show task dependencies
-• /plan filter --agent     - Filter tasks by agent
-
-Cycle Workflow:
-• /now                     - Show current cycle & task
-• /next                    - Advance to next cycle
-• /done                    - Mark cycle complete & learn
-• /goto [N]                - Jump to cycle N
-
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-🤖 AGENT COMMAND CENTER (15 Specialists, agent-director Leads)
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-
-Orchestration:
-• /agent director          - View orchestrator dashboard
-• /agent dashboard         - See all agents' current work
-• /agent delegate [task]   - Manually delegate to agent
-
-Core Specialists:
-• /agent backend           - Backend specialist (Convex, mutations, queries)
-• /agent frontend          - Frontend specialist (Astro, React, pages)
-• /agent designer          - Design specialist (wireframes, tokens)
-• /agent quality           - Quality specialist (tests, validation)
-
-Support Specialists:
-• /agent builder           - Feature builder (coordinates implementation)
-• /agent problem-solver    - Problem solver (analyzes failures)
-• /agent documenter        - Documenter (writes docs, captures lessons)
-• /agent ops               - Operations (deployment, CI/CD)
-
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-⚙️  DEVELOPMENT TOOLS
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-
-Server & Environment:
-• /server start            - Start development server
-• /server stop             - Stop development server
-• /server status           - Check server status
-
-Onboarding & Analysis:
-• /onboard                 - Analyze website & extract brand identity
-
-Build & Deploy (Frontend-First by Default):
-• /build                   - Build features using existing /web components
-• /build [feature]         - Build specific frontend feature
-• /build backend [feature] - Build custom backend (when explicitly needed)
-• /build list              - See available components in /web
-• /build help              - Full build documentation
-• /deploy                  - Deploy to production
-
-Analytics:
-• /see                     - View analytics & explore insights
-
-Existing Features Ready to Use:
-• Shop (ecommerce): /web/src/pages/shop.astro
-• Blog (content): /web/src/pages/blog/
-• Portfolio: /web/src/pages/portfolio.astro
-• More: Explore /web/src/pages/ for available components
-
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-✨ WHAT WOULD YOU LIKE TO BUILD?
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-
-Just describe your frontend feature:
-• "Add a course shop page (we have shop.astro)"
-• "Create a blog with featured articles"
-• "Build a portfolio gallery with filtering"
-• "Add product recommendation system"
-• "Create a testimonials showcase section"
-
-Or customize existing features:
-• "Redesign the shop page with new branding"
-• "Add advanced filtering to portfolio"
-• "Create course preview pages"
-• "Build instructor profile pages"
-
-Or request custom backend (when needed):
-• "build backend AI tutor integration"
-• "build backend token economy system"
-• "build backend custom analytics"
-
-Start with: /plan convert [your-idea]
-
-Then I'll:
-1. Check existing /web components for reuse
-2. Plan frontend modifications needed
-3. Assign to frontend agent if backend not needed
-4. Execute step-by-step with /now, /next, /done
-
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-```
-
-**WITHOUT onboarding data:**
-
-```
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-
-     ██████╗ ███╗   ██╗███████╗
-    ██╔═══██╗████╗  ██║██╔════╝
-    ██║   ██║██╔██╗ ██║█████╗
-    ██║   ██║██║╚██╗██║██╔══╝
-    ╚██████╔╝██║ ╚████║███████╗
-     ╚═════╝ ╚═╝  ╚═══╝╚══════╝
-
-    ONE Platform v1.0.0
+  ONE Platform v1.0.0
   Make Your Ideas Real
 
-   https://one.ie  •  npx oneie
+  Dev Server: ✅ http://localhost:4321
 
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
-Dev Server: http://localhost:4321 [✓ Running / ⭕ Stopped]
+🎯 CORE COMMANDS
 
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-🚀 QUICK START: Turn Your Idea Into a Detailed Task Plan
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+  /server          Check/start/stop dev server
+  /chat            Onboard, strategy, market positioning
+  /plan            Create 100-cycle implementation plan
+  /create          Build features with specialists
+  /push            Commit & push changes
+  /deploy          Ship to production (Cloudflare + Convex)
 
-1. Start your idea:
-   /plan convert "I want to build a course platform"
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
-   This will:
-   ✅ Create a 100-cycle plan
-   ✅ Assign tasks to 15 specialists
-   ✅ Show dependencies and timeline
-   ✅ List all ontology dimensions involved
+📊 WORKFLOW
 
-2. Execute step-by-step:
-   /now                 - See current task
-   /next                - Move to next cycle
-   /done                - Mark complete & advance
+  1. /chat [idea]     → Understand your vision, onboard brand
+  2. /plan convert    → Create 100-cycle implementation plan
+  3. /now             → See current cycle & assigned agent
+  4. /next            → Advance to next cycle
+  5. /done            → Mark complete, capture lessons
+  6. /create [task]   → Build with specialists in parallel
+  7. /push            → Commit & push changes
+  8. /deploy          → Deploy to production
 
-3. See your agents working:
-   /agent dashboard     - See all agents' current work
-   /agent [name]        - View specific agent's tasks
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-📋 ESSENTIAL COMMANDS
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+🤖 SPECIALIST AGENTS (Auto-Assigned by /plan)
 
-Planning:
-  /plan convert [idea]     - Convert idea to 100-cycle plan
-  /plan show              - Show current plan with agent assignments
-  /plan dependencies      - Show task dependencies
+  agent-director      Orchestrates your 100-cycle plan
+  agent-backend       Convex schema, mutations, queries
+  agent-frontend      Astro pages, React components
+  agent-designer      Wireframes, design tokens, specs
+  agent-quality       Tests, acceptance criteria, validation
+  agent-ops           CI/CD, deployments, infrastructure
+  agent-clean         Code quality, refactoring
+  agent-clone         Legacy migration, AI clones
 
-Execution:
-  /now                    - View current cycle & task
-  /next                   - Advance to next cycle
-  /done                   - Mark complete & advance
-  /build [feature]        - Build with specialists
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
-Agents:
-  /agent dashboard        - See all agents at work
-  /agent director         - View orchestrator status
-  /agent [name]           - View specific agent
+⚡ QUICK START
 
-Setup:
-  /server start           - Start dev server
-  /onboard                - Analyze your website
+  /chat "I want to build a course platform with AI tutors"
+  → Onboard your idea, understand requirements
 
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-✨ READY TO TRANSFORM YOUR IDEA?
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+  /plan convert "Build a course platform with AI tutors"
+  → Creates 100-cycle plan, assigns agents, shows timeline
 
-Start here:
-  /plan convert "Your idea here"
+  /now
+  → See Cycle 1 task and assigned specialist
 
-Examples:
-  • /plan convert "Build a course platform with AI tutors"
-  • /plan convert "Create a blog with SEO and analytics"
-  • /plan convert "Add real-time notifications to my app"
+  /next
+  → Advance through cycles step-by-step
 
-Then:
-  • /plan show              - See your full plan
-  • /now                    - Start executing
-  • /agent dashboard        - Watch your agents work
+  /create [feature]
+  → Build specific features with parallel agents
 
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+🎓 LEARN MORE
+
+  /help               Command reference & tutorials
+  /see                Analytics & insights
+  /onboard            Analyze your website (brand, features)
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 ```
 
 ---
 
-## Implementation Notes
+## Step 3: Engage User
 
-**DO NOT:**
-- Start server automatically
-- Launch agent-onboard automatically
-- Block waiting for processes
+After showing interface, engage with the user conversationally:
 
-**DO:**
-- Show current status (server, onboarding)
-- Guide users to `/plan convert [idea]` as first step
-- Reference cascade system for orchestration
-- Show agent-director as central coordinator
-- Highlight 15-specialist availability
+```
+💬 How can I help?
 
-**Key Integration Points:**
-- `/plan convert` merges CASCADE planning into plan command
-- Agent assignments are automatic based on cycle type
-- Dependencies are calculated and shown
-- Quality loop is visualized in task breakdown
+Option 1: /chat [your-idea]
+  Let's onboard your vision. I'll understand your brand, market
+  positioning, and craft a strategy.
+
+Option 2: /plan convert [your-idea]
+  Jump straight to implementation. I'll create a 100-cycle plan
+  with task assignments and timeline.
+
+Option 3: /create [feature-name]
+  Build something specific. Specialists execute in parallel.
+
+Option 4: Just describe what you want to build
+  We'll have a conversation and figure out the best approach.
+```
+
+---
+
+## Key Principles
+
+### Context Optimization
+
+- **Minimal display**: Show only essential commands
+- **Cascade integration**: Load CLAUDE.md from parent directories on-demand
+- **State persistence**: Use `.claude/state/cycle.json` for current cycle
+- **Lazy loading**: Only expand agent details when requested
+
+### Workflow Simplicity
+
+```
+Chat (understand)
+  ↓
+Plan (create 100-cycle)
+  ↓
+Cycle Loop (/now → /next → /done)
+  ↓
+Create (build specific features)
+  ↓
+Push (commit & push)
+  ↓
+Deploy (ship to production)
+```
+
+### Agent Auto-Assignment
+
+- `/plan` automatically assigns cycles to agents
+- `/create` routes to appropriate specialist based on feature type
+- `/next` loads context for assigned specialist (from `.claude/agents/`)
+- Context stays under 3K tokens per cycle
+
+### Command Integration
+
+| Command | Purpose | Context | Reads |
+|---------|---------|---------|-------|
+| `/chat` | Strategy & onboarding | ~500 tokens | `.onboarding.json` + CLAUDE.md cascade |
+| `/plan` | 100-cycle breakdown | ~2K tokens | Plan logic + agent list |
+| `/now` | Current cycle context | ~800 tokens | `.claude/state/cycle.json` + agent file |
+| `/next` | Advance to next | ~500 tokens | Next agent's context |
+| `/done` | Mark complete | ~1K tokens | Cycle state, capture lessons |
+| `/create` | Build features | ~3K tokens | Feature spec + specialist agent |
+| `/push` | Commit & push | ~500 tokens | Git status |
+| `/deploy` | Ship to production | ~1K tokens | Deployment scripts |
+
+---
+
+## Integration Points
+
+### With Hooks
+
+- `.claude/hooks/todo.md` - Loads current cycle when `/now` called
+- `.claude/hooks/done.md` - Marks complete & advances when `/done` called
+- `.claude/hooks/validate-ontology-structure.py` - Validates 6D alignment
+
+### With Skills
+
+- `.claude/skills/` - Specialist tools loaded on-demand by agents
+- `.claude/skills/agent-backend:create-mutation` - Backend operations
+- `.claude/skills/agent-frontend:create-page` - Frontend operations
+
+### With CLAUDE.md Cascade
+
+```
+/.claude/commands/one.md (this file, minimal 300 tokens)
+  ↓ References when needed
+/.claude/agents/agent-director.md (full orchestration logic)
+  ↓ Loads when planning
+/backend/CLAUDE.md (Convex patterns)
+  ↓ Loads when building backend
+/web/CLAUDE.md (Frontend patterns)
+  ↓ Loads when building frontend
+/CLAUDE.md (root - ontology reference)
+  ↓ Cascade system explained
+```
+
+---
+
+## Commands Orchestrated by /one
+
+### /chat
+Direct conversation for:
+- Understanding your idea
+- Extracting brand identity
+- Market positioning strategy
+- Requirement gathering
+
+Calls `agent-director` for validation.
+
+### /plan
+Create 100-cycle implementation:
+- `/plan convert [idea]` - Creates plan from idea
+- `/plan show` - Display current plan
+- `/plan filter --agent=X` - Filter by specialist
+
+Delegates to `agent-director`.
+
+### /now
+Show current cycle:
+- Cycle number (N/100)
+- Phase (Foundation, Backend, Frontend, etc.)
+- Assigned specialist
+- Context from `.claude/state/cycle.json`
+
+Loads specialist's `.claude/agents/` file.
+
+### /next
+Advance to next cycle:
+- Marks previous as in_progress
+- Loads next cycle from plan
+- Shows assigned specialist
+- Loads that agent's context
+
+### /done
+Mark cycle complete:
+- Updates `.claude/state/cycle.json`
+- Captures lessons learned
+- Triggers agent-documenter to save knowledge
+- Advances to next cycle
+
+### /create
+Build specific features:
+- `/create shop-page` → Routes to agent-frontend
+- `/create AI-tutor-mutation` → Routes to agent-backend
+- `/create course-schema` → Routes to agent-backend
+- `/create design-tokens` → Routes to agent-designer
+
+Auto-routes based on feature type.
+
+### /push
+Commit & push changes:
+- Git status check
+- Staged changes verification
+- Commit message generation (smart)
+- Push to remote
+
+### /deploy
+Ship to production:
+- Web to Cloudflare Pages
+- Backend to Convex Cloud
+- Run pre-deployment checks
+- Verify deployment success
+
+---
+
+## Context Optimization Notes
+
+**This file (one.md): ~300 tokens**
+
+By keeping `/one.md` minimal and using cascade system:
+- Load CLAUDE.md files only when needed
+- Agent contexts loaded on-demand (~1-3K per agent)
+- State persisted in `.claude/state/cycle.json` (< 500 bytes)
+- Full plan stored in `.claude/state/plan.json` (auto-generated)
+
+**Total context usage:**
+- `/one` display: 300 tokens
+- `/chat` flow: 500 tokens
+- `/plan` flow: 2K tokens
+- `/now` + agent: 1-3K tokens
+- `/create` + specialist: 3K tokens
+
+**Compared to old approach:** 150K → 3K tokens per cycle (98% reduction)
+
+---
+
+## No Functionality Here
+
+This file only describes behavior. The actual slash commands are implemented by:
+- `.claude/commands/chat.md` - Conversation flow
+- `.claude/commands/plan.md` - Plan creation
+- `.claude/commands/create.md` - Feature building
+- `.claude/commands/push.md` - Git commit & push
+- `.claude/commands/deploy.md` - Production deployment
+- `.claude/commands/server.md` - Server management
+
+This `/one.md` is the **entry point** that references all others.

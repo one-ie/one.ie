@@ -22,6 +22,7 @@ export function GitSection({ children }: GitSectionProps) {
   const [stats, setStats] = useState({ stars: 0, forks: 0, downloads: 0, watchers: 0 });
   const [copied, setCopied] = useState<CopyTarget>(null);
   const [displayStats, setDisplayStats] = useState({ stars: 0, downloads: 0 });
+  const [imageLoaded, setImageLoaded] = useState(true);
   const animationFrame = useRef<number | null>(null);
 
   useEffect(() => {
@@ -144,21 +145,29 @@ export function GitSection({ children }: GitSectionProps) {
               Own AI Agents
             </span>
           </div>
-          <div className="flex justify-center">
-            <img
-              src="/logo.svg"
-              alt="ONE Logo"
-              width={400}
-              height={400}
-              className="mx-auto w-full max-w-[400px] h-auto"
-            />
-          </div>
+          {imageLoaded && (
+            <div className="flex justify-center">
+              <img
+                src="/logo.svg"
+                alt="ONE Logo"
+                width={400}
+                height={400}
+                className="mx-auto w-full max-w-[400px] h-auto"
+                onError={() => setImageLoaded(false)}
+              />
+            </div>
+          )}
           <h1 className="text-4xl sm:text-5xl md:text-6xl font-bold tracking-tight text-foreground">
-            Download FREE · Own FOREVER
+            BRING YOUR IDEAS TO LIFE
           </h1>
-          <p className="text-lg sm:text-xl text-muted-foreground max-w-2xl mx-auto">
-            Build apps, websites, and AI agents is English. Download to your computer, run in the cloud and deploy to the edge or your own server. ONE is open source and free forever.
-          </p>
+          <div className="space-y-4">
+            <p className="text-lg sm:text-xl text-muted-foreground max-w-2xl mx-auto">
+              Build apps, websites, and AI agents is English. Download to your computer, run in the cloud and deploy to the edge or your own server. ONE is open source and free forever.
+            </p>
+            <h2 className="text-2xl sm:text-3xl font-semibold text-foreground">
+              Download FREE · Own FOREVER
+            </h2>
+          </div>
         </div>
 
         {/* Main Download Cards */}
@@ -333,9 +342,9 @@ export function GitSection({ children }: GitSectionProps) {
 
         {/* Download Stats */}
         <div className="text-center py-4">
-          <a href="/stream/over-10000-users" className="inline-block">
+          <a href="/news/over-10000-installs" className="inline-block">
             <p className="text-2xl font-semibold text-foreground hover:opacity-80 transition-opacity">
-              Over <span style={{ color: 'hsl(45 93% 47%)' }}>10,000</span> Downloads
+              Over <span style={{ color: 'hsl(45 93% 47%)' }}>10,000</span> Installs
             </p>
           </a>
         </div>
