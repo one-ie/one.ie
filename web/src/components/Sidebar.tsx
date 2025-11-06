@@ -214,7 +214,7 @@ export function Sidebar({ children, initialCollapsed = true }: SimpleSidebarLayo
       >
         <div className={`flex h-16 items-center border-b shrink-0 relative z-10 ${sidebarCollapsed ? 'justify-center px-0' : 'justify-start px-4'}`}>
           <a href="/" className={`flex items-center gap-3 transition-opacity hover:opacity-80 ${sidebarCollapsed ? 'p-0' : 'px-3'}`}>
-            <img src="/icon.svg" alt="Logo" className="w-8 h-8 shrink-0" />
+            <img src="/icon.svg" alt="Logo" className="w-8 h-8 shrink-0 dark:invert-0 invert" />
             {!sidebarCollapsed && <span className="font-semibold">ONE</span>}
           </a>
         </div>
@@ -388,7 +388,7 @@ export function Sidebar({ children, initialCollapsed = true }: SimpleSidebarLayo
             </Button>
           </div>
           <a href="/" className="absolute left-1/2 -translate-x-1/2">
-            <img src="/logo.svg" alt="Logo" className="h-28" width="112" height="112" />
+            <img src="/logo.svg" alt="Logo" className="h-28 dark:invert-0 invert" width="112" height="112" />
           </a>
         </header>
         <main id="main-content" className="flex-1 p-4 sm:p-6">{children}</main>

@@ -61,7 +61,7 @@ import { DeployHeroMetrics } from '@/components/DeployHeroMetrics.tsx';
       </div>
 
       <!-- Beautiful Above-the-Fold Metrics with Integrated Charts -->
-      <DeployHeroMetrics client:only="react" />
+      <DeployHeroMetrics client:visible />
 
 
       <div class="flex flex-col gap-4 sm:flex-row sm:justify-center">
@@ -100,7 +100,7 @@ import { DeployHeroMetrics } from '@/components/DeployHeroMetrics.tsx';
         </p>
       </div>
 
-      <DeploymentMetrics client:only="react" />
+      <DeploymentMetrics client:visible />
     </div>
   </section>
 

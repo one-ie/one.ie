@@ -1,20 +1,6 @@
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
-import {
-  AreaChart,
-  Area,
-  BarChart,
-  Bar,
-  LineChart,
-  Line,
-  ResponsiveContainer,
-  XAxis,
-  YAxis,
-  Tooltip,
-  Cell,
-  PieChart,
-  Pie,
-} from 'recharts';
+import { lazy, Suspense } from 'react';
 import {
   Zap,
   Globe,
@@ -25,6 +11,15 @@ import {
   Shield,
   Rocket,
 } from 'lucide-react';
+
+// Lazy load recharts to reduce initial bundle size
+const AreaChart = lazy(() => import('recharts').then(mod => ({ default: mod.AreaChart })));
+const Area = lazy(() => import('recharts').then(mod => ({ default: mod.Area })));
+const BarChart = lazy(() => import('recharts').then(mod => ({ default: mod.BarChart })));
+const Bar = lazy(() => import('recharts').then(mod => ({ default: mod.Bar })));
+const ResponsiveContainer = lazy(() => import('recharts').then(mod => ({ default: mod.ResponsiveContainer })));
+const Tooltip = lazy(() => import('recharts').then(mod => ({ default: mod.Tooltip })));
+const Cell = lazy(() => import('recharts').then(mod => ({ default: mod.Cell })));
 
 // Mini chart data
 const deployTrend = [
@@ -78,27 +73,29 @@ export function DeployHeroMetrics() {
               <span className="text-3xl font-bold text-primary">$0</span>
               <span className="text-sm text-muted-foreground">/month</span>
             </div>
-            <ResponsiveContainer width="100%" height={40}>
-              <BarChart data={costComparison} margin={{ top: 0, right: 0, bottom: 0, left: 0 }}>
-                <Bar dataKey="cost" radius={[4, 4, 0, 0]}>
-                  {costComparison.map((entry, index) => (
-                    <Cell key={`cell-${index}`} fill={index === 0 ? '#f97316' : '#e5e7eb'} />
-                  ))}
-                </Bar>
-                <Tooltip
-                  content={({ active, payload }) => {
-                    if (active && payload && payload[0]) {
-                      return (
-                        <div className="rounded-lg border bg-background px-2 py-1 text-xs shadow-sm">
-                          <p className="font-medium">{payload[0].payload.name}: ${payload[0].value}</p>
-                        </div>
-                      );
-                    }
-                    return null;
-                  }}
-                />
-              </BarChart>
-            </ResponsiveContainer>
+            <Suspense fallback={<div className="h-10 bg-muted/20 animate-pulse rounded" />}>
+              <ResponsiveContainer width="100%" height={40}>
+                <BarChart data={costComparison} margin={{ top: 0, right: 0, bottom: 0, left: 0 }}>
+                  <Bar dataKey="cost" radius={[4, 4, 0, 0]}>
+                    {costComparison.map((entry, index) => (
+                      <Cell key={`cell-${index}`} fill={index === 0 ? '#f97316' : '#e5e7eb'} />
+                    ))}
+                  </Bar>
+                  <Tooltip
+                    content={({ active, payload }) => {
+                      if (active && payload && payload[0]) {
+                        return (
+                          <div className="rounded-lg border bg-background px-2 py-1 text-xs shadow-sm">
+                            <p className="font-medium">{payload[0].payload.name}: ${payload[0].value}</p>
+                          </div>
+                        );
+                      }
+                      return null;
+                    }}
+                  />
+                </BarChart>
+              </ResponsiveContainer>
+            </Suspense>
             <p className="text-xs text-muted-foreground">vs $229-350 others</p>
           </CardContent>
         </Card>
@@ -119,35 +116,37 @@ export function DeployHeroMetrics() {
               <span className="text-3xl font-bold text-blue-600">19</span>
               <span className="text-sm text-muted-foreground">seconds</span>
             </div>
-            <ResponsiveContainer width="100%" height={40}>
-              <AreaChart data={deployTrend} margin={{ top: 0, right: 0, bottom: 0, left: 0 }}>
-                <defs>
-                  <linearGradient id="deployGradient" x1="0" y1="0" x2="0" y2="1">
-                    <stop offset="5%" stopColor="#3b82f6" stopOpacity={0.3}/>
-                    <stop offset="95%" stopColor="#3b82f6" stopOpacity={0}/>
-                  </linearGradient>
-                </defs>
-                <Area
-                  type="monotone"
-                  dataKey="time"
-                  stroke="#3b82f6"
-                  strokeWidth={2}
-                  fill="url(#deployGradient)"
-                />
-                <Tooltip
-                  content={({ active, payload }) => {
-                    if (active && payload && payload[0]) {
-                      return (
-                        <div className="rounded-lg border bg-background px-2 py-1 text-xs shadow-sm">
-                          <p className="font-medium">{payload[0].payload.day}: {payload[0].value}s</p>
-                        </div>
-                      );
-                    }
-                    return null;
-                  }}
-                />
-              </AreaChart>
-            </ResponsiveContainer>
+            <Suspense fallback={<div className="h-10 bg-muted/20 animate-pulse rounded" />}>
+              <ResponsiveContainer width="100%" height={40}>
+                <AreaChart data={deployTrend} margin={{ top: 0, right: 0, bottom: 0, left: 0 }}>
+                  <defs>
+                    <linearGradient id="deployGradient" x1="0" y1="0" x2="0" y2="1">
+                      <stop offset="5%" stopColor="#3b82f6" stopOpacity={0.3}/>
+                      <stop offset="95%" stopColor="#3b82f6" stopOpacity={0}/>
+                    </linearGradient>
+                  </defs>
+                  <Area
+                    type="monotone"
+                    dataKey="time"
+                    stroke="#3b82f6"
+                    strokeWidth={2}
+                    fill="url(#deployGradient)"
+                  />
+                  <Tooltip
+                    content={({ active, payload }) => {
+                      if (active && payload && payload[0]) {
+                        return (
+                          <div className="rounded-lg border bg-background px-2 py-1 text-xs shadow-sm">
+                            <p className="font-medium">{payload[0].payload.day}: {payload[0].value}s</p>
+                          </div>
+                        );
+                      }
+                      return null;
+                    }}
+                  />
+                </AreaChart>
+              </ResponsiveContainer>
+            </Suspense>
             <p className="text-xs text-muted-foreground">Build → Deploy → Live</p>
           </CardContent>
         </Card>
@@ -168,30 +167,32 @@ export function DeployHeroMetrics() {
               <span className="text-3xl font-bold text-purple-600">287</span>
               <span className="text-sm text-muted-foreground">ms avg</span>
             </div>
-            <ResponsiveContainer width="100%" height={40}>
-              <BarChart data={latencyData} margin={{ top: 0, right: 0, bottom: 0, left: 0 }}>
-                <Bar dataKey="value" radius={[4, 4, 0, 0]}>
-                  {latencyData.map((entry, index) => (
-                    <Cell
-                      key={`cell-${index}`}
-                      fill={entry.value < 100 ? '#10b981' : entry.value < 150 ? '#f59e0b' : '#ef4444'}
-                    />
-                  ))}
-                </Bar>
-                <Tooltip
-                  content={({ active, payload }) => {
-                    if (active && payload && payload[0]) {
-                      return (
-                        <div className="rounded-lg border bg-background px-2 py-1 text-xs shadow-sm">
-                          <p className="font-medium">{payload[0].payload.region}: {payload[0].value}ms</p>
-                        </div>
-                      );
-                    }
-                    return null;
-                  }}
-                />
-              </BarChart>
-            </ResponsiveContainer>
+            <Suspense fallback={<div className="h-10 bg-muted/20 animate-pulse rounded" />}>
+              <ResponsiveContainer width="100%" height={40}>
+                <BarChart data={latencyData} margin={{ top: 0, right: 0, bottom: 0, left: 0 }}>
+                  <Bar dataKey="value" radius={[4, 4, 0, 0]}>
+                    {latencyData.map((entry, index) => (
+                      <Cell
+                        key={`cell-${index}`}
+                        fill={entry.value < 100 ? '#10b981' : entry.value < 150 ? '#f59e0b' : '#ef4444'}
+                      />
+                    ))}
+                  </Bar>
+                  <Tooltip
+                    content={({ active, payload }) => {
+                      if (active && payload && payload[0]) {
+                        return (
+                          <div className="rounded-lg border bg-background px-2 py-1 text-xs shadow-sm">
+                            <p className="font-medium">{payload[0].payload.region}: {payload[0].value}ms</p>
+                          </div>
+                        );
+                      }
+                      return null;
+                    }}
+                  />
+                </BarChart>
+              </ResponsiveContainer>
+            </Suspense>
             <p className="text-xs text-muted-foreground">Across 4 continents</p>
           </CardContent>
         </Card>

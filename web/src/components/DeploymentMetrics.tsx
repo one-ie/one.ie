@@ -1,28 +1,21 @@
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
 import { Progress } from '@/components/ui/progress';
-import {
-  BarChart,
-  Bar,
-  LineChart,
-  Line,
-  PieChart,
-  Pie,
-  Cell,
-  XAxis,
-  YAxis,
-  CartesianGrid,
-  Tooltip,
-  Legend,
-  ResponsiveContainer,
-  RadarChart,
-  PolarGrid,
-  PolarAngleAxis,
-  PolarRadiusAxis,
-  Radar,
-  Area,
-  AreaChart
-} from 'recharts';
+import { lazy, Suspense } from 'react';
+
+// Lazy load recharts to reduce initial bundle size and prevent forced reflows
+const BarChart = lazy(() => import('recharts').then(mod => ({ default: mod.BarChart })));
+const Bar = lazy(() => import('recharts').then(mod => ({ default: mod.Bar })));
+const PieChart = lazy(() => import('recharts').then(mod => ({ default: mod.PieChart })));
+const Pie = lazy(() => import('recharts').then(mod => ({ default: mod.Pie })));
+const Cell = lazy(() => import('recharts').then(mod => ({ default: mod.Cell })));
+const XAxis = lazy(() => import('recharts').then(mod => ({ default: mod.XAxis })));
+const YAxis = lazy(() => import('recharts').then(mod => ({ default: mod.YAxis })));
+const CartesianGrid = lazy(() => import('recharts').then(mod => ({ default: mod.CartesianGrid })));
+const Tooltip = lazy(() => import('recharts').then(mod => ({ default: mod.Tooltip })));
+const ResponsiveContainer = lazy(() => import('recharts').then(mod => ({ default: mod.ResponsiveContainer })));
+const Area = lazy(() => import('recharts').then(mod => ({ default: mod.Area })));
+const AreaChart = lazy(() => import('recharts').then(mod => ({ default: mod.AreaChart })));
 
 // Cost comparison data
 const costData = [
@@ -134,8 +127,9 @@ export function DeploymentMetrics() {
           <CardDescription>For 100GB bandwidth, 1M requests/month</CardDescription>
         </CardHeader>
         <CardContent>
-          <ResponsiveContainer width="100%" height={300}>
-            <BarChart data={costData}>
+          <Suspense fallback={<div className="h-[300px] bg-muted/20 animate-pulse rounded" />}>
+            <ResponsiveContainer width="100%" height={300}>
+              <BarChart data={costData}>
               <CartesianGrid strokeDasharray="3 3" opacity={0.3} />
               <XAxis dataKey="provider" />
               <YAxis />
@@ -155,6 +149,7 @@ export function DeploymentMetrics() {
               </Bar>
             </BarChart>
           </ResponsiveContainer>
+          </Suspense>
           <div className="mt-4 flex items-center justify-center gap-4 text-xs">
             <span className="flex items-center gap-2">
               <div className="h-3 w-3 rounded bg-[#f97316]" />
@@ -185,8 +180,9 @@ export function DeploymentMetrics() {
             <CardDescription>Response time from edge locations (ms)</CardDescription>
           </CardHeader>
           <CardContent>
-            <ResponsiveContainer width="100%" height={250}>
-              <BarChart data={performanceData} layout="horizontal">
+            <Suspense fallback={<div className="h-[250px] bg-muted/20 animate-pulse rounded" />}>
+              <ResponsiveContainer width="100%" height={250}>
+                <BarChart data={performanceData} layout="horizontal">
                 <CartesianGrid strokeDasharray="3 3" opacity={0.3} />
                 <XAxis type="number" domain={[0, 250]} />
                 <YAxis dataKey="region" type="category" width={80} />
@@ -212,6 +208,7 @@ export function DeploymentMetrics() {
                 </Bar>
               </BarChart>
             </ResponsiveContainer>
+            </Suspense>
           </CardContent>
         </Card>
 
@@ -222,8 +219,9 @@ export function DeploymentMetrics() {
             <CardDescription>Average duration per phase (seconds)</CardDescription>
           </CardHeader>
           <CardContent>
-            <ResponsiveContainer width="100%" height={200}>
-              <PieChart>
+            <Suspense fallback={<div className="h-[200px] bg-muted/20 animate-pulse rounded" />}>
+              <ResponsiveContainer width="100%" height={200}>
+                <PieChart>
                 <Pie
                   data={buildMetrics}
                   cx="50%"
@@ -248,6 +246,7 @@ export function DeploymentMetrics() {
                 />
               </PieChart>
             </ResponsiveContainer>
+            </Suspense>
             <div className="mt-4 grid grid-cols-2 gap-2 text-xs">
               {buildMetrics.map((metric) => (
                 <div key={metric.phase} className="flex items-center gap-2">
@@ -303,8 +302,9 @@ export function DeploymentMetrics() {
           <CardDescription>Total deployment time over the past week</CardDescription>
         </CardHeader>
         <CardContent>
-          <ResponsiveContainer width="100%" height={200}>
-            <AreaChart data={deploymentTrend}>
+          <Suspense fallback={<div className="h-[200px] bg-muted/20 animate-pulse rounded" />}>
+            <ResponsiveContainer width="100%" height={200}>
+              <AreaChart data={deploymentTrend}>
               <defs>
                 <linearGradient id="colorTime" x1="0" y1="0" x2="0" y2="1">
                   <stop offset="5%" stopColor="#f97316" stopOpacity={0.3}/>
@@ -332,6 +332,7 @@ export function DeploymentMetrics() {
               />
             </AreaChart>
           </ResponsiveContainer>
+          </Suspense>
           <div className="mt-4 flex items-center justify-between text-sm">
             <span className="text-muted-foreground">Improvement</span>
             <Badge className="bg-green-500/10 text-green-600 hover:bg-green-500/20">

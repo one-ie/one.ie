@@ -24,9 +24,29 @@ export function GitSection({ children }: GitSectionProps) {
   const [displayStats, setDisplayStats] = useState({ stars: 0, downloads: 0 });
   const [imageLoaded, setImageLoaded] = useState(true);
   const animationFrame = useRef<number | null>(null);
+  const sectionRef = useRef<HTMLElement | null>(null);
+  const [hasLoaded, setHasLoaded] = useState(false);
 
   useEffect(() => {
+    // Defer API calls until component is visible or after initial page load
     const fetchStats = async () => {
+      // Check sessionStorage for cached stats (avoid redundant API calls)
+      const cached = sessionStorage.getItem('github-stats');
+      if (cached) {
+        try {
+          const cachedData = JSON.parse(cached);
+          const age = Date.now() - cachedData.timestamp;
+          // Use cache if less than 5 minutes old
+          if (age < 5 * 60 * 1000) {
+            setStats(cachedData.stats);
+            setHasLoaded(true);
+            return;
+          }
+        } catch (e) {
+          // Invalid cache, continue to fetch
+        }
+      }
+
       try {
         const [githubResponse, npmResponse] = await Promise.all([
           fetch(`https://api.github.com/repos/${GITHUB_REPO}`, {
@@ -56,6 +76,11 @@ export function GitSection({ children }: GitSectionProps) {
           };
 
           setStats(nextStats);
+          // Cache the result
+          sessionStorage.setItem('github-stats', JSON.stringify({
+            stats: nextStats,
+            timestamp: Date.now()
+          }));
         } else {
           console.warn('Unexpected GitHub API response format:', githubData);
           const fallbackStats = {
@@ -71,12 +96,31 @@ export function GitSection({ children }: GitSectionProps) {
         console.error('Error fetching repository stats:', error);
         setStats({ stars: 0, forks: 0, watchers: 0, downloads: 0 });
       }
+      setHasLoaded(true);
     };
 
-    fetchStats();
-    const interval = setInterval(fetchStats, 5 * 60 * 1000);
-    return () => clearInterval(interval);
-  }, []);
+    // Use IntersectionObserver to fetch stats only when component is visible
+    if ('IntersectionObserver' in window && sectionRef.current) {
+      const observer = new IntersectionObserver(
+        (entries) => {
+          if (entries[0].isIntersecting && !hasLoaded) {
+            fetchStats();
+          }
+        },
+        { rootMargin: '100px' } // Start loading 100px before visible
+      );
+
+      observer.observe(sectionRef.current);
+
+      return () => {
+        observer.disconnect();
+      };
+    } else {
+      // Fallback: defer fetch slightly to prioritize initial render
+      const timer = setTimeout(fetchStats, 100);
+      return () => clearTimeout(timer);
+    }
+  }, [hasLoaded]);
 
   useEffect(() => {
     const duration = 800;
@@ -132,7 +176,7 @@ export function GitSection({ children }: GitSectionProps) {
   };
 
   return (
-    <section className="w-full min-h-screen flex items-center justify-center px-4 sm:px-6 py-8">
+    <section ref={sectionRef} className="w-full min-h-screen flex items-center justify-center px-4 sm:px-6 py-8">
       <div className="w-full max-w-7xl mx-auto space-y-12">
         {/* Hero Section */}
         <div className="text-center space-y-6">
@@ -152,6 +196,8 @@ export function GitSection({ children }: GitSectionProps) {
                 alt="ONE Logo"
                 width={400}
                 height={400}
+                fetchpriority="high"
+                loading="eager"
                 className="mx-auto w-full max-w-[400px] h-auto"
                 onError={() => setImageLoaded(false)}
               />

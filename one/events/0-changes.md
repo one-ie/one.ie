@@ -1,3 +1,12 @@
+### **965260cd** — template:3 — `chore: Update cycle state and event documentation``
+
+**Template:**
+  - .claude/hooks.log
+  - .claude/state/cycle.json
+  - one/events/0-changes.md
+
+
+
 ### **22aff091** — template:8 — `chore: Update .claude, one/, and web/ for Cycle 100 completion``
 
 **Template:**

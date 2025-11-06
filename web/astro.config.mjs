@@ -57,6 +57,26 @@ export default defineConfig({
     },
     build: {
       target: "esnext",
+      cssCodeSplit: true,
+      minify: "esbuild",
+      rollupOptions: {
+        output: {
+          manualChunks: (id) => {
+            // Separate recharts into its own chunk to enable lazy loading
+            if (id.includes('recharts')) {
+              return 'recharts';
+            }
+            // Separate lucide icons into their own chunk
+            if (id.includes('lucide-react')) {
+              return 'icons';
+            }
+            // Keep React separate
+            if (id.includes('node_modules/react') || id.includes('node_modules/react-dom')) {
+              return 'react-vendor';
+            }
+          },
+        },
+      },
     },
   },
   output: "server",
