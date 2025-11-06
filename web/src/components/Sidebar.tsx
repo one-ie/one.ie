@@ -236,12 +236,14 @@ export function Sidebar({ children, initialCollapsed = true }: SimpleSidebarLayo
                       onClick={() => setExpandedMenu(expandedMenu === item.title ? null : item.title)}
                       className="flex items-center gap-3 rounded-md px-3 py-2 text-sm font-medium w-full transition-colors hover:text-sidebar-accent-foreground"
                       title={sidebarCollapsed ? item.title : undefined}
+                      aria-label={sidebarCollapsed ? `Expand ${item.title} menu` : (isExpanded ? `Collapse ${item.title} menu` : `Expand ${item.title} menu`)}
+                      aria-expanded={isExpanded}
                     >
-                      <Icon className="h-5 w-5 shrink-0" />
+                      <Icon className="h-5 w-5 shrink-0" aria-hidden="true" />
                       {!sidebarCollapsed && (
                         <>
                           <span className="flex-1 text-left">{item.title}</span>
-                          <ChevronDown className={`h-4 w-4 shrink-0 transition-transform duration-200 ${isExpanded ? 'rotate-180' : ''}`} />
+                          <ChevronDown className={`h-4 w-4 shrink-0 transition-transform duration-200 ${isExpanded ? 'rotate-180' : ''}`} aria-hidden="true" />
                         </>
                       )}
                     </button>
@@ -294,7 +296,7 @@ export function Sidebar({ children, initialCollapsed = true }: SimpleSidebarLayo
             {authEnabled ? (
               <DropdownMenu>
                 <DropdownMenuTrigger asChild>
-                  <button className={`flex items-center gap-3 rounded-md p-2 w-full text-left transition-colors hover:bg-sidebar-accent hover:text-sidebar-accent-foreground ${sidebarCollapsed ? 'justify-center' : ''}`}>
+                  <button className={`flex items-center gap-3 rounded-md p-2 w-full text-left transition-colors hover:bg-sidebar-accent hover:text-sidebar-accent-foreground ${sidebarCollapsed ? 'justify-center' : ''}`} aria-label={user ? `User menu for ${user.name}` : 'Guest user menu'}>
                     <Avatar className="h-10 w-10 rounded-lg shrink-0">
                       <AvatarImage src={user?.avatar} alt={user?.name} />
                       <AvatarFallback className="rounded-lg bg-primary text-primary-foreground text-sm font-semibold">{initials}</AvatarFallback>
@@ -305,7 +307,7 @@ export function Sidebar({ children, initialCollapsed = true }: SimpleSidebarLayo
                           <p className="text-sm font-semibold truncate">{user?.name || 'Guest'}</p>
                           <p className="text-xs text-muted-foreground truncate">{user?.email || 'guest@example.com'}</p>
                         </div>
-                        <ChevronsUpDown className="h-4 w-4 shrink-0" />
+                        <ChevronsUpDown className="h-4 w-4 shrink-0" aria-hidden="true" />
                       </>
                     )}
                   </button>
@@ -382,7 +384,7 @@ export function Sidebar({ children, initialCollapsed = true }: SimpleSidebarLayo
               className="h-7 w-7"
               aria-label={mobileOpen || !sidebarCollapsed ? "Close menu" : "Open menu"}
             >
-              <PanelLeft className="h-4 w-4" />
+              <PanelLeft className="h-4 w-4" aria-hidden="true" />
             </Button>
           </div>
           <a href="/" className="absolute left-1/2 -translate-x-1/2">
