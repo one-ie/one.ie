@@ -1,3 +1,19 @@
+### **935f4f0d** — template:2 — `enhance: Add comprehensive credits page with web data and sidebar link``
+
+**Template:**
+  - web/src/components/Sidebar.tsx
+  - web/src/pages/credits.astro
+
+
+
+### **35928ada** — template:2 — `chore: Release v3.6.23 to npm - Gold metrics theme update``
+
+**Template:**
+  - .claude/hooks.log
+  - one/events/0-changes.md
+
+
+
 ### **b038a8bf** — template:4 — `chore: Final updates - cycle state and git section refinement``
 
 **Template:**

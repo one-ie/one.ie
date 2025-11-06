@@ -36,7 +36,7 @@ interface ProductSearchProps {
   initialCategory?: string;
 }
 
-export function ProductSearch({
+function ProductSearch({
   products,
   viewMode,
   gridColumns,
@@ -264,3 +264,7 @@ export function ProductSearch({
     </div>
   );
 }
+
+// Export both default and named for compatibility
+export default ProductSearch;
+export { ProductSearch };

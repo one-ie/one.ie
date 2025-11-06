@@ -26,7 +26,7 @@ interface RecommendationsCarouselProps {
   autoplayDelay?: number; // in milliseconds
 }
 
-export function RecommendationsCarousel({
+function RecommendationsCarousel({
   products,
   title = 'You May Also Like',
   autoplay = true,
@@ -141,7 +141,7 @@ interface FrequentlyBoughtTogetherProps {
   bundleDiscount?: number; // Percentage discount for bundle
 }
 
-export function FrequentlyBoughtTogether({
+function FrequentlyBoughtTogether({
   mainProduct,
   suggestions,
   bundleDiscount = 10,
@@ -242,3 +242,7 @@ export function FrequentlyBoughtTogether({
     </div>
   );
 }
+
+// Export both default and named for compatibility
+export default RecommendationsCarousel;
+export { RecommendationsCarousel, FrequentlyBoughtTogether };

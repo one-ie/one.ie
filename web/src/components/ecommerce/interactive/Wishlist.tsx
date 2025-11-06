@@ -75,7 +75,7 @@ export const wishlistActions = {
 };
 
 // Wishlist count badge (for header)
-export function WishlistCount() {
+function WishlistCount() {
   const wishlist = useStore($wishlist);
 
   if (wishlist.length === 0) return null;
@@ -92,7 +92,7 @@ interface WishlistPageProps {
   allProducts: Product[]; // Pass all products to filter wishlist items
 }
 
-export function WishlistPage({ allProducts }: WishlistPageProps) {
+function WishlistPage({ allProducts }: WishlistPageProps) {
   const wishlist = useStore($wishlist);
   const [mounted, setMounted] = useState(false);
 
@@ -178,7 +178,7 @@ interface WishlistButtonProps {
   className?: string;
 }
 
-export function WishlistButton({ productId, className = '' }: WishlistButtonProps) {
+function WishlistButton({ productId, className = '' }: WishlistButtonProps) {
   const wishlist = useStore($wishlist);
   const [mounted, setMounted] = useState(false);
 
@@ -240,3 +240,7 @@ export function WishlistButton({ productId, className = '' }: WishlistButtonProp
     </button>
   );
 }
+
+// Export both default and named for compatibility
+export default WishlistPage;
+export { WishlistPage, WishlistCount, WishlistButton };

@@ -28,7 +28,7 @@ interface FAQAccordionProps {
   description?: string;
 }
 
-export function FAQAccordion({
+function FAQAccordion({
   faqs,
   searchable = true,
   title = 'Frequently Asked Questions',
@@ -273,7 +273,7 @@ interface ProductFAQProps {
   customFaqs?: FAQItem[];
 }
 
-export function ProductFAQ({ productType, customFaqs }: ProductFAQProps) {
+function ProductFAQ({ productType, customFaqs }: ProductFAQProps) {
   // Filter default FAQs or use custom FAQs
   const faqs = customFaqs || defaultEcommerceFAQs;
 
@@ -283,3 +283,7 @@ export function ProductFAQ({ productType, customFaqs }: ProductFAQProps) {
     </div>
   );
 }
+
+// Export both default and named for compatibility
+export default FAQAccordion;
+export { FAQAccordion, ProductFAQ };

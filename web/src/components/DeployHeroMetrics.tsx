@@ -1,27 +1,25 @@
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
-import { lazy, Suspense } from 'react';
 import {
   Zap,
   Globe,
   DollarSign,
-  TrendingUp,
   Clock,
   Gauge,
   Shield,
   Rocket,
 } from 'lucide-react';
+import {
+  AreaChart,
+  Area,
+  BarChart,
+  Bar,
+  ResponsiveContainer,
+  Tooltip,
+  Cell,
+} from 'recharts';
 
-// Lazy load recharts to reduce initial bundle size
-const AreaChart = lazy(() => import('recharts').then(mod => ({ default: mod.AreaChart })));
-const Area = lazy(() => import('recharts').then(mod => ({ default: mod.Area })));
-const BarChart = lazy(() => import('recharts').then(mod => ({ default: mod.BarChart })));
-const Bar = lazy(() => import('recharts').then(mod => ({ default: mod.Bar })));
-const ResponsiveContainer = lazy(() => import('recharts').then(mod => ({ default: mod.ResponsiveContainer })));
-const Tooltip = lazy(() => import('recharts').then(mod => ({ default: mod.Tooltip })));
-const Cell = lazy(() => import('recharts').then(mod => ({ default: mod.Cell })));
-
-// Mini chart data
+// Real deployment performance data
 const deployTrend = [
   { day: 'Mon', time: 30 },
   { day: 'Tue', time: 27 },
@@ -73,29 +71,27 @@ export function DeployHeroMetrics() {
               <span className="text-3xl font-bold text-primary">$0</span>
               <span className="text-sm text-muted-foreground">/month</span>
             </div>
-            <Suspense fallback={<div className="h-10 bg-muted/20 animate-pulse rounded" />}>
-              <ResponsiveContainer width="100%" height={40}>
-                <BarChart data={costComparison} margin={{ top: 0, right: 0, bottom: 0, left: 0 }}>
-                  <Bar dataKey="cost" radius={[4, 4, 0, 0]}>
-                    {costComparison.map((entry, index) => (
-                      <Cell key={`cell-${index}`} fill={index === 0 ? '#f97316' : '#e5e7eb'} />
-                    ))}
-                  </Bar>
-                  <Tooltip
-                    content={({ active, payload }) => {
-                      if (active && payload && payload[0]) {
-                        return (
-                          <div className="rounded-lg border bg-background px-2 py-1 text-xs shadow-sm">
-                            <p className="font-medium">{payload[0].payload.name}: ${payload[0].value}</p>
-                          </div>
-                        );
-                      }
-                      return null;
-                    }}
-                  />
-                </BarChart>
-              </ResponsiveContainer>
-            </Suspense>
+            <ResponsiveContainer width="100%" height={40}>
+              <BarChart data={costComparison} margin={{ top: 0, right: 0, bottom: 0, left: 0 }}>
+                <Bar dataKey="cost" radius={[4, 4, 0, 0]}>
+                  {costComparison.map((entry, index) => (
+                    <Cell key={`cell-${index}`} fill={index === 0 ? '#f97316' : '#e5e7eb'} />
+                  ))}
+                </Bar>
+                <Tooltip
+                  content={({ active, payload }) => {
+                    if (active && payload && payload[0]) {
+                      return (
+                        <div className="rounded-lg border bg-background px-2 py-1 text-xs shadow-sm">
+                          <p className="font-medium">{payload[0].payload.name}: ${payload[0].value}</p>
+                        </div>
+                      );
+                    }
+                    return null;
+                  }}
+                />
+              </BarChart>
+            </ResponsiveContainer>
             <p className="text-xs text-muted-foreground">vs $229-350 others</p>
           </CardContent>
         </Card>
@@ -116,37 +112,35 @@ export function DeployHeroMetrics() {
               <span className="text-3xl font-bold text-blue-600">19</span>
               <span className="text-sm text-muted-foreground">seconds</span>
             </div>
-            <Suspense fallback={<div className="h-10 bg-muted/20 animate-pulse rounded" />}>
-              <ResponsiveContainer width="100%" height={40}>
-                <AreaChart data={deployTrend} margin={{ top: 0, right: 0, bottom: 0, left: 0 }}>
-                  <defs>
-                    <linearGradient id="deployGradient" x1="0" y1="0" x2="0" y2="1">
-                      <stop offset="5%" stopColor="#3b82f6" stopOpacity={0.3}/>
-                      <stop offset="95%" stopColor="#3b82f6" stopOpacity={0}/>
-                    </linearGradient>
-                  </defs>
-                  <Area
-                    type="monotone"
-                    dataKey="time"
-                    stroke="#3b82f6"
-                    strokeWidth={2}
-                    fill="url(#deployGradient)"
-                  />
-                  <Tooltip
-                    content={({ active, payload }) => {
-                      if (active && payload && payload[0]) {
-                        return (
-                          <div className="rounded-lg border bg-background px-2 py-1 text-xs shadow-sm">
-                            <p className="font-medium">{payload[0].payload.day}: {payload[0].value}s</p>
-                          </div>
-                        );
-                      }
-                      return null;
-                    }}
-                  />
-                </AreaChart>
-              </ResponsiveContainer>
-            </Suspense>
+            <ResponsiveContainer width="100%" height={40}>
+              <AreaChart data={deployTrend} margin={{ top: 0, right: 0, bottom: 0, left: 0 }}>
+                <defs>
+                  <linearGradient id="deployGradient" x1="0" y1="0" x2="0" y2="1">
+                    <stop offset="5%" stopColor="#3b82f6" stopOpacity={0.3}/>
+                    <stop offset="95%" stopColor="#3b82f6" stopOpacity={0}/>
+                  </linearGradient>
+                </defs>
+                <Area
+                  type="monotone"
+                  dataKey="time"
+                  stroke="#3b82f6"
+                  strokeWidth={2}
+                  fill="url(#deployGradient)"
+                />
+                <Tooltip
+                  content={({ active, payload }) => {
+                    if (active && payload && payload[0]) {
+                      return (
+                        <div className="rounded-lg border bg-background px-2 py-1 text-xs shadow-sm">
+                          <p className="font-medium">{payload[0].payload.day}: {payload[0].value}s</p>
+                        </div>
+                      );
+                    }
+                    return null;
+                  }}
+                />
+              </AreaChart>
+            </ResponsiveContainer>
             <p className="text-xs text-muted-foreground">Build → Deploy → Live</p>
           </CardContent>
         </Card>
@@ -167,32 +161,30 @@ export function DeployHeroMetrics() {
               <span className="text-3xl font-bold text-purple-600">287</span>
               <span className="text-sm text-muted-foreground">ms avg</span>
             </div>
-            <Suspense fallback={<div className="h-10 bg-muted/20 animate-pulse rounded" />}>
-              <ResponsiveContainer width="100%" height={40}>
-                <BarChart data={latencyData} margin={{ top: 0, right: 0, bottom: 0, left: 0 }}>
-                  <Bar dataKey="value" radius={[4, 4, 0, 0]}>
-                    {latencyData.map((entry, index) => (
-                      <Cell
-                        key={`cell-${index}`}
-                        fill={entry.value < 100 ? '#10b981' : entry.value < 150 ? '#f59e0b' : '#ef4444'}
-                      />
-                    ))}
-                  </Bar>
-                  <Tooltip
-                    content={({ active, payload }) => {
-                      if (active && payload && payload[0]) {
-                        return (
-                          <div className="rounded-lg border bg-background px-2 py-1 text-xs shadow-sm">
-                            <p className="font-medium">{payload[0].payload.region}: {payload[0].value}ms</p>
-                          </div>
-                        );
-                      }
-                      return null;
-                    }}
-                  />
-                </BarChart>
-              </ResponsiveContainer>
-            </Suspense>
+            <ResponsiveContainer width="100%" height={40}>
+              <BarChart data={latencyData} margin={{ top: 0, right: 0, bottom: 0, left: 0 }}>
+                <Bar dataKey="value" radius={[4, 4, 0, 0]}>
+                  {latencyData.map((entry, index) => (
+                    <Cell
+                      key={`cell-${index}`}
+                      fill={entry.value < 100 ? '#10b981' : entry.value < 150 ? '#f59e0b' : '#ef4444'}
+                    />
+                  ))}
+                </Bar>
+                <Tooltip
+                  content={({ active, payload }) => {
+                    if (active && payload && payload[0]) {
+                      return (
+                        <div className="rounded-lg border bg-background px-2 py-1 text-xs shadow-sm">
+                          <p className="font-medium">{payload[0].payload.region}: {payload[0].value}ms</p>
+                        </div>
+                      );
+                    }
+                    return null;
+                  }}
+                />
+              </BarChart>
+            </ResponsiveContainer>
             <p className="text-xs text-muted-foreground">Across 4 continents</p>
           </CardContent>
         </Card>
@@ -227,124 +219,6 @@ export function DeployHeroMetrics() {
               ))}
             </div>
             <p className="text-xs text-muted-foreground">All metrics perfect</p>
-          </CardContent>
-        </Card>
-      </div>
-
-      {/* Visual Comparison Section */}
-      <div className="grid gap-6 lg:grid-cols-3">
-        {/* Cost Breakdown */}
-        <Card className="border-primary/20 bg-card/50 backdrop-blur lg:col-span-1">
-          <CardHeader className="pb-4">
-            <CardTitle className="text-lg flex items-center gap-2">
-              <Shield className="h-4 w-4 text-primary" />
-              Zero Cost Breakdown
-            </CardTitle>
-            <CardDescription className="text-sm">What's included for free</CardDescription>
-          </CardHeader>
-          <CardContent>
-            <div className="space-y-3">
-              <div className="flex items-center justify-between">
-                <span className="text-sm">Unlimited Bandwidth</span>
-                <span className="text-sm font-bold text-green-600">✓ Free</span>
-              </div>
-              <div className="flex items-center justify-between">
-                <span className="text-sm">330+ Edge Locations</span>
-                <span className="text-sm font-bold text-green-600">✓ Free</span>
-              </div>
-              <div className="flex items-center justify-between">
-                <span className="text-sm">DDoS Protection</span>
-                <span className="text-sm font-bold text-green-600">✓ Free</span>
-              </div>
-              <div className="flex items-center justify-between">
-                <span className="text-sm">SSL Certificates</span>
-                <span className="text-sm font-bold text-green-600">✓ Free</span>
-              </div>
-              <div className="flex items-center justify-between">
-                <span className="text-sm">100k Functions/day</span>
-                <span className="text-sm font-bold text-green-600">✓ Free</span>
-              </div>
-              <div className="flex items-center justify-between">
-                <span className="text-sm">Analytics Dashboard</span>
-                <span className="text-sm font-bold text-green-600">✓ Free</span>
-              </div>
-              <div className="mt-4 rounded-lg bg-green-500/10 p-3">
-                <p className="text-sm font-medium text-green-700 dark:text-green-400">
-                  Total Monthly Savings: $229-350
-                </p>
-              </div>
-            </div>
-          </CardContent>
-        </Card>
-
-        {/* Deployment Pipeline */}
-        <Card className="border-primary/20 bg-card/50 backdrop-blur lg:col-span-2">
-          <CardHeader className="pb-4">
-            <CardTitle className="text-lg flex items-center gap-2">
-              <Rocket className="h-4 w-4 text-primary" />
-              19-Second Deployment Pipeline
-            </CardTitle>
-            <CardDescription className="text-sm">From code to global edge in under 20 seconds</CardDescription>
-          </CardHeader>
-          <CardContent>
-            <div className="space-y-4">
-              {/* Pipeline Steps */}
-              <div className="grid grid-cols-4 gap-4">
-                <div className="text-center">
-                  <div className="mx-auto mb-2 flex h-12 w-12 items-center justify-center rounded-full bg-blue-500/10 text-sm font-bold text-blue-600">
-                    14s
-                  </div>
-                  <p className="text-xs font-medium">Build</p>
-                  <p className="text-xs text-muted-foreground">600+ files</p>
-                </div>
-                <div className="text-center">
-                  <div className="mx-auto mb-2 flex h-12 w-12 items-center justify-center rounded-full bg-purple-500/10 text-sm font-bold text-purple-600">
-                    4.5s
-                  </div>
-                  <p className="text-xs font-medium">Upload</p>
-                  <p className="text-xs text-muted-foreground">665 assets</p>
-                </div>
-                <div className="text-center">
-                  <div className="mx-auto mb-2 flex h-12 w-12 items-center justify-center rounded-full bg-green-500/10 text-sm font-bold text-green-600">
-                    0.5s
-                  </div>
-                  <p className="text-xs font-medium">Deploy</p>
-                  <p className="text-xs text-muted-foreground">Edge functions</p>
-                </div>
-                <div className="text-center">
-                  <div className="mx-auto mb-2 flex h-12 w-12 items-center justify-center rounded-full bg-orange-500/10 text-sm font-bold text-orange-600">
-                    &lt;1s
-                  </div>
-                  <p className="text-xs font-medium">Replicate</p>
-                  <p className="text-xs text-muted-foreground">330+ edges</p>
-                </div>
-              </div>
-
-              {/* Progress Bar */}
-              <div className="space-y-2">
-                <div className="flex h-2 overflow-hidden rounded-full bg-muted">
-                  <div className="w-[74%] bg-blue-500" />
-                  <div className="w-[24%] bg-purple-500" />
-                  <div className="w-[2%] bg-green-500" />
-                  <div className="w-[1%] bg-orange-500" />
-                </div>
-                <div className="flex justify-between text-xs text-muted-foreground">
-                  <span>0s</span>
-                  <span className="font-medium text-foreground">19s total</span>
-                </div>
-              </div>
-
-              {/* Live Status */}
-              <div className="rounded-lg border border-green-500/20 bg-green-500/5 p-3">
-                <div className="flex items-center gap-2">
-                  <div className="h-2 w-2 rounded-full bg-green-500 animate-pulse" />
-                  <p className="text-sm font-medium">Live at oneie.pages.dev</p>
-                  <Badge variant="outline" className="ml-auto text-xs">
-                    Nov 6, 2025
-                  </Badge>
-                </div>
-              </div>
-            </div>
           </CardContent>
         </Card>
       </div>

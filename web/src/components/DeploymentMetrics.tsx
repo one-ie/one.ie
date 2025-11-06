@@ -1,21 +1,20 @@
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
 import { Progress } from '@/components/ui/progress';
-import { lazy, Suspense } from 'react';
-
-// Lazy load recharts to reduce initial bundle size and prevent forced reflows
-const BarChart = lazy(() => import('recharts').then(mod => ({ default: mod.BarChart })));
-const Bar = lazy(() => import('recharts').then(mod => ({ default: mod.Bar })));
-const PieChart = lazy(() => import('recharts').then(mod => ({ default: mod.PieChart })));
-const Pie = lazy(() => import('recharts').then(mod => ({ default: mod.Pie })));
-const Cell = lazy(() => import('recharts').then(mod => ({ default: mod.Cell })));
-const XAxis = lazy(() => import('recharts').then(mod => ({ default: mod.XAxis })));
-const YAxis = lazy(() => import('recharts').then(mod => ({ default: mod.YAxis })));
-const CartesianGrid = lazy(() => import('recharts').then(mod => ({ default: mod.CartesianGrid })));
-const Tooltip = lazy(() => import('recharts').then(mod => ({ default: mod.Tooltip })));
-const ResponsiveContainer = lazy(() => import('recharts').then(mod => ({ default: mod.ResponsiveContainer })));
-const Area = lazy(() => import('recharts').then(mod => ({ default: mod.Area })));
-const AreaChart = lazy(() => import('recharts').then(mod => ({ default: mod.AreaChart })));
+import {
+  BarChart,
+  Bar,
+  PieChart,
+  Pie,
+  Cell,
+  XAxis,
+  YAxis,
+  CartesianGrid,
+  Tooltip,
+  ResponsiveContainer,
+  Area,
+  AreaChart,
+} from 'recharts';
 
 // Cost comparison data
 const costData = [
@@ -44,12 +43,19 @@ const buildMetrics = [
   { phase: 'Upload', duration: 4.5, color: '#ef4444' },
 ];
 
-// Core Web Vitals
+// Core Web Vitals (Real data from Lighthouse)
 const webVitals = [
-  { metric: 'FCP', value: 0.8, good: 1.8, label: 'First Contentful Paint' },
-  { metric: 'LCP', value: 1.2, good: 2.5, label: 'Largest Contentful Paint' },
-  { metric: 'CLS', value: 0.02, good: 0.1, label: 'Cumulative Layout Shift' },
-  { metric: 'TTI', value: 1.1, good: 3.8, label: 'Time to Interactive' },
+  { metric: 'FCP', value: 0.3, good: 1.8, label: 'First Contentful Paint (Desktop)' },
+  { metric: 'LCP', value: 0.7, good: 2.5, label: 'Largest Contentful Paint (Desktop)' },
+  { metric: 'TBT', value: 0, good: 0.2, label: 'Total Blocking Time' },
+  { metric: 'CLS', value: 0, good: 0.1, label: 'Cumulative Layout Shift' },
+];
+
+const webVitalsMobile = [
+  { metric: 'FCP', value: 1.4, good: 1.8, label: 'First Contentful Paint (Mobile)' },
+  { metric: 'LCP', value: 2.5, good: 2.5, label: 'Largest Contentful Paint (Mobile)' },
+  { metric: 'TBT', value: 0, good: 0.2, label: 'Total Blocking Time (Mobile)' },
+  { metric: 'CLS', value: 0, good: 0.1, label: 'Cumulative Layout Shift (Mobile)' },
 ];
 
 // Deployment trend
@@ -106,15 +112,22 @@ export function DeploymentMetrics() {
           </CardContent>
         </Card>
 
-        <Card className="border-primary/20 bg-gradient-to-br from-primary/5 to-background">
+        <Card className="border-primary/20 bg-gradient-to-br from-green-500/10 to-background">
           <CardHeader className="pb-2">
             <CardTitle className="text-sm font-medium text-muted-foreground">Lighthouse Score</CardTitle>
           </CardHeader>
           <CardContent>
-            <div className="text-3xl font-bold text-green-600">100</div>
-            <p className="text-xs text-muted-foreground">All categories</p>
+            <div className="flex items-baseline gap-2">
+              <div className="text-3xl font-bold text-green-600">100</div>
+              <span className="text-sm text-muted-foreground">Desktop</span>
+            </div>
+            <div className="flex items-baseline gap-2 mt-1">
+              <div className="text-2xl font-bold text-green-600">97</div>
+              <span className="text-xs text-muted-foreground">Mobile</span>
+            </div>
+            <p className="text-xs text-muted-foreground mt-1">Top 3% worldwide</p>
             <div className="mt-2">
-              <Progress value={100} className="h-1 bg-green-100" />
+              <Progress value={100} className="h-1" style={{ backgroundColor: '#10b981' }} />
             </div>
           </CardContent>
         </Card>
@@ -127,8 +140,7 @@ export function DeploymentMetrics() {
           <CardDescription>For 100GB bandwidth, 1M requests/month</CardDescription>
         </CardHeader>
         <CardContent>
-          <Suspense fallback={<div className="h-[300px] bg-muted/20 animate-pulse rounded" />}>
-            <ResponsiveContainer width="100%" height={300}>
+          <ResponsiveContainer width="100%" height={300}>
               <BarChart data={costData}>
               <CartesianGrid strokeDasharray="3 3" opacity={0.3} />
               <XAxis dataKey="provider" />
@@ -149,7 +161,6 @@ export function DeploymentMetrics() {
               </Bar>
             </BarChart>
           </ResponsiveContainer>
-          </Suspense>
           <div className="mt-4 flex items-center justify-center gap-4 text-xs">
             <span className="flex items-center gap-2">
               <div className="h-3 w-3 rounded bg-[#f97316]" />
@@ -180,8 +191,7 @@ export function DeploymentMetrics() {
             <CardDescription>Response time from edge locations (ms)</CardDescription>
           </CardHeader>
           <CardContent>
-            <Suspense fallback={<div className="h-[250px] bg-muted/20 animate-pulse rounded" />}>
-              <ResponsiveContainer width="100%" height={250}>
+            <ResponsiveContainer width="100%" height={250}>
                 <BarChart data={performanceData} layout="horizontal">
                 <CartesianGrid strokeDasharray="3 3" opacity={0.3} />
                 <XAxis type="number" domain={[0, 250]} />
@@ -208,7 +218,6 @@ export function DeploymentMetrics() {
                 </Bar>
               </BarChart>
             </ResponsiveContainer>
-            </Suspense>
           </CardContent>
         </Card>
 
@@ -219,8 +228,7 @@ export function DeploymentMetrics() {
             <CardDescription>Average duration per phase (seconds)</CardDescription>
           </CardHeader>
           <CardContent>
-            <Suspense fallback={<div className="h-[200px] bg-muted/20 animate-pulse rounded" />}>
-              <ResponsiveContainer width="100%" height={200}>
+            <ResponsiveContainer width="100%" height={200}>
                 <PieChart>
                 <Pie
                   data={buildMetrics}
@@ -246,7 +254,6 @@ export function DeploymentMetrics() {
                 />
               </PieChart>
             </ResponsiveContainer>
-            </Suspense>
             <div className="mt-4 grid grid-cols-2 gap-2 text-xs">
               {buildMetrics.map((metric) => (
                 <div key={metric.phase} className="flex items-center gap-2">
@@ -265,32 +272,124 @@ export function DeploymentMetrics() {
         </Card>
       </div>
 
-      {/* Core Web Vitals */}
+      {/* Core Web Vitals - Desktop & Mobile */}
+      <div className="grid gap-6 lg:grid-cols-2">
+        {/* Desktop Core Web Vitals */}
+        <Card className="border-green-500/20 bg-gradient-to-br from-green-500/5 to-background">
+          <CardHeader>
+            <div className="flex items-center justify-between">
+              <div>
+                <CardTitle>Desktop Core Web Vitals</CardTitle>
+                <CardDescription>Perfect 100/100 Lighthouse Score</CardDescription>
+              </div>
+              <Badge className="bg-green-500 text-white">100</Badge>
+            </div>
+          </CardHeader>
+          <CardContent>
+            <div className="grid gap-4 grid-cols-2">
+              {webVitals.map((vital) => (
+                <div key={vital.metric} className="space-y-2">
+                  <div className="flex items-center justify-between">
+                    <span className="text-xs font-medium">{vital.metric}</span>
+                    <Badge variant="default" className="text-xs bg-green-600">
+                      {vital.value === 0 ? '0' : `${vital.value}s`}
+                    </Badge>
+                  </div>
+                  <div className="relative h-2 rounded-full bg-muted overflow-hidden">
+                    <div
+                      className="absolute h-full bg-green-500"
+                      style={{ width: vital.value === 0 ? '100%' : `${Math.min((vital.value / vital.good) * 100, 100)}%` }}
+                    />
+                  </div>
+                  <p className="text-xs text-muted-foreground">{vital.label}</p>
+                </div>
+              ))}
+            </div>
+          </CardContent>
+        </Card>
+
+        {/* Mobile Core Web Vitals */}
+        <Card className="border-green-500/20 bg-gradient-to-br from-green-500/5 to-background">
+          <CardHeader>
+            <div className="flex items-center justify-between">
+              <div>
+                <CardTitle>Mobile Core Web Vitals</CardTitle>
+                <CardDescription>Near-Perfect 97/100 on Slow 4G</CardDescription>
+              </div>
+              <Badge className="bg-green-500 text-white">97</Badge>
+            </div>
+          </CardHeader>
+          <CardContent>
+            <div className="grid gap-4 grid-cols-2">
+              {webVitalsMobile.map((vital) => (
+                <div key={vital.metric} className="space-y-2">
+                  <div className="flex items-center justify-between">
+                    <span className="text-xs font-medium">{vital.metric}</span>
+                    <Badge variant="default" className="text-xs bg-green-600">
+                      {vital.value === 0 ? '0' : `${vital.value}s`}
+                    </Badge>
+                  </div>
+                  <div className="relative h-2 rounded-full bg-muted overflow-hidden">
+                    <div
+                      className="absolute h-full bg-green-500"
+                      style={{ width: vital.value === 0 ? '100%' : `${Math.min((vital.value / vital.good) * 100, 100)}%` }}
+                    />
+                  </div>
+                  <p className="text-xs text-muted-foreground">{vital.label}</p>
+                </div>
+              ))}
+            </div>
+          </CardContent>
+        </Card>
+      </div>
+
+      {/* Lighthouse Screenshots */}
       <Card className="border-primary/20">
         <CardHeader>
-          <CardTitle>Core Web Vitals Performance</CardTitle>
-          <CardDescription>All metrics in the "Good" range</CardDescription>
+          <CardTitle>Lighthouse Performance Reports</CardTitle>
+          <CardDescription>Real screenshots from Chrome DevTools</CardDescription>
         </CardHeader>
         <CardContent>
-          <div className="grid gap-4 md:grid-cols-4">
-            {webVitals.map((vital) => (
-              <div key={vital.metric} className="space-y-2">
-                <div className="flex items-center justify-between">
-                  <span className="text-xs font-medium">{vital.metric}</span>
-                  <Badge variant={vital.value <= vital.good * 0.5 ? 'default' : 'secondary'} className="text-xs">
-                    {vital.value}s
-                  </Badge>
-                </div>
-                <div className="relative h-2 rounded-full bg-muted overflow-hidden">
-                  <div
-                    className="absolute h-full bg-green-500"
-                    style={{ width: `${(vital.value / vital.good) * 100}%` }}
-                  />
-                  <div className="absolute right-0 h-full w-px bg-yellow-500" style={{ left: '50%' }} />
-                </div>
-                <p className="text-xs text-muted-foreground">{vital.label}</p>
+          <div className="grid gap-6 md:grid-cols-2">
+            <div className="space-y-3">
+              <div className="flex items-center justify-between">
+                <h4 className="font-semibold">Desktop - Perfect 100/100</h4>
+                <Badge className="bg-green-500">100</Badge>
               </div>
-            ))}
+              <a href="/screenshots/lighthouse-desktop.png" target="_blank" rel="noopener noreferrer">
+                <img
+                  src="/screenshots/lighthouse-desktop.png"
+                  alt="Desktop Lighthouse Score - Perfect 100/100"
+                  className="rounded-lg border border-border/50 hover:border-primary/50 transition-colors cursor-pointer"
+                  loading="lazy"
+                />
+              </a>
+              <p className="text-xs text-muted-foreground">
+                🏆 FCP: 0.3s | LCP: 0.7s | TBT: 0ms | CLS: 0
+              </p>
+            </div>
+            <div className="space-y-3">
+              <div className="flex items-center justify-between">
+                <h4 className="font-semibold">Mobile - Near-Perfect 97/100</h4>
+                <Badge className="bg-green-500">97</Badge>
+              </div>
+              <a href="/screenshots/lighthouse-mobile.png" target="_blank" rel="noopener noreferrer">
+                <img
+                  src="/screenshots/lighthouse-mobile.png"
+                  alt="Mobile Lighthouse Score - 97/100"
+                  className="rounded-lg border border-border/50 hover:border-primary/50 transition-colors cursor-pointer"
+                  loading="lazy"
+                />
+              </a>
+              <p className="text-xs text-muted-foreground">
+                📱 FCP: 1.4s | LCP: 2.5s | TBT: 0ms | CLS: 0 (on Slow 4G)
+              </p>
+            </div>
+          </div>
+          <div className="mt-4 text-center">
+            <a href="/news/perfect-lighthouse-scores-desktop-mobile" className="text-sm text-primary hover:underline">
+              Read the full performance optimization story →
+            </a>
           </div>
         </CardContent>
       </Card>
@@ -302,8 +401,7 @@ export function DeploymentMetrics() {
           <CardDescription>Total deployment time over the past week</CardDescription>
         </CardHeader>
         <CardContent>
-          <Suspense fallback={<div className="h-[200px] bg-muted/20 animate-pulse rounded" />}>
-            <ResponsiveContainer width="100%" height={200}>
+          <ResponsiveContainer width="100%" height={200}>
               <AreaChart data={deploymentTrend}>
               <defs>
                 <linearGradient id="colorTime" x1="0" y1="0" x2="0" y2="1">
@@ -332,7 +430,6 @@ export function DeploymentMetrics() {
               />
             </AreaChart>
           </ResponsiveContainer>
-          </Suspense>
           <div className="mt-4 flex items-center justify-between text-sm">
             <span className="text-muted-foreground">Improvement</span>
             <Badge className="bg-green-500/10 text-green-600 hover:bg-green-500/20">

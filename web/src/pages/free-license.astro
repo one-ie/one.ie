@@ -1,11 +1,10 @@
 ---
 import Layout from '../layouts/Layout.astro';
-import { readFileSync } from 'fs';
-import { resolve } from 'path';
 import { marked } from 'marked';
 
-// Read LICENSE.md content at build time
-const licenseMarkdown = readFileSync(resolve('..', 'LICENSE.md'), 'utf-8');
+// Import LICENSE.md content at build time (Vite handles this)
+const licenseModule = await import('../../LICENSE.md?raw');
+const licenseMarkdown = licenseModule.default;
 const licenseContent = await marked.parse(licenseMarkdown);
 ---
 

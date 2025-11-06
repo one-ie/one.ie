@@ -2,7 +2,7 @@
 import Layout from '../../layouts/Layout.astro';
 import { getCollection } from 'astro:content';
 import { Grid, List } from 'lucide-react';
-import { ProductSearch } from '../../components/products/ProductSearch.tsx';
+import ProductSearch from '../../components/products/ProductSearch.tsx';
 
 // Get all Product entries
 const entries = await getCollection('products');

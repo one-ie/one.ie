@@ -46,6 +46,10 @@
   animation: gradient 3s ease infinite;
 }
 
+.animate-fade-in {
+  animation: fadeIn 0.5s ease-in;
+}
+
 @custom-variant dark (&:is(.dark *));
 @plugin "@tailwindcss/typography";
 

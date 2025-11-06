@@ -34,7 +34,7 @@ const isLowStock = (inventory?: number) => {
   return inventory !== undefined && inventory > 0 && inventory < 10;
 };
 
-export function ProductCard({ product }: ProductCardProps) {
+function ProductCard({ product }: ProductCardProps) {
   const [isAdding, setIsAdding] = useState(false);
   const [showQuickView, setShowQuickView] = useState(false);
 
@@ -282,3 +282,7 @@ export function ProductCard({ product }: ProductCardProps) {
     </div>
   );
 }
+
+// Export both default and named for compatibility
+export default ProductCard;
+export { ProductCard };
