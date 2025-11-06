@@ -253,9 +253,9 @@ export function GitSection({ children }: GitSectionProps) {
                 <div className="flex h-14 w-14 items-center justify-center rounded-2xl bg-primary/10 transition-all duration-500 group-hover:scale-110 group-hover:bg-primary/20">
                   <Code className="w-7 h-7 text-primary" />
                 </div>
-                <div className="flex items-center gap-2 px-3 py-1.5 rounded-full backdrop-blur-md transition-all duration-300 hover:scale-105" style={{ backgroundColor: 'hsl(45 93% 47% / 0.08)' }}>
-                  <Star className="w-3.5 h-3.5" style={{ fill: 'hsl(216 55% 25%)', color: 'hsl(216 55% 25%)' }} />
-                  <span className="font-semibold text-sm" style={{ color: 'hsl(216 55% 25%)' }}>{formattedStars}</span>
+                <div className="flex items-center gap-2 px-3 py-1.5 rounded-full backdrop-blur-md transition-all duration-300 hover:scale-105" style={{ backgroundColor: 'hsl(45 93% 47% / 0.15)' }}>
+                  <Star className="w-3.5 h-3.5" style={{ fill: 'hsl(45 93% 47%)', color: 'hsl(45 93% 47%)' }} />
+                  <span className="font-semibold text-sm" style={{ color: 'hsl(45 93% 47%)' }}>{formattedStars}</span>
                   <span className="text-xs text-muted-foreground">stars</span>
                 </div>
               </div>
@@ -294,9 +294,9 @@ export function GitSection({ children }: GitSectionProps) {
                 <div className="flex h-14 w-14 items-center justify-center rounded-2xl bg-primary/10 transition-all duration-500 group-hover:scale-110 group-hover:bg-primary/20">
                   <TerminalSquare className="w-7 h-7 text-primary" />
                 </div>
-                <div className="flex items-center gap-2 px-3 py-1.5 rounded-full backdrop-blur-md transition-all duration-300 hover:scale-105" style={{ backgroundColor: 'hsl(45 93% 47% / 0.08)' }}>
-                  <Download className="w-3.5 h-3.5" style={{ color: 'hsl(216 55% 25%)' }} />
-                  <span className="font-semibold text-sm" style={{ color: 'hsl(216 55% 25%)' }}>{formattedDownloads}</span>
+                <div className="flex items-center gap-2 px-3 py-1.5 rounded-full backdrop-blur-md transition-all duration-300 hover:scale-105" style={{ backgroundColor: 'hsl(45 93% 47% / 0.15)' }}>
+                  <Download className="w-3.5 h-3.5" style={{ color: 'hsl(45 93% 47%)' }} />
+                  <span className="font-semibold text-sm" style={{ color: 'hsl(45 93% 47%)' }}>{formattedDownloads}</span>
                   <span className="text-xs text-muted-foreground">/week</span>
                 </div>
               </div>
@@ -349,9 +349,9 @@ export function GitSection({ children }: GitSectionProps) {
             >
               <Github className="w-5 h-5 mr-2" aria-hidden="true" />
               <span>View on GitHub</span>
-              <div className="ml-2 flex items-center gap-1.5 px-2.5 py-1 rounded-full text-xs transition-all duration-300 hover:scale-105" style={{ backgroundColor: 'hsl(45 93% 47% / 0.08)' }}>
-                <Star className="w-3 h-3" style={{ fill: 'hsl(216 55% 25%)', color: 'hsl(216 55% 25%)' }} />
-                <span className="font-semibold" style={{ color: 'hsl(216 55% 25%)' }}>{stats.stars > 0 ? stats.stars.toLocaleString() : '—'}</span>
+              <div className="ml-2 flex items-center gap-1.5 px-2.5 py-1 rounded-full text-xs transition-all duration-300 hover:scale-105" style={{ backgroundColor: 'hsl(45 93% 47% / 0.15)' }}>
+                <Star className="w-3 h-3" style={{ fill: 'hsl(45 93% 47%)', color: 'hsl(45 93% 47%)' }} />
+                <span className="font-semibold" style={{ color: 'hsl(45 93% 47%)' }}>{stats.stars > 0 ? stats.stars.toLocaleString() : '—'}</span>
               </div>
             </Button>
           </a>
@@ -365,9 +365,9 @@ export function GitSection({ children }: GitSectionProps) {
             >
               <GitFork className="w-5 h-5 mr-2" aria-hidden="true" />
               <span>Fork</span>
-              <div className="ml-2 flex items-center gap-1 px-2 py-0.5 rounded-full bg-muted text-xs">
-                <GitFork className="w-3 h-3" style={{ color: 'hsl(216 55% 25%)' }} />
-                <span className="font-semibold" style={{ color: 'hsl(216 55% 25%)' }}>{stats.forks > 0 ? stats.forks.toLocaleString() : '—'}</span>
+              <div className="ml-2 flex items-center gap-1 px-2 py-0.5 rounded-full text-xs transition-all duration-300 hover:scale-105" style={{ backgroundColor: 'hsl(45 93% 47% / 0.15)' }}>
+                <GitFork className="w-3 h-3" style={{ color: 'hsl(45 93% 47%)' }} />
+                <span className="font-semibold" style={{ color: 'hsl(45 93% 47%)' }}>{stats.forks > 0 ? stats.forks.toLocaleString() : '—'}</span>
               </div>
             </Button>
           </a>
@@ -394,7 +394,7 @@ export function GitSection({ children }: GitSectionProps) {
         <div className="text-center py-4">
           <a href="/news/over-10000-installs" className="inline-block">
             <p className="text-2xl font-semibold text-foreground hover:opacity-80 transition-opacity">
-              Over <span style={{ color: 'hsl(216 55% 25%)' }}>10,000</span> Installs
+              Over <span style={{ color: 'hsl(45 93% 47%)' }}>10,000</span> Installs
             </p>
           </a>
         </div>
