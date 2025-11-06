@@ -196,7 +196,7 @@ export function GitSection({ children }: GitSectionProps) {
                 alt="ONE Logo"
                 width={400}
                 height={400}
-                fetchpriority="high"
+                fetchPriority="high"
                 loading="eager"
                 className="mx-auto w-full max-w-[400px] h-auto"
                 onError={() => setImageLoaded(false)}
