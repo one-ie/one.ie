@@ -1,3 +1,17 @@
+### **22aff091** — template:8 — `chore: Update .claude, one/, and web/ for Cycle 100 completion``
+
+**Template:**
+  - .claude/hooks.log
+  - .claude/settings.local.json
+  - .claude/state/cycle.json
+  - one/events/0-changes.md
+  - one/events/ACCESSIBILITY_CHECKLIST.md
+  - one/events/ACCESSIBILITY_FIXES_SUMMARY.md
+  - web/src/components/Sidebar.tsx
+  - web/src/pages/index.astro
+
+
+
 ### **ae3edde8** — template:43 — `chore: Complete Cycle 100 - Documentation and deployment artifacts``
 
 **Template:**
