@@ -49,7 +49,8 @@
       "Bash([ -d web ])",
       "Bash(git rm:*)",
       "WebFetch(domain:github.com)",
-      "Bash(git pull:*)"
+      "Bash(git pull:*)",
+      "Bash(./.claude/hooks/push.sh:*)"
     ],
     "deny": [],
     "ask": []

@@ -28,12 +28,12 @@ const currentSlug = Astro.url.pathname.replace(/^\/docs\//, '').replace(/\/$/, '
 ---
 
 <Layout title={title} description={description} sidebarInitialCollapsed={true}>
-  <div class="flex gap-0 h-full">
+  <div class="flex gap-0 w-full">
     {/* Left Sidebar */}
     <SidebarDocs client:only="react" entries={allDocs} currentSlug={currentSlug} />
 
     {/* Main Content Area - Three Column Layout */}
-    <div class="flex-1 overflow-y-auto bg-gradient-to-b from-background/95 to-background">
+    <div class="flex-1 bg-gradient-to-b from-background/95 to-background">
       <div class="mx-auto w-full px-4 sm:px-6 lg:px-8 py-8 sm:py-12">
         <div class="grid grid-cols-1 lg:grid-cols-4 gap-8 max-w-7xl mx-auto">
           {/* Center Content - 2 columns on lg screens */}

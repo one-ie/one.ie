@@ -2,7 +2,8 @@
 
 import { Card, CardContent, CardHeader, CardTitle, CardDescription } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
-import { ArrowRight, Zap } from 'lucide-react';
+import { ArrowRight, Zap, CheckCircle2, Clock } from 'lucide-react';
+import { useEffect, useState } from 'react';
 
 interface DeploymentStage {
   name: string;
@@ -10,7 +11,7 @@ interface DeploymentStage {
   description: string;
   files?: number | string;
   color: string;
-  bgColor: string;
+  iconGradient: string;
 }
 
 const stages: DeploymentStage[] = [
@@ -19,32 +20,32 @@ const stages: DeploymentStage[] = [
     duration: 14,
     description: 'Compile & optimize',
     files: '600+ files',
-    color: 'from-blue-600 to-blue-500',
-    bgColor: 'bg-blue-500/10',
+    color: 'from-blue-600 via-cyan-500 to-blue-500',
+    iconGradient: 'from-blue-500/20 via-cyan-500/10 to-transparent',
   },
   {
     name: 'Upload',
     duration: 4.5,
     description: 'Transfer assets',
     files: '665 assets',
-    color: 'from-purple-600 to-purple-500',
-    bgColor: 'bg-purple-500/10',
+    color: 'from-purple-600 via-pink-500 to-purple-500',
+    iconGradient: 'from-purple-500/20 via-pink-500/10 to-transparent',
   },
   {
     name: 'Deploy',
     duration: 0.5,
     description: 'Edge functions',
     files: 'Serverless',
-    color: 'from-green-600 to-green-500',
-    bgColor: 'bg-green-500/10',
+    color: 'from-green-600 via-emerald-500 to-green-500',
+    iconGradient: 'from-green-500/20 via-emerald-500/10 to-transparent',
   },
   {
     name: 'Replicate',
     duration: 0.8,
     description: 'Global propagation',
     files: '330+ edges',
-    color: 'from-orange-600 to-orange-500',
-    bgColor: 'bg-orange-500/10',
+    color: 'from-orange-600 via-red-500 to-orange-500',
+    iconGradient: 'from-orange-500/20 via-red-500/10 to-transparent',
   },
 ];
 
@@ -55,119 +56,257 @@ interface DeploymentSpeedProps {
   showDetails?: boolean;
   /** Timestamp for deployment */
   timestamp?: string;
+  /** Enable animations */
+  animate?: boolean;
+}
+
+function AnimatedStage({
+  stage,
+  index,
+  isActive,
+  isComplete,
+}: {
+  stage: DeploymentStage;
+  index: number;
+  isActive: boolean;
+  isComplete: boolean;
+}) {
+  return (
+    <div className="relative">
+      {/* Stage Card */}
+      <div
+        className={`relative overflow-hidden rounded-xl border-2 p-6 space-y-4 h-full transition-all duration-700 ${
+          isActive
+            ? 'border-primary shadow-2xl shadow-primary/50 scale-105'
+            : isComplete
+            ? 'border-green-500/50 bg-green-500/5'
+            : 'border-border/50 bg-card/30'
+        }`}
+      >
+        {/* Animated Background Gradient */}
+        <div
+          className={`absolute inset-0 bg-gradient-to-br ${stage.iconGradient} opacity-0 transition-opacity duration-700 ${
+            isActive ? 'opacity-100' : ''
+          }`}
+        />
+
+        {/* Glow Effect */}
+        {isActive && (
+          <div
+            className="absolute -inset-2 bg-gradient-to-r opacity-30 blur-2xl -z-10"
+            style={{
+              background: `linear-gradient(135deg, ${stage.color.includes('blue') ? '#3b82f6' : stage.color.includes('purple') ? '#a855f7' : stage.color.includes('green') ? '#22c55e' : '#f97316'}, transparent)`,
+            }}
+          />
+        )}
+
+        {/* Stage Number Badge */}
+        <div className="relative flex items-center justify-between">
+          <div
+            className={`flex h-14 w-14 items-center justify-center rounded-full bg-gradient-to-br ${stage.color} text-white text-lg font-black shadow-lg transition-all duration-500 ${
+              isActive ? 'scale-110 animate-pulse' : ''
+            }`}
+          >
+            {isComplete ? <CheckCircle2 className="h-7 w-7" /> : index + 1}
+          </div>
+
+          {/* Duration Badge */}
+          <Badge
+            variant="secondary"
+            className={`text-sm font-bold transition-all duration-500 ${
+              isActive ? 'scale-110 bg-primary/20 text-primary' : ''
+            }`}
+          >
+            <Clock className="h-3 w-3 mr-1" />
+            {stage.duration}s
+          </Badge>
+        </div>
+
+        {/* Stage Info */}
+        <div className="relative space-y-2 text-center">
+          <p className="font-bold text-lg">{stage.name}</p>
+          <p className="text-sm text-muted-foreground">{stage.description}</p>
+        </div>
+
+        {/* File Count */}
+        {stage.files && (
+          <div className="relative text-xs text-center text-muted-foreground bg-background/60 backdrop-blur-sm rounded-lg px-3 py-2 font-medium">
+            {stage.files}
+          </div>
+        )}
+
+        {/* Progress Indicator */}
+        <div className="relative">
+          <div className="h-2 bg-muted rounded-full overflow-hidden">
+            <div
+              className={`h-full bg-gradient-to-r ${stage.color} transition-all duration-1000 ease-out`}
+              style={{ width: isActive ? '100%' : isComplete ? '100%' : '0%' }}
+            />
+          </div>
+        </div>
+      </div>
+
+      {/* Arrow Connector */}
+      {index < stages.length - 1 && (
+        <div className="absolute -right-6 top-1/2 -translate-y-1/2 hidden md:block z-10">
+          <ArrowRight
+            className={`h-6 w-6 transition-all duration-500 ${
+              isComplete ? 'text-green-500' : isActive ? 'text-primary animate-pulse' : 'text-muted'
+            }`}
+          />
+        </div>
+      )}
+    </div>
+  );
 }
 
 export function DeploymentSpeed({
   showDetails = true,
   timestamp = 'Nov 6, 2025',
+  animate = true,
 }: DeploymentSpeedProps) {
+  const [activeStage, setActiveStage] = useState(-1);
+  const [completedStages, setCompletedStages] = useState<number[]>([]);
+
+  useEffect(() => {
+    if (!animate) {
+      setCompletedStages([0, 1, 2, 3]);
+      return;
+    }
+
+    let accumulatedTime = 0;
+    const timers: NodeJS.Timeout[] = [];
+
+    stages.forEach((stage, index) => {
+      // Start stage
+      timers.push(
+        setTimeout(() => {
+          setActiveStage(index);
+        }, accumulatedTime * 1000)
+      );
+
+      // Complete stage
+      accumulatedTime += stage.duration;
+      timers.push(
+        setTimeout(() => {
+          setCompletedStages((prev) => [...prev, index]);
+          setActiveStage(-1);
+        }, accumulatedTime * 1000)
+      );
+    });
+
+    return () => timers.forEach(clearTimeout);
+  }, [animate]);
+
   const getPercentage = (duration: number): number => {
     return (duration / totalTime) * 100;
   };
 
-  return (
-    <div className="w-full space-y-6">
-      {/* Main Speed Card */}
-      <Card className="relative overflow-hidden border-primary/20 bg-gradient-to-br from-primary/5 via-background to-background">
-        <div className="absolute -top-12 -right-12 h-32 w-32 bg-primary/10 rounded-full blur-3xl" />
+  const isStageActive = (index: number) => animate && activeStage === index;
+  const isStageComplete = (index: number) =>
+    !animate || completedStages.includes(index);
 
-        <CardHeader className="relative pb-4">
+  return (
+    <div className="w-full space-y-8">
+      {/* Main Speed Card */}
+      <Card className="relative overflow-hidden border-2 border-primary/30 bg-gradient-to-br from-primary/10 via-background to-background shadow-2xl">
+        {/* Animated Background Orbs */}
+        <div className="absolute -top-20 -right-20 h-40 w-40 bg-primary/20 rounded-full blur-3xl animate-pulse" />
+        <div className="absolute -bottom-20 -left-20 h-40 w-40 bg-purple-500/20 rounded-full blur-3xl animate-pulse delay-700" />
+
+        <CardHeader className="relative pb-6">
           <div className="flex items-start justify-between">
             <div>
-              <CardTitle className="text-2xl">37% Faster Deployments</CardTitle>
-              <CardDescription>4-stage pipeline optimized for speed</CardDescription>
+              <CardTitle className="text-3xl font-black bg-gradient-to-r from-primary via-purple-500 to-primary bg-clip-text text-transparent animate-gradient">
+                37% Faster Deployments
+              </CardTitle>
+              <CardDescription className="text-base mt-2">
+                4-stage pipeline optimized for blazing speed
+              </CardDescription>
             </div>
-            <Badge variant="secondary" className="text-sm">
-              <Zap className="h-3 w-3 mr-1" />
+            <Badge variant="secondary" className="text-sm font-bold bg-primary/20 text-primary">
+              <Zap className="h-4 w-4 mr-1 animate-pulse" />
               Lightning Fast
             </Badge>
           </div>
         </CardHeader>
 
         <CardContent className="relative space-y-8">
-          {/* Stages Grid */}
-          <div className="grid gap-4 md:grid-cols-4">
+          {/* Animated Stages Grid */}
+          <div className="grid gap-6 md:grid-cols-4">
             {stages.map((stage, idx) => (
-              <div key={idx} className="relative">
-                {/* Stage Card */}
-                <div className={`${stage.bgColor} rounded-lg border border-primary/10 p-4 space-y-3 h-full`}>
-                  {/* Duration Circle */}
-                  <div className="flex items-center justify-center h-14 w-14 mx-auto rounded-full bg-gradient-to-br from-white/20 to-white/5 border border-white/20">
-                    <span className="text-lg font-bold text-foreground">{stage.duration}s</span>
-                  </div>
-
-                  {/* Stage Info */}
-                  <div className="space-y-1 text-center">
-                    <p className="font-semibold text-sm">{stage.name}</p>
-                    <p className="text-xs text-muted-foreground">{stage.description}</p>
-                  </div>
-
-                  {/* File Count */}
-                  {stage.files && (
-                    <div className="text-xs text-center text-muted-foreground bg-background/50 rounded px-2 py-1">
-                      {stage.files}
-                    </div>
-                  )}
-
-                  {/* Percentage */}
-                  <div className="text-xs text-center font-medium text-primary">
-                    {getPercentage(stage.duration).toFixed(0)}%
-                  </div>
-                </div>
-
-                {/* Arrow Connector */}
-                {idx < stages.length - 1 && (
-                  <div className="absolute -right-6 top-1/2 -translate-y-1/2 hidden md:block">
-                    <ArrowRight className="h-5 w-5 text-primary/30" />
-                  </div>
-                )}
-              </div>
+              <AnimatedStage
+                key={idx}
+                stage={stage}
+                index={idx}
+                isActive={isStageActive(idx)}
+                isComplete={isStageComplete(idx)}
+              />
             ))}
           </div>
 
-          {/* Progress Bar Visualization */}
-          <div className="space-y-3">
-            <h4 className="text-sm font-semibold">Pipeline Timeline</h4>
-            <div className="flex h-3 w-full overflow-hidden rounded-full bg-muted gap-0.5">
+          {/* Enhanced Progress Bar Timeline */}
+          <div className="space-y-4">
+            <h4 className="text-sm font-bold flex items-center gap-2">
+              <span className="h-2 w-2 rounded-full bg-primary animate-pulse" />
+              Pipeline Timeline
+            </h4>
+
+            {/* Main Progress Bar */}
+            <div className="relative h-4 w-full overflow-hidden rounded-full bg-muted shadow-inner">
               {stages.map((stage, idx) => (
                 <div
                   key={idx}
-                  className={`bg-gradient-to-r ${stage.color}`}
-                  style={{ width: `${getPercentage(stage.duration)}%` }}
-                  title={`${stage.name}: ${stage.duration}s`}
+                  className={`absolute h-full bg-gradient-to-r ${stage.color} transition-all duration-1000 ease-out shadow-lg`}
+                  style={{
+                    left: `${stages
+                      .slice(0, idx)
+                      .reduce((sum, s) => sum + getPercentage(s.duration), 0)}%`,
+                    width: `${getPercentage(stage.duration)}%`,
+                    transform: isStageComplete(idx) ? 'scaleX(1)' : 'scaleX(0)',
+                    transformOrigin: 'left',
+                  }}
                 />
               ))}
             </div>
 
-            <div className="flex justify-between items-center text-xs text-muted-foreground">
-              <span>0s</span>
-              <span className="font-semibold text-foreground">{totalTime}s total</span>
-              <span>100%</span>
+            <div className="flex justify-between items-center text-sm font-medium">
+              <span className="text-muted-foreground">0s</span>
+              <span className="text-primary font-bold text-lg">{totalTime}s total</span>
+              <span className="text-green-600">100%</span>
             </div>
           </div>
 
-          {/* Live Status */}
-          <div className="rounded-lg border border-green-500/30 bg-green-500/10 p-4 flex items-center gap-3">
-            <div className="h-2.5 w-2.5 rounded-full bg-green-500 animate-pulse" />
+          {/* Live Status with Pulse */}
+          <div className="rounded-xl border-2 border-green-500/50 bg-gradient-to-br from-green-500/20 via-emerald-500/10 to-transparent p-6 flex items-center gap-4 shadow-lg shadow-green-500/20">
+            <div className="relative">
+              <div className="h-4 w-4 rounded-full bg-green-500 animate-ping absolute" />
+              <div className="h-4 w-4 rounded-full bg-green-500" />
+            </div>
+
             <div className="flex-1">
-              <p className="text-sm font-semibold text-green-700 dark:text-green-400">
-                Live at oneie.pages.dev
+              <p className="text-lg font-black text-green-700 dark:text-green-400">
+                ✓ Live at oneie.pages.dev
               </p>
-              <p className="text-xs text-green-600 dark:text-green-400/80">
-                Deployed {timestamp}
+              <p className="text-sm text-green-600 dark:text-green-400/80">
+                Deployed {timestamp} • All systems operational
               </p>
             </div>
-            <Badge variant="outline" className="text-xs">
+
+            <Badge className="bg-green-500/20 text-green-700 dark:text-green-400 border-green-500/50 text-sm font-bold">
               Active
             </Badge>
           </div>
 
-          {/* Cost Breakdown */}
-          <div className="rounded-lg border border-primary/20 bg-primary/5 p-4">
-            <p className="text-xs text-muted-foreground mb-2">Deployment Cost</p>
-            <p className="text-2xl font-bold text-primary">$0.00</p>
-            <p className="text-xs text-muted-foreground mt-1">
-              Unlimited deployments. Completely free.
+          {/* Cost Breakdown with Shimmer */}
+          <div className="relative overflow-hidden rounded-xl border-2 border-primary/30 bg-gradient-to-br from-primary/10 to-transparent p-6 group">
+            {/* Shimmer Effect */}
+            <div className="absolute inset-0 -translate-x-full group-hover:translate-x-full transition-transform duration-1000 bg-gradient-to-r from-transparent via-white/10 to-transparent" />
+
+            <p className="text-sm text-muted-foreground mb-2 font-medium">Deployment Cost</p>
+            <p className="text-4xl font-black text-primary mb-2">$0.00</p>
+            <p className="text-sm text-muted-foreground">
+              Unlimited deployments. <span className="font-bold text-green-600">Completely free.</span>
             </p>
           </div>
         </CardContent>
@@ -175,60 +314,69 @@ export function DeploymentSpeed({
 
       {/* Detailed Breakdown */}
       {showDetails && (
-        <Card className="border-border/50 bg-card/50 backdrop-blur">
+        <Card className="border-border/50 bg-card/50 backdrop-blur-xl shadow-xl">
           <CardHeader>
-            <CardTitle className="text-lg">Stage Details</CardTitle>
+            <CardTitle className="text-xl font-bold">Stage Details</CardTitle>
+            <CardDescription>Deep dive into each deployment phase</CardDescription>
           </CardHeader>
 
           <CardContent>
-            <div className="space-y-4">
+            <div className="space-y-6">
               {stages.map((stage, idx) => (
                 <div
                   key={idx}
-                  className="flex items-start gap-4 pb-4 border-b border-border/50 last:border-0"
+                  className={`flex items-start gap-6 pb-6 border-b border-border/50 last:border-0 transition-all duration-500 hover:bg-primary/5 rounded-lg p-4 ${
+                    isStageComplete(idx) ? 'opacity-100' : 'opacity-50'
+                  }`}
                 >
+                  {/* Stage Icon */}
                   <div
-                    className={`flex h-10 w-10 items-center justify-center rounded-lg bg-gradient-to-br ${stage.color} text-white text-sm font-bold flex-shrink-0`}
+                    className={`flex h-14 w-14 items-center justify-center rounded-xl bg-gradient-to-br ${stage.color} text-white text-lg font-black flex-shrink-0 shadow-lg hover:scale-110 transition-transform duration-300`}
                   >
-                    {idx + 1}
+                    {isStageComplete(idx) ? <CheckCircle2 className="h-7 w-7" /> : idx + 1}
                   </div>
 
-                  <div className="flex-1 space-y-1">
-                    <div className="flex items-baseline gap-2">
-                      <p className="font-semibold">{stage.name}</p>
-                      <p className="text-sm text-primary font-bold">{stage.duration}s</p>
+                  {/* Stage Info */}
+                  <div className="flex-1 space-y-2">
+                    <div className="flex items-baseline gap-3">
+                      <p className="font-bold text-lg">{stage.name}</p>
+                      <p className="text-base text-primary font-black">{stage.duration}s</p>
                     </div>
                     <p className="text-sm text-muted-foreground">{stage.description}</p>
                     {stage.files && (
-                      <p className="text-xs text-muted-foreground">
+                      <p className="text-xs text-muted-foreground font-medium bg-muted/50 rounded px-2 py-1 inline-block">
                         {stage.files}
                       </p>
                     )}
                   </div>
 
-                  {/* Small Progress Bar */}
-                  <div className="w-24 h-2 bg-muted rounded-full overflow-hidden flex-shrink-0">
+                  {/* Mini Progress Bar */}
+                  <div className="w-32 h-3 bg-muted rounded-full overflow-hidden flex-shrink-0 shadow-inner">
                     <div
-                      className={`h-full bg-gradient-to-r ${stage.color}`}
-                      style={{ width: `${Math.min((stage.duration / 15) * 100, 100)}%` }}
+                      className={`h-full bg-gradient-to-r ${stage.color} transition-all duration-1000 ease-out shadow-lg`}
+                      style={{
+                        width: `${Math.min((stage.duration / 15) * 100, 100)}%`,
+                        transform: isStageComplete(idx) ? 'scaleX(1)' : 'scaleX(0)',
+                        transformOrigin: 'left',
+                      }}
                     />
                   </div>
                 </div>
               ))}
 
               {/* Summary Stats */}
-              <div className="grid gap-4 md:grid-cols-3 pt-4 border-t border-border/50">
-                <div className="space-y-1">
-                  <p className="text-xs text-muted-foreground">Total Time</p>
-                  <p className="text-2xl font-bold text-primary">{totalTime}s</p>
+              <div className="grid gap-6 md:grid-cols-3 pt-6 border-t-2 border-primary/20">
+                <div className="space-y-2 text-center p-4 rounded-xl bg-gradient-to-br from-primary/10 to-transparent">
+                  <p className="text-sm text-muted-foreground font-medium">Total Time</p>
+                  <p className="text-4xl font-black text-primary">{totalTime}s</p>
                 </div>
-                <div className="space-y-1">
-                  <p className="text-xs text-muted-foreground">Files Processed</p>
-                  <p className="text-2xl font-bold">1,265+</p>
+                <div className="space-y-2 text-center p-4 rounded-xl bg-gradient-to-br from-purple-500/10 to-transparent">
+                  <p className="text-sm text-muted-foreground font-medium">Files Processed</p>
+                  <p className="text-4xl font-black text-purple-600 dark:text-purple-400">1,265+</p>
                 </div>
-                <div className="space-y-1">
-                  <p className="text-xs text-muted-foreground">Improvement</p>
-                  <p className="text-2xl font-bold text-green-600">37% ↓</p>
+                <div className="space-y-2 text-center p-4 rounded-xl bg-gradient-to-br from-green-500/10 to-transparent">
+                  <p className="text-sm text-muted-foreground font-medium">Speed Improvement</p>
+                  <p className="text-4xl font-black text-green-600">37% ↓</p>
                 </div>
               </div>
             </div>

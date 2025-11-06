@@ -70,6 +70,11 @@ The ONE frontend is **purely a rendering and interaction layer** with zero busin
 - **Better Auth** - Multi-method authentication
 - **TypeScript 5.9+** - End-to-end type safety (strict mode)
 
+**Design System:**
+- **Design:** See `one/knowledge/develop/design.md` for complete design tokens, guidelines, and implementation playbook
+- **Design Patterns:** See `one/knowledge/patterns/design/` for reusable wireframe and component patterns
+- **Agent Coordination:** See `.claude/agents/agent-designer.md` for design specification and QA workflows
+
 ---
 
 ## Table of Contents

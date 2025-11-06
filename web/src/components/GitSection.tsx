@@ -187,10 +187,10 @@ export function GitSection({ children }: GitSectionProps) {
                   Get the latest code as a ZIP archive. No Git required.
                 </p>
               </div>
-              <a href={DOWNLOAD_URL} className="block">
-                <Button className="w-full group/btn relative overflow-hidden" size="lg">
+              <a href={DOWNLOAD_URL} className="block" aria-label="Download ONE as ZIP file">
+                <Button className="w-full group/btn relative overflow-hidden" size="lg" aria-label="Download ONE as ZIP file">
                   <span className="relative z-10 flex items-center justify-center gap-2">
-                    <Download className="w-4 h-4 transition-transform group-hover/btn:translate-y-0.5" />
+                    <Download className="w-4 h-4 transition-transform group-hover/btn:translate-y-0.5" aria-hidden="true" />
                     Download ZIP
                   </span>
                   <div className="absolute inset-0 opacity-0 group-hover/btn:opacity-100 transition-opacity duration-300" style={{ background: 'linear-gradient(90deg, transparent, hsl(45 93% 47% / 0.1), transparent)' }} />
@@ -208,9 +208,9 @@ export function GitSection({ children }: GitSectionProps) {
                   <Code className="w-7 h-7 text-primary" />
                 </div>
                 <div className="flex items-center gap-2 px-3 py-1.5 rounded-full backdrop-blur-md transition-all duration-300 hover:scale-105" style={{ backgroundColor: 'hsl(45 93% 47% / 0.08)' }}>
-                  <Star className="w-3.5 h-3.5" style={{ fill: 'hsl(45 93% 47% / 0.9)', color: 'hsl(45 93% 47% / 0.9)' }} />
-                  <span className="font-semibold text-sm" style={{ color: 'hsl(45 93% 47%)' }}>{formattedStars}</span>
-                  <span className="text-xs opacity-60">stars</span>
+                  <Star className="w-3.5 h-3.5" style={{ fill: 'hsl(216 55% 25%)', color: 'hsl(216 55% 25%)' }} />
+                  <span className="font-semibold text-sm" style={{ color: 'hsl(216 55% 25%)' }}>{formattedStars}</span>
+                  <span className="text-xs text-muted-foreground">stars</span>
                 </div>
               </div>
               <div className="space-y-3">
@@ -224,15 +224,15 @@ export function GitSection({ children }: GitSectionProps) {
                   variant="outline"
                   className="w-full font-mono text-sm justify-start hover:border-primary/40 transition-all duration-300 group/btn"
                   onClick={() => copyCommand(`git clone ${GITHUB_URL}.git`, 'git')}
+                  aria-label="Copy git clone command"
                 >
-                  <Code className="mr-2 h-4 w-4 shrink-0 transition-transform group-hover/btn:scale-110" />
+                  <Code className="mr-2 h-4 w-4 shrink-0 transition-transform group-hover/btn:scale-110" aria-hidden="true" />
                   <span className="truncate">github.com/{GITHUB_REPO}</span>
                 </Button>
                 <p
-                  className={`absolute -bottom-6 left-0 text-xs transition-opacity duration-200 ${
+                  className={`absolute -bottom-6 left-0 text-xs text-primary transition-opacity duration-200 ${
                     copied === 'git' ? 'opacity-100' : 'opacity-0'
                   }`}
-                  style={{ color: 'hsl(45 93% 47%)' }}
                 >
                   ✓ Copied!
                 </p>
@@ -249,9 +249,9 @@ export function GitSection({ children }: GitSectionProps) {
                   <TerminalSquare className="w-7 h-7 text-primary" />
                 </div>
                 <div className="flex items-center gap-2 px-3 py-1.5 rounded-full backdrop-blur-md transition-all duration-300 hover:scale-105" style={{ backgroundColor: 'hsl(45 93% 47% / 0.08)' }}>
-                  <Download className="w-3.5 h-3.5" style={{ color: 'hsl(45 93% 47% / 0.9)' }} />
-                  <span className="font-semibold text-sm" style={{ color: 'hsl(45 93% 47%)' }}>{formattedDownloads}</span>
-                  <span className="text-xs opacity-60">/week</span>
+                  <Download className="w-3.5 h-3.5" style={{ color: 'hsl(216 55% 25%)' }} />
+                  <span className="font-semibold text-sm" style={{ color: 'hsl(216 55% 25%)' }}>{formattedDownloads}</span>
+                  <span className="text-xs text-muted-foreground">/week</span>
                 </div>
               </div>
               <div className="space-y-3">
@@ -264,6 +264,7 @@ export function GitSection({ children }: GitSectionProps) {
                 <Button
                   className="w-full font-mono text-sm transition-all duration-300 group/btn shadow-lg hover:shadow-xl"
                   onClick={() => copyCommand(`npx ${NPM_PACKAGE}`, 'npx')}
+                  aria-label="Copy npx command to start a new project"
                   style={{
                     backgroundColor: 'hsl(216 55% 25%)',
                     color: 'hsl(36 8% 96%)',
@@ -276,14 +277,13 @@ export function GitSection({ children }: GitSectionProps) {
                     e.currentTarget.style.backgroundColor = 'hsl(216 55% 25%)';
                   }}
                 >
-                  <TerminalSquare className="mr-2 h-4 w-4 transition-transform group-hover/btn:scale-110" />
+                  <TerminalSquare className="mr-2 h-4 w-4 transition-transform group-hover/btn:scale-110" aria-hidden="true" />
                   npx {NPM_PACKAGE}
                 </Button>
                 <p
-                  className={`absolute -bottom-6 left-0 text-xs transition-opacity duration-200 ${
+                  className={`absolute -bottom-6 left-0 text-xs text-primary transition-opacity duration-200 ${
                     copied === 'npx' ? 'opacity-100' : 'opacity-0'
                   }`}
-                  style={{ color: 'hsl(45 93% 47%)' }}
                 >
                   ✓ Copied!
                 </p>
@@ -294,32 +294,34 @@ export function GitSection({ children }: GitSectionProps) {
 
         {/* Secondary Actions */}
         <div className="flex flex-wrap items-center justify-center gap-4">
-          <a href={GITHUB_URL} target="_blank" rel="noopener noreferrer">
+          <a href={GITHUB_URL} target="_blank" rel="noopener noreferrer" aria-label="View ONE repository on GitHub">
             <Button
               variant="outline"
               size="lg"
               className="group hover:border-primary/40 hover:bg-primary/5"
+              aria-label="View ONE repository on GitHub"
             >
-              <Github className="w-5 h-5 mr-2" />
+              <Github className="w-5 h-5 mr-2" aria-hidden="true" />
               <span>View on GitHub</span>
               <div className="ml-2 flex items-center gap-1.5 px-2.5 py-1 rounded-full text-xs transition-all duration-300 hover:scale-105" style={{ backgroundColor: 'hsl(45 93% 47% / 0.08)' }}>
-                <Star className="w-3 h-3" style={{ fill: 'hsl(45 93% 47% / 0.9)', color: 'hsl(45 93% 47% / 0.9)' }} />
-                <span className="font-semibold" style={{ color: 'hsl(45 93% 47%)' }}>{stats.stars > 0 ? stats.stars.toLocaleString() : '—'}</span>
+                <Star className="w-3 h-3" style={{ fill: 'hsl(216 55% 25%)', color: 'hsl(216 55% 25%)' }} />
+                <span className="font-semibold" style={{ color: 'hsl(216 55% 25%)' }}>{stats.stars > 0 ? stats.stars.toLocaleString() : '—'}</span>
               </div>
             </Button>
           </a>
 
-          <a href={`${GITHUB_URL}/fork`} target="_blank" rel="noopener noreferrer">
+          <a href={`${GITHUB_URL}/fork`} target="_blank" rel="noopener noreferrer" aria-label="Fork ONE repository on GitHub">
             <Button
               variant="outline"
               size="lg"
               className="group hover:border-primary/40 hover:bg-primary/5"
+              aria-label="Fork ONE repository on GitHub"
             >
-              <GitFork className="w-5 h-5 mr-2" />
+              <GitFork className="w-5 h-5 mr-2" aria-hidden="true" />
               <span>Fork</span>
               <div className="ml-2 flex items-center gap-1 px-2 py-0.5 rounded-full bg-muted text-xs">
-                <GitFork className="w-3 h-3" style={{ color: 'hsl(45 93% 47%)' }} />
-                <span className="font-semibold" style={{ color: 'hsl(45 93% 47%)' }}>{stats.forks > 0 ? stats.forks.toLocaleString() : '—'}</span>
+                <GitFork className="w-3 h-3" style={{ color: 'hsl(216 55% 25%)' }} />
+                <span className="font-semibold" style={{ color: 'hsl(216 55% 25%)' }}>{stats.forks > 0 ? stats.forks.toLocaleString() : '—'}</span>
               </div>
             </Button>
           </a>
@@ -328,13 +330,15 @@ export function GitSection({ children }: GitSectionProps) {
             href={`https://github.com/codespaces/new?hide_repo_select=true&ref=main&repo=${GITHUB_REPO}`}
             target="_blank"
             rel="noopener noreferrer"
+            aria-label="Open ONE in GitHub Codespaces"
           >
             <Button
               variant="outline"
               size="lg"
               className="group hover:border-primary/40 hover:bg-primary/5"
+              aria-label="Open ONE in GitHub Codespaces"
             >
-              <CloudCog className="w-5 h-5 mr-2" />
+              <CloudCog className="w-5 h-5 mr-2" aria-hidden="true" />
               <span>Open in Codespaces</span>
             </Button>
           </a>
@@ -344,7 +348,7 @@ export function GitSection({ children }: GitSectionProps) {
         <div className="text-center py-4">
           <a href="/news/over-10000-installs" className="inline-block">
             <p className="text-2xl font-semibold text-foreground hover:opacity-80 transition-opacity">
-              Over <span style={{ color: 'hsl(45 93% 47%)' }}>10,000</span> Installs
+              Over <span style={{ color: 'hsl(216 55% 25%)' }}>10,000</span> Installs
             </p>
           </a>
         </div>

@@ -311,6 +311,7 @@ watchFor('tests_ready_for_*', 'quality/*', (event) => {
 - Design patterns (layout patterns, component patterns)
 - Previous designs (similar features, proven solutions)
 - Accessibility guidelines (WCAG best practices)
+- **PRIMARY REFERENCE:** `one/knowledge/develop/design.md` - Complete design system specification with tokens, guidelines, and implementation patterns
 
 **From Workflow Events (ontology dimension 5):**
 - `entity_created` event (tests defined, ready for design) with metadata.stage: "4_tests"
