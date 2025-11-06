@@ -57,6 +57,7 @@ const navItems: NavItem[] = [
   { title: 'Docs', url: '/docs', icon: FileText },
   { title: 'Download', url: '/download', icon: Download },
   { title: 'Deploy', url: '/deploy', icon: Rocket },
+  { title: 'Credits', url: '/credits', icon: Github },
   { title: 'License', url: '/free-license', icon: Shield },
 ]
 
