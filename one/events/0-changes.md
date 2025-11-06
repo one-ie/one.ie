@@ -1,3 +1,32 @@
+### **bf748a04** — template:20 custom:1 — `chore: Update commands, documentation, and news content`` [customization]
+
+**Template:**
+  - .claude/COMMANDS_ARCHITECTURE.md
+  - .claude/OPTIMIZATION_SUMMARY.md
+  - .claude/QUICK_REFERENCE.md
+  - .claude/commands/npx.md
+  - .claude/commands/one.md
+  - .claude/hooks.log
+  - .claude/hooks/__pycache__/todo.cpython-313.pyc
+  - .claude/state/cycle.json
+  - one/events/0-changes.md
+  - web/src/components/DownloadSection.astro
+  - web/src/components/GitSection.tsx
+  - web/src/components/docs/SidebarDocs.tsx
+  - web/src/content/news/2025-11-06-agent-ops-optimization.md
+  - web/src/content/news/deployment-metrics.md
+  - web/src/content/news/over-10000-installs.md
+  - web/src/content/news/over-10000-users.md
+  - web/src/content/news/successful-deployment-to-cloudflare.md
+  - web/src/layouts/DocsDetail.astro
+  - web/src/pages/docs/[...slug].astro
+  - web/src/pages/index.astro
+
+**Your Changes:**
+  - .mcp.json.backup
+
+
+
 ### **685dc5f3** — template:1 — `news: Document agent-ops optimization, mcp-on script, and deployment improvements``
 
 **Template:**

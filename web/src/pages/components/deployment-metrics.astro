@@ -1,0 +1,384 @@
+---
+import Layout from '../../layouts/Layout.astro';
+import { Badge } from '@/components/ui/badge';
+import { PricingComparison } from '@/components/charts/PricingComparison';
+import { DeploymentSpeed } from '@/components/charts/DeploymentSpeed';
+import { PerformanceMetrics } from '@/components/charts/PerformanceMetrics';
+import { IncludedFeatures } from '@/components/charts/IncludedFeatures';
+import { Code, Zap } from 'lucide-react';
+---
+
+<Layout title="Deployment Metrics - Chart Components Demo" sidebarInitialCollapsed={true}>
+  <div class="min-h-screen px-4 py-12 sm:px-6 md:px-8">
+    <div class="mx-auto max-w-7xl space-y-16">
+      {/* Header Section */}
+      <div class="space-y-6 text-center">
+        <Badge variant="secondary" className="inline-flex items-center gap-2 text-base font-medium px-6 py-2">
+          <Zap className="h-5 w-5" />
+          Component Gallery
+        </Badge>
+
+        <h1 class="text-5xl font-bold tracking-tight sm:text-6xl">
+          Deployment Metrics
+          <br />
+          <span class="text-primary">Chart Components</span>
+        </h1>
+
+        <p class="mx-auto max-w-3xl text-xl leading-relaxed text-muted-foreground">
+          Beautiful, high-converting React chart components for showcasing deployment and performance metrics.
+          <br />
+          <strong class="text-foreground">Zero dependencies. Fully typed. Production ready.</strong>
+        </p>
+      </div>
+
+      {/* Component 1: Performance Metrics */}
+      <section class="space-y-6">
+        <div class="space-y-2">
+          <h2 class="text-3xl font-bold tracking-tight">1. Performance Metrics</h2>
+          <p class="text-muted-foreground">
+            4-card layout showing deploy speed, global latency, lighthouse scores, and monthly cost.
+          </p>
+        </div>
+
+        <div class="rounded-xl border border-border/50 bg-card/50 backdrop-blur p-8">
+          <PerformanceMetrics client:load columns={2} />
+        </div>
+
+        <div class="rounded-lg border border-border/50 bg-background/50 p-4">
+          <div class="flex items-start gap-2 text-sm">
+            <Code className="h-5 w-5 text-primary flex-shrink-0 mt-0.5" />
+            <pre class="overflow-x-auto flex-1"><code>{`import { PerformanceMetrics } from '@/components/charts/PerformanceMetrics';
+
+export default function Page() {
+  return (
+    <PerformanceMetrics
+      columns={2}
+      showDescriptions={true}
+    />
+  );
+}`}</code></pre>
+          </div>
+        </div>
+      </section>
+
+      {/* Component 2: Deployment Speed */}
+      <section class="space-y-6">
+        <div class="space-y-2">
+          <h2 class="text-3xl font-bold tracking-tight">2. Deployment Speed</h2>
+          <p class="text-muted-foreground">
+            4-stage deployment pipeline visualization with detailed breakdown and live status.
+          </p>
+        </div>
+
+        <div class="rounded-xl border border-border/50 bg-card/50 backdrop-blur p-8">
+          <DeploymentSpeed client:load timestamp="Nov 6, 2025" />
+        </div>
+
+        <div class="rounded-lg border border-border/50 bg-background/50 p-4">
+          <div class="flex items-start gap-2 text-sm">
+            <Code className="h-5 w-5 text-primary flex-shrink-0 mt-0.5" />
+            <pre class="overflow-x-auto flex-1"><code>{`import { DeploymentSpeed } from '@/components/charts/DeploymentSpeed';
+
+export default function Page() {
+  return (
+    <DeploymentSpeed
+      showDetails={true}
+      timestamp="Nov 6, 2025"
+    />
+  );
+}`}</code></pre>
+          </div>
+        </div>
+      </section>
+
+      {/* Component 3: Pricing Comparison */}
+      <section class="space-y-6">
+        <div class="space-y-2">
+          <h2 class="text-3xl font-bold tracking-tight">3. Pricing Comparison</h2>
+          <p class="text-muted-foreground">
+            Side-by-side comparison showing FREE pricing vs $229-350 competitors with feature breakdown.
+          </p>
+        </div>
+
+        <div class="rounded-xl border border-border/50 bg-card/50 backdrop-blur p-8">
+          <PricingComparison client:load showDetails={true} />
+        </div>
+
+        <div class="rounded-lg border border-border/50 bg-background/50 p-4">
+          <div class="flex items-start gap-2 text-sm">
+            <Code className="h-5 w-5 text-primary flex-shrink-0 mt-0.5" />
+            <pre class="overflow-x-auto flex-1"><code>{`import { PricingComparison } from '@/components/charts/PricingComparison';
+
+export default function Page() {
+  return (
+    <PricingComparison
+      showDetails={true}
+    />
+  );
+}`}</code></pre>
+          </div>
+        </div>
+      </section>
+
+      {/* Component 4: Included Features */}
+      <section class="space-y-6">
+        <div class="space-y-2">
+          <h2 class="text-3xl font-bold tracking-tight">4. Included Features</h2>
+          <p class="text-muted-foreground">
+            Feature grid with free tier breakdown and annual savings calculation.
+          </p>
+        </div>
+
+        <div class="rounded-xl border border-border/50 bg-card/50 backdrop-blur p-8">
+          <IncludedFeatures client:load columns={3} showDescriptions={true} />
+        </div>
+
+        <div class="rounded-lg border border-border/50 bg-background/50 p-4">
+          <div class="flex items-start gap-2 text-sm">
+            <Code className="h-5 w-5 text-primary flex-shrink-0 mt-0.5" />
+            <pre class="overflow-x-auto flex-1"><code>{`import { IncludedFeatures } from '@/components/charts/IncludedFeatures';
+
+export default function Page() {
+  return (
+    <IncludedFeatures
+      columns={3}
+      showDescriptions={true}
+      showFooter={true}
+    />
+  );
+}`}</code></pre>
+          </div>
+        </div>
+      </section>
+
+      {/* Component Specifications */}
+      <section class="space-y-6 border-t border-border/50 pt-12">
+        <h2 class="text-3xl font-bold tracking-tight">Component Specifications</h2>
+
+        <div class="grid gap-6 md:grid-cols-2">
+          {/* PerformanceMetrics */}
+          <div class="rounded-lg border border-border/50 bg-card/50 backdrop-blur p-6 space-y-4">
+            <h3 class="font-bold text-lg">PerformanceMetrics</h3>
+            <div class="space-y-3 text-sm">
+              <div>
+                <p class="font-semibold text-foreground">Props</p>
+                <pre class="text-xs bg-background/50 p-2 rounded mt-1 overflow-x-auto"><code>{`columns?: 1 | 2 | 3 | 4
+showDescriptions?: boolean`}</code></pre>
+              </div>
+              <div>
+                <p class="font-semibold text-foreground">Size</p>
+                <p class="text-muted-foreground">~2.8 KB gzipped</p>
+              </div>
+              <div>
+                <p class="font-semibold text-foreground">Dependencies</p>
+                <p class="text-muted-foreground">shadcn/ui, lucide-react</p>
+              </div>
+              <div>
+                <p class="font-semibold text-foreground">Best For</p>
+                <p class="text-muted-foreground">Above-the-fold hero metrics</p>
+              </div>
+            </div>
+          </div>
+
+          {/* DeploymentSpeed */}
+          <div class="rounded-lg border border-border/50 bg-card/50 backdrop-blur p-6 space-y-4">
+            <h3 class="font-bold text-lg">DeploymentSpeed</h3>
+            <div class="space-y-3 text-sm">
+              <div>
+                <p class="font-semibold text-foreground">Props</p>
+                <pre class="text-xs bg-background/50 p-2 rounded mt-1 overflow-x-auto"><code>{`showDetails?: boolean
+timestamp?: string`}</code></pre>
+              </div>
+              <div>
+                <p class="font-semibold text-foreground">Size</p>
+                <p class="text-muted-foreground">~3.2 KB gzipped</p>
+              </div>
+              <div>
+                <p class="font-semibold text-foreground">Dependencies</p>
+                <p class="text-muted-foreground">shadcn/ui, lucide-react</p>
+              </div>
+              <div>
+                <p class="font-semibold text-foreground">Best For</p>
+                <p class="text-muted-foreground">Pipeline visualization</p>
+              </div>
+            </div>
+          </div>
+
+          {/* PricingComparison */}
+          <div class="rounded-lg border border-border/50 bg-card/50 backdrop-blur p-6 space-y-4">
+            <h3 class="font-bold text-lg">PricingComparison</h3>
+            <div class="space-y-3 text-sm">
+              <div>
+                <p class="font-semibold text-foreground">Props</p>
+                <pre class="text-xs bg-background/50 p-2 rounded mt-1 overflow-x-auto"><code>{`showDetails?: boolean`}</code></pre>
+              </div>
+              <div>
+                <p class="font-semibold text-foreground">Size</p>
+                <p class="text-muted-foreground">~2.5 KB gzipped</p>
+              </div>
+              <div>
+                <p class="font-semibold text-foreground">Dependencies</p>
+                <p class="text-muted-foreground">shadcn/ui, lucide-react</p>
+              </div>
+              <div>
+                <p class="font-semibold text-foreground">Best For</p>
+                <p class="text-muted-foreground">Pricing pages, comparisons</p>
+              </div>
+            </div>
+          </div>
+
+          {/* IncludedFeatures */}
+          <div class="rounded-lg border border-border/50 bg-card/50 backdrop-blur p-6 space-y-4">
+            <h3 class="font-bold text-lg">IncludedFeatures</h3>
+            <div class="space-y-3 text-sm">
+              <div>
+                <p class="font-semibold text-foreground">Props</p>
+                <pre class="text-xs bg-background/50 p-2 rounded mt-1 overflow-x-auto"><code>{`columns?: 1 | 2 | 3
+showFooter?: boolean
+showDescriptions?: boolean`}</code></pre>
+              </div>
+              <div>
+                <p class="font-semibold text-foreground">Size</p>
+                <p class="text-muted-foreground">~3.1 KB gzipped</p>
+              </div>
+              <div>
+                <p class="font-semibold text-foreground">Dependencies</p>
+                <p class="text-muted-foreground">shadcn/ui, lucide-react</p>
+              </div>
+              <div>
+                <p class="font-semibold text-foreground">Best For</p>
+                <p class="text-muted-foreground">Feature lists, pricing breakdown</p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* Features Overview */}
+      <section class="space-y-6 border-t border-border/50 pt-12">
+        <h2 class="text-3xl font-bold tracking-tight">Features</h2>
+
+        <div class="grid gap-6 md:grid-cols-2">
+          <div class="space-y-4">
+            <h3 class="font-semibold text-lg">Design</h3>
+            <ul class="space-y-2 text-sm text-muted-foreground">
+              <li class="flex items-center gap-2">
+                <span class="text-primary">✓</span>
+                Premium gradients & animations
+              </li>
+              <li class="flex items-center gap-2">
+                <span class="text-primary">✓</span>
+                Dark mode support built-in
+              </li>
+              <li class="flex items-center gap-2">
+                <span class="text-primary">✓</span>
+                Tailwind v4 CSS variables
+              </li>
+              <li class="flex items-center gap-2">
+                <span class="text-primary">✓</span>
+                Accessible WCAG 2.1 AA
+              </li>
+            </ul>
+          </div>
+
+          <div class="space-y-4">
+            <h3 class="font-semibold text-lg">Performance</h3>
+            <ul class="space-y-2 text-sm text-muted-foreground">
+              <li class="flex items-center gap-2">
+                <span class="text-primary">✓</span>
+                &lt; 5KB gzipped each
+              </li>
+              <li class="flex items-center gap-2">
+                <span class="text-primary">✓</span>
+                No external chart libraries
+              </li>
+              <li class="flex items-center gap-2">
+                <span class="text-primary">✓</span>
+                Islands architecture ready
+              </li>
+              <li class="flex items-center gap-2">
+                <span class="text-primary">✓</span>
+                Lighthouse 100 compatible
+              </li>
+            </ul>
+          </div>
+
+          <div class="space-y-4">
+            <h3 class="font-semibold text-lg">Developer Experience</h3>
+            <ul class="space-y-2 text-sm text-muted-foreground">
+              <li class="flex items-center gap-2">
+                <span class="text-primary">✓</span>
+                100% TypeScript strict mode
+              </li>
+              <li class="flex items-center gap-2">
+                <span class="text-primary">✓</span>
+                Fully documented props
+              </li>
+              <li class="flex items-center gap-2">
+                <span class="text-primary">✓</span>
+                Zero setup required
+              </li>
+              <li class="flex items-center gap-2">
+                <span class="text-primary">✓</span>
+                React 19 compatible
+              </li>
+            </ul>
+          </div>
+
+          <div class="space-y-4">
+            <h3 class="font-semibold text-lg">Customization</h3>
+            <ul class="space-y-2 text-sm text-muted-foreground">
+              <li class="flex items-center gap-2">
+                <span class="text-primary">✓</span>
+                All props are optional
+              </li>
+              <li class="flex items-center gap-2">
+                <span class="text-primary">✓</span>
+                Easy to extend & customize
+              </li>
+              <li class="flex items-center gap-2">
+                <span class="text-primary">✓</span>
+                Theme-aware colors
+              </li>
+              <li class="flex items-center gap-2">
+                <span class="text-primary">✓</span>
+                Responsive layouts
+              </li>
+            </ul>
+          </div>
+        </div>
+      </section>
+
+      {/* Usage Tips */}
+      <section class="space-y-6 border-t border-border/50 pt-12">
+        <h2 class="text-3xl font-bold tracking-tight">Usage Tips</h2>
+
+        <div class="grid gap-6 md:grid-cols-3">
+          <div class="rounded-lg border border-border/50 bg-card/50 backdrop-blur p-6 space-y-3">
+            <h3 class="font-semibold">Islands Architecture</h3>
+            <p class="text-sm text-muted-foreground">
+              Use <code class="bg-background/50 px-1.5 py-0.5 rounded text-xs">client:load</code> for above-the-fold charts,
+              <code class="bg-background/50 px-1.5 py-0.5 rounded text-xs ml-1">client:visible</code> for below-the-fold.
+            </p>
+          </div>
+
+          <div class="rounded-lg border border-border/50 bg-card/50 backdrop-blur p-6 space-y-3">
+            <h3 class="font-semibold">Dark Mode</h3>
+            <p class="text-sm text-muted-foreground">
+              All components automatically support dark mode via next-themes.
+              No additional configuration needed.
+            </p>
+          </div>
+
+          <div class="rounded-lg border border-border/50 bg-card/50 backdrop-blur p-6 space-y-3">
+            <h3 class="font-semibold">Responsive Design</h3>
+            <p class="text-sm text-muted-foreground">
+              Mobile-first approach. All components are fully responsive.
+              Stack to single column on mobile by default.
+            </p>
+          </div>
+        </div>
+      </section>
+    </div>
+  </div>
+</Layout>
