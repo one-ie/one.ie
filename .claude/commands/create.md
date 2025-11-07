@@ -78,25 +78,75 @@ To start a NEW feature, run:
 
 ---
 
-## Available Features Ready to Build
+## Ready-to-Build Projects (Optimized Plans Available)
 
-### Shop (E-commerce)
+**Use `/plan [project]` to see full optimized plan, or `/create [project]` to start building:**
+
+### 1. Blog (30 cycles · Frontend-only)
 ```bash
-/create shop                       # Customize shop page
-/create shop-product-cards         # Add product card variants
-/create shop-recommendations       # Add AI product recommendations
-/create shop-reviews               # Add product review section
+/plan blog         # See full plan with quick wins
+/create blog       # Start building article publishing system
+/fast blog-post    # Quick: Create single blog post page
 ```
-**Location:** `/web/src/pages/shop.astro`
-**Components:** Cart, checkout, product filters, payment integration
-**Cycles:** 20-35 cycles (frontend-only)
+**Features:** Article publishing, categories, tags, search, RSS, SEO
+**Quick Win:** Working blog by Cycle 3, MVP by Cycle 10
+**Architecture:** Frontend-only (Astro content collections)
 
-### Blog (Content)
+### 2. Pages (20 cycles · Frontend-only)
 ```bash
-/create blog-featured              # Add featured articles section
-/create blog-search                # Add blog search & filtering
-/create blog-categories            # Add category navigation
-/create blog-newsletter            # Add newsletter signup
+/plan pages        # See full plan with quick wins
+/create pages      # Start building landing page builder
+/fast landing      # Quick: Create single landing page
+```
+**Features:** Hero sections, features, testimonials, CTAs, responsive design
+**Quick Win:** Hero section by Cycle 3, MVP by Cycle 8
+**Architecture:** Frontend-only (static pages)
+
+### 3. Shop (28 cycles · Frontend + Stripe)
+```bash
+/plan shop         # See full plan with quick wins
+/create shop       # Start building e-commerce store
+/fast product      # Quick: Add single product page
+```
+**Features:** Product catalog, cart, checkout, Stripe payments, orders
+**Quick Win:** Product listing by Cycle 3, first sale by Cycle 8
+**Architecture:** Frontend-only + Stripe.js (no backend initially)
+
+### 4. Dashboard (40 cycles · Backend + Frontend)
+```bash
+/plan dashboard    # See full plan with quick wins
+/create dashboard  # Start building analytics dashboard
+```
+**Features:** Real-time metrics, charts, activity feed, team management
+**Quick Win:** Backend schema by Cycle 3, 3 metrics live by Cycle 8
+**Architecture:** Backend (Convex real-time) + Frontend
+
+### 5. Email (45 cycles · Backend + Frontend)
+```bash
+/plan email        # See full plan with quick wins
+/create email      # Start building messaging system
+```
+**Features:** Conversations, threads, search, notifications, attachments
+**Quick Win:** Backend schema by Cycle 3, send/receive by Cycle 8
+**Architecture:** Backend (Convex real-time) + Frontend
+
+### 6. Website (55 cycles · Backend + Frontend)
+```bash
+/plan website      # See full plan with quick wins
+/create website    # Start building website builder
+```
+**Features:** Page builder, CMS, templates, multi-language, SEO tools
+**Quick Win:** Backend schema by Cycle 3, page editor by Cycle 8
+**Architecture:** Backend (Convex CMS) + Frontend
+
+---
+
+## Or Build Custom Features
+
+### Single Component/Page
+```bash
+/fast [feature]               # Build in minutes (< 5 files)
+/create [feature-name]        # Build specific feature (plan generated)
 ```
 **Location:** `/web/src/pages/blog/`
 **Components:** Article cards, RSS feeds, tags, archives
@@ -175,9 +225,73 @@ To start a NEW feature, run:
 /create backend invoice-system     # Invoice/billing system (70-100 cycles)
 ```
 
+## Before You Start: Search for Existing Code
+
+**CRITICAL:** Before implementing anything new:
+
+1. **Search for existing implementations:**
+   ```bash
+   # Frontend components
+   find /Users/toc/Server/ONE/web/src/components -name "*.tsx"
+
+   # Pages
+   find /Users/toc/Server/ONE/web/src/pages -name "*.astro" -o -name "*.tsx"
+
+   # Backend functions
+   find /Users/toc/Server/ONE/backend/convex -name "*.ts"
+
+   # Search by keyword (example: "product")
+   grep -r "Product" /Users/toc/Server/ONE/web/src/ /Users/toc/Server/ONE/backend/convex/
+   ```
+
+2. **Ask yourself:**
+   - Does a similar component/function exist?
+   - Can I extend it instead of creating new?
+   - What patterns are already established?
+
+3. **Build on what exists:**
+   - ✅ Extend ThingCard, not create ProductCard
+   - ✅ Add prop to existing component
+   - ✅ Enhance existing mutation
+   - ❌ Duplicate patterns
+
+**Pattern convergence = 98% accuracy. Pattern divergence = 30% accuracy.**
+
+---
+
 ## Workflow
 
-### Step 1: Describe What You Want
+### Step 1: Discover Existing Code (MANDATORY)
+
+**Before generating ANY code:**
+
+1. **Search codebase:**
+   ```bash
+   # Components
+   ls -la /Users/toc/Server/ONE/web/src/components/features/
+
+   # Pages
+   ls -la /Users/toc/Server/ONE/web/src/pages/
+
+   # Backend
+   ls -la /Users/toc/Server/ONE/backend/convex/mutations/
+   ls -la /Users/toc/Server/ONE/backend/convex/queries/
+
+   # Search for patterns (replace <keyword> with your feature)
+   grep -r "<keyword>" /Users/toc/Server/ONE/web/src/
+   grep -r "<keyword>" /Users/toc/Server/ONE/backend/convex/
+   ```
+
+2. **Document what exists:**
+   - Existing components that might be reusable
+   - Existing mutations/queries to extend
+   - Established patterns to follow
+
+3. **Decision:**
+   - ✅ Extend existing code (90% of cases)
+   - ⚠️ Create new only if truly different (10% of cases)
+
+### Step 2: Describe What You Want
 
 ```bash
 /create shop-recommendations
@@ -187,7 +301,7 @@ To start a NEW feature, run:
 /create backend ai-tutors
 ```
 
-### Step 2: Agent-Director Validates & Plans
+### Step 3: Agent-Director Validates & Plans
 
 1. **Check existing /web components**
 2. **Decide: Frontend-only or Backend-required?**
@@ -195,7 +309,9 @@ To start a NEW feature, run:
 4. **Assign to specialist(s)** (agent-frontend, agent-backend, etc.)
 5. **Load dependencies** from cycle context
 
-### Step 3: See Your Plan
+**Rule:** Prefer extending over creating new code.
+
+### Step 4: See Your Plan
 
 ```bash
 /plan show
@@ -206,7 +322,7 @@ To start a NEW feature, run:
 # - Dependencies & parallel opportunities
 ```
 
-### Step 4: Execute Cycles
+### Step 5: Execute Cycles
 
 Follow the cycle workflow:
 ```bash

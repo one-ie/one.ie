@@ -1,6 +1,32 @@
 # /plan - Transform Ideas Into Optimized Execution Plans
 
-**Purpose:** Automatically generate intelligent 100-cycle plans optimized for speed, quick wins, and minimal cycles to production.
+**Purpose:** Load pre-built optimized plans or generate custom plans with speed, quick wins, and minimal cycles to production.
+
+---
+
+## Project Detection (Step 1)
+
+**When user types `/plan [keyword]`, check if keyword matches a pre-built project:**
+
+| Keyword | File | Cycles | Description |
+|---------|------|--------|-------------|
+| `blog` | `web/src/content/plans/blog.md` | 30 | Article publishing, search, RSS |
+| `pages` | `web/src/content/plans/pages.md` | 20 | Landing page builder |
+| `shop` | `web/src/content/plans/shop.md` | 28 | E-commerce with Stripe |
+| `dashboard` | `web/src/content/plans/dashboard.md` | 40 | Real-time analytics (backend) |
+| `email` | `web/src/content/plans/email.md` | 45 | Messaging system (backend) |
+| `website` | `web/src/content/plans/website.md` | 55 | Website builder + CMS (backend) |
+
+**If keyword matches:**
+1. Read the plan file from `web/src/content/plans/[keyword].md`
+2. Display the optimized plan with Quick Wins section
+3. Show "Ready to execute" message
+4. Skip plan generation (plan already exists)
+
+**If keyword doesn't match:**
+1. Treat as custom idea
+2. Generate plan using algorithm below
+3. Save to `.claude/state/plan.json`
 
 ---
 
@@ -18,8 +44,16 @@
 ## Usage
 
 ```bash
-# Automatic plan generation
-/plan [your-idea]
+# Use pre-built optimized plans (RECOMMENDED)
+/plan blog          # 30 cycles - Article publishing
+/plan pages         # 20 cycles - Landing pages
+/plan shop          # 28 cycles - E-commerce
+/plan dashboard     # 40 cycles - Analytics (backend)
+/plan email         # 45 cycles - Messaging (backend)
+/plan website       # 55 cycles - Website builder (backend)
+
+# Or generate custom plan
+/plan [your-custom-idea]
 
 # Examples:
 /plan Build a course platform with AI tutors
@@ -27,7 +61,9 @@
 /plan SaaS tool for project management
 ```
 
-**That's it.** Just `/plan [idea]` and the system:
+**Pre-built plans load instantly** from `web/src/content/plans/` with optimized cycle counts and quick wins already defined.
+
+**Custom plans** take 30 seconds to generate and follow the same optimization:
 1. Validates against 6-dimension ontology
 2. Determines frontend-only vs backend architecture
 3. Identifies quick wins for Cycles 1-10
