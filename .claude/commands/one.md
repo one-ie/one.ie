@@ -57,22 +57,9 @@ lsof -ti:4321 2>/dev/null && echo "RUNNING" || echo "STOPPED"
   /deploy          Ship to production
 
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-
-🚀 READY-TO-BUILD PROJECTS (246 cycles total, 59% optimized)
-
-  /plan blog       30 cycles · Article publishing, search, RSS
-  /plan pages      20 cycles · Landing page builder
-  /plan shop       28 cycles · E-commerce with Stripe
-  /plan dashboard  40 cycles · Real-time analytics (backend)
-  /plan email      45 cycles · Messaging system (backend)
-  /plan website    55 cycles · Website builder + CMS (backend)
-
-  Quick wins in first 10 cycles · MVP deployed by Cycle 10
-
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 ```
 
-**DO NOT add any workflow steps or explanations after this.**
+**DO NOT add any sections, workflow steps, or explanations after the commands.**
 
 ---
 
