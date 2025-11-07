@@ -6,7 +6,7 @@ organization: "ONE Platform"
 personRole: "platform_owner"
 ontologyDimensions: ["Things", "Knowledge", "Connections"]
 assignedSpecialist: "agent-frontend"
-totalCycles: 100
+totalCycles: 55
 completedCycles: 0
 createdAt: 2025-10-30
 draft: false
@@ -15,17 +15,56 @@ draft: false
 # ONE Platform: Website Builder with CMS v1.0.0
 
 **Focus:** Comprehensive website builder with visual editor, CMS, multi-language support, and SEO optimization
-**Type:** Complete platform implementation (Astro + React 19 + Tailwind v4)
+**Type:** Complete platform implementation (Astro + React 19 + Tailwind v4 + Convex)
 **Integration:** Content management, localization, version control, performance monitoring
-**Process:** `Cycle 1-100 cycle sequence`
-**Timeline:** 16-20 cycles per specialist per day
+**Process:** `Cycle 1-55 optimized sequence`
+**Timeline:** 16-20 cycles per specialist per day (3-4 days to MVP, 5-7 days complete)
 **Target:** Fully functional website builder with enterprise features
 
 ---
 
-## PHASE 1: FOUNDATION & ARCHITECTURE (Cycle 1-10)
+## CYCLE BUDGET (55 Total)
 
-**Purpose:** Define website builder requirements, editor capabilities, CMS structure, design system
+**Quick Wins (Cycles 1-10):** Foundation + Backend + MVP Editor (45% effort → 80% value)
+- Cycles 1-2: Requirements & ontology mapping
+- Cycle 3: Backend schema implementation
+- Cycles 4-8: Core editor components
+- Cycles 9-10: MVP deployed and working
+
+**Core Features (Cycles 11-30):** Components + CMS + Theme System (35% effort → 15% value)
+- Cycles 11-20: Complete component library + media
+- Cycles 21-25: Theme customization + responsive
+- Cycles 26-30: Version control + publishing workflow
+
+**Advanced Features (Cycles 31-45):** Multi-language + SEO + Analytics (15% effort → 4% value)
+- Cycles 31-35: Multi-language support
+- Cycles 36-40: SEO tools and optimization
+- Cycles 41-45: Analytics and performance monitoring
+
+**Polish + Deploy (Cycles 46-55):** Testing + Optimization + Documentation (5% effort → 1% value)
+- Cycles 46-50: Cross-browser testing + accessibility
+- Cycles 51-53: Performance optimization + Lighthouse
+- Cycles 54-55: Documentation + final deployment
+
+---
+
+## QUICK WINS (Cycles 1-10) - MVP IN 10 CYCLES
+
+**Goal:** Working website builder where you can create and edit a simple page, then deploy it.
+
+**Tangible Progress Milestones:**
+- ✅ **Cycle 3:** Backend schema live, can store pages in Convex
+- ✅ **Cycle 5:** Can drag a component onto canvas
+- ✅ **Cycle 8:** Can edit text inline, see changes live
+- ✅ **Cycle 10:** MVP deployed to Cloudflare - create/edit/publish one page end-to-end
+
+**Why this works:** Backend + Frontend in parallel. Schema first, then build on it. Ship early.
+
+---
+
+## PHASE 1: FOUNDATION + BACKEND + MVP EDITOR (Cycle 1-10)
+
+**Purpose:** Define requirements, implement backend schema, build core editor with ONE working page
 
 ### Cycle 1: Define Website Builder Structure
 - [ ] **Core Features:**
@@ -85,449 +124,369 @@ draft: false
   - [ ] theme_changed, domain_configured
 - [ ] **Knowledge:** SEO keywords, performance metrics, visitor analytics
 
-### Cycle 3: Design Page Builder Editor
-- [ ] **Editor Layout:**
-  - [ ] **Left Sidebar: Component Library**
-    - [ ] Sections (hero, features, testimonials, CTA)
-    - [ ] Layout components (container, grid, columns)
-    - [ ] Content components (text, image, video, button)
-    - [ ] Forms (input, textarea, checkbox, select)
-    - [ ] Navigation (header, footer, menu)
-    - [ ] Advanced (code, embed, custom)
-    - [ ] Search components
-    - [ ] Drag component to canvas
-  - [ ] **Center Canvas: Visual Editor**
-    - [ ] Live preview of page
-    - [ ] Drop zones for components
-    - [ ] Hover highlights
-    - [ ] Click to select component
-    - [ ] Inline text editing
-    - [ ] Resize handles
-    - [ ] Context menu (duplicate, delete, move)
-  - [ ] **Right Sidebar: Properties Panel**
-    - [ ] Component settings (content, props)
-    - [ ] Style settings (colors, spacing, typography)
-    - [ ] Layout settings (width, alignment, position)
-    - [ ] Animation settings (entrance, scroll effects)
-    - [ ] SEO settings (title, description, keywords)
-  - [ ] **Top Bar: Editor Controls**
-    - [ ] Page title input
-    - [ ] Undo/redo buttons
-    - [ ] Device preview (mobile, tablet, desktop)
-    - [ ] Zoom controls
-    - [ ] Save draft button
-    - [ ] Publish button
-    - [ ] Exit editor button
+### Cycle 3: Implement Backend Schema (CRITICAL - BACKEND FIRST)
+- [ ] **Create Convex Schema (`backend/convex/schema.ts`):**
+  - [ ] **websites table:**
+    - [ ] _id, groupId, domain, name, status
+    - [ ] properties: { theme, settings, customDomain }
+  - [ ] **pages table:**
+    - [ ] _id, websiteId, slug, title, status (draft/published)
+    - [ ] content: JSON array of components
+    - [ ] metadata: { description, keywords, ogImage }
+    - [ ] createdAt, updatedAt, publishedAt
+  - [ ] **components table:**
+    - [ ] _id, pageId, type, position, props, styles
+  - [ ] **media table:**
+    - [ ] _id, websiteId, url, name, size, type
+    - [ ] metadata: { alt, width, height }
+  - [ ] **Indexes:**
+    - [ ] by_website, by_slug, by_status
+- [ ] **Create Basic Mutations:**
+  - [ ] `websites.create` - Create new website
+  - [ ] `pages.create` - Create new page
+  - [ ] `pages.update` - Update page content
+  - [ ] `pages.publish` - Change status to published
+- [ ] **Create Basic Queries:**
+  - [ ] `websites.list` - List all websites
+  - [ ] `pages.list` - List pages for website
+  - [ ] `pages.get` - Get single page by slug
+- [ ] **Deploy to Convex:**
+  - [ ] Run `npx convex dev` to generate types
+  - [ ] Verify schema with sample data
+  - [ ] Test mutations/queries in Convex dashboard
 
-### Cycle 4: Design Component System
+### Cycle 4: Create Basic Editor Layout
+- [ ] **Create `/builder/edit/[pageId].astro` page:**
+  - [ ] Three-panel layout (component library, canvas, properties)
+  - [ ] Load page data from Convex
+  - [ ] Render editor with client:load
+- [ ] **Create `<PageEditor>` React component:**
+  - [ ] Left sidebar placeholder (component library)
+  - [ ] Center canvas placeholder (visual editor)
+  - [ ] Right sidebar placeholder (properties panel)
+  - [ ] Top bar with save/publish buttons
+  - [ ] Wire up to Convex mutations
+- [ ] **Test:** Can load editor page, see layout
+
+### Cycle 5: Implement Drag-and-Drop
+- [ ] **Install @dnd-kit packages:**
+  - [ ] `@dnd-kit/core`, `@dnd-kit/sortable`, `@dnd-kit/utilities`
+- [ ] **Create `<ComponentLibrary>` sidebar:**
+  - [ ] List 3 basic components: Heading, Text, Button
+  - [ ] Make each draggable with useDraggable
+- [ ] **Create `<VisualCanvas>` area:**
+  - [ ] Drop zone with useDroppable
+  - [ ] Handle component drops
+  - [ ] Add component to page content array
+  - [ ] Save to Convex on drop
+- [ ] **Test:** Drag Heading from library → drop on canvas → saves to Convex
+
+### Cycle 6: Render Components on Canvas
+- [ ] **Create `<ComponentRenderer>` component:**
+  - [ ] Switch statement for component types
+  - [ ] Heading → render h1-h6 with editable text
+  - [ ] Text → render p with editable content
+  - [ ] Button → render button with text + link
+- [ ] **Map over page.content array:**
+  - [ ] Render each component with ComponentRenderer
+  - [ ] Show in visual order
+  - [ ] Add wrapper divs for selection
+- [ ] **Test:** Components dropped on canvas appear visually
+
+### Cycle 7: Add Component Selection + Properties Panel
+- [ ] **Component Selection:**
+  - [ ] Click component on canvas to select
+  - [ ] Show blue outline on selected component
+  - [ ] Store selectedComponentId in state
+- [ ] **Create `<PropertiesPanel>` sidebar:**
+  - [ ] Show selected component type
+  - [ ] For Heading: text input + level dropdown (h1-h6)
+  - [ ] For Text: textarea for content
+  - [ ] For Button: text input + URL input
+  - [ ] Update component props on change
+  - [ ] Save to Convex on blur
+- [ ] **Test:** Click component → edit in properties panel → see changes live
+
+### Cycle 8: Implement Inline Text Editing
+- [ ] **Inline editing with contentEditable:**
+  - [ ] Make Heading text contentEditable on double-click
+  - [ ] Make Text paragraph contentEditable on double-click
+  - [ ] Capture onBlur event to save changes
+  - [ ] Update component props in state
+  - [ ] Call Convex mutation to persist
+- [ ] **Keyboard shortcuts:**
+  - [ ] Cmd+S / Ctrl+S to save draft
+  - [ ] Escape to deselect component
+- [ ] **Test:** Double-click text → edit inline → see changes save
+
+### Cycle 9: Create Page List + Publishing Workflow
+- [ ] **Create `/builder/[websiteId]/pages.astro` page:**
+  - [ ] Query all pages from Convex
+  - [ ] Display in table with status badges
+  - [ ] "Create New Page" button
+  - [ ] Edit/Delete actions per page
+- [ ] **Implement publish/unpublish:**
+  - [ ] Add "Publish" button to editor top bar
+  - [ ] Call `pages.publish` mutation (status = "published")
+  - [ ] Show success toast
+  - [ ] Add "Unpublish" to revert to draft
+- [ ] **Test:** Create page → edit → publish → see status change
+
+### Cycle 10: Deploy MVP + End-to-End Test
+- [ ] **Create public page renderer:**
+  - [ ] Create `/[websiteId]/[slug].astro` route
+  - [ ] Query page from Convex by slug
+  - [ ] Filter for status = "published"
+  - [ ] Render components with ComponentRenderer
+  - [ ] Apply basic styles (Tailwind)
+- [ ] **Deploy to Cloudflare Pages:**
+  - [ ] Build with `bun run build`
+  - [ ] Deploy with `wrangler pages deploy`
+  - [ ] Verify published page loads
+- [ ] **End-to-End Test (MVP Complete):**
+  - [ ] Create website via Convex dashboard
+  - [ ] Create new page via pages list
+  - [ ] Drag Heading + Text components onto canvas
+  - [ ] Edit text inline
+  - [ ] Edit text via properties panel
+  - [ ] Publish page
+  - [ ] Visit public URL → see published page
+- [ ] **Success Criteria:**
+  - [ ] ✅ Backend schema stores pages in Convex
+  - [ ] ✅ Can drag components from library to canvas
+  - [ ] ✅ Can edit text inline with double-click
+  - [ ] ✅ Can edit text in properties panel
+  - [ ] ✅ Can publish page (status change)
+  - [ ] ✅ Published page renders at public URL
+  - [ ] ✅ MVP deployed to Cloudflare
+
+---
+
+## PHASE 2: COMPLETE COMPONENT LIBRARY + MEDIA (Cycle 11-30)
+
+**Purpose:** Expand component library, add media upload, implement CMS features
+
+### Cycle 11-15: Add More Components
+- [ ] **Section Components:**
+  - [ ] Hero (headline, subheadline, CTA, background image)
+  - [ ] Features (grid of 3-4 feature cards)
+  - [ ] Testimonial (quote, author, avatar)
+  - [ ] CTA Section (heading, text, button)
+  - [ ] Image (with alt text, size controls)
 - [ ] **Layout Components:**
   - [ ] Container (max-width wrapper)
-  - [ ] Grid (2-6 columns)
-  - [ ] Columns (flexible columns)
-  - [ ] Section (full-width sections)
+  - [ ] Grid (2-4 columns responsive)
   - [ ] Spacer (vertical spacing)
-- [ ] **Content Components:**
-  - [ ] Heading (h1-h6)
-  - [ ] Text/paragraph
-  - [ ] Image (with optimization)
-  - [ ] Video (YouTube, Vimeo, self-hosted)
-  - [ ] Button (primary, secondary, outline)
-  - [ ] Link
-  - [ ] Icon
-  - [ ] Divider/separator
-- [ ] **Section Components:**
-  - [ ] Hero (headline, subheadline, CTA, background)
-  - [ ] Features (grid of feature cards)
-  - [ ] Testimonials (carousel or grid)
-  - [ ] Pricing (pricing table)
-  - [ ] FAQ (accordion)
-  - [ ] Contact form
-  - [ ] Newsletter signup
-  - [ ] Gallery (image grid)
-  - [ ] Stats (metric display)
-- [ ] **Navigation Components:**
-  - [ ] Header (logo, menu, CTA)
-  - [ ] Footer (links, social, copyright)
-  - [ ] Breadcrumbs
-  - [ ] Sidebar menu
-- [ ] **Each Component Has:**
-  - [ ] Configurable props (text, images, links)
-  - [ ] Style settings (colors, spacing, borders)
-  - [ ] Responsive settings (hide on mobile, etc.)
-  - [ ] Animation settings
+- [ ] **Update ComponentRenderer to handle all types**
+- [ ] **Test:** Can drag all component types onto canvas
 
-### Cycle 5: Design CMS Structure
-- [ ] **Content Management:**
-  - [ ] **Pages Tab:**
-    - [ ] List of all pages
-    - [ ] Status (draft, published, scheduled)
-    - [ ] Create new page button
-    - [ ] Duplicate page
-    - [ ] Delete page
-    - [ ] Search and filter
-  - [ ] **Media Library:**
-    - [ ] Grid of uploaded images/files
-    - [ ] Upload button
-    - [ ] Search and filter
-    - [ ] File details (size, dimensions, URL)
-    - [ ] Organize in folders
-    - [ ] Bulk actions (delete, move)
-  - [ ] **Templates:**
-    - [ ] Pre-built page templates
-    - [ ] Create from template
-    - [ ] Save current page as template
-  - [ ] **Settings:**
-    - [ ] Site settings (title, description, logo)
-    - [ ] Theme customization
-    - [ ] SEO defaults
-    - [ ] Domain configuration
-    - [ ] Integrations (analytics, etc.)
+### Cycle 16-18: Implement Media Library
+- [ ] **Media Upload:**
+  - [ ] Create `/builder/[websiteId]/media.astro` page
+  - [ ] File upload component (drag-and-drop)
+  - [ ] Use Convex file storage API
+  - [ ] Save file URLs to media table
+- [ ] **Media Selector:**
+  - [ ] Add "Choose Image" button to Image component props
+  - [ ] Modal to select from media library
+  - [ ] Update component props with selected image URL
+- [ ] **Test:** Upload image → select in Image component → renders on canvas
 
-### Cycle 6: Design Theme Customization
-- [ ] **Theme Settings:**
-  - [ ] **Colors:**
-    - [ ] Primary color (brand)
-    - [ ] Secondary color (accents)
-    - [ ] Background colors (light, dark)
-    - [ ] Text colors (heading, body, muted)
-    - [ ] Success, warning, error colors
-    - [ ] Custom color palette (10+ colors)
-  - [ ] **Typography:**
-    - [ ] Heading font (Google Fonts, custom)
-    - [ ] Body font
-    - [ ] Font sizes (scale: xs to 3xl)
-    - [ ] Font weights (light, regular, medium, bold)
-    - [ ] Line heights
-    - [ ] Letter spacing
-  - [ ] **Spacing:**
-    - [ ] Spacing scale (4px to 128px)
-    - [ ] Container max-width
-    - [ ] Section padding
-  - [ ] **Borders & Shadows:**
-    - [ ] Border radius (none, sm, md, lg, xl)
-    - [ ] Border colors
-    - [ ] Box shadows (presets)
-  - [ ] **Dark Mode:**
-    - [ ] Enable/disable
-    - [ ] Custom dark colors
-    - [ ] Toggle position
+### Cycle 19-22: Add Component Reordering + Deletion
+- [ ] **Reorder Components:**
+  - [ ] Use @dnd-kit/sortable for reordering
+  - [ ] Drag component up/down to change position
+  - [ ] Update position in Convex
+- [ ] **Delete Components:**
+  - [ ] Add delete icon on component hover
+  - [ ] Confirm deletion modal
+  - [ ] Remove from page content array
+  - [ ] Save to Convex
+- [ ] **Test:** Reorder components, delete components
 
-### Cycle 7: Design Multi-Language Support
-- [ ] **Localization Features:**
-  - [ ] **Language Management:**
-    - [ ] Add languages (English, Spanish, French, etc.)
-    - [ ] Default language selection
-    - [ ] Language picker UI
-    - [ ] Language-specific URLs (/en, /es, /fr)
-  - [ ] **Content Translation:**
-    - [ ] Translate page by page
-    - [ ] Show translation status (translated, outdated, missing)
-    - [ ] Translate component text
-    - [ ] Translate media alt text
-    - [ ] Translate SEO metadata
-  - [ ] **Translation Workflow:**
-    - [ ] Export for translation (JSON, CSV)
-    - [ ] Import translations
-    - [ ] Translation memory (reuse translations)
-    - [ ] Auto-translate via API (optional)
-- [ ] **Localized Content:**
-  - [ ] Date/time formats
-  - [ ] Number formats
-  - [ ] Currency formats
-  - [ ] Right-to-left (RTL) support
+### Cycle 23-25: Add Responsive Design Controls
+- [ ] **Device Preview:**
+  - [ ] Add mobile/tablet/desktop buttons to top bar
+  - [ ] Change canvas width on click
+  - [ ] Show viewport dimensions
+- [ ] **Responsive Settings per Component:**
+  - [ ] Hide on mobile checkbox
+  - [ ] Hide on tablet checkbox
+  - [ ] Different spacing per breakpoint
+- [ ] **Test:** Toggle device preview, hide components on mobile
 
-### Cycle 8: Design SEO Tools
-- [ ] **SEO Features:**
-  - [ ] **Page-Level SEO:**
-    - [ ] Meta title (with preview)
-    - [ ] Meta description (with preview)
-    - [ ] Meta keywords
-    - [ ] Open Graph tags (social sharing)
-    - [ ] Twitter Card tags
-    - [ ] Canonical URL
-    - [ ] Robots meta (index, noindex)
-  - [ ] **Site-Level SEO:**
-    - [ ] Sitemap generation (XML)
-    - [ ] Robots.txt editor
-    - [ ] Schema.org markup (structured data)
-    - [ ] Google Analytics integration
-    - [ ] Google Search Console integration
-  - [ ] **SEO Analysis:**
-    - [ ] Keyword density
-    - [ ] Readability score
-    - [ ] Image alt text checker
-    - [ ] Heading structure analysis
-    - [ ] Internal linking suggestions
-    - [ ] Mobile-friendliness check
-  - [ ] **Performance SEO:**
-    - [ ] Page speed score
-    - [ ] Core Web Vitals
-    - [ ] Image optimization suggestions
-    - [ ] Code minification
-
-### Cycle 9: Design Version Control
-- [ ] **Version History:**
-  - [ ] Auto-save every 30 seconds
-  - [ ] List of all versions (timestamp, author)
-  - [ ] Compare versions (visual diff)
-  - [ ] Restore previous version
-  - [ ] Name versions (e.g., "Before redesign")
-- [ ] **Publishing Workflow:**
-  - [ ] Draft mode (unpublished changes)
-  - [ ] Review mode (send for approval)
-  - [ ] Scheduled publishing (future date/time)
-  - [ ] Rollback published page
-- [ ] **Collaboration:**
-  - [ ] See who's editing (real-time presence)
-  - [ ] Prevent simultaneous editing conflicts
-  - [ ] Comments on components
-  - [ ] Change history with authors
-
-### Cycle 10: Define Success Metrics
-- [ ] Website builder complete when:
-  - [ ] Visual editor loads with drag-and-drop
-  - [ ] Components can be added, moved, deleted
-  - [ ] Inline text editing works
-  - [ ] Style customization applies in real-time
-  - [ ] Responsive preview switches devices
-  - [ ] Pages save as drafts
-  - [ ] Pages publish successfully
-  - [ ] Theme customization persists
-  - [ ] Multi-language content translates
-  - [ ] SEO metadata displays correctly
-  - [ ] Version history saves and restores
-  - [ ] Media library uploads and displays files
-  - [ ] Mobile responsive on all devices
-  - [ ] Lighthouse score > 90
-  - [ ] Accessible (WCAG 2.1 AA compliant)
+### Cycle 26-30: Implement Version Control
+- [ ] **Auto-save Versions:**
+  - [ ] Save snapshot every 5 minutes
+  - [ ] Create versions table in Convex
+  - [ ] Store full page content JSON
+- [ ] **Version History UI:**
+  - [ ] List versions in sidebar (timestamp, author)
+  - [ ] Preview version on hover
+  - [ ] Restore version button
+- [ ] **Test:** Edit page → auto-save → restore previous version
 
 ---
 
-## PHASE 2: BACKEND SCHEMA & SERVICES (Cycle 11-20)
+## PHASE 3: THEME SYSTEM + ADVANCED FEATURES (Cycle 31-45)
 
-**Purpose:** Define Convex schema, queries, mutations for website builder data
+**Purpose:** Theme customization, multi-language, SEO, analytics
 
-### Cycle 11: Define Website Builder Schema
-- [ ] **Tables:**
-  - [ ] websites (domain, settings, theme)
-  - [ ] pages (slug, content, layout, status)
-  - [ ] components (type, props, styles)
-  - [ ] media (files, images, metadata)
-  - [ ] versions (page snapshots, timestamps)
-  - [ ] translations (locale, page, content)
-- [ ] **Indexes:**
-  - [ ] by_website, by_slug, by_status, by_locale
+### Cycle 31-35: Implement Multi-Language Support
+- [ ] **Add translations table to Convex schema**
+- [ ] **Language switcher in editor:**
+  - [ ] Add language dropdown to top bar
+  - [ ] Store default language per website
+  - [ ] Store translations per component + language
+- [ ] **Translation UI:**
+  - [ ] Duplicate page content for new language
+  - [ ] Edit component text per language
+  - [ ] Show translation status (translated/missing)
+- [ ] **Public page rendering:**
+  - [ ] Detect language from URL (/en/about, /es/about)
+  - [ ] Render translated content
+- [ ] **Test:** Create English page → translate to Spanish → render both
 
-### Cycle 12: Create Page Queries
-- [ ] **Convex queries:**
-  - [ ] `pages.list` (all pages for website)
-  - [ ] `pages.get` (single page by slug)
-  - [ ] `pages.byStatus` (draft, published)
-  - [ ] `pages.search` (search by title, content)
+### Cycle 36-40: Implement SEO Tools
+- [ ] **Add SEO fields to pages table:**
+  - [ ] metaTitle, metaDescription, keywords
+  - [ ] ogImage, ogTitle, ogDescription
+- [ ] **SEO Panel in editor:**
+  - [ ] Meta title/description inputs
+  - [ ] Preview snippet (Google result)
+  - [ ] Character count warnings
+  - [ ] Open Graph image uploader
+- [ ] **Public page rendering:**
+  - [ ] Add meta tags to page <head>
+  - [ ] Add Open Graph tags
+  - [ ] Add Twitter Card tags
+  - [ ] Generate sitemap.xml
+- [ ] **Test:** Add SEO metadata → view source → verify tags
 
-### Cycle 13: Create Page Mutations
-- [ ] **Convex mutations:**
-  - [ ] `pages.create` (new page)
-  - [ ] `pages.update` (update content, layout)
-  - [ ] `pages.publish` (change status to published)
-  - [ ] `pages.unpublish` (revert to draft)
-  - [ ] `pages.delete` (remove page)
-  - [ ] `pages.duplicate` (copy page)
-
-### Cycle 14: Create Component Mutations
-- [ ] **Convex mutations:**
-  - [ ] `components.add` (add to page)
-  - [ ] `components.update` (update props, styles)
-  - [ ] `components.move` (reorder on page)
-  - [ ] `components.delete` (remove from page)
-
-### Cycle 15: Create Media Mutations
-- [ ] **Convex mutations:**
-  - [ ] `media.upload` (store file reference)
-  - [ ] `media.delete` (remove file)
-  - [ ] `media.organize` (move to folder)
-
-### Cycle 16: Create Version Control Mutations
-- [ ] **Convex mutations:**
-  - [ ] `versions.save` (create snapshot)
-  - [ ] `versions.list` (get history)
-  - [ ] `versions.restore` (rollback to version)
-
-### Cycle 17: Create Translation Mutations
-- [ ] **Convex mutations:**
-  - [ ] `translations.create` (add translation)
-  - [ ] `translations.update` (edit translation)
-  - [ ] `translations.sync` (sync from default language)
-
-### Cycle 18: Create Theme Mutations
-- [ ] **Convex mutations:**
-  - [ ] `theme.update` (save theme settings)
-  - [ ] `theme.reset` (revert to defaults)
-
-### Cycle 19-20: Continue with real-time subscriptions and optimization
+### Cycle 41-45: Add Analytics + Performance Monitoring
+- [ ] **Analytics Integration:**
+  - [ ] Add Plausible script tag option
+  - [ ] Add Google Analytics option
+  - [ ] Store analytics ID in website settings
+  - [ ] Inject script on published pages
+- [ ] **Performance Metrics:**
+  - [ ] Add Lighthouse CI to build process
+  - [ ] Track Core Web Vitals
+  - [ ] Image optimization checks
+  - [ ] Show performance score in editor
+- [ ] **Test:** Publish page → run Lighthouse → see score
 
 ---
 
-## PHASE 3: REACT COMPONENTS (Cycle 21-50)
+## PHASE 4: POLISH + TESTING + DEPLOYMENT (Cycle 46-55)
 
-**Purpose:** Build interactive React components for website builder
+**Purpose:** Cross-browser testing, accessibility, performance, documentation
 
-### Cycle 21: Create Page Editor Layout
-- [ ] **PageEditor component:**
-  - [ ] Three-panel layout
-  - [ ] Component library sidebar (left)
-  - [ ] Visual canvas (center)
-  - [ ] Properties panel (right)
-  - [ ] Top bar with controls
+### Cycle 46-48: Accessibility + Keyboard Navigation
+- [ ] **Keyboard shortcuts:**
+  - [ ] Tab to navigate components
+  - [ ] Delete key to remove selected component
+  - [ ] Cmd+Z / Ctrl+Z to undo
+  - [ ] Cmd+Shift+Z / Ctrl+Shift+Z to redo
+- [ ] **ARIA labels:**
+  - [ ] Add aria-labels to all interactive elements
+  - [ ] Add focus indicators
+  - [ ] Screen reader testing
+- [ ] **Test:** Navigate editor with keyboard only, run axe DevTools
 
-### Cycle 22: Create Component Library Sidebar
-- [ ] **ComponentLibrary component:**
-  - [ ] Categorized components
-  - [ ] Search filter
-  - [ ] Draggable component items
-  - [ ] Component preview thumbnails
+### Cycle 49-50: Cross-Browser Testing
+- [ ] **Test in browsers:**
+  - [ ] Chrome (latest)
+  - [ ] Firefox (latest)
+  - [ ] Safari (latest)
+  - [ ] Edge (latest)
+- [ ] **Fix browser-specific issues:**
+  - [ ] CSS compatibility
+  - [ ] contentEditable behavior
+  - [ ] Drag-and-drop quirks
+- [ ] **Test:** All features work in all browsers
 
-### Cycle 23: Create Visual Canvas
-- [ ] **VisualCanvas component:**
-  - [ ] Render page components
-  - [ ] Drop zones for new components
-  - [ ] Selection highlighting
-  - [ ] Drag handles for reordering
-  - [ ] Inline editing for text
-  - [ ] Context menu (right-click)
+### Cycle 51-53: Performance Optimization
+- [ ] **Frontend optimizations:**
+  - [ ] Code splitting for editor components
+  - [ ] Lazy load component library
+  - [ ] Debounce auto-save mutations
+  - [ ] Optimize images (automatic compression)
+- [ ] **Backend optimizations:**
+  - [ ] Add indexes to Convex queries
+  - [ ] Batch component updates
+  - [ ] Cache published pages
+- [ ] **Lighthouse Audit:**
+  - [ ] Target score > 90 on all metrics
+  - [ ] Fix performance issues
+- [ ] **Test:** Run Lighthouse, achieve >90 score
 
-### Cycle 24: Create Properties Panel
-- [ ] **PropertiesPanel component:**
-  - [ ] Content settings tab
-  - [ ] Style settings tab
-  - [ ] Layout settings tab
-  - [ ] Animation settings tab
-  - [ ] Conditional logic
-  - [ ] Component-specific controls
-
-### Cycle 25: Create Component Renderer
-- [ ] **ComponentRenderer component:**
-  - [ ] Dynamically render component by type
-  - [ ] Apply styles from props
-  - [ ] Handle responsive settings
-  - [ ] Support nested components
-
-### Cycle 26: Create Device Preview Switcher
-- [ ] **DevicePreview component:**
-  - [ ] Desktop, tablet, mobile buttons
-  - [ ] Canvas resize animation
-  - [ ] Orientation toggle (portrait/landscape)
-  - [ ] Custom breakpoint preview
-
-### Cycle 27: Create Media Library
-- [ ] **MediaLibrary component:**
-  - [ ] Grid of uploaded files
-  - [ ] Upload button with drag-and-drop
-  - [ ] File details modal
-  - [ ] Search and filter
-  - [ ] Select mode for editor
-
-### Cycle 28: Create Theme Customizer
-- [ ] **ThemeCustomizer component:**
-  - [ ] Color pickers
-  - [ ] Font selectors
-  - [ ] Spacing controls
-  - [ ] Live preview of changes
-  - [ ] Reset to defaults
-
-### Cycle 29: Create Translation Manager
-- [ ] **TranslationManager component:**
-  - [ ] Language selector
-  - [ ] Translation status table
-  - [ ] Edit translation modal
-  - [ ] Export/import buttons
-
-### Cycle 30: Create SEO Panel
-- [ ] **SEOPanel component:**
-  - [ ] Meta title and description inputs
-  - [ ] Preview snippets (Google, social)
-  - [ ] Keyword suggestions
-  - [ ] SEO score display
-
-### Cycle 31-50: Continue with templates, publishing workflow, version control UI
-
----
-
-## PHASE 4: ASTRO PAGES & INTEGRATION (Cycle 51-70)
-
-**Purpose:** Create Astro pages and integrate builder components
-
-### Cycle 51: Create Builder Dashboard
-- [ ] **`/builder/index.astro`:**
-  - [ ] List of websites
-  - [ ] Create new website button
-  - [ ] Website cards with quick actions
-
-### Cycle 52: Create Pages Manager
-- [ ] **`/builder/[websiteId]/pages.astro`:**
-  - [ ] List of pages
-  - [ ] Create, edit, delete actions
-  - [ ] Status filters
-
-### Cycle 53: Create Page Editor
-- [ ] **`/builder/[websiteId]/edit/[pageId].astro`:**
-  - [ ] Full page editor interface
-  - [ ] Load page data via Convex
-  - [ ] Save changes in real-time
-
-### Cycle 54: Create Media Manager
-- [ ] **`/builder/[websiteId]/media.astro`:**
-  - [ ] Media library UI
-  - [ ] Upload functionality
-  - [ ] File management
-
-### Cycle 55: Create Settings Page
-- [ ] **`/builder/[websiteId]/settings.astro`:**
-  - [ ] Site settings
-  - [ ] Theme customization
-  - [ ] Domain configuration
-  - [ ] SEO defaults
-
-### Cycle 56-70: Continue with templates, translations, analytics integration
-
----
-
-## PHASE 5: POLISH & OPTIMIZATION (Cycle 71-100)
-
-**Purpose:** Refine UX, performance, accessibility, testing
-
-### Cycle 71-80: Animations, transitions, loading states
-### Cycle 81-85: Accessibility, keyboard navigation
-### Cycle 86-90: Performance optimization
-### Cycle 91-95: Testing, cross-browser compatibility
-### Cycle 96-100: Documentation, deployment, final polish
+### Cycle 54-55: Documentation + Final Deployment
+- [ ] **User Documentation:**
+  - [ ] How to create a website
+  - [ ] How to add components
+  - [ ] How to customize theme
+  - [ ] How to publish pages
+  - [ ] How to add languages
+  - [ ] How to configure SEO
+- [ ] **Developer Documentation:**
+  - [ ] How to add new component types
+  - [ ] How to extend theme system
+  - [ ] API reference for Convex functions
+- [ ] **Final Deployment:**
+  - [ ] Deploy to production Cloudflare Pages
+  - [ ] Configure custom domain
+  - [ ] Set up SSL certificate
+  - [ ] Test end-to-end in production
+- [ ] **Test:** Complete user journey in production
 
 ---
 
 ## SUCCESS CRITERIA
 
-Website builder is complete when:
+**MVP (Cycle 10) - Can ship a basic website:**
+- ✅ Backend schema stores pages in Convex
+- ✅ Visual editor loads with three-panel layout
+- ✅ Can drag 3 component types (Heading, Text, Button) from library to canvas
+- ✅ Can edit text inline with double-click
+- ✅ Can edit component props in properties panel
+- ✅ Can publish page (status change to "published")
+- ✅ Published page renders at public URL with components
+- ✅ MVP deployed to Cloudflare Pages
 
-- ✅ Visual page editor loads with drag-and-drop functionality
-- ✅ All component types can be added, configured, and styled
-- ✅ Inline text editing works smoothly
-- ✅ Responsive preview switches between devices
-- ✅ Theme customization applies globally
-- ✅ Pages save, publish, and unpublish correctly
-- ✅ Version history saves and restores pages
-- ✅ Multi-language content translates and displays
-- ✅ SEO metadata generates correctly
-- ✅ Media library uploads and manages files
-- ✅ Performance monitoring tracks metrics
-- ✅ Custom domains can be configured
-- ✅ Mobile responsive on all screen sizes
-- ✅ Dark mode works
-- ✅ Lighthouse score > 90
-- ✅ Accessible (WCAG 2.1 AA compliant)
-- ✅ Cross-browser tested
+**Complete (Cycle 55) - Production-ready website builder:**
+- ✅ 15+ component types (sections, layouts, content, navigation)
+- ✅ Media library with upload + selection
+- ✅ Component reordering via drag-and-drop
+- ✅ Responsive design controls (mobile/tablet/desktop preview)
+- ✅ Version control with auto-save + restore
+- ✅ Multi-language support with translations
+- ✅ SEO metadata (title, description, Open Graph, sitemap)
+- ✅ Analytics integration (Plausible or Google Analytics)
+- ✅ Keyboard shortcuts + accessibility (WCAG 2.1 AA)
+- ✅ Cross-browser tested (Chrome, Firefox, Safari, Edge)
+- ✅ Lighthouse score > 90 on all metrics
+- ✅ Documentation (user + developer)
+- ✅ Deployed to production with custom domain + SSL
 
 ---
 
-**Timeline:** 90-100 cycles for complete implementation
+## OPTIMIZED TIMELINE
+
+**Total:** 55 cycles (down from 100)
+**Savings:** 45% reduction through aggressive prioritization
+
+**Why this is faster:**
+1. **Backend first (Cycle 3):** Build on solid foundation, not mocks
+2. **MVP in 10 cycles:** Ship early, iterate based on real usage
+3. **Parallel work:** Backend + Frontend can run simultaneously after Cycle 3
+4. **Cut ceremony:** No separate "design" cycles, design while building
+5. **Quick wins first:** 80% value in first 40% of cycles
+
+**Specialist assignment:**
+- **Backend (agent-backend):** Cycles 3, 16-18 (schema, media storage)
+- **Frontend (agent-frontend):** Cycles 4-15, 19-55 (editor, components, UI)
+- **Parallel execution:** After Cycle 3, both can work simultaneously
+
 **Status:** Ready to build
-**Next:** Use Claude Code to implement step by step following cycle sequence
+**Next:** Start Cycle 1 - Define website builder requirements

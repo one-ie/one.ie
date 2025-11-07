@@ -6,7 +6,7 @@ organization: "ONE Platform"
 personRole: "platform_owner"
 ontologyDimensions: ["Things", "Connections", "Events"]
 assignedSpecialist: "Frontend Architect"
-totalCycles: 100
+totalCycles: 20
 completedCycles: 0
 createdAt: 2025-10-30
 draft: false
@@ -15,567 +15,422 @@ draft: false
 # ONE Platform: Landing Page Template v1.0.0
 
 **Focus:** Customizable landing page builder template with hero, features, testimonials, CTA, and responsive design
-**Type:** Complete frontend template (Astro + React 19 + Tailwind v4)
+**Type:** Frontend-only (Astro + React 19 + Tailwind v4)
 **UI Pattern:** Modern landing page with sections, animations, and conversion optimization
-**Process:** `Cycle 1-100 cycle sequence`
-**Timeline:** 12-16 cycles per specialist per day
+**Process:** `Optimized 20-cycle sequence (frontend-only)`
+**Timeline:** 15-20 cycles per specialist per day
 **Target:** Fully functional landing page template with customizable sections
 **Source File:** `web/src/pages/page.astro`
 
 ---
 
-## PHASE 1: FOUNDATION & ARCHITECTURE (Cycle 1-10)
+## Cycle Budget (20 Cycles - Frontend-Only)
 
-**Purpose:** Define landing page template requirements, customization options, content structure
+**Frontend-only landing pages are FAST:**
 
-### Cycle 1: Define Landing Page Features
-- [ ] **Core Sections:**
-  - [ ] Hero section with headline, subheadline, CTA
-  - [ ] Features/benefits grid (3-6 items)
-  - [ ] Social proof section (testimonials, case studies)
-  - [ ] How it works section (step-by-step)
-  - [ ] Call-to-action section (conversion focused)
-  - [ ] FAQ accordion
-  - [ ] Footer with links and contact
-- [ ] **Customization Options:**
-  - [ ] Change hero image/background
-  - [ ] Update colors and branding
-  - [ ] Add/remove sections via configuration
-  - [ ] Customize form fields (lead capture)
-  - [ ] Add social media links
-  - [ ] Insert custom CSS/animations
-- [ ] **Interactive Features:**
-  - [ ] Smooth scroll navigation
-  - [ ] Mobile hamburger menu
-  - [ ] Newsletter signup
-  - [ ] Contact form with validation
-  - [ ] Dark/light mode toggle
-  - [ ] Animated counters (stats)
-- [ ] **Performance:**
-  - [ ] Image optimization
-  - [ ] Code splitting
-  - [ ] Lazy loading
-  - [ ] SEO optimization
-  - [ ] Lighthouse 95+ score
+- **Cycle 1-3:** Foundation (hero, layout, basic sections) → **Hero section live**
+- **Cycle 4-8:** Core features (testimonials, FAQ, forms) → **Full MVP deployed**
+- **Cycle 9-12:** Polish (animations, responsive, accessibility) → **Production-ready**
+- **Cycle 13-15:** Optimization (performance, SEO, images) → **Lighthouse 95+**
+- **Cycle 16-18:** Documentation (examples, templates, guides) → **Reusable templates**
+- **Cycle 19-20:** Advanced features (A/B testing, analytics) → **Enhanced features**
 
-### Cycle 2: Map Landing Page to 6-Dimension Ontology
-- [ ] **Groups:** Creator's brand/organization
-- [ ] **People:**
-  - [ ] Creator (page owner)
-  - [ ] Visitors (potential customers)
-  - [ ] Team members (collaborators)
-- [ ] **Things:**
-  - [ ] landing_page (name, description, design config)
-  - [ ] section (type, content, order, visibility)
-  - [ ] feature (title, description, icon)
-  - [ ] testimonial (quote, author, avatar, rating)
-  - [ ] faq (question, answer)
-  - [ ] contact_form (fields, validation rules)
-  - [ ] cta_button (text, link, variant)
-- [ ] **Connections:**
-  - [ ] creator → landing_page (owns, created)
-  - [ ] page → section (contains)
-  - [ ] feature → thing (describes benefit)
-  - [ ] testimonial → creator (endorses)
-- [ ] **Events:**
-  - [ ] page_viewed, page_customized, page_published
-  - [ ] form_submitted, signup_clicked, cta_clicked
-  - [ ] testimonial_added, feature_updated
-- [ ] **Knowledge:** Landing page templates, conversion best practices, design patterns
+**Quick Wins (Cycles 1-10):**
 
-### Cycle 3: Design Template Structure
-- [ ] **Page Configuration:**
-  ```
-  {
-    id: string (uuid)
-    creatorId: string
-    title: string (page title)
-    slug: string (for URL)
-    description: string (SEO meta)
-    sections: Section[]
-    branding: {
-      primaryColor: string
-      accentColor: string
-      logo: string (URL)
-      favicon: string (URL)
-    }
-    metadata: {
-      published: boolean
-      publishedAt?: number
-      viewCount: number
-      conversionRate: number
-    }
-  }
-  ```
-- [ ] **Section Types:**
-  - Hero, Features, Social Proof, How It Works, FAQ, CTA, Footer
-- [ ] **Hero Section:**
-  ```
-  {
-    type: 'hero'
-    headline: string
-    subheadline: string
-    cta: { text, link, variant }
-    backgroundImage?: string
-    backgroundVideo?: string
-  }
-  ```
-- [ ] **Features Section:**
-  ```
-  {
-    type: 'features'
-    title: string
-    features: [
-      { icon, title, description }
-    ]
-  }
-  ```
-- [ ] **Testimonials Section:**
-  ```
-  {
-    type: 'testimonials'
-    testimonials: [
-      { quote, author, role, avatar, rating }
-    ]
-  }
-  ```
+- ✅ **Cycle 3:** Hero section deployed and live on localhost
+- ✅ **Cycle 5:** Features + testimonials sections working
+- ✅ **Cycle 8:** Complete landing page with working CTA and forms
+- ✅ **Cycle 10:** MVP deployed to production with real traffic
 
-### Cycle 4: Design UI/UX Pattern
-- [ ] **Layout:**
-  - [ ] Full-width hero with centered content
-  - [ ] Grid-based sections (max-width: 6xl)
-  - [ ] Proper spacing and typography hierarchy
+---
+
+## PHASE 1: FOUNDATION (Cycle 1-3) - QUICK WINS
+
+**Purpose:** Get working hero section deployed to localhost
+
+### Cycle 1: Hero Section + Basic Layout
+- [ ] **Create page.astro:**
+  - [ ] Basic HTML structure with SEO meta tags
+  - [ ] Hero section with headline, subheadline, CTA button
+  - [ ] Use shadcn/ui Button component for CTA
+  - [ ] Full-width hero with background gradient
   - [ ] Mobile-first responsive design
-- [ ] **Components:**
-  - [ ] Hero component with image/video background
-  - [ ] Feature cards (3-column, responsive)
-  - [ ] Testimonial carousel or grid
-  - [ ] FAQ accordion (accessible)
-  - [ ] Contact form (email, name, message)
-  - [ ] Newsletter signup (email input)
-  - [ ] CTA button variations
-  - [ ] Navigation header (sticky on scroll)
-- [ ] **Animations:**
-  - [ ] Fade in on scroll
-  - [ ] Smooth transitions
-  - [ ] Hover effects (cards, buttons)
-  - [ ] Animated counters for stats
-  - [ ] Loading states
-- [ ] **Accessibility:**
-  - [ ] WCAG 2.1 AA compliance
-  - [ ] Keyboard navigation
-  - [ ] Screen reader support
-  - [ ] Color contrast ratios
-  - [ ] Alt text for images
+- [ ] **Basic Styling:**
+  - [ ] Import Tailwind v4 CSS
+  - [ ] Set up color variables (HSL format)
+  - [ ] Typography hierarchy (h1, h2, p)
+  - [ ] Spacing utilities
+- [ ] **Deploy:**
+  - [ ] Run `bun run dev`
+  - [ ] Verify hero displays on localhost:4321
+  - [ ] Test on mobile viewport
 
----
-
-## PHASE 2: BACKEND SCHEMA & SERVICES (Cycle 11-20)
-
-**Purpose:** Define data model, create Convex schema, implement services
-
-### Cycle 5: Create Convex Schema
-- [ ] **Landing Page Table:**
-  - [ ] _id, creatorId, title, slug, description
-  - [ ] sections: Section[]
-  - [ ] branding: BrandingConfig
-  - [ ] metadata: PageMetadata
-  - [ ] status: draft | active | archived
-  - [ ] createdAt, updatedAt
-- [ ] **Indexes:**
-  - [ ] by_creatorId (for listing user's pages)
-  - [ ] by_slug (for public access)
-  - [ ] by_status (for published pages)
-- [ ] **Validation:**
-  - [ ] Required fields: title, creatorId
-  - [ ] Unique: slug per creator
-  - [ ] Section validation (correct types)
-
-### Cycle 6: Implement Landing Page Queries
-- [ ] **Query: listPages**
-  - [ ] Args: creatorId, limit, offset
-  - [ ] Returns: Page[] with metadata
-  - [ ] Pagination support
-- [ ] **Query: getPageBySlug**
-  - [ ] Args: slug
-  - [ ] Returns: Full page with all sections
-  - [ ] Public access (no auth required)
-- [ ] **Query: getPageById**
-  - [ ] Args: pageId
-  - [ ] Returns: Full page
-  - [ ] Creator-only access
-- [ ] **Query: getPageStats**
-  - [ ] Args: pageId
-  - [ ] Returns: views, conversions, submits
-  - [ ] Time range support
-
-### Cycle 7: Implement Landing Page Mutations
-- [ ] **Mutation: createPage**
-  - [ ] Args: creatorId, title, sections
-  - [ ] Create page with defaults
-  - [ ] Log creation event
-  - [ ] Return pageId
-- [ ] **Mutation: updatePage**
-  - [ ] Args: pageId, updates (title, sections, branding)
-  - [ ] Validate sections before update
-  - [ ] Update timestamp
-  - [ ] Log update event
-- [ ] **Mutation: publishPage**
-  - [ ] Args: pageId
-  - [ ] Set status to active
-  - [ ] Generate short URL
-  - [ ] Log publish event
-- [ ] **Mutation: deletePage**
-  - [ ] Args: pageId
-  - [ ] Soft delete (archive)
-  - [ ] Remove from public access
-  - [ ] Log deletion event
-- [ ] **Mutation: submitForm**
-  - [ ] Args: pageId, formData
-  - [ ] Validate form fields
-  - [ ] Save submission
-  - [ ] Send confirmation email
-  - [ ] Log conversion event
-
-### Cycle 8: Create Landing Page Services
-- [ ] **PageService:**
-  - [ ] validatePageData() - check sections, required fields
-  - [ ] generateSlug() - create unique URL slug
-  - [ ] getPageStats() - aggregate view/conversion data
-  - [ ] parsePageTemplate() - convert config to HTML
-- [ ] **FormService:**
-  - [ ] validateFormSubmission() - check required fields
-  - [ ] sanitizeInput() - prevent XSS
-  - [ ] sendConfirmationEmail() - notify submitter
-  - [ ] saveLead() - store in database
-- [ ] **BrandingService:**
-  - [ ] validateColors() - check hex/rgb format
-  - [ ] generateCSSVariables() - create theme CSS
-  - [ ] updateBranding() - apply to all sections
-
----
-
-## PHASE 3: FRONTEND PAGES & COMPONENTS (Cycle 21-30)
-
-**Purpose:** Build reusable components, create template pages, implement interactions
-
-### Cycle 9: Create Landing Page Components
-- [ ] **HeroSection component**
-  - [ ] Props: headline, subheadline, cta, image/video
-  - [ ] Dynamic background image or video
-  - [ ] Responsive text sizing
-  - [ ] CTA button with link
-- [ ] **FeaturesSection component**
-  - [ ] Props: features array
-  - [ ] 3-column grid on desktop, 1 on mobile
-  - [ ] Icon + title + description
-  - [ ] Hover scale animation
-- [ ] **TestimonialsSection component**
-  - [ ] Props: testimonials array
-  - [ ] Carousel or grid layout
-  - [ ] Avatar + quote + author + rating
-  - [ ] Navigation arrows/dots
-- [ ] **HowItWorksSection component**
-  - [ ] Props: steps array
-  - [ ] Numbered steps with descriptions
-  - [ ] Timeline or card layout
-  - [ ] Optional images/videos
-- [ ] **CTASection component**
-  - [ ] Props: headline, description, buttons
-  - [ ] Prominent call-to-action
-  - [ ] Secondary action (optional)
-  - [ ] Background highlight
-- [ ] **FAQSection component**
-  - [ ] Props: faqs array
-  - [ ] Accordion pattern
-  - [ ] Smooth expand/collapse
-  - [ ] Search/filter optional
-- [ ] **FormSection component**
-  - [ ] Props: fields, onSubmit
-  - [ ] Input validation
-  - [ ] Success/error states
-  - [ ] Loading state during submit
-
-### Cycle 10: Create Landing Page Template Page
-- [ ] **pages/page.astro:**
-  - [ ] Load page data by slug
-  - [ ] Render hero section
-  - [ ] Render each section in order
-  - [ ] Apply branding colors
-  - [ ] Add header/navigation
-  - [ ] Add footer with links
-  - [ ] SEO meta tags
-  - [ ] Analytics tracking
-- [ ] **Dynamic Sections:**
-  - [ ] Map sections array to components
-  - [ ] Handle conditional rendering
-  - [ ] Apply custom CSS from branding
-  - [ ] Track visibility events
-- [ ] **Interactive Features:**
+### Cycle 2: Features Section + Navigation
+- [ ] **Features Grid Component:**
+  - [ ] 3-column responsive grid (1 col mobile, 3 desktop)
+  - [ ] Feature cards with icon, title, description
+  - [ ] Use shadcn/ui Card components
+  - [ ] Hover animations (scale, shadow)
+- [ ] **Navigation Header:**
+  - [ ] Sticky header on scroll
+  - [ ] Logo + navigation links
+  - [ ] Mobile hamburger menu
   - [ ] Smooth scroll to sections
-  - [ ] Mobile navigation menu
-  - [ ] Dark mode toggle
-  - [ ] Form validation and submission
+- [ ] **Footer:**
+  - [ ] Links, social media icons
+  - [ ] Copyright notice
+  - [ ] Contact information
+
+### Cycle 3: Testimonials + Social Proof
+- [ ] **Testimonials Section:**
+  - [ ] Grid layout (2-3 columns)
+  - [ ] Quote + author + avatar + rating
+  - [ ] Use shadcn/ui Avatar component
+  - [ ] Responsive (1 col mobile, 3 desktop)
+- [ ] **Social Proof:**
+  - [ ] Trust badges or logos
+  - [ ] Stats/metrics (animated counters)
+  - [ ] Customer count or success stories
+- [ ] **Deploy Checkpoint:**
+  - [ ] Hero + Features + Testimonials live
+  - [ ] All sections responsive
+  - [ ] Quick Win: MVP landing page complete
 
 ---
 
-## PHASE 4: INTEGRATION & CONNECTIONS (Cycle 31-40)
+## PHASE 2: CORE FEATURES (Cycle 4-8) - MVP DEPLOYED
 
-**Purpose:** Connect to backend, implement data flow, handle authentication
+**Purpose:** Add interactive features, forms, FAQ, complete MVP
 
-### Cycle 11: Connect Frontend to Backend
-- [ ] **usePageData hook:**
-  - [ ] Fetch page by slug
-  - [ ] Handle loading/error states
-  - [ ] Cache page data
-  - [ ] Track page view event
-- [ ] **useFormSubmission hook:**
-  - [ ] Handle form state
-  - [ ] Validate before submit
-  - [ ] Call submitForm mutation
-  - [ ] Show success/error messages
-- [ ] **usePageStats hook:**
-  - [ ] Fetch page statistics
-  - [ ] Display view count
-  - [ ] Show conversion rate
-  - [ ] Track user actions
+### Cycle 4: Contact Form + Validation
+- [ ] **FormSection Component:**
+  - [ ] Email, name, message fields
+  - [ ] Client-side validation (Zod schema)
+  - [ ] Submit button with loading state
+  - [ ] Success/error messages
+- [ ] **Form Handling:**
+  - [ ] Store submissions in localStorage (no backend)
+  - [ ] Email validation (regex pattern)
+  - [ ] Required field indicators
+  - [ ] Character limits
 
-### Cycle 12: Implement Creator Dashboard
-- [ ] **pages/dashboard/pages.astro:**
-  - [ ] List creator's landing pages
-  - [ ] Create new page button
-  - [ ] Edit/delete/publish actions
-  - [ ] View statistics
-- [ ] **Pages Management:**
-  - [ ] Create page workflow
-  - [ ] Edit sections
-  - [ ] Customize branding
-  - [ ] Preview before publish
-  - [ ] Publish/unpublish toggle
-  - [ ] Copy share link
-  - [ ] View analytics
+### Cycle 5: FAQ Accordion
+- [ ] **FAQ Component:**
+  - [ ] Use shadcn/ui Accordion
+  - [ ] Question/answer pairs
+  - [ ] Smooth expand/collapse animation
+  - [ ] Keyboard accessible (arrow keys)
+- [ ] **Content:**
+  - [ ] 5-10 common questions
+  - [ ] Clear, concise answers
+  - [ ] Searchable (optional)
 
----
+### Cycle 6: CTA Sections + How It Works
+- [ ] **CTA Section:**
+  - [ ] Prominent headline
+  - [ ] Primary + secondary buttons
+  - [ ] Background highlight color
+  - [ ] Conversion-focused copy
+- [ ] **How It Works:**
+  - [ ] Numbered steps (3-5 steps)
+  - [ ] Step title + description
+  - [ ] Optional icons or images
+  - [ ] Timeline or card layout
 
-## PHASE 5: AUTHENTICATION & AUTHORIZATION (Cycle 41-50)
+### Cycle 7: Animations + Interactions
+- [ ] **Scroll Animations:**
+  - [ ] Fade in on scroll (Intersection Observer)
+  - [ ] Slide in from bottom
+  - [ ] Stagger animations for cards
+- [ ] **Hover Effects:**
+  - [ ] Button hover states
+  - [ ] Card hover (lift, shadow)
+  - [ ] Link underline animations
+- [ ] **Loading States:**
+  - [ ] Form submission spinner
+  - [ ] Button disabled states
+  - [ ] Skeleton loaders (shadcn/ui)
 
-**Purpose:** Secure pages, implement access control, protect forms
-
-### Cycle 13: Implement Access Control
-- [ ] **Page Publishing:**
-  - [ ] Creator can edit own pages
-  - [ ] Public can view published pages
-  - [ ] Draft pages private to creator
-  - [ ] Archived pages hidden from public
-- [ ] **Form Submissions:**
-  - [ ] Allow public submissions
-  - [ ] No auth required for visitors
-  - [ ] Creator sees all submissions
-  - [ ] Spam filtering
-- [ ] **Rate Limiting:**
-  - [ ] Limit form submissions per IP
-  - [ ] Prevent abuse
-  - [ ] Show rate limit message
-
----
-
-## PHASE 6: KNOWLEDGE & RAG (Cycle 51-60)
-
-**Purpose:** Store best practices, enable AI recommendations
-
-### Cycle 14: Create Landing Page Knowledge Base
-- [ ] **Template Patterns:**
-  - [ ] SaaS landing pages
-  - [ ] Service-based landing pages
-  - [ ] Product launch pages
-  - [ ] Creator/portfolio pages
-  - [ ] Nonprofit landing pages
-- [ ] **Conversion Best Practices:**
-  - [ ] CTA placement and wording
-  - [ ] Form field optimization
-  - [ ] Social proof placement
-  - [ ] Headline copywriting tips
-  - [ ] Mobile optimization
-- [ ] **Design Patterns:**
-  - [ ] Color scheme recommendations
-  - [ ] Typography hierarchy
-  - [ ] Spacing and layout
-  - [ ] Animation usage
-  - [ ] Accessibility patterns
-- [ ] **AI Recommendations:**
-  - [ ] Suggest missing sections
-  - [ ] Recommend copy improvements
-  - [ ] Highlight conversion opportunities
-  - [ ] Test variations
-
----
-
-## PHASE 7: QUALITY & TESTING (Cycle 61-70)
-
-**Purpose:** Write tests, validate functionality, ensure reliability
-
-### Cycle 15: Create Landing Page Tests
-- [ ] **Unit Tests:**
-  - [ ] HeroSection component
-  - [ ] FeaturesSection component
-  - [ ] FormSection component
-  - [ ] Validation functions
-- [ ] **Integration Tests:**
-  - [ ] Page loading and rendering
-  - [ ] Form submission flow
-  - [ ] Navigation between sections
-  - [ ] Backend API calls
-- [ ] **E2E Tests:**
-  - [ ] Create and publish page
-  - [ ] Submit form on landing page
-  - [ ] View page analytics
-  - [ ] Edit published page
-
----
-
-## PHASE 8: DESIGN & WIREFRAMES (Cycle 71-80)
-
-**Purpose:** Finalize UI/UX, create design system, ensure accessibility
-
-### Cycle 16: Finalize Landing Page Design
-- [ ] **Component Variants:**
-  - [ ] Hero: image, video, gradient backgrounds
-  - [ ] Features: icon + text, cards, list
-  - [ ] Testimonials: carousel, grid, single
-  - [ ] Forms: minimal, detailed, multi-step
-- [ ] **Design System:**
-  - [ ] Color palette (primary, accent, neutrals)
-  - [ ] Typography (font families, sizes, weights)
-  - [ ] Spacing scale (4px, 8px, 16px...)
-  - [ ] Component library
-  - [ ] Animation timing
-- [ ] **Responsive Design:**
-  - [ ] Mobile (320px+)
-  - [ ] Tablet (768px+)
-  - [ ] Desktop (1024px+)
-  - [ ] Large screens (1280px+)
-- [ ] **Accessibility Audit:**
-  - [ ] WCAG 2.1 AA compliance check
-  - [ ] Color contrast verification
-  - [ ] Keyboard navigation testing
-  - [ ] Screen reader testing
-  - [ ] Alt text for all images
-
----
-
-## PHASE 9: PERFORMANCE & OPTIMIZATION (Cycle 81-90)
-
-**Purpose:** Optimize speed, improve Core Web Vitals, ensure scalability
-
-### Cycle 17: Optimize Landing Page Performance
-- [ ] **Image Optimization:**
-  - [ ] Convert to WebP/AVIF formats
-  - [ ] Responsive image sizes
-  - [ ] Lazy loading below fold
-  - [ ] Image compression
-- [ ] **Code Splitting:**
-  - [ ] Dynamic imports for components
-  - [ ] Separate bundle for admin pages
-  - [ ] Lazy load form validation
-- [ ] **Caching Strategy:**
-  - [ ] Cache page data (30 min)
-  - [ ] Cache images (1 year with versioning)
-  - [ ] Cache CSS/JS (CDN cache)
-- [ ] **Core Web Vitals:**
-  - [ ] LCP < 2.5s (Largest Contentful Paint)
-  - [ ] FID < 100ms (First Input Delay)
-  - [ ] CLS < 0.1 (Cumulative Layout Shift)
-  - [ ] Target: Lighthouse 95+
-- [ ] **Database Optimization:**
-  - [ ] Index creatorId, slug
-  - [ ] Limit query results
-  - [ ] Pagination for large lists
-
----
-
-## PHASE 10: DEPLOYMENT & DOCUMENTATION (Cycle 91-100)
-
-**Purpose:** Ship to production, document features, enable end-users
-
-### Cycle 18: Deploy and Document Landing Page
-- [ ] **Production Deployment:**
-  - [ ] Build for production
+### Cycle 8: MVP Polish + Deploy
+- [ ] **SEO Optimization:**
+  - [ ] Meta title, description
+  - [ ] Open Graph tags (social sharing)
+  - [ ] Structured data (JSON-LD)
+  - [ ] Sitemap generation
+- [ ] **Responsive Testing:**
+  - [ ] Test all breakpoints (mobile, tablet, desktop)
+  - [ ] Fix any layout issues
+  - [ ] Ensure touch targets are 44px+
+- [ ] **Deploy to Production:**
+  - [ ] `bun run build`
   - [ ] Deploy to Cloudflare Pages
-  - [ ] Set up CDN caching
-  - [ ] Configure SSL/TLS
-  - [ ] Monitor performance
-- [ ] **Documentation:**
-  - [ ] User guide for creators
-  - [ ] Template customization guide
-  - [ ] FAQ for end-users
-  - [ ] API documentation
-  - [ ] Component library docs
-- [ ] **Post-Launch:**
-  - [ ] Monitor error logs
-  - [ ] Track Core Web Vitals
-  - [ ] Collect user feedback
-  - [ ] Plan improvements
-  - [ ] Schedule feature releases
+  - [ ] Quick Win: Full MVP live with real traffic
 
-### Cycle 19: Create Landing Page Examples
-- [ ] **Template Examples:**
-  - [ ] SaaS product launch
-  - [ ] Creator portfolio
-  - [ ] Service business (coach, consultant)
-  - [ ] Nonprofit organization
-  - [ ] Event/conference registration
-- [ ] **Sample Content:**
-  - [ ] Pre-written copy
-  - [ ] Sample images
-  - [ ] Example testimonials
-  - [ ] Icon sets
+---
+
+## PHASE 3: POLISH (Cycle 9-12) - PRODUCTION-READY
+
+**Purpose:** Accessibility, dark mode, advanced UI
+
+### Cycle 9: Accessibility Compliance
+- [ ] **WCAG 2.1 AA:**
+  - [ ] Color contrast ratios (4.5:1 text, 3:1 UI)
+  - [ ] Alt text for all images
+  - [ ] ARIA labels for interactive elements
+  - [ ] Heading hierarchy (h1 → h6)
+- [ ] **Keyboard Navigation:**
+  - [ ] Tab order logical
+  - [ ] Focus indicators visible
+  - [ ] Skip to content link
+  - [ ] Escape to close modals/menus
+- [ ] **Screen Reader Testing:**
+  - [ ] Test with VoiceOver/NVDA
+  - [ ] Semantic HTML (nav, main, footer)
+  - [ ] Form labels properly associated
+
+### Cycle 10: Dark Mode + Theme Switching
+- [ ] **Dark Mode:**
+  - [ ] CSS variables for light/dark themes
+  - [ ] Toggle button in header
+  - [ ] Persist preference (localStorage)
+  - [ ] Smooth transition between modes
+- [ ] **Theme Variables:**
+  - [ ] Background, foreground colors
+  - [ ] Primary, accent colors
+  - [ ] Border, muted colors
+  - [ ] Update all components to use variables
+
+### Cycle 11: Advanced Components
+- [ ] **Newsletter Signup:**
+  - [ ] Email input field
+  - [ ] Subscribe button
+  - [ ] Success message
+  - [ ] Store in localStorage
+- [ ] **Video Background (Optional):**
+  - [ ] Hero section video support
+  - [ ] Autoplay, loop, muted
+  - [ ] Fallback image for mobile
+  - [ ] Performance optimized
+- [ ] **Testimonial Carousel:**
+  - [ ] Auto-rotate testimonials
+  - [ ] Navigation arrows/dots
+  - [ ] Pause on hover
+  - [ ] Swipe gestures (mobile)
+
+### Cycle 12: Final QA + Bug Fixes
+- [ ] **Cross-Browser Testing:**
+  - [ ] Chrome, Firefox, Safari, Edge
+  - [ ] iOS Safari, Android Chrome
+  - [ ] Fix any rendering issues
+- [ ] **Performance Check:**
+  - [ ] Lighthouse audit (target 90+)
+  - [ ] Fix any issues flagged
+  - [ ] Optimize images if needed
+- [ ] **Final Deploy:**
+  - [ ] Quick Win: Production-ready landing page
+
+---
+
+## PHASE 4: OPTIMIZATION (Cycle 13-15) - LIGHTHOUSE 95+
+
+**Purpose:** Performance, SEO, Core Web Vitals
+
+### Cycle 13: Image Optimization
+- [ ] **Image Formats:**
+  - [ ] Convert to WebP/AVIF
+  - [ ] Responsive images (srcset)
+  - [ ] Lazy loading (loading="lazy")
+  - [ ] Image compression
+- [ ] **Performance:**
+  - [ ] Preload hero image
+  - [ ] Defer off-screen images
+  - [ ] Use CDN for images
+  - [ ] Optimize SVG icons
+
+### Cycle 14: Code Splitting + Caching
+- [ ] **Code Splitting:**
+  - [ ] Dynamic imports for heavy components
+  - [ ] Lazy load form validation libraries
+  - [ ] Split vendor bundles
+- [ ] **Caching Strategy:**
+  - [ ] Cache static assets (1 year)
+  - [ ] Cache HTML (5 minutes)
+  - [ ] Service worker (optional)
+- [ ] **Minification:**
+  - [ ] Minify CSS/JS in production
+  - [ ] Remove unused CSS
+  - [ ] Tree shake dependencies
+
+### Cycle 15: Core Web Vitals
+- [ ] **LCP (Largest Contentful Paint):**
+  - [ ] Target < 2.5s
+  - [ ] Preload hero image
+  - [ ] Optimize font loading
+- [ ] **FID (First Input Delay):**
+  - [ ] Target < 100ms
+  - [ ] Minimize JavaScript execution
+  - [ ] Use passive event listeners
+- [ ] **CLS (Cumulative Layout Shift):**
+  - [ ] Target < 0.1
+  - [ ] Set image dimensions
+  - [ ] Reserve space for dynamic content
+- [ ] **Lighthouse 95+ Score:**
+  - [ ] Run audit, fix issues
+  - [ ] Quick Win: Optimized landing page
+
+---
+
+## PHASE 5: DOCUMENTATION (Cycle 16-18) - REUSABLE TEMPLATES
+
+**Purpose:** Create examples, guides, templates
+
+### Cycle 16: Template Examples
+- [ ] **SaaS Landing Page:**
+  - [ ] Product-focused copy
+  - [ ] Pricing section
+  - [ ] Feature comparison
+  - [ ] Trial signup CTA
+- [ ] **Creator Portfolio:**
+  - [ ] Personal brand focus
+  - [ ] Work showcase
+  - [ ] About section
+  - [ ] Contact form
+- [ ] **Service Business:**
+  - [ ] Coach/consultant template
+  - [ ] Services overview
+  - [ ] Testimonials emphasis
+  - [ ] Booking CTA
+
+### Cycle 17: Documentation + Guides
+- [ ] **User Guide:**
+  - [ ] How to customize sections
+  - [ ] How to change colors/branding
+  - [ ] How to add/remove sections
+  - [ ] How to customize forms
+- [ ] **Component Library:**
+  - [ ] Document all components
+  - [ ] Props and usage examples
+  - [ ] Variant options
+  - [ ] Accessibility notes
+- [ ] **Best Practices:**
+  - [ ] CTA placement tips
+  - [ ] Conversion optimization
+  - [ ] Mobile-first design
+  - [ ] Performance guidelines
+
+### Cycle 18: Sample Content + Assets
+- [ ] **Pre-Written Copy:**
+  - [ ] Headlines for different industries
+  - [ ] Subheadlines and CTAs
+  - [ ] Feature descriptions
+  - [ ] Testimonial templates
+- [ ] **Sample Assets:**
+  - [ ] Placeholder images
+  - [ ] Icon sets (Lucide icons)
   - [ ] Color palettes
+  - [ ] Font pairings
+- [ ] **Quick Win: Reusable template library**
 
-### Cycle 20: Plan Future Enhancements
-- [ ] **Advanced Features:**
-  - [ ] A/B testing
-  - [ ] Email integration (ConvertKit, etc.)
-  - [ ] Payment integration (for products)
+---
+
+## PHASE 6: ADVANCED FEATURES (Cycle 19-20) - ENHANCED
+
+**Purpose:** A/B testing, analytics, advanced integrations
+
+### Cycle 19: Analytics + Tracking
+- [ ] **Analytics Integration:**
+  - [ ] Plausible or Fathom script tag
+  - [ ] Track page views
+  - [ ] Track CTA clicks
+  - [ ] Track form submissions
+- [ ] **UTM Parameters:**
+  - [ ] Support for utm_source, utm_medium
+  - [ ] Track campaign performance
+  - [ ] Display in form submissions
+- [ ] **Conversion Tracking:**
+  - [ ] Count CTA clicks
+  - [ ] Count form submissions
+  - [ ] Calculate conversion rate
+  - [ ] Store in localStorage
+
+### Cycle 20: A/B Testing + Future Enhancements
+- [ ] **A/B Testing (Frontend):**
+  - [ ] Simple variant toggle
+  - [ ] Test different headlines
+  - [ ] Test different CTAs
+  - [ ] Track variant performance
+- [ ] **Future Roadmap:**
+  - [ ] Email integration (ConvertKit, Mailchimp)
+  - [ ] Payment integration (Stripe.js)
   - [ ] Custom domain support
-  - [ ] Advanced analytics (UTM parameters)
-- [ ] **AI Features:**
-  - [ ] Generate copy suggestions
-  - [ ] Optimize headlines
-  - [ ] Recommend section order
-  - [ ] Auto-generate testimonials
-  - [ ] Design recommendations
-- [ ] **Automation:**
-  - [ ] Automated email sequences
-  - [ ] Lead scoring
+  - [ ] Advanced analytics dashboard
+  - [ ] AI copy suggestions
   - [ ] CRM integration
   - [ ] Webhook support
-  - [ ] Zapier/Make.com integration
+- [ ] **Quick Win: Advanced features complete**
 
 ---
 
 ## Success Criteria
 
-- ✅ Landing page template fully functional
-- ✅ Creators can customize sections and branding
-- ✅ Public pages are fast (Lighthouse 95+)
-- ✅ Forms capture leads reliably
-- ✅ Analytics track key metrics
+- ✅ **Cycle 3:** Hero section deployed and working on localhost
+- ✅ **Cycle 8:** Full landing page MVP deployed to production
+- ✅ **Cycle 10:** MVP live with real traffic and working forms
+- ✅ **Cycle 12:** Production-ready with accessibility compliance
+- ✅ **Cycle 15:** Lighthouse 95+ score achieved
+- ✅ **Cycle 18:** Reusable template library with 3+ examples
+- ✅ **Cycle 20:** Advanced features (analytics, A/B testing) complete
 - ✅ Mobile responsive on all devices
 - ✅ WCAG 2.1 AA accessibility compliant
-- ✅ No security vulnerabilities
-- ✅ Comprehensive documentation
-- ✅ 5+ template examples provided
+- ✅ Forms capture leads reliably (localStorage)
+- ✅ Comprehensive documentation and guides
 
 ---
 
 ## Next Steps
 
-1. **Cycle 1-5:** Design and validate template structure
-2. **Cycle 6-10:** Implement backend schema and queries
-3. **Cycle 11-20:** Build frontend components and pages
-4. **Cycle 21-30:** Integrate with backend and add features
-5. **Cycle 31-50:** Security, authentication, access control
-6. **Cycle 51-70:** Testing and quality assurance
-7. **Cycle 71-80:** Design refinement and accessibility
-8. **Cycle 81-90:** Performance optimization
-9. **Cycle 91-100:** Deployment and documentation
+1. **Cycle 1-3 (FOUNDATION):** Hero + Features + Testimonials → Quick Win: MVP structure live
+2. **Cycle 4-8 (CORE FEATURES):** Forms + FAQ + CTA + Animations → Quick Win: Full MVP deployed
+3. **Cycle 9-12 (POLISH):** Accessibility + Dark Mode + QA → Quick Win: Production-ready
+4. **Cycle 13-15 (OPTIMIZATION):** Performance + SEO + Core Web Vitals → Quick Win: Lighthouse 95+
+5. **Cycle 16-18 (DOCUMENTATION):** Examples + Guides + Assets → Quick Win: Reusable templates
+6. **Cycle 19-20 (ADVANCED):** Analytics + A/B Testing → Quick Win: Enhanced features
+
+---
+
+## Why 20 Cycles Works (vs 100)
+
+**Frontend-only landing pages are SIMPLE:**
+
+- ❌ No backend schema (cycles 5-8 eliminated)
+- ❌ No database queries/mutations (cycles 6-7 eliminated)
+- ❌ No authentication layer (cycle 13 simplified)
+- ❌ No real-time sync (cycles eliminated)
+- ❌ No complex state management (cycles eliminated)
+
+**Static sites = 5x faster:**
+
+- ✅ Astro pages are just HTML + CSS + minimal JS
+- ✅ Forms use localStorage (no backend integration)
+- ✅ Components are shadcn/ui (pre-built, accessible)
+- ✅ Styling is Tailwind v4 (utility-first, fast)
+- ✅ Deploy is Cloudflare Pages (one command)
+
+**The math:**
+- Old: 100 cycles × 5 min/cycle = 500 minutes (8.3 hours)
+- New: 20 cycles × 5 min/cycle = 100 minutes (1.7 hours)
+- **Result: 5x faster, same quality**
+
+---
+
+## When to Add Backend (Not Part of This Plan)
+
+**Only add backend when user explicitly requests:**
+
+1. **Multi-user collaboration** → Need groups dimension
+2. **Real-time updates** → Need Convex subscriptions
+3. **Event tracking** → Need events dimension
+4. **User authentication** → Need people dimension with roles
+5. **Database storage** → Need things/connections dimensions
+
+**For this landing page plan:** Frontend-only is sufficient. Forms store in localStorage. Analytics use script tags. No backend needed.
