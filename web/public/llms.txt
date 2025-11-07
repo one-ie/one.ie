@@ -1,8 +1,54 @@
-# ONE Platform
+# ONE Platform - llms.txt
 
-> A multi-tenant AI-native platform built on a 6-dimension ontology that models reality through: Groups, People, Things, Connections, Events, and Knowledge.
+> **For Large Language Models and AI Coding Assistants**
+
+A multi-tenant AI-native platform built on a 6-dimension ontology that models reality through: Groups, People, Things, Connections, Events, and Knowledge.
 
 ONE Platform is a complete web framework combining Astro 5, React 19, Tailwind v4, and Convex backend with a universal 6-dimension ontology. Simple enough for children, powerful enough for enterprises.
+
+## 🚀 Quick Start for AI Agents
+
+**IMPORTANT:** If you are an AI agent (Claude Code, Cursor, Windsurf, GitHub Copilot), use the agent command:
+
+```bash
+# Zero-interaction setup (completes in 5-10 seconds)
+npx oneie agent
+
+# Automatic context detection from:
+# - Claude Code environment (CLAUDE_CODE, CLAUDE_USER_NAME, CLAUDE_ORG_NAME)
+# - Git configuration (user.name, user.email, remote.origin.url)
+# - package.json (author, homepage)
+# - README.md (first H1, URLs)
+# - Directory structure
+
+# What it creates:
+# - /one/ (ontology, docs, specs)
+# - /.claude/ (agents, commands, hooks)
+# - /<org-slug>/ (installation folder)
+# - .env.local (organization settings)
+# - CLAUDE.md, AGENTS.md, README.md
+```
+
+**With Claude context (passed automatically by Claude Code):**
+```bash
+npx oneie agent \
+  --claude-user="Your Name" \
+  --claude-email="your@email.com" \
+  --claude-org="Your Organization"
+```
+
+**After setup, use Claude Code:**
+```bash
+claude                   # Start Claude Code
+/one                     # Show control center
+/chat [idea]             # Start conversation & onboard
+/plan convert            # Create 100-cycle plan
+/now                     # View current cycle
+/create [feature]        # Build with specialists
+/done                    # Complete cycle
+/push                    # Commit & push
+/deploy                  # Deploy to production
+```
 
 ## Core Documentation
 
@@ -11,14 +57,19 @@ ONE Platform is a complete web framework combining Astro 5, React 19, Tailwind v
 - [Development Workflow](/one/connections/workflow.md): 6-phase development process for any feature
 - [Golden Rules](/one/knowledge/rules.md): Critical rules for AI agents and developers
 - [Quick Reference](/AGENTS.md): Convex patterns and development shortcuts
+- [Progressive Complexity](/one/knowledge/astro-effect-simple-architecture.md): 5-layer architecture (start simple!)
 
 ## Getting Started
 
 - [README](/README.md): Platform overview and quick start guide
+- [Quick Start](/getting-started/quick-start): Get started in 60 seconds
+- [Claude Commands](/getting-started/claude-commands): Complete command reference
 - [Installation Guide](/one/knowledge/installation.md): How to install and initialize ONE Platform
 - [First Feature](/one/knowledge/first-feature.md): Build your first feature in 5 minutes
 
 ## The 6 Dimensions
+
+Everything you build MUST map to these dimensions:
 
 - [Groups](/one/knowledge/groups.md): Hierarchical containers (friend circles to governments)
 - [People](/one/knowledge/people.md): Authorization and governance (4 roles)
@@ -26,6 +77,59 @@ ONE Platform is a complete web framework combining Astro 5, React 19, Tailwind v
 - [Connections](/one/knowledge/connections.md): Relationships between entities (25+ types)
 - [Events](/one/knowledge/events.md): Actions and state changes (67+ event types)
 - [Knowledge](/one/knowledge/knowledge.md): Embeddings and semantic search (RAG)
+
+## Frontend-First Development (Default Mode)
+
+**CRITICAL:** All agents default to frontend-only development unless explicitly requested otherwise.
+
+**When building features:**
+1. Build ONLY frontend code by default
+2. Use client-side state management (nanostores)
+3. Integrate third-party services via direct API calls (Stripe.js, OpenAI SDK)
+4. Store data in browser (localStorage) or third-party services
+5. NEVER create backend code unless explicitly requested
+
+**Backend is ONLY needed when user explicitly says:**
+- "Use backend"
+- "Add groups" (multi-tenant data isolation)
+- "Add multi-user" (user collaboration)
+- "Track events" (immutable audit trail)
+- "Build RAG" (vector embeddings)
+- "Real-time updates" (WebSocket sync)
+
+## Progressive Complexity (5 Layers)
+
+Start simple, add layers only when needed:
+
+**Layer 1: Content + Pages (80% of features)**
+```astro
+---
+import { getCollection } from "astro:content";
+const products = await getCollection("products");
+---
+
+<Layout>
+  {products.map(product => (
+    <ThingCard thing={product.data} type="product" />
+  ))}
+</Layout>
+```
+
+**Layer 2:** + Validation (Effect.ts services) - Only when you need validation
+**Layer 3:** + State (Nanostores) - Only when islands need to communicate
+**Layer 4:** + Multiple Sources (Provider pattern) - Only when switching content sources
+**Layer 5:** + Backend (Convex) - Only when explicitly requested
+
+**Golden Rule:** Start at Layer 1. Add layers only when you feel the pain.
+
+## Pattern Convergence (98% AI Accuracy)
+
+**ONE component per dimension** (not one per entity type):
+- `ThingCard` - For ALL thing types (product, course, agent, etc.)
+- `PersonCard` - For ALL people
+- `EventItem` - For ALL events
+
+**Result:** 98% AI accuracy (patterns converge, not diverge)
 
 ## Protocols & Integrations
 
@@ -36,7 +140,7 @@ ONE Platform is a complete web framework combining Astro 5, React 19, Tailwind v
 - [CopilotKit Integration](/one/things/copilotkit.md): Conversational UI components
 - [Blockchain Support](/one/connections/cryptonetworks.md): Multi-chain integration
 
-## Backend Development
+## Backend Development (Layer 5 - Optional)
 
 - [Schema Design](/backend/convex/schema.ts): 5-table implementation of 6 dimensions
 - [Queries Pattern](/one/connections/patterns.md): Read operations best practices
@@ -44,7 +148,7 @@ ONE Platform is a complete web framework combining Astro 5, React 19, Tailwind v
 - [Effect.ts Services](/one/knowledge/effect.md): Pure business logic layer
 - [Better Auth Setup](/backend/convex/auth.ts): Multi-method authentication
 
-## Frontend Development
+## Frontend Development (Default)
 
 - [Astro 5 Patterns](/one/knowledge/astro.md): SSR and island architecture
 - [React 19 Components](/one/knowledge/react.md): Component patterns with Convex hooks
@@ -71,7 +175,7 @@ ONE Platform is a complete web framework combining Astro 5, React 19, Tailwind v
 - [Enterprise CRM](/one/things/examples/enterprise-crm.md): Organization example
 - [DAO Governance](/one/things/examples/dao.md): Decentralized community example
 
-## AI Agents
+## AI Agents & Automation
 
 - [Agent Director](/one/things/agent-director.md): Feature orchestration and validation
 - [Agent Backend](/one/things/agent-backend.md): Convex schema and service specialist
@@ -79,19 +183,79 @@ ONE Platform is a complete web framework combining Astro 5, React 19, Tailwind v
 - [Agent Ops](/one/things/agent-ops.md): Deployment and release automation
 - [Agent Quality](/one/things/agent-quality.md): Testing and validation specialist
 
-## Inference-Based Planning
+## Cycle-Based Planning
 
-- [100-Inference Template](/one/knowledge/todo.md): How we plan features (not in days)
-- [Inference Workflow](/one/knowledge/inference-planning.md): Context-light execution
+- [100-Cycle Template](/one/knowledge/todo.md): How we plan features (not in days)
+- [Cycle Workflow](/one/knowledge/inference-planning.md): Context-light execution
 - [Commands](/one/knowledge/commands.md): /now, /next, /todo, /done, /build, /deploy
 
-## Optional
+## Before Writing ANY Code
+
+**CRITICAL READING:**
+
+1. `CLAUDE.md` - Root instructions for Claude Code
+2. `AGENTS.md` - Quick reference for Convex patterns
+3. `/one/knowledge/ontology.md` - Complete 6-dimension spec
+4. `/one/knowledge/astro-effect-simple-architecture.md` - Progressive complexity
+5. `/one/knowledge/rules.md` - Golden rules for AI development
+
+## Development Commands
+
+```bash
+bun run dev              # Start dev server (localhost:4321)
+bun run build            # Build for production
+bunx astro check         # Type checking
+bun test                 # Run tests
+```
+
+## Key Principles
+
+1. **Clarity Scales** - Everything maps to 6 dimensions
+2. **Groups Partition** - Multi-tenant by design
+3. **People Authorize** - Every action traces to human intent
+4. **Things Exist** - 66 typed entities
+5. **Connections Relate** - 25 relationship types
+6. **Events Record** - Immutable audit trail
+7. **Knowledge Learns** - AI understanding
+
+## Performance
+
+- **Setup time:** 5-10 seconds (agent mode) vs 2-3 minutes (interactive)
+- **Pattern accuracy:** 98% (compound over time)
+- **Core Web Vitals:** 90+ Lighthouse score
+- **Scale:** 2 people → billions without schema changes
+
+## Optional Resources
 
 - [Revenue Model](/one/people/revenue.md): Freemium pricing strategy
 - [Organization Structure](/one/people/organization.md): Team and governance
 - [Roadmap](/one/things/plans/roadmap.md): Future enhancements
 - [Technical Debt](/one/things/plans/technical-debt.md): Known issues and plans
 - [Security Policy](/SECURITY.md): Vulnerability reporting
-- [License](/LICENSE.md): MIT License
+- [License](/LICENSE.md): ONE Free License
 - [Contributing](/one/knowledge/contributing.md): How to contribute
 - [Changelog](/one/events/changelog.md): Release history
+
+## Support
+
+- Website: https://one.ie
+- GitHub: https://github.com/one-ie/one
+- Issues: https://github.com/one-ie/one/issues
+- Discussions: https://github.com/one-ie/one/discussions
+- CLI: `npx oneie agent --help`
+
+## Agent Experience Philosophy
+
+**"Agent Experience First"** - The CLI is designed so agents never get stuck on prompts they can't answer. If an agent accidentally runs the interactive command (`npx oneie`), it will:
+1. Detect the agent environment
+2. Show helpful error message
+3. Suggest correct command: `npx oneie agent`
+4. Exit cleanly without hanging
+
+This ensures agents can automate project setup as part of natural conversation flow without manual intervention.
+
+---
+
+**ONE Ontology. Infinite Systems.**
+
+*Built with clarity, simplicity, and infinite scale in mind.*

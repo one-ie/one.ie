@@ -1,0 +1,419 @@
+# ONE Platform Web - llms.txt
+
+This file provides guidance for Large Language Models (LLMs) and AI coding assistants working with the ONE Platform web application.
+
+## Project Overview
+
+This is the ONE Platform web application built with:
+- **Astro 5** - Static site generation + SSR
+- **React 19** - Islands architecture with selective hydration
+- **Tailwind CSS v4** - CSS-based configuration
+- **shadcn/ui** - 50+ pre-installed accessible components
+- **TypeScript 5.9+** - Strict mode with path aliases
+
+## For AI Agents: Development Workflow
+
+### 1. Understanding the Architecture
+
+**Read these files in order (CRITICAL):**
+1. `CLAUDE.md` - Complete instructions for Claude Code
+2. `AGENTS.md` - Quick reference for Convex patterns
+3. `/one/knowledge/ontology.md` - 6-dimension ontology
+4. `/one/knowledge/astro-effect-simple-architecture.md` - Progressive complexity
+
+### 2. The 6-Dimension Ontology
+
+Everything you build MUST map to these 6 dimensions:
+- **Groups** - Multi-tenant isolation (who owns what at group level)
+- **People** - Authorization & governance (who can do what)
+- **Things** - All entities (66 types: users, products, courses, tokens)
+- **Connections** - Relationships (25 types: owns, follows, teaches)
+- **Events** - Actions & audit trail (67 types: created, purchased, viewed)
+- **Knowledge** - AI understanding (labels, embeddings, vectors)
+
+### 3. Progressive Complexity Architecture (5 Layers)
+
+**Start simple, add complexity only when needed:**
+
+**Layer 1: Content + Pages (80% of features)**
+```astro
+---
+// Static content from content collections
+import { getCollection } from "astro:content";
+const products = await getCollection("products");
+---
+
+<Layout>
+  {products.map(product => (
+    <ThingCard thing={product.data} type="product" />
+  ))}
+</Layout>
+```
+
+**Layer 2: + Validation (15% of features)**
+- Add Effect.ts services for business logic
+- Only when you need validation
+
+**Layer 3: + State (4% of features)**
+- Add Nanostores when components need to share state
+- Only when islands need to communicate
+
+**Layer 4: + Multiple Sources (1% of features)**
+- Provider pattern enables markdown ↔ API switching
+- Only when switching between content sources
+
+**Layer 5: + Backend (<1% of features)**
+- Add Convex for real-time data and complex operations
+- Only when explicitly requested
+
+**Golden Rule:** Start at Layer 1. Add layers only when you feel the pain.
+
+## Frontend-First Development (Default Mode)
+
+**CRITICAL:** All agents default to frontend-only development unless explicitly requested otherwise.
+
+### Default Behavior
+
+When building features, you MUST:
+1. Build ONLY frontend code by default
+2. Use client-side state management (nanostores)
+3. Integrate third-party services via direct API calls (Stripe.js, OpenAI SDK)
+4. Store data in browser (localStorage, IndexedDB) or third-party services
+5. NEVER create backend code unless explicitly requested
+
+### When Backend is NOT Needed
+
+Frontend-only works perfectly for:
+- Ecommerce stores (Stripe.js handles payments)
+- LMS platforms (content in Astro pages, progress in localStorage)
+- SaaS tools (third-party APIs via client SDKs)
+- Marketing sites (static pages with forms)
+- Portfolio sites (projects, case studies)
+- Blogs (content collections)
+
+### When to Use Backend
+
+Backend is ONLY needed when user explicitly says:
+1. "Use backend"
+2. "Add groups" (multi-tenant data isolation)
+3. "Add multi-user" (user collaboration)
+4. "Track events" (immutable audit trail)
+5. "Build RAG" (vector embeddings)
+6. "Real-time updates" (WebSocket sync)
+
+## Development Commands
+
+```bash
+# Start dev server
+bun run dev              # localhost:4321
+
+# Build for production
+bun run build            # Includes type checking
+
+# Type checking only
+bunx astro check
+
+# Generate content collection types
+bunx astro sync
+
+# Run tests
+bun test
+
+# Watch mode
+bun test --watch
+```
+
+## File Structure
+
+```
+web/
+├── src/
+│   ├── pages/              # File-based routing (Astro)
+│   │   └── groups/
+│   │       └── [groupId]/
+│   │           └── things/
+│   │               └── [type].astro
+│   ├── components/         # React components + shadcn/ui
+│   │   ├── features/       # Feature-specific components
+│   │   │   ├── ThingCard.tsx
+│   │   │   ├── PersonCard.tsx
+│   │   │   └── EventItem.tsx
+│   │   └── ui/             # shadcn/ui components
+│   ├── content/            # Content collections (markdown)
+│   │   ├── config.ts       # Zod schemas
+│   │   └── products/
+│   ├── lib/                # Utilities
+│   │   ├── services/       # Effect.ts services (Layer 2)
+│   │   └── providers/      # Provider pattern (Layer 4)
+│   ├── stores/             # Nanostores (Layer 3)
+│   └── styles/             # Global CSS + Tailwind config
+└── test/                   # Test suites
+```
+
+## Pattern Convergence (98% Accuracy)
+
+**Your responsibility:** Make every new component REINFORCE the pattern, not introduce new ones.
+
+### ONE Pattern (Good - AI learns)
+
+```typescript
+// Things (entities) - ONE component type
+<ThingCard thing={product} type="product">
+  <CardHeader>
+    <CardTitle>{product.name}</CardTitle>
+  </CardHeader>
+</ThingCard>
+
+// People (separate dimension) - ONE component type
+<PersonCard person={user}>
+  <CardHeader>
+    <CardTitle>{user.displayName}</CardTitle>
+  </CardHeader>
+</PersonCard>
+
+// Events - ONE component type
+<EventItem event={event}>
+  <EventIcon type={event.type} />
+  <EventDescription event={event} />
+</EventItem>
+```
+
+**AI sees:** 3 patterns (ThingCard, PersonCard, EventItem). Pattern confidence: 98%.
+
+### Anti-Pattern (Bad - AI confused)
+
+```typescript
+// Different components for each thing type (WRONG!)
+<ProductCard product={product}>...</ProductCard>
+<CourseCard course={course}>...</CourseCard>
+<UserProfile user={user}>...</UserProfile>
+```
+
+**AI sees:** 4+ different patterns. Pattern confidence: 30%. Accuracy degrades.
+
+## Component Architecture
+
+### Entity Display (Things Dimension)
+
+```typescript
+// Generic thing renderer (use for ALL thing types)
+export function ThingCard({ thing, type }: { thing: Thing; type: string }) {
+  const price = thing.properties.price;
+
+  return (
+    <Card>
+      <CardHeader>
+        <CardTitle>{thing.name}</CardTitle>
+        <Badge variant="outline">{type}</Badge>
+      </CardHeader>
+      <CardContent>
+        {price && <div className="text-lg font-bold">${price}</div>}
+      </CardContent>
+    </Card>
+  );
+}
+
+// Use for ANY thing type
+<ThingCard thing={product} type="product" />
+<ThingCard thing={course} type="course" />
+<ThingCard thing={agent} type="ai_clone" />
+```
+
+## Astro Islands Architecture
+
+**Performance principle:** Generate static HTML by default. Add interactivity only where needed.
+
+### Hydration Directives
+
+```astro
+<!-- Static HTML (NO JavaScript) -->
+<ProductCard product={product} />
+
+<!-- Critical interactivity (loads immediately) -->
+<ShoppingCart client:load />
+
+<!-- Deferred interactivity (loads when browser idle) -->
+<SearchBox client:idle />
+
+<!-- Lazy loading (loads when visible) -->
+<RelatedProducts client:visible />
+
+<!-- Responsive features (loads on mobile) -->
+<MobileMenu client:media="(max-width: 768px)" />
+```
+
+## Nanostores for Island Communication
+
+**Problem:** Astro islands are isolated React trees. They can't share state via props.
+**Solution:** Nanostores provide global state accessible from ANY island.
+
+```typescript
+// stores/cart.ts (ONE file, ONE pattern)
+import { atom } from "nanostores";
+
+export const cart$ = atom<CartItem[]>([]);
+
+// Use in ANY island
+import { useStore } from "@nanostores/react";
+import { cart$ } from "@/stores/cart";
+
+const cart = useStore(cart$);
+```
+
+## Tailwind v4 Styling
+
+**CRITICAL:** Tailwind v4 uses CSS-based configuration (NO tailwind.config.mjs).
+
+```css
+/* src/styles/global.css */
+@import "tailwindcss";
+
+@theme {
+  /* Colors in HSL format (NO OKLCH!) */
+  --color-background: 0 0% 100%;
+  --color-foreground: 222.2 84% 4.9%;
+  --color-primary: 222.2 47.4% 11.2%;
+}
+
+/* Dark mode overrides */
+@variant dark (.dark &);
+
+.dark {
+  --color-background: 222.2 84% 4.9%;
+  --color-foreground: 210 40% 98%;
+}
+
+/* ALWAYS wrap colors with hsl() */
+.my-component {
+  background-color: hsl(var(--color-background));
+}
+```
+
+## Decision Framework
+
+### Ontology Mapping Questions (Ask BEFORE coding)
+
+1. **Groups:** Is this scoped to a group? Filter by groupId?
+2. **People:** Who can see this? Check role and permissions?
+3. **Things:** What entity types are displayed? Use correct thing type?
+4. **Connections:** What relationships need showing? Query connections table?
+5. **Events:** What actions need logging? Create event on mutation?
+6. **Knowledge:** How is this categorized? Add knowledge labels for search?
+
+### Performance Questions
+
+1. Can this be static HTML? → Use Astro component (no JS)
+2. Does this need interactivity? → Client island with appropriate directive
+3. Is data real-time? → Convex useQuery subscription (Layer 5)
+4. Is this above the fold? → `client:load` or eager loading
+5. Is this below the fold? → `client:visible` or lazy loading
+
+### Component Selection
+
+1. Static content? → Astro component (.astro file)
+2. Simple interactivity? → React component (hooks, state)
+3. Complex state? → React component + nanostores
+4. Form handling? → React component + Effect.ts validation
+
+## Common Mistakes to Avoid
+
+### Ontology Violations
+
+- ❌ Creating custom tables instead of using 6 dimensions
+- ✅ Map all features to things, connections, events, knowledge
+- ❌ Forgetting to filter by groupId
+- ✅ Always scope queries to current group
+
+### Performance Anti-Patterns
+
+- ❌ Using client:load for all components
+- ✅ Use appropriate hydration directive (idle, visible)
+- ❌ Fetching data client-side when it could be static
+- ✅ SSR data at build time or request time
+- ❌ Large unoptimized images
+- ✅ Use Astro Image with webp format and lazy loading
+
+### Pattern Divergence
+
+- ❌ Creating ProductCard, CourseCard, UserCard (different patterns)
+- ✅ Creating ThingCard, PersonCard (converging patterns)
+- ❌ Custom state management (localStorage hacks, URL params)
+- ✅ Nanostores for ALL island communication
+
+## Before Writing ANY Code
+
+**CRITICAL READING:**
+
+1. `CLAUDE.md` - Root instructions for Claude Code
+2. `AGENTS.md` - Quick reference for Convex patterns
+3. `/one/knowledge/ontology.md` - Complete 6-dimension spec
+4. `/one/knowledge/astro-effect-simple-architecture.md` - Progressive complexity
+5. `/one/knowledge/rules.md` - Golden rules for AI development
+
+## Content Collections
+
+```typescript
+// src/content/config.ts
+import { defineCollection, z } from 'astro:content';
+
+export const collections = {
+  blog: defineCollection({
+    schema: z.object({
+      title: z.string(),
+      description: z.string(),
+      pubDate: z.date(),
+      tags: z.array(z.string()),
+    }),
+  }),
+};
+
+// Usage in pages
+const posts = await getCollection('blog');
+```
+
+## Environment Variables
+
+```bash
+# Frontend (.env.local)
+PUBLIC_CONVEX_URL=https://shocking-falcon-870.convex.cloud
+CONVEX_DEPLOYMENT=prod:shocking-falcon-870
+
+# Organization (from CLI setup)
+ORG_NAME=Your Organization
+ORG_WEBSITE=https://example.com
+ORG_FOLDER=your-org
+ONE_BACKEND=off  # Default: frontend-only mode
+```
+
+## Success Criteria
+
+### Immediate (Feature-Level)
+
+- [ ] Component maps to correct dimension (groups/people/things/connections/events/knowledge)
+- [ ] Queries filtered by groupId (multi-tenant)
+- [ ] Role-based UI rendering (people dimension)
+- [ ] Events logged for all user actions
+- [ ] Static HTML by default, client islands strategic
+- [ ] Core Web Vitals > 90 (LCP, FID, CLS)
+
+## Learn More
+
+**Documentation:**
+- [Quick Start](/getting-started/quick-start)
+- [Claude Commands Reference](/getting-started/claude-commands)
+- [Architecture Overview](/overview/architecture)
+- [6-Dimension Ontology](/overview/ontology)
+
+**In this repository:**
+- `CLAUDE.md` - Complete instructions
+- `AGENTS.md` - Convex patterns
+- `/one/knowledge/` - Platform documentation
+
+**Community:**
+- Website: https://one.ie
+- GitHub: https://github.com/one-ie/web
+- CLI: `npx oneie`
+
+---
+
+**Built for performance. Aligned with ontology. Optimized for AI agents.**

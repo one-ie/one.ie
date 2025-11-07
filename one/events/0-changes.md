@@ -1,3 +1,108 @@
+### **c095d076** — template:96 custom:1 — `ONE`` [customization]
+
+**Template:**
+  - .claude/agents/agent-builder.md
+  - .claude/agents/agent-designer.md
+  - .claude/agents/agent-director.md
+  - .claude/agents/agent-frontend.md
+  - .claude/agents/agent-quality.md
+  - .claude/hooks.log
+  - .claude/hooks/release-cli.sh
+  - .claude/plans/1-PROJECTS-START-HERE.md
+  - .claude/plans/1-projects-developer-quickstart.md
+  - .claude/plans/1-projects-feature.md
+  - .claude/plans/1-projects-team-briefing.md
+  - .claude/plans/DELIVERABLES.txt
+  - .claude/plans/DOCUMENTER-DELIVERY-SUMMARY.md
+  - .claude/plans/DOCUMENTER-EXECUTION-GUIDE.md
+  - .claude/plans/DOCUMENTER-TASK-BREAKDOWN.md
+  - .claude/plans/EXECUTION-READY.md
+  - .claude/plans/EXECUTION-SUMMARY.md
+  - .claude/plans/INDEX-ALL-AGENTS.md
+  - .claude/plans/INDEX-FRONTEND-TESTING.md
+  - .claude/plans/INDEX-PROBLEM-SOLVER.md
+  - .claude/plans/INDEX-QUALITY-AGENT-INFER65.md
+  - .claude/plans/INDEX.md
+  - .claude/plans/MASTER-COORDINATION-PLAN.md
+  - .claude/plans/MASTER-ORCHESTRATION-INFER65.md
+  - .claude/plans/MASTER-PLAN-SUMMARY.md
+  - .claude/plans/PLAN-COMPLETE.md
+  - .claude/plans/PROBLEM-SOLVER-EXECUTIVE-SUMMARY.md
+  - .claude/plans/PROBLEM-SOLVER-QUICKSTART.md
+  - .claude/plans/PROJECTS-PLAN-SUMMARY.md
+  - .claude/plans/QUALITY-AGENT-SUMMARY.md
+  - .claude/plans/QUALITY-EXECUTION-CHECKLIST.md
+  - .claude/plans/QUICK-REFERENCE-FRONTEND-TESTING.md
+  - .claude/plans/README-PROBLEM-SOLVER.md
+  - .claude/plans/README.md
+  - .claude/plans/SPECIALIST-QUICK-REFERENCE.md
+  - .claude/plans/creation-instructions-9-todos.md
+  - .claude/plans/master-coordination-plan.json
+  - .claude/plans/master-plan-9-todos.md
+  - .claude/plans/specialist-assignments.md
+  - .claude/plans/todo-agent-builder.md
+  - .claude/plans/todo-agent-director.md
+  - .claude/plans/todo-agent-documenter.md
+  - .claude/plans/todo-agent-frontend.md
+  - .claude/plans/todo-agent-problem-solver.md
+  - .claude/plans/todo-agent-quality.md
+  - .claude/state/PHASE4-FILES.md
+  - .claude/state/cleanup_metrics.json
+  - .claude/state/cycle.json
+  - one/events/0-changes.md
+  - one/events/1-PROJECTS-START-HERE.md
+  - one/events/1-projects-developer-quickstart.md
+  - one/events/1-projects-feature.md
+  - one/events/1-projects-team-briefing.md
+  - one/events/DELIVERABLES.txt
+  - one/events/DOCUMENTER-DELIVERY-SUMMARY.md
+  - one/events/DOCUMENTER-EXECUTION-GUIDE.md
+  - one/events/DOCUMENTER-TASK-BREAKDOWN.md
+  - one/events/EXECUTION-READY.md
+  - one/events/EXECUTION-SUMMARY.md
+  - one/events/INDEX-ALL-AGENTS.md
+  - one/events/INDEX-FRONTEND-TESTING.md
+  - one/events/INDEX-PROBLEM-SOLVER.md
+  - one/events/INDEX-QUALITY-AGENT-INFER65.md
+  - one/events/INDEX.md
+  - one/events/MASTER-COORDINATION-PLAN.md
+  - one/events/MASTER-ORCHESTRATION-INFER65.md
+  - one/events/MASTER-PLAN-SUMMARY.md
+  - one/events/PLAN-COMPLETE.md
+  - one/events/PROBLEM-SOLVER-EXECUTIVE-SUMMARY.md
+  - one/events/PROBLEM-SOLVER-QUICKSTART.md
+  - one/events/PROJECTS-PLAN-SUMMARY.md
+  - one/events/QUALITY-AGENT-SUMMARY.md
+  - one/events/QUALITY-EXECUTION-CHECKLIST.md
+  - one/events/QUICK-REFERENCE-FRONTEND-TESTING.md
+  - one/events/README-PROBLEM-SOLVER.md
+  - one/events/SPECIALIST-QUICK-REFERENCE.md
+  - one/events/agent-director-routing-update.md
+  - one/events/creation-instructions-9-todos.md
+  - one/events/master-coordination-plan.json
+  - one/events/master-plan-9-todos.md
+  - one/events/specialist-assignments.md
+  - one/events/todo-agent-builder.md
+  - one/events/todo-agent-director.md
+  - one/events/todo-agent-documenter.md
+  - one/events/todo-agent-frontend.md
+  - one/events/todo-agent-problem-solver.md
+  - one/events/todo-agent-quality.md
+  - one/things/plans/remove-backend-development-from-agents.md
+  - web/src/components/DeployBuildTimeline.tsx
+  - web/src/components/docs/DocCompact.tsx
+  - web/src/components/docs/DocGrid.tsx
+  - web/src/components/docs/DocList.tsx
+  - web/src/components/docs/SidebarDocs.tsx
+  - web/src/content/docs/develop-platform/develop-cli.md
+  - web/src/content/docs/getting-started/introduction.md
+  - web/src/content/docs/getting-started/quick-start.md
+
+**Your Changes:**
+  - CLAUDE.md
+
+
+
 ### **a83fc6a2** — template:24 — `enhance: Refine deployment metrics and add build timeline component``
 
 **Template:**

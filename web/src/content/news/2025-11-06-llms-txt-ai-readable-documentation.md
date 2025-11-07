@@ -3,7 +3,6 @@ title: 'llms.txt: AI-Readable Documentation Standard'
 description: "We've created minimal and comprehensive llms.txt files following the llmstxt.org standard, with transparent context about Google's assessment and real-world utility."
 slug: 'llms-txt-ai-readable-documentation'
 date: 2025-11-06
-image: '/screenshots/llms-txt-preview.png'
 author: 'ONE'
 tags: ['documentation', 'ai', 'llm', 'standards', 'transparency']
 category: 'news'

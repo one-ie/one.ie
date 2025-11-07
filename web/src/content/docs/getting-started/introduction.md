@@ -207,21 +207,28 @@ Add Convex for real-time data and complex operations
 
 ### Essential Reading
 
-1. [Core Concepts: Ontology](/docs/core-concepts/ontology) - Deep dive into the 6 dimensions
-2. [Architecture Overview](/docs/core-concepts/architecture) - System design and patterns
-3. [Quick Start Guide](/docs/getting-started/quick-start) - Build your first feature
+1. [Quick Start Guide](/getting-started/quick-start) - Get started in 60 seconds
+2. [Claude Commands Reference](/getting-started/claude-commands) - Complete command guide
+3. [6-Dimension Ontology](/overview/ontology) - Deep dive into core model
+4. [Architecture Overview](/overview/architecture) - System design and patterns
 
 ### Learn by Example
 
-- [Tutorials](/docs/tutorials/first-feature) - Step-by-step guides
-- [Examples](/docs/tutorials/examples) - Reference implementations
-- [Patterns](/docs/core-concepts/patterns) - Common use cases
+- [Frontend Architecture](/overview/frontend-architecture) - Progressive complexity layers
+- [Language & DSL](/overview/language) - Write features in plain English
+- [Design System](/develop/design) - UI components and patterns
+
+### Development Guides
+
+- [Website Development](/develop/website-development) - Building with ONE
+- [Tracking Customizations](/develop/tracking-customizations) - Extend the platform
+- [Develop CLI](/develop-platform/develop-cli) - CLI development
 
 ### Get Help
 
-- [Claude Code Integration](/docs/guides/claude-code) - AI-assisted development
-- [Troubleshooting](/docs/troubleshooting/faq) - Common issues
-- [GitHub Discussions](https://github.com/one-ie/web/discussions) - Community support
+- **In Claude Code:** Type `/one` for help and command reference
+- [GitHub Issues](https://github.com/one-ie/one/issues) - Bug reports and features
+- [GitHub Discussions](https://github.com/one-ie/one/discussions) - Community support
 
 ## Philosophy
 
