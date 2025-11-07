@@ -1,442 +1,453 @@
-# /plan - Convert Ideas to Implementation Plans with CASCADE
+# /plan - Transform Ideas Into Optimized Execution Plans
 
-**Purpose:** Transform ideas into detailed 100-cycle plans with automatic agent assignment and task breakdown.
+**Purpose:** Automatically generate intelligent 100-cycle plans optimized for speed, quick wins, and minimal cycles to production.
 
-## Core Functionality
+---
 
-### Convert Idea to Full Plan
+## Core Philosophy
 
-```bash
-/plan convert "Build a course platform with AI tutors"
-```
+**Speed is a feature.** Every plan should:
+- ✅ **Show quick wins first** - Users see value in Cycles 1-10
+- ✅ **Minimize total cycles** - Can we ship in 30 cycles instead of 100?
+- ✅ **Maximize parallelization** - Run agents simultaneously whenever possible
+- ✅ **Prioritize MVP** - Core value first, enhancements later
+- ✅ **Validate early** - Test assumptions in first 10 cycles
 
-Generates:
-- ✅ 100-cycle execution plan
-- ✅ Automatic agent assignments
-- ✅ Task dependencies & timeline
-- ✅ 6-dimension ontology mapping
-- ✅ Quality loop workflow
-- ✅ Estimated tokens & budget
+---
 
-## Quick Usage
-
-### Plan Conversion (CASCADE Integration)
+## Usage
 
 ```bash
-/plan convert [idea]                    # Convert idea to full plan
-/plan show                              # Show current plan with assignments
-/plan export [format]                   # Export plan (md, json, csv)
+# Automatic plan generation
+/plan [your-idea]
+
+# Examples:
+/plan Build a course platform with AI tutors
+/plan E-commerce store for digital downloads
+/plan SaaS tool for project management
 ```
 
-### Execution Management
+**That's it.** Just `/plan [idea]` and the system:
+1. Validates against 6-dimension ontology
+2. Determines frontend-only vs backend architecture
+3. Identifies quick wins for Cycles 1-10
+4. Optimizes total cycle count (aim for 30-60, not 100)
+5. Assigns specialists automatically
+6. Shows parallel execution opportunities
 
-```bash
-/now                                    # Show current cycle & task
-/next                                   # Advance to next cycle
-/done                                   # Mark complete & advance
-/goto [N]                              # Jump to cycle N
+---
+
+## Quick Win Optimization (Cycles 1-10)
+
+**CRITICAL:** First 10 cycles must deliver visible progress.
+
+### Quick Win Strategy
+
+**❌ Old approach (slow start):**
+```
+Cycle 1-10: Research, planning, documentation, meetings
+Cycle 11+: Finally start coding
 ```
 
-### Plan Filtering & Analysis
-
-```bash
-/plan filter --agent=[name]            # Filter by agent (backend, frontend, etc)
-/plan filter --dimension=[name]        # Filter by dimension (things, connections, etc)
-/plan filter --status=[status]         # Filter by status (completed, pending, blocked)
-/plan dependencies                      # Show task dependencies
-/plan timeline                          # Show gantt-style timeline
-/plan stats                             # Show plan statistics
+**✅ New approach (fast start):**
+```
+Cycle 1-3:  Validate idea, map to ontology, decide architecture
+Cycle 4-7:  Build ONE working feature (end-to-end)
+Cycle 8-10: Deploy to staging, show something real
 ```
 
-## Example: Converting an Idea to a Plan
+### Example: Course Platform
 
-### Input
+**Quick Win Path:**
+```
+Cycle 1: Validate idea → Maps to Things (course), Connections (enrolled_in), Events (completed)
+Cycle 2: Frontend-only decision (no backend needed for MVP)
+Cycle 3: Create basic course list page (Astro SSR)
+Cycle 4: Add course detail page (static content)
+Cycle 5: Implement course navigation (prev/next lessons)
+Cycle 6: Add progress tracking (localStorage)
+Cycle 7: Style with Tailwind (make it beautiful)
+Cycle 8: Deploy to Cloudflare Pages
+Cycle 9: Test end-to-end (QA pass)
+Cycle 10: ✅ WORKING COURSE PLATFORM LIVE
+
+Result: 10 cycles → MVP shipped
+```
+
+---
+
+## Cycle Minimization Strategy
+
+**Golden Rule:** Use the minimum cycles needed. If MVP can ship in 30 cycles, don't plan 100.
+
+### Cycle Budget Guidelines
+
+| Feature Complexity | Frontend-Only | Backend + Frontend | Notes |
+|-------------------|---------------|-------------------|-------|
+| **Simple** (landing page, blog) | 5-15 cycles | N/A | Astro static pages only |
+| **Standard** (SaaS tool, e-commerce) | 15-30 cycles | 30-50 cycles | Most products fit here |
+| **Complex** (multi-tenant platform) | N/A | 50-80 cycles | Groups, events, real-time |
+| **Enterprise** (full platform) | N/A | 80-100 cycles | All 6 dimensions, integrations |
+
+### How to Minimize Cycles
+
+**1. Start Frontend-Only (Default)**
+- No backend = 50% fewer cycles
+- Add backend later if needed
+- Example: E-commerce with Stripe.js (15 cycles vs 40 with backend)
+
+**2. Use Existing Patterns**
+- Replicate proven components (5 cycles vs 20 from scratch)
+- Search codebase first: `grep -r "feature-name" /web/src/`
+- Extend existing code vs new implementation
+
+**3. Skip Non-Essential Features**
+- MVP = core value only
+- Nice-to-have → Future cycles
+- Example: Ship without admin dashboard (save 15 cycles)
+
+**4. Maximize Parallelization**
+- Design + Frontend can run simultaneously
+- Backend + Tests can run simultaneously
+- Example: 60 sequential cycles → 35 with parallelization
+
+**5. Defer Documentation**
+- Code is documentation (well-named functions)
+- Write docs in cycle 95-100 (not 1-10)
+- Focus on shipping first
+
+---
+
+## Plan Output Format
+
+After typing `/plan [idea]`, you'll see:
 
 ```
-/plan convert "Build a course platform where creators can:
-- Upload courses with lessons and quizzes
-- Set up AI tutors that answer student questions
-- Earn tokens that students can buy/trade
-- Access analytics on student progress
-- Build a community with forums and discussions"
-```
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
-### Output
+🚀 EXECUTION PLAN GENERATED
 
-```
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-📋 IDEA CONVERTED TO IMPLEMENTATION PLAN
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
-Idea: Course Platform with AI Tutors & Token Economy
-Status: ✅ Plan generated | 100 cycles | 15 agents assigned
+**Idea:** Course platform with AI tutors
+**Architecture:** Frontend-only → Backend (add later if needed)
+**Total Cycles:** 28 (optimized from 100)
+**Quick Wins:** Cycle 8 (working MVP deployed)
 
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-📊 PLAN OVERVIEW
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
-Total Cycles:     100
-Estimated Duration:   90 days
-Estimated Tokens:     ~500K
-Quality Loops:        4
-Agent Teams:          15 specialists
+⚡ QUICK WINS (Cycles 1-10)
 
-6-Dimension Coverage:
-  ✅ Groups (multi-tenant orgs)
-  ✅ People (roles & permissions)
-  ✅ Things (entities: courses, lessons, tokens)
-  ✅ Connections (relationships between entities)
-  ✅ Events (audit trail, activity log)
-  ✅ Knowledge (RAG for AI tutors)
+Cycle 1-3:   Foundation & validation (3 cycles)
+  ✓ Validate against ontology
+  ✓ Map entities (course, lesson, progress)
+  ✓ Choose frontend-only architecture
 
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-🎯 AGENT ASSIGNMENTS (Automatic)
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+Cycle 4-7:   Build core feature (4 cycles)
+  ✓ Course list page (Astro SSR)
+  ✓ Course detail page (lesson player)
+  ✓ Progress tracking (localStorage)
+  ✓ Navigation (prev/next lessons)
 
-Lead Orchestrator:
-  🤖 agent-director (infers 1-10, coordinates all specialists)
+Cycle 8-10:  Deploy MVP (3 cycles)
+  ✓ Style with Tailwind
+  ✓ Deploy to Cloudflare Pages
+  ✓ Test end-to-end
 
-Foundation Phase (Cycle 1-10):
-  📊 Validation, mapping, planning with agent-director
-  ✅ All done by orchestrator + planning
+🎯 **Cycle 10 Milestone:** Working course platform live at [your-domain].pages.dev
 
-Backend Phase (Cycle 11-30):
-  ⚙️ agent-backend: Schema, mutations, queries, services
-  - Cycle 11-20: Convex schema design (groups, entities, connections, events)
-  - Cycle 21-30: Core mutations (create, update, delete)
-  - Cycle 41-50: Advanced queries (filtering, pagination, relationships)
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
-Frontend Phase (Cycle 31-50):
-  🎨 agent-frontend: Pages, components, UI/UX
-  - Cycle 31-40: Astro pages (course list, detail, creator dashboard)
-  - Cycle 51-60: React components (course card, lesson player, forum)
-  - Cycle 71-80: Performance optimization
+📋 FULL PLAN (28 Cycles Total)
 
-Design Phase (Cycle 21-40):
-  🎭 agent-designer: Wireframes, tokens, specs
-  - Cycle 21-30: Wireframes (acceptance criteria → UI elements)
-  - Cycle 31-40: Design tokens (brand colors, spacing, typography)
-  - Cycle 41-50: Component specifications
+Phase 1: Foundation (Cycles 1-3)
+  → agent-director validates & plans
 
-Quality Phase (Cycle 41-60):
-  🧪 agent-quality: Tests, validation, requirements
-  - Cycle 41-50: User flows & acceptance criteria
-  - Cycle 51-60: Test suite execution
-  - Cycle 61-70: Quality loop (test → fix → verify)
+Phase 2: Core Feature (Cycles 4-10)
+  → agent-frontend builds pages & components
 
-Support Specialists (Throughout):
-  🔧 agent-problem-solver: Analyzes test failures, proposes fixes
-  📝 agent-documenter: Writes docs, captures lessons
-  🚀 agent-ops: Sets up CI/CD, prepares deployment
+Phase 3: Enhancement (Cycles 11-20)
+  → agent-frontend adds features (quiz, certificates)
 
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-📈 PHASE BREAKDOWN (100 Cycles)
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+Phase 4: Backend (Cycles 21-25) [If needed later]
+  → agent-backend adds groups, events, multi-user
 
-Cycle 1-10:   Foundation & Understanding
-  - Validate idea against 6-dimension ontology
-  - Map entity types (courses, lessons, tokens, users)
-  - Identify connection types (owns, enrolls, holds_tokens)
-  - List event types (course_created, quiz_completed, token_earned)
-  - Determine knowledge requirements (RAG for AI tutors)
-  - Identify org scope (multi-tenant per creator)
-  - Define people roles (creator, student, admin)
-  - Create vision document
-  - Break down features
-  - Create 100-cycle plan ← You are here!
+Phase 5: Quality (Cycles 26-27)
+  → agent-quality runs tests, validates
 
-Cycle 11-20: Backend Schema & Services
-  - Design Convex schema (groups, things, connections, events, knowledge)
-  - Define entity types (course, lesson, quiz, token, user, ai_clone)
-  - Create relationship types (owns, enrolled_in, holds_tokens)
-  - Plan service layer (CourseService, TokenService, AITutorService)
-  - Define mutations (createCourse, enrollStudent, earnToken)
-  - Plan queries (listCourses, getStudent, checkTokenBalance)
+Phase 6: Deploy (Cycle 28)
+  → agent-ops ships to production
 
-Cycle 21-30: Frontend Pages & Wireframes
-  - Design course list page (SSR with server data)
-  - Design course detail page (interactive lessons)
-  - Design creator dashboard (analytics, course management)
-  - Design AI tutor chat interface
-  - Create wireframes satisfying acceptance criteria
-  - Plan component hierarchy
-  - Design token system UI
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
-Cycle 31-40: Design Tokens & System
-  - Extract brand colors (from onboarding)
-  - Create typography scale
-  - Define spacing system
-  - Generate Tailwind v4 tokens
-  - Ensure WCAG AA contrast
-  - Create component specs with props
+⚡ PARALLEL OPPORTUNITIES
 
-Cycle 41-50: Quality & Testing
-  - Define user flows (creator: upload course, student: take course)
-  - Create acceptance criteria (all features testable)
-  - Define test suite (unit, integration, e2e)
-  - Start test implementation
-  - Run tests against schema
+These cycles can run simultaneously:
+- Design (Cycles 4-7) + Backend (if added later)
+- Frontend (Cycles 8-15) + Tests (Cycles 8-15)
+- Documentation (Cycles 20+) + Optimization (Cycles 20+)
 
-Cycle 51-60: Backend Implementation
-  - Implement Convex mutations (createCourse, enrollStudent)
-  - Implement queries (listCourses, getProgress)
-  - Create Effect.ts services (business logic)
-  - Add event logging (complete audit trail)
-  - Implement multi-tenant isolation
+**Time Savings:** 28 sequential cycles → 18 days with parallelization
 
-Cycle 61-70: Frontend Implementation
-  - Implement Astro pages (SSR + React islands)
-  - Build React components (course cards, lesson player)
-  - Integrate Convex queries (useQuery, useMutation)
-  - Add loading/error states
-  - Optimize performance (90+ Lighthouse)
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
-Cycle 71-80: AI Tutor Integration
-  - Integrate Claude API for responses
-  - Implement RAG (Retrieval-Augmented Generation)
-  - Connect knowledge base (course content → embeddings)
-  - Create AI personality system
-  - Test tutor quality
-
-Cycle 81-90: Quality Assurance
-  - Run full test suite
-  - Fix failing tests
-  - Performance testing (Core Web Vitals)
-  - Security testing
-  - Accessibility audit (WCAG AA)
-
-Cycle 91-100: Deployment & Documentation
-  - Write user documentation
-  - Create API documentation
-  - Set up CI/CD pipeline
-  - Deploy to Cloudflare Pages (frontend)
-  - Deploy to Convex Cloud (backend)
-  - Write deployment guide
-
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-🔗 AGENT TASK ASSIGNMENTS
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-
-agent-backend assigned:
-  - Cycle 11-20: Schema design
-  - Cycle 41-50: Queries design
-  - Cycle 51-60: Mutation implementation
-  - Skills: agent-backend:create-mutation, create-query, design-schema
-
-agent-frontend assigned:
-  - Cycle 21-30: Page wireframes
-  - Cycle 61-70: Component implementation
-  - Cycle 81-90: Performance optimization
-  - Skills: agent-frontend:create-page, create-component, optimize-performance
-
-agent-designer assigned:
-  - Cycle 21-30: Wireframe generation
-  - Cycle 31-40: Token & spec definition
-  - Skills: agent-designer:create-wireframe, define-components, set-design-tokens
-
-agent-quality assigned:
-  - Cycle 41-50: Test definition
-  - Cycle 61-70: Test execution
-  - Cycle 81-90: Full quality suite
-  - Skills: agent-quality:define-tests, run-tests, validate-ontology
-
-agent-problem-solver assigned:
-  - Throughout: Monitor test failures
-  - When needed: Analyze root causes
-  - Delegate fixes to specialists
-
-agent-ops assigned:
-  - Cycle 91-100: CI/CD setup
-  - Deployment configuration
-  - Production monitoring
-
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-💾 DEPENDENCIES & TIMELINE
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-
-Sequential (Cannot run in parallel):
-  1-10 (Foundation) → All other phases
-
-Parallel Tracks (Can run simultaneously after Foundation):
-  Backend Track:   Cycle 11-20 → 41-50 → 51-60
-  Frontend Track:  Cycle 21-30 → 61-70
-  Design Track:    Cycle 21-30 → 31-40
-  Quality Track:   Cycle 41-50 → 61-70 → 81-90
-  Integration:     Cycle 71-80 (after backend + frontend core)
-
-Critical Path:
-  Foundation → Backend Schema → Mutations → Frontend Implementation
-  (28 days minimum, parallelization can reduce)
-
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 🎯 NEXT STEPS
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
-1. View full plan:
-   /plan show
+1. Start execution:
+   /now    - See Cycle 1 task
+   /next   - Advance through cycles
+   /done   - Mark complete & learn
 
-2. See task assignments:
-   /plan filter --agent=backend
+2. Fast-track a feature:
+   /fast [feature-name]
 
-3. Start execution:
-   /now              - See Cycle 1 context
-   /next             - Move through plan
-   /done             - Mark complete & advance
+3. Build with specialists:
+   /create [specific-feature]
 
-4. Monitor agents:
-   /agent dashboard  - See all agents working
-   /agent [name]     - View specific agent
-
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 ```
 
-## Advanced Features
+---
 
-### Plan Filtering
+## Intelligent Planning Algorithm
+
+The plan generator uses these rules:
+
+### 1. Ontology Validation (Cycle 1)
+```
+Question: Does this map to 6 dimensions?
+- Identify Groups (multi-tenant? hierarchical?)
+- Identify People (roles? permissions?)
+- Identify Things (core entities)
+- Identify Connections (relationships)
+- Identify Events (actions to track?)
+- Identify Knowledge (search/RAG needed?)
+
+If unclear → Ask clarifying questions
+If invalid → Suggest reframing
+```
+
+### 2. Architecture Decision (Cycle 2)
+```
+Frontend-only if:
+- Single user OR third-party auth
+- Static content OR localStorage sufficient
+- Payments via Stripe.js
+- No real-time collaboration
+
+Backend needed if:
+- Multi-tenant groups
+- Real-time sync
+- Immutable event log
+- Vector embeddings (RAG)
+```
+
+### 3. Quick Win Identification (Cycle 3)
+```
+Quick Win = Smallest shippable feature showing core value
+
+Examples:
+- Course platform → One playable course
+- E-commerce → One purchasable product
+- SaaS tool → One working workflow
+- Blog → Five published posts
+
+Goal: Cycle 10 = Something live and usable
+```
+
+### 4. Cycle Budget Allocation
+```
+Frontend-only:
+  Foundation:     3 cycles (10%)
+  Core Feature:   7 cycles (25%)
+  Enhancements:   10 cycles (35%)
+  Quality:        5 cycles (18%)
+  Deploy:         3 cycles (12%)
+  Total:          28 cycles
+
+Backend + Frontend:
+  Foundation:     3 cycles (6%)
+  Backend Schema: 5 cycles (10%)
+  Backend Logic:  8 cycles (16%)
+  Frontend Pages: 10 cycles (20%)
+  Integration:    8 cycles (16%)
+  Quality:        8 cycles (16%)
+  Deploy:         5 cycles (10%)
+  Documentation:  3 cycles (6%)
+  Total:          50 cycles
+```
+
+### 5. Parallelization Mapping
+```
+Identify independent work streams:
+- Design + Backend (no dependencies)
+- Frontend + Tests (can run together)
+- Optimization + Documentation (separate concerns)
+
+Calculate time savings:
+  Sequential: 50 cycles × 1 day = 50 days
+  Parallel (3 streams): 50 ÷ 3 = 17 days
+```
+
+---
+
+## Plan Commands
 
 ```bash
-# Filter by agent
-/plan filter --agent=backend               # Shows backend cycles
-/plan filter --agent=frontend              # Shows frontend cycles
-/plan filter --agent=designer              # Shows design cycles
+# Generate plan
+/plan [idea]
 
-# Filter by dimension
-/plan filter --dimension=things            # Entity-related tasks
-/plan filter --dimension=connections       # Relationship-related tasks
-/plan filter --dimension=events            # Event-related tasks
+# View plan
+/plan show              # Full plan with all cycles
+/plan summary           # Quick overview
 
-# Filter by status
-/plan filter --status=pending              # Not started
-/plan filter --status=completed            # Already done
-/plan filter --status=blocked              # Dependencies unmet
+# Filter plan
+/plan cycles 1-10       # Show specific range
+/plan agent frontend    # Show cycles for specific agent
+/plan quick-wins        # Show Cycles 1-10 only
+
+# Modify plan
+/plan optimize          # Re-optimize to use fewer cycles
+/plan add-backend       # Add backend to frontend-only plan
+/plan skip [N]          # Skip cycle N (mark not applicable)
+
+# Export plan
+/plan export md         # Markdown format
+/plan export json       # JSON format
+/plan export timeline   # Gantt chart
 ```
 
-### Plan Analysis
+---
 
-```bash
-# View dependencies
-/plan dependencies                         # Show all task dependencies
+## Example Plans
 
-# Show timeline
-/plan timeline                            # Show gantt chart of phases
+### Example 1: E-commerce Store (Frontend-Only)
 
-# Get statistics
-/plan stats                               # Show plan metrics
-  - Total cycles: 100
-  - Agents assigned: 15
-  - Estimated duration: 90 days
-  - Parallel tracks: 5
-  - Quality loops: 4
+**Input:** `/plan E-commerce store for digital fonts`
+
+**Output:**
+```
+🚀 Plan: 22 cycles (frontend-only)
+
+Quick Wins (Cycles 1-8):
+- Cycle 1-2: Validate + architect
+- Cycle 3-5: Product list + detail pages
+- Cycle 6-7: Stripe Checkout integration
+- Cycle 8: Deploy MVP
+
+Enhancement (Cycles 9-18):
+- Cycle 9-12: Cart system (localStorage)
+- Cycle 13-15: Download management
+- Cycle 16-18: Admin dashboard
+
+Quality & Deploy (Cycles 19-22):
+- Cycle 19-20: Testing
+- Cycle 21: Performance optimization
+- Cycle 22: Production deploy
+
+✅ Cycle 8: Customers can buy fonts
+🎯 Cycle 22: Full-featured store live
 ```
 
-### Export Plan
+### Example 2: SaaS Platform (Backend + Frontend)
 
-```bash
-# Export to different formats
-/plan export markdown                     # one/plans/[feature-name].md
-/plan export json                        # .claude/state/plan.json
-/plan export csv                         # plan.csv (for spreadsheets)
-/plan export timeline                    # project timeline format
+**Input:** `/plan Project management tool with team collaboration`
 
-# Share plan
-/plan share                              # Generate shareable link
+**Output:**
+```
+🚀 Plan: 45 cycles (backend + frontend)
+
+Quick Wins (Cycles 1-10):
+- Cycle 1-3: Validate + architect (backend needed)
+- Cycle 4-6: Backend schema (groups, projects, tasks)
+- Cycle 7-9: Basic project view (list tasks)
+- Cycle 10: Deploy staging (team can test)
+
+Core Features (Cycles 11-30):
+- Cycle 11-15: Task CRUD operations
+- Cycle 16-20: Real-time updates (WebSocket)
+- Cycle 21-25: Team permissions
+- Cycle 26-30: Activity feed (events table)
+
+Polish (Cycles 31-45):
+- Cycle 31-38: UI/UX refinement
+- Cycle 39-42: Performance optimization
+- Cycle 43-44: Testing
+- Cycle 45: Production deploy
+
+✅ Cycle 10: MVP with basic task management
+🎯 Cycle 45: Full collaboration platform
 ```
 
-## Plan Structure
+### Example 3: Landing Page (Minimal)
 
-Each plan includes:
+**Input:** `/plan Landing page for SaaS product`
 
-### 1. Idea Validation
-- Maps to 6-dimension ontology
-- Identifies entity types
-- Lists required connections
-- Determines event types
+**Output:**
+```
+🚀 Plan: 8 cycles (frontend-only, minimal)
 
-### 2. 100-Cycle Breakdown
-- Foundation (Cycle 1-10)
-- Backend (Cycle 11-50)
-- Frontend (Cycle 21-80)
-- Quality (Cycle 41-90)
-- Operations (Cycle 91-100)
+Cycles 1-2: Validate + content structure
+Cycle 3: Hero section + CTA
+Cycle 4: Features section
+Cycle 5: Pricing section
+Cycle 6: Contact form (Formspree)
+Cycle 7: Style + responsive design
+Cycle 8: Deploy to Cloudflare Pages
 
-### 3. Agent Assignments
-- Each agent gets specific cycles
-- Skills listed for each task
-- Dependencies documented
+✅ Cycle 8: Landing page live
 
-### 4. Quality Loop
-- Tests defined before design/implementation
-- Design created to satisfy tests
-- Implementation validates against tests
-- Failures trigger root cause analysis
-
-### 5. Timeline & Dependencies
-- Parallel work identified
-- Critical path highlighted
-- Gantt chart generated
-
-## Usage Examples
-
-### Example 1: Convert Idea to Plan
-
-```bash
-/plan convert "Build an e-commerce store with product recommendations"
-
-Output:
-✅ Plan generated: 100 cycles
-✅ Agents assigned: 15 specialists
-✅ Quality loops: 3
-✅ Dependencies: 24
+💡 Tip: This could be done in 8 cycles because:
+- No backend needed
+- Static content
+- Third-party form handling
+- Existing patterns (hero, pricing, form)
 ```
 
-### Example 2: View Plan with Agent Filter
+---
 
-```bash
-/plan filter --agent=backend
+## Integration with Other Commands
 
-Output:
-Shows only backend cycles:
-- Cycle 11-20: Schema design
-- Cycle 41-50: Queries
-- Cycle 51-60: Mutations
-```
+### → /now
+After plan is created, use `/now` to see current cycle
 
-### Example 3: Export and Share
+### → /next
+Advance through cycles sequentially
 
-```bash
-/plan export markdown
+### → /fast [feature]
+Skip planning, build specific feature immediately (see `/fast` command)
 
-Output:
-📄 Created: one/plans/ecommerce-store.md
-📊 Statistics: 100 cycles, 15 agents, 90 days
-🔗 Share: /plan share
-```
+### → /create [feature]
+Build specific feature with specialists
 
-## Cycle Workflow Integration
+### → /done
+Mark current cycle complete, capture lessons
 
-Once plan is created, use these commands:
-
-```bash
-/now                    # Show current cycle (Cycle 1)
-/next                   # Advance to next cycle
-/done                   # Mark complete, capture lessons
-/goto [N]              # Jump to specific cycle
-/build                 # Start building with agents
-```
+---
 
 ## Key Principles
 
-1. **Ideas → Plans:** Convert any idea into actionable 100-cycle plan
-2. **Automatic Assignment:** Agent assignments happen automatically based on cycle type
-3. **Quality First:** Tests defined before implementation
-4. **Parallel Execution:** Maximize agent parallelization
-5. **Complete Tracking:** Every cycle tracked with status, dependencies, lessons
-6. **Continuous Learning:** Capture lessons after each cycle
+1. **Default to minimum cycles** - Start with smallest viable plan
+2. **Quick wins in first 10 cycles** - Show progress early
+3. **Frontend-only by default** - Add backend only when necessary
+4. **Parallelize aggressively** - Run independent work simultaneously
+5. **Ship early, enhance later** - MVP first, features follow
+6. **Learn from previous plans** - Refine cycle estimates over time
+
+---
+
+## State Persistence
+
+Plans are saved to:
+- `.claude/state/plan.json` - Full plan with all cycles
+- `.claude/state/cycle.json` - Current cycle context
+- `one/events/plans/[feature-name].md` - Human-readable plan export
 
 ---
 
 ## See Also
 
-- [CASCADE System](./cascade.md) - Full agent orchestration
-- [Cycle Workflow](../commands/done.md) - Mark cycles complete
-- [Agent Dashboard](./one.md) - View all agents
+- `/fast` - Build features rapidly without planning
+- `/create` - Build specific features with specialists
+- `/now` - View current cycle
+- `/done` - Complete cycles and advance
