@@ -1,3 +1,33 @@
+### **a83fc6a2** — template:24 — `enhance: Refine deployment metrics and add build timeline component``
+
+**Template:**
+  - .claude/hooks.log
+  - .claude/state/cycle.json
+  - one/events/0-changes.md
+  - one/events/CLOUDFLARE-FS-FIX-20251106-100516.md
+  - one/events/fix-product-hydration-20251106.md
+  - web/src/components/DeployBuildTimeline.tsx
+  - web/src/components/DeployHeroMetrics.tsx
+  - web/src/components/DeploymentMetrics.tsx
+  - web/src/components/ProjectActionButtons.astro
+  - web/src/components/ecommerce/interactive/ProductCard.tsx
+  - web/src/components/ecommerce/interactive/Wishlist.tsx
+  - web/src/components/ecommerce/static/FAQAccordion.tsx
+  - web/src/components/ecommerce/static/RecommendationsCarousel.tsx
+  - web/src/components/products/ProductSearch.tsx
+  - web/src/content/news/2025-11-06-llms-txt-ai-readable-documentation.md
+  - web/src/content/news/perfect-lighthouse-scores-desktop-mobile.md
+  - web/src/pages/collections/[slug].astro
+  - web/src/pages/deploy.astro
+  - web/src/pages/free-license.astro
+  - web/src/pages/license.astro
+  - web/src/pages/products/[slug].astro
+  - web/src/pages/products/index.astro
+  - web/src/pages/shop.astro
+  - web/src/styles/global.css
+
+
+
 ### **935f4f0d** — template:2 — `enhance: Add comprehensive credits page with web data and sidebar link``
 
 **Template:**

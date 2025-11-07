@@ -46,17 +46,17 @@ export function DocCompact({ entries, onTagClick }: DocCompactProps) {
                       className="no-underline hover:no-underline"
                       onClick={(e) => e.stopPropagation()}
                     >
-                      <Badge className="text-base px-2 py-0.5 bg-primary/10 hover:bg-primary/20 text-primary border-none flex items-center gap-1 cursor-pointer">
+                      <Badge className="text-xs px-2 py-0.5 bg-primary/10 hover:bg-primary/20 text-primary border-none flex items-center gap-1 cursor-pointer">
                         <Tag className="w-3 h-3" />
                         <span>{tag}</span>
                       </Badge>
                     </a>
                   ))
                 ) : (
-                  <span className="text-base text-muted-foreground">-</span>
+                  <span className="text-xs text-muted-foreground">-</span>
                 )}
                 {entry.data.tags && entry.data.tags.length > 3 && (
-                  <span className="text-base text-muted-foreground">
+                  <span className="text-xs text-muted-foreground">
                     +{entry.data.tags.length - 3}
                   </span>
                 )}

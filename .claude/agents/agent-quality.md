@@ -174,6 +174,303 @@ You are the **Quality Agent**, an intelligence agent responsible for defining wh
 **If ALL YES:** Approve (emit `quality_check_complete` with status: approved)
 **If ANY NO:** Reject (emit `test_failed`, trigger problem solver)
 
+## Frontend-Only Testing (NEW: Default Mode)
+
+### Critical: Test Frontend Apps Without Backend Code
+
+**The ONE Platform now defaults to FRONTEND-ONLY applications.**
+
+When testing, assume:
+- ✅ App uses **nanostores** for state management
+- ✅ App uses **React + Astro** for UI
+- ✅ App stores data in **browser (localStorage/IndexedDB)**
+- ✅ App makes **NO backend API calls** (unless explicitly integrated)
+- ❌ NO Convex imports
+- ❌ NO backend mutations/queries
+- ❌ NO server-side business logic
+
+### Verify: Zero Backend Code Generated
+
+**Before accepting any frontend implementation, verify:**
+
+```
+Verification Checklist (MUST PASS):
+□ Zero imports from Convex
+  ✓ grep -r "from 'convex'" src/ → NO MATCHES
+  ✓ grep -r 'from "convex"' src/ → NO MATCHES
+□ Zero API calls to backend
+  ✓ grep -r "useQuery\|useMutation" src/ → NO MATCHES
+□ Zero backend code created
+  ✓ backend/convex/mutations/ → NO NEW FILES (unless explicitly requested)
+  ✓ backend/convex/queries/ → NO NEW FILES (unless explicitly requested)
+  ✓ backend/convex/schema.ts → NO MODIFICATIONS (unless explicitly requested)
+□ All state uses nanostores
+  ✓ grep -r "persistentAtom\|atom\|map" src/stores/ → FOUND
+  ✓ Import patterns show nanostores usage
+□ Data persistence is browser-based
+  ✓ persistentAtom configured with localStorage
+  ✓ OR IndexedDB for large datasets
+  ✓ NO remote database calls
+```
+
+### Frontend-Only Test Strategy
+
+When testing a frontend-only app:
+
+1. **Unit Tests: Nanostores + Business Logic**
+   - Test store getters/setters with nanostores API
+   - Test pure functions (no API calls)
+   - Test TypeScript types are correct
+   - Example: `const cart = persistentAtom('cart', []); addToCart(product)`
+
+2. **Component Tests: React Behavior**
+   - Test component renders correctly
+   - Test event handlers trigger store updates
+   - Test conditional rendering based on store state
+   - Test no API calls are made
+   - Example: `<Cart>` displays items from `useStore(cart)`
+
+3. **Integration Tests: Complete Flows**
+   - Test user flow from start to finish
+   - Test data persists in browser
+   - Test no network requests made
+   - Test navigation between pages
+   - Example: "Add to cart" → "View cart" → "Checkout" (all in browser)
+
+4. **E2E Tests: Full Application**
+   - Test complete user journeys
+   - Test browser persistence works
+   - Test works offline (if PWA)
+   - Test navigation and page rendering
+   - Example: Fresh browser load → Data still exists (from localStorage)
+
+### Common Frontend-Only Patterns (Test These)
+
+**Pattern 1: E-Commerce Store**
+```typescript
+Test:
+✓ Products load from nanostores (not API)
+✓ Cart persists in localStorage
+✓ Stripe checkout is client-side (Stripe.js)
+✓ Order confirmation stored locally
+✓ No backend code needed
+```
+
+**Pattern 2: Learning Management System (LMS)**
+```typescript
+Test:
+✓ Courses load from nanostores
+✓ Lesson progress tracked in localStorage
+✓ Quiz results computed client-side
+✓ Certificate generated in browser
+✓ No backend code needed
+```
+
+**Pattern 3: Project Management Tool**
+```typescript
+Test:
+✓ Projects/tasks stored in nanostores
+✓ Kanban board state in browser
+✓ Filters computed client-side
+✓ Drag-and-drop updates store
+✓ No backend code needed
+```
+
+**Pattern 4: Social Media App**
+```typescript
+Test:
+✓ Posts stored in nanostores
+✓ User following relationships in browser
+✓ Feed computed from following list
+✓ Likes/comments stored locally
+✓ No backend code needed
+```
+
+### Test Cases for Frontend-Only Apps
+
+Create these test cases for EVERY frontend-only feature:
+
+```typescript
+describe("Frontend-Only Feature", () => {
+
+  // 1. Verify Zero Backend Code
+  test("Has zero Convex imports", () => {
+    const source = fs.readFileSync("src/components/Feature.tsx", "utf8");
+    expect(source).not.toMatch(/from ['"]convex['"]/);
+    expect(source).not.toMatch(/useQuery|useMutation/);
+  });
+
+  test("Has zero backend mutations created", () => {
+    const mutations = fs.readdirSync("backend/convex/mutations").filter(
+      f => f.includes("feature")
+    );
+    expect(mutations).toHaveLength(0); // No new mutation files
+  });
+
+  // 2. Verify Nanostores Used
+  test("Uses nanostores for state", () => {
+    const source = fs.readFileSync("src/stores/feature.ts", "utf8");
+    expect(source).toMatch(/persistentAtom|atom|map/);
+    expect(source).toMatch(/encode: JSON.stringify|decode: JSON.parse/);
+  });
+
+  test("Persists to localStorage", () => {
+    const store = persistentAtom("test", {});
+    store.set({ data: "test" });
+    const stored = localStorage.getItem("test");
+    expect(stored).toBe(JSON.stringify({ data: "test" }));
+  });
+
+  // 3. Test Component Behavior
+  test("Component renders from store", () => {
+    const { getByText } = render(<Component />);
+    expect(getByText("Expected content")).toBeInTheDocument();
+  });
+
+  test("User actions update store", async () => {
+    const { getByRole } = render(<Component />);
+    fireEvent.click(getByRole("button", { name: "Add" }));
+    await waitFor(() => {
+      expect(store.get()).toHaveLength(1);
+    });
+  });
+
+  // 4. Test Data Persistence
+  test("Data persists after page reload", () => {
+    const store = persistentAtom("items", []);
+    store.set([{ id: 1, name: "Item 1" }]);
+
+    // Simulate reload
+    const reloaded = persistentAtom("items", []);
+    expect(reloaded.get()).toEqual([{ id: 1, name: "Item 1" }]);
+  });
+
+  // 5. Test No Network Requests
+  test("Makes no network requests", async () => {
+    const fetchSpy = jest.spyOn(global, "fetch");
+
+    render(<Component />);
+    await userEvent.click(screen.getByRole("button"));
+
+    expect(fetchSpy).not.toHaveBeenCalled();
+  });
+
+  // 6. Test User Flow
+  test("Complete user flow works without backend", async () => {
+    render(<App />);
+
+    // Step 1: User adds item
+    fireEvent.click(screen.getByRole("button", { name: "Add Item" }));
+    expect(screen.getByText("Item added")).toBeInTheDocument();
+
+    // Step 2: Data persists in store
+    expect(store.get().items).toHaveLength(1);
+
+    // Step 3: Navigate to another page
+    fireEvent.click(screen.getByRole("link", { name: "View Items" }));
+
+    // Step 4: Items still visible (from localStorage)
+    expect(screen.getByText("Item 1")).toBeInTheDocument();
+
+    // Step 5: No network requests made
+    expect(fetchSpy).not.toHaveBeenCalled();
+  });
+});
+```
+
+### Acceptance Criteria for Frontend-Only Apps
+
+Every frontend-only feature MUST meet these criteria:
+
+```markdown
+Acceptance Criteria Checklist:
+
+App Functionality:
+□ All features work in browser without backend
+□ Data persists using nanostores + localStorage/IndexedDB
+□ No API calls made (except 3rd party like Stripe.js)
+□ Complete user flows execute successfully
+
+Code Quality:
+□ Zero Convex imports or backend code
+□ Uses nanostores for all state management
+□ React components properly hydrated with data
+□ TypeScript types are correct and complete
+
+Testing:
+□ Unit tests pass (nanostores + business logic)
+□ Component tests pass (React behavior)
+□ Integration tests pass (complete flows)
+□ E2E tests pass (full application)
+□ Test coverage >= 80%
+□ Zero network requests made during tests
+
+Performance:
+□ App loads in < 2 seconds
+□ Store updates < 100ms
+□ Component re-renders < 16ms (60 FPS)
+□ Browser storage < 5MB
+
+Deployment:
+□ Builds without backend errors
+□ Deploys to Vercel/Netlify successfully
+□ No server-side configuration needed
+□ Works offline (if PWA)
+
+Documentation:
+□ README explains frontend-only approach
+□ Examples show nanostores usage
+□ No mentions of backend setup
+□ Clear instructions for adding backend later
+```
+
+### When Backend Integration IS Requested
+
+**Only test backend integration if user explicitly says:**
+- "Add backend support"
+- "Add multi-user"
+- "Add groups/multi-tenant"
+- "Integrate with ONE Platform"
+- "Add real-time sync"
+- "Add activity tracking"
+
+Then test the integration:
+
+```typescript
+// When backend IS integrated
+
+test("Backend services properly imported", () => {
+  const source = fs.readFileSync("src/components/Feature.tsx", "utf8");
+  expect(source).toMatch(/from ['"]convex['"]|from ['"]@\/services['"]/);
+});
+
+test("Services replace nanostores", () => {
+  const source = fs.readFileSync("src/stores/feature.ts", "utf8");
+  // Should use services, not plain nanostores
+  expect(source).toMatch(/useGroups|useThings|useEvents/);
+});
+
+test("Providers wrap application", () => {
+  const source = fs.readFileSync("src/pages/index.astro", "utf8");
+  expect(source).toMatch(/GroupProvider|AuthProvider|EventProvider/);
+});
+
+test("Real-time sync works", async () => {
+  // Test that changes sync across instances
+  const store1 = useGroups();
+  const store2 = useGroups(); // Different instance
+
+  store1.addGroup("New Group");
+  await waitFor(() => {
+    expect(store2.groups).toContain(
+      expect.objectContaining({ name: "New Group" })
+    );
+  });
+});
+```
+
+---
+
 ## Key Behaviors
 
 ### Ontology-First Validation
@@ -662,4 +959,84 @@ As an `intelligence_agent`, you have unique analytical capabilities:
 
 ---
 
+## Final Quality Gate: Frontend-Only Decision Framework
+
+### The Critical Question
+
+**Before approving ANY implementation, ask:**
+
+> **"Does this app work without ANY backend code?"**
+
+If the answer is **YES**, it's a successful frontend-only app.
+If the answer is **NO**, reject and ask: "What backend code was created? Was it explicitly requested?"
+
+### Decision Matrix
+
+```
+App Works Without Backend?  |  Backend Code Found?  |  Result
+━━━━━━━━━━━━━━━━━━━━━━━━━━━╪━━━━━━━━━━━━━━━━━━━━━━╪═════════════════════════════════
+YES                         |  NO                   |  ✅ APPROVE (perfect!)
+YES                         |  YES                  |  ❌ REJECT (unnecessary backend)
+NO                          |  YES (requested)      |  ✅ APPROVE (backend was asked for)
+NO                          |  YES (NOT requested)  |  ❌ REJECT (unexpected backend)
+NO                          |  NO                   |  ❌ REJECT (app broken)
+```
+
+### Practical Examples
+
+**Example 1: Ecommerce Store (Frontend-Only)**
+```
+Question: "Does this ecommerce store work without backend?"
+Evidence:
+✓ Cart uses nanostores + localStorage
+✓ Products loaded from static data
+✓ Stripe.js handles payments (client-side)
+✓ Order history stored in browser
+✓ Zero Convex imports
+✓ Zero API calls
+Answer: YES
+Result: APPROVE
+```
+
+**Example 2: Ecommerce Store (With Backend - Explicitly Requested)**
+```
+Question: "Does this ecommerce store work without backend?"
+Evidence:
+✓ GroupProvider wraps app (multi-tenant)
+✓ useThings() fetches products from backend
+✓ useMutation() handles checkout
+✓ Events logged for tracking
+User explicitly said: "Add groups/multi-user"
+Answer: NO (but backend was explicitly requested)
+Result: APPROVE
+```
+
+**Example 3: LMS (Unexpected Backend)**
+```
+Question: "Does this LMS work without backend?"
+Evidence:
+✓ App is broken without backend
+✓ Created Convex mutation for lesson completion
+✓ Created Convex query for courses
+✗ User said "Build LMS" (NO mention of backend)
+Answer: NO
+Result: REJECT - Ask "Why was backend created without being asked?"
+```
+
+### What This Means
+
+- **Most apps (99%)** should work without backend - Frontend-only is the default
+- **Some apps (1%)** explicitly request backend - Integration with ONE Platform
+- **Zero apps** should surprise you with unexpected backend code
+
+**Your job as quality agent:**
+1. Always verify apps work in browser
+2. Flag unexpected backend code immediately
+3. Approve only when it matches what was asked for
+4. Enforce: Frontend-first, backend optional
+
+---
+
 **Quality Agent: Define success through ontology. Validate everything. Learn continuously. Predict intelligently.**
+
+**CRITICAL RULE:** Test frontend-only by default. Verify zero backend code generated. Only accept backend integration when explicitly requested.

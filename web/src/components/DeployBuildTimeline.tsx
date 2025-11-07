@@ -18,14 +18,14 @@ import {
   Legend,
 } from 'recharts';
 
-// Deployment timeline data
+// Deployment timeline data - matching actual build stages
 const deploymentTimelineData = [
-  { phase: 'Reset', time: 5.1, cumulative: 5.1, percentage: 24.4, status: 'complete', color: '#8b5cf6' },
-  { phase: 'Clone', time: 2.1, cumulative: 7.2, percentage: 10, status: 'complete', color: '#3b82f6' },
-  { phase: 'Install', time: 3.0, cumulative: 10.2, percentage: 14.4, status: 'running', color: '#10b981' },
-  { phase: 'Type Check', time: 0, cumulative: 10.2, percentage: 0, status: 'pending', color: '#6b7280' },
-  { phase: 'Build', time: 0, cumulative: 10.2, percentage: 0, status: 'pending', color: '#f59e0b' },
-  { phase: 'Optimize', time: 0, cumulative: 10.2, percentage: 0, status: 'pending', color: '#ef4444' },
+  { phase: 'Clone', time: 2.1, cumulative: 2.1, percentage: 10.0, status: 'complete', color: '#8b5cf6' },
+  { phase: 'Install', time: 3.8, cumulative: 5.9, percentage: 18.2, status: 'complete', color: '#3b82f6' },
+  { phase: 'Type Check', time: 2.6, cumulative: 8.5, percentage: 12.4, status: 'complete', color: '#06b6d4' },
+  { phase: 'Build', time: 6.0, cumulative: 14.5, percentage: 28.7, status: 'complete', color: '#10b981' },
+  { phase: 'Optimize', time: 3.2, cumulative: 17.7, percentage: 15.3, status: 'complete', color: '#f59e0b' },
+  { phase: 'Push Edge', time: 3.2, cumulative: 20.9, percentage: 15.3, status: 'complete', color: '#ef4444' },
 ];
 
 // Build optimization metrics
@@ -201,10 +201,16 @@ export function DeployBuildTimeline() {
           </Badge>
         </div>
 
-        {/* Main Timeline Graph */}
+        {/* Main Timeline Graph - Animated */}
         <div className="rounded-xl border border-primary/20 bg-card/50 backdrop-blur p-6">
           <ResponsiveContainer width="100%" height={200}>
-            <AreaChart data={deploymentTimelineData}>
+            <AreaChart
+              data={deploymentTimelineData.map((item) => ({
+                ...item,
+                // Only show cumulative value if currentTime has reached this point
+                cumulative: currentTime >= item.cumulative ? item.cumulative : currentTime >= (deploymentTimelineData[deploymentTimelineData.indexOf(item) - 1]?.cumulative || 0) ? currentTime : null,
+              }))}
+            >
               <defs>
                 <linearGradient id="deployGradient" x1="0" y1="0" x2="0" y2="1">
                   <stop offset="5%" stopColor="#3b82f6" stopOpacity={0.8}/>
@@ -221,6 +227,7 @@ export function DeployBuildTimeline() {
                 label={{ value: 'Time (s)', angle: -90, position: 'insideLeft', style: { fontSize: 12 } }}
                 tick={{ fontSize: 12 }}
                 tickLine={false}
+                domain={[0, 21]}
               />
               <Tooltip
                 content={({ active, payload }) => {
@@ -230,10 +237,8 @@ export function DeployBuildTimeline() {
                       <div className="rounded-lg border bg-background p-3 shadow-lg">
                         <p className="font-semibold text-sm">{data.phase}</p>
                         <p className="text-xs text-muted-foreground">Duration: {data.time}s</p>
+                        <p className="text-xs text-muted-foreground">Cumulative: {data.cumulative}s</p>
                         <p className="text-xs text-muted-foreground">Progress: {data.percentage.toFixed(1)}%</p>
-                        <p className="text-xs font-medium mt-1">
-                          Status: <span className={`${data.status === 'complete' ? 'text-green-600' : data.status === 'running' ? 'text-blue-600' : 'text-muted-foreground'}`}>{data.status}</span>
-                        </p>
                       </div>
                     );
                   }
@@ -244,8 +249,9 @@ export function DeployBuildTimeline() {
                 type="monotone"
                 dataKey="cumulative"
                 stroke="#3b82f6"
-                strokeWidth={2}
+                strokeWidth={3}
                 fill="url(#deployGradient)"
+                animationDuration={100}
               />
             </AreaChart>
           </ResponsiveContainer>
@@ -263,29 +269,36 @@ export function DeployBuildTimeline() {
               />
             </div>
           </div>
-        </div>
 
-        {/* Build Optimization Metrics */}
-        <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
-          {optimizationMetrics.map((metric, index) => (
-            <div key={index} className="rounded-lg border border-border/50 bg-background/50 p-3 space-y-2">
-              <div className="flex items-center justify-between">
-                <p className="text-xs font-medium text-muted-foreground">{metric.metric}</p>
-                <Badge variant="secondary" className="text-xs">
-                  {metric.improvement}
-                </Badge>
-              </div>
-              <div className="space-y-1">
-                <div className="flex h-1.5 rounded-full bg-muted overflow-hidden">
+          {/* Real Numbers Timeline */}
+          <div className="mt-6 pt-4 border-t border-border/50">
+            <div className="grid grid-cols-6 gap-2 text-center">
+              {deploymentTimelineData.map((stage, index) => {
+                const isComplete = currentTime >= stage.cumulative;
+                const isActive = currentTime >= (deploymentTimelineData[index - 1]?.cumulative || 0) && !isComplete;
+                const isPending = !isComplete && !isActive;
+
+                return (
                   <div
-                    className="bg-primary transition-all duration-700"
-                    style={{ width: `${(metric.optimized / Math.max(metric.baseline, metric.optimized)) * 100}%` }}
-                  />
-                </div>
-                <p className="text-xs text-center text-muted-foreground">{metric.optimized} {metric.unit}</p>
-              </div>
+                    key={stage.phase}
+                    className="transition-all duration-300"
+                    style={{ opacity: isComplete ? 1 : isActive ? 0.7 : 0.3 }}
+                  >
+                    <div className="text-xs font-medium text-foreground">{stage.phase}</div>
+                    <div
+                      className="text-lg font-bold"
+                      style={{
+                        color: isComplete ? '#16a34a' : isActive ? '#3b82f6' : 'hsl(var(--color-muted-foreground))'
+                      }}
+                    >
+                      {stage.time}s
+                    </div>
+                    <div className="text-xs text-muted-foreground">@{stage.cumulative}s</div>
+                  </div>
+                );
+              })}
             </div>
-          ))}
+          </div>
         </div>
 
         {/* Build Timeline Details */}
@@ -471,9 +484,15 @@ export function DeployBuildTimeline() {
               key={index}
               className={`text-center transition-all duration-700 transform ${
                 isActive
-                  ? 'bg-primary scale-110 shadow-2xl shadow-primary/50 border-primary text-primary-foreground'
+                  ? 'scale-110 shadow-2xl border-2'
                   : 'bg-card/50 backdrop-blur hover:scale-105 hover:shadow-lg'
               }`}
+              style={isActive ? {
+                backgroundColor: '#16a34a',
+                borderColor: '#16a34a',
+                boxShadow: '0 25px 50px -12px rgba(22, 163, 74, 0.5)',
+                color: 'white'
+              } : {}}
             >
               <CardHeader className="pb-3">
                 <div

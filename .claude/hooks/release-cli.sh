@@ -78,10 +78,19 @@ wait  # Wait for all copies to complete
 echo -e "${GREEN}✓ All markdown files synced${NC}"
 echo ""
 
-# Step 4: Hooks reference (important note)
-echo -e "${BLUE}Step 4: Hooks configuration${NC}"
-echo -e "${GREEN}✓ Hooks reference root .claude/ (no duplication)${NC}"
-echo -e "${YELLOW}  CLI uses root hooks via relative paths or environment setup${NC}"
+# Step 4: Sync .claude/ to cli/.claude/ (agents, commands, hooks, skills)
+echo -e "${BLUE}Step 4: Sync .claude/ to cli/.claude/${NC}"
+if [ -d ".claude" ]; then
+    mkdir -p cli/.claude
+    for dir in agents commands hooks skills; do
+        if [ -d ".claude/$dir" ]; then
+            rsync -av --delete --quiet ".claude/$dir/" "cli/.claude/$dir/" 2>&1 | tail -1 || true
+            echo -e "${GREEN}✓ .claude/$dir/ synced${NC}"
+        fi
+    done
+else
+    echo -e "${YELLOW}⚠ .claude/ directory not found, skipping${NC}"
+fi
 echo ""
 
 # Step 5: Version bump (if not sync)
@@ -104,13 +113,12 @@ echo -e "${BLUE}Step 6: Commit cli/ changes${NC}"
 cd cli
 if [[ -n $(git status -s) ]]; then
     git add . > /dev/null 2>&1
-    git commit -m "chore: sync /one documentation and markdown files
+    git commit -m "chore: sync /one, .claude/, and markdown files
 
 Synced from root repository:
 - /one/* → CLI documentation
+- .claude/* → CLI automation (agents, commands, hooks, skills)
 - CLAUDE.md, README.md, LICENSE.md, SECURITY.md, AGENTS.md
-
-Note: Hooks remain in root .claude/ directory (single source of truth)
 
 🤖 Generated with [Claude Code](https://claude.com/claude-code)
 
@@ -190,6 +198,6 @@ fi
 
 echo -e "${BLUE}Synced:${NC}"
 echo "  ✓ /one/* → cli/one/ (documentation)"
+echo "  ✓ .claude/* → cli/.claude/ (agents, commands, hooks, skills)"
 echo "  ✓ CLAUDE.md, README.md, LICENSE.md, SECURITY.md, AGENTS.md"
-echo "  ✓ Hooks reference root .claude/ (no duplication)"
 echo ""

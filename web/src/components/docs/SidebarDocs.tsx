@@ -16,24 +16,28 @@ export function SidebarDocs({ entries, currentSlug }: SidebarDocsProps) {
     'getting-started': true,
     'overview': true,
     'develop': true,
+    'develop-platform': true,
   });
 
   const folderOrder = {
     'getting-started': 1,
     'overview': 2,
     'develop': 3,
+    'develop-platform': 10,
   };
 
   const folderDisplayNames = {
     'getting-started': 'Quick Start',
     'overview': 'Overview',
     'develop': 'Develop',
+    'develop-platform': 'Develop Platform',
   };
 
   const folderIcons: Record<string, string> = {
     'getting-started': '🚀',
     'overview': '🏗️',
     'develop': '⚡',
+    'develop-platform': '🔧',
   };
 
   // Group entries by folder
@@ -73,7 +77,7 @@ export function SidebarDocs({ entries, currentSlug }: SidebarDocsProps) {
   };
 
   return (
-    <aside className="w-64 border-r border-border/40 bg-muted/20 sticky top-0 h-screen flex flex-col">
+    <aside className="hidden lg:flex lg:flex-col w-64 border-r border-border/40 bg-muted/20 sticky top-0 h-screen">
       <nav className="p-4 space-y-1 overflow-y-auto flex-1">
         {sortedFolders.map((folder) => {
           const displayName =

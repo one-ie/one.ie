@@ -384,6 +384,111 @@ bun run lint
 bun run format
 ```
 
+## Frontend-First Development (Default Mode)
+
+**CRITICAL:** All agents default to frontend-only development unless explicitly requested otherwise.
+
+### Default Behavior
+
+**Frontend-only is the DEFAULT for ALL agents across the platform.**
+
+When building features, agents MUST:
+1. Build ONLY frontend code by default
+2. Use client-side state management (nanostores)
+3. Integrate third-party services via direct API calls (Stripe.js, OpenAI client SDK, etc.)
+4. Store data in browser (localStorage, IndexedDB) or third-party services
+5. NEVER create backend code unless explicitly requested
+
+### When Backend is NOT Needed
+
+Frontend-only works perfectly for:
+
+- **Ecommerce stores**: Stripe.js handles payments, no backend needed
+- **LMS platforms**: Content in Astro pages, progress in localStorage
+- **SaaS tools**: Third-party APIs (OpenAI, Anthropic, Stripe) via client SDKs
+- **Marketing sites**: Static pages with forms, analytics, chat widgets
+- **Documentation sites**: Content collections with search
+- **Landing pages**: Interactive demos, forms, newsletters
+- **Portfolio sites**: Projects, case studies, contact forms
+- **Blogs**: Content collections with comments (Giscus, Utterances)
+
+### Frontend Stack (Default Tools)
+
+Use these tools for frontend-only development:
+
+- **State Management**: nanostores (persistent atoms, maps, computed)
+- **UI Components**: React 19 + shadcn/ui (50+ accessible components)
+- **Styling**: Tailwind CSS v4 (CSS-based configuration)
+- **Pages**: Astro 5 (file-based routing, SSR, islands)
+- **Forms**: React Hook Form + Zod validation
+- **Data Fetching**: fetch API, SWR, React Query
+- **Storage**: localStorage, sessionStorage, IndexedDB
+- **Payments**: Stripe.js (client-side only)
+- **Auth**: Better Auth (client-side hooks)
+- **Analytics**: Plausible, Fathom (script tags)
+
+### When to Use Backend
+
+Backend is ONLY needed when user explicitly says:
+
+1. **"Use backend"** - Direct request for backend integration
+2. **"Add groups"** - Multi-tenant data isolation requires backend
+3. **"Add multi-user"** - User collaboration requires backend
+4. **"Track events"** - Immutable audit trail requires backend
+5. **"Build RAG"** - Vector embeddings require backend
+6. **"Real-time updates"** - WebSocket sync requires backend
+
+### Backend Integration (Only When Requested)
+
+If user explicitly requests backend, integrate via:
+
+- **Services Layer**: `/web/src/services/` - Business logic and API wrappers
+- **Providers Layer**: `/web/src/providers/` - React context for state management
+- **Convex Client**: `useQuery` and `useMutation` hooks for backend calls
+- **API Routes**: `/web/src/pages/api/` for serverless functions
+
+Example structure when backend is explicitly requested:
+
+```typescript
+// /web/src/services/products.ts
+import { ConvexHttpClient } from "convex/browser";
+import { api } from "@/convex/_generated/api";
+
+const client = new ConvexHttpClient(import.meta.env.PUBLIC_CONVEX_URL);
+
+export const productService = {
+  list: () => client.query(api.queries.products.list),
+  create: (data) => client.mutation(api.mutations.products.create, data),
+};
+
+// /web/src/providers/ProductProvider.tsx
+import { createContext, useContext } from "react";
+import { useQuery } from "convex/react";
+import { api } from "@/convex/_generated/api";
+
+const ProductContext = createContext(null);
+
+export const ProductProvider = ({ children }) => {
+  const products = useQuery(api.queries.products.list);
+  return <ProductContext.Provider value={{ products }}>{children}</ProductContext.Provider>;
+};
+
+export const useProducts = () => useContext(ProductContext);
+```
+
+### Golden Rule
+
+**Default to frontend-only. Only add backend when explicitly requested.**
+
+- ✅ User says "build ecommerce store" → Frontend-only with Stripe.js
+- ✅ User says "build ecommerce store with groups" → Add backend for multi-tenancy
+- ✅ User says "build LMS" → Frontend-only with content collections
+- ✅ User says "build LMS with real-time progress" → Add backend for events
+- ✅ User says "add payments" → Frontend-only with Stripe.js
+- ✅ User says "add payments and track events" → Add backend for event logging
+
+**When in doubt, ask:** "Do you need multi-user groups, or can this work as a single-user frontend-only app?"
+
 ### Backend Development
 
 ```bash

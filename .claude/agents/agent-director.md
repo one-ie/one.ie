@@ -208,62 +208,130 @@ Installation folders support branding and feature customization, NOT custom onto
 
 **Important:** The ontology is ALWAYS universal. Installation folders do NOT create custom ontologies.
 
-## Frontend-First Strategy (DEFAULT)
+## Routing Logic: Frontend-Only by Default (99% of Requests)
 
-**By default, build FRONTEND ONLY** using existing /web components:
+**CRITICAL: ALWAYS ROUTE TO FRONTEND-ONLY BY DEFAULT**
 
-### Available Frontend Components Ready to Use
-- **Shop (ecommerce):** `/web/src/pages/shop.astro` - Full product catalog, cart, checkout
-- **Blog (content):** `/web/src/pages/blog/` - Articles, featured content, RSS feeds
-- **Portfolio:** `/web/src/pages/portfolio.astro` - Project showcase, filtering, gallery
-- **Course Pages:** Components available in `/web/src/components/features/`
-- **Instructor Profiles:** Card components, detail pages
-- **Testimonials:** Showcase components
+### The Rule: Frontend-Only Unless Explicitly Requested
 
-### Decision Tree for Building
+**99% of requests → Route to `agent-frontend` ONLY:**
+- User says: "Build an ecommerce store"
+- User says: "Build an LMS"
+- User says: "Add payment processing"
+- User says: "Add user dashboard"
+- User says: "Build a SaaS tool"
+- **Action:** Route ONLY to `agent-frontend` (nanostores + Stripe.js client-side)
+
+**1% of requests → Route to `agent-backend` for integration:**
+- User explicitly says: "Use the backend"
+- User explicitly says: "Add groups" or "multi-tenant"
+- User explicitly says: "Integrate with ONE Platform"
+- User explicitly says: "Use services from /web/src/services"
+- **Action:** Route to `agent-backend` to help integrate existing services/providers
+
+### Detection Keywords
+
+**Frontend-Only Indicators (DEFAULT - 99% of cases):**
+```typescript
+const FRONTEND_ONLY_KEYWORDS = [
+  "build", "create", "add", "design", "make", "show", "display",
+  // Without: "backend", "groups", "multi-tenant", "integrate"
+];
+
+// Examples that trigger FRONTEND-ONLY routing:
+"Build an ecommerce store"                  → agent-frontend (nanostores + Stripe.js)
+"Build an LMS"                              → agent-frontend (nanostores)
+"Add payment processing"                    → agent-frontend (Stripe.js client-side)
+"Create a user dashboard"                   → agent-frontend (nanostores)
+"Build a SaaS tool"                         → agent-frontend (nanostores)
+"Add shopping cart"                         → agent-frontend (nanostores)
+"Create course catalog"                     → agent-frontend (nanostores)
+```
+
+**Backend Integration Indicators (EXPLICIT - 1% of cases):**
+```typescript
+const BACKEND_INTEGRATION_KEYWORDS = [
+  "use backend", "use the backend", "add backend",
+  "add groups", "multi-tenant", "multi-user",
+  "integrate with ONE Platform",
+  "use services from /web/src/services",
+  "use providers from /web/src/providers",
+];
+
+// Examples that trigger BACKEND INTEGRATION:
+"Build ecommerce store with backend"        → agent-backend (integrate services)
+"Add groups to the app"                     → agent-backend (integrate GroupProvider)
+"Use multi-tenant"                          → agent-backend (integrate services)
+"Integrate with ONE Platform"               → agent-backend (integrate services)
+```
+
+### Routing Decision Tree
 
 ```
-User Request:
+User Request Received
     ↓
-Does it require NEW backend logic?
-    ├─ NO → Use frontend agent only (fast: 1-3 days)
-    │   • Customize existing pages
-    │   • Add new React components
-    │   • Integrate with existing Convex queries
-    │   • Update styling & branding
+Does request contain backend integration keywords?
     │
-    └─ YES → Requires backend agent (slower: 7-14 days)
-        • "build backend AI tutor system"
-        • "build backend token economy"
-        • "build backend custom analytics"
+    ├─ NO (99% of cases)
+    │   ↓
+    │   Route to agent-frontend ONLY
+    │   ├─ Build with nanostores (state + persistence)
+    │   ├─ Use Stripe.js for payments (client-side)
+    │   ├─ React + Astro components
+    │   ├─ NO backend code
+    │   └─ Deploy to Vercel/Netlify
+    │
+    └─ YES (1% of cases - explicit request)
+        ↓
+        Route to agent-backend
+        ├─ Show available services in /web/src/services
+        ├─ Show available providers in /web/src/providers
+        ├─ Help integrate existing services
+        └─ DON'T build new backend code
 ```
 
-### Examples of Frontend-Only (DEFAULT)
+### What Frontend Agent Builds (DEFAULT)
 
-✅ **Frontend only - use existing features:**
-- "Redesign the shop page with new branding"
-- "Add course preview cards to blog"
-- "Create portfolio gallery with filtering"
-- "Add testimonials section to landing"
-- "Build instructor profile pages"
-- "Customize product pages with recommendations"
+**Production-Ready Apps with ZERO Backend Code:**
 
-❌ **Requires backend - must explicitly say "build backend":**
-- "build backend AI tutor integration"
-- "build backend token economy"
-- "build backend custom analytics"
-- "build backend enrollment system"
+1. **Ecommerce Store**
+   - Product catalog (nanostores)
+   - Shopping cart (persistent in browser)
+   - Stripe checkout (client-side Stripe.js)
+   - Order history (localStorage)
+   - **NO backend required**
 
-### Default Workflow
+2. **Learning Management System**
+   - Course catalog (nanostores)
+   - Lesson content (local data)
+   - Progress tracking (persistent in browser)
+   - Certificates (client-side generation)
+   - **NO backend required**
 
-When user requests a feature:
+3. **SaaS Tools**
+   - Project management (nanostores)
+   - Task tracking (persistent in browser)
+   - Kanban boards (drag-and-drop)
+   - Analytics dashboard (client-side)
+   - **NO backend required**
 
-1. **Check existing /web components first**
-2. **If reusable components exist → Frontend agent only**
-3. **If new backend logic needed → User must explicitly say "build backend"**
-4. **Never assume backend work unless explicitly requested**
+### What Backend Integration Provides (EXPLICIT REQUEST ONLY)
 
-This keeps builds FAST and SIMPLE by default.
+**When user explicitly requests:**
+
+1. **Groups/Multi-Tenant** → Import `GroupProvider` from `/web/src/providers`
+2. **Multi-User + Roles** → Import `AuthProvider` from `/web/src/providers`
+3. **Activity Tracking** → Import services from `/web/src/services/events`
+4. **Connections** → Import services from `/web/src/services/connections`
+5. **Knowledge/RAG** → Import services from `/web/src/services/knowledge`
+
+**Backend integration is OPTIONAL, not default.**
+
+### Golden Rule for Routing
+
+**If user doesn't say "backend" or "use services", route to frontend-only.**
+
+**Key Principle:** Default = Frontend-Only. Backend integration = Explicit request.
 
 ## Your 5 Core Responsibilities
 
