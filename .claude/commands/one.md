@@ -28,7 +28,7 @@ lsof -ti:4321 2>/dev/null && echo "RUNNING" || echo "STOPPED"
 
 ## Step 2: Display ONE Platform Interface
 
-Show this minimal interface:
+**CRITICAL: ALWAYS display this interface exactly as shown below. No variations. No summaries. Show the full output every time.**
 
 ```
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
@@ -54,87 +54,12 @@ Show this minimal interface:
   /plan            Create 100-cycle implementation plan
   /create          Build features with specialists
   /push            Commit & push changes
-  /deploy          Ship to production (Cloudflare + Convex)
-
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-
-📊 WORKFLOW
-
-  1. /chat [idea]     → Understand your vision, onboard brand
-  2. /plan convert    → Create 100-cycle implementation plan
-  3. /now             → See current cycle & assigned agent
-  4. /next            → Advance to next cycle
-  5. /done            → Mark complete, capture lessons
-  6. /create [task]   → Build with specialists in parallel
-  7. /push            → Commit & push changes
-  8. /deploy          → Deploy to production
-
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-
-🤖 SPECIALIST AGENTS (Auto-Assigned by /plan)
-
-  agent-director      Orchestrates your 100-cycle plan
-  agent-backend       Convex schema, mutations, queries
-  agent-frontend      Astro pages, React components
-  agent-designer      Wireframes, design tokens, specs
-  agent-quality       Tests, acceptance criteria, validation
-  agent-ops           CI/CD, deployments, infrastructure
-  agent-clean         Code quality, refactoring
-  agent-clone         Legacy migration, AI clones
-
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-
-⚡ QUICK START
-
-  /chat "I want to build a course platform with AI tutors"
-  → Onboard your idea, understand requirements
-
-  /plan convert "Build a course platform with AI tutors"
-  → Creates 100-cycle plan, assigns agents, shows timeline
-
-  /now
-  → See Cycle 1 task and assigned specialist
-
-  /next
-  → Advance through cycles step-by-step
-
-  /create [feature]
-  → Build specific features with parallel agents
-
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-
-🎓 LEARN MORE
-
-  /help               Command reference & tutorials
-  /see                Analytics & insights
-  /onboard            Analyze your website (brand, features)
+  /deploy          Ship to production
 
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 ```
 
----
-
-## Step 3: Engage User
-
-After showing interface, engage with the user conversationally:
-
-```
-💬 How can I help?
-
-Option 1: /chat [your-idea]
-  Let's onboard your vision. I'll understand your brand, market
-  positioning, and craft a strategy.
-
-Option 2: /plan convert [your-idea]
-  Jump straight to implementation. I'll create a 100-cycle plan
-  with task assignments and timeline.
-
-Option 3: /create [feature-name]
-  Build something specific. Specialists execute in parallel.
-
-Option 4: Just describe what you want to build
-  We'll have a conversation and figure out the best approach.
-```
+**DO NOT add any additional sections, workflow steps, or explanations after the commands.**
 
 ---
 
@@ -285,7 +210,9 @@ Ship to production:
 
 ## Context Optimization Notes
 
-**This file (one.md): ~300 tokens**
+**This file (one.md): ~200 tokens for display**
+
+**CRITICAL RULE:** The interface display is MANDATORY regardless of which model is being used (Haiku, Sonnet, Opus). Always show the full ASCII logo and command list. Never summarize or skip this output.
 
 By keeping `/one.md` minimal and using cascade system:
 - Load CLAUDE.md files only when needed
@@ -294,7 +221,7 @@ By keeping `/one.md` minimal and using cascade system:
 - Full plan stored in `.claude/state/plan.json` (auto-generated)
 
 **Total context usage:**
-- `/one` display: 300 tokens
+- `/one` display: 200 tokens (mandatory output)
 - `/chat` flow: 500 tokens
 - `/plan` flow: 2K tokens
 - `/now` + agent: 1-3K tokens
