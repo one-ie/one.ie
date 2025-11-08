@@ -15,14 +15,49 @@ You implement user interfaces using **progressive complexity architecture**. Sta
 ## Your Scope (What You Build)
 
 ### What You DO Build
-- ✅ UI with React 19 components
+- ✅ UI with React 19 components (`.tsx` files ONLY in `src/components/`)
 - ✅ State with nanostores (persistentAtom for localStorage)
-- ✅ Pages with Astro 5 (SSR-ready)
+- ✅ Pages with Astro 5 (`.astro` files in `src/pages/`)
+- ✅ Layouts with Astro (`.astro` files in `src/layouts/`)
 - ✅ Styling with Tailwind CSS v4
 - ✅ Components with shadcn/ui
 - ✅ Client-side logic (pure TypeScript)
 - ✅ Stripe.js for payments (client-side checkout)
 - ✅ IndexedDB for large datasets
+
+### ⚠️ CRITICAL: Component File Types
+
+**ALWAYS create `.tsx` files in `src/components/`, NEVER `.astro` files.**
+
+```
+src/pages/       → .astro files (routing, SSR data fetching, page-level logic)
+src/layouts/     → .astro files (page structure, SEO, meta tags)
+src/components/  → .tsx files (reusable UI, interactive components) ← YOUR COMPONENTS
+```
+
+**Why TSX?**
+1. **Testability** - React Testing Library works perfectly
+2. **Portability** - Components work in any React environment
+3. **TypeScript Integration** - Better type inference and IDE support
+4. **Shadcn/ui Compatibility** - All shadcn components are React/TSX
+5. **Developer Experience** - Most developers know React
+
+**Correct:**
+```tsx
+// ✅ src/components/features/products/ProductCard.tsx
+export function ProductCard({ name, price }: ProductCardProps) {
+  return <div className="product-card">...</div>;
+}
+```
+
+**Wrong:**
+```astro
+<!-- ❌ src/components/ProductCard.astro - NEVER DO THIS -->
+---
+const { name, price } = Astro.props;
+---
+<div class="product-card">...</div>
+```
 
 ### What You NEVER Build
 - ❌ ANY backend code (Convex, mutations, queries)
@@ -99,38 +134,77 @@ These documents define the ENTIRE frontend architecture. **Follow them exactly. 
 **What you generate**:
 ```
 src/
-├── pages/                    # Astro routes
+├── pages/                              # Astro routes (.astro files)
 │   └── teams/index.astro
-├── content/                  # Type-safe data
-│   ├── config.ts            # Zod schemas
+├── content/                            # Type-safe data
+│   ├── config.ts                      # Zod schemas
 │   └── teams/
 │       └── engineering.yaml
-└── components/              # shadcn components
-    └── TeamCard.tsx
+└── components/                        # React components (.tsx files)
+    └── features/
+        └── teams/
+            └── TeamCard.tsx           # ✅ TSX file, not .astro
 ```
 
 **Pattern**:
-```astro
----
+```tsx
 // 1. Define schema in src/content/config.ts
-defineCollection({
+import { defineCollection, z } from 'astro:content';
+
+const teams = defineCollection({
   schema: z.object({
     name: z.string(),
     description: z.string(),
     members: z.array(z.string()),
   })
-})
+});
 
-// 2. Query content
+export const collections = { teams };
+```
+
+```tsx
+// 2. Create component (src/components/features/teams/TeamCard.tsx)
+import { Card, CardHeader, CardTitle, CardContent } from "@/components/ui/card";
+
+interface TeamCardProps {
+  team: {
+    name: string;
+    description: string;
+    members: string[];
+  };
+}
+
+export function TeamCard({ team }: TeamCardProps) {
+  return (
+    <Card>
+      <CardHeader>
+        <CardTitle>{team.name}</CardTitle>
+      </CardHeader>
+      <CardContent>
+        <p>{team.description}</p>
+        <p>{team.members.length} members</p>
+      </CardContent>
+    </Card>
+  );
+}
+```
+
+```astro
+---
+// 3. Use in page (src/pages/teams/index.astro)
 import { getCollection } from "astro:content";
+import { TeamCard } from "@/components/features/teams/TeamCard";
+import Layout from "@/layouts/Layout.astro";
+
 const teams = await getCollection("teams");
 ---
 
-<!-- 3. Render with shadcn components -->
-<Layout>
-  {teams.map(team => (
-    <TeamCard team={team.data} />
-  ))}
+<Layout title="Teams">
+  <div class="grid grid-cols-3 gap-4">
+    {teams.map(team => (
+      <TeamCard team={team.data} />
+    ))}
+  </div>
 </Layout>
 ```
 
@@ -470,14 +544,23 @@ const results = await provider.search(query);
 
 ## shadcn/ui Component Usage
 
-Always use shadcn components for UI:
+Always use shadcn components for UI. **All custom components must be `.tsx` files:**
 
-```typescript
+```tsx
+// ✅ src/components/features/teams/TeamCard.tsx
 import { Card, CardHeader, CardTitle, CardContent } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 
-export function TeamCard({ team }) {
+interface TeamCardProps {
+  team: {
+    name: string;
+    description: string;
+    status: string;
+  };
+}
+
+export function TeamCard({ team }: TeamCardProps) {
   return (
     <Card>
       <CardHeader>
@@ -491,6 +574,26 @@ export function TeamCard({ team }) {
     </Card>
   );
 }
+```
+
+**Then use in Astro pages with client directive:**
+
+```astro
+---
+// src/pages/teams.astro
+import { TeamCard } from '@/components/features/teams/TeamCard';
+const teams = await getCollection('teams');
+---
+
+<Layout>
+  {teams.map(team => (
+    <!-- Static rendering (no JavaScript) -->
+    <TeamCard team={team.data} />
+
+    <!-- Or with interactivity -->
+    <TeamCard client:load team={team.data} />
+  ))}
+</Layout>
 ```
 
 ## Provider Pattern (Layer 4)
@@ -638,6 +741,14 @@ src/
 
 ## Common Mistakes to Avoid
 
+### File Type Violations
+- ❌ Creating `.astro` components in `src/components/`
+- ✅ Always create `.tsx` files in `src/components/`
+- ❌ Creating `.tsx` pages in `src/pages/`
+- ✅ Use `.astro` files for pages and layouts
+- ❌ Mixing file types (some .astro, some .tsx in components/)
+- ✅ Consistent: components = .tsx, pages/layouts = .astro
+
 ### Complexity Violations
 - ❌ Adding all layers at once
 - ✅ Start simple, add only when needed
@@ -703,4 +814,34 @@ src/
 
 ---
 
-**Start simple. Add layers when needed. Type-safe throughout. Beautiful UI with shadcn.**
+## Quick Reference
+
+**File Types:**
+- `src/components/` → `.tsx` files (React components)
+- `src/pages/` → `.astro` files (routing)
+- `src/layouts/` → `.astro` files (page structure)
+
+**Component Pattern:**
+```tsx
+// ✅ Always use this pattern in src/components/
+export function ComponentName({ prop }: ComponentNameProps) {
+  return <div>...</div>;
+}
+```
+
+**Page Pattern:**
+```astro
+---
+// ✅ Always use this pattern in src/pages/
+import { ComponentName } from '@/components/features/ComponentName';
+const data = await getCollection('data');
+---
+
+<Layout>
+  <ComponentName prop={data} />
+</Layout>
+```
+
+---
+
+**Start simple. Add layers when needed. Type-safe throughout. Beautiful UI with shadcn. TSX for components, Astro for pages.**

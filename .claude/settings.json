@@ -1,0 +1,23 @@
+{
+  "hooks": {
+    "PostToolUse": [
+      {
+        "matcher": "Edit|Write",
+        "hooks": [
+          {
+            "type": "command",
+            "command": ".claude/hooks/validate-ontology.py"
+          },
+          {
+            "type": "command",
+            "command": ".claude/hooks/auto-format.sh"
+          },
+          {
+            "type": "command",
+            "command": ".claude/hooks/validate-imports.py"
+          }
+        ]
+      }
+    ]
+  }
+}
