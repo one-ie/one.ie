@@ -1,3 +1,111 @@
+### **48980930** — template:99 custom:1 — `feat: Add video platform, conversion features, and automated news generation`` [customization]
+
+**Template:**
+  - .claude/agents/agent-clone.md
+  - .claude/agents/agent-writer.md
+  - .claude/commands/one.md
+  - .claude/commands/server.md
+  - .claude/commands/start.md
+  - .claude/hooks.log
+  - .claude/hooks/README-news-generation.md
+  - .claude/hooks/write-news.sh
+  - one/.obsidian/workspace.json
+  - one/events/0-changes.md
+  - one/events/AUDIT_PLAN_COMPLETION-20251108-125555.md
+  - one/events/CRITICAL-FIXES-COMPLETE.md
+  - one/events/IMPLEMENTATION-SUMMARY-FINAL.md
+  - one/events/MULTI-ONTOLOGY-COMPLETE-GUIDE.md
+  - one/events/MULTI-ONTOLOGY-IMPLEMENTATION-COMPLETE.md
+  - one/events/ONTOLOGY-TUTORIALS-SUMMARY.md
+  - one/events/ONTOLOGY-TYPE-GENERATOR-SUMMARY.md
+  - one/events/bullfm-video-podcast-analysis.md
+  - one/events/cycle-3-video-player-port-20251108.md
+  - one/events/cycle-3-video-player-port-complete-20251108.md
+  - one/events/server-command-optimization-20251108.md
+  - one/events/structural-analysis-architecture-vs-plans.md
+  - one/events/test-dashboard.md
+  - one/events/test-index.md
+  - one/events/test-report-ontology.md
+  - one/events/testing-summary.md
+  - one/knowledge/ontology-cheatsheet.md
+  - one/knowledge/ontology-developer-guide.md
+  - one/knowledge/ontology-index.md
+  - one/knowledge/ontology-quickstart.md
+  - one/knowledge/ontology-tutorial.md
+  - one/knowledge/ontology-video-script.md
+  - one/things/plans/multi-ontology-architecture.md
+  - one/things/plans/ontology-compliance-audit.md
+  - one/things/plans/video-backend.md
+  - one/things/plans/video-frontend.md
+  - one/things/plans/video-old-archived.md
+  - web/.gitignore
+  - web/CLAUDE.md
+  - web/astro.config.mjs
+  - web/package.json
+  - web/public/media/.gitkeep
+  - web/public/media/README.md
+  - web/src/components/Safari.tsx
+  - web/src/components/features/mdx/AuthDemo.tsx
+  - web/src/components/features/mdx/CodePlayground.tsx
+  - web/src/components/features/mdx/FeatureCTA.tsx
+  - web/src/components/features/mdx/FeatureComparison.tsx
+  - web/src/components/features/mdx/FeatureDemo.tsx
+  - web/src/components/features/mdx/PricingCalculator.tsx
+  - web/src/components/features/mdx/README.md
+  - web/src/components/features/mdx/SocialProof.tsx
+  - web/src/components/features/mdx/USAGE.md
+  - web/src/components/features/mdx/index.ts
+  - web/src/components/media/README.md
+  - web/src/components/media/VideoCard.tsx
+  - web/src/components/media/VideoEmbed.astro
+  - web/src/components/media/VideoEmbed.test.tsx
+  - web/src/components/media/VideoGallery.tsx
+  - web/src/components/media/VideoPlayer.example.tsx
+  - web/src/components/media/VideoPlayer.test.tsx
+  - web/src/components/media/VideoPlayer.tsx
+  - web/src/components/shop/ExitIntentPopup.tsx
+  - web/src/components/shop/FAQ.tsx
+  - web/src/components/shop/ProductHeader.tsx
+  - web/src/components/shop/UrgencyMechanics.tsx
+  - web/src/components/shop/ValueStack.tsx
+  - web/src/content/config.ts
+  - web/src/content/docs/conversion-copy-patterns.md
+  - web/src/content/docs/conversion-copy-quick-reference.md
+  - web/src/content/docs/conversion-copy-template.md
+  - web/src/content/docs/develop/videos.md
+  - web/src/content/features/auth.md
+  - web/src/content/features/auth.mdx
+  - web/src/content/features/conversion-demo.mdx
+  - web/src/content/features/demo.mdx
+  - web/src/content/features/simple-demo.mdx
+  - web/src/content/features/test-mdx.mdx
+  - web/src/content/features/test-simple.mdx
+  - web/src/content/news/automated-news-generation-from-commits.md
+  - web/src/content/videos/building-with-astro-islands.md
+  - web/src/content/videos/crypto-market-analysis-january-2025.md
+  - web/src/content/videos/crypto-market-analysis.md
+  - web/src/content/videos/intro-to-one-platform.md
+  - web/src/content/videos/sui-blockchain-gaming-revolution.md
+  - web/src/content/videos/sui-blockchain-gaming.md
+  - web/src/content/videos/test-install-tutorial.md
+  - web/src/content/videos/test-install-with-chapters.md
+  - web/src/layouts/ShopLayout.astro
+  - web/src/lib/date.ts
+  - web/src/pages/features/[slug].astro
+  - web/src/pages/safari.astro
+  - web/src/pages/shop/product-landing.astro
+  - web/src/pages/test-videos.astro
+  - web/src/pages/videos.astro
+  - web/src/pages/videos/[slug].astro
+  - web/src/styles/global.css
+  - web/src/templates/blog/ONTOLOGY-INTEGRATION.md
+  - web/src/templates/ecommerce/ONTOLOGY-INTEGRATION.md
+
+**Your Changes:**
+  - CLAUDE.md
+
+
+
 ### **405b9460** — template:42 — `docs: Add comprehensive Claude Code integration and optimization guides``
 
 **Template:**

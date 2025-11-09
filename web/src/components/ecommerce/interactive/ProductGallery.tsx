@@ -134,7 +134,7 @@ export function ProductGallery({ images, productName }: ProductGalleryProps) {
             <>
               <button
                 onClick={handlePrevious}
-                className="absolute left-2 top-1/2 -translate-y-1/2 rounded-full bg-background/80 p-2 shadow transition-all hover:bg-background hover:scale-110"
+                className="absolute left-2 top-1/2 -translate-y-1/2 rounded-full bg-white/90 dark:bg-black/90 backdrop-blur-sm p-2 shadow transition-all hover:bg-white hover:dark:bg-black hover:scale-110"
                 aria-label="Previous image"
               >
                 <svg
@@ -153,7 +153,7 @@ export function ProductGallery({ images, productName }: ProductGalleryProps) {
               </button>
               <button
                 onClick={handleNext}
-                className="absolute right-2 top-1/2 -translate-y-1/2 rounded-full bg-background/80 p-2 shadow transition-all hover:bg-background hover:scale-110"
+                className="absolute right-2 top-1/2 -translate-y-1/2 rounded-full bg-white/90 dark:bg-black/90 backdrop-blur-sm p-2 shadow transition-all hover:bg-white hover:dark:bg-black hover:scale-110"
                 aria-label="Next image"
               >
                 <svg
@@ -176,7 +176,7 @@ export function ProductGallery({ images, productName }: ProductGalleryProps) {
           {/* Fullscreen Button */}
           <button
             onClick={openFullscreen}
-            className="absolute top-2 right-2 rounded-full bg-background/80 p-2 shadow transition-all hover:bg-background hover:scale-110"
+            className="absolute top-2 right-2 rounded-full bg-white/90 dark:bg-black/90 backdrop-blur-sm p-2 shadow transition-all hover:bg-white hover:dark:bg-black hover:scale-110"
             aria-label="View fullscreen"
           >
             <svg
@@ -196,14 +196,14 @@ export function ProductGallery({ images, productName }: ProductGalleryProps) {
 
           {/* Image Counter */}
           {images.length > 1 && (
-            <div className="absolute bottom-2 left-2 rounded bg-background/80 px-2 py-1 text-xs font-medium">
+            <div className="absolute bottom-2 left-2 rounded bg-white/90 dark:bg-black/90 backdrop-blur-sm px-2 py-1 text-xs font-medium">
               {currentIndex + 1} / {images.length}
             </div>
           )}
 
           {/* Zoom Indicator */}
           {isZoomed && (
-            <div className="absolute bottom-2 right-2 rounded bg-background/80 px-2 py-1 text-xs font-medium">
+            <div className="absolute bottom-2 right-2 rounded bg-white/90 dark:bg-black/90 backdrop-blur-sm px-2 py-1 text-xs font-medium">
               2x Zoom
             </div>
           )}

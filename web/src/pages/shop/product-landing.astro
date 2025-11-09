@@ -2,213 +2,323 @@
 import ShopLayout from '@/layouts/ShopLayout.astro';
 import { ProductGallery } from '@/components/ecommerce/interactive/ProductGallery';
 import { ProductHeader } from '@/components/shop/ProductHeader';
-import { UrgencyMechanics } from '@/components/shop/UrgencyMechanics';
-import { ValueStack } from '@/components/shop/ValueStack';
-import { FAQ } from '@/components/shop/FAQ';
-import { ExitIntentPopup } from '@/components/shop/ExitIntentPopup';
+import { InlineUrgencyBanner } from '@/components/shop/InlineUrgencyBanner';
+import { RecentPurchaseToast } from '@/components/shop/RecentPurchaseToast';
+import { ProductSpecs } from '@/components/shop/ProductSpecs';
+import { FragranceNotes } from '@/components/shop/FragranceNotes';
+import { FeaturesWithImages } from '@/components/shop/FeaturesWithImages';
+import { ValueProposition } from '@/components/shop/ValueProposition';
+import { ReviewsSection } from '@/components/shop/ReviewsSection';
+import { ProductFAQ } from '@/components/ecommerce/static/FAQAccordion';
+import { StickyCartButton } from '@/components/shop/StickyCartButton';
+import { ThemeToggle } from '@/components/shop/ThemeToggle';
 
-const productImages = [
-  'https://cdn.dummyjson.com/product-images/fragrances/chanel-coco-noir-eau-de/1.webp',
-  'https://cdn.dummyjson.com/product-images/fragrances/chanel-coco-noir-eau-de/2.webp',
-  'https://cdn.dummyjson.com/product-images/fragrances/chanel-coco-noir-eau-de/3.webp',
+// Product data (from DummyJSON)
+const product = {
+  title: 'Chanel Coco Noir Eau de Parfum',
+  category: 'Fragrances',
+  brand: 'Chanel',
+  rating: 4.26,
+  reviewCount: 89,
+  price: 129.99,
+  originalPrice: 155.99,
+  stock: 7,
+  description: 'Elegant and mysterious. Coco Noir captures the essence of timeless sophistication with notes of grapefruit, rose, and sandalwood. A fragrance for the modern woman who embraces mystery.',
+  images: [
+    'https://cdn.dummyjson.com/product-images/fragrances/chanel-coco-noir-eau-de/1.webp',
+    'https://cdn.dummyjson.com/product-images/fragrances/chanel-coco-noir-eau-de/2.webp',
+    'https://cdn.dummyjson.com/product-images/fragrances/chanel-coco-noir-eau-de/3.webp',
+  ],
+};
+
+const specs = [
+  { label: 'Brand', value: 'Chanel' },
+  { label: 'Fragrance Type', value: 'Eau de Parfum' },
+  { label: 'Volume', value: '100ml / 3.4 fl oz' },
+  { label: 'Gender', value: 'Women' },
+  { label: 'Stock Status', value: `${product.stock} units available` },
+  { label: 'SKU', value: 'COCO-NOIR-EDP-100' },
+];
+
+const fragranceNotes = {
+  topNotes: [
+    { name: 'Grapefruit', description: 'Fresh and citrusy opening' },
+  ],
+  middleNotes: [
+    { name: 'Rose', description: 'Elegant floral heart' },
+    { name: 'Jasmine', description: 'Delicate white flower' },
+  ],
+  baseNotes: [
+    { name: 'Sandalwood', description: 'Warm and woody foundation' },
+  ],
+};
+
+const featuresWithImages = [
+  {
+    title: 'Iconic Bottle Design',
+    description: 'The sleek, minimalist black bottle embodies pure sophistication. Every curve and edge is meticulously crafted to reflect the mysterious and timeless character of Coco Noir. A statement piece for your vanity that exudes luxury and elegance.',
+    image: product.images[0],
+  },
+  {
+    title: 'Long-Lasting Formula',
+    description: 'Experience a fragrance that evolves throughout the day. Premium Eau de Parfum concentration ensures 8-10 hours of rich, complex scent. From the bright citrus opening to the warm woody base, each note lingers with intention and depth.',
+    image: product.images[1],
+  },
+  {
+    title: 'Luxury Presentation',
+    description: 'Arrives in signature Chanel packaging with premium gift box included. Every detail speaks to the heritage and craftsmanship that defines the Chanel legacy. Perfect for gifting or adding to your personal collection.',
+    image: product.images[2],
+  },
+];
+
+const reviews = [
+  {
+    author: 'Jennifer K.',
+    rating: 5,
+    text: 'An absolute masterpiece. The craftsmanship is exceptional and the design is truly timeless. Worth every penny.',
+    date: 'January 2025',
+  },
+  {
+    author: 'Michael R.',
+    rating: 5,
+    text: 'Worth every penny. The quality is unmatched and it arrived beautifully packaged.',
+    date: 'December 2024',
+  },
+  {
+    author: 'Sarah M.',
+    rating: 5,
+    text: 'A stunning fragrance that gets compliments everywhere I go. Highly recommend!',
+    date: 'December 2024',
+  },
 ];
 ---
 
 <ShopLayout title="Chanel Coco Noir Eau de Parfum - Luxury Fragrance">
   <div class="bg-white dark:bg-black text-black dark:text-white">
     <!-- Header -->
-    <ProductHeader client:load />
+    <ProductHeader client:load productName={product.title} />
 
-    <!-- Urgency Mechanics (Fixed Position) -->
-    <UrgencyMechanics client:load />
-
-    <!-- Exit Intent Popup -->
-    <ExitIntentPopup client:idle />
-    <!-- Hero Section -->
-    <section id="hero" class="relative h-screen flex items-center justify-center overflow-hidden">
-      <div class="absolute inset-0 bg-gradient-to-b from-white/0 via-white/0 to-white/20 dark:from-black/0 dark:via-black/0 dark:to-black/40"></div>
-
-      <div class="relative z-10 grid grid-cols-1 lg:grid-cols-2 gap-12 items-start max-w-7xl mx-auto px-6 py-24">
-        <!-- Product Gallery -->
-        <div class="flex items-start justify-center lg:sticky lg:top-24">
-          <ProductGallery client:load images={productImages} productName="Chanel Coco Noir Eau de Parfum" />
+    <!-- Hero Section - Above the Fold -->
+    <section class="max-w-7xl mx-auto px-6 py-24 border-b border-black dark:border-white">
+      <div class="grid md:grid-cols-2 gap-20 items-center">
+        <!-- Product Gallery - Left Side -->
+        <div>
+          <ProductGallery client:load images={product.images} productName={product.title} />
         </div>
 
-        <!-- Product Info -->
-        <div class="space-y-8 lg:pr-12">
-          <div class="space-y-4">
-            <div class="text-sm font-semibold tracking-wide text-gray-500 dark:text-gray-400">CHANEL</div>
-            <h1 class="text-5xl lg:text-6xl font-black leading-tight tracking-tight">
-              Coco Noir Eau de Parfum
-            </h1>
-            <p class="text-xl text-gray-600 dark:text-gray-300 font-light leading-relaxed">
-              Elegant and mysterious. Coco Noir captures the essence of timeless sophistication with notes of grapefruit, rose, and sandalwood. A fragrance for the modern woman who embraces mystery.
+        <!-- Product Info - Right Side -->
+        <div class="space-y-12">
+          <!-- Category -->
+          <div>
+            <p class="text-xs font-bold tracking-[0.3em] uppercase">
+              {product.category}
             </p>
           </div>
+
+          <!-- Title -->
+          <h1 class="text-5xl md:text-6xl font-light tracking-tight leading-none">
+            {product.title}
+          </h1>
+
+          <!-- Rating -->
+          <div class="flex items-center gap-6 border-t border-b border-black dark:border-white py-4">
+            <span class="text-4xl font-light tabular-nums">{product.rating.toFixed(1)}</span>
+            <div class="flex gap-1">
+              <svg class="w-5 h-5" viewBox="0 0 24 24" fill="currentColor" style="color: #D4AF37">
+                <path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/>
+              </svg>
+              <svg class="w-5 h-5" viewBox="0 0 24 24" fill="currentColor" style="color: #D4AF37">
+                <path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/>
+              </svg>
+              <svg class="w-5 h-5" viewBox="0 0 24 24" fill="currentColor" style="color: #D4AF37">
+                <path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/>
+              </svg>
+              <svg class="w-5 h-5" viewBox="0 0 24 24" fill="currentColor" style="color: #D4AF37">
+                <path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/>
+              </svg>
+              <svg class="w-5 h-5" viewBox="0 0 24 24" fill="currentColor" style="color: #D4AF37" opacity="0.3">
+                <path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/>
+              </svg>
+            </div>
+            <div class="flex flex-col border-l border-black dark:border-white pl-4">
+              <span class="text-[10px] font-bold tracking-[0.25em] uppercase opacity-60">Rating</span>
+              <span class="text-[10px] tracking-wide opacity-40">{product.reviewCount} Reviews</span>
+            </div>
+          </div>
+
+          <!-- Description -->
+          <p class="text-base leading-relaxed">
+            {product.description}
+          </p>
 
           <!-- Price -->
-          <div class="pt-4">
-            <div class="flex items-baseline gap-3">
-              <div class="text-5xl font-black">$129.99</div>
-              <div class="text-lg text-gray-500 line-through">$155.99</div>
-            </div>
-            <p class="text-sm text-green-600 dark:text-green-400 mt-2 font-semibold">Save $26 (16.51% off)</p>
-          </div>
-
-          <!-- Key Features -->
-          <div class="grid grid-cols-2 gap-6 pt-8 border-t border-gray-200 dark:border-gray-800">
-            <div>
-              <p class="text-xs font-semibold text-gray-500 dark:text-gray-400 uppercase tracking-wider mb-2">Top Notes</p>
-              <p class="text-lg font-semibold">Grapefruit</p>
-            </div>
-            <div>
-              <p class="text-xs font-semibold text-gray-500 dark:text-gray-400 uppercase tracking-wider mb-2">Heart Notes</p>
-              <p class="text-lg font-semibold">Rose & Jasmine</p>
-            </div>
-            <div>
-              <p class="text-xs font-semibold text-gray-500 dark:text-gray-400 uppercase tracking-wider mb-2">Base Notes</p>
-              <p class="text-lg font-semibold">Sandalwood</p>
-            </div>
-            <div>
-              <p class="text-xs font-semibold text-gray-500 dark:text-gray-400 uppercase tracking-wider mb-2">Rating</p>
-              <p class="text-lg font-semibold">★ 4.26/5</p>
+          <div class="space-y-4">
+            <div class="flex items-baseline gap-6">
+              <span class="text-6xl font-light tabular-nums">${product.price.toFixed(2)}</span>
+              {product.originalPrice && (
+                <div class="flex flex-col">
+                  <span class="text-sm line-through tabular-nums">
+                    ${product.originalPrice.toFixed(2)}
+                  </span>
+                  <span class="text-xs font-bold tracking-[0.2em] uppercase">
+                    Save {Math.round(((product.originalPrice - product.price) / product.originalPrice) * 100)}%
+                  </span>
+                </div>
+              )}
             </div>
           </div>
 
-          <!-- CTA Button -->
-          <div class="pt-8">
-            <button class="w-full bg-black dark:bg-white text-white dark:text-black py-4 rounded-full text-lg font-semibold tracking-wide hover:opacity-80 transition-opacity duration-300 active:scale-95">
-              Buy Now
-            </button>
-            <p class="text-center text-xs text-gray-500 dark:text-gray-400 mt-4">
-              Overnight shipping • 90-day returns • 3-year warranty
-            </p>
+          <!-- Quantity & Buy Now Button -->
+          <div class="space-y-4">
+            <div class="flex gap-4">
+              <!-- Quantity Selector -->
+              <div class="flex items-center border-2 border-black dark:border-white">
+                <button
+                  id="decrease-qty"
+                  class="px-5 py-5 hover:bg-black/5 dark:hover:bg-white/5 transition-colors border-r-2 border-black dark:border-white"
+                  aria-label="Decrease quantity"
+                >
+                  <span class="text-xl font-light">−</span>
+                </button>
+                <div class="px-6 py-5 min-w-[60px] text-center">
+                  <span id="quantity-display" class="text-base font-medium tabular-nums">1</span>
+                </div>
+                <button
+                  id="increase-qty"
+                  class="px-5 py-5 hover:bg-black/5 dark:hover:bg-white/5 transition-colors border-l-2 border-black dark:border-white"
+                  aria-label="Increase quantity"
+                >
+                  <span class="text-xl font-light">+</span>
+                </button>
+              </div>
+
+              <!-- Buy Now Button -->
+              <button
+                id="hero-buy-button"
+                class="flex-1 bg-black dark:bg-white text-white dark:text-black border-2 border-black dark:border-white py-5 hover:opacity-80 transition-opacity duration-200"
+              >
+                <span class="text-xs font-bold tracking-[0.3em] uppercase">
+                  Buy Now
+                </span>
+              </button>
+            </div>
+            <div class="grid grid-cols-3 gap-4 text-center text-xs tracking-wide pt-4">
+              <div>Free Shipping</div>
+              <div>90-Day Returns</div>
+              <div>3-Year Warranty</div>
+            </div>
           </div>
         </div>
       </div>
     </section>
 
-    <!-- Features Section -->
-    <section id="features" class="max-w-7xl mx-auto px-6 py-24 border-t border-gray-200 dark:border-gray-800">
+    <script>
+      // Quantity selector logic
+      let currentQuantity = 1;
+      const maxQuantity = 10;
+
+      const quantityDisplay = document.getElementById('quantity-display');
+      const decreaseBtn = document.getElementById('decrease-qty');
+      const increaseBtn = document.getElementById('increase-qty');
+
+      decreaseBtn?.addEventListener('click', () => {
+        if (currentQuantity > 1) {
+          currentQuantity--;
+          if (quantityDisplay) quantityDisplay.textContent = String(currentQuantity);
+        }
+      });
+
+      increaseBtn?.addEventListener('click', () => {
+        if (currentQuantity < maxQuantity) {
+          currentQuantity++;
+          if (quantityDisplay) quantityDisplay.textContent = String(currentQuantity);
+        }
+      });
+
+      // Connect hero Buy Now button to header dialog
+      const heroBuyButton = document.getElementById('hero-buy-button');
+      heroBuyButton?.addEventListener('click', () => {
+        // Store quantity for modal
+        (window as any).orderQuantity = currentQuantity;
+        // Dispatch custom event to open the buy dialog
+        window.dispatchEvent(new Event('openBuyDialog'));
+      });
+
+      // Connect bottom CTA Buy Now button
+      const bottomBuyButton = document.getElementById('bottom-buy-button');
+      bottomBuyButton?.addEventListener('click', () => {
+        (window as any).orderQuantity = currentQuantity;
+        window.dispatchEvent(new Event('openBuyDialog'));
+      });
+    </script>
+
+    <!-- Inline Urgency Banner -->
+    <InlineUrgencyBanner
+      client:load
+      stock={product.stock}
+      offerText="Free overnight shipping"
+      countdownMinutes={154}
+    />
+
+    <!-- Features with Images Section -->
+    <FeaturesWithImages features={featuresWithImages} />
+
+    <!-- Product Description + Specs -->
+    <section id="details" class="max-w-7xl mx-auto px-6 py-32 border-t-4 border-black dark:border-white">
       <div class="grid md:grid-cols-2 gap-20">
-        <div>
-          <h2 class="text-4xl font-black mb-8 tracking-tight">Mystery in a bottle.</h2>
-          <p class="text-lg text-gray-600 dark:text-gray-300 font-light leading-relaxed mb-6">
+        <div class="space-y-8">
+          <div>
+            <p class="text-xs font-bold tracking-[0.3em] uppercase mb-6">Description</p>
+            <h2 class="text-4xl md:text-5xl font-light leading-tight mb-8">
+              Mystery in a bottle
+            </h2>
+          </div>
+          <div class="h-px bg-black dark:bg-white w-20" />
+          <p class="text-base leading-relaxed">
             Coco Noir is an ode to femininity and mystery. Inspired by the legendary Coco Chanel herself, this fragrance blends dark, intoxicating notes of grapefruit with delicate florals and a sensual sandalwood base.
           </p>
-          <p class="text-lg text-gray-600 dark:text-gray-300 font-light leading-relaxed">
+          <p class="text-base leading-relaxed">
             Each spritz reveals layers of sophistication—perfect for evening wear or whenever you want to make an unforgettable impression.
           </p>
         </div>
 
-        <div class="space-y-8">
-          <div>
-            <h3 class="text-2xl font-black mb-4">Signature Scent Profile</h3>
-            <p class="text-gray-600 dark:text-gray-300 font-light">
-              A perfect balance of citrus brightness, floral elegance, and woody warmth that evolves throughout the day.
-            </p>
-          </div>
-          <div>
-            <h3 class="text-2xl font-black mb-4">Iconic Bottle Design</h3>
-            <p class="text-gray-600 dark:text-gray-300 font-light">
-              The sleek, minimalist black bottle reflects the fragrance's mysterious and sophisticated character—pure luxury.
-            </p>
-          </div>
-          <div>
-            <h3 class="text-2xl font-black mb-4">Lasting Luxury</h3>
-            <p class="text-gray-600 dark:text-gray-300 font-light">
-              Long-lasting formula ensures your signature scent lingers all day and into the evening.
-            </p>
-          </div>
-        </div>
-      </div>
-    </section>
-
-    <!-- Specifications -->
-    <section id="details" class="max-w-7xl mx-auto px-6 py-24 border-t border-gray-200 dark:border-gray-800">
-      <h2 class="text-4xl font-black mb-12 tracking-tight">Fragrance Details</h2>
-
-      <div class="grid md:grid-cols-2 gap-8">
         <div class="space-y-6">
-          <div class="pb-6 border-b border-gray-200 dark:border-gray-800">
-            <p class="text-sm font-semibold text-gray-500 dark:text-gray-400 uppercase tracking-wider mb-2">Fragrance Type</p>
-            <p class="text-lg">Eau de Parfum</p>
-          </div>
-          <div class="pb-6 border-b border-gray-200 dark:border-gray-800">
-            <p class="text-sm font-semibold text-gray-500 dark:text-gray-400 uppercase tracking-wider mb-2">Brand</p>
-            <p class="text-lg">Chanel</p>
-          </div>
-          <div class="pb-6 border-b border-gray-200 dark:border-gray-800">
-            <p class="text-sm font-semibold text-gray-500 dark:text-gray-400 uppercase tracking-wider mb-2">Top Notes</p>
-            <p class="text-lg">Grapefruit</p>
-          </div>
-        </div>
-
-        <div class="space-y-6">
-          <div class="pb-6 border-b border-gray-200 dark:border-gray-800">
-            <p class="text-sm font-semibold text-gray-500 dark:text-gray-400 uppercase tracking-wider mb-2">Heart Notes</p>
-            <p class="text-lg">Rose & Jasmine</p>
-          </div>
-          <div class="pb-6 border-b border-gray-200 dark:border-gray-800">
-            <p class="text-sm font-semibold text-gray-500 dark:text-gray-400 uppercase tracking-wider mb-2">Base Notes</p>
-            <p class="text-lg">Sandalwood</p>
-          </div>
-          <div class="pb-6 border-b border-gray-200 dark:border-gray-800">
-            <p class="text-sm font-semibold text-gray-500 dark:text-gray-400 uppercase tracking-wider mb-2">Rating</p>
-            <p class="text-lg">★★★★☆ 4.26/5</p>
-          </div>
+          <p class="text-xs font-bold tracking-[0.3em] uppercase mb-6">Specifications</p>
+          {specs.map(spec => (
+            <div class="grid grid-cols-2 gap-6 py-4 border-b border-black dark:border-white">
+              <span class="text-xs font-bold tracking-[0.2em] uppercase">{spec.label}</span>
+              <span class="text-base">{spec.value}</span>
+            </div>
+          ))}
         </div>
       </div>
     </section>
 
-    <!-- Reviews Section -->
-    <section id="reviews" class="max-w-7xl mx-auto px-6 py-24 border-t border-gray-200 dark:border-gray-800">
-      <h2 class="text-4xl font-black mb-12 tracking-tight">What customers say</h2>
+    <!-- Fragrance Notes -->
+    <FragranceNotes
+      topNotes={fragranceNotes.topNotes}
+      middleNotes={fragranceNotes.middleNotes}
+      baseNotes={fragranceNotes.baseNotes}
+    />
 
-      <div class="grid md:grid-cols-3 gap-8">
-        <div class="space-y-4">
-          <div class="flex gap-1">
-            {[...Array(5)].map(() => (
-              <span class="text-2xl">★</span>
-            ))}
-          </div>
-          <p class="text-lg font-light leading-relaxed">
-            "An absolute masterpiece. The craftsmanship is exceptional and the design is truly timeless."
-          </p>
-          <p class="text-sm font-semibold">— Jennifer K.</p>
-        </div>
+    <!-- Value Proposition -->
+    <ValueProposition />
 
-        <div class="space-y-4">
-          <div class="flex gap-1">
-            {[...Array(5)].map(() => (
-              <span class="text-2xl">★</span>
-            ))}
-          </div>
-          <p class="text-lg font-light leading-relaxed">
-            "Worth every penny. The quality is unmatched and it arrived beautifully packaged."
-          </p>
-          <p class="text-sm font-semibold">— Michael R.</p>
-        </div>
+    <!-- Reviews -->
+    <section id="reviews">
+      <ReviewsSection
+      averageRating={product.rating}
+      totalReviews={product.reviewCount}
+      reviews={reviews}
+      ratingDistribution={{ 5: 72, 4: 12, 3: 3, 2: 1, 1: 1 }}
+    />
 
-        <div class="space-y-4">
-          <div class="flex gap-1">
-            {[...Array(5)].map(() => (
-              <span class="text-2xl">★</span>
-            ))}
-          </div>
-          <p class="text-lg font-light leading-relaxed">
-            "A stunning piece that gets compliments everywhere I go. Highly recommend!"
-          </p>
-          <p class="text-sm font-semibold">— Sarah M.</p>
-        </div>
+    <!-- FAQ -->
+    <section id="faq" class="max-w-7xl mx-auto px-6">
+      <div class="mt-16">
+        <ProductFAQ client:load />
       </div>
     </section>
-
-    <!-- Value Stack Section -->
-    <ValueStack client:load />
-
-    <!-- FAQ Section -->
-    <FAQ client:load />
 
     <!-- Bottom CTA -->
     <section class="max-w-7xl mx-auto px-6 py-24 border-t border-gray-200 dark:border-gray-800">
@@ -217,100 +327,56 @@ const productImages = [
         <p class="text-xl text-gray-600 dark:text-gray-300 font-light max-w-2xl mx-auto">
           Discover the allure of Coco Noir. A fragrance for the sophisticated woman who knows her power.
         </p>
-        <button class="bg-black dark:bg-white text-white dark:text-black px-12 py-4 rounded-full text-lg font-semibold tracking-wide hover:opacity-80 transition-opacity duration-300 active:scale-95">
+        <button id="bottom-buy-button" class="bg-black dark:bg-white text-white dark:text-black border-2 border-black dark:border-white px-12 py-4 rounded-full text-lg font-semibold tracking-wide hover:opacity-80 transition-opacity duration-300 active:scale-95">
           Buy Now
         </button>
       </div>
     </section>
 
-    <!-- Product Gallery Section -->
-    <section id="gallery" class="max-w-7xl mx-auto px-6 py-24 border-t border-gray-200 dark:border-gray-800">
-      <h2 class="text-5xl font-black mb-20 tracking-tight text-center">Gallery</h2>
-
-      <!-- Large hero image -->
-      <div class="mb-20">
-        <div class="relative w-full aspect-video max-w-4xl mx-auto">
-          <img
-            src="https://cdn.dummyjson.com/product-images/fragrances/chanel-coco-noir-eau-de/1.webp"
-            alt="Chanel Coco Noir - Main View"
-            class="w-full h-full object-contain filter drop-shadow-2xl"
-          />
-        </div>
-      </div>
-
-      <!-- Detail shots grid -->
-      <div class="grid grid-cols-1 md:grid-cols-2 gap-8 mb-20">
-        <div class="relative w-full aspect-square">
-          <img
-            src="https://cdn.dummyjson.com/product-images/fragrances/chanel-coco-noir-eau-de/2.webp"
-            alt="Bottle Front"
-            class="w-full h-full object-contain filter drop-shadow-xl rounded-lg"
-          />
-          <p class="text-center mt-4 font-semibold text-gray-600 dark:text-gray-300">Iconic Black Bottle</p>
-        </div>
-        <div class="relative w-full aspect-square">
-          <img
-            src="https://cdn.dummyjson.com/product-images/fragrances/chanel-coco-noir-eau-de/3.webp"
-            alt="Bottle Detail"
-            class="w-full h-full object-contain filter drop-shadow-xl rounded-lg"
-          />
-          <p class="text-center mt-4 font-semibold text-gray-600 dark:text-gray-300">Luxurious Packaging</p>
-        </div>
-      </div>
-
-      <!-- Three column showcase -->
-      <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
-        <div class="relative w-full aspect-square">
-          <img
-            src="https://cdn.dummyjson.com/product-images/fragrances/chanel-coco-noir-eau-de/1.webp"
-            alt="Front View"
-            class="w-full h-full object-contain filter drop-shadow-lg rounded-lg"
-          />
-          <p class="text-center mt-4 font-semibold text-gray-600 dark:text-gray-300">Front View</p>
-        </div>
-        <div class="relative w-full aspect-square">
-          <img
-            src="https://cdn.dummyjson.com/product-images/fragrances/chanel-coco-noir-eau-de/2.webp"
-            alt="Side Profile"
-            class="w-full h-full object-contain filter drop-shadow-lg rounded-lg"
-          />
-          <p class="text-center mt-4 font-semibold text-gray-600 dark:text-gray-300">Side Profile</p>
-        </div>
-        <div class="relative w-full aspect-square">
-          <img
-            src="https://cdn.dummyjson.com/product-images/fragrances/chanel-coco-noir-eau-de/3.webp"
-            alt="Detail Shot"
-            class="w-full h-full object-contain filter drop-shadow-lg rounded-lg"
-          />
-          <p class="text-center mt-4 font-semibold text-gray-600 dark:text-gray-300">Detail Shot</p>
-        </div>
-      </div>
-    </section>
-
     <!-- Footer -->
-    <footer class="border-t border-gray-200 dark:border-gray-800 py-12">
-      <div class="max-w-7xl mx-auto px-6 text-center">
-        <p class="text-sm text-gray-500 dark:text-gray-400">
-          Free shipping worldwide • 30-day returns • Lifetime warranty
-        </p>
+    <footer class="border-t-4 border-black dark:border-white py-16">
+      <div class="max-w-7xl mx-auto px-6">
+        <div class="grid md:grid-cols-3 gap-8 mb-12">
+          <div>
+            <p class="text-xs font-bold tracking-[0.3em] uppercase mb-4">
+              Shipping
+            </p>
+            <p class="text-sm leading-relaxed">
+              Free worldwide delivery on all orders
+            </p>
+          </div>
+          <div>
+            <p class="text-xs font-bold tracking-[0.3em] uppercase mb-4">
+              Returns
+            </p>
+            <p class="text-sm leading-relaxed">
+              90-day money-back guarantee
+            </p>
+          </div>
+          <div>
+            <p class="text-xs font-bold tracking-[0.3em] uppercase mb-4">
+              Warranty
+            </p>
+            <p class="text-sm leading-relaxed">
+              3-year premium coverage
+            </p>
+          </div>
+        </div>
+        <div class="border-t border-black dark:border-white pt-8 text-center">
+          <p class="text-xs tracking-wide">
+            © 2025 Your Brand. All rights reserved.
+          </p>
+        </div>
       </div>
     </footer>
+
+    <!-- Sticky Cart Button (Mobile) -->
+    <StickyCartButton client:load price={product.price} />
+
+    <!-- Recent Purchase Toast -->
+    <RecentPurchaseToast client:load />
+
+    <!-- Theme Toggle -->
+    <ThemeToggle client:load />
   </div>
 </ShopLayout>
-
-<style>
-  @keyframes fade-in {
-    from {
-      opacity: 0;
-      transform: translateY(20px);
-    }
-    to {
-      opacity: 1;
-      transform: translateY(0);
-    }
-  }
-
-  * {
-    animation: fade-in 0.6s ease-out;
-  }
-</style>

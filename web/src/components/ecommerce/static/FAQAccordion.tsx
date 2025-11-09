@@ -55,51 +55,39 @@ function FAQAccordion({
   });
 
   return (
-    <div className="space-y-6">
+    <div className="space-y-12">
       {/* Header */}
-      <div className="text-center">
-        <h2 className="text-3xl font-bold text-foreground">{title}</h2>
+      <div className="text-center border-b border-black dark:border-white pb-8">
+        <p className="text-xs font-bold tracking-[0.3em] uppercase mb-4">Support</p>
+        <h2 className="text-4xl md:text-5xl font-light tracking-tight">{title}</h2>
         {description && (
-          <p className="mt-2 text-muted-foreground">{description}</p>
+          <p className="mt-4 text-base leading-relaxed max-w-2xl mx-auto">{description}</p>
         )}
       </div>
 
       {/* Search and filter */}
       {searchable && (
-        <div className="space-y-4">
+        <div className="space-y-6">
           {/* Search bar */}
           <div className="relative">
-            <svg
-              className="absolute left-3 top-1/2 h-5 w-5 -translate-y-1/2 text-muted-foreground"
-              fill="none"
-              stroke="currentColor"
-              viewBox="0 0 24 24"
-            >
-              <path
-                strokeLinecap="round"
-                strokeLinejoin="round"
-                strokeWidth={2}
-                d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"
-              />
-            </svg>
             <input
               type="text"
-              placeholder="Search questions..."
+              placeholder="SEARCH QUESTIONS..."
               value={searchQuery}
               onChange={(e) => setSearchQuery(e.target.value)}
-              className="w-full rounded-lg border border-border bg-background py-3 pl-10 pr-4 text-foreground placeholder:text-muted-foreground focus:outline-none focus:ring-2 focus:ring-primary"
+              className="w-full border-2 border-black dark:border-white bg-transparent py-4 px-6 text-sm font-bold tracking-[0.2em] uppercase placeholder:text-black/50 dark:placeholder:text-white/50 focus:outline-none"
             />
           </div>
 
           {/* Category filter */}
           {categories.length > 0 && (
-            <div className="flex flex-wrap gap-2">
+            <div className="flex flex-wrap gap-3">
               <button
                 onClick={() => setSelectedCategory(null)}
-                className={`rounded-full px-4 py-2 text-sm font-medium transition-colors ${
+                className={`border-2 px-6 py-3 text-xs font-bold tracking-[0.2em] uppercase transition-all ${
                   selectedCategory === null
-                    ? 'bg-primary text-primary-foreground'
-                    : 'bg-muted text-muted-foreground hover:bg-muted/80'
+                    ? 'bg-black dark:bg-white text-white dark:text-black border-black dark:border-white'
+                    : 'bg-transparent border-black dark:border-white hover:bg-black/5 dark:hover:bg-white/5'
                 }`}
               >
                 All
@@ -108,10 +96,10 @@ function FAQAccordion({
                 <button
                   key={category}
                   onClick={() => setSelectedCategory(category!)}
-                  className={`rounded-full px-4 py-2 text-sm font-medium transition-colors ${
+                  className={`border-2 px-6 py-3 text-xs font-bold tracking-[0.2em] uppercase transition-all ${
                     selectedCategory === category
-                      ? 'bg-primary text-primary-foreground'
-                      : 'bg-muted text-muted-foreground hover:bg-muted/80'
+                      ? 'bg-black dark:bg-white text-white dark:text-black border-black dark:border-white'
+                      : 'bg-transparent border-black dark:border-white hover:bg-black/5 dark:hover:bg-white/5'
                   }`}
                 >
                   {category}
@@ -124,48 +112,37 @@ function FAQAccordion({
 
       {/* FAQs */}
       {filteredFaqs.length === 0 ? (
-        <div className="py-12 text-center">
-          <svg
-            className="mx-auto h-12 w-12 text-muted-foreground"
-            fill="none"
-            stroke="currentColor"
-            viewBox="0 0 24 24"
-          >
-            <path
-              strokeLinecap="round"
-              strokeLinejoin="round"
-              strokeWidth={2}
-              d="M9.172 16.172a4 4 0 015.656 0M9 10h.01M15 10h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"
-            />
-          </svg>
-          <p className="mt-4 text-muted-foreground">No questions found</p>
+        <div className="py-20 text-center border border-black dark:border-white">
+          <p className="text-sm tracking-wide">No questions found</p>
         </div>
       ) : (
-        <Accordion type="single" collapsible className="w-full">
+        <div className="space-y-4">
           {filteredFaqs.map((faq) => (
-            <AccordionItem key={faq.id} value={faq.id}>
-              <AccordionTrigger className="text-left">
-                {faq.question}
-              </AccordionTrigger>
-              <AccordionContent>
-                <div className="prose prose-sm max-w-none text-muted-foreground dark:prose-invert">
-                  {faq.answer}
-                </div>
-              </AccordionContent>
-            </AccordionItem>
+            <Accordion key={faq.id} type="single" collapsible className="border border-black dark:border-white">
+              <AccordionItem value={faq.id} className="border-none">
+                <AccordionTrigger className="text-left px-6 py-5 hover:no-underline hover:bg-black/5 dark:hover:bg-white/5 transition-colors">
+                  <span className="text-base font-medium tracking-wide">{faq.question}</span>
+                </AccordionTrigger>
+                <AccordionContent className="px-6 pb-6 border-t border-black dark:border-white">
+                  <div className="pt-4 text-base leading-relaxed">
+                    {faq.answer}
+                  </div>
+                </AccordionContent>
+              </AccordionItem>
+            </Accordion>
           ))}
-        </Accordion>
+        </div>
       )}
 
       {/* Still have questions CTA */}
-      <div className="mt-8 rounded-lg bg-muted p-6 text-center">
-        <h3 className="text-lg font-semibold text-foreground">
+      <div className="border-t-4 border-black dark:border-white pt-12 text-center">
+        <h3 className="text-2xl font-light tracking-tight mb-4">
           Still have questions?
         </h3>
-        <p className="mt-2 text-sm text-muted-foreground">
+        <p className="text-base leading-relaxed mb-8 max-w-xl mx-auto">
           Can't find the answer you're looking for? Our customer support team is here to help.
         </p>
-        <button className="mt-4 rounded-lg bg-primary px-6 py-2 font-semibold text-primary-foreground transition-colors hover:bg-primary/90">
+        <button className="bg-black dark:bg-white text-white dark:text-black border-2 border-black dark:border-white px-12 py-4 text-xs font-bold tracking-[0.3em] uppercase hover:opacity-80 transition-opacity">
           Contact Support
         </button>
       </div>
@@ -278,9 +255,7 @@ function ProductFAQ({ productType, customFaqs }: ProductFAQProps) {
   const faqs = customFaqs || defaultEcommerceFAQs;
 
   return (
-    <div className="rounded-lg border border-border bg-card p-6">
-      <FAQAccordion faqs={faqs} searchable={faqs.length > 5} />
-    </div>
+    <FAQAccordion faqs={faqs} searchable={faqs.length > 5} />
   );
 }
 

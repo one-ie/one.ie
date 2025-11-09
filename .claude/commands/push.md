@@ -26,11 +26,17 @@ git push origin main       # ← Then push
 
 ## How It Works
 
-This command uses `./.claude/hooks/push.sh` to intelligently push to:
-- Main repository: `github.com/one-ie/one`
-- `/one` subtree: `github.com/one-ie/ontology`
-- `/web` subtree: `github.com/one-ie/web`
-- `one.ie/` directory: `github.com/one-ie/one.ie`
+This command uses `./.claude/hooks/push.sh` to automatically:
+1. **Stage all changes** (`git add -A`) if any exist
+2. **Commit changes** with generated message if needed
+3. **Pull latest** from remote (prevent divergence)
+4. **Push to remotes**:
+   - Main repository: `github.com/one-ie/one`
+   - `/one` subtree: `github.com/one-ie/ontology`
+   - `/web` subtree: `github.com/one-ie/web`
+   - `one.ie/` directory: `github.com/one-ie/one.ie`
+
+**You don't need to manually run `git add` or `git commit` - the script handles it automatically!**
 
 ## Usage
 
@@ -45,43 +51,53 @@ This command uses `./.claude/hooks/push.sh` to intelligently push to:
 /push oneie         # one.ie directory only
 ```
 
-## Workflow: Safe Push (No Divergence)
+## Workflow: Automatic Push (No Manual Steps)
 
-**Always follow this sequence:**
+**The `/push` command handles everything automatically:**
 
 ```bash
-# 1. Make changes
-git add -A
-git commit -m "Your message"
-
-# 2. Pull latest from remote (CRITICAL)
-git pull origin main
-
-# 3. Now push safely
-/push main
-
-# Or push to all:
+# Just make your changes, then run:
 /push all
+
+# That's it! The script automatically:
+# 1. Stages all changes (git add -A)
+# 2. Commits with generated message
+# 3. Pulls latest from remote (prevents divergence)
+# 4. Pushes to all remotes
 ```
 
-**Result:** Zero divergence, always in sync with remote.
+**You can also push to specific remotes:**
 
-## What the Script Does
+```bash
+/push main    # Push to one-ie/one only
+/push one     # Push to one-ie/ontology only
+/push web     # Push to one-ie/web only
+/push oneie   # Push to one-ie/one.ie only
+```
 
-1. **Pulls latest changes** from remote first (prevent divergence)
-2. **Analyzes changes** across all repositories
-3. **Commits with generated messages** based on file changes
-4. **Pushes to each remote** with appropriate branch handling
-5. **Reports summary** of all pushed repositories
+**Result:** Zero divergence, always in sync with remote, zero manual steps.
+
+## What the Script Does (Automatically)
+
+1. **Checks for uncommitted changes** - If any exist, proceeds to stage and commit
+2. **Stages all changes** - Runs `git add -A` to stage everything
+3. **Commits with generated message** - Creates commit from changed file list
+4. **Pulls latest changes** - Always pulls before pushing (prevents divergence)
+5. **Pushes to remotes** - Pushes to main repo and/or subtrees
+6. **Reports summary** - Shows what was pushed where
+
+**You never need to manually run `git add`, `git commit`, or `git pull` - it's all automatic!**
 
 ## Your Task
 
 When the user runs `/push [option]`, you MUST:
 
-1. **Run the push script** with the appropriate argument:
+1. **Simply run the push script** with the appropriate argument:
    ```bash
    ./.claude/hooks/push.sh [all|main|one|web|oneie]
    ```
+
+   **DO NOT run `git add`, `git commit`, or `git pull` manually** - the script handles everything!
 
 2. **Handle errors gracefully**:
    - If a directory doesn't exist, the script handles it
@@ -98,6 +114,8 @@ When the user runs `/push [option]`, you MUST:
    - /web: pushed to web-repo
    - one.ie: pushed (if directory exists)
    ```
+
+**IMPORTANT:** Do not manually stage, commit, or pull. The script does this automatically to ensure consistency.
 
 ## Examples
 
