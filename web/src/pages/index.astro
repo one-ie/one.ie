@@ -17,9 +17,9 @@ import { YouTube } from '@astro-community/astro-embed-youtube';
 
   <!-- Video Section -->
   <section class="w-full py-8">
-    <div class="mx-auto max-w-7xl px-4">
-      <h2 class="text-3xl sm:text-4xl font-bold mb-6 text-center">Demo</h2>
-      <div class="video-container border-[16px] border-primary rounded-lg overflow-hidden shadow-xl">
+    <div class="mx-auto max-w-7xl px-0 sm:px-4">
+      <h2 class="text-3xl sm:text-4xl font-bold mb-4 sm:mb-6 text-center px-4 sm:px-0">Demo</h2>
+      <div class="video-container border-[8px] sm:border-[16px] border-primary rounded-none sm:rounded-lg overflow-hidden shadow-xl">
         <YouTube id="VguPAHfksEY" posterQuality="max" />
       </div>
     </div>
@@ -1751,11 +1751,27 @@ EVERY DAY at 8am:
     margin: 0 !important;
   }
 
+  /* Responsive video height - smaller on mobile */
   .video-container :global(lite-youtube > iframe),
   .video-container :global(lite-youtube::before) {
     width: 100% !important;
-    height: 80vh !important;
-    max-height: 800px !important;
+  }
+
+  /* Mobile: aspect ratio based height */
+  @media (max-width: 640px) {
+    .video-container :global(lite-youtube > iframe),
+    .video-container :global(lite-youtube::before) {
+      height: 56.25vw !important; /* 16:9 aspect ratio */
+    }
+  }
+
+  /* Larger screens: fixed height */
+  @media (min-width: 641px) {
+    .video-container :global(lite-youtube > iframe),
+    .video-container :global(lite-youtube::before) {
+      height: 80vh !important;
+      max-height: 800px !important;
+    }
   }
 
   /* Accessibility: Respect user motion preferences */

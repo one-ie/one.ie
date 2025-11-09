@@ -1,3 +1,17 @@
+### **b9e75a77** — template:8 — `chore: Update 8 file(s)``
+
+**Template:**
+  - .claude/hooks.log
+  - .claude/hooks/.last-news-context
+  - .claude/state/cycle.json
+  - .claude/state/director-template-update.md
+  - .claude/state/template-workflow-comparison.md
+  - one/events/0-changes.md
+  - web/src/pages/index.astro
+  - web/src/styles/global.css
+
+
+
 ### **066a006c** — template:7 — `feat: Complete template-first transformation across all agents``
 
 **Template:**

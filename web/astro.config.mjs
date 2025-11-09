@@ -15,6 +15,12 @@ const adapter = isDev
 
 export default defineConfig({
   site: "https://one.ie",
+  markdown: {
+    shikiConfig: {
+      theme: 'monokai',
+      wrap: true,
+    },
+  },
   integrations: [
     react(),
     mdx({

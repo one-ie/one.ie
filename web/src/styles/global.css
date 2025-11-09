@@ -309,39 +309,28 @@ html, body {
 }
 
 /* Add styles for code blocks */
+/* Monokai theme is configured in astro.config.mjs */
 .prose pre {
-  background-color: hsl(var(--color-sidebar-background)) !important;
+  border-radius: 0.5rem;
+  padding: 1rem;
+  overflow-x: auto;
+  background-color: hsl(0 0% 10%) !important;
 }
 
-.prose code {
-  background-color: hsl(var(--color-sidebar-background)) !important;
-  color: hsl(0 0% 0%) !important; /* Pure black on light theme */
+.dark .prose pre {
+  background-color: hsl(0 0% 10%) !important;
 }
 
-/* Ensure all code content is black in light theme */
-.prose pre code,
-.prose pre code *,
-.prose code *,
-pre, pre *, code, code * {
-  color: hsl(0 0% 0%) !important;
-}
-
-/* Dark mode code blocks */
-.dark .prose code,
-.dark .prose pre code,
-.dark .prose pre code *,
-.dark .prose code *,
-.dark pre, .dark pre *, .dark code, .dark code * {
-  color: hsl(var(--color-sidebar-foreground)) !important;
-}
-
-/* Optional: Style inline code differently if needed */
+/* Inline code styling */
 .prose :not(pre) > code {
   padding-left: 0.375rem;
   padding-right: 0.375rem;
   padding-top: 0.125rem;
   padding-bottom: 0.125rem;
   border-radius: 0.375rem;
+  background-color: hsl(var(--color-muted));
+  color: hsl(var(--color-foreground));
+  font-size: 0.875em;
 }
 
 /* Ensure translucent card utility pulls full surface color */
