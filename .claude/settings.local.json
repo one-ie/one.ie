@@ -48,10 +48,7 @@
       "Bash(npx oneie@latest --version)",
       "Bash([ -d web ])",
       "Bash(git rm:*)",
-      "WebFetch(domain:github.com)",
-      "Bash(git pull:*)",
-      "Bash(./.claude/hooks/push.sh:*)",
-      "Bash(./.claude/hooks/release-cli.sh:*)"
+      "WebFetch(domain:github.com)"
     ],
     "deny": [],
     "ask": []

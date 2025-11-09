@@ -67,15 +67,15 @@ else
 fi
 echo ""
 
-# Step 3: Sync root markdown files to cli/
-echo -e "${BLUE}Step 3: Sync root markdown files (parallel)${NC}"
-for file in CLAUDE.md README.md LICENSE.md SECURITY.md AGENTS.md; do
+# Step 3: Sync root markdown and config files to cli/
+echo -e "${BLUE}Step 3: Sync root markdown and config files (parallel)${NC}"
+for file in CLAUDE.md README.md LICENSE.md SECURITY.md AGENTS.md .mcp.json.on .mcp.json.off; do
     if [ -f "$file" ]; then
         cp "$file" "cli/$file" &
     fi
 done
 wait  # Wait for all copies to complete
-echo -e "${GREEN}✓ All markdown files synced${NC}"
+echo -e "${GREEN}✓ All markdown and config files synced${NC}"
 echo ""
 
 # Step 4: Sync .claude/ to cli/.claude/ (agents, commands, hooks, skills)
@@ -113,12 +113,13 @@ echo -e "${BLUE}Step 6: Commit cli/ changes${NC}"
 cd cli
 if [[ -n $(git status -s) ]]; then
     git add . > /dev/null 2>&1
-    git commit -m "chore: sync /one, .claude/, and markdown files
+    git commit -m "chore: sync /one, .claude/, markdown, and config files
 
 Synced from root repository:
 - /one/* → CLI documentation
 - .claude/* → CLI automation (agents, commands, hooks, skills)
 - CLAUDE.md, README.md, LICENSE.md, SECURITY.md, AGENTS.md
+- .mcp.json.on, .mcp.json.off → MCP server configurations
 
 🤖 Generated with [Claude Code](https://claude.com/claude-code)
 
@@ -200,4 +201,5 @@ echo -e "${BLUE}Synced:${NC}"
 echo "  ✓ /one/* → cli/one/ (documentation)"
 echo "  ✓ .claude/* → cli/.claude/ (agents, commands, hooks, skills)"
 echo "  ✓ CLAUDE.md, README.md, LICENSE.md, SECURITY.md, AGENTS.md"
+echo "  ✓ .mcp.json.on, .mcp.json.off (MCP server configurations)"
 echo ""

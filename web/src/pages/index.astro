@@ -1,12 +1,9 @@
 ---
-/**
- * Homepage - Dynamic Product Landing Template Demo
- * Showcases the beautiful product landing template
- * Redirects to /shop/product-landing for the actual template
- */
-
-// Redirect to product landing template demo
-return Astro.redirect('/shop/product-landing');
+import Layout from "../layouts/Layout.astro";
+import { GitSection } from "@/components/GitSection";
+import { PerformanceChart } from "@/components/features/PerformanceChart";
+import OrbitingCircles from "@/components/magicui/orbiting-circles";
+import DownloadSection from "@/components/DownloadSection.astro";
 ---
 
 <Layout
@@ -18,167 +15,508 @@ return Astro.redirect('/shop/product-landing');
   <GitSection client:idle />
 
   <!-- Who Is ONE For Section -->
-  <section class="border-y bg-muted/50 px-4 py-20 sm:px-6 sm:py-24 md:px-8 md:py-32">
+  <section
+    class="border-y bg-muted/50 px-4 py-20 sm:px-6 sm:py-24 md:px-8 md:py-32"
+  >
     <div class="mx-auto max-w-full sm:max-w-6xl">
       <div class="mb-20 space-y-4 text-center">
-        <div class="rounded-md border px-2.5 py-0.5 text-xs font-semibold transition-colors focus:outline-none focus:ring-2 focus:ring-ring focus:ring-offset-2 text-foreground mb-2 inline-flex items-center gap-2" data-usal="fade-down duration-600">
-          <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-users h-4 w-4" aria-hidden="true"><path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"></path><path d="M16 3.128a4 4 0 0 1 0 7.744"></path><path d="M22 21v-2a4 4 0 0 0-3-3.87"></path><circle cx="9" cy="7" r="4"></circle></svg>
+        <div
+          class="rounded-md border px-2.5 py-0.5 text-xs font-semibold transition-colors focus:outline-none focus:ring-2 focus:ring-ring focus:ring-offset-2 text-foreground mb-2 inline-flex items-center gap-2"
+          data-usal="fade-down duration-600"
+        >
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            width="24"
+            height="24"
+            viewBox="0 0 24 24"
+            fill="none"
+            stroke="currentColor"
+            stroke-width="2"
+            stroke-linecap="round"
+            stroke-linejoin="round"
+            class="lucide lucide-users h-4 w-4"
+            aria-hidden="true"
+            ><path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"></path><path
+              d="M16 3.128a4 4 0 0 1 0 7.744"></path><path
+              d="M22 21v-2a4 4 0 0 0-3-3.87"></path><circle cx="9" cy="7" r="4"
+            ></circle></svg
+          >
           Built For Everyone
         </div>
-        <h2 class="text-4xl font-bold leading-tight tracking-tight sm:text-5xl" data-usal="fade-up duration-700 delay-100">
-          Who Is ONE For?<br><span class="text-muted-foreground">You. Right Now.</span>
+        <h2
+          class="text-4xl font-bold leading-tight tracking-tight sm:text-5xl"
+          data-usal="fade-up duration-700 delay-100"
+        >
+          Who Is ONE For?<br /><span class="text-muted-foreground"
+            >You. Right Now.</span
+          >
         </h2>
-        <p class="mx-auto max-w-3xl text-lg leading-relaxed text-muted-foreground" data-usal="fade-up duration-700 delay-200">
-          From kids learning to code to enterprises managing billions in revenue—the same 6-dimension ontology scales to your needs.
+        <p
+          class="mx-auto max-w-3xl text-lg leading-relaxed text-muted-foreground"
+          data-usal="fade-up duration-700 delay-200"
+        >
+          From kids learning to code to enterprises managing billions in
+          revenue—the same 6-dimension ontology scales to your needs.
         </p>
       </div>
 
       <!-- Segment Grid -->
       <div class="grid gap-6 md:grid-cols-2 lg:grid-cols-4">
-        <div class="rounded-xl border text-card-foreground shadow group border-border/50 bg-card/50 backdrop-blur transition-all hover:scale-[1.02] hover:border-primary/20 hover:bg-card hover:shadow-lg hover:shadow-primary/5 cursor-pointer" data-usal="fade-up duration-600 delay-100">
+        <div
+          class="rounded-xl border text-card-foreground shadow group border-border/50 bg-card/50 backdrop-blur transition-all hover:scale-[1.02] hover:border-primary/20 hover:bg-card hover:shadow-lg hover:shadow-primary/5 cursor-pointer"
+          data-usal="fade-up duration-600 delay-100"
+        >
           <div class="flex flex-col p-6 space-y-4">
-            <div class="flex h-12 w-12 items-center justify-center rounded-lg bg-primary/10 transition-colors group-hover:bg-primary/15">
-              <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-users h-6 w-6 text-primary" aria-hidden="true"><path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"></path><path d="M16 3.128a4 4 0 0 1 0 7.744"></path><path d="M22 21v-2a4 4 0 0 0-3-3.87"></path><circle cx="9" cy="7" r="4"></circle></svg>
+            <div
+              class="flex h-12 w-12 items-center justify-center rounded-lg bg-primary/10 transition-colors group-hover:bg-primary/15"
+            >
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                width="24"
+                height="24"
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                stroke-width="2"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                class="lucide lucide-users h-6 w-6 text-primary"
+                aria-hidden="true"
+                ><path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"
+                ></path><path d="M16 3.128a4 4 0 0 1 0 7.744"></path><path
+                  d="M22 21v-2a4 4 0 0 0-3-3.87"></path><circle
+                  cx="9"
+                  cy="7"
+                  r="4"></circle></svg
+              >
             </div>
-            <div class="font-semibold tracking-tight text-xl">For Executives 🤵</div>
+            <div class="font-semibold tracking-tight text-xl">
+              For Executives 🤵
+            </div>
             <div class="text-sm text-muted-foreground leading-relaxed">
-              Monitor performance, make data-driven decisions, oversee strategy. Business intelligence.
+              Monitor performance, make data-driven decisions, oversee strategy.
+              Business intelligence.
             </div>
             <div class="flex flex-wrap gap-2 pt-2">
-              <div class="inline-flex items-center rounded-md border px-2.5 py-0.5 font-semibold transition-colors focus:outline-none focus:ring-2 focus:ring-ring focus:ring-offset-2 border-transparent bg-secondary text-secondary-foreground hover:bg-secondary/80 text-xs">Analytics</div>
-              <div class="inline-flex items-center rounded-md border px-2.5 py-0.5 font-semibold transition-colors focus:outline-none focus:ring-2 focus:ring-ring focus:ring-offset-2 border-transparent bg-secondary text-secondary-foreground hover:bg-secondary/80 text-xs">Strategy</div>
-              <div class="inline-flex items-center rounded-md border px-2.5 py-0.5 font-semibold transition-colors focus:outline-none focus:ring-2 focus:ring-ring focus:ring-offset-2 border-transparent bg-secondary text-secondary-foreground hover:bg-secondary/80 text-xs">Insights</div>
+              <div
+                class="inline-flex items-center rounded-md border px-2.5 py-0.5 font-semibold transition-colors focus:outline-none focus:ring-2 focus:ring-ring focus:ring-offset-2 border-transparent bg-secondary text-secondary-foreground hover:bg-secondary/80 text-xs"
+              >
+                Analytics
+              </div>
+              <div
+                class="inline-flex items-center rounded-md border px-2.5 py-0.5 font-semibold transition-colors focus:outline-none focus:ring-2 focus:ring-ring focus:ring-offset-2 border-transparent bg-secondary text-secondary-foreground hover:bg-secondary/80 text-xs"
+              >
+                Strategy
+              </div>
+              <div
+                class="inline-flex items-center rounded-md border px-2.5 py-0.5 font-semibold transition-colors focus:outline-none focus:ring-2 focus:ring-ring focus:ring-offset-2 border-transparent bg-secondary text-secondary-foreground hover:bg-secondary/80 text-xs"
+              >
+                Insights
+              </div>
             </div>
           </div>
         </div>
 
-        <div class="rounded-xl border text-card-foreground shadow group border-border/50 bg-card/50 backdrop-blur transition-all hover:scale-[1.02] hover:border-primary/20 hover:bg-card hover:shadow-lg hover:shadow-primary/5 cursor-pointer" data-usal="fade-up duration-600 delay-150">
+        <div
+          class="rounded-xl border text-card-foreground shadow group border-border/50 bg-card/50 backdrop-blur transition-all hover:scale-[1.02] hover:border-primary/20 hover:bg-card hover:shadow-lg hover:shadow-primary/5 cursor-pointer"
+          data-usal="fade-up duration-600 delay-150"
+        >
           <div class="flex flex-col p-6 space-y-4">
-            <div class="flex h-12 w-12 items-center justify-center rounded-lg bg-primary/10 transition-colors group-hover:bg-primary/15">
-              <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-code h-6 w-6 text-primary" aria-hidden="true"><path d="m16 18 6-6-6-6"></path><path d="m8 6-6 6 6 6"></path></svg>
+            <div
+              class="flex h-12 w-12 items-center justify-center rounded-lg bg-primary/10 transition-colors group-hover:bg-primary/15"
+            >
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                width="24"
+                height="24"
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                stroke-width="2"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                class="lucide lucide-code h-6 w-6 text-primary"
+                aria-hidden="true"
+                ><path d="m16 18 6-6-6-6"></path><path d="m8 6-6 6 6 6"
+                ></path></svg
+              >
             </div>
-            <div class="font-semibold tracking-tight text-xl">For Engineers ⚙️</div>
+            <div class="font-semibold tracking-tight text-xl">
+              For Engineers ⚙️
+            </div>
             <div class="text-sm text-muted-foreground leading-relaxed">
-              Connect systems, automate workflows, build integrations. APIs that just work.
+              Connect systems, automate workflows, build integrations. APIs that
+              just work.
             </div>
             <div class="flex flex-wrap gap-2 pt-2">
-              <div class="inline-flex items-center rounded-md border px-2.5 py-0.5 font-semibold transition-colors focus:outline-none focus:ring-2 focus:ring-ring focus:ring-offset-2 border-transparent bg-secondary text-secondary-foreground hover:bg-secondary/80 text-xs">Integrations</div>
-              <div class="inline-flex items-center rounded-md border px-2.5 py-0.5 font-semibold transition-colors focus:outline-none focus:ring-2 focus:ring-ring focus:ring-offset-2 border-transparent bg-secondary text-secondary-foreground hover:bg-secondary/80 text-xs">Workflows</div>
-              <div class="inline-flex items-center rounded-md border px-2.5 py-0.5 font-semibold transition-colors focus:outline-none focus:ring-2 focus:ring-ring focus:ring-offset-2 border-transparent bg-secondary text-secondary-foreground hover:bg-secondary/80 text-xs">APIs</div>
+              <div
+                class="inline-flex items-center rounded-md border px-2.5 py-0.5 font-semibold transition-colors focus:outline-none focus:ring-2 focus:ring-ring focus:ring-offset-2 border-transparent bg-secondary text-secondary-foreground hover:bg-secondary/80 text-xs"
+              >
+                Integrations
+              </div>
+              <div
+                class="inline-flex items-center rounded-md border px-2.5 py-0.5 font-semibold transition-colors focus:outline-none focus:ring-2 focus:ring-ring focus:ring-offset-2 border-transparent bg-secondary text-secondary-foreground hover:bg-secondary/80 text-xs"
+              >
+                Workflows
+              </div>
+              <div
+                class="inline-flex items-center rounded-md border px-2.5 py-0.5 font-semibold transition-colors focus:outline-none focus:ring-2 focus:ring-ring focus:ring-offset-2 border-transparent bg-secondary text-secondary-foreground hover:bg-secondary/80 text-xs"
+              >
+                APIs
+              </div>
             </div>
           </div>
         </div>
 
-        <div class="rounded-xl border text-card-foreground shadow group border-border/50 bg-card/50 backdrop-blur transition-all hover:scale-[1.02] hover:border-primary/20 hover:bg-card hover:shadow-lg hover:shadow-primary/5 cursor-pointer" data-usal="fade-up duration-600 delay-200">
+        <div
+          class="rounded-xl border text-card-foreground shadow group border-border/50 bg-card/50 backdrop-blur transition-all hover:scale-[1.02] hover:border-primary/20 hover:bg-card hover:shadow-lg hover:shadow-primary/5 cursor-pointer"
+          data-usal="fade-up duration-600 delay-200"
+        >
           <div class="flex flex-col p-6 space-y-4">
-            <div class="flex h-12 w-12 items-center justify-center rounded-lg bg-primary/10 transition-colors group-hover:bg-primary/15">
-              <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-wand-sparkles h-6 w-6 text-primary" aria-hidden="true"><path d="m21.64 3.64-1.28-1.28a1.21 1.21 0 0 0-1.72 0L2.36 18.64a1.21 1.21 0 0 0 0 1.72l1.28 1.28a1.2 1.2 0 0 0 1.72 0L21.64 5.36a1.2 1.2 0 0 0 0-1.72"></path><path d="m14 7 3 3"></path><path d="M5 6v4"></path><path d="M19 14v4"></path><path d="M10 2v2"></path><path d="M7 8H3"></path><path d="M21 16h-4"></path><path d="M11 3H9"></path></svg>
+            <div
+              class="flex h-12 w-12 items-center justify-center rounded-lg bg-primary/10 transition-colors group-hover:bg-primary/15"
+            >
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                width="24"
+                height="24"
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                stroke-width="2"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                class="lucide lucide-wand-sparkles h-6 w-6 text-primary"
+                aria-hidden="true"
+                ><path
+                  d="m21.64 3.64-1.28-1.28a1.21 1.21 0 0 0-1.72 0L2.36 18.64a1.21 1.21 0 0 0 0 1.72l1.28 1.28a1.2 1.2 0 0 0 1.72 0L21.64 5.36a1.2 1.2 0 0 0 0-1.72"
+                ></path><path d="m14 7 3 3"></path><path d="M5 6v4"></path><path
+                  d="M19 14v4"></path><path d="M10 2v2"></path><path d="M7 8H3"
+                ></path><path d="M21 16h-4"></path><path d="M11 3H9"
+                ></path></svg
+              >
             </div>
-            <div class="font-semibold tracking-tight text-xl">For Designers 🎨</div>
+            <div class="font-semibold tracking-tight text-xl">
+              For Designers 🎨
+            </div>
             <div class="text-sm text-muted-foreground leading-relaxed">
-              Create assets, build templates, maintain brand consistency. Design at scale.
+              Create assets, build templates, maintain brand consistency. Design
+              at scale.
             </div>
             <div class="flex flex-wrap gap-2 pt-2">
-              <div class="inline-flex items-center rounded-md border px-2.5 py-0.5 font-semibold transition-colors focus:outline-none focus:ring-2 focus:ring-ring focus:ring-offset-2 border-transparent bg-secondary text-secondary-foreground hover:bg-secondary/80 text-xs">Templates</div>
-              <div class="inline-flex items-center rounded-md border px-2.5 py-0.5 font-semibold transition-colors focus:outline-none focus:ring-2 focus:ring-ring focus:ring-offset-2 border-transparent bg-secondary text-secondary-foreground hover:bg-secondary/80 text-xs">Assets</div>
-              <div class="inline-flex items-center rounded-md border px-2.5 py-0.5 font-semibold transition-colors focus:outline-none focus:ring-2 focus:ring-ring focus:ring-offset-2 border-transparent bg-secondary text-secondary-foreground hover:bg-secondary/80 text-xs">Branding</div>
+              <div
+                class="inline-flex items-center rounded-md border px-2.5 py-0.5 font-semibold transition-colors focus:outline-none focus:ring-2 focus:ring-ring focus:ring-offset-2 border-transparent bg-secondary text-secondary-foreground hover:bg-secondary/80 text-xs"
+              >
+                Templates
+              </div>
+              <div
+                class="inline-flex items-center rounded-md border px-2.5 py-0.5 font-semibold transition-colors focus:outline-none focus:ring-2 focus:ring-ring focus:ring-offset-2 border-transparent bg-secondary text-secondary-foreground hover:bg-secondary/80 text-xs"
+              >
+                Assets
+              </div>
+              <div
+                class="inline-flex items-center rounded-md border px-2.5 py-0.5 font-semibold transition-colors focus:outline-none focus:ring-2 focus:ring-ring focus:ring-offset-2 border-transparent bg-secondary text-secondary-foreground hover:bg-secondary/80 text-xs"
+              >
+                Branding
+              </div>
             </div>
           </div>
         </div>
 
-        <div class="rounded-xl border text-card-foreground shadow group border-border/50 bg-card/50 backdrop-blur transition-all hover:scale-[1.02] hover:border-primary/20 hover:bg-card hover:shadow-lg hover:shadow-primary/5 cursor-pointer" data-usal="fade-up duration-600 delay-250">
+        <div
+          class="rounded-xl border text-card-foreground shadow group border-border/50 bg-card/50 backdrop-blur transition-all hover:scale-[1.02] hover:border-primary/20 hover:bg-card hover:shadow-lg hover:shadow-primary/5 cursor-pointer"
+          data-usal="fade-up duration-600 delay-250"
+        >
           <div class="flex flex-col p-6 space-y-4">
-            <div class="flex h-12 w-12 items-center justify-center rounded-lg bg-primary/10 transition-colors group-hover:bg-primary/15">
-              <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-dollar-sign h-6 w-6 text-primary" aria-hidden="true"><line x1="12" x2="12" y1="2" y2="22"></line><path d="M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"></path></svg>
+            <div
+              class="flex h-12 w-12 items-center justify-center rounded-lg bg-primary/10 transition-colors group-hover:bg-primary/15"
+            >
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                width="24"
+                height="24"
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                stroke-width="2"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                class="lucide lucide-dollar-sign h-6 w-6 text-primary"
+                aria-hidden="true"
+                ><line x1="12" x2="12" y1="2" y2="22"></line><path
+                  d="M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"
+                ></path></svg
+              >
             </div>
-            <div class="font-semibold tracking-tight text-xl">For Marketers 📈</div>
+            <div class="font-semibold tracking-tight text-xl">
+              For Marketers 📈
+            </div>
             <div class="text-sm text-muted-foreground leading-relaxed">
-              Launch campaigns, generate leads, analyze performance. Data-driven automation.
+              Launch campaigns, generate leads, analyze performance. Data-driven
+              automation.
             </div>
             <div class="flex flex-wrap gap-2 pt-2">
-              <div class="inline-flex items-center rounded-md border px-2.5 py-0.5 font-semibold transition-colors focus:outline-none focus:ring-2 focus:ring-ring focus:ring-offset-2 border-transparent bg-secondary text-secondary-foreground hover:bg-secondary/80 text-xs">Campaigns</div>
-              <div class="inline-flex items-center rounded-md border px-2.5 py-0.5 font-semibold transition-colors focus:outline-none focus:ring-2 focus:ring-ring focus:ring-offset-2 border-transparent bg-secondary text-secondary-foreground hover:bg-secondary/80 text-xs">Leads</div>
-              <div class="inline-flex items-center rounded-md border px-2.5 py-0.5 font-semibold transition-colors focus:outline-none focus:ring-2 focus:ring-ring focus:ring-offset-2 border-transparent bg-secondary text-secondary-foreground hover:bg-secondary/80 text-xs">Insights</div>
+              <div
+                class="inline-flex items-center rounded-md border px-2.5 py-0.5 font-semibold transition-colors focus:outline-none focus:ring-2 focus:ring-ring focus:ring-offset-2 border-transparent bg-secondary text-secondary-foreground hover:bg-secondary/80 text-xs"
+              >
+                Campaigns
+              </div>
+              <div
+                class="inline-flex items-center rounded-md border px-2.5 py-0.5 font-semibold transition-colors focus:outline-none focus:ring-2 focus:ring-ring focus:ring-offset-2 border-transparent bg-secondary text-secondary-foreground hover:bg-secondary/80 text-xs"
+              >
+                Leads
+              </div>
+              <div
+                class="inline-flex items-center rounded-md border px-2.5 py-0.5 font-semibold transition-colors focus:outline-none focus:ring-2 focus:ring-ring focus:ring-offset-2 border-transparent bg-secondary text-secondary-foreground hover:bg-secondary/80 text-xs"
+              >
+                Insights
+              </div>
             </div>
           </div>
         </div>
 
-        <div class="rounded-xl border text-card-foreground shadow group border-border/50 bg-card/50 backdrop-blur transition-all hover:scale-[1.02] hover:border-primary/20 hover:bg-card hover:shadow-lg hover:shadow-primary/5 cursor-pointer" data-usal="fade-up duration-600 delay-100">
+        <div
+          class="rounded-xl border text-card-foreground shadow group border-border/50 bg-card/50 backdrop-blur transition-all hover:scale-[1.02] hover:border-primary/20 hover:bg-card hover:shadow-lg hover:shadow-primary/5 cursor-pointer"
+          data-usal="fade-up duration-600 delay-100"
+        >
           <div class="flex flex-col p-6 space-y-4">
-            <div class="flex h-12 w-12 items-center justify-center rounded-lg bg-primary/10 transition-colors group-hover:bg-primary/15">
-              <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-dollar-sign h-6 w-6 text-primary" aria-hidden="true"><line x1="12" x2="12" y1="2" y2="22"></line><path d="M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"></path></svg>
+            <div
+              class="flex h-12 w-12 items-center justify-center rounded-lg bg-primary/10 transition-colors group-hover:bg-primary/15"
+            >
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                width="24"
+                height="24"
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                stroke-width="2"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                class="lucide lucide-dollar-sign h-6 w-6 text-primary"
+                aria-hidden="true"
+                ><line x1="12" x2="12" y1="2" y2="22"></line><path
+                  d="M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"
+                ></path></svg
+              >
             </div>
-            <div class="font-semibold tracking-tight text-xl">For Sellers 🛒</div>
+            <div class="font-semibold tracking-tight text-xl">
+              For Sellers 🛒
+            </div>
             <div class="text-sm text-muted-foreground leading-relaxed">
-              Sell products, manage customers, automate sales. AI agents handle the funnel.
+              Sell products, manage customers, automate sales. AI agents handle
+              the funnel.
             </div>
             <div class="flex flex-wrap gap-2 pt-2">
-              <div class="inline-flex items-center rounded-md border px-2.5 py-0.5 font-semibold transition-colors focus:outline-none focus:ring-2 focus:ring-ring focus:ring-offset-2 border-transparent bg-secondary text-secondary-foreground hover:bg-secondary/80 text-xs">Products</div>
-              <div class="inline-flex items-center rounded-md border px-2.5 py-0.5 font-semibold transition-colors focus:outline-none focus:ring-2 focus:ring-ring focus:ring-offset-2 border-transparent bg-secondary text-secondary-foreground hover:bg-secondary/80 text-xs">Sales Agents</div>
-              <div class="inline-flex items-center rounded-md border px-2.5 py-0.5 font-semibold transition-colors focus:outline-none focus:ring-2 focus:ring-ring focus:ring-offset-2 border-transparent bg-secondary text-secondary-foreground hover:bg-secondary/80 text-xs">Analytics</div>
+              <div
+                class="inline-flex items-center rounded-md border px-2.5 py-0.5 font-semibold transition-colors focus:outline-none focus:ring-2 focus:ring-ring focus:ring-offset-2 border-transparent bg-secondary text-secondary-foreground hover:bg-secondary/80 text-xs"
+              >
+                Products
+              </div>
+              <div
+                class="inline-flex items-center rounded-md border px-2.5 py-0.5 font-semibold transition-colors focus:outline-none focus:ring-2 focus:ring-ring focus:ring-offset-2 border-transparent bg-secondary text-secondary-foreground hover:bg-secondary/80 text-xs"
+              >
+                Sales Agents
+              </div>
+              <div
+                class="inline-flex items-center rounded-md border px-2.5 py-0.5 font-semibold transition-colors focus:outline-none focus:ring-2 focus:ring-ring focus:ring-offset-2 border-transparent bg-secondary text-secondary-foreground hover:bg-secondary/80 text-xs"
+              >
+                Analytics
+              </div>
             </div>
           </div>
         </div>
 
-        <div class="rounded-xl border text-card-foreground shadow group border-border/50 bg-card/50 backdrop-blur transition-all hover:scale-[1.02] hover:border-primary/20 hover:bg-card hover:shadow-lg hover:shadow-primary/5 cursor-pointer" data-usal="fade-up duration-600 delay-150">
+        <div
+          class="rounded-xl border text-card-foreground shadow group border-border/50 bg-card/50 backdrop-blur transition-all hover:scale-[1.02] hover:border-primary/20 hover:bg-card hover:shadow-lg hover:shadow-primary/5 cursor-pointer"
+          data-usal="fade-up duration-600 delay-150"
+        >
           <div class="flex flex-col p-6 space-y-4">
-            <div class="flex h-12 w-12 items-center justify-center rounded-lg bg-primary/10 transition-colors group-hover:bg-primary/15">
-              <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-wand-sparkles h-6 w-6 text-primary" aria-hidden="true"><path d="m21.64 3.64-1.28-1.28a1.21 1.21 0 0 0-1.72 0L2.36 18.64a1.21 1.21 0 0 0 0 1.72l1.28 1.28a1.2 1.2 0 0 0 1.72 0L21.64 5.36a1.2 1.2 0 0 0 0-1.72"></path><path d="m14 7 3 3"></path><path d="M5 6v4"></path><path d="M19 14v4"></path><path d="M10 2v2"></path><path d="M7 8H3"></path><path d="M21 16h-4"></path><path d="M11 3H9"></path></svg>
+            <div
+              class="flex h-12 w-12 items-center justify-center rounded-lg bg-primary/10 transition-colors group-hover:bg-primary/15"
+            >
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                width="24"
+                height="24"
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                stroke-width="2"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                class="lucide lucide-wand-sparkles h-6 w-6 text-primary"
+                aria-hidden="true"
+                ><path
+                  d="m21.64 3.64-1.28-1.28a1.21 1.21 0 0 0-1.72 0L2.36 18.64a1.21 1.21 0 0 0 0 1.72l1.28 1.28a1.2 1.2 0 0 0 1.72 0L21.64 5.36a1.2 1.2 0 0 0 0-1.72"
+                ></path><path d="m14 7 3 3"></path><path d="M5 6v4"></path><path
+                  d="M19 14v4"></path><path d="M10 2v2"></path><path d="M7 8H3"
+                ></path><path d="M21 16h-4"></path><path d="M11 3H9"
+                ></path></svg
+              >
             </div>
-            <div class="font-semibold tracking-tight text-xl">For Creators 🧑‍🎨</div>
+            <div class="font-semibold tracking-tight text-xl">
+              For Creators 🧑‍🎨
+            </div>
             <div class="text-sm text-muted-foreground leading-relaxed">
-              Build your audience, clone yourself, monetize your passion. AI works for you 24/7.
+              Build your audience, clone yourself, monetize your passion. AI
+              works for you 24/7.
             </div>
             <div class="flex flex-wrap gap-2 pt-2">
-              <div class="inline-flex items-center rounded-md border px-2.5 py-0.5 font-semibold transition-colors focus:outline-none focus:ring-2 focus:ring-ring focus:ring-offset-2 border-transparent bg-secondary text-secondary-foreground hover:bg-secondary/80 text-xs">AI Clones</div>
-              <div class="inline-flex items-center rounded-md border px-2.5 py-0.5 font-semibold transition-colors focus:outline-none focus:ring-2 focus:ring-ring focus:ring-offset-2 border-transparent bg-secondary text-secondary-foreground hover:bg-secondary/80 text-xs">Tokens</div>
-              <div class="inline-flex items-center rounded-md border px-2.5 py-0.5 font-semibold transition-colors focus:outline-none focus:ring-2 focus:ring-ring focus:ring-offset-2 border-transparent bg-secondary text-secondary-foreground hover:bg-secondary/80 text-xs">Courses</div>
+              <div
+                class="inline-flex items-center rounded-md border px-2.5 py-0.5 font-semibold transition-colors focus:outline-none focus:ring-2 focus:ring-ring focus:ring-offset-2 border-transparent bg-secondary text-secondary-foreground hover:bg-secondary/80 text-xs"
+              >
+                AI Clones
+              </div>
+              <div
+                class="inline-flex items-center rounded-md border px-2.5 py-0.5 font-semibold transition-colors focus:outline-none focus:ring-2 focus:ring-ring focus:ring-offset-2 border-transparent bg-secondary text-secondary-foreground hover:bg-secondary/80 text-xs"
+              >
+                Tokens
+              </div>
+              <div
+                class="inline-flex items-center rounded-md border px-2.5 py-0.5 font-semibold transition-colors focus:outline-none focus:ring-2 focus:ring-ring focus:ring-offset-2 border-transparent bg-secondary text-secondary-foreground hover:bg-secondary/80 text-xs"
+              >
+                Courses
+              </div>
             </div>
           </div>
         </div>
 
-        <div class="rounded-xl border text-card-foreground shadow group border-border/50 bg-card/50 backdrop-blur transition-all hover:scale-[1.02] hover:border-primary/20 hover:bg-card hover:shadow-lg hover:shadow-primary/5 cursor-pointer" data-usal="fade-up duration-600 delay-200">
+        <div
+          class="rounded-xl border text-card-foreground shadow group border-border/50 bg-card/50 backdrop-blur transition-all hover:scale-[1.02] hover:border-primary/20 hover:bg-card hover:shadow-lg hover:shadow-primary/5 cursor-pointer"
+          data-usal="fade-up duration-600 delay-200"
+        >
           <div class="flex flex-col p-6 space-y-4">
-            <div class="flex h-12 w-12 items-center justify-center rounded-lg bg-primary/10 transition-colors group-hover:bg-primary/15">
-              <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-code h-6 w-6 text-primary" aria-hidden="true"><path d="m16 18 6-6-6-6"></path><path d="m8 6-6 6 6 6"></path></svg>
+            <div
+              class="flex h-12 w-12 items-center justify-center rounded-lg bg-primary/10 transition-colors group-hover:bg-primary/15"
+            >
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                width="24"
+                height="24"
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                stroke-width="2"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                class="lucide lucide-code h-6 w-6 text-primary"
+                aria-hidden="true"
+                ><path d="m16 18 6-6-6-6"></path><path d="m8 6-6 6 6 6"
+                ></path></svg
+              >
             </div>
-            <div class="font-semibold tracking-tight text-xl">For Young People 🧑‍💻</div>
+            <div class="font-semibold tracking-tight text-xl">
+              For Young People 🧑‍💻
+            </div>
             <div class="text-sm text-muted-foreground leading-relaxed">
-              Learn skills, build projects, start your first side hustle. Launch your career.
+              Learn skills, build projects, start your first side hustle. Launch
+              your career.
             </div>
             <div class="flex flex-wrap gap-2 pt-2">
-              <div class="inline-flex items-center rounded-md border px-2.5 py-0.5 font-semibold transition-colors focus:outline-none focus:ring-2 focus:ring-ring focus:ring-offset-2 border-transparent bg-secondary text-secondary-foreground hover:bg-secondary/80 text-xs">Courses</div>
-              <div class="inline-flex items-center rounded-md border px-2.5 py-0.5 font-semibold transition-colors focus:outline-none focus:ring-2 focus:ring-ring focus:ring-offset-2 border-transparent bg-secondary text-secondary-foreground hover:bg-secondary/80 text-xs">Projects</div>
-              <div class="inline-flex items-center rounded-md border px-2.5 py-0.5 font-semibold transition-colors focus:outline-none focus:ring-2 focus:ring-ring focus:ring-offset-2 border-transparent bg-secondary text-secondary-foreground hover:bg-secondary/80 text-xs">Monetize</div>
+              <div
+                class="inline-flex items-center rounded-md border px-2.5 py-0.5 font-semibold transition-colors focus:outline-none focus:ring-2 focus:ring-ring focus:ring-offset-2 border-transparent bg-secondary text-secondary-foreground hover:bg-secondary/80 text-xs"
+              >
+                Courses
+              </div>
+              <div
+                class="inline-flex items-center rounded-md border px-2.5 py-0.5 font-semibold transition-colors focus:outline-none focus:ring-2 focus:ring-ring focus:ring-offset-2 border-transparent bg-secondary text-secondary-foreground hover:bg-secondary/80 text-xs"
+              >
+                Projects
+              </div>
+              <div
+                class="inline-flex items-center rounded-md border px-2.5 py-0.5 font-semibold transition-colors focus:outline-none focus:ring-2 focus:ring-ring focus:ring-offset-2 border-transparent bg-secondary text-secondary-foreground hover:bg-secondary/80 text-xs"
+              >
+                Monetize
+              </div>
             </div>
           </div>
         </div>
 
-        <div class="rounded-xl border text-card-foreground shadow group border-border/50 bg-card/50 backdrop-blur transition-all hover:scale-[1.02] hover:border-primary/20 hover:bg-card hover:shadow-lg hover:shadow-primary/5 cursor-pointer" data-usal="fade-up duration-600 delay-250">
+        <div
+          class="rounded-xl border text-card-foreground shadow group border-border/50 bg-card/50 backdrop-blur transition-all hover:scale-[1.02] hover:border-primary/20 hover:bg-card hover:shadow-lg hover:shadow-primary/5 cursor-pointer"
+          data-usal="fade-up duration-600 delay-250"
+        >
           <div class="flex flex-col p-6 space-y-4">
-            <div class="flex h-12 w-12 items-center justify-center rounded-lg bg-primary/10 transition-colors group-hover:bg-primary/15">
-              <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-users h-6 w-6 text-primary" aria-hidden="true"><path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"></path><path d="M16 3.128a4 4 0 0 1 0 7.744"></path><path d="M22 21v-2a4 4 0 0 0-3-3.87"></path><circle cx="9" cy="7" r="4"></circle></svg>
+            <div
+              class="flex h-12 w-12 items-center justify-center rounded-lg bg-primary/10 transition-colors group-hover:bg-primary/15"
+            >
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                width="24"
+                height="24"
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                stroke-width="2"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                class="lucide lucide-users h-6 w-6 text-primary"
+                aria-hidden="true"
+                ><path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"
+                ></path><path d="M16 3.128a4 4 0 0 1 0 7.744"></path><path
+                  d="M22 21v-2a4 4 0 0 0-3-3.87"></path><circle
+                  cx="9"
+                  cy="7"
+                  r="4"></circle></svg
+              >
             </div>
             <div class="font-semibold tracking-tight text-xl">For Kids 🧒</div>
             <div class="text-sm text-muted-foreground leading-relaxed">
-              Create, share, and play safely. Learn to build your first AI agent or community.
+              Create, share, and play safely. Learn to build your first AI agent
+              or community.
             </div>
             <div class="flex flex-wrap gap-2 pt-2">
-              <div class="inline-flex items-center rounded-md border px-2.5 py-0.5 font-semibold transition-colors focus:outline-none focus:ring-2 focus:ring-ring focus:ring-offset-2 border-transparent bg-secondary text-secondary-foreground hover:bg-secondary/80 text-xs">Communities</div>
-              <div class="inline-flex items-center rounded-md border px-2.5 py-0.5 font-semibold transition-colors focus:outline-none focus:ring-2 focus:ring-ring focus:ring-offset-2 border-transparent bg-secondary text-secondary-foreground hover:bg-secondary/80 text-xs">Content</div>
-              <div class="inline-flex items-center rounded-md border px-2.5 py-0.5 font-semibold transition-colors focus:outline-none focus:ring-2 focus:ring-ring focus:ring-offset-2 border-transparent bg-secondary text-secondary-foreground hover:bg-secondary/80 text-xs">Safe</div>
+              <div
+                class="inline-flex items-center rounded-md border px-2.5 py-0.5 font-semibold transition-colors focus:outline-none focus:ring-2 focus:ring-ring focus:ring-offset-2 border-transparent bg-secondary text-secondary-foreground hover:bg-secondary/80 text-xs"
+              >
+                Communities
+              </div>
+              <div
+                class="inline-flex items-center rounded-md border px-2.5 py-0.5 font-semibold transition-colors focus:outline-none focus:ring-2 focus:ring-ring focus:ring-offset-2 border-transparent bg-secondary text-secondary-foreground hover:bg-secondary/80 text-xs"
+              >
+                Content
+              </div>
+              <div
+                class="inline-flex items-center rounded-md border px-2.5 py-0.5 font-semibold transition-colors focus:outline-none focus:ring-2 focus:ring-ring focus:ring-offset-2 border-transparent bg-secondary text-secondary-foreground hover:bg-secondary/80 text-xs"
+              >
+                Safe
+              </div>
             </div>
           </div>
         </div>
       </div>
 
-      <div class="mt-16 rounded-lg border border-primary/20 bg-primary/5 p-8 backdrop-blur text-center">
-        <p class="text-lg leading-relaxed"><strong class="text-foreground">Same platform. Same 6 dimensions. Infinite possibilities.</strong><br class="hidden sm:block"><span class="text-muted-foreground">The ontology adapts to YOUR world, not the other way around.</span></p>
+      <div
+        class="mt-16 rounded-lg border border-primary/20 bg-primary/5 p-8 backdrop-blur text-center"
+      >
+        <p class="text-lg leading-relaxed">
+          <strong class="text-foreground"
+            >Same platform. Same 6 dimensions. Infinite possibilities.</strong
+          ><br class="hidden sm:block" /><span class="text-muted-foreground"
+            >The ontology adapts to YOUR world, not the other way around.</span>
+        </p>
         <div class="mt-6">
           <a href="/ontology">
-            <button class="inline-flex items-center justify-center gap-2 whitespace-nowrap text-sm font-medium transition-all disabled:pointer-events-none disabled:opacity-50 [&_svg]:pointer-events-none [&_svg:not([class*='size-'])]:size-4 shrink-0 [&_svg]:shrink-0 outline-none focus-visible:border-ring focus-visible:ring-ring/50 focus-visible:ring-[3px] aria-invalid:ring-destructive/20 dark:aria-invalid:ring-destructive/40 aria-invalid:border-destructive border bg-background shadow-xs hover:bg-accent hover:text-accent-foreground dark:bg-input/30 dark:border-input dark:hover:bg-input/50 h-10 rounded-md px-6 has-[>svg]:px-4" aria-label="Explore the 6-dimension ontology">
+            <button
+              class="inline-flex items-center justify-center gap-2 whitespace-nowrap text-sm font-medium transition-all disabled:pointer-events-none disabled:opacity-50 [&_svg]:pointer-events-none [&_svg:not([class*='size-'])]:size-4 shrink-0 [&_svg]:shrink-0 outline-none focus-visible:border-ring focus-visible:ring-ring/50 focus-visible:ring-[3px] aria-invalid:ring-destructive/20 dark:aria-invalid:ring-destructive/40 aria-invalid:border-destructive border bg-background shadow-xs hover:bg-accent hover:text-accent-foreground dark:bg-input/30 dark:border-input dark:hover:bg-input/50 h-10 rounded-md px-6 has-[>svg]:px-4"
+              aria-label="Explore the 6-dimension ontology"
+            >
               Explore The Ontology
-              <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-arrow-right ml-2 h-5 w-5" aria-hidden="true"><path d="M5 12h14"></path><path d="m12 5 7 7-7 7"></path></svg>
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                width="24"
+                height="24"
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                stroke-width="2"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                class="lucide lucide-arrow-right ml-2 h-5 w-5"
+                aria-hidden="true"
+                ><path d="M5 12h14"></path><path d="m12 5 7 7-7 7"></path></svg
+              >
             </button>
           </a>
         </div>
@@ -187,35 +525,83 @@ return Astro.redirect('/shop/product-landing');
   </section>
 
   <!-- AI Agents Section -->
-  <section class="border-y bg-muted/50 px-4 py-20 sm:px-6 sm:py-24 md:px-8 md:py-32">
+  <section
+    class="border-y bg-muted/50 px-4 py-20 sm:px-6 sm:py-24 md:px-8 md:py-32"
+  >
     <div class="mx-auto max-w-full sm:max-w-6xl">
       <div class="mb-20 space-y-4 text-center">
-        <div class="rounded-md border px-2.5 py-0.5 text-xs font-semibold transition-colors focus:outline-none focus:ring-2 focus:ring-ring focus:ring-offset-2 text-foreground mb-2 inline-flex items-center gap-2" data-usal="fade-down duration-600">
-          <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-bot h-4 w-4" aria-hidden="true"><path d="M12 8V4H8"></path><rect width="16" height="12" x="4" y="8" rx="2"></rect><path d="M2 14h2"></path><path d="M20 14h2"></path><path d="M15 13v2"></path><path d="M9 13v2"></path></svg>
+        <div
+          class="rounded-md border px-2.5 py-0.5 text-xs font-semibold transition-colors focus:outline-none focus:ring-2 focus:ring-ring focus:ring-offset-2 text-foreground mb-2 inline-flex items-center gap-2"
+          data-usal="fade-down duration-600"
+        >
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            width="24"
+            height="24"
+            viewBox="0 0 24 24"
+            fill="none"
+            stroke="currentColor"
+            stroke-width="2"
+            stroke-linecap="round"
+            stroke-linejoin="round"
+            class="lucide lucide-bot h-4 w-4"
+            aria-hidden="true"
+            ><path d="M12 8V4H8"></path><rect
+              width="16"
+              height="12"
+              x="4"
+              y="8"
+              rx="2"></rect><path d="M2 14h2"></path><path d="M20 14h2"
+            ></path><path d="M15 13v2"></path><path d="M9 13v2"></path></svg
+          >
           AI Agents in English
         </div>
-        <h2 class="text-4xl font-bold leading-tight tracking-tight sm:text-5xl" data-usal="fade-up duration-700 delay-100">
-          Build Autonomous Agents<br><span class="text-muted-foreground">With Plain English Commands</span>
+        <h2
+          class="text-4xl font-bold leading-tight tracking-tight sm:text-5xl"
+          data-usal="fade-up duration-700 delay-100"
+        >
+          Build Autonomous Agents<br /><span class="text-muted-foreground"
+            >With Plain English Commands</span
+          >
         </h2>
-        <p class="mx-auto max-w-3xl text-lg leading-relaxed text-muted-foreground" data-usal="fade-up duration-700 delay-200">
-          Define AI agents that work like teammates—specialized, coordinated, and always learning. No AI expertise required.
+        <p
+          class="mx-auto max-w-3xl text-lg leading-relaxed text-muted-foreground"
+          data-usal="fade-up duration-700 delay-200"
+        >
+          Define AI agents that work like teammates—specialized, coordinated,
+          and always learning. No AI expertise required.
         </p>
       </div>
 
       <div class="grid gap-8 lg:grid-cols-2">
-        <div class="rounded-xl border text-card-foreground shadow border-border/50 bg-card/50 backdrop-blur">
+        <div
+          class="rounded-xl border text-card-foreground shadow border-border/50 bg-card/50 backdrop-blur"
+        >
           <div class="flex flex-col space-y-1.5 p-6">
             <div class="flex items-center justify-between mb-2">
-              <div class="font-semibold tracking-tight text-2xl">Sales Agent</div>
+              <div class="font-semibold tracking-tight text-2xl">
+                Sales Agent
+              </div>
               <div class="flex gap-2">
-                <div class="inline-flex items-center rounded-md border px-2.5 py-0.5 font-semibold transition-colors focus:outline-none focus:ring-2 focus:ring-ring focus:ring-offset-2 text-foreground text-xs">For Sellers</div>
-                <div class="inline-flex items-center rounded-md border px-2.5 py-0.5 font-semibold transition-colors focus:outline-none focus:ring-2 focus:ring-ring focus:ring-offset-2 text-foreground text-xs">For Executives</div>
+                <div
+                  class="inline-flex items-center rounded-md border px-2.5 py-0.5 font-semibold transition-colors focus:outline-none focus:ring-2 focus:ring-ring focus:ring-offset-2 text-foreground text-xs"
+                >
+                  For Sellers
+                </div>
+                <div
+                  class="inline-flex items-center rounded-md border px-2.5 py-0.5 font-semibold transition-colors focus:outline-none focus:ring-2 focus:ring-ring focus:ring-offset-2 text-foreground text-xs"
+                >
+                  For Executives
+                </div>
               </div>
             </div>
-            <div class="text-sm text-muted-foreground">Qualifies leads, answers questions, books meetings</div>
+            <div class="text-sm text-muted-foreground">
+              Qualifies leads, answers questions, books meetings
+            </div>
           </div>
           <div class="p-6 pt-0">
-            <pre class="overflow-x-auto rounded bg-muted/50 p-4 text-sm leading-relaxed"><code>AGENT: Sales Agent
+            <pre
+              class="overflow-x-auto rounded bg-muted/50 p-4 text-sm leading-relaxed"><code>AGENT: Sales Agent
 
 WHEN lead sends message:
   GET lead's history
@@ -232,26 +618,53 @@ WHEN lead sends message:
   RECORD interaction
   NOTIFY me if hot lead</code></pre>
             <div class="mt-4 flex flex-wrap gap-2">
-              <div class="inline-flex items-center rounded-md border px-2.5 py-0.5 text-xs font-semibold transition-colors focus:outline-none focus:ring-2 focus:ring-ring focus:ring-offset-2 border-transparent bg-secondary text-secondary-foreground hover:bg-secondary/80">Auto-qualifies</div>
-              <div class="inline-flex items-center rounded-md border px-2.5 py-0.5 text-xs font-semibold transition-colors focus:outline-none focus:ring-2 focus:ring-ring focus:ring-offset-2 border-transparent bg-secondary text-secondary-foreground hover:bg-secondary/80">Books meetings</div>
-              <div class="inline-flex items-center rounded-md border px-2.5 py-0.5 text-xs font-semibold transition-colors focus:outline-none focus:ring-2 focus:ring-ring focus:ring-offset-2 border-transparent bg-secondary text-secondary-foreground hover:bg-secondary/80">24/7 available</div>
+              <div
+                class="inline-flex items-center rounded-md border px-2.5 py-0.5 text-xs font-semibold transition-colors focus:outline-none focus:ring-2 focus:ring-ring focus:ring-offset-2 border-transparent bg-secondary text-secondary-foreground hover:bg-secondary/80"
+              >
+                Auto-qualifies
+              </div>
+              <div
+                class="inline-flex items-center rounded-md border px-2.5 py-0.5 text-xs font-semibold transition-colors focus:outline-none focus:ring-2 focus:ring-ring focus:ring-offset-2 border-transparent bg-secondary text-secondary-foreground hover:bg-secondary/80"
+              >
+                Books meetings
+              </div>
+              <div
+                class="inline-flex items-center rounded-md border px-2.5 py-0.5 text-xs font-semibold transition-colors focus:outline-none focus:ring-2 focus:ring-ring focus:ring-offset-2 border-transparent bg-secondary text-secondary-foreground hover:bg-secondary/80"
+              >
+                24/7 available
+              </div>
             </div>
           </div>
         </div>
 
-        <div class="rounded-xl border text-card-foreground shadow border-border/50 bg-card/50 backdrop-blur">
+        <div
+          class="rounded-xl border text-card-foreground shadow border-border/50 bg-card/50 backdrop-blur"
+        >
           <div class="flex flex-col space-y-1.5 p-6">
             <div class="flex items-center justify-between mb-2">
-              <div class="font-semibold tracking-tight text-2xl">Content Agent</div>
+              <div class="font-semibold tracking-tight text-2xl">
+                Content Agent
+              </div>
               <div class="flex gap-2">
-                <div class="inline-flex items-center rounded-md border px-2.5 py-0.5 font-semibold transition-colors focus:outline-none focus:ring-2 focus:ring-ring focus:ring-offset-2 text-foreground text-xs">For Creators</div>
-                <div class="inline-flex items-center rounded-md border px-2.5 py-0.5 font-semibold transition-colors focus:outline-none focus:ring-2 focus:ring-ring focus:ring-offset-2 text-foreground text-xs">For Marketers</div>
+                <div
+                  class="inline-flex items-center rounded-md border px-2.5 py-0.5 font-semibold transition-colors focus:outline-none focus:ring-2 focus:ring-ring focus:ring-offset-2 text-foreground text-xs"
+                >
+                  For Creators
+                </div>
+                <div
+                  class="inline-flex items-center rounded-md border px-2.5 py-0.5 font-semibold transition-colors focus:outline-none focus:ring-2 focus:ring-ring focus:ring-offset-2 text-foreground text-xs"
+                >
+                  For Marketers
+                </div>
               </div>
             </div>
-            <div class="text-sm text-muted-foreground">Generates posts, schedules publishing, analyzes performance</div>
+            <div class="text-sm text-muted-foreground">
+              Generates posts, schedules publishing, analyzes performance
+            </div>
           </div>
           <div class="p-6 pt-0">
-            <pre class="overflow-x-auto rounded bg-muted/50 p-4 text-sm leading-relaxed"><code>AGENT: Content Agent
+            <pre
+              class="overflow-x-auto rounded bg-muted/50 p-4 text-sm leading-relaxed"><code>AGENT: Content Agent
 
 EVERY DAY at 8am:
   GET my writing style
@@ -267,19 +680,39 @@ EVERY DAY at 8am:
   LEARN from engagement
   ADJUST strategy weekly</code></pre>
             <div class="mt-4 flex flex-wrap gap-2">
-              <div class="inline-flex items-center rounded-md border px-2.5 py-0.5 text-xs font-semibold transition-colors focus:outline-none focus:ring-2 focus:ring-ring focus:ring-offset-2 border-transparent bg-secondary text-secondary-foreground hover:bg-secondary/80">Daily automation</div>
-              <div class="inline-flex items-center rounded-md border px-2.5 py-0.5 text-xs font-semibold transition-colors focus:outline-none focus:ring-2 focus:ring-ring focus:ring-offset-2 border-transparent bg-secondary text-secondary-foreground hover:bg-secondary/80">Multi-platform</div>
-              <div class="inline-flex items-center rounded-md border px-2.5 py-0.5 text-xs font-semibold transition-colors focus:outline-none focus:ring-2 focus:ring-ring focus:ring-offset-2 border-transparent bg-secondary text-secondary-foreground hover:bg-secondary/80">Self-improving</div>
+              <div
+                class="inline-flex items-center rounded-md border px-2.5 py-0.5 text-xs font-semibold transition-colors focus:outline-none focus:ring-2 focus:ring-ring focus:ring-offset-2 border-transparent bg-secondary text-secondary-foreground hover:bg-secondary/80"
+              >
+                Daily automation
+              </div>
+              <div
+                class="inline-flex items-center rounded-md border px-2.5 py-0.5 text-xs font-semibold transition-colors focus:outline-none focus:ring-2 focus:ring-ring focus:ring-offset-2 border-transparent bg-secondary text-secondary-foreground hover:bg-secondary/80"
+              >
+                Multi-platform
+              </div>
+              <div
+                class="inline-flex items-center rounded-md border px-2.5 py-0.5 text-xs font-semibold transition-colors focus:outline-none focus:ring-2 focus:ring-ring focus:ring-offset-2 border-transparent bg-secondary text-secondary-foreground hover:bg-secondary/80"
+              >
+                Self-improving
+              </div>
             </div>
           </div>
         </div>
       </div>
 
-      <div class="mt-16 rounded-lg border border-primary/20 bg-primary/5 p-8 backdrop-blur">
-        <h3 class="mb-4 text-center text-2xl font-bold">Agents Work Together</h3>
+      <div
+        class="mt-16 rounded-lg border border-primary/20 bg-primary/5 p-8 backdrop-blur"
+      >
+        <h3 class="mb-4 text-center text-2xl font-bold">
+          Agents Work Together
+        </h3>
         <p class="mx-auto max-w-2xl text-lg text-muted-foreground text-center">
-          Sales Agent books a demo → Content Agent creates follow-up → Support Agent answers questions → Research Agent finds their pain points.
-          <br class="mt-2 block"><strong class="text-foreground">They coordinate through the shared ontology, learning from every interaction.</strong>
+          Sales Agent books a demo → Content Agent creates follow-up → Support
+          Agent answers questions → Research Agent finds their pain points.
+          <br class="mt-2 block" /><strong class="text-foreground"
+            >They coordinate through the shared ontology, learning from every
+            interaction.</strong
+          >
         </p>
       </div>
     </div>
@@ -289,94 +722,264 @@ EVERY DAY at 8am:
   <section class="px-4 py-20 sm:px-6 sm:py-24 md:px-8 md:py-32">
     <div class="mx-auto max-w-full sm:max-w-6xl">
       <div class="mb-20 space-y-4 text-center">
-        <div class="rounded-md border px-2.5 py-0.5 text-xs font-semibold transition-colors focus:outline-none focus:ring-2 focus:ring-ring focus:ring-offset-2 text-foreground mb-2 inline-flex items-center gap-2" data-usal="fade-down duration-600">
-          <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-network h-4 w-4" aria-hidden="true"><rect x="16" y="16" width="6" height="6" rx="1"></rect><rect x="2" y="16" width="6" height="6" rx="1"></rect><rect x="9" y="2" width="6" height="6" rx="1"></rect><path d="M5 16v-3a1 1 0 0 1 1-1h12a1 1 0 0 1 1 1v3"></path><path d="M12 12V8"></path></svg>
+        <div
+          class="rounded-md border px-2.5 py-0.5 text-xs font-semibold transition-colors focus:outline-none focus:ring-2 focus:ring-ring focus:ring-offset-2 text-foreground mb-2 inline-flex items-center gap-2"
+          data-usal="fade-down duration-600"
+        >
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            width="24"
+            height="24"
+            viewBox="0 0 24 24"
+            fill="none"
+            stroke="currentColor"
+            stroke-width="2"
+            stroke-linecap="round"
+            stroke-linejoin="round"
+            class="lucide lucide-network h-4 w-4"
+            aria-hidden="true"
+            ><rect x="16" y="16" width="6" height="6" rx="1"></rect><rect
+              x="2"
+              y="16"
+              width="6"
+              height="6"
+              rx="1"></rect><rect x="9" y="2" width="6" height="6" rx="1"
+            ></rect><path d="M5 16v-3a1 1 0 0 1 1-1h12a1 1 0 0 1 1 1v3"
+            ></path><path d="M12 12V8"></path></svg
+          >
           Universal Connectivity
         </div>
-        <h2 class="text-4xl font-bold leading-tight tracking-tight sm:text-5xl" data-usal="fade-up duration-700 delay-100">
-          Six Protocols<br><span class="text-muted-foreground">Infinite Connections</span>
+        <h2
+          class="text-4xl font-bold leading-tight tracking-tight sm:text-5xl"
+          data-usal="fade-up duration-700 delay-100"
+        >
+          Six Protocols<br /><span class="text-muted-foreground"
+            >Infinite Connections</span
+          >
         </h2>
-        <p class="mx-auto max-w-3xl text-lg leading-relaxed text-muted-foreground" data-usal="fade-up duration-700 delay-200">
-          Built on open standards. Connect to any AI framework, payment system, or communication platform. No vendor lock-in.
+        <p
+          class="mx-auto max-w-3xl text-lg leading-relaxed text-muted-foreground"
+          data-usal="fade-up duration-700 delay-200"
+        >
+          Built on open standards. Connect to any AI framework, payment system,
+          or communication platform. No vendor lock-in.
         </p>
       </div>
 
       <div class="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
-        <div class="rounded-xl border text-card-foreground shadow group border-border/50 bg-card/50 backdrop-blur transition-all hover:scale-[1.02] hover:border-primary/20 hover:bg-card hover:shadow-lg hover:shadow-primary/5">
+        <div
+          class="rounded-xl border text-card-foreground shadow group border-border/50 bg-card/50 backdrop-blur transition-all hover:scale-[1.02] hover:border-primary/20 hover:bg-card hover:shadow-lg hover:shadow-primary/5"
+        >
           <div class="flex flex-col p-6 space-y-4">
-            <div class="flex h-12 w-12 items-center justify-center rounded-lg bg-primary/10 transition-colors group-hover:bg-primary/15">
-              <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-network h-6 w-6 text-primary" aria-hidden="true"><rect x="16" y="16" width="6" height="6" rx="1"></rect><rect x="2" y="16" width="6" height="6" rx="1"></rect><rect x="9" y="2" width="6" height="6" rx="1"></rect><path d="M5 16v-3a1 1 0 0 1 1-1h12a1 1 0 0 1 1 1v3"></path><path d="M12 12V8"></path></svg>
+            <div
+              class="flex h-12 w-12 items-center justify-center rounded-lg bg-primary/10 transition-colors group-hover:bg-primary/15"
+            >
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                width="24"
+                height="24"
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                stroke-width="2"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                class="lucide lucide-network h-6 w-6 text-primary"
+                aria-hidden="true"
+                ><rect x="16" y="16" width="6" height="6" rx="1"></rect><rect
+                  x="2"
+                  y="16"
+                  width="6"
+                  height="6"
+                  rx="1"></rect><rect x="9" y="2" width="6" height="6" rx="1"
+                ></rect><path d="M5 16v-3a1 1 0 0 1 1-1h12a1 1 0 0 1 1 1v3"
+                ></path><path d="M12 12V8"></path></svg
+              >
             </div>
             <div class="font-semibold tracking-tight text-xl">ACP</div>
             <div class="text-sm text-muted-foreground leading-relaxed">
-              Agent Communication Protocol. REST-based messaging, task delegation, and multi-agent coordination. Linux Foundation standard.
+              Agent Communication Protocol. REST-based messaging, task
+              delegation, and multi-agent coordination. Linux Foundation
+              standard.
             </div>
           </div>
         </div>
 
-        <div class="rounded-xl border text-card-foreground shadow group border-border/50 bg-card/50 backdrop-blur transition-all hover:scale-[1.02] hover:border-primary/20 hover:bg-card hover:shadow-lg hover:shadow-primary/5">
+        <div
+          class="rounded-xl border text-card-foreground shadow group border-border/50 bg-card/50 backdrop-blur transition-all hover:scale-[1.02] hover:border-primary/20 hover:bg-card hover:shadow-lg hover:shadow-primary/5"
+        >
           <div class="flex flex-col p-6 space-y-4">
-            <div class="flex h-12 w-12 items-center justify-center rounded-lg bg-primary/10 transition-colors group-hover:bg-primary/15">
-              <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-globe h-6 w-6 text-primary" aria-hidden="true"><circle cx="12" cy="12" r="10"></circle><path d="M12 2a14.5 14.5 0 0 0 0 20 14.5 14.5 0 0 0 0-20"></path><path d="M2 12h20"></path></svg>
+            <div
+              class="flex h-12 w-12 items-center justify-center rounded-lg bg-primary/10 transition-colors group-hover:bg-primary/15"
+            >
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                width="24"
+                height="24"
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                stroke-width="2"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                class="lucide lucide-globe h-6 w-6 text-primary"
+                aria-hidden="true"
+                ><circle cx="12" cy="12" r="10"></circle><path
+                  d="M12 2a14.5 14.5 0 0 0 0 20 14.5 14.5 0 0 0 0-20"
+                ></path><path d="M2 12h20"></path></svg
+              >
             </div>
             <div class="font-semibold tracking-tight text-xl">MCP</div>
             <div class="text-sm text-muted-foreground leading-relaxed">
-              Model Context Protocol. Universal AI connectivity. Access ontology, semantic search, and RAG pipelines. Anthropic standard.
+              Model Context Protocol. Universal AI connectivity. Access
+              ontology, semantic search, and RAG pipelines. Anthropic standard.
             </div>
           </div>
         </div>
 
-        <div class="rounded-xl border text-card-foreground shadow group border-border/50 bg-card/50 backdrop-blur transition-all hover:scale-[1.02] hover:border-primary/20 hover:bg-card hover:shadow-lg hover:shadow-primary/5">
+        <div
+          class="rounded-xl border text-card-foreground shadow group border-border/50 bg-card/50 backdrop-blur transition-all hover:scale-[1.02] hover:border-primary/20 hover:bg-card hover:shadow-lg hover:shadow-primary/5"
+        >
           <div class="flex flex-col p-6 space-y-4">
-            <div class="flex h-12 w-12 items-center justify-center rounded-lg bg-primary/10 transition-colors group-hover:bg-primary/15">
-              <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-bot h-6 w-6 text-primary" aria-hidden="true"><path d="M12 8V4H8"></path><rect width="16" height="12" x="4" y="8" rx="2"></rect><path d="M2 14h2"></path><path d="M20 14h2"></path><path d="M15 13v2"></path><path d="M9 13v2"></path></svg>
+            <div
+              class="flex h-12 w-12 items-center justify-center rounded-lg bg-primary/10 transition-colors group-hover:bg-primary/15"
+            >
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                width="24"
+                height="24"
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                stroke-width="2"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                class="lucide lucide-bot h-6 w-6 text-primary"
+                aria-hidden="true"
+                ><path d="M12 8V4H8"></path><rect
+                  width="16"
+                  height="12"
+                  x="4"
+                  y="8"
+                  rx="2"></rect><path d="M2 14h2"></path><path d="M20 14h2"
+                ></path><path d="M15 13v2"></path><path d="M9 13v2"></path></svg
+              >
             </div>
             <div class="font-semibold tracking-tight text-xl">A2A</div>
             <div class="text-sm text-muted-foreground leading-relaxed">
-              Agent-to-Agent Protocol. Framework-agnostic collaboration across LangGraph, CrewAI, and custom systems. Google + Linux Foundation.
+              Agent-to-Agent Protocol. Framework-agnostic collaboration across
+              LangGraph, CrewAI, and custom systems. Google + Linux Foundation.
             </div>
           </div>
         </div>
 
-        <div class="rounded-xl border text-card-foreground shadow group border-border/50 bg-card/50 backdrop-blur transition-all hover:scale-[1.02] hover:border-primary/20 hover:bg-card hover:shadow-lg hover:shadow-primary/5">
+        <div
+          class="rounded-xl border text-card-foreground shadow group border-border/50 bg-card/50 backdrop-blur transition-all hover:scale-[1.02] hover:border-primary/20 hover:bg-card hover:shadow-lg hover:shadow-primary/5"
+        >
           <div class="flex flex-col p-6 space-y-4">
-            <div class="flex h-12 w-12 items-center justify-center rounded-lg bg-primary/10 transition-colors group-hover:bg-primary/15">
-              <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-dollar-sign h-6 w-6 text-primary" aria-hidden="true"><line x1="12" x2="12" y1="2" y2="22"></line><path d="M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"></path></svg>
+            <div
+              class="flex h-12 w-12 items-center justify-center rounded-lg bg-primary/10 transition-colors group-hover:bg-primary/15"
+            >
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                width="24"
+                height="24"
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                stroke-width="2"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                class="lucide lucide-dollar-sign h-6 w-6 text-primary"
+                aria-hidden="true"
+                ><line x1="12" x2="12" y1="2" y2="22"></line><path
+                  d="M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"
+                ></path></svg
+              >
             </div>
             <div class="font-semibold tracking-tight text-xl">AP2</div>
             <div class="text-sm text-muted-foreground leading-relaxed">
-              Agent Payments Protocol. Secure autonomous transactions with verifiable credentials. Credit cards, crypto, bank transfers. 60+ partners.
+              Agent Payments Protocol. Secure autonomous transactions with
+              verifiable credentials. Credit cards, crypto, bank transfers. 60+
+              partners.
             </div>
           </div>
         </div>
 
-        <div class="rounded-xl border text-card-foreground shadow group border-border/50 bg-card/50 backdrop-blur transition-all hover:scale-[1.02] hover:border-primary/20 hover:bg-card hover:shadow-lg hover:shadow-primary/5">
+        <div
+          class="rounded-xl border text-card-foreground shadow group border-border/50 bg-card/50 backdrop-blur transition-all hover:scale-[1.02] hover:border-primary/20 hover:bg-card hover:shadow-lg hover:shadow-primary/5"
+        >
           <div class="flex flex-col p-6 space-y-4">
-            <div class="flex h-12 w-12 items-center justify-center rounded-lg bg-primary/10 transition-colors group-hover:bg-primary/15">
-              <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-zap h-6 w-6 text-primary" aria-hidden="true"><path d="M4 14a1 1 0 0 1-.78-1.63l9.9-10.2a.5.5 0 0 1 .86.46l-1.92 6.02A1 1 0 0 0 13 10h7a1 1 0 0 1 .78 1.63l-9.9 10.2a.5.5 0 0 1-.86-.46l1.92-6.02A1 1 0 0 0 11 14z"></path></svg>
+            <div
+              class="flex h-12 w-12 items-center justify-center rounded-lg bg-primary/10 transition-colors group-hover:bg-primary/15"
+            >
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                width="24"
+                height="24"
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                stroke-width="2"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                class="lucide lucide-zap h-6 w-6 text-primary"
+                aria-hidden="true"
+                ><path
+                  d="M4 14a1 1 0 0 1-.78-1.63l9.9-10.2a.5.5 0 0 1 .86.46l-1.92 6.02A1 1 0 0 0 13 10h7a1 1 0 0 1 .78 1.63l-9.9 10.2a.5.5 0 0 1-.86-.46l1.92-6.02A1 1 0 0 0 11 14z"
+                ></path></svg
+              >
             </div>
             <div class="font-semibold tracking-tight text-xl">X402</div>
             <div class="text-sm text-muted-foreground leading-relaxed">
-              HTTP-Native Payments. Instant micropayments via HTTP 402. Zero fees, 2-second settlement, blockchain-agnostic. Pay-per-API-call.
+              HTTP-Native Payments. Instant micropayments via HTTP 402. Zero
+              fees, 2-second settlement, blockchain-agnostic. Pay-per-API-call.
             </div>
           </div>
         </div>
 
-        <div class="rounded-xl border text-card-foreground shadow group border-border/50 bg-card/50 backdrop-blur transition-all hover:scale-[1.02] hover:border-primary/20 hover:bg-card hover:shadow-lg hover:shadow-primary/5">
+        <div
+          class="rounded-xl border text-card-foreground shadow group border-border/50 bg-card/50 backdrop-blur transition-all hover:scale-[1.02] hover:border-primary/20 hover:bg-card hover:shadow-lg hover:shadow-primary/5"
+        >
           <div class="flex flex-col p-6 space-y-4">
-            <div class="flex h-12 w-12 items-center justify-center rounded-lg bg-primary/10 transition-colors group-hover:bg-primary/15">
-              <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-code h-6 w-6 text-primary" aria-hidden="true"><path d="m16 18 6-6-6-6"></path><path d="m8 6-6 6 6 6"></path></svg>
+            <div
+              class="flex h-12 w-12 items-center justify-center rounded-lg bg-primary/10 transition-colors group-hover:bg-primary/15"
+            >
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                width="24"
+                height="24"
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                stroke-width="2"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                class="lucide lucide-code h-6 w-6 text-primary"
+                aria-hidden="true"
+                ><path d="m16 18 6-6-6-6"></path><path d="m8 6-6 6 6 6"
+                ></path></svg
+              >
             </div>
             <div class="font-semibold tracking-tight text-xl">AG-UI</div>
             <div class="text-sm text-muted-foreground leading-relaxed">
-              Agent-Generated UI. Dynamic interfaces from structured JSON. Charts, tables, forms—all type-safe and composable. Real-time rendering.
+              Agent-Generated UI. Dynamic interfaces from structured JSON.
+              Charts, tables, forms—all type-safe and composable. Real-time
+              rendering.
             </div>
           </div>
         </div>
       </div>
 
-      <div class="mt-16 rounded-lg border border-primary/20 bg-primary/5 p-8 backdrop-blur text-center">
-        <p class="text-lg leading-relaxed"><strong class="text-foreground">One ontology. Six protocols. Universal interoperability.</strong><br class="hidden sm:block"><span class="text-muted-foreground">Connect anything to everything with type-safe, open standards.</span></p>
+      <div
+        class="mt-16 rounded-lg border border-primary/20 bg-primary/5 p-8 backdrop-blur text-center"
+      >
+        <p class="text-lg leading-relaxed">
+          <strong class="text-foreground"
+            >One ontology. Six protocols. Universal interoperability.</strong
+          ><br class="hidden sm:block" /><span class="text-muted-foreground"
+            >Connect anything to everything with type-safe, open standards.</span>
+        </p>
       </div>
     </div>
   </section>
@@ -385,60 +988,130 @@ EVERY DAY at 8am:
   <section class="border-t bg-muted/50 px-6 py-24 md:px-8 md:py-32">
     <div class="mx-auto max-w-6xl">
       <div class="mb-16 space-y-4 text-center">
-        <h2 class="text-4xl font-bold leading-tight tracking-tight sm:text-5xl" data-usal="fade-up duration-700">
+        <h2
+          class="text-4xl font-bold leading-tight tracking-tight sm:text-5xl"
+          data-usal="fade-up duration-700"
+        >
           Built on the Edge
         </h2>
-        <p class="text-lg text-muted-foreground" data-usal="fade-up duration-700 delay-100">
+        <p
+          class="text-lg text-muted-foreground"
+          data-usal="fade-up duration-700 delay-100"
+        >
           Modern stack designed for AI-native applications
         </p>
       </div>
       <div class="grid gap-6 sm:grid-cols-2 lg:grid-cols-4">
-        <div class="rounded-xl border text-card-foreground shadow group border-border/50 bg-card/50 backdrop-blur text-center transition-all hover:scale-[1.02] hover:border-primary/20 hover:bg-card hover:shadow-lg hover:shadow-primary/5">
+        <div
+          class="rounded-xl border text-card-foreground shadow group border-border/50 bg-card/50 backdrop-blur text-center transition-all hover:scale-[1.02] hover:border-primary/20 hover:bg-card hover:shadow-lg hover:shadow-primary/5"
+        >
           <div class="flex flex-col p-6 space-y-2">
-            <div class="font-semibold tracking-tight text-lg transition-colors group-hover:text-primary">Astro 5.14+</div>
-            <div class="text-sm text-muted-foreground leading-relaxed">Lightning-fast SSR</div>
+            <div
+              class="font-semibold tracking-tight text-lg transition-colors group-hover:text-primary"
+            >
+              Astro 5.14+
+            </div>
+            <div class="text-sm text-muted-foreground leading-relaxed">
+              Lightning-fast SSR
+            </div>
           </div>
         </div>
-        <div class="rounded-xl border text-card-foreground shadow group border-border/50 bg-card/50 backdrop-blur text-center transition-all hover:scale-[1.02] hover:border-primary/20 hover:bg-card hover:shadow-lg hover:shadow-primary/5">
+        <div
+          class="rounded-xl border text-card-foreground shadow group border-border/50 bg-card/50 backdrop-blur text-center transition-all hover:scale-[1.02] hover:border-primary/20 hover:bg-card hover:shadow-lg hover:shadow-primary/5"
+        >
           <div class="flex flex-col p-6 space-y-2">
-            <div class="font-semibold tracking-tight text-lg transition-colors group-hover:text-primary">React 19</div>
-            <div class="text-sm text-muted-foreground leading-relaxed">Edge-compatible</div>
+            <div
+              class="font-semibold tracking-tight text-lg transition-colors group-hover:text-primary"
+            >
+              React 19
+            </div>
+            <div class="text-sm text-muted-foreground leading-relaxed">
+              Edge-compatible
+            </div>
           </div>
         </div>
-        <div class="rounded-xl border text-card-foreground shadow group border-border/50 bg-card/50 backdrop-blur text-center transition-all hover:scale-[1.02] hover:border-primary/20 hover:bg-card hover:shadow-lg hover:shadow-primary/5">
+        <div
+          class="rounded-xl border text-card-foreground shadow group border-border/50 bg-card/50 backdrop-blur text-center transition-all hover:scale-[1.02] hover:border-primary/20 hover:bg-card hover:shadow-lg hover:shadow-primary/5"
+        >
           <div class="flex flex-col p-6 space-y-2">
-            <div class="font-semibold tracking-tight text-lg transition-colors group-hover:text-primary">shadcn/ui</div>
-            <div class="text-sm text-muted-foreground leading-relaxed">50+ components</div>
+            <div
+              class="font-semibold tracking-tight text-lg transition-colors group-hover:text-primary"
+            >
+              shadcn/ui
+            </div>
+            <div class="text-sm text-muted-foreground leading-relaxed">
+              50+ components
+            </div>
           </div>
         </div>
-        <div class="rounded-xl border text-card-foreground shadow group border-border/50 bg-card/50 backdrop-blur text-center transition-all hover:scale-[1.02] hover:border-primary/20 hover:bg-card hover:shadow-lg hover:shadow-primary/5">
+        <div
+          class="rounded-xl border text-card-foreground shadow group border-border/50 bg-card/50 backdrop-blur text-center transition-all hover:scale-[1.02] hover:border-primary/20 hover:bg-card hover:shadow-lg hover:shadow-primary/5"
+        >
           <div class="flex flex-col p-6 space-y-2">
-            <div class="font-semibold tracking-tight text-lg transition-colors group-hover:text-primary">Tailwind v4</div>
-            <div class="text-sm text-muted-foreground leading-relaxed">CSS-based config</div>
+            <div
+              class="font-semibold tracking-tight text-lg transition-colors group-hover:text-primary"
+            >
+              Tailwind v4
+            </div>
+            <div class="text-sm text-muted-foreground leading-relaxed">
+              CSS-based config
+            </div>
           </div>
         </div>
-        <div class="rounded-xl border text-card-foreground shadow group border-border/50 bg-card/50 backdrop-blur text-center transition-all hover:scale-[1.02] hover:border-primary/20 hover:bg-card hover:shadow-lg hover:shadow-primary/5">
+        <div
+          class="rounded-xl border text-card-foreground shadow group border-border/50 bg-card/50 backdrop-blur text-center transition-all hover:scale-[1.02] hover:border-primary/20 hover:bg-card hover:shadow-lg hover:shadow-primary/5"
+        >
           <div class="flex flex-col p-6 space-y-2">
-            <div class="font-semibold tracking-tight text-lg transition-colors group-hover:text-primary">Convex</div>
-            <div class="text-sm text-muted-foreground leading-relaxed">Real-time backend</div>
+            <div
+              class="font-semibold tracking-tight text-lg transition-colors group-hover:text-primary"
+            >
+              Convex
+            </div>
+            <div class="text-sm text-muted-foreground leading-relaxed">
+              Real-time backend
+            </div>
           </div>
         </div>
-        <div class="rounded-xl border text-card-foreground shadow group border-border/50 bg-card/50 backdrop-blur text-center transition-all hover:scale-[1.02] hover:border-primary/20 hover:bg-card hover:shadow-lg hover:shadow-primary/5">
+        <div
+          class="rounded-xl border text-card-foreground shadow group border-border/50 bg-card/50 backdrop-blur text-center transition-all hover:scale-[1.02] hover:border-primary/20 hover:bg-card hover:shadow-lg hover:shadow-primary/5"
+        >
           <div class="flex flex-col p-6 space-y-2">
-            <div class="font-semibold tracking-tight text-lg transition-colors group-hover:text-primary">Better Auth</div>
-            <div class="text-sm text-muted-foreground leading-relaxed">6 auth methods</div>
+            <div
+              class="font-semibold tracking-tight text-lg transition-colors group-hover:text-primary"
+            >
+              Better Auth
+            </div>
+            <div class="text-sm text-muted-foreground leading-relaxed">
+              6 auth methods
+            </div>
           </div>
         </div>
-        <div class="rounded-xl border text-card-foreground shadow group border-border/50 bg-card/50 backdrop-blur text-center transition-all hover:scale-[1.02] hover:border-primary/20 hover:bg-card hover:shadow-lg hover:shadow-primary/5">
+        <div
+          class="rounded-xl border text-card-foreground shadow group border-border/50 bg-card/50 backdrop-blur text-center transition-all hover:scale-[1.02] hover:border-primary/20 hover:bg-card hover:shadow-lg hover:shadow-primary/5"
+        >
           <div class="flex flex-col p-6 space-y-2">
-            <div class="font-semibold tracking-tight text-lg transition-colors group-hover:text-primary">TypeScript 5.9+</div>
-            <div class="text-sm text-muted-foreground leading-relaxed">Strict mode</div>
+            <div
+              class="font-semibold tracking-tight text-lg transition-colors group-hover:text-primary"
+            >
+              TypeScript 5.9+
+            </div>
+            <div class="text-sm text-muted-foreground leading-relaxed">
+              Strict mode
+            </div>
           </div>
         </div>
-        <div class="rounded-xl border text-card-foreground shadow group border-border/50 bg-card/50 backdrop-blur text-center transition-all hover:scale-[1.02] hover:border-primary/20 hover:bg-card hover:shadow-lg hover:shadow-primary/5">
+        <div
+          class="rounded-xl border text-card-foreground shadow group border-border/50 bg-card/50 backdrop-blur text-center transition-all hover:scale-[1.02] hover:border-primary/20 hover:bg-card hover:shadow-lg hover:shadow-primary/5"
+        >
           <div class="flex flex-col p-6 space-y-2">
-            <div class="font-semibold tracking-tight text-lg transition-colors group-hover:text-primary">Cloudflare Pages</div>
-            <div class="text-sm text-muted-foreground leading-relaxed">Global edge network</div>
+            <div
+              class="font-semibold tracking-tight text-lg transition-colors group-hover:text-primary"
+            >
+              Cloudflare Pages
+            </div>
+            <div class="text-sm text-muted-foreground leading-relaxed">
+              Global edge network
+            </div>
           </div>
         </div>
       </div>
@@ -449,128 +1122,312 @@ EVERY DAY at 8am:
   <section class="px-4 py-20 sm:px-6 sm:py-24 md:px-8 md:py-32">
     <div class="mx-auto max-w-full sm:max-w-6xl">
       <div class="mb-20 space-y-4 text-center">
-        <h2 class="text-4xl font-bold leading-tight tracking-tight sm:text-5xl" data-usal="fade-up duration-700">
+        <h2
+          class="text-4xl font-bold leading-tight tracking-tight sm:text-5xl"
+          data-usal="fade-up duration-700"
+        >
           Integrations & Partnerships
         </h2>
-        <p class="text-lg text-muted-foreground" data-usal="fade-up duration-700 delay-100">
+        <p
+          class="text-lg text-muted-foreground"
+          data-usal="fade-up duration-700 delay-100"
+        >
           Connect with the tools you already use
         </p>
       </div>
 
-      <div class="relative mx-auto mb-20 flex h-[500px] sm:h-[600px] w-full max-w-[360px] sm:max-w-[500px] items-center justify-center origin-center scale-[0.85] sm:scale-100">
+      <div
+        class="relative mx-auto mb-20 flex h-[500px] sm:h-[600px] w-full max-w-[360px] sm:max-w-[500px] items-center justify-center origin-center scale-[0.85] sm:scale-100"
+      >
         <div class="absolute inset-0 flex items-center justify-center">
           <svg class="absolute size-full" viewBox="0 0 900 900">
-            <circle cx="450" cy="450" r="240" fill="none" stroke="currentColor" stroke-opacity="0.12" stroke-width="1.5" stroke-dasharray="6 4"></circle>
-            <circle cx="450" cy="450" r="360" fill="none" stroke="currentColor" stroke-opacity="0.1" stroke-width="1.5" stroke-dasharray="6 4"></circle>
+            <circle
+              cx="450"
+              cy="450"
+              r="240"
+              fill="none"
+              stroke="currentColor"
+              stroke-opacity="0.12"
+              stroke-width="1.5"
+              stroke-dasharray="6 4"></circle>
+            <circle
+              cx="450"
+              cy="450"
+              r="360"
+              fill="none"
+              stroke="currentColor"
+              stroke-opacity="0.1"
+              stroke-width="1.5"
+              stroke-dasharray="6 4"></circle>
           </svg>
         </div>
 
-        <div class="relative flex h-60 w-60 items-center justify-center rounded-full bg-primary/10 shadow-inner">
-          <div class="flex h-28 w-28 items-center justify-center rounded-full bg-primary text-xl font-semibold text-primary-foreground shadow-lg">
+        <div
+          class="relative flex h-60 w-60 items-center justify-center rounded-full bg-primary/10 shadow-inner"
+        >
+          <div
+            class="flex h-28 w-28 items-center justify-center rounded-full bg-primary text-xl font-semibold text-primary-foreground shadow-lg"
+          >
             <img src="/logo.svg" alt="ONE" class="h-16 w-16" loading="lazy" />
           </div>
         </div>
 
         <!-- Inner Circle: E-commerce Integrations -->
-        <div class="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2" style="width:480px;height:480px">
-          <svg xmlns="http://www.w3.org/2000/svg" version="1.1" width="480" height="480" viewBox="0 0 480 480" class="pointer-events-none absolute inset-0">
-            <circle class="stroke-black/10 stroke-1 dark:stroke-white/10" cx="240" cy="240" r="240" fill="none"></circle>
+        <div
+          class="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2"
+          style="width:480px;height:480px"
+        >
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            version="1.1"
+            width="480"
+            height="480"
+            viewBox="0 0 480 480"
+            class="pointer-events-none absolute inset-0"
+          >
+            <circle
+              class="stroke-black/10 stroke-1 dark:stroke-white/10"
+              cx="240"
+              cy="240"
+              r="240"
+              fill="none"></circle>
           </svg>
           <!-- Shopify -->
-          <div style="--duration:36;--radius:240;--start-angle:0;transform-origin:center" class="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 animate-orbit">
+          <div
+            style="--duration:36;--radius:240;--start-angle:0;transform-origin:center"
+            class="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 animate-orbit"
+          >
             <div class="flex flex-col items-center text-center">
-              <div class="flex h-14 w-14 items-center justify-center rounded-full bg-background/90 p-2 shadow-sm backdrop-blur">
-                <img src="/logos/shopify.svg" alt="Shopify" class="h-full w-full object-contain" loading="lazy" />
+              <div
+                class="flex h-14 w-14 items-center justify-center rounded-full bg-background/90 p-2 shadow-sm backdrop-blur"
+              >
+                <img
+                  src="/logos/shopify.svg"
+                  alt="Shopify"
+                  class="h-full w-full object-contain"
+                  loading="lazy"
+                />
               </div>
-              <span class="mt-2 text-sm font-medium text-foreground">Shopify</span>
-              <span class="text-xs text-muted-foreground whitespace-nowrap">Storefront</span>
+              <span class="mt-2 text-sm font-medium text-foreground"
+                >Shopify</span
+              >
+              <span class="text-xs text-muted-foreground whitespace-nowrap"
+                >Storefront</span
+              >
             </div>
           </div>
           <!-- WooCommerce -->
-          <div style="--duration:36;--radius:240;--start-angle:90;transform-origin:center" class="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 animate-orbit">
+          <div
+            style="--duration:36;--radius:240;--start-angle:90;transform-origin:center"
+            class="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 animate-orbit"
+          >
             <div class="flex flex-col items-center text-center">
-              <div class="flex h-14 w-14 items-center justify-center rounded-full bg-background/90 p-2 shadow-sm backdrop-blur">
-                <img src="/logos/woocommerce.svg" alt="WooCommerce" class="h-full w-full object-contain" loading="lazy" />
+              <div
+                class="flex h-14 w-14 items-center justify-center rounded-full bg-background/90 p-2 shadow-sm backdrop-blur"
+              >
+                <img
+                  src="/logos/woocommerce.svg"
+                  alt="WooCommerce"
+                  class="h-full w-full object-contain"
+                  loading="lazy"
+                />
               </div>
-              <span class="mt-2 text-sm font-medium text-foreground">WooCommerce</span>
-              <span class="text-xs text-muted-foreground whitespace-nowrap">Commerce</span>
+              <span class="mt-2 text-sm font-medium text-foreground"
+                >WooCommerce</span
+              >
+              <span class="text-xs text-muted-foreground whitespace-nowrap"
+                >Commerce</span
+              >
             </div>
           </div>
           <!-- Magento -->
-          <div style="--duration:36;--radius:240;--start-angle:180;transform-origin:center" class="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 animate-orbit">
+          <div
+            style="--duration:36;--radius:240;--start-angle:180;transform-origin:center"
+            class="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 animate-orbit"
+          >
             <div class="flex flex-col items-center text-center">
-              <div class="flex h-14 w-14 items-center justify-center rounded-full bg-background/90 p-2 shadow-sm backdrop-blur">
-                <img src="/logos/magento.svg" alt="Magento" class="h-full w-full object-contain" loading="lazy" />
+              <div
+                class="flex h-14 w-14 items-center justify-center rounded-full bg-background/90 p-2 shadow-sm backdrop-blur"
+              >
+                <img
+                  src="/logos/magento.svg"
+                  alt="Magento"
+                  class="h-full w-full object-contain"
+                  loading="lazy"
+                />
               </div>
-              <span class="mt-2 text-sm font-medium text-foreground">Magento</span>
-              <span class="text-xs text-muted-foreground whitespace-nowrap">Enterprise</span>
+              <span class="mt-2 text-sm font-medium text-foreground"
+                >Magento</span
+              >
+              <span class="text-xs text-muted-foreground whitespace-nowrap"
+                >Enterprise</span
+              >
             </div>
           </div>
           <!-- Stripe -->
-          <div style="--duration:36;--radius:240;--start-angle:270;transform-origin:center" class="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 animate-orbit">
+          <div
+            style="--duration:36;--radius:240;--start-angle:270;transform-origin:center"
+            class="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 animate-orbit"
+          >
             <div class="flex flex-col items-center text-center">
-              <div class="flex h-14 w-14 items-center justify-center rounded-full bg-background/90 p-2 shadow-sm backdrop-blur">
-                <img src="/logos/stripe.svg" alt="Stripe" class="h-full w-full object-contain" loading="lazy" />
+              <div
+                class="flex h-14 w-14 items-center justify-center rounded-full bg-background/90 p-2 shadow-sm backdrop-blur"
+              >
+                <img
+                  src="/logos/stripe.svg"
+                  alt="Stripe"
+                  class="h-full w-full object-contain"
+                  loading="lazy"
+                />
               </div>
-              <span class="mt-2 text-sm font-medium text-foreground">Stripe</span>
-              <span class="text-xs text-muted-foreground whitespace-nowrap">Billing</span>
+              <span class="mt-2 text-sm font-medium text-foreground"
+                >Stripe</span
+              >
+              <span class="text-xs text-muted-foreground whitespace-nowrap"
+                >Billing</span
+              >
             </div>
           </div>
         </div>
 
         <!-- Outer Circle: AI Model Integrations -->
-        <div class="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2" style="width:720px;height:720px">
-          <svg xmlns="http://www.w3.org/2000/svg" version="1.1" width="720" height="720" viewBox="0 0 720 720" class="pointer-events-none absolute inset-0">
-            <circle class="stroke-black/10 stroke-1 dark:stroke-white/10" cx="360" cy="360" r="360" fill="none"></circle>
+        <div
+          class="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2"
+          style="width:720px;height:720px"
+        >
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            version="1.1"
+            width="720"
+            height="720"
+            viewBox="0 0 720 720"
+            class="pointer-events-none absolute inset-0"
+          >
+            <circle
+              class="stroke-black/10 stroke-1 dark:stroke-white/10"
+              cx="360"
+              cy="360"
+              r="360"
+              fill="none"></circle>
           </svg>
           <!-- OpenAI -->
-          <div style="--duration:48;--radius:360;--start-angle:0;transform-origin:center" class="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 animate-orbit">
+          <div
+            style="--duration:48;--radius:360;--start-angle:0;transform-origin:center"
+            class="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 animate-orbit"
+          >
             <div class="flex flex-col items-center text-center">
-              <div class="flex h-16 w-16 items-center justify-center rounded-full bg-card/70 p-3 shadow-md backdrop-blur">
-                <img src="/logos/openai.svg" alt="OpenAI" class="h-full w-full object-contain" loading="lazy" />
+              <div
+                class="flex h-16 w-16 items-center justify-center rounded-full bg-card/70 p-3 shadow-md backdrop-blur"
+              >
+                <img
+                  src="/logos/openai.svg"
+                  alt="OpenAI"
+                  class="h-full w-full object-contain"
+                  loading="lazy"
+                />
               </div>
-              <span class="mt-2 text-sm font-semibold text-foreground">OpenAI</span>
-              <span class="text-xs text-muted-foreground whitespace-nowrap">GPT-4</span>
+              <span class="mt-2 text-sm font-semibold text-foreground"
+                >OpenAI</span
+              >
+              <span class="text-xs text-muted-foreground whitespace-nowrap"
+                >GPT-4</span
+              >
             </div>
           </div>
           <!-- Anthropic -->
-          <div style="--duration:48;--radius:360;--start-angle:72;transform-origin:center" class="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 animate-orbit">
+          <div
+            style="--duration:48;--radius:360;--start-angle:72;transform-origin:center"
+            class="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 animate-orbit"
+          >
             <div class="flex flex-col items-center text-center">
-              <div class="flex h-16 w-16 items-center justify-center rounded-full bg-card/70 p-3 shadow-md backdrop-blur">
-                <img src="/logos/anthropic.svg" alt="Anthropic" class="h-full w-full object-contain" loading="lazy" />
+              <div
+                class="flex h-16 w-16 items-center justify-center rounded-full bg-card/70 p-3 shadow-md backdrop-blur"
+              >
+                <img
+                  src="/logos/anthropic.svg"
+                  alt="Anthropic"
+                  class="h-full w-full object-contain"
+                  loading="lazy"
+                />
               </div>
-              <span class="mt-2 text-sm font-semibold text-foreground">Anthropic</span>
-              <span class="text-xs text-muted-foreground whitespace-nowrap">Claude 3</span>
+              <span class="mt-2 text-sm font-semibold text-foreground"
+                >Anthropic</span
+              >
+              <span class="text-xs text-muted-foreground whitespace-nowrap"
+                >Claude 3</span
+              >
             </div>
           </div>
           <!-- Google Gemini -->
-          <div style="--duration:48;--radius:360;--start-angle:144;transform-origin:center" class="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 animate-orbit">
+          <div
+            style="--duration:48;--radius:360;--start-angle:144;transform-origin:center"
+            class="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 animate-orbit"
+          >
             <div class="flex flex-col items-center text-center">
-              <div class="flex h-16 w-16 items-center justify-center rounded-full bg-card/70 p-3 shadow-md backdrop-blur">
-                <img src="/logos/gemini.svg" alt="Google Gemini" class="h-full w-full object-contain" loading="lazy" />
+              <div
+                class="flex h-16 w-16 items-center justify-center rounded-full bg-card/70 p-3 shadow-md backdrop-blur"
+              >
+                <img
+                  src="/logos/gemini.svg"
+                  alt="Google Gemini"
+                  class="h-full w-full object-contain"
+                  loading="lazy"
+                />
               </div>
-              <span class="mt-2 text-sm font-semibold text-foreground">Google Gemini</span>
-              <span class="text-xs text-muted-foreground whitespace-nowrap">Multimodal</span>
+              <span class="mt-2 text-sm font-semibold text-foreground"
+                >Google Gemini</span
+              >
+              <span class="text-xs text-muted-foreground whitespace-nowrap"
+                >Multimodal</span
+              >
             </div>
           </div>
           <!-- Mistral AI -->
-          <div style="--duration:48;--radius:360;--start-angle:216;transform-origin:center" class="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 animate-orbit">
+          <div
+            style="--duration:48;--radius:360;--start-angle:216;transform-origin:center"
+            class="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 animate-orbit"
+          >
             <div class="flex flex-col items-center text-center">
-              <div class="flex h-16 w-16 items-center justify-center rounded-full bg-card/70 p-3 shadow-md backdrop-blur">
-                <img src="/logos/mistral.svg" alt="Mistral AI" class="h-full w-full object-contain" loading="lazy" />
+              <div
+                class="flex h-16 w-16 items-center justify-center rounded-full bg-card/70 p-3 shadow-md backdrop-blur"
+              >
+                <img
+                  src="/logos/mistral.svg"
+                  alt="Mistral AI"
+                  class="h-full w-full object-contain"
+                  loading="lazy"
+                />
               </div>
-              <span class="mt-2 text-sm font-semibold text-foreground">Mistral AI</span>
-              <span class="text-xs text-muted-foreground whitespace-nowrap">Open-Weight</span>
+              <span class="mt-2 text-sm font-semibold text-foreground"
+                >Mistral AI</span
+              >
+              <span class="text-xs text-muted-foreground whitespace-nowrap"
+                >Open-Weight</span
+              >
             </div>
           </div>
           <!-- DeepSeek -->
-          <div style="--duration:48;--radius:360;--start-angle:288;transform-origin:center" class="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 animate-orbit">
+          <div
+            style="--duration:48;--radius:360;--start-angle:288;transform-origin:center"
+            class="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 animate-orbit"
+          >
             <div class="flex flex-col items-center text-center">
-              <div class="flex h-16 w-16 items-center justify-center rounded-full bg-card/70 p-3 shadow-md backdrop-blur">
-                <img src="/logos/deepseek.svg" alt="DeepSeek" class="h-full w-full object-contain" loading="lazy" />
+              <div
+                class="flex h-16 w-16 items-center justify-center rounded-full bg-card/70 p-3 shadow-md backdrop-blur"
+              >
+                <img
+                  src="/logos/deepseek.svg"
+                  alt="DeepSeek"
+                  class="h-full w-full object-contain"
+                  loading="lazy"
+                />
               </div>
-              <span class="mt-2 text-sm font-semibold text-foreground">DeepSeek</span>
-              <span class="text-xs text-muted-foreground whitespace-nowrap">Optimized</span>
+              <span class="mt-2 text-sm font-semibold text-foreground"
+                >DeepSeek</span
+              >
+              <span class="text-xs text-muted-foreground whitespace-nowrap"
+                >Optimized</span
+              >
             </div>
           </div>
         </div>
@@ -582,84 +1439,276 @@ EVERY DAY at 8am:
   <section class="px-4 py-20 sm:px-6 sm:py-24 md:px-8 md:py-32">
     <div class="mx-auto max-w-full sm:max-w-6xl">
       <div class="mb-20 space-y-4 text-center">
-        <div class="rounded-md border px-2.5 py-0.5 text-xs font-semibold transition-colors focus:outline-none focus:ring-2 focus:ring-ring focus:ring-offset-2 text-foreground mb-2 inline-flex items-center gap-2" data-usal="fade-down duration-600">
-          <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-zap h-4 w-4" aria-hidden="true"><path d="M4 14a1 1 0 0 1-.78-1.63l9.9-10.2a.5.5 0 0 1 .86.46l-1.92 6.02A1 1 0 0 0 13 10h7a1 1 0 0 1 .78 1.63l-9.9 10.2a.5.5 0 0 1-.86-.46l1.92-6.02A1 1 0 0 0 11 14z"></path></svg>
+        <div
+          class="rounded-md border px-2.5 py-0.5 text-xs font-semibold transition-colors focus:outline-none focus:ring-2 focus:ring-ring focus:ring-offset-2 text-foreground mb-2 inline-flex items-center gap-2"
+          data-usal="fade-down duration-600"
+        >
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            width="24"
+            height="24"
+            viewBox="0 0 24 24"
+            fill="none"
+            stroke="currentColor"
+            stroke-width="2"
+            stroke-linecap="round"
+            stroke-linejoin="round"
+            class="lucide lucide-zap h-4 w-4"
+            aria-hidden="true"
+            ><path
+              d="M4 14a1 1 0 0 1-.78-1.63l9.9-10.2a.5.5 0 0 1 .86.46l-1.92 6.02A1 1 0 0 0 13 10h7a1 1 0 0 1 .78 1.63l-9.9 10.2a.5.5 0 0 1-.86-.46l1.92-6.02A1 1 0 0 0 11 14z"
+            ></path></svg
+          >
           How It Works
         </div>
-        <h2 class="text-4xl font-bold leading-tight tracking-tight sm:text-5xl" data-usal="fade-up duration-700 delay-100">
-          English → Code → Reality<br><span class="text-muted-foreground">In Minutes, Not Months</span>
+        <h2
+          class="text-4xl font-bold leading-tight tracking-tight sm:text-5xl"
+          data-usal="fade-up duration-700 delay-100"
+        >
+          English → Code → Reality<br /><span class="text-muted-foreground"
+            >In Minutes, Not Months</span
+          >
         </h2>
-        <p class="mx-auto max-w-3xl text-lg leading-relaxed text-muted-foreground" data-usal="fade-up duration-700 delay-200">
-          Describe your feature in plain English. The system validates it against the ontology, compiles to TypeScript, generates tests, and deploys to the edge.
+        <p
+          class="mx-auto max-w-3xl text-lg leading-relaxed text-muted-foreground"
+          data-usal="fade-up duration-700 delay-200"
+        >
+          Describe your feature in plain English. The system validates it
+          against the ontology, compiles to TypeScript, generates tests, and
+          deploys to the edge.
         </p>
       </div>
 
       <div class="grid gap-8 md:grid-cols-2 lg:grid-cols-4">
-        <div class="rounded-xl border text-card-foreground shadow border-border/50 bg-card/50 backdrop-blur" data-usal="fade-up duration-600 delay-100">
+        <div
+          class="rounded-xl border text-card-foreground shadow border-border/50 bg-card/50 backdrop-blur"
+          data-usal="fade-up duration-600 delay-100"
+        >
           <div class="flex flex-col p-6 space-y-4">
-            <div class="flex h-12 w-12 items-center justify-center rounded-lg bg-primary/10 text-2xl font-bold text-primary">1</div>
-            <div class="font-semibold tracking-tight text-xl">Write in English</div>
+            <div
+              class="flex h-12 w-12 items-center justify-center rounded-lg bg-primary/10 text-2xl font-bold text-primary"
+            >
+              1
+            </div>
+            <div class="font-semibold tracking-tight text-xl">
+              Write in English
+            </div>
             <div class="text-sm text-muted-foreground leading-relaxed">
-              Describe what you want: "CREATE ai clone", "CALL OpenAI", "RECORD purchase". Use 15 simple commands anyone can understand.
+              Describe what you want: "CREATE ai clone", "CALL OpenAI", "RECORD
+              purchase". Use 15 simple commands anyone can understand.
             </div>
             <div class="space-y-2 pt-2">
-              <div class="text-xs text-muted-foreground"><span class="font-semibold text-foreground">Creator:</span> "CREATE my AI clone"</div>
-              <div class="text-xs text-muted-foreground"><span class="font-semibold text-foreground">Seller:</span> "RECORD purchase event"</div>
-              <div class="text-xs text-muted-foreground"><span class="font-semibold text-foreground">Engineer:</span> "CONNECT to Stripe API"</div>
-            </div>
-          </div>
-        </div>
-
-        <div class="rounded-xl border text-card-foreground shadow border-border/50 bg-card/50 backdrop-blur" data-usal="fade-up duration-600 delay-200">
-          <div class="flex flex-col p-6 space-y-4">
-            <div class="flex h-12 w-12 items-center justify-center rounded-lg bg-primary/10 text-2xl font-bold text-primary">2</div>
-            <div class="font-semibold tracking-tight text-xl">System Validates</div>
-            <div class="text-sm text-muted-foreground leading-relaxed">
-              Checks against the ontology: Do these entity types exist? Are connections valid? Are services available? Instant feedback.
-            </div>
-            <div class="space-y-2 pt-2">
-              <div class="text-xs text-muted-foreground"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-check inline h-3 w-3 text-green-500" aria-hidden="true"><path d="M20 6 9 17l-5-5"></path></svg><span class="font-semibold text-foreground">ai_clone</span> entity type exists</div>
-              <div class="text-xs text-muted-foreground"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-check inline h-3 w-3 text-green-500" aria-hidden="true"><path d="M20 6 9 17l-5-5"></path></svg><span class="font-semibold text-foreground">tokens_purchased</span> event valid</div>
-              <div class="text-xs text-muted-foreground"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-check inline h-3 w-3 text-green-500" aria-hidden="true"><path d="M20 6 9 17l-5-5"></path></svg><span class="font-semibold text-foreground">Stripe</span> service available</div>
-            </div>
-          </div>
-        </div>
-
-        <div class="rounded-xl border text-card-foreground shadow border-border/50 bg-card/50 backdrop-blur" data-usal="fade-up duration-600 delay-300">
-          <div class="flex flex-col p-6 space-y-4">
-            <div class="flex h-12 w-12 items-center justify-center rounded-lg bg-primary/10 text-2xl font-bold text-primary">3</div>
-            <div class="font-semibold tracking-tight text-xl">Code Generated</div>
-            <div class="text-sm text-muted-foreground leading-relaxed">
-              Compiles to production TypeScript with Effect.ts, Convex functions, React components, full test suite. Type-safe, tested, ready.
-            </div>
-            <div class="space-y-2 pt-2">
-              <div class="flex items-center gap-2">
-                <div class="inline-flex items-center rounded-md border px-2.5 py-0.5 font-semibold transition-colors focus:outline-none focus:ring-2 focus:ring-ring focus:ring-offset-2 border-transparent bg-secondary text-secondary-foreground hover:bg-secondary/80 text-xs">Backend</div>
-                <span class="text-xs text-muted-foreground">Mutations + Queries</span>
+              <div class="text-xs text-muted-foreground">
+                <span class="font-semibold text-foreground">Creator:</span> "CREATE
+                my AI clone"
               </div>
-              <div class="flex items-center gap-2">
-                <div class="inline-flex items-center rounded-md border px-2.5 py-0.5 font-semibold transition-colors focus:outline-none focus:ring-2 focus:ring-ring focus:ring-offset-2 border-transparent bg-secondary text-secondary-foreground hover:bg-secondary/80 text-xs">Frontend</div>
-                <span class="text-xs text-muted-foreground">React Components</span>
+              <div class="text-xs text-muted-foreground">
+                <span class="font-semibold text-foreground">Seller:</span> "RECORD
+                purchase event"
               </div>
-              <div class="flex items-center gap-2">
-                <div class="inline-flex items-center rounded-md border px-2.5 py-0.5 font-semibold transition-colors focus:outline-none focus:ring-2 focus:ring-ring focus:ring-offset-2 border-transparent bg-secondary text-secondary-foreground hover:bg-secondary/80 text-xs">Tests</div>
-                <span class="text-xs text-muted-foreground">50+ test cases</span>
+              <div class="text-xs text-muted-foreground">
+                <span class="font-semibold text-foreground">Engineer:</span> "CONNECT
+                to Stripe API"
               </div>
             </div>
           </div>
         </div>
 
-        <div class="rounded-xl border text-card-foreground shadow border-border/50 bg-card/50 backdrop-blur" data-usal="fade-up duration-600 delay-400">
+        <div
+          class="rounded-xl border text-card-foreground shadow border-border/50 bg-card/50 backdrop-blur"
+          data-usal="fade-up duration-600 delay-200"
+        >
           <div class="flex flex-col p-6 space-y-4">
-            <div class="flex h-12 w-12 items-center justify-center rounded-lg bg-primary/10 text-2xl font-bold text-primary">4</div>
-            <div class="font-semibold tracking-tight text-xl">Deploy to Edge</div>
+            <div
+              class="flex h-12 w-12 items-center justify-center rounded-lg bg-primary/10 text-2xl font-bold text-primary"
+            >
+              2
+            </div>
+            <div class="font-semibold tracking-tight text-xl">
+              System Validates
+            </div>
             <div class="text-sm text-muted-foreground leading-relaxed">
-              Push to Cloudflare's global network. Unlimited requests, instant updates, zero configuration. Live in 60 seconds.
+              Checks against the ontology: Do these entity types exist? Are
+              connections valid? Are services available? Instant feedback.
             </div>
             <div class="space-y-2 pt-2">
-              <div class="text-xs text-muted-foreground"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-globe inline h-3 w-3 text-primary" aria-hidden="true"><circle cx="12" cy="12" r="10"></circle><path d="M12 2a14.5 14.5 0 0 0 0 20 14.5 14.5 0 0 0 0-20"></path><path d="M2 12h20"></path></svg><span class="font-semibold text-foreground">330+ locations</span> worldwide</div>
-              <div class="text-xs text-muted-foreground"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-zap inline h-3 w-3 text-primary" aria-hidden="true"><path d="M4 14a1 1 0 0 1-.78-1.63l9.9-10.2a.5.5 0 0 1 .86.46l-1.92 6.02A1 1 0 0 0 13 10h7a1 1 0 0 1 .78 1.63l-9.9 10.2a.5.5 0 0 1-.86-.46l1.92-6.02A1 1 0 0 0 11 14z"></path></svg><span class="font-semibold text-foreground">&lt; 330ms</span> average response</div>
-              <div class="text-xs text-muted-foreground"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-check inline h-3 w-3 text-green-500" aria-hidden="true"><path d="M20 6 9 17l-5-5"></path></svg><span class="font-semibold text-foreground">Free tier</span> unlimited</div>
+              <div class="text-xs text-muted-foreground">
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  width="24"
+                  height="24"
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  stroke="currentColor"
+                  stroke-width="2"
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                  class="lucide lucide-check inline h-3 w-3 text-green-500"
+                  aria-hidden="true"><path d="M20 6 9 17l-5-5"></path></svg
+                ><span class="font-semibold text-foreground">ai_clone</span> entity
+                type exists
+              </div>
+              <div class="text-xs text-muted-foreground">
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  width="24"
+                  height="24"
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  stroke="currentColor"
+                  stroke-width="2"
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                  class="lucide lucide-check inline h-3 w-3 text-green-500"
+                  aria-hidden="true"><path d="M20 6 9 17l-5-5"></path></svg
+                ><span class="font-semibold text-foreground"
+                  >tokens_purchased</span
+                > event valid
+              </div>
+              <div class="text-xs text-muted-foreground">
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  width="24"
+                  height="24"
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  stroke="currentColor"
+                  stroke-width="2"
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                  class="lucide lucide-check inline h-3 w-3 text-green-500"
+                  aria-hidden="true"><path d="M20 6 9 17l-5-5"></path></svg
+                ><span class="font-semibold text-foreground">Stripe</span> service
+                available
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div
+          class="rounded-xl border text-card-foreground shadow border-border/50 bg-card/50 backdrop-blur"
+          data-usal="fade-up duration-600 delay-300"
+        >
+          <div class="flex flex-col p-6 space-y-4">
+            <div
+              class="flex h-12 w-12 items-center justify-center rounded-lg bg-primary/10 text-2xl font-bold text-primary"
+            >
+              3
+            </div>
+            <div class="font-semibold tracking-tight text-xl">
+              Code Generated
+            </div>
+            <div class="text-sm text-muted-foreground leading-relaxed">
+              Compiles to production TypeScript with Effect.ts, Convex
+              functions, React components, full test suite. Type-safe, tested,
+              ready.
+            </div>
+            <div class="space-y-2 pt-2">
+              <div class="flex items-center gap-2">
+                <div
+                  class="inline-flex items-center rounded-md border px-2.5 py-0.5 font-semibold transition-colors focus:outline-none focus:ring-2 focus:ring-ring focus:ring-offset-2 border-transparent bg-secondary text-secondary-foreground hover:bg-secondary/80 text-xs"
+                >
+                  Backend
+                </div>
+                <span class="text-xs text-muted-foreground"
+                  >Mutations + Queries</span
+                >
+              </div>
+              <div class="flex items-center gap-2">
+                <div
+                  class="inline-flex items-center rounded-md border px-2.5 py-0.5 font-semibold transition-colors focus:outline-none focus:ring-2 focus:ring-ring focus:ring-offset-2 border-transparent bg-secondary text-secondary-foreground hover:bg-secondary/80 text-xs"
+                >
+                  Frontend
+                </div>
+                <span class="text-xs text-muted-foreground"
+                  >React Components</span
+                >
+              </div>
+              <div class="flex items-center gap-2">
+                <div
+                  class="inline-flex items-center rounded-md border px-2.5 py-0.5 font-semibold transition-colors focus:outline-none focus:ring-2 focus:ring-ring focus:ring-offset-2 border-transparent bg-secondary text-secondary-foreground hover:bg-secondary/80 text-xs"
+                >
+                  Tests
+                </div>
+                <span class="text-xs text-muted-foreground">50+ test cases</span
+                >
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div
+          class="rounded-xl border text-card-foreground shadow border-border/50 bg-card/50 backdrop-blur"
+          data-usal="fade-up duration-600 delay-400"
+        >
+          <div class="flex flex-col p-6 space-y-4">
+            <div
+              class="flex h-12 w-12 items-center justify-center rounded-lg bg-primary/10 text-2xl font-bold text-primary"
+            >
+              4
+            </div>
+            <div class="font-semibold tracking-tight text-xl">
+              Deploy to Edge
+            </div>
+            <div class="text-sm text-muted-foreground leading-relaxed">
+              Push to Cloudflare's global network. Unlimited requests, instant
+              updates, zero configuration. Live in 60 seconds.
+            </div>
+            <div class="space-y-2 pt-2">
+              <div class="text-xs text-muted-foreground">
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  width="24"
+                  height="24"
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  stroke="currentColor"
+                  stroke-width="2"
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                  class="lucide lucide-globe inline h-3 w-3 text-primary"
+                  aria-hidden="true"
+                  ><circle cx="12" cy="12" r="10"></circle><path
+                    d="M12 2a14.5 14.5 0 0 0 0 20 14.5 14.5 0 0 0 0-20"
+                  ></path><path d="M2 12h20"></path></svg
+                ><span class="font-semibold text-foreground"
+                  >330+ locations</span
+                > worldwide
+              </div>
+              <div class="text-xs text-muted-foreground">
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  width="24"
+                  height="24"
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  stroke="currentColor"
+                  stroke-width="2"
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                  class="lucide lucide-zap inline h-3 w-3 text-primary"
+                  aria-hidden="true"
+                  ><path
+                    d="M4 14a1 1 0 0 1-.78-1.63l9.9-10.2a.5.5 0 0 1 .86.46l-1.92 6.02A1 1 0 0 0 13 10h7a1 1 0 0 1 .78 1.63l-9.9 10.2a.5.5 0 0 1-.86-.46l1.92-6.02A1 1 0 0 0 11 14z"
+                  ></path></svg
+                ><span class="font-semibold text-foreground">&lt; 330ms</span> average
+                response
+              </div>
+              <div class="text-xs text-muted-foreground">
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  width="24"
+                  height="24"
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  stroke="currentColor"
+                  stroke-width="2"
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                  class="lucide lucide-check inline h-3 w-3 text-green-500"
+                  aria-hidden="true"><path d="M20 6 9 17l-5-5"></path></svg
+                ><span class="font-semibold text-foreground">Free tier</span> unlimited
+              </div>
             </div>
           </div>
         </div>
@@ -697,7 +1746,8 @@ EVERY DAY at 8am:
   }
 
   .gradient-text {
-    background: linear-gradient(90deg,
+    background: linear-gradient(
+      90deg,
       hsl(var(--color-primary)) 0%,
       hsl(var(--color-chart-1)) 50%,
       hsl(var(--color-chart-2)) 100%
@@ -711,8 +1761,12 @@ EVERY DAY at 8am:
   }
 
   @keyframes gradient {
-    0% { background-position: 0% center; }
-    100% { background-position: 200% center; }
+    0% {
+      background-position: 0% center;
+    }
+    100% {
+      background-position: 200% center;
+    }
   }
 
   /* Disable gradient animation when motion is reduced */

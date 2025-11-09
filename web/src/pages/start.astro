@@ -7,48 +7,45 @@ const docEntries = await getCollection('docs');
 ---
 
 <Layout title="Server Started - ONE Platform">
-  <div class="min-h-screen bg-gradient-to-br from-green-50 to-emerald-50 dark:from-green-950 dark:to-emerald-950 flex flex-col items-center justify-center p-4">
+  <div class="min-h-screen bg-background flex flex-col items-center p-4">
 
-    <!-- Success Message Section -->
-    <div class="max-w-2xl w-full space-y-8 mb-16">
+    <!-- Header Section -->
+    <div class="max-w-2xl w-full space-y-8 py-16">
       <div class="text-center space-y-6">
-        <!-- Green Badge -->
+        <!-- Success Icon -->
         <div class="inline-flex items-center justify-center">
-          <div class="relative">
-            <div class="absolute inset-0 bg-green-500 rounded-full animate-pulse opacity-20"></div>
-            <div class="relative bg-green-500 rounded-full p-4">
-              <svg class="w-12 h-12 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path>
-              </svg>
-            </div>
+          <div class="bg-green-500 rounded-full p-4">
+            <svg class="w-12 h-12 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path>
+            </svg>
           </div>
         </div>
 
         <!-- Main Message -->
         <div class="space-y-3">
-          <h1 class="text-5xl font-bold text-green-700 dark:text-green-400">
+          <h1 class="text-5xl font-bold text-foreground">
             Your Server Has Started
           </h1>
-          <p class="text-xl text-gray-700 dark:text-gray-300">
+          <p class="text-xl text-muted-foreground">
             Welcome to the ONE Platform. Your development environment is ready.
           </p>
         </div>
 
         <!-- Server Link -->
-        <div class="bg-white dark:bg-gray-900 rounded-lg border-2 border-green-500 p-6 space-y-4">
-          <p class="text-sm font-medium text-gray-600 dark:text-gray-400">Visit your server:</p>
-          <div class="flex items-center gap-3 bg-gray-100 dark:bg-gray-800 p-4 rounded-lg">
+        <div class="bg-card rounded-lg border-2 border-primary p-6 space-y-4">
+          <p class="text-sm font-medium text-muted-foreground">Visit your server:</p>
+          <div class="flex items-center gap-3 bg-muted p-4 rounded-lg">
             <svg class="w-5 h-5 text-green-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
               <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13.828 10.172a4 4 0 00-5.656 0l-4 4a4 4 0 105.656 5.656l1.102-1.101m-.758-4.899a4 4 0 005.658 0l4-4a4 4 0 00-5.656-5.656l-1.1 1.1"></path>
             </svg>
-            <a href="http://localhost:4321" class="text-lg font-mono text-green-500 dark:text-green-500 hover:underline font-semibold">
+            <a href="http://localhost:4321" class="text-lg font-mono text-green-500 hover:underline font-semibold">
               http://localhost:4321
             </a>
           </div>
 
           <!-- Home Button -->
           <a href="/" class="block">
-            <button class="w-full bg-green-500 hover:bg-green-600 text-white font-semibold py-3 px-6 rounded-lg transition-colors">
+            <button class="w-full bg-primary hover:opacity-90 text-primary-foreground font-semibold py-3 px-6 rounded-lg transition-opacity">
               Go to Home
             </button>
           </a>
@@ -57,36 +54,36 @@ const docEntries = await getCollection('docs');
     </div>
 
     <!-- Docs Grid Section -->
-    <div class="max-w-6xl w-full space-y-8">
+    <div class="max-w-6xl w-full space-y-8 pb-16">
       <div class="text-center">
-        <h2 class="text-3xl font-bold text-gray-900 dark:text-white mb-2">Documentation</h2>
-        <p class="text-gray-600 dark:text-gray-400">Explore guides and references</p>
+        <h2 class="text-3xl font-bold text-foreground mb-2">Documentation</h2>
+        <p class="text-muted-foreground">Explore guides and references</p>
       </div>
 
       <!-- Docs Grid -->
       <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
         {docEntries.map((doc) => (
           <a href={`/docs/${doc.slug}`} class="block h-full">
-            <div class="h-full bg-white dark:bg-gray-900 rounded-lg border border-gray-200 dark:border-gray-800 p-6 hover:shadow-lg hover:border-green-500 dark:hover:border-green-500 transition-all cursor-pointer">
+            <div class="h-full bg-card rounded-lg border border-border p-6 hover:shadow-lg hover:border-primary transition-all cursor-pointer">
               <div class="space-y-3">
                 <div class="flex items-start justify-between">
-                  <h3 class="font-semibold text-gray-900 dark:text-white text-lg flex-1">
+                  <h3 class="font-semibold text-card-foreground text-lg flex-1">
                     {doc.data.title}
                   </h3>
-                  <svg class="w-5 h-5 text-green-500 flex-shrink-0 ml-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <svg class="w-5 h-5 text-muted-foreground flex-shrink-0 ml-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 7l5 5m0 0l-5 5m5-5H6"></path>
                   </svg>
                 </div>
 
                 {doc.data.description && (
-                  <p class="text-sm text-gray-600 dark:text-gray-400">
+                  <p class="text-sm text-muted-foreground">
                     {doc.data.description}
                   </p>
                 )}
 
                 <div class="flex flex-wrap gap-2 pt-2">
                   {doc.data.tags?.map((tag: string) => (
-                    <span key={tag} class="inline-block px-2 py-1 text-xs font-medium bg-green-100 dark:bg-green-900 text-green-700 dark:text-green-300 rounded">
+                    <span key={tag} class="inline-block px-2 py-1 text-xs font-medium bg-secondary text-secondary-foreground rounded">
                       {tag}
                     </span>
                   ))}
@@ -99,12 +96,12 @@ const docEntries = await getCollection('docs');
 
       <!-- Empty State -->
       {docEntries.length === 0 && (
-        <div class="text-center py-12 bg-gray-50 dark:bg-gray-900 rounded-lg border-2 border-dashed border-gray-300 dark:border-gray-700">
-          <svg class="w-12 h-12 text-gray-400 mx-auto mb-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+        <div class="text-center py-12 bg-muted rounded-lg border-2 border-dashed border-border">
+          <svg class="w-12 h-12 text-muted-foreground mx-auto mb-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"></path>
           </svg>
-          <p class="text-gray-600 dark:text-gray-400 text-lg">No documentation available yet</p>
-          <p class="text-sm text-gray-500 dark:text-gray-500 mt-1">Add docs to get started</p>
+          <p class="text-muted-foreground text-lg">No documentation available yet</p>
+          <p class="text-sm text-muted-foreground mt-1">Add docs to get started</p>
         </div>
       )}
     </div>

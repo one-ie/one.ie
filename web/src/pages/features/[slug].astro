@@ -37,10 +37,8 @@ const { feature, allFeatures } = Astro.props;
 // Check if this is an MDX file by looking at the file path
 const isMDX = feature.id.endsWith('.mdx');
 
-// For MDX files, pass components so they can be used in the content
-const { Content } = await feature.render(
-  isMDX ? { components: MDXComponents } : {}
-);
+// Render the content
+const { Content } = await feature.render();
 
 const statusIcons = {
   completed: CheckCircle2,
@@ -189,7 +187,7 @@ const categoryColors = {
 
       <!-- Markdown Content -->
       <div class="prose prose-invert max-w-none mb-16">
-        <Content />
+        {isMDX ? <Content components={MDXComponents} /> : <Content />}
       </div>
 
       <!-- Ontology Mapping -->

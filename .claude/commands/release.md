@@ -22,12 +22,13 @@ Runs `./.claude/hooks/release-cli.sh [type]` which:
 
 1. **Syncs documentation** `/one/*` → `cli/one/` (all platform docs)
 2. **Syncs root markdown** (CLAUDE.md, README.md, LICENSE.md, SECURITY.md, AGENTS.md)
-3. **Hooks stay in root** - CLI references `./.claude/hooks/` (single source of truth, no duplication)
-4. **Parallel operations** - Uses background jobs for file copies
-5. **Bumps version** in `cli/package.json` (if not sync)
-6. **Builds CLI** with npm
-7. **Publishes to npm** registry
-8. **Verifies publication** on npm registry
+3. **Syncs MCP config files** (.mcp.json.on, .mcp.json.off)
+4. **Hooks stay in root** - CLI references `./.claude/hooks/` (single source of truth, no duplication)
+5. **Parallel operations** - Uses background jobs for file copies
+6. **Bumps version** in `cli/package.json` (if not sync)
+7. **Builds CLI** with npm
+8. **Publishes to npm** registry
+9. **Verifies publication** on npm registry
 
 ## Architecture
 
@@ -37,6 +38,8 @@ Root Repository (.claude/hooks/)
 CLI Repo (cli/)
     ├── cli/one/*          (synced documentation)
     ├── cli/*.md           (synced markdown files)
+    ├── cli/.mcp.json.on   (MCP servers enabled config)
+    ├── cli/.mcp.json.off  (MCP servers disabled config)
     └── package.json       (version bumped & published)
 ```
 
@@ -61,6 +64,7 @@ Task({
 1. Execute: ./.claude/hooks/release-cli.sh ${releaseType}
    - Syncs /one/* to cli/one/
    - Syncs root markdown files
+   - Syncs .mcp.json.on and .mcp.json.off files
    - Hooks reference root .claude/ (no copy)
    - Bumps version (if not sync)
    - Publishes to npm

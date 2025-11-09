@@ -5,7 +5,7 @@ import Layout from "../layouts/Layout.astro";
 import Stripe from "stripe";
 import { Button } from "@/components/ui/button";
 import { Card, CardHeader, CardContent, CardFooter } from "@/components/ui/card";
-import { Check, ArrowRight, Mail, Calendar } from 'lucide-react';
+import { Check, ArrowRight, Mail } from 'lucide-react';
 import type { Stripe as StripeType } from 'stripe';
 
 const stripe = new Stripe(import.meta.env.STRIPE_SECRET_KEY) as StripeType;
@@ -20,7 +20,7 @@ try {
   });
   lineItems = session.line_items?.data || [];
 } catch (e) {
-  console.error('Session retrieval error:', e);
+  // Session retrieval failed, redirect to product page
   return Astro.redirect('/shop/product-landing-stripe');
 }
 

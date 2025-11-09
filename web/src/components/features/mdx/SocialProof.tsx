@@ -4,8 +4,13 @@ import { Star, Quote } from "lucide-react";
 
 interface Testimonial {
   quote: string;
-  author: string;
-  role: string;
+  author: string | {
+    name: string;
+    role: string;
+    company?: string;
+    avatarUrl?: string;
+  };
+  role?: string;
   company?: string;
   rating?: number;
 }
@@ -13,7 +18,8 @@ interface Testimonial {
 interface SocialProofProps {
   title?: string;
   testimonials?: Testimonial[];
-  stats?: { label: string; value: string }[];
+  stats?: { label: string; value: string }[] | Record<string, string | number>;
+  companyLogos?: { name: string; logoUrl: string }[];
 }
 
 /**
@@ -43,8 +49,19 @@ interface SocialProofProps {
 export function SocialProof({
   title = "What Our Users Say",
   testimonials = [],
-  stats = []
+  stats,
+  companyLogos = []
 }: SocialProofProps) {
+  // Convert stats object to array if needed
+  const statsArray = Array.isArray(stats)
+    ? stats
+    : stats
+    ? Object.entries(stats).map(([label, value]) => ({
+        label: label.replace(/([A-Z])/g, ' $1').trim().replace(/^./, str => str.toUpperCase()),
+        value: String(value)
+      }))
+    : [];
+
   return (
     <div className="my-12 space-y-8">
       {title && (
@@ -55,9 +72,9 @@ export function SocialProof({
       )}
 
       {/* Stats Grid */}
-      {stats.length > 0 && (
+      {statsArray.length > 0 && (
         <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
-          {stats.map((stat, index) => (
+          {statsArray.map((stat, index) => (
             <Card key={index} className="text-center">
               <CardContent className="pt-6">
                 <div className="text-3xl font-bold text-primary mb-1">
@@ -69,6 +86,24 @@ export function SocialProof({
               </CardContent>
             </Card>
           ))}
+        </div>
+      )}
+
+      {/* Company Logos */}
+      {companyLogos.length > 0 && (
+        <div className="text-center space-y-4">
+          <p className="text-sm text-muted-foreground">Trusted by leading companies</p>
+          <div className="flex flex-wrap justify-center items-center gap-8">
+            {companyLogos.map((company, index) => (
+              <div key={index} className="grayscale hover:grayscale-0 transition-all opacity-60 hover:opacity-100">
+                <img
+                  src={company.logoUrl}
+                  alt={company.name}
+                  className="h-8 object-contain"
+                />
+              </div>
+            ))}
+          </div>
         </div>
       )}
 
@@ -91,10 +126,24 @@ export function SocialProof({
                 <p className="text-sm mb-4 italic">"{testimonial.quote}"</p>
 
                 <div>
-                  <div className="font-semibold">{testimonial.author}</div>
+                  <div className="font-semibold">
+                    {typeof testimonial.author === 'string'
+                      ? testimonial.author
+                      : testimonial.author.name}
+                  </div>
                   <div className="text-sm text-muted-foreground">
-                    {testimonial.role}
-                    {testimonial.company && ` at ${testimonial.company}`}
+                    {typeof testimonial.author === 'string'
+                      ? (
+                        <>
+                          {testimonial.role}
+                          {testimonial.company && ` at ${testimonial.company}`}
+                        </>
+                      ) : (
+                        <>
+                          {testimonial.author.role}
+                          {testimonial.author.company && ` at ${testimonial.author.company}`}
+                        </>
+                      )}
                   </div>
                 </div>
               </CardContent>

@@ -1,232 +1,219 @@
 {
-  "current_cycle": 3,
-  "completed_cycles": [
-    1,
-    2
-  ],
+  "current_inference": 1,
+  "completed_inferences": [],
   "feature_name": "CLI Release",
   "organization": "Default Org",
   "person_role": "platform_owner",
   "lessons_learned": [
     {
-      "cycle": 1,
+      "inference": 1,
       "lesson": "Completed Cycle 1",
       "timestamp": 1762363178
     },
     {
-      "cycle": 2,
+      "inference": 2,
       "lesson": "Completed Cycle 2",
       "timestamp": 1762363182
     },
     {
-      "cycle": 3,
-      "lesson": "Completed Cycle 3",
+      "inference": 3,
+      "lesson": "Completed Infer 3",
       "timestamp": 1762363258
     },
     {
-      "cycle": 4,
-      "lesson": "Completed Cycle 4",
+      "inference": 4,
+      "lesson": "Completed Infer 4",
       "timestamp": 1762363346
     },
     {
-      "cycle": 5,
-      "lesson": "Completed Cycle 5",
+      "inference": 5,
+      "lesson": "Completed Infer 5",
       "timestamp": 1762363501
     },
     {
-      "cycle": 6,
-      "lesson": "Completed Cycle 6",
+      "inference": 6,
+      "lesson": "Completed Infer 6",
       "timestamp": 1762363842
     },
     {
-      "cycle": 7,
-      "lesson": "Completed Cycle 7",
+      "inference": 7,
+      "lesson": "Completed Infer 7",
       "timestamp": 1762364045
     },
     {
-      "cycle": 8,
-      "lesson": "Completed Cycle 8",
+      "inference": 8,
+      "lesson": "Completed Infer 8",
       "timestamp": 1762364208
     },
     {
-      "cycle": 9,
-      "lesson": "Completed Cycle 9",
+      "inference": 9,
+      "lesson": "Completed Infer 9",
       "timestamp": 1762364271
     },
     {
-      "cycle": 10,
-      "lesson": "Completed Cycle 10",
+      "inference": 10,
+      "lesson": "Completed Infer 10",
       "timestamp": 1762364351
     },
     {
-      "cycle": 11,
-      "lesson": "Completed Cycle 11",
+      "inference": 11,
+      "lesson": "Completed Infer 11",
       "timestamp": 1762364431
     },
     {
-      "cycle": 12,
-      "lesson": "Completed Cycle 12",
+      "inference": 12,
+      "lesson": "Completed Infer 12",
       "timestamp": 1762364450
     },
     {
-      "cycle": 13,
-      "lesson": "Completed Cycle 13",
+      "inference": 13,
+      "lesson": "Completed Infer 13",
       "timestamp": 1762364456
     },
     {
-      "cycle": 14,
-      "lesson": "Completed Cycle 14",
+      "inference": 14,
+      "lesson": "Completed Infer 14",
       "timestamp": 1762364469
     },
     {
-      "cycle": 15,
-      "lesson": "Completed Cycle 15",
+      "inference": 15,
+      "lesson": "Completed Infer 15",
       "timestamp": 1762364593
     },
     {
-      "cycle": 16,
-      "lesson": "Completed Cycle 16",
+      "inference": 16,
+      "lesson": "Completed Infer 16",
       "timestamp": 1762364601
     },
     {
-      "cycle": 17,
-      "lesson": "Completed Cycle 17",
+      "inference": 17,
+      "lesson": "Completed Infer 17",
       "timestamp": 1762364642
     },
     {
-      "cycle": 18,
-      "lesson": "Completed Cycle 18",
+      "inference": 18,
+      "lesson": "Completed Infer 18",
       "timestamp": 1762364730
     },
     {
-      "cycle": 19,
-      "lesson": "Completed Cycle 19",
+      "inference": 19,
+      "lesson": "Completed Infer 19",
       "timestamp": 1762364840
     },
     {
-      "cycle": 20,
-      "lesson": "Completed Cycle 20",
+      "inference": 20,
+      "lesson": "Completed Infer 20",
       "timestamp": 1762364941
     },
     {
-      "cycle": 21,
-      "lesson": "Completed Cycle 21",
+      "inference": 21,
+      "lesson": "Completed Infer 21",
       "timestamp": 1762365560
     },
     {
-      "cycle": 22,
-      "lesson": "Completed Cycle 22",
+      "inference": 22,
+      "lesson": "Completed Infer 22",
       "timestamp": 1762365637
     },
     {
-      "cycle": 23,
-      "lesson": "Completed Cycle 23",
+      "inference": 23,
+      "lesson": "Completed Infer 23",
       "timestamp": 1762365775
     },
     {
-      "cycle": 24,
-      "lesson": "Completed Cycle 24",
+      "inference": 24,
+      "lesson": "Completed Infer 24",
       "timestamp": 1762365874
     },
     {
-      "cycle": 25,
-      "lesson": "Completed Cycle 25",
+      "inference": 25,
+      "lesson": "Completed Infer 25",
       "timestamp": 1762366010
     },
     {
-      "cycle": 26,
-      "lesson": "Completed Cycle 26",
+      "inference": 26,
+      "lesson": "Completed Infer 26",
       "timestamp": 1762366226
     },
     {
-      "cycle": 27,
-      "lesson": "Completed Cycle 27",
+      "inference": 27,
+      "lesson": "Completed Infer 27",
       "timestamp": 1762366317
     },
     {
-      "cycle": 28,
-      "lesson": "Completed Cycle 28",
+      "inference": 28,
+      "lesson": "Completed Infer 28",
       "timestamp": 1762368549
     },
     {
-      "cycle": 29,
-      "lesson": "Completed Cycle 29",
+      "inference": 29,
+      "lesson": "Completed Infer 29",
       "timestamp": 1762368739
     },
     {
-      "cycle": 30,
-      "lesson": "Completed Cycle 30",
+      "inference": 30,
+      "lesson": "Completed Infer 30",
       "timestamp": 1762369086
     },
     {
-      "cycle": 31,
-      "lesson": "Completed Cycle 31",
+      "inference": 31,
+      "lesson": "Completed Infer 31",
       "timestamp": 1762369807
     },
     {
-      "cycle": 32,
-      "lesson": "Completed Cycle 32",
+      "inference": 32,
+      "lesson": "Completed Infer 32",
       "timestamp": 1762370169
     },
     {
-      "cycle": 33,
-      "lesson": "Completed Cycle 33",
+      "inference": 33,
+      "lesson": "Completed Infer 33",
       "timestamp": 1762370182
     },
     {
-      "cycle": 34,
-      "lesson": "Completed Cycle 34",
+      "inference": 34,
+      "lesson": "Completed Infer 34",
       "timestamp": 1762372271
     },
     {
-      "cycle": 35,
-      "lesson": "Completed Cycle 35",
+      "inference": 35,
+      "lesson": "Completed Infer 35",
       "timestamp": 1762372523
     },
     {
-      "cycle": 36,
-      "lesson": "Completed Cycle 36",
+      "inference": 36,
+      "lesson": "Completed Infer 36",
       "timestamp": 1762375435
     },
     {
-      "cycle": 37,
-      "lesson": "Completed Cycle 37",
+      "inference": 37,
+      "lesson": "Completed Infer 37",
       "timestamp": 1762375539
     },
     {
-      "cycle": 38,
-      "lesson": "Completed Cycle 38",
+      "inference": 38,
+      "lesson": "Completed Infer 38",
       "timestamp": 1762375738
     },
     {
-      "cycle": 39,
-      "lesson": "Completed Cycle 39",
+      "inference": 39,
+      "lesson": "Completed Infer 39",
       "timestamp": 1762376173
     },
     {
-      "cycle": 40,
-      "lesson": "Completed Cycle 40",
+      "inference": 40,
+      "lesson": "Completed Infer 40",
       "timestamp": 1762376185
     },
     {
-      "cycle": 41,
-      "lesson": "Completed Cycle 41",
+      "inference": 41,
+      "lesson": "Completed Infer 41",
       "timestamp": 1762376421
     },
     {
-      "cycle": 42,
-      "lesson": "Completed Cycle 42",
+      "inference": 42,
+      "lesson": "Completed Infer 42",
       "timestamp": 1762376426
-    },
-    {
-      "cycle": 1,
-      "lesson": "Completed Cycle 1",
-      "timestamp": 1762377458
-    },
-    {
-      "cycle": 2,
-      "lesson": "Completed Cycle 2",
-      "timestamp": 1762377654
     }
   ]
 }

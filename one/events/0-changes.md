@@ -1,3 +1,42 @@
+### **96a63d7b** — template:8 custom:1 — `feat: Transform to template-first, conversational development`` [customization]
+
+**Template:**
+  - .claude/agents/agent-frontend.md
+  - .claude/commands/chat.md
+  - .claude/commands/create.md
+  - .claude/commands/fast.md
+  - .claude/commands/one.md
+  - .claude/commands/plan.md
+  - web/CLAUDE.md
+  - web/src/pages/CLAUDE.md
+
+**Your Changes:**
+  - CLAUDE.md
+
+
+
+### **32dff0ab** — template:16 — `chore: Update 16 file(s)``
+
+**Template:**
+  - .claude/agents/agent-builder.md
+  - .claude/agents/agent-frontend.md
+  - .claude/commands/create.md
+  - .claude/hooks.log
+  - one/events/0-changes.md
+  - web/.env.example
+  - web/src/components/shop/ProductHeader.tsx
+  - web/src/components/shop/StickyBuyBar.tsx
+  - web/src/components/shop/StickyCartButton.tsx
+  - web/src/content/docs/develop/stripe.md
+  - web/src/lib/productTemplateHelpers.ts
+  - web/src/pages/index.astro
+  - web/src/pages/shop/TEMPLATE-README.md
+  - web/src/pages/shop/[productId].astro
+  - web/src/pages/shop/product-landing.astro
+  - web/src/pages/thankyou-product.astro
+
+
+
 ### **be542c90** — template:7 — `chore: Update 7 file(s)``
 
 **Template:**
