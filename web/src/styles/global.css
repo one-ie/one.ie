@@ -107,7 +107,7 @@
   --color-chart-3: 219 14% 40%;
   --color-chart-4: 36 8% 55%;
   --color-chart-5: 0 0% 13%;
-  --color-sidebar-background: 36 8% 88%;
+  --color-sidebar-background: 0 0% 100%;
   --color-sidebar-foreground: 0 0% 13%;
   --color-sidebar-primary: 216 55% 25%;
   --color-sidebar-primary-foreground: 36 8% 96%;
@@ -210,7 +210,7 @@ html, body {
   --aui-thread-max-width: infinity;
   --primary: 216 55% 25%;
   --primary-foreground: 36 8% 96%;
-  --sidebar: 36 8% 88%;
+  --sidebar: 0 0% 100%;
   --sidebar-foreground: 0 0% 13%;
   --sidebar-primary: 216 55% 25%;
   --sidebar-primary-foreground: 36 8% 96%;
@@ -315,6 +315,23 @@ html, body {
 
 .prose code {
   background-color: hsl(var(--color-sidebar-background)) !important;
+  color: hsl(0 0% 0%) !important; /* Pure black on light theme */
+}
+
+/* Ensure all code content is black in light theme */
+.prose pre code,
+.prose pre code *,
+.prose code *,
+pre, pre *, code, code * {
+  color: hsl(0 0% 0%) !important;
+}
+
+/* Dark mode code blocks */
+.dark .prose code,
+.dark .prose pre code,
+.dark .prose pre code *,
+.dark .prose code *,
+.dark pre, .dark pre *, .dark code, .dark code * {
   color: hsl(var(--color-sidebar-foreground)) !important;
 }
 

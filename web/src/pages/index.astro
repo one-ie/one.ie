@@ -4,6 +4,7 @@ import { GitSection } from "@/components/GitSection";
 import { PerformanceChart } from "@/components/features/PerformanceChart";
 import OrbitingCircles from "@/components/magicui/orbiting-circles";
 import DownloadSection from "@/components/DownloadSection.astro";
+import { YouTube } from '@astro-community/astro-embed-youtube';
 ---
 
 <Layout
@@ -13,6 +14,16 @@ import DownloadSection from "@/components/DownloadSection.astro";
 >
   <!-- Main Content -->
   <GitSection client:idle />
+
+  <!-- Video Section -->
+  <section class="w-full py-8">
+    <div class="mx-auto max-w-7xl px-4">
+      <h2 class="text-3xl sm:text-4xl font-bold mb-6 text-center">Demo</h2>
+      <div class="video-container border-[16px] border-primary rounded-lg overflow-hidden shadow-xl">
+        <YouTube id="VguPAHfksEY" posterQuality="max" />
+      </div>
+    </div>
+  </section>
 
   <!-- Who Is ONE For Section -->
   <section
@@ -1733,6 +1744,20 @@ EVERY DAY at 8am:
 </Layout>
 
 <style>
+  /* Video Full Width */
+  .video-container :global(lite-youtube) {
+    max-width: none !important;
+    width: 100% !important;
+    margin: 0 !important;
+  }
+
+  .video-container :global(lite-youtube > iframe),
+  .video-container :global(lite-youtube::before) {
+    width: 100% !important;
+    height: 80vh !important;
+    max-height: 800px !important;
+  }
+
   /* Accessibility: Respect user motion preferences */
   @media (prefers-reduced-motion: reduce) {
     *,

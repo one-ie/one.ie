@@ -1,3 +1,77 @@
+### **066a006c** — template:7 — `feat: Complete template-first transformation across all agents``
+
+**Template:**
+  - .claude/agents/agent-backend.md
+  - .claude/agents/agent-builder.md
+  - .claude/agents/agent-designer.md
+  - .claude/agents/agent-director.md
+  - .claude/commands/onboard.md
+  - .claude/commands/start.md
+  - web/src/components/CLAUDE.md
+
+
+
+### **87928514** — template:55 — `chore: Update 55 file(s)``
+
+**Template:**
+  - .claude/commands/release.md
+  - .claude/hooks.log
+  - .claude/hooks/.last-news-context
+  - .claude/hooks/__pycache__/todo.cpython-313.pyc
+  - .claude/hooks/release-cli.sh
+  - .claude/plans/1-PROJECTS-START-HERE.md
+  - .claude/plans/1-projects-developer-quickstart.md
+  - .claude/plans/1-projects-feature.md
+  - .claude/plans/1-projects-team-briefing.md
+  - .claude/plans/DELIVERABLES.txt
+  - .claude/plans/DOCUMENTER-DELIVERY-SUMMARY.md
+  - .claude/plans/DOCUMENTER-EXECUTION-GUIDE.md
+  - .claude/plans/DOCUMENTER-TASK-BREAKDOWN.md
+  - .claude/plans/EXECUTION-READY.md
+  - .claude/plans/EXECUTION-SUMMARY.md
+  - .claude/plans/INDEX-ALL-AGENTS.md
+  - .claude/plans/INDEX-FRONTEND-TESTING.md
+  - .claude/plans/INDEX-PROBLEM-SOLVER.md
+  - .claude/plans/INDEX-QUALITY-AGENT-INFER65.md
+  - .claude/plans/INDEX.md
+  - .claude/plans/MASTER-COORDINATION-PLAN.md
+  - .claude/plans/MASTER-ORCHESTRATION-INFER65.md
+  - .claude/plans/MASTER-PLAN-SUMMARY.md
+  - .claude/plans/PLAN-COMPLETE.md
+  - .claude/plans/PROBLEM-SOLVER-EXECUTIVE-SUMMARY.md
+  - .claude/plans/PROBLEM-SOLVER-QUICKSTART.md
+  - .claude/plans/PROJECTS-PLAN-SUMMARY.md
+  - .claude/plans/QUALITY-AGENT-SUMMARY.md
+  - .claude/plans/QUALITY-EXECUTION-CHECKLIST.md
+  - .claude/plans/QUICK-REFERENCE-FRONTEND-TESTING.md
+  - .claude/plans/README-PROBLEM-SOLVER.md
+  - .claude/plans/README.md
+  - .claude/plans/SPECIALIST-QUICK-REFERENCE.md
+  - .claude/plans/creation-instructions-9-todos.md
+  - .claude/plans/master-coordination-plan.json
+  - .claude/plans/master-plan-9-todos.md
+  - .claude/plans/specialist-assignments.md
+  - .claude/plans/todo-agent-builder.md
+  - .claude/plans/todo-agent-director.md
+  - .claude/plans/todo-agent-documenter.md
+  - .claude/plans/todo-agent-frontend.md
+  - .claude/plans/todo-agent-problem-solver.md
+  - .claude/plans/todo-agent-quality.md
+  - .claude/settings.local.json
+  - .claude/state/PHASE4-FILES.md
+  - .claude/state/cleanup_metrics.json
+  - .claude/state/cycle.json
+  - .claude/state/inference.json
+  - one/events/0-changes.md
+  - web/.env.example
+  - web/src/components/features/mdx/SocialProof.tsx
+  - web/src/pages/features/[slug].astro
+  - web/src/pages/index.astro
+  - web/src/pages/start.astro
+  - web/src/pages/thankyou-product.astro
+
+
+
 ### **96a63d7b** — template:8 custom:1 — `feat: Transform to template-first, conversational development`` [customization]
 
 **Template:**
