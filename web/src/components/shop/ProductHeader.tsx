@@ -7,19 +7,55 @@ import { TopBar } from './TopBar';
 interface ProductHeaderProps {
   productName?: string;
   onBuyNowClick?: () => void;
+  stripeEnabled?: boolean;
 }
 
-export function ProductHeader({ productName = "Chanel Coco Noir", onBuyNowClick }: ProductHeaderProps) {
+export function ProductHeader({ productName = "Chanel Coco Noir", onBuyNowClick, stripeEnabled = false }: ProductHeaderProps) {
   const [buyDialogOpen, setBuyDialogOpen] = useState(false);
   const [quantity, setQuantity] = useState(1);
+  const [processing, setProcessing] = useState(false);
   const productPrice = 129.99; // This should come from props in a real implementation
 
-  const handleBuyNow = () => {
+  const handleBuyNow = async () => {
     // Get quantity from window if set by other buttons
     const orderQuantity = (window as any).orderQuantity || 1;
     setQuantity(orderQuantity);
-    setBuyDialogOpen(true);
-    onBuyNowClick?.();
+
+    // If Stripe is enabled, redirect to checkout
+    if (stripeEnabled) {
+      setProcessing(true);
+      try {
+        const formData = new FormData();
+        formData.append('quantity', String(orderQuantity));
+        formData.append('email', 'customer@example.com'); // This should come from a form
+
+        const response = await fetch(window.location.pathname, {
+          method: 'POST',
+          body: formData,
+        });
+
+        if (!response.ok) {
+          throw new Error('Payment processing failed');
+        }
+
+        const data = await response.json();
+
+        // Redirect to Stripe Checkout
+        if (data.url) {
+          window.location.href = data.url;
+        } else {
+          throw new Error('No checkout URL received');
+        }
+      } catch (error) {
+        console.error('Checkout error:', error);
+        alert('Payment processing failed. Please try again.');
+        setProcessing(false);
+      }
+    } else {
+      // Show modal dialog for contact options
+      setBuyDialogOpen(true);
+      onBuyNowClick?.();
+    }
   };
 
   // Listen for custom event from other buy buttons
@@ -90,10 +126,11 @@ export function ProductHeader({ productName = "Chanel Coco Noir", onBuyNowClick 
             {/* Buy Now Button */}
             <button
               onClick={handleBuyNow}
-              className="bg-black dark:bg-white text-white dark:text-black border-2 border-black dark:border-white px-4 md:px-8 py-2 md:py-3 hover:opacity-80 transition-opacity duration-200"
+              disabled={processing}
+              className="bg-black dark:bg-white text-white dark:text-black border-2 border-black dark:border-white px-4 md:px-8 py-2 md:py-3 hover:opacity-80 transition-opacity duration-200 disabled:opacity-50 disabled:cursor-not-allowed"
             >
               <span className="text-[10px] md:text-xs font-bold tracking-[0.2em] md:tracking-[0.3em] uppercase">
-                Buy Now
+                {processing ? 'Processing...' : 'Buy Now'}
               </span>
             </button>
           </div>

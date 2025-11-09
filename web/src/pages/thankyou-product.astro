@@ -1,0 +1,167 @@
+---
+export const prerender = false; // Must be server-rendered to retrieve Stripe session
+
+import Layout from "../layouts/Layout.astro";
+import Stripe from "stripe";
+import { Button } from "@/components/ui/button";
+import { Card, CardHeader, CardContent, CardFooter } from "@/components/ui/card";
+import { Check, ArrowRight, Mail, Calendar } from 'lucide-react';
+import type { Stripe as StripeType } from 'stripe';
+
+const stripe = new Stripe(import.meta.env.STRIPE_SECRET_KEY) as StripeType;
+const sessionId = Astro.url.searchParams.get('session_id');
+
+let session;
+let lineItems;
+try {
+  if (!sessionId) throw new Error('No session ID provided');
+  session = await stripe.checkout.sessions.retrieve(sessionId, {
+    expand: ['line_items']
+  });
+  lineItems = session.line_items?.data || [];
+} catch (e) {
+  console.error('Session retrieval error:', e);
+  return Astro.redirect('/shop/product-landing-stripe');
+}
+
+const { name, email } = session.customer_details || {};
+const totalAmount = (session.amount_total || 0) / 100;
+const currency = session.currency?.toUpperCase() || 'USD';
+const metadata = session.metadata || {};
+---
+
+<Layout title="Payment Successful - Thank You">
+  <div class="container max-w-3xl mx-auto px-4 py-12">
+    {/* Success Message */}
+    <div class="text-center mb-12">
+      <div class="inline-flex items-center justify-center w-16 h-16 rounded-full bg-green-100 dark:bg-green-900 mb-6">
+        <Check className="w-8 h-8 text-green-600 dark:text-green-400" />
+      </div>
+      <h1 class="text-4xl font-bold mb-4">Payment Successful!</h1>
+      {name && <p class="text-xl text-muted-foreground mb-2">Thank you for your purchase, {name}!</p>}
+      <p class="text-muted-foreground">Your order has been confirmed and is being processed.</p>
+    </div>
+
+    {/* Order Details Card */}
+    <Card className="mb-8">
+      <CardHeader>
+        <h2 class="text-2xl font-semibold">Order Summary</h2>
+      </CardHeader>
+      <CardContent>
+        <div class="space-y-6">
+          {/* Line Items */}
+          {lineItems.length > 0 && (
+            <div class="space-y-3">
+              <p class="font-medium text-sm uppercase tracking-wide opacity-60">Items Purchased</p>
+              {lineItems.map((item) => (
+                <div class="flex justify-between items-start border-b pb-3 last:border-b-0 last:pb-0">
+                  <div class="flex-1">
+                    <p class="font-medium">{item.description}</p>
+                    {item.quantity && item.quantity > 1 && (
+                      <p class="text-sm text-muted-foreground">Quantity: {item.quantity}</p>
+                    )}
+                  </div>
+                  <div class="text-right">
+                    <p class="font-medium">
+                      ${((item.amount_total || 0) / 100).toFixed(2)}
+                    </p>
+                    {item.quantity && item.quantity > 1 && (
+                      <p class="text-xs text-muted-foreground">
+                        ${((item.price?.unit_amount || 0) / 100).toFixed(2)} each
+                      </p>
+                    )}
+                  </div>
+                </div>
+              ))}
+            </div>
+          )}
+
+          {/* Total */}
+          <div class="border-t pt-4">
+            <div class="flex justify-between items-center">
+              <span class="text-lg font-semibold">Total Paid</span>
+              <span class="text-2xl font-bold">
+                ${totalAmount.toFixed(2)} {currency}
+              </span>
+            </div>
+          </div>
+
+          {/* Customer Details */}
+          <div class="border-t pt-4 space-y-3">
+            {email && (
+              <div class="flex items-start gap-3">
+                <Mail className="w-5 h-5 mt-1 text-muted-foreground" />
+                <div>
+                  <p class="font-medium">Confirmation Email</p>
+                  <p class="text-muted-foreground">Receipt sent to {email}</p>
+                </div>
+              </div>
+            )}
+            {metadata.productId && (
+              <div class="text-sm text-muted-foreground">
+                Order ID: {sessionId?.slice(-12)}
+              </div>
+            )}
+          </div>
+        </div>
+      </CardContent>
+    </Card>
+
+    {/* Next Steps */}
+    <Card>
+      <CardHeader>
+        <h2 class="text-2xl font-semibold">What Happens Next?</h2>
+      </CardHeader>
+      <CardContent>
+        <ul class="space-y-4">
+          <li class="flex items-start gap-3">
+            <div class="flex-shrink-0 w-6 h-6 rounded-full bg-primary/10 flex items-center justify-center">
+              <span class="text-sm font-medium text-primary">1</span>
+            </div>
+            <div>
+              <p class="font-medium">Order Confirmation</p>
+              <p class="text-muted-foreground">
+                A detailed receipt has been sent to {email || 'your email'}. Please check your inbox (and spam folder if needed).
+              </p>
+            </div>
+          </li>
+          <li class="flex items-start gap-3">
+            <div class="flex-shrink-0 w-6 h-6 rounded-full bg-primary/10 flex items-center justify-center">
+              <span class="text-sm font-medium text-primary">2</span>
+            </div>
+            <div>
+              <p class="font-medium">Processing & Shipping</p>
+              <p class="text-muted-foreground">
+                Your order is being prepared for shipment. You'll receive tracking information within 24 hours.
+              </p>
+            </div>
+          </li>
+          <li class="flex items-start gap-3">
+            <div class="flex-shrink-0 w-6 h-6 rounded-full bg-primary/10 flex items-center justify-center">
+              <span class="text-sm font-medium text-primary">3</span>
+            </div>
+            <div>
+              <p class="font-medium">Need Help?</p>
+              <p class="text-muted-foreground">
+                Questions about your order? Contact our support team at support@example.com
+              </p>
+            </div>
+          </li>
+        </ul>
+      </CardContent>
+      <CardFooter className="flex gap-4 justify-center">
+        <a href="/shop/product-landing-stripe" class="inline-flex items-center">
+          <Button variant="outline" size="lg">
+            Continue Shopping
+          </Button>
+        </a>
+        <a href="/" class="inline-flex items-center">
+          <Button variant="default" size="lg" className="gap-2">
+            Return Home
+            <ArrowRight className="w-4 h-4" />
+          </Button>
+        </a>
+      </CardFooter>
+    </Card>
+  </div>
+</Layout>

@@ -4,11 +4,13 @@ import { ShoppingCart } from 'lucide-react';
 
 interface StickyCartButtonProps {
   price: number;
-  onAddToCart?: () => void;
+  productName: string;
+  stripeEnabled?: boolean;
 }
 
-export function StickyCartButton({ price, onAddToCart }: StickyCartButtonProps) {
+export function StickyCartButton({ price, productName, stripeEnabled = false }: StickyCartButtonProps) {
   const [isVisible, setIsVisible] = useState(false);
+  const [processing, setProcessing] = useState(false);
 
   useEffect(() => {
     const handleScroll = () => {
@@ -21,6 +23,47 @@ export function StickyCartButton({ price, onAddToCart }: StickyCartButtonProps) 
     return () => window.removeEventListener('scroll', handleScroll);
   }, []);
 
+  const handleBuyNow = async () => {
+    // Default to quantity of 1 for mobile quick buy
+    const quantity = (window as any).orderQuantity || 1;
+    (window as any).orderQuantity = quantity;
+
+    // If Stripe is enabled, redirect to checkout
+    if (stripeEnabled) {
+      setProcessing(true);
+      try {
+        const formData = new FormData();
+        formData.append('quantity', String(quantity));
+        formData.append('email', 'customer@example.com'); // This should come from user session or form
+
+        const response = await fetch(window.location.pathname, {
+          method: 'POST',
+          body: formData,
+        });
+
+        if (!response.ok) {
+          throw new Error('Payment processing failed');
+        }
+
+        const data = await response.json();
+
+        // Redirect to Stripe Checkout
+        if (data.url) {
+          window.location.href = data.url;
+        } else {
+          throw new Error('No checkout URL received');
+        }
+      } catch (error) {
+        console.error('Checkout error:', error);
+        alert('Payment processing failed. Please try again.');
+        setProcessing(false);
+      }
+    } else {
+      // Show modal dialog for contact options
+      window.dispatchEvent(new Event('openBuyDialog'));
+    }
+  };
+
   if (!isVisible) return null;
 
   return (
@@ -31,12 +74,13 @@ export function StickyCartButton({ price, onAddToCart }: StickyCartButtonProps) 
           <p className="text-2xl font-black">${price.toFixed(2)}</p>
         </div>
         <Button
-          onClick={onAddToCart}
+          onClick={handleBuyNow}
+          disabled={processing}
           size="lg"
-          className="bg-black dark:bg-white text-white dark:text-black border-2 border-white dark:border-black flex items-center gap-2 hover:opacity-80 transition-opacity"
+          className="bg-black dark:bg-white text-white dark:text-black border-2 border-white dark:border-black flex items-center gap-2 hover:opacity-80 transition-opacity disabled:opacity-50 disabled:cursor-not-allowed"
         >
           <ShoppingCart className="w-5 h-5" />
-          Add to Cart
+          {processing ? 'Processing...' : 'Add to Cart'}
         </Button>
       </div>
     </div>

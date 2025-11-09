@@ -14,6 +14,87 @@ import { StickyCartButton } from '@/components/shop/StickyCartButton';
 import { StickyBuyBar } from '@/components/shop/StickyBuyBar';
 import { ThemeToggle } from '@/components/shop/ThemeToggle';
 
+// Check if Stripe is configured
+const stripeSecretKey = import.meta.env.STRIPE_SECRET_KEY;
+const stripeEnabled = Boolean(stripeSecretKey);
+
+// Import Stripe only if enabled
+let stripe: any = null;
+if (stripeEnabled) {
+  const { default: Stripe } = await import('stripe');
+  stripe = new Stripe(stripeSecretKey);
+}
+
+// Handle Stripe Checkout Session Creation (POST request)
+if (stripeEnabled && Astro.request.method === 'POST') {
+  try {
+    const formData = await Astro.request.formData();
+    const quantity = Number(formData.get('quantity')) || 1;
+    const customerEmail = formData.get('email')?.toString();
+
+    // Validate quantity
+    if (quantity < 1 || quantity > 10) {
+      return new Response(JSON.stringify({ error: 'Invalid quantity' }), {
+        status: 400,
+        headers: { 'Content-Type': 'application/json' }
+      });
+    }
+
+    // Product info for Stripe (will be defined below)
+    const productPrice = 129.99;
+    const productTitle = 'Chanel Coco Noir Eau de Parfum';
+    const productDescription = 'Elegant and mysterious. Coco Noir captures the essence of timeless sophistication with notes of grapefruit, rose, and sandalwood.';
+    const productImage = 'https://cdn.dummyjson.com/product-images/fragrances/chanel-coco-noir-eau-de/1.webp';
+
+    // Create Stripe Checkout Session
+    const session = await stripe.checkout.sessions.create({
+      payment_method_types: ['card'],
+      line_items: [
+        {
+          price_data: {
+            currency: 'usd',
+            product_data: {
+              name: productTitle,
+              description: productDescription,
+              images: [productImage],
+            },
+            unit_amount: Math.round(productPrice * 100), // Convert to cents
+          },
+          quantity: quantity,
+        },
+      ],
+      mode: 'payment',
+      success_url: `${Astro.url.origin}/thankyou-product?session_id={CHECKOUT_SESSION_ID}`,
+      cancel_url: `${Astro.url.origin}/shop/product-landing`,
+      customer_email: customerEmail || undefined,
+      metadata: {
+        productId: 'chanel-coco-noir',
+        productCategory: 'Fragrances',
+      },
+    });
+
+    // Return the checkout URL as JSON
+    return new Response(
+      JSON.stringify({ url: session.url }),
+      {
+        status: 200,
+        headers: {
+          'Content-Type': 'application/json',
+        },
+      }
+    );
+  } catch (error) {
+    console.error('Stripe checkout error:', error);
+    return new Response(
+      JSON.stringify({ error: 'Payment processing failed' }),
+      {
+        status: 500,
+        headers: { 'Content-Type': 'application/json' }
+      }
+    );
+  }
+}
+
 // Product data (from DummyJSON)
 const product = {
   title: 'Chanel Coco Noir Eau de Parfum',
@@ -97,7 +178,7 @@ const reviews = [
 <ShopLayout title="Chanel Coco Noir Eau de Parfum - Luxury Fragrance">
   <div class="bg-white dark:bg-black text-black dark:text-white">
     <!-- Header -->
-    <ProductHeader client:load productName={product.title} />
+    <ProductHeader client:load productName={product.title} stripeEnabled={stripeEnabled} />
 
     <!-- Hero Section - Above the Fold -->
     <section class="max-w-7xl mx-auto px-6 py-24 border-b border-black dark:border-white">
@@ -503,10 +584,11 @@ const reviews = [
       productName={product.title}
       price={product.price}
       originalPrice={product.originalPrice}
+      stripeEnabled={stripeEnabled}
     />
 
     <!-- Sticky Cart Button (Mobile) -->
-    <StickyCartButton client:load price={product.price} />
+    <StickyCartButton client:load price={product.price} productName={product.title} stripeEnabled={stripeEnabled} />
 
     <!-- Recent Purchase Toast -->
     <RecentPurchaseToast client:load />

@@ -79,6 +79,93 @@ You can build complete, fully-functional applications with **ZERO backend code**
 
 ---
 
+## 🎨 Product Landing Page Template (USE THIS!)
+
+**We have a beautiful, production-ready product landing template!**
+
+### Files
+- **Template**: `/web/src/pages/shop/[productId].astro`
+- **Helpers**: `/web/src/lib/productTemplateHelpers.ts`
+- **Documentation**: `/web/src/pages/shop/TEMPLATE-README.md`
+- **Example**: `/web/src/pages/shop/product-landing.astro` (hardcoded Chanel perfume)
+
+### Features
+- ✅ Fetches ANY product from DummyJSON API
+- ✅ Auto-generates features, specs, reviews, trust badges
+- ✅ Adapts to 10+ product categories (fragrances, smartphones, clothing, etc.)
+- ✅ Beautiful minimalist black/white design with gold star ratings
+- ✅ Mobile-responsive, dark mode, conversion-optimized
+- ✅ Includes: Hero, gallery, urgency banner, features, specs, reviews, FAQ, sticky buy bar
+
+### Helper Functions
+```typescript
+import {
+  getOriginalPrice,      // Calculate discount from percentage
+  getTrustBadges,        // Category-specific badges (Free Shipping, etc.)
+  getProductFeatures,    // Generate 3 compelling features with images
+  getProductSpecs,       // Auto-generate product specifications
+  getCTAText,            // Category-appropriate call-to-action
+  hasFragranceNotes,     // Check if category needs fragrance section
+  generateReviews,       // Create realistic product reviews
+} from '@/lib/productTemplateHelpers';
+```
+
+### Usage Example
+```astro
+---
+// Fetch product from DummyJSON
+const res = await fetch('https://dummyjson.com/products/1');
+const productData = await res.json();
+
+// Use helpers to generate content
+const product = {
+  ...productData,
+  originalPrice: getOriginalPrice(productData.price, productData.discountPercentage),
+};
+
+const features = getProductFeatures(productData);
+const specs = getProductSpecs(productData);
+const badges = getTrustBadges(productData.category);
+const reviews = generateReviews(productData);
+const cta = getCTAText(productData.category);
+---
+
+<!-- Template automatically adapts to product type -->
+```
+
+### When to Use
+- **E-commerce landing pages** - Use this instead of building from scratch
+- **Product showcases** - Works for ANY product type
+- **Quick prototypes** - Beautiful page in minutes
+- **User asks for "product page"** - Always use this template first
+
+### Supported Categories
+Each category gets custom features, badges, and CTAs:
+- `fragrances` - Fragrance notes, luxury features
+- `smartphones` - Tech specs, camera/display features
+- `laptops` - Performance, warranty info
+- `mens-shirts`, `womens-dresses` - Size exchange, fit info
+- `furniture` - Dimensions, materials
+- `beauty` - Ingredients, benefits
+- `groceries` - Fresh guarantee, nutrition
+
+### Component Architecture
+All components are designed to work with ANY product:
+1. **ProductHeader** - Universal header with buy button
+2. **ProductGallery** - Multi-image gallery
+3. **InlineUrgencyBanner** - Stock countdown timer
+4. **FeaturesWithImages** - 3-column features grid
+5. **ProductSpecs** - Two-column specifications
+6. **ValueProposition** - Trust builders
+7. **ReviewsSection** - Star ratings and reviews
+8. **ProductFAQ** - E-commerce FAQs
+9. **StickyBuyBar** - Bottom sticky purchase bar
+10. **RecentPurchaseToast** - Social proof popups
+
+**All responsive, all dark mode compatible, all conversion-optimized!**
+
+---
+
 ## Core Philosophy
 
 **Progressive Complexity**: Each layer is optional and independent.

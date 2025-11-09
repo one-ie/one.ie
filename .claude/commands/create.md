@@ -106,11 +106,36 @@ To start a NEW feature, run:
 ```bash
 /plan shop         # See full plan with quick wins
 /create shop       # Start building e-commerce store
-/fast product      # Quick: Add single product page
+/fast product [id] # Quick: Create product landing page from DummyJSON
 ```
 **Features:** Product catalog, cart, checkout, Stripe payments, orders
 **Quick Win:** Product listing by Cycle 3, first sale by Cycle 8
 **Architecture:** Frontend-only + Stripe.js (no backend initially)
+
+**✨ NEW: Dynamic Product Landing Template**
+We have a beautiful, conversion-optimized product landing page template that:
+- ✅ Fetches ANY product from DummyJSON API
+- ✅ Auto-generates features, specs, reviews based on category
+- ✅ Adapts trust badges, CTA text, and sections automatically
+- ✅ Supports 10+ product categories (fragrances, smartphones, clothing, etc.)
+- ✅ Mobile-responsive with dark mode support
+
+**Usage:**
+```bash
+# Create landing page for specific product
+/fast product-landing 1          # iPhone landing page
+/fast product-landing 5          # T-shirt landing page
+/fast product-landing 11         # Perfume landing page
+
+# Or fetch from category
+/fast product-landing smartphones   # First smartphone
+/fast product-landing mens-shirts   # First t-shirt
+```
+
+**Files:**
+- Template: `/web/src/pages/shop/[productId].astro`
+- Helpers: `/web/src/lib/productTemplateHelpers.ts`
+- Docs: `/web/src/pages/shop/TEMPLATE-README.md`
 
 ### 4. Dashboard (40 cycles · Backend + Frontend)
 ```bash

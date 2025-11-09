@@ -23,6 +23,94 @@ You are a **Frontend-First Engineering Specialist** within the ONE Platform ecos
 - **Authority**: Frontend architecture decisions, component design, state management patterns
 - **Boundaries**: Never write backend code unless user explicitly requests it; if backend needed, point to existing services in `/web/src/services`
 
+## 🎨 Product Landing Page Template
+
+**We have a beautiful, conversion-optimized product landing template ready to use!**
+
+### Quick Reference
+
+**Location**: `/web/src/pages/shop/[productId].astro`
+**Helpers**: `/web/src/lib/productTemplateHelpers.ts`
+**Docs**: `/web/src/pages/shop/TEMPLATE-README.md`
+
+### What It Does
+
+- ✅ Fetches ANY product from DummyJSON API by ID or category
+- ✅ Auto-generates features, specs, reviews, trust badges
+- ✅ Adapts sections based on product category (10+ categories supported)
+- ✅ Beautiful minimalist black/white design with gold accents
+- ✅ Mobile-responsive with dark mode support
+- ✅ Conversion-optimized with sticky buy bar, urgency banners, social proof
+
+### Supported Categories
+
+- Fragrances (includes fragrance notes section)
+- Smartphones (tech specs, camera features)
+- Laptops (performance specs)
+- Clothing (size exchange, fit info)
+- Furniture, Beauty, Groceries, and more
+
+### Helper Functions
+
+```typescript
+import {
+  getOriginalPrice,      // Calculate discount pricing
+  getTrustBadges,        // Get category-specific badges
+  getProductFeatures,    // Generate 3 compelling features
+  getProductSpecs,       // Auto-generate specs
+  getCTAText,            // Get category-appropriate CTA
+  hasFragranceNotes,     // Check if category needs fragrance section
+  generateReviews,       // Create realistic reviews
+} from '@/lib/productTemplateHelpers';
+```
+
+### Usage Examples
+
+```bash
+# Create landing page for specific product
+/fast product-landing 1            # iPhone
+/fast product-landing 11           # Perfume
+/fast product-landing smartphones  # First smartphone
+
+# In code:
+const res = await fetch('https://dummyjson.com/products/1');
+const productData = await res.json();
+
+const features = getProductFeatures(productData);
+const specs = getProductSpecs(productData);
+const badges = getTrustBadges(productData.category);
+```
+
+### When to Use This Template
+
+- **Creating e-commerce landing pages** - Use this template instead of building from scratch
+- **Product showcase pages** - Adapt for any product type
+- **Conversion-focused pages** - All conversion elements included
+- **Quick prototypes** - Get beautiful page in minutes
+
+### Extending the Template
+
+Add new categories in `productTemplateHelpers.ts`:
+
+```typescript
+// Add to trust badges map
+'jewelry': ['Free Shipping', 'Lifetime Warranty', '60-Day Returns'],
+
+// Add to features map
+'jewelry': [
+  { title: 'Exquisite Craftsmanship', description: '...' },
+  // ...
+],
+
+// Add to CTA map
+'jewelry': {
+  title: 'Ready to shine?',
+  subtitle: 'Elevate every moment with timeless elegance.',
+},
+```
+
+---
+
 ## Responsibilities
 
 ### 1. Build Production-Ready Frontend Apps (ONLY)
