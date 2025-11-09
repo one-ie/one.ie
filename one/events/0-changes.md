@@ -1,3 +1,37 @@
+### **02b2e161** — template:28 — `chore: Update 28 file(s)``
+
+**Template:**
+  - .claude/commands/push.md
+  - .claude/hooks.log
+  - .claude/hooks/.last-news-context
+  - .claude/hooks/push.sh
+  - one/events/0-changes.md
+  - web/src/components/ecommerce/interactive/ProductGallery.tsx
+  - web/src/components/ecommerce/static/FAQAccordion.tsx
+  - web/src/components/shop/COMPONENT-GUIDE.md
+  - web/src/components/shop/ExitIntentPopup.tsx
+  - web/src/components/shop/FAQMinimal.tsx
+  - web/src/components/shop/FeaturesList.tsx
+  - web/src/components/shop/FeaturesWithImages.tsx
+  - web/src/components/shop/FragranceNotes.tsx
+  - web/src/components/shop/IMPLEMENTATION-SUMMARY.md
+  - web/src/components/shop/InlineUrgencyBanner.tsx
+  - web/src/components/shop/ProductHeader.tsx
+  - web/src/components/shop/ProductHero.tsx
+  - web/src/components/shop/ProductSpecs.tsx
+  - web/src/components/shop/RecentPurchaseToast.tsx
+  - web/src/components/shop/ReviewsSection.tsx
+  - web/src/components/shop/StickyCartButton.tsx
+  - web/src/components/shop/ThemeToggle.tsx
+  - web/src/components/shop/TopBar.tsx
+  - web/src/components/shop/UrgencyMechanics.tsx
+  - web/src/components/shop/ValueProposition.tsx
+  - web/src/components/shop/ValueStack.tsx
+  - web/src/pages/shop/product-landing.astro
+  - web/src/styles/global.css
+
+
+
 ### **48980930** — template:99 custom:1 — `feat: Add video platform, conversion features, and automated news generation`` [customization]
 
 **Template:**
