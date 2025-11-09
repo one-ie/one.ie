@@ -11,12 +11,12 @@ version: 1.0.0
 ai_context: |
   This document is part of the knowledge dimension in the ontology-developer-guide.md category.
   Location: one/knowledge/ontology-developer-guide.md
-  Purpose: Documents multi-ontology architecture: developer guide
+  Purpose: Documents ONE Ontology architecture: developer guide
   Related dimensions: connections, events, people, things
   For AI agents: Read this to understand ontology developer guide.
 ---
 
-# Multi-Ontology Architecture: Developer Guide
+# ONE Ontology Architecture: Developer Guide
 
 **Version:** 1.0.0
 **Last Updated:** 2025-10-20
@@ -66,7 +66,7 @@ type EntityType =
 
 ### The Solution: Composable Ontologies
 
-The multi-ontology architecture uses **feature-specific YAML files** that compose at runtime:
+The ONE Ontology architecture uses **feature-specific YAML files** that compose at runtime:
 
 ```
 ┌─────────────────────────────────────┐
@@ -131,21 +131,25 @@ eventTypes:                      # OPTIONAL: Event types this feature adds
 ### Naming Conventions
 
 **Feature Names:**
+
 - Lowercase, no spaces
 - Use hyphens for multi-word features
 - Examples: `core`, `blog`, `shop`, `social-media`
 
 **Thing Type Names:**
+
 - Lowercase with underscores
 - Singular nouns
 - Examples: `blog_post`, `product`, `user`, `shopping_cart`
 
 **Connection Type Names:**
+
 - Lowercase with underscores
 - Action verbs (present tense)
 - Examples: `created_by`, `posted_in`, `purchased`, `in_stock`
 
 **Event Type Names:**
+
 - Lowercase with underscores
 - Past tense verbs
 - Examples: `blog_post_published`, `product_created`, `order_placed`
@@ -156,19 +160,19 @@ eventTypes:                      # OPTIONAL: Event types this feature adds
 
 ```yaml
 properties:
-  name: string           # Text
-  age: number            # Integer or float
-  active: boolean        # true/false
-  metadata: object       # JSON object (any structure)
+  name: string # Text
+  age: number # Integer or float
+  active: boolean # true/false
+  metadata: object # JSON object (any structure)
 ```
 
 **Array Types:**
 
 ```yaml
 properties:
-  tags: string[]         # Array of strings
-  scores: number[]       # Array of numbers
-  items: object[]        # Array of objects (not validated)
+  tags: string[] # Array of strings
+  scores: number[] # Array of numbers
+  items: object[] # Array of objects (not validated)
 ```
 
 **Complex Types:**
@@ -177,8 +181,8 @@ For complex nested structures, use `object`:
 
 ```yaml
 properties:
-  address: object        # { street, city, zip, country }
-  settings: object       # { theme, language, notifications }
+  address: object # { street, city, zip, country }
+  settings: object # { theme, language, notifications }
 ```
 
 > **Note:** Object properties are not validated by the type system. Validation happens at runtime in mutation handlers.
@@ -190,13 +194,13 @@ Features can inherit types from a base feature:
 ```yaml
 # ontology-blog.yaml
 feature: blog
-extends: core           # Inherits: page, user, file, link, note
+extends: core # Inherits: page, user, file, link, note
 description: Blog and content publishing
 
 thingTypes:
-  - name: blog_post     # ✅ Can use inherited types
+  - name: blog_post # ✅ Can use inherited types
     properties:
-      authorId: string  # ✅ References 'user' from core
+      authorId: string # ✅ References 'user' from core
 ```
 
 **Inheritance Rules:**
@@ -281,7 +285,7 @@ function resolveFeatureDependencies(features: string[]): string[] {
   function visit(feature: string, path: string[] = []) {
     // Detect circular dependencies
     if (path.includes(feature)) {
-      throw new Error(`Circular dependency: ${path.join(' → ')} → ${feature}`);
+      throw new Error(`Circular dependency: ${path.join(" → ")} → ${feature}`);
     }
 
     // Skip if already resolved
@@ -349,8 +353,8 @@ feature: blog
 thingTypes:
   - name: blog_post
   - name: blog_category
-  - name: product        # ❌ Wrong feature!
-  - name: shopping_cart  # ❌ Wrong feature!
+  - name: product # ❌ Wrong feature!
+  - name: shopping_cart # ❌ Wrong feature!
 ```
 
 **Guideline:** If a type doesn't make sense without the feature, it belongs in that feature.
@@ -364,7 +368,7 @@ thingTypes:
 ```yaml
 # ontology-advanced-blog.yaml
 feature: advanced-blog
-extends: blog          # ✅ Builds on top of blog
+extends: blog # ✅ Builds on top of blog
 thingTypes:
   - name: blog_series
   - name: blog_newsletter
@@ -375,7 +379,7 @@ thingTypes:
 ```yaml
 # ontology-products.yaml
 feature: products
-extends: blog          # ❌ Products have nothing to do with blog!
+extends: blog # ❌ Products have nothing to do with blog!
 ```
 
 **Guideline:** Only extend features that are semantically related.
@@ -407,7 +411,7 @@ thingTypes:
 thingTypes:
   - name: product
     properties:
-      data: object       # ❌ Too vague!
+      data: object # ❌ Too vague!
 ```
 
 **Guideline:** Be explicit about properties. Use `object` only for truly dynamic data.
@@ -420,11 +424,11 @@ thingTypes:
 
 ```yaml
 connectionTypes:
-  - name: purchased      # ✅ Clear action
+  - name: purchased # ✅ Clear action
     fromType: user
     toType: product
 
-  - name: in_cart        # ✅ Clear state
+  - name: in_cart # ✅ Clear state
     fromType: user
     toType: product
 ```
@@ -433,7 +437,7 @@ connectionTypes:
 
 ```yaml
 connectionTypes:
-  - name: user_product   # ❌ Too vague!
+  - name: user_product # ❌ Too vague!
     fromType: user
     toType: product
 ```
@@ -457,8 +461,8 @@ eventTypes:
 
 ```yaml
 eventTypes:
-  - name: create_product    # ❌ Present tense!
-  - name: place_order       # ❌ Imperative!
+  - name: create_product # ❌ Present tense!
+  - name: place_order # ❌ Imperative!
 ```
 
 **Guideline:** Events describe what **happened** (past tense).
@@ -489,18 +493,18 @@ Each backend generates types for only its enabled features!
 ### Pattern 2: Feature Flags with Runtime Checks
 
 ```typescript
-import { hasFeature } from './types/ontology';
+import { hasFeature } from "./types/ontology";
 
 export const createBlogPost = mutation({
   handler: async (ctx, args) => {
     // Runtime check
-    if (!hasFeature('blog')) {
-      throw new Error('Blog feature not enabled');
+    if (!hasFeature("blog")) {
+      throw new Error("Blog feature not enabled");
     }
 
     // Type-safe (TypeScript knows 'blog_post' exists)
-    await ctx.db.insert('things', {
-      type: 'blog_post',
+    await ctx.db.insert("things", {
+      type: "blog_post",
       // ...
     });
   },
@@ -541,9 +545,9 @@ PUBLIC_FEATURES="core,blog-v1,blog-v2"
 
 ```typescript
 // Load types dynamically based on environment
-const features = process.env.PUBLIC_FEATURES?.split(',') || ['core'];
+const features = process.env.PUBLIC_FEATURES?.split(",") || ["core"];
 
-if (features.includes('blog')) {
+if (features.includes("blog")) {
   // Blog-specific initialization
 }
 ```
@@ -562,7 +566,7 @@ description: Multi-vendor marketplace (combines shop + vendors)
 
 thingTypes:
   - name: vendor
-  - name: vendor_product  # Product with vendor info
+  - name: vendor_product # Product with vendor info
 
 connectionTypes:
   - name: sold_by
@@ -587,6 +591,7 @@ PUBLIC_FEATURES="core,blog"
 ```
 
 **Impact:**
+
 - Smaller TypeScript bundle
 - Faster type checking
 - Fewer database indexes
@@ -617,9 +622,9 @@ The generated `ontology.ts` file is deterministic. Cache it:
 
 ```typescript
 // Check if types are up-to-date
-const hash = hashFile('/one/knowledge/ontology-*.yaml');
+const hash = hashFile("/one/knowledge/ontology-*.yaml");
 if (cachedHash === hash) {
-  console.log('Types are up-to-date');
+  console.log("Types are up-to-date");
   return;
 }
 
@@ -635,18 +640,18 @@ Don't load validators for disabled features:
 
 ```typescript
 // ❌ Load all validators upfront
-import { validateBlogPost } from './validators/blog';
-import { validateProduct } from './validators/shop';
+import { validateBlogPost } from "./validators/blog";
+import { validateProduct } from "./validators/shop";
 
 // ✅ Lazy load only when needed
 const validators = {
   get blog_post() {
-    if (!hasFeature('blog')) throw new Error('Blog not enabled');
-    return require('./validators/blog').validateBlogPost;
+    if (!hasFeature("blog")) throw new Error("Blog not enabled");
+    return require("./validators/blog").validateBlogPost;
   },
   get product() {
-    if (!hasFeature('shop')) throw new Error('Shop not enabled');
-    return require('./validators/shop').validateProduct;
+    if (!hasFeature("shop")) throw new Error("Shop not enabled");
+    return require("./validators/shop").validateProduct;
   },
 };
 ```
@@ -658,26 +663,26 @@ const validators = {
 ### 1. Test Ontology Loading
 
 ```typescript
-import { describe, it, expect } from 'bun:test';
-import { loadOntology } from './scripts/generate-ontology-types';
+import { describe, it, expect } from "bun:test";
+import { loadOntology } from "./scripts/generate-ontology-types";
 
-describe('Ontology Loading', () => {
-  it('should load core ontology', () => {
-    const core = loadOntology('core');
-    expect(core.thingTypes).toContain('page');
-    expect(core.thingTypes).toContain('user');
+describe("Ontology Loading", () => {
+  it("should load core ontology", () => {
+    const core = loadOntology("core");
+    expect(core.thingTypes).toContain("page");
+    expect(core.thingTypes).toContain("user");
   });
 
-  it('should resolve dependencies', () => {
-    const features = ['blog', 'shop'];
+  it("should resolve dependencies", () => {
+    const features = ["blog", "shop"];
     const resolved = resolveFeatureDependencies(features);
-    expect(resolved).toEqual(['core', 'blog', 'shop']);
+    expect(resolved).toEqual(["core", "blog", "shop"]);
   });
 
-  it('should detect circular dependencies', () => {
+  it("should detect circular dependencies", () => {
     expect(() => {
-      resolveFeatureDependencies(['circular-a', 'circular-b']);
-    }).toThrow('Circular dependency');
+      resolveFeatureDependencies(["circular-a", "circular-b"]);
+    }).toThrow("Circular dependency");
   });
 });
 ```
@@ -687,20 +692,20 @@ describe('Ontology Loading', () => {
 ### 2. Test Type Guards
 
 ```typescript
-describe('Type Guards', () => {
-  it('should validate thing types', () => {
-    expect(isThingType('blog_post')).toBe(true);
-    expect(isThingType('invalid')).toBe(false);
+describe("Type Guards", () => {
+  it("should validate thing types", () => {
+    expect(isThingType("blog_post")).toBe(true);
+    expect(isThingType("invalid")).toBe(false);
   });
 
-  it('should validate connection types', () => {
-    expect(isConnectionType('created_by')).toBe(true);
-    expect(isConnectionType('invalid')).toBe(false);
+  it("should validate connection types", () => {
+    expect(isConnectionType("created_by")).toBe(true);
+    expect(isConnectionType("invalid")).toBe(false);
   });
 
-  it('should validate event types', () => {
-    expect(isEventType('thing_created')).toBe(true);
-    expect(isEventType('invalid')).toBe(false);
+  it("should validate event types", () => {
+    expect(isEventType("thing_created")).toBe(true);
+    expect(isEventType("invalid")).toBe(false);
   });
 });
 ```
@@ -710,16 +715,16 @@ describe('Type Guards', () => {
 ### 3. Test Feature Flags
 
 ```typescript
-describe('Feature Flags', () => {
-  it('should detect enabled features', () => {
-    process.env.PUBLIC_FEATURES = 'core,blog';
-    expect(hasFeature('blog')).toBe(true);
-    expect(hasFeature('shop')).toBe(false);
+describe("Feature Flags", () => {
+  it("should detect enabled features", () => {
+    process.env.PUBLIC_FEATURES = "core,blog";
+    expect(hasFeature("blog")).toBe(true);
+    expect(hasFeature("shop")).toBe(false);
   });
 
-  it('should list all enabled features', () => {
-    process.env.PUBLIC_FEATURES = 'core,blog,shop';
-    expect(ENABLED_FEATURES).toEqual(['core', 'blog', 'shop']);
+  it("should list all enabled features", () => {
+    process.env.PUBLIC_FEATURES = "core,blog,shop";
+    expect(ENABLED_FEATURES).toEqual(["core", "blog", "shop"]);
   });
 });
 ```
@@ -731,32 +736,34 @@ describe('Feature Flags', () => {
 Test mutations with different feature sets:
 
 ```typescript
-describe('Blog Mutations (blog enabled)', () => {
+describe("Blog Mutations (blog enabled)", () => {
   beforeAll(() => {
-    process.env.PUBLIC_FEATURES = 'core,blog';
+    process.env.PUBLIC_FEATURES = "core,blog";
     regenerateTypes();
   });
 
-  it('should create blog post', async () => {
+  it("should create blog post", async () => {
     const id = await createBlogPost({
-      title: 'Test Post',
-      content: 'Content',
+      title: "Test Post",
+      content: "Content",
     });
     expect(id).toBeDefined();
   });
 });
 
-describe('Blog Mutations (blog disabled)', () => {
+describe("Blog Mutations (blog disabled)", () => {
   beforeAll(() => {
-    process.env.PUBLIC_FEATURES = 'core';
+    process.env.PUBLIC_FEATURES = "core";
     regenerateTypes();
   });
 
-  it('should reject blog post creation', async () => {
-    await expect(createBlogPost({
-      title: 'Test Post',
-      content: 'Content',
-    })).rejects.toThrow('Blog feature not enabled');
+  it("should reject blog post creation", async () => {
+    await expect(
+      createBlogPost({
+        title: "Test Post",
+        content: "Content",
+      })
+    ).rejects.toThrow("Blog feature not enabled");
   });
 });
 ```
@@ -791,7 +798,7 @@ ONTOLOGY_DEBUG=true bun run scripts/generate-ontology-types.ts
 
 ## Summary
 
-The multi-ontology architecture provides:
+The ONE Ontology architecture provides:
 
 ✅ **Composability** - Features are independent and composable
 ✅ **Type Safety** - Full TypeScript validation

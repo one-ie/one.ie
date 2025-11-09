@@ -42,3 +42,11 @@ pnpm-debug.log*
 
 # Stripe configuration (contains product IDs)
 .stripe-config.json
+
+# Video files (too large for git)
+public/media/*.mp4
+public/media/*.mov
+public/media/*.avi
+public/media/*.webm
+public/media/*.mkv
+!public/media/.gitkeep

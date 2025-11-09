@@ -1,6 +1,6 @@
 # Ecommerce Template - Ontology Integration
 
-This document explains how the ecommerce template integrates with the ONE Platform's multi-ontology architecture.
+This document explains how the ecommerce template integrates with the ONE Platform's ONE Ontology architecture.
 
 ## Overview
 
@@ -29,6 +29,7 @@ Template Types (Product, CartItem)
 From `ontology-shop.yaml`:
 
 **Thing Types:**
+
 - `product` - Physical or digital products
 - `product_variant` - Product variations (size, color)
 - `shopping_cart` - User shopping carts
@@ -37,6 +38,7 @@ From `ontology-shop.yaml`:
 - `payment` - Payment transactions
 
 **Connection Types:**
+
 - `purchased` - User purchased product
 - `in_cart` - Product in user's cart
 - `variant_of` - Variant belongs to product
@@ -44,6 +46,7 @@ From `ontology-shop.yaml`:
 - `paid_for` - Payment for order
 
 **Event Types:**
+
 - `product_added_to_cart`
 - `cart_updated`
 - `order_placed`
@@ -56,19 +59,19 @@ From `ontology-shop.yaml`:
 ### 1. Convert Product to Ontology Thing
 
 ```typescript
-import { productToThing } from './lib/ontology-adapter';
-import type { Product } from './lib/types';
+import { productToThing } from "./lib/ontology-adapter";
+import type { Product } from "./lib/types";
 
 const product: Product = {
-  id: '1',
-  name: 'Classic White T-Shirt',
-  description: 'Premium cotton blend',
+  id: "1",
+  name: "Classic White T-Shirt",
+  description: "Premium cotton blend",
   price: 29.99,
-  category: 'men',
-  subcategory: 'tops',
-  sizes: ['S', 'M', 'L', 'XL'],
-  colors: ['White', 'Black'],
-  images: ['https://...'],
+  category: "men",
+  subcategory: "tops",
+  sizes: ["S", "M", "L", "XL"],
+  colors: ["White", "Black"],
+  images: ["https://..."],
   isNew: true,
   isSale: false,
   stock: 150,
@@ -103,7 +106,7 @@ const thingInput = productToThing(product, groupId);
 ### 2. Convert Ontology Thing to Product
 
 ```typescript
-import { thingToProduct } from './lib/ontology-adapter';
+import { thingToProduct } from "./lib/ontology-adapter";
 
 // Fetch from backend
 const thing = await convex.query(api.queries.entities.get, {
@@ -130,14 +133,14 @@ const product = thingToProduct(thing);
 import {
   cartItemToConnection,
   createProductAddedToCartEvent,
-} from './lib/ontology-adapter';
-import type { CartItem } from './lib/types';
+} from "./lib/ontology-adapter";
+import type { CartItem } from "./lib/types";
 
 const cartItem: CartItem = {
   product: product,
   quantity: 2,
-  selectedSize: 'M',
-  selectedColor: 'White',
+  selectedSize: "M",
+  selectedColor: "White",
 };
 
 // 1. Create connection (user → product)
@@ -155,12 +158,12 @@ await convex.mutation(api.mutations.events.create, eventInput);
 ### 4. Query User's Cart (via Connections)
 
 ```typescript
-import { connectionToCartItem, thingToProduct } from './lib/ontology-adapter';
+import { connectionToCartItem, thingToProduct } from "./lib/ontology-adapter";
 
 // Get all cart connections for user
 const connections = await convex.query(api.queries.connections.list, {
   fromEntityId: userId,
-  relationshipType: 'in_cart',
+  relationshipType: "in_cart",
 });
 
 // Get products for each connection
@@ -179,7 +182,7 @@ const cartItems = await Promise.all(
 ### 5. Track Product Views (Events)
 
 ```typescript
-import { createProductViewedEvent } from './lib/ontology-adapter';
+import { createProductViewedEvent } from "./lib/ontology-adapter";
 
 // Log product view
 const eventInput = createProductViewedEvent(productId, userId, groupId);
@@ -188,7 +191,7 @@ await convex.mutation(api.mutations.events.create, eventInput);
 
 // Query popular products (most viewed)
 const events = await convex.query(api.queries.events.list, {
-  type: 'product_viewed',
+  type: "product_viewed",
   groupId,
 });
 
@@ -205,6 +208,7 @@ const viewCounts = events.reduce((acc, event) => {
 ### From Template Types to Ontology
 
 **Before (Template-only):**
+
 ```typescript
 // products.ts - hardcoded array
 export const products: Product[] = [...];
@@ -215,6 +219,7 @@ export const cartItems = atom<CartItem[]>([]);
 ```
 
 **After (With Ontology):**
+
 ```typescript
 // Use Convex queries
 import { useQuery } from 'convex/react';
@@ -261,13 +266,13 @@ function ProductList() {
 
 ```typescript
 // ❌ Before: Any type, runtime errors
-const product = JSON.parse(localStorage.getItem('product'));
-product.price // Could be undefined, wrong type, etc.
+const product = JSON.parse(localStorage.getItem("product"));
+product.price; // Could be undefined, wrong type, etc.
 
 // ✅ After: Full type safety
 const thing = await convex.query(api.queries.entities.get, { id });
 const product = thingToProduct(thing); // TypeScript validates
-product.price // Guaranteed to be number
+product.price; // Guaranteed to be number
 ```
 
 ### 2. Multi-Tenant Isolation
@@ -276,7 +281,7 @@ product.price // Guaranteed to be number
 // Every entity automatically scoped to group
 const products = await convex.query(api.queries.entities.list, {
   groupId: currentGroupId, // Automatic isolation
-  type: 'product',
+  type: "product",
 });
 
 // Users in Group A can't see Group B's products
@@ -287,13 +292,13 @@ const products = await convex.query(api.queries.entities.list, {
 ```typescript
 // Complete audit trail of all actions
 const orderEvents = await convex.query(api.queries.events.list, {
-  type: 'order_placed',
+  type: "order_placed",
   groupId,
 });
 
 // Analyze shopping patterns
 const abandonedCarts = await convex.query(api.queries.events.list, {
-  type: 'cart_abandoned',
+  type: "cart_abandoned",
   groupId,
 });
 ```
@@ -302,13 +307,10 @@ const abandonedCarts = await convex.query(api.queries.events.list, {
 
 ```typescript
 // Find products purchased together
-const purchasedConnections = await convex.query(
-  api.queries.connections.list,
-  {
-    fromEntityId: userId,
-    relationshipType: 'purchased',
-  }
-);
+const purchasedConnections = await convex.query(api.queries.connections.list, {
+  fromEntityId: userId,
+  relationshipType: "purchased",
+});
 
 // Recommend based on connections
 ```
@@ -358,13 +360,13 @@ web/src/templates/ecommerce/
 // Create product variant thing
 const variantThing = await convex.mutation(api.mutations.entities.create, {
   groupId,
-  type: 'product_variant',
-  name: 'White T-Shirt - Size M',
+  type: "product_variant",
+  name: "White T-Shirt - Size M",
   properties: {
-    sku: 'TS-WHT-M',
+    sku: "TS-WHT-M",
     price: 29.99,
     inventory: 50,
-    options: { size: 'M', color: 'White' },
+    options: { size: "M", color: "White" },
   },
 });
 
@@ -373,7 +375,7 @@ await convex.mutation(api.mutations.connections.create, {
   groupId,
   fromEntityId: variantThing._id,
   toEntityId: productId,
-  relationshipType: 'variant_of',
+  relationshipType: "variant_of",
 });
 ```
 
@@ -383,7 +385,7 @@ await convex.mutation(api.mutations.connections.create, {
 // 1. Create order thing
 const orderThing = await convex.mutation(api.mutations.entities.create, {
   groupId,
-  type: 'order',
+  type: "order",
   name: `Order #${orderNumber}`,
   properties: {
     orderNumber,
@@ -392,7 +394,7 @@ const orderThing = await convex.mutation(api.mutations.entities.create, {
     tax,
     shipping,
     total,
-    status: 'pending',
+    status: "pending",
     shippingAddress,
     billingAddress,
   },
@@ -403,13 +405,13 @@ await convex.mutation(api.mutations.connections.create, {
   groupId,
   fromEntityId: userId,
   toEntityId: orderThing._id,
-  relationshipType: 'ordered',
+  relationshipType: "ordered",
 });
 
 // 3. Log order_placed event
 await convex.mutation(api.mutations.events.create, {
   groupId,
-  type: 'order_placed',
+  type: "order_placed",
   actorId: userId,
   targetId: orderThing._id,
   metadata: { orderNumber, total, items: cartItems.length },
@@ -422,11 +424,11 @@ await convex.mutation(api.mutations.events.create, {
 // Create discount code thing
 const discountThing = await convex.mutation(api.mutations.entities.create, {
   groupId,
-  type: 'discount_code',
-  name: 'SUMMER25',
+  type: "discount_code",
+  name: "SUMMER25",
   properties: {
-    code: 'SUMMER25',
-    discountType: 'percentage',
+    code: "SUMMER25",
+    discountType: "percentage",
     discountValue: 25,
     minPurchase: 50,
     maxUses: 100,
@@ -439,7 +441,7 @@ const discountThing = await convex.mutation(api.mutations.entities.create, {
 // Apply to order and log event
 await convex.mutation(api.mutations.events.create, {
   groupId,
-  type: 'discount_applied',
+  type: "discount_applied",
   actorId: userId,
   targetId: discountThing._id,
   metadata: { orderId, discountAmount },

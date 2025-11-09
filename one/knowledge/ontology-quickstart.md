@@ -11,20 +11,20 @@ version: 1.0.0
 ai_context: |
   This document is part of the knowledge dimension in the ontology-quickstart.md category.
   Location: one/knowledge/ontology-quickstart.md
-  Purpose: Documents multi-ontology architecture: quick start guide
+  Purpose: Documents ONE Ontology architecture: quick start guide
   Related dimensions: connections, events, groups, people, things
   For AI agents: Read this to understand ontology quickstart.
 ---
 
-# Multi-Ontology Architecture: Quick Start Guide
+# ONE Ontology Architecture: Quick Start Guide
 
 **Version:** 1.0.0
 **Last Updated:** 2025-10-20
 **Status:** Complete
 
-## What is the Multi-Ontology Architecture?
+## What is the ONE Ontology Architecture?
 
-The Multi-Ontology Architecture lets you extend the ONE Platform's core 6-dimension ontology with **feature-specific types**. Instead of hardcoding all possible entity types, features bring their own data models that compose cleanly.
+The ONE Ontology Architecture lets you extend the ONE Platform's core 6-dimension ontology with **feature-specific types**. Instead of hardcoding all possible entity types, features bring their own data models that compose cleanly.
 
 ### Core Concept
 
@@ -79,6 +79,7 @@ bun run scripts/generate-ontology-types.ts
 ```
 
 This script:
+
 1. Reads all enabled feature ontologies from `/one/knowledge/ontology-*.yaml`
 2. Generates TypeScript types in `convex/types/ontology.ts`
 3. Creates validation functions and type guards
@@ -102,6 +103,7 @@ npx convex dev
 ```
 
 Convex will automatically:
+
 - Read the generated types
 - Update schema validation
 - Hot-reload with new types
@@ -192,9 +194,9 @@ Now use your new types in Convex mutations:
 
 ```typescript
 // backend/convex/mutations/products.ts
-import { mutation } from './_generated/server';
-import { v } from 'convex/values';
-import { isThingType } from './types/ontology';
+import { mutation } from "./_generated/server";
+import { v } from "convex/values";
+import { isThingType } from "./types/ontology";
 
 export const createProduct = mutation({
   args: {
@@ -205,24 +207,24 @@ export const createProduct = mutation({
   },
   handler: async (ctx, args) => {
     // Type validation happens automatically!
-    const productId = await ctx.db.insert('things', {
-      type: 'product', // ✅ Validated against ontology
+    const productId = await ctx.db.insert("things", {
+      type: "product", // ✅ Validated against ontology
       name: args.name,
       properties: {
         sku: args.sku,
         price: args.price,
         inventory: args.inventory,
-        description: '',
+        description: "",
         images: [],
       },
-      status: 'active',
+      status: "active",
       createdAt: Date.now(),
       updatedAt: Date.now(),
     });
 
     // Log event
-    await ctx.db.insert('events', {
-      type: 'product_created', // ✅ Validated against ontology
+    await ctx.db.insert("events", {
+      type: "product_created", // ✅ Validated against ontology
       actorId: ctx.auth.getUserIdentity()?.tokenIdentifier,
       targetId: productId,
       timestamp: Date.now(),
@@ -244,22 +246,22 @@ export const createProduct = mutation({
 ### Check Available Types
 
 ```typescript
-import { THING_TYPES, CONNECTION_TYPES, EVENT_TYPES } from './types/ontology';
+import { THING_TYPES, CONNECTION_TYPES, EVENT_TYPES } from "./types/ontology";
 
-console.log('Available thing types:', THING_TYPES);
+console.log("Available thing types:", THING_TYPES);
 // Output: ['page', 'user', 'file', 'blog_post', 'product', ...]
 
-console.log('Available connection types:', CONNECTION_TYPES);
+console.log("Available connection types:", CONNECTION_TYPES);
 // Output: ['created_by', 'posted_in', 'in_stock', ...]
 
-console.log('Available event types:', EVENT_TYPES);
+console.log("Available event types:", EVENT_TYPES);
 // Output: ['thing_created', 'blog_post_published', 'product_created', ...]
 ```
 
 ### Validate User Input
 
 ```typescript
-import { isThingType, isConnectionType, isEventType } from './types/ontology';
+import { isThingType, isConnectionType, isEventType } from "./types/ontology";
 
 // Validate thing type
 if (!isThingType(userInput)) {
@@ -280,30 +282,30 @@ if (!isEventType(eventType)) {
 ### Feature-Conditional Logic
 
 ```typescript
-import { hasFeature, ENABLED_FEATURES } from './types/ontology';
+import { hasFeature, ENABLED_FEATURES } from "./types/ontology";
 
 // Check if feature is enabled
-if (hasFeature('blog')) {
+if (hasFeature("blog")) {
   // Blog-specific logic
-  console.log('Blog feature is enabled');
+  console.log("Blog feature is enabled");
 }
 
-if (hasFeature('products')) {
+if (hasFeature("products")) {
   // Products-specific logic
-  console.log('Products feature is enabled');
+  console.log("Products feature is enabled");
 }
 
 // List all enabled features
-console.log('Enabled features:', ENABLED_FEATURES);
+console.log("Enabled features:", ENABLED_FEATURES);
 // Output: ['core', 'blog', 'products']
 ```
 
 ### Get Thing Type Schema
 
 ```typescript
-import { getThingTypeSchema } from './types/ontology';
+import { getThingTypeSchema } from "./types/ontology";
 
-const productSchema = getThingTypeSchema('product');
+const productSchema = getThingTypeSchema("product");
 console.log(productSchema);
 // Output:
 // {
@@ -327,11 +329,13 @@ console.log(productSchema);
 ### Problem: Type not found after adding feature
 
 **Symptom:**
+
 ```
 Error: Invalid thing type: "product"
 ```
 
 **Solution:**
+
 1. Verify feature is in `PUBLIC_FEATURES` environment variable
 2. Run `bun run scripts/generate-ontology-types.ts`
 3. Restart Convex dev server (`npx convex dev`)
@@ -341,6 +345,7 @@ Error: Invalid thing type: "product"
 ### Problem: Schema validation fails
 
 **Symptom:**
+
 ```
 Error: Validation failed for thing type "product"
 Property "price" expected number, got string
@@ -366,6 +371,7 @@ Supported property types: `string`, `number`, `boolean`, `object`, `string[]`, `
 ### Problem: Circular dependency error
 
 **Symptom:**
+
 ```
 Error: Circular dependency detected: blog → portfolio → blog
 ```
@@ -394,11 +400,13 @@ extends: core
 ### Problem: Feature not loading
 
 **Symptom:**
+
 ```
 ⚠️  Feature "products" not found, skipping
 ```
 
 **Solution:**
+
 1. Verify file exists: `/one/knowledge/ontology-products.yaml`
 2. Check file naming convention: `ontology-{feature}.yaml`
 3. Ensure YAML is valid (no syntax errors)
@@ -406,20 +414,20 @@ extends: core
 
 ```yaml
 # File: ontology-products.yaml
-feature: products  # ✅ Must match filename
+feature: products # ✅ Must match filename
 ```
 
 ---
 
 ## Example: Full CRUD Implementation
 
-Here's a complete example showing how to implement CRUD operations with the multi-ontology architecture:
+Here's a complete example showing how to implement CRUD operations with the ONE Ontology architecture:
 
 ```typescript
 // backend/convex/mutations/products.ts
-import { mutation } from './_generated/server';
-import { v } from 'convex/values';
-import { isThingType } from './types/ontology';
+import { mutation } from "./_generated/server";
+import { v } from "convex/values";
+import { isThingType } from "./types/ontology";
 
 // CREATE
 export const createProduct = mutation({
@@ -429,23 +437,23 @@ export const createProduct = mutation({
     price: v.number(),
   },
   handler: async (ctx, args) => {
-    const productId = await ctx.db.insert('things', {
-      type: 'product',
+    const productId = await ctx.db.insert("things", {
+      type: "product",
       name: args.name,
       properties: {
         sku: args.sku,
         price: args.price,
         inventory: 0,
-        description: '',
+        description: "",
         images: [],
       },
-      status: 'active',
+      status: "active",
       createdAt: Date.now(),
       updatedAt: Date.now(),
     });
 
-    await ctx.db.insert('events', {
-      type: 'product_created',
+    await ctx.db.insert("events", {
+      type: "product_created",
       actorId: ctx.auth.getUserIdentity()?.tokenIdentifier,
       targetId: productId,
       timestamp: Date.now(),
@@ -458,11 +466,11 @@ export const createProduct = mutation({
 
 // READ
 export const getProduct = query({
-  args: { id: v.id('things') },
+  args: { id: v.id("things") },
   handler: async (ctx, { id }) => {
     const product = await ctx.db.get(id);
-    if (!product || product.type !== 'product') {
-      throw new Error('Product not found');
+    if (!product || product.type !== "product") {
+      throw new Error("Product not found");
     }
     return product;
   },
@@ -471,14 +479,14 @@ export const getProduct = query({
 // UPDATE
 export const updateProduct = mutation({
   args: {
-    id: v.id('things'),
+    id: v.id("things"),
     price: v.optional(v.number()),
     inventory: v.optional(v.number()),
   },
   handler: async (ctx, args) => {
     const product = await ctx.db.get(args.id);
-    if (!product || product.type !== 'product') {
-      throw new Error('Product not found');
+    if (!product || product.type !== "product") {
+      throw new Error("Product not found");
     }
 
     await ctx.db.patch(args.id, {
@@ -490,8 +498,8 @@ export const updateProduct = mutation({
       updatedAt: Date.now(),
     });
 
-    await ctx.db.insert('events', {
-      type: 'product_updated',
+    await ctx.db.insert("events", {
+      type: "product_updated",
       actorId: ctx.auth.getUserIdentity()?.tokenIdentifier,
       targetId: args.id,
       timestamp: Date.now(),
@@ -507,15 +515,15 @@ export const updateProduct = mutation({
 
 // DELETE
 export const deleteProduct = mutation({
-  args: { id: v.id('things') },
+  args: { id: v.id("things") },
   handler: async (ctx, { id }) => {
     await ctx.db.patch(id, {
-      status: 'deleted',
+      status: "deleted",
       updatedAt: Date.now(),
     });
 
-    await ctx.db.insert('events', {
-      type: 'product_deleted',
+    await ctx.db.insert("events", {
+      type: "product_deleted",
       actorId: ctx.auth.getUserIdentity()?.tokenIdentifier,
       targetId: id,
       timestamp: Date.now(),
@@ -591,4 +599,4 @@ eventTypes:
 
 ---
 
-**You're now ready to build with the Multi-Ontology Architecture!** 🚀
+**You're now ready to build with the ONE Ontology Architecture!** 🚀

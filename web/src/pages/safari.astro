@@ -1,0 +1,56 @@
+---
+import Layout from "@/layouts/Layout.astro";
+import { Safari } from "@/components/Safari";
+---
+
+<Layout title="Safari Browser Mockup">
+  <div class="container mx-auto px-4 py-12">
+    <h1 class="mb-8 text-4xl font-bold">Safari Browser Mockup</h1>
+
+    <div class="space-y-12">
+      <!-- Default mode with URL -->
+      <section>
+        <h2 class="mb-4 text-2xl font-semibold">Default Mode</h2>
+        <Safari
+          client:load
+          url="https://one.ie"
+          className="w-full max-w-4xl"
+        />
+      </section>
+
+      <!-- With image -->
+      <section>
+        <h2 class="mb-4 text-2xl font-semibold">With Image</h2>
+        <Safari
+          client:load
+          url="https://example.com"
+          imageSrc="https://images.unsplash.com/photo-1618005182384-a83a8bd57fbe?w=1200&h=800&fit=crop"
+          className="w-full max-w-4xl"
+        />
+      </section>
+
+      <!-- Simple mode -->
+      <section>
+        <h2 class="mb-4 text-2xl font-semibold">Simple Mode</h2>
+        <Safari
+          client:load
+          mode="simple"
+          url="https://one.ie"
+          className="w-full max-w-4xl"
+        />
+      </section>
+
+      <!-- Custom dimensions -->
+      <section>
+        <h2 class="mb-4 text-2xl font-semibold">Custom Size</h2>
+        <Safari
+          client:load
+          url="https://one.ie/features"
+          width={800}
+          height={500}
+          className="w-full max-w-2xl"
+        />
+      </section>
+    </div>
+  </div>
+</Layout>

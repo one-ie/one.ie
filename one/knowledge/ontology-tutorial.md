@@ -11,15 +11,15 @@ version: 1.0.0
 ai_context: |
   This document is part of the knowledge dimension in the ontology-tutorial.md category.
   Location: one/knowledge/ontology-tutorial.md
-  Purpose: Documents multi-ontology architecture: interactive tutorial
+  Purpose: Documents ONE Ontology architecture: interactive tutorial
   Related dimensions: connections, events, groups, people, things
   For AI agents: Read this to understand ontology tutorial.
 ---
 
-# Multi-Ontology Architecture: Interactive Tutorial
+# ONE Ontology Architecture: Interactive Tutorial
 
 **Version:** 1.0.0
-**Purpose:** Learn the multi-ontology system from basics to advanced patterns
+**Purpose:** Learn the ONE Ontology system from basics to advanced patterns
 **Audience:** Developers, AI agents, platform builders
 
 ---
@@ -134,8 +134,8 @@ connectionTypes:
 
   - name: authored
     description: "Creator authored post"
-    fromType: creator      # From core ontology
-    toType: blog_post      # From this feature
+    fromType: creator # From core ontology
+    toType: blog_post # From this feature
 
 eventTypes:
   - name: post_published
@@ -165,18 +165,21 @@ Let's create a **newsletter** feature step-by-step.
 Before writing YAML, answer these questions:
 
 **What entities do we need?** (Things)
+
 - `newsletter` - The newsletter publication
 - `newsletter_issue` - Individual issues/editions
 - `subscriber` - Someone subscribed to newsletter
 - `newsletter_campaign` - Email campaign sending issues
 
 **How do they relate?** (Connections)
+
 - `creator` → `newsletter` (owns)
 - `newsletter` → `newsletter_issue` (part_of)
 - `subscriber` → `newsletter` (subscribed_to)
 - `newsletter_campaign` → `newsletter_issue` (sends)
 
 **What actions happen?** (Events)
+
 - `newsletter_created` - New newsletter created
 - `newsletter_subscribed` - Someone subscribed
 - `newsletter_unsubscribed` - Someone unsubscribed
@@ -208,7 +211,7 @@ thingTypes:
       title: string
       description: string
       slug: string
-      schedule: string              # daily, weekly, monthly
+      schedule: string # daily, weekly, monthly
       subscriberCount: number
       issueCount: number
 
@@ -217,12 +220,12 @@ thingTypes:
     description: "Individual newsletter edition"
     properties:
       title: string
-      content: string               # HTML or Markdown
+      content: string # HTML or Markdown
       slug: string
-      publishedAt: number           # Timestamp
-      sentAt: number                # When sent to subscribers
-      openRate: number              # Percentage
-      clickRate: number             # Percentage
+      publishedAt: number # Timestamp
+      sentAt: number # When sent to subscribers
+      openRate: number # Percentage
+      clickRate: number # Percentage
 
   # Newsletter subscriber
   - name: subscriber
@@ -232,9 +235,9 @@ thingTypes:
       firstName: string
       lastName: string
       subscribedAt: number
-      source: string                # Where they signed up
-      tags: string[]                # Subscriber tags/segments
-      active: boolean               # Active subscription
+      source: string # Where they signed up
+      tags: string[] # Subscriber tags/segments
+      active: boolean # Active subscription
 
   # Email campaign for sending issues
   - name: newsletter_campaign
@@ -244,13 +247,13 @@ thingTypes:
       previewText: string
       fromName: string
       fromEmail: string
-      scheduledFor: number          # When to send
-      sentAt: number                # When actually sent
+      scheduledFor: number # When to send
+      sentAt: number # When actually sent
       recipientCount: number
       deliveredCount: number
       openCount: number
       clickCount: number
-      status: string                # draft, scheduled, sending, sent
+      status: string # draft, scheduled, sending, sent
 
 # ============================================================================
 # Connection Types - How things relate
@@ -260,11 +263,11 @@ connectionTypes:
   # Creator owns newsletter
   - name: owns_newsletter
     description: "Creator owns newsletter publication"
-    fromType: creator               # From core ontology
+    fromType: creator # From core ontology
     toType: newsletter
     metadata:
-      role: string                  # owner, editor, contributor
-      permissions: string[]         # What they can do
+      role: string # owner, editor, contributor
+      permissions: string[] # What they can do
 
   # Newsletter contains issues
   - name: part_of_newsletter
@@ -272,7 +275,7 @@ connectionTypes:
     fromType: newsletter_issue
     toType: newsletter
     metadata:
-      issueNumber: number           # Sequential issue number
+      issueNumber: number # Sequential issue number
 
   # Subscriber subscribed to newsletter
   - name: subscribed_to
@@ -281,9 +284,9 @@ connectionTypes:
     toType: newsletter
     metadata:
       subscribedAt: number
-      source: string                # Where they subscribed
-      doubleOptIn: boolean          # Confirmed subscription
-      preferences: object           # Email preferences
+      source: string # Where they subscribed
+      doubleOptIn: boolean # Confirmed subscription
+      preferences: object # Email preferences
 
   # Campaign sends issue
   - name: sends

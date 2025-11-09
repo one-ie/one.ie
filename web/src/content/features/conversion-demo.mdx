@@ -1,0 +1,215 @@
+---
+title: "Conversion Optimization Demo"
+description: "See all MDX components in action with conversion psychology"
+featureId: "conversion-demo"
+category: "developer-tools"
+status: "completed"
+version: "1.0.0"
+releaseDate: 2025-11-08T00:00:00Z
+draft: false
+---
+
+import { FeatureCTA, PricingCalculator, SocialProof, CodePlayground, FeatureComparison, FeatureDemo } from '@/components/features/mdx';
+
+## All MDX Components Demo
+
+This page demonstrates every conversion-optimized component available for feature pages.
+
+---
+
+## 1. Feature CTA (Call-to-Action)
+
+Three variants: default, gradient, and minimal.
+
+### Default Variant
+
+<FeatureCTA
+  title="Ready to Get Started?"
+  description="Join thousands of developers building with ONE Platform"
+  primaryText="Start Free Trial"
+  primaryUrl="/signup"
+  secondaryText="View Documentation"
+  secondaryUrl="/docs"
+  variant="default"
+/>
+
+### Gradient Variant (High Impact)
+
+<FeatureCTA
+  title="Limited Beta Access"
+  description="50 spots remaining for early adopters"
+  primaryText="Join Beta Program"
+  primaryUrl="/beta"
+  variant="gradient"
+/>
+
+### Minimal Variant
+
+<FeatureCTA
+  title="Learn More"
+  description="Explore our developer documentation"
+  primaryText="Read Docs"
+  primaryUrl="/docs"
+  variant="minimal"
+/>
+
+---
+
+## 2. Pricing Calculator (Interactive ROI)
+
+This component uses **client-side interactivity** to calculate pricing based on usage.
+
+<PricingCalculator
+  title="Calculate Your Savings"
+  basePrice={29}
+  pricePerUnit={0.01}
+  unitName="API calls per month"
+  maxUnits={100000}
+/>
+
+---
+
+## 3. Social Proof
+
+Build trust with testimonials, company logos, and usage statistics.
+
+<SocialProof
+  testimonials={[
+    {
+      quote: "ONE Platform cut our development time from 6 months to 6 weeks. The ontology-based architecture is brilliant.",
+      author: {
+        name: "Sarah Chen",
+        role: "CTO",
+        company: "TechFlow",
+        avatarUrl: "/avatars/sarah.jpg"
+      },
+      rating: 5
+    },
+    {
+      quote: "The best platform for building multi-tenant SaaS. Period.",
+      author: {
+        name: "Marcus Johnson",
+        role: "Founder",
+        company: "BuildFast",
+        avatarUrl: "/avatars/marcus.jpg"
+      },
+      rating: 5
+    }
+  ]}
+  stats={{
+    userCount: 12453,
+    transactionVolume: "$2.4M",
+    uptime: "99.98%"
+  }}
+  companyLogos={[
+    { name: "Stripe", logoUrl: "/logos/stripe.svg" },
+    { name: "Vercel", logoUrl: "/logos/vercel.svg" },
+    { name: "Cloudflare", logoUrl: "/logos/cloudflare.svg" }
+  ]}
+/>
+
+---
+
+## 4. Code Playground (Interactive Examples)
+
+Live code examples with **copy-to-clipboard** functionality.
+
+<CodePlayground
+  title="Quick Start Example"
+  examples={[
+    {
+      language: "typescript",
+      code: `import { ONE } from 'oneie';
+
+// Initialize with your organization
+const platform = new ONE({
+  groupId: 'your-org-id'
+});
+
+// Create a product
+const product = await platform.things.create({
+  type: 'product',
+  name: 'Premium Course',
+  properties: {
+    price: 99,
+    inventory: 100
+  }
+});
+
+console.log('Product created:', product.id);`
+    },
+    {
+      language: "javascript",
+      code: `// Simple product listing
+const products = await platform.things.list({
+  type: 'product',
+  status: 'published'
+});
+
+products.forEach(p => {
+  console.log(p.name, p.properties.price);
+});`
+    }
+  ]}
+/>
+
+---
+
+## 5. Feature Comparison Table
+
+Show competitive advantages clearly.
+
+<FeatureComparison
+  title="ONE Platform vs Traditional Approaches"
+  rows={[
+    { feature: "Setup Time", one: "5 minutes", competitor: "2-4 weeks" },
+    { feature: "Multi-Tenancy", one: "Built-in", competitor: "Manual DIY" },
+    { feature: "Real-Time Updates", one: "Yes (Convex)", competitor: "Polling" },
+    { feature: "Authentication", one: "6 methods included", competitor: "Build yourself" },
+    { feature: "Type Safety", one: "Full TypeScript", competitor: "Partial" },
+    { feature: "Ontology Model", one: "6 dimensions", competitor: "Custom schemas" },
+    { feature: "Development Speed", one: "10x faster", competitor: "Baseline" }
+  ]}
+/>
+
+---
+
+## 6. Feature Demo Links
+
+Point users to live demos and documentation.
+
+<FeatureDemo
+  title="See It In Action"
+  description="Try our interactive demo or watch a video walkthrough"
+  demoUrl="https://demo.one.ie"
+  videoUrl="https://youtube.com/watch?v=example"
+  codeUrl="https://github.com/anthropics/one-platform"
+/>
+
+---
+
+## Conversion Psychology Mapping
+
+Each component uses proven psychological triggers:
+
+- **FeatureCTA** → Scarcity (limited beta) + Authority (social proof numbers)
+- **PricingCalculator** → Consistency (personalized value = commitment)
+- **SocialProof** → Social Proof (testimonials) + Authority (company logos)
+- **CodePlayground** → Reciprocity (free value) + Authority (technical depth)
+- **FeatureComparison** → Authority (quantifiable advantages)
+- **FeatureDemo** → Liking (try before buy)
+
+## Next Steps
+
+1. Convert your feature pages from `.md` to `.mdx`
+2. Import components at the top of the file
+3. Embed components throughout content
+4. Measure conversion lift (expect 20-40% increase in CTA clicks)
+
+<FeatureCTA
+  title="Start Optimizing Your Features"
+  description="Use these components to turn feature pages into conversion machines"
+  primaryText="View All Features"
+  primaryUrl="/features"
+  variant="gradient"
+/>

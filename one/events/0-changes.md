@@ -1,3 +1,51 @@
+### **405b9460** — template:42 — `docs: Add comprehensive Claude Code integration and optimization guides``
+
+**Template:**
+  - .claude/CLAUDE_BLOG_INSIGHTS.md
+  - .claude/CLAUDE_CODE_VISION.md
+  - .claude/ENHANCEMENT_PLAN_INDEX.md
+  - .claude/MCP_AND_CYCLES_GUIDE.md
+  - .claude/PHASE_1_CYCLES.md
+  - .claude/PLAN_SUMMARY.md
+  - .claude/WEEK_1_CHECKLIST.md
+  - .claude/agents/AUDIT-agent-ops-alignment.md
+  - .claude/agents/TROUBLESHOOTING.md
+  - .claude/agents/agent-claude.md
+  - .claude/agents/agent-frontend.md
+  - .claude/commands/optimize.md
+  - .claude/commands/review.md
+  - .claude/commands/test.md
+  - .claude/commands/validate.md
+  - .claude/hooks/__pycache__/todo.cpython-312.pyc
+  - .claude/hooks/auto-format.sh
+  - .claude/hooks/formatting.py
+  - .claude/hooks/ontology-validation.py
+  - .claude/hooks/validate-imports.py
+  - .claude/hooks/validate-ontology.py
+  - .claude/settings.json
+  - .claude/state/cycle.json
+  - one/.obsidian/workspace.json
+  - one/events/2025-11-08-backend-claude-refactor.md
+  - one/events/2025-11-08-parallel-agent-implementation.md
+  - one/events/plan-completion-audit.md
+  - one/events/plan-files-updated.md
+  - one/knowledge/cascading-context-specification.md
+  - one/knowledge/claude-code-integration.md
+  - one/knowledge/development-commands.md
+  - one/knowledge/guidelines.md
+  - one/knowledge/parallel-agents.md
+  - one/knowledge/performance.md
+  - one/knowledge/troubleshooting.md
+  - one/things/plans/dsl-claude-code.md
+  - web/src/components/CLAUDE.md
+  - web/src/content/news/agent-claude-parallel-execution.md
+  - web/src/content/news/context-engineering-cascading-architecture.md
+  - web/src/content/news/cycle-100-complete.md
+  - web/src/content/news/parallel-agents-breakthrough.md
+  - web/src/pages/CLAUDE.md
+
+
+
 ### **c095d076** — template:96 custom:1 — `ONE`` [customization]
 
 **Template:**

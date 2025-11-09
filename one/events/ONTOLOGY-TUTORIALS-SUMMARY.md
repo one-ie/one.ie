@@ -11,15 +11,15 @@ version: 1.0.0
 ai_context: |
   This document is part of the events dimension in the ONTOLOGY-TUTORIALS-SUMMARY.md category.
   Location: one/events/ONTOLOGY-TUTORIALS-SUMMARY.md
-  Purpose: Documents multi-ontology system: tutorials & examples - summary
+  Purpose: Documents ONE Ontology system: tutorials & examples - summary
   Related dimensions: connections, knowledge, things
   For AI agents: Read this to understand ONTOLOGY TUTORIALS SUMMARY.
 ---
 
-# Multi-Ontology System: Tutorials & Examples - Summary
+# ONE Ontology System: Tutorials & Examples - Summary
 
 **Created:** 2025-01-20
-**Purpose:** Comprehensive educational materials for the multi-ontology architecture
+**Purpose:** Comprehensive educational materials for the ONE Ontology architecture
 **Status:** Complete
 
 ---
@@ -31,12 +31,14 @@ ai_context: |
 **File:** `/one/knowledge/ontology-tutorial.md`
 
 A complete hands-on tutorial that teaches developers how to:
+
 - Understand ontology composition
 - Create their first feature (newsletter example)
 - Use advanced patterns
 - Test and deploy features
 
 **Structure:**
+
 - Part 1: Understanding Ontology Composition
 - Part 2: Creating Your First Feature (newsletter)
 - Part 3: Advanced Patterns
@@ -44,6 +46,7 @@ A complete hands-on tutorial that teaches developers how to:
 - Solutions to all exercises
 
 **Learning Outcomes:**
+
 - Build a complete newsletter system from scratch
 - Understand YAML ontology definitions
 - Write type-safe mutations and queries
@@ -57,16 +60,19 @@ A complete hands-on tutorial that teaches developers how to:
 A condensed reference guide containing:
 
 **Quick Commands:**
+
 - Type generation commands
 - Validation commands
 - Test commands
 
 **YAML Templates:**
+
 - Minimal feature ontology
 - Full feature ontology with all sections
 - Examples for all field types
 
 **Code Patterns:**
+
 - Create entity with ownership
 - Query entities with connections
 - Type validation
@@ -75,11 +81,13 @@ A condensed reference guide containing:
 - Analytics from events
 
 **Troubleshooting:**
+
 - Common issues and solutions
 - Performance tips
 - Best practices
 
 **Type Reference:**
+
 - All generated types
 - Type guards
 - Metadata access
@@ -91,6 +99,7 @@ A condensed reference guide containing:
 A production-ready newsletter feature implementation including:
 
 **Files Created:**
+
 - `README.md` - Complete documentation
 - Architecture overview
 - Installation instructions
@@ -99,6 +108,7 @@ A production-ready newsletter feature implementation including:
 - File structure guide
 
 **What It Demonstrates:**
+
 - Complete YAML ontology definition
 - Type-safe mutations (create, subscribe, update)
 - Real-time queries (list, get, analytics)
@@ -109,6 +119,7 @@ A production-ready newsletter feature implementation including:
 - Real-time subscriptions
 
 **Features:**
+
 - Newsletter creation and management
 - Subscriber management with duplicate prevention
 - Issue publishing
@@ -123,12 +134,14 @@ A production-ready newsletter feature implementation including:
 Complete scripts for a 3-part video series (35 minutes total):
 
 **Video 1: Introduction (5 minutes)**
+
 - Hook showing the problem
 - Traditional vs. ONE approach
 - 6-dimension overview
 - Course outline
 
 **Video 2: First Feature (10 minutes)**
+
 - Planning the data model
 - Creating YAML ontology
 - Generating TypeScript types
@@ -136,6 +149,7 @@ Complete scripts for a 3-part video series (35 minutes total):
 - Testing the feature
 
 **Video 3: Advanced Patterns (20 minutes)**
+
 - Multi-feature composition
 - Conditional features (runtime)
 - Performance optimization
@@ -144,6 +158,7 @@ Complete scripts for a 3-part video series (35 minutes total):
 - Real-world case study
 
 **Includes:**
+
 - Timestamp markers
 - Visual descriptions
 - On-screen text suggestions
@@ -157,6 +172,7 @@ Complete scripts for a 3-part video series (35 minutes total):
 ### 1. Hands-On Learning
 
 The tutorial walks through building a real feature (newsletter) with:
+
 - Complete YAML ontology
 - Full TypeScript implementation
 - Comprehensive tests
@@ -178,6 +194,7 @@ The tutorial walks through building a real feature (newsletter) with:
 ### 4. Production-Ready Patterns
 
 All examples follow production best practices:
+
 - Type safety with auto-generated types
 - Multi-tenant isolation with groups
 - Complete event logging for analytics
@@ -188,6 +205,7 @@ All examples follow production best practices:
 ### 5. Real-World Application
 
 The newsletter example demonstrates:
+
 - Entity lifecycle (create, update, delete)
 - Relationship management (ownership, subscriptions)
 - Event tracking (analytics, engagement)
@@ -331,12 +349,14 @@ The newsletter example demonstrates:
 After completing these materials, developers should be able to:
 
 ### Beginner Level (Tutorial Part 1)
+
 - ✅ Understand the 6-dimension ontology
 - ✅ Explain how features compose
 - ✅ Read YAML ontology definitions
 - ✅ Understand type generation
 
 ### Intermediate Level (Tutorial Part 2)
+
 - ✅ Create a complete feature ontology
 - ✅ Write type-safe mutations
 - ✅ Write real-time queries
@@ -344,6 +364,7 @@ After completing these materials, developers should be able to:
 - ✅ Deploy to production
 
 ### Advanced Level (Tutorial Part 3)
+
 - ✅ Compose multiple features
 - ✅ Implement conditional features
 - ✅ Optimize for performance
@@ -351,6 +372,7 @@ After completing these materials, developers should be able to:
 - ✅ Debug production issues
 
 ### Expert Level (Real-World Practice)
+
 - ✅ Design complex feature systems
 - ✅ Refactor existing features
 - ✅ Mentor other developers
@@ -509,6 +531,7 @@ This comprehensive tutorial system provides:
 5. **Complete Coverage** - All aspects of ontology system
 
 **Total Content Created:**
+
 - 4 major documentation files
 - 1 complete working example
 - 3 video scripts (35 minutes)
@@ -517,17 +540,19 @@ This comprehensive tutorial system provides:
 - Comprehensive test suite
 
 **Educational Value:**
+
 - 2-3 hours self-paced learning
 - Hands-on feature building
 - Production-ready knowledge
 - Reusable patterns
 - Quick reference material
 
-The multi-ontology system is now fully documented, tutorialized, and exemplified for developers at all levels.
+The ONE Ontology system is now fully documented, tutorialized, and exemplified for developers at all levels.
 
 ---
 
 **Files Created:**
+
 1. `/one/knowledge/ontology-tutorial.md` (complete tutorial)
 2. `/one/knowledge/ontology-cheatsheet.md` (quick reference)
 3. `/one/knowledge/ontology-video-script.md` (video scripts)
@@ -536,6 +561,7 @@ The multi-ontology system is now fully documented, tutorialized, and exemplified
 **Status:** ✅ Complete and ready for use
 
 **Next Steps:**
+
 1. Test tutorial with real users
 2. Collect feedback
 3. Record videos from script

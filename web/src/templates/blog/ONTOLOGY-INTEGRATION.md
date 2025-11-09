@@ -1,6 +1,6 @@
 # Blog Template - Ontology Integration
 
-This document explains how the blog template integrates with the ONE Platform's multi-ontology architecture.
+This document explains how the blog template integrates with the ONE Platform's ONE Ontology architecture.
 
 ## Ontology Composition
 
@@ -18,10 +18,10 @@ This template uses the **blog ontology** with the following types:
 
 ### Connections (5)
 
-- `created_by` - * → user
-- `updated_by` - * → user
-- `viewed_by` - * → user
-- `favorited_by` - * → user
+- `created_by` - \* → user
+- `updated_by` - \* → user
+- `viewed_by` - \* → user
+- `favorited_by` - \* → user
 - `posted_in` - blog_post → blog_category
 
 ### Events (6)
@@ -38,7 +38,7 @@ This template uses the **blog ontology** with the following types:
 ### Convert to Ontology
 
 ```typescript
-import { pageToThing } from './lib/ontology-adapter';
+import { pageToThing } from "./lib/ontology-adapter";
 
 const thingInput = pageToThing(entity, groupId);
 await convex.mutation(api.mutations.entities.create, thingInput);
@@ -47,7 +47,7 @@ await convex.mutation(api.mutations.entities.create, thingInput);
 ### Convert from Ontology
 
 ```typescript
-import { thingToPage } from './lib/ontology-adapter';
+import { thingToPage } from "./lib/ontology-adapter";
 
 const thing = await convex.query(api.queries.entities.get, { id });
 const entity = thingToPage(thing);
@@ -56,7 +56,7 @@ const entity = thingToPage(thing);
 ### Log Events
 
 ```typescript
-import { createThingCreatedEvent } from './lib/ontology-adapter';
+import { createThingCreatedEvent } from "./lib/ontology-adapter";
 
 const eventInput = createThingCreatedEvent(
   targetId,

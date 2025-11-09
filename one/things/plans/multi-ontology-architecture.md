@@ -1,5 +1,5 @@
 ---
-title: Multi Ontology Architecture
+title: ONE Ontology Architecture
 dimension: things
 category: plans
 tags: 6-dimensions, ai, architecture, connections, events, groups, knowledge, ontology, people, system-design
@@ -10,13 +10,13 @@ updated: 2025-11-03
 version: 1.0.0
 ai_context: |
   This document is part of the things dimension in the plans category.
-  Location: one/things/plans/multi-ontology-architecture.md
-  Purpose: Documents multi-ontology architecture: feature-specific ontologies
+  Location: one/things/plans/ONE Ontology-architecture.md
+  Purpose: Documents ONE Ontology architecture: feature-specific ontologies
   Related dimensions: connections, events, groups, knowledge, people
-  For AI agents: Read this to understand multi ontology architecture.
+  For AI agents: Read this to understand ONE Ontology architecture.
 ---
 
-# Multi-Ontology Architecture: Feature-Specific Ontologies
+# ONE Ontology Architecture: Feature-Specific Ontologies
 
 **Status:** 🎯 Active Plan
 **Created:** 2025-10-19
@@ -529,7 +529,7 @@ const compositeOntology = composeOntologies(
   coreOntology,
   hasFeature("blog") ? blogOntology : null,
   hasFeature("shop") ? shopOntology : null,
-  hasFeature("courses") ? coursesOntology : null,
+  hasFeature("courses") ? coursesOntology : null
 );
 
 // Result: TypeScript types are generated for enabled features only
@@ -573,7 +573,7 @@ export default defineSchema({
     status: v.union(
       v.literal("draft"),
       v.literal("active"),
-      v.literal("archived"),
+      v.literal("archived")
     ),
     createdAt: v.number(),
     updatedAt: v.number(),
@@ -585,7 +585,7 @@ export default defineSchema({
     fromThingId: v.id("things"),
     toThingId: v.id("things"),
     relationshipType: v.union(
-      ...ontologies.connectionTypes.map((t) => v.literal(t)),
+      ...ontologies.connectionTypes.map((t) => v.literal(t))
     ),
     metadata: v.optional(v.any()),
     createdAt: v.number(),

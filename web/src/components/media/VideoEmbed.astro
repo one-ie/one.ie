@@ -1,0 +1,75 @@
+---
+/**
+ * VideoEmbed Component (Astro)
+ *
+ * Responsive YouTube embed wrapper with metadata display.
+ * Uses @astro-community/astro-embed-youtube for optimal performance and SSR support.
+ *
+ * Features:
+ * - Lazy loading YouTube embeds
+ * - Responsive sizing (full-width on mobile)
+ * - Optional title, description, and timestamp display
+ * - Dark mode support via semantic tokens
+ * - Accessible with proper ARIA labels
+ * - Zero CLS (proper aspect ratio maintained)
+ *
+ * Responsive breakpoints:
+ * - Mobile (<768px): Full-width, stacked layout
+ * - Tablet (768-1024px): Optimized padding
+ * - Desktop (>1024px): Maximum content width
+ */
+
+import { YouTube } from '@astro-community/astro-embed-youtube';
+import { cn } from '@/lib/utils';
+
+interface Props {
+  id: string;
+  title?: string;
+  description?: string;
+  timestamp?: string;
+  class?: string;
+  posterQuality?: 'max' | 'high' | 'default' | 'low';
+  params?: string;
+}
+
+const {
+  id,
+  title,
+  description,
+  timestamp,
+  class: className,
+  posterQuality = 'high',
+  params
+} = Astro.props;
+---
+
+<div class={cn("rounded-lg border bg-card text-card-foreground shadow-sm w-full", className)}>
+  <div class="relative">
+    <YouTube
+      id={id}
+      title={title || 'YouTube video'}
+      posterQuality={posterQuality}
+      params={params}
+      playlabel="Play video"
+    />
+  </div>
+  {(title || description || timestamp) && (
+    <div class="p-3 sm:p-4 space-y-2">
+      {title && (
+        <h3 class="font-semibold text-base sm:text-lg leading-tight">
+          {title}
+        </h3>
+      )}
+      {description && (
+        <p class="text-sm sm:text-base text-muted-foreground leading-relaxed">
+          {description}
+        </p>
+      )}
+      {timestamp && (
+        <div class="text-xs sm:text-sm text-muted-foreground">
+          <span class="font-medium">Timestamp:</span> {timestamp}
+        </div>
+      )}
+    </div>
+  )}
+</div>

@@ -20,7 +20,7 @@ ai_context: |
 
 ## Overview
 
-Successfully created a **TypeScript type generator system** that generates type definitions from composed ontologies based on enabled features. This system enables compile-time type safety and runtime validation for the ONE Platform's multi-ontology architecture.
+Successfully created a **TypeScript type generator system** that generates type definitions from composed ontologies based on enabled features. This system enables compile-time type safety and runtime validation for the ONE Platform's ONE Ontology architecture.
 
 ## What Was Created
 
@@ -42,6 +42,7 @@ export function generateTypes(ontology: ComposedOntology): string {
 ```
 
 **Features:**
+
 - Union type generation for all 3 dimensions (things, connections, events)
 - Type guard functions (`isThingType`, `isConnectionType`, `isEventType`)
 - Constant arrays for iteration (`THING_TYPES`, `CONNECTION_TYPES`, `EVENT_TYPES`)
@@ -65,6 +66,7 @@ bun run generate-types core
 ```
 
 **Features:**
+
 - Loads ontologies using existing `ontology-loader.ts`
 - Composes features with dependency resolution
 - Generates formatted TypeScript output
@@ -78,32 +80,32 @@ Auto-generated TypeScript definitions (example for `blog,portfolio` features):
 
 ```typescript
 export type ThingType =
-  | 'page'
-  | 'user'
-  | 'file'
-  | 'link'
-  | 'note'           // from core
-  | 'blog_post'
-  | 'blog_category'  // from blog
-  | 'project'
-  | 'case_study';    // from portfolio
+  | "page"
+  | "user"
+  | "file"
+  | "link"
+  | "note" // from core
+  | "blog_post"
+  | "blog_category" // from blog
+  | "project"
+  | "case_study"; // from portfolio
 
 export type ConnectionType =
-  | 'created_by'
-  | 'updated_by'
-  | 'viewed_by'
-  | 'favorited_by'          // from core
-  | 'posted_in'             // from blog
-  | 'belongs_to_portfolio'; // from portfolio
+  | "created_by"
+  | "updated_by"
+  | "viewed_by"
+  | "favorited_by" // from core
+  | "posted_in" // from blog
+  | "belongs_to_portfolio"; // from portfolio
 
 export type EventType =
-  | 'thing_created'
-  | 'thing_updated'
-  | 'thing_deleted'
-  | 'thing_viewed'         // from core
-  | 'blog_post_published'
-  | 'blog_post_viewed'     // from blog
-  | 'project_viewed';      // from portfolio
+  | "thing_created"
+  | "thing_updated"
+  | "thing_deleted"
+  | "thing_viewed" // from core
+  | "blog_post_published"
+  | "blog_post_viewed" // from blog
+  | "project_viewed"; // from portfolio
 
 // Plus validation functions, constants, and metadata
 ```
@@ -165,6 +167,7 @@ export type EventType =
 ```
 
 **Generated Types:**
+
 - **ThingType**: page, user, file, link, note, blog_post, blog_category, project, case_study, course, lesson, quiz, certificate
 - **ConnectionType**: created_by, updated_by, viewed_by, favorited_by, posted_in, belongs_to_portfolio, enrolled_in, part_of
 - **EventType**: thing_created, thing_updated, thing_deleted, thing_viewed, blog_post_published, blog_post_viewed, project_viewed, enrolled_in_course, lesson_completed, quiz_submitted, certificate_earned
@@ -174,13 +177,13 @@ export type EventType =
 ### 1. Type-Safe Convex Mutation
 
 ```typescript
-import { mutation } from './_generated/server';
-import { v } from 'convex/values';
-import { isThingType, THING_TYPES, ThingType } from './types/ontology';
+import { mutation } from "./_generated/server";
+import { v } from "convex/values";
+import { isThingType, THING_TYPES, ThingType } from "./types/ontology";
 
 export const createEntity = mutation({
   args: {
-    groupId: v.id('groups'),
+    groupId: v.id("groups"),
     type: v.string(),
     name: v.string(),
     properties: v.any(),
@@ -189,17 +192,17 @@ export const createEntity = mutation({
     // Runtime validation
     if (!isThingType(args.type)) {
       throw new Error(
-        `Invalid type: ${args.type}. Valid: ${THING_TYPES.join(', ')}`
+        `Invalid type: ${args.type}. Valid: ${THING_TYPES.join(", ")}`
       );
     }
 
     // Type-safe insertion
-    return await ctx.db.insert('entities', {
+    return await ctx.db.insert("entities", {
       groupId: args.groupId,
       type: args.type as ThingType,
       name: args.name,
       properties: args.properties,
-      status: 'active',
+      status: "active",
       createdAt: Date.now(),
       updatedAt: Date.now(),
     });
@@ -250,7 +253,7 @@ function OntologyInfo() {
 
 ## Architecture Integration
 
-### How It Fits into Multi-Ontology System
+### How It Fits into ONE Ontology System
 
 ```
 ┌─────────────────────────────────────────────────────────┐
@@ -298,26 +301,31 @@ function OntologyInfo() {
 ## Benefits
 
 ### 1. **Compile-Time Type Safety**
+
 - TypeScript catches invalid types before runtime
 - Auto-completion in IDE for valid types
 - Refactoring safety
 
 ### 2. **Runtime Validation**
+
 - Type guard functions validate user input
 - Clear error messages with valid options
 - Prevents invalid data from entering database
 
 ### 3. **Feature-Driven Types**
+
 - Types adapt to enabled features
 - No unused types in production
 - Smaller bundle sizes
 
 ### 4. **Developer Experience**
+
 - Clear, self-documenting code
 - Comprehensive usage examples
 - Beautiful CLI output
 
 ### 5. **Single Source of Truth**
+
 - YAML ontology files define everything
 - TypeScript types auto-generated
 - No manual synchronization needed
@@ -325,24 +333,28 @@ function OntologyInfo() {
 ## Testing Results
 
 ### Test 1: Core Only
+
 ```bash
 bun run generate-types core
 # Result: 5 thing types, 4 connection types, 4 event types
 ```
 
 ### Test 2: Blog + Portfolio
+
 ```bash
 bun run generate-types blog,portfolio
 # Result: 9 thing types, 6 connection types, 7 event types
 ```
 
 ### Test 3: Full Feature Set
+
 ```bash
 bun run generate-types blog,courses,community,tokens
 # Result: 16 thing types, 10 connection types, 17 event types
 ```
 
 ### Test 4: Education Platform
+
 ```bash
 bun run generate-types blog,portfolio,courses
 # Result: 13 thing types, 8 connection types, 11 event types
@@ -356,12 +368,13 @@ All tests passed successfully! ✅
 
 1. **Feature changes** - When `PUBLIC_FEATURES` environment variable changes
 2. **Ontology updates** - When YAML files in `/one/knowledge/` are modified
-3. **New features** - When new ontology-*.yaml files are added
+3. **New features** - When new ontology-\*.yaml files are added
 4. **Deployment** - Before deploying to new environment
 
 ### Recommended Integration
 
 #### Option 1: Pre-commit Hook
+
 ```bash
 #!/bin/bash
 # .git/hooks/pre-commit
@@ -374,6 +387,7 @@ fi
 ```
 
 #### Option 2: Build Pipeline
+
 ```json
 {
   "scripts": {
@@ -383,6 +397,7 @@ fi
 ```
 
 #### Option 3: Watch Mode (Future Enhancement)
+
 ```json
 {
   "scripts": {
@@ -412,12 +427,14 @@ backend/
 ## Next Steps
 
 ### Immediate
+
 1. ✅ Test with different feature combinations
 2. ✅ Document usage patterns
 3. ✅ Create comprehensive examples
 4. ✅ Update package.json with scripts
 
 ### Future Enhancements
+
 1. **Watch mode** - Auto-regenerate on YAML changes
 2. **Validation strictness** - Configurable validation levels
 3. **Custom type mappings** - Support for custom types per installation
@@ -435,6 +452,7 @@ backend/
 ## Error Handling
 
 The system handles:
+
 - Missing ontology files → Clear error with file path
 - Invalid YAML syntax → Parse error with line number
 - Circular dependencies → Detected and reported
@@ -463,11 +481,11 @@ Successfully implemented a **complete TypeScript type generation system** that:
 7. ✅ Includes 9 real-world usage examples
 8. ✅ Beautiful CLI with progress indicators
 
-The system is production-ready and fully integrated with the ONE Platform's multi-ontology architecture. Developers can now enjoy full type safety across frontend and backend with zero manual synchronization.
+The system is production-ready and fully integrated with the ONE Platform's ONE Ontology architecture. Developers can now enjoy full type safety across frontend and backend with zero manual synchronization.
 
 ---
 
 **Generated:** 2025-10-19
 **Author:** Claude Code (Engineering Agent)
-**Architecture:** Multi-Ontology Architecture v1.0
+**Architecture:** ONE Ontology Architecture v1.0
 **Status:** ✅ Complete and Production-Ready

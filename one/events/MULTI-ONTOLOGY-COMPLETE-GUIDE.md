@@ -1,7 +1,7 @@
 ---
-title: Multi Ontology Complete Guide
+title: ONE Ontology Complete Guide
 dimension: events
-category: MULTI-ONTOLOGY-COMPLETE-GUIDE.md
+category: ONE Ontology-COMPLETE-GUIDE.md
 tags: 6-dimensions, architecture, backend, frontend, ontology
 related_dimensions: knowledge, people, things
 scope: global
@@ -9,14 +9,14 @@ created: 2025-11-03
 updated: 2025-11-03
 version: 1.0.0
 ai_context: |
-  This document is part of the events dimension in the MULTI-ONTOLOGY-COMPLETE-GUIDE.md category.
-  Location: one/events/MULTI-ONTOLOGY-COMPLETE-GUIDE.md
-  Purpose: Documents multi-ontology architecture: complete guide
+  This document is part of the events dimension in the ONE Ontology-COMPLETE-GUIDE.md category.
+  Location: one/events/ONE Ontology-COMPLETE-GUIDE.md
+  Purpose: Documents ONE Ontology architecture: complete guide
   Related dimensions: knowledge, people, things
-  For AI agents: Read this to understand MULTI ONTOLOGY COMPLETE GUIDE.
+  For AI agents: Read this to understand ONE Ontology COMPLETE GUIDE.
 ---
 
-# Multi-Ontology Architecture: Complete Guide
+# ONE Ontology Architecture: Complete Guide
 
 **Version:** 1.0.0
 **Last Updated:** 2025-10-20
@@ -46,9 +46,9 @@ ai_context: |
 
 ## 1. Introduction
 
-### What is the Multi-Ontology Architecture?
+### What is the ONE Ontology Architecture?
 
-The **Multi-Ontology Architecture** is a revolutionary approach to feature development in the ONE Platform. Instead of hardcoding all possible entity types into a monolithic schema, features bring their own data models (ontologies) that compose cleanly at runtime.
+The **ONE Ontology Architecture** is a revolutionary approach to feature development in the ONE Platform. Instead of hardcoding all possible entity types into a monolithic schema, features bring their own data models (ontologies) that compose cleanly at runtime.
 
 **The Problem It Solves:**
 
@@ -57,19 +57,20 @@ Traditional platforms suffer from **schema bloat**:
 ```typescript
 // Traditional approach - ALL types hardcoded
 type EntityType =
-  | 'user'
-  | 'page'
-  | 'blog_post'
-  | 'product'
-  | 'course'
-  | 'video'
-  | 'podcast'
-  | 'nft'
-  | 'token'
-  // ... 100+ more types you'll never use
+  | "user"
+  | "page"
+  | "blog_post"
+  | "product"
+  | "course"
+  | "video"
+  | "podcast"
+  | "nft"
+  | "token";
+// ... 100+ more types you'll never use
 ```
 
 This leads to:
+
 - Large bundle sizes (load types you don't need)
 - Tight coupling (can't change one without affecting all)
 - Poor developer experience (autocomplete suggests 100+ irrelevant types)
@@ -191,8 +192,8 @@ Check that your schema now validates blog and portfolio types:
 
 ```typescript
 // backend/convex/mutations/blog.ts
-import { mutation } from './_generated/server';
-import { v } from 'convex/values';
+import { mutation } from "./_generated/server";
+import { v } from "convex/values";
 
 export const createBlogPost = mutation({
   args: {
@@ -201,15 +202,15 @@ export const createBlogPost = mutation({
   },
   handler: async (ctx, args) => {
     // TypeScript knows 'blog_post' is a valid type!
-    const postId = await ctx.db.insert('things', {
-      type: 'blog_post', // ✅ Type-safe
+    const postId = await ctx.db.insert("things", {
+      type: "blog_post", // ✅ Type-safe
       name: args.title,
       properties: {
         title: args.title,
         content: args.content,
         publishedAt: Date.now(),
       },
-      status: 'active',
+      status: "active",
       createdAt: Date.now(),
       updatedAt: Date.now(),
     });
@@ -219,7 +220,7 @@ export const createBlogPost = mutation({
 });
 ```
 
-**Done!** You're now using the multi-ontology architecture.
+**Done!** You're now using the ONE Ontology architecture.
 
 ---
 
@@ -340,7 +341,7 @@ The ONE Platform is built on a universal 6-dimension ontology that models realit
 └──────────────────────────────────────────────────────────────┘
 ```
 
-**The multi-ontology architecture extends the THINGS, CONNECTIONS, and EVENTS dimensions.**
+**The ONE Ontology architecture extends the THINGS, CONNECTIONS, and EVENTS dimensions.**
 
 ### Feature Ontologies
 
@@ -390,10 +391,15 @@ From composed ontology, the system generates:
 
 ```typescript
 // 1. Union types
-export type ThingType = 'page' | 'user' | 'blog_post' | 'project';
+export type ThingType = "page" | "user" | "blog_post" | "project";
 
 // 2. Constant arrays
-export const THING_TYPES: readonly ThingType[] = ['page', 'user', 'blog_post', 'project'];
+export const THING_TYPES: readonly ThingType[] = [
+  "page",
+  "user",
+  "blog_post",
+  "project",
+];
 
 // 3. Type guards
 export function isThingType(value: string): value is ThingType {
@@ -401,7 +407,7 @@ export function isThingType(value: string): value is ThingType {
 }
 
 // 4. Feature metadata
-export const ENABLED_FEATURES = ['core', 'blog', 'portfolio'];
+export const ENABLED_FEATURES = ["core", "blog", "portfolio"];
 
 export function hasFeature(feature: string): boolean {
   return ENABLED_FEATURES.includes(feature);
@@ -436,73 +442,77 @@ dependencies:
 # ============================================================================
 
 thingTypes:
-  - name: my_entity              # Type name (lowercase_underscore)
+  - name: my_entity # Type name (lowercase_underscore)
     description: "What this thing represents"
     properties:
       # Primitive types
-      name: string               # Text values
-      count: number              # Numeric values
-      active: boolean            # True/false values
+      name: string # Text values
+      count: number # Numeric values
+      active: boolean # True/false values
 
       # Array types
-      tags: string[]             # Array of strings
-      scores: number[]           # Array of numbers
+      tags: string[] # Array of strings
+      scores: number[] # Array of numbers
 
       # Complex types
-      metadata: object           # JSON object (any structure)
+      metadata: object # JSON object (any structure)
 
 # ============================================================================
 # CONNECTION TYPES - Relationships between entities
 # ============================================================================
 
 connectionTypes:
-  - name: my_connection          # Connection name (lowercase_underscore)
+  - name: my_connection # Connection name (lowercase_underscore)
     description: "How things relate"
-    fromType: source_type        # Source thing type (or '*' for any)
-    toType: target_type          # Target thing type (or '*' for any)
+    fromType: source_type # Source thing type (or '*' for any)
+    toType: target_type # Target thing type (or '*' for any)
 
 # ============================================================================
 # EVENT TYPES - Actions that occur
 # ============================================================================
 
 eventTypes:
-  - name: my_event_happened      # Event name (past tense, lowercase_underscore)
+  - name: my_event_happened # Event name (past tense, lowercase_underscore)
     description: "What action occurred"
-    thingType: my_entity         # Thing type this event applies to (or '*' for any)
+    thingType: my_entity # Thing type this event applies to (or '*' for any)
 ```
 
 ### Naming Conventions
 
 **Feature Names:**
+
 - Lowercase, no spaces
 - Use hyphens for multi-word features
 - Examples: `core`, `blog`, `shop`, `social-media`
 
 **Thing Type Names:**
+
 - Lowercase with underscores
 - Singular nouns
 - Examples: `blog_post`, `product`, `user`, `shopping_cart`
 
 **Connection Type Names:**
+
 - Lowercase with underscores
 - Action verbs (present tense)
 - Examples: `created_by`, `posted_in`, `purchased`, `in_stock`
 
 **Event Type Names:**
+
 - Lowercase with underscores
 - Past tense verbs
 - Examples: `blog_post_published`, `product_created`, `order_placed`
 
 ### Property Types
 
-| Type | Example | Description |
-|------|---------|-------------|
-| `string` | `"Hello"` | Text values |
-| `number` | `42`, `3.14` | Integer or float |
-| `boolean` | `true`, `false` | True/false values |
-| `object` | `{ key: "value" }` | JSON object (any structure) |
-| `string[]` | `["a", "b"]` | Array of strings |
-| `number[]` | `[1, 2, 3]` | Array of numbers |
+| Type       | Example            | Description                 |
+| ---------- | ------------------ | --------------------------- |
+| `string`   | `"Hello"`          | Text values                 |
+| `number`   | `42`, `3.14`       | Integer or float            |
+| `boolean`  | `true`, `false`    | True/false values           |
+| `object`   | `{ key: "value" }` | JSON object (any structure) |
+| `string[]` | `["a", "b"]`       | Array of strings            |
+| `number[]` | `[1, 2, 3]`        | Array of numbers            |
 
 ### Inheritance with `extends`
 
@@ -511,10 +521,10 @@ Features can inherit types from a base feature:
 ```yaml
 # ontology-advanced-blog.yaml
 feature: advanced-blog
-extends: blog           # Inherits: blog_post, blog_category
+extends: blog # Inherits: blog_post, blog_category
 
 thingTypes:
-  - name: blog_series   # New type (builds on blog)
+  - name: blog_series # New type (builds on blog)
   - name: blog_newsletter
 ```
 
@@ -609,66 +619,66 @@ The type generator:
 // ============================================================================
 
 export type ThingType =
-  | 'page'
-  | 'user'
-  | 'file'
-  | 'link'
-  | 'note'
-  | 'blog_post'
-  | 'blog_category'
-  | 'project'
-  | 'case_study';
+  | "page"
+  | "user"
+  | "file"
+  | "link"
+  | "note"
+  | "blog_post"
+  | "blog_category"
+  | "project"
+  | "case_study";
 
 export type ConnectionType =
-  | 'created_by'
-  | 'updated_by'
-  | 'viewed_by'
-  | 'favorited_by'
-  | 'posted_in'
-  | 'authored';
+  | "created_by"
+  | "updated_by"
+  | "viewed_by"
+  | "favorited_by"
+  | "posted_in"
+  | "authored";
 
 export type EventType =
-  | 'thing_created'
-  | 'thing_updated'
-  | 'thing_deleted'
-  | 'thing_viewed'
-  | 'blog_post_published'
-  | 'blog_post_viewed'
-  | 'project_viewed';
+  | "thing_created"
+  | "thing_updated"
+  | "thing_deleted"
+  | "thing_viewed"
+  | "blog_post_published"
+  | "blog_post_viewed"
+  | "project_viewed";
 
 // ============================================================================
 // CONSTANT ARRAYS
 // ============================================================================
 
 export const THING_TYPES: readonly ThingType[] = [
-  'page',
-  'user',
-  'file',
-  'link',
-  'note',
-  'blog_post',
-  'blog_category',
-  'project',
-  'case_study',
+  "page",
+  "user",
+  "file",
+  "link",
+  "note",
+  "blog_post",
+  "blog_category",
+  "project",
+  "case_study",
 ] as const;
 
 export const CONNECTION_TYPES: readonly ConnectionType[] = [
-  'created_by',
-  'updated_by',
-  'viewed_by',
-  'favorited_by',
-  'posted_in',
-  'authored',
+  "created_by",
+  "updated_by",
+  "viewed_by",
+  "favorited_by",
+  "posted_in",
+  "authored",
 ] as const;
 
 export const EVENT_TYPES: readonly EventType[] = [
-  'thing_created',
-  'thing_updated',
-  'thing_deleted',
-  'thing_viewed',
-  'blog_post_published',
-  'blog_post_viewed',
-  'project_viewed',
+  "thing_created",
+  "thing_updated",
+  "thing_deleted",
+  "thing_viewed",
+  "blog_post_published",
+  "blog_post_viewed",
+  "project_viewed",
 ] as const;
 
 // ============================================================================
@@ -691,7 +701,7 @@ export function isEventType(value: string): value is EventType {
 // FEATURE HELPERS
 // ============================================================================
 
-export const ENABLED_FEATURES = ['core', 'blog', 'portfolio'] as const;
+export const ENABLED_FEATURES = ["core", "blog", "portfolio"] as const;
 
 export function hasFeature(feature: string): boolean {
   return ENABLED_FEATURES.includes(feature);
@@ -702,8 +712,8 @@ export function hasFeature(feature: string): boolean {
 // ============================================================================
 
 export const ONTOLOGY_METADATA = {
-  features: ['core', 'blog', 'portfolio'],
-  generatedAt: '2025-10-20T12:34:56.789Z',
+  features: ["core", "blog", "portfolio"],
+  generatedAt: "2025-10-20T12:34:56.789Z",
   thingTypeCount: 9,
   connectionTypeCount: 6,
   eventTypeCount: 7,
@@ -744,49 +754,51 @@ Update your Convex schema to use generated types:
 
 ```typescript
 // backend/convex/schema.ts
-import { defineSchema, defineTable } from 'convex/server';
-import { v } from 'convex/values';
-import { THING_TYPES, CONNECTION_TYPES, EVENT_TYPES } from './types/ontology';
+import { defineSchema, defineTable } from "convex/server";
+import { v } from "convex/values";
+import { THING_TYPES, CONNECTION_TYPES, EVENT_TYPES } from "./types/ontology";
 
 // Generate union from ontology types
-const thingTypeUnion = v.union(...THING_TYPES.map(t => v.literal(t)));
-const connectionTypeUnion = v.union(...CONNECTION_TYPES.map(t => v.literal(t)));
-const eventTypeUnion = v.union(...EVENT_TYPES.map(t => v.literal(t)));
+const thingTypeUnion = v.union(...THING_TYPES.map((t) => v.literal(t)));
+const connectionTypeUnion = v.union(
+  ...CONNECTION_TYPES.map((t) => v.literal(t))
+);
+const eventTypeUnion = v.union(...EVENT_TYPES.map((t) => v.literal(t)));
 
 export default defineSchema({
   things: defineTable({
-    groupId: v.id('groups'),
-    type: thingTypeUnion,        // ✅ Generated from ontology
+    groupId: v.id("groups"),
+    type: thingTypeUnion, // ✅ Generated from ontology
     name: v.string(),
     properties: v.any(),
     status: v.string(),
     createdAt: v.number(),
     updatedAt: v.number(),
   })
-    .index('by_group_type', ['groupId', 'type'])
-    .index('by_type', ['type']),
+    .index("by_group_type", ["groupId", "type"])
+    .index("by_type", ["type"]),
 
   connections: defineTable({
-    groupId: v.id('groups'),
-    fromThingId: v.id('things'),
-    toThingId: v.id('things'),
+    groupId: v.id("groups"),
+    fromThingId: v.id("things"),
+    toThingId: v.id("things"),
     relationshipType: connectionTypeUnion, // ✅ Generated
     metadata: v.any(),
     createdAt: v.number(),
   })
-    .index('by_from', ['fromThingId', 'relationshipType'])
-    .index('by_to', ['toThingId', 'relationshipType']),
+    .index("by_from", ["fromThingId", "relationshipType"])
+    .index("by_to", ["toThingId", "relationshipType"]),
 
   events: defineTable({
-    groupId: v.id('groups'),
-    type: eventTypeUnion,        // ✅ Generated
+    groupId: v.id("groups"),
+    type: eventTypeUnion, // ✅ Generated
     actorId: v.optional(v.string()),
-    targetId: v.optional(v.id('things')),
+    targetId: v.optional(v.id("things")),
     timestamp: v.number(),
     metadata: v.any(),
   })
-    .index('by_target', ['targetId', 'timestamp'])
-    .index('by_type', ['type', 'timestamp']),
+    .index("by_target", ["targetId", "timestamp"])
+    .index("by_type", ["type", "timestamp"]),
 });
 ```
 
@@ -794,13 +806,13 @@ export default defineSchema({
 
 ```typescript
 // backend/convex/mutations/entities.ts
-import { mutation } from './_generated/server';
-import { v } from 'convex/values';
-import { isThingType, type ThingType } from './types/ontology';
+import { mutation } from "./_generated/server";
+import { v } from "convex/values";
+import { isThingType, type ThingType } from "./types/ontology";
 
 export const create = mutation({
   args: {
-    groupId: v.id('groups'),
+    groupId: v.id("groups"),
     type: v.string(),
     name: v.string(),
     properties: v.any(),
@@ -810,25 +822,25 @@ export const create = mutation({
     if (!isThingType(args.type)) {
       throw new Error(
         `Invalid thing type: "${args.type}". ` +
-        `Valid types: ${THING_TYPES.join(', ')}`
+          `Valid types: ${THING_TYPES.join(", ")}`
       );
     }
 
     // Now TypeScript knows args.type is valid
-    const thingId = await ctx.db.insert('things', {
+    const thingId = await ctx.db.insert("things", {
       groupId: args.groupId,
       type: args.type as ThingType,
       name: args.name,
       properties: args.properties,
-      status: 'draft',
+      status: "draft",
       createdAt: Date.now(),
       updatedAt: Date.now(),
     });
 
     // Log creation event
-    await ctx.db.insert('events', {
+    await ctx.db.insert("events", {
       groupId: args.groupId,
-      type: 'thing_created',
+      type: "thing_created",
       actorId: ctx.auth?.getUserIdentity()?.tokenIdentifier,
       targetId: thingId,
       timestamp: Date.now(),
@@ -844,34 +856,32 @@ export const create = mutation({
 
 ```typescript
 // backend/convex/queries/entities.ts
-import { query } from './_generated/server';
-import { v } from 'convex/values';
-import { hasFeature, THING_TYPES } from './types/ontology';
+import { query } from "./_generated/server";
+import { v } from "convex/values";
+import { hasFeature, THING_TYPES } from "./types/ontology";
 
 export const listContent = query({
   args: {
-    groupId: v.id('groups'),
+    groupId: v.id("groups"),
   },
   handler: async (ctx, args) => {
     // Build type filter based on enabled features
-    const contentTypes: string[] = ['page']; // Core type
+    const contentTypes: string[] = ["page"]; // Core type
 
-    if (hasFeature('blog')) {
-      contentTypes.push('blog_post');
+    if (hasFeature("blog")) {
+      contentTypes.push("blog_post");
     }
 
-    if (hasFeature('portfolio')) {
-      contentTypes.push('project', 'case_study');
+    if (hasFeature("portfolio")) {
+      contentTypes.push("project", "case_study");
     }
 
     // Query entities
     const entities = await ctx.db
-      .query('things')
-      .withIndex('by_group_type', (q) => q.eq('groupId', args.groupId))
+      .query("things")
+      .withIndex("by_group_type", (q) => q.eq("groupId", args.groupId))
       .filter((q) =>
-        q.or(
-          ...contentTypes.map(type => q.eq(q.field('type'), type))
-        )
+        q.or(...contentTypes.map((type) => q.eq(q.field("type"), type)))
       )
       .collect();
 
@@ -1055,13 +1065,13 @@ bun run scripts/generate-ontology-types.ts
 
 ```typescript
 // backend/convex/mutations/products.ts
-import { mutation } from './_generated/server';
-import { v } from 'convex/values';
-import type { ThingType, EventType } from './types/ontology';
+import { mutation } from "./_generated/server";
+import { v } from "convex/values";
+import type { ThingType, EventType } from "./types/ontology";
 
 export const create = mutation({
   args: {
-    groupId: v.id('groups'),
+    groupId: v.id("groups"),
     name: v.string(),
     sku: v.string(),
     price: v.number(),
@@ -1069,41 +1079,41 @@ export const create = mutation({
   },
   handler: async (ctx, args) => {
     const userId = await ctx.auth.getUserIdentity();
-    if (!userId) throw new Error('Unauthorized');
+    if (!userId) throw new Error("Unauthorized");
 
     // Create product
-    const productId = await ctx.db.insert('things', {
+    const productId = await ctx.db.insert("things", {
       groupId: args.groupId,
-      type: 'product' as ThingType,
+      type: "product" as ThingType,
       name: args.name,
       properties: {
         name: args.name,
         sku: args.sku,
         price: args.price,
         inventory: args.inventory,
-        description: '',
+        description: "",
         images: [],
-        status: 'active',
+        status: "active",
       },
-      status: 'active',
+      status: "active",
       createdAt: Date.now(),
       updatedAt: Date.now(),
     });
 
     // Create ownership connection
-    await ctx.db.insert('connections', {
+    await ctx.db.insert("connections", {
       groupId: args.groupId,
       fromThingId: userId.tokenIdentifier as any,
       toThingId: productId,
-      relationshipType: 'created_product',
+      relationshipType: "created_product",
       metadata: {},
       createdAt: Date.now(),
     });
 
     // Log event
-    await ctx.db.insert('events', {
+    await ctx.db.insert("events", {
       groupId: args.groupId,
-      type: 'product_created' as EventType,
+      type: "product_created" as EventType,
       actorId: userId.tokenIdentifier,
       targetId: productId,
       timestamp: Date.now(),
@@ -1122,18 +1132,18 @@ export const create = mutation({
 
 ```typescript
 // backend/convex/queries/products.ts
-import { query } from './_generated/server';
-import { v } from 'convex/values';
+import { query } from "./_generated/server";
+import { v } from "convex/values";
 
 export const list = query({
   args: {
-    groupId: v.id('groups'),
+    groupId: v.id("groups"),
   },
   handler: async (ctx, args) => {
     const products = await ctx.db
-      .query('things')
-      .withIndex('by_group_type', (q) =>
-        q.eq('groupId', args.groupId).eq('type', 'product')
+      .query("things")
+      .withIndex("by_group_type", (q) =>
+        q.eq("groupId", args.groupId).eq("type", "product")
       )
       .collect();
 
@@ -1147,11 +1157,11 @@ export const getBySlug = query({
   },
   handler: async (ctx, args) => {
     const product = await ctx.db
-      .query('things')
+      .query("things")
       .filter((q) =>
         q.and(
-          q.eq(q.field('type'), 'product'),
-          q.eq(q.field('properties.sku'), args.sku)
+          q.eq(q.field("type"), "product"),
+          q.eq(q.field("properties.sku"), args.sku)
         )
       )
       .first();
@@ -1224,14 +1234,14 @@ Features can depend on other features:
 ```yaml
 # ontology-advanced-blog.yaml
 feature: advanced-blog
-extends: blog           # Requires blog feature
+extends: blog # Requires blog feature
 dependencies:
-  - newsletter          # Also requires newsletter feature
+  - newsletter # Also requires newsletter feature
 
 thingTypes:
   - name: blog_series
     properties:
-      posts: string[]   # Array of blog_post IDs
+      posts: string[] # Array of blog_post IDs
 ```
 
 ### Pattern 3: Versioned Ontologies
@@ -1264,14 +1274,14 @@ PUBLIC_FEATURES="products-v1,products-v2"
 
 ```typescript
 // Load types dynamically based on environment
-const features = process.env.PUBLIC_FEATURES?.split(',') || ['core'];
+const features = process.env.PUBLIC_FEATURES?.split(",") || ["core"];
 
-if (features.includes('blog')) {
+if (features.includes("blog")) {
   // Blog-specific initialization
   await initializeBlogFeature();
 }
 
-if (features.includes('products')) {
+if (features.includes("products")) {
   // Products-specific initialization
   await initializeProductsFeature();
 }
@@ -1285,11 +1295,11 @@ Use wildcard types for shared relationships:
 # ontology-core.yaml
 connectionTypes:
   - name: created_by
-    fromType: '*'       # Any thing can have a creator
+    fromType: "*" # Any thing can have a creator
     toType: user
 
   - name: viewed_by
-    fromType: '*'       # Any thing can be viewed
+    fromType: "*" # Any thing can be viewed
     toType: user
 ```
 
@@ -1297,7 +1307,7 @@ connectionTypes:
 
 ## 11. Migration Guide
 
-### From Hardcoded Schema to Multi-Ontology
+### From Hardcoded Schema to ONE Ontology
 
 **Before (Hardcoded):**
 
@@ -1305,24 +1315,24 @@ connectionTypes:
 // backend/convex/schema.ts
 entities: defineTable({
   type: v.union(
-    v.literal('page'),
-    v.literal('user'),
-    v.literal('blog_post'),
-    v.literal('product'),
+    v.literal("page"),
+    v.literal("user"),
+    v.literal("blog_post"),
+    v.literal("product")
     // ... 50 more hardcoded types
   ),
-})
+});
 ```
 
-**After (Multi-Ontology):**
+**After (ONE Ontology):**
 
 ```typescript
 // backend/convex/schema.ts
-import { THING_TYPES } from './types/ontology';
+import { THING_TYPES } from "./types/ontology";
 
 entities: defineTable({
-  type: v.union(...THING_TYPES.map(t => v.literal(t))),
-})
+  type: v.union(...THING_TYPES.map((t) => v.literal(t))),
+});
 ```
 
 ### Migration Steps
@@ -1331,12 +1341,12 @@ entities: defineTable({
 
 Create a spreadsheet of all entity types in use:
 
-| Type | Feature | Usage Count |
-|------|---------|-------------|
-| page | core | 1,245 |
-| user | core | 8,932 |
-| blog_post | blog | 3,421 |
-| product | shop | 1,892 |
+| Type      | Feature | Usage Count |
+| --------- | ------- | ----------- |
+| page      | core    | 1,245       |
+| user      | core    | 8,932       |
+| blog_post | blog    | 3,421       |
+| product   | shop    | 1,892       |
 
 **Step 2: Group Types into Features**
 
@@ -1371,7 +1381,7 @@ Monitor for issues after deployment.
 
 ### Data Migration
 
-**Good news:** No data migration required! The multi-ontology architecture doesn't change your data structure, only type definitions.
+**Good news:** No data migration required! The ONE Ontology architecture doesn't change your data structure, only type definitions.
 
 Existing data remains valid:
 
@@ -1413,7 +1423,7 @@ import {
 
   // Metadata
   ONTOLOGY_METADATA,
-} from './backend/convex/types/ontology';
+} from "./backend/convex/types/ontology";
 ```
 
 ### Type Guard Functions
@@ -1425,8 +1435,9 @@ isThingType(value: string): value is ThingType
 Checks if a string is a valid thing type.
 
 **Example:**
+
 ```typescript
-if (isThingType('blog_post')) {
+if (isThingType("blog_post")) {
   // Type is valid
 }
 ```
@@ -1456,8 +1467,9 @@ hasFeature(feature: string): boolean
 Checks if a feature is enabled.
 
 **Example:**
+
 ```typescript
-if (hasFeature('blog')) {
+if (hasFeature("blog")) {
   // Blog feature is enabled
 }
 ```
@@ -1481,11 +1493,13 @@ ONTOLOGY_METADATA = {
 ### Problem: Type not found after adding feature
 
 **Symptom:**
+
 ```
 Error: Invalid thing type: "product"
 ```
 
 **Solution:**
+
 1. Verify feature is in `PUBLIC_FEATURES`
 2. Run `bun run scripts/generate-ontology-types.ts`
 3. Restart Convex dev server
@@ -1495,6 +1509,7 @@ Error: Invalid thing type: "product"
 ### Problem: Circular dependency error
 
 **Symptom:**
+
 ```
 Error: Circular dependency detected: blog → portfolio → blog
 ```
@@ -1516,6 +1531,7 @@ extends: core
 ### Problem: Duplicate type error
 
 **Symptom:**
+
 ```
 Error: Duplicate thing type "product" in features "shop" and "marketplace"
 ```
@@ -1528,11 +1544,13 @@ Consolidate into one feature or use different names.
 ### Problem: Feature not loading
 
 **Symptom:**
+
 ```
 ⚠️  Feature "products" not found, skipping
 ```
 
 **Solution:**
+
 1. Verify file exists: `/one/knowledge/ontology-products.yaml`
 2. Check naming: `ontology-{feature}.yaml`
 3. Feature name in YAML must match filename
@@ -1543,7 +1561,7 @@ Consolidate into one feature or use different names.
 
 ### Q: Do I need to migrate existing data?
 
-**A:** No! The multi-ontology architecture only changes type definitions, not data structure. Existing data remains valid.
+**A:** No! The ONE Ontology architecture only changes type definitions, not data structure. Existing data remains valid.
 
 ---
 
@@ -1606,7 +1624,7 @@ Consolidate into one feature or use different names.
 ### Test Reports
 
 - [Test Report](/backend/TEST-REPORT-ONTOLOGY.md) - 33 tests, all passing
-- [Implementation Summary](/MULTI-ONTOLOGY-IMPLEMENTATION-COMPLETE.md) - Production readiness
+- [Implementation Summary](/ONE Ontology-IMPLEMENTATION-COMPLETE.md) - Production readiness
 
 ### Community
 
@@ -1618,7 +1636,7 @@ Consolidate into one feature or use different names.
 
 ## Summary
 
-The Multi-Ontology Architecture provides:
+The ONE Ontology Architecture provides:
 
 ✅ **Feature Modularity** - Self-contained, composable features
 ✅ **Type Safety** - Compile-time and runtime validation

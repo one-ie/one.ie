@@ -12,6 +12,8 @@ import { Badge } from '@/components/ui/badge';
 import { Button } from '@/components/ui/button';
 import { ArrowLeft, Code, CheckCircle2, Clock, AlertCircle, Users, Database, FileText, Zap, Link as LinkIcon } from 'lucide-react';
 import { FeatureSidebarNav } from '@/components/features/FeatureSidebarNav';
+// Import MDX components for embedding in feature pages
+import * as MDXComponents from '@/components/features/mdx';
 
 // Enable static pre-rendering for this dynamic route
 export const prerender = true;
@@ -31,7 +33,14 @@ interface Props {
 }
 
 const { feature, allFeatures } = Astro.props;
-const { Content } = await feature.render();
+
+// Check if this is an MDX file by looking at the file path
+const isMDX = feature.id.endsWith('.mdx');
+
+// For MDX files, pass components so they can be used in the content
+const { Content } = await feature.render(
+  isMDX ? { components: MDXComponents } : {}
+);
 
 const statusIcons = {
   completed: CheckCircle2,

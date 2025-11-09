@@ -105,6 +105,7 @@ architecture.md Structure (CANONICAL TEMPLATE)
 ### Key Structural Patterns in Architecture.md
 
 **1. Frontmatter (YAML)**
+
 ```yaml
 ---
 title: Architecture
@@ -120,35 +121,41 @@ ai_context: |
 ```
 
 **2. Section Naming Convention**
+
 - Double hash (##) for major sections
 - Triple hash (###) for subsections
 - Quad hash (####) for sub-subsections
 - **NEVER** uses "Table of Contents" header (content starts immediately after frontmatter)
 
 **3. Major Section Pattern**
+
 - **Opening Statement:** Clear 1-3 sentence summary
 - **Body:** Detailed explanation with examples
 - **Visual Aids:** Code blocks, ASCII diagrams, comparisons
 - **Conclusion:** Key insights or transition to next section
 
 **4. Evidence-Based Arguments**
+
 - **Problem statement** → counterargument → evidence → conclusion
 - Uses real metrics, comparisons, and concrete examples
 - Addresses objections head-on with counter-arguments section
 
 **5. Code Example Convention**
+
 - Indented with triple backticks
 - Includes language identifier (typescript, sql, etc.)
 - Shows minimal but complete examples
 - Explains each block in adjacent text
 
 **6. List Types**
+
 - **Bulleted lists** for unordered items
 - **Numbered lists** for sequences
 - **Key insight boxes** use **bold** text at start of paragraphs
 - **Tables** for comparisons (| header | data |)
 
 **7. Emphasis Hierarchy**
+
 - Line breaks between major ideas
 - Horizontal rules (---) rarely used
 - **Bold** for concepts (not colors or emojis)
@@ -161,6 +168,7 @@ ai_context: |
 ### Complete Classification (50 plans files analyzed)
 
 #### GROUP A: WELL-ALIGNED FILES (6 files - 12%)
+
 **These follow architecture.md patterns closely**
 
 1. **backend-agnostic-frontend.md** (391 lines)
@@ -215,6 +223,7 @@ ai_context: |
    - **Structure Score:** 85%
 
 #### GROUP B: PARTIALLY ALIGNED FILES (18 files - 36%)
+
 **These have some structure but deviate significantly**
 
 Files: email.md, app.md, data-quality-metrics.md, update-demos.md, wave1-onboarding-vision.md, sync-checklist.md, SIMPLIFICATION-EXAMPLES.md, ai-elements.md, effect-patterns-reference.md, repos.md, 3-groups.md, backend-target-structure.md, execution-strategy.md, phase-3-implementation.md, mail-backend.md, better-auth-any-backend-revised.md, separate-demo.md, backend-structure.md
@@ -222,6 +231,7 @@ Files: email.md, app.md, data-quality-metrics.md, update-demos.md, wave1-onboard
 **Common Issues:** Missing some standard sections, inconsistent naming, weak narrative flow
 
 #### GROUP C: MINIMAL/STUB FILES (18 files - 36%)
+
 **These are underdeveloped or incomplete**
 
 Files: big-plan.md, ontology-driven-strategy.md, components.md, desktop.md, test-backend-connection.md, deep-researcher-agent.md, 1-create-workflow.md, QUICK-START-SIMPLIFICATION.md, enhance-auth.md, feature-based-sites.md, phase-3-implementation.md, workflow-files.md, open-agent.md, complete-step-by-step.md, shadcn-integration-summary.md, agent-director-100-cycle-plans.md, and others
@@ -229,9 +239,10 @@ Files: big-plan.md, ontology-driven-strategy.md, components.md, desktop.md, test
 **Common Issues:** Outline only, no Executive Summary, incomplete sections
 
 #### GROUP D: MISPLACED/ARCHIVE FILES (8 files - 16%)
+
 **Not structured as plans**
 
-Files: SIMPLIFICATION-SUMMARY.md, README-SIMPLIFICATION.md, architecture-summary.md, readme-backend-cleanup.md, multi-ontology-architecture.md, deployment-architecture.md, and similar documents
+Files: SIMPLIFICATION-SUMMARY.md, README-SIMPLIFICATION.md, architecture-summary.md, readme-backend-cleanup.md, ONE Ontology-architecture.md, deployment-architecture.md, and similar documents
 
 **Issue:** Should be in /knowledge/ not /plans/
 
@@ -242,6 +253,7 @@ Files: SIMPLIFICATION-SUMMARY.md, README-SIMPLIFICATION.md, architecture-summary
 ### Common Elements (Found in Group A files)
 
 **1. Frontmatter Structure** (100% consistency in Group A)
+
 ```yaml
 ---
 title: [Clear, descriptive title]
@@ -259,12 +271,14 @@ ai_context: |
 ```
 
 **2. Executive Summary** (100% of Group A)
+
 - First section after frontmatter
 - Clear value proposition (why this matters)
 - Key metrics or scope
 - Status indicator (In Progress, Validated, etc.)
 
 **3. Major Sections** (typical Group A pattern)
+
 - Overview/Architecture
 - Detailed breakdown
 - Risk/Quality analysis
@@ -274,12 +288,14 @@ ai_context: |
 - Next actions
 
 **4. Section Hierarchy**
+
 - H2 (##) for major sections
 - H3 (###) for subsections
 - H4 (####) for detailed topics
 - Consistent depth (3-4 levels)
 
 **5. Supporting Elements**
+
 - ASCII diagrams for architecture
 - Tables for comparisons/timelines
 - Code blocks for technical examples
@@ -292,39 +308,48 @@ ai_context: |
 ### Specific Deviations in Group B/C Files
 
 #### Deviation 1: Missing Executive Summary
+
 **Files affected:** big-plan.md, email.md, app.md, and 8 others
 **Issue:** Plans jump directly into content without business context
 **Expected:** 2-3 sentence summary of value and scope
 
 #### Deviation 2: Inconsistent Frontmatter
+
 **Files affected:** SIMPLIFICATION-EXAMPLES.md, update-demos.md, 6 others
 **Issues:**
+
 - Missing frontmatter entirely (3 files)
 - Incomplete fields (6 files missing `ai_context`)
 - Non-standard formatting (2 files)
 
 #### Deviation 3: Missing Ontology Mapping
+
 **Files affected:** All Group B/C files except phase-1-foundation.md
 **Issue:** Plans don't validate against 6-dimension ontology
 **Expected:** Subsections for all 6 dimensions with 1-paragraph explanation each
 
 #### Deviation 4: Section Naming Inconsistency
+
 **Files affected:** 22 files
 **Examples:**
+
 - "Phase 1: Foundation" vs "Phase 1 Foundation"
 - "## Overview" vs "## Architecture Overview"
 - "## Tasks" vs "## Implementation" vs "## Deliverables"
 - "## Success Metrics" vs "## Success Criteria"
 
 #### Deviation 5: No Timeline/Sequence Information
+
 **Files affected:** 18 files (Group B/C)
 **Expected:** Every plan should specify duration, team size, phase sequence
 
 #### Deviation 6: Missing Risk Analysis
+
 **Files affected:** 16 files (Group B/C)
 **Expected:** Section identifying risks, probability/impact, mitigation
 
 #### Deviation 7: Vague Acceptance Criteria
+
 **Files affected:** 20 files
 **Expected:** Explicit checklist of "Complete when..."
 
@@ -374,21 +399,27 @@ ai_context: |
 ## Ontology Validation
 
 ### ✅ Groups (Dimension 1)
+
 [Single paragraph on how this affects groups]
 
 ### ✅ People (Dimension 2)
+
 [Single paragraph on how this affects people]
 
 ### ✅ Things (Dimension 3)
+
 [Single paragraph on how this affects things]
 
 ### ✅ Connections (Dimension 4)
+
 [Single paragraph on how this affects connections]
 
 ### ✅ Events (Dimension 5)
+
 [Single paragraph on how this affects events]
 
 ### ✅ Knowledge (Dimension 6)
+
 [Single paragraph on how this affects knowledge]
 
 **Verdict:** ✅ PASS - All 6 dimensions successfully mapped
@@ -398,12 +429,15 @@ ai_context: |
 ## [Major Section]
 
 ### Objectives
+
 [Clear goals for this section]
 
 ### Tasks
+
 [Breakdown of work]
 
 ### Deliverables
+
 - [ ] Item 1
 - [ ] Item 2
 
@@ -411,9 +445,9 @@ ai_context: |
 
 ## Risk Analysis
 
-| Risk | Probability | Impact | Mitigation |
-|------|------------|--------|-----------|
-| Description | High | Critical | Strategy |
+| Risk        | Probability | Impact   | Mitigation |
+| ----------- | ----------- | -------- | ---------- |
+| Description | High        | Critical | Strategy   |
 
 ---
 
@@ -426,9 +460,9 @@ ai_context: |
 
 ## Timeline
 
-| Phase | Week | Tasks | Owner |
-|-------|------|-------|-------|
-| 1 | 1-2 | [Tasks] | [Owner] |
+| Phase | Week | Tasks   | Owner   |
+| ----- | ---- | ------- | ------- |
+| 1     | 1-2  | [Tasks] | [Owner] |
 
 ---
 
@@ -456,11 +490,13 @@ ai_context: |
 ### Priority 1: CRITICAL (44 files)
 
 **Week 1: Standardize Frontmatter + Executive Summary**
+
 - Add/fix frontmatter on 44 files
 - Add Executive Summary to all files
 - Validation script to verify
 
 **Week 2: Add Ontology Mapping + Timeline**
+
 - 6-dimension validation on all files
 - Standardize section names
 - Add Risk Analysis to 16+ files
@@ -468,6 +504,7 @@ ai_context: |
 ### Priority 2: HIGH (36 files)
 
 **Week 3: Add Supporting Sections**
+
 - Success Metrics on 20 files
 - Dependencies on 14 files
 - Related Documents links
@@ -475,6 +512,7 @@ ai_context: |
 ### Priority 3: MEDIUM (18 files)
 
 **Week 4: Reorganize Misplaced Files**
+
 - Move architecture docs to /knowledge/
 - Archive incomplete files
 - Update cross-references
@@ -485,14 +523,14 @@ ai_context: |
 
 ### Metrics (Current → Target)
 
-| Metric | Current | Target |
-|--------|---------|--------|
-| Frontmatter Compliance | 88% | 100% |
-| Executive Summary Coverage | 12% | 100% |
-| Ontology Mapping Coverage | 12% | 100% |
-| Risk Analysis Coverage | 12% | 92%+ |
-| Success Metrics Coverage | 14% | 98%+ |
-| Structural Alignment Score | 12% | 95%+ |
+| Metric                     | Current | Target |
+| -------------------------- | ------- | ------ |
+| Frontmatter Compliance     | 88%     | 100%   |
+| Executive Summary Coverage | 12%     | 100%   |
+| Ontology Mapping Coverage  | 12%     | 100%   |
+| Risk Analysis Coverage     | 12%     | 92%+   |
+| Success Metrics Coverage   | 14%     | 98%+   |
+| Structural Alignment Score | 12%     | 95%+   |
 
 ---
 
@@ -501,6 +539,7 @@ ai_context: |
 For each plan file, verify:
 
 **Frontmatter**
+
 - [ ] Title present
 - [ ] dimension = "things"
 - [ ] category = "plans"
@@ -510,6 +549,7 @@ For each plan file, verify:
 - [ ] ai_context = 3-4 sentences
 
 **Content**
+
 - [ ] Executive Summary present (2-3 sentences)
 - [ ] Status field (Validated/In Progress/Complete)
 - [ ] Duration specified
@@ -522,6 +562,7 @@ For each plan file, verify:
 - [ ] Next Actions section
 
 **Structure**
+
 - [ ] Consistent section hierarchy (## → ### → ####)
 - [ ] Clear section names (not vague)
 - [ ] Proper formatting (code blocks, tables, lists)

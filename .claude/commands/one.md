@@ -6,23 +6,85 @@ When user types `/one`, follow this workflow:
 
 ---
 
-## Step 1: Server Status Check (< 1 second)
+## Step 1: Server Status Check & Auto-Start (< 3 seconds)
+
+### Check if Running
 
 ```bash
 lsof -ti:4321 2>/dev/null && echo "RUNNING" || echo "STOPPED"
 ```
 
 **If RUNNING:**
-```
-✅ Dev Server: http://localhost:4321
-```
+- Show "✅ Dev Server: http://localhost:4321" in the interface below
+- Skip to Step 2
 
 **If STOPPED:**
-- Check if installed: `[ -d web/node_modules ] && echo "installed" || echo "missing"`
-- If missing: Run `cd web && bun install`
-- Then: Run `cd web && bun run dev > /dev/null 2>&1 &`
-- Show: "🚀 Starting server..." then wait 2 seconds
-- Final: "✅ Dev Server: http://localhost:4321"
+
+### Determine Working Directory
+
+```bash
+pwd | grep -q '/web$' && echo "IN_WEB" || echo "IN_ROOT"
+```
+
+### Check if Dependencies Installed
+
+**If IN_ROOT:**
+```bash
+[ -d web/node_modules ] && echo "installed" || echo "missing"
+```
+
+**If IN_WEB:**
+```bash
+[ -d node_modules ] && echo "installed" || echo "missing"
+```
+
+### Install if Missing
+
+**If missing, show progress and install:**
+
+```
+📦 Installing dependencies...
+```
+
+**If IN_ROOT:**
+```bash
+cd web && bun install
+```
+
+**If IN_WEB:**
+```bash
+bun install
+```
+
+### Start Server
+
+**If IN_ROOT:**
+```bash
+cd web && bun run dev > /dev/null 2>&1 &
+```
+
+**If IN_WEB:**
+```bash
+bun run dev > /dev/null 2>&1 &
+```
+
+### Wait and Verify
+
+```bash
+sleep 3 && lsof -ti:4321 2>/dev/null
+```
+
+### Open Start Page
+
+```bash
+open http://localhost:4321/start 2>/dev/null || xdg-open http://localhost:4321/start 2>/dev/null || start http://localhost:4321/start 2>/dev/null
+```
+
+**Final Output:**
+```
+✅ Dev Server: http://localhost:4321
+🚀 Opening /start page in browser...
+```
 
 ---
 

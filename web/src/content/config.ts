@@ -426,7 +426,7 @@ const FeatureSchema = z.object({
   draft: z.boolean().optional().default(false),
 });
 
-// Define the Features collection
+// Define the Features collection (MDX-enabled for component embedding)
 const features = defineCollection({
   type: 'content',
   schema: FeatureSchema,
@@ -449,6 +449,49 @@ const docs = defineCollection({
   schema: DocsSchema,
 });
 
+// Define the Videos schema (video content ontology - thing type: video)
+// Enhanced with premium Vidstack features for education and news content
+const VideoSchema = z.object({
+  // Basic metadata
+  title: z.string(),
+  description: z.string(),
+  youtubeId: z.string().optional(), // For YouTube embeds
+  videoUrl: z.string().optional(),  // For native hosting (future)
+  thumbnail: z.string(),            // Image URL or path
+  duration: z.number(),             // Seconds
+  publishedAt: z.coerce.date(),     // Coerce string to Date
+  author: z.string().optional(),
+  categories: z.array(z.string()).default([]),
+  tags: z.array(z.string()).default([]),
+
+  // Premium features - Education & News
+  chapters: z.array(z.object({
+    startTime: z.number(),          // Seconds from start
+    endTime: z.number().optional(), // Optional end time
+    text: z.string(),               // Chapter title
+  })).optional(),                   // Chapter markers for navigation
+
+  subtitles: z.array(z.object({
+    src: z.string(),                // VTT file URL
+    label: z.string(),              // Display name (e.g., "English")
+    language: z.string(),           // Language code (e.g., "en")
+    kind: z.enum(['subtitles', 'captions']), // Type of text track
+    default: z.boolean().optional(), // Default language
+  })).optional(),                   // Multi-language subtitle support
+
+  thumbnails: z.string().optional(), // VTT file with thumbnail previews
+  streamType: z.enum(['on-demand', 'live', 'live:dvr']).optional(), // Video type
+  aspectRatio: z.string().optional(), // Custom aspect ratio (default: 16/9)
+  featured: z.boolean().default(false), // Feature on homepage
+  draft: z.boolean().default(false), // Hide if draft
+});
+
+// Define the Videos collection
+const videos = defineCollection({
+  type: 'content',
+  schema: VideoSchema,
+});
+
 // Note: Installation-specific documentation is handled via file-resolver utility
 // in Astro pages, not through content collections. This allows dynamic resolution
 // based on INSTALLATION_NAME environment variable at runtime.
@@ -464,6 +507,7 @@ export const collections = {
   connections: connections,
   features: features,
   docs: docs,
+  videos: videos,
 };
 
 // Export schema types
@@ -477,3 +521,4 @@ export type ProjectSchema = z.infer<typeof ProjectSchema>;
 export type ConnectionSchema = z.infer<typeof ConnectionSchema>;
 export type FeatureSchema = z.infer<typeof FeatureSchema>;
 export type DocsSchema = z.infer<typeof DocsSchema>;
+export type VideoSchema = z.infer<typeof VideoSchema>;

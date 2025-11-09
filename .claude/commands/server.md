@@ -72,83 +72,95 @@ lsof -ti:4321 2>/dev/null
 If running, show:
 
 ```
-⚠️  Server already running on port 4321
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+⚠️  Server Already Running
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
 URL: http://localhost:4321
+PID: [process-id]
 
 Use /server restart to restart it.
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 ```
 
-### Step 2: Verify web Directory Exists
+Stop here and don't continue.
+
+### Step 2: Detect Working Directory
 
 ```bash
-[ -d web ] && echo "exists" || echo "missing"
+pwd | grep -q '/web$' && echo "IN_WEB" || echo "IN_ROOT"
 ```
 
-If missing, show error:
+### Step 3: Check Dependencies Installed
 
-```
-❌ web/ directory not found
-
-Are you in the ONE Platform root directory?
-
-Current directory: [pwd]
-```
-
-### Step 3: Check Dependencies are Installed
-
-Check if `node_modules` exists in web/:
-
+**If IN_ROOT:**
 ```bash
 [ -d web/node_modules ] && echo "installed" || echo "missing"
 ```
 
-**If dependencies not installed:**
-
-Show progress message and install:
-
-```
-📦 Installing dependencies...
-
-Installing:
-  cd web && bun install
+**If IN_WEB:**
+```bash
+[ -d node_modules ] && echo "installed" || echo "missing"
 ```
 
-Run the install:
+### Step 4: Install Dependencies if Missing
 
+**If missing, show progress:**
+
+```
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+📦 Installing Dependencies
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+```
+
+**If IN_ROOT:**
 ```bash
 cd web && bun install
 ```
 
-**If install succeeds, continue to Step 4.**
+**If IN_WEB:**
+```bash
+bun install
+```
 
-**If install fails, show error:**
+**If install fails, show error and STOP:**
 
 ```
-❌ Failed to install dependencies
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+❌ Failed to Install Dependencies
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
 Try manually:
-cd web && bun install
+  bun install
 
 Common issues:
-• Node.js/Bun not installed
+• Bun not installed (curl -fsSL https://bun.sh/install | bash)
 • package.json corrupted
 • Network issues
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 ```
 
-### Step 4: Start Server in Background
+### Step 5: Start Server in Background
 
+**If IN_ROOT:**
 ```bash
 cd web && bun run dev > /dev/null 2>&1 &
 ```
 
-### Step 5: Wait and Verify (2 seconds)
-
+**If IN_WEB:**
 ```bash
-sleep 2 && lsof -ti:4321 2>/dev/null
+bun run dev > /dev/null 2>&1 &
 ```
 
-### Step 5: Open Start Page in Browser
+### Step 6: Wait and Verify (3 seconds)
+
+```bash
+sleep 3 && lsof -ti:4321 2>/dev/null
+```
+
+### Step 7: Open Start Page in Browser
 
 ```bash
 open http://localhost:4321/start 2>/dev/null || xdg-open http://localhost:4321/start 2>/dev/null || start http://localhost:4321/start 2>/dev/null
@@ -164,7 +176,7 @@ open http://localhost:4321/start 2>/dev/null || xdg-open http://localhost:4321/s
 URL: http://localhost:4321/start
 PID: [process-id]
 
-Opening start page in your browser...
+Opening /start page in your browser...
 
 The server is running in the background.
 
@@ -179,15 +191,19 @@ Commands:
 **If failed to start:**
 
 ```
-❌ Failed to start dev server
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+❌ Failed to Start Dev Server
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
 Check for errors:
-cd web && bun run dev
+  bun run dev
 
 Possible issues:
-• Port 4321 already in use
+• Port 4321 in use (try: lsof -ti:4321 | xargs kill)
 • Missing dependencies (run: bun install)
-• Build errors in web/
+• Build errors (check TypeScript)
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 ```
 
 ---
@@ -257,34 +273,63 @@ lsof -ti:4321 | xargs kill 2>/dev/null
 sleep 1
 ```
 
-### Step 2: Check Dependencies are Installed
+### Step 2: Detect Working Directory
 
-Check if `node_modules` exists in web/:
+```bash
+pwd | grep -q '/web$' && echo "IN_WEB" || echo "IN_ROOT"
+```
 
+### Step 3: Check Dependencies Installed
+
+**If IN_ROOT:**
 ```bash
 [ -d web/node_modules ] && echo "installed" || echo "missing"
 ```
 
-**If dependencies not installed, run:**
+**If IN_WEB:**
+```bash
+[ -d node_modules ] && echo "installed" || echo "missing"
+```
 
+### Step 4: Install Dependencies if Missing
+
+**If missing:**
+
+```
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+📦 Installing Dependencies
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+```
+
+**If IN_ROOT:**
 ```bash
 cd web && bun install
 ```
 
-### Step 3: Start Server
+**If IN_WEB:**
+```bash
+bun install
+```
 
+### Step 5: Start Server
+
+**If IN_ROOT:**
 ```bash
 cd web && bun run dev > /dev/null 2>&1 &
-sleep 2
 ```
 
-### Step 4: Verify Running
+**If IN_WEB:**
+```bash
+bun run dev > /dev/null 2>&1 &
+```
+
+### Step 6: Wait and Verify (3 seconds)
 
 ```bash
-lsof -ti:4321 2>/dev/null
+sleep 3 && lsof -ti:4321 2>/dev/null
 ```
 
-### Step 4: Open Start Page in Browser
+### Step 7: Open Start Page in Browser
 
 ```bash
 open http://localhost:4321/start 2>/dev/null || xdg-open http://localhost:4321/start 2>/dev/null || start http://localhost:4321/start 2>/dev/null
@@ -301,7 +346,7 @@ URL: http://localhost:4321/start
 PID: [process-id]
 
 Fresh server instance running.
-Opening start page in your browser...
+Opening /start page in your browser...
 
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 ```
@@ -309,14 +354,18 @@ Opening start page in your browser...
 **If restart failed:**
 
 ```
-❌ Failed to restart server
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+❌ Failed to Restart Server
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
 Try manually:
 1. /server stop
 2. /server start
 
 Or check logs:
-cd web && bun run dev
+  bun run dev
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 ```
 
 ---

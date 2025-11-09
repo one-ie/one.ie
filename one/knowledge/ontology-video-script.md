@@ -11,20 +11,20 @@ version: 1.0.0
 ai_context: |
   This document is part of the knowledge dimension in the ontology-video-script.md category.
   Location: one/knowledge/ontology-video-script.md
-  Purpose: Documents multi-ontology tutorial video script
+  Purpose: Documents ONE Ontology tutorial video script
   Related dimensions: connections, events, groups, people, things
   For AI agents: Read this to understand ontology video script.
 ---
 
-# Multi-Ontology Tutorial Video Script
+# ONE Ontology Tutorial Video Script
 
-**Purpose:** Educational video series explaining the multi-ontology architecture
+**Purpose:** Educational video series explaining the ONE Ontology architecture
 **Target Audience:** Developers building on ONE Platform
 **Total Duration:** ~35 minutes (3 videos)
 
 ---
 
-## Video 1: Introduction to Multi-Ontology Architecture (5 minutes)
+## Video 1: Introduction to ONE Ontology Architecture (5 minutes)
 
 ### [0:00-0:30] Hook
 
@@ -36,9 +36,10 @@ ai_context: |
 
 What if adding a blog, newsletter, or course system was as simple as enabling a feature flag?
 
-Welcome to the Multi-Ontology Architecture."
+Welcome to the ONE Ontology Architecture."
 
 **ON-SCREEN TEXT:**
+
 - No schema migrations
 - Type-safe by default
 - Infinite extensibility
@@ -58,6 +59,7 @@ Want to add a shop? Create tables for products, orders, inventory, shipping...
 Before long, you have 50 tables, 200 columns, and a maintenance nightmare.
 
 Every new feature requires:
+
 - Database migrations
 - Schema updates
 - Breaking changes
@@ -67,11 +69,13 @@ There's a better way."
 
 **ON-SCREEN TEXT:**
 Traditional:
+
 - 50+ tables
 - Schema migrations
 - Breaking changes
 
 ONE:
+
 - 6 dimensions
 - YAML definitions
 - Zero downtime
@@ -82,7 +86,7 @@ ONE:
 
 **SCRIPT:**
 
-"The Multi-Ontology Architecture solves this with 6 universal dimensions:
+"The ONE Ontology Architecture solves this with 6 universal dimensions:
 
 1. **Groups** - Who belongs where (organizations, teams, communities)
 2. **People** - Who can do what (roles, permissions)
@@ -119,6 +123,7 @@ All type-safe. All auto-generated. Zero schema migrations."
 **Video 3:** Advanced patterns - Multi-feature interactions, performance optimization, and production deployment. 20 minutes.
 
 By the end, you'll be able to:
+
 - Create custom features in minutes
 - Compose features together
 - Deploy with confidence
@@ -127,6 +132,7 @@ By the end, you'll be able to:
 Let's get started."
 
 **ON-SCREEN TEXT:**
+
 - 3 videos, 35 minutes
 - Build a real feature
 - Production-ready patterns
@@ -144,6 +150,7 @@ Let's get started."
 "Welcome back! In this video, we're building a complete newsletter feature from scratch.
 
 We'll create:
+
 - Newsletter publications
 - Subscriber management
 - Email campaigns
@@ -162,18 +169,21 @@ Let's dive in."
 "Before writing any code, let's plan our data model.
 
 **What entities do we need?** (Things)
+
 - Newsletter - The publication
 - Newsletter Issue - Individual editions
 - Subscriber - People subscribed
 - Campaign - Email delivery system
 
 **How do they relate?** (Connections)
+
 - Creator owns Newsletter
 - Issue belongs to Newsletter
 - Subscriber subscribes to Newsletter
 - Campaign sends Issue
 
 **What actions happen?** (Events)
+
 - Newsletter created
 - User subscribed
 - Issue published
@@ -183,6 +193,7 @@ Let's dive in."
 This maps perfectly to our 6-dimension ontology."
 
 **ON-SCREEN DIAGRAM:**
+
 ```
 Creator --owns--> Newsletter --contains--> Issue
                       ^                      |
@@ -240,10 +251,11 @@ eventTypes:
 That's it. Our ontology is defined."
 
 **ON-SCREEN TEXT:**
+
 - 4 thing types
 - 5 connection types
 - 12 event types
-= Complete feature
+  = Complete feature
 
 ### [4:00-5:30] Generating TypeScript Types
 
@@ -258,12 +270,14 @@ PUBLIC_FEATURES='newsletter' bun run generate-ontology-types.ts
 ```
 
 Watch as it:
+
 1. Loads the core ontology
 2. Loads your newsletter ontology
 3. Composes them together
 4. Generates TypeScript types
 
 Output:
+
 - 70 thing types (core + newsletter)
 - 30 connection types
 - 79 event types
@@ -271,6 +285,7 @@ Output:
 All type-safe. All auto-complete. Zero manual typing."
 
 **ON-SCREEN OUTPUT:**
+
 ```
 ✅ Ontologies loaded successfully!
    - Features: core, newsletter
@@ -292,8 +307,7 @@ All type-safe. All auto-complete. Zero manual typing."
 Import the generated types:
 
 ```typescript
-import type { ThingType, ConnectionType, EventType }
-  from '../types/ontology';
+import type { ThingType, ConnectionType, EventType } from "../types/ontology";
 ```
 
 Create the mutation:
@@ -301,28 +315,30 @@ Create the mutation:
 ```typescript
 export const create = mutation({
   args: {
-    groupId: v.id('groups'),
+    groupId: v.id("groups"),
     title: v.string(),
     schedule: v.string(),
   },
   handler: async (ctx, args) => {
     // 1. Create newsletter entity
-    const newsletterId = await ctx.db.insert('entities', {
-      type: 'newsletter' as ThingType,
+    const newsletterId = await ctx.db.insert("entities", {
+      type: "newsletter" as ThingType,
       name: args.title,
-      properties: { /* ... */ },
+      properties: {
+        /* ... */
+      },
     });
 
     // 2. Create ownership connection
-    await ctx.db.insert('connections', {
-      relationshipType: 'owns' as ConnectionType,
+    await ctx.db.insert("connections", {
+      relationshipType: "owns" as ConnectionType,
       fromEntityId: userId,
       toEntityId: newsletterId,
     });
 
     // 3. Log creation event
-    await ctx.db.insert('events', {
-      type: 'newsletter_created' as EventType,
+    await ctx.db.insert("events", {
+      type: "newsletter_created" as EventType,
       actorId: userId,
       targetId: newsletterId,
     });
@@ -336,6 +352,7 @@ Three steps. Create, connect, log. Every time."
 
 **ON-SCREEN TEXT:**
 Pattern:
+
 1. Create entity
 2. Create connection
 3. Log event
@@ -350,13 +367,12 @@ Pattern:
 
 ```typescript
 export const list = query({
-  args: { groupId: v.id('groups') },
+  args: { groupId: v.id("groups") },
   handler: async (ctx, args) => {
     return await ctx.db
-      .query('entities')
-      .withIndex('group_type', q =>
-        q.eq('groupId', args.groupId)
-         .eq('type', 'newsletter')
+      .query("entities")
+      .withIndex("group_type", (q) =>
+        q.eq("groupId", args.groupId).eq("type", "newsletter")
       )
       .collect();
   },
@@ -364,6 +380,7 @@ export const list = query({
 ```
 
 This automatically:
+
 - Filters by group (multi-tenant)
 - Filters by type
 - Returns real-time results
@@ -381,10 +398,10 @@ That's the power of Convex."
 "Write tests to validate:
 
 ```typescript
-it('should create newsletter', async () => {
+it("should create newsletter", async () => {
   const id = await t.mutation(api.newsletter.create, {
-    groupId: 'test',
-    title: 'Test Newsletter',
+    groupId: "test",
+    title: "Test Newsletter",
   });
 
   expect(id).toBeDefined();
@@ -392,6 +409,7 @@ it('should create newsletter', async () => {
 ```
 
 Run tests:
+
 ```bash
 bun test newsletter.test.ts
 ```
@@ -421,6 +439,7 @@ See you there!"
 You've learned the basics. Now let's level up.
 
 We'll cover:
+
 - Multi-feature interactions
 - Performance optimization
 - Production deployment
@@ -454,7 +473,7 @@ Now define a connection:
 ```yaml
 connectionTypes:
   - name: featured_in
-    fromType: blog_post      # From blog feature
+    fromType: blog_post # From blog feature
     toType: newsletter_issue # From newsletter feature
 ```
 
@@ -474,8 +493,8 @@ export const sendPostToNewsletter = mutation({
     const post = await ctx.db.get(args.postId);
 
     // Create newsletter issue from post
-    const issueId = await ctx.db.insert('entities', {
-      type: 'newsletter_issue',
+    const issueId = await ctx.db.insert("entities", {
+      type: "newsletter_issue",
       properties: {
         title: post.properties.title,
         content: post.properties.content,
@@ -483,15 +502,15 @@ export const sendPostToNewsletter = mutation({
     });
 
     // Link post to issue
-    await ctx.db.insert('connections', {
-      relationshipType: 'featured_in',
+    await ctx.db.insert("connections", {
+      relationshipType: "featured_in",
       fromEntityId: args.postId,
       toEntityId: issueId,
     });
 
     // Log event
-    await ctx.db.insert('events', {
-      type: 'post_emailed',
+    await ctx.db.insert("events", {
+      type: "post_emailed",
       actorId: args.postId,
       targetId: issueId,
     });
@@ -505,6 +524,7 @@ Features compose beautifully."
 
 **ON-SCREEN TEXT:**
 Compose Features:
+
 - Extend multiple
 - Cross-reference types
 - Share connections
@@ -521,14 +541,14 @@ Compose Features:
 Check enabled features:
 
 ```typescript
-import { ONTOLOGY_METADATA } from '../types/ontology';
+import { ONTOLOGY_METADATA } from "../types/ontology";
 
 export const getFeatures = query({
   handler: async () => {
     return {
       enabled: ONTOLOGY_METADATA.features,
-      hasBlog: ONTOLOGY_METADATA.features.includes('blog'),
-      hasShop: ONTOLOGY_METADATA.features.includes('shop'),
+      hasBlog: ONTOLOGY_METADATA.features.includes("blog"),
+      hasShop: ONTOLOGY_METADATA.features.includes("shop"),
     };
   },
 });
@@ -541,8 +561,8 @@ export const createContent = mutation({
   handler: async (ctx, args) => {
     const features = ONTOLOGY_METADATA.features;
 
-    if (args.type === 'blog_post' && !features.includes('blog')) {
-      throw new Error('Blog feature not enabled');
+    if (args.type === "blog_post" && !features.includes("blog")) {
+      throw new Error("Blog feature not enabled");
     }
 
     // Create entity...
@@ -551,6 +571,7 @@ export const createContent = mutation({
 ```
 
 This enables:
+
 - Feature flags
 - A/B testing
 - Gradual rollouts
@@ -562,6 +583,7 @@ One platform. Infinite configurations."
 
 **ON-SCREEN TEXT:**
 Runtime Features:
+
 - Feature flags
 - A/B testing
 - Gradual rollout
@@ -580,6 +602,7 @@ Runtime Features:
 Type validation can be slow with linear search.
 
 Before:
+
 ```typescript
 function isValid(type: string) {
   return THING_TYPES.includes(type); // O(n)
@@ -587,6 +610,7 @@ function isValid(type: string) {
 ```
 
 After:
+
 ```typescript
 const THING_TYPE_SET = new Set(THING_TYPES);
 
@@ -608,9 +632,7 @@ for (const item of items) {
 }
 
 // Good: Batch with Promise.all
-const results = await Promise.all(
-  items.map(item => create(item))
-);
+const results = await Promise.all(items.map((item) => create(item)));
 ```
 
 10x faster for bulk operations.
@@ -621,13 +643,13 @@ Always use indexes:
 
 ```typescript
 // Bad: No index
-await ctx.db.query('entities').collect();
+await ctx.db.query("entities").collect();
 
 // Good: Use index
 await ctx.db
-  .query('entities')
-  .withIndex('group_type', q =>
-    q.eq('groupId', groupId).eq('type', 'newsletter')
+  .query("entities")
+  .withIndex("group_type", (q) =>
+    q.eq("groupId", groupId).eq("type", "newsletter")
   )
   .collect();
 ```
@@ -640,15 +662,16 @@ Always paginate:
 
 ```typescript
 // Bad: Unbounded
-await ctx.db.query('entities').collect();
+await ctx.db.query("entities").collect();
 
 // Good: Limited
-await ctx.db.query('entities').take(50);
+await ctx.db.query("entities").take(50);
 ```
 
 Prevents memory issues at scale."
 
 **ON-SCREEN METRICS:**
+
 - Type checks: 100x faster
 - Batch ops: 10x faster
 - Indexed queries: 1000x faster
@@ -670,19 +693,17 @@ Every action creates an event. Query events for insights.
 export const getAnalytics = query({
   handler: async (ctx, args) => {
     const events = await ctx.db
-      .query('events')
-      .withIndex('target_time', q =>
-        q.eq('targetId', newsletterId)
-         .gte('timestamp', thirtyDaysAgo)
+      .query("events")
+      .withIndex("target_time", (q) =>
+        q.eq("targetId", newsletterId).gte("timestamp", thirtyDaysAgo)
       )
       .collect();
 
     return {
-      subscriptions: events.filter(e =>
-        e.type === 'newsletter_subscribed'
-      ).length,
-      unsubscriptions: events.filter(e =>
-        e.type === 'newsletter_unsubscribed'
+      subscriptions: events.filter((e) => e.type === "newsletter_subscribed")
+        .length,
+      unsubscriptions: events.filter(
+        (e) => e.type === "newsletter_unsubscribed"
       ).length,
     };
   },
@@ -702,9 +723,7 @@ const cohorts = subscribers.reduce((acc, sub) => {
 
 // Calculate retention for each cohort
 const retention = Object.entries(cohorts).map(([week, subs]) => {
-  const stillActive = subs.filter(s =>
-    s.properties.active
-  ).length;
+  const stillActive = subs.filter((s) => s.properties.active).length;
 
   return {
     week,
@@ -719,6 +738,7 @@ Events enable any analytics without changing schema."
 
 **ON-SCREEN TEXT:**
 Event-Driven Analytics:
+
 - No schema changes
 - Real-time metrics
 - Infinite dimensions
@@ -781,6 +801,7 @@ Back to previous version in seconds.
 **Step 5: Monitor**
 
 Watch real-time metrics:
+
 - Event throughput
 - Query latency
 - Error rates
@@ -809,6 +830,7 @@ Production Checklist:
 The ONE Platform uses this exact architecture.
 
 Features enabled:
+
 - blog (content publishing)
 - newsletter (email marketing)
 - courses (education)
@@ -816,12 +838,14 @@ Features enabled:
 - tokens (creator economy)
 
 **By the numbers:**
+
 - 66 thing types
 - 31 connection types
 - 93 event types
 - 1 schema migration ever (the initial one)
 
 **Adding a new feature:**
+
 - Write YAML: 10 minutes
 - Generate types: 5 seconds
 - Write mutations: 20 minutes
@@ -834,6 +858,7 @@ Total: ~1 hour from idea to production.
 Traditional approach: 2-4 weeks.
 
 **Metrics:**
+
 - 98% less context for AI
 - 100x faster feature development
 - Zero schema migrations
@@ -843,6 +868,7 @@ This is the power of ontology-driven development."
 
 **ON-SCREEN STATS:**
 ONE Platform:
+
 - 66 thing types
 - 31 connections
 - 93 events
@@ -855,9 +881,10 @@ ONE Platform:
 
 **SCRIPT:**
 
-"Congratulations! You've mastered the Multi-Ontology Architecture.
+"Congratulations! You've mastered the ONE Ontology Architecture.
 
 You learned:
+
 1. The 6-dimension foundation
 2. How to create features
 3. Advanced composition patterns
@@ -872,6 +899,7 @@ You learned:
 4. Deploy to production
 
 **Resources:**
+
 - Documentation: /one/knowledge/
 - Examples: /backend/examples/
 - Community: Discord link
@@ -885,6 +913,7 @@ Happy coding!"
 You Did It! 🎉
 
 Next Steps:
+
 1. Build your feature
 2. Join Discord
 3. Read docs
@@ -895,11 +924,13 @@ Next Steps:
 **END OF VIDEO SERIES**
 
 Total Duration: ~35 minutes
+
 - Video 1: 5 minutes (Introduction)
 - Video 2: 10 minutes (First Feature)
 - Video 3: 20 minutes (Advanced Patterns)
 
 **Production Notes:**
+
 - Use screen recording for code
 - Use animations for concepts
 - Add captions for accessibility

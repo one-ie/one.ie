@@ -75,7 +75,7 @@
             }
           }
         ],
-        "currentTab": 1
+        "currentTab": 2
       }
     ],
     "direction": "vertical"
@@ -224,8 +224,20 @@
       "terminal:Open terminal": false
     }
   },
-  "active": "13ef81dce096a3a3",
+  "active": "d5d16e1429820f2d",
   "lastOpenFiles": [
+    "oil.md",
+    "knowledge/dsl.md",
+    "things/ontologies/oilfield-staffing.md",
+    "things/ontologies",
+    "events/cycle-3-video-player-port-complete-20251108.md",
+    "things/plans/video-old-archived.md",
+    "things/plans/video-backend.md",
+    "things/plans/video-frontend.md",
+    "events/server-command-optimization-20251108.md",
+    "things/plans/video.md",
+    "events/bullfm-video-podcast-analysis.md",
+    "events/AUDIT_PLAN_COMPLETION-20251108-125555.md",
     "things/plans/dsl-claude-code.md",
     "events/2025-11-08-parallel-agent-implementation.md",
     "knowledge/claude-code-integration.md",
@@ -243,24 +255,12 @@
     "knowledge/cascading-context-specification.md",
     "events/games-crypto.md",
     "events/games-crypto-strategy.md",
-    "events/games-crypto-english.md",
-    "events/documentation-updates.md",
-    "events/agent-command-implementation.md",
     "things/plans/npx-agent.md.tmp.10741.1762536409144",
     "things/plans/npx-agent.md.tmp.10741.1762536401133",
-    "things/plans/npx-agent-safety.md",
-    "things/plans/npx-agent.md",
-    "knowledge/games-english.md",
-    "knowledge/games.md",
-    "knowledge/dsl.md",
-    "example.md",
-    "things/plans/ai-tools.md",
-    "things/plans/0-timeline.md",
     "connections/x402-Baazar.txt",
     "things/todo-projects.md.tmp.37955.1761791028387",
     "things/files.yaml",
     "things/files.yaml.tmp.40358.1761761141598",
-    "knowledge/ontology-files.yaml",
-    "events/TESTING-DELIVERY.txt"
+    "knowledge/ontology-files.yaml"
   ]
 }

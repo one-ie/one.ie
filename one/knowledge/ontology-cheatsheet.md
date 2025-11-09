@@ -11,12 +11,12 @@ version: 1.0.0
 ai_context: |
   This document is part of the knowledge dimension in the ontology-cheatsheet.md category.
   Location: one/knowledge/ontology-cheatsheet.md
-  Purpose: Documents multi-ontology architecture cheat sheet
+  Purpose: Documents ONE Ontology architecture cheat sheet
   Related dimensions: connections, events, people, things
   For AI agents: Read this to understand ontology cheatsheet.
 ---
 
-# Multi-Ontology Architecture Cheat Sheet
+# ONE Ontology Architecture Cheat Sheet
 
 **Quick Reference Guide** | **Version:** 1.0.0
 
@@ -104,8 +104,8 @@ thingTypes:
       slug: string
 
       # Status and metadata
-      status: string              # active, inactive, draft
-      createdBy: string          # User ID
+      status: string # active, inactive, draft
+      createdBy: string # User ID
 
       # Feature-specific fields
       customField1: string
@@ -135,7 +135,7 @@ thingTypes:
 connectionTypes:
   - name: owns_entity
     description: "Creator owns entity"
-    fromType: creator           # From core
+    fromType: creator # From core
     toType: my_entity
     metadata:
       role: string
@@ -151,7 +151,7 @@ connectionTypes:
   - name: related_to
     description: "Generic relationship"
     fromType: my_entity
-    toType: my_entity           # Self-referential
+    toType: my_entity # Self-referential
     metadata:
       relationshipType: string
 
@@ -195,51 +195,51 @@ eventTypes:
 ### 1. Create Entity with Ownership
 
 ```typescript
-import { mutation } from '../_generated/server';
-import { v } from 'convex/values';
-import type { ThingType, ConnectionType, EventType } from '../types/ontology';
+import { mutation } from "../_generated/server";
+import { v } from "convex/values";
+import type { ThingType, ConnectionType, EventType } from "../types/ontology";
 
 export const create = mutation({
   args: {
-    groupId: v.id('groups'),
+    groupId: v.id("groups"),
     name: v.string(),
     properties: v.any(),
   },
   handler: async (ctx, args) => {
     const userId = await ctx.auth.getUserIdentity();
-    if (!userId) throw new Error('Unauthorized');
+    if (!userId) throw new Error("Unauthorized");
 
     // 1. Create entity
-    const entityId = await ctx.db.insert('entities', {
+    const entityId = await ctx.db.insert("entities", {
       groupId: args.groupId,
-      type: 'my_entity' as ThingType,
+      type: "my_entity" as ThingType,
       name: args.name,
       properties: {
         ...args.properties,
         createdBy: userId.tokenIdentifier,
       },
-      status: 'active',
+      status: "active",
       createdAt: Date.now(),
       updatedAt: Date.now(),
     });
 
     // 2. Create ownership connection
-    await ctx.db.insert('connections', {
+    await ctx.db.insert("connections", {
       groupId: args.groupId,
       fromEntityId: userId.tokenIdentifier,
       toEntityId: entityId,
-      relationshipType: 'owns' as ConnectionType,
+      relationshipType: "owns" as ConnectionType,
       metadata: {
-        role: 'owner',
-        permissions: ['read', 'write', 'delete'],
+        role: "owner",
+        permissions: ["read", "write", "delete"],
       },
       createdAt: Date.now(),
     });
 
     // 3. Log creation event
-    await ctx.db.insert('events', {
+    await ctx.db.insert("events", {
       groupId: args.groupId,
-      type: 'entity_created' as EventType,
+      type: "entity_created" as EventType,
       actorId: userId.tokenIdentifier,
       targetId: entityId,
       timestamp: Date.now(),
@@ -254,19 +254,19 @@ export const create = mutation({
 ### 2. Query Entities with Connections
 
 ```typescript
-import { query } from '../_generated/server';
-import { v } from 'convex/values';
+import { query } from "../_generated/server";
+import { v } from "convex/values";
 
 export const listWithOwners = query({
   args: {
-    groupId: v.id('groups'),
+    groupId: v.id("groups"),
   },
   handler: async (ctx, args) => {
     // Get entities
     const entities = await ctx.db
-      .query('entities')
-      .withIndex('group_type', (q) =>
-        q.eq('groupId', args.groupId).eq('type', 'my_entity')
+      .query("entities")
+      .withIndex("group_type", (q) =>
+        q.eq("groupId", args.groupId).eq("type", "my_entity")
       )
       .collect();
 
@@ -274,9 +274,9 @@ export const listWithOwners = query({
     const entitiesWithOwners = await Promise.all(
       entities.map(async (entity) => {
         const ownership = await ctx.db
-          .query('connections')
-          .withIndex('to_type', (q) =>
-            q.eq('toEntityId', entity._id).eq('relationshipType', 'owns')
+          .query("connections")
+          .withIndex("to_type", (q) =>
+            q.eq("toEntityId", entity._id).eq("relationshipType", "owns")
           )
           .first();
 
@@ -300,7 +300,7 @@ export const listWithOwners = query({
 ### 3. Type Validation
 
 ```typescript
-import { isThingType, isConnectionType, isEventType } from '../types/ontology';
+import { isThingType, isConnectionType, isEventType } from "../types/ontology";
 
 // Validate thing type
 export const validateEntity = mutation({
@@ -313,7 +313,7 @@ export const validateEntity = mutation({
     }
 
     // Now TypeScript knows args.type is valid
-    const entity = await ctx.db.insert('entities', {
+    const entity = await ctx.db.insert("entities", {
       type: args.type as ThingType,
       // ...
     });
@@ -324,14 +324,14 @@ export const validateEntity = mutation({
 ### 4. Feature Detection
 
 ```typescript
-import { ONTOLOGY_METADATA } from '../types/ontology';
+import { ONTOLOGY_METADATA } from "../types/ontology";
 
 export const getFeatures = query({
   handler: async () => {
     return {
       enabled: ONTOLOGY_METADATA.features,
-      hasBlog: ONTOLOGY_METADATA.features.includes('blog'),
-      hasShop: ONTOLOGY_METADATA.features.includes('shop'),
+      hasBlog: ONTOLOGY_METADATA.features.includes("blog"),
+      hasShop: ONTOLOGY_METADATA.features.includes("shop"),
       counts: {
         things: ONTOLOGY_METADATA.thingTypeCount,
         connections: ONTOLOGY_METADATA.connectionTypeCount,
@@ -346,8 +346,8 @@ export const createContent = mutation({
   handler: async (ctx, args) => {
     const features = ONTOLOGY_METADATA.features;
 
-    if (args.type === 'blog_post' && !features.includes('blog')) {
-      throw new Error('Blog feature not enabled');
+    if (args.type === "blog_post" && !features.includes("blog")) {
+      throw new Error("Blog feature not enabled");
     }
 
     // Create entity...
@@ -360,7 +360,7 @@ export const createContent = mutation({
 ```typescript
 export const batchCreate = mutation({
   args: {
-    groupId: v.id('groups'),
+    groupId: v.id("groups"),
     entities: v.array(
       v.object({
         type: v.string(),
@@ -377,18 +377,18 @@ export const batchCreate = mutation({
         results.push({
           name: entity.name,
           success: false,
-          error: 'Invalid type',
+          error: "Invalid type",
         });
         continue;
       }
 
       try {
-        const id = await ctx.db.insert('entities', {
+        const id = await ctx.db.insert("entities", {
           groupId: args.groupId,
           type: entity.type as ThingType,
           name: entity.name,
           properties: entity.properties,
-          status: 'active',
+          status: "active",
           createdAt: Date.now(),
           updatedAt: Date.now(),
         });
@@ -417,24 +417,27 @@ export const batchCreate = mutation({
 ```typescript
 export const getAnalytics = query({
   args: {
-    entityId: v.id('entities'),
+    entityId: v.id("entities"),
     days: v.optional(v.number()),
   },
   handler: async (ctx, args) => {
     const since = Date.now() - (args.days || 30) * 24 * 60 * 60 * 1000;
 
     const events = await ctx.db
-      .query('events')
-      .withIndex('target_time', (q) =>
-        q.eq('targetId', args.entityId).gte('timestamp', since)
+      .query("events")
+      .withIndex("target_time", (q) =>
+        q.eq("targetId", args.entityId).gte("timestamp", since)
       )
       .collect();
 
     // Group by event type
-    const byType = events.reduce((acc, event) => {
-      acc[event.type] = (acc[event.type] || 0) + 1;
-      return acc;
-    }, {} as Record<string, number>);
+    const byType = events.reduce(
+      (acc, event) => {
+        acc[event.type] = (acc[event.type] || 0) + 1;
+        return acc;
+      },
+      {} as Record<string, number>
+    );
 
     return {
       period: `${args.days || 30} days`,
@@ -459,49 +462,49 @@ export const getAnalytics = query({
 ```typescript
 // Auto-generated from ontologies
 import type {
-  ThingType,           // Union of all thing types
-  ConnectionType,      // Union of all connection types
-  EventType,          // Union of all event types
-} from './types/ontology';
+  ThingType, // Union of all thing types
+  ConnectionType, // Union of all connection types
+  EventType, // Union of all event types
+} from "./types/ontology";
 
 // Type arrays
 import {
-  THING_TYPES,         // string[] of all thing types
-  CONNECTION_TYPES,    // string[] of all connection types
-  EVENT_TYPES,        // string[] of all event types
-} from './types/ontology';
+  THING_TYPES, // string[] of all thing types
+  CONNECTION_TYPES, // string[] of all connection types
+  EVENT_TYPES, // string[] of all event types
+} from "./types/ontology";
 
 // Type guards
 import {
-  isThingType,        // (value: string) => boolean
-  isConnectionType,   // (value: string) => boolean
-  isEventType,       // (value: string) => boolean
-} from './types/ontology';
+  isThingType, // (value: string) => boolean
+  isConnectionType, // (value: string) => boolean
+  isEventType, // (value: string) => boolean
+} from "./types/ontology";
 
 // Metadata
 import {
-  ONTOLOGY_METADATA   // { features, generatedAt, counts }
-} from './types/ontology';
+  ONTOLOGY_METADATA, // { features, generatedAt, counts }
+} from "./types/ontology";
 ```
 
 ### Database Schema Types
 
 ```typescript
 // Convex auto-generated types
-import type { Doc, Id } from './_generated/dataModel';
+import type { Doc, Id } from "./_generated/dataModel";
 
 // Entity document
-type Entity = Doc<'entities'>;
-type EntityId = Id<'entities'>;
+type Entity = Doc<"entities">;
+type EntityId = Id<"entities">;
 
 // Connection document
-type Connection = Doc<'connections'>;
+type Connection = Doc<"connections">;
 
 // Event document
-type Event = Doc<'events'>;
+type Event = Doc<"events">;
 
 // Group document
-type Group = Doc<'groups'>;
+type Group = Doc<"groups">;
 ```
 
 ---
@@ -511,6 +514,7 @@ type Group = Doc<'groups'>;
 ### Issue: Types not generating
 
 **Solution:**
+
 ```bash
 # Check YAML syntax
 bun run backend/scripts/validate-ontology.ts
@@ -525,6 +529,7 @@ cat backend/convex/types/ontology.ts
 ### Issue: Invalid type errors
 
 **Solution:**
+
 ```typescript
 // Always use type guards
 if (!isThingType(args.type)) {
@@ -540,6 +545,7 @@ if (!THING_TYPES.includes(args.type)) {
 ### Issue: Circular dependencies
 
 **Solution:**
+
 ```yaml
 # Feature A
 feature: featureA
@@ -557,6 +563,7 @@ extends: featureA,featureB
 ### Issue: Missing core types
 
 **Solution:**
+
 ```yaml
 # Always extend core
 extends: core
@@ -564,13 +571,14 @@ extends: core
 # Reference core types in connections
 connectionTypes:
   - name: my_connection
-    fromType: creator     # From core
-    toType: my_thing      # From this feature
+    fromType: creator # From core
+    toType: my_thing # From this feature
 ```
 
 ### Issue: Performance with many types
 
 **Solution:**
+
 ```typescript
 // Cache type sets for O(1) lookup
 const THING_TYPE_SET = new Set(THING_TYPES);
