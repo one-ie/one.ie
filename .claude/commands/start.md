@@ -108,6 +108,21 @@ PID: [process-id]
 Opening /start page in browser...
 
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+Welcome to ONE Platform!
+
+Build production-ready features in minutes, not hours.
+
+Get started with proven templates:
+• "I want to sell coffee mugs"
+• "Create a landing page for my course"
+• "Build a product page for my service"
+
+I'll guide you through every step - no technical knowledge needed.
+
+Ready to build something amazing?
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 ```
 
 **If server was started:**
@@ -123,6 +138,21 @@ PID: [process-id]
 Opening /start page in browser...
 
 The server is running in the background.
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+Welcome to ONE Platform!
+
+Build production-ready features in minutes, not hours.
+
+Get started with proven templates:
+• "I want to sell coffee mugs"
+• "Create a landing page for my course"
+• "Build a product page for my service"
+
+I'll guide you through every step - no technical knowledge needed.
+
+Ready to build something amazing?
 
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 ```
@@ -141,6 +171,21 @@ PID: [process-id]
 Opening /start page in browser...
 
 The server is running in the background.
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+Welcome to ONE Platform!
+
+Build production-ready features in minutes, not hours.
+
+Get started with proven templates:
+• "I want to sell coffee mugs"
+• "Create a landing page for my course"
+• "Build a product page for my service"
+
+I'll guide you through every step - no technical knowledge needed.
+
+Ready to build something amazing?
 
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 ```

@@ -77,9 +77,184 @@ const { name, price } = Astro.props;
 
 ---
 
-## CRITICAL: Existing Code First
+## Component Discovery Before Creation
 
-**BEFORE creating ANY component:**
+**CRITICAL: Before building ANY component, search for existing ones:**
+
+### Search Pattern - Priority Order
+
+**1. Search shadcn/ui components FIRST (50+ pre-installed):**
+```bash
+# Check if shadcn/ui already has what you need
+ls /Users/toc/Server/ONE/web/src/components/ui/
+
+# Common shadcn components available:
+# button, card, input, select, dialog, dropdown-menu, avatar,
+# badge, skeleton, separator, table, tabs, toast, tooltip, etc.
+```
+
+**2. Search template components (product pages, shop, etc.):**
+```bash
+# Search for product/shop templates
+Glob: "web/src/pages/**/*product*.astro"
+Glob: "web/src/pages/**/*shop*.astro"
+Glob: "web/src/pages/**/*landing*.astro"
+
+# Example: product-landing.astro contains:
+# - ProductGallery (image zoom and gallery)
+# - ProductHeader (title and metadata)
+# - InlineUrgencyBanner (stock/countdown)
+# - ReviewsSection (customer reviews)
+# - StickyBuyBar (purchase CTA)
+# - RecentPurchaseToast (social proof)
+```
+
+**3. Search existing custom components:**
+```bash
+# Search by feature
+Glob: "web/src/components/**/*product*.tsx"
+Glob: "web/src/components/**/*cart*.tsx"
+Glob: "web/src/components/**/*user*.tsx"
+
+# Search by category
+Glob: "web/src/components/ecommerce/**/*.tsx"
+Glob: "web/src/components/shop/**/*.tsx"
+Glob: "web/src/components/features/**/*.tsx"
+
+# Search by ontology dimension
+Glob: "web/src/components/**/*Thing*.tsx"
+Glob: "web/src/components/**/*Person*.tsx"
+Glob: "web/src/components/**/*Event*.tsx"
+```
+
+**4. Search content collections (for data patterns):**
+```bash
+# Check what content structures exist
+ls /Users/toc/Server/ONE/web/src/content/
+
+# Common collections: products, courses, blog, docs, tokens
+```
+
+### Template Component Extraction
+
+**Template pages contain reusable components you can extract:**
+
+**Product Landing Template** (`/web/src/pages/shop/product-landing.astro`):
+- **ProductGallery** - Image zoom, thumbnails, gallery navigation
+- **ProductHeader** - Title, price, category, metadata
+- **InlineUrgencyBanner** - Stock indicators, countdown timers
+- **ReviewsSection** - Customer reviews, ratings, testimonials
+- **StickyBuyBar** - Fixed purchase CTA on scroll
+- **RecentPurchaseToast** - Social proof notifications
+
+**To reuse template components:**
+1. Read the template page to see component implementation
+2. Extract component to `/web/src/components/features/<category>/`
+3. Make it generic (remove hardcoded data)
+4. Import and reuse across multiple pages
+
+**Example extraction:**
+```typescript
+// FROM: /web/src/pages/shop/product-landing.astro
+// Inline ProductGallery component
+
+// TO: /web/src/components/features/products/ProductGallery.tsx
+interface ProductGalleryProps {
+  images: string[];
+  alt: string;
+  enableZoom?: boolean;
+}
+
+export function ProductGallery({ images, alt, enableZoom = true }: ProductGalleryProps) {
+  // Extracted component logic
+}
+```
+
+### Component Priority (Follow This Order)
+
+**Priority 1: shadcn/ui components (ALWAYS CHECK FIRST)**
+```typescript
+// ✅ Use shadcn/ui for UI primitives
+import { Button } from '@/components/ui/button';
+import { Card, CardHeader, CardContent } from '@/components/ui/card';
+import { Badge } from '@/components/ui/badge';
+import { Avatar, AvatarImage, AvatarFallback } from '@/components/ui/avatar';
+
+// ❌ DON'T build custom buttons, cards, badges, avatars
+```
+
+**Priority 2: Existing template components**
+```typescript
+// ✅ Copy from product-landing.astro or similar templates
+import { ProductGallery } from '@/components/features/products/ProductGallery';
+
+// ❌ DON'T build image galleries from scratch
+```
+
+**Priority 3: Existing custom components**
+```typescript
+// ✅ Use existing ThingCard, PersonCard, EventItem
+import { ThingCard } from '@/components/features/ontology/ThingCard';
+
+// ❌ DON'T create ProductCard, CourseCard, TokenCard
+```
+
+**Priority 4: Build new component (LAST RESORT)**
+```typescript
+// ⚠️ ONLY if no existing component or template matches
+// MUST follow naming convention and ontology mapping
+```
+
+### Component Categories
+
+**E-commerce Components:**
+- Product displays → ThingCard with `type="product"`
+- Shopping cart → Search for "cart" in components
+- Checkout flows → Search templates in `/pages/shop/`
+- Payment forms → Stripe integration examples
+
+**Course/Learning Components:**
+- Course cards → ThingCard with `type="course"`
+- Lesson lists → Search for "lesson" or "module"
+- Progress tracking → Search for "progress"
+- Enrollment → Search for "enroll"
+
+**Landing Page Components:**
+- Hero sections → Search templates in `/pages/`
+- Feature grids → Search for "features" in components
+- Testimonials → Search "reviews" or "testimonials"
+- CTA sections → Search "cta" or templates
+
+**Interactive Components:**
+- Forms → shadcn/ui form components
+- Search → Search for "search" in components
+- Filters → Search for "filter" in components
+- Modals/Dialogs → shadcn/ui dialog component
+
+### Pattern Rules
+
+**Ontology-based patterns (NEVER violate):**
+- ✅ ONE ThingCard for all thing types (product, course, token, agent)
+- ✅ ONE PersonCard for all people (users, creators, team members)
+- ✅ ONE EventItem for all events (created, updated, purchased)
+- ✅ Add props/variants instead of creating duplicate components
+- ❌ DO NOT create ProductCard, CourseCard, TokenCard (use ThingCard variants)
+- ❌ DO NOT create UserProfile, TeamCard, AgentCard (use PersonCard variants)
+
+**Golden Rules:**
+1. **Search before build** - 90% of components already exist in some form
+2. **shadcn/ui first** - Use pre-built UI primitives
+3. **Templates second** - Extract and customize template components
+4. **Pattern convergence** - Extend existing patterns, don't create new ones
+5. **Build last** - Only when absolutely nothing exists
+
+**Why this matters:** Every component you build is a component that didn't need to be built. Search-first development reduces code duplication, maintains pattern consistency, and delivers features 10x faster.
+
+---
+
+## CRITICAL: Existing Code First (Legacy Search Commands)
+
+**For manual searches (when Glob not available):**
 
 ```bash
 # 1. Search for similar components
@@ -94,14 +269,6 @@ grep -r "ThingCard\|PersonCard\|EventItem" /Users/toc/Server/ONE/web/src/compone
 # 4. Check shadcn/ui components
 ls -la /Users/toc/Server/ONE/web/src/components/ui/
 ```
-
-**Pattern rules:**
-- ✅ ONE ThingCard for all thing types (product, course, token, agent)
-- ✅ ONE PersonCard for all people
-- ✅ ONE EventItem for all events
-- ✅ Add props instead of creating duplicate components
-- ❌ DO NOT create ProductCard, CourseCard, TokenCard (use ThingCard variants)
-- ❌ DO NOT create UserProfile, TeamCard, AgentCard (use PersonCard variants)
 
 ---
 

@@ -355,6 +355,119 @@ watchFor('test_passed', 'quality/all', () => {
 })
 ```
 
+# Frontend Template Awareness
+
+## Backend Serves Template Needs
+
+When building backend for features that use frontend templates, design APIs to match template consumption patterns. **Backend enables templates, not vice versa.**
+
+### E-commerce Features
+
+**Frontend uses:** `/Users/toc/Server/ONE/web/src/pages/shop/product-landing.astro`
+
+**Template expects:**
+- Product data (name, description, price, images, features)
+- Pricing information (regular price, sale price, currency)
+- Inventory status (in stock, low stock, out of stock)
+- Stripe integration (checkout session creation)
+
+**Backend should provide:**
+```typescript
+// Query: Get product with all display data
+export const getProduct = query({
+  args: { productId: v.id("things") },
+  handler: async (ctx, args) => {
+    const product = await ctx.db.get(args.productId);
+    // Return exactly what template needs
+    return {
+      name: product.name,
+      description: product.properties.description,
+      price: product.properties.price,
+      images: product.properties.images,
+      features: product.properties.features,
+      inventory: product.properties.inventory,
+      // Template-ready format
+    };
+  }
+});
+
+// Mutation: Create Stripe checkout session
+export const createCheckoutSession = mutation({
+  args: { productId: v.id("things"), quantity: v.number() },
+  handler: async (ctx, args) => {
+    // 1. Validate product and inventory
+    // 2. Create Stripe session
+    // 3. Return session URL for template redirect
+    return { sessionUrl: "https://checkout.stripe.com/..." };
+  }
+});
+```
+
+### Stripe Checkout Integration
+
+**Template handles:** User flow, product display, "Buy Now" button, redirect to Stripe
+
+**Backend provides:**
+- `createCheckoutSession` mutation (returns Stripe session URL)
+- `handleWebhook` mutation (processes Stripe events)
+- `getOrderStatus` query (check order completion)
+
+**Reference:** `/Users/toc/Server/ONE/web/src/pages/shop/TEMPLATE-README.md`
+
+### Template-Driven API Design Principles
+
+1. **Return template-ready data** → No extra formatting needed by frontend
+2. **Match template structure** → API shape follows template expectations
+3. **Minimize frontend logic** → Backend does heavy lifting
+4. **Clear error messages** → Template can display user-friendly errors
+5. **Optimize for template patterns** → Index queries that templates use
+
+### Common Template Patterns
+
+**Product features:**
+```typescript
+// Template expects array of feature objects
+properties: {
+  features: [
+    { icon: "check", text: "Feature 1" },
+    { icon: "check", text: "Feature 2" }
+  ]
+}
+```
+
+**Pricing display:**
+```typescript
+// Template expects structured price data
+properties: {
+  pricing: {
+    regular: 99.00,
+    sale: 79.00,
+    currency: "USD",
+    displayPrice: "$79" // Pre-formatted
+  }
+}
+```
+
+**Inventory status:**
+```typescript
+// Template expects boolean flags
+properties: {
+  inventory: {
+    inStock: true,
+    lowStock: false,
+    quantity: 50
+  }
+}
+```
+
+### Golden Rule
+
+**Backend serves template needs, not vice versa.** When implementing full-stack features:
+1. Read the template first (`/web/src/pages/shop/*.astro`)
+2. Understand what data it expects
+3. Design mutations/queries to match that structure
+4. Test with the template, not in isolation
+
 # Common Ontology Types Reference
 
 ## Thing Types (66 total, subset shown)

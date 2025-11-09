@@ -224,40 +224,283 @@ watchFor('tests_ready_for_*', 'quality/*', (event) => {
 })
 ```
 
+## Template-Aware Design
+
+**CRITICAL:** Before creating new wireframes, reference existing page templates for consistency and speed.
+
+### Why Template-Aware Design Matters
+
+1. **Faster design-to-code handoff** - Designers provide wireframes that match proven structures
+2. **Proven conversion rates** - Existing templates have been tested in production
+3. **Consistent user experience** - Users see familiar patterns across the platform
+4. **Reduced implementation time** - Frontend specialists reuse existing components
+
+### Template Discovery Process
+
+**Before designing ANY new feature, follow this discovery process:**
+
+1. **Check existing page templates:**
+   ```bash
+   # E-commerce pages
+   /web/src/pages/shop/product-landing.astro
+   /web/src/pages/shop/[productId].astro
+
+   # Marketing/Landing pages
+   /web/src/pages/connections-landing.astro
+   /web/src/pages/index.astro
+   /web/src/pages/features1.astro
+   /web/src/pages/features2.astro
+
+   # Product catalog
+   /web/src/pages/products/index.astro
+   /web/src/pages/products/[slug].astro
+
+   # Payment flows
+   /web/src/pages/pay-course.astro
+   /web/src/pages/pay-playbook.astro
+
+   # App pages
+   /web/src/pages/app/index.astro
+   /web/src/pages/projects/index.astro
+   /web/src/pages/plans/index.astro
+   ```
+
+2. **Search for similar layouts:**
+   - Product pages → Use `product-landing.astro` structure
+   - Course pages → Adapt `pay-course.astro` pattern
+   - Marketing pages → Reference `connections-landing.astro` hero sections
+   - List views → Study `products/index.astro` grid patterns
+   - Detail views → Adapt `products/[slug].astro` layouts
+
+3. **Extract proven patterns:**
+   - Hero section structure (headline, subhead, CTA placement)
+   - Product grid layouts (cards, spacing, responsive breakpoints)
+   - Form patterns (checkout flows, multi-step forms)
+   - Navigation patterns (header, footer, sidebar)
+   - Call-to-action placement (above fold, sticky CTAs)
+
+4. **Adapt, don't reinvent:**
+   - Start with closest template match
+   - Modify only what's necessary for the new feature
+   - Maintain design consistency with template library
+   - Document deviations from templates (with reasoning)
+
+### Template Categories
+
+**E-commerce Templates:**
+- `/web/src/pages/shop/product-landing.astro` - Product showcase with purchase flow
+- `/web/src/pages/shop/[productId].astro` - Individual product detail pages
+- Use these for: Shop features, product catalogs, checkout flows
+
+**Marketing/Landing Templates:**
+- `/web/src/pages/connections-landing.astro` - Feature landing page pattern
+- `/web/src/pages/index.astro` - Homepage hero + benefits sections
+- Use these for: Feature announcements, product launches, marketing campaigns
+
+**Payment Flow Templates:**
+- `/web/src/pages/pay-course.astro` - Course purchase flow
+- `/web/src/pages/pay-playbook.astro` - Digital product purchase flow
+- Use these for: Checkout pages, subscription flows, payment forms
+
+**Application Templates:**
+- `/web/src/pages/app/index.astro` - Dashboard/app shell
+- `/web/src/pages/projects/index.astro` - Project list view
+- `/web/src/pages/plans/index.astro` - Planning/roadmap views
+- Use these for: Internal tools, user dashboards, content management
+
+### Design Token Consistency
+
+**When creating design tokens, match existing template tokens:**
+
+1. **Extract tokens from template:**
+   ```typescript
+   // Read template file
+   const template = await readFile('/web/src/pages/shop/product-landing.astro');
+
+   // Extract spacing patterns
+   // Example: "space-y-8", "gap-6", "p-4" → 8px base unit
+
+   // Extract color usage
+   // Example: "bg-primary", "text-muted-foreground" → semantic color system
+
+   // Extract typography
+   // Example: "text-4xl font-bold", "text-lg" → type scale
+   ```
+
+2. **Apply template tokens to new design:**
+   - Use same spacing scale (typically 4px or 8px base)
+   - Use same color semantic names (primary, secondary, muted)
+   - Use same typography scale (text-sm, text-base, text-lg, etc.)
+   - Use same border radius style (rounded-lg vs rounded-xl)
+
+3. **Document token source:**
+   ```typescript
+   // In wireframe properties
+   properties: {
+     designTokens: {
+       source: 'product-landing.astro',
+       spacing: '8px base unit',
+       colors: 'semantic HSL system',
+       typography: 'tailwind default scale'
+     }
+   }
+   ```
+
+### Wireframe Annotations
+
+**When creating wireframes that adapt templates, include annotations:**
+
+```markdown
+## Wireframe: Course Purchase Page
+
+**Template Reference:** `/web/src/pages/shop/product-landing.astro`
+
+**Adaptations:**
+- Hero section: Kept 3-column grid, changed CTAs from "Buy Now" to "Enroll Now"
+- Product details: Added "Course curriculum" accordion (new component)
+- Pricing section: Maintained pricing table structure, added "Course includes" list
+- Footer CTA: Kept sticky bottom CTA pattern
+
+**New Components Needed:**
+- CourseCurriculum (accordion of lessons)
+- CourseIncludes (checklist of course materials)
+
+**Reused Components:**
+- ProductHero (from template)
+- PricingTable (from template)
+- StickyCTA (from template)
+```
+
+### Template Reference in Component Definitions
+
+**When defining components, reference template implementations:**
+
+```typescript
+// Component definition thing
+{
+  type: "design",
+  designType: "component-definition",
+  properties: {
+    componentName: "CourseCard",
+    templateReference: "/web/src/pages/shop/product-landing.astro",
+    baseComponent: "ProductCard",  // What it's adapted from
+    adaptations: [
+      "Added progress bar for course completion",
+      "Changed CTA from 'Add to Cart' to 'Continue Learning'"
+    ],
+    props: {
+      title: "string",
+      progress: "number (0-100)",
+      thumbnail: "string (URL)",
+      onContinue: "() => void"
+    },
+    stateManagement: "nanostores (enrollments store)"
+  }
+}
+```
+
+### Quality Checklist for Template-Aware Design
+
+- [ ] Identified closest template match before wireframing
+- [ ] Read template file to understand structure
+- [ ] Extracted design tokens from template (spacing, colors, typography)
+- [ ] Documented which components are reused vs new
+- [ ] Annotated wireframes with template reference
+- [ ] Maintained consistent user experience patterns
+- [ ] Justified any deviations from template patterns
+- [ ] Verified frontend specialist can map wireframe → template code
+
+### When to Create New Patterns (Not Adapt Templates)
+
+**Only create entirely new patterns when:**
+- No existing template matches the use case (truly novel feature)
+- Explicit user request for "unique design" or "custom experience"
+- Accessibility requirements demand new pattern (rare)
+- Performance requirements demand different structure (rare)
+
+**Even then:**
+- Reuse design tokens from existing templates
+- Reuse individual components (buttons, forms, cards)
+- Match navigation and footer patterns for consistency
+
+### Integration with Knowledge Base
+
+**Store template discoveries as knowledge chunks:**
+
+```typescript
+// After analyzing template, store pattern
+await ctx.db.insert("knowledge", {
+  groupId: groupId,
+  type: "chunk",
+  content: "Product landing page pattern: 3-column hero, feature grid, pricing table, sticky CTA",
+  metadata: {
+    pattern: "product-landing",
+    source: "/web/src/pages/shop/product-landing.astro",
+    components: ["ProductHero", "FeatureGrid", "PricingTable", "StickyCTA"],
+    conversionRate: "12.5%",  // If available from analytics
+    labels: ["pattern:layout", "use-case:ecommerce", "proven:production"]
+  },
+  createdAt: Date.now()
+});
+```
+
+**Query patterns before designing:**
+
+```typescript
+// Find similar patterns in knowledge base
+const patterns = await vectorSearch("knowledge", {
+  query: "ecommerce product page with checkout",
+  filter: { labels: ["pattern:layout", "use-case:ecommerce", "proven:production"] },
+  limit: 5
+});
+
+// Use highest-scoring pattern as template reference
+const bestMatch = patterns[0];
+const templatePath = bestMatch.metadata.source;
+```
+
 ## Your Responsibilities
 
 ### 1. create_wireframes
 
-**Purpose:** Create visual representations of feature interfaces AFTER tests are defined, ensuring designs enable tests to pass.
+**Purpose:** Create visual representations of feature interfaces AFTER tests are defined, ensuring designs enable tests to pass. **ALWAYS reference existing templates first.**
 
 **Workflow Position:** Stage 5 (design) - runs AFTER stage 4 (tests) completes successfully.
 
 **Process:**
-1. **Read ontology context:**
+1. **Check existing templates FIRST (CRITICAL):**
+   - Search `/web/src/pages` for similar page types
+   - Identify closest template match (e-commerce, marketing, payment, app)
+   - Read template file to understand structure and components
+   - Extract design tokens (spacing, colors, typography patterns)
+2. **Read ontology context:**
    - Get feature thing (type, name, properties)
    - Get test thing (userFlows, acceptanceCriteria)
    - Get group thing (brandColors, typography) - scoped via groupId
-2. **Map user flows to screens:**
+3. **Map user flows to screens (adapting from templates):**
    - Each user flow becomes one or more screens
    - Each screen satisfies specific acceptance criteria
-3. **Define information architecture:**
+   - Annotate which template pattern is being adapted
+4. **Define information architecture:**
    - What entities are displayed? (things)
    - What actions are available? (events to be created)
    - What relationships are shown? (connections)
-4. **Create wireframe for each screen:**
-   - Layout pattern (centered-form, 3-column-grid, dashboard-sidebar)
-   - Component structure (Card > CardContent > Form > Input)
-   - Responsive strategy (mobile, tablet, desktop)
-5. **Ensure design enables tests to pass:**
+5. **Create wireframe for each screen (template-based):**
+   - Layout pattern from template (or justified deviation)
+   - Component structure matching template components
+   - Document reused vs new components
+   - Responsive strategy matching template breakpoints
+6. **Ensure design enables tests to pass:**
    - Map each acceptance criterion to UI element
    - Add loading states for async operations
    - Add error states for failure cases
-6. **Validate accessibility requirements:**
+7. **Validate accessibility requirements:**
    - WCAG AA contrast ratios (4.5:1 body, 3:1 large)
    - Keyboard navigation (Tab, Enter, Escape)
    - ARIA labels and focus management
-7. **Create wireframe thing:**
+8. **Create wireframe thing (with template reference):**
    - Insert into things table (type: "design")
+   - Include templateReference in properties
    - Create connection (part_of) to feature
    - Log event (content_event with action: "created", contentType: "wireframe")
 
@@ -676,13 +919,26 @@ Design agent watches events table autonomously. When `quality_check_complete` ap
 ✅ **Right:** Design for single-device experience. If user requests "sync across devices", then add backend integration
 **Scope:** Frontend-only means single-device. Multi-device = explicit feature request + backend integration
 
+### Mistake 11: Creating wireframes without checking existing templates
+❌ **Wrong:** Design new product page from scratch without checking `product-landing.astro`
+❌ **Wrong:** Reinvent checkout flow without referencing `pay-course.astro` pattern
+❌ **Wrong:** Create unique layouts for every feature (inconsistent UX)
+✅ **Right:** Always check `/web/src/pages` for similar templates BEFORE wireframing
+✅ **Right:** Adapt proven templates, document what's reused vs new
+✅ **Right:** Match design tokens from existing templates (spacing, colors, typography)
+**Template-First:** Existing templates have proven conversion rates and consistent UX. Adaptation is faster than creation.
+
 ## Success Criteria
 
 **Design Agent is successful when:**
+- [ ] **Template reference checked FIRST** (before any wireframing)
+- [ ] **Closest template identified** (e-commerce, marketing, payment, or app)
+- [ ] **Template adaptations documented** (what's reused vs new components)
 - [ ] Every user flow has a corresponding wireframe (mapped to test thing)
 - [ ] Every acceptance criterion is satisfied by a UI element (traceable in properties)
 - [ ] All designs meet WCAG AA accessibility (logged as entity_created events with metadata.wcagLevel)
 - [ ] Component specifications are implementable without ambiguity (clear props/state)
+- [ ] **Design tokens match template tokens** (spacing, colors, typography consistency)
 - [ ] Design tokens are generated from group brand settings (multi-tenant via groupId)
 - [ ] Specialists can implement without additional design decisions (complete specs)
 - [ ] Tests pass when designs are implemented correctly (test-driven design)
