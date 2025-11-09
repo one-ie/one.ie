@@ -51,7 +51,7 @@ export function RecentPurchaseToast() {
   if (isDismissed) return null;
 
   return (
-    <div className="fixed bottom-20 right-4 z-40 pointer-events-none">
+    <div className="fixed bottom-20 md:bottom-24 right-2 md:right-4 z-40 pointer-events-none">
       <AnimatePresence>
         {isVisible && (
           <motion.div
@@ -59,9 +59,9 @@ export function RecentPurchaseToast() {
             animate={{ opacity: 1, x: 0 }}
             exit={{ opacity: 0, x: 100 }}
             transition={{ duration: 0.3, ease: 'easeOut' }}
-            className="pointer-events-auto bg-white dark:bg-black border-2 border-black dark:border-white shadow-2xl max-w-sm"
+            className="pointer-events-auto bg-white dark:bg-black border-2 border-black dark:border-white shadow-2xl max-w-[280px] md:max-w-sm"
           >
-            <div className="flex items-start gap-4 p-5">
+            <div className="flex items-start gap-3 md:gap-4 p-3 md:p-5">
               <div className="flex items-center justify-center w-10 h-10 border border-black dark:border-white flex-shrink-0">
                 <ShoppingBag className="w-5 h-5" />
               </div>

@@ -135,7 +135,7 @@ function FAQAccordion({
       )}
 
       {/* Still have questions CTA */}
-      <div className="border-t-4 border-black dark:border-white pt-12 text-center">
+      <div className="pt-12 text-center">
         <h3 className="text-2xl font-light tracking-tight mb-4">
           Still have questions?
         </h3>

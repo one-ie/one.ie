@@ -50,11 +50,11 @@ export function ProductHeader({ productName = "Chanel Coco Noir", onBuyNowClick 
 
       {/* Main Header */}
       <header className="sticky top-0 z-50 bg-white dark:bg-black border-b border-black dark:border-white dark:border-b-2">
-        <div className="max-w-7xl mx-auto px-6 py-6">
-          <div className="flex items-center justify-between">
+        <div className="max-w-7xl mx-auto px-4 md:px-6 py-4 md:py-6">
+          <div className="flex items-center justify-between gap-4">
             {/* Logo */}
             <div className="flex items-center">
-              <div className="text-xl font-bold tracking-[0.3em] uppercase">
+              <div className="text-base md:text-xl font-bold tracking-[0.2em] md:tracking-[0.3em] uppercase">
                 YOUR LOGO
               </div>
             </div>
@@ -90,9 +90,9 @@ export function ProductHeader({ productName = "Chanel Coco Noir", onBuyNowClick 
             {/* Buy Now Button */}
             <button
               onClick={handleBuyNow}
-              className="bg-black dark:bg-white text-white dark:text-black border-2 border-black dark:border-white px-8 py-3 hover:opacity-80 transition-opacity duration-200"
+              className="bg-black dark:bg-white text-white dark:text-black border-2 border-black dark:border-white px-4 md:px-8 py-2 md:py-3 hover:opacity-80 transition-opacity duration-200"
             >
-              <span className="text-xs font-bold tracking-[0.3em] uppercase">
+              <span className="text-[10px] md:text-xs font-bold tracking-[0.2em] md:tracking-[0.3em] uppercase">
                 Buy Now
               </span>
             </button>
