@@ -2,31 +2,51 @@
 
 **Transform Ideas Into Production Code In Minutes**
 
-When user types `/one`, follow this workflow:
+When user types `/one`, follow this workflow with **warm, encouraging feedback** at every step:
 
 ---
 
 ## Step 1: Server Status Check & Auto-Start (< 3 seconds)
 
-### Check if Running
+### 1.1 Check if Server is Running
 
+**Always show this first:**
+```
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+🔍 Checking if your development server is running...
+```
+
+**Run:**
 ```bash
 lsof -ti:4321 2>/dev/null && echo "RUNNING" || echo "STOPPED"
 ```
 
 **If RUNNING:**
-- Show "✅ Dev Server: http://localhost:4321" in the interface below
-- Skip to Step 2
+```
+✅ Great! Your server is already running at http://localhost:4321
+
+Let's open the platform for you...
+```
+- Skip to Step 1.5 (Open Start Page)
 
 **If STOPPED:**
+```
+⚡ Server is off. No problem! Let's get you up and running...
+```
 
-### Determine Working Directory
+### 1.2 Check if Dependencies are Installed
 
+**Show to user:**
+```
+📦 Checking if we have everything installed...
+```
+
+**Determine working directory:**
 ```bash
 pwd | grep -q '/web$' && echo "IN_WEB" || echo "IN_ROOT"
 ```
 
-### Check if Dependencies Installed
+**Check dependencies:**
 
 **If IN_ROOT:**
 ```bash
@@ -38,13 +58,28 @@ pwd | grep -q '/web$' && echo "IN_WEB" || echo "IN_ROOT"
 [ -d node_modules ] && echo "installed" || echo "missing"
 ```
 
-### Install if Missing
-
-**If missing, show progress and install:**
-
+**If installed:**
 ```
-📦 Installing dependencies...
+✅ All dependencies are installed!
 ```
+- Skip to Step 1.3
+
+**If missing:**
+```
+🚀 Time to install the magic! This will only take a moment...
+
+We're installing Astro - the framework that powers the world's
+fastest websites for companies like:
+  • Google
+  • Visa
+  • Porsche
+  • OpenAI
+  • The Guardian
+
+Installing dependencies now...
+```
+
+**Run installation:**
 
 **If IN_ROOT:**
 ```bash
@@ -56,7 +91,19 @@ cd web && bun install
 bun install
 ```
 
-### Start Server
+**After successful install:**
+```
+✅ Installation complete! Your development environment is ready.
+```
+
+### 1.3 Start the Server
+
+**Show to user:**
+```
+🔥 Starting your development server...
+```
+
+**Start server:**
 
 **If IN_ROOT:**
 ```bash
@@ -68,22 +115,40 @@ cd web && bun run dev > /dev/null 2>&1 &
 bun run dev > /dev/null 2>&1 &
 ```
 
-### Wait and Verify
-
+**Wait for server to start:**
 ```bash
 sleep 3 && lsof -ti:4321 2>/dev/null
 ```
 
-### Open Start Page
+**After server starts:**
+```
+✅ Server started successfully at http://localhost:4321
 
+You're moving fast! 🚀
+```
+
+### 1.4 Open Start Page
+
+**Show to user:**
+```
+🌟 Let's have a look at your platform...
+
+Opening http://localhost:4321/start in your browser...
+```
+
+**Run:**
 ```bash
 open http://localhost:4321/start 2>/dev/null || xdg-open http://localhost:4321/start 2>/dev/null || start http://localhost:4321/start 2>/dev/null
 ```
 
-**Final Output:**
+**Final success message:**
 ```
-✅ Dev Server: http://localhost:4321
-🚀 Opening /start page in browser...
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+✅ SUCCESS! You're all set up and ready to go!
+
+Your development server: http://localhost:4321
+Your start page: http://localhost:4321/start
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 ```
 
 ---
@@ -102,23 +167,28 @@ open http://localhost:4321/start 2>/dev/null || xdg-open http://localhost:4321/s
     ╚██████╔╝██║ ╚████║███████╗
      ╚═════╝ ╚═╝  ╚═══╝╚══════╝
 
-  ONE Platform v1.0.0
+  ONE Platform v1.0.0 ✨
   Make Your Ideas Real
 
   Dev Server: ✅ http://localhost:4321
 
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-
-🎯 CORE COMMANDS
-
-  /chat            Onboard your idea
-  /plan [idea]     Generate optimized plan
-  /fast [feature]  Build in minutes
-  /create [type]   Build with specialists
-  /push            Commit & push
-  /deploy          Ship to production
+  Welcome! Your journey to production starts now. 🚀
 
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+🎯 CORE COMMANDS - Start Here
+
+  /chat            Tell me about your idea
+  /plan [idea]     Get your 100-step roadmap
+  /fast [feature]  Build features in minutes
+  /create [type]   Work with AI specialists
+  /push            Save your progress
+  /deploy          Go live to the world
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+💡 Quick Start: Type /chat and tell me about your idea!
+
 ```
 
 **DO NOT add any sections, workflow steps, or explanations after the commands.**

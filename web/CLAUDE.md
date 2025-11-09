@@ -38,6 +38,73 @@ people (role)     →      <PersonCard>, <RoleBadge>
 
 ---
 
+## Template-First Frontend Development
+
+**Before building ANY page or component, search for existing templates:**
+
+### Quick Template Guide
+
+```bash
+# Product/shop pages
+/web/src/pages/shop/product-landing.astro  # Full e-commerce template with Stripe
+
+# Search for similar pages
+glob "web/src/pages/**/*.astro"
+
+# Search for reusable components
+glob "web/src/components/**/*.tsx"
+```
+
+### Template Usage Flow
+
+1. **User asks for feature** → Identify type (product page, dashboard, etc.)
+2. **Search templates first** → Use Glob to find similar patterns
+3. **Copy template** → Use Read to examine, then copy structure
+4. **Customize** → Modify for specific use case
+5. **Enhance** → Add Stripe, features, interactivity
+
+### E-commerce Template (/shop/product-landing.astro)
+
+**When to use:**
+- User wants to sell a product
+- User needs a landing page for merchandise
+- User mentions "shop", "buy", "sell", "product"
+
+**Features included:**
+- Product gallery with zoom
+- Reviews section
+- Urgency banners
+- Stripe checkout integration
+- Mobile-optimized
+- Dark mode support
+
+**Setup:**
+1. Copy template to new page
+2. Update product data (title, price, images)
+3. Ask: "Would you like this as your home page?"
+4. After creation: "Add Stripe? Just paste your keys: https://one.ie/docs/develop/stripe"
+
+### Common Template Categories
+
+**E-commerce:**
+- Product landing pages → `/web/src/pages/shop/product-landing.astro`
+- Product galleries → Search for ThingCard implementations
+- Shopping cart → Search for cart stores in `/web/src/stores/`
+
+**Content:**
+- Blog posts → `/web/src/content/blog/`
+- Documentation → `/web/src/content/docs/`
+- Landing pages → `/web/src/pages/index.astro`
+
+**Dashboards:**
+- Admin interfaces → Search for "dashboard" in pages
+- Analytics → Search for chart components
+- User profiles → Search for PersonCard implementations
+
+**Golden Rule:** Copy existing patterns first. Build new ONLY when no template exists.
+
+---
+
 ## Progressive Complexity (5 Layers)
 
 **Read full architecture:** `/one/knowledge/astro-effect-simple-architecture.md`
@@ -122,7 +189,34 @@ const products = useQuery(api.queries.products.list);
 
 ## Pattern Convergence (98% AI Accuracy)
 
-**ONE component per dimension:**
+**ONE component per dimension, MANY templates for common use cases:**
+
+### Template-Based Development
+
+**Start with templates, not components:**
+
+```bash
+# User says: "I want to sell coffee mugs"
+# 1. Search templates first
+glob "web/src/pages/**/*product*.astro"  # Find product templates
+glob "web/src/pages/**/*shop*.astro"     # Find shop templates
+
+# 2. Found: /web/src/pages/shop/product-landing.astro
+# 3. Copy and customize for coffee mugs
+# 4. Ask about Stripe integration
+```
+
+**Template priority over raw components:**
+- ✅ Copy `/shop/product-landing.astro` → customize for your product
+- ❌ Build page from scratch using ThingCard
+
+**Why templates win:**
+- Complete page structure (header, gallery, reviews, footer)
+- Stripe integration pre-configured
+- Mobile-responsive layouts
+- Dark mode support
+- SEO optimization
+- Performance best practices
 
 ### Things Dimension → ThingCard
 

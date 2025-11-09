@@ -1,538 +1,544 @@
-# /create - Create New Features & Projects
+# /create - Template-First Feature Creation
 
-🚀 **Create features using AI specialists. Cycle-based planning, 100-cycle execution.**
-
-## Quick Start
-
-**First time?** Start with onboarding to extract your brand:
-```bash
-/onboard                          # Analyze website & extract brand identity
-```
-
-**Ready to build?** Choose your approach:
-```bash
-/create                           # Start feature wizard (guided mode)
-/create [feature-name]            # Create specific feature
-/create backend [feature-name]    # Create with backend (explicit)
-/create help                      # Show help
-```
-
-## Feature Types & Cycle Counts
-
-### 1. Frontend Feature
-**Build UI components & pages using existing /web infrastructure**
-- Reuse proven components from shadcn/ui + Astro
-- Customize styling, layout, content
-- No backend changes needed
-- **Cycles:** 20-40 cycles
-
-**Examples:**
-- Page redesigns (landing, shop, portfolio)
-- Component enhancements (cards, galleries, forms)
-- Content collections (blog, courses)
-
-### 2. Custom Backend Service
-**Build new backend logic with database schema changes**
-- Design database schema (groups, things, connections)
-- Implement Convex mutations/queries
-- Create Effect.ts services
-- Build frontend for new functionality
-- **Cycles:** 60-90 cycles
-
-**Examples:**
-- AI tutors, token economy, analytics
-- Enrollment systems, billing, member tiers
-- Custom workflows, integrations
-
-### 3. Integration
-**Connect external services or protocols**
-- API integrations, webhooks
-- Third-party services (payment, email, etc.)
-- Protocol implementations
-- **Cycles:** 30-60 cycles
-
-### 4. Custom Feature
-**Something else - describe what you need**
-- Special requirements, specific tech
-- Hybrid approaches, novel combinations
-- **Cycles:** Variable
+**Build features in minutes, not hours. Copy existing templates, customize, ship.**
 
 ---
 
-## What's Already Built
+## Quick Start: Tell Me What You Want
 
-Based on your cycle.json state (Cycle 100/100 complete):
+When you type `/create`, just tell me what you want to build:
 
-**Current Feature:** New Feature
-**Organization:** Default Org
-**Role:** platform_owner
-**Status:** ✅ Complete (100 cycles executed)
+```
+"I want to create a page that sells a product"
+"I need a landing page for my course"
+"Build me a checkout page with Stripe"
+"I want a portfolio gallery"
+```
 
-**Lessons Learned:** 100+ successful cycle cycles documented
+**I'll handle the rest:**
+1. 🔍 Search for existing templates
+2. 📋 Copy the best match
+3. ✨ Customize for your needs
+4. 🚀 Ask what you want to add next
 
-To start a NEW feature, run:
-```bash
-/create [new-feature-name]        # Begin new 100-cycle plan
-/reset                            # Start fresh (clears current state)
+**No planning. No complexity. Just fast, conversational feature building.**
+
+---
+
+## The Template-First Approach
+
+**CRITICAL RULE:** Before building ANYTHING new, search for existing templates.
+
+### Step 1: Understanding Your Request
+
+When you say "I want to create a page that sells a [product]", I automatically:
+
+1. **Search for templates:**
+   - Product landing pages: `/web/src/pages/shop/*.astro`
+   - Similar pages: `/web/src/pages/**/*.astro`
+   - Reusable components: `/web/src/components/**/*.tsx`
+
+2. **Pick the best template:**
+   - **Product landing?** → `/web/src/pages/shop/product-landing.astro`
+   - **Course landing?** → Search for course pages
+   - **Service landing?** → Search for service pages
+   - **Custom?** → Find closest match
+
+3. **Copy and customize:**
+   - Create your new page from template
+   - Swap product data
+   - Update branding
+   - Keep proven structure
+
+### Step 2: Interactive Refinement
+
+After creating your page, I'll ask:
+
+```
+✅ Your product landing page is ready at /shop/your-product!
+
+🎨 What would you like to add or change?
+
+Or would you like to add credit card processing with Stripe?
+```
+
+**You can say:**
+- "Change the colors to match my brand"
+- "Add a video demo section"
+- "Make the CTA button bigger"
+- "Yes, add Stripe payments"
+- "Add customer testimonials"
+- "I want this as my home page"
+
+### Step 3: Stripe Integration (Optional)
+
+If you request Stripe, I'll guide you:
+
+```
+🔐 To enable Stripe payments, I need your API keys.
+
+1. Get your keys from https://dashboard.stripe.com/apikeys
+2. Paste them here:
+
+PUBLIC_STRIPE_PUBLISHABLE_KEY=pk_test_...
+STRIPE_SECRET_KEY=sk_test_...
+
+📚 Full setup guide: https://one.ie/docs/develop/stripe
 ```
 
 ---
 
-## Ready-to-Build Projects (Optimized Plans Available)
+## Template Mapping Rules
 
-**Use `/plan [project]` to see full optimized plan, or `/create [project]` to start building:**
+**When you request a feature, I automatically map to templates:**
 
-### 1. Blog (30 cycles · Frontend-only)
-```bash
-/plan blog         # See full plan with quick wins
-/create blog       # Start building article publishing system
-/fast blog-post    # Quick: Create single blog post page
-```
-**Features:** Article publishing, categories, tags, search, RSS, SEO
-**Quick Win:** Working blog by Cycle 3, MVP by Cycle 10
-**Architecture:** Frontend-only (Astro content collections)
+| Your Request | Template Used | Path |
+|--------------|--------------|------|
+| "sell a product" | Product landing page | `/web/src/pages/shop/product-landing.astro` |
+| "sell a course" | Search course pages | `/web/src/pages/**/*course*.astro` |
+| "portfolio gallery" | Search portfolio pages | `/web/src/pages/**/*portfolio*.astro` |
+| "blog" | Blog template | `/web/src/pages/blog/*.astro` |
+| "landing page" | Landing template | `/web/src/pages/index.astro` or similar |
+| "checkout" | Checkout flow | `/web/src/pages/shop/*checkout*.astro` |
+| "dashboard" | Dashboard layout | `/web/src/pages/*dashboard*.astro` |
 
-### 2. Pages (20 cycles · Frontend-only)
-```bash
-/plan pages        # See full plan with quick wins
-/create pages      # Start building landing page builder
-/fast landing      # Quick: Create single landing page
-```
-**Features:** Hero sections, features, testimonials, CTAs, responsive design
-**Quick Win:** Hero section by Cycle 3, MVP by Cycle 8
-**Architecture:** Frontend-only (static pages)
+**If no exact match exists, I search for the closest pattern and adapt it.**
 
-### 3. Shop (28 cycles · Frontend + Stripe)
-```bash
-/plan shop         # See full plan with quick wins
-/create shop       # Start building e-commerce store
-/fast product [id] # Quick: Create product landing page from DummyJSON
-```
-**Features:** Product catalog, cart, checkout, Stripe payments, orders
-**Quick Win:** Product listing by Cycle 3, first sale by Cycle 8
-**Architecture:** Frontend-only + Stripe.js (no backend initially)
+---
 
-**✨ NEW: Dynamic Product Landing Template**
-We have a beautiful, conversion-optimized product landing page template that:
+## Product Landing Template (Built-In)
+
+We have a **conversion-optimized product landing page** ready to use:
+
+**Location:** `/web/src/pages/shop/product-landing.astro`
+
+**Features:**
 - ✅ Fetches ANY product from DummyJSON API
 - ✅ Auto-generates features, specs, reviews based on category
 - ✅ Adapts trust badges, CTA text, and sections automatically
 - ✅ Supports 10+ product categories (fragrances, smartphones, clothing, etc.)
 - ✅ Mobile-responsive with dark mode support
+- ✅ Optional Stripe integration for payments
 
-**Usage:**
-```bash
-# Create landing page for specific product
-/fast product-landing 1          # iPhone landing page
-/fast product-landing 5          # T-shirt landing page
-/fast product-landing 11         # Perfume landing page
+**Supported Categories:**
+- Fragrances → Includes fragrance notes, luxury features
+- Smartphones → Tech specs, display/camera features
+- Laptops → Performance specs, tech features
+- Clothing → Size exchange, fit information
+- Furniture → Dimensions, material details
+- Beauty → Ingredients, skin type info
+- Groceries → Fresh guarantee, nutritional info
 
-# Or fetch from category
-/fast product-landing smartphones   # First smartphone
-/fast product-landing mens-shirts   # First t-shirt
+**How It Works:**
+```astro
+---
+// 1. Fetch product from DummyJSON
+const response = await fetch('https://dummyjson.com/products/1');
+const productData = await response.json();
+
+// 2. Use template helpers to generate content
+import {
+  getOriginalPrice,
+  getTrustBadges,
+  getProductFeatures,
+  getProductSpecs,
+  getCTAText,
+} from '@/lib/productTemplateHelpers';
+
+const product = {
+  title: productData.title,
+  price: productData.price,
+  // ... more fields
+};
+
+const specs = getProductSpecs(productData);
+const features = getProductFeatures(productData);
+const trustBadges = getTrustBadges(productData.category);
+---
+
+<!-- 3. Render with dynamic sections -->
+<ProductHeader productName={product.title} />
+<ProductGallery images={product.images} />
+<FeaturesWithImages features={features} />
+<ProductSpecs specs={specs} />
 ```
 
-**Files:**
-- Template: `/web/src/pages/shop/[productId].astro`
-- Helpers: `/web/src/lib/productTemplateHelpers.ts`
-- Docs: `/web/src/pages/shop/TEMPLATE-README.md`
+**Template README:** `/web/src/pages/shop/TEMPLATE-README.md`
 
-### 4. Dashboard (40 cycles · Backend + Frontend)
-```bash
-/plan dashboard    # See full plan with quick wins
-/create dashboard  # Start building analytics dashboard
-```
-**Features:** Real-time metrics, charts, activity feed, team management
-**Quick Win:** Backend schema by Cycle 3, 3 metrics live by Cycle 8
-**Architecture:** Backend (Convex real-time) + Frontend
-
-### 5. Email (45 cycles · Backend + Frontend)
-```bash
-/plan email        # See full plan with quick wins
-/create email      # Start building messaging system
-```
-**Features:** Conversations, threads, search, notifications, attachments
-**Quick Win:** Backend schema by Cycle 3, send/receive by Cycle 8
-**Architecture:** Backend (Convex real-time) + Frontend
-
-### 6. Website (55 cycles · Backend + Frontend)
-```bash
-/plan website      # See full plan with quick wins
-/create website    # Start building website builder
-```
-**Features:** Page builder, CMS, templates, multi-language, SEO tools
-**Quick Win:** Backend schema by Cycle 3, page editor by Cycle 8
-**Architecture:** Backend (Convex CMS) + Frontend
+**When you say "I want to sell [product]", I'll:**
+1. Use this template as the foundation
+2. Fetch data for your product category
+3. Customize branding and content
+4. Ask if you want it as your home page
 
 ---
 
-## Or Build Custom Features
+## The Fast, Conversational Workflow
 
-### Single Component/Page
-```bash
-/fast [feature]               # Build in minutes (< 5 files)
-/create [feature-name]        # Build specific feature (plan generated)
+### Example 1: Selling a Product
+
+**You:** "I want to create a page that sells a perfume"
+
+**Me:**
 ```
-**Location:** `/web/src/pages/blog/`
-**Components:** Article cards, RSS feeds, tags, archives
-**Cycles:** 20-30 cycles (frontend-only)
+🔍 Found the perfect template! Using our product landing page...
 
-### Portfolio (Showcase)
-```bash
-/create portfolio-gallery          # Add portfolio gallery with filtering
-/create portfolio-case-studies     # Add detailed case study pages
-/create portfolio-testimonials     # Add client testimonials
-/create portfolio-projects         # Add project showcase
-```
-**Location:** `/web/src/pages/portfolio.astro`
-**Components:** Project cards, filtering, lightbox gallery
-**Cycles:** 25-40 cycles (frontend-only)
+✨ Creating your perfume landing page...
 
-### Courses
-```bash
-/create courses-preview            # Add course preview cards
-/create courses-enrollment         # Add course enrollment UI
-/create courses-progress           # Add student progress tracking
-/create courses-certificates       # Add certificate generation UI
-```
-**Location:** `/web/src/components/features/courses/`
-**Components:** Course cards, lesson player, progress bar
-**Cycles:** 40-60 cycles (frontend + backend)
+I'll use the Chanel Coco Noir template as a starting point.
+Customizing for your brand...
 
-### Landing & Marketing
-```bash
-/create landing-hero               # Redesign hero section
-/create landing-features           # Add features showcase
-/create landing-pricing            # Add pricing section
-/create landing-cta                # Add call-to-action sections
-```
-**Location:** `/web/src/pages/index.astro`
-**Components:** Hero, feature cards, pricing tables
-**Cycles:** 20-30 cycles (frontend-only)
+✅ Done! Your perfume landing page is ready at:
+   /shop/perfume
 
-### Customization Examples
+🎨 What would you like to add or change?
 
-```bash
-# Redesign existing features
-/create shop --rebrand             # Update shop branding
-/create blog --dark-mode           # Add dark mode support
-/create portfolio --animation      # Add animated transitions
-
-# Add to existing features
-/create shop --add-wishlist        # Add wishlist to shop
-/create blog --add-comments        # Add comments to articles
-/create portfolio --add-filters    # Add advanced filtering
+Or would you like to add credit card processing with Stripe?
 ```
 
-## Custom Backend Features
+**You:** "Yes, add Stripe"
 
-**When you need NEW backend logic, explicitly request it:**
+**Me:**
+```
+🔐 Great! To enable Stripe payments, I need your API keys.
 
-```bash
-/create backend ai-tutors          # Custom AI tutor system
-/create backend token-economy      # Custom token economy
-/create backend analytics          # Custom analytics dashboard
-/create backend enrollment         # Custom enrollment system
+1. Sign up at https://stripe.com (if you haven't already)
+2. Get your test keys from Dashboard → Developers → API Keys
+3. Paste them here:
+
+PUBLIC_STRIPE_PUBLISHABLE_KEY=pk_test_...
+STRIPE_SECRET_KEY=sk_test_...
+
+📚 Full setup guide: https://one.ie/docs/develop/stripe
 ```
 
-### Backend Request Format
+**You:** *(pastes keys)*
 
-```bash
-/create backend [feature-name]     # Triggers agent-backend + agent-frontend
+**Me:**
+```
+✅ Stripe integrated! Your customers can now pay with credit cards.
+
+🧪 Test with these cards:
+- 4242 4242 4242 4242 (success)
+- 4000 0025 0000 3155 (requires 3D Secure)
+
+Your perfume page now has:
+- ✅ Product gallery with zoom
+- ✅ Add to cart with quantity
+- ✅ Secure Stripe checkout
+- ✅ Order confirmation page
+- ✅ Email receipts (from Stripe)
+
+🎨 What else would you like to add or change?
 ```
 
-**Examples of valid backend requests:**
-```bash
-/create backend ai-tutors          # AI tutor integration (60-90 cycles)
-/create backend token-economy      # Token economy system (70-100 cycles)
-/create backend custom-analytics   # Custom analytics (50-80 cycles)
-/create backend member-tiers       # Membership tier system (60-90 cycles)
-/create backend invoice-system     # Invoice/billing system (70-100 cycles)
+### Example 2: Making It Your Home Page
+
+**You:** "I want this as my home page"
+
+**Me:**
+```
+✅ Perfect! I'll set your perfume page as the home page.
+
+Updating /src/pages/index.astro to use your product landing...
+
+Done! Now when visitors go to your site, they'll see your perfume
+landing page first.
+
+🌐 Test it: http://localhost:4321
+
+🎨 What would you like to add or change next?
 ```
 
-## Before You Start: Search for Existing Code
+### Example 3: Adding Features
 
-**CRITICAL:** Before implementing anything new:
+**You:** "Add customer testimonials"
 
-1. **Search for existing implementations:**
-   ```bash
-   # Frontend components
-   find /Users/toc/Server/ONE/web/src/components -name "*.tsx"
+**Me:**
+```
+✨ Adding a testimonials section to your page...
 
-   # Pages
-   find /Users/toc/Server/ONE/web/src/pages -name "*.astro" -o -name "*.tsx"
+I'll place it after the product features, before the FAQ.
 
-   # Backend functions
-   find /Users/toc/Server/ONE/backend/convex -name "*.ts"
+✅ Done! Your page now includes:
+- 5-star reviews from customers
+- Star ratings
+- Customer names and dates
+- Social proof section
 
-   # Search by keyword (example: "product")
-   grep -r "Product" /Users/toc/Server/ONE/web/src/ /Users/toc/Server/ONE/backend/convex/
-   ```
-
-2. **Ask yourself:**
-   - Does a similar component/function exist?
-   - Can I extend it instead of creating new?
-   - What patterns are already established?
-
-3. **Build on what exists:**
-   - ✅ Extend ThingCard, not create ProductCard
-   - ✅ Add prop to existing component
-   - ✅ Enhance existing mutation
-   - ❌ Duplicate patterns
-
-**Pattern convergence = 98% accuracy. Pattern divergence = 30% accuracy.**
+🎨 What else would you like to add?
+```
 
 ---
 
-## Workflow
+## Template Discovery Process
 
-### Step 1: Discover Existing Code (MANDATORY)
+**Before implementing ANYTHING, I ALWAYS:**
 
-**Before generating ANY code:**
-
-1. **Search codebase:**
-   ```bash
-   # Components
-   ls -la /Users/toc/Server/ONE/web/src/components/features/
-
-   # Pages
-   ls -la /Users/toc/Server/ONE/web/src/pages/
-
-   # Backend
-   ls -la /Users/toc/Server/ONE/backend/convex/mutations/
-   ls -la /Users/toc/Server/ONE/backend/convex/queries/
-
-   # Search for patterns (replace <keyword> with your feature)
-   grep -r "<keyword>" /Users/toc/Server/ONE/web/src/
-   grep -r "<keyword>" /Users/toc/Server/ONE/backend/convex/
-   ```
-
-2. **Document what exists:**
-   - Existing components that might be reusable
-   - Existing mutations/queries to extend
-   - Established patterns to follow
-
-3. **Decision:**
-   - ✅ Extend existing code (90% of cases)
-   - ⚠️ Create new only if truly different (10% of cases)
-
-### Step 2: Describe What You Want
+### 1. Search Existing Pages
 
 ```bash
-/create shop-recommendations
-# or
-/create portfolio --add-filters
-# or
-/create backend ai-tutors
+# Search for pages by keyword
+find /Users/toc/Server/ONE/web/src/pages -name "*product*.astro"
+find /Users/toc/Server/ONE/web/src/pages -name "*landing*.astro"
+find /Users/toc/Server/ONE/web/src/pages -name "*shop*.astro"
 ```
 
-### Step 3: Agent-Director Validates & Plans
-
-1. **Check existing /web components**
-2. **Decide: Frontend-only or Backend-required?**
-3. **Create 100-cycle plan** with cycle breakdown
-4. **Assign to specialist(s)** (agent-frontend, agent-backend, etc.)
-5. **Load dependencies** from cycle context
-
-**Rule:** Prefer extending over creating new code.
-
-### Step 4: See Your Plan
+### 2. Search Components
 
 ```bash
-/plan show
-# Shows:
-# - 100-cycle breakdown
-# - Phase descriptions (1-10 through 91-100)
-# - Agent assignments
-# - Dependencies & parallel opportunities
+# Search for reusable components
+find /Users/toc/Server/ONE/web/src/components -name "*Product*.tsx"
+find /Users/toc/Server/ONE/web/src/components -name "*Card*.tsx"
+find /Users/toc/Server/ONE/web/src/components -name "*Checkout*.tsx"
 ```
 
-### Step 5: Execute Cycles
+### 3. Analyze Template Structure
 
-Follow the cycle workflow:
-```bash
-/now                               # See current cycle (1-100)
-/next                              # Advance to next cycle
-/done                              # Mark complete & capture lesson
+- Read template README (if exists)
+- Identify reusable sections
+- Note customization points
+- Check for helper functions
+
+### 4. Copy & Customize (Never Build from Scratch)
+
+```astro
+---
+// Copy template
+// Swap data source
+// Update branding
+// Keep proven structure
+---
 ```
-
-Each cycle ~5-20 minutes depending on complexity.
 
 ---
 
-## Examples
+## Feature Request Examples
 
-### Example 1: Frontend-Only (FASTEST)
-You request: `/create landing-hero`
+**Just tell me what you want. I'll handle the template search and customization.**
 
-```
-✅ Category: Frontend Feature
-✅ No database changes needed
-✅ Assigned to: agent-frontend + agent-designer
-✅ Cycle cycles: 20-30
-✅ Phase breakdown:
-   • Cycle 1-5: Understand & validate
-   • Cycle 6-10: Design wireframes
-   • Cycle 11-20: Build components
-   • Cycle 21-30: Test & deploy
-```
-
-### Example 2: Backend Service (COMPREHENSIVE)
-You request: `/create backend ai-tutors`
+### E-commerce
 
 ```
-✅ Category: Backend Service
-✅ Needs: schema design, mutations, queries, Effect.ts services
-✅ Assigned to: agent-backend + agent-frontend + agent-quality
-✅ Cycle cycles: 60-90
-✅ Phase breakdown:
-   • Cycle 1-10: Foundation & plan
-   • Cycle 11-20: Backend schema & services
-   • Cycle 21-30: Frontend pages & components
-   • Cycle 31-40: Integration & connections
-   • Cycle 41-50: Auth & authorization
-   • Cycle 51-60: Knowledge & RAG
-   • Cycle 61-70: Quality & testing
-   • Cycle 71-80: Design & wireframes
-   • Cycle 81-90: Performance & optimization
-   • Cycle 91-100: Deployment & documentation
+"I want to sell a t-shirt"
+"I need a checkout page"
+"Add a shopping cart"
+"Create a product catalog"
 ```
 
-### Example 3: Integration (VARIABLE)
-You request: `/create backend stripe-payment`
+### Marketing
 
 ```
-✅ Category: Integration
-✅ Type: Third-party service (Stripe)
-✅ Assigned to: agent-integrator + agent-frontend
-✅ Cycle cycles: 30-50
-✅ Phase breakdown:
-   • Cycle 1-10: API exploration & validation
-   • Cycle 11-25: Backend integration layer
-   • Cycle 26-40: Frontend payment UI
-   • Cycle 41-50: Testing & deployment
+"I want a landing page for my app"
+"Create a pricing page"
+"Add a newsletter signup"
+"Build a contact form"
 ```
 
-### Example 4: Direct Commands
-Quick feature building:
+### Content
+
+```
+"I want a blog"
+"Create an article page"
+"Add a portfolio gallery"
+"Build a case study template"
+```
+
+### Business
+
+```
+"I need a dashboard"
+"Create an analytics page"
+"Add user profiles"
+"Build an admin panel"
+```
+
+---
+
+## Warm, Encouraging Feedback
+
+**I'll guide you every step with clear, friendly messages:**
+
+```
+✅ Perfect! I found a great template for that...
+
+🔍 Searching for existing templates...
+
+✨ Creating your [feature] from our [template] template...
+
+🎨 What would you like to add or change?
+
+🚀 You're making great progress! What's next?
+
+💡 Tip: You can add Stripe payments in just 2 minutes!
+
+🌟 Your [feature] is live! Test it and tell me what you think.
+```
+
+---
+
+## Built-In Templates
+
+### Shop Templates
+
+**Location:** `/web/src/pages/shop/`
+
+- `product-landing.astro` - Conversion-optimized product page
+- Template README with full documentation
+- Helper functions in `/web/src/lib/productTemplateHelpers.ts`
+
+**Components:**
+- `ProductHeader` - Header with cart and dark mode
+- `ProductGallery` - Image gallery with zoom
+- `InlineUrgencyBanner` - Stock countdown
+- `FeaturesWithImages` - Feature sections
+- `ProductSpecs` - Specifications table
+- `FragranceNotes` - Category-specific (fragrances)
+- `ReviewsSection` - Customer reviews
+- `ProductFAQ` - Common questions
+- `StickyBuyBar` - Floating purchase bar
+- `RecentPurchaseToast` - Social proof
+
+### More Templates (Search & Discover)
+
+I'll search for templates based on your request:
+
+- Blog pages in `/web/src/pages/blog/`
+- Portfolio pages in `/web/src/pages/portfolio/`
+- Dashboard pages in `/web/src/pages/dashboard/`
+- Documentation pages in `/web/src/pages/docs/`
+
+**If a template doesn't exist yet, I'll:**
+1. Find the closest existing pattern
+2. Adapt it to your needs
+3. Document it as a new template
+4. Suggest adding it to the template library
+
+---
+
+## Stripe Integration Guide
+
+**When you're ready to add payments:**
+
+### Step 1: Get Your Keys
+
+1. Sign up at https://stripe.com
+2. Go to Dashboard → Developers → API Keys
+3. Copy your Publishable key (starts with `pk_test_...`)
+4. Copy your Secret key (starts with `sk_test_...`)
+
+### Step 2: Paste Keys
 
 ```bash
-/create shop-recommendations     # → Frontend feature (25-35 cycles)
-/create blog --add-comments      # → Frontend enhancement (15-25 cycles)
-/create backend token-economy    # → Backend service (70-100 cycles)
+# I'll ask you to paste these:
+PUBLIC_STRIPE_PUBLISHABLE_KEY=pk_test_xxxxxxxxxxxxxxxxxxxxx
+STRIPE_SECRET_KEY=sk_test_xxxxxxxxxxxxxxxxxxxxx
 ```
 
-## Available Components by Feature
+### Step 3: I'll Configure Everything
 
-### Shop Components
-- Product cards with images, pricing, ratings
-- Shopping cart with quantity management
-- Checkout flow with shipping & payment
-- Product filters (category, price, rating)
-- Search functionality
-- Order history & tracking
+I'll automatically:
+- Add Stripe SDK to dependencies
+- Create `.env.local` file
+- Update product page with checkout flow
+- Add success/cancel pages
+- Configure webhook handling (optional)
 
-### Blog Components
-- Article cards with preview & metadata
-- Featured articles section
-- Category/tag navigation
-- Search & filtering
-- RSS feeds
-- Newsletter signup
-- Comment system (optional)
+### Step 4: Test Payments
 
-### Portfolio Components
-- Project showcase cards
-- Portfolio filtering (by category, skills)
-- Lightbox image gallery
-- Case study detail pages
-- Client testimonials
-- Skills/expertise listing
-- Project links & CTAs
+Use these test cards:
 
-### Course Components
-- Course cards with preview
-- Course detail pages
-- Lesson player
-- Progress tracking
-- Quiz/assessment UI
-- Certificate preview
-- Instructor profiles
-- Student reviews
+| Card Number | Result |
+|-------------|--------|
+| 4242 4242 4242 4242 | Payment succeeds |
+| 4000 0025 0000 3155 | Requires 3D Secure |
+| 4000 0000 0000 9995 | Declined (insufficient funds) |
 
-### Landing Components
-- Hero section with CTA
-- Feature showcase with icons
-- Pricing tables with tiers
-- Testimonial carousel
-- FAQ accordion
-- Email capture forms
-- Social proof (reviews, numbers)
-- Footer with links
+**Expiry:** Any future date (e.g., 12/34)
+**CVC:** Any 3 digits (e.g., 123)
+**ZIP:** Any 5 digits (e.g., 12345)
 
-## Cycle Cycle Estimates
+**Full guide:** https://one.ie/docs/develop/stripe
 
-| Type | Cycles | Typical | Agents |
-|------|--------|---------|--------|
-| Frontend-only (reuse) | 20-40 | 25 cycles | agent-frontend |
-| Frontend enhancement | 15-25 | 20 cycles | agent-frontend |
-| Custom backend | 60-90 | 75 cycles | agent-backend + agent-frontend |
-| Integration | 30-60 | 45 cycles | agent-integrator + agent-frontend |
-
-**Each cycle:** 5-20 minutes (depends on complexity)
+---
 
 ## Pro Tips
 
-**Start with frontend-only features:**
-- ✅ Reuse components from /web (fast, proven, tested)
-- ✅ Customize styling, layout, branding
-- ✅ Add filtering, search, or sorting
-- ✅ Reorganize content, add new pages
-- ✅ Integrate existing third-party services
+### Start with Templates
 
-**Go backend when you need:**
-- ❌ New data models or database schema
-- ❌ Custom business logic not in existing code
-- ❌ Real-time features (WebSockets, live updates)
-- ❌ Complex calculations or transformations
-- ❌ Multi-step workflows or state machines
+- ✅ Copy existing pages and customize
+- ✅ Reuse proven components
+- ✅ Keep tested patterns
+- ❌ Never build from scratch
 
-**Key principle:** If you can solve it with styling or layout, it's frontend-only. If you need new data or logic, it's backend.
+### Iterate Fast
+
+- ✅ Build basic version first
+- ✅ Get feedback
+- ✅ Add features incrementally
+- ❌ Don't plan for hours
+
+### Ask for Help
+
+- ✅ "Add Stripe payments"
+- ✅ "Change the colors"
+- ✅ "Make it my home page"
+- ❌ Don't struggle alone
+
+### Ship Often
+
+- ✅ Deploy early and often
+- ✅ Test with real users
+- ✅ Iterate based on feedback
+- ❌ Don't wait for perfect
+
+---
+
+## Golden Rules
+
+1. **Template-first:** ALWAYS search for existing templates before building
+2. **Copy, don't create:** Reuse proven patterns, customize for your needs
+3. **Fast iteration:** Build basic version, get feedback, iterate
+4. **Conversational:** Just tell me what you want, I'll handle the technical details
+5. **Encouraging:** Every step should feel fast, easy, and exciting
+
+---
 
 ## Commands
 
 ```bash
-/create                           # Start feature creator (guided wizard)
-/create help                      # Show this help
-/create [feature-name]            # Create specific feature (skip wizard)
-/create backend [feature-name]    # Create with backend support
-/onboard                          # Analyze website & extract brand (first time)
+/create                           # Start feature wizard (tell me what you want)
+/create [feature-name]            # Create specific feature (I'll find templates)
 
-# During execution:
-/now                              # See current cycle (1-100)
-/next                             # Advance to next cycle
-/done                             # Mark complete, capture lesson, advance
-/plan show                        # View your 100-cycle plan
-/reset                            # Start new feature (clear current state)
-```
-
-## Workflow Integration
-
-The `/create` command integrates with the cycle workflow:
-
-```
-/create [feature]   →   agent-director plans   →   /now shows progress
-                        (100-cycle breakdown)
-                               ↓
-                        /next / /done execute
-                        each cycle cycle
+# Examples:
+/create                           # "I want to sell a product"
+/create product-page              # Uses product landing template
+/create checkout                  # Searches for checkout templates
+/create blog                      # Uses blog templates
 ```
 
 ---
 
-**Golden Rule:** Always ask "Can I solve this with existing components?" before choosing backend.
+## What Happens Next?
 
-**Cycle comparison:**
-- Frontend feature: 20-40 cycles (typically 20-30 minutes each)
-- Backend service: 60-90 cycles (typically 10-20 minutes each)
-- Integration: 30-60 cycles (typically 15-25 minutes each)
+After I create your feature, I'll ask:
+
+```
+🎨 What would you like to add or change?
+
+Suggestions:
+- Add credit card processing with Stripe
+- Change colors to match your brand
+- Add customer testimonials
+- Make this your home page
+- Add a video demo section
+- Add live chat support
+
+Just tell me what you want, and I'll make it happen!
+```
+
+---
+
+**Golden Rule:** Copy existing templates. Customize fast. Ship often. Make it yours.
+
+**Your success is my success. Let's build something amazing together! 🚀**

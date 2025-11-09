@@ -40,6 +40,81 @@ src/pages/[...slug].astro       → / and /any/deep/path (catch-all)
 
 ---
 
+## Page Template Catalog
+
+**CRITICAL: Before creating ANY new page, check if a template exists.**
+
+### Available Page Templates
+
+#### E-commerce Templates
+```
+/web/src/pages/shop/product-landing.astro
+├─ Features: Product gallery, reviews, Stripe checkout, urgency banners
+├─ Guide: /web/src/pages/shop/TEMPLATE-README.md
+├─ Use for: Product pages, shop pages, landing pages for merchandise
+└─ Stripe-ready: Yes (just add API keys)
+```
+
+#### Other Page Templates
+```bash
+# Search all available pages
+glob "web/src/pages/**/*.astro"
+
+# Common patterns:
+/web/src/pages/account/*.astro        # Auth flows
+/web/src/pages/dashboard/*.astro      # Admin dashboards
+/web/src/pages/docs/[...slug].astro   # Documentation
+/web/src/pages/blog/[...slug].astro   # Blog posts
+```
+
+### Template Usage Pattern
+
+**ALWAYS follow this pattern when creating pages:**
+
+```bash
+# Step 1: Search for similar pages
+glob "web/src/pages/**/*.astro"
+
+# Step 2: Read template
+Read("/web/src/pages/shop/product-landing.astro")
+
+# Step 3: Read template guide
+Read("/web/src/pages/shop/TEMPLATE-README.md")
+
+# Step 4: Copy and customize
+# - Update product data
+# - Modify layout/content
+# - Keep component structure
+
+# Step 5: Offer enhancements
+# - "Make this your home page?"
+# - "Add Stripe checkout?"
+# - "Add more features?"
+```
+
+### Example: Creating a T-Shirt Shop Page
+
+User: "I want to create a page that sells a t-shirt"
+
+**Template-first approach:**
+```
+1. ✅ Use /web/src/pages/shop/product-landing.astro
+2. ✅ Update product data (t-shirt details)
+3. ✅ Ask: "Want this as home page?"
+4. ✅ After creation: "Add Stripe for payments?"
+```
+
+**From-scratch approach (WRONG):**
+```
+1. ❌ Create new ProductPage.astro from blank file
+2. ❌ Rebuild gallery component
+3. ❌ Rebuild reviews section
+4. ❌ Figure out Stripe integration
+Result: Hours instead of minutes
+```
+
+---
+
 ## Page Types & Rendering Modes
 
 ### 1. Static Pages (Default)

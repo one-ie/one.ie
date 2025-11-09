@@ -1,20 +1,70 @@
 # /fast - Rapid Feature Building & Modification
 
-**Purpose:** Build or modify features at maximum speed without planning cycles. Zero ceremony, pure execution.
+**Purpose:** Build or modify features at maximum speed through template reuse. Zero ceremony, pure execution.
 
 ---
 
 ## Core Philosophy
 
-**Sometimes you just need it done. Now.**
+**Fast = Copy, Modify, Ship. Not Build From Scratch.**
 
 The `/fast` command is for when:
 - ✅ You know exactly what you want
 - ✅ Feature is small/straightforward (< 5 files)
-- ✅ No planning needed, just execution
-- ✅ Speed > process
+- ✅ Existing templates can be adapted
+- ✅ Speed > perfection
 
-**No cycles. No planning. No bureaucracy. Just build.**
+**CRITICAL: Always search for existing templates FIRST. Never build from scratch if a template exists.**
+
+**Template Priority:**
+1. **Product/Shop Features** → Use `/web/src/pages/shop/product-landing.astro` immediately
+2. **Other Features** → Search pages and components for similar patterns
+3. **No Template Found** → Build minimal version following existing patterns
+
+**No cycles. No planning. No bureaucracy. Just copy, modify, ship.**
+
+---
+
+## Template-First Workflow (Execute for EVERY /fast request)
+
+### Step 1: Identify Feature Type
+```bash
+# Product/shop/landing page?
+→ Use /web/src/pages/shop/product-landing.astro immediately
+
+# Other feature?
+→ Proceed to Step 2
+```
+
+### Step 2: Search for Templates
+```bash
+# Search pages for similar patterns
+Glob: /web/src/pages/**/*.astro
+
+# Search components for reusable elements
+Glob: /web/src/components/**/*.tsx
+
+# Pick closest match
+```
+
+### Step 3: Show Template to User
+```bash
+# Be transparent about what you're using
+"Using [template-path] as base, customizing [specific changes]"
+```
+
+### Step 4: Copy, Modify, Ship
+```bash
+# Copy template
+# Modify for specific needs
+# Ship immediately
+```
+
+### Step 5: Offer Stripe Integration (if relevant)
+```bash
+# For product/payment features
+"Would you like to add Stripe payment integration?"
+```
 
 ---
 
@@ -24,21 +74,22 @@ The `/fast` command is for when:
 /fast [feature-description]
 
 # Examples:
-/fast Add dark mode toggle to header
-/fast Fix broken cart icon on mobile
-/fast Create pricing page with 3 tiers
-/fast Add email signup form to footer
-/fast Change primary color to blue
+/fast Create product page for AI course → Uses product-landing.astro template
+/fast Add dark mode toggle to header → Searches for existing toggle components
+/fast Fix broken cart icon on mobile → Direct modification
+/fast Create pricing page with 3 tiers → Uses product-landing.astro pricing section
+/fast Add email signup form to footer → Searches for existing form components
 ```
 
 **What happens:**
-1. Parse feature description
-2. Identify files to create/modify
-3. Execute immediately (no plan, no approval)
-4. Deploy if applicable
-5. Done.
+1. **Search for templates FIRST** (glob pages/components for similar patterns)
+2. **Show user the template** you're using and what you're customizing
+3. **Copy and modify** template for specific needs
+4. Execute immediately (no plan, no approval)
+5. **Offer Stripe integration** if feature is product/payment-related
+6. Done.
 
-**Time:** 30 seconds to 3 minutes (average: 90 seconds)
+**Time:** 30 seconds to 3 minutes (average: 60 seconds with templates)
 
 ---
 
@@ -62,7 +113,7 @@ The `/fast` command is for when:
 
 ## Fast Execution Modes
 
-### Mode 1: Create New Feature (3-5 minutes)
+### Mode 1: Template-Based Feature Creation (30-90 seconds)
 
 ```bash
 /fast Create pricing page with 3 tiers
@@ -70,13 +121,13 @@ The `/fast` command is for when:
 
 **Execution:**
 ```
-→ Identify: Need Astro page + pricing component
-→ Create: /web/src/pages/pricing.astro
-→ Create: /web/src/components/Pricing.tsx
-→ Style: Use existing design tokens
-→ Test: Visual check (no formal testing)
-→ Deploy: Push to staging
-✅ Done in 3 minutes
+→ Search: Glob /web/src/pages/**/*.astro for pricing patterns
+→ Found: /web/src/pages/shop/product-landing.astro (has pricing section)
+→ Show: "Using product-landing.astro template, customizing for 3-tier pricing"
+→ Copy: Template to /web/src/pages/pricing.astro
+→ Modify: Update pricing tiers, remove product-specific sections
+→ Offer: "Would you like to add Stripe payment integration?"
+✅ Done in 90 seconds (vs 3-5 minutes from scratch)
 ```
 
 ### Mode 2: Modify Existing Feature (1-2 minutes)
@@ -265,36 +316,83 @@ The `/fast` command automatically detects:
 
 ---
 
-## Speed Optimizations
+## Template-First Execution Strategy
 
-### 1. Use Existing Patterns
+### CRITICAL: Template Search Process (Run BEFORE Building)
+
+**For EVERY /fast request, execute this search pattern:**
+
 ```bash
-/fast Create new blog post page
+# Step 1: Identify feature type
+Is this a product/shop feature? → Use /web/src/pages/shop/product-landing.astro
 
-→ Searches: /web/src/pages/blog/
-→ Finds: Existing post structure
-→ Replicates: Same pattern, new content
-→ Time: 60 seconds (vs 5 minutes from scratch)
+# Step 2: Search for similar pages
+Glob search: /web/src/pages/**/*.astro for similar page types
+
+# Step 3: Search for reusable components
+Glob search: /web/src/components/**/*.tsx for relevant components
+
+# Step 4: Pick closest match, copy, and modify
 ```
 
-### 2. Component Reuse
-```bash
-/fast Add testimonials to home page
+### Template Priority Map
 
-→ Checks: Do testimonials component exist?
-→ Found: /web/src/components/Testimonials.tsx
-→ Uses: Import and place on home page
-→ Time: 30 seconds (vs 4 minutes new component)
+**Product Pages** → `/web/src/pages/shop/product-landing.astro`
+- Product launches, sales pages, landing pages, offers
+- Time: 30-60 seconds (just modify content)
+
+**Blog/Content Pages** → Search `/web/src/pages/blog/`
+- Articles, posts, case studies, documentation
+- Time: 60 seconds (replicate structure)
+
+**Marketing Pages** → Search `/web/src/pages/*.astro`
+- About, pricing, features, contact
+- Time: 2 minutes (adapt layout)
+
+**Components** → Search `/web/src/components/`
+- UI elements, forms, cards, modals
+- Time: 30 seconds (import and place)
+
+### Example: Template-Driven Creation
+
+```bash
+/fast Create SaaS pricing page
+
+→ Step 1: Search for templates
+  Glob: /web/src/pages/**/*pricing*.astro
+  Found: /web/src/pages/shop/product-landing.astro (has pricing section)
+
+→ Step 2: Show user what we're using
+  "Using product-landing.astro template, customizing for SaaS pricing"
+
+→ Step 3: Copy and modify
+  - Keep: Layout, styling, structure
+  - Change: Content, pricing tiers, CTAs
+  - Remove: Product-specific sections
+
+→ Step 4: Ship
+  Created: /web/src/pages/pricing.astro
+  Time: 90 seconds
+
+→ Step 5: Offer integration
+  "Would you like to add Stripe payment integration?"
 ```
 
-### 3. Template Matching
-```bash
-/fast Create landing page
+### Speed Comparison
 
-→ Matches: Similar to existing pages
-→ Template: Hero + Features + CTA + Footer
-→ Time: 3 minutes (vs 10 minutes custom)
-```
+**With Template:**
+- Search: 10 seconds
+- Copy: 5 seconds
+- Modify: 30 seconds
+- Total: **45 seconds**
+
+**From Scratch:**
+- Design: 2 minutes
+- Build: 3 minutes
+- Style: 2 minutes
+- Total: **7 minutes**
+
+**Template = 9x faster**
 
 ---
 
@@ -387,13 +485,16 @@ Total: 10 minutes, experiment live
 
 Even though `/fast` is rapid, it still:
 
+✅ **Searches templates FIRST** - Never builds from scratch if template exists
+✅ **Shows template being used** - Transparency in what's being copied
 ✅ **Validates against ontology** - Ensures features map to 6 dimensions
-✅ **Checks existing code** - Searches for patterns to reuse
 ✅ **Type checks** - Runs `bunx astro check` before deploy
-✅ **Maintains consistency** - Uses existing design tokens
+✅ **Maintains consistency** - Uses existing design tokens and patterns
 ✅ **Git commits** - Auto-commits with descriptive messages
+✅ **Offers integrations** - Suggests Stripe for product/payment features
 
 **What /fast does NOT do:**
+❌ Build from scratch when templates exist
 ❌ Formal testing (unless requested)
 ❌ Documentation (code is self-documenting)
 ❌ Design reviews (trust the patterns)
@@ -515,11 +616,15 @@ Fast executions are logged to:
 
 ## Key Principles
 
-1. **Speed is the priority** - Sacrifice process for velocity
-2. **Trust the patterns** - Replicate what works
-3. **Good enough ships** - Perfection is the enemy of done
-4. **Auto-commit everything** - Never lose work
-5. **Fail fast** - If complex, escalate to `/plan`
+1. **Templates FIRST** - Always search before building from scratch
+2. **Show your work** - Tell user which template you're using
+3. **Copy, modify, ship** - Fastest path is adaptation, not creation
+4. **Speed is the priority** - Sacrifice process for velocity
+5. **Trust the patterns** - Replicate what works
+6. **Offer integrations** - Suggest Stripe for product/payment features
+7. **Good enough ships** - Perfection is the enemy of done
+8. **Auto-commit everything** - Never lose work
+9. **Fail fast** - If complex, escalate to `/plan`
 
 ---
 

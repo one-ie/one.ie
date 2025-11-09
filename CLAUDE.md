@@ -108,6 +108,31 @@ Web (Astro + React) → Backend (Convex) → 6-Dimension Ontology
 
 ---
 
+## Template-First Development
+
+**CRITICAL PRINCIPLE:** Always reuse existing templates and components. NEVER build from scratch when a template exists.
+
+### Template Discovery Process
+1. **User requests feature** → Parse intent and identify feature type
+2. **Search existing templates** → Check pages/components for similar patterns
+3. **Propose template** → Show user the template being used
+4. **Copy and customize** → Modify template for specific needs
+5. **Offer enhancements** → Suggest Stripe, features, etc.
+
+### Template Registry
+- **Product landing pages:** `/web/src/pages/shop/product-landing.astro` (includes Stripe)
+- **Template guide:** `/web/src/pages/shop/TEMPLATE-README.md`
+- **Components library:** `/web/src/components/` (50+ shadcn/ui components)
+- **Page patterns:** Search `/web/src/pages/**/*.astro` for similar routes
+
+### Development Speed
+- Template-driven: **Minutes**
+- From-scratch: **Hours**
+
+**Golden Rule:** If someone wants to sell a product → use product-landing template. If someone wants any feature → search first, build second.
+
+---
+
 ## Technology Stack
 
 **Frontend:** Astro 5, React 19, Tailwind v4, shadcn/ui (50+ components), Better Auth
