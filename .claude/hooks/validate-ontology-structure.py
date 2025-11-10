@@ -224,12 +224,30 @@ def to_kebab_case(filename):
 
     return name + ext
 
+def is_in_ontology_directory(file_path):
+    """Check if file is in the /one ontology directory (not just any path containing 'one')"""
+    parts = Path(file_path).parts
+
+    # Look for 'one' directory in the path
+    try:
+        one_index = parts.index('one')
+        # Must have at least one more part after 'one'
+        if one_index + 1 < len(parts):
+            next_part = parts[one_index + 1]
+            # Check if next part is a valid dimension or allowed root file
+            if normalize_dimension(next_part) or next_part in ['LICENSE.md', 'README.md', 'CONTRIBUTING.md', 'CHANGELOG.md', '.gitignore']:
+                return True
+    except ValueError:
+        pass
+
+    return False
+
 def validate_file_path(file_path):
     """Validate that file path follows ontology structure"""
     issues = []
 
-    # Check if file is in /one directory
-    if '/one/' not in file_path:
+    # Check if file is in /one ontology directory
+    if not is_in_ontology_directory(file_path):
         return issues  # Not in /one, skip validation
 
     # Allow certain root-level files in /one
@@ -412,8 +430,8 @@ def main():
         if not file_path:
             sys.exit(0)
 
-        # Skip validation for non-/one files
-        if '/one/' not in file_path:
+        # Skip validation for files not in the /one ontology directory
+        if not is_in_ontology_directory(file_path):
             sys.exit(0)
 
         # For PostToolUse, try to auto-fix filename first

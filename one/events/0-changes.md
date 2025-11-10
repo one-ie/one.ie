@@ -1,3 +1,40 @@
+### **RELEASE v3.6.33** — 2025-11-05 — `CLI Release: MCPs Default OFF`
+
+**What Changed:**
+- Fixed MCP servers default state (now OFF instead of ON)
+- Saves ~10k context tokens on new installations
+- Users enable MCPs with `/mcp-on` command when needed
+- Synced 518+ files from root to cli/ distribution package
+- Published to npm: oneie@3.6.33
+
+**Deployment:**
+- npm package: https://www.npmjs.com/package/oneie
+- Version: 3.6.33 (patch release)
+- Published at: 2025-11-05 ~14:10 UTC
+- Verification: `npx oneie@latest --version` works correctly
+
+**Impact:**
+- New installations more token-efficient by default
+- Better for users who don't need MCPs immediately
+- MCPs still fully available via `/mcp-on` command
+- Zero breaking changes
+
+**Modified Files:**
+  - cli/package.json (version bump)
+  - .mcp.json (default state: OFF)
+  - cli/dist/* (rebuilt TypeScript)
+
+
+
+### **7d435321** — template:3 — `ONE``
+
+**Template:**
+  - .claude/hooks.log
+  - .claude/state/cycle.json
+  - one/events/0-changes.md
+
+
+
 ### **f1681cdb** — template:3 — `chore: Update cycle state and documentation``
 
 **Template:**
