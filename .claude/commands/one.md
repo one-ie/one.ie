@@ -34,7 +34,29 @@ Let's open the platform for you...
 ⚡ Server is off. No problem! Let's get you up and running...
 ```
 
-### 1.2 Check if Dependencies are Installed
+### 1.2 Check if Bun is Installed
+
+**Check for bun:**
+```bash
+command -v bun >/dev/null 2>&1 && echo "installed" || echo "missing"
+```
+
+**If missing:**
+```
+📦 Installing Bun - the last npm command you'll ever need...
+```
+
+**Install bun globally:**
+```bash
+npm install -g bun
+```
+
+**After successful install:**
+```
+✅ Bun installed successfully!
+```
+
+### 1.3 Check if Dependencies are Installed
 
 **Show to user:**
 ```
@@ -62,7 +84,7 @@ pwd | grep -q '/web$' && echo "IN_WEB" || echo "IN_ROOT"
 ```
 ✅ All dependencies are installed!
 ```
-- Skip to Step 1.3
+- Skip to Step 1.4
 
 **If missing:**
 ```
@@ -96,7 +118,7 @@ bun install
 ✅ Installation complete! Your development environment is ready.
 ```
 
-### 1.3 Start the Server
+### 1.4 Start the Server
 
 **Show to user:**
 ```
@@ -127,7 +149,7 @@ sleep 3 && lsof -ti:4321 2>/dev/null
 You're moving fast! 🚀
 ```
 
-### 1.4 Open Start Page
+### 1.5 Open Start Page
 
 **Show to user:**
 ```

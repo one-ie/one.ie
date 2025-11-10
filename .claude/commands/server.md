@@ -86,13 +86,35 @@ Use /server restart to restart it.
 
 Stop here and don't continue.
 
-### Step 2: Detect Working Directory
+### Step 2: Check if Bun is Installed
+
+**Check for bun:**
+```bash
+command -v bun >/dev/null 2>&1 && echo "installed" || echo "missing"
+```
+
+**If missing:**
+```
+📦 Installing Bun - the last npm command you'll ever need...
+```
+
+**Install bun globally:**
+```bash
+npm install -g bun
+```
+
+**If install succeeds:**
+```
+✅ Bun installed successfully!
+```
+
+### Step 3: Detect Working Directory
 
 ```bash
 pwd | grep -q '/web$' && echo "IN_WEB" || echo "IN_ROOT"
 ```
 
-### Step 3: Check Dependencies Installed
+### Step 4: Check Dependencies Installed
 
 **If IN_ROOT:**
 ```bash
@@ -104,7 +126,7 @@ pwd | grep -q '/web$' && echo "IN_WEB" || echo "IN_ROOT"
 [ -d node_modules ] && echo "installed" || echo "missing"
 ```
 
-### Step 4: Install Dependencies if Missing
+### Step 5: Install Dependencies if Missing
 
 **If missing, show progress:**
 
@@ -142,7 +164,7 @@ Common issues:
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 ```
 
-### Step 5: Start Server in Background
+### Step 6: Start Server in Background
 
 **If IN_ROOT:**
 ```bash
@@ -154,13 +176,13 @@ cd web && bun run dev > /dev/null 2>&1 &
 bun run dev > /dev/null 2>&1 &
 ```
 
-### Step 6: Wait and Verify (3 seconds)
+### Step 7: Wait and Verify (3 seconds)
 
 ```bash
 sleep 3 && lsof -ti:4321 2>/dev/null
 ```
 
-### Step 7: Open Start Page in Browser
+### Step 8: Open Start Page in Browser
 
 ```bash
 open http://localhost:4321/start 2>/dev/null || xdg-open http://localhost:4321/start 2>/dev/null || start http://localhost:4321/start 2>/dev/null
@@ -273,13 +295,35 @@ lsof -ti:4321 | xargs kill 2>/dev/null
 sleep 1
 ```
 
-### Step 2: Detect Working Directory
+### Step 2: Check if Bun is Installed
+
+**Check for bun:**
+```bash
+command -v bun >/dev/null 2>&1 && echo "installed" || echo "missing"
+```
+
+**If missing:**
+```
+📦 Installing Bun - the last npm command you'll ever need...
+```
+
+**Install bun globally:**
+```bash
+npm install -g bun
+```
+
+**If install succeeds:**
+```
+✅ Bun installed successfully!
+```
+
+### Step 3: Detect Working Directory
 
 ```bash
 pwd | grep -q '/web$' && echo "IN_WEB" || echo "IN_ROOT"
 ```
 
-### Step 3: Check Dependencies Installed
+### Step 4: Check Dependencies Installed
 
 **If IN_ROOT:**
 ```bash
@@ -291,7 +335,7 @@ pwd | grep -q '/web$' && echo "IN_WEB" || echo "IN_ROOT"
 [ -d node_modules ] && echo "installed" || echo "missing"
 ```
 
-### Step 4: Install Dependencies if Missing
+### Step 5: Install Dependencies if Missing
 
 **If missing:**
 
@@ -311,7 +355,7 @@ cd web && bun install
 bun install
 ```
 
-### Step 5: Start Server
+### Step 6: Start Server
 
 **If IN_ROOT:**
 ```bash
@@ -323,13 +367,13 @@ cd web && bun run dev > /dev/null 2>&1 &
 bun run dev > /dev/null 2>&1 &
 ```
 
-### Step 6: Wait and Verify (3 seconds)
+### Step 7: Wait and Verify (3 seconds)
 
 ```bash
 sleep 3 && lsof -ti:4321 2>/dev/null
 ```
 
-### Step 7: Open Start Page in Browser
+### Step 8: Open Start Page in Browser
 
 ```bash
 open http://localhost:4321/start 2>/dev/null || xdg-open http://localhost:4321/start 2>/dev/null || start http://localhost:4321/start 2>/dev/null
