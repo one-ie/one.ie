@@ -137,7 +137,7 @@ const buildTimelineStages = [
 
 const totalBuildTime = 20.9;
 
-export function DeployBuildTimeline() {
+export default function DeployBuildTimeline() {
   const [activeStep, setActiveStep] = useState(0);
   const [animationProgress, setAnimationProgress] = useState(0);
   const [currentTime, setCurrentTime] = useState(0);

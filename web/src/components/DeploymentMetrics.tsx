@@ -68,7 +68,7 @@ const deploymentTrend = [
   { date: 'Nov 6', time: 19 },
 ];
 
-export function DeploymentMetrics() {
+export default function DeploymentMetrics() {
   return (
     <div className="space-y-8">
       {/* Key Metrics Cards */}

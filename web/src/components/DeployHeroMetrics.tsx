@@ -50,7 +50,7 @@ const lighthouseScores = [
   { metric: 'SEO', score: 100, color: '#10b981' },
 ];
 
-export function DeployHeroMetrics() {
+export default function DeployHeroMetrics() {
   return (
     <div className="w-full space-y-8">
       {/* Primary Metrics Row */}

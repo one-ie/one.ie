@@ -1,3 +1,31 @@
+### **0c545b36** — template:1 — `fix: Add strict link policy to agent-writer to prevent broken links``
+
+**Template:**
+  - .claude/agents/agent-writer.md
+
+
+
+### **39ff2c9d** — template:15 — `feat: Add podcast support with featured ONE ontology episode``
+
+**Template:**
+  - .claude/hooks.log
+  - .claude/state/cycle.json
+  - one/events/0-changes.md
+  - web/public/audio/podcast-truth-terminal.mp3
+  - web/public/media/.gitignore
+  - web/public/media/.gitkeep
+  - web/public/media/README.md
+  - web/src/components/FeaturedPodcast.tsx
+  - web/src/components/media/VideoPlayer.tsx
+  - web/src/content/config.ts
+  - web/src/content/podcasts/one-ontology.md
+  - web/src/pages/index.astro
+  - web/src/pages/ontology.astro
+  - web/src/pages/podcasts/[...slug].astro
+  - web/src/pages/podcasts/index.astro
+
+
+
 ### **614c622a** — template:4 — `chore: Update 4 file(s)``
 
 **Template:**

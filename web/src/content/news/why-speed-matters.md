@@ -6,7 +6,6 @@ author: "ONE Platform"
 tags: ["performance", "speed", "cloudflare", "astro", "lighthouse"]
 category: "article"
 featured: true
-image: "/blog/speed-matters.png"
 readingTime: 5
 ---
 

@@ -6,7 +6,6 @@ author: "ONE Platform"
 tags: ["launch", "platform", "free", "enterprise", "startup"]
 category: "news"
 featured: true
-image: "/blog/introducing-one.png"
 readingTime: 7
 ---
 
@@ -34,6 +33,7 @@ That was our challenge. The result? **ONE Platform**—a production-ready stack 
 Modern web development is **unnecessarily complex and expensive**:
 
 **Traditional Stacks:**
+
 ```
 Next.js + Vercel:      $20-2000/month
 Firebase:              $25-400/month
@@ -42,6 +42,7 @@ Custom Infrastructure: $100-5000/month
 ```
 
 **Setup Time:**
+
 ```
 MERN Stack:        2-3 hours (if you're lucky)
 Laravel + MySQL:   3-4 hours
@@ -50,6 +51,7 @@ Microservices:     Days to weeks
 ```
 
 **Performance:**
+
 ```
 Average web app: 2-4 second load times
 Mobile 3G:       5-10 second load times
@@ -83,6 +85,7 @@ Lighthouse:   100/100 (perfect scores)
 ### Real Numbers, Real Sites
 
 **Homepage:**
+
 ```
 Load Time:              < 330ms
 Time to Interactive:    < 400ms
@@ -91,6 +94,7 @@ Cumulative Layout Shift:  0 (perfect)
 ```
 
 **Dashboard (Logged In):**
+
 ```
 Session Check:   < 2ms
 Data Load:       < 100ms (from edge)
@@ -98,6 +102,7 @@ Page Transition: < 50ms (client-side)
 ```
 
 **API Responses:**
+
 ```
 Query (cached):    < 10ms
 Mutation (write):  < 100ms
@@ -107,6 +112,7 @@ Real-time update:  < 50ms (WebSocket)
 ### Why It's So Fast
 
 **1. Minimal JavaScript**
+
 ```
 Traditional React SPA: ~800KB
 ONE Platform:          ~30KB
@@ -116,6 +122,7 @@ Reduction:             96%
 **Result:** Instant page loads, even on slow networks.
 
 **2. Global Edge Rendering**
+
 ```
 User Location:  Nearest Edge
 Tokyo →         Tokyo DC (28ms)
@@ -126,6 +133,7 @@ New York →      New York DC (30ms)
 **Result:** Everyone gets the same blazing performance.
 
 **3. Smart Caching**
+
 ```
 Static HTML:      Edge cache (milliseconds)
 Session Data:     Local cache (< 2ms)
@@ -183,6 +191,7 @@ API Responses:    Edge + Browser (< 50ms)
 ### What's Included (Free Tier)
 
 **Cloudflare Pages:**
+
 - Unlimited requests
 - 330+ edge locations
 - Automatic SSL/TLS
@@ -190,6 +199,7 @@ API Responses:    Edge + Browser (< 50ms)
 - Global CDN
 
 **Convex Backend:**
+
 - 1M+ function calls/month
 - Real-time subscriptions
 - Automatic scaling
@@ -197,6 +207,7 @@ API Responses:    Edge + Browser (< 50ms)
 - Built-in file storage
 
 **Better Auth:**
+
 - Open source (MIT)
 - 6 authentication methods
 - Session management
@@ -208,12 +219,14 @@ API Responses:    Edge + Browser (< 50ms)
 ### When You Need to Scale
 
 **Cloudflare Pages (Pro):**
+
 - $20/month
 - Same unlimited requests
 - Advanced analytics
 - Custom headers
 
 **Convex (Pro):**
+
 - $25/month base
 - 10M+ function calls included
 - 99.99% SLA
@@ -248,6 +261,7 @@ wrangler pages deploy dist
 ```
 
 **What you get:**
+
 - ✅ Live production URL
 - ✅ Global CDN enabled
 - ✅ HTTPS configured
@@ -268,8 +282,8 @@ wrangler pages deploy dist
 ```css
 /* src/styles/global.css */
 @theme {
-  --color-primary: 250 84% 54%;    /* Your brand */
-  --color-accent: 142 76% 36%;     /* Your accent */
+  --color-primary: 250 84% 54%; /* Your brand */
+  --color-accent: 142 76% 36%; /* Your accent */
 }
 ```
 
@@ -286,8 +300,8 @@ cp your-logo.svg public/logo.svg
 export const siteConfig = {
   name: "Your Company",
   tagline: "Your Tagline",
-  url: "https://yoursite.com"
-}
+  url: "https://yoursite.com",
+};
 ```
 
 **Deploy changes: `bun run build && wrangler pages deploy dist`**
@@ -303,6 +317,7 @@ export const siteConfig = {
 **ONE doesn't compromise on enterprise needs:**
 
 **Security:**
+
 - ✅ Better Auth (6 methods: email, OAuth, magic links, 2FA)
 - ✅ Rate limiting (brute force protection)
 - ✅ Session management (secure, httpOnly cookies)
@@ -310,6 +325,7 @@ export const siteConfig = {
 - ✅ Security headers (CSP, HSTS, etc.)
 
 **Scalability:**
+
 - ✅ Edge rendering (handles traffic spikes automatically)
 - ✅ Auto-scaling backend (Convex)
 - ✅ Global CDN (330+ locations)
@@ -317,6 +333,7 @@ export const siteConfig = {
 - ✅ 99.99% uptime SLA (Cloudflare + Convex)
 
 **Compliance:**
+
 - ✅ GDPR compliant
 - ✅ SOC 2 infrastructure
 - ✅ WCAG 2.1 AA accessibility
@@ -324,12 +341,14 @@ export const siteConfig = {
 - ✅ Audit logs built-in
 
 **Multi-Tenancy:**
+
 - ✅ One backend, multiple frontends
 - ✅ Per-org customization
 - ✅ White-labeling ready
 - ✅ Centralized governance
 
 **Team Collaboration:**
+
 - ✅ Git-based workflow
 - ✅ Preview deployments
 - ✅ Rollback in seconds
@@ -340,24 +359,28 @@ export const siteConfig = {
 **Start free, scale when profitable:**
 
 **No Barriers to Entry:**
+
 - ✅ $0 to start
 - ✅ No credit card required
 - ✅ No time limits
 - ✅ No feature restrictions (free tier)
 
 **Learn While You Build:**
+
 - ✅ 41 comprehensive docs
 - ✅ Code examples everywhere
 - ✅ AI-assisted development (Claude Code integration)
 - ✅ Active community support
 
 **Monetize Instantly:**
+
 - ✅ Stripe integration (built-in)
 - ✅ Subscription management
 - ✅ Token economy ready
 - ✅ Instant payouts
 
 **Scale Without Worry:**
+
 - ✅ Free tier handles thousands of users
 - ✅ Auto-scaling (no configuration)
 - ✅ Pay only when profitable
@@ -404,6 +427,7 @@ export const siteConfig = {
 ### Security Features
 
 **Rate Limiting:**
+
 ```typescript
 // Built-in protection
 SignIn:        5 attempts / 15 min
@@ -413,6 +437,7 @@ API Calls:     1000 / minute
 ```
 
 **Session Management:**
+
 ```typescript
 // Secure by default
 httpOnly:    true  // No JavaScript access
@@ -422,6 +447,7 @@ maxAge:      30 days (configurable)
 ```
 
 **Headers:**
+
 ```typescript
 // Automatic security headers
 Content-Security-Policy:   strict
@@ -437,12 +463,14 @@ Strict-Transport-Security: max-age=31536000
 ### Startup MVP (1 Day)
 
 **Before ONE:**
+
 - Setup: 8 hours (infrastructure + backend)
 - Development: 3 days (auth + features)
 - Deployment: 4 hours (debugging)
 - **Total: 4+ days**
 
 **With ONE:**
+
 - Setup: 6 minutes (automated)
 - Development: 1 day (features only)
 - Deployment: Automatic
@@ -455,12 +483,14 @@ Strict-Transport-Security: max-age=31536000
 ### E-commerce Site (High Traffic)
 
 **Requirements:**
+
 - 10,000 products
 - 50,000 daily visitors
 - Real-time inventory
 - Global customers
 
 **ONE Handles:**
+
 - ✅ Edge rendering (fast worldwide)
 - ✅ Real-time updates (Convex)
 - ✅ Auto-scaling (no config)
@@ -474,12 +504,14 @@ Strict-Transport-Security: max-age=31536000
 ### SaaS Dashboard (Complex App)
 
 **Features:**
+
 - User authentication
 - Real-time collaboration
 - Data visualization
 - API integrations
 
 **ONE Provides:**
+
 - ✅ Auth (6 methods, pre-built)
 - ✅ Real-time (WebSocket)
 - ✅ Components (50+ shadcn/ui)
@@ -494,6 +526,7 @@ Strict-Transport-Security: max-age=31536000
 **Use Case:** Deploy branded sites for each client
 
 **ONE Workflow:**
+
 ```bash
 # Clone once
 git clone one-platform
@@ -516,26 +549,28 @@ cp .env.example .env.local
 
 ### Performance by Region
 
-| Region | Users | Avg Latency | Avg Load Time |
-|--------|-------|-------------|---------------|
-| North America | 40% | 28ms | 310ms |
-| Europe | 30% | 31ms | 295ms |
-| Asia-Pacific | 20% | 35ms | 330ms |
-| South America | 5% | 42ms | 380ms |
-| Africa | 3% | 45ms | 410ms |
-| Middle East | 2% | 38ms | 350ms |
+| Region        | Users | Avg Latency | Avg Load Time |
+| ------------- | ----- | ----------- | ------------- |
+| North America | 40%   | 28ms        | 310ms         |
+| Europe        | 30%   | 31ms        | 295ms         |
+| Asia-Pacific  | 20%   | 35ms        | 330ms         |
+| South America | 5%    | 42ms        | 380ms         |
+| Africa        | 3%    | 45ms        | 410ms         |
+| Middle East   | 2%    | 38ms        | 350ms         |
 
 **Global Average: 346ms** ⚡
 
 ### Traffic Patterns
 
 **Peak Traffic Handling:**
+
 - 1000 concurrent users: No degradation
 - 10,000 concurrent users: Auto-scales
 - 100,000 concurrent users: Still fast
 - DDoS attack: Absorbed by Cloudflare
 
 **Reliability:**
+
 - Uptime: 99.99% (measured)
 - MTTR: < 1 minute (auto-recovery)
 - Data durability: 99.999999999% (11 nines)
@@ -547,18 +582,21 @@ cp .env.example .env.local
 ### Coming Soon
 
 **Q4 2025:**
+
 - ✅ REST API separation (Hono + API keys)
 - ✅ GraphQL endpoint
 - ✅ Mobile app support (React Native)
 - ✅ Desktop app support (Electron)
 
 **Q1 2026:**
+
 - ✅ CLI tools
 - ✅ Component marketplace
 - ✅ Theme store
 - ✅ Plugin system
 
 **Q2 2026:**
+
 - ✅ Visual builder
 - ✅ No-code workflows
 - ✅ AI code generation
@@ -602,6 +640,7 @@ bun install
 ### Example Apps
 
 **Explore what's possible:**
+
 - E-commerce: https://shop.one.ie
 - SaaS Dashboard: https://app.one.ie
 - Blog: https://blog.one.ie
@@ -705,6 +744,6 @@ bun run dev
 
 ---
 
-*Built with ❤️ by the ONE Platform team*
-*Powered by Astro 5 + React 19 + Convex + Cloudflare*
-*Join us at https://one.ie*
+_Built with ❤️ by the ONE Platform team_
+_Powered by Astro 5 + React 19 + Convex + Cloudflare_
+_Join us at https://one.ie_
