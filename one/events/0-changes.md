@@ -1,3 +1,15 @@
+### **65fd2405** — template:6 — `fix: Update ontology validation hook to only validate /one directory``
+
+**Template:**
+  - .claude/hooks.log
+  - .claude/hooks/.last-news-context
+  - .claude/hooks/validate-ontology-structure.py
+  - .claude/state/cycle.json
+  - one/events/0-changes.md
+  - one/things/plans/r2.md
+
+
+
 ### **RELEASE v3.6.33** — 2025-11-05 — `CLI Release: MCPs Default OFF`
 
 **What Changed:**
