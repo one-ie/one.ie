@@ -1,3 +1,21 @@
+### **b04e732d** — template:2 — `feat: Add bun installation check to /one and /server commands``
+
+**Template:**
+  - .claude/commands/one.md
+  - .claude/commands/server.md
+
+
+
+### **ca409455** — template:4 — `chore: Update 4 file(s)``
+
+**Template:**
+  - .claude/hooks.log
+  - .claude/hooks/.last-news-context
+  - .claude/state/cycle.json
+  - one/events/0-changes.md
+
+
+
 ### **65fd2405** — template:6 — `fix: Update ontology validation hook to only validate /one directory``
 
 **Template:**
