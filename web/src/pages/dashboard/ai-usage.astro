@@ -1,67 +1,55 @@
 ---
+/**
+ * AI Usage Dashboard (PREMIUM TIER)
+ *
+ * Token usage analytics - requires backend
+ */
+import { backendConfig } from '@/config/backend';
 import Layout from '@/layouts/Layout.astro';
-import { Card, CardHeader, CardTitle, CardContent } from '@/components/ui/card';
 
-// Mock usage data
-const usage = {
-  totalMessages: 1234,
-  totalTokens: 567890,
-  estimatedCost: 12.34,
-  topAgents: [
-    { name: "Intelligence Agent", calls: 456 },
-    { name: "Strategy Agent", calls: 234 },
-    { name: "Marketing Agent", calls: 123 }
-  ]
-};
+if (!backendConfig.enabled) {
+  return Astro.redirect('/upgrade?feature=analytics');
+}
 ---
 
-<Layout title="AI Usage Dashboard">
+<Layout title="AI Usage Analytics">
   <div class="container mx-auto max-w-6xl py-8">
-    <h1 class="mb-8 text-3xl font-bold">AI Usage Dashboard</h1>
-    
-    <div class="grid gap-6 md:grid-cols-3">
-      <Card>
-        <CardHeader>
-          <CardTitle>Total Messages</CardTitle>
-        </CardHeader>
-        <CardContent>
-          <p class="text-3xl font-bold">{usage.totalMessages.toLocaleString()}</p>
-        </CardContent>
-      </Card>
-
-      <Card>
-        <CardHeader>
-          <CardTitle>Total Tokens</CardTitle>
-        </CardHeader>
-        <CardContent>
-          <p class="text-3xl font-bold">{usage.totalTokens.toLocaleString()}</p>
-        </CardContent>
-      </Card>
-
-      <Card>
-        <CardHeader>
-          <CardTitle>Estimated Cost</CardTitle>
-        </CardHeader>
-        <CardContent>
-          <p class="text-3xl font-bold">${usage.estimatedCost.toFixed(2)}</p>
-        </CardContent>
-      </Card>
+    <div class="mb-4 flex items-center justify-between">
+      <h1 class="text-3xl font-bold">AI Usage Analytics</h1>
+      <span class="rounded-full bg-gradient-to-r from-blue-500 to-purple-600 px-3 py-1 text-xs font-medium text-white">
+        Premium
+      </span>
     </div>
 
-    <Card class="mt-6">
-      <CardHeader>
-        <CardTitle>Top Agents by Usage</CardTitle>
-      </CardHeader>
-      <CardContent>
-        <div class="space-y-4">
-          {usage.topAgents.map(agent => (
-            <div class="flex items-center justify-between">
-              <span class="font-medium">{agent.name}</span>
-              <span class="text-muted-foreground">{agent.calls} calls</span>
-            </div>
-          ))}
-        </div>
-      </CardContent>
-    </Card>
+    <p class="mb-8 text-gray-600">
+      Track token usage, costs, and AI performance metrics.
+    </p>
+
+    <div class="grid gap-6 md:grid-cols-3">
+      <div class="rounded-lg border p-6">
+        <h3 class="mb-2 text-sm font-medium text-gray-600">Total Tokens</h3>
+        <p class="text-3xl font-bold">1.2M</p>
+        <p class="text-sm text-green-600">+12% this month</p>
+      </div>
+
+      <div class="rounded-lg border p-6">
+        <h3 class="mb-2 text-sm font-medium text-gray-600">Estimated Cost</h3>
+        <p class="text-3xl font-bold">$48.50</p>
+        <p class="text-sm text-gray-600">This month</p>
+      </div>
+
+      <div class="rounded-lg border p-6">
+        <h3 class="mb-2 text-sm font-medium text-gray-600">Messages</h3>
+        <p class="text-3xl font-bold">3,429</p>
+        <p class="text-sm text-blue-600">6,571 remaining</p>
+      </div>
+    </div>
+
+    <div class="mt-8 rounded-lg border p-6">
+      <h2 class="mb-4 text-xl font-semibold">Usage Over Time</h2>
+      <div id="usage-chart" class="h-64">
+        <!-- Chart will be rendered here -->
+      </div>
+    </div>
   </div>
 </Layout>

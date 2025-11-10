@@ -1,28 +1,56 @@
 ---
+/**
+ * Chat Thread Page (PREMIUM TIER)
+ *
+ * Load and continue a persistent chat thread
+ * Requires backend=on
+ */
+import { backendConfig } from '@/config/backend';
 import Layout from '@/layouts/Layout.astro';
-import { Chatbot } from '@/components/ai/Chatbot';
+
+// Redirect to upgrade if backend not enabled
+if (!backendConfig.enabled) {
+  return Astro.redirect('/upgrade?feature=persistent-threads');
+}
 
 const { threadId } = Astro.params;
-
-const suggestions = [
-  "Analyze my performance metrics",
-  "Create a strategic plan",
-  "Show me insights",
-  "Generate a report"
-];
 ---
 
-<Layout title={`Chat - ${threadId}`}>
-  <div class="container mx-auto h-[calc(100vh-4rem)] max-w-6xl py-4">
-    <Chatbot
-      client:load
-      messages={[]}
-      input=""
-      isLoading={false}
-      onInputChange={(value) => {}}
-      onSubmit={(value) => {}}
-      suggestions={suggestions}
-      className="h-full"
-    />
+<Layout title={`Chat Thread - ${threadId}`}>
+  <div class="container mx-auto max-w-4xl py-8">
+    <div class="mb-4">
+      <a href="/chat" class="text-sm text-blue-600 hover:underline">← Back to Chats</a>
+    </div>
+    
+    <div class="mb-4 flex items-center justify-between">
+      <h1 class="text-3xl font-bold">Chat Thread</h1>
+      <span class="rounded-full bg-gradient-to-r from-blue-500 to-purple-600 px-3 py-1 text-xs font-medium text-white">
+        Premium
+      </span>
+    </div>
+
+    <div id="chat-container" class="rounded-lg border p-6">
+      <div id="messages" class="mb-4 min-h-[400px] space-y-4">
+        <!-- Messages will be loaded from database -->
+        <p class="text-center text-gray-500">Loading messages from thread {threadId}...</p>
+      </div>
+
+      <div id="input-container">
+        <!-- Chat input will be rendered here -->
+      </div>
+    </div>
+
+    <div class="mt-4 flex items-center justify-between text-sm text-gray-600">
+      <span>Thread ID: {threadId}</span>
+      <button class="rounded px-3 py-1 hover:bg-gray-100">
+        Invite Human Agent
+      </button>
+    </div>
   </div>
+
+  <script define:vars={{ threadId, backendConfig }}>
+    // Load chat thread from backend
+    console.log('Loading thread:', threadId);
+    console.log('Backend config:', backendConfig);
+  </script>
 </Layout>

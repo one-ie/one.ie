@@ -1,15 +1,33 @@
 ---
+/**
+ * AI Chat Index (PREMIUM TIER)
+ *
+ * Requires backend=on for persistent chats
+ * Redirects to upgrade page if on free tier
+ */
+import { backendConfig } from '@/config/backend';
 import Layout from '@/layouts/Layout.astro';
+
+// Redirect to upgrade if backend not enabled
+if (!backendConfig.enabled) {
+  return Astro.redirect('/upgrade?feature=persistent-chats');
+}
 ---
 
 <Layout title="AI Chat">
   <div class="container mx-auto max-w-4xl py-8">
-    <h1 class="mb-8 text-3xl font-bold">AI Chat</h1>
+    <div class="mb-4 flex items-center justify-between">
+      <h1 class="text-3xl font-bold">AI Chat</h1>
+      <span class="rounded-full bg-gradient-to-r from-blue-500 to-purple-600 px-3 py-1 text-xs font-medium text-white">
+        Premium
+      </span>
+    </div>
     
     <div class="rounded-lg border p-6">
       <h2 class="mb-4 text-xl font-semibold">Start a Conversation</h2>
       <p class="mb-4 text-muted-foreground">
         Choose an AI agent to chat with, or start a new conversation.
+        All chats are saved and can be resumed anytime.
       </p>
       
       <div class="space-y-4">
@@ -29,6 +47,16 @@ import Layout from '@/layouts/Layout.astro';
           </a>
         </div>
       </div>
+    </div>
+    
+    <div class="mt-6 rounded-lg bg-blue-50 p-4">
+      <h3 class="mb-2 font-semibold text-blue-900">✨ Premium Features Active:</h3>
+      <ul class="space-y-1 text-sm text-blue-800">
+        <li>✅ Persistent chat threads (saved to database)</li>
+        <li>✅ Resume conversations anytime</li>
+        <li>✅ Human-in-the-loop support</li>
+        <li>✅ Token usage analytics</li>
+      </ul>
     </div>
   </div>
 </Layout>

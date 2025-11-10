@@ -1,16 +1,23 @@
-import { useChat } from "ai/react";
+/**
+ * Smart AI Chat Hook
+ *
+ * Automatically routes to correct implementation based on backend configuration:
+ * - FREE TIER (backend=off): useClientChat (ephemeral, client-side only)
+ * - PREMIUM TIER (backend=on): useBackendChat (persistent, database, analytics)
+ */
 
-export function useAIChat(agentId: string) {
-  const { messages, input, handleInputChange, handleSubmit, isLoading } = useChat({
-    api: "/api/chat",
-    body: { agentId },
-  });
+import { backendConfig } from '@/config/backend';
+import { useClientChat, UseClientChatOptions } from './basic/useClientChat';
+import { useBackendChat, UseBackendChatOptions } from './premium/useBackendChat';
 
-  return {
-    messages,
-    input,
-    handleInputChange,
-    handleSubmit,
-    isLoading,
-  };
+export type UseAIChatOptions = UseClientChatOptions | UseBackendChatOptions;
+
+export function useAIChat(options: any) {
+  if (backendConfig.enabled) {
+    // PREMIUM: Use backend with persistence, analytics, HITL
+    return useBackendChat(options as UseBackendChatOptions);
+  } else {
+    // FREE: Direct client-side chat (no persistence)
+    return useClientChat(options as UseClientChatOptions);
+  }
 }
