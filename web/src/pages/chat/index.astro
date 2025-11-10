@@ -1,62 +1,14 @@
 ---
 /**
- * AI Chat Index (PREMIUM TIER)
+ * AI Chat - Free Tier with OpenRouter
  *
- * Requires backend=on for persistent chats
- * Redirects to upgrade page if on free tier
+ * Client-side only chat with user's OpenRouter API key
+ * No persistence (messages lost on refresh)
  */
-import { backendConfig } from '@/config/backend';
 import Layout from '@/layouts/Layout.astro';
-
-// Redirect to upgrade if backend not enabled
-if (!backendConfig.enabled) {
-  return Astro.redirect('/upgrade?feature=persistent-chats');
-}
+import { SimpleChatClient } from '@/components/ai/basic/SimpleChatClient';
 ---
 
 <Layout title="AI Chat">
-  <div class="container mx-auto max-w-4xl py-8">
-    <div class="mb-4 flex items-center justify-between">
-      <h1 class="text-3xl font-bold">AI Chat</h1>
-      <span class="rounded-full bg-gradient-to-r from-blue-500 to-purple-600 px-3 py-1 text-xs font-medium text-white">
-        Premium
-      </span>
-    </div>
-    
-    <div class="rounded-lg border p-6">
-      <h2 class="mb-4 text-xl font-semibold">Start a Conversation</h2>
-      <p class="mb-4 text-muted-foreground">
-        Choose an AI agent to chat with, or start a new conversation.
-        All chats are saved and can be resumed anytime.
-      </p>
-      
-      <div class="space-y-4">
-        <div class="rounded-lg border p-4">
-          <h3 class="font-medium">Intelligence Agent</h3>
-          <p class="text-sm text-muted-foreground">Data analysis and insights</p>
-          <a href="/chat/new?agent=intelligence" class="mt-2 inline-block rounded bg-primary px-4 py-2 text-sm text-primary-foreground">
-            Start Chat
-          </a>
-        </div>
-        
-        <div class="rounded-lg border p-4">
-          <h3 class="font-medium">Strategy Agent</h3>
-          <p class="text-sm text-muted-foreground">Planning and recommendations</p>
-          <a href="/chat/new?agent=strategy" class="mt-2 inline-block rounded bg-primary px-4 py-2 text-sm text-primary-foreground">
-            Start Chat
-          </a>
-        </div>
-      </div>
-    </div>
-    
-    <div class="mt-6 rounded-lg bg-blue-50 p-4">
-      <h3 class="mb-2 font-semibold text-blue-900">✨ Premium Features Active:</h3>
-      <ul class="space-y-1 text-sm text-blue-800">
-        <li>✅ Persistent chat threads (saved to database)</li>
-        <li>✅ Resume conversations anytime</li>
-        <li>✅ Human-in-the-loop support</li>
-        <li>✅ Token usage analytics</li>
-      </ul>
-    </div>
-  </div>
+  <SimpleChatClient client:load />
 </Layout>

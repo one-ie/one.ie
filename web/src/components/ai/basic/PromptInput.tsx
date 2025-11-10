@@ -13,18 +13,21 @@ export interface PromptInputProps {
 
 export function PromptInput({ value, onChange, onSubmit, isLoading = false, placeholder = "Type..." }: PromptInputProps) {
   const textareaRef = useRef<HTMLTextAreaElement>(null);
-  
+
+  // Ensure value is always a string
+  const safeValue = value || '';
+
   useEffect(() => {
     if (textareaRef.current) {
       textareaRef.current.style.height = "auto";
       const newHeight = Math.min(textareaRef.current.scrollHeight, 200);
       textareaRef.current.style.height = newHeight + "px";
     }
-  }, [value]);
+  }, [safeValue]);
 
   const handleSubmit = () => {
-    if (value.trim() && !isLoading) {
-      onSubmit(value.trim());
+    if (safeValue.trim() && !isLoading) {
+      onSubmit(safeValue.trim());
       onChange("");
     }
   };
@@ -33,7 +36,7 @@ export function PromptInput({ value, onChange, onSubmit, isLoading = false, plac
     <div className="flex gap-2">
       <Textarea
         ref={textareaRef}
-        value={value}
+        value={safeValue}
         onChange={(e) => onChange(e.target.value)}
         onKeyDown={(e) => {
           if (e.key === "Enter" && !e.shiftKey) {
@@ -46,7 +49,7 @@ export function PromptInput({ value, onChange, onSubmit, isLoading = false, plac
         className="min-h-[44px] resize-none"
         rows={1}
       />
-      <Button onClick={handleSubmit} disabled={isLoading || !value.trim()} size="icon">
+      <Button onClick={handleSubmit} disabled={isLoading || !safeValue.trim()} size="icon">
         <Send className="h-4 w-4" />
       </Button>
     </div>

@@ -1,11 +1,11 @@
 /**
- * Free Tier Chat Component (OpenRouter)
+ * Simple Chat Client - OpenRouter Integration
  *
- * Access to all AI models through OpenRouter
+ * Manages state locally and calls API directly
+ * Stores API key in localStorage (client-side only)
  */
 
 import { useState, useEffect } from 'react';
-import { useChat } from '@ai-sdk/react';
 import { MessageList } from '@/components/ai/basic/MessageList';
 import { PromptInput } from '@/components/ai/basic/PromptInput';
 import { Button } from '@/components/ui/button';
@@ -28,10 +28,20 @@ const POPULAR_MODELS = [
 const STORAGE_KEY = 'openrouter-api-key';
 const MODEL_KEY = 'openrouter-model';
 
-export function FreeChatExample() {
+interface Message {
+  id: string;
+  role: 'user' | 'assistant' | 'system';
+  content: string;
+}
+
+export function SimpleChatClient() {
   const [apiKey, setApiKey] = useState('');
   const [selectedModel, setSelectedModel] = useState('google/gemini-2.5-flash-lite');
   const [chatStarted, setChatStarted] = useState(false);
+  const [messages, setMessages] = useState<Message[]>([]);
+  const [input, setInput] = useState('');
+  const [isLoading, setIsLoading] = useState(false);
+  const [error, setError] = useState<string | null>(null);
 
   // Load API key and model from localStorage on mount
   useEffect(() => {
@@ -41,7 +51,7 @@ export function FreeChatExample() {
 
       if (savedKey) {
         setApiKey(savedKey);
-        setChatStarted(true); // Auto-start if key exists
+        setChatStarted(true);
       }
       if (savedModel) {
         setSelectedModel(savedModel);
@@ -49,7 +59,7 @@ export function FreeChatExample() {
     }
   }, []);
 
-  // Save to localStorage when key or model changes
+  // Save to localStorage when starting chat
   const handleStartChat = () => {
     if (apiKey && typeof window !== 'undefined') {
       localStorage.setItem(STORAGE_KEY, apiKey);
@@ -58,6 +68,7 @@ export function FreeChatExample() {
     }
   };
 
+  // Clear stored key
   const handleClearKey = () => {
     if (typeof window !== 'undefined') {
       localStorage.removeItem(STORAGE_KEY);
@@ -65,38 +76,102 @@ export function FreeChatExample() {
     }
     setApiKey('');
     setChatStarted(false);
+    setMessages([]);
   };
 
-  // Initialize chat hook - only when chat is started
-  const { messages, input, handleInputChange, handleSubmit, isLoading, error } = useChat({
-    api: '/api/chat',
-    body: {
-      apiKey: apiKey || '',
-      model: selectedModel,
-    },
-  });
+  // Submit message to API
+  const handleSubmit = async (message: string) => {
+    if (!message.trim() || isLoading) return;
 
-  console.log('useChat values:', { messages, input, handleInputChange: typeof handleInputChange, handleSubmit: typeof handleSubmit, isLoading, error });
+    const userMessage: Message = {
+      id: `user-${Date.now()}`,
+      role: 'user',
+      content: message.trim(),
+    };
 
-  // Handle input changes - convert string to event for useChat
-  const handleInputChangeWrapper = (value: string) => {
-    const event = {
-      target: { value },
-    } as React.ChangeEvent<HTMLInputElement>;
-    handleInputChange(event);
+    // Add user message to the chat
+    setMessages(prev => [...prev, userMessage]);
+    setInput('');
+    setIsLoading(true);
+    setError(null);
+
+    try {
+      const response = await fetch('/api/chat', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          messages: [...messages, userMessage],
+          apiKey,
+          model: selectedModel,
+        }),
+      });
+
+      if (!response.ok) {
+        const errorData = await response.json();
+        const errorMessage = errorData.error || `HTTP error! status: ${response.status}`;
+        console.error('API Error:', errorMessage);
+        throw new Error(errorMessage);
+      }
+
+      const reader = response.body?.getReader();
+      if (!reader) throw new Error('No response body');
+
+      const decoder = new TextDecoder();
+      let assistantContent = '';
+      const assistantMessage: Message = {
+        id: `assistant-${Date.now()}`,
+        role: 'assistant',
+        content: '',
+      };
+
+      // Add empty assistant message that we'll update
+      setMessages(prev => [...prev, assistantMessage]);
+
+      // Read streaming response
+      while (true) {
+        const { done, value } = await reader.read();
+        if (done) break;
+
+        const chunk = decoder.decode(value);
+        const lines = chunk.split('\n');
+
+        for (const line of lines) {
+          if (line.startsWith('data: ')) {
+            const data = line.slice(6);
+            if (data === '[DONE]') continue;
+
+            try {
+              const parsed = JSON.parse(data);
+              if (parsed.choices?.[0]?.delta?.content) {
+                assistantContent += parsed.choices[0].delta.content;
+                // Update the assistant message content
+                setMessages(prev =>
+                  prev.map(msg =>
+                    msg.id === assistantMessage.id
+                      ? { ...msg, content: assistantContent }
+                      : msg
+                  )
+                );
+              }
+            } catch (e) {
+              // Some chunks might not be valid JSON, that's okay
+            }
+          }
+        }
+      }
+    } catch (err) {
+      console.error('Chat error:', err);
+      setError(err instanceof Error ? err.message : 'Failed to send message');
+      // Remove the user message if there was an error
+      setMessages(prev => prev.filter(msg => msg.id !== userMessage.id));
+    } finally {
+      setIsLoading(false);
+    }
   };
 
-  // Handle form submission
-  const handleFormSubmit = (message: string) => {
-    if (!message.trim()) return;
-
-    const event = {
-      preventDefault: () => {},
-    } as React.FormEvent<HTMLFormElement>;
-
-    handleSubmit(event);
-  };
-
+  // Show API key setup form
   if (!chatStarted) {
     return (
       <div className="container max-w-md mx-auto p-6">
@@ -113,7 +188,11 @@ export function FreeChatExample() {
               <AlertDescription className="text-xs">
                 🔒 <strong>Security:</strong> Your API key is stored in your browser's localStorage
                 (not on our servers). Only use this on trusted devices.
-                <button onClick={handleClearKey} className="underline ml-1">Clear stored key</button>
+                {apiKey && (
+                  <button onClick={handleClearKey} className="underline ml-1">
+                    Clear stored key
+                  </button>
+                )}
               </AlertDescription>
             </Alert>
 
@@ -157,19 +236,13 @@ export function FreeChatExample() {
     );
   }
 
-  // Transform messages to match MessageList format
-  const formattedMessages = messages.map((msg, index) => ({
-    id: msg.id || `msg-${index}`,
-    role: msg.role as 'user' | 'assistant' | 'system',
-    content: msg.content,
-  }));
-
+  // Show chat interface
   return (
-    <div className="container max-w-4xl mx-auto p-6">
+    <div className="container max-w-4xl mx-auto p-6 h-screen flex flex-col">
       {/* Header */}
       <div className="mb-4 flex items-center justify-between">
         <div>
-          <h1 className="text-2xl font-bold">Free Tier Chat</h1>
+          <h1 className="text-2xl font-bold">AI Chat</h1>
           <p className="text-sm text-muted-foreground">
             Model: {POPULAR_MODELS.find(m => m.id === selectedModel)?.name}
           </p>
@@ -188,26 +261,29 @@ export function FreeChatExample() {
       {error && (
         <Alert variant="destructive" className="mb-4">
           <AlertDescription>
-            <strong>Error:</strong> {error.message}
+            <strong>Error:</strong> {error}
           </AlertDescription>
         </Alert>
       )}
 
-      {/* Messages */}
-      <Card className="mb-4">
-        <CardContent className="p-4 min-h-[400px] max-h-[600px] overflow-y-auto">
-          <MessageList messages={formattedMessages} isLoading={isLoading} />
+      {/* Chat Interface */}
+      <Card className="flex-1 flex flex-col overflow-hidden">
+        {/* Messages */}
+        <CardContent className="flex-1 overflow-y-auto p-4">
+          <MessageList messages={messages} isLoading={isLoading} />
         </CardContent>
-      </Card>
 
-      {/* Input */}
-      <PromptInput
-        value={input}
-        onChange={handleInputChangeWrapper}
-        onSubmit={handleFormSubmit}
-        isLoading={isLoading}
-        placeholder="Type your message..."
-      />
+        {/* Input */}
+        <div className="border-t p-4">
+          <PromptInput
+            value={input}
+            onChange={setInput}
+            onSubmit={handleSubmit}
+            isLoading={isLoading}
+            placeholder="Type your message..."
+          />
+        </div>
+      </Card>
 
       {/* Upgrade prompt */}
       {messages.length > 10 && (

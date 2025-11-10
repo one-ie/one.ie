@@ -1,7 +1,8 @@
 /**
- * Free Tier Chat Component (OpenRouter)
+ * Free Chat Client - OpenRouter Integration
  *
- * Access to all AI models through OpenRouter
+ * Client-side only chat with OpenRouter backend
+ * Stores API key in localStorage (client-side only)
  */
 
 import { useState, useEffect } from 'react';
@@ -28,7 +29,7 @@ const POPULAR_MODELS = [
 const STORAGE_KEY = 'openrouter-api-key';
 const MODEL_KEY = 'openrouter-model';
 
-export function FreeChatExample() {
+export function FreeChatClient() {
   const [apiKey, setApiKey] = useState('');
   const [selectedModel, setSelectedModel] = useState('google/gemini-2.5-flash-lite');
   const [chatStarted, setChatStarted] = useState(false);
@@ -41,7 +42,7 @@ export function FreeChatExample() {
 
       if (savedKey) {
         setApiKey(savedKey);
-        setChatStarted(true); // Auto-start if key exists
+        setChatStarted(true);
       }
       if (savedModel) {
         setSelectedModel(savedModel);
@@ -49,7 +50,7 @@ export function FreeChatExample() {
     }
   }, []);
 
-  // Save to localStorage when key or model changes
+  // Save to localStorage when starting chat
   const handleStartChat = () => {
     if (apiKey && typeof window !== 'undefined') {
       localStorage.setItem(STORAGE_KEY, apiKey);
@@ -58,6 +59,7 @@ export function FreeChatExample() {
     }
   };
 
+  // Clear stored key
   const handleClearKey = () => {
     if (typeof window !== 'undefined') {
       localStorage.removeItem(STORAGE_KEY);
@@ -67,8 +69,8 @@ export function FreeChatExample() {
     setChatStarted(false);
   };
 
-  // Initialize chat hook - only when chat is started
-  const { messages, input, handleInputChange, handleSubmit, isLoading, error } = useChat({
+  // Initialize chat hook
+  const chatHook = useChat({
     api: '/api/chat',
     body: {
       apiKey: apiKey || '',
@@ -76,19 +78,27 @@ export function FreeChatExample() {
     },
   });
 
-  console.log('useChat values:', { messages, input, handleInputChange: typeof handleInputChange, handleSubmit: typeof handleSubmit, isLoading, error });
+  // Destructure with defaults to handle undefined values
+  const messages = chatHook.messages || [];
+  const input = chatHook.input || '';
+  const handleInputChange = chatHook.handleInputChange;
+  const handleSubmit = chatHook.handleSubmit;
+  const isLoading = chatHook.isLoading || false;
+  const error = chatHook.error;
 
-  // Handle input changes - convert string to event for useChat
+  // Convert string onChange to event onChange for Chatbot
   const handleInputChangeWrapper = (value: string) => {
+    if (!handleInputChange) return;
+
     const event = {
       target: { value },
     } as React.ChangeEvent<HTMLInputElement>;
     handleInputChange(event);
   };
 
-  // Handle form submission
-  const handleFormSubmit = (message: string) => {
-    if (!message.trim()) return;
+  // Convert string onSubmit to form event for useChat
+  const handleSubmitWrapper = (value: string) => {
+    if (!value.trim() || !handleSubmit) return;
 
     const event = {
       preventDefault: () => {},
@@ -97,6 +107,7 @@ export function FreeChatExample() {
     handleSubmit(event);
   };
 
+  // Show API key setup form
   if (!chatStarted) {
     return (
       <div className="container max-w-md mx-auto p-6">
@@ -113,7 +124,11 @@ export function FreeChatExample() {
               <AlertDescription className="text-xs">
                 🔒 <strong>Security:</strong> Your API key is stored in your browser's localStorage
                 (not on our servers). Only use this on trusted devices.
-                <button onClick={handleClearKey} className="underline ml-1">Clear stored key</button>
+                {apiKey && (
+                  <button onClick={handleClearKey} className="underline ml-1">
+                    Clear stored key
+                  </button>
+                )}
               </AlertDescription>
             </Alert>
 
@@ -164,12 +179,13 @@ export function FreeChatExample() {
     content: msg.content,
   }));
 
+  // Show chat interface
   return (
-    <div className="container max-w-4xl mx-auto p-6">
+    <div className="container max-w-4xl mx-auto p-6 h-screen flex flex-col">
       {/* Header */}
       <div className="mb-4 flex items-center justify-between">
         <div>
-          <h1 className="text-2xl font-bold">Free Tier Chat</h1>
+          <h1 className="text-2xl font-bold">AI Chat</h1>
           <p className="text-sm text-muted-foreground">
             Model: {POPULAR_MODELS.find(m => m.id === selectedModel)?.name}
           </p>
@@ -193,21 +209,24 @@ export function FreeChatExample() {
         </Alert>
       )}
 
-      {/* Messages */}
-      <Card className="mb-4">
-        <CardContent className="p-4 min-h-[400px] max-h-[600px] overflow-y-auto">
+      {/* Chat Interface */}
+      <Card className="flex-1 flex flex-col">
+        {/* Messages */}
+        <CardContent className="flex-1 overflow-y-auto p-4">
           <MessageList messages={formattedMessages} isLoading={isLoading} />
         </CardContent>
-      </Card>
 
-      {/* Input */}
-      <PromptInput
-        value={input}
-        onChange={handleInputChangeWrapper}
-        onSubmit={handleFormSubmit}
-        isLoading={isLoading}
-        placeholder="Type your message..."
-      />
+        {/* Input */}
+        <div className="border-t p-4">
+          <PromptInput
+            value={input}
+            onChange={handleInputChangeWrapper}
+            onSubmit={handleSubmitWrapper}
+            isLoading={isLoading}
+            placeholder="Type your message..."
+          />
+        </div>
+      </Card>
 
       {/* Upgrade prompt */}
       {messages.length > 10 && (

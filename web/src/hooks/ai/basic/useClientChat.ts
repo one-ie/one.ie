@@ -7,7 +7,7 @@
  * - Access to GPT-4, Claude, Llama, etc.
  */
 
-import { useChat } from 'ai/react';
+import { useChat } from '@ai-sdk/react';
 
 export interface UseClientChatOptions {
   apiKey: string;
@@ -17,16 +17,17 @@ export interface UseClientChatOptions {
 
 /**
  * Popular OpenRouter Models:
+ * - google/gemini-2.5-flash-lite (Default - Fast & Free)
  * - openai/gpt-4
  * - openai/gpt-3.5-turbo
  * - anthropic/claude-3-opus
  * - anthropic/claude-3-sonnet
  * - meta-llama/llama-3-70b-instruct
- * - google/gemini-pro
+ * - google/gemini-pro-1.5
  */
 
 export function useClientChat(options: UseClientChatOptions) {
-  const { apiKey, model = 'openai/gpt-4', initialMessages = [] } = options;
+  const { apiKey, model = 'google/gemini-2.5-flash-lite', initialMessages = [] } = options;
 
   const { messages, input, handleInputChange, handleSubmit, isLoading, error } = useChat({
     api: '/api/chat',

@@ -1,25 +1,15 @@
 ---
 /**
  * Free Tier Chat Example
- * 
+ *
  * Demonstrates client-side only chat with user's API key
  */
 import Layout from '@/layouts/Layout.astro';
+import { FreeChatExample } from '@/components/examples/FreeChatExample';
 ---
 
 <Layout title="Free Tier AI Chat">
   <div class="container mx-auto px-4 py-8">
-    <div id="chat-app"></div>
+    <FreeChatExample client:load />
   </div>
-
-  <script>
-    import { FreeChatExample } from '@/components/examples/FreeChatExample';
-    import { createRoot } from 'react-dom/client';
-
-    const container = document.getElementById('chat-app');
-    if (container) {
-      const root = createRoot(container);
-      root.render(<FreeChatExample />);
-    }
-  </script>
 </Layout>
