@@ -296,3 +296,144 @@ export class EventService {
       };
     });
 }
+
+  /**
+   * Log AI generation event
+   */
+  static logAIGeneration = (
+    actorId: string,
+    agentId: string,
+    targetId: string,
+    metadata: {
+      promptTokens?: number;
+      completionTokens?: number;
+      model?: string;
+      duration?: number;
+    }
+  ) =>
+    Effect.gen(function* () {
+      return yield* EventService.create({
+        type: "ai_generation_completed",
+        actorId,
+        targetId,
+        metadata: {
+          ...metadata,
+          agentId,
+        },
+      });
+    });
+
+  /**
+   * Log AI error event
+   */
+  static logAIError = (
+    actorId: string,
+    agentId: string,
+    error: {
+      code?: string;
+      message: string;
+      recoverable?: boolean;
+    }
+  ) =>
+    Effect.gen(function* () {
+      return yield* EventService.create({
+        type: "ai_error_occurred",
+        actorId,
+        metadata: {
+          agentId,
+          error,
+        },
+      });
+    });
+
+  /**
+   * Log AI tool call event
+   */
+  static logToolCall = (
+    actorId: string,
+    agentId: string,
+    toolName: string,
+    metadata: {
+      arguments?: any;
+      result?: any;
+      duration?: number;
+      status?: string;
+    }
+  ) =>
+    Effect.gen(function* () {
+      return yield* EventService.create({
+        type: "ai_tool_called",
+        actorId,
+        metadata: {
+          agentId,
+          toolName,
+          ...metadata,
+        },
+      });
+    });
+
+  /**
+   * Log thread creation event
+   */
+  static logThreadCreated = (actorId: string, threadId: string, agentId: string) =>
+    Effect.gen(function* () {
+      return yield* EventService.create({
+        type: "ai_thread_created",
+        actorId,
+        targetId: threadId,
+        metadata: {
+          agentId,
+        },
+      });
+    });
+
+  /**
+   * Log message added event
+   */
+  static logMessageAdded = (
+    actorId: string,
+    threadId: string,
+    messageId: string,
+    role: "user" | "assistant"
+  ) =>
+    Effect.gen(function* () {
+      return yield* EventService.create({
+        type: "ai_message_added",
+        actorId,
+        targetId: threadId,
+        metadata: {
+          messageId,
+          role,
+        },
+      });
+    });
+
+  /**
+   * Get AI usage statistics
+   */
+  static getAIUsageStats = (groupId?: string, since?: number, until?: number) =>
+    Effect.gen(function* () {
+      const events = yield* EventService.list({
+        type: "ai_generation_completed",
+        since,
+        until,
+      });
+
+      let totalPromptTokens = 0;
+      let totalCompletionTokens = 0;
+      let totalCalls = events.length;
+
+      for (const event of events) {
+        totalPromptTokens += event.metadata?.promptTokens || 0;
+        totalCompletionTokens += event.metadata?.completionTokens || 0;
+      }
+
+      return {
+        totalCalls,
+        totalPromptTokens,
+        totalCompletionTokens,
+        totalTokens: totalPromptTokens + totalCompletionTokens,
+        estimatedCost: ((totalPromptTokens + totalCompletionTokens) / 1000) * 0.002,
+      };
+    });
+}

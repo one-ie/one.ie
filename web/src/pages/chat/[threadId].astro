@@ -1,0 +1,28 @@
+---
+import Layout from '@/layouts/Layout.astro';
+import { Chatbot } from '@/components/ai/Chatbot';
+
+const { threadId } = Astro.params;
+
+const suggestions = [
+  "Analyze my performance metrics",
+  "Create a strategic plan",
+  "Show me insights",
+  "Generate a report"
+];
+---
+
+<Layout title={`Chat - ${threadId}`}>
+  <div class="container mx-auto h-[calc(100vh-4rem)] max-w-6xl py-4">
+    <Chatbot
+      client:load
+      messages={[]}
+      input=""
+      isLoading={false}
+      onInputChange={(value) => {}}
+      onSubmit={(value) => {}}
+      suggestions={suggestions}
+      className="h-full"
+    />
+  </div>
+</Layout>

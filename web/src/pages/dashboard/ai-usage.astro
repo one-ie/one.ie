@@ -1,0 +1,67 @@
+---
+import Layout from '@/layouts/Layout.astro';
+import { Card, CardHeader, CardTitle, CardContent } from '@/components/ui/card';
+
+// Mock usage data
+const usage = {
+  totalMessages: 1234,
+  totalTokens: 567890,
+  estimatedCost: 12.34,
+  topAgents: [
+    { name: "Intelligence Agent", calls: 456 },
+    { name: "Strategy Agent", calls: 234 },
+    { name: "Marketing Agent", calls: 123 }
+  ]
+};
+---
+
+<Layout title="AI Usage Dashboard">
+  <div class="container mx-auto max-w-6xl py-8">
+    <h1 class="mb-8 text-3xl font-bold">AI Usage Dashboard</h1>
+    
+    <div class="grid gap-6 md:grid-cols-3">
+      <Card>
+        <CardHeader>
+          <CardTitle>Total Messages</CardTitle>
+        </CardHeader>
+        <CardContent>
+          <p class="text-3xl font-bold">{usage.totalMessages.toLocaleString()}</p>
+        </CardContent>
+      </Card>
+
+      <Card>
+        <CardHeader>
+          <CardTitle>Total Tokens</CardTitle>
+        </CardHeader>
+        <CardContent>
+          <p class="text-3xl font-bold">{usage.totalTokens.toLocaleString()}</p>
+        </CardContent>
+      </Card>
+
+      <Card>
+        <CardHeader>
+          <CardTitle>Estimated Cost</CardTitle>
+        </CardHeader>
+        <CardContent>
+          <p class="text-3xl font-bold">${usage.estimatedCost.toFixed(2)}</p>
+        </CardContent>
+      </Card>
+    </div>
+
+    <Card class="mt-6">
+      <CardHeader>
+        <CardTitle>Top Agents by Usage</CardTitle>
+      </CardHeader>
+      <CardContent>
+        <div class="space-y-4">
+          {usage.topAgents.map(agent => (
+            <div class="flex items-center justify-between">
+              <span class="font-medium">{agent.name}</span>
+              <span class="text-muted-foreground">{agent.calls} calls</span>
+            </div>
+          ))}
+        </div>
+      </CardContent>
+    </Card>
+  </div>
+</Layout>

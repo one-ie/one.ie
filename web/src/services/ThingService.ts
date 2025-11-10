@@ -245,3 +245,83 @@ export class ThingService {
       );
     });
 }
+
+  /**
+   * Create an AI agent thing
+   */
+  static createAgent = (input: {
+    name: string;
+    description?: string;
+    model: string;
+    systemPrompt?: string;
+    tools?: string[];
+    groupId?: string;
+  }) =>
+    Effect.gen(function* () {
+      return yield* ThingService.create({
+        name: input.name,
+        type: "agent",
+        properties: {
+          description: input.description,
+          model: input.model,
+          systemPrompt: input.systemPrompt,
+          tools: input.tools || [],
+        },
+        status: "active",
+        groupId: input.groupId,
+      });
+    });
+
+  /**
+   * Create a conversation thread thing
+   */
+  static createThread = (input: {
+    title: string;
+    agentId: string;
+    userId: string;
+    groupId?: string;
+  }) =>
+    Effect.gen(function* () {
+      return yield* ThingService.create({
+        name: input.title,
+        type: "conversation",
+        properties: {
+          agentId: input.agentId,
+          userId: input.userId,
+          messageCount: 0,
+        },
+        status: "active",
+        groupId: input.groupId,
+      });
+    });
+
+  /**
+   * List all agents
+   */
+  static listAgents = (groupId?: string) =>
+    Effect.gen(function* () {
+      return yield* ThingService.list({
+        type: "agent",
+        status: "active",
+        groupId,
+      });
+    });
+
+  /**
+   * List all conversations/threads
+   */
+  static listThreads = (userId?: string, groupId?: string) =>
+    Effect.gen(function* () {
+      const threads = yield* ThingService.list({
+        type: "conversation",
+        status: "active",
+        groupId,
+      });
+
+      if (userId) {
+        return threads.filter((t) => t.properties.userId === userId);
+      }
+
+      return threads;
+    });
+}

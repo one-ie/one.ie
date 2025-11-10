@@ -1,0 +1,68 @@
+---
+import Layout from '@/layouts/Layout.astro';
+import { Card, CardHeader, CardTitle, CardContent } from '@/components/ui/card';
+import { Badge } from '@/components/ui/badge';
+
+const { agentId } = Astro.params;
+
+// Mock agent data
+const agent = {
+  id: agentId,
+  name: "Intelligence Agent",
+  description: "Analyzes data and provides insights using AI",
+  model: "gpt-4",
+  capabilities: ["Data Analysis", "Metrics", "Insights", "Reporting"],
+  status: "active"
+};
+---
+
+<Layout title={agent.name}>
+  <div class="container mx-auto max-w-4xl py-8">
+    <div class="mb-6 flex items-start justify-between">
+      <div>
+        <h1 class="mb-2 text-3xl font-bold">{agent.name}</h1>
+        <p class="text-muted-foreground">{agent.description}</p>
+      </div>
+      <Badge variant={agent.status === "active" ? "default" : "secondary"}>
+        {agent.status}
+      </Badge>
+    </div>
+
+    <div class="space-y-6">
+      <Card>
+        <CardHeader>
+          <CardTitle>Details</CardTitle>
+        </CardHeader>
+        <CardContent class="space-y-4">
+          <div>
+            <p class="text-sm font-medium">Model</p>
+            <p class="text-sm text-muted-foreground">{agent.model}</p>
+          </div>
+          <div>
+            <p class="mb-2 text-sm font-medium">Capabilities</p>
+            <div class="flex flex-wrap gap-2">
+              {agent.capabilities.map(cap => (
+                <Badge variant="outline">{cap}</Badge>
+              ))}
+            </div>
+          </div>
+        </CardContent>
+      </Card>
+
+      <div class="flex gap-4">
+        <a 
+          href={`/chat/new?agent=${agent.id}`}
+          class="inline-block rounded bg-primary px-6 py-3 text-primary-foreground"
+        >
+          Start Chat
+        </a>
+        <a 
+          href="/agents"
+          class="inline-block rounded border px-6 py-3"
+        >
+          Back to Agents
+        </a>
+      </div>
+    </div>
+  </div>
+</Layout>

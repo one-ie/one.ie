@@ -302,3 +302,137 @@ export class KnowledgeService {
       return results.filter((k) => k._id !== knowledgeId);
     });
 }
+
+  /**
+   * Perform RAG search for AI agents
+   * Finds relevant knowledge chunks for a given query
+   */
+  static ragSearchForAgent = (
+    query: string,
+    agentId: string,
+    embedFn: (text: string) => Effect.Effect<number[], any>,
+    options?: {
+      limit?: number;
+      minScore?: number;
+      knowledgeType?: "chunk" | "document" | "label";
+    }
+  ) =>
+    Effect.gen(function* () {
+      // Generate query embedding
+      const queryEmbedding = yield* embedFn(query);
+
+      // Search for similar knowledge
+      return yield* KnowledgeService.search(queryEmbedding, {
+        knowledgeType: options?.knowledgeType || "chunk",
+        limit: options?.limit || 5,
+      });
+    });
+
+  /**
+   * Get knowledge context for AI agent
+   * Retrieves all relevant knowledge for an agent to use
+   */
+  static getAgentKnowledge = (agentId: string, options?: {
+    includeLabels?: boolean;
+    includeChunks?: boolean;
+    includeDocuments?: boolean;
+  }) =>
+    Effect.gen(function* () {
+      const opts = {
+        includeLabels: options?.includeLabels ?? true,
+        includeChunks: options?.includeChunks ?? true,
+        includeDocuments: options?.includeDocuments ?? true,
+      };
+
+      const knowledge = yield* KnowledgeService.list({
+        sourceThingId: agentId,
+      });
+
+      return {
+        labels: opts.includeLabels
+          ? knowledge.filter((k) => k.knowledgeType === "label")
+          : [],
+        chunks: opts.includeChunks
+          ? knowledge.filter((k) => k.knowledgeType === "chunk")
+          : [],
+        documents: opts.includeDocuments
+          ? knowledge.filter((k) => k.knowledgeType === "document")
+          : [],
+        total: knowledge.length,
+      };
+    });
+
+  /**
+   * Add training data to an AI agent
+   * Creates knowledge chunks from training text
+   */
+  static addAgentTrainingData = (
+    agentId: string,
+    content: string,
+    embedFn: (text: string) => Effect.Effect<number[], any>,
+    metadata?: {
+      source?: string;
+      category?: string;
+    }
+  ) =>
+    Effect.gen(function* () {
+      // Chunk the content
+      const chunks = content.split(/\n\n+/).filter((c) => c.trim().length > 0);
+      const results: string[] = [];
+
+      for (let i = 0; i < chunks.length; i++) {
+        const text = chunks[i].trim();
+
+        // Generate embedding
+        const embedding = yield* embedFn(text);
+
+        // Create knowledge chunk
+        const knowledgeId = yield* KnowledgeService.createChunk(
+          text,
+          embedding,
+          agentId,
+          "training_data",
+          i
+        );
+
+        // Link to agent
+        yield* KnowledgeService.link(agentId, knowledgeId, "trained_on");
+
+        results.push(knowledgeId);
+      }
+
+      return {
+        chunksCreated: results.length,
+        knowledgeIds: results,
+      };
+    });
+
+  /**
+   * Search agent memory
+   * Searches through an agent's conversation history and knowledge
+   */
+  static searchAgentMemory = (
+    agentId: string,
+    query: string,
+    embedFn: (text: string) => Effect.Effect<number[], any>,
+    options?: {
+      limit?: number;
+      includeConversations?: boolean;
+    }
+  ) =>
+    Effect.gen(function* () {
+      // Generate query embedding
+      const queryEmbedding = yield* embedFn(query);
+
+      // Search knowledge
+      const knowledge = yield* KnowledgeService.search(queryEmbedding, {
+        sourceThingId: agentId,
+        limit: options?.limit || 10,
+      });
+
+      return {
+        results: knowledge,
+        count: knowledge.length,
+      };
+    });
+}

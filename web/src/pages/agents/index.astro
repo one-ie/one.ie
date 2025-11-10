@@ -1,0 +1,69 @@
+---
+import Layout from '@/layouts/Layout.astro';
+import { Card, CardHeader, CardTitle, CardDescription, CardContent } from '@/components/ui/card';
+import { Badge } from '@/components/ui/badge';
+
+const agents = [
+  {
+    id: "intelligence",
+    name: "Intelligence Agent",
+    description: "Analyzes data and provides insights",
+    capabilities: ["Data Analysis", "Metrics", "Insights"],
+    status: "active"
+  },
+  {
+    id: "strategy",
+    name: "Strategy Agent",
+    description: "Creates plans and recommendations",
+    capabilities: ["Planning", "Recommendations", "Strategy"],
+    status: "active"
+  },
+  {
+    id: "marketing",
+    name: "Marketing Agent",
+    description: "Generates marketing content",
+    capabilities: ["Content Creation", "Campaigns", "Copy"],
+    status: "beta"
+  }
+];
+---
+
+<Layout title="AI Agents">
+  <div class="container mx-auto max-w-6xl py-8">
+    <h1 class="mb-8 text-3xl font-bold">AI Agents</h1>
+    
+    <div class="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
+      {agents.map(agent => (
+        <Card>
+          <CardHeader>
+            <div class="flex items-start justify-between">
+              <CardTitle>{agent.name}</CardTitle>
+              <Badge variant={agent.status === "active" ? "default" : "secondary"}>
+                {agent.status}
+              </Badge>
+            </div>
+            <CardDescription>{agent.description}</CardDescription>
+          </CardHeader>
+          <CardContent>
+            <div class="space-y-3">
+              <div>
+                <p class="mb-2 text-sm font-medium">Capabilities:</p>
+                <div class="flex flex-wrap gap-1">
+                  {agent.capabilities.map(cap => (
+                    <Badge variant="outline" className="text-xs">{cap}</Badge>
+                  ))}
+                </div>
+              </div>
+              <a 
+                href={`/agents/${agent.id}`}
+                class="inline-block rounded bg-primary px-4 py-2 text-sm text-primary-foreground"
+              >
+                View Details
+              </a>
+            </div>
+          </CardContent>
+        </Card>
+      ))}
+    </div>
+  </div>
+</Layout>
