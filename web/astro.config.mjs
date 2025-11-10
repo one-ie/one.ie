@@ -38,6 +38,7 @@ export default defineConfig({
     ],
     resolve: {
       alias: {
+        "@": new URL("./src", import.meta.url).pathname,
         lodash: "lodash-es",
         // React 19 + Cloudflare Edge compatibility (production only)
         // In dev mode with Node adapter, use standard server rendering

@@ -1,3 +1,40 @@
+### **0cabf9e9** — template:31 — `feat: Add 5 news articles and /news command for automated content generation``
+
+**Template:**
+  - .claude/commands/news.md
+  - .claude/hooks.log
+  - .claude/hooks/.last-news-context
+  - .claude/state/cycle.json
+  - one/events/0-changes.md
+  - one/knowledge/astro-effect-simple-architecture.md
+  - web/.archive/.code-quality-report-20251105-142351.md
+  - web/.archive/CLEANUP-REPORT-20251105-142350.md
+  - web/.archive/CODE-QUALITY-INDEX-20251105-142350.md
+  - web/.archive/COMPREHENSIVE-FEATURES-SYSTEM-20251105-142350.md
+  - web/.archive/DOCUMENTATION-CREATED-20251105-142350.md
+  - web/.archive/FEATURES-DOCUMENTATION-20251105-142350.md
+  - web/.archive/FEATURES-DOCUMENTATION-SUMMARY-20251105-142350.md
+  - web/.archive/FEATURES-QUALITY-CHECKLIST-20251105-142350.md
+  - web/.archive/FEATURES-TEST-SUITE-20251105-142350.md
+  - web/.archive/FEATURES_COMPONENTS-20251105-142351.md
+  - web/.archive/IMPLEMENTATION_SUMMARY-20251105-142350.md
+  - web/.archive/INDEX-20251105-142350.md
+  - web/.archive/QUALITY_IMPROVEMENTS-20251105-142351.md
+  - web/.archive/REFACTORING-SUMMARY-20251105-142350.md
+  - web/src/components/DeployBuildTimeline.tsx
+  - web/src/components/DeployHeroMetrics.tsx
+  - web/src/components/DeploymentMetrics.tsx
+  - web/src/content/news/claude-code-integration-complete.md
+  - web/src/content/news/conversational-template-first-development.md
+  - web/src/content/news/introducing-one-platform.md
+  - web/src/content/news/native-podcast-support-audio-first-platform.md
+  - web/src/content/news/template-first-development-transformation.md
+  - web/src/content/news/video-platform-launch.md
+  - web/src/content/news/why-speed-matters.md
+  - web/src/pages/deploy.astro
+
+
+
 ### **0c545b36** — template:1 — `fix: Add strict link policy to agent-writer to prevent broken links``
 
 **Template:**
