@@ -40,11 +40,26 @@ Think **Alex Hormozi meets Wired meets Fast Company**—direct, educational, occ
 
 ### 1. News Articles (Primary)
 
+**⚠️ DATE HANDLING - READ THIS FIRST:**
+
+The `date` field in frontmatter MUST be today's actual date from the environment.
+
+**How to get today's date:**
+1. Look for `<env>Today's date: YYYY-MM-DD</env>` in the context
+2. Use that EXACT date in the frontmatter
+3. Format: YYYY-MM-DD (e.g., 2025-11-10)
+4. NO quotes needed in YAML
+5. NEVER use placeholders like "2025-01-01" or "YYYY-MM-DD"
+
+**Example:**
+- Environment says: `<env>Today's date: 2025-11-10</env>`
+- Frontmatter should have: `date: 2025-11-10`
+
 **Format:**
 ```markdown
 ---
 title: "Clear, Benefit-Driven Headline"
-date: 2025-11-08
+date: 2025-11-10  # TODAY'S DATE from <env> (YYYY-MM-DD format)
 description: "One-sentence value prop that makes them want to read more"
 author: "ONE Platform Team"
 type: "feature_update"
@@ -289,7 +304,10 @@ const upload = await uploadVideo(file);
 
 ---
 
-**Related:** [Link to docs], [Link to related features]
+**Resources:**
+- Source code: https://github.com/one-ie/one
+- npm package: https://www.npmjs.com/package/oneie
+- Report issues: https://github.com/one-ie/one/issues
 ```
 
 ### Quality Checklist
@@ -299,12 +317,16 @@ Before publishing, verify:
 - [ ] Opening hook grabs attention
 - [ ] Technical accuracy (no BS)
 - [ ] Code examples compile
-- [ ] Links work
+- [ ] **CRITICAL:** All links verified (NO placeholder/broken links - see Link Policy above)
+- [ ] **CRITICAL:** No invented Discord channels, docs pages, or fake URLs
+- [ ] **CRITICAL:** Only use approved links from the verified list
 - [ ] Tone matches voice guidelines
 - [ ] Scannable structure (headers, lists, code blocks)
 - [ ] Clear call-to-action
 - [ ] Appropriate tags and metadata
-- [ ] Today's date in frontmatter (but NOT in filename)
+- [ ] **CRITICAL:** Today's date in frontmatter (from `<env>Today's date: YYYY-MM-DD</env>`)
+- [ ] **CRITICAL:** Date is in YYYY-MM-DD format (no quotes)
+- [ ] Date is NOT in filename (only in frontmatter)
 
 ## File Naming Convention
 
@@ -323,6 +345,326 @@ web/src/content/news/2025-11-08-video-upload.md
 **Why:** URLs stay clean. `one.ie/news/video-upload-cloudflare-stream` is better than `one.ie/news/2025-11-08-video-upload`.
 
 **Date goes in frontmatter, not filename.**
+
+## ⚠️ CRITICAL: Content Collection Schema Rules
+
+**STOP AND READ THIS BEFORE CREATING ANY FILES**
+
+Each content collection has a DIFFERENT schema validation. Creating a file in the wrong collection will BREAK THE BUILD.
+
+### Collection Schemas
+
+```typescript
+// web/src/content/news/ - NewsSchema
+{
+  title: string,              // REQUIRED
+  date: date,                 // REQUIRED
+  description?: string,
+  category?: string,
+  tags?: string[],
+  author?: string,
+  // ... more optional fields
+}
+
+// web/src/content/podcasts/ - PodcastSchema
+{
+  title: string,              // REQUIRED
+  description: string,        // REQUIRED
+  audioUrl: string,           // REQUIRED (unless draft)
+  date: date,                 // REQUIRED
+  chapters?: Chapter[],
+  // ... podcast-specific fields
+}
+
+// web/src/content/blog/ - BlogSchema
+{
+  title: string,
+  description: string,
+  date: date,
+  author?: string,
+  // ... blog-specific fields
+}
+
+// web/src/content/products/ - ProductSchema
+{
+  name: string,               // REQUIRED
+  price: number,              // REQUIRED
+  description: string,        // REQUIRED
+  images: string[],           // REQUIRED
+  // ... product-specific fields
+}
+```
+
+### GOLDEN RULE
+
+**ONLY create files in the collection that matches your content type AND schema.**
+
+### Examples of WRONG Behavior
+
+```bash
+❌ Saving news article to web/src/content/podcasts/news.md
+   (NewsSchema ≠ PodcastSchema - BUILD WILL FAIL)
+
+❌ Creating technical doc in web/src/content/blog/
+   (Technical docs don't match BlogSchema)
+
+❌ Saving marketing copy to web/src/content/products/
+   (Marketing copy ≠ Product data)
+```
+
+### Examples of CORRECT Behavior
+
+```bash
+✅ News article → web/src/content/news/feature-launch.md
+   (Uses NewsSchema with title, date, description, category)
+
+✅ Podcast episode → web/src/content/podcasts/episode-1.md
+   (Uses PodcastSchema with audioUrl, chapters, etc.)
+
+✅ Blog post → web/src/content/blog/my-thoughts.md
+   (Uses BlogSchema with title, date, author)
+
+✅ Product page → web/src/content/products/t-shirt.md
+   (Uses ProductSchema with name, price, images)
+```
+
+### Schema Validation Errors
+
+If you see this error:
+```
+InvalidContentEntryDataError: Content entry data does not match schema
+```
+
+**You created a file in the WRONG collection.**
+
+**Fix:**
+1. Delete the file from the wrong collection
+2. Create it in the CORRECT collection with the CORRECT schema
+3. Verify frontmatter matches the schema EXACTLY
+
+### When In Doubt
+
+**ASK YOURSELF:**
+- Am I writing a **news article**? → `web/src/content/news/`
+- Am I documenting a **podcast episode**? → `web/src/content/podcasts/`
+- Am I writing a **blog post**? → `web/src/content/blog/`
+- Am I creating a **product page**? → `web/src/content/products/`
+
+**If the answer is unclear, ask the user before creating the file.**
+
+### File Location Validation Checklist
+
+Before creating ANY file in `web/src/content/`:
+
+- [ ] I know which collection this belongs to
+- [ ] I have read that collection's schema
+- [ ] My frontmatter EXACTLY matches the required fields
+- [ ] I am saving to the CORRECT directory
+- [ ] My frontmatter includes ALL required fields
+- [ ] Optional fields are properly formatted (not just empty strings)
+
+**Remember:** It's better to ask than to break the build.
+
+## ⚠️ CRITICAL: Link Policy - NO BROKEN LINKS
+
+**STOP: Read this before adding ANY link to your content**
+
+### Golden Rules
+
+1. **ONLY use real, verified links that you KNOW exist**
+2. **NEVER create placeholder links that look real but aren't**
+3. **NEVER invent URLs, Discord channels, or documentation pages**
+4. **When in doubt, OMIT the link entirely**
+
+### Approved Links for ONE Platform
+
+These links are VERIFIED and safe to use:
+
+```markdown
+**Platform:**
+- Website: https://one.ie
+- Web App: https://web.one.ie
+- Documentation: https://docs.one.ie (when it exists)
+
+**GitHub:**
+- Main Repo: https://github.com/one-ie/one
+- Issues: https://github.com/one-ie/one/issues
+- Discussions: https://github.com/one-ie/one/discussions
+
+**Package Managers:**
+- npm: https://www.npmjs.com/package/oneie
+- CLI Install: `npx oneie@latest --version`
+
+**Social Media:**
+- Twitter/X: https://x.com/oneieplatform
+- LinkedIn: https://linkedin.com/company/oneie
+```
+
+### FORBIDDEN: Placeholder Links
+
+**NEVER create links like these:**
+
+```markdown
+❌ Docs: [Podcast Setup Guide](#)
+❌ Discord: [#audio-features](https://discord.gg/one)
+❌ GitHub: [Report issues](#issues)
+❌ [Join our community](#community)
+❌ [Read the full guide](#guide)
+❌ [See the tutorial](#tutorial)
+❌ [API Reference](/docs/api)  # Unless you VERIFIED it exists
+❌ [Learn more](#)
+```
+
+**Why these are bad:**
+- They look like working links but lead nowhere (404)
+- Users click and get frustrated
+- Damages platform credibility
+- Creates maintenance burden
+
+### When to Include Links
+
+**Include links ONLY when:**
+1. You can verify the URL exists right now
+2. The link adds clear value (not just decoration)
+3. The link is to approved ONE Platform resources
+4. You've tested the URL or seen it in the codebase
+
+**Omit links when:**
+- You're not 100% sure it exists
+- It's a "nice to have" but not essential
+- You can't verify it in the codebase
+- You're guessing the URL structure
+
+### How to Verify Links
+
+**Before adding a link, check:**
+
+```bash
+# Check if docs page exists
+Read web/src/pages/docs/[topic].md
+
+# Check if route exists
+Glob "web/src/pages/**/[pattern].astro"
+
+# Search for URL in codebase
+Grep "the-url-you-want-to-link"
+```
+
+**If you CAN'T verify:** Don't include the link.
+
+### Safe Alternatives to Broken Links
+
+Instead of placeholder links, use these patterns:
+
+**❌ Bad (broken link):**
+```markdown
+Learn more in our [Podcast Setup Guide](/docs/podcast-setup)
+```
+
+**✅ Good (no link):**
+```markdown
+Learn more by running: `npx oneie create --type=podcast`
+```
+
+**❌ Bad (fake Discord):**
+```markdown
+Join the discussion on [Discord #audio-features](https://discord.gg/one)
+```
+
+**✅ Good (real GitHub):**
+```markdown
+Join the discussion: https://github.com/one-ie/one/discussions
+```
+
+**❌ Bad (dead anchor):**
+```markdown
+See the [API Reference](#api-reference) for details.
+```
+
+**✅ Good (inline explanation):**
+```markdown
+The API includes three main endpoints: `POST /upload`, `GET /status`, and `DELETE /media`.
+```
+
+### Link Quality Checklist
+
+Before publishing content with links:
+
+- [ ] Every link points to a REAL, verified URL
+- [ ] No placeholder links (#, /coming-soon, etc.)
+- [ ] No invented Discord channels
+- [ ] No assumed documentation pages
+- [ ] All internal links verified in codebase
+- [ ] All external links tested (or from approved list)
+- [ ] Links add value (not just decoration)
+- [ ] Content works WITHOUT the links (links enhance, don't replace)
+
+### Real-World Examples
+
+**✅ Good article endings:**
+
+```markdown
+## Get Started
+
+1. Install ONE: `npx oneie@latest init`
+2. Create a podcast: `npx oneie create --type=podcast`
+3. Deploy: `npx oneie deploy`
+
+**Source code:** https://github.com/one-ie/one
+**Report issues:** https://github.com/one-ie/one/issues
+**npm package:** https://www.npmjs.com/package/oneie
+```
+
+**❌ Bad article endings:**
+
+```markdown
+## Get Help
+
+- Docs: [Podcast Setup Guide](/docs/podcast-setup)  # Doesn't exist!
+- Discord: [#audio-features](https://discord.gg/one)  # Channel doesn't exist!
+- GitHub: [Report issues](#)  # Empty link!
+- Tutorial: [Watch video](#tutorial)  # No video exists!
+```
+
+### When Users Need More Information
+
+If users genuinely need more info and no link exists, use these patterns:
+
+**Instead of broken docs link:**
+```markdown
+For more details, run: `npx oneie help podcasts`
+```
+
+**Instead of broken tutorial link:**
+```markdown
+Follow these steps:
+1. Create the file: `touch podcast.md`
+2. Add frontmatter (see example above)
+3. Deploy: `npx oneie deploy`
+```
+
+**Instead of broken community link:**
+```markdown
+Have questions? Open an issue: https://github.com/one-ie/one/issues
+```
+
+### Summary
+
+**The rule is simple:** If you can't verify the link exists, don't include it.
+
+**Better to have:**
+- Fewer links that work
+- Clear instructions instead of links
+- Real GitHub/npm links only
+- Inline code examples
+
+**Than:**
+- Many links that 404
+- Placeholder links that frustrate users
+- Invented URLs that don't exist
+- False promises of documentation
+
+**Remember:** Every broken link damages user trust. When in doubt, leave it out.
 
 ## Example News Articles
 
@@ -487,9 +829,11 @@ The platform that makes it easier for AI to build than humans just got easier fo
 
 ---
 
-**Read the docs:** [API Reference](https://docs.one.ie/api)
-**Get your API key:** `npx oneie auth:login`
-**Join the discussion:** [Discord](https://discord.gg/one)
+**Get Started:**
+- Install: `npx oneie@latest init`
+- Get your API key: `npx oneie auth:login`
+- View source: https://github.com/one-ie/one
+- Report issues: https://github.com/one-ie/one/issues
 ```
 
 ### Example 2: Performance Win
@@ -660,9 +1004,11 @@ The platform gets faster. Your builds get faster. Everyone wins.
 
 ---
 
-**Read the performance guide:** [Optimization Docs](https://docs.one.ie/performance)
-**Measure your own builds:** `bunx vite-plugin-inspect`
-**Questions?** [Discord](https://discord.gg/one)
+**Get Started:**
+- Clone: `git clone https://github.com/one-ie/one.git`
+- Measure your builds: `bunx vite-plugin-inspect`
+- View source: https://github.com/one-ie/one
+- Ask questions: https://github.com/one-ie/one/discussions
 ```
 
 ## Common Pitfalls to Avoid
