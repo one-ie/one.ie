@@ -1,0 +1,281 @@
+---
+/**
+ * Podcasts Index Page (index.astro)
+ *
+ * Browse all podcast episodes with filtering and search.
+ *
+ * Features:
+ * - Grid layout of podcast episodes
+ * - Category filtering
+ * - Episode metadata display
+ * - Featured episodes
+ * - Responsive design
+ * - Dark mode support
+ * - SEO optimized
+ *
+ * Responsive breakpoints:
+ * - Mobile (<768px): Single column
+ * - Tablet (768-1024px): 2 columns
+ * - Desktop (>1024px): 3 columns
+ */
+
+import { getCollection } from 'astro:content';
+import Layout from '@/layouts/Layout.astro';
+import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
+import { Badge } from '@/components/ui/badge';
+import { Button } from '@/components/ui/button';
+
+// Get all public podcast episodes
+const allEpisodes = await getCollection('podcasts', ({ data }) => {
+  return !data.status || data.status === 'public';
+});
+
+// Sort by date (newest first)
+const sortedEpisodes = allEpisodes.sort((a, b) => {
+  const dateA = a.data.date instanceof Date ? a.data.date : new Date(a.data.date);
+  const dateB = b.data.date instanceof Date ? b.data.date : new Date(b.data.date);
+  return dateB.getTime() - dateA.getTime();
+});
+
+// Get unique categories
+const categories = [...new Set(allEpisodes.map(ep => ep.data.category).filter(Boolean))];
+
+// Get featured episodes
+const featuredEpisodes = sortedEpisodes.filter(ep => ep.data.featured);
+
+// Helper function
+function formatDate(dateValue: any): string {
+  if (!dateValue) return "";
+  const date = dateValue instanceof Date ? dateValue : new Date(dateValue);
+  return new Intl.DateTimeFormat("en-US", {
+    year: "numeric",
+    month: "short",
+    day: "numeric",
+  }).format(date);
+}
+---
+
+<Layout
+  title="Podcasts - ONE Platform"
+  description="Listen to podcast episodes about building with ONE Platform, Astro, React, Convex, and modern web development"
+  type="website"
+>
+  <div class="container mx-auto px-4 sm:px-6 lg:px-8 py-6 sm:py-8 lg:py-12">
+    <!-- Hero Section -->
+    <div class="text-center mb-8 sm:mb-12">
+      <h1 class="text-4xl sm:text-5xl lg:text-6xl font-bold mb-4 bg-gradient-to-r from-primary to-accent bg-clip-text text-transparent">
+        🎧 ONE Platform Podcasts
+      </h1>
+      <p class="text-lg sm:text-xl text-muted-foreground max-w-3xl mx-auto leading-relaxed">
+        Deep dives into architecture, tutorials, and insights about building modern web applications with ONE Platform
+      </p>
+    </div>
+
+    <!-- Featured Episodes -->
+    {featuredEpisodes.length > 0 && (
+      <div class="mb-12">
+        <h2 class="text-2xl sm:text-3xl font-bold mb-6 flex items-center gap-3">
+          <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 sm:h-8 sm:w-8 text-primary" viewBox="0 0 20 20" fill="currentColor">
+            <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z" />
+          </svg>
+          Featured Episodes
+        </h2>
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+          {featuredEpisodes.map(episode => (
+            <a
+              href={`/podcasts/${episode.slug}`}
+              class="group block h-full"
+            >
+              <Card className="h-full hover:shadow-xl hover:border-primary/50 transition-all duration-300">
+                {episode.data.thumbnail && (
+                  <div class="relative aspect-video overflow-hidden rounded-t-lg">
+                    <img
+                      src={episode.data.thumbnail}
+                      alt={episode.data.title}
+                      class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"
+                      loading="lazy"
+                    />
+                    <div class="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent" />
+                    <Badge className="absolute top-3 right-3 bg-primary">Featured</Badge>
+                    {episode.data.duration && (
+                      <div class="absolute bottom-3 right-3 bg-black/90 text-white text-xs px-2 py-1 rounded">
+                        {episode.data.duration}
+                      </div>
+                    )}
+                  </div>
+                )}
+                <CardHeader>
+                  <div class="flex items-center gap-2 mb-2 flex-wrap">
+                    {episode.data.category && (
+                      <Badge variant="secondary" className="text-xs">
+                        {episode.data.category}
+                      </Badge>
+                    )}
+                    {episode.data.episode && (
+                      <Badge variant="outline" className="text-xs">
+                        Ep. {episode.data.episode}
+                      </Badge>
+                    )}
+                  </div>
+                  <CardTitle className="text-lg sm:text-xl group-hover:text-primary transition-colors line-clamp-2">
+                    {episode.data.title}
+                  </CardTitle>
+                </CardHeader>
+                <CardContent>
+                  <p class="text-sm text-muted-foreground line-clamp-3 mb-4">
+                    {episode.data.description}
+                  </p>
+                  <div class="flex items-center gap-4 text-xs text-muted-foreground">
+                    {episode.data.author && (
+                      <div class="flex items-center gap-1">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="h-3.5 w-3.5" viewBox="0 0 20 20" fill="currentColor">
+                          <path fill-rule="evenodd" d="M10 9a3 3 0 100-6 3 3 0 000 6zm-7 9a7 7 0 1114 0H3z" clip-rule="evenodd" />
+                        </svg>
+                        <span>{episode.data.author}</span>
+                      </div>
+                    )}
+                    {episode.data.date && (
+                      <div class="flex items-center gap-1">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="h-3.5 w-3.5" viewBox="0 0 20 20" fill="currentColor">
+                          <path fill-rule="evenodd" d="M6 2a1 1 0 00-1 1v1H4a2 2 0 00-2 2v10a2 2 0 002 2h12a2 2 0 002-2V6a2 2 0 00-2-2h-1V3a1 1 0 10-2 0v1H7V3a1 1 0 00-1-1zm0 5a1 1 0 000 2h8a1 1 0 100-2H6z" clip-rule="evenodd" />
+                        </svg>
+                        <span>{formatDate(episode.data.date)}</span>
+                      </div>
+                    )}
+                  </div>
+                </CardContent>
+              </Card>
+            </a>
+          ))}
+        </div>
+      </div>
+    )}
+
+    <!-- Category Filter -->
+    {categories.length > 0 && (
+      <div class="mb-8">
+        <div class="flex flex-wrap gap-2 items-center">
+          <span class="text-sm font-semibold text-muted-foreground">Categories:</span>
+          <a href="/podcasts">
+            <Badge variant="outline" className="cursor-pointer hover:bg-primary hover:text-primary-foreground transition-colors">
+              All
+            </Badge>
+          </a>
+          {categories.map(category => (
+            <a href={`/podcasts?category=${category}`}>
+              <Badge variant="outline" className="cursor-pointer hover:bg-primary hover:text-primary-foreground transition-colors">
+                {category}
+              </Badge>
+            </a>
+          ))}
+        </div>
+      </div>
+    )}
+
+    <!-- All Episodes Grid -->
+    <div class="mb-8">
+      <h2 class="text-2xl sm:text-3xl font-bold mb-6">All Episodes</h2>
+      <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+        {sortedEpisodes.map(episode => (
+          <a
+            href={`/podcasts/${episode.slug}`}
+            class="group block h-full"
+          >
+            <Card className="h-full hover:shadow-xl hover:border-primary/30 transition-all duration-300">
+              {episode.data.thumbnail && (
+                <div class="relative aspect-video overflow-hidden rounded-t-lg">
+                  <img
+                    src={episode.data.thumbnail}
+                    alt={episode.data.title}
+                    class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"
+                    loading="lazy"
+                  />
+                  <div class="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent" />
+                  {episode.data.duration && (
+                    <div class="absolute bottom-3 right-3 bg-black/90 text-white text-xs px-2 py-1 rounded">
+                      {episode.data.duration}
+                    </div>
+                  )}
+                </div>
+              )}
+              <CardHeader>
+                <div class="flex items-center gap-2 mb-2 flex-wrap">
+                  {episode.data.category && (
+                    <Badge variant="secondary" className="text-xs">
+                      {episode.data.category}
+                    </Badge>
+                  )}
+                  {episode.data.episode && (
+                    <Badge variant="outline" className="text-xs">
+                      Ep. {episode.data.episode}
+                    </Badge>
+                  )}
+                </div>
+                <CardTitle className="text-lg sm:text-xl group-hover:text-primary transition-colors line-clamp-2">
+                  {episode.data.title}
+                </CardTitle>
+              </CardHeader>
+              <CardContent>
+                <p class="text-sm text-muted-foreground line-clamp-3 mb-4">
+                  {episode.data.description}
+                </p>
+                <div class="flex items-center gap-4 text-xs text-muted-foreground">
+                  {episode.data.author && (
+                    <div class="flex items-center gap-1">
+                      <svg xmlns="http://www.w3.org/2000/svg" class="h-3.5 w-3.5" viewBox="0 0 20 20" fill="currentColor">
+                        <path fill-rule="evenodd" d="M10 9a3 3 0 100-6 3 3 0 000 6zm-7 9a7 7 0 1114 0H3z" clip-rule="evenodd" />
+                      </svg>
+                      <span>{episode.data.author}</span>
+                    </div>
+                  )}
+                  {episode.data.date && (
+                    <div class="flex items-center gap-1">
+                      <svg xmlns="http://www.w3.org/2000/svg" class="h-3.5 w-3.5" viewBox="0 0 20 20" fill="currentColor">
+                        <path fill-rule="evenodd" d="M6 2a1 1 0 00-1 1v1H4a2 2 0 00-2 2v10a2 2 0 002 2h12a2 2 0 002-2V6a2 2 0 00-2-2h-1V3a1 1 0 10-2 0v1H7V3a1 1 0 00-1-1zm0 5a1 1 0 000 2h8a1 1 0 100-2H6z" clip-rule="evenodd" />
+                      </svg>
+                      <span>{formatDate(episode.data.date)}</span>
+                    </div>
+                  )}
+                </div>
+              </CardContent>
+            </Card>
+          </a>
+        ))}
+      </div>
+    </div>
+
+    <!-- Subscribe CTA -->
+    <div class="mt-12">
+      <Card className="bg-gradient-to-br from-primary/10 via-accent/10 to-primary/20 border-primary/30">
+        <CardContent className="p-8 text-center">
+          <h3 class="text-2xl font-bold mb-3">Subscribe to ONE Platform Podcasts</h3>
+          <p class="text-muted-foreground mb-6 max-w-2xl mx-auto">
+            Get notified when new episodes are released. Deep technical insights, architecture patterns, and practical tutorials.
+          </p>
+          <div class="flex flex-wrap gap-3 justify-center">
+            <Button className="bg-gradient-to-r from-primary to-accent hover:from-primary/90 hover:to-accent/90">
+              <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 mr-2" viewBox="0 0 20 20" fill="currentColor">
+                <path d="M2 5a2 2 0 012-2h7a2 2 0 012 2v4a2 2 0 01-2 2H9l-3 3v-3H4a2 2 0 01-2-2V5z" />
+                <path d="M15 7v2a4 4 0 01-4 4H9.828l-1.766 1.767c.28.149.599.233.938.233h2l3 3v-3h2a2 2 0 002-2V9a2 2 0 00-2-2h-1z" />
+              </svg>
+              RSS Feed
+            </Button>
+            <Button variant="outline" className="border-primary/30 hover:bg-primary/10">
+              <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 mr-2" viewBox="0 0 20 20" fill="currentColor">
+                <path fill-rule="evenodd" d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-8-3a1 1 0 00-.867.5 1 1 0 11-1.731-1A3 3 0 0113 8a3.001 3.001 0 01-2 2.83V11a1 1 0 11-2 0v-1a1 1 0 011-1 1 1 0 100-2zm0 8a1 1 0 100-2 1 1 0 000 2z" clip-rule="evenodd" />
+              </svg>
+              Learn More
+            </Button>
+          </div>
+        </CardContent>
+      </Card>
+    </div>
+  </div>
+</Layout>
+
+<style>
+  /* Smooth scrolling */
+  html {
+    scroll-behavior: smooth;
+  }
+</style>

@@ -492,6 +492,55 @@ const videos = defineCollection({
   schema: VideoSchema,
 });
 
+// Define the Podcasts schema (audio content ontology - thing type: podcast)
+// Enhanced with premium audio features for education and entertainment content
+const PodcastSchema = z.object({
+  // Basic metadata
+  title: z.string(),
+  description: z.string(),
+  audioUrl: z.string().optional(),  // Audio file URL
+  thumbnail: z.string().optional(), // Cover art image
+  duration: z.string().optional(),  // Duration in HH:MM:SS or MM:SS format
+  date: z.coerce.date(),            // Publication date
+  author: z.string().optional(),
+  category: z.string().optional(),  // Podcast category
+  tags: z.array(z.string()).default([]),
+
+  // Episode information
+  episode: z.number().optional(),   // Episode number
+  season: z.number().optional(),    // Season number
+
+  // Status and visibility
+  status: z.enum(['draft', 'public', 'archived']).optional().default('public'),
+  featured: z.boolean().default(false),
+
+  // Premium features
+  chapters: z.array(z.object({
+    startTime: z.number(),          // Seconds from start
+    endTime: z.number().optional(), // Optional end time
+    text: z.string(),               // Chapter title
+  })).optional(),                   // Chapter markers for navigation
+
+  subtitles: z.array(z.object({
+    src: z.string(),                // VTT file URL
+    label: z.string(),              // Display name (e.g., "English")
+    language: z.string(),           // Language code (e.g., "en")
+    kind: z.enum(['subtitles', 'captions']), // Type of text track
+    default: z.boolean().optional(), // Default language
+  })).optional(),                   // Multi-language subtitle support
+
+  transcript: z.string().optional(), // Full episode transcript
+
+  // Ontology alignment
+  slug: z.string().optional(),      // URL slug (optional, defaults to filename)
+});
+
+// Define the Podcasts collection
+const podcasts = defineCollection({
+  type: 'content',
+  schema: PodcastSchema,
+});
+
 // Note: Installation-specific documentation is handled via file-resolver utility
 // in Astro pages, not through content collections. This allows dynamic resolution
 // based on INSTALLATION_NAME environment variable at runtime.
@@ -508,6 +557,7 @@ export const collections = {
   features: features,
   docs: docs,
   videos: videos,
+  podcasts: podcasts,
 };
 
 // Export schema types
@@ -522,3 +572,4 @@ export type ConnectionSchema = z.infer<typeof ConnectionSchema>;
 export type FeatureSchema = z.infer<typeof FeatureSchema>;
 export type DocsSchema = z.infer<typeof DocsSchema>;
 export type VideoSchema = z.infer<typeof VideoSchema>;
+export type PodcastSchema = z.infer<typeof PodcastSchema>;

@@ -4,7 +4,12 @@ import { GitSection } from "@/components/GitSection";
 import { PerformanceChart } from "@/components/features/PerformanceChart";
 import OrbitingCircles from "@/components/magicui/orbiting-circles";
 import DownloadSection from "@/components/DownloadSection.astro";
-import { YouTube } from '@astro-community/astro-embed-youtube';
+import { FeaturedPodcast } from "@/components/FeaturedPodcast";
+import { getCollection } from 'astro:content';
+
+// Get the featured ONE ontology podcast
+const podcasts = await getCollection('podcasts');
+const featuredPodcast = podcasts.find(p => p.slug === 'one-ontology');
 ---
 
 <Layout
@@ -20,7 +25,15 @@ import { YouTube } from '@astro-community/astro-embed-youtube';
     <div class="w-full sm:mx-auto sm:max-w-7xl sm:px-4">
       <h2 class="text-2xl sm:text-3xl md:text-4xl font-bold mb-3 sm:mb-4 md:mb-6 text-center px-4 sm:px-0">Demo</h2>
       <div class="video-container border-0 sm:border-[16px] border-primary rounded-none sm:rounded-lg overflow-hidden sm:shadow-xl">
-        <YouTube id="VguPAHfksEY" posterQuality="max" />
+        <video
+          controls
+          preload="metadata"
+          class="w-full h-auto"
+          poster="/logo.svg"
+        >
+          <source src="https://media.one.ie/ONE-demo.mp4" type="video/mp4" />
+          Your browser does not support the video tag.
+        </video>
       </div>
     </div>
   </section>
@@ -1446,6 +1459,19 @@ EVERY DAY at 8am:
     </div>
   </section>
 
+  <!-- Featured Podcast Section -->
+  {featuredPodcast && (
+    <FeaturedPodcast
+      title={featuredPodcast.data.title}
+      description={featuredPodcast.data.description}
+      audioUrl={featuredPodcast.data.audioUrl}
+      duration={featuredPodcast.data.duration}
+      slug={featuredPodcast.slug}
+      chapters={featuredPodcast.data.chapters}
+      client:load
+    />
+  )}
+
   <!-- How It Works Section -->
   <section class="px-4 py-20 sm:px-6 sm:py-24 md:px-8 md:py-32">
     <div class="mx-auto max-w-full sm:max-w-6xl">
@@ -1745,16 +1771,11 @@ EVERY DAY at 8am:
 
 <style>
   /* Video Full Width */
-  .video-container :global(lite-youtube) {
+  .video-container video {
     max-width: none !important;
     width: 100% !important;
     margin: 0 !important;
-  }
-
-  /* Responsive video height - smaller on mobile */
-  .video-container :global(lite-youtube > iframe),
-  .video-container :global(lite-youtube::before) {
-    width: 100% !important;
+    display: block;
   }
 
   /* Mobile: aspect ratio based height - edge to edge */
@@ -1771,27 +1792,21 @@ EVERY DAY at 8am:
       padding: 0 !important;
       width: 100vw !important;
       max-width: 100vw !important;
+      border-radius: 0 !important;
     }
 
-    .video-container :global(lite-youtube) {
+    .video-container video {
       border-radius: 0 !important;
       width: 100vw !important;
       max-width: 100vw !important;
-    }
-
-    .video-container :global(lite-youtube > iframe),
-    .video-container :global(lite-youtube::before) {
-      width: 100vw !important;
-      max-width: 100vw !important;
-      height: calc(100vw * 0.5625) !important; /* 16:9 aspect ratio of full viewport width */
+      height: calc(100vw * 0.5625) !important; /* 16:9 aspect ratio */
       min-height: 200px !important;
     }
   }
 
   /* Larger screens: fixed height */
   @media (min-width: 641px) {
-    .video-container :global(lite-youtube > iframe),
-    .video-container :global(lite-youtube::before) {
+    .video-container video {
       height: 80vh !important;
       max-height: 800px !important;
     }

@@ -1,0 +1,272 @@
+---
+/**
+ * Individual Podcast Page ([...slug].astro)
+ *
+ * Responsive single podcast episode page with audio player, metadata, and episode content.
+ *
+ * Features:
+ * - Premium audio player with chapters (above the fold)
+ * - Responsive 1-column layout optimized for content
+ * - Episode metadata and show notes
+ * - Categories and tags
+ * - Breadcrumb navigation
+ * - Dark mode support
+ * - Accessibility optimized
+ * - SEO metadata
+ *
+ * Layout Structure:
+ * 1. Breadcrumb navigation
+ * 2. Audio player (above the fold, full-width)
+ * 3. Episode title and description
+ * 4. Metadata badges (category, episode number, date, duration, author)
+ * 5. Episode content (tags, markdown, transcript)
+ * 6. Episode actions (more episodes, share)
+ *
+ * Responsive breakpoints:
+ * - Mobile (<768px): Full-width layout, stacked elements
+ * - Tablet (768-1024px): Optimized spacing
+ * - Desktop (>1024px): Centered content with max-width
+ */
+
+import { getCollection, type CollectionEntry } from 'astro:content';
+import Layout from '@/layouts/Layout.astro';
+import { VideoPlayer } from '@/components/media/VideoPlayer';
+import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
+import { Badge } from '@/components/ui/badge';
+import { Button } from '@/components/ui/button';
+import { Separator } from '@/components/ui/separator';
+
+export const prerender = true;
+
+export async function getStaticPaths() {
+  // Get all public podcast episodes
+  const episodes = await getCollection('podcasts', ({ data }: CollectionEntry<'podcasts'>) => {
+    return !data.status || data.status === 'public';
+  });
+
+  return episodes.map((entry: CollectionEntry<'podcasts'>) => ({
+    params: { slug: entry.slug },
+    props: { entry },
+  }));
+}
+
+type Props = {
+  entry: CollectionEntry<'podcasts'>;
+};
+
+const { entry } = Astro.props as Props;
+const { Content } = await entry.render();
+
+// Helper functions
+function formatDate(dateValue: any): string {
+  if (!dateValue) return "";
+  const date = dateValue instanceof Date ? dateValue : new Date(dateValue);
+  return new Intl.DateTimeFormat("en-US", {
+    year: "numeric",
+    month: "long",
+    day: "numeric",
+  }).format(date);
+}
+
+function estimateReadingTime(text: string | undefined): number {
+  if (!text) return 1;
+  const wordsPerMinute = 200;
+  const words = text.trim().split(/\s+/).length;
+  return Math.ceil(words / wordsPerMinute);
+}
+---
+
+<Layout
+  title={`${entry.data.title} - Podcasts`}
+  description={entry.data.description}
+  image={entry.data.thumbnail}
+  type="article"
+>
+  <!-- Container - responsive padding and max-width -->
+  <div class="container mx-auto px-4 sm:px-6 lg:px-8 py-6 sm:py-8 lg:py-12 max-w-4xl">
+    <!-- Breadcrumb navigation - responsive text size -->
+    <nav class="mb-4 sm:mb-6 text-xs sm:text-sm text-muted-foreground" aria-label="Breadcrumb">
+      <ol class="flex items-center flex-wrap gap-1 sm:gap-2">
+        <li>
+          <a href="/" class="hover:text-foreground transition-colors">Home</a>
+        </li>
+        <li aria-hidden="true">/</li>
+        <li>
+          <a href="/podcasts" class="hover:text-foreground transition-colors">Podcasts</a>
+        </li>
+        <li aria-hidden="true">/</li>
+        <li>
+          <span class="text-foreground line-clamp-1">{entry.data.title}</span>
+        </li>
+      </ol>
+    </nav>
+
+    <!-- Audio Player Section - Above the Fold -->
+    {entry.data.audioUrl && (
+      <div class="mb-8">
+        <VideoPlayer
+          src={entry.data.audioUrl}
+          title={entry.data.title}
+          type="audio"
+          autoplay={false}
+          muted={false}
+          chapters={entry.data.chapters}
+          subtitles={entry.data.subtitles}
+          videoId={entry.slug}
+          enableProgressTracking={true}
+          enableTimestampSharing={true}
+          client:load
+        />
+      </div>
+    )}
+
+    <!-- Episode Header -->
+    <div class="mb-6">
+      <h1 class="text-2xl sm:text-3xl lg:text-4xl font-bold mb-3">
+        {entry.data.title}
+      </h1>
+
+      {entry.data.description && (
+        <p class="text-base sm:text-lg text-muted-foreground mb-4 leading-relaxed">
+          {entry.data.description}
+        </p>
+      )}
+    </div>
+
+    <!-- Episode Metadata -->
+    <div class="flex flex-wrap items-center gap-3 text-sm mb-8">
+      {entry.data.category && (
+        <Badge variant="secondary" className="text-xs sm:text-sm">
+          {entry.data.category}
+        </Badge>
+      )}
+
+      {entry.data.episode && (
+        <Badge variant="outline" className="text-xs sm:text-sm">
+          Episode {entry.data.episode}
+        </Badge>
+      )}
+
+      {entry.data.date && (
+        <div class="flex items-center gap-2 text-muted-foreground">
+          <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" viewBox="0 0 20 20" fill="currentColor">
+            <path fill-rule="evenodd" d="M6 2a1 1 0 00-1 1v1H4a2 2 0 00-2 2v10a2 2 0 002 2h12a2 2 0 002-2V6a2 2 0 00-2-2h-1V3a1 1 0 10-2 0v1H7V3a1 1 0 00-1-1zm0 5a1 1 0 000 2h8a1 1 0 100-2H6z" clip-rule="evenodd" />
+          </svg>
+          <span>{formatDate(entry.data.date)}</span>
+        </div>
+      )}
+
+      {entry.data.duration && (
+        <div class="flex items-center gap-2 text-muted-foreground">
+          <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" viewBox="0 0 20 20" fill="currentColor">
+            <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm1-12a1 1 0 10-2 0v4a1 1 0 00.293.707l2.828 2.829a1 1 0 101.415-1.415L11 9.586V6z" clip-rule="evenodd" />
+          </svg>
+          <span>{entry.data.duration}</span>
+        </div>
+      )}
+
+      {entry.data.author && (
+        <div class="flex items-center gap-2 text-muted-foreground">
+          <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" viewBox="0 0 20 20" fill="currentColor">
+            <path fill-rule="evenodd" d="M10 9a3 3 0 100-6 3 3 0 000 6zm-7 9a7 7 0 1114 0H3z" clip-rule="evenodd" />
+          </svg>
+          <span>{entry.data.author}</span>
+        </div>
+      )}
+    </div>
+
+    <!-- Episode Content -->
+    <Card>
+      <CardContent className="pt-6">
+        <!-- Tags -->
+        {entry.data.tags && entry.data.tags.length > 0 && (
+          <div class="mb-6">
+            <div class="flex flex-wrap gap-2">
+              {entry.data.tags.map(tag => (
+                <Badge variant="outline" className="text-xs">
+                  {tag}
+                </Badge>
+              ))}
+            </div>
+          </div>
+        )}
+
+        <Separator className="my-6" />
+
+        <!-- Podcast content (rendered markdown) - responsive prose -->
+        <article class="prose prose-sm sm:prose-base prose-slate dark:prose-invert max-w-none prose-headings:font-bold prose-h1:text-3xl prose-h2:text-2xl prose-h3:text-xl prose-p:leading-relaxed">
+          <Content />
+        </article>
+
+        <Separator className="my-6" />
+
+        <!-- Transcript -->
+        {entry.data.transcript && (
+          <details class="mt-6">
+            <summary class="cursor-pointer font-semibold text-sm sm:text-base mb-4 hover:text-primary transition-colors">
+              Show Transcript
+            </summary>
+            <div class="prose prose-sm dark:prose-invert max-w-none mt-4 pl-4 border-l-2 border-primary/20">
+              <p class="text-muted-foreground whitespace-pre-wrap">{entry.data.transcript}</p>
+            </div>
+          </details>
+        )}
+      </CardContent>
+    </Card>
+
+    <!-- Episode Actions -->
+    <div class="mt-8 mb-8">
+      <Card className="bg-gradient-to-br from-primary/5 via-accent/5 to-primary/10 border-primary/20">
+        <CardContent className="p-6">
+          <h3 class="text-xl font-semibold mb-4 text-center">Enjoyed this episode?</h3>
+          <div class="flex flex-wrap gap-3 justify-center">
+            <a href="/podcasts">
+              <Button className="bg-gradient-to-r from-primary to-accent hover:from-primary/90 hover:to-accent/90">
+                🎧 More Episodes
+              </Button>
+            </a>
+            {entry.data.audioUrl && (
+              <Button
+                variant="outline"
+                className="border-primary/30 hover:bg-primary/10"
+                onClick={() => document.querySelector('audio')?.scrollIntoView({behavior: 'smooth', block: 'center'})}
+              >
+                <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 mr-2" viewBox="0 0 20 20" fill="currentColor">
+                  <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zM9.555 7.168A1 1 0 008 8v4a1 1 0 001.555.832l3-2a1 1 0 000-1.664l-3-2z" clip-rule="evenodd" />
+                </svg>
+                Listen Again
+              </Button>
+            )}
+            <Button variant="outline" className="border-accent/30 hover:bg-accent/10">
+              <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 mr-2" viewBox="0 0 20 20" fill="currentColor">
+                <path d="M15 8a3 3 0 10-2.977-2.63l-4.94 2.47a3 3 0 100 4.319l4.94 2.47a3 3 0 10.895-1.789l-4.94-2.47a3.027 3.027 0 000-.74l4.94-2.47C13.456 7.68 14.19 8 15 8z" />
+              </svg>
+              Share Episode
+            </Button>
+          </div>
+        </CardContent>
+      </Card>
+    </div>
+
+    <!-- Back to podcasts -->
+    <nav class="mt-12 mb-8 border-t dark:border-gray-800 pt-8">
+      <div class="text-center">
+        <a href="/podcasts">
+          <Button variant="outline" size="lg" className="touch-manipulation">
+            <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 mr-2" viewBox="0 0 20 20" fill="currentColor">
+              <path fill-rule="evenodd" d="M9.707 16.707a1 1 0 01-1.414 0l-6-6a1 1 0 010-1.414l6-6a1 1 0 011.414 1.414L5.414 9H17a1 1 0 110 2H5.414l4.293 4.293a1 1 0 010 1.414z" clip-rule="evenodd" />
+            </svg>
+            Back to Podcasts
+          </Button>
+        </a>
+      </div>
+    </nav>
+  </div>
+</Layout>
+
+<style>
+  /* Smooth scrolling for all links */
+  html {
+    scroll-behavior: smooth;
+  }
+</style>

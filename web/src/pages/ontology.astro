@@ -30,6 +30,12 @@ import {
   Globe,
   Coins,
 } from 'lucide-react';
+import { FeaturedPodcast } from '@/components/FeaturedPodcast';
+import { getCollection } from 'astro:content';
+
+// Get the featured ONE ontology podcast
+const podcasts = await getCollection('podcasts');
+const featuredPodcast = podcasts.find(p => p.slug === 'one-ontology');
 ---
 
 <Layout title="The ONE Ontology - ONE Platform">
@@ -96,6 +102,19 @@ import {
       </div>
     </div>
   </section>
+
+  <!-- Featured Podcast Section -->
+  {featuredPodcast && (
+    <FeaturedPodcast
+      title={featuredPodcast.data.title}
+      description={featuredPodcast.data.description}
+      audioUrl={featuredPodcast.data.audioUrl}
+      duration={featuredPodcast.data.duration}
+      slug={featuredPodcast.slug}
+      chapters={featuredPodcast.data.chapters}
+      client:load
+    />
+  )}
 
   <!-- Why ONE Ontology -->
   <section

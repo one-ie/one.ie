@@ -139,6 +139,7 @@ export function VideoPlayer({
   const [playbackSpeed, setPlaybackSpeed] = useState(1);
   const [showKeyboardHelp, setShowKeyboardHelp] = useState(false);
   const [shareTooltip, setShareTooltip] = useState(false);
+  const [chaptersVTT, setChaptersVTT] = useState<string | null>(null);
 
   // Map aspect ratio to Tailwind classes
   const getAspectClass = (ratio: string) => {
@@ -252,6 +253,21 @@ export function VideoPlayer({
     });
   };
 
+  // Generate chapters VTT on client-side only (avoid hydration mismatch)
+  useEffect(() => {
+    if (chapters.length > 0) {
+      const vttUrl = generateChaptersVTT(chapters);
+      setChaptersVTT(vttUrl);
+
+      // Cleanup blob URL on unmount
+      return () => {
+        if (vttUrl) {
+          URL.revokeObjectURL(vttUrl);
+        }
+      };
+    }
+  }, [chapters]);
+
   // Keyboard Shortcuts
   useEffect(() => {
     if (!src) return;
@@ -335,28 +351,10 @@ export function VideoPlayer({
     );
   }
 
-  // Generate chapters VTT if chapters provided (for audio and native video)
-  const chaptersVTT = React.useMemo(() =>
-    chapters.length > 0 ? generateChaptersVTT(chapters) : null,
-    [chapters]
-  );
-
   // Audio player
   if (type === 'audio') {
     return (
       <div className={cn('one-video-player relative w-full', className)}>
-        {poster && (
-          <div className="relative mb-4">
-            <img
-              src={poster}
-              alt={title || 'Audio cover art'}
-              className="w-full aspect-square object-cover rounded-lg shadow-lg"
-              loading="lazy"
-              decoding="async"
-            />
-            <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent rounded-lg" />
-          </div>
-        )}
         <div className="bg-gradient-to-br from-primary/10 to-accent/10 border-2 border-primary/20 rounded-lg p-4">
           <audio
             ref={audioRef}
