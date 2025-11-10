@@ -1,77 +1,25 @@
 ---
 /**
- * Basic AI Chat Example (FREE TIER)
- *
- * Demonstrates client-side only chat:
- * - No persistence (messages lost on refresh)
- * - User provides their own OpenAI API key
- * - Works without backend
+ * Free Tier Chat Example
+ * 
+ * Demonstrates client-side only chat with user's API key
  */
 import Layout from '@/layouts/Layout.astro';
-import Message from '@/components/ai/basic/Message';
-import MessageList from '@/components/ai/basic/MessageList';
-import PromptInput from '@/components/ai/basic/PromptInput';
-import { UpgradeBanner } from '@/components/upgrade/UpgradeBanner';
 ---
 
-<Layout title="Basic AI Chat - Free Tier">
-  <div class="container mx-auto px-4 py-8 max-w-4xl">
-    <div class="mb-8">
-      <h1 class="text-4xl font-bold mb-2">Basic AI Chat</h1>
-      <p class="text-gray-600">
-        Free tier - Messages are stored in memory only and will be lost on page refresh.
-      </p>
-    </div>
-
-    <div class="bg-white rounded-lg shadow-lg p-6">
-      <div id="chat-container" class="space-y-4">
-        <div class="bg-blue-50 border border-blue-200 rounded-lg p-4 mb-4">
-          <h3 class="font-semibold text-blue-900 mb-2">🆓 Free Tier Features:</h3>
-          <ul class="text-sm text-blue-800 space-y-1">
-            <li>✅ Client-side AI chat (bring your own OpenAI key)</li>
-            <li>✅ All generative UI components</li>
-            <li>❌ No persistence (messages lost on refresh)</li>
-            <li>❌ No analytics or usage tracking</li>
-            <li>❌ No human-in-the-loop support</li>
-          </ul>
-        </div>
-
-        <div class="border-t pt-4">
-          <label for="api-key" class="block text-sm font-medium text-gray-700 mb-2">
-            Your OpenAI API Key:
-          </label>
-          <input
-            type="password"
-            id="api-key"
-            placeholder="sk-..."
-            class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
-          />
-          <p class="text-xs text-gray-500 mt-1">
-            Your key is used client-side only and never sent to our servers.
-          </p>
-        </div>
-
-        <div id="messages" class="min-h-[400px] border rounded-lg p-4 bg-gray-50">
-          <!-- Messages will be rendered here -->
-        </div>
-
-        <div id="input-container">
-          <!-- Chat input will be rendered here -->
-        </div>
-      </div>
-    </div>
-
-    <div class="mt-6" id="upgrade-prompt">
-      <!-- Upgrade prompt will be shown after 10 messages -->
-    </div>
+<Layout title="Free Tier AI Chat">
+  <div class="container mx-auto px-4 py-8">
+    <div id="chat-app"></div>
   </div>
 
   <script>
-    import { useAIChat } from '@/hooks/ai/useAIChat';
-    import { backendConfig } from '@/config/backend';
+    import { FreeChatExample } from '@/components/examples/FreeChatExample';
+    import { createRoot } from 'react-dom/client';
 
-    // This would be implemented with React/client-side rendering
-    console.log('Backend enabled:', backendConfig.enabled);
-    console.log('Features:', backendConfig.features);
+    const container = document.getElementById('chat-app');
+    if (container) {
+      const root = createRoot(container);
+      root.render(<FreeChatExample />);
+    }
   </script>
 </Layout>
