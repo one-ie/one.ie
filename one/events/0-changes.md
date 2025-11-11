@@ -1,3 +1,61 @@
+### **7cbf136f** — template:1 — `fix: Restore working Astro config for Cloudflare deployment``
+
+**Template:**
+  - web/astro.config.mjs
+
+
+
+### **9626e617** — template:1 — `fix: Remove invalid content config from Tailwind v4 Vite plugin``
+
+**Template:**
+  - web/astro.config.mjs
+
+
+
+### **5e89d9f0** — template:3 — `fix: Remove conflicting @vitejs/plugin-react dependency``
+
+**Template:**
+  - web/.npmrc
+  - web/package-lock.json
+  - web/package.json
+
+
+
+### **a23a6a79** — template:4 — `fix: Remove unused @vidstack/react and vidstack dependencies``
+
+**Template:**
+  - web/.npmrc
+  - web/bun.lock
+  - web/package-lock.json
+  - web/package.json
+
+
+
+### **9b2c963f** — template:1 — `fix: Regenerate package-lock.json as standalone for Cloudflare deployment``
+
+**Template:**
+  - web/package-lock.json
+
+
+
+### **b06f4af8** — template:1 — `fix: Add .npmrc to resolve @vidstack/react peer dependency conflict on Cloudflare``
+
+**Template:**
+  - web/.npmrc
+
+
+
+### **dfcf3b89** — template:5 — `fix: Update better-auth dependencies to resolve peer dependency conflict``
+
+**Template:**
+  - .claude/hooks.log
+  - .claude/hooks/.last-news-context
+  - .claude/state/cycle.json
+  - one/events/0-changes.md
+  - web/package.json
+
+
+
 ### **b2313be4** — template:4 — `fix: Remove React components from podcasts page to resolve SSR style prop error``
 
 **Template:**
