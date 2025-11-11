@@ -31,10 +31,6 @@
 import { getCollection, type CollectionEntry } from 'astro:content';
 import Layout from '@/layouts/Layout.astro';
 import { VideoPlayer } from '@/components/media/VideoPlayer';
-import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
-import { Badge } from '@/components/ui/badge';
-import { Button } from '@/components/ui/button';
-import { Separator } from '@/components/ui/separator';
 
 export const prerender = true;
 
@@ -103,19 +99,19 @@ function estimateReadingTime(text: string | undefined): number {
 
     <!-- Audio Player Section - Above the Fold -->
     {entry.data.audioUrl && (
-      <div class="mb-8">
+      <div id="audio-player" class="mb-8">
         <VideoPlayer
           src={entry.data.audioUrl}
           title={entry.data.title}
           type="audio"
           autoplay={false}
           muted={false}
-          chapters={entry.data.chapters}
-          subtitles={entry.data.subtitles}
+          chapters={entry.data.chapters || []}
+          subtitles={entry.data.subtitles || []}
           videoId={entry.slug}
           enableProgressTracking={true}
           enableTimestampSharing={true}
-          client:load
+          client:only="react"
         />
       </div>
     )}
@@ -136,15 +132,15 @@ function estimateReadingTime(text: string | undefined): number {
     <!-- Episode Metadata -->
     <div class="flex flex-wrap items-center gap-3 text-sm mb-8">
       {entry.data.category && (
-        <Badge variant="secondary" className="text-xs sm:text-sm">
+        <span class="px-2 py-1 text-xs sm:text-sm rounded-md bg-secondary text-secondary-foreground">
           {entry.data.category}
-        </Badge>
+        </span>
       )}
 
       {entry.data.episode && (
-        <Badge variant="outline" className="text-xs sm:text-sm">
+        <span class="px-2 py-1 text-xs sm:text-sm rounded-md border">
           Episode {entry.data.episode}
-        </Badge>
+        </span>
       )}
 
       {entry.data.date && (
@@ -176,88 +172,76 @@ function estimateReadingTime(text: string | undefined): number {
     </div>
 
     <!-- Episode Content -->
-    <Card>
-      <CardContent className="pt-6">
-        <!-- Tags -->
-        {entry.data.tags && entry.data.tags.length > 0 && (
-          <div class="mb-6">
-            <div class="flex flex-wrap gap-2">
-              {entry.data.tags.map(tag => (
-                <Badge variant="outline" className="text-xs">
-                  {tag}
-                </Badge>
-              ))}
-            </div>
+    <div class="border rounded-lg p-6 bg-card">
+      <!-- Tags -->
+      {entry.data.tags && entry.data.tags.length > 0 && (
+        <div class="mb-6">
+          <div class="flex flex-wrap gap-2">
+            {entry.data.tags.map(tag => (
+              <span class="px-2 py-1 text-xs border rounded-md">
+                {tag}
+              </span>
+            ))}
           </div>
-        )}
+        </div>
+      )}
 
-        <Separator className="my-6" />
+      <hr class="my-6" />
 
-        <!-- Podcast content (rendered markdown) - responsive prose -->
-        <article class="prose prose-sm sm:prose-base prose-slate dark:prose-invert max-w-none prose-headings:font-bold prose-h1:text-3xl prose-h2:text-2xl prose-h3:text-xl prose-p:leading-relaxed">
-          <Content />
-        </article>
+      <!-- Podcast content (rendered markdown) - responsive prose -->
+      <article class="prose prose-sm sm:prose-base prose-slate dark:prose-invert max-w-none prose-headings:font-bold prose-h1:text-3xl prose-h2:text-2xl prose-h3:text-xl prose-p:leading-relaxed">
+        <Content />
+      </article>
 
-        <Separator className="my-6" />
+      <hr class="my-6" />
 
-        <!-- Transcript -->
-        {entry.data.transcript && (
-          <details class="mt-6">
-            <summary class="cursor-pointer font-semibold text-sm sm:text-base mb-4 hover:text-primary transition-colors">
-              Show Transcript
-            </summary>
-            <div class="prose prose-sm dark:prose-invert max-w-none mt-4 pl-4 border-l-2 border-primary/20">
-              <p class="text-muted-foreground whitespace-pre-wrap">{entry.data.transcript}</p>
-            </div>
-          </details>
-        )}
-      </CardContent>
-    </Card>
+      <!-- Transcript -->
+      {entry.data.transcript && (
+        <details class="mt-6">
+          <summary class="cursor-pointer font-semibold text-sm sm:text-base mb-4 hover:text-primary transition-colors">
+            Show Transcript
+          </summary>
+          <div class="prose prose-sm dark:prose-invert max-w-none mt-4 pl-4 border-l-2 border-primary/20">
+            <p class="text-muted-foreground whitespace-pre-wrap">{entry.data.transcript}</p>
+          </div>
+        </details>
+      )}
+    </div>
 
     <!-- Episode Actions -->
     <div class="mt-8 mb-8">
-      <Card className="bg-gradient-to-br from-primary/5 via-accent/5 to-primary/10 border-primary/20">
-        <CardContent className="p-6">
-          <h3 class="text-xl font-semibold mb-4 text-center">Enjoyed this episode?</h3>
-          <div class="flex flex-wrap gap-3 justify-center">
-            <a href="/podcasts">
-              <Button className="bg-gradient-to-r from-primary to-accent hover:from-primary/90 hover:to-accent/90">
-                🎧 More Episodes
-              </Button>
-            </a>
-            {entry.data.audioUrl && (
-              <Button
-                variant="outline"
-                className="border-primary/30 hover:bg-primary/10"
-                onClick={() => document.querySelector('audio')?.scrollIntoView({behavior: 'smooth', block: 'center'})}
-              >
-                <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 mr-2" viewBox="0 0 20 20" fill="currentColor">
-                  <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zM9.555 7.168A1 1 0 008 8v4a1 1 0 001.555.832l3-2a1 1 0 000-1.664l-3-2z" clip-rule="evenodd" />
-                </svg>
-                Listen Again
-              </Button>
-            )}
-            <Button variant="outline" className="border-accent/30 hover:bg-accent/10">
+      <div class="bg-gradient-to-br from-primary/5 via-accent/5 to-primary/10 border border-primary/20 rounded-lg p-6">
+        <h3 class="text-xl font-semibold mb-4 text-center">Enjoyed this episode?</h3>
+        <div class="flex flex-wrap gap-3 justify-center">
+          <a href="/podcasts" class="inline-flex items-center justify-center px-4 py-2 rounded-md bg-gradient-to-r from-primary to-accent hover:from-primary/90 hover:to-accent/90 text-primary-foreground font-medium">
+            🎧 More Episodes
+          </a>
+          {entry.data.audioUrl && (
+            <a href="#audio-player" class="inline-flex items-center justify-center px-4 py-2 rounded-md border border-primary/30 hover:bg-primary/10">
               <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 mr-2" viewBox="0 0 20 20" fill="currentColor">
-                <path d="M15 8a3 3 0 10-2.977-2.63l-4.94 2.47a3 3 0 100 4.319l4.94 2.47a3 3 0 10.895-1.789l-4.94-2.47a3.027 3.027 0 000-.74l4.94-2.47C13.456 7.68 14.19 8 15 8z" />
+                <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zM9.555 7.168A1 1 0 008 8v4a1 1 0 001.555.832l3-2a1 1 0 000-1.664l-3-2z" clip-rule="evenodd" />
               </svg>
-              Share Episode
-            </Button>
-          </div>
-        </CardContent>
-      </Card>
+              Listen Again
+            </a>
+          )}
+          <button class="inline-flex items-center justify-center px-4 py-2 rounded-md border border-accent/30 hover:bg-accent/10">
+            <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 mr-2" viewBox="0 0 20 20" fill="currentColor">
+              <path d="M15 8a3 3 0 10-2.977-2.63l-4.94 2.47a3 3 0 100 4.319l4.94 2.47a3 3 0 10.895-1.789l-4.94-2.47a3.027 3.027 0 000-.74l4.94-2.47C13.456 7.68 14.19 8 15 8z" />
+            </svg>
+            Share Episode
+          </button>
+        </div>
+      </div>
     </div>
 
     <!-- Back to podcasts -->
     <nav class="mt-12 mb-8 border-t dark:border-gray-800 pt-8">
       <div class="text-center">
-        <a href="/podcasts">
-          <Button variant="outline" size="lg" className="touch-manipulation">
-            <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 mr-2" viewBox="0 0 20 20" fill="currentColor">
-              <path fill-rule="evenodd" d="M9.707 16.707a1 1 0 01-1.414 0l-6-6a1 1 0 010-1.414l6-6a1 1 0 011.414 1.414L5.414 9H17a1 1 0 110 2H5.414l4.293 4.293a1 1 0 010 1.414z" clip-rule="evenodd" />
-            </svg>
-            Back to Podcasts
-          </Button>
+        <a href="/podcasts" class="inline-flex items-center justify-center px-6 py-3 rounded-md border hover:bg-muted touch-manipulation">
+          <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 mr-2" viewBox="0 0 20 20" fill="currentColor">
+            <path fill-rule="evenodd" d="M9.707 16.707a1 1 0 01-1.414 0l-6-6a1 1 0 010-1.414l6-6a1 1 0 011.414 1.414L5.414 9H17a1 1 0 110 2H5.414l4.293 4.293a1 1 0 010 1.414z" clip-rule="evenodd" />
+          </svg>
+          Back to Podcasts
         </a>
       </div>
     </nav>

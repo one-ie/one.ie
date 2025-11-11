@@ -1,3 +1,27 @@
+### **c90a32f8** — template:18 — `chore: Organize documentation into ontology structure``
+
+**Template:**
+  - .claude/PLAN_SUMMARY.md
+  - .claude/hooks.log
+  - .claude/hooks/.last-news-context
+  - .claude/hooks/__pycache__/todo.cpython-313.pyc
+  - .claude/state/cycle.json
+  - one/events/0-changes.md
+  - one/events/web-AI_INTEGRATION_PHASE2_SUMMARY-20251111-152540.md
+  - one/events/web-CODE-HIGHLIGHTING-SUMMARY-20251111-152540.md
+  - one/events/web-README-AI-INTEGRATION-20251111-152540.md
+  - one/events/web-RECHARTS-INTEGRATION-20251111-152540.md
+  - one/events/web-USING-ANY-COMPONENT-IN-CHAT-20251111-152540.md
+  - one/events/web-test-code-highlighting-20251111-152540.md
+  - web/AI_INTEGRATION_PHASE2_SUMMARY.md
+  - web/CODE-HIGHLIGHTING-SUMMARY.md
+  - web/README-AI-INTEGRATION.md
+  - web/RECHARTS-INTEGRATION.md
+  - web/USING-ANY-COMPONENT-IN-CHAT.md
+  - web/test-code-highlighting.md
+
+
+
 ### **57674823** — custom:1 — `Merge remote changes - resolved conflicts in cycle state and validation hook`` [customization]
 
 **Your Changes:**
