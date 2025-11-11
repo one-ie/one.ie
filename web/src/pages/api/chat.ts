@@ -265,13 +265,9 @@ export const POST: APIRoute = async ({ request }) => {
               }
             }
 
-            // Forward the chunk (but filter out [DONE] messages)
-            const filteredChunk = chunk.split('\n')
-              .filter(line => !line.includes('[DONE]'))
-              .join('\n');
-
-            if (filteredChunk.trim()) {
-              controller.enqueue(encoder.encode(filteredChunk + '\n'));
+            // Forward the chunk as-is, unless it's the [DONE] marker
+            if (!chunk.includes('data: [DONE]')) {
+              controller.enqueue(encoder.encode(chunk));
             }
           }
         } catch (error) {
