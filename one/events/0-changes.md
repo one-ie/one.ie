@@ -1,3 +1,13 @@
+### **2bb44a38** — template:4 — `fix: Add client-side fallback for chart rendering on Cloudflare``
+
+**Template:**
+  - .claude/hooks.log
+  - .claude/hooks/.last-news-context
+  - .claude/state/cycle.json
+  - one/events/0-changes.md
+
+
+
 ### **1ff55acd** — template:8 — `ONE``
 
 **Template:**

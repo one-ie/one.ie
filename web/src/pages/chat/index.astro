@@ -1,14 +1,34 @@
 ---
 /**
- * AI Chat - The App
+ * Premium Chat Page
  *
- * Clean chat interface like ChatGPT/Claude
- * Fixed input at bottom, scrollable messages
+ * Features:
+ * - Agent reasoning visualization
+ * - Tool call display
+ * - Extended message types
+ * - Premium indicators
+ * - Thread persistence (coming soon)
+ * - Generative UI (coming soon)
  */
+
 import Layout from '@/layouts/Layout.astro';
-import { SimpleChatClient } from '@/components/ai/basic/SimpleChatClient';
+import { PremiumChatClient } from '@/components/ai/premium/PremiumChatClient';
+
+// Check if premium features are enabled (via backend config)
+const backendEnabled = import.meta.env.PUBLIC_CONVEX_URL !== undefined;
+
+const title = 'Premium AI Chat';
+const description = 'Advanced AI chat with reasoning visualization, tool calls, and generative UI';
 ---
 
-<Layout title="AI Chat">
-  <SimpleChatClient client:load />
+<Layout title={title} description={description}>
+  <PremiumChatClient client:only="react" />
 </Layout>
+
+<style>
+  /* Ensure full height for chat interface */
+  html, body {
+    height: 100%;
+    margin: 0;
+  }
+</style>
