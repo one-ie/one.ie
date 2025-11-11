@@ -177,28 +177,6 @@ EXPECTED_STRUCTURE = {
 # Protocol identifiers that should be in metadata
 PROTOCOLS = ["a2a", "acp", "ap2", "x402", "ag-ui"]
 
-def is_in_ontology_directory(file_path):
-    """Check if file is in the /one/ ontology directory structure"""
-    parts = Path(file_path).parts
-    
-    if 'one' not in parts:
-        return False
-    
-    try:
-        one_index = parts.index('one')
-        
-        # If file is directly under /one/ (no subdirectory)
-        if one_index + 1 >= len(parts):
-            return True
-        
-        # Check if next directory after 'one' is a valid dimension
-        next_part = parts[one_index + 1]
-        valid_dimension_dirs = ['groups', 'people', 'things', 'connections', 'events', 'knowledge']
-        
-        return next_part in valid_dimension_dirs
-    except ValueError:
-        return False
-
 def get_dimension_from_path(file_path):
     """Extract dimension from file path"""
     parts = Path(file_path).parts
@@ -246,31 +224,13 @@ def to_kebab_case(filename):
 
     return name + ext
 
-def is_in_ontology_directory(file_path):
-    """Check if file is in the /one ontology directory (not just any path containing 'one')"""
-    parts = Path(file_path).parts
-
-    # Look for 'one' directory in the path
-    try:
-        one_index = parts.index('one')
-        # Must have at least one more part after 'one'
-        if one_index + 1 < len(parts):
-            next_part = parts[one_index + 1]
-            # Check if next part is a valid dimension or allowed root file
-            if normalize_dimension(next_part) or next_part in ['LICENSE.md', 'README.md', 'CONTRIBUTING.md', 'CHANGELOG.md', '.gitignore']:
-                return True
-    except ValueError:
-        pass
-
-    return False
-
 def validate_file_path(file_path):
     """Validate that file path follows ontology structure"""
     issues = []
 
     # Check if file is in /one directory
-    if not is_in_ontology_directory(file_path):
-        return issues  # Not in /one ontology, skip validation
+    if '/one/' not in file_path:
+        return issues  # Not in /one, skip validation
 
     # Allow certain root-level files in /one
     parts = Path(file_path).parts
@@ -452,8 +412,8 @@ def main():
         if not file_path:
             sys.exit(0)
 
-        # Skip validation for files not in /one ontology directory
-        if not is_in_ontology_directory(file_path):
+        # Skip validation for non-/one files
+        if '/one/' not in file_path:
             sys.exit(0)
 
         # For PostToolUse, try to auto-fix filename first

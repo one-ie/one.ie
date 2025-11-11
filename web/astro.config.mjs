@@ -22,7 +22,11 @@ export default defineConfig({
     },
   },
   integrations: [
-    react(),
+    react({
+      // Ensure React runs in dev mode during development
+      include: ['**/react/*', '**/recharts/*'],
+      experimentalReactChildren: true,
+    }),
     mdx({
       // Disable imports/exports processing to avoid conflicts
       remarkPlugins: [],
@@ -36,6 +40,10 @@ export default defineConfig({
         content: ["./src/**/*.{astro,html,js,jsx,md,mdx,svelte,ts,tsx,vue}"],
       }),
     ],
+    define: {
+      // Ensure React runs in development mode during dev
+      'process.env.NODE_ENV': JSON.stringify(isDev ? 'development' : 'production'),
+    },
     resolve: {
       alias: {
         "@": new URL("./src", import.meta.url).pathname,

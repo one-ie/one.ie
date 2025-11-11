@@ -124,10 +124,8 @@ const orgWebsite = import.meta.env.ORG_WEBSITE || "https://one.ie";
     <TransitionController client:load />
 
     <!-- Always use Sidebar - it will decide what to render internally -->
-    <Sidebar client:load initialCollapsed={sidebarInitialCollapsed}>
+    <Sidebar client:only="react" initialCollapsed={sidebarInitialCollapsed}>
       <slot />
-      <!-- Powered by ONE Footer -->
-      <PoweredByONE />
     </Sidebar>
 
     <Toaster client:only="react" />

@@ -1,0 +1,32 @@
+---
+/**
+ * Agent Detail Page (PREMIUM TIER)
+ */
+import { backendConfig } from '@/config/backend';
+import Layout from '@/layouts/Layout.astro';
+
+if (!backendConfig.enabled) {
+  return Astro.redirect('/upgrade?feature=agent-management');
+}
+
+const { agentId } = Astro.params;
+---
+
+<Layout title={`Agent - ${agentId}`}>
+  <div class="container mx-auto max-w-4xl py-8">
+    <div class="mb-4">
+      <a href="/agents" class="text-sm text-blue-600 hover:underline">← Back to Agents</a>
+    </div>
+
+    <div class="mb-4 flex items-center justify-between">
+      <h1 class="text-3xl font-bold">Agent Configuration</h1>
+      <span class="rounded-full bg-gradient-to-r from-blue-500 to-purple-600 px-3 py-1 text-xs font-medium text-white">
+        Premium
+      </span>
+    </div>
+
+    <div id="agent-config" class="rounded-lg border p-6">
+      <p class="text-center text-gray-500">Loading agent {agentId}...</p>
+    </div>
+  </div>
+</Layout>

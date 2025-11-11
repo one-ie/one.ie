@@ -147,6 +147,7 @@ export function Sidebar({ children, initialCollapsed = true }: SimpleSidebarLayo
         <div className="relative w-10 h-10">
           {/* X icon - left, z-30 */}
           <a
+            key="x-collapsed"
             href="https://x.com/tonyoconnell"
             target="_blank"
             rel="noopener noreferrer"
@@ -158,6 +159,7 @@ export function Sidebar({ children, initialCollapsed = true }: SimpleSidebarLayo
           </a>
           {/* GitHub icon - center, z-20 */}
           <a
+            key="github-collapsed"
             href="https://github.com/one-ie"
             target="_blank"
             rel="noopener noreferrer"
@@ -169,6 +171,7 @@ export function Sidebar({ children, initialCollapsed = true }: SimpleSidebarLayo
           </a>
           {/* YouTube icon - right, z-10 */}
           <a
+            key="youtube-collapsed"
             href="https://www.youtube.com/@onedotie"
             target="_blank"
             rel="noopener noreferrer"
@@ -182,13 +185,13 @@ export function Sidebar({ children, initialCollapsed = true }: SimpleSidebarLayo
       ) : (
         // Expanded: Horizontal layout
         <div className="ml-2.5 flex items-center gap-2">
-          <a href="https://x.com/tonyoconnell" target="_blank" rel="noopener noreferrer" className="inline-flex h-7 w-7 items-center justify-center transition-opacity hover:opacity-80">
+          <a key="x" href="https://x.com/tonyoconnell" target="_blank" rel="noopener noreferrer" className="inline-flex h-7 w-7 items-center justify-center transition-opacity hover:opacity-80">
             <X className="h-4 w-4" /><span className="sr-only">X profile</span>
           </a>
-          <a href="https://github.com/one-ie" target="_blank" rel="noopener noreferrer" className="inline-flex h-7 w-7 items-center justify-center transition-opacity hover:opacity-80">
+          <a key="github" href="https://github.com/one-ie" target="_blank" rel="noopener noreferrer" className="inline-flex h-7 w-7 items-center justify-center transition-opacity hover:opacity-80">
             <Github className="h-4 w-4" /><span className="sr-only">GitHub</span>
           </a>
-          <a href="https://www.youtube.com/@onedotie" target="_blank" rel="noopener noreferrer" className="inline-flex h-7 w-7 items-center justify-center transition-opacity hover:opacity-80">
+          <a key="youtube" href="https://www.youtube.com/@onedotie" target="_blank" rel="noopener noreferrer" className="inline-flex h-7 w-7 items-center justify-center transition-opacity hover:opacity-80">
             <Youtube className="h-4 w-4" /><span className="sr-only">YouTube</span>
           </a>
         </div>

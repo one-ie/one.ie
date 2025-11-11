@@ -1,0 +1,13 @@
+---
+/**
+ * Free Tier Chat Example
+ *
+ * Demonstrates client-side only chat with user's API key
+ */
+import Layout from '@/layouts/Layout.astro';
+import { SimpleChatClient } from '@/components/ai/basic/SimpleChatClient';
+---
+
+<Layout title="Free Tier AI Chat">
+  <SimpleChatClient client:load />
+</Layout>
