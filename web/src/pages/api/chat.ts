@@ -241,7 +241,11 @@ export const POST: APIRoute = async ({ request }) => {
               }
 
               controller.enqueue(encoder.encode('data: [DONE]\n\n'));
-              break;
+
+              // Close the stream AFTER all messages are enqueued
+              // This ensures messages are flushed before closing on Cloudflare Workers
+              controller.close();
+              return;
             }
 
             const chunk = decoder.decode(value, { stream: true });
@@ -272,7 +276,6 @@ export const POST: APIRoute = async ({ request }) => {
           }
         } catch (error) {
           console.error('Stream error:', error);
-        } finally {
           controller.close();
         }
       },
