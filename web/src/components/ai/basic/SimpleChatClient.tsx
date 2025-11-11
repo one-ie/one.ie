@@ -8,12 +8,14 @@
 import { useState, useEffect } from 'react';
 import { MessageList } from '@/components/ai/basic/MessageList';
 import { PromptInput } from '@/components/ai/basic/PromptInput';
+import { Suggestions } from '@/components/ai/basic/Suggestions';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import { Alert, AlertDescription } from '@/components/ui/alert';
+import { Sparkles, Code, Brain, Lightbulb, MessageSquare } from 'lucide-react';
 
 const POPULAR_MODELS = [
   { id: 'google/gemini-2.5-flash-lite', name: 'Gemini 2.5 Flash Lite (Google) - Fast & Free' },
@@ -27,6 +29,18 @@ const POPULAR_MODELS = [
 
 const STORAGE_KEY = 'openrouter-api-key';
 const MODEL_KEY = 'openrouter-model';
+
+// Demo prompt suggestions showcasing AI capabilities
+const PROMPT_SUGGESTIONS = [
+  "Write a creative short story about a time traveler",
+  "Create a React component for a todo list with TypeScript",
+  "Explain how neural networks work in simple terms",
+  "Generate 5 unique business ideas for sustainable products",
+  "Help me debug this code: function add(a,b) { return a+b }",
+  "Analyze the pros and cons of remote work vs office work",
+  "Write a professional email requesting a project deadline extension",
+  "Create a Python script to analyze CSV data",
+];
 
 interface Message {
   id: string;
@@ -77,6 +91,11 @@ export function SimpleChatClient() {
     setApiKey('');
     setChatStarted(false);
     setMessages([]);
+  };
+
+  // Handle suggestion click
+  const handleSuggestionClick = (suggestion: string) => {
+    handleSubmit(suggestion);
   };
 
   // Submit message to API
@@ -238,74 +257,123 @@ export function SimpleChatClient() {
 
   // Show chat interface
   return (
-    <div className="container max-w-4xl mx-auto p-6 h-screen flex flex-col">
-      {/* Header */}
-      <div className="mb-4 flex items-center justify-between">
-        <div>
-          <h1 className="text-2xl font-bold">AI Chat</h1>
-          <p className="text-sm text-muted-foreground">
-            Model: {POPULAR_MODELS.find(m => m.id === selectedModel)?.name}
-          </p>
-        </div>
-        <div className="flex gap-2">
-          <Button variant="outline" size="sm" onClick={() => setChatStarted(false)}>
-            Change Model
-          </Button>
-          <Button variant="destructive" size="sm" onClick={handleClearKey}>
-            Clear Key
-          </Button>
+    <div className="flex flex-col h-screen">
+      {/* Header - Fixed at top */}
+      <div className="flex-shrink-0 border-b px-6 py-4 bg-background">
+        <div className="container max-w-4xl mx-auto flex items-center justify-between">
+          <div>
+            <h1 className="text-lg font-semibold">AI Chat</h1>
+            <p className="text-xs text-muted-foreground">
+              {POPULAR_MODELS.find(m => m.id === selectedModel)?.name}
+            </p>
+          </div>
+          <div className="flex gap-2">
+            <Button variant="ghost" size="sm" onClick={() => setChatStarted(false)}>
+              Change Model
+            </Button>
+            <Button variant="ghost" size="sm" onClick={handleClearKey}>
+              Clear Key
+            </Button>
+          </div>
         </div>
       </div>
 
       {/* Error Display */}
       {error && (
-        <Alert variant="destructive" className="mb-4">
-          <AlertDescription>
-            <strong>Error:</strong> {error}
-          </AlertDescription>
-        </Alert>
+        <div className="flex-shrink-0 px-6 py-2 bg-destructive/10">
+          <div className="container max-w-4xl mx-auto">
+            <Alert variant="destructive">
+              <AlertDescription>
+                <strong>Error:</strong> {error}
+              </AlertDescription>
+            </Alert>
+          </div>
+        </div>
       )}
 
-      {/* Chat Interface */}
-      <Card className="flex-1 flex flex-col overflow-hidden">
-        {/* Messages */}
-        <CardContent className="flex-1 overflow-y-auto p-4">
-          <MessageList messages={messages} isLoading={isLoading} />
-        </CardContent>
+      {/* Messages Area - Scrollable */}
+      <div className="flex-1 overflow-y-auto">
+        <div className="container max-w-4xl mx-auto px-6 py-4">
+          {messages.length === 0 && !isLoading ? (
+            <div className="flex flex-col items-center justify-center min-h-[60vh] text-center space-y-6 py-12">
+              <div className="space-y-3">
+                <div className="inline-flex items-center justify-center w-16 h-16 rounded-full bg-gradient-to-br from-blue-500 to-purple-600">
+                  <Sparkles className="h-8 w-8 text-white" />
+                </div>
+                <h3 className="text-2xl font-bold">Start a Conversation</h3>
+                <p className="text-muted-foreground max-w-md">
+                  Try asking me anything! I can help with coding, writing, analysis, and creative tasks.
+                </p>
+              </div>
 
-        {/* Input */}
-        <div className="border-t p-4">
+              {/* Feature highlights */}
+              <div className="grid grid-cols-2 gap-3 max-w-lg w-full">
+                <div className="flex items-center gap-2 text-sm text-muted-foreground bg-muted/50 p-3 rounded-lg">
+                  <Code className="h-4 w-4 text-blue-500" />
+                  <span>Code Generation</span>
+                </div>
+                <div className="flex items-center gap-2 text-sm text-muted-foreground bg-muted/50 p-3 rounded-lg">
+                  <Brain className="h-4 w-4 text-purple-500" />
+                  <span>Problem Solving</span>
+                </div>
+                <div className="flex items-center gap-2 text-sm text-muted-foreground bg-muted/50 p-3 rounded-lg">
+                  <Lightbulb className="h-4 w-4 text-yellow-500" />
+                  <span>Creative Writing</span>
+                </div>
+                <div className="flex items-center gap-2 text-sm text-muted-foreground bg-muted/50 p-3 rounded-lg">
+                  <MessageSquare className="h-4 w-4 text-green-500" />
+                  <span>Analysis & Insights</span>
+                </div>
+              </div>
+
+              {/* Prompt Suggestions - Show when no messages */}
+              <div className="w-full max-w-2xl pt-4">
+                <Suggestions
+                  suggestions={PROMPT_SUGGESTIONS}
+                  onSuggestionClick={handleSuggestionClick}
+                />
+              </div>
+            </div>
+          ) : (
+            <MessageList messages={messages} isLoading={isLoading} />
+          )}
+
+          {/* Upgrade prompt - inline with messages */}
+          {messages.length > 10 && (
+            <div className="mt-6 bg-gradient-to-r from-blue-500 to-purple-600 text-white p-4 rounded-lg shadow-lg">
+              <div className="flex items-start gap-2">
+                <svg className="w-5 h-5 mt-0.5 flex-shrink-0" fill="currentColor" viewBox="0 0 20 20">
+                  <path d="M13 10V3L4 14h7v7l9-11h-7z"/>
+                </svg>
+                <div className="flex-1">
+                  <p className="font-semibold mb-1">💡 Upgrade to Premium</p>
+                  <p className="text-sm opacity-90">
+                    Your messages will be lost on page refresh.
+                    <a href="/upgrade" className="underline ml-1 font-medium">Enable persistence for $29/mo</a>
+                  </p>
+                </div>
+              </div>
+            </div>
+          )}
+        </div>
+      </div>
+
+      {/* Input Area - Fixed at bottom */}
+      <div className="flex-shrink-0 border-t bg-background">
+        <div className="container max-w-4xl mx-auto px-6 py-4">
           <PromptInput
             value={input}
             onChange={setInput}
             onSubmit={handleSubmit}
             isLoading={isLoading}
-            placeholder="Type your message..."
+            placeholder={messages.length === 0 ? "Type your message or choose a suggestion above..." : "Type your message..."}
           />
+          {messages.length === 0 && (
+            <p className="mt-2 text-xs text-muted-foreground text-center">
+              Using OpenRouter with your API key
+            </p>
+          )}
         </div>
-      </Card>
-
-      {/* Upgrade prompt */}
-      {messages.length > 10 && (
-        <div className="mt-4 bg-gradient-to-r from-blue-500 to-purple-600 text-white p-4 rounded-lg shadow-lg">
-          <div className="flex items-start gap-2">
-            <svg className="w-5 h-5 mt-0.5 flex-shrink-0" fill="currentColor" viewBox="0 0 20 20">
-              <path d="M13 10V3L4 14h7v7l9-11h-7z"/>
-            </svg>
-            <div className="flex-1">
-              <p className="font-semibold mb-1">💡 Upgrade to Premium</p>
-              <p className="text-sm opacity-90">
-                Your messages will be lost on page refresh.
-                <a href="/upgrade" className="underline ml-1 font-medium">Enable persistence for $29/mo</a>
-              </p>
-            </div>
-          </div>
-        </div>
-      )}
-
-      {/* Info */}
-      <div className="mt-4 text-xs text-muted-foreground text-center">
-        Messages are ephemeral (lost on refresh). Using OpenRouter with your API key.
       </div>
     </div>
   );

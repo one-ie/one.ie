@@ -244,7 +244,6 @@ export class ThingService {
         thing.name.toLowerCase().includes(lowerQuery)
       );
     });
-}
 
   /**
    * Create an AI agent thing

@@ -5,11 +5,9 @@
  * Demonstrates client-side only chat with user's API key
  */
 import Layout from '@/layouts/Layout.astro';
-import { FreeChatExample } from '@/components/examples/FreeChatExample';
+import { SimpleChatClient } from '@/components/ai/basic/SimpleChatClient';
 ---
 
 <Layout title="Free Tier AI Chat">
-  <div class="container mx-auto px-4 py-8">
-    <FreeChatExample client:load />
-  </div>
+  <SimpleChatClient client:load />
 </Layout>

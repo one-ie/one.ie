@@ -1,0 +1,246 @@
+---
+/**
+ * AI Chat Features Page
+ * Comprehensive showcase of AI chat capabilities and components
+ */
+import Layout from '@/layouts/Layout.astro';
+import { Button } from '@/components/ui/button';
+import { Badge } from '@/components/ui/badge';
+import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
+import { GenAIComponentShowcase } from '@/components/examples/GenAIComponentShowcase';
+import { Sparkles, Zap, MessageSquare, ArrowRight, Code } from 'lucide-react';
+---
+
+<Layout title="AI Chat - Advanced Capabilities - ONE Platform">
+  <!-- Hero Section -->
+  <section class="relative min-h-[70vh] flex items-center justify-center px-4 py-20 sm:px-6 lg:px-8 bg-gradient-to-b from-background to-muted/30">
+    <div class="w-full max-w-6xl mx-auto text-center space-y-8">
+      <Badge variant="outline" className="inline-flex items-center gap-2 text-base px-6 py-2 bg-background">
+        <MessageSquare className="h-5 w-5" />
+        AI Chat Platform
+      </Badge>
+
+      <h1 class="text-5xl sm:text-6xl md:text-7xl lg:text-8xl font-bold !leading-[1.05] tracking-tight">
+        Chat with the world's
+        <span class="bg-gradient-to-r from-blue-600 to-purple-600 bg-clip-text text-transparent"> most powerful </span>
+        AI models
+      </h1>
+
+      <p class="text-lg sm:text-xl md:text-2xl text-muted-foreground/85 max-w-4xl mx-auto leading-relaxed">
+        Access GPT-4, Claude, Gemini, and more through a unified interface.
+        <span class="font-semibold text-foreground">Start free</span> with your own API key,
+        or <span class="font-semibold text-foreground">upgrade for premium features</span> like reasoning visualization, tool integration, and persistent history.
+      </p>
+
+      <div class="flex flex-col sm:flex-row gap-4 justify-center items-center pt-4">
+        <a href="/chat">
+          <Button size="lg" className="h-16 px-10 text-lg font-semibold shadow-lg hover:shadow-xl transition-shadow">
+            <MessageSquare className="mr-2 h-6 w-6" />
+            Start Chatting Free
+            <ArrowRight className="ml-2 h-6 w-6" />
+          </Button>
+        </a>
+        <a href="#showcase">
+          <Button variant="outline" size="lg" className="h-16 px-10 text-lg font-semibold">
+            <Code className="mr-2 h-6 w-6" />
+            Explore Components
+          </Button>
+        </a>
+      </div>
+
+      <!-- Quick Stats -->
+      <div class="pt-12 grid grid-cols-2 md:grid-cols-4 gap-6 max-w-4xl mx-auto">
+        <div class="text-center">
+          <div class="text-3xl font-bold text-primary">15+</div>
+          <div class="text-sm text-muted-foreground">AI Models</div>
+        </div>
+        <div class="text-center">
+          <div class="text-3xl font-bold text-primary">12</div>
+          <div class="text-sm text-muted-foreground">Components</div>
+        </div>
+        <div class="text-center">
+          <div class="text-3xl font-bold text-primary">100%</div>
+          <div class="text-sm text-muted-foreground">Open Source</div>
+        </div>
+        <div class="text-center">
+          <div class="text-3xl font-bold text-primary">$0</div>
+          <div class="text-sm text-muted-foreground">To Start</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Free Tier Value Props -->
+  <section class="px-4 py-20 sm:px-6 sm:py-24 md:px-8 md:py-32">
+    <div class="mx-auto max-w-6xl space-y-12">
+      <div class="space-y-6 text-center">
+        <Badge variant="outline" className="inline-flex items-center gap-2">
+          <Sparkles className="h-4 w-4" />
+          Free Forever
+        </Badge>
+        <h2 class="text-4xl sm:text-5xl md:text-6xl font-bold tracking-tight">
+          Start chatting today,
+          <br class="hidden sm:block" />
+          <span class="text-muted-foreground">no credit card required</span>
+        </h2>
+        <p class="text-lg sm:text-xl text-muted-foreground/90 leading-relaxed max-w-3xl mx-auto">
+          Bring your own OpenRouter API key and get instant access to all AI models.
+          Perfect for testing, learning, and personal projects.
+        </p>
+      </div>
+
+      <div class="grid gap-6 md:grid-cols-3">
+        <Card className="border-2 border-border/50 bg-card/60 backdrop-blur transition-all hover:border-primary/30 hover:shadow-lg hover:scale-[1.02]">
+          <CardHeader className="space-y-4 pb-6">
+            <div class="flex h-14 w-14 items-center justify-center rounded-xl bg-gradient-to-br from-blue-500/20 to-blue-600/20">
+              <MessageSquare className="h-7 w-7 text-blue-600" />
+            </div>
+            <CardTitle className="text-2xl">All AI Models</CardTitle>
+            <CardDescription className="text-base leading-relaxed">
+              Access <strong>GPT-4, Claude 3, Gemini, Llama 3</strong>, and dozens more
+              through OpenRouter's unified API. Switch models with one click.
+            </CardDescription>
+          </CardHeader>
+        </Card>
+
+        <Card className="border-2 border-border/50 bg-card/60 backdrop-blur transition-all hover:border-primary/30 hover:shadow-lg hover:scale-[1.02]">
+          <CardHeader className="space-y-4 pb-6">
+            <div class="flex h-14 w-14 items-center justify-center rounded-xl bg-gradient-to-br from-purple-500/20 to-purple-600/20">
+              <Sparkles className="h-7 w-7 text-purple-600" />
+            </div>
+            <CardTitle className="text-2xl">Smart Suggestions</CardTitle>
+            <CardDescription className="text-base leading-relaxed">
+              Jump-start conversations with <strong>curated prompt suggestions</strong> for
+              coding, writing, analysis, and creative tasks.
+            </CardDescription>
+          </CardHeader>
+        </Card>
+
+        <Card className="border-2 border-border/50 bg-card/60 backdrop-blur transition-all hover:border-primary/30 hover:shadow-lg hover:scale-[1.02]">
+          <CardHeader className="space-y-4 pb-6">
+            <div class="flex h-14 w-14 items-center justify-center rounded-xl bg-gradient-to-br from-green-500/20 to-green-600/20">
+              <Zap className="h-7 w-7 text-green-600" />
+            </div>
+            <CardTitle className="text-2xl">Real-Time Streaming</CardTitle>
+            <CardDescription className="text-base leading-relaxed">
+              Watch responses <strong>stream in real-time</strong> as the AI generates them,
+              just like ChatGPT. No waiting for complete responses.
+            </CardDescription>
+          </CardHeader>
+        </Card>
+      </div>
+
+      <div class="text-center pt-6">
+        <a href="/chat">
+          <Button size="lg" variant="outline" className="h-14 px-10 text-base font-medium shadow-md hover:shadow-lg">
+            Try Free Chat Now
+            <ArrowRight className="ml-2 h-5 w-5" />
+          </Button>
+        </a>
+        <p class="mt-4 text-sm text-muted-foreground">
+          Get your free OpenRouter API key at <a href="https://openrouter.ai/keys" target="_blank" rel="noopener noreferrer" class="text-primary hover:underline">openrouter.ai/keys</a>
+        </p>
+      </div>
+    </div>
+  </section>
+
+  <!-- GenAI Component Showcase - THE STAR -->
+  <section id="showcase" class="px-4 py-20 sm:px-6 sm:py-24 md:px-8 md:py-32 bg-muted/40">
+    <div class="mx-auto max-w-6xl">
+      <GenAIComponentShowcase client:load />
+    </div>
+  </section>
+
+  <!-- Upgrade CTA -->
+  <section class="px-4 py-20 sm:px-6 sm:py-24 md:px-8 md:py-32">
+    <div class="mx-auto max-w-5xl">
+      <Card className="relative overflow-hidden border-2">
+        <!-- Gradient Background -->
+        <div class="absolute inset-0 bg-gradient-to-br from-blue-500/10 via-purple-500/10 to-pink-500/10" />
+
+        <CardContent className="relative p-8 md:p-12">
+          <div class="space-y-8">
+            <!-- Header -->
+            <div class="text-center space-y-4">
+              <Badge className="inline-flex items-center gap-2 px-4 py-2 bg-primary text-primary-foreground">
+                <Sparkles className="h-4 w-4" />
+                Premium Features
+              </Badge>
+              <h2 class="text-4xl sm:text-5xl font-bold">
+                Ready for more?
+              </h2>
+              <p class="text-xl text-muted-foreground max-w-2xl mx-auto">
+                Upgrade to unlock agent reasoning, tool integration, persistent history, and priority processing
+              </p>
+            </div>
+
+            <!-- Pricing -->
+            <div class="text-center py-6">
+              <div class="inline-flex items-baseline gap-2">
+                <span class="text-5xl sm:text-6xl font-bold">$29</span>
+                <span class="text-2xl text-muted-foreground">/month</span>
+              </div>
+              <p class="mt-2 text-sm text-muted-foreground">
+                Cancel anytime. No long-term contracts.
+              </p>
+            </div>
+
+            <!-- Feature Badges -->
+            <div class="flex flex-wrap justify-center gap-3">
+              <Badge variant="secondary" className="px-4 py-2 text-sm">
+                🧠 Agent Reasoning
+              </Badge>
+              <Badge variant="secondary" className="px-4 py-2 text-sm">
+                🔧 Tool Integration
+              </Badge>
+              <Badge variant="secondary" className="px-4 py-2 text-sm">
+                📚 Persistent History
+              </Badge>
+              <Badge variant="secondary" className="px-4 py-2 text-sm">
+                ⚡ Priority Processing
+              </Badge>
+              <Badge variant="secondary" className="px-4 py-2 text-sm">
+                🎯 Custom Workflows
+              </Badge>
+              <Badge variant="secondary" className="px-4 py-2 text-sm">
+                👥 Team Collaboration
+              </Badge>
+            </div>
+
+            <!-- CTA Buttons -->
+            <div class="flex flex-col sm:flex-row gap-4 justify-center pt-4">
+              <a href="/upgrade" class="inline-flex">
+                <Button size="lg" className="w-full sm:w-auto h-14 px-10 text-lg font-semibold shadow-lg hover:shadow-xl transition-shadow">
+                  Upgrade to Premium
+                  <ArrowRight className="ml-2 h-5 w-5" />
+                </Button>
+              </a>
+              <a href="/chat" class="inline-flex">
+                <Button variant="outline" size="lg" className="w-full sm:w-auto h-14 px-10 text-lg font-semibold">
+                  Start with Free Tier
+                </Button>
+              </a>
+            </div>
+
+            <!-- Trust Signals -->
+            <div class="pt-6 text-center space-y-2">
+              <p class="text-sm text-muted-foreground">
+                ✓ 30-day money-back guarantee &nbsp;•&nbsp; ✓ Secure payments via Stripe
+              </p>
+              <p class="text-xs text-muted-foreground">
+                Join hundreds of developers and teams using ONE Platform for AI development
+              </p>
+            </div>
+          </div>
+        </CardContent>
+      </Card>
+    </div>
+  </section>
+
+  <!-- Powered by ONE -->
+  <section class="px-4 py-12 text-center">
+    <p class="text-sm text-muted-foreground">
+      Powered by <a href="/" class="font-semibold text-primary hover:underline">ONE Platform</a>
+    </p>
+  </section>
+</Layout>

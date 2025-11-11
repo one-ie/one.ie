@@ -8,12 +8,16 @@ import { useState, useEffect } from 'react';
 import { useChat } from '@ai-sdk/react';
 import { MessageList } from '@/components/ai/basic/MessageList';
 import { PromptInput } from '@/components/ai/basic/PromptInput';
+import { Suggestions } from '@/components/ai/basic/Suggestions';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import { Alert, AlertDescription } from '@/components/ui/alert';
+import { Badge } from '@/components/ui/badge';
+import { Sparkles, Code, Brain, Lightbulb, Zap, MessageSquare } from 'lucide-react';
+import { PremiumFeaturesShowcase } from './PremiumFeaturesShowcase';
 
 const POPULAR_MODELS = [
   { id: 'google/gemini-2.5-flash-lite', name: 'Gemini 2.5 Flash Lite (Google) - Fast & Free' },
@@ -27,6 +31,18 @@ const POPULAR_MODELS = [
 
 const STORAGE_KEY = 'openrouter-api-key';
 const MODEL_KEY = 'openrouter-model';
+
+// Demo prompt suggestions showcasing AI capabilities
+const PROMPT_SUGGESTIONS = [
+  "Write a creative short story about a time traveler",
+  "Create a React component for a todo list with TypeScript",
+  "Explain how neural networks work in simple terms",
+  "Generate 5 unique business ideas for sustainable products",
+  "Help me debug this code: function add(a,b) { return a+b }",
+  "Analyze the pros and cons of remote work vs office work",
+  "Write a professional email requesting a project deadline extension",
+  "Create a Python script to analyze CSV data",
+];
 
 export function FreeChatExample() {
   const [apiKey, setApiKey] = useState('');
@@ -95,6 +111,15 @@ export function FreeChatExample() {
     } as React.FormEvent<HTMLFormElement>;
 
     handleSubmit(event);
+  };
+
+  // Handle suggestion click
+  const handleSuggestionClick = (suggestion: string) => {
+    handleInputChangeWrapper(suggestion);
+    // Auto-submit after a brief delay
+    setTimeout(() => {
+      handleFormSubmit(suggestion);
+    }, 100);
   };
 
   if (!chatStarted) {
@@ -196,9 +221,53 @@ export function FreeChatExample() {
       {/* Messages */}
       <Card className="mb-4">
         <CardContent className="p-4 min-h-[400px] max-h-[600px] overflow-y-auto">
-          <MessageList messages={formattedMessages} isLoading={isLoading} />
+          {messages.length === 0 && !isLoading ? (
+            <div className="flex flex-col items-center justify-center h-full text-center space-y-6 p-8">
+              <div className="space-y-3">
+                <div className="inline-flex items-center justify-center w-16 h-16 rounded-full bg-gradient-to-br from-blue-500 to-purple-600">
+                  <Sparkles className="h-8 w-8 text-white" />
+                </div>
+                <h3 className="text-2xl font-bold">Start a Conversation</h3>
+                <p className="text-muted-foreground max-w-md">
+                  Try asking me anything! I can help with coding, writing, analysis, and creative tasks.
+                </p>
+              </div>
+
+              {/* Feature highlights */}
+              <div className="grid grid-cols-2 gap-3 max-w-lg w-full">
+                <div className="flex items-center gap-2 text-sm text-muted-foreground bg-muted/50 p-3 rounded-lg">
+                  <Code className="h-4 w-4 text-blue-500" />
+                  <span>Code Generation</span>
+                </div>
+                <div className="flex items-center gap-2 text-sm text-muted-foreground bg-muted/50 p-3 rounded-lg">
+                  <Brain className="h-4 w-4 text-purple-500" />
+                  <span>Problem Solving</span>
+                </div>
+                <div className="flex items-center gap-2 text-sm text-muted-foreground bg-muted/50 p-3 rounded-lg">
+                  <Lightbulb className="h-4 w-4 text-yellow-500" />
+                  <span>Creative Writing</span>
+                </div>
+                <div className="flex items-center gap-2 text-sm text-muted-foreground bg-muted/50 p-3 rounded-lg">
+                  <MessageSquare className="h-4 w-4 text-green-500" />
+                  <span>Analysis & Insights</span>
+                </div>
+              </div>
+            </div>
+          ) : (
+            <MessageList messages={formattedMessages} isLoading={isLoading} />
+          )}
         </CardContent>
       </Card>
+
+      {/* Prompt Suggestions - Show when no messages */}
+      {messages.length === 0 && !isLoading && (
+        <div className="mb-4">
+          <Suggestions
+            suggestions={PROMPT_SUGGESTIONS}
+            onSuggestionClick={handleSuggestionClick}
+          />
+        </div>
+      )}
 
       {/* Input */}
       <PromptInput
@@ -206,7 +275,7 @@ export function FreeChatExample() {
         onChange={handleInputChangeWrapper}
         onSubmit={handleFormSubmit}
         isLoading={isLoading}
-        placeholder="Type your message..."
+        placeholder="Type your message or choose a suggestion above..."
       />
 
       {/* Upgrade prompt */}
@@ -230,6 +299,11 @@ export function FreeChatExample() {
       {/* Info */}
       <div className="mt-4 text-xs text-muted-foreground text-center">
         Messages are ephemeral (lost on refresh). Using OpenRouter with your API key.
+      </div>
+
+      {/* Premium Features Showcase */}
+      <div className="mt-12">
+        <PremiumFeaturesShowcase />
       </div>
     </div>
   );
