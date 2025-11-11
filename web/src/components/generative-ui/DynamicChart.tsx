@@ -26,8 +26,6 @@ import {
 } from 'recharts';
 
 export function DynamicChart({ data, layout }: any) {
-  console.log('DynamicChart rendering with data:', data);
-
   const chartData = data.labels?.map((label: string, i: number) => ({
     name: label,
     ...(data.datasets?.reduce((acc: any, dataset: any) => ({
@@ -35,8 +33,6 @@ export function DynamicChart({ data, layout }: any) {
       [dataset.label]: dataset.data[i],
     }), {}) || {}),
   })) || [];
-
-  console.log('chartData transformed:', chartData);
 
   return (
     <Card>

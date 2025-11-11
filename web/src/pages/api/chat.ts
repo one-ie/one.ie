@@ -33,7 +33,34 @@ Example:
 }
 \`\`\`
 
-When a user asks to "show data", "create a chart", "display a table", etc., respond with:
+**For BUTTONS** - Wrap JSON in \`\`\`ui-button:\n{your json}\n\`\`\`
+
+Example:
+\`\`\`ui-button
+{
+  "label": "Click Me!",
+  "variant": "default",
+  "size": "default",
+  "action": "alert('Hello from the button!')"
+}
+\`\`\`
+
+Variants: "default", "destructive", "outline", "secondary", "ghost", "link"
+Sizes: "default", "sm", "lg", "icon"
+
+**For CARDS** - Wrap JSON in \`\`\`ui-card:\n{your json}\n\`\`\`
+
+Example:
+\`\`\`ui-card
+{
+  "title": "Feature Card",
+  "description": "This is a cool feature",
+  "icon": "rocket",
+  "content": "Here's some detailed information about the feature."
+}
+\`\`\`
+
+When a user asks to "show a button", "create a card", "display a table", etc., respond with:
 1. A friendly text explanation
 2. The appropriate UI code block with realistic data
 
@@ -132,6 +159,8 @@ export const POST: APIRoute = async ({ request }) => {
               // Check for UI components in the complete response
               const chartMatch = fullContent.match(/```ui-chart\s*\n([\s\S]*?)\n```/);
               const tableMatch = fullContent.match(/```ui-table\s*\n([\s\S]*?)\n```/);
+              const buttonMatch = fullContent.match(/```ui-button\s*\n([\s\S]*?)\n```/);
+              const cardMatch = fullContent.match(/```ui-card\s*\n([\s\S]*?)\n```/);
 
               if (chartMatch) {
                 try {
@@ -162,6 +191,38 @@ export const POST: APIRoute = async ({ request }) => {
                   controller.enqueue(encoder.encode(`data: ${JSON.stringify(uiMessage)}\n\n`));
                 } catch (e) {
                   console.error('Failed to parse table JSON:', e);
+                }
+              }
+
+              if (buttonMatch) {
+                try {
+                  const buttonData = JSON.parse(buttonMatch[1]);
+                  const uiMessage = {
+                    type: 'ui',
+                    payload: {
+                      component: 'button',
+                      data: buttonData
+                    }
+                  };
+                  controller.enqueue(encoder.encode(`data: ${JSON.stringify(uiMessage)}\n\n`));
+                } catch (e) {
+                  console.error('Failed to parse button JSON:', e);
+                }
+              }
+
+              if (cardMatch) {
+                try {
+                  const cardData = JSON.parse(cardMatch[1]);
+                  const uiMessage = {
+                    type: 'ui',
+                    payload: {
+                      component: 'card',
+                      data: cardData
+                    }
+                  };
+                  controller.enqueue(encoder.encode(`data: ${JSON.stringify(uiMessage)}\n\n`));
+                } catch (e) {
+                  console.error('Failed to parse card JSON:', e);
                 }
               }
 

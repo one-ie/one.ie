@@ -295,7 +295,6 @@ export class EventService {
         updatedAt: thing.updatedAt,
       };
     });
-}
 
   /**
    * Log AI generation event
