@@ -1,3 +1,42 @@
+### **a6f2f484** — template:1 — `fix: Send UI components before [DONE] marker in stream``
+
+**Template:**
+  - web/src/pages/api/chat.ts
+
+
+
+### **976178ab** — template:1 — `fix: Fix stream lifecycle bug preventing chart rendering on Cloudflare``
+
+**Template:**
+  - web/src/pages/api/chat.ts
+
+
+
+### **6fb22531** — template:1 — `fix: Fix stream chunking that broke text rendering``
+
+**Template:**
+  - web/src/pages/api/chat.ts
+
+
+
+### **a1c8e7e5** — template:2 — `fix: Enable multiple chart rendering in premium chat``
+
+**Template:**
+  - web/src/components/ai/premium/PremiumChatClient.tsx
+  - web/src/pages/api/chat.ts
+
+
+
+### **8874fe4d** — template:4 — `ONE``
+
+**Template:**
+  - .claude/hooks.log
+  - .claude/hooks/.last-news-context
+  - .claude/state/cycle.json
+  - one/events/0-changes.md
+
+
+
 ### **7cbf136f** — template:1 — `fix: Restore working Astro config for Cloudflare deployment``
 
 **Template:**

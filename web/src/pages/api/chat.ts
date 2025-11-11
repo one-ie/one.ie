@@ -2,7 +2,7 @@ import type { APIRoute } from 'astro';
 
 const SYSTEM_PROMPT = `You are a helpful AI assistant with the ability to generate interactive visualizations.
 
-When users ask to see data, charts, tables, or visualizations, you can generate them using this format:
+IMPORTANT: When users ask about charts, data, or visualizations, ALWAYS generate sample data and charts immediately. DO NOT ask them to provide data - create realistic example data based on their request.
 
 **For CHARTS** - Wrap JSON in \`\`\`ui-chart:\n{your json}\n\`\`\`
 
@@ -18,6 +18,8 @@ Example:
   ]
 }
 \`\`\`
+
+Chart types: "line", "bar", "pie", "doughnut", "area"
 
 **For TABLES** - Wrap JSON in \`\`\`ui-table:\n{your json}\n\`\`\`
 
@@ -60,11 +62,40 @@ Example:
 }
 \`\`\`
 
-When a user asks to "show a button", "create a card", "display a table", etc., respond with:
-1. A friendly text explanation
-2. The appropriate UI code block with realistic data
+RULES:
+1. If user mentions "sales", "revenue", "growth", "analytics" - generate charts with realistic business data
+2. If user doesn't provide specific data - CREATE sample data that matches their request
+3. ALWAYS include multiple charts when appropriate (e.g., "analyze sales" = revenue chart + profit chart + comparison chart)
+4. Use diverse chart types (line for trends, bar for comparisons, pie for distribution)
+5. Generate data that tells a story (growth trends, seasonal patterns, comparisons)
 
-Be creative and generate relevant data based on the user's request!`;
+Example response for "Analyze sales data":
+Here's an analysis of sales performance with interactive charts:
+
+\`\`\`ui-chart
+{
+  "title": "Monthly Revenue Trend",
+  "chartType": "line",
+  "labels": ["Jan", "Feb", "Mar", "Apr", "May", "Jun"],
+  "datasets": [
+    { "label": "2024", "data": [45000, 52000, 48000, 61000, 58000, 67000], "color": "#3b82f6" },
+    { "label": "2023", "data": [38000, 42000, 41000, 47000, 51000, 54000], "color": "#10b981" }
+  ]
+}
+\`\`\`
+
+\`\`\`ui-chart
+{
+  "title": "Sales by Category",
+  "chartType": "bar",
+  "labels": ["Electronics", "Clothing", "Home", "Books", "Sports"],
+  "datasets": [
+    { "label": "Q2 Sales", "data": [28000, 19000, 15000, 12000, 8000], "color": "#f59e0b" }
+  ]
+}
+\`\`\`
+
+Key insights: Revenue up 24% year-over-year, Electronics leading category, strong growth in May-June.`;
 
 /**
  * Free Tier API Endpoint (OpenRouter)
@@ -167,12 +198,20 @@ export const POST: APIRoute = async ({ request }) => {
 
             const chunk = decoder.decode(value, { stream: true });
 
+            // Log every chunk to see what we're getting
+            if (chunk.includes('[DONE]')) {
+              console.log('[CHAT API] FOUND DONE CHUNK:', JSON.stringify(chunk));
+            }
+
             // Extract content from SSE format
             const lines = chunk.split('\n');
             for (const line of lines) {
               if (line.startsWith('data: ')) {
                 const data = line.slice(6);
-                if (data === '[DONE]') continue; // Don't forward [DONE] yet
+                if (data === '[DONE]') {
+                  console.log('[CHAT API] Found [DONE] in line processing');
+                  continue; // Don't forward [DONE] yet
+                }
 
                 try {
                   const parsed = JSON.parse(data);
@@ -187,7 +226,10 @@ export const POST: APIRoute = async ({ request }) => {
             }
 
             // Check if this chunk contains [DONE]
-            if (chunk.includes('data: [DONE]')) {
+            const hasDone = chunk.includes('[DONE]');
+            console.log('[CHAT API] Chunk check - hasDone:', hasDone, 'fullContent length:', fullContent.length);
+
+            if (hasDone) {
               console.log('[CHAT API] Detected [DONE] in chunk, processing UI components now');
 
               // Send UI messages BEFORE [DONE]

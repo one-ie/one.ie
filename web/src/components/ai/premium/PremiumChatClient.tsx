@@ -374,6 +374,7 @@ export function PremiumChatClient() {
       setMessages(prev => [...prev, assistantMessage]);
 
       // Read streaming response
+      let receivedUIComponent = false;
       while (true) {
         const { done, value } = await reader.read();
         if (done) {
@@ -381,9 +382,47 @@ export function PremiumChatClient() {
 
           // Client-side fallback: detect charts in content if server didn't send them
           const chartMatches = assistantContent.match(/```ui-chart\s*\n([\s\S]*?)\n```/g);
-          if (chartMatches) {
+          if (!receivedUIComponent && chartMatches) {
             console.log(`Found ${chartMatches.length} charts in content, but not received as UI components`);
             console.log('This means server-side detection failed');
+
+            const newChartMessages: ExtendedMessage[] = [];
+
+            for (const match of chartMatches) {
+              const chartJson = match
+                .replace(/^```ui-chart\s*\n?/, '')
+                .replace(/\n```$/, '')
+                .trim();
+
+              try {
+                const chartData = JSON.parse(chartJson);
+                newChartMessages.push({
+                  id: `chart-${crypto.randomUUID()}`,
+                  role: 'assistant',
+                  content: '',
+                  type: 'ui',
+                  payload: { component: 'chart', data: chartData },
+                  timestamp: Date.now(),
+                });
+              } catch (parseError) {
+                console.error('Failed to parse chart JSON from fallback detection', parseError);
+              }
+            }
+
+            if (newChartMessages.length) {
+              const chartBlockRegex = /```ui-chart\s*\n([\s\S]*?)\n```/g;
+              assistantContent = assistantContent.replace(chartBlockRegex, '').trim();
+
+              setMessages(prev => {
+                const cleaned = prev.map(msg =>
+                  msg.id === assistantMessage.id
+                    ? { ...msg, content: assistantContent }
+                    : msg
+                );
+
+                return [...cleaned, ...newChartMessages];
+              });
+            }
           }
 
           break;
@@ -407,6 +446,7 @@ export function PremiumChatClient() {
 
               // Handle extended message types
               if (parsed.type) {
+                receivedUIComponent = true;
                 // Agent message with special type (reasoning, tool_call, etc.)
                 // Use crypto.randomUUID() for truly unique IDs
                 const agentMessage: ExtendedMessage = {
