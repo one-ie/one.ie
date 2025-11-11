@@ -376,7 +376,18 @@ export function PremiumChatClient() {
       // Read streaming response
       while (true) {
         const { done, value } = await reader.read();
-        if (done) break;
+        if (done) {
+          console.log('Stream complete. Full assistant content:', assistantContent);
+
+          // Client-side fallback: detect charts in content if server didn't send them
+          const chartMatches = assistantContent.match(/```ui-chart\s*\n([\s\S]*?)\n```/g);
+          if (chartMatches) {
+            console.log(`Found ${chartMatches.length} charts in content, but not received as UI components`);
+            console.log('This means server-side detection failed');
+          }
+
+          break;
+        }
 
         const chunk = decoder.decode(value);
         const lines = chunk.split('\n');
@@ -389,11 +400,17 @@ export function PremiumChatClient() {
             try {
               const parsed = JSON.parse(data);
 
+              // Debug logging
+              if (parsed.type) {
+                console.log('Received UI component:', parsed.type, parsed.payload);
+              }
+
               // Handle extended message types
               if (parsed.type) {
                 // Agent message with special type (reasoning, tool_call, etc.)
+                // Use crypto.randomUUID() for truly unique IDs
                 const agentMessage: ExtendedMessage = {
-                  id: `agent-${Date.now()}-${parsed.type}`,
+                  id: `agent-${crypto.randomUUID()}`,
                   role: 'assistant',
                   content: '',
                   type: parsed.type,

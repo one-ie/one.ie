@@ -156,15 +156,26 @@ export const POST: APIRoute = async ({ request }) => {
           while (true) {
             const { done, value } = await reader.read();
             if (done) {
-              // Check for UI components in the complete response
-              const chartMatch = fullContent.match(/```ui-chart\s*\n([\s\S]*?)\n```/);
-              const tableMatch = fullContent.match(/```ui-table\s*\n([\s\S]*?)\n```/);
-              const buttonMatch = fullContent.match(/```ui-button\s*\n([\s\S]*?)\n```/);
-              const cardMatch = fullContent.match(/```ui-card\s*\n([\s\S]*?)\n```/);
+              // Log the full content for debugging
+              console.log('Full AI response:', fullContent);
 
-              if (chartMatch) {
+              // Check for UI components in the complete response (find ALL occurrences)
+              const chartMatches = [...fullContent.matchAll(/```ui-chart\s*\n([\s\S]*?)\n```/g)];
+              const tableMatches = [...fullContent.matchAll(/```ui-table\s*\n([\s\S]*?)\n```/g)];
+              const buttonMatches = [...fullContent.matchAll(/```ui-button\s*\n([\s\S]*?)\n```/g)];
+              const cardMatches = [...fullContent.matchAll(/```ui-card\s*\n([\s\S]*?)\n```/g)];
+
+              console.log('Regex matches:', {
+                charts: chartMatches.length,
+                tables: tableMatches.length,
+                buttons: buttonMatches.length,
+                cards: cardMatches.length
+              });
+
+              // Send all chart components
+              for (const match of chartMatches) {
                 try {
-                  const chartData = JSON.parse(chartMatch[1]);
+                  const chartData = JSON.parse(match[1]);
                   const uiMessage = {
                     type: 'ui',
                     payload: {
@@ -178,9 +189,10 @@ export const POST: APIRoute = async ({ request }) => {
                 }
               }
 
-              if (tableMatch) {
+              // Send all table components
+              for (const match of tableMatches) {
                 try {
-                  const tableData = JSON.parse(tableMatch[1]);
+                  const tableData = JSON.parse(match[1]);
                   const uiMessage = {
                     type: 'ui',
                     payload: {
@@ -194,9 +206,10 @@ export const POST: APIRoute = async ({ request }) => {
                 }
               }
 
-              if (buttonMatch) {
+              // Send all button components
+              for (const match of buttonMatches) {
                 try {
-                  const buttonData = JSON.parse(buttonMatch[1]);
+                  const buttonData = JSON.parse(match[1]);
                   const uiMessage = {
                     type: 'ui',
                     payload: {
@@ -210,9 +223,10 @@ export const POST: APIRoute = async ({ request }) => {
                 }
               }
 
-              if (cardMatch) {
+              // Send all card components
+              for (const match of cardMatches) {
                 try {
-                  const cardData = JSON.parse(cardMatch[1]);
+                  const cardData = JSON.parse(match[1]);
                   const uiMessage = {
                     type: 'ui',
                     payload: {
@@ -237,7 +251,7 @@ export const POST: APIRoute = async ({ request }) => {
             for (const line of lines) {
               if (line.startsWith('data: ')) {
                 const data = line.slice(6);
-                if (data === '[DONE]') continue;
+                if (data === '[DONE]') continue; // Don't forward [DONE] yet
 
                 try {
                   const parsed = JSON.parse(data);
@@ -251,8 +265,14 @@ export const POST: APIRoute = async ({ request }) => {
               }
             }
 
-            // Forward the chunk
-            controller.enqueue(encoder.encode(chunk));
+            // Forward the chunk (but filter out [DONE] messages)
+            const filteredChunk = chunk.split('\n')
+              .filter(line => !line.includes('[DONE]'))
+              .join('\n');
+
+            if (filteredChunk.trim()) {
+              controller.enqueue(encoder.encode(filteredChunk + '\n'));
+            }
           }
         } catch (error) {
           console.error('Stream error:', error);
