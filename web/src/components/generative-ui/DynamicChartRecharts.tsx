@@ -9,24 +9,28 @@
  * To test: Rename this file to DynamicChart.tsx (backup the CSS version first)
  */
 
-import React from 'react';
+import React, { useState, useEffect, lazy, Suspense } from 'react';
 import { Card, CardHeader, CardTitle, CardDescription, CardContent } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
-import {
-  LineChart,
-  BarChart,
-  Line,
-  Bar,
-  XAxis,
-  YAxis,
-  CartesianGrid,
-  Tooltip,
-  Legend,
-  ResponsiveContainer
-} from 'recharts';
 
-export function DynamicChart({ data, layout }: any) {
-  console.log('DynamicChart rendering with data:', data);
+// Dynamically import Recharts to avoid SSR issues
+const LineChart = lazy(() => import('recharts').then(mod => ({ default: mod.LineChart })));
+const BarChart = lazy(() => import('recharts').then(mod => ({ default: mod.BarChart })));
+const Line = lazy(() => import('recharts').then(mod => ({ default: mod.Line })));
+const Bar = lazy(() => import('recharts').then(mod => ({ default: mod.Bar })));
+const XAxis = lazy(() => import('recharts').then(mod => ({ default: mod.XAxis })));
+const YAxis = lazy(() => import('recharts').then(mod => ({ default: mod.YAxis })));
+const CartesianGrid = lazy(() => import('recharts').then(mod => ({ default: mod.CartesianGrid })));
+const Tooltip = lazy(() => import('recharts').then(mod => ({ default: mod.Tooltip })));
+const Legend = lazy(() => import('recharts').then(mod => ({ default: mod.Legend })));
+const ResponsiveContainer = lazy(() => import('recharts').then(mod => ({ default: mod.ResponsiveContainer })));
+
+export function DynamicChartRecharts({ data, layout }: any) {
+  const [isMounted, setIsMounted] = useState(false);
+
+  useEffect(() => {
+    setIsMounted(true);
+  }, []);
 
   const chartData = data.labels?.map((label: string, i: number) => ({
     name: label,
@@ -36,7 +40,24 @@ export function DynamicChart({ data, layout }: any) {
     }), {}) || {}),
   })) || [];
 
-  console.log('chartData transformed:', chartData);
+  if (!isMounted) {
+    return (
+      <Card>
+        <CardHeader>
+          <CardTitle>{data.title}</CardTitle>
+          {data.description && <CardDescription>{data.description}</CardDescription>}
+        </CardHeader>
+        <CardContent>
+          <div className="h-[300px] flex items-center justify-center bg-muted rounded-lg">
+            <div className="flex flex-col items-center gap-2">
+              <div className="h-8 w-8 border-4 border-primary border-t-transparent rounded-full animate-spin" />
+              <p className="text-sm text-muted-foreground">Loading Recharts...</p>
+            </div>
+          </div>
+        </CardContent>
+      </Card>
+    );
+  }
 
   return (
     <Card>
@@ -50,8 +71,19 @@ export function DynamicChart({ data, layout }: any) {
         {data.description && <CardDescription>{data.description}</CardDescription>}
       </CardHeader>
       <CardContent>
-        <ResponsiveContainer width="100%" height={300}>
-            {data.chartType === 'line' ? (
+        <Suspense
+          fallback={
+            <div className="h-[300px] flex items-center justify-center bg-muted rounded-lg">
+              <div className="flex flex-col items-center gap-2">
+                <div className="h-8 w-8 border-4 border-primary border-t-transparent rounded-full animate-spin" />
+                <p className="text-sm text-muted-foreground">Rendering chart...</p>
+              </div>
+            </div>
+          }
+        >
+          <div className="w-full h-[300px]">
+            <ResponsiveContainer width="100%" height="100%">
+              {data.chartType === 'line' ? (
                 <LineChart data={chartData} margin={{ top: 5, right: 30, left: 20, bottom: 5 }}>
                   <CartesianGrid strokeDasharray="3 3" className="stroke-border" />
                   <XAxis
@@ -113,7 +145,9 @@ export function DynamicChart({ data, layout }: any) {
                   ))}
                 </BarChart>
               )}
-          </ResponsiveContainer>
+            </ResponsiveContainer>
+          </div>
+        </Suspense>
       </CardContent>
     </Card>
   );

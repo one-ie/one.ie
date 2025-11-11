@@ -1,0 +1,196 @@
+---
+/**
+ * Premium Chat Demo Page
+ *
+ * Demonstrates all premium features with sample data:
+ * - Agent reasoning visualization
+ * - Tool call display
+ * - Extended message types
+ * - Premium UI components
+ */
+
+import Layout from '@/layouts/Layout.astro';
+import { AgentMessage } from '@/components/ai/premium/AgentMessage';
+import { Reasoning } from '@/components/ai/premium/Reasoning';
+import { ToolCall } from '@/components/ai/premium/ToolCall';
+import { Card, CardHeader, CardTitle, CardContent } from '@/components/ui/card';
+import { Badge } from '@/components/ui/badge';
+import { sampleReasoning, sampleToolCalls, sampleAgentMessages } from '@/lib/samplePremiumData';
+
+const title = 'Premium Chat Demo';
+const description = 'Interactive demo of premium chat features';
+---
+
+<Layout title={title} description={description}>
+  <div class="container max-w-4xl mx-auto px-6 py-12 space-y-8">
+    <!-- Header -->
+    <div class="text-center space-y-3">
+      <div class="flex items-center justify-center gap-2">
+        <h1 class="text-4xl font-bold">Premium Chat Features</h1>
+        <Badge className="bg-gradient-to-r from-blue-500 to-purple-600 text-white">Demo</Badge>
+      </div>
+      <p class="text-lg text-muted-foreground">
+        Explore advanced AI capabilities with interactive examples
+      </p>
+    </div>
+
+    <!-- Feature 1: Reasoning Visualization -->
+    <Card>
+      <CardHeader>
+        <CardTitle>1. Agent Reasoning Visualization</CardTitle>
+        <p class="text-sm text-muted-foreground">
+          See step-by-step how the AI agent thinks through problems
+        </p>
+      </CardHeader>
+      <CardContent>
+        <Reasoning steps={sampleReasoning} client:load />
+      </CardContent>
+    </Card>
+
+    <!-- Feature 2: Tool Calls -->
+    <Card>
+      <CardHeader>
+        <CardTitle>2. Tool Call Display</CardTitle>
+        <p class="text-sm text-muted-foreground">
+          View function calls with arguments and results
+        </p>
+      </CardHeader>
+      <CardContent>
+        <div class="space-y-4">
+          {sampleToolCalls.map((toolCall, index) => (
+            <ToolCall {...toolCall} client:load />
+          ))}
+        </div>
+      </CardContent>
+    </Card>
+
+    <!-- Feature 3: Agent Messages -->
+    <Card>
+      <CardHeader>
+        <CardTitle>3. Extended Message Types</CardTitle>
+        <p class="text-sm text-muted-foreground">
+          Support for text, reasoning, tool calls, and generative UI
+        </p>
+      </CardHeader>
+      <CardContent>
+        <div class="space-y-6">
+          {sampleAgentMessages.map((msg, index) => (
+            <div class="border-l-2 border-primary/20 pl-4">
+              <div class="text-xs text-muted-foreground mb-2">
+                Type: <code class="bg-muted px-1 py-0.5 rounded">{msg.type}</code>
+              </div>
+              <AgentMessage message={msg} client:load />
+            </div>
+          ))}
+        </div>
+      </CardContent>
+    </Card>
+
+    <!-- Feature 4: Integration Guide -->
+    <Card>
+      <CardHeader>
+        <CardTitle>4. How to Use Premium Features</CardTitle>
+      </CardHeader>
+      <CardContent className="space-y-4">
+        <div>
+          <h3 class="font-medium mb-2">In Your API Response:</h3>
+          <pre class="bg-muted p-4 rounded-lg text-xs overflow-x-auto"><code>{`// Send extended message types from your API
+{
+  "type": "reasoning",
+  "payload": {
+    "steps": [
+      {
+        "step": 1,
+        "title": "Analyzing request",
+        "description": "Understanding context",
+        "completed": true
+      }
+    ]
+  }
+}
+
+// Or tool calls
+{
+  "type": "tool_call",
+  "payload": {
+    "name": "search_database",
+    "args": { "query": "..." },
+    "result": { "count": 5 },
+    "status": "completed"
+  }
+}`}</code></pre>
+        </div>
+
+        <div>
+          <h3 class="font-medium mb-2">In Your Component:</h3>
+          <pre class="bg-muted p-4 rounded-lg text-xs overflow-x-auto"><code>{`import { AgentMessage } from '@/components/ai/premium/AgentMessage';
+
+// Render agent message with automatic type detection
+<AgentMessage message={message} />
+
+// Message automatically renders:
+// - Text messages with Message component
+// - Reasoning with Reasoning component
+// - Tool calls with ToolCall component
+// - UI with GenerativeUIRenderer`}</code></pre>
+        </div>
+
+        <div class="pt-4 border-t">
+          <h3 class="font-medium mb-3">Try It Live:</h3>
+          <div class="flex gap-3">
+            <a
+              href="/chat/premium"
+              class="inline-flex items-center gap-2 px-4 py-2 bg-gradient-to-r from-blue-500 to-purple-600 text-white rounded-lg hover:opacity-90 transition-opacity"
+            >
+              Launch Premium Chat
+            </a>
+            <a
+              href="/chat"
+              class="inline-flex items-center gap-2 px-4 py-2 border border-border rounded-lg hover:bg-muted transition-colors"
+            >
+              Compare with Free Chat
+            </a>
+          </div>
+        </div>
+      </CardContent>
+    </Card>
+
+    <!-- Feature Comparison -->
+    <Card>
+      <CardHeader>
+        <CardTitle>Feature Comparison</CardTitle>
+      </CardHeader>
+      <CardContent>
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+          <div class="space-y-2">
+            <h3 class="font-medium text-sm">Free Chat</h3>
+            <ul class="text-sm text-muted-foreground space-y-1">
+              <li>✓ Basic text messages</li>
+              <li>✓ OpenRouter integration</li>
+              <li>✓ All AI models</li>
+              <li>✗ No persistence</li>
+              <li>✗ No reasoning display</li>
+              <li>✗ No tool call visualization</li>
+            </ul>
+          </div>
+          <div class="space-y-2">
+            <h3 class="font-medium text-sm flex items-center gap-2">
+              Premium Chat
+              <Badge className="bg-gradient-to-r from-blue-500 to-purple-600 text-white text-xs">
+                Premium
+              </Badge>
+            </h3>
+            <ul class="text-sm space-y-1">
+              <li>✓ Extended message types</li>
+              <li>✓ Agent reasoning visualization</li>
+              <li>✓ Tool call display</li>
+              <li>✓ Generative UI support</li>
+              <li>✓ Thread persistence (backend)</li>
+              <li>✓ Advanced analytics</li>
+            </ul>
+          </div>
+        </div>
+      </CardContent>
+    </Card>
+  </div>
+</Layout>

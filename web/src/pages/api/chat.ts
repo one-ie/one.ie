@@ -1,15 +1,54 @@
 import type { APIRoute } from 'astro';
 
+const SYSTEM_PROMPT = `You are a helpful AI assistant with the ability to generate interactive visualizations.
+
+When users ask to see data, charts, tables, or visualizations, you can generate them using this format:
+
+**For CHARTS** - Wrap JSON in \`\`\`ui-chart:\n{your json}\n\`\`\`
+
+Example:
+\`\`\`ui-chart
+{
+  "title": "Sales Growth",
+  "chartType": "line",
+  "labels": ["Jan", "Feb", "Mar", "Apr", "May", "Jun"],
+  "datasets": [
+    { "label": "Revenue", "data": [12000, 15000, 18000, 22000, 25000, 30000], "color": "#3b82f6" },
+    { "label": "Profit", "data": [3000, 4500, 5400, 7700, 9000, 12000], "color": "#10b981" }
+  ]
+}
+\`\`\`
+
+**For TABLES** - Wrap JSON in \`\`\`ui-table:\n{your json}\n\`\`\`
+
+Example:
+\`\`\`ui-table
+{
+  "title": "Product List",
+  "columns": ["Product", "Price", "Stock"],
+  "rows": [
+    ["Widget A", "$19.99", "50"],
+    ["Gadget B", "$29.99", "30"]
+  ]
+}
+\`\`\`
+
+When a user asks to "show data", "create a chart", "display a table", etc., respond with:
+1. A friendly text explanation
+2. The appropriate UI code block with realistic data
+
+Be creative and generate relevant data based on the user's request!`;
+
 /**
  * Free Tier API Endpoint (OpenRouter)
  *
  * Client sends their own OpenRouter API key
  * Access to all models: GPT-4, Claude, Llama, etc.
- * No persistence, no analytics
+ * Enhanced with chart/table generation capabilities
  */
 export const POST: APIRoute = async ({ request }) => {
   try {
-    const { messages, apiKey, model = 'openai/gpt-4' } = await request.json();
+    const { messages, apiKey, model = 'openai/gpt-4', premium } = await request.json();
 
     if (!apiKey) {
       return new Response(
@@ -18,10 +57,16 @@ export const POST: APIRoute = async ({ request }) => {
       );
     }
 
+    // Add system prompt for chart generation if premium mode
+    const messagesWithSystem = premium
+      ? [{ role: 'system', content: SYSTEM_PROMPT }, ...messages]
+      : messages;
+
     // Log the request for debugging
     console.log('OpenRouter request:', {
       model,
-      messageCount: messages.length,
+      messageCount: messagesWithSystem.length,
+      premium,
       hasApiKey: !!apiKey,
       apiKeyPrefix: apiKey.substring(0, 10) + '...'
     });
@@ -37,7 +82,7 @@ export const POST: APIRoute = async ({ request }) => {
       },
       body: JSON.stringify({
         model: model,
-        messages: messages,
+        messages: messagesWithSystem,
         stream: true, // Enable streaming
       }),
     });
@@ -66,8 +111,97 @@ export const POST: APIRoute = async ({ request }) => {
       );
     }
 
-    // Forward the streaming response
-    return new Response(response.body, {
+    // Parse streaming response for UI components
+    const encoder = new TextEncoder();
+    const decoder = new TextDecoder();
+
+    const stream = new ReadableStream({
+      async start(controller) {
+        const reader = response.body?.getReader();
+        if (!reader) {
+          controller.close();
+          return;
+        }
+
+        let fullContent = '';
+
+        try {
+          while (true) {
+            const { done, value } = await reader.read();
+            if (done) {
+              // Check for UI components in the complete response
+              const chartMatch = fullContent.match(/```ui-chart\s*\n([\s\S]*?)\n```/);
+              const tableMatch = fullContent.match(/```ui-table\s*\n([\s\S]*?)\n```/);
+
+              if (chartMatch) {
+                try {
+                  const chartData = JSON.parse(chartMatch[1]);
+                  const uiMessage = {
+                    type: 'ui',
+                    payload: {
+                      component: 'chart',
+                      data: chartData
+                    }
+                  };
+                  controller.enqueue(encoder.encode(`data: ${JSON.stringify(uiMessage)}\n\n`));
+                } catch (e) {
+                  console.error('Failed to parse chart JSON:', e);
+                }
+              }
+
+              if (tableMatch) {
+                try {
+                  const tableData = JSON.parse(tableMatch[1]);
+                  const uiMessage = {
+                    type: 'ui',
+                    payload: {
+                      component: 'table',
+                      data: tableData
+                    }
+                  };
+                  controller.enqueue(encoder.encode(`data: ${JSON.stringify(uiMessage)}\n\n`));
+                } catch (e) {
+                  console.error('Failed to parse table JSON:', e);
+                }
+              }
+
+              controller.enqueue(encoder.encode('data: [DONE]\n\n'));
+              break;
+            }
+
+            const chunk = decoder.decode(value, { stream: true });
+
+            // Extract content from SSE format
+            const lines = chunk.split('\n');
+            for (const line of lines) {
+              if (line.startsWith('data: ')) {
+                const data = line.slice(6);
+                if (data === '[DONE]') continue;
+
+                try {
+                  const parsed = JSON.parse(data);
+                  const content = parsed.choices?.[0]?.delta?.content;
+                  if (content) {
+                    fullContent += content;
+                  }
+                } catch (e) {
+                  // Ignore parse errors
+                }
+              }
+            }
+
+            // Forward the chunk
+            controller.enqueue(encoder.encode(chunk));
+          }
+        } catch (error) {
+          console.error('Stream error:', error);
+        } finally {
+          controller.close();
+        }
+      },
+    });
+
+    return new Response(stream, {
       headers: {
         'Content-Type': 'text/event-stream',
         'Cache-Control': 'no-cache',
