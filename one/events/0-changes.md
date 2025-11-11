@@ -1,3 +1,13 @@
+### **b2313be4** — template:4 — `fix: Remove React components from podcasts page to resolve SSR style prop error``
+
+**Template:**
+  - .claude/hooks.log
+  - .claude/state/cycle.json
+  - one/events/0-changes.md
+  - web/src/pages/podcasts/[...slug].astro
+
+
+
 ### **c90a32f8** — template:18 — `chore: Organize documentation into ontology structure``
 
 **Template:**
