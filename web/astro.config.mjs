@@ -22,11 +22,7 @@ export default defineConfig({
     },
   },
   integrations: [
-    react({
-      // Ensure React runs in dev mode during development
-      include: ['**/react/*', '**/recharts/*'],
-      experimentalReactChildren: true,
-    }),
+    react(),
     mdx({
       // Disable imports/exports processing to avoid conflicts
       remarkPlugins: [],
@@ -36,7 +32,9 @@ export default defineConfig({
   ],
   vite: {
     plugins: [
-      tailwindcss(),
+      tailwindcss({
+        content: ["./src/**/*.{astro,html,js,jsx,md,mdx,svelte,ts,tsx,vue}"],
+      }),
     ],
     define: {
       // Ensure React runs in development mode during dev
