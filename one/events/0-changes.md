@@ -1,3 +1,17 @@
+### **1ff55acd** — template:8 — `ONE``
+
+**Template:**
+  - .claude/hooks.log
+  - .claude/hooks/.last-news-context
+  - .claude/state/cycle.json
+  - one/events/0-changes.md
+  - web/package.json
+  - web/src/components/ai/premium/PremiumChatClient.tsx
+  - web/src/pages/api/chat.ts
+  - web/tsconfig.json
+
+
+
 ### **a6f2f484** — template:1 — `fix: Send UI components before [DONE] marker in stream``
 
 **Template:**
