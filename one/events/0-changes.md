@@ -1,3 +1,15 @@
+### **ed6ef81f** — template:6 — `chore: Update deployment tracking and cycle state``
+
+**Template:**
+  - .claude/hooks.log
+  - .claude/hooks/.last-news-context
+  - .claude/state/cycle.json
+  - one/events/0-changes.md
+  - web/astro.config.mjs
+  - web/src/pages/deploy.astro
+
+
+
 ### **0cabf9e9** — template:31 — `feat: Add 5 news articles and /news command for automated content generation``
 
 **Template:**

@@ -198,7 +198,7 @@ export function GitSection({ children }: GitSectionProps) {
                 height={400}
                 fetchPriority="high"
                 loading="eager"
-                className="mx-auto w-full max-w-[400px] h-auto"
+                className="mx-auto w-full max-w-[400px] h-auto dark:invert-0 invert"
                 onError={() => setImageLoaded(false)}
               />
             </div>
@@ -286,7 +286,7 @@ export function GitSection({ children }: GitSectionProps) {
             </div>
           </Card>
 
-          {/* Bootstrap with NPX */}
+          {/* Install with NPX */}
           <Card className="group relative overflow-hidden border-border/50 hover:shadow-2xl transition-all duration-500">
             <div className="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-500" style={{ background: 'linear-gradient(135deg, hsl(45 93% 47% / 0.03) 0%, transparent 100%)' }} />
             <div className="relative p-8 space-y-6">
@@ -301,7 +301,7 @@ export function GitSection({ children }: GitSectionProps) {
                 </div>
               </div>
               <div className="space-y-3">
-                <h3 className="text-2xl font-bold tracking-tight">Bootstrap with NPX</h3>
+                <h3 className="text-2xl font-bold tracking-tight">Install with NPX</h3>
                 <p className="text-sm text-muted-foreground leading-relaxed">
                   Generate a fresh project instantly with one command.
                 </p>
@@ -392,10 +392,13 @@ export function GitSection({ children }: GitSectionProps) {
 
         {/* Download Stats */}
         <div className="text-center py-4">
-          <a href="/news/over-10000-installs" className="inline-block">
+          <a href="/news/over-10000-installs" className="block">
             <p className="text-2xl font-semibold text-foreground hover:opacity-80 transition-opacity">
               Over <span style={{ color: 'hsl(45 93% 47%)' }}>10,000</span> Installs
             </p>
+          </a>
+          <a href="/docs/getting-started/quick-start" className="block text-primary hover:underline text-sm font-medium mt-2">
+            View Installation Instructions →
           </a>
         </div>
 
