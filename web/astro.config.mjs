@@ -36,9 +36,7 @@ export default defineConfig({
   ],
   vite: {
     plugins: [
-      tailwindcss({
-        content: ["./src/**/*.{astro,html,js,jsx,md,mdx,svelte,ts,tsx,vue}"],
-      }),
+      tailwindcss(),
     ],
     define: {
       // Ensure React runs in development mode during dev
