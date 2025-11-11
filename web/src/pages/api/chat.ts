@@ -153,97 +153,14 @@ export const POST: APIRoute = async ({ request }) => {
         let fullContent = '';
 
         try {
+          console.log('[CHAT API] Stream started');
+
           while (true) {
             const { done, value } = await reader.read();
+
             if (done) {
-              // Log the full content for debugging
-              console.log('Full AI response:', fullContent);
-
-              // Check for UI components in the complete response (find ALL occurrences)
-              const chartMatches = [...fullContent.matchAll(/```ui-chart\s*\n([\s\S]*?)\n```/g)];
-              const tableMatches = [...fullContent.matchAll(/```ui-table\s*\n([\s\S]*?)\n```/g)];
-              const buttonMatches = [...fullContent.matchAll(/```ui-button\s*\n([\s\S]*?)\n```/g)];
-              const cardMatches = [...fullContent.matchAll(/```ui-card\s*\n([\s\S]*?)\n```/g)];
-
-              console.log('Regex matches:', {
-                charts: chartMatches.length,
-                tables: tableMatches.length,
-                buttons: buttonMatches.length,
-                cards: cardMatches.length
-              });
-
-              // Send all chart components
-              for (const match of chartMatches) {
-                try {
-                  const chartData = JSON.parse(match[1]);
-                  const uiMessage = {
-                    type: 'ui',
-                    payload: {
-                      component: 'chart',
-                      data: chartData
-                    }
-                  };
-                  controller.enqueue(encoder.encode(`data: ${JSON.stringify(uiMessage)}\n\n`));
-                } catch (e) {
-                  console.error('Failed to parse chart JSON:', e);
-                }
-              }
-
-              // Send all table components
-              for (const match of tableMatches) {
-                try {
-                  const tableData = JSON.parse(match[1]);
-                  const uiMessage = {
-                    type: 'ui',
-                    payload: {
-                      component: 'table',
-                      data: tableData
-                    }
-                  };
-                  controller.enqueue(encoder.encode(`data: ${JSON.stringify(uiMessage)}\n\n`));
-                } catch (e) {
-                  console.error('Failed to parse table JSON:', e);
-                }
-              }
-
-              // Send all button components
-              for (const match of buttonMatches) {
-                try {
-                  const buttonData = JSON.parse(match[1]);
-                  const uiMessage = {
-                    type: 'ui',
-                    payload: {
-                      component: 'button',
-                      data: buttonData
-                    }
-                  };
-                  controller.enqueue(encoder.encode(`data: ${JSON.stringify(uiMessage)}\n\n`));
-                } catch (e) {
-                  console.error('Failed to parse button JSON:', e);
-                }
-              }
-
-              // Send all card components
-              for (const match of cardMatches) {
-                try {
-                  const cardData = JSON.parse(match[1]);
-                  const uiMessage = {
-                    type: 'ui',
-                    payload: {
-                      component: 'card',
-                      data: cardData
-                    }
-                  };
-                  controller.enqueue(encoder.encode(`data: ${JSON.stringify(uiMessage)}\n\n`));
-                } catch (e) {
-                  console.error('Failed to parse card JSON:', e);
-                }
-              }
-
-              controller.enqueue(encoder.encode('data: [DONE]\n\n'));
-
-              // Close the stream AFTER all messages are enqueued
-              // This ensures messages are flushed before closing on Cloudflare Workers
+              console.log('[CHAT API] Stream done naturally (after [DONE] was sent)');
+              // Stream already closed by [DONE] handler
               controller.close();
               return;
             }
@@ -269,8 +186,36 @@ export const POST: APIRoute = async ({ request }) => {
               }
             }
 
-            // Forward the chunk as-is, unless it's the [DONE] marker
-            if (!chunk.includes('data: [DONE]')) {
+            // Check if this chunk contains [DONE]
+            if (chunk.includes('data: [DONE]')) {
+              console.log('[CHAT API] Detected [DONE] in chunk, processing UI components now');
+
+              // Send UI messages BEFORE [DONE]
+              // Check for UI components in the complete response
+              const chartMatches = [...fullContent.matchAll(/```ui-chart\s*\n([\s\S]*?)\n```/g)];
+              console.log('[CHAT API] Found', chartMatches.length, 'charts in content');
+
+              for (const match of chartMatches) {
+                try {
+                  const chartData = JSON.parse(match[1]);
+                  const uiMessage = {
+                    type: 'ui',
+                    payload: {
+                      component: 'chart',
+                      data: chartData
+                    }
+                  };
+                  console.log('[CHAT API] Sending chart UI message');
+                  controller.enqueue(encoder.encode(`data: ${JSON.stringify(uiMessage)}\n\n`));
+                } catch (e) {
+                  console.error('[CHAT API] Failed to parse chart JSON:', e);
+                }
+              }
+
+              // Now forward the chunk with [DONE]
+              controller.enqueue(encoder.encode(chunk));
+            } else {
+              // Forward chunk as-is
               controller.enqueue(encoder.encode(chunk));
             }
           }
