@@ -1,3 +1,14 @@
+### **a4336710** — template:5 — `fix: Chat now works for free WITHOUT requiring API key``
+
+**Template:**
+  - .claude/hooks.log
+  - .claude/hooks/.last-news-context
+  - .claude/state/cycle.json
+  - one/events/0-changes.md
+  - web/src/components/ai/ChatClient.tsx
+
+
+
 ### **f1b5a0c3** — template:46 — `feat: Merge premium and basic chat into unified free chat app``
 
 **Template:**

@@ -73,6 +73,18 @@ const CardFooter = React.forwardRef<
 ));
 CardFooter.displayName = 'CardFooter';
 
+const CardAction = React.forwardRef<
+  HTMLDivElement,
+  React.HTMLAttributes<HTMLDivElement>
+>(({ className, ...props }, ref) => (
+  <div
+    ref={ref}
+    className={cn('absolute right-4 top-4', className)}
+    {...props}
+  />
+));
+CardAction.displayName = 'CardAction';
+
 export {
   Card,
   CardHeader,
@@ -80,4 +92,5 @@ export {
   CardTitle,
   CardDescription,
   CardContent,
+  CardAction,
 };
