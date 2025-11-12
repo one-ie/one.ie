@@ -98,20 +98,28 @@ Here's an analysis of sales performance with interactive charts:
 Key insights: Revenue up 24% year-over-year, Electronics leading category, strong growth in May-June.`;
 
 /**
- * Free Tier API Endpoint (OpenRouter)
+ * Unified Chat API Endpoint (OpenRouter)
  *
- * Client sends their own OpenRouter API key
- * Access to all models: GPT-4, Claude, Llama, etc.
+ * Two modes:
+ * 1. Client provides their own OpenRouter API key → Use that
+ * 2. No key provided → Use backend default key from env (OPENROUTER_API_KEY)
+ *
+ * Access to all models: Gemini Flash Lite (free), GPT-4, Claude, Llama, etc.
  * Enhanced with chart/table generation capabilities
  */
 export const POST: APIRoute = async ({ request }) => {
   try {
-    const { messages, apiKey, model = 'openai/gpt-4', premium } = await request.json();
+    const { messages, apiKey, model = 'google/gemini-2.5-flash-lite', premium } = await request.json();
 
-    if (!apiKey) {
+    // Use provided key or fall back to backend default
+    const effectiveApiKey = apiKey || import.meta.env.OPENROUTER_API_KEY;
+
+    if (!effectiveApiKey) {
       return new Response(
-        JSON.stringify({ error: 'OpenRouter API key required for free tier' }),
-        { status: 400, headers: { 'Content-Type': 'application/json' } }
+        JSON.stringify({
+          error: 'No auth credentials found. Please add your OpenRouter API key or contact support.'
+        }),
+        { status: 401, headers: { 'Content-Type': 'application/json' } }
       );
     }
 
@@ -125,15 +133,16 @@ export const POST: APIRoute = async ({ request }) => {
       model,
       messageCount: messagesWithSystem.length,
       premium,
-      hasApiKey: !!apiKey,
-      apiKeyPrefix: apiKey.substring(0, 10) + '...'
+      usingClientKey: !!apiKey,
+      usingBackendKey: !apiKey,
+      keyPrefix: effectiveApiKey.substring(0, 10) + '...'
     });
 
     // Call OpenRouter API directly
     const response = await fetch('https://openrouter.ai/api/v1/chat/completions', {
       method: 'POST',
       headers: {
-        'Authorization': `Bearer ${apiKey}`,
+        'Authorization': `Bearer ${effectiveApiKey}`,
         'Content-Type': 'application/json',
         'HTTP-Referer': 'http://localhost:4321', // Optional: for OpenRouter analytics
         'X-Title': 'ONE Platform Chat' // Optional: shows in OpenRouter dashboard

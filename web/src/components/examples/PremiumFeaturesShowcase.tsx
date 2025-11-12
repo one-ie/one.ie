@@ -6,8 +6,8 @@
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
-import { Reasoning } from '@/components/ai/premium/Reasoning';
-import { ToolCall } from '@/components/ai/premium/ToolCall';
+import { Reasoning } from '@/components/ai/Reasoning';
+import { ToolCall } from '@/components/ai/ToolCall';
 import { Sparkles, Brain, Wrench, History, Zap } from 'lucide-react';
 
 const DEMO_REASONING_STEPS = [

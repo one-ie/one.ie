@@ -48,7 +48,8 @@
       "Bash(npx oneie@latest --version)",
       "Bash([ -d web ])",
       "Bash(git rm:*)",
-      "WebFetch(domain:github.com)"
+      "WebFetch(domain:github.com)",
+      "Bash(pkill:*)"
     ],
     "deny": [],
     "ask": []

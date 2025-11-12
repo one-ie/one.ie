@@ -9,10 +9,10 @@
  */
 
 import { useState, useEffect } from 'react';
-import { MessageList } from '@/components/ai/basic/MessageList';
-import { PromptInput } from '@/components/ai/basic/PromptInput';
-import { Suggestions } from '@/components/ai/basic/Suggestions';
-import { AgentMessage, type AgentUIMessage } from '@/components/ai/premium/AgentMessage';
+import { MessageList } from '@/components/ai/MessageList';
+import { PromptInput } from '@/components/ai/PromptInput';
+import { Suggestions } from '@/components/ai/Suggestions';
+import { AgentMessage, type AgentUIMessage } from '@/components/ai/AgentMessage';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
@@ -237,7 +237,7 @@ const DEMO_RESPONSES: Record<string, ExtendedMessage[]> = {
   ]
 };
 
-export function PremiumChatClient() {
+export function ChatClient() {
   const [apiKey, setApiKey] = useState('');
   const [selectedModel, setSelectedModel] = useState('google/gemini-2.5-flash-lite');
   const [chatStarted, setChatStarted] = useState(false);

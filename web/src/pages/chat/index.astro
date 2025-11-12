@@ -1,28 +1,27 @@
 ---
 /**
- * Premium Chat Page
+ * Unified AI Chat Page
  *
- * Features:
- * - Agent reasoning visualization
- * - Tool call display
- * - Extended message types
- * - Premium indicators
- * - Thread persistence (coming soon)
- * - Generative UI (coming soon)
+ * One chat app for all users:
+ * - Free tier: Works without API keys (Gemini Flash Lite only)
+ * - Premium: Users add their own OpenRouter keys for full model access
+ * - Smart UI: Show/hide features based on user API key status
+ *
+ * Features scale with backend capabilities:
+ * - Reasoning visualization (when available)
+ * - Tool call display (when available)
+ * - Generative UI components (when available)
  */
 
 import Layout from '@/layouts/Layout.astro';
-import { PremiumChatClient } from '@/components/ai/premium/PremiumChatClient';
+import { ChatClient } from '@/components/ai/ChatClient';
 
-// Check if premium features are enabled (via backend config)
-const backendEnabled = import.meta.env.PUBLIC_CONVEX_URL !== undefined;
-
-const title = 'Premium AI Chat';
-const description = 'Advanced AI chat with reasoning visualization, tool calls, and generative UI';
+const title = 'AI Chat';
+const description = 'Free AI chat with all features. Reasoning, tool calls, generative UI included.';
 ---
 
 <Layout title={title} description={description}>
-  <PremiumChatClient client:only="react" />
+  <ChatClient client:only="react" />
 </Layout>
 
 <style>

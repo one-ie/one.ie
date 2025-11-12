@@ -6,9 +6,9 @@
  */
 
 import { useState, useEffect } from 'react';
-import { MessageList } from '@/components/ai/basic/MessageList';
-import { PromptInput } from '@/components/ai/basic/PromptInput';
-import { Suggestions } from '@/components/ai/basic/Suggestions';
+import { MessageList } from '@/components/ai/MessageList';
+import { PromptInput } from '@/components/ai/PromptInput';
+import { Suggestions } from '@/components/ai/Suggestions';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';

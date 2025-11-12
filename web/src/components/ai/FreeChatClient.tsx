@@ -7,8 +7,8 @@
 
 import { useState, useEffect } from 'react';
 import { useChat } from '@ai-sdk/react';
-import { MessageList } from '@/components/ai/basic/MessageList';
-import { PromptInput } from '@/components/ai/basic/PromptInput';
+import { MessageList } from '@/components/ai/MessageList';
+import { PromptInput } from '@/components/ai/PromptInput';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';

@@ -10,16 +10,16 @@ import { Badge } from '@/components/ui/badge';
 import { Separator } from '@/components/ui/separator';
 
 // Basic Components
-import { CodeBlock } from '@/components/ai/basic/CodeBlock';
-import { LoadingIndicator } from '@/components/ai/basic/LoadingIndicator';
-import { Message } from '@/components/ai/basic/Message';
-import { MessageList } from '@/components/ai/basic/MessageList';
-import { PromptInput } from '@/components/ai/basic/PromptInput';
-import { Suggestions } from '@/components/ai/basic/Suggestions';
+import { CodeBlock } from '@/components/ai/CodeBlock';
+import { LoadingIndicator } from '@/components/ai/LoadingIndicator';
+import { Message } from '@/components/ai/Message';
+import { MessageList } from '@/components/ai/MessageList';
+import { PromptInput } from '@/components/ai/PromptInput';
+import { Suggestions } from '@/components/ai/Suggestions';
 
 // Premium Components
-import { Reasoning } from '@/components/ai/premium/Reasoning';
-import { ToolCall } from '@/components/ai/premium/ToolCall';
+import { Reasoning } from '@/components/ai/Reasoning';
+import { ToolCall } from '@/components/ai/ToolCall';
 
 import { Code, Sparkles, MessageSquare, Lightbulb, Brain, Wrench } from 'lucide-react';
 

@@ -7,9 +7,9 @@
  * - Agent messages
  */
 
-import type { AgentUIMessage } from '@/components/ai/premium/AgentMessage';
-import type { ReasoningStep } from '@/components/ai/premium/Reasoning';
-import type { ToolCallProps } from '@/components/ai/premium/ToolCall';
+import type { AgentUIMessage } from '@/components/ai/AgentMessage';
+import type { ReasoningStep } from '@/components/ai/Reasoning';
+import type { ToolCallProps } from '@/components/ai/ToolCall';
 
 // Sample reasoning steps
 export const sampleReasoning: ReasoningStep[] = [

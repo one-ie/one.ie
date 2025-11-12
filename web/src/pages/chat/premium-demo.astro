@@ -10,9 +10,9 @@
  */
 
 import Layout from '@/layouts/Layout.astro';
-import { AgentMessage } from '@/components/ai/premium/AgentMessage';
-import { Reasoning } from '@/components/ai/premium/Reasoning';
-import { ToolCall } from '@/components/ai/premium/ToolCall';
+import { AgentMessage } from '@/components/ai/AgentMessage';
+import { Reasoning } from '@/components/ai/Reasoning';
+import { ToolCall } from '@/components/ai/ToolCall';
 import { Card, CardHeader, CardTitle, CardContent } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
 import { sampleReasoning, sampleToolCalls, sampleAgentMessages } from '@/lib/samplePremiumData';
@@ -123,7 +123,7 @@ const description = 'Interactive demo of premium chat features';
 
         <div>
           <h3 class="font-medium mb-2">In Your Component:</h3>
-          <pre class="bg-muted p-4 rounded-lg text-xs overflow-x-auto"><code>{`import { AgentMessage } from '@/components/ai/premium/AgentMessage';
+          <pre class="bg-muted p-4 rounded-lg text-xs overflow-x-auto"><code>{`import { AgentMessage } from '@/components/ai/AgentMessage';
 
 // Render agent message with automatic type detection
 <AgentMessage message={message} />
