@@ -1,0 +1,23 @@
+---
+/**
+ * v0-style Chat Interface
+ *
+ * Advanced chat UI with v0-specific features
+ */
+
+import Layout from '@/layouts/Layout.astro';
+import DemoV0 from '@/components/ai/examples/v0-clone';
+
+const title = 'v0 Chat';
+const description = 'AI chat powered by v0 with code generation';
+---
+
+<Layout
+  title={title}
+  description={description}
+  sidebarInitialCollapsed={true}
+  hideHeader={true}
+  fullHeight={true}
+>
+  <DemoV0 client:only="react" />
+</Layout>

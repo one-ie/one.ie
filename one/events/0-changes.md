@@ -1,3 +1,22 @@
+### **08994029** — template:13 — `AI Chat``
+
+**Template:**
+  - .claude/agents/agent-frontend.md
+  - .claude/hooks.log
+  - .claude/hooks/.last-news-context
+  - .claude/state/cycle.json
+  - one/events/0-changes.md
+  - one/things/plans/ai-elements-integration.md
+  - web/CLAUDE.md
+  - web/package-lock.json
+  - web/src/components/Sidebar.tsx
+  - web/src/components/ai/ChatClient.tsx
+  - web/src/layouts/Layout.astro
+  - web/src/pages/CLAUDE.md
+  - web/src/pages/chat/index.astro
+
+
+
 ### **9f9df7ff** — template:1 — `docs: Add comprehensive deployment guide for Cloudflare Pages``
 
 **Template:**

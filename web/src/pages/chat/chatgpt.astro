@@ -1,0 +1,29 @@
+---
+/**
+ * ChatGPT-style Chat Interface
+ *
+ * Advanced chat UI with:
+ * - Message branching (multiple versions)
+ * - Agent reasoning visualization
+ * - Tool call display
+ * - Source citations
+ * - Streaming responses
+ * - Suggestion prompts
+ */
+
+import Layout from '@/layouts/Layout.astro';
+import DemoChatGPT from '@/components/ai/examples/demo-chatgpt';
+
+const title = 'ChatGPT-Style Chat';
+const description = 'Advanced AI chat with reasoning, tool calls, and message versioning';
+---
+
+<Layout
+  title={title}
+  description={description}
+  sidebarInitialCollapsed={true}
+  hideHeader={true}
+  fullHeight={true}
+>
+  <DemoChatGPT client:only="react" />
+</Layout>
