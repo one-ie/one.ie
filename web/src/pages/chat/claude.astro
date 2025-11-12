@@ -1,0 +1,23 @@
+---
+/**
+ * Claude-style Chat Interface
+ *
+ * Advanced chat UI with Claude-specific features
+ */
+
+import Layout from '@/layouts/Layout.astro';
+import DemoClaude from '@/components/ai/examples/demo-claude';
+
+const title = 'Claude Chat';
+const description = 'AI chat powered by Claude with advanced features';
+---
+
+<Layout
+  title={title}
+  description={description}
+  sidebarInitialCollapsed={true}
+  hideHeader={true}
+  fullHeight={true}
+>
+  <DemoClaude client:only="react" />
+</Layout>

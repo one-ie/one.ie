@@ -1,3 +1,84 @@
+### **7b5b1367** — template:4 — `AI Chat``
+
+**Template:**
+  - web/src/components/ai/ChatClient.tsx
+  - web/src/components/ai/elements/conversation.tsx
+  - web/src/components/ai/elements/message.tsx
+  - web/src/styles/global.css
+
+
+
+### **08994029** — template:13 — `AI Chat``
+
+**Template:**
+  - .claude/agents/agent-frontend.md
+  - .claude/hooks.log
+  - .claude/hooks/.last-news-context
+  - .claude/state/cycle.json
+  - one/events/0-changes.md
+  - one/things/plans/ai-elements-integration.md
+  - web/CLAUDE.md
+  - web/package-lock.json
+  - web/src/components/Sidebar.tsx
+  - web/src/components/ai/ChatClient.tsx
+  - web/src/layouts/Layout.astro
+  - web/src/pages/CLAUDE.md
+  - web/src/pages/chat/index.astro
+
+
+
+### **9f9df7ff** — template:1 — `docs: Add comprehensive deployment guide for Cloudflare Pages``
+
+**Template:**
+  - web/src/content/docs/develop/deploy.md
+
+
+
+### **3777c450** — custom:1 — `fix: Add root package.json for Cloudflare Pages monorepo`` [customization]
+
+**Your Changes:**
+  - package.json
+
+
+
+### **ee979043** — custom:1 — `fix: Configure Node.js version for Cloudflare Pages`` [customization]
+
+**Your Changes:**
+  - .node-version
+
+
+
+### **bf86d112** — template:1 — `Revert "fix: Update package-lock.json to match current package.json"``
+
+**Template:**
+  - web/package-lock.json
+
+
+
+### **18f89d3b** — template:1 — `fix: Update package-lock.json to match current package.json``
+
+**Template:**
+  - web/package-lock.json
+
+
+
+### **2a4ab577** — custom:1 — `fix: Add pre-deployment check script to prevent build failures`` [customization]
+
+**Your Changes:**
+  - scripts/pre-deployment-check.sh
+
+
+
+### **57572bef** — template:4 — `feat: Add Vercel AI Elements components and dependencies``
+
+**Template:**
+  - .claude/hooks.log
+  - .claude/hooks/.last-news-context
+  - .claude/state/cycle.json
+  - one/events/0-changes.md
+
+
+
 ### **8002966b** — template:68 — `AI Elements``
 
 **Template:**

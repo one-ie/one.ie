@@ -82,7 +82,7 @@
 @variant dark (.dark &);
 
 @theme {
-  --color-background: 36 8% 88%;
+  --color-background: 0 0% 100%;
   --color-foreground: 0 0% 13%;
   --color-card: 36 10% 74%;
   --color-card-foreground: 0 0% 13%;
@@ -107,7 +107,7 @@
   --color-chart-3: 219 14% 40%;
   --color-chart-4: 36 8% 55%;
   --color-chart-5: 0 0% 13%;
-  --color-sidebar-background: 0 0% 100%;
+  --color-sidebar-background: 0 0% 93.3%;
   --color-sidebar-foreground: 0 0% 13%;
   --color-sidebar-primary: 216 55% 25%;
   --color-sidebar-primary-foreground: 36 8% 96%;
@@ -210,7 +210,7 @@ html, body {
   --aui-thread-max-width: infinity;
   --primary: 216 55% 25%;
   --primary-foreground: 36 8% 96%;
-  --sidebar: 0 0% 100%;
+  --sidebar: 0 0% 93.3%;
   --sidebar-foreground: 0 0% 13%;
   --sidebar-primary: 216 55% 25%;
   --sidebar-primary-foreground: 36 8% 96%;

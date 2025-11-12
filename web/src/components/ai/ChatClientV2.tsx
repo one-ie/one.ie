@@ -1,11 +1,12 @@
 /**
- * Premium Chat Client - Extended with Agent Features
+ * High-Converting Chat Client V2
  *
- * Extends SimpleChatClient with:
- * - Agent reasoning visualization
- * - Tool call display
- * - Extended message types (text, reasoning, tool_call, ui)
- * - Premium indicators
+ * Redesigned for maximum conversion with:
+ * - Beautiful demo suggestion cards
+ * - Clear value proposition
+ * - Progressive feature disclosure
+ * - Social proof indicators
+ * - Premium tier benefits
  */
 
 import { useState, useEffect, useRef } from 'react';
@@ -24,7 +25,6 @@ import {
   ModelSelectorTrigger,
 } from '@/components/ai/elements/model-selector';
 import { PromptInputSpeechButton } from '@/components/ai/elements/prompt-input';
-import { Suggestions, Suggestion } from '@/components/ai/elements/suggestion';
 import { AgentMessage, type AgentUIMessage } from '@/components/ai/AgentMessage';
 import {
   Message,
@@ -50,7 +50,40 @@ import { Label } from '@/components/ui/label';
 import { Alert, AlertDescription } from '@/components/ui/alert';
 import { Badge } from '@/components/ui/badge';
 import { useToast } from '@/hooks/use-toast';
-import { Brain, GlobeIcon, CheckIcon, CopyIcon, CheckCheckIcon } from 'lucide-react';
+import {
+  Brain,
+  GlobeIcon,
+  CheckIcon,
+  CopyIcon,
+  CheckCheckIcon,
+  Sparkles,
+  Zap,
+  Shield,
+  ChartBar,
+  Code2,
+  Palette,
+  Database,
+  FileSearch,
+  Users,
+  TrendingUp,
+  Lock,
+  Unlock,
+  Star,
+  ArrowRight,
+  Play,
+  Layers,
+  Bot,
+  Wand2,
+  LineChart,
+  Table,
+  FormInput,
+  Calendar,
+  MessageSquare,
+  Image,
+  Search,
+  Mic,
+  Plus
+} from 'lucide-react';
 import { cn } from '@/lib/utils';
 import {
   Select,
@@ -61,74 +94,266 @@ import {
 } from '@/components/ui/select';
 import type { ChatStatus } from 'ai';
 
+// Category definitions with icons and colors
+const DEMO_CATEGORIES = {
+  'ai-features': {
+    name: 'AI Features',
+    icon: Brain,
+    color: 'from-purple-500 to-pink-500',
+    bgColor: 'bg-gradient-to-br from-purple-500/10 to-pink-500/10',
+    borderColor: 'border-purple-500/20',
+    description: 'Advanced AI capabilities'
+  },
+  'data-viz': {
+    name: 'Data & Analytics',
+    icon: ChartBar,
+    color: 'from-blue-500 to-cyan-500',
+    bgColor: 'bg-gradient-to-br from-blue-500/10 to-cyan-500/10',
+    borderColor: 'border-blue-500/20',
+    description: 'Visualize and analyze data'
+  },
+  'ui-generation': {
+    name: 'UI Generation',
+    icon: Palette,
+    color: 'from-green-500 to-emerald-500',
+    bgColor: 'bg-gradient-to-br from-green-500/10 to-emerald-500/10',
+    borderColor: 'border-green-500/20',
+    description: 'Generate UI components'
+  },
+  'productivity': {
+    name: 'Productivity',
+    icon: Zap,
+    color: 'from-orange-500 to-red-500',
+    bgColor: 'bg-gradient-to-br from-orange-500/10 to-red-500/10',
+    borderColor: 'border-orange-500/20',
+    description: 'Boost your productivity'
+  }
+};
+
+// Enhanced demo suggestions with categories
+const DEMO_SUGGESTIONS = [
+  {
+    id: 'chart',
+    prompt: "📊 Generate a sales chart (demo)",
+    title: "Dynamic Charts",
+    description: "Create interactive visualizations",
+    category: 'data-viz',
+    icon: LineChart,
+    premium: false,
+    popular: true
+  },
+  {
+    id: 'table',
+    prompt: "📋 Create a data table (demo)",
+    title: "Data Tables",
+    description: "Structure data beautifully",
+    category: 'data-viz',
+    icon: Table,
+    premium: false
+  },
+  {
+    id: 'form',
+    prompt: "📝 Build a contact form (demo)",
+    title: "Smart Forms",
+    description: "Generate forms instantly",
+    category: 'ui-generation',
+    icon: FormInput,
+    premium: false
+  },
+  {
+    id: 'timeline',
+    prompt: "⏱️ Show project timeline (demo)",
+    title: "Timeline View",
+    description: "Visualize project milestones",
+    category: 'ui-generation',
+    icon: Calendar,
+    premium: false
+  },
+];
+
+// Value propositions for conversion
+const VALUE_PROPS: any[] = [];
+
+// Trust indicators
+const TRUST_BADGES: any[] = [];
+
 const POPULAR_MODELS = [
+  // Free models
   {
     id: 'google/gemini-2.5-flash-lite',
     name: 'Gemini 2.5 Flash Lite',
     chef: 'Google',
     chefSlug: 'google',
     providers: ['google'],
+    free: true,
+    context: '1M'
   },
   {
-    id: 'openai/gpt-4',
-    name: 'GPT-4',
+    id: 'openrouter/polaris-alpha',
+    name: 'Polaris Alpha',
+    chef: 'OpenRouter',
+    chefSlug: 'openrouter',
+    providers: ['openrouter'],
+    free: true,
+    context: '256K'
+  },
+  {
+    id: 'tngtech/deepseek-r1t2-chimera:free',
+    name: 'DeepSeek R1T2 Chimera',
+    chef: 'TNG',
+    chefSlug: 'tng',
+    providers: ['tng'],
+    free: true,
+    context: '164K'
+  },
+  {
+    id: 'z-ai/glm-4.5-air:free',
+    name: 'GLM 4.5 Air',
+    chef: 'Z.AI',
+    chefSlug: 'z-ai',
+    providers: ['z-ai'],
+    free: true,
+    context: '131K'
+  },
+  {
+    id: 'tngtech/deepseek-r1t-chimera:free',
+    name: 'DeepSeek R1T Chimera',
+    chef: 'TNG',
+    chefSlug: 'tng',
+    providers: ['tng'],
+    free: true,
+    context: '164K'
+  },
+  // Premium models - Frontier
+  {
+    id: 'anthropic/claude-sonnet-4.5',
+    name: 'Claude Sonnet 4.5',
+    chef: 'Anthropic',
+    chefSlug: 'anthropic',
+    providers: ['anthropic'],
+    free: false,
+    context: '1M'
+  },
+  {
+    id: 'openai/gpt-5',
+    name: 'GPT-5',
     chef: 'OpenAI',
     chefSlug: 'openai',
     providers: ['openai'],
+    free: false,
+    context: '400K'
   },
   {
-    id: 'openai/gpt-4o',
-    name: 'GPT-4o',
+    id: 'google/gemini-2.5-pro',
+    name: 'Gemini 2.5 Pro',
+    chef: 'Google',
+    chefSlug: 'google',
+    providers: ['google'],
+    free: false,
+    context: '1M'
+  },
+  {
+    id: 'anthropic/claude-sonnet-4',
+    name: 'Claude Sonnet 4',
+    chef: 'Anthropic',
+    chefSlug: 'anthropic',
+    providers: ['anthropic'],
+    free: false,
+    context: '1M'
+  },
+  // Premium - Fast models
+  {
+    id: 'x-ai/grok-code-fast-1',
+    name: 'Grok Code Fast 1',
+    chef: 'xAI',
+    chefSlug: 'x-ai',
+    providers: ['x-ai'],
+    free: false,
+    context: '256K'
+  },
+  {
+    id: 'x-ai/grok-4-fast',
+    name: 'Grok 4 Fast',
+    chef: 'xAI',
+    chefSlug: 'x-ai',
+    providers: ['x-ai'],
+    free: false,
+    context: '2M'
+  },
+  {
+    id: 'google/gemini-2.5-flash',
+    name: 'Gemini 2.5 Flash',
+    chef: 'Google',
+    chefSlug: 'google',
+    providers: ['google'],
+    free: false,
+    context: '1M'
+  },
+  {
+    id: 'google/gemini-2.0-flash-001',
+    name: 'Gemini 2.0 Flash',
+    chef: 'Google',
+    chefSlug: 'google',
+    providers: ['google'],
+    free: false,
+    context: '1M'
+  },
+  // Premium - Efficient
+  {
+    id: 'openai/gpt-5-mini',
+    name: 'GPT-5 Mini',
     chef: 'OpenAI',
     chefSlug: 'openai',
-    providers: ['openai', 'azure'],
+    providers: ['openai'],
+    free: false,
+    context: '400K'
+  },
+  {
+    id: 'anthropic/claude-haiku-4.5',
+    name: 'Claude Haiku 4.5',
+    chef: 'Anthropic',
+    chefSlug: 'anthropic',
+    providers: ['anthropic'],
+    free: false,
+    context: '200K'
   },
   {
     id: 'openai/gpt-4o-mini',
     name: 'GPT-4o Mini',
     chef: 'OpenAI',
     chefSlug: 'openai',
-    providers: ['openai', 'azure'],
+    providers: ['openai'],
+    free: false,
+    context: '128K'
   },
   {
-    id: 'anthropic/claude-3-opus',
-    name: 'Claude 3 Opus',
-    chef: 'Anthropic',
-    chefSlug: 'anthropic',
-    providers: ['anthropic'],
+    id: 'deepseek/deepseek-chat-v3.1',
+    name: 'DeepSeek V3.1',
+    chef: 'DeepSeek',
+    chefSlug: 'deepseek',
+    providers: ['deepseek'],
+    free: false,
+    context: '164K'
   },
   {
-    id: 'anthropic/claude-3-sonnet',
-    name: 'Claude 3 Sonnet',
-    chef: 'Anthropic',
-    chefSlug: 'anthropic',
-    providers: ['anthropic'],
+    id: 'meta-llama/llama-3.3-70b-instruct',
+    name: 'Llama 3.3 70B',
+    chef: 'Meta',
+    chefSlug: 'meta',
+    providers: ['meta'],
+    free: false,
+    context: '131K'
   },
 ];
 
 const STORAGE_KEY = 'openrouter-api-key';
 const MODEL_KEY = 'openrouter-model';
 
-// Premium demo prompt suggestions showcasing advanced features
-const PROMPT_SUGGESTIONS = [
-  "🧠 Show me agent reasoning (demo)",
-  "🔧 Demonstrate tool calls (demo)",
-  "📊 Generate a sales chart (demo)",
-  "📋 Create a data table (demo)",
-  "📝 Build a contact form (demo)",
-  "⏱️ Show project timeline (demo)",
-  "Create a React component for a todo list with TypeScript",
-  "Analyze sales data and show insights with charts",
-];
-
-interface Message {
+// Extended message type for premium features
+interface ExtendedMessage {
   id: string;
   role: 'user' | 'assistant' | 'system';
   content: string;
-}
-
-// Extended message type for premium features
-interface ExtendedMessage extends Message {
   type?: 'text' | 'reasoning' | 'tool_call' | 'ui';
   payload?: any;
   timestamp?: number;
@@ -317,7 +542,117 @@ const DEMO_RESPONSES: Record<string, ExtendedMessage[]> = {
   ]
 };
 
-export function ChatClient() {
+// Demo suggestion card component
+function DemoCard({
+  suggestion,
+  onSelect,
+  isLocked = false
+}: {
+  suggestion: typeof DEMO_SUGGESTIONS[0];
+  onSelect: (prompt: string) => void;
+  isLocked?: boolean;
+}) {
+  const category = DEMO_CATEGORIES[suggestion.category as keyof typeof DEMO_CATEGORIES];
+  const Icon = suggestion.icon;
+
+  return (
+    <Card
+      className={cn(
+        "relative overflow-hidden cursor-pointer transition-all duration-300 hover:scale-[1.02] hover:shadow-xl group",
+        category.bgColor,
+        category.borderColor,
+        "border-2",
+        isLocked && "opacity-60"
+      )}
+      onClick={() => !isLocked && onSelect(suggestion.prompt)}
+    >
+      {/* Popular badge */}
+      {suggestion.popular && (
+        <div className="absolute top-2 right-2 z-10">
+          <Badge className="bg-gradient-to-r from-yellow-500 to-orange-500 text-white border-0">
+            <Star className="w-3 h-3 mr-1" />
+            Popular
+          </Badge>
+        </div>
+      )}
+
+      {/* Premium badge */}
+      {suggestion.premium && (
+        <div className="absolute top-2 left-2 z-10">
+          <Badge variant="secondary" className="bg-gradient-to-r from-purple-500 to-pink-500 text-white border-0">
+            <Sparkles className="w-3 h-3 mr-1" />
+            Premium
+          </Badge>
+        </div>
+      )}
+
+      <CardHeader className="pb-3">
+        <div className="flex items-start gap-3">
+          <div className={cn(
+            "p-2.5 rounded-lg bg-gradient-to-br",
+            category.color,
+            "text-white shadow-lg"
+          )}>
+            <Icon className="w-5 h-5" />
+          </div>
+          <div className="flex-1">
+            <CardTitle className="text-base font-semibold">
+              {suggestion.title}
+            </CardTitle>
+            <CardDescription className="text-xs mt-1">
+              {suggestion.description}
+            </CardDescription>
+          </div>
+        </div>
+      </CardHeader>
+
+      <CardContent className="pt-0 pb-4">
+        <div className="flex items-center justify-between">
+          <Badge variant="outline" className="text-xs">
+            {category.name}
+          </Badge>
+          <ArrowRight className={cn(
+            "w-4 h-4 transition-transform group-hover:translate-x-1",
+            isLocked ? "text-muted-foreground" : "text-primary"
+          )} />
+        </div>
+      </CardContent>
+
+      {/* Lock overlay for premium features when no API key */}
+      {isLocked && (
+        <div className="absolute inset-0 bg-background/80 backdrop-blur-sm flex items-center justify-center">
+          <div className="text-center p-4">
+            <Lock className="w-8 h-8 mx-auto mb-2 text-muted-foreground" />
+            <p className="text-sm font-medium">Add API Key</p>
+            <p className="text-xs text-muted-foreground mt-1">to unlock</p>
+          </div>
+        </div>
+      )}
+    </Card>
+  );
+}
+
+// Hero section component
+function HeroSection({ hasApiKey }: { hasApiKey: boolean }) {
+  return (
+    <div className="text-center space-y-6 mb-8">
+      {/* Main heading with gradient */}
+      <div className="space-y-2">
+        <h1 className="text-4xl md:text-5xl font-bold">
+          <span className="bg-gradient-to-r from-purple-600 via-pink-600 to-blue-600 bg-clip-text text-transparent">
+            AI Chat That Actually Works
+          </span>
+        </h1>
+        <p className="text-lg text-muted-foreground max-w-2xl mx-auto">
+          Experience the future of AI with reasoning visualization, tool calls, and dynamic UI generation
+        </p>
+      </div>
+
+    </div>
+  );
+}
+
+export function ChatClientV2() {
   const [apiKey, setApiKey] = useState('');
   const [selectedModel, setSelectedModel] = useState('google/gemini-2.5-flash-lite');
   const [modelSelectorOpen, setModelSelectorOpen] = useState(false);
@@ -332,6 +667,7 @@ export function ChatClient() {
   const textareaRef = useRef<HTMLTextAreaElement>(null);
 
   const selectedModelData = POPULAR_MODELS.find((m) => m.id === selectedModel);
+  const hasApiKey = !!apiKey;
 
   // Load API key and model from localStorage on mount
   useEffect(() => {
@@ -353,6 +689,11 @@ export function ChatClient() {
     if (apiKey && typeof window !== 'undefined') {
       localStorage.setItem(STORAGE_KEY, apiKey);
       localStorage.setItem(MODEL_KEY, selectedModel);
+      toast({
+        title: "API Key Saved",
+        description: "All premium features are now unlocked!",
+      });
+      setShowSettings(false);
     }
   };
 
@@ -364,11 +705,16 @@ export function ChatClient() {
     }
     setApiKey('');
     setMessages([]);
+    toast({
+      title: "API Key Removed",
+      description: "Switched back to free tier",
+    });
   };
 
-  // Handle suggestion click
-  const handleSuggestionClick = (suggestion: string) => {
-    handleSubmit({ text: suggestion, files: [] } as any, new Event('submit') as any);
+  // Handle demo selection
+  const handleDemoSelect = (prompt: string) => {
+    // All demos work in free tier!
+    handleSubmit({ text: prompt, files: [] } as any, new Event('submit') as any);
   };
 
   // Copy message to clipboard
@@ -390,7 +736,7 @@ export function ChatClient() {
     }
   };
 
-  // Copy entire conversation to clipboard
+  // Copy entire conversation
   const handleCopyConversation = async () => {
     try {
       const conversationText = messages
@@ -407,7 +753,6 @@ export function ChatClient() {
         description: "Entire conversation copied to clipboard",
       });
 
-      // Reset after 2 seconds
       setTimeout(() => setConversationCopied(false), 2000);
     } catch (err) {
       toast({
@@ -418,7 +763,7 @@ export function ChatClient() {
     }
   };
 
-  // Handle voice input - updates textarea value as user speaks
+  // Handle voice input
   const handleTranscriptionChange = (text: string) => {
     if (textareaRef.current) {
       textareaRef.current.value = text;
@@ -431,7 +776,6 @@ export function ChatClient() {
     if (textarea) {
       const currentText = textarea.value;
       if (currentText.trim()) {
-        // Prepend "Search the web for: " to the query
         textarea.value = `Search the web for: ${currentText}`;
         toast({
           title: "Web Search",
@@ -454,6 +798,18 @@ export function ChatClient() {
 
     if (!text.trim() || isLoading) return;
 
+    // Check if premium model selected without API key
+    const selectedModelInfo = POPULAR_MODELS.find(m => m.id === selectedModel);
+    if (selectedModelInfo && !selectedModelInfo.free && !apiKey) {
+      // Show settings modal instead of making request
+      setShowSettings(true);
+      toast({
+        title: "API Key Required",
+        description: `${selectedModelInfo.name} requires an OpenRouter API key. Add your key or switch to a free model.`,
+      });
+      return;
+    }
+
     const userMessage: ExtendedMessage = {
       id: `user-${Date.now()}`,
       role: 'user',
@@ -462,12 +818,11 @@ export function ChatClient() {
       timestamp: Date.now(),
     };
 
-    // Add user message to the chat
     setMessages(prev => [...prev, userMessage]);
     setIsLoading(true);
     setError(null);
 
-    // Check if this is a demo request (only trigger if "(demo)" is in the message)
+    // Check if this is a demo request
     const messageLower = text.toLowerCase();
     let demoKey: string | null = null;
 
@@ -483,10 +838,7 @@ export function ChatClient() {
     // If demo request, return mock responses
     if (demoKey && DEMO_RESPONSES[demoKey]) {
       try {
-        // Simulate typing delay for realism
         await new Promise(resolve => setTimeout(resolve, 500));
-
-        // Add all demo messages
         setMessages(prev => [...prev, ...DEMO_RESPONSES[demoKey]]);
         setIsLoading(false);
         return;
@@ -499,33 +851,11 @@ export function ChatClient() {
     }
 
     try {
-      // Convert files to data URLs if present
-      let messageContent: any = text;
-
-      if (files && files.length > 0) {
-        const fileDataUrls = await Promise.all(
-          files.map(file => new Promise<string>((resolve, reject) => {
-            const reader = new FileReader();
-            reader.onload = () => resolve(reader.result as string);
-            reader.onerror = reject;
-            reader.readAsDataURL(file);
-          }))
-        );
-
-        messageContent = [
-          { type: 'text', text },
-          ...fileDataUrls.map(url => ({
-            type: 'image',
-            url
-          }))
-        ];
-      }
-
-      // Create the user message with multimodal content if needed
-      const userMessageForAPI = {
-        role: 'user',
-        content: messageContent,
-      };
+      // Always make the API call - free tier works without API key!
+      const allMessages = [
+        ...messages.map(m => ({ role: m.role, content: m.content })),
+        { role: 'user', content: text.trim() }
+      ];
 
       const response = await fetch('/api/chat', {
         method: 'POST',
@@ -533,18 +863,16 @@ export function ChatClient() {
           'Content-Type': 'application/json',
         },
         body: JSON.stringify({
-          messages: [...messages.map(m => ({ role: m.role, content: m.content })), userMessageForAPI],
+          messages: allMessages,
           apiKey,
           model: selectedModel,
-          premium: true, // Request premium features
+          premium: true,
         }),
       });
 
       if (!response.ok) {
         const errorData = await response.json();
-        const errorMessage = errorData.error || `HTTP error! status: ${response.status}`;
-        console.error('API Error:', errorMessage);
-        throw new Error(errorMessage);
+        throw new Error(errorData.error || `HTTP error! status: ${response.status}`);
       }
 
       const reader = response.body?.getReader();
@@ -560,63 +888,12 @@ export function ChatClient() {
         timestamp: Date.now(),
       };
 
-      // Add empty assistant message that we'll update
       setMessages(prev => [...prev, assistantMessage]);
 
       // Read streaming response
-      let receivedUIComponent = false;
       while (true) {
         const { done, value } = await reader.read();
-        if (done) {
-          console.log('Stream complete. Full assistant content:', assistantContent);
-
-          // Client-side fallback: detect charts in content if server didn't send them
-          const chartMatches = assistantContent.match(/```ui-chart\s*\n([\s\S]*?)\n```/g);
-          if (!receivedUIComponent && chartMatches) {
-            console.log(`Found ${chartMatches.length} charts in content, but not received as UI components`);
-            console.log('This means server-side detection failed');
-
-            const newChartMessages: ExtendedMessage[] = [];
-
-            for (const match of chartMatches) {
-              const chartJson = match
-                .replace(/^```ui-chart\s*\n?/, '')
-                .replace(/\n```$/, '')
-                .trim();
-
-              try {
-                const chartData = JSON.parse(chartJson);
-                newChartMessages.push({
-                  id: `chart-${crypto.randomUUID()}`,
-                  role: 'assistant',
-                  content: '',
-                  type: 'ui',
-                  payload: { component: 'chart', data: chartData },
-                  timestamp: Date.now(),
-                });
-              } catch (parseError) {
-                console.error('Failed to parse chart JSON from fallback detection', parseError);
-              }
-            }
-
-            if (newChartMessages.length) {
-              const chartBlockRegex = /```ui-chart\s*\n([\s\S]*?)\n```/g;
-              assistantContent = assistantContent.replace(chartBlockRegex, '').trim();
-
-              setMessages(prev => {
-                const cleaned = prev.map(msg =>
-                  msg.id === assistantMessage.id
-                    ? { ...msg, content: assistantContent }
-                    : msg
-                );
-
-                return [...cleaned, ...newChartMessages];
-              });
-            }
-          }
-
-          break;
-        }
+        if (done) break;
 
         const chunk = decoder.decode(value);
         const lines = chunk.split('\n');
@@ -629,28 +906,21 @@ export function ChatClient() {
             try {
               const parsed = JSON.parse(data);
 
-              // Debug logging
-              if (parsed.type) {
+              // Check for UI component messages (charts, tables, etc.)
+              if (parsed.type && parsed.type !== 'text') {
                 console.log('Received UI component:', parsed.type, parsed.payload);
-              }
-
-              // Handle extended message types
-              if (parsed.type) {
-                receivedUIComponent = true;
-                // Agent message with special type (reasoning, tool_call, etc.)
-                // Use crypto.randomUUID() for truly unique IDs
-                const agentMessage: ExtendedMessage = {
-                  id: `agent-${crypto.randomUUID()}`,
+                const uiMessage: ExtendedMessage = {
+                  id: `ui-${crypto.randomUUID()}`,
                   role: 'assistant',
                   content: '',
-                  type: parsed.type,
+                  type: parsed.type as any,
                   payload: parsed.payload,
                   timestamp: Date.now(),
                 };
-
-                setMessages(prev => [...prev, agentMessage]);
-              } else if (parsed.choices?.[0]?.delta?.content) {
-                // Standard text content
+                setMessages(prev => [...prev, uiMessage]);
+              }
+              // Check for regular text content
+              else if (parsed.choices?.[0]?.delta?.content) {
                 assistantContent += parsed.choices[0].delta.content;
                 setMessages(prev =>
                   prev.map(msg =>
@@ -661,29 +931,29 @@ export function ChatClient() {
                 );
               }
             } catch (e) {
-              // Some chunks might not be valid JSON, that's okay
+              // Ignore parse errors
             }
           }
         }
       }
+
+      setIsLoading(false);
     } catch (err) {
       console.error('Chat error:', err);
       setError(err instanceof Error ? err.message : 'Failed to send message');
-      // Remove the user message if there was an error
       setMessages(prev => prev.filter(msg => msg.id !== userMessage.id));
     } finally {
       setIsLoading(false);
     }
   };
 
-  // Render extended message types with proper structure
+  // Render message
   const renderMessage = (msg: ExtendedMessage) => {
     const isCopied = copiedMessageId === msg.id;
 
     return (
       <Message key={msg.id} from={msg.role}>
         <div>
-          {/* Show reasoning if present */}
           {msg.reasoning && (
             <Reasoning
               duration={msg.reasoning.duration}
@@ -696,7 +966,6 @@ export function ChatClient() {
             </Reasoning>
           )}
 
-          {/* Show UI components (charts, tables, etc.) */}
           {msg.type && msg.type !== 'text' && msg.type !== 'reasoning' && (
             <div className="mb-4">
               <AgentMessage
@@ -709,7 +978,6 @@ export function ChatClient() {
             </div>
           )}
 
-          {/* Show content when user message or reasoning is complete */}
           {(msg.role === 'user' || msg.isReasoningComplete || !msg.reasoning) && msg.content && (
             <MessageContent
               className={cn(
@@ -721,7 +989,6 @@ export function ChatClient() {
             </MessageContent>
           )}
 
-          {/* Copy button for assistant messages only */}
           {msg.content && msg.role === 'assistant' && (
             <MessageActions className="mt-2 opacity-0 group-hover:opacity-100 transition-opacity">
               <MessageAction
@@ -741,8 +1008,6 @@ export function ChatClient() {
     );
   };
 
-
-  // Show chat interface
   return (
     <div className="relative flex size-full flex-col overflow-hidden items-center justify-center bg-background">
       <style>{`
@@ -753,35 +1018,49 @@ export function ChatClient() {
         }
       `}</style>
 
-      <div className="w-full max-w-[1000px] h-full flex flex-col">
+      <div className="w-full max-w-[1200px] h-full flex flex-col">
         {/* Settings Modal */}
         {showSettings && (
           <div className="fixed inset-0 bg-black/50 flex items-center justify-center z-50">
             <Card className="w-96">
               <CardHeader className="flex flex-row items-center justify-between">
-                <CardTitle>Chat Settings</CardTitle>
-                <Button variant="ghost" size="sm" onClick={() => setShowSettings(false)}>
+                <CardTitle>Unlock Premium Features</CardTitle>
+                <Button variant="ghost" size="sm" onClick={() => {
+                  // Same as Clear button - clear key and reset to free model
+                  if (typeof window !== 'undefined') {
+                    localStorage.removeItem(STORAGE_KEY);
+                    localStorage.removeItem(MODEL_KEY);
+                  }
+                  setApiKey('');
+                  setSelectedModel('google/gemini-2.5-flash-lite');
+                  setMessages([]);
+                  setShowSettings(false);
+                }}>
                   ✕
                 </Button>
               </CardHeader>
               <CardContent className="space-y-4">
                 <Alert>
                   <AlertDescription className="text-xs">
-                    💡 Chat works for free with Gemini Flash Lite. Add your OpenRouter API key to unlock other models.
+                    ✨ <strong>Chat is 100% FREE with Gemini Flash Lite!</strong> No API key required.
+                    Add an OpenRouter key only if you want access to GPT-4, Claude, and 50+ other models.
                   </AlertDescription>
                 </Alert>
 
                 <div className="space-y-2">
-                  <Label htmlFor="api-key">OpenRouter API Key (Optional)</Label>
+                  <Label htmlFor="api-key">OpenRouter API Key</Label>
                   <Input
                     id="api-key"
                     type="password"
                     value={apiKey}
                     onChange={(e) => setApiKey(e.target.value)}
-                    placeholder="sk-or-v1-... (optional)"
+                    placeholder="sk-or-v1-..."
                   />
                   <p className="text-xs text-muted-foreground">
-                    Get a free key from <a href="https://openrouter.ai/keys" target="_blank" rel="noopener noreferrer" className="text-primary hover:underline">OpenRouter</a>
+                    Get a free key from{' '}
+                    <a href="https://openrouter.ai/keys" target="_blank" rel="noopener noreferrer" className="text-primary hover:underline">
+                      OpenRouter
+                    </a>
                   </p>
                 </div>
 
@@ -794,7 +1073,12 @@ export function ChatClient() {
                     <SelectContent>
                       {POPULAR_MODELS.map((model) => (
                         <SelectItem key={model.id} value={model.id}>
-                          {model.name}
+                          <div className="flex items-center gap-2">
+                            {model.name}
+                            {model.free && (
+                              <Badge variant="secondary" className="text-xs">Free</Badge>
+                            )}
+                          </div>
                         </SelectItem>
                       ))}
                     </SelectContent>
@@ -803,11 +1087,11 @@ export function ChatClient() {
 
                 <div className="flex gap-2 pt-2">
                   <Button onClick={handleSaveApiKey} className="flex-1">
-                    Save Settings
+                    Unlock Features
                   </Button>
                   {apiKey && (
                     <Button variant="destructive" size="sm" onClick={handleClearKey}>
-                      Clear Key
+                      Clear
                     </Button>
                   )}
                 </div>
@@ -819,33 +1103,64 @@ export function ChatClient() {
         {/* Error Display */}
         {error && (
           <div className="flex-shrink-0 px-6 py-2 bg-destructive/10">
-            <div className="container max-w-full mx-auto">
-              <Alert variant="destructive">
-                <AlertDescription>
-                  <strong>Error:</strong> {error}
-                </AlertDescription>
-              </Alert>
-            </div>
+            <Alert variant="destructive">
+              <AlertDescription>
+                <strong>Error:</strong> {error}
+              </AlertDescription>
+            </Alert>
           </div>
         )}
 
-        {/* Messages Area - Using Conversation wrapper for better scroll handling */}
-        <Conversation className="pb-[220px]">
+        {/* Messages Area */}
+        <Conversation className="pb-[280px]">
           <ConversationContent>
             {messages.length === 0 && !isLoading ? (
-              <div className="flex flex-col items-center justify-center min-h-[70vh] space-y-8 px-4">
-                {/* Prompt Suggestions - Show when no messages */}
-                <div className="w-full">
-                  <Suggestions className="gap-2">
-                    {PROMPT_SUGGESTIONS.map((suggestion, idx) => (
-                      <Suggestion
-                        key={idx}
+              <div className="flex flex-col items-center justify-center min-h-[80vh] space-y-8 px-4">
+                {/* Hero Section */}
+                <HeroSection hasApiKey={hasApiKey} />
+
+                {/* Demo Cards Grid */}
+                <div className="w-full max-w-4xl">
+                  <div className="flex items-center justify-between mb-4">
+                    <h2 className="text-xl font-semibold">Try These Demos</h2>
+                    {!hasApiKey && (
+                      <Button
+                        variant="outline"
+                        size="sm"
+                        onClick={() => setShowSettings(true)}
+                        className="gap-2"
+                      >
+                        <Unlock className="w-4 h-4" />
+                        Add API Key
+                      </Button>
+                    )}
+                  </div>
+
+                  {/* Category tabs */}
+                  <div className="flex gap-2 mb-6 overflow-x-auto pb-2">
+                    {Object.entries(DEMO_CATEGORIES).map(([key, cat]) => (
+                      <Badge
+                        key={key}
+                        variant="outline"
+                        className="flex items-center gap-1.5 px-3 py-1.5 whitespace-nowrap"
+                      >
+                        <cat.icon className="w-3.5 h-3.5" />
+                        {cat.name}
+                      </Badge>
+                    ))}
+                  </div>
+
+                  {/* Demo cards grid */}
+                  <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
+                    {DEMO_SUGGESTIONS.map((suggestion) => (
+                      <DemoCard
+                        key={suggestion.id}
                         suggestion={suggestion}
-                        onClick={handleSuggestionClick}
-                        className="rounded-full bg-zinc-800 hover:bg-zinc-700 text-zinc-200 border-zinc-700"
+                        onSelect={handleDemoSelect}
+                        isLocked={false} // Everything works in free tier!
                       />
                     ))}
-                  </Suggestions>
+                  </div>
                 </div>
               </div>
             ) : (
@@ -863,21 +1178,22 @@ export function ChatClient() {
           <ConversationScrollButton />
         </Conversation>
 
-        {/* Input Area - FIXED at bottom with dark background */}
-        <div className="fixed bottom-0 left-0 right-0 z-10 bg-background">
-          <div className="w-full max-w-[1000px] mx-auto px-4 py-4" style={{ marginLeft: 'calc(50% - 500px + 45px)' }}>
-            {/* Copy Conversation Button - appears when there are messages */}
+        {/* Enhanced Input Area */}
+        <div className="fixed bottom-0 left-0 right-0 z-10 bg-background border-t">
+          <div className="w-full max-w-[1200px] mx-auto px-4 py-4">
+            {/* Copy Conversation Button */}
             {messages.length > 0 && (
               <div className="flex justify-center mb-3">
                 <Button
                   variant={conversationCopied ? "default" : "outline"}
                   size="sm"
                   onClick={handleCopyConversation}
-                  className={`transition-all duration-200 ${
+                  className={cn(
+                    "transition-all duration-200",
                     conversationCopied
                       ? 'bg-green-600 hover:bg-green-700 text-white border-green-600'
-                      : 'text-foreground dark:text-zinc-300 border-border dark:border-zinc-600 hover:bg-accent dark:hover:bg-zinc-800 hover:text-foreground dark:hover:text-zinc-100'
-                  }`}
+                      : ''
+                  )}
                 >
                   {conversationCopied ? (
                     <>
@@ -895,7 +1211,7 @@ export function ChatClient() {
             )}
 
             <div className="relative flex flex-col bg-[hsl(var(--color-sidebar))] rounded-2xl p-3 gap-3 focus-within:outline-none border-2 border-border">
-              {/* Text input area on top */}
+              {/* Text input area */}
               <textarea
                 ref={textareaRef}
                 placeholder="Ask anything..."
@@ -913,7 +1229,7 @@ export function ChatClient() {
                 }}
               />
 
-              {/* Show attached files if any */}
+              {/* Attached files */}
               {attachments.length > 0 && (
                 <div className="flex flex-wrap gap-2 px-2">
                   {attachments.map((file, index) => (
@@ -930,10 +1246,10 @@ export function ChatClient() {
                 </div>
               )}
 
-              {/* Button row on bottom */}
+              {/* Enhanced button row */}
               <div className="flex items-center justify-between gap-2">
                 <div className="flex items-center gap-1">
-                  {/* Plus button for attachments */}
+                  {/* Attachment button */}
                   <input
                     type="file"
                     id="file-input"
@@ -946,59 +1262,62 @@ export function ChatClient() {
                       e.target.value = '';
                     }}
                   />
-                  <button
-                    type="button"
-                    className="p-2 text-zinc-400 hover:text-zinc-200 hover:bg-zinc-700/50 rounded-lg transition-all"
+                  <Button
+                    variant="ghost"
+                    size="icon"
+                    className="h-9 w-9"
                     onClick={() => document.getElementById('file-input')?.click()}
                     title="Attach files"
                   >
-                    <svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
-                      <path d="M10 4V16M4 10H16" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
-                    </svg>
-                  </button>
+                    <Plus className="h-4 w-4" />
+                  </Button>
 
-                  {/* Microphone button - uses Web Speech Recognition API */}
+                  {/* Voice input */}
                   <div className="inline-flex">
                     <PromptInputSpeechButton
                       textareaRef={textareaRef}
                       onTranscriptionChange={handleTranscriptionChange}
-                      className="p-2 text-zinc-400 hover:text-zinc-200 hover:bg-zinc-700/50 rounded-lg transition-all"
+                      className="h-9 w-9"
                     />
                   </div>
 
-                  {/* Search button with text */}
-                  <button
-                    type="button"
-                    className="flex items-center gap-1.5 px-3 py-1.5 text-zinc-400 hover:text-zinc-200 hover:bg-zinc-700/50 rounded-lg transition-all text-sm"
+                  {/* Web search */}
+                  <Button
+                    variant="ghost"
+                    size="sm"
+                    className="gap-1.5"
                     onClick={handleWebSearch}
                     title="Search the web"
                   >
-                    <GlobeIcon size={16} />
-                    <span>Search</span>
-                  </button>
+                    <GlobeIcon className="h-4 w-4" />
+                    <span className="hidden sm:inline">Search</span>
+                  </Button>
                 </div>
 
                 <div className="flex items-center gap-2">
                   {/* Model selector */}
-                  <ModelSelector
-                    onOpenChange={setModelSelectorOpen}
-                    open={modelSelectorOpen}
-                  >
-                    <ModelSelectorTrigger asChild>
-                      <button
-                        type="button"
-                        className="flex items-center gap-2 px-3 py-1.5 text-zinc-300 hover:text-zinc-100 transition-colors bg-zinc-700/50 hover:bg-zinc-600/50 rounded-full text-sm"
-                      >
-                        {selectedModelData?.name || 'GPT-4o'}
-                      </button>
-                    </ModelSelectorTrigger>
-                    <ModelSelectorContent>
-                      <ModelSelectorInput placeholder="Search models..." />
-                      <ModelSelectorList>
-                        <ModelSelectorEmpty>No models found.</ModelSelectorEmpty>
-                        {['OpenAI', 'Anthropic', 'Google'].map((chef) => (
-                          <ModelSelectorGroup heading={chef} key={chef}>
-                            {POPULAR_MODELS.filter((m) => m.chef === chef).map((m) => (
+                  <div className="flex items-center gap-2">
+                    <ModelSelector
+                      onOpenChange={setModelSelectorOpen}
+                      open={modelSelectorOpen}
+                    >
+                      <ModelSelectorTrigger asChild>
+                        <Button
+                          variant="outline"
+                          size="sm"
+                          className="gap-2"
+                        >
+                          {selectedModelData?.name || 'Select Model'}
+                        </Button>
+                      </ModelSelectorTrigger>
+                      <ModelSelectorContent>
+                        <ModelSelectorInput placeholder="Search models..." />
+                        <ModelSelectorList>
+                          <ModelSelectorEmpty>No models found.</ModelSelectorEmpty>
+
+                          {/* Free Models */}
+                          <ModelSelectorGroup heading="Free Models" key="free">
+                            {POPULAR_MODELS.filter((m) => m.free).map((m) => (
                               <ModelSelectorItem
                                 key={m.id}
                                 onSelect={() => {
@@ -1009,28 +1328,54 @@ export function ChatClient() {
                               >
                                 <ModelSelectorLogo provider={m.chefSlug} />
                                 <ModelSelectorName>{m.name}</ModelSelectorName>
-                                <ModelSelectorLogoGroup>
-                                  {m.providers.map((provider) => (
-                                    <ModelSelectorLogo key={provider} provider={provider} />
-                                  ))}
-                                </ModelSelectorLogoGroup>
-                                {selectedModel === m.id ? (
-                                  <CheckIcon className="ml-auto size-4" />
-                                ) : (
-                                  <div className="ml-auto size-4" />
-                                )}
+                                <Badge variant="secondary" className="ml-2 text-xs">Free</Badge>
+                                {selectedModel === m.id && <CheckIcon className="ml-auto size-4" />}
                               </ModelSelectorItem>
                             ))}
                           </ModelSelectorGroup>
-                        ))}
-                      </ModelSelectorList>
-                    </ModelSelectorContent>
-                  </ModelSelector>
 
-                  {/* Submit button */}
-                  <button
-                    type="button"
-                    className="p-2 bg-blue-600 hover:bg-blue-500 text-white rounded-full transition-colors disabled:opacity-50"
+                          {/* Premium Models */}
+                          {['OpenAI', 'Anthropic', 'Google', 'xAI', 'DeepSeek', 'Meta'].map((chef) => {
+                            const chefModels = POPULAR_MODELS.filter((m) => !m.free && m.chef === chef);
+                            if (chefModels.length === 0) return null;
+
+                            return (
+                              <ModelSelectorGroup heading={chef} key={chef}>
+                                {chefModels.map((m) => (
+                                  <ModelSelectorItem
+                                    key={m.id}
+                                    onSelect={() => {
+                                      if (!hasApiKey) {
+                                        setModelSelectorOpen(false);
+                                        setShowSettings(true);
+                                        toast({
+                                          title: "API Key Required",
+                                          description: `${m.name} requires an OpenRouter API key.`,
+                                        });
+                                      } else {
+                                        setSelectedModel(m.id);
+                                        setModelSelectorOpen(false);
+                                      }
+                                    }}
+                                    value={m.id}
+                                  >
+                                    <ModelSelectorLogo provider={m.chefSlug} />
+                                    <ModelSelectorName>{m.name}</ModelSelectorName>
+                                    {!hasApiKey && <Lock className="ml-2 h-3 w-3 text-muted-foreground" />}
+                                    {selectedModel === m.id && <CheckIcon className="ml-auto size-4" />}
+                                  </ModelSelectorItem>
+                                ))}
+                              </ModelSelectorGroup>
+                            );
+                          })}
+                        </ModelSelectorList>
+                      </ModelSelectorContent>
+                    </ModelSelector>
+                  </div>
+
+                  {/* Send button */}
+                  <Button
+                    className="gap-2"
                     disabled={isLoading}
                     onClick={() => {
                       const textarea = textareaRef.current;
@@ -1042,17 +1387,17 @@ export function ChatClient() {
                     }}
                   >
                     {isLoading ? (
-                      <svg className="animate-spin h-5 w-5" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
-                        <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4"></circle>
-                        <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
-                      </svg>
+                      <>
+                        <div className="h-4 w-4 animate-spin rounded-full border-2 border-current border-t-transparent" />
+                        <span className="hidden sm:inline">Sending</span>
+                      </>
                     ) : (
-                      <svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
-                        <path d="M10 17L17 10L10 3" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
-                        <path d="M17 10H3" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
-                      </svg>
+                      <>
+                        <Play className="h-4 w-4" />
+                        <span className="hidden sm:inline">Send</span>
+                      </>
                     )}
-                  </button>
+                  </Button>
                 </div>
               </div>
             </div>

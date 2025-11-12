@@ -584,8 +584,9 @@ const Example = () => {
   };
 
   return (
-    <div className="relative flex size-full flex-col divide-y overflow-hidden bg-secondary">
-      <Conversation>
+    <div className="relative flex size-full flex-col divide-y overflow-hidden bg-secondary items-center justify-center">
+      <div className="w-full max-w-[1000px] h-full flex flex-col divide-y">
+      <Conversation className="pb-[220px]">
         <ConversationContent>
           {messages.map(({ versions, ...message }) => (
             <MessageBranch defaultBranch={0} key={message.key}>
@@ -649,145 +650,71 @@ const Example = () => {
         </ConversationContent>
         <ConversationScrollButton />
       </Conversation>
-      <div className="grid shrink-0 gap-4 p-4">
-        <PromptInput
-          className="divide-y-0 rounded-[28px]"
-          onSubmit={handleSubmit}
-        >
-          <PromptInputTextarea
-            className="px-5 md:text-base"
-            onChange={(event) => setText(event.target.value)}
-            placeholder="How can Grok help?"
-            value={text}
-          />
-          <PromptInputFooter className="p-2.5">
-            <PromptInputTools>
-              <DropdownMenu>
-                <DropdownMenuTrigger asChild>
-                  <PromptInputButton
-                    className="!rounded-full border text-foreground"
-                    variant="outline"
-                  >
-                    <PaperclipIcon size={16} />
-                    <span className="sr-only">Attach</span>
-                  </PromptInputButton>
-                </DropdownMenuTrigger>
-                <DropdownMenuContent align="start">
-                  <DropdownMenuItem
-                    onClick={() => handleFileAction("upload-file")}
-                  >
-                    <FileIcon className="mr-2" size={16} />
-                    Upload file
-                  </DropdownMenuItem>
-                  <DropdownMenuItem
-                    onClick={() => handleFileAction("upload-photo")}
-                  >
-                    <ImageIcon className="mr-2" size={16} />
-                    Upload photo
-                  </DropdownMenuItem>
-                  <DropdownMenuItem
-                    onClick={() => handleFileAction("take-screenshot")}
-                  >
-                    <ScreenShareIcon className="mr-2" size={16} />
-                    Take screenshot
-                  </DropdownMenuItem>
-                  <DropdownMenuItem
-                    onClick={() => handleFileAction("take-photo")}
-                  >
-                    <CameraIcon className="mr-2" size={16} />
-                    Take photo
-                  </DropdownMenuItem>
-                </DropdownMenuContent>
-              </DropdownMenu>
-              <div className="flex items-center rounded-full border">
-                <PromptInputButton
-                  className="!rounded-l-full text-foreground"
+      {/* Input Area - FIXED at bottom with dark background */}
+      <div className="fixed bottom-0 left-0 right-0 z-10 bg-secondary">
+        <div className="w-full max-w-[1000px] mx-auto px-4 py-4">
+          <div className="relative flex flex-col bg-card rounded-2xl p-3 gap-3 focus-within:outline-none border border-border">
+            {/* Text input area on top */}
+            <textarea
+              className="w-full bg-transparent text-foreground placeholder-muted-foreground outline-none ring-0 focus:outline-none focus:ring-0 text-base resize-none min-h-[80px] px-2"
+              placeholder="How can Grok help?"
+              value={text}
+              onChange={(e) => setText(e.target.value)}
+              onKeyDown={(e) => {
+                if (e.key === 'Enter' && !e.shiftKey) {
+                  e.preventDefault();
+                  const value = e.currentTarget.value.trim();
+                  if (value) {
+                    handleSubmit({ text: value, files: [] });
+                    setText('');
+                  }
+                }
+              }}
+            />
+
+            {/* Button row on bottom */}
+            <div className="flex items-center justify-between gap-2">
+              <div className="flex items-center gap-1">
+                {/* DeepSearch button */}
+                <button
+                  type="button"
+                  className="flex items-center gap-1.5 px-3 py-1.5 text-foreground hover:bg-muted rounded-lg transition-all text-sm border border-border"
                   onClick={() => setUseWebSearch(!useWebSearch)}
-                  variant="ghost"
+                  title="DeepSearch"
                 >
                   <SearchIcon size={16} />
                   <span>DeepSearch</span>
-                </PromptInputButton>
-                <div className="h-full w-px bg-border" />
-                <PromptInputButton
-                  className="rounded-r-full"
-                  size="icon-sm"
-                  variant="ghost"
-                >
-                  <ChevronDownIcon size={16} />
-                </PromptInputButton>
+                </button>
               </div>
-              <PromptInputButton
-                className="!rounded-full text-foreground"
-                variant="outline"
+
+              {/* Submit button */}
+              <button
+                type="button"
+                className="p-2 bg-foreground hover:bg-foreground/90 text-background rounded-full transition-colors disabled:opacity-50"
+                disabled={!text.trim() || status === "streaming"}
+                onClick={() => {
+                  if (text.trim()) {
+                    handleSubmit({ text, files: [] });
+                    setText('');
+                  }
+                }}
               >
-                <LightbulbIcon size={16} />
-                <span>Think</span>
-              </PromptInputButton>
-            </PromptInputTools>
-            <div className="flex items-center gap-2">
-              <ModelSelector
-                onOpenChange={setModelSelectorOpen}
-                open={modelSelectorOpen}
-              >
-                <ModelSelectorTrigger asChild>
-                  <PromptInputButton>
-                    {selectedModelData?.chefSlug && (
-                      <ModelSelectorLogo provider={selectedModelData.chefSlug} />
-                    )}
-                    {selectedModelData?.name && (
-                      <ModelSelectorName>
-                        {selectedModelData.name}
-                      </ModelSelectorName>
-                    )}
-                  </PromptInputButton>
-                </ModelSelectorTrigger>
-                <ModelSelectorContent>
-                  <ModelSelectorInput placeholder="Search models..." />
-                  <ModelSelectorList>
-                    <ModelSelectorEmpty>No models found.</ModelSelectorEmpty>
-                    <ModelSelectorGroup heading="xAI">
-                      {models.map((m) => (
-                        <ModelSelectorItem
-                          key={m.id}
-                          onSelect={() => {
-                            setModel(m.id);
-                            setModelSelectorOpen(false);
-                          }}
-                          value={m.id}
-                        >
-                          <ModelSelectorLogo provider={m.chefSlug} />
-                          <ModelSelectorName>{m.name}</ModelSelectorName>
-                          <ModelSelectorLogoGroup>
-                            {m.providers.map((provider) => (
-                              <ModelSelectorLogo
-                                key={provider}
-                                provider={provider}
-                              />
-                            ))}
-                          </ModelSelectorLogoGroup>
-                          {model === m.id ? (
-                            <CheckIcon className="ml-auto size-4" />
-                          ) : (
-                            <div className="ml-auto size-4" />
-                          )}
-                        </ModelSelectorItem>
-                      ))}
-                    </ModelSelectorGroup>
-                  </ModelSelectorList>
-                </ModelSelectorContent>
-              </ModelSelector>
-              <PromptInputButton
-                className="rounded-full bg-foreground font-medium text-background"
-                onClick={() => setUseMicrophone(!useMicrophone)}
-                variant="default"
-              >
-                <AudioWaveformIcon size={16} />
-                <span className="sr-only">Voice</span>
-              </PromptInputButton>
+                {status === "streaming" ? (
+                  <svg className="animate-spin h-5 w-5" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
+                    <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4"></circle>
+                    <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
+                  </svg>
+                ) : (
+                  <svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <path d="M10 17L17 10L10 3" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
+                    <path d="M17 10H3" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
+                  </svg>
+                )}
+              </button>
             </div>
-          </PromptInputFooter>
-        </PromptInput>
+          </div>
+        </div>
+      </div>
       </div>
     </div>
   );

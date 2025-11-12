@@ -14,20 +14,18 @@
  */
 
 import Layout from '@/layouts/Layout.astro';
-import { ChatClient } from '@/components/ai/ChatClient';
+import { ChatClientV2 } from '@/components/ai/ChatClientV2';
 
-const title = 'AI Chat';
-const description = 'Free AI chat with all features. Reasoning, tool calls, generative UI included.';
+const title = 'AI Chat - Experience the Future';
+const description = 'Free AI chat with reasoning visualization, tool calls, and dynamic UI generation. 10x faster than ChatGPT.';
 ---
 
-<Layout title={title} description={description}>
-  <ChatClient client:only="react" />
+<Layout
+  title={title}
+  description={description}
+  sidebarInitialCollapsed={true}
+  hideHeader={true}
+  fullHeight={true}
+>
+  <ChatClientV2 client:only="react" />
 </Layout>
-
-<style>
-  /* Ensure full height for chat interface */
-  html, body {
-    height: 100%;
-    margin: 0;
-  }
-</style>

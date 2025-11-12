@@ -396,6 +396,50 @@ const { title, author } = Astro.props;
 </html>
 ```
 
+### Collapsing the Sidebar
+
+**The default Layout includes a sidebar. Collapse it to maximize page width:**
+
+```astro
+---
+// src/pages/chat/index.astro
+import Layout from '@/layouts/Layout.astro';
+import { ChatClient } from '@/components/ai/ChatClient';
+
+const title = 'AI Chat';
+---
+
+<Layout title={title} sidebarInitialCollapsed={true}>
+  <ChatClient client:only="react" />
+</Layout>
+```
+
+**Sidebar behavior when collapsed:**
+- Shows only icons (80px width instead of 256px)
+- Users can hover to temporarily expand (desktop only)
+- Desktop toggle button still works
+- Mobile menu works normally
+
+**When to collapse:**
+- Chat interfaces (maximize chat area)
+- Full-width editors
+- Canvas/drawing apps
+- Data visualization dashboards
+- Wide tables or spreadsheets
+
+**Default behavior:**
+```astro
+<!-- Sidebar expanded by default (256px) -->
+<Layout title="Dashboard">
+  <Content />
+</Layout>
+
+<!-- Sidebar collapsed (80px, icons only) -->
+<Layout title="Chat" sidebarInitialCollapsed={true}>
+  <ChatInterface />
+</Layout>
+```
+
 ### Nesting Layouts
 
 **Layouts can use other layouts:**

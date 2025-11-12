@@ -16,6 +16,8 @@ interface Props {
   image?: string;
   type?: string;
   sidebarInitialCollapsed?: boolean;
+  hideHeader?: boolean;
+  fullHeight?: boolean;
 }
 
 const {
@@ -24,6 +26,8 @@ const {
   image = '/og.jpg',
   type = 'website',
   sidebarInitialCollapsed = false,
+  hideHeader = false,
+  fullHeight = false,
 } = Astro.props;
 
 // Generate canonical URL and full image URL
@@ -124,7 +128,7 @@ const orgWebsite = import.meta.env.ORG_WEBSITE || "https://one.ie";
     <TransitionController client:load />
 
     <!-- Always use Sidebar - it will decide what to render internally -->
-    <Sidebar client:only="react" initialCollapsed={sidebarInitialCollapsed}>
+    <Sidebar client:only="react" initialCollapsed={sidebarInitialCollapsed} hideHeader={hideHeader} fullHeight={fullHeight}>
       <slot />
     </Sidebar>
 

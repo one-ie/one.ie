@@ -1,0 +1,23 @@
+---
+/**
+ * Grok-style Chat Interface
+ *
+ * Advanced chat UI with Grok-specific features
+ */
+
+import Layout from '@/layouts/Layout.astro';
+import DemoGrok from '@/components/ai/examples/demo-grok';
+
+const title = 'Grok Chat';
+const description = 'AI chat powered by Grok with advanced features';
+---
+
+<Layout
+  title={title}
+  description={description}
+  sidebarInitialCollapsed={true}
+  hideHeader={true}
+  fullHeight={true}
+>
+  <DemoGrok client:only="react" />
+</Layout>
