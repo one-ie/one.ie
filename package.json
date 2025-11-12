@@ -1,0 +1,11 @@
+{
+  "name": "one-platform",
+  "version": "1.0.0",
+  "private": true,
+  "workspaces": [
+    "web"
+  ],
+  "scripts": {
+    "build": "cd web && bun install && bun run build"
+  }
+}
