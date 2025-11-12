@@ -240,11 +240,11 @@ const DEMO_RESPONSES: Record<string, ExtendedMessage[]> = {
 export function ChatClient() {
   const [apiKey, setApiKey] = useState('');
   const [selectedModel, setSelectedModel] = useState('google/gemini-2.5-flash-lite');
-  const [chatStarted, setChatStarted] = useState(false);
   const [messages, setMessages] = useState<ExtendedMessage[]>([]);
   const [input, setInput] = useState('');
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
+  const [showSettings, setShowSettings] = useState(false);
 
   // Load API key and model from localStorage on mount
   useEffect(() => {
@@ -254,7 +254,6 @@ export function ChatClient() {
 
       if (savedKey) {
         setApiKey(savedKey);
-        setChatStarted(true);
       }
       if (savedModel) {
         setSelectedModel(savedModel);
@@ -262,12 +261,11 @@ export function ChatClient() {
     }
   }, []);
 
-  // Save to localStorage when starting chat
-  const handleStartChat = () => {
+  // Save API key to localStorage
+  const handleSaveApiKey = () => {
     if (apiKey && typeof window !== 'undefined') {
       localStorage.setItem(STORAGE_KEY, apiKey);
       localStorage.setItem(MODEL_KEY, selectedModel);
-      setChatStarted(true);
     }
   };
 
@@ -524,97 +522,6 @@ export function ChatClient() {
     );
   };
 
-  // Show API key setup form
-  if (!chatStarted) {
-    return (
-      <div className="container max-w-md mx-auto p-6">
-        <Card>
-          <CardHeader>
-            <div className="flex items-center justify-between">
-              <CardTitle>Start Premium Chat</CardTitle>
-              <Badge variant="default" className="bg-gradient-to-r from-blue-500 to-purple-600">
-                <Zap className="h-3 w-3 mr-1" />
-                Premium
-              </Badge>
-            </div>
-            <CardDescription>
-              Access advanced AI features: reasoning visualization, tool calls, and more.
-            </CardDescription>
-          </CardHeader>
-          <CardContent className="space-y-4">
-            {/* Premium Features */}
-            <div className="grid grid-cols-2 gap-2 p-3 bg-gradient-to-br from-blue-50 to-purple-50 dark:from-blue-950 dark:to-purple-950 rounded-lg">
-              <div className="text-xs">
-                <Brain className="h-4 w-4 mb-1 text-blue-500" />
-                <span className="font-medium">Agent Reasoning</span>
-              </div>
-              <div className="text-xs">
-                <Code className="h-4 w-4 mb-1 text-purple-500" />
-                <span className="font-medium">Tool Calls</span>
-              </div>
-              <div className="text-xs">
-                <Sparkles className="h-4 w-4 mb-1 text-green-500" />
-                <span className="font-medium">Generative UI</span>
-              </div>
-              <div className="text-xs">
-                <MessageSquare className="h-4 w-4 mb-1 text-orange-500" />
-                <span className="font-medium">Thread Persistence</span>
-              </div>
-            </div>
-
-            {/* Security Notice */}
-            <Alert>
-              <AlertDescription className="text-xs">
-                🔒 <strong>Security:</strong> Your API key is stored in your browser's localStorage
-                (not on our servers). Only use this on trusted devices.
-                {apiKey && (
-                  <button onClick={handleClearKey} className="underline ml-1">
-                    Clear stored key
-                  </button>
-                )}
-              </AlertDescription>
-            </Alert>
-
-            <div className="space-y-2">
-              <Label htmlFor="api-key">OpenRouter API Key</Label>
-              <Input
-                id="api-key"
-                type="password"
-                value={apiKey}
-                onChange={(e) => setApiKey(e.target.value)}
-                onKeyDown={(e) => e.key === 'Enter' && handleStartChat()}
-                placeholder="sk-or-v1-..."
-              />
-              <p className="text-xs text-muted-foreground">
-                Get your key from <a href="https://openrouter.ai/keys" target="_blank" rel="noopener noreferrer" className="text-primary hover:underline">OpenRouter</a>
-              </p>
-            </div>
-
-            <div className="space-y-2">
-              <Label htmlFor="model">Select Model</Label>
-              <Select value={selectedModel} onValueChange={setSelectedModel}>
-                <SelectTrigger id="model">
-                  <SelectValue />
-                </SelectTrigger>
-                <SelectContent>
-                  {POPULAR_MODELS.map((model) => (
-                    <SelectItem key={model.id} value={model.id}>
-                      {model.name}
-                    </SelectItem>
-                  ))}
-                </SelectContent>
-              </Select>
-            </div>
-
-            <Button onClick={handleStartChat} disabled={!apiKey} className="w-full">
-              <Zap className="h-4 w-4 mr-2" />
-              Start Premium Chat
-            </Button>
-          </CardContent>
-        </Card>
-      </div>
-    );
-  }
 
   // Show chat interface
   return (
@@ -626,10 +533,17 @@ export function ChatClient() {
             <div>
               <div className="flex items-center gap-2">
                 <h1 className="text-lg font-semibold">AI Chat</h1>
-                <Badge variant="default" className="bg-gradient-to-r from-blue-500 to-purple-600">
-                  <Zap className="h-3 w-3 mr-1" />
-                  Premium
-                </Badge>
+                {!apiKey && (
+                  <Badge variant="outline" className="text-xs">
+                    Free • Gemini Flash Lite
+                  </Badge>
+                )}
+                {apiKey && (
+                  <Badge variant="default" className="bg-gradient-to-r from-blue-500 to-purple-600 text-xs">
+                    <Zap className="h-3 w-3 mr-1" />
+                    Unlocked
+                  </Badge>
+                )}
               </div>
               <p className="text-xs text-muted-foreground">
                 {POPULAR_MODELS.find(m => m.id === selectedModel)?.name}
@@ -637,15 +551,74 @@ export function ChatClient() {
             </div>
           </div>
           <div className="flex gap-2">
-            <Button variant="ghost" size="sm" onClick={() => setChatStarted(false)}>
-              Change Model
-            </Button>
-            <Button variant="ghost" size="sm" onClick={handleClearKey}>
-              Clear Key
+            <Button variant="ghost" size="sm" onClick={() => setShowSettings(true)}>
+              Settings
             </Button>
           </div>
         </div>
       </div>
+
+      {/* Settings Modal */}
+      {showSettings && (
+        <div className="fixed inset-0 bg-black/50 flex items-center justify-center z-50">
+          <Card className="w-96">
+            <CardHeader className="flex flex-row items-center justify-between">
+              <CardTitle>Chat Settings</CardTitle>
+              <Button variant="ghost" size="sm" onClick={() => setShowSettings(false)}>
+                ✕
+              </Button>
+            </CardHeader>
+            <CardContent className="space-y-4">
+              <Alert>
+                <AlertDescription className="text-xs">
+                  💡 Chat works for free with Gemini Flash Lite. Add your OpenRouter API key to unlock other models.
+                </AlertDescription>
+              </Alert>
+
+              <div className="space-y-2">
+                <Label htmlFor="api-key">OpenRouter API Key (Optional)</Label>
+                <Input
+                  id="api-key"
+                  type="password"
+                  value={apiKey}
+                  onChange={(e) => setApiKey(e.target.value)}
+                  placeholder="sk-or-v1-... (optional)"
+                />
+                <p className="text-xs text-muted-foreground">
+                  Get a free key from <a href="https://openrouter.ai/keys" target="_blank" rel="noopener noreferrer" className="text-primary hover:underline">OpenRouter</a>
+                </p>
+              </div>
+
+              <div className="space-y-2">
+                <Label htmlFor="model">Select Model</Label>
+                <Select value={selectedModel} onValueChange={setSelectedModel}>
+                  <SelectTrigger id="model">
+                    <SelectValue />
+                  </SelectTrigger>
+                  <SelectContent>
+                    {POPULAR_MODELS.map((model) => (
+                      <SelectItem key={model.id} value={model.id}>
+                        {model.name}
+                      </SelectItem>
+                    ))}
+                  </SelectContent>
+                </Select>
+              </div>
+
+              <div className="flex gap-2 pt-2">
+                <Button onClick={handleSaveApiKey} className="flex-1">
+                  Save Settings
+                </Button>
+                {apiKey && (
+                  <Button variant="destructive" size="sm" onClick={handleClearKey}>
+                    Clear Key
+                  </Button>
+                )}
+              </div>
+            </CardContent>
+          </Card>
+        </div>
+      )}
 
       {/* Error Display */}
       {error && (
@@ -669,9 +642,12 @@ export function ChatClient() {
                 <div className="inline-flex items-center justify-center w-16 h-16 rounded-full bg-gradient-to-br from-blue-500 to-purple-600">
                   <Sparkles className="h-8 w-8 text-white" />
                 </div>
-                <h3 className="text-2xl font-bold">Start a Premium Conversation</h3>
+                <h3 className="text-2xl font-bold">Welcome to AI Chat</h3>
                 <p className="text-muted-foreground max-w-md">
-                  Experience advanced AI with reasoning visualization, tool calls, and generative UI.
+                  Free forever with Gemini Flash Lite. All features included: reasoning, tool calls, charts, forms, and more.
+                  {!apiKey && (
+                    <> Optional: <Button variant="link" size="sm" className="h-auto p-0" onClick={() => setShowSettings(true)}>add your API key</Button> to unlock other models.</>
+                  )}
                 </p>
               </div>
 

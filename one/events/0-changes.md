@@ -1,3 +1,55 @@
+### **f1b5a0c3** — template:46 — `feat: Merge premium and basic chat into unified free chat app``
+
+**Template:**
+  - .claude/settings.local.json
+  - .claude/state/cycle.json
+  - web/src/components/ai/AgentMessage.tsx
+  - web/src/components/ai/CHAT_ARCHITECTURE.md
+  - web/src/components/ai/CHAT_QUICK_REFERENCE.md
+  - web/src/components/ai/ChatClient.tsx
+  - web/src/components/ai/Chatbot.tsx
+  - web/src/components/ai/CodeBlock.tsx
+  - web/src/components/ai/FreeChatClient.tsx
+  - web/src/components/ai/IMPLEMENTATION.md
+  - web/src/components/ai/LoadingIndicator.tsx
+  - web/src/components/ai/Message.tsx
+  - web/src/components/ai/MessageList.tsx
+  - web/src/components/ai/PromptInput.tsx
+  - web/src/components/ai/Reasoning.tsx
+  - web/src/components/ai/SimpleChatClient.tsx
+  - web/src/components/ai/Suggestions.tsx
+  - web/src/components/ai/ToolCall.tsx
+  - web/src/components/ai/basic/CodeBlock.tsx
+  - web/src/components/ai/basic/FreeChatClient.tsx
+  - web/src/components/ai/basic/LoadingIndicator.tsx
+  - web/src/components/ai/basic/Message.tsx
+  - web/src/components/ai/basic/MessageList.tsx
+  - web/src/components/ai/basic/PromptInput.tsx
+  - web/src/components/ai/basic/SimpleChatClient.tsx
+  - web/src/components/ai/basic/Suggestions.tsx
+  - web/src/components/ai/premium/AgentMessage.tsx
+  - web/src/components/ai/premium/Chatbot.tsx
+  - web/src/components/ai/premium/IMPLEMENTATION.md
+  - web/src/components/ai/premium/Message.tsx
+  - web/src/components/ai/premium/MessageList.tsx
+  - web/src/components/ai/premium/PremiumChatClient.tsx
+  - web/src/components/ai/premium/PromptInput.tsx
+  - web/src/components/ai/premium/Reasoning.tsx
+  - web/src/components/ai/premium/Suggestions.tsx
+  - web/src/components/ai/premium/ToolCall.tsx
+  - web/src/components/examples/FreeChatExample.tsx
+  - web/src/components/examples/GenAIComponentShowcase.tsx
+  - web/src/components/examples/PremiumFeaturesShowcase.tsx
+  - web/src/lib/samplePremiumData.ts
+  - web/src/pages/api/chat.ts
+  - web/src/pages/chat/demo-ui.astro
+  - web/src/pages/chat/index.astro
+  - web/src/pages/chat/premium-demo.astro
+  - web/src/pages/chat/simple.astro
+  - web/src/pages/examples/basic-chat.astro
+
+
+
 ### **2bb44a38** — template:4 — `fix: Add client-side fallback for chart rendering on Cloudflare``
 
 **Template:**
