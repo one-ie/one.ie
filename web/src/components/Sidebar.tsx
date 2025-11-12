@@ -67,9 +67,11 @@ const AUTH_ENABLED = backendProvider === 'one'
 interface SimpleSidebarLayoutProps {
   children: React.ReactNode
   initialCollapsed?: boolean
+  hideHeader?: boolean
+  fullHeight?: boolean
 }
 
-export function Sidebar({ children, initialCollapsed = true }: SimpleSidebarLayoutProps) {
+export function Sidebar({ children, initialCollapsed = true, hideHeader = false, fullHeight = false }: SimpleSidebarLayoutProps) {
   const [collapsed, setCollapsed] = React.useState(initialCollapsed)
   const [mobileOpen, setMobileOpen] = React.useState(false)
   const [currentPath, setCurrentPath] = React.useState('')
@@ -367,35 +369,37 @@ export function Sidebar({ children, initialCollapsed = true }: SimpleSidebarLayo
       </aside>
       <div className="hidden lg:block shrink-0 transition-all duration-300 ease-in-out" style={{ width: sidebarCollapsed ? '80px' : '256px' }} />
       <div className="flex flex-1 flex-col min-w-0">
-        <header data-home-header className="flex h-16 shrink-0 items-center border-b px-4 sticky top-0 bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60 z-40">
-          <div className="flex items-center gap-2">
-            <Button
-              variant="ghost"
-              size="icon"
-              onClick={() => {
-                if (window.innerWidth < 1024) {
-                  setMobileOpen(!mobileOpen)
-                } else {
-                  setCollapsed((prev) => {
-                    const next = !prev
-                    if (!next) {
-                      setIsHoveringSidebar(false)
-                    }
-                    return next
-                  })
-                }
-              }}
-              className="h-7 w-7"
-              aria-label={mobileOpen || !sidebarCollapsed ? "Close menu" : "Open menu"}
-            >
-              <PanelLeft className="h-4 w-4" aria-hidden="true" />
-            </Button>
-          </div>
-          <a href="/" className="absolute left-1/2 -translate-x-1/2">
-            <img src="/logo.svg" alt="Logo" className="h-28 dark:invert-0 invert" width="112" height="112" />
-          </a>
-        </header>
-        <main id="main-content" className="flex-1 p-4 sm:p-6">{children}</main>
+        {!hideHeader && (
+          <header data-home-header className="flex h-16 shrink-0 items-center border-b px-4 sticky top-0 bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60 z-40">
+            <div className="flex items-center gap-2">
+              <Button
+                variant="ghost"
+                size="icon"
+                onClick={() => {
+                  if (window.innerWidth < 1024) {
+                    setMobileOpen(!mobileOpen)
+                  } else {
+                    setCollapsed((prev) => {
+                      const next = !prev
+                      if (!next) {
+                        setIsHoveringSidebar(false)
+                      }
+                      return next
+                    })
+                  }
+                }}
+                className="h-7 w-7"
+                aria-label={mobileOpen || !sidebarCollapsed ? "Close menu" : "Open menu"}
+              >
+                <PanelLeft className="h-4 w-4" aria-hidden="true" />
+              </Button>
+            </div>
+            <a href="/" className="absolute left-1/2 -translate-x-1/2">
+              <img src="/logo.svg" alt="Logo" className="h-28 dark:invert-0 invert" width="112" height="112" />
+            </a>
+          </header>
+        )}
+        <main id="main-content" className={fullHeight ? "flex-1" : "flex-1 p-4 sm:p-6"}>{children}</main>
       </div>
     </div>
   )

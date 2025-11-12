@@ -1,3 +1,55 @@
+### **9f9df7ff** — template:1 — `docs: Add comprehensive deployment guide for Cloudflare Pages``
+
+**Template:**
+  - web/src/content/docs/develop/deploy.md
+
+
+
+### **3777c450** — custom:1 — `fix: Add root package.json for Cloudflare Pages monorepo`` [customization]
+
+**Your Changes:**
+  - package.json
+
+
+
+### **ee979043** — custom:1 — `fix: Configure Node.js version for Cloudflare Pages`` [customization]
+
+**Your Changes:**
+  - .node-version
+
+
+
+### **bf86d112** — template:1 — `Revert "fix: Update package-lock.json to match current package.json"``
+
+**Template:**
+  - web/package-lock.json
+
+
+
+### **18f89d3b** — template:1 — `fix: Update package-lock.json to match current package.json``
+
+**Template:**
+  - web/package-lock.json
+
+
+
+### **2a4ab577** — custom:1 — `fix: Add pre-deployment check script to prevent build failures`` [customization]
+
+**Your Changes:**
+  - scripts/pre-deployment-check.sh
+
+
+
+### **57572bef** — template:4 — `feat: Add Vercel AI Elements components and dependencies``
+
+**Template:**
+  - .claude/hooks.log
+  - .claude/hooks/.last-news-context
+  - .claude/state/cycle.json
+  - one/events/0-changes.md
+
+
+
 ### **8002966b** — template:68 — `AI Elements``
 
 **Template:**

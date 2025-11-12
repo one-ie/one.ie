@@ -20,14 +20,12 @@ const title = 'AI Chat';
 const description = 'Free AI chat with all features. Reasoning, tool calls, generative UI included.';
 ---
 
-<Layout title={title} description={description}>
+<Layout
+  title={title}
+  description={description}
+  sidebarInitialCollapsed={true}
+  hideHeader={true}
+  fullHeight={true}
+>
   <ChatClient client:only="react" />
 </Layout>
-
-<style>
-  /* Ensure full height for chat interface */
-  html, body {
-    height: 100%;
-    margin: 0;
-  }
-</style>

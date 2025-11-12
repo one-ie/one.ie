@@ -8,28 +8,83 @@
  * - Premium indicators
  */
 
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useRef } from 'react';
 import { MessageList } from '@/components/ai/MessageList';
-import { PromptInput } from '@/components/ai/PromptInput';
+import {
+  ModelSelector,
+  ModelSelectorContent,
+  ModelSelectorEmpty,
+  ModelSelectorGroup,
+  ModelSelectorInput,
+  ModelSelectorItem,
+  ModelSelectorList,
+  ModelSelectorLogo,
+  ModelSelectorLogoGroup,
+  ModelSelectorName,
+  ModelSelectorTrigger,
+} from '@/components/ai/elements/model-selector';
 import { Suggestions } from '@/components/ai/Suggestions';
 import { AgentMessage, type AgentUIMessage } from '@/components/ai/AgentMessage';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import { Alert, AlertDescription } from '@/components/ui/alert';
 import { Badge } from '@/components/ui/badge';
-import { Sparkles, Code, Brain, Lightbulb, MessageSquare, Zap } from 'lucide-react';
+import { useToast } from '@/hooks/use-toast';
+import { Brain, GlobeIcon, CheckIcon } from 'lucide-react';
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from '@/components/ui/select';
+import type { ChatStatus } from 'ai';
 
 const POPULAR_MODELS = [
-  { id: 'google/gemini-2.5-flash-lite', name: 'Gemini 2.5 Flash Lite (Google) - Fast & Free' },
-  { id: 'openai/gpt-4', name: 'GPT-4 (OpenAI)' },
-  { id: 'openai/gpt-3.5-turbo', name: 'GPT-3.5 Turbo (OpenAI)' },
-  { id: 'anthropic/claude-3-opus', name: 'Claude 3 Opus (Anthropic)' },
-  { id: 'anthropic/claude-3-sonnet', name: 'Claude 3 Sonnet (Anthropic)' },
-  { id: 'meta-llama/llama-3-70b-instruct', name: 'Llama 3 70B (Meta)' },
-  { id: 'google/gemini-pro-1.5', name: 'Gemini Pro 1.5 (Google)' },
+  {
+    id: 'google/gemini-2.5-flash-lite',
+    name: 'Gemini 2.5 Flash Lite',
+    chef: 'Google',
+    chefSlug: 'google',
+    providers: ['google'],
+  },
+  {
+    id: 'openai/gpt-4',
+    name: 'GPT-4',
+    chef: 'OpenAI',
+    chefSlug: 'openai',
+    providers: ['openai'],
+  },
+  {
+    id: 'openai/gpt-4o',
+    name: 'GPT-4o',
+    chef: 'OpenAI',
+    chefSlug: 'openai',
+    providers: ['openai', 'azure'],
+  },
+  {
+    id: 'openai/gpt-4o-mini',
+    name: 'GPT-4o Mini',
+    chef: 'OpenAI',
+    chefSlug: 'openai',
+    providers: ['openai', 'azure'],
+  },
+  {
+    id: 'anthropic/claude-3-opus',
+    name: 'Claude 3 Opus',
+    chef: 'Anthropic',
+    chefSlug: 'anthropic',
+    providers: ['anthropic'],
+  },
+  {
+    id: 'anthropic/claude-3-sonnet',
+    name: 'Claude 3 Sonnet',
+    chef: 'Anthropic',
+    chefSlug: 'anthropic',
+    providers: ['anthropic'],
+  },
 ];
 
 const STORAGE_KEY = 'openrouter-api-key';
@@ -240,11 +295,19 @@ const DEMO_RESPONSES: Record<string, ExtendedMessage[]> = {
 export function ChatClient() {
   const [apiKey, setApiKey] = useState('');
   const [selectedModel, setSelectedModel] = useState('google/gemini-2.5-flash-lite');
+  const [modelSelectorOpen, setModelSelectorOpen] = useState(false);
   const [messages, setMessages] = useState<ExtendedMessage[]>([]);
-  const [input, setInput] = useState('');
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
   const [showSettings, setShowSettings] = useState(false);
+  const [attachments, setAttachments] = useState<File[]>([]);
+  const [isRecording, setIsRecording] = useState(false);
+  const { toast } = useToast();
+  const textareaRef = useRef<HTMLTextAreaElement>(null);
+  const mediaRecorderRef = useRef<MediaRecorder | null>(null);
+  const audioChunksRef = useRef<Blob[]>([]);
+
+  const selectedModelData = POPULAR_MODELS.find((m) => m.id === selectedModel);
 
   // Load API key and model from localStorage on mount
   useEffect(() => {
@@ -276,35 +339,108 @@ export function ChatClient() {
       localStorage.removeItem(MODEL_KEY);
     }
     setApiKey('');
-    setChatStarted(false);
     setMessages([]);
   };
 
   // Handle suggestion click
   const handleSuggestionClick = (suggestion: string) => {
-    handleSubmit(suggestion);
+    handleSubmit({ text: suggestion, files: [] } as any, new Event('submit') as any);
+  };
+
+  // Handle voice input
+  const handleVoiceInput = async () => {
+    if (isRecording) {
+      // Stop recording
+      if (mediaRecorderRef.current) {
+        mediaRecorderRef.current.stop();
+        setIsRecording(false);
+      }
+    } else {
+      // Start recording
+      try {
+        const stream = await navigator.mediaDevices.getUserMedia({ audio: true });
+        const mediaRecorder = new MediaRecorder(stream);
+        mediaRecorderRef.current = mediaRecorder;
+        audioChunksRef.current = [];
+
+        mediaRecorder.ondataavailable = (event) => {
+          audioChunksRef.current.push(event.data);
+        };
+
+        mediaRecorder.onstop = async () => {
+          const audioBlob = new Blob(audioChunksRef.current, { type: 'audio/wav' });
+          stream.getTracks().forEach(track => track.stop());
+
+          // Here you would normally send the audio to a speech-to-text API
+          // For now, we'll just show a message
+          toast({
+            title: "Voice Recording",
+            description: "Voice input recorded. Speech-to-text integration coming soon!",
+          });
+        };
+
+        mediaRecorder.start();
+        setIsRecording(true);
+
+        toast({
+          title: "Recording Started",
+          description: "Speak now... Click the microphone again to stop.",
+        });
+      } catch (err) {
+        console.error('Error accessing microphone:', err);
+        toast({
+          title: "Microphone Error",
+          description: "Could not access your microphone. Please check permissions.",
+          variant: "destructive",
+        });
+      }
+    }
+  };
+
+  // Handle web search
+  const handleWebSearch = () => {
+    const textarea = textareaRef.current;
+    if (textarea) {
+      const currentText = textarea.value;
+      if (currentText.trim()) {
+        // Prepend "Search the web for: " to the query
+        textarea.value = `Search the web for: ${currentText}`;
+        toast({
+          title: "Web Search",
+          description: "Your query will include web search results.",
+        });
+      } else {
+        toast({
+          title: "Enter a query",
+          description: "Please type what you want to search for.",
+          variant: "destructive",
+        });
+      }
+    }
   };
 
   // Submit message to API
-  const handleSubmit = async (message: string) => {
-    if (!message.trim() || isLoading) return;
+  const handleSubmit = async (message: any, event?: React.FormEvent<HTMLFormElement>) => {
+    const text = message?.text || '';
+    const files = message?.files || [];
+
+    if (!text.trim() || isLoading) return;
 
     const userMessage: ExtendedMessage = {
       id: `user-${Date.now()}`,
       role: 'user',
-      content: message.trim(),
+      content: text.trim(),
       type: 'text',
       timestamp: Date.now(),
     };
 
     // Add user message to the chat
     setMessages(prev => [...prev, userMessage]);
-    setInput('');
     setIsLoading(true);
     setError(null);
 
     // Check if this is a demo request (only trigger if "(demo)" is in the message)
-    const messageLower = message.toLowerCase();
+    const messageLower = text.toLowerCase();
     let demoKey: string | null = null;
 
     if (messageLower.includes('(demo)')) {
@@ -335,13 +471,41 @@ export function ChatClient() {
     }
 
     try {
+      // Convert files to data URLs if present
+      let messageContent: any = text;
+
+      if (files && files.length > 0) {
+        const fileDataUrls = await Promise.all(
+          files.map(file => new Promise<string>((resolve, reject) => {
+            const reader = new FileReader();
+            reader.onload = () => resolve(reader.result as string);
+            reader.onerror = reject;
+            reader.readAsDataURL(file);
+          }))
+        );
+
+        messageContent = [
+          { type: 'text', text },
+          ...fileDataUrls.map(url => ({
+            type: 'image',
+            url
+          }))
+        ];
+      }
+
+      // Create the user message with multimodal content if needed
+      const userMessageForAPI = {
+        role: 'user',
+        content: messageContent,
+      };
+
       const response = await fetch('/api/chat', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
         },
         body: JSON.stringify({
-          messages: [...messages, userMessage],
+          messages: [...messages.map(m => ({ role: m.role, content: m.content })), userMessageForAPI],
           apiKey,
           model: selectedModel,
           premium: true, // Request premium features
@@ -490,7 +654,7 @@ export function ChatClient() {
       // Standard user message
       return (
         <div key={msg.id} className="flex justify-end mb-4">
-          <div className="max-w-[80%] bg-primary text-primary-foreground rounded-lg px-4 py-2">
+          <div className="max-w-[80%] bg-blue-600 text-white rounded-2xl px-4 py-2">
             {msg.content}
           </div>
         </div>
@@ -515,7 +679,7 @@ export function ChatClient() {
     // Standard assistant text message
     return (
       <div key={msg.id} className="flex justify-start mb-4">
-        <div className="max-w-[80%] bg-muted rounded-lg px-4 py-2">
+        <div className="max-w-[80%] bg-zinc-800 text-zinc-100 rounded-2xl px-4 py-2">
           {msg.content}
         </div>
       </div>
@@ -525,38 +689,15 @@ export function ChatClient() {
 
   // Show chat interface
   return (
-    <div className="flex flex-col h-screen">
-      {/* Header - Fixed at top */}
-      <div className="flex-shrink-0 border-b px-6 py-4 bg-background">
-        <div className="container max-w-4xl mx-auto flex items-center justify-between">
-          <div className="flex items-center gap-3">
-            <div>
-              <div className="flex items-center gap-2">
-                <h1 className="text-lg font-semibold">AI Chat</h1>
-                {!apiKey && (
-                  <Badge variant="outline" className="text-xs">
-                    Free • Gemini Flash Lite
-                  </Badge>
-                )}
-                {apiKey && (
-                  <Badge variant="default" className="bg-gradient-to-r from-blue-500 to-purple-600 text-xs">
-                    <Zap className="h-3 w-3 mr-1" />
-                    Unlocked
-                  </Badge>
-                )}
-              </div>
-              <p className="text-xs text-muted-foreground">
-                {POPULAR_MODELS.find(m => m.id === selectedModel)?.name}
-              </p>
-            </div>
-          </div>
-          <div className="flex gap-2">
-            <Button variant="ghost" size="sm" onClick={() => setShowSettings(true)}>
-              Settings
-            </Button>
-          </div>
-        </div>
-      </div>
+    <div className="relative h-screen bg-zinc-950">
+      <style>{`
+        textarea:focus, input:focus, button:focus {
+          outline: none !important;
+          border: none !important;
+          box-shadow: none !important;
+        }
+      `}</style>
+      {/* No header - clean layout */}
 
       {/* Settings Modal */}
       {showSettings && (
@@ -633,46 +774,13 @@ export function ChatClient() {
         </div>
       )}
 
-      {/* Messages Area - Scrollable */}
-      <div className="flex-1 overflow-y-auto">
-        <div className="container max-w-4xl mx-auto px-6 py-4">
+      {/* Messages Area - Scrollable with padding for fixed input */}
+      <div className="h-full overflow-y-auto pb-[180px]">
+        <div className="max-w-3xl mx-auto px-4 py-8">
           {messages.length === 0 && !isLoading ? (
-            <div className="flex flex-col items-center justify-center min-h-[60vh] text-center space-y-6 py-12">
-              <div className="space-y-3">
-                <div className="inline-flex items-center justify-center w-16 h-16 rounded-full bg-gradient-to-br from-blue-500 to-purple-600">
-                  <Sparkles className="h-8 w-8 text-white" />
-                </div>
-                <h3 className="text-2xl font-bold">Welcome to AI Chat</h3>
-                <p className="text-muted-foreground max-w-md">
-                  Free forever with Gemini Flash Lite. All features included: reasoning, tool calls, charts, forms, and more.
-                  {!apiKey && (
-                    <> Optional: <Button variant="link" size="sm" className="h-auto p-0" onClick={() => setShowSettings(true)}>add your API key</Button> to unlock other models.</>
-                  )}
-                </p>
-              </div>
-
-              {/* Premium feature highlights */}
-              <div className="grid grid-cols-2 gap-3 max-w-lg w-full">
-                <div className="flex items-center gap-2 text-sm text-muted-foreground bg-gradient-to-br from-blue-50 to-blue-100 dark:from-blue-950 dark:to-blue-900 p-3 rounded-lg">
-                  <Brain className="h-4 w-4 text-blue-500" />
-                  <span>Agent Reasoning</span>
-                </div>
-                <div className="flex items-center gap-2 text-sm text-muted-foreground bg-gradient-to-br from-purple-50 to-purple-100 dark:from-purple-950 dark:to-purple-900 p-3 rounded-lg">
-                  <Code className="h-4 w-4 text-purple-500" />
-                  <span>Tool Calls</span>
-                </div>
-                <div className="flex items-center gap-2 text-sm text-muted-foreground bg-gradient-to-br from-green-50 to-green-100 dark:from-green-950 dark:to-green-900 p-3 rounded-lg">
-                  <Sparkles className="h-4 w-4 text-green-500" />
-                  <span>Generative UI</span>
-                </div>
-                <div className="flex items-center gap-2 text-sm text-muted-foreground bg-gradient-to-br from-orange-50 to-orange-100 dark:from-orange-950 dark:to-orange-900 p-3 rounded-lg">
-                  <MessageSquare className="h-4 w-4 text-orange-500" />
-                  <span>Thread Persistence</span>
-                </div>
-              </div>
-
+            <div className="flex flex-col items-center justify-center min-h-[70vh] space-y-8">
               {/* Prompt Suggestions - Show when no messages */}
-              <div className="w-full max-w-2xl pt-4">
+              <div className="w-full max-w-2xl">
                 <Suggestions
                   suggestions={PROMPT_SUGGESTIONS}
                   onSuggestionClick={handleSuggestionClick}
@@ -680,12 +788,12 @@ export function ChatClient() {
               </div>
             </div>
           ) : (
-            <div className="space-y-4">
+            <div className="space-y-6">
               {messages.map(msg => renderMessage(msg))}
               {isLoading && (
-                <div className="flex items-center gap-2 text-muted-foreground">
+                <div className="flex items-center gap-2 text-zinc-400">
                   <Brain className="h-4 w-4 animate-pulse" />
-                  <span className="text-sm">Agent thinking...</span>
+                  <span className="text-sm">Thinking...</span>
                 </div>
               )}
             </div>
@@ -693,21 +801,177 @@ export function ChatClient() {
         </div>
       </div>
 
-      {/* Input Area - Fixed at bottom */}
-      <div className="flex-shrink-0 border-t bg-background">
-        <div className="container max-w-4xl mx-auto px-6 py-4">
-          <PromptInput
-            value={input}
-            onChange={setInput}
-            onSubmit={handleSubmit}
-            isLoading={isLoading}
-            placeholder={messages.length === 0 ? "Ask me anything with premium features..." : "Type your message..."}
-          />
-          {messages.length === 0 && (
-            <p className="mt-2 text-xs text-muted-foreground text-center">
-              Premium Chat with reasoning, tool calls, and advanced features
-            </p>
-          )}
+      {/* Input Area - FIXED at bottom with dark background, 3x taller */}
+      <div className="fixed bottom-0 left-0 right-0 z-10 bg-zinc-950">
+        <div className="w-full max-w-3xl mx-auto px-4 py-4">
+          <div className="relative flex flex-col bg-[hsl(var(--color-sidebar))] rounded-2xl p-3 gap-3 focus-within:outline-none border border-zinc-700">
+            {/* Text input area on top */}
+            <textarea
+              ref={textareaRef}
+              placeholder="What would you like to know?"
+              className="w-full bg-transparent text-zinc-100 placeholder-zinc-500 outline-none ring-0 focus:outline-none focus:ring-0 text-base resize-none min-h-[80px] px-2"
+              onKeyDown={(e) => {
+                if (e.key === 'Enter' && !e.shiftKey) {
+                  e.preventDefault();
+                  const value = e.currentTarget.value.trim();
+                  if (value) {
+                    handleSubmit({ text: value, files: attachments } as any, e as any);
+                    e.currentTarget.value = '';
+                    setAttachments([]);
+                  }
+                }
+              }}
+            />
+
+            {/* Show attached files if any */}
+            {attachments.length > 0 && (
+              <div className="flex flex-wrap gap-2 px-2">
+                {attachments.map((file, index) => (
+                  <div key={index} className="flex items-center gap-1 bg-zinc-700/50 rounded-lg px-2 py-1 text-xs text-zinc-300">
+                    <span>{file.name}</span>
+                    <button
+                      onClick={() => setAttachments(attachments.filter((_, i) => i !== index))}
+                      className="text-zinc-400 hover:text-zinc-200"
+                    >
+                      ✕
+                    </button>
+                  </div>
+                ))}
+              </div>
+            )}
+
+            {/* Button row on bottom */}
+            <div className="flex items-center justify-between gap-2">
+              <div className="flex items-center gap-1">
+                {/* Plus button for attachments */}
+                <input
+                  type="file"
+                  id="file-input"
+                  multiple
+                  accept="image/*"
+                  className="hidden"
+                  onChange={(e) => {
+                    const files = Array.from(e.target.files || []);
+                    setAttachments(prev => [...prev, ...files]);
+                    e.target.value = '';
+                  }}
+                />
+                <button
+                  type="button"
+                  className="p-2 text-zinc-400 hover:text-zinc-200 hover:bg-zinc-700/50 rounded-lg transition-all"
+                  onClick={() => document.getElementById('file-input')?.click()}
+                  title="Attach files"
+                >
+                  <svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <path d="M10 4V16M4 10H16" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
+                  </svg>
+                </button>
+
+                {/* Microphone button */}
+                <button
+                  type="button"
+                  className="p-2 text-zinc-400 hover:text-zinc-200 hover:bg-zinc-700/50 rounded-lg transition-all"
+                  onClick={handleVoiceInput}
+                  title={isRecording ? "Stop recording" : "Start voice input"}
+                >
+                  <svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <path d="M10 1C8.89543 1 8 1.89543 8 3V10C8 11.1046 8.89543 12 10 12C11.1046 12 12 11.1046 12 10V3C12 1.89543 11.1046 1 10 1Z" stroke={isRecording ? "#ef4444" : "currentColor"} strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" fill={isRecording ? "#ef4444" : "none"}/>
+                    <path d="M14 8V10C14 12.2091 12.2091 14 10 14C7.79086 14 6 12.2091 6 10V8" stroke={isRecording ? "#ef4444" : "currentColor"} strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/>
+                    <path d="M10 14V18" stroke={isRecording ? "#ef4444" : "currentColor"} strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/>
+                    <path d="M6 18H14" stroke={isRecording ? "#ef4444" : "currentColor"} strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/>
+                  </svg>
+                </button>
+
+                {/* Search button with text */}
+                <button
+                  type="button"
+                  className="flex items-center gap-1.5 px-3 py-1.5 text-zinc-400 hover:text-zinc-200 hover:bg-zinc-700/50 rounded-lg transition-all text-sm"
+                  onClick={handleWebSearch}
+                  title="Search the web"
+                >
+                  <GlobeIcon size={16} />
+                  <span>Search</span>
+                </button>
+              </div>
+
+              <div className="flex items-center gap-2">
+                {/* Model selector */}
+                <ModelSelector
+                  onOpenChange={setModelSelectorOpen}
+                  open={modelSelectorOpen}
+                >
+                  <ModelSelectorTrigger asChild>
+                    <button
+                      type="button"
+                      className="flex items-center gap-2 px-3 py-1.5 text-zinc-300 hover:text-zinc-100 transition-colors bg-zinc-700/50 hover:bg-zinc-600/50 rounded-full text-sm"
+                    >
+                      {selectedModelData?.name || 'GPT-4o'}
+                    </button>
+                  </ModelSelectorTrigger>
+                  <ModelSelectorContent>
+                    <ModelSelectorInput placeholder="Search models..." />
+                    <ModelSelectorList>
+                      <ModelSelectorEmpty>No models found.</ModelSelectorEmpty>
+                      {['OpenAI', 'Anthropic', 'Google'].map((chef) => (
+                        <ModelSelectorGroup heading={chef} key={chef}>
+                          {POPULAR_MODELS.filter((m) => m.chef === chef).map((m) => (
+                            <ModelSelectorItem
+                              key={m.id}
+                              onSelect={() => {
+                                setSelectedModel(m.id);
+                                setModelSelectorOpen(false);
+                              }}
+                              value={m.id}
+                            >
+                              <ModelSelectorLogo provider={m.chefSlug} />
+                              <ModelSelectorName>{m.name}</ModelSelectorName>
+                              <ModelSelectorLogoGroup>
+                                {m.providers.map((provider) => (
+                                  <ModelSelectorLogo key={provider} provider={provider} />
+                                ))}
+                              </ModelSelectorLogoGroup>
+                              {selectedModel === m.id ? (
+                                <CheckIcon className="ml-auto size-4" />
+                              ) : (
+                                <div className="ml-auto size-4" />
+                              )}
+                            </ModelSelectorItem>
+                          ))}
+                        </ModelSelectorGroup>
+                      ))}
+                    </ModelSelectorList>
+                  </ModelSelectorContent>
+                </ModelSelector>
+
+                {/* Submit button */}
+                <button
+                  type="button"
+                  className="p-2 bg-blue-600 hover:bg-blue-500 text-white rounded-full transition-colors disabled:opacity-50"
+                  disabled={isLoading}
+                  onClick={() => {
+                    const textarea = textareaRef.current;
+                    if (textarea && textarea.value.trim()) {
+                      handleSubmit({ text: textarea.value, files: attachments } as any, new Event('submit') as any);
+                      textarea.value = '';
+                      setAttachments([]);
+                    }
+                  }}
+                >
+                  {isLoading ? (
+                    <svg className="animate-spin h-5 w-5" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
+                      <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4"></circle>
+                      <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
+                    </svg>
+                  ) : (
+                    <svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
+                      <path d="M10 17L17 10L10 3" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
+                      <path d="M17 10H3" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
+                    </svg>
+                  )}
+                </button>
+              </div>
+            </div>
+          </div>
         </div>
       </div>
     </div>

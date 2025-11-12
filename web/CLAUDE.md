@@ -187,6 +187,82 @@ const products = useQuery(api.queries.products.list);
 
 ---
 
+## Sidebar Collapse Pattern
+
+**When to collapse the sidebar (showing icons only):**
+
+The Layout component includes a built-in sidebar that can be collapsed to show only icons. This is useful for full-width pages like chat interfaces, dashboards, or editors.
+
+### Quick Usage
+
+```astro
+---
+// Pass sidebarInitialCollapsed={true} to Layout
+import Layout from '@/layouts/Layout.astro';
+
+const title = 'Your Page Title';
+---
+
+<Layout title={title} sidebarInitialCollapsed={true}>
+  <!-- Your page content gets maximum width -->
+</Layout>
+```
+
+### When to Use
+
+Collapse the sidebar for pages that need maximum horizontal space:
+- **Chat interfaces** - Maximize chat area (e.g., `/pages/chat/index.astro`)
+- **Full-width editors** - Code editors, rich text editors
+- **Canvas/drawing apps** - Design tools, drawing boards
+- **Data visualization dashboards** - Charts, graphs, analytics
+- **Wide tables** - Large data tables, spreadsheets
+
+### Sidebar Behavior
+
+- **Collapsed state**: Shows only icons (80px width)
+- **Hover expansion**: Users can hover to temporarily expand (desktop only)
+- **Toggle button**: Desktop toggle button in header still works
+- **Mobile menu**: Mobile menu works normally (overlay)
+
+### Complete Example
+
+```astro
+---
+// web/src/pages/chat/index.astro
+import Layout from '@/layouts/Layout.astro';
+import { ChatClient } from '@/components/ai/ChatClient';
+
+const title = 'AI Chat';
+const description = 'Chat with AI';
+---
+
+<Layout
+  title={title}
+  description={description}
+  sidebarInitialCollapsed={true}
+>
+  <ChatClient client:only="react" />
+</Layout>
+```
+
+### Default Behavior
+
+If you don't pass `sidebarInitialCollapsed`, the sidebar will be expanded by default:
+
+```astro
+<!-- Sidebar expanded by default -->
+<Layout title="Dashboard">
+  <DashboardContent />
+</Layout>
+
+<!-- Sidebar collapsed (icons only) -->
+<Layout title="Chat" sidebarInitialCollapsed={true}>
+  <ChatInterface />
+</Layout>
+```
+
+---
+
 ## Pattern Convergence (98% AI Accuracy)
 
 **ONE component per dimension, MANY templates for common use cases:**

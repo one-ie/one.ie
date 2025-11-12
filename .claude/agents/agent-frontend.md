@@ -837,6 +837,54 @@ await logEvent({
 const results = await provider.search(query);
 ```
 
+## Sidebar Collapse Pattern
+
+**When pages need a collapsed sidebar (showing icons only):**
+
+The Layout component includes a built-in sidebar that can be collapsed to show only icons. This is useful for full-width pages like chat interfaces, dashboards, or editors.
+
+**Pattern:**
+```astro
+---
+// Pass sidebarInitialCollapsed={true} to Layout
+import Layout from '@/layouts/Layout.astro';
+
+const title = 'Your Page Title';
+---
+
+<Layout title={title} sidebarInitialCollapsed={true}>
+  <!-- Your page content -->
+</Layout>
+```
+
+**When to use:**
+- Chat interfaces (maximize chat area)
+- Full-width editors
+- Canvas/drawing apps
+- Data visualization dashboards
+- Any page that needs maximum horizontal space
+
+**Sidebar behavior:**
+- Collapsed: Shows only icons (80px width)
+- Users can hover to temporarily expand
+- Desktop toggle button still works
+- Mobile menu works normally
+
+**Example - Chat Page:**
+```astro
+---
+// web/src/pages/chat/index.astro
+import Layout from '@/layouts/Layout.astro';
+import { ChatClient } from '@/components/ai/ChatClient';
+
+const title = 'AI Chat';
+---
+
+<Layout title={title} sidebarInitialCollapsed={true}>
+  <ChatClient client:only="react" />
+</Layout>
+```
+
 ## shadcn/ui Component Usage
 
 Always use shadcn components for UI. **All custom components must be `.tsx` files:**
