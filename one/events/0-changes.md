@@ -1,3 +1,77 @@
+### **8002966b** — template:68 — `AI Elements``
+
+**Template:**
+  - .claude/hooks.log
+  - .claude/hooks/.last-news-context
+  - .claude/state/cycle.json
+  - one/events/0-changes.md
+  - web/package.json
+  - web/src/components/ai/README.md
+  - web/src/components/ai/elements/artifact.tsx
+  - web/src/components/ai/elements/canvas.tsx
+  - web/src/components/ai/elements/chain-of-thought.tsx
+  - web/src/components/ai/elements/checkpoint.tsx
+  - web/src/components/ai/elements/code-block.tsx
+  - web/src/components/ai/elements/confirmation.tsx
+  - web/src/components/ai/elements/connection.tsx
+  - web/src/components/ai/elements/context.tsx
+  - web/src/components/ai/elements/controls.tsx
+  - web/src/components/ai/elements/conversation.tsx
+  - web/src/components/ai/elements/edge.tsx
+  - web/src/components/ai/elements/image.tsx
+  - web/src/components/ai/elements/inline-citation.tsx
+  - web/src/components/ai/elements/loader.tsx
+  - web/src/components/ai/elements/message.tsx
+  - web/src/components/ai/elements/model-selector.tsx
+  - web/src/components/ai/elements/node.tsx
+  - web/src/components/ai/elements/open-in-chat.tsx
+  - web/src/components/ai/elements/panel.tsx
+  - web/src/components/ai/elements/plan.tsx
+  - web/src/components/ai/elements/prompt-input.tsx
+  - web/src/components/ai/elements/queue.tsx
+  - web/src/components/ai/elements/reasoning.tsx
+  - web/src/components/ai/elements/shimmer.tsx
+  - web/src/components/ai/elements/sources.tsx
+  - web/src/components/ai/elements/suggestion.tsx
+  - web/src/components/ai/elements/task.tsx
+  - web/src/components/ai/elements/tool.tsx
+  - web/src/components/ai/elements/toolbar.tsx
+  - web/src/components/ai/elements/web-preview.tsx
+  - web/src/components/ai/examples/chatbot.tsx
+  - web/src/components/ai/examples/code-block-dark.tsx
+  - web/src/components/ai/examples/confirmation.tsx
+  - web/src/components/ai/examples/conversation.tsx
+  - web/src/components/ai/examples/demo-chatgpt.tsx
+  - web/src/components/ai/examples/demo-claude.tsx
+  - web/src/components/ai/examples/demo-grok.tsx
+  - web/src/components/ai/examples/loader-custom.tsx
+  - web/src/components/ai/examples/loader.tsx
+  - web/src/components/ai/examples/message-flat.tsx
+  - web/src/components/ai/examples/message.tsx
+  - web/src/components/ai/examples/model-selector.tsx
+  - web/src/components/ai/examples/prompt-input-cursor.tsx
+  - web/src/components/ai/examples/prompt-input.tsx
+  - web/src/components/ai/examples/queue-prompt-input.tsx
+  - web/src/components/ai/examples/queue.tsx
+  - web/src/components/ai/examples/reasoning.tsx
+  - web/src/components/ai/examples/shimmer.tsx
+  - web/src/components/ai/examples/sources.tsx
+  - web/src/components/ai/examples/suggestion-input.tsx
+  - web/src/components/ai/examples/suggestion.tsx
+  - web/src/components/ai/examples/task.tsx
+  - web/src/components/ai/examples/tool.tsx
+  - web/src/components/ai/examples/v0-clone.tsx
+  - web/src/components/ui/button-group.tsx
+  - web/src/components/ui/card.tsx
+  - web/src/components/ui/empty.tsx
+  - web/src/components/ui/field.tsx
+  - web/src/components/ui/input-group.tsx
+  - web/src/components/ui/item.tsx
+  - web/src/components/ui/kbd.tsx
+  - web/src/components/ui/spinner.tsx
+
+
+
 ### **a4336710** — template:5 — `fix: Chat now works for free WITHOUT requiring API key``
 
 **Template:**
