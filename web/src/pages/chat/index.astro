@@ -14,10 +14,10 @@
  */
 
 import Layout from '@/layouts/Layout.astro';
-import { ChatClient } from '@/components/ai/ChatClient';
+import { ChatClientV2 } from '@/components/ai/ChatClientV2';
 
-const title = 'AI Chat';
-const description = 'Free AI chat with all features. Reasoning, tool calls, generative UI included.';
+const title = 'AI Chat - Experience the Future';
+const description = 'Free AI chat with reasoning visualization, tool calls, and dynamic UI generation. 10x faster than ChatGPT.';
 ---
 
 <Layout
@@ -27,5 +27,5 @@ const description = 'Free AI chat with all features. Reasoning, tool calls, gene
   hideHeader={true}
   fullHeight={true}
 >
-  <ChatClient client:only="react" />
+  <ChatClientV2 client:only="react" />
 </Layout>

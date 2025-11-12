@@ -1,3 +1,13 @@
+### **7b5b1367** — template:4 — `AI Chat``
+
+**Template:**
+  - web/src/components/ai/ChatClient.tsx
+  - web/src/components/ai/elements/conversation.tsx
+  - web/src/components/ai/elements/message.tsx
+  - web/src/styles/global.css
+
+
+
 ### **08994029** — template:13 — `AI Chat``
 
 **Template:**
