@@ -62,12 +62,7 @@ export function DynamicChartRecharts({ data, layout }: any) {
   return (
     <Card>
       <CardHeader>
-        <div className="flex items-center justify-between">
-          <CardTitle>{data.title}</CardTitle>
-          <Badge variant="secondary" className="text-xs">
-            Recharts {data.chartType === 'line' ? 'Line' : 'Bar'}
-          </Badge>
-        </div>
+        <CardTitle>{data.title}</CardTitle>
         {data.description && <CardDescription>{data.description}</CardDescription>}
       </CardHeader>
       <CardContent>

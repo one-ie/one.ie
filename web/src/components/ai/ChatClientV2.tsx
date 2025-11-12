@@ -640,11 +640,11 @@ function HeroSection({ hasApiKey }: { hasApiKey: boolean }) {
       <div className="space-y-2">
         <h1 className="text-4xl md:text-5xl font-bold">
           <span className="bg-gradient-to-r from-purple-600 via-pink-600 to-blue-600 bg-clip-text text-transparent">
-            AI Chat That Actually Works
+            Generative UI Demo
           </span>
         </h1>
         <p className="text-lg text-muted-foreground max-w-2xl mx-auto">
-          Experience the future of AI with reasoning visualization, tool calls, and dynamic UI generation
+          Add any react component into AI chat
         </p>
       </div>
 
