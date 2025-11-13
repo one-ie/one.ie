@@ -637,17 +637,14 @@ function HeroSection({ hasApiKey }: { hasApiKey: boolean }) {
   return (
     <div className="text-center space-y-6 mb-8">
       {/* Main heading with gradient */}
-      <div className="space-y-2">
-        <h1 className="text-4xl md:text-5xl font-bold">
-          <span className="bg-gradient-to-r from-purple-600 via-pink-600 to-blue-600 bg-clip-text text-transparent">
-            Generative UI Demo
-          </span>
+      <div className="space-y-4">
+        <h1 className="text-4xl md:text-5xl font-bold bg-gradient-to-r from-purple-600 via-pink-600 to-blue-600 bg-clip-text text-transparent">
+          Generative UI Demo
         </h1>
         <p className="text-lg text-muted-foreground max-w-2xl mx-auto">
           Add any react component into AI chat
         </p>
       </div>
-
     </div>
   );
 }
@@ -665,9 +662,15 @@ export function ChatClientV2() {
   const [conversationCopied, setConversationCopied] = useState(false);
   const { toast } = useToast();
   const textareaRef = useRef<HTMLTextAreaElement>(null);
+  const messagesEndRef = useRef<HTMLDivElement>(null);
 
   const selectedModelData = POPULAR_MODELS.find((m) => m.id === selectedModel);
   const hasApiKey = !!apiKey;
+
+  // Auto-scroll to bottom when messages change
+  useEffect(() => {
+    messagesEndRef.current?.scrollIntoView({ behavior: 'smooth' });
+  }, [messages]);
 
   // Load API key and model from localStorage on mount
   useEffect(() => {
@@ -1016,390 +1019,433 @@ export function ChatClientV2() {
           border: none !important;
           box-shadow: none !important;
         }
+
+        /* Code block styling */
+        .is-assistant pre {
+          background-color: hsl(var(--muted)) !important;
+          border: 1px solid hsl(var(--border)) !important;
+          border-radius: 0.5rem !important;
+          padding: 1rem !important;
+          overflow-x: auto !important;
+          margin: 0.5rem 0 !important;
+        }
+
+        .is-assistant code {
+          font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace !important;
+          font-size: 0.875rem !important;
+          line-height: 1.5 !important;
+        }
+
+        .is-assistant pre code {
+          background: none !important;
+          padding: 0 !important;
+          border: none !important;
+          border-radius: 0 !important;
+        }
+
+        .is-assistant :not(pre) > code {
+          background-color: hsl(var(--muted)) !important;
+          padding: 0.125rem 0.375rem !important;
+          border-radius: 0.25rem !important;
+          font-size: 0.875em !important;
+        }
+
+        .is-assistant pre > div {
+          display: flex !important;
+          align-items: center !important;
+          justify-content: space-between !important;
+          margin-bottom: 0.5rem !important;
+          padding-bottom: 0.5rem !important;
+          border-bottom: 1px solid hsl(var(--border)) !important;
+        }
+
+        .is-assistant pre > div > span {
+          font-size: 0.75rem !important;
+          font-weight: 600 !important;
+          text-transform: uppercase !important;
+          color: hsl(var(--muted-foreground)) !important;
+        }
       `}</style>
 
-      <div className="w-full max-w-[1200px] h-full flex flex-col">
-        {/* Settings Modal */}
-        {showSettings && (
-          <div className="fixed inset-0 bg-black/50 flex items-center justify-center z-50">
-            <Card className="w-96">
-              <CardHeader className="flex flex-row items-center justify-between">
-                <CardTitle>Unlock Premium Features</CardTitle>
-                <Button variant="ghost" size="sm" onClick={() => {
-                  // Same as Clear button - clear key and reset to free model
-                  if (typeof window !== 'undefined') {
-                    localStorage.removeItem(STORAGE_KEY);
-                    localStorage.removeItem(MODEL_KEY);
-                  }
-                  setApiKey('');
-                  setSelectedModel('google/gemini-2.5-flash-lite');
-                  setMessages([]);
-                  setShowSettings(false);
-                }}>
-                  ✕
+      {/* Settings Modal */}
+      {showSettings && (
+        <div className="fixed inset-0 bg-black/50 flex items-center justify-center z-50">
+          <Card className="w-96">
+            <CardHeader className="flex flex-row items-center justify-between">
+              <CardTitle>Unlock Premium Features</CardTitle>
+              <Button variant="ghost" size="sm" onClick={() => {
+                // Same as Clear button - clear key and reset to free model
+                if (typeof window !== 'undefined') {
+                  localStorage.removeItem(STORAGE_KEY);
+                  localStorage.removeItem(MODEL_KEY);
+                }
+                setApiKey('');
+                setSelectedModel('google/gemini-2.5-flash-lite');
+                setMessages([]);
+                setShowSettings(false);
+              }}>
+                ✕
+              </Button>
+            </CardHeader>
+            <CardContent className="space-y-4">
+              <Alert>
+                <AlertDescription className="text-xs">
+                  ✨ <strong>Chat is 100% FREE with Gemini Flash Lite!</strong> No API key required.
+                  Add an OpenRouter key only if you want access to GPT-4, Claude, and 50+ other models.
+                </AlertDescription>
+              </Alert>
+
+              <div className="space-y-2">
+                <Label htmlFor="api-key">OpenRouter API Key</Label>
+                <Input
+                  id="api-key"
+                  type="password"
+                  value={apiKey}
+                  onChange={(e) => setApiKey(e.target.value)}
+                  placeholder="sk-or-v1-..."
+                />
+                <p className="text-xs text-muted-foreground">
+                  Get a free key from{' '}
+                  <a href="https://openrouter.ai/keys" target="_blank" rel="noopener noreferrer" className="text-primary hover:underline">
+                    OpenRouter
+                  </a>
+                </p>
+              </div>
+
+              <div className="space-y-2">
+                <Label htmlFor="model">Select Model</Label>
+                <Select value={selectedModel} onValueChange={setSelectedModel}>
+                  <SelectTrigger id="model">
+                    <SelectValue />
+                  </SelectTrigger>
+                  <SelectContent>
+                    {POPULAR_MODELS.map((model) => (
+                      <SelectItem key={model.id} value={model.id}>
+                        <div className="flex items-center gap-2">
+                          {model.name}
+                          {model.free && (
+                            <Badge variant="secondary" className="text-xs">Free</Badge>
+                          )}
+                        </div>
+                      </SelectItem>
+                    ))}
+                  </SelectContent>
+                </Select>
+              </div>
+
+              <div className="flex gap-2 pt-2">
+                <Button onClick={handleSaveApiKey} className="flex-1">
+                  Unlock Features
                 </Button>
-              </CardHeader>
-              <CardContent className="space-y-4">
-                <Alert>
-                  <AlertDescription className="text-xs">
-                    ✨ <strong>Chat is 100% FREE with Gemini Flash Lite!</strong> No API key required.
-                    Add an OpenRouter key only if you want access to GPT-4, Claude, and 50+ other models.
-                  </AlertDescription>
-                </Alert>
-
-                <div className="space-y-2">
-                  <Label htmlFor="api-key">OpenRouter API Key</Label>
-                  <Input
-                    id="api-key"
-                    type="password"
-                    value={apiKey}
-                    onChange={(e) => setApiKey(e.target.value)}
-                    placeholder="sk-or-v1-..."
-                  />
-                  <p className="text-xs text-muted-foreground">
-                    Get a free key from{' '}
-                    <a href="https://openrouter.ai/keys" target="_blank" rel="noopener noreferrer" className="text-primary hover:underline">
-                      OpenRouter
-                    </a>
-                  </p>
-                </div>
-
-                <div className="space-y-2">
-                  <Label htmlFor="model">Select Model</Label>
-                  <Select value={selectedModel} onValueChange={setSelectedModel}>
-                    <SelectTrigger id="model">
-                      <SelectValue />
-                    </SelectTrigger>
-                    <SelectContent>
-                      {POPULAR_MODELS.map((model) => (
-                        <SelectItem key={model.id} value={model.id}>
-                          <div className="flex items-center gap-2">
-                            {model.name}
-                            {model.free && (
-                              <Badge variant="secondary" className="text-xs">Free</Badge>
-                            )}
-                          </div>
-                        </SelectItem>
-                      ))}
-                    </SelectContent>
-                  </Select>
-                </div>
-
-                <div className="flex gap-2 pt-2">
-                  <Button onClick={handleSaveApiKey} className="flex-1">
-                    Unlock Features
+                {apiKey && (
+                  <Button variant="destructive" size="sm" onClick={handleClearKey}>
+                    Clear
                   </Button>
-                  {apiKey && (
-                    <Button variant="destructive" size="sm" onClick={handleClearKey}>
-                      Clear
+                )}
+              </div>
+            </CardContent>
+          </Card>
+        </div>
+      )}
+
+      {/* Error Display - Centered */}
+      {error && (
+        <div className="fixed top-0 left-1/2 -translate-x-1/2 w-full max-w-3xl z-20 px-6 py-2">
+          <Alert variant="destructive">
+            <AlertDescription>
+              <strong>Error:</strong> {error}
+            </AlertDescription>
+          </Alert>
+        </div>
+      )}
+
+      {/* Messages Area - Centered with max-width */}
+      <Conversation className="w-full" initial="auto" resize="auto">
+        <ConversationContent className="max-w-3xl mx-auto px-4 pb-[200px]">
+          {messages.length === 0 && !isLoading ? (
+            <div className="flex flex-col items-center justify-center min-h-[80vh] space-y-8">
+              {/* Hero Section */}
+              <HeroSection hasApiKey={hasApiKey} />
+
+              {/* Demo Cards Grid */}
+              <div className="w-full max-w-4xl">
+                <div className="flex items-center justify-between mb-4">
+                  <h2 className="text-xl font-semibold">Try These Demos</h2>
+                  {!hasApiKey && (
+                    <Button
+                      variant="outline"
+                      size="sm"
+                      onClick={() => setShowSettings(true)}
+                      className="gap-2"
+                    >
+                      <Unlock className="w-4 h-4" />
+                      Add API Key
                     </Button>
                   )}
                 </div>
-              </CardContent>
-            </Card>
-          </div>
-        )}
 
-        {/* Error Display */}
-        {error && (
-          <div className="flex-shrink-0 px-6 py-2 bg-destructive/10">
-            <Alert variant="destructive">
-              <AlertDescription>
-                <strong>Error:</strong> {error}
-              </AlertDescription>
-            </Alert>
-          </div>
-        )}
-
-        {/* Messages Area */}
-        <Conversation className="pb-[280px]">
-          <ConversationContent>
-            {messages.length === 0 && !isLoading ? (
-              <div className="flex flex-col items-center justify-center min-h-[80vh] space-y-8 px-4">
-                {/* Hero Section */}
-                <HeroSection hasApiKey={hasApiKey} />
-
-                {/* Demo Cards Grid */}
-                <div className="w-full max-w-4xl">
-                  <div className="flex items-center justify-between mb-4">
-                    <h2 className="text-xl font-semibold">Try These Demos</h2>
-                    {!hasApiKey && (
-                      <Button
-                        variant="outline"
-                        size="sm"
-                        onClick={() => setShowSettings(true)}
-                        className="gap-2"
-                      >
-                        <Unlock className="w-4 h-4" />
-                        Add API Key
-                      </Button>
-                    )}
-                  </div>
-
-                  {/* Category tabs */}
-                  <div className="flex gap-2 mb-6 overflow-x-auto pb-2">
-                    {Object.entries(DEMO_CATEGORIES).map(([key, cat]) => (
-                      <Badge
-                        key={key}
-                        variant="outline"
-                        className="flex items-center gap-1.5 px-3 py-1.5 whitespace-nowrap"
-                      >
-                        <cat.icon className="w-3.5 h-3.5" />
-                        {cat.name}
-                      </Badge>
-                    ))}
-                  </div>
-
-                  {/* Demo cards grid */}
-                  <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
-                    {DEMO_SUGGESTIONS.map((suggestion) => (
-                      <DemoCard
-                        key={suggestion.id}
-                        suggestion={suggestion}
-                        onSelect={handleDemoSelect}
-                        isLocked={false} // Everything works in free tier!
-                      />
-                    ))}
-                  </div>
-                </div>
-              </div>
-            ) : (
-              <>
-                {messages.map(msg => renderMessage(msg))}
-                {isLoading && (
-                  <div className="flex items-center gap-2 text-zinc-400 px-4">
-                    <Brain className="h-4 w-4 animate-pulse" />
-                    <span className="text-sm">Thinking...</span>
-                  </div>
-                )}
-              </>
-            )}
-          </ConversationContent>
-          <ConversationScrollButton />
-        </Conversation>
-
-        {/* Enhanced Input Area */}
-        <div className="fixed bottom-0 left-0 right-0 z-10 bg-background border-t">
-          <div className="w-full max-w-[1200px] mx-auto px-4 py-4">
-            {/* Copy Conversation Button */}
-            {messages.length > 0 && (
-              <div className="flex justify-center mb-3">
-                <Button
-                  variant={conversationCopied ? "default" : "outline"}
-                  size="sm"
-                  onClick={handleCopyConversation}
-                  className={cn(
-                    "transition-all duration-200",
-                    conversationCopied
-                      ? 'bg-green-600 hover:bg-green-700 text-white border-green-600'
-                      : ''
-                  )}
-                >
-                  {conversationCopied ? (
-                    <>
-                      <CheckCheckIcon className="h-4 w-4 mr-2" />
-                      Copied!
-                    </>
-                  ) : (
-                    <>
-                      <CopyIcon className="h-4 w-4 mr-2" />
-                      Copy Conversation
-                    </>
-                  )}
-                </Button>
-              </div>
-            )}
-
-            <div className="relative flex flex-col bg-[hsl(var(--color-sidebar))] rounded-2xl p-3 gap-3 focus-within:outline-none border-2 border-border">
-              {/* Text input area */}
-              <textarea
-                ref={textareaRef}
-                placeholder="Ask anything..."
-                className="w-full bg-transparent text-foreground placeholder:text-muted-foreground outline-none ring-0 focus:outline-none focus:ring-0 text-base resize-none min-h-[80px] px-2"
-                onKeyDown={(e) => {
-                  if (e.key === 'Enter' && !e.shiftKey) {
-                    e.preventDefault();
-                    const value = e.currentTarget.value.trim();
-                    if (value) {
-                      handleSubmit({ text: value, files: attachments } as any, e as any);
-                      e.currentTarget.value = '';
-                      setAttachments([]);
-                    }
-                  }
-                }}
-              />
-
-              {/* Attached files */}
-              {attachments.length > 0 && (
-                <div className="flex flex-wrap gap-2 px-2">
-                  {attachments.map((file, index) => (
-                    <div key={index} className="flex items-center gap-1 bg-zinc-700/50 rounded-lg px-2 py-1 text-xs text-zinc-300">
-                      <span>{file.name}</span>
-                      <button
-                        onClick={() => setAttachments(attachments.filter((_, i) => i !== index))}
-                        className="text-zinc-400 hover:text-zinc-200"
-                      >
-                        ✕
-                      </button>
-                    </div>
+                {/* Category tabs */}
+                <div className="flex gap-2 mb-6 overflow-x-auto pb-2">
+                  {Object.entries(DEMO_CATEGORIES).map(([key, cat]) => (
+                    <Badge
+                      key={key}
+                      variant="outline"
+                      className="flex items-center gap-1.5 px-3 py-1.5 whitespace-nowrap"
+                    >
+                      <cat.icon className="w-3.5 h-3.5" />
+                      {cat.name}
+                    </Badge>
                   ))}
                 </div>
-              )}
 
-              {/* Enhanced button row */}
-              <div className="flex items-center justify-between gap-2">
-                <div className="flex items-center gap-1">
-                  {/* Attachment button */}
-                  <input
-                    type="file"
-                    id="file-input"
-                    multiple
-                    accept="image/*"
-                    className="hidden"
-                    onChange={(e) => {
-                      const files = Array.from(e.target.files || []);
-                      setAttachments(prev => [...prev, ...files]);
-                      e.target.value = '';
-                    }}
-                  />
-                  <Button
-                    variant="ghost"
-                    size="icon"
-                    className="h-9 w-9"
-                    onClick={() => document.getElementById('file-input')?.click()}
-                    title="Attach files"
-                  >
-                    <Plus className="h-4 w-4" />
-                  </Button>
-
-                  {/* Voice input */}
-                  <div className="inline-flex">
-                    <PromptInputSpeechButton
-                      textareaRef={textareaRef}
-                      onTranscriptionChange={handleTranscriptionChange}
-                      className="h-9 w-9"
+                {/* Demo cards grid */}
+                <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
+                  {DEMO_SUGGESTIONS.map((suggestion) => (
+                    <DemoCard
+                      key={suggestion.id}
+                      suggestion={suggestion}
+                      onSelect={handleDemoSelect}
+                      isLocked={false} // Everything works in free tier!
                     />
-                  </div>
-
-                  {/* Web search */}
-                  <Button
-                    variant="ghost"
-                    size="sm"
-                    className="gap-1.5"
-                    onClick={handleWebSearch}
-                    title="Search the web"
-                  >
-                    <GlobeIcon className="h-4 w-4" />
-                    <span className="hidden sm:inline">Search</span>
-                  </Button>
+                  ))}
                 </div>
+              </div>
+            </div>
+          ) : (
+            <>
+              {messages.map(msg => renderMessage(msg))}
+              {isLoading && (
+                <div className="flex items-center gap-2 text-muted-foreground">
+                  <Brain className="h-4 w-4 animate-pulse text-purple-500" />
+                  <span className="text-sm">Thinking...</span>
+                </div>
+              )}
+              <div ref={messagesEndRef} />
+            </>
+          )}
+        </ConversationContent>
+        <ConversationScrollButton />
+      </Conversation>
 
-                <div className="flex items-center gap-2">
-                  {/* Model selector */}
-                  <div className="flex items-center gap-2">
-                    <ModelSelector
-                      onOpenChange={setModelSelectorOpen}
-                      open={modelSelectorOpen}
+      {/* Enhanced Input Area - Centered with max-width */}
+      <div className="fixed bottom-0 left-1/2 -translate-x-1/2 w-full max-w-3xl z-10 px-4 pb-4">
+        {/* Copy Conversation Button */}
+        {messages.length > 0 && (
+          <div className="flex justify-center mb-3">
+            <Button
+              variant={conversationCopied ? "default" : "outline"}
+              size="sm"
+              onClick={handleCopyConversation}
+              className={cn(
+                "transition-all duration-200",
+                conversationCopied
+                  ? 'bg-green-600 hover:bg-green-700 text-white border-green-600'
+                  : ''
+              )}
+            >
+              {conversationCopied ? (
+                <>
+                  <CheckCheckIcon className="h-4 w-4 mr-2" />
+                  Copied!
+                </>
+              ) : (
+                <>
+                  <CopyIcon className="h-4 w-4 mr-2" />
+                  Copy Conversation
+                </>
+              )}
+            </Button>
+          </div>
+        )}
+
+        <div className="relative flex flex-col bg-[hsl(var(--color-sidebar))] rounded-2xl p-3 gap-3 focus-within:outline-none border-2 border-border">
+          {/* Text input area */}
+          <textarea
+            ref={textareaRef}
+            placeholder="Ask anything..."
+            className="w-full bg-transparent text-foreground placeholder:text-muted-foreground outline-none ring-0 focus:outline-none focus:ring-0 text-base resize-none min-h-[80px] px-2"
+            onKeyDown={(e) => {
+              if (e.key === 'Enter' && !e.shiftKey) {
+                e.preventDefault();
+                const value = e.currentTarget.value.trim();
+                if (value) {
+                  handleSubmit({ text: value, files: attachments } as any, e as any);
+                  e.currentTarget.value = '';
+                  setAttachments([]);
+                }
+              }
+            }}
+          />
+
+          {/* Attached files */}
+          {attachments.length > 0 && (
+            <div className="flex flex-wrap gap-2 px-2">
+              {attachments.map((file, index) => (
+                <div key={index} className="flex items-center gap-1 bg-zinc-700/50 rounded-lg px-2 py-1 text-xs text-zinc-300">
+                  <span>{file.name}</span>
+                  <button
+                    onClick={() => setAttachments(attachments.filter((_, i) => i !== index))}
+                    className="text-zinc-400 hover:text-zinc-200"
+                  >
+                    ✕
+                  </button>
+                </div>
+              ))}
+            </div>
+          )}
+
+          {/* Enhanced button row */}
+          <div className="flex items-center justify-between gap-2">
+            <div className="flex items-center gap-1">
+              {/* Attachment button */}
+              <input
+                type="file"
+                id="file-input"
+                multiple
+                accept="image/*"
+                className="hidden"
+                onChange={(e) => {
+                  const files = Array.from(e.target.files || []);
+                  setAttachments(prev => [...prev, ...files]);
+                  e.target.value = '';
+                }}
+              />
+              <Button
+                variant="ghost"
+                size="icon"
+                className="h-9 w-9"
+                onClick={() => document.getElementById('file-input')?.click()}
+                title="Attach files"
+              >
+                <Plus className="h-4 w-4" />
+              </Button>
+
+              {/* Voice input */}
+              <div className="inline-flex">
+                <PromptInputSpeechButton
+                  textareaRef={textareaRef}
+                  onTranscriptionChange={handleTranscriptionChange}
+                  className="h-9 w-9"
+                />
+              </div>
+
+              {/* Web search */}
+              <Button
+                variant="ghost"
+                size="sm"
+                className="gap-1.5"
+                onClick={handleWebSearch}
+                title="Search the web"
+              >
+                <GlobeIcon className="h-4 w-4" />
+                <span className="hidden sm:inline">Search</span>
+              </Button>
+            </div>
+
+            <div className="flex items-center gap-2">
+              {/* Model selector */}
+              <div className="flex items-center gap-2">
+                <ModelSelector
+                  onOpenChange={setModelSelectorOpen}
+                  open={modelSelectorOpen}
+                >
+                  <ModelSelectorTrigger asChild>
+                    <Button
+                      variant="outline"
+                      size="sm"
+                      className="gap-2"
                     >
-                      <ModelSelectorTrigger asChild>
-                        <Button
-                          variant="outline"
-                          size="sm"
-                          className="gap-2"
-                        >
-                          {selectedModelData?.name || 'Select Model'}
-                        </Button>
-                      </ModelSelectorTrigger>
-                      <ModelSelectorContent>
-                        <ModelSelectorInput placeholder="Search models..." />
-                        <ModelSelectorList>
-                          <ModelSelectorEmpty>No models found.</ModelSelectorEmpty>
+                      {selectedModelData?.name || 'Select Model'}
+                    </Button>
+                  </ModelSelectorTrigger>
+                  <ModelSelectorContent>
+                    <ModelSelectorInput placeholder="Search models..." />
+                    <ModelSelectorList>
+                      <ModelSelectorEmpty>No models found.</ModelSelectorEmpty>
 
-                          {/* Free Models */}
-                          <ModelSelectorGroup heading="Free Models" key="free">
-                            {POPULAR_MODELS.filter((m) => m.free).map((m) => (
+                      {/* Free Models */}
+                      <ModelSelectorGroup heading="Free Models" key="free">
+                        {POPULAR_MODELS.filter((m) => m.free).map((m) => (
+                          <ModelSelectorItem
+                            key={m.id}
+                            onSelect={() => {
+                              setSelectedModel(m.id);
+                              setModelSelectorOpen(false);
+                            }}
+                            value={m.id}
+                          >
+                            <ModelSelectorLogo provider={m.chefSlug} />
+                            <ModelSelectorName>{m.name}</ModelSelectorName>
+                            <Badge variant="secondary" className="ml-2 text-xs">Free</Badge>
+                            {selectedModel === m.id && <CheckIcon className="ml-auto size-4" />}
+                          </ModelSelectorItem>
+                        ))}
+                      </ModelSelectorGroup>
+
+                      {/* Premium Models */}
+                      {['OpenAI', 'Anthropic', 'Google', 'xAI', 'DeepSeek', 'Meta'].map((chef) => {
+                        const chefModels = POPULAR_MODELS.filter((m) => !m.free && m.chef === chef);
+                        if (chefModels.length === 0) return null;
+
+                        return (
+                          <ModelSelectorGroup heading={chef} key={chef}>
+                            {chefModels.map((m) => (
                               <ModelSelectorItem
                                 key={m.id}
                                 onSelect={() => {
-                                  setSelectedModel(m.id);
-                                  setModelSelectorOpen(false);
+                                  if (!hasApiKey) {
+                                    setModelSelectorOpen(false);
+                                    setShowSettings(true);
+                                    toast({
+                                      title: "API Key Required",
+                                      description: `${m.name} requires an OpenRouter API key.`,
+                                    });
+                                  } else {
+                                    setSelectedModel(m.id);
+                                    setModelSelectorOpen(false);
+                                  }
                                 }}
                                 value={m.id}
                               >
                                 <ModelSelectorLogo provider={m.chefSlug} />
                                 <ModelSelectorName>{m.name}</ModelSelectorName>
-                                <Badge variant="secondary" className="ml-2 text-xs">Free</Badge>
+                                {!hasApiKey && <Lock className="ml-2 h-3 w-3 text-muted-foreground" />}
                                 {selectedModel === m.id && <CheckIcon className="ml-auto size-4" />}
                               </ModelSelectorItem>
                             ))}
                           </ModelSelectorGroup>
-
-                          {/* Premium Models */}
-                          {['OpenAI', 'Anthropic', 'Google', 'xAI', 'DeepSeek', 'Meta'].map((chef) => {
-                            const chefModels = POPULAR_MODELS.filter((m) => !m.free && m.chef === chef);
-                            if (chefModels.length === 0) return null;
-
-                            return (
-                              <ModelSelectorGroup heading={chef} key={chef}>
-                                {chefModels.map((m) => (
-                                  <ModelSelectorItem
-                                    key={m.id}
-                                    onSelect={() => {
-                                      if (!hasApiKey) {
-                                        setModelSelectorOpen(false);
-                                        setShowSettings(true);
-                                        toast({
-                                          title: "API Key Required",
-                                          description: `${m.name} requires an OpenRouter API key.`,
-                                        });
-                                      } else {
-                                        setSelectedModel(m.id);
-                                        setModelSelectorOpen(false);
-                                      }
-                                    }}
-                                    value={m.id}
-                                  >
-                                    <ModelSelectorLogo provider={m.chefSlug} />
-                                    <ModelSelectorName>{m.name}</ModelSelectorName>
-                                    {!hasApiKey && <Lock className="ml-2 h-3 w-3 text-muted-foreground" />}
-                                    {selectedModel === m.id && <CheckIcon className="ml-auto size-4" />}
-                                  </ModelSelectorItem>
-                                ))}
-                              </ModelSelectorGroup>
-                            );
-                          })}
-                        </ModelSelectorList>
-                      </ModelSelectorContent>
-                    </ModelSelector>
-                  </div>
-
-                  {/* Send button */}
-                  <Button
-                    className="gap-2"
-                    disabled={isLoading}
-                    onClick={() => {
-                      const textarea = textareaRef.current;
-                      if (textarea && textarea.value.trim()) {
-                        handleSubmit({ text: textarea.value, files: attachments } as any, new Event('submit') as any);
-                        textarea.value = '';
-                        setAttachments([]);
-                      }
-                    }}
-                  >
-                    {isLoading ? (
-                      <>
-                        <div className="h-4 w-4 animate-spin rounded-full border-2 border-current border-t-transparent" />
-                        <span className="hidden sm:inline">Sending</span>
-                      </>
-                    ) : (
-                      <>
-                        <Play className="h-4 w-4" />
-                        <span className="hidden sm:inline">Send</span>
-                      </>
-                    )}
-                  </Button>
-                </div>
+                        );
+                      })}
+                    </ModelSelectorList>
+                  </ModelSelectorContent>
+                </ModelSelector>
               </div>
+
+              {/* Send button */}
+              <Button
+                className="gap-2"
+                disabled={isLoading}
+                onClick={() => {
+                  const textarea = textareaRef.current;
+                  if (textarea && textarea.value.trim()) {
+                    handleSubmit({ text: textarea.value, files: attachments } as any, new Event('submit') as any);
+                    textarea.value = '';
+                    setAttachments([]);
+                  }
+                }}
+              >
+                {isLoading ? (
+                  <>
+                    <div className="h-4 w-4 animate-spin rounded-full border-2 border-current border-t-transparent" />
+                    <span className="hidden sm:inline">Sending</span>
+                  </>
+                ) : (
+                  <>
+                    <Play className="h-4 w-4" />
+                    <span className="hidden sm:inline">Send</span>
+                  </>
+                )}
+              </Button>
             </div>
           </div>
         </div>

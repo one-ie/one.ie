@@ -333,6 +333,55 @@ html, body {
   font-size: 0.875em;
 }
 
+/* Streamdown / Markdown code block styling for chat messages */
+.is-assistant pre {
+  background-color: hsl(var(--color-muted)) !important;
+  border: 1px solid hsl(var(--color-border)) !important;
+  border-radius: 0.5rem !important;
+  padding: 1rem !important;
+  overflow-x: auto !important;
+  margin: 0.5rem 0 !important;
+  font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace !important;
+}
+
+.is-assistant code {
+  font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace !important;
+  font-size: 0.875rem !important;
+  line-height: 1.5 !important;
+}
+
+.is-assistant pre code {
+  background: none !important;
+  padding: 0 !important;
+  border: none !important;
+  border-radius: 0 !important;
+  display: block !important;
+}
+
+.is-assistant :not(pre) > code {
+  background-color: hsl(var(--color-muted)) !important;
+  padding: 0.125rem 0.375rem !important;
+  border-radius: 0.25rem !important;
+  font-size: 0.875em !important;
+}
+
+/* Code block language label */
+.is-assistant pre > div:first-child {
+  display: flex !important;
+  align-items: center !important;
+  justify-content: space-between !important;
+  margin-bottom: 0.5rem !important;
+  padding-bottom: 0.5rem !important;
+  border-bottom: 1px solid hsl(var(--color-border)) !important;
+}
+
+.is-assistant pre > div:first-child > span {
+  font-size: 0.75rem !important;
+  font-weight: 600 !important;
+  text-transform: uppercase !important;
+  color: hsl(var(--color-muted-foreground)) !important;
+}
+
 /* Ensure translucent card utility pulls full surface color */
 .bg-card\/50 {
   --tw-bg-opacity: 1 !important;

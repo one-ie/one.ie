@@ -2,19 +2,38 @@
  * VideoPlayer Component - Usage Examples
  *
  * This file demonstrates the different ways to use the VideoPlayer component
- * with various media types and configurations.
+ * with Mux Player and YouTube embeds.
  */
 
 import { VideoPlayer } from './VideoPlayer';
 
 /**
- * Example 1: YouTube Video Embed
+ * Example 1: Mux Video with Metadata Tracking
+ * Production-ready video player with built-in analytics
+ */
+export function MuxVideoExample() {
+  return (
+    <VideoPlayer
+      playbackId="a4nOgmxGWg6gULfcBbAa00gXyfcwPnAFldF8RdsNyk8M"
+      title="Tutorial: Getting Started"
+      videoId="tutorial-getting-started"
+      viewerUserId="user-123"
+      poster="/thumbnails/tutorial.jpg"
+      aspectRatio="16/9"
+      autoplay={false}
+      muted={false}
+    />
+  );
+}
+
+/**
+ * Example 2: YouTube Video Fallback
  * Automatically detects YouTube URLs and renders iframe embed
  */
 export function YouTubeExample() {
   return (
     <VideoPlayer
-      src="https://www.youtube.com/watch?v=dQw4w9WgXcQ"
+      youtubeId="dQw4w9WgXcQ"
       title="YouTube Video Example"
       aspectRatio="16/9"
       autoplay={false}
@@ -24,37 +43,14 @@ export function YouTubeExample() {
 }
 
 /**
- * Example 2: Native Video Player (MP4, WebM, etc.)
- * Renders HTML5 video element for direct video files
+ * Example 3: Mux Video with Auto-generated Metadata
+ * Metadata is automatically populated from playbackId
  */
-export function NativeVideoExample() {
+export function MuxVideoMinimalExample() {
   return (
     <VideoPlayer
-      src="https://example.com/sample-video.mp4"
-      poster="https://example.com/thumbnail.jpg"
-      title="Native Video Example"
-      aspectRatio="16/9"
-      autoplay={false}
-      muted={false}
-      loop={false}
-    />
-  );
-}
-
-/**
- * Example 3: Audio Player with Poster Image
- * Renders audio player with optional poster image
- */
-export function AudioExample() {
-  return (
-    <VideoPlayer
-      type="audio"
-      src="https://example.com/podcast-episode.mp3"
-      poster="https://example.com/podcast-cover.jpg"
-      title="Podcast Episode Title"
-      autoplay={false}
-      muted={false}
-      loop={false}
+      playbackId="DS00Spx1CV902MCtPj5WknGlR102V5HFkDe"
+      title="Big Buck Bunny"
     />
   );
 }
@@ -66,9 +62,9 @@ export function AudioExample() {
 export function CustomStyledExample() {
   return (
     <VideoPlayer
-      src="https://www.youtube.com/watch?v=dQw4w9WgXcQ"
+      playbackId="a4nOgmxGWg6gULfcBbAa00gXyfcwPnAFldF8RdsNyk8M"
       title="Custom Styled Video"
-      className="shadow-2xl border-2 border-primary"
+      className="shadow-2xl border-4 border-primary/40"
       aspectRatio="21/9"
     />
   );
@@ -83,28 +79,28 @@ export function AspectRatioExamples() {
     <div className="grid grid-cols-2 gap-4">
       {/* 16:9 - Standard widescreen */}
       <VideoPlayer
-        src="https://www.youtube.com/watch?v=dQw4w9WgXcQ"
+        playbackId="a4nOgmxGWg6gULfcBbAa00gXyfcwPnAFldF8RdsNyk8M"
         title="16:9 Aspect Ratio"
         aspectRatio="16/9"
       />
 
       {/* 4:3 - Classic aspect ratio */}
       <VideoPlayer
-        src="https://www.youtube.com/watch?v=dQw4w9WgXcQ"
+        youtubeId="dQw4w9WgXcQ"
         title="4:3 Aspect Ratio"
         aspectRatio="4/3"
       />
 
       {/* 21:9 - Ultra-wide */}
       <VideoPlayer
-        src="https://www.youtube.com/watch?v=dQw4w9WgXcQ"
+        playbackId="a4nOgmxGWg6gULfcBbAa00gXyfcwPnAFldF8RdsNyk8M"
         title="21:9 Aspect Ratio"
         aspectRatio="21/9"
       />
 
       {/* 1:1 - Square */}
       <VideoPlayer
-        src="https://www.youtube.com/watch?v=dQw4w9WgXcQ"
+        youtubeId="dQw4w9WgXcQ"
         title="1:1 Square Aspect Ratio"
         aspectRatio="1/1"
       />
@@ -119,7 +115,7 @@ export function AspectRatioExamples() {
 export function AutoplayLoopExample() {
   return (
     <VideoPlayer
-      src="https://example.com/background-video.mp4"
+      playbackId="a4nOgmxGWg6gULfcBbAa00gXyfcwPnAFldF8RdsNyk8M"
       title="Background Video"
       autoplay={true}
       muted={true}
@@ -130,21 +126,62 @@ export function AutoplayLoopExample() {
 }
 
 /**
- * Example 7: Future Vidstack Integration
- * Props are ready for enhanced Vidstack features
+ * Example 7: Mux Video with Full Metadata
+ * Complete example with all metadata options
  */
-export function VidstackReadyExample() {
+export function MuxVideoFullExample() {
   return (
     <VideoPlayer
-      src="https://example.com/video.mp4"
-      title="Advanced Video"
-      thumbnails="https://example.com/thumbnails.vtt"
-      chapters={[
-        { startTime: 0, endTime: 60, text: 'Introduction' },
-        { startTime: 60, endTime: 180, text: 'Main Content' },
-        { startTime: 180, endTime: 240, text: 'Conclusion' },
-      ]}
-      streamType="on-demand"
+      playbackId="a4nOgmxGWg6gULfcBbAa00gXyfcwPnAFldF8RdsNyk8M"
+      muxAssetId="asset-123456"
+      title="Advanced Tutorial"
+      videoId="advanced-tutorial-001"
+      viewerUserId="user-456"
+      poster="/thumbnails/advanced-tutorial.jpg"
+      aspectRatio="16/9"
+      autoplay={false}
+      muted={false}
+      loop={false}
     />
+  );
+}
+
+/**
+ * Example 8: No Video Source (Fallback UI)
+ * Shows placeholder when no playbackId or youtubeId provided
+ */
+export function NoSourceExample() {
+  return (
+    <VideoPlayer
+      title="Missing Video"
+      aspectRatio="16/9"
+    />
+  );
+}
+
+/**
+ * Example 9: Page Integration Example
+ * How to use VideoPlayer in an Astro page
+ */
+export function PageIntegrationExample() {
+  return (
+    <div className="max-w-4xl mx-auto py-8">
+      <h1 className="text-3xl font-bold mb-6">Video Tutorial</h1>
+
+      <VideoPlayer
+        playbackId="a4nOgmxGWg6gULfcBbAa00gXyfcwPnAFldF8RdsNyk8M"
+        title="Complete Tutorial"
+        videoId="tutorial-complete"
+        viewerUserId="user-789"
+        poster="/thumbnails/tutorial.jpg"
+      />
+
+      <div className="mt-6 prose prose-lg">
+        <h2>About This Video</h2>
+        <p>
+          This tutorial covers everything you need to know about the ONE Platform.
+        </p>
+      </div>
+    </div>
   );
 }

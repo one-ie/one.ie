@@ -450,16 +450,21 @@ const docs = defineCollection({
 });
 
 // Define the Videos schema (video content ontology - thing type: video)
-// Enhanced with premium Vidstack features for education and news content
+// Enhanced with Mux Player for professional video hosting
 const VideoSchema = z.object({
   // Basic metadata
   title: z.string(),
   description: z.string(),
-  youtubeId: z.string().optional(), // For YouTube embeds
-  videoUrl: z.string().optional(),  // For native hosting (future)
-  thumbnail: z.string(),            // Image URL or path
-  duration: z.number(),             // Seconds
-  publishedAt: z.coerce.date(),     // Coerce string to Date
+
+  // Video sources (prioritized: Mux > YouTube > Direct URL)
+  playbackId: z.string().optional(),  // Mux playback ID (primary - professional hosting)
+  muxAssetId: z.string().optional(),  // Mux asset ID for metadata tracking
+  youtubeId: z.string().optional(),   // YouTube fallback
+  videoUrl: z.string().optional(),    // Direct URL fallback
+
+  thumbnail: z.string(),              // Image URL or path
+  duration: z.number(),               // Seconds
+  publishedAt: z.coerce.date(),       // Coerce string to Date
   author: z.string().optional(),
   categories: z.array(z.string()).default([]),
   tags: z.array(z.string()).default([]),

@@ -37,7 +37,9 @@ const videoData = videos.map(v => ({
   slug: v.slug,
   author: v.data.author,
   publishedAt: v.data.publishedAt,
-  youtubeId: v.data.youtubeId, // Auto-generate thumbnail from YouTube
+  playbackId: v.data.playbackId, // Mux playback ID
+  muxAssetId: v.data.muxAssetId, // Mux asset ID
+  youtubeId: v.data.youtubeId, // YouTube fallback
 }));
 
 // Page metadata

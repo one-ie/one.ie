@@ -1,297 +1,146 @@
 ---
 /**
- * Individual Video Page ([slug].astro)
+ * Video Detail Page - Dynamic Route
  *
- * Responsive single video page with player, metadata, and related videos.
+ * Displays a single video with the VideoPlayer component.
+ * Supports Mux, YouTube, and direct video URLs.
  *
- * Features:
- * - YouTube or native video player
- * - Responsive 2-column layout (desktop) → stacked (mobile)
- * - Related videos sidebar
- * - Categories and tags
- * - Breadcrumb navigation
- * - Dark mode support
- * - Accessibility optimized
- * - SEO metadata
- *
- * Responsive breakpoints:
- * - Mobile (<768px): Stacked layout, full-width player
- * - Tablet (768-1024px): Optimized spacing, stacked layout
- * - Desktop (>1024px): 2-column layout with sidebar
+ * Route: /videos/[slug]
+ * Example: /videos/one-platform-installation
  */
 
 import { getCollection, type CollectionEntry } from 'astro:content';
 import Layout from '@/layouts/Layout.astro';
 import { VideoPlayer } from '@/components/media/VideoPlayer';
-import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
-import { Badge } from '@/components/ui/badge';
-import { Button } from '@/components/ui/button';
-import { Separator } from '@/components/ui/separator';
-import { formatDate, formatDuration } from '@/lib/date';
 
-// Server mode: fetch data directly using params (no getStaticPaths)
-const { slug } = Astro.params;
+// Generate static paths for all videos
+export async function getStaticPaths() {
+  const videos = await getCollection('videos');
 
-// Get all videos and find the one matching this slug
-const allVideos = await getCollection('videos');
-const video = allVideos.find(v => v.slug === slug);
-
-// If no video found, return 404
-if (!video) {
-  return Astro.redirect('/videos');
+  return videos.map(video => ({
+    params: { slug: video.slug },
+    props: { video }
+  }));
 }
 
-const { Content } = await video.render();
+// Get video data from props
+const { video } = Astro.props;
 
-// Determine video source type
-const hasYoutubeId = !!video.data.youtubeId;
-const hasVideoUrl = !!video.data.videoUrl;
+// In dev mode, if video is not in props, fetch it from collection
+if (!video) {
+  const videos = await getCollection('videos');
+  const currentVideo = videos.find(v => v.slug === Astro.params.slug);
 
-// Get related videos (same category, exclude current) - reuse allVideos from above
-const relatedVideos = allVideos
-  .filter(v =>
-    v.slug !== video.slug &&
-    v.data.categories.some(cat => video.data.categories.includes(cat))
-  )
-  .slice(0, 3);
+  if (!currentVideo) {
+    return Astro.redirect('/videos');
+  }
+
+  // Re-assign to use below
+  Astro.props.video = currentVideo;
+}
+
+const videoData = video || Astro.props.video;
+
+// Page metadata
+const pageTitle = `${videoData.data.title} - ONE Platform`;
+const pageDescription = videoData.data.description;
 ---
 
 <Layout
-  title={`${video.data.title} - Videos`}
-  description={video.data.description}
-  image={video.data.thumbnail}
-  type="video.other"
+  title={pageTitle}
+  description={pageDescription}
+  sidebarInitialCollapsed={false}
 >
-  <!-- Container - responsive padding and max-width -->
-  <div class="container mx-auto px-4 sm:px-6 lg:px-8 py-6 sm:py-8 lg:py-12 max-w-7xl">
-    <!-- Breadcrumb navigation - responsive text size -->
-    <nav class="mb-4 sm:mb-6 text-xs sm:text-sm text-muted-foreground" aria-label="Breadcrumb">
-      <ol class="flex items-center flex-wrap gap-1 sm:gap-2">
-        <li>
-          <a href="/" class="hover:text-foreground transition-colors">Home</a>
-        </li>
-        <li aria-hidden="true">/</li>
-        <li>
-          <a href="/videos" class="hover:text-foreground transition-colors">Videos</a>
-        </li>
-        <li aria-hidden="true">/</li>
-        <li>
-          <span class="text-foreground line-clamp-1">{video.data.title}</span>
-        </li>
-      </ol>
-    </nav>
+  <!-- Page Container - responsive padding and max-width -->
+  <div class="container mx-auto py-6 sm:py-8 lg:py-12 px-4 sm:px-6 lg:px-8 max-w-5xl">
+    <!-- Back to Gallery Link -->
+    <div class="mb-4 sm:mb-6">
+      <a
+        href="/videos"
+        class="inline-flex items-center gap-2 text-sm text-muted-foreground hover:text-foreground transition-colors"
+      >
+        <svg
+          xmlns="http://www.w3.org/2000/svg"
+          class="h-4 w-4"
+          viewBox="0 0 20 20"
+          fill="currentColor"
+        >
+          <path
+            fill-rule="evenodd"
+            d="M9.707 16.707a1 1 0 01-1.414 0l-6-6a1 1 0 010-1.414l6-6a1 1 0 011.414 1.414L5.414 9H17a1 1 0 110 2H5.414l4.293 4.293a1 1 0 010 1.414z"
+            clip-rule="evenodd"
+          />
+        </svg>
+        Back to Videos
+      </a>
+    </div>
 
-    <!-- Responsive grid: stacked on mobile/tablet, 2-column on desktop -->
-    <div class="grid grid-cols-1 lg:grid-cols-3 gap-6 sm:gap-8">
-      <!-- Main content area - responsive spacing -->
-      <div class="lg:col-span-2 space-y-4 sm:space-y-6">
-        <!-- Video player - full-width, responsive -->
-        <div class="w-full">
-          {hasYoutubeId && video.data.youtubeId ? (
-            <VideoPlayer
-              youtubeId={video.data.youtubeId}
-              title={video.data.title}
-              poster={video.data.thumbnail}
-              videoId={video.slug}
-              client:visible
-            />
-          ) : hasVideoUrl && video.data.videoUrl ? (
-            <VideoPlayer
-              src={video.data.videoUrl}
-              poster={video.data.thumbnail}
-              title={video.data.title}
-              videoId={video.slug}
-              chapters={video.data.chapters}
-              client:visible
-            />
-          ) : (
-            <Card>
-              <CardContent className="p-4 sm:p-6">
-                <img
-                  src={video.data.thumbnail}
-                  alt={video.data.title}
-                  class="w-full aspect-video object-cover rounded-lg"
-                  loading="lazy"
-                  decoding="async"
-                />
-                <p class="mt-4 text-sm sm:text-base text-muted-foreground text-center">
-                  Video player coming soon
-                </p>
-              </CardContent>
-            </Card>
+    <!-- Video Player -->
+    <div class="mb-6 sm:mb-8">
+      <VideoPlayer
+        playbackId={videoData.data.playbackId}
+        muxAssetId={videoData.data.muxAssetId}
+        youtubeId={videoData.data.youtubeId}
+        videoUrl={videoData.data.videoUrl}
+        title={videoData.data.title}
+        videoId={videoData.slug}
+        poster={videoData.data.thumbnail}
+        aspectRatio="16/9"
+        client:load
+      />
+    </div>
+
+    <!-- Video Metadata -->
+    <div class="space-y-4 sm:space-y-6">
+      <!-- Title and Author -->
+      <div>
+        <h1 class="text-2xl sm:text-3xl lg:text-4xl font-bold mb-2 sm:mb-3">
+          {videoData.data.title}
+        </h1>
+        <div class="flex flex-wrap items-center gap-3 text-sm sm:text-base text-muted-foreground">
+          {videoData.data.author && (
+            <span class="font-medium">{videoData.data.author}</span>
           )}
-        </div>
-
-        <!-- Video metadata - responsive typography and spacing -->
-        <Card>
-          <CardHeader className="px-4 sm:px-6 pt-4 sm:pt-6 pb-3 sm:pb-4">
-            <CardTitle className="text-2xl sm:text-3xl lg:text-4xl leading-tight">
-              {video.data.title}
-            </CardTitle>
-            <div class="flex flex-wrap gap-1.5 sm:gap-2 items-center text-xs sm:text-sm text-muted-foreground mt-2 sm:mt-3">
-              {video.data.author && (
-                <span class="flex items-center gap-1">
-                  <svg xmlns="http://www.w3.org/2000/svg" class="h-3.5 w-3.5 sm:h-4 sm:w-4" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true">
-                    <path fill-rule="evenodd" d="M10 9a3 3 0 100-6 3 3 0 000 6zm-7 9a7 7 0 1114 0H3z" clip-rule="evenodd" />
-                  </svg>
-                  <span class="truncate max-w-[150px] sm:max-w-none">{video.data.author}</span>
-                </span>
-              )}
-              <span class="text-muted-foreground" aria-hidden="true">•</span>
-              <span class="flex items-center gap-1 shrink-0">
-                <svg xmlns="http://www.w3.org/2000/svg" class="h-3.5 w-3.5 sm:h-4 sm:w-4" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true">
-                  <path fill-rule="evenodd" d="M6 2a1 1 0 00-1 1v1H4a2 2 0 00-2 2v10a2 2 0 002 2h12a2 2 0 002-2V6a2 2 0 00-2-2h-1V3a1 1 0 10-2 0v1H7V3a1 1 0 00-1-1zm0 5a1 1 0 000 2h8a1 1 0 100-2H6z" clip-rule="evenodd" />
-                </svg>
-                {formatDate(video.data.publishedAt)}
-              </span>
-              <span class="text-muted-foreground" aria-hidden="true">•</span>
-              <span class="flex items-center gap-1 shrink-0">
-                <svg xmlns="http://www.w3.org/2000/svg" class="h-3.5 w-3.5 sm:h-4 sm:w-4" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true">
-                  <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm1-12a1 1 0 10-2 0v4a1 1 0 00.293.707l2.828 2.829a1 1 0 101.415-1.415L11 9.586V6z" clip-rule="evenodd" />
-                </svg>
-                {formatDuration(video.data.duration)}
-              </span>
-            </div>
-          </CardHeader>
-
-          <CardContent className="px-4 sm:px-6 pb-4 sm:pb-6">
-            <!-- Description - responsive text size -->
-            <p class="text-base sm:text-lg text-muted-foreground mb-4 sm:mb-6 leading-relaxed">
-              {video.data.description}
-            </p>
-
-            <Separator className="my-4" />
-
-            <!-- Categories and tags - responsive spacing -->
-            <div class="space-y-3 sm:space-y-4">
-              {video.data.categories.length > 0 && (
-                <div>
-                  <h3 class="text-sm sm:text-base font-semibold mb-2">Categories</h3>
-                  <div class="flex flex-wrap gap-1.5 sm:gap-2">
-                    {video.data.categories.map(category => (
-                      <Badge variant="secondary" className="capitalize text-xs sm:text-sm">
-                        {category}
-                      </Badge>
-                    ))}
-                  </div>
-                </div>
-              )}
-
-              {video.data.tags.length > 0 && (
-                <div>
-                  <h3 class="text-sm sm:text-base font-semibold mb-2">Tags</h3>
-                  <div class="flex flex-wrap gap-1.5 sm:gap-2">
-                    {video.data.tags.map(tag => (
-                      <Badge variant="outline" className="text-xs">
-                        {tag}
-                      </Badge>
-                    ))}
-                  </div>
-                </div>
-              )}
-            </div>
-
-            <Separator className="my-4 sm:my-6" />
-
-            <!-- Video content (rendered markdown) - responsive prose -->
-            <div class="prose prose-sm sm:prose-base prose-slate dark:prose-invert max-w-none">
-              <Content />
-            </div>
-          </CardContent>
-        </Card>
-
-        <!-- Back to gallery button - responsive sizing -->
-        <div class="flex justify-center sm:justify-start">
-          <a href="/videos">
-            <Button variant="outline" size="lg" className="w-full sm:w-auto touch-manipulation">
-              <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 sm:h-5 sm:w-5 mr-2" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true">
-                <path fill-rule="evenodd" d="M9.707 16.707a1 1 0 01-1.414 0l-6-6a1 1 0 010-1.414l6-6a1 1 0 011.414 1.414L5.414 9H17a1 1 0 110 2H5.414l4.293 4.293a1 1 0 010 1.414z" clip-rule="evenodd" />
-              </svg>
-              Back to Gallery
-            </Button>
-          </a>
+          <span>•</span>
+          <time datetime={videoData.data.publishedAt.toISOString()}>
+            {videoData.data.publishedAt.toLocaleDateString('en-US', {
+              year: 'numeric',
+              month: 'long',
+              day: 'numeric'
+            })}
+          </time>
         </div>
       </div>
 
-      <!-- Sidebar with related videos - responsive spacing -->
-      <aside class="lg:col-span-1 space-y-4 sm:space-y-6">
-        <Card>
-          <CardHeader className="px-4 sm:px-6 pt-4 sm:pt-6 pb-3 sm:pb-4">
-            <CardTitle className="text-lg sm:text-xl">Related Videos</CardTitle>
-          </CardHeader>
-          <CardContent className="space-y-3 sm:space-y-4 px-4 sm:px-6 pb-4 sm:pb-6">
-            {relatedVideos.length > 0 ? (
-              relatedVideos.map(related => {
-                // Auto-generate YouTube thumbnail if youtubeId is provided
-                const thumbnailUrl = related.data.youtubeId && (!related.data.thumbnail || !related.data.thumbnail.startsWith('http'))
-                  ? `https://img.youtube.com/vi/${related.data.youtubeId}/hqdefault.jpg`
-                  : related.data.thumbnail;
+      <!-- Categories and Tags -->
+      {(videoData.data.categories.length > 0 || videoData.data.tags.length > 0) && (
+        <div class="flex flex-wrap gap-2">
+          {videoData.data.categories.map(category => (
+            <span class="inline-flex items-center rounded-md border px-2.5 py-0.5 text-xs font-semibold transition-colors focus:outline-none focus:ring-2 focus:ring-ring focus:ring-offset-2 border-transparent bg-primary text-primary-foreground hover:bg-primary/80">
+              {category}
+            </span>
+          ))}
+          {videoData.data.tags.map(tag => (
+            <span class="inline-flex items-center rounded-md border px-2.5 py-0.5 text-xs font-semibold transition-colors focus:outline-none focus:ring-2 focus:ring-ring focus:ring-offset-2 border-transparent bg-secondary text-secondary-foreground hover:bg-secondary/80">
+              {tag}
+            </span>
+          ))}
+        </div>
+      )}
 
-                return (
-                <a
-                  href={`/videos/${related.slug}`}
-                  class="block group touch-manipulation"
-                  aria-label={`Watch ${related.data.title}`}
-                >
-                  <div class="space-y-2">
-                    <div class="relative aspect-video overflow-hidden rounded-lg">
-                      <img
-                        src={thumbnailUrl}
-                        alt={`${related.data.title} thumbnail`}
-                        class="w-full h-full object-cover transition-transform md:group-hover:scale-105"
-                        loading="lazy"
-                        decoding="async"
-                      />
-                      <div class="absolute bottom-1.5 sm:bottom-2 right-1.5 sm:right-2 bg-black/90 text-white text-xs px-1.5 py-0.5 sm:px-2 sm:py-1 rounded font-mono">
-                        {formatDuration(related.data.duration)}
-                      </div>
-                    </div>
-                    <h4 class="font-semibold text-sm sm:text-base md:group-hover:text-primary transition-colors line-clamp-2 leading-tight">
-                      {related.data.title}
-                    </h4>
-                    <p class="text-xs sm:text-sm text-muted-foreground">
-                      {related.data.author || 'ONE Platform'}
-                    </p>
-                  </div>
-                </a>
-                );
-              })
-            ) : (
-              <p class="text-sm text-muted-foreground text-center py-6 sm:py-8">
-                No related videos found
-              </p>
-            )}
-          </CardContent>
-        </Card>
+      <!-- Description -->
+      <div class="prose prose-lg dark:prose-invert max-w-none">
+        <p class="text-base sm:text-lg leading-relaxed">
+          {videoData.data.description}
+        </p>
+      </div>
 
-        <!-- Categories filter card - responsive -->
-        {video.data.categories.length > 0 && (
-          <Card>
-            <CardHeader className="px-4 sm:px-6 pt-4 sm:pt-6 pb-3 sm:pb-4">
-              <CardTitle className="text-lg sm:text-xl">Browse by Category</CardTitle>
-            </CardHeader>
-            <CardContent className="space-y-1 sm:space-y-2 px-4 sm:px-6 pb-4 sm:pb-6">
-              {video.data.categories.map(category => (
-                <a
-                  href={`/videos?category=${category}`}
-                  class="block"
-                >
-                  <Button variant="ghost" className="w-full justify-start capitalize text-sm sm:text-base touch-manipulation">
-                    {category}
-                  </Button>
-                </a>
-              ))}
-            </CardContent>
-          </Card>
-        )}
-      </aside>
+      <!-- Video Content (Markdown) -->
+      {videoData.body && (
+        <div class="prose prose-lg dark:prose-invert max-w-none border-t pt-6 sm:pt-8">
+          <div set:html={videoData.body} />
+        </div>
+      )}
     </div>
   </div>
 </Layout>
-
-<style>
-  /* Smooth scrolling for all links */
-  html {
-    scroll-behavior: smooth;
-  }
-</style>

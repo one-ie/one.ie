@@ -32,35 +32,32 @@ Build working video player functionality on the frontend WITHOUT requiring backe
 
 ---
 
-## Dependencies (From Bull.fm package.json)
+## Dependencies
 
 ### Required Dependencies
 ```json
 {
-  "@astro-community/astro-embed-youtube": "^0.5.6",
-  "@vidstack/react": "^0.6.15",
-  "vidstack": "^0.6.15",
-  "react-h5-audio-player": "3.10.0-rc.1",
-  "lucide-react": "^0.479.0",
-  "zod": "^3.25.67",
-  "react": "^18.3.1",
-  "react-dom": "^18.3.1"
+  "@astro-community/astro-embed-youtube": "^0.5.7",
+  "@mux/mux-player-react": "^3.8.0",
+  "react-h5-audio-player": "^3.10.1",
+  "lucide-react": "^0.546.0",
+  "zod": "^4.1.12",
+  "react": "^19.1.1",
+  "react-dom": "^19.1.1"
 }
 ```
 
 ### Already Installed in web/package.json
-- `astro`: ✅ (5.10.1 in Bull.fm, check web version)
-- `react`: ✅ (18.3.1)
-- `react-dom`: ✅ (18.3.1)
-- `lucide-react`: ✅
-- `zod`: ✅
-- `@radix-ui/react-slider`: ✅ (needed for video controls)
+- `astro`: ✅ (5.14.1)
+- `react`: ✅ (19.1.1)
+- `react-dom`: ✅ (19.1.1)
+- `lucide-react`: ✅ (0.546.0)
+- `zod`: ✅ (4.1.12)
+- `@astro-community/astro-embed-youtube`: ✅ (0.5.7)
+- `react-h5-audio-player`: ✅ (3.10.1)
 
 ### Need to Install
-- `@astro-community/astro-embed-youtube`: ❌ (YouTube embeds)
-- `@vidstack/react`: ❌ (advanced video player)
-- `vidstack`: ❌ (player core)
-- `react-h5-audio-player`: ❌ (audio player for podcasts)
+- `@mux/mux-player-react`: ❌ (Mux video player - official, production-ready)
 
 ---
 
@@ -72,22 +69,23 @@ Build working video player functionality on the frontend WITHOUT requiring backe
 **Agent:** agent-frontend
 
 ✓ **Cycle 1:** Install dependencies
-  - Run `cd web && bun add @astro-community/astro-embed-youtube @vidstack/react vidstack react-h5-audio-player`
-  - Verify installations in package.json
+  - Run `cd web && bun add @mux/mux-player-react`
+  - Verify installation in package.json
   - Test imports in a simple component
 
 ✓ **Cycle 2:** Create content collection schema
   - Create `web/src/content/videos/` directory
-  - Define Zod schema for video metadata (title, description, youtubeId, thumbnail, duration)
-  - Create sample video entries (3-4 videos from Bull.fm)
+  - Define Zod schema for video metadata (title, description, playbackId, muxAssetId, youtubeId, thumbnail, duration)
+  - Create sample video entries (3-4 videos)
 
 ### Cycle 3-6: Core Components (4 cycles)
 **Agent:** agent-frontend
 
-✓ **Cycle 3:** Port VideoPlayer component
-  - Copy `apps/bullfm/src/components/VideoPlayer.tsx` → `web/src/components/media/VideoPlayer.tsx`
-  - Adapt for web/ project structure
-  - Test with sample YouTube embed
+✓ **Cycle 3:** Create VideoPlayer component
+  - Create `web/src/components/media/VideoPlayer.tsx` using @mux/mux-player-react
+  - Support both Mux (playbackId) and YouTube (youtubeId) sources
+  - Add metadata tracking (video_id, video_title, viewer_user_id)
+  - Test with sample playbackId
 
 ✓ **Cycle 4:** Port VideoEmbed component
   - Copy `apps/bullfm/src/components/lessons/VideoEmbed.tsx` → `web/src/components/media/VideoEmbed.tsx`
@@ -140,14 +138,14 @@ Build working video player functionality on the frontend WITHOUT requiring backe
 **Agent:** agent-frontend
 **Deliverable:** Dependencies installed, content collection configured
 
-- Cycle 1: Install video dependencies (YouTube embed, Vidstack, audio player)
+- Cycle 1: Install Mux player dependency (others already installed)
 - Cycle 2: Create content collection schema + sample data
 
 ### Phase 2: Core Components (Cycles 3-6)
 **Agent:** agent-frontend
 **Deliverable:** Reusable video components
 
-- Cycle 3: Port VideoPlayer (YouTube + native video support)
+- Cycle 3: Create VideoPlayer (Mux + YouTube support)
 - Cycle 4: Port VideoEmbed (SSR YouTube embeds)
 - Cycle 5: Create VideoCard (thumbnail + metadata)
 - Cycle 6: Create VideoGallery (grid layout)
@@ -193,37 +191,41 @@ Build working video player functionality on the frontend WITHOUT requiring backe
 
 ---
 
-## Component Migration from Bull.fm
+## Component Structure
 
-### Files to Port (90%+ Reusable)
+### New Components to Create
 
 **Video Components:**
 ```
-apps/bullfm/src/components/VideoPlayer.tsx
-→ web/src/components/media/VideoPlayer.tsx
-Changes: Update imports, remove Bull.fm specific config
+web/src/components/media/VideoPlayer.tsx
+- Uses @mux/mux-player-react for Mux-hosted videos
+- Falls back to YouTube embeds for youtubeId
+- Metadata tracking for analytics
 
-apps/bullfm/src/components/lessons/VideoEmbed.tsx
-→ web/src/components/media/VideoEmbed.tsx
-Changes: Use @astro-community/astro-embed-youtube
+web/src/components/media/VideoEmbed.tsx
+- SSR YouTube embeds using @astro-community/astro-embed-youtube
+- Lightweight for marketing pages
 
-apps/bullfm/src/components/BullVideoLayout.tsx
-→ web/src/components/media/VideoLayout.tsx (optional, Vidstack advanced)
-Changes: Simplify for MVP (defer to Phase 6)
+web/src/components/media/VideoCard.tsx
+- Thumbnail card with metadata
+- Links to video detail page
+
+web/src/components/media/VideoGallery.tsx
+- Grid layout for video browsing
 ```
 
 **Audio Components:**
 ```
-apps/bullfm/src/components/AudioPlayer.tsx
-→ web/src/components/media/AudioPlayer.tsx
-Changes: Update imports, test with sample MP3
+web/src/components/media/AudioPlayer.tsx
+- Uses react-h5-audio-player
+- Support for podcast episodes
 ```
 
 **Content Collections:**
 ```
-apps/bullfm/src/content/config.ts (video/podcast schemas)
-→ web/src/content/config.ts (add video/podcast schemas)
-Changes: Merge with existing schemas
+web/src/content/config.ts
+- Add videos collection schema
+- Add podcasts collection schema
 ```
 
 ---
@@ -240,10 +242,12 @@ const videosCollection = defineCollection({
   schema: z.object({
     title: z.string(),
     description: z.string(),
-    youtubeId: z.string().optional(), // For YouTube embeds
-    videoUrl: z.string().optional(),  // For native hosting (future)
-    thumbnail: z.string(),            // Image URL or path
-    duration: z.number(),             // Seconds
+    playbackId: z.string().optional(),  // Mux playback ID (primary)
+    muxAssetId: z.string().optional(),  // Mux asset ID for metadata
+    youtubeId: z.string().optional(),   // YouTube fallback
+    videoUrl: z.string().optional(),    // Direct URL fallback
+    thumbnail: z.string(),              // Image URL or path
+    duration: z.number(),               // Seconds
     publishedAt: z.date(),
     author: z.string().optional(),
     categories: z.array(z.string()).default([]),
@@ -256,22 +260,43 @@ export const collections = {
 };
 ```
 
-### Sample Video Entry
+### Sample Video Entries
+
+**Mux-hosted video:**
 ```markdown
 ---
-# web/src/content/videos/sui-blockchain-gaming.md
-title: "Sui Blockchain Gaming Revolution"
-description: "Explore how Sui is transforming the gaming industry with fast, low-cost transactions"
-youtubeId: "dQw4w9WgXcQ"
-thumbnail: "/images/videos/sui-gaming-thumb.jpg"
-duration: 420
+# web/src/content/videos/mux-example.md
+title: "Mux Video Example"
+description: "Example video hosted on Mux"
+playbackId: "a4nOgmxGWg6gULfcBbAa00gXyfcwPnAFldF8RdsNyk8M"
+muxAssetId: "video-123"
+thumbnail: "/images/videos/mux-example-thumb.jpg"
+duration: 300
 publishedAt: 2025-01-15
-author: "Bull.fm Team"
-categories: ["blockchain", "gaming"]
-tags: ["sui", "web3", "gaming"]
+author: "ONE Platform"
+categories: ["tutorial"]
+tags: ["mux", "video"]
 ---
 
-Deep dive into Sui's gaming capabilities...
+Example video demonstrating Mux player integration...
+```
+
+**YouTube fallback:**
+```markdown
+---
+# web/src/content/videos/youtube-example.md
+title: "YouTube Video Example"
+description: "Example video from YouTube"
+youtubeId: "dQw4w9WgXcQ"
+thumbnail: "/images/videos/youtube-thumb.jpg"
+duration: 420
+publishedAt: 2025-01-15
+author: "ONE Platform"
+categories: ["demo"]
+tags: ["youtube"]
+---
+
+Example video using YouTube embed...
 ```
 
 ---
@@ -279,17 +304,17 @@ Deep dive into Sui's gaming capabilities...
 ## Technology Stack
 
 ### Frontend
-- **Framework:** Astro 5 + React 19
-- **Styling:** Tailwind v4
-- **Video Player:** @vidstack/react + @astro-community/astro-embed-youtube
-- **Audio Player:** react-h5-audio-player
-- **Icons:** lucide-react
-- **Validation:** Zod
+- **Framework:** Astro 5.14.1 + React 19.1.1
+- **Styling:** Tailwind v4.1.13
+- **Video Player:** @mux/mux-player-react 3.8.0 (primary) + @astro-community/astro-embed-youtube 0.5.7 (fallback)
+- **Audio Player:** react-h5-audio-player 3.10.1
+- **Icons:** lucide-react 0.546.0
+- **Validation:** Zod 4.1.12
 
 ### Deployment
 - **Frontend:** Cloudflare Pages (web.one.ie)
 - **Assets:** Static files in `/public/`
-- **YouTube:** Embeds (zero hosting cost)
+- **Video Hosting:** Mux (production-ready CDN) or YouTube (zero cost fallback)
 
 ### No Backend Required
 - ❌ No Convex (deferred to video-backend.md)
@@ -373,8 +398,8 @@ When ready to add multi-tenancy, analytics, and user features:
 # 1. Review this plan
 cat /Users/toc/Server/ONE/one/things/plans/video-frontend.md
 
-# 2. Start Cycle 1
-cd web && bun add @astro-community/astro-embed-youtube @vidstack/react vidstack react-h5-audio-player
+# 2. Start Cycle 1 (most dependencies already installed!)
+cd web && bun add @mux/mux-player-react
 
 # 3. Execute cycles sequentially
 /next  # Advance to next cycle
@@ -402,27 +427,60 @@ cd web && bun add @astro-community/astro-embed-youtube @vidstack/react vidstack 
 
 ---
 
-## Appendix: Bull.fm Actual Dependencies
+## Appendix: Dependencies
 
-**From:** `/Users/toc/Server/ONE/apps/bullfm/package.json`
+**Already Installed:**
+- `@astro-community/astro-embed-youtube`: "^0.5.7" (YouTube embeds) ✅
+- `react-h5-audio-player`: "^3.10.1" (podcast player) ✅
+- `lucide-react`: "^0.546.0" (icons) ✅
+- `zod`: "^4.1.12" (validation) ✅
+- `astro`: "^5.14.1" (static site generator) ✅
+- `react`: "^19.1.1" (UI library - React 19!) ✅
+- `react-dom`: "^19.1.1" (React renderer) ✅
 
-**Video Dependencies:**
-- `@astro-community/astro-embed-youtube`: "^0.5.6"
-- `@vidstack/react`: "^0.6.15"
-- `vidstack`: "^0.6.15"
+**Need to Install:**
+- `@mux/mux-player-react`: "^3.8.0" (Mux video player - official package) ❌
 
-**Audio Dependencies:**
-- `react-h5-audio-player`: "3.10.0-rc.1"
+## Mux Player Features
 
-**Supporting Libraries:**
-- `lucide-react`: "^0.479.0" (icons)
-- `zod`: "^3.25.67" (validation)
-- `@radix-ui/react-slider`: "^1.3.5" (video controls)
+**Official Package:** https://www.npmjs.com/package/@mux/mux-player-react
 
-**Framework:**
-- `astro`: "^5.10.1"
-- `react`: "^18.3.1"
-- `react-dom`: "^18.3.1"
+**Key Features:**
+- Production-ready player with built-in controls
+- Automatic quality selection and adaptive streaming
+- Built-in metadata tracking for analytics
+- Lazy loading support for performance
+- Works with Mux Video CDN
+- Fallback poster/placeholder images
+
+**Basic Usage:**
+```tsx
+import MuxPlayer from '@mux/mux-player-react';
+
+<MuxPlayer
+  playbackId="a4nOgmxGWg6gULfcBbAa00gXyfcwPnAFldF8RdsNyk8M"
+  metadata={{
+    video_id: "video-123",
+    video_title: "Example Video",
+    viewer_user_id: "user-456"
+  }}
+/>
+```
+
+**Lazy Loading:**
+```tsx
+import MuxPlayer from '@mux/mux-player-react/lazy';
+
+<MuxPlayer
+  loading="viewport"
+  playbackId="DS00Spx1CV902MCtPj5WknGlR102V5HFkDe"
+  metadata={{
+    video_id: 'video-id-123456',
+    video_title: 'Big Buck Bunny',
+    viewer_user_id: 'user-id-bc-789'
+  }}
+/>
+```
 
 ---
 

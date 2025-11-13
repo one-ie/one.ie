@@ -1,6 +1,6 @@
 "use client";
 
-import { SiReact } from "@icons-pack/react-simple-icons";
+import { FileCode } from "lucide-react";
 import {
   Task,
   TaskContent,
@@ -20,7 +20,7 @@ const Example = () => {
         <span className="inline-flex items-center gap-1" key="read-page-tsx">
           Read
           <TaskItemFile>
-            <SiReact className="size-4" color="#149ECA" />
+            <FileCode className="size-4 text-blue-500" />
             <span>page.tsx</span>
           </TaskItemFile>
         </span>
@@ -34,7 +34,7 @@ const Example = () => {
         <span className="inline-flex items-center gap-1" key="read-layout-tsx">
           Reading files
           <TaskItemFile>
-            <SiReact className="size-4" color="#149ECA" />
+            <FileCode className="size-4 text-blue-500" />
             <span>layout.tsx</span>
           </TaskItemFile>
         </span>

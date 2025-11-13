@@ -5,7 +5,7 @@
   "packageManager": "bun@1.2.19",
   "scripts": {
     "dev": "astro dev",
-    "build": "NODE_ENV=production bunx astro build",
+    "build": "NODE_OPTIONS=--max-old-space-size=4096 NODE_ENV=production bunx astro build",
     "build:starter": "./scripts/generate-starter.sh",
     "check": "bunx astro check",
     "preview": "astro preview",
@@ -44,6 +44,7 @@
     "@dnd-kit/sortable": "^10.0.0",
     "@dnd-kit/utilities": "^3.2.2",
     "@hookform/resolvers": "^5.2.2",
+    "@mux/mux-player-react": "^3.8.0",
     "@nanostores/react": "^1.0.0",
     "@notionhq/client": "^5.1.0",
     "@radix-ui/react-accordion": "^1.2.12",
