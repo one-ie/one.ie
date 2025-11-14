@@ -83,13 +83,12 @@ export default defineConfig({
         output: {
           // Conservative code splitting for Cloudflare Workers SSR compatibility
           manualChunks: (id) => {
-            // Keep React + lucide-react together to avoid forwardRef issues
-            if (id.includes('node_modules/react') || id.includes('node_modules/react-dom') || id.includes('lucide-react')) {
+            // Keep React + all React-dependent libraries together to avoid initialization issues
+            if (id.includes('node_modules/react') ||
+                id.includes('node_modules/react-dom') ||
+                id.includes('lucide-react') ||
+                id.includes('recharts')) {
               return 'react-vendor';
-            }
-            // Separate recharts (large charting library)
-            if (id.includes('recharts')) {
-              return 'recharts';
             }
             // Separate @mux/mux-player-react (VideoPlayer)
             if (id.includes('@mux/mux-player-react') || id.includes('media/VideoPlayer')) {
