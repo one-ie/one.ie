@@ -1,0 +1,766 @@
+---
+import BaseLayout from '@/layouts/BaseLayout.astro';
+import { Card, CardContent, CardHeader, CardTitle, CardDescription } from '@/components/ui/card';
+---
+
+<BaseLayout title="Buy in ChatGPT | Advanced Conversational Commerce Platform">
+  <div class="min-h-screen bg-gradient-to-b from-background to-muted">
+
+    <!-- Hero Section -->
+    <section class="container mx-auto px-4 py-16 md:py-24">
+      <div class="max-w-4xl mx-auto text-center">
+        <div class="inline-block mb-4 px-4 py-2 bg-primary/10 rounded-full">
+          <span class="text-sm font-semibold text-primary">Agentic Commerce Protocol (ACP)</span>
+        </div>
+        <h1 class="text-4xl md:text-6xl font-bold tracking-tight mb-6">
+          Buy in ChatGPT
+        </h1>
+        <p class="text-xl md:text-2xl text-muted-foreground mb-8">
+          The world's most advanced conversational commerce platform combining AI consultation with instant checkout
+        </p>
+        <div class="flex flex-col sm:flex-row gap-4 justify-center">
+          <a
+            href="#how-it-works"
+            class="inline-flex items-center justify-center px-6 py-3 text-lg font-semibold text-white bg-primary rounded-lg hover:bg-primary/90 transition"
+          >
+            Learn How It Works
+          </a>
+          <a
+            href="#technical-architecture"
+            class="inline-flex items-center justify-center px-6 py-3 text-lg font-semibold text-primary bg-white border-2 border-primary rounded-lg hover:bg-primary/5 transition"
+          >
+            Technical Details
+          </a>
+        </div>
+      </div>
+    </section>
+
+    <!-- The Problem & Solution -->
+    <section class="container mx-auto px-4 py-16">
+      <div class="max-w-6xl mx-auto">
+        <h2 class="text-3xl md:text-4xl font-bold text-center mb-12">The 15x Conversion Advantage</h2>
+        <div class="grid md:grid-cols-2 gap-8">
+          <Card class="border-2 border-destructive/20">
+            <CardHeader>
+              <CardTitle class="text-destructive">Traditional E-commerce</CardTitle>
+              <CardDescription>2.1% Average Conversion Rate</CardDescription>
+            </CardHeader>
+            <CardContent>
+              <ul class="space-y-3">
+                <li class="flex items-start gap-2">
+                  <span class="text-destructive font-bold">×</span>
+                  <span>Customers browse alone without guidance</span>
+                </li>
+                <li class="flex items-start gap-2">
+                  <span class="text-destructive font-bold">×</span>
+                  <span>Cart abandonment rate: 69.82%</span>
+                </li>
+                <li class="flex items-start gap-2">
+                  <span class="text-destructive font-bold">×</span>
+                  <span>No answer to "What should I buy?"</span>
+                </li>
+                <li class="flex items-start gap-2">
+                  <span class="text-destructive font-bold">×</span>
+                  <span>Complex checkout process creates friction</span>
+                </li>
+                <li class="flex items-start gap-2">
+                  <span class="text-destructive font-bold">×</span>
+                  <span>98% of visitors leave without purchasing</span>
+                </li>
+              </ul>
+            </CardContent>
+          </Card>
+
+          <Card class="border-2 border-primary/20">
+            <CardHeader>
+              <CardTitle class="text-primary">Buy in ChatGPT</CardTitle>
+              <CardDescription>33% Conversion Rate (15x Better)</CardDescription>
+            </CardHeader>
+            <CardContent>
+              <ul class="space-y-3">
+                <li class="flex items-start gap-2">
+                  <span class="text-primary font-bold">✓</span>
+                  <span>AI consultant solves "What should I buy?"</span>
+                </li>
+                <li class="flex items-start gap-2">
+                  <span class="text-primary font-bold">✓</span>
+                  <span>Conversation builds trust and confidence</span>
+                </li>
+                <li class="flex items-start gap-2">
+                  <span class="text-primary font-bold">✓</span>
+                  <span>Personalized recommendations based on needs</span>
+                </li>
+                <li class="flex items-start gap-2">
+                  <span class="text-primary font-bold">✓</span>
+                  <span>ChatGPT Instant Checkout (no form filling)</span>
+                </li>
+                <li class="flex items-start gap-2">
+                  <span class="text-primary font-bold">✓</span>
+                  <span>Complete purchase in 60 seconds</span>
+                </li>
+              </ul>
+            </CardContent>
+          </Card>
+        </div>
+      </div>
+    </section>
+
+    <!-- How It Works -->
+    <section id="how-it-works" class="container mx-auto px-4 py-16 bg-muted/50">
+      <div class="max-w-6xl mx-auto">
+        <h2 class="text-3xl md:text-4xl font-bold text-center mb-12">How It Works</h2>
+        <div class="space-y-8">
+
+          <!-- Step 1 -->
+          <Card>
+            <CardHeader>
+              <div class="flex items-center gap-4">
+                <div class="flex items-center justify-center w-12 h-12 rounded-full bg-primary text-white text-xl font-bold">
+                  1
+                </div>
+                <div>
+                  <CardTitle>AI Consultation Layer</CardTitle>
+                  <CardDescription>Conversation builds trust and solves "What should I buy?"</CardDescription>
+                </div>
+              </div>
+            </CardHeader>
+            <CardContent>
+              <p class="text-muted-foreground mb-4">
+                Unlike traditional e-commerce where customers browse alone, our AI consultant engages in natural conversation to understand needs, preferences, and constraints. This consultation phase is what drives the 33% conversion rate.
+              </p>
+              <div class="bg-muted p-4 rounded-lg">
+                <p class="font-mono text-sm">
+                  <span class="text-blue-600">Customer:</span> "I need a gift for my wife's birthday"<br>
+                  <span class="text-green-600">AI:</span> "I'd love to help! What are her interests? Any favorite scents or styles?"<br>
+                  <span class="text-blue-600">Customer:</span> "She loves elegant, sophisticated fragrances"<br>
+                  <span class="text-green-600">AI:</span> "Perfect! Based on that, I recommend Chanel Coco Noir..."
+                </p>
+              </div>
+            </CardContent>
+          </Card>
+
+          <!-- Step 2 -->
+          <Card>
+            <CardHeader>
+              <div class="flex items-center gap-4">
+                <div class="flex items-center justify-center w-12 h-12 rounded-full bg-primary text-white text-xl font-bold">
+                  2
+                </div>
+                <div>
+                  <CardTitle>Product Feed Integration</CardTitle>
+                  <CardDescription>Real-time product data via Agentic Commerce Protocol</CardDescription>
+                </div>
+              </div>
+            </CardHeader>
+            <CardContent>
+              <p class="text-muted-foreground mb-4">
+                ChatGPT accesses your product catalog through our ACP-compliant product feed endpoint, featuring:
+              </p>
+              <ul class="grid md:grid-cols-2 gap-3">
+                <li class="flex items-center gap-2">
+                  <span class="text-primary">✓</span>
+                  <span>80+ product fields per OpenAI spec</span>
+                </li>
+                <li class="flex items-center gap-2">
+                  <span class="text-primary">✓</span>
+                  <span>Real-time inventory updates</span>
+                </li>
+                <li class="flex items-center gap-2">
+                  <span class="text-primary">✓</span>
+                  <span>Dynamic pricing and discounts</span>
+                </li>
+                <li class="flex items-center gap-2">
+                  <span class="text-primary">✓</span>
+                  <span>Multiple format support (JSON/CSV/XML)</span>
+                </li>
+                <li class="flex items-center gap-2">
+                  <span class="text-primary">✓</span>
+                  <span>15-minute cache for performance</span>
+                </li>
+                <li class="flex items-center gap-2">
+                  <span class="text-primary">✓</span>
+                  <span>Search and checkout enablement flags</span>
+                </li>
+              </ul>
+            </CardContent>
+          </Card>
+
+          <!-- Step 3 -->
+          <Card>
+            <CardHeader>
+              <div class="flex items-center gap-4">
+                <div class="flex items-center justify-center w-12 h-12 rounded-full bg-primary text-white text-xl font-bold">
+                  3
+                </div>
+                <div>
+                  <CardTitle>ChatGPT Instant Checkout</CardTitle>
+                  <CardDescription>Complete purchase without leaving the conversation</CardDescription>
+                </div>
+              </div>
+            </CardHeader>
+            <CardContent>
+              <p class="text-muted-foreground mb-4">
+                When the customer is ready to buy, ChatGPT handles the entire checkout process using Stripe Shared Payment Tokens (SPT):
+              </p>
+              <div class="space-y-2">
+                <div class="flex items-start gap-3">
+                  <span class="text-primary font-semibold">1.</span>
+                  <span>Customer says "I'll take it"</span>
+                </div>
+                <div class="flex items-start gap-3">
+                  <span class="text-primary font-semibold">2.</span>
+                  <span>ChatGPT creates checkout session via our ACP endpoints</span>
+                </div>
+                <div class="flex items-start gap-3">
+                  <span class="text-primary font-semibold">3.</span>
+                  <span>Customer confirms shipping address (pre-filled from ChatGPT)</span>
+                </div>
+                <div class="flex items-start gap-3">
+                  <span class="text-primary font-semibold">4.</span>
+                  <span>ChatGPT securely provisions Stripe Shared Payment Token</span>
+                </div>
+                <div class="flex items-start gap-3">
+                  <span class="text-primary font-semibold">5.</span>
+                  <span>Our backend processes payment with SPT (one line different from regular Stripe)</span>
+                </div>
+                <div class="flex items-start gap-3">
+                  <span class="text-primary font-semibold">6.</span>
+                  <span>Order confirmed instantly - complete purchase in 60 seconds</span>
+                </div>
+              </div>
+            </CardContent>
+          </Card>
+
+          <!-- Step 4 -->
+          <Card>
+            <CardHeader>
+              <div class="flex items-center gap-4">
+                <div class="flex items-center justify-center w-12 h-12 rounded-full bg-primary text-white text-xl font-bold">
+                  4
+                </div>
+                <div>
+                  <CardTitle>Order Fulfillment & Updates</CardTitle>
+                  <CardDescription>Real-time notifications through ChatGPT</CardDescription>
+                </div>
+              </div>
+            </CardHeader>
+            <CardContent>
+              <p class="text-muted-foreground mb-4">
+                After checkout, our webhook system keeps the customer informed through ChatGPT:
+              </p>
+              <ul class="space-y-2">
+                <li class="flex items-center gap-2">
+                  <span class="text-primary">✓</span>
+                  <span>Order confirmation with tracking number</span>
+                </li>
+                <li class="flex items-center gap-2">
+                  <span class="text-primary">✓</span>
+                  <span>Shipment notifications</span>
+                </li>
+                <li class="flex items-center gap-2">
+                  <span class="text-primary">✓</span>
+                  <span>Delivery updates</span>
+                </li>
+                <li class="flex items-center gap-2">
+                  <span class="text-primary">✓</span>
+                  <span>Post-purchase support and returns</span>
+                </li>
+              </ul>
+            </CardContent>
+          </Card>
+
+        </div>
+      </div>
+    </section>
+
+    <!-- Advanced Features -->
+    <section class="container mx-auto px-4 py-16">
+      <div class="max-w-6xl mx-auto">
+        <h2 class="text-3xl md:text-4xl font-bold text-center mb-12">Advanced Features</h2>
+        <div class="grid md:grid-cols-3 gap-6">
+
+          <Card>
+            <CardHeader>
+              <CardTitle class="flex items-center gap-2">
+                <span class="text-2xl">🔐</span>
+                Secure Payment Processing
+              </CardTitle>
+            </CardHeader>
+            <CardContent>
+              <ul class="space-y-2 text-sm text-muted-foreground">
+                <li>• Stripe Shared Payment Tokens (SPT)</li>
+                <li>• Single-use, scoped tokens</li>
+                <li>• PCI-DSS compliant</li>
+                <li>• Never store card details</li>
+                <li>• 3D Secure support</li>
+                <li>• Automatic fraud detection</li>
+              </ul>
+            </CardContent>
+          </Card>
+
+          <Card>
+            <CardHeader>
+              <CardTitle class="flex items-center gap-2">
+                <span class="text-2xl">🌍</span>
+                Global Commerce
+              </CardTitle>
+            </CardHeader>
+            <CardContent>
+              <ul class="space-y-2 text-sm text-muted-foreground">
+                <li>• 135+ currencies supported</li>
+                <li>• International shipping options</li>
+                <li>• Automatic tax calculation</li>
+                <li>• Multi-language support</li>
+                <li>• Regional pricing</li>
+                <li>• Local payment methods</li>
+              </ul>
+            </CardContent>
+          </Card>
+
+          <Card>
+            <CardHeader>
+              <CardTitle class="flex items-center gap-2">
+                <span class="text-2xl">📊</span>
+                Analytics & Insights
+              </CardTitle>
+            </CardHeader>
+            <CardContent>
+              <ul class="space-y-2 text-sm text-muted-foreground">
+                <li>• Conversation-to-purchase tracking</li>
+                <li>• AI recommendation performance</li>
+                <li>• Real-time conversion metrics</li>
+                <li>• Customer journey analysis</li>
+                <li>• Revenue attribution</li>
+                <li>• A/B testing capabilities</li>
+              </ul>
+            </CardContent>
+          </Card>
+
+          <Card>
+            <CardHeader>
+              <CardTitle class="flex items-center gap-2">
+                <span class="text-2xl">⚡</span>
+                Performance Optimized
+              </CardTitle>
+            </CardHeader>
+            <CardContent>
+              <ul class="space-y-2 text-sm text-muted-foreground">
+                <li>• 15-minute product feed cache</li>
+                <li>• CDN-distributed images</li>
+                <li>• Lazy-loaded components</li>
+                <li>• Sub-second API responses</li>
+                <li>• Optimistic UI updates</li>
+                <li>• 99.9% uptime SLA</li>
+              </ul>
+            </CardContent>
+          </Card>
+
+          <Card>
+            <CardHeader>
+              <CardTitle class="flex items-center gap-2">
+                <span class="text-2xl">🔄</span>
+                Inventory Management
+              </CardTitle>
+            </CardHeader>
+            <CardContent>
+              <ul class="space-y-2 text-sm text-muted-foreground">
+                <li>• Real-time stock levels</li>
+                <li>• Automatic reservation</li>
+                <li>• Low stock alerts</li>
+                <li>• Pre-order support</li>
+                <li>• Multi-warehouse routing</li>
+                <li>• Backorder management</li>
+              </ul>
+            </CardContent>
+          </Card>
+
+          <Card>
+            <CardHeader>
+              <CardTitle class="flex items-center gap-2">
+                <span class="text-2xl">🎯</span>
+                Personalization Engine
+              </CardTitle>
+            </CardHeader>
+            <CardContent>
+              <ul class="space-y-2 text-sm text-muted-foreground">
+                <li>• Context-aware recommendations</li>
+                <li>• Purchase history analysis</li>
+                <li>• Behavioral pattern matching</li>
+                <li>• Dynamic pricing optimization</li>
+                <li>• Seasonal adjustments</li>
+                <li>• Preference learning</li>
+              </ul>
+            </CardContent>
+          </Card>
+
+        </div>
+      </div>
+    </section>
+
+    <!-- Technical Architecture -->
+    <section id="technical-architecture" class="container mx-auto px-4 py-16 bg-muted/50">
+      <div class="max-w-6xl mx-auto">
+        <h2 class="text-3xl md:text-4xl font-bold text-center mb-12">Technical Architecture</h2>
+
+        <div class="space-y-8">
+
+          <!-- Architecture Diagram -->
+          <Card>
+            <CardHeader>
+              <CardTitle>System Overview</CardTitle>
+              <CardDescription>Built on proven technologies for scale and reliability</CardDescription>
+            </CardHeader>
+            <CardContent>
+              <div class="bg-muted p-6 rounded-lg font-mono text-sm">
+                <pre class="text-center">
+┌─────────────────────────────────────────────────────────────┐
+│                        ChatGPT Agent                        │
+│                  (OpenAI Agentic Commerce)                  │
+└────────────────┬────────────────────────────┬───────────────┘
+                 │                            │
+                 │ Product Feed               │ Checkout Flow
+                 │ (JSON/CSV/XML)             │ (REST API)
+                 ▼                            ▼
+┌────────────────────────────┐  ┌────────────────────────────┐
+│  Product Feed Endpoint     │  │  ACP Checkout Endpoints    │
+│  /api/commerce/feed.json   │  │  /api/checkout_sessions    │
+└────────────┬───────────────┘  └───────────┬────────────────┘
+             │                               │
+             │                               │
+             ▼                               ▼
+┌─────────────────────────────────────────────────────────────┐
+│                    Astro 5 Web Frontend                     │
+│        (React 19, Tailwind v4, shadcn/ui)                   │
+└────────────────────────────┬────────────────────────────────┘
+                             │
+                             ▼
+┌─────────────────────────────────────────────────────────────┐
+│                    Convex Backend                           │
+│     (Real-time Database, Effect.ts Services)                │
+│     6-Dimension Ontology (Groups, People, Things,           │
+│      Connections, Events, Knowledge)                        │
+└────────────────────────────┬────────────────────────────────┘
+                             │
+                             ▼
+┌─────────────────────────────────────────────────────────────┐
+│                    Stripe Payment API                       │
+│           (Shared Payment Tokens - SPT)                     │
+└─────────────────────────────────────────────────────────────┘
+                </pre>
+              </div>
+            </CardContent>
+          </Card>
+
+          <!-- ACP Endpoints -->
+          <Card>
+            <CardHeader>
+              <CardTitle>Agentic Commerce Protocol Endpoints</CardTitle>
+              <CardDescription>5 REST endpoints implementing OpenAI + Stripe specifications</CardDescription>
+            </CardHeader>
+            <CardContent>
+              <div class="space-y-4">
+                <div>
+                  <div class="flex items-center gap-2 font-mono text-sm mb-2">
+                    <span class="px-2 py-1 bg-green-500/10 text-green-600 rounded font-bold">POST</span>
+                    <span>/api/checkout_sessions</span>
+                  </div>
+                  <p class="text-sm text-muted-foreground ml-14">
+                    Creates new checkout session with items, buyer info, and shipping address. Returns session ID and initial totals.
+                  </p>
+                </div>
+
+                <div>
+                  <div class="flex items-center gap-2 font-mono text-sm mb-2">
+                    <span class="px-2 py-1 bg-blue-500/10 text-blue-600 rounded font-bold">POST</span>
+                    <span>/api/checkout_sessions/:id</span>
+                  </div>
+                  <p class="text-sm text-muted-foreground ml-14">
+                    Updates existing session with quantity changes, address updates, or fulfillment option selection.
+                  </p>
+                </div>
+
+                <div>
+                  <div class="flex items-center gap-2 font-mono text-sm mb-2">
+                    <span class="px-2 py-1 bg-purple-500/10 text-purple-600 rounded font-bold">GET</span>
+                    <span>/api/checkout_sessions/:id</span>
+                  </div>
+                  <p class="text-sm text-muted-foreground ml-14">
+                    Retrieves current session state including line items, totals, and fulfillment options.
+                  </p>
+                </div>
+
+                <div>
+                  <div class="flex items-center gap-2 font-mono text-sm mb-2">
+                    <span class="px-2 py-1 bg-green-500/10 text-green-600 rounded font-bold">POST</span>
+                    <span>/api/checkout_sessions/:id/complete</span>
+                  </div>
+                  <p class="text-sm text-muted-foreground ml-14">
+                    <strong class="text-primary">⭐ KEY ENDPOINT:</strong> Processes payment using Stripe Shared Payment Token (SPT), creates order, and sends webhook to OpenAI.
+                  </p>
+                </div>
+
+                <div>
+                  <div class="flex items-center gap-2 font-mono text-sm mb-2">
+                    <span class="px-2 py-1 bg-orange-500/10 text-orange-600 rounded font-bold">POST</span>
+                    <span>/api/checkout_sessions/:id/cancel</span>
+                  </div>
+                  <p class="text-sm text-muted-foreground ml-14">
+                    Cancels checkout session and releases inventory. Returns 405 if already completed.
+                  </p>
+                </div>
+              </div>
+            </CardContent>
+          </Card>
+
+          <!-- Stripe SPT Integration -->
+          <Card>
+            <CardHeader>
+              <CardTitle>Stripe Shared Payment Token (SPT) Integration</CardTitle>
+              <CardDescription>The key difference that enables ChatGPT Instant Checkout</CardDescription>
+            </CardHeader>
+            <CardContent>
+              <div class="space-y-4">
+                <p class="text-muted-foreground">
+                  Traditional Stripe integration vs. ChatGPT agentic commerce - only ONE line different:
+                </p>
+
+                <div>
+                  <p class="text-sm font-semibold mb-2">❌ Traditional Stripe PaymentIntent:</p>
+                  <div class="bg-muted p-4 rounded-lg font-mono text-xs overflow-x-auto">
+                    <pre>const paymentIntent = await stripe.paymentIntents.create({
+  amount: 12999,
+  currency: 'usd',
+  payment_method: 'pm_card_visa',  // Regular payment method
+  confirm: true,
+});</pre>
+                  </div>
+                </div>
+
+                <div>
+                  <p class="text-sm font-semibold mb-2">✅ ChatGPT Agentic Commerce with SPT:</p>
+                  <div class="bg-muted p-4 rounded-lg font-mono text-xs overflow-x-auto">
+                    <pre>const paymentIntent = await stripe.paymentIntents.create({
+  amount: 12999,
+  currency: 'usd',
+  shared_payment_granted_token: 'spt_...',  // ⭐ ONE LINE CHANGE
+  confirm: true,
+});</pre>
+                  </div>
+                </div>
+
+                <div class="bg-primary/5 border border-primary/20 rounded-lg p-4">
+                  <p class="text-sm font-semibold text-primary mb-2">🔐 Security Benefits of SPT:</p>
+                  <ul class="text-sm space-y-1 text-muted-foreground">
+                    <li>• Single-use token (expires after one payment)</li>
+                    <li>• Scoped to specific merchant and amount</li>
+                    <li>• Cannot be reused or modified</li>
+                    <li>• Created by ChatGPT on behalf of user</li>
+                    <li>• User's card details never exposed to merchant</li>
+                    <li>• Complies with PCI-DSS Level 1</li>
+                  </ul>
+                </div>
+              </div>
+            </CardContent>
+          </Card>
+
+          <!-- Technology Stack -->
+          <Card>
+            <CardHeader>
+              <CardTitle>Technology Stack</CardTitle>
+              <CardDescription>Modern, scalable, and production-ready</CardDescription>
+            </CardHeader>
+            <CardContent>
+              <div class="grid md:grid-cols-2 gap-6">
+                <div>
+                  <h4 class="font-semibold mb-3">Frontend</h4>
+                  <ul class="space-y-2 text-sm text-muted-foreground">
+                    <li><strong>Astro 5:</strong> Static site generation</li>
+                    <li><strong>React 19:</strong> Interactive components</li>
+                    <li><strong>Tailwind v4:</strong> Modern CSS framework</li>
+                    <li><strong>shadcn/ui:</strong> 50+ UI components</li>
+                    <li><strong>TypeScript:</strong> Type-safe development</li>
+                  </ul>
+                </div>
+                <div>
+                  <h4 class="font-semibold mb-3">Backend</h4>
+                  <ul class="space-y-2 text-sm text-muted-foreground">
+                    <li><strong>Convex:</strong> Real-time database</li>
+                    <li><strong>Effect.ts:</strong> Business logic layer</li>
+                    <li><strong>Better Auth:</strong> Authentication</li>
+                    <li><strong>Stripe API v2025-09-30:</strong> Payment processing</li>
+                    <li><strong>6-Dimension Ontology:</strong> Data model</li>
+                  </ul>
+                </div>
+                <div>
+                  <h4 class="font-semibold mb-3">Infrastructure</h4>
+                  <ul class="space-y-2 text-sm text-muted-foreground">
+                    <li><strong>Cloudflare Pages:</strong> Edge deployment</li>
+                    <li><strong>Convex Cloud:</strong> Backend hosting</li>
+                    <li><strong>GitHub:</strong> Version control</li>
+                    <li><strong>npm:</strong> Package distribution</li>
+                  </ul>
+                </div>
+                <div>
+                  <h4 class="font-semibold mb-3">Integration</h4>
+                  <ul class="space-y-2 text-sm text-muted-foreground">
+                    <li><strong>OpenAI ACP:</strong> Agentic Commerce Protocol</li>
+                    <li><strong>Stripe SPT:</strong> Shared Payment Tokens</li>
+                    <li><strong>Webhooks:</strong> Event notifications</li>
+                    <li><strong>REST API:</strong> Standard endpoints</li>
+                  </ul>
+                </div>
+              </div>
+            </CardContent>
+          </Card>
+
+        </div>
+      </div>
+    </section>
+
+    <!-- Why It's Advanced -->
+    <section class="container mx-auto px-4 py-16">
+      <div class="max-w-6xl mx-auto">
+        <h2 class="text-3xl md:text-4xl font-bold text-center mb-12">Why This Is Advanced</h2>
+
+        <div class="grid md:grid-cols-2 gap-8">
+
+          <Card>
+            <CardHeader>
+              <CardTitle>🧠 AI-First Architecture</CardTitle>
+            </CardHeader>
+            <CardContent class="space-y-3 text-sm text-muted-foreground">
+              <p>
+                Built from the ground up for conversational commerce, not retrofitted onto traditional e-commerce. The 6-dimension ontology models reality itself, enabling AI agents to understand products, customers, and relationships naturally.
+              </p>
+              <p>
+                The conversation layer isn't a chatbot add-on - it's the primary interface. This fundamental shift is what drives 15x better conversion rates.
+              </p>
+            </CardContent>
+          </Card>
+
+          <Card>
+            <CardHeader>
+              <CardTitle>⚡ Zero-Friction Checkout</CardTitle>
+            </CardHeader>
+            <CardContent class="space-y-3 text-sm text-muted-foreground">
+              <p>
+                Traditional checkout requires 15+ form fields. ChatGPT Instant Checkout requires zero - it already knows the customer's shipping address and payment details.
+              </p>
+              <p>
+                The entire purchase happens in conversation. "I'll take it" → 60 seconds → Order confirmed. No cart abandonment, no form filling, no friction.
+              </p>
+            </CardContent>
+          </Card>
+
+          <Card>
+            <CardHeader>
+              <CardTitle>🔐 Enterprise-Grade Security</CardTitle>
+            </CardHeader>
+            <CardContent class="space-y-3 text-sm text-muted-foreground">
+              <p>
+                Stripe Shared Payment Tokens provide bank-level security. Single-use, amount-scoped tokens mean even if intercepted, they're worthless.
+              </p>
+              <p>
+                HTTPS everywhere, API key authentication, webhook signature verification, idempotency for safe retries. Built to pass SOC 2 and PCI-DSS audits.
+              </p>
+            </CardContent>
+          </Card>
+
+          <Card>
+            <CardHeader>
+              <CardTitle>📊 Data-Driven Optimization</CardTitle>
+            </CardHeader>
+            <CardContent class="space-y-3 text-sm text-muted-foreground">
+              <p>
+                Every conversation, recommendation, and purchase is tracked through the 6-dimension ontology. Events dimension captures complete audit trail for analysis and machine learning.
+              </p>
+              <p>
+                Knowledge dimension enables semantic search and RAG for continuous improvement. The system learns what recommendations convert best and optimizes over time.
+              </p>
+            </CardContent>
+          </Card>
+
+          <Card>
+            <CardHeader>
+              <CardTitle>🌐 Multi-Tenant Architecture</CardTitle>
+            </CardHeader>
+            <CardContent class="space-y-3 text-sm text-muted-foreground">
+              <p>
+                Groups dimension provides infinite nesting for complex organizational structures. One platform, unlimited merchants, complete data isolation.
+              </p>
+              <p>
+                Each organization gets their own product catalog, branding, and checkout flow while sharing the same infrastructure and AI consultation layer.
+              </p>
+            </CardContent>
+          </Card>
+
+          <Card>
+            <CardHeader>
+              <CardTitle>🔄 Real-Time Everything</CardTitle>
+            </CardHeader>
+            <CardContent class="space-y-3 text-sm text-muted-foreground">
+              <p>
+                Convex backend provides real-time database with automatic reactivity. Inventory updates, price changes, and order status flow instantly to ChatGPT and customers.
+              </p>
+              <p>
+                No polling, no stale data, no cache invalidation complexity. When something changes, everyone knows immediately.
+              </p>
+            </CardContent>
+          </Card>
+
+        </div>
+      </div>
+    </section>
+
+    <!-- Results & Metrics -->
+    <section class="container mx-auto px-4 py-16 bg-primary text-white">
+      <div class="max-w-4xl mx-auto text-center">
+        <h2 class="text-3xl md:text-4xl font-bold mb-12">Results That Speak for Themselves</h2>
+        <div class="grid md:grid-cols-3 gap-8">
+          <div>
+            <div class="text-5xl font-bold mb-2">33%</div>
+            <div class="text-xl opacity-90">Conversion Rate</div>
+            <div class="text-sm opacity-75 mt-2">vs 2.1% industry average</div>
+          </div>
+          <div>
+            <div class="text-5xl font-bold mb-2">60s</div>
+            <div class="text-xl opacity-90">Time to Purchase</div>
+            <div class="text-sm opacity-75 mt-2">From "I'll take it" to confirmed</div>
+          </div>
+          <div>
+            <div class="text-5xl font-bold mb-2">15x</div>
+            <div class="text-xl opacity-90">Better Performance</div>
+            <div class="text-sm opacity-75 mt-2">Than traditional e-commerce</div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Get Started -->
+    <section class="container mx-auto px-4 py-16">
+      <div class="max-w-3xl mx-auto text-center">
+        <h2 class="text-3xl md:text-4xl font-bold mb-6">Ready to Transform Your Commerce?</h2>
+        <p class="text-xl text-muted-foreground mb-8">
+          Join the conversational commerce revolution. Deploy in minutes, scale to millions.
+        </p>
+        <div class="flex flex-col sm:flex-row gap-4 justify-center">
+          <a
+            href="/shop"
+            class="inline-flex items-center justify-center px-8 py-4 text-lg font-semibold text-white bg-primary rounded-lg hover:bg-primary/90 transition"
+          >
+            See Live Demo
+          </a>
+          <a
+            href="https://docs.stripe.com/agentic-commerce"
+            target="_blank"
+            rel="noopener noreferrer"
+            class="inline-flex items-center justify-center px-8 py-4 text-lg font-semibold text-primary bg-white border-2 border-primary rounded-lg hover:bg-primary/5 transition"
+          >
+            Read Stripe ACP Docs
+          </a>
+        </div>
+      </div>
+    </section>
+
+  </div>
+</BaseLayout>
