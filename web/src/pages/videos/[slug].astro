@@ -13,6 +13,9 @@ import { getCollection, type CollectionEntry } from 'astro:content';
 import Layout from '@/layouts/Layout.astro';
 import { VideoPlayer } from '@/components/media/VideoPlayer';
 
+// Prerender all video pages as static to reduce Worker bundle size
+export const prerender = true;
+
 // Generate static paths for all videos
 export async function getStaticPaths() {
   const videos = await getCollection('videos');

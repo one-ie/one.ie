@@ -81,6 +81,7 @@ export default defineConfig({
       minify: "esbuild",
       rollupOptions: {
         output: {
+          // Aggressive code splitting to reduce initial bundle
           manualChunks: (id) => {
             // Separate recharts into its own chunk to enable lazy loading
             if (id.includes('recharts')) {
@@ -93,6 +94,24 @@ export default defineConfig({
             // Keep React separate
             if (id.includes('node_modules/react') || id.includes('node_modules/react-dom')) {
               return 'react-vendor';
+            }
+            // Separate @mux/mux-player-react (VideoPlayer) into its own chunk
+            if (id.includes('@mux/mux-player-react') || id.includes('media/VideoPlayer')) {
+              return 'video-player';
+            }
+            // Separate AI SDK into its own chunk
+            if (id.includes('@ai-sdk') || id.includes('ai/')) {
+              return 'ai-sdk';
+            }
+            // Separate content collections into their own chunks by collection
+            if (id.includes('src/content/')) {
+              if (id.includes('content/docs')) return 'content-docs';
+              if (id.includes('content/news')) return 'content-news';
+              if (id.includes('content/plans')) return 'content-plans';
+              if (id.includes('content/products')) return 'content-products';
+              if (id.includes('content/videos')) return 'content-videos';
+              if (id.includes('content/podcasts')) return 'content-podcasts';
+              return 'content-other';
             }
           },
         },

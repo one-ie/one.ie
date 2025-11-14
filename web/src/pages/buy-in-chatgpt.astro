@@ -1,5 +1,8 @@
 ---
 import LandingLayout from '@/layouts/LandingLayout.astro';
+
+// Prerender this page as static HTML to reduce Worker bundle size
+export const prerender = true;
 ---
 
 <LandingLayout

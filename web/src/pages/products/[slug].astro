@@ -18,6 +18,9 @@ import { WishlistButton } from '@/components/ecommerce/interactive/Wishlist';
 import RecommendationsCarousel from '@/components/ecommerce/static/RecommendationsCarousel';
 import { ProductFAQ } from '@/components/ecommerce/static/FAQAccordion';
 
+// Prerender all product pages as static to reduce Worker bundle size
+export const prerender = true;
+
 // Generate static paths for all products
 export async function getStaticPaths() {
   const products = await getCollection('products');

@@ -10,6 +10,9 @@ import { getCollection, getEntry } from 'astro:content';
 import CollectionPageClient from '@/components/ecommerce/interactive/CollectionPageClient';
 import { Breadcrumbs, type BreadcrumbItem } from '@/components/ecommerce/static/Breadcrumbs';
 
+// Prerender all collection pages as static to reduce Worker bundle size
+export const prerender = true;
+
 // Generate static paths for all collections
 export async function getStaticPaths() {
   const collections = await getCollection('collections');
