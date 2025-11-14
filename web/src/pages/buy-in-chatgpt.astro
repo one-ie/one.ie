@@ -3,13 +3,352 @@ import LandingLayout from '@/layouts/LandingLayout.astro';
 ---
 
 <LandingLayout
-  title="Buy in ChatGPT"
-  description="Advanced conversational commerce platform with 33% conversion rate"
+  title="Buy in ChatGPT | Advanced Conversational Commerce Platform"
+  description="The world's most advanced conversational commerce platform. 33% conversion rate (15x better than traditional e-commerce) with ChatGPT Instant Checkout powered by Stripe."
 >
-  <div class="container mx-auto px-4 py-16">
-    <h1 class="text-4xl font-bold text-center mb-8">Buy in ChatGPT</h1>
-    <p class="text-xl text-center mb-12">
-      The most advanced conversational commerce platform
-    </p>
+  <div class="min-h-screen bg-gradient-to-b from-background to-muted">
+
+    <!-- Hero Section -->
+    <section class="container mx-auto px-4 py-16 md:py-24">
+      <div class="max-w-4xl mx-auto text-center">
+        <div class="inline-block mb-4 px-4 py-2 bg-primary/10 rounded-full">
+          <span class="text-sm font-semibold text-primary">Agentic Commerce Protocol (ACP)</span>
+        </div>
+        <h1 class="text-4xl md:text-6xl font-bold tracking-tight mb-6">
+          Buy in ChatGPT
+        </h1>
+        <p class="text-xl md:text-2xl text-muted-foreground mb-8">
+          The world&apos;s most advanced conversational commerce platform combining AI consultation with instant checkout
+        </p>
+        <div class="flex flex-col sm:flex-row gap-4 justify-center">
+          <a
+            href="#how-it-works"
+            class="inline-flex items-center justify-center px-6 py-3 text-lg font-semibold text-white bg-primary rounded-lg hover:bg-primary/90 transition"
+          >
+            Learn How It Works
+          </a>
+          <a
+            href="#features"
+            class="inline-flex items-center justify-center px-6 py-3 text-lg font-semibold text-primary bg-white border-2 border-primary rounded-lg hover:bg-primary/5 transition"
+          >
+            View Features
+          </a>
+        </div>
+      </div>
+    </section>
+
+    <!-- Problem vs Solution -->
+    <section class="container mx-auto px-4 py-16">
+      <div class="max-w-6xl mx-auto">
+        <h2 class="text-3xl md:text-4xl font-bold text-center mb-12">The 15x Conversion Advantage</h2>
+        <div class="grid md:grid-cols-2 gap-8">
+
+          <!-- Traditional E-commerce -->
+          <div class="rounded-xl border-2 border-destructive/20 bg-card p-6 shadow-lg">
+            <h3 class="text-xl font-bold text-destructive mb-4">Traditional E-commerce</h3>
+            <p class="text-muted-foreground mb-4 font-semibold">2.1% Average Conversion Rate</p>
+            <ul class="space-y-3">
+              <li class="flex items-start gap-2">
+                <span class="text-destructive font-bold">×</span>
+                <span>Customers browse alone without guidance</span>
+              </li>
+              <li class="flex items-start gap-2">
+                <span class="text-destructive font-bold">×</span>
+                <span>Cart abandonment rate 69.82%</span>
+              </li>
+              <li class="flex items-start gap-2">
+                <span class="text-destructive font-bold">×</span>
+                <span>No answer to what should I buy</span>
+              </li>
+              <li class="flex items-start gap-2">
+                <span class="text-destructive font-bold">×</span>
+                <span>Complex checkout creates friction</span>
+              </li>
+              <li class="flex items-start gap-2">
+                <span class="text-destructive font-bold">×</span>
+                <span>98% leave without purchasing</span>
+              </li>
+            </ul>
+          </div>
+
+          <!-- Buy in ChatGPT -->
+          <div class="rounded-xl border-2 border-primary/20 bg-card p-6 shadow-lg">
+            <h3 class="text-xl font-bold text-primary mb-4">Buy in ChatGPT</h3>
+            <p class="text-muted-foreground mb-4 font-semibold">33% Conversion Rate (15x Better)</p>
+            <ul class="space-y-3">
+              <li class="flex items-start gap-2">
+                <span class="text-primary font-bold">✓</span>
+                <span>AI consultant solves what to buy</span>
+              </li>
+              <li class="flex items-start gap-2">
+                <span class="text-primary font-bold">✓</span>
+                <span>Conversation builds trust</span>
+              </li>
+              <li class="flex items-start gap-2">
+                <span class="text-primary font-bold">✓</span>
+                <span>Personalized recommendations</span>
+              </li>
+              <li class="flex items-start gap-2">
+                <span class="text-primary font-bold">✓</span>
+                <span>ChatGPT Instant Checkout</span>
+              </li>
+              <li class="flex items-start gap-2">
+                <span class="text-primary font-bold">✓</span>
+                <span>Complete purchase in 60 seconds</span>
+              </li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- How It Works -->
+    <section id="how-it-works" class="container mx-auto px-4 py-16 bg-muted/50">
+      <div class="max-w-6xl mx-auto">
+        <h2 class="text-3xl md:text-4xl font-bold text-center mb-12">How It Works</h2>
+        <div class="space-y-8">
+
+          <!-- Step 1 -->
+          <div class="rounded-xl border bg-card text-card-foreground shadow-lg p-6">
+            <div class="flex items-center gap-4 mb-4">
+              <div class="flex items-center justify-center w-12 h-12 rounded-full bg-primary text-white text-xl font-bold">
+                1
+              </div>
+              <div>
+                <h3 class="text-xl font-semibold">AI Consultation Layer</h3>
+                <p class="text-sm text-muted-foreground">Conversation builds trust and solves what should I buy</p>
+              </div>
+            </div>
+            <p class="text-muted-foreground mb-4">
+              Unlike traditional e-commerce where customers browse alone, our AI consultant engages in natural conversation to understand needs, preferences, and constraints. This consultation phase drives the 33% conversion rate.
+            </p>
+            <div class="bg-muted p-4 rounded-lg">
+              <p class="font-mono text-sm space-y-1">
+                <span class="block"><span class="text-blue-600">Customer:</span> I need a gift for my wife</span>
+                <span class="block"><span class="text-green-600">AI:</span> I can help! What are her interests?</span>
+                <span class="block"><span class="text-blue-600">Customer:</span> She loves elegant fragrances</span>
+                <span class="block"><span class="text-green-600">AI:</span> Perfect! I recommend Chanel Coco Noir...</span>
+              </p>
+            </div>
+          </div>
+
+          <!-- Step 2 -->
+          <div class="rounded-xl border bg-card text-card-foreground shadow-lg p-6">
+            <div class="flex items-center gap-4 mb-4">
+              <div class="flex items-center justify-center w-12 h-12 rounded-full bg-primary text-white text-xl font-bold">
+                2
+              </div>
+              <div>
+                <h3 class="text-xl font-semibold">Product Feed Integration</h3>
+                <p class="text-sm text-muted-foreground">Real-time product data via ACP</p>
+              </div>
+            </div>
+            <p class="text-muted-foreground mb-4">
+              ChatGPT accesses your product catalog through our ACP-compliant feed with 80+ fields, real-time inventory, dynamic pricing, and multi-format support.
+            </p>
+          </div>
+
+          <!-- Step 3 -->
+          <div class="rounded-xl border bg-card text-card-foreground shadow-lg p-6">
+            <div class="flex items-center gap-4 mb-4">
+              <div class="flex items-center justify-center w-12 h-12 rounded-full bg-primary text-white text-xl font-bold">
+                3
+              </div>
+              <div>
+                <h3 class="text-xl font-semibold">ChatGPT Instant Checkout</h3>
+                <p class="text-sm text-muted-foreground">Complete purchase without leaving the conversation</p>
+              </div>
+            </div>
+            <p class="text-muted-foreground mb-4">
+              When ready to buy, ChatGPT handles checkout using Stripe Shared Payment Tokens. The entire purchase happens in conversation - 60 seconds from decision to order confirmed.
+            </p>
+            <div class="bg-primary/5 border border-primary/20 rounded-lg p-4">
+              <p class="text-sm font-semibold text-primary mb-2">Key Integration</p>
+              <p class="text-sm text-muted-foreground">
+                ONE line different from regular Stripe: Use shared_payment_granted_token instead of payment_method for instant, secure checkout.
+              </p>
+            </div>
+          </div>
+
+        </div>
+      </div>
+    </section>
+
+    <!-- Features -->
+    <section id="features" class="container mx-auto px-4 py-16">
+      <div class="max-w-6xl mx-auto">
+        <h2 class="text-3xl md:text-4xl font-bold text-center mb-12">Advanced Features</h2>
+        <div class="grid md:grid-cols-3 gap-6">
+
+          <div class="rounded-xl border bg-card p-6 shadow">
+            <div class="text-3xl mb-3">🔐</div>
+            <h3 class="font-semibold mb-2">Secure Payment Processing</h3>
+            <ul class="text-sm space-y-1 text-muted-foreground">
+              <li>• Stripe Shared Payment Tokens</li>
+              <li>• Single-use scoped tokens</li>
+              <li>• PCI-DSS Level 1 compliant</li>
+              <li>• Never store card details</li>
+            </ul>
+          </div>
+
+          <div class="rounded-xl border bg-card p-6 shadow">
+            <div class="text-3xl mb-3">🌍</div>
+            <h3 class="font-semibold mb-2">Global Commerce</h3>
+            <ul class="text-sm space-y-1 text-muted-foreground">
+              <li>• 135+ currencies supported</li>
+              <li>• International shipping</li>
+              <li>• Automatic tax calculation</li>
+              <li>• Multi-language support</li>
+            </ul>
+          </div>
+
+          <div class="rounded-xl border bg-card p-6 shadow">
+            <div class="text-3xl mb-3">📊</div>
+            <h3 class="font-semibold mb-2">Analytics & Insights</h3>
+            <ul class="text-sm space-y-1 text-muted-foreground">
+              <li>• Conversation-to-purchase tracking</li>
+              <li>• AI recommendation performance</li>
+              <li>• Real-time conversion metrics</li>
+              <li>• Customer journey analysis</li>
+            </ul>
+          </div>
+
+          <div class="rounded-xl border bg-card p-6 shadow">
+            <div class="text-3xl mb-3">⚡</div>
+            <h3 class="font-semibold mb-2">Performance Optimized</h3>
+            <ul class="text-sm space-y-1 text-muted-foreground">
+              <li>• 15-minute product feed cache</li>
+              <li>• CDN-distributed images</li>
+              <li>• Sub-second API responses</li>
+              <li>• 99.9% uptime SLA</li>
+            </ul>
+          </div>
+
+          <div class="rounded-xl border bg-card p-6 shadow">
+            <div class="text-3xl mb-3">🔄</div>
+            <h3 class="font-semibold mb-2">Inventory Management</h3>
+            <ul class="text-sm space-y-1 text-muted-foreground">
+              <li>• Real-time stock levels</li>
+              <li>• Automatic reservation</li>
+              <li>• Low stock alerts</li>
+              <li>• Multi-warehouse routing</li>
+            </ul>
+          </div>
+
+          <div class="rounded-xl border bg-card p-6 shadow">
+            <div class="text-3xl mb-3">🎯</div>
+            <h3 class="font-semibold mb-2">Personalization Engine</h3>
+            <ul class="text-sm space-y-1 text-muted-foreground">
+              <li>• Context-aware recommendations</li>
+              <li>• Purchase history analysis</li>
+              <li>• Behavioral pattern matching</li>
+              <li>• Dynamic pricing optimization</li>
+            </ul>
+          </div>
+
+        </div>
+      </div>
+    </section>
+
+    <!-- Why Advanced -->
+    <section class="container mx-auto px-4 py-16 bg-muted/50">
+      <div class="max-w-6xl mx-auto">
+        <h2 class="text-3xl md:text-4xl font-bold text-center mb-12">Why This Is Advanced</h2>
+        <div class="grid md:grid-cols-2 gap-8">
+
+          <div class="rounded-xl border bg-card p-6 shadow">
+            <h3 class="text-xl font-bold mb-3">AI-First Architecture</h3>
+            <p class="text-sm text-muted-foreground mb-3">
+              Built from the ground up for conversational commerce. The 6-dimension ontology models reality itself, enabling AI agents to understand products and relationships naturally.
+            </p>
+            <p class="text-sm text-muted-foreground">
+              The conversation layer is the primary interface, not an add-on. This fundamental shift drives 15x better conversion rates.
+            </p>
+          </div>
+
+          <div class="rounded-xl border bg-card p-6 shadow">
+            <h3 class="text-xl font-bold mb-3">Zero-Friction Checkout</h3>
+            <p class="text-sm text-muted-foreground mb-3">
+              Traditional checkout requires 15+ form fields. ChatGPT Instant Checkout requires zero - it already knows shipping address and payment details.
+            </p>
+            <p class="text-sm text-muted-foreground">
+              Complete purchase in 60 seconds. No cart abandonment, no form filling, no friction.
+            </p>
+          </div>
+
+          <div class="rounded-xl border bg-card p-6 shadow">
+            <h3 class="text-xl font-bold mb-3">Enterprise-Grade Security</h3>
+            <p class="text-sm text-muted-foreground mb-3">
+              Stripe Shared Payment Tokens provide bank-level security. Single-use, amount-scoped tokens mean even if intercepted, they are worthless.
+            </p>
+            <p class="text-sm text-muted-foreground">
+              Built to pass SOC 2 and PCI-DSS audits with HTTPS everywhere and webhook signature verification.
+            </p>
+          </div>
+
+          <div class="rounded-xl border bg-card p-6 shadow">
+            <h3 class="text-xl font-bold mb-3">Real-Time Everything</h3>
+            <p class="text-sm text-muted-foreground mb-3">
+              Convex backend provides real-time database with automatic reactivity. Inventory updates and price changes flow instantly to ChatGPT and customers.
+            </p>
+            <p class="text-sm text-muted-foreground">
+              No polling, no stale data, no cache invalidation complexity.
+            </p>
+          </div>
+
+        </div>
+      </div>
+    </section>
+
+    <!-- Results & Metrics -->
+    <section class="container mx-auto px-4 py-16 bg-primary text-white">
+      <div class="max-w-4xl mx-auto text-center">
+        <h2 class="text-3xl md:text-4xl font-bold mb-12">Results That Speak for Themselves</h2>
+        <div class="grid md:grid-cols-3 gap-8">
+          <div>
+            <div class="text-5xl font-bold mb-2">33%</div>
+            <div class="text-xl opacity-90">Conversion Rate</div>
+            <div class="text-sm opacity-75 mt-2">vs 2.1% industry average</div>
+          </div>
+          <div>
+            <div class="text-5xl font-bold mb-2">60s</div>
+            <div class="text-xl opacity-90">Time to Purchase</div>
+            <div class="text-sm opacity-75 mt-2">Decision to order confirmed</div>
+          </div>
+          <div>
+            <div class="text-5xl font-bold mb-2">15x</div>
+            <div class="text-xl opacity-90">Better Performance</div>
+            <div class="text-sm opacity-75 mt-2">Than traditional e-commerce</div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Get Started -->
+    <section class="container mx-auto px-4 py-16">
+      <div class="max-w-3xl mx-auto text-center">
+        <h2 class="text-3xl md:text-4xl font-bold mb-6">Ready to Transform Your Commerce?</h2>
+        <p class="text-xl text-muted-foreground mb-8">
+          Join the conversational commerce revolution. Deploy in minutes, scale to millions.
+        </p>
+        <div class="flex flex-col sm:flex-row gap-4 justify-center">
+          <a
+            href="/shop"
+            class="inline-flex items-center justify-center px-8 py-4 text-lg font-semibold text-white bg-primary rounded-lg hover:bg-primary/90 transition"
+          >
+            See Live Demo
+          </a>
+          <a
+            href="https://docs.stripe.com/agentic-commerce"
+            target="_blank"
+            rel="noopener noreferrer"
+            class="inline-flex items-center justify-center px-8 py-4 text-lg font-semibold text-primary bg-white border-2 border-primary rounded-lg hover:bg-primary/5 transition"
+          >
+            Read Stripe ACP Docs
+          </a>
+        </div>
+      </div>
+    </section>
+
   </div>
 </LandingLayout>
