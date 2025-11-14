@@ -18,6 +18,10 @@ version: "1.0.0"
 
 **Strategic Vision:** Deploy a virtual, expert `sales_agent` that lives inside ChatGPT, powered by the complete intelligence of our ontology.
 
+**Universal Architecture:** This system works with **ANY product category** (fashion, electronics, sports equipment, courses, software, etc.). The 6-dimension ontology naturally adapts to any vertical without code changes.
+
+**Demo Use Case:** We use **padel equipment** (Nine Padel) as our reference implementation because it demonstrates complex product consultation (skill level, playing style, pain points, materials). The exact same system works for selling courses, software licenses, fashion, electronics, or any other product—just swap the product catalog and expertise domain.
+
 **Core Insight:** We're not "listing products in a chatbot." We're deploying an autonomous sales agent that intercepts customer research, provides expert consultation, enables frictionless purchase, and builds lifelong customer relationships—all inside ChatGPT.
 
 **Competitive Advantage:** While competitors figure out how to list products in chatbots, we build a fully autonomous system that uses conversational AI as a customer acquisition channel, seamlessly integrating new buyers into a long-term, predictive, and highly profitable loyalty loop.
@@ -90,6 +94,194 @@ The competitor's interaction ends at the sale. Ours is just beginning. Automated
 - Customer preferences (inferred from conversation)
 - Conversation summaries (for personalization)
 - Product comparison data (for recommendations)
+
+---
+
+## UNIVERSAL PRODUCT ARCHITECTURE
+
+**Key Principle:** The sales agent works with ANY product category without code changes. Only the data (product catalog, expertise domain) changes.
+
+### Multi-Vertical Support
+
+**Padel Equipment (Demo):**
+```
+Sales Agent: "Nine Padel Expert"
+Specialization: padel_equipment
+Intent Extraction: skill level, playing style, pain points
+Consultation: "Power racket + tennis elbow? Try soft-core racket"
+Follow-up: "Time to replace overgrips?" (6 months)
+```
+
+**Online Courses:**
+```
+Sales Agent: "Learning Path Advisor"
+Specialization: online_education
+Intent Extraction: skill level, learning goals, time availability
+Consultation: "Beginner in web dev? Start with HTML/CSS before React"
+Follow-up: "Ready for advanced JavaScript?" (3 months post-completion)
+```
+
+**Fashion E-commerce:**
+```
+Sales Agent: "Style Consultant"
+Specialization: fashion
+Intent Extraction: style preferences, body type, occasion, budget
+Consultation: "Business casual + athletic build? Try fitted blazers"
+Follow-up: "Summer collection just dropped" (seasonal)
+```
+
+**SaaS Software:**
+```
+Sales Agent: "Solution Architect"
+Specialization: business_software
+Intent Extraction: company size, use case, integrations needed
+Consultation: "Need CRM for 10-person team? Start with Starter plan"
+Follow-up: "Ready to upgrade to Pro?" (usage-based trigger)
+```
+
+**Electronics:**
+```
+Sales Agent: "Tech Advisor"
+Specialization: consumer_electronics
+Intent Extraction: use case, technical skill, budget, compatibility
+Consultation: "Photography + travel? Mirrorless over DSLR for weight"
+Follow-up: "New lens released for your camera" (product-specific)
+```
+
+### How It Adapts
+
+**1. Product Schema (Universal):**
+```typescript
+{
+  type: 'product',
+  properties: {
+    // Universal fields (work for ANY product)
+    category: 'padel_racket' | 'course' | 'clothing' | 'software' | 'camera',
+    name: string,
+    price: number,
+    description: string,
+
+    // AI-optimized (adapts to category)
+    aiDescription: string, // Detailed, conversational
+    aiUseCases: string[], // Category-specific use cases
+    aiTargetAudience: string[], // Who it's for
+    aiBestFor: string, // Ideal customer
+    aiAvoidWhen: string, // When NOT to buy
+
+    // Comparison (category-specific attributes)
+    aiComparisonPoints: {
+      // Padel: "weight: 360g - lighter for faster swings"
+      // Course: "duration: 8 weeks - fits busy schedules"
+      // Fashion: "fit: relaxed - comfortable for all-day wear"
+      // SaaS: "users: up to 50 - scales with your team"
+    },
+
+    // Semantic search (universal)
+    aiEmbedding: number[],
+    aiKeywords: string[]
+  }
+}
+```
+
+**2. Sales Agent Persona (Per Category):**
+```typescript
+const agentPersonas = {
+  padel_equipment: {
+    name: "Nine Padel Expert",
+    tone: "Friendly coach who loves the sport",
+    expertise: ["skill levels", "playing styles", "injury prevention", "equipment care"],
+    questions: [
+      "What's your current skill level?",
+      "Do you play more aggressively or defensively?",
+      "Any arm or shoulder issues?",
+      "What's your budget range?"
+    ]
+  },
+
+  online_courses: {
+    name: "Learning Path Advisor",
+    tone: "Supportive mentor focused on outcomes",
+    expertise: ["learning styles", "skill prerequisites", "time management", "career goals"],
+    questions: [
+      "What's your current experience level?",
+      "What's your end goal with this skill?",
+      "How many hours per week can you dedicate?",
+      "Prefer video, text, or hands-on projects?"
+    ]
+  },
+
+  fashion: {
+    name: "Style Consultant",
+    tone: "Trendy but practical fashion advisor",
+    expertise: ["body types", "occasions", "color theory", "seasonal trends"],
+    questions: [
+      "What's the occasion?",
+      "What's your usual style (casual, formal, sporty)?",
+      "Any fit preferences or concerns?",
+      "Favorite colors or patterns?"
+    ]
+  }
+};
+```
+
+**3. Follow-Up Logic (Per Product Lifecycle):**
+```typescript
+const followUpSchedules = {
+  consumables: {
+    // Overgrips, cosmetics, food
+    replenishmentCycle: 3-6 months,
+    trigger: "time-based",
+    message: "Time to restock?"
+  },
+
+  durables: {
+    // Rackets, electronics, furniture
+    replenishmentCycle: 2-5 years,
+    trigger: "upgrade-based",
+    message: "New model with better features"
+  },
+
+  courses: {
+    // Online education
+    replenishmentCycle: "completion-based",
+    trigger: "80% course progress",
+    message: "Ready for the next level?"
+  },
+
+  subscriptions: {
+    // SaaS, memberships
+    replenishmentCycle: "usage-based",
+    trigger: "approaching limits",
+    message: "Upgrade to unlock more features?"
+  }
+};
+```
+
+### Why This Works
+
+**Ontology is Universal:**
+- A "padel racket" and a "JavaScript course" are both `things` with `type` and `properties`
+- A "purchase" connection works the same for physical and digital products
+- An "order_placed_from_chat" event captures any transaction
+- Product embeddings work for any text description
+
+**AI Adapts Naturally:**
+- Same semantic search algorithm (cosine similarity)
+- Same recommendation logic (match customer needs to product features)
+- Same objection handling (address concerns with product evidence)
+- Just the domain expertise changes (loaded as context)
+
+**Creator Experience:**
+1. Create product (any category)
+2. Fill in AI-optimized fields (description, use cases, target audience)
+3. System auto-generates embeddings
+4. Sales agent instantly knows how to sell it
+
+**No Code Changes Needed:**
+- New vertical? Add products to database
+- New sales agent personality? Update system prompt
+- New follow-up schedule? Configure lifecycle rules
+- Everything else stays the same
 
 ---
 
@@ -1759,16 +1951,29 @@ const generateUpsells = async (order: Order): Promise<Upsell[]> => {
 
 ## PHASE 8: KNOWLEDGE & LESSONS (Cycles 96-100)
 
-### Cycle 96: Document Ontology Patterns
+### Cycle 96: Document Universal Multi-Vertical Patterns
 **Specialist:** ontology
 
 **Tasks:**
 - [ ] Document how ACP maps to 6 dimensions
 - [ ] Create reusable patterns for external agent integration
 - [ ] Document conversation tracking patterns
+- [ ] Document multi-vertical product architecture:
+  - How product schema adapts to any category
+  - How sales agent persona changes per vertical
+  - How follow-up schedules adapt to product lifecycles
+  - Examples: padel equipment, courses, fashion, SaaS, electronics
+- [ ] Create vertical expansion playbook:
+  - Step 1: Add products to database (any category)
+  - Step 2: Configure sales agent persona (tone, expertise)
+  - Step 3: Set follow-up schedules (lifecycle rules)
+  - Step 4: Test with sample conversations
+  - Step 5: Deploy (no code changes needed)
 - [ ] Share learnings with team
 
-**Deliverable:** Ontology patterns documented
+**Key Insight:** The same ontology works for ANY product. Padel is just the demo. Fashion, courses, software, electronics—all use identical architecture.
+
+**Deliverable:** Universal multi-vertical patterns documented
 
 ---
 
@@ -1794,11 +1999,13 @@ const generateUpsells = async (order: Order): Promise<Upsell[]> => {
 - [ ] Document competitive moat
 
 **Our Advantages:**
-1. **Integrated with ontology** - Complete customer intelligence
-2. **Autonomous sales agent** - Not just product search
-3. **Multi-channel growth loop** - Doesn't end at purchase
-4. **Protocol-based** - Can extend to Gemini, Claude, etc
-5. **Creator-friendly** - Sellers benefit from AI recommendations
+1. **Universal multi-vertical** - Works with ANY product (padel, courses, fashion, SaaS, electronics)
+2. **Integrated with ontology** - Complete customer intelligence across all verticals
+3. **Autonomous sales agent** - Expert consultation, not just product search
+4. **Multi-channel growth loop** - Doesn't end at purchase, works across categories
+5. **Protocol-based** - Can extend to Gemini, Claude, and any future LLM
+6. **Creator-friendly** - Any seller benefits from AI recommendations (no category limits)
+7. **Zero code changes** - New vertical = add products + configure persona
 
 **Deliverable:** Competitive analysis
 
@@ -1809,14 +2016,32 @@ const generateUpsells = async (order: Order): Promise<Upsell[]> => {
 
 **Tasks:**
 - [ ] Plan v2.0 features:
-  - Multi-language support
-  - Gemini integration
-  - Voice commerce (via ACP)
-  - AR product visualization
-  - Live agent handoff for complex queries
-- [ ] Define success metrics for v2.0
+  - **Vertical Expansion:**
+    - Add 5+ new product categories (courses, fashion, electronics, software, home goods)
+    - Create category-specific sales agent personas
+    - Build vertical-specific follow-up automation
+    - Multi-category shopping (buy racket + course in same chat)
+  - **Multi-language support:**
+    - Spanish, French, Portuguese, German
+    - Auto-detect customer language
+    - Translate product descriptions on-the-fly
+  - **LLM Platform Expansion:**
+    - Gemini integration (Google Shopping)
+    - Claude integration (Anthropic)
+    - Perplexity integration (search-first commerce)
+  - **Advanced Features:**
+    - Voice commerce (via ACP)
+    - AR product visualization (try before you buy)
+    - Live agent handoff for complex queries
+    - Video product demos in chat
+    - Social proof (show real-time purchases)
+- [ ] Define success metrics for v2.0:
+  - 10+ active product categories
+  - 5,000+ conversations/day across all verticals
+  - $100,000+ monthly revenue via conversational commerce
+  - 3+ LLM platforms integrated
 
-**Deliverable:** Product roadmap
+**Deliverable:** Multi-vertical expansion roadmap
 
 ---
 
@@ -1852,11 +2077,15 @@ While competitors are still figuring out how to list products in chatbots, we bu
 - **Grows** customers for life (automated nurture)
 
 **What's Next:**
-- Scale to 1000+ conversations/day
-- Expand to Gemini, Claude, and other LLMs
-- International markets (multi-language)
-- New verticals beyond padel
-- Voice commerce integration
+- Scale to 1000+ conversations/day (across all verticals)
+- Expand to 10+ product categories (courses, fashion, electronics, SaaS, home goods, etc.)
+- Expand to Gemini, Claude, Perplexity (any LLM with ACP support)
+- International markets (multi-language support)
+- Voice commerce integration (speak to buy)
+- Cross-category shopping (racket + course + apparel in one chat)
+
+**The Universal Vision:**
+We didn't build a padel commerce system. We built a **universal conversational commerce platform** that works with ANY product, ANY vertical, ANY LLM. Padel is just the proof of concept. The same ontology powers course sales, fashion recommendations, software subscriptions, and electronics advice—with zero code changes.
 
 ---
 
