@@ -1,0 +1,14 @@
+---
+import Layout from '@/layouts/Layout.astro';
+import { BuyInChatGPTDemo } from '@/components/demos/BuyInChatGPTDemo';
+---
+
+<Layout
+  title="Buy in ChatGPT - Interactive Demo"
+  description="Experience the 33% conversion rate advantage with our interactive ChatGPT commerce demo"
+  sidebarInitialCollapsed={true}
+>
+  <div class="h-full">
+    <BuyInChatGPTDemo client:only="react" />
+  </div>
+</Layout>
