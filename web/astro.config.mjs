@@ -81,25 +81,21 @@ export default defineConfig({
       minify: "esbuild",
       rollupOptions: {
         output: {
-          // Aggressive code splitting to reduce initial bundle
+          // Conservative code splitting for Cloudflare Workers SSR compatibility
           manualChunks: (id) => {
-            // Separate recharts into its own chunk to enable lazy loading
+            // Keep React + lucide-react together to avoid forwardRef issues
+            if (id.includes('node_modules/react') || id.includes('node_modules/react-dom') || id.includes('lucide-react')) {
+              return 'react-vendor';
+            }
+            // Separate recharts (large charting library)
             if (id.includes('recharts')) {
               return 'recharts';
             }
-            // Separate lucide icons into their own chunk
-            if (id.includes('lucide-react')) {
-              return 'icons';
-            }
-            // Keep React separate
-            if (id.includes('node_modules/react') || id.includes('node_modules/react-dom')) {
-              return 'react-vendor';
-            }
-            // Separate @mux/mux-player-react (VideoPlayer) into its own chunk
+            // Separate @mux/mux-player-react (VideoPlayer)
             if (id.includes('@mux/mux-player-react') || id.includes('media/VideoPlayer')) {
               return 'video-player';
             }
-            // Separate AI SDK into its own chunk
+            // Separate AI SDK
             if (id.includes('@ai-sdk') || id.includes('ai/')) {
               return 'ai-sdk';
             }
