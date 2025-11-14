@@ -82,6 +82,6 @@ export default defineConfig({
       // Let Vite handle chunking automatically to avoid module initialization issues in Cloudflare Workers
     },
   },
-  output: "server",
+  output: "server", // Server mode with aggressive prerendering via prerender=true
   adapter,
 });

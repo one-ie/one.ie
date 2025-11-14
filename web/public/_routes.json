@@ -1,11 +1,8 @@
 {
   "version": 1,
-  "description": "Minimal worker bundle - only include essential SSR routes",
+  "description": "Minimal worker - only API routes use SSR, everything else is static",
   "include": [
-    "/api/*",
-    "/chat",
-    "/chat/*",
-    "/demos/buy-in-chatgpt"
+    "/api/*"
   ],
   "exclude": [
     "/*"
