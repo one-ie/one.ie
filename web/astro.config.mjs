@@ -79,38 +79,7 @@ export default defineConfig({
       target: "esnext",
       cssCodeSplit: true,
       minify: "esbuild",
-      rollupOptions: {
-        output: {
-          // Conservative code splitting for Cloudflare Workers SSR compatibility
-          manualChunks: (id) => {
-            // Keep React + all React-dependent libraries together to avoid initialization issues
-            if (id.includes('node_modules/react') ||
-                id.includes('node_modules/react-dom') ||
-                id.includes('lucide-react') ||
-                id.includes('recharts')) {
-              return 'react-vendor';
-            }
-            // Separate @mux/mux-player-react (VideoPlayer)
-            if (id.includes('@mux/mux-player-react') || id.includes('media/VideoPlayer')) {
-              return 'video-player';
-            }
-            // Separate AI SDK
-            if (id.includes('@ai-sdk') || id.includes('ai/')) {
-              return 'ai-sdk';
-            }
-            // Separate content collections into their own chunks by collection
-            if (id.includes('src/content/')) {
-              if (id.includes('content/docs')) return 'content-docs';
-              if (id.includes('content/news')) return 'content-news';
-              if (id.includes('content/plans')) return 'content-plans';
-              if (id.includes('content/products')) return 'content-products';
-              if (id.includes('content/videos')) return 'content-videos';
-              if (id.includes('content/podcasts')) return 'content-podcasts';
-              return 'content-other';
-            }
-          },
-        },
-      },
+      // Let Vite handle chunking automatically to avoid module initialization issues in Cloudflare Workers
     },
   },
   output: "server",
