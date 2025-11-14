@@ -1,0 +1,61 @@
+---
+/**
+ * One-Click Checkout Page
+ *
+ * Pre-filled checkout optimized for conversational commerce
+ */
+
+import Layout from '@/layouts/Layout.astro';
+import { OneClickCheckout } from '@/components/commerce/OneClickCheckout';
+
+const { productId } = Astro.params;
+const url = new URL(Astro.request.url);
+const conversationId = url.searchParams.get('conv');
+
+// In production, fetch product from database
+// For now, mock product data
+const mockProduct = {
+  id: productId || 'prod-1',
+  name: 'StarVie Metheora Warrior',
+  price: 139,
+  currency: '€',
+  description: 'Carbon-fiber racket with soft core',
+  image: '/images/products/racket-1.jpg',
+  category: 'padel_racket',
+  rating: 4.9,
+  reviewCount: 127,
+  inStock: true,
+  aiDescription: 'Perfect for aggressive intermediate players with elbow sensitivity',
+  aiUseCases: ['aggressive play', 'elbow-friendly'],
+  aiTargetAudience: ['intermediate', 'advanced'],
+  aiBestFor: 'Aggressive players needing elbow-friendly power',
+  aiAvoidWhen: 'Maximum control preference',
+  aiComparisonPoints: {
+    weight: '360g',
+    sweetSpot: 'Large',
+    balance: 'Head-light',
+    vibration: 'Soft core',
+  },
+  aiKeywords: ['power', 'soft', 'elbow-friendly'],
+  aiSimilarProducts: [],
+  aiOftenBoughtWith: [],
+  aiUpgradeTo: [],
+};
+
+const title = `Checkout - ${mockProduct.name}`;
+const description = 'Complete your purchase';
+---
+
+<Layout title={title} description={description} hideHeader={true}>
+  <OneClickCheckout
+    client:only="react"
+    product={mockProduct}
+    conversationId={conversationId}
+    onComplete={(orderId) => {
+      window.location.href = `/commerce-chat/order/${orderId}`;
+    }}
+    onCancel={() => {
+      window.history.back();
+    }}
+  />
+</Layout>

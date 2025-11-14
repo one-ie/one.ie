@@ -1,0 +1,65 @@
+---
+/**
+ * Conversational Commerce Chat Page
+ *
+ * AI-powered sales agent that provides expert product consultation
+ *
+ * Features:
+ * - Intent parsing (extract customer needs from natural language)
+ * - Product recommendations with reasoning
+ * - Objection handling
+ * - One-click purchase
+ * - Works standalone or embedded
+ *
+ * Integration:
+ * - Can be embedded on product pages
+ * - Works with ChatGPT via ACP protocol
+ * - Full conversation tracking and attribution
+ */
+
+import Layout from '@/layouts/Layout.astro';
+import { CommerceChatInterface } from '@/components/commerce/CommerceChatInterface';
+
+const title = 'Product Advisor - Find Your Perfect Match';
+const description = 'Get expert product recommendations through conversation. Our AI advisor understands your needs and finds exactly what you\'re looking for.';
+
+// Get category from query params
+const url = new URL(Astro.request.url);
+const category = url.searchParams.get('category') || undefined;
+const embed = url.searchParams.get('embed') === 'true';
+---
+
+{embed ? (
+  <!-- Embedded version: No layout, just the chat interface -->
+  <div class="h-full w-full">
+    <CommerceChatInterface
+      client:only="react"
+      category={category}
+      platform="web"
+    />
+  </div>
+) : (
+  <!-- Standalone version: Full layout -->
+  <Layout
+    title={title}
+    description={description}
+    sidebarInitialCollapsed={true}
+    hideHeader={true}
+    fullHeight={true}
+  >
+    <CommerceChatInterface
+      client:only="react"
+      category={category}
+      platform="web"
+    />
+  </Layout>
+)}
+
+<style>
+  /* Ensure full height for embedded version */
+  :global(html, body) {
+    height: 100%;
+    margin: 0;
+    padding: 0;
+  }
+</style>

@@ -1,0 +1,35 @@
+---
+/**
+ * Analytics Dashboard Page
+ *
+ * Shows conversational commerce metrics
+ */
+
+import Layout from '@/layouts/Layout.astro';
+import { AnalyticsDashboard } from '@/components/commerce/AnalyticsDashboard';
+
+// In production, fetch from Convex database
+// For now, mock analytics data
+const mockMetrics = {
+  conversationsStarted: 1247,
+  conversionsCompleted: 412,
+  conversionRate: 0.33, // 33%
+  averageOrderValue: 127.50,
+  averageConversationDuration: 180, // 3 minutes
+  customerSatisfaction: 4.8,
+  topProducts: [
+    { productId: 'prod-1', mentions: 89, purchases: 45 },
+    { productId: 'prod-3', mentions: 67, purchases: 32 },
+    { productId: 'prod-2', mentions: 54, purchases: 18 },
+  ],
+};
+
+const title = 'Conversational Commerce Analytics';
+const description = 'Track performance of your AI sales agent';
+---
+
+<Layout title={title} description={description}>
+  <div class="container mx-auto py-8">
+    <AnalyticsDashboard client:only="react" metrics={mockMetrics} />
+  </div>
+</Layout>
