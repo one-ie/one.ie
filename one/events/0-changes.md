@@ -1,3 +1,25 @@
+### **64cff3de** — template:4 — `Update cycle state and context tracking``
+
+**Template:**
+  - .claude/hooks.log
+  - .claude/hooks/.last-news-context
+  - .claude/state/cycle.json
+  - one/events/0-changes.md
+
+
+
+### **2d18ad9a** — template:6 — `Agent Sell:``
+
+**Template:**
+  - .claude/hooks.log
+  - .claude/hooks/.last-news-context
+  - one/events/0-changes.md
+  - one/events/BUY_IN_CHATGPT_FILES-20251115-235304.md
+  - one/events/web-BUNDLE_OPTIMIZATION_GUIDE-20251115-235304.md
+  - web/BUNDLE_OPTIMIZATION_GUIDE.md
+
+
+
 ### **407e4078** — template:102 — `Agent Sell``
 
 **Template:**
