@@ -1,3 +1,14 @@
+### **be3a36c8** — template:5 — `Enhance chart demo with compelling business metrics``
+
+**Template:**
+  - .claude/hooks.log
+  - .claude/hooks/.last-news-context
+  - .claude/state/cycle.json
+  - one/events/0-changes.md
+  - web/src/components/ai/ChatClientV2.tsx
+
+
+
 ### **1a6f8b26** — template:3 — `Update hook logs after ChatClientV2 simplification``
 
 **Template:**
