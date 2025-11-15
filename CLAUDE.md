@@ -133,6 +133,57 @@ Web (Astro + React) → Backend (Convex) → 6-Dimension Ontology
 
 ---
 
+## Design System
+
+**CRITICAL PRINCIPLE:** All components use the **6-token + 4 design properties** system. Every card, button, and component flows from this foundation.
+
+### The 6 Color Tokens
+
+1. **background** - Card surface color (light gray / dark gray)
+2. **foreground** - Content area inside cards (white / dark)
+3. **font** - All text color (dark / white, readable in both modes)
+4. **primary** - Main CTA buttons, links (blue by default)
+5. **secondary** - Supporting actions (gray-blue by default)
+6. **tertiary** - Accent highlights, success states (green by default)
+
+### The 4 Design Properties
+
+1. **states** - hover (opacity-90 scale-[1.02]), active (opacity-80 scale-[0.98]), focus (ring-2), disabled (opacity-50)
+2. **elevation** - shadow-sm (cards), shadow-md (dropdowns), shadow-lg (modals), shadow-xl (popovers)
+3. **radius** - sm (6px), md (8px - default), lg (12px), xl (16px), full (circular)
+4. **motion** - fast (150ms), normal (300ms), slow (500ms), easing (ease-in-out)
+
+### Component Patterns
+
+**Cards (Foundation):** Frame + content pattern
+```tsx
+<Card className="bg-background p-1 shadow-sm rounded-md">
+  <CardContent className="bg-foreground p-4 rounded-md text-font">
+    <h3>Card Title</h3>
+    <Button variant="primary">Main Action</Button>
+  </CardContent>
+</Card>
+```
+
+**Buttons (6 Variants):**
+- `primary` - Main CTA (bg-primary)
+- `secondary` - Supporting action (bg-secondary)
+- `tertiary` - Accent action (bg-tertiary)
+- `outline` - Neutral (border-font)
+- `ghost` - Minimal (hover:bg-font/10)
+- `link` - Text link (text-primary)
+
+### Thing-Level Branding (Optional)
+
+**IMPORTANT:** Platform defaults are beautiful. Thing-level colors are **optional** for strong brand identities.
+
+Each Thing can optionally define its own 6 colors while maintaining the same component structure. Same components, different brands, zero custom CSS.
+
+**Read full design system:** `/one/knowledge/design-system.md`
+**Read implementation plan:** `/one/events/design-system-implementation-plan.md`
+
+---
+
 ## Technology Stack
 
 **Frontend:** Astro 5, React 19, Tailwind v4, shadcn/ui (50+ components), Better Auth
