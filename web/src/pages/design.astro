@@ -192,20 +192,38 @@ const buttonVariants = [
 
 const buttonStates = [
   {
+    title: 'Default',
+    primary: 'hsl(216 55% 25%)',
+    secondary: 'hsl(219 14% 28%)',
+    tertiary: 'hsl(105 22% 25%)',
+    elevation: 'shadow-lg',
+    description: 'Base state with strong elevation (shadow-lg). Primary uses 216 55% 25%, Secondary uses 219 14% 28%, Tertiary uses 105 22% 25%.',
+  },
+  {
     title: 'Hover',
-    description: 'Strengthen fill by 8% (primary) or introduce a 10% surface tint (outline/ghost) while preserving contrast.',
+    primary: 'hsl(216 55% 20%)',
+    secondary: 'hsl(219 14% 23%)',
+    tertiary: 'hsl(105 22% 20%)',
+    elevation: 'shadow-xl',
+    description: 'Darken by 5% lightness, elevate to shadow-xl. Outline/Ghost add 10% surface tint instead.',
   },
   {
     title: 'Focus',
-    description: 'Apply a 2px ring in `--color-primary` with 2px offset. Never rely on box-shadow alone for focus.',
+    ring: 'hsl(216 55% 25%)',
+    description: 'Apply 2px ring in primary color with 2px offset. Maintain hover state if focused while hovering.',
   },
   {
     title: 'Active',
-    description: 'Reduce elevation, darken fill by 12%, and compress transition timing to <80ms for instant feedback.',
+    primary: 'hsl(216 55% 18%)',
+    secondary: 'hsl(219 14% 20%)',
+    tertiary: 'hsl(105 22% 18%)',
+    elevation: 'shadow-md',
+    description: 'Darken by 7% from base, reduce to shadow-md. Timing <80ms for instant tactile feedback.',
   },
   {
     title: 'Disabled',
-    description: 'Lower opacity to 55%, remove hover styles, and ensure tooltips or helper text clarify next steps.',
+    opacity: '55%',
+    description: 'Opacity 55%, cursor not-allowed, remove all hover/active states. Add tooltip explaining why disabled.',
   },
 ];
 
@@ -483,9 +501,34 @@ const buttonGuidelines = [
               <div className="space-y-3">
                 <h3 className="text-sm font-semibold uppercase tracking-wide text-muted-foreground">Button States</h3>
                 {buttonStates.map((state) => (
-                  <div class="rounded-md border bg-background p-3">
-                    <p class="text-sm font-medium">{state.title}</p>
-                    <p class="mt-1 text-xs text-muted-foreground">{state.description}</p>
+                  <div class="rounded-md border bg-background p-3 space-y-2">
+                    <div class="flex items-center justify-between">
+                      <p class="text-sm font-medium">{state.title}</p>
+                      {state.elevation && (
+                        <span class="text-xs font-mono text-muted-foreground">{state.elevation}</span>
+                      )}
+                      {state.opacity && (
+                        <span class="text-xs font-mono text-muted-foreground">opacity: {state.opacity}</span>
+                      )}
+                    </div>
+
+                    {/* Color swatches for states with color values */}
+                    {(state.primary || state.ring) && (
+                      <div class="flex gap-1">
+                        {state.primary && (
+                          <>
+                            <div class="h-6 w-6 rounded-sm ring-1 ring-border" style={`background-color: ${state.primary}`} title="Primary"></div>
+                            <div class="h-6 w-6 rounded-sm ring-1 ring-border" style={`background-color: ${state.secondary}`} title="Secondary"></div>
+                            <div class="h-6 w-6 rounded-sm ring-1 ring-border" style={`background-color: ${state.tertiary}`} title="Tertiary"></div>
+                          </>
+                        )}
+                        {state.ring && (
+                          <div class="h-6 w-6 rounded-sm ring-2" style={`border: 2px solid ${state.ring}`} title="Focus ring"></div>
+                        )}
+                      </div>
+                    )}
+
+                    <p class="text-xs text-muted-foreground">{state.description}</p>
                   </div>
                 ))}
               </div>
