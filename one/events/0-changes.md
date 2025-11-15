@@ -1,3 +1,13 @@
+### **ede96ca6** — template:4 — `Update hooks log and ChatClientV2 after generative UI refactor``
+
+**Template:**
+  - .claude/hooks.log
+  - .claude/hooks/.last-news-context
+  - one/events/0-changes.md
+  - web/src/components/ai/ChatClientV2.tsx
+
+
+
 ### **014f3072** — template:4 — `Refactor chat API to make generative UI optional``
 
 **Template:**
