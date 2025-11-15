@@ -1753,8 +1753,8 @@ EVERY DAY at 8am:
     </div>
   </section>
 
-  <!-- Performance Chart -->
-  <PerformanceChart client:only="react" />
+  <!-- Performance Chart - lazy load when visible -->
+  <PerformanceChart client:visible />
 
   <!-- Final CTA Section -->
   <DownloadSection

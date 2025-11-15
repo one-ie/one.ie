@@ -16,10 +16,8 @@ const adapter = isDev
 export default defineConfig({
   site: "https://one.ie",
   markdown: {
-    shikiConfig: {
-      theme: 'monokai',
-      wrap: true,
-    },
+    // CRITICAL: Disable Shiki to save 9.4MB in worker bundle
+    syntaxHighlight: false,
   },
   integrations: [
     react(),
@@ -27,6 +25,8 @@ export default defineConfig({
       // Disable imports/exports processing to avoid conflicts
       remarkPlugins: [],
       rehypePlugins: [],
+      // CRITICAL: Also disable syntax highlighting in MDX
+      syntaxHighlight: false,
     }),
     sitemap()
   ],
@@ -82,17 +82,38 @@ export default defineConfig({
       rollupOptions: {
         output: {
           manualChunks: (id) => {
-            // Separate recharts into its own chunk to enable lazy loading
+            // CRITICAL: Split heavy dependencies for optimal lazy loading
+            // Mermaid diagrams (1.5MB)
+            if (id.includes('mermaid')) {
+              return 'vendor-diagrams';
+            }
+            // Cytoscape graphs (645KB)
+            if (id.includes('cytoscape')) {
+              return 'vendor-graph';
+            }
+            // VideoPlayer and video libraries (1MB+)
+            if (id.includes('VideoPlayer') || id.includes('video-react') || id.includes('hls.js')) {
+              return 'vendor-video';
+            }
+            // Recharts (411KB)
             if (id.includes('recharts')) {
-              return 'recharts';
+              return 'vendor-charts';
             }
-            // Separate lucide icons into their own chunk
+            // AI/prompt components
+            if (id.includes('prompt-input') || id.includes('PromptInput')) {
+              return 'vendor-ai';
+            }
+            // React markdown
+            if (id.includes('react-markdown')) {
+              return 'vendor-markdown';
+            }
+            // Lucide icons
             if (id.includes('lucide-react')) {
-              return 'icons';
+              return 'vendor-icons';
             }
-            // Keep React separate
+            // Core React (keep separate)
             if (id.includes('node_modules/react') || id.includes('node_modules/react-dom')) {
-              return 'react-vendor';
+              return 'vendor-react';
             }
           },
         },
