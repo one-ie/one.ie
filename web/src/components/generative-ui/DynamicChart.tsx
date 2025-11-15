@@ -37,12 +37,7 @@ export function DynamicChart({ data, layout }: any) {
   return (
     <Card>
       <CardHeader>
-        <div className="flex items-center justify-between">
-          <CardTitle>{data.title}</CardTitle>
-          <Badge variant="secondary" className="text-xs">
-            Recharts {data.chartType === 'line' ? 'Line' : 'Bar'}
-          </Badge>
-        </div>
+        <CardTitle>{data.title}</CardTitle>
         {data.description && <CardDescription>{data.description}</CardDescription>}
       </CardHeader>
       <CardContent>
@@ -53,18 +48,20 @@ export function DynamicChart({ data, layout }: any) {
                   <XAxis
                     dataKey="name"
                     className="text-xs"
-                    tick={{ fill: 'hsl(var(--muted-foreground))' }}
+                    tick={{ fill: 'hsl(var(--color-font))' }}
                   />
                   <YAxis
                     className="text-xs"
-                    tick={{ fill: 'hsl(var(--muted-foreground))' }}
+                    tick={{ fill: 'hsl(var(--color-font))' }}
                   />
                   <Tooltip
                     contentStyle={{
-                      backgroundColor: 'hsl(var(--popover))',
-                      border: '1px solid hsl(var(--border))',
+                      backgroundColor: 'hsl(var(--color-background))',
+                      border: '1px solid hsl(var(--color-border))',
                       borderRadius: '0.5rem',
+                      color: 'hsl(var(--color-font))',
                     }}
+                    cursor={{ fill: 'hsl(var(--color-font) / 0.03)' }}
                   />
                   <Legend />
                   {data.datasets?.map((dataset: any, i: number) => (
@@ -85,18 +82,20 @@ export function DynamicChart({ data, layout }: any) {
                   <XAxis
                     dataKey="name"
                     className="text-xs"
-                    tick={{ fill: 'hsl(var(--muted-foreground))' }}
+                    tick={{ fill: 'hsl(var(--color-font))' }}
                   />
                   <YAxis
                     className="text-xs"
-                    tick={{ fill: 'hsl(var(--muted-foreground))' }}
+                    tick={{ fill: 'hsl(var(--color-font))' }}
                   />
                   <Tooltip
                     contentStyle={{
-                      backgroundColor: 'hsl(var(--popover))',
-                      border: '1px solid hsl(var(--border))',
+                      backgroundColor: 'hsl(var(--color-background))',
+                      border: '1px solid hsl(var(--color-border))',
                       borderRadius: '0.5rem',
+                      color: 'hsl(var(--color-font))',
                     }}
+                    cursor={{ fill: 'hsl(var(--color-font) / 0.03)' }}
                   />
                   <Legend />
                   {data.datasets?.map((dataset: any, i: number) => (
@@ -105,6 +104,7 @@ export function DynamicChart({ data, layout }: any) {
                       dataKey={dataset.label}
                       fill={dataset.color || '#3b82f6'}
                       radius={[4, 4, 0, 0]}
+                      label={false}
                     />
                   ))}
                 </BarChart>

@@ -84,6 +84,7 @@
 @theme {
   --color-background: 0 0% 100%;
   --color-foreground: 0 0% 13%;
+  --color-font: 0 0% 13%;
   --color-card: 0 0% 93.3%;
   --color-card-foreground: 0 0% 13%;
   --color-popover: 0 0% 93.3%;
@@ -229,6 +230,7 @@ html, body {
   --primary-foreground: 36 8% 96%;
   --color-background: 0 0% 13%;
   --color-foreground: 36 8% 96%;
+  --color-font: 0 0% 100%;
   --color-card: 0 0% 10%;
   --color-card-foreground: 36 8% 96%;
   --color-popover: 0 0% 10%;

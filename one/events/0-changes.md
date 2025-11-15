@@ -1,3 +1,16 @@
+### **7a969818** — template:7 — `Add Chat link to sidebar navigation``
+
+**Template:**
+  - .claude/hooks.log
+  - .claude/hooks/.last-news-context
+  - .claude/state/cycle.json
+  - one/events/0-changes.md
+  - one/things/design-system.md
+  - web/src/components/Sidebar.tsx
+  - web/src/pages/design.astro
+
+
+
 ### **1ebada87** — template:6 — `Update chart demo with comprehensive business metrics``
 
 **Template:**

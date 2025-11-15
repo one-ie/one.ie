@@ -282,6 +282,25 @@ function parseGenerativeUI(content: string): any[] {
     }
   }
 
+  // Check for forms
+  const formMatches = [...content.matchAll(/```ui-form\s*\n([\s\S]*?)\n```/g)];
+  console.log('[GENERATIVE UI] Found', formMatches.length, 'forms in content');
+
+  for (const match of formMatches) {
+    try {
+      const formData = JSON.parse(match[1]);
+      uiMessages.push({
+        type: 'ui',
+        payload: {
+          component: 'form',
+          data: formData
+        }
+      });
+    } catch (e) {
+      console.error('[GENERATIVE UI] Failed to parse form JSON:', e);
+    }
+  }
+
   return uiMessages;
 }
 
@@ -351,12 +370,32 @@ Example:
 }
 \`\`\`
 
+**For FORMS** - Wrap JSON in \`\`\`ui-form:\n{your json}\n\`\`\`
+
+Example:
+\`\`\`ui-form
+{
+  "title": "Contact Us",
+  "description": "Get in touch with our team",
+  "fields": [
+    { "name": "name", "label": "Full Name", "type": "text", "required": true, "placeholder": "John Doe" },
+    { "name": "email", "label": "Email", "type": "email", "required": true, "placeholder": "you@example.com" },
+    { "name": "phone", "label": "Phone", "type": "tel", "placeholder": "+1 (555) 000-0000" },
+    { "name": "message", "label": "Message", "type": "textarea", "required": true, "placeholder": "How can we help you?", "rows": 4 }
+  ],
+  "submitLabel": "Send Message"
+}
+\`\`\`
+
+Field types: "text", "email", "tel", "number", "textarea", "password"
+
 RULES:
 1. If user mentions "sales", "revenue", "growth", "analytics" - generate charts with realistic business data
 2. If user doesn't provide specific data - CREATE sample data that matches their request
 3. ALWAYS include multiple charts when appropriate (e.g., "analyze sales" = revenue chart + profit chart + comparison chart)
 4. Use diverse chart types (line for trends, bar for comparisons, pie for distribution)
-5. Generate data that tells a story (growth trends, seasonal patterns, comparisons)`;
+5. Generate data that tells a story (growth trends, seasonal patterns, comparisons)
+6. If user asks for a contact form or any form - generate it with appropriate fields`;
 
 // Free tier handler - Simulates free model responses
 async function handleFreeTier(messages: any[], enableGenerativeUI: boolean, model: string = 'google/gemini-2.5-flash-lite') {
