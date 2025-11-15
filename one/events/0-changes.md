@@ -1,3 +1,14 @@
+### **b4b77871** — template:5 — `Simplify ChatClientV2 demo cards and move API key button``
+
+**Template:**
+  - .claude/hooks.log
+  - .claude/hooks/.last-news-context
+  - .claude/state/cycle.json
+  - one/events/0-changes.md
+  - web/src/components/ai/ChatClientV2.tsx
+
+
+
 ### **e992a3c7** — template:4 — `Update hook logs and cycle state``
 
 **Template:**
