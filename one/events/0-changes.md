@@ -1,3 +1,49 @@
+### **a0e2d4fe** — template:1 — `Integrate button states with actual color values and swatches``
+
+**Template:**
+  - web/src/pages/design.astro
+
+
+
+### **16a3f7ce** — template:2 — `Update design system heading and add comprehensive news article``
+
+**Template:**
+  - web/src/content/news/design-system-redesign.md
+  - web/src/pages/design.astro
+
+
+
+### **0dfa6561** — template:2 — `Update design system heading and add comprehensive news article``
+
+**Template:**
+  - web/src/content/news/design-system-redesign.md
+  - web/src/pages/design.astro
+
+
+
+### **18382082** — template:7 — `Redesign design system page with 6-color extractable tokens above the fold``
+
+**Template:**
+  - one/events/web-DEPLOYMENT_SUMMARY-20251116-005428.md
+  - one/events/web-RELEASE_OPTIMIZATION_PLAN-20251116-005428.md
+  - web/DEPLOYMENT_SUMMARY.md
+  - web/RELEASE_OPTIMIZATION_PLAN.md
+  - web/src/components/shop/ThemeToggle.tsx
+  - web/src/pages/design.astro
+  - web/src/styles/global.css
+
+
+
+### **ea5e8a8d** — template:4 — `Migrate to one-ie/one.ie as official ONE Platform repository``
+
+**Template:**
+  - web/DEPLOYMENT_SUMMARY.md
+  - web/RELEASE_OPTIMIZATION_PLAN.md
+  - web/astro.config.mjs
+  - web/src/pages/index.astro
+
+
+
 ### **61dba341** — template:2 — `Add optimized demo thumbnail to video on front page``
 
 **Template:**

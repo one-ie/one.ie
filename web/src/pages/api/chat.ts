@@ -1,7 +1,295 @@
 import type { APIRoute } from 'astro';
 import { maskSensitive } from '@/lib/security';
 
-const SYSTEM_PROMPT = `You are a helpful AI assistant with the ability to generate interactive visualizations.
+/**
+ * Unified Chat API Endpoint (OpenRouter)
+ *
+ * Two modes:
+ * 1. Client provides their own OpenRouter API key → Use that
+ * 2. No key provided → Use backend default key from env (OPENROUTER_API_KEY)
+ *
+ * Access to all models: Gemini Flash Lite (free), GPT-4, Claude, Llama, etc.
+ *
+ * Generative UI is OPTIONAL and activated only when enableGenerativeUI=true
+ */
+export const POST: APIRoute = async ({ request }) => {
+  try {
+    const { messages, apiKey, model = 'google/gemini-2.5-flash-lite', enableGenerativeUI = false } = await request.json();
+
+    // List of free models that work without API key
+    const FREE_MODELS = [
+      'google/gemini-2.5-flash-lite',
+      'openrouter/polaris-alpha',
+      'tngtech/deepseek-r1t2-chimera:free',
+      'z-ai/glm-4.5-air:free',
+      'tngtech/deepseek-r1t-chimera:free'
+    ];
+
+    // Check if using free tier (any free model without API key)
+    const isFreeTier = !apiKey && FREE_MODELS.includes(model);
+
+    if (isFreeTier) {
+      // FREE TIER - Works without API key
+      return handleFreeTier(messages, enableGenerativeUI, model);
+    }
+
+    // PREMIUM TIER - Requires API key for other models
+    const effectiveApiKey = apiKey || import.meta.env.OPENROUTER_API_KEY;
+
+    if (!effectiveApiKey) {
+      return new Response(
+        JSON.stringify({
+          error: 'API key required for premium models. Switch to a free model or add your OpenRouter API key.'
+        }),
+        { status: 401, headers: { 'Content-Type': 'application/json' } }
+      );
+    }
+
+    // Add system prompt for generative UI ONLY if enabled
+    const messagesWithSystem = enableGenerativeUI
+      ? [{ role: 'system', content: GENERATIVE_UI_SYSTEM_PROMPT }, ...messages]
+      : messages;
+
+    // Log the request for debugging (with masked API key)
+    console.log('OpenRouter request:', {
+      model,
+      messageCount: messagesWithSystem.length,
+      enableGenerativeUI,
+      usingClientKey: !!apiKey,
+      usingBackendKey: !apiKey,
+      maskedKey: maskSensitive(effectiveApiKey, 4)
+    });
+
+    // Call OpenRouter API directly
+    const response = await fetch('https://openrouter.ai/api/v1/chat/completions', {
+      method: 'POST',
+      headers: {
+        'Authorization': `Bearer ${effectiveApiKey}`,
+        'Content-Type': 'application/json',
+        'HTTP-Referer': 'http://localhost:4321', // Optional: for OpenRouter analytics
+        'X-Title': 'ONE Platform Chat' // Optional: shows in OpenRouter dashboard
+      },
+      body: JSON.stringify({
+        model: model,
+        messages: messagesWithSystem,
+        stream: true, // Enable streaming
+      }),
+    });
+
+    if (!response.ok) {
+      const errorText = await response.text();
+      console.error('OpenRouter API error:', {
+        status: response.status,
+        statusText: response.statusText,
+        error: errorText
+      });
+
+      // Parse error message if possible
+      let errorMessage = `OpenRouter API error: ${response.statusText}`;
+      try {
+        const errorJson = JSON.parse(errorText);
+        errorMessage = errorJson.error?.message || errorJson.message || errorMessage;
+      } catch (e) {
+        // If not JSON, use the text directly
+        if (errorText) errorMessage = errorText;
+      }
+
+      return new Response(
+        JSON.stringify({ error: errorMessage }),
+        { status: response.status, headers: { 'Content-Type': 'application/json' } }
+      );
+    }
+
+    // Parse streaming response for UI components (only if generative UI enabled)
+    const encoder = new TextEncoder();
+    const decoder = new TextDecoder();
+
+    const stream = new ReadableStream({
+      async start(controller) {
+        const reader = response.body?.getReader();
+        if (!reader) {
+          controller.close();
+          return;
+        }
+
+        let fullContent = '';
+
+        try {
+          console.log('[CHAT API] Stream started');
+
+          while (true) {
+            const { done, value } = await reader.read();
+
+            if (done) {
+              console.log('[CHAT API] Stream done naturally (after [DONE] was sent)');
+              controller.close();
+              return;
+            }
+
+            const chunk = decoder.decode(value, { stream: true });
+
+            // Log every chunk to see what we're getting
+            if (chunk.includes('[DONE]')) {
+              console.log('[CHAT API] FOUND DONE CHUNK:', JSON.stringify(chunk));
+            }
+
+            // Extract content from SSE format
+            const lines = chunk.split('\n');
+            for (const line of lines) {
+              if (line.startsWith('data: ')) {
+                const data = line.slice(6);
+                if (data === '[DONE]') {
+                  console.log('[CHAT API] Found [DONE] in line processing');
+                  continue; // Don't forward [DONE] yet
+                }
+
+                try {
+                  const parsed = JSON.parse(data);
+                  const content = parsed.choices?.[0]?.delta?.content;
+                  if (content) {
+                    fullContent += content;
+                  }
+                } catch (e) {
+                  // Ignore parse errors
+                }
+              }
+            }
+
+            // Check if this chunk contains [DONE]
+            const hasDone = chunk.includes('[DONE]');
+
+            if (hasDone && enableGenerativeUI) {
+              console.log('[CHAT API] Detected [DONE] in chunk, processing UI components now');
+
+              // Send UI messages BEFORE [DONE] (only if generative UI enabled)
+              const uiMessages = parseGenerativeUI(fullContent);
+              for (const uiMessage of uiMessages) {
+                controller.enqueue(encoder.encode(`data: ${JSON.stringify(uiMessage)}\n\n`));
+              }
+
+              // Now forward the chunk with [DONE]
+              controller.enqueue(encoder.encode(chunk));
+            } else {
+              // Forward chunk as-is
+              controller.enqueue(encoder.encode(chunk));
+            }
+          }
+        } catch (error) {
+          console.error('Stream error:', error);
+          controller.close();
+        }
+      },
+    });
+
+    return new Response(stream, {
+      headers: {
+        'Content-Type': 'text/event-stream',
+        'Cache-Control': 'no-cache',
+        'Connection': 'keep-alive',
+      },
+    });
+  } catch (error) {
+    console.error('Chat error:', error);
+    return new Response(
+      JSON.stringify({
+        error: error instanceof Error ? error.message : 'Failed to process chat'
+      }),
+      { status: 500, headers: { 'Content-Type': 'application/json' } }
+    );
+  }
+};
+
+/**
+ * Parse generative UI components from text content
+ * Activated only when enableGenerativeUI=true
+ */
+function parseGenerativeUI(content: string): any[] {
+  const uiMessages: any[] = [];
+
+  // Check for charts
+  const chartMatches = [...content.matchAll(/```ui-chart\s*\n([\s\S]*?)\n```/g)];
+  console.log('[GENERATIVE UI] Found', chartMatches.length, 'charts in content');
+
+  for (const match of chartMatches) {
+    try {
+      const chartData = JSON.parse(match[1]);
+      uiMessages.push({
+        type: 'ui',
+        payload: {
+          component: 'chart',
+          data: chartData
+        }
+      });
+    } catch (e) {
+      console.error('[GENERATIVE UI] Failed to parse chart JSON:', e);
+    }
+  }
+
+  // Check for tables
+  const tableMatches = [...content.matchAll(/```ui-table\s*\n([\s\S]*?)\n```/g)];
+  console.log('[GENERATIVE UI] Found', tableMatches.length, 'tables in content');
+
+  for (const match of tableMatches) {
+    try {
+      const tableData = JSON.parse(match[1]);
+      uiMessages.push({
+        type: 'ui',
+        payload: {
+          component: 'table',
+          data: tableData
+        }
+      });
+    } catch (e) {
+      console.error('[GENERATIVE UI] Failed to parse table JSON:', e);
+    }
+  }
+
+  // Check for buttons
+  const buttonMatches = [...content.matchAll(/```ui-button\s*\n([\s\S]*?)\n```/g)];
+  console.log('[GENERATIVE UI] Found', buttonMatches.length, 'buttons in content');
+
+  for (const match of buttonMatches) {
+    try {
+      const buttonData = JSON.parse(match[1]);
+      uiMessages.push({
+        type: 'ui',
+        payload: {
+          component: 'button',
+          data: buttonData
+        }
+      });
+    } catch (e) {
+      console.error('[GENERATIVE UI] Failed to parse button JSON:', e);
+    }
+  }
+
+  // Check for cards
+  const cardMatches = [...content.matchAll(/```ui-card\s*\n([\s\S]*?)\n```/g)];
+  console.log('[GENERATIVE UI] Found', cardMatches.length, 'cards in content');
+
+  for (const match of cardMatches) {
+    try {
+      const cardData = JSON.parse(match[1]);
+      uiMessages.push({
+        type: 'ui',
+        payload: {
+          component: 'card',
+          data: cardData
+        }
+      });
+    } catch (e) {
+      console.error('[GENERATIVE UI] Failed to parse card JSON:', e);
+    }
+  }
+
+  return uiMessages;
+}
+
+/**
+ * System prompt for generative UI mode
+ * Only sent when enableGenerativeUI=true
+ */
+const GENERATIVE_UI_SYSTEM_PROMPT = `You are a helpful AI assistant with the ability to generate interactive visualizations.
 
 IMPORTANT: When users ask about charts, data, or visualizations, ALWAYS generate sample data and charts immediately. DO NOT ask them to provide data - create realistic example data based on their request.
 
@@ -68,253 +356,10 @@ RULES:
 2. If user doesn't provide specific data - CREATE sample data that matches their request
 3. ALWAYS include multiple charts when appropriate (e.g., "analyze sales" = revenue chart + profit chart + comparison chart)
 4. Use diverse chart types (line for trends, bar for comparisons, pie for distribution)
-5. Generate data that tells a story (growth trends, seasonal patterns, comparisons)
-
-Example response for "Analyze sales data":
-Here's an analysis of sales performance with interactive charts:
-
-\`\`\`ui-chart
-{
-  "title": "Monthly Revenue Trend",
-  "chartType": "line",
-  "labels": ["Jan", "Feb", "Mar", "Apr", "May", "Jun"],
-  "datasets": [
-    { "label": "2024", "data": [45000, 52000, 48000, 61000, 58000, 67000], "color": "#3b82f6" },
-    { "label": "2023", "data": [38000, 42000, 41000, 47000, 51000, 54000], "color": "#10b981" }
-  ]
-}
-\`\`\`
-
-\`\`\`ui-chart
-{
-  "title": "Sales by Category",
-  "chartType": "bar",
-  "labels": ["Electronics", "Clothing", "Home", "Books", "Sports"],
-  "datasets": [
-    { "label": "Q2 Sales", "data": [28000, 19000, 15000, 12000, 8000], "color": "#f59e0b" }
-  ]
-}
-\`\`\`
-
-Key insights: Revenue up 24% year-over-year, Electronics leading category, strong growth in May-June.`;
-
-/**
- * Unified Chat API Endpoint (OpenRouter)
- *
- * Two modes:
- * 1. Client provides their own OpenRouter API key → Use that
- * 2. No key provided → Use backend default key from env (OPENROUTER_API_KEY)
- *
- * Access to all models: Gemini Flash Lite (free), GPT-4, Claude, Llama, etc.
- * Enhanced with chart/table generation capabilities
- */
-export const POST: APIRoute = async ({ request }) => {
-  try {
-    const { messages, apiKey, model = 'google/gemini-2.5-flash-lite', premium } = await request.json();
-
-    // List of free models that work without API key
-    const FREE_MODELS = [
-      'google/gemini-2.5-flash-lite',
-      'openrouter/polaris-alpha',
-      'tngtech/deepseek-r1t2-chimera:free',
-      'z-ai/glm-4.5-air:free',
-      'tngtech/deepseek-r1t-chimera:free'
-    ];
-
-    // Check if using free tier (any free model without API key)
-    const isFreeTier = !apiKey && FREE_MODELS.includes(model);
-
-    if (isFreeTier) {
-      // FREE TIER - Works without API key
-      return handleFreeTier(messages, premium, model);
-    }
-
-    // PREMIUM TIER - Requires API key for other models
-    const effectiveApiKey = apiKey || import.meta.env.OPENROUTER_API_KEY;
-
-    if (!effectiveApiKey) {
-      return new Response(
-        JSON.stringify({
-          error: 'API key required for premium models. Switch to a free model or add your OpenRouter API key.'
-        }),
-        { status: 401, headers: { 'Content-Type': 'application/json' } }
-      );
-    }
-
-    // Add system prompt for chart generation if premium mode
-    const messagesWithSystem = premium
-      ? [{ role: 'system', content: SYSTEM_PROMPT }, ...messages]
-      : messages;
-
-    // Log the request for debugging (with masked API key)
-    console.log('OpenRouter request:', {
-      model,
-      messageCount: messagesWithSystem.length,
-      premium,
-      usingClientKey: !!apiKey,
-      usingBackendKey: !apiKey,
-      maskedKey: maskSensitive(effectiveApiKey, 4)
-    });
-
-    // Call OpenRouter API directly
-    const response = await fetch('https://openrouter.ai/api/v1/chat/completions', {
-      method: 'POST',
-      headers: {
-        'Authorization': `Bearer ${effectiveApiKey}`,
-        'Content-Type': 'application/json',
-        'HTTP-Referer': 'http://localhost:4321', // Optional: for OpenRouter analytics
-        'X-Title': 'ONE Platform Chat' // Optional: shows in OpenRouter dashboard
-      },
-      body: JSON.stringify({
-        model: model,
-        messages: messagesWithSystem,
-        stream: true, // Enable streaming
-      }),
-    });
-
-    if (!response.ok) {
-      const errorText = await response.text();
-      console.error('OpenRouter API error:', {
-        status: response.status,
-        statusText: response.statusText,
-        error: errorText
-      });
-
-      // Parse error message if possible
-      let errorMessage = `OpenRouter API error: ${response.statusText}`;
-      try {
-        const errorJson = JSON.parse(errorText);
-        errorMessage = errorJson.error?.message || errorJson.message || errorMessage;
-      } catch (e) {
-        // If not JSON, use the text directly
-        if (errorText) errorMessage = errorText;
-      }
-
-      return new Response(
-        JSON.stringify({ error: errorMessage }),
-        { status: response.status, headers: { 'Content-Type': 'application/json' } }
-      );
-    }
-
-    // Parse streaming response for UI components
-    const encoder = new TextEncoder();
-    const decoder = new TextDecoder();
-
-    const stream = new ReadableStream({
-      async start(controller) {
-        const reader = response.body?.getReader();
-        if (!reader) {
-          controller.close();
-          return;
-        }
-
-        let fullContent = '';
-
-        try {
-          console.log('[CHAT API] Stream started');
-
-          while (true) {
-            const { done, value } = await reader.read();
-
-            if (done) {
-              console.log('[CHAT API] Stream done naturally (after [DONE] was sent)');
-              // Stream already closed by [DONE] handler
-              controller.close();
-              return;
-            }
-
-            const chunk = decoder.decode(value, { stream: true });
-
-            // Log every chunk to see what we're getting
-            if (chunk.includes('[DONE]')) {
-              console.log('[CHAT API] FOUND DONE CHUNK:', JSON.stringify(chunk));
-            }
-
-            // Extract content from SSE format
-            const lines = chunk.split('\n');
-            for (const line of lines) {
-              if (line.startsWith('data: ')) {
-                const data = line.slice(6);
-                if (data === '[DONE]') {
-                  console.log('[CHAT API] Found [DONE] in line processing');
-                  continue; // Don't forward [DONE] yet
-                }
-
-                try {
-                  const parsed = JSON.parse(data);
-                  const content = parsed.choices?.[0]?.delta?.content;
-                  if (content) {
-                    fullContent += content;
-                  }
-                } catch (e) {
-                  // Ignore parse errors
-                }
-              }
-            }
-
-            // Check if this chunk contains [DONE]
-            const hasDone = chunk.includes('[DONE]');
-            console.log('[CHAT API] Chunk check - hasDone:', hasDone, 'fullContent length:', fullContent.length);
-
-            if (hasDone) {
-              console.log('[CHAT API] Detected [DONE] in chunk, processing UI components now');
-
-              // Send UI messages BEFORE [DONE]
-              // Check for UI components in the complete response
-              const chartMatches = [...fullContent.matchAll(/```ui-chart\s*\n([\s\S]*?)\n```/g)];
-              console.log('[CHAT API] Found', chartMatches.length, 'charts in content');
-
-              for (const match of chartMatches) {
-                try {
-                  const chartData = JSON.parse(match[1]);
-                  const uiMessage = {
-                    type: 'ui',
-                    payload: {
-                      component: 'chart',
-                      data: chartData
-                    }
-                  };
-                  console.log('[CHAT API] Sending chart UI message');
-                  controller.enqueue(encoder.encode(`data: ${JSON.stringify(uiMessage)}\n\n`));
-                } catch (e) {
-                  console.error('[CHAT API] Failed to parse chart JSON:', e);
-                }
-              }
-
-              // Now forward the chunk with [DONE]
-              controller.enqueue(encoder.encode(chunk));
-            } else {
-              // Forward chunk as-is
-              controller.enqueue(encoder.encode(chunk));
-            }
-          }
-        } catch (error) {
-          console.error('Stream error:', error);
-          controller.close();
-        }
-      },
-    });
-
-    return new Response(stream, {
-      headers: {
-        'Content-Type': 'text/event-stream',
-        'Cache-Control': 'no-cache',
-        'Connection': 'keep-alive',
-      },
-    });
-  } catch (error) {
-    console.error('Free tier chat error:', error);
-    return new Response(
-      JSON.stringify({
-        error: error instanceof Error ? error.message : 'Failed to process chat'
-      }),
-      { status: 500, headers: { 'Content-Type': 'application/json' } }
-    );
-  }
-};
+5. Generate data that tells a story (growth trends, seasonal patterns, comparisons)`;
 
 // Free tier handler - Simulates free model responses
-async function handleFreeTier(messages: any[], premium: boolean, model: string = 'google/gemini-2.5-flash-lite') {
+async function handleFreeTier(messages: any[], enableGenerativeUI: boolean, model: string = 'google/gemini-2.5-flash-lite') {
   if (!messages || messages.length === 0) {
     return new Response(
       JSON.stringify({ error: 'No messages provided' }),
@@ -356,12 +401,12 @@ async function handleFreeTier(messages: any[], premium: boolean, model: string =
         };
         const modelName = modelNames[model] || 'AI Assistant';
 
-        // Check for chart/visualization requests
-        if (premium && (lowerMessage.includes('chart') || lowerMessage.includes('graph') || lowerMessage.includes('visualiz') || lowerMessage.includes('data'))) {
+        // Check for chart/visualization requests (only if generative UI enabled)
+        if (enableGenerativeUI && (lowerMessage.includes('chart') || lowerMessage.includes('graph') || lowerMessage.includes('visualiz') || lowerMessage.includes('data'))) {
           response = generateDataVisualization(userMessage);
         }
         // Check for table requests
-        else if (premium && (lowerMessage.includes('table') || lowerMessage.includes('list') || lowerMessage.includes('spreadsheet'))) {
+        else if (enableGenerativeUI && (lowerMessage.includes('table') || lowerMessage.includes('list') || lowerMessage.includes('spreadsheet'))) {
           response = generateTableResponse(userMessage);
         }
         // Programming/code requests
@@ -389,45 +434,14 @@ async function handleFreeTier(messages: any[], premium: boolean, model: string =
           await new Promise(resolve => setTimeout(resolve, 30 + Math.random() * 20));
         }
 
-        // BEFORE sending [DONE], check for and send UI components
-        const chartMatches = [...response.matchAll(/```ui-chart\s*\n([\s\S]*?)\n```/g)];
-        console.log('[FREE TIER] Found', chartMatches.length, 'charts in response');
+        // BEFORE sending [DONE], check for and send UI components (only if generative UI enabled)
+        if (enableGenerativeUI) {
+          const uiMessages = parseGenerativeUI(response);
+          console.log('[FREE TIER] Found', uiMessages.length, 'UI components');
 
-        for (const match of chartMatches) {
-          try {
-            const chartData = JSON.parse(match[1]);
-            const uiMessage = {
-              type: 'ui',
-              payload: {
-                component: 'chart',
-                data: chartData
-              }
-            };
-            console.log('[FREE TIER] Sending chart UI message:', chartData.title);
+          for (const uiMessage of uiMessages) {
+            console.log('[FREE TIER] Sending UI message:', uiMessage.payload.component);
             controller.enqueue(encoder.encode(`data: ${JSON.stringify(uiMessage)}\n\n`));
-          } catch (e) {
-            console.error('[FREE TIER] Failed to parse chart JSON:', e);
-          }
-        }
-
-        // Check for tables
-        const tableMatches = [...response.matchAll(/```ui-table\s*\n([\s\S]*?)\n```/g)];
-        console.log('[FREE TIER] Found', tableMatches.length, 'tables in response');
-
-        for (const match of tableMatches) {
-          try {
-            const tableData = JSON.parse(match[1]);
-            const uiMessage = {
-              type: 'ui',
-              payload: {
-                component: 'table',
-                data: tableData
-              }
-            };
-            console.log('[FREE TIER] Sending table UI message:', tableData.title);
-            controller.enqueue(encoder.encode(`data: ${JSON.stringify(uiMessage)}\n\n`));
-          } catch (e) {
-            console.error('[FREE TIER] Failed to parse table JSON:', e);
           }
         }
 
@@ -738,7 +752,7 @@ function generateConversationalResponse(message: string, modelName: string = 'AI
 
   // Help requests
   if (lower.includes('help') || lower.includes('what can you')) {
-    return `I'm Gemini Flash Lite, and I can help you with:
+    return `I'm ${modelName}, and I can help you with:
 
 **Free Features Available Now:**
 - 💻 **Code Generation** - React, Python, TypeScript, and more
@@ -779,10 +793,10 @@ Would you like me to provide code examples or create a visualization to help ill
 
   // API/Model questions
   if (lower.includes('model') || lower.includes('api') || lower.includes('free')) {
-    return `You're currently using **Gemini Flash Lite** - completely free, no API key needed!
+    return `You're currently using **${modelName}** - completely free, no API key needed!
 
 **Current Setup:**
-- ✅ Model: Gemini Flash Lite (Free Tier)
+- ✅ Model: ${modelName} (Free Tier)
 - ✅ Features: Full chat, code generation, visualizations
 - ✅ Limits: None - unlimited free usage
 - ✅ Speed: Fast responses
@@ -796,7 +810,7 @@ Add an OpenRouter API key to unlock:
 
 Get your free API key at: openrouter.ai/keys
 
-But honestly, Gemini Flash Lite works great for most tasks! What would you like to create?`;
+But honestly, ${modelName} works great for most tasks! What would you like to create?`;
   }
 
   // Default response
