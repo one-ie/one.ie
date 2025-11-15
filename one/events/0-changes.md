@@ -1,3 +1,13 @@
+### **e992a3c7** — template:4 — `Update hook logs and cycle state``
+
+**Template:**
+  - .claude/hooks.log
+  - .claude/hooks/.last-news-context
+  - .claude/state/cycle.json
+  - one/events/0-changes.md
+
+
+
 ### **9426da33** — template:3 — `Update hooks log with latest execution records``
 
 **Template:**

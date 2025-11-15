@@ -543,7 +543,7 @@ const DEMO_RESPONSES: Record<string, ExtendedMessage[]> = {
   ]
 };
 
-// Demo suggestion card component
+// Demo suggestion card component - simplified
 function DemoCard({
   suggestion,
   onSelect,
@@ -553,102 +553,34 @@ function DemoCard({
   onSelect: (prompt: string) => void;
   isLocked?: boolean;
 }) {
-  const category = DEMO_CATEGORIES[suggestion.category as keyof typeof DEMO_CATEGORIES];
   const Icon = suggestion.icon;
 
   return (
-    <Card
+    <button
       className={cn(
-        "relative overflow-hidden cursor-pointer transition-all duration-300 hover:scale-[1.02] hover:shadow-xl group",
-        category.bgColor,
-        category.borderColor,
-        "border-2",
+        "w-full p-4 rounded-lg border border-border bg-background",
+        "hover:bg-accent hover:border-foreground/20 transition-colors",
+        "text-left cursor-pointer",
         isLocked && "opacity-60"
       )}
       onClick={() => !isLocked && onSelect(suggestion.prompt)}
     >
-      {/* Popular badge */}
-      {suggestion.popular && (
-        <div className="absolute top-2 right-2 z-10">
-          <Badge className="bg-gradient-to-r from-yellow-500 to-orange-500 text-white border-0">
-            <Star className="w-3 h-3 mr-1" />
-            Popular
-          </Badge>
-        </div>
-      )}
-
-      {/* Premium badge */}
-      {suggestion.premium && (
-        <div className="absolute top-2 left-2 z-10">
-          <Badge variant="secondary" className="bg-gradient-to-r from-purple-500 to-pink-500 text-white border-0">
-            <Sparkles className="w-3 h-3 mr-1" />
-            Premium
-          </Badge>
-        </div>
-      )}
-
-      <CardHeader className="pb-3">
-        <div className="flex items-start gap-3">
-          <div className={cn(
-            "p-2.5 rounded-lg bg-gradient-to-br",
-            category.color,
-            "text-white shadow-lg"
-          )}>
-            <Icon className="w-5 h-5" />
+      <div className="flex items-center gap-3">
+        <Icon className="w-5 h-5 text-foreground flex-shrink-0" />
+        <div className="flex-1 min-w-0">
+          <div className="font-medium text-sm text-foreground">
+            {suggestion.title}
           </div>
-          <div className="flex-1">
-            <CardTitle className="text-base font-semibold">
-              {suggestion.title}
-            </CardTitle>
-            <CardDescription className="text-xs mt-1">
-              {suggestion.description}
-            </CardDescription>
+          <div className="text-xs text-muted-foreground mt-0.5">
+            {suggestion.description}
           </div>
         </div>
-      </CardHeader>
-
-      <CardContent className="pt-0 pb-4">
-        <div className="flex items-center justify-between">
-          <Badge variant="outline" className="text-xs">
-            {category.name}
-          </Badge>
-          <ArrowRight className={cn(
-            "w-4 h-4 transition-transform group-hover:translate-x-1",
-            isLocked ? "text-muted-foreground" : "text-primary"
-          )} />
-        </div>
-      </CardContent>
-
-      {/* Lock overlay for premium features when no API key */}
-      {isLocked && (
-        <div className="absolute inset-0 bg-background/80 backdrop-blur-sm flex items-center justify-center">
-          <div className="text-center p-4">
-            <Lock className="w-8 h-8 mx-auto mb-2 text-muted-foreground" />
-            <p className="text-sm font-medium">Add API Key</p>
-            <p className="text-xs text-muted-foreground mt-1">to unlock</p>
-          </div>
-        </div>
-      )}
-    </Card>
-  );
-}
-
-// Hero section component
-function HeroSection({ hasApiKey }: { hasApiKey: boolean }) {
-  return (
-    <div className="text-center space-y-6 mb-8">
-      {/* Main heading with gradient */}
-      <div className="space-y-4">
-        <h1 className="text-4xl md:text-5xl font-bold bg-gradient-to-r from-purple-600 via-pink-600 to-blue-600 bg-clip-text text-transparent">
-          Generative UI Demo
-        </h1>
-        <p className="text-lg text-muted-foreground max-w-2xl mx-auto">
-          Add any react component into AI chat
-        </p>
       </div>
-    </div>
+    </button>
   );
 }
+
+// Hero section component - removed, content moved to main layout
 
 export function ChatClientV2() {
   const [apiKey, setApiKey] = useState('');
@@ -1074,6 +1006,19 @@ export function ChatClientV2() {
         }
       `}</style>
 
+      {/* Top Right: Add API Key Button */}
+      <div className="fixed top-4 right-4 z-50">
+        <Button
+          variant="outline"
+          size="sm"
+          onClick={() => setShowSettings(true)}
+          className="gap-2"
+        >
+          <Unlock className="w-4 h-4" />
+          Add API Key
+        </Button>
+      </div>
+
       {/* Settings Modal */}
       {showSettings && (
         <div className="fixed inset-0 bg-black/50 flex items-center justify-center z-50">
@@ -1171,40 +1116,8 @@ export function ChatClientV2() {
         <ConversationContent className="max-w-3xl mx-auto px-4 pb-[200px]">
           {messages.length === 0 && !isLoading ? (
             <div className="flex flex-col items-center justify-center min-h-[80vh] space-y-8">
-              {/* Hero Section */}
-              <HeroSection hasApiKey={hasApiKey} />
-
               {/* Demo Cards Grid */}
               <div className="w-full max-w-4xl">
-                <div className="flex items-center justify-between mb-4">
-                  <h2 className="text-xl font-semibold">Try These Demos</h2>
-                  {!hasApiKey && (
-                    <Button
-                      variant="outline"
-                      size="sm"
-                      onClick={() => setShowSettings(true)}
-                      className="gap-2"
-                    >
-                      <Unlock className="w-4 h-4" />
-                      Add API Key
-                    </Button>
-                  )}
-                </div>
-
-                {/* Category tabs */}
-                <div className="flex gap-2 mb-6 overflow-x-auto pb-2">
-                  {Object.entries(DEMO_CATEGORIES).map(([key, cat]) => (
-                    <Badge
-                      key={key}
-                      variant="outline"
-                      className="flex items-center gap-1.5 px-3 py-1.5 whitespace-nowrap"
-                    >
-                      <cat.icon className="w-3.5 h-3.5" />
-                      {cat.name}
-                    </Badge>
-                  ))}
-                </div>
-
                 {/* Demo cards grid */}
                 <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
                   {DEMO_SUGGESTIONS.map((suggestion) => (
