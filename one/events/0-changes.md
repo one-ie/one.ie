@@ -1,3 +1,13 @@
+### **8a010a4f** — template:4 — `Update cycle state and context tracking``
+
+**Template:**
+  - .claude/hooks.log
+  - .claude/hooks/.last-news-context
+  - .claude/state/cycle.json
+  - one/events/0-changes.md
+
+
+
 ### **64cff3de** — template:4 — `Update cycle state and context tracking``
 
 **Template:**
