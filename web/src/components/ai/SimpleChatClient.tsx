@@ -16,6 +16,7 @@ import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import { Alert, AlertDescription } from '@/components/ui/alert';
 import { Sparkles, Code, Brain, Lightbulb, MessageSquare } from 'lucide-react';
+import { secureSetItem, secureGetItem, secureRemoveItem } from '@/lib/security';
 
 const POPULAR_MODELS = [
   { id: 'google/gemini-2.5-flash-lite', name: 'Gemini 2.5 Flash Lite (Google) - Fast & Free' },
@@ -57,11 +58,11 @@ export function SimpleChatClient() {
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
 
-  // Load API key and model from localStorage on mount
+  // Load API key and model from secure storage on mount
   useEffect(() => {
     if (typeof window !== 'undefined') {
-      const savedKey = localStorage.getItem(STORAGE_KEY);
-      const savedModel = localStorage.getItem(MODEL_KEY);
+      const savedKey = secureGetItem(STORAGE_KEY);
+      const savedModel = localStorage.getItem(MODEL_KEY); // Model selection is not sensitive
 
       if (savedKey) {
         setApiKey(savedKey);
@@ -73,10 +74,10 @@ export function SimpleChatClient() {
     }
   }, []);
 
-  // Save to localStorage when starting chat
+  // Save to secure storage when starting chat
   const handleStartChat = () => {
     if (apiKey && typeof window !== 'undefined') {
-      localStorage.setItem(STORAGE_KEY, apiKey);
+      secureSetItem(STORAGE_KEY, apiKey);
       localStorage.setItem(MODEL_KEY, selectedModel);
       setChatStarted(true);
     }
@@ -85,7 +86,7 @@ export function SimpleChatClient() {
   // Clear stored key
   const handleClearKey = () => {
     if (typeof window !== 'undefined') {
-      localStorage.removeItem(STORAGE_KEY);
+      secureRemoveItem(STORAGE_KEY);
       localStorage.removeItem(MODEL_KEY);
     }
     setApiKey('');

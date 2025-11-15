@@ -15,6 +15,7 @@ import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import { Alert, AlertDescription } from '@/components/ui/alert';
+import { secureSetItem, secureGetItem, secureRemoveItem } from '@/lib/security';
 
 const POPULAR_MODELS = [
   { id: 'google/gemini-2.5-flash-lite', name: 'Gemini 2.5 Flash Lite (Google) - Fast & Free' },
@@ -34,11 +35,11 @@ export function FreeChatClient() {
   const [selectedModel, setSelectedModel] = useState('google/gemini-2.5-flash-lite');
   const [chatStarted, setChatStarted] = useState(false);
 
-  // Load API key and model from localStorage on mount
+  // Load API key and model from secure storage on mount
   useEffect(() => {
     if (typeof window !== 'undefined') {
-      const savedKey = localStorage.getItem(STORAGE_KEY);
-      const savedModel = localStorage.getItem(MODEL_KEY);
+      const savedKey = secureGetItem(STORAGE_KEY);
+      const savedModel = localStorage.getItem(MODEL_KEY); // Model selection is not sensitive
 
       if (savedKey) {
         setApiKey(savedKey);
@@ -50,10 +51,10 @@ export function FreeChatClient() {
     }
   }, []);
 
-  // Save to localStorage when starting chat
+  // Save to secure storage when starting chat
   const handleStartChat = () => {
     if (apiKey && typeof window !== 'undefined') {
-      localStorage.setItem(STORAGE_KEY, apiKey);
+      secureSetItem(STORAGE_KEY, apiKey);
       localStorage.setItem(MODEL_KEY, selectedModel);
       setChatStarted(true);
     }
@@ -62,7 +63,7 @@ export function FreeChatClient() {
   // Clear stored key
   const handleClearKey = () => {
     if (typeof window !== 'undefined') {
-      localStorage.removeItem(STORAGE_KEY);
+      secureRemoveItem(STORAGE_KEY);
       localStorage.removeItem(MODEL_KEY);
     }
     setApiKey('');

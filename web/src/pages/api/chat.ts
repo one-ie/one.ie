@@ -1,4 +1,5 @@
 import type { APIRoute } from 'astro';
+import { maskSensitive } from '@/lib/security';
 
 const SYSTEM_PROMPT = `You are a helpful AI assistant with the ability to generate interactive visualizations.
 
@@ -145,14 +146,14 @@ export const POST: APIRoute = async ({ request }) => {
       ? [{ role: 'system', content: SYSTEM_PROMPT }, ...messages]
       : messages;
 
-    // Log the request for debugging
+    // Log the request for debugging (with masked API key)
     console.log('OpenRouter request:', {
       model,
       messageCount: messagesWithSystem.length,
       premium,
       usingClientKey: !!apiKey,
       usingBackendKey: !apiKey,
-      keyPrefix: effectiveApiKey.substring(0, 10) + '...'
+      maskedKey: maskSensitive(effectiveApiKey, 4)
     });
 
     // Call OpenRouter API directly

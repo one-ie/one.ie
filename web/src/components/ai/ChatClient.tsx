@@ -26,6 +26,7 @@ import {
 import { PromptInputSpeechButton } from '@/components/ai/elements/prompt-input';
 import { Suggestions, Suggestion } from '@/components/ai/elements/suggestion';
 import { AgentMessage, type AgentUIMessage } from '@/components/ai/AgentMessage';
+import { secureSetItem, secureGetItem, secureRemoveItem } from '@/lib/security';
 import {
   Message,
   MessageContent,
@@ -333,11 +334,11 @@ export function ChatClient() {
 
   const selectedModelData = POPULAR_MODELS.find((m) => m.id === selectedModel);
 
-  // Load API key and model from localStorage on mount
+  // Load API key and model from secure storage on mount
   useEffect(() => {
     if (typeof window !== 'undefined') {
-      const savedKey = localStorage.getItem(STORAGE_KEY);
-      const savedModel = localStorage.getItem(MODEL_KEY);
+      const savedKey = secureGetItem(STORAGE_KEY);
+      const savedModel = localStorage.getItem(MODEL_KEY); // Model selection is not sensitive
 
       if (savedKey) {
         setApiKey(savedKey);
@@ -348,10 +349,10 @@ export function ChatClient() {
     }
   }, []);
 
-  // Save API key to localStorage
+  // Save API key to secure storage
   const handleSaveApiKey = () => {
     if (apiKey && typeof window !== 'undefined') {
-      localStorage.setItem(STORAGE_KEY, apiKey);
+      secureSetItem(STORAGE_KEY, apiKey);
       localStorage.setItem(MODEL_KEY, selectedModel);
     }
   };
@@ -359,7 +360,7 @@ export function ChatClient() {
   // Clear stored key
   const handleClearKey = () => {
     if (typeof window !== 'undefined') {
-      localStorage.removeItem(STORAGE_KEY);
+      secureRemoveItem(STORAGE_KEY);
       localStorage.removeItem(MODEL_KEY);
     }
     setApiKey('');

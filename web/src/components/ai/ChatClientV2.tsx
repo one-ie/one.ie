@@ -26,6 +26,7 @@ import {
 } from '@/components/ai/elements/model-selector';
 import { PromptInputSpeechButton } from '@/components/ai/elements/prompt-input';
 import { AgentMessage, type AgentUIMessage } from '@/components/ai/AgentMessage';
+import { secureSetItem, secureGetItem, secureRemoveItem } from '@/lib/security';
 import {
   Message,
   MessageContent,
@@ -672,11 +673,11 @@ export function ChatClientV2() {
     messagesEndRef.current?.scrollIntoView({ behavior: 'smooth' });
   }, [messages]);
 
-  // Load API key and model from localStorage on mount
+  // Load API key and model from secure storage on mount
   useEffect(() => {
     if (typeof window !== 'undefined') {
-      const savedKey = localStorage.getItem(STORAGE_KEY);
-      const savedModel = localStorage.getItem(MODEL_KEY);
+      const savedKey = secureGetItem(STORAGE_KEY);
+      const savedModel = localStorage.getItem(MODEL_KEY); // Model selection is not sensitive
 
       if (savedKey) {
         setApiKey(savedKey);
@@ -687,10 +688,10 @@ export function ChatClientV2() {
     }
   }, []);
 
-  // Save API key to localStorage
+  // Save API key to secure storage
   const handleSaveApiKey = () => {
     if (apiKey && typeof window !== 'undefined') {
-      localStorage.setItem(STORAGE_KEY, apiKey);
+      secureSetItem(STORAGE_KEY, apiKey);
       localStorage.setItem(MODEL_KEY, selectedModel);
       toast({
         title: "API Key Saved",
@@ -703,7 +704,7 @@ export function ChatClientV2() {
   // Clear stored key
   const handleClearKey = () => {
     if (typeof window !== 'undefined') {
-      localStorage.removeItem(STORAGE_KEY);
+      secureRemoveItem(STORAGE_KEY);
       localStorage.removeItem(MODEL_KEY);
     }
     setApiKey('');

@@ -1,3 +1,55 @@
+### **a82d3ce0** — custom:1 — `Add video demo and podcast to README`` [customization]
+
+**Your Changes:**
+  - README.md
+
+
+
+### **a80a5239** — template:36 custom:1 — `ONE`` [customization]
+
+**Template:**
+  - .claude/hooks.log
+  - .claude/hooks/.last-news-context
+  - .claude/state/cycle.json
+  - one/events/0-changes.md
+  - one/events/production-readiness-plan.md
+  - web/.env.example
+  - web/public/assets/Attract.png
+  - web/public/assets/Company.png
+  - web/public/assets/Convert.png
+  - web/public/assets/Customer.png
+  - web/public/assets/Educate.png
+  - web/public/assets/Engaage.png
+  - web/public/assets/Foundation.png
+  - web/public/assets/Gift.png
+  - web/public/assets/Grow.png
+  - web/public/assets/Hook.png
+  - web/public/assets/Identify.png
+  - web/public/assets/Market.png
+  - web/public/assets/Nurture.png
+  - web/public/assets/Pieces.png
+  - web/public/assets/Playbook.png
+  - web/public/assets/Sell.png
+  - web/public/assets/Share.png
+  - web/public/assets/Upsell.png
+  - web/public/assets/_Anatomy of a High Converting Ecommerce Website.md
+  - web/public/assets/author.png
+  - web/public/assets/book-cover.png
+  - web/public/assets/epub-style.css
+  - web/public/screenshots/astro-shadcn.mov
+  - web/src/components/FeaturedPodcast.tsx
+  - web/src/components/media/VideoPlayer.tsx
+  - web/src/content/docs/develop/youtube-connect.md
+  - web/src/pages/videos.astro
+  - web/src/pages/videos/[slug].astro
+  - web/src/services/KnowledgeService.ts
+  - web/src/services/youtube.ts
+
+**Your Changes:**
+  - package.json
+
+
+
 ### **25e3680d** — template:17 — `AI Chat``
 
 **Template:**
