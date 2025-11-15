@@ -83,7 +83,8 @@ import {
   Image,
   Search,
   Mic,
-  Plus
+  Plus,
+  ShoppingCart
 } from 'lucide-react';
 import { cn } from '@/lib/utils';
 import {
@@ -144,6 +145,16 @@ const DEMO_SUGGESTIONS = [
     popular: true
   },
   {
+    id: 'product',
+    prompt: "Show me the Efficient Slice Toaster product card with a working Add to Cart button. Make it look professional with product image, price, rating, stock count, and quantity selector.",
+    title: "Products",
+    description: "E-commerce product cards",
+    category: 'ui-generation',
+    icon: ShoppingCart,
+    premium: false,
+    popular: true
+  },
+  {
     id: 'table',
     prompt: "📋 Create a data table (demo)",
     title: "Tables",
@@ -155,7 +166,7 @@ const DEMO_SUGGESTIONS = [
   {
     id: 'form',
     prompt: "📝 Build a contact form (demo)",
-    title: "Smart Forms",
+    title: "Forms",
     description: "Generate forms instantly",
     category: 'ui-generation',
     icon: FormInput,
@@ -164,7 +175,7 @@ const DEMO_SUGGESTIONS = [
   {
     id: 'timeline',
     prompt: "⏱️ Show project timeline (demo)",
-    title: "Timeline View",
+    title: "Timeline",
     description: "Visualize project milestones",
     category: 'ui-generation',
     icon: Calendar,
@@ -614,16 +625,16 @@ function DemoCard({
   return (
     <button
       className={cn(
-        "w-full p-3 rounded-lg border border-border bg-background",
-        "hover:bg-accent hover:border-foreground/20 transition-colors",
+        "w-full p-2 rounded-lg bg-background",
+        "hover:bg-accent transition-colors",
         "cursor-pointer",
         isLocked && "opacity-60"
       )}
       onClick={() => !isLocked && onSelect(suggestion.prompt)}
     >
-      <div className="flex items-center gap-2.5">
-        <Icon className="w-4 h-4 text-foreground flex-shrink-0" />
-        <span className="font-medium text-sm text-foreground">
+      <div className="flex items-center gap-2">
+        <Icon className="w-3.5 h-3.5 text-foreground flex-shrink-0" />
+        <span className="font-medium text-xs text-foreground">
           {suggestion.title}
         </span>
       </div>
@@ -854,7 +865,9 @@ export function ChatClientV2() {
       const isGenerativeUIRequest = text.toLowerCase().includes('(demo)') ||
                                      text.toLowerCase().includes('chart') ||
                                      text.toLowerCase().includes('table') ||
-                                     text.toLowerCase().includes('visualiz');
+                                     text.toLowerCase().includes('visualiz') ||
+                                     text.toLowerCase().includes('product') ||
+                                     text.toLowerCase().includes('toaster');
 
       const response = await fetch('/api/chat', {
         method: 'POST',
@@ -1205,7 +1218,7 @@ export function ChatClientV2() {
       {/* Centered Layout - Empty State */}
       {!hasMessages && (
         <div className="flex flex-col items-center justify-center min-h-screen w-full px-4">
-          <div className="w-full max-w-2xl space-y-8 input-container">
+          <div className="w-full max-w-2xl input-container">
             {/* Centered Input */}
             <div className="relative flex flex-col bg-[hsl(var(--color-sidebar))] rounded-2xl p-3 gap-3 focus-within:outline-none border-2 border-border">
               {/* Text input area */}
@@ -1400,8 +1413,8 @@ export function ChatClientV2() {
             </div>
 
             {/* Demo Cards - Below Input */}
-            <div className={cn("demo-cards w-full", hasMessages && "hidden")}>
-              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
+            <div className={cn("demo-cards w-full", hasMessages && "hidden")} style={{ marginTop: '20px' }}>
+              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-2">
                 {DEMO_SUGGESTIONS.map((suggestion) => (
                   <DemoCard
                     key={suggestion.id}

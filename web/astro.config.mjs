@@ -82,39 +82,32 @@ export default defineConfig({
       rollupOptions: {
         output: {
           manualChunks: (id) => {
-            // CRITICAL: Split heavy dependencies for optimal lazy loading
-            // Mermaid diagrams (1.5MB)
-            if (id.includes('mermaid')) {
+            // CRITICAL: Only split truly heavy, self-contained dependencies
+            // React and React-dependent components stay in main chunks to avoid hydration errors
+
+            // Mermaid diagrams (1.5MB, self-contained)
+            if (id.includes('node_modules/mermaid')) {
               return 'vendor-diagrams';
             }
-            // Cytoscape graphs (645KB)
-            if (id.includes('cytoscape')) {
+            // Cytoscape graphs (645KB, self-contained)
+            if (id.includes('node_modules/cytoscape')) {
               return 'vendor-graph';
             }
-            // VideoPlayer and video libraries (1MB+)
-            if (id.includes('VideoPlayer') || id.includes('video-react') || id.includes('hls.js')) {
+            // VideoPlayer and video libraries (1MB+, self-contained)
+            if (id.includes('node_modules/video-react') || id.includes('node_modules/hls.js')) {
               return 'vendor-video';
             }
-            // Recharts (411KB)
-            if (id.includes('recharts')) {
+            // Recharts (411KB, has React peer deps but self-contained)
+            if (id.includes('node_modules/recharts')) {
               return 'vendor-charts';
             }
-            // AI/prompt components
-            if (id.includes('prompt-input') || id.includes('PromptInput')) {
-              return 'vendor-ai';
-            }
-            // React markdown
-            if (id.includes('react-markdown')) {
+            // React markdown (self-contained)
+            if (id.includes('node_modules/react-markdown')) {
               return 'vendor-markdown';
             }
-            // Lucide icons
-            if (id.includes('lucide-react')) {
-              return 'vendor-icons';
-            }
-            // Core React (keep separate)
-            if (id.includes('node_modules/react') || id.includes('node_modules/react-dom')) {
-              return 'vendor-react';
-            }
+
+            // DO NOT split React or any React-dependent UI components
+            // Let Vite's automatic chunking handle React ecosystem
           },
         },
       },

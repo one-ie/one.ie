@@ -301,6 +301,25 @@ function parseGenerativeUI(content: string): any[] {
     }
   }
 
+  // Check for products
+  const productMatches = [...content.matchAll(/```ui-product\s*\n([\s\S]*?)\n```/g)];
+  console.log('[GENERATIVE UI] Found', productMatches.length, 'products in content');
+
+  for (const match of productMatches) {
+    try {
+      const productData = JSON.parse(match[1]);
+      uiMessages.push({
+        type: 'ui',
+        payload: {
+          component: 'product',
+          data: productData
+        }
+      });
+    } catch (e) {
+      console.error('[GENERATIVE UI] Failed to parse product JSON:', e);
+    }
+  }
+
   return uiMessages;
 }
 
@@ -389,13 +408,32 @@ Example:
 
 Field types: "text", "email", "tel", "number", "textarea", "password"
 
+**For PRODUCTS** - Wrap JSON in \`\`\`ui-product:\n{your json}\n\`\`\`
+
+Example:
+\`\`\`ui-product
+{
+  "title": "Efficient Slice Toaster",
+  "description": "Premium 4-slice toaster with extra-wide slots and 7 browning levels. Perfect for artisan bread.",
+  "price": 79.99,
+  "originalPrice": 99.99,
+  "image": "https://images.unsplash.com/photo-1585515320310-259814833e62?w=400",
+  "rating": 4.5,
+  "reviewCount": 127,
+  "stock": 15,
+  "badge": "Best Seller",
+  "category": "Kitchen Appliances"
+}
+\`\`\`
+
 RULES:
 1. If user mentions "sales", "revenue", "growth", "analytics" - generate charts with realistic business data
 2. If user doesn't provide specific data - CREATE sample data that matches their request
 3. ALWAYS include multiple charts when appropriate (e.g., "analyze sales" = revenue chart + profit chart + comparison chart)
 4. Use diverse chart types (line for trends, bar for comparisons, pie for distribution)
 5. Generate data that tells a story (growth trends, seasonal patterns, comparisons)
-6. If user asks for a contact form or any form - generate it with appropriate fields`;
+6. If user asks for a contact form or any form - generate it with appropriate fields
+7. If user asks for a product or mentions e-commerce - generate product cards with realistic data and images`;
 
 // Free tier handler - Simulates free model responses
 async function handleFreeTier(messages: any[], enableGenerativeUI: boolean, model: string = 'google/gemini-2.5-flash-lite') {
@@ -443,6 +481,10 @@ async function handleFreeTier(messages: any[], enableGenerativeUI: boolean, mode
         // Check for chart/visualization requests (only if generative UI enabled)
         if (enableGenerativeUI && (lowerMessage.includes('chart') || lowerMessage.includes('graph') || lowerMessage.includes('visualiz') || lowerMessage.includes('data'))) {
           response = generateDataVisualization(userMessage);
+        }
+        // Check for product requests
+        else if (enableGenerativeUI && (lowerMessage.includes('product') || lowerMessage.includes('toaster') || lowerMessage.includes('e-commerce') || lowerMessage.includes('shop'))) {
+          response = generateProductResponse(userMessage);
         }
         // Check for table requests
         else if (enableGenerativeUI && (lowerMessage.includes('table') || lowerMessage.includes('list') || lowerMessage.includes('spreadsheet'))) {
@@ -589,6 +631,59 @@ Traffic highlights:
 \`\`\`
 
 This chart shows the trend over time. Would you like me to customize this visualization with your specific data?`;
+}
+
+// Generate product card response
+function generateProductResponse(message: string): string {
+  const lower = message.toLowerCase();
+
+  if (lower.includes('toaster') || lower.includes('efficient slice')) {
+    return `Here's the Efficient Slice Toaster product card:
+
+\`\`\`ui-product
+{
+  "title": "Efficient Slice Toaster",
+  "description": "Premium 4-slice toaster with extra-wide slots and 7 browning levels. Perfect for artisan bread, bagels, and thick slices. Features auto-centering guides and removable crumb tray.",
+  "price": 79.99,
+  "originalPrice": 99.99,
+  "image": "https://images.unsplash.com/photo-1585515320310-259814833e62?w=400",
+  "rating": 4.5,
+  "reviewCount": 127,
+  "stock": 15,
+  "badge": "Best Seller",
+  "category": "Kitchen Appliances"
+}
+\`\`\`
+
+This premium toaster features:
+- Extra-wide slots for thick artisan bread
+- 7 precise browning levels
+- Auto-centering guides for even toasting
+- Quick-lift lever for safe removal
+- Removable crumb tray for easy cleaning
+
+Perfect for any kitchen! Click "Add to Cart" to purchase.`;
+  }
+
+  // Default product response
+  return `Here's a featured product for you:
+
+\`\`\`ui-product
+{
+  "title": "Premium Coffee Maker",
+  "description": "Professional-grade coffee maker with programmable timer and thermal carafe. Brews perfect coffee every time.",
+  "price": 129.99,
+  "originalPrice": 159.99,
+  "image": "https://images.unsplash.com/photo-1517668808822-9ebb02f2a0e6?w=400",
+  "rating": 4.7,
+  "reviewCount": 89,
+  "stock": 23,
+  "badge": "New",
+  "category": "Kitchen Appliances"
+}
+\`\`\`
+
+This high-quality coffee maker is perfect for coffee enthusiasts!`;
 }
 
 // Generate table response

@@ -6,9 +6,10 @@ import { DynamicForm } from "./DynamicForm";
 import { DynamicList } from "./DynamicList";
 import { DynamicTimeline } from "./DynamicTimeline";
 import { DynamicButton } from "./DynamicButton";
+import { DynamicProduct } from "./DynamicProduct";
 
 export interface UIPayload {
-  component: "chart" | "table" | "card" | "form" | "list" | "timeline" | "button";
+  component: "chart" | "table" | "card" | "form" | "list" | "timeline" | "button" | "product";
   data: any;
   layout?: any;
 }
@@ -29,6 +30,8 @@ export function GenerativeUIRenderer({ payload }: { payload: UIPayload }) {
       return <DynamicTimeline data={payload.data} layout={payload.layout} />;
     case "button":
       return <DynamicButton data={payload.data} layout={payload.layout} />;
+    case "product":
+      return <DynamicProduct data={payload.data} />;
     default:
       return <div className="rounded-lg border border-destructive bg-destructive/10 p-4">Unknown component: {payload.component}</div>;
   }

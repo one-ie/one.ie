@@ -1,3 +1,25 @@
+### **434a00f7** — template:16 — `Add Chat link to sidebar navigation``
+
+**Template:**
+  - .claude/hooks.log
+  - .claude/hooks/.last-news-context
+  - .claude/prompts/design-quick-ref.md
+  - .claude/prompts/design-system.md
+  - .claude/state/cycle.json
+  - one/events/0-changes.md
+  - web/CLAUDE.md
+  - web/src/components/design/InteractionDemo.tsx
+  - web/src/components/design/MotionDemo.tsx
+  - web/src/components/generative-ui/DynamicChart.tsx
+  - web/src/components/generative-ui/DynamicChartRecharts.tsx
+  - web/src/components/generative-ui/DynamicForm.tsx
+  - web/src/components/ui/chart.tsx
+  - web/src/pages/api/chat.ts
+  - web/src/pages/design.astro
+  - web/src/styles/global.css
+
+
+
 ### **7a969818** — template:7 — `Add Chat link to sidebar navigation``
 
 **Template:**
