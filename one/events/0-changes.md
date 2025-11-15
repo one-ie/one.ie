@@ -1,3 +1,13 @@
+### **c0d22838** — template:4 — `Update hook logs and cycle state``
+
+**Template:**
+  - .claude/hooks.log
+  - .claude/hooks/.last-news-context
+  - .claude/state/cycle.json
+  - one/events/0-changes.md
+
+
+
 ### **be3a36c8** — template:5 — `Enhance chart demo with compelling business metrics``
 
 **Template:**

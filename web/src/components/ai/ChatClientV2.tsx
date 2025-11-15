@@ -135,7 +135,7 @@ const DEMO_CATEGORIES = {
 const DEMO_SUGGESTIONS = [
   {
     id: 'chart',
-    prompt: "📊 Generate a sales chart (demo)",
+    prompt: "Show me beautiful conversion rate charts comparing AI chat vs traditional forms. Include: 1) Sales funnel showing drop-off at each stage (Landing → Engagement → Qualification → Demo → Closed Won), 2) Upsell success rates (Basic → Pro → Enterprise → Annual), 3) Code to production deployment timeline with Cloudflare, and 4) Edge performance metrics (response time + requests/sec). Make the charts visually stunning with clear comparisons showing AI chat crushing traditional forms.",
     title: "Charts",
     description: "Create interactive visualizations",
     category: 'data-viz',
@@ -435,11 +435,12 @@ const DEMO_RESPONSES: Record<string, ExtendedMessage[]> = {
       payload: {
         component: 'chart',
         data: {
-          title: 'AI Chat vs Forms: Conversion Rate Comparison',
+          title: 'Sales Funnel: AI Chat vs Traditional Forms',
           chartType: 'bar',
-          labels: ['AI Chat', 'Traditional Form'],
+          labels: ['Landing Page', 'Engagement', 'Qualification', 'Demo Request', 'Closed Won'],
           datasets: [
-            { label: 'Conversion Rate (%)', data: [67, 23], color: '#10b981' }
+            { label: 'AI Chat', data: [100, 82, 67, 54, 38], color: '#10b981' },
+            { label: 'Traditional Form', data: [100, 34, 23, 12, 5], color: '#94a3b8' }
           ]
         }
       },
@@ -453,12 +454,12 @@ const DEMO_RESPONSES: Record<string, ExtendedMessage[]> = {
       payload: {
         component: 'chart',
         data: {
-          title: 'Monthly Revenue Growth: AI Chat Implementation',
-          chartType: 'line',
-          labels: ['Month 1', 'Month 2', 'Month 3', 'Month 4', 'Month 5', 'Month 6'],
+          title: 'Upsell & Cross-sell Success Rate',
+          chartType: 'bar',
+          labels: ['Basic Plan', 'Pro Plan Upsell', 'Enterprise Add-ons', 'Annual Commitment'],
           datasets: [
-            { label: 'With AI Chat', data: [45000, 67000, 89000, 112000, 138000, 165000], color: '#3b82f6' },
-            { label: 'Traditional Forms', data: [45000, 49000, 52000, 55000, 58000, 61000], color: '#94a3b8' }
+            { label: 'AI Chat Conversational', data: [100, 68, 42, 73], color: '#3b82f6' },
+            { label: 'Traditional Forms', data: [100, 22, 8, 31], color: '#94a3b8' }
           ]
         }
       },
@@ -472,12 +473,11 @@ const DEMO_RESPONSES: Record<string, ExtendedMessage[]> = {
       payload: {
         component: 'chart',
         data: {
-          title: 'User Engagement Metrics',
-          chartType: 'bar',
-          labels: ['Time on Page', 'Questions Asked', 'Pages Viewed', 'Completion Rate'],
+          title: 'Code to Production: Deployment Pipeline',
+          chartType: 'line',
+          labels: ['Code Push', 'Build Start', 'Tests Pass', 'Cloudflare Deploy', 'Live Traffic'],
           datasets: [
-            { label: 'AI Chat', data: [8.5, 12, 5.2, 67], color: '#8b5cf6' },
-            { label: 'Forms', data: [2.1, 0, 1.3, 23], color: '#94a3b8' }
+            { label: 'Deployment Time (seconds)', data: [0, 12, 45, 67, 89], color: '#f59e0b' }
           ]
         }
       },
@@ -491,11 +491,12 @@ const DEMO_RESPONSES: Record<string, ExtendedMessage[]> = {
       payload: {
         component: 'chart',
         data: {
-          title: 'Lead Quality Distribution',
-          chartType: 'doughnut',
-          labels: ['Hot Leads', 'Warm Leads', 'Cold Leads', 'Unqualified'],
+          title: 'Cloudflare Edge Performance',
+          chartType: 'line',
+          labels: ['0s', '10s', '20s', '30s', '40s', '50s', '60s'],
           datasets: [
-            { label: 'AI Chat Leads', data: [45, 35, 15, 5], color: '#f59e0b' }
+            { label: 'Response Time (ms)', data: [8, 9, 7, 8, 9, 8, 7], color: '#8b5cf6' },
+            { label: 'Requests/sec', data: [1200, 1450, 1380, 1520, 1490, 1560, 1610], color: '#3b82f6' }
           ]
         }
       },
@@ -504,7 +505,7 @@ const DEMO_RESPONSES: Record<string, ExtendedMessage[]> = {
     {
       id: 'demo-text',
       role: 'assistant',
-      content: '🚀 **AI Chat crushes traditional forms in every metric:**\n\n✅ **2.9x higher conversion rate** (67% vs 23%)\n✅ **170% revenue growth** in 6 months\n✅ **4x longer engagement** (8.5min vs 2.1min)\n✅ **45% hot leads** with AI vs scattered form submissions\n\nAI chat doesn\'t just collect data—it qualifies, educates, and converts visitors into customers through natural conversation. Traditional forms? They just sit there waiting to be ignored.\n\n**The future of conversion is conversational.** 💬',
+      content: '🚀 **Conversion Funnel Analysis:**\n\n📊 **AI Chat crushes every funnel stage:**\n✅ **7.6x better closed-won rate** (38% vs 5%)\n✅ **68% upsell success** vs 22% with forms\n✅ **3.1x higher cross-sell** on add-ons\n✅ **2.4x annual commitment rate**\n\n⚡ **Deployment Pipeline:**\n✅ **89 seconds** from code to production\n✅ **Cloudflare Edge** delivers <10ms response times\n✅ **1,500+ req/sec** with zero performance degradation\n\n**AI chat doesn\'t just convert better—it tracks, analyzes, and optimizes every step from visitor to customer to champion.** The data speaks for itself. 📈',
       type: 'text',
       timestamp: Date.now(),
     }
@@ -812,7 +813,13 @@ export function ChatClientV2() {
     const messageLower = text.toLowerCase();
     let demoKey: string | null = null;
 
-    if (messageLower.includes('(demo)')) {
+    // Check for conversion charts request
+    if (messageLower.includes('conversion rate charts') ||
+        (messageLower.includes('sales funnel') && messageLower.includes('upsell'))) {
+      demoKey = 'sales chart';
+    }
+    // Check for other demo requests
+    else if (messageLower.includes('(demo)')) {
       for (const key of Object.keys(DEMO_RESPONSES)) {
         if (messageLower.includes(key)) {
           demoKey = key;
