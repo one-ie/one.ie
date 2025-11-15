@@ -64,18 +64,16 @@ export function FeaturedPodcast({
 
         {/* Audio Player */}
         <div className="mb-8">
-          <VideoPlayer
-            src={audioUrl}
-            title={title}
-            type="audio"
-            autoplay={false}
-            muted={false}
-            chapters={chapters}
-            videoId={slug}
-            enableProgressTracking={true}
-            enableTimestampSharing={true}
-            client:load
-          />
+          <div className="w-full max-w-4xl mx-auto">
+            <audio
+              controls
+              className="w-full rounded-lg shadow-lg bg-card border"
+              preload="metadata"
+            >
+              <source src={audioUrl} type="audio/mpeg" />
+              Your browser does not support the audio element.
+            </audio>
+          </div>
         </div>
 
         {/* CTA Button */}

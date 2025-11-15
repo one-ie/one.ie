@@ -301,7 +301,6 @@ export class KnowledgeService {
       // Filter out self
       return results.filter((k) => k._id !== knowledgeId);
     });
-}
 
   /**
    * Perform RAG search for AI agents
@@ -436,3 +435,4 @@ export class KnowledgeService {
       };
     });
 }
+

@@ -1,3 +1,26 @@
+### **25e3680d** — template:17 — `AI Chat``
+
+**Template:**
+  - .claude/hooks.log
+  - .claude/hooks/.last-news-context
+  - .claude/state/cycle.json
+  - one/events/0-changes.md
+  - one/things/plans/video-frontend.md
+  - web/package.json
+  - web/src/components/ai/ChatClientV2.tsx
+  - web/src/components/ai/examples/shimmer.tsx
+  - web/src/components/ai/examples/task.tsx
+  - web/src/components/media/VideoPlayer.example.tsx
+  - web/src/components/media/VideoPlayer.tsx
+  - web/src/components/ui/item.tsx
+  - web/src/content/config.ts
+  - web/src/content/videos/one-platform-installation.md
+  - web/src/pages/videos.astro
+  - web/src/pages/videos/[slug].astro
+  - web/src/styles/global.css
+
+
+
 ### **c38e4775** — template:3 — `ONE``
 
 **Template:**

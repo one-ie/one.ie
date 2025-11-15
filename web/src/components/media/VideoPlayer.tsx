@@ -12,6 +12,7 @@ interface VideoPlayerProps {
 
   // Direct video URL support
   videoUrl?: string;
+  src?: string; // Alternative to videoUrl
 
   // Metadata
   title?: string;
@@ -19,11 +20,25 @@ interface VideoPlayerProps {
   poster?: string;
   className?: string;
 
+  // Media type
+  type?: 'video' | 'audio';
+
   // Player options
   autoplay?: boolean;
   muted?: boolean;
   loop?: boolean;
   aspectRatio?: string;
+
+  // Chapter support
+  chapters?: Array<{
+    startTime: number;
+    endTime?: number;
+    value: string;
+  }>;
+
+  // Features
+  enableProgressTracking?: boolean;
+  enableTimestampSharing?: boolean;
 
   // Tracking metadata
   viewerUserId?: string;

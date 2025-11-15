@@ -3,47 +3,65 @@
  * Video Detail Page - Dynamic Route
  *
  * Displays a single video with the VideoPlayer component.
- * Supports Mux, YouTube, and direct video URLs.
+ * Fetches video data from YouTube API using the video ID from the URL.
  *
  * Route: /videos/[slug]
- * Example: /videos/one-platform-installation
+ * Example: /videos/VguPAHfksEY (YouTube video ID)
  */
 
-import { getCollection, type CollectionEntry } from 'astro:content';
 import Layout from '@/layouts/Layout.astro';
 import { VideoPlayer } from '@/components/media/VideoPlayer';
+import { fetchYouTubeVideo, fetchYouTubeVideos } from '@/services/youtube';
 
-// Generate static paths for all videos
+// Get YouTube API credentials
+const YOUTUBE_API_KEY = import.meta.env.YOUTUBE_API_KEY;
+const YOUTUBE_CHANNEL_ID = import.meta.env.YOUTUBE_CHANNEL_ID;
+
+// Generate static paths for all videos from YouTube
 export async function getStaticPaths() {
-  const videos = await getCollection('videos');
+  const YOUTUBE_API_KEY = import.meta.env.YOUTUBE_API_KEY;
+  const YOUTUBE_CHANNEL_ID = import.meta.env.YOUTUBE_CHANNEL_ID;
 
-  return videos.map(video => ({
-    params: { slug: video.slug },
-    props: { video }
-  }));
-}
-
-// Get video data from props
-const { video } = Astro.props;
-
-// In dev mode, if video is not in props, fetch it from collection
-if (!video) {
-  const videos = await getCollection('videos');
-  const currentVideo = videos.find(v => v.slug === Astro.params.slug);
-
-  if (!currentVideo) {
-    return Astro.redirect('/videos');
+  if (!YOUTUBE_API_KEY || !YOUTUBE_CHANNEL_ID) {
+    console.warn('YouTube API credentials not configured');
+    return [];
   }
 
-  // Re-assign to use below
-  Astro.props.video = currentVideo;
+  try {
+    const videos = await fetchYouTubeVideos(YOUTUBE_API_KEY, YOUTUBE_CHANNEL_ID, 50);
+
+    return videos.map(video => ({
+      params: { slug: video.id },
+      props: { video }
+    }));
+  } catch (error) {
+    console.error('Error fetching videos for static paths:', error);
+    return [];
+  }
 }
 
-const videoData = video || Astro.props.video;
+// Get video ID from URL params
+const videoId = Astro.params.slug;
+
+// Try to get video from props first (build time), otherwise fetch (dev mode)
+let videoData = Astro.props.video;
+
+if (!videoData && YOUTUBE_API_KEY) {
+  try {
+    videoData = await fetchYouTubeVideo(YOUTUBE_API_KEY, videoId);
+  } catch (error) {
+    console.error('Error fetching video:', error);
+  }
+}
+
+// If no video found, redirect to videos page
+if (!videoData) {
+  return Astro.redirect('/videos');
+}
 
 // Page metadata
-const pageTitle = `${videoData.data.title} - ONE Platform`;
-const pageDescription = videoData.data.description;
+const pageTitle = `${videoData.title} - ONE Platform`;
+const pageDescription = videoData.description;
 ---
 
 <Layout
@@ -78,13 +96,10 @@ const pageDescription = videoData.data.description;
     <!-- Video Player -->
     <div class="mb-6 sm:mb-8">
       <VideoPlayer
-        playbackId={videoData.data.playbackId}
-        muxAssetId={videoData.data.muxAssetId}
-        youtubeId={videoData.data.youtubeId}
-        videoUrl={videoData.data.videoUrl}
-        title={videoData.data.title}
-        videoId={videoData.slug}
-        poster={videoData.data.thumbnail}
+        youtubeId={videoData.id}
+        title={videoData.title}
+        videoId={videoData.id}
+        poster={videoData.thumbnail}
         aspectRatio="16/9"
         client:load
       />
@@ -95,32 +110,39 @@ const pageDescription = videoData.data.description;
       <!-- Title and Author -->
       <div>
         <h1 class="text-2xl sm:text-3xl lg:text-4xl font-bold mb-2 sm:mb-3">
-          {videoData.data.title}
+          {videoData.title}
         </h1>
         <div class="flex flex-wrap items-center gap-3 text-sm sm:text-base text-muted-foreground">
-          {videoData.data.author && (
-            <span class="font-medium">{videoData.data.author}</span>
+          {videoData.channelTitle && (
+            <span class="font-medium">{videoData.channelTitle}</span>
           )}
           <span>•</span>
-          <time datetime={videoData.data.publishedAt.toISOString()}>
-            {videoData.data.publishedAt.toLocaleDateString('en-US', {
+          <time datetime={videoData.publishedAt.toISOString()}>
+            {videoData.publishedAt.toLocaleDateString('en-US', {
               year: 'numeric',
               month: 'long',
               day: 'numeric'
             })}
           </time>
+          {videoData.viewCount > 0 && (
+            <>
+              <span>•</span>
+              <span>{videoData.viewCount.toLocaleString()} views</span>
+            </>
+          )}
+          {videoData.likeCount > 0 && (
+            <>
+              <span>•</span>
+              <span>{videoData.likeCount.toLocaleString()} likes</span>
+            </>
+          )}
         </div>
       </div>
 
-      <!-- Categories and Tags -->
-      {(videoData.data.categories.length > 0 || videoData.data.tags.length > 0) && (
+      <!-- Tags -->
+      {videoData.tags && videoData.tags.length > 0 && (
         <div class="flex flex-wrap gap-2">
-          {videoData.data.categories.map(category => (
-            <span class="inline-flex items-center rounded-md border px-2.5 py-0.5 text-xs font-semibold transition-colors focus:outline-none focus:ring-2 focus:ring-ring focus:ring-offset-2 border-transparent bg-primary text-primary-foreground hover:bg-primary/80">
-              {category}
-            </span>
-          ))}
-          {videoData.data.tags.map(tag => (
+          {videoData.tags.slice(0, 10).map(tag => (
             <span class="inline-flex items-center rounded-md border px-2.5 py-0.5 text-xs font-semibold transition-colors focus:outline-none focus:ring-2 focus:ring-ring focus:ring-offset-2 border-transparent bg-secondary text-secondary-foreground hover:bg-secondary/80">
               {tag}
             </span>
@@ -130,17 +152,10 @@ const pageDescription = videoData.data.description;
 
       <!-- Description -->
       <div class="prose prose-lg dark:prose-invert max-w-none">
-        <p class="text-base sm:text-lg leading-relaxed">
-          {videoData.data.description}
+        <p class="text-base sm:text-lg leading-relaxed whitespace-pre-line">
+          {videoData.description}
         </p>
       </div>
-
-      <!-- Video Content (Markdown) -->
-      {videoData.body && (
-        <div class="prose prose-lg dark:prose-invert max-w-none border-t pt-6 sm:pt-8">
-          <div set:html={videoData.body} />
-        </div>
-      )}
     </div>
   </div>
 </Layout>
