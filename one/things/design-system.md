@@ -18,72 +18,431 @@ ONE Platform's design system is built on **6 extractable color tokens** that cre
 
 ---
 
-## The 6 Color Tokens
+## The 6 Color Tokens + Design Properties
 
-### Token Reference
+Every visual aspect of the platform is defined by these design tokens. Extract 6 colors from any website, apply universally.
 
-| Token | Purpose | Light Mode | Dark Mode |
-|-------|---------|------------|-----------|
-| **background** | Card surface, sidebar color | `0 0% 93%` (gray) | `0 0% 10%` (dark gray) |
-| **foreground** | Content area inside card | `0 0% 100%` (white) | `0 0% 13%` (dark) |
-| **font** | Text color, readable in both modes | `0 0% 13%` (dark) | `0 0% 100%` (white) |
-| **primary** | Main CTA, buttons | `216 55% 25%` (blue) | `216 55% 25%` |
-| **secondary** | Supporting actions | `219 14% 28%` (gray-blue) | `219 14% 28%` |
-| **tertiary** | Accent color (was "accent") | `105 22% 25%` (green) | `105 22% 25%` |
+### Complete Design System
+
+| Property | Values | Light Mode | Dark Mode | Purpose |
+|----------|--------|------------|-----------|---------|
+| **background** | HSL color | `0 0% 93%` (gray) | `0 0% 10%` (dark gray) | Card surface, sidebar, page background |
+| **foreground** | HSL color | `0 0% 100%` (white) | `0 0% 13%` (dark) | Content area inside cards, elevated surfaces |
+| **font** | HSL color | `0 0% 13%` (dark) | `0 0% 100%` (white) | All text, icons, readable in both modes |
+| **primary** | HSL color | `216 55% 25%` (blue) | `216 55% 25%` | Main CTA buttons, links, active states |
+| **secondary** | HSL color | `219 14% 28%` (gray-blue) | `219 14% 28%` | Supporting actions, secondary buttons |
+| **tertiary** | HSL color | `105 22% 25%` (green) | `105 22% 25%` | Accent highlights, success states, badges |
+| **states** | Opacity + scale | hover: `opacity-90 scale-[1.02]`<br/>active: `opacity-80 scale-[0.98]`<br/>focus: `ring-2 ring-primary-dark`<br/>disabled: `opacity-50 cursor-not-allowed` | Same | Button/interactive states, consistent across all components |
+| **elevation** | Shadow layers | none: `shadow-none`<br/>sm: `shadow-sm` (cards)<br/>md: `shadow-md` (dropdowns)<br/>lg: `shadow-lg` (modals)<br/>xl: `shadow-xl` (popovers) | Subtle in dark mode | Depth hierarchy, component stacking |
+| **radius** | Border radius | sm: `0.375rem` (6px)<br/>md: `0.5rem` (8px) - default<br/>lg: `0.75rem` (12px)<br/>xl: `1rem` (16px)<br/>full: `9999px` (pills) | Same | Consistent corner rounding, brand personality |
+| **motion** | Animation timing | instant: `duration-0`<br/>fast: `duration-150` (hovers)<br/>normal: `duration-300` (default)<br/>slow: `duration-500` (page transitions)<br/>easing: `ease-in-out` | Same | Smooth, natural interactions, never jarring |
 
 **Color Format:** HSL values in format `H S% L%` (Hue Saturation Lightness)
 
-**Auto-Generated Variants:** System automatically creates:
-- `primary-light`, `primary-dark`
+**Auto-Generated Variants:** System creates color shades automatically:
+- `primary-light` (10% lighter), `primary-dark` (10% darker)
 - `secondary-light`, `secondary-dark`
 - `tertiary-light`, `tertiary-dark`
-- `ring` color (defaults to `primary-dark`)
+- `ring` color (defaults to `primary-dark` for focus states)
 
 ---
 
-## Component Mapping
+## Component Architecture
 
-### Cards (shadcn Card Component)
+Every component on the platform follows these design rules. No exceptions. No custom styling.
 
-Cards use **background/foreground** tokens:
+### Cards (Foundation of Everything)
 
+Cards are the **primary container** for all content. Every product, course, agent, and piece of content lives in a card.
+
+**Visual Structure:**
 ```
-┌─────────────────────────────────────┐
-│  Card Surface (background)          │
-│  ┌───────────────────────────────┐  │
-│  │ Content Area (foreground)     │  │
-│  │                               │  │
-│  │ Text uses font color          │  │
-│  │                               │  │
-│  └───────────────────────────────┘  │
-└─────────────────────────────────────┘
+┌─────────────────────────────────────────────────────────┐
+│  Card Surface (background)                              │
+│  - Uses background color (gray in light, dark in dark)  │
+│  - Padding: 4px (p-1) creates the "frame"               │
+│  - Shadow: shadow-sm for subtle elevation               │
+│  - Radius: rounded-md (8px) for soft edges              │
+│  ┌─────────────────────────────────────────────────┐   │
+│  │ Content Area (foreground)                       │   │
+│  │ - Uses foreground color (white/dark)            │   │
+│  │ - Padding: 16px (p-4) for breathing room        │   │
+│  │ - Radius: rounded-md (8px) matches outer        │   │
+│  │                                                  │   │
+│  │ Heading (font color)                            │   │
+│  │ Description text (font color, opacity-80)       │   │
+│  │                                                  │   │
+│  │ [Primary Button] [Secondary Button]             │   │
+│  └─────────────────────────────────────────────────┘   │
+└─────────────────────────────────────────────────────────┘
 ```
 
-**Example:** Product card
-- Outer card surface: `background` (gray in light mode)
-- Inner content area: `foreground` (white in light mode)
-- Text: `font` (dark in light mode, white in dark mode)
-
-### Buttons (shadcn Button Component)
-
-Buttons use **primary/secondary/tertiary** tokens:
-
-| Variant | Token Used | Use Case |
-|---------|------------|----------|
-| **Primary** | `primary` | Main CTA (Purchase, Start, Join) |
-| **Secondary** | `secondary` | Supporting actions (Learn More, View Details) |
-| **Tertiary** | `tertiary` | Accent actions (Special offers, highlights) |
-| **Outline** | `font` (border only) | Neutral variant, no fill |
-| **Ghost** | `font` (hover only) | Minimal variant, transparent |
-
-**Visual Reference:**
-
+**Implementation Pattern:**
+```tsx
+<Card className="bg-background p-1 shadow-sm rounded-md">
+  <CardContent className="bg-foreground p-4 rounded-md">
+    <h3 className="text-font font-semibold text-lg">Card Title</h3>
+    <p className="text-font opacity-80 text-sm">Card description</p>
+    <div className="flex gap-2 mt-4">
+      <Button variant="primary">Main Action</Button>
+      <Button variant="secondary">Secondary</Button>
+    </div>
+  </CardContent>
+</Card>
 ```
-Primary Button     ← Uses primary color
-Secondary Button   ← Uses secondary color
-Tertiary Button    ← Uses tertiary color
-Outline Button     ← Uses font color (border only)
-Ghost Button       ← Uses font color (hover only)
+
+**Card Variants:**
+- **Default:** `shadow-sm` - Standard cards (products, courses)
+- **Elevated:** `shadow-md` - Important cards (featured products)
+- **Floating:** `shadow-lg` - Modal dialogs, popovers
+- **Flat:** `shadow-none` - Nested cards, list items
+
+**Spacing System:**
+- Outer padding: `p-1` (4px frame)
+- Inner padding: `p-4` (16px content)
+- Gap between cards: `gap-4` (16px)
+- Grid layouts: `grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4`
+
+### Buttons (All Actions Flow Through These)
+
+Buttons are the **primary interaction** mechanism. Every purchase, signup, navigation, and action uses these exact variants.
+
+**Button Variants Matrix:**
+
+| Variant | Background | Text | Border | States | Use Case |
+|---------|------------|------|--------|--------|----------|
+| **primary** | `bg-primary` | White | None | hover: `opacity-90 scale-[1.02]`<br/>active: `opacity-80 scale-[0.98]`<br/>focus: `ring-2 ring-primary-dark` | Main CTA (Purchase, Start, Join Now) |
+| **secondary** | `bg-secondary` | White | None | Same as primary | Supporting actions (Learn More, View Details) |
+| **tertiary** | `bg-tertiary` | White | None | Same as primary | Accent actions (Special Offer, Bonus Feature) |
+| **outline** | Transparent | `text-font` | `border-font` | hover: `bg-font/10` | Neutral actions (Cancel, Go Back) |
+| **ghost** | Transparent | `text-font` | None | hover: `bg-font/10` | Minimal actions (Menu items, subtle links) |
+| **link** | Transparent | `text-primary` | None | hover: `underline` | Text links, navigation |
+
+**Size Scale:**
+- **sm:** `h-8 px-3 text-xs` - Compact buttons (table actions, inline controls)
+- **md:** `h-10 px-4 text-sm` - Default size (most buttons)
+- **lg:** `h-12 px-6 text-base` - Prominent CTAs (main purchase buttons)
+- **xl:** `h-14 px-8 text-lg` - Hero CTAs (landing page actions)
+- **icon:** `h-10 w-10` - Square icon buttons (no padding)
+
+**Implementation Pattern:**
+```tsx
+// Primary CTA - Most important action
+<Button variant="primary" size="lg">
+  Purchase Now
+</Button>
+
+// Secondary - Supporting action
+<Button variant="secondary" size="md">
+  Learn More
+</Button>
+
+// Tertiary - Special accent
+<Button variant="tertiary" size="md">
+  🎁 Limited Offer
+</Button>
+
+// Outline - Neutral action
+<Button variant="outline" size="md">
+  Cancel
+</Button>
+
+// Ghost - Minimal action
+<Button variant="ghost" size="sm">
+  View Details
+</Button>
+```
+
+**Button States (All Variants):**
+```css
+/* Default state */
+button {
+  transition: all 150ms ease-in-out;
+  cursor: pointer;
+}
+
+/* Hover state */
+button:hover {
+  opacity: 0.9;
+  transform: scale(1.02);
+}
+
+/* Active state (clicking) */
+button:active {
+  opacity: 0.8;
+  transform: scale(0.98);
+}
+
+/* Focus state (keyboard navigation) */
+button:focus-visible {
+  outline: none;
+  ring: 2px;
+  ring-color: var(--primary-dark);
+  ring-offset: 2px;
+}
+
+/* Disabled state */
+button:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+  transform: none;
+}
+```
+
+**Button Groups:**
+```tsx
+// Horizontal group
+<div className="flex gap-2">
+  <Button variant="primary">Save</Button>
+  <Button variant="outline">Cancel</Button>
+</div>
+
+// Vertical stack
+<div className="flex flex-col gap-2">
+  <Button variant="primary" className="w-full">Primary Action</Button>
+  <Button variant="secondary" className="w-full">Secondary Action</Button>
+</div>
+```
+
+### Typography (Hierarchy Through Size + Weight)
+
+All text uses the `font` color token. Hierarchy is established through size and weight, not color.
+
+**Type Scale:**
+
+| Element | Size | Weight | Line Height | Use Case |
+|---------|------|--------|-------------|----------|
+| **h1** | `text-4xl` (36px) | `font-bold` (700) | `leading-tight` (1.25) | Page titles, hero headings |
+| **h2** | `text-3xl` (30px) | `font-bold` (700) | `leading-tight` | Section headings |
+| **h3** | `text-2xl` (24px) | `font-semibold` (600) | `leading-snug` (1.375) | Card titles, subsections |
+| **h4** | `text-xl` (20px) | `font-semibold` (600) | `leading-snug` | Component headings |
+| **h5** | `text-lg` (18px) | `font-medium` (500) | `leading-normal` (1.5) | Small headings |
+| **body** | `text-base` (16px) | `font-normal` (400) | `leading-relaxed` (1.625) | Paragraph text, default |
+| **small** | `text-sm` (14px) | `font-normal` (400) | `leading-relaxed` | Descriptions, metadata |
+| **xs** | `text-xs` (12px) | `font-normal` (400) | `leading-normal` | Labels, captions, fine print |
+
+**Font Family:**
+```css
+:root {
+  --font-sans: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+  --font-mono: 'Fira Code', 'Cascadia Code', Consolas, monospace;
+}
+```
+
+**Implementation Pattern:**
+```tsx
+<div className="space-y-4">
+  <h1 className="text-4xl font-bold text-font">Page Title</h1>
+  <h2 className="text-3xl font-bold text-font">Section Heading</h2>
+  <h3 className="text-2xl font-semibold text-font">Card Title</h3>
+  <p className="text-base text-font leading-relaxed">
+    Body paragraph text with comfortable reading line height.
+  </p>
+  <p className="text-sm text-font opacity-80">
+    Secondary text with reduced opacity for hierarchy.
+  </p>
+</div>
+```
+
+**Text Utilities:**
+```css
+.text-muted     { opacity: 0.8; }   /* Secondary text */
+.text-subtle    { opacity: 0.6; }   /* Tertiary text */
+.text-disabled  { opacity: 0.5; }   /* Disabled text */
+```
+
+### Layout (Grid + Stack Everything)
+
+The platform uses **CSS Grid** for layouts and **Flexbox** for components. No floats, no absolute positioning.
+
+**Page Layout Structure:**
+```tsx
+<div className="min-h-screen bg-background">
+  {/* Header */}
+  <header className="sticky top-0 z-50 bg-foreground shadow-sm">
+    <div className="container mx-auto px-4 py-4">
+      {/* Navigation */}
+    </div>
+  </header>
+
+  {/* Main content */}
+  <main className="container mx-auto px-4 py-8">
+    <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+      {/* Cards go here */}
+    </div>
+  </main>
+
+  {/* Footer */}
+  <footer className="bg-foreground mt-16 py-8">
+    <div className="container mx-auto px-4">
+      {/* Footer content */}
+    </div>
+  </footer>
+</div>
+```
+
+**Grid System:**
+```tsx
+// 1-column (mobile)
+<div className="grid grid-cols-1 gap-4">
+
+// 2-column (tablet)
+<div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+
+// 3-column (desktop)
+<div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+
+// 4-column (wide desktop)
+<div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4">
+
+// Sidebar layout
+<div className="grid grid-cols-1 lg:grid-cols-[300px_1fr] gap-4">
+  <aside>Sidebar</aside>
+  <main>Content</main>
+</div>
+```
+
+**Container Widths:**
+```css
+.container {
+  max-width: 1280px;    /* Default max width */
+  margin: 0 auto;       /* Center horizontally */
+  padding: 0 1rem;      /* Horizontal padding */
+}
+
+/* Responsive breakpoints */
+sm: 640px   /* Mobile landscape */
+md: 768px   /* Tablet */
+lg: 1024px  /* Desktop */
+xl: 1280px  /* Wide desktop */
+2xl: 1536px /* Ultra-wide */
+```
+
+**Spacing Scale:**
+```css
+gap-1: 4px    /* Tight spacing */
+gap-2: 8px    /* Small spacing */
+gap-4: 16px   /* Default spacing */
+gap-6: 24px   /* Medium spacing */
+gap-8: 32px   /* Large spacing */
+gap-12: 48px  /* XL spacing */
+gap-16: 64px  /* XXL spacing */
+```
+
+### Forms (Input = Card Pattern)
+
+Forms follow the same card pattern as everything else. Every input lives in a foreground surface.
+
+**Form Structure:**
+```tsx
+<form className="space-y-6">
+  {/* Text input */}
+  <div className="space-y-2">
+    <label className="text-sm font-medium text-font">
+      Email Address
+    </label>
+    <input
+      type="email"
+      className="w-full h-10 px-3 bg-foreground text-font border border-font/20 rounded-md
+                 focus:ring-2 focus:ring-primary-dark focus:border-transparent
+                 transition-all duration-150"
+      placeholder="you@example.com"
+    />
+  </div>
+
+  {/* Textarea */}
+  <div className="space-y-2">
+    <label className="text-sm font-medium text-font">
+      Description
+    </label>
+    <textarea
+      className="w-full min-h-[120px] px-3 py-2 bg-foreground text-font border border-font/20 rounded-md
+                 focus:ring-2 focus:ring-primary-dark focus:border-transparent
+                 transition-all duration-150"
+      placeholder="Enter description..."
+    />
+  </div>
+
+  {/* Select dropdown */}
+  <div className="space-y-2">
+    <label className="text-sm font-medium text-font">
+      Category
+    </label>
+    <select className="w-full h-10 px-3 bg-foreground text-font border border-font/20 rounded-md
+                       focus:ring-2 focus:ring-primary-dark focus:border-transparent">
+      <option>Choose option...</option>
+      <option>Product</option>
+      <option>Course</option>
+    </select>
+  </div>
+
+  {/* Checkbox */}
+  <div className="flex items-center gap-2">
+    <input
+      type="checkbox"
+      id="terms"
+      className="w-4 h-4 text-primary bg-foreground border-font/20 rounded
+                 focus:ring-2 focus:ring-primary-dark"
+    />
+    <label htmlFor="terms" className="text-sm text-font">
+      I agree to the terms and conditions
+    </label>
+  </div>
+
+  {/* Submit button */}
+  <div className="flex gap-2">
+    <Button type="submit" variant="primary">Save Changes</Button>
+    <Button type="button" variant="outline">Cancel</Button>
+  </div>
+</form>
+```
+
+**Input States:**
+```css
+/* Default state */
+input {
+  border: 1px solid hsl(var(--font) / 0.2);
+  transition: all 150ms ease-in-out;
+}
+
+/* Focus state */
+input:focus {
+  outline: none;
+  ring: 2px;
+  ring-color: var(--primary-dark);
+  border-color: transparent;
+}
+
+/* Error state */
+input.error {
+  border-color: hsl(0, 84%, 60%);
+  ring-color: hsl(0, 84%, 60%);
+}
+
+/* Disabled state */
+input:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+  background: hsl(var(--background));
+}
+```
+
+**Form Validation:**
+```tsx
+// Error message component
+<div className="space-y-2">
+  <label className="text-sm font-medium text-font">Email</label>
+  <input
+    type="email"
+    className="w-full h-10 px-3 bg-foreground text-font border border-red-500 rounded-md"
+  />
+  <p className="text-xs text-red-500">Please enter a valid email address</p>
+</div>
+
+// Success message
+<div className="p-4 bg-green-50 border border-green-200 rounded-md">
+  <p className="text-sm text-green-800">Form submitted successfully!</p>
+</div>
 ```
 
 ---
@@ -456,12 +815,18 @@ export default {
 ## Version History
 
 **1.0.0 (2025-11-16)**
-- Initial specification
-- 6 core color tokens defined
-- Thing-level override system
-- Component mapping (cards + buttons)
+- Complete design system specification
+- 6 core color tokens + 4 design properties (states, elevation, radius, motion)
+- Comprehensive component architecture:
+  - Cards (foundation of everything)
+  - Buttons (6 variants with full state system)
+  - Typography (8-level type scale)
+  - Layout (grid + responsive breakpoints)
+  - Forms (input states + validation)
+- Thing-level override system (optional)
 - Migration guide from old tokens
+- Complete implementation patterns with code examples
 
 ---
 
-**The 6 extractable colors. Extract from any website. Map to these 6 tokens. Apply everywhere.**
+**The 6 extractable colors + design properties. Extract from any website. Apply everywhere. Beautiful by default.**

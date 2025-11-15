@@ -1,5 +1,5 @@
 import * as React from "react"
-import { PanelLeft, Newspaper, Shield, ChevronsUpDown, LogOut, UserPlus, LogIn, LayoutDashboard, Settings, X, Github, Youtube, Code2, Bot, Download, Rocket, Database, ChevronDown, FileText, BarChart3, Link2 } from "lucide-react"
+import { PanelLeft, Newspaper, Shield, ChevronsUpDown, LogOut, UserPlus, LogIn, LayoutDashboard, Settings, X, Github, Youtube, Code2, Bot, Download, Rocket, Database, ChevronDown, FileText, BarChart3, Link2, MessageSquare } from "lucide-react"
 import { Button } from "@/components/ui/button"
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar"
 import { DropdownMenu, DropdownMenuContent, DropdownMenuGroup, DropdownMenuItem, DropdownMenuLabel, DropdownMenuSeparator, DropdownMenuTrigger } from "@/components/ui/dropdown-menu"
@@ -25,6 +25,7 @@ type NavItem = NavItemWithUrl | NavItemWithSubmenu
 
 const navItems: NavItem[] = [
   { title: 'News', url: '/news', icon: Newspaper },
+  { title: 'Chat', url: '/chat', icon: MessageSquare },
   {
     title: 'Projects',
     icon: BarChart3,
