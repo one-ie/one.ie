@@ -1,3 +1,111 @@
+### **407e4078** — template:102 — `Agent Sell``
+
+**Template:**
+  - .claude/state/cycle.json
+  - web/BUNDLE_OPTIMIZATION_GUIDE.md
+  - web/astro.config.mjs
+  - web/src/pages/404.astro
+  - web/src/pages/account/confirmation.astro
+  - web/src/pages/account/forgot-password.astro
+  - web/src/pages/account/index.astro
+  - web/src/pages/account/magic-link.astro
+  - web/src/pages/account/order-confirmation.astro
+  - web/src/pages/account/reset-password.astro
+  - web/src/pages/account/settings.astro
+  - web/src/pages/account/signin.astro
+  - web/src/pages/account/signup.astro
+  - web/src/pages/account/verify-email.astro
+  - web/src/pages/account/wishlist.astro
+  - web/src/pages/agents/[agentId].astro
+  - web/src/pages/agents/index.astro
+  - web/src/pages/agents1.astro
+  - web/src/pages/agentsss.astro
+  - web/src/pages/ai-chat.astro
+  - web/src/pages/ai.astro
+  - web/src/pages/app/index.astro
+  - web/src/pages/astro.astro
+  - web/src/pages/blog/index.astro
+  - web/src/pages/build-in-english.astro
+  - web/src/pages/cart.astro
+  - web/src/pages/chat/[threadId].astro
+  - web/src/pages/chat/chatgpt.astro
+  - web/src/pages/chat/claude.astro
+  - web/src/pages/chat/demo-ui.astro
+  - web/src/pages/chat/grok.astro
+  - web/src/pages/chat/index.astro
+  - web/src/pages/chat/premium-demo.astro
+  - web/src/pages/chat/simple.astro
+  - web/src/pages/chat/v0.astro
+  - web/src/pages/checkout-stripe.astro
+  - web/src/pages/checkout.astro
+  - web/src/pages/cli.astro
+  - web/src/pages/collections/index.astro
+  - web/src/pages/commerce-chat/CHATGPT_INTEGRATION.md
+  - web/src/pages/commerce-chat/analytics.astro
+  - web/src/pages/commerce-chat/checkout/[productId].astro
+  - web/src/pages/commerce-chat/demo.astro
+  - web/src/pages/commerce-chat/index.astro
+  - web/src/pages/components.astro
+  - web/src/pages/components/deployment-metrics.astro
+  - web/src/pages/connections-landing.astro
+  - web/src/pages/connections/index.astro
+  - web/src/pages/contact.astro
+  - web/src/pages/creators.astro
+  - web/src/pages/credits.astro
+  - web/src/pages/dashboard/ai-usage.astro
+  - web/src/pages/dashboard/index.astro
+  - web/src/pages/dashboard/things/[id].astro
+  - web/src/pages/dashboard/things/index.astro
+  - web/src/pages/demos/buy-in-chatgpt.astro
+  - web/src/pages/deploy.astro
+  - web/src/pages/design.astro
+  - web/src/pages/docs/index.astro
+  - web/src/pages/download.astro
+  - web/src/pages/enterprise.astro
+  - web/src/pages/examples/basic-chat.astro
+  - web/src/pages/features/index.astro
+  - web/src/pages/features1.astro
+  - web/src/pages/features2.astro
+  - web/src/pages/free-license.astro
+  - web/src/pages/index.astro
+  - web/src/pages/install.astro
+  - web/src/pages/landing.astro
+  - web/src/pages/language.astro
+  - web/src/pages/license.astro
+  - web/src/pages/mail.astro
+  - web/src/pages/news/index.astro
+  - web/src/pages/onboard/index.astro
+  - web/src/pages/onboard/signup.astro
+  - web/src/pages/ontology.astro
+  - web/src/pages/page.astro
+  - web/src/pages/pay-course.astro
+  - web/src/pages/pay-playbook.astro
+  - web/src/pages/plans/index.astro
+  - web/src/pages/podcasts/[...slug].astro
+  - web/src/pages/podcasts/index.astro
+  - web/src/pages/products/index.astro
+  - web/src/pages/projects/index.astro
+  - web/src/pages/readme.astro
+  - web/src/pages/safari.astro
+  - web/src/pages/shop copy.astro
+  - web/src/pages/shop.astro
+  - web/src/pages/shop/[productId].astro
+  - web/src/pages/shop/product-landing.astro
+  - web/src/pages/signup-choice.astro
+  - web/src/pages/software.astro
+  - web/src/pages/start.astro
+  - web/src/pages/test-videos.astro
+  - web/src/pages/test/integration.astro
+  - web/src/pages/thankyou-course.astro
+  - web/src/pages/thankyou-playbook.astro
+  - web/src/pages/thankyou-product.astro
+  - web/src/pages/upgrade.astro
+  - web/src/pages/videos.astro
+  - web/src/pages/videos/[slug].astro
+  - web/src/pages/websites.astro
+
+
+
 ### **c38e4775** — template:3 — `ONE``
 
 **Template:**
