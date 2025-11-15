@@ -84,9 +84,9 @@
 @theme {
   --color-background: 0 0% 100%;
   --color-foreground: 0 0% 13%;
-  --color-card: 36 10% 74%;
+  --color-card: 0 0% 93.3%;
   --color-card-foreground: 0 0% 13%;
-  --color-popover: 36 10% 74%;
+  --color-popover: 0 0% 93.3%;
   --color-popover-foreground: 0 0% 13%;
   --color-primary: 216 55% 25%;
   --color-primary-foreground: 36 8% 96%;
@@ -117,9 +117,13 @@
   --color-sidebar-ring: 216 63% 17%;
   --color-gold: 45 93% 47%;
   --color-gold-foreground: 0 0% 0%;
-  --radius-lg: 1.5rem;
-  --radius-md: 0.75rem;
-  --radius-sm: 0.375rem;
+  /* Border Radius Tokens - Modern Scale (2025) */
+  --radius-xs: 0.25rem;    /* 4px - Badges, chips, inline pills */
+  --radius-sm: 0.375rem;   /* 6px - Input fields, small buttons, tags */
+  --radius-md: 0.5rem;     /* 8px - Cards, primary buttons (OPTIMAL) */
+  --radius-lg: 0.75rem;    /* 12px - Modals, hero cards, feature sections */
+  --radius-xl: 1rem;       /* 16px - Large hero surfaces, landing sections */
+  --radius-full: 9999px;   /* Circular avatars, icon buttons */
 
   /* Product Landing Page Design Tokens */
   --spacing-section: 6rem;
