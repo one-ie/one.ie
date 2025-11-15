@@ -1,3 +1,12 @@
+### **1a6f8b26** — template:3 — `Update hook logs after ChatClientV2 simplification``
+
+**Template:**
+  - .claude/hooks.log
+  - .claude/hooks/.last-news-context
+  - one/events/0-changes.md
+
+
+
 ### **b4b77871** — template:5 — `Simplify ChatClientV2 demo cards and move API key button``
 
 **Template:**

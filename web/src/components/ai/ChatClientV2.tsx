@@ -136,7 +136,7 @@ const DEMO_SUGGESTIONS = [
   {
     id: 'chart',
     prompt: "📊 Generate a sales chart (demo)",
-    title: "Dynamic Charts",
+    title: "Charts",
     description: "Create interactive visualizations",
     category: 'data-viz',
     icon: LineChart,
@@ -146,7 +146,7 @@ const DEMO_SUGGESTIONS = [
   {
     id: 'table',
     prompt: "📋 Create a data table (demo)",
-    title: "Data Tables",
+    title: "Tables",
     description: "Structure data beautifully",
     category: 'data-viz',
     icon: Table,
@@ -428,19 +428,74 @@ const DEMO_RESPONSES: Record<string, ExtendedMessage[]> = {
   ],
   'sales chart': [
     {
-      id: 'demo-chart',
+      id: 'demo-chart-1',
       role: 'assistant',
       content: '',
       type: 'ui',
       payload: {
         component: 'chart',
         data: {
-          title: 'Monthly Sales Growth',
-          chartType: 'line',
-          labels: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun'],
+          title: 'AI Chat vs Forms: Conversion Rate Comparison',
+          chartType: 'bar',
+          labels: ['AI Chat', 'Traditional Form'],
           datasets: [
-            { label: 'Revenue', data: [12000, 15000, 18000, 22000, 25000, 30000], color: '#3b82f6' },
-            { label: 'Profit', data: [3000, 4500, 5400, 7700, 9000, 12000], color: '#10b981' }
+            { label: 'Conversion Rate (%)', data: [67, 23], color: '#10b981' }
+          ]
+        }
+      },
+      timestamp: Date.now(),
+    },
+    {
+      id: 'demo-chart-2',
+      role: 'assistant',
+      content: '',
+      type: 'ui',
+      payload: {
+        component: 'chart',
+        data: {
+          title: 'Monthly Revenue Growth: AI Chat Implementation',
+          chartType: 'line',
+          labels: ['Month 1', 'Month 2', 'Month 3', 'Month 4', 'Month 5', 'Month 6'],
+          datasets: [
+            { label: 'With AI Chat', data: [45000, 67000, 89000, 112000, 138000, 165000], color: '#3b82f6' },
+            { label: 'Traditional Forms', data: [45000, 49000, 52000, 55000, 58000, 61000], color: '#94a3b8' }
+          ]
+        }
+      },
+      timestamp: Date.now(),
+    },
+    {
+      id: 'demo-chart-3',
+      role: 'assistant',
+      content: '',
+      type: 'ui',
+      payload: {
+        component: 'chart',
+        data: {
+          title: 'User Engagement Metrics',
+          chartType: 'bar',
+          labels: ['Time on Page', 'Questions Asked', 'Pages Viewed', 'Completion Rate'],
+          datasets: [
+            { label: 'AI Chat', data: [8.5, 12, 5.2, 67], color: '#8b5cf6' },
+            { label: 'Forms', data: [2.1, 0, 1.3, 23], color: '#94a3b8' }
+          ]
+        }
+      },
+      timestamp: Date.now(),
+    },
+    {
+      id: 'demo-chart-4',
+      role: 'assistant',
+      content: '',
+      type: 'ui',
+      payload: {
+        component: 'chart',
+        data: {
+          title: 'Lead Quality Distribution',
+          chartType: 'doughnut',
+          labels: ['Hot Leads', 'Warm Leads', 'Cold Leads', 'Unqualified'],
+          datasets: [
+            { label: 'AI Chat Leads', data: [45, 35, 15, 5], color: '#f59e0b' }
           ]
         }
       },
@@ -449,7 +504,7 @@ const DEMO_RESPONSES: Record<string, ExtendedMessage[]> = {
     {
       id: 'demo-text',
       role: 'assistant',
-      content: 'Here\'s a dynamic chart showing sales growth! The AI can generate interactive visualizations to help you understand data better.',
+      content: '🚀 **AI Chat crushes traditional forms in every metric:**\n\n✅ **2.9x higher conversion rate** (67% vs 23%)\n✅ **170% revenue growth** in 6 months\n✅ **4x longer engagement** (8.5min vs 2.1min)\n✅ **45% hot leads** with AI vs scattered form submissions\n\nAI chat doesn\'t just collect data—it qualifies, educates, and converts visitors into customers through natural conversation. Traditional forms? They just sit there waiting to be ignored.\n\n**The future of conversion is conversational.** 💬',
       type: 'text',
       timestamp: Date.now(),
     }
@@ -543,7 +598,7 @@ const DEMO_RESPONSES: Record<string, ExtendedMessage[]> = {
   ]
 };
 
-// Demo suggestion card component - simplified
+// Demo suggestion card component - ultra minimal
 function DemoCard({
   suggestion,
   onSelect,
@@ -558,23 +613,18 @@ function DemoCard({
   return (
     <button
       className={cn(
-        "w-full p-4 rounded-lg border border-border bg-background",
+        "w-full p-3 rounded-lg border border-border bg-background",
         "hover:bg-accent hover:border-foreground/20 transition-colors",
-        "text-left cursor-pointer",
+        "cursor-pointer",
         isLocked && "opacity-60"
       )}
       onClick={() => !isLocked && onSelect(suggestion.prompt)}
     >
-      <div className="flex items-center gap-3">
-        <Icon className="w-5 h-5 text-foreground flex-shrink-0" />
-        <div className="flex-1 min-w-0">
-          <div className="font-medium text-sm text-foreground">
-            {suggestion.title}
-          </div>
-          <div className="text-xs text-muted-foreground mt-0.5">
-            {suggestion.description}
-          </div>
-        </div>
+      <div className="flex items-center gap-2.5">
+        <Icon className="w-4 h-4 text-foreground flex-shrink-0" />
+        <span className="font-medium text-sm text-foreground">
+          {suggestion.title}
+        </span>
       </div>
     </button>
   );
@@ -950,6 +1000,8 @@ export function ChatClientV2() {
     );
   };
 
+  const hasMessages = messages.length > 0;
+
   return (
     <div className="relative flex size-full flex-col overflow-hidden items-center justify-center bg-background">
       <style>{`
@@ -1003,6 +1055,21 @@ export function ChatClientV2() {
           font-weight: 600 !important;
           text-transform: uppercase !important;
           color: hsl(var(--muted-foreground)) !important;
+        }
+
+        /* Smooth transitions */
+        .input-container {
+          transition: all 0.6s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        .demo-cards {
+          transition: opacity 0.4s ease-out, transform 0.4s ease-out;
+        }
+
+        .demo-cards.hidden {
+          opacity: 0;
+          transform: translateY(20px);
+          pointer-events: none;
         }
       `}</style>
 
@@ -1111,46 +1178,241 @@ export function ChatClientV2() {
         </div>
       )}
 
-      {/* Messages Area - Centered with max-width */}
-      <Conversation className="w-full" initial="auto" resize="auto">
-        <ConversationContent className="max-w-3xl mx-auto px-4 pb-[200px]">
-          {messages.length === 0 && !isLoading ? (
-            <div className="flex flex-col items-center justify-center min-h-[80vh] space-y-8">
-              {/* Demo Cards Grid */}
-              <div className="w-full max-w-4xl">
-                {/* Demo cards grid */}
-                <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
-                  {DEMO_SUGGESTIONS.map((suggestion) => (
-                    <DemoCard
-                      key={suggestion.id}
-                      suggestion={suggestion}
-                      onSelect={handleDemoSelect}
-                      isLocked={false} // Everything works in free tier!
-                    />
+      {/* Messages Area - Only show when there are messages */}
+      {hasMessages && (
+        <Conversation className="w-full" initial="auto" resize="auto">
+          <ConversationContent className="max-w-3xl mx-auto px-4 pb-[200px]">
+            {messages.map(msg => renderMessage(msg))}
+            {isLoading && (
+              <div className="flex items-center gap-2 text-muted-foreground">
+                <Brain className="h-4 w-4 animate-pulse text-purple-500" />
+                <span className="text-sm">Thinking...</span>
+              </div>
+            )}
+            <div ref={messagesEndRef} />
+          </ConversationContent>
+          <ConversationScrollButton />
+        </Conversation>
+      )}
+
+      {/* Centered Layout - Empty State */}
+      {!hasMessages && (
+        <div className="flex flex-col items-center justify-center min-h-screen w-full px-4">
+          <div className="w-full max-w-2xl space-y-8 input-container">
+            {/* Centered Input */}
+            <div className="relative flex flex-col bg-[hsl(var(--color-sidebar))] rounded-2xl p-3 gap-3 focus-within:outline-none border-2 border-border">
+              {/* Text input area */}
+              <textarea
+                ref={textareaRef}
+                placeholder="Ask anything..."
+                className="w-full bg-transparent text-foreground placeholder:text-muted-foreground outline-none ring-0 focus:outline-none focus:ring-0 text-base resize-none min-h-[80px] px-2"
+                onKeyDown={(e) => {
+                  if (e.key === 'Enter' && !e.shiftKey) {
+                    e.preventDefault();
+                    const value = e.currentTarget.value.trim();
+                    if (value) {
+                      handleSubmit({ text: value, files: attachments } as any, e as any);
+                      e.currentTarget.value = '';
+                      setAttachments([]);
+                    }
+                  }
+                }}
+              />
+
+              {/* Attached files */}
+              {attachments.length > 0 && (
+                <div className="flex flex-wrap gap-2 px-2">
+                  {attachments.map((file, index) => (
+                    <div key={index} className="flex items-center gap-1 bg-zinc-700/50 rounded-lg px-2 py-1 text-xs text-zinc-300">
+                      <span>{file.name}</span>
+                      <button
+                        onClick={() => setAttachments(attachments.filter((_, i) => i !== index))}
+                        className="text-zinc-400 hover:text-zinc-200"
+                      >
+                        ✕
+                      </button>
+                    </div>
                   ))}
+                </div>
+              )}
+
+              {/* Enhanced button row */}
+              <div className="flex items-center justify-between gap-2">
+                <div className="flex items-center gap-1">
+                  {/* Attachment button */}
+                  <input
+                    type="file"
+                    id="file-input-center"
+                    multiple
+                    accept="image/*"
+                    className="hidden"
+                    onChange={(e) => {
+                      const files = Array.from(e.target.files || []);
+                      setAttachments(prev => [...prev, ...files]);
+                      e.target.value = '';
+                    }}
+                  />
+                  <Button
+                    variant="ghost"
+                    size="icon"
+                    className="h-9 w-9"
+                    onClick={() => document.getElementById('file-input-center')?.click()}
+                    title="Attach files"
+                  >
+                    <Plus className="h-4 w-4" />
+                  </Button>
+
+                  {/* Voice input */}
+                  <div className="inline-flex">
+                    <PromptInputSpeechButton
+                      textareaRef={textareaRef}
+                      onTranscriptionChange={handleTranscriptionChange}
+                      className="h-9 w-9"
+                    />
+                  </div>
+
+                  {/* Web search */}
+                  <Button
+                    variant="ghost"
+                    size="sm"
+                    className="gap-1.5"
+                    onClick={handleWebSearch}
+                    title="Search the web"
+                  >
+                    <GlobeIcon className="h-4 w-4" />
+                    <span className="hidden sm:inline">Search</span>
+                  </Button>
+                </div>
+
+                <div className="flex items-center gap-2">
+                  {/* Model selector */}
+                  <div className="flex items-center gap-2">
+                    <ModelSelector
+                      onOpenChange={setModelSelectorOpen}
+                      open={modelSelectorOpen}
+                    >
+                      <ModelSelectorTrigger asChild>
+                        <Button
+                          variant="outline"
+                          size="sm"
+                          className="gap-2"
+                        >
+                          {selectedModelData?.name || 'Select Model'}
+                        </Button>
+                      </ModelSelectorTrigger>
+                      <ModelSelectorContent>
+                        <ModelSelectorInput placeholder="Search models..." />
+                        <ModelSelectorList>
+                          <ModelSelectorEmpty>No models found.</ModelSelectorEmpty>
+
+                          {/* Free Models */}
+                          <ModelSelectorGroup heading="Free Models" key="free">
+                            {POPULAR_MODELS.filter((m) => m.free).map((m) => (
+                              <ModelSelectorItem
+                                key={m.id}
+                                onSelect={() => {
+                                  setSelectedModel(m.id);
+                                  setModelSelectorOpen(false);
+                                }}
+                                value={m.id}
+                              >
+                                <ModelSelectorLogo provider={m.chefSlug} />
+                                <ModelSelectorName>{m.name}</ModelSelectorName>
+                                <Badge variant="secondary" className="ml-2 text-xs">Free</Badge>
+                                {selectedModel === m.id && <CheckIcon className="ml-auto size-4" />}
+                              </ModelSelectorItem>
+                            ))}
+                          </ModelSelectorGroup>
+
+                          {/* Premium Models */}
+                          {['OpenAI', 'Anthropic', 'Google', 'xAI', 'DeepSeek', 'Meta'].map((chef) => {
+                            const chefModels = POPULAR_MODELS.filter((m) => !m.free && m.chef === chef);
+                            if (chefModels.length === 0) return null;
+
+                            return (
+                              <ModelSelectorGroup heading={chef} key={chef}>
+                                {chefModels.map((m) => (
+                                  <ModelSelectorItem
+                                    key={m.id}
+                                    onSelect={() => {
+                                      if (!hasApiKey) {
+                                        setModelSelectorOpen(false);
+                                        setShowSettings(true);
+                                        toast({
+                                          title: "API Key Required",
+                                          description: `${m.name} requires an OpenRouter API key.`,
+                                        });
+                                      } else {
+                                        setSelectedModel(m.id);
+                                        setModelSelectorOpen(false);
+                                      }
+                                    }}
+                                    value={m.id}
+                                  >
+                                    <ModelSelectorLogo provider={m.chefSlug} />
+                                    <ModelSelectorName>{m.name}</ModelSelectorName>
+                                    {!hasApiKey && <Lock className="ml-2 h-3 w-3 text-muted-foreground" />}
+                                    {selectedModel === m.id && <CheckIcon className="ml-auto size-4" />}
+                                  </ModelSelectorItem>
+                                ))}
+                              </ModelSelectorGroup>
+                            );
+                          })}
+                        </ModelSelectorList>
+                      </ModelSelectorContent>
+                    </ModelSelector>
+                  </div>
+
+                  {/* Send button */}
+                  <Button
+                    className="gap-2"
+                    disabled={isLoading}
+                    onClick={() => {
+                      const textarea = textareaRef.current;
+                      if (textarea && textarea.value.trim()) {
+                        handleSubmit({ text: textarea.value, files: attachments } as any, new Event('submit') as any);
+                        textarea.value = '';
+                        setAttachments([]);
+                      }
+                    }}
+                  >
+                    {isLoading ? (
+                      <>
+                        <div className="h-4 w-4 animate-spin rounded-full border-2 border-current border-t-transparent" />
+                        <span className="hidden sm:inline">Sending</span>
+                      </>
+                    ) : (
+                      <>
+                        <Play className="h-4 w-4" />
+                        <span className="hidden sm:inline">Send</span>
+                      </>
+                    )}
+                  </Button>
                 </div>
               </div>
             </div>
-          ) : (
-            <>
-              {messages.map(msg => renderMessage(msg))}
-              {isLoading && (
-                <div className="flex items-center gap-2 text-muted-foreground">
-                  <Brain className="h-4 w-4 animate-pulse text-purple-500" />
-                  <span className="text-sm">Thinking...</span>
-                </div>
-              )}
-              <div ref={messagesEndRef} />
-            </>
-          )}
-        </ConversationContent>
-        <ConversationScrollButton />
-      </Conversation>
 
-      {/* Enhanced Input Area - Centered with max-width */}
-      <div className="fixed bottom-0 left-1/2 -translate-x-1/2 w-full max-w-3xl z-10 px-4 pb-4">
-        {/* Copy Conversation Button */}
-        {messages.length > 0 && (
+            {/* Demo Cards - Below Input */}
+            <div className={cn("demo-cards w-full", hasMessages && "hidden")}>
+              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
+                {DEMO_SUGGESTIONS.map((suggestion) => (
+                  <DemoCard
+                    key={suggestion.id}
+                    suggestion={suggestion}
+                    onSelect={handleDemoSelect}
+                    isLocked={false}
+                  />
+                ))}
+              </div>
+            </div>
+          </div>
+        </div>
+      )}
+
+      {/* Bottom Input Area - When Messages Exist */}
+      {hasMessages && (
+        <div className="fixed bottom-0 left-1/2 -translate-x-1/2 w-full max-w-3xl z-10 px-4 pb-4 input-container">
+          {/* Copy Conversation Button */}
           <div className="flex justify-center mb-3">
             <Button
               variant={conversationCopied ? "default" : "outline"}
@@ -1176,7 +1438,6 @@ export function ChatClientV2() {
               )}
             </Button>
           </div>
-        )}
 
         <div className="relative flex flex-col bg-[hsl(var(--color-sidebar))] rounded-2xl p-3 gap-3 focus-within:outline-none border-2 border-border">
           {/* Text input area */}
@@ -1369,7 +1630,8 @@ export function ChatClientV2() {
             </div>
           </div>
         </div>
-      </div>
+        </div>
+      )}
     </div>
   );
 }
