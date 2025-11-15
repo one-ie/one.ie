@@ -1,3 +1,30 @@
+### **61dba341** — template:2 — `Add optimized demo thumbnail to video on front page``
+
+**Template:**
+  - web/public/demo.png
+  - web/src/pages/index.astro
+
+
+
+### **711b9829** — template:13 — `Fix security vulnerabilities: API key storage and XSS protection``
+
+**Template:**
+  - .claude/hooks.log
+  - .claude/hooks/.last-news-context
+  - .claude/state/cycle.json
+  - one/events/0-changes.md
+  - one/events/security-fixes-2025-01-15.md
+  - web/src/components/ai/ChatClient.tsx
+  - web/src/components/ai/ChatClientV2.tsx
+  - web/src/components/ai/FreeChatClient.tsx
+  - web/src/components/ai/SimpleChatClient.tsx
+  - web/src/components/ai/elements/web-preview.tsx
+  - web/src/components/examples/FreeChatExample.tsx
+  - web/src/lib/security.ts
+  - web/src/pages/api/chat.ts
+
+
+
 ### **a82d3ce0** — custom:1 — `Add video demo and podcast to README`` [customization]
 
 **Your Changes:**
