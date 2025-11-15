@@ -1,4 +1,5 @@
 ---
+export const prerender = true;
 import Layout from '@/layouts/Layout.astro';
 import { ContactForm } from '@/components/features/ContactForm';
 import { Card, CardHeader, CardTitle, CardDescription, CardContent } from '@/components/ui/card';
@@ -8,6 +9,7 @@ import { Mail, MessageSquare, MapPin, Clock } from 'lucide-react';
 const title = 'Contact Us';
 const description = 'Get in touch with the ONE Platform team. We\'re here to help you build better websites.';
 ---
+export const prerender = true;
 
 <Layout title={title} description={description}>
   <!-- Hero Section -->

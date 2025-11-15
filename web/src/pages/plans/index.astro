@@ -5,7 +5,8 @@ import { StaggeredFadeIn } from '@/components/features/StaggeredFadeIn';
 import { Grid, List } from 'lucide-react';
 
 // Disable view transitions for faster content loading
-export const prerender = false;
+// CRITICAL: Prerender to reduce worker bundle
+export const prerender = true;
 
 // Get all Plans entries
 const plans = await getCollection('plans');

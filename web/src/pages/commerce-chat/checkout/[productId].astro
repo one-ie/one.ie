@@ -1,4 +1,6 @@
 ---
+// Dynamic route - must be SSR
+export const prerender = false;
 /**
  * One-Click Checkout Page
  *
@@ -45,6 +47,7 @@ const mockProduct = {
 const title = `Checkout - ${mockProduct.name}`;
 const description = 'Complete your purchase';
 ---
+export const prerender = true;
 
 <Layout title={title} description={description} hideHeader={true}>
   <OneClickCheckout

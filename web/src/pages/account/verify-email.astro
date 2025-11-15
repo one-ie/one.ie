@@ -1,10 +1,12 @@
 ---
+export const prerender = true;
 import Layout from '@/layouts/Layout.astro';
 import { VerifyEmailPage } from '@/components/auth/VerifyEmailPage';
 
 const url = new URL(Astro.request.url);
 const token = url.searchParams.get('token') || '';
 ---
+export const prerender = true;
 
 <Layout title="Verify Email - ONE">
   <div class="flex items-center justify-center min-h-[calc(100vh-8rem)] px-4">

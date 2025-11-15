@@ -11,7 +11,8 @@ import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 
-export const prerender = false;
+// CRITICAL: Prerender to reduce worker bundle
+export const prerender = true;
 
 const session = Astro.locals.session;
 if (!session) {

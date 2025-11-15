@@ -1,4 +1,7 @@
 ---
+// CRITICAL: Prerender homepage to reduce worker bundle
+export const prerender = true;
+
 import Layout from "../layouts/Layout.astro";
 import { GitSection } from "@/components/GitSection";
 import { PerformanceChart } from "@/components/features/PerformanceChart";
@@ -1753,8 +1756,8 @@ EVERY DAY at 8am:
     </div>
   </section>
 
-  <!-- Performance Chart -->
-  <PerformanceChart client:only="react" />
+  <!-- Performance Chart - lazy load to reduce bundle -->
+  <PerformanceChart client:visible />
 
   <!-- Final CTA Section -->
   <DownloadSection

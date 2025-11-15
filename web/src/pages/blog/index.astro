@@ -1,4 +1,5 @@
 ---
+export const prerender = true;
 import Layout from "@/layouts/Layout.astro";
 import { getCollection } from "astro:content";
 import { Card } from "@/components/ui/card";
@@ -52,6 +53,7 @@ function getBlogImage(entry: CollectionEntry<"blog">): string {
   return "/images/placeholders/blog-placeholder-3.jpg";
 }
 ---
+export const prerender = true;
 
 <Layout
   title="Blog - Latest Articles and Updates"

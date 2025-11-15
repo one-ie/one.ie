@@ -1,10 +1,12 @@
 ---
+export const prerender = true;
 import Layout from '../layouts/Layout.astro';
 import { getCollection } from 'astro:content';
 
 // Get all doc entries for grid display
 const docEntries = await getCollection('docs');
 ---
+export const prerender = true;
 
 <Layout title="Server Started - ONE Platform">
   <div class="min-h-screen bg-background flex flex-col items-center p-4">

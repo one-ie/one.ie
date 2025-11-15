@@ -2,7 +2,8 @@
 import Layout from '@/layouts/Layout.astro';
 import { MagicLinkPage } from '@/components/auth/MagicLinkPage';
 
-export const prerender = false;
+// CRITICAL: Prerender to reduce worker bundle
+export const prerender = true;
 
 // Check for token (authentication mode) or show request form
 const url = new URL(Astro.request.url);

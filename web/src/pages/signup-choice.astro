@@ -1,4 +1,5 @@
 ---
+export const prerender = true;
 import Layout from '@/layouts/Layout.astro';
 import { Button } from '@/components/ui/button';
 import { Card, CardHeader, CardTitle, CardDescription, CardContent } from '@/components/ui/card';
@@ -9,6 +10,7 @@ if (Astro.locals.user) {
   return Astro.redirect('/dashboard');
 }
 ---
+export const prerender = true;
 
 <Layout title="Choose Your Sign Up Method - ONE">
   <div class="min-h-screen bg-gradient-to-br from-background via-secondary/5 to-background py-12 px-4">

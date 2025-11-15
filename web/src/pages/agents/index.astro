@@ -1,4 +1,5 @@
 ---
+export const prerender = true;
 /**
  * Agents Index (PREMIUM TIER)
  *
@@ -11,6 +12,7 @@ if (!backendConfig.enabled) {
   return Astro.redirect('/upgrade?feature=agent-management');
 }
 ---
+export const prerender = true;
 
 <Layout title="AI Agents">
   <div class="container mx-auto max-w-6xl py-8">

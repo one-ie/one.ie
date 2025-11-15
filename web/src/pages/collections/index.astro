@@ -1,4 +1,5 @@
 ---
+export const prerender = true;
 /**
  * Collections Index Page with Sidebar Filters
  * Browse all product collections with filtering capabilities
@@ -50,6 +51,7 @@ const productsForClient = products.map((product) => ({
   updatedAt: product.updatedAt.toISOString(),
 }));
 ---
+export const prerender = true;
 
 <Layout
   title="Collections - Browse All Categories"

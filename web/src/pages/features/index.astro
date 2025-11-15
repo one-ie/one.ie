@@ -1,4 +1,5 @@
 ---
+export const prerender = true;
 import Layout from '../../layouts/Layout.astro';
 import { getCollection } from 'astro:content';
 import { Badge } from '@/components/ui/badge';
@@ -24,6 +25,7 @@ const completedFeatures = sortedFeatures.filter(f => f.data.status === 'complete
 const inDevelopmentFeatures = sortedFeatures.filter(f => f.data.status === 'in_development' || f.data.status === 'beta');
 const plannedFeatures = sortedFeatures.filter(f => f.data.status === 'planned');
 ---
+export const prerender = true;
 
 <Layout title="Features - ONE Platform | Complete Platform Specification">
   <!-- Hero Section -->

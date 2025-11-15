@@ -2,7 +2,8 @@
 import Layout from '@/layouts/Layout.astro';
 import { DashboardLayout } from '@/components/dashboard/dashboard-layout';
 
-export const prerender = false;
+// CRITICAL: Prerender to reduce worker bundle
+export const prerender = true;
 
 const user = Astro.locals.user;
 ---

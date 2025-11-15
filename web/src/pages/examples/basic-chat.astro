@@ -1,4 +1,5 @@
 ---
+export const prerender = true;
 /**
  * Free Tier Chat Example
  *
@@ -7,6 +8,7 @@
 import Layout from '@/layouts/Layout.astro';
 import { SimpleChatClient } from '@/components/ai/SimpleChatClient';
 ---
+export const prerender = true;
 
 <Layout title="Free Tier AI Chat">
   <SimpleChatClient client:load />

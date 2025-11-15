@@ -1,4 +1,5 @@
 ---
+export const prerender = true;
 import Layout from '../../layouts/Layout.astro';
 import { Badge } from '@/components/ui/badge';
 import { PricingComparison } from '@/components/charts/PricingComparison';
@@ -11,6 +12,7 @@ import { ResourceUsage } from '@/components/charts/ResourceUsage';
 import { TrafficAnalytics } from '@/components/charts/TrafficAnalytics';
 import { Code, Zap, Sparkles } from 'lucide-react';
 ---
+export const prerender = true;
 
 <Layout title="Deployment Metrics - Chart Components Demo" sidebarInitialCollapsed={true}>
   <!-- Custom Gradient Animation Styles -->

@@ -4,14 +4,11 @@ import mdx from "@astrojs/mdx";
 import sitemap from "@astrojs/sitemap";
 import tailwindcss from "@tailwindcss/vite";
 import cloudflare from "@astrojs/cloudflare";
-import node from "@astrojs/node";
 
-// Use Node adapter for local dev (avoids miniflare EPIPE issues with Node 20.11.0)
-// Use Cloudflare adapter for production builds
+// CRITICAL: Production builds use cloudflare adapter in static mode
+// This avoids bundling content collections into the worker (5MB+ savings)
 const isDev = process.env.NODE_ENV !== "production";
-const adapter = isDev
-  ? node({ mode: "standalone" })
-  : cloudflare({ mode: "directory" });
+const adapter = cloudflare({ mode: "directory" });
 
 export default defineConfig({
   site: "https://one.ie",
@@ -19,6 +16,9 @@ export default defineConfig({
     shikiConfig: {
       theme: 'monokai',
       wrap: true,
+      // CRITICAL: Only include essential languages to reduce bundle size
+      // This saves ~4-5MB by excluding rarely-used languages
+      langs: ['javascript', 'typescript', 'jsx', 'tsx', 'json', 'bash', 'markdown'],
     },
   },
   integrations: [
@@ -27,6 +27,12 @@ export default defineConfig({
       // Disable imports/exports processing to avoid conflicts
       remarkPlugins: [],
       rehypePlugins: [],
+      // Apply same Shiki config to MDX
+      shikiConfig: {
+        theme: 'monokai',
+        wrap: true,
+        langs: ['javascript', 'typescript', 'jsx', 'tsx', 'json', 'bash', 'markdown'],
+      },
     }),
     sitemap()
   ],
@@ -79,9 +85,31 @@ export default defineConfig({
       target: "esnext",
       cssCodeSplit: true,
       minify: "esbuild",
-      // Let Vite handle chunking automatically to avoid module initialization issues in Cloudflare Workers
+      rollupOptions: {
+        output: {
+          // Aggressive code splitting to stay under Cloudflare's 3MB limit
+          manualChunks(id) {
+            // Split out Shiki and syntax highlighting (HUGE)
+            if (id.includes('shiki') || id.includes('textmate') || id.includes('vscode-')) {
+              return 'vendor-shiki';
+            }
+            // Heavy dependencies get their own chunks (lazy-loaded)
+            if (id.includes('recharts')) return 'vendor-charts';
+            if (id.includes('mermaid')) return 'vendor-diagrams';
+            if (id.includes('cytoscape')) return 'vendor-graph';
+            if (id.includes('VideoPlayer') || id.includes('video-react')) return 'vendor-video';
+            if (id.includes('prompt-input') || id.includes('PromptInput')) return 'vendor-ai';
+            if (id.includes('react-markdown')) return 'vendor-markdown';
+            // Core React stays in main bundle
+            if (id.includes('node_modules/react') || id.includes('node_modules/react-dom')) {
+              return 'vendor-react';
+            }
+          },
+        },
+      },
     },
   },
-  output: "server", // Server mode with aggressive prerendering via prerender=true
+  // Server mode with aggressive prerendering - most pages use prerender=true
+  output: "server",
   adapter,
 });

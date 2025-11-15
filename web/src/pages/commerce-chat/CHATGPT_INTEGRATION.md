@@ -7,43 +7,52 @@ This document outlines how to deeply integrate our conversational commerce syste
 ## Integration Levels
 
 ### Level 1: Custom GPT Action (Current Focus)
+
 **What it is:** A ChatGPT custom action that calls our API
 **User Experience:** Customer asks ChatGPT about products → ChatGPT calls our API → We return recommendations → ChatGPT displays them
 **Setup Time:** 1-2 hours
 **Pros:**
+
 - Quick to implement
 - No OpenAI approval needed
 - Works immediately for testing
 
 **Cons:**
+
 - Limited control over UI
 - Can't show rich product cards directly
 - Depends on ChatGPT formatting
 
 ### Level 2: OpenAI Plugin (Marketplace)
+
 **What it is:** Official ChatGPT plugin in the Plugin Store
 **User Experience:** User discovers our plugin in ChatGPT → Installs → Seamless product search
 **Setup Time:** 2-4 weeks (OpenAI review process)
 **Pros:**
-- Discoverable by 200M+ ChatGPT users
+
+- Discoverable by 800M+ ChatGPT users
 - Official integration
 - Better branding
 
 **Cons:**
+
 - Requires OpenAI approval
 - Review process takes time
 - Must follow strict guidelines
 
 ### Level 3: ChatGPT Enterprise Integration
+
 **What it is:** Deep integration with ChatGPT for Enterprise customers
 **User Experience:** Embedded directly in company's ChatGPT instance
 **Setup Time:** Months
 **Pros:**
+
 - White-label capability
 - Full customization
 - Enterprise-grade
 
 **Cons:**
+
 - Expensive
 - Long sales cycle
 - Limited to enterprise customers
@@ -53,6 +62,7 @@ This document outlines how to deeply integrate our conversational commerce syste
 ### Step 1: Create OpenAPI Specification
 
 Our API endpoints are already documented in `/api/commerce/`:
+
 - `POST /api/commerce/chat` - Main conversation endpoint
 - `POST /api/commerce/session` - Create session
 - `POST /api/commerce/purchase` - Initiate purchase
@@ -63,6 +73,7 @@ Our API endpoints are already documented in `/api/commerce/`:
 2. Name: "Product Advisor"
 3. Description: "Expert product consultant that helps you find exactly what you need"
 4. Instructions:
+
    ```
    You are an expert product consultant specializing in [category].
 
@@ -85,6 +96,7 @@ Our API endpoints are already documented in `/api/commerce/`:
 ### Step 3: Test Conversation Flow
 
 Example conversation:
+
 ```
 User: "I need a padel racket for aggressive play but I have tennis elbow"
 
@@ -120,6 +132,7 @@ Your order will include:
 ## Deep Integration Features
 
 ### 1. Conversation Context Preservation
+
 ```typescript
 // Every API call includes full conversation history
 {
@@ -139,6 +152,7 @@ Your order will include:
 ```
 
 ### 2. Rich Responses with Actions
+
 ```typescript
 // Our API returns structured data
 {
@@ -164,6 +178,7 @@ Your order will include:
 ```
 
 ### 3. Purchase Attribution
+
 ```typescript
 // Every conversation gets tracked
 {
@@ -190,6 +205,8 @@ Your order will include:
 ```
 
 ### 4. Multi-Turn Consultation
+
 ```typescript
 // AI can ask clarifying questions
-User: "I want a powerful racket"
+User: "I want a powerful racket";
+```

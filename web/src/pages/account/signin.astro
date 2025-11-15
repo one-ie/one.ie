@@ -2,7 +2,8 @@
 import Layout from "@/layouts/Layout.astro";
 import { SignInPage } from "@/components/auth/SignInPage";
 
-export const prerender = false;
+// CRITICAL: Prerender to reduce worker bundle
+export const prerender = true;
 
 // Redirect if already logged in
 if (Astro.locals.user) {
