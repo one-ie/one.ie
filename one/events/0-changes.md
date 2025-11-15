@@ -1,3 +1,13 @@
+### **014f3072** — template:4 — `Refactor chat API to make generative UI optional``
+
+**Template:**
+  - .claude/hooks.log
+  - .claude/hooks/.last-news-context
+  - one/events/0-changes.md
+  - web/src/pages/api/chat.ts
+
+
+
 ### **a0e2d4fe** — template:1 — `Integrate button states with actual color values and swatches``
 
 **Template:**

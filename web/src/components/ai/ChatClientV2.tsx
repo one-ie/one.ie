@@ -861,6 +861,12 @@ export function ChatClientV2() {
         { role: 'user', content: text.trim() }
       ];
 
+      // Enable generative UI only for demo prompts or when explicitly requested
+      const isGenerativeUIRequest = text.toLowerCase().includes('(demo)') ||
+                                     text.toLowerCase().includes('chart') ||
+                                     text.toLowerCase().includes('table') ||
+                                     text.toLowerCase().includes('visualiz');
+
       const response = await fetch('/api/chat', {
         method: 'POST',
         headers: {
@@ -870,7 +876,7 @@ export function ChatClientV2() {
           messages: allMessages,
           apiKey,
           model: selectedModel,
-          premium: true,
+          enableGenerativeUI: isGenerativeUIRequest,
         }),
       });
 
