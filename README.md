@@ -56,6 +56,18 @@ cd web/
 bun test           # All tests
 ```
 
+---
+
+## 🎬 Demo
+
+See ONE in action:
+
+**Video Demo:** [Watch on one.ie](https://media.one.ie/ONE-demo.mp4)
+
+A complete walkthrough showing how to build AI agents, applications, and your audience using the 6-dimension ontology.
+
+---
+
 # ONE
 
 Make your ideas real
@@ -884,6 +896,22 @@ Tags, chunks, embeddings, and relationships give AI agents context to act intell
 - ✅ **100% Type Safe** - Every entity, connection, and event is typed
 - ✅ **100% AI Understandable** - Plain English DSL compiles to ontology
 - ✅ **100% Auditable** - Immutable event log for every action
+
+---
+
+## 🎧 Learn More
+
+### Featured Podcast: Understanding the ONE Ontology
+
+**Listen:** [ONE Ontology Explained](https://one.ie/podcasts/one-ontology)
+
+A deep dive into how the 6-dimension ontology models reality and enables AI agents to understand who owns what, who can do what, what happened, and what it all means.
+
+**Topics covered:**
+- Why every intelligent system needs a coherent model of reality
+- How the 6 dimensions (groups, people, things, connections, events, knowledge) work together
+- Real-world examples from lemonade stands to Fortune 500 companies
+- How AI agents use the ontology to make intelligent decisions
 
 ---
 
