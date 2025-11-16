@@ -11,7 +11,7 @@
 import { useState, useEffect } from 'react';
 import { X, MessageSquare } from 'lucide-react';
 import { Button } from '@/components/ui/button';
-import ProductChatAssistant from './ProductChatAssistant';
+import ProductChatAssistantEnhanced from './ProductChatAssistantEnhanced';
 
 interface ChatSidebarProps {
   initialOpen?: boolean;
@@ -88,7 +88,7 @@ export function ChatSidebar({ initialOpen = true }: ChatSidebarProps) {
         {/* Chat Content */}
         {(isOpen || isHovering) && (
           <div className="flex-1 overflow-hidden">
-            <ProductChatAssistant />
+            <ProductChatAssistantEnhanced />
           </div>
         )}
 
