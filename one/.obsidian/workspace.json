@@ -246,6 +246,7 @@
   },
   "active": "45bdc9c426ab0878",
   "lastOpenFiles": [
+    "events/biome-ai-components-cleanup-2025-11-18.md",
     "events/parallel-agent-clean-2025-11-18.md",
     "events/biome-implementation-2025-11-18.md",
     "knowledge/biome-clean-code-guide.md",
@@ -273,7 +274,6 @@
     "knowledge/performance.md",
     "knowledge/performance.md.tmp.10741.1762543026526",
     "knowledge/troubleshooting.md",
-    "knowledge/guidelines.md",
     "knowledge/guidelines.md.tmp.10741.1762543026243",
     "things/plans/npx-agent.md.tmp.10741.1762536409144",
     "things/plans/npx-agent.md.tmp.10741.1762536401133",
