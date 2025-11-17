@@ -10,18 +10,18 @@
  * Shows how to coordinate multiple Effect.ts services.
  */
 
-import { useState } from 'react';
-import { useThingService, type Thing } from '@/hooks/useThingService';
-import { useConnectionService } from '@/hooks/useConnectionService';
-import { useToast } from '@/hooks/use-toast';
-import { Button } from '@/components/ui/button';
+import { useState } from "react";
+import { Button } from "@/components/ui/button";
+import { useToast } from "@/hooks/use-toast";
+import { useConnectionService } from "@/hooks/useConnectionService";
+import { type Thing, useThingService } from "@/hooks/useThingService";
 
 // Use string types for all IDs in frontend (backend accessed via HTTP)
-type Id<T> = string;
+type Id<_T> = string;
 
 interface EnrollmentFlowProps {
-  userId: Id<'entities'>;
-  courseId: Id<'entities'>;
+  userId: Id<"entities">;
+  courseId: Id<"entities">;
   course: Thing;
 }
 
@@ -46,96 +46,100 @@ export function EnrollmentFlow({ userId, courseId, course }: EnrollmentFlowProps
     setIsEnrolling(true);
 
     // Step 1: Check if already enrolled
-    getRelated({
-      entityId: userId as any,
-      relationshipType: 'enrolled_in',
-      direction: 'from'
-    }, {
-      onSuccess: (enrollments) => {
-        const alreadyEnrolled = enrollments.some(e => e._id === courseId);
+    getRelated(
+      {
+        entityId: userId as any,
+        relationshipType: "enrolled_in",
+        direction: "from",
+      },
+      {
+        onSuccess: (enrollments) => {
+          const alreadyEnrolled = enrollments.some((e) => e._id === courseId);
 
-        if (alreadyEnrolled) {
-          toast({
-            title: 'Already enrolled',
-            description: 'You are already enrolled in this course',
-            variant: 'destructive'
-          });
-          setIsEnrolling(false);
-          return;
-        }
-
-        // Step 2: Create enrollment connection
-        createConnection({
-          fromEntityId: userId as any,
-          toEntityId: courseId as any,
-          relationshipType: 'enrolled_in',
-          metadata: {
-            enrolledAt: Date.now(),
-            progress: 0
+          if (alreadyEnrolled) {
+            toast({
+              title: "Already enrolled",
+              description: "You are already enrolled in this course",
+              variant: "destructive",
+            });
+            setIsEnrolling(false);
+            return;
           }
-        }, {
-          onSuccess: (connectionId) => {
-            // Step 3: Update course enrollment count
-            const currentCount = course.properties.enrollmentCount || 0;
 
-            updateThing({
-              id: courseId as any,
-              properties: {
-                ...course.properties,
-                enrollmentCount: currentCount + 1
-              }
-            }, {
-              onSuccess: () => {
-                toast({
-                  title: 'Enrollment successful!',
-                  description: `You are now enrolled in ${course.name}`
-                });
-                setIsEnrolling(false);
+          // Step 2: Create enrollment connection
+          createConnection(
+            {
+              fromEntityId: userId as any,
+              toEntityId: courseId as any,
+              relationshipType: "enrolled_in",
+              metadata: {
+                enrolledAt: Date.now(),
+                progress: 0,
+              },
+            },
+            {
+              onSuccess: (_connectionId) => {
+                // Step 3: Update course enrollment count
+                const currentCount = course.properties.enrollmentCount || 0;
+
+                updateThing(
+                  {
+                    id: courseId as any,
+                    properties: {
+                      ...course.properties,
+                      enrollmentCount: currentCount + 1,
+                    },
+                  },
+                  {
+                    onSuccess: () => {
+                      toast({
+                        title: "Enrollment successful!",
+                        description: `You are now enrolled in ${course.name}`,
+                      });
+                      setIsEnrolling(false);
+                    },
+                    onError: (err) => {
+                      toast({
+                        title: "Error updating enrollment count",
+                        description: String(err),
+                        variant: "destructive",
+                      });
+                      setIsEnrolling(false);
+                    },
+                  }
+                );
               },
               onError: (err) => {
                 toast({
-                  title: 'Error updating enrollment count',
+                  title: "Enrollment failed",
                   description: String(err),
-                  variant: 'destructive'
+                  variant: "destructive",
                 });
                 setIsEnrolling(false);
-              }
-            });
-          },
-          onError: (err) => {
-            toast({
-              title: 'Enrollment failed',
-              description: String(err),
-              variant: 'destructive'
-            });
-            setIsEnrolling(false);
-          }
-        });
-      },
-      onError: (err) => {
-        toast({
-          title: 'Error checking enrollment',
-          description: String(err),
-          variant: 'destructive'
-        });
-        setIsEnrolling(false);
+              },
+            }
+          );
+        },
+        onError: (err) => {
+          toast({
+            title: "Error checking enrollment",
+            description: String(err),
+            variant: "destructive",
+          });
+          setIsEnrolling(false);
+        },
       }
-    });
+    );
   };
 
   return (
     <div className="space-y-4">
       <h3 className="text-2xl font-bold">{course.name}</h3>
-      <p className="text-muted-foreground">
-        {course.properties.description}
-      </p>
+      <p className="text-muted-foreground">{course.properties.description}</p>
 
       <div className="flex items-center gap-4">
-        <Button
-          onClick={handleEnroll}
-          disabled={isEnrolling}
-        >
-          {isEnrolling ? 'Enrolling...' : 'Enroll in Course'}
+        <Button onClick={handleEnroll} disabled={isEnrolling}>
+          {isEnrolling ? "Enrolling..." : "Enroll in Course"}
         </Button>
 
         <span className="text-sm text-muted-foreground">
@@ -224,15 +228,15 @@ export function EnrollmentFlowImproved({ userId, courseId, course }: EnrollmentF
 
     // For now, use nested callbacks (will be replaced by Effect.gen)
     toast({
-      title: 'Enrollment successful!',
-      description: 'Effect.gen pattern coming soon...'
+      title: "Enrollment successful!",
+      description: "Effect.gen pattern coming soon...",
     });
     setIsEnrolling(false);
   };
 
   return (
     <Button onClick={handleEnroll} disabled={isEnrolling}>
-      {isEnrolling ? 'Enrolling...' : 'Enroll (Effect.gen)'}
+      {isEnrolling ? "Enrolling..." : "Enroll (Effect.gen)"}
     </Button>
   );
 }

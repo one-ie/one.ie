@@ -1,23 +1,15 @@
 ---
-import Layout from '../../layouts/Layout.astro';
-import { getCollection } from 'astro:content';
-import {
-  Card,
-  CardHeader,
-  CardTitle,
-  CardDescription,
-  CardContent,
-} from '@/components/ui/card';
-import { Badge } from '@/components/ui/badge';
-import { Button } from '@/components/ui/button';
-import { ArrowLeft, Code, Zap, Users, Link as LinkIcon, Database, FileText } from 'lucide-react';
+import { getCollection } from "astro:content";
+import { ArrowLeft, Database, FileText, Link as LinkIcon, Users, Zap } from "lucide-react";
+import { Badge } from "@/components/ui/badge";
+import Layout from "@/layouts/Layout.astro";
 
 // Enable static pre-rendering for this dynamic route
 export const prerender = true;
 
 // Generate static paths
 export async function getStaticPaths() {
-  const connections = await getCollection('connections');
+  const connections = await getCollection("connections");
   return connections.map((connection) => ({
     params: { slug: connection.slug },
     props: { connection },
@@ -38,7 +30,7 @@ const ontologyIcons = {
   connections: LinkIcon,
   events: Zap,
   knowledge: FileText,
-}
+};
 ---
 
 <Layout title={`${connection.data.title} | ONE Platform`}>

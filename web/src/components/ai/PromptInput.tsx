@@ -1,4 +1,4 @@
-import React from "react";
+import type React from "react";
 import { Button } from "@/components/ui/button";
 import { Textarea } from "@/components/ui/textarea";
 
@@ -43,11 +43,7 @@ export function PromptInput({
         className="min-h-[60px] max-h-[200px] resize-none"
         rows={2}
       />
-      <Button
-        onClick={handleSubmit}
-        disabled={!value.trim() || isLoading}
-        size="lg"
-      >
+      <Button onClick={handleSubmit} disabled={!value.trim() || isLoading} size="lg">
         {isLoading ? "Sending..." : "Send"}
       </Button>
     </div>

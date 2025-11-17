@@ -1,5 +1,20 @@
 "use client";
 
+import { AtSignIcon, CheckIcon, FilesIcon, GlobeIcon, ImageIcon, RulerIcon } from "lucide-react";
+import { useRef, useState } from "react";
+import {
+  ModelSelector,
+  ModelSelectorContent,
+  ModelSelectorEmpty,
+  ModelSelectorGroup,
+  ModelSelectorInput,
+  ModelSelectorItem,
+  ModelSelectorList,
+  ModelSelectorLogo,
+  ModelSelectorLogoGroup,
+  ModelSelectorName,
+  ModelSelectorTrigger,
+} from "@/components/ai/elements/model-selector";
 import {
   PromptInput,
   PromptInputAttachment,
@@ -28,29 +43,7 @@ import {
   PromptInputTextarea,
   PromptInputTools,
 } from "@/components/ai/elements/prompt-input";
-import {
-  ModelSelector,
-  ModelSelectorContent,
-  ModelSelectorEmpty,
-  ModelSelectorGroup,
-  ModelSelectorInput,
-  ModelSelectorItem,
-  ModelSelectorList,
-  ModelSelectorLogo,
-  ModelSelectorLogoGroup,
-  ModelSelectorName,
-  ModelSelectorTrigger,
-} from "@/components/ai/elements/model-selector";
 import { Button } from "@/components/ui/button";
-import {
-  AtSignIcon,
-  CheckIcon,
-  FilesIcon,
-  GlobeIcon,
-  ImageIcon,
-  RulerIcon,
-} from "lucide-react";
-import { useRef, useState } from "react";
 
 const models = [
   {
@@ -127,9 +120,7 @@ const sampleTabs = {
 const Example = () => {
   const [model, setModel] = useState<string>(models[0].id);
   const [modelSelectorOpen, setModelSelectorOpen] = useState(false);
-  const [status, setStatus] = useState<
-    "submitted" | "streaming" | "ready" | "error"
-  >("ready");
+  const [status, setStatus] = useState<"submitted" | "streaming" | "ready" | "error">("ready");
   const textareaRef = useRef<HTMLTextAreaElement>(null);
 
   const selectedModelData = models.find((m) => m.id === model);
@@ -162,11 +153,7 @@ const Example = () => {
           <PromptInputHeader>
             <PromptInputHoverCard>
               <PromptInputHoverCardTrigger>
-                <PromptInputButton
-                  className="!h-8"
-                  size="icon-sm"
-                  variant="outline"
-                >
+                <PromptInputButton className="!h-8" size="icon-sm" variant="outline">
                   <AtSignIcon className="text-muted-foreground" size={12} />
                 </PromptInputButton>
               </PromptInputHoverCardTrigger>
@@ -193,12 +180,8 @@ const Example = () => {
                         <PromptInputCommandItem key={`${file.path}-${index}`}>
                           <GlobeIcon className="text-primary" />
                           <div className="flex flex-col">
-                            <span className="font-medium text-sm">
-                              {file.path}
-                            </span>
-                            <span className="text-muted-foreground text-xs">
-                              {file.location}
-                            </span>
+                            <span className="font-medium text-sm">{file.path}</span>
+                            <span className="text-muted-foreground text-xs">{file.location}</span>
                           </div>
                         </PromptInputCommandItem>
                       ))}
@@ -219,9 +202,7 @@ const Example = () => {
                   <p className="font-medium text-muted-foreground text-sm">
                     Attached Project Rules
                   </p>
-                  <p className="ml-4 text-muted-foreground text-sm">
-                    Always Apply:
-                  </p>
+                  <p className="ml-4 text-muted-foreground text-sm">Always Apply:</p>
                   <p className="ml-8 text-sm">ultracite.mdc</p>
                 </div>
                 <p className="bg-sidebar px-4 py-3 text-muted-foreground text-sm">
@@ -273,26 +254,18 @@ const Example = () => {
             </PromptInputAttachments>
           </PromptInputHeader>
           <PromptInputBody>
-            <PromptInputTextarea
-              placeholder="Plan, search, build anything"
-              ref={textareaRef}
-            />
+            <PromptInputTextarea placeholder="Plan, search, build anything" ref={textareaRef} />
           </PromptInputBody>
           <PromptInputFooter>
             <PromptInputTools>
-              <ModelSelector
-                onOpenChange={setModelSelectorOpen}
-                open={modelSelectorOpen}
-              >
+              <ModelSelector onOpenChange={setModelSelectorOpen} open={modelSelectorOpen}>
                 <ModelSelectorTrigger asChild>
                   <PromptInputButton>
                     {selectedModelData?.chefSlug && (
                       <ModelSelectorLogo provider={selectedModelData.chefSlug} />
                     )}
                     {selectedModelData?.name && (
-                      <ModelSelectorName>
-                        {selectedModelData.name}
-                      </ModelSelectorName>
+                      <ModelSelectorName>{selectedModelData.name}</ModelSelectorName>
                     )}
                   </PromptInputButton>
                 </ModelSelectorTrigger>
@@ -317,10 +290,7 @@ const Example = () => {
                               <ModelSelectorName>{m.name}</ModelSelectorName>
                               <ModelSelectorLogoGroup>
                                 {m.providers.map((provider) => (
-                                  <ModelSelectorLogo
-                                    key={provider}
-                                    provider={provider}
-                                  />
+                                  <ModelSelectorLogo key={provider} provider={provider} />
                                 ))}
                               </ModelSelectorLogoGroup>
                               {model === m.id ? (

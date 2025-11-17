@@ -4,13 +4,13 @@
  * Provides real-time filtering, sorting, and product display
  */
 
-'use client';
+"use client";
 
-import { useState, useMemo, useEffect } from 'react';
-import type { FilterOptions } from '@/types/ecommerce';
-import { FilterSidebar } from './FilterSidebar';
-import { ProductCard } from './ProductCard';
-import { ProductGrid } from '../static/ProductGrid';
+import { useEffect, useMemo, useState } from "react";
+import type { FilterOptions } from "@/types/ecommerce";
+import { ProductGrid } from "../static/ProductGrid";
+import { FilterSidebar } from "./FilterSidebar";
+import { ProductCard } from "./ProductCard";
 
 export interface Product {
   id: string;
@@ -54,18 +54,16 @@ function CollectionPageClient({
 }: CollectionPageClientProps) {
   const [filters, setFilters] = useState<FilterOptions>(() => ({
     categories:
-      currentCollectionSlug && currentCollectionSlug !== 'all'
-        ? [currentCollectionSlug]
-        : [],
+      currentCollectionSlug && currentCollectionSlug !== "all" ? [currentCollectionSlug] : [],
     tags: [],
     inStockOnly: false,
     priceRange: undefined,
-    sortBy: 'newest',
+    sortBy: "newest",
     rating: undefined,
   }));
 
   useEffect(() => {
-    if (currentCollectionSlug && currentCollectionSlug !== 'all') {
+    if (currentCollectionSlug && currentCollectionSlug !== "all") {
       setFilters((prev) => {
         if (prev.categories?.includes(currentCollectionSlug)) {
           return prev;
@@ -79,23 +77,19 @@ function CollectionPageClient({
     return initialProducts.map((product) => ({
       ...product,
       createdAt:
-        product.createdAt instanceof Date
-          ? product.createdAt
-          : new Date(product.createdAt),
+        product.createdAt instanceof Date ? product.createdAt : new Date(product.createdAt),
       updatedAt:
-        product.updatedAt instanceof Date
-          ? product.updatedAt
-          : new Date(product.updatedAt),
+        product.updatedAt instanceof Date ? product.updatedAt : new Date(product.updatedAt),
     }));
   }, [initialProducts]);
 
   // Calculate min/max prices for slider
   const priceRange = useMemo(() => {
     if (normalizedProducts.length === 0) return { min: 0, max: 500 };
-    const prices = normalizedProducts.map(p => p.price);
+    const prices = normalizedProducts.map((p) => p.price);
     return {
       min: Math.floor(Math.min(...prices) / 10) * 10, // Round down to nearest 10
-      max: Math.ceil(Math.max(...prices) / 10) * 10,  // Round up to nearest 10
+      max: Math.ceil(Math.max(...prices) / 10) * 10, // Round up to nearest 10
     };
   }, [normalizedProducts]);
 
@@ -111,12 +105,12 @@ function CollectionPageClient({
       // For each selected collection, we need to find which products belong to it
       const productsToShow = new Set<string>();
 
-      selectedCollectionSlugs.forEach(collectionSlug => {
+      selectedCollectionSlugs.forEach((collectionSlug) => {
         // Find products that belong to this collection
-        result.forEach(product => {
+        result.forEach((product) => {
           // Check if this product is in the selected collection
-          const collection = categories.find(c => c.id === collectionSlug);
-          if (collection?.products && collection.products.includes(product.slug)) {
+          const collection = categories.find((c) => c.id === collectionSlug);
+          if (collection?.products?.includes(product.slug)) {
             productsToShow.add(product.slug);
           }
         });
@@ -124,52 +118,47 @@ function CollectionPageClient({
 
       // If collections are selected, only show products in those collections
       if (productsToShow.size > 0) {
-        result = result.filter(p => productsToShow.has(p.slug));
+        result = result.filter((p) => productsToShow.has(p.slug));
       }
     }
 
     // Filter by tags
     if (filters.tags && filters.tags.length > 0) {
-      result = result.filter(p =>
-        filters.tags.some(tag => p.tags.includes(tag))
-      );
+      result = result.filter((p) => filters.tags.some((tag) => p.tags.includes(tag)));
     }
 
     // Filter by in stock
     if (filters.inStockOnly) {
-      result = result.filter(p => p.inStock);
+      result = result.filter((p) => p.inStock);
     }
 
     // Filter by price range
     if (filters.priceRange) {
       const { min, max } = filters.priceRange;
-      result = result.filter(p =>
-        p.price >= min &&
-        p.price <= max
-      );
+      result = result.filter((p) => p.price >= min && p.price <= max);
     }
 
     // Filter by rating
     if (filters.rating) {
       const minRating = filters.rating;
-      result = result.filter(p => p.rating >= minRating);
+      result = result.filter((p) => p.rating >= minRating);
     }
 
     // Sort products
     switch (filters.sortBy) {
-      case 'newest':
+      case "newest":
         result.sort((a, b) => b.createdAt.getTime() - a.createdAt.getTime());
         break;
-      case 'popular':
+      case "popular":
         result.sort((a, b) => b.reviewCount - a.reviewCount);
         break;
-      case 'rating':
+      case "rating":
         result.sort((a, b) => b.rating - a.rating);
         break;
-      case 'price-asc':
+      case "price-asc":
         result.sort((a, b) => a.price - b.price);
         break;
-      case 'price-desc':
+      case "price-desc":
         result.sort((a, b) => b.price - a.price);
         break;
       default:
@@ -196,9 +185,7 @@ function CollectionPageClient({
             maxPrice={priceRange.max}
             minPrice={priceRange.min}
             initialFilters={
-              currentCollectionSlug !== 'all'
-                ? { categories: [currentCollectionSlug] }
-                : undefined
+              currentCollectionSlug !== "all" ? { categories: [currentCollectionSlug] } : undefined
             }
           />
         </div>

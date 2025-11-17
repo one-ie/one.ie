@@ -12,43 +12,37 @@
  * Supports all 6 dimensions of the ONE ontology
  */
 
-import { Effect, Layer } from "effect";
 import { Client } from "@notionhq/client";
 import type { PageObjectResponse } from "@notionhq/client/build/src/api-endpoints";
+import { Effect, Layer } from "effect";
 
 import type {
-  DataProvider,
-  Group,
-  Thing,
   Connection,
-  Event,
-  Knowledge,
-  ThingKnowledge,
-  CreateThingInput,
-  UpdateThingInput,
-  CreateGroupInput,
-  UpdateGroupInput,
   CreateConnectionInput,
   CreateEventInput,
   CreateKnowledgeInput,
-  ListThingsOptions,
+  CreateThingInput,
+  DataProvider,
   ListConnectionsOptions,
   ListEventsOptions,
-  ListGroupsOptions,
+  ListThingsOptions,
   SearchKnowledgeOptions,
+  Thing,
+  ThingKnowledge,
+  UpdateThingInput,
 } from "../DataProvider";
 import {
-  DataProviderService,
-  ThingNotFoundError,
-  ThingCreateError,
-  ThingUpdateError,
-  ConnectionNotFoundError,
   ConnectionCreateError,
-  QueryError,
+  ConnectionNotFoundError,
+  DataProviderService,
   EventCreateError,
-  KnowledgeNotFoundError,
-  GroupNotFoundError,
   GroupCreateError,
+  GroupNotFoundError,
+  KnowledgeNotFoundError,
+  QueryError,
+  ThingCreateError,
+  ThingNotFoundError,
+  ThingUpdateError,
 } from "../DataProvider";
 
 // ============================================================================
@@ -131,7 +125,7 @@ export const makeNotionProvider = (config: NotionProviderConfig): DataProvider =
 
   const extractTitleFromProperties = (properties: Record<string, any>): string => {
     // Find first title property
-    for (const [key, value] of Object.entries(properties)) {
+    for (const [_key, value] of Object.entries(properties)) {
       if (value.type === "title" && value.title?.[0]?.text?.content) {
         return value.title[0].text.content;
       }
@@ -139,13 +133,20 @@ export const makeNotionProvider = (config: NotionProviderConfig): DataProvider =
     return "Untitled";
   };
 
-  const extractStatusFromProperties = (properties: Record<string, any>): "draft" | "active" | "published" | "archived" => {
+  const extractStatusFromProperties = (
+    properties: Record<string, any>
+  ): "draft" | "active" | "published" | "archived" => {
     const status = properties.Status?.select?.name
       ? mapNotionStatusToOntology(properties.Status.select.name)
       : "draft";
 
     // Type guard to ensure status is valid
-    if (status === "draft" || status === "active" || status === "published" || status === "archived") {
+    if (
+      status === "draft" ||
+      status === "active" ||
+      status === "published" ||
+      status === "archived"
+    ) {
       return status;
     }
     return "draft";
@@ -163,7 +164,7 @@ export const makeNotionProvider = (config: NotionProviderConfig): DataProvider =
           extracted,
           JSON.parse(properties["ONE Properties"].rich_text[0].text.content)
         );
-      } catch (e) {
+      } catch (_e) {
         // Ignore parse errors
       }
     }
@@ -229,7 +230,10 @@ export const makeNotionProvider = (config: NotionProviderConfig): DataProvider =
 
   // ===== MAPPERS =====
 
-  const mapNotionPageToThing = async (page: PageObjectResponse, thingType: string): Promise<Thing> => {
+  const mapNotionPageToThing = async (
+    page: PageObjectResponse,
+    thingType: string
+  ): Promise<Thing> => {
     const props = (page as any).properties;
 
     return {
@@ -292,7 +296,9 @@ export const makeNotionProvider = (config: NotionProviderConfig): DataProvider =
     return properties;
   };
 
-  const transformPropertiesToNotionUpdate = (properties: Record<string, any>): Record<string, any> => {
+  const transformPropertiesToNotionUpdate = (
+    properties: Record<string, any>
+  ): Record<string, any> => {
     const notionProps: Record<string, any> = {};
 
     if (properties.content) {
@@ -398,32 +404,21 @@ export const makeNotionProvider = (config: NotionProviderConfig): DataProvider =
     // ===== GROUPS =====
     groups: {
       get: (id: string) =>
-        Effect.fail(
-          new GroupNotFoundError(id, "Notion provider does not support groups")
-        ),
+        Effect.fail(new GroupNotFoundError(id, "Notion provider does not support groups")),
 
       getBySlug: (slug: string) =>
-        Effect.fail(
-          new GroupNotFoundError(slug, "Notion provider does not support groups")
-        ),
+        Effect.fail(new GroupNotFoundError(slug, "Notion provider does not support groups")),
 
-      list: () =>
-        Effect.succeed([]),
+      list: () => Effect.succeed([]),
 
       create: () =>
-        Effect.fail(
-          new GroupCreateError("Notion provider does not support creating groups")
-        ),
+        Effect.fail(new GroupCreateError("Notion provider does not support creating groups")),
 
       update: () =>
-        Effect.fail(
-          new GroupNotFoundError("", "Notion provider does not support updating groups")
-        ),
+        Effect.fail(new GroupNotFoundError("", "Notion provider does not support updating groups")),
 
       delete: () =>
-        Effect.fail(
-          new GroupNotFoundError("", "Notion provider does not support deleting groups")
-        ),
+        Effect.fail(new GroupNotFoundError("", "Notion provider does not support deleting groups")),
     },
 
     // ===== THINGS =====
@@ -570,12 +565,13 @@ export const makeNotionProvider = (config: NotionProviderConfig): DataProvider =
             // We're inside connections.get, but need to call connections.list to verify
             // TypeScript sees this as possibly undefined due to the recursive structure
             // Verify relation exists
-            const connections = await Effect.runPromise(
-              // @ts-ignore - this.connections is defined as we're inside the connections object
+            const connections = (await Effect.runPromise(
+              // @ts-expect-error - this.connections is defined as we're inside the connections object
               this.connections.list({ fromEntityId: fromThingId })
-            ) as Connection[];
+            )) as Connection[];
             const connection = connections?.find(
-              (c: Connection) => c.toEntityId === toThingId && c.relationshipType === relationshipType
+              (c: Connection) =>
+                c.toEntityId === toThingId && c.relationshipType === relationshipType
             );
 
             if (!connection) {
@@ -591,9 +587,7 @@ export const makeNotionProvider = (config: NotionProviderConfig): DataProvider =
         Effect.tryPromise({
           try: async () => {
             if (!options?.fromEntityId && !options?.toEntityId) {
-              throw new QueryError(
-                "Notion connections.list requires fromEntityId or toEntityId"
-              );
+              throw new QueryError("Notion connections.list requires fromEntityId or toEntityId");
             }
 
             const fromId = options.fromEntityId;
@@ -715,17 +709,18 @@ export const makeNotionProvider = (config: NotionProviderConfig): DataProvider =
     // ===== EVENTS =====
     // NOTE: Notion doesn't support events natively - use hybrid approach with Convex
     events: {
-      get: (id: string) =>
+      get: (_id: string) =>
         Effect.fail(
           new QueryError("Notion provider does not support events - use Convex for event storage")
         ),
 
-      list: (options?: ListEventsOptions) =>
-        Effect.succeed([]), // Could integrate with Convex for hybrid storage
+      list: (_options?: ListEventsOptions) => Effect.succeed([]), // Could integrate with Convex for hybrid storage
 
-      create: (input: CreateEventInput) =>
+      create: (_input: CreateEventInput) =>
         Effect.fail(
-          new EventCreateError("Notion provider does not support events - use Convex for event storage")
+          new EventCreateError(
+            "Notion provider does not support events - use Convex for event storage"
+          )
         ),
     },
 
@@ -740,22 +735,27 @@ export const makeNotionProvider = (config: NotionProviderConfig): DataProvider =
           )
         ),
 
-      list: (options?: SearchKnowledgeOptions) =>
-        Effect.succeed([]), // Could integrate with Convex for hybrid storage
+      list: (_options?: SearchKnowledgeOptions) => Effect.succeed([]), // Could integrate with Convex for hybrid storage
 
-      create: (input: CreateKnowledgeInput) =>
+      create: (_input: CreateKnowledgeInput) =>
         Effect.fail(
-          new QueryError("Notion provider does not support knowledge - use Convex for knowledge storage")
+          new QueryError(
+            "Notion provider does not support knowledge - use Convex for knowledge storage"
+          )
         ),
 
-      link: (thingId: string, knowledgeId: string, role?: ThingKnowledge["role"]) =>
+      link: (_thingId: string, _knowledgeId: string, _role?: ThingKnowledge["role"]) =>
         Effect.fail(
-          new QueryError("Notion provider does not support knowledge - use Convex for knowledge storage")
+          new QueryError(
+            "Notion provider does not support knowledge - use Convex for knowledge storage"
+          )
         ),
 
-      search: (embedding: number[], options?: SearchKnowledgeOptions) =>
+      search: (_embedding: number[], _options?: SearchKnowledgeOptions) =>
         Effect.fail(
-          new QueryError("Notion provider does not support vector search - use Convex for knowledge storage")
+          new QueryError(
+            "Notion provider does not support vector search - use Convex for knowledge storage"
+          )
         ),
     },
   };

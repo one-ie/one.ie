@@ -1,9 +1,9 @@
 import { useState } from "react";
+import { toast } from "sonner";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { useLogin } from "@/hooks/useAuth";
-import { toast } from "sonner";
 import { AuthCard } from "./AuthCard";
 import { SocialLoginButtons } from "./SocialLoginButtons";
 
@@ -21,8 +21,7 @@ export function SimpleSignInForm() {
       if (result.success) {
         // Success
         toast.success("Welcome back!", {
-          description:
-            "Successfully signed in. Redirecting to your dashboard...",
+          description: "Successfully signed in. Redirecting to your dashboard...",
         });
 
         setTimeout(() => {
@@ -72,8 +71,7 @@ export function SimpleSignInForm() {
             "The password you entered is incorrect. Please try again or use the 'Forgot password' option.";
         } else if (errorMessage.toLowerCase().includes("email")) {
           title = "Invalid email";
-          description =
-            "Please enter a valid email address (e.g., yourname@example.com).";
+          description = "Please enter a valid email address (e.g., yourname@example.com).";
         } else if (
           errorMessage.toLowerCase().includes("network") ||
           errorMessage.toLowerCase().includes("connection") ||
@@ -84,12 +82,10 @@ export function SimpleSignInForm() {
             "Unable to connect to the server. Please check your internet connection and try again.";
         } else if (errorMessage.toLowerCase().includes("timeout")) {
           title = "Request timeout";
-          description =
-            "The server is taking too long to respond. Please try again in a moment.";
+          description = "The server is taking too long to respond. Please try again in a moment.";
         } else if (errorMessage.toLowerCase().includes("cors")) {
           title = "Configuration error";
-          description =
-            "There's a configuration issue preventing sign in. Please contact support.";
+          description = "There's a configuration issue preventing sign in. Please contact support.";
         } else if (
           errorMessage.toLowerCase().includes("blocked") ||
           errorMessage.toLowerCase().includes("suspended")
@@ -156,10 +152,7 @@ export function SimpleSignInForm() {
         <div className="space-y-2">
           <div className="flex items-center justify-between">
             <Label htmlFor="password">Password</Label>
-            <a
-              href="/account/forgot-password"
-              className="text-xs text-primary hover:underline"
-            >
+            <a href="/account/forgot-password" className="text-xs text-primary hover:underline">
               Forgot password?
             </a>
           </div>

@@ -4,15 +4,15 @@
  * Shows current step in onboarding flow and completion percentage
  */
 
-import { Check } from 'lucide-react';
+import { Check } from "lucide-react";
 
 const STEPS = [
-  { number: 1, label: 'Email', key: 'email_verification' },
-  { number: 2, label: 'Profile', key: 'profile' },
-  { number: 3, label: 'Workspace', key: 'workspace' },
-  { number: 4, label: 'Team', key: 'team' },
-  { number: 5, label: 'Wallet', key: 'wallet' },
-  { number: 6, label: 'Skills', key: 'skills' },
+  { number: 1, label: "Email", key: "email_verification" },
+  { number: 2, label: "Profile", key: "profile" },
+  { number: 3, label: "Workspace", key: "workspace" },
+  { number: 4, label: "Team", key: "team" },
+  { number: 5, label: "Wallet", key: "wallet" },
+  { number: 6, label: "Skills", key: "skills" },
 ];
 
 interface ProgressBarProps {
@@ -26,9 +26,7 @@ export function ProgressBar({ currentStep, completedSteps, progress }: ProgressB
     <div className="w-full space-y-4">
       {/* Progress Percentage */}
       <div className="flex items-center justify-between">
-        <span className="text-sm font-medium text-foreground">
-          Onboarding Progress
-        </span>
+        <span className="text-sm font-medium text-foreground">Onboarding Progress</span>
         <span className="text-sm font-semibold text-primary">{progress}%</span>
       </div>
 
@@ -53,12 +51,12 @@ export function ProgressBar({ currentStep, completedSteps, progress }: ProgressB
               <div
                 className={`flex items-center justify-center w-10 h-10 rounded-full border-2 transition-all duration-300 ${
                   isCompleted
-                    ? 'bg-primary border-primary'
+                    ? "bg-primary border-primary"
                     : isCurrent
-                      ? 'border-primary bg-primary/10'
+                      ? "border-primary bg-primary/10"
                       : isUpcoming
-                        ? 'border-muted bg-muted'
-                        : 'border-muted bg-background'
+                        ? "border-muted bg-muted"
+                        : "border-muted bg-background"
                 }`}
               >
                 {isCompleted ? (
@@ -67,10 +65,10 @@ export function ProgressBar({ currentStep, completedSteps, progress }: ProgressB
                   <span
                     className={`text-sm font-semibold ${
                       isCurrent
-                        ? 'text-primary'
+                        ? "text-primary"
                         : isUpcoming
-                          ? 'text-muted-foreground'
-                          : 'text-foreground'
+                          ? "text-muted-foreground"
+                          : "text-foreground"
                     }`}
                   >
                     {step.number}
@@ -82,10 +80,10 @@ export function ProgressBar({ currentStep, completedSteps, progress }: ProgressB
               <span
                 className={`text-xs mt-2 text-center ${
                   isCurrent
-                    ? 'font-semibold text-primary'
+                    ? "font-semibold text-primary"
                     : isCompleted
-                      ? 'text-muted-foreground'
-                      : 'text-muted-foreground'
+                      ? "text-muted-foreground"
+                      : "text-muted-foreground"
                 }`}
               >
                 {step.label}
@@ -95,9 +93,9 @@ export function ProgressBar({ currentStep, completedSteps, progress }: ProgressB
               {index < STEPS.length - 1 && (
                 <div
                   className={`absolute w-[calc(100%/6-20px)] h-0.5 top-5 -right-[calc(50%+10px)] transition-all duration-300 ${
-                    isCompleted ? 'bg-primary' : 'bg-muted'
+                    isCompleted ? "bg-primary" : "bg-muted"
                   }`}
-                  style={{ transform: 'translateY(-50%)' }}
+                  style={{ transform: "translateY(-50%)" }}
                 />
               )}
             </div>

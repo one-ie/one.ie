@@ -1,6 +1,6 @@
-import { Button } from '@/components/ui/button';
-import { Badge } from '@/components/ui/badge';
-import { Star } from 'lucide-react';
+import { Star } from "lucide-react";
+import { Badge } from "@/components/ui/badge";
+import { Button } from "@/components/ui/button";
 
 interface ProductHeroProps {
   title: string;
@@ -21,7 +21,7 @@ export function ProductHero({
   price,
   originalPrice,
   description,
-  onBuyNow
+  onBuyNow,
 }: ProductHeroProps) {
   const savings = originalPrice ? originalPrice - price : 0;
   const savingsPercent = originalPrice ? Math.round((savings / originalPrice) * 100) : 0;
@@ -37,9 +37,7 @@ export function ProductHero({
         </div>
 
         {/* Title */}
-        <h1 className="text-4xl md:text-6xl font-black tracking-tight leading-tight">
-          {title}
-        </h1>
+        <h1 className="text-4xl md:text-6xl font-black tracking-tight leading-tight">{title}</h1>
 
         {/* Rating */}
         <div className="flex items-center gap-3">
@@ -49,8 +47,8 @@ export function ProductHero({
                 key={i}
                 className={`w-5 h-5 ${
                   i < Math.floor(rating)
-                    ? 'fill-current text-yellow-500'
-                    : 'text-gray-300 dark:text-gray-600'
+                    ? "fill-current text-yellow-500"
+                    : "text-gray-300 dark:text-gray-600"
                 }`}
               />
             ))}

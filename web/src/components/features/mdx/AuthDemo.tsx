@@ -1,8 +1,8 @@
 "use client";
 
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import { Check, Key, Lock, Mail, Shield, Smartphone } from "lucide-react";
 import { Badge } from "@/components/ui/badge";
-import { Check, X, Shield, Clock, Key, Mail, Smartphone, Lock } from "lucide-react";
+import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 
 interface AuthMethod {
   name: string;
@@ -24,7 +24,7 @@ const authMethods: AuthMethod[] = [
     setup: "easy",
     userExperience: "good",
     features: ["Password strength validation", "Bcrypt hashing", "Remember me", "Password reset"],
-    components: ["SimpleSignInForm", "SimpleSignUpForm", "ForgotPasswordForm"]
+    components: ["SimpleSignInForm", "SimpleSignUpForm", "ForgotPasswordForm"],
   },
   {
     name: "OAuth Social Login",
@@ -33,8 +33,14 @@ const authMethods: AuthMethod[] = [
     security: "high",
     setup: "medium",
     userExperience: "excellent",
-    features: ["Google OAuth", "GitHub OAuth", "Discord OAuth", "Microsoft OAuth", "Auto account linking"],
-    components: ["SocialLoginButtons"]
+    features: [
+      "Google OAuth",
+      "GitHub OAuth",
+      "Discord OAuth",
+      "Microsoft OAuth",
+      "Auto account linking",
+    ],
+    components: ["SocialLoginButtons"],
   },
   {
     name: "Magic Link",
@@ -44,7 +50,7 @@ const authMethods: AuthMethod[] = [
     setup: "easy",
     userExperience: "excellent",
     features: ["No password needed", "Email verification", "Time-limited tokens", "Secure links"],
-    components: ["RequestMagicLinkForm", "MagicLinkAuth"]
+    components: ["RequestMagicLinkForm", "MagicLinkAuth"],
   },
   {
     name: "Two-Factor (2FA)",
@@ -54,7 +60,7 @@ const authMethods: AuthMethod[] = [
     setup: "complex",
     userExperience: "fair",
     features: ["SMS codes", "TOTP authenticator", "Backup codes", "Trusted devices"],
-    components: ["TwoFactorSettings"]
+    components: ["TwoFactorSettings"],
   },
   {
     name: "Email Verification",
@@ -64,7 +70,7 @@ const authMethods: AuthMethod[] = [
     setup: "easy",
     userExperience: "good",
     features: ["Email confirmation", "Resend verification", "Expiring tokens"],
-    components: ["VerifyEmailForm"]
+    components: ["VerifyEmailForm"],
   },
   {
     name: "Password Reset",
@@ -74,14 +80,14 @@ const authMethods: AuthMethod[] = [
     setup: "easy",
     userExperience: "good",
     features: ["Email verification", "Time-limited tokens", "Password strength validation"],
-    components: ["ForgotPasswordForm", "ResetPasswordForm"]
-  }
+    components: ["ForgotPasswordForm", "ResetPasswordForm"],
+  },
 ];
 
 const securityColors = {
   "very-high": "bg-green-100 text-green-800 dark:bg-green-900/30 dark:text-green-400",
-  "high": "bg-blue-100 text-blue-800 dark:bg-blue-900/30 dark:text-blue-400",
-  "medium": "bg-yellow-100 text-yellow-800 dark:bg-yellow-900/30 dark:text-yellow-400"
+  high: "bg-blue-100 text-blue-800 dark:bg-blue-900/30 dark:text-blue-400",
+  medium: "bg-yellow-100 text-yellow-800 dark:bg-yellow-900/30 dark:text-yellow-400",
 };
 
 interface AuthDemoProps {
@@ -103,7 +109,7 @@ interface AuthDemoProps {
  */
 export function AuthDemo({
   title = "Authentication Methods Overview",
-  description = "All 6 authentication methods with their features and components"
+  description = "All 6 authentication methods with their features and components",
 }: AuthDemoProps) {
   return (
     <Card className="my-8 border-primary/20">
@@ -112,9 +118,7 @@ export function AuthDemo({
           <Shield className="h-6 w-6 text-primary" />
           {title}
         </CardTitle>
-        {description && (
-          <p className="text-sm text-muted-foreground mt-2">{description}</p>
-        )}
+        {description && <p className="text-sm text-muted-foreground mt-2">{description}</p>}
       </CardHeader>
       <CardContent>
         <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
@@ -131,12 +135,12 @@ export function AuthDemo({
                       <CardTitle className="text-lg">{method.name}</CardTitle>
                     </div>
                     <Badge className={securityColors[method.security]} variant="secondary">
-                      {method.security === "very-high" ? "Very High" : method.security.charAt(0).toUpperCase() + method.security.slice(1)}
+                      {method.security === "very-high"
+                        ? "Very High"
+                        : method.security.charAt(0).toUpperCase() + method.security.slice(1)}
                     </Badge>
                   </div>
-                  <p className="text-sm text-muted-foreground mt-2">
-                    {method.description}
-                  </p>
+                  <p className="text-sm text-muted-foreground mt-2">{method.description}</p>
                 </CardHeader>
                 <CardContent className="space-y-4">
                   <div>

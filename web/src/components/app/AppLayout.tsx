@@ -1,34 +1,22 @@
 "use client";
 
+import { BookOpen, Package, Search, Share2, Sparkles, Users } from "lucide-react";
 import * as React from "react";
-import {
-  Search,
-  Users,
-  Package,
-  Share2,
-  Sparkles,
-  BookOpen,
-} from "lucide-react";
 import { Toaster } from "sonner";
-
-import { cn } from "@/lib/utils";
 import { Input } from "@/components/ui/input";
-import {
-  ResizableHandle,
-  ResizablePanel,
-  ResizablePanelGroup,
-} from "@/components/ui/resizable";
+import { ResizableHandle, ResizablePanel, ResizablePanelGroup } from "@/components/ui/resizable";
 import { TooltipProvider } from "@/components/ui/tooltip";
-import { useApp } from "./use-app";
-import { ProfileHeader } from "./ProfileHeader";
-import { Navigation, type NavigationItem } from "./Navigation";
-import { EntityCard } from "./EntityCard";
-import { StatusTabs } from "./StatusTabs";
-import { MobileNav } from "./MobileNav";
-import { FloatingActionButton } from "./FloatingActionButton";
-import { CommandPalette } from "./CommandPalette";
-import { mockEntities, viewCounts, JOURNEY_STAGES } from "@/data/app-data";
+import { JOURNEY_STAGES, mockEntities, viewCounts } from "@/data/app-data";
 import { useMediaQuery } from "@/hooks/use-media-query";
+import { cn } from "@/lib/utils";
+import { CommandPalette } from "./CommandPalette";
+import { EntityCard } from "./EntityCard";
+import { FloatingActionButton } from "./FloatingActionButton";
+import { MobileNav } from "./MobileNav";
+import { Navigation, type NavigationItem } from "./Navigation";
+import { ProfileHeader } from "./ProfileHeader";
+import { StatusTabs } from "./StatusTabs";
+import { useApp } from "./use-app";
 
 interface AppLayoutProps {
   defaultLayout?: number[] | undefined;
@@ -75,9 +63,7 @@ export function AppLayout({ defaultLayout = [20, 32, 48] }: AppLayoutProps) {
 
   // Filter entities based on current state
   const filteredEntities = React.useMemo(() => {
-    let filtered = mockEntities.filter(
-      (entity) => entity.kind === app.activeView,
-    );
+    let filtered = mockEntities.filter((entity) => entity.kind === app.activeView);
 
     // Filter by status
     filtered = filtered.filter((e) => e.status === app.statusFilter);
@@ -85,7 +71,7 @@ export function AppLayout({ defaultLayout = [20, 32, 48] }: AppLayoutProps) {
     // Filter by journey stages (if any selected)
     if (app.journeyStages.length > 0) {
       filtered = filtered.filter((e) =>
-        e.tags.some((tag: string) => app.journeyStages.includes(tag)),
+        e.tags.some((tag: string) => app.journeyStages.includes(tag))
       );
     }
 
@@ -96,7 +82,7 @@ export function AppLayout({ defaultLayout = [20, 32, 48] }: AppLayoutProps) {
         (e) =>
           e.title.toLowerCase().includes(query) ||
           e.subtitle.toLowerCase().includes(query) ||
-          e.preview.toLowerCase().includes(query),
+          e.preview.toLowerCase().includes(query)
       );
     }
 
@@ -104,22 +90,16 @@ export function AppLayout({ defaultLayout = [20, 32, 48] }: AppLayoutProps) {
   }, [app.activeView, app.statusFilter, app.journeyStages, app.searchQuery]);
 
   const selectedEntity =
-    filteredEntities.find((e) => e._id === app.selectedEntityId) ||
-    filteredEntities[0];
+    filteredEntities.find((e) => e._id === app.selectedEntityId) || filteredEntities[0];
 
   // Keyboard navigation (j/k for next/prev, esc to deselect)
   React.useEffect(() => {
     const handleKeyPress = (e: KeyboardEvent) => {
-      if (
-        e.target instanceof HTMLInputElement ||
-        e.target instanceof HTMLTextAreaElement
-      ) {
+      if (e.target instanceof HTMLInputElement || e.target instanceof HTMLTextAreaElement) {
         return; // Don't trigger when typing in inputs
       }
 
-      const currentIndex = filteredEntities.findIndex(
-        (e) => e._id === app.selectedEntityId,
-      );
+      const currentIndex = filteredEntities.findIndex((e) => e._id === app.selectedEntityId);
 
       if (e.key === "j" && currentIndex < filteredEntities.length - 1) {
         // Next item
@@ -160,9 +140,7 @@ export function AppLayout({ defaultLayout = [20, 32, 48] }: AppLayoutProps) {
           {/* Status Tabs */}
           <StatusTabs
             activeStatus={app.statusFilter}
-            onStatusChange={(status) =>
-              setApp({ ...app, statusFilter: status })
-            }
+            onStatusChange={(status) => setApp({ ...app, statusFilter: status })}
           />
 
           {/* Search */}
@@ -173,9 +151,7 @@ export function AppLayout({ defaultLayout = [20, 32, 48] }: AppLayoutProps) {
                 placeholder="Search people, things, connections..."
                 className="pl-10 h-10 shadow-sm"
                 value={app.searchQuery}
-                onChange={(e) =>
-                  setApp({ ...app, searchQuery: e.target.value })
-                }
+                onChange={(e) => setApp({ ...app, searchQuery: e.target.value })}
               />
             </div>
           </div>
@@ -186,14 +162,13 @@ export function AppLayout({ defaultLayout = [20, 32, 48] }: AppLayoutProps) {
               const isSelected = app.journeyStages.includes(stage);
               return (
                 <button
+                  type="button"
                   key={stage}
                   onClick={() => {
                     if (isSelected) {
                       setApp({
                         ...app,
-                        journeyStages: app.journeyStages.filter(
-                          (s) => s !== stage,
-                        ),
+                        journeyStages: app.journeyStages.filter((s) => s !== stage),
                       });
                     } else {
                       setApp({
@@ -207,7 +182,7 @@ export function AppLayout({ defaultLayout = [20, 32, 48] }: AppLayoutProps) {
                     "focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-black focus-visible:ring-offset-2",
                     isSelected
                       ? "bg-black text-white shadow-md"
-                      : "bg-white text-gray-700 border border-gray-300 hover:border-gray-400 hover:shadow-sm active:bg-gray-50",
+                      : "bg-white text-gray-700 border border-gray-300 hover:border-gray-400 hover:shadow-sm active:bg-gray-50"
                   )}
                 >
                   {stage}
@@ -222,9 +197,7 @@ export function AppLayout({ defaultLayout = [20, 32, 48] }: AppLayoutProps) {
               <div className="flex h-full items-center justify-center text-center p-8">
                 <div className="space-y-3">
                   <div className="text-4xl">📭</div>
-                  <p className="text-base font-semibold text-gray-900">
-                    No entities found
-                  </p>
+                  <p className="text-base font-semibold text-gray-900">No entities found</p>
                   <p className="text-sm text-gray-600">
                     Try adjusting your filters or search query
                   </p>
@@ -258,10 +231,7 @@ export function AppLayout({ defaultLayout = [20, 32, 48] }: AppLayoutProps) {
         </div>
       ) : (
         // Desktop Layout
-        <ResizablePanelGroup
-          direction="horizontal"
-          className="h-full items-stretch"
-        >
+        <ResizablePanelGroup direction="horizontal" className="h-full items-stretch">
           {/* LEFT PANEL - Navigation */}
           <ResizablePanel
             defaultSize={defaultLayout[0]}
@@ -286,9 +256,7 @@ export function AppLayout({ defaultLayout = [20, 32, 48] }: AppLayoutProps) {
             <div className="flex h-full flex-col">
               <StatusTabs
                 activeStatus={app.statusFilter}
-                onStatusChange={(status) =>
-                  setApp({ ...app, statusFilter: status })
-                }
+                onStatusChange={(status) => setApp({ ...app, statusFilter: status })}
               />
 
               {/* Search */}
@@ -299,9 +267,7 @@ export function AppLayout({ defaultLayout = [20, 32, 48] }: AppLayoutProps) {
                     placeholder="Search people, things, connections..."
                     className="pl-10 h-10 shadow-sm"
                     value={app.searchQuery}
-                    onChange={(e) =>
-                      setApp({ ...app, searchQuery: e.target.value })
-                    }
+                    onChange={(e) => setApp({ ...app, searchQuery: e.target.value })}
                   />
                 </div>
               </div>
@@ -312,14 +278,13 @@ export function AppLayout({ defaultLayout = [20, 32, 48] }: AppLayoutProps) {
                   const isSelected = app.journeyStages.includes(stage);
                   return (
                     <button
+                      type="button"
                       key={stage}
                       onClick={() => {
                         if (isSelected) {
                           setApp({
                             ...app,
-                            journeyStages: app.journeyStages.filter(
-                              (s) => s !== stage,
-                            ),
+                            journeyStages: app.journeyStages.filter((s) => s !== stage),
                           });
                         } else {
                           setApp({
@@ -333,7 +298,7 @@ export function AppLayout({ defaultLayout = [20, 32, 48] }: AppLayoutProps) {
                         "focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-black focus-visible:ring-offset-2",
                         isSelected
                           ? "bg-black text-white shadow-md"
-                          : "bg-white text-gray-700 border border-gray-300 hover:border-gray-400 hover:shadow-sm",
+                          : "bg-white text-gray-700 border border-gray-300 hover:border-gray-400 hover:shadow-sm"
                       )}
                     >
                       {stage}
@@ -348,9 +313,7 @@ export function AppLayout({ defaultLayout = [20, 32, 48] }: AppLayoutProps) {
                   <div className="flex h-full items-center justify-center text-center p-8">
                     <div className="space-y-3">
                       <div className="text-4xl">📭</div>
-                      <p className="text-base font-semibold text-gray-900">
-                        No entities found
-                      </p>
+                      <p className="text-base font-semibold text-gray-900">No entities found</p>
                       <p className="text-sm text-gray-600">
                         Try adjusting your filters or search query
                       </p>
@@ -363,9 +326,7 @@ export function AppLayout({ defaultLayout = [20, 32, 48] }: AppLayoutProps) {
                         key={entity._id}
                         entity={entity}
                         selected={app.selectedEntityId === entity._id}
-                        onClick={() =>
-                          setApp({ ...app, selectedEntityId: entity._id })
-                        }
+                        onClick={() => setApp({ ...app, selectedEntityId: entity._id })}
                       />
                     ))}
                   </div>
@@ -388,12 +349,8 @@ export function AppLayout({ defaultLayout = [20, 32, 48] }: AppLayoutProps) {
                         📧
                       </div>
                       <div>
-                        <h2 className="text-lg font-semibold">
-                          {selectedEntity.title}
-                        </h2>
-                        <p className="text-sm text-gray-600">
-                          {selectedEntity.subtitle}
-                        </p>
+                        <h2 className="text-lg font-semibold">{selectedEntity.title}</h2>
+                        <p className="text-sm text-gray-600">{selectedEntity.subtitle}</p>
                       </div>
                     </div>
                   </div>
@@ -424,28 +381,40 @@ export function AppLayout({ defaultLayout = [20, 32, 48] }: AppLayoutProps) {
                   {/* Action Buttons */}
                   <div className="border-t p-4">
                     <div className="flex flex-wrap gap-3 text-sm text-gray-700">
-                      <button className="hover:text-black">Add</button>
+                      <button type="button" className="hover:text-black">
+                        Add
+                      </button>
                       <span>|</span>
-                      <button className="hover:text-black">Reply</button>
+                      <button type="button" className="hover:text-black">
+                        Reply
+                      </button>
                       <span>|</span>
-                      <button className="hover:text-black">Forward</button>
+                      <button type="button" className="hover:text-black">
+                        Forward
+                      </button>
                       <span>|</span>
-                      <button className="hover:text-black">Share</button>
+                      <button type="button" className="hover:text-black">
+                        Share
+                      </button>
                       <span>|</span>
-                      <button className="hover:text-black">Save</button>
+                      <button type="button" className="hover:text-black">
+                        Save
+                      </button>
                       <span>|</span>
-                      <button className="hover:text-black">Copy</button>
+                      <button type="button" className="hover:text-black">
+                        Copy
+                      </button>
                       <span>|</span>
-                      <button className="hover:text-black">Complete</button>
+                      <button type="button" className="hover:text-black">
+                        Complete
+                      </button>
                     </div>
                   </div>
 
                   {/* @Mentions */}
                   <div className="border-t px-4 py-3">
                     <div className="flex flex-wrap gap-2">
-                      <span className="bg-muted rounded-full px-3 py-1 text-sm">
-                        @Teacher One
-                      </span>
+                      <span className="bg-muted rounded-full px-3 py-1 text-sm">@Teacher One</span>
                       <span className="bg-muted rounded-full px-3 py-1 text-sm">
                         @Anthony O'Connell
                       </span>
@@ -455,15 +424,25 @@ export function AppLayout({ defaultLayout = [20, 32, 48] }: AppLayoutProps) {
                   {/* Secondary Actions */}
                   <div className="border-t p-4">
                     <div className="flex flex-wrap gap-3 text-sm text-gray-700">
-                      <button className="hover:text-black">Add</button>
+                      <button type="button" className="hover:text-black">
+                        Add
+                      </button>
                       <span>|</span>
-                      <button className="hover:text-black">Invite</button>
+                      <button type="button" className="hover:text-black">
+                        Invite
+                      </button>
                       <span>|</span>
-                      <button className="hover:text-black">Share</button>
+                      <button type="button" className="hover:text-black">
+                        Share
+                      </button>
                       <span>|</span>
-                      <button className="hover:text-black">Save</button>
+                      <button type="button" className="hover:text-black">
+                        Save
+                      </button>
                       <span>|</span>
-                      <button className="hover:text-black">Complete</button>
+                      <button type="button" className="hover:text-black">
+                        Complete
+                      </button>
                     </div>
                   </div>
                 </>
@@ -481,10 +460,7 @@ export function AppLayout({ defaultLayout = [20, 32, 48] }: AppLayoutProps) {
       <FloatingActionButton />
 
       {/* Command Palette */}
-      <CommandPalette
-        open={commandPaletteOpen}
-        onOpenChange={setCommandPaletteOpen}
-      />
+      <CommandPalette open={commandPaletteOpen} onOpenChange={setCommandPaletteOpen} />
 
       {/* Bottom Category Bar - Desktop Only */}
       {!isMobile && (
@@ -492,6 +468,7 @@ export function AppLayout({ defaultLayout = [20, 32, 48] }: AppLayoutProps) {
           <div className="flex items-center gap-8 px-6 py-2 text-xs text-muted-foreground overflow-x-auto scrollbar-hide">
             {JOURNEY_STAGES.map((stage) => (
               <button
+                type="button"
                 key={stage}
                 className="whitespace-nowrap hover:text-foreground transition-colors"
               >

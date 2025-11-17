@@ -5,74 +5,71 @@
  * Organizations can switch backends by changing ONE import.
  */
 
+export type { ConvexProviderConfig } from "./ConvexProvider";
+// Convex implementation
+export { createConvexProvider } from "./ConvexProvider";
 // Main interface and types
 export type {
-  DataProvider,
-  Thing,
+  AuthError,
+  AuthResult,
   Connection,
-  Event,
-  Knowledge,
-  ThingKnowledge,
-  CreateThingInput,
-  UpdateThingInput,
+  ConnectionCreateError,
+  ConnectionNotFoundError,
+  ConnectionType,
   CreateConnectionInput,
   CreateEventInput,
   CreateKnowledgeInput,
-  ListThingsOptions,
+  CreateThingInput,
+  DataProvider,
+  DataProviderError,
+  Disable2FAArgs,
+  EmailAlreadyExistsError,
+  EmailNotVerifiedError,
+  Event,
+  EventCreateError,
+  Invalid2FACodeError,
+  InvalidCredentialsError,
+  InvalidTokenError,
+  Knowledge,
+  KnowledgeNotFoundError,
+  KnowledgeType,
   ListConnectionsOptions,
   ListEventsOptions,
-  SearchKnowledgeOptions,
-  ThingStatus,
-  ConnectionType,
-  KnowledgeType,
-  DataProviderError,
-  ThingNotFoundError,
-  ThingCreateError,
-  ThingUpdateError,
-  ConnectionNotFoundError,
-  ConnectionCreateError,
-  EventCreateError,
-  KnowledgeNotFoundError,
-  QueryError,
-  // Auth types
-  User,
-  AuthResult,
-  TwoFactorStatus,
-  TwoFactorSetup,
+  ListThingsOptions,
   LoginArgs,
-  SignupArgs,
   MagicLinkArgs,
+  NetworkError,
   PasswordResetArgs,
   PasswordResetCompleteArgs,
-  VerifyEmailArgs,
-  Verify2FAArgs,
-  Disable2FAArgs,
-  AuthError,
-  InvalidCredentialsError,
-  UserNotFoundError,
-  EmailAlreadyExistsError,
-  WeakPasswordError,
-  InvalidTokenError,
-  TokenExpiredError,
-  NetworkError,
+  QueryError,
   RateLimitExceededError,
-  EmailNotVerifiedError,
+  SearchKnowledgeOptions,
+  SignupArgs,
+  Thing,
+  ThingCreateError,
+  ThingKnowledge,
+  ThingNotFoundError,
+  ThingStatus,
+  ThingUpdateError,
+  TokenExpiredError,
   TwoFactorRequiredError,
-  Invalid2FACodeError,
+  TwoFactorSetup,
+  TwoFactorStatus,
+  UpdateThingInput,
+  // Auth types
+  User,
+  UserNotFoundError,
+  Verify2FAArgs,
+  VerifyEmailArgs,
+  WeakPasswordError,
 } from "./DataProvider";
-
 // Effect.ts service tag
 export { DataProviderService } from "./DataProvider";
-
-// Convex implementation
-export { createConvexProvider } from "./ConvexProvider";
-export type { ConvexProviderConfig } from "./ConvexProvider";
-
+export type { ProviderConfig, ProviderType } from "./factory";
 // Factory pattern
 export {
   createDataProvider,
   createDataProviderLayer,
-  initializeDefaultProvider,
   getDefaultProvider,
+  initializeDefaultProvider,
 } from "./factory";
-export type { ProviderType, ProviderConfig } from "./factory";

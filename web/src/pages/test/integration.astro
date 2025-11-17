@@ -8,14 +8,11 @@
  * Visit: http://localhost:4321/test/integration
  */
 
-import Layout from '@/layouts/Layout.astro';
-import { BackendIntegrationTest } from '@/components/test/BackendIntegrationTest';
-import { DataProviderProvider } from '@/hooks/useDataProvider';
-import { makeConvexProvider } from '@/providers/convex/ConvexProvider';
+import { makeConvexProvider } from "@/providers/convex/ConvexProvider";
 
 // Initialize Convex provider with backend URL
-const convexUrl = import.meta.env.PUBLIC_CONVEX_URL || 'https://shocking-falcon-870.convex.cloud';
-const provider = makeConvexProvider({ url: convexUrl });
+const convexUrl = import.meta.env.PUBLIC_CONVEX_URL || "https://shocking-falcon-870.convex.cloud";
+const _provider = makeConvexProvider({ url: convexUrl });
 ---
 
 <Layout title="Backend Integration Tests">

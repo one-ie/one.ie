@@ -5,11 +5,11 @@
  * for all onboarding steps
  */
 
-import type { ReactNode } from 'react';
-import { Card } from '@/components/ui/card';
-import { ProgressBar } from './ProgressBar';
-import { ArrowLeft } from 'lucide-react';
-import { Button } from '@/components/ui/button';
+import { ArrowLeft } from "lucide-react";
+import type { ReactNode } from "react";
+import { Button } from "@/components/ui/button";
+import { Card } from "@/components/ui/card";
+import { ProgressBar } from "./ProgressBar";
 
 interface OnboardingLayoutProps {
   children: ReactNode;
@@ -41,28 +41,16 @@ export function OnboardingLayout({
             <div className="h-8 w-8 rounded-full bg-primary text-primary-foreground flex items-center justify-center text-sm font-bold">
               1
             </div>
-            <span className="text-sm font-semibold text-muted-foreground">
-              creator onboarding
-            </span>
+            <span className="text-sm font-semibold text-muted-foreground">creator onboarding</span>
           </div>
-          <h1 className="text-3xl sm:text-4xl font-bold text-foreground">
-            {title}
-          </h1>
-          {subtitle && (
-            <p className="text-muted-foreground max-w-lg mx-auto">
-              {subtitle}
-            </p>
-          )}
+          <h1 className="text-3xl sm:text-4xl font-bold text-foreground">{title}</h1>
+          {subtitle && <p className="text-muted-foreground max-w-lg mx-auto">{subtitle}</p>}
         </div>
 
         {/* Progress Bar */}
         {showProgress && (
           <div className="px-4">
-            <ProgressBar
-              currentStep={step}
-              completedSteps={completedSteps}
-              progress={progress}
-            />
+            <ProgressBar currentStep={step} completedSteps={completedSteps} progress={progress} />
           </div>
         )}
 
@@ -71,13 +59,7 @@ export function OnboardingLayout({
           {/* Back Button */}
           {onBack && (
             <div className="mb-6">
-              <Button
-                type="button"
-                variant="ghost"
-                size="sm"
-                onClick={onBack}
-                className="gap-2"
-              >
+              <Button type="button" variant="ghost" size="sm" onClick={onBack} className="gap-2">
                 <ArrowLeft className="w-4 h-4" />
                 Back
               </Button>
@@ -90,22 +72,14 @@ export function OnboardingLayout({
 
         {/* Footer */}
         <div className="text-center text-sm text-muted-foreground space-y-2">
+          <p>Step {step} of 6</p>
           <p>
-            Step {step} of 6
-          </p>
-          <p>
-            By signing up, you agree to our{' '}
-            <a
-              href="/terms"
-              className="underline hover:text-foreground transition-colors"
-            >
+            By signing up, you agree to our{" "}
+            <a href="/terms" className="underline hover:text-foreground transition-colors">
               Terms of Service
-            </a>
-            {' '}and{' '}
-            <a
-              href="/privacy"
-              className="underline hover:text-foreground transition-colors"
-            >
+            </a>{" "}
+            and{" "}
+            <a href="/privacy" className="underline hover:text-foreground transition-colors">
               Privacy Policy
             </a>
           </p>

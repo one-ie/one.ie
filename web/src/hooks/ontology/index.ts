@@ -18,106 +18,100 @@
  * ```
  */
 
-// Provider
-export {
-  type IDataProvider,
-  DataProviderProvider,
-  useProvider,
-  useIsProviderAvailable,
-  useProviderCapability,
-  useProviderName,
-} from './useProvider';
-
-// Groups
-export {
-  type GroupType,
-  type GroupPlan,
-  type Group,
-  type CreateGroupInput,
-  type UpdateGroupInput,
-  type GroupFilter,
-  useGroup,
-  useGroups,
-  useCurrentGroup,
-  useChildGroups,
-} from './useGroup';
-
-// People
-export {
-  type UserRole,
-  type Person,
-  type CreatePersonInput,
-  usePerson,
-  useCurrentUser,
-  useHasRole,
-  useCanAccess,
-  useGroupMembers,
-  useUserProfile,
-} from './usePerson';
-
-// Things
-export {
-  type Thing,
-  type CreateThingInput,
-  type UpdateThingInput,
-  type ThingFilter,
-  useThing,
-  useThings,
-  useThingDetail,
-  useThingsByType,
-  useThingSearch,
-  usePublishedThings,
-  useMyThings,
-} from './useThing';
-
 // Connections
 export {
-  type ConnectionType,
   type Connection,
-  type CreateConnectionInput,
   type ConnectionFilter,
+  type ConnectionType,
+  type CreateConnectionInput,
   useConnection,
   useConnections,
-  useRelatedEntities,
-  useIsConnected,
-  useOwnedEntities,
+  useEnrollments,
   useFollowers,
   useFollowing,
-  useEnrollments,
+  useIsConnected,
+  useOwnedEntities,
+  useRelatedEntities,
   useUserEnrollments,
-} from './useConnection';
-
+} from "./useConnection";
 // Events
 export {
-  type EventType,
   type Event,
-  type RecordEventInput,
   type EventFilter,
-  useEvent,
-  useEvents,
+  type EventType,
+  type RecordEventInput,
   useActivityFeed,
   useAuditTrail,
-  useUserHistory,
-  useEventsByType,
+  useEvent,
   useEventCount,
-  useTimeline,
   useEventStream,
-} from './useEvent';
-
+  useEvents,
+  useEventsByType,
+  useTimeline,
+  useUserHistory,
+} from "./useEvent";
+// Groups
+export {
+  type CreateGroupInput,
+  type Group,
+  type GroupFilter,
+  type GroupPlan,
+  type GroupType,
+  type UpdateGroupInput,
+  useChildGroups,
+  useCurrentGroup,
+  useGroup,
+  useGroups,
+} from "./useGroup";
+// People
+export {
+  type CreatePersonInput,
+  type Person,
+  type UserRole,
+  useCanAccess,
+  useCurrentUser,
+  useGroupMembers,
+  useHasRole,
+  usePerson,
+  useUserProfile,
+} from "./usePerson";
+// Provider
+export {
+  DataProviderProvider,
+  type IDataProvider,
+  useIsProviderAvailable,
+  useProvider,
+  useProviderCapability,
+  useProviderName,
+} from "./useProvider";
 // Knowledge & Search
 export {
-  type LabelCategory,
   type Label,
-  type SearchResult,
+  type LabelCategory,
   type SearchOptions,
-  useSearch,
-  useSearchByType,
+  type SearchResult,
+  useEntitiesByLabel,
+  useEntityLabels,
+  useFacetedSearch,
   useLabels,
   useLabelsByCategory,
-  useEntityLabels,
-  useEntitiesByLabel,
-  useSimilarEntities,
-  useFacetedSearch,
-  useTrendingEntities,
   useRecommendations,
-} from './useSearch';
+  useSearch,
+  useSearchByType,
+  useSimilarEntities,
+  useTrendingEntities,
+} from "./useSearch";
+// Things
+export {
+  type CreateThingInput,
+  type Thing,
+  type ThingFilter,
+  type UpdateThingInput,
+  useMyThings,
+  usePublishedThings,
+  useThing,
+  useThingDetail,
+  useThingSearch,
+  useThings,
+  useThingsByType,
+} from "./useThing";

@@ -1,16 +1,16 @@
-import { formatDistanceToNow } from "date-fns"
-import { cn } from "@/lib/utils"
-import { Badge } from "@/components/ui/badge"
-import { ScrollArea } from "@/components/ui/scroll-area"
-import { type Mail } from "@/data/mail-data"
-import { useMail } from "./use-mail"
+import { formatDistanceToNow } from "date-fns";
+import { Badge } from "@/components/ui/badge";
+import { ScrollArea } from "@/components/ui/scroll-area";
+import type { Mail } from "@/data/mail-data";
+import { cn } from "@/lib/utils";
+import { useMail } from "./use-mail";
 
 interface MailListProps {
-  items: Mail[]
+  items: Mail[];
 }
 
 export function MailList({ items }: MailListProps) {
-  const [mail, setMail] = useMail()
+  const [mail, setMail] = useMail();
 
   return (
     <ScrollArea className="h-screen">
@@ -33,16 +33,12 @@ export function MailList({ items }: MailListProps) {
               <div className="flex items-center">
                 <div className="flex items-center gap-2">
                   <div className="font-semibold">{item.name}</div>
-                  {!item.read && (
-                    <span className="flex size-2 rounded-full bg-blue-600" />
-                  )}
+                  {!item.read && <span className="flex size-2 rounded-full bg-blue-600" />}
                 </div>
                 <div
                   className={cn(
                     "ml-auto text-xs",
-                    mail.selected === item.id
-                      ? "text-foreground"
-                      : "text-muted-foreground"
+                    mail.selected === item.id ? "text-foreground" : "text-muted-foreground"
                   )}
                 >
                   {formatDistanceToNow(new Date(item.date), {
@@ -68,5 +64,5 @@ export function MailList({ items }: MailListProps) {
         ))}
       </div>
     </ScrollArea>
-  )
+  );
 }

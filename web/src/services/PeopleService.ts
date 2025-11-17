@@ -8,9 +8,7 @@
  */
 
 import { Effect } from "effect";
-import {
-  DataProviderService,
-} from "../providers/DataProvider";
+import { DataProviderService } from "../providers/DataProvider";
 import { isValidRole, type Role } from "./constants";
 import type { PeopleError } from "./types";
 
@@ -73,11 +71,7 @@ export class PeopleService {
   /**
    * Check if person has permission to perform action
    */
-  static checkPermission = (
-    personId: string,
-    action: string,
-    resourceId?: string
-  ) =>
+  static checkPermission = (personId: string, action: string, resourceId?: string) =>
     Effect.gen(function* () {
       const person = yield* PeopleService.get(personId);
       const role = person.properties.role as Role;
@@ -95,9 +89,7 @@ export class PeopleService {
           const resource = yield* provider.things.get(resourceId);
 
           // Check if person's org matches resource's org
-          return (
-            person.properties.organizationId === resource.properties.organizationId
-          );
+          return person.properties.organizationId === resource.properties.organizationId;
         }
         return true;
       }
@@ -190,12 +182,7 @@ export class PeopleService {
   /**
    * Add person to organization with role
    */
-  static addToOrganization = (
-    personId: string,
-    orgId: string,
-    role: Role,
-    invitedBy?: string
-  ) =>
+  static addToOrganization = (personId: string, orgId: string, role: Role, invitedBy?: string) =>
     Effect.gen(function* () {
       const provider = yield* DataProviderService;
 
@@ -260,11 +247,7 @@ export class PeopleService {
   /**
    * Remove person from organization
    */
-  static removeFromOrganization = (
-    personId: string,
-    orgId: string,
-    removedBy: string
-  ) =>
+  static removeFromOrganization = (personId: string, orgId: string, removedBy: string) =>
     Effect.gen(function* () {
       const provider = yield* DataProviderService;
 
@@ -313,12 +296,7 @@ export class PeopleService {
   /**
    * Update person role in organization
    */
-  static updateRole = (
-    personId: string,
-    orgId: string,
-    newRole: Role,
-    updatedBy: string
-  ) =>
+  static updateRole = (personId: string, orgId: string, newRole: Role, updatedBy: string) =>
     Effect.gen(function* () {
       const provider = yield* DataProviderService;
 

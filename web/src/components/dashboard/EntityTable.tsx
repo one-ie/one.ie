@@ -5,10 +5,10 @@
  * Uses Effect services for mutations (delete, update status).
  */
 
-import React, { useState } from "react";
 import { Effect } from "effect";
-import { ThingService } from "@/services/ThingService";
-import { getOrCreateDataProviderLayer } from "@/lib/effect-client";
+import { useState } from "react";
+import { Badge } from "@/components/ui/badge";
+import { Button } from "@/components/ui/button";
 import {
   Table,
   TableBody,
@@ -17,8 +17,8 @@ import {
   TableHeader,
   TableRow,
 } from "@/components/ui/table";
-import { Button } from "@/components/ui/button";
-import { Badge } from "@/components/ui/badge";
+import { getOrCreateDataProviderLayer } from "@/lib/effect-client";
+import { ThingService } from "@/services/ThingService";
 
 interface Thing {
   _id: string;
@@ -64,9 +64,7 @@ export function EntityTable({ entities, page, totalPages, total }: EntityTablePr
 
       // Optimistic update
       setLocalEntities((prev) =>
-        prev.map((entity) =>
-          entity._id === id ? { ...entity, status: newStatus } : entity
-        )
+        prev.map((entity) => (entity._id === id ? { ...entity, status: newStatus } : entity))
       );
     } catch (err) {
       setError("Failed to update status");
@@ -110,7 +108,7 @@ export function EntityTable({ entities, page, totalPages, total }: EntityTablePr
     }
   };
 
-  const getStatusBadgeVariant = (status: Thing["status"]) => {
+  const _getStatusBadgeVariant = (status: Thing["status"]) => {
     switch (status) {
       case "published":
         return "default";
@@ -177,10 +175,7 @@ export function EntityTable({ entities, page, totalPages, total }: EntityTablePr
                   <select
                     value={entity.status}
                     onChange={(e) =>
-                      handleStatusChange(
-                        entity._id,
-                        e.target.value as Thing["status"]
-                      )
+                      handleStatusChange(entity._id, e.target.value as Thing["status"])
                     }
                     disabled={loading === entity._id}
                     className="rounded-md border border-gray-300 bg-white px-2 py-1 text-sm dark:border-gray-600 dark:bg-gray-700"
@@ -195,11 +190,7 @@ export function EntityTable({ entities, page, totalPages, total }: EntityTablePr
                 <TableCell>{formatDate(entity.updatedAt)}</TableCell>
                 <TableCell className="text-right">
                   <div className="flex justify-end gap-2">
-                    <Button
-                      variant="outline"
-                      size="sm"
-                      asChild
-                    >
+                    <Button variant="outline" size="sm" asChild>
                       <a href={`/dashboard/things/${entity._id}`}>View</a>
                     </Button>
                     <Button

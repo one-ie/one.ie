@@ -11,7 +11,7 @@
  * - Full dependency injection
  */
 
-import type { IOntologyProvider } from './types';
+import type { IOntologyProvider } from "./types";
 
 // ============================================================================
 // Service Types (Placeholder)

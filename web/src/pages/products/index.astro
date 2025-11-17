@@ -1,14 +1,11 @@
 ---
-import Layout from '../../layouts/Layout.astro';
-import { getCollection } from 'astro:content';
-import { Grid, List } from 'lucide-react';
-import ProductSearch from '../../components/products/ProductSearch.tsx';
+import { getCollection } from "astro:content";
 
 // Get all Product entries
-const entries = await getCollection('products');
+const entries = await getCollection("products");
 
 // Transform entries to serializable format for client components
-const products = entries.map(entry => ({
+const _products = entries.map((entry) => ({
   slug: entry.slug,
   data: {
     name: entry.data.name,
@@ -24,13 +21,16 @@ const products = entries.map(entry => ({
 }));
 
 // Get view mode from URL params, default to grid
-const viewModeParam = Astro.url.searchParams.get('view') || 'grid';
-const viewMode = (viewModeParam === 'list' || viewModeParam === 'grid') ? viewModeParam : 'grid';
-const gridColumnsParam = Astro.url.searchParams.get('columns') || '3';
-const gridColumns = (gridColumnsParam === '2' || gridColumnsParam === '3' || gridColumnsParam === '4') ? gridColumnsParam : '3';
+const viewModeParam = Astro.url.searchParams.get("view") || "grid";
+const _viewMode = viewModeParam === "list" || viewModeParam === "grid" ? viewModeParam : "grid";
+const gridColumnsParam = Astro.url.searchParams.get("columns") || "3";
+const _gridColumns =
+  gridColumnsParam === "2" || gridColumnsParam === "3" || gridColumnsParam === "4"
+    ? gridColumnsParam
+    : "3";
 
 // Get category from URL params
-const categoryParam = Astro.url.searchParams.get('category') || 'all';
+const _categoryParam = Astro.url.searchParams.get("category") || "all";
 ---
 
 <Layout title="Products" description="Browse all available products" sidebarInitialCollapsed>

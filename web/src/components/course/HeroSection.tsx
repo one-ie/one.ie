@@ -17,16 +17,11 @@ interface HeroSectionProps {
   courseDetails: CourseDetails;
 }
 
-export function CourseHeroSection({
-  courseDetails,
-}: HeroSectionProps) {
+export function CourseHeroSection({ courseDetails }: HeroSectionProps) {
   return (
     <section className="container mx-auto px-6 py-16 border-b border-border bg-background/50 backdrop-blur-sm">
       <div className="w-full max-w-[1400px] mx-auto flex flex-col items-center gap-8 text-center">
-        <Badge
-          variant="outline"
-          className="text-sm md:text-base animate-fade-in"
-        >
+        <Badge variant="outline" className="text-sm md:text-base animate-fade-in">
           {courseDetails.badge}
         </Badge>
 

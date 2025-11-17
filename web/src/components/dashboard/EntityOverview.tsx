@@ -4,7 +4,6 @@
  * Display recent entities with type grouping.
  */
 
-import React from "react";
 import { Badge } from "@/components/ui/badge";
 
 interface Thing {
@@ -21,13 +20,16 @@ interface EntityOverviewProps {
 
 export function EntityOverview({ entities }: EntityOverviewProps) {
   // Group entities by type
-  const groupedByType = entities.reduce((acc, entity) => {
-    if (!acc[entity.type]) {
-      acc[entity.type] = [];
-    }
-    acc[entity.type].push(entity);
-    return acc;
-  }, {} as Record<string, Thing[]>);
+  const groupedByType = entities.reduce(
+    (acc, entity) => {
+      if (!acc[entity.type]) {
+        acc[entity.type] = [];
+      }
+      acc[entity.type].push(entity);
+      return acc;
+    },
+    {} as Record<string, Thing[]>
+  );
 
   const formatDate = (timestamp: number) => {
     return new Date(timestamp).toLocaleDateString("en-US", {
@@ -39,7 +41,10 @@ export function EntityOverview({ entities }: EntityOverviewProps) {
   return (
     <div className="space-y-6">
       {Object.entries(groupedByType).map(([type, items]) => (
-        <div key={type} className="rounded-lg border border-gray-200 dark:border-gray-700 bg-white dark:bg-gray-800 p-4">
+        <div
+          key={type}
+          className="rounded-lg border border-gray-200 dark:border-gray-700 bg-white dark:bg-gray-800 p-4"
+        >
           <div className="mb-3 flex items-center justify-between">
             <h3 className="text-lg font-semibold capitalize text-gray-900 dark:text-white">
               {type}s
@@ -64,8 +69,8 @@ export function EntityOverview({ entities }: EntityOverviewProps) {
                       entity.status === "published"
                         ? "default"
                         : entity.status === "active"
-                        ? "secondary"
-                        : "outline"
+                          ? "secondary"
+                          : "outline"
                     }
                   >
                     {entity.status}

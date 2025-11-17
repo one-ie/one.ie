@@ -159,7 +159,12 @@ export const OntologyErrors = {
     message: `Validation failed for ${field}: ${reason}`,
   }),
 
-  unauthorized: (reason: "not_authenticated" | "insufficient_permissions" | "resource_forbidden" = "not_authenticated"): UnauthorizedError => ({
+  unauthorized: (
+    reason:
+      | "not_authenticated"
+      | "insufficient_permissions"
+      | "resource_forbidden" = "not_authenticated"
+  ): UnauthorizedError => ({
     _tag: "Unauthorized",
     reason,
     message: {
@@ -169,7 +174,11 @@ export const OntologyErrors = {
     }[reason],
   }),
 
-  permissionDenied: (action: string, resource: string, requiredRole?: string): PermissionDeniedError => ({
+  permissionDenied: (
+    action: string,
+    resource: string,
+    requiredRole?: string
+  ): PermissionDeniedError => ({
     _tag: "PermissionDenied",
     action,
     resource,
@@ -197,7 +206,11 @@ export const OntologyErrors = {
     message: `Thing not found: ${thingType ? `${thingType} ` : ""}${thingId}`,
   }),
 
-  connectionNotFound: (connectionId: string, sourceId?: string, targetId?: string): ConnectionNotFoundError => ({
+  connectionNotFound: (
+    connectionId: string,
+    sourceId?: string,
+    targetId?: string
+  ): ConnectionNotFoundError => ({
     _tag: "ConnectionNotFound",
     connectionId,
     sourceId,
@@ -217,7 +230,11 @@ export const OntologyErrors = {
     message: `Knowledge not found: ${knowledgeId}`,
   }),
 
-  operationFailed: (operation: string, reason: string, details?: Record<string, unknown>): OperationFailedError => ({
+  operationFailed: (
+    operation: string,
+    reason: string,
+    details?: Record<string, unknown>
+  ): OperationFailedError => ({
     _tag: "OperationFailed",
     operation,
     reason,
@@ -225,7 +242,11 @@ export const OntologyErrors = {
     message: `Operation failed: ${operation} - ${reason}`,
   }),
 
-  providerError: (providerName: string, operation: string, originalError: Error): ProviderError => ({
+  providerError: (
+    providerName: string,
+    operation: string,
+    originalError: Error
+  ): ProviderError => ({
     _tag: "ProviderError",
     providerName,
     operation,
@@ -233,7 +254,11 @@ export const OntologyErrors = {
     message: `Provider error: ${providerName}.${operation} - ${originalError.message}`,
   }),
 
-  quotaExceeded: (resourceType: string, currentUsage: number, limit: number): QuotaExceededError => ({
+  quotaExceeded: (
+    resourceType: string,
+    currentUsage: number,
+    limit: number
+  ): QuotaExceededError => ({
     _tag: "QuotaExceeded",
     resourceType,
     currentUsage,
@@ -241,7 +266,11 @@ export const OntologyErrors = {
     message: `Quota exceeded for ${resourceType}: ${currentUsage}/${limit}`,
   }),
 
-  conflict: (resource: string, conflictingField: string, existingValue: unknown): ConflictError => ({
+  conflict: (
+    resource: string,
+    conflictingField: string,
+    existingValue: unknown
+  ): ConflictError => ({
     _tag: "Conflict",
     resource,
     conflictingField,

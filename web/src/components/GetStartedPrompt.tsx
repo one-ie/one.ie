@@ -5,9 +5,9 @@
  * Displays on homepage when ORG_NAME !== "one"
  */
 
+import { useState } from "react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
-import { useState } from "react";
 
 interface GetStartedPromptProps {
   orgName: string;
@@ -36,13 +36,9 @@ export function GetStartedPrompt({ orgName }: GetStartedPromptProps) {
       <div className="max-w-2xl w-full space-y-8 text-center">
         {/* Header */}
         <div className="space-y-4">
-          <h1 className="text-6xl font-bold gradient-text">
-            Welcome to {orgName}
-          </h1>
+          <h1 className="text-6xl font-bold gradient-text">Welcome to {orgName}</h1>
 
-          <p className="text-xl text-muted-foreground">
-            What would you like to build?
-          </p>
+          <p className="text-xl text-muted-foreground">What would you like to build?</p>
         </div>
 
         {/* Input */}
@@ -60,12 +56,7 @@ export function GetStartedPrompt({ orgName }: GetStartedPromptProps) {
               }}
               className="text-lg p-6"
             />
-            <Button
-              onClick={handleSubmit}
-              disabled={!prompt.trim()}
-              size="lg"
-              className="px-8"
-            >
+            <Button onClick={handleSubmit} disabled={!prompt.trim()} size="lg" className="px-8">
               Build
             </Button>
           </div>
@@ -74,6 +65,7 @@ export function GetStartedPrompt({ orgName }: GetStartedPromptProps) {
           <div className="grid grid-cols-2 gap-4 text-sm">
             {quickStarts.map((option) => (
               <button
+                type="button"
                 key={option.label}
                 onClick={() => setPrompt(option.prompt)}
                 className="p-4 border rounded-lg hover:bg-accent hover:border-primary transition-colors text-left"
@@ -89,9 +81,7 @@ export function GetStartedPrompt({ orgName }: GetStartedPromptProps) {
         <div className="text-sm text-muted-foreground space-y-2">
           <p className="font-medium">Powered by ONE Platform</p>
           <p>Frontend-only mode • No backend required</p>
-          <p className="text-xs">
-            Enable backend features in .env.local: ONE_BACKEND=on
-          </p>
+          <p className="text-xs">Enable backend features in .env.local: ONE_BACKEND=on</p>
         </div>
       </div>
     </div>

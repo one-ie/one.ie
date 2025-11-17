@@ -1,5 +1,5 @@
-import { useState } from 'react';
-import { ChevronDown } from 'lucide-react';
+import { ChevronDown } from "lucide-react";
+import { useState } from "react";
 
 interface FAQ {
   question: string;
@@ -36,15 +36,13 @@ export function FAQMinimal({ faqs }: FAQMinimalProps) {
               <span className="text-lg font-semibold pr-8">{faq.question}</span>
               <ChevronDown
                 className={`w-5 h-5 flex-shrink-0 transition-transform duration-200 ${
-                  openIndex === index ? 'transform rotate-180' : ''
+                  openIndex === index ? "transform rotate-180" : ""
                 }`}
               />
             </button>
             {openIndex === index && (
               <div className="px-6 pb-6">
-                <p className="text-gray-600 dark:text-gray-300 leading-relaxed">
-                  {faq.answer}
-                </p>
+                <p className="text-gray-600 dark:text-gray-300 leading-relaxed">{faq.answer}</p>
               </div>
             )}
           </div>

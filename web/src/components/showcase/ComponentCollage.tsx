@@ -1,37 +1,22 @@
-'use client';
+"use client";
 
-import { useState } from 'react';
-import { Sparkles, Zap } from 'lucide-react';
+import { Sparkles, Zap } from "lucide-react";
+import { useState } from "react";
 
-import { Chart } from '@/components/Chart';
-import { Badge } from '@/components/ui/badge';
-import { Button } from '@/components/ui/button';
-import {
-  Card,
-  CardContent,
-  CardDescription,
-  CardHeader,
-  CardTitle,
-} from '@/components/ui/card';
-import { Input } from '@/components/ui/input';
-import { Label } from '@/components/ui/label';
-import { Switch } from '@/components/ui/switch';
-import {
-  Tabs,
-  TabsContent,
-  TabsList,
-  TabsTrigger,
-} from '@/components/ui/tabs';
-import {
-  Avatar,
-  AvatarFallback,
-  AvatarImage,
-} from '@/components/ui/avatar';
+import { Chart } from "@/components/Chart";
+import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
+import { Badge } from "@/components/ui/badge";
+import { Button } from "@/components/ui/button";
+import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
+import { Input } from "@/components/ui/input";
+import { Label } from "@/components/ui/label";
+import { Switch } from "@/components/ui/switch";
+import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 
 const collaborators = [
-  { name: 'Ava Synth', role: 'AI Composer', image: 'https://i.pravatar.cc/100?img=40' },
-  { name: 'Leon Flux', role: 'Design Ops', image: 'https://i.pravatar.cc/100?img=12' },
-  { name: 'Mira Chen', role: 'Product', image: 'https://i.pravatar.cc/100?img=33' },
+  { name: "Ava Synth", role: "AI Composer", image: "https://i.pravatar.cc/100?img=40" },
+  { name: "Leon Flux", role: "Design Ops", image: "https://i.pravatar.cc/100?img=12" },
+  { name: "Mira Chen", role: "Product", image: "https://i.pravatar.cc/100?img=33" },
 ];
 
 export function ComponentCollage() {
@@ -53,7 +38,10 @@ export function ComponentCollage() {
       </div>
 
       <Card className="relative overflow-hidden">
-        <div className="absolute -top-12 -right-12 h-32 w-32 rounded-full bg-primary/10 blur-3xl" aria-hidden="true" />
+        <div
+          className="absolute -top-12 -right-12 h-32 w-32 rounded-full bg-primary/10 blur-3xl"
+          aria-hidden="true"
+        />
         <CardHeader>
           <CardTitle>Mission Control</CardTitle>
           <CardDescription>
@@ -92,7 +80,10 @@ export function ComponentCollage() {
       </Card>
 
       <Card className="relative overflow-hidden">
-        <div className="absolute -bottom-10 -left-10 h-32 w-32 rounded-full bg-accent/10 blur-3xl" aria-hidden="true" />
+        <div
+          className="absolute -bottom-10 -left-10 h-32 w-32 rounded-full bg-accent/10 blur-3xl"
+          aria-hidden="true"
+        />
         <CardHeader>
           <CardTitle>Story Tabs</CardTitle>
           <CardDescription>
@@ -108,7 +99,8 @@ export function ComponentCollage() {
             </TabsList>
             <TabsContent value="vision" className="space-y-4 text-sm text-muted-foreground">
               <p>
-                Drop ONE components onto any page and let agents adapt copy, imagery, and data without breaking design.
+                Drop ONE components onto any page and let agents adapt copy, imagery, and data
+                without breaking design.
               </p>
               <div className="grid gap-2">
                 <Label htmlFor="headline">Headline</Label>
@@ -117,7 +109,8 @@ export function ComponentCollage() {
             </TabsContent>
             <TabsContent value="metrics" className="text-sm text-muted-foreground">
               <p>
-                Recharts, cards, and badges sync with live data sources through our providers. Zero bespoke wiring needed.
+                Recharts, cards, and badges sync with live data sources through our providers. Zero
+                bespoke wiring needed.
               </p>
             </TabsContent>
             <TabsContent value="handoff" className="space-y-2 text-sm text-muted-foreground">
@@ -159,7 +152,8 @@ export function ComponentCollage() {
               <Zap className="h-4 w-4" />
               Live updates
             </div>
-            Agents stream component changes, humans review in context, and stakeholders approve on the spot.
+            Agents stream component changes, humans review in context, and stakeholders approve on
+            the spot.
           </div>
         </CardContent>
       </Card>

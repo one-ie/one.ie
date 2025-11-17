@@ -1,19 +1,4 @@
 ---
-import ShopLayout from '@/layouts/ShopLayout.astro';
-import { ProductGallery } from '@/components/ecommerce/interactive/ProductGallery';
-import { ProductHeader } from '@/components/shop/ProductHeader';
-import { InlineUrgencyBanner } from '@/components/shop/InlineUrgencyBanner';
-import { RecentPurchaseToast } from '@/components/shop/RecentPurchaseToast';
-import { ProductSpecs } from '@/components/shop/ProductSpecs';
-import { FragranceNotes } from '@/components/shop/FragranceNotes';
-import { FeaturesWithImages } from '@/components/shop/FeaturesWithImages';
-import { ValueProposition } from '@/components/shop/ValueProposition';
-import { ReviewsSection } from '@/components/shop/ReviewsSection';
-import { ProductFAQ } from '@/components/ecommerce/static/FAQAccordion';
-import { StickyCartButton } from '@/components/shop/StickyCartButton';
-import { StickyBuyBar } from '@/components/shop/StickyBuyBar';
-import { ThemeToggle } from '@/components/shop/ThemeToggle';
-
 // Check if Stripe is configured
 const stripeSecretKey = import.meta.env.STRIPE_SECRET_KEY;
 const stripeEnabled = Boolean(stripeSecretKey);
@@ -21,38 +6,40 @@ const stripeEnabled = Boolean(stripeSecretKey);
 // Import Stripe only if enabled
 let stripe: any = null;
 if (stripeEnabled) {
-  const { default: Stripe } = await import('stripe');
+  const { default: Stripe } = await import("stripe");
   stripe = new Stripe(stripeSecretKey);
 }
 
 // Handle Stripe Checkout Session Creation (POST request)
-if (stripeEnabled && Astro.request.method === 'POST') {
+if (stripeEnabled && Astro.request.method === "POST") {
   try {
     const formData = await Astro.request.formData();
-    const quantity = Number(formData.get('quantity')) || 1;
-    const customerEmail = formData.get('email')?.toString();
+    const quantity = Number(formData.get("quantity")) || 1;
+    const customerEmail = formData.get("email")?.toString();
 
     // Validate quantity
     if (quantity < 1 || quantity > 10) {
-      return new Response(JSON.stringify({ error: 'Invalid quantity' }), {
+      return new Response(JSON.stringify({ error: "Invalid quantity" }), {
         status: 400,
-        headers: { 'Content-Type': 'application/json' }
+        headers: { "Content-Type": "application/json" },
       });
     }
 
     // Product info for Stripe (will be defined below)
     const productPrice = 129.99;
-    const productTitle = 'Chanel Coco Noir Eau de Parfum';
-    const productDescription = 'Elegant and mysterious. Coco Noir captures the essence of timeless sophistication with notes of grapefruit, rose, and sandalwood.';
-    const productImage = 'https://cdn.dummyjson.com/product-images/fragrances/chanel-coco-noir-eau-de/1.webp';
+    const productTitle = "Chanel Coco Noir Eau de Parfum";
+    const productDescription =
+      "Elegant and mysterious. Coco Noir captures the essence of timeless sophistication with notes of grapefruit, rose, and sandalwood.";
+    const productImage =
+      "https://cdn.dummyjson.com/product-images/fragrances/chanel-coco-noir-eau-de/1.webp";
 
     // Create Stripe Checkout Session
     const session = await stripe.checkout.sessions.create({
-      payment_method_types: ['card'],
+      payment_method_types: ["card"],
       line_items: [
         {
           price_data: {
-            currency: 'usd',
+            currency: "usd",
             product_data: {
               name: productTitle,
               description: productDescription,
@@ -63,114 +50,108 @@ if (stripeEnabled && Astro.request.method === 'POST') {
           quantity: quantity,
         },
       ],
-      mode: 'payment',
+      mode: "payment",
       success_url: `${Astro.url.origin}/thankyou-product?session_id={CHECKOUT_SESSION_ID}`,
       cancel_url: `${Astro.url.origin}/shop/product-landing`,
       customer_email: customerEmail || undefined,
       metadata: {
-        productId: 'chanel-coco-noir',
-        productCategory: 'Fragrances',
+        productId: "chanel-coco-noir",
+        productCategory: "Fragrances",
       },
     });
 
     // Return the checkout URL as JSON
-    return new Response(
-      JSON.stringify({ url: session.url }),
-      {
-        status: 200,
-        headers: {
-          'Content-Type': 'application/json',
-        },
-      }
-    );
+    return new Response(JSON.stringify({ url: session.url }), {
+      status: 200,
+      headers: {
+        "Content-Type": "application/json",
+      },
+    });
   } catch (error) {
-    console.error('Stripe checkout error:', error);
-    return new Response(
-      JSON.stringify({ error: 'Payment processing failed' }),
-      {
-        status: 500,
-        headers: { 'Content-Type': 'application/json' }
-      }
-    );
+    console.error("Stripe checkout error:", error);
+    return new Response(JSON.stringify({ error: "Payment processing failed" }), {
+      status: 500,
+      headers: { "Content-Type": "application/json" },
+    });
   }
 }
 
 // Product data (from DummyJSON)
 const product = {
-  title: 'Chanel Coco Noir Eau de Parfum',
-  category: 'Fragrances',
-  brand: 'Chanel',
+  title: "Chanel Coco Noir Eau de Parfum",
+  category: "Fragrances",
+  brand: "Chanel",
   rating: 4.26,
   reviewCount: 89,
   price: 129.99,
   originalPrice: 155.99,
   stock: 7,
-  description: 'Elegant and mysterious. Coco Noir captures the essence of timeless sophistication with notes of grapefruit, rose, and sandalwood. A fragrance for the modern woman who embraces mystery.',
+  description:
+    "Elegant and mysterious. Coco Noir captures the essence of timeless sophistication with notes of grapefruit, rose, and sandalwood. A fragrance for the modern woman who embraces mystery.",
   images: [
-    'https://cdn.dummyjson.com/product-images/fragrances/chanel-coco-noir-eau-de/1.webp',
-    'https://cdn.dummyjson.com/product-images/fragrances/chanel-coco-noir-eau-de/2.webp',
-    'https://cdn.dummyjson.com/product-images/fragrances/chanel-coco-noir-eau-de/3.webp',
+    "https://cdn.dummyjson.com/product-images/fragrances/chanel-coco-noir-eau-de/1.webp",
+    "https://cdn.dummyjson.com/product-images/fragrances/chanel-coco-noir-eau-de/2.webp",
+    "https://cdn.dummyjson.com/product-images/fragrances/chanel-coco-noir-eau-de/3.webp",
   ],
 };
 
-const specs = [
-  { label: 'Brand', value: 'Chanel' },
-  { label: 'Fragrance Type', value: 'Eau de Parfum' },
-  { label: 'Volume', value: '100ml / 3.4 fl oz' },
-  { label: 'Gender', value: 'Women' },
-  { label: 'Stock Status', value: `${product.stock} units available` },
-  { label: 'SKU', value: 'COCO-NOIR-EDP-100' },
+const _specs = [
+  { label: "Brand", value: "Chanel" },
+  { label: "Fragrance Type", value: "Eau de Parfum" },
+  { label: "Volume", value: "100ml / 3.4 fl oz" },
+  { label: "Gender", value: "Women" },
+  { label: "Stock Status", value: `${product.stock} units available` },
+  { label: "SKU", value: "COCO-NOIR-EDP-100" },
 ];
 
-const fragranceNotes = {
-  topNotes: [
-    { name: 'Grapefruit', description: 'Fresh and citrusy opening' },
-  ],
+const _fragranceNotes = {
+  topNotes: [{ name: "Grapefruit", description: "Fresh and citrusy opening" }],
   middleNotes: [
-    { name: 'Rose', description: 'Elegant floral heart' },
-    { name: 'Jasmine', description: 'Delicate white flower' },
+    { name: "Rose", description: "Elegant floral heart" },
+    { name: "Jasmine", description: "Delicate white flower" },
   ],
-  baseNotes: [
-    { name: 'Sandalwood', description: 'Warm and woody foundation' },
-  ],
+  baseNotes: [{ name: "Sandalwood", description: "Warm and woody foundation" }],
 };
 
-const featuresWithImages = [
+const _featuresWithImages = [
   {
-    title: 'Iconic Bottle Design',
-    description: 'The sleek, minimalist black bottle embodies pure sophistication. Every curve and edge is meticulously crafted to reflect the mysterious and timeless character of Coco Noir. A statement piece for your vanity that exudes luxury and elegance.',
+    title: "Iconic Bottle Design",
+    description:
+      "The sleek, minimalist black bottle embodies pure sophistication. Every curve and edge is meticulously crafted to reflect the mysterious and timeless character of Coco Noir. A statement piece for your vanity that exudes luxury and elegance.",
     image: product.images[0],
   },
   {
-    title: 'Long-Lasting Formula',
-    description: 'Experience a fragrance that evolves throughout the day. Premium Eau de Parfum concentration ensures 8-10 hours of rich, complex scent. From the bright citrus opening to the warm woody base, each note lingers with intention and depth.',
+    title: "Long-Lasting Formula",
+    description:
+      "Experience a fragrance that evolves throughout the day. Premium Eau de Parfum concentration ensures 8-10 hours of rich, complex scent. From the bright citrus opening to the warm woody base, each note lingers with intention and depth.",
     image: product.images[1],
   },
   {
-    title: 'Luxury Presentation',
-    description: 'Arrives in signature Chanel packaging with premium gift box included. Every detail speaks to the heritage and craftsmanship that defines the Chanel legacy. Perfect for gifting or adding to your personal collection.',
+    title: "Luxury Presentation",
+    description:
+      "Arrives in signature Chanel packaging with premium gift box included. Every detail speaks to the heritage and craftsmanship that defines the Chanel legacy. Perfect for gifting or adding to your personal collection.",
     image: product.images[2],
   },
 ];
 
-const reviews = [
+const _reviews = [
   {
-    author: 'Jennifer K.',
+    author: "Jennifer K.",
     rating: 5,
-    text: 'An absolute masterpiece. The craftsmanship is exceptional and the design is truly timeless. Worth every penny.',
-    date: 'January 2025',
+    text: "An absolute masterpiece. The craftsmanship is exceptional and the design is truly timeless. Worth every penny.",
+    date: "January 2025",
   },
   {
-    author: 'Michael R.',
+    author: "Michael R.",
     rating: 5,
-    text: 'Worth every penny. The quality is unmatched and it arrived beautifully packaged.',
-    date: 'December 2024',
+    text: "Worth every penny. The quality is unmatched and it arrived beautifully packaged.",
+    date: "December 2024",
   },
   {
-    author: 'Sarah M.',
+    author: "Sarah M.",
     rating: 5,
-    text: 'A stunning fragrance that gets compliments everywhere I go. Highly recommend!',
-    date: 'December 2024',
+    text: "A stunning fragrance that gets compliments everywhere I go. Highly recommend!",
+    date: "December 2024",
   },
 ];
 ---

@@ -1,10 +1,10 @@
-'use client';
+"use client";
 
-import { Badge } from '@/components/ui/badge';
-import { FileText, Tag } from 'lucide-react';
-import type { CollectionEntry } from 'astro:content';
+import type { CollectionEntry } from "astro:content";
+import { FileText, Tag } from "lucide-react";
+import { Badge } from "@/components/ui/badge";
 
-type DocEntry = CollectionEntry<'docs'>;
+type DocEntry = CollectionEntry<"docs">;
 
 interface DocCompactProps {
   entries: DocEntry[];

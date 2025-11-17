@@ -1,10 +1,6 @@
 "use client";
 
-import {
-  Terminal,
-  AnimatedSpan,
-  TypingAnimation,
-} from "@/components/ui/terminal";
+import { AnimatedSpan, Terminal, TypingAnimation } from "@/components/ui/terminal";
 
 const logo = `     \u2588\u2588\u2588\u2588\u2588\u2588\u2557 \u2588\u2588\u2588\u2557   \u2588\u2588\u2557\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2557
     \u2588\u2588\u2554\u2550\u2550\u2550\u2588\u2588\u2557\u2588\u2588\u2588\u2588\u2557  \u2588\u2588\u2551\u2588\u2588\u2554\u2550\u2550\u2550\u2550\u255d

@@ -1,27 +1,27 @@
 ---
-import Layout from '../../layouts/Layout.astro';
-import { getCollection } from 'astro:content';
-import { StaggeredFadeIn } from '@/components/features/StaggeredFadeIn';
-import { Grid, List } from 'lucide-react';
+import { getCollection } from "astro:content";
 
 // Disable view transitions for faster content loading
 export const prerender = false;
 
 // Get all Projects entries
-const projects = await getCollection('projects');
+const projects = await getCollection("projects");
 
 // Get view mode from URL params, default to grid with 4 columns
-const viewModeParam = Astro.url.searchParams.get('view') || 'grid';
-const viewMode = (viewModeParam === 'list' || viewModeParam === 'grid') ? viewModeParam : 'grid';
-const gridColumnsParam = Astro.url.searchParams.get('columns') || '3';
-const gridColumns = (gridColumnsParam === '2' || gridColumnsParam === '3' || gridColumnsParam === '4') ? gridColumnsParam : '3';
+const viewModeParam = Astro.url.searchParams.get("view") || "grid";
+const _viewMode = viewModeParam === "list" || viewModeParam === "grid" ? viewModeParam : "grid";
+const gridColumnsParam = Astro.url.searchParams.get("columns") || "3";
+const _gridColumns =
+  gridColumnsParam === "2" || gridColumnsParam === "3" || gridColumnsParam === "4"
+    ? gridColumnsParam
+    : "3";
 
 // Get status filter from URL params
-const statusParam = Astro.url.searchParams.get('status') || '';
+const statusParam = Astro.url.searchParams.get("status") || "";
 
 // Sort by updatedAt (most recent first)
-const sortedProjects = projects
-  .filter(p => !statusParam || p.data.status === statusParam)
+const _sortedProjects = projects
+  .filter((p) => !statusParam || p.data.status === statusParam)
   .sort((a, b) => {
     const dateA = a.data.updatedAt?.getTime() || a.data.createdAt?.getTime() || 0;
     const dateB = b.data.updatedAt?.getTime() || b.data.createdAt?.getTime() || 0;
@@ -29,48 +29,53 @@ const sortedProjects = projects
   });
 
 // Calculate project statistics
-const projectStats = {
+const _projectStats = {
   total: projects.length,
-  active: projects.filter(p => p.data.status === 'active').length,
-  completed: projects.filter(p => p.data.status === 'completed').length,
-  planning: projects.filter(p => p.data.status === 'planning').length,
-  onHold: projects.filter(p => p.data.status === 'on_hold').length,
-  averageProgress: Math.round(projects.reduce((sum, p) => sum + (p.data.progress || 0), 0) / projects.length),
+  active: projects.filter((p) => p.data.status === "active").length,
+  completed: projects.filter((p) => p.data.status === "completed").length,
+  planning: projects.filter((p) => p.data.status === "planning").length,
+  onHold: projects.filter((p) => p.data.status === "on_hold").length,
+  averageProgress: Math.round(
+    projects.reduce((sum, p) => sum + (p.data.progress || 0), 0) / projects.length
+  ),
 };
 
-const statusBadgeClass = (status: string) => {
+const _statusBadgeClass = (status: string) => {
   switch (status) {
-    case 'completed':
-      return 'bg-green-100 text-green-700 dark:bg-green-900 dark:text-green-200';
-    case 'active':
-      return 'bg-blue-100 text-blue-700 dark:bg-blue-900 dark:text-blue-200';
-    case 'on_hold':
-      return 'bg-yellow-100 text-yellow-700 dark:bg-yellow-900 dark:text-yellow-200';
-    case 'planning':
-      return 'bg-purple-100 text-purple-700 dark:bg-purple-900 dark:text-purple-200';
-    case 'archived':
-      return 'bg-gray-100 text-gray-700 dark:bg-gray-800 dark:text-gray-200';
+    case "completed":
+      return "bg-green-100 text-green-700 dark:bg-green-900 dark:text-green-200";
+    case "active":
+      return "bg-blue-100 text-blue-700 dark:bg-blue-900 dark:text-blue-200";
+    case "on_hold":
+      return "bg-yellow-100 text-yellow-700 dark:bg-yellow-900 dark:text-yellow-200";
+    case "planning":
+      return "bg-purple-100 text-purple-700 dark:bg-purple-900 dark:text-purple-200";
+    case "archived":
+      return "bg-gray-100 text-gray-700 dark:bg-gray-800 dark:text-gray-200";
     default:
-      return 'bg-gray-100 text-gray-700';
+      return "bg-gray-100 text-gray-700";
   }
 };
 
-const statusLabel = (status: string) => {
-  return status.split('_').map(word => word.charAt(0).toUpperCase() + word.slice(1)).join(' ');
+const _statusLabel = (status: string) => {
+  return status
+    .split("_")
+    .map((word) => word.charAt(0).toUpperCase() + word.slice(1))
+    .join(" ");
 };
 
-const priorityBadgeClass = (priority?: string) => {
+const _priorityBadgeClass = (priority?: string) => {
   switch (priority) {
-    case 'critical':
-      return 'bg-red-100 text-red-700 dark:bg-red-900 dark:text-red-200';
-    case 'high':
-      return 'bg-orange-100 text-orange-700 dark:bg-orange-900 dark:text-orange-200';
-    case 'medium':
-      return 'bg-blue-100 text-blue-700 dark:bg-blue-900 dark:text-blue-200';
-    case 'low':
-      return 'bg-green-100 text-green-700 dark:bg-green-900 dark:text-green-200';
+    case "critical":
+      return "bg-red-100 text-red-700 dark:bg-red-900 dark:text-red-200";
+    case "high":
+      return "bg-orange-100 text-orange-700 dark:bg-orange-900 dark:text-orange-200";
+    case "medium":
+      return "bg-blue-100 text-blue-700 dark:bg-blue-900 dark:text-blue-200";
+    case "low":
+      return "bg-green-100 text-green-700 dark:bg-green-900 dark:text-green-200";
     default:
-      return '';
+      return "";
   }
 };
 ---

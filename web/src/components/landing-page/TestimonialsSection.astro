@@ -1,7 +1,4 @@
 ---
-import { Card, CardHeader } from "@/components/ui/card";
-import { Badge } from "@/components/ui/badge";
-import { Star } from "lucide-react";
 import type { TestimonialsSectionProps } from "@/types/landing-page";
 
 interface Props extends Omit<TestimonialsSectionProps, "branding"> {
@@ -10,13 +7,11 @@ interface Props extends Omit<TestimonialsSectionProps, "branding"> {
 
 const { section, branding } = Astro.props;
 
-const layout = section.layout || "grid";
-const brandingStyle = branding
-  ? `--primary: ${branding.primaryColor || "#3b82f6"};`
-  : "";
+const _layout = section.layout || "grid";
+const _brandingStyle = branding ? `--primary: ${branding.primaryColor || "#3b82f6"};` : "";
 
 // Generate star array for display
-const getStars = (rating?: number) => {
+const _getStars = (rating?: number) => {
   if (!rating) return [];
   return Array.from({ length: 5 });
 };

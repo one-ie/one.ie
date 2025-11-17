@@ -1,53 +1,37 @@
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
-import { Badge } from '@/components/ui/badge';
-import {
-  Zap,
-  Globe,
-  DollarSign,
-  Clock,
-  Gauge,
-  Shield,
-  Rocket,
-} from 'lucide-react';
-import {
-  AreaChart,
-  Area,
-  BarChart,
-  Bar,
-  ResponsiveContainer,
-  Tooltip,
-  Cell,
-} from 'recharts';
+import { Clock, DollarSign, Gauge, Globe } from "lucide-react";
+import { Area, AreaChart, Bar, BarChart, Cell, ResponsiveContainer, Tooltip } from "recharts";
+import { Badge } from "@/components/ui/badge";
+import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 
 // Real deployment performance data
 const deployTrend = [
-  { day: 'Mon', time: 30 },
-  { day: 'Tue', time: 27 },
-  { day: 'Wed', time: 25 },
-  { day: 'Thu', time: 22 },
-  { day: 'Fri', time: 20 },
-  { day: 'Sat', time: 19 },
+  { day: "Mon", time: 30 },
+  { day: "Tue", time: 27 },
+  { day: "Wed", time: 25 },
+  { day: "Thu", time: 22 },
+  { day: "Fri", time: 20 },
+  { day: "Sat", time: 19 },
 ];
 
 const latencyData = [
-  { region: 'NA', value: 45 },
-  { region: 'EU', value: 78 },
-  { region: 'APAC', value: 112 },
-  { region: 'SA', value: 156 },
+  { region: "NA", value: 45 },
+  { region: "EU", value: 78 },
+  { region: "APAC", value: 112 },
+  { region: "SA", value: 156 },
 ];
 
 const costComparison = [
-  { name: 'CF', cost: 0, color: '#f97316' },
-  { name: 'Vercel', cost: 229, color: '#6b7280' },
-  { name: 'Netlify', cost: 240, color: '#14b8a6' },
-  { name: 'AWS', cost: 350, color: '#f59e0b' },
+  { name: "CF", cost: 0, color: "#f97316" },
+  { name: "Vercel", cost: 229, color: "#6b7280" },
+  { name: "Netlify", cost: 240, color: "#14b8a6" },
+  { name: "AWS", cost: 350, color: "#f59e0b" },
 ];
 
 const lighthouseScores = [
-  { metric: 'Perf', score: 100, color: '#10b981' },
-  { metric: 'A11y', score: 100, color: '#10b981' },
-  { metric: 'BP', score: 100, color: '#10b981' },
-  { metric: 'SEO', score: 100, color: '#10b981' },
+  { metric: "Perf", score: 100, color: "#10b981" },
+  { metric: "A11y", score: 100, color: "#10b981" },
+  { metric: "BP", score: 100, color: "#10b981" },
+  { metric: "SEO", score: 100, color: "#10b981" },
 ];
 
 export default function DeployHeroMetrics() {
@@ -64,7 +48,9 @@ export default function DeployHeroMetrics() {
                 100% Free
               </Badge>
             </div>
-            <CardTitle className="text-sm font-medium text-muted-foreground">Monthly Cost</CardTitle>
+            <CardTitle className="text-sm font-medium text-muted-foreground">
+              Monthly Cost
+            </CardTitle>
           </CardHeader>
           <CardContent className="space-y-2">
             <div className="flex items-baseline gap-1">
@@ -74,8 +60,8 @@ export default function DeployHeroMetrics() {
             <ResponsiveContainer width="100%" height={40}>
               <BarChart data={costComparison} margin={{ top: 0, right: 0, bottom: 0, left: 0 }}>
                 <Bar dataKey="cost" radius={[4, 4, 0, 0]}>
-                  {costComparison.map((entry, index) => (
-                    <Cell key={`cell-${index}`} fill={index === 0 ? '#f97316' : '#e5e7eb'} />
+                  {costComparison.map((entry) => (
+                    <Cell key={entry.name} fill={entry.color} />
                   ))}
                 </Bar>
                 <Tooltip
@@ -83,7 +69,9 @@ export default function DeployHeroMetrics() {
                     if (active && payload && payload[0]) {
                       return (
                         <div className="rounded-lg border bg-background px-2 py-1 text-xs shadow-sm">
-                          <p className="font-medium">{payload[0].payload.name}: ${payload[0].value}</p>
+                          <p className="font-medium">
+                            {payload[0].payload.name}: ${payload[0].value}
+                          </p>
                         </div>
                       );
                     }
@@ -105,7 +93,9 @@ export default function DeployHeroMetrics() {
                 -37% faster
               </Badge>
             </div>
-            <CardTitle className="text-sm font-medium text-muted-foreground">Deploy Speed</CardTitle>
+            <CardTitle className="text-sm font-medium text-muted-foreground">
+              Deploy Speed
+            </CardTitle>
           </CardHeader>
           <CardContent className="space-y-2">
             <div className="flex items-baseline gap-1">
@@ -116,8 +106,8 @@ export default function DeployHeroMetrics() {
               <AreaChart data={deployTrend} margin={{ top: 0, right: 0, bottom: 0, left: 0 }}>
                 <defs>
                   <linearGradient id="deployGradient" x1="0" y1="0" x2="0" y2="1">
-                    <stop offset="5%" stopColor="#3b82f6" stopOpacity={0.3}/>
-                    <stop offset="95%" stopColor="#3b82f6" stopOpacity={0}/>
+                    <stop offset="5%" stopColor="#3b82f6" stopOpacity={0.3} />
+                    <stop offset="95%" stopColor="#3b82f6" stopOpacity={0} />
                   </linearGradient>
                 </defs>
                 <Area
@@ -132,7 +122,9 @@ export default function DeployHeroMetrics() {
                     if (active && payload && payload[0]) {
                       return (
                         <div className="rounded-lg border bg-background px-2 py-1 text-xs shadow-sm">
-                          <p className="font-medium">{payload[0].payload.day}: {payload[0].value}s</p>
+                          <p className="font-medium">
+                            {payload[0].payload.day}: {payload[0].value}s
+                          </p>
                         </div>
                       );
                     }
@@ -154,7 +146,9 @@ export default function DeployHeroMetrics() {
                 330+ edges
               </Badge>
             </div>
-            <CardTitle className="text-sm font-medium text-muted-foreground">Global Latency</CardTitle>
+            <CardTitle className="text-sm font-medium text-muted-foreground">
+              Global Latency
+            </CardTitle>
           </CardHeader>
           <CardContent className="space-y-2">
             <div className="flex items-baseline gap-1">
@@ -164,10 +158,12 @@ export default function DeployHeroMetrics() {
             <ResponsiveContainer width="100%" height={40}>
               <BarChart data={latencyData} margin={{ top: 0, right: 0, bottom: 0, left: 0 }}>
                 <Bar dataKey="value" radius={[4, 4, 0, 0]}>
-                  {latencyData.map((entry, index) => (
+                  {latencyData.map((entry) => (
                     <Cell
-                      key={`cell-${index}`}
-                      fill={entry.value < 100 ? '#10b981' : entry.value < 150 ? '#f59e0b' : '#ef4444'}
+                      key={entry.region}
+                      fill={
+                        entry.value < 100 ? "#10b981" : entry.value < 150 ? "#f59e0b" : "#ef4444"
+                      }
                     />
                   ))}
                 </Bar>
@@ -176,7 +172,9 @@ export default function DeployHeroMetrics() {
                     if (active && payload && payload[0]) {
                       return (
                         <div className="rounded-lg border bg-background px-2 py-1 text-xs shadow-sm">
-                          <p className="font-medium">{payload[0].payload.region}: {payload[0].value}ms</p>
+                          <p className="font-medium">
+                            {payload[0].payload.region}: {payload[0].value}ms
+                          </p>
                         </div>
                       );
                     }
@@ -198,7 +196,9 @@ export default function DeployHeroMetrics() {
                 Perfect
               </Badge>
             </div>
-            <CardTitle className="text-sm font-medium text-muted-foreground">Lighthouse Score</CardTitle>
+            <CardTitle className="text-sm font-medium text-muted-foreground">
+              Lighthouse Score
+            </CardTitle>
           </CardHeader>
           <CardContent className="space-y-2">
             <div className="flex items-baseline gap-1">
@@ -206,8 +206,8 @@ export default function DeployHeroMetrics() {
               <span className="text-sm text-muted-foreground">/100</span>
             </div>
             <div className="flex gap-1">
-              {lighthouseScores.map((score, index) => (
-                <div key={index} className="flex-1">
+              {lighthouseScores.map((score) => (
+                <div key={score.metric} className="flex-1">
                   <div className="h-8 rounded bg-green-500/20 relative overflow-hidden">
                     <div
                       className="absolute bottom-0 w-full bg-green-500 transition-all"

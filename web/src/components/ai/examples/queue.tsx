@@ -1,5 +1,7 @@
 "use client";
 
+import { ArrowUp, Trash2 } from "lucide-react";
+import { useState } from "react";
 import {
   Queue,
   QueueItem,
@@ -19,8 +21,6 @@ import {
   QueueSectionTrigger,
   type QueueTodo,
 } from "@/components/ai/elements/queue";
-import { ArrowUp, Trash2 } from "lucide-react";
-import { useState } from "react";
 
 const sampleMessages: QueueMessage[] = [
   {
@@ -33,13 +33,14 @@ const sampleMessages: QueueMessage[] = [
   },
   {
     id: "msg-3",
-    parts: [{ type: "text", text: "Update the default logo to this png." },
+    parts: [
+      { type: "text", text: "Update the default logo to this png." },
       {
-      type: "file",
-      url: "https://github.com/haydenbleasel.png",
-      filename: "setup-guide.png",
-      mediaType: "image/png",
-    }
+        type: "file",
+        url: "https://github.com/haydenbleasel.png",
+        filename: "setup-guide.png",
+        mediaType: "image/png",
+      },
     ],
   },
   {
@@ -124,9 +125,7 @@ const Example = () => {
             <QueueList>
               {messages.map((message) => {
                 const summary = (() => {
-                  const textParts = message.parts.filter(
-                    (p) => p.type === "text"
-                  );
+                  const textParts = message.parts.filter((p) => p.type === "text");
                   const text = textParts
                     .map((p) => p.text)
                     .join(" ")
@@ -134,9 +133,7 @@ const Example = () => {
                   return text || "(queued message)";
                 })();
 
-                const hasFiles = message.parts.some(
-                  (p) => p.type === "file" && p.url
-                );
+                const hasFiles = message.parts.some((p) => p.type === "file" && p.url);
 
                 return (
                   <QueueItem key={message.id}>
@@ -172,10 +169,7 @@ const Example = () => {
                         {message.parts
                           .filter((p) => p.type === "file" && p.url)
                           .map((file) => {
-                            if (
-                              file.mediaType?.startsWith("image/") &&
-                              file.url
-                            ) {
+                            if (file.mediaType?.startsWith("image/") && file.url) {
                               return (
                                 <QueueItemImage
                                   alt={file.filename || "attachment"}
@@ -213,9 +207,7 @@ const Example = () => {
                   <QueueItem key={todo.id}>
                     <div className="flex items-center gap-2">
                       <QueueItemIndicator completed={isCompleted} />
-                      <QueueItemContent completed={isCompleted}>
-                        {todo.title}
-                      </QueueItemContent>
+                      <QueueItemContent completed={isCompleted}>{todo.title}</QueueItemContent>
                       <QueueItemActions>
                         <QueueItemAction
                           aria-label="Remove todo"

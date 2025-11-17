@@ -1,97 +1,96 @@
 ---
-import Layout from '../layouts/Layout.astro';
-import ReadmeContent from '../../README.md';
+import Layout from "@/layouts/Layout.astro";
 
-const agents = [
+const _agents = [
   {
-    name: 'agent-director',
-    title: 'Engineering Director',
+    name: "agent-director",
+    title: "Engineering Director",
     summary:
-      'Validates ideas against the six-dimension ontology, sequences numbered plans, and assigns work to the right specialists.',
+      "Validates ideas against the six-dimension ontology, sequences numbered plans, and assigns work to the right specialists.",
   },
   {
-    name: 'agent-builder',
-    title: 'Full-Stack Builder',
+    name: "agent-builder",
+    title: "Full-Stack Builder",
     summary:
-      'Ships end-to-end features—Convex backend, Astro frontend, and integrations—while keeping multi-tenant boundaries intact.',
+      "Ships end-to-end features—Convex backend, Astro frontend, and integrations—while keeping multi-tenant boundaries intact.",
   },
   {
-    name: 'agent-backend',
-    title: 'Backend Specialist',
+    name: "agent-backend",
+    title: "Backend Specialist",
     summary:
-      'Designs Convex schemas, mutations, queries, and services that project cleanly into groups, people, things, connections, events, and knowledge.',
+      "Designs Convex schemas, mutations, queries, and services that project cleanly into groups, people, things, connections, events, and knowledge.",
   },
   {
-    name: 'backend-specialist',
-    title: 'Backend Executor',
+    name: "backend-specialist",
+    title: "Backend Executor",
     summary:
-      'Implements backend tasks on demand with strict adherence to typed contracts, auditing, and ontology mappings.',
+      "Implements backend tasks on demand with strict adherence to typed contracts, auditing, and ontology mappings.",
   },
   {
-    name: 'agent-frontend',
-    title: 'Frontend Specialist',
+    name: "agent-frontend",
+    title: "Frontend Specialist",
     summary:
-      'Builds Astro + React interfaces that render ontology data with accessibility, performance, and islands architecture best practices.',
+      "Builds Astro + React interfaces that render ontology data with accessibility, performance, and islands architecture best practices.",
   },
   {
-    name: 'frontend-specialist',
-    title: 'Frontend Executor',
+    name: "frontend-specialist",
+    title: "Frontend Executor",
     summary:
-      'Handles focused UI deliveries—components, pages, or flows—while respecting design tokens and shared language.',
+      "Handles focused UI deliveries—components, pages, or flows—while respecting design tokens and shared language.",
   },
   {
-    name: 'agent-integrator',
-    title: 'Protocol Integrator',
+    name: "agent-integrator",
+    title: "Protocol Integrator",
     summary:
-      'Connects external systems (A2A, ACP, AP2, X402, AG-UI) and reconciles third-party data so it lands in the ontology without drift.',
+      "Connects external systems (A2A, ACP, AP2, X402, AG-UI) and reconciles third-party data so it lands in the ontology without drift.",
   },
   {
-    name: 'agent-quality',
-    title: 'Quality Intelligence',
+    name: "agent-quality",
+    title: "Quality Intelligence",
     summary:
-      'Defines acceptance criteria up front, runs validations, forecasts risks, and ensures every change upholds ontology guarantees.',
+      "Defines acceptance criteria up front, runs validations, forecasts risks, and ensures every change upholds ontology guarantees.",
   },
   {
-    name: 'agent-clean',
-    title: 'Refinement Specialist',
+    name: "agent-clean",
+    title: "Refinement Specialist",
     summary:
-      'Refactors code, pays down debt, and restores architecture clarity without altering behavior or breaking typed contracts.',
+      "Refactors code, pays down debt, and restores architecture clarity without altering behavior or breaking typed contracts.",
   },
   {
-    name: 'agent-problem-solver',
-    title: 'Root Cause Analyst',
+    name: "agent-problem-solver",
+    title: "Root Cause Analyst",
     summary:
-      'Investigates failing runs, diagnoses ontology or implementation gaps, and prescribes fixes for the right specialist to execute.',
+      "Investigates failing runs, diagnoses ontology or implementation gaps, and prescribes fixes for the right specialist to execute.",
   },
   {
-    name: 'agent-designer',
-    title: 'Design Strategist',
+    name: "agent-designer",
+    title: "Design Strategist",
     summary:
-      'Translates feature specs and quality requirements into wireframes, component definitions, and design tokens ready for build.',
+      "Translates feature specs and quality requirements into wireframes, component definitions, and design tokens ready for build.",
   },
   {
-    name: 'designer',
-    title: 'Design Executor',
+    name: "designer",
+    title: "Design Executor",
     summary:
-      'Produces targeted design assets after tests are defined so implementation agents can ship pixel-perfect work.',
+      "Produces targeted design assets after tests are defined so implementation agents can ship pixel-perfect work.",
   },
   {
-    name: 'agent-documenter',
-    title: 'Knowledge Curator',
+    name: "agent-documenter",
+    title: "Knowledge Curator",
     summary:
-      'Captures learnings, updates docs, and indexes knowledge chunks so agents have richer context on future runs.',
+      "Captures learnings, updates docs, and indexes knowledge chunks so agents have richer context on future runs.",
   },
   {
-    name: 'agent-clone',
-    title: 'Migration & Clone Specialist',
+    name: "agent-clone",
+    title: "Migration & Clone Specialist",
     summary:
-      'Migrates legacy assets into the ontology, assembles AI clones, and preserves provenance across events and knowledge.',
+      "Migrates legacy assets into the ontology, assembles AI clones, and preserves provenance across events and knowledge.",
   },
   {
-    name: 'agent-sales',
-    title: 'Revenue Operator',
+    name: "agent-sales",
+    title: "Revenue Operator",
     summary:
-      'Qualifies leads, coordinates demos, assists trials, and ensures revenue attribution flows through auditable events.',
+      "Qualifies leads, coordinates demos, assists trials, and ensures revenue attribution flows through auditable events.",
   },
 ];
 ---

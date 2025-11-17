@@ -4,13 +4,13 @@
  */
 /* eslint-disable @typescript-eslint/no-explicit-any */
 
-import { vi, beforeEach } from 'vitest';
-import { createRequire } from 'module';
+import { createRequire } from "node:module";
+import { beforeEach, vi } from "vitest";
 
 const require = createRequire(import.meta.url);
 
 try {
-  require('@testing-library/jest-dom');
+  require("@testing-library/jest-dom");
 } catch {
   // Optional dependency; tests will be skipped when the library is unavailable
 }
@@ -19,17 +19,17 @@ try {
 export const mockUseQuery = vi.fn();
 export const mockUseMutation = vi.fn();
 
-if (typeof (vi as any)?.mock === 'function') {
-  vi.mock('convex/react', () => ({
+if (typeof (vi as any)?.mock === "function") {
+  vi.mock("convex/react", () => ({
     useQuery: mockUseQuery,
     useMutation: mockUseMutation,
     ConvexProvider: ({ children }: any) => children,
   }));
 
   // Mock next-themes
-  vi.mock('next-themes', () => ({
+  vi.mock("next-themes", () => ({
     useTheme: () => ({
-      theme: 'light',
+      theme: "light",
       setTheme: vi.fn(),
     }),
   }));
@@ -39,14 +39,14 @@ if (typeof (vi as any)?.mock === 'function') {
 export function createMockGroup(overrides?: any) {
   return {
     _id: `group_${Math.random()}`,
-    slug: 'test-group',
-    name: 'Test Group',
-    type: 'business',
-    status: 'active',
+    slug: "test-group",
+    name: "Test Group",
+    type: "business",
+    status: "active",
     settings: {
-      visibility: 'private',
-      joinPolicy: 'invite_only',
-      plan: 'starter',
+      visibility: "private",
+      joinPolicy: "invite_only",
+      plan: "starter",
     },
     createdAt: Date.now(),
     updatedAt: Date.now(),
@@ -56,7 +56,7 @@ export function createMockGroup(overrides?: any) {
 
 export function createMockGroupHierarchy(levels: number) {
   const groups = [];
-  let currentParentId = undefined;
+  let currentParentId;
 
   for (let i = 0; i < levels; i++) {
     const group = createMockGroup({
@@ -83,7 +83,7 @@ export function createMockStats() {
 }
 
 // Reset mocks before each test when supported by the runner
-if (typeof beforeEach === 'function') {
+if (typeof beforeEach === "function") {
   beforeEach(() => {
     mockUseQuery.mockReset();
     mockUseMutation.mockReset();

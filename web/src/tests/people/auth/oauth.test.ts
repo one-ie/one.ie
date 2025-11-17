@@ -1,12 +1,6 @@
-import { describe, it, expect, beforeEach } from "vitest";
+import { describe, expect, it } from "vitest";
 import { api } from "../../../../../backend/convex/_generated/api";
-import {
-  convex,
-  generateTestEmail,
-  TestLogger,
-  assert,
-  getCurrentUser,
-} from "./utils";
+import { assert, convex, generateTestEmail, getCurrentUser, TestLogger } from "./utils";
 
 /**
  * OAuth Authentication Tests
@@ -66,10 +60,7 @@ describe("Auth - OAuth", () => {
       logger.log(`Second signin (Google): ${googleResult.userId}`);
 
       // Should return same user ID
-      assert(
-        githubResult.userId === googleResult.userId,
-        "Should link to same user by email"
-      );
+      assert(githubResult.userId === googleResult.userId, "Should link to same user by email");
 
       logger.success("OAuth providers linked by email");
       expect(googleResult.userId).toBe(githubResult.userId);
@@ -194,7 +185,7 @@ describe("Auth - OAuth", () => {
     it("should validate provider ID uniqueness", async () => {
       const logger = new TestLogger("OAuth - Provider ID Unique");
       const email1 = generateTestEmail("oauth-unique-1");
-      const email2 = generateTestEmail("oauth-unique-2");
+      const _email2 = generateTestEmail("oauth-unique-2");
       const providerId = `github_${Date.now()}`;
 
       // Create first user with provider ID

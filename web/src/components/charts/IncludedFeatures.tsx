@@ -1,19 +1,19 @@
-'use client';
+"use client";
 
-import { Card, CardContent, CardHeader, CardTitle, CardDescription } from '@/components/ui/card';
-import { Badge } from '@/components/ui/badge';
 import {
-  Zap,
-  Globe,
-  Shield,
-  Lock,
-  Cpu,
   BarChart3,
-  DollarSign,
   CheckCircle2,
+  Cpu,
+  DollarSign,
+  Globe,
+  Lock,
+  Shield,
   Sparkles,
-} from 'lucide-react';
-import { useEffect, useState } from 'react';
+  Zap,
+} from "lucide-react";
+import { useEffect, useState } from "react";
+import { Badge } from "@/components/ui/badge";
+import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 
 interface Feature {
   icon: React.ReactNode;
@@ -25,38 +25,38 @@ interface Feature {
 const features: Feature[] = [
   {
     icon: <Zap className="h-6 w-6" />,
-    name: 'Unlimited Bandwidth',
-    description: 'Transfer unlimited data globally',
+    name: "Unlimited Bandwidth",
+    description: "Transfer unlimited data globally",
     included: true,
   },
   {
     icon: <Globe className="h-6 w-6" />,
-    name: '330+ Edge Locations',
-    description: 'Deploy to any location worldwide',
+    name: "330+ Edge Locations",
+    description: "Deploy to any location worldwide",
     included: true,
   },
   {
     icon: <Shield className="h-6 w-6" />,
-    name: 'DDoS Protection',
-    description: 'Enterprise-grade security included',
+    name: "DDoS Protection",
+    description: "Enterprise-grade security included",
     included: true,
   },
   {
     icon: <Lock className="h-6 w-6" />,
-    name: 'SSL Certificates',
-    description: 'Free HTTPS for all domains',
+    name: "SSL Certificates",
+    description: "Free HTTPS for all domains",
     included: true,
   },
   {
     icon: <Cpu className="h-6 w-6" />,
-    name: '100k Functions/day',
-    description: 'Serverless computing included',
+    name: "100k Functions/day",
+    description: "Serverless computing included",
     included: true,
   },
   {
     icon: <BarChart3 className="h-6 w-6" />,
-    name: 'Analytics Dashboard',
-    description: 'Real-time performance metrics',
+    name: "Analytics Dashboard",
+    description: "Real-time performance metrics",
     included: true,
   },
 ];
@@ -97,7 +97,7 @@ function FeatureCard({
   return (
     <Card
       className={`relative overflow-hidden border-2 border-green-500/30 bg-gradient-to-br from-green-500/10 via-emerald-500/5 to-transparent hover:border-green-500/50 hover:shadow-2xl hover:shadow-green-500/20 transition-all duration-700 group ${
-        isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-8'
+        isVisible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-8"
       }`}
     >
       {/* Animated Gradient Border Effect */}
@@ -154,11 +154,12 @@ export function IncludedFeatures({
   showDescriptions = true,
   animate = true,
 }: IncludedFeaturesProps) {
-  const gridClass = {
-    1: 'grid-cols-1',
-    2: 'md:grid-cols-2',
-    3: 'md:grid-cols-3',
-  }[columns] || 'md:grid-cols-3';
+  const gridClass =
+    {
+      1: "grid-cols-1",
+      2: "md:grid-cols-2",
+      3: "md:grid-cols-3",
+    }[columns] || "md:grid-cols-3";
 
   const savings = 229 + 240 + 350;
   const monthlyValue = Math.round(savings / 3);
@@ -192,7 +193,8 @@ export function IncludedFeatures({
                 Zero Cost Breakdown
               </CardTitle>
               <CardDescription className="text-lg mt-3 font-medium">
-                All features are completely free. No hidden costs, <span className="font-black text-green-600">ever</span>.
+                All features are completely free. No hidden costs,{" "}
+                <span className="font-black text-green-600">ever</span>.
               </CardDescription>
             </div>
           </div>
@@ -245,9 +247,9 @@ export function IncludedFeatures({
 
             <div className="space-y-3">
               {[
-                { platform: 'Vercel', price: 229 },
-                { platform: 'Netlify', price: 240 },
-                { platform: 'AWS', price: 350 },
+                { platform: "Vercel", price: 229 },
+                { platform: "Netlify", price: 240 },
+                { platform: "AWS", price: 350 },
               ].map((item, idx) => (
                 <div
                   key={idx}
@@ -260,7 +262,9 @@ export function IncludedFeatures({
             </div>
 
             <div className="border-t-2 border-green-500/30 pt-4 flex justify-between items-baseline">
-              <p className="text-xl font-black text-green-700 dark:text-green-400">ONE Platform Total</p>
+              <p className="text-xl font-black text-green-700 dark:text-green-400">
+                ONE Platform Total
+              </p>
               <p className="text-5xl font-black bg-gradient-to-r from-green-600 to-emerald-600 bg-clip-text text-transparent">
                 $0
               </p>
@@ -278,7 +282,8 @@ export function IncludedFeatures({
               ${(monthlyValue * 12).toLocaleString()}
             </p>
             <p className="text-base text-muted-foreground font-medium">
-              Keep this money. <span className="font-black text-green-600">Grow your business.</span>
+              Keep this money.{" "}
+              <span className="font-black text-green-600">Grow your business.</span>
             </p>
           </div>
         </CardContent>
@@ -294,21 +299,21 @@ export function IncludedFeatures({
               </h3>
 
               <p className="text-base text-muted-foreground max-w-3xl mx-auto leading-relaxed">
-                All features above are included in your free tier.{' '}
-                <span className="font-bold text-foreground">No credit card required.</span>{' '}
+                All features above are included in your free tier.{" "}
+                <span className="font-bold text-foreground">No credit card required.</span>{" "}
                 <span className="font-bold text-foreground">No trial limits.</span>
                 <br />
-                Deploy unlimited apps. Scale globally.{' '}
+                Deploy unlimited apps. Scale globally.{" "}
                 <span className="font-black text-green-600">Keep 100% of your revenue.</span>
               </p>
 
               {/* Feature Badges */}
               <div className="flex flex-wrap justify-center gap-3 pt-6">
                 {[
-                  { label: 'No Credit Card', icon: '💳', color: 'from-blue-500 to-cyan-500' },
-                  { label: 'No Trial Limits', icon: '⏱️', color: 'from-purple-500 to-pink-500' },
-                  { label: 'Production Ready', icon: '🚀', color: 'from-green-500 to-emerald-500' },
-                  { label: '100% Free Forever', icon: '✨', color: 'from-orange-500 to-red-500' },
+                  { label: "No Credit Card", icon: "💳", color: "from-blue-500 to-cyan-500" },
+                  { label: "No Trial Limits", icon: "⏱️", color: "from-purple-500 to-pink-500" },
+                  { label: "Production Ready", icon: "🚀", color: "from-green-500 to-emerald-500" },
+                  { label: "100% Free Forever", icon: "✨", color: "from-orange-500 to-red-500" },
                 ].map((item, idx) => (
                   <Badge
                     key={idx}
@@ -324,11 +329,11 @@ export function IncludedFeatures({
               {/* CTA Message */}
               <div className="pt-6 pb-2">
                 <p className="text-xl font-bold text-foreground">
-                  Start building now.{' '}
+                  Start building now.{" "}
                   <span className="bg-gradient-to-r from-primary via-purple-500 to-primary bg-clip-text text-transparent">
                     Ship faster.
-                  </span>
-                  {' '}Pay nothing.
+                  </span>{" "}
+                  Pay nothing.
                 </p>
               </div>
             </div>

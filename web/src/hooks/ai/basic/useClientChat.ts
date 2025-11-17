@@ -7,12 +7,12 @@
  * - Access to GPT-4, Claude, Llama, etc.
  */
 
-import { useChat } from '@ai-sdk/react';
+import { useChat } from "@ai-sdk/react";
 
 export interface UseClientChatOptions {
   apiKey: string;
   model?: string;
-  initialMessages?: Array<{ role: 'user' | 'assistant'; content: string }>;
+  initialMessages?: Array<{ role: "user" | "assistant"; content: string }>;
 }
 
 /**
@@ -27,12 +27,12 @@ export interface UseClientChatOptions {
  */
 
 export function useClientChat(options: UseClientChatOptions) {
-  const { apiKey, model = 'google/gemini-2.5-flash-lite', initialMessages = [] } = options;
+  const { apiKey, model = "google/gemini-2.5-flash-lite", initialMessages = [] } = options;
 
   const { messages, input, handleInputChange, handleSubmit, isLoading, error } = useChat({
-    api: '/api/chat',
+    api: "/api/chat",
     body: {
-      apiKey,  // User's OpenRouter API key
+      apiKey, // User's OpenRouter API key
       model,
     },
     initialMessages,

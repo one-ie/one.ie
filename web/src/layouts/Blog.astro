@@ -1,12 +1,8 @@
 ---
-import Layout from './Layout.astro';
-import { Image } from 'astro:assets';
-import { ShareButtons } from '@/components/ShareButtons';
-import type { CollectionEntry } from 'astro:content';
-import { ChevronRight, Home, FolderOpen } from 'lucide-react';
-import { getCollection } from 'astro:content';
+import type { CollectionEntry } from "astro:content";
+import { getCollection } from "astro:content";
 
-type BlogEntry = CollectionEntry<'blog'>;
+type BlogEntry = CollectionEntry<"blog">;
 
 interface Props {
   entry: BlogEntry;
@@ -17,10 +13,10 @@ interface Props {
 const { entry, headings } = Astro.props as Props;
 
 // Determine if this is a news article or blog post based on URL
-const isNews = Astro.url.pathname.includes('/news/');
+const isNews = Astro.url.pathname.includes("/news/");
 
 // Get all posts from the appropriate collection sorted by date to find previous/next
-const allPosts = (await getCollection(isNews ? 'news' : 'blog'))
+const allPosts = (await getCollection(isNews ? "news" : "blog"))
   .filter((post: any) => post.data && (post.data.title || post.data.description))
   .sort((a: any, b: any) => {
     const dateA = new Date(a.data.date).getTime();
@@ -29,35 +25,35 @@ const allPosts = (await getCollection(isNews ? 'news' : 'blog'))
   });
 
 // Find current post index
-const currentIndex = allPosts.findIndex(post => post.slug === entry.slug);
-const previousPost = currentIndex > 0 ? allPosts[currentIndex - 1] : null;
-const nextPost = currentIndex < allPosts.length - 1 ? allPosts[currentIndex + 1] : null;
+const currentIndex = allPosts.findIndex((post) => post.slug === entry.slug);
+const _previousPost = currentIndex > 0 ? allPosts[currentIndex - 1] : null;
+const _nextPost = currentIndex < allPosts.length - 1 ? allPosts[currentIndex + 1] : null;
 
-const pageData = {
+const _pageData = {
   title: entry.data.title,
   description: entry.data.description,
   image: entry.data.picture || entry.data.image,
-  type: 'article',
+  type: "article",
 };
 
 // Construct full URL for sharing
-const currentUrl = new URL(Astro.url.pathname, Astro.site).href;
+const _currentUrl = new URL(Astro.url.pathname, Astro.site).href;
 
 // Format date
-function formatDate(date: Date) {
-  return new Intl.DateTimeFormat('en-US', {
-    year: 'numeric',
-    month: 'long',
-    day: 'numeric',
+function _formatDate(date: Date) {
+  return new Intl.DateTimeFormat("en-US", {
+    year: "numeric",
+    month: "long",
+    day: "numeric",
   }).format(date);
 }
 
-const mainContentClass =
+const _mainContentClass =
   "prose dark:prose-invert max-w-none mx-auto prose-lg prose-headings:font-normal prose-p:text-gray-600 dark:prose-p:text-gray-300 prose-p:leading-relaxed prose-headings:text-gray-900 dark:prose-headings:text-gray-100 prose-a:text-blue-600 dark:prose-a:text-blue-400 prose-img:rounded-lg prose-blockquote:border-l-4 prose-blockquote:border-gray-300 dark:prose-blockquote:border-gray-700 prose-blockquote:pl-6 prose-blockquote:italic prose-blockquote:text-gray-700 dark:prose-blockquote:text-gray-300 prose-blockquote:my-8";
 
 // Set breadcrumb labels based on collection type
-const breadcrumbLabel = isNews ? 'News' : 'Blog';
-const breadcrumbHref = isNews ? '/news' : '/blog';
+const _breadcrumbLabel = isNews ? "News" : "Blog";
+const _breadcrumbHref = isNews ? "/news" : "/blog";
 ---
 
 <Layout {...pageData}>

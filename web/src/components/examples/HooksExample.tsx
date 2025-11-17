@@ -10,68 +10,52 @@
  * - Knowledge (search & labels)
  */
 
-import { useState } from 'react';
+import { useState } from "react";
+import { toast } from "sonner";
+import { Badge } from "@/components/ui/badge";
+import { Button } from "@/components/ui/button";
+import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import { Input } from "@/components/ui/input";
+import { Skeleton } from "@/components/ui/skeleton";
 import {
-  // Provider
-  DataProviderProvider,
-  
-  // Organizations
-  useOrganization,
-  useOrganizations,
+  useAuditTrail,
+  useCreateConnection,
   useCreateOrganization,
-  
+  useCreateThing,
   // People
   useCurrentUser,
-  usePeople,
   useHasRole,
-  
-  // Things
-  useThings,
-  useThing,
-  useCreateThing,
-  useUpdateThing,
-  
-  // Connections
-  useConnections,
-  useCreateConnection,
-  useOwnedThings,
-  
-  // Events
-  useEvents,
+  useLabels,
   useLogEvent,
-  useAuditTrail,
-  
+  useOrganizations,
+  useOwnedThings,
   // Knowledge
   useSearch,
-  useLabels,
-  useCreateKnowledge,
-} from '@/hooks';
-
-import { Card, CardHeader, CardTitle, CardContent } from '@/components/ui/card';
-import { Button } from '@/components/ui/button';
-import { Input } from '@/components/ui/input';
-import { Badge } from '@/components/ui/badge';
-import { Skeleton } from '@/components/ui/skeleton';
-import { toast } from 'sonner';
+  // Things
+  useThings,
+  useUpdateThing,
+} from "@/hooks";
 
 /**
  * Example 1: Organizations Management
  */
 export function OrganizationsExample() {
-  const { data: orgs, loading } = useOrganizations({ status: 'active' });
+  const { data: orgs, loading } = useOrganizations({ status: "active" });
   const { mutate: createOrg } = useCreateOrganization({
-    onSuccess: async () => { toast.success('Organization created!'); },
+    onSuccess: async () => {
+      toast.success("Organization created!");
+    },
   });
 
-  const [newOrgName, setNewOrgName] = useState('');
+  const [newOrgName, setNewOrgName] = useState("");
 
   async function handleCreate() {
     await createOrg({
       name: newOrgName,
-      slug: newOrgName.toLowerCase().replace(/\s+/g, '-'),
-      plan: 'starter',
+      slug: newOrgName.toLowerCase().replace(/\s+/g, "-"),
+      plan: "starter",
     });
-    setNewOrgName('');
+    setNewOrgName("");
   }
 
   if (loading) return <Skeleton className="h-32" />;
@@ -114,7 +98,7 @@ export function OrganizationsExample() {
  */
 export function RoleBasedUIExample() {
   const { data: user, loading } = useCurrentUser();
-  const { data: isOrgOwner } = useHasRole(['org_owner', 'platform_owner']);
+  const { data: isOrgOwner } = useHasRole(["org_owner", "platform_owner"]);
 
   if (loading) return <Skeleton className="h-20" />;
   if (!user) return <div>Not authenticated</div>;
@@ -151,37 +135,37 @@ export function RoleBasedUIExample() {
  * Example 3: Things CRUD Operations
  */
 export function ThingsCRUDExample() {
-  const { data: courses, loading } = useThings({ type: 'course', status: 'published' });
+  const { data: courses, loading } = useThings({ type: "course", status: "published" });
   const { mutate: createCourse } = useCreateThing({
     onSuccess: async () => {
-      toast.success('Course created!');
+      toast.success("Course created!");
     },
   });
   const { mutate: updateCourse } = useUpdateThing({
     onSuccess: async () => {
-      toast.success('Course updated!');
+      toast.success("Course updated!");
     },
   });
 
-  const [newCourseName, setNewCourseName] = useState('');
+  const [newCourseName, setNewCourseName] = useState("");
 
   async function handleCreateCourse() {
     await createCourse({
-      type: 'course',
+      type: "course",
       name: newCourseName,
       properties: {
-        description: 'A new course',
+        description: "A new course",
         price: 99,
       },
-      status: 'published',
+      status: "published",
     });
-    setNewCourseName('');
+    setNewCourseName("");
   }
 
   async function handlePublishCourse(courseId: string) {
     await updateCourse({
       id: courseId,
-      status: 'published',
+      status: "published",
     });
   }
 
@@ -205,12 +189,15 @@ export function ThingsCRUDExample() {
 
           <div className="space-y-2">
             {courses?.map((course) => (
-              <div key={course._id} className="flex items-center justify-between p-2 border rounded">
+              <div
+                key={course._id}
+                className="flex items-center justify-between p-2 border rounded"
+              >
                 <div>
                   <div className="font-medium">{course.name}</div>
                   <Badge variant="outline">{course.status}</Badge>
                 </div>
-                {course.status === 'draft' && (
+                {course.status === "draft" && (
                   <Button size="sm" onClick={() => handlePublishCourse(course._id)}>
                     Publish
                   </Button>
@@ -231,17 +218,17 @@ export function ConnectionsExample({ userId }: { userId: string | null }) {
   const { data: ownedCourses } = useOwnedThings(userId);
   const { mutate: createConnection } = useCreateConnection({
     onSuccess: async () => {
-      toast.success('Enrolled!');
+      toast.success("Enrolled!");
     },
   });
 
-  async function handleEnroll(courseId: string) {
+  async function _handleEnroll(courseId: string) {
     if (!userId) return;
 
     await createConnection({
       fromEntityId: userId,
       toEntityId: courseId,
-      relationshipType: 'enrolled_in',
+      relationshipType: "enrolled_in",
       metadata: { progress: 0 },
     });
   }
@@ -256,9 +243,7 @@ export function ConnectionsExample({ userId }: { userId: string | null }) {
           {ownedCourses?.map((connection) => (
             <div key={connection._id} className="p-2 border rounded">
               <div className="font-medium">Course ID: {connection.toEntityId}</div>
-              <div className="text-sm text-muted-foreground">
-                {connection.relationshipType}
-              </div>
+              <div className="text-sm text-muted-foreground">{connection.relationshipType}</div>
             </div>
           ))}
         </div>
@@ -274,7 +259,7 @@ export function AuditTrailExample({ thingId }: { thingId: string | null }) {
   const { data: events, loading } = useAuditTrail(thingId, { limit: 10 });
   const { mutate: logEvent } = useLogEvent({
     onSuccess: async () => {
-      toast.success('Event logged');
+      toast.success("Event logged");
     },
   });
 
@@ -282,10 +267,10 @@ export function AuditTrailExample({ thingId }: { thingId: string | null }) {
     if (!thingId) return;
 
     await logEvent({
-      type: 'content_viewed',
-      actorId: 'current-user-id', // Would come from useCurrentUser
+      type: "content_viewed",
+      actorId: "current-user-id", // Would come from useCurrentUser
       targetId: thingId,
-      metadata: { source: 'audit-trail-example' },
+      metadata: { source: "audit-trail-example" },
     });
   }
 
@@ -320,7 +305,7 @@ export function AuditTrailExample({ thingId }: { thingId: string | null }) {
  * Example 6: Search & Knowledge
  */
 export function SearchExample() {
-  const [query, setQuery] = useState('');
+  const [query, setQuery] = useState("");
   const { data: results, loading } = useSearch(query);
   const { data: labels } = useLabels();
 
@@ -331,11 +316,7 @@ export function SearchExample() {
       </CardHeader>
       <CardContent>
         <div className="space-y-4">
-          <Input
-            value={query}
-            onChange={(e) => setQuery(e.target.value)}
-            placeholder="Search..."
-          />
+          <Input value={query} onChange={(e) => setQuery(e.target.value)} placeholder="Search..." />
 
           {loading && <div>Searching...</div>}
 

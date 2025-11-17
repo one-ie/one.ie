@@ -1,21 +1,18 @@
-'use client';
+"use client";
 
-import { Card, CardContent, CardHeader, CardTitle, CardDescription } from '@/components/ui/card';
-import { Badge } from '@/components/ui/badge';
 import {
-  Users,
-  Globe,
-  MousePointer,
-  Eye,
-  Clock,
-  TrendingUp,
-  Smartphone,
-  Monitor,
-  Tablet,
   BarChart3,
-  Activity
-} from 'lucide-react';
-import { useEffect, useState } from 'react';
+  Clock,
+  Eye,
+  Monitor,
+  MousePointer,
+  Smartphone,
+  Tablet,
+  Users,
+} from "lucide-react";
+import { useEffect, useState } from "react";
+import { Badge } from "@/components/ui/badge";
+import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 
 interface TrafficData {
   timestamp: string;
@@ -61,7 +58,7 @@ const generateTrafficData = (seed: number = 1): TrafficData[] => {
   return Array.from({ length: 24 }, (_, i) => {
     const hour = new Date(now.getTime() - (23 - i) * 60 * 60 * 1000);
     return {
-      timestamp: hour.toLocaleTimeString('en-US', { hour: '2-digit', minute: '2-digit' }),
+      timestamp: hour.toLocaleTimeString("en-US", { hour: "2-digit", minute: "2-digit" }),
       visitors: Math.floor(seededRandom(i * 4) * 500) + 200,
       pageViews: Math.floor(seededRandom(i * 4 + 1) * 1500) + 500,
       bounceRate: seededRandom(i * 4 + 2) * 30 + 20,
@@ -71,25 +68,43 @@ const generateTrafficData = (seed: number = 1): TrafficData[] => {
 };
 
 const deviceData: DeviceData[] = [
-  { device: 'Desktop', icon: <Monitor className="h-5 w-5" />, percentage: 58, count: 3847, color: 'from-blue-600 to-cyan-500' },
-  { device: 'Mobile', icon: <Smartphone className="h-5 w-5" />, percentage: 35, count: 2319, color: 'from-purple-600 to-pink-500' },
-  { device: 'Tablet', icon: <Tablet className="h-5 w-5" />, percentage: 7, count: 464, color: 'from-green-600 to-emerald-500' },
+  {
+    device: "Desktop",
+    icon: <Monitor className="h-5 w-5" />,
+    percentage: 58,
+    count: 3847,
+    color: "from-blue-600 to-cyan-500",
+  },
+  {
+    device: "Mobile",
+    icon: <Smartphone className="h-5 w-5" />,
+    percentage: 35,
+    count: 2319,
+    color: "from-purple-600 to-pink-500",
+  },
+  {
+    device: "Tablet",
+    icon: <Tablet className="h-5 w-5" />,
+    percentage: 7,
+    count: 464,
+    color: "from-green-600 to-emerald-500",
+  },
 ];
 
 const geoData: GeoData[] = [
-  { country: 'United States', flag: '🇺🇸', visitors: 4523, percentage: 34.2, growth: 12.3 },
-  { country: 'United Kingdom', flag: '🇬🇧', visitors: 2341, percentage: 17.7, growth: 8.1 },
-  { country: 'Germany', flag: '🇩🇪', visitors: 1876, percentage: 14.2, growth: -3.2 },
-  { country: 'Japan', flag: '🇯🇵', visitors: 1432, percentage: 10.8, growth: 23.4 },
-  { country: 'Canada', flag: '🇨🇦', visitors: 987, percentage: 7.5, growth: 5.6 },
+  { country: "United States", flag: "🇺🇸", visitors: 4523, percentage: 34.2, growth: 12.3 },
+  { country: "United Kingdom", flag: "🇬🇧", visitors: 2341, percentage: 17.7, growth: 8.1 },
+  { country: "Germany", flag: "🇩🇪", visitors: 1876, percentage: 14.2, growth: -3.2 },
+  { country: "Japan", flag: "🇯🇵", visitors: 1432, percentage: 10.8, growth: 23.4 },
+  { country: "Canada", flag: "🇨🇦", visitors: 987, percentage: 7.5, growth: 5.6 },
 ];
 
 const topPages: PageData[] = [
-  { path: '/', views: 8234, uniqueViews: 5421, avgTime: '2:34', bounceRate: 23.4 },
-  { path: '/features', views: 4532, uniqueViews: 3214, avgTime: '3:12', bounceRate: 18.2 },
-  { path: '/pricing', views: 3421, uniqueViews: 2987, avgTime: '1:45', bounceRate: 34.5 },
-  { path: '/docs', views: 2198, uniqueViews: 1876, avgTime: '5:23', bounceRate: 12.3 },
-  { path: '/blog', views: 1765, uniqueViews: 1432, avgTime: '4:12', bounceRate: 28.7 },
+  { path: "/", views: 8234, uniqueViews: 5421, avgTime: "2:34", bounceRate: 23.4 },
+  { path: "/features", views: 4532, uniqueViews: 3214, avgTime: "3:12", bounceRate: 18.2 },
+  { path: "/pricing", views: 3421, uniqueViews: 2987, avgTime: "1:45", bounceRate: 34.5 },
+  { path: "/docs", views: 2198, uniqueViews: 1876, avgTime: "5:23", bounceRate: 12.3 },
+  { path: "/blog", views: 1765, uniqueViews: 1432, avgTime: "4:12", bounceRate: 28.7 },
 ];
 
 interface TrafficAnalyticsProps {
@@ -98,7 +113,7 @@ interface TrafficAnalyticsProps {
   /** Enable animations */
   animate?: boolean;
   /** Time range */
-  timeRange?: '24h' | '7d' | '30d';
+  timeRange?: "24h" | "7d" | "30d";
 }
 
 function MetricCard({
@@ -132,7 +147,7 @@ function MetricCard({
   return (
     <div
       className={`rounded-xl border border-border/50 bg-card/50 backdrop-blur-xl p-6 hover:scale-105 transition-all duration-500 ${
-        isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-8'
+        isVisible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-8"
       }`}
     >
       <div className="flex items-start justify-between mb-4">
@@ -141,9 +156,10 @@ function MetricCard({
         </div>
         <Badge
           variant="secondary"
-          className={`text-xs font-bold ${change > 0 ? 'text-green-600' : 'text-red-600'}`}
+          className={`text-xs font-bold ${change > 0 ? "text-green-600" : "text-red-600"}`}
         >
-          {change > 0 ? '+' : ''}{change}%
+          {change > 0 ? "+" : ""}
+          {change}%
         </Badge>
       </div>
       <p className="text-sm text-muted-foreground mb-1">{label}</p>
@@ -158,7 +174,7 @@ function TrafficChart({ data, animate }: { data: TrafficData[]; animate: boolean
   useEffect(() => {
     if (animate) {
       const interval = setInterval(() => {
-        setVisibleBars(prev => Math.min(prev + 1, data.length));
+        setVisibleBars((prev) => Math.min(prev + 1, data.length));
       }, 50);
       return () => clearInterval(interval);
     } else {
@@ -166,22 +182,19 @@ function TrafficChart({ data, animate }: { data: TrafficData[]; animate: boolean
     }
   }, [data.length, animate]);
 
-  const maxVisitors = Math.max(...data.map(d => d.visitors));
+  const maxVisitors = Math.max(...data.map((d) => d.visitors));
 
   return (
     <div className="relative h-48 flex items-end gap-1 p-4 rounded-xl border border-border/50 bg-card/50 backdrop-blur-xl">
       {data.map((item, idx) => {
         const height = (item.visitors / maxVisitors) * 100;
         return (
-          <div
-            key={idx}
-            className="flex-1 relative group"
-          >
+          <div key={idx} className="flex-1 relative group">
             {/* Bar */}
             <div
               className={`w-full bg-gradient-to-t from-primary to-primary/60 rounded-t transition-all duration-500 hover:from-primary/80 hover:to-primary`}
               style={{
-                height: idx < visibleBars ? `${height}%` : '0%',
+                height: idx < visibleBars ? `${height}%` : "0%",
                 transitionDelay: `${idx * 20}ms`,
               }}
             />
@@ -210,16 +223,16 @@ function TrafficChart({ data, animate }: { data: TrafficData[]; animate: boolean
 export function TrafficAnalytics({
   showDetails = true,
   animate = true,
-  timeRange = '24h',
+  timeRange = "24h",
 }: TrafficAnalyticsProps) {
   const [trafficData] = useState(() => generateTrafficData(1));
   const [currentVisitors, setCurrentVisitors] = useState(87); // Start with fixed value
 
   useEffect(() => {
-    if (animate && typeof window !== 'undefined') {
+    if (animate && typeof window !== "undefined") {
       // Only animate on client side
       const interval = setInterval(() => {
-        setCurrentVisitors(prev => {
+        setCurrentVisitors((prev) => {
           const change = Math.floor(Math.random() * 10) - 5;
           return Math.max(0, prev + change);
         });
@@ -231,8 +244,12 @@ export function TrafficAnalytics({
 
   const totalVisitors = trafficData.reduce((sum, d) => sum + d.visitors, 0);
   const totalPageViews = trafficData.reduce((sum, d) => sum + d.pageViews, 0);
-  const avgBounceRate = Math.round(trafficData.reduce((sum, d) => sum + d.bounceRate, 0) / trafficData.length);
-  const avgDuration = Math.round(trafficData.reduce((sum, d) => sum + d.avgDuration, 0) / trafficData.length);
+  const avgBounceRate = Math.round(
+    trafficData.reduce((sum, d) => sum + d.bounceRate, 0) / trafficData.length
+  );
+  const avgDuration = Math.round(
+    trafficData.reduce((sum, d) => sum + d.avgDuration, 0) / trafficData.length
+  );
 
   return (
     <div className="w-full space-y-8">
@@ -261,7 +278,11 @@ export function TrafficAnalytics({
                 {currentVisitors} Live
               </Badge>
               <Badge variant="outline" className="text-sm font-bold">
-                {timeRange === '24h' ? 'Last 24 Hours' : timeRange === '7d' ? 'Last 7 Days' : 'Last 30 Days'}
+                {timeRange === "24h"
+                  ? "Last 24 Hours"
+                  : timeRange === "7d"
+                    ? "Last 7 Days"
+                    : "Last 30 Days"}
               </Badge>
             </div>
           </div>
@@ -300,7 +321,7 @@ export function TrafficAnalytics({
             <MetricCard
               icon={<Clock className="h-5 w-5" />}
               label="Avg Duration"
-              value={`${Math.floor(avgDuration / 60)}:${(avgDuration % 60).toString().padStart(2, '0')}`}
+              value={`${Math.floor(avgDuration / 60)}:${(avgDuration % 60).toString().padStart(2, "0")}`}
               change={15.4}
               color="from-orange-600 to-yellow-500"
               index={3}
@@ -337,7 +358,9 @@ export function TrafficAnalytics({
                     </div>
                     <div>
                       <p className="font-semibold">{device.device}</p>
-                      <p className="text-sm text-muted-foreground">{device.count.toLocaleString()} users</p>
+                      <p className="text-sm text-muted-foreground">
+                        {device.count.toLocaleString()} users
+                      </p>
                     </div>
                   </div>
                   <span className="text-lg font-black">{device.percentage}%</span>
@@ -346,7 +369,7 @@ export function TrafficAnalytics({
                   <div
                     className={`h-full bg-gradient-to-r ${device.color} transition-all duration-1000`}
                     style={{
-                      width: animate ? `${device.percentage}%` : '0%',
+                      width: animate ? `${device.percentage}%` : "0%",
                       transitionDelay: `${idx * 200}ms`,
                     }}
                   />
@@ -379,8 +402,11 @@ export function TrafficAnalytics({
                 </div>
                 <div className="text-right">
                   <p className="font-black">{country.percentage}%</p>
-                  <p className={`text-xs font-bold ${country.growth > 0 ? 'text-green-600' : 'text-red-600'}`}>
-                    {country.growth > 0 ? '+' : ''}{country.growth}%
+                  <p
+                    className={`text-xs font-bold ${country.growth > 0 ? "text-green-600" : "text-red-600"}`}
+                  >
+                    {country.growth > 0 ? "+" : ""}
+                    {country.growth}%
                   </p>
                 </div>
               </div>
@@ -401,11 +427,21 @@ export function TrafficAnalytics({
               <table className="w-full">
                 <thead>
                   <tr className="border-b border-border/50">
-                    <th className="text-left p-3 text-sm font-medium text-muted-foreground">Page</th>
-                    <th className="text-right p-3 text-sm font-medium text-muted-foreground">Views</th>
-                    <th className="text-right p-3 text-sm font-medium text-muted-foreground">Unique</th>
-                    <th className="text-right p-3 text-sm font-medium text-muted-foreground">Avg Time</th>
-                    <th className="text-right p-3 text-sm font-medium text-muted-foreground">Bounce Rate</th>
+                    <th className="text-left p-3 text-sm font-medium text-muted-foreground">
+                      Page
+                    </th>
+                    <th className="text-right p-3 text-sm font-medium text-muted-foreground">
+                      Views
+                    </th>
+                    <th className="text-right p-3 text-sm font-medium text-muted-foreground">
+                      Unique
+                    </th>
+                    <th className="text-right p-3 text-sm font-medium text-muted-foreground">
+                      Avg Time
+                    </th>
+                    <th className="text-right p-3 text-sm font-medium text-muted-foreground">
+                      Bounce Rate
+                    </th>
                   </tr>
                 </thead>
                 <tbody>
@@ -419,7 +455,15 @@ export function TrafficAnalytics({
                       <td className="p-3 text-right">{page.uniqueViews.toLocaleString()}</td>
                       <td className="p-3 text-right">{page.avgTime}</td>
                       <td className="p-3 text-right">
-                        <Badge variant={page.bounceRate < 20 ? 'default' : page.bounceRate > 30 ? 'destructive' : 'secondary'}>
+                        <Badge
+                          variant={
+                            page.bounceRate < 20
+                              ? "default"
+                              : page.bounceRate > 30
+                                ? "destructive"
+                                : "secondary"
+                          }
+                        >
                           {page.bounceRate}%
                         </Badge>
                       </td>

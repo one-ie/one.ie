@@ -5,12 +5,12 @@
  * This is the key integration point for ChatGPT payments
  */
 
-import { useState } from 'react';
-import { Button } from '@/components/ui/button';
-import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
-import { Input } from '@/components/ui/input';
-import { Label } from '@/components/ui/label';
-import { Loader2, CreditCard, CheckCircle2 } from 'lucide-react';
+import { CheckCircle2, CreditCard, Loader2 } from "lucide-react";
+import { useState } from "react";
+import { Button } from "@/components/ui/button";
+import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import { Input } from "@/components/ui/input";
+import { Label } from "@/components/ui/label";
 
 interface PaymentProcessorProps {
   sessionId: string;
@@ -26,8 +26,8 @@ export function PaymentProcessor({
   const [isProcessing, setIsProcessing] = useState(false);
   const [isGeneratingSpt, setIsGeneratingSpt] = useState(false);
   const [error, setError] = useState<string | null>(null);
-  const [email, setEmail] = useState('');
-  const [sptToken, setSptToken] = useState<string>('');
+  const [email, setEmail] = useState("");
+  const [sptToken, setSptToken] = useState<string>("");
 
   const generateTestSpt = async () => {
     setIsGeneratingSpt(true);
@@ -36,26 +36,26 @@ export function PaymentProcessor({
     try {
       // Generate a test SPT using Stripe's test helpers
       // In production, ChatGPT creates this automatically
-      const response = await fetch('/api/stripe/test-spt', {
-        method: 'POST',
+      const response = await fetch("/api/stripe/test-spt", {
+        method: "POST",
         headers: {
-          'Content-Type': 'application/json',
+          "Content-Type": "application/json",
           Authorization: `Bearer ${import.meta.env.PUBLIC_COMMERCE_API_KEY}`,
         },
         body: JSON.stringify({
           amount: totalAmount,
-          currency: 'usd',
+          currency: "usd",
         }),
       });
 
       if (!response.ok) {
-        throw new Error('Failed to generate test SPT');
+        throw new Error("Failed to generate test SPT");
       }
 
       const data = await response.json();
       setSptToken(data.token);
     } catch (err) {
-      setError(err instanceof Error ? err.message : 'Failed to generate test token');
+      setError(err instanceof Error ? err.message : "Failed to generate test token");
     } finally {
       setIsGeneratingSpt(false);
     }
@@ -68,9 +68,9 @@ export function PaymentProcessor({
 
     try {
       const response = await fetch(`/api/checkout_sessions/${sessionId}/complete`, {
-        method: 'POST',
+        method: "POST",
         headers: {
-          'Content-Type': 'application/json',
+          "Content-Type": "application/json",
           Authorization: `Bearer ${import.meta.env.PUBLIC_COMMERCE_API_KEY}`,
         },
         body: JSON.stringify({
@@ -78,7 +78,7 @@ export function PaymentProcessor({
             email,
           },
           payment_data: {
-            provider: 'stripe',
+            provider: "stripe",
             token: sptToken,
           },
         }),
@@ -86,20 +86,20 @@ export function PaymentProcessor({
 
       if (!response.ok) {
         const errorData = await response.json();
-        throw new Error(errorData.message || 'Payment failed');
+        throw new Error(errorData.message || "Payment failed");
       }
 
       const result = await response.json();
 
-      if (result.status === 'completed' && result.order) {
+      if (result.status === "completed" && result.order) {
         // Pass both order ID and payment intent ID (if available from session storage)
         const paymentIntentId = result.payment_intent_id;
         onPaymentComplete(result.order.id, paymentIntentId);
       } else {
-        throw new Error('Payment did not complete successfully');
+        throw new Error("Payment did not complete successfully");
       }
     } catch (err) {
-      setError(err instanceof Error ? err.message : 'Payment processing failed');
+      setError(err instanceof Error ? err.message : "Payment processing failed");
     } finally {
       setIsProcessing(false);
     }
@@ -136,15 +136,16 @@ export function PaymentProcessor({
                 How Payment Works
               </p>
               <p className="text-xs text-blue-800 dark:text-blue-200 leading-relaxed">
-                <strong>In Production:</strong> When a customer shops in ChatGPT, ChatGPT automatically creates
-                a Shared Payment Token (SPT) using the customer saved payment method. The SPT is sent to us
-                and we charge it via Stripe.
+                <strong>In Production:</strong> When a customer shops in ChatGPT, ChatGPT
+                automatically creates a Shared Payment Token (SPT) using the customer saved payment
+                method. The SPT is sent to us and we charge it via Stripe.
               </p>
             </div>
             <div className="pt-2 border-t border-blue-200 dark:border-blue-700">
               <p className="text-xs text-blue-800 dark:text-blue-200 leading-relaxed">
-                <strong>For This Demo:</strong> We will create a real Stripe test transaction using a test card.
-                Click below to generate a test payment method - this will appear in your Stripe dashboard.
+                <strong>For This Demo:</strong> We will create a real Stripe test transaction using
+                a test card. Click below to generate a test payment method - this will appear in
+                your Stripe dashboard.
               </p>
             </div>
           </div>
@@ -183,23 +184,15 @@ export function PaymentProcessor({
           <div className="bg-accent p-4 rounded-lg">
             <div className="flex justify-between items-center">
               <span className="text-sm font-medium">Total Amount</span>
-              <span className="text-2xl font-bold">
-                ${(totalAmount / 100).toFixed(2)}
-              </span>
+              <span className="text-2xl font-bold">${(totalAmount / 100).toFixed(2)}</span>
             </div>
           </div>
 
           {error && (
-            <div className="text-sm text-destructive bg-destructive/10 p-3 rounded-md">
-              {error}
-            </div>
+            <div className="text-sm text-destructive bg-destructive/10 p-3 rounded-md">{error}</div>
           )}
 
-          <Button
-            type="submit"
-            className="w-full"
-            disabled={isProcessing || !sptToken}
-          >
+          <Button type="submit" className="w-full" disabled={isProcessing || !sptToken}>
             {isProcessing ? (
               <>
                 <Loader2 className="mr-2 h-4 w-4 animate-spin" />

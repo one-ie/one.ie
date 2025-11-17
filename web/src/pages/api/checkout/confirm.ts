@@ -9,17 +9,13 @@
  * - Sends confirmation email
  */
 
-import type { APIRoute } from 'astro';
-import Stripe from 'stripe';
-import type {
-  PaymentConfirmationRequest,
-  OrderConfirmation,
-  OrderItem,
-} from '@/types/stripe';
+import type { APIRoute } from "astro";
+import Stripe from "stripe";
+import type { OrderConfirmation, OrderItem, PaymentConfirmationRequest } from "@/types/stripe";
 
 // Initialize Stripe
-const stripe = new Stripe(import.meta.env.STRIPE_SECRET_KEY || '', {
-  apiVersion: '2025-09-30.clover',
+const stripe = new Stripe(import.meta.env.STRIPE_SECRET_KEY || "", {
+  apiVersion: "2025-09-30.clover",
   typescript: true,
 });
 
@@ -41,16 +37,14 @@ async function createOrder(
   request: PaymentConfirmationRequest
 ): Promise<OrderConfirmation> {
   // Parse items from metadata
-  const items: OrderItem[] = JSON.parse(
-    paymentIntent.metadata.items || '[]'
-  ).map((item: any) => ({
+  const items: OrderItem[] = JSON.parse(paymentIntent.metadata.items || "[]").map((item: any) => ({
     productId: item.productId,
-    name: 'Product Name', // TODO: Get from database
+    name: "Product Name", // TODO: Get from database
     quantity: item.quantity,
     price: 2999, // TODO: Get from database
     selectedColor: item.selectedColor,
     selectedSize: item.selectedSize,
-    imageUrl: '/placeholder.jpg', // TODO: Get from database
+    imageUrl: "/placeholder.jpg", // TODO: Get from database
   }));
 
   // Calculate estimated delivery (7 business days)
@@ -66,7 +60,7 @@ async function createOrder(
     items,
     billingAddress: request.billingAddress,
     createdAt: Date.now(),
-    estimatedDelivery: estimatedDelivery.toISOString().split('T')[0],
+    estimatedDelivery: estimatedDelivery.toISOString().split("T")[0],
   };
 
   // TODO: Save to database
@@ -79,12 +73,10 @@ async function createOrder(
  * Send order confirmation email
  * TODO: Integrate with Resend or email service
  */
-async function sendConfirmationEmail(
-  order: OrderConfirmation
-): Promise<void> {
+async function sendConfirmationEmail(order: OrderConfirmation): Promise<void> {
   // TODO: Integrate with @convex-dev/resend or Resend API
-  console.log('Sending confirmation email to:', order.billingAddress.email);
-  console.log('Order number:', order.orderNumber);
+  console.log("Sending confirmation email to:", order.billingAddress.email);
+  console.log("Order number:", order.orderNumber);
 
   // Example Resend integration:
   // const resend = new Resend(import.meta.env.RESEND_API_KEY);
@@ -107,7 +99,7 @@ async function sendConfirmationEmail(
  */
 async function clearCart(userId?: string): Promise<void> {
   // TODO: Clear cart in database or localStorage
-  console.log('Clearing cart for user:', userId || 'guest');
+  console.log("Clearing cart for user:", userId || "guest");
 }
 
 export const POST: APIRoute = async ({ request }) => {
@@ -119,34 +111,32 @@ export const POST: APIRoute = async ({ request }) => {
     if (!body.paymentIntentId) {
       return new Response(
         JSON.stringify({
-          error: 'Invalid request: paymentIntentId is required',
+          error: "Invalid request: paymentIntentId is required",
         }),
-        { status: 400, headers: { 'Content-Type': 'application/json' } }
+        { status: 400, headers: { "Content-Type": "application/json" } }
       );
     }
 
     if (!body.billingAddress) {
       return new Response(
         JSON.stringify({
-          error: 'Invalid request: billingAddress is required',
+          error: "Invalid request: billingAddress is required",
         }),
-        { status: 400, headers: { 'Content-Type': 'application/json' } }
+        { status: 400, headers: { "Content-Type": "application/json" } }
       );
     }
 
     // Retrieve PaymentIntent from Stripe to verify status
-    const paymentIntent = await stripe.paymentIntents.retrieve(
-      body.paymentIntentId
-    );
+    const paymentIntent = await stripe.paymentIntents.retrieve(body.paymentIntentId);
 
     // Verify payment succeeded
-    if (paymentIntent.status !== 'succeeded') {
+    if (paymentIntent.status !== "succeeded") {
       return new Response(
         JSON.stringify({
-          error: 'Payment not completed',
+          error: "Payment not completed",
           status: paymentIntent.status,
         }),
-        { status: 400, headers: { 'Content-Type': 'application/json' } }
+        { status: 400, headers: { "Content-Type": "application/json" } }
       );
     }
 
@@ -155,42 +145,42 @@ export const POST: APIRoute = async ({ request }) => {
 
     // Send confirmation email (async - don't wait)
     sendConfirmationEmail(order).catch((error) => {
-      console.error('Failed to send confirmation email:', error);
+      console.error("Failed to send confirmation email:", error);
       // Don't fail the request if email fails
     });
 
     // Clear cart (async - don't wait)
     clearCart().catch((error) => {
-      console.error('Failed to clear cart:', error);
+      console.error("Failed to clear cart:", error);
       // Don't fail the request if cart clear fails
     });
 
     // Return order confirmation
     return new Response(JSON.stringify(order), {
       status: 200,
-      headers: { 'Content-Type': 'application/json' },
+      headers: { "Content-Type": "application/json" },
     });
   } catch (error) {
-    console.error('Confirm payment error:', error);
+    console.error("Confirm payment error:", error);
 
     // Handle Stripe errors
     if (error instanceof Stripe.errors.StripeError) {
       return new Response(
         JSON.stringify({
           error: error.message,
-          type: 'stripe_error',
+          type: "stripe_error",
         }),
-        { status: 400, headers: { 'Content-Type': 'application/json' } }
+        { status: 400, headers: { "Content-Type": "application/json" } }
       );
     }
 
     // Handle other errors
     return new Response(
       JSON.stringify({
-        error: 'Failed to confirm payment',
-        type: 'api_error',
+        error: "Failed to confirm payment",
+        type: "api_error",
       }),
-      { status: 500, headers: { 'Content-Type': 'application/json' } }
+      { status: 500, headers: { "Content-Type": "application/json" } }
     );
   }
 };

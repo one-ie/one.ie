@@ -1,7 +1,6 @@
-import React from "react";
+import { ArrowRight, BookOpen, Check, MessageSquare } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
-import { ArrowRight, BookOpen, MessageSquare, Check } from "lucide-react";
 
 export function FrameworkOverview() {
   return (
@@ -12,9 +11,8 @@ export function FrameworkOverview() {
           Your AI Growth System: Playbook, Ebook, Community
         </h2>
         <p className="text-xl text-center text-muted-foreground mb-12 max-w-3xl mx-auto">
-          The ONE Playbook is your complete toolkit designed to systematize and
-          accelerate your e-commerce growth using Artificial Intelligence
-          effectively.
+          The ONE Playbook is your complete toolkit designed to systematize and accelerate your
+          e-commerce growth using Artificial Intelligence effectively.
         </p>
 
         {/* System Components */}
@@ -29,22 +27,17 @@ export function FrameworkOverview() {
               <div className="space-y-4">
                 <h4 className="text-2xl font-bold">Master the "Why"</h4>
                 <p className="text-muted-foreground leading-relaxed">
-                  Comprehensive guide through building the crucial Foundation
-                  for AI success. Learn timeless principles to define your
-                  irresistible offer.
+                  Comprehensive guide through building the crucial Foundation for AI success. Learn
+                  timeless principles to define your irresistible offer.
                 </p>
                 <div className="space-y-3">
                   <div className="flex items-start gap-3">
                     <Check className="w-5 h-5 text-primary mt-1" />
-                    <p className="text-sm">
-                      Deep Customer Avatar understanding
-                    </p>
+                    <p className="text-sm">Deep Customer Avatar understanding</p>
                   </div>
                   <div className="flex items-start gap-3">
                     <Check className="w-5 h-5 text-primary mt-1" />
-                    <p className="text-sm">
-                      Irresistible Offer crafting framework
-                    </p>
+                    <p className="text-sm">Irresistible Offer crafting framework</p>
                   </div>
                   <div className="flex items-start gap-3">
                     <Check className="w-5 h-5 text-primary mt-1" />
@@ -63,16 +56,13 @@ export function FrameworkOverview() {
               <div className="space-y-4">
                 <h4 className="text-2xl font-bold">Execute & Scale</h4>
                 <p className="text-muted-foreground leading-relaxed">
-                  Get straight to results with our curated system of 100+
-                  field-tested, Ecom-specific prompts designed for rapid
-                  implementation.
+                  Get straight to results with our curated system of 100+ field-tested,
+                  Ecom-specific prompts designed for rapid implementation.
                 </p>
                 <div className="space-y-3">
                   <div className="flex items-start gap-3">
                     <Check className="w-5 h-5 text-primary mt-1" />
-                    <p className="text-sm">
-                      100+ proven prompts for Ecom growth
-                    </p>
+                    <p className="text-sm">100+ proven prompts for Ecom growth</p>
                   </div>
                   <div className="flex items-start gap-3">
                     <Check className="w-5 h-5 text-primary mt-1" />
@@ -95,8 +85,8 @@ export function FrameworkOverview() {
               <div className="space-y-4">
                 <h4 className="text-2xl font-bold">Learn & Grow</h4>
                 <p className="text-muted-foreground leading-relaxed">
-                  Join a thriving community of Ecom leaders using AI. Get
-                  support, share insights, and stay ahead of the curve.
+                  Join a thriving community of Ecom leaders using AI. Get support, share insights,
+                  and stay ahead of the curve.
                 </p>
                 <div className="space-y-3">
                   <div className="flex items-start gap-3">
@@ -117,32 +107,24 @@ export function FrameworkOverview() {
           </div>
 
           <div className="mt-12 p-6 bg-primary/5 rounded-lg border border-primary/10">
-            <h3 className="text-xl font-bold mb-4 text-center">
-              The Power of System + Support
-            </h3>
+            <h3 className="text-xl font-bold mb-4 text-center">The Power of System + Support</h3>
             <p className="text-center text-muted-foreground leading-relaxed max-w-2xl mx-auto">
-              The ONE Playbook combines strategic knowledge, proven prompts, and
-              community support to create a complete solution for achieving
-              predictable, scalable e-commerce growth with AI.
+              The ONE Playbook combines strategic knowledge, proven prompts, and community support
+              to create a complete solution for achieving predictable, scalable e-commerce growth
+              with AI.
             </p>
             <div className="grid md:grid-cols-3 gap-6 mt-8">
               <Card className="p-4 text-center">
                 <h4 className="font-semibold mb-2">Foundation First</h4>
-                <p className="text-sm text-muted-foreground">
-                  Build your strategic bedrock
-                </p>
+                <p className="text-sm text-muted-foreground">Build your strategic bedrock</p>
               </Card>
               <Card className="p-4 text-center">
                 <h4 className="font-semibold mb-2">Rapid Execution</h4>
-                <p className="text-sm text-muted-foreground">
-                  Implement with proven prompts
-                </p>
+                <p className="text-sm text-muted-foreground">Implement with proven prompts</p>
               </Card>
               <Card className="p-4 text-center">
                 <h4 className="font-semibold mb-2">Ongoing Growth</h4>
-                <p className="text-sm text-muted-foreground">
-                  Learn from the community
-                </p>
+                <p className="text-sm text-muted-foreground">Learn from the community</p>
               </Card>
             </div>
           </div>
@@ -156,8 +138,7 @@ export function FrameworkOverview() {
               </Button>
             </a>
             <p className="mt-4 text-sm text-muted-foreground">
-              Join successful store owners using our proven system to scale with
-              AI
+              Join successful store owners using our proven system to scale with AI
             </p>
           </div>
         </div>

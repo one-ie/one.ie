@@ -1,6 +1,5 @@
-import React from "react";
+import { Check, Trophy, User } from "lucide-react";
 import { Card } from "@/components/ui/card";
-import { Trophy, Check, User } from "lucide-react";
 
 export function KeyFeatures() {
   return (
@@ -13,8 +12,8 @@ export function KeyFeatures() {
             </div>
             <h3 className="text-xl font-bold mb-3">Proven System</h3>
             <p className="text-muted-foreground">
-              Field-tested framework used by successful ecommerce stores to
-              generate predictable growth with AI
+              Field-tested framework used by successful ecommerce stores to generate predictable
+              growth with AI
             </p>
           </Card>
 
@@ -24,8 +23,8 @@ export function KeyFeatures() {
             </div>
             <h3 className="text-xl font-bold mb-3">200+ Tested Prompts</h3>
             <p className="text-muted-foreground">
-              Skip the experimentation with our library of proven prompts
-              designed specifically for ecommerce
+              Skip the experimentation with our library of proven prompts designed specifically for
+              ecommerce
             </p>
           </Card>
 
@@ -35,8 +34,7 @@ export function KeyFeatures() {
             </div>
             <h3 className="text-xl font-bold mb-3">Expert Support</h3>
             <p className="text-muted-foreground">
-              Get guidance from our community of successful ecommerce owners and
-              AI experts
+              Get guidance from our community of successful ecommerce owners and AI experts
             </p>
           </Card>
         </div>
@@ -97,9 +95,8 @@ export function KeyFeatures() {
         </p>
         <div className="text-center mt-12">
           <p className="text-lg text-muted-foreground max-w-2xl mx-auto">
-            Join owners of the world's leading ecommerce stores who have
-            transformed their random AI experiments into systematic growth
-            engines
+            Join owners of the world's leading ecommerce stores who have transformed their random AI
+            experiments into systematic growth engines
           </p>
         </div>
       </div>

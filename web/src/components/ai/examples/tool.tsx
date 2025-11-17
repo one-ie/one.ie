@@ -1,5 +1,8 @@
 "use client";
 
+import type { ToolUIPart } from "ai";
+import { CheckIcon, XIcon } from "lucide-react";
+import { nanoid } from "nanoid";
 import {
   Confirmation,
   ConfirmationAccepted,
@@ -16,9 +19,6 @@ import {
   ToolInput,
   ToolOutput,
 } from "@/components/ai/elements/tool";
-import type { ToolUIPart } from "ai";
-import { CheckIcon, XIcon } from "lucide-react";
-import { nanoid } from "nanoid";
 
 const toolCall: ToolUIPart = {
   type: "tool-database_query" as const,
@@ -43,11 +43,7 @@ const Example = () => (
   <div className="space-y-4" style={{ minHeight: "1400px" }}>
     {/* 1. input-streaming: Pending */}
     <Tool defaultOpen>
-      <ToolHeader
-        state="input-streaming"
-        title="database_query"
-        type="tool-database_query"
-      />
+      <ToolHeader state="input-streaming" title="database_query" type="tool-database_query" />
       <ToolContent>
         <ToolInput input={{}} />
       </ToolContent>
@@ -107,10 +103,7 @@ const Example = () => (
       />
       <ToolContent>
         <ToolInput input={toolCall.input} />
-        <Confirmation
-          approval={{ id: nanoid(), approved: true }}
-          state="approval-responded"
-        >
+        <Confirmation approval={{ id: nanoid(), approved: true }} state="approval-responded">
           <ConfirmationTitle>
             <ConfirmationRequest>
               This tool will execute a query on the production database.
@@ -130,11 +123,7 @@ const Example = () => (
 
     {/* 4. input-available: Running */}
     <Tool>
-      <ToolHeader
-        state="input-available"
-        title="database_query"
-        type="tool-database_query"
-      />
+      <ToolHeader state="input-available" title="database_query" type="tool-database_query" />
       <ToolContent>
         <ToolInput input={toolCall.input} />
       </ToolContent>
@@ -145,10 +134,7 @@ const Example = () => (
       <ToolHeader state={toolCall.state} type={toolCall.type} />
       <ToolContent>
         <ToolInput input={toolCall.input} />
-        <Confirmation
-          approval={{ id: nanoid(), approved: true }}
-          state="output-available"
-        >
+        <Confirmation approval={{ id: nanoid(), approved: true }} state="output-available">
           <ConfirmationTitle>
             <ConfirmationRequest>
               This tool will execute a query on the production database.
@@ -171,11 +157,7 @@ const Example = () => (
 
     {/* 6. output-error: Error */}
     <Tool>
-      <ToolHeader
-        state="output-error"
-        title="database_query"
-        type="tool-database_query"
-      />
+      <ToolHeader state="output-error" title="database_query" type="tool-database_query" />
       <ToolContent>
         <ToolInput input={toolCall.input} />
         <ToolOutput

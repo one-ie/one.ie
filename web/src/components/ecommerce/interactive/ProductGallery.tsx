@@ -4,10 +4,10 @@
  * Requires client:load hydration
  */
 
-'use client';
+"use client";
 
-import { useState, useRef, useEffect } from 'react';
-import { Dialog, DialogContent } from '@/components/ui/dialog';
+import { useEffect, useRef, useState } from "react";
+import { Dialog, DialogContent } from "@/components/ui/dialog";
 
 interface ProductGalleryProps {
   images: string[];
@@ -91,14 +91,14 @@ export function ProductGallery({ images, productName }: ProductGalleryProps) {
   // Keyboard navigation
   useEffect(() => {
     const handleKeyDown = (e: KeyboardEvent) => {
-      if (e.key === 'ArrowLeft') handlePrevious();
-      if (e.key === 'ArrowRight') handleNext();
-      if (e.key === 'Escape') setIsZoomed(false);
+      if (e.key === "ArrowLeft") handlePrevious();
+      if (e.key === "ArrowRight") handleNext();
+      if (e.key === "Escape") setIsZoomed(false);
     };
 
-    window.addEventListener('keydown', handleKeyDown);
-    return () => window.removeEventListener('keydown', handleKeyDown);
-  }, []);
+    window.addEventListener("keydown", handleKeyDown);
+    return () => window.removeEventListener("keydown", handleKeyDown);
+  }, [handleNext, handlePrevious]);
 
   return (
     <>
@@ -113,12 +113,12 @@ export function ProductGallery({ images, productName }: ProductGalleryProps) {
         >
           <div
             className={`h-full w-full transition-transform duration-200 ${
-              isZoomed ? 'cursor-zoom-out scale-200' : 'cursor-zoom-in'
+              isZoomed ? "cursor-zoom-out scale-200" : "cursor-zoom-in"
             }`}
             onClick={toggleZoom}
             onMouseMove={handleMouseMove}
             style={{
-              transformOrigin: isZoomed ? `${zoomPosition.x}% ${zoomPosition.y}%` : 'center',
+              transformOrigin: isZoomed ? `${zoomPosition.x}% ${zoomPosition.y}%` : "center",
             }}
           >
             <img
@@ -137,12 +137,7 @@ export function ProductGallery({ images, productName }: ProductGalleryProps) {
                 className="absolute left-2 top-1/2 -translate-y-1/2 rounded-full bg-white/90 dark:bg-black/90 backdrop-blur-sm p-2 shadow transition-all hover:bg-white hover:dark:bg-black hover:scale-110"
                 aria-label="Previous image"
               >
-                <svg
-                  className="h-6 w-6"
-                  fill="none"
-                  stroke="currentColor"
-                  viewBox="0 0 24 24"
-                >
+                <svg className="h-6 w-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                   <path
                     strokeLinecap="round"
                     strokeLinejoin="round"
@@ -156,12 +151,7 @@ export function ProductGallery({ images, productName }: ProductGalleryProps) {
                 className="absolute right-2 top-1/2 -translate-y-1/2 rounded-full bg-white/90 dark:bg-black/90 backdrop-blur-sm p-2 shadow transition-all hover:bg-white hover:dark:bg-black hover:scale-110"
                 aria-label="Next image"
               >
-                <svg
-                  className="h-6 w-6"
-                  fill="none"
-                  stroke="currentColor"
-                  viewBox="0 0 24 24"
-                >
+                <svg className="h-6 w-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                   <path
                     strokeLinecap="round"
                     strokeLinejoin="round"
@@ -179,12 +169,7 @@ export function ProductGallery({ images, productName }: ProductGalleryProps) {
             className="absolute top-2 right-2 rounded-full bg-white/90 dark:bg-black/90 backdrop-blur-sm p-2 shadow transition-all hover:bg-white hover:dark:bg-black hover:scale-110"
             aria-label="View fullscreen"
           >
-            <svg
-              className="h-5 w-5"
-              fill="none"
-              stroke="currentColor"
-              viewBox="0 0 24 24"
-            >
+            <svg className="h-5 w-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
               <path
                 strokeLinecap="round"
                 strokeLinejoin="round"
@@ -221,8 +206,8 @@ export function ProductGallery({ images, productName }: ProductGalleryProps) {
                 }}
                 className={`relative aspect-square w-20 flex-shrink-0 overflow-hidden rounded-md border-2 transition-all ${
                   index === currentIndex
-                    ? 'border-primary scale-105'
-                    : 'border-transparent hover:border-muted-foreground'
+                    ? "border-primary scale-105"
+                    : "border-transparent hover:border-muted-foreground"
                 }`}
               >
                 <img
@@ -255,12 +240,7 @@ export function ProductGallery({ images, productName }: ProductGalleryProps) {
                   className="absolute left-4 top-1/2 -translate-y-1/2 rounded-full bg-white/20 backdrop-blur-sm p-3 text-white shadow transition-all hover:bg-white/30 hover:scale-110"
                   aria-label="Previous image"
                 >
-                  <svg
-                    className="h-8 w-8"
-                    fill="none"
-                    stroke="currentColor"
-                    viewBox="0 0 24 24"
-                  >
+                  <svg className="h-8 w-8" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                     <path
                       strokeLinecap="round"
                       strokeLinejoin="round"
@@ -274,12 +254,7 @@ export function ProductGallery({ images, productName }: ProductGalleryProps) {
                   className="absolute right-4 top-1/2 -translate-y-1/2 rounded-full bg-white/20 backdrop-blur-sm p-3 text-white shadow transition-all hover:bg-white/30 hover:scale-110"
                   aria-label="Next image"
                 >
-                  <svg
-                    className="h-8 w-8"
-                    fill="none"
-                    stroke="currentColor"
-                    viewBox="0 0 24 24"
-                  >
+                  <svg className="h-8 w-8" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                     <path
                       strokeLinecap="round"
                       strokeLinejoin="round"
@@ -304,12 +279,7 @@ export function ProductGallery({ images, productName }: ProductGalleryProps) {
               className="absolute top-4 right-4 rounded-full bg-white/20 backdrop-blur-sm p-3 text-white shadow transition-all hover:bg-white/30 hover:scale-110"
               aria-label="Close fullscreen"
             >
-              <svg
-                className="h-6 w-6"
-                fill="none"
-                stroke="currentColor"
-                viewBox="0 0 24 24"
-              >
+              <svg className="h-6 w-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                 <path
                   strokeLinecap="round"
                   strokeLinejoin="round"

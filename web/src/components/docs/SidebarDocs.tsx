@@ -1,10 +1,10 @@
-'use client';
+"use client";
 
-import { useState, useMemo } from 'react';
-import { ChevronDown } from 'lucide-react';
-import type { CollectionEntry } from 'astro:content';
+import type { CollectionEntry } from "astro:content";
+import { ChevronDown } from "lucide-react";
+import { useMemo, useState } from "react";
 
-type DocEntry = CollectionEntry<'docs'>;
+type DocEntry = CollectionEntry<"docs">;
 
 interface SidebarDocsProps {
   entries: DocEntry[];
@@ -13,31 +13,31 @@ interface SidebarDocsProps {
 
 export function SidebarDocs({ entries, currentSlug }: SidebarDocsProps) {
   const [expandedFolders, setExpandedFolders] = useState<Record<string, boolean>>({
-    'getting-started': true,
-    'overview': true,
-    'develop': true,
-    'develop-platform': true,
+    "getting-started": true,
+    overview: true,
+    develop: true,
+    "develop-platform": true,
   });
 
   const folderOrder = {
-    'getting-started': 1,
-    'overview': 2,
-    'develop': 3,
-    'develop-platform': 10,
+    "getting-started": 1,
+    overview: 2,
+    develop: 3,
+    "develop-platform": 10,
   };
 
   const folderDisplayNames = {
-    'getting-started': 'Quick Start',
-    'overview': 'Overview',
-    'develop': 'Develop',
-    'develop-platform': 'Develop Platform',
+    "getting-started": "Quick Start",
+    overview: "Overview",
+    develop: "Develop",
+    "develop-platform": "Develop Platform",
   };
 
   const folderIcons: Record<string, string> = {
-    'getting-started': '🚀',
-    'overview': '🏗️',
-    'develop': '⚡',
-    'develop-platform': '🔧',
+    "getting-started": "🚀",
+    overview: "🏗️",
+    develop: "⚡",
+    "develop-platform": "🔧",
   };
 
   // Group entries by folder
@@ -45,9 +45,7 @@ export function SidebarDocs({ entries, currentSlug }: SidebarDocsProps) {
     const groups: Record<string, DocEntry[]> = {};
 
     entries.forEach((entry) => {
-      const folder = entry.slug.includes('/')
-        ? entry.slug.split('/')[0]
-        : 'getting-started';
+      const folder = entry.slug.includes("/") ? entry.slug.split("/")[0] : "getting-started";
 
       if (!groups[folder]) {
         groups[folder] = [];
@@ -80,9 +78,8 @@ export function SidebarDocs({ entries, currentSlug }: SidebarDocsProps) {
     <aside className="hidden lg:flex lg:flex-col w-64 border-r border-border/40 bg-muted/20 sticky top-0 h-screen">
       <nav className="p-4 space-y-1 overflow-y-auto flex-1">
         {sortedFolders.map((folder) => {
-          const displayName =
-            (folderDisplayNames as Record<string, string>)[folder] || folder;
-          const icon = (folderIcons as Record<string, string>)[folder] || '📁';
+          const displayName = (folderDisplayNames as Record<string, string>)[folder] || folder;
+          const icon = (folderIcons as Record<string, string>)[folder] || "📁";
           const docs = groupedEntries[folder] || [];
           const isExpanded = expandedFolders[folder] ?? true;
 
@@ -97,9 +94,7 @@ export function SidebarDocs({ entries, currentSlug }: SidebarDocsProps) {
                   <span>{displayName}</span>
                 </span>
                 <ChevronDown
-                  className={`w-4 h-4 transition-transform ${
-                    isExpanded ? '' : '-rotate-90'
-                  }`}
+                  className={`w-4 h-4 transition-transform ${isExpanded ? "" : "-rotate-90"}`}
                 />
               </button>
 
@@ -113,8 +108,8 @@ export function SidebarDocs({ entries, currentSlug }: SidebarDocsProps) {
                         href={`/docs/${doc.slug}`}
                         className={`block px-3 py-2 rounded-lg text-sm transition-colors no-underline ${
                           isActive
-                            ? 'bg-primary/10 text-primary font-medium'
-                            : 'text-muted-foreground hover:text-foreground hover:bg-muted/30'
+                            ? "bg-primary/10 text-primary font-medium"
+                            : "text-muted-foreground hover:text-foreground hover:bg-muted/30"
                         }`}
                       >
                         {doc.data.title}

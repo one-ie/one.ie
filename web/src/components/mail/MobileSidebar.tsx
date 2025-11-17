@@ -1,42 +1,38 @@
-"use client"
+"use client";
 
-import * as React from "react"
-import { Menu } from "lucide-react"
-import { Button } from "@/components/ui/button"
-import {
-  Sheet,
-  SheetContent,
-  SheetTrigger,
-} from "@/components/ui/sheet"
-import { AccountSwitcher } from "./AccountSwitcher"
-import { Nav } from "./Nav"
-import { Separator } from "@/components/ui/separator"
-import type { LucideIcon } from "lucide-react"
+import type { LucideIcon } from "lucide-react";
+import { Menu } from "lucide-react";
+import * as React from "react";
+import { Button } from "@/components/ui/button";
+import { Separator } from "@/components/ui/separator";
+import { Sheet, SheetContent, SheetTrigger } from "@/components/ui/sheet";
+import { AccountSwitcher } from "./AccountSwitcher";
+import { Nav } from "./Nav";
 
 interface MobileSidebarProps {
   accounts: {
-    label: string
-    email: string
-    icon: React.ReactNode
-  }[]
+    label: string;
+    email: string;
+    icon: React.ReactNode;
+  }[];
   navLinks: {
-    title: string
-    label?: string
-    icon: LucideIcon
-    variant: "default" | "ghost"
-    onClick?: () => void
-  }[]
+    title: string;
+    label?: string;
+    icon: LucideIcon;
+    variant: "default" | "ghost";
+    onClick?: () => void;
+  }[];
   secondaryLinks: {
-    title: string
-    label?: string
-    icon: LucideIcon
-    variant: "default" | "ghost"
-    onClick?: () => void
-  }[]
+    title: string;
+    label?: string;
+    icon: LucideIcon;
+    variant: "default" | "ghost";
+    onClick?: () => void;
+  }[];
 }
 
 export function MobileSidebar({ accounts, navLinks, secondaryLinks }: MobileSidebarProps) {
-  const [open, setOpen] = React.useState(false)
+  const [open, setOpen] = React.useState(false);
 
   return (
     <Sheet open={open} onOpenChange={setOpen}>
@@ -58,5 +54,5 @@ export function MobileSidebar({ accounts, navLinks, secondaryLinks }: MobileSide
         </div>
       </SheetContent>
     </Sheet>
-  )
+  );
 }

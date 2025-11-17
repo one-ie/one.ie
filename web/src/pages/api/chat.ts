@@ -1,5 +1,5 @@
-import type { APIRoute } from 'astro';
-import { maskSensitive } from '@/lib/security';
+import type { APIRoute } from "astro";
+import { maskSensitive } from "@/lib/security";
 
 /**
  * Unified Chat API Endpoint (OpenRouter)
@@ -14,15 +14,20 @@ import { maskSensitive } from '@/lib/security';
  */
 export const POST: APIRoute = async ({ request }) => {
   try {
-    const { messages, apiKey, model = 'google/gemini-2.5-flash-lite', enableGenerativeUI = false } = await request.json();
+    const {
+      messages,
+      apiKey,
+      model = "google/gemini-2.5-flash-lite",
+      enableGenerativeUI = false,
+    } = await request.json();
 
     // List of free models that work without API key
     const FREE_MODELS = [
-      'google/gemini-2.5-flash-lite',
-      'openrouter/polaris-alpha',
-      'tngtech/deepseek-r1t2-chimera:free',
-      'z-ai/glm-4.5-air:free',
-      'tngtech/deepseek-r1t-chimera:free'
+      "google/gemini-2.5-flash-lite",
+      "openrouter/polaris-alpha",
+      "tngtech/deepseek-r1t2-chimera:free",
+      "z-ai/glm-4.5-air:free",
+      "tngtech/deepseek-r1t-chimera:free",
     ];
 
     // Check if using free tier (any free model without API key)
@@ -39,35 +44,36 @@ export const POST: APIRoute = async ({ request }) => {
     if (!effectiveApiKey) {
       return new Response(
         JSON.stringify({
-          error: 'API key required for premium models. Switch to a free model or add your OpenRouter API key.'
+          error:
+            "API key required for premium models. Switch to a free model or add your OpenRouter API key.",
         }),
-        { status: 401, headers: { 'Content-Type': 'application/json' } }
+        { status: 401, headers: { "Content-Type": "application/json" } }
       );
     }
 
     // Add system prompt for generative UI ONLY if enabled
     const messagesWithSystem = enableGenerativeUI
-      ? [{ role: 'system', content: GENERATIVE_UI_SYSTEM_PROMPT }, ...messages]
+      ? [{ role: "system", content: GENERATIVE_UI_SYSTEM_PROMPT }, ...messages]
       : messages;
 
     // Log the request for debugging (with masked API key)
-    console.log('OpenRouter request:', {
+    console.log("OpenRouter request:", {
       model,
       messageCount: messagesWithSystem.length,
       enableGenerativeUI,
       usingClientKey: !!apiKey,
       usingBackendKey: !apiKey,
-      maskedKey: maskSensitive(effectiveApiKey, 4)
+      maskedKey: maskSensitive(effectiveApiKey, 4),
     });
 
     // Call OpenRouter API directly
-    const response = await fetch('https://openrouter.ai/api/v1/chat/completions', {
-      method: 'POST',
+    const response = await fetch("https://openrouter.ai/api/v1/chat/completions", {
+      method: "POST",
       headers: {
-        'Authorization': `Bearer ${effectiveApiKey}`,
-        'Content-Type': 'application/json',
-        'HTTP-Referer': 'http://localhost:4321', // Optional: for OpenRouter analytics
-        'X-Title': 'ONE Platform Chat' // Optional: shows in OpenRouter dashboard
+        Authorization: `Bearer ${effectiveApiKey}`,
+        "Content-Type": "application/json",
+        "HTTP-Referer": "http://localhost:4321", // Optional: for OpenRouter analytics
+        "X-Title": "ONE Platform Chat", // Optional: shows in OpenRouter dashboard
       },
       body: JSON.stringify({
         model: model,
@@ -78,10 +84,10 @@ export const POST: APIRoute = async ({ request }) => {
 
     if (!response.ok) {
       const errorText = await response.text();
-      console.error('OpenRouter API error:', {
+      console.error("OpenRouter API error:", {
         status: response.status,
         statusText: response.statusText,
-        error: errorText
+        error: errorText,
       });
 
       // Parse error message if possible
@@ -89,15 +95,15 @@ export const POST: APIRoute = async ({ request }) => {
       try {
         const errorJson = JSON.parse(errorText);
         errorMessage = errorJson.error?.message || errorJson.message || errorMessage;
-      } catch (e) {
+      } catch (_e) {
         // If not JSON, use the text directly
         if (errorText) errorMessage = errorText;
       }
 
-      return new Response(
-        JSON.stringify({ error: errorMessage }),
-        { status: response.status, headers: { 'Content-Type': 'application/json' } }
-      );
+      return new Response(JSON.stringify({ error: errorMessage }), {
+        status: response.status,
+        headers: { "Content-Type": "application/json" },
+      });
     }
 
     // Parse streaming response for UI components (only if generative UI enabled)
@@ -112,16 +118,16 @@ export const POST: APIRoute = async ({ request }) => {
           return;
         }
 
-        let fullContent = '';
+        let fullContent = "";
 
         try {
-          console.log('[CHAT API] Stream started');
+          console.log("[CHAT API] Stream started");
 
           while (true) {
             const { done, value } = await reader.read();
 
             if (done) {
-              console.log('[CHAT API] Stream done naturally (after [DONE] was sent)');
+              console.log("[CHAT API] Stream done naturally (after [DONE] was sent)");
               controller.close();
               return;
             }
@@ -129,17 +135,17 @@ export const POST: APIRoute = async ({ request }) => {
             const chunk = decoder.decode(value, { stream: true });
 
             // Log every chunk to see what we're getting
-            if (chunk.includes('[DONE]')) {
-              console.log('[CHAT API] FOUND DONE CHUNK:', JSON.stringify(chunk));
+            if (chunk.includes("[DONE]")) {
+              console.log("[CHAT API] FOUND DONE CHUNK:", JSON.stringify(chunk));
             }
 
             // Extract content from SSE format
-            const lines = chunk.split('\n');
+            const lines = chunk.split("\n");
             for (const line of lines) {
-              if (line.startsWith('data: ')) {
+              if (line.startsWith("data: ")) {
                 const data = line.slice(6);
-                if (data === '[DONE]') {
-                  console.log('[CHAT API] Found [DONE] in line processing');
+                if (data === "[DONE]") {
+                  console.log("[CHAT API] Found [DONE] in line processing");
                   continue; // Don't forward [DONE] yet
                 }
 
@@ -149,17 +155,17 @@ export const POST: APIRoute = async ({ request }) => {
                   if (content) {
                     fullContent += content;
                   }
-                } catch (e) {
+                } catch (_e) {
                   // Ignore parse errors
                 }
               }
             }
 
             // Check if this chunk contains [DONE]
-            const hasDone = chunk.includes('[DONE]');
+            const hasDone = chunk.includes("[DONE]");
 
             if (hasDone && enableGenerativeUI) {
-              console.log('[CHAT API] Detected [DONE] in chunk, processing UI components now');
+              console.log("[CHAT API] Detected [DONE] in chunk, processing UI components now");
 
               // Send UI messages BEFORE [DONE] (only if generative UI enabled)
               const uiMessages = parseGenerativeUI(fullContent);
@@ -175,7 +181,7 @@ export const POST: APIRoute = async ({ request }) => {
             }
           }
         } catch (error) {
-          console.error('Stream error:', error);
+          console.error("Stream error:", error);
           controller.close();
         }
       },
@@ -183,18 +189,18 @@ export const POST: APIRoute = async ({ request }) => {
 
     return new Response(stream, {
       headers: {
-        'Content-Type': 'text/event-stream',
-        'Cache-Control': 'no-cache',
-        'Connection': 'keep-alive',
+        "Content-Type": "text/event-stream",
+        "Cache-Control": "no-cache",
+        Connection: "keep-alive",
       },
     });
   } catch (error) {
-    console.error('Chat error:', error);
+    console.error("Chat error:", error);
     return new Response(
       JSON.stringify({
-        error: error instanceof Error ? error.message : 'Failed to process chat'
+        error: error instanceof Error ? error.message : "Failed to process chat",
       }),
-      { status: 500, headers: { 'Content-Type': 'application/json' } }
+      { status: 500, headers: { "Content-Type": "application/json" } }
     );
   }
 };
@@ -208,115 +214,115 @@ function parseGenerativeUI(content: string): any[] {
 
   // Check for charts
   const chartMatches = [...content.matchAll(/```ui-chart\s*\n([\s\S]*?)\n```/g)];
-  console.log('[GENERATIVE UI] Found', chartMatches.length, 'charts in content');
+  console.log("[GENERATIVE UI] Found", chartMatches.length, "charts in content");
 
   for (const match of chartMatches) {
     try {
       const chartData = JSON.parse(match[1]);
       uiMessages.push({
-        type: 'ui',
+        type: "ui",
         payload: {
-          component: 'chart',
-          data: chartData
-        }
+          component: "chart",
+          data: chartData,
+        },
       });
     } catch (e) {
-      console.error('[GENERATIVE UI] Failed to parse chart JSON:', e);
+      console.error("[GENERATIVE UI] Failed to parse chart JSON:", e);
     }
   }
 
   // Check for tables
   const tableMatches = [...content.matchAll(/```ui-table\s*\n([\s\S]*?)\n```/g)];
-  console.log('[GENERATIVE UI] Found', tableMatches.length, 'tables in content');
+  console.log("[GENERATIVE UI] Found", tableMatches.length, "tables in content");
 
   for (const match of tableMatches) {
     try {
       const tableData = JSON.parse(match[1]);
       uiMessages.push({
-        type: 'ui',
+        type: "ui",
         payload: {
-          component: 'table',
-          data: tableData
-        }
+          component: "table",
+          data: tableData,
+        },
       });
     } catch (e) {
-      console.error('[GENERATIVE UI] Failed to parse table JSON:', e);
+      console.error("[GENERATIVE UI] Failed to parse table JSON:", e);
     }
   }
 
   // Check for buttons
   const buttonMatches = [...content.matchAll(/```ui-button\s*\n([\s\S]*?)\n```/g)];
-  console.log('[GENERATIVE UI] Found', buttonMatches.length, 'buttons in content');
+  console.log("[GENERATIVE UI] Found", buttonMatches.length, "buttons in content");
 
   for (const match of buttonMatches) {
     try {
       const buttonData = JSON.parse(match[1]);
       uiMessages.push({
-        type: 'ui',
+        type: "ui",
         payload: {
-          component: 'button',
-          data: buttonData
-        }
+          component: "button",
+          data: buttonData,
+        },
       });
     } catch (e) {
-      console.error('[GENERATIVE UI] Failed to parse button JSON:', e);
+      console.error("[GENERATIVE UI] Failed to parse button JSON:", e);
     }
   }
 
   // Check for cards
   const cardMatches = [...content.matchAll(/```ui-card\s*\n([\s\S]*?)\n```/g)];
-  console.log('[GENERATIVE UI] Found', cardMatches.length, 'cards in content');
+  console.log("[GENERATIVE UI] Found", cardMatches.length, "cards in content");
 
   for (const match of cardMatches) {
     try {
       const cardData = JSON.parse(match[1]);
       uiMessages.push({
-        type: 'ui',
+        type: "ui",
         payload: {
-          component: 'card',
-          data: cardData
-        }
+          component: "card",
+          data: cardData,
+        },
       });
     } catch (e) {
-      console.error('[GENERATIVE UI] Failed to parse card JSON:', e);
+      console.error("[GENERATIVE UI] Failed to parse card JSON:", e);
     }
   }
 
   // Check for forms
   const formMatches = [...content.matchAll(/```ui-form\s*\n([\s\S]*?)\n```/g)];
-  console.log('[GENERATIVE UI] Found', formMatches.length, 'forms in content');
+  console.log("[GENERATIVE UI] Found", formMatches.length, "forms in content");
 
   for (const match of formMatches) {
     try {
       const formData = JSON.parse(match[1]);
       uiMessages.push({
-        type: 'ui',
+        type: "ui",
         payload: {
-          component: 'form',
-          data: formData
-        }
+          component: "form",
+          data: formData,
+        },
       });
     } catch (e) {
-      console.error('[GENERATIVE UI] Failed to parse form JSON:', e);
+      console.error("[GENERATIVE UI] Failed to parse form JSON:", e);
     }
   }
 
   // Check for products
   const productMatches = [...content.matchAll(/```ui-product\s*\n([\s\S]*?)\n```/g)];
-  console.log('[GENERATIVE UI] Found', productMatches.length, 'products in content');
+  console.log("[GENERATIVE UI] Found", productMatches.length, "products in content");
 
   for (const match of productMatches) {
     try {
       const productData = JSON.parse(match[1]);
       uiMessages.push({
-        type: 'ui',
+        type: "ui",
         payload: {
-          component: 'product',
-          data: productData
-        }
+          component: "product",
+          data: productData,
+        },
       });
     } catch (e) {
-      console.error('[GENERATIVE UI] Failed to parse product JSON:', e);
+      console.error("[GENERATIVE UI] Failed to parse product JSON:", e);
     }
   }
 
@@ -436,27 +442,32 @@ RULES:
 7. If user asks for a product or mentions e-commerce - generate product cards with realistic data and images`;
 
 // Free tier handler - Simulates free model responses
-async function handleFreeTier(messages: any[], enableGenerativeUI: boolean, model: string = 'google/gemini-2.5-flash-lite') {
+async function handleFreeTier(
+  messages: any[],
+  enableGenerativeUI: boolean,
+  model: string = "google/gemini-2.5-flash-lite"
+) {
   if (!messages || messages.length === 0) {
-    return new Response(
-      JSON.stringify({ error: 'No messages provided' }),
-      { status: 400, headers: { 'Content-Type': 'application/json' } }
-    );
+    return new Response(JSON.stringify({ error: "No messages provided" }), {
+      status: 400,
+      headers: { "Content-Type": "application/json" },
+    });
   }
 
   const lastMessage = messages[messages.length - 1];
   if (!lastMessage || !lastMessage.content) {
-    return new Response(
-      JSON.stringify({ error: 'Invalid message format' }),
-      { status: 400, headers: { 'Content-Type': 'application/json' } }
-    );
+    return new Response(JSON.stringify({ error: "Invalid message format" }), {
+      status: 400,
+      headers: { "Content-Type": "application/json" },
+    });
   }
 
-  const userMessage = typeof lastMessage.content === 'string'
-    ? lastMessage.content
-    : Array.isArray(lastMessage.content) && lastMessage.content[0]?.text
-      ? lastMessage.content[0].text
-      : '';
+  const userMessage =
+    typeof lastMessage.content === "string"
+      ? lastMessage.content
+      : Array.isArray(lastMessage.content) && lastMessage.content[0]?.text
+        ? lastMessage.content[0].text
+        : "";
 
   const encoder = new TextEncoder();
 
@@ -465,33 +476,55 @@ async function handleFreeTier(messages: any[], enableGenerativeUI: boolean, mode
     async start(controller) {
       try {
         // Generate appropriate response based on message content
-        let response = '';
+        let response = "";
         const lowerMessage = userMessage.toLowerCase();
 
         // Get friendly model name
         const modelNames: Record<string, string> = {
-          'google/gemini-2.5-flash-lite': 'Gemini Flash Lite',
-          'openrouter/polaris-alpha': 'Polaris Alpha',
-          'tngtech/deepseek-r1t2-chimera:free': 'DeepSeek R1T2 Chimera',
-          'z-ai/glm-4.5-air:free': 'GLM 4.5 Air',
-          'tngtech/deepseek-r1t-chimera:free': 'DeepSeek R1T Chimera'
+          "google/gemini-2.5-flash-lite": "Gemini Flash Lite",
+          "openrouter/polaris-alpha": "Polaris Alpha",
+          "tngtech/deepseek-r1t2-chimera:free": "DeepSeek R1T2 Chimera",
+          "z-ai/glm-4.5-air:free": "GLM 4.5 Air",
+          "tngtech/deepseek-r1t-chimera:free": "DeepSeek R1T Chimera",
         };
-        const modelName = modelNames[model] || 'AI Assistant';
+        const modelName = modelNames[model] || "AI Assistant";
 
         // Check for chart/visualization requests (only if generative UI enabled)
-        if (enableGenerativeUI && (lowerMessage.includes('chart') || lowerMessage.includes('graph') || lowerMessage.includes('visualiz') || lowerMessage.includes('data'))) {
+        if (
+          enableGenerativeUI &&
+          (lowerMessage.includes("chart") ||
+            lowerMessage.includes("graph") ||
+            lowerMessage.includes("visualiz") ||
+            lowerMessage.includes("data"))
+        ) {
           response = generateDataVisualization(userMessage);
         }
         // Check for product requests
-        else if (enableGenerativeUI && (lowerMessage.includes('product') || lowerMessage.includes('toaster') || lowerMessage.includes('e-commerce') || lowerMessage.includes('shop'))) {
+        else if (
+          enableGenerativeUI &&
+          (lowerMessage.includes("product") ||
+            lowerMessage.includes("toaster") ||
+            lowerMessage.includes("e-commerce") ||
+            lowerMessage.includes("shop"))
+        ) {
           response = generateProductResponse(userMessage);
         }
         // Check for table requests
-        else if (enableGenerativeUI && (lowerMessage.includes('table') || lowerMessage.includes('list') || lowerMessage.includes('spreadsheet'))) {
+        else if (
+          enableGenerativeUI &&
+          (lowerMessage.includes("table") ||
+            lowerMessage.includes("list") ||
+            lowerMessage.includes("spreadsheet"))
+        ) {
           response = generateTableResponse(userMessage);
         }
         // Programming/code requests
-        else if (lowerMessage.includes('code') || lowerMessage.includes('function') || lowerMessage.includes('component') || lowerMessage.includes('program')) {
+        else if (
+          lowerMessage.includes("code") ||
+          lowerMessage.includes("function") ||
+          lowerMessage.includes("component") ||
+          lowerMessage.includes("program")
+        ) {
           response = generateCodeResponse(userMessage);
         }
         // General conversation
@@ -500,47 +533,49 @@ async function handleFreeTier(messages: any[], enableGenerativeUI: boolean, mode
         }
 
         // Stream the response word by word for realistic typing effect
-        const words = response.split(' ');
+        const words = response.split(" ");
         for (let i = 0; i < words.length; i++) {
-          const word = words[i] + (i < words.length - 1 ? ' ' : '');
+          const word = words[i] + (i < words.length - 1 ? " " : "");
           const data = JSON.stringify({
-            choices: [{
-              delta: { content: word }
-            }]
+            choices: [
+              {
+                delta: { content: word },
+              },
+            ],
           });
 
           controller.enqueue(encoder.encode(`data: ${data}\n\n`));
 
           // Simulate typing delay
-          await new Promise(resolve => setTimeout(resolve, 30 + Math.random() * 20));
+          await new Promise((resolve) => setTimeout(resolve, 30 + Math.random() * 20));
         }
 
         // BEFORE sending [DONE], check for and send UI components (only if generative UI enabled)
         if (enableGenerativeUI) {
           const uiMessages = parseGenerativeUI(response);
-          console.log('[FREE TIER] Found', uiMessages.length, 'UI components');
+          console.log("[FREE TIER] Found", uiMessages.length, "UI components");
 
           for (const uiMessage of uiMessages) {
-            console.log('[FREE TIER] Sending UI message:', uiMessage.payload.component);
+            console.log("[FREE TIER] Sending UI message:", uiMessage.payload.component);
             controller.enqueue(encoder.encode(`data: ${JSON.stringify(uiMessage)}\n\n`));
           }
         }
 
         // Send completion signal
-        controller.enqueue(encoder.encode('data: [DONE]\n\n'));
+        controller.enqueue(encoder.encode("data: [DONE]\n\n"));
         controller.close();
       } catch (error) {
-        console.error('Free tier streaming error:', error);
+        console.error("Free tier streaming error:", error);
         controller.close();
       }
-    }
+    },
   });
 
   return new Response(stream, {
     headers: {
-      'Content-Type': 'text/event-stream',
-      'Cache-Control': 'no-cache',
-      'Connection': 'keep-alive',
+      "Content-Type": "text/event-stream",
+      "Cache-Control": "no-cache",
+      Connection: "keep-alive",
     },
   });
 }
@@ -549,7 +584,7 @@ async function handleFreeTier(messages: any[], enableGenerativeUI: boolean, mode
 function generateDataVisualization(message: string): string {
   const lower = message.toLowerCase();
 
-  if (lower.includes('sales') || lower.includes('revenue')) {
+  if (lower.includes("sales") || lower.includes("revenue")) {
     return `I'll create a sales visualization for you!
 
 Here's a comprehensive sales analysis:
@@ -584,7 +619,7 @@ Key insights:
 - Strong performance in summer months`;
   }
 
-  if (lower.includes('user') || lower.includes('traffic') || lower.includes('visitor')) {
+  if (lower.includes("user") || lower.includes("traffic") || lower.includes("visitor")) {
     return `Here's your user analytics dashboard:
 
 \`\`\`ui-chart
@@ -637,7 +672,7 @@ This chart shows the trend over time. Would you like me to customize this visual
 function generateProductResponse(message: string): string {
   const lower = message.toLowerCase();
 
-  if (lower.includes('toaster') || lower.includes('efficient slice')) {
+  if (lower.includes("toaster") || lower.includes("efficient slice")) {
     return `Here's the Efficient Slice Toaster product card:
 
 \`\`\`ui-product
@@ -690,7 +725,7 @@ This high-quality coffee maker is perfect for coffee enthusiasts!`;
 function generateTableResponse(message: string): string {
   const lower = message.toLowerCase();
 
-  if (lower.includes('customer') || lower.includes('client')) {
+  if (lower.includes("customer") || lower.includes("client")) {
     return `Here's a customer overview table:
 
 \`\`\`ui-table
@@ -733,7 +768,7 @@ You can customize this table with your specific data requirements.`;
 function generateCodeResponse(message: string): string {
   const lower = message.toLowerCase();
 
-  if (lower.includes('react') && lower.includes('component')) {
+  if (lower.includes("react") && lower.includes("component")) {
     return `I'll create a React component for you:
 
 \`\`\`typescript
@@ -802,7 +837,7 @@ This TodoList component includes:
 Would you like me to add more features or create a different component?`;
   }
 
-  if (lower.includes('python') || lower.includes('function')) {
+  if (lower.includes("python") || lower.includes("function")) {
     return `Here's a Python implementation:
 
 \`\`\`python
@@ -871,21 +906,24 @@ This demonstrates data filtering, transformation, and sorting. What specific fun
 }
 
 // Generate conversational response
-function generateConversationalResponse(message: string, modelName: string = 'AI Assistant'): string {
+function generateConversationalResponse(
+  message: string,
+  modelName: string = "AI Assistant"
+): string {
   const lower = message.toLowerCase();
 
   // Greetings
-  if (lower.includes('hello') || lower.includes('hi') || lower.includes('hey')) {
+  if (lower.includes("hello") || lower.includes("hi") || lower.includes("hey")) {
     const greetings = [
       `Hello! I'm ${modelName}, your free AI assistant. I can help with coding, data visualization, analysis, and general questions. What would you like to explore today?`,
       `Hi there! I'm here to help with any questions or tasks you have. I can generate code, create visualizations, build tables, and much more - all for free! What can I assist you with?`,
-      `Hey! Great to meet you. I'm powered by ${modelName} (free tier). Feel free to ask me anything - from coding questions to data analysis. How can I help you today?`
+      `Hey! Great to meet you. I'm powered by ${modelName} (free tier). Feel free to ask me anything - from coding questions to data analysis. How can I help you today?`,
     ];
     return greetings[Math.floor(Math.random() * greetings.length)];
   }
 
   // Help requests
-  if (lower.includes('help') || lower.includes('what can you')) {
+  if (lower.includes("help") || lower.includes("what can you")) {
     return `I'm ${modelName}, and I can help you with:
 
 **Free Features Available Now:**
@@ -912,7 +950,7 @@ What would you like to explore first?`;
   }
 
   // How/why questions
-  if (lower.includes('how do') || lower.includes('how to')) {
+  if (lower.includes("how do") || lower.includes("how to")) {
     return `I'll explain that step by step!
 
 ${generateExplanation(message)}
@@ -921,12 +959,12 @@ Would you like me to provide code examples or create a visualization to help ill
   }
 
   // Thank you
-  if (lower.includes('thank')) {
+  if (lower.includes("thank")) {
     return "You're welcome! I'm always here to help. Feel free to ask me anything else - whether it's coding, data analysis, or general questions. Using Gemini Flash Lite means you get unlimited free assistance!";
   }
 
   // API/Model questions
-  if (lower.includes('model') || lower.includes('api') || lower.includes('free')) {
+  if (lower.includes("model") || lower.includes("api") || lower.includes("free")) {
     return `You're currently using **${modelName}** - completely free, no API key needed!
 
 **Current Setup:**
@@ -951,7 +989,7 @@ But honestly, ${modelName} works great for most tasks! What would you like to cr
   const responses = [
     `That's an interesting question! ${generateContextualResponse(message)} What specific aspect would you like me to elaborate on?`,
     `I understand what you're asking about. ${generateContextualResponse(message)} Would you like me to provide examples or create a visualization?`,
-    `Great question! ${generateContextualResponse(message)} Is there a particular use case you have in mind?`
+    `Great question! ${generateContextualResponse(message)} Is there a particular use case you have in mind?`,
   ];
 
   return responses[Math.floor(Math.random() * responses.length)];
@@ -961,7 +999,7 @@ But honestly, ${modelName} works great for most tasks! What would you like to cr
 function generateExplanation(message: string): string {
   const lower = message.toLowerCase();
 
-  if (lower.includes('async') || lower.includes('await')) {
+  if (lower.includes("async") || lower.includes("await")) {
     return `Async/await is a modern JavaScript pattern for handling asynchronous operations:
 
 1. **async** declares a function that returns a Promise
@@ -982,7 +1020,7 @@ async function fetchData() {
 \`\`\``;
   }
 
-  if (lower.includes('react') && lower.includes('hook')) {
+  if (lower.includes("react") && lower.includes("hook")) {
     return `React Hooks are functions that let you use state and lifecycle features in functional components:
 
 **Common Hooks:**
@@ -1014,19 +1052,19 @@ This approach helps build a solid foundation for understanding the topic.`;
 function generateContextualResponse(message: string): string {
   const lower = message.toLowerCase();
 
-  if (lower.includes('performance') || lower.includes('optimi')) {
+  if (lower.includes("performance") || lower.includes("optimi")) {
     return "Performance optimization is crucial for user experience. Key strategies include code splitting, lazy loading, memoization, and efficient state management.";
   }
 
-  if (lower.includes('secur')) {
+  if (lower.includes("secur")) {
     return "Security is paramount in modern applications. Important considerations include input validation, authentication, authorization, and protection against common vulnerabilities.";
   }
 
-  if (lower.includes('database') || lower.includes('data')) {
+  if (lower.includes("database") || lower.includes("data")) {
     return "Data management involves choosing the right storage solution, designing efficient schemas, and implementing proper indexing strategies.";
   }
 
-  if (lower.includes('deploy') || lower.includes('host')) {
+  if (lower.includes("deploy") || lower.includes("host")) {
     return "Deployment strategies vary based on your needs - from simple static hosting to complex containerized microservices architectures.";
   }
 

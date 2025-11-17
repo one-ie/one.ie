@@ -9,9 +9,9 @@
  * POST /api/events              - Record a new event
  */
 
-import type { APIRoute } from 'astro';
-import { getDefaultProvider } from '@/providers/factory';
-import { successResponse, errorResponse, getStatusCode } from '../response';
+import type { APIRoute } from "astro";
+import { getDefaultProvider } from "@/providers/factory";
+import { errorResponse, getStatusCode, successResponse } from "../response";
 
 /**
  * GET /api/events
@@ -54,25 +54,22 @@ import { successResponse, errorResponse, getStatusCode } from '../response';
 export const GET: APIRoute = async ({ url }) => {
   try {
     const provider = getDefaultProvider();
-    const { Effect } = await import('effect');
+    const { Effect } = await import("effect");
 
     // Parse query parameters
-    const type = url.searchParams.get('type');
-    const actorId = url.searchParams.get('actorId');
-    const targetId = url.searchParams.get('targetId');
-    const groupId = url.searchParams.get('groupId');
-    const startTime = url.searchParams.get('startTime')
-      ? parseInt(url.searchParams.get('startTime')!)
+    const type = url.searchParams.get("type");
+    const actorId = url.searchParams.get("actorId");
+    const targetId = url.searchParams.get("targetId");
+    const groupId = url.searchParams.get("groupId");
+    const startTime = url.searchParams.get("startTime")
+      ? parseInt(url.searchParams.get("startTime")!, 10)
       : undefined;
-    const endTime = url.searchParams.get('endTime')
-      ? parseInt(url.searchParams.get('endTime')!)
+    const endTime = url.searchParams.get("endTime")
+      ? parseInt(url.searchParams.get("endTime")!, 10)
       : undefined;
-    const limit = Math.min(
-      parseInt(url.searchParams.get('limit') || '50'),
-      1000
-    );
-    const offset = parseInt(url.searchParams.get('offset') || '0');
-    const sort = (url.searchParams.get('sort') || 'desc') as 'asc' | 'desc';
+    const limit = Math.min(parseInt(url.searchParams.get("limit") || "50", 10), 1000);
+    const offset = parseInt(url.searchParams.get("offset") || "0", 10);
+    const sort = (url.searchParams.get("sort") || "desc") as "asc" | "desc";
 
     // Build filter
     const filter: Record<string, any> = {};
@@ -87,9 +84,7 @@ export const GET: APIRoute = async ({ url }) => {
     const events = await Effect.runPromise(provider.events.list(filter));
 
     // Sort by timestamp
-    events.sort((a, b) =>
-      sort === 'asc' ? a.timestamp - b.timestamp : b.timestamp - a.timestamp
-    );
+    events.sort((a, b) => (sort === "asc" ? a.timestamp - b.timestamp : b.timestamp - a.timestamp));
 
     // Paginate
     const paginated = events.slice(offset, offset + limit);
@@ -106,19 +101,19 @@ export const GET: APIRoute = async ({ url }) => {
       {
         status: 200,
         headers: {
-          'Content-Type': 'application/json',
-          'Cache-Control': 'max-age=30, public',
+          "Content-Type": "application/json",
+          "Cache-Control": "max-age=30, public",
         },
       }
     );
   } catch (error) {
-    const message = error instanceof Error ? error.message : 'Unknown error';
-    const response = errorResponse('INTERNAL_ERROR', message);
+    const message = error instanceof Error ? error.message : "Unknown error";
+    const response = errorResponse("INTERNAL_ERROR", message);
     const status = getStatusCode(response.error);
 
     return new Response(JSON.stringify(response), {
       status,
-      headers: { 'Content-Type': 'application/json' },
+      headers: { "Content-Type": "application/json" },
     });
   }
 };
@@ -174,40 +169,37 @@ export const GET: APIRoute = async ({ url }) => {
 export const POST: APIRoute = async ({ request }) => {
   try {
     const provider = getDefaultProvider();
-    const { Effect } = await import('effect');
+    const { Effect } = await import("effect");
     const body = await request.json();
 
     // Validate required fields
-    if (!body.type || typeof body.type !== 'string') {
-      const response = errorResponse(
-        'VALIDATION_ERROR',
-        'type is required and must be a string'
-      );
+    if (!body.type || typeof body.type !== "string") {
+      const response = errorResponse("VALIDATION_ERROR", "type is required and must be a string");
       return new Response(JSON.stringify(response), {
         status: getStatusCode(response.error),
-        headers: { 'Content-Type': 'application/json' },
+        headers: { "Content-Type": "application/json" },
       });
     }
 
-    if (!body.actorId || typeof body.actorId !== 'string') {
+    if (!body.actorId || typeof body.actorId !== "string") {
       const response = errorResponse(
-        'VALIDATION_ERROR',
-        'actorId is required and must be a string'
+        "VALIDATION_ERROR",
+        "actorId is required and must be a string"
       );
       return new Response(JSON.stringify(response), {
         status: getStatusCode(response.error),
-        headers: { 'Content-Type': 'application/json' },
+        headers: { "Content-Type": "application/json" },
       });
     }
 
-    if (!body.groupId || typeof body.groupId !== 'string') {
+    if (!body.groupId || typeof body.groupId !== "string") {
       const response = errorResponse(
-        'VALIDATION_ERROR',
-        'groupId is required and must be a string'
+        "VALIDATION_ERROR",
+        "groupId is required and must be a string"
       );
       return new Response(JSON.stringify(response), {
         status: getStatusCode(response.error),
-        headers: { 'Content-Type': 'application/json' },
+        headers: { "Content-Type": "application/json" },
       });
     }
 
@@ -225,18 +217,18 @@ export const POST: APIRoute = async ({ request }) => {
     return new Response(JSON.stringify(successResponse({ _id: eventId })), {
       status: 201,
       headers: {
-        'Content-Type': 'application/json',
-        'Cache-Control': 'no-cache',
+        "Content-Type": "application/json",
+        "Cache-Control": "no-cache",
       },
     });
   } catch (error) {
-    const message = error instanceof Error ? error.message : 'Unknown error';
-    const response = errorResponse('INTERNAL_ERROR', message);
+    const message = error instanceof Error ? error.message : "Unknown error";
+    const response = errorResponse("INTERNAL_ERROR", message);
     const status = getStatusCode(response.error);
 
     return new Response(JSON.stringify(response), {
       status,
-      headers: { 'Content-Type': 'application/json' },
+      headers: { "Content-Type": "application/json" },
     });
   }
 };

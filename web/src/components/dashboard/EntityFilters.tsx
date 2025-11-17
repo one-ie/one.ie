@@ -4,7 +4,6 @@
  * Filter controls for entity list page.
  */
 
-import React from "react";
 import { Button } from "@/components/ui/button";
 
 interface EntityFiltersProps {
@@ -36,7 +35,10 @@ export function EntityFilters({ availableTypes, currentFilters }: EntityFiltersP
   return (
     <div className="flex flex-wrap items-center gap-4">
       <div className="flex items-center gap-2">
-        <label htmlFor="type-filter" className="text-sm font-medium text-gray-700 dark:text-gray-300">
+        <label
+          htmlFor="type-filter"
+          className="text-sm font-medium text-gray-700 dark:text-gray-300"
+        >
           Type:
         </label>
         <select
@@ -55,7 +57,10 @@ export function EntityFilters({ availableTypes, currentFilters }: EntityFiltersP
       </div>
 
       <div className="flex items-center gap-2">
-        <label htmlFor="status-filter" className="text-sm font-medium text-gray-700 dark:text-gray-300">
+        <label
+          htmlFor="status-filter"
+          className="text-sm font-medium text-gray-700 dark:text-gray-300"
+        >
           Status:
         </label>
         <select

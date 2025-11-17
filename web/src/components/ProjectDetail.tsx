@@ -1,9 +1,9 @@
-import { Badge } from '@/components/ui/badge';
+import { Badge } from "@/components/ui/badge";
 
 interface ProjectDetailProps {
   title: string;
   description: string;
-  level: 'Beginner' | 'Intermediate' | 'Advanced';
+  level: "Beginner" | "Intermediate" | "Advanced";
   children?: React.ReactNode;
 }
 

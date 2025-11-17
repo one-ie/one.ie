@@ -1,10 +1,10 @@
-import { useState } from 'react';
-import { Button } from '@/components/ui/button';
-import { Input } from '@/components/ui/input';
-import { Label } from '@/components/ui/label';
-import { Textarea } from '@/components/ui/textarea';
-import { Alert, AlertDescription } from '@/components/ui/alert';
-import { Loader2, CheckCircle2, AlertCircle } from 'lucide-react';
+import { AlertCircle, CheckCircle2, Loader2 } from "lucide-react";
+import { useState } from "react";
+import { Alert, AlertDescription } from "@/components/ui/alert";
+import { Button } from "@/components/ui/button";
+import { Input } from "@/components/ui/input";
+import { Label } from "@/components/ui/label";
+import { Textarea } from "@/components/ui/textarea";
 
 interface FormData {
   name: string;
@@ -15,27 +15,27 @@ interface FormData {
 
 export function ContactForm() {
   const [formData, setFormData] = useState<FormData>({
-    name: '',
-    email: '',
-    subject: '',
-    message: '',
+    name: "",
+    email: "",
+    subject: "",
+    message: "",
   });
 
-  const [status, setStatus] = useState<'idle' | 'loading' | 'success' | 'error'>('idle');
-  const [errorMessage, setErrorMessage] = useState('');
+  const [status, setStatus] = useState<"idle" | "loading" | "success" | "error">("idle");
+  const [errorMessage, setErrorMessage] = useState("");
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    setStatus('loading');
-    setErrorMessage('');
+    setStatus("loading");
+    setErrorMessage("");
 
     try {
       // Submit to backend API
       const BACKEND_URL = import.meta.env.PUBLIC_CONVEX_URL;
       const response = await fetch(`${BACKEND_URL}/contact`, {
-        method: 'POST',
+        method: "POST",
         headers: {
-          'Content-Type': 'application/json',
+          "Content-Type": "application/json",
         },
         body: JSON.stringify({
           name: formData.name,
@@ -47,34 +47,32 @@ export function ContactForm() {
 
       if (!response.ok) {
         const error = await response.json();
-        throw new Error(error.message || 'Failed to submit contact form');
+        throw new Error(error.message || "Failed to submit contact form");
       }
 
       const result = await response.json();
-      console.log('Contact form submitted successfully:', result);
-      setStatus('success');
+      console.log("Contact form submitted successfully:", result);
+      setStatus("success");
 
       // Reset form after 3 seconds
       setTimeout(() => {
         setFormData({
-          name: '',
-          email: '',
-          subject: '',
-          message: '',
+          name: "",
+          email: "",
+          subject: "",
+          message: "",
         });
-        setStatus('idle');
+        setStatus("idle");
       }, 3000);
     } catch (error) {
-      setStatus('error');
+      setStatus("error");
       setErrorMessage(
-        error instanceof Error ? error.message : 'Failed to send message. Please try again.'
+        error instanceof Error ? error.message : "Failed to send message. Please try again."
       );
     }
   };
 
-  const handleChange = (
-    e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
-  ) => {
+  const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
     const { name, value } = e.target;
     setFormData((prev) => ({ ...prev, [name]: value }));
   };
@@ -82,7 +80,7 @@ export function ContactForm() {
   const isFormValid =
     formData.name.trim() &&
     formData.email.trim() &&
-    formData.email.includes('@') &&
+    formData.email.includes("@") &&
     formData.message.trim().length >= 10;
 
   return (
@@ -100,7 +98,7 @@ export function ContactForm() {
           value={formData.name}
           onChange={handleChange}
           required
-          disabled={status === 'loading'}
+          disabled={status === "loading"}
         />
       </div>
 
@@ -117,7 +115,7 @@ export function ContactForm() {
           value={formData.email}
           onChange={handleChange}
           required
-          disabled={status === 'loading'}
+          disabled={status === "loading"}
         />
       </div>
 
@@ -131,7 +129,7 @@ export function ContactForm() {
           placeholder="What can we help you with?"
           value={formData.subject}
           onChange={handleChange}
-          disabled={status === 'loading'}
+          disabled={status === "loading"}
         />
       </div>
 
@@ -149,7 +147,7 @@ export function ContactForm() {
           required
           minLength={10}
           rows={6}
-          disabled={status === 'loading'}
+          disabled={status === "loading"}
           className="resize-none"
         />
         <p className="text-xs text-muted-foreground">
@@ -158,7 +156,7 @@ export function ContactForm() {
       </div>
 
       {/* Status Messages */}
-      {status === 'success' && (
+      {status === "success" && (
         <Alert className="border-green-500/50 bg-green-500/10">
           <CheckCircle2 className="h-4 w-4 text-green-500" />
           <AlertDescription className="text-green-700 dark:text-green-400">
@@ -167,7 +165,7 @@ export function ContactForm() {
         </Alert>
       )}
 
-      {status === 'error' && (
+      {status === "error" && (
         <Alert variant="destructive">
           <AlertCircle className="h-4 w-4" />
           <AlertDescription>{errorMessage}</AlertDescription>
@@ -175,18 +173,14 @@ export function ContactForm() {
       )}
 
       {/* Submit Button */}
-      <Button
-        type="submit"
-        className="w-full"
-        disabled={!isFormValid || status === 'loading'}
-      >
-        {status === 'loading' ? (
+      <Button type="submit" className="w-full" disabled={!isFormValid || status === "loading"}>
+        {status === "loading" ? (
           <>
             <Loader2 className="mr-2 h-4 w-4 animate-spin" />
             Sending...
           </>
         ) : (
-          'Send Message'
+          "Send Message"
         )}
       </Button>
 

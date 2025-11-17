@@ -24,20 +24,14 @@ export function processCheckboxes(htmlContent: string): ProcessedContent {
   const completedPattern = /\[\s*[xX]\s*\]/g;
   if (completedPattern.test(processed)) {
     hasCheckboxes = true;
-    processed = processed.replace(
-      completedPattern,
-      '<span class="checkbox-completed">✓</span>'
-    );
+    processed = processed.replace(completedPattern, '<span class="checkbox-completed">✓</span>');
   }
 
   // Pattern for pending checkboxes: [ ]
   const pendingPattern = /\[\s*\]/g;
   if (pendingPattern.test(processed)) {
     hasCheckboxes = true;
-    processed = processed.replace(
-      pendingPattern,
-      '<span class="checkbox-pending"></span>'
-    );
+    processed = processed.replace(pendingPattern, '<span class="checkbox-pending"></span>');
   }
 
   return {
@@ -51,10 +45,10 @@ export function processCheckboxes(htmlContent: string): ProcessedContent {
  * This is used for client-side processing if needed
  */
 export function createCheckboxElement(isCompleted: boolean): HTMLElement {
-  const span = document.createElement('span');
-  span.className = isCompleted ? 'checkbox-completed' : 'checkbox-pending';
+  const span = document.createElement("span");
+  span.className = isCompleted ? "checkbox-completed" : "checkbox-pending";
   if (isCompleted) {
-    span.textContent = '✓';
+    span.textContent = "✓";
   }
   return span;
 }

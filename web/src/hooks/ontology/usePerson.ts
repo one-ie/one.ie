@@ -25,34 +25,34 @@
  * ```
  */
 
-import { useCallback, useEffect, useState } from 'react';
-import { Effect } from 'effect';
-import type { Id } from '@/types/convex';
-import { useEffectRunner } from '../useEffectRunner';
-import { useIsProviderAvailable } from './useProvider';
+import { Effect } from "effect";
+import { useCallback, useEffect, useState } from "react";
+import type { Id } from "@/types/convex";
+import { useEffectRunner } from "../useEffectRunner";
+import { useIsProviderAvailable } from "./useProvider";
 
 /**
  * Role-based access levels
  * These are stored in the Thing entity with type: 'creator' or 'audience_member'
  * and properties.role field
  */
-export type UserRole = 'platform_owner' | 'org_owner' | 'org_user' | 'customer';
+export type UserRole = "platform_owner" | "org_owner" | "org_user" | "customer";
 
 /**
  * Person entity (represented as Thing with special role metadata)
  */
 export interface Person {
-  _id: Id<'entities'>;
+  _id: Id<"entities">;
   _creationTime: number;
-  type: 'creator' | 'audience_member';
+  type: "creator" | "audience_member";
   name: string;
   properties: {
     email?: string;
     role?: UserRole;
-    groupId?: Id<'groups'>;
+    groupId?: Id<"groups">;
     metadata?: Record<string, any>;
   };
-  status: 'active' | 'inactive' | 'draft' | 'archived';
+  status: "active" | "inactive" | "draft" | "archived";
   createdAt: number;
   updatedAt: number;
 }
@@ -64,7 +64,7 @@ export interface CreatePersonInput {
   name: string;
   email?: string;
   role?: UserRole;
-  groupId?: Id<'groups'>;
+  groupId?: Id<"groups">;
 }
 
 /**
@@ -90,14 +90,14 @@ export function usePerson() {
    */
   const get = useCallback(
     async (
-      id: Id<'entities'>,
+      _id: Id<"entities">,
       options?: {
         onSuccess?: (person: Person) => void;
         onError?: (error: unknown) => void;
       }
     ) => {
       if (!isProviderAvailable) {
-        options?.onError?.(new Error('Provider not available'));
+        options?.onError?.(new Error("Provider not available"));
         return null;
       }
 
@@ -118,14 +118,14 @@ export function usePerson() {
    */
   const list = useCallback(
     async (
-      filter?: { groupId?: Id<'groups'>; role?: UserRole },
+      _filter?: { groupId?: Id<"groups">; role?: UserRole },
       options?: {
         onSuccess?: (people: Person[]) => void;
         onError?: (error: unknown) => void;
       }
     ) => {
       if (!isProviderAvailable) {
-        options?.onError?.(new Error('Provider not available'));
+        options?.onError?.(new Error("Provider not available"));
         return [];
       }
 
@@ -150,22 +150,19 @@ export function usePerson() {
    * - org_user: content creation + member management
    * - customer: read-only
    */
-  const hasPermission = useCallback(
-    (permission: string, userRole?: UserRole): boolean => {
-      const role = userRole || 'customer';
+  const hasPermission = useCallback((permission: string, userRole?: UserRole): boolean => {
+    const role = userRole || "customer";
 
-      const rolePermissions: Record<UserRole, string[]> = {
-        platform_owner: ['*'],
-        org_owner: ['org_manage', 'content_create', 'member_invite'],
-        org_user: ['content_create', 'member_invite'],
-        customer: ['read'],
-      };
+    const rolePermissions: Record<UserRole, string[]> = {
+      platform_owner: ["*"],
+      org_owner: ["org_manage", "content_create", "member_invite"],
+      org_user: ["content_create", "member_invite"],
+      customer: ["read"],
+    };
 
-      const permissions = rolePermissions[role] || [];
-      return permissions.includes('*') || permissions.includes(permission);
-    },
-    []
-  );
+    const permissions = rolePermissions[role] || [];
+    return permissions.includes("*") || permissions.includes(permission);
+  }, []);
 
   return {
     get,
@@ -242,7 +239,7 @@ export function useHasRole(requiredRole: UserRole): boolean {
 
   if (!user) return false;
 
-  const userRole = user.properties.role || 'customer';
+  const userRole = user.properties.role || "customer";
   return userRole === requiredRole;
 }
 
@@ -269,7 +266,7 @@ export function useCanAccess(permission: string): boolean {
 
   if (!user) return false;
 
-  const userRole = user.properties.role || 'customer';
+  const userRole = user.properties.role || "customer";
   return hasPermission(permission, userRole);
 }
 
@@ -284,14 +281,17 @@ export function useCanAccess(permission: string): boolean {
  * const { people: members } = useGroupMembers(organizationId);
  * ```
  */
-export function useGroupMembers(groupId: Id<'groups'>) {
+export function useGroupMembers(groupId: Id<"groups">) {
   const { list, loading, error } = usePerson();
   const [members, setMembers] = useState<Person[]>([]);
 
   useEffect(() => {
-    list({ groupId }, {
-      onSuccess: setMembers,
-    });
+    list(
+      { groupId },
+      {
+        onSuccess: setMembers,
+      }
+    );
   }, [groupId, list]);
 
   return {
@@ -313,7 +313,7 @@ export function useGroupMembers(groupId: Id<'groups'>) {
  * return <ProfileCard user={profile} />;
  * ```
  */
-export function useUserProfile(userId?: Id<'entities'>) {
+export function useUserProfile(userId?: Id<"entities">) {
   const { get } = usePerson();
   const currentUser = useCurrentUser();
   const [profile, setProfile] = useState<Person | null>(null);

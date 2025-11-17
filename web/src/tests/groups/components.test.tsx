@@ -6,12 +6,9 @@
 /* global HTMLSelectElement */
 /* eslint-disable @typescript-eslint/no-explicit-any */
 
-import { describe, it, expect, vi } from "vitest";
-import { createRequire } from "module";
-import {
-  createMockGroup,
-  createMockStats,
-} from './setup';
+import { createRequire } from "node:module";
+import { describe, expect, it, vi } from "vitest";
+import { createMockGroup, createMockStats } from "./setup";
 
 const require = createRequire(import.meta.url);
 
@@ -29,19 +26,8 @@ try {
 const describeIfTestingLibrary = hasTestingLibrary ? describe : describe.skip;
 
 // Mock components that would exist in the actual implementation
-const GroupCard = ({
-  group,
-  onClick,
-}: {
-  group: any;
-  onClick?: () => void;
-}) => (
-  <div
-    data-testid="group-card"
-    data-group-id={group._id}
-    onClick={onClick}
-    role="button"
-  >
+const GroupCard = ({ group, onClick }: { group: any; onClick?: () => void }) => (
+  <div data-testid="group-card" data-group-id={group._id} onClick={onClick} role="button">
     <h3 data-testid="group-name">{group.name}</h3>
     <p data-testid="group-type">{group.type}</p>
     <span data-testid="group-visibility">{group.settings.visibility}</span>
@@ -63,7 +49,7 @@ const GroupSelector = ({
     <select
       id="group-select"
       data-testid="group-select"
-      value={selectedId || ''}
+      value={selectedId || ""}
       onChange={(e) => onSelect(e.target.value)}
     >
       <option value="">Choose a group...</option>
@@ -83,14 +69,7 @@ const GroupTypeSelector = ({
   value: string;
   onChange: (type: string) => void;
 }) => {
-  const types = [
-    'friend_circle',
-    'business',
-    'community',
-    'dao',
-    'government',
-    'organization',
-  ];
+  const types = ["friend_circle", "business", "community", "dao", "government", "organization"];
 
   return (
     <div data-testid="group-type-selector">
@@ -103,7 +82,7 @@ const GroupTypeSelector = ({
       >
         {types.map((type) => (
           <option key={type} value={type}>
-            {type.replace('_', ' ')}
+            {type.replace("_", " ")}
           </option>
         ))}
       </select>
@@ -111,13 +90,7 @@ const GroupTypeSelector = ({
   );
 };
 
-const GroupHierarchy = ({
-  rootGroup,
-  subgroups,
-}: {
-  rootGroup: any;
-  subgroups: any[];
-}) => {
+const GroupHierarchy = ({ rootGroup, subgroups }: { rootGroup: any; subgroups: any[] }) => {
   const renderGroup = (group: any, level = 0) => (
     <div
       key={group._id}
@@ -151,278 +124,241 @@ const GroupStats = ({ stats }: { stats: any }) => (
   </div>
 );
 
-describeIfTestingLibrary('GroupCard Component', () => {
-  it('should render group information', () => {
+describeIfTestingLibrary("GroupCard Component", () => {
+  it("should render group information", () => {
     const group = createMockGroup({
-      name: 'Acme Corp',
-      type: 'business',
+      name: "Acme Corp",
+      type: "business",
     });
 
     render(<GroupCard group={group} />);
 
-    expect(screen.getByTestId('group-name')).toHaveTextContent('Acme Corp');
-    expect(screen.getByTestId('group-type')).toHaveTextContent('business');
-    expect(screen.getByTestId('group-visibility')).toHaveTextContent('private');
-    expect(screen.getByTestId('group-plan')).toHaveTextContent('starter');
+    expect(screen.getByTestId("group-name")).toHaveTextContent("Acme Corp");
+    expect(screen.getByTestId("group-type")).toHaveTextContent("business");
+    expect(screen.getByTestId("group-visibility")).toHaveTextContent("private");
+    expect(screen.getByTestId("group-plan")).toHaveTextContent("starter");
   });
 
-  it('should handle click events', () => {
+  it("should handle click events", () => {
     const group = createMockGroup();
     const onClick = vi.fn();
 
     render(<GroupCard group={group} onClick={onClick} />);
 
-    fireEvent.click(screen.getByTestId('group-card'));
+    fireEvent.click(screen.getByTestId("group-card"));
 
     expect(onClick).toHaveBeenCalledTimes(1);
   });
 
-  it('should display different group types correctly', () => {
-    const types = [
-      'friend_circle',
-      'business',
-      'community',
-      'dao',
-      'government',
-      'organization',
-    ];
+  it("should display different group types correctly", () => {
+    const types = ["friend_circle", "business", "community", "dao", "government", "organization"];
 
     types.forEach((type) => {
-      const { rerender } = render(
-        <GroupCard group={createMockGroup({ type })} />
-      );
-      expect(screen.getByTestId('group-type')).toHaveTextContent(type);
+      const { rerender } = render(<GroupCard group={createMockGroup({ type })} />);
+      expect(screen.getByTestId("group-type")).toHaveTextContent(type);
       rerender(<></>);
     });
   });
 
-  it('should show public visibility', () => {
+  it("should show public visibility", () => {
     const group = createMockGroup({
-      settings: { visibility: 'public' },
+      settings: { visibility: "public" },
     });
 
     render(<GroupCard group={group} />);
 
-    expect(screen.getByTestId('group-visibility')).toHaveTextContent('public');
+    expect(screen.getByTestId("group-visibility")).toHaveTextContent("public");
   });
 
-  it('should show enterprise plan', () => {
+  it("should show enterprise plan", () => {
     const group = createMockGroup({
-      settings: { plan: 'enterprise' },
+      settings: { plan: "enterprise" },
     });
 
     render(<GroupCard group={group} />);
 
-    expect(screen.getByTestId('group-plan')).toHaveTextContent('enterprise');
+    expect(screen.getByTestId("group-plan")).toHaveTextContent("enterprise");
   });
 });
 
-describeIfTestingLibrary('GroupSelector Component', () => {
-  it('should render group options', () => {
+describeIfTestingLibrary("GroupSelector Component", () => {
+  it("should render group options", () => {
     const groups = [
-      createMockGroup({ name: 'Group 1' }),
-      createMockGroup({ name: 'Group 2' }),
-      createMockGroup({ name: 'Group 3' }),
+      createMockGroup({ name: "Group 1" }),
+      createMockGroup({ name: "Group 2" }),
+      createMockGroup({ name: "Group 3" }),
     ];
 
     render(<GroupSelector groups={groups} onSelect={vi.fn()} />);
 
-    const select = screen.getByTestId('group-select');
+    const select = screen.getByTestId("group-select");
     expect(select).toBeInTheDocument();
     expect(select.children).toHaveLength(4); // 3 groups + placeholder
   });
 
-  it('should call onSelect when group is selected', () => {
-    const groups = [createMockGroup({ name: 'Test Group' })];
+  it("should call onSelect when group is selected", () => {
+    const groups = [createMockGroup({ name: "Test Group" })];
     const onSelect = vi.fn();
 
     render(<GroupSelector groups={groups} onSelect={onSelect} />);
 
-    const select = screen.getByTestId('group-select');
+    const select = screen.getByTestId("group-select");
     fireEvent.change(select, { target: { value: groups[0]._id } });
 
     expect(onSelect).toHaveBeenCalledWith(groups[0]._id);
   });
 
-  it('should show selected group', () => {
-    const groups = [createMockGroup({ name: 'Selected Group' })];
+  it("should show selected group", () => {
+    const groups = [createMockGroup({ name: "Selected Group" })];
 
-    render(
-      <GroupSelector
-        groups={groups}
-        onSelect={vi.fn()}
-        selectedId={groups[0]._id}
-      />
-    );
+    render(<GroupSelector groups={groups} onSelect={vi.fn()} selectedId={groups[0]._id} />);
 
-    const select = screen.getByTestId(
-      'group-select'
-    ) as HTMLSelectElement;
+    const select = screen.getByTestId("group-select") as HTMLSelectElement;
     expect(select.value).toBe(groups[0]._id);
   });
 
-  it('should handle empty groups list', () => {
+  it("should handle empty groups list", () => {
     render(<GroupSelector groups={[]} onSelect={vi.fn()} />);
 
-    const select = screen.getByTestId('group-select');
+    const select = screen.getByTestId("group-select");
     expect(select.children).toHaveLength(1); // Only placeholder
   });
 
-  it('should have accessible label', () => {
+  it("should have accessible label", () => {
     render(<GroupSelector groups={[]} onSelect={vi.fn()} />);
 
-    expect(screen.getByLabelText('Select Group')).toBeInTheDocument();
+    expect(screen.getByLabelText("Select Group")).toBeInTheDocument();
   });
 });
 
-describeIfTestingLibrary('GroupTypeSelector Component', () => {
-  it('should render all group types', () => {
+describeIfTestingLibrary("GroupTypeSelector Component", () => {
+  it("should render all group types", () => {
     render(<GroupTypeSelector value="business" onChange={vi.fn()} />);
 
-    const select = screen.getByTestId('type-select');
+    const select = screen.getByTestId("type-select");
     expect(select.children).toHaveLength(6);
   });
 
-  it('should call onChange when type is selected', () => {
+  it("should call onChange when type is selected", () => {
     const onChange = vi.fn();
 
     render(<GroupTypeSelector value="business" onChange={onChange} />);
 
-    const select = screen.getByTestId('type-select');
-    fireEvent.change(select, { target: { value: 'dao' } });
+    const select = screen.getByTestId("type-select");
+    fireEvent.change(select, { target: { value: "dao" } });
 
-    expect(onChange).toHaveBeenCalledWith('dao');
+    expect(onChange).toHaveBeenCalledWith("dao");
   });
 
-  it('should show selected type', () => {
+  it("should show selected type", () => {
     render(<GroupTypeSelector value="community" onChange={vi.fn()} />);
 
-    const select = screen.getByTestId('type-select') as HTMLSelectElement;
-    expect(select.value).toBe('community');
+    const select = screen.getByTestId("type-select") as HTMLSelectElement;
+    expect(select.value).toBe("community");
   });
 
-  it('should have accessible label', () => {
+  it("should have accessible label", () => {
     render(<GroupTypeSelector value="business" onChange={vi.fn()} />);
 
-    expect(screen.getByLabelText('Group Type')).toBeInTheDocument();
+    expect(screen.getByLabelText("Group Type")).toBeInTheDocument();
   });
 });
 
-describeIfTestingLibrary('GroupHierarchy Component', () => {
-  it('should render flat hierarchy (no subgroups)', () => {
-    const rootGroup = createMockGroup({ name: 'Root' });
+describeIfTestingLibrary("GroupHierarchy Component", () => {
+  it("should render flat hierarchy (no subgroups)", () => {
+    const rootGroup = createMockGroup({ name: "Root" });
 
     render(<GroupHierarchy rootGroup={rootGroup} subgroups={[]} />);
 
-    expect(screen.getByTestId('group-hierarchy')).toBeInTheDocument();
-    expect(screen.getAllByTestId('hierarchy-item')).toHaveLength(1);
+    expect(screen.getByTestId("group-hierarchy")).toBeInTheDocument();
+    expect(screen.getAllByTestId("hierarchy-item")).toHaveLength(1);
   });
 
-  it('should render 2-level hierarchy', () => {
-    const rootGroup = createMockGroup({ name: 'Root' });
+  it("should render 2-level hierarchy", () => {
+    const rootGroup = createMockGroup({ name: "Root" });
     const child1 = createMockGroup({
-      name: 'Child 1',
+      name: "Child 1",
       parentGroupId: rootGroup._id,
     });
     const child2 = createMockGroup({
-      name: 'Child 2',
+      name: "Child 2",
       parentGroupId: rootGroup._id,
     });
 
-    render(
-      <GroupHierarchy
-        rootGroup={rootGroup}
-        subgroups={[child1, child2]}
-      />
-    );
+    render(<GroupHierarchy rootGroup={rootGroup} subgroups={[child1, child2]} />);
 
-    const items = screen.getAllByTestId('hierarchy-item');
+    const items = screen.getAllByTestId("hierarchy-item");
     expect(items).toHaveLength(3); // Root + 2 children
   });
 
-  it('should render 5-level hierarchy', () => {
+  it("should render 5-level hierarchy", () => {
     const hierarchy = createMockGroupHierarchy(5);
     const rootGroup = hierarchy[0];
     const subgroups = hierarchy.slice(1);
 
-    render(
-      <GroupHierarchy rootGroup={rootGroup} subgroups={subgroups} />
-    );
+    render(<GroupHierarchy rootGroup={rootGroup} subgroups={subgroups} />);
 
-    const items = screen.getAllByTestId('hierarchy-item');
+    const items = screen.getAllByTestId("hierarchy-item");
     expect(items).toHaveLength(5);
 
     // Check indentation levels
-    expect(items[0]).toHaveAttribute('data-level', '0');
-    expect(items[4]).toHaveAttribute('data-level', '4');
+    expect(items[0]).toHaveAttribute("data-level", "0");
+    expect(items[4]).toHaveAttribute("data-level", "4");
   });
 
-  it('should display group names in hierarchy', () => {
-    const rootGroup = createMockGroup({ name: 'Company' });
+  it("should display group names in hierarchy", () => {
+    const rootGroup = createMockGroup({ name: "Company" });
     const dept = createMockGroup({
-      name: 'Engineering',
+      name: "Engineering",
       parentGroupId: rootGroup._id,
     });
 
     render(<GroupHierarchy rootGroup={rootGroup} subgroups={[dept]} />);
 
-    expect(screen.getByText('Company')).toBeInTheDocument();
-    expect(screen.getByText('Engineering')).toBeInTheDocument();
+    expect(screen.getByText("Company")).toBeInTheDocument();
+    expect(screen.getByText("Engineering")).toBeInTheDocument();
   });
 
-  it('should handle complex nested structure', () => {
-    const root = createMockGroup({ name: 'Root', _id: 'root' });
+  it("should handle complex nested structure", () => {
+    const root = createMockGroup({ name: "Root", _id: "root" });
     const child1 = createMockGroup({
-      name: 'Child 1',
-      _id: 'child1',
-      parentGroupId: 'root',
+      name: "Child 1",
+      _id: "child1",
+      parentGroupId: "root",
     });
     const child2 = createMockGroup({
-      name: 'Child 2',
-      _id: 'child2',
-      parentGroupId: 'root',
+      name: "Child 2",
+      _id: "child2",
+      parentGroupId: "root",
     });
     const grandchild = createMockGroup({
-      name: 'Grandchild',
-      _id: 'grandchild',
-      parentGroupId: 'child1',
+      name: "Grandchild",
+      _id: "grandchild",
+      parentGroupId: "child1",
     });
 
-    render(
-      <GroupHierarchy
-        rootGroup={root}
-        subgroups={[child1, child2, grandchild]}
-      />
-    );
+    render(<GroupHierarchy rootGroup={root} subgroups={[child1, child2, grandchild]} />);
 
-    const items = screen.getAllByTestId('hierarchy-item');
+    const items = screen.getAllByTestId("hierarchy-item");
     expect(items).toHaveLength(4);
   });
 });
 
-describeIfTestingLibrary('GroupStats Component', () => {
-  it('should display all stats', () => {
+describeIfTestingLibrary("GroupStats Component", () => {
+  it("should display all stats", () => {
     const stats = createMockStats();
 
     render(<GroupStats stats={stats} />);
 
-    expect(screen.getByTestId('stat-members')).toHaveTextContent('Members: 5');
-    expect(screen.getByTestId('stat-entities')).toHaveTextContent(
-      'Entities: 20'
-    );
-    expect(screen.getByTestId('stat-connections')).toHaveTextContent(
-      'Connections: 15'
-    );
-    expect(screen.getByTestId('stat-events')).toHaveTextContent('Events: 50');
-    expect(screen.getByTestId('stat-knowledge')).toHaveTextContent(
-      'Knowledge: 10'
-    );
-    expect(screen.getByTestId('stat-subgroups')).toHaveTextContent(
-      'Subgroups: 3'
-    );
+    expect(screen.getByTestId("stat-members")).toHaveTextContent("Members: 5");
+    expect(screen.getByTestId("stat-entities")).toHaveTextContent("Entities: 20");
+    expect(screen.getByTestId("stat-connections")).toHaveTextContent("Connections: 15");
+    expect(screen.getByTestId("stat-events")).toHaveTextContent("Events: 50");
+    expect(screen.getByTestId("stat-knowledge")).toHaveTextContent("Knowledge: 10");
+    expect(screen.getByTestId("stat-subgroups")).toHaveTextContent("Subgroups: 3");
   });
 
-  it('should display zero values correctly', () => {
+  it("should display zero values correctly", () => {
     const stats = {
       members: 0,
       entities: 0,
@@ -434,10 +370,10 @@ describeIfTestingLibrary('GroupStats Component', () => {
 
     render(<GroupStats stats={stats} />);
 
-    expect(screen.getByTestId('stat-members')).toHaveTextContent('Members: 0');
+    expect(screen.getByTestId("stat-members")).toHaveTextContent("Members: 0");
   });
 
-  it('should handle large numbers', () => {
+  it("should handle large numbers", () => {
     const stats = {
       members: 1000,
       entities: 50000,
@@ -449,11 +385,7 @@ describeIfTestingLibrary('GroupStats Component', () => {
 
     render(<GroupStats stats={stats} />);
 
-    expect(screen.getByTestId('stat-members')).toHaveTextContent(
-      'Members: 1000'
-    );
-    expect(screen.getByTestId('stat-entities')).toHaveTextContent(
-      'Entities: 50000'
-    );
+    expect(screen.getByTestId("stat-members")).toHaveTextContent("Members: 1000");
+    expect(screen.getByTestId("stat-entities")).toHaveTextContent("Entities: 50000");
   });
 });

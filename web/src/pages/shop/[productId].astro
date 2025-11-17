@@ -6,28 +6,15 @@
  * Example: /shop/1 (iPhone)
  */
 
-import ShopLayout from '@/layouts/ShopLayout.astro';
-import { ProductGallery } from '@/components/ecommerce/interactive/ProductGallery';
-import { ProductHeader } from '@/components/shop/ProductHeader';
-import { InlineUrgencyBanner } from '@/components/shop/InlineUrgencyBanner';
-import { RecentPurchaseToast } from '@/components/shop/RecentPurchaseToast';
-import { FeaturesWithImages } from '@/components/shop/FeaturesWithImages';
-import { ValueProposition } from '@/components/shop/ValueProposition';
-import { ReviewsSection } from '@/components/shop/ReviewsSection';
-import { ProductFAQ } from '@/components/ecommerce/static/FAQAccordion';
-import { StickyCartButton } from '@/components/shop/StickyCartButton';
-import { StickyBuyBar } from '@/components/shop/StickyBuyBar';
-import { ThemeToggle } from '@/components/shop/ThemeToggle';
-import { FragranceNotes } from '@/components/shop/FragranceNotes';
 import {
+  generateReviews,
+  getCTAText,
   getOriginalPrice,
-  getTrustBadges,
   getProductFeatures,
   getProductSpecs,
-  getCTAText,
+  getTrustBadges,
   hasFragranceNotes,
-  generateReviews,
-} from '@/lib/productTemplateHelpers';
+} from "@/lib/productTemplateHelpers";
 
 // Fetch product from DummyJSON
 const { productId } = Astro.params;
@@ -39,7 +26,7 @@ const product = {
   id: productData.id,
   title: productData.title,
   category: productData.category,
-  brand: productData.brand || 'Premium',
+  brand: productData.brand || "Premium",
   rating: productData.rating,
   reviewCount: Math.floor(Math.random() * 150) + 50, // Random review count
   price: productData.price,
@@ -50,25 +37,21 @@ const product = {
 };
 
 // Generate dynamic content
-const specs = getProductSpecs(productData);
-const features = getProductFeatures(productData);
-const trustBadges = getTrustBadges(product.category);
-const reviews = generateReviews(productData);
-const cta = getCTAText(product.category);
+const _specs = getProductSpecs(productData);
+const _features = getProductFeatures(productData);
+const _trustBadges = getTrustBadges(product.category);
+const _reviews = generateReviews(productData);
+const _cta = getCTAText(product.category);
 const showFragranceNotes = hasFragranceNotes(product.category);
 
 // Mock fragrance notes (only for fragrances)
-const fragranceNotes = showFragranceNotes ? {
-  topNotes: [
-    { name: 'Citrus', description: 'Fresh and vibrant opening' },
-  ],
-  middleNotes: [
-    { name: 'Florals', description: 'Elegant heart notes' },
-  ],
-  baseNotes: [
-    { name: 'Woods', description: 'Warm foundation' },
-  ],
-} : null;
+const _fragranceNotes = showFragranceNotes
+  ? {
+      topNotes: [{ name: "Citrus", description: "Fresh and vibrant opening" }],
+      middleNotes: [{ name: "Florals", description: "Elegant heart notes" }],
+      baseNotes: [{ name: "Woods", description: "Warm foundation" }],
+    }
+  : null;
 ---
 
 <ShopLayout title={`${product.title} - Premium ${product.category}`}>

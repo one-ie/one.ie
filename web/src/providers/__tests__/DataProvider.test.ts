@@ -4,15 +4,14 @@
  * Tests the DataProvider interface pattern and implementations.
  */
 
-import { describe, it, expect, vi } from "vitest";
 import { Effect, Layer } from "effect";
+import { describe, expect, it } from "vitest";
 import {
-  DataProviderService,
-  type DataProvider,
   type CreateThingInput,
-  ThingNotFoundError,
-  ThingCreateError,
+  type DataProvider,
+  DataProviderService,
   QueryError,
+  ThingNotFoundError,
 } from "../DataProvider";
 
 // ============================================================================
@@ -21,9 +20,9 @@ import {
 
 const createMockProvider = (): DataProvider => {
   const things = new Map<string, any>();
-  const connections = new Map<string, any>();
+  const _connections = new Map<string, any>();
   const events: any[] = [];
-  const knowledge = new Map<string, any>();
+  const _knowledge = new Map<string, any>();
 
   return {
     things: {
@@ -94,15 +93,15 @@ const createMockProvider = (): DataProvider => {
     },
 
     connections: {
-      get: (id) => Effect.fail(new QueryError("Not implemented")),
-      list: (options) => Effect.succeed([]),
-      create: (input) => Effect.succeed(`conn-${Date.now()}`),
-      delete: (id) => Effect.succeed(undefined),
+      get: (_id) => Effect.fail(new QueryError("Not implemented")),
+      list: (_options) => Effect.succeed([]),
+      create: (_input) => Effect.succeed(`conn-${Date.now()}`),
+      delete: (_id) => Effect.succeed(undefined),
     },
 
     events: {
-      get: (id) => Effect.fail(new QueryError("Not implemented")),
-      list: (options) => Effect.succeed(events),
+      get: (_id) => Effect.fail(new QueryError("Not implemented")),
+      list: (_options) => Effect.succeed(events),
       create: (input) =>
         Effect.gen(function* () {
           const event = {
@@ -116,11 +115,11 @@ const createMockProvider = (): DataProvider => {
     },
 
     knowledge: {
-      get: (id) => Effect.fail(new QueryError("Not implemented")),
-      list: (options) => Effect.succeed([]),
-      create: (input) => Effect.succeed(`knowledge-${Date.now()}`),
-      link: (thingId, knowledgeId, role) => Effect.succeed(`link-${Date.now()}`),
-      search: (embedding, options) => Effect.succeed([]),
+      get: (_id) => Effect.fail(new QueryError("Not implemented")),
+      list: (_options) => Effect.succeed([]),
+      create: (_input) => Effect.succeed(`knowledge-${Date.now()}`),
+      link: (_thingId, _knowledgeId, _role) => Effect.succeed(`link-${Date.now()}`),
+      search: (_embedding, _options) => Effect.succeed([]),
     },
   };
 };
@@ -246,9 +245,7 @@ describe("DataProvider Interface", () => {
       return yield* provider.things.get(id);
     });
 
-    await expect(
-      Effect.runPromise(program.pipe(Effect.provide(layer)))
-    ).rejects.toThrow();
+    await expect(Effect.runPromise(program.pipe(Effect.provide(layer)))).rejects.toThrow();
   });
 
   it("should create events", async () => {
@@ -293,8 +290,8 @@ describe("DataProvider Interface", () => {
       return yield* provider.things.get("non-existent-id");
     });
 
-    await expect(
-      Effect.runPromise(program.pipe(Effect.provide(layer)))
-    ).rejects.toThrow(/ThingNotFoundError/);
+    await expect(Effect.runPromise(program.pipe(Effect.provide(layer)))).rejects.toThrow(
+      /ThingNotFoundError/
+    );
   });
 });

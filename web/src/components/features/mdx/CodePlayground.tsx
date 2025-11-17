@@ -1,11 +1,11 @@
 "use client";
 
+import { Check, Code, Copy } from "lucide-react";
 import { useState } from "react";
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
+import { Button } from "@/components/ui/button";
+import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
-import { Copy, Check, Code } from "lucide-react";
 
 interface CodeExample {
   language: string;
@@ -48,7 +48,7 @@ export function CodePlayground({
   title = "Code Example",
   description,
   examples,
-  runnable = false
+  runnable = false,
 }: CodePlaygroundProps) {
   const [copied, setCopied] = useState(false);
 
@@ -68,9 +68,7 @@ export function CodePlayground({
           </CardTitle>
           {runnable && <Badge variant="outline">Live Preview</Badge>}
         </div>
-        {description && (
-          <p className="text-sm text-muted-foreground mt-2">{description}</p>
-        )}
+        {description && <p className="text-sm text-muted-foreground mt-2">{description}</p>}
       </CardHeader>
       <CardContent>
         {examples.length === 1 ? (
@@ -81,11 +79,7 @@ export function CodePlayground({
               className="absolute right-2 top-2 z-10"
               onClick={() => handleCopy(examples[0].code)}
             >
-              {copied ? (
-                <Check className="h-4 w-4" />
-              ) : (
-                <Copy className="h-4 w-4" />
-              )}
+              {copied ? <Check className="h-4 w-4" /> : <Copy className="h-4 w-4" />}
             </Button>
             <pre className="overflow-x-auto rounded-lg bg-muted p-4 text-xs leading-relaxed">
               <code>{examples[0].code}</code>
@@ -109,11 +103,7 @@ export function CodePlayground({
                     className="absolute right-2 top-2 z-10"
                     onClick={() => handleCopy(example.code)}
                   >
-                    {copied ? (
-                      <Check className="h-4 w-4" />
-                    ) : (
-                      <Copy className="h-4 w-4" />
-                    )}
+                    {copied ? <Check className="h-4 w-4" /> : <Copy className="h-4 w-4" />}
                   </Button>
                   <pre className="overflow-x-auto rounded-lg bg-muted p-4 text-xs leading-relaxed">
                     <code>{example.code}</code>

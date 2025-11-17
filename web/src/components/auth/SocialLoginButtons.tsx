@@ -1,4 +1,3 @@
-import * as React from "react";
 import { Button } from "@/components/ui/button";
 import { Separator } from "@/components/ui/separator";
 
@@ -18,12 +17,7 @@ export function SocialLoginButtons({
   return (
     <>
       <div className="space-y-2">
-        <Button
-          type="button"
-          variant="outline"
-          className="w-full"
-          onClick={onGithubClick}
-        >
+        <Button type="button" variant="outline" className="w-full" onClick={onGithubClick}>
           <svg className="mr-2 h-4 w-4" viewBox="0 0 24 24">
             <path
               fill="currentColor"
@@ -32,12 +26,7 @@ export function SocialLoginButtons({
           </svg>
           {actionText} with GitHub
         </Button>
-        <Button
-          type="button"
-          variant="outline"
-          className="w-full"
-          onClick={onGoogleClick}
-        >
+        <Button type="button" variant="outline" className="w-full" onClick={onGoogleClick}>
           <svg className="mr-2 h-4 w-4" viewBox="0 0 24 24">
             <path
               fill="currentColor"
@@ -65,9 +54,7 @@ export function SocialLoginButtons({
           <Separator />
         </div>
         <div className="relative flex justify-center text-xs uppercase">
-          <span className="bg-background px-2 text-muted-foreground">
-            Or continue with email
-          </span>
+          <span className="bg-background px-2 text-muted-foreground">Or continue with email</span>
         </div>
       </div>
     </>

@@ -9,8 +9,8 @@
  * - Screen reader compatibility
  */
 
-import { describe, it, expect, beforeAll } from "vitest";
 import { getCollection } from "astro:content";
+import { beforeAll, describe, expect, it } from "vitest";
 import type { FeatureSchema } from "@/content/config";
 
 interface Feature {

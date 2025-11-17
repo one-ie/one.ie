@@ -1,11 +1,11 @@
-'use client';
+"use client";
 
-import React from 'react';
-import { CheckCircle2, Clock, AlertCircle, TrendingUp } from 'lucide-react';
-import { Badge } from '@/components/ui/badge';
-import type { CollectionEntry } from 'astro:content';
+import type { CollectionEntry } from "astro:content";
+import { AlertCircle, CheckCircle2, Clock, TrendingUp } from "lucide-react";
+import React from "react";
+import { Badge } from "@/components/ui/badge";
 
-type Feature = CollectionEntry<'features'>;
+type Feature = CollectionEntry<"features">;
 
 interface FeatureStatsProps {
   features: Feature[];
@@ -25,21 +25,16 @@ interface FeatureStatsProps {
 export function FeatureStats({
   features,
   showCompletionPercentage = true,
-  className = '',
+  className = "",
 }: FeatureStatsProps): React.ReactElement {
   const stats = React.useMemo(() => {
-    const completed = features.filter(
-      (f) => f.data.status === 'completed'
-    ).length;
+    const completed = features.filter((f) => f.data.status === "completed").length;
     const inDev = features.filter(
-      (f) => f.data.status === 'in_development' || f.data.status === 'beta'
+      (f) => f.data.status === "in_development" || f.data.status === "beta"
     ).length;
-    const planned = features.filter(
-      (f) => f.data.status === 'planned'
-    ).length;
+    const planned = features.filter((f) => f.data.status === "planned").length;
     const total = features.length;
-    const completionPercentage =
-      total > 0 ? Math.round((completed / total) * 100) : 0;
+    const completionPercentage = total > 0 ? Math.round((completed / total) * 100) : 0;
 
     return {
       total,
@@ -98,9 +93,7 @@ export function FeatureStats({
           className="gap-2 px-3 py-2"
           title={`${stats.completionPercentage}% completion rate`}
         >
-          <span className="text-xs font-semibold">
-            {stats.completionPercentage}% Complete
-          </span>
+          <span className="text-xs font-semibold">{stats.completionPercentage}% Complete</span>
         </Badge>
       )}
     </div>

@@ -6,15 +6,10 @@
 /* global HTMLSelectElement */
 /* eslint-disable @typescript-eslint/no-explicit-any, @typescript-eslint/no-unused-vars */
 
-import { describe, it, expect, vi } from "vitest";
-import { createRequire } from "module";
-import {
-  mockUseQuery,
-  mockUseMutation,
-  createMockGroup,
-  createMockStats,
-} from './setup';
-import React from 'react';
+import { createRequire } from "node:module";
+import React from "react";
+import { describe, expect, it, vi } from "vitest";
+import { createMockGroup, createMockStats, mockUseMutation, mockUseQuery } from "./setup";
 
 const require = createRequire(import.meta.url);
 
@@ -86,9 +81,9 @@ const CreateGroupPage = () => {
 
     try {
       await createGroup({
-        slug: formData.get('slug'),
-        name: formData.get('name'),
-        type: formData.get('type'),
+        slug: formData.get("slug"),
+        name: formData.get("name"),
+        type: formData.get("type"),
       });
       setSuccess(true);
       setError(null);
@@ -107,30 +102,13 @@ const CreateGroupPage = () => {
 
       <form data-testid="create-form" onSubmit={handleSubmit}>
         <label htmlFor="slug">Slug</label>
-        <input
-          id="slug"
-          name="slug"
-          data-testid="input-slug"
-          placeholder="my-group"
-          required
-        />
+        <input id="slug" name="slug" data-testid="input-slug" placeholder="my-group" required />
 
         <label htmlFor="name">Name</label>
-        <input
-          id="name"
-          name="name"
-          data-testid="input-name"
-          placeholder="My Group"
-          required
-        />
+        <input id="name" name="name" data-testid="input-name" placeholder="My Group" required />
 
         <label htmlFor="type">Type</label>
-        <select
-          id="type"
-          name="type"
-          data-testid="select-type"
-          defaultValue="business"
-        >
+        <select id="type" name="type" data-testid="select-type" defaultValue="business">
           <option value="friend_circle">Friend Circle</option>
           <option value="business">Business</option>
           <option value="community">Community</option>
@@ -140,12 +118,7 @@ const CreateGroupPage = () => {
         </select>
 
         <label htmlFor="description">Description (Optional)</label>
-        <textarea
-          id="description"
-          name="description"
-          data-testid="input-description"
-          rows={4}
-        />
+        <textarea id="description" name="description" data-testid="input-description" rows={4} />
 
         <fieldset data-testid="settings-section">
           <legend>Settings</legend>
@@ -192,8 +165,8 @@ const GroupSettingsPage = ({ group }: { group: any }) => {
     const formData = new FormData(e.target as HTMLFormElement);
     await updateGroup({
       groupId: group._id,
-      name: formData.get('name'),
-      description: formData.get('description'),
+      name: formData.get("name"),
+      description: formData.get("description"),
     });
   };
 
@@ -209,12 +182,7 @@ const GroupSettingsPage = ({ group }: { group: any }) => {
         <h2>Basic Information</h2>
         <form data-testid="update-form" onSubmit={handleUpdate}>
           <label htmlFor="name">Name</label>
-          <input
-            id="name"
-            name="name"
-            data-testid="input-name"
-            defaultValue={group.name}
-          />
+          <input id="name" name="name" data-testid="input-name" defaultValue={group.name} />
 
           <label htmlFor="description">Description</label>
           <textarea
@@ -233,10 +201,7 @@ const GroupSettingsPage = ({ group }: { group: any }) => {
       <section data-testid="danger-zone">
         <h2>Danger Zone</h2>
         {!showArchiveConfirm ? (
-          <button
-            data-testid="archive-button"
-            onClick={() => setShowArchiveConfirm(true)}
-          >
+          <button data-testid="archive-button" onClick={() => setShowArchiveConfirm(true)}>
             Archive Group
           </button>
         ) : (
@@ -245,10 +210,7 @@ const GroupSettingsPage = ({ group }: { group: any }) => {
             <button data-testid="confirm-archive" onClick={handleArchive}>
               Yes, Archive
             </button>
-            <button
-              data-testid="cancel-archive"
-              onClick={() => setShowArchiveConfirm(false)}
-            >
+            <button data-testid="cancel-archive" onClick={() => setShowArchiveConfirm(false)}>
               Cancel
             </button>
           </div>
@@ -259,8 +221,8 @@ const GroupSettingsPage = ({ group }: { group: any }) => {
 };
 
 const GroupDiscoveryPage = () => {
-  const [searchQuery, setSearchQuery] = React.useState('');
-  const [filters, setFilters] = React.useState({ type: '', visibility: '' });
+  const [searchQuery, setSearchQuery] = React.useState("");
+  const [filters, setFilters] = React.useState({ type: "", visibility: "" });
   const groups = mockUseQuery();
 
   return (
@@ -289,9 +251,7 @@ const GroupDiscoveryPage = () => {
         <select
           data-testid="filter-visibility"
           value={filters.visibility}
-          onChange={(e) =>
-            setFilters({ ...filters, visibility: e.target.value })
-          }
+          onChange={(e) => setFilters({ ...filters, visibility: e.target.value })}
         >
           <option value="">All Visibility</option>
           <option value="public">Public Only</option>
@@ -319,44 +279,42 @@ const GroupDiscoveryPage = () => {
   );
 };
 
-describeIfTestingLibrary('GroupDetailPage', () => {
-  it('should show loading state', () => {
+describeIfTestingLibrary("GroupDetailPage", () => {
+  it("should show loading state", () => {
     mockUseQuery.mockReturnValue(undefined);
 
     render(<GroupDetailPage slug="test-group" />);
 
-    expect(screen.getByTestId('loading')).toBeInTheDocument();
+    expect(screen.getByTestId("loading")).toBeInTheDocument();
   });
 
-  it('should show not found state', () => {
+  it("should show not found state", () => {
     mockUseQuery.mockReturnValue(null);
 
     render(<GroupDetailPage slug="nonexistent" />);
 
-    expect(screen.getByTestId('not-found')).toBeInTheDocument();
+    expect(screen.getByTestId("not-found")).toBeInTheDocument();
   });
 
-  it('should display group details', () => {
+  it("should display group details", () => {
     const group = createMockGroup({
-      name: 'Acme Corp',
-      type: 'business',
-      description: 'A test business group',
-      status: 'active',
+      name: "Acme Corp",
+      type: "business",
+      description: "A test business group",
+      status: "active",
     });
 
     mockUseQuery.mockReturnValueOnce(group).mockReturnValueOnce(null);
 
     render(<GroupDetailPage slug="acme-corp" />);
 
-    expect(screen.getByTestId('group-title')).toHaveTextContent('Acme Corp');
-    expect(screen.getByTestId('group-type')).toHaveTextContent('business');
-    expect(screen.getByTestId('group-status')).toHaveTextContent('active');
-    expect(screen.getByTestId('group-description')).toHaveTextContent(
-      'A test business group'
-    );
+    expect(screen.getByTestId("group-title")).toHaveTextContent("Acme Corp");
+    expect(screen.getByTestId("group-type")).toHaveTextContent("business");
+    expect(screen.getByTestId("group-status")).toHaveTextContent("active");
+    expect(screen.getByTestId("group-description")).toHaveTextContent("A test business group");
   });
 
-  it('should display group stats', () => {
+  it("should display group stats", () => {
     const group = createMockGroup();
     const stats = createMockStats();
 
@@ -364,162 +322,156 @@ describeIfTestingLibrary('GroupDetailPage', () => {
 
     render(<GroupDetailPage slug="test" />);
 
-    expect(screen.getByTestId('group-stats')).toBeInTheDocument();
+    expect(screen.getByTestId("group-stats")).toBeInTheDocument();
     expect(screen.getByText(/Members: 5/)).toBeInTheDocument();
     expect(screen.getByText(/Entities: 20/)).toBeInTheDocument();
   });
 
-  it('should show navigation tabs', () => {
+  it("should show navigation tabs", () => {
     const group = createMockGroup();
     mockUseQuery.mockReturnValueOnce(group).mockReturnValueOnce(null);
 
     render(<GroupDetailPage slug="test" />);
 
-    expect(screen.getByTestId('tab-overview')).toBeInTheDocument();
-    expect(screen.getByTestId('tab-members')).toBeInTheDocument();
-    expect(screen.getByTestId('tab-settings')).toBeInTheDocument();
+    expect(screen.getByTestId("tab-overview")).toBeInTheDocument();
+    expect(screen.getByTestId("tab-members")).toBeInTheDocument();
+    expect(screen.getByTestId("tab-settings")).toBeInTheDocument();
   });
 });
 
-describeIfTestingLibrary('CreateGroupPage', () => {
-  it('should render create form', () => {
+describeIfTestingLibrary("CreateGroupPage", () => {
+  it("should render create form", () => {
     render(<CreateGroupPage />);
 
-    expect(screen.getByTestId('create-form')).toBeInTheDocument();
-    expect(screen.getByTestId('input-slug')).toBeInTheDocument();
-    expect(screen.getByTestId('input-name')).toBeInTheDocument();
-    expect(screen.getByTestId('select-type')).toBeInTheDocument();
+    expect(screen.getByTestId("create-form")).toBeInTheDocument();
+    expect(screen.getByTestId("input-slug")).toBeInTheDocument();
+    expect(screen.getByTestId("input-name")).toBeInTheDocument();
+    expect(screen.getByTestId("select-type")).toBeInTheDocument();
   });
 
-  it('should show optional description field', () => {
+  it("should show optional description field", () => {
     render(<CreateGroupPage />);
 
-    expect(screen.getByTestId('input-description')).toBeInTheDocument();
+    expect(screen.getByTestId("input-description")).toBeInTheDocument();
   });
 
-  it('should include settings section', () => {
+  it("should include settings section", () => {
     render(<CreateGroupPage />);
 
-    expect(screen.getByTestId('settings-section')).toBeInTheDocument();
-    expect(screen.getByTestId('select-visibility')).toBeInTheDocument();
-    expect(screen.getByTestId('select-joinPolicy')).toBeInTheDocument();
+    expect(screen.getByTestId("settings-section")).toBeInTheDocument();
+    expect(screen.getByTestId("select-visibility")).toBeInTheDocument();
+    expect(screen.getByTestId("select-joinPolicy")).toBeInTheDocument();
   });
 
-  it('should handle successful creation', async () => {
-    const createMutation = vi.fn().mockResolvedValue('new-id');
+  it("should handle successful creation", async () => {
+    const createMutation = vi.fn().mockResolvedValue("new-id");
     mockUseMutation.mockReturnValue(createMutation);
 
     render(<CreateGroupPage />);
 
-    fireEvent.change(screen.getByTestId('input-slug'), {
-      target: { value: 'new-group' },
+    fireEvent.change(screen.getByTestId("input-slug"), {
+      target: { value: "new-group" },
     });
-    fireEvent.change(screen.getByTestId('input-name'), {
-      target: { value: 'New Group' },
+    fireEvent.change(screen.getByTestId("input-name"), {
+      target: { value: "New Group" },
     });
-    fireEvent.click(screen.getByTestId('submit-button'));
+    fireEvent.click(screen.getByTestId("submit-button"));
 
     await waitFor(() => {
-      expect(screen.getByTestId('success-message')).toBeInTheDocument();
+      expect(screen.getByTestId("success-message")).toBeInTheDocument();
     });
   });
 
-  it('should handle creation error', async () => {
-    const createMutation = vi
-      .fn()
-      .mockRejectedValue(new Error('Slug already exists'));
+  it("should handle creation error", async () => {
+    const createMutation = vi.fn().mockRejectedValue(new Error("Slug already exists"));
     mockUseMutation.mockReturnValue(createMutation);
 
     render(<CreateGroupPage />);
 
-    fireEvent.change(screen.getByTestId('input-slug'), {
-      target: { value: 'duplicate' },
+    fireEvent.change(screen.getByTestId("input-slug"), {
+      target: { value: "duplicate" },
     });
-    fireEvent.change(screen.getByTestId('input-name'), {
-      target: { value: 'Duplicate' },
+    fireEvent.change(screen.getByTestId("input-name"), {
+      target: { value: "Duplicate" },
     });
-    fireEvent.click(screen.getByTestId('submit-button'));
+    fireEvent.click(screen.getByTestId("submit-button"));
 
     await waitFor(() => {
-      expect(screen.getByTestId('error-message')).toHaveTextContent(
-        'Slug already exists'
-      );
+      expect(screen.getByTestId("error-message")).toHaveTextContent("Slug already exists");
     });
   });
 });
 
-describeIfTestingLibrary('GroupSettingsPage', () => {
-  it('should display current group info', () => {
+describeIfTestingLibrary("GroupSettingsPage", () => {
+  it("should display current group info", () => {
     const group = createMockGroup({
-      name: 'Test Group',
-      description: 'Test description',
+      name: "Test Group",
+      description: "Test description",
     });
 
     render(<GroupSettingsPage group={group} />);
 
     expect(screen.getByText(/Group Settings: Test Group/)).toBeInTheDocument();
-    expect(screen.getByTestId('input-name')).toHaveValue('Test Group');
-    expect(screen.getByTestId('input-description')).toHaveValue(
-      'Test description'
-    );
+    expect(screen.getByTestId("input-name")).toHaveValue("Test Group");
+    expect(screen.getByTestId("input-description")).toHaveValue("Test description");
   });
 
-  it('should handle settings update', async () => {
+  it("should handle settings update", async () => {
     const group = createMockGroup();
     const updateMutation = vi.fn().mockResolvedValue(true);
     mockUseMutation.mockReturnValue(updateMutation);
 
     render(<GroupSettingsPage group={group} />);
 
-    fireEvent.change(screen.getByTestId('input-name'), {
-      target: { value: 'Updated Name' },
+    fireEvent.change(screen.getByTestId("input-name"), {
+      target: { value: "Updated Name" },
     });
-    fireEvent.click(screen.getByTestId('save-button'));
+    fireEvent.click(screen.getByTestId("save-button"));
 
     await waitFor(() => {
       expect(updateMutation).toHaveBeenCalledWith(
         expect.objectContaining({
           groupId: group._id,
-          name: 'Updated Name',
+          name: "Updated Name",
         })
       );
     });
   });
 
-  it('should show archive confirmation', () => {
+  it("should show archive confirmation", () => {
     const group = createMockGroup();
     mockUseMutation.mockReturnValue(vi.fn());
 
     render(<GroupSettingsPage group={group} />);
 
-    fireEvent.click(screen.getByTestId('archive-button'));
+    fireEvent.click(screen.getByTestId("archive-button"));
 
-    expect(screen.getByTestId('archive-confirm')).toBeInTheDocument();
-    expect(screen.getByTestId('confirm-archive')).toBeInTheDocument();
-    expect(screen.getByTestId('cancel-archive')).toBeInTheDocument();
+    expect(screen.getByTestId("archive-confirm")).toBeInTheDocument();
+    expect(screen.getByTestId("confirm-archive")).toBeInTheDocument();
+    expect(screen.getByTestId("cancel-archive")).toBeInTheDocument();
   });
 
-  it('should cancel archive', () => {
+  it("should cancel archive", () => {
     const group = createMockGroup();
     mockUseMutation.mockReturnValue(vi.fn());
 
     render(<GroupSettingsPage group={group} />);
 
-    fireEvent.click(screen.getByTestId('archive-button'));
-    fireEvent.click(screen.getByTestId('cancel-archive'));
+    fireEvent.click(screen.getByTestId("archive-button"));
+    fireEvent.click(screen.getByTestId("cancel-archive"));
 
-    expect(screen.queryByTestId('archive-confirm')).not.toBeInTheDocument();
+    expect(screen.queryByTestId("archive-confirm")).not.toBeInTheDocument();
   });
 
-  it('should confirm archive', async () => {
+  it("should confirm archive", async () => {
     const group = createMockGroup();
     const archiveMutation = vi.fn().mockResolvedValue(true);
     mockUseMutation.mockReturnValue(archiveMutation);
 
     render(<GroupSettingsPage group={group} />);
 
-    fireEvent.click(screen.getByTestId('archive-button'));
-    fireEvent.click(screen.getByTestId('confirm-archive'));
+    fireEvent.click(screen.getByTestId("archive-button"));
+    fireEvent.click(screen.getByTestId("confirm-archive"));
 
     await waitFor(() => {
       expect(archiveMutation).toHaveBeenCalledWith({ groupId: group._id });
@@ -527,65 +479,62 @@ describeIfTestingLibrary('GroupSettingsPage', () => {
   });
 });
 
-describeIfTestingLibrary('GroupDiscoveryPage', () => {
-  it('should render search interface', () => {
+describeIfTestingLibrary("GroupDiscoveryPage", () => {
+  it("should render search interface", () => {
     mockUseQuery.mockReturnValue([]);
 
     render(<GroupDiscoveryPage />);
 
-    expect(screen.getByTestId('search-input')).toBeInTheDocument();
-    expect(screen.getByTestId('filter-type')).toBeInTheDocument();
-    expect(screen.getByTestId('filter-visibility')).toBeInTheDocument();
+    expect(screen.getByTestId("search-input")).toBeInTheDocument();
+    expect(screen.getByTestId("filter-type")).toBeInTheDocument();
+    expect(screen.getByTestId("filter-visibility")).toBeInTheDocument();
   });
 
-  it('should show loading state', () => {
+  it("should show loading state", () => {
     mockUseQuery.mockReturnValue(undefined);
 
     render(<GroupDiscoveryPage />);
 
-    expect(screen.getByTestId('loading')).toBeInTheDocument();
+    expect(screen.getByTestId("loading")).toBeInTheDocument();
   });
 
-  it('should display search results', () => {
-    const groups = [
-      createMockGroup({ name: 'Group 1' }),
-      createMockGroup({ name: 'Group 2' }),
-    ];
+  it("should display search results", () => {
+    const groups = [createMockGroup({ name: "Group 1" }), createMockGroup({ name: "Group 2" })];
     mockUseQuery.mockReturnValue(groups);
 
     render(<GroupDiscoveryPage />);
 
-    const cards = screen.getAllByTestId('group-card');
+    const cards = screen.getAllByTestId("group-card");
     expect(cards).toHaveLength(2);
   });
 
-  it('should show empty state', () => {
+  it("should show empty state", () => {
     mockUseQuery.mockReturnValue([]);
 
     render(<GroupDiscoveryPage />);
 
-    expect(screen.getByTestId('empty-state')).toBeInTheDocument();
+    expect(screen.getByTestId("empty-state")).toBeInTheDocument();
   });
 
-  it('should update search query', () => {
+  it("should update search query", () => {
     mockUseQuery.mockReturnValue([]);
 
     render(<GroupDiscoveryPage />);
 
-    const searchInput = screen.getByTestId('search-input') as HTMLInputElement;
-    fireEvent.change(searchInput, { target: { value: 'test query' } });
+    const searchInput = screen.getByTestId("search-input") as HTMLInputElement;
+    fireEvent.change(searchInput, { target: { value: "test query" } });
 
-    expect(searchInput.value).toBe('test query');
+    expect(searchInput.value).toBe("test query");
   });
 
-  it('should update filters', () => {
+  it("should update filters", () => {
     mockUseQuery.mockReturnValue([]);
 
     render(<GroupDiscoveryPage />);
 
-    const typeFilter = screen.getByTestId('filter-type') as HTMLSelectElement;
-    fireEvent.change(typeFilter, { target: { value: 'dao' } });
+    const typeFilter = screen.getByTestId("filter-type") as HTMLSelectElement;
+    fireEvent.change(typeFilter, { target: { value: "dao" } });
 
-    expect(typeFilter.value).toBe('dao');
+    expect(typeFilter.value).toBe("dao");
   });
 });

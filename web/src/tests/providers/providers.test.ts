@@ -5,17 +5,15 @@
  * validation, and multi-tenant configuration management.
  */
 
-import { describe, it, expect, beforeEach, afterEach } from "vitest";
+import { afterEach, beforeEach, describe, expect, it } from "vitest";
 import {
-  loadProviderConfig,
-  validateEncryptionKey,
+  clearAllOrganizationProviderConfigs,
+  clearOrganizationProviderConfig,
+  getMissingEnvHelp,
   getOrganizationProviderConfig,
   setOrganizationProviderConfig,
-  clearOrganizationProviderConfig,
-  clearAllOrganizationProviderConfigs,
+  validateEncryptionKey,
   validateProviderConfig,
-  getMissingEnvHelp,
-  type OrganizationProviderConfig,
 } from "../../src/config/providers";
 import type { ProviderConfig } from "../../src/providers/factory";
 
@@ -34,9 +32,7 @@ describe("Provider Configuration Loader", () => {
 
     it("should reject short key", () => {
       const shortKey = "0".repeat(32); // Only 32 chars instead of 64
-      expect(() => validateEncryptionKey(shortKey)).toThrow(
-        "must be 32 bytes (64 hex characters)"
-      );
+      expect(() => validateEncryptionKey(shortKey)).toThrow("must be 32 bytes (64 hex characters)");
     });
 
     it("should reject non-hex key", () => {
@@ -352,7 +348,7 @@ describe("Configuration Performance", () => {
     const start = Date.now();
 
     // Set up valid environment
-    const config: ProviderConfig = {
+    const _config: ProviderConfig = {
       type: "convex",
       client: null as any,
       cacheEnabled: true,

@@ -1,13 +1,14 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
+
+import { AlertCircle, CheckCircle2 } from "lucide-react";
 import { useState } from "react";
+import { toast } from "sonner";
+import { Alert, AlertDescription } from "@/components/ui/alert";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { usePasswordReset } from "@/hooks/useAuth";
-import { toast } from "sonner";
 import { AuthCard } from "./AuthCard";
-import { AlertCircle, CheckCircle2 } from "lucide-react";
-import { Alert, AlertDescription } from "@/components/ui/alert";
 
 export function ForgotPasswordForm() {
   const [email, setEmail] = useState("");
@@ -88,8 +89,8 @@ export function ForgotPasswordForm() {
         <Alert className="border-green-500/50 bg-green-500/10">
           <CheckCircle2 className="h-4 w-4 text-green-500" />
           <AlertDescription className="text-sm">
-            If an account exists with <strong>{email}</strong>, you will receive
-            an email with instructions to reset your password.
+            If an account exists with <strong>{email}</strong>, you will receive an email with
+            instructions to reset your password.
           </AlertDescription>
         </Alert>
 

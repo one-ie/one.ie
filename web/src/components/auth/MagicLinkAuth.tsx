@@ -1,11 +1,12 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import { useState, useEffect } from "react";
+
+import { CheckCircle2, Mail } from "lucide-react";
+import { useEffect, useState } from "react";
+import { toast } from "sonner";
+import { Alert, AlertDescription } from "@/components/ui/alert";
 import { Button } from "@/components/ui/button";
 import { useMagicLinkAuth } from "@/hooks/useAuth";
-import { toast } from "sonner";
 import { AuthCard } from "./AuthCard";
-import { CheckCircle2, Mail } from "lucide-react";
-import { Alert, AlertDescription } from "@/components/ui/alert";
 
 interface MagicLinkAuthProps {
   token: string;
@@ -93,10 +94,7 @@ export function MagicLinkAuth({ token }: MagicLinkAuthProps) {
         description="This magic link is no longer valid"
         footer={
           <p className="text-sm text-muted-foreground text-center w-full">
-            <a
-              href="/account/magic-link"
-              className="text-primary hover:underline"
-            >
+            <a href="/account/magic-link" className="text-primary hover:underline">
               Request a new magic link
             </a>
           </p>
@@ -105,8 +103,8 @@ export function MagicLinkAuth({ token }: MagicLinkAuthProps) {
         <Alert variant="destructive">
           <Mail className="h-4 w-4" />
           <AlertDescription className="text-sm">
-            This magic link has expired or is invalid. Magic links expire after
-            15 minutes and can only be used once.
+            This magic link has expired or is invalid. Magic links expire after 15 minutes and can
+            only be used once.
           </AlertDescription>
         </Alert>
 

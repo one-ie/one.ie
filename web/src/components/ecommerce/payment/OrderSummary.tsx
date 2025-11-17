@@ -6,10 +6,10 @@
  * <OrderSummary items={cartItems} calculation={orderCalculation} />
  */
 
-import type { CartItem } from '@/types/products';
-import type { OrderCalculation } from '@/types/stripe';
-import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
-import { Separator } from '@/components/ui/separator';
+import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import { Separator } from "@/components/ui/separator";
+import type { CartItem } from "@/types/products";
+import type { OrderCalculation } from "@/types/stripe";
 
 interface OrderSummaryProps {
   items: CartItem[];
@@ -20,9 +20,9 @@ interface OrderSummaryProps {
 /**
  * Format currency with proper symbol and decimals
  */
-function formatCurrency(amount: number, currency = 'usd'): string {
-  return new Intl.NumberFormat('en-US', {
-    style: 'currency',
+function formatCurrency(amount: number, currency = "usd"): string {
+  return new Intl.NumberFormat("en-US", {
+    style: "currency",
     currency: currency.toUpperCase(),
   }).format(amount / 100); // Stripe uses cents
 }
@@ -34,18 +34,12 @@ function getDisplayPrice(item: CartItem): number {
   return item.price;
 }
 
-export function OrderSummary({
-  items,
-  calculation,
-  showTitle = true,
-}: OrderSummaryProps) {
+export function OrderSummary({ items, calculation, showTitle = true }: OrderSummaryProps) {
   if (items.length === 0) {
     return (
       <Card>
         <CardContent className="p-6">
-          <p className="text-center text-muted-foreground">
-            Your cart is empty
-          </p>
+          <p className="text-center text-muted-foreground">Your cart is empty</p>
         </CardContent>
       </Card>
     );
@@ -82,13 +76,11 @@ export function OrderSummary({
                 <div className="flex flex-1 flex-col gap-1">
                   <div className="flex items-start justify-between">
                     <div>
-                      <p className="text-sm font-medium leading-none">
-                        {item.productName}
-                      </p>
+                      <p className="text-sm font-medium leading-none">{item.productName}</p>
                       {(item.selectedColor || item.selectedSize) && (
                         <p className="mt-1 text-xs text-muted-foreground">
                           {item.selectedColor && `Color: ${item.selectedColor}`}
-                          {item.selectedColor && item.selectedSize && ' • '}
+                          {item.selectedColor && item.selectedSize && " • "}
                           {item.selectedSize && `Size: ${item.selectedSize}`}
                         </p>
                       )}
@@ -119,7 +111,7 @@ export function OrderSummary({
           <span className="text-muted-foreground">Shipping</span>
           <span>
             {calculation.shipping === 0
-              ? 'FREE'
+              ? "FREE"
               : formatCurrency(calculation.shipping, calculation.currency)}
           </span>
         </div>
@@ -137,16 +129,13 @@ export function OrderSummary({
         {/* Total */}
         <div className="flex items-center justify-between text-base font-semibold">
           <span>Total</span>
-          <span className="text-lg">
-            {formatCurrency(calculation.total, calculation.currency)}
-          </span>
+          <span className="text-lg">{formatCurrency(calculation.total, calculation.currency)}</span>
         </div>
 
         {/* Item Count */}
         <p className="text-center text-xs text-muted-foreground">
           {items.reduce((sum, item) => sum + item.quantity, 0)} item
-          {items.reduce((sum, item) => sum + item.quantity, 0) !== 1 ? 's' : ''} in
-          cart
+          {items.reduce((sum, item) => sum + item.quantity, 0) !== 1 ? "s" : ""} in cart
         </p>
       </CardContent>
     </Card>

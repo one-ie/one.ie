@@ -443,22 +443,52 @@ Long method with 200 lines and complexity score of 25
 ## Tools & References
 
 ### Analysis Tools
-- **Code Quality:** ESLint, TypeScript strict mode, SonarQube
+- **Code Quality:** Biome (via Ultracite), TypeScript strict mode
 - **Performance:** Convex dashboard, Chrome DevTools, Lighthouse
-- **Complexity:** cyclomatic complexity analyzers, cognitive complexity tools
-- **Dependencies:** npm audit, Snyk, Dependabot
+- **Complexity:** Biome complexity analyzers, cognitive complexity tools
+- **Dependencies:** bun audit, npm audit, Dependabot
+
+### Biome Integration (Primary Linting Tool)
+
+**Biome** has replaced ESLint and Prettier as the primary code quality tool. It provides:
+- 35x faster linting than ESLint
+- Consistent formatting rules
+- Comprehensive accessibility checks
+- Type-aware linting
+- Auto-fix for 90% of issues
+
+**Key Commands:**
+```bash
+cd web/
+bun run lint              # Check code quality
+bun run lint:fix          # Auto-fix safe issues
+npx @biomejs/biome check --write --unsafe src/  # Fix all issues
+```
+
+**Configuration:** `web/biome.json`
+
+**Training Guide:** `/one/knowledge/biome-clean-code-guide.md` (REQUIRED READING)
+
+**Hooks:**
+- `.claude/hooks/biome-check.py` - Real-time code quality checks
+- `.claude/hooks/quality-gate.py` - Pre-commit quality gate
+
+**MCP Server:** Ultracite MCP provides real-time linting in Claude Code via `.claude/mcp.json`
 
 ### Refactoring Patterns
 - **Knowledge Base:** `one/knowledge/patterns/` (refactoring strategies)
+- **Biome Patterns:** `one/knowledge/biome-clean-code-guide.md` (PRIMARY REFERENCE)
 - **Clean Code:** `one/knowledge/rules.md` (clean code principles)
 - **Ontology Guide:** `one/knowledge/ontology.yaml` (6-dimension structure)
 - **Architecture:** `one/knowledge/architecture.md` (system design)
 
 ### Automation Scripts
-- `scripts/quality/detect-code-smells.ts` - Automated smell detection
+- `.claude/hooks/biome-check.py` - Real-time Biome validation
+- `.claude/hooks/quality-gate.py` - Comprehensive quality gate
+- `.claude/hooks/validate-ontology-structure.py` - Ontology validation
+- `scripts/quality/detect-code-smells.ts` - Automated smell detection (deprecated, use Biome)
 - `scripts/quality/analyze-dependencies.ts` - Dependency audit
 - `scripts/quality/check-ontology-alignment.ts` - Ontology validation
-- `scripts/quality/measure-complexity.ts` - Complexity metrics
 
 ## Philosophy
 

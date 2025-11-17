@@ -1,5 +1,7 @@
 "use client";
 
+import { CheckIcon } from "lucide-react";
+import { useState } from "react";
 import {
   ModelSelector,
   ModelSelectorContent,
@@ -14,8 +16,6 @@ import {
   ModelSelectorTrigger,
 } from "@/components/ai/elements/model-selector";
 import { Button } from "@/components/ui/button";
-import { CheckIcon } from "lucide-react";
-import { useState } from "react";
 
 const models = [
   {
@@ -322,10 +322,7 @@ const Example = () => {
                       <ModelSelectorName>{model.name}</ModelSelectorName>
                       <ModelSelectorLogoGroup>
                         {model.providers.map((provider) => (
-                          <ModelSelectorLogo
-                            key={provider}
-                            provider={provider}
-                          />
+                          <ModelSelectorLogo key={provider} provider={provider} />
                         ))}
                       </ModelSelectorLogoGroup>
                       {selectedModel === model.id ? (

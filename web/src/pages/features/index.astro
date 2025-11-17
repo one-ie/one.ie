@@ -1,18 +1,11 @@
 ---
-import Layout from '../../layouts/Layout.astro';
-import { getCollection } from 'astro:content';
-import { Badge } from '@/components/ui/badge';
-import { Button } from '@/components/ui/button';
-import { Zap, CheckCircle2, Clock, AlertCircle } from 'lucide-react';
-import { FeatureCard } from '@/components/features/FeatureCard';
-import { FeatureStats } from '@/components/features/FeatureStats';
-import { FeatureCategoryFilter } from '@/components/features/FeatureCategoryFilter';
+import { getCollection } from "astro:content";
 
 // Get all features
-const features = await getCollection('features');
+const features = await getCollection("features");
 const sortedFeatures = features.sort((a, b) => {
   // Sort by status priority then by name
-  const statusOrder = ['completed', 'beta', 'in_development', 'planned', 'deprecated'];
+  const statusOrder = ["completed", "beta", "in_development", "planned", "deprecated"];
   const aIndex = statusOrder.indexOf(a.data.status);
   const bIndex = statusOrder.indexOf(b.data.status);
   if (aIndex !== bIndex) return aIndex - bIndex;
@@ -20,9 +13,11 @@ const sortedFeatures = features.sort((a, b) => {
 });
 
 // Group features by status
-const completedFeatures = sortedFeatures.filter(f => f.data.status === 'completed');
-const inDevelopmentFeatures = sortedFeatures.filter(f => f.data.status === 'in_development' || f.data.status === 'beta');
-const plannedFeatures = sortedFeatures.filter(f => f.data.status === 'planned');
+const _completedFeatures = sortedFeatures.filter((f) => f.data.status === "completed");
+const _inDevelopmentFeatures = sortedFeatures.filter(
+  (f) => f.data.status === "in_development" || f.data.status === "beta"
+);
+const _plannedFeatures = sortedFeatures.filter((f) => f.data.status === "planned");
 ---
 
 <Layout title="Features - ONE Platform | Complete Platform Specification">

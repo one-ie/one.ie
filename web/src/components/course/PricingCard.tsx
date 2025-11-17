@@ -1,12 +1,6 @@
-import React from "react";
+import { ArrowRightIcon, CheckIcon, ShieldCheckIcon, XIcon } from "lucide-react";
 import { Button } from "../ui/button";
 import { Card } from "../ui/card";
-import {
-  CheckIcon,
-  ShieldCheckIcon,
-  ArrowRightIcon,
-  XIcon,
-} from "lucide-react";
 import { Separator } from "../ui/separator";
 
 interface PricingFeature {
@@ -58,15 +52,11 @@ export function PricingCard({
 
       <div className="p-6">
         <h3 className="text-xl font-bold mb-2">{title}</h3>
-        {description && (
-          <p className="text-muted-foreground mb-6">{description}</p>
-        )}
+        {description && <p className="text-muted-foreground mb-6">{description}</p>}
 
         <div className="mb-6">
           <div className="flex items-baseline gap-2">
-            <span className="text-lg line-through text-muted-foreground">
-              ${originalPrice}
-            </span>
+            <span className="text-lg line-through text-muted-foreground">${originalPrice}</span>
             <span className="text-4xl font-bold">${currentPrice}</span>
           </div>
 
@@ -100,9 +90,7 @@ export function PricingCard({
                 ) : (
                   <XIcon className="h-5 w-5 text-muted-foreground shrink-0 mt-0.5" />
                 )}
-                <span
-                  className={feature.included ? "" : "text-muted-foreground"}
-                >
+                <span className={feature.included ? "" : "text-muted-foreground"}>
                   {feature.title}
                 </span>
               </li>

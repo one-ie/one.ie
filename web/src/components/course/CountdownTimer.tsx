@@ -1,10 +1,9 @@
 "use client";
 
-import React from "react";
-import { useState, useEffect } from "react";
-import { Card } from "@/components/ui/card";
 import { ArrowRight } from "lucide-react";
+import { useEffect, useState } from "react";
 import { Button } from "@/components/ui/button";
+import { Card } from "@/components/ui/card";
 
 interface TimeLeft {
   days: number;
@@ -39,7 +38,7 @@ export function CountdownTimer({
   useEffect(() => {
     const calculateTimeLeft = () => {
       try {
-        const now = new Date().getTime();
+        const now = Date.now();
         const target = new Date(targetDate).getTime();
         const difference = target - now;
 
@@ -53,12 +52,8 @@ export function CountdownTimer({
 
         // Calculate time units
         const days = Math.floor(difference / (1000 * 60 * 60 * 24));
-        const hours = Math.floor(
-          (difference % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60),
-        );
-        const minutes = Math.floor(
-          (difference % (1000 * 60 * 60)) / (1000 * 60),
-        );
+        const hours = Math.floor((difference % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+        const minutes = Math.floor((difference % (1000 * 60 * 60)) / (1000 * 60));
         const seconds = Math.floor((difference % (1000 * 60)) / 1000);
 
         setTimeLeft({ days, hours, minutes, seconds });
@@ -114,17 +109,11 @@ export function CountdownTimer({
     <section className={`py-12 ${className}`}>
       <Card className="max-w-4xl mx-auto p-8 text-center bg-gradient-to-b from-primary/5 to-background border-2 border-primary/20">
         <h2 className="text-2xl font-bold mb-2">Pre-Launch Special Offer</h2>
-        <p className="text-lg text-muted-foreground mb-6">
-          Lock In Pre-Launch Price
-        </p>
+        <p className="text-lg text-muted-foreground mb-6">Lock In Pre-Launch Price</p>
 
         <div className="flex justify-center items-center gap-4 mb-8">
-          <span className="text-4xl font-bold text-primary">
-            ${currentPrice}
-          </span>
-          <span className="text-xl text-muted-foreground line-through">
-            ${originalPrice}
-          </span>
+          <span className="text-4xl font-bold text-primary">${currentPrice}</span>
+          <span className="text-xl text-muted-foreground line-through">${originalPrice}</span>
         </div>
 
         <p className="text-sm text-muted-foreground mb-8">

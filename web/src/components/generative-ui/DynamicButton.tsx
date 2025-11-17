@@ -1,12 +1,11 @@
-import React from 'react';
-import { Button } from '@/components/ui/button';
-import { Card, CardHeader, CardTitle, CardContent } from '@/components/ui/card';
+import { Button } from "@/components/ui/button";
+import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 
 interface DynamicButtonProps {
   data: {
     label: string;
-    variant?: 'default' | 'destructive' | 'outline' | 'secondary' | 'ghost' | 'link';
-    size?: 'default' | 'sm' | 'lg' | 'icon';
+    variant?: "default" | "destructive" | "outline" | "secondary" | "ghost" | "link";
+    size?: "default" | "sm" | "lg" | "icon";
     action?: string;
     disabled?: boolean;
   };
@@ -21,7 +20,7 @@ export function DynamicButton({ data }: DynamicButtonProps) {
         const func = new Function(data.action);
         func();
       } catch (e) {
-        console.error('Button action error:', e);
+        console.error("Button action error:", e);
       }
     }
   };
@@ -33,8 +32,8 @@ export function DynamicButton({ data }: DynamicButtonProps) {
       </CardHeader>
       <CardContent>
         <Button
-          variant={data.variant || 'default'}
-          size={data.size || 'default'}
+          variant={data.variant || "default"}
+          size={data.size || "default"}
           onClick={handleClick}
           disabled={data.disabled}
         >

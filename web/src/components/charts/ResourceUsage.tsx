@@ -1,20 +1,20 @@
-'use client';
+"use client";
 
-import { Card, CardContent, CardHeader, CardTitle, CardDescription } from '@/components/ui/card';
-import { Badge } from '@/components/ui/badge';
 import {
-  Cpu,
-  HardDrive,
   Activity,
-  Wifi,
-  Database,
-  MemoryStick,
-  TrendingUp,
-  TrendingDown,
   AlertTriangle,
-  Zap
-} from 'lucide-react';
-import { useEffect, useState } from 'react';
+  Cpu,
+  Database,
+  HardDrive,
+  MemoryStick,
+  TrendingDown,
+  TrendingUp,
+  Wifi,
+  Zap,
+} from "lucide-react";
+import { useEffect, useState } from "react";
+import { Badge } from "@/components/ui/badge";
+import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 
 interface Resource {
   id: string;
@@ -23,9 +23,9 @@ interface Resource {
   current: number;
   max: number;
   unit: string;
-  trend: 'up' | 'down' | 'stable';
+  trend: "up" | "down" | "stable";
   trendValue: number;
-  status: 'good' | 'warning' | 'critical';
+  status: "good" | "warning" | "critical";
   color: string;
   description: string;
   details?: { label: string; value: string }[];
@@ -33,111 +33,111 @@ interface Resource {
 
 const resources: Resource[] = [
   {
-    id: 'cpu',
-    name: 'CPU Usage',
+    id: "cpu",
+    name: "CPU Usage",
     icon: <Cpu className="h-5 w-5" />,
     current: 23,
     max: 100,
-    unit: '%',
-    trend: 'down',
+    unit: "%",
+    trend: "down",
     trendValue: -12,
-    status: 'good',
-    color: 'from-blue-600 to-cyan-500',
-    description: 'Processing power utilization',
+    status: "good",
+    color: "from-blue-600 to-cyan-500",
+    description: "Processing power utilization",
     details: [
-      { label: 'Cores', value: '8 vCPU' },
-      { label: 'Peak today', value: '67%' },
-      { label: 'Avg load', value: '0.92' },
+      { label: "Cores", value: "8 vCPU" },
+      { label: "Peak today", value: "67%" },
+      { label: "Avg load", value: "0.92" },
     ],
   },
   {
-    id: 'memory',
-    name: 'Memory',
+    id: "memory",
+    name: "Memory",
     icon: <MemoryStick className="h-5 w-5" />,
     current: 4.2,
     max: 16,
-    unit: 'GB',
-    trend: 'stable',
+    unit: "GB",
+    trend: "stable",
     trendValue: 0,
-    status: 'good',
-    color: 'from-purple-600 to-pink-500',
-    description: 'RAM consumption',
+    status: "good",
+    color: "from-purple-600 to-pink-500",
+    description: "RAM consumption",
     details: [
-      { label: 'Available', value: '11.8 GB' },
-      { label: 'Cached', value: '2.1 GB' },
-      { label: 'Swap', value: '0 MB' },
+      { label: "Available", value: "11.8 GB" },
+      { label: "Cached", value: "2.1 GB" },
+      { label: "Swap", value: "0 MB" },
     ],
   },
   {
-    id: 'storage',
-    name: 'Storage',
+    id: "storage",
+    name: "Storage",
     icon: <HardDrive className="h-5 w-5" />,
     current: 127,
     max: 500,
-    unit: 'GB',
-    trend: 'up',
+    unit: "GB",
+    trend: "up",
     trendValue: 8,
-    status: 'good',
-    color: 'from-green-600 to-emerald-500',
-    description: 'Disk space usage',
+    status: "good",
+    color: "from-green-600 to-emerald-500",
+    description: "Disk space usage",
     details: [
-      { label: 'Free', value: '373 GB' },
-      { label: 'IOPS', value: '12.5k/s' },
-      { label: 'Type', value: 'NVMe SSD' },
+      { label: "Free", value: "373 GB" },
+      { label: "IOPS", value: "12.5k/s" },
+      { label: "Type", value: "NVMe SSD" },
     ],
   },
   {
-    id: 'bandwidth',
-    name: 'Bandwidth',
+    id: "bandwidth",
+    name: "Bandwidth",
     icon: <Wifi className="h-5 w-5" />,
     current: 892,
     max: 10000,
-    unit: 'GB/mo',
-    trend: 'up',
+    unit: "GB/mo",
+    trend: "up",
     trendValue: 23,
-    status: 'good',
-    color: 'from-orange-600 to-yellow-500',
-    description: 'Network transfer this month',
+    status: "good",
+    color: "from-orange-600 to-yellow-500",
+    description: "Network transfer this month",
     details: [
-      { label: 'Inbound', value: '342 GB' },
-      { label: 'Outbound', value: '550 GB' },
-      { label: 'Speed', value: '10 Gbps' },
+      { label: "Inbound", value: "342 GB" },
+      { label: "Outbound", value: "550 GB" },
+      { label: "Speed", value: "10 Gbps" },
     ],
   },
   {
-    id: 'database',
-    name: 'Database',
+    id: "database",
+    name: "Database",
     icon: <Database className="h-5 w-5" />,
     current: 1.8,
     max: 5,
-    unit: 'GB',
-    trend: 'stable',
+    unit: "GB",
+    trend: "stable",
     trendValue: 2,
-    status: 'good',
-    color: 'from-indigo-600 to-blue-500',
-    description: 'Database storage used',
+    status: "good",
+    color: "from-indigo-600 to-blue-500",
+    description: "Database storage used",
     details: [
-      { label: 'Queries/s', value: '1,247' },
-      { label: 'Connections', value: '42/100' },
-      { label: 'Cache hit', value: '98.2%' },
+      { label: "Queries/s", value: "1,247" },
+      { label: "Connections", value: "42/100" },
+      { label: "Cache hit", value: "98.2%" },
     ],
   },
   {
-    id: 'functions',
-    name: 'Functions',
+    id: "functions",
+    name: "Functions",
     icon: <Zap className="h-5 w-5" />,
     current: 45231,
     max: 100000,
-    unit: 'calls',
-    trend: 'up',
+    unit: "calls",
+    trend: "up",
     trendValue: 15,
-    status: 'good',
-    color: 'from-teal-600 to-cyan-500',
-    description: 'Edge function invocations today',
+    status: "good",
+    color: "from-teal-600 to-cyan-500",
+    description: "Edge function invocations today",
     details: [
-      { label: 'Avg duration', value: '23ms' },
-      { label: 'Success rate', value: '99.8%' },
-      { label: 'Cost', value: '$0.00' },
+      { label: "Avg duration", value: "23ms" },
+      { label: "Success rate", value: "99.8%" },
+      { label: "Cost", value: "$0.00" },
     ],
   },
 ];
@@ -148,7 +148,7 @@ interface ResourceUsageProps {
   /** Enable animations */
   animate?: boolean;
   /** View mode */
-  viewMode?: 'cards' | 'list' | 'compact';
+  viewMode?: "cards" | "list" | "compact";
 }
 
 function ResourceCard({
@@ -191,16 +191,17 @@ function ResourceCard({
   }, [resource.current, index, animate]);
 
   const percentage = (resource.current / resource.max) * 100;
-  const displayValue = resource.unit === '%'
-    ? Math.round(currentValue)
-    : currentValue < 1000
-    ? currentValue.toFixed(1)
-    : (currentValue / 1000).toFixed(1) + 'k';
+  const displayValue =
+    resource.unit === "%"
+      ? Math.round(currentValue)
+      : currentValue < 1000
+        ? currentValue.toFixed(1)
+        : `${(currentValue / 1000).toFixed(1)}k`;
 
   const statusColors = {
-    good: 'border-green-500/30 bg-green-500/5',
-    warning: 'border-yellow-500/30 bg-yellow-500/5',
-    critical: 'border-red-500/30 bg-red-500/5',
+    good: "border-green-500/30 bg-green-500/5",
+    warning: "border-yellow-500/30 bg-yellow-500/5",
+    critical: "border-red-500/30 bg-red-500/5",
   };
 
   const trendIcons = {
@@ -209,11 +210,11 @@ function ResourceCard({
     stable: <Activity className="h-4 w-4 text-gray-600" />,
   };
 
-  if (viewMode === 'compact') {
+  if (viewMode === "compact") {
     return (
       <div
         className={`flex items-center gap-4 p-4 rounded-lg border ${statusColors[resource.status]} transition-all duration-500 hover:scale-102 ${
-          isVisible ? 'opacity-100' : 'opacity-0'
+          isVisible ? "opacity-100" : "opacity-0"
         }`}
       >
         <div className={`p-2 rounded-lg bg-gradient-to-br ${resource.color} text-white`}>
@@ -240,7 +241,7 @@ function ResourceCard({
   return (
     <Card
       className={`relative overflow-hidden border-2 ${statusColors[resource.status]} backdrop-blur-xl transition-all duration-700 hover:scale-105 hover:shadow-2xl group ${
-        isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-8'
+        isVisible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-8"
       }`}
     >
       {/* Animated Background Gradient */}
@@ -249,7 +250,7 @@ function ResourceCard({
       />
 
       {/* Warning Indicator */}
-      {resource.status === 'warning' && (
+      {resource.status === "warning" && (
         <div className="absolute top-3 right-3">
           <AlertTriangle className="h-5 w-5 text-yellow-600 animate-pulse" />
         </div>
@@ -259,7 +260,9 @@ function ResourceCard({
         <div className="flex items-start justify-between">
           {/* Icon and Name */}
           <div className="flex items-center gap-3">
-            <div className={`p-3 rounded-xl bg-gradient-to-br ${resource.color} text-white shadow-lg group-hover:scale-110 transition-transform duration-500`}>
+            <div
+              className={`p-3 rounded-xl bg-gradient-to-br ${resource.color} text-white shadow-lg group-hover:scale-110 transition-transform duration-500`}
+            >
               {resource.icon}
             </div>
             <div>
@@ -297,12 +300,17 @@ function ResourceCard({
               <span className="text-xs text-muted-foreground">{Math.round(percentage)}% used</span>
               <div className="flex items-center gap-1">
                 {trendIcons[resource.trend]}
-                <span className={`text-xs font-bold ${
-                  resource.trend === 'up' ? 'text-green-600' :
-                  resource.trend === 'down' ? 'text-blue-600' :
-                  'text-gray-600'
-                }`}>
-                  {resource.trendValue > 0 ? '+' : ''}{resource.trendValue}%
+                <span
+                  className={`text-xs font-bold ${
+                    resource.trend === "up"
+                      ? "text-green-600"
+                      : resource.trend === "down"
+                        ? "text-blue-600"
+                        : "text-gray-600"
+                  }`}
+                >
+                  {resource.trendValue > 0 ? "+" : ""}
+                  {resource.trendValue}%
                 </span>
               </div>
             </div>
@@ -310,7 +318,7 @@ function ResourceCard({
         </div>
 
         {/* Details Grid */}
-        {resource.details && viewMode === 'cards' && (
+        {resource.details && viewMode === "cards" && (
           <div className="grid grid-cols-3 gap-2 pt-3 border-t border-border/50">
             {resource.details.map((detail, idx) => (
               <div key={idx} className="text-center">
@@ -355,11 +363,12 @@ function ResourceChart({ resources }: { resources: Resource[] }) {
 export function ResourceUsage({
   showDetails = true,
   animate = true,
-  viewMode = 'cards',
+  viewMode = "cards",
 }: ResourceUsageProps) {
-  const totalUsage = resources.reduce((sum, r) => sum + (r.current / r.max) * 100, 0) / resources.length;
-  const criticalResources = resources.filter(r => r.status === 'critical').length;
-  const warningResources = resources.filter(r => r.status === 'warning').length;
+  const totalUsage =
+    resources.reduce((sum, r) => sum + (r.current / r.max) * 100, 0) / resources.length;
+  const criticalResources = resources.filter((r) => r.status === "critical").length;
+  const warningResources = resources.filter((r) => r.status === "warning").length;
 
   return (
     <div className="w-full space-y-8">
@@ -413,11 +422,15 @@ export function ResourceUsage({
       </Card>
 
       {/* Resource Cards Grid */}
-      <div className={`grid gap-6 ${
-        viewMode === 'compact' ? 'md:grid-cols-2' :
-        viewMode === 'list' ? 'grid-cols-1' :
-        'md:grid-cols-2 lg:grid-cols-3'
-      }`}>
+      <div
+        className={`grid gap-6 ${
+          viewMode === "compact"
+            ? "md:grid-cols-2"
+            : viewMode === "list"
+              ? "grid-cols-1"
+              : "md:grid-cols-2 lg:grid-cols-3"
+        }`}
+      >
         {resources.map((resource, idx) => (
           <ResourceCard
             key={resource.id}
@@ -434,9 +447,7 @@ export function ResourceUsage({
         <Card className="border-2 border-border/50 bg-card/50 backdrop-blur-xl">
           <CardHeader>
             <CardTitle>Resource Optimization</CardTitle>
-            <CardDescription>
-              Tips to maximize efficiency and minimize costs
-            </CardDescription>
+            <CardDescription>Tips to maximize efficiency and minimize costs</CardDescription>
           </CardHeader>
           <CardContent>
             <div className="grid gap-6 md:grid-cols-2">

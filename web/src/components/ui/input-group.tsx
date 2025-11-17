@@ -1,50 +1,40 @@
-import * as React from "react"
-import { cn } from "@/lib/utils"
+import * as React from "react";
+import { cn } from "@/lib/utils";
 
-const InputGroup = React.forwardRef<
-  HTMLDivElement,
-  React.HTMLAttributes<HTMLDivElement>
->(({ className, ...props }, ref) => (
-  <div
-    ref={ref}
-    className={cn(
-      "inline-flex items-center rounded-md border border-input bg-background",
-      "[&>:not(:last-child)]:border-r",
-      "[&>:not(:last-child)]:rounded-r-none",
-      "[&>:not(:first-child)]:rounded-l-none",
-      className
-    )}
-    {...props}
-  />
-))
-InputGroup.displayName = "InputGroup"
+const InputGroup = React.forwardRef<HTMLDivElement, React.HTMLAttributes<HTMLDivElement>>(
+  ({ className, ...props }, ref) => (
+    <div
+      ref={ref}
+      className={cn(
+        "inline-flex items-center rounded-md border border-input bg-background",
+        "[&>:not(:last-child)]:border-r",
+        "[&>:not(:last-child)]:rounded-r-none",
+        "[&>:not(:first-child)]:rounded-l-none",
+        className
+      )}
+      {...props}
+    />
+  )
+);
+InputGroup.displayName = "InputGroup";
 
-const InputGroupItem = React.forwardRef<
-  HTMLDivElement,
-  React.HTMLAttributes<HTMLDivElement>
->(({ className, ...props }, ref) => (
-  <div
-    ref={ref}
-    className={cn("flex items-center px-3 py-2", className)}
-    {...props}
-  />
-))
-InputGroupItem.displayName = "InputGroupItem"
+const InputGroupItem = React.forwardRef<HTMLDivElement, React.HTMLAttributes<HTMLDivElement>>(
+  ({ className, ...props }, ref) => (
+    <div ref={ref} className={cn("flex items-center px-3 py-2", className)} {...props} />
+  )
+);
+InputGroupItem.displayName = "InputGroupItem";
 
-const InputGroupAddon = React.forwardRef<
-  HTMLDivElement,
-  React.HTMLAttributes<HTMLDivElement>
->(({ className, ...props }, ref) => (
-  <div
-    ref={ref}
-    className={cn(
-      "text-sm font-medium text-muted-foreground",
-      className
-    )}
-    {...props}
-  />
-))
-InputGroupAddon.displayName = "InputGroupAddon"
+const InputGroupAddon = React.forwardRef<HTMLDivElement, React.HTMLAttributes<HTMLDivElement>>(
+  ({ className, ...props }, ref) => (
+    <div
+      ref={ref}
+      className={cn("text-sm font-medium text-muted-foreground", className)}
+      {...props}
+    />
+  )
+);
+InputGroupAddon.displayName = "InputGroupAddon";
 
 const InputGroupButton = React.forwardRef<
   HTMLButtonElement,
@@ -58,8 +48,8 @@ const InputGroupButton = React.forwardRef<
     )}
     {...props}
   />
-))
-InputGroupButton.displayName = "InputGroupButton"
+));
+InputGroupButton.displayName = "InputGroupButton";
 
 const InputGroupTextarea = React.forwardRef<
   HTMLTextAreaElement,
@@ -73,7 +63,7 @@ const InputGroupTextarea = React.forwardRef<
     )}
     {...props}
   />
-))
-InputGroupTextarea.displayName = "InputGroupTextarea"
+));
+InputGroupTextarea.displayName = "InputGroupTextarea";
 
-export { InputGroup, InputGroupItem, InputGroupAddon, InputGroupButton, InputGroupTextarea }
+export { InputGroup, InputGroupItem, InputGroupAddon, InputGroupButton, InputGroupTextarea };

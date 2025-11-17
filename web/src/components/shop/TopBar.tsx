@@ -1,10 +1,6 @@
-import { useState, useEffect } from 'react';
+import { useEffect, useState } from "react";
 
-const messages: string[] = [
-  'FREE WORLDWIDE SHIPPING',
-  '90-DAY GUARANTEE',
-  '3-YEAR WARRANTY',
-];
+const messages: string[] = ["FREE WORLDWIDE SHIPPING", "90-DAY GUARANTEE", "3-YEAR WARRANTY"];
 
 export function TopBar() {
   const [currentIndex, setCurrentIndex] = useState(0);

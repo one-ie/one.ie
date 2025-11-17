@@ -4,10 +4,10 @@
  * Requires client:load hydration
  */
 
-'use client';
+"use client";
 
-import { useState } from 'react';
-import type { ProductVariant } from '@/types/ecommerce';
+import { useState } from "react";
+import type { ProductVariant } from "@/types/ecommerce";
 
 interface VariantSelectorProps {
   variants?: ProductVariant[];
@@ -22,12 +22,12 @@ export function VariantSelector({
   variant,
   selectedValue,
   onSelect,
-  onChange
+  onChange,
 }: VariantSelectorProps) {
   const [selections, setSelections] = useState<Record<string, string>>({});
 
   // Support both single variant and multiple variants
-  const variantList = variant ? [variant] : (variants || []);
+  const variantList = variant ? [variant] : variants || [];
 
   const handleSelect = (variantName: string, optionValue: string) => {
     // Single variant mode uses onSelect
@@ -57,11 +57,9 @@ export function VariantSelector({
     <div className="space-y-4">
       {variantList.map((variant) => (
         <div key={variant.id}>
-          <label className="mb-2 block text-sm font-medium text-foreground">
-            {variant.name}
-          </label>
+          <label className="mb-2 block text-sm font-medium text-foreground">{variant.name}</label>
 
-          {variant.type === 'color' ? (
+          {variant.type === "color" ? (
             // Color swatches
             <div className="flex flex-wrap gap-2">
               {variant.options.map((option) => (
@@ -71,9 +69,9 @@ export function VariantSelector({
                   disabled={option.inStock === false}
                   className={`group relative h-10 w-10 rounded-full border-2 transition-all ${
                     getSelectedValue(variant.name) === option.value
-                      ? 'border-primary ring-2 ring-primary ring-offset-2'
-                      : 'border-border hover:border-muted-foreground'
-                  } ${option.inStock === false ? 'cursor-not-allowed opacity-50' : ''}`}
+                      ? "border-primary ring-2 ring-primary ring-offset-2"
+                      : "border-border hover:border-muted-foreground"
+                  } ${option.inStock === false ? "cursor-not-allowed opacity-50" : ""}`}
                   title={option.label}
                   aria-label={option.label}
                 >
@@ -107,14 +105,14 @@ export function VariantSelector({
                   disabled={option.inStock === false}
                   className={`rounded-md border px-4 py-2 text-sm font-medium transition-all ${
                     getSelectedValue(variant.name) === option.value
-                      ? 'border-primary bg-primary text-primary-foreground'
-                      : 'border-border bg-background hover:border-muted-foreground hover:bg-accent'
-                  } ${option.inStock === false ? 'cursor-not-allowed opacity-50 line-through' : ''}`}
+                      ? "border-primary bg-primary text-primary-foreground"
+                      : "border-border bg-background hover:border-muted-foreground hover:bg-accent"
+                  } ${option.inStock === false ? "cursor-not-allowed opacity-50 line-through" : ""}`}
                 >
                   {option.label}
                   {option.priceModifier && option.priceModifier !== 0 && (
                     <span className="ml-1 text-xs">
-                      ({option.priceModifier > 0 ? '+' : ''}${option.priceModifier.toFixed(2)})
+                      ({option.priceModifier > 0 ? "+" : ""}${option.priceModifier.toFixed(2)})
                     </span>
                   )}
                 </button>

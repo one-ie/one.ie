@@ -1,18 +1,18 @@
 export interface Mail {
-  id: string
-  name: string
-  email: string
-  subject: string
-  text: string
-  date: string
-  read: boolean
-  labels: string[]
+  id: string;
+  name: string;
+  email: string;
+  subject: string;
+  text: string;
+  date: string;
+  read: boolean;
+  labels: string[];
 }
 
 export interface Account {
-  label: string
-  email: string
-  icon: React.ReactNode
+  label: string;
+  email: string;
+  icon: React.ReactNode;
 }
 
 export const accounts: Account[] = [
@@ -31,7 +31,7 @@ export const accounts: Account[] = [
     email: "alicia@me.com",
     icon: null,
   },
-]
+];
 
 export const mails: Mail[] = [
   {
@@ -314,4 +314,4 @@ export const mails: Mail[] = [
     read: false,
     labels: ["promotions"],
   },
-]
+];

@@ -4,11 +4,11 @@
  * Requires client:load hydration
  */
 
-'use client';
+"use client";
 
-import { useEffect, useState } from 'react';
-import { useStore } from '@nanostores/react';
-import { $cartCount, $cart, $cartSubtotal } from '@/stores/cart';
+import { useStore } from "@nanostores/react";
+import { useEffect, useState } from "react";
+import { $cart, $cartCount, $cartSubtotal } from "@/stores/cart";
 
 export function CartIcon() {
   const cartCount = useStore($cartCount);
@@ -39,12 +39,7 @@ export function CartIcon() {
         className="relative inline-flex items-center justify-center rounded-md p-2 text-foreground transition-colors hover:bg-accent hover:text-accent-foreground"
         aria-label={`Shopping cart with ${cartCount} items`}
       >
-        <svg
-          className="h-6 w-6"
-          fill="none"
-          stroke="currentColor"
-          viewBox="0 0 24 24"
-        >
+        <svg className="h-6 w-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
           <path
             strokeLinecap="round"
             strokeLinejoin="round"
@@ -56,10 +51,10 @@ export function CartIcon() {
           <>
             <span
               className={`absolute -right-1 -top-1 flex h-5 w-5 items-center justify-center rounded-full bg-primary text-xs font-bold text-primary-foreground transition-transform ${
-                isPulsing ? 'animate-bounce scale-125' : 'scale-100'
+                isPulsing ? "animate-bounce scale-125" : "scale-100"
               }`}
             >
-              {cartCount > 99 ? '99+' : cartCount}
+              {cartCount > 99 ? "99+" : cartCount}
             </span>
             {/* Pulsing ring effect */}
             {isPulsing && (
@@ -74,13 +69,16 @@ export function CartIcon() {
         <div className="absolute right-0 top-full z-50 mt-2 w-80 overflow-hidden rounded-lg border border-border bg-popover shadow-lg">
           <div className="p-4">
             <h3 className="mb-3 text-sm font-semibold text-foreground">
-              Shopping Cart ({cartCount} {cartCount === 1 ? 'item' : 'items'})
+              Shopping Cart ({cartCount} {cartCount === 1 ? "item" : "items"})
             </h3>
 
             {/* Cart Items Preview (max 3) */}
             <div className="space-y-2">
               {cart.items.slice(0, 3).map((item) => (
-                <div key={`${item.id}-${item.variant?.size}-${item.variant?.color}`} className="flex gap-2">
+                <div
+                  key={`${item.id}-${item.variant?.size}-${item.variant?.color}`}
+                  className="flex gap-2"
+                >
                   {item.image && (
                     <img
                       src={item.image}
@@ -89,9 +87,7 @@ export function CartIcon() {
                     />
                   )}
                   <div className="flex-1 min-w-0">
-                    <p className="text-sm font-medium text-foreground truncate">
-                      {item.name}
-                    </p>
+                    <p className="text-sm font-medium text-foreground truncate">{item.name}</p>
                     <p className="text-xs text-muted-foreground">
                       Qty: {item.quantity} × ${item.price.toFixed(2)}
                     </p>
@@ -100,7 +96,7 @@ export function CartIcon() {
               ))}
               {cart.items.length > 3 && (
                 <p className="text-xs text-muted-foreground">
-                  +{cart.items.length - 3} more {cart.items.length - 3 === 1 ? 'item' : 'items'}
+                  +{cart.items.length - 3} more {cart.items.length - 3 === 1 ? "item" : "items"}
                 </p>
               )}
             </div>
@@ -108,9 +104,7 @@ export function CartIcon() {
             {/* Subtotal */}
             <div className="mt-3 flex items-center justify-between border-t border-border pt-3">
               <span className="text-sm font-semibold text-foreground">Subtotal:</span>
-              <span className="text-sm font-bold text-foreground">
-                ${subtotal.toFixed(2)}
-              </span>
+              <span className="text-sm font-bold text-foreground">${subtotal.toFixed(2)}</span>
             </div>
 
             {/* View Cart Button */}

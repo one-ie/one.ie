@@ -4,8 +4,6 @@
  * Display entity properties in a readable format.
  */
 
-import React from "react";
-
 interface Thing {
   _id: string;
   type: string;
@@ -42,41 +40,25 @@ export function EntityDetail({ entity }: EntityDetailProps) {
       {/* Core Properties */}
       <div className="grid grid-cols-1 gap-4 sm:grid-cols-2">
         <div>
-          <dt className="text-sm font-medium text-gray-500 dark:text-gray-400">
-            Entity ID
-          </dt>
-          <dd className="mt-1 text-sm text-gray-900 dark:text-white font-mono">
-            {entity._id}
-          </dd>
+          <dt className="text-sm font-medium text-gray-500 dark:text-gray-400">Entity ID</dt>
+          <dd className="mt-1 text-sm text-gray-900 dark:text-white font-mono">{entity._id}</dd>
         </div>
         <div>
-          <dt className="text-sm font-medium text-gray-500 dark:text-gray-400">
-            Type
-          </dt>
-          <dd className="mt-1 text-sm text-gray-900 dark:text-white">
-            {entity.type}
-          </dd>
+          <dt className="text-sm font-medium text-gray-500 dark:text-gray-400">Type</dt>
+          <dd className="mt-1 text-sm text-gray-900 dark:text-white">{entity.type}</dd>
         </div>
         <div>
-          <dt className="text-sm font-medium text-gray-500 dark:text-gray-400">
-            Status
-          </dt>
-          <dd className="mt-1 text-sm text-gray-900 dark:text-white capitalize">
-            {entity.status}
-          </dd>
+          <dt className="text-sm font-medium text-gray-500 dark:text-gray-400">Status</dt>
+          <dd className="mt-1 text-sm text-gray-900 dark:text-white capitalize">{entity.status}</dd>
         </div>
         <div>
-          <dt className="text-sm font-medium text-gray-500 dark:text-gray-400">
-            Created
-          </dt>
+          <dt className="text-sm font-medium text-gray-500 dark:text-gray-400">Created</dt>
           <dd className="mt-1 text-sm text-gray-900 dark:text-white">
             {formatDate(entity.createdAt)}
           </dd>
         </div>
         <div>
-          <dt className="text-sm font-medium text-gray-500 dark:text-gray-400">
-            Last Updated
-          </dt>
+          <dt className="text-sm font-medium text-gray-500 dark:text-gray-400">Last Updated</dt>
           <dd className="mt-1 text-sm text-gray-900 dark:text-white">
             {formatDate(entity.updatedAt)}
           </dd>
@@ -93,9 +75,7 @@ export function EntityDetail({ entity }: EntityDetailProps) {
             <dl className="space-y-3">
               {Object.entries(entity.properties).map(([key, value]) => (
                 <div key={key}>
-                  <dt className="text-sm font-medium text-gray-700 dark:text-gray-300">
-                    {key}
-                  </dt>
+                  <dt className="text-sm font-medium text-gray-700 dark:text-gray-300">{key}</dt>
                   <dd className="mt-1 text-sm text-gray-900 dark:text-white">
                     <pre className="whitespace-pre-wrap font-mono text-xs">
                       {formatValue(value)}

@@ -1,9 +1,9 @@
-import * as React from "react";
-import { Input } from "@/components/ui/input";
-import { Card } from "@/components/ui/card";
-import { Badge } from "@/components/ui/badge";
-import { Calendar } from "lucide-react";
 import type { CollectionEntry } from "astro:content";
+import { Calendar } from "lucide-react";
+import * as React from "react";
+import { Badge } from "@/components/ui/badge";
+import { Card } from "@/components/ui/card";
+import { Input } from "@/components/ui/input";
 
 export type BlogPost = CollectionEntry<"blog">;
 
@@ -59,20 +59,15 @@ export function BlogSearch({
         />
         {searchQuery && (
           <p className="mt-2 text-sm text-muted-foreground">
-            Found {filteredPosts.length}{" "}
-            {filteredPosts.length === 1 ? "post" : "posts"}
+            Found {filteredPosts.length} {filteredPosts.length === 1 ? "post" : "posts"}
           </p>
         )}
       </div>
 
       {filteredPosts.length === 0 && searchQuery ? (
         <div className="text-center py-12">
-          <p className="text-lg text-muted-foreground">
-            No posts found matching "{searchQuery}"
-          </p>
-          <p className="text-sm text-muted-foreground mt-2">
-            Try a different search term
-          </p>
+          <p className="text-lg text-muted-foreground">No posts found matching "{searchQuery}"</p>
+          <p className="text-sm text-muted-foreground mt-2">Try a different search term</p>
         </div>
       ) : (
         <div
@@ -124,12 +119,8 @@ export function BlogSearch({
                       {formatDate(new Date(entry.data.date))}
                     </span>
                   </div>
-                  <h2 className="text-2xl font-bold mb-2">
-                    {entry.data.title}
-                  </h2>
-                  <p className="text-muted-foreground">
-                    {entry.data.description}
-                  </p>
+                  <h2 className="text-2xl font-bold mb-2">{entry.data.title}</h2>
+                  <p className="text-muted-foreground">{entry.data.description}</p>
                 </div>
                 {entry.data.image && viewMode === "grid" && (
                   <div className="aspect-video w-full">

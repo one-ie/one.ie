@@ -1,12 +1,5 @@
+import { Bot, MessageSquare, Plus, Search, Settings, Users } from "lucide-react";
 import * as React from "react";
-import {
-  Search,
-  MessageSquare,
-  Plus,
-  Settings,
-  Users,
-  Bot,
-} from "lucide-react";
 import { Dialog, DialogContent } from "@/components/ui/dialog";
 import { Input } from "@/components/ui/input";
 import { cn } from "@/lib/utils";
@@ -35,9 +28,7 @@ export function CommandPalette({ open, onOpenChange }: CommandPaletteProps) {
 
   const filteredCommands = React.useMemo(() => {
     if (!search) return commands;
-    return commands.filter((cmd) =>
-      cmd.label.toLowerCase().includes(search.toLowerCase()),
-    );
+    return commands.filter((cmd) => cmd.label.toLowerCase().includes(search.toLowerCase()));
   }, [search]);
 
   React.useEffect(() => {
@@ -54,10 +45,7 @@ export function CommandPalette({ open, onOpenChange }: CommandPaletteProps) {
         setSelectedIndex((prev) => (prev + 1) % filteredCommands.length);
       } else if (e.key === "ArrowUp") {
         e.preventDefault();
-        setSelectedIndex(
-          (prev) =>
-            (prev - 1 + filteredCommands.length) % filteredCommands.length,
-        );
+        setSelectedIndex((prev) => (prev - 1 + filteredCommands.length) % filteredCommands.length);
       } else if (e.key === "Enter") {
         e.preventDefault();
         // Handle command execution here
@@ -87,15 +75,14 @@ export function CommandPalette({ open, onOpenChange }: CommandPaletteProps) {
 
         <div className="max-h-[300px] overflow-y-auto p-2">
           {filteredCommands.length === 0 ? (
-            <div className="py-6 text-center text-sm text-muted-foreground">
-              No results found.
-            </div>
+            <div className="py-6 text-center text-sm text-muted-foreground">No results found.</div>
           ) : (
             <div className="space-y-1">
               {filteredCommands.map((command, index) => {
                 const Icon = command.icon;
                 return (
                   <button
+                    type="button"
                     key={command.id}
                     onClick={() => {
                       // Handle command execution
@@ -105,14 +92,12 @@ export function CommandPalette({ open, onOpenChange }: CommandPaletteProps) {
                       "flex w-full items-center gap-2 rounded-md px-2 py-2 text-sm transition-colors",
                       index === selectedIndex
                         ? "bg-accent text-accent-foreground"
-                        : "hover:bg-accent/50",
+                        : "hover:bg-accent/50"
                     )}
                   >
                     <Icon className="h-4 w-4" />
                     <span className="flex-1 text-left">{command.label}</span>
-                    <span className="text-xs text-muted-foreground">
-                      {command.group}
-                    </span>
+                    <span className="text-xs text-muted-foreground">{command.group}</span>
                   </button>
                 );
               })}

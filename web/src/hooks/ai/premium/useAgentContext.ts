@@ -1,12 +1,12 @@
-import { useState, useEffect } from "react";
+import { useEffect, useState } from "react";
 
-export function useAgentContext(conversationId: string) {
+export function useAgentContext(_conversationId: string) {
   const [context, setContext] = useState<Record<string, any>>({});
 
   useEffect(() => {
     // Sync context with backend
     // TODO: Implement with Convex mutation
-  }, [context, conversationId]);
+  }, []);
 
   return {
     shareContext: (key: string, value: any) => {

@@ -19,16 +19,13 @@
  * - Desktop (>1024px): Maximum content width
  */
 
-import { YouTube } from '@astro-community/astro-embed-youtube';
-import { cn } from '@/lib/utils';
-
 interface Props {
   id: string;
   title?: string;
   description?: string;
   timestamp?: string;
   class?: string;
-  posterQuality?: 'max' | 'high' | 'default' | 'low';
+  posterQuality?: "max" | "high" | "default" | "low";
   params?: string;
 }
 
@@ -38,8 +35,8 @@ const {
   description,
   timestamp,
   class: className,
-  posterQuality = 'high',
-  params
+  posterQuality = "high",
+  params,
 } = Astro.props;
 ---
 

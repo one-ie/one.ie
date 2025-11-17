@@ -24,71 +24,71 @@
  * ```
  */
 
-import { useCallback, useEffect, useState } from 'react';
-import { Effect } from 'effect';
-import type { Id } from '@/types/convex';
-import { useEffectRunner } from '../useEffectRunner';
-import { useIsProviderAvailable } from './useProvider';
+import { Effect } from "effect";
+import { useCallback, useEffect, useState } from "react";
+import type { Id } from "@/types/convex";
+import { useEffectRunner } from "../useEffectRunner";
+import { useIsProviderAvailable } from "./useProvider";
 
 /**
  * Event types (67+ types including cycle and blockchain)
  */
 export type EventType =
   // Core entity events
-  | 'entity_created'
-  | 'entity_updated'
-  | 'entity_deleted'
-  | 'entity_published'
-  | 'entity_archived'
+  | "entity_created"
+  | "entity_updated"
+  | "entity_deleted"
+  | "entity_published"
+  | "entity_archived"
   // Content events
-  | 'blog_post_published'
-  | 'blog_post_commented'
-  | 'content_viewed'
-  | 'content_shared'
+  | "blog_post_published"
+  | "blog_post_commented"
+  | "content_viewed"
+  | "content_shared"
   // User actions
-  | 'user_signup'
-  | 'user_login'
-  | 'user_logout'
-  | 'user_profile_updated'
+  | "user_signup"
+  | "user_login"
+  | "user_logout"
+  | "user_profile_updated"
   // Course events
-  | 'course_created'
-  | 'course_enrolled'
-  | 'course_started'
-  | 'course_completed'
-  | 'lesson_completed'
+  | "course_created"
+  | "course_enrolled"
+  | "course_started"
+  | "course_completed"
+  | "lesson_completed"
   // Token events
-  | 'tokens_purchased'
-  | 'tokens_transferred'
-  | 'tokens_staked'
+  | "tokens_purchased"
+  | "tokens_transferred"
+  | "tokens_staked"
   // Transaction events
-  | 'payment_received'
-  | 'payment_failed'
-  | 'refund_issued'
+  | "payment_received"
+  | "payment_failed"
+  | "refund_issued"
   // Cycle events
-  | 'cycle_request'
-  | 'cycle_completed'
-  | 'cycle_failed'
-  | 'cycle_quota_exceeded'
+  | "cycle_request"
+  | "cycle_completed"
+  | "cycle_failed"
+  | "cycle_quota_exceeded"
   // Blockchain events
-  | 'nft_minted'
-  | 'nft_transferred'
-  | 'tokens_bridged'
+  | "nft_minted"
+  | "nft_transferred"
+  | "tokens_bridged"
   // Community events
-  | 'comment_created'
-  | 'reaction_added'
-  | 'member_joined'
-  | 'member_left'
+  | "comment_created"
+  | "reaction_added"
+  | "member_joined"
+  | "member_left"
   | string; // Allow custom event types
 
 /**
  * Event entity
  */
 export interface Event {
-  _id: Id<'events'>;
+  _id: Id<"events">;
   _creationTime: number;
   type: EventType;
-  actorId?: Id<'entities'>;
-  targetId?: Id<'entities'>;
+  actorId?: Id<"entities">;
+  targetId?: Id<"entities">;
   timestamp: number;
   metadata?: Record<string, any>;
   createdAt: number;
@@ -100,8 +100,8 @@ export interface Event {
  */
 export interface RecordEventInput {
   type: EventType;
-  actorId?: Id<'entities'>;
-  targetId?: Id<'entities'>;
+  actorId?: Id<"entities">;
+  targetId?: Id<"entities">;
   metadata?: Record<string, any>;
 }
 
@@ -110,8 +110,8 @@ export interface RecordEventInput {
  */
 export interface EventFilter {
   type?: EventType;
-  actorId?: Id<'entities'>;
-  targetId?: Id<'entities'>;
+  actorId?: Id<"entities">;
+  targetId?: Id<"entities">;
   startTime?: number;
   endTime?: number;
   limit?: number;
@@ -145,14 +145,14 @@ export function useEvent() {
    */
   const record = useCallback(
     async (
-      input: RecordEventInput,
+      _input: RecordEventInput,
       options?: {
         onSuccess?: (event: Event) => void;
         onError?: (error: unknown) => void;
       }
     ) => {
       if (!isProviderAvailable) {
-        options?.onError?.(new Error('Provider not available'));
+        options?.onError?.(new Error("Provider not available"));
         return null;
       }
 
@@ -193,7 +193,7 @@ export function useEvent() {
  * const { events } = useEvents({ actorId: userId });
  * ```
  */
-export function useEvents(filter?: EventFilter) {
+export function useEvents(_filter?: EventFilter) {
   const { run, loading, error } = useEffectRunner<unknown, any>();
   const isProviderAvailable = useIsProviderAvailable();
   const [events, setEvents] = useState<Event[]>([]);
@@ -214,7 +214,7 @@ export function useEvents(filter?: EventFilter) {
     run(program, {
       onSuccess: (data) => setEvents(data),
     });
-  }, [isProviderAvailable, filter?.type, filter?.actorId, filter?.targetId, run]);
+  }, [isProviderAvailable, run]);
 
   return {
     events,
@@ -261,7 +261,7 @@ export function useActivityFeed(limit = 20) {
  * // Shows all changes, views, etc. for the course
  * ```
  */
-export function useAuditTrail(targetId?: Id<'entities'>) {
+export function useAuditTrail(targetId?: Id<"entities">) {
   return useEvents({
     targetId,
     limit: 100,
@@ -280,7 +280,7 @@ export function useAuditTrail(targetId?: Id<'entities'>) {
  * // Shows everything this user has done
  * ```
  */
-export function useUserHistory(userId?: Id<'entities'>) {
+export function useUserHistory(userId?: Id<"entities">) {
   return useEvents({
     actorId: userId,
     limit: 100,
@@ -361,10 +361,7 @@ export function useTimeline(startTime: number, endTime: number) {
  * );
  * ```
  */
-export function useEventStream(
-  filter?: EventFilter,
-  onNewEvent?: (event: Event) => void
-) {
+export function useEventStream(filter?: EventFilter, onNewEvent?: (event: Event) => void) {
   const { events, loading, error } = useEvents(filter);
   const [isSubscribed, setIsSubscribed] = useState(false);
 
@@ -380,7 +377,7 @@ export function useEventStream(
       //   setIsSubscribed(false);
       // };
     }
-  }, [filter, onNewEvent]);
+  }, [onNewEvent]);
 
   return {
     events,

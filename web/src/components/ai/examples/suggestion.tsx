@@ -21,11 +21,7 @@ const Example = () => {
   return (
     <Suggestions>
       {suggestions.map((suggestion) => (
-        <Suggestion
-          key={suggestion}
-          onClick={handleSuggestionClick}
-          suggestion={suggestion}
-        />
+        <Suggestion key={suggestion} onClick={handleSuggestionClick} suggestion={suggestion} />
       ))}
     </Suggestions>
   );

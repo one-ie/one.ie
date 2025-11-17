@@ -5,14 +5,15 @@
  * Uses Effect services with validation and error handling.
  */
 
-import React, { useState } from "react";
 import { Effect } from "effect";
-import { ThingService } from "@/services/ThingService";
-import { getOrCreateDataProviderLayer } from "@/lib/effect-client";
+import type React from "react";
+import { useState } from "react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Textarea } from "@/components/ui/textarea";
+import { getOrCreateDataProviderLayer } from "@/lib/effect-client";
+import { ThingService } from "@/services/ThingService";
 
 interface Thing {
   _id: string;
@@ -47,7 +48,7 @@ export function EntityForm({ entity }: EntityFormProps) {
     let properties;
     try {
       properties = JSON.parse(formData.properties);
-    } catch (err) {
+    } catch (_err) {
       setError("Invalid JSON in properties field");
       setLoading(false);
       return;
@@ -145,9 +146,7 @@ export function EntityForm({ entity }: EntityFormProps) {
           placeholder="e.g., product, course, creator"
         />
         {entity && (
-          <p className="mt-1 text-xs text-gray-500">
-            Type cannot be changed after creation
-          </p>
+          <p className="mt-1 text-xs text-gray-500">Type cannot be changed after creation</p>
         )}
       </div>
 
@@ -172,9 +171,7 @@ export function EntityForm({ entity }: EntityFormProps) {
         <Textarea
           id="properties"
           value={formData.properties}
-          onChange={(e) =>
-            setFormData({ ...formData, properties: e.target.value })
-          }
+          onChange={(e) => setFormData({ ...formData, properties: e.target.value })}
           disabled={loading}
           rows={10}
           className="font-mono text-xs"

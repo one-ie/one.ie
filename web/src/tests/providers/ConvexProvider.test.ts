@@ -7,10 +7,10 @@
 
 /* global performance */
 
-import { describe, it, expect, vi, beforeEach } from "vitest";
-import { Effect } from "effect";
-import { createConvexProvider } from "@/providers/ConvexProvider";
 import type { ConvexReactClient } from "convex/react";
+import { Effect } from "effect";
+import { beforeEach, describe, expect, it, vi } from "vitest";
+import { createConvexProvider } from "@/providers/ConvexProvider";
 
 // Mock Convex client
 function createMockConvexClient() {

@@ -1,6 +1,8 @@
 "use client";
 
 import { FileCode } from "lucide-react";
+import { nanoid } from "nanoid";
+import type { ReactNode } from "react";
 import {
   Task,
   TaskContent,
@@ -8,8 +10,6 @@ import {
   TaskItemFile,
   TaskTrigger,
 } from "@/components/ai/elements/task";
-import { nanoid } from "nanoid";
-import type { ReactNode } from "react";
 
 const Example = () => {
   const tasks: { key: string; value: ReactNode }[] = [

@@ -1,5 +1,8 @@
 "use client";
 
+import { CopyIcon, RefreshCcwIcon, ThumbsDownIcon, ThumbsUpIcon } from "lucide-react";
+import { nanoid } from "nanoid";
+import { useState } from "react";
 import {
   Message,
   MessageAction,
@@ -16,14 +19,6 @@ import {
   MessageResponse,
   MessageToolbar,
 } from "@/components/ai/elements/message";
-import {
-  CopyIcon,
-  RefreshCcwIcon,
-  ThumbsDownIcon,
-  ThumbsUpIcon,
-} from "lucide-react";
-import { nanoid } from "nanoid";
-import { useState } from "react";
 
 const messages: {
   key: string;
@@ -233,11 +228,7 @@ const Example = () => {
                     </MessageAction>
                     <MessageAction
                       label="Copy"
-                      onClick={() =>
-                        handleCopy(
-                          message.versions?.find((v) => v.id)?.content || ""
-                        )
-                      }
+                      onClick={() => handleCopy(message.versions?.find((v) => v.id)?.content || "")}
                       tooltip="Copy to clipboard"
                     >
                       <CopyIcon className="size-4" />
@@ -264,11 +255,7 @@ const Example = () => {
               </MessageContent>
               {message.from === "assistant" && message.versions && (
                 <MessageActions>
-                  <MessageAction
-                    label="Retry"
-                    onClick={handleRetry}
-                    tooltip="Regenerate response"
-                  >
+                  <MessageAction label="Retry" onClick={handleRetry} tooltip="Regenerate response">
                     <RefreshCcwIcon className="size-4" />
                   </MessageAction>
                   <MessageAction

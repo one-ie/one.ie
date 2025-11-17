@@ -15,28 +15,28 @@ export interface AgenticCheckoutRequestHeaders {
   /** API Key for authentication */
   Authorization: string; // Bearer api_key_123
   /** Preferred locale for content */
-  'Accept-Language'?: string; // en-US
+  "Accept-Language"?: string; // en-US
   /** Client making the request */
-  'User-Agent': string; // ChatGPT/2.0
+  "User-Agent": string; // ChatGPT/2.0
   /** Idempotency key */
-  'Idempotency-Key': string;
+  "Idempotency-Key": string;
   /** Unique request ID for tracing */
-  'Request-Id': string;
+  "Request-Id": string;
   /** Content type */
-  'Content-Type': 'application/json';
+  "Content-Type": "application/json";
   /** HMAC signature of request body */
   Signature?: string;
   /** RFC 3339 timestamp */
   Timestamp: string;
   /** API version */
-  'API-Version': string; // 2025-09-12
+  "API-Version": string; // 2025-09-12
 }
 
 export interface AgenticCheckoutResponseHeaders {
   /** Echo idempotency key */
-  'Idempotency-Key': string;
+  "Idempotency-Key": string;
   /** Echo request ID */
-  'Request-Id': string;
+  "Request-Id": string;
 }
 
 // ===== Core Entities =====
@@ -82,9 +82,9 @@ export interface Buyer {
 /** Payment provider configuration */
 export interface PaymentProvider {
   /** Payment processor */
-  provider: 'stripe';
+  provider: "stripe";
   /** Supported payment methods */
-  supported_payment_methods: Array<'card'>;
+  supported_payment_methods: Array<"card">;
 }
 
 /** Line item with computed costs */
@@ -109,14 +109,14 @@ export interface LineItem {
 export interface Total {
   /** Type of total */
   type:
-    | 'items_base_amount'
-    | 'items_discount'
-    | 'subtotal'
-    | 'discount'
-    | 'fulfillment'
-    | 'tax'
-    | 'fee'
-    | 'total';
+    | "items_base_amount"
+    | "items_discount"
+    | "subtotal"
+    | "discount"
+    | "fulfillment"
+    | "tax"
+    | "fee"
+    | "total";
   /** Display text */
   display_text: string;
   /** Amount in cents */
@@ -126,7 +126,7 @@ export interface Total {
 /** Fulfillment option (shipping) */
 export interface FulfillmentOptionShipping {
   /** Type */
-  type: 'shipping';
+  type: "shipping";
   /** Unique ID */
   id: string;
   /** Title */
@@ -150,7 +150,7 @@ export interface FulfillmentOptionShipping {
 /** Fulfillment option (digital) */
 export interface FulfillmentOptionDigital {
   /** Type */
-  type: 'digital';
+  type: "digital";
   /** Unique ID */
   id: string;
   /** Title */
@@ -165,18 +165,16 @@ export interface FulfillmentOptionDigital {
   total: number; // = subtotal + tax
 }
 
-export type FulfillmentOption =
-  | FulfillmentOptionShipping
-  | FulfillmentOptionDigital;
+export type FulfillmentOption = FulfillmentOptionShipping | FulfillmentOptionDigital;
 
 /** Message (info) */
 export interface MessageInfo {
   /** Type */
-  type: 'info';
+  type: "info";
   /** JSONPath to component */
   param: string; // e.g., $.line_items[1]
   /** Content type */
-  content_type: 'plain' | 'markdown';
+  content_type: "plain" | "markdown";
   /** Message content */
   content: string;
 }
@@ -184,19 +182,19 @@ export interface MessageInfo {
 /** Message (error) */
 export interface MessageError {
   /** Type */
-  type: 'error';
+  type: "error";
   /** Error code */
   code:
-    | 'missing'
-    | 'invalid'
-    | 'out_of_stock'
-    | 'payment_declined'
-    | 'requires_sign_in'
-    | 'requires_3ds';
+    | "missing"
+    | "invalid"
+    | "out_of_stock"
+    | "payment_declined"
+    | "requires_sign_in"
+    | "requires_3ds";
   /** JSONPath to component */
   param?: string;
   /** Content type */
-  content_type: 'plain' | 'markdown';
+  content_type: "plain" | "markdown";
   /** Message content */
   content: string;
 }
@@ -206,7 +204,7 @@ export type Message = MessageInfo | MessageError;
 /** Link */
 export interface Link {
   /** Link type */
-  type: 'terms_of_use' | 'privacy_policy' | 'seller_shop_policies';
+  type: "terms_of_use" | "privacy_policy" | "seller_shop_policies";
   /** URL */
   value: string;
 }
@@ -216,7 +214,7 @@ export interface PaymentData {
   /** Stripe Shared Payment Token */
   token: string; // spt_...
   /** Provider */
-  provider: 'stripe';
+  provider: "stripe";
   /** Billing address */
   billing_address?: Address;
 }
@@ -233,11 +231,11 @@ export interface Order {
 
 /** Checkout session status */
 export type CheckoutSessionStatus =
-  | 'not_ready_for_payment'
-  | 'ready_for_payment'
-  | 'in_progress'
-  | 'completed'
-  | 'canceled';
+  | "not_ready_for_payment"
+  | "ready_for_payment"
+  | "in_progress"
+  | "completed"
+  | "canceled";
 
 // ===== API Request/Response Types =====
 
@@ -304,9 +302,9 @@ export interface CompleteCheckoutSessionRequest {
 /** Error response */
 export interface ErrorResponse {
   /** Error type */
-  type: 'invalid_request';
+  type: "invalid_request";
   /** Error code */
-  code: 'request_not_idempotent' | string;
+  code: "request_not_idempotent" | string;
   /** Human-readable message */
   message: string;
   /** JSONPath to offending field */
@@ -318,7 +316,7 @@ export interface ErrorResponse {
 /** Webhook event */
 export interface WebhookEvent {
   /** Event type */
-  type: 'order_created' | 'order_updated';
+  type: "order_created" | "order_updated";
   /** Event data */
   data: EventData;
 }
@@ -326,19 +324,13 @@ export interface WebhookEvent {
 /** Event data (order) */
 export interface EventData {
   /** Type */
-  type: 'order';
+  type: "order";
   /** Checkout session ID */
   checkout_session_id: string;
   /** Order permalink */
   permalink_url: string;
   /** Order status */
-  status:
-    | 'created'
-    | 'manual_review'
-    | 'confirmed'
-    | 'canceled'
-    | 'shipped'
-    | 'fulfilled';
+  status: "created" | "manual_review" | "confirmed" | "canceled" | "shipped" | "fulfilled";
   /** Refunds */
   refunds: Refund[];
 }
@@ -346,7 +338,7 @@ export interface EventData {
 /** Refund */
 export interface Refund {
   /** Refund type */
-  type: 'store_credit' | 'original_payment';
+  type: "store_credit" | "original_payment";
   /** Amount (cents) */
   amount: number; // >= 0
 }
@@ -358,13 +350,13 @@ export interface StripeSharedPaymentToken {
   /** Token ID */
   id: string; // spt_...
   /** Object type */
-  object: 'shared_payment_granted_token';
+  object: "shared_payment_granted_token";
   /** Created timestamp */
   created: number;
   /** Payment method details */
   payment_method: {
     id: string;
-    type: 'card';
+    type: "card";
     card: {
       brand: string;
       last4: string;
@@ -374,7 +366,7 @@ export interface StripeSharedPaymentToken {
   };
   /** Allowance */
   allowance: {
-    reason: 'one_time';
+    reason: "one_time";
     max_amount: number;
     currency: string;
     expires_at: number;

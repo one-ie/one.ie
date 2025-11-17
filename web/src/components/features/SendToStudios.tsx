@@ -1,24 +1,9 @@
-import { useState } from "react";
 import type { LucideIcon } from "lucide-react";
-import {
-  Card,
-  CardContent,
-  CardDescription,
-  CardHeader,
-  CardTitle,
-} from "@/components/ui/card";
+import { Check, Code2, Copy, Folders, MessageSquare, Send, Sparkles, Wind } from "lucide-react";
+import { useState } from "react";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
-import {
-  Sparkles,
-  Code2,
-  Folders,
-  Wind,
-  MessageSquare,
-  Check,
-  Copy,
-  Send,
-} from "lucide-react";
+import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { cn } from "@/lib/utils";
 
 type StudioId = "claude" | "codex" | "cursor" | "windsurf" | "chatgpt";
@@ -49,8 +34,7 @@ const STUDIOS: Studio[] = [
     tagline: "Anthropic’s coding studio tuned for ontology-first workflows.",
     accent: "from-amber-500/80 via-orange-500/60 to-yellow-400/40",
     icon: Sparkles,
-    instructions:
-      "Use `/send` in Claude Code and paste the snippet below to brief the assistant.",
+    instructions: "Use `/send` in Claude Code and paste the snippet below to brief the assistant.",
     cta: "Send to Claude Code",
     link: "https://claude.ai/new",
   },
@@ -60,8 +44,7 @@ const STUDIOS: Studio[] = [
     tagline: "Classic Codex prompt suited for API-first transformations.",
     accent: "from-sky-500/80 via-blue-500/60 to-indigo-500/40",
     icon: Code2,
-    instructions:
-      "Wrap the snippet with `'''typescript` fences and provide expected outputs.",
+    instructions: "Wrap the snippet with `'''typescript` fences and provide expected outputs.",
     cta: "Share with Codex",
     link: "https://platform.openai.com/playground",
   },
@@ -71,8 +54,7 @@ const STUDIOS: Studio[] = [
     tagline: "Cursor’s editor takes this as a recipe for paired iteration.",
     accent: "from-emerald-500/80 via-teal-500/60 to-cyan-400/40",
     icon: Folders,
-    instructions:
-      "Open the Command Palette → `Insert Snippet` and paste the payload.",
+    instructions: "Open the Command Palette → `Insert Snippet` and paste the payload.",
     cta: "Insert into Cursor",
     link: "https://www.cursor.com/",
   },
@@ -82,8 +64,7 @@ const STUDIOS: Studio[] = [
     tagline: "Guide Windsurf agents with structured English instructions.",
     accent: "from-violet-500/80 via-purple-500/60 to-fuchsia-500/40",
     icon: Wind,
-    instructions:
-      "Use `Command + Shift + L` to open the Launchpad and drop this brief.",
+    instructions: "Use `Command + Shift + L` to open the Launchpad and drop this brief.",
     cta: "Launch in Windsurf",
     link: "https://windsurf.ai/",
   },
@@ -93,8 +74,7 @@ const STUDIOS: Studio[] = [
     tagline: "Great for brainstorming variations or fast documentation drafts.",
     accent: "from-rose-500/80 via-pink-500/60 to-orange-400/40",
     icon: MessageSquare,
-    instructions:
-      "Start with “You are an ontology-aligned engineer” before the snippet.",
+    instructions: "Start with “You are an ontology-aligned engineer” before the snippet.",
     cta: "Open with ChatGPT",
     link: "https://chat.openai.com/",
   },
@@ -110,12 +90,7 @@ export function SendToStudios({ snippet = DEFAULT_SNIPPET, className }: SendToSt
   const [feedback, setFeedback] = useState<Studio | null>(null);
 
   const handleSend = async (studio: Studio) => {
-    const payload = [
-      `### ${studio.name}`,
-      studio.instructions,
-      "",
-      snippet.trim(),
-    ].join("\n");
+    const payload = [`### ${studio.name}`, studio.instructions, "", snippet.trim()].join("\n");
 
     try {
       if (typeof navigator === "undefined" || !navigator.clipboard) {
@@ -148,7 +123,12 @@ export function SendToStudios({ snippet = DEFAULT_SNIPPET, className }: SendToSt
   };
 
   return (
-    <Card className={cn("relative overflow-hidden border-border/60 bg-card/70 backdrop-blur", className)}>
+    <Card
+      className={cn(
+        "relative overflow-hidden border-border/60 bg-card/70 backdrop-blur",
+        className
+      )}
+    >
       <div className="absolute inset-x-12 top-12 h-64 rounded-full bg-gradient-to-br from-primary/10 via-primary/5 to-transparent blur-3xl" />
       <CardHeader className="relative z-10 space-y-6">
         <div className="flex flex-col gap-4 text-center lg:flex-row lg:items-center lg:justify-between lg:text-left">
@@ -161,16 +141,15 @@ export function SendToStudios({ snippet = DEFAULT_SNIPPET, className }: SendToSt
               Ship this brief to Claude, Codex, Cursor, Windsurf, or ChatGPT
             </CardTitle>
             <CardDescription className="text-base leading-relaxed text-muted-foreground">
-              Copy the structured instructions with one click. Each button adds
-              tool-specific guidance so your favorite AI environment knows how
-              to help immediately.
+              Copy the structured instructions with one click. Each button adds tool-specific
+              guidance so your favorite AI environment knows how to help immediately.
             </CardDescription>
           </div>
           <div className="rounded-2xl border border-primary/20 bg-primary/10 px-6 py-4 text-sm text-primary-foreground shadow-lg shadow-primary/20 lg:w-80">
             <p className="font-semibold text-primary">Preview Snippet</p>
             <p className="mt-2 text-xs text-primary-foreground/80">
-              This is the English-first feature request we will share with the tooling
-              of your choice. Customize it, then press a button to copy a tailored brief.
+              This is the English-first feature request we will share with the tooling of your
+              choice. Customize it, then press a button to copy a tailored brief.
             </p>
           </div>
         </div>

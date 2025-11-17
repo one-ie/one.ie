@@ -9,35 +9,35 @@
  * without breaking them. Zero changes to backend required.
  */
 
-import { Effect } from "effect";
 import type { ConvexReactClient } from "convex/react";
+import { Effect } from "effect";
 import type {
+  AuthError,
   AuthResult,
-  User,
-  TwoFactorStatus,
-  TwoFactorSetup,
+  Disable2FAArgs,
   LoginArgs,
-  SignupArgs,
   MagicLinkArgs,
   PasswordResetArgs,
   PasswordResetCompleteArgs,
-  VerifyEmailArgs,
+  SignupArgs,
+  TwoFactorSetup,
+  TwoFactorStatus,
+  User,
   Verify2FAArgs,
-  Disable2FAArgs,
-  AuthError,
+  VerifyEmailArgs,
 } from "./DataProvider";
 import {
-  InvalidCredentialsError,
-  UserNotFoundError,
   EmailAlreadyExistsError,
-  WeakPasswordError,
+  EmailNotVerifiedError,
+  Invalid2FACodeError,
+  InvalidCredentialsError,
   InvalidTokenError,
-  TokenExpiredError,
   NetworkError,
   RateLimitExceededError,
-  EmailNotVerifiedError,
+  TokenExpiredError,
   TwoFactorRequiredError,
-  Invalid2FACodeError,
+  UserNotFoundError,
+  WeakPasswordError,
 } from "./DataProvider";
 
 /**
@@ -51,7 +51,9 @@ interface ErrorPattern {
 const ERROR_PATTERNS: ErrorPattern[] = [
   {
     matchers: (msg) =>
-      msg.includes("invalid email or password") || msg.includes("invalid password") || msg.includes("incorrect"),
+      msg.includes("invalid email or password") ||
+      msg.includes("invalid password") ||
+      msg.includes("incorrect"),
     error: () => new InvalidCredentialsError(),
   },
   {
@@ -169,7 +171,8 @@ export function createBetterAuthProvider(client: ConvexReactClient) {
             password: args.password,
             name: args.name,
             sendVerificationEmail: true,
-            baseUrl: typeof window !== "undefined" ? window.location.origin : "http://localhost:4321",
+            baseUrl:
+              typeof window !== "undefined" ? window.location.origin : "http://localhost:4321",
           });
 
           if (result?.token) {
@@ -238,7 +241,8 @@ export function createBetterAuthProvider(client: ConvexReactClient) {
         try: async () => {
           await client.mutation("auth:requestPasswordReset" as any, {
             email: args.email,
-            baseUrl: typeof window !== "undefined" ? window.location.origin : "http://localhost:4321",
+            baseUrl:
+              typeof window !== "undefined" ? window.location.origin : "http://localhost:4321",
           });
         },
         catch: (error) => parseAuthError(error),

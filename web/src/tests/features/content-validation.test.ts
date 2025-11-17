@@ -7,7 +7,7 @@
  * For full content collection testing, use Astro integration tests.
  */
 
-import { describe, it, expect } from "vitest";
+import { describe, expect, it } from "vitest";
 import type { FeatureSchema } from "@/content/config";
 
 // Valid status values
@@ -72,7 +72,7 @@ describe("Feature Schema Validation", () => {
     });
 
     it("should enforce status requirement with default", () => {
-      const featureWithoutStatus: Partial<FeatureSchema> = {
+      const _featureWithoutStatus: Partial<FeatureSchema> = {
         title: "Test",
         description: "Test",
         featureId: "test",

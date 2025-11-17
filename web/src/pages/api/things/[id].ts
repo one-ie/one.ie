@@ -5,9 +5,9 @@
  * PUT /api/things/[id]    - Update a thing
  */
 
-import type { APIRoute } from 'astro';
-import { getDefaultProvider } from '@/providers/factory';
-import { successResponse, errorResponse, getStatusCode } from '../response';
+import type { APIRoute } from "astro";
+import { getDefaultProvider } from "@/providers/factory";
+import { errorResponse, getStatusCode, successResponse } from "../response";
 
 /**
  * GET /api/things/[id]
@@ -25,45 +25,42 @@ import { successResponse, errorResponse, getStatusCode } from '../response';
 export const GET: APIRoute = async ({ params }) => {
   try {
     const provider = getDefaultProvider();
-    const { Effect } = await import('effect');
+    const { Effect } = await import("effect");
     const id = params.id;
 
     if (!id) {
-      const response = errorResponse('BAD_REQUEST', 'Thing ID is required');
+      const response = errorResponse("BAD_REQUEST", "Thing ID is required");
       return new Response(JSON.stringify(response), {
         status: getStatusCode(response.error),
-        headers: { 'Content-Type': 'application/json' },
+        headers: { "Content-Type": "application/json" },
       });
     }
 
     const thing = await Effect.runPromise(provider.things.get(id));
 
     if (!thing) {
-      const response = errorResponse(
-        'NOT_FOUND',
-        `Thing with ID ${id} not found`
-      );
+      const response = errorResponse("NOT_FOUND", `Thing with ID ${id} not found`);
       return new Response(JSON.stringify(response), {
         status: getStatusCode(response.error),
-        headers: { 'Content-Type': 'application/json' },
+        headers: { "Content-Type": "application/json" },
       });
     }
 
     return new Response(JSON.stringify(successResponse(thing)), {
       status: 200,
       headers: {
-        'Content-Type': 'application/json',
-        'Cache-Control': 'max-age=300, public',
+        "Content-Type": "application/json",
+        "Cache-Control": "max-age=300, public",
       },
     });
   } catch (error) {
-    const message = error instanceof Error ? error.message : 'Unknown error';
-    const response = errorResponse('INTERNAL_ERROR', message);
+    const message = error instanceof Error ? error.message : "Unknown error";
+    const response = errorResponse("INTERNAL_ERROR", message);
     const status = getStatusCode(response.error);
 
     return new Response(JSON.stringify(response), {
       status,
-      headers: { 'Content-Type': 'application/json' },
+      headers: { "Content-Type": "application/json" },
     });
   }
 };
@@ -103,27 +100,24 @@ export const GET: APIRoute = async ({ params }) => {
 export const PUT: APIRoute = async ({ params, request }) => {
   try {
     const provider = getDefaultProvider();
-    const { Effect } = await import('effect');
+    const { Effect } = await import("effect");
     const id = params.id;
 
     if (!id) {
-      const response = errorResponse('BAD_REQUEST', 'Thing ID is required');
+      const response = errorResponse("BAD_REQUEST", "Thing ID is required");
       return new Response(JSON.stringify(response), {
         status: getStatusCode(response.error),
-        headers: { 'Content-Type': 'application/json' },
+        headers: { "Content-Type": "application/json" },
       });
     }
 
     // Verify thing exists and extract Effect value
     const existing = await Effect.runPromise(provider.things.get(id));
     if (!existing) {
-      const response = errorResponse(
-        'NOT_FOUND',
-        `Thing with ID ${id} not found`
-      );
+      const response = errorResponse("NOT_FOUND", `Thing with ID ${id} not found`);
       return new Response(JSON.stringify(response), {
         status: getStatusCode(response.error),
-        headers: { 'Content-Type': 'application/json' },
+        headers: { "Content-Type": "application/json" },
       });
     }
 
@@ -154,19 +148,19 @@ export const PUT: APIRoute = async ({ params, request }) => {
       {
         status: 200,
         headers: {
-          'Content-Type': 'application/json',
-          'Cache-Control': 'no-cache',
+          "Content-Type": "application/json",
+          "Cache-Control": "no-cache",
         },
       }
     );
   } catch (error) {
-    const message = error instanceof Error ? error.message : 'Unknown error';
-    const response = errorResponse('INTERNAL_ERROR', message);
+    const message = error instanceof Error ? error.message : "Unknown error";
+    const response = errorResponse("INTERNAL_ERROR", message);
     const status = getStatusCode(response.error);
 
     return new Response(JSON.stringify(response), {
       status,
-      headers: { 'Content-Type': 'application/json' },
+      headers: { "Content-Type": "application/json" },
     });
   }
 };

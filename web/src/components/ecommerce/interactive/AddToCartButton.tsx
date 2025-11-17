@@ -4,18 +4,18 @@
  * Requires client:load hydration
  */
 
-'use client';
+"use client";
 
-import { useState } from 'react';
-import { Button, buttonVariants } from '@/components/ui/button';
-import { cn } from '@/lib/utils';
-import type { VariantProps } from 'class-variance-authority';
-import { cartActions, type CartItem } from '@/stores/cart';
+import type { VariantProps } from "class-variance-authority";
+import { useState } from "react";
+import { Button, type buttonVariants } from "@/components/ui/button";
+import { cn } from "@/lib/utils";
+import { type CartItem, cartActions } from "@/stores/cart";
 
 interface AddToCartButtonProps
-  extends Omit<React.ComponentProps<'button'>, 'onClick'>,
+  extends Omit<React.ComponentProps<"button">, "onClick">,
     VariantProps<typeof buttonVariants> {
-  product: Omit<CartItem, 'quantity'>;
+  product: Omit<CartItem, "quantity">;
   quantity?: number;
   onSuccess?: () => void;
 }
@@ -26,7 +26,7 @@ export function AddToCartButton({
   onSuccess,
   children,
   className,
-  variant = 'default',
+  variant = "default",
   ...props
 }: AddToCartButtonProps) {
   const [isAdding, setIsAdding] = useState(false);
@@ -57,35 +57,21 @@ export function AddToCartButton({
       disabled={isAdding || showSuccess}
       variant={variant}
       className={cn(
-        'bg-[hsl(var(--color-primary))] text-[hsl(var(--color-primary-foreground))] hover:bg-[hsl(var(--color-primary))]/90 focus-visible:ring-[hsl(var(--color-primary))]/40',
-        className,
+        "bg-[hsl(var(--color-primary))] text-[hsl(var(--color-primary-foreground))] hover:bg-[hsl(var(--color-primary))]/90 focus-visible:ring-[hsl(var(--color-primary))]/40",
+        className
       )}
       {...props}
     >
       {showSuccess ? (
         <>
-          <svg
-            className="mr-2 h-4 w-4"
-            fill="none"
-            stroke="currentColor"
-            viewBox="0 0 24 24"
-          >
-            <path
-              strokeLinecap="round"
-              strokeLinejoin="round"
-              strokeWidth={2}
-              d="M5 13l4 4L19 7"
-            />
+          <svg className="mr-2 h-4 w-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
           </svg>
           Added!
         </>
       ) : isAdding ? (
         <>
-          <svg
-            className="mr-2 h-4 w-4 animate-spin"
-            fill="none"
-            viewBox="0 0 24 24"
-          >
+          <svg className="mr-2 h-4 w-4 animate-spin" fill="none" viewBox="0 0 24 24">
             <circle
               className="opacity-25"
               cx="12"
@@ -103,7 +89,7 @@ export function AddToCartButton({
           Adding...
         </>
       ) : (
-        children || 'Add to Cart'
+        children || "Add to Cart"
       )}
     </Button>
   );

@@ -1,10 +1,10 @@
 ---
 // Test page to verify videos collection is working
-import { getCollection } from 'astro:content';
-import Layout from '@/layouts/Layout.astro';
+import { getCollection } from "astro:content";
+import Layout from "@/layouts/Layout.astro";
 
-const videos = await getCollection('videos');
-const videoCount = videos.length;
+const videos = await getCollection("videos");
+const _videoCount = videos.length;
 ---
 
 <Layout title="Video Collection Test">

@@ -4,30 +4,27 @@
  * Exports all ecommerce services built on the 6-dimension ontology
  */
 
-export { ProductService } from "./ProductService";
-export type {
-  ProductVariant,
-  ProductProperties,
-  CreateProductInput,
-  UpdateProductInput,
-} from "./ProductService";
-
+export type { Cart, CartItem, CartItemMetadata } from "./CartService";
 export { CartService } from "./CartService";
-export type { CartItemMetadata, CartItem, Cart } from "./CartService";
-
-export { OrderService } from "./OrderService";
 export type {
+  CreateOrderInput,
   OrderItem,
-  ShippingAddress,
   OrderProperties,
   OrderStatus,
-  CreateOrderInput,
+  ShippingAddress,
 } from "./OrderService";
-
-export { ReviewService } from "./ReviewService";
+export { OrderService } from "./OrderService";
 export type {
-  ReviewProperties,
+  CreateProductInput,
+  ProductProperties,
+  ProductVariant,
+  UpdateProductInput,
+} from "./ProductService";
+export { ProductService } from "./ProductService";
+export type {
   CreateReviewInput,
-  UpdateReviewInput,
   Review,
+  ReviewProperties,
+  UpdateReviewInput,
 } from "./ReviewService";
+export { ReviewService } from "./ReviewService";

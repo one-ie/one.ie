@@ -6,9 +6,12 @@
  * Requires client:load hydration
  */
 
-'use client';
+"use client";
 
-import { useState, useEffect, useCallback } from 'react';
+import { Clock, Gift } from "lucide-react";
+import { useCallback, useEffect, useState } from "react";
+import { toastActions } from "@/components/ecommerce/interactive/Toast";
+import { Button } from "@/components/ui/button";
 import {
   Dialog,
   DialogContent,
@@ -16,25 +19,22 @@ import {
   DialogFooter,
   DialogHeader,
   DialogTitle,
-} from '@/components/ui/dialog';
-import { Button } from '@/components/ui/button';
-import { Input } from '@/components/ui/input';
-import { Label } from '@/components/ui/label';
-import { toastActions } from '@/components/ecommerce/interactive/Toast';
-import { Gift, Clock } from 'lucide-react';
+} from "@/components/ui/dialog";
+import { Input } from "@/components/ui/input";
+import { Label } from "@/components/ui/label";
 
-const STORAGE_KEY = 'exit-intent-shown';
+const STORAGE_KEY = "exit-intent-shown";
 const COUNTDOWN_MINUTES = 10;
 
 export function ExitIntentPopup() {
   const [isOpen, setIsOpen] = useState(false);
-  const [email, setEmail] = useState('');
+  const [email, setEmail] = useState("");
   const [timeLeft, setTimeLeft] = useState(COUNTDOWN_MINUTES * 60); // in seconds
   const [hasShown, setHasShown] = useState(false);
 
   // Check if already shown this session
   useEffect(() => {
-    if (typeof window !== 'undefined') {
+    if (typeof window !== "undefined") {
       const shown = sessionStorage.getItem(STORAGE_KEY);
       setHasShown(!!shown);
     }
@@ -65,7 +65,7 @@ export function ExitIntentPopup() {
       if (e.clientY <= 10 && !hasShown) {
         setIsOpen(true);
         setHasShown(true);
-        sessionStorage.setItem(STORAGE_KEY, 'true');
+        sessionStorage.setItem(STORAGE_KEY, "true");
       }
     },
     [hasShown]
@@ -74,24 +74,24 @@ export function ExitIntentPopup() {
   useEffect(() => {
     if (hasShown) return;
 
-    document.addEventListener('mousemove', handleMouseMove);
-    return () => document.removeEventListener('mousemove', handleMouseMove);
+    document.addEventListener("mousemove", handleMouseMove);
+    return () => document.removeEventListener("mousemove", handleMouseMove);
   }, [hasShown, handleMouseMove]);
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
 
-    if (!email || !email.includes('@')) {
-      toastActions.error('Please enter a valid email address');
+    if (!email || !email.includes("@")) {
+      toastActions.error("Please enter a valid email address");
       return;
     }
 
     // Store discount code in localStorage
-    localStorage.setItem('discount-code', 'FIRST10');
+    localStorage.setItem("discount-code", "FIRST10");
 
     toastActions.success(
-      'Discount Applied!',
-      'Your 10% off code FIRST10 has been applied to your cart'
+      "Discount Applied!",
+      "Your 10% off code FIRST10 has been applied to your cart"
     );
 
     setIsOpen(false);
@@ -104,7 +104,7 @@ export function ExitIntentPopup() {
   // Format time left
   const minutes = Math.floor(timeLeft / 60);
   const seconds = timeLeft % 60;
-  const timeDisplay = `${minutes}:${seconds.toString().padStart(2, '0')}`;
+  const timeDisplay = `${minutes}:${seconds.toString().padStart(2, "0")}`;
 
   return (
     <Dialog open={isOpen} onOpenChange={setIsOpen}>
@@ -115,9 +115,7 @@ export function ExitIntentPopup() {
               <Gift className="h-8 w-8 text-primary" />
             </div>
           </div>
-          <DialogTitle className="text-center text-2xl">
-            Wait! Don't Leave Yet
-          </DialogTitle>
+          <DialogTitle className="text-center text-2xl">Wait! Don't Leave Yet</DialogTitle>
           <DialogDescription className="text-center text-base">
             Get <span className="font-bold text-primary">10% off</span> your first order
           </DialogDescription>
@@ -147,12 +145,7 @@ export function ExitIntentPopup() {
             <Button type="submit" size="lg" className="w-full">
               Get My 10% Discount
             </Button>
-            <Button
-              type="button"
-              variant="ghost"
-              onClick={handleDismiss}
-              className="w-full"
-            >
+            <Button type="button" variant="ghost" onClick={handleDismiss} className="w-full">
               No thanks, I'll pay full price
             </Button>
           </DialogFooter>

@@ -1,71 +1,71 @@
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
-import { Badge } from '@/components/ui/badge';
-import { Progress } from '@/components/ui/progress';
 import {
-  BarChart,
-  Bar,
-  PieChart,
-  Pie,
-  Cell,
-  XAxis,
-  YAxis,
-  CartesianGrid,
-  Tooltip,
-  ResponsiveContainer,
   Area,
   AreaChart,
-} from 'recharts';
+  Bar,
+  BarChart,
+  CartesianGrid,
+  Cell,
+  Pie,
+  PieChart,
+  ResponsiveContainer,
+  Tooltip,
+  XAxis,
+  YAxis,
+} from "recharts";
+import { Badge } from "@/components/ui/badge";
+import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
+import { Progress } from "@/components/ui/progress";
 
 // Cost comparison data
 const costData = [
-  { provider: 'Cloudflare', cost: 0, color: '#f97316' },
-  { provider: 'Vercel', cost: 229, color: '#000000' },
-  { provider: 'Netlify', cost: 240, color: '#00AD9F' },
-  { provider: 'AWS', cost: 350, color: '#FF9900' },
+  { provider: "Cloudflare", cost: 0, color: "#f97316" },
+  { provider: "Vercel", cost: 229, color: "#000000" },
+  { provider: "Netlify", cost: 240, color: "#00AD9F" },
+  { provider: "AWS", cost: 350, color: "#FF9900" },
 ];
 
 // Performance metrics
 const performanceData = [
-  { region: 'N. America', latency: 45, coverage: '38%' },
-  { region: 'Europe', latency: 78, coverage: '27%' },
-  { region: 'Asia Pacific', latency: 112, coverage: '22%' },
-  { region: 'S. America', latency: 156, coverage: '8%' },
-  { region: 'Africa', latency: 203, coverage: '3%' },
-  { region: 'Oceania', latency: 134, coverage: '2%' },
+  { region: "N. America", latency: 45, coverage: "38%" },
+  { region: "Europe", latency: 78, coverage: "27%" },
+  { region: "Asia Pacific", latency: 112, coverage: "22%" },
+  { region: "S. America", latency: 156, coverage: "8%" },
+  { region: "Africa", latency: 203, coverage: "3%" },
+  { region: "Oceania", latency: 134, coverage: "2%" },
 ];
 
 // Build metrics
 const buildMetrics = [
-  { phase: 'Install', duration: 3.2, color: '#8b5cf6' },
-  { phase: 'Type Check', duration: 2.1, color: '#3b82f6' },
-  { phase: 'Build', duration: 14, color: '#10b981' },
-  { phase: 'Optimize', duration: 1.8, color: '#f59e0b' },
-  { phase: 'Upload', duration: 4.5, color: '#ef4444' },
+  { phase: "Install", duration: 3.2, color: "#8b5cf6" },
+  { phase: "Type Check", duration: 2.1, color: "#3b82f6" },
+  { phase: "Build", duration: 14, color: "#10b981" },
+  { phase: "Optimize", duration: 1.8, color: "#f59e0b" },
+  { phase: "Upload", duration: 4.5, color: "#ef4444" },
 ];
 
 // Core Web Vitals (Real data from Lighthouse)
 const webVitals = [
-  { metric: 'FCP', value: 0.3, good: 1.8, label: 'First Contentful Paint (Desktop)' },
-  { metric: 'LCP', value: 0.7, good: 2.5, label: 'Largest Contentful Paint (Desktop)' },
-  { metric: 'TBT', value: 0, good: 0.2, label: 'Total Blocking Time' },
-  { metric: 'CLS', value: 0, good: 0.1, label: 'Cumulative Layout Shift' },
+  { metric: "FCP", value: 0.3, good: 1.8, label: "First Contentful Paint (Desktop)" },
+  { metric: "LCP", value: 0.7, good: 2.5, label: "Largest Contentful Paint (Desktop)" },
+  { metric: "TBT", value: 0, good: 0.2, label: "Total Blocking Time" },
+  { metric: "CLS", value: 0, good: 0.1, label: "Cumulative Layout Shift" },
 ];
 
 const webVitalsMobile = [
-  { metric: 'FCP', value: 1.4, good: 1.8, label: 'First Contentful Paint (Mobile)' },
-  { metric: 'LCP', value: 2.5, good: 2.5, label: 'Largest Contentful Paint (Mobile)' },
-  { metric: 'TBT', value: 0, good: 0.2, label: 'Total Blocking Time (Mobile)' },
-  { metric: 'CLS', value: 0, good: 0.1, label: 'Cumulative Layout Shift (Mobile)' },
+  { metric: "FCP", value: 1.4, good: 1.8, label: "First Contentful Paint (Mobile)" },
+  { metric: "LCP", value: 2.5, good: 2.5, label: "Largest Contentful Paint (Mobile)" },
+  { metric: "TBT", value: 0, good: 0.2, label: "Total Blocking Time (Mobile)" },
+  { metric: "CLS", value: 0, good: 0.1, label: "Cumulative Layout Shift (Mobile)" },
 ];
 
 // Deployment trend
 const deploymentTrend = [
-  { date: 'Nov 1', time: 30 },
-  { date: 'Nov 2', time: 27 },
-  { date: 'Nov 3', time: 25 },
-  { date: 'Nov 4', time: 22 },
-  { date: 'Nov 5', time: 20 },
-  { date: 'Nov 6', time: 19 },
+  { date: "Nov 1", time: 30 },
+  { date: "Nov 2", time: 27 },
+  { date: "Nov 3", time: 25 },
+  { date: "Nov 4", time: 22 },
+  { date: "Nov 5", time: 20 },
+  { date: "Nov 6", time: 19 },
 ];
 
 export default function DeploymentMetrics() {
@@ -75,7 +75,9 @@ export default function DeploymentMetrics() {
       <div className="grid gap-4 md:grid-cols-4">
         <Card className="border-primary/20 bg-gradient-to-br from-primary/5 to-background">
           <CardHeader className="pb-2">
-            <CardTitle className="text-sm font-medium text-muted-foreground">Monthly Cost</CardTitle>
+            <CardTitle className="text-sm font-medium text-muted-foreground">
+              Monthly Cost
+            </CardTitle>
           </CardHeader>
           <CardContent>
             <div className="text-3xl font-bold text-primary">$0.00</div>
@@ -88,7 +90,9 @@ export default function DeploymentMetrics() {
 
         <Card className="border-primary/20 bg-gradient-to-br from-primary/5 to-background">
           <CardHeader className="pb-2">
-            <CardTitle className="text-sm font-medium text-muted-foreground">Global Latency</CardTitle>
+            <CardTitle className="text-sm font-medium text-muted-foreground">
+              Global Latency
+            </CardTitle>
           </CardHeader>
           <CardContent>
             <div className="text-3xl font-bold text-primary">287ms</div>
@@ -101,7 +105,9 @@ export default function DeploymentMetrics() {
 
         <Card className="border-primary/20 bg-gradient-to-br from-primary/5 to-background">
           <CardHeader className="pb-2">
-            <CardTitle className="text-sm font-medium text-muted-foreground">Edge Locations</CardTitle>
+            <CardTitle className="text-sm font-medium text-muted-foreground">
+              Edge Locations
+            </CardTitle>
           </CardHeader>
           <CardContent>
             <div className="text-3xl font-bold text-primary">330+</div>
@@ -114,7 +120,9 @@ export default function DeploymentMetrics() {
 
         <Card className="border-primary/20 bg-gradient-to-br from-green-500/10 to-background">
           <CardHeader className="pb-2">
-            <CardTitle className="text-sm font-medium text-muted-foreground">Lighthouse Score</CardTitle>
+            <CardTitle className="text-sm font-medium text-muted-foreground">
+              Lighthouse Score
+            </CardTitle>
           </CardHeader>
           <CardContent>
             <div className="flex items-baseline gap-2">
@@ -127,7 +135,7 @@ export default function DeploymentMetrics() {
             </div>
             <p className="text-xs text-muted-foreground mt-1">Top 3% worldwide</p>
             <div className="mt-2">
-              <Progress value={100} className="h-1" style={{ backgroundColor: '#10b981' }} />
+              <Progress value={100} className="h-1" style={{ backgroundColor: "#10b981" }} />
             </div>
           </CardContent>
         </Card>
@@ -141,22 +149,22 @@ export default function DeploymentMetrics() {
         </CardHeader>
         <CardContent>
           <ResponsiveContainer width="100%" height={300}>
-              <BarChart data={costData}>
+            <BarChart data={costData}>
               <CartesianGrid strokeDasharray="3 3" opacity={0.3} />
               <XAxis dataKey="provider" />
               <YAxis />
               <Tooltip
-                formatter={(value) => [`$${value}`, 'Monthly Cost']}
+                formatter={(value) => [`$${value}`, "Monthly Cost"]}
                 contentStyle={{
-                  backgroundColor: 'hsl(var(--background))',
-                  border: '1px solid hsl(var(--border))',
-                  borderRadius: '8px',
+                  backgroundColor: "hsl(var(--background))",
+                  border: "1px solid hsl(var(--border))",
+                  borderRadius: "8px",
                 }}
-                labelStyle={{ color: 'hsl(var(--foreground))' }}
+                labelStyle={{ color: "hsl(var(--foreground))" }}
               />
               <Bar dataKey="cost" radius={[8, 8, 0, 0]}>
-                {costData.map((entry, index) => (
-                  <Cell key={`cell-${index}`} fill={entry.color} />
+                {costData.map((entry) => (
+                  <Cell key={entry.provider} fill={entry.color} />
                 ))}
               </Bar>
             </BarChart>
@@ -192,27 +200,38 @@ export default function DeploymentMetrics() {
           </CardHeader>
           <CardContent>
             <ResponsiveContainer width="100%" height={250}>
-                <BarChart data={performanceData} layout="horizontal">
+              <BarChart data={performanceData} layout="horizontal">
                 <CartesianGrid strokeDasharray="3 3" opacity={0.3} />
                 <XAxis type="number" domain={[0, 250]} />
                 <YAxis dataKey="region" type="category" width={80} />
                 <Tooltip
                   formatter={(value, name) => {
-                    if (name === 'latency') return [`${value}ms`, 'Latency'];
+                    if (name === "latency") return [`${value}ms`, "Latency"];
                     return [value, name];
                   }}
                   contentStyle={{
-                    backgroundColor: 'hsl(var(--background))',
-                    border: '1px solid hsl(var(--border))',
-                    borderRadius: '8px',
+                    backgroundColor: "hsl(var(--background))",
+                    border: "1px solid hsl(var(--border))",
+                    borderRadius: "8px",
                   }}
-                  labelStyle={{ color: 'hsl(var(--foreground))' }}
+                  labelStyle={{ color: "hsl(var(--foreground))" }}
                 />
-                <Bar dataKey="latency" fill="#10b981" radius={[0, 4, 4, 0]} label={{ position: 'right', formatter: (value: number) => `${value}ms` }}>
-                  {performanceData.map((entry, index) => (
+                <Bar
+                  dataKey="latency"
+                  fill="#10b981"
+                  radius={[0, 4, 4, 0]}
+                  label={{ position: "right", formatter: (value: number) => `${value}ms` }}
+                >
+                  {performanceData.map((entry) => (
                     <Cell
-                      key={`cell-${index}`}
-                      fill={entry.latency < 100 ? '#10b981' : entry.latency < 200 ? '#f59e0b' : '#ef4444'}
+                      key={entry.region}
+                      fill={
+                        entry.latency < 100
+                          ? "#10b981"
+                          : entry.latency < 200
+                            ? "#f59e0b"
+                            : "#ef4444"
+                      }
                     />
                   ))}
                 </Bar>
@@ -229,7 +248,7 @@ export default function DeploymentMetrics() {
           </CardHeader>
           <CardContent>
             <ResponsiveContainer width="100%" height={200}>
-                <PieChart>
+              <PieChart>
                 <Pie
                   data={buildMetrics}
                   cx="50%"
@@ -239,18 +258,18 @@ export default function DeploymentMetrics() {
                   paddingAngle={2}
                   dataKey="duration"
                 >
-                  {buildMetrics.map((entry, index) => (
-                    <Cell key={`cell-${index}`} fill={entry.color} />
+                  {buildMetrics.map((entry) => (
+                    <Cell key={entry.phase} fill={entry.color} />
                   ))}
                 </Pie>
                 <Tooltip
                   formatter={(value) => `${value}s`}
                   contentStyle={{
-                    backgroundColor: 'hsl(var(--background))',
-                    border: '1px solid hsl(var(--border))',
-                    borderRadius: '8px',
+                    backgroundColor: "hsl(var(--background))",
+                    border: "1px solid hsl(var(--border))",
+                    borderRadius: "8px",
                   }}
-                  labelStyle={{ color: 'hsl(var(--foreground))' }}
+                  labelStyle={{ color: "hsl(var(--foreground))" }}
                 />
               </PieChart>
             </ResponsiveContainer>
@@ -292,13 +311,18 @@ export default function DeploymentMetrics() {
                   <div className="flex items-center justify-between">
                     <span className="text-xs font-medium">{vital.metric}</span>
                     <Badge variant="default" className="text-xs bg-green-600">
-                      {vital.value === 0 ? '0' : `${vital.value}s`}
+                      {vital.value === 0 ? "0" : `${vital.value}s`}
                     </Badge>
                   </div>
                   <div className="relative h-2 rounded-full bg-muted overflow-hidden">
                     <div
                       className="absolute h-full bg-green-500"
-                      style={{ width: vital.value === 0 ? '100%' : `${Math.min((vital.value / vital.good) * 100, 100)}%` }}
+                      style={{
+                        width:
+                          vital.value === 0
+                            ? "100%"
+                            : `${Math.min((vital.value / vital.good) * 100, 100)}%`,
+                      }}
                     />
                   </div>
                   <p className="text-xs text-muted-foreground">{vital.label}</p>
@@ -326,13 +350,18 @@ export default function DeploymentMetrics() {
                   <div className="flex items-center justify-between">
                     <span className="text-xs font-medium">{vital.metric}</span>
                     <Badge variant="default" className="text-xs bg-green-600">
-                      {vital.value === 0 ? '0' : `${vital.value}s`}
+                      {vital.value === 0 ? "0" : `${vital.value}s`}
                     </Badge>
                   </div>
                   <div className="relative h-2 rounded-full bg-muted overflow-hidden">
                     <div
                       className="absolute h-full bg-green-500"
-                      style={{ width: vital.value === 0 ? '100%' : `${Math.min((vital.value / vital.good) * 100, 100)}%` }}
+                      style={{
+                        width:
+                          vital.value === 0
+                            ? "100%"
+                            : `${Math.min((vital.value / vital.good) * 100, 100)}%`,
+                      }}
                     />
                   </div>
                   <p className="text-xs text-muted-foreground">{vital.label}</p>
@@ -356,7 +385,11 @@ export default function DeploymentMetrics() {
                 <h4 className="font-semibold">Desktop - Perfect 100/100</h4>
                 <Badge className="bg-green-500">100</Badge>
               </div>
-              <a href="/screenshots/lighthouse-desktop.png" target="_blank" rel="noopener noreferrer">
+              <a
+                href="/screenshots/lighthouse-desktop.png"
+                target="_blank"
+                rel="noopener noreferrer"
+              >
                 <img
                   src="/screenshots/lighthouse-desktop.png"
                   alt="Desktop Lighthouse Score - Perfect 100/100"
@@ -373,7 +406,11 @@ export default function DeploymentMetrics() {
                 <h4 className="font-semibold">Mobile - Near-Perfect 97/100</h4>
                 <Badge className="bg-green-500">97</Badge>
               </div>
-              <a href="/screenshots/lighthouse-mobile.png" target="_blank" rel="noopener noreferrer">
+              <a
+                href="/screenshots/lighthouse-mobile.png"
+                target="_blank"
+                rel="noopener noreferrer"
+              >
                 <img
                   src="/screenshots/lighthouse-mobile.png"
                   alt="Mobile Lighthouse Score - 97/100"
@@ -387,7 +424,10 @@ export default function DeploymentMetrics() {
             </div>
           </div>
           <div className="mt-4 text-center">
-            <a href="/news/perfect-lighthouse-scores-desktop-mobile" className="text-sm text-primary hover:underline">
+            <a
+              href="/news/perfect-lighthouse-scores-desktop-mobile"
+              className="text-sm text-primary hover:underline"
+            >
               Read the full performance optimization story →
             </a>
           </div>
@@ -402,24 +442,24 @@ export default function DeploymentMetrics() {
         </CardHeader>
         <CardContent>
           <ResponsiveContainer width="100%" height={200}>
-              <AreaChart data={deploymentTrend}>
+            <AreaChart data={deploymentTrend}>
               <defs>
                 <linearGradient id="colorTime" x1="0" y1="0" x2="0" y2="1">
-                  <stop offset="5%" stopColor="#f97316" stopOpacity={0.3}/>
-                  <stop offset="95%" stopColor="#f97316" stopOpacity={0}/>
+                  <stop offset="5%" stopColor="#f97316" stopOpacity={0.3} />
+                  <stop offset="95%" stopColor="#f97316" stopOpacity={0} />
                 </linearGradient>
               </defs>
               <CartesianGrid strokeDasharray="3 3" opacity={0.3} />
               <XAxis dataKey="date" />
               <YAxis />
               <Tooltip
-                formatter={(value) => [`${value}s`, 'Deployment Time']}
+                formatter={(value) => [`${value}s`, "Deployment Time"]}
                 contentStyle={{
-                  backgroundColor: 'hsl(var(--background))',
-                  border: '1px solid hsl(var(--border))',
-                  borderRadius: '8px',
+                  backgroundColor: "hsl(var(--background))",
+                  border: "1px solid hsl(var(--border))",
+                  borderRadius: "8px",
                 }}
-                labelStyle={{ color: 'hsl(var(--foreground))' }}
+                labelStyle={{ color: "hsl(var(--foreground))" }}
               />
               <Area
                 type="monotone"

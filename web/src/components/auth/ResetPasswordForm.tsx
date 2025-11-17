@@ -1,14 +1,15 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import { useState, useEffect } from "react";
+
+import { CheckCircle2 } from "lucide-react";
+import { useEffect, useState } from "react";
+import { toast } from "sonner";
+import { Alert, AlertDescription } from "@/components/ui/alert";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { usePasswordResetComplete } from "@/hooks/useAuth";
-import { toast } from "sonner";
 import { AuthCard } from "./AuthCard";
 import { PasswordStrengthIndicator } from "./PasswordStrengthIndicator";
-import { CheckCircle2 } from "lucide-react";
-import { Alert, AlertDescription } from "@/components/ui/alert";
 
 interface ResetPasswordFormProps {
   token: string;
@@ -25,9 +26,7 @@ export function ResetPasswordForm({ token }: ResetPasswordFormProps) {
     // Validate token on mount
     const validateToken = async () => {
       try {
-        const response = await fetch(
-          `/api/auth/validate-reset-token?token=${token}`,
-        );
+        const response = await fetch(`/api/auth/validate-reset-token?token=${token}`);
         if (!response.ok) {
           setTokenValid(false);
           toast.error("Invalid or expired token", {
@@ -67,8 +66,7 @@ export function ResetPasswordForm({ token }: ResetPasswordFormProps) {
 
       setResetSuccess(true);
       toast.success("Password reset successful!", {
-        description:
-          "Your password has been updated. Redirecting to sign in...",
+        description: "Your password has been updated. Redirecting to sign in...",
       });
 
       setTimeout(() => {
@@ -125,10 +123,7 @@ export function ResetPasswordForm({ token }: ResetPasswordFormProps) {
         description="This password reset link is no longer valid"
         footer={
           <p className="text-sm text-muted-foreground text-center w-full">
-            <a
-              href="/account/forgot-password"
-              className="text-primary hover:underline"
-            >
+            <a href="/account/forgot-password" className="text-primary hover:underline">
               Request a new password reset
             </a>
           </p>
@@ -136,8 +131,8 @@ export function ResetPasswordForm({ token }: ResetPasswordFormProps) {
       >
         <Alert variant="destructive">
           <AlertDescription className="text-sm">
-            This password reset link has expired or is invalid. Please request a
-            new password reset email to continue.
+            This password reset link has expired or is invalid. Please request a new password reset
+            email to continue.
           </AlertDescription>
         </Alert>
 
@@ -164,8 +159,7 @@ export function ResetPasswordForm({ token }: ResetPasswordFormProps) {
         <Alert className="border-green-500/50 bg-green-500/10">
           <CheckCircle2 className="h-4 w-4 text-green-500" />
           <AlertDescription className="text-sm">
-            Your password has been successfully reset. You can now sign in with
-            your new password.
+            Your password has been successfully reset. You can now sign in with your new password.
           </AlertDescription>
         </Alert>
       </AuthCard>

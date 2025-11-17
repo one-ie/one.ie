@@ -1,11 +1,11 @@
 ---
-import Layout from '../layouts/Layout.astro';
-import { marked } from 'marked';
+import { marked } from "marked";
+import Layout from "@/layouts/Layout.astro";
 
 // Import LICENSE.md content at build time (Vite handles this)
-const licenseModule = await import('../../LICENSE.md?raw');
+const licenseModule = await import("../../LICENSE.md?raw");
 const licenseMarkdown = licenseModule.default;
-const licenseContent = await marked.parse(licenseMarkdown);
+const _licenseContent = await marked.parse(licenseMarkdown);
 ---
 
 <Layout title="License" description="ONE Platform License">

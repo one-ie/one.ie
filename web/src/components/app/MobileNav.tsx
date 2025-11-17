@@ -1,6 +1,6 @@
-import { Users, Package, Share2, Sparkles, BookOpen } from "lucide-react";
+import { BookOpen, Package, Share2, Sparkles, Users } from "lucide-react";
+import type { NavigationView } from "@/data/app-data";
 import { cn } from "@/lib/utils";
-import { type NavigationView } from "@/data/app-data";
 
 interface MobileNavProps {
   activeView: NavigationView;
@@ -25,13 +25,12 @@ export function MobileNav({ activeView, onViewChange }: MobileNavProps) {
 
           return (
             <button
+              type="button"
               key={item.id}
               onClick={() => onViewChange(item.id)}
               className={cn(
                 "flex flex-col items-center gap-1 rounded-lg px-2 py-2 transition-colors",
-                isActive
-                  ? "bg-black text-white"
-                  : "text-gray-600 active:bg-gray-100",
+                isActive ? "bg-black text-white" : "text-gray-600 active:bg-gray-100"
               )}
             >
               <Icon className="h-5 w-5" />

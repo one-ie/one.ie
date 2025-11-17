@@ -24,44 +24,44 @@
  * ```
  */
 
-import { useCallback, useEffect, useState } from 'react';
-import { Effect } from 'effect';
-import type { Id } from '@/types/convex';
-import { useEffectRunner } from '../useEffectRunner';
-import { useIsProviderAvailable } from './useProvider';
+import { Effect } from "effect";
+import { useCallback, useEffect, useState } from "react";
+import type { Id } from "@/types/convex";
+import { useEffectRunner } from "../useEffectRunner";
+import { useIsProviderAvailable } from "./useProvider";
 
 /**
  * Group types (6 types total)
  */
 export type GroupType =
-  | 'friend_circle'
-  | 'business'
-  | 'community'
-  | 'dao'
-  | 'government'
-  | 'organization';
+  | "friend_circle"
+  | "business"
+  | "community"
+  | "dao"
+  | "government"
+  | "organization";
 
 /**
  * Pricing plans for organizations
  */
-export type GroupPlan = 'starter' | 'pro' | 'enterprise';
+export type GroupPlan = "starter" | "pro" | "enterprise";
 
 /**
  * Group entity from ontology
  */
 export interface Group {
-  _id: Id<'groups'>;
+  _id: Id<"groups">;
   _creationTime: number;
   name: string;
   type: GroupType;
-  parentGroupId?: Id<'groups'>;
+  parentGroupId?: Id<"groups">;
   properties: {
     description?: string;
     plan?: GroupPlan;
     settings?: Record<string, any>;
     metadata?: Record<string, any>;
   };
-  status: 'draft' | 'active' | 'archived';
+  status: "draft" | "active" | "archived";
   createdAt: number;
   updatedAt: number;
 }
@@ -74,7 +74,7 @@ export interface CreateGroupInput {
   type: GroupType;
   description?: string;
   plan?: GroupPlan;
-  parentGroupId?: Id<'groups'>;
+  parentGroupId?: Id<"groups">;
 }
 
 /**
@@ -84,7 +84,7 @@ export interface UpdateGroupInput {
   name?: string;
   description?: string;
   plan?: GroupPlan;
-  status?: 'draft' | 'active' | 'archived';
+  status?: "draft" | "active" | "archived";
 }
 
 /**
@@ -92,8 +92,8 @@ export interface UpdateGroupInput {
  */
 export interface GroupFilter {
   type?: GroupType;
-  parentGroupId?: Id<'groups'>;
-  status?: 'draft' | 'active' | 'archived';
+  parentGroupId?: Id<"groups">;
+  status?: "draft" | "active" | "archived";
   limit?: number;
   offset?: number;
 }
@@ -125,14 +125,14 @@ export function useGroup() {
    */
   const get = useCallback(
     async (
-      id: Id<'groups'>,
+      _id: Id<"groups">,
       options?: {
         onSuccess?: (group: Group) => void;
         onError?: (error: unknown) => void;
       }
     ) => {
       if (!isProviderAvailable) {
-        options?.onError?.(new Error('Provider not available'));
+        options?.onError?.(new Error("Provider not available"));
         return null;
       }
 
@@ -153,14 +153,14 @@ export function useGroup() {
    */
   const create = useCallback(
     async (
-      input: CreateGroupInput,
+      _input: CreateGroupInput,
       options?: {
         onSuccess?: (group: Group) => void;
         onError?: (error: unknown) => void;
       }
     ) => {
       if (!isProviderAvailable) {
-        options?.onError?.(new Error('Provider not available'));
+        options?.onError?.(new Error("Provider not available"));
         return null;
       }
 
@@ -181,15 +181,15 @@ export function useGroup() {
    */
   const update = useCallback(
     async (
-      id: Id<'groups'>,
-      input: UpdateGroupInput,
+      _id: Id<"groups">,
+      _input: UpdateGroupInput,
       options?: {
         onSuccess?: (group: Group) => void;
         onError?: (error: unknown) => void;
       }
     ) => {
       if (!isProviderAvailable) {
-        options?.onError?.(new Error('Provider not available'));
+        options?.onError?.(new Error("Provider not available"));
         return null;
       }
 
@@ -236,7 +236,7 @@ export function useGroup() {
  * );
  * ```
  */
-export function useGroups(filter?: GroupFilter) {
+export function useGroups(_filter?: GroupFilter) {
   const { run, loading, error } = useEffectRunner<unknown, any>();
   const isProviderAvailable = useIsProviderAvailable();
   const [groups, setGroups] = useState<Group[]>([]);
@@ -257,7 +257,7 @@ export function useGroups(filter?: GroupFilter) {
     run(program, {
       onSuccess: (data) => setGroups(data),
     });
-  }, [isProviderAvailable, filter?.type, filter?.parentGroupId, run]);
+  }, [isProviderAvailable, run]);
 
   return {
     groups,
@@ -281,7 +281,7 @@ export function useGroups(filter?: GroupFilter) {
  * return <h1>{group.name}</h1>;
  * ```
  */
-export function useCurrentGroup(groupId?: Id<'groups'>) {
+export function useCurrentGroup(groupId?: Id<"groups">) {
   const { groups, loading, error } = useGroups();
   const [currentGroup, setCurrentGroup] = useState<Group | null>(null);
 
@@ -314,9 +314,9 @@ export function useCurrentGroup(groupId?: Id<'groups'>) {
  * // Returns all departments under organization
  * ```
  */
-export function useChildGroups(parentGroupId: Id<'groups'>) {
+export function useChildGroups(parentGroupId: Id<"groups">) {
   return useGroups({
     parentGroupId,
-    status: 'active',
+    status: "active",
   });
 }

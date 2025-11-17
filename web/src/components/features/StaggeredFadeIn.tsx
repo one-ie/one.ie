@@ -3,20 +3,20 @@
  * Animates children one by one with staggered fade-in effect
  */
 
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState } from "react";
 
 interface StaggeredFadeInProps {
   children: React.ReactNode[];
   delay?: number; // Delay between each child in ms
   duration?: number; // Animation duration in ms
-  staggerDirection?: 'up' | 'down' | 'left' | 'right';
+  staggerDirection?: "up" | "down" | "left" | "right";
 }
 
 export function StaggeredFadeIn({
   children,
   delay = 100,
   duration = 600,
-  staggerDirection = 'up',
+  staggerDirection = "up",
 }: StaggeredFadeInProps) {
   const [visibleIndices, setVisibleIndices] = useState<Set<number>>(new Set());
 
@@ -34,19 +34,19 @@ export function StaggeredFadeIn({
     return () => clearInterval(interval);
   }, [children, delay]);
 
-  const getInitialTransform = (index: number) => {
+  const getInitialTransform = (_index: number) => {
     const offset = 20;
     switch (staggerDirection) {
-      case 'up':
+      case "up":
         return `translateY(${offset}px)`;
-      case 'down':
+      case "down":
         return `translateY(-${offset}px)`;
-      case 'left':
+      case "left":
         return `translateX(${offset}px)`;
-      case 'right':
+      case "right":
         return `translateX(-${offset}px)`;
       default:
-        return 'translateY(20px)';
+        return "translateY(20px)";
     }
   };
 
@@ -57,9 +57,9 @@ export function StaggeredFadeIn({
           key={index}
           style={{
             opacity: visibleIndices.has(index) ? 1 : 0,
-            transform: visibleIndices.has(index) ? 'translate(0)' : getInitialTransform(index),
+            transform: visibleIndices.has(index) ? "translate(0)" : getInitialTransform(index),
             transition: `opacity ${duration}ms ease-out, transform ${duration}ms ease-out`,
-            willChange: 'opacity, transform',
+            willChange: "opacity, transform",
           }}
         >
           {child}

@@ -4,14 +4,14 @@
  * Requires client:load hydration
  */
 
-'use client';
+"use client";
 
-import { useEffect, useState } from 'react';
-import { atom } from 'nanostores';
-import { useStore } from '@nanostores/react';
-import type { Product } from '@/types/ecommerce';
-import { ProductCard } from './ProductCard';
-import { Button } from '@/components/ui/button';
+import { useStore } from "@nanostores/react";
+import { atom } from "nanostores";
+import { useEffect, useState } from "react";
+import { Button } from "@/components/ui/button";
+import type { Product } from "@/types/ecommerce";
+import { ProductCard } from "./ProductCard";
 
 interface WishlistItem {
   productId: string;
@@ -22,21 +22,21 @@ interface WishlistItem {
 const $wishlist = atom<WishlistItem[]>([]);
 
 // Initialize wishlist from localStorage
-if (typeof window !== 'undefined') {
-  const stored = localStorage.getItem('wishlist');
+if (typeof window !== "undefined") {
+  const stored = localStorage.getItem("wishlist");
   if (stored) {
     try {
       $wishlist.set(JSON.parse(stored));
     } catch (e) {
-      console.error('Failed to parse wishlist from localStorage', e);
+      console.error("Failed to parse wishlist from localStorage", e);
     }
   }
 }
 
 // Persist wishlist to localStorage on changes
 $wishlist.subscribe((wishlist) => {
-  if (typeof window !== 'undefined') {
-    localStorage.setItem('wishlist', JSON.stringify(wishlist));
+  if (typeof window !== "undefined") {
+    localStorage.setItem("wishlist", JSON.stringify(wishlist));
   }
 });
 
@@ -82,7 +82,7 @@ function WishlistCount() {
 
   return (
     <span className="absolute -right-1 -top-1 flex h-5 w-5 items-center justify-center rounded-full bg-red-500 text-xs font-bold text-white">
-      {wishlist.length > 9 ? '9+' : wishlist.length}
+      {wishlist.length > 9 ? "9+" : wishlist.length}
     </span>
   );
 }
@@ -133,9 +133,7 @@ function WishlistPage({ allProducts }: WishlistPageProps) {
             d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z"
           />
         </svg>
-        <h1 className="mt-6 text-2xl font-bold text-foreground">
-          Your wishlist is empty
-        </h1>
+        <h1 className="mt-6 text-2xl font-bold text-foreground">Your wishlist is empty</h1>
         <p className="mt-2 text-muted-foreground">
           Start adding products you love to your wishlist
         </p>
@@ -150,17 +148,13 @@ function WishlistPage({ allProducts }: WishlistPageProps) {
     <div className="container mx-auto px-4 py-8">
       <div className="flex items-center justify-between">
         <h1 className="text-3xl font-bold text-foreground">My Wishlist</h1>
-        <Button
-          variant="outline"
-          onClick={() => wishlistActions.clear()}
-          size="sm"
-        >
+        <Button variant="outline" onClick={() => wishlistActions.clear()} size="sm">
           Clear All
         </Button>
       </div>
 
       <p className="mt-2 text-muted-foreground">
-        {wishlistProducts.length} {wishlistProducts.length === 1 ? 'item' : 'items'}
+        {wishlistProducts.length} {wishlistProducts.length === 1 ? "item" : "items"}
       </p>
 
       <div className="mt-8 grid grid-cols-1 gap-6 md:grid-cols-3 lg:grid-cols-4">
@@ -178,7 +172,7 @@ interface WishlistButtonProps {
   className?: string;
 }
 
-function WishlistButton({ productId, className = '' }: WishlistButtonProps) {
+function WishlistButton({ productId, className = "" }: WishlistButtonProps) {
   const wishlist = useStore($wishlist);
   const [mounted, setMounted] = useState(false);
 
@@ -220,13 +214,13 @@ function WishlistButton({ productId, className = '' }: WishlistButtonProps) {
     <button
       onClick={handleToggle}
       className={`rounded-full bg-background/90 p-2 shadow transition-all duration-200 hover:scale-110 hover:bg-background ${className}`}
-      aria-label={isWishlisted ? 'Remove from wishlist' : 'Add to wishlist'}
+      aria-label={isWishlisted ? "Remove from wishlist" : "Add to wishlist"}
     >
       <svg
         className={`h-5 w-5 transition-colors ${
-          isWishlisted ? 'fill-red-500 text-red-500' : 'text-foreground'
+          isWishlisted ? "fill-red-500 text-red-500" : "text-foreground"
         }`}
-        fill={isWishlisted ? 'currentColor' : 'none'}
+        fill={isWishlisted ? "currentColor" : "none"}
         stroke="currentColor"
         viewBox="0 0 24 24"
       >

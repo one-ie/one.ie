@@ -1,4 +1,3 @@
-import React from "react";
 import type { Message } from "./Chatbot";
 
 export interface MessageListProps {
@@ -27,9 +26,18 @@ export function MessageList({ messages, isLoading }: MessageListProps) {
       {isLoading && (
         <div className="rounded-lg p-4 bg-gray-50 dark:bg-gray-900 mr-auto max-w-[80%]">
           <div className="flex items-center gap-2">
-            <div className="w-2 h-2 bg-gray-400 rounded-full animate-bounce" style={{ animationDelay: "0ms" }} />
-            <div className="w-2 h-2 bg-gray-400 rounded-full animate-bounce" style={{ animationDelay: "150ms" }} />
-            <div className="w-2 h-2 bg-gray-400 rounded-full animate-bounce" style={{ animationDelay: "300ms" }} />
+            <div
+              className="w-2 h-2 bg-gray-400 rounded-full animate-bounce"
+              style={{ animationDelay: "0ms" }}
+            />
+            <div
+              className="w-2 h-2 bg-gray-400 rounded-full animate-bounce"
+              style={{ animationDelay: "150ms" }}
+            />
+            <div
+              className="w-2 h-2 bg-gray-400 rounded-full animate-bounce"
+              style={{ animationDelay: "300ms" }}
+            />
           </div>
         </div>
       )}

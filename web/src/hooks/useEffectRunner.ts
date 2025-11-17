@@ -1,5 +1,5 @@
-import { useCallback, useState } from 'react';
-import { Effect, Exit } from 'effect';
+import { Effect, Exit } from "effect";
+import { useCallback, useState } from "react";
 
 /**
  * Hook for running Effect programs in React components
@@ -51,7 +51,7 @@ export function useEffectRunner<E = unknown, A = unknown>() {
         } else {
           const cause = exit.cause;
           // Extract the error from the cause
-          const err = cause._tag === 'Fail' ? cause.error : (cause as unknown as E);
+          const err = cause._tag === "Fail" ? cause.error : (cause as unknown as E);
           setError(err);
           options?.onError?.(err);
         }

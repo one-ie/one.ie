@@ -5,10 +5,10 @@
  * Shows only: Blog + License + Website link
  */
 
+import { ExternalLink, PanelLeft, X } from "lucide-react";
 import * as React from "react";
-import { ExternalLink, X, PanelLeft } from "lucide-react";
-import { Button } from "@/components/ui/button";
 import { ModeToggle } from "@/components/ModeToggle";
+import { Button } from "@/components/ui/button";
 import { useIsMobile } from "@/hooks/use-mobile";
 
 interface MinimalSidebarProps {
@@ -19,7 +19,7 @@ interface MinimalSidebarProps {
 
 export function MinimalSidebar({ orgName, orgWebsite, children }: MinimalSidebarProps) {
   const [mobileOpen, setMobileOpen] = React.useState(false);
-  const [currentPath, setCurrentPath] = React.useState('');
+  const [currentPath, setCurrentPath] = React.useState("");
   const isMobile = useIsMobile();
   const websiteDisplay = orgWebsite.replace(/^https?:\/\//, "");
 
@@ -41,9 +41,9 @@ export function MinimalSidebar({ orgName, orgWebsite, children }: MinimalSidebar
       {/* Sidebar - fixed width on desktop, overlay on mobile */}
       <aside
         className={`fixed left-0 top-0 h-screen flex flex-col border-r bg-[hsl(var(--color-sidebar))] text-sidebar-foreground transition-all duration-300 ease-in-out z-50 ${
-          mobileOpen ? 'translate-x-0' : '-translate-x-full'
+          mobileOpen ? "translate-x-0" : "-translate-x-full"
         } lg:translate-x-0`}
-        style={{ width: '256px' }}
+        style={{ width: "256px" }}
       >
         {/* Header with logo/name */}
         <div className="flex h-16 items-center border-b px-4 shrink-0 relative z-10 justify-between">
@@ -76,7 +76,7 @@ export function MinimalSidebar({ orgName, orgWebsite, children }: MinimalSidebar
             <a
               href="/blog"
               className={`flex items-center gap-3 rounded-md px-3 py-2 text-sm font-medium transition-colors hover:bg-sidebar-accent hover:text-sidebar-accent-foreground ${
-                currentPath === '/blog' ? 'bg-sidebar-accent text-sidebar-accent-foreground' : ''
+                currentPath === "/blog" ? "bg-sidebar-accent text-sidebar-accent-foreground" : ""
               }`}
             >
               <span className="text-lg">📝</span>
@@ -87,7 +87,7 @@ export function MinimalSidebar({ orgName, orgWebsite, children }: MinimalSidebar
             <a
               href="/license"
               className={`flex items-center gap-3 rounded-md px-3 py-2 text-sm font-medium transition-colors hover:bg-sidebar-accent hover:text-sidebar-accent-foreground ${
-                currentPath === '/license' ? 'bg-sidebar-accent text-sidebar-accent-foreground' : ''
+                currentPath === "/license" ? "bg-sidebar-accent text-sidebar-accent-foreground" : ""
               }`}
             >
               <span className="text-lg">📜</span>

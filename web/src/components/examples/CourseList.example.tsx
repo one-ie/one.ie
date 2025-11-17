@@ -8,11 +8,11 @@
  * AFTER: Works with any backend (Convex, WordPress, Supabase, etc.)
  */
 
-import { useEffect, useState } from 'react';
-import { useThingService, type Thing } from '@/hooks/useThingService';
-import { useToast } from '@/hooks/use-toast';
-import { Button } from '@/components/ui/button';
-import { Card, CardHeader, CardTitle, CardDescription, CardContent } from '@/components/ui/card';
+import { useEffect, useState } from "react";
+import { Button } from "@/components/ui/button";
+import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
+import { useToast } from "@/hooks/use-toast";
+import { type Thing, useThingService } from "@/hooks/useThingService";
 
 /**
  * BEFORE (Convex-specific):
@@ -49,49 +49,58 @@ export function CourseList() {
 
   // Load courses on mount
   useEffect(() => {
-    list({ type: 'course', status: 'published' }, {
-      onSuccess: (data) => {
-        setCourses(data);
-      },
-      onError: (err) => {
-        toast({
-          title: 'Error loading courses',
-          description: String(err),
-          variant: 'destructive'
-        });
+    list(
+      { type: "course", status: "published" },
+      {
+        onSuccess: (data) => {
+          setCourses(data);
+        },
+        onError: (err) => {
+          toast({
+            title: "Error loading courses",
+            description: String(err),
+            variant: "destructive",
+          });
+        },
       }
-    });
-  }, []);
+    );
+  }, [list, toast]);
 
   // Create a new course
   const handleCreateCourse = () => {
-    create({
-      type: 'course',
-      name: 'New Course',
-      properties: {
-        description: 'A brand new course',
-        duration: '4 weeks'
+    create(
+      {
+        type: "course",
+        name: "New Course",
+        properties: {
+          description: "A brand new course",
+          duration: "4 weeks",
+        },
+        status: "draft",
       },
-      status: 'draft'
-    }, {
-      onSuccess: (courseId) => {
-        toast({
-          title: 'Course created!',
-          description: `Course ID: ${courseId}`
-        });
-        // Refresh list
-        list({ type: 'course', status: 'published' }, {
-          onSuccess: setCourses
-        });
-      },
-      onError: (err) => {
-        toast({
-          title: 'Error creating course',
-          description: String(err),
-          variant: 'destructive'
-        });
+      {
+        onSuccess: (courseId) => {
+          toast({
+            title: "Course created!",
+            description: `Course ID: ${courseId}`,
+          });
+          // Refresh list
+          list(
+            { type: "course", status: "published" },
+            {
+              onSuccess: setCourses,
+            }
+          );
+        },
+        onError: (err) => {
+          toast({
+            title: "Error creating course",
+            description: String(err),
+            variant: "destructive",
+          });
+        },
       }
-    });
+    );
   };
 
   if (loading) {
@@ -114,23 +123,19 @@ export function CourseList() {
     <div className="space-y-6">
       <div className="flex items-center justify-between">
         <h2 className="text-3xl font-bold">Courses</h2>
-        <Button onClick={handleCreateCourse}>
-          Create Course
-        </Button>
+        <Button onClick={handleCreateCourse}>Create Course</Button>
       </div>
 
       <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
-        {courses.map(course => (
+        {courses.map((course) => (
           <Card key={course._id}>
             <CardHeader>
               <CardTitle>{course.name}</CardTitle>
-              <CardDescription>
-                {course.properties.description || 'No description'}
-              </CardDescription>
+              <CardDescription>{course.properties.description || "No description"}</CardDescription>
             </CardHeader>
             <CardContent>
               <p className="text-sm text-muted-foreground">
-                Duration: {course.properties.duration || 'Not specified'}
+                Duration: {course.properties.duration || "Not specified"}
               </p>
             </CardContent>
           </Card>

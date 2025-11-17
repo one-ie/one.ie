@@ -4,24 +4,19 @@
  * Requires client:load hydration
  */
 
-'use client';
+"use client";
 
-import { useState } from 'react';
-import type { Product } from '@/types/ecommerce';
-import {
-  Dialog,
-  DialogContent,
-  DialogHeader,
-  DialogTitle,
-} from '@/components/ui/dialog';
-import { Button } from '@/components/ui/button';
-import { Badge } from '@/components/ui/badge';
-import { PriceDisplay } from '../static/PriceDisplay';
-import { ReviewStars } from '../static/ReviewStars';
-import { VariantSelector } from './VariantSelector';
-import { QuantitySelector } from './QuantitySelector';
-import { cartActions } from '@/stores/cart';
-import { toastActions } from './Toast';
+import { useState } from "react";
+import { Badge } from "@/components/ui/badge";
+import { Button } from "@/components/ui/button";
+import { Dialog, DialogContent, DialogHeader, DialogTitle } from "@/components/ui/dialog";
+import { cartActions } from "@/stores/cart";
+import type { Product } from "@/types/ecommerce";
+import { PriceDisplay } from "../static/PriceDisplay";
+import { ReviewStars } from "../static/ReviewStars";
+import { QuantitySelector } from "./QuantitySelector";
+import { toastActions } from "./Toast";
+import { VariantSelector } from "./VariantSelector";
 
 interface QuickViewModalProps {
   product: Product;
@@ -29,11 +24,7 @@ interface QuickViewModalProps {
   onOpenChange: (open: boolean) => void;
 }
 
-export function QuickViewModal({
-  product,
-  open,
-  onOpenChange,
-}: QuickViewModalProps) {
+export function QuickViewModal({ product, open, onOpenChange }: QuickViewModalProps) {
   const [currentImageIndex, setCurrentImageIndex] = useState(0);
   const [selectedVariants, setSelectedVariants] = useState<Record<string, string>>({});
   const [quantity, setQuantity] = useState(1);
@@ -41,9 +32,10 @@ export function QuickViewModal({
 
   const currentImage = product.images[currentImageIndex] || product.thumbnail;
   const hasDiscount = product.compareAtPrice && product.compareAtPrice > product.price;
-  const discountPercent = hasDiscount && product.compareAtPrice
-    ? Math.round(((product.compareAtPrice - product.price) / product.compareAtPrice) * 100)
-    : 0;
+  const discountPercent =
+    hasDiscount && product.compareAtPrice
+      ? Math.round(((product.compareAtPrice - product.price) / product.compareAtPrice) * 100)
+      : 0;
 
   const handleAddToCart = async () => {
     setIsAdding(true);
@@ -58,7 +50,7 @@ export function QuickViewModal({
       variants: selectedVariants,
     });
 
-    toastActions.success('Added to cart', `${quantity}x ${product.name} added to your cart`);
+    toastActions.success("Added to cart", `${quantity}x ${product.name} added to your cart`);
 
     setTimeout(() => {
       setIsAdding(false);
@@ -82,11 +74,7 @@ export function QuickViewModal({
           <div className="space-y-3">
             {/* Main Image */}
             <div className="relative aspect-square overflow-hidden rounded-lg bg-muted">
-              <img
-                src={currentImage}
-                alt={product.name}
-                className="h-full w-full object-cover"
-              />
+              <img src={currentImage} alt={product.name} className="h-full w-full object-cover" />
 
               {/* Badges */}
               <div className="absolute left-2 top-2 flex flex-col gap-2">
@@ -101,9 +89,7 @@ export function QuickViewModal({
                   </Badge>
                 )}
                 {product.featured && (
-                  <Badge className="bg-primary text-primary-foreground">
-                    Featured
-                  </Badge>
+                  <Badge className="bg-primary text-primary-foreground">Featured</Badge>
                 )}
               </div>
             </div>
@@ -117,8 +103,8 @@ export function QuickViewModal({
                     onClick={() => setCurrentImageIndex(index)}
                     className={`relative aspect-square w-16 flex-shrink-0 overflow-hidden rounded-md border-2 transition-all ${
                       index === currentImageIndex
-                        ? 'border-primary'
-                        : 'border-transparent hover:border-muted-foreground'
+                        ? "border-primary"
+                        : "border-transparent hover:border-muted-foreground"
                     }`}
                   >
                     <img
@@ -158,9 +144,7 @@ export function QuickViewModal({
             </div>
 
             {/* Description */}
-            <p className="text-sm text-muted-foreground line-clamp-3">
-              {product.description}
-            </p>
+            <p className="text-sm text-muted-foreground line-clamp-3">{product.description}</p>
 
             {/* Variants */}
             {product.variants && product.variants.length > 0 && (
@@ -209,11 +193,7 @@ export function QuickViewModal({
               >
                 {isAdding ? (
                   <>
-                    <svg
-                      className="mr-2 h-4 w-4 animate-spin"
-                      fill="none"
-                      viewBox="0 0 24 24"
-                    >
+                    <svg className="mr-2 h-4 w-4 animate-spin" fill="none" viewBox="0 0 24 24">
                       <circle
                         className="opacity-25"
                         cx="12"
@@ -231,7 +211,7 @@ export function QuickViewModal({
                     Adding...
                   </>
                 ) : !product.inStock ? (
-                  'Out of Stock'
+                  "Out of Stock"
                 ) : (
                   <>
                     <svg
@@ -252,11 +232,7 @@ export function QuickViewModal({
                 )}
               </Button>
 
-              <Button
-                onClick={handleViewFullDetails}
-                variant="outline"
-                className="w-full"
-              >
+              <Button onClick={handleViewFullDetails} variant="outline" className="w-full">
                 View Full Details
               </Button>
             </div>

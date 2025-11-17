@@ -1,17 +1,17 @@
 import { Context, Effect, Layer } from "effect";
-import { DataProviderService } from "@/providers/DataProvider";
 import type {
-  Group,
-  GroupType,
-  GroupStatus,
   CreateGroupInput,
-  UpdateGroupInput,
-  ListGroupsOptions,
+  DataProviderError,
+  Group,
   GroupCreateError,
   GroupNotFoundError,
-  DataProviderError,
+  GroupStatus,
+  GroupType,
+  ListGroupsOptions,
   QueryError,
+  UpdateGroupInput,
 } from "@/providers/DataProvider";
+import { DataProviderService } from "@/providers/DataProvider";
 
 export class GroupService extends Context.Tag("GroupService")<
   GroupService,
@@ -20,7 +20,10 @@ export class GroupService extends Context.Tag("GroupService")<
     readonly getBySlug: (slug: string) => Effect.Effect<Group, GroupNotFoundError>;
     readonly list: (options?: ListGroupsOptions) => Effect.Effect<Group[], QueryError>;
     readonly create: (input: CreateGroupInput) => Effect.Effect<string, GroupCreateError>;
-    readonly update: (id: string, input: UpdateGroupInput) => Effect.Effect<void, DataProviderError>;
+    readonly update: (
+      id: string,
+      input: UpdateGroupInput
+    ) => Effect.Effect<void, DataProviderError>;
     readonly delete: (id: string) => Effect.Effect<void, GroupNotFoundError>;
   }
 >() {
@@ -114,8 +117,9 @@ export class GroupService extends Context.Tag("GroupService")<
   }
 
   static findByName(name: string): Effect.Effect<Group | null, QueryError, GroupService> {
-    return Effect.map(GroupService.list(), (groups) =>
-      groups.find((g) => g.name.toLowerCase().includes(name.toLowerCase())) || null
+    return Effect.map(
+      GroupService.list(),
+      (groups) => groups.find((g) => g.name.toLowerCase().includes(name.toLowerCase())) || null
     );
   }
 }

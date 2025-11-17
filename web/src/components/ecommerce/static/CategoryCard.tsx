@@ -3,7 +3,7 @@
  * Displays collection with image and product count
  */
 
-import type { Category } from '@/types/ecommerce';
+import type { Category } from "@/types/ecommerce";
 
 interface CategoryCardProps {
   category: Category;
@@ -44,12 +44,10 @@ export function CategoryCard({ category }: CategoryCardProps) {
       <div className="p-4">
         <h3 className="text-lg font-semibold text-foreground">{category.name}</h3>
         {category.description && (
-          <p className="mt-1 text-sm text-muted-foreground line-clamp-2">
-            {category.description}
-          </p>
+          <p className="mt-1 text-sm text-muted-foreground line-clamp-2">{category.description}</p>
         )}
         <p className="mt-2 text-sm text-muted-foreground">
-          {category.productCount} {category.productCount === 1 ? 'product' : 'products'}
+          {category.productCount} {category.productCount === 1 ? "product" : "products"}
         </p>
       </div>
     </a>

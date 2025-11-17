@@ -4,79 +4,79 @@
  * Requires client:load hydration
  */
 
-'use client';
+"use client";
 
 /* global Node */
 
-import { useState, useEffect, useRef } from 'react';
-import type { FilterOptions } from '@/types/ecommerce';
-import { Button } from '@/components/ui/button';
-import { ChevronDown, TrendingUp, DollarSign, Clock, Star, Award } from 'lucide-react';
+import { Award, ChevronDown, Clock, DollarSign, Star, TrendingUp } from "lucide-react";
+import { useEffect, useRef, useState } from "react";
+import { Button } from "@/components/ui/button";
+import type { FilterOptions } from "@/types/ecommerce";
 
 interface SortDropdownProps {
-  value?: FilterOptions['sortBy'];
-  onChange?: (sortBy: FilterOptions['sortBy']) => void;
+  value?: FilterOptions["sortBy"];
+  onChange?: (sortBy: FilterOptions["sortBy"]) => void;
   persistPreference?: boolean;
 }
 
 interface SortOption {
-  value: FilterOptions['sortBy'];
+  value: FilterOptions["sortBy"];
   label: string;
   icon: React.ReactNode;
 }
 
 const sortOptions: SortOption[] = [
   {
-    value: 'popular',
-    label: 'Best Selling',
+    value: "popular",
+    label: "Best Selling",
     icon: <TrendingUp className="h-4 w-4" />,
   },
   {
-    value: 'price-asc',
-    label: 'Price: Low to High',
+    value: "price-asc",
+    label: "Price: Low to High",
     icon: <DollarSign className="h-4 w-4" />,
   },
   {
-    value: 'price-desc',
-    label: 'Price: High to Low',
+    value: "price-desc",
+    label: "Price: High to Low",
     icon: <DollarSign className="h-4 w-4" />,
   },
   {
-    value: 'newest',
-    label: 'Newest Arrivals',
+    value: "newest",
+    label: "Newest Arrivals",
     icon: <Clock className="h-4 w-4" />,
   },
   {
-    value: 'rating',
-    label: 'Highest Rated',
+    value: "rating",
+    label: "Highest Rated",
     icon: <Star className="h-4 w-4" />,
   },
 ];
 
 export function SortDropdown({
-  value = 'newest',
+  value = "newest",
   onChange,
   persistPreference = true,
 }: SortDropdownProps) {
   const [isOpen, setIsOpen] = useState(false);
-  const [selectedSort, setSelectedSort] = useState<FilterOptions['sortBy']>(value);
+  const [selectedSort, setSelectedSort] = useState<FilterOptions["sortBy"]>(value);
   const dropdownRef = useRef<HTMLDivElement>(null);
 
   // Load sort preference from localStorage
   useEffect(() => {
-    if (persistPreference && typeof window !== 'undefined') {
-      const saved = localStorage.getItem('product-sort-preference');
+    if (persistPreference && typeof window !== "undefined") {
+      const saved = localStorage.getItem("product-sort-preference");
       if (saved && sortOptions.some((opt) => opt.value === saved)) {
-        setSelectedSort(saved as FilterOptions['sortBy']);
-        onChange?.(saved as FilterOptions['sortBy']);
+        setSelectedSort(saved as FilterOptions["sortBy"]);
+        onChange?.(saved as FilterOptions["sortBy"]);
       }
     }
   }, [persistPreference, onChange]);
 
   // Save sort preference to localStorage
   useEffect(() => {
-    if (persistPreference && typeof window !== 'undefined') {
-      localStorage.setItem('product-sort-preference', selectedSort || 'newest');
+    if (persistPreference && typeof window !== "undefined") {
+      localStorage.setItem("product-sort-preference", selectedSort || "newest");
     }
   }, [selectedSort, persistPreference]);
 
@@ -88,11 +88,11 @@ export function SortDropdown({
       }
     };
 
-    document.addEventListener('mousedown', handleClickOutside);
-    return () => document.removeEventListener('mousedown', handleClickOutside);
+    document.addEventListener("mousedown", handleClickOutside);
+    return () => document.removeEventListener("mousedown", handleClickOutside);
   }, []);
 
-  const handleSelect = (sortValue: FilterOptions['sortBy']) => {
+  const handleSelect = (sortValue: FilterOptions["sortBy"]) => {
     setSelectedSort(sortValue);
     setIsOpen(false);
     onChange?.(sortValue);
@@ -110,11 +110,9 @@ export function SortDropdown({
       >
         <div className="flex items-center gap-2">
           {selectedOption?.icon}
-          <span className="text-sm">{selectedOption?.label || 'Sort By'}</span>
+          <span className="text-sm">{selectedOption?.label || "Sort By"}</span>
         </div>
-        <ChevronDown
-          className={`h-4 w-4 transition-transform ${isOpen ? 'rotate-180' : ''}`}
-        />
+        <ChevronDown className={`h-4 w-4 transition-transform ${isOpen ? "rotate-180" : ""}`} />
       </Button>
 
       {/* Dropdown Menu */}
@@ -127,11 +125,15 @@ export function SortDropdown({
                 onClick={() => handleSelect(option.value)}
                 className={`flex w-full items-center gap-3 rounded-md px-3 py-2.5 text-sm transition-colors ${
                   selectedSort === option.value
-                    ? 'bg-accent text-accent-foreground font-medium'
-                    : 'text-foreground hover:bg-accent hover:text-accent-foreground'
+                    ? "bg-accent text-accent-foreground font-medium"
+                    : "text-foreground hover:bg-accent hover:text-accent-foreground"
                 }`}
               >
-                <span className={selectedSort === option.value ? 'text-primary' : 'text-muted-foreground'}>
+                <span
+                  className={
+                    selectedSort === option.value ? "text-primary" : "text-muted-foreground"
+                  }
+                >
                   {option.icon}
                 </span>
                 <span>{option.label}</span>

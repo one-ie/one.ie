@@ -1,20 +1,12 @@
 ---
-import Layout from '../../../layouts/Layout.astro';
-import { Badge } from '@/components/ui/badge';
-import {
-  Card,
-  CardHeader,
-  CardTitle,
-  CardDescription,
-} from '@/components/ui/card';
-import { products } from '../lib/products';
-import type { Product } from '../lib/types';
+import { products } from "../lib/products";
+import type { Product } from "../lib/types";
 
 // Get URL parameters for filtering
 const url = new URL(Astro.request.url);
-const category = url.searchParams.get('category');
-const filter = url.searchParams.get('filter');
-const subcategory = url.searchParams.get('subcategory');
+const category = url.searchParams.get("category");
+const filter = url.searchParams.get("filter");
+const subcategory = url.searchParams.get("subcategory");
 
 // Filter products based on parameters
 let filteredProducts = products;
@@ -27,17 +19,17 @@ if (subcategory) {
   filteredProducts = filteredProducts.filter((p: Product) => p.subcategory === subcategory);
 }
 
-if (filter === 'new') {
+if (filter === "new") {
   filteredProducts = filteredProducts.filter((p: Product) => p.isNew);
-} else if (filter === 'sale') {
+} else if (filter === "sale") {
   filteredProducts = filteredProducts.filter((p: Product) => p.isSale);
 }
 
 // Get page title based on filters
-let pageTitle = 'Shop All';
-if (category) pageTitle = `Shop ${category.charAt(0).toUpperCase() + category.slice(1)}`;
-if (filter === 'new') pageTitle = 'New Arrivals';
-if (filter === 'sale') pageTitle = 'Sale Items';
+let _pageTitle = "Shop All";
+if (category) _pageTitle = `Shop ${category.charAt(0).toUpperCase() + category.slice(1)}`;
+if (filter === "new") _pageTitle = "New Arrivals";
+if (filter === "sale") _pageTitle = "Sale Items";
 ---
 
 <Layout title={`${pageTitle} | SHOS`}>

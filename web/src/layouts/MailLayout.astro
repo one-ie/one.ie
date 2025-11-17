@@ -1,18 +1,15 @@
 ---
-import ThemeInit from '@/components/ThemeInit.astro';
-import '../styles/global.css';
+import "../styles/global.css";
 
 interface Props {
   title: string;
   description?: string;
 }
 
-const {
-  title,
-  description = 'A beautiful mail application built with Astro and shadcn/ui',
-} = Astro.props;
+const { title, description = "A beautiful mail application built with Astro and shadcn/ui" } =
+  Astro.props;
 
-const canonicalURL = new URL(Astro.url.pathname, Astro.site);
+const _canonicalURL = new URL(Astro.url.pathname, Astro.site);
 ---
 
 <!doctype html>

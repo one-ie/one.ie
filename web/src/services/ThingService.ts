@@ -8,12 +8,12 @@
 
 import { Effect } from "effect";
 import {
-  DataProviderService,
   type CreateThingInput,
-  type UpdateThingInput,
+  DataProviderService,
   type ListThingsOptions,
-  type ThingStatus,
   ThingCreateError,
+  type ThingStatus,
+  type UpdateThingInput,
 } from "../providers/DataProvider";
 
 // ============================================================================
@@ -240,9 +240,7 @@ export class ThingService {
 
       // Filter by name (case-insensitive)
       const lowerQuery = query.toLowerCase();
-      return things.filter((thing) =>
-        thing.name.toLowerCase().includes(lowerQuery)
-      );
+      return things.filter((thing) => thing.name.toLowerCase().includes(lowerQuery));
     });
 
   /**

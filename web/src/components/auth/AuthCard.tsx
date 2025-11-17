@@ -1,4 +1,4 @@
-import * as React from "react";
+import type * as React from "react";
 import {
   Card,
   CardContent,
@@ -15,12 +15,7 @@ interface AuthCardProps {
   footer?: React.ReactNode;
 }
 
-export function AuthCard({
-  title,
-  description,
-  children,
-  footer,
-}: AuthCardProps) {
+export function AuthCard({ title, description, children, footer }: AuthCardProps) {
   return (
     <Card className="w-full max-w-md mx-auto">
       <CardHeader>
@@ -28,9 +23,7 @@ export function AuthCard({
         {description && <CardDescription>{description}</CardDescription>}
       </CardHeader>
       <CardContent>{children}</CardContent>
-      {footer && (
-        <CardFooter className="flex flex-col space-y-4">{footer}</CardFooter>
-      )}
+      {footer && <CardFooter className="flex flex-col space-y-4">{footer}</CardFooter>}
     </Card>
   );
 }

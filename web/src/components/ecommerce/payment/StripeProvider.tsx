@@ -8,10 +8,10 @@
  * </StripeProvider>
  */
 
-import { useEffect, useState } from 'react';
-import { loadStripe, type Stripe, type StripeElements } from '@stripe/stripe-js';
-import { Elements } from '@stripe/react-stripe-js';
-import type { StripeElementsAppearance } from '@/types/stripe';
+import { Elements } from "@stripe/react-stripe-js";
+import { loadStripe, type Stripe } from "@stripe/stripe-js";
+import { useEffect, useState } from "react";
+import type { StripeElementsAppearance } from "@/types/stripe";
 
 interface StripeProviderProps {
   children: React.ReactNode;
@@ -26,7 +26,7 @@ const getStripe = () => {
   if (!stripePromise) {
     const key = import.meta.env.PUBLIC_STRIPE_PUBLISHABLE_KEY;
     if (!key) {
-      console.error('Missing PUBLIC_STRIPE_PUBLISHABLE_KEY environment variable');
+      console.error("Missing PUBLIC_STRIPE_PUBLISHABLE_KEY environment variable");
       return null;
     }
     stripePromise = loadStripe(key);
@@ -39,22 +39,22 @@ const getStripe = () => {
  * Matches ONE Platform design system (Tailwind v4)
  */
 const defaultAppearance: StripeElementsAppearance = {
-  theme: 'stripe',
+  theme: "stripe",
   variables: {
-    colorPrimary: 'hsl(222.2 47.4% 11.2%)',
-    colorBackground: 'hsl(0 0% 100%)',
-    colorText: 'hsl(222.2 84% 4.9%)',
-    colorDanger: 'hsl(0 84.2% 60.2%)',
-    fontFamily: 'system-ui, sans-serif',
-    spacingUnit: '4px',
-    borderRadius: '6px',
+    colorPrimary: "hsl(222.2 47.4% 11.2%)",
+    colorBackground: "hsl(0 0% 100%)",
+    colorText: "hsl(222.2 84% 4.9%)",
+    colorDanger: "hsl(0 84.2% 60.2%)",
+    fontFamily: "system-ui, sans-serif",
+    spacingUnit: "4px",
+    borderRadius: "6px",
   },
 };
 
 export function StripeProvider({
   children,
   clientSecret,
-  appearance = defaultAppearance
+  appearance = defaultAppearance,
 }: StripeProviderProps) {
   const [stripe, setStripe] = useState<Stripe | null>(null);
   const [error, setError] = useState<string | null>(null);
@@ -64,13 +64,13 @@ export function StripeProvider({
       try {
         const stripeInstance = await getStripe();
         if (!stripeInstance) {
-          setError('Failed to load Stripe. Please check your configuration.');
+          setError("Failed to load Stripe. Please check your configuration.");
           return;
         }
         setStripe(stripeInstance);
       } catch (err) {
-        console.error('Stripe initialization error:', err);
-        setError('Failed to initialize payment system.');
+        console.error("Stripe initialization error:", err);
+        setError("Failed to initialize payment system.");
       }
     };
 
@@ -99,7 +99,7 @@ export function StripeProvider({
   const options = {
     clientSecret,
     appearance,
-    loader: 'auto' as const,
+    loader: "auto" as const,
   };
 
   return (

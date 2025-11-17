@@ -1,34 +1,17 @@
-'use client';
+"use client";
 
-import { useState } from 'react';
-import { Calendar, Flame, Sparkles } from 'lucide-react';
-
-import { Badge } from '@/components/ui/badge';
-import { Button } from '@/components/ui/button';
-import {
-  Card,
-  CardContent,
-  CardDescription,
-  CardHeader,
-  CardTitle,
-} from '@/components/ui/card';
-import { Input } from '@/components/ui/input';
-import { Label } from '@/components/ui/label';
-import { Switch } from '@/components/ui/switch';
-import {
-  Tabs,
-  TabsContent,
-  TabsList,
-  TabsTrigger,
-} from '@/components/ui/tabs';
-import { Textarea } from '@/components/ui/textarea';
-import {
-  Tooltip,
-  TooltipContent,
-  TooltipProvider,
-  TooltipTrigger,
-} from '@/components/ui/tooltip';
-import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
+import { Calendar, Flame, Sparkles } from "lucide-react";
+import { useState } from "react";
+import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
+import { Badge } from "@/components/ui/badge";
+import { Button } from "@/components/ui/button";
+import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
+import { Input } from "@/components/ui/input";
+import { Label } from "@/components/ui/label";
+import { Switch } from "@/components/ui/switch";
+import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
+import { Textarea } from "@/components/ui/textarea";
+import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from "@/components/ui/tooltip";
 
 export function PaletteShowcase() {
   const [autoPilot, setAutoPilot] = useState(true);
@@ -71,9 +54,7 @@ export function PaletteShowcase() {
                   View component tokens
                 </Button>
               </TooltipTrigger>
-              <TooltipContent>
-                Customizable via CSS variables & Tailwind primitives.
-              </TooltipContent>
+              <TooltipContent>Customizable via CSS variables & Tailwind primitives.</TooltipContent>
             </Tooltip>
           </TooltipProvider>
         </CardContent>
@@ -173,9 +154,7 @@ export function PaletteShowcase() {
                 <span className="rounded-full bg-foreground/10 px-3 py-1">
                   Real-time copy suggestions
                 </span>
-                <span className="rounded-full bg-muted px-3 py-1">
-                  Component versioning
-                </span>
+                <span className="rounded-full bg-muted px-3 py-1">Component versioning</span>
               </div>
             </TabsContent>
             <TabsContent value="notes" className="space-y-4">

@@ -1,4 +1,4 @@
-import { Button } from '@/components/ui/button';
+import { Button } from "@/components/ui/button";
 
 export function Hero() {
   return (
@@ -7,11 +7,7 @@ export function Hero() {
         <div className="flex flex-col items-center text-center space-y-8">
           {/* Logo */}
           <div className="w-32 h-32 md:w-40 md:h-40">
-            <img
-              src="/logo.svg"
-              alt="ONE Platform"
-              className="w-full h-full object-contain"
-            />
+            <img src="/logo.svg" alt="ONE Platform" className="w-full h-full object-contain" />
           </div>
 
           {/* Headline */}
@@ -29,14 +25,10 @@ export function Hero() {
           {/* CTA Buttons */}
           <div className="flex flex-col sm:flex-row gap-4 pt-4">
             <Button size="lg" className="text-lg px-8" asChild>
-              <a href="/account/signup">
-                Get Started
-              </a>
+              <a href="/account/signup">Get Started</a>
             </Button>
             <Button size="lg" variant="outline" className="text-lg px-8" asChild>
-              <a href="/docs">
-                Learn More
-              </a>
+              <a href="/docs">Learn More</a>
             </Button>
           </div>
         </div>

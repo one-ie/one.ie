@@ -1,11 +1,11 @@
-'use client';
+"use client";
 
-import { Card } from '@/components/ui/card';
-import { Badge } from '@/components/ui/badge';
-import { FileText, Tag } from 'lucide-react';
-import type { CollectionEntry } from 'astro:content';
+import type { CollectionEntry } from "astro:content";
+import { FileText, Tag } from "lucide-react";
+import { Badge } from "@/components/ui/badge";
+import { Card } from "@/components/ui/card";
 
-type DocEntry = CollectionEntry<'docs'>;
+type DocEntry = CollectionEntry<"docs">;
 
 interface DocListProps {
   entries: DocEntry[];
@@ -39,21 +39,21 @@ export function DocList({ entries, onTagClick }: DocListProps) {
                   {entry.data.description}
                 </p>
                 <div className="flex flex-wrap gap-1 mt-1">
-                  {entry.data.tags ? (
-                    entry.data.tags.slice(0, 4).map((tag) => (
-                      <a
-                        key={tag}
-                        href={createTagUrl(tag)}
-                        className="no-underline hover:no-underline"
-                        onClick={(e) => e.stopPropagation()}
-                      >
-                        <Badge className="text-xs px-2 py-0.5 bg-primary/10 hover:bg-primary/20 text-primary border-none flex items-center gap-1 cursor-pointer">
-                          <Tag className="w-3 h-3" />
-                          <span>{tag}</span>
-                        </Badge>
-                      </a>
-                    ))
-                  ) : null}
+                  {entry.data.tags
+                    ? entry.data.tags.slice(0, 4).map((tag) => (
+                        <a
+                          key={tag}
+                          href={createTagUrl(tag)}
+                          className="no-underline hover:no-underline"
+                          onClick={(e) => e.stopPropagation()}
+                        >
+                          <Badge className="text-xs px-2 py-0.5 bg-primary/10 hover:bg-primary/20 text-primary border-none flex items-center gap-1 cursor-pointer">
+                            <Tag className="w-3 h-3" />
+                            <span>{tag}</span>
+                          </Badge>
+                        </a>
+                      ))
+                    : null}
                   {entry.data.tags && entry.data.tags.length > 4 && (
                     <span className="text-xs text-muted-foreground">
                       +{entry.data.tags.length - 4}

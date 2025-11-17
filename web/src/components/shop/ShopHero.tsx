@@ -4,8 +4,6 @@
  * Features: Glass morphism, floating elements, particle effects, premium gradients
  */
 
-import { Badge } from '@/components/ui/badge';
-
 interface ShopHeroProps {
   stats?: {
     customers: string;
@@ -16,10 +14,10 @@ interface ShopHeroProps {
 
 export function ShopHero({
   stats = {
-    customers: '50k+',
-    rating: '4.9',
-    support: '24/7'
-  }
+    customers: "50k+",
+    rating: "4.9",
+    support: "24/7",
+  },
 }: ShopHeroProps) {
   return (
     <section className="relative overflow-hidden py-32 md:py-40 lg:py-48">
@@ -30,15 +28,15 @@ export function ShopHero({
       <div className="absolute inset-0 opacity-40">
         <div
           className="absolute left-0 top-0 h-[600px] w-[600px] -translate-x-1/2 -translate-y-1/2 rounded-full bg-gradient-to-br from-primary/30 to-purple-500/20 blur-[120px]"
-          style={{ animation: 'float 8s ease-in-out infinite' }}
+          style={{ animation: "float 8s ease-in-out infinite" }}
         />
         <div
           className="absolute right-0 bottom-0 h-[700px] w-[700px] translate-x-1/2 translate-y-1/2 rounded-full bg-gradient-to-br from-secondary/30 to-pink-500/20 blur-[140px]"
-          style={{ animation: 'float 10s ease-in-out infinite', animationDelay: '2s' }}
+          style={{ animation: "float 10s ease-in-out infinite", animationDelay: "2s" }}
         />
         <div
           className="absolute left-1/2 top-1/2 h-[500px] w-[500px] -translate-x-1/2 -translate-y-1/2 rounded-full bg-gradient-to-br from-violet-500/20 to-blue-500/20 blur-[100px]"
-          style={{ animation: 'float 12s ease-in-out infinite', animationDelay: '4s' }}
+          style={{ animation: "float 12s ease-in-out infinite", animationDelay: "4s" }}
         />
       </div>
 
@@ -46,36 +44,26 @@ export function ShopHero({
       <div
         className="absolute inset-0 bg-[linear-gradient(rgba(255,255,255,.02)_1px,transparent_1px),linear-gradient(90deg,rgba(255,255,255,.02)_1px,transparent_1px)] bg-[size:64px_64px]"
         style={{
-          maskImage: 'radial-gradient(ellipse 80% 50% at 50% 50%, black, transparent)'
+          maskImage: "radial-gradient(ellipse 80% 50% at 50% 50%, black, transparent)",
         }}
       />
 
       <div className="container relative mx-auto px-4">
         <div className="mx-auto max-w-5xl text-center">
-
           {/* Glass Morphism Trust Badges */}
           <div
             className="mb-12 flex flex-wrap justify-center gap-4"
-            style={{ animation: 'fadeIn 1s ease-out' }}
+            style={{ animation: "fadeIn 1s ease-out" }}
           >
-            <TrustBadge
-              icon={<CheckIcon />}
-              label="Free Shipping $50+"
-            />
-            <TrustBadge
-              icon={<ShieldIcon />}
-              label="30-Day Returns"
-            />
-            <TrustBadge
-              icon={<StarIcon />}
-              label="4.9/5 Stars (2.5k)"
-            />
+            <TrustBadge icon={<CheckIcon />} label="Free Shipping $50+" />
+            <TrustBadge icon={<ShieldIcon />} label="30-Day Returns" />
+            <TrustBadge icon={<StarIcon />} label="4.9/5 Stars (2.5k)" />
           </div>
 
           {/* Ultra Premium Main Heading */}
           <h1
             className="text-6xl font-black tracking-tight text-foreground md:text-7xl lg:text-8xl xl:text-9xl"
-            style={{ animation: 'fadeInUp 1s ease-out 0.2s both' }}
+            style={{ animation: "fadeInUp 1s ease-out 0.2s both" }}
           >
             <span className="block mb-4">Premium Quality</span>
             <span className="block bg-gradient-to-r from-primary via-purple-600 to-secondary bg-clip-text text-transparent animate-gradient">
@@ -86,7 +74,7 @@ export function ShopHero({
           {/* Elevated Subheading */}
           <p
             className="mx-auto mt-10 max-w-3xl text-xl text-muted-foreground md:text-2xl lg:text-3xl leading-relaxed font-light"
-            style={{ animation: 'fadeInUp 1s ease-out 0.4s both' }}
+            style={{ animation: "fadeInUp 1s ease-out 0.4s both" }}
           >
             Discover our handpicked collection of premium products.
             <span className="block mt-3 font-semibold bg-gradient-to-r from-primary to-secondary bg-clip-text text-transparent">
@@ -98,13 +86,9 @@ export function ShopHero({
           {/* Premium CTA Buttons */}
           <div
             className="mt-14 flex flex-col gap-6 sm:flex-row sm:justify-center"
-            style={{ animation: 'fadeInUp 1s ease-out 0.6s both' }}
+            style={{ animation: "fadeInUp 1s ease-out 0.6s both" }}
           >
-            <PremiumButton
-              href="/products"
-              variant="primary"
-              icon={<ShoppingBagIcon />}
-            >
+            <PremiumButton href="/products" variant="primary" icon={<ShoppingBagIcon />}>
               Shop Collection
             </PremiumButton>
 
@@ -121,20 +105,11 @@ export function ShopHero({
           {/* Glass Morphism Stats */}
           <div
             className="mt-20 grid grid-cols-3 gap-8 border-t border-white/10 pt-16"
-            style={{ animation: 'fadeInUp 1s ease-out 0.8s both' }}
+            style={{ animation: "fadeInUp 1s ease-out 0.8s both" }}
           >
-            <StatCard
-              value={stats.customers}
-              label="Happy Customers"
-            />
-            <StatCard
-              value={stats.rating}
-              label="Average Rating"
-            />
-            <StatCard
-              value={stats.support}
-              label="Support Available"
-            />
+            <StatCard value={stats.customers} label="Happy Customers" />
+            <StatCard value={stats.rating} label="Average Rating" />
+            <StatCard value={stats.support} label="Support Available" />
           </div>
         </div>
       </div>
@@ -174,27 +149,33 @@ function TrustBadge({ icon, label }: { icon: React.ReactNode; label: string }) {
 // Premium Button Component
 interface PremiumButtonProps {
   href: string;
-  variant: 'primary' | 'secondary';
+  variant: "primary" | "secondary";
   icon?: React.ReactNode;
-  iconPosition?: 'left' | 'right';
+  iconPosition?: "left" | "right";
   children: React.ReactNode;
 }
 
-function PremiumButton({ href, variant, icon, iconPosition = 'left', children }: PremiumButtonProps) {
-  if (variant === 'primary') {
+function PremiumButton({
+  href,
+  variant,
+  icon,
+  iconPosition = "left",
+  children,
+}: PremiumButtonProps) {
+  if (variant === "primary") {
     return (
       <a
         href={href}
         className="group relative inline-flex items-center justify-center gap-3 overflow-hidden rounded-full bg-gradient-to-r from-primary via-purple-600 to-secondary px-10 py-5 text-lg font-bold text-white shadow-2xl transition-all duration-500 hover:scale-105 hover:shadow-[0_20px_60px_rgba(0,0,0,0.3)]"
       >
         <div className="absolute inset-0 bg-gradient-to-r from-primary via-purple-600 to-secondary opacity-0 blur-xl group-hover:opacity-100 transition-opacity duration-500" />
-        {iconPosition === 'left' && icon && (
+        {iconPosition === "left" && icon && (
           <span className="relative transition-transform duration-500 group-hover:rotate-12">
             {icon}
           </span>
         )}
         <span className="relative">{children}</span>
-        {iconPosition === 'right' && icon && (
+        {iconPosition === "right" && icon && (
           <span className="relative transition-transform duration-500 group-hover:translate-x-1">
             {icon}
           </span>
@@ -248,7 +229,12 @@ function CheckIcon() {
 function ShieldIcon() {
   return (
     <svg className="h-5 w-5 text-primary" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
+      <path
+        strokeLinecap="round"
+        strokeLinejoin="round"
+        strokeWidth={2}
+        d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"
+      />
     </svg>
   );
 }
@@ -264,7 +250,12 @@ function StarIcon() {
 function ShoppingBagIcon() {
   return (
     <svg className="h-6 w-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M16 11V7a4 4 0 00-8 0v4M5 9h14l1 12H4L5 9z" />
+      <path
+        strokeLinecap="round"
+        strokeLinejoin="round"
+        strokeWidth={2}
+        d="M16 11V7a4 4 0 00-8 0v4M5 9h14l1 12H4L5 9z"
+      />
     </svg>
   );
 }
@@ -272,7 +263,12 @@ function ShoppingBagIcon() {
 function ArrowRightIcon() {
   return (
     <svg className="h-6 w-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17 8l4 4m0 0l-4 4m4-4H3" />
+      <path
+        strokeLinecap="round"
+        strokeLinejoin="round"
+        strokeWidth={2}
+        d="M17 8l4 4m0 0l-4 4m4-4H3"
+      />
     </svg>
   );
 }

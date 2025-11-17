@@ -1,10 +1,10 @@
-import React, { useState } from "react";
-import { Card, CardHeader, CardTitle, CardDescription, CardContent } from "@/components/ui/card";
+import type React from "react";
+import { useState } from "react";
 import { Button } from "@/components/ui/button";
+import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Textarea } from "@/components/ui/textarea";
-import { cn } from "@/lib/utils";
 
 export function DynamicForm({ data, layout }: any) {
   const [isSubmitting, setIsSubmitting] = useState(false);
@@ -15,7 +15,7 @@ export function DynamicForm({ data, layout }: any) {
     setIsSubmitting(true);
 
     // Simulate form submission
-    await new Promise(resolve => setTimeout(resolve, 1000));
+    await new Promise((resolve) => setTimeout(resolve, 1000));
 
     setIsSubmitting(false);
     setSubmitted(true);
@@ -47,7 +47,7 @@ export function DynamicForm({ data, layout }: any) {
                   {field.label}
                   {field.required && <span className="text-destructive ml-1">*</span>}
                 </Label>
-                {field.type === 'textarea' ? (
+                {field.type === "textarea" ? (
                   <Textarea
                     id={field.name}
                     name={field.name}
@@ -59,7 +59,7 @@ export function DynamicForm({ data, layout }: any) {
                 ) : (
                   <Input
                     id={field.name}
-                    type={field.type || 'text'}
+                    type={field.type || "text"}
                     name={field.name}
                     required={field.required}
                     placeholder={field.placeholder}
@@ -69,12 +69,8 @@ export function DynamicForm({ data, layout }: any) {
                 )}
               </div>
             ))}
-            <Button
-              type="submit"
-              disabled={isSubmitting}
-              className="w-full"
-            >
-              {isSubmitting ? "Sending..." : (data.submitLabel || "Submit")}
+            <Button type="submit" disabled={isSubmitting} className="w-full">
+              {isSubmitting ? "Sending..." : data.submitLabel || "Submit"}
             </Button>
           </form>
         )}

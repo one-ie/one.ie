@@ -12,7 +12,7 @@ export const GET: APIRoute = async ({ url, cookies, redirect, locals }) => {
 
   try {
     // Access runtime environment variables from Cloudflare context
-    // @ts-ignore - Cloudflare runtime is available but not typed
+    // @ts-expect-error - Cloudflare runtime is available but not typed
     const runtime = locals.runtime;
     const env = runtime?.env || {};
 
@@ -40,20 +40,26 @@ export const GET: APIRoute = async ({ url, cookies, redirect, locals }) => {
     if (!tokenResponse.ok) {
       const text = await tokenResponse.text();
       console.error("Google token exchange failed:", tokenResponse.status, text.substring(0, 200));
-      return redirect(`/account/signin?error=google_token_failed&details=${encodeURIComponent('Google API error: ' + tokenResponse.status)}`);
+      return redirect(
+        `/account/signin?error=google_token_failed&details=${encodeURIComponent(`Google API error: ${tokenResponse.status}`)}`
+      );
     }
 
     const tokenText = await tokenResponse.text();
     let tokenData: any;
     try {
       tokenData = JSON.parse(tokenText);
-    } catch (e) {
+    } catch (_e) {
       console.error("Failed to parse Google token response:", tokenText.substring(0, 200));
-      return redirect(`/account/signin?error=google_token_invalid&details=${encodeURIComponent('Invalid response from Google token API')}`);
+      return redirect(
+        `/account/signin?error=google_token_invalid&details=${encodeURIComponent("Invalid response from Google token API")}`
+      );
     }
 
     if (!tokenData.access_token) {
-      return redirect(`/account/signin?error=google_token_failed&details=${encodeURIComponent(tokenData.error_description || tokenData.error || 'No access token')}`);
+      return redirect(
+        `/account/signin?error=google_token_failed&details=${encodeURIComponent(tokenData.error_description || tokenData.error || "No access token")}`
+      );
     }
 
     // Get user info from Google
@@ -68,16 +74,20 @@ export const GET: APIRoute = async ({ url, cookies, redirect, locals }) => {
     if (!userResponse.ok) {
       const text = await userResponse.text();
       console.error("Google user fetch failed:", userResponse.status, text.substring(0, 200));
-      return redirect(`/account/signin?error=google_user_failed&details=${encodeURIComponent('Google API error: ' + userResponse.status)}`);
+      return redirect(
+        `/account/signin?error=google_user_failed&details=${encodeURIComponent(`Google API error: ${userResponse.status}`)}`
+      );
     }
 
     let googleUser: any;
     try {
       googleUser = await userResponse.json();
-    } catch (e) {
+    } catch (_e) {
       const text = await userResponse.text();
       console.error("Failed to parse Google user response:", text.substring(0, 200));
-      return redirect(`/account/signin?error=google_user_invalid&details=${encodeURIComponent('Invalid response from Google user API')}`);
+      return redirect(
+        `/account/signin?error=google_user_invalid&details=${encodeURIComponent("Invalid response from Google user API")}`
+      );
     }
 
     if (!googleUser.email) {

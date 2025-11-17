@@ -1,33 +1,33 @@
 ---
+import Layout from "@/layouts/Layout.astro";
 export const prerender = false; // Must be server-rendered for Stripe session creation
 
-import Layout from '../layouts/Layout.astro';
-import { Stripe as StripeClient } from 'stripe';
+import { Stripe as StripeClient } from "stripe";
 
 let session;
-let error = null;
+let _error = null;
 
 try {
   const stripeKey = import.meta.env.STRIPE_SECRET_KEY;
   if (!stripeKey) {
-    throw new Error('Stripe secret key is not configured');
+    throw new Error("Stripe secret key is not configured");
   }
 
   const stripe = new StripeClient(stripeKey, {
-    apiVersion: '2025-09-30.clover',
+    apiVersion: "2025-09-30.clover",
   });
 
   const { origin } = Astro.url;
-  console.log('Creating Stripe session with origin:', origin); // Debug log
+  console.log("Creating Stripe session with origin:", origin); // Debug log
 
   // Get price ID from environment variable
   const priceId = import.meta.env.STRIPE_COURSE_PRICE_ID;
   if (!priceId) {
-    throw new Error('STRIPE_COURSE_PRICE_ID is not configured. Run: bun run stripe:setup');
+    throw new Error("STRIPE_COURSE_PRICE_ID is not configured. Run: bun run stripe:setup");
   }
 
   session = await stripe.checkout.sessions.create({
-    mode: 'payment',
+    mode: "payment",
     line_items: [
       {
         price: priceId,
@@ -42,15 +42,12 @@ try {
     return Astro.redirect(session.url);
   }
 } catch (e) {
-  console.error('Stripe error details:', {
+  console.error("Stripe error details:", {
     error: e,
-    message: e instanceof Error ? e.message : 'Unknown error',
-    env: import.meta.env.STRIPE_SECRET_KEY ? 'Key exists' : 'Key missing',
+    message: e instanceof Error ? e.message : "Unknown error",
+    env: import.meta.env.STRIPE_SECRET_KEY ? "Key exists" : "Key missing",
   });
-  error =
-    e instanceof Error
-      ? e.message
-      : 'An error occurred with the payment system';
+  _error = e instanceof Error ? e.message : "An error occurred with the payment system";
 }
 ---
 

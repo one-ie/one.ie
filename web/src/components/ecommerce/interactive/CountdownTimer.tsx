@@ -4,15 +4,15 @@
  * Auto-updates every second
  */
 
-'use client';
+"use client";
 
-import { useEffect, useState } from 'react';
-import { motion } from 'framer-motion';
+import { motion } from "framer-motion";
+import { useEffect, useState } from "react";
 
 interface CountdownTimerProps {
   endDate: Date;
   label?: string;
-  size?: 'sm' | 'md' | 'lg';
+  size?: "sm" | "md" | "lg";
   onComplete?: () => void;
 }
 
@@ -41,9 +41,9 @@ function calculateTimeRemaining(endDate: Date): TimeRemaining {
 
 export function CountdownTimer({
   endDate,
-  label = 'Sale ends in',
-  size = 'md',
-  onComplete
+  label = "Sale ends in",
+  size = "md",
+  onComplete,
 }: CountdownTimerProps) {
   const [timeRemaining, setTimeRemaining] = useState<TimeRemaining>(
     calculateTimeRemaining(endDate)
@@ -64,11 +64,7 @@ export function CountdownTimer({
   }, [endDate, onComplete]);
 
   if (timeRemaining.total <= 0) {
-    return (
-      <div className="text-sm text-muted-foreground font-medium">
-        Sale has ended
-      </div>
-    );
+    return <div className="text-sm text-muted-foreground font-medium">Sale has ended</div>;
   }
 
   // Red color when less than 1 hour remaining
@@ -76,15 +72,15 @@ export function CountdownTimer({
   const totalHours = timeRemaining.days * 24 + timeRemaining.hours;
 
   const sizeClasses = {
-    sm: 'text-xs',
-    md: 'text-sm',
-    lg: 'text-base',
+    sm: "text-xs",
+    md: "text-sm",
+    lg: "text-base",
   };
 
   const digitClasses = {
-    sm: 'text-lg',
-    md: 'text-2xl',
-    lg: 'text-3xl',
+    sm: "text-lg",
+    md: "text-2xl",
+    lg: "text-3xl",
   };
 
   return (
@@ -94,7 +90,9 @@ export function CountdownTimer({
       className={`inline-flex flex-col gap-2 ${sizeClasses[size]}`}
     >
       {label && (
-        <div className={`font-medium ${isUrgent ? 'text-red-600 dark:text-red-400' : 'text-muted-foreground'}`}>
+        <div
+          className={`font-medium ${isUrgent ? "text-red-600 dark:text-red-400" : "text-muted-foreground"}`}
+        >
           {label}
         </div>
       )}
@@ -150,7 +148,7 @@ export function CountdownTimer({
 interface TimeUnitProps {
   value: number;
   label: string;
-  size: 'sm' | 'md' | 'lg';
+  size: "sm" | "md" | "lg";
   digitClass: string;
   isUrgent: boolean;
 }
@@ -166,26 +164,22 @@ function TimeUnit({ value, label, size, digitClass, isUrgent }: TimeUnitProps) {
     >
       <div
         className={`font-bold tabular-nums ${digitClass} ${
-          isUrgent
-            ? 'text-red-600 dark:text-red-400'
-            : 'text-foreground'
+          isUrgent ? "text-red-600 dark:text-red-400" : "text-foreground"
         }`}
       >
-        {value.toString().padStart(2, '0')}
+        {value.toString().padStart(2, "0")}
       </div>
-      <div className={`text-xs text-muted-foreground uppercase ${size === 'sm' ? 'text-[10px]' : ''}`}>
+      <div
+        className={`text-xs text-muted-foreground uppercase ${size === "sm" ? "text-[10px]" : ""}`}
+      >
         {label}
       </div>
     </motion.div>
   );
 }
 
-function Separator({ size }: { size: 'sm' | 'md' | 'lg' }) {
-  const sizeClass = size === 'sm' ? 'text-lg' : size === 'md' ? 'text-2xl' : 'text-3xl';
+function Separator({ size }: { size: "sm" | "md" | "lg" }) {
+  const sizeClass = size === "sm" ? "text-lg" : size === "md" ? "text-2xl" : "text-3xl";
 
-  return (
-    <div className={`font-bold text-muted-foreground ${sizeClass}`}>
-      :
-    </div>
-  );
+  return <div className={`font-bold text-muted-foreground ${sizeClass}`}>:</div>;
 }

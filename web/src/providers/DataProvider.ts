@@ -9,7 +9,7 @@
  * Uses Effect.ts for typed errors and dependency injection.
  */
 
-import { Effect, Context } from "effect";
+import { Context, type Effect } from "effect";
 
 // ============================================================================
 // ERROR TYPES
@@ -17,52 +17,83 @@ import { Effect, Context } from "effect";
 
 export class ThingNotFoundError {
   readonly _tag = "ThingNotFoundError";
-  constructor(readonly id: string, readonly message?: string) {}
+  constructor(
+    readonly id: string,
+    readonly message?: string
+  ) {}
 }
 
 export class ThingCreateError {
   readonly _tag = "ThingCreateError";
-  constructor(readonly message: string, readonly cause?: unknown) {}
+  constructor(
+    readonly message: string,
+    readonly cause?: unknown
+  ) {}
 }
 
 export class ThingUpdateError {
   readonly _tag = "ThingUpdateError";
-  constructor(readonly id: string, readonly message: string, readonly cause?: unknown) {}
+  constructor(
+    readonly id: string,
+    readonly message: string,
+    readonly cause?: unknown
+  ) {}
 }
 
 export class ConnectionNotFoundError {
   readonly _tag = "ConnectionNotFoundError";
-  constructor(readonly id: string, readonly message?: string) {}
+  constructor(
+    readonly id: string,
+    readonly message?: string
+  ) {}
 }
 
 export class ConnectionCreateError {
   readonly _tag = "ConnectionCreateError";
-  constructor(readonly message: string, readonly cause?: unknown) {}
+  constructor(
+    readonly message: string,
+    readonly cause?: unknown
+  ) {}
 }
 
 export class EventCreateError {
   readonly _tag = "EventCreateError";
-  constructor(readonly message: string, readonly cause?: unknown) {}
+  constructor(
+    readonly message: string,
+    readonly cause?: unknown
+  ) {}
 }
 
 export class KnowledgeNotFoundError {
   readonly _tag = "KnowledgeNotFoundError";
-  constructor(readonly id: string, readonly message?: string) {}
+  constructor(
+    readonly id: string,
+    readonly message?: string
+  ) {}
 }
 
 export class GroupNotFoundError {
   readonly _tag = "GroupNotFoundError";
-  constructor(readonly id: string, readonly message?: string) {}
+  constructor(
+    readonly id: string,
+    readonly message?: string
+  ) {}
 }
 
 export class GroupCreateError {
   readonly _tag = "GroupCreateError";
-  constructor(readonly message: string, readonly cause?: unknown) {}
+  constructor(
+    readonly message: string,
+    readonly cause?: unknown
+  ) {}
 }
 
 export class QueryError {
   readonly _tag = "QueryError";
-  constructor(readonly message: string, readonly cause?: unknown) {}
+  constructor(
+    readonly message: string,
+    readonly cause?: unknown
+  ) {}
 }
 
 // ============================================================================
@@ -156,7 +187,13 @@ export type DataProviderError =
 
 export type ThingStatus = "active" | "inactive" | "draft" | "published" | "archived";
 
-export type GroupType = "friend_circle" | "business" | "community" | "dao" | "government" | "organization";
+export type GroupType =
+  | "friend_circle"
+  | "business"
+  | "community"
+  | "dao"
+  | "government"
+  | "organization";
 export type GroupStatus = "active" | "archived";
 
 export interface Group {
@@ -526,8 +563,15 @@ export interface DataProvider {
     get: (id: string) => Effect.Effect<Knowledge, KnowledgeNotFoundError>;
     list: (options?: SearchKnowledgeOptions) => Effect.Effect<Knowledge[], QueryError>;
     create: (input: CreateKnowledgeInput) => Effect.Effect<string, DataProviderError>;
-    link: (thingId: string, knowledgeId: string, role?: ThingKnowledge["role"]) => Effect.Effect<string, DataProviderError>;
-    search: (embedding: number[], options?: SearchKnowledgeOptions) => Effect.Effect<Knowledge[], QueryError>;
+    link: (
+      thingId: string,
+      knowledgeId: string,
+      role?: ThingKnowledge["role"]
+    ) => Effect.Effect<string, DataProviderError>;
+    search: (
+      embedding: number[],
+      options?: SearchKnowledgeOptions
+    ) => Effect.Effect<Knowledge[], QueryError>;
   };
 
   // ===== AUTH =====

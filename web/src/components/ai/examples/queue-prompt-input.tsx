@@ -1,5 +1,20 @@
 "use client";
 
+import { CheckIcon, GlobeIcon, Trash2 } from "lucide-react";
+import { useRef, useState } from "react";
+import {
+  ModelSelector,
+  ModelSelectorContent,
+  ModelSelectorEmpty,
+  ModelSelectorGroup,
+  ModelSelectorInput,
+  ModelSelectorItem,
+  ModelSelectorList,
+  ModelSelectorLogo,
+  ModelSelectorLogoGroup,
+  ModelSelectorName,
+  ModelSelectorTrigger,
+} from "@/components/ai/elements/model-selector";
 import {
   PromptInput,
   PromptInputActionAddAttachments,
@@ -19,19 +34,6 @@ import {
   PromptInputTools,
 } from "@/components/ai/elements/prompt-input";
 import {
-  ModelSelector,
-  ModelSelectorContent,
-  ModelSelectorEmpty,
-  ModelSelectorGroup,
-  ModelSelectorInput,
-  ModelSelectorItem,
-  ModelSelectorList,
-  ModelSelectorLogo,
-  ModelSelectorLogoGroup,
-  ModelSelectorName,
-  ModelSelectorTrigger,
-} from "@/components/ai/elements/model-selector";
-import {
   Queue,
   QueueItem,
   QueueItemAction,
@@ -43,8 +45,6 @@ import {
   QueueSectionContent,
   type QueueTodo,
 } from "@/components/ai/elements/queue";
-import { CheckIcon, GlobeIcon, Trash2 } from "lucide-react";
-import { useRef, useState } from "react";
 
 const models = [
   {
@@ -129,9 +129,7 @@ const Example = () => {
   const [text, setText] = useState<string>("");
   const [model, setModel] = useState<string>(models[0].id);
   const [modelSelectorOpen, setModelSelectorOpen] = useState(false);
-  const [status, setStatus] = useState<
-    "submitted" | "streaming" | "ready" | "error"
-  >("ready");
+  const [status, setStatus] = useState<"submitted" | "streaming" | "ready" | "error">("ready");
   const timeoutRef = useRef<NodeJS.Timeout | null>(null);
   const textareaRef = useRef<HTMLTextAreaElement>(null);
 
@@ -191,9 +189,7 @@ const Example = () => {
                     <QueueItem key={todo.id}>
                       <div className="flex items-center gap-2">
                         <QueueItemIndicator completed={isCompleted} />
-                        <QueueItemContent completed={isCompleted}>
-                          {todo.title}
-                        </QueueItemContent>
+                        <QueueItemContent completed={isCompleted}>{todo.title}</QueueItemContent>
                         <QueueItemActions>
                           <QueueItemAction
                             aria-label="Remove todo"
@@ -237,27 +233,19 @@ const Example = () => {
                 <PromptInputActionAddAttachments />
               </PromptInputActionMenuContent>
             </PromptInputActionMenu>
-            <PromptInputSpeechButton
-              onTranscriptionChange={setText}
-              textareaRef={textareaRef}
-            />
+            <PromptInputSpeechButton onTranscriptionChange={setText} textareaRef={textareaRef} />
             <PromptInputButton>
               <GlobeIcon size={16} />
               <span>Search</span>
             </PromptInputButton>
-            <ModelSelector
-              onOpenChange={setModelSelectorOpen}
-              open={modelSelectorOpen}
-            >
+            <ModelSelector onOpenChange={setModelSelectorOpen} open={modelSelectorOpen}>
               <ModelSelectorTrigger asChild>
                 <PromptInputButton>
                   {selectedModelData?.chefSlug && (
                     <ModelSelectorLogo provider={selectedModelData.chefSlug} />
                   )}
                   {selectedModelData?.name && (
-                    <ModelSelectorName>
-                      {selectedModelData.name}
-                    </ModelSelectorName>
+                    <ModelSelectorName>{selectedModelData.name}</ModelSelectorName>
                   )}
                 </PromptInputButton>
               </ModelSelectorTrigger>
@@ -282,10 +270,7 @@ const Example = () => {
                             <ModelSelectorName>{m.name}</ModelSelectorName>
                             <ModelSelectorLogoGroup>
                               {m.providers.map((provider) => (
-                                <ModelSelectorLogo
-                                  key={provider}
-                                  provider={provider}
-                                />
+                                <ModelSelectorLogo key={provider} provider={provider} />
                               ))}
                             </ModelSelectorLogoGroup>
                             {model === m.id ? (

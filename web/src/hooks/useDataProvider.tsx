@@ -5,9 +5,9 @@
  * Uses React Context for dependency injection similar to Convex's ConvexProvider.
  */
 
-import React, { createContext, useContext, type ReactNode } from 'react';
-import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
-import type { DataProvider } from '@/providers/DataProvider';
+import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
+import { createContext, type ReactNode, useContext } from "react";
+import type { DataProvider } from "@/providers/DataProvider";
 
 // ============================================================================
 // CONTEXT SETUP
@@ -68,9 +68,7 @@ export interface DataProviderProviderProps {
 export function DataProviderProvider({ provider, children }: DataProviderProviderProps) {
   return (
     <QueryClientProvider client={queryClient}>
-      <DataProviderContext.Provider value={provider}>
-        {children}
-      </DataProviderContext.Provider>
+      <DataProviderContext.Provider value={provider}>{children}</DataProviderContext.Provider>
     </QueryClientProvider>
   );
 }
@@ -96,8 +94,8 @@ export function useDataProvider(): DataProvider {
 
   if (!provider) {
     throw new Error(
-      'useDataProvider must be used within a DataProviderProvider. ' +
-        'Make sure to wrap your app with <DataProviderProvider provider={...}>.'
+      "useDataProvider must be used within a DataProviderProvider. " +
+        "Make sure to wrap your app with <DataProviderProvider provider={...}>."
     );
   }
 

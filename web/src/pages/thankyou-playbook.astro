@@ -1,22 +1,19 @@
 ---
+import Layout from "@/layouts/Layout.astro";
 export const prerender = false; // Must be server-rendered to retrieve Stripe session
 
-import Layout from "../layouts/Layout.astro";
+import type { Stripe as StripeType } from "stripe";
 import Stripe from "stripe";
-import { Button } from "@/components/ui/button";
-import { Card, CardHeader, CardContent, CardFooter } from "@/components/ui/card";
-import { Check, ArrowRight, Mail, Download, BookOpen } from 'lucide-react';
-import type { Stripe as StripeType } from 'stripe';
 
 const stripe = new Stripe(import.meta.env.STRIPE_SECRET_KEY) as StripeType;
-const sessionId = Astro.url.searchParams.get('session_id');
+const sessionId = Astro.url.searchParams.get("session_id");
 
 let session;
 try {
-  if (!sessionId) throw new Error('No session ID provided');
+  if (!sessionId) throw new Error("No session ID provided");
   session = await stripe.checkout.sessions.retrieve(sessionId);
-} catch (e) {
-  return Astro.redirect('/playbook');
+} catch (_e) {
+  return Astro.redirect("/playbook");
 }
 
 const { name, email } = session.customer_details || {};

@@ -1,8 +1,8 @@
 "use client";
 
 import { Shimmer } from "@/components/ai/elements/shimmer";
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
+import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Separator } from "@/components/ui/separator";
 
 /**
@@ -19,7 +19,10 @@ const Example = () => (
   <div className="flex flex-col items-center justify-center gap-8 p-8 max-w-5xl mx-auto">
     {/* Hero Section */}
     <div className="text-center space-y-4">
-      <Shimmer as="h1" className="text-6xl font-bold bg-gradient-to-r from-purple-600 to-pink-600 bg-clip-text">
+      <Shimmer
+        as="h1"
+        className="text-6xl font-bold bg-gradient-to-r from-purple-600 to-pink-600 bg-clip-text"
+      >
         Beautiful Shimmer Effects
       </Shimmer>
       <Shimmer as="p" className="text-xl text-muted-foreground" duration={3}>
@@ -34,21 +37,23 @@ const Example = () => (
       {/* Basic Usage */}
       <Card>
         <CardHeader>
-          <Badge variant="secondary" className="w-fit">Basic</Badge>
+          <Badge variant="secondary" className="w-fit">
+            Basic
+          </Badge>
           <CardTitle>Default Shimmer</CardTitle>
           <CardDescription>Standard animated gradient effect</CardDescription>
         </CardHeader>
         <CardContent>
-          <Shimmer className="text-2xl font-semibold">
-            Simple Text Effect
-          </Shimmer>
+          <Shimmer className="text-2xl font-semibold">Simple Text Effect</Shimmer>
         </CardContent>
       </Card>
 
       {/* Fast Shimmer */}
       <Card>
         <CardHeader>
-          <Badge variant="secondary" className="w-fit">Fast</Badge>
+          <Badge variant="secondary" className="w-fit">
+            Fast
+          </Badge>
           <CardTitle>Quick Animation</CardTitle>
           <CardDescription>Faster animation for urgency</CardDescription>
         </CardHeader>
@@ -62,7 +67,9 @@ const Example = () => (
       {/* Slow Shimmer */}
       <Card>
         <CardHeader>
-          <Badge variant="secondary" className="w-fit">Slow</Badge>
+          <Badge variant="secondary" className="w-fit">
+            Slow
+          </Badge>
           <CardTitle>Elegant Animation</CardTitle>
           <CardDescription>Slower animation for elegance</CardDescription>
         </CardHeader>
@@ -76,7 +83,9 @@ const Example = () => (
       {/* AI Streaming */}
       <Card>
         <CardHeader>
-          <Badge variant="secondary" className="w-fit">AI</Badge>
+          <Badge variant="secondary" className="w-fit">
+            AI
+          </Badge>
           <CardTitle>Streaming Text</CardTitle>
           <CardDescription>Simulate AI response streaming</CardDescription>
         </CardHeader>
@@ -90,7 +99,9 @@ const Example = () => (
       {/* CTA Button Text */}
       <Card>
         <CardHeader>
-          <Badge variant="secondary" className="w-fit">CTA</Badge>
+          <Badge variant="secondary" className="w-fit">
+            CTA
+          </Badge>
           <CardTitle>Call to Action</CardTitle>
           <CardDescription>Attention-grabbing CTAs</CardDescription>
         </CardHeader>
@@ -106,12 +117,17 @@ const Example = () => (
       {/* Feature Highlight */}
       <Card>
         <CardHeader>
-          <Badge variant="secondary" className="w-fit">Feature</Badge>
+          <Badge variant="secondary" className="w-fit">
+            Feature
+          </Badge>
           <CardTitle>Highlight Features</CardTitle>
           <CardDescription>Draw attention to key features</CardDescription>
         </CardHeader>
         <CardContent>
-          <Shimmer as="div" className="text-2xl font-bold bg-gradient-to-r from-green-600 to-emerald-600 bg-clip-text">
+          <Shimmer
+            as="div"
+            className="text-2xl font-bold bg-gradient-to-r from-green-600 to-emerald-600 bg-clip-text"
+          >
             NEW ✨ Dark Mode
           </Shimmer>
         </CardContent>
@@ -200,10 +216,18 @@ const Example = () => (
         <div className="space-y-2">
           <h4 className="font-semibold">Props:</h4>
           <ul className="list-disc list-inside text-sm text-muted-foreground space-y-1">
-            <li><code>as</code> - HTML element type (default: "p")</li>
-            <li><code>duration</code> - Animation duration in seconds (default: 2)</li>
-            <li><code>spread</code> - Gradient spread multiplier (default: 2)</li>
-            <li><code>className</code> - Additional Tailwind classes</li>
+            <li>
+              <code>as</code> - HTML element type (default: "p")
+            </li>
+            <li>
+              <code>duration</code> - Animation duration in seconds (default: 2)
+            </li>
+            <li>
+              <code>spread</code> - Gradient spread multiplier (default: 2)
+            </li>
+            <li>
+              <code>className</code> - Additional Tailwind classes
+            </li>
           </ul>
         </div>
       </CardContent>

@@ -1,59 +1,60 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import { useCallback, useState } from 'react';
-import { Effect } from 'effect';
-import type { Id } from '@/types/convex';
-import { useEffectRunner } from './useEffectRunner';
-import type { Thing } from './useThingService';
+
+import { Effect } from "effect";
+import { useCallback, useState } from "react";
+import type { Id } from "@/types/convex";
+import { useEffectRunner } from "./useEffectRunner";
+import type { Thing } from "./useThingService";
 
 /**
  * Connection types matching the backend ontology
  */
 export type ConnectionType =
   // Ownership (2)
-  | 'owns'
-  | 'created_by'
+  | "owns"
+  | "created_by"
   // AI (3)
-  | 'clone_of'
-  | 'trained_on'
-  | 'powers'
+  | "clone_of"
+  | "trained_on"
+  | "powers"
   // Content (5)
-  | 'authored'
-  | 'generated_by'
-  | 'published_to'
-  | 'part_of'
-  | 'references'
+  | "authored"
+  | "generated_by"
+  | "published_to"
+  | "part_of"
+  | "references"
   // Community (4)
-  | 'member_of'
-  | 'following'
-  | 'moderates'
-  | 'participated_in'
+  | "member_of"
+  | "following"
+  | "moderates"
+  | "participated_in"
   // Business (3)
-  | 'manages'
-  | 'reports_to'
-  | 'collaborates_with'
+  | "manages"
+  | "reports_to"
+  | "collaborates_with"
   // Token (3)
-  | 'holds_tokens'
-  | 'staked_in'
-  | 'earned_from'
+  | "holds_tokens"
+  | "staked_in"
+  | "earned_from"
   // Product (4)
-  | 'purchased'
-  | 'enrolled_in'
-  | 'completed'
-  | 'teaching'
+  | "purchased"
+  | "enrolled_in"
+  | "completed"
+  | "teaching"
   // Consolidated (7)
-  | 'transacted'
-  | 'notified'
-  | 'referred'
-  | 'communicated'
-  | 'delegated'
-  | 'approved'
-  | 'fulfilled';
+  | "transacted"
+  | "notified"
+  | "referred"
+  | "communicated"
+  | "delegated"
+  | "approved"
+  | "fulfilled";
 
 export interface Connection {
-  _id: Id<'connections'>;
+  _id: Id<"connections">;
   _creationTime: number;
-  fromEntityId: Id<'entities'>;
-  toEntityId: Id<'entities'>;
+  fromEntityId: Id<"entities">;
+  toEntityId: Id<"entities">;
   relationshipType: ConnectionType;
   metadata?: Record<string, any>;
   strength?: number;
@@ -65,8 +66,8 @@ export interface Connection {
 }
 
 export interface CreateConnectionArgs {
-  fromEntityId: Id<'entities'>;
-  toEntityId: Id<'entities'>;
+  fromEntityId: Id<"entities">;
+  toEntityId: Id<"entities">;
   relationshipType: ConnectionType;
   metadata?: Record<string, any>;
   strength?: number;
@@ -75,16 +76,16 @@ export interface CreateConnectionArgs {
 }
 
 export interface ListConnectionsArgs {
-  fromEntityId?: Id<'entities'>;
-  toEntityId?: Id<'entities'>;
+  fromEntityId?: Id<"entities">;
+  toEntityId?: Id<"entities">;
   relationshipType?: ConnectionType;
-  organizationId?: Id<'entities'>;
+  organizationId?: Id<"entities">;
 }
 
 export interface GetRelatedArgs {
-  entityId: Id<'entities'>;
+  entityId: Id<"entities">;
   relationshipType: ConnectionType;
-  direction?: 'from' | 'to' | 'both';
+  direction?: "from" | "to" | "both";
 }
 
 /**
@@ -125,7 +126,7 @@ export function useConnectionService() {
    */
   const list = useCallback(
     async (
-      args: ListConnectionsArgs,
+      _args: ListConnectionsArgs,
       options?: {
         onSuccess?: (connections: Connection[]) => void;
         onError?: (error: unknown) => void;
@@ -155,7 +156,7 @@ export function useConnectionService() {
    */
   const getRelated = useCallback(
     async (
-      args: GetRelatedArgs,
+      _args: GetRelatedArgs,
       options?: {
         onSuccess?: (entities: Thing[]) => void;
         onError?: (error: unknown) => void;
@@ -179,9 +180,9 @@ export function useConnectionService() {
    */
   const create = useCallback(
     async (
-      args: CreateConnectionArgs,
+      _args: CreateConnectionArgs,
       options?: {
-        onSuccess?: (id: Id<'connections'>) => void;
+        onSuccess?: (id: Id<"connections">) => void;
         onError?: (error: unknown) => void;
       }
     ) => {
@@ -190,7 +191,7 @@ export function useConnectionService() {
         // const dataProvider = yield* DataProvider;
         // return yield* dataProvider.connections.create(args);
 
-        return '' as Id<'connections'>;
+        return "" as Id<"connections">;
       });
 
       return run(program, options);
@@ -203,8 +204,8 @@ export function useConnectionService() {
    */
   const update = useCallback(
     async (
-      id: Id<'connections'>,
-      updates: Partial<CreateConnectionArgs>,
+      _id: Id<"connections">,
+      _updates: Partial<CreateConnectionArgs>,
       options?: {
         onSuccess?: (connection: Connection) => void;
         onError?: (error: unknown) => void;
@@ -228,7 +229,7 @@ export function useConnectionService() {
    */
   const remove = useCallback(
     async (
-      id: Id<'connections'>,
+      _id: Id<"connections">,
       options?: {
         onSuccess?: () => void;
         onError?: (error: unknown) => void;

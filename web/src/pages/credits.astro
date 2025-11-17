@@ -1,5 +1,5 @@
 ---
-import Layout from "../layouts/Layout.astro";
+import Layout from "@/layouts/Layout.astro";
 
 interface Link {
   label: string;
@@ -26,7 +26,7 @@ interface Package {
   url: string;
 }
 
-const creditGroups: CreditGroup[] = [
+const _creditGroups: CreditGroup[] = [
   {
     category: "Framework & Runtime",
     summary:
@@ -85,7 +85,10 @@ const creditGroups: CreditGroup[] = [
         links: [
           { label: "GitHub", url: "https://github.com/cloudflare" },
           { label: "Developers", url: "https://developers.cloudflare.com" },
-          { label: "Astro Adapter", url: "https://docs.astro.build/en/guides/integrations-guide/cloudflare/" },
+          {
+            label: "Astro Adapter",
+            url: "https://docs.astro.build/en/guides/integrations-guide/cloudflare/",
+          },
         ],
       },
     ],
@@ -125,7 +128,10 @@ const creditGroups: CreditGroup[] = [
         links: [
           { label: "GitHub", url: "https://github.com/lucide-icons/lucide" },
           { label: "Lucide Icons", url: "https://lucide.dev" },
-          { label: "Figma Plugin", url: "https://www.figma.com/community/plugin/1101450596816564643/lucide-icons" },
+          {
+            label: "Figma Plugin",
+            url: "https://www.figma.com/community/plugin/1101450596816564643/lucide-icons",
+          },
         ],
       },
     ],

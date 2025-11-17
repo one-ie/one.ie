@@ -1,6 +1,6 @@
+import { Check, X } from "lucide-react";
 import * as React from "react";
 import { Progress } from "@/components/ui/progress";
-import { Check, X } from "lucide-react";
 
 interface PasswordStrengthIndicatorProps {
   password: string;
@@ -11,9 +11,7 @@ interface PasswordRequirement {
   met: boolean;
 }
 
-export function PasswordStrengthIndicator({
-  password,
-}: PasswordStrengthIndicatorProps) {
+export function PasswordStrengthIndicator({ password }: PasswordStrengthIndicatorProps) {
   const requirements: PasswordRequirement[] = React.useMemo(() => {
     return [
       {
@@ -45,8 +43,7 @@ export function PasswordStrengthIndicator({
   }, [requirements]);
 
   const getStrengthLabel = () => {
-    if (strength === 0)
-      return { label: "No password", color: "text-muted-foreground" };
+    if (strength === 0) return { label: "No password", color: "text-muted-foreground" };
     if (strength <= 40) return { label: "Weak", color: "text-destructive" };
     if (strength <= 60) return { label: "Fair", color: "text-orange-500" };
     if (strength <= 80) return { label: "Good", color: "text-yellow-500" };
@@ -61,9 +58,7 @@ export function PasswordStrengthIndicator({
     <div className="space-y-2">
       <div className="flex items-center justify-between">
         <span className="text-sm font-medium">Password strength</span>
-        <span className={`text-sm font-medium ${strengthInfo.color}`}>
-          {strengthInfo.label}
-        </span>
+        <span className={`text-sm font-medium ${strengthInfo.color}`}>{strengthInfo.label}</span>
       </div>
       <Progress value={strength} className="h-2" />
       <div className="space-y-1">
@@ -74,9 +69,7 @@ export function PasswordStrengthIndicator({
             ) : (
               <X className="h-4 w-4 text-muted-foreground" />
             )}
-            <span
-              className={req.met ? "text-foreground" : "text-muted-foreground"}
-            >
+            <span className={req.met ? "text-foreground" : "text-muted-foreground"}>
               {req.label}
             </span>
           </div>

@@ -1,15 +1,14 @@
-import React from "react";
-import { Card } from "@/components/ui/card";
-import { Badge } from "@/components/ui/badge";
 import {
-  ArrowRight,
-  TrendingUp,
-  TrendingDown,
-  ArrowUpRight,
   ArrowDownRight,
+  ArrowRight,
+  ArrowUpRight,
+  TrendingDown,
+  TrendingUp,
   User,
 } from "lucide-react";
+import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
+import { Card } from "@/components/ui/card";
 
 interface MetricItem {
   title: string;
@@ -33,103 +32,108 @@ export function Transformation() {
     {
       title: "Profits",
       description: "Through systematic sales optimization",
-      step: "SELL, NURTURE, & UPSELL"
+      step: "SELL, NURTURE, & UPSELL",
     },
     {
       title: "Sales",
       description: "Using AI-powered conversion copy",
-      step: "SELL, ENGAGE, & NURTURE"
+      step: "SELL, ENGAGE, & NURTURE",
     },
     {
       title: "Lead Quality",
       description: "With refined targeting and qualification",
-      step: "HOOK, GIFT, & IDENTIFY"
+      step: "HOOK, GIFT, & IDENTIFY",
     },
     {
       title: "Average Order Value",
       description: "Strategic upsell timing and offers",
-      step: "UPSELL"
+      step: "UPSELL",
     },
     {
       title: "Conversion Rates",
       description: "Optimized across entire funnel",
-      step: "HOOK, GIFT, SELL"
+      step: "HOOK, GIFT, SELL",
     },
     {
       title: "Customer Lifetime Value",
       description: "Full framework implementation",
-      step: "NURTURE, UPSELL, UNDERSTAND"
+      step: "NURTURE, UPSELL, UNDERSTAND",
     },
     {
       title: "Email Performance",
       description: "AI-crafted sequences and content",
-      step: "NURTURE"
+      step: "NURTURE",
     },
     {
       title: "Customer Engagement",
       description: "Personalized content and support",
-      step: "ENGAGE, UNDERSTAND"
-    }
+      step: "ENGAGE, UNDERSTAND",
+    },
   ];
 
   const decreaseMetrics: MetricItem[] = [
     {
       title: "Customer Acquisition Costs",
       description: "Higher conversion efficiency",
-      step: "HOOK, GIFT, & SELL"
+      step: "HOOK, GIFT, & SELL",
     },
     {
       title: "Cost Per Lead",
       description: "Optimized lead generation",
-      step: "GIFT & NURTURE"
+      step: "GIFT & NURTURE",
     },
     {
       title: "Unqualified Leads",
       description: "Precise targeting with Foundation",
-      step: "HOOK & IDENTIFY"
+      step: "HOOK & IDENTIFY",
     },
     {
       title: "Time To Sale",
       description: "Automated nurture sequences",
-      step: "NURTURE"
+      step: "NURTURE",
     },
     {
       title: "Cart Abandonment",
       description: "Timely recovery sequences",
-      step: "ENGAGE & NURTURE"
+      step: "ENGAGE & NURTURE",
     },
     {
       title: "Response Times",
       description: "AI-powered automation",
-      step: "ENGAGE"
+      step: "ENGAGE",
     },
     {
       title: "Manual Work Hours",
       description: "Framework + AI efficiency",
-      step: "ALL STEPS"
+      step: "ALL STEPS",
     },
     {
       title: "Marketing Waste",
       description: "Better performing content",
-      step: "ALL STEPS"
-    }
+      step: "ALL STEPS",
+    },
   ];
 
   const successStory: SuccessStory = {
     name: "Sarah K.",
     title: "Ecommerce Store Owner",
-    beforeSituation: "Wasting 15+ hours weekly tweaking AI prompts. Generated content was hit-or-miss, rarely matching our brand voice.",
-    afterResults: "Cut AI workflow time by 73%. Now consistently producing on-brand content that converts at 2.8X our previous rate.",
+    beforeSituation:
+      "Wasting 15+ hours weekly tweaking AI prompts. Generated content was hit-or-miss, rarely matching our brand voice.",
+    afterResults:
+      "Cut AI workflow time by 73%. Now consistently producing on-brand content that converts at 2.8X our previous rate.",
     metrics: [
       { label: "Time Saved", value: "15hr/wk" },
       { label: "Content Quality", value: "+180%" },
       { label: "Conversion Rate", value: "2.8X" },
-      { label: "Revenue Growth", value: "+156%" }
-    ]
+      { label: "Revenue Growth", value: "+156%" },
+    ],
   };
 
   return (
-    <section className="py-24 bg-gradient-to-b from-primary/5 via-transparent to-transparent" id="transformation">
+    <section
+      className="py-24 bg-gradient-to-b from-primary/5 via-transparent to-transparent"
+      id="transformation"
+    >
       <div className="container mx-auto px-4">
         <div className="text-center max-w-3xl mx-auto mb-16">
           <Badge variant="outline" className="mb-4">
@@ -139,7 +143,8 @@ export function Transformation() {
             Powered by The Elevate Ecommerce Framework & AI Playbook
           </h2>
           <p className="text-lg text-muted-foreground">
-            This Course Isn't Just About AI Prompts – It's About Systematically Implementing Them Within a Proven Growth Framework
+            This Course Isn't Just About AI Prompts – It's About Systematically Implementing Them
+            Within a Proven Growth Framework
           </p>
         </div>
 
@@ -243,4 +248,4 @@ export function Transformation() {
       </div>
     </section>
   );
-} 
+}

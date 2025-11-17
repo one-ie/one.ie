@@ -1,4 +1,3 @@
-import React from "react";
 import { Button } from "@/components/ui/button";
 
 export interface SuggestionsProps {
@@ -11,9 +10,9 @@ export function Suggestions({ suggestions, onSuggestionClick }: SuggestionsProps
     <div className="space-y-2">
       <p className="text-sm text-muted-foreground">Suggested prompts:</p>
       <div className="flex flex-wrap gap-2">
-        {suggestions.map((suggestion, index) => (
+        {suggestions.map((suggestion) => (
           <Button
-            key={index}
+            key={suggestion}
             variant="outline"
             size="sm"
             onClick={() => onSuggestionClick(suggestion)}

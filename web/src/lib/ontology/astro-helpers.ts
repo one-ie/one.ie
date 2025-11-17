@@ -22,7 +22,7 @@
  * ```
  */
 
-import { features } from './features';
+import { features } from "./features";
 
 /**
  * Get provider instance for Astro SSR
@@ -90,7 +90,7 @@ export async function getStaticPaths(type?: string) {
   try {
     const things = await (provider as any).things.list({
       type,
-      status: 'published',
+      status: "published",
     });
 
     return things.map((thing: any) => ({
@@ -98,7 +98,7 @@ export async function getStaticPaths(type?: string) {
       props: { thing },
     }));
   } catch (error) {
-    console.error('Failed to get static paths:', error);
+    console.error("Failed to get static paths:", error);
     return [];
   }
 }
@@ -158,11 +158,7 @@ export async function getThingWithFallback(id: string) {
  * ---
  * ```
  */
-export async function getThings(filter?: {
-  type?: string;
-  status?: string;
-  limit?: number;
-}) {
+export async function getThings(filter?: { type?: string; status?: string; limit?: number }) {
   const provider = await getProvider();
 
   if (!provider) {
@@ -172,7 +168,7 @@ export async function getThings(filter?: {
   try {
     return await (provider as any).things.list(filter);
   } catch (error) {
-    console.error('Failed to fetch things:', error);
+    console.error("Failed to fetch things:", error);
     return [];
   }
 }
@@ -192,10 +188,7 @@ export async function getThings(filter?: {
  * ---
  * ```
  */
-export async function getRelatedThings(
-  entityId: string,
-  relationshipType: string
-) {
+export async function getRelatedThings(entityId: string, relationshipType: string) {
   const provider = await getProvider();
 
   if (!provider) {
@@ -208,7 +201,7 @@ export async function getRelatedThings(
       relationshipType: relationshipType as any,
     });
   } catch (error) {
-    console.error('Failed to fetch related things:', error);
+    console.error("Failed to fetch related things:", error);
     return [];
   }
 }
@@ -234,7 +227,7 @@ export async function getRelatedThings(
  * ---
  * ```
  */
-export async function getCurrentUser(request?: Request) {
+export async function getCurrentUser(_request?: Request) {
   if (!features.auth) {
     return null;
   }
@@ -250,7 +243,7 @@ export async function getCurrentUser(request?: Request) {
     // return await provider.people.current();
     return null;
   } catch (error) {
-    console.error('Failed to fetch current user:', error);
+    console.error("Failed to fetch current user:", error);
     return null;
   }
 }
@@ -265,7 +258,7 @@ export async function getCurrentUser(request?: Request) {
  * @param groupId - Group ID
  * @returns Group data or null
  */
-export async function getGroup(groupId: string) {
+export async function getGroup(_groupId: string) {
   // Groups are managed through the things dimension
   // Use getThings({ type: 'group' }) to fetch groups
   return null;
@@ -302,7 +295,7 @@ export async function searchThings(query: string, type?: string) {
   try {
     return await (provider as any).knowledge.search(query, { type });
   } catch (error) {
-    console.error('Failed to search:', error);
+    console.error("Failed to search:", error);
     return [];
   }
 }
@@ -334,7 +327,7 @@ export async function getRecentEvents(limit = 20) {
   try {
     return await (provider as any).events.list({ limit });
   } catch (error) {
-    console.error('Failed to fetch events:', error);
+    console.error("Failed to fetch events:", error);
     return [];
   }
 }
@@ -356,10 +349,7 @@ export async function getRecentEvents(limit = 20) {
  * ---
  * ```
  */
-export function shouldRenderRoute(
-  featureCheck: () => boolean,
-  fallbackRoute?: string
-): boolean {
+export function shouldRenderRoute(featureCheck: () => boolean, fallbackRoute?: string): boolean {
   if (!featureCheck()) {
     if (fallbackRoute) {
       // Astro can't redirect in this context, return false
@@ -376,16 +366,16 @@ export function shouldRenderRoute(
  */
 export const cacheControl = {
   /** Static content (long TTL) */
-  static: 'public, max-age=31536000, immutable',
+  static: "public, max-age=31536000, immutable",
 
   /** User-specific content (no cache) */
-  private: 'private, no-cache, no-store, must-revalidate',
+  private: "private, no-cache, no-store, must-revalidate",
 
   /** Generated content (medium TTL) */
-  generated: 'public, max-age=3600, s-maxage=3600',
+  generated: "public, max-age=3600, s-maxage=3600",
 
   /** Real-time content (short TTL) */
-  dynamic: 'public, max-age=60, s-maxage=60',
+  dynamic: "public, max-age=60, s-maxage=60",
 };
 
 /**

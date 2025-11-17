@@ -9,9 +9,9 @@
  * POST /api/connections              - Create a new connection
  */
 
-import type { APIRoute } from 'astro';
-import { getDefaultProvider } from '@/providers/factory';
-import { successResponse, errorResponse, getStatusCode } from '../response';
+import type { APIRoute } from "astro";
+import { getDefaultProvider } from "@/providers/factory";
+import { errorResponse, getStatusCode, successResponse } from "../response";
 
 /**
  * GET /api/connections
@@ -46,18 +46,15 @@ import { successResponse, errorResponse, getStatusCode } from '../response';
 export const GET: APIRoute = async ({ url }) => {
   try {
     const provider = getDefaultProvider();
-    const { Effect } = await import('effect');
+    const { Effect } = await import("effect");
 
     // Parse query parameters
-    const type = url.searchParams.get('type');
-    const fromEntityId = url.searchParams.get('fromEntityId');
-    const toEntityId = url.searchParams.get('toEntityId');
-    const groupId = url.searchParams.get('groupId');
-    const limit = Math.min(
-      parseInt(url.searchParams.get('limit') || '50'),
-      1000
-    );
-    const offset = parseInt(url.searchParams.get('offset') || '0');
+    const type = url.searchParams.get("type");
+    const fromEntityId = url.searchParams.get("fromEntityId");
+    const toEntityId = url.searchParams.get("toEntityId");
+    const groupId = url.searchParams.get("groupId");
+    const limit = Math.min(parseInt(url.searchParams.get("limit") || "50", 10), 1000);
+    const offset = parseInt(url.searchParams.get("offset") || "0", 10);
 
     // Build filter
     const filter: Record<string, any> = {};
@@ -84,19 +81,19 @@ export const GET: APIRoute = async ({ url }) => {
       {
         status: 200,
         headers: {
-          'Content-Type': 'application/json',
-          'Cache-Control': 'max-age=60, public',
+          "Content-Type": "application/json",
+          "Cache-Control": "max-age=60, public",
         },
       }
     );
   } catch (error) {
-    const message = error instanceof Error ? error.message : 'Unknown error';
-    const response = errorResponse('INTERNAL_ERROR', message);
+    const message = error instanceof Error ? error.message : "Unknown error";
+    const response = errorResponse("INTERNAL_ERROR", message);
     const status = getStatusCode(response.error);
 
     return new Response(JSON.stringify(response), {
       status,
-      headers: { 'Content-Type': 'application/json' },
+      headers: { "Content-Type": "application/json" },
     });
   }
 };
@@ -146,51 +143,51 @@ export const GET: APIRoute = async ({ url }) => {
 export const POST: APIRoute = async ({ request }) => {
   try {
     const provider = getDefaultProvider();
-    const { Effect } = await import('effect');
+    const { Effect } = await import("effect");
     const body = await request.json();
 
     // Validate required fields
-    if (!body.fromEntityId || typeof body.fromEntityId !== 'string') {
+    if (!body.fromEntityId || typeof body.fromEntityId !== "string") {
       const response = errorResponse(
-        'VALIDATION_ERROR',
-        'fromEntityId is required and must be a string'
+        "VALIDATION_ERROR",
+        "fromEntityId is required and must be a string"
       );
       return new Response(JSON.stringify(response), {
         status: getStatusCode(response.error),
-        headers: { 'Content-Type': 'application/json' },
+        headers: { "Content-Type": "application/json" },
       });
     }
 
-    if (!body.toEntityId || typeof body.toEntityId !== 'string') {
+    if (!body.toEntityId || typeof body.toEntityId !== "string") {
       const response = errorResponse(
-        'VALIDATION_ERROR',
-        'toEntityId is required and must be a string'
+        "VALIDATION_ERROR",
+        "toEntityId is required and must be a string"
       );
       return new Response(JSON.stringify(response), {
         status: getStatusCode(response.error),
-        headers: { 'Content-Type': 'application/json' },
+        headers: { "Content-Type": "application/json" },
       });
     }
 
-    if (!body.relationshipType || typeof body.relationshipType !== 'string') {
+    if (!body.relationshipType || typeof body.relationshipType !== "string") {
       const response = errorResponse(
-        'VALIDATION_ERROR',
-        'relationshipType is required and must be a string'
+        "VALIDATION_ERROR",
+        "relationshipType is required and must be a string"
       );
       return new Response(JSON.stringify(response), {
         status: getStatusCode(response.error),
-        headers: { 'Content-Type': 'application/json' },
+        headers: { "Content-Type": "application/json" },
       });
     }
 
-    if (!body.groupId || typeof body.groupId !== 'string') {
+    if (!body.groupId || typeof body.groupId !== "string") {
       const response = errorResponse(
-        'VALIDATION_ERROR',
-        'groupId is required and must be a string'
+        "VALIDATION_ERROR",
+        "groupId is required and must be a string"
       );
       return new Response(JSON.stringify(response), {
         status: getStatusCode(response.error),
-        headers: { 'Content-Type': 'application/json' },
+        headers: { "Content-Type": "application/json" },
       });
     }
 
@@ -208,18 +205,18 @@ export const POST: APIRoute = async ({ request }) => {
     return new Response(JSON.stringify(successResponse({ _id: connectionId })), {
       status: 201,
       headers: {
-        'Content-Type': 'application/json',
-        'Cache-Control': 'no-cache',
+        "Content-Type": "application/json",
+        "Cache-Control": "no-cache",
       },
     });
   } catch (error) {
-    const message = error instanceof Error ? error.message : 'Unknown error';
-    const response = errorResponse('INTERNAL_ERROR', message);
+    const message = error instanceof Error ? error.message : "Unknown error";
+    const response = errorResponse("INTERNAL_ERROR", message);
     const status = getStatusCode(response.error);
 
     return new Response(JSON.stringify(response), {
       status,
-      headers: { 'Content-Type': 'application/json' },
+      headers: { "Content-Type": "application/json" },
     });
   }
 };

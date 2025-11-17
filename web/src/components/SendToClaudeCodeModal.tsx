@@ -1,7 +1,7 @@
+import { Check, Code2, Copy, X } from "lucide-react";
 import { useState } from "react";
-import { Copy, Check, X, Code2 } from "lucide-react";
-import { Button } from "@/components/ui/button";
 import { toast } from "sonner";
+import { Button } from "@/components/ui/button";
 
 interface SendToClaudeCodeModalProps {
   isOpen: boolean;
@@ -38,10 +38,11 @@ export function SendToClaudeCodeModal({
   return (
     <>
       {/* Backdrop */}
-      <div
-        className="fixed inset-0 bg-black/50 backdrop-blur-sm z-50"
+      <button
+        type="button"
+        className="fixed inset-0 bg-black/50 backdrop-blur-sm z-50 cursor-default"
         onClick={onClose}
-        role="presentation"
+        aria-label="Close modal"
       />
 
       {/* Modal */}
@@ -59,6 +60,7 @@ export function SendToClaudeCodeModal({
               </div>
             </div>
             <button
+              type="button"
               onClick={onClose}
               className="inline-flex h-8 w-8 items-center justify-center rounded-md hover:bg-accent text-muted-foreground hover:text-foreground transition-colors"
               aria-label="Close modal"
@@ -118,8 +120,8 @@ export function SendToClaudeCodeModal({
                     className="text-primary hover:underline font-medium"
                   >
                     Claude Code GitHub
-                  </a>
-                  {" "}or via npm:
+                  </a>{" "}
+                  or via npm:
                 </p>
                 <div className="bg-muted p-3 rounded border font-mono text-xs">
                   npx oneie --project
@@ -134,13 +136,15 @@ export function SendToClaudeCodeModal({
                   Paste & Start Building
                 </h3>
                 <p className="text-sm text-muted-foreground">
-                  Paste the prompt you copied into Claude Code's chat. It will set up the project scaffolding and help you build it step-by-step.
+                  Paste the prompt you copied into Claude Code's chat. It will set up the project
+                  scaffolding and help you build it step-by-step.
                 </p>
               </div>
 
               <div className="bg-blue-50 dark:bg-blue-950 p-4 rounded-lg border border-blue-200 dark:border-blue-800">
                 <p className="text-sm text-blue-900 dark:text-blue-100">
-                  <strong>What's Next:</strong> Claude Code will guide you through building the project with real-time code suggestions, testing, and deployment help.
+                  <strong>What's Next:</strong> Claude Code will guide you through building the
+                  project with real-time code suggestions, testing, and deployment help.
                 </p>
               </div>
             </div>

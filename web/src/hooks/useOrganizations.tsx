@@ -6,10 +6,10 @@
  * Organizations partition the system and control quotas/billing.
  */
 
-import { useQuery, useMutation as useReactMutation, useQueryClient } from '@tanstack/react-query';
-import { Effect } from 'effect';
-import { useDataProvider } from './useDataProvider';
-import type { QueryResult, MutationResult, QueryOptions, MutationOptions } from './types';
+import { useQuery, useQueryClient, useMutation as useReactMutation } from "@tanstack/react-query";
+import { Effect } from "effect";
+import type { MutationOptions, MutationResult, QueryOptions, QueryResult } from "./types";
+import { useDataProvider } from "./useDataProvider";
 
 // Note: Organizations types would come from DataProvider
 // For now, using minimal types that match the ontology
@@ -18,16 +18,16 @@ interface Organization {
   _id: string;
   name: string;
   slug: string;
-  status: 'active' | 'suspended' | 'trial' | 'cancelled';
-  plan: 'starter' | 'pro' | 'enterprise';
+  status: "active" | "suspended" | "trial" | "cancelled";
+  plan: "starter" | "pro" | "enterprise";
   properties: Record<string, any>;
   createdAt: number;
   updatedAt: number;
 }
 
 interface OrganizationFilter {
-  status?: Organization['status'];
-  plan?: Organization['plan'];
+  status?: Organization["status"];
+  plan?: Organization["plan"];
   limit?: number;
   offset?: number;
 }
@@ -35,15 +35,15 @@ interface OrganizationFilter {
 interface CreateOrganizationInput {
   name: string;
   slug: string;
-  plan?: Organization['plan'];
+  plan?: Organization["plan"];
   properties?: Record<string, any>;
 }
 
 interface UpdateOrganizationInput {
   name?: string;
   slug?: string;
-  status?: Organization['status'];
-  plan?: Organization['plan'];
+  status?: Organization["status"];
+  plan?: Organization["plan"];
   properties?: Record<string, any>;
 }
 
@@ -74,10 +74,10 @@ export function useOrganization(
   const provider = useDataProvider();
   const { enabled = true, ...reactQueryOptions } = queryOptions ?? {};
 
-  const queryKey = ['organization', id];
+  const queryKey = ["organization", id];
 
   const queryFn = async (): Promise<Organization> => {
-    if (!id) throw new Error('Organization ID is required');
+    if (!id) throw new Error("Organization ID is required");
     // Use things.get since organizations are things with type='organization'
     const effect = provider.things.get(id);
     const result = await Effect.runPromise(effect);
@@ -126,12 +126,12 @@ export function useOrganizations(
   const provider = useDataProvider();
   const { enabled = true, ...reactQueryOptions } = queryOptions ?? {};
 
-  const queryKey = ['organizations', filter];
+  const queryKey = ["organizations", filter];
 
   const queryFn = async (): Promise<Organization[]> => {
     // Use things.list with type='organization'
     const effect = provider.things.list({
-      type: 'organization',
+      type: "organization",
       status: filter?.status as any,
       limit: filter?.limit,
       offset: filter?.offset,
@@ -190,12 +190,12 @@ export function useCreateOrganization(
   const mutation = useReactMutation({
     mutationFn: async (input: CreateOrganizationInput): Promise<string> => {
       const effect = provider.things.create({
-        type: 'organization',
+        type: "organization",
         name: input.name,
         properties: {
           slug: input.slug,
-          plan: input.plan || 'starter',
-          orgStatus: 'trial',
+          plan: input.plan || "starter",
+          orgStatus: "trial",
           limits: {
             users: 5,
             storage: 1000,
@@ -215,12 +215,12 @@ export function useCreateOrganization(
           },
           ...input.properties,
         },
-        status: 'active',
+        status: "active",
       });
       return await Effect.runPromise(effect);
     },
     onSuccess: async (id, input) => {
-      await queryClient.invalidateQueries({ queryKey: ['organizations'] });
+      await queryClient.invalidateQueries({ queryKey: ["organizations"] });
       await mutationOptions?.onSuccess?.(id, input);
     },
     onError: async (error, input) => {
@@ -262,7 +262,10 @@ export function useUpdateOrganization(
   const queryClient = useQueryClient();
 
   const mutation = useReactMutation({
-    mutationFn: async ({ id, ...updates }: { id: string } & UpdateOrganizationInput): Promise<void> => {
+    mutationFn: async ({
+      id,
+      ...updates
+    }: { id: string } & UpdateOrganizationInput): Promise<void> => {
       const effect = provider.things.update(id, {
         name: updates.name,
         status: updates.status as any,
@@ -271,8 +274,8 @@ export function useUpdateOrganization(
       return await Effect.runPromise(effect);
     },
     onSuccess: async (data, { id }) => {
-      await queryClient.invalidateQueries({ queryKey: ['organization', id] });
-      await queryClient.invalidateQueries({ queryKey: ['organizations'] });
+      await queryClient.invalidateQueries({ queryKey: ["organization", id] });
+      await queryClient.invalidateQueries({ queryKey: ["organizations"] });
       await mutationOptions?.onSuccess?.(data, { id });
     },
     onError: async (error, input) => {
@@ -315,8 +318,8 @@ export function useDeleteOrganization(
       return await Effect.runPromise(effect);
     },
     onSuccess: async (data, id) => {
-      queryClient.removeQueries({ queryKey: ['organization', id] });
-      await queryClient.invalidateQueries({ queryKey: ['organizations'] });
+      queryClient.removeQueries({ queryKey: ["organization", id] });
+      await queryClient.invalidateQueries({ queryKey: ["organizations"] });
       await mutationOptions?.onSuccess?.(data, id);
     },
     onError: async (error, id) => {
@@ -377,13 +380,13 @@ export function useOrganizationMembers(
   const provider = useDataProvider();
   const { enabled = true, ...reactQueryOptions } = queryOptions ?? {};
 
-  const queryKey = ['organization-members', orgId];
+  const queryKey = ["organization-members", orgId];
 
   const queryFn = async (): Promise<any[]> => {
-    if (!orgId) throw new Error('Organization ID is required');
+    if (!orgId) throw new Error("Organization ID is required");
     const effect = provider.connections.list({
       toEntityId: orgId,
-      relationshipType: 'member_of',
+      relationshipType: "member_of",
     });
     return await Effect.runPromise(effect);
   };

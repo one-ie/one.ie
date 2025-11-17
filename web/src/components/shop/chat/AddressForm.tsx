@@ -5,12 +5,12 @@
  * Updates checkout session with fulfillment address
  */
 
-import { useState } from 'react';
-import { Button } from '@/components/ui/button';
-import { Input } from '@/components/ui/input';
-import { Label } from '@/components/ui/label';
-import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
-import { Loader2, MapPin } from 'lucide-react';
+import { Loader2, MapPin } from "lucide-react";
+import { useState } from "react";
+import { Button } from "@/components/ui/button";
+import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import { Input } from "@/components/ui/input";
+import { Label } from "@/components/ui/label";
 
 interface AddressFormProps {
   sessionId: string;
@@ -22,13 +22,13 @@ export function AddressForm({ sessionId, onAddressSubmitted }: AddressFormProps)
   const [error, setError] = useState<string | null>(null);
 
   const [formData, setFormData] = useState({
-    name: '',
-    line_one: '',
-    line_two: '',
-    city: '',
-    state: '',
-    postal_code: '',
-    country: 'US',
+    name: "",
+    line_one: "",
+    line_two: "",
+    city: "",
+    state: "",
+    postal_code: "",
+    country: "US",
   });
 
   const handleSubmit = async (e: React.FormEvent) => {
@@ -38,9 +38,9 @@ export function AddressForm({ sessionId, onAddressSubmitted }: AddressFormProps)
 
     try {
       const response = await fetch(`/api/checkout_sessions/${sessionId}`, {
-        method: 'POST',
+        method: "POST",
         headers: {
-          'Content-Type': 'application/json',
+          "Content-Type": "application/json",
           Authorization: `Bearer ${import.meta.env.PUBLIC_COMMERCE_API_KEY}`,
         },
         body: JSON.stringify({
@@ -49,18 +49,18 @@ export function AddressForm({ sessionId, onAddressSubmitted }: AddressFormProps)
       });
 
       if (!response.ok) {
-        const errorData = await response.json().catch(() => ({ message: 'Unknown error' }));
-        console.error('[AddressForm] API error:', errorData);
-        throw new Error(errorData.message || 'Failed to update address');
+        const errorData = await response.json().catch(() => ({ message: "Unknown error" }));
+        console.error("[AddressForm] API error:", errorData);
+        throw new Error(errorData.message || "Failed to update address");
       }
 
       const updatedSession = await response.json();
-      console.log('[AddressForm] Updated session:', updatedSession);
+      console.log("[AddressForm] Updated session:", updatedSession);
 
       onAddressSubmitted(updatedSession);
     } catch (err) {
-      console.error('[AddressForm] Error:', err);
-      setError(err instanceof Error ? err.message : 'Something went wrong');
+      console.error("[AddressForm] Error:", err);
+      setError(err instanceof Error ? err.message : "Something went wrong");
     } finally {
       setIsSubmitting(false);
     }
@@ -85,7 +85,7 @@ export function AddressForm({ sessionId, onAddressSubmitted }: AddressFormProps)
             <Input
               id="name"
               value={formData.name}
-              onChange={(e) => updateField('name', e.target.value)}
+              onChange={(e) => updateField("name", e.target.value)}
               placeholder="John Doe"
               required
             />
@@ -96,7 +96,7 @@ export function AddressForm({ sessionId, onAddressSubmitted }: AddressFormProps)
             <Input
               id="line_one"
               value={formData.line_one}
-              onChange={(e) => updateField('line_one', e.target.value)}
+              onChange={(e) => updateField("line_one", e.target.value)}
               placeholder="123 Main St"
               required
             />
@@ -107,7 +107,7 @@ export function AddressForm({ sessionId, onAddressSubmitted }: AddressFormProps)
             <Input
               id="line_two"
               value={formData.line_two}
-              onChange={(e) => updateField('line_two', e.target.value)}
+              onChange={(e) => updateField("line_two", e.target.value)}
               placeholder="Apt 4B"
             />
           </div>
@@ -118,7 +118,7 @@ export function AddressForm({ sessionId, onAddressSubmitted }: AddressFormProps)
               <Input
                 id="city"
                 value={formData.city}
-                onChange={(e) => updateField('city', e.target.value)}
+                onChange={(e) => updateField("city", e.target.value)}
                 placeholder="San Francisco"
                 required
               />
@@ -129,7 +129,7 @@ export function AddressForm({ sessionId, onAddressSubmitted }: AddressFormProps)
               <Input
                 id="state"
                 value={formData.state}
-                onChange={(e) => updateField('state', e.target.value)}
+                onChange={(e) => updateField("state", e.target.value)}
                 placeholder="CA"
                 required
                 maxLength={2}
@@ -142,16 +142,14 @@ export function AddressForm({ sessionId, onAddressSubmitted }: AddressFormProps)
             <Input
               id="postal_code"
               value={formData.postal_code}
-              onChange={(e) => updateField('postal_code', e.target.value)}
+              onChange={(e) => updateField("postal_code", e.target.value)}
               placeholder="94102"
               required
             />
           </div>
 
           {error && (
-            <div className="text-sm text-destructive bg-destructive/10 p-3 rounded-md">
-              {error}
-            </div>
+            <div className="text-sm text-destructive bg-destructive/10 p-3 rounded-md">{error}</div>
           )}
 
           <Button type="submit" className="w-full" disabled={isSubmitting}>
@@ -161,7 +159,7 @@ export function AddressForm({ sessionId, onAddressSubmitted }: AddressFormProps)
                 Saving address...
               </>
             ) : (
-              'Continue to Shipping'
+              "Continue to Shipping"
             )}
           </Button>
         </form>

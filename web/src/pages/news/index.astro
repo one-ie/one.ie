@@ -1,36 +1,33 @@
 ---
-import { getCollection } from 'astro:content';
-import Layout from '../../layouts/Layout.astro';
-import { Badge } from '@/components/ui/badge';
-import { Card, CardHeader, CardTitle, CardContent } from '@/components/ui/card';
-import { Activity, Clock, Grid, List } from 'lucide-react';
-import { StreamSearch } from '@/components/StreamSearch';
+import { getCollection } from "astro:content";
 
 // Get all news entries, sorted by date (newest first)
-const allNewsEntries = await getCollection('news', ({ data }) => {
+const allNewsEntries = await getCollection("news", ({ data }) => {
   return !data.draft; // Filter out drafts
 });
 
 // Sort by date descending (newest first)
-const streamEntries = allNewsEntries.sort((a, b) => {
+const _streamEntries = allNewsEntries.sort((a, b) => {
   return b.data.date.valueOf() - a.data.date.valueOf();
 });
 
 // Get view mode from URL params, default to list
-const viewModeParam = Astro.url.searchParams.get('view') || 'list';
-const viewMode = (viewModeParam === 'list' || viewModeParam === 'grid') ? viewModeParam : 'list';
-const gridColumnsParam = Astro.url.searchParams.get('columns') || '2';
-const gridColumns = (gridColumnsParam === '2' || gridColumnsParam === '3' || gridColumnsParam === '4') ? gridColumnsParam : '2';
+const viewModeParam = Astro.url.searchParams.get("view") || "list";
+const _viewMode = viewModeParam === "list" || viewModeParam === "grid" ? viewModeParam : "list";
+const gridColumnsParam = Astro.url.searchParams.get("columns") || "2";
+const _gridColumns =
+  gridColumnsParam === "2" || gridColumnsParam === "3" || gridColumnsParam === "4"
+    ? gridColumnsParam
+    : "2";
 
 // Format date helper
-function formatDate(date: Date): string {
-  return new Intl.DateTimeFormat('en-US', {
-    year: 'numeric',
-    month: 'long',
-    day: 'numeric',
+function _formatDate(date: Date): string {
+  return new Intl.DateTimeFormat("en-US", {
+    year: "numeric",
+    month: "long",
+    day: "numeric",
   }).format(date);
 }
-
 ---
 
 <Layout title="News - Latest Updates | ONE Platform">

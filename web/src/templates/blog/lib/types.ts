@@ -4,7 +4,6 @@
  * Generated from ontology-core.yaml
  */
 
-
 /**
  * page entity
  * Generated from ontology thing type
@@ -16,7 +15,6 @@ export interface Page {
   content: string;
 }
 
-
 /**
  * user entity
  * Generated from ontology thing type
@@ -26,7 +24,6 @@ export interface User {
   email: string;
   displayName: string;
 }
-
 
 /**
  * file entity
@@ -39,7 +36,6 @@ export interface File {
   size: number;
 }
 
-
 /**
  * link entity
  * Generated from ontology thing type
@@ -50,7 +46,6 @@ export interface Link {
   title: string;
 }
 
-
 /**
  * note entity
  * Generated from ontology thing type
@@ -59,7 +54,6 @@ export interface Note {
   id: string;
   content: string;
 }
-
 
 /**
  * blog_post entity
@@ -76,7 +70,6 @@ export interface BlogPost {
   tags: string[];
   category: string;
 }
-
 
 /**
  * blog_category entity

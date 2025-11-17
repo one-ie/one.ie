@@ -4,27 +4,27 @@
  * Manages the complete Wave 1 creator onboarding flow across all steps
  */
 
-import { useState, useEffect } from 'react';
-import { AppProviders } from '@/components/providers/AppProviders';
-import { OnboardingLayout } from './OnboardingLayout';
-import { Wave1SignUpForm } from './Wave1SignUpForm';
-import { EmailVerificationForm } from './EmailVerificationForm';
-import { ProfileForm } from './ProfileForm';
-import { WorkspaceForm } from './WorkspaceForm';
-import { TeamInviteForm } from './TeamInviteForm';
-import { WalletConnector } from './WalletConnector';
-import { SkillsSelector } from './SkillsSelector';
-import { OnboardingCompleted } from './OnboardingCompleted';
+import { useState } from "react";
+import { AppProviders } from "@/components/providers/AppProviders";
+import { EmailVerificationForm } from "./EmailVerificationForm";
+import { OnboardingCompleted } from "./OnboardingCompleted";
+import { OnboardingLayout } from "./OnboardingLayout";
+import { ProfileForm } from "./ProfileForm";
+import { SkillsSelector } from "./SkillsSelector";
+import { TeamInviteForm } from "./TeamInviteForm";
+import { WalletConnector } from "./WalletConnector";
+import { Wave1SignUpForm } from "./Wave1SignUpForm";
+import { WorkspaceForm } from "./WorkspaceForm";
 
 type OnboardingStep =
-  | 'signup'
-  | 'email_verification'
-  | 'profile'
-  | 'workspace'
-  | 'team'
-  | 'wallet'
-  | 'skills'
-  | 'completed';
+  | "signup"
+  | "email_verification"
+  | "profile"
+  | "workspace"
+  | "team"
+  | "wallet"
+  | "skills"
+  | "completed";
 
 interface OnboardingState {
   userId?: string;
@@ -34,25 +34,25 @@ interface OnboardingState {
 }
 
 const STEP_CONFIGS: Record<OnboardingStep, { number: number; label: string }> = {
-  signup: { number: 1, label: 'Sign Up' },
-  email_verification: { number: 1, label: 'Verify Email' },
-  profile: { number: 2, label: 'Profile' },
-  workspace: { number: 3, label: 'Workspace' },
-  team: { number: 4, label: 'Team' },
-  wallet: { number: 5, label: 'Wallet' },
-  skills: { number: 6, label: 'Skills' },
-  completed: { number: 6, label: 'Complete' },
+  signup: { number: 1, label: "Sign Up" },
+  email_verification: { number: 1, label: "Verify Email" },
+  profile: { number: 2, label: "Profile" },
+  workspace: { number: 3, label: "Workspace" },
+  team: { number: 4, label: "Team" },
+  wallet: { number: 5, label: "Wallet" },
+  skills: { number: 6, label: "Skills" },
+  completed: { number: 6, label: "Complete" },
 };
 
 const COMPLETED_STEPS: Record<OnboardingStep, string[]> = {
   signup: [],
   email_verification: [],
-  profile: ['email_verification'],
-  workspace: ['email_verification', 'profile'],
-  team: ['email_verification', 'profile', 'workspace'],
-  wallet: ['email_verification', 'profile', 'workspace', 'team'],
-  skills: ['email_verification', 'profile', 'workspace', 'team', 'wallet'],
-  completed: ['email_verification', 'profile', 'workspace', 'team', 'wallet', 'skills'],
+  profile: ["email_verification"],
+  workspace: ["email_verification", "profile"],
+  team: ["email_verification", "profile", "workspace"],
+  wallet: ["email_verification", "profile", "workspace", "team"],
+  skills: ["email_verification", "profile", "workspace", "team", "wallet"],
+  completed: ["email_verification", "profile", "workspace", "team", "wallet", "skills"],
 };
 
 const PROGRESS_PERCENTAGES: Record<OnboardingStep, number> = {
@@ -67,7 +67,7 @@ const PROGRESS_PERCENTAGES: Record<OnboardingStep, number> = {
 };
 
 export function SignUpOnboarding() {
-  const [currentStep, setCurrentStep] = useState<OnboardingStep>('signup');
+  const [currentStep, setCurrentStep] = useState<OnboardingStep>("signup");
   const [state, setState] = useState<OnboardingState>({});
   const [isTransitioning, setIsTransitioning] = useState(false);
 
@@ -84,7 +84,7 @@ export function SignUpOnboarding() {
     });
     setIsTransitioning(true);
     setTimeout(() => {
-      setCurrentStep('email_verification');
+      setCurrentStep("email_verification");
       setIsTransitioning(false);
     }, 500);
   };
@@ -92,7 +92,7 @@ export function SignUpOnboarding() {
   const handleEmailVerificationSuccess = () => {
     setIsTransitioning(true);
     setTimeout(() => {
-      setCurrentStep('profile');
+      setCurrentStep("profile");
       setIsTransitioning(false);
     }, 500);
   };
@@ -100,7 +100,7 @@ export function SignUpOnboarding() {
   const handleProfileSuccess = () => {
     setIsTransitioning(true);
     setTimeout(() => {
-      setCurrentStep('workspace');
+      setCurrentStep("workspace");
       setIsTransitioning(false);
     }, 500);
   };
@@ -109,7 +109,7 @@ export function SignUpOnboarding() {
     setState({ ...state, workspaceId });
     setIsTransitioning(true);
     setTimeout(() => {
-      setCurrentStep('team');
+      setCurrentStep("team");
       setIsTransitioning(false);
     }, 500);
   };
@@ -117,7 +117,7 @@ export function SignUpOnboarding() {
   const handleTeamSuccess = () => {
     setIsTransitioning(true);
     setTimeout(() => {
-      setCurrentStep('wallet');
+      setCurrentStep("wallet");
       setIsTransitioning(false);
     }, 500);
   };
@@ -125,7 +125,7 @@ export function SignUpOnboarding() {
   const handleWalletSuccess = () => {
     setIsTransitioning(true);
     setTimeout(() => {
-      setCurrentStep('skills');
+      setCurrentStep("skills");
       setIsTransitioning(false);
     }, 500);
   };
@@ -133,20 +133,20 @@ export function SignUpOnboarding() {
   const handleSkillsSuccess = () => {
     setIsTransitioning(true);
     setTimeout(() => {
-      setCurrentStep('completed');
+      setCurrentStep("completed");
       setIsTransitioning(false);
     }, 500);
   };
 
   const handleBack = () => {
     const stepOrder: OnboardingStep[] = [
-      'signup',
-      'email_verification',
-      'profile',
-      'workspace',
-      'team',
-      'wallet',
-      'skills',
+      "signup",
+      "email_verification",
+      "profile",
+      "workspace",
+      "team",
+      "wallet",
+      "skills",
     ];
     const currentIndex = stepOrder.indexOf(currentStep);
     if (currentIndex > 0) {
@@ -160,48 +160,48 @@ export function SignUpOnboarding() {
 
   const getTitlesAndSubtitles = () => {
     switch (currentStep) {
-      case 'signup':
+      case "signup":
         return {
-          title: 'Create Your Account',
-          subtitle: 'Join Wave 1 to start creating',
+          title: "Create Your Account",
+          subtitle: "Join Wave 1 to start creating",
         };
-      case 'email_verification':
+      case "email_verification":
         return {
-          title: 'Verify Your Email',
+          title: "Verify Your Email",
           subtitle: `We sent a code to ${state.email}`,
         };
-      case 'profile':
+      case "profile":
         return {
-          title: 'Complete Your Profile',
-          subtitle: 'Help others discover you',
+          title: "Complete Your Profile",
+          subtitle: "Help others discover you",
         };
-      case 'workspace':
+      case "workspace":
         return {
-          title: 'Create Your Workspace',
-          subtitle: 'Your space to create and collaborate',
+          title: "Create Your Workspace",
+          subtitle: "Your space to create and collaborate",
         };
-      case 'team':
+      case "team":
         return {
-          title: 'Invite Your Team',
-          subtitle: 'Work together with your team',
+          title: "Invite Your Team",
+          subtitle: "Work together with your team",
         };
-      case 'wallet':
+      case "wallet":
         return {
-          title: 'Connect Your Wallet',
-          subtitle: 'Secure your web3 presence',
+          title: "Connect Your Wallet",
+          subtitle: "Secure your web3 presence",
         };
-      case 'skills':
+      case "skills":
         return {
-          title: 'Add Your Skills',
-          subtitle: 'Tell us what you do best',
+          title: "Add Your Skills",
+          subtitle: "Tell us what you do best",
         };
-      case 'completed':
+      case "completed":
         return {
-          title: 'Welcome to Wave 1!',
-          subtitle: 'Your onboarding is complete',
+          title: "Welcome to Wave 1!",
+          subtitle: "Your onboarding is complete",
         };
       default:
-        return { title: '', subtitle: '' };
+        return { title: "", subtitle: "" };
     }
   };
 
@@ -215,19 +215,17 @@ export function SignUpOnboarding() {
         step={config.number}
         progress={progress}
         completedSteps={completedSteps}
-        onBack={currentStep !== 'signup' && currentStep !== 'completed' ? handleBack : undefined}
-        showProgress={currentStep !== 'completed'}
+        onBack={currentStep !== "signup" && currentStep !== "completed" ? handleBack : undefined}
+        showProgress={currentStep !== "completed"}
       >
         <div
           className={`transition-opacity duration-300 ${
-            isTransitioning ? 'opacity-50' : 'opacity-100'
+            isTransitioning ? "opacity-50" : "opacity-100"
           }`}
         >
-          {currentStep === 'signup' && (
-            <SignUpOnboardingForm onSuccess={handleSignupSuccess} />
-          )}
+          {currentStep === "signup" && <SignUpOnboardingForm onSuccess={handleSignupSuccess} />}
 
-          {currentStep === 'email_verification' && state.email && (
+          {currentStep === "email_verification" && state.email && (
             <EmailVerificationForm
               email={state.email}
               onSuccess={handleEmailVerificationSuccess}
@@ -235,7 +233,7 @@ export function SignUpOnboarding() {
             />
           )}
 
-          {currentStep === 'profile' && state.userId && (
+          {currentStep === "profile" && state.userId && (
             <ProfileForm
               userId={state.userId}
               onSuccess={handleProfileSuccess}
@@ -243,7 +241,7 @@ export function SignUpOnboarding() {
             />
           )}
 
-          {currentStep === 'workspace' && state.userId && (
+          {currentStep === "workspace" && state.userId && (
             <WorkspaceFormWrapper
               userId={state.userId}
               onSuccess={(workspaceId) => handleWorkspaceSuccess(workspaceId)}
@@ -251,7 +249,7 @@ export function SignUpOnboarding() {
             />
           )}
 
-          {currentStep === 'team' && state.userId && state.workspaceId && (
+          {currentStep === "team" && state.userId && state.workspaceId && (
             <TeamInviteForm
               userId={state.userId}
               workspaceId={state.workspaceId}
@@ -260,7 +258,7 @@ export function SignUpOnboarding() {
             />
           )}
 
-          {currentStep === 'wallet' && state.userId && (
+          {currentStep === "wallet" && state.userId && (
             <WalletConnector
               userId={state.userId}
               onSuccess={handleWalletSuccess}
@@ -268,7 +266,7 @@ export function SignUpOnboarding() {
             />
           )}
 
-          {currentStep === 'skills' && state.userId && (
+          {currentStep === "skills" && state.userId && (
             <SkillsSelector
               userId={state.userId}
               onSuccess={handleSkillsSuccess}
@@ -276,10 +274,10 @@ export function SignUpOnboarding() {
             />
           )}
 
-          {currentStep === 'completed' && state.userId && (
+          {currentStep === "completed" && state.userId && (
             <OnboardingCompleted
               userId={state.userId}
-              workspaceName={state.displayName || 'Your Workspace'}
+              workspaceName={state.displayName || "Your Workspace"}
             />
           )}
         </div>
@@ -307,7 +305,7 @@ function WorkspaceFormWrapper({
   onSuccess: (workspaceId: string) => void;
   onSkip: (workspaceId: string) => void;
 }) {
-  const [tempWorkspaceId, setTempWorkspaceId] = useState<string | null>(null);
+  const [tempWorkspaceId, _setTempWorkspaceId] = useState<string | null>(null);
 
   return (
     <WorkspaceForm

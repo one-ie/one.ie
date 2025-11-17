@@ -11,9 +11,9 @@
  */
 
 import { Effect } from "effect";
-import { ThingService } from "./ThingService";
 import { ConnectionService } from "./ConnectionService";
 import { EventService } from "./EventService";
+import { ThingService } from "./ThingService";
 
 // ============================================================================
 // TYPES
@@ -167,13 +167,9 @@ export class OrderService {
       });
 
       // Filter for orders and get order details
-      const orderIds = connections
-        .map((conn: any) => conn.toEntityId)
-        .slice(0, limit);
+      const orderIds = connections.map((conn: any) => conn.toEntityId).slice(0, limit);
 
-      const orders = yield* Effect.all(
-        orderIds.map((id: string) => ThingService.get(id))
-      );
+      const orders = yield* Effect.all(orderIds.map((id: string) => ThingService.get(id)));
 
       // Filter only order things and sort by creation date
       return orders
@@ -266,9 +262,7 @@ export class OrderService {
       );
 
       if (!order) {
-        return yield* Effect.fail(
-          new Error(`Order not found: ${orderNumber}`)
-        );
+        return yield* Effect.fail(new Error(`Order not found: ${orderNumber}`));
       }
 
       return order;
@@ -323,47 +317,9 @@ export class OrderService {
     });
 
   /**
-   * Generate unique order number
-   */
-  private static generateOrderNumber = () => {
-    const year = new Date().getFullYear();
-    const timestamp = Date.now();
-    const random = Math.floor(Math.random() * 10000);
-    return Effect.succeed(`ORD-${year}-${timestamp}-${random}`);
-  };
-
-  /**
-   * Calculate shipping cost based on subtotal
-   */
-  private static calculateShipping = (subtotal: number): number => {
-    // Free shipping over $100
-    if (subtotal >= 10000) return 0;
-
-    // Flat rate shipping
-    return 999; // $9.99
-  };
-
-  /**
-   * Calculate tax based on location
-   */
-  private static calculateTax = (subtotal: number, state: string): number => {
-    // Simple tax calculation (in real app, use tax API)
-    const taxRates: Record<string, number> = {
-      CA: 0.0725, // California
-      NY: 0.08, // New York
-      TX: 0.0625, // Texas
-      FL: 0.06, // Florida
-      // Add more states as needed
-    };
-
-    const rate = taxRates[state] || 0;
-    return Math.round(subtotal * rate);
-  };
-
-  /**
    * Get order statistics for admin
    */
-  static getStatistics = (groupId: string, since?: number, until?: number) =>
+  static getStatistics = (_groupId: string, since?: number, until?: number) =>
     Effect.gen(function* () {
       const orders = yield* ThingService.list({
         type: "order",
@@ -382,10 +338,13 @@ export class OrderService {
         return sum + props.total;
       }, 0);
 
-      const ordersByStatus = filteredOrders.reduce((acc: Record<string, number>, order: any) => {
-        acc[order.status] = (acc[order.status] || 0) + 1;
-        return acc;
-      }, {} as Record<string, number>);
+      const ordersByStatus = filteredOrders.reduce(
+        (acc: Record<string, number>, order: any) => {
+          acc[order.status] = (acc[order.status] || 0) + 1;
+          return acc;
+        },
+        {} as Record<string, number>
+      );
 
       return {
         totalOrders: filteredOrders.length,

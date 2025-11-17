@@ -4,19 +4,18 @@
  * Shows all team members and pending invitations with their status
  */
 
-import { useState, useEffect } from 'react';
-import { Badge } from '@/components/ui/badge';
-import { Button } from '@/components/ui/button';
-import { Alert, AlertDescription } from '@/components/ui/alert';
-import { Avatar, AvatarFallback } from '@/components/ui/avatar';
-import { Mail, Check, Clock, X } from 'lucide-react';
+import { Check, Clock, Mail, X } from "lucide-react";
+import { Alert, AlertDescription } from "@/components/ui/alert";
+import { Avatar, AvatarFallback } from "@/components/ui/avatar";
+import { Badge } from "@/components/ui/badge";
+import { Button } from "@/components/ui/button";
 
 interface TeamMember {
   id: string;
   email: string;
   displayName?: string;
-  role: 'owner' | 'editor' | 'viewer';
-  status: 'accepted' | 'pending' | 'expired';
+  role: "owner" | "editor" | "viewer";
+  status: "accepted" | "pending" | "expired";
   joinedAt?: number;
   expiresAt?: number;
 }
@@ -34,40 +33,40 @@ export function TeamMembersList({
   onRemove,
   loading = false,
 }: TeamMembersListProps) {
-  const acceptedMembers = members.filter((m) => m.status === 'accepted');
-  const pendingMembers = members.filter((m) => m.status === 'pending');
-  const expiredMembers = members.filter((m) => m.status === 'expired');
+  const acceptedMembers = members.filter((m) => m.status === "accepted");
+  const pendingMembers = members.filter((m) => m.status === "pending");
+  const expiredMembers = members.filter((m) => m.status === "expired");
 
   const getInitials = (email: string) => {
     return email
-      .split('@')[0]
-      .split('.')
+      .split("@")[0]
+      .split(".")
       .map((part) => part[0])
-      .join('')
+      .join("")
       .toUpperCase()
       .slice(0, 2);
   };
 
   const getStatusColor = (status: string) => {
     switch (status) {
-      case 'accepted':
-        return 'bg-green-500/10 text-green-700 dark:text-green-400';
-      case 'pending':
-        return 'bg-yellow-500/10 text-yellow-700 dark:text-yellow-400';
-      case 'expired':
-        return 'bg-destructive/10 text-destructive';
+      case "accepted":
+        return "bg-green-500/10 text-green-700 dark:text-green-400";
+      case "pending":
+        return "bg-yellow-500/10 text-yellow-700 dark:text-yellow-400";
+      case "expired":
+        return "bg-destructive/10 text-destructive";
       default:
-        return 'bg-muted text-muted-foreground';
+        return "bg-muted text-muted-foreground";
     }
   };
 
   const getStatusIcon = (status: string) => {
     switch (status) {
-      case 'accepted':
+      case "accepted":
         return <Check className="w-3 h-3" />;
-      case 'pending':
+      case "pending":
         return <Clock className="w-3 h-3" />;
-      case 'expired':
+      case "expired":
         return <X className="w-3 h-3" />;
       default:
         return null;
@@ -76,12 +75,12 @@ export function TeamMembersList({
 
   const getRoleLabel = (role: string) => {
     switch (role) {
-      case 'owner':
-        return 'Owner';
-      case 'editor':
-        return 'Editor';
-      case 'viewer':
-        return 'Viewer';
+      case "owner":
+        return "Owner";
+      case "editor":
+        return "Editor";
+      case "viewer":
+        return "Viewer";
       default:
         return role;
     }
@@ -97,25 +96,20 @@ export function TeamMembersList({
         </Avatar>
 
         <div className="flex-1 min-w-0">
-          <p className="text-sm font-medium truncate">
-            {member.displayName || member.email}
-          </p>
+          <p className="text-sm font-medium truncate">{member.displayName || member.email}</p>
           <p className="text-xs text-muted-foreground truncate">{member.email}</p>
         </div>
       </div>
 
       <div className="flex items-center gap-2">
-        <Badge
-          variant="outline"
-          className={`${getStatusColor(member.status)} border-0`}
-        >
+        <Badge variant="outline" className={`${getStatusColor(member.status)} border-0`}>
           <span className="mr-1">{getStatusIcon(member.status)}</span>
-          {member.status === 'accepted' ? 'Joined' : 'Pending'}
+          {member.status === "accepted" ? "Joined" : "Pending"}
         </Badge>
 
         <Badge variant="outline">{getRoleLabel(member.role)}</Badge>
 
-        {onRemove && member.status !== 'accepted' && (
+        {onRemove && member.status !== "accepted" && (
           <Button
             type="button"
             variant="ghost"
@@ -148,9 +142,7 @@ export function TeamMembersList({
       {/* Accepted Members */}
       {acceptedMembers.length > 0 && (
         <div className="space-y-2">
-          <h3 className="text-sm font-semibold">
-            Team Members ({acceptedMembers.length})
-          </h3>
+          <h3 className="text-sm font-semibold">Team Members ({acceptedMembers.length})</h3>
           <div className="space-y-2">
             {acceptedMembers.map((member) => (
               <MemberCard key={member.id} member={member} />
@@ -162,9 +154,7 @@ export function TeamMembersList({
       {/* Pending Invitations */}
       {pendingMembers.length > 0 && (
         <div className="space-y-2">
-          <h3 className="text-sm font-semibold">
-            Pending Invitations ({pendingMembers.length})
-          </h3>
+          <h3 className="text-sm font-semibold">Pending Invitations ({pendingMembers.length})</h3>
           <div className="space-y-2">
             {pendingMembers.map((member) => (
               <MemberCard key={member.id} member={member} />

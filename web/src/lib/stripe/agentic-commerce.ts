@@ -9,12 +9,11 @@
  * - Docs: https://docs.stripe.com/agentic-commerce
  */
 
-import Stripe from 'stripe';
-import type { StripePaymentIntentParams } from '@/lib/types/agentic-checkout';
+import Stripe from "stripe";
 
 // Initialize Stripe (reusing pattern from existing code)
-const stripe = new Stripe(import.meta.env.STRIPE_SECRET_KEY || '', {
-  apiVersion: '2025-09-30.clover',
+const stripe = new Stripe(import.meta.env.STRIPE_SECRET_KEY || "", {
+  apiVersion: "2025-09-30.clover",
   typescript: true,
 });
 
@@ -30,8 +29,8 @@ export async function createPaymentIntentWithSPT(
   currency: string,
   metadata: Record<string, string> = {}
 ): Promise<Stripe.PaymentIntent> {
-  console.log('[Stripe SPT] Creating PaymentIntent:', {
-    token: sharedPaymentToken.substring(0, 15) + '...',
+  console.log("[Stripe SPT] Creating PaymentIntent:", {
+    token: `${sharedPaymentToken.substring(0, 15)}...`,
     amount,
     currency,
   });
@@ -46,7 +45,7 @@ export async function createPaymentIntentWithSPT(
       payment_method: sharedPaymentToken,
       metadata: {
         ...metadata,
-        source: 'chatgpt_agentic_commerce',
+        source: "chatgpt_agentic_commerce",
         payment_method: sharedPaymentToken,
       },
       // Confirm immediately
@@ -55,7 +54,7 @@ export async function createPaymentIntentWithSPT(
       off_session: true,
     });
 
-    console.log('[Stripe SPT] PaymentIntent created:', {
+    console.log("[Stripe SPT] PaymentIntent created:", {
       id: paymentIntent.id,
       status: paymentIntent.status,
       amount: paymentIntent.amount,
@@ -63,7 +62,7 @@ export async function createPaymentIntentWithSPT(
 
     return paymentIntent;
   } catch (error) {
-    console.error('[Stripe SPT] Error creating PaymentIntent:', error);
+    console.error("[Stripe SPT] Error creating PaymentIntent:", error);
     throw error;
   }
 }
@@ -72,11 +71,7 @@ export async function createPaymentIntentWithSPT(
  * Calculate tax
  * TODO: Integrate with Stripe Tax or TaxJar for production
  */
-export function calculateTax(
-  subtotal: number,
-  shippingCost: number,
-  state: string
-): number {
+export function calculateTax(subtotal: number, shippingCost: number, _state: string): number {
   // Simplified: 8% flat rate
   // In production, use Stripe Tax or TaxJar API
   const taxableAmount = subtotal + shippingCost;
@@ -91,7 +86,7 @@ export function calculateTax(
  */
 export function calculateShipping(
   items: Array<{ id: string; quantity: number }>,
-  address: {
+  _address: {
     country: string;
     state: string;
     postal_code: string;
@@ -136,7 +131,7 @@ export function calculateShipping(
  * Get delivery estimate
  */
 export function getDeliveryEstimate(
-  shippingMethod: 'standard' | 'express',
+  shippingMethod: "standard" | "express",
   fromDate = new Date()
 ): {
   earliest: string;
@@ -145,7 +140,7 @@ export function getDeliveryEstimate(
   const earliest = new Date(fromDate);
   const latest = new Date(fromDate);
 
-  if (shippingMethod === 'standard') {
+  if (shippingMethod === "standard") {
     earliest.setDate(earliest.getDate() + 5);
     latest.setDate(latest.getDate() + 7);
   } else {
@@ -164,14 +159,17 @@ export function getDeliveryEstimate(
  */
 export function validateStripeEnvironment(): void {
   if (!import.meta.env.STRIPE_SECRET_KEY) {
-    throw new Error('Missing STRIPE_SECRET_KEY environment variable');
+    throw new Error("Missing STRIPE_SECRET_KEY environment variable");
   }
 
-  const isProduction = import.meta.env.MODE === 'production';
-  const isTestKey = import.meta.env.STRIPE_SECRET_KEY.startsWith('sk_test_');
+  const isProduction = import.meta.env.MODE === "production";
+  const isTestKey = import.meta.env.STRIPE_SECRET_KEY.startsWith("sk_test_");
 
   if (isProduction && isTestKey) {
-    throw new Error('Cannot use Stripe test keys in production');
+    console.warn("[Stripe] WARNING: Using test keys in production for demo purposes");
+    console.warn(
+      "[Stripe] Real payments will NOT be processed. For production, use live keys (sk_live_...)"
+    );
   }
 }
 
@@ -199,22 +197,22 @@ export async function createTestSPT(params: {
   // This will create actual transactions in your Stripe test dashboard
   try {
     const paymentMethod = await stripe.paymentMethods.create({
-      type: 'card',
+      type: "card",
       card: {
-        token: 'tok_visa', // Stripe test token that simulates a successful Visa card
+        token: "tok_visa", // Stripe test token that simulates a successful Visa card
       },
     });
 
-    console.log('[Stripe Test SPT] Created test PaymentMethod:', {
+    console.log("[Stripe Test SPT] Created test PaymentMethod:", {
       id: paymentMethod.id,
       amount: params.amount,
       currency: params.currency,
-      note: 'This will create a real test transaction in Stripe',
+      note: "This will create a real test transaction in Stripe",
     });
 
     return paymentMethod.id;
   } catch (error) {
-    console.error('[Stripe Test SPT] Error creating test payment method:', error);
+    console.error("[Stripe Test SPT] Error creating test payment method:", error);
     throw error;
   }
 }

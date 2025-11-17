@@ -5,14 +5,14 @@
  * Transforms [x] to green checkmarks and [ ] to empty checkboxes
  */
 
-import { processCheckboxes } from '@/lib/checkbox-processor';
+import { processCheckboxes } from "@/lib/checkbox-processor";
 
 export interface Props {
   html: string;
   class?: string;
 }
 
-const { html, class: className = '' } = Astro.props;
+const { html, class: className = "" } = Astro.props;
 
 // Process the HTML to replace checkbox syntax
 const { html: processedHtml } = processCheckboxes(html);

@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react';
+import { useEffect, useState } from "react";
 
 interface StickyBuyBarProps {
   productName: string;
@@ -7,16 +7,21 @@ interface StickyBuyBarProps {
   stripeEnabled?: boolean;
 }
 
-export function StickyBuyBar({ productName, price, originalPrice, stripeEnabled = false }: StickyBuyBarProps) {
+export function StickyBuyBar({
+  productName,
+  price,
+  originalPrice,
+  stripeEnabled = false,
+}: StickyBuyBarProps) {
   const [isVisible, setIsVisible] = useState(false);
   const [quantity, setQuantity] = useState(1);
-  const [processing, setProcessing] = useState(false);
+  const [_processing, setProcessing] = useState(false);
   const maxQuantity = 10;
 
   useEffect(() => {
     const handleScroll = () => {
-      const heroBuyButton = document.getElementById('hero-buy-button');
-      const footer = document.querySelector('footer');
+      const heroBuyButton = document.getElementById("hero-buy-button");
+      const footer = document.querySelector("footer");
 
       if (!heroBuyButton || !footer) return;
 
@@ -29,11 +34,11 @@ export function StickyBuyBar({ productName, price, originalPrice, stripeEnabled 
       setIsVisible(shouldShow);
     };
 
-    window.addEventListener('scroll', handleScroll);
+    window.addEventListener("scroll", handleScroll);
     // Use timeout to ensure DOM is ready
     setTimeout(handleScroll, 100);
 
-    return () => window.removeEventListener('scroll', handleScroll);
+    return () => window.removeEventListener("scroll", handleScroll);
   }, []);
 
   const handleBuyNow = async () => {
@@ -45,16 +50,16 @@ export function StickyBuyBar({ productName, price, originalPrice, stripeEnabled 
       setProcessing(true);
       try {
         const formData = new FormData();
-        formData.append('quantity', String(quantity));
-        formData.append('email', 'customer@example.com'); // This should come from user session or form
+        formData.append("quantity", String(quantity));
+        formData.append("email", "customer@example.com"); // This should come from user session or form
 
         const response = await fetch(window.location.pathname, {
-          method: 'POST',
+          method: "POST",
           body: formData,
         });
 
         if (!response.ok) {
-          throw new Error('Payment processing failed');
+          throw new Error("Payment processing failed");
         }
 
         const data = await response.json();
@@ -63,16 +68,16 @@ export function StickyBuyBar({ productName, price, originalPrice, stripeEnabled 
         if (data.url) {
           window.location.href = data.url;
         } else {
-          throw new Error('No checkout URL received');
+          throw new Error("No checkout URL received");
         }
       } catch (error) {
-        console.error('Checkout error:', error);
-        alert('Payment processing failed. Please try again.');
+        console.error("Checkout error:", error);
+        alert("Payment processing failed. Please try again.");
         setProcessing(false);
       }
     } else {
       // Show modal dialog for contact options
-      window.dispatchEvent(new Event('openBuyDialog'));
+      window.dispatchEvent(new Event("openBuyDialog"));
     }
   };
 

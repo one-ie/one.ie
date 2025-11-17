@@ -11,28 +11,28 @@
  */
 
 import { Effect, Layer } from "effect";
-import { DataProviderService } from "../DataProvider";
 import type {
-  DataProvider,
-  Group,
-  Thing,
   Connection,
-  Event,
-  Knowledge,
-  CreateThingInput,
-  UpdateThingInput,
-  CreateGroupInput,
-  UpdateGroupInput,
   CreateConnectionInput,
   CreateEventInput,
+  CreateGroupInput,
   CreateKnowledgeInput,
-  ListThingsOptions,
+  CreateThingInput,
+  DataProvider,
+  Event,
+  Group,
+  Knowledge,
   ListConnectionsOptions,
   ListEventsOptions,
   ListGroupsOptions,
+  ListThingsOptions,
   SearchKnowledgeOptions,
+  Thing,
   ThingKnowledge,
+  UpdateGroupInput,
+  UpdateThingInput,
 } from "../DataProvider";
+import { DataProviderService } from "../DataProvider";
 
 // ============================================================================
 // CONFIG
@@ -386,8 +386,7 @@ export const CompositeProviderLive = (config: CompositeProviderConfig) =>
 // FACTORY FUNCTION
 // ============================================================================
 
-export const compositeProvider = (routes: ProviderRoute[]) =>
-  makeCompositeProvider({ routes });
+export const compositeProvider = (routes: ProviderRoute[]) => makeCompositeProvider({ routes });
 
 // ============================================================================
 // EXAMPLE USAGE

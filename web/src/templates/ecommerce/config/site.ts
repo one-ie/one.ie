@@ -1,4 +1,4 @@
-import type { LucideIcon } from 'lucide-react';
+import type { LucideIcon } from "lucide-react";
 
 export interface NavigationItem {
   title: string;
@@ -20,33 +20,32 @@ export interface SiteConfig {
     twitter?: string;
     linkedin?: string;
   };
-  navigation: Omit<NavigationItem, 'icon'>[];
+  navigation: Omit<NavigationItem, "icon">[];
 }
 
 export const siteConfig: SiteConfig = {
-  name: 'Nine Padel',
-  description:
-    'Premium padel rackets, bags, shoes, and accessories - Expert gear for every level',
-  url: 'https://ninepadel.com',
+  name: "Nine Padel",
+  description: "Premium padel rackets, bags, shoes, and accessories - Expert gear for every level",
+  url: "https://ninepadel.com",
 
   author: {
-    name: 'Nine Padel',
-    email: 'hello@ninepadel.com',
-    url: 'https://ninepadel.com',
+    name: "Nine Padel",
+    email: "hello@ninepadel.com",
+    url: "https://ninepadel.com",
   },
 
   social: {
-    github: 'https://github.com/ninepadel',
-    twitter: 'https://twitter.com/ninepadel',
-    linkedin: 'https://linkedin.com/company/ninepadel',
+    github: "https://github.com/ninepadel",
+    twitter: "https://twitter.com/ninepadel",
+    linkedin: "https://linkedin.com/company/ninepadel",
   },
 
   navigation: [
-    { title: 'Rackets', path: '/shop?category=rackets' },
-    { title: 'Bags', path: '/shop?category=bags' },
-    { title: 'Shoes', path: '/shop?category=shoes' },
-    { title: 'Balls', path: '/shop?category=balls' },
-    { title: 'Apparel', path: '/shop?category=apparel' },
-    { title: 'Guides', path: '/guides' },
+    { title: "Rackets", path: "/shop?category=rackets" },
+    { title: "Bags", path: "/shop?category=bags" },
+    { title: "Shoes", path: "/shop?category=shoes" },
+    { title: "Balls", path: "/shop?category=balls" },
+    { title: "Apparel", path: "/shop?category=apparel" },
+    { title: "Guides", path: "/guides" },
   ],
 };

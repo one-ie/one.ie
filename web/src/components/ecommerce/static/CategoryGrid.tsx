@@ -1,4 +1,4 @@
-'use client';
+"use client";
 
 /**
  * Category Grid Component
@@ -15,34 +15,39 @@ interface CategoryGridItem {
 
 const TOP_CATEGORIES: CategoryGridItem[] = [
   {
-    slug: 'shoes',
-    name: 'Shoes',
-    description: 'Footwear for every occasion',
-    imageUrl: 'https://images.unsplash.com/photo-1542291026-7eec264c27ff?w=400&h=300&fm=webp&fit=crop',
+    slug: "shoes",
+    name: "Shoes",
+    description: "Footwear for every occasion",
+    imageUrl:
+      "https://images.unsplash.com/photo-1542291026-7eec264c27ff?w=400&h=300&fm=webp&fit=crop",
   },
   {
-    slug: 'electronics',
-    name: 'Electronics',
-    description: 'Latest tech and gadgets',
-    imageUrl: 'https://images.unsplash.com/photo-1505740420928-5e560c06d30e?w=400&h=300&fm=webp&fit=crop',
+    slug: "electronics",
+    name: "Electronics",
+    description: "Latest tech and gadgets",
+    imageUrl:
+      "https://images.unsplash.com/photo-1505740420928-5e560c06d30e?w=400&h=300&fm=webp&fit=crop",
   },
   {
-    slug: 'furniture',
-    name: 'Furniture',
-    description: 'Home and office furniture',
-    imageUrl: 'https://images.unsplash.com/photo-1555041469-a586c61ea9bc?w=400&h=300&fm=webp&fit=crop',
+    slug: "furniture",
+    name: "Furniture",
+    description: "Home and office furniture",
+    imageUrl:
+      "https://images.unsplash.com/photo-1555041469-a586c61ea9bc?w=400&h=300&fm=webp&fit=crop",
   },
   {
-    slug: 'clothing',
-    name: 'Clothing',
-    description: 'Fashion and apparel',
-    imageUrl: 'https://images.unsplash.com/photo-1491553895911-0055eca6402d?w=400&h=300&fm=webp&fit=crop',
+    slug: "clothing",
+    name: "Clothing",
+    description: "Fashion and apparel",
+    imageUrl:
+      "https://images.unsplash.com/photo-1491553895911-0055eca6402d?w=400&h=300&fm=webp&fit=crop",
   },
   {
-    slug: 'accessories',
-    name: 'Accessories',
-    description: 'Bags, hats, and more',
-    imageUrl: 'https://images.unsplash.com/photo-1548036328-c9fa89d128fa?w=400&h=300&fm=webp&fit=crop',
+    slug: "accessories",
+    name: "Accessories",
+    description: "Bags, hats, and more",
+    imageUrl:
+      "https://images.unsplash.com/photo-1548036328-c9fa89d128fa?w=400&h=300&fm=webp&fit=crop",
   },
 ];
 
@@ -51,9 +56,7 @@ export function CategoryGrid() {
     <div className="w-full px-4 py-12">
       <div className="mx-auto max-w-full">
         <div className="mb-12 text-center">
-          <h2 className="text-4xl font-bold tracking-tight text-foreground">
-            Shop by Category
-          </h2>
+          <h2 className="text-4xl font-bold tracking-tight text-foreground">Shop by Category</h2>
           <p className="mt-4 text-lg text-muted-foreground">
             Explore our curated selection of premium products
           </p>
@@ -78,7 +81,7 @@ export function CategoryGrid() {
                   height="300"
                   onError={(e) => {
                     // Fallback to a solid color if image fails to load
-                    (e.target as HTMLImageElement).style.display = 'none';
+                    (e.target as HTMLImageElement).style.display = "none";
                   }}
                 />
                 {/* Overlay Gradient */}
@@ -90,9 +93,7 @@ export function CategoryGrid() {
                 <h3 className="text-lg font-bold text-white transition-colors duration-300 line-clamp-1">
                   {category.name}
                 </h3>
-                <p className="mt-1 text-xs text-gray-200 line-clamp-2">
-                  {category.description}
-                </p>
+                <p className="mt-1 text-xs text-gray-200 line-clamp-2">{category.description}</p>
 
                 {/* CTA Button (appears on hover) */}
                 <div className="mt-3 inline-flex items-center text-xs font-semibold text-white opacity-0 transition-opacity duration-300 group-hover:opacity-100">

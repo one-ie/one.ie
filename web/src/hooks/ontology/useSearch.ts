@@ -30,27 +30,27 @@
  * ```
  */
 
-import { useCallback, useEffect, useState } from 'react';
-import { Effect } from 'effect';
-import { useEffectRunner } from '../useEffectRunner';
-import { useIsProviderAvailable } from './useProvider';
+import { Effect } from "effect";
+import { useEffect, useState } from "react";
+import { useEffectRunner } from "../useEffectRunner";
+import { useIsProviderAvailable } from "./useProvider";
 
 /**
  * Label/tag categories for knowledge organization
  */
 export type LabelCategory =
-  | 'industry'
-  | 'skill'
-  | 'topic'
-  | 'format'
-  | 'goal'
-  | 'audience'
-  | 'technology'
-  | 'status'
-  | 'capability'
-  | 'protocol'
-  | 'payment_method'
-  | 'network'
+  | "industry"
+  | "skill"
+  | "topic"
+  | "format"
+  | "goal"
+  | "audience"
+  | "technology"
+  | "status"
+  | "capability"
+  | "protocol"
+  | "payment_method"
+  | "network"
   | string;
 
 /**
@@ -105,7 +105,7 @@ export interface SearchOptions {
  * });
  * ```
  */
-export function useSearch(query: string, options?: SearchOptions) {
+export function useSearch(query: string, _options?: SearchOptions) {
   const { run, loading, error } = useEffectRunner<unknown, any>();
   const isProviderAvailable = useIsProviderAvailable();
   const [results, setResults] = useState<SearchResult[]>([]);
@@ -131,7 +131,7 @@ export function useSearch(query: string, options?: SearchOptions) {
     }, 300);
 
     return () => clearTimeout(timeout);
-  }, [query, options?.type, isProviderAvailable, run]);
+  }, [query, isProviderAvailable, run]);
 
   return {
     results,
@@ -170,7 +170,7 @@ export function useSearchByType(query: string, type: string) {
  * const { labels: skills } = useLabels('skill');
  * ```
  */
-export function useLabels(category?: LabelCategory) {
+export function useLabels(_category?: LabelCategory) {
   const { run, loading, error } = useEffectRunner<unknown, any>();
   const isProviderAvailable = useIsProviderAvailable();
   const [labels, setLabels] = useState<Label[]>([]);
@@ -191,7 +191,7 @@ export function useLabels(category?: LabelCategory) {
     run(program, {
       onSuccess: (data) => setLabels(data),
     });
-  }, [category, isProviderAvailable, run]);
+  }, [isProviderAvailable, run]);
 
   return {
     labels,
@@ -314,10 +314,7 @@ export function useEntitiesByLabel(labelId?: string) {
  * // Shows courses similar to this one
  * ```
  */
-export function useSimilarEntities(
-  entityId?: string,
-  limit = 10
-) {
+export function useSimilarEntities(entityId?: string, _limit = 10) {
   const { run, loading, error } = useEffectRunner<unknown, any>();
   const isProviderAvailable = useIsProviderAvailable();
   const [results, setResults] = useState<any[]>([]);
@@ -338,7 +335,7 @@ export function useSimilarEntities(
     run(program, {
       onSuccess: (data) => setResults(data),
     });
-  }, [entityId, limit, isProviderAvailable, run]);
+  }, [entityId, isProviderAvailable, run]);
 
   return {
     results,
@@ -367,16 +364,11 @@ export function useSimilarEntities(
  * // Show facet filters (technologies, levels, etc.)
  * ```
  */
-export function useFacetedSearch(
-  query: string,
-  facets?: Record<string, string>
-) {
+export function useFacetedSearch(query: string, _facets?: Record<string, string>) {
   const { run, loading, error } = useEffectRunner<unknown, any>();
   const isProviderAvailable = useIsProviderAvailable();
   const [results, setResults] = useState<SearchResult[]>([]);
-  const [availableFacets, setAvailableFacets] = useState<
-    Record<string, string[]>
-  >({});
+  const [availableFacets, setAvailableFacets] = useState<Record<string, string[]>>({});
 
   useEffect(() => {
     if (!query.trim() || !isProviderAvailable) {
@@ -404,7 +396,7 @@ export function useFacetedSearch(
     }, 300);
 
     return () => clearTimeout(timeout);
-  }, [query, facets?.category, facets?.type, isProviderAvailable, run]);
+  }, [query, isProviderAvailable, run]);
 
   return {
     results,
@@ -426,7 +418,7 @@ export function useFacetedSearch(
  * const { results: trendingCourses } = useTrendingEntities('course', 10);
  * ```
  */
-export function useTrendingEntities(entityType?: string, limit = 10) {
+export function useTrendingEntities(_entityType?: string, _limit = 10) {
   const { run, loading, error } = useEffectRunner<unknown, any>();
   const isProviderAvailable = useIsProviderAvailable();
   const [results, setResults] = useState<SearchResult[]>([]);
@@ -447,7 +439,7 @@ export function useTrendingEntities(entityType?: string, limit = 10) {
     run(program, {
       onSuccess: (data) => setResults(data),
     });
-  }, [entityType, limit, isProviderAvailable, run]);
+  }, [isProviderAvailable, run]);
 
   return {
     results,
@@ -471,7 +463,7 @@ export function useTrendingEntities(entityType?: string, limit = 10) {
  * // Shows AI-powered course recommendations
  * ```
  */
-export function useRecommendations(userId?: string, limit = 20) {
+export function useRecommendations(userId?: string, _limit = 20) {
   const { run, loading, error } = useEffectRunner<unknown, any>();
   const isProviderAvailable = useIsProviderAvailable();
   const [results, setResults] = useState<SearchResult[]>([]);
@@ -492,7 +484,7 @@ export function useRecommendations(userId?: string, limit = 20) {
     run(program, {
       onSuccess: (data) => setResults(data),
     });
-  }, [userId, limit, isProviderAvailable, run]);
+  }, [userId, isProviderAvailable, run]);
 
   return {
     results,

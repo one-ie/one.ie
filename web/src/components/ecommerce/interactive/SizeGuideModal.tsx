@@ -4,15 +4,15 @@
  * Requires client:load hydration
  */
 
-'use client';
+"use client";
 
 import {
   Dialog,
   DialogContent,
+  DialogDescription,
   DialogHeader,
   DialogTitle,
-  DialogDescription,
-} from '@/components/ui/dialog';
+} from "@/components/ui/dialog";
 import {
   Table,
   TableBody,
@@ -20,39 +20,39 @@ import {
   TableHead,
   TableHeader,
   TableRow,
-} from '@/components/ui/table';
-import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
+} from "@/components/ui/table";
+import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 
 interface SizeGuideModalProps {
   open: boolean;
   onOpenChange: (open: boolean) => void;
-  productType?: 'apparel' | 'shoes' | 'accessories';
+  productType?: "apparel" | "shoes" | "accessories";
 }
 
 // Size data for different product types
 const apparelSizes = [
-  { size: 'XS', chest: '30-32', waist: '24-26', hips: '33-35', length: '27' },
-  { size: 'S', chest: '32-34', waist: '26-28', hips: '35-37', length: '27.5' },
-  { size: 'M', chest: '34-36', waist: '28-30', hips: '37-39', length: '28' },
-  { size: 'L', chest: '36-38', waist: '30-32', hips: '39-41', length: '28.5' },
-  { size: 'XL', chest: '38-40', waist: '32-34', hips: '41-43', length: '29' },
-  { size: '2XL', chest: '40-42', waist: '34-36', hips: '43-45', length: '29.5' },
+  { size: "XS", chest: "30-32", waist: "24-26", hips: "33-35", length: "27" },
+  { size: "S", chest: "32-34", waist: "26-28", hips: "35-37", length: "27.5" },
+  { size: "M", chest: "34-36", waist: "28-30", hips: "37-39", length: "28" },
+  { size: "L", chest: "36-38", waist: "30-32", hips: "39-41", length: "28.5" },
+  { size: "XL", chest: "38-40", waist: "32-34", hips: "41-43", length: "29" },
+  { size: "2XL", chest: "40-42", waist: "34-36", hips: "43-45", length: "29.5" },
 ];
 
 const shoeSizes = [
-  { us: '6', uk: '3.5', eu: '36', cm: '22.5' },
-  { us: '7', uk: '4.5', eu: '37', cm: '23.5' },
-  { us: '8', uk: '5.5', eu: '38', cm: '24.5' },
-  { us: '9', uk: '6.5', eu: '39', cm: '25.5' },
-  { us: '10', uk: '7.5', eu: '40', cm: '26.5' },
-  { us: '11', uk: '8.5', eu: '41', cm: '27.5' },
-  { us: '12', uk: '9.5', eu: '42', cm: '28.5' },
+  { us: "6", uk: "3.5", eu: "36", cm: "22.5" },
+  { us: "7", uk: "4.5", eu: "37", cm: "23.5" },
+  { us: "8", uk: "5.5", eu: "38", cm: "24.5" },
+  { us: "9", uk: "6.5", eu: "39", cm: "25.5" },
+  { us: "10", uk: "7.5", eu: "40", cm: "26.5" },
+  { us: "11", uk: "8.5", eu: "41", cm: "27.5" },
+  { us: "12", uk: "9.5", eu: "42", cm: "28.5" },
 ];
 
 export function SizeGuideModal({
   open,
   onOpenChange,
-  productType = 'apparel',
+  productType = "apparel",
 }: SizeGuideModalProps) {
   return (
     <Dialog open={open} onOpenChange={onOpenChange}>
@@ -73,7 +73,7 @@ export function SizeGuideModal({
 
           {/* Size Measurements Tab */}
           <TabsContent value="measurements" className="space-y-4">
-            {productType === 'apparel' && (
+            {productType === "apparel" && (
               <>
                 <div className="rounded-lg border p-4">
                   <h3 className="text-sm font-semibold mb-3">Size Chart (inches)</h3>
@@ -116,7 +116,7 @@ export function SizeGuideModal({
               </>
             )}
 
-            {productType === 'shoes' && (
+            {productType === "shoes" && (
               <div className="rounded-lg border p-4">
                 <h3 className="text-sm font-semibold mb-3">Shoe Size Conversion</h3>
                 <div className="overflow-x-auto">
@@ -154,29 +154,28 @@ export function SizeGuideModal({
                   <div>
                     <h4 className="font-medium text-foreground mb-1">1. Chest</h4>
                     <p>
-                      Measure around the fullest part of your chest, keeping the tape
-                      measure horizontal and comfortable.
+                      Measure around the fullest part of your chest, keeping the tape measure
+                      horizontal and comfortable.
                     </p>
                   </div>
                   <div>
                     <h4 className="font-medium text-foreground mb-1">2. Waist</h4>
                     <p>
-                      Measure around your natural waistline, keeping the tape snug but
-                      not tight.
+                      Measure around your natural waistline, keeping the tape snug but not tight.
                     </p>
                   </div>
                   <div>
                     <h4 className="font-medium text-foreground mb-1">3. Hips</h4>
                     <p>
-                      Measure around the fullest part of your hips, approximately 8
-                      inches below your waist.
+                      Measure around the fullest part of your hips, approximately 8 inches below
+                      your waist.
                     </p>
                   </div>
                   <div>
                     <h4 className="font-medium text-foreground mb-1">4. Length</h4>
                     <p>
-                      Measure from the highest point of your shoulder to your desired
-                      garment length.
+                      Measure from the highest point of your shoulder to your desired garment
+                      length.
                     </p>
                   </div>
                 </div>
@@ -198,12 +197,10 @@ export function SizeGuideModal({
                     />
                   </svg>
                   <div className="text-sm">
-                    <h4 className="font-medium text-blue-900 dark:text-blue-100 mb-1">
-                      Pro Tip
-                    </h4>
+                    <h4 className="font-medium text-blue-900 dark:text-blue-100 mb-1">Pro Tip</h4>
                     <p className="text-blue-800 dark:text-blue-200">
-                      For best results, ask someone to help you take measurements. Wear
-                      fitted clothing or undergarments and keep the tape measure level.
+                      For best results, ask someone to help you take measurements. Wear fitted
+                      clothing or undergarments and keep the tape measure level.
                     </p>
                   </div>
                 </div>
@@ -217,33 +214,32 @@ export function SizeGuideModal({
               <div className="rounded-lg border p-4">
                 <h3 className="text-sm font-semibold mb-2">Regular Fit</h3>
                 <p className="text-sm text-muted-foreground">
-                  Comfortable, classic cut with room to move. Not too tight or loose.
-                  Perfect for everyday wear.
+                  Comfortable, classic cut with room to move. Not too tight or loose. Perfect for
+                  everyday wear.
                 </p>
               </div>
 
               <div className="rounded-lg border p-4">
                 <h3 className="text-sm font-semibold mb-2">Slim Fit</h3>
                 <p className="text-sm text-muted-foreground">
-                  Tailored closer to the body for a modern, streamlined look. More
-                  fitted through chest and waist.
+                  Tailored closer to the body for a modern, streamlined look. More fitted through
+                  chest and waist.
                 </p>
               </div>
 
               <div className="rounded-lg border p-4">
                 <h3 className="text-sm font-semibold mb-2">Relaxed Fit</h3>
                 <p className="text-sm text-muted-foreground">
-                  Looser, more comfortable fit with extra room throughout. Ideal for
-                  casual, laid-back style.
+                  Looser, more comfortable fit with extra room throughout. Ideal for casual,
+                  laid-back style.
                 </p>
               </div>
 
               <div className="rounded-lg bg-muted p-4">
                 <h4 className="text-sm font-semibold mb-2">Between Sizes?</h4>
                 <p className="text-sm text-muted-foreground">
-                  If you're between sizes, we recommend sizing up for a more comfortable
-                  fit, or sizing down if you prefer a tighter fit. Check customer reviews
-                  for fit feedback.
+                  If you're between sizes, we recommend sizing up for a more comfortable fit, or
+                  sizing down if you prefer a tighter fit. Check customer reviews for fit feedback.
                 </p>
               </div>
             </div>

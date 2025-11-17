@@ -1,75 +1,30 @@
 "use client";
 
+import type { ToolUIPart } from "ai";
+import { SearchIcon } from "lucide-react";
+import { nanoid } from "nanoid";
+import { useCallback, useEffect, useState } from "react";
+import { toast } from "sonner";
 import {
+  Conversation,
+  ConversationContent,
+  ConversationScrollButton,
+} from "@/components/ai/elements/conversation";
+import {
+  Message,
   MessageBranch,
   MessageBranchContent,
   MessageBranchNext,
   MessageBranchPage,
   MessageBranchPrevious,
   MessageBranchSelector,
+  MessageContent,
+  MessageResponse,
 } from "@/components/ai/elements/message";
-import {
-  Conversation,
-  ConversationContent,
-  ConversationScrollButton,
-} from "@/components/ai/elements/conversation";
-import { Message, MessageContent } from "@/components/ai/elements/message";
-import {
-  PromptInput,
-  PromptInputButton,
-  PromptInputFooter,
-  type PromptInputMessage,
-  PromptInputTextarea,
-  PromptInputTools,
-} from "@/components/ai/elements/prompt-input";
-import {
-  ModelSelector,
-  ModelSelectorContent,
-  ModelSelectorEmpty,
-  ModelSelectorGroup,
-  ModelSelectorInput,
-  ModelSelectorItem,
-  ModelSelectorList,
-  ModelSelectorLogo,
-  ModelSelectorLogoGroup,
-  ModelSelectorName,
-  ModelSelectorTrigger,
-} from "@/components/ai/elements/model-selector";
-import {
-  Reasoning,
-  ReasoningContent,
-  ReasoningTrigger,
-} from "@/components/ai/elements/reasoning";
-import { MessageResponse } from "@/components/ai/elements/message";
-import {
-  Source,
-  Sources,
-  SourcesContent,
-  SourcesTrigger,
-} from "@/components/ai/elements/sources";
-import {
-  DropdownMenu,
-  DropdownMenuContent,
-  DropdownMenuItem,
-  DropdownMenuTrigger,
-} from "@/components/ui/dropdown-menu";
+import type { PromptInputMessage } from "@/components/ai/elements/prompt-input";
+import { Reasoning, ReasoningContent, ReasoningTrigger } from "@/components/ai/elements/reasoning";
+import { Source, Sources, SourcesContent, SourcesTrigger } from "@/components/ai/elements/sources";
 import { cn } from "@/lib/utils";
-import type { ToolUIPart } from "ai";
-import { CheckIcon } from "lucide-react";
-import {
-  AudioWaveformIcon,
-  CameraIcon,
-  ChevronDownIcon,
-  FileIcon,
-  ImageIcon,
-  LightbulbIcon,
-  PaperclipIcon,
-  ScreenShareIcon,
-  SearchIcon,
-} from "lucide-react";
-import { nanoid } from "nanoid";
-import { useCallback, useEffect, useState } from "react";
-import { toast } from "sonner";
 
 type MessageType = {
   key: string;
@@ -313,24 +268,20 @@ const mockMessageResponses = [
 ];
 
 const Example = () => {
-  const [model, setModel] = useState<string>(models[0].id);
-  const [modelSelectorOpen, setModelSelectorOpen] = useState(false);
+  const [model, _setModel] = useState<string>(models[0].id);
+  const [_modelSelectorOpen, _setModelSelectorOpen] = useState(false);
   const [text, setText] = useState<string>("");
   const [useWebSearch, setUseWebSearch] = useState<boolean>(false);
-  const [useMicrophone, setUseMicrophone] = useState<boolean>(false);
-  const [status, setStatus] = useState<
-    "submitted" | "streaming" | "ready" | "error"
-  >("ready");
+  const [_useMicrophone, _setUseMicrophone] = useState<boolean>(false);
+  const [status, setStatus] = useState<"submitted" | "streaming" | "ready" | "error">("ready");
   const [messages, setMessages] = useState<MessageType[]>([]);
-  const [streamingMessageId, setStreamingMessageId] = useState<string | null>(
-    null
-  );
+  const [_streamingMessageId, setStreamingMessageId] = useState<string | null>(null);
 
-  const selectedModelData = models.find((m) => m.id === model);
+  const _selectedModelData = models.find((m) => m.id === model);
 
   const streamReasoning = async (
     messageKey: string,
-    versionId: string,
+    _versionId: string,
     reasoningContent: string
   ) => {
     const words = reasoningContent.split(" ");
@@ -344,18 +295,14 @@ const Example = () => {
           if (msg.key === messageKey) {
             return {
               ...msg,
-              reasoning: msg.reasoning
-                ? { ...msg.reasoning, content: currentContent }
-                : undefined,
+              reasoning: msg.reasoning ? { ...msg.reasoning, content: currentContent } : undefined,
             };
           }
           return msg;
         })
       );
 
-      await new Promise((resolve) =>
-        setTimeout(resolve, Math.random() * 30 + 20)
-      );
+      await new Promise((resolve) => setTimeout(resolve, Math.random() * 30 + 20));
     }
 
     // Mark reasoning as complete
@@ -373,11 +320,7 @@ const Example = () => {
     );
   };
 
-  const streamContent = async (
-    messageKey: string,
-    versionId: string,
-    content: string
-  ) => {
+  const streamContent = async (messageKey: string, versionId: string, content: string) => {
     const words = content.split(" ");
     let currentContent = "";
 
@@ -398,9 +341,7 @@ const Example = () => {
         })
       );
 
-      await new Promise((resolve) =>
-        setTimeout(resolve, Math.random() * 50 + 25)
-      );
+      await new Promise((resolve) => setTimeout(resolve, Math.random() * 50 + 25));
     }
 
     // Mark content as complete
@@ -436,7 +377,7 @@ const Example = () => {
       setStatus("ready");
       setStreamingMessageId(null);
     },
-    []
+    [streamContent, streamReasoning]
   );
 
   const streamMessage = useCallback(
@@ -450,9 +391,7 @@ const Example = () => {
       const newMessage = {
         ...message,
         versions: message.versions.map((v) => ({ ...v, content: "" })),
-        reasoning: message.reasoning
-          ? { ...message.reasoning, content: "" }
-          : undefined,
+        reasoning: message.reasoning ? { ...message.reasoning, content: "" } : undefined,
         isReasoningComplete: false,
         isContentComplete: false,
         isReasoningStreaming: !!message.reasoning,
@@ -572,13 +511,13 @@ const Example = () => {
     setText("");
   };
 
-  const handleFileAction = (action: string) => {
+  const _handleFileAction = (action: string) => {
     toast.success("File action", {
       description: action,
     });
   };
 
-  const handleSuggestionClick = (suggestion: string) => {
+  const _handleSuggestionClick = (suggestion: string) => {
     setStatus("submitted");
     addUserMessage(suggestion);
   };
@@ -586,135 +525,160 @@ const Example = () => {
   return (
     <div className="relative flex size-full flex-col divide-y overflow-hidden bg-secondary items-center justify-center">
       <div className="w-full max-w-[1000px] h-full flex flex-col divide-y">
-      <Conversation className="pb-[220px]">
-        <ConversationContent>
-          {messages.map(({ versions, ...message }) => (
-            <MessageBranch defaultBranch={0} key={message.key}>
-              <MessageBranchContent>
-                {versions.map((version) => (
-                  <Message
-                    from={message.from}
-                    key={`${message.key}-${version.id}`}
-                  >
-                    <div>
-                      {message.sources?.length && (
-                        <Sources>
-                          <SourcesTrigger count={message.sources.length} />
-                          <SourcesContent>
-                            {message.sources.map((source) => (
-                              <Source
-                                href={source.href}
-                                key={source.href}
-                                title={source.title}
-                              />
-                            ))}
-                          </SourcesContent>
-                        </Sources>
-                      )}
-                      {message.reasoning && (
-                        <Reasoning
-                          duration={message.reasoning.duration}
-                          isStreaming={message.isReasoningStreaming}
-                        >
-                          <ReasoningTrigger />
-                          <ReasoningContent>
-                            {message.reasoning.content}
-                          </ReasoningContent>
-                        </Reasoning>
-                      )}
-                      {(message.from === "user" ||
-                        message.isReasoningComplete ||
-                        !message.reasoning) && (
-                        <MessageContent
-                          className={cn(
-                            "group-[.is-user]:rounded-[24px] group-[.is-user]:rounded-br-sm group-[.is-user]:border group-[.is-user]:bg-background group-[.is-user]:text-foreground",
-                            "group-[.is-assistant]:bg-transparent group-[.is-assistant]:p-0 group-[.is-assistant]:text-foreground"
-                          )}
-                        >
-                          <MessageResponse>{version.content}</MessageResponse>
-                        </MessageContent>
-                      )}
-                    </div>
-                  </Message>
-                ))}
-              </MessageBranchContent>
-              {versions.length > 1 && (
-                <MessageBranchSelector className="px-0" from={message.from}>
-                  <MessageBranchPrevious />
-                  <MessageBranchPage />
-                  <MessageBranchNext />
-                </MessageBranchSelector>
-              )}
-            </MessageBranch>
-          ))}
-        </ConversationContent>
-        <ConversationScrollButton />
-      </Conversation>
-      {/* Input Area - FIXED at bottom with dark background */}
-      <div className="fixed bottom-0 left-0 right-0 z-10 bg-secondary">
-        <div className="w-full max-w-[1000px] mx-auto px-4 py-4">
-          <div className="relative flex flex-col bg-card rounded-2xl p-3 gap-3 focus-within:outline-none border border-border">
-            {/* Text input area on top */}
-            <textarea
-              className="w-full bg-transparent text-foreground placeholder-muted-foreground outline-none ring-0 focus:outline-none focus:ring-0 text-base resize-none min-h-[80px] px-2"
-              placeholder="How can Grok help?"
-              value={text}
-              onChange={(e) => setText(e.target.value)}
-              onKeyDown={(e) => {
-                if (e.key === 'Enter' && !e.shiftKey) {
-                  e.preventDefault();
-                  const value = e.currentTarget.value.trim();
-                  if (value) {
-                    handleSubmit({ text: value, files: [] });
-                    setText('');
-                  }
-                }
-              }}
-            />
-
-            {/* Button row on bottom */}
-            <div className="flex items-center justify-between gap-2">
-              <div className="flex items-center gap-1">
-                {/* DeepSearch button */}
-                <button
-                  type="button"
-                  className="flex items-center gap-1.5 px-3 py-1.5 text-foreground hover:bg-muted rounded-lg transition-all text-sm border border-border"
-                  onClick={() => setUseWebSearch(!useWebSearch)}
-                  title="DeepSearch"
-                >
-                  <SearchIcon size={16} />
-                  <span>DeepSearch</span>
-                </button>
-              </div>
-
-              {/* Submit button */}
-              <button
-                type="button"
-                className="p-2 bg-foreground hover:bg-foreground/90 text-background rounded-full transition-colors disabled:opacity-50"
-                disabled={!text.trim() || status === "streaming"}
-                onClick={() => {
-                  if (text.trim()) {
-                    handleSubmit({ text, files: [] });
-                    setText('');
+        <Conversation className="pb-[220px]">
+          <ConversationContent>
+            {messages.map(({ versions, ...message }) => (
+              <MessageBranch defaultBranch={0} key={message.key}>
+                <MessageBranchContent>
+                  {versions.map((version) => (
+                    <Message from={message.from} key={`${message.key}-${version.id}`}>
+                      <div>
+                        {message.sources?.length && (
+                          <Sources>
+                            <SourcesTrigger count={message.sources.length} />
+                            <SourcesContent>
+                              {message.sources.map((source) => (
+                                <Source href={source.href} key={source.href} title={source.title} />
+                              ))}
+                            </SourcesContent>
+                          </Sources>
+                        )}
+                        {message.reasoning && (
+                          <Reasoning
+                            duration={message.reasoning.duration}
+                            isStreaming={message.isReasoningStreaming}
+                          >
+                            <ReasoningTrigger />
+                            <ReasoningContent>{message.reasoning.content}</ReasoningContent>
+                          </Reasoning>
+                        )}
+                        {(message.from === "user" ||
+                          message.isReasoningComplete ||
+                          !message.reasoning) && (
+                          <MessageContent
+                            className={cn(
+                              "group-[.is-user]:rounded-[24px] group-[.is-user]:rounded-br-sm group-[.is-user]:border group-[.is-user]:bg-background group-[.is-user]:text-foreground",
+                              "group-[.is-assistant]:bg-transparent group-[.is-assistant]:p-0 group-[.is-assistant]:text-foreground"
+                            )}
+                          >
+                            <MessageResponse>{version.content}</MessageResponse>
+                          </MessageContent>
+                        )}
+                      </div>
+                    </Message>
+                  ))}
+                </MessageBranchContent>
+                {versions.length > 1 && (
+                  <MessageBranchSelector className="px-0" from={message.from}>
+                    <MessageBranchPrevious />
+                    <MessageBranchPage />
+                    <MessageBranchNext />
+                  </MessageBranchSelector>
+                )}
+              </MessageBranch>
+            ))}
+          </ConversationContent>
+          <ConversationScrollButton />
+        </Conversation>
+        {/* Input Area - FIXED at bottom with dark background */}
+        <div className="fixed bottom-0 left-0 right-0 z-10 bg-secondary">
+          <div className="w-full max-w-[1000px] mx-auto px-4 py-4">
+            <div className="relative flex flex-col bg-card rounded-2xl p-3 gap-3 focus-within:outline-none border border-border">
+              {/* Text input area on top */}
+              <textarea
+                className="w-full bg-transparent text-foreground placeholder-muted-foreground outline-none ring-0 focus:outline-none focus:ring-0 text-base resize-none min-h-[80px] px-2"
+                placeholder="How can Grok help?"
+                value={text}
+                onChange={(e) => setText(e.target.value)}
+                onKeyDown={(e) => {
+                  if (e.key === "Enter" && !e.shiftKey) {
+                    e.preventDefault();
+                    const value = e.currentTarget.value.trim();
+                    if (value) {
+                      handleSubmit({ text: value, files: [] });
+                      setText("");
+                    }
                   }
                 }}
-              >
-                {status === "streaming" ? (
-                  <svg className="animate-spin h-5 w-5" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
-                    <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4"></circle>
-                    <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
-                  </svg>
-                ) : (
-                  <svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
-                    <path d="M10 17L17 10L10 3" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
-                    <path d="M17 10H3" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
-                  </svg>
-                )}
-              </button>
+              />
+
+              {/* Button row on bottom */}
+              <div className="flex items-center justify-between gap-2">
+                <div className="flex items-center gap-1">
+                  {/* DeepSearch button */}
+                  <button
+                    type="button"
+                    className="flex items-center gap-1.5 px-3 py-1.5 text-foreground hover:bg-muted rounded-lg transition-all text-sm border border-border"
+                    onClick={() => setUseWebSearch(!useWebSearch)}
+                    title="DeepSearch"
+                  >
+                    <SearchIcon size={16} />
+                    <span>DeepSearch</span>
+                  </button>
+                </div>
+
+                {/* Submit button */}
+                <button
+                  type="button"
+                  className="p-2 bg-foreground hover:bg-foreground/90 text-background rounded-full transition-colors disabled:opacity-50"
+                  disabled={!text.trim() || status === "streaming"}
+                  onClick={() => {
+                    if (text.trim()) {
+                      handleSubmit({ text, files: [] });
+                      setText("");
+                    }
+                  }}
+                >
+                  {status === "streaming" ? (
+                    <svg
+                      className="animate-spin h-5 w-5"
+                      xmlns="http://www.w3.org/2000/svg"
+                      fill="none"
+                      viewBox="0 0 24 24"
+                    >
+                      <circle
+                        className="opacity-25"
+                        cx="12"
+                        cy="12"
+                        r="10"
+                        stroke="currentColor"
+                        strokeWidth="4"
+                      ></circle>
+                      <path
+                        className="opacity-75"
+                        fill="currentColor"
+                        d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"
+                      ></path>
+                    </svg>
+                  ) : (
+                    <svg
+                      width="20"
+                      height="20"
+                      viewBox="0 0 20 20"
+                      fill="none"
+                      xmlns="http://www.w3.org/2000/svg"
+                    >
+                      <path
+                        d="M10 17L17 10L10 3"
+                        stroke="currentColor"
+                        strokeWidth="2"
+                        strokeLinecap="round"
+                        strokeLinejoin="round"
+                      />
+                      <path
+                        d="M17 10H3"
+                        stroke="currentColor"
+                        strokeWidth="2"
+                        strokeLinecap="round"
+                        strokeLinejoin="round"
+                      />
+                    </svg>
+                  )}
+                </button>
+              </div>
             </div>
           </div>
         </div>
-      </div>
       </div>
     </div>
   );

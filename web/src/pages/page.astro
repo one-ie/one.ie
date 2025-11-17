@@ -1,110 +1,74 @@
 ---
-import Layout from '../layouts/Layout.astro';
-import { Button } from '@/components/ui/button';
-import {
-  Card,
-  CardHeader,
-  CardTitle,
-  CardDescription,
-  CardContent,
-} from '@/components/ui/card';
-import { Badge } from '@/components/ui/badge';
-import { GitSection } from '@/components/GitSection';
-import { PerformanceChart } from '@/components/features/PerformanceChart';
-import OrbitingCircles from '@/components/magicui/orbiting-circles';
-import {
-  Github,
-  Check,
-  Rocket,
-  Users,
-  Box,
-  GitBranch,
-  Activity,
-  Brain,
-  Coins,
-  Wand2,
-  Sparkles,
-  Zap,
-  Globe,
-  Shield,
-  Target,
-  TrendingUp,
-  Code,
-  DollarSign,
-  Network,
-  Bot,
-  Building2,
-} from 'lucide-react';
+import Layout from "@/layouts/Layout.astro";
 
-const innerOrbits = [
+const _innerOrbits = [
   {
     startAngle: 0,
     duration: 36,
-    logo: '/logos/shopify.svg',
-    name: 'Shopify',
-    caption: 'Storefront',
+    logo: "/logos/shopify.svg",
+    name: "Shopify",
+    caption: "Storefront",
   },
   {
     startAngle: 90,
     duration: 36,
-    logo: '/logos/woocommerce.svg',
-    name: 'WooCommerce',
-    caption: 'Commerce',
+    logo: "/logos/woocommerce.svg",
+    name: "WooCommerce",
+    caption: "Commerce",
   },
   {
     startAngle: 180,
     duration: 36,
-    logo: '/logos/magento.svg',
-    name: 'Magento',
-    caption: 'Enterprise',
+    logo: "/logos/magento.svg",
+    name: "Magento",
+    caption: "Enterprise",
   },
   {
     startAngle: 270,
     duration: 36,
-    logo: '/logos/stripe.svg',
-    name: 'Stripe',
-    caption: 'Billing',
+    logo: "/logos/stripe.svg",
+    name: "Stripe",
+    caption: "Billing",
   },
 ];
 
-const outerOrbits = [
+const _outerOrbits = [
   {
     startAngle: 0,
     duration: 48,
-    logo: '/logos/openai.svg',
-    name: 'OpenAI',
-    caption: 'GPT-4',
+    logo: "/logos/openai.svg",
+    name: "OpenAI",
+    caption: "GPT-4",
   },
   {
     startAngle: 72,
     duration: 48,
-    logo: '/logos/anthropic.svg',
-    name: 'Anthropic',
-    caption: 'Claude 3',
+    logo: "/logos/anthropic.svg",
+    name: "Anthropic",
+    caption: "Claude 3",
   },
   {
     startAngle: 144,
     duration: 48,
-    logo: '/logos/gemini.svg',
-    name: 'Google Gemini',
-    caption: 'Multimodal',
+    logo: "/logos/gemini.svg",
+    name: "Google Gemini",
+    caption: "Multimodal",
   },
   {
     startAngle: 216,
     duration: 48,
-    logo: '/logos/mistral.svg',
-    name: 'Mistral AI',
-    caption: 'Open-Weight',
+    logo: "/logos/mistral.svg",
+    name: "Mistral AI",
+    caption: "Open-Weight",
   },
   {
     startAngle: 288,
     duration: 48,
-    logo: '/logos/deepseek.svg',
-    name: 'DeepSeek',
-    caption: 'Optimized',
+    logo: "/logos/deepseek.svg",
+    name: "DeepSeek",
+    caption: "Optimized",
   },
 ];
-
 ---
 
 <Layout title="ONE - Build AI Agents, Applications, and Your Audience">

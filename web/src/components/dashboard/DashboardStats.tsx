@@ -5,7 +5,6 @@
  * Static display component (no Effect calls needed).
  */
 
-import React from "react";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 
 interface DashboardStatsProps {
@@ -40,9 +39,7 @@ export function DashboardStats({ stats }: DashboardStatsProps) {
         </CardHeader>
         <CardContent>
           <div className="text-2xl font-bold">{stats.total}</div>
-          <p className="text-xs text-muted-foreground">
-            All entities in the system
-          </p>
+          <p className="text-xs text-muted-foreground">All entities in the system</p>
         </CardContent>
       </Card>
 
@@ -65,9 +62,7 @@ export function DashboardStats({ stats }: DashboardStatsProps) {
         </CardHeader>
         <CardContent>
           <div className="text-2xl font-bold">{stats.products}</div>
-          <p className="text-xs text-muted-foreground">
-            Products available
-          </p>
+          <p className="text-xs text-muted-foreground">Products available</p>
         </CardContent>
       </Card>
 
@@ -89,9 +84,7 @@ export function DashboardStats({ stats }: DashboardStatsProps) {
         </CardHeader>
         <CardContent>
           <div className="text-2xl font-bold">{stats.courses}</div>
-          <p className="text-xs text-muted-foreground">
-            Courses created
-          </p>
+          <p className="text-xs text-muted-foreground">Courses created</p>
         </CardContent>
       </Card>
 
@@ -115,9 +108,7 @@ export function DashboardStats({ stats }: DashboardStatsProps) {
         </CardHeader>
         <CardContent>
           <div className="text-2xl font-bold">{stats.users}</div>
-          <p className="text-xs text-muted-foreground">
-            Registered users
-          </p>
+          <p className="text-xs text-muted-foreground">Registered users</p>
         </CardContent>
       </Card>
     </div>

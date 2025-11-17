@@ -1,13 +1,13 @@
-import { useState, useEffect } from 'react';
-import { useInstallation } from '@/components/providers/InstallationProvider';
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
-import { ScrollArea } from '@/components/ui/scroll-area';
-import { Badge } from '@/components/ui/badge';
+import { useEffect, useState } from "react";
+import { useInstallation } from "@/components/providers/InstallationProvider";
+import { Badge } from "@/components/ui/badge";
+import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
+import { ScrollArea } from "@/components/ui/scroll-area";
 
 interface FileNode {
   name: string;
   path: string;
-  type: 'file' | 'directory';
+  type: "file" | "directory";
   children?: FileNode[];
 }
 
@@ -54,7 +54,8 @@ export function InstallationFileBrowser() {
         <CardContent>
           <div className="rounded-lg border border-dashed p-8 text-center">
             <p className="mb-4 text-sm text-muted-foreground">
-              Initialize an installation folder to store organization-specific documentation and configuration.
+              Initialize an installation folder to store organization-specific documentation and
+              configuration.
             </p>
             <code className="rounded bg-muted px-3 py-1.5 text-sm">npx oneie init</code>
           </div>
@@ -76,7 +77,9 @@ export function InstallationFileBrowser() {
         <ScrollArea className="h-[400px] w-full rounded-md border">
           <div className="p-4">
             {files.length === 0 ? (
-              <p className="text-sm text-muted-foreground">No files found in installation folder.</p>
+              <p className="text-sm text-muted-foreground">
+                No files found in installation folder.
+              </p>
             ) : (
               <FileTree nodes={files} />
             )}
@@ -98,7 +101,7 @@ function FileTree({ nodes, depth = 0 }: FileTreeProps) {
       {nodes.map((node) => (
         <li key={node.path} style={{ paddingLeft: `${depth * 16}px` }}>
           <div className="flex items-center gap-2 rounded-md px-2 py-1 hover:bg-accent">
-            <span className="text-lg">{node.type === 'directory' ? '📁' : '📄'}</span>
+            <span className="text-lg">{node.type === "directory" ? "📁" : "📄"}</span>
             <span className="text-sm">{node.name}</span>
           </div>
           {node.children && node.children.length > 0 && (
@@ -120,44 +123,44 @@ async function fetchFileTree(installationName: string): Promise<FileNode[]> {
     // For now, return mock structure
     return [
       {
-        name: 'groups',
+        name: "groups",
         path: `/${installationName}/groups`,
-        type: 'directory',
+        type: "directory",
         children: [
           {
-            name: 'engineering',
+            name: "engineering",
             path: `/${installationName}/groups/engineering`,
-            type: 'directory',
+            type: "directory",
             children: [
               {
-                name: 'practices.md',
+                name: "practices.md",
                 path: `/${installationName}/groups/engineering/practices.md`,
-                type: 'file',
+                type: "file",
               },
             ],
           },
         ],
       },
       {
-        name: 'things',
+        name: "things",
         path: `/${installationName}/things`,
-        type: 'directory',
+        type: "directory",
         children: [
           {
-            name: 'vision.md',
+            name: "vision.md",
             path: `/${installationName}/things/vision.md`,
-            type: 'file',
+            type: "file",
           },
         ],
       },
       {
-        name: 'README.md',
+        name: "README.md",
         path: `/${installationName}/README.md`,
-        type: 'file',
+        type: "file",
       },
     ];
   } catch (error) {
-    console.error('Failed to fetch file tree:', error);
+    console.error("Failed to fetch file tree:", error);
     return [];
   }
 }

@@ -1,4 +1,4 @@
-import { Button } from '@/components/ui/button';
+import { Button } from "@/components/ui/button";
 
 export function CTA() {
   return (
@@ -13,15 +13,8 @@ export function CTA() {
               Start creating with the ONE Platform today.
             </p>
             <div className="pt-4">
-              <Button
-                size="lg"
-                variant="secondary"
-                className="text-lg px-8"
-                asChild
-              >
-                <a href="/account/signup">
-                  Get Started
-                </a>
+              <Button size="lg" variant="secondary" className="text-lg px-8" asChild>
+                <a href="/account/signup">Get Started</a>
               </Button>
             </div>
           </div>

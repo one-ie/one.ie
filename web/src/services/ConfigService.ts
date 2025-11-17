@@ -23,20 +23,17 @@
  * ```
  */
 
-import { Effect, Context, Layer, Data } from "effect";
-import type { ProviderConfig } from "@/providers/factory";
-import type { DataProvider } from "@/providers/DataProvider";
-import { createDataProvider } from "@/providers/factory";
+import { Context, Data, Effect, Layer } from "effect";
 import {
-  validateConfig,
-  type ConfigValidationError,
-} from "@/config/validation";
-import {
-  getOrganizationProviderConfig,
-  setOrganizationProviderConfig,
   clearOrganizationProviderConfig,
+  getOrganizationProviderConfig,
   loadProviderConfig,
+  setOrganizationProviderConfig,
 } from "@/config/providers";
+import { type ConfigValidationError, validateConfig } from "@/config/validation";
+import type { DataProvider } from "@/providers/DataProvider";
+import type { ProviderConfig } from "@/providers/factory";
+import { createDataProvider } from "@/providers/factory";
 
 // ============================================================================
 // ERROR TYPES
@@ -122,10 +119,7 @@ export class ConfigService extends Context.Tag("ConfigService")<
       organizationId: string,
       config: ProviderConfig,
       actorId: string
-    ) => Effect.Effect<
-      string,
-      ConfigValidationError | ConfigSaveError | ConfigUnauthorizedError
-    >;
+    ) => Effect.Effect<string, ConfigValidationError | ConfigSaveError | ConfigUnauthorizedError>;
 
     /**
      * Test provider connection
@@ -137,10 +131,7 @@ export class ConfigService extends Context.Tag("ConfigService")<
      */
     testConnection: (
       config: ProviderConfig
-    ) => Effect.Effect<
-      { success: true; responseTime: number },
-      ConnectionTestError
-    >;
+    ) => Effect.Effect<{ success: true; responseTime: number }, ConnectionTestError>;
 
     /**
      * Switch provider for organization
@@ -231,11 +222,7 @@ export const ConfigServiceLive = Layer.succeed(
     /**
      * Save configuration for organization
      */
-    saveForOrganization: (
-      organizationId: string,
-      config: ProviderConfig,
-      actorId: string
-    ) =>
+    saveForOrganization: (organizationId: string, config: ProviderConfig, actorId: string) =>
       Effect.gen(function* () {
         // Step 1: Validate configuration
         yield* validateConfig(config);
@@ -300,11 +287,7 @@ export const ConfigServiceLive = Layer.succeed(
     /**
      * Switch provider for organization
      */
-    switchProvider: (
-      organizationId: string,
-      newConfig: ProviderConfig,
-      actorId: string
-    ) =>
+    switchProvider: (organizationId: string, newConfig: ProviderConfig, actorId: string) =>
       Effect.gen(function* () {
         const startTime = Date.now();
 
@@ -313,9 +296,9 @@ export const ConfigServiceLive = Layer.succeed(
 
         // Step 2: Test connection (3s target)
         yield* Effect.gen(function* () {
-          const testResult = yield* Effect.tryPromise({
+          const _testResult = yield* Effect.tryPromise({
             try: async () => {
-              const provider = createDataProvider(newConfig);
+              const _provider = createDataProvider(newConfig);
               // Basic validation that provider was created
               return { success: true, responseTime: Date.now() - startTime };
             },

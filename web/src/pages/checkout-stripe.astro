@@ -1,4 +1,6 @@
 ---
+import Layout from "@/layouts/Layout.astro";
+
 /**
  * Stripe Checkout Page
  * Demonstrates Stripe Elements integration
@@ -8,45 +10,40 @@
 
 /* global window */
 
-import Layout from '@/layouts/Layout.astro';
-import { StripeProvider } from '@/components/ecommerce/payment/StripeProvider';
-import { PaymentForm } from '@/components/ecommerce/payment/PaymentForm';
-import { OrderSummary } from '@/components/ecommerce/payment/OrderSummary';
-
 // Example cart items
 const cartItems = [
   {
     product: {
-      id: 'tshirt-1',
-      name: 'Premium ONE Platform T-Shirt',
-      description: 'High-quality cotton t-shirt',
+      id: "tshirt-1",
+      name: "Premium ONE Platform T-Shirt",
+      description: "High-quality cotton t-shirt",
       price: 2999, // $29.99 in cents
       salePrice: null,
-      category: 'Apparel',
-      subcategory: 'T-Shirts',
-      sizes: ['S', 'M', 'L', 'XL'],
-      colors: ['Black', 'White', 'Blue'],
-      images: ['/images/tshirt-black.jpg'],
+      category: "Apparel",
+      subcategory: "T-Shirts",
+      sizes: ["S", "M", "L", "XL"],
+      colors: ["Black", "White", "Blue"],
+      images: ["/images/tshirt-black.jpg"],
       isNew: true,
       isSale: false,
       stock: 50,
     },
     quantity: 2,
-    selectedColor: 'Black',
-    selectedSize: 'M',
+    selectedColor: "Black",
+    selectedSize: "M",
   },
   {
     product: {
-      id: 'sticker-1',
-      name: 'ONE Platform Sticker Pack',
-      description: 'Set of 10 vinyl stickers',
+      id: "sticker-1",
+      name: "ONE Platform Sticker Pack",
+      description: "Set of 10 vinyl stickers",
       price: 999, // $9.99 in cents
       salePrice: 799, // $7.99 sale price
-      category: 'Accessories',
-      subcategory: 'Stickers',
+      category: "Accessories",
+      subcategory: "Stickers",
       sizes: [],
       colors: [],
-      images: ['/images/stickers.jpg'],
+      images: ["/images/stickers.jpg"],
       isNew: false,
       isSale: true,
       stock: 100,
@@ -56,14 +53,14 @@ const cartItems = [
 ];
 
 // Create PaymentIntent
-let clientSecret: string | null = null;
-let error: string | null = null;
+let _clientSecret: string | null = null;
+let _error: string | null = null;
 
 try {
   const response = await fetch(`${Astro.url.origin}/api/checkout/create-intent`, {
-    method: 'POST',
+    method: "POST",
     headers: {
-      'Content-Type': 'application/json',
+      "Content-Type": "application/json",
     },
     body: JSON.stringify({
       items: cartItems.map((item) => ({
@@ -77,14 +74,14 @@ try {
 
   if (!response.ok) {
     const errorData = await response.json();
-    error = errorData.error || 'Failed to initialize checkout';
+    _error = errorData.error || "Failed to initialize checkout";
   } else {
     const data = await response.json();
-    clientSecret = data.clientSecret;
+    _clientSecret = data.clientSecret;
   }
 } catch (err) {
-  console.error('Checkout initialization error:', err);
-  error = 'Failed to connect to payment system';
+  console.error("Checkout initialization error:", err);
+  _error = "Failed to connect to payment system";
 }
 
 // Calculate order totals
@@ -97,25 +94,25 @@ const shipping = subtotal >= 10000 ? 0 : 999; // Free shipping over $100
 const tax = Math.round((subtotal + shipping) * 0.08); // 8% tax
 const total = subtotal + shipping + tax;
 
-const calculation = {
+const _calculation = {
   subtotal,
   shipping,
   tax,
   total,
-  currency: 'usd',
+  currency: "usd",
 };
 
 // Transform cartItems to match CartItem type for OrderSummary
-import type { CartItem } from '@/types/products';
+import type { CartItem } from "@/types/products";
 
-const transformedItems: CartItem[] = cartItems.map((item) => ({
+const _transformedItems: CartItem[] = cartItems.map((item) => ({
   productSlug: item.product.id,
   productName: item.product.name,
   price: item.product.salePrice || item.product.price,
   quantity: item.quantity,
   selectedColor: item.selectedColor,
   selectedSize: item.selectedSize,
-  image: item.product.images[0] || '/placeholder.jpg',
+  image: item.product.images[0] || "/placeholder.jpg",
 }));
 ---
 

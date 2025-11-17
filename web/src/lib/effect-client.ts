@@ -5,10 +5,7 @@
  */
 
 import { ConvexReactClient } from "convex/react";
-import {
-  createDataProvider,
-  createDataProviderLayer,
-} from "@/providers/factory";
+import { createDataProvider, createDataProviderLayer } from "@/providers/factory";
 
 /**
  * Get the DataProvider layer for client-side use

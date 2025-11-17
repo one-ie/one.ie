@@ -1,5 +1,5 @@
+import type { StatusFilter } from "@/data/app-data";
 import { cn } from "@/lib/utils";
-import { type StatusFilter } from "@/data/app-data";
 
 interface StatusTabsProps {
   activeStatus: StatusFilter;
@@ -18,14 +18,13 @@ export function StatusTabs({ activeStatus, onStatusChange }: StatusTabsProps) {
     <div className="flex items-center gap-8 border-b px-6 py-3 bg-white">
       {statusTabs.map((tab) => (
         <button
+          type="button"
           key={tab.value}
           onClick={() => onStatusChange(tab.value)}
           className={cn(
             "relative px-2 py-2 text-sm font-semibold transition-all duration-200",
             "focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-black focus-visible:ring-offset-2 rounded-md",
-            activeStatus === tab.value
-              ? "text-black"
-              : "text-gray-600 hover:text-gray-900",
+            activeStatus === tab.value ? "text-black" : "text-gray-600 hover:text-gray-900"
           )}
         >
           {tab.label}

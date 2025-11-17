@@ -42,7 +42,7 @@ export const WordPressEnvSchema = z.object({
   WORDPRESS_USERNAME: z.string().min(1),
   WORDPRESS_APP_PASSWORD: z.string().refine(
     (pwd) => {
-      const noSpaces = pwd.replace(/ /g, '');
+      const noSpaces = pwd.replace(/ /g, "");
       return noSpaces.length === 24 && /^[a-zA-Z0-9]{24}$/.test(noSpaces);
     },
     { message: "Must be 24 alphanumeric characters (with or without spaces)" }
@@ -93,7 +93,7 @@ export function validateEncryptionKey(key?: string): void {
   if (!key) {
     throw new Error(
       "ENCRYPTION_KEY environment variable required for secure credential storage. " +
-      "Generate one with: openssl rand -hex 32"
+        "Generate one with: openssl rand -hex 32"
     );
   }
 
@@ -101,7 +101,7 @@ export function validateEncryptionKey(key?: string): void {
   if (!/^[0-9a-f]{64}$/i.test(key)) {
     throw new Error(
       "ENCRYPTION_KEY must be 32 bytes (64 hex characters). " +
-      "Generate one with: openssl rand -hex 32"
+        "Generate one with: openssl rand -hex 32"
     );
   }
 }
@@ -133,7 +133,7 @@ export function loadProviderConfig(): ProviderConfig {
   if (!providerType) {
     throw new Error(
       "BACKEND_PROVIDER environment variable required. " +
-      "Set to: convex, wordpress, notion, or supabase"
+        "Set to: convex, wordpress, notion, or supabase"
     );
   }
 
@@ -169,7 +169,7 @@ export function loadProviderConfig(): ProviderConfig {
       const issues = error.issues.map((i) => `  - ${i.path.join(".")}: ${i.message}`).join("\n");
       throw new Error(
         `Invalid provider configuration:\n${issues}\n\n` +
-        `Check your .env file for missing or invalid environment variables.`
+          `Check your .env file for missing or invalid environment variables.`
       );
     }
     throw error;
@@ -207,9 +207,10 @@ export function loadProviderConfig(): ProviderConfig {
         anonKey: validatedEnv.SUPABASE_ANON_KEY,
       };
 
-    default:
+    default: {
       const _exhaustive: never = validatedEnv;
       throw new Error(`Unknown provider type: ${JSON.stringify(validatedEnv)}`);
+    }
   }
 }
 
@@ -255,9 +256,7 @@ const organizationProviderCache = new Map<string, ProviderConfig>();
  * // Returns { type: 'wordpress', ... }
  * ```
  */
-export function getOrganizationProviderConfig(
-  organizationId: string
-): ProviderConfig | null {
+export function getOrganizationProviderConfig(organizationId: string): ProviderConfig | null {
   return organizationProviderCache.get(organizationId) || null;
 }
 
@@ -312,25 +311,24 @@ export function clearAllOrganizationProviderConfigs(): void {
  * }
  * ```
  */
-export function validateProviderConfig(
-  config: unknown
-): { success: boolean; errors?: string[] } {
+export function validateProviderConfig(config: unknown): { success: boolean; errors?: string[] } {
   try {
     const providerType = (config as any)?.type;
 
     switch (providerType) {
-      case "convex":
+      case "convex": {
         // For Convex, we accept client (even if null) or url
         const convexConfig = config as any;
-        if (!('client' in convexConfig) && !convexConfig.url) {
+        if (!("client" in convexConfig) && !convexConfig.url) {
           return {
             success: false,
             errors: ["Convex provider requires 'client' or 'url' field"],
           };
         }
         break;
+      }
 
-      case "wordpress":
+      case "wordpress": {
         const wpConfig = config as any;
         // Validate WordPress requirements
         if (!wpConfig.url || !wpConfig.username || !wpConfig.password) {
@@ -341,11 +339,13 @@ export function validateProviderConfig(
         }
         // Validate WordPress password format (24 alphanumeric + 5 spaces = 29 total)
         // Accept format: "xxxx xxxx xxxx xxxx xxxx xxxx" (6 groups of 4 chars)
-        const passwordNoSpaces = wpConfig.password.replace(/ /g, '');
+        const passwordNoSpaces = wpConfig.password.replace(/ /g, "");
         if (passwordNoSpaces.length !== 24 || !/^[a-zA-Z0-9]{24}$/.test(passwordNoSpaces)) {
           return {
             success: false,
-            errors: ["WordPress application password must be 24 characters (format: xxxx xxxx xxxx xxxx xxxx xxxx)"],
+            errors: [
+              "WordPress application password must be 24 characters (format: xxxx xxxx xxxx xxxx xxxx xxxx)",
+            ],
           };
         }
         WordPressEnvSchema.parse({
@@ -355,6 +355,7 @@ export function validateProviderConfig(
           WORDPRESS_APP_PASSWORD: wpConfig.password,
         });
         break;
+      }
 
       case "notion":
         NotionEnvSchema.parse({

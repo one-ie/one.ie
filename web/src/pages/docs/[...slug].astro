@@ -1,27 +1,27 @@
 ---
-import { getCollection } from 'astro:content';
-import DocsDetail from '../../layouts/DocsDetail.astro';
-import type { CollectionEntry } from 'astro:content';
+import type { CollectionEntry } from "astro:content";
+import { getCollection } from "astro:content";
+import DocsDetail from "@/layouts/DocsDetail.astro";
 
 export const prerender = true;
 
 export async function getStaticPaths() {
-  const docs = await getCollection('docs');
-  return docs.map((entry: CollectionEntry<'docs'>) => ({
+  const docs = await getCollection("docs");
+  return docs.map((entry: CollectionEntry<"docs">) => ({
     params: { slug: entry.slug },
     props: { entry },
   }));
 }
 
 type Props = {
-  entry: CollectionEntry<'docs'>;
+  entry: CollectionEntry<"docs">;
 };
 
 const { entry } = Astro.props;
 const { Content, headings } = await entry.render();
 
 // Transform headings to the format expected by TableOfContents component
-const tocHeadings = headings
+const _tocHeadings = headings
   .filter((heading) => heading.depth >= 2 && heading.depth <= 4)
   .map((heading) => ({
     depth: heading.depth,

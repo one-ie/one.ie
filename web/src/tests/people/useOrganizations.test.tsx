@@ -10,19 +10,19 @@
  */
 /* eslint-disable @typescript-eslint/no-unused-vars */
 
-import { describe, it, expect, beforeEach } from "vitest";
-import { createRequire } from "module";
-import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
-import { Effect, Layer } from 'effect';
-import { DataProviderService, type DataProvider } from '@/providers/DataProvider';
-import { DataProviderProvider } from '@/hooks/useDataProvider';
+import { createRequire } from "node:module";
+import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
+import { Effect } from "effect";
+import { describe, expect, it } from "vitest";
+import { DataProviderProvider } from "@/hooks/useDataProvider";
 import {
+  useCreateOrganization,
+  useDeleteOrganization,
   useOrganization,
   useOrganizations,
-  useCreateOrganization,
   useUpdateOrganization,
-  useDeleteOrganization,
-} from '@/hooks/useOrganizations';
+} from "@/hooks/useOrganizations";
+import type { DataProvider } from "@/providers/DataProvider";
 
 const require = createRequire(import.meta.url);
 
@@ -41,20 +41,20 @@ const describeIfTestingLibrary = hasTestingLibrary ? describe : describe.skip;
 // Mock DataProvider
 const mockOrgs = [
   {
-    _id: 'org1',
-    type: 'organization',
-    name: 'Acme Corp',
-    properties: { slug: 'acme', plan: 'pro', status: 'active' },
-    status: 'active' as const,
+    _id: "org1",
+    type: "organization",
+    name: "Acme Corp",
+    properties: { slug: "acme", plan: "pro", status: "active" },
+    status: "active" as const,
     createdAt: Date.now(),
     updatedAt: Date.now(),
   },
   {
-    _id: 'org2',
-    type: 'organization',
-    name: 'TechStart',
-    properties: { slug: 'techstart', plan: 'starter', status: 'active' },
-    status: 'active' as const,
+    _id: "org2",
+    type: "organization",
+    name: "TechStart",
+    properties: { slug: "techstart", plan: "starter", status: "active" },
+    status: "active" as const,
     createdAt: Date.now(),
     updatedAt: Date.now(),
   },
@@ -65,7 +65,7 @@ const mockProvider: DataProvider = {
     get: (id: string) =>
       Effect.succeed(mockOrgs.find((o) => o._id === id) || null).pipe(
         Effect.flatMap((org) =>
-          org ? Effect.succeed(org) : Effect.fail({ _tag: 'ThingNotFoundError', id })
+          org ? Effect.succeed(org) : Effect.fail({ _tag: "ThingNotFoundError", id })
         )
       ),
     list: (options) =>
@@ -74,26 +74,26 @@ const mockProvider: DataProvider = {
           (o) => o.type === options?.type && (!options?.status || o.status === options.status)
         )
       ),
-    create: (input) => Effect.succeed('new-org-id'),
-    update: (id, input) => Effect.succeed(undefined),
-    delete: (id) => Effect.succeed(undefined),
+    create: (_input) => Effect.succeed("new-org-id"),
+    update: (_id, _input) => Effect.succeed(undefined),
+    delete: (_id) => Effect.succeed(undefined),
   },
   connections: {
-    get: (id) => Effect.fail({ _tag: 'ConnectionNotFoundError', id }),
+    get: (id) => Effect.fail({ _tag: "ConnectionNotFoundError", id }),
     list: () => Effect.succeed([]),
-    create: () => Effect.succeed('new-conn-id'),
+    create: () => Effect.succeed("new-conn-id"),
     delete: () => Effect.succeed(undefined),
   },
   events: {
-    get: (id) => Effect.fail({ _tag: 'QueryError', message: 'Not implemented' }),
+    get: (_id) => Effect.fail({ _tag: "QueryError", message: "Not implemented" }),
     list: () => Effect.succeed([]),
-    create: () => Effect.succeed('new-event-id'),
+    create: () => Effect.succeed("new-event-id"),
   },
   knowledge: {
-    get: (id) => Effect.fail({ _tag: 'KnowledgeNotFoundError', id }),
+    get: (id) => Effect.fail({ _tag: "KnowledgeNotFoundError", id }),
     list: () => Effect.succeed([]),
-    create: () => Effect.succeed('new-knowledge-id'),
-    link: () => Effect.succeed('new-link-id'),
+    create: () => Effect.succeed("new-knowledge-id"),
+    link: () => Effect.succeed("new-link-id"),
     search: () => Effect.succeed([]),
   },
 };
@@ -115,22 +115,22 @@ function createWrapper() {
   };
 }
 
-describeIfTestingLibrary('useOrganizations hooks', () => {
-  describe('useOrganization', () => {
-    it('should fetch organization by ID', async () => {
-      const { result } = renderHook(() => useOrganization('org1'), {
+describeIfTestingLibrary("useOrganizations hooks", () => {
+  describe("useOrganization", () => {
+    it("should fetch organization by ID", async () => {
+      const { result } = renderHook(() => useOrganization("org1"), {
         wrapper: createWrapper(),
       });
 
       await waitFor(() => expect(result.current.loading).toBe(false));
 
       expect(result.current.data).toBeDefined();
-      expect(result.current.data?.name).toBe('Acme Corp');
+      expect(result.current.data?.name).toBe("Acme Corp");
       expect(result.current.error).toBeNull();
     });
 
-    it('should handle not found error', async () => {
-      const { result } = renderHook(() => useOrganization('nonexistent'), {
+    it("should handle not found error", async () => {
+      const { result } = renderHook(() => useOrganization("nonexistent"), {
         wrapper: createWrapper(),
       });
 
@@ -140,7 +140,7 @@ describeIfTestingLibrary('useOrganizations hooks', () => {
       expect(result.current.error).toBeDefined();
     });
 
-    it('should not fetch when ID is null', async () => {
+    it("should not fetch when ID is null", async () => {
       const { result } = renderHook(() => useOrganization(null), {
         wrapper: createWrapper(),
       });
@@ -150,8 +150,8 @@ describeIfTestingLibrary('useOrganizations hooks', () => {
     });
   });
 
-  describe('useOrganizations', () => {
-    it('should list all organizations', async () => {
+  describe("useOrganizations", () => {
+    it("should list all organizations", async () => {
       const { result } = renderHook(() => useOrganizations(), {
         wrapper: createWrapper(),
       });
@@ -163,20 +163,20 @@ describeIfTestingLibrary('useOrganizations hooks', () => {
       expect(result.current.error).toBeNull();
     });
 
-    it('should filter by status', async () => {
-      const { result } = renderHook(() => useOrganizations({ status: 'active' }), {
+    it("should filter by status", async () => {
+      const { result } = renderHook(() => useOrganizations({ status: "active" }), {
         wrapper: createWrapper(),
       });
 
       await waitFor(() => expect(result.current.loading).toBe(false));
 
       expect(result.current.data).toBeDefined();
-      expect(result.current.data?.every((org) => org.status === 'active')).toBe(true);
+      expect(result.current.data?.every((org) => org.status === "active")).toBe(true);
     });
   });
 
-  describe('useCreateOrganization', () => {
-    it('should create organization', async () => {
+  describe("useCreateOrganization", () => {
+    it("should create organization", async () => {
       const { result } = renderHook(() => useCreateOrganization(), {
         wrapper: createWrapper(),
       });
@@ -186,28 +186,28 @@ describeIfTestingLibrary('useOrganizations hooks', () => {
       let orgId: string | undefined;
       await waitFor(async () => {
         orgId = await result.current.mutate({
-          name: 'New Corp',
-          slug: 'newcorp',
-          plan: 'enterprise',
+          name: "New Corp",
+          slug: "newcorp",
+          plan: "enterprise",
         });
       });
 
-      expect(orgId).toBe('new-org-id');
+      expect(orgId).toBe("new-org-id");
       expect(result.current.error).toBeNull();
     });
   });
 
-  describe('useUpdateOrganization', () => {
-    it('should update organization', async () => {
+  describe("useUpdateOrganization", () => {
+    it("should update organization", async () => {
       const { result } = renderHook(() => useUpdateOrganization(), {
         wrapper: createWrapper(),
       });
 
       await waitFor(async () => {
         await result.current.mutate({
-          id: 'org1',
-          name: 'Updated Corp',
-          plan: 'enterprise',
+          id: "org1",
+          name: "Updated Corp",
+          plan: "enterprise",
         });
       });
 
@@ -215,14 +215,14 @@ describeIfTestingLibrary('useOrganizations hooks', () => {
     });
   });
 
-  describe('useDeleteOrganization', () => {
-    it('should delete organization', async () => {
+  describe("useDeleteOrganization", () => {
+    it("should delete organization", async () => {
       const { result } = renderHook(() => useDeleteOrganization(), {
         wrapper: createWrapper(),
       });
 
       await waitFor(async () => {
-        await result.current.mutate('org1');
+        await result.current.mutate("org1");
       });
 
       expect(result.current.error).toBeNull();

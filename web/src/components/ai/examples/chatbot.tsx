@@ -1,19 +1,39 @@
 "use client";
 
+import type { ToolUIPart } from "ai";
+import { CheckIcon, GlobeIcon, MicIcon } from "lucide-react";
+import { nanoid } from "nanoid";
+import { useCallback, useState } from "react";
+import { toast } from "sonner";
 import {
+  Conversation,
+  ConversationContent,
+  ConversationScrollButton,
+} from "@/components/ai/elements/conversation";
+import {
+  Message,
   MessageBranch,
   MessageBranchContent,
   MessageBranchNext,
   MessageBranchPage,
   MessageBranchPrevious,
   MessageBranchSelector,
+  MessageContent,
+  MessageResponse,
 } from "@/components/ai/elements/message";
 import {
-  Conversation,
-  ConversationContent,
-  ConversationScrollButton,
-} from "@/components/ai/elements/conversation";
-import { Message, MessageContent } from "@/components/ai/elements/message";
+  ModelSelector,
+  ModelSelectorContent,
+  ModelSelectorEmpty,
+  ModelSelectorGroup,
+  ModelSelectorInput,
+  ModelSelectorItem,
+  ModelSelectorList,
+  ModelSelectorLogo,
+  ModelSelectorLogoGroup,
+  ModelSelectorName,
+  ModelSelectorTrigger,
+} from "@/components/ai/elements/model-selector";
 import {
   PromptInput,
   PromptInputActionAddAttachments,
@@ -31,37 +51,9 @@ import {
   PromptInputTextarea,
   PromptInputTools,
 } from "@/components/ai/elements/prompt-input";
-import {
-  ModelSelector,
-  ModelSelectorContent,
-  ModelSelectorEmpty,
-  ModelSelectorGroup,
-  ModelSelectorInput,
-  ModelSelectorItem,
-  ModelSelectorList,
-  ModelSelectorLogo,
-  ModelSelectorLogoGroup,
-  ModelSelectorName,
-  ModelSelectorTrigger,
-} from "@/components/ai/elements/model-selector";
-import {
-  Reasoning,
-  ReasoningContent,
-  ReasoningTrigger,
-} from "@/components/ai/elements/reasoning";
-import { MessageResponse } from "@/components/ai/elements/message";
-import {
-  Source,
-  Sources,
-  SourcesContent,
-  SourcesTrigger,
-} from "@/components/ai/elements/sources";
+import { Reasoning, ReasoningContent, ReasoningTrigger } from "@/components/ai/elements/reasoning";
+import { Source, Sources, SourcesContent, SourcesTrigger } from "@/components/ai/elements/sources";
 import { Suggestion, Suggestions } from "@/components/ai/elements/suggestion";
-import type { ToolUIPart } from "ai";
-import { CheckIcon, GlobeIcon, MicIcon } from "lucide-react";
-import { nanoid } from "nanoid";
-import { useCallback, useState } from "react";
-import { toast } from "sonner";
 
 type MessageType = {
   key: string;
@@ -333,51 +325,42 @@ const Example = () => {
   const [text, setText] = useState<string>("");
   const [useWebSearch, setUseWebSearch] = useState<boolean>(false);
   const [useMicrophone, setUseMicrophone] = useState<boolean>(false);
-  const [status, setStatus] = useState<
-    "submitted" | "streaming" | "ready" | "error"
-  >("ready");
+  const [status, setStatus] = useState<"submitted" | "streaming" | "ready" | "error">("ready");
   const [messages, setMessages] = useState<MessageType[]>(initialMessages);
-  const [streamingMessageId, setStreamingMessageId] = useState<string | null>(
-    null
-  );
+  const [_streamingMessageId, setStreamingMessageId] = useState<string | null>(null);
 
   const selectedModelData = models.find((m) => m.id === model);
 
-  const streamResponse = useCallback(
-    async (messageId: string, content: string) => {
-      setStatus("streaming");
-      setStreamingMessageId(messageId);
+  const streamResponse = useCallback(async (messageId: string, content: string) => {
+    setStatus("streaming");
+    setStreamingMessageId(messageId);
 
-      const words = content.split(" ");
-      let currentContent = "";
+    const words = content.split(" ");
+    let currentContent = "";
 
-      for (let i = 0; i < words.length; i++) {
-        currentContent += (i > 0 ? " " : "") + words[i];
+    for (let i = 0; i < words.length; i++) {
+      currentContent += (i > 0 ? " " : "") + words[i];
 
-        setMessages((prev) =>
-          prev.map((msg) => {
-            if (msg.versions.some((v) => v.id === messageId)) {
-              return {
-                ...msg,
-                versions: msg.versions.map((v) =>
-                  v.id === messageId ? { ...v, content: currentContent } : v
-                ),
-              };
-            }
-            return msg;
-          })
-        );
+      setMessages((prev) =>
+        prev.map((msg) => {
+          if (msg.versions.some((v) => v.id === messageId)) {
+            return {
+              ...msg,
+              versions: msg.versions.map((v) =>
+                v.id === messageId ? { ...v, content: currentContent } : v
+              ),
+            };
+          }
+          return msg;
+        })
+      );
 
-        await new Promise((resolve) =>
-          setTimeout(resolve, Math.random() * 100 + 50)
-        );
-      }
+      await new Promise((resolve) => setTimeout(resolve, Math.random() * 100 + 50));
+    }
 
-      setStatus("ready");
-      setStreamingMessageId(null);
-    },
-    []
-  );
+    setStatus("ready");
+    setStreamingMessageId(null);
+  }, []);
 
   const addUserMessage = useCallback(
     (content: string) => {
@@ -396,8 +379,7 @@ const Example = () => {
 
       setTimeout(() => {
         const assistantMessageId = `assistant-${Date.now()}`;
-        const randomResponse =
-          mockResponses[Math.floor(Math.random() * mockResponses.length)];
+        const randomResponse = mockResponses[Math.floor(Math.random() * mockResponses.length)];
 
         const assistantMessage: MessageType = {
           key: `assistant-${Date.now()}`,
@@ -450,21 +432,14 @@ const Example = () => {
             <MessageBranch defaultBranch={0} key={message.key}>
               <MessageBranchContent>
                 {versions.map((version) => (
-                  <Message
-                    from={message.from}
-                    key={`${message.key}-${version.id}`}
-                  >
+                  <Message from={message.from} key={`${message.key}-${version.id}`}>
                     <div>
                       {message.sources?.length && (
                         <Sources>
                           <SourcesTrigger count={message.sources.length} />
                           <SourcesContent>
                             {message.sources.map((source) => (
-                              <Source
-                                href={source.href}
-                                key={source.href}
-                                title={source.title}
-                              />
+                              <Source href={source.href} key={source.href} title={source.title} />
                             ))}
                           </SourcesContent>
                         </Sources>
@@ -472,9 +447,7 @@ const Example = () => {
                       {message.reasoning && (
                         <Reasoning duration={message.reasoning.duration}>
                           <ReasoningTrigger />
-                          <ReasoningContent>
-                            {message.reasoning.content}
-                          </ReasoningContent>
+                          <ReasoningContent>{message.reasoning.content}</ReasoningContent>
                         </Reasoning>
                       )}
                       <MessageContent>
@@ -514,10 +487,7 @@ const Example = () => {
               </PromptInputAttachments>
             </PromptInputHeader>
             <PromptInputBody>
-              <PromptInputTextarea
-                onChange={(event) => setText(event.target.value)}
-                value={text}
-              />
+              <PromptInputTextarea onChange={(event) => setText(event.target.value)} value={text} />
             </PromptInputBody>
             <PromptInputFooter>
               <PromptInputTools>
@@ -541,19 +511,14 @@ const Example = () => {
                   <GlobeIcon size={16} />
                   <span>Search</span>
                 </PromptInputButton>
-                <ModelSelector
-                  onOpenChange={setModelSelectorOpen}
-                  open={modelSelectorOpen}
-                >
+                <ModelSelector onOpenChange={setModelSelectorOpen} open={modelSelectorOpen}>
                   <ModelSelectorTrigger asChild>
                     <PromptInputButton>
                       {selectedModelData?.chefSlug && (
                         <ModelSelectorLogo provider={selectedModelData.chefSlug} />
                       )}
                       {selectedModelData?.name && (
-                        <ModelSelectorName>
-                          {selectedModelData.name}
-                        </ModelSelectorName>
+                        <ModelSelectorName>{selectedModelData.name}</ModelSelectorName>
                       )}
                     </PromptInputButton>
                   </ModelSelectorTrigger>
@@ -578,10 +543,7 @@ const Example = () => {
                                 <ModelSelectorName>{m.name}</ModelSelectorName>
                                 <ModelSelectorLogoGroup>
                                   {m.providers.map((provider) => (
-                                    <ModelSelectorLogo
-                                      key={provider}
-                                      provider={provider}
-                                    />
+                                    <ModelSelectorLogo key={provider} provider={provider} />
                                   ))}
                                 </ModelSelectorLogoGroup>
                                 {model === m.id ? (

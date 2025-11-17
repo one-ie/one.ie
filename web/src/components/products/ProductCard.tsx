@@ -1,5 +1,5 @@
-import { Badge } from '@/components/ui/badge';
-import { Card, CardContent, CardFooter } from '@/components/ui/card';
+import { Badge } from "@/components/ui/badge";
+import { Card, CardContent, CardFooter } from "@/components/ui/card";
 
 interface ProductData {
   slug: string;
@@ -18,19 +18,20 @@ interface ProductData {
 
 interface ProductCardProps {
   product: ProductData;
-  viewMode: 'list' | 'grid';
+  viewMode: "list" | "grid";
 }
 
 export function ProductCard({ product, viewMode }: ProductCardProps) {
-  const { name, description, price, compareAtPrice, images, category, inStock, featured, tags } = product.data;
+  const { name, description, price, compareAtPrice, images, category, inStock, featured, tags } =
+    product.data;
   const slug = product.slug;
-  const mainImage = images[0] || '/placeholder-product.jpg';
+  const mainImage = images[0] || "/placeholder-product.jpg";
   const hasDiscount = compareAtPrice && compareAtPrice > price;
   const discountPercent = hasDiscount
     ? Math.round(((compareAtPrice - price) / compareAtPrice) * 100)
     : 0;
 
-  if (viewMode === 'list') {
+  if (viewMode === "list") {
     return (
       <Card className="overflow-hidden hover:shadow-lg transition-shadow duration-300">
         <a href={`/products/${slug}`} className="flex flex-col md:flex-row">
@@ -41,18 +42,12 @@ export function ProductCard({ product, viewMode }: ProductCardProps) {
               className="w-full h-full object-cover hover:scale-105 transition-transform duration-300"
               loading="lazy"
             />
-            {featured && (
-              <Badge className="absolute top-2 left-2 bg-primary">Featured</Badge>
-            )}
+            {featured && <Badge className="absolute top-2 left-2 bg-primary">Featured</Badge>}
             {hasDiscount && (
-              <Badge className="absolute top-2 right-2 bg-red-500">
-                -{discountPercent}%
-              </Badge>
+              <Badge className="absolute top-2 right-2 bg-red-500">-{discountPercent}%</Badge>
             )}
             {!inStock && (
-              <Badge className="absolute bottom-2 left-2 bg-gray-500">
-                Out of Stock
-              </Badge>
+              <Badge className="absolute bottom-2 left-2 bg-gray-500">Out of Stock</Badge>
             )}
           </div>
           <div className="md:w-2/3 p-6">
@@ -99,28 +94,18 @@ export function ProductCard({ product, viewMode }: ProductCardProps) {
             className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"
             loading="lazy"
           />
-          {featured && (
-            <Badge className="absolute top-2 left-2 bg-primary">Featured</Badge>
-          )}
+          {featured && <Badge className="absolute top-2 left-2 bg-primary">Featured</Badge>}
           {hasDiscount && (
-            <Badge className="absolute top-2 right-2 bg-red-500">
-              -{discountPercent}%
-            </Badge>
+            <Badge className="absolute top-2 right-2 bg-red-500">-{discountPercent}%</Badge>
           )}
-          {!inStock && (
-            <Badge className="absolute bottom-2 left-2 bg-gray-500">
-              Out of Stock
-            </Badge>
-          )}
+          {!inStock && <Badge className="absolute bottom-2 left-2 bg-gray-500">Out of Stock</Badge>}
         </div>
         <CardContent className="p-4">
           <Badge variant="outline" className="mb-2 text-xs">
             {category}
           </Badge>
           <h3 className="font-semibold text-lg mb-1 line-clamp-1">{name}</h3>
-          <p className="text-sm text-muted-foreground mb-3 line-clamp-2">
-            {description}
-          </p>
+          <p className="text-sm text-muted-foreground mb-3 line-clamp-2">{description}</p>
           <div className="flex items-center gap-2">
             <span className="text-xl font-bold">${price.toFixed(2)}</span>
             {hasDiscount && (

@@ -10,8 +10,8 @@
  * - Knowledge (semantic search and RAG)
  */
 
-import { describe, it, expect, beforeAll } from "vitest";
 import { getCollection } from "astro:content";
+import { beforeAll, describe, expect, it } from "vitest";
 import type { FeatureSchema } from "@/content/config";
 
 interface Feature {
@@ -50,10 +50,7 @@ describe("Ontology Alignment - 6-Dimension Validation", () => {
         });
 
         it("should have dimension array matching mapping", () => {
-          if (
-            feature.data.ontologyDimensions &&
-            feature.data.ontologyMapping
-          ) {
+          if (feature.data.ontologyDimensions && feature.data.ontologyMapping) {
             feature.data.ontologyDimensions.forEach((dimension) => {
               expect(ONTOLOGY_DIMENSIONS).toContain(dimension);
             });
@@ -122,12 +119,7 @@ describe("Ontology Alignment - 6-Dimension Validation", () => {
 
         it("should have valid person roles if specified", () => {
           if (feature.data.personRole) {
-            const validRoles = [
-              "platform_owner",
-              "org_owner",
-              "org_user",
-              "customer",
-            ];
+            const validRoles = ["platform_owner", "org_owner", "org_user", "customer"];
             expect(validRoles).toContain(feature.data.personRole);
           }
         });
@@ -329,12 +321,7 @@ describe("Ontology Alignment - 6-Dimension Validation", () => {
 
         it("should have valid person role if specified", () => {
           if (feature.data.personRole) {
-            const validRoles = [
-              "platform_owner",
-              "org_owner",
-              "org_user",
-              "customer",
-            ];
+            const validRoles = ["platform_owner", "org_owner", "org_user", "customer"];
             expect(validRoles).toContain(feature.data.personRole);
           }
         });
@@ -373,8 +360,7 @@ describe("Ontology Alignment - 6-Dimension Validation", () => {
     it("should have features using connections dimension", () => {
       const withConnections = allFeatures.filter(
         (f) =>
-          f.data.ontologyMapping?.connections ||
-          f.data.ontologyDimensions?.includes("connections")
+          f.data.ontologyMapping?.connections || f.data.ontologyDimensions?.includes("connections")
       );
       expect(withConnections.length).toBeGreaterThan(0);
     });

@@ -5,9 +5,9 @@
  * Displayed after payment is processed
  */
 
-import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
-import { Button } from '@/components/ui/button';
-import { CheckCircle2, Download, ArrowRight } from 'lucide-react';
+import { ArrowRight, CheckCircle2, Download } from "lucide-react";
+import { Button } from "@/components/ui/button";
+import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 
 interface OrderConfirmationProps {
   orderId: string;
@@ -39,8 +39,7 @@ export function OrderConfirmation({
         {email && (
           <div className="bg-accent p-4 rounded-lg">
             <p className="text-sm">
-              A confirmation email has been sent to{' '}
-              <span className="font-medium">{email}</span>
+              A confirmation email has been sent to <span className="font-medium">{email}</span>
             </p>
           </div>
         )}
@@ -56,7 +55,9 @@ export function OrderConfirmation({
 
         <div className="flex gap-2">
           <Button variant="outline" className="flex-1" asChild>
-            <a href={`/thankyou-chatgpt${paymentIntentId ? `?payment_intent=${paymentIntentId}` : ''}`}>
+            <a
+              href={`/thankyou-chatgpt${paymentIntentId ? `?payment_intent=${paymentIntentId}` : ""}`}
+            >
               <Download className="mr-2 h-4 w-4" />
               View Order
             </a>

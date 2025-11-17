@@ -4,17 +4,12 @@
  * Features: Card input, address collection, error handling, loading states
  */
 
-import { useState, useEffect } from 'react';
-import {
-  PaymentElement,
-  AddressElement,
-  useStripe,
-  useElements,
-} from '@stripe/react-stripe-js';
-import type { StripePaymentElementOptions } from '@stripe/stripe-js';
-import { Button } from '@/components/ui/button';
-import { Alert, AlertDescription } from '@/components/ui/alert';
-import { Loader2, CreditCard, Shield, Lock } from 'lucide-react';
+import { AddressElement, PaymentElement, useElements, useStripe } from "@stripe/react-stripe-js";
+import type { StripePaymentElementOptions } from "@stripe/stripe-js";
+import { CreditCard, Loader2, Lock, Shield } from "lucide-react";
+import { useEffect, useState } from "react";
+import { Alert, AlertDescription } from "@/components/ui/alert";
+import { Button } from "@/components/ui/button";
 
 interface StripeCheckoutFormProps {
   amount: number;
@@ -25,7 +20,7 @@ interface StripeCheckoutFormProps {
 
 export function StripeCheckoutForm({
   amount,
-  _currency = 'usd',
+  _currency = "usd",
   onSuccess,
   onError,
 }: StripeCheckoutFormProps) {
@@ -37,10 +32,10 @@ export function StripeCheckoutForm({
   const [isComplete, setIsComplete] = useState(false);
 
   const paymentElementOptions: StripePaymentElementOptions = {
-    layout: 'tabs',
+    layout: "tabs",
     wallets: {
-      applePay: 'auto',
-      googlePay: 'auto',
+      applePay: "auto",
+      googlePay: "auto",
     },
     defaultValues: {
       billingDetails: {
@@ -50,7 +45,7 @@ export function StripeCheckoutForm({
     fields: {
       billingDetails: {
         address: {
-          country: 'auto',
+          country: "auto",
         },
       },
     },
@@ -72,18 +67,18 @@ export function StripeCheckoutForm({
         confirmParams: {
           return_url: `${window.location.origin}/ecommerce/order-confirmation`,
         },
-        redirect: 'if_required',
+        redirect: "if_required",
       });
 
       if (error) {
-        setErrorMessage(error.message || 'An unexpected error occurred.');
-        onError?.(error.message || 'Payment failed');
-      } else if (paymentIntent && paymentIntent.status === 'succeeded') {
+        setErrorMessage(error.message || "An unexpected error occurred.");
+        onError?.(error.message || "Payment failed");
+      } else if (paymentIntent && paymentIntent.status === "succeeded") {
         onSuccess(paymentIntent.id);
       }
     } catch (_err) {
-      setErrorMessage('An unexpected error occurred.');
-      onError?.('Payment processing failed');
+      setErrorMessage("An unexpected error occurred.");
+      onError?.("Payment processing failed");
     } finally {
       setIsProcessing(false);
     }
@@ -93,10 +88,10 @@ export function StripeCheckoutForm({
   useEffect(() => {
     if (!elements) return;
 
-    const paymentElement = elements.getElement('payment');
+    const paymentElement = elements.getElement("payment");
     if (!paymentElement) return;
 
-    paymentElement.on('change', (event) => {
+    paymentElement.on("change", (event) => {
       setIsComplete(event.complete);
     });
   }, [elements]);
@@ -126,13 +121,13 @@ export function StripeCheckoutForm({
         <h3 className="text-lg font-semibold">Billing Address</h3>
         <AddressElement
           options={{
-            mode: 'billing',
+            mode: "billing",
             fields: {
-              phone: 'always',
+              phone: "always",
             },
             validation: {
               phone: {
-                required: 'always',
+                required: "always",
               },
             },
           }}

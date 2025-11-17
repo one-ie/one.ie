@@ -5,8 +5,8 @@
  * Tests the main /features page and dynamic feature detail pages.
  */
 
-import { describe, it, expect, beforeAll } from "vitest";
 import { getCollection } from "astro:content";
+import { beforeAll, describe, expect, it } from "vitest";
 import type { FeatureSchema } from "@/content/config";
 
 interface Feature {
@@ -60,13 +60,7 @@ describe("Features Listing Page (/features)", () => {
 
         it("should display status badge", () => {
           expect(feature.data.status).toBeDefined();
-          const validStatuses = [
-            "planned",
-            "in_development",
-            "beta",
-            "completed",
-            "deprecated",
-          ];
+          const validStatuses = ["planned", "in_development", "beta", "completed", "deprecated"];
           expect(validStatuses).toContain(feature.data.status);
         });
 
@@ -174,9 +168,7 @@ describe("Feature Detail Pages (/features/[slug])", () => {
             expect(feature.data.marketingPosition.tagline.length).toBeGreaterThan(0);
           }
           if (feature.data.marketingPosition.valueProposition) {
-            expect(
-              feature.data.marketingPosition.valueProposition.length
-            ).toBeGreaterThan(0);
+            expect(feature.data.marketingPosition.valueProposition.length).toBeGreaterThan(0);
           }
           if (feature.data.marketingPosition.targetAudience) {
             expect(Array.isArray(feature.data.marketingPosition.targetAudience)).toBe(true);

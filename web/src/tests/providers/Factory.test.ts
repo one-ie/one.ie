@@ -4,19 +4,19 @@
  * Tests for DataProvider factory pattern and provider switching.
  */
 
-import { describe, it, expect, vi, beforeEach, afterEach } from "vitest";
+import type { ConvexReactClient } from "convex/react";
+import { Effect } from "effect";
+import { describe, expect, it, vi } from "vitest";
+import { DataProviderService } from "@/providers/DataProvider";
 import {
   createDataProvider,
   createDataProviderLayer,
-  initializeDefaultProvider,
-  getDefaultProvider,
   defaultProvider,
+  getDefaultProvider,
+  initializeDefaultProvider,
   type ProviderConfig,
   type ProviderType,
 } from "@/providers/factory";
-import type { ConvexReactClient } from "convex/react";
-import { Effect } from "effect";
-import { DataProviderService } from "@/providers/DataProvider";
 
 // Mock Convex client
 function createMockConvexClient() {
@@ -59,9 +59,7 @@ describe("DataProvider Factory", () => {
         url: "https://example.com",
       };
 
-      expect(() => createDataProvider(config)).toThrow(
-        "WordPress provider not yet implemented"
-      );
+      expect(() => createDataProvider(config)).toThrow("WordPress provider not yet implemented");
     });
 
     it("should throw for unimplemented Notion provider", () => {

@@ -4,22 +4,14 @@
  * Follows ontology patterns for queries and data access
  */
 
-import { getCollection, type CollectionEntry } from 'astro:content';
-import type {
-  Product,
-  ProductVariant,
-  Category,
-  ProductCollection,
-  CartItem,
-} from '@/types/products';
+import { type CollectionEntry, getCollection } from "astro:content";
+import type { CartItem, Product, ProductVariant } from "@/types/products";
 
 /**
  * Get all products
  */
-export async function getAllProducts(): Promise<
-  CollectionEntry<'products'>[]
-> {
-  const products = await getCollection('products');
+export async function getAllProducts(): Promise<CollectionEntry<"products">[]> {
+  const products = await getCollection("products");
   return products;
 }
 
@@ -28,8 +20,8 @@ export async function getAllProducts(): Promise<
  */
 export async function getProductsByCategory(
   categorySlug: string
-): Promise<CollectionEntry<'products'>[]> {
-  const products = await getCollection('products');
+): Promise<CollectionEntry<"products">[]> {
+  const products = await getCollection("products");
   return products.filter((product) => product.data.category === categorySlug);
 }
 
@@ -38,21 +30,16 @@ export async function getProductsByCategory(
  */
 export async function getProductsByCollection(
   collectionSlug: string
-): Promise<CollectionEntry<'products'>[]> {
-  const products = await getCollection('products');
-  return products.filter(
-    (product) =>
-      product.data.collections && product.data.collections.includes(collectionSlug)
-  );
+): Promise<CollectionEntry<"products">[]> {
+  const products = await getCollection("products");
+  return products.filter((product) => product.data.collections?.includes(collectionSlug));
 }
 
 /**
  * Get featured products
  */
-export async function getFeaturedProducts(
-  limit?: number
-): Promise<CollectionEntry<'products'>[]> {
-  const products = await getCollection('products');
+export async function getFeaturedProducts(limit?: number): Promise<CollectionEntry<"products">[]> {
+  const products = await getCollection("products");
   const featured = products.filter((product) => product.data.featured === true);
   return limit ? featured.slice(0, limit) : featured;
 }
@@ -61,13 +48,12 @@ export async function getFeaturedProducts(
  * Get related products (same category, different product)
  */
 export async function getRelatedProducts(
-  product: CollectionEntry<'products'>,
+  product: CollectionEntry<"products">,
   limit = 4
-): Promise<CollectionEntry<'products'>[]> {
-  const products = await getCollection('products');
+): Promise<CollectionEntry<"products">[]> {
+  const products = await getCollection("products");
   const related = products.filter(
-    (p) =>
-      p.data.category === product.data.category && p.slug !== product.slug
+    (p) => p.data.category === product.data.category && p.slug !== product.slug
   );
   return related.slice(0, limit);
 }
@@ -75,32 +61,23 @@ export async function getRelatedProducts(
 /**
  * Get products by tag (knowledge layer)
  */
-export async function getProductsByTag(
-  tag: string
-): Promise<CollectionEntry<'products'>[]> {
-  const products = await getCollection('products');
-  return products.filter(
-    (product) => product.data.tags && product.data.tags.includes(tag)
-  );
+export async function getProductsByTag(tag: string): Promise<CollectionEntry<"products">[]> {
+  const products = await getCollection("products");
+  return products.filter((product) => product.data.tags?.includes(tag));
 }
 
 /**
  * Get products in stock only
  */
-export async function getInStockProducts(): Promise<
-  CollectionEntry<'products'>[]
-> {
-  const products = await getCollection('products');
+export async function getInStockProducts(): Promise<CollectionEntry<"products">[]> {
+  const products = await getCollection("products");
   return products.filter((product) => product.data.inStock === true);
 }
 
 /**
  * Calculate product price (handles variants and sales)
  */
-export function calculatePrice(
-  product: Product,
-  variant?: ProductVariant
-): number {
+export function calculatePrice(product: Product, variant?: ProductVariant): number {
   if (variant) {
     return variant.price;
   }
@@ -110,10 +87,7 @@ export function calculatePrice(
 /**
  * Calculate compare at price (original price if on sale)
  */
-export function getCompareAtPrice(
-  product: Product,
-  variant?: ProductVariant
-): number | undefined {
+export function getCompareAtPrice(product: Product, variant?: ProductVariant): number | undefined {
   if (variant) {
     // Variants don't have compareAt price in our schema
     return undefined;
@@ -125,10 +99,7 @@ export function getCompareAtPrice(
  * Check if product is on sale
  */
 export function isOnSale(product: Product): boolean {
-  return (
-    product.compareAtPrice !== undefined &&
-    product.compareAtPrice > product.price
-  );
+  return product.compareAtPrice !== undefined && product.compareAtPrice > product.price;
 }
 
 /**
@@ -136,20 +107,16 @@ export function isOnSale(product: Product): boolean {
  */
 export function getDiscountPercentage(product: Product): number {
   if (!isOnSale(product)) return 0;
-  const discount =
-    ((product.compareAtPrice! - product.price) / product.compareAtPrice!) * 100;
+  const discount = ((product.compareAtPrice! - product.price) / product.compareAtPrice!) * 100;
   return Math.round(discount);
 }
 
 /**
  * Format currency
  */
-export function formatCurrency(
-  amount: number,
-  currency = 'USD'
-): string {
-  return new Intl.NumberFormat('en-US', {
-    style: 'currency',
+export function formatCurrency(amount: number, currency = "USD"): string {
+  return new Intl.NumberFormat("en-US", {
+    style: "currency",
     currency: currency,
   }).format(amount);
 }
@@ -157,10 +124,8 @@ export function formatCurrency(
 /**
  * Get all categories
  */
-export async function getAllCategories(): Promise<
-  CollectionEntry<'categories'>[]
-> {
-  const categories = await getCollection('categories');
+export async function getAllCategories(): Promise<CollectionEntry<"categories">[]> {
+  const categories = await getCollection("categories");
   return categories.sort((a, b) => a.data.order - b.data.order);
 }
 
@@ -169,27 +134,23 @@ export async function getAllCategories(): Promise<
  */
 export async function getCategoryBySlug(
   slug: string
-): Promise<CollectionEntry<'categories'> | undefined> {
-  const categories = await getCollection('categories');
+): Promise<CollectionEntry<"categories"> | undefined> {
+  const categories = await getCollection("categories");
   return categories.find((cat) => cat.slug === slug);
 }
 
 /**
  * Get all collections
  */
-export async function getAllCollections(): Promise<
-  CollectionEntry<'collections'>[]
-> {
-  return await getCollection('collections');
+export async function getAllCollections(): Promise<CollectionEntry<"collections">[]> {
+  return await getCollection("collections");
 }
 
 /**
  * Get featured collections
  */
-export async function getFeaturedCollections(): Promise<
-  CollectionEntry<'collections'>[]
-> {
-  const collections = await getCollection('collections');
+export async function getFeaturedCollections(): Promise<CollectionEntry<"collections">[]> {
+  const collections = await getCollection("collections");
   return collections.filter((collection) => collection.data.featured === true);
 }
 
@@ -198,8 +159,8 @@ export async function getFeaturedCollections(): Promise<
  */
 export async function getCollectionBySlug(
   slug: string
-): Promise<CollectionEntry<'collections'> | undefined> {
-  const collections = await getCollection('collections');
+): Promise<CollectionEntry<"collections"> | undefined> {
+  const collections = await getCollection("collections");
   return collections.find((col) => col.slug === slug);
 }
 
@@ -213,10 +174,7 @@ export function calculateCartTotals(items: CartItem[]): {
   total: number;
   itemCount: number;
 } {
-  const subtotal = items.reduce(
-    (sum, item) => sum + item.price * item.quantity,
-    0
-  );
+  const subtotal = items.reduce((sum, item) => sum + item.price * item.quantity, 0);
   const itemCount = items.reduce((sum, item) => sum + item.quantity, 0);
 
   // Example tax calculation (10%)
@@ -239,10 +197,8 @@ export function calculateCartTotals(items: CartItem[]): {
 /**
  * Search products by name or description
  */
-export async function searchProducts(
-  query: string
-): Promise<CollectionEntry<'products'>[]> {
-  const products = await getCollection('products');
+export async function searchProducts(query: string): Promise<CollectionEntry<"products">[]> {
+  const products = await getCollection("products");
   const lowerQuery = query.toLowerCase();
 
   return products.filter(
@@ -256,9 +212,7 @@ export async function searchProducts(
 /**
  * Get product variants that are in stock
  */
-export function getInStockVariants(
-  product: Product
-): ProductVariant[] | undefined {
+export function getInStockVariants(product: Product): ProductVariant[] | undefined {
   if (!product.variants) return undefined;
   return product.variants.filter((variant) => variant.inStock === true);
 }
@@ -266,10 +220,7 @@ export function getInStockVariants(
 /**
  * Get unique variant options (e.g., all available colors)
  */
-export function getVariantOptions(
-  product: Product,
-  optionKey: string
-): string[] {
+export function getVariantOptions(product: Product, optionKey: string): string[] {
   if (!product.variants) return [];
 
   const options = new Set<string>();
@@ -292,9 +243,7 @@ export function findVariant(
   if (!product.variants) return undefined;
 
   return product.variants.find((variant) => {
-    return Object.entries(options).every(
-      ([key, value]) => variant.options[key] === value
-    );
+    return Object.entries(options).every(([key, value]) => variant.options[key] === value);
   });
 }
 
@@ -333,7 +282,7 @@ export function getHighestPrice(product: Product): number {
 /**
  * Get price range string (e.g., "$29.99 - $85.00")
  */
-export function getPriceRange(product: Product, currency = 'USD'): string {
+export function getPriceRange(product: Product, currency = "USD"): string {
   const lowest = getLowestPrice(product);
   const highest = getHighestPrice(product);
 
@@ -341,8 +290,5 @@ export function getPriceRange(product: Product, currency = 'USD'): string {
     return formatCurrency(lowest, currency);
   }
 
-  return `${formatCurrency(lowest, currency)} - ${formatCurrency(
-    highest,
-    currency
-  )}`;
+  return `${formatCurrency(lowest, currency)} - ${formatCurrency(highest, currency)}`;
 }

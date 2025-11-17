@@ -4,10 +4,10 @@
  * Requires client:load hydration
  */
 
-'use client';
+"use client";
 
-import { useState } from 'react';
-import { Button } from '@/components/ui/button';
+import { useState } from "react";
+import { Button } from "@/components/ui/button";
 
 interface QuantitySelectorProps {
   initialQuantity?: number;
@@ -49,7 +49,7 @@ export function QuantitySelector({
 
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const newValue = parseInt(e.target.value, 10);
-    if (!isNaN(newValue) && newValue >= min && newValue <= max) {
+    if (!Number.isNaN(newValue) && newValue >= min && newValue <= max) {
       if (value === undefined) setQuantity(newValue);
       onChange?.(newValue);
     }

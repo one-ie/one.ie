@@ -1,14 +1,11 @@
 "use client";
 
+import { nanoid } from "nanoid";
+import { useState } from "react";
 import { Conversation, ConversationContent } from "@/components/ai/elements/conversation";
 import { Loader } from "@/components/ai/elements/loader";
 import { Message, MessageContent } from "@/components/ai/elements/message";
-import {
-  PromptInput,
-  type PromptInputMessage,
-  PromptInputSubmit,
-  PromptInputTextarea,
-} from "@/components/ai/elements/prompt-input";
+import type { PromptInputMessage } from "@/components/ai/elements/prompt-input";
 import { Suggestion, Suggestions } from "@/components/ai/elements/suggestion";
 import {
   WebPreview,
@@ -16,8 +13,6 @@ import {
   WebPreviewNavigation,
   WebPreviewUrl,
 } from "@/components/ai/elements/web-preview";
-import { nanoid } from "nanoid";
-import { useState } from "react";
 
 type Chat = {
   id: string;
@@ -26,7 +21,7 @@ type Chat = {
 
 export default function Home() {
   const [message, setMessage] = useState("");
-  const [currentChat, setCurrentChat] = useState<Chat | null>(null);
+  const [currentChat, _setCurrentChat] = useState<Chat | null>(null);
   const [isLoading, setIsLoading] = useState(false);
   const [chatHistory, setChatHistory] = useState<
     Array<{
@@ -48,10 +43,7 @@ export default function Home() {
     setMessage("");
     setIsLoading(true);
 
-    setChatHistory((prev) => [
-      ...prev,
-      { id: nanoid(), type: "user", content: userMessage },
-    ]);
+    setChatHistory((prev) => [...prev, { id: nanoid(), type: "user", content: userMessage }]);
 
     try {
       // TODO: Replace with /api/v0 when implementing code generation
@@ -62,8 +54,11 @@ export default function Home() {
         },
         body: JSON.stringify({
           messages: [
-            ...chatHistory.map(msg => ({ role: msg.type === 'user' ? 'user' : 'assistant', content: msg.content })),
-            { role: 'user', content: userMessage }
+            ...chatHistory.map((msg) => ({
+              role: msg.type === "user" ? "user" : "assistant",
+              content: msg.content,
+            })),
+            { role: "user", content: userMessage },
           ],
           model: "google/gemini-2.5-flash-lite",
           premium: false,
@@ -76,10 +71,10 @@ export default function Home() {
 
       // Stream response
       const reader = response.body?.getReader();
-      if (!reader) throw new Error('No response body');
+      if (!reader) throw new Error("No response body");
 
       const decoder = new TextDecoder();
-      let assistantContent = '';
+      let assistantContent = "";
       const assistantId = nanoid();
 
       // Add empty assistant message
@@ -98,26 +93,24 @@ export default function Home() {
         if (done) break;
 
         const chunk = decoder.decode(value);
-        const lines = chunk.split('\n');
+        const lines = chunk.split("\n");
 
         for (const line of lines) {
-          if (line.startsWith('data: ')) {
+          if (line.startsWith("data: ")) {
             const data = line.slice(6);
-            if (data === '[DONE]') continue;
+            if (data === "[DONE]") continue;
 
             try {
               const parsed = JSON.parse(data);
               if (parsed.choices?.[0]?.delta?.content) {
                 assistantContent += parsed.choices[0].delta.content;
                 setChatHistory((prev) =>
-                  prev.map(msg =>
-                    msg.id === assistantId
-                      ? { ...msg, content: assistantContent }
-                      : msg
+                  prev.map((msg) =>
+                    msg.id === assistantId ? { ...msg, content: assistantContent } : msg
                   )
                 );
               }
-            } catch (e) {
+            } catch (_e) {
               // Some chunks might not be valid JSON
             }
           }
@@ -130,8 +123,7 @@ export default function Home() {
         {
           id: nanoid(),
           type: "assistant",
-          content:
-            "Sorry, there was an error. Please try again.",
+          content: "Sorry, there was an error. Please try again.",
         },
       ]);
     } finally {
@@ -155,9 +147,7 @@ export default function Home() {
               <p className="mt-4 text-3xl">What can we build together?</p>
               <Suggestions className="mt-8 justify-center">
                 <Suggestion
-                  onClick={() =>
-                    setMessage("Create a responsive navbar with Tailwind CSS")
-                  }
+                  onClick={() => setMessage("Create a responsive navbar with Tailwind CSS")}
                   suggestion="Create a responsive navbar with Tailwind CSS"
                 />
                 <Suggestion
@@ -165,9 +155,7 @@ export default function Home() {
                   suggestion="Build a todo app with React"
                 />
                 <Suggestion
-                  onClick={() =>
-                    setMessage("Make a landing page for a coffee shop")
-                  }
+                  onClick={() => setMessage("Make a landing page for a coffee shop")}
                   suggestion="Make a landing page for a coffee shop"
                 />
               </Suggestions>
@@ -208,7 +196,7 @@ export default function Home() {
                 value={message}
                 onChange={(e) => setMessage(e.target.value)}
                 onKeyDown={(e) => {
-                  if (e.key === 'Enter' && !e.shiftKey) {
+                  if (e.key === "Enter" && !e.shiftKey) {
                     e.preventDefault();
                     const value = e.currentTarget.value.trim();
                     if (value) {
@@ -232,14 +220,48 @@ export default function Home() {
                   }}
                 >
                   {isLoading ? (
-                    <svg className="animate-spin h-5 w-5" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
-                      <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4"></circle>
-                      <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
+                    <svg
+                      className="animate-spin h-5 w-5"
+                      xmlns="http://www.w3.org/2000/svg"
+                      fill="none"
+                      viewBox="0 0 24 24"
+                    >
+                      <circle
+                        className="opacity-25"
+                        cx="12"
+                        cy="12"
+                        r="10"
+                        stroke="currentColor"
+                        strokeWidth="4"
+                      ></circle>
+                      <path
+                        className="opacity-75"
+                        fill="currentColor"
+                        d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"
+                      ></path>
                     </svg>
                   ) : (
-                    <svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
-                      <path d="M10 17L17 10L10 3" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
-                      <path d="M17 10H3" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
+                    <svg
+                      width="20"
+                      height="20"
+                      viewBox="0 0 20 20"
+                      fill="none"
+                      xmlns="http://www.w3.org/2000/svg"
+                    >
+                      <path
+                        d="M10 17L17 10L10 3"
+                        stroke="currentColor"
+                        strokeWidth="2"
+                        strokeLinecap="round"
+                        strokeLinejoin="round"
+                      />
+                      <path
+                        d="M17 10H3"
+                        stroke="currentColor"
+                        strokeWidth="2"
+                        strokeLinecap="round"
+                        strokeLinejoin="round"
+                      />
                     </svg>
                   )}
                 </button>
@@ -253,10 +275,7 @@ export default function Home() {
       <div className="flex w-1/2 flex-col">
         <WebPreview>
           <WebPreviewNavigation>
-            <WebPreviewUrl
-              placeholder="Preview will appear here..."
-              value={currentChat?.demo}
-            />
+            <WebPreviewUrl placeholder="Preview will appear here..." value={currentChat?.demo} />
           </WebPreviewNavigation>
           <WebPreviewBody src={currentChat?.demo} />
         </WebPreview>

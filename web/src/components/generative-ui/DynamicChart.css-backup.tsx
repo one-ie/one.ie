@@ -1,6 +1,5 @@
-import React from "react";
-import { Card, CardHeader, CardTitle, CardDescription, CardContent } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
+import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 
 export function DynamicChart({ data, layout }: any) {
   // Simple CSS-based chart (works instantly without Recharts context issues)
@@ -31,7 +30,7 @@ export function DynamicChart({ data, layout }: any) {
                           className="h-full rounded-full transition-all duration-500 flex items-center justify-end pr-2"
                           style={{
                             width: `${percentage}%`,
-                            backgroundColor: dataset.color || '#3b82f6'
+                            backgroundColor: dataset.color || "#3b82f6",
                           }}
                         >
                           <span className="text-xs font-medium text-white">
@@ -57,7 +56,7 @@ export function DynamicChart({ data, layout }: any) {
             <div className="flex items-center gap-2 mb-2">
               <div
                 className="w-3 h-3 rounded-full"
-                style={{ backgroundColor: dataset.color || '#3b82f6' }}
+                style={{ backgroundColor: dataset.color || "#3b82f6" }}
               />
               <span className="text-sm font-medium">{dataset.label}</span>
             </div>
@@ -73,13 +72,11 @@ export function DynamicChart({ data, layout }: any) {
                       className="w-full rounded-t transition-all duration-500"
                       style={{
                         height: `${height}%`,
-                        backgroundColor: dataset.color || '#3b82f6',
-                        opacity: 0.8
+                        backgroundColor: dataset.color || "#3b82f6",
+                        opacity: 0.8,
                       }}
                     />
-                    <div className="text-xs text-muted-foreground mt-1">
-                      {labels[i]}
-                    </div>
+                    <div className="text-xs text-muted-foreground mt-1">{labels[i]}</div>
                   </div>
                 );
               })}

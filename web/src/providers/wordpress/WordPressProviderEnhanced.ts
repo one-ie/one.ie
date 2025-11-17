@@ -14,38 +14,31 @@
 
 import { Effect, Layer } from "effect";
 import type {
-  Thing,
-  Connection,
-  Event,
-  Knowledge,
-  Group,
-  ThingKnowledge,
-  CreateThingInput,
-  UpdateThingInput,
   CreateConnectionInput,
   CreateEventInput,
   CreateKnowledgeInput,
-  CreateGroupInput,
-  UpdateGroupInput,
-  ListThingsOptions,
+  CreateThingInput,
+  DataProvider,
   ListConnectionsOptions,
   ListEventsOptions,
-  ListGroupsOptions,
+  ListThingsOptions,
   SearchKnowledgeOptions,
-  DataProvider,
+  Thing,
+  ThingKnowledge,
+  UpdateThingInput,
 } from "../DataProvider";
 import {
-  DataProviderService,
-  ThingNotFoundError,
-  ThingCreateError,
-  ThingUpdateError,
-  ConnectionNotFoundError,
   ConnectionCreateError,
+  ConnectionNotFoundError,
+  DataProviderService,
   EventCreateError,
-  QueryError,
-  KnowledgeNotFoundError,
-  GroupNotFoundError,
   GroupCreateError,
+  GroupNotFoundError,
+  KnowledgeNotFoundError,
+  QueryError,
+  ThingCreateError,
+  ThingNotFoundError,
+  ThingUpdateError,
 } from "../DataProvider";
 
 // ============================================================================
@@ -109,7 +102,9 @@ class WordPressAPI {
 
     if (!response.ok) {
       const errorText = await response.text();
-      throw new Error(`WordPress API error: ${response.status} ${response.statusText} - ${errorText}`);
+      throw new Error(
+        `WordPress API error: ${response.status} ${response.statusText} - ${errorText}`
+      );
     }
 
     return response;
@@ -282,14 +277,14 @@ export const makeWordPressProvider = (config: WordPressProviderConfig): DataProv
       const acfResponse = await api.get(`/acf/v3/posts/${post.id}`);
       const acfData = await acfResponse.json();
       acfFields = acfData.acf || {};
-    } catch (e) {
+    } catch (_e) {
       // ACF not available or no fields
     }
 
     return {
       _id: wpIdToOneId(post.type, post.id),
       type: thingType,
-      name: typeof post.title === 'string' ? post.title : (post.title?.rendered || ''),
+      name: typeof post.title === "string" ? post.title : post.title?.rendered || "",
       status: mapWPStatusToOntology(post.status) as any,
       properties: {
         organizationId: post.meta?._one_organization_id || config.organizationId,
@@ -355,7 +350,7 @@ export const makeWordPressProvider = (config: WordPressProviderConfig): DataProv
     if (acfFields._one_properties) {
       try {
         Object.assign(properties, JSON.parse(acfFields._one_properties));
-      } catch (e) {
+      } catch (_e) {
         // Ignore parse errors
       }
     }
@@ -369,7 +364,7 @@ export const makeWordPressProvider = (config: WordPressProviderConfig): DataProv
     if (acfFields.prerequisites) {
       try {
         properties.prerequisites = JSON.parse(acfFields.prerequisites);
-      } catch (e) {
+      } catch (_e) {
         properties.prerequisites = acfFields.prerequisites;
       }
     }
@@ -388,7 +383,7 @@ export const makeWordPressProvider = (config: WordPressProviderConfig): DataProv
     return mapping[wpRole] || "customer";
   };
 
-  const mapONERoleToWP = (oneRole: string): string => {
+  const _mapONERoleToWP = (oneRole: string): string => {
     const mapping: Record<string, string> = {
       org_owner: "administrator",
       org_user: "editor",
@@ -407,22 +402,15 @@ export const makeWordPressProvider = (config: WordPressProviderConfig): DataProv
     // ===== GROUPS =====
     groups: {
       get: (id: string) =>
-        Effect.fail(
-          new GroupNotFoundError(id, "WordPress provider does not support groups")
-        ),
+        Effect.fail(new GroupNotFoundError(id, "WordPress provider does not support groups")),
 
       getBySlug: (slug: string) =>
-        Effect.fail(
-          new GroupNotFoundError(slug, "WordPress provider does not support groups")
-        ),
+        Effect.fail(new GroupNotFoundError(slug, "WordPress provider does not support groups")),
 
-      list: () =>
-        Effect.succeed([]),
+      list: () => Effect.succeed([]),
 
       create: () =>
-        Effect.fail(
-          new GroupCreateError("WordPress provider does not support creating groups")
-        ),
+        Effect.fail(new GroupCreateError("WordPress provider does not support creating groups")),
 
       update: () =>
         Effect.fail(
@@ -467,7 +455,7 @@ export const makeWordPressProvider = (config: WordPressProviderConfig): DataProv
             // Build WordPress query parameters
             const params = new URLSearchParams({
               per_page: String(options.limit || 10),
-              page: String(((options.offset || 0) / (options.limit || 10)) + 1),
+              page: String((options.offset || 0) / (options.limit || 10) + 1),
             });
 
             if (options.status) {
@@ -772,14 +760,18 @@ export const makeWordPressProvider = (config: WordPressProviderConfig): DataProv
           catch: (error) => new QueryError(String(error), error),
         }),
 
-      link: (thingId: string, knowledgeId: string, role?: ThingKnowledge["role"]) =>
+      link: (_thingId: string, _knowledgeId: string, _role?: ThingKnowledge["role"]) =>
         Effect.fail(
-          new QueryError("WordPress provider does not support linking knowledge - implement via custom endpoint")
+          new QueryError(
+            "WordPress provider does not support linking knowledge - implement via custom endpoint"
+          )
         ),
 
-      search: (embedding: number[], options?: SearchKnowledgeOptions) =>
+      search: (_embedding: number[], _options?: SearchKnowledgeOptions) =>
         Effect.fail(
-          new QueryError("WordPress provider does not support vector search - use Convex hybrid approach")
+          new QueryError(
+            "WordPress provider does not support vector search - use Convex hybrid approach"
+          )
         ),
     },
   };

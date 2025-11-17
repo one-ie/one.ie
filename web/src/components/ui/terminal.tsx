@@ -1,9 +1,9 @@
-'use client';
+"use client";
 
-import * as React from 'react';
-import { motion } from 'motion/react';
+import { motion } from "motion/react";
+import * as React from "react";
 
-import { cn } from '@/lib/utils';
+import { cn } from "@/lib/utils";
 
 type AnimatedSpanProps = React.ComponentProps<typeof motion.div> & {
   delay?: number;
@@ -20,7 +20,7 @@ export const AnimatedSpan: React.FC<AnimatedSpanProps> = ({
       initial={{ opacity: 0, y: -5 }}
       animate={{ opacity: 1, y: 0 }}
       transition={{ duration: 0.3, delay: delay / 1000 }}
-      className={cn('block text-left text-sm font-normal tracking-tight', className)}
+      className={cn("block text-left text-sm font-normal tracking-tight", className)}
       {...props}
     >
       {children}
@@ -41,11 +41,11 @@ export const TypingAnimation: React.FC<TypingAnimationProps> = ({
   delay = 0,
   ...props
 }) => {
-  if (typeof children !== 'string') {
-    throw new Error('TypingAnimation: children must be a string.');
+  if (typeof children !== "string") {
+    throw new Error("TypingAnimation: children must be a string.");
   }
 
-  const [displayedText, setDisplayedText] = React.useState('');
+  const [displayedText, setDisplayedText] = React.useState("");
   const [started, setStarted] = React.useState(false);
 
   React.useEffect(() => {
@@ -55,7 +55,7 @@ export const TypingAnimation: React.FC<TypingAnimationProps> = ({
 
   React.useEffect(() => {
     if (!started) {
-      setDisplayedText('');
+      setDisplayedText("");
       return;
     }
 
@@ -77,7 +77,7 @@ export const TypingAnimation: React.FC<TypingAnimationProps> = ({
       initial={{ opacity: 0 }}
       animate={{ opacity: started ? 1 : 0 }}
       transition={{ duration: 0.2, delay: delay / 1000 }}
-      className={cn('text-left text-sm font-normal tracking-tight', className)}
+      className={cn("text-left text-sm font-normal tracking-tight", className)}
       {...props}
     >
       {displayedText}
@@ -89,11 +89,7 @@ type TerminalProps = React.HTMLAttributes<HTMLDivElement> & {
   children: React.ReactNode;
 };
 
-export const Terminal: React.FC<TerminalProps> = ({
-  children,
-  className,
-  ...props
-}) => {
+export const Terminal: React.FC<TerminalProps> = ({ children, className, ...props }) => {
   const preRef = React.useRef<globalThis.HTMLPreElement | null>(null);
 
   React.useEffect(() => {
@@ -115,7 +111,7 @@ export const Terminal: React.FC<TerminalProps> = ({
       if (shouldFollow) {
         node.scrollTo({
           top: scrollHeight,
-          behavior: 'smooth'
+          behavior: "smooth",
         });
       }
     });
@@ -123,7 +119,7 @@ export const Terminal: React.FC<TerminalProps> = ({
     observer.observe(node, {
       childList: true,
       subtree: true,
-      characterData: true
+      characterData: true,
     });
 
     return () => observer.disconnect();
@@ -132,7 +128,7 @@ export const Terminal: React.FC<TerminalProps> = ({
   return (
     <div
       className={cn(
-        'relative z-0 flex h-[420px] w-full max-w-2xl flex-col overflow-hidden rounded-2xl border border-white/10 bg-[hsl(var(--sidebar))] text-slate-100 shadow-[0_25px_60px_-20px_rgba(0,0,0,0.75)] backdrop-blur',
+        "relative z-0 flex h-[420px] w-full max-w-2xl flex-col overflow-hidden rounded-2xl border border-white/10 bg-[hsl(var(--sidebar))] text-slate-100 shadow-[0_25px_60px_-20px_rgba(0,0,0,0.75)] backdrop-blur",
         className
       )}
       {...props}

@@ -35,24 +35,24 @@
  * ```
  */
 
-import { useState, useCallback } from 'react';
-import { useDataProvider } from './useDataProvider';
-import { Effect } from 'effect';
+import { Effect } from "effect";
+import { useCallback, useState } from "react";
 import type {
+  AuthError,
   AuthResult,
-  User,
-  TwoFactorStatus,
-  TwoFactorSetup,
+  Disable2FAArgs,
   LoginArgs,
-  SignupArgs,
   MagicLinkArgs,
   PasswordResetArgs,
   PasswordResetCompleteArgs,
-  VerifyEmailArgs,
+  SignupArgs,
+  TwoFactorSetup,
+  TwoFactorStatus,
+  User,
   Verify2FAArgs,
-  Disable2FAArgs,
-  AuthError,
-} from '@/providers/DataProvider';
+  VerifyEmailArgs,
+} from "@/providers/DataProvider";
+import { useDataProvider } from "./useDataProvider";
 
 // ============================================================================
 // HOOK RESULT TYPES

@@ -283,12 +283,7 @@ export type OrganizationPlan = (typeof ORGANIZATION_PLANS)[number];
 // ROLES
 // ============================================================================
 
-export const ROLES = [
-  "platform_owner",
-  "org_owner",
-  "org_user",
-  "customer",
-] as const;
+export const ROLES = ["platform_owner", "org_owner", "org_user", "customer"] as const;
 export type Role = (typeof ROLES)[number];
 
 // ============================================================================

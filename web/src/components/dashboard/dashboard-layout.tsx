@@ -1,9 +1,9 @@
-import * as React from 'react';
-import { SiteHeader } from '@/components/dashboard/site-header';
-import { RevenueChart } from '@/components/dashboard/revenue-chart';
-import { ActivityChart } from '@/components/dashboard/activity-chart';
-import { RecentTransactions } from '@/components/dashboard/recent-transactions';
-import { SidebarInset, SidebarProvider } from '@/components/ui/sidebar';
+import type * as React from "react";
+import { ActivityChart } from "@/components/dashboard/activity-chart";
+import { RecentTransactions } from "@/components/dashboard/recent-transactions";
+import { RevenueChart } from "@/components/dashboard/revenue-chart";
+import { SiteHeader } from "@/components/dashboard/site-header";
+import { SidebarInset, SidebarProvider } from "@/components/ui/sidebar";
 
 interface DashboardLayoutProps {
   user?: {
@@ -19,8 +19,8 @@ export function DashboardLayout({ user }: DashboardLayoutProps) {
       defaultOpen={false}
       style={
         {
-          '--sidebar-width': '16rem',
-          '--header-height': '3rem',
+          "--sidebar-width": "16rem",
+          "--header-height": "3rem",
         } as React.CSSProperties
       }
     >

@@ -5,14 +5,14 @@
  * with automatic resend and countdown timer
  */
 
-import { useState, useEffect } from 'react';
-import { Button } from '@/components/ui/button';
-import { Input } from '@/components/ui/input';
-import { Label } from '@/components/ui/label';
-import { Alert, AlertDescription } from '@/components/ui/alert';
-import { useVerifyEmailOnboarding, useResendVerificationCode } from '@/hooks/useOnboarding';
-import { toast } from 'sonner';
-import { Clock, AlertCircle } from 'lucide-react';
+import { AlertCircle, Clock } from "lucide-react";
+import { useEffect, useState } from "react";
+import { toast } from "sonner";
+import { Alert, AlertDescription } from "@/components/ui/alert";
+import { Button } from "@/components/ui/button";
+import { Input } from "@/components/ui/input";
+import { Label } from "@/components/ui/label";
+import { useResendVerificationCode, useVerifyEmailOnboarding } from "@/hooks/useOnboarding";
 
 interface EmailVerificationFormProps {
   email: string;
@@ -20,13 +20,9 @@ interface EmailVerificationFormProps {
   onBack?: () => void;
 }
 
-export function EmailVerificationForm({
-  email,
-  onSuccess,
-  onBack,
-}: EmailVerificationFormProps) {
-  const [code, setCode] = useState('');
-  const [codeError, setCodeError] = useState('');
+export function EmailVerificationForm({ email, onSuccess, onBack }: EmailVerificationFormProps) {
+  const [code, setCode] = useState("");
+  const [codeError, setCodeError] = useState("");
   const [resendCountdown, setResendCountdown] = useState(0);
   const { mutate: verify, loading: verifying } = useVerifyEmailOnboarding();
   const { mutate: resend, loading: resending, nextRetryAt } = useResendVerificationCode();
@@ -52,16 +48,16 @@ export function EmailVerificationForm({
 
   // Format code input (6 digits only)
   const handleCodeChange = (value: string) => {
-    const cleaned = value.replace(/\D/g, '').slice(0, 6);
+    const cleaned = value.replace(/\D/g, "").slice(0, 6);
     setCode(cleaned);
-    setCodeError('');
+    setCodeError("");
   };
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
 
     if (!code || code.length !== 6) {
-      setCodeError('Please enter a valid 6-digit code');
+      setCodeError("Please enter a valid 6-digit code");
       return;
     }
 
@@ -69,20 +65,20 @@ export function EmailVerificationForm({
       const result = await verify({ email, code });
 
       if (result.success) {
-        toast.success('Email verified!', {
-          description: 'Your email has been verified successfully.',
+        toast.success("Email verified!", {
+          description: "Your email has been verified successfully.",
         });
         onSuccess();
       }
     } catch (err) {
-      const message = err instanceof Error ? err.message : 'Verification failed';
+      const message = err instanceof Error ? err.message : "Verification failed";
 
-      if (message.includes('Too many failed attempts')) {
-        setCodeError('Too many incorrect attempts. Please request a new code.');
-      } else if (message.includes('expired')) {
-        setCodeError('Code has expired. Please request a new one.');
-      } else if (message.includes('Incorrect')) {
-        setCodeError('Incorrect code. Please try again.');
+      if (message.includes("Too many failed attempts")) {
+        setCodeError("Too many incorrect attempts. Please request a new code.");
+      } else if (message.includes("expired")) {
+        setCodeError("Code has expired. Please request a new one.");
+      } else if (message.includes("Incorrect")) {
+        setCodeError("Incorrect code. Please try again.");
       } else {
         setCodeError(message);
       }
@@ -94,12 +90,12 @@ export function EmailVerificationForm({
 
     try {
       await resend(email);
-      toast.success('Code sent!', {
-        description: 'A new verification code has been sent to your email.',
+      toast.success("Code sent!", {
+        description: "A new verification code has been sent to your email.",
       });
     } catch (err) {
-      const message = err instanceof Error ? err.message : 'Failed to resend code';
-      toast.error('Resend failed', { description: message });
+      const message = err instanceof Error ? err.message : "Failed to resend code";
+      toast.error("Resend failed", { description: message });
     }
   };
 
@@ -127,18 +123,12 @@ export function EmailVerificationForm({
           disabled={verifying}
           autoComplete="one-time-code"
         />
-        {codeError && (
-          <p className="text-sm font-medium text-destructive">{codeError}</p>
-        )}
+        {codeError && <p className="text-sm font-medium text-destructive">{codeError}</p>}
       </div>
 
       {/* Submit Button */}
-      <Button
-        type="submit"
-        className="w-full"
-        disabled={verifying || code.length !== 6}
-      >
-        {verifying ? 'Verifying...' : 'Verify Email'}
+      <Button type="submit" className="w-full" disabled={verifying || code.length !== 6}>
+        {verifying ? "Verifying..." : "Verify Email"}
       </Button>
 
       {/* Resend Section */}
@@ -148,9 +138,7 @@ export function EmailVerificationForm({
         {resendCountdown > 0 ? (
           <div className="flex items-center gap-2 text-sm text-muted-foreground">
             <Clock className="w-4 h-4" />
-            <span>
-              You can resend in {resendCountdown}s
-            </span>
+            <span>You can resend in {resendCountdown}s</span>
           </div>
         ) : (
           <Button
@@ -160,7 +148,7 @@ export function EmailVerificationForm({
             onClick={handleResendCode}
             disabled={resending}
           >
-            {resending ? 'Sending...' : 'Resend Code'}
+            {resending ? "Sending..." : "Resend Code"}
           </Button>
         )}
       </div>

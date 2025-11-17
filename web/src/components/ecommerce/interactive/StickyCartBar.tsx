@@ -5,14 +5,14 @@
  * Requires client:load hydration
  */
 
-'use client';
+"use client";
 
-import { useState, useEffect, useRef } from 'react';
-import type { Product } from '@/types/ecommerce';
-import { Button } from '@/components/ui/button';
-import { PriceDisplay } from '../static/PriceDisplay';
-import { cartActions } from '@/stores/cart';
-import { toastActions } from './Toast';
+import { useEffect, useRef, useState } from "react";
+import { Button } from "@/components/ui/button";
+import { cartActions } from "@/stores/cart";
+import type { Product } from "@/types/ecommerce";
+import { PriceDisplay } from "../static/PriceDisplay";
+import { toastActions } from "./Toast";
 
 interface StickyCartBarProps {
   product: Product;
@@ -25,7 +25,7 @@ export function StickyCartBar({
   product,
   selectedVariants = {},
   quantity = 1,
-  triggerElementId = 'variant-selector',
+  triggerElementId = "variant-selector",
 }: StickyCartBarProps) {
   const [isVisible, setIsVisible] = useState(false);
   const [isAdding, setIsAdding] = useState(false);
@@ -71,8 +71,8 @@ export function StickyCartBar({
       }
     };
 
-    window.addEventListener('scroll', scrollListener, { passive: true });
-    return () => window.removeEventListener('scroll', scrollListener);
+    window.addEventListener("scroll", scrollListener, { passive: true });
+    return () => window.removeEventListener("scroll", scrollListener);
   }, [triggerElementId]);
 
   const handleAddToCart = async () => {
@@ -88,7 +88,7 @@ export function StickyCartBar({
       variants: selectedVariants,
     });
 
-    toastActions.success('Added to cart', `${quantity}x ${product.name} added to your cart`);
+    toastActions.success("Added to cart", `${quantity}x ${product.name} added to your cart`);
 
     setTimeout(() => {
       setIsAdding(false);
@@ -98,14 +98,14 @@ export function StickyCartBar({
   const variantText = Object.entries(selectedVariants)
     .map(([_key, value]) => value)
     .filter(Boolean)
-    .join(', ');
+    .join(", ");
 
   return (
     <>
       {/* Mobile only - hidden on desktop */}
       <div
         className={`fixed bottom-0 left-0 right-0 z-40 bg-background border-t border-border shadow-lg transition-transform duration-300 md:hidden ${
-          isVisible ? 'translate-y-0' : 'translate-y-full'
+          isVisible ? "translate-y-0" : "translate-y-full"
         }`}
       >
         <div className="flex items-center gap-3 p-3">
@@ -120,14 +120,8 @@ export function StickyCartBar({
 
           {/* Product Info */}
           <div className="flex-1 min-w-0">
-            <h3 className="text-sm font-semibold text-foreground truncate">
-              {product.name}
-            </h3>
-            {variantText && (
-              <p className="text-xs text-muted-foreground truncate">
-                {variantText}
-              </p>
-            )}
+            <h3 className="text-sm font-semibold text-foreground truncate">{product.name}</h3>
+            {variantText && <p className="text-xs text-muted-foreground truncate">{variantText}</p>}
             <div className="mt-0.5">
               <PriceDisplay
                 price={product.price}
@@ -146,11 +140,7 @@ export function StickyCartBar({
           >
             {isAdding ? (
               <>
-                <svg
-                  className="mr-1.5 h-3.5 w-3.5 animate-spin"
-                  fill="none"
-                  viewBox="0 0 24 24"
-                >
+                <svg className="mr-1.5 h-3.5 w-3.5 animate-spin" fill="none" viewBox="0 0 24 24">
                   <circle
                     className="opacity-25"
                     cx="12"
@@ -168,7 +158,7 @@ export function StickyCartBar({
                 Adding...
               </>
             ) : !product.inStock ? (
-              'Out of Stock'
+              "Out of Stock"
             ) : (
               <>
                 <svg

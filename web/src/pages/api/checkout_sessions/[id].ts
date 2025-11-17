@@ -7,30 +7,26 @@
  * Follows OpenAI Agentic Checkout Spec
  */
 
-import type { APIRoute } from 'astro';
+import type { APIRoute } from "astro";
 import type {
-  UpdateCheckoutSessionRequest,
   CheckoutSessionResponse,
+  ErrorResponse,
+  FulfillmentOption,
   LineItem,
   Total,
-  FulfillmentOption,
-  ErrorResponse,
-} from '@/lib/types/agentic-checkout';
-import { sessions } from '../checkout_sessions';
-import {
-  calculateTax,
-  calculateShipping,
-  getDeliveryEstimate,
-} from '@/lib/stripe/agentic-commerce';
+  UpdateCheckoutSessionRequest,
+} from "@/lib/types/agentic-checkout";
+import { sessions } from "../checkout_sessions";
 
 // Product catalog (matches product-chat.astro)
 const products = {
-  'chanel-coco-noir': {
-    id: 'chanel-coco-noir',
-    name: 'Chanel Coco Noir Eau de Parfum',
+  "chanel-coco-noir": {
+    id: "chanel-coco-noir",
+    name: "Chanel Coco Noir Eau de Parfum",
     price: 12999, // $129.99 in cents
-    description: 'Elegant and mysterious. Coco Noir captures the essence of timeless sophistication with notes of grapefruit, rose, and sandalwood.',
-    image: 'https://cdn.dummyjson.com/product-images/fragrances/chanel-coco-noir-eau-de/1.webp',
+    description:
+      "Elegant and mysterious. Coco Noir captures the essence of timeless sophistication with notes of grapefruit, rose, and sandalwood.",
+    image: "https://cdn.dummyjson.com/product-images/fragrances/chanel-coco-noir-eau-de/1.webp",
     inStock: true,
     stock: 7,
   },
@@ -44,11 +40,11 @@ function getProductById(id: string) {
  * Validate API key
  */
 function validateApiKey(authHeader: string | null): boolean {
-  if (!authHeader?.startsWith('Bearer ')) {
+  if (!authHeader?.startsWith("Bearer ")) {
     return false;
   }
   const apiKey = authHeader.slice(7);
-  const expectedKey = import.meta.env.COMMERCE_API_KEY || 'test_key_change_in_production';
+  const expectedKey = import.meta.env.COMMERCE_API_KEY || "test_key_change_in_production";
   return apiKey === expectedKey;
 }
 
@@ -98,24 +94,24 @@ export const GET: APIRoute = async ({ params, request }) => {
     if (!sessionId) {
       return new Response(
         JSON.stringify({
-          type: 'invalid_request',
-          code: 'missing',
-          message: 'Session ID is required',
+          type: "invalid_request",
+          code: "missing",
+          message: "Session ID is required",
         } as ErrorResponse),
-        { status: 400, headers: { 'Content-Type': 'application/json' } }
+        { status: 400, headers: { "Content-Type": "application/json" } }
       );
     }
 
     // Validate API key
-    const authHeader = request.headers.get('Authorization');
+    const authHeader = request.headers.get("Authorization");
     if (!validateApiKey(authHeader)) {
       return new Response(
         JSON.stringify({
-          type: 'invalid_request',
-          code: 'unauthorized',
-          message: 'Invalid API key',
+          type: "invalid_request",
+          code: "unauthorized",
+          message: "Invalid API key",
         } as ErrorResponse),
-        { status: 401, headers: { 'Content-Type': 'application/json' } }
+        { status: 401, headers: { "Content-Type": "application/json" } }
       );
     }
 
@@ -124,11 +120,11 @@ export const GET: APIRoute = async ({ params, request }) => {
     if (!session) {
       return new Response(
         JSON.stringify({
-          type: 'invalid_request',
-          code: 'not_found',
-          message: 'Checkout session not found',
+          type: "invalid_request",
+          code: "not_found",
+          message: "Checkout session not found",
         } as ErrorResponse),
-        { status: 404, headers: { 'Content-Type': 'application/json' } }
+        { status: 404, headers: { "Content-Type": "application/json" } }
       );
     }
 
@@ -137,17 +133,17 @@ export const GET: APIRoute = async ({ params, request }) => {
 
     return new Response(JSON.stringify(response), {
       status: 200,
-      headers: { 'Content-Type': 'application/json' },
+      headers: { "Content-Type": "application/json" },
     });
   } catch (error) {
-    console.error('Get checkout session error:', error);
+    console.error("Get checkout session error:", error);
     return new Response(
       JSON.stringify({
-        type: 'invalid_request',
-        code: 'processing_error',
-        message: error instanceof Error ? error.message : 'Unknown error',
+        type: "invalid_request",
+        code: "processing_error",
+        message: error instanceof Error ? error.message : "Unknown error",
       } as ErrorResponse),
-      { status: 500, headers: { 'Content-Type': 'application/json' } }
+      { status: 500, headers: { "Content-Type": "application/json" } }
     );
   }
 };
@@ -161,24 +157,24 @@ export const POST: APIRoute = async ({ params, request }) => {
     if (!sessionId) {
       return new Response(
         JSON.stringify({
-          type: 'invalid_request',
-          code: 'missing',
-          message: 'Session ID is required',
+          type: "invalid_request",
+          code: "missing",
+          message: "Session ID is required",
         } as ErrorResponse),
-        { status: 400, headers: { 'Content-Type': 'application/json' } }
+        { status: 400, headers: { "Content-Type": "application/json" } }
       );
     }
 
     // Validate API key
-    const authHeader = request.headers.get('Authorization');
+    const authHeader = request.headers.get("Authorization");
     if (!validateApiKey(authHeader)) {
       return new Response(
         JSON.stringify({
-          type: 'invalid_request',
-          code: 'unauthorized',
-          message: 'Invalid API key',
+          type: "invalid_request",
+          code: "unauthorized",
+          message: "Invalid API key",
         } as ErrorResponse),
-        { status: 401, headers: { 'Content-Type': 'application/json' } }
+        { status: 401, headers: { "Content-Type": "application/json" } }
       );
     }
 
@@ -187,23 +183,23 @@ export const POST: APIRoute = async ({ params, request }) => {
     if (!existingSession) {
       return new Response(
         JSON.stringify({
-          type: 'invalid_request',
-          code: 'not_found',
-          message: 'Checkout session not found',
+          type: "invalid_request",
+          code: "not_found",
+          message: "Checkout session not found",
         } as ErrorResponse),
-        { status: 404, headers: { 'Content-Type': 'application/json' } }
+        { status: 404, headers: { "Content-Type": "application/json" } }
       );
     }
 
     // Check if session is completed or canceled
-    if (existingSession.status === 'completed' || existingSession.status === 'canceled') {
+    if (existingSession.status === "completed" || existingSession.status === "canceled") {
       return new Response(
         JSON.stringify({
-          type: 'invalid_request',
-          code: 'invalid',
+          type: "invalid_request",
+          code: "invalid",
           message: `Cannot update ${existingSession.status} session`,
         } as ErrorResponse),
-        { status: 400, headers: { 'Content-Type': 'application/json' } }
+        { status: 400, headers: { "Content-Type": "application/json" } }
       );
     }
 
@@ -213,22 +209,21 @@ export const POST: APIRoute = async ({ params, request }) => {
 
     // Start with existing session
     let lineItems = existingSession.line_items;
-    let itemsBaseAmount = existingSession.totals.find(
-      (t: Total) => t.type === 'items_base_amount'
-    )?.amount || 0;
+    let itemsBaseAmount =
+      existingSession.totals.find((t: Total) => t.type === "items_base_amount")?.amount || 0;
 
     // Rebuild line items if items changed
     if (items) {
       const result = rebuildLineItems(items);
-      if ('error' in result) {
+      if ("error" in result) {
         return new Response(
           JSON.stringify({
-            type: 'invalid_request',
-            code: 'invalid',
+            type: "invalid_request",
+            code: "invalid",
             message: result.error,
-            param: 'items',
+            param: "items",
           } as ErrorResponse),
-          { status: 400, headers: { 'Content-Type': 'application/json' } }
+          { status: 400, headers: { "Content-Type": "application/json" } }
         );
       }
       lineItems = result.lineItems;
@@ -252,11 +247,11 @@ export const POST: APIRoute = async ({ params, request }) => {
 
       fulfillmentOptions = [
         {
-          type: 'shipping',
-          id: 'free_shipping',
-          title: 'Free Shipping',
-          subtitle: 'Arrives in 5-7 business days',
-          carrier_info: 'USPS',
+          type: "shipping",
+          id: "free_shipping",
+          title: "Free Shipping",
+          subtitle: "Arrives in 5-7 business days",
+          carrier_info: "USPS",
           earliest_delivery_time: deliveryDate.toISOString(),
           latest_delivery_time: latestDeliveryDate.toISOString(),
           subtotal: 0,
@@ -266,30 +261,30 @@ export const POST: APIRoute = async ({ params, request }) => {
       ];
 
       // Select free shipping by default
-      selectedFulfillmentId = fulfillment_option_id || 'free_shipping';
+      selectedFulfillmentId = fulfillment_option_id || "free_shipping";
       fulfillmentCost = 0;
     }
 
     // Calculate tax (no tax for now)
-    let tax = 0;
+    const tax = 0;
 
     // Build totals
     const totals: Total[] = [
       {
-        type: 'items_base_amount',
-        display_text: 'Item(s) total',
+        type: "items_base_amount",
+        display_text: "Item(s) total",
         amount: itemsBaseAmount,
       },
       {
-        type: 'subtotal',
-        display_text: 'Subtotal',
+        type: "subtotal",
+        display_text: "Subtotal",
         amount: itemsBaseAmount,
       },
       ...(fulfillmentCost > 0
         ? [
             {
-              type: 'fulfillment' as const,
-              display_text: 'Shipping',
+              type: "fulfillment" as const,
+              display_text: "Shipping",
               amount: fulfillmentCost,
             },
           ]
@@ -297,21 +292,21 @@ export const POST: APIRoute = async ({ params, request }) => {
       ...(tax > 0
         ? [
             {
-              type: 'tax' as const,
-              display_text: 'Tax',
+              type: "tax" as const,
+              display_text: "Tax",
               amount: tax,
             },
           ]
         : []),
       {
-        type: 'total',
-        display_text: 'Total',
+        type: "total",
+        display_text: "Total",
         amount: itemsBaseAmount + fulfillmentCost + tax,
       },
     ];
 
     // Determine status
-    const status = currentAddress ? 'ready_for_payment' : 'not_ready_for_payment';
+    const status = currentAddress ? "ready_for_payment" : "not_ready_for_payment";
 
     // Build updated session
     const updatedSession: CheckoutSessionResponse = {
@@ -337,26 +332,26 @@ export const POST: APIRoute = async ({ params, request }) => {
     });
 
     // Return response
-    const idempotencyKey = request.headers.get('Idempotency-Key') || '';
-    const requestId = request.headers.get('Request-Id') || '';
+    const idempotencyKey = request.headers.get("Idempotency-Key") || "";
+    const requestId = request.headers.get("Request-Id") || "";
 
     return new Response(JSON.stringify(updatedSession), {
       status: 200,
       headers: {
-        'Content-Type': 'application/json',
-        'Idempotency-Key': idempotencyKey,
-        'Request-Id': requestId,
+        "Content-Type": "application/json",
+        "Idempotency-Key": idempotencyKey,
+        "Request-Id": requestId,
       },
     });
   } catch (error) {
-    console.error('Update checkout session error:', error);
+    console.error("Update checkout session error:", error);
     return new Response(
       JSON.stringify({
-        type: 'invalid_request',
-        code: 'processing_error',
-        message: error instanceof Error ? error.message : 'Unknown error',
+        type: "invalid_request",
+        code: "processing_error",
+        message: error instanceof Error ? error.message : "Unknown error",
       } as ErrorResponse),
-      { status: 500, headers: { 'Content-Type': 'application/json' } }
+      { status: 500, headers: { "Content-Type": "application/json" } }
     );
   }
 };

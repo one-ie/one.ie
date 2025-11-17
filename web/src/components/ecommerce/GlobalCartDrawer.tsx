@@ -4,9 +4,9 @@
  * Integrates with Nanostores for reactive cart updates
  */
 
-import { useStore } from '@nanostores/react';
-import { $cart, $cartDrawerOpen, cartActions } from '@/stores/cart';
-import { CartDrawer } from './interactive/CartDrawer';
+import { useStore } from "@nanostores/react";
+import { $cart, $cartDrawerOpen, cartActions } from "@/stores/cart";
+import { CartDrawer } from "./interactive/CartDrawer";
 
 export function GlobalCartDrawer() {
   const cart = useStore($cart);
@@ -27,7 +27,7 @@ export function GlobalCartDrawer() {
   const handleCheckout = () => {
     // Close drawer and navigate to checkout
     $cartDrawerOpen.set(false);
-    window.location.href = '/checkout';
+    window.location.href = "/checkout";
   };
 
   return (

@@ -1,4 +1,4 @@
-import { Check } from 'lucide-react';
+import { Check } from "lucide-react";
 
 interface Feature {
   title: string;
@@ -22,9 +22,7 @@ export function FeaturesList({ features }: FeaturesListProps) {
             </div>
             <div>
               <h3 className="text-xl font-bold mb-2">{feature.title}</h3>
-              <p className="text-gray-600 dark:text-gray-300">
-                {feature.description}
-              </p>
+              <p className="text-gray-600 dark:text-gray-300">{feature.description}</p>
             </div>
           </div>
         ))}

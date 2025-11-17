@@ -1,43 +1,40 @@
 ---
+import Layout from "@/layouts/Layout.astro";
 export const prerender = false; // Server-rendered to retrieve Stripe payment intent
 
-import Layout from "../layouts/Layout.astro";
-import { Button } from "@/components/ui/button";
-import { Card, CardHeader, CardContent, CardFooter } from "@/components/ui/card";
-import { Check, ArrowRight, Mail, Package, Truck } from 'lucide-react';
-import Stripe from 'stripe';
+import Stripe from "stripe";
 
-const title = "Order Confirmed - Thank You!";
-const description = "Your ChatGPT purchase has been confirmed";
+const _title = "Order Confirmed - Thank You!";
+const _description = "Your ChatGPT purchase has been confirmed";
 
 // Initialize Stripe
-const stripe = new Stripe(import.meta.env.STRIPE_SECRET_KEY || '', {
-  apiVersion: '2025-09-30.clover',
+const stripe = new Stripe(import.meta.env.STRIPE_SECRET_KEY || "", {
+  apiVersion: "2025-09-30.clover",
   typescript: true,
 });
 
 // Get payment intent ID from URL
-const paymentIntentId = Astro.url.searchParams.get('payment_intent');
+const paymentIntentId = Astro.url.searchParams.get("payment_intent");
 
 let paymentIntent: Stripe.PaymentIntent | null = null;
-let productName = 'Chanel Coco Noir Eau de Parfum';
+let _productName = "Chanel Coco Noir Eau de Parfum";
 let amount = 12999; // Default amount in cents
-let currency = 'USD';
-let customerEmail = '';
+let _currency = "USD";
+let _customerEmail = "";
 
 if (paymentIntentId) {
   try {
     paymentIntent = await stripe.paymentIntents.retrieve(paymentIntentId);
     amount = paymentIntent.amount;
-    currency = paymentIntent.currency.toUpperCase();
-    customerEmail = paymentIntent.metadata.buyer_email || '';
+    _currency = paymentIntent.currency.toUpperCase();
+    _customerEmail = paymentIntent.metadata.buyer_email || "";
   } catch (error) {
-    console.error('Error retrieving payment intent:', error);
+    console.error("Error retrieving payment intent:", error);
     // Fall back to defaults
   }
 }
 
-const totalAmount = (amount / 100).toFixed(2);
+const _totalAmount = (amount / 100).toFixed(2);
 ---
 
 <Layout title={title} description={description}>

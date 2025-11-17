@@ -34,8 +34,8 @@
  * ```
  */
 
-import { VideoCard } from './VideoCard';
-import { Skeleton } from '@/components/ui/skeleton';
+import { Skeleton } from "@/components/ui/skeleton";
+import { VideoCard } from "./VideoCard";
 
 export interface VideoGalleryProps {
   videos: Array<{
@@ -76,7 +76,11 @@ export function VideoGallery({ videos, loading = false, limit }: VideoGalleryPro
   // Loading state: Show skeleton cards
   if (loading) {
     return (
-      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-6" role="status" aria-label="Loading videos">
+      <div
+        className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-6"
+        role="status"
+        aria-label="Loading videos"
+      >
         {Array.from({ length: limit || 6 }).map((_, index) => (
           <VideoCardSkeleton key={index} />
         ))}

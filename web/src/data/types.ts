@@ -1,13 +1,8 @@
-export type EntityId = string
+export type EntityId = string;
 
-export type NavigationView =
-  | "people"
-  | "things"
-  | "connections"
-  | "events"
-  | "knowledge"
+export type NavigationView = "people" | "things" | "connections" | "events" | "knowledge";
 
-export type StatusFilter = "now" | "top" | "todo" | "done"
+export type StatusFilter = "now" | "top" | "todo" | "done";
 
 export const JOURNEY_STAGES = [
   "Hook",
@@ -19,32 +14,32 @@ export const JOURNEY_STAGES = [
   "Upsell",
   "Educate",
   "Share",
-] as const
+] as const;
 
-export type JourneyStage = (typeof JOURNEY_STAGES)[number]
+export type JourneyStage = (typeof JOURNEY_STAGES)[number];
 
 export interface EntityCard {
-  _id: EntityId
-  kind: NavigationView
+  _id: EntityId;
+  kind: NavigationView;
 
-  title: string
-  characterCode?: string
-  subtitle: string
-  preview: string
+  title: string;
+  characterCode?: string;
+  subtitle: string;
+  preview: string;
 
-  timestamp: number
-  unread: boolean
+  timestamp: number;
+  unread: boolean;
 
-  tags: string[]
+  tags: string[];
 
-  type: string
-  status: StatusFilter
+  type: string;
+  status: StatusFilter;
 
-  properties: Record<string, unknown>
-  createdAt: number
-  updatedAt: number
-  createdBy?: EntityId
+  properties: Record<string, unknown>;
+  createdAt: number;
+  updatedAt: number;
+  createdBy?: EntityId;
 
-  connectionCount?: number
-  recentActivityCount?: number
+  connectionCount?: number;
+  recentActivityCount?: number;
 }

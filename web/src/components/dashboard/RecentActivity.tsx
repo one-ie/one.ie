@@ -4,7 +4,6 @@
  * Display recent events in a timeline format.
  */
 
-import React from "react";
 import { Badge } from "@/components/ui/badge";
 
 interface Event {
@@ -68,9 +67,7 @@ export function RecentActivity({ events }: RecentActivityProps) {
   return (
     <div className="rounded-lg border border-gray-200 dark:border-gray-700 bg-white dark:bg-gray-800 p-4">
       {events.length === 0 ? (
-        <div className="text-center py-8 text-gray-500 dark:text-gray-400">
-          No recent activity
-        </div>
+        <div className="text-center py-8 text-gray-500 dark:text-gray-400">No recent activity</div>
       ) : (
         <div className="space-y-4">
           {events.map((event) => (
@@ -78,9 +75,7 @@ export function RecentActivity({ events }: RecentActivityProps) {
               key={event._id}
               className="flex items-start gap-3 border-l-2 border-gray-200 dark:border-gray-700 pl-3"
             >
-              <div className="flex-shrink-0 text-2xl">
-                {getEventIcon(event.type)}
-              </div>
+              <div className="flex-shrink-0 text-2xl">{getEventIcon(event.type)}</div>
               <div className="flex-grow">
                 <p className="text-sm font-medium text-gray-900 dark:text-white">
                   {getEventDescription(event)}

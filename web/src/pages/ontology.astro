@@ -1,41 +1,10 @@
 ---
-import Layout from '../layouts/Layout.astro';
-import { Button } from '@/components/ui/button';
-import {
-  Card,
-  CardHeader,
-  CardTitle,
-  CardDescription,
-  CardContent,
-} from '@/components/ui/card';
-import { Badge } from '@/components/ui/badge';
-import {
-  ArrowRight,
-  Check,
-  Users,
-  Box,
-  GitBranch,
-  Activity,
-  Brain,
-  Network,
-  Sparkles,
-  Code,
-  FileText,
-  Zap,
-  Database,
-  MessageSquare,
-  ChevronDown,
-  Building2,
-  Shield,
-  Globe,
-  Coins,
-} from 'lucide-react';
-import { FeaturedPodcast } from '@/components/FeaturedPodcast';
-import { getCollection } from 'astro:content';
+import { getCollection } from "astro:content";
+import Layout from "@/layouts/Layout.astro";
 
 // Get the featured ONE ontology podcast
-const podcasts = await getCollection('podcasts');
-const featuredPodcast = podcasts.find(p => p.slug === 'one-ontology');
+const podcasts = await getCollection("podcasts");
+const _featuredPodcast = podcasts.find((p) => p.slug === "one-ontology");
 ---
 
 <Layout title="The ONE Ontology - ONE Platform">
@@ -310,225 +279,9 @@ const featuredPodcast = podcasts.find(p => p.slug === 'one-ontology');
                 </div>
               </div>
 
-              <!-- Hierarchical Nesting -->
-              <div class="space-y-3">
-                <div class="font-semibold text-sm text-foreground">
-                  Hierarchical Nesting
-                </div>
-                <div class="rounded-lg border border-primary/20 bg-primary/5 p-4">
-                  <pre class="text-xs overflow-x-auto"><code>{`groups/acme-corp (business)
-  ├─ groups/engineering (organization)
-  │   ├─ groups/backend-team (organization)
-  │   └─ groups/frontend-team (organization)
-  ├─ groups/marketing (organization)
-  └─ groups/sales (organization)
-
-groups/emmas-friends (friend_circle)
-  ├─ groups/birthday-party (friend_circle)
-  └─ groups/game-night (friend_circle)
-
-groups/cool-dao (dao)
-  ├─ groups/treasury (dao)
-  └─ groups/governance (dao)`}</code></pre>
-                </div>
-              </div>
-
-              <!-- Properties & Features -->
-              <div class="grid gap-4 sm:grid-cols-2">
-                <div
-                  class="rounded-lg border border-border/50 bg-muted/30 p-4 space-y-2"
-                >
-                  <div class="font-semibold text-sm text-foreground">
-                    Properties
-                  </div>
-                  <ul class="text-sm text-muted-foreground space-y-1">
-                    <li>• Name, slug, and type</li>
-                    <li>• Parent group (for nesting)</li>
-                    <li>• Ownership chain</li>
-                    <li>• Subscription plan and billing</li>
-                    <li>• Usage quotas and limits</li>
-                    <li>• Status (active, suspended, trial)</li>
-                  </ul>
-                </div>
-                <div
-                  class="rounded-lg border border-border/50 bg-muted/30 p-4 space-y-2"
-                >
-                  <div class="font-semibold text-sm text-foreground">
-                    Why it matters
-                  </div>
-                  <ul class="text-sm text-muted-foreground space-y-1">
-                    <li>• Works at any scale</li>
-                    <li>• Natural hierarchy modeling</li>
-                    <li>• Multi-tenant isolation</li>
-                    <li>• Inherited permissions</li>
-                    <li>• URL-based creation</li>
-                    <li>• Type-specific defaults</li>
-                  </ul>
-                </div>
-              </div>
-
-              <!-- Example with Schema -->
-              <div class="rounded-lg border border-primary/20 bg-primary/5 p-4">
-                <pre
-                  class="text-xs overflow-x-auto"><code>{`groups/acme-corp
-  type: "business"
-  parentGroupId: null
-  properties: {
-    plan: "enterprise",
-    limits: { users: 50, agents: 20, inference: "1M/month" },
-    usage: { users: 12, agents: 8, inference: "234K" },
-    status: "active"
-  }
-  owned_by → people/anthony-o-connell
-
-groups/engineering
-  type: "organization"
-  parentGroupId: "acme-corp"
-  inherited_permissions: true`}</code></pre>
-              </div>
             </CardContent>
           </Card>
 
-          <!-- How Groups Work Section -->
-          <Card className="border-border/50 bg-card/50 backdrop-blur">
-            <CardHeader>
-              <CardTitle className="text-2xl">How Groups Work</CardTitle>
-            </CardHeader>
-            <CardContent className="space-y-4">
-              <div class="space-y-4">
-                <div>
-                  <h4 class="font-semibold text-sm text-foreground mb-2">URL-Based Creation</h4>
-                  <p class="text-sm text-muted-foreground mb-2">
-                    Create groups instantly by visiting <code class="text-xs bg-muted px-1 py-0.5 rounded">one.ie/group/slug</code>
-                  </p>
-                  <div class="rounded-lg border border-border/50 bg-muted/30 p-3">
-                    <pre class="text-xs overflow-x-auto"><code>{`one.ie/group/cooldao → creates "cooldao" group
-one.ie/group/cooldao/treasury → creates nested "treasury" group
-one.ie/group/emmas-birthday → creates "emmas-birthday" group`}</code></pre>
-                  </div>
-                </div>
-
-                <div>
-                  <h4 class="font-semibold text-sm text-foreground mb-2">Type-Specific Defaults</h4>
-                  <p class="text-sm text-muted-foreground mb-2">
-                    Each group type has smart defaults based on its use case:
-                  </p>
-                  <div class="grid gap-2 sm:grid-cols-2">
-                    <div class="rounded-lg border border-border/50 bg-muted/30 p-3">
-                      <div class="text-xs font-mono text-primary">friend_circle</div>
-                      <div class="text-xs text-muted-foreground">Private, invitation-only, no billing</div>
-                    </div>
-                    <div class="rounded-lg border border-border/50 bg-muted/30 p-3">
-                      <div class="text-xs font-mono text-primary">business</div>
-                      <div class="text-xs text-muted-foreground">Billing enabled, quotas enforced</div>
-                    </div>
-                    <div class="rounded-lg border border-border/50 bg-muted/30 p-3">
-                      <div class="text-xs font-mono text-primary">dao</div>
-                      <div class="text-xs text-muted-foreground">Token-gated, on-chain governance</div>
-                    </div>
-                    <div class="rounded-lg border border-border/50 bg-muted/30 p-3">
-                      <div class="text-xs font-mono text-primary">community</div>
-                      <div class="text-xs text-muted-foreground">Public, open membership</div>
-                    </div>
-                  </div>
-                </div>
-
-                <div>
-                  <h4 class="font-semibold text-sm text-foreground mb-2">Multi-Tenant Isolation</h4>
-                  <p class="text-sm text-muted-foreground">
-                    Every group gets its own isolated data space. Resources from one group never leak into another—perfect for SaaS, white-label deployment, and enterprise scale.
-                  </p>
-                </div>
-              </div>
-            </CardContent>
-          </Card>
-
-          <!-- Example Scenarios -->
-          <Card className="border-border/50 bg-card/50 backdrop-blur">
-            <CardHeader>
-              <CardTitle className="text-2xl">3 Example Scenarios</CardTitle>
-            </CardHeader>
-            <CardContent className="space-y-6">
-              <!-- Scenario 1: Friend Circle -->
-              <div class="space-y-3">
-                <div class="flex items-center gap-2">
-                  <Users className="h-5 w-5 text-primary" />
-                  <h4 class="font-semibold text-foreground">Scenario 1: Friend Circle</h4>
-                </div>
-                <div class="rounded-lg border border-border/50 bg-muted/30 p-4">
-                  <pre class="text-xs overflow-x-auto"><code>{`Emma creates: one.ie/group/emmas-friends
-
-groups/emmas-friends (friend_circle)
-  owned_by → people/emma
-  members → [emma, sarah, jake, alex]
-
-  └─ groups/birthday-party (friend_circle)
-      event_date: "2025-10-20"
-      location: "Emma's House"
-      members → [emma, sarah, jake]  # Subset of parent`}</code></pre>
-                  <p class="text-xs text-muted-foreground mt-2">
-                    Perfect for: Party planning, trip coordination, small gatherings
-                  </p>
-                </div>
-              </div>
-
-              <!-- Scenario 2: Business -->
-              <div class="space-y-3">
-                <div class="flex items-center gap-2">
-                  <Building2 className="h-5 w-5 text-primary" />
-                  <h4 class="font-semibold text-foreground">Scenario 2: Business Organization</h4>
-                </div>
-                <div class="rounded-lg border border-border/50 bg-muted/30 p-4">
-                  <pre class="text-xs overflow-x-auto"><code>{`Anthony creates: one.ie/group/acme-corp
-
-groups/acme-corp (business)
-  owned_by → people/anthony
-  plan: "enterprise"
-  billing: { seats: 50, price: "$5000/mo" }
-
-  ├─ groups/engineering (organization)
-  │   ├─ groups/backend (organization)
-  │   │   members → [dev1, dev2, dev3]
-  │   └─ groups/frontend (organization)
-  │       members → [dev4, dev5]
-  │
-  └─ groups/marketing (organization)
-      members → [marketing1, marketing2]`}</code></pre>
-                  <p class="text-xs text-muted-foreground mt-2">
-                    Perfect for: Company org charts, department isolation, permission inheritance
-                  </p>
-                </div>
-              </div>
-
-              <!-- Scenario 3: DAO -->
-              <div class="space-y-3">
-                <div class="flex items-center gap-2">
-                  <Coins className="h-5 w-5 text-primary" />
-                  <h4 class="font-semibold text-foreground">Scenario 3: Decentralized Organization</h4>
-                </div>
-                <div class="rounded-lg border border-border/50 bg-muted/30 p-4">
-                  <pre class="text-xs overflow-x-auto"><code>{`Community creates: one.ie/group/cooldao
-
-groups/cooldao (dao)
-  token_address: "0x..."
-  voting_threshold: 100_000
-  members → [wallet1, wallet2, wallet3...]
-
-  ├─ groups/treasury (dao)
-  │   governance: "multisig"
-  │   signers → [wallet1, wallet2, wallet3]
-  │   funds → $500K USDC
-  │
-  └─ groups/governance (dao)
-      proposals → [prop1, prop2, prop3]
-      voting_power → weighted by token holdings`}</code></pre>
-                  <p class="text-xs text-muted-foreground mt-2">
-                    Perfect for: Token-gated communities, on-chain governance, decentralized collaboration
-                  </p>
-                </div>
-              </div>
-            </CardContent>
-          </Card>
         </div>
 
         <!-- Dimension 2: People -->
@@ -924,17 +677,17 @@ groups/cooldao (dao)
 
         <!-- Enhanced Data Flow Diagram -->
         <div class="rounded-lg border border-border/50 bg-card/50 p-8 backdrop-blur">
-          <h3 class="mb-8 text-center text-xl font-bold">Data Flow Through The Ontology</h3>
+          <h3 class="mb-8 text-center text-xl font-bold">Data Flow</h3>
 
           <div class="mx-auto max-w-3xl">
-            <div class="relative space-y-6">
+            <div class="relative space-y-8">
               <!-- Vertical flow line -->
-              <div class="absolute left-12 top-16 bottom-16 w-px bg-gradient-to-b from-primary/40 via-primary/20 to-primary/40"></div>
+              <div class="absolute left-12 top-16 bottom-16 w-0.5 bg-gradient-to-b from-green-500/60 via-green-500/40 to-green-500/60"></div>
 
               <!-- Step 0: Groups -->
               <div class="relative">
                 <div class="flex items-start gap-6">
-                  <div class="relative z-10 flex h-24 w-24 shrink-0 items-center justify-center rounded-xl border-2 border-primary/30 bg-gradient-to-br from-primary/10 to-primary/5 backdrop-blur">
+                  <div class="relative z-10 flex h-24 w-24 shrink-0 items-center justify-center rounded-xl bg-primary/20 shadow-lg">
                     <div class="text-center">
                       <Users className="mx-auto h-8 w-8 text-primary" />
                       <div class="mt-1 text-xs font-medium text-primary">0</div>
@@ -945,23 +698,23 @@ groups/cooldao (dao)
                     <p class="text-sm text-muted-foreground leading-relaxed">
                       <strong class="text-foreground">Isolation Layer:</strong> Everything happens within a group boundary (can be hierarchically nested). Perfect multi-tenant separation, resource quotas, billing boundaries.
                     </p>
-                    <div class="flex items-center gap-2 pt-1">
-                      <Badge variant="secondary" className="text-xs">Scope</Badge>
-                      <Badge variant="secondary" className="text-xs">Hierarchical</Badge>
-                      <Badge variant="secondary" className="text-xs">Isolation</Badge>
+                    <div class="flex items-center gap-1.5 pt-1">
+                      <span class="inline-flex items-center rounded-md bg-secondary/50 px-2 py-0.5 text-[10px] font-medium">Scope</span>
+                      <span class="inline-flex items-center rounded-md bg-secondary/50 px-2 py-0.5 text-[10px] font-medium">Hierarchical</span>
+                      <span class="inline-flex items-center rounded-md bg-secondary/50 px-2 py-0.5 text-[10px] font-medium">Isolation</span>
                     </div>
                   </div>
                 </div>
-                <div class="ml-12 mt-3 flex items-center gap-2 text-xs text-muted-foreground">
-                  <ArrowRight className="h-3 w-3" />
-                  <span>Establishes scope for all operations (with optional nesting)</span>
+                <div class="ml-12 mt-4 flex items-center gap-3 text-sm">
+                  <ArrowRight className="h-6 w-6 text-green-500" />
+                  <span class="text-muted-foreground">Establishes scope for all operations</span>
                 </div>
               </div>
 
               <!-- Step 1: People -->
               <div class="relative">
                 <div class="flex items-start gap-6">
-                  <div class="relative z-10 flex h-24 w-24 shrink-0 items-center justify-center rounded-xl border-2 border-border/50 bg-muted/50 backdrop-blur">
+                  <div class="relative z-10 flex h-24 w-24 shrink-0 items-center justify-center rounded-xl bg-muted shadow-lg">
                     <div class="text-center">
                       <Users className="mx-auto h-8 w-8 text-primary" />
                       <div class="mt-1 text-xs font-medium text-muted-foreground">1</div>
@@ -972,23 +725,23 @@ groups/cooldao (dao)
                     <p class="text-sm text-muted-foreground leading-relaxed">
                       <strong class="text-foreground">Policy Layer:</strong> Humans set outcomes, attach limits, and approve execution. Every workflow starts with explicit intent.
                     </p>
-                    <div class="flex items-center gap-2 pt-1">
-                      <Badge variant="secondary" className="text-xs">Intent</Badge>
-                      <Badge variant="secondary" className="text-xs">Policy</Badge>
-                      <Badge variant="secondary" className="text-xs">Approval</Badge>
+                    <div class="flex items-center gap-1.5 pt-1">
+                      <span class="inline-flex items-center rounded-md bg-secondary/50 px-2 py-0.5 text-[10px] font-medium">Intent</span>
+                      <span class="inline-flex items-center rounded-md bg-secondary/50 px-2 py-0.5 text-[10px] font-medium">Policy</span>
+                      <span class="inline-flex items-center rounded-md bg-secondary/50 px-2 py-0.5 text-[10px] font-medium">Approval</span>
                     </div>
                   </div>
                 </div>
-                <div class="ml-12 mt-3 flex items-center gap-2 text-xs text-muted-foreground">
-                  <ArrowRight className="h-3 w-3" />
-                  <span>Triggers system action</span>
+                <div class="ml-12 mt-4 flex items-center gap-3 text-sm">
+                  <ArrowRight className="h-6 w-6 text-green-500" />
+                  <span class="text-muted-foreground">Triggers system action</span>
                 </div>
               </div>
 
               <!-- Step 2: Things -->
               <div class="relative">
                 <div class="flex items-start gap-6">
-                  <div class="relative z-10 flex h-24 w-24 shrink-0 items-center justify-center rounded-xl border-2 border-border/50 bg-muted/50 backdrop-blur">
+                  <div class="relative z-10 flex h-24 w-24 shrink-0 items-center justify-center rounded-xl bg-muted shadow-lg">
                     <div class="text-center">
                       <Box className="mx-auto h-8 w-8 text-primary" />
                       <div class="mt-1 text-xs font-medium text-muted-foreground">2</div>
@@ -999,23 +752,23 @@ groups/cooldao (dao)
                     <p class="text-sm text-muted-foreground leading-relaxed">
                       <strong class="text-foreground">Entity Layer:</strong> ONE resolves intent into typed Things—people, agents, offers, content—and versions every change.
                     </p>
-                    <div class="flex items-center gap-2 pt-1">
-                      <Badge variant="secondary" className="text-xs">66 types</Badge>
-                      <Badge variant="secondary" className="text-xs">Typed</Badge>
-                      <Badge variant="secondary" className="text-xs">Validated</Badge>
+                    <div class="flex items-center gap-1.5 pt-1">
+                      <span class="inline-flex items-center rounded-md bg-secondary/50 px-2 py-0.5 text-[10px] font-medium">66 types</span>
+                      <span class="inline-flex items-center rounded-md bg-secondary/50 px-2 py-0.5 text-[10px] font-medium">Typed</span>
+                      <span class="inline-flex items-center rounded-md bg-secondary/50 px-2 py-0.5 text-[10px] font-medium">Validated</span>
                     </div>
                   </div>
                 </div>
-                <div class="ml-12 mt-3 flex items-center gap-2 text-xs text-muted-foreground">
-                  <ArrowRight className="h-3 w-3" />
-                  <span>Creates relationships</span>
+                <div class="ml-12 mt-4 flex items-center gap-3 text-sm">
+                  <ArrowRight className="h-6 w-6 text-green-500" />
+                  <span class="text-muted-foreground">Creates relationships</span>
                 </div>
               </div>
 
               <!-- Step 3: Connections -->
               <div class="relative">
                 <div class="flex items-start gap-6">
-                  <div class="relative z-10 flex h-24 w-24 shrink-0 items-center justify-center rounded-xl border-2 border-border/50 bg-muted/50 backdrop-blur">
+                  <div class="relative z-10 flex h-24 w-24 shrink-0 items-center justify-center rounded-xl bg-muted shadow-lg">
                     <div class="text-center">
                       <GitBranch className="mx-auto h-8 w-8 text-primary" />
                       <div class="mt-1 text-xs font-medium text-muted-foreground">3</div>
@@ -1026,23 +779,23 @@ groups/cooldao (dao)
                     <p class="text-sm text-muted-foreground leading-relaxed">
                       <strong class="text-foreground">Relationship Layer:</strong> Defines how value moves—ownership, membership, authority—and stores actionable metadata on every edge.
                     </p>
-                    <div class="flex items-center gap-2 pt-1">
-                      <Badge variant="secondary" className="text-xs">25 types</Badge>
-                      <Badge variant="secondary" className="text-xs">Graph</Badge>
-                      <Badge variant="secondary" className="text-xs">Metadata</Badge>
+                    <div class="flex items-center gap-1.5 pt-1">
+                      <span class="inline-flex items-center rounded-md bg-secondary/50 px-2 py-0.5 text-[10px] font-medium">25 types</span>
+                      <span class="inline-flex items-center rounded-md bg-secondary/50 px-2 py-0.5 text-[10px] font-medium">Graph</span>
+                      <span class="inline-flex items-center rounded-md bg-secondary/50 px-2 py-0.5 text-[10px] font-medium">Metadata</span>
                     </div>
                   </div>
                 </div>
-                <div class="ml-12 mt-3 flex items-center gap-2 text-xs text-muted-foreground">
-                  <ArrowRight className="h-3 w-3" />
-                  <span>Determines permitted actions</span>
+                <div class="ml-12 mt-4 flex items-center gap-3 text-sm">
+                  <ArrowRight className="h-6 w-6 text-green-500" />
+                  <span class="text-muted-foreground">Determines permitted actions</span>
                 </div>
               </div>
 
               <!-- Step 4: Events -->
               <div class="relative">
                 <div class="flex items-start gap-6">
-                  <div class="relative z-10 flex h-24 w-24 shrink-0 items-center justify-center rounded-xl border-2 border-border/50 bg-muted/50 backdrop-blur">
+                  <div class="relative z-10 flex h-24 w-24 shrink-0 items-center justify-center rounded-xl bg-muted shadow-lg">
                     <div class="text-center">
                       <Activity className="mx-auto h-8 w-8 text-primary" />
                       <div class="mt-1 text-xs font-medium text-muted-foreground">4</div>
@@ -1053,23 +806,23 @@ groups/cooldao (dao)
                     <p class="text-sm text-muted-foreground leading-relaxed">
                       <strong class="text-foreground">Audit Layer:</strong> Records what happened, when, by whom. Builds the immutable timeline for analytics, compliance, and automation.
                     </p>
-                    <div class="flex items-center gap-2 pt-1">
-                      <Badge variant="secondary" className="text-xs">67 types</Badge>
-                      <Badge variant="secondary" className="text-xs">Timestamped</Badge>
-                      <Badge variant="secondary" className="text-xs">Immutable</Badge>
+                    <div class="flex items-center gap-1.5 pt-1">
+                      <span class="inline-flex items-center rounded-md bg-secondary/50 px-2 py-0.5 text-[10px] font-medium">67 types</span>
+                      <span class="inline-flex items-center rounded-md bg-secondary/50 px-2 py-0.5 text-[10px] font-medium">Timestamped</span>
+                      <span class="inline-flex items-center rounded-md bg-secondary/50 px-2 py-0.5 text-[10px] font-medium">Immutable</span>
                     </div>
                   </div>
                 </div>
-                <div class="ml-12 mt-3 flex items-center gap-2 text-xs text-muted-foreground">
-                  <ArrowRight className="h-3 w-3" />
-                  <span>Feeds the knowledge graph</span>
+                <div class="ml-12 mt-4 flex items-center gap-3 text-sm">
+                  <ArrowRight className="h-6 w-6 text-green-500" />
+                  <span class="text-muted-foreground">Feeds the knowledge graph</span>
                 </div>
               </div>
 
               <!-- Step 5: Knowledge -->
               <div class="relative">
                 <div class="flex items-start gap-6">
-                  <div class="relative z-10 flex h-24 w-24 shrink-0 items-center justify-center rounded-xl border-2 border-border/50 bg-muted/50 backdrop-blur">
+                  <div class="relative z-10 flex h-24 w-24 shrink-0 items-center justify-center rounded-xl bg-muted shadow-lg">
                     <div class="text-center">
                       <Brain className="mx-auto h-8 w-8 text-primary" />
                       <div class="mt-1 text-xs font-medium text-muted-foreground">5</div>
@@ -1080,10 +833,10 @@ groups/cooldao (dao)
                     <p class="text-sm text-muted-foreground leading-relaxed">
                       <strong class="text-foreground">Intelligence Layer:</strong> Adds labels, embeddings, and summaries so agents can recall, reason, and personalize.
                     </p>
-                    <div class="flex items-center gap-2 pt-1">
-                      <Badge variant="secondary" className="text-xs">Labels</Badge>
-                      <Badge variant="secondary" className="text-xs">Vectors</Badge>
-                      <Badge variant="secondary" className="text-xs">RAG</Badge>
+                    <div class="flex items-center gap-1.5 pt-1">
+                      <span class="inline-flex items-center rounded-md bg-secondary/50 px-2 py-0.5 text-[10px] font-medium">Labels</span>
+                      <span class="inline-flex items-center rounded-md bg-secondary/50 px-2 py-0.5 text-[10px] font-medium">Vectors</span>
+                      <span class="inline-flex items-center rounded-md bg-secondary/50 px-2 py-0.5 text-[10px] font-medium">RAG</span>
                     </div>
                   </div>
                 </div>
@@ -1254,65 +1007,6 @@ CREATE page /blog/[slug]
   </section>
 
   <!-- Ontology Summary -->
-  <section class="border-y bg-muted/50 px-4 py-20 sm:px-6 sm:py-24 md:px-8 md:py-32">
-    <div class="mx-auto max-w-full sm:max-w-6xl">
-      <div class="space-y-12 text-center">
-        <Badge variant="outline" className="mb-4 inline-flex items-center gap-2" data-usal="fade-down duration-600">
-          <Sparkles className="h-4 w-4" />
-          The Foundation
-        </Badge>
-
-        <div class="space-y-6" data-usal="fade-up duration-700 delay-100">
-          <h2 class="text-4xl font-bold leading-tight tracking-tight sm:text-5xl">
-            Why This Works
-          </h2>
-          <p class="mx-auto max-w-3xl text-xl leading-relaxed text-muted-foreground">
-            The ontology holds the contracts. The DSL speaks those contracts. Together they give <strong class="text-foreground">humans, AI agents, and code the same, inspectable source of truth.</strong>
-          </p>
-        </div>
-
-        <div class="grid gap-8 md:grid-cols-3 pt-8">
-          <Card className="border-border/50 bg-card/50 backdrop-blur text-center">
-            <CardHeader className="space-y-4">
-              <Database className="mx-auto h-12 w-12 text-primary" />
-              <CardTitle className="text-2xl">66 Thing Types</CardTitle>
-              <CardDescription className="leading-relaxed">
-                Every entity—users, agents, content, products, tokens—has a canonical, versioned schema
-              </CardDescription>
-            </CardHeader>
-          </Card>
-
-          <Card className="border-border/50 bg-card/50 backdrop-blur text-center">
-            <CardHeader className="space-y-4">
-              <Network className="mx-auto h-12 w-12 text-primary" />
-              <CardTitle className="text-2xl">25 Connection Types</CardTitle>
-              <CardDescription className="leading-relaxed">
-                Directional edges model ownership, access, payouts, and more with structured metadata
-              </CardDescription>
-            </CardHeader>
-          </Card>
-
-          <Card className="border-border/50 bg-card/50 backdrop-blur text-center">
-            <CardHeader className="space-y-4">
-              <Activity className="mx-auto h-12 w-12 text-primary" />
-              <CardTitle className="text-2xl">67 Event Types</CardTitle>
-              <CardDescription className="leading-relaxed">
-                Every action—purchases, completions, interactions—is immutable and ready for analytics
-              </CardDescription>
-            </CardHeader>
-          </Card>
-        </div>
-
-        <div class="pt-12" data-usal="fade-up duration-700 delay-200">
-          <p class="text-lg text-muted-foreground">
-            <strong class="text-foreground">Clarity scales.</strong>
-            <br class="hidden sm:block" />
-            Your DSL features, agent playbooks, and analytics dashboards stay in sync because they pull from the same ontology.
-          </p>
-        </div>
-      </div>
-    </div>
-  </section>
 
   <!-- Context Flow -->
   <section

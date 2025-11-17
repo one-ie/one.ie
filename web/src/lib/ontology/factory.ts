@@ -33,41 +33,31 @@ export async function getProvider(): Promise<IOntologyProvider | null> {
  * @deprecated Use `createDataProvider()` from `@/providers/factory` instead
  */
 export async function createConvexProvider(
-  url: string,
-  userId?: string
+  _url: string,
+  _userId?: string
 ): Promise<IOntologyProvider> {
   console.warn(
     "createConvexProvider() is deprecated. Use createDataProvider() from @/providers/factory instead."
   );
-  throw new Error(
-    "ConvexProvider moved to @/providers/factory. Update your imports."
-  );
+  throw new Error("ConvexProvider moved to @/providers/factory. Update your imports.");
 }
 
 /**
  * @deprecated Use `createDataProvider()` from `@/providers/factory` instead
  */
-export async function createHTTPProvider(
-  baseUrl: string
-): Promise<IOntologyProvider> {
+export async function createHTTPProvider(_baseUrl: string): Promise<IOntologyProvider> {
   console.warn(
     "createHTTPProvider() is deprecated. Use createDataProvider() from @/providers/factory instead."
   );
-  throw new Error(
-    "HTTPProvider moved to @/providers/factory. Update your imports."
-  );
+  throw new Error("HTTPProvider moved to @/providers/factory. Update your imports.");
 }
 
 /**
  * @deprecated Use `createDataProvider()` from `@/providers/factory` instead
  */
-export async function createMarkdownProvider(
-  contentDir: string
-): Promise<IOntologyProvider> {
+export async function createMarkdownProvider(_contentDir: string): Promise<IOntologyProvider> {
   console.warn(
     "createMarkdownProvider() is deprecated. Use createDataProvider() from @/providers/factory instead."
   );
-  throw new Error(
-    "MarkdownProvider moved to @/providers/factory. Update your imports."
-  );
+  throw new Error("MarkdownProvider moved to @/providers/factory. Update your imports.");
 }

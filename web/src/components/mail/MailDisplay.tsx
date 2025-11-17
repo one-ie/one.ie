@@ -1,5 +1,4 @@
-import * as React from "react"
-import { addDays, addHours, format, nextSaturday } from "date-fns"
+import { addDays, addHours, format, nextSaturday } from "date-fns";
 import {
   Archive,
   ArchiveX,
@@ -9,97 +8,87 @@ import {
   Reply,
   ReplyAll,
   Trash2,
-} from "lucide-react"
-import { toast } from "sonner"
-
-import {
-  DropdownMenuContent,
-  DropdownMenuItem,
-} from "@/components/ui/dropdown-menu"
-import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar"
-import { Button } from "@/components/ui/button"
-import { Calendar } from "@/components/ui/calendar"
+} from "lucide-react";
+import * as React from "react";
+import { toast } from "sonner";
+import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
+import { Button } from "@/components/ui/button";
+import { Calendar } from "@/components/ui/calendar";
 import {
   DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuItem,
   DropdownMenuTrigger,
-} from "@/components/ui/dropdown-menu"
-import { Label } from "@/components/ui/label"
-import {
-  Popover,
-  PopoverContent,
-  PopoverTrigger,
-} from "@/components/ui/popover"
-import { Separator } from "@/components/ui/separator"
-import { Switch } from "@/components/ui/switch"
-import { Textarea } from "@/components/ui/textarea"
-import {
-  Tooltip,
-  TooltipContent,
-  TooltipTrigger,
-} from "@/components/ui/tooltip"
-import { type Mail } from "@/data/mail-data"
+} from "@/components/ui/dropdown-menu";
+import { Label } from "@/components/ui/label";
+import { Popover, PopoverContent, PopoverTrigger } from "@/components/ui/popover";
+import { Separator } from "@/components/ui/separator";
+import { Switch } from "@/components/ui/switch";
+import { Textarea } from "@/components/ui/textarea";
+import { Tooltip, TooltipContent, TooltipTrigger } from "@/components/ui/tooltip";
+import type { Mail } from "@/data/mail-data";
 
 interface MailDisplayProps {
-  mail: Mail | null
+  mail: Mail | null;
 }
 
 export function MailDisplay({ mail }: MailDisplayProps) {
-  const today = new Date()
-  const [replyText, setReplyText] = React.useState("")
-  const [selectedSnoozeDate, setSelectedSnoozeDate] = React.useState<Date | undefined>(undefined)
+  const today = new Date();
+  const [replyText, setReplyText] = React.useState("");
+  const [selectedSnoozeDate, setSelectedSnoozeDate] = React.useState<Date | undefined>(undefined);
 
   // Action handlers
   const handleArchive = () => {
-    if (!mail) return
+    if (!mail) return;
     toast.success("Email archived", {
       description: mail.subject,
-    })
-  }
+    });
+  };
 
   const handleDelete = () => {
-    if (!mail) return
+    if (!mail) return;
     toast.success("Email deleted", {
       description: mail.subject,
-    })
-  }
+    });
+  };
 
   const handleJunk = () => {
-    if (!mail) return
+    if (!mail) return;
     toast.success("Email marked as junk", {
       description: mail.subject,
-    })
-  }
+    });
+  };
 
   const handleMarkUnread = () => {
-    if (!mail) return
+    if (!mail) return;
     toast.info("Marked as unread", {
       description: mail.subject,
-    })
-  }
+    });
+  };
 
-  const handleSnooze = (date: Date, label: string) => {
-    if (!mail) return
+  const handleSnooze = (_date: Date, label: string) => {
+    if (!mail) return;
     toast.success("Email snoozed", {
       description: `${mail.subject} - Until ${label}`,
-    })
-  }
+    });
+  };
 
   const handleReply = (e: React.FormEvent) => {
-    e.preventDefault()
-    if (!mail) return
+    e.preventDefault();
+    if (!mail) return;
 
     if (!replyText.trim()) {
       toast.error("Cannot send empty reply", {
         description: "Please enter a message",
-      })
-      return
+      });
+      return;
     }
 
     toast.success("Reply sent", {
       description: `Reply to "${mail.subject}"`,
-    })
-    setReplyText("")
-  }
+    });
+    setReplyText("");
+  };
 
   return (
     <div className="flex h-full flex-col">
@@ -150,8 +139,8 @@ export function MailDisplay({ mail }: MailDisplayProps) {
                         variant="ghost"
                         className="justify-start font-normal"
                         onClick={() => {
-                          const date = addHours(today, 4)
-                          handleSnooze(date, format(date, "E, h:m b"))
+                          const date = addHours(today, 4);
+                          handleSnooze(date, format(date, "E, h:m b"));
                         }}
                       >
                         Later today{" "}
@@ -163,8 +152,8 @@ export function MailDisplay({ mail }: MailDisplayProps) {
                         variant="ghost"
                         className="justify-start font-normal"
                         onClick={() => {
-                          const date = addDays(today, 1)
-                          handleSnooze(date, format(date, "E, h:m b"))
+                          const date = addDays(today, 1);
+                          handleSnooze(date, format(date, "E, h:m b"));
                         }}
                       >
                         Tomorrow
@@ -176,8 +165,8 @@ export function MailDisplay({ mail }: MailDisplayProps) {
                         variant="ghost"
                         className="justify-start font-normal"
                         onClick={() => {
-                          const date = nextSaturday(today)
-                          handleSnooze(date, format(date, "E, h:m b"))
+                          const date = nextSaturday(today);
+                          handleSnooze(date, format(date, "E, h:m b"));
                         }}
                       >
                         This weekend
@@ -189,8 +178,8 @@ export function MailDisplay({ mail }: MailDisplayProps) {
                         variant="ghost"
                         className="justify-start font-normal"
                         onClick={() => {
-                          const date = addDays(today, 7)
-                          handleSnooze(date, format(date, "E, h:m b"))
+                          const date = addDays(today, 7);
+                          handleSnooze(date, format(date, "E, h:m b"));
                         }}
                       >
                         Next week
@@ -206,8 +195,8 @@ export function MailDisplay({ mail }: MailDisplayProps) {
                       selected={selectedSnoozeDate}
                       onSelect={(date) => {
                         if (date) {
-                          setSelectedSnoozeDate(date)
-                          handleSnooze(date, format(date, "PPP"))
+                          setSelectedSnoozeDate(date);
+                          handleSnooze(date, format(date, "PPP"));
                         }
                       }}
                     />
@@ -288,9 +277,7 @@ export function MailDisplay({ mail }: MailDisplayProps) {
               )}
             </div>
             <Separator />
-            <div className="flex-1 whitespace-pre-wrap p-4 text-sm">
-              {mail.text}
-            </div>
+            <div className="flex-1 whitespace-pre-wrap p-4 text-sm">{mail.text}</div>
             <Separator className="mt-auto" />
             <div className="p-4">
               <form onSubmit={handleReply}>
@@ -302,18 +289,10 @@ export function MailDisplay({ mail }: MailDisplayProps) {
                     onChange={(e) => setReplyText(e.target.value)}
                   />
                   <div className="flex items-center">
-                    <Label
-                      htmlFor="mute"
-                      className="flex items-center gap-2 text-xs font-normal"
-                    >
-                      <Switch id="mute" aria-label="Mute thread" /> Mute this
-                      thread
+                    <Label htmlFor="mute" className="flex items-center gap-2 text-xs font-normal">
+                      <Switch id="mute" aria-label="Mute thread" /> Mute this thread
                     </Label>
-                    <Button
-                      type="submit"
-                      size="sm"
-                      className="ml-auto"
-                    >
+                    <Button type="submit" size="sm" className="ml-auto">
                       Send
                     </Button>
                   </div>
@@ -328,5 +307,5 @@ export function MailDisplay({ mail }: MailDisplayProps) {
         </div>
       )}
     </div>
-  )
+  );
 }

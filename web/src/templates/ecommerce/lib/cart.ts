@@ -1,5 +1,5 @@
-import { atom } from 'nanostores';
-import type { CartItem } from './types';
+import { atom } from "nanostores";
+import type { CartItem } from "./types";
 
 export const cartItems = atom<CartItem[]>([]);
 
@@ -23,8 +23,8 @@ export function addToCart(item: CartItem) {
   }
 
   // Save to localStorage
-  if (typeof window !== 'undefined') {
-    localStorage.setItem('cart', JSON.stringify(cartItems.get()));
+  if (typeof window !== "undefined") {
+    localStorage.setItem("cart", JSON.stringify(cartItems.get()));
   }
 }
 
@@ -32,26 +32,17 @@ export function removeFromCart(productId: string, size: string, color: string) {
   const currentItems = cartItems.get();
   const newItems = currentItems.filter(
     (item) =>
-      !(
-        item.product.id === productId &&
-        item.selectedSize === size &&
-        item.selectedColor === color
-      )
+      !(item.product.id === productId && item.selectedSize === size && item.selectedColor === color)
   );
   cartItems.set(newItems);
 
   // Save to localStorage
-  if (typeof window !== 'undefined') {
-    localStorage.setItem('cart', JSON.stringify(newItems));
+  if (typeof window !== "undefined") {
+    localStorage.setItem("cart", JSON.stringify(newItems));
   }
 }
 
-export function updateQuantity(
-  productId: string,
-  size: string,
-  color: string,
-  quantity: number
-) {
+export function updateQuantity(productId: string, size: string, color: string, quantity: number) {
   const currentItems = cartItems.get();
   const newItems = currentItems.map((item) => {
     if (
@@ -66,15 +57,15 @@ export function updateQuantity(
   cartItems.set(newItems);
 
   // Save to localStorage
-  if (typeof window !== 'undefined') {
-    localStorage.setItem('cart', JSON.stringify(newItems));
+  if (typeof window !== "undefined") {
+    localStorage.setItem("cart", JSON.stringify(newItems));
   }
 }
 
 export function clearCart() {
   cartItems.set([]);
-  if (typeof window !== 'undefined') {
-    localStorage.removeItem('cart');
+  if (typeof window !== "undefined") {
+    localStorage.removeItem("cart");
   }
 }
 
@@ -92,13 +83,13 @@ export function getCartCount(): number {
 }
 
 // Load cart from localStorage on init
-if (typeof window !== 'undefined') {
-  const savedCart = localStorage.getItem('cart');
+if (typeof window !== "undefined") {
+  const savedCart = localStorage.getItem("cart");
   if (savedCart) {
     try {
       cartItems.set(JSON.parse(savedCart));
     } catch (e) {
-      console.error('Failed to load cart from localStorage', e);
+      console.error("Failed to load cart from localStorage", e);
     }
   }
 }

@@ -6,42 +6,42 @@
  * This preserves all existing functionality while enabling backend abstraction.
  */
 
-import { Effect, Layer } from "effect";
 import { ConvexHttpClient } from "convex/browser";
+import { Effect, Layer } from "effect";
 import type { Id } from "@/types/convex";
-import {
-  DataProviderService,
-  ThingNotFoundError,
-  ThingCreateError,
-  ThingUpdateError,
-  ConnectionNotFoundError,
-  ConnectionCreateError,
-  EventCreateError,
-  KnowledgeNotFoundError,
-  GroupNotFoundError,
-  GroupCreateError,
-  QueryError,
-} from "../DataProvider";
 import type {
-  DataProvider,
-  Group,
-  Thing,
   Connection,
-  Event,
-  Knowledge,
-  CreateThingInput,
-  UpdateThingInput,
-  CreateGroupInput,
-  UpdateGroupInput,
   CreateConnectionInput,
   CreateEventInput,
+  CreateGroupInput,
   CreateKnowledgeInput,
-  ListThingsOptions,
+  CreateThingInput,
+  DataProvider,
+  Event,
+  Group,
+  Knowledge,
   ListConnectionsOptions,
   ListEventsOptions,
   ListGroupsOptions,
+  ListThingsOptions,
   SearchKnowledgeOptions,
+  Thing,
   ThingKnowledge,
+  UpdateGroupInput,
+  UpdateThingInput,
+} from "../DataProvider";
+import {
+  ConnectionCreateError,
+  ConnectionNotFoundError,
+  DataProviderService,
+  EventCreateError,
+  GroupCreateError,
+  GroupNotFoundError,
+  KnowledgeNotFoundError,
+  QueryError,
+  ThingCreateError,
+  ThingNotFoundError,
+  ThingUpdateError,
 } from "../DataProvider";
 
 // ============================================================================
@@ -66,7 +66,9 @@ export const makeConvexProvider = (config: ConvexProviderConfig): DataProvider =
       get: (id: string) =>
         Effect.tryPromise({
           try: async () => {
-            const result = await client.query("queries/groups:get" as any, { id: id as Id<"groups"> });
+            const result = await client.query("queries/groups:get" as any, {
+              id: id as Id<"groups">,
+            });
             if (!result) {
               throw new GroupNotFoundError(id, `Group with id ${id} not found`);
             }
@@ -160,7 +162,9 @@ export const makeConvexProvider = (config: ConvexProviderConfig): DataProvider =
       get: (id: string) =>
         Effect.tryPromise({
           try: async () => {
-            const result = await client.query("queries/entities:get" as any, { id: id as Id<"entities"> });
+            const result = await client.query("queries/entities:get" as any, {
+              id: id as Id<"entities">,
+            });
             if (!result) {
               throw new ThingNotFoundError(id, `Thing with id ${id} not found`);
             }

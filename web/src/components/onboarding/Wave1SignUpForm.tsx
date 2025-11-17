@@ -4,32 +4,25 @@
  * NOT the old Better Auth flow
  */
 
-import { useState } from 'react';
-import { Button } from '@/components/ui/button';
-import { Input } from '@/components/ui/input';
-import { Label } from '@/components/ui/label';
-import { Alert, AlertDescription } from '@/components/ui/alert';
-import { useSignupOnboarding } from '@/hooks/useOnboarding';
-import { toast } from 'sonner';
-import { AlertCircle, CheckCircle } from 'lucide-react';
-import { PasswordStrengthIndicator } from '@/components/auth/PasswordStrengthIndicator';
+import { AlertCircle, CheckCircle } from "lucide-react";
+import { useState } from "react";
+import { toast } from "sonner";
+import { PasswordStrengthIndicator } from "@/components/auth/PasswordStrengthIndicator";
+import { Alert, AlertDescription } from "@/components/ui/alert";
+import { Button } from "@/components/ui/button";
+import { Input } from "@/components/ui/input";
+import { Label } from "@/components/ui/label";
+import { useSignupOnboarding } from "@/hooks/useOnboarding";
 
 interface Wave1SignUpFormProps {
-  onSuccess?: (data: {
-    userId: string;
-    email: string;
-    displayName: string;
-  }) => void;
+  onSuccess?: (data: { userId: string; email: string; displayName: string }) => void;
   onError?: (error: string) => void;
 }
 
-export function Wave1SignUpForm({
-  onSuccess,
-  onError,
-}: Wave1SignUpFormProps) {
-  const [email, setEmail] = useState('');
-  const [password, setPassword] = useState('');
-  const [displayName, setDisplayName] = useState('');
+export function Wave1SignUpForm({ onSuccess, onError }: Wave1SignUpFormProps) {
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+  const [displayName, setDisplayName] = useState("");
   const [agreeToTerms, setAgreeToTerms] = useState(false);
   const [agreeToPrivacy, setAgreeToPrivacy] = useState(false);
   const [errors, setErrors] = useState<Record<string, string>>({});
@@ -44,33 +37,33 @@ export function Wave1SignUpForm({
     const newErrors: Record<string, string> = {};
 
     if (!email) {
-      newErrors.email = 'Email is required';
-    } else if (!email.includes('@')) {
-      newErrors.email = 'Please enter a valid email';
+      newErrors.email = "Email is required";
+    } else if (!email.includes("@")) {
+      newErrors.email = "Please enter a valid email";
     }
 
     if (!password) {
-      newErrors.password = 'Password is required';
+      newErrors.password = "Password is required";
     } else if (password.length < 8) {
-      newErrors.password = 'Password must be at least 8 characters';
+      newErrors.password = "Password must be at least 8 characters";
     } else if (!/[A-Z]/.test(password)) {
-      newErrors.password = 'Password must contain at least one uppercase letter';
+      newErrors.password = "Password must contain at least one uppercase letter";
     } else if (!/[0-9]/.test(password)) {
-      newErrors.password = 'Password must contain at least one number';
+      newErrors.password = "Password must contain at least one number";
     }
 
     if (!displayName) {
-      newErrors.displayName = 'Name is required';
+      newErrors.displayName = "Name is required";
     } else if (displayName.length < 2) {
-      newErrors.displayName = 'Name must be at least 2 characters';
+      newErrors.displayName = "Name must be at least 2 characters";
     }
 
     if (!agreeToTerms) {
-      newErrors.terms = 'You must agree to the Terms of Service';
+      newErrors.terms = "You must agree to the Terms of Service";
     }
 
     if (!agreeToPrivacy) {
-      newErrors.privacy = 'You must agree to the Privacy Policy';
+      newErrors.privacy = "You must agree to the Privacy Policy";
     }
 
     if (Object.keys(newErrors).length > 0) {
@@ -89,7 +82,7 @@ export function Wave1SignUpForm({
       });
 
       if (result) {
-        toast.success('Account created! Check your email for the verification code.', {
+        toast.success("Account created! Check your email for the verification code.", {
           description: `A 6-digit code has been sent to ${email}`,
         });
 
@@ -103,9 +96,8 @@ export function Wave1SignUpForm({
         }
       }
     } catch (err) {
-      const errorMsg =
-        err instanceof Error ? err.message : 'An unexpected error occurred';
-      toast.error('Signup failed', {
+      const errorMsg = err instanceof Error ? err.message : "An unexpected error occurred";
+      toast.error("Signup failed", {
         description: errorMsg,
       });
       if (onError) {
@@ -118,9 +110,7 @@ export function Wave1SignUpForm({
     <div className="space-y-6 w-full max-w-md">
       <div className="space-y-2 text-center">
         <h2 className="text-2xl font-bold">Create Your Account</h2>
-        <p className="text-sm text-muted-foreground">
-          Start your creator journey on ONE
-        </p>
+        <p className="text-sm text-muted-foreground">Start your creator journey on ONE</p>
       </div>
 
       {/* Terms Notice */}
@@ -142,11 +132,9 @@ export function Wave1SignUpForm({
             value={displayName}
             onChange={(e) => setDisplayName(e.target.value)}
             disabled={loading}
-            className={errors.displayName ? 'border-red-500' : ''}
+            className={errors.displayName ? "border-red-500" : ""}
           />
-          {errors.displayName && (
-            <p className="text-sm text-red-500">{errors.displayName}</p>
-          )}
+          {errors.displayName && <p className="text-sm text-red-500">{errors.displayName}</p>}
         </div>
 
         {/* Email */}
@@ -159,11 +147,9 @@ export function Wave1SignUpForm({
             value={email}
             onChange={(e) => setEmail(e.target.value)}
             disabled={loading}
-            className={errors.email ? 'border-red-500' : ''}
+            className={errors.email ? "border-red-500" : ""}
           />
-          {errors.email && (
-            <p className="text-sm text-red-500">{errors.email}</p>
-          )}
+          {errors.email && <p className="text-sm text-red-500">{errors.email}</p>}
         </div>
 
         {/* Password */}
@@ -176,11 +162,9 @@ export function Wave1SignUpForm({
             value={password}
             onChange={(e) => setPassword(e.target.value)}
             disabled={loading}
-            className={errors.password ? 'border-red-500' : ''}
+            className={errors.password ? "border-red-500" : ""}
           />
-          {errors.password && (
-            <p className="text-sm text-red-500">{errors.password}</p>
-          )}
+          {errors.password && <p className="text-sm text-red-500">{errors.password}</p>}
           <PasswordStrengthIndicator password={password} />
         </div>
 
@@ -195,15 +179,13 @@ export function Wave1SignUpForm({
               className="mt-1"
             />
             <span className="text-sm text-muted-foreground">
-              I agree to the{' '}
+              I agree to the{" "}
               <a href="/terms" className="text-primary hover:underline">
                 Terms of Service
               </a>
             </span>
           </label>
-          {errors.terms && (
-            <p className="text-sm text-red-500">{errors.terms}</p>
-          )}
+          {errors.terms && <p className="text-sm text-red-500">{errors.terms}</p>}
 
           <label className="flex items-start gap-2 cursor-pointer">
             <input
@@ -214,15 +196,13 @@ export function Wave1SignUpForm({
               className="mt-1"
             />
             <span className="text-sm text-muted-foreground">
-              I agree to the{' '}
+              I agree to the{" "}
               <a href="/privacy" className="text-primary hover:underline">
                 Privacy Policy
               </a>
             </span>
           </label>
-          {errors.privacy && (
-            <p className="text-sm text-red-500">{errors.privacy}</p>
-          )}
+          {errors.privacy && <p className="text-sm text-red-500">{errors.privacy}</p>}
         </div>
 
         {/* Submit Button */}
@@ -244,7 +224,7 @@ export function Wave1SignUpForm({
       {/* Info */}
       <div className="text-center text-sm text-muted-foreground">
         <p>
-          Already have an account?{' '}
+          Already have an account?{" "}
           <a href="/account/signin" className="text-primary hover:underline">
             Sign in here
           </a>

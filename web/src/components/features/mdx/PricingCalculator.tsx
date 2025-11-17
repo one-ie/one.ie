@@ -1,11 +1,11 @@
 "use client";
 
+import { DollarSign, TrendingUp } from "lucide-react";
 import { useState } from "react";
+import { Badge } from "@/components/ui/badge";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Label } from "@/components/ui/label";
 import { Slider } from "@/components/ui/slider";
-import { Badge } from "@/components/ui/badge";
-import { DollarSign, TrendingUp } from "lucide-react";
 
 interface PricingCalculatorProps {
   title?: string;
@@ -38,11 +38,11 @@ export function PricingCalculator({
   basePrice = 0,
   pricePerUnit = 0.01,
   unitName = "users",
-  maxUnits = 10000
+  maxUnits = 10000,
 }: PricingCalculatorProps) {
   const [units, setUnits] = useState([1000]);
 
-  const totalCost = basePrice + (units[0] * pricePerUnit);
+  const totalCost = basePrice + units[0] * pricePerUnit;
   const competitorCost = totalCost * 3; // Assume competitors 3x more expensive
   const savings = competitorCost - totalCost;
 
@@ -56,14 +56,13 @@ export function PricingCalculator({
           </CardTitle>
           <Badge variant="outline">Interactive</Badge>
         </div>
-        {description && (
-          <p className="text-sm text-muted-foreground mt-2">{description}</p>
-        )}
+        {description && <p className="text-sm text-muted-foreground mt-2">{description}</p>}
       </CardHeader>
       <CardContent className="space-y-6">
         <div>
           <Label className="text-base mb-4 block">
-            Number of {unitName}: <span className="font-bold text-primary">{units[0].toLocaleString()}</span>
+            Number of {unitName}:{" "}
+            <span className="font-bold text-primary">{units[0].toLocaleString()}</span>
           </Label>
           <Slider
             value={units}

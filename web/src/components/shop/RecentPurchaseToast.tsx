@@ -1,6 +1,6 @@
-import { useState, useEffect } from 'react';
-import { ShoppingBag, X } from 'lucide-react';
-import { motion, AnimatePresence } from 'framer-motion';
+import { AnimatePresence, motion } from "framer-motion";
+import { ShoppingBag, X } from "lucide-react";
+import { useEffect, useState } from "react";
 
 interface Purchase {
   name: string;
@@ -10,16 +10,41 @@ interface Purchase {
 }
 
 const mockPurchases: Purchase[] = [
-  { name: 'Sarah M.', location: 'New York, USA', timeAgo: '2 min ago', product: 'Chanel Coco Noir' },
-  { name: 'Michael R.', location: 'London, UK', timeAgo: '5 min ago', product: 'Chanel Coco Noir' },
-  { name: 'Emma W.', location: 'Tokyo, Japan', timeAgo: '8 min ago', product: 'Chanel Coco Noir' },
-  { name: 'Jessica L.', location: 'Paris, France', timeAgo: '12 min ago', product: 'Chanel Coco Noir' },
-  { name: 'David K.', location: 'Dubai, UAE', timeAgo: '15 min ago', product: 'Chanel Coco Noir' },
-  { name: 'Sophie T.', location: 'Singapore', timeAgo: '18 min ago', product: 'Chanel Coco Noir' },
-  { name: 'James P.', location: 'Los Angeles, USA', timeAgo: '22 min ago', product: 'Chanel Coco Noir' },
-  { name: 'Olivia B.', location: 'Miami, USA', timeAgo: '25 min ago', product: 'Chanel Coco Noir' },
-  { name: 'Lucas M.', location: 'Sydney, Australia', timeAgo: '30 min ago', product: 'Chanel Coco Noir' },
-  { name: 'Isabella R.', location: 'Barcelona, Spain', timeAgo: '35 min ago', product: 'Chanel Coco Noir' },
+  {
+    name: "Sarah M.",
+    location: "New York, USA",
+    timeAgo: "2 min ago",
+    product: "Chanel Coco Noir",
+  },
+  { name: "Michael R.", location: "London, UK", timeAgo: "5 min ago", product: "Chanel Coco Noir" },
+  { name: "Emma W.", location: "Tokyo, Japan", timeAgo: "8 min ago", product: "Chanel Coco Noir" },
+  {
+    name: "Jessica L.",
+    location: "Paris, France",
+    timeAgo: "12 min ago",
+    product: "Chanel Coco Noir",
+  },
+  { name: "David K.", location: "Dubai, UAE", timeAgo: "15 min ago", product: "Chanel Coco Noir" },
+  { name: "Sophie T.", location: "Singapore", timeAgo: "18 min ago", product: "Chanel Coco Noir" },
+  {
+    name: "James P.",
+    location: "Los Angeles, USA",
+    timeAgo: "22 min ago",
+    product: "Chanel Coco Noir",
+  },
+  { name: "Olivia B.", location: "Miami, USA", timeAgo: "25 min ago", product: "Chanel Coco Noir" },
+  {
+    name: "Lucas M.",
+    location: "Sydney, Australia",
+    timeAgo: "30 min ago",
+    product: "Chanel Coco Noir",
+  },
+  {
+    name: "Isabella R.",
+    location: "Barcelona, Spain",
+    timeAgo: "35 min ago",
+    product: "Chanel Coco Noir",
+  },
 ];
 
 export function RecentPurchaseToast() {
@@ -44,7 +69,7 @@ export function RecentPurchaseToast() {
       clearTimeout(hideTimer);
       clearTimeout(showTimer);
     };
-  }, [currentIndex, isDismissed]);
+  }, [isDismissed]);
 
   const currentPurchase = mockPurchases[currentIndex];
 
@@ -58,7 +83,7 @@ export function RecentPurchaseToast() {
             initial={{ opacity: 0, x: 100 }}
             animate={{ opacity: 1, x: 0 }}
             exit={{ opacity: 0, x: 100 }}
-            transition={{ duration: 0.3, ease: 'easeOut' }}
+            transition={{ duration: 0.3, ease: "easeOut" }}
             className="pointer-events-auto bg-white dark:bg-black border-2 border-black dark:border-white shadow-2xl max-w-[280px] md:max-w-sm"
           >
             <div className="flex items-start gap-3 md:gap-4 p-3 md:p-5">
@@ -66,18 +91,14 @@ export function RecentPurchaseToast() {
                 <ShoppingBag className="w-5 h-5" />
               </div>
               <div className="flex-1 min-w-0">
-                <p className="text-xs font-bold tracking-[0.2em] uppercase mb-2">
-                  Recent Purchase
-                </p>
+                <p className="text-xs font-bold tracking-[0.2em] uppercase mb-2">Recent Purchase</p>
                 <p className="text-sm font-medium tracking-wide truncate">
                   {currentPurchase.name} from {currentPurchase.location}
                 </p>
                 <p className="text-xs tracking-wide mt-1 opacity-60">
                   Purchased {currentPurchase.product}
                 </p>
-                <p className="text-xs tracking-wide mt-1 opacity-40">
-                  {currentPurchase.timeAgo}
-                </p>
+                <p className="text-xs tracking-wide mt-1 opacity-40">{currentPurchase.timeAgo}</p>
               </div>
               <button
                 onClick={() => setIsDismissed(true)}

@@ -1,7 +1,7 @@
+import { Check, Copy } from "lucide-react";
 import { useState } from "react";
-import { Copy, Check } from "lucide-react";
-import { Button } from "@/components/ui/button";
 import { toast } from "sonner";
+import { Button } from "@/components/ui/button";
 
 interface CopyButtonProps {
   text: string;
@@ -9,11 +9,7 @@ interface CopyButtonProps {
   children?: React.ReactNode;
 }
 
-export function CopyButton({
-  text,
-  className = "",
-  children,
-}: CopyButtonProps) {
+export function CopyButton({ text, className = "", children }: CopyButtonProps) {
   const [copied, setCopied] = useState(false);
 
   const handleCopy = async () => {
@@ -48,9 +44,7 @@ export function CopyButton({
       className={`focus-visible:ring-2 focus-visible:ring-primary/50 focus-visible:ring-offset-2 ${className}`}
       size="lg"
       variant={copied ? "default" : "outline"}
-      aria-label={
-        copied ? "Prompt copied to clipboard" : "Copy prompt to clipboard"
-      }
+      aria-label={copied ? "Prompt copied to clipboard" : "Copy prompt to clipboard"}
     >
       {children ? (
         children

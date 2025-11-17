@@ -1,5 +1,5 @@
-import { useState } from 'react';
-import { Play, Pause } from 'lucide-react';
+import { Pause, Play } from "lucide-react";
+import { useState } from "react";
 
 export function MotionDemo() {
   const [isAnimating, setIsAnimating] = useState(false);
@@ -46,9 +46,9 @@ export function MotionDemo() {
           <div className="flex-1 rounded-md bg-muted p-2">
             <div
               className={`h-2 rounded-full bg-primary transition-none ${
-                isAnimating ? 'translate-x-full' : 'translate-x-0'
+                isAnimating ? "translate-x-full" : "translate-x-0"
               }`}
-              style={{ width: '40px' }}
+              style={{ width: "40px" }}
             />
           </div>
           <span className="w-12 text-xs text-muted-foreground">0ms</span>
@@ -60,9 +60,9 @@ export function MotionDemo() {
           <div className="flex-1 rounded-md bg-muted p-2">
             <div
               className={`h-2 rounded-full bg-primary transition-all duration-150 ease-in-out ${
-                isAnimating ? 'translate-x-full' : 'translate-x-0'
+                isAnimating ? "translate-x-full" : "translate-x-0"
               }`}
-              style={{ width: '40px' }}
+              style={{ width: "40px" }}
             />
           </div>
           <span className="w-12 text-xs text-muted-foreground">150ms</span>
@@ -74,9 +74,9 @@ export function MotionDemo() {
           <div className="flex-1 rounded-md bg-muted p-2">
             <div
               className={`h-2 rounded-full bg-primary transition-all duration-300 ease-in-out ${
-                isAnimating ? 'translate-x-full' : 'translate-x-0'
+                isAnimating ? "translate-x-full" : "translate-x-0"
               }`}
-              style={{ width: '40px' }}
+              style={{ width: "40px" }}
             />
           </div>
           <span className="w-12 text-xs text-muted-foreground">300ms</span>
@@ -88,9 +88,9 @@ export function MotionDemo() {
           <div className="flex-1 rounded-md bg-muted p-2">
             <div
               className={`h-2 rounded-full bg-primary transition-all duration-500 ease-in-out ${
-                isAnimating ? 'translate-x-full' : 'translate-x-0'
+                isAnimating ? "translate-x-full" : "translate-x-0"
               }`}
-              style={{ width: '40px' }}
+              style={{ width: "40px" }}
             />
           </div>
           <span className="w-12 text-xs text-muted-foreground">500ms</span>

@@ -19,5 +19,5 @@ export function SiteHeader({ user }: SiteHeaderProps) {
         </div>
       </div>
     </header>
-  )
+  );
 }

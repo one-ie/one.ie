@@ -9,17 +9,17 @@
  * - 33% conversion rate vs 2.1% traditional (new)
  */
 
-import { useState, useRef, useEffect } from 'react';
-import { PurchaseIntent } from './chat/PurchaseIntent';
-import { AddressForm } from './chat/AddressForm';
-import { ShippingOptions } from './chat/ShippingOptions';
-import { OrderSummary } from './chat/OrderSummary';
-import { PaymentProcessor } from './chat/PaymentProcessor';
-import { OrderConfirmation } from './chat/OrderConfirmation';
+import { useEffect, useRef, useState } from "react";
+import { AddressForm } from "./chat/AddressForm";
+import { OrderConfirmation } from "./chat/OrderConfirmation";
+import { OrderSummary } from "./chat/OrderSummary";
+import { PaymentProcessor } from "./chat/PaymentProcessor";
+import { PurchaseIntent } from "./chat/PurchaseIntent";
+import { ShippingOptions } from "./chat/ShippingOptions";
 
 interface Message {
   id: string;
-  role: 'user' | 'assistant';
+  role: "user" | "assistant";
   content: string;
   timestamp: Date;
   showAddToCart?: boolean;
@@ -38,19 +38,19 @@ interface ProductContext {
 }
 
 type CheckoutState =
-  | 'idle'
-  | 'intent_detected'
-  | 'collecting_address'
-  | 'selecting_shipping'
-  | 'reviewing_order'
-  | 'processing_payment'
-  | 'completed';
+  | "idle"
+  | "intent_detected"
+  | "collecting_address"
+  | "selecting_shipping"
+  | "reviewing_order"
+  | "processing_payment"
+  | "completed";
 
 interface CheckoutSession {
   id: string;
   status: string;
   totals: Array<{
-    type: 'subtotal' | 'shipping' | 'tax' | 'total';
+    type: "subtotal" | "shipping" | "tax" | "total";
     label: string;
     amount: number;
   }>;
@@ -69,18 +69,18 @@ interface CheckoutSession {
 export function ProductChatAssistantEnhanced() {
   const [messages, setMessages] = useState<Message[]>([
     {
-      id: '1',
-      role: 'assistant',
+      id: "1",
+      role: "assistant",
       content:
         "Hi! I'm your AI shopping assistant with instant checkout. I can answer questions about this product AND help you complete your purchase right here in chat. What would you like to know?",
       timestamp: new Date(),
     },
   ]);
 
-  const [input, setInput] = useState('');
+  const [input, setInput] = useState("");
   const [isLoading, setIsLoading] = useState(false);
   const [productContext, setProductContext] = useState<ProductContext | null>(null);
-  const [checkoutState, setCheckoutState] = useState<CheckoutState>('idle');
+  const [checkoutState, setCheckoutState] = useState<CheckoutState>("idle");
   const [checkoutSession, setCheckoutSession] = useState<CheckoutSession | null>(null);
   const [orderId, setOrderId] = useState<string | null>(null);
   const [paymentIntentId, setPaymentIntentId] = useState<string | null>(null);
@@ -90,18 +90,18 @@ export function ProductChatAssistantEnhanced() {
 
   // Suggested questions (enhanced with purchase prompts)
   const suggestedQuestions = [
-    'Tell me about this fragrance',
-    'How long does it last?',
-    'Is this a good gift?',
-    'I want to buy this now', // Triggers checkout
+    "Tell me about this fragrance",
+    "How long does it last?",
+    "Is this a good gift?",
+    "I want to buy this now", // Triggers checkout
     "What's included in the box?",
-    'Buy with instant checkout', // Triggers checkout
+    "Buy with instant checkout", // Triggers checkout
   ];
 
   // Extract product context from the page
   useEffect(() => {
     try {
-      const title = document.querySelector('h1')?.textContent || '';
+      const title = document.querySelector("h1")?.textContent || "";
 
       let price = 0;
       const priceElements = document.querySelectorAll(
@@ -109,7 +109,7 @@ export function ProductChatAssistantEnhanced() {
       );
 
       for (const el of Array.from(priceElements)) {
-        const val = parseFloat(el.textContent?.replace(/[^0-9.]/g, '') || '0');
+        const val = parseFloat(el.textContent?.replace(/[^0-9.]/g, "") || "0");
         if (val > 10 && price === 0) {
           price = val;
           break;
@@ -117,30 +117,29 @@ export function ProductChatAssistantEnhanced() {
       }
 
       const descriptionElement = document.querySelector('p[class*="leading-relaxed"]');
-      const description = descriptionElement?.textContent || '';
+      const description = descriptionElement?.textContent || "";
 
       const categoryElement = document.querySelector('[class*="tracking"][class*="uppercase"]');
-      const category = categoryElement?.textContent || '';
+      const category = categoryElement?.textContent || "";
 
-      let brand = '';
-      const brandSpec = Array.from(document.querySelectorAll('span')).find((el) =>
-        el.textContent?.toLowerCase().includes('brand')
+      let brand = "";
+      const brandSpec = Array.from(document.querySelectorAll("span")).find((el) =>
+        el.textContent?.toLowerCase().includes("brand")
       );
       if (brandSpec) {
-        brand = brandSpec.nextElementSibling?.textContent || '';
+        brand = brandSpec.nextElementSibling?.textContent || "";
       } else {
         const brandMatch = title.match(/^([A-Z][a-z]+)/);
-        brand = brandMatch ? brandMatch[1] : 'Brand';
+        brand = brandMatch ? brandMatch[1] : "Brand";
       }
 
       let stock = 0;
-      const stockText = Array.from(document.querySelectorAll('*')).find(
-        (el) =>
-          el.textContent?.includes('units available') || el.textContent?.includes('stock')
+      const stockText = Array.from(document.querySelectorAll("*")).find(
+        (el) => el.textContent?.includes("units available") || el.textContent?.includes("stock")
       );
       if (stockText) {
         const stockMatch = stockText.textContent?.match(/(\d+)\s*units?/i);
-        stock = stockMatch ? parseInt(stockMatch[1]) : 0;
+        stock = stockMatch ? parseInt(stockMatch[1], 10) : 0;
       }
 
       const features: string[] = [];
@@ -154,10 +153,10 @@ export function ProductChatAssistantEnhanced() {
       const imageElement = document.querySelector(
         'img[alt*="product" i], img[src*="product" i], main img, article img'
       );
-      const image = imageElement?.getAttribute('src') || '';
+      const image = imageElement?.getAttribute("src") || "";
 
       setProductContext({
-        id: 'chanel-coco-noir', // Static for now, could be dynamic
+        id: "chanel-coco-noir", // Static for now, could be dynamic
         title,
         price,
         description,
@@ -168,7 +167,7 @@ export function ProductChatAssistantEnhanced() {
         image,
       });
     } catch (error) {
-      console.error('Error extracting product context:', error);
+      console.error("Error extracting product context:", error);
     }
   }, []);
 
@@ -177,21 +176,21 @@ export function ProductChatAssistantEnhanced() {
     if (scrollRef.current) {
       scrollRef.current.scrollTop = scrollRef.current.scrollHeight;
     }
-  }, [messages, checkoutState]);
+  }, []);
 
   // Detect purchase intent
   const detectPurchaseIntent = (text: string): boolean => {
     const buyKeywords = [
-      'buy',
-      'purchase',
-      'order',
-      'checkout',
-      'cart',
-      'get it',
-      'want it',
-      'take it',
-      'ship to me',
-      'instant checkout',
+      "buy",
+      "purchase",
+      "order",
+      "checkout",
+      "cart",
+      "get it",
+      "want it",
+      "take it",
+      "ship to me",
+      "instant checkout",
     ];
     const lowerText = text.toLowerCase();
     return buyKeywords.some((keyword) => lowerText.includes(keyword));
@@ -203,25 +202,25 @@ export function ProductChatAssistantEnhanced() {
 
     const userMessage: Message = {
       id: Date.now().toString(),
-      role: 'user',
+      role: "user",
       content: text,
       timestamp: new Date(),
     };
 
     setMessages((prev) => [...prev, userMessage]);
-    setInput('');
+    setInput("");
     setIsLoading(true);
 
     // Check for purchase intent
     const isPurchaseIntent = detectPurchaseIntent(text);
 
-    if (isPurchaseIntent && productContext && checkoutState === 'idle') {
+    if (isPurchaseIntent && productContext && checkoutState === "idle") {
       // Trigger checkout flow
-      setCheckoutState('intent_detected');
+      setCheckoutState("intent_detected");
 
       const aiResponse: Message = {
         id: (Date.now() + 1).toString(),
-        role: 'assistant',
+        role: "assistant",
         content:
           "Perfect! I can help you complete your purchase right here. Let's get started with instant checkout. Click the button below to begin.",
         timestamp: new Date(),
@@ -236,8 +235,8 @@ export function ProductChatAssistantEnhanced() {
       // Build system prompt with product context
       const featuresText =
         productContext?.features && productContext.features.length > 0
-          ? `\nKey Features:\n${productContext.features.map((f) => `- ${f}`).join('\n')}`
-          : '';
+          ? `\nKey Features:\n${productContext.features.map((f) => `- ${f}`).join("\n")}`
+          : "";
 
       const systemPrompt = productContext
         ? `You are a helpful shopping assistant for an e-commerce store with INSTANT CHECKOUT capability. You're currently helping a customer who is viewing this product:
@@ -256,46 +255,45 @@ Returns: 90-day money-back guarantee
 Warranty: 3-year premium coverage
 
 Be friendly, knowledgeable, and concise.`
-        : 'You are a helpful shopping assistant. Answer questions about products and help customers make informed decisions.';
+        : "You are a helpful shopping assistant. Answer questions about products and help customers make informed decisions.";
 
-      const response = await fetch('/api/product-chat', {
-        method: 'POST',
+      const response = await fetch("/api/product-chat", {
+        method: "POST",
         headers: {
-          'Content-Type': 'application/json',
+          "Content-Type": "application/json",
         },
         body: JSON.stringify({
           messages: [
-            { role: 'system', content: systemPrompt },
+            { role: "system", content: systemPrompt },
             ...messages.map((m) => ({ role: m.role, content: m.content })),
-            { role: 'user', content: text },
+            { role: "user", content: text },
           ],
-          model: 'google/gemini-2.5-flash-lite',
+          model: "google/gemini-2.5-flash-lite",
         }),
       });
 
       if (!response.ok) {
-        throw new Error('Failed to get AI response');
+        throw new Error("Failed to get AI response");
       }
 
       const data = await response.json();
       const aiContent =
-        data.choices?.[0]?.message?.content ||
-        'Sorry, I encountered an error. Please try again.';
+        data.choices?.[0]?.message?.content || "Sorry, I encountered an error. Please try again.";
 
       const aiResponse: Message = {
         id: (Date.now() + 1).toString(),
-        role: 'assistant',
+        role: "assistant",
         content: aiContent,
         timestamp: new Date(),
       };
 
       setMessages((prev) => [...prev, aiResponse]);
     } catch (error) {
-      console.error('Chat error:', error);
+      console.error("Chat error:", error);
 
       const aiResponse: Message = {
         id: (Date.now() + 1).toString(),
-        role: 'assistant',
+        role: "assistant",
         content: generateResponse(text, productContext),
         timestamp: new Date(),
       };
@@ -307,7 +305,7 @@ Be friendly, knowledgeable, and concise.`
   };
 
   const handleSessionCreated = async (sessionId: string) => {
-    setCheckoutState('collecting_address');
+    setCheckoutState("collecting_address");
 
     // Fetch session details
     try {
@@ -322,12 +320,12 @@ Be friendly, knowledgeable, and concise.`
         setCheckoutSession(session);
       }
     } catch (error) {
-      console.error('Failed to fetch session:', error);
+      console.error("Failed to fetch session:", error);
     }
 
     const aiResponse: Message = {
       id: Date.now().toString(),
-      role: 'assistant',
+      role: "assistant",
       content: "Great! Now I just need your shipping address to calculate shipping and tax.",
       timestamp: new Date(),
     };
@@ -336,17 +334,16 @@ Be friendly, knowledgeable, and concise.`
   };
 
   const handleAddressSubmitted = (updatedSession: any) => {
-    console.log('[ProductChat] Address submitted, updated session:', updatedSession);
+    console.log("[ProductChat] Address submitted, updated session:", updatedSession);
 
     // Update the checkout session with the new data (including fulfillment_options)
     setCheckoutSession(updatedSession);
-    setCheckoutState('selecting_shipping');
+    setCheckoutState("selecting_shipping");
 
     const aiResponse: Message = {
       id: Date.now().toString(),
-      role: 'assistant',
-      content:
-        'Perfect! Address saved. Now please select your preferred shipping method below.',
+      role: "assistant",
+      content: "Perfect! Address saved. Now please select your preferred shipping method below.",
       timestamp: new Date(),
     };
 
@@ -354,11 +351,11 @@ Be friendly, knowledgeable, and concise.`
   };
 
   const handleShippingSelected = () => {
-    setCheckoutState('reviewing_order');
+    setCheckoutState("reviewing_order");
 
     const aiResponse: Message = {
       id: Date.now().toString(),
-      role: 'assistant',
+      role: "assistant",
       content:
         "Excellent choice! Here's your order summary. When you're ready, proceed to payment.",
       timestamp: new Date(),
@@ -372,11 +369,11 @@ Be friendly, knowledgeable, and concise.`
     if (newPaymentIntentId) {
       setPaymentIntentId(newPaymentIntentId);
     }
-    setCheckoutState('completed');
+    setCheckoutState("completed");
 
     const aiResponse: Message = {
       id: Date.now().toString(),
-      role: 'assistant',
+      role: "assistant",
       content: `🎉 Success! Your order has been confirmed. Order #${newOrderId} is on its way!`,
       timestamp: new Date(),
     };
@@ -389,7 +386,7 @@ Be friendly, knowledgeable, and concise.`
   };
 
   const handleKeyPress = (e: React.KeyboardEvent) => {
-    if (e.key === 'Enter' && !e.shiftKey) {
+    if (e.key === "Enter" && !e.shiftKey) {
       e.preventDefault();
       handleSend();
     }
@@ -402,25 +399,25 @@ Be friendly, knowledgeable, and concise.`
       </div>
 
       {/* Messages Area */}
-      <div ref={scrollRef} className="flex-1 overflow-y-auto p-4">
-        <div className="space-y-4">
+      <div ref={scrollRef} className="flex-1 overflow-y-auto p-2 md:p-4">
+        <div className="space-y-3 md:space-y-4">
           {messages.map((message) => (
             <div key={message.id}>
-              <div
-                className={`flex ${message.role === 'user' ? 'justify-end' : 'justify-start'}`}
-              >
+              <div className={`flex ${message.role === "user" ? "justify-end" : "justify-start"}`}>
                 <div
-                  className={`max-w-[85%] border-2 p-3 ${
-                    message.role === 'user'
-                      ? 'border-black dark:border-white bg-black dark:bg-white text-white dark:text-black'
-                      : 'border-black/20 dark:border-white/20 bg-white dark:bg-black'
+                  className={`max-w-[90%] md:max-w-[85%] border-2 p-2 md:p-3 ${
+                    message.role === "user"
+                      ? "border-black dark:border-white bg-black dark:bg-white text-white dark:text-black"
+                      : "border-black/20 dark:border-white/20 bg-white dark:bg-black"
                   }`}
                 >
-                  <p className="text-sm leading-relaxed whitespace-pre-wrap">{message.content}</p>
-                  <p className="text-xs opacity-60 mt-2 tracking-wide">
+                  <p className="text-xs md:text-sm leading-relaxed whitespace-pre-wrap">
+                    {message.content}
+                  </p>
+                  <p className="text-[10px] md:text-xs opacity-60 mt-1 md:mt-2 tracking-wide">
                     {message.timestamp.toLocaleTimeString([], {
-                      hour: '2-digit',
-                      minute: '2-digit',
+                      hour: "2-digit",
+                      minute: "2-digit",
                     })}
                   </p>
                 </div>
@@ -429,9 +426,9 @@ Be friendly, knowledgeable, and concise.`
           ))}
 
           {/* Checkout Flow Components */}
-          {checkoutState === 'intent_detected' && productContext && (
+          {checkoutState === "intent_detected" && productContext && (
             <div className="flex justify-start">
-              <div className="max-w-[85%]">
+              <div className="w-full md:max-w-[85%]">
                 <PurchaseIntent
                   productId={productContext.id}
                   productName={productContext.title}
@@ -442,9 +439,9 @@ Be friendly, knowledgeable, and concise.`
             </div>
           )}
 
-          {checkoutState === 'collecting_address' && checkoutSession && (
+          {checkoutState === "collecting_address" && checkoutSession && (
             <div className="flex justify-start">
-              <div className="max-w-[85%]">
+              <div className="w-full md:max-w-[85%]">
                 <AddressForm
                   sessionId={checkoutSession.id}
                   onAddressSubmitted={handleAddressSubmitted}
@@ -453,11 +450,11 @@ Be friendly, knowledgeable, and concise.`
             </div>
           )}
 
-          {checkoutState === 'selecting_shipping' &&
+          {checkoutState === "selecting_shipping" &&
             checkoutSession &&
             checkoutSession.fulfillment_options && (
               <div className="flex justify-start">
-                <div className="max-w-[85%]">
+                <div className="w-full md:max-w-[85%]">
                   <ShippingOptions
                     sessionId={checkoutSession.id}
                     options={checkoutSession.fulfillment_options}
@@ -467,24 +464,22 @@ Be friendly, knowledgeable, and concise.`
               </div>
             )}
 
-          {checkoutState === 'reviewing_order' && checkoutSession && (
+          {checkoutState === "reviewing_order" && checkoutSession && (
             <div className="flex justify-start">
-              <div className="max-w-[85%] space-y-3">
+              <div className="w-full md:max-w-[85%] space-y-2 md:space-y-3">
                 <OrderSummary totals={checkoutSession.totals} currency={checkoutSession.currency} />
                 <PaymentProcessor
                   sessionId={checkoutSession.id}
-                  totalAmount={
-                    checkoutSession.totals.find((t) => t.type === 'total')?.amount || 0
-                  }
+                  totalAmount={checkoutSession.totals.find((t) => t.type === "total")?.amount || 0}
                   onPaymentComplete={handlePaymentComplete}
                 />
               </div>
             </div>
           )}
 
-          {checkoutState === 'completed' && orderId && (
+          {checkoutState === "completed" && orderId && (
             <div className="flex justify-start">
-              <div className="max-w-[85%]">
+              <div className="w-full md:max-w-[85%]">
                 <OrderConfirmation
                   orderId={orderId}
                   orderUrl={`https://one.ie/orders/${orderId}`}
@@ -522,16 +517,16 @@ Be friendly, knowledgeable, and concise.`
 
       {/* Suggested Questions */}
       {messages.length === 1 && (
-        <div className="border-t border-black dark:border-white p-4 flex-shrink-0">
-          <p className="text-xs font-bold tracking-[0.2em] uppercase mb-3 opacity-60">
+        <div className="border-t border-black dark:border-white p-2 md:p-4 flex-shrink-0">
+          <p className="text-[10px] md:text-xs font-bold tracking-[0.2em] uppercase mb-2 md:mb-3 opacity-60">
             Suggested questions:
           </p>
-          <div className="flex flex-wrap gap-2">
+          <div className="flex flex-wrap gap-1.5 md:gap-2">
             {suggestedQuestions.map((question, index) => (
               <button
                 key={index}
                 onClick={() => handleSuggestionClick(question)}
-                className="text-xs border border-black dark:border-white px-3 py-2 hover:bg-black/5 dark:hover:bg-white/5 transition-colors"
+                className="text-[10px] md:text-xs border border-black dark:border-white px-2 md:px-3 py-1.5 md:py-2 hover:bg-black/5 dark:hover:bg-white/5 transition-colors"
               >
                 {question}
               </button>
@@ -541,23 +536,28 @@ Be friendly, knowledgeable, and concise.`
       )}
 
       {/* Input Area - Fixed at Bottom */}
-      <div className="border-t-2 border-black dark:border-white p-4 flex-shrink-0 bg-white dark:bg-black">
-        <div className="flex gap-2">
+      <div className="border-t-2 border-black dark:border-white p-2 md:p-4 flex-shrink-0 bg-white dark:bg-black">
+        <div className="flex gap-1.5 md:gap-2">
           <input
             ref={inputRef}
             value={input}
             onChange={(e) => setInput(e.target.value)}
             onKeyPress={handleKeyPress}
-            placeholder="Ask about this product or say 'buy now'..."
-            className="flex-1 border-2 border-black dark:border-white bg-transparent px-4 py-3 text-sm focus:outline-none focus:border-black dark:focus:border-white"
+            placeholder="Ask or say 'buy now'..."
+            className="flex-1 border-2 border-black dark:border-white bg-transparent px-2 md:px-4 py-2 md:py-3 text-xs md:text-sm focus:outline-none focus:border-black dark:focus:border-white"
             disabled={isLoading}
           />
           <button
             onClick={() => handleSend()}
             disabled={!input.trim() || isLoading}
-            className="border-2 border-black dark:border-white bg-black dark:bg-white text-white dark:text-black px-4 py-3 hover:opacity-80 transition-opacity disabled:opacity-50"
+            className="border-2 border-black dark:border-white bg-black dark:bg-white text-white dark:text-black px-2 md:px-4 py-2 md:py-3 hover:opacity-80 transition-opacity disabled:opacity-50"
           >
-            <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <svg
+              className="w-4 h-4 md:w-5 md:h-5"
+              fill="none"
+              stroke="currentColor"
+              viewBox="0 0 24 24"
+            >
               <path
                 strokeLinecap="round"
                 strokeLinejoin="round"
@@ -567,7 +567,7 @@ Be friendly, knowledgeable, and concise.`
             </svg>
           </button>
         </div>
-        <p className="text-xs opacity-60 mt-2 tracking-wide">
+        <p className="text-[10px] md:text-xs opacity-60 mt-1 md:mt-2 tracking-wide hidden md:block">
           Press Enter to send • Say "buy now" for instant checkout
         </p>
       </div>
@@ -583,16 +583,16 @@ function generateResponse(question: string, context: ProductContext | null): str
     return "I'm still loading the product details. Please try again in a moment.";
   }
 
-  if (lowerQuestion.includes('last') || lowerQuestion.includes('longevity')) {
-    return 'As an Eau de Parfum, this fragrance typically lasts 8-10 hours on the skin. The rich base notes of sandalwood provide excellent staying power.';
+  if (lowerQuestion.includes("last") || lowerQuestion.includes("longevity")) {
+    return "As an Eau de Parfum, this fragrance typically lasts 8-10 hours on the skin. The rich base notes of sandalwood provide excellent staying power.";
   }
 
-  if (lowerQuestion.includes('ship') || lowerQuestion.includes('delivery')) {
-    return 'We offer free worldwide shipping on all orders! Your order will be carefully packaged and typically ships within 24 hours. You will receive tracking information once it is dispatched.';
+  if (lowerQuestion.includes("ship") || lowerQuestion.includes("delivery")) {
+    return "We offer free worldwide shipping on all orders! Your order will be carefully packaged and typically ships within 24 hours. You will receive tracking information once it is dispatched.";
   }
 
-  if (lowerQuestion.includes('return') || lowerQuestion.includes('refund')) {
-    return 'We have a generous 90-day money-back guarantee. If you are not completely satisfied with your purchase, you can return it for a full refund within 90 days of delivery.';
+  if (lowerQuestion.includes("return") || lowerQuestion.includes("refund")) {
+    return "We have a generous 90-day money-back guarantee. If you are not completely satisfied with your purchase, you can return it for a full refund within 90 days of delivery.";
   }
 
   return `That is a great question about ${context.title}! This ${context.brand} ${context.category.toLowerCase()} is priced at $${context.price.toFixed(2)} and features ${context.description}. Want to buy it? Just say "buy now" for instant checkout!`;

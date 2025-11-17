@@ -4,8 +4,8 @@ export interface Product {
   description: string;
   price: number;
   salePrice?: number;
-  category: 'men' | 'women' | 'unisex';
-  subcategory: 'tops' | 'bottoms' | 'outerwear' | 'accessories' | 'shoes';
+  category: "men" | "women" | "unisex";
+  subcategory: "tops" | "bottoms" | "outerwear" | "accessories" | "shoes";
   sizes: string[];
   colors: string[];
   images: string[];

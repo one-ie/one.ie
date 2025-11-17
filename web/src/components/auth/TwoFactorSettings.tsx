@@ -1,31 +1,27 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import { useState, useEffect } from "react";
-import { Button } from "@/components/ui/button";
-import { Input } from "@/components/ui/input";
-import { Label } from "@/components/ui/label";
-import { toast } from "sonner";
-import {
-  Card,
-  CardContent,
-  CardDescription,
-  CardHeader,
-  CardTitle,
-} from "@/components/ui/card";
-import { Alert, AlertDescription } from "@/components/ui/alert";
-import { Shield, Key, Copy, CheckCircle2 } from "lucide-react";
+
 import { ConvexHttpClient } from "convex/browser";
+import { CheckCircle2, Copy, Key, Shield } from "lucide-react";
 import * as OTPAuth from "otpauth";
 import QRCode from "qrcode";
+import { useEffect, useState } from "react";
+import { toast } from "sonner";
+import { Alert, AlertDescription } from "@/components/ui/alert";
+import { Button } from "@/components/ui/button";
+import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
+import { Input } from "@/components/ui/input";
+import { Label } from "@/components/ui/label";
 
 const convex = new ConvexHttpClient(
-  import.meta.env.PUBLIC_CONVEX_URL || import.meta.env.NEXT_PUBLIC_CONVEX_URL,
+  import.meta.env.PUBLIC_CONVEX_URL || import.meta.env.NEXT_PUBLIC_CONVEX_URL
 );
 
 export function TwoFactorSettings() {
   const [loading, setLoading] = useState(false);
-  const [status, setStatus] = useState<{ enabled: boolean; hasSetup: boolean }>(
-    { enabled: false, hasSetup: false },
-  );
+  const [status, setStatus] = useState<{ enabled: boolean; hasSetup: boolean }>({
+    enabled: false,
+    hasSetup: false,
+  });
   const [showSetup, setShowSetup] = useState(false);
   const [secret, setSecret] = useState("");
   const [backupCodes, setBackupCodes] = useState<string[]>([]);
@@ -35,7 +31,7 @@ export function TwoFactorSettings() {
 
   useEffect(() => {
     loadStatus();
-  }, []);
+  }, [loadStatus]);
 
   const loadStatus = async () => {
     try {
@@ -75,9 +71,7 @@ export function TwoFactorSettings() {
         algorithm: "SHA1",
         digits: 6,
         period: 30,
-        secret: OTPAuth.Secret.fromBase32(
-          result.secret.toUpperCase().padEnd(32, "A"),
-        ),
+        secret: OTPAuth.Secret.fromBase32(result.secret.toUpperCase().padEnd(32, "A")),
       });
 
       const uri = totp.toString();
@@ -133,8 +127,7 @@ export function TwoFactorSettings() {
       await convex.mutation("auth:verify2FA" as any, { token });
 
       toast.success("2FA enabled!", {
-        description:
-          "Two-factor authentication has been enabled for your account",
+        description: "Two-factor authentication has been enabled for your account",
       });
 
       setShowSetup(false);
@@ -190,25 +183,21 @@ export function TwoFactorSettings() {
       <Card>
         <CardHeader>
           <CardTitle>Setup Two-Factor Authentication</CardTitle>
-          <CardDescription>
-            Scan the QR code with your authenticator app
-          </CardDescription>
+          <CardDescription>Scan the QR code with your authenticator app</CardDescription>
         </CardHeader>
         <CardContent className="space-y-4">
           <Alert>
             <Shield className="h-4 w-4" />
             <AlertDescription>
-              Download an authenticator app like Google Authenticator, Authy, or
-              1Password before continuing.
+              Download an authenticator app like Google Authenticator, Authy, or 1Password before
+              continuing.
             </AlertDescription>
           </Alert>
 
           <div className="space-y-2">
             <Label>1. Scan QR Code</Label>
             <div className="flex justify-center p-4 bg-white rounded-lg">
-              {qrCodeUrl && (
-                <img src={qrCodeUrl} alt="QR Code" className="w-48 h-48" />
-              )}
+              {qrCodeUrl && <img src={qrCodeUrl} alt="QR Code" className="w-48 h-48" />}
             </div>
           </div>
 
@@ -216,11 +205,7 @@ export function TwoFactorSettings() {
             <Label>Or enter this key manually:</Label>
             <div className="flex gap-2">
               <Input value={secret} readOnly className="font-mono" />
-              <Button
-                variant="outline"
-                size="icon"
-                onClick={() => copyToClipboard(secret)}
-              >
+              <Button variant="outline" size="icon" onClick={() => copyToClipboard(secret)}>
                 <Copy className="h-4 w-4" />
               </Button>
             </div>
@@ -231,19 +216,15 @@ export function TwoFactorSettings() {
             <Alert className="border-yellow-500/50 bg-yellow-500/10">
               <Key className="h-4 w-4 text-yellow-500" />
               <AlertDescription>
-                Save these backup codes in a safe place. You can use them to
-                access your account if you lose your device.
+                Save these backup codes in a safe place. You can use them to access your account if
+                you lose your device.
               </AlertDescription>
             </Alert>
             <div className="grid grid-cols-2 gap-2 p-4 bg-muted rounded-lg font-mono text-sm">
               {backupCodes.map((code, i) => (
                 <div key={i} className="flex items-center justify-between">
                   <span>{code}</span>
-                  <Button
-                    variant="ghost"
-                    size="sm"
-                    onClick={() => copyToClipboard(code)}
-                  >
+                  <Button variant="ghost" size="sm" onClick={() => copyToClipboard(code)}>
                     <Copy className="h-3 w-3" />
                   </Button>
                 </div>
@@ -263,10 +244,7 @@ export function TwoFactorSettings() {
           </div>
 
           <div className="flex gap-2">
-            <Button
-              onClick={handleVerify}
-              disabled={loading || !verificationCode}
-            >
+            <Button onClick={handleVerify} disabled={loading || !verificationCode}>
               {loading ? "Verifying..." : "Enable 2FA"}
             </Button>
             <Button variant="outline" onClick={() => setShowSetup(false)}>
@@ -282,9 +260,7 @@ export function TwoFactorSettings() {
     <Card>
       <CardHeader>
         <CardTitle>Two-Factor Authentication</CardTitle>
-        <CardDescription>
-          Add an extra layer of security to your account
-        </CardDescription>
+        <CardDescription>Add an extra layer of security to your account</CardDescription>
       </CardHeader>
       <CardContent className="space-y-4">
         {status.enabled ? (
@@ -292,15 +268,12 @@ export function TwoFactorSettings() {
             <Alert className="border-green-500/50 bg-green-500/10">
               <CheckCircle2 className="h-4 w-4 text-green-500" />
               <AlertDescription>
-                Two-factor authentication is <strong>enabled</strong> for your
-                account.
+                Two-factor authentication is <strong>enabled</strong> for your account.
               </AlertDescription>
             </Alert>
 
             <div className="space-y-2">
-              <Label htmlFor="disablePassword">
-                Enter password to disable 2FA
-              </Label>
+              <Label htmlFor="disablePassword">Enter password to disable 2FA</Label>
               <Input
                 id="disablePassword"
                 type="password"
@@ -323,8 +296,8 @@ export function TwoFactorSettings() {
             <Alert>
               <Shield className="h-4 w-4" />
               <AlertDescription>
-                Two-factor authentication adds an extra layer of security by
-                requiring a code from your phone in addition to your password.
+                Two-factor authentication adds an extra layer of security by requiring a code from
+                your phone in addition to your password.
               </AlertDescription>
             </Alert>
 

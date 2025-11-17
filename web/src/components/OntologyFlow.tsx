@@ -1,5 +1,5 @@
-import React from 'react';
-import { ArrowRight, Box, Users, Share2, Zap, Brain, Lock } from 'lucide-react';
+import { ArrowRight, Box, Brain, Lock, Share2, Users, Zap } from "lucide-react";
+import React from "react";
 
 interface OntologyDimension {
   id: string;
@@ -12,52 +12,52 @@ interface OntologyDimension {
 
 const dimensions: OntologyDimension[] = [
   {
-    id: 'groups',
-    title: 'Groups',
-    description: 'Hierarchical containers for multi-tenant isolation',
-    color: 'from-blue-500 to-blue-600',
+    id: "groups",
+    title: "Groups",
+    description: "Hierarchical containers for multi-tenant isolation",
+    color: "from-blue-500 to-blue-600",
     icon: <Lock className="w-5 h-5" />,
-    example: 'Organizations, teams, communities',
+    example: "Organizations, teams, communities",
   },
   {
-    id: 'people',
-    title: 'People',
-    description: 'Authorization and governance roles',
-    color: 'from-purple-500 to-purple-600',
+    id: "people",
+    title: "People",
+    description: "Authorization and governance roles",
+    color: "from-purple-500 to-purple-600",
     icon: <Users className="w-5 h-5" />,
-    example: 'Owners, members, customers',
+    example: "Owners, members, customers",
   },
   {
-    id: 'things',
-    title: 'Things',
-    description: '66+ entity types with flexible properties',
-    color: 'from-green-500 to-green-600',
+    id: "things",
+    title: "Things",
+    description: "66+ entity types with flexible properties",
+    color: "from-green-500 to-green-600",
     icon: <Box className="w-5 h-5" />,
-    example: 'Products, users, agents, tokens',
+    example: "Products, users, agents, tokens",
   },
   {
-    id: 'connections',
-    title: 'Connections',
-    description: 'Relationships with rich metadata',
-    color: 'from-orange-500 to-orange-600',
+    id: "connections",
+    title: "Connections",
+    description: "Relationships with rich metadata",
+    color: "from-orange-500 to-orange-600",
     icon: <Share2 className="w-5 h-5" />,
-    example: 'Owns, follows, purchased, enrolled',
+    example: "Owns, follows, purchased, enrolled",
   },
   {
-    id: 'events',
-    title: 'Events',
-    description: 'Immutable action history and audit trail',
-    color: 'from-red-500 to-red-600',
+    id: "events",
+    title: "Events",
+    description: "Immutable action history and audit trail",
+    color: "from-red-500 to-red-600",
     icon: <Zap className="w-5 h-5" />,
-    example: 'Created, purchased, viewed, completed',
+    example: "Created, purchased, viewed, completed",
   },
   {
-    id: 'knowledge',
-    title: 'Knowledge',
-    description: 'Vectors, embeddings, and semantic search',
-    color: 'from-cyan-500 to-cyan-600',
+    id: "knowledge",
+    title: "Knowledge",
+    description: "Vectors, embeddings, and semantic search",
+    color: "from-cyan-500 to-cyan-600",
     icon: <Brain className="w-5 h-5" />,
-    example: 'Search, recommendations, RAG',
+    example: "Search, recommendations, RAG",
   },
 ];
 
@@ -93,13 +93,9 @@ export function OntologyFlow() {
       <div className="md:hidden space-y-4">
         {dimensions.map((dim, idx) => (
           <div key={dim.id} className="space-y-2">
-            <div
-              className={`rounded-lg bg-gradient-to-br ${dim.color} p-4 text-white shadow-lg`}
-            >
+            <div className={`rounded-lg bg-gradient-to-br ${dim.color} p-4 text-white shadow-lg`}>
               <div className="flex items-start gap-3">
-                <div className="bg-white/20 p-2 rounded-lg flex-shrink-0">
-                  {dim.icon}
-                </div>
+                <div className="bg-white/20 p-2 rounded-lg flex-shrink-0">{dim.icon}</div>
                 <div className="flex-1">
                   <h3 className="font-semibold">{dim.title}</h3>
                   <p className="text-sm opacity-90">{dim.description}</p>

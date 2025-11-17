@@ -19,15 +19,11 @@
  * - Desktop (>1024px): 3 columns
  */
 
-import { getCollection } from 'astro:content';
-import Layout from '@/layouts/Layout.astro';
-import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
-import { Badge } from '@/components/ui/badge';
-import { Button } from '@/components/ui/button';
+import { getCollection } from "astro:content";
 
 // Get all public podcast episodes
-const allEpisodes = await getCollection('podcasts', ({ data }) => {
-  return !data.status || data.status === 'public';
+const allEpisodes = await getCollection("podcasts", ({ data }) => {
+  return !data.status || data.status === "public";
 });
 
 // Sort by date (newest first)
@@ -38,13 +34,13 @@ const sortedEpisodes = allEpisodes.sort((a, b) => {
 });
 
 // Get unique categories
-const categories = [...new Set(allEpisodes.map(ep => ep.data.category).filter(Boolean))];
+const _categories = [...new Set(allEpisodes.map((ep) => ep.data.category).filter(Boolean))];
 
 // Get featured episodes
-const featuredEpisodes = sortedEpisodes.filter(ep => ep.data.featured);
+const _featuredEpisodes = sortedEpisodes.filter((ep) => ep.data.featured);
 
 // Helper function
-function formatDate(dateValue: any): string {
+function _formatDate(dateValue: any): string {
   if (!dateValue) return "";
   const date = dateValue instanceof Date ? dateValue : new Date(dateValue);
   return new Intl.DateTimeFormat("en-US", {

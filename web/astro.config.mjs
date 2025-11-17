@@ -1,17 +1,15 @@
-import { defineConfig } from "astro/config";
-import react from "@astrojs/react";
+import cloudflare from "@astrojs/cloudflare";
 import mdx from "@astrojs/mdx";
+import node from "@astrojs/node";
+import react from "@astrojs/react";
 import sitemap from "@astrojs/sitemap";
 import tailwindcss from "@tailwindcss/vite";
-import cloudflare from "@astrojs/cloudflare";
-import node from "@astrojs/node";
+import { defineConfig } from "astro/config";
 
 // Use Node adapter for local dev (avoids miniflare EPIPE issues with Node 20.11.0)
 // Use Cloudflare adapter for production builds
 const isDev = process.env.NODE_ENV !== "production";
-const adapter = isDev
-  ? node({ mode: "standalone" })
-  : cloudflare({ mode: "directory" });
+const adapter = isDev ? node({ mode: "standalone" }) : cloudflare({ mode: "directory" });
 
 export default defineConfig({
   site: "https://one.ie",
@@ -28,7 +26,7 @@ export default defineConfig({
       // CRITICAL: Also disable syntax highlighting in MDX
       syntaxHighlight: false,
     }),
-    sitemap()
+    sitemap(),
   ],
   vite: {
     plugins: [
@@ -38,7 +36,7 @@ export default defineConfig({
     ],
     define: {
       // Ensure React runs in development mode during dev
-      'process.env.NODE_ENV': JSON.stringify(isDev ? 'development' : 'production'),
+      "process.env.NODE_ENV": JSON.stringify(isDev ? "development" : "production"),
     },
     resolve: {
       alias: {
@@ -86,24 +84,24 @@ export default defineConfig({
             // React and React-dependent components stay in main chunks to avoid hydration errors
 
             // Mermaid diagrams (1.5MB, self-contained)
-            if (id.includes('node_modules/mermaid')) {
-              return 'vendor-diagrams';
+            if (id.includes("node_modules/mermaid")) {
+              return "vendor-diagrams";
             }
             // Cytoscape graphs (645KB, self-contained)
-            if (id.includes('node_modules/cytoscape')) {
-              return 'vendor-graph';
+            if (id.includes("node_modules/cytoscape")) {
+              return "vendor-graph";
             }
             // VideoPlayer and video libraries (1MB+, self-contained)
-            if (id.includes('node_modules/video-react') || id.includes('node_modules/hls.js')) {
-              return 'vendor-video';
+            if (id.includes("node_modules/video-react") || id.includes("node_modules/hls.js")) {
+              return "vendor-video";
             }
             // Recharts (411KB, has React peer deps but self-contained)
-            if (id.includes('node_modules/recharts')) {
-              return 'vendor-charts';
+            if (id.includes("node_modules/recharts")) {
+              return "vendor-charts";
             }
             // React markdown (self-contained)
-            if (id.includes('node_modules/react-markdown')) {
-              return 'vendor-markdown';
+            if (id.includes("node_modules/react-markdown")) {
+              return "vendor-markdown";
             }
 
             // DO NOT split React or any React-dependent UI components

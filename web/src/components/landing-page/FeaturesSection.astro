@@ -1,16 +1,5 @@
 ---
-import { Card, CardHeader, CardTitle, CardDescription } from "@/components/ui/card";
-import { Badge } from "@/components/ui/badge";
-import {
-  Wand2,
-  Code,
-  TrendingUp,
-  DollarSign,
-  Globe,
-  Shield,
-  Zap,
-  Sparkles,
-} from "lucide-react";
+import { Code, DollarSign, Globe, Shield, Sparkles, TrendingUp, Wand2, Zap } from "lucide-react";
 import type { FeaturesSectionProps } from "@/types/landing-page";
 
 interface Props extends Omit<FeaturesSectionProps, "branding"> {
@@ -20,7 +9,7 @@ interface Props extends Omit<FeaturesSectionProps, "branding"> {
 const { section, branding } = Astro.props;
 
 // Icon mapping for feature icons
-const iconMap: Record<string, any> = {
+const _iconMap: Record<string, any> = {
   wand: Wand2,
   code: Code,
   trending: TrendingUp,
@@ -32,16 +21,14 @@ const iconMap: Record<string, any> = {
 };
 
 const columns = section.columns || 3;
-const gridClass =
+const _gridClass =
   columns === 2
     ? "grid-cols-1 sm:grid-cols-2"
     : columns === 4
       ? "grid-cols-1 sm:grid-cols-2 lg:grid-cols-4"
       : "grid-cols-1 sm:grid-cols-2 lg:grid-cols-3";
 
-const brandingStyle = branding
-  ? `--primary: ${branding.primaryColor || "#3b82f6"};`
-  : "";
+const _brandingStyle = branding ? `--primary: ${branding.primaryColor || "#3b82f6"};` : "";
 ---
 
 <section class={`px-4 py-20 sm:px-6 sm:py-24 md:px-8 md:py-32 ${section.customClass || ""}`} style={brandingStyle}>

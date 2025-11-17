@@ -1,9 +1,9 @@
-'use client';
+"use client";
 
-import { Card, CardContent, CardHeader, CardTitle, CardDescription } from '@/components/ui/card';
-import { Badge } from '@/components/ui/badge';
-import { Check, DollarSign, TrendingDown, Sparkles, PartyPopper } from 'lucide-react';
-import { useEffect, useState } from 'react';
+import { Check, DollarSign, PartyPopper, Sparkles, TrendingDown } from "lucide-react";
+import { useEffect, useState } from "react";
+import { Badge } from "@/components/ui/badge";
+import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 
 interface PricingComparisonProps {
   /** Show comparison details */
@@ -28,7 +28,7 @@ function useCountUp(end: number, duration: number = 2000, enabled: boolean = tru
       if (!startTime) startTime = timestamp;
       const progress = Math.min((timestamp - startTime) / duration, 1);
 
-      const easeOutQuart = 1 - Math.pow(1 - progress, 4);
+      const easeOutQuart = 1 - (1 - progress) ** 4;
       setCount(Math.floor(easeOutQuart * end));
 
       if (progress < 1) {
@@ -45,9 +45,9 @@ function useCountUp(end: number, duration: number = 2000, enabled: boolean = tru
 
 export function PricingComparison({ showDetails = true, animate = true }: PricingComparisonProps) {
   const competitors = [
-    { name: 'Vercel', price: 229, color: 'from-gray-900 via-gray-700 to-gray-600' },
-    { name: 'Netlify', price: 240, color: 'from-teal-600 via-cyan-500 to-teal-500' },
-    { name: 'AWS', price: 350, color: 'from-orange-600 via-amber-500 to-orange-500' },
+    { name: "Vercel", price: 229, color: "from-gray-900 via-gray-700 to-gray-600" },
+    { name: "Netlify", price: 240, color: "from-teal-600 via-cyan-500 to-teal-500" },
+    { name: "AWS", price: 350, color: "from-orange-600 via-amber-500 to-orange-500" },
   ];
 
   const savings = Math.floor(competitors.reduce((sum, c) => sum + c.price, 0) / competitors.length);
@@ -62,12 +62,12 @@ export function PricingComparison({ showDetails = true, animate = true }: Pricin
   }, [animate]);
 
   const features = [
-    { icon: '∞', label: 'Unlimited Bandwidth', included: true },
-    { icon: '🌍', label: '330+ Edge Locations', included: true },
-    { icon: '🛡️', label: 'DDoS Protection', included: true },
-    { icon: '🔒', label: 'SSL Certificates', included: true },
-    { icon: '⚡', label: '100k Functions/day', included: true },
-    { icon: '📊', label: 'Analytics Dashboard', included: true },
+    { icon: "∞", label: "Unlimited Bandwidth", included: true },
+    { icon: "🌍", label: "330+ Edge Locations", included: true },
+    { icon: "🛡️", label: "DDoS Protection", included: true },
+    { icon: "🔒", label: "SSL Certificates", included: true },
+    { icon: "⚡", label: "100k Functions/day", included: true },
+    { icon: "📊", label: "Analytics Dashboard", included: true },
   ];
 
   return (
@@ -110,7 +110,8 @@ export function PricingComparison({ showDetails = true, animate = true }: Pricin
                 <span className="text-2xl text-muted-foreground font-bold">/month</span>
               </div>
               <p className="text-base text-muted-foreground font-medium">
-                Forever free tier. <span className="text-green-600 font-bold">No hidden costs. Ever.</span>
+                Forever free tier.{" "}
+                <span className="text-green-600 font-bold">No hidden costs. Ever.</span>
               </p>
             </div>
 
@@ -161,12 +162,7 @@ export function PricingComparison({ showDetails = true, animate = true }: Pricin
           </h3>
 
           {competitors.map((competitor, idx) => (
-            <CompetitorCard
-              key={idx}
-              competitor={competitor}
-              index={idx}
-              animate={animate}
-            />
+            <CompetitorCard key={idx} competitor={competitor} index={idx} animate={animate} />
           ))}
 
           {/* Annual Savings with Count-Up Animation */}
@@ -174,7 +170,9 @@ export function PricingComparison({ showDetails = true, animate = true }: Pricin
             {/* Shimmer Effect */}
             <div className="absolute inset-0 -translate-x-full group-hover:translate-x-full transition-transform duration-1000 bg-gradient-to-r from-transparent via-white/10 to-transparent" />
 
-            <p className="relative text-sm text-muted-foreground mb-2 font-medium">Annual Savings</p>
+            <p className="relative text-sm text-muted-foreground mb-2 font-medium">
+              Annual Savings
+            </p>
             <p className="relative text-5xl font-black bg-gradient-to-r from-primary via-purple-500 to-primary bg-clip-text text-transparent">
               ${annualSavings.toLocaleString()}/year
             </p>
@@ -208,7 +206,10 @@ export function PricingComparison({ showDetails = true, animate = true }: Pricin
                   {/* Glow Effect */}
                   <div className="absolute -inset-1 bg-gradient-to-r from-primary/20 to-purple-500/20 opacity-0 group-hover:opacity-100 blur-xl transition-opacity duration-500 -z-10" />
 
-                  <div className="text-4xl animate-in zoom-in duration-700" style={{ animationDelay: `${idx * 50}ms` }}>
+                  <div
+                    className="text-4xl animate-in zoom-in duration-700"
+                    style={{ animationDelay: `${idx * 50}ms` }}
+                  >
                     {feature.icon}
                   </div>
                   <p className="text-base font-bold">{feature.label}</p>
@@ -227,7 +228,7 @@ export function PricingComparison({ showDetails = true, animate = true }: Pricin
                 $229-350
               </p>
               <p className="text-base text-muted-foreground max-w-2xl mx-auto">
-                Typical pricing from competitors.{' '}
+                Typical pricing from competitors.{" "}
                 <span className="font-black text-green-600">You get this completely free.</span>
               </p>
             </div>
@@ -264,7 +265,9 @@ function CompetitorCard({
   return (
     <div className="relative overflow-hidden rounded-xl border-2 border-border/50 bg-card/50 backdrop-blur-xl p-6 hover:border-muted-foreground/50 transition-all duration-500 hover:shadow-xl group">
       {/* Background Gradient */}
-      <div className={`absolute inset-0 bg-gradient-to-r ${competitor.color} opacity-0 group-hover:opacity-10 transition-opacity duration-500`} />
+      <div
+        className={`absolute inset-0 bg-gradient-to-r ${competitor.color} opacity-0 group-hover:opacity-10 transition-opacity duration-500`}
+      />
 
       <div className="relative flex items-center justify-between mb-4">
         <span className="font-bold text-lg">{competitor.name}</span>

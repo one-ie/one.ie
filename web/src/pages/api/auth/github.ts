@@ -1,5 +1,5 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import type { APIRoute} from "astro";
+import type { APIRoute } from "astro";
 
 export const prerender = false;
 

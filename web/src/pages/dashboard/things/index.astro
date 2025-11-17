@@ -6,22 +6,21 @@
  * Uses Effect services for server-side rendering with pagination.
  */
 
-import { Effect } from "effect";
 import { ConvexReactClient } from "convex/react";
+import { Effect } from "effect";
+import { createDataProvider, createDataProviderLayer } from "@/providers/factory";
 import { ThingService } from "@/services/ThingService";
-import {
-  createDataProvider,
-  createDataProviderLayer,
-} from "@/providers/factory";
-import Layout from "@/layouts/Layout.astro";
-import { EntityTable } from "@/components/dashboard/EntityTable";
-import { EntityFilters } from "@/components/dashboard/EntityFilters";
 
 // Get query parameters for filters
 const url = new URL(Astro.request.url);
 const typeFilter = url.searchParams.get("type") || undefined;
-const statusFilter = url.searchParams.get("status") as "draft" | "active" | "published" | "archived" | undefined;
-const page = parseInt(url.searchParams.get("page") || "1");
+const statusFilter = url.searchParams.get("status") as
+  | "draft"
+  | "active"
+  | "published"
+  | "archived"
+  | undefined;
+const page = parseInt(url.searchParams.get("page") || "1", 10);
 const limit = 20;
 
 // Initialize Convex provider
@@ -43,12 +42,10 @@ const program = Effect.gen(function* () {
     type: typeFilter,
     status: statusFilter,
     limit: limit * page, // Fetch up to current page
-  }).pipe(
-    Effect.catchAll(() => Effect.succeed([]))
-  );
+  }).pipe(Effect.catchAll(() => Effect.succeed([])));
 
   // Get unique types for filter dropdown
-  const uniqueTypes = [...new Set(allThings.map(thing => thing.type))];
+  const uniqueTypes = [...new Set(allThings.map((thing) => thing.type))];
 
   // Paginate results
   const startIndex = (page - 1) * limit;
@@ -69,7 +66,7 @@ const program = Effect.gen(function* () {
 });
 
 // Run Effect program with DataProvider layer
-const data = await Effect.runPromise(
+const _data = await Effect.runPromise(
   program.pipe(
     Effect.provide(providerLayer),
     Effect.catchAll((error) => {

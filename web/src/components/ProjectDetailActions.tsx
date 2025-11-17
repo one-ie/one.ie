@@ -1,5 +1,5 @@
-import { useState, useEffect } from 'react';
-import { SendToClaudeCodeModal } from './SendToClaudeCodeModal';
+import { useEffect, useState } from "react";
+import { SendToClaudeCodeModal } from "./SendToClaudeCodeModal";
 
 interface ProjectDetailActionsProps {
   prompt: string;
@@ -15,11 +15,11 @@ export function ProjectDetailActions({ prompt, projectTitle }: ProjectDetailActi
       setIsModalOpen(true);
     };
 
-    const button = document.getElementById('send-to-claude-btn');
-    button?.addEventListener('click', handleClick);
+    const button = document.getElementById("send-to-claude-btn");
+    button?.addEventListener("click", handleClick);
 
     return () => {
-      button?.removeEventListener('click', handleClick);
+      button?.removeEventListener("click", handleClick);
     };
   }, []);
 

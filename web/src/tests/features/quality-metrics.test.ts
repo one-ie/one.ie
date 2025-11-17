@@ -9,8 +9,8 @@
  * - Documentation completeness
  */
 
-import { describe, it, expect, beforeAll } from "vitest";
 import { getCollection } from "astro:content";
+import { beforeAll, describe, expect, it } from "vitest";
 import type { FeatureSchema } from "@/content/config";
 
 interface Feature {
@@ -39,7 +39,9 @@ beforeAll(async () => {
 
 describe("Feature Quality Metrics", () => {
   describe("Test Coverage", () => {
-    const featuresWithMetrics = allFeatures.filter((f) => f.data.metrics?.testCoverage !== undefined);
+    const featuresWithMetrics = allFeatures.filter(
+      (f) => f.data.metrics?.testCoverage !== undefined
+    );
 
     it("should have test coverage documented for critical features", () => {
       const criticalFeatures = allFeatures.filter((f) => f.data.priority === "critical");
@@ -67,7 +69,7 @@ describe("Feature Quality Metrics", () => {
 
     it("should have valid test coverage percentages", () => {
       featuresWithMetrics.forEach((feature) => {
-        const coverage = feature.data.metrics!.testCoverage!;
+        const coverage = feature.data.metrics?.testCoverage!;
         expect(coverage).toBeGreaterThanOrEqual(0);
         expect(coverage).toBeLessThanOrEqual(100);
       });
@@ -77,17 +79,17 @@ describe("Feature Quality Metrics", () => {
       const byStatus = {
         completed: allFeatures
           .filter((f) => f.data.status === "completed" && f.data.metrics?.testCoverage)
-          .map((f) => f.data.metrics!.testCoverage!),
+          .map((f) => f.data.metrics?.testCoverage!),
         inDevelopment: allFeatures
           .filter(
             (f) =>
               (f.data.status === "in_development" || f.data.status === "beta") &&
               f.data.metrics?.testCoverage
           )
-          .map((f) => f.data.metrics!.testCoverage!),
+          .map((f) => f.data.metrics?.testCoverage!),
         planned: allFeatures
           .filter((f) => f.data.status === "planned" && f.data.metrics?.testCoverage)
-          .map((f) => f.data.metrics!.testCoverage!),
+          .map((f) => f.data.metrics?.testCoverage!),
       };
 
       // Completed features should have higher coverage than in-dev
@@ -120,7 +122,7 @@ describe("Feature Quality Metrics", () => {
 
     it("should have valid performance scores (0-100)", () => {
       featuresWithPerformance.forEach((feature) => {
-        const score = feature.data.metrics!.performanceScore!;
+        const score = feature.data.metrics?.performanceScore!;
         expect(score).toBeGreaterThanOrEqual(0);
         expect(score).toBeLessThanOrEqual(100);
       });
@@ -130,14 +132,14 @@ describe("Feature Quality Metrics", () => {
       const byStatus = {
         completed: allFeatures
           .filter((f) => f.data.status === "completed" && f.data.metrics?.performanceScore)
-          .map((f) => f.data.metrics!.performanceScore!),
+          .map((f) => f.data.metrics?.performanceScore!),
         inDevelopment: allFeatures
           .filter(
             (f) =>
               (f.data.status === "in_development" || f.data.status === "beta") &&
               f.data.metrics?.performanceScore
           )
-          .map((f) => f.data.metrics!.performanceScore!),
+          .map((f) => f.data.metrics?.performanceScore!),
       };
 
       if (byStatus.completed.length > 0 && byStatus.inDevelopment.length > 0) {
@@ -169,7 +171,7 @@ describe("Feature Quality Metrics", () => {
 
     it("should have valid accessibility scores (0-100)", () => {
       featuresWithAccessibility.forEach((feature) => {
-        const score = feature.data.metrics!.accessibilityScore!;
+        const score = feature.data.metrics?.accessibilityScore!;
         expect(score).toBeGreaterThanOrEqual(0);
         expect(score).toBeLessThanOrEqual(100);
       });
@@ -179,10 +181,10 @@ describe("Feature Quality Metrics", () => {
       const byPriority = {
         critical: allFeatures
           .filter((f) => f.data.priority === "critical" && f.data.metrics?.accessibilityScore)
-          .map((f) => f.data.metrics!.accessibilityScore!),
+          .map((f) => f.data.metrics?.accessibilityScore!),
         high: allFeatures
           .filter((f) => f.data.priority === "high" && f.data.metrics?.accessibilityScore)
-          .map((f) => f.data.metrics!.accessibilityScore!),
+          .map((f) => f.data.metrics?.accessibilityScore!),
       };
 
       // Critical features should have better accessibility
@@ -333,9 +335,7 @@ describe("Feature Quality Metrics", () => {
         it("should have value proposition if marketing position exists", () => {
           if (feature.data.marketingPosition) {
             if (feature.data.marketingPosition.valueProposition) {
-              expect(
-                feature.data.marketingPosition.valueProposition.length
-              ).toBeGreaterThan(0);
+              expect(feature.data.marketingPosition.valueProposition.length).toBeGreaterThan(0);
             }
           }
         });
@@ -360,7 +360,7 @@ describe("Feature Quality Metrics", () => {
       };
 
       // Completed features should have more comprehensive documentation
-      const plannedDocumented = statusProgression.planned.filter(
+      const _plannedDocumented = statusProgression.planned.filter(
         (f) => f.data.useCases && f.data.useCases.length > 0
       );
       const completedDocumented = statusProgression.completed.filter(

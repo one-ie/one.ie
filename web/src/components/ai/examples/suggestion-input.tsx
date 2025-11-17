@@ -1,5 +1,8 @@
 "use client";
 
+import { GlobeIcon, MicIcon, PlusIcon, SendIcon } from "lucide-react";
+import { nanoid } from "nanoid";
+import { useState } from "react";
 import {
   PromptInput,
   PromptInputButton,
@@ -15,9 +18,6 @@ import {
   PromptInputTools,
 } from "@/components/ai/elements/prompt-input";
 import { Suggestion, Suggestions } from "@/components/ai/elements/suggestion";
-import { GlobeIcon, MicIcon, PlusIcon, SendIcon } from "lucide-react";
-import { nanoid } from "nanoid";
-import { useState } from "react";
 
 const suggestions: { key: string; value: string }[] = [
   { key: nanoid(), value: "What are the latest trends in AI?" },

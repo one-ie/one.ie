@@ -4,12 +4,12 @@
  * Works with FilterSidebar to provide real-time product filtering
  */
 
-'use client';
+"use client";
 
-import { useState, useMemo } from 'react';
-import type { FilterOptions } from '@/types/ecommerce';
-import { ProductCard } from './ProductCard';
-import { ProductGrid } from '../static/ProductGrid';
+import { useMemo, useState } from "react";
+import type { FilterOptions } from "@/types/ecommerce";
+import { ProductGrid } from "../static/ProductGrid";
+import { ProductCard } from "./ProductCard";
 
 export interface Product {
   id: string;
@@ -39,14 +39,14 @@ interface FilteredProductGridProps {
 export function FilteredProductGrid({
   products,
   _collectionSlug,
-  allCollections
+  allCollections,
 }: FilteredProductGridProps) {
-  const [filters, setFilters] = useState<FilterOptions>({
+  const [filters, _setFilters] = useState<FilterOptions>({
     categories: [],
     tags: [],
     inStockOnly: false,
     priceRange: undefined,
-    sortBy: 'newest',
+    sortBy: "newest",
     rating: undefined,
   });
 
@@ -60,59 +60,54 @@ export function FilteredProductGrid({
       const allProductSlugs = new Set<string>();
 
       // Get all product slugs from selected collections
-      selectedCollectionSlugs.forEach(collectionId => {
-        const collection = allCollections.find(c => c.id === collectionId);
+      selectedCollectionSlugs.forEach((collectionId) => {
+        const collection = allCollections.find((c) => c.id === collectionId);
         if (collection?.products) {
-          collection.products.forEach(slug => allProductSlugs.add(slug));
+          collection.products.forEach((slug) => allProductSlugs.add(slug));
         }
       });
 
       // Filter to only show products in selected collections
-      result = result.filter(p => allProductSlugs.has(p.slug));
+      result = result.filter((p) => allProductSlugs.has(p.slug));
     }
 
     // Filter by tags
     if (filters.tags && filters.tags.length > 0) {
-      result = result.filter(p =>
-        filters.tags.some(tag => p.tags.includes(tag))
-      );
+      result = result.filter((p) => filters.tags.some((tag) => p.tags.includes(tag)));
     }
 
     // Filter by in stock
     if (filters.inStockOnly) {
-      result = result.filter(p => p.inStock);
+      result = result.filter((p) => p.inStock);
     }
 
     // Filter by price range
     if (filters.priceRange) {
       const { min, max } = filters.priceRange;
-      result = result.filter(p =>
-        p.price >= min &&
-        p.price <= max
-      );
+      result = result.filter((p) => p.price >= min && p.price <= max);
     }
 
     // Filter by rating
     if (filters.rating) {
       const minRating = filters.rating;
-      result = result.filter(p => p.rating >= minRating);
+      result = result.filter((p) => p.rating >= minRating);
     }
 
     // Sort products
     switch (filters.sortBy) {
-      case 'newest':
+      case "newest":
         result.sort((a, b) => b.createdAt.getTime() - a.createdAt.getTime());
         break;
-      case 'popular':
+      case "popular":
         result.sort((a, b) => b.reviewCount - a.reviewCount);
         break;
-      case 'rating':
+      case "rating":
         result.sort((a, b) => b.rating - a.rating);
         break;
-      case 'price-asc':
+      case "price-asc":
         result.sort((a, b) => a.price - b.price);
         break;
-      case 'price-desc':
+      case "price-desc":
         result.sort((a, b) => b.price - a.price);
         break;
       default:
@@ -125,10 +120,10 @@ export function FilteredProductGrid({
   // Calculate min/max prices for slider
   const priceRange = useMemo(() => {
     if (products.length === 0) return { min: 0, max: 500 };
-    const prices = products.map(p => p.price);
+    const prices = products.map((p) => p.price);
     return {
       min: Math.floor(Math.min(...prices) / 10) * 10, // Round down to nearest 10
-      max: Math.ceil(Math.max(...prices) / 10) * 10,  // Round up to nearest 10
+      max: Math.ceil(Math.max(...prices) / 10) * 10, // Round up to nearest 10
     };
   }, [products]);
 
@@ -141,7 +136,7 @@ export function FilteredProductGrid({
         data-filter-handler="true"
         data-min-price={priceRange.min}
         data-max-price={priceRange.max}
-        style={{ display: 'none' }}
+        style={{ display: "none" }}
       />
 
       {filteredProducts.length > 0 ? (
@@ -185,7 +180,7 @@ export function useProductFilters(_products: Product[]) {
     tags: [],
     inStockOnly: false,
     priceRange: undefined,
-    sortBy: 'newest',
+    sortBy: "newest",
     rating: undefined,
   });
 

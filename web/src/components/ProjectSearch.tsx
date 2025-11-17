@@ -1,7 +1,7 @@
-import { useState, useEffect } from "react";
 import { Search, X } from "lucide-react";
-import { Input } from "@/components/ui/input";
+import { useEffect, useState } from "react";
 import { Button } from "@/components/ui/button";
+import { Input } from "@/components/ui/input";
 
 interface ProjectSearchProps {
   onSearch: (query: string) => void;
@@ -16,11 +16,11 @@ export function ProjectSearch({
 
   useEffect(() => {
     const timer = setTimeout(() => {
-      if (typeof onSearch === 'function') {
+      if (typeof onSearch === "function") {
         onSearch(query);
       }
       // Also dispatch event for ClientProjectsManager
-      const event = new CustomEvent('projectSearch', { detail: { query } });
+      const event = new CustomEvent("projectSearch", { detail: { query } });
       window.dispatchEvent(event);
     }, 300);
 

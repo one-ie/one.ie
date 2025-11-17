@@ -9,11 +9,11 @@
 
 import { Effect } from "effect";
 import {
-  DataProviderService,
   type CreateKnowledgeInput,
-  type SearchKnowledgeOptions,
+  DataProviderService,
   type KnowledgeType,
   QueryError,
+  type SearchKnowledgeOptions,
 } from "../providers/DataProvider";
 
 // ============================================================================
@@ -62,9 +62,7 @@ export class KnowledgeService {
       }
 
       if (input.knowledgeType === "vector_only" && !input.embedding) {
-        return yield* Effect.fail(
-          new QueryError("Vector-only knowledge requires embedding")
-        );
+        return yield* Effect.fail(new QueryError("Vector-only knowledge requires embedding"));
       }
 
       return yield* provider.knowledge.create(input);
@@ -308,7 +306,7 @@ export class KnowledgeService {
    */
   static ragSearchForAgent = (
     query: string,
-    agentId: string,
+    _agentId: string,
     embedFn: (text: string) => Effect.Effect<number[], any>,
     options?: {
       limit?: number;
@@ -331,11 +329,14 @@ export class KnowledgeService {
    * Get knowledge context for AI agent
    * Retrieves all relevant knowledge for an agent to use
    */
-  static getAgentKnowledge = (agentId: string, options?: {
-    includeLabels?: boolean;
-    includeChunks?: boolean;
-    includeDocuments?: boolean;
-  }) =>
+  static getAgentKnowledge = (
+    agentId: string,
+    options?: {
+      includeLabels?: boolean;
+      includeChunks?: boolean;
+      includeDocuments?: boolean;
+    }
+  ) =>
     Effect.gen(function* () {
       const opts = {
         includeLabels: options?.includeLabels ?? true,
@@ -348,12 +349,8 @@ export class KnowledgeService {
       });
 
       return {
-        labels: opts.includeLabels
-          ? knowledge.filter((k) => k.knowledgeType === "label")
-          : [],
-        chunks: opts.includeChunks
-          ? knowledge.filter((k) => k.knowledgeType === "chunk")
-          : [],
+        labels: opts.includeLabels ? knowledge.filter((k) => k.knowledgeType === "label") : [],
+        chunks: opts.includeChunks ? knowledge.filter((k) => k.knowledgeType === "chunk") : [],
         documents: opts.includeDocuments
           ? knowledge.filter((k) => k.knowledgeType === "document")
           : [],
@@ -369,7 +366,7 @@ export class KnowledgeService {
     agentId: string,
     content: string,
     embedFn: (text: string) => Effect.Effect<number[], any>,
-    metadata?: {
+    _metadata?: {
       source?: string;
       category?: string;
     }
@@ -435,4 +432,3 @@ export class KnowledgeService {
       };
     });
 }
-

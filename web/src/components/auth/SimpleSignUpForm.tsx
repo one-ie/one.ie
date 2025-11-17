@@ -1,12 +1,12 @@
 import { useState } from "react";
+import { toast } from "sonner";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { useSignup } from "@/hooks/useAuth";
-import { toast } from "sonner";
 import { AuthCard } from "./AuthCard";
-import { SocialLoginButtons } from "./SocialLoginButtons";
 import { PasswordStrengthIndicator } from "./PasswordStrengthIndicator";
+import { SocialLoginButtons } from "./SocialLoginButtons";
 
 interface SimpleSignUpFormProps {
   onSuccess?: (data: { userId: string; email: string; displayName: string }) => void;
@@ -61,8 +61,7 @@ export function SimpleSignUpForm({ onSuccess }: SimpleSignUpFormProps) {
           "Password must be at least 8 characters long and contain letters and numbers.";
       } else if (error?._tag === "InvalidEmail") {
         title = "Invalid email";
-        description =
-          "Please enter a valid email address (e.g., yourname@example.com).";
+        description = "Please enter a valid email address (e.g., yourname@example.com).";
       } else {
         // Fallback to message-based error handling
         if (
@@ -79,8 +78,7 @@ export function SimpleSignUpForm({ onSuccess }: SimpleSignUpFormProps) {
             "Password must be at least 8 characters long and contain letters and numbers.";
         } else if (errorMessage.toLowerCase().includes("email")) {
           title = "Invalid email";
-          description =
-            "Please enter a valid email address (e.g., yourname@example.com).";
+          description = "Please enter a valid email address (e.g., yourname@example.com).";
         } else if (
           errorMessage.toLowerCase().includes("network") ||
           errorMessage.toLowerCase().includes("connection") ||
@@ -91,19 +89,16 @@ export function SimpleSignUpForm({ onSuccess }: SimpleSignUpFormProps) {
             "Unable to connect to the server. Please check your internet connection and try again.";
         } else if (errorMessage.toLowerCase().includes("timeout")) {
           title = "Request timeout";
-          description =
-            "The server is taking too long to respond. Please try again in a moment.";
+          description = "The server is taking too long to respond. Please try again in a moment.";
         } else if (errorMessage.toLowerCase().includes("cors")) {
           title = "Configuration error";
-          description =
-            "There's a configuration issue preventing sign up. Please contact support.";
+          description = "There's a configuration issue preventing sign up. Please contact support.";
         } else if (
           errorMessage.toLowerCase().includes("required") ||
           errorMessage.toLowerCase().includes("missing")
         ) {
           title = "Missing information";
-          description =
-            "Please fill in all required fields (name, email, and password).";
+          description = "Please fill in all required fields (name, email, and password).";
         }
       }
 

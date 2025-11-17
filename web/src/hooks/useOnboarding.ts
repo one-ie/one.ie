@@ -5,8 +5,8 @@
  * Uses ConvexHttpClient to call backend APIs
  */
 
-import { useCallback, useState } from 'react';
-import { ConvexHttpClient } from 'convex/browser';
+import { ConvexHttpClient } from "convex/browser";
+import { useCallback, useState } from "react";
 
 // Initialize Convex client - URL comes from environment variable
 const convexUrl = import.meta.env.PUBLIC_CONVEX_URL;
@@ -45,20 +45,20 @@ export function useSignupOnboarding() {
     setError(null);
 
     try {
-      const result = await client.mutation('mutations:auth:signup', input);
+      const result = await client.mutation("mutations:auth:signup", input);
 
       if (!result.success) {
         setError({
-          message: result.error || 'Signup failed',
-          code: 'SIGNUP_FAILED'
+          message: result.error || "Signup failed",
+          code: "SIGNUP_FAILED",
         });
         return null;
       }
 
       return result.data;
     } catch (err) {
-      const message = err instanceof Error ? err.message : 'Unknown error';
-      setError({ message, code: 'SIGNUP_ERROR' });
+      const message = err instanceof Error ? err.message : "Unknown error";
+      setError({ message, code: "SIGNUP_ERROR" });
       return null;
     } finally {
       setLoading(false);
@@ -91,19 +91,19 @@ export function useVerifyEmailOnboarding() {
     setError(null);
 
     try {
-      const result = await client.mutation('mutations:auth:verifyEmail', input);
+      const result = await client.mutation("mutations:auth:verifyEmail", input);
 
       if (!result.success) {
         setError({
-          message: result.error || 'Verification failed',
-          field: 'code'
+          message: result.error || "Verification failed",
+          field: "code",
         });
         return false;
       }
 
       return true;
     } catch (err) {
-      const message = err instanceof Error ? err.message : 'Unknown error';
+      const message = err instanceof Error ? err.message : "Unknown error";
       setError({ message });
       return false;
     } finally {
@@ -139,15 +139,15 @@ export function useResendVerificationCode() {
     setError(null);
 
     try {
-      const result = await client.mutation('mutations:auth:resendVerificationCode', input);
+      const result = await client.mutation("mutations:auth:resendVerificationCode", input);
 
       if (!result.success) {
-        const message = result.error || 'Resend failed';
+        const message = result.error || "Resend failed";
         const retryIn = result.retryAfter || 0;
         setNextRetryAt(Date.now() + retryIn * 1000);
         setError({
           message,
-          code: 'RATE_LIMITED'
+          code: "RATE_LIMITED",
         });
         return false;
       }
@@ -155,7 +155,7 @@ export function useResendVerificationCode() {
       setNextRetryAt(null);
       return true;
     } catch (err) {
-      const message = err instanceof Error ? err.message : 'Unknown error';
+      const message = err instanceof Error ? err.message : "Unknown error";
       setError({ message });
       return false;
     } finally {
@@ -187,19 +187,19 @@ export function useUpdateProfile() {
     setError(null);
 
     try {
-      const result = await client.mutation('mutations:auth:updateProfile', input);
+      const result = await client.mutation("mutations:auth:updateProfile", input);
 
       if (!result.success) {
         setError({
-          message: result.error || 'Profile update failed',
-          field: result.field
+          message: result.error || "Profile update failed",
+          field: result.field,
         });
         return false;
       }
 
       return true;
     } catch (err) {
-      const message = err instanceof Error ? err.message : 'Unknown error';
+      const message = err instanceof Error ? err.message : "Unknown error";
       setError({ message });
       return false;
     } finally {
@@ -231,30 +231,33 @@ export function useCreateWorkspace() {
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<OnboardingError | null>(null);
 
-  const create = useCallback(async (input: CreateWorkspaceInput): Promise<CreateWorkspaceResponse | null> => {
-    setLoading(true);
-    setError(null);
+  const create = useCallback(
+    async (input: CreateWorkspaceInput): Promise<CreateWorkspaceResponse | null> => {
+      setLoading(true);
+      setError(null);
 
-    try {
-      const result = await client.mutation('mutations:workspace:createWorkspace', input);
+      try {
+        const result = await client.mutation("mutations:workspace:createWorkspace", input);
 
-      if (!result.success) {
-        setError({
-          message: result.error || 'Workspace creation failed',
-          field: result.field
-        });
+        if (!result.success) {
+          setError({
+            message: result.error || "Workspace creation failed",
+            field: result.field,
+          });
+          return null;
+        }
+
+        return result.data;
+      } catch (err) {
+        const message = err instanceof Error ? err.message : "Unknown error";
+        setError({ message });
         return null;
+      } finally {
+        setLoading(false);
       }
-
-      return result.data;
-    } catch (err) {
-      const message = err instanceof Error ? err.message : 'Unknown error';
-      setError({ message });
-      return null;
-    } finally {
-      setLoading(false);
-    }
-  }, []);
+    },
+    []
+  );
 
   return { create, loading, error };
 }
@@ -278,19 +281,19 @@ export function useInviteTeamMember() {
     setError(null);
 
     try {
-      const result = await client.mutation('mutations:workspace:inviteTeamMember', input);
+      const result = await client.mutation("mutations:workspace:inviteTeamMember", input);
 
       if (!result.success) {
         setError({
-          message: result.error || 'Invitation failed',
-          field: 'email'
+          message: result.error || "Invitation failed",
+          field: "email",
         });
         return false;
       }
 
       return true;
     } catch (err) {
-      const message = err instanceof Error ? err.message : 'Unknown error';
+      const message = err instanceof Error ? err.message : "Unknown error";
       setError({ message });
       return false;
     } finally {
@@ -321,19 +324,19 @@ export function useConnectWallet() {
     setError(null);
 
     try {
-      const result = await client.mutation('mutations:workspace:connectWallet', input);
+      const result = await client.mutation("mutations:workspace:connectWallet", input);
 
       if (!result.success) {
         setError({
-          message: result.error || 'Wallet connection failed',
-          field: 'walletAddress'
+          message: result.error || "Wallet connection failed",
+          field: "walletAddress",
         });
         return false;
       }
 
       return true;
     } catch (err) {
-      const message = err instanceof Error ? err.message : 'Unknown error';
+      const message = err instanceof Error ? err.message : "Unknown error";
       setError({ message });
       return false;
     } finally {
@@ -364,18 +367,18 @@ export function useAddSkills() {
     setError(null);
 
     try {
-      const result = await client.mutation('mutations:workspace:addSkills', input);
+      const result = await client.mutation("mutations:workspace:addSkills", input);
 
       if (!result.success) {
         setError({
-          message: result.error || 'Skills update failed'
+          message: result.error || "Skills update failed",
         });
         return false;
       }
 
       return true;
     } catch (err) {
-      const message = err instanceof Error ? err.message : 'Unknown error';
+      const message = err instanceof Error ? err.message : "Unknown error";
       setError({ message });
       return false;
     } finally {
@@ -397,7 +400,7 @@ export function useCheckUsernameAvailable() {
     setLoading(true);
 
     try {
-      const result = await client.query('queries:onboarding:checkUsernameAvailable', { username });
+      const result = await client.query("queries:onboarding:checkUsernameAvailable", { username });
       return result.available ?? false;
     } catch {
       return false;
@@ -420,7 +423,7 @@ export function useCheckWorkspaceSlugAvailable() {
     setLoading(true);
 
     try {
-      const result = await client.query('queries:onboarding:checkWorkspaceSlugAvailable', { slug });
+      const result = await client.query("queries:onboarding:checkWorkspaceSlugAvailable", { slug });
       return result.available ?? false;
     } catch {
       return false;
@@ -462,7 +465,7 @@ export function useOnboardingStatus(userId: string | null) {
     setLoading(true);
 
     try {
-      const result = await client.query('queries:onboarding:getOnboardingStatus', { userId });
+      const result = await client.query("queries:onboarding:getOnboardingStatus", { userId });
       setStatus(result);
     } catch {
       setStatus(null);

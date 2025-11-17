@@ -1,12 +1,12 @@
-'use client';
+"use client";
 
-import React, { useState } from 'react';
-import { Card, CardHeader, CardTitle, CardDescription, CardContent, CardFooter } from '@/components/ui/card';
-import { Button } from '@/components/ui/button';
-import { Badge } from '@/components/ui/badge';
-import { Tabs, TabsList, TabsTrigger, TabsContent } from '@/components/ui/tabs';
-import { Copy, CheckCircle, ExternalLink, Zap, Github, Package } from 'lucide-react';
-import { useState as useStateCallback } from 'react';
+import { CheckCircle, Copy, ExternalLink, Github, Package, Zap } from "lucide-react";
+import type React from "react";
+import { useState } from "react";
+import { Badge } from "@/components/ui/badge";
+import { Button } from "@/components/ui/button";
+import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
+import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 
 interface SetupOption {
   id: string;
@@ -22,78 +22,76 @@ interface SetupOption {
 
 const options: SetupOption[] = [
   {
-    id: 'ai-assisted',
-    title: 'AI-Assisted Setup',
-    description: 'Fastest way - Claude Code guides you through setup with intelligence',
+    id: "ai-assisted",
+    title: "AI-Assisted Setup",
+    description: "Fastest way - Claude Code guides you through setup with intelligence",
     icon: <Zap className="w-6 h-6" />,
-    badge: 'Recommended',
-    command: 'npx oneie && claude',
+    badge: "Recommended",
+    command: "npx oneie && claude",
     steps: [
-      'Install ONE CLI globally',
-      'Launch Claude Code IDE',
-      'Run `/one` command in Claude',
-      'Claude scaffolds your project',
-      'Start building with AI assistance',
+      "Install ONE CLI globally",
+      "Launch Claude Code IDE",
+      "Run `/one` command in Claude",
+      "Claude scaffolds your project",
+      "Start building with AI assistance",
     ],
     benefits: [
-      'Real-time AI assistance',
-      'Instant error debugging',
-      'Best developer experience',
-      'Learn patterns as you build',
+      "Real-time AI assistance",
+      "Instant error debugging",
+      "Best developer experience",
+      "Learn patterns as you build",
     ],
-    timeEstimate: '5 minutes',
+    timeEstimate: "5 minutes",
   },
   {
-    id: 'clone-repo',
-    title: 'Clone Repository',
-    description: 'Get the full example repo and start building immediately',
+    id: "clone-repo",
+    title: "Clone Repository",
+    description: "Get the full example repo and start building immediately",
     icon: <Github className="w-6 h-6" />,
-    badge: 'Full Example',
-    command: 'git clone https://github.com/one-ie/one.git && cd one/web',
+    badge: "Full Example",
+    command: "git clone https://github.com/one-ie/one.git && cd one/web",
     steps: [
-      'Clone the repository',
-      'Navigate to web directory',
-      'Install dependencies (bun install)',
-      'Start dev server (bun run dev)',
-      'Explore and customize example code',
+      "Clone the repository",
+      "Navigate to web directory",
+      "Install dependencies (bun install)",
+      "Start dev server (bun run dev)",
+      "Explore and customize example code",
     ],
     benefits: [
-      'Full working example',
-      'All best practices included',
-      'Real components to learn from',
-      'Production-ready setup',
+      "Full working example",
+      "All best practices included",
+      "Real components to learn from",
+      "Production-ready setup",
     ],
-    timeEstimate: '10 minutes',
+    timeEstimate: "10 minutes",
   },
   {
-    id: 'npm-package',
-    title: 'Use NPM Package',
-    description: 'Minimal setup - just install and start using ONE features',
+    id: "npm-package",
+    title: "Use NPM Package",
+    description: "Minimal setup - just install and start using ONE features",
     icon: <Package className="w-6 h-6" />,
-    badge: 'Lightweight',
-    command: 'npm create astro@latest -- --template one-ie/minimal',
+    badge: "Lightweight",
+    command: "npm create astro@latest -- --template one-ie/minimal",
     steps: [
-      'Create new Astro project with ONE template',
-      'Install dependencies (npm install)',
-      'Set up environment variables',
-      'Start dev server (npm run dev)',
-      'Begin with minimal boilerplate',
+      "Create new Astro project with ONE template",
+      "Install dependencies (npm install)",
+      "Set up environment variables",
+      "Start dev server (npm run dev)",
+      "Begin with minimal boilerplate",
     ],
     benefits: [
-      'Minimal boilerplate',
-      'Full control over structure',
-      'Start from scratch',
-      'Lightweight setup',
+      "Minimal boilerplate",
+      "Full control over structure",
+      "Start from scratch",
+      "Lightweight setup",
     ],
-    timeEstimate: '8 minutes',
+    timeEstimate: "8 minutes",
   },
 ];
 
 export function QuickStartOptions() {
-  const [activeTab, setActiveTab] = useState('ai-assisted');
+  const [activeTab, setActiveTab] = useState("ai-assisted");
   const [copiedCommand, setCopiedCommand] = useState<string | null>(null);
-
-  const activeOption = options.find(opt => opt.id === activeTab) || options[0];
 
   const copyCommand = (command: string) => {
     navigator.clipboard.writeText(command);
@@ -114,9 +112,9 @@ export function QuickStartOptions() {
               <div className="flex items-center gap-2">
                 {option.icon}
                 <span className="hidden sm:inline">{option.title}</span>
-                <span className="sm:hidden">{option.title.split(' ')[0]}</span>
+                <span className="sm:hidden">{option.title.split(" ")[0]}</span>
               </div>
-              {option.badge === 'Recommended' && (
+              {option.badge === "Recommended" && (
                 <Badge variant="secondary" className="ml-2 text-xs">
                   ⭐ Rec
                 </Badge>
@@ -168,7 +166,7 @@ export function QuickStartOptions() {
                 <CardContent>
                   <ol className="space-y-3">
                     {option.steps.map((step, idx) => (
-                      <li key={idx} className="flex gap-3 items-start">
+                      <li key={step} className="flex gap-3 items-start">
                         <div className="flex-shrink-0 w-6 h-6 rounded-full bg-primary/10 text-primary flex items-center justify-center text-xs font-semibold">
                           {idx + 1}
                         </div>
@@ -187,8 +185,8 @@ export function QuickStartOptions() {
                 </CardHeader>
                 <CardContent>
                   <ul className="space-y-2">
-                    {option.benefits.map((benefit, idx) => (
-                      <li key={idx} className="flex gap-2 items-start text-sm">
+                    {option.benefits.map((benefit) => (
+                      <li key={benefit} className="flex gap-2 items-start text-sm">
                         <CheckCircle className="w-4 h-4 text-green-600 flex-shrink-0 mt-0.5" />
                         <span>{benefit}</span>
                       </li>
@@ -206,7 +204,7 @@ export function QuickStartOptions() {
               <Button
                 size="lg"
                 variant="outline"
-                onClick={() => window.open('https://docs.one.ie', '_blank')}
+                onClick={() => window.open("https://docs.one.ie", "_blank")}
               >
                 View Docs
                 <ExternalLink className="w-4 h-4 ml-2" />

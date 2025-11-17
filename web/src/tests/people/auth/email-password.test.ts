@@ -1,14 +1,14 @@
-import { describe, it, expect, beforeEach } from "vitest";
+import { beforeEach, describe, expect, it } from "vitest";
 import { api } from "../../../../../backend/convex/_generated/api";
 import {
+  assert,
+  assertErrorMessage,
   convex,
   generateTestEmail,
   generateTestPassword,
-  TestLogger,
-  assert,
-  assertErrorMessage,
-  isValidEmail,
   isStrongPassword,
+  isValidEmail,
+  TestLogger,
 } from "./utils";
 
 /**
@@ -29,18 +29,9 @@ describe("Auth - Email & Password", () => {
     it("should validate email format", () => {
       const logger = new TestLogger("Email Validation");
 
-      const validEmails = [
-        "test@example.com",
-        "user+tag@domain.co.uk",
-        "name.surname@company.io",
-      ];
+      const validEmails = ["test@example.com", "user+tag@domain.co.uk", "name.surname@company.io"];
 
-      const invalidEmails = [
-        "notanemail",
-        "@example.com",
-        "user@",
-        "user @example.com",
-      ];
+      const invalidEmails = ["notanemail", "@example.com", "user@", "user @example.com"];
 
       validEmails.forEach((email) => {
         assert(isValidEmail(email), `${email} should be valid`);
@@ -60,18 +51,9 @@ describe("Auth - Email & Password", () => {
     it("should enforce password strength", () => {
       const logger = new TestLogger("Password Strength");
 
-      const strongPasswords = [
-        "MyP@ssw0rd123",
-        "Test1234!Pass",
-        "Secure9Pass!",
-      ];
+      const strongPasswords = ["MyP@ssw0rd123", "Test1234!Pass", "Secure9Pass!"];
 
-      const weakPasswords = [
-        "short",
-        "alllowercase123",
-        "ALLUPPERCASE123",
-        "NoNumbers!",
-      ];
+      const weakPasswords = ["short", "alllowercase123", "ALLUPPERCASE123", "NoNumbers!"];
 
       strongPasswords.forEach((password) => {
         assert(isStrongPassword(password), `${password} should be strong`);
@@ -140,7 +122,7 @@ describe("Auth - Email & Password", () => {
 
     it("should prevent weak passwords", async () => {
       const logger = new TestLogger("SignUp - Weak Password");
-      const weakPassword = "123"; // Too short
+      const _weakPassword = "123"; // Too short
 
       // Note: The backend currently doesn't enforce password strength
       // This is a placeholder for when that validation is added
@@ -264,7 +246,7 @@ describe("Auth - Email & Password", () => {
     it("should handle very long passwords", async () => {
       const logger = new TestLogger("Edge - Long Password");
       const email = generateTestEmail("long-password");
-      const longPassword = "A".repeat(100) + "1!"; // 102 characters
+      const longPassword = `${"A".repeat(100)}1!`; // 102 characters
 
       const result = await convex.mutation(api.auth.signUp, {
         email,
@@ -319,7 +301,7 @@ describe("Auth - Email & Password", () => {
         // If this succeeds, email is case-insensitive
         logger.log("✓ Email is case-insensitive");
         assert(!!result.token, "Should accept different case email");
-      } catch (error) {
+      } catch (_error) {
         // If this fails, email is case-sensitive
         logger.log("ℹ️  Email is case-sensitive");
       }

@@ -5,16 +5,16 @@
  * Provides hooks for semantic search, RAG, and knowledge management.
  */
 
-import { useState, useEffect } from 'react';
-import { useQuery, useMutation as useReactMutation, useQueryClient } from '@tanstack/react-query';
-import { Effect } from 'effect';
-import { useDataProvider } from './useDataProvider';
-import type { QueryResult, MutationResult, QueryOptions, MutationOptions } from './types';
+import { useQuery, useQueryClient, useMutation as useReactMutation } from "@tanstack/react-query";
+import { Effect } from "effect";
+import { useEffect, useState } from "react";
 import type {
-  Knowledge,
   CreateKnowledgeInput,
+  Knowledge,
   SearchKnowledgeOptions,
-} from '@/providers/DataProvider';
+} from "@/providers/DataProvider";
+import type { MutationOptions, MutationResult, QueryOptions, QueryResult } from "./types";
+import { useDataProvider } from "./useDataProvider";
 
 // ============================================================================
 // QUERY HOOKS
@@ -47,7 +47,7 @@ export function useKnowledge(
   const provider = useDataProvider();
   const { enabled = true, ...reactQueryOptions } = queryOptions ?? {};
 
-  const queryKey = ['knowledge', options];
+  const queryKey = ["knowledge", options];
 
   const queryFn = async (): Promise<Knowledge[]> => {
     const effect = provider.knowledge.list(options);
@@ -106,7 +106,7 @@ export function useKnowledge(
  */
 export function useSearch(
   query: string,
-  options?: Omit<SearchKnowledgeOptions, 'query'>,
+  options?: Omit<SearchKnowledgeOptions, "query">,
   queryOptions?: QueryOptions
 ): QueryResult<Knowledge[]> {
   const [debouncedQuery, setDebouncedQuery] = useState(query);
@@ -123,7 +123,7 @@ export function useSearch(
   const provider = useDataProvider();
   const { enabled = true, ...reactQueryOptions } = queryOptions ?? {};
 
-  const queryKey = ['search', debouncedQuery, options];
+  const queryKey = ["search", debouncedQuery, options];
 
   const queryFn = async (): Promise<Knowledge[]> => {
     // TODO: Implement text-to-embedding conversion
@@ -187,7 +187,7 @@ export function useCreateKnowledge(
     },
     onSuccess: async (id, input) => {
       // Invalidate knowledge queries
-      await queryClient.invalidateQueries({ queryKey: ['knowledge'] });
+      await queryClient.invalidateQueries({ queryKey: ["knowledge"] });
 
       await mutationOptions?.onSuccess?.(id, input);
     },
@@ -222,10 +222,7 @@ export function useCreateKnowledge(
  * ```
  */
 export function useLinkKnowledge(
-  mutationOptions?: MutationOptions<
-    string,
-    { thingId: string; knowledgeId: string; role?: string }
-  >
+  mutationOptions?: MutationOptions<string, { thingId: string; knowledgeId: string; role?: string }>
 ): MutationResult<string, { thingId: string; knowledgeId: string; role?: string }> {
   const provider = useDataProvider();
   const queryClient = useQueryClient();
@@ -246,13 +243,13 @@ export function useLinkKnowledge(
     onSuccess: async (id, { thingId }) => {
       // Invalidate knowledge queries for this thing
       await queryClient.invalidateQueries({
-        queryKey: ['knowledge', { sourceThingId: thingId }],
+        queryKey: ["knowledge", { sourceThingId: thingId }],
       });
 
       // Invalidate the thing itself (it may display linked knowledge)
-      await queryClient.invalidateQueries({ queryKey: ['thing', thingId] });
+      await queryClient.invalidateQueries({ queryKey: ["thing", thingId] });
 
-      await mutationOptions?.onSuccess?.(id, { thingId, knowledgeId: '', role: '' });
+      await mutationOptions?.onSuccess?.(id, { thingId, knowledgeId: "", role: "" });
     },
     onError: async (error, input) => {
       await mutationOptions?.onError?.(error as Error, input);
@@ -284,10 +281,10 @@ export function useLinkKnowledge(
  * const { data: allLabels } = useLabels();
  * ```
  */
-export function useLabels(category?: string, queryOptions?: QueryOptions) {
+export function useLabels(_category?: string, queryOptions?: QueryOptions) {
   return useKnowledge(
     {
-      knowledgeType: 'label',
+      knowledgeType: "label",
       // Note: category filtering would need to be implemented in the backend
       // For now, this returns all labels and filtering can be done client-side
     },

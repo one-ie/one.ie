@@ -1,23 +1,23 @@
-import { useState, useEffect } from 'react';
-import { Moon, Sun } from 'lucide-react';
+import { Moon, Sun } from "lucide-react";
+import { useEffect, useState } from "react";
 
 interface ThemeToggleProps {
-  variant?: 'floating' | 'inline';
-  size?: 'sm' | 'md' | 'lg';
+  variant?: "floating" | "inline";
+  size?: "sm" | "md" | "lg";
 }
 
-export function ThemeToggle({ variant = 'floating', size = 'md' }: ThemeToggleProps) {
+export function ThemeToggle({ variant = "floating", size = "md" }: ThemeToggleProps) {
   const [isDark, setIsDark] = useState(false);
 
   useEffect(() => {
     // Check initial theme
-    const theme = localStorage.getItem('theme') || 'light';
-    const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
-    const initialDark = theme === 'dark' || (theme === 'system' && prefersDark);
+    const theme = localStorage.getItem("theme") || "light";
+    const prefersDark = window.matchMedia("(prefers-color-scheme: dark)").matches;
+    const initialDark = theme === "dark" || (theme === "system" && prefersDark);
 
     setIsDark(initialDark);
     if (initialDark) {
-      document.documentElement.classList.add('dark');
+      document.documentElement.classList.add("dark");
     }
   }, []);
 
@@ -26,25 +26,25 @@ export function ThemeToggle({ variant = 'floating', size = 'md' }: ThemeTogglePr
     setIsDark(newIsDark);
 
     if (newIsDark) {
-      document.documentElement.classList.add('dark');
-      localStorage.setItem('theme', 'dark');
+      document.documentElement.classList.add("dark");
+      localStorage.setItem("theme", "dark");
     } else {
-      document.documentElement.classList.remove('dark');
-      localStorage.setItem('theme', 'light');
+      document.documentElement.classList.remove("dark");
+      localStorage.setItem("theme", "light");
     }
   };
 
   // Size configurations
   const sizeClasses = {
-    sm: { button: 'h-10 px-4 gap-2', icon: 'w-4 h-4', text: 'text-sm' },
-    md: { button: 'h-12 px-6 gap-3', icon: 'w-5 h-5', text: 'text-base' },
-    lg: { button: 'h-16 px-8 gap-4', icon: 'w-7 h-7', text: 'text-lg' },
+    sm: { button: "h-10 px-4 gap-2", icon: "w-4 h-4", text: "text-sm" },
+    md: { button: "h-12 px-6 gap-3", icon: "w-5 h-5", text: "text-base" },
+    lg: { button: "h-16 px-8 gap-4", icon: "w-7 h-7", text: "text-lg" },
   };
 
   const currentSize = sizeClasses[size];
 
   // Floating variant (original)
-  if (variant === 'floating') {
+  if (variant === "floating") {
     return (
       <button
         onClick={toggleTheme}
@@ -54,17 +54,17 @@ export function ThemeToggle({ variant = 'floating', size = 'md' }: ThemeTogglePr
         <div className="relative w-6 h-6">
           <Sun
             className={`absolute inset-0 w-6 h-6 text-yellow-500 transition-all duration-300 ${
-              isDark ? 'opacity-0 rotate-90 scale-0' : 'opacity-100 rotate-0 scale-100'
+              isDark ? "opacity-0 rotate-90 scale-0" : "opacity-100 rotate-0 scale-100"
             }`}
           />
           <Moon
             className={`absolute inset-0 w-6 h-6 text-blue-600 transition-all duration-300 ${
-              isDark ? 'opacity-100 rotate-0 scale-100' : 'opacity-0 -rotate-90 scale-0'
+              isDark ? "opacity-100 rotate-0 scale-100" : "opacity-0 -rotate-90 scale-0"
             }`}
           />
         </div>
         <span className="absolute left-full ml-3 top-1/2 -translate-y-1/2 px-3 py-1 bg-black dark:bg-white text-white dark:text-black text-sm font-medium rounded-lg opacity-0 group-hover:opacity-100 transition-opacity duration-200 whitespace-nowrap pointer-events-none">
-          {isDark ? 'Light mode' : 'Dark mode'}
+          {isDark ? "Light mode" : "Dark mode"}
         </span>
       </button>
     );
@@ -80,8 +80,8 @@ export function ThemeToggle({ variant = 'floating', size = 'md' }: ThemeTogglePr
         }}
         className={`${currentSize.button} ${currentSize.text} flex items-center rounded-md font-semibold transition-all ${
           !isDark
-            ? 'bg-background text-foreground shadow-lg'
-            : 'bg-transparent text-muted-foreground hover:text-foreground'
+            ? "bg-background text-foreground shadow-lg"
+            : "bg-transparent text-muted-foreground hover:text-foreground"
         }`}
         aria-label="Light mode"
       >
@@ -96,8 +96,8 @@ export function ThemeToggle({ variant = 'floating', size = 'md' }: ThemeTogglePr
         }}
         className={`${currentSize.button} ${currentSize.text} flex items-center rounded-md font-semibold transition-all ${
           isDark
-            ? 'bg-background text-foreground shadow-lg'
-            : 'bg-transparent text-muted-foreground hover:text-foreground'
+            ? "bg-background text-foreground shadow-lg"
+            : "bg-transparent text-muted-foreground hover:text-foreground"
         }`}
         aria-label="Dark mode"
       >

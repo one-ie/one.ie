@@ -5,8 +5,8 @@
  * Includes quantity selector and buy button
  */
 
-import { useState } from 'react';
-import { Card, CardContent } from '@/components/ui/card';
+import { useState } from "react";
+import { Card, CardContent } from "@/components/ui/card";
 
 interface AddToCartCardProps {
   productName: string;
@@ -19,7 +19,7 @@ export function AddToCartCard({
   productName,
   productPrice,
   productImage,
-  stripeEnabled = false
+  stripeEnabled = false,
 }: AddToCartCardProps) {
   const [quantity, setQuantity] = useState(1);
   const [processing, setProcessing] = useState(false);
@@ -31,16 +31,16 @@ export function AddToCartCard({
       setProcessing(true);
       try {
         const formData = new FormData();
-        formData.append('quantity', String(quantity));
-        formData.append('email', 'customer@example.com');
+        formData.append("quantity", String(quantity));
+        formData.append("email", "customer@example.com");
 
         const response = await fetch(window.location.pathname, {
-          method: 'POST',
+          method: "POST",
           body: formData,
         });
 
         if (!response.ok) {
-          throw new Error('Payment processing failed');
+          throw new Error("Payment processing failed");
         }
 
         const data = await response.json();
@@ -48,11 +48,11 @@ export function AddToCartCard({
         if (data.url) {
           window.location.href = data.url;
         } else {
-          throw new Error('No checkout URL received');
+          throw new Error("No checkout URL received");
         }
       } catch (error) {
-        console.error('Checkout error:', error);
-        alert('Payment processing failed. Please try again.');
+        console.error("Checkout error:", error);
+        alert("Payment processing failed. Please try again.");
         setProcessing(false);
       }
     } else {
@@ -60,7 +60,7 @@ export function AddToCartCard({
       (window as any).orderQuantity = quantity;
 
       // Dispatch event to open buy dialog in ProductHeader
-      window.dispatchEvent(new Event('openBuyDialog'));
+      window.dispatchEvent(new Event("openBuyDialog"));
     }
   };
 
@@ -129,7 +129,7 @@ export function AddToCartCard({
           className="w-full bg-black dark:bg-white text-white dark:text-black border-2 border-black dark:border-white py-3 hover:opacity-80 transition-opacity disabled:opacity-50"
         >
           <span className="text-xs font-bold tracking-[0.3em] uppercase">
-            {processing ? 'Processing...' : 'Buy Now'}
+            {processing ? "Processing..." : "Buy Now"}
           </span>
         </button>
 

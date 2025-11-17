@@ -1,14 +1,12 @@
-import React from "react";
-import { Card } from "@/components/ui/card";
-import { Button } from "@/components/ui/button";
 import { ArrowRight, BookOpen, MessageSquare, Zap } from "lucide-react";
+import { Button } from "@/components/ui/button";
+import { Card } from "@/components/ui/card";
 
 export function CourseModules() {
   const modules = [
     {
       title: "Strategy Ebook",
-      description:
-        "Master the foundational principles for AI success in e-commerce",
+      description: "Master the foundational principles for AI success in e-commerce",
       icon: <BookOpen className="w-6 h-6 text-primary" />,
       features: [
         "Company Context Framework",
@@ -21,8 +19,7 @@ export function CourseModules() {
     },
     {
       title: "100 Prompt System",
-      description:
-        "Field-tested prompts for rapid implementation across marketing channels",
+      description: "Field-tested prompts for rapid implementation across marketing channels",
       icon: <Zap className="w-6 h-6 text-primary" />,
       features: [
         "Product Descriptions",
@@ -35,8 +32,7 @@ export function CourseModules() {
     },
     {
       title: "Expert Community",
-      description:
-        "Connect with successful store owners and get ongoing support",
+      description: "Connect with successful store owners and get ongoing support",
       icon: <MessageSquare className="w-6 h-6 text-primary" />,
       features: [
         "Weekly Strategy Calls",
@@ -53,9 +49,7 @@ export function CourseModules() {
     <section className="py-20 relative">
       <div className="container px-4 mx-auto">
         <div className="max-w-4xl mx-auto text-center mb-16">
-          <h2 className="text-3xl lg:text-4xl font-bold mb-4">
-            Inside the ONE Playbook
-          </h2>
+          <h2 className="text-3xl lg:text-4xl font-bold mb-4">Inside the ONE Playbook</h2>
           <p className="text-xl text-muted-foreground">
             Everything you need to transform your e-commerce business with AI
           </p>
@@ -69,19 +63,14 @@ export function CourseModules() {
                   {module.icon}
                 </div>
                 <h3 className="text-xl font-bold mb-2">{module.title}</h3>
-                <p className="text-muted-foreground text-sm mb-4">
-                  {module.description}
-                </p>
+                <p className="text-muted-foreground text-sm mb-4">{module.description}</p>
               </div>
 
               <div className="space-y-3">
                 <p className="text-sm font-medium">Includes:</p>
                 <ul className="space-y-2">
                   {module.features.map((feature, i) => (
-                    <li
-                      key={i}
-                      className="text-sm text-muted-foreground flex items-center gap-2"
-                    >
+                    <li key={i} className="text-sm text-muted-foreground flex items-center gap-2">
                       <div className="w-1 h-1 rounded-full bg-primary" />
                       {feature}
                     </li>

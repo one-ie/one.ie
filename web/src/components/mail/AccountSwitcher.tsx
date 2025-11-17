@@ -1,7 +1,5 @@
-import * as React from "react"
-import { ChevronsUpDown, Plus } from "lucide-react"
-import { cn } from "@/lib/utils"
-
+import { ChevronsUpDown, Plus } from "lucide-react";
+import * as React from "react";
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -9,20 +7,21 @@ import {
   DropdownMenuLabel,
   DropdownMenuSeparator,
   DropdownMenuTrigger,
-} from "@/components/ui/dropdown-menu"
+} from "@/components/ui/dropdown-menu";
+import { cn } from "@/lib/utils";
 
 export function AccountSwitcher({
   accounts,
   isCollapsed,
 }: {
   accounts: {
-    label: string
-    email: string
-    icon: React.ReactNode
-  }[]
-  isCollapsed: boolean
+    label: string;
+    email: string;
+    icon: React.ReactNode;
+  }[];
+  isCollapsed: boolean;
 }) {
-  const [selectedAccount, setSelectedAccount] = React.useState(accounts[0])
+  const [selectedAccount, setSelectedAccount] = React.useState(accounts[0]);
 
   return (
     <DropdownMenu>
@@ -58,10 +57,8 @@ export function AccountSwitcher({
         side={isCollapsed ? "right" : "bottom"}
         sideOffset={4}
       >
-        <DropdownMenuLabel className="text-xs text-muted-foreground">
-          Accounts
-        </DropdownMenuLabel>
-        {accounts.map((account, index) => (
+        <DropdownMenuLabel className="text-xs text-muted-foreground">Accounts</DropdownMenuLabel>
+        {accounts.map((account, _index) => (
           <DropdownMenuItem
             key={account.email}
             onClick={() => setSelectedAccount(account)}
@@ -85,5 +82,5 @@ export function AccountSwitcher({
         </DropdownMenuItem>
       </DropdownMenuContent>
     </DropdownMenu>
-  )
+  );
 }

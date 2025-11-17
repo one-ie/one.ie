@@ -5,8 +5,8 @@
  * Shows upgrade prompt if feature is locked
  */
 
-import { canAccessPremium, getUpgradeUrl } from '@/config/backend';
-import { UpgradeBanner } from './UpgradeBanner';
+import { canAccessPremium } from "@/config/backend";
+import { UpgradeBanner } from "./UpgradeBanner";
 
 export interface FeatureGateProps {
   feature: string;
@@ -15,12 +15,7 @@ export interface FeatureGateProps {
   fallback?: React.ReactNode;
 }
 
-export function FeatureGate({
-  feature,
-  featureName,
-  children,
-  fallback,
-}: FeatureGateProps) {
+export function FeatureGate({ feature, featureName, children, fallback }: FeatureGateProps) {
   if (canAccessPremium()) {
     return <>{children}</>;
   }
@@ -30,8 +25,6 @@ export function FeatureGate({
   }
 
   return (
-    <UpgradeBanner feature={feature}>
-      {featureName} requires a premium subscription.
-    </UpgradeBanner>
+    <UpgradeBanner feature={feature}>{featureName} requires a premium subscription.</UpgradeBanner>
   );
 }

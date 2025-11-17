@@ -1,8 +1,8 @@
-'use client';
+"use client";
 
-import { useStore } from '@nanostores/react';
-import { $cart, $cartTotal, $cartSubtotal, cartActions } from '@/stores/cart';
-import { CheckoutForm } from './interactive/CheckoutForm';
+import { useStore } from "@nanostores/react";
+import { $cart, $cartSubtotal, $cartTotal, cartActions } from "@/stores/cart";
+import { CheckoutForm } from "./interactive/CheckoutForm";
 
 export function CheckoutFormWrapper() {
   const cart = useStore($cart);
@@ -10,7 +10,7 @@ export function CheckoutFormWrapper() {
   const subtotal = useStore($cartSubtotal);
 
   const handleSubmit = (data: unknown) => {
-    console.warn('Order submitted:', data);
+    console.warn("Order submitted:", data);
 
     // Generate unique order ID
     const timestamp = Date.now().toString(36).toUpperCase();
@@ -21,7 +21,7 @@ export function CheckoutFormWrapper() {
     const orderData = {
       id: orderId,
       date: new Date().toISOString(),
-      items: cart.items.map(item => ({
+      items: cart.items.map((item) => ({
         id: item.id,
         name: item.name,
         quantity: item.quantity,
@@ -33,15 +33,15 @@ export function CheckoutFormWrapper() {
       shipping: 0, // Free shipping
       tax: 0,
       total: total,
-      email: 'customer@example.com', // In production, get from auth
-      status: 'confirmed',
+      email: "customer@example.com", // In production, get from auth
+      status: "confirmed",
     };
 
-    localStorage.setItem('lastOrder', JSON.stringify(orderData));
+    localStorage.setItem("lastOrder", JSON.stringify(orderData));
 
     // Clear cart and redirect
     cartActions.clearCart();
-    window.location.href = '/account/order-confirmation';
+    window.location.href = "/account/order-confirmation";
   };
 
   return <CheckoutForm total={total} onSubmit={handleSubmit} />;

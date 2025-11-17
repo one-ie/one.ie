@@ -6,10 +6,10 @@
  * - No persistence
  */
 
-import { useState } from 'react';
+import { useState } from "react";
 
 export interface GenerativeUIComponent {
-  type: 'chart' | 'table' | 'form' | 'card' | 'list' | 'timeline';
+  type: "chart" | "table" | "form" | "card" | "list" | "timeline";
   props: Record<string, any>;
 }
 

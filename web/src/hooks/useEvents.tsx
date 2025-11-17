@@ -4,11 +4,11 @@
  * Provides hooks for querying event streams and logging events.
  */
 
-import { useQuery, useMutation as useReactMutation, useQueryClient } from '@tanstack/react-query';
-import { Effect } from 'effect';
-import { useDataProvider } from './useDataProvider';
-import type { QueryResult, MutationResult, QueryOptions, MutationOptions } from './types';
-import type { Event, CreateEventInput, ListEventsOptions } from '@/providers/DataProvider';
+import { useQuery, useQueryClient, useMutation as useReactMutation } from "@tanstack/react-query";
+import { Effect } from "effect";
+import type { CreateEventInput, Event, ListEventsOptions } from "@/providers/DataProvider";
+import type { MutationOptions, MutationResult, QueryOptions, QueryResult } from "./types";
+import { useDataProvider } from "./useDataProvider";
 
 // ============================================================================
 // QUERY HOOKS
@@ -42,7 +42,7 @@ export function useEvents(
   const provider = useDataProvider();
   const { enabled = true, ...reactQueryOptions } = queryOptions ?? {};
 
-  const queryKey = ['events', options];
+  const queryKey = ["events", options];
 
   const queryFn = async (): Promise<Event[]> => {
     const effect = provider.events.list(options);
@@ -82,10 +82,10 @@ export function useEvent(id: string | null, queryOptions?: QueryOptions): QueryR
   const provider = useDataProvider();
   const { enabled = true, ...reactQueryOptions } = queryOptions ?? {};
 
-  const queryKey = ['event', id];
+  const queryKey = ["event", id];
 
   const queryFn = async (): Promise<Event> => {
-    if (!id) throw new Error('Event ID is required');
+    if (!id) throw new Error("Event ID is required");
     const effect = provider.events.get(id);
     return await Effect.runPromise(effect);
   };
@@ -144,17 +144,17 @@ export function useLogEvent(
     },
     onSuccess: async (id, input) => {
       // Invalidate event queries for affected entities
-      await queryClient.invalidateQueries({ queryKey: ['events'] });
+      await queryClient.invalidateQueries({ queryKey: ["events"] });
 
       if (input.actorId) {
         await queryClient.invalidateQueries({
-          queryKey: ['events', { actorId: input.actorId }],
+          queryKey: ["events", { actorId: input.actorId }],
         });
       }
 
       if (input.targetId) {
         await queryClient.invalidateQueries({
-          queryKey: ['events', { targetId: input.targetId }],
+          queryKey: ["events", { targetId: input.targetId }],
         });
       }
 

@@ -3,53 +3,53 @@
  * Demonstrates advanced AI capabilities available in premium tier
  */
 
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
-import { Badge } from '@/components/ui/badge';
-import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
-import { Reasoning } from '@/components/ai/Reasoning';
-import { ToolCall } from '@/components/ai/ToolCall';
-import { Sparkles, Brain, Wrench, History, Zap } from 'lucide-react';
+import { Brain, History, Sparkles, Wrench, Zap } from "lucide-react";
+import { Reasoning } from "@/components/ai/Reasoning";
+import { ToolCall } from "@/components/ai/ToolCall";
+import { Badge } from "@/components/ui/badge";
+import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
+import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 
 const DEMO_REASONING_STEPS = [
   {
     step: 1,
-    title: 'Analyze user request',
-    description: 'Understanding the context and requirements of the query',
+    title: "Analyze user request",
+    description: "Understanding the context and requirements of the query",
     completed: true,
   },
   {
     step: 2,
-    title: 'Break down into sub-tasks',
-    description: 'Identifying the key components needed for the solution',
+    title: "Break down into sub-tasks",
+    description: "Identifying the key components needed for the solution",
     completed: true,
   },
   {
     step: 3,
-    title: 'Generate solution',
-    description: 'Creating the code/content based on best practices',
+    title: "Generate solution",
+    description: "Creating the code/content based on best practices",
     completed: true,
   },
   {
     step: 4,
-    title: 'Validate and optimize',
-    description: 'Checking for errors and improving performance',
+    title: "Validate and optimize",
+    description: "Checking for errors and improving performance",
     completed: false,
   },
 ];
 
 const DEMO_TOOL_CALL = {
-  name: 'searchDocumentation',
+  name: "searchDocumentation",
   args: {
-    query: 'React hooks useEffect dependencies',
+    query: "React hooks useEffect dependencies",
     maxResults: 5,
   },
   result: {
     results: [
-      { title: 'useEffect Hook', url: 'https://react.dev/reference/react/useEffect' },
-      { title: 'Rules of Hooks', url: 'https://react.dev/warnings/invalid-hook-call-warning' },
+      { title: "useEffect Hook", url: "https://react.dev/reference/react/useEffect" },
+      { title: "Rules of Hooks", url: "https://react.dev/warnings/invalid-hook-call-warning" },
     ],
   },
-  status: 'completed' as const,
+  status: "completed" as const,
 };
 
 export function PremiumFeaturesShowcase() {
@@ -123,9 +123,7 @@ export function PremiumFeaturesShowcase() {
       <Card>
         <CardHeader>
           <CardTitle>Interactive Demo</CardTitle>
-          <CardDescription>
-            See premium features in action with live examples
-          </CardDescription>
+          <CardDescription>See premium features in action with live examples</CardDescription>
         </CardHeader>
         <CardContent>
           <Tabs defaultValue="reasoning" className="w-full">
@@ -174,10 +172,16 @@ export function PremiumFeaturesShowcase() {
               </p>
             </div>
             <div className="flex gap-2">
-              <a href="/upgrade" className="inline-flex items-center justify-center rounded-md text-sm font-medium ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 bg-primary text-primary-foreground hover:bg-primary/90 h-10 px-6">
+              <a
+                href="/upgrade"
+                className="inline-flex items-center justify-center rounded-md text-sm font-medium ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 bg-primary text-primary-foreground hover:bg-primary/90 h-10 px-6"
+              >
                 Upgrade Now
               </a>
-              <a href="/features" className="inline-flex items-center justify-center rounded-md text-sm font-medium ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 border border-input bg-background hover:bg-accent hover:text-accent-foreground h-10 px-6">
+              <a
+                href="/features"
+                className="inline-flex items-center justify-center rounded-md text-sm font-medium ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 border border-input bg-background hover:bg-accent hover:text-accent-foreground h-10 px-6"
+              >
                 Learn More
               </a>
             </div>

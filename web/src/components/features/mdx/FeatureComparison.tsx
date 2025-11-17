@@ -1,6 +1,6 @@
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import { Badge } from "@/components/ui/badge";
 import { Check, X } from "lucide-react";
+import { Badge } from "@/components/ui/badge";
+import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 
 interface ComparisonRow {
   feature: string;
@@ -36,7 +36,7 @@ export function FeatureComparison({
   title = "Feature Comparison",
   description,
   rows,
-  competitorName = "Competitors"
+  competitorName = "Competitors",
 }: FeatureComparisonProps) {
   const renderCell = (value: boolean | string) => {
     if (typeof value === "boolean") {
@@ -56,9 +56,7 @@ export function FeatureComparison({
           <CardTitle>{title}</CardTitle>
           <Badge variant="outline">Comparison</Badge>
         </div>
-        {description && (
-          <p className="text-sm text-muted-foreground mt-2">{description}</p>
-        )}
+        {description && <p className="text-sm text-muted-foreground mt-2">{description}</p>}
       </CardHeader>
       <CardContent>
         <div className="overflow-x-auto">

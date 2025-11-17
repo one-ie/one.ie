@@ -4,15 +4,15 @@
  * Provides hooks for querying and mutating relationships between entities.
  */
 
-import { useQuery, useMutation as useReactMutation, useQueryClient } from '@tanstack/react-query';
-import { Effect } from 'effect';
-import { useDataProvider } from './useDataProvider';
-import type { QueryResult, MutationResult, QueryOptions, MutationOptions } from './types';
+import { useQuery, useQueryClient, useMutation as useReactMutation } from "@tanstack/react-query";
+import { Effect } from "effect";
 import type {
   Connection,
   CreateConnectionInput,
   ListConnectionsOptions,
-} from '@/providers/DataProvider';
+} from "@/providers/DataProvider";
+import type { MutationOptions, MutationResult, QueryOptions, QueryResult } from "./types";
+import { useDataProvider } from "./useDataProvider";
 
 // ============================================================================
 // QUERY HOOKS
@@ -46,7 +46,7 @@ export function useConnections(
   const provider = useDataProvider();
   const { enabled = true, ...reactQueryOptions } = queryOptions ?? {};
 
-  const queryKey = ['connections', options];
+  const queryKey = ["connections", options];
 
   const queryFn = async (): Promise<Connection[]> => {
     const effect = provider.connections.list(options);
@@ -89,10 +89,10 @@ export function useConnection(
   const provider = useDataProvider();
   const { enabled = true, ...reactQueryOptions } = queryOptions ?? {};
 
-  const queryKey = ['connection', id];
+  const queryKey = ["connection", id];
 
   const queryFn = async (): Promise<Connection> => {
-    if (!id) throw new Error('Connection ID is required');
+    if (!id) throw new Error("Connection ID is required");
     const effect = provider.connections.get(id);
     return await Effect.runPromise(effect);
   };
@@ -151,11 +151,11 @@ export function useCreateConnection(
     },
     onSuccess: async (id, input) => {
       // Invalidate connection queries
-      await queryClient.invalidateQueries({ queryKey: ['connections'] });
+      await queryClient.invalidateQueries({ queryKey: ["connections"] });
 
       // Invalidate related things
-      await queryClient.invalidateQueries({ queryKey: ['thing', input.fromEntityId] });
-      await queryClient.invalidateQueries({ queryKey: ['thing', input.toEntityId] });
+      await queryClient.invalidateQueries({ queryKey: ["thing", input.fromEntityId] });
+      await queryClient.invalidateQueries({ queryKey: ["thing", input.toEntityId] });
 
       await mutationOptions?.onSuccess?.(id, input);
     },
@@ -198,10 +198,10 @@ export function useDeleteConnection(
     },
     onSuccess: async (data, id) => {
       // Remove from cache
-      queryClient.removeQueries({ queryKey: ['connection', id] });
+      queryClient.removeQueries({ queryKey: ["connection", id] });
 
       // Invalidate all connection lists
-      await queryClient.invalidateQueries({ queryKey: ['connections'] });
+      await queryClient.invalidateQueries({ queryKey: ["connections"] });
 
       await mutationOptions?.onSuccess?.(data, id);
     },
@@ -232,10 +232,10 @@ export function useDeleteConnection(
  * ```
  */
 export function useOwnedThings(ownerId: string | null, queryOptions?: QueryOptions) {
-  return useConnections(
-    ownerId ? { fromEntityId: ownerId, relationshipType: 'owns' } : undefined,
-    { ...queryOptions, enabled: queryOptions?.enabled && !!ownerId }
-  );
+  return useConnections(ownerId ? { fromEntityId: ownerId, relationshipType: "owns" } : undefined, {
+    ...queryOptions,
+    enabled: queryOptions?.enabled && !!ownerId,
+  });
 }
 
 /**
@@ -248,7 +248,7 @@ export function useOwnedThings(ownerId: string | null, queryOptions?: QueryOptio
  */
 export function useEnrollments(userId: string | null, queryOptions?: QueryOptions) {
   return useConnections(
-    userId ? { fromEntityId: userId, relationshipType: 'enrolled_in' } : undefined,
+    userId ? { fromEntityId: userId, relationshipType: "enrolled_in" } : undefined,
     { ...queryOptions, enabled: queryOptions?.enabled && !!userId }
   );
 }
@@ -263,7 +263,7 @@ export function useEnrollments(userId: string | null, queryOptions?: QueryOption
  */
 export function useFollowing(userId: string | null, queryOptions?: QueryOptions) {
   return useConnections(
-    userId ? { fromEntityId: userId, relationshipType: 'following' } : undefined,
+    userId ? { fromEntityId: userId, relationshipType: "following" } : undefined,
     { ...queryOptions, enabled: queryOptions?.enabled && !!userId }
   );
 }
@@ -278,7 +278,7 @@ export function useFollowing(userId: string | null, queryOptions?: QueryOptions)
  */
 export function useTokenHoldings(userId: string | null, queryOptions?: QueryOptions) {
   return useConnections(
-    userId ? { fromEntityId: userId, relationshipType: 'holds_tokens' } : undefined,
+    userId ? { fromEntityId: userId, relationshipType: "holds_tokens" } : undefined,
     { ...queryOptions, enabled: queryOptions?.enabled && !!userId }
   );
 }

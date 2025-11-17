@@ -1,187 +1,177 @@
 ---
-import Layout from '../layouts/Layout.astro';
-import { Badge } from '@/components/ui/badge';
 import {
-  Card,
-  CardHeader,
-  CardTitle,
-  CardContent,
-  CardDescription,
-} from '@/components/ui/card';
-import {
-  Users,
-  Sparkles,
-  Workflow,
-  ClipboardCheck,
-  ListChecks,
   BookOpen,
-  Share2,
-  Target,
-  Rocket,
-  PenTool,
+  ClipboardCheck,
   Layers,
   Library,
-} from 'lucide-react';
+  ListChecks,
+  PenTool,
+  Rocket,
+  Share2,
+  Target,
+  Workflow,
+} from "lucide-react";
+import Layout from "@/layouts/Layout.astro";
 
-const crew = [
+const _crew = [
   {
-    name: 'agent-director',
-    title: 'Engineering Director',
+    name: "agent-director",
+    title: "Engineering Director",
     summary:
-      'Maps every idea to the six dimensions, sequences numbered plans, and keeps the roster aligned through `one/knowledge/todo.md`.',
-    handoff: 'agent-builder',
+      "Maps every idea to the six dimensions, sequences numbered plans, and keeps the roster aligned through `one/knowledge/todo.md`.",
+    handoff: "agent-builder",
   },
   {
-    name: 'agent-builder',
-    title: 'Full-Stack Builder',
+    name: "agent-builder",
+    title: "Full-Stack Builder",
     summary:
-      'Transforms validated plans into working features across Convex, Effect services, and Astro islands without breaking multi-tenant rules.',
-    handoff: 'agent-backend · agent-frontend',
+      "Transforms validated plans into working features across Convex, Effect services, and Astro islands without breaking multi-tenant rules.",
+    handoff: "agent-backend · agent-frontend",
   },
   {
-    name: 'agent-backend',
-    title: 'Backend Specialist',
+    name: "agent-backend",
+    title: "Backend Specialist",
     summary:
-      'Shapes schemas, mutations, and queries that preserve organization, people, and event boundaries for every release.',
-    handoff: 'agent-frontend',
+      "Shapes schemas, mutations, and queries that preserve organization, people, and event boundaries for every release.",
+    handoff: "agent-frontend",
   },
   {
-    name: 'agent-frontend',
-    title: 'Frontend Specialist',
+    name: "agent-frontend",
+    title: "Frontend Specialist",
     summary:
-      'Ships React and Astro experiences with Tailwind tokens, shadcn/ui, and agent-friendly copy so features feel native immediately.',
-    handoff: 'agent-quality',
+      "Ships React and Astro experiences with Tailwind tokens, shadcn/ui, and agent-friendly copy so features feel native immediately.",
+    handoff: "agent-quality",
   },
   {
-    name: 'agent-designer',
-    title: 'Design Strategist',
+    name: "agent-designer",
+    title: "Design Strategist",
     summary:
-      'Breaks plans into flows, wireframes, and tokens so builders and frontenders stay on rhythm with the ontology.',
-    handoff: 'agent-frontend',
+      "Breaks plans into flows, wireframes, and tokens so builders and frontenders stay on rhythm with the ontology.",
+    handoff: "agent-frontend",
   },
   {
-    name: 'agent-integrator',
-    title: 'Protocol Integrator',
+    name: "agent-integrator",
+    title: "Protocol Integrator",
     summary:
-      'Connects external APIs and protocols (A2A, ACP, AP2, X402) while translating every payload into ontology-native structures.',
-    handoff: 'agent-quality',
+      "Connects external APIs and protocols (A2A, ACP, AP2, X402) while translating every payload into ontology-native structures.",
+    handoff: "agent-quality",
   },
   {
-    name: 'agent-quality',
-    title: 'Quality Intelligence',
+    name: "agent-quality",
+    title: "Quality Intelligence",
     summary:
-      'Defines acceptance criteria during planning, runs validations, and blocks release until events, docs, and tests line up.',
-    handoff: 'agent-documenter',
+      "Defines acceptance criteria during planning, runs validations, and blocks release until events, docs, and tests line up.",
+    handoff: "agent-documenter",
   },
   {
-    name: 'agent-problem-solver',
-    title: 'Root Cause Analyst',
+    name: "agent-problem-solver",
+    title: "Root Cause Analyst",
     summary:
-      'Triages regressions, replays failed runs, and issues corrective tasks so no agent repeats the same mistake.',
-    handoff: 'agent-builder',
+      "Triages regressions, replays failed runs, and issues corrective tasks so no agent repeats the same mistake.",
+    handoff: "agent-builder",
   },
   {
-    name: 'agent-documenter',
-    title: 'Knowledge Curator',
+    name: "agent-documenter",
+    title: "Knowledge Curator",
     summary:
-      'Captures what shipped, updates `one/things/` and `one/events/`, and keeps future agents primed with richer context.',
-    handoff: 'agent-sales',
+      "Captures what shipped, updates `one/things/` and `one/events/`, and keeps future agents primed with richer context.",
+    handoff: "agent-sales",
   },
   {
-    name: 'agent-clone',
-    title: 'Migration & Clone Specialist',
+    name: "agent-clone",
+    title: "Migration & Clone Specialist",
     summary:
-      'Ports legacy artifacts and assembles AI clones with provenance so audience, products, and agents stay in sync.',
-    handoff: 'agent-builder',
+      "Ports legacy artifacts and assembles AI clones with provenance so audience, products, and agents stay in sync.",
+    handoff: "agent-builder",
   },
   {
-    name: 'agent-clean',
-    title: 'Refinement Specialist',
+    name: "agent-clean",
+    title: "Refinement Specialist",
     summary:
-      'Pays down debt, restructures files, and restores clarity without altering behaviors or violating typed contracts.',
-    handoff: 'agent-quality',
+      "Pays down debt, restructures files, and restores clarity without altering behaviors or violating typed contracts.",
+    handoff: "agent-quality",
   },
   {
-    name: 'agent-sales',
-    title: 'Revenue Operator',
+    name: "agent-sales",
+    title: "Revenue Operator",
     summary:
-      'Keeps the pipeline warm, feeds back requests from customers, and ensures releases map to monetizable outcomes.',
-    handoff: 'agent-director',
+      "Keeps the pipeline warm, feeds back requests from customers, and ensures releases map to monetizable outcomes.",
+    handoff: "agent-director",
   },
 ];
 
-const workflow = [
+const _workflow = [
   {
     icon: Workflow,
-    stage: 'Infer & Align',
-    lead: 'agent-director',
+    stage: "Infer & Align",
+    lead: "agent-director",
     focus:
-      'Loads the current inference from `one/knowledge/todo.md`, validates ontology coverage, and numbers the plan so every agent knows the lane.',
-    artifacts: ['one/knowledge/todo.md', 'one/connections/workflow.md'],
+      "Loads the current inference from `one/knowledge/todo.md`, validates ontology coverage, and numbers the plan so every agent knows the lane.",
+    artifacts: ["one/knowledge/todo.md", "one/connections/workflow.md"],
   },
   {
     icon: PenTool,
-    stage: 'Design the Experience',
-    lead: 'agent-designer',
+    stage: "Design the Experience",
+    lead: "agent-designer",
     focus:
-      'Sketches flows, tokens, and UI scaffolding while builders gather references in `/web/src/components/` to reuse established patterns.',
-    artifacts: ['web/src/components/ui/*', 'web/src/styles/global.css'],
+      "Sketches flows, tokens, and UI scaffolding while builders gather references in `/web/src/components/` to reuse established patterns.",
+    artifacts: ["web/src/components/ui/*", "web/src/styles/global.css"],
   },
   {
     icon: Layers,
-    stage: 'Build the Stack',
-    lead: 'agent-builder',
+    stage: "Build the Stack",
+    lead: "agent-builder",
     focus:
-      'Hands work to backend, frontend, and integrator specialists who implement Convex services, React islands, and protocol bridges in parallel.',
-    artifacts: ['backend/convex', 'web/src/pages', 'web/src/services'],
+      "Hands work to backend, frontend, and integrator specialists who implement Convex services, React islands, and protocol bridges in parallel.",
+    artifacts: ["backend/convex", "web/src/pages", "web/src/services"],
   },
   {
     icon: ClipboardCheck,
-    stage: 'Validate & Document',
-    lead: 'agent-quality',
+    stage: "Validate & Document",
+    lead: "agent-quality",
     focus:
-      'Runs scoped tests, checks release notes, and pairs with the documenter to log events, update `one/things/`, and keep knowledge searchable.',
-    artifacts: ['scripts/release.md', 'one/things/', 'one/events/'],
+      "Runs scoped tests, checks release notes, and pairs with the documenter to log events, update `one/things/`, and keep knowledge searchable.",
+    artifacts: ["scripts/release.md", "one/things/", "one/events/"],
   },
   {
     icon: Rocket,
-    stage: 'Ship & Learn',
-    lead: 'agent-sales',
+    stage: "Ship & Learn",
+    lead: "agent-sales",
     focus:
-      'Coordinates launch tasks, loops customer feedback back into the todo, and keeps agents on call for follow-up improvements.',
-    artifacts: ['scripts/release.sh', 'one/knowledge/todo.md'],
+      "Coordinates launch tasks, loops customer feedback back into the todo, and keeps agents on call for follow-up improvements.",
+    artifacts: ["scripts/release.sh", "one/knowledge/todo.md"],
   },
 ];
 
-const operatingSystem = [
+const _operatingSystem = [
   {
-    title: 'Source of Truth',
+    title: "Source of Truth",
     description:
-      '`one/knowledge/todo.md` tracks every inference, /now, /next, and /done hook. Agents mark assignments and completions here before touching code.',
+      "`one/knowledge/todo.md` tracks every inference, /now, /next, and /done hook. Agents mark assignments and completions here before touching code.",
     icon: ListChecks,
   },
   {
-    title: 'Release Memory',
+    title: "Release Memory",
     description:
-      '`scripts/release.md` and `scripts/release.sh` capture the shipping checklist so every iteration remembers what just went live.',
+      "`scripts/release.md` and `scripts/release.sh` capture the shipping checklist so every iteration remembers what just went live.",
     icon: BookOpen,
   },
   {
-    title: 'Shared Playbooks',
+    title: "Shared Playbooks",
     description:
-      '`.claude/agents/*` defines tools, guardrails, and vocabulary. Any new specialist inherits these prompts to stay in sync.',
+      "`.claude/agents/*` defines tools, guardrails, and vocabulary. Any new specialist inherits these prompts to stay in sync.",
     icon: Library,
   },
   {
-    title: 'Collaboration Signals',
+    title: "Collaboration Signals",
     description:
-      'Events like `agent_assigned`, `quality_check_complete`, and `feature_complete` broadcast progress through Convex.',
+      "Events like `agent_assigned`, `quality_check_complete`, and `feature_complete` broadcast progress through Convex.",
     icon: Share2,
   },
   {
-    title: 'Targets & Outcomes',
+    title: "Targets & Outcomes",
     description:
-      'Roadmap items stay mapped to groups, people, things, connections, events, and knowledge so releases ladder up to business goals.',
+      "Roadmap items stay mapped to groups, people, things, connections, events, and knowledge so releases ladder up to business goals.",
     icon: Target,
   },
 ];

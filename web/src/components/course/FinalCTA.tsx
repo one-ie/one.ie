@@ -1,7 +1,6 @@
-import React from "react";
+import { ArrowRight, Shield } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
-import { ArrowRight, Shield } from "lucide-react";
 
 interface FinalCTAProps {
   currentPrice: string;
@@ -9,11 +8,7 @@ interface FinalCTAProps {
   guaranteeText: string;
 }
 
-export function FinalCTA({
-  currentPrice,
-  remainingSpots,
-  guaranteeText,
-}: FinalCTAProps) {
+export function FinalCTA({ currentPrice, remainingSpots, guaranteeText }: FinalCTAProps) {
   return (
     <section className="py-20">
       <div className="container px-4 mx-auto">
@@ -22,9 +17,7 @@ export function FinalCTA({
             <Shield className="w-16 h-16 text-primary mx-auto" />
 
             <div>
-              <h2 className="text-3xl font-bold mb-2">
-                30-Day Money-Back Guarantee
-              </h2>
+              <h2 className="text-3xl font-bold mb-2">30-Day Money-Back Guarantee</h2>
               <p className="text-xl text-muted-foreground">
                 Try the complete system risk-free for 30 days
               </p>
@@ -44,8 +37,7 @@ export function FinalCTA({
               </Button>
             </a>
             <p className="text-sm text-muted-foreground">
-              Limited Time: Only {remainingSpots} Spots Remaining at Launch
-              Price
+              Limited Time: Only {remainingSpots} Spots Remaining at Launch Price
             </p>
           </div>
         </Card>

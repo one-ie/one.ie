@@ -11,31 +11,31 @@
  * - Request validation
  */
 
-import type { APIRoute } from 'astro';
-import { nanoid } from 'nanoid';
-import type {
-  CreateCheckoutSessionRequest,
-  CheckoutSessionResponse,
-  LineItem,
-  Total,
-  FulfillmentOption,
-  ErrorResponse,
-} from '@/lib/types/agentic-checkout';
+import type { APIRoute } from "astro";
+import { nanoid } from "nanoid";
 import {
-  calculateTax,
   calculateShipping,
   getDeliveryEstimate,
   validateStripeEnvironment,
-} from '@/lib/stripe/agentic-commerce';
+} from "@/lib/stripe/agentic-commerce";
+import type {
+  CheckoutSessionResponse,
+  CreateCheckoutSessionRequest,
+  ErrorResponse,
+  FulfillmentOption,
+  LineItem,
+  Total,
+} from "@/lib/types/agentic-checkout";
 
 // Product catalog (matches product-chat.astro)
 const products = {
-  'chanel-coco-noir': {
-    id: 'chanel-coco-noir',
-    name: 'Chanel Coco Noir Eau de Parfum',
+  "chanel-coco-noir": {
+    id: "chanel-coco-noir",
+    name: "Chanel Coco Noir Eau de Parfum",
     price: 12999, // $129.99 in cents
-    description: 'Elegant and mysterious. Coco Noir captures the essence of timeless sophistication with notes of grapefruit, rose, and sandalwood.',
-    image: 'https://cdn.dummyjson.com/product-images/fragrances/chanel-coco-noir-eau-de/1.webp',
+    description:
+      "Elegant and mysterious. Coco Noir captures the essence of timeless sophistication with notes of grapefruit, rose, and sandalwood.",
+    image: "https://cdn.dummyjson.com/product-images/fragrances/chanel-coco-noir-eau-de/1.webp",
     inStock: true, // Product is in stock
     stock: 7, // 7 units available
   },
@@ -53,12 +53,12 @@ const sessions = new Map<string, any>();
  * Validate API key (from environment)
  */
 function validateApiKey(authHeader: string | null): boolean {
-  if (!authHeader?.startsWith('Bearer ')) {
+  if (!authHeader?.startsWith("Bearer ")) {
     return false;
   }
 
   const apiKey = authHeader.slice(7);
-  const expectedKey = import.meta.env.COMMERCE_API_KEY || 'test_key_change_in_production';
+  const expectedKey = import.meta.env.COMMERCE_API_KEY || "test_key_change_in_production";
 
   return apiKey === expectedKey;
 }
@@ -108,7 +108,7 @@ function buildLineItems(
 /**
  * Build fulfillment options
  */
-function buildFulfillmentOptions(
+function _buildFulfillmentOptions(
   items: Array<{ id: string; quantity: number }>,
   address: any
 ): FulfillmentOption[] {
@@ -118,16 +118,16 @@ function buildFulfillmentOptions(
     postal_code: address.postal_code,
   });
 
-  const standardEstimate = getDeliveryEstimate('standard');
-  const expressEstimate = getDeliveryEstimate('express');
+  const standardEstimate = getDeliveryEstimate("standard");
+  const expressEstimate = getDeliveryEstimate("express");
 
   return [
     {
-      type: 'shipping',
-      id: 'standard_shipping',
-      title: 'Standard Shipping',
-      subtitle: 'Arrives in 5-7 business days',
-      carrier_info: 'USPS',
+      type: "shipping",
+      id: "standard_shipping",
+      title: "Standard Shipping",
+      subtitle: "Arrives in 5-7 business days",
+      carrier_info: "USPS",
       earliest_delivery_time: standardEstimate.earliest,
       latest_delivery_time: standardEstimate.latest,
       subtotal: shippingCosts.standard,
@@ -135,11 +135,11 @@ function buildFulfillmentOptions(
       total: shippingCosts.standard,
     },
     {
-      type: 'shipping',
-      id: 'express_shipping',
-      title: 'Express Shipping',
-      subtitle: 'Arrives in 1-2 business days',
-      carrier_info: 'USPS',
+      type: "shipping",
+      id: "express_shipping",
+      title: "Express Shipping",
+      subtitle: "Arrives in 1-2 business days",
+      carrier_info: "USPS",
       earliest_delivery_time: expressEstimate.earliest,
       latest_delivery_time: expressEstimate.latest,
       subtotal: shippingCosts.express,
@@ -152,27 +152,23 @@ function buildFulfillmentOptions(
 /**
  * Build totals array
  */
-function buildTotals(
-  itemsBaseAmount: number,
-  fulfillmentCost: number,
-  tax: number
-): Total[] {
+function buildTotals(itemsBaseAmount: number, fulfillmentCost: number, tax: number): Total[] {
   return [
     {
-      type: 'items_base_amount',
-      display_text: 'Item(s) total',
+      type: "items_base_amount",
+      display_text: "Item(s) total",
       amount: itemsBaseAmount,
     },
     {
-      type: 'subtotal',
-      display_text: 'Subtotal',
+      type: "subtotal",
+      display_text: "Subtotal",
       amount: itemsBaseAmount,
     },
     ...(fulfillmentCost > 0
       ? [
           {
-            type: 'fulfillment' as const,
-            display_text: 'Shipping',
+            type: "fulfillment" as const,
+            display_text: "Shipping",
             amount: fulfillmentCost,
           },
         ]
@@ -180,15 +176,15 @@ function buildTotals(
     ...(tax > 0
       ? [
           {
-            type: 'tax' as const,
-            display_text: 'Tax',
+            type: "tax" as const,
+            display_text: "Tax",
             amount: tax,
           },
         ]
       : []),
     {
-      type: 'total',
-      display_text: 'Total',
+      type: "total",
+      display_text: "Total",
       amount: itemsBaseAmount + fulfillmentCost + tax,
     },
   ];
@@ -196,70 +192,70 @@ function buildTotals(
 
 export const POST: APIRoute = async ({ request }) => {
   try {
-    console.log('[Checkout] Creating session...');
+    console.log("[Checkout] Creating session...");
 
     // Validate environment
     validateStripeEnvironment();
 
     // Validate API key
-    const authHeader = request.headers.get('Authorization');
-    console.log('[Checkout] Auth header:', authHeader ? 'present' : 'missing');
-    console.log('[Checkout] Expected key:', import.meta.env.COMMERCE_API_KEY);
+    const authHeader = request.headers.get("Authorization");
+    console.log("[Checkout] Auth header:", authHeader ? "present" : "missing");
+    console.log("[Checkout] Expected key:", import.meta.env.COMMERCE_API_KEY);
 
     if (!validateApiKey(authHeader)) {
-      console.error('[Checkout] API key validation failed');
+      console.error("[Checkout] API key validation failed");
       return new Response(
         JSON.stringify({
-          type: 'invalid_request',
-          code: 'unauthorized',
-          message: 'Invalid API key',
+          type: "invalid_request",
+          code: "unauthorized",
+          message: "Invalid API key",
         } as ErrorResponse),
         {
           status: 401,
-          headers: { 'Content-Type': 'application/json' },
+          headers: { "Content-Type": "application/json" },
         }
       );
     }
 
-    console.log('[Checkout] API key validated');
+    console.log("[Checkout] API key validated");
 
     // Parse request body
     const body = (await request.json()) as CreateCheckoutSessionRequest;
-    console.log('[Checkout] Request body:', JSON.stringify(body, null, 2));
+    console.log("[Checkout] Request body:", JSON.stringify(body, null, 2));
     const { items, buyer, fulfillment_address } = body;
 
     // Validate items
-    console.log('[Checkout] Items:', items);
+    console.log("[Checkout] Items:", items);
     if (!items || !Array.isArray(items) || items.length === 0) {
-      console.error('[Checkout] Items validation failed');
+      console.error("[Checkout] Items validation failed");
 
       return new Response(
         JSON.stringify({
-          type: 'invalid_request',
-          code: 'missing',
-          message: 'Items array is required and must not be empty',
-          param: 'items',
+          type: "invalid_request",
+          code: "missing",
+          message: "Items array is required and must not be empty",
+          param: "items",
         } as ErrorResponse),
         {
           status: 400,
-          headers: { 'Content-Type': 'application/json' },
+          headers: { "Content-Type": "application/json" },
         }
       );
     }
 
     // Validate each item
     for (const item of items) {
-      if (!item.id || typeof item.id !== 'string') {
+      if (!item.id || typeof item.id !== "string") {
         return new Response(
           JSON.stringify({
-            type: 'invalid_request',
-            code: 'invalid',
-            message: 'Each item must have a valid id',
-            param: 'items',
+            type: "invalid_request",
+            code: "invalid",
+            message: "Each item must have a valid id",
+            param: "items",
           } as ErrorResponse),
           {
             status: 400,
-            headers: { 'Content-Type': 'application/json' },
+            headers: { "Content-Type": "application/json" },
           }
         );
       }
@@ -267,14 +263,14 @@ export const POST: APIRoute = async ({ request }) => {
       if (!item.quantity || item.quantity < 1) {
         return new Response(
           JSON.stringify({
-            type: 'invalid_request',
-            code: 'invalid',
-            message: 'Each item must have quantity >= 1',
-            param: 'items',
+            type: "invalid_request",
+            code: "invalid",
+            message: "Each item must have quantity >= 1",
+            param: "items",
           } as ErrorResponse),
           {
             status: 400,
-            headers: { 'Content-Type': 'application/json' },
+            headers: { "Content-Type": "application/json" },
           }
         );
       }
@@ -282,30 +278,30 @@ export const POST: APIRoute = async ({ request }) => {
 
     // Create session ID
     const sessionId = `cs_${nanoid(24)}`;
-    console.log('[Checkout] Session ID:', sessionId);
+    console.log("[Checkout] Session ID:", sessionId);
 
     // Build line items
-    console.log('[Checkout] Building line items...');
+    console.log("[Checkout] Building line items...");
     const lineItemsResult = buildLineItems(items);
-    console.log('[Checkout] Line items result:', lineItemsResult);
+    console.log("[Checkout] Line items result:", lineItemsResult);
 
-    if ('error' in lineItemsResult) {
-      console.error('[Checkout] Line items error:', lineItemsResult.error);
+    if ("error" in lineItemsResult) {
+      console.error("[Checkout] Line items error:", lineItemsResult.error);
       return new Response(
         JSON.stringify({
-          type: 'invalid_request',
-          code: 'invalid',
+          type: "invalid_request",
+          code: "invalid",
           message: lineItemsResult.error,
-          param: 'items',
+          param: "items",
         } as ErrorResponse),
         {
           status: 400,
-          headers: { 'Content-Type': 'application/json' },
+          headers: { "Content-Type": "application/json" },
         }
       );
     }
 
-    console.log('[Checkout] Line items built successfully');
+    console.log("[Checkout] Line items built successfully");
 
     const { lineItems, itemsBaseAmount } = lineItemsResult;
 
@@ -314,7 +310,7 @@ export const POST: APIRoute = async ({ request }) => {
     let selectedFulfillmentId: string | undefined;
     let fulfillmentCost = 0;
     let tax = 0;
-    let status: 'not_ready_for_payment' | 'ready_for_payment' = 'not_ready_for_payment';
+    let status: "not_ready_for_payment" | "ready_for_payment" = "not_ready_for_payment";
 
     if (fulfillment_address) {
       // Simple free shipping option
@@ -325,11 +321,11 @@ export const POST: APIRoute = async ({ request }) => {
 
       fulfillmentOptions = [
         {
-          type: 'shipping',
-          id: 'free_shipping',
-          title: 'Free Shipping',
-          subtitle: 'Arrives in 5-7 business days',
-          carrier_info: 'USPS',
+          type: "shipping",
+          id: "free_shipping",
+          title: "Free Shipping",
+          subtitle: "Arrives in 5-7 business days",
+          carrier_info: "USPS",
           earliest_delivery_time: deliveryDate.toISOString(),
           latest_delivery_time: latestDeliveryDate.toISOString(),
           subtotal: 0,
@@ -339,20 +335,20 @@ export const POST: APIRoute = async ({ request }) => {
       ];
 
       // Select free shipping by default
-      selectedFulfillmentId = 'free_shipping';
+      selectedFulfillmentId = "free_shipping";
       fulfillmentCost = 0;
 
       // Calculate tax (no tax for now)
       tax = 0;
 
-      status = 'ready_for_payment';
+      status = "ready_for_payment";
     }
 
     // Build totals
     const totals = buildTotals(itemsBaseAmount, fulfillmentCost, tax);
 
     // Build response
-    console.log('[Checkout] Building response with:', {
+    console.log("[Checkout] Building response with:", {
       sessionId,
       status,
       fulfillmentOptionsCount: fulfillmentOptions.length,
@@ -363,11 +359,11 @@ export const POST: APIRoute = async ({ request }) => {
       id: sessionId,
       buyer,
       payment_provider: {
-        provider: 'stripe',
-        supported_payment_methods: ['card'],
+        provider: "stripe",
+        supported_payment_methods: ["card"],
       },
       status,
-      currency: 'usd',
+      currency: "usd",
       line_items: lineItems,
       fulfillment_address,
       fulfillment_options: fulfillmentOptions, // Correct variable name
@@ -376,17 +372,17 @@ export const POST: APIRoute = async ({ request }) => {
       messages: [],
       links: [
         {
-          type: 'terms_of_use',
-          value: 'https://one.ie/terms',
+          type: "terms_of_use",
+          value: "https://one.ie/terms",
         },
         {
-          type: 'privacy_policy',
-          value: 'https://one.ie/privacy',
+          type: "privacy_policy",
+          value: "https://one.ie/privacy",
         },
       ],
     };
 
-    console.log('[Checkout] Response built successfully');
+    console.log("[Checkout] Response built successfully");
 
     // Store session (TODO: Migrate to Convex)
     sessions.set(sessionId, {
@@ -396,29 +392,29 @@ export const POST: APIRoute = async ({ request }) => {
     });
 
     // Return response
-    const idempotencyKey = request.headers.get('Idempotency-Key') || '';
-    const requestId = request.headers.get('Request-Id') || '';
+    const idempotencyKey = request.headers.get("Idempotency-Key") || "";
+    const requestId = request.headers.get("Request-Id") || "";
 
     return new Response(JSON.stringify(response), {
       status: 201,
       headers: {
-        'Content-Type': 'application/json',
-        'Idempotency-Key': idempotencyKey,
-        'Request-Id': requestId,
+        "Content-Type": "application/json",
+        "Idempotency-Key": idempotencyKey,
+        "Request-Id": requestId,
       },
     });
   } catch (error) {
-    console.error('Create checkout session error:', error);
+    console.error("Create checkout session error:", error);
 
     return new Response(
       JSON.stringify({
-        type: 'invalid_request',
-        code: 'processing_error',
-        message: error instanceof Error ? error.message : 'Unknown error',
+        type: "invalid_request",
+        code: "processing_error",
+        message: error instanceof Error ? error.message : "Unknown error",
       } as ErrorResponse),
       {
         status: 500,
-        headers: { 'Content-Type': 'application/json' },
+        headers: { "Content-Type": "application/json" },
       }
     );
   }

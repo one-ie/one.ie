@@ -1,4 +1,3 @@
-import React from "react";
 import FaqAccordion from "@/components/FaqAccordion";
 
 interface FAQ {

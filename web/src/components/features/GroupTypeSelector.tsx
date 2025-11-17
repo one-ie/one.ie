@@ -3,27 +3,14 @@
  * Radio buttons for selecting one of 6 group types with descriptions
  */
 
-import * as React from "react";
+import { Briefcase, Building, Building2, Coins, Globe, Users } from "lucide-react";
+import type * as React from "react";
+import { Card, CardContent } from "@/components/ui/card";
 import { Label } from "@/components/ui/label";
 import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group";
-import { Card, CardContent } from "@/components/ui/card";
-import {
-  Users,
-  Briefcase,
-  Globe,
-  Coins,
-  Building2,
-  Building,
-} from "lucide-react";
 import { cn } from "@/lib/utils";
 
-type GroupType =
-  | "friend_circle"
-  | "business"
-  | "community"
-  | "dao"
-  | "government"
-  | "organization";
+type GroupType = "friend_circle" | "business" | "community" | "dao" | "government" | "organization";
 
 interface GroupTypeOption {
   value: GroupType;
@@ -96,9 +83,7 @@ export function GroupTypeSelector({
       value={value}
       onValueChange={(val) => onValueChange(val as GroupType)}
       className={cn(
-        layout === "grid"
-          ? "grid grid-cols-1 md:grid-cols-2 gap-4"
-          : "space-y-4",
+        layout === "grid" ? "grid grid-cols-1 md:grid-cols-2 gap-4" : "space-y-4",
         className
       )}
     >
@@ -107,11 +92,7 @@ export function GroupTypeSelector({
         const isSelected = value === type.value;
 
         return (
-          <Label
-            key={type.value}
-            htmlFor={type.value}
-            className="cursor-pointer"
-          >
+          <Label key={type.value} htmlFor={type.value} className="cursor-pointer">
             <Card
               className={cn(
                 "transition-all hover:border-primary hover:shadow-md",
@@ -119,21 +100,13 @@ export function GroupTypeSelector({
               )}
             >
               <CardContent className="flex items-start gap-4 p-4">
-                <RadioGroupItem
-                  value={type.value}
-                  id={type.value}
-                  className="mt-1"
-                />
+                <RadioGroupItem value={type.value} id={type.value} className="mt-1" />
                 <div className="flex-1">
                   <div className="flex items-center gap-2 mb-1">
                     <Icon className={cn("h-5 w-5", type.color)} />
-                    <span className="font-semibold text-base">
-                      {type.label}
-                    </span>
+                    <span className="font-semibold text-base">{type.label}</span>
                   </div>
-                  <p className="text-sm text-muted-foreground">
-                    {type.description}
-                  </p>
+                  <p className="text-sm text-muted-foreground">{type.description}</p>
                 </div>
               </CardContent>
             </Card>

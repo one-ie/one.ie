@@ -5,25 +5,20 @@
 
 /* eslint-disable @typescript-eslint/no-explicit-any, @typescript-eslint/no-unused-vars */
 
-import { describe, it, expect, vi } from "vitest";
-import { createRequire } from "module";
-import {
-  mockUseQuery,
-  mockUseMutation,
-  createMockGroup,
-  createMockGroupHierarchy,
-} from './setup';
+import { createRequire } from "node:module";
+import { describe, expect, it, vi } from "vitest";
+import { createMockGroup, mockUseMutation } from "./setup";
 
 const require = createRequire(import.meta.url);
 
 let render: typeof import("@testing-library/react")["render"];
 let screen: typeof import("@testing-library/react")["screen"];
 let fireEvent: typeof import("@testing-library/react")["fireEvent"];
-let waitFor: typeof import("@testing-library/react")["waitFor"];
+let _waitFor: typeof import("@testing-library/react")["waitFor"];
 let hasTestingLibrary = true;
 
 try {
-  ({ render, screen, fireEvent, waitFor } = require("@testing-library/react"));
+  ({ render, screen, fireEvent, _waitFor } = require("@testing-library/react"));
 } catch {
   hasTestingLibrary = false;
 }
@@ -36,37 +31,22 @@ const CreateGroupForm = ({ onSubmit }: { onSubmit: (data: any) => void }) => {
     e.preventDefault();
     const formData = new FormData(e.target as HTMLFormElement);
     onSubmit({
-      slug: formData.get('slug'),
-      name: formData.get('name'),
-      type: formData.get('type'),
+      slug: formData.get("slug"),
+      name: formData.get("name"),
+      type: formData.get("type"),
     });
   };
 
   return (
     <form data-testid="create-group-form" onSubmit={handleSubmit}>
       <label htmlFor="slug">Slug</label>
-      <input
-        id="slug"
-        name="slug"
-        data-testid="input-slug"
-        required
-      />
+      <input id="slug" name="slug" data-testid="input-slug" required />
 
       <label htmlFor="name">Name</label>
-      <input
-        id="name"
-        name="name"
-        data-testid="input-name"
-        required
-      />
+      <input id="name" name="name" data-testid="input-name" required />
 
       <label htmlFor="type">Type</label>
-      <select
-        id="type"
-        name="type"
-        data-testid="select-type"
-        defaultValue="business"
-      >
+      <select id="type" name="type" data-testid="select-type" defaultValue="business">
         <option value="friend_circle">Friend Circle</option>
         <option value="business">Business</option>
         <option value="community">Community</option>
@@ -80,20 +60,14 @@ const CreateGroupForm = ({ onSubmit }: { onSubmit: (data: any) => void }) => {
   );
 };
 
-const GroupSettingsForm = ({
-  group,
-  onSubmit,
-}: {
-  group: any;
-  onSubmit: (data: any) => void;
-}) => {
+const GroupSettingsForm = ({ group, onSubmit }: { group: any; onSubmit: (data: any) => void }) => {
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
     const formData = new FormData(e.target as HTMLFormElement);
     onSubmit({
-      visibility: formData.get('visibility'),
-      joinPolicy: formData.get('joinPolicy'),
-      plan: formData.get('plan'),
+      visibility: formData.get("visibility"),
+      joinPolicy: formData.get("joinPolicy"),
+      plan: formData.get("plan"),
     });
   };
 
@@ -125,12 +99,7 @@ const GroupSettingsForm = ({
       </select>
 
       <label htmlFor="plan">Plan</label>
-      <select
-        id="plan"
-        name="plan"
-        data-testid="select-plan"
-        defaultValue={group.settings.plan}
-      >
+      <select id="plan" name="plan" data-testid="select-plan" defaultValue={group.settings.plan}>
         <option value="starter">Starter</option>
         <option value="pro">Pro</option>
         <option value="enterprise">Enterprise</option>
@@ -150,9 +119,9 @@ const GroupDiscovery = ({
   onSearch: (query: string, filters: any) => void;
   results: any[];
 }) => {
-  const [query, setQuery] = React.useState('');
-  const [type, setType] = React.useState('');
-  const [visibility, setVisibility] = React.useState('');
+  const [query, setQuery] = React.useState("");
+  const [type, setType] = React.useState("");
+  const [visibility, setVisibility] = React.useState("");
 
   const handleSearch = () => {
     onSearch(query, { type, visibility });
@@ -167,11 +136,7 @@ const GroupDiscovery = ({
         onChange={(e) => setQuery(e.target.value)}
       />
 
-      <select
-        data-testid="filter-type"
-        value={type}
-        onChange={(e) => setType(e.target.value)}
-      >
+      <select data-testid="filter-type" value={type} onChange={(e) => setType(e.target.value)}>
         <option value="">All Types</option>
         <option value="dao">DAO</option>
         <option value="community">Community</option>
@@ -203,226 +168,217 @@ const GroupDiscovery = ({
 };
 
 // Add React import
-import React from 'react';
+import React from "react";
 
-describeIfTestingLibrary('Create Group Workflow', () => {
-  it('should complete full group creation flow', async () => {
-    const createMutation = vi.fn().mockResolvedValue('new-group-id');
+describeIfTestingLibrary("Create Group Workflow", () => {
+  it("should complete full group creation flow", async () => {
+    const createMutation = vi.fn().mockResolvedValue("new-group-id");
     mockUseMutation.mockReturnValue(createMutation);
 
     const onSubmit = vi.fn();
     render(<CreateGroupForm onSubmit={onSubmit} />);
 
     // Fill form
-    fireEvent.change(screen.getByTestId('input-slug'), {
-      target: { value: 'my-group' },
+    fireEvent.change(screen.getByTestId("input-slug"), {
+      target: { value: "my-group" },
     });
-    fireEvent.change(screen.getByTestId('input-name'), {
-      target: { value: 'My Group' },
+    fireEvent.change(screen.getByTestId("input-name"), {
+      target: { value: "My Group" },
     });
-    fireEvent.change(screen.getByTestId('select-type'), {
-      target: { value: 'business' },
+    fireEvent.change(screen.getByTestId("select-type"), {
+      target: { value: "business" },
     });
 
     // Submit
-    fireEvent.click(screen.getByTestId('submit-button'));
+    fireEvent.click(screen.getByTestId("submit-button"));
 
     expect(onSubmit).toHaveBeenCalledWith({
-      slug: 'my-group',
-      name: 'My Group',
-      type: 'business',
+      slug: "my-group",
+      name: "My Group",
+      type: "business",
     });
   });
 
-  it('should validate required fields', () => {
+  it("should validate required fields", () => {
     const onSubmit = vi.fn();
     render(<CreateGroupForm onSubmit={onSubmit} />);
 
     // Try to submit without filling
-    const submitButton = screen.getByTestId('submit-button');
+    const submitButton = screen.getByTestId("submit-button");
     fireEvent.click(submitButton);
 
     // Form validation should prevent submission
     expect(onSubmit).not.toHaveBeenCalled();
   });
 
-  it('should create different group types', async () => {
-    const types = ['friend_circle', 'business', 'community', 'dao'];
+  it("should create different group types", async () => {
+    const types = ["friend_circle", "business", "community", "dao"];
     const onSubmit = vi.fn();
 
     types.forEach((type) => {
       const { rerender } = render(<CreateGroupForm onSubmit={onSubmit} />);
 
-      fireEvent.change(screen.getByTestId('input-slug'), {
+      fireEvent.change(screen.getByTestId("input-slug"), {
         target: { value: `${type}-slug` },
       });
-      fireEvent.change(screen.getByTestId('input-name'), {
+      fireEvent.change(screen.getByTestId("input-name"), {
         target: { value: `${type} Group` },
       });
-      fireEvent.change(screen.getByTestId('select-type'), {
+      fireEvent.change(screen.getByTestId("select-type"), {
         target: { value: type },
       });
 
-      fireEvent.click(screen.getByTestId('submit-button'));
+      fireEvent.click(screen.getByTestId("submit-button"));
 
-      expect(onSubmit).toHaveBeenCalledWith(
-        expect.objectContaining({ type })
-      );
+      expect(onSubmit).toHaveBeenCalledWith(expect.objectContaining({ type }));
 
       rerender(<></>);
     });
   });
 });
 
-describeIfTestingLibrary('Group Settings Workflow', () => {
-  it('should update group settings', () => {
-    const group = createMockGroup({ name: 'Test Group' });
+describeIfTestingLibrary("Group Settings Workflow", () => {
+  it("should update group settings", () => {
+    const group = createMockGroup({ name: "Test Group" });
     const onSubmit = vi.fn();
 
     render(<GroupSettingsForm group={group} onSubmit={onSubmit} />);
 
     // Change settings
-    fireEvent.change(screen.getByTestId('select-visibility'), {
-      target: { value: 'public' },
+    fireEvent.change(screen.getByTestId("select-visibility"), {
+      target: { value: "public" },
     });
-    fireEvent.change(screen.getByTestId('select-joinPolicy'), {
-      target: { value: 'open' },
+    fireEvent.change(screen.getByTestId("select-joinPolicy"), {
+      target: { value: "open" },
     });
-    fireEvent.change(screen.getByTestId('select-plan'), {
-      target: { value: 'pro' },
+    fireEvent.change(screen.getByTestId("select-plan"), {
+      target: { value: "pro" },
     });
 
     // Save
-    fireEvent.click(screen.getByTestId('save-button'));
+    fireEvent.click(screen.getByTestId("save-button"));
 
     expect(onSubmit).toHaveBeenCalledWith({
-      visibility: 'public',
-      joinPolicy: 'open',
-      plan: 'pro',
+      visibility: "public",
+      joinPolicy: "open",
+      plan: "pro",
     });
   });
 
-  it('should show current settings as defaults', () => {
+  it("should show current settings as defaults", () => {
     const group = createMockGroup({
       settings: {
-        visibility: 'public',
-        joinPolicy: 'approval_required',
-        plan: 'enterprise',
+        visibility: "public",
+        joinPolicy: "approval_required",
+        plan: "enterprise",
       },
     });
 
     render(<GroupSettingsForm group={group} onSubmit={vi.fn()} />);
 
-    expect(screen.getByTestId('select-visibility')).toHaveValue('public');
-    expect(screen.getByTestId('select-joinPolicy')).toHaveValue(
-      'approval_required'
-    );
-    expect(screen.getByTestId('select-plan')).toHaveValue('enterprise');
+    expect(screen.getByTestId("select-visibility")).toHaveValue("public");
+    expect(screen.getByTestId("select-joinPolicy")).toHaveValue("approval_required");
+    expect(screen.getByTestId("select-plan")).toHaveValue("enterprise");
   });
 
-  it('should upgrade from starter to enterprise', () => {
+  it("should upgrade from starter to enterprise", () => {
     const group = createMockGroup({
-      settings: { plan: 'starter' },
+      settings: { plan: "starter" },
     });
     const onSubmit = vi.fn();
 
     render(<GroupSettingsForm group={group} onSubmit={onSubmit} />);
 
-    fireEvent.change(screen.getByTestId('select-plan'), {
-      target: { value: 'enterprise' },
+    fireEvent.change(screen.getByTestId("select-plan"), {
+      target: { value: "enterprise" },
     });
-    fireEvent.click(screen.getByTestId('save-button'));
+    fireEvent.click(screen.getByTestId("save-button"));
 
-    expect(onSubmit).toHaveBeenCalledWith(
-      expect.objectContaining({ plan: 'enterprise' })
-    );
+    expect(onSubmit).toHaveBeenCalledWith(expect.objectContaining({ plan: "enterprise" }));
   });
 });
 
-describeIfTestingLibrary('Group Discovery Workflow', () => {
-  it('should search and display results', () => {
-    const results = [
-      createMockGroup({ name: 'Tech DAO' }),
-      createMockGroup({ name: 'Art DAO' }),
-    ];
+describeIfTestingLibrary("Group Discovery Workflow", () => {
+  it("should search and display results", () => {
+    const results = [createMockGroup({ name: "Tech DAO" }), createMockGroup({ name: "Art DAO" })];
 
     const onSearch = vi.fn();
     render(<GroupDiscovery onSearch={onSearch} results={results} />);
 
     // Search
-    fireEvent.change(screen.getByTestId('search-input'), {
-      target: { value: 'dao' },
+    fireEvent.change(screen.getByTestId("search-input"), {
+      target: { value: "dao" },
     });
-    fireEvent.click(screen.getByTestId('search-button'));
+    fireEvent.click(screen.getByTestId("search-button"));
 
-    expect(onSearch).toHaveBeenCalledWith('dao', { type: '', visibility: '' });
+    expect(onSearch).toHaveBeenCalledWith("dao", { type: "", visibility: "" });
 
     // Results displayed
-    const resultItems = screen.getAllByTestId('result-item');
+    const resultItems = screen.getAllByTestId("result-item");
     expect(resultItems).toHaveLength(2);
   });
 
-  it('should filter by type', () => {
+  it("should filter by type", () => {
     const onSearch = vi.fn();
     render(<GroupDiscovery onSearch={onSearch} results={[]} />);
 
-    fireEvent.change(screen.getByTestId('filter-type'), {
-      target: { value: 'dao' },
+    fireEvent.change(screen.getByTestId("filter-type"), {
+      target: { value: "dao" },
     });
-    fireEvent.click(screen.getByTestId('search-button'));
+    fireEvent.click(screen.getByTestId("search-button"));
 
-    expect(onSearch).toHaveBeenCalledWith('', {
-      type: 'dao',
-      visibility: '',
+    expect(onSearch).toHaveBeenCalledWith("", {
+      type: "dao",
+      visibility: "",
     });
   });
 
-  it('should filter by visibility', () => {
+  it("should filter by visibility", () => {
     const onSearch = vi.fn();
     render(<GroupDiscovery onSearch={onSearch} results={[]} />);
 
-    fireEvent.change(screen.getByTestId('filter-visibility'), {
-      target: { value: 'public' },
+    fireEvent.change(screen.getByTestId("filter-visibility"), {
+      target: { value: "public" },
     });
-    fireEvent.click(screen.getByTestId('search-button'));
+    fireEvent.click(screen.getByTestId("search-button"));
 
-    expect(onSearch).toHaveBeenCalledWith('', {
-      type: '',
-      visibility: 'public',
+    expect(onSearch).toHaveBeenCalledWith("", {
+      type: "",
+      visibility: "public",
     });
   });
 
-  it('should combine search and filters', () => {
+  it("should combine search and filters", () => {
     const onSearch = vi.fn();
     render(<GroupDiscovery onSearch={onSearch} results={[]} />);
 
-    fireEvent.change(screen.getByTestId('search-input'), {
-      target: { value: 'tech' },
+    fireEvent.change(screen.getByTestId("search-input"), {
+      target: { value: "tech" },
     });
-    fireEvent.change(screen.getByTestId('filter-type'), {
-      target: { value: 'dao' },
+    fireEvent.change(screen.getByTestId("filter-type"), {
+      target: { value: "dao" },
     });
-    fireEvent.change(screen.getByTestId('filter-visibility'), {
-      target: { value: 'public' },
+    fireEvent.change(screen.getByTestId("filter-visibility"), {
+      target: { value: "public" },
     });
-    fireEvent.click(screen.getByTestId('search-button'));
+    fireEvent.click(screen.getByTestId("search-button"));
 
-    expect(onSearch).toHaveBeenCalledWith('tech', {
-      type: 'dao',
-      visibility: 'public',
+    expect(onSearch).toHaveBeenCalledWith("tech", {
+      type: "dao",
+      visibility: "public",
     });
   });
 
-  it('should display empty state when no results', () => {
+  it("should display empty state when no results", () => {
     render(<GroupDiscovery onSearch={vi.fn()} results={[]} />);
 
-    const resultsContainer = screen.getByTestId('search-results');
+    const resultsContainer = screen.getByTestId("search-results");
     expect(resultsContainer).toBeEmptyDOMElement();
   });
 });
 
-describeIfTestingLibrary('Complete Group Lifecycle', () => {
-  it('should create → configure → publish workflow', async () => {
+describeIfTestingLibrary("Complete Group Lifecycle", () => {
+  it("should create → configure → publish workflow", async () => {
     const workflow = {
       created: false,
       configured: false,
@@ -433,39 +389,39 @@ describeIfTestingLibrary('Complete Group Lifecycle', () => {
     const createForm = render(
       <CreateGroupForm
         onSubmit={(data) => {
-          expect(data.slug).toBe('new-group');
+          expect(data.slug).toBe("new-group");
           workflow.created = true;
         }}
       />
     );
 
-    fireEvent.change(screen.getByTestId('input-slug'), {
-      target: { value: 'new-group' },
+    fireEvent.change(screen.getByTestId("input-slug"), {
+      target: { value: "new-group" },
     });
-    fireEvent.change(screen.getByTestId('input-name'), {
-      target: { value: 'New Group' },
+    fireEvent.change(screen.getByTestId("input-name"), {
+      target: { value: "New Group" },
     });
-    fireEvent.click(screen.getByTestId('submit-button'));
+    fireEvent.click(screen.getByTestId("submit-button"));
 
     expect(workflow.created).toBe(true);
     createForm.unmount();
 
     // Step 2: Configure
-    const group = createMockGroup({ slug: 'new-group' });
+    const group = createMockGroup({ slug: "new-group" });
     const settingsForm = render(
       <GroupSettingsForm
         group={group}
         onSubmit={(data) => {
-          expect(data.visibility).toBe('public');
+          expect(data.visibility).toBe("public");
           workflow.configured = true;
         }}
       />
     );
 
-    fireEvent.change(screen.getByTestId('select-visibility'), {
-      target: { value: 'public' },
+    fireEvent.change(screen.getByTestId("select-visibility"), {
+      target: { value: "public" },
     });
-    fireEvent.click(screen.getByTestId('save-button'));
+    fireEvent.click(screen.getByTestId("save-button"));
 
     expect(workflow.configured).toBe(true);
     settingsForm.unmount();
@@ -476,52 +432,52 @@ describeIfTestingLibrary('Complete Group Lifecycle', () => {
   });
 });
 
-describeIfTestingLibrary('Hierarchical Group Workflows', () => {
-  it('should create parent and child groups', async () => {
+describeIfTestingLibrary("Hierarchical Group Workflows", () => {
+  it("should create parent and child groups", async () => {
     const groups: any[] = [];
 
     // Create parent
     const parentForm = render(
       <CreateGroupForm
         onSubmit={(data) => {
-          groups.push({ _id: 'parent-id', ...data });
+          groups.push({ _id: "parent-id", ...data });
         }}
       />
     );
 
-    fireEvent.change(screen.getByTestId('input-slug'), {
-      target: { value: 'parent-org' },
+    fireEvent.change(screen.getByTestId("input-slug"), {
+      target: { value: "parent-org" },
     });
-    fireEvent.change(screen.getByTestId('input-name'), {
-      target: { value: 'Parent Org' },
+    fireEvent.change(screen.getByTestId("input-name"), {
+      target: { value: "Parent Org" },
     });
-    fireEvent.click(screen.getByTestId('submit-button'));
+    fireEvent.click(screen.getByTestId("submit-button"));
 
     expect(groups).toHaveLength(1);
     parentForm.unmount();
 
     // Create child (in real implementation would select parent)
-    const childForm = render(
+    const _childForm = render(
       <CreateGroupForm
         onSubmit={(data) => {
           groups.push({
-            _id: 'child-id',
+            _id: "child-id",
             ...data,
-            parentGroupId: 'parent-id',
+            parentGroupId: "parent-id",
           });
         }}
       />
     );
 
-    fireEvent.change(screen.getByTestId('input-slug'), {
-      target: { value: 'child-team' },
+    fireEvent.change(screen.getByTestId("input-slug"), {
+      target: { value: "child-team" },
     });
-    fireEvent.change(screen.getByTestId('input-name'), {
-      target: { value: 'Child Team' },
+    fireEvent.change(screen.getByTestId("input-name"), {
+      target: { value: "Child Team" },
     });
-    fireEvent.click(screen.getByTestId('submit-button'));
+    fireEvent.click(screen.getByTestId("submit-button"));
 
     expect(groups).toHaveLength(2);
-    expect(groups[1].parentGroupId).toBe('parent-id');
+    expect(groups[1].parentGroupId).toBe("parent-id");
   });
 });

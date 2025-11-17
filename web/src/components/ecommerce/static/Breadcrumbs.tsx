@@ -23,24 +23,11 @@ export function Breadcrumbs({ items }: BreadcrumbsProps) {
         </li>
         {items.map((item, index) => (
           <li key={index} className="flex items-center space-x-2">
-            <svg
-              className="h-4 w-4"
-              fill="none"
-              stroke="currentColor"
-              viewBox="0 0 24 24"
-            >
-              <path
-                strokeLinecap="round"
-                strokeLinejoin="round"
-                strokeWidth={2}
-                d="M9 5l7 7-7 7"
-              />
+            <svg className="h-4 w-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
             </svg>
             {item.href ? (
-              <a
-                href={item.href}
-                className="hover:text-foreground transition-colors"
-              >
+              <a href={item.href} className="hover:text-foreground transition-colors">
                 {item.label}
               </a>
             ) : (

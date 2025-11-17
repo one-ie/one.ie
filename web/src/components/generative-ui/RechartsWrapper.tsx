@@ -7,27 +7,31 @@
  * 3. Lazy loading to avoid bundle conflicts
  */
 
-import React, { lazy, Suspense, useState, useEffect } from 'react';
-import { Card, CardHeader, CardTitle, CardDescription, CardContent } from '@/components/ui/card';
-import { Badge } from '@/components/ui/badge';
+import { lazy, Suspense, useEffect, useState } from "react";
+import { Badge } from "@/components/ui/badge";
+import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 
 // Lazy load Recharts components (client-only)
-const LineChart = lazy(() => import('recharts').then(mod => ({ default: mod.LineChart })));
-const BarChart = lazy(() => import('recharts').then(mod => ({ default: mod.BarChart })));
-const Line = lazy(() => import('recharts').then(mod => ({ default: mod.Line })));
-const Bar = lazy(() => import('recharts').then(mod => ({ default: mod.Bar })));
-const XAxis = lazy(() => import('recharts').then(mod => ({ default: mod.XAxis })));
-const YAxis = lazy(() => import('recharts').then(mod => ({ default: mod.YAxis })));
-const CartesianGrid = lazy(() => import('recharts').then(mod => ({ default: mod.CartesianGrid })));
-const Tooltip = lazy(() => import('recharts').then(mod => ({ default: mod.Tooltip })));
-const Legend = lazy(() => import('recharts').then(mod => ({ default: mod.Legend })));
-const ResponsiveContainer = lazy(() => import('recharts').then(mod => ({ default: mod.ResponsiveContainer })));
+const LineChart = lazy(() => import("recharts").then((mod) => ({ default: mod.LineChart })));
+const BarChart = lazy(() => import("recharts").then((mod) => ({ default: mod.BarChart })));
+const Line = lazy(() => import("recharts").then((mod) => ({ default: mod.Line })));
+const Bar = lazy(() => import("recharts").then((mod) => ({ default: mod.Bar })));
+const XAxis = lazy(() => import("recharts").then((mod) => ({ default: mod.XAxis })));
+const YAxis = lazy(() => import("recharts").then((mod) => ({ default: mod.YAxis })));
+const CartesianGrid = lazy(() =>
+  import("recharts").then((mod) => ({ default: mod.CartesianGrid }))
+);
+const Tooltip = lazy(() => import("recharts").then((mod) => ({ default: mod.Tooltip })));
+const Legend = lazy(() => import("recharts").then((mod) => ({ default: mod.Legend })));
+const ResponsiveContainer = lazy(() =>
+  import("recharts").then((mod) => ({ default: mod.ResponsiveContainer }))
+);
 
 interface RechartsWrapperProps {
   data: {
     title: string;
     description?: string;
-    chartType: 'line' | 'bar';
+    chartType: "line" | "bar";
     labels: string[];
     datasets: Array<{
       label: string;
@@ -46,13 +50,17 @@ export function RechartsWrapper({ data }: RechartsWrapperProps) {
   }, []);
 
   // Transform data for Recharts format
-  const chartData = data.labels?.map((label: string, i: number) => ({
-    name: label,
-    ...(data.datasets?.reduce((acc: any, dataset: any) => ({
-      ...acc,
-      [dataset.label]: dataset.data[i],
-    }), {}) || {}),
-  })) || [];
+  const chartData =
+    data.labels?.map((label: string, i: number) => ({
+      name: label,
+      ...(data.datasets?.reduce(
+        (acc: any, dataset: any) => ({
+          ...acc,
+          [dataset.label]: dataset.data[i],
+        }),
+        {}
+      ) || {}),
+    })) || [];
 
   if (!isClient) {
     return (
@@ -76,7 +84,7 @@ export function RechartsWrapper({ data }: RechartsWrapperProps) {
         <div className="flex items-center justify-between">
           <CardTitle>{data.title}</CardTitle>
           <Badge variant="outline" className="text-xs">
-            Recharts {data.chartType === 'line' ? 'Line' : 'Bar'} Chart
+            Recharts {data.chartType === "line" ? "Line" : "Bar"} Chart
           </Badge>
         </div>
         {data.description && <CardDescription>{data.description}</CardDescription>}
@@ -90,7 +98,7 @@ export function RechartsWrapper({ data }: RechartsWrapperProps) {
           }
         >
           <ResponsiveContainer width="100%" height={300}>
-            {data.chartType === 'line' ? (
+            {data.chartType === "line" ? (
               <LineChart data={chartData}>
                 <CartesianGrid strokeDasharray="3 3" />
                 <XAxis dataKey="name" />

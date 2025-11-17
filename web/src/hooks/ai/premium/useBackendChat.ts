@@ -8,8 +8,8 @@
  * - Multi-tenant
  */
 
-import { useState, useEffect } from 'react';
-import { backendConfig } from '@/config/backend';
+import { useEffect, useState } from "react";
+import { backendConfig } from "@/config/backend";
 
 export interface UseBackendChatOptions {
   threadId?: string;
@@ -19,7 +19,7 @@ export interface UseBackendChatOptions {
 
 export interface Message {
   id: string;
-  role: 'user' | 'assistant' | 'system';
+  role: "user" | "assistant" | "system";
   content: string;
   timestamp: number;
   metadata?: Record<string, any>;
@@ -36,19 +36,19 @@ export function useBackendChat(options: UseBackendChatOptions) {
     if (threadId && backendConfig.features.persistence) {
       loadMessages();
     }
-  }, [threadId]);
+  }, [threadId, loadMessages]);
 
   const loadMessages = async () => {
     try {
       const response = await fetch(`${backendConfig.endpoints.api}/chat/threads/${threadId}`, {
         headers: {
-          'Content-Type': 'application/json',
+          "Content-Type": "application/json",
         },
       });
       const data = await response.json();
       setMessages(data.messages || []);
     } catch (err) {
-      console.error('Failed to load messages:', err);
+      console.error("Failed to load messages:", err);
       setError(err as Error);
     }
   };
@@ -59,9 +59,9 @@ export function useBackendChat(options: UseBackendChatOptions) {
 
     try {
       const response = await fetch(`${backendConfig.endpoints.api}/chat`, {
-        method: 'POST',
+        method: "POST",
         headers: {
-          'Content-Type': 'application/json',
+          "Content-Type": "application/json",
         },
         body: JSON.stringify({
           threadId,
@@ -76,7 +76,7 @@ export function useBackendChat(options: UseBackendChatOptions) {
       // Update messages with response
       setMessages((prev) => [...prev, data.userMessage, data.assistantMessage]);
     } catch (err) {
-      console.error('Failed to send message:', err);
+      console.error("Failed to send message:", err);
       setError(err as Error);
     } finally {
       setIsLoading(false);
@@ -85,14 +85,14 @@ export function useBackendChat(options: UseBackendChatOptions) {
 
   const inviteHuman = async (userId: string) => {
     if (!backendConfig.features.humanInTheLoop) {
-      throw new Error('Human-in-the-loop requires premium tier');
+      throw new Error("Human-in-the-loop requires premium tier");
     }
 
     // Implementation for inviting human agent
     await fetch(`${backendConfig.endpoints.api}/chat/threads/${threadId}/invite`, {
-      method: 'POST',
+      method: "POST",
       headers: {
-        'Content-Type': 'application/json',
+        "Content-Type": "application/json",
       },
       body: JSON.stringify({ userId }),
     });

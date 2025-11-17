@@ -7,31 +7,31 @@
  * Reference: https://docs.stripe.com/agentic-commerce/concepts/shared-payment-tokens
  */
 
-import type { APIRoute } from 'astro';
-import { createTestSPT } from '@/lib/stripe/agentic-commerce';
+import type { APIRoute } from "astro";
+import { createTestSPT } from "@/lib/stripe/agentic-commerce";
 
 export const POST: APIRoute = async ({ request }) => {
   try {
     const { amount, currency } = await request.json();
 
     // Validate inputs
-    if (!amount || typeof amount !== 'number' || amount <= 0) {
+    if (!amount || typeof amount !== "number" || amount <= 0) {
       return new Response(
         JSON.stringify({
-          error: 'Invalid amount',
-          message: 'Amount must be a positive number in cents',
+          error: "Invalid amount",
+          message: "Amount must be a positive number in cents",
         }),
-        { status: 400, headers: { 'Content-Type': 'application/json' } }
+        { status: 400, headers: { "Content-Type": "application/json" } }
       );
     }
 
-    if (!currency || typeof currency !== 'string') {
+    if (!currency || typeof currency !== "string") {
       return new Response(
         JSON.stringify({
-          error: 'Invalid currency',
-          message: 'Currency must be a valid ISO 4217 currency code',
+          error: "Invalid currency",
+          message: "Currency must be a valid ISO 4217 currency code",
         }),
-        { status: 400, headers: { 'Content-Type': 'application/json' } }
+        { status: 400, headers: { "Content-Type": "application/json" } }
       );
     }
 
@@ -49,17 +49,17 @@ export const POST: APIRoute = async ({ request }) => {
         test_mode: true,
         created_at: new Date().toISOString(),
       }),
-      { status: 200, headers: { 'Content-Type': 'application/json' } }
+      { status: 200, headers: { "Content-Type": "application/json" } }
     );
   } catch (error) {
-    console.error('[Test SPT] Error generating test token:', error);
+    console.error("[Test SPT] Error generating test token:", error);
 
     return new Response(
       JSON.stringify({
-        error: 'Internal server error',
-        message: error instanceof Error ? error.message : 'Failed to generate test SPT',
+        error: "Internal server error",
+        message: error instanceof Error ? error.message : "Failed to generate test SPT",
       }),
-      { status: 500, headers: { 'Content-Type': 'application/json' } }
+      { status: 500, headers: { "Content-Type": "application/json" } }
     );
   }
 };

@@ -1,11 +1,11 @@
-import { atom } from 'nanostores';
+import { atom } from "nanostores";
 
 /** Layout right panel size options */
 export const RightSize = {
-  Full: 'Full',
-  Half: 'Half',
-  Quarter: 'Quarter',
-  Closed: 'Closed',
+  Full: "Full",
+  Half: "Half",
+  Quarter: "Quarter",
+  Closed: "Closed",
 } as const;
 
 export type RightSizeType = (typeof RightSize)[keyof typeof RightSize];
@@ -75,7 +75,7 @@ export const layoutActions = {
   },
 
   initLayout() {
-    const saved = localStorage.getItem('layoutPreference');
+    const saved = localStorage.getItem("layoutPreference");
     if (saved) {
       try {
         const savedState = JSON.parse(saved) as LayoutState;
@@ -87,7 +87,7 @@ export const layoutActions = {
 
     // Save layout changes to localStorage
     store.subscribe((state) => {
-      localStorage.setItem('layoutPreference', JSON.stringify(state));
+      localStorage.setItem("layoutPreference", JSON.stringify(state));
     });
   },
 };

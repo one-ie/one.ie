@@ -1,10 +1,10 @@
-import { useState, useEffect } from 'react';
-import * as React from 'react';
-import { ExternalLink, Code2, Rocket, FileText, ShoppingBag, BarChart3, Users } from 'lucide-react';
-import { Card } from '@/components/ui/card';
-import { Badge } from '@/components/ui/badge';
-import { CopyButton } from '@/components/CopyButton';
-import { SendToClaudeCodeModal } from '@/components/SendToClaudeCodeModal';
+import { BarChart3, Code2, ExternalLink, FileText, Rocket, ShoppingBag, Users } from "lucide-react";
+import type * as React from "react";
+import { useEffect, useState } from "react";
+import { CopyButton } from "@/components/CopyButton";
+import { SendToClaudeCodeModal } from "@/components/SendToClaudeCodeModal";
+import { Badge } from "@/components/ui/badge";
+import { Card } from "@/components/ui/card";
 
 interface Project {
   id: string;
@@ -12,17 +12,17 @@ interface Project {
   description: string;
   prompt: string;
   demoUrl: string;
-  iconName: 'Rocket' | 'FileText' | 'ShoppingBag' | 'BarChart3' | 'Users';
+  iconName: "Rocket" | "FileText" | "ShoppingBag" | "BarChart3" | "Users";
   borderColor: string;
   bgColor: string;
-  level: 'Beginner' | 'Intermediate' | 'Advanced';
+  level: "Beginner" | "Intermediate" | "Advanced";
   levelColor: string;
 }
 
 interface ClientProjectsManagerProps {
   projects: Project[];
-  viewMode: 'list' | 'grid';
-  gridColumns: '2' | '3';
+  viewMode: "list" | "grid";
+  gridColumns: "2" | "3";
 }
 
 export function ClientProjectsManager({
@@ -34,8 +34,8 @@ export function ClientProjectsManager({
   const [selectedProject, setSelectedProject] = useState<Project | null>(null);
   const [isModalOpen, setIsModalOpen] = useState(false);
 
-  const renderIcon = (iconName: Project['iconName'], className = 'h-4 w-4') => {
-    const iconMap: Record<Project['iconName'], React.ComponentType<{ className?: string }>> = {
+  const renderIcon = (iconName: Project["iconName"], className = "h-4 w-4") => {
+    const iconMap: Record<Project["iconName"], React.ComponentType<{ className?: string }>> = {
       Rocket,
       FileText,
       ShoppingBag,
@@ -53,7 +53,7 @@ export function ClientProjectsManager({
 
   useEffect(() => {
     const handleSearch = (e: CustomEvent<{ query: string }>) => {
-      const query = e.detail?.query || '';
+      const query = e.detail?.query || "";
       if (!query) {
         setFilteredProjects(projects);
       } else {
@@ -69,8 +69,8 @@ export function ClientProjectsManager({
       }
     };
 
-    window.addEventListener('projectSearch', handleSearch as EventListener);
-    return () => window.removeEventListener('projectSearch', handleSearch as EventListener);
+    window.addEventListener("projectSearch", handleSearch as EventListener);
+    return () => window.removeEventListener("projectSearch", handleSearch as EventListener);
   }, [projects]);
 
   const handleSendToClaudeCode = (project: Project) => {
@@ -78,7 +78,7 @@ export function ClientProjectsManager({
     setIsModalOpen(true);
   };
 
-  if (viewMode === 'list') {
+  if (viewMode === "list") {
     return (
       <>
         <div className="mx-auto max-w-4xl space-y-4">
@@ -92,22 +92,18 @@ export function ClientProjectsManager({
                   <div
                     className={`mt-1 inline-flex h-8 w-8 items-center justify-center rounded-lg ${project.bgColor} ${project.levelColor} flex-shrink-0`}
                   >
-                    {renderIcon(project.iconName, 'h-4 w-4')}
+                    {renderIcon(project.iconName, "h-4 w-4")}
                   </div>
                   <div className="flex-1 min-w-0">
                     <div className="flex items-center gap-2 mb-1">
-                      <h3 className="font-semibold text-base text-foreground">
-                        {project.title}
-                      </h3>
+                      <h3 className="font-semibold text-base text-foreground">{project.title}</h3>
                       <Badge variant="secondary" className="text-xs flex-shrink-0">
                         {project.level}
                       </Badge>
                     </div>
+                    <p className="text-sm text-muted-foreground mb-2">{project.description}</p>
                     <p className="text-sm text-muted-foreground mb-2">
-                      {project.description}
-                    </p>
-                    <p className="text-sm text-muted-foreground mb-2">
-                      {project.prompt.split('\n')[0]}
+                      {project.prompt.split("\n")[0]}
                     </p>
                     <div className="flex gap-2 flex-wrap">
                       <a
@@ -119,11 +115,9 @@ export function ClientProjectsManager({
                         <ExternalLink className="h-3.5 w-3.5" />
                         View Demo
                       </a>
-                      <CopyButton
-                        text={project.prompt}
-                        className="h-8 text-xs"
-                      />
+                      <CopyButton text={project.prompt} className="h-8 text-xs" />
                       <button
+                        type="button"
                         onClick={() => handleSendToClaudeCode(project)}
                         className="inline-flex items-center gap-2 text-sm px-3 py-1.5 rounded-md bg-primary/10 hover:bg-primary/20 transition-colors text-primary"
                       >
@@ -153,9 +147,9 @@ export function ClientProjectsManager({
     <>
       <div
         className={`mx-auto max-w-full grid gap-4 ${
-          gridColumns === '2'
-            ? 'grid-cols-1 sm:grid-cols-2'
-            : 'grid-cols-1 sm:grid-cols-2 lg:grid-cols-3'
+          gridColumns === "2"
+            ? "grid-cols-1 sm:grid-cols-2"
+            : "grid-cols-1 sm:grid-cols-2 lg:grid-cols-3"
         }`}
       >
         {filteredProjects.map((project) => {
@@ -168,7 +162,7 @@ export function ClientProjectsManager({
                 <div
                   className={`mt-0.5 inline-flex h-7 w-7 items-center justify-center rounded-lg ${project.bgColor} ${project.levelColor} flex-shrink-0`}
                 >
-                  {renderIcon(project.iconName, 'h-3.5 w-3.5')}
+                  {renderIcon(project.iconName, "h-3.5 w-3.5")}
                 </div>
                 <div className="flex-1 min-w-0">
                   <h3 className="font-semibold text-sm leading-tight text-foreground">
@@ -186,7 +180,7 @@ export function ClientProjectsManager({
               </div>
               <div className="flex-1 flex flex-col">
                 <p className="text-xs text-muted-foreground mb-2 line-clamp-2">
-                  {project.prompt.split('\n')[0]}
+                  {project.prompt.split("\n")[0]}
                 </p>
                 <div className="flex gap-1.5 flex-wrap mt-auto">
                   <a
@@ -198,11 +192,9 @@ export function ClientProjectsManager({
                     <ExternalLink className="h-3 w-3" />
                     Demo
                   </a>
-                  <CopyButton
-                    text={project.prompt}
-                    className="h-7 text-xs px-2"
-                  />
+                  <CopyButton text={project.prompt} className="h-7 text-xs px-2" />
                   <button
+                    type="button"
                     onClick={() => handleSendToClaudeCode(project)}
                     className="inline-flex items-center gap-1 text-xs px-2 py-1 rounded bg-primary/10 hover:bg-primary/20 transition-colors text-primary"
                   >

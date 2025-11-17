@@ -81,7 +81,7 @@ export interface OrderItem {
  * Payment status response
  */
 export interface PaymentStatusResponse {
-  status: 'pending' | 'processing' | 'succeeded' | 'failed' | 'canceled';
+  status: "pending" | "processing" | "succeeded" | "failed" | "canceled";
   paymentIntentId: string;
   amount: number;
   currency: string;
@@ -93,7 +93,7 @@ export interface PaymentStatusResponse {
  * Stripe error response
  */
 export interface StripeError {
-  type: 'card_error' | 'validation_error' | 'api_error' | 'network_error';
+  type: "card_error" | "validation_error" | "api_error" | "network_error";
   code?: string;
   message: string;
   param?: string;
@@ -114,7 +114,7 @@ export interface OrderCalculation {
  * Stripe Elements appearance customization
  */
 export interface StripeElementsAppearance {
-  theme?: 'stripe' | 'night' | 'flat';
+  theme?: "stripe" | "night" | "flat";
   variables?: {
     colorPrimary?: string;
     colorBackground?: string;

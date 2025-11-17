@@ -1,0 +1,307 @@
+{
+  "products": [
+    {
+      "id": 1,
+      "name": "Bugatti La Voiture Noire",
+      "category": "Hypercar",
+      "price": 18900000,
+      "currency": "USD",
+      "description": "The most expensive new car ever made. A one-of-a-kind tribute to the legendary 1936 Bugatti Type 57 SC Atlantic with 1,500 PS and a top speed of over 260 mph.",
+      "specs": {
+        "engine": "16-cylinder, 8.0L",
+        "power": "1,500 PS / 1,103 kW",
+        "torque": "1,600 Nm",
+        "acceleration": "0-60 mph in 2.4 seconds",
+        "topSpeed": "261 mph"
+      },
+      "officialUrl": "https://www.bugatti.com/en/models/la-voiture-noire",
+      "images": {
+        "hero": "https://www.mad4wheels.com/img/free-car-images/desktop/17155/bugatti-la-voiture-noire-2019-538906.jpg",
+        "gallery": [
+          "https://www.mad4wheels.com/img/free-car-images/desktop/17155/bugatti-la-voiture-noire-2019-538906.jpg",
+          "https://www.mad4wheels.com/img/free-car-images/desktop/17155/bugatti-la-voiture-noire-2019-538907.jpg",
+          "https://www.mad4wheels.com/img/free-car-images/desktop/17155/bugatti-la-voiture-noire-2019-538908.jpg"
+        ]
+      },
+      "brand": {
+        "name": "Bugatti",
+        "logo": "https://upload.wikimedia.org/wikipedia/commons/6/60/Bugatti_logo.svg"
+      },
+      "availability": "Sold - One-of-a-kind",
+      "yearIntroduced": 2019
+    },
+    {
+      "id": 2,
+      "name": "Gulfstream G700",
+      "category": "Private Jet",
+      "price": 80000000,
+      "currency": "USD",
+      "description": "Gulfstream's flagship ultra-long-range business jet. The pinnacle of private aviation with a maximum range of 7,750 nautical miles and the industry's most advanced flight deck.",
+      "specs": {
+        "range": "7,750 nautical miles / 14,353 km",
+        "maxSpeed": "Mach 0.925",
+        "maxAltitude": "51,000 feet",
+        "passengers": "Up to 19",
+        "cabinLength": "56 ft 11 in"
+      },
+      "officialUrl": "https://www.gulfstream.com/en/aircraft/gulfstream-g700/",
+      "images": {
+        "hero": "https://images.unsplash.com/photo-1540962351504-03099e0a754b?w=1200&h=900&fit=crop&q=80",
+        "gallery": [
+          "https://images.unsplash.com/photo-1540962351504-03099e0a754b?w=1200&h=900&fit=crop&q=80",
+          "https://images.unsplash.com/photo-1556388158-158ea5ccacbd?w=1200&h=900&fit=crop&q=80"
+        ]
+      },
+      "brand": {
+        "name": "Gulfstream Aerospace",
+        "logo": "https://upload.wikimedia.org/wikipedia/commons/8/8c/Gulfstream_Aerospace_Logo.svg"
+      },
+      "availability": "Available for order",
+      "yearIntroduced": 2024
+    },
+    {
+      "id": 3,
+      "name": "Migaloo M5 Submersible Superyacht",
+      "category": "Luxury Submarine",
+      "price": 2000000000,
+      "currency": "USD",
+      "description": "The world's first luxury super submarine. A 544-foot submersible superyacht that can dive to 250 meters and stay submerged for up to four weeks.",
+      "specs": {
+        "length": "544 feet / 165.8 meters",
+        "divingDepth": "250 meters",
+        "submersionDuration": "Up to 4 weeks",
+        "amenities": "Helipad, swimming pool, cinema, gym, wine cellar"
+      },
+      "officialUrl": "https://www.migaloo-submarines.com/m5/",
+      "images": {
+        "hero": "https://images.unsplash.com/photo-1567899378494-47b22a2ae96a?w=1200&h=900&fit=crop&q=80",
+        "gallery": [
+          "https://images.unsplash.com/photo-1567899378494-47b22a2ae96a?w=1200&h=900&fit=crop&q=80",
+          "https://images.unsplash.com/photo-1583487960975-37c0ff9c5b61?w=1200&h=900&fit=crop&q=80"
+        ]
+      },
+      "brand": {
+        "name": "Migaloo Submarines",
+        "logo": "https://via.placeholder.com/200x80/000000/FFFFFF?text=MIGALOO"
+      },
+      "availability": "Custom order - 3-5 year build time",
+      "yearIntroduced": 2024
+    },
+    {
+      "id": 4,
+      "name": "Eclipse Superyacht",
+      "category": "Superyacht",
+      "price": 500000000,
+      "currency": "USD",
+      "description": "One of the world's largest and most expensive private superyachts. Features missile-detection system, two helipads, luxury spa, swimming pool, and its own mini-submarine.",
+      "specs": {
+        "length": "533 feet / 162.5 meters",
+        "crew": "70 people",
+        "guests": "36",
+        "amenities": "2 helipads, submarine, missile defense, armor plating, 24 guest cabins"
+      },
+      "officialUrl": "https://www.superyachts.com/motor-yacht-eclipse",
+      "images": {
+        "hero": "https://images.unsplash.com/photo-1569263979104-865ab7cd8d13?w=1200&h=900&fit=crop&q=80",
+        "gallery": [
+          "https://images.unsplash.com/photo-1569263979104-865ab7cd8d13?w=1200&h=900&fit=crop&q=80",
+          "https://images.unsplash.com/photo-1605281317010-fe5ffe798166?w=1200&h=900&fit=crop&q=80"
+        ]
+      },
+      "brand": {
+        "name": "Blohm + Voss",
+        "logo": "https://via.placeholder.com/200x80/000000/FFFFFF?text=BLOHM+VOSS"
+      },
+      "availability": "Privately owned - Not for sale",
+      "yearIntroduced": 2010
+    },
+    {
+      "id": 5,
+      "name": "Private Island - Laucala Island, Fiji",
+      "category": "Real Estate",
+      "price": 155000000,
+      "currency": "USD",
+      "description": "One of the most exclusive private islands in Fiji. A 3,500-acre tropical paradise with pristine beaches, luxury villas, and complete self-sufficiency.",
+      "specs": {
+        "size": "3,500 acres",
+        "location": "Fiji, South Pacific",
+        "amenities": "Private airport, organic farm, coral reef, 25 luxury villas",
+        "staff": "Full resort staff included"
+      },
+      "officialUrl": "https://www.laucala.com/",
+      "images": {
+        "hero": "https://images.unsplash.com/photo-1559827260-dc66d52bef19?w=1200&h=900&fit=crop&q=80",
+        "gallery": [
+          "https://images.unsplash.com/photo-1559827260-dc66d52bef19?w=1200&h=900&fit=crop&q=80",
+          "https://images.unsplash.com/photo-1573843981267-be1999ff37cd?w=1200&h=900&fit=crop&q=80"
+        ]
+      },
+      "brand": {
+        "name": "Laucala Island Resort",
+        "logo": "https://via.placeholder.com/200x80/000000/FFFFFF?text=LAUCALA"
+      },
+      "availability": "Available for purchase",
+      "yearIntroduced": 2025
+    },
+    {
+      "id": 6,
+      "name": "Koenigsegg CCXR Trevita",
+      "category": "Hypercar",
+      "price": 4800000,
+      "currency": "USD",
+      "description": "One of the rarest hypercars in existence. Features a unique diamond-weave carbon fiber body that shimmers like diamonds. Only 2 units were ever produced.",
+      "specs": {
+        "engine": "4.8L V8 Twin Supercharged",
+        "power": "1,004 HP",
+        "torque": "1,080 Nm",
+        "acceleration": "0-60 mph in 2.9 seconds",
+        "topSpeed": "254 mph"
+      },
+      "officialUrl": "https://www.koenigsegg.com/",
+      "images": {
+        "hero": "https://images.unsplash.com/photo-1614200179396-2bdb77ebf81b?w=1200&h=900&fit=crop&q=80",
+        "gallery": [
+          "https://images.unsplash.com/photo-1614200179396-2bdb77ebf81b?w=1200&h=900&fit=crop&q=80",
+          "https://images.unsplash.com/photo-1611821064430-4a1009920b77?w=1200&h=900&fit=crop&q=80"
+        ]
+      },
+      "brand": {
+        "name": "Koenigsegg",
+        "logo": "https://upload.wikimedia.org/wikipedia/commons/1/1f/Koenigsegg_logo.svg"
+      },
+      "availability": "Sold out - Only 2 ever made",
+      "yearIntroduced": 2009
+    },
+    {
+      "id": 7,
+      "name": "Seabreacher X",
+      "category": "Luxury Water Toy",
+      "price": 100000,
+      "currency": "USD",
+      "description": "A high-performance submersible watercraft that looks like a shark. Capable of 60 mph on water and can perform 360-degree barrel rolls and breach jumps up to 18 feet.",
+      "specs": {
+        "topSpeed": "60 mph above water / 25 mph submerged",
+        "divingDepth": "5 feet",
+        "engine": "300 HP supercharged",
+        "features": "Jet fighter style cockpit, snorkel breathing system"
+      },
+      "officialUrl": "https://www.seabreacher.com/",
+      "images": {
+        "hero": "https://images.unsplash.com/photo-1544551763-46a013bb70d5?w=1200&h=900&fit=crop&q=80",
+        "gallery": [
+          "https://images.unsplash.com/photo-1544551763-46a013bb70d5?w=1200&h=900&fit=crop&q=80",
+          "https://images.unsplash.com/photo-1559827260-dc66d52bef19?w=1200&h=900&fit=crop&q=80"
+        ]
+      },
+      "brand": {
+        "name": "Seabreacher",
+        "logo": "https://via.placeholder.com/200x80/000000/FFFFFF?text=SEABREACHER"
+      },
+      "availability": "Available - 12 month build time",
+      "yearIntroduced": 2016
+    },
+    {
+      "id": 8,
+      "name": "McLaren Speedtail",
+      "category": "Hypercar",
+      "price": 2250000,
+      "currency": "USD",
+      "description": "The ultimate McLaren Grand Tourer. A hybrid hypercar with a top speed of 250 mph and a unique 3-seat layout with central driving position.",
+      "specs": {
+        "engine": "4.0L V8 Hybrid",
+        "power": "1,036 HP",
+        "torque": "848 lb-ft",
+        "acceleration": "0-186 mph in 12.8 seconds",
+        "topSpeed": "250 mph"
+      },
+      "officialUrl": "https://cars.mclaren.com/",
+      "images": {
+        "hero": "https://www.mad4wheels.com/img/free-car-images/desktop/16786/mclaren-speedtail-2020-515335.jpg",
+        "gallery": [
+          "https://www.mad4wheels.com/img/free-car-images/desktop/16786/mclaren-speedtail-2020-515335.jpg",
+          "https://www.mad4wheels.com/img/free-car-images/desktop/16786/mclaren-speedtail-2020-515336.jpg",
+          "https://www.mad4wheels.com/img/free-car-images/desktop/16786/mclaren-speedtail-2020-515337.jpg"
+        ]
+      },
+      "brand": {
+        "name": "McLaren Automotive",
+        "logo": "https://upload.wikimedia.org/wikipedia/en/5/56/McLaren_Racing_logo.svg"
+      },
+      "availability": "Sold out - Limited to 106 units",
+      "yearIntroduced": 2020
+    },
+    {
+      "id": 9,
+      "name": "Ripsaw EV2 Luxury Tank",
+      "category": "Luxury Vehicle",
+      "price": 295000,
+      "currency": "USD",
+      "description": "The world's fastest dual-track vehicle. A luxury tank with iPhone chargers, cup holders, air conditioning, and automatic transmission. Reaches 80 mph.",
+      "specs": {
+        "topSpeed": "80 mph",
+        "engine": "Duramax diesel / LS3 V8",
+        "power": "Up to 800 HP",
+        "features": "Air conditioning, luxury interior, automatic transmission, off-road capability"
+      },
+      "officialUrl": "https://www.howe-and-howe.com/",
+      "images": {
+        "hero": "https://images.unsplash.com/photo-1563720223185-11003d516935?w=1200&h=900&fit=crop&q=80",
+        "gallery": [
+          "https://images.unsplash.com/photo-1563720223185-11003d516935?w=1200&h=900&fit=crop&q=80",
+          "https://images.unsplash.com/photo-1595535783425-3580b28c3a66?w=1200&h=900&fit=crop&q=80"
+        ]
+      },
+      "brand": {
+        "name": "Howe & Howe Technologies",
+        "logo": "https://via.placeholder.com/200x80/000000/FFFFFF?text=HOWE+HOWE"
+      },
+      "availability": "Available - Custom order",
+      "yearIntroduced": 2018
+    },
+    {
+      "id": 10,
+      "name": "Jacob & Co. Astronomia Zodiac Watch",
+      "category": "Luxury Timepiece",
+      "price": 348000,
+      "currency": "USD",
+      "description": "A masterpiece of watchmaking featuring tiny rotating replicas of the Sun and planets made from eight different varieties of precious gemstones. A wearable solar system.",
+      "specs": {
+        "movement": "Hand-wound mechanical",
+        "functions": "Time, rotating solar system",
+        "materials": "18K gold, precious gemstones",
+        "complications": "4-arm gravitational complication, zodiac dial"
+      },
+      "officialUrl": "https://www.jacobandco.com/",
+      "images": {
+        "hero": "https://images.unsplash.com/photo-1587836374828-4dbafa94cf0e?w=1200&h=900&fit=crop&q=80",
+        "gallery": [
+          "https://images.unsplash.com/photo-1587836374828-4dbafa94cf0e?w=1200&h=900&fit=crop&q=80",
+          "https://images.unsplash.com/photo-1523170335258-f5ed11844a49?w=1200&h=900&fit=crop&q=80"
+        ]
+      },
+      "brand": {
+        "name": "Jacob & Co.",
+        "logo": "https://via.placeholder.com/200x80/000000/FFFFFF?text=JACOB+CO"
+      },
+      "availability": "Available - Limited production",
+      "yearIntroduced": 2020
+    }
+  ],
+  "metadata": {
+    "totalProducts": 10,
+    "totalValue": 21578348000,
+    "averagePrice": 2157834800,
+    "categories": [
+      "Hypercar",
+      "Private Jet",
+      "Luxury Submarine",
+      "Superyacht",
+      "Real Estate",
+      "Luxury Water Toy",
+      "Luxury Vehicle",
+      "Luxury Timepiece"
+    ],
+    "lastUpdated": "2025-11-18",
+    "currency": "USD"
+  }
+}

@@ -1,23 +1,11 @@
-import type {
-  EntityCard,
-  EntityId,
-  JourneyStage,
-  NavigationView,
-  StatusFilter,
-} from "./types"
-import { JOURNEY_STAGES } from "./types"
+import type { EntityCard, EntityId, JourneyStage, NavigationView, StatusFilter } from "./types";
+import { JOURNEY_STAGES } from "./types";
 
-export type {
-  EntityCard,
-  EntityId,
-  JourneyStage,
-  NavigationView,
-  StatusFilter,
-}
-export { JOURNEY_STAGES }
+export type { EntityCard, EntityId, JourneyStage, NavigationView, StatusFilter };
+export { JOURNEY_STAGES };
 
-const HOUR = 60 * 60 * 1000
-const now = Date.now()
+const HOUR = 60 * 60 * 1000;
+const now = Date.now();
 
 const baseSource: Record<NavigationView, string> = {
   people: "one/people",
@@ -25,62 +13,56 @@ const baseSource: Record<NavigationView, string> = {
   connections: "one/connections",
   events: "one/events",
   knowledge: "one/knowledge",
-}
+};
 
-const defaultCreator: EntityId = "people:anthony-oconnell"
+const defaultCreator: EntityId = "people:anthony-oconnell";
 
-function resolveSourceFile(
-  kind: NavigationView,
-  fileName: string,
-): string {
-  return `${baseSource[kind]}/${fileName}`.replace(/\/+/g, "/")
+function resolveSourceFile(kind: NavigationView, fileName: string): string {
+  return `${baseSource[kind]}/${fileName}`.replace(/\/+/g, "/");
 }
 
 function characterCodeFromSlug(slug: string, fallback: string): string {
-  const slugLetters = slug.replace(/[^a-z]/gi, "").slice(0, 3).toUpperCase()
-  const base = slugLetters || fallback.slice(0, 3).toUpperCase()
-  return base.padEnd(3, fallback[0]?.toUpperCase() ?? "X")
+  const slugLetters = slug
+    .replace(/[^a-z]/gi, "")
+    .slice(0, 3)
+    .toUpperCase();
+  const base = slugLetters || fallback.slice(0, 3).toUpperCase();
+  return base.padEnd(3, fallback[0]?.toUpperCase() ?? "X");
 }
 
 interface CardConfig {
-  title: string
-  subtitle: string
-  preview: string
-  status: StatusFilter
-  tags: string[]
-  type: string
-  source: string
-  updatedAgoHours: number
-  createdAgoHours?: number
-  unread?: boolean
-  characterCode?: string
-  createdBy?: EntityId
-  connectionCount?: number
-  recentActivityCount?: number
-  relatedIds?: EntityId[]
-  properties?: Record<string, unknown>
+  title: string;
+  subtitle: string;
+  preview: string;
+  status: StatusFilter;
+  tags: string[];
+  type: string;
+  source: string;
+  updatedAgoHours: number;
+  createdAgoHours?: number;
+  unread?: boolean;
+  characterCode?: string;
+  createdBy?: EntityId;
+  connectionCount?: number;
+  recentActivityCount?: number;
+  relatedIds?: EntityId[];
+  properties?: Record<string, unknown>;
 }
 
 function uniqueTags(tags: string[]): string[] {
-  return Array.from(new Set(tags.map(tag => tag.trim()).filter(Boolean)))
+  return Array.from(new Set(tags.map((tag) => tag.trim()).filter(Boolean)));
 }
 
-function createCard(
-  kind: NavigationView,
-  slug: string,
-  config: CardConfig,
-): EntityCard {
-  const updatedAt = now - config.updatedAgoHours * HOUR
-  const createdAt =
-    now - (config.createdAgoHours ?? config.updatedAgoHours + 24) * HOUR
+function createCard(kind: NavigationView, slug: string, config: CardConfig): EntityCard {
+  const updatedAt = now - config.updatedAgoHours * HOUR;
+  const createdAt = now - (config.createdAgoHours ?? config.updatedAgoHours + 24) * HOUR;
 
   return {
     _id: `${kind}:${slug}`,
     kind,
     title: config.title,
     characterCode:
-      config.characterCode ??
-      characterCodeFromSlug(slug, kind.slice(0, 3).toUpperCase()),
+      config.characterCode ?? characterCodeFromSlug(slug, kind.slice(0, 3).toUpperCase()),
     subtitle: config.subtitle,
     preview: config.preview,
     timestamp: updatedAt,
@@ -98,18 +80,16 @@ function createCard(
     updatedAt,
     createdBy: config.createdBy ?? defaultCreator,
     connectionCount: config.connectionCount ?? config.relatedIds?.length ?? 0,
-    recentActivityCount:
-      config.recentActivityCount ??
-      Math.max(1, config.status === "now" ? 4 : 2),
-  }
+    recentActivityCount: config.recentActivityCount ?? Math.max(1, config.status === "now" ? 4 : 2),
+  };
 }
 
 interface OntologyCollection {
-  kind: NavigationView
-  label: string
-  description: string
-  focus: JourneyStage[]
-  cards: EntityCard[]
+  kind: NavigationView;
+  label: string;
+  description: string;
+  focus: JourneyStage[];
+  cards: EntityCard[];
 }
 
 const peopleCards: EntityCard[] = [
@@ -170,16 +150,13 @@ const peopleCards: EntityCard[] = [
     source: resolveSourceFile("people", "people.md"),
     updatedAgoHours: 18,
     connectionCount: 3,
-    relatedIds: [
-      "knowledge:pillar-playbook",
-      "events:community-onboarding",
-    ],
+    relatedIds: ["knowledge:pillar-playbook", "events:community-onboarding"],
     properties: {
       focus: ["Audience Design", "Journey Experimentation"],
       deliverable: "Weekly journey report",
     },
   }),
-]
+];
 
 const thingsCards: EntityCard[] = [
   createCard("things", "agent-atlas", {
@@ -216,10 +193,7 @@ const thingsCards: EntityCard[] = [
     source: resolveSourceFile("things", "organisation.md"),
     updatedAgoHours: 9,
     connectionCount: 5,
-    relatedIds: [
-      "connections:audience-flywheel",
-      "events:community-onboarding",
-    ],
+    relatedIds: ["connections:audience-flywheel", "events:community-onboarding"],
     properties: {
       metrics: {
         totalMembers: 1280,
@@ -260,20 +234,13 @@ const thingsCards: EntityCard[] = [
     source: resolveSourceFile("things", "frontend.md"),
     updatedAgoHours: 32,
     connectionCount: 3,
-    relatedIds: [
-      "events:edge-deploy",
-      "knowledge:protocol-cheatsheet",
-    ],
+    relatedIds: ["events:edge-deploy", "knowledge:protocol-cheatsheet"],
     properties: {
-      starterKits: [
-        "Audience Portal",
-        "Agent Console",
-        "Knowledge Marketplace",
-      ],
+      starterKits: ["Audience Portal", "Agent Console", "Knowledge Marketplace"],
       hosting: "Cloudflare Edge",
     },
   }),
-]
+];
 
 const connectionsCards: EntityCard[] = [
   createCard("connections", "intent-to-execution", {
@@ -315,11 +282,7 @@ const connectionsCards: EntityCard[] = [
       "knowledge:pillar-playbook",
     ],
     properties: {
-      loops: [
-        "Content → Community",
-        "Community → Commerce",
-        "Commerce → Insight",
-      ],
+      loops: ["Content → Community", "Community → Commerce", "Commerce → Insight"],
     },
   }),
   createCard("connections", "knowledge-market", {
@@ -343,7 +306,7 @@ const connectionsCards: EntityCard[] = [
       settlement: "USDC & fiat",
     },
   }),
-]
+];
 
 const eventsCards: EntityCard[] = [
   createCard("events", "autonomous-sprint-kickoff", {
@@ -364,11 +327,7 @@ const eventsCards: EntityCard[] = [
       "connections:intent-to-execution",
     ],
     properties: {
-      agenda: [
-        "Intent alignment",
-        "Agent assignment",
-        "Success metrics",
-      ],
+      agenda: ["Intent alignment", "Agent assignment", "Success metrics"],
     },
   }),
   createCard("events", "community-onboarding", {
@@ -403,10 +362,7 @@ const eventsCards: EntityCard[] = [
     source: resolveSourceFile("events", "events.md"),
     updatedAgoHours: 40,
     connectionCount: 3,
-    relatedIds: [
-      "things:edge-app-studio",
-      "knowledge:protocol-cheatsheet",
-    ],
+    relatedIds: ["things:edge-app-studio", "knowledge:protocol-cheatsheet"],
     properties: {
       rollout: "Canary then global",
       metrics: ["<200ms TTFB", "0 errors"],
@@ -429,14 +385,10 @@ const eventsCards: EntityCard[] = [
       "knowledge:pillar-playbook",
     ],
     properties: {
-      includes: [
-        "Journey instrumentation guide",
-        "Prompt library",
-        "Revenue forecast model",
-      ],
+      includes: ["Journey instrumentation guide", "Prompt library", "Revenue forecast model"],
     },
   }),
-]
+];
 
 const knowledgeCards: EntityCard[] = [
   createCard("knowledge", "vision-constellation", {
@@ -498,10 +450,7 @@ const knowledgeCards: EntityCard[] = [
     source: resolveSourceFile("knowledge", "tags.md"),
     updatedAgoHours: 22,
     connectionCount: 4,
-    relatedIds: [
-      "things:audience-graph",
-      "connections:intent-to-execution",
-    ],
+    relatedIds: ["things:audience-graph", "connections:intent-to-execution"],
     properties: {
       tagCount: 64,
       embeddingModel: "text-embedding-3-large",
@@ -518,24 +467,19 @@ const knowledgeCards: EntityCard[] = [
     source: resolveSourceFile("knowledge", "knowledge.md"),
     updatedAgoHours: 36,
     connectionCount: 3,
-    relatedIds: [
-      "things:edge-app-studio",
-      "connections:knowledge-market",
-      "events:edge-deploy",
-    ],
+    relatedIds: ["things:edge-app-studio", "connections:knowledge-market", "events:edge-deploy"],
     properties: {
       protocols: ["AP2", "MCP", "X402"],
       lastReviewedBy: "people:steward-collective",
     },
   }),
-]
+];
 
 export const ontologyCollections: OntologyCollection[] = [
   {
     kind: "people",
     label: "People",
-    description:
-      "Who sets intent, approves missions, and nurtures the community.",
+    description: "Who sets intent, approves missions, and nurtures the community.",
     focus: ["Hook", "Engage"],
     cards: peopleCards,
   },
@@ -567,16 +511,16 @@ export const ontologyCollections: OntologyCollection[] = [
     focus: ["Educate", "Sell"],
     cards: knowledgeCards,
   },
-]
+];
 
 export const mockEntities: EntityCard[] = ontologyCollections
-  .flatMap(collection => collection.cards)
-  .sort((a, b) => b.timestamp - a.timestamp)
+  .flatMap((collection) => collection.cards)
+  .sort((a, b) => b.timestamp - a.timestamp);
 
 export const viewCounts: Record<NavigationView, number> = mockEntities.reduce(
   (acc, entity) => {
-    acc[entity.kind] = (acc[entity.kind] ?? 0) + 1
-    return acc
+    acc[entity.kind] = (acc[entity.kind] ?? 0) + 1;
+    return acc;
   },
   {
     people: 0,
@@ -584,5 +528,5 @@ export const viewCounts: Record<NavigationView, number> = mockEntities.reduce(
     connections: 0,
     events: 0,
     knowledge: 0,
-  } as Record<NavigationView, number>,
-)
+  } as Record<NavigationView, number>
+);

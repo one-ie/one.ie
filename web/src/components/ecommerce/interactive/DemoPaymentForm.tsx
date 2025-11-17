@@ -1,10 +1,10 @@
-'use client';
+"use client";
 
-import { useState } from 'react';
-import { Button } from '@/components/ui/button';
-import { Alert, AlertDescription } from '@/components/ui/alert';
-import { CreditCard, Lock } from 'lucide-react';
-import { cn } from '@/lib/utils';
+import { CreditCard, Lock } from "lucide-react";
+import { useState } from "react";
+import { Alert, AlertDescription } from "@/components/ui/alert";
+import { Button } from "@/components/ui/button";
+import { cn } from "@/lib/utils";
 
 interface DemoPaymentFormProps {
   amount: number;
@@ -13,16 +13,12 @@ interface DemoPaymentFormProps {
   onError?: (error: string) => void;
 }
 
-export function DemoPaymentForm({
-  amount,
-  currency = 'usd',
-  onSuccess,
-}: DemoPaymentFormProps) {
+export function DemoPaymentForm({ amount, currency = "usd", onSuccess }: DemoPaymentFormProps) {
   const [isProcessing, setIsProcessing] = useState(false);
-  const [cardNumber, setCardNumber] = useState('');
-  const [expiry, setExpiry] = useState('');
-  const [cvc, setCvc] = useState('');
-  const [cardholderName, setCardholderName] = useState('');
+  const [cardNumber, setCardNumber] = useState("");
+  const [expiry, setExpiry] = useState("");
+  const [cvc, setCvc] = useState("");
+  const [cardholderName, setCardholderName] = useState("");
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -36,9 +32,9 @@ export function DemoPaymentForm({
   };
 
   const formatCardNumber = (value: string) => {
-    const v = value.replace(/\s+/g, '').replace(/[^0-9]/gi, '');
+    const v = value.replace(/\s+/g, "").replace(/[^0-9]/gi, "");
     const matches = v.match(/\d{4,16}/g);
-    const match = (matches && matches[0]) || '';
+    const match = matches?.[0] || "";
     const parts = [];
 
     for (let i = 0, len = match.length; i < len; i += 4) {
@@ -46,14 +42,14 @@ export function DemoPaymentForm({
     }
 
     if (parts.length) {
-      return parts.join(' ');
+      return parts.join(" ");
     } else {
       return value;
     }
   };
 
   const formatExpiry = (value: string) => {
-    const v = value.replace(/\s+/g, '').replace(/[^0-9]/gi, '');
+    const v = value.replace(/\s+/g, "").replace(/[^0-9]/gi, "");
     if (v.length >= 2) {
       return `${v.slice(0, 2)}/${v.slice(2, 4)}`;
     }
@@ -65,8 +61,8 @@ export function DemoPaymentForm({
       <Alert>
         <Lock className="h-4 w-4" />
         <AlertDescription>
-          Demo Mode: This is a test payment form. No real payment will be processed.
-          Use any test card number (e.g., 4242 4242 4242 4242).
+          Demo Mode: This is a test payment form. No real payment will be processed. Use any test
+          card number (e.g., 4242 4242 4242 4242).
         </AlertDescription>
       </Alert>
 
@@ -119,7 +115,7 @@ export function DemoPaymentForm({
               type="text"
               required
               value={cvc}
-              onChange={(e) => setCvc(e.target.value.replace(/[^0-9]/g, '').slice(0, 4))}
+              onChange={(e) => setCvc(e.target.value.replace(/[^0-9]/g, "").slice(0, 4))}
               placeholder="123"
               maxLength={4}
               className="w-full rounded-md border border-input bg-background px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-ring"
@@ -138,9 +134,9 @@ export function DemoPaymentForm({
           <Button
             type="submit"
             className={cn(
-              'w-full',
-              'bg-[hsl(var(--color-primary))] text-[hsl(var(--color-primary-foreground))]',
-              'hover:bg-[hsl(var(--color-primary))]/90 focus-visible:ring-[hsl(var(--color-primary))]/40',
+              "w-full",
+              "bg-[hsl(var(--color-primary))] text-[hsl(var(--color-primary-foreground))]",
+              "hover:bg-[hsl(var(--color-primary))]/90 focus-visible:ring-[hsl(var(--color-primary))]/40"
             )}
             size="lg"
             disabled={isProcessing}

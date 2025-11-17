@@ -16,22 +16,20 @@
  * 4. Support multi-tenant isolation via groupId
  */
 
-import type { Id } from 'convex/_generated/dataModel';
-import type { Product, CartItem } from './types';
+import type { Id } from "convex/_generated/dataModel";
 import {
-  type Thing,
   type Connection,
-  type CreateThingInput,
   type CreateConnectionInput,
   type CreateEventInput,
+  type CreateThingInput,
   getProperty,
   getRequiredProperty,
-  validateThingType,
-  validateThingProperties,
-  mapStatus,
+  type Thing,
   templateToThing,
-  thingToTemplate,
-} from '@/lib/template-ontology';
+  validateThingProperties,
+  validateThingType,
+} from "@/lib/template-ontology";
+import type { CartItem, Product } from "./types";
 
 // ============================================================================
 // Shop Ontology Types (from ontology-shop.yaml)
@@ -41,38 +39,33 @@ import {
  * Thing types from shop ontology
  */
 export type ShopThingType =
-  | 'product'
-  | 'product_variant'
-  | 'shopping_cart'
-  | 'order'
-  | 'discount_code'
-  | 'payment';
+  | "product"
+  | "product_variant"
+  | "shopping_cart"
+  | "order"
+  | "discount_code"
+  | "payment";
 
 /**
  * Connection types from shop ontology
  */
-export type ShopConnectionType =
-  | 'purchased'
-  | 'in_cart'
-  | 'variant_of'
-  | 'ordered'
-  | 'paid_for';
+export type ShopConnectionType = "purchased" | "in_cart" | "variant_of" | "ordered" | "paid_for";
 
 /**
  * Event types from shop ontology
  */
 export type ShopEventType =
-  | 'product_added_to_cart'
-  | 'cart_updated'
-  | 'cart_abandoned'
-  | 'order_placed'
-  | 'order_fulfilled'
-  | 'order_shipped'
-  | 'order_delivered'
-  | 'payment_processed'
-  | 'payment_failed'
-  | 'product_viewed'
-  | 'discount_applied';
+  | "product_added_to_cart"
+  | "cart_updated"
+  | "cart_abandoned"
+  | "order_placed"
+  | "order_fulfilled"
+  | "order_shipped"
+  | "order_delivered"
+  | "payment_processed"
+  | "payment_failed"
+  | "product_viewed"
+  | "discount_applied";
 
 // ============================================================================
 // Product Conversions (Thing type: 'product')
@@ -86,39 +79,37 @@ export type ShopEventType =
  */
 export function thingToProduct(thing: Thing): Product {
   // Validate thing type
-  validateThingType(thing, 'product');
+  validateThingType(thing, "product");
 
   // Validate required properties
   validateThingProperties(thing, [
-    'description',
-    'price',
-    'category',
-    'subcategory',
-    'sizes',
-    'colors',
-    'images',
-    'stock',
+    "description",
+    "price",
+    "category",
+    "subcategory",
+    "sizes",
+    "colors",
+    "images",
+    "stock",
   ]);
 
   return {
     id: thing._id,
     name: thing.name,
-    description: getRequiredProperty<string>(thing, 'description'),
-    price: getRequiredProperty<number>(thing, 'price'),
-    salePrice: getProperty<number>(thing, 'compareAtPrice'),
-    category: getRequiredProperty<'men' | 'women' | 'unisex'>(
+    description: getRequiredProperty<string>(thing, "description"),
+    price: getRequiredProperty<number>(thing, "price"),
+    salePrice: getProperty<number>(thing, "compareAtPrice"),
+    category: getRequiredProperty<"men" | "women" | "unisex">(thing, "category"),
+    subcategory: getRequiredProperty<"tops" | "bottoms" | "outerwear" | "accessories" | "shoes">(
       thing,
-      'category'
+      "subcategory"
     ),
-    subcategory: getRequiredProperty<
-      'tops' | 'bottoms' | 'outerwear' | 'accessories' | 'shoes'
-    >(thing, 'subcategory'),
-    sizes: getRequiredProperty<string[]>(thing, 'sizes'),
-    colors: getRequiredProperty<string[]>(thing, 'colors'),
-    images: getRequiredProperty<string[]>(thing, 'images'),
-    isNew: getProperty<boolean>(thing, 'isNew') ?? false,
-    isSale: getProperty<boolean>(thing, 'isSale') ?? false,
-    stock: getRequiredProperty<number>(thing, 'stock'),
+    sizes: getRequiredProperty<string[]>(thing, "sizes"),
+    colors: getRequiredProperty<string[]>(thing, "colors"),
+    images: getRequiredProperty<string[]>(thing, "images"),
+    isNew: getProperty<boolean>(thing, "isNew") ?? false,
+    isSale: getProperty<boolean>(thing, "isSale") ?? false,
+    stock: getRequiredProperty<number>(thing, "stock"),
   };
 }
 
@@ -128,38 +119,27 @@ export function thingToProduct(thing: Thing): Product {
  * Maps from the template Product interface to a CreateThingInput for the
  * 'product' thing type in the ontology.
  */
-export function productToThing(
-  product: Product,
-  groupId: Id<'groups'>
-): CreateThingInput {
-  return templateToThing(
-    product,
-    'product',
-    groupId,
-    (p) => ({
-      // From ontology-shop.yaml product properties
-      slug: p.name.toLowerCase().replace(/\s+/g, '-'),
-      description: p.description,
-      price: p.price,
-      compareAtPrice: p.salePrice,
-      images: p.images,
-      inventory: p.stock,
-      sku: p.id, // Using product ID as SKU for now
-      status:
-        p.stock > 0
-          ? 'active'
-          : 'inactive',
+export function productToThing(product: Product, groupId: Id<"groups">): CreateThingInput {
+  return templateToThing(product, "product", groupId, (p) => ({
+    // From ontology-shop.yaml product properties
+    slug: p.name.toLowerCase().replace(/\s+/g, "-"),
+    description: p.description,
+    price: p.price,
+    compareAtPrice: p.salePrice,
+    images: p.images,
+    inventory: p.stock,
+    sku: p.id, // Using product ID as SKU for now
+    status: p.stock > 0 ? "active" : "inactive",
 
-      // Template-specific properties (preserved in properties object)
-      category: p.category,
-      subcategory: p.subcategory,
-      sizes: p.sizes,
-      colors: p.colors,
-      isNew: p.isNew,
-      isSale: p.isSale,
-      stock: p.stock,
-    })
-  );
+    // Template-specific properties (preserved in properties object)
+    category: p.category,
+    subcategory: p.subcategory,
+    sizes: p.sizes,
+    colors: p.colors,
+    isNew: p.isNew,
+    isSale: p.isSale,
+    stock: p.stock,
+  }));
 }
 
 /**
@@ -174,7 +154,7 @@ export function batchThingsToProducts(things: Thing[]): Product[] {
  */
 export function batchProductsToThings(
   products: Product[],
-  groupId: Id<'groups'>
+  groupId: Id<"groups">
 ): CreateThingInput[] {
   return products.map((product) => productToThing(product, groupId));
 }
@@ -198,18 +178,13 @@ export interface CartItemMetadata {
  *
  * Requires fetching the product Thing separately.
  */
-export function connectionToCartItem(
-  connection: Connection,
-  product: Thing
-): CartItem {
-  validateThingType(product, 'product');
+export function connectionToCartItem(connection: Connection, product: Thing): CartItem {
+  validateThingType(product, "product");
 
   const metadata = connection.metadata as CartItemMetadata | undefined;
 
   if (!metadata) {
-    throw new Error(
-      `Connection ${connection._id} is missing required cart metadata`
-    );
+    throw new Error(`Connection ${connection._id} is missing required cart metadata`);
   }
 
   return {
@@ -228,8 +203,8 @@ export function connectionToCartItem(
  */
 export function cartItemToConnection(
   cartItem: CartItem,
-  userId: Id<'entities'>, // Can be user entity or session entity
-  groupId: Id<'groups'>
+  userId: Id<"entities">, // Can be user entity or session entity
+  groupId: Id<"groups">
 ): CreateConnectionInput {
   const metadata: CartItemMetadata = {
     quantity: cartItem.quantity,
@@ -241,8 +216,8 @@ export function cartItemToConnection(
   return {
     groupId,
     fromEntityId: userId,
-    toEntityId: cartItem.product.id as Id<'entities'>,
-    relationshipType: 'in_cart',
+    toEntityId: cartItem.product.id as Id<"entities">,
+    relationshipType: "in_cart",
     metadata,
   };
 }
@@ -256,14 +231,14 @@ export function cartItemToConnection(
  */
 export function createProductAddedToCartEvent(
   cartItem: CartItem,
-  userId: Id<'entities'>,
-  groupId: Id<'groups'>
+  userId: Id<"entities">,
+  groupId: Id<"groups">
 ): CreateEventInput {
   return {
     groupId,
-    type: 'product_added_to_cart',
+    type: "product_added_to_cart",
     actorId: userId,
-    targetId: cartItem.product.id as Id<'entities'>,
+    targetId: cartItem.product.id as Id<"entities">,
     metadata: {
       quantity: cartItem.quantity,
       selectedSize: cartItem.selectedSize,
@@ -277,13 +252,13 @@ export function createProductAddedToCartEvent(
  * Create 'product_viewed' event
  */
 export function createProductViewedEvent(
-  productId: Id<'entities'>,
-  userId: Id<'entities'>,
-  groupId: Id<'groups'>
+  productId: Id<"entities">,
+  userId: Id<"entities">,
+  groupId: Id<"groups">
 ): CreateEventInput {
   return {
     groupId,
-    type: 'product_viewed',
+    type: "product_viewed",
     actorId: userId,
     targetId: productId,
     metadata: {
@@ -296,17 +271,17 @@ export function createProductViewedEvent(
  * Create 'cart_updated' event
  */
 export function createCartUpdatedEvent(
-  userId: Id<'entities'>,
-  groupId: Id<'groups'>,
+  userId: Id<"entities">,
+  groupId: Id<"groups">,
   metadata: {
-    action: 'added' | 'removed' | 'updated';
-    productId: Id<'entities'>;
+    action: "added" | "removed" | "updated";
+    productId: Id<"entities">;
     quantity?: number;
   }
 ): CreateEventInput {
   return {
     groupId,
-    type: 'cart_updated',
+    type: "cart_updated",
     actorId: userId,
     metadata,
   };
@@ -316,9 +291,9 @@ export function createCartUpdatedEvent(
  * Create 'order_placed' event
  */
 export function createOrderPlacedEvent(
-  orderId: Id<'entities'>,
-  userId: Id<'entities'>,
-  groupId: Id<'groups'>,
+  orderId: Id<"entities">,
+  userId: Id<"entities">,
+  groupId: Id<"groups">,
   metadata: {
     orderNumber: string;
     total: number;
@@ -327,7 +302,7 @@ export function createOrderPlacedEvent(
 ): CreateEventInput {
   return {
     groupId,
-    type: 'order_placed',
+    type: "order_placed",
     actorId: userId,
     targetId: orderId,
     metadata,
@@ -343,7 +318,7 @@ export function createOrderPlacedEvent(
  */
 export function filterProductsByCategory(
   products: Product[],
-  category: 'men' | 'women' | 'unisex'
+  category: "men" | "women" | "unisex"
 ): Product[] {
   return products.filter((p) => p.category === category);
 }
@@ -353,7 +328,7 @@ export function filterProductsByCategory(
  */
 export function filterProductsBySubcategory(
   products: Product[],
-  subcategory: 'tops' | 'bottoms' | 'outerwear' | 'accessories' | 'shoes'
+  subcategory: "tops" | "bottoms" | "outerwear" | "accessories" | "shoes"
 ): Product[] {
   return products.filter((p) => p.subcategory === subcategory);
 }
@@ -387,18 +362,18 @@ export function filterInStockProducts(products: Product[]): Product[] {
  * Validate that a product has valid data
  */
 export function validateProduct(product: Product): void {
-  if (!product.id) throw new Error('Product must have an ID');
-  if (!product.name) throw new Error('Product must have a name');
-  if (product.price <= 0) throw new Error('Product price must be positive');
-  if (product.stock < 0) throw new Error('Product stock cannot be negative');
+  if (!product.id) throw new Error("Product must have an ID");
+  if (!product.name) throw new Error("Product must have a name");
+  if (product.price <= 0) throw new Error("Product price must be positive");
+  if (product.stock < 0) throw new Error("Product stock cannot be negative");
   if (product.sizes.length === 0) {
-    throw new Error('Product must have at least one size');
+    throw new Error("Product must have at least one size");
   }
   if (product.colors.length === 0) {
-    throw new Error('Product must have at least one color');
+    throw new Error("Product must have at least one color");
   }
   if (product.images.length === 0) {
-    throw new Error('Product must have at least one image');
+    throw new Error("Product must have at least one image");
   }
 }
 
@@ -409,23 +384,19 @@ export function validateCartItem(cartItem: CartItem): void {
   validateProduct(cartItem.product);
 
   if (cartItem.quantity <= 0) {
-    throw new Error('Cart item quantity must be positive');
+    throw new Error("Cart item quantity must be positive");
   }
 
   if (!cartItem.product.sizes.includes(cartItem.selectedSize)) {
-    throw new Error(
-      `Invalid size: ${cartItem.selectedSize} not available for product`
-    );
+    throw new Error(`Invalid size: ${cartItem.selectedSize} not available for product`);
   }
 
   if (!cartItem.product.colors.includes(cartItem.selectedColor)) {
-    throw new Error(
-      `Invalid color: ${cartItem.selectedColor} not available for product`
-    );
+    throw new Error(`Invalid color: ${cartItem.selectedColor} not available for product`);
   }
 
   if (cartItem.quantity > cartItem.product.stock) {
-    throw new Error('Cart item quantity exceeds available stock');
+    throw new Error("Cart item quantity exceeds available stock");
   }
 }
 
@@ -433,9 +404,4 @@ export function validateCartItem(cartItem: CartItem): void {
 // Type Exports
 // ============================================================================
 
-export type {
-  ShopThingType,
-  ShopConnectionType,
-  ShopEventType,
-  CartItemMetadata,
-};
+export type { ShopThingType, ShopConnectionType, ShopEventType, CartItemMetadata };

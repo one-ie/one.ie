@@ -1,10 +1,10 @@
 ---
-import Layout from './Layout.astro';
-import { getCollection } from 'astro:content';
-import { SidebarDocs } from '@/components/docs/SidebarDocs';
-import { TableOfContents } from '@/components/TableOfContents';
-import type { CollectionEntry } from 'astro:content';
-import { ChevronRight, FileText } from 'lucide-react';
+import type { CollectionEntry } from "astro:content";
+import { getCollection } from "astro:content";
+import { ChevronRight, FileText } from "lucide-react";
+import { SidebarDocs } from "@/components/docs/SidebarDocs";
+import { TableOfContents } from "@/components/TableOfContents";
+import Layout from "@/layouts/Layout.astro";
 
 interface Heading {
   depth: number;
@@ -21,10 +21,10 @@ interface Props {
 const { title, description, headings = [] } = Astro.props;
 
 // Get all docs for sidebar
-const allDocs = (await getCollection('docs')) as CollectionEntry<'docs'>[];
+const allDocs = (await getCollection("docs")) as CollectionEntry<"docs">[];
 
 // Get current slug from URL
-const currentSlug = Astro.url.pathname.replace(/^\/docs\//, '').replace(/\/$/, '');
+const currentSlug = Astro.url.pathname.replace(/^\/docs\//, "").replace(/\/$/, "");
 ---
 
 <Layout title={title} description={description} sidebarInitialCollapsed={true}>

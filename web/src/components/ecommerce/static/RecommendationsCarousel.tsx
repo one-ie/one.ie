@@ -4,20 +4,20 @@
  * Uses shadcn/ui Carousel component
  */
 
-'use client';
+"use client";
 
-import { useEffect, useState } from 'react';
-import type { Product } from '@/types/ecommerce';
+import Autoplay from "embla-carousel-autoplay";
+import { useEffect, useState } from "react";
 import {
   Carousel,
+  type CarouselApi,
   CarouselContent,
   CarouselItem,
   CarouselNext,
   CarouselPrevious,
-  type CarouselApi,
-} from '@/components/ui/carousel';
-import { ProductCard } from '../interactive/ProductCard';
-import Autoplay from 'embla-carousel-autoplay';
+} from "@/components/ui/carousel";
+import type { Product } from "@/types/ecommerce";
+import { ProductCard } from "../interactive/ProductCard";
 
 interface RecommendationsCarouselProps {
   products: Product[];
@@ -28,7 +28,7 @@ interface RecommendationsCarouselProps {
 
 function RecommendationsCarousel({
   products,
-  title = 'You May Also Like',
+  title = "You May Also Like",
   autoplay = true,
   autoplayDelay = 5000,
 }: RecommendationsCarouselProps) {
@@ -54,7 +54,7 @@ function RecommendationsCarousel({
     setCount(api.scrollSnapList().length);
     setCurrent(api.selectedScrollSnap() + 1);
 
-    api.on('select', () => {
+    api.on("select", () => {
       setCurrent(api.selectedScrollSnap() + 1);
     });
   }, [api]);
@@ -80,7 +80,7 @@ function RecommendationsCarousel({
         <Carousel
           setApi={setApi}
           opts={{
-            align: 'start',
+            align: "start",
             loop: true,
           }}
           plugins={autoplayPlugin ? [autoplayPlugin] : undefined}
@@ -88,10 +88,7 @@ function RecommendationsCarousel({
         >
           <CarouselContent>
             {products.map((product) => (
-              <CarouselItem
-                key={product.id}
-                className="md:basis-1/2 lg:basis-1/4"
-              >
+              <CarouselItem key={product.id} className="md:basis-1/2 lg:basis-1/4">
                 <ProductCard product={product} />
               </CarouselItem>
             ))}
@@ -108,7 +105,7 @@ function RecommendationsCarousel({
         {autoplay && (
           <div className="mt-4 flex items-center justify-center gap-2">
             <div className="text-xs text-muted-foreground">
-              {isHovering ? 'Paused' : 'Auto-scrolling'}
+              {isHovering ? "Paused" : "Auto-scrolling"}
             </div>
             <div className="flex gap-1">
               {Array.from({ length: count }).map((_, index) => (
@@ -117,8 +114,8 @@ function RecommendationsCarousel({
                   onClick={() => api?.scrollTo(index)}
                   className={`h-2 rounded-full transition-all ${
                     index === current - 1
-                      ? 'w-6 bg-primary'
-                      : 'w-2 bg-muted-foreground/30 hover:bg-muted-foreground/50'
+                      ? "w-6 bg-primary"
+                      : "w-2 bg-muted-foreground/30 hover:bg-muted-foreground/50"
                   }`}
                   aria-label={`Go to slide ${index + 1}`}
                 />
@@ -146,12 +143,12 @@ function FrequentlyBoughtTogether({
   suggestions,
   bundleDiscount = 10,
 }: FrequentlyBoughtTogetherProps) {
-  const [selected, setSelected] = useState<string[]>(
-    suggestions.slice(0, 2).map((p) => p.id)
-  );
+  const [selected, setSelected] = useState<string[]>(suggestions.slice(0, 2).map((p) => p.id));
 
-  const totalPrice = [mainProduct, ...suggestions.filter((p) => selected.includes(p.id))]
-    .reduce((sum, p) => sum + p.price, 0);
+  const totalPrice = [mainProduct, ...suggestions.filter((p) => selected.includes(p.id))].reduce(
+    (sum, p) => sum + p.price,
+    0
+  );
 
   const discountedPrice = totalPrice * (1 - bundleDiscount / 100);
   const savings = totalPrice - discountedPrice;
@@ -195,8 +192,8 @@ function FrequentlyBoughtTogether({
               onClick={() => toggleProduct(product.id)}
               className={`flex h-5 w-5 items-center justify-center rounded-full border-2 transition-colors ${
                 selected.includes(product.id)
-                  ? 'border-primary bg-primary text-primary-foreground'
-                  : 'border-muted-foreground bg-background'
+                  ? "border-primary bg-primary text-primary-foreground"
+                  : "border-muted-foreground bg-background"
               }`}
             >
               {selected.includes(product.id) && (

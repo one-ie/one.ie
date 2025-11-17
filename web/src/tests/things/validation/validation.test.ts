@@ -9,18 +9,17 @@
  * - Type-specific property validation
  */
 
-import { describe, it, expect } from "vitest";
 import { Effect } from "effect";
+import { describe, expect, it } from "vitest";
 import {
-  validateThingType,
-  validateConnectionType,
-  validateEventType,
-  validateStatusTransition,
-  validateCourseProperties,
-  validateLessonProperties,
-  validateTokenProperties,
-  validatePaymentProperties,
   validateAICloneProperties,
+  validateConnectionType,
+  validateCourseProperties,
+  validateEventType,
+  validatePaymentProperties,
+  validateStatusTransition,
+  validateThingType,
+  validateTokenProperties,
 } from "@/services/utils/validation";
 
 describe("Validation Utilities", () => {

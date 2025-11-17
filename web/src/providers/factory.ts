@@ -12,9 +12,9 @@
  */
 
 import type { ConvexReactClient } from "convex/react";
-import type { DataProvider } from "./DataProvider";
-import { createConvexProvider } from "./ConvexProvider";
 import { Layer } from "effect";
+import { createConvexProvider } from "./ConvexProvider";
+import type { DataProvider } from "./DataProvider";
 import { DataProviderService } from "./DataProvider";
 
 /**

@@ -1,6 +1,5 @@
-import React from "react";
-import { Card, CardHeader, CardTitle, CardContent } from "@/components/ui/card";
-import { Check, Loader2, Circle } from "lucide-react";
+import { Check, Circle } from "lucide-react";
+import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 
 export interface ReasoningStep {
   step: number;
@@ -16,7 +15,9 @@ export interface ReasoningProps {
 export function Reasoning({ steps }: ReasoningProps) {
   return (
     <Card>
-      <CardHeader><CardTitle className="text-sm">Agent Reasoning</CardTitle></CardHeader>
+      <CardHeader>
+        <CardTitle className="text-sm">Agent Reasoning</CardTitle>
+      </CardHeader>
       <CardContent>
         <div className="space-y-3">
           {steps.map((s) => (

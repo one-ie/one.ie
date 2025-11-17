@@ -9,12 +9,12 @@
 
 import { Effect } from "effect";
 import {
-  DataProviderService,
-  type CreateConnectionInput,
-  type ListConnectionsOptions,
-  type ConnectionType,
-  ConnectionNotFoundError,
   ConnectionCreateError,
+  ConnectionNotFoundError,
+  type ConnectionType,
+  type CreateConnectionInput,
+  DataProviderService,
+  type ListConnectionsOptions,
 } from "../providers/DataProvider";
 
 // ============================================================================
@@ -158,11 +158,7 @@ export class ConnectionService {
   /**
    * Check if connection exists between two things
    */
-  static exists = (
-    fromEntityId: string,
-    toEntityId: string,
-    relationshipType?: ConnectionType
-  ) =>
+  static exists = (fromEntityId: string, toEntityId: string, relationshipType?: ConnectionType) =>
     Effect.gen(function* () {
       const provider = yield* DataProviderService;
 

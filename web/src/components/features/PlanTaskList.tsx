@@ -3,13 +3,13 @@
  * Beautiful, interactive task list for plan cycles with completion toggling
  */
 
-import React, { useState, useMemo } from 'react';
-import { CheckCircle, AlertCircle, Clock, ChevronDown } from 'lucide-react';
+import { AlertCircle, CheckCircle, ChevronDown, Clock } from "lucide-react";
+import { useMemo, useState } from "react";
 
 interface Task {
   cycleNumber: number;
   content: string;
-  status: 'pending' | 'in_progress' | 'completed';
+  status: "pending" | "in_progress" | "completed";
   activeForm: string;
   dependencies?: number[];
 }
@@ -24,27 +24,35 @@ interface PlanTaskListProps {
   tasks?: Task[];
   phases?: CyclePhase[];
   editable?: boolean;
-  onTaskToggle?: (cycleNumber: number, newStatus: 'pending' | 'in_progress' | 'completed') => void;
+  onTaskToggle?: (cycleNumber: number, newStatus: "pending" | "in_progress" | "completed") => void;
 }
 
 const DEFAULT_PHASES = [
-  { range: '1-10', phase: 'Foundation & Setup', description: 'Validate requirements and plan' },
-  { range: '11-20', phase: 'Backend Schema & Services', description: 'Design database and services' },
-  { range: '21-30', phase: 'Frontend Pages & Components', description: 'Build UI and interactions' },
-  { range: '31-40', phase: 'Integration & Connections', description: 'Connect external systems' },
-  { range: '41-50', phase: 'Authentication & Authorization', description: 'Implement security' },
-  { range: '51-60', phase: 'Knowledge & RAG', description: 'Create embeddings and search' },
-  { range: '61-70', phase: 'Quality & Testing', description: 'Write tests and ensure quality' },
-  { range: '71-80', phase: 'Design & Wireframes', description: 'Create UI/UX designs' },
-  { range: '81-90', phase: 'Performance & Optimization', description: 'Optimize and profile' },
-  { range: '91-100', phase: 'Deployment & Documentation', description: 'Deploy and document' },
+  { range: "1-10", phase: "Foundation & Setup", description: "Validate requirements and plan" },
+  {
+    range: "11-20",
+    phase: "Backend Schema & Services",
+    description: "Design database and services",
+  },
+  {
+    range: "21-30",
+    phase: "Frontend Pages & Components",
+    description: "Build UI and interactions",
+  },
+  { range: "31-40", phase: "Integration & Connections", description: "Connect external systems" },
+  { range: "41-50", phase: "Authentication & Authorization", description: "Implement security" },
+  { range: "51-60", phase: "Knowledge & RAG", description: "Create embeddings and search" },
+  { range: "61-70", phase: "Quality & Testing", description: "Write tests and ensure quality" },
+  { range: "71-80", phase: "Design & Wireframes", description: "Create UI/UX designs" },
+  { range: "81-90", phase: "Performance & Optimization", description: "Optimize and profile" },
+  { range: "91-100", phase: "Deployment & Documentation", description: "Deploy and document" },
 ];
 
 const getStatusIcon = (status: string) => {
   switch (status) {
-    case 'completed':
+    case "completed":
       return CheckCircle;
-    case 'in_progress':
+    case "in_progress":
       return Clock;
     default:
       return AlertCircle;
@@ -53,40 +61,40 @@ const getStatusIcon = (status: string) => {
 
 const getStatusColor = (status: string) => {
   switch (status) {
-    case 'completed':
-      return 'text-green-600';
-    case 'in_progress':
-      return 'text-blue-600';
+    case "completed":
+      return "text-green-600";
+    case "in_progress":
+      return "text-blue-600";
     default:
-      return 'text-gray-400';
+      return "text-gray-400";
   }
 };
 
 const getStatusBg = (status: string) => {
   switch (status) {
-    case 'completed':
-      return 'bg-green-100 text-green-700 dark:bg-green-950 dark:text-green-300';
-    case 'in_progress':
-      return 'bg-blue-100 text-blue-700 dark:bg-blue-950 dark:text-blue-300';
+    case "completed":
+      return "bg-green-100 text-green-700 dark:bg-green-950 dark:text-green-300";
+    case "in_progress":
+      return "bg-blue-100 text-blue-700 dark:bg-blue-950 dark:text-blue-300";
     default:
-      return 'bg-gray-100 text-gray-700 dark:bg-gray-900 dark:text-gray-300';
+      return "bg-gray-100 text-gray-700 dark:bg-gray-900 dark:text-gray-300";
   }
 };
 
 const getStatusLabel = (status: string) => {
   switch (status) {
-    case 'completed':
-      return '✓';
-    case 'in_progress':
-      return '⟳';
+    case "completed":
+      return "✓";
+    case "in_progress":
+      return "⟳";
     default:
-      return '○';
+      return "○";
   }
 };
 
-const getPhaseRange = (start: number, end: number) => {
+const _getPhaseRange = (start: number, end: number) => {
   return DEFAULT_PHASES.find((p) => {
-    const [s, e] = p.range.split('-').map(Number);
+    const [s, e] = p.range.split("-").map(Number);
     return s === start && e === end;
   });
 };
@@ -105,25 +113,25 @@ export function PlanTaskList({
   // Group tasks by phase
   const tasksByPhase = useMemo(() => {
     return phases.map((phase) => {
-      const [start, end] = phase.range.split('-').map(Number);
+      const [start, end] = phase.range.split("-").map(Number);
       const phaseTasks = tasks.filter((t) => t.cycleNumber >= start && t.cycleNumber <= end);
       return {
         phase,
         tasks: phaseTasks,
-        completed: phaseTasks.filter((t) => taskStatuses[t.cycleNumber] === 'completed').length,
+        completed: phaseTasks.filter((t) => taskStatuses[t.cycleNumber] === "completed").length,
       };
     });
   }, [tasks, taskStatuses, phases]);
 
   const handleTaskToggle = (cycleNumber: number) => {
     const currentStatus = taskStatuses[cycleNumber];
-    const statusCycle: Record<string, 'pending' | 'in_progress' | 'completed'> = {
-      pending: 'in_progress',
-      in_progress: 'completed',
-      completed: 'pending',
+    const statusCycle: Record<string, "pending" | "in_progress" | "completed"> = {
+      pending: "in_progress",
+      in_progress: "completed",
+      completed: "pending",
     };
 
-    const newStatus = statusCycle[currentStatus] || 'pending';
+    const newStatus = statusCycle[currentStatus] || "pending";
     setTaskStatuses((prev) => ({ ...prev, [cycleNumber]: newStatus }));
 
     if (onTaskToggle) {
@@ -168,7 +176,7 @@ export function PlanTaskList({
                 <div className="flex-1">
                   <div className="flex items-center gap-2">
                     <ChevronDown
-                      className={`w-5 h-5 transition-transform ${isExpanded ? 'rotate-0' : '-rotate-90'}`}
+                      className={`w-5 h-5 transition-transform ${isExpanded ? "rotate-0" : "-rotate-90"}`}
                     />
                     <h3 className="font-semibold text-lg">
                       Cycle {item.phase.range}: {item.phase.phase}
@@ -204,7 +212,7 @@ export function PlanTaskList({
                     <div
                       key={task.cycleNumber}
                       className={`px-6 py-4 hover:bg-muted/50 transition-colors ${
-                        editable ? 'cursor-pointer' : ''
+                        editable ? "cursor-pointer" : ""
                       }`}
                       onClick={() => editable && handleTaskToggle(task.cycleNumber)}
                     >
@@ -217,9 +225,9 @@ export function PlanTaskList({
                                 e.stopPropagation();
                                 handleTaskToggle(task.cycleNumber);
                               }}
-                              className={`p-1 rounded-full hover:bg-muted transition-colors ${
-                                getStatusColor(currentStatus)
-                              }`}
+                              className={`p-1 rounded-full hover:bg-muted transition-colors ${getStatusColor(
+                                currentStatus
+                              )}`}
                               title="Click to cycle status"
                             >
                               <Icon className="w-5 h-5" />
@@ -233,7 +241,9 @@ export function PlanTaskList({
                         <div className="flex-1 min-w-0">
                           <div
                             className={`font-medium ${
-                              currentStatus === 'completed' ? 'line-through text-muted-foreground' : ''
+                              currentStatus === "completed"
+                                ? "line-through text-muted-foreground"
+                                : ""
                             }`}
                           >
                             {task.content}
@@ -246,7 +256,8 @@ export function PlanTaskList({
                           {task.dependencies && task.dependencies.length > 0 && (
                             <div className="mt-2 text-xs">
                               <div className="text-muted-foreground">
-                                Depends on: {task.dependencies.map((dep) => `Cycle ${dep}`).join(', ')}
+                                Depends on:{" "}
+                                {task.dependencies.map((dep) => `Cycle ${dep}`).join(", ")}
                               </div>
                             </div>
                           )}
@@ -254,7 +265,9 @@ export function PlanTaskList({
 
                         {/* Status Badge */}
                         <div className="flex-shrink-0">
-                          <span className={`px-2.5 py-1 rounded text-xs font-medium whitespace-nowrap ${getStatusBg(currentStatus)}`}>
+                          <span
+                            className={`px-2.5 py-1 rounded text-xs font-medium whitespace-nowrap ${getStatusBg(currentStatus)}`}
+                          >
                             {getStatusLabel(currentStatus)}
                           </span>
                         </div>
@@ -273,19 +286,19 @@ export function PlanTaskList({
         <div className="grid grid-cols-3 gap-4 mt-6 pt-4 border-t">
           <div className="text-center">
             <div className="text-2xl font-bold text-green-600">
-              {tasks.filter((t) => taskStatuses[t.cycleNumber] === 'completed').length}
+              {tasks.filter((t) => taskStatuses[t.cycleNumber] === "completed").length}
             </div>
             <div className="text-xs text-muted-foreground">Completed</div>
           </div>
           <div className="text-center">
             <div className="text-2xl font-bold text-blue-600">
-              {tasks.filter((t) => taskStatuses[t.cycleNumber] === 'in_progress').length}
+              {tasks.filter((t) => taskStatuses[t.cycleNumber] === "in_progress").length}
             </div>
             <div className="text-xs text-muted-foreground">In Progress</div>
           </div>
           <div className="text-center">
             <div className="text-2xl font-bold text-gray-600">
-              {tasks.filter((t) => taskStatuses[t.cycleNumber] === 'pending').length}
+              {tasks.filter((t) => taskStatuses[t.cycleNumber] === "pending").length}
             </div>
             <div className="text-xs text-muted-foreground">Pending</div>
           </div>

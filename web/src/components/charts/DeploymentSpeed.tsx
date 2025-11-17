@@ -1,9 +1,9 @@
-'use client';
+"use client";
 
-import { Card, CardContent, CardHeader, CardTitle, CardDescription } from '@/components/ui/card';
-import { Badge } from '@/components/ui/badge';
-import { ArrowRight, Zap, CheckCircle2, Clock } from 'lucide-react';
-import { useEffect, useState } from 'react';
+import { ArrowRight, CheckCircle2, Clock, Zap } from "lucide-react";
+import { useEffect, useState } from "react";
+import { Badge } from "@/components/ui/badge";
+import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 
 interface DeploymentStage {
   name: string;
@@ -16,36 +16,36 @@ interface DeploymentStage {
 
 const stages: DeploymentStage[] = [
   {
-    name: 'Build',
+    name: "Build",
     duration: 14,
-    description: 'Compile & optimize',
-    files: '600+ files',
-    color: 'from-blue-600 via-cyan-500 to-blue-500',
-    iconGradient: 'from-blue-500/20 via-cyan-500/10 to-transparent',
+    description: "Compile & optimize",
+    files: "600+ files",
+    color: "from-blue-600 via-cyan-500 to-blue-500",
+    iconGradient: "from-blue-500/20 via-cyan-500/10 to-transparent",
   },
   {
-    name: 'Upload',
+    name: "Upload",
     duration: 4.5,
-    description: 'Transfer assets',
-    files: '665 assets',
-    color: 'from-purple-600 via-pink-500 to-purple-500',
-    iconGradient: 'from-purple-500/20 via-pink-500/10 to-transparent',
+    description: "Transfer assets",
+    files: "665 assets",
+    color: "from-purple-600 via-pink-500 to-purple-500",
+    iconGradient: "from-purple-500/20 via-pink-500/10 to-transparent",
   },
   {
-    name: 'Deploy',
+    name: "Deploy",
     duration: 0.5,
-    description: 'Edge functions',
-    files: 'Serverless',
-    color: 'from-green-600 via-emerald-500 to-green-500',
-    iconGradient: 'from-green-500/20 via-emerald-500/10 to-transparent',
+    description: "Edge functions",
+    files: "Serverless",
+    color: "from-green-600 via-emerald-500 to-green-500",
+    iconGradient: "from-green-500/20 via-emerald-500/10 to-transparent",
   },
   {
-    name: 'Replicate',
+    name: "Replicate",
     duration: 0.8,
-    description: 'Global propagation',
-    files: '330+ edges',
-    color: 'from-orange-600 via-red-500 to-orange-500',
-    iconGradient: 'from-orange-500/20 via-red-500/10 to-transparent',
+    description: "Global propagation",
+    files: "330+ edges",
+    color: "from-orange-600 via-red-500 to-orange-500",
+    iconGradient: "from-orange-500/20 via-red-500/10 to-transparent",
   },
 ];
 
@@ -77,16 +77,16 @@ function AnimatedStage({
       <div
         className={`relative overflow-hidden rounded-xl border-2 p-6 space-y-4 h-full transition-all duration-700 ${
           isActive
-            ? 'border-primary shadow-2xl shadow-primary/50 scale-105'
+            ? "border-primary shadow-2xl shadow-primary/50 scale-105"
             : isComplete
-            ? 'border-green-500/50 bg-green-500/5'
-            : 'border-border/50 bg-card/30'
+              ? "border-green-500/50 bg-green-500/5"
+              : "border-border/50 bg-card/30"
         }`}
       >
         {/* Animated Background Gradient */}
         <div
           className={`absolute inset-0 bg-gradient-to-br ${stage.iconGradient} opacity-0 transition-opacity duration-700 ${
-            isActive ? 'opacity-100' : ''
+            isActive ? "opacity-100" : ""
           }`}
         />
 
@@ -95,7 +95,7 @@ function AnimatedStage({
           <div
             className="absolute -inset-2 bg-gradient-to-r opacity-30 blur-2xl -z-10"
             style={{
-              background: `linear-gradient(135deg, ${stage.color.includes('blue') ? '#3b82f6' : stage.color.includes('purple') ? '#a855f7' : stage.color.includes('green') ? '#22c55e' : '#f97316'}, transparent)`,
+              background: `linear-gradient(135deg, ${stage.color.includes("blue") ? "#3b82f6" : stage.color.includes("purple") ? "#a855f7" : stage.color.includes("green") ? "#22c55e" : "#f97316"}, transparent)`,
             }}
           />
         )}
@@ -104,7 +104,7 @@ function AnimatedStage({
         <div className="relative flex items-center justify-between">
           <div
             className={`flex h-14 w-14 items-center justify-center rounded-full bg-gradient-to-br ${stage.color} text-white text-lg font-black shadow-lg transition-all duration-500 ${
-              isActive ? 'scale-110 animate-pulse' : ''
+              isActive ? "scale-110 animate-pulse" : ""
             }`}
           >
             {isComplete ? <CheckCircle2 className="h-7 w-7" /> : index + 1}
@@ -114,7 +114,7 @@ function AnimatedStage({
           <Badge
             variant="secondary"
             className={`text-sm font-bold transition-all duration-500 ${
-              isActive ? 'scale-110 bg-primary/20 text-primary' : ''
+              isActive ? "scale-110 bg-primary/20 text-primary" : ""
             }`}
           >
             <Clock className="h-3 w-3 mr-1" />
@@ -140,7 +140,7 @@ function AnimatedStage({
           <div className="h-2 bg-muted rounded-full overflow-hidden">
             <div
               className={`h-full bg-gradient-to-r ${stage.color} transition-all duration-1000 ease-out`}
-              style={{ width: isActive ? '100%' : isComplete ? '100%' : '0%' }}
+              style={{ width: isActive ? "100%" : isComplete ? "100%" : "0%" }}
             />
           </div>
         </div>
@@ -151,7 +151,7 @@ function AnimatedStage({
         <div className="absolute -right-6 top-1/2 -translate-y-1/2 hidden md:block z-10">
           <ArrowRight
             className={`h-6 w-6 transition-all duration-500 ${
-              isComplete ? 'text-green-500' : isActive ? 'text-primary animate-pulse' : 'text-muted'
+              isComplete ? "text-green-500" : isActive ? "text-primary animate-pulse" : "text-muted"
             }`}
           />
         </div>
@@ -162,7 +162,7 @@ function AnimatedStage({
 
 export function DeploymentSpeed({
   showDetails = true,
-  timestamp = 'Nov 6, 2025',
+  timestamp = "Nov 6, 2025",
   animate = true,
 }: DeploymentSpeedProps) {
   const [activeStage, setActiveStage] = useState(-1);
@@ -203,8 +203,7 @@ export function DeploymentSpeed({
   };
 
   const isStageActive = (index: number) => animate && activeStage === index;
-  const isStageComplete = (index: number) =>
-    !animate || completedStages.includes(index);
+  const isStageComplete = (index: number) => !animate || completedStages.includes(index);
 
   return (
     <div className="w-full space-y-8">
@@ -263,8 +262,8 @@ export function DeploymentSpeed({
                       .slice(0, idx)
                       .reduce((sum, s) => sum + getPercentage(s.duration), 0)}%`,
                     width: `${getPercentage(stage.duration)}%`,
-                    transform: isStageComplete(idx) ? 'scaleX(1)' : 'scaleX(0)',
-                    transformOrigin: 'left',
+                    transform: isStageComplete(idx) ? "scaleX(1)" : "scaleX(0)",
+                    transformOrigin: "left",
                   }}
                 />
               ))}
@@ -306,7 +305,8 @@ export function DeploymentSpeed({
             <p className="text-sm text-muted-foreground mb-2 font-medium">Deployment Cost</p>
             <p className="text-4xl font-black text-primary mb-2">$0.00</p>
             <p className="text-sm text-muted-foreground">
-              Unlimited deployments. <span className="font-bold text-green-600">Completely free.</span>
+              Unlimited deployments.{" "}
+              <span className="font-bold text-green-600">Completely free.</span>
             </p>
           </div>
         </CardContent>
@@ -326,7 +326,7 @@ export function DeploymentSpeed({
                 <div
                   key={idx}
                   className={`flex items-start gap-6 pb-6 border-b border-border/50 last:border-0 transition-all duration-500 hover:bg-primary/5 rounded-lg p-4 ${
-                    isStageComplete(idx) ? 'opacity-100' : 'opacity-50'
+                    isStageComplete(idx) ? "opacity-100" : "opacity-50"
                   }`}
                 >
                   {/* Stage Icon */}
@@ -356,8 +356,8 @@ export function DeploymentSpeed({
                       className={`h-full bg-gradient-to-r ${stage.color} transition-all duration-1000 ease-out shadow-lg`}
                       style={{
                         width: `${Math.min((stage.duration / 15) * 100, 100)}%`,
-                        transform: isStageComplete(idx) ? 'scaleX(1)' : 'scaleX(0)',
-                        transformOrigin: 'left',
+                        transform: isStageComplete(idx) ? "scaleX(1)" : "scaleX(0)",
+                        transformOrigin: "left",
                       }}
                     />
                   </div>

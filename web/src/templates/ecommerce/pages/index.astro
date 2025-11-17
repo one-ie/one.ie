@@ -1,21 +1,10 @@
 ---
-import Layout from '../../../layouts/Layout.astro';
-import { Button } from '@/components/ui/button';
-import {
-  Card,
-  CardHeader,
-  CardTitle,
-  CardDescription,
-  CardContent,
-} from '@/components/ui/card';
-import { Badge } from '@/components/ui/badge';
-import { products } from '../lib/products';
-import type { Product } from '../lib/types';
-import { ShoppingBag, TruckIcon, RefreshCcw, ShieldCheck, Star } from 'lucide-react';
+import { products } from "../lib/products";
+import type { Product } from "../lib/types";
 
 // Get featured products (new arrivals and sale items)
-const newArrivals = products.filter((p: Product) => p.isNew).slice(0, 4);
-const saleItems = products.filter((p: Product) => p.isSale).slice(0, 4);
+const _newArrivals = products.filter((p: Product) => p.isNew).slice(0, 4);
+const _saleItems = products.filter((p: Product) => p.isSale).slice(0, 4);
 ---
 
 <Layout title="Sho's Shop - Premium Streetwear & Contemporary Fashion">

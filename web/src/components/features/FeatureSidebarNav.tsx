@@ -1,19 +1,13 @@
-'use client';
+"use client";
 
-import React from 'react';
-import {
-  Card,
-  CardHeader,
-  CardTitle,
-  CardContent,
-  CardDescription,
-} from '@/components/ui/card';
-import { Badge } from '@/components/ui/badge';
-import { Button } from '@/components/ui/button';
-import { ArrowRight, BookOpen, Code, Users } from 'lucide-react';
-import type { CollectionEntry } from 'astro:content';
+import type { CollectionEntry } from "astro:content";
+import { ArrowRight, BookOpen, Code, Users } from "lucide-react";
+import React from "react";
+import { Badge } from "@/components/ui/badge";
+import { Button } from "@/components/ui/button";
+import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 
-type Feature = CollectionEntry<'features'>;
+type Feature = CollectionEntry<"features">;
 
 interface FeatureSidebarNavProps {
   feature: Feature;
@@ -22,11 +16,11 @@ interface FeatureSidebarNavProps {
 }
 
 const statusColors = {
-  completed: 'bg-green-100 text-green-700 border-green-200',
-  beta: 'bg-blue-100 text-blue-700 border-blue-200',
-  in_development: 'bg-yellow-100 text-yellow-700 border-yellow-200',
-  planned: 'bg-gray-100 text-gray-700 border-gray-200',
-  deprecated: 'bg-red-100 text-red-700 border-red-200',
+  completed: "bg-green-100 text-green-700 border-green-200",
+  beta: "bg-blue-100 text-blue-700 border-blue-200",
+  in_development: "bg-yellow-100 text-yellow-700 border-yellow-200",
+  planned: "bg-gray-100 text-gray-700 border-gray-200",
+  deprecated: "bg-red-100 text-red-700 border-red-200",
 } as const;
 
 /**
@@ -41,11 +35,11 @@ const statusColors = {
 export function FeatureSidebarNav({
   feature,
   allFeatures,
-  className = '',
+  className = "",
 }: FeatureSidebarNavProps): React.ReactElement {
   const status = feature.data.status as keyof typeof statusColors;
-  const displayStatus = status.replace('-', ' ').charAt(0).toUpperCase() +
-    status.replace('-', ' ').slice(1);
+  const displayStatus =
+    status.replace("-", " ").charAt(0).toUpperCase() + status.replace("-", " ").slice(1);
 
   // Get related features
   const relatedFeatureObjects = React.useMemo(() => {
@@ -54,26 +48,24 @@ export function FeatureSidebarNav({
     }
 
     return feature.data.relatedFeatures
-      .map((relatedSlug) =>
-        allFeatures.find((f) => f.slug === relatedSlug)
-      )
+      .map((relatedSlug) => allFeatures.find((f) => f.slug === relatedSlug))
       .filter((f): f is Feature => Boolean(f))
       .slice(0, 3); // Show max 3 related features
   }, [feature, allFeatures]);
 
-  const hasDocumentation = feature.data.documentation &&
-    Object.values(feature.data.documentation).some(v => v);
+  const hasDocumentation =
+    feature.data.documentation && Object.values(feature.data.documentation).some((v) => v);
 
   const onThisPageSections = React.useMemo(() => {
     const sections = [];
-    if (feature.data.marketingPosition) sections.push('Marketing');
-    if (feature.data.ontologyMapping) sections.push('Ontology Alignment');
-    if (feature.data.features?.length) sections.push('Capabilities');
-    if (feature.data.useCases?.length) sections.push('Use Cases');
-    if (feature.data.examples?.length) sections.push('Code Examples');
-    if (feature.data.specification) sections.push('Technical Specifications');
-    if (feature.data.metrics) sections.push('Quality Metrics');
-    if (relatedFeatureObjects.length > 0) sections.push('Related Features');
+    if (feature.data.marketingPosition) sections.push("Marketing");
+    if (feature.data.ontologyMapping) sections.push("Ontology Alignment");
+    if (feature.data.features?.length) sections.push("Capabilities");
+    if (feature.data.useCases?.length) sections.push("Use Cases");
+    if (feature.data.examples?.length) sections.push("Code Examples");
+    if (feature.data.specification) sections.push("Technical Specifications");
+    if (feature.data.metrics) sections.push("Quality Metrics");
+    if (relatedFeatureObjects.length > 0) sections.push("Related Features");
     return sections;
   }, [feature, relatedFeatureObjects]);
 
@@ -89,10 +81,7 @@ export function FeatureSidebarNav({
             <div className="text-xs font-semibold text-muted-foreground uppercase tracking-wide">
               Status
             </div>
-            <Badge
-              className={`capitalize ${statusColors[status]}`}
-              variant="secondary"
-            >
+            <Badge className={`capitalize ${statusColors[status]}`} variant="secondary">
               {displayStatus}
             </Badge>
           </div>
@@ -152,7 +141,7 @@ export function FeatureSidebarNav({
               {onThisPageSections.map((section) => (
                 <a
                   key={section}
-                  href={`#${section.toLowerCase().replace(/\s+/g, '-')}`}
+                  href={`#${section.toLowerCase().replace(/\s+/g, "-")}`}
                   className="block text-sm text-muted-foreground hover:text-foreground transition-colors py-1 px-2 rounded hover:bg-muted/50"
                 >
                   {section}
@@ -241,11 +230,8 @@ export function FeatureSidebarNav({
                   {relatedFeature.data.title}
                 </div>
                 <div className="flex items-center gap-2">
-                  <Badge
-                    variant="secondary"
-                    className="capitalize text-xs h-5"
-                  >
-                    {relatedFeature.data.status.replace('-', ' ')}
+                  <Badge variant="secondary" className="capitalize text-xs h-5">
+                    {relatedFeature.data.status.replace("-", " ")}
                   </Badge>
                   <ArrowRight className="h-3 w-3 text-muted-foreground" />
                 </div>
@@ -275,17 +261,12 @@ export function FeatureSidebarNav({
           >
             Copy Link
           </Button>
-          <Button
-            variant="outline"
-            size="sm"
-            asChild
-            className="w-full text-xs"
-          >
+          <Button variant="outline" size="sm" asChild className="w-full text-xs">
             <a
               href={`https://twitter.com/intent/tweet?text=${encodeURIComponent(
                 `Check out ${feature.data.title} on ONE Platform: `
               )}&url=${encodeURIComponent(
-                `${typeof window !== 'undefined' ? window.location.origin : ''}/features/${feature.slug}`
+                `${typeof window !== "undefined" ? window.location.origin : ""}/features/${feature.slug}`
               )}`}
               target="_blank"
               rel="noopener noreferrer"

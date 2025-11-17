@@ -5,12 +5,12 @@
  * Updates checkout session with selected shipping method
  */
 
-import { useState } from 'react';
-import { Button } from '@/components/ui/button';
-import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
-import { RadioGroup, RadioGroupItem } from '@/components/ui/radio-group';
-import { Label } from '@/components/ui/label';
-import { Loader2, Truck } from 'lucide-react';
+import { Loader2, Truck } from "lucide-react";
+import { useState } from "react";
+import { Button } from "@/components/ui/button";
+import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import { Label } from "@/components/ui/label";
+import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group";
 
 interface ShippingOption {
   id: string;
@@ -27,12 +27,8 @@ interface ShippingOptionsProps {
   onShippingSelected: (optionId: string) => void;
 }
 
-export function ShippingOptions({
-  sessionId,
-  options,
-  onShippingSelected,
-}: ShippingOptionsProps) {
-  const [selectedOption, setSelectedOption] = useState(options[0]?.id || '');
+export function ShippingOptions({ sessionId, options, onShippingSelected }: ShippingOptionsProps) {
+  const [selectedOption, setSelectedOption] = useState(options[0]?.id || "");
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [error, setError] = useState<string | null>(null);
 
@@ -43,12 +39,12 @@ export function ShippingOptions({
     setError(null);
 
     try {
-      console.log('[ShippingOptions] Updating shipping option:', selectedOption);
+      console.log("[ShippingOptions] Updating shipping option:", selectedOption);
 
       const response = await fetch(`/api/checkout_sessions/${sessionId}`, {
-        method: 'POST',
+        method: "POST",
         headers: {
-          'Content-Type': 'application/json',
+          "Content-Type": "application/json",
           Authorization: `Bearer ${import.meta.env.PUBLIC_COMMERCE_API_KEY}`,
         },
         body: JSON.stringify({
@@ -57,19 +53,19 @@ export function ShippingOptions({
       });
 
       if (!response.ok) {
-        const errorData = await response.json().catch(() => ({ message: 'Unknown error' }));
-        console.error('[ShippingOptions] API error:', errorData);
-        throw new Error(errorData.message || 'Failed to update shipping option');
+        const errorData = await response.json().catch(() => ({ message: "Unknown error" }));
+        console.error("[ShippingOptions] API error:", errorData);
+        throw new Error(errorData.message || "Failed to update shipping option");
       }
 
       const updatedSession = await response.json();
-      console.log('[ShippingOptions] Updated session:', updatedSession);
-      console.log('[ShippingOptions] Calling onShippingSelected');
+      console.log("[ShippingOptions] Updated session:", updatedSession);
+      console.log("[ShippingOptions] Calling onShippingSelected");
 
       onShippingSelected(selectedOption);
     } catch (err) {
-      console.error('[ShippingOptions] Error:', err);
-      setError(err instanceof Error ? err.message : 'Something went wrong');
+      console.error("[ShippingOptions] Error:", err);
+      setError(err instanceof Error ? err.message : "Something went wrong");
     } finally {
       setIsSubmitting(false);
     }
@@ -78,9 +74,9 @@ export function ShippingOptions({
   const formatDeliveryDate = (dateString: string) => {
     try {
       const date = new Date(dateString);
-      return date.toLocaleDateString('en-US', { month: 'short', day: 'numeric' });
+      return date.toLocaleDateString("en-US", { month: "short", day: "numeric" });
     } catch {
-      return 'TBD';
+      return "TBD";
     }
   };
 
@@ -106,11 +102,12 @@ export function ShippingOptions({
                   <div>
                     <p className="font-medium">{option.title}</p>
                     <p className="text-sm text-muted-foreground">
-                      {option.subtitle || `${formatDeliveryDate(option.earliest_delivery_time)} - ${formatDeliveryDate(option.latest_delivery_time)}`}
+                      {option.subtitle ||
+                        `${formatDeliveryDate(option.earliest_delivery_time)} - ${formatDeliveryDate(option.latest_delivery_time)}`}
                     </p>
                   </div>
                   <p className="font-bold">
-                    {option.total === 0 ? 'FREE' : `$${(option.total / 100).toFixed(2)}`}
+                    {option.total === 0 ? "FREE" : `$${(option.total / 100).toFixed(2)}`}
                   </p>
                 </div>
               </Label>
@@ -119,9 +116,7 @@ export function ShippingOptions({
         </RadioGroup>
 
         {error && (
-          <div className="text-sm text-destructive bg-destructive/10 p-3 rounded-md">
-            {error}
-          </div>
+          <div className="text-sm text-destructive bg-destructive/10 p-3 rounded-md">{error}</div>
         )}
 
         <Button
@@ -135,7 +130,7 @@ export function ShippingOptions({
               Updating shipping...
             </>
           ) : (
-            'Continue to Payment'
+            "Continue to Payment"
           )}
         </Button>
       </CardContent>

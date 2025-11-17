@@ -1,5 +1,4 @@
-import { Badge } from '@/components/ui/badge';
-import { Search, Tag, Folder } from 'lucide-react';
+import { Folder, Search, Tag } from "lucide-react";
 
 interface DocFilterResultsProps {
   searchQuery: string;
@@ -16,10 +15,10 @@ export function DocFilterResults({
 }: DocFilterResultsProps) {
   const formatFolderName = (folder: string): string => {
     const folderNameMap: Record<string, string> = {
-      'root': 'Root',
-      'getting-started': 'Quick Start',
-      'overview': 'Overview',
-      'develop': 'Develop',
+      root: "Root",
+      "getting-started": "Quick Start",
+      overview: "Overview",
+      develop: "Develop",
     };
 
     if (folderNameMap[folder]) {
@@ -27,10 +26,10 @@ export function DocFilterResults({
     }
 
     return folder
-      .replace(/-/g, ' ')
-      .split(' ')
+      .replace(/-/g, " ")
+      .split(" ")
       .map((word) => word.charAt(0).toUpperCase() + word.slice(1))
-      .join(' ');
+      .join(" ");
   };
 
   if (!searchQuery && !tagFilter && !folderFilter) {
@@ -44,7 +43,7 @@ export function DocFilterResults({
           <>
             <Search className="w-4 h-4 text-primary" />
             <span>
-              Found {resultCount} result{resultCount !== 1 ? 's' : ''} for{' '}
+              Found {resultCount} result{resultCount !== 1 ? "s" : ""} for{" "}
               <strong>"{searchQuery}"</strong>
             </span>
           </>
@@ -52,7 +51,7 @@ export function DocFilterResults({
           <>
             <Tag className="w-4 h-4 text-primary" />
             <span>
-              Found {resultCount} document{resultCount !== 1 ? 's' : ''} tagged{' '}
+              Found {resultCount} document{resultCount !== 1 ? "s" : ""} tagged{" "}
               <strong>"{tagFilter}"</strong>
             </span>
           </>
@@ -60,7 +59,7 @@ export function DocFilterResults({
           <>
             <Folder className="w-4 h-4 text-primary" />
             <span>
-              Found {resultCount} document{resultCount !== 1 ? 's' : ''} in folder{' '}
+              Found {resultCount} document{resultCount !== 1 ? "s" : ""} in folder{" "}
               <strong>"{formatFolderName(folderFilter)}"</strong>
             </span>
           </>

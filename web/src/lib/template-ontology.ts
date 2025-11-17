@@ -20,7 +20,7 @@
  * ```
  */
 
-import type { Id } from '@/types/convex';
+import type { Id } from "@/types/convex";
 
 // ============================================================================
 // Core Ontology Types
@@ -31,13 +31,13 @@ import type { Id } from '@/types/convex';
  * Represents ANY entity in the system (products, users, content, etc.)
  */
 export interface Thing {
-  _id: Id<'entities'>;
+  _id: Id<"entities">;
   _creationTime: number;
-  groupId: Id<'groups'>;
+  groupId: Id<"groups">;
   type: string; // Will be specific like 'product', 'user', 'blog_post', etc.
   name: string;
   properties: Record<string, any>;
-  status?: 'active' | 'inactive' | 'draft' | 'published' | 'archived';
+  status?: "active" | "inactive" | "draft" | "published" | "archived";
   createdAt: number;
   updatedAt: number;
   deletedAt?: number;
@@ -48,11 +48,11 @@ export interface Thing {
  * Represents relationships between things
  */
 export interface Connection {
-  _id: Id<'connections'>;
+  _id: Id<"connections">;
   _creationTime: number;
-  groupId: Id<'groups'>;
-  fromEntityId: Id<'entities'>;
-  toEntityId: Id<'entities'>;
+  groupId: Id<"groups">;
+  fromEntityId: Id<"entities">;
+  toEntityId: Id<"entities">;
   relationshipType: string; // e.g., 'purchased', 'in_cart', 'variant_of'
   metadata?: Record<string, any>;
   strength?: number;
@@ -68,12 +68,12 @@ export interface Connection {
  * Represents actions/state changes over time
  */
 export interface Event {
-  _id: Id<'events'>;
+  _id: Id<"events">;
   _creationTime: number;
-  groupId: Id<'groups'>;
+  groupId: Id<"groups">;
   type: string; // e.g., 'product_added_to_cart', 'order_placed'
-  actorId: Id<'entities'>;
-  targetId?: Id<'entities'>;
+  actorId: Id<"entities">;
+  targetId?: Id<"entities">;
   timestamp: number;
   metadata?: Record<string, any>;
 }
@@ -95,20 +95,20 @@ export interface TemplateEntity {
  * Input type for creating a new Thing in the ontology
  */
 export interface CreateThingInput {
-  groupId: Id<'groups'>;
+  groupId: Id<"groups">;
   type: string;
   name: string;
   properties: Record<string, any>;
-  status?: 'active' | 'inactive' | 'draft' | 'published' | 'archived';
+  status?: "active" | "inactive" | "draft" | "published" | "archived";
 }
 
 /**
  * Input type for creating a new Connection in the ontology
  */
 export interface CreateConnectionInput {
-  groupId: Id<'groups'>;
-  fromEntityId: Id<'entities'>;
-  toEntityId: Id<'entities'>;
+  groupId: Id<"groups">;
+  fromEntityId: Id<"entities">;
+  toEntityId: Id<"entities">;
   relationshipType: string;
   metadata?: Record<string, any>;
 }
@@ -117,10 +117,10 @@ export interface CreateConnectionInput {
  * Input type for creating a new Event in the ontology
  */
 export interface CreateEventInput {
-  groupId: Id<'groups'>;
+  groupId: Id<"groups">;
   type: string;
-  actorId: Id<'entities'>;
-  targetId?: Id<'entities'>;
+  actorId: Id<"entities">;
+  targetId?: Id<"entities">;
   metadata?: Record<string, any>;
 }
 
@@ -176,7 +176,7 @@ export function isEventOfType<T extends string>(
 export function templateToThing<T extends TemplateEntity>(
   entity: T,
   type: string,
-  groupId: Id<'groups'>,
+  groupId: Id<"groups">,
   propertyMapper: (entity: T) => Record<string, any>
 ): CreateThingInput {
   return {
@@ -184,7 +184,7 @@ export function templateToThing<T extends TemplateEntity>(
     type,
     name: entity.name || entity.title || entity.id,
     properties: propertyMapper(entity),
-    status: entity.status || 'active',
+    status: entity.status || "active",
   };
 }
 
@@ -212,11 +212,7 @@ export function thingToTemplate<T extends TemplateEntity>(
  * Extract specific properties from a Thing
  * Type-safe property extraction with validation
  */
-export function getProperty<T>(
-  thing: Thing,
-  key: string,
-  defaultValue?: T
-): T | undefined {
+export function getProperty<T>(thing: Thing, key: string, defaultValue?: T): T | undefined {
   const value = thing.properties[key];
   return value !== undefined ? (value as T) : defaultValue;
 }
@@ -227,9 +223,7 @@ export function getProperty<T>(
 export function getRequiredProperty<T>(thing: Thing, key: string): T {
   const value = thing.properties[key];
   if (value === undefined) {
-    throw new Error(
-      `Required property '${key}' not found on thing ${thing._id}`
-    );
+    throw new Error(`Required property '${key}' not found on thing ${thing._id}`);
   }
   return value as T;
 }
@@ -255,32 +249,20 @@ export function mapProperties<T extends Record<string, any>>(
 /**
  * Validate that a Thing has required properties
  */
-export function validateThingProperties(
-  thing: Thing,
-  requiredProperties: string[]
-): void {
-  const missing = requiredProperties.filter(
-    (prop) => thing.properties[prop] === undefined
-  );
+export function validateThingProperties(thing: Thing, requiredProperties: string[]): void {
+  const missing = requiredProperties.filter((prop) => thing.properties[prop] === undefined);
 
   if (missing.length > 0) {
-    throw new Error(
-      `Thing ${thing._id} is missing required properties: ${missing.join(', ')}`
-    );
+    throw new Error(`Thing ${thing._id} is missing required properties: ${missing.join(", ")}`);
   }
 }
 
 /**
  * Validate thing type matches expected type
  */
-export function validateThingType(
-  thing: Thing,
-  expectedType: string
-): void {
+export function validateThingType(thing: Thing, expectedType: string): void {
   if (thing.type !== expectedType) {
-    throw new Error(
-      `Expected thing type '${expectedType}', got '${thing.type}'`
-    );
+    throw new Error(`Expected thing type '${expectedType}', got '${thing.type}'`);
   }
 }
 
@@ -294,12 +276,10 @@ export function validateThingType(
 export function batchTemplateToThing<T extends TemplateEntity>(
   entities: T[],
   type: string,
-  groupId: Id<'groups'>,
+  groupId: Id<"groups">,
   propertyMapper: (entity: T) => Record<string, any>
 ): CreateThingInput[] {
-  return entities.map((entity) =>
-    templateToThing(entity, type, groupId, propertyMapper)
-  );
+  return entities.map((entity) => templateToThing(entity, type, groupId, propertyMapper));
 }
 
 /**
@@ -321,28 +301,28 @@ export function batchThingToTemplate<T extends TemplateEntity>(
  */
 export function mapStatus(
   templateStatus: string
-): 'active' | 'inactive' | 'draft' | 'published' | 'archived' {
-  const statusMap: Record<string, Thing['status']> = {
-    available: 'active',
-    unavailable: 'inactive',
-    draft: 'draft',
-    published: 'published',
-    archived: 'archived',
-    active: 'active',
-    inactive: 'inactive',
+): "active" | "inactive" | "draft" | "published" | "archived" {
+  const statusMap: Record<string, Thing["status"]> = {
+    available: "active",
+    unavailable: "inactive",
+    draft: "draft",
+    published: "published",
+    archived: "archived",
+    active: "active",
+    inactive: "inactive",
   };
 
-  return statusMap[templateStatus.toLowerCase()] || 'active';
+  return statusMap[templateStatus.toLowerCase()] || "active";
 }
 
 /**
  * Map ontology status to template-specific status
  */
 export function mapStatusToTemplate(
-  ontologyStatus: Thing['status'],
+  ontologyStatus: Thing["status"],
   templateStatusMap?: Record<string, string>
 ): string {
-  if (!ontologyStatus) return 'active';
+  if (!ontologyStatus) return "active";
 
   if (templateStatusMap) {
     return templateStatusMap[ontologyStatus] || ontologyStatus;

@@ -5,76 +5,76 @@
  * with suggested options and custom input
  */
 
-import { useState, useCallback } from 'react';
-import { Button } from '@/components/ui/button';
-import { Input } from '@/components/ui/input';
-import { Label } from '@/components/ui/label';
-import { Badge } from '@/components/ui/badge';
-import { Alert, AlertDescription } from '@/components/ui/alert';
+import { AlertCircle, Plus, X } from "lucide-react";
+import { useState } from "react";
+import { toast } from "sonner";
+import { Alert, AlertDescription } from "@/components/ui/alert";
+import { Badge } from "@/components/ui/badge";
+import { Button } from "@/components/ui/button";
+import { Input } from "@/components/ui/input";
+import { Label } from "@/components/ui/label";
 import {
   Select,
   SelectContent,
   SelectItem,
   SelectTrigger,
   SelectValue,
-} from '@/components/ui/select';
-import { useAddSkills } from '@/hooks/useOnboarding';
-import { toast } from 'sonner';
-import { X, AlertCircle, Plus } from 'lucide-react';
+} from "@/components/ui/select";
+import { useAddSkills } from "@/hooks/useOnboarding";
 
 const SUGGESTED_SKILLS = [
   // Technical
-  'React',
-  'TypeScript',
-  'Node.js',
-  'Python',
-  'JavaScript',
-  'Web Development',
-  'Backend Development',
-  'Data Science',
-  'Machine Learning',
-  'Cloud Architecture',
+  "React",
+  "TypeScript",
+  "Node.js",
+  "Python",
+  "JavaScript",
+  "Web Development",
+  "Backend Development",
+  "Data Science",
+  "Machine Learning",
+  "Cloud Architecture",
 
   // Design
-  'UI/UX Design',
-  'Product Design',
-  'Graphic Design',
-  'Motion Design',
-  'Figma',
-  'Web Design',
+  "UI/UX Design",
+  "Product Design",
+  "Graphic Design",
+  "Motion Design",
+  "Figma",
+  "Web Design",
 
   // Marketing
-  'Content Marketing',
-  'Social Media Marketing',
-  'Email Marketing',
-  'SEO',
-  'Growth Marketing',
-  'Brand Strategy',
+  "Content Marketing",
+  "Social Media Marketing",
+  "Email Marketing",
+  "SEO",
+  "Growth Marketing",
+  "Brand Strategy",
 
   // Business
-  'Product Management',
-  'Project Management',
-  'Business Strategy',
-  'Entrepreneurship',
-  'Sales',
-  'Leadership',
+  "Product Management",
+  "Project Management",
+  "Business Strategy",
+  "Entrepreneurship",
+  "Sales",
+  "Leadership",
 
   // Other
-  'Writing',
-  'Video Production',
-  'Photography',
-  'Public Speaking',
-  'Coaching',
-  'Consulting',
+  "Writing",
+  "Video Production",
+  "Photography",
+  "Public Speaking",
+  "Coaching",
+  "Consulting",
 ];
 
 const CATEGORIES = [
-  { value: 'technical', label: 'Technical' },
-  { value: 'design', label: 'Design' },
-  { value: 'marketing', label: 'Marketing' },
-  { value: 'business', label: 'Business' },
-  { value: 'creative', label: 'Creative' },
-  { value: 'other', label: 'Other' },
+  { value: "technical", label: "Technical" },
+  { value: "design", label: "Design" },
+  { value: "marketing", label: "Marketing" },
+  { value: "business", label: "Business" },
+  { value: "creative", label: "Creative" },
+  { value: "other", label: "Other" },
 ];
 
 interface SkillsSelectorProps {
@@ -83,35 +83,30 @@ interface SkillsSelectorProps {
   onSkip?: () => void;
 }
 
-export function SkillsSelector({
-  userId,
-  onSuccess,
-  onSkip,
-}: SkillsSelectorProps) {
+export function SkillsSelector({ userId, onSuccess, onSkip }: SkillsSelectorProps) {
   const [selectedSkills, setSelectedSkills] = useState<string[]>([]);
-  const [customSkill, setCustomSkill] = useState('');
-  const [category, setCategory] = useState('technical');
-  const [searchTerm, setSearchTerm] = useState('');
-  const [error, setError] = useState('');
+  const [customSkill, setCustomSkill] = useState("");
+  const [category, setCategory] = useState("technical");
+  const [searchTerm, setSearchTerm] = useState("");
+  const [error, setError] = useState("");
   const { mutate: addSkills, loading } = useAddSkills();
 
   const filteredSkills = SUGGESTED_SKILLS.filter(
     (skill) =>
-      skill.toLowerCase().includes(searchTerm.toLowerCase()) &&
-      !selectedSkills.includes(skill)
+      skill.toLowerCase().includes(searchTerm.toLowerCase()) && !selectedSkills.includes(skill)
   );
 
   const handleAddSkill = (skill: string) => {
     if (!selectedSkills.includes(skill) && selectedSkills.length < 50) {
       setSelectedSkills([...selectedSkills, skill]);
-      setSearchTerm('');
-      setError('');
+      setSearchTerm("");
+      setError("");
     }
   };
 
   const handleRemoveSkill = (skill: string) => {
     setSelectedSkills(selectedSkills.filter((s) => s !== skill));
-    setError('');
+    setError("");
   };
 
   const handleAddCustomSkill = (e: React.FormEvent) => {
@@ -121,26 +116,26 @@ export function SkillsSelector({
     if (!skill) return;
 
     if (skill.length > 50) {
-      setError('Skill must be 50 characters or less');
+      setError("Skill must be 50 characters or less");
       return;
     }
 
     if (!selectedSkills.includes(skill)) {
       if (selectedSkills.length >= 50) {
-        setError('Maximum 50 skills allowed');
+        setError("Maximum 50 skills allowed");
         return;
       }
       handleAddSkill(skill);
-      setCustomSkill('');
+      setCustomSkill("");
     }
   };
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    setError('');
+    setError("");
 
     if (selectedSkills.length === 0) {
-      setError('Please select at least one skill');
+      setError("Please select at least one skill");
       return;
     }
 
@@ -152,13 +147,13 @@ export function SkillsSelector({
       });
 
       if (result.success) {
-        toast.success('Skills added!', {
-          description: 'Your profile skills have been saved.',
+        toast.success("Skills added!", {
+          description: "Your profile skills have been saved.",
         });
         onSuccess();
       }
     } catch (err) {
-      const message = err instanceof Error ? err.message : 'Failed to add skills';
+      const message = err instanceof Error ? err.message : "Failed to add skills";
       setError(message);
     }
   };
@@ -231,11 +226,7 @@ export function SkillsSelector({
             disabled={loading}
             maxLength={50}
           />
-          <Button
-            type="submit"
-            size="icon"
-            disabled={loading || !customSkill.trim()}
-          >
+          <Button type="submit" size="icon" disabled={loading || !customSkill.trim()}>
             <Plus className="w-4 h-4" />
           </Button>
         </div>
@@ -275,19 +266,15 @@ export function SkillsSelector({
       <Alert>
         <AlertCircle className="h-4 w-4" />
         <AlertDescription className="text-sm">
-          Your skills help creators discover you and find collaboration opportunities.
-          You can update these anytime in your profile settings.
+          Your skills help creators discover you and find collaboration opportunities. You can
+          update these anytime in your profile settings.
         </AlertDescription>
       </Alert>
 
       {/* Action Buttons */}
       <div className="space-y-2">
-        <Button
-          type="submit"
-          className="w-full"
-          disabled={loading || selectedSkills.length === 0}
-        >
-          {loading ? 'Saving...' : 'Complete Onboarding'}
+        <Button type="submit" className="w-full" disabled={loading || selectedSkills.length === 0}>
+          {loading ? "Saving..." : "Complete Onboarding"}
         </Button>
 
         {onSkip && (

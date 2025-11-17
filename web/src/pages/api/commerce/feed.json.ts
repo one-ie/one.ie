@@ -7,7 +7,7 @@
  * Uses existing product data from shop/product-chat.astro
  */
 
-import type { APIRoute } from 'astro';
+import type { APIRoute } from "astro";
 
 // Product data structure (matches product-chat.astro)
 interface Product {
@@ -46,7 +46,7 @@ interface ACPProduct {
   sale_price?: string;
 
   // Availability
-  availability: 'in_stock' | 'out_of_stock';
+  availability: "in_stock" | "out_of_stock";
   inventory_quantity: number;
 
   // Category
@@ -89,22 +89,23 @@ interface ProductFeed {
 // Product catalog (synced with product-chat.astro)
 const products: Product[] = [
   {
-    id: 'chanel-coco-noir',
-    title: 'Chanel Coco Noir Eau de Parfum',
-    category: 'Fragrances',
-    brand: 'Chanel',
+    id: "chanel-coco-noir",
+    title: "Chanel Coco Noir Eau de Parfum",
+    category: "Fragrances",
+    brand: "Chanel",
     rating: 4.26,
     reviewCount: 89,
     price: 129.99,
     originalPrice: 155.99,
     stock: 7,
-    description: 'Elegant and mysterious. Coco Noir captures the essence of timeless sophistication with notes of grapefruit, rose, and sandalwood. A fragrance for the modern woman who embraces mystery.',
+    description:
+      "Elegant and mysterious. Coco Noir captures the essence of timeless sophistication with notes of grapefruit, rose, and sandalwood. A fragrance for the modern woman who embraces mystery.",
     images: [
-      'https://cdn.dummyjson.com/product-images/fragrances/chanel-coco-noir-eau-de/1.webp',
-      'https://cdn.dummyjson.com/product-images/fragrances/chanel-coco-noir-eau-de/2.webp',
-      'https://cdn.dummyjson.com/product-images/fragrances/chanel-coco-noir-eau-de/3.webp',
+      "https://cdn.dummyjson.com/product-images/fragrances/chanel-coco-noir-eau-de/1.webp",
+      "https://cdn.dummyjson.com/product-images/fragrances/chanel-coco-noir-eau-de/2.webp",
+      "https://cdn.dummyjson.com/product-images/fragrances/chanel-coco-noir-eau-de/3.webp",
     ],
-    weight: '100ml (3.4 fl oz)',
+    weight: "100ml (3.4 fl oz)",
   },
 ];
 
@@ -126,12 +127,10 @@ function transformToACPFormat(product: Product, baseUrl: string): ACPProduct {
 
     // Pricing
     price: `${product.price.toFixed(2)} USD`,
-    sale_price: product.originalPrice
-      ? `${product.originalPrice.toFixed(2)} USD`
-      : undefined,
+    sale_price: product.originalPrice ? `${product.originalPrice.toFixed(2)} USD` : undefined,
 
     // Availability
-    availability: product.stock > 0 ? 'in_stock' : 'out_of_stock',
+    availability: product.stock > 0 ? "in_stock" : "out_of_stock",
     inventory_quantity: product.stock,
 
     // Category
@@ -139,7 +138,7 @@ function transformToACPFormat(product: Product, baseUrl: string): ACPProduct {
     brand: product.brand,
 
     // Merchant info
-    seller_name: 'ONE Platform',
+    seller_name: "ONE Platform",
     seller_url: baseUrl,
     seller_privacy_policy: `${baseUrl}/privacy`,
     seller_tos: `${baseUrl}/terms`,
@@ -153,23 +152,23 @@ function transformToACPFormat(product: Product, baseUrl: string): ACPProduct {
     product_review_rating: product.rating,
 
     // Weight (required by ACP)
-    weight: product.weight || '1lb',
+    weight: product.weight || "1lb",
   };
 }
 
 export const GET: APIRoute = async ({ request, site }) => {
   try {
-    const baseUrl = site?.toString().replace(/\/$/, '') || 'https://one.ie';
+    const baseUrl = site?.toString().replace(/\/$/, "") || "https://one.ie";
 
     const feed: ProductFeed = {
       meta: {
         generated_at: new Date().toISOString(),
         total_products: products.length,
-        format: 'json',
-        version: '1.0.0',
+        format: "json",
+        version: "1.0.0",
         merchant: {
-          name: 'ONE Platform',
-          id: 'one_platform',
+          name: "ONE Platform",
+          id: "one_platform",
           url: baseUrl,
         },
       },
@@ -179,21 +178,21 @@ export const GET: APIRoute = async ({ request, site }) => {
     return new Response(JSON.stringify(feed, null, 2), {
       status: 200,
       headers: {
-        'Content-Type': 'application/json',
-        'Cache-Control': 'public, max-age=900', // 15-minute cache
+        "Content-Type": "application/json",
+        "Cache-Control": "public, max-age=900", // 15-minute cache
       },
     });
   } catch (error) {
-    console.error('Product feed error:', error);
+    console.error("Product feed error:", error);
 
     return new Response(
       JSON.stringify({
-        error: 'Failed to generate product feed',
-        message: error instanceof Error ? error.message : 'Unknown error',
+        error: "Failed to generate product feed",
+        message: error instanceof Error ? error.message : "Unknown error",
       }),
       {
         status: 500,
-        headers: { 'Content-Type': 'application/json' },
+        headers: { "Content-Type": "application/json" },
       }
     );
   }

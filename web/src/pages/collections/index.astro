@@ -4,13 +4,11 @@
  * Browse all product collections with filtering capabilities
  */
 
-import Layout from '@/layouts/Layout.astro';
-import { getCollection } from 'astro:content';
-import CollectionPageClient from '@/components/ecommerce/interactive/CollectionPageClient';
+import { getCollection } from "astro:content";
 
 // Get all collections and products
-const allCollections = await getCollection('collections');
-const allProducts = await getCollection('products');
+const allCollections = await getCollection("collections");
+const allProducts = await getCollection("products");
 
 // Transform product helper
 const products = allProducts.map((p) => ({
@@ -33,7 +31,7 @@ const products = allProducts.map((p) => ({
 }));
 
 // Collections with associated products (used for filtering)
-const collectionCategories = allCollections.map((collection) => ({
+const _collectionCategories = allCollections.map((collection) => ({
   id: collection.slug,
   name: collection.data.name,
   count: collection.data.products?.length || 0,
@@ -41,10 +39,10 @@ const collectionCategories = allCollections.map((collection) => ({
 }));
 
 // Unique tags aggregated from products
-const tags = Array.from(new Set(allProducts.flatMap((product) => product.data.tags || [])));
+const _tags = Array.from(new Set(allProducts.flatMap((product) => product.data.tags || [])));
 
 // Serialize products for client hydration
-const productsForClient = products.map((product) => ({
+const _productsForClient = products.map((product) => ({
   ...product,
   createdAt: product.createdAt.toISOString(),
   updatedAt: product.updatedAt.toISOString(),

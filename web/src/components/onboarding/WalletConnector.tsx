@@ -5,21 +5,21 @@
  * with support for MetaMask, WalletConnect, and other providers
  */
 
-import { useState } from 'react';
-import { Button } from '@/components/ui/button';
-import { Input } from '@/components/ui/input';
-import { Label } from '@/components/ui/label';
-import { Alert, AlertDescription } from '@/components/ui/alert';
+import { AlertCircle, Check, Unlink, Wallet } from "lucide-react";
+import { useState } from "react";
+import { toast } from "sonner";
+import { Alert, AlertDescription } from "@/components/ui/alert";
+import { Button } from "@/components/ui/button";
+import { Input } from "@/components/ui/input";
+import { Label } from "@/components/ui/label";
 import {
   Select,
   SelectContent,
   SelectItem,
   SelectTrigger,
   SelectValue,
-} from '@/components/ui/select';
-import { useConnectWallet } from '@/hooks/useOnboarding';
-import { toast } from 'sonner';
-import { Wallet, AlertCircle, Check, Unlink } from 'lucide-react';
+} from "@/components/ui/select";
+import { useConnectWallet } from "@/hooks/useOnboarding";
 
 interface WalletConnectorProps {
   userId: string;
@@ -34,10 +34,12 @@ export function WalletConnector({
   onSuccess,
   onSkip,
 }: WalletConnectorProps) {
-  const [walletType, setWalletType] = useState<'metamask' | 'walletconnect' | 'rainbowkit' | 'other'>('metamask');
-  const [walletAddress, setWalletAddress] = useState(connectedWallet || '');
+  const [walletType, setWalletType] = useState<
+    "metamask" | "walletconnect" | "rainbowkit" | "other"
+  >("metamask");
+  const [walletAddress, setWalletAddress] = useState(connectedWallet || "");
   const [isManualEntry, setIsManualEntry] = useState(false);
-  const [error, setError] = useState('');
+  const [error, setError] = useState("");
   const [chainId, setChainId] = useState<number>(1);
   const { mutate: connectWallet, loading } = useConnectWallet();
 
@@ -46,27 +48,24 @@ export function WalletConnector({
   };
 
   const handleDetectWallet = async () => {
-    setError('');
+    setError("");
 
-    if (walletType === 'metamask') {
+    if (walletType === "metamask") {
       if (!window.ethereum) {
-        setError(
-          'MetaMask is not installed. Please install MetaMask extension first.'
-        );
-        toast.error('MetaMask not found', {
-          description:
-            'Please install the MetaMask extension from metamask.io',
+        setError("MetaMask is not installed. Please install MetaMask extension first.");
+        toast.error("MetaMask not found", {
+          description: "Please install the MetaMask extension from metamask.io",
         });
         return;
       }
 
       try {
         const accounts = await window.ethereum.request({
-          method: 'eth_requestAccounts',
+          method: "eth_requestAccounts",
         });
         const address = accounts[0];
         const chainIdHex = await window.ethereum.request({
-          method: 'eth_chainId',
+          method: "eth_chainId",
         });
         const chain = parseInt(chainIdHex, 16);
 
@@ -74,27 +73,27 @@ export function WalletConnector({
         setChainId(chain);
         setIsManualEntry(false);
       } catch (err) {
-        const message = err instanceof Error ? err.message : 'Failed to connect MetaMask';
+        const message = err instanceof Error ? err.message : "Failed to connect MetaMask";
         setError(message);
       }
     } else {
-      toast.info('WalletConnect coming soon', {
-        description: 'WalletConnect integration is under development',
+      toast.info("WalletConnect coming soon", {
+        description: "WalletConnect integration is under development",
       });
     }
   };
 
   const handleManualConnect = async (e: React.FormEvent) => {
     e.preventDefault();
-    setError('');
+    setError("");
 
     if (!walletAddress) {
-      setError('Please enter a wallet address');
+      setError("Please enter a wallet address");
       return;
     }
 
     if (!validateAddress(walletAddress)) {
-      setError('Invalid wallet address format (must be 0x + 40 hex characters)');
+      setError("Invalid wallet address format (must be 0x + 40 hex characters)");
       return;
     }
 
@@ -107,21 +106,21 @@ export function WalletConnector({
       });
 
       if (result.success) {
-        toast.success('Wallet connected!', {
-          description: 'Your wallet has been connected successfully.',
+        toast.success("Wallet connected!", {
+          description: "Your wallet has been connected successfully.",
         });
         onSuccess();
       }
     } catch (err) {
-      const message = err instanceof Error ? err.message : 'Connection failed';
+      const message = err instanceof Error ? err.message : "Connection failed";
       setError(message);
     }
   };
 
   const handleDisconnect = () => {
-    setWalletAddress('');
+    setWalletAddress("");
     setIsManualEntry(false);
-    setError('');
+    setError("");
   };
 
   // Check if wallet is already connected
@@ -147,26 +146,17 @@ export function WalletConnector({
 
           {chainId && (
             <p className="text-xs text-muted-foreground">
-              Chain ID: {chainId === 1 ? 'Ethereum Mainnet' : `Chain ${chainId}`}
+              Chain ID: {chainId === 1 ? "Ethereum Mainnet" : `Chain ${chainId}`}
             </p>
           )}
         </div>
 
         <div className="space-y-2">
-          <Button
-            type="button"
-            className="w-full"
-            onClick={onSuccess}
-          >
+          <Button type="button" className="w-full" onClick={onSuccess}>
             Continue
           </Button>
 
-          <Button
-            type="button"
-            variant="outline"
-            className="w-full"
-            onClick={handleDisconnect}
-          >
+          <Button type="button" variant="outline" className="w-full" onClick={handleDisconnect}>
             <Unlink className="w-4 h-4 mr-2" />
             Disconnect
           </Button>
@@ -185,8 +175,8 @@ export function WalletConnector({
             value={walletType}
             onValueChange={(value) => {
               setWalletType(value as any);
-              setWalletAddress('');
-              setError('');
+              setWalletAddress("");
+              setError("");
             }}
             disabled={loading}
           >
@@ -212,7 +202,7 @@ export function WalletConnector({
             disabled={loading}
           >
             <Wallet className="w-4 h-4 mr-2" />
-            Detect {walletType === 'metamask' ? 'MetaMask' : 'Wallet'}
+            Detect {walletType === "metamask" ? "MetaMask" : "Wallet"}
           </Button>
         )}
 
@@ -259,7 +249,7 @@ export function WalletConnector({
               className="w-full"
               disabled={loading || !validateAddress(walletAddress)}
             >
-              {loading ? 'Connecting...' : 'Connect Wallet'}
+              {loading ? "Connecting..." : "Connect Wallet"}
             </Button>
           </>
         )}
@@ -290,8 +280,8 @@ export function WalletConnector({
       <Alert>
         <AlertCircle className="h-4 w-4" />
         <AlertDescription className="text-sm">
-          Wallet connection is optional. You can always add or change your wallet
-          later in account settings.
+          Wallet connection is optional. You can always add or change your wallet later in account
+          settings.
         </AlertDescription>
       </Alert>
 

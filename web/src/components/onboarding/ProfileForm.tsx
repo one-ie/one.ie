@@ -5,18 +5,15 @@
  * real-time validation for username availability
  */
 
-import { useState, useEffect, useCallback } from 'react';
-import { Button } from '@/components/ui/button';
-import { Input } from '@/components/ui/input';
-import { Label } from '@/components/ui/label';
-import { Textarea } from '@/components/ui/textarea';
-import { Alert, AlertDescription } from '@/components/ui/alert';
-import {
-  useUpdateProfile,
-  useCheckUsernameAvailable,
-} from '@/hooks/useOnboarding';
-import { toast } from 'sonner';
-import { Check, X } from 'lucide-react';
+import { Check, X } from "lucide-react";
+import { useCallback, useEffect, useState } from "react";
+import { toast } from "sonner";
+import { Alert, AlertDescription } from "@/components/ui/alert";
+import { Button } from "@/components/ui/button";
+import { Input } from "@/components/ui/input";
+import { Label } from "@/components/ui/label";
+import { Textarea } from "@/components/ui/textarea";
+import { useCheckUsernameAvailable, useUpdateProfile } from "@/hooks/useOnboarding";
 
 interface ProfileFormProps {
   userId: string;
@@ -29,15 +26,12 @@ interface ProfileFormProps {
   onSkip?: () => void;
 }
 
-export function ProfileForm({
-  userId,
-  initialData,
-  onSuccess,
-  onSkip,
-}: ProfileFormProps) {
-  const [username, setUsername] = useState(initialData?.username || '');
-  const [bio, setBio] = useState(initialData?.bio || '');
-  const [usernameStatus, setUsernameStatus] = useState<'available' | 'taken' | 'checking' | null>(null);
+export function ProfileForm({ userId, initialData, onSuccess, onSkip }: ProfileFormProps) {
+  const [username, setUsername] = useState(initialData?.username || "");
+  const [bio, setBio] = useState(initialData?.bio || "");
+  const [usernameStatus, setUsernameStatus] = useState<"available" | "taken" | "checking" | null>(
+    null
+  );
   const [errors, setErrors] = useState<Record<string, string>>({});
   const { mutate: updateProfile, loading } = useUpdateProfile();
   const { check: checkUsername, loading: checkingUsername } = useCheckUsernameAvailable();
@@ -50,9 +44,9 @@ export function ProfileForm({
     }
 
     const timer = setTimeout(async () => {
-      setUsernameStatus('checking');
+      setUsernameStatus("checking");
       const available = await checkUsername(username);
-      setUsernameStatus(available ? 'available' : 'taken');
+      setUsernameStatus(available ? "available" : "taken");
     }, 500);
 
     return () => clearTimeout(timer);
@@ -62,15 +56,15 @@ export function ProfileForm({
     const newErrors: Record<string, string> = {};
 
     if (username && (username.length < 3 || username.length > 20)) {
-      newErrors.username = 'Username must be 3-20 characters';
+      newErrors.username = "Username must be 3-20 characters";
     }
 
-    if (username && !/^[a-z0-9\-]+$/.test(username)) {
-      newErrors.username = 'Username can only contain lowercase letters, numbers, and hyphens';
+    if (username && !/^[a-z0-9-]+$/.test(username)) {
+      newErrors.username = "Username can only contain lowercase letters, numbers, and hyphens";
     }
 
     if (bio && bio.length > 500) {
-      newErrors.bio = 'Bio must be 500 characters or less';
+      newErrors.bio = "Bio must be 500 characters or less";
     }
 
     setErrors(newErrors);
@@ -82,9 +76,9 @@ export function ProfileForm({
 
     if (!validateForm()) return;
 
-    if (username && usernameStatus !== 'available') {
+    if (username && usernameStatus !== "available") {
       setErrors({
-        username: usernameStatus === 'taken' ? 'Username already taken' : 'Please check username',
+        username: usernameStatus === "taken" ? "Username already taken" : "Please check username",
       });
       return;
     }
@@ -97,14 +91,14 @@ export function ProfileForm({
       });
 
       if (result.success) {
-        toast.success('Profile updated!', {
-          description: 'Your profile has been saved successfully.',
+        toast.success("Profile updated!", {
+          description: "Your profile has been saved successfully.",
         });
         onSuccess();
       }
     } catch (err) {
-      const message = err instanceof Error ? err.message : 'Profile update failed';
-      toast.error('Update failed', { description: message });
+      const message = err instanceof Error ? err.message : "Profile update failed";
+      toast.error("Update failed", { description: message });
     }
   };
 
@@ -121,15 +115,15 @@ export function ProfileForm({
             value={username}
             onChange={(e) => setUsername(e.target.value.toLowerCase())}
             disabled={loading}
-            className={usernameStatus === 'checking' ? 'pr-10' : ''}
+            className={usernameStatus === "checking" ? "pr-10" : ""}
           />
           {username && (
             <div className="absolute right-3 top-1/2 -translate-y-1/2">
               {checkingUsername ? (
                 <div className="animate-spin rounded-full h-4 w-4 border-b-2 border-primary" />
-              ) : usernameStatus === 'available' ? (
+              ) : usernameStatus === "available" ? (
                 <Check className="w-4 h-4 text-green-500" />
-              ) : usernameStatus === 'taken' ? (
+              ) : usernameStatus === "taken" ? (
                 <X className="w-4 h-4 text-destructive" />
               ) : null}
             </div>
@@ -155,12 +149,8 @@ export function ProfileForm({
           rows={4}
           className="resize-none"
         />
-        {errors.bio && (
-          <p className="text-sm font-medium text-destructive">{errors.bio}</p>
-        )}
-        <p className="text-xs text-muted-foreground">
-          {bio.length}/500 characters
-        </p>
+        {errors.bio && <p className="text-sm font-medium text-destructive">{errors.bio}</p>}
+        <p className="text-xs text-muted-foreground">{bio.length}/500 characters</p>
       </div>
 
       {/* Info Alert */}
@@ -174,12 +164,9 @@ export function ProfileForm({
       <Button
         type="submit"
         className="w-full"
-        disabled={
-          loading ||
-          (username && usernameStatus !== 'available')
-        }
+        disabled={loading || (username && usernameStatus !== "available")}
       >
-        {loading ? 'Saving...' : 'Continue'}
+        {loading ? "Saving..." : "Continue"}
       </Button>
 
       {/* Skip Button */}

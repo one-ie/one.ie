@@ -4,15 +4,15 @@
  * Requires client:load hydration
  */
 
-'use client';
+"use client";
 
 /* global Node */
 
-import { useState, useEffect, useRef, useCallback } from 'react';
-import type { Product } from '@/types/ecommerce';
-import { Input } from '@/components/ui/input';
-import { Badge } from '@/components/ui/badge';
-import { debounce } from '@/lib/utils';
+import { useCallback, useEffect, useRef, useState } from "react";
+import { Badge } from "@/components/ui/badge";
+import { Input } from "@/components/ui/input";
+import { debounce } from "@/lib/utils";
+import type { Product } from "@/types/ecommerce";
 
 interface ProductSearchProps {
   products: Product[];
@@ -26,10 +26,10 @@ export function ProductSearch({
   products,
   categories,
   onSearchResults,
-  placeholder = 'Search products...',
+  placeholder = "Search products...",
   showResultsCount = true,
 }: ProductSearchProps) {
-  const [query, setQuery] = useState('');
+  const [query, setQuery] = useState("");
   const [selectedCategory, setSelectedCategory] = useState<string | null>(null);
   const [suggestions, setSuggestions] = useState<Product[]>([]);
   const [showSuggestions, setShowSuggestions] = useState(false);
@@ -41,13 +41,13 @@ export function ProductSearch({
 
   // Load recent searches from localStorage
   useEffect(() => {
-    if (typeof window !== 'undefined') {
-      const stored = localStorage.getItem('recent-searches');
+    if (typeof window !== "undefined") {
+      const stored = localStorage.getItem("recent-searches");
       if (stored) {
         try {
           setRecentSearches(JSON.parse(stored));
         } catch (e) {
-          console.error('Failed to load recent searches:', e);
+          console.error("Failed to load recent searches:", e);
         }
       }
     }
@@ -70,9 +70,7 @@ export function ProductSearch({
           product.description.toLowerCase().includes(lowerQuery) ||
           product.tags.some((tag) => tag.toLowerCase().includes(lowerQuery));
 
-        const matchesCategory = category
-          ? product.category === category
-          : true;
+        const matchesCategory = category ? product.category === category : true;
 
         return matchesQuery && matchesCategory;
       });
@@ -89,7 +87,7 @@ export function ProductSearch({
     debounce((searchQuery: string, category: string | null) => {
       performSearch(searchQuery, category);
     }, 300),
-    [performSearch]
+    []
   );
 
   // Handle input change
@@ -111,14 +109,11 @@ export function ProductSearch({
   const saveRecentSearch = (searchQuery: string) => {
     if (!searchQuery.trim()) return;
 
-    const updated = [
-      searchQuery,
-      ...recentSearches.filter((s) => s !== searchQuery),
-    ].slice(0, 5);
+    const updated = [searchQuery, ...recentSearches.filter((s) => s !== searchQuery)].slice(0, 5);
 
     setRecentSearches(updated);
-    if (typeof window !== 'undefined') {
-      localStorage.setItem('recent-searches', JSON.stringify(updated));
+    if (typeof window !== "undefined") {
+      localStorage.setItem("recent-searches", JSON.stringify(updated));
     }
   };
 
@@ -142,17 +137,15 @@ export function ProductSearch({
     if (!showSuggestions) return;
 
     switch (e.key) {
-      case 'ArrowDown':
+      case "ArrowDown":
         e.preventDefault();
-        setSelectedIndex((prev) =>
-          prev < suggestions.length - 1 ? prev + 1 : prev
-        );
+        setSelectedIndex((prev) => (prev < suggestions.length - 1 ? prev + 1 : prev));
         break;
-      case 'ArrowUp':
+      case "ArrowUp":
         e.preventDefault();
         setSelectedIndex((prev) => (prev > 0 ? prev - 1 : -1));
         break;
-      case 'Enter':
+      case "Enter":
         e.preventDefault();
         if (selectedIndex >= 0 && suggestions[selectedIndex]) {
           handleSuggestionClick(suggestions[selectedIndex]);
@@ -161,7 +154,7 @@ export function ProductSearch({
           setShowSuggestions(false);
         }
         break;
-      case 'Escape':
+      case "Escape":
         setShowSuggestions(false);
         setSelectedIndex(-1);
         break;
@@ -181,8 +174,8 @@ export function ProductSearch({
       }
     };
 
-    document.addEventListener('mousedown', handleClickOutside);
-    return () => document.removeEventListener('mousedown', handleClickOutside);
+    document.addEventListener("mousedown", handleClickOutside);
+    return () => document.removeEventListener("mousedown", handleClickOutside);
   }, []);
 
   return (
@@ -215,7 +208,7 @@ export function ProductSearch({
         {query && (
           <button
             onClick={() => {
-              setQuery('');
+              setQuery("");
               setSuggestions([]);
               onSearchResults?.(products);
               inputRef.current?.focus();
@@ -242,7 +235,7 @@ export function ProductSearch({
             <span>No products found for "{query}"</span>
           ) : (
             <span>
-              {resultsCount} {resultsCount === 1 ? 'product' : 'products'} found
+              {resultsCount} {resultsCount === 1 ? "product" : "products"} found
               {query && ` for "${query}"`}
             </span>
           )}
@@ -253,7 +246,7 @@ export function ProductSearch({
       {categories && categories.length > 0 && (
         <div className="flex flex-wrap gap-2">
           <Badge
-            variant={selectedCategory === null ? 'default' : 'outline'}
+            variant={selectedCategory === null ? "default" : "outline"}
             className="cursor-pointer"
             onClick={() => handleCategoryChange(null)}
           >
@@ -262,7 +255,7 @@ export function ProductSearch({
           {categories.map((cat) => (
             <Badge
               key={cat.id}
-              variant={selectedCategory === cat.id ? 'default' : 'outline'}
+              variant={selectedCategory === cat.id ? "default" : "outline"}
               className="cursor-pointer"
               onClick={() => handleCategoryChange(cat.id)}
             >
@@ -290,7 +283,12 @@ export function ProductSearch({
                   onClick={() => handleRecentClick(search)}
                   className="flex w-full items-center gap-2 rounded px-2 py-2 text-sm text-foreground transition-colors hover:bg-accent"
                 >
-                  <svg className="h-4 w-4 text-muted-foreground" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <svg
+                    className="h-4 w-4 text-muted-foreground"
+                    fill="none"
+                    stroke="currentColor"
+                    viewBox="0 0 24 24"
+                  >
                     <path
                       strokeLinecap="round"
                       strokeLinejoin="round"
@@ -307,17 +305,13 @@ export function ProductSearch({
           {/* Product Suggestions */}
           {suggestions.length > 0 && (
             <div className="border-t border-border p-2">
-              <p className="mb-2 px-2 text-xs font-semibold text-muted-foreground">
-                Products
-              </p>
+              <p className="mb-2 px-2 text-xs font-semibold text-muted-foreground">Products</p>
               {suggestions.map((product, idx) => (
                 <button
                   key={product.id}
                   onClick={() => handleSuggestionClick(product)}
                   className={`flex w-full items-center gap-3 rounded p-2 text-left transition-colors ${
-                    idx === selectedIndex
-                      ? 'bg-accent'
-                      : 'hover:bg-accent'
+                    idx === selectedIndex ? "bg-accent" : "hover:bg-accent"
                   }`}
                 >
                   {product.thumbnail && (
@@ -328,12 +322,8 @@ export function ProductSearch({
                     />
                   )}
                   <div className="flex-1 min-w-0">
-                    <p className="text-sm font-medium text-foreground truncate">
-                      {product.name}
-                    </p>
-                    <p className="text-xs text-muted-foreground">
-                      ${product.price.toFixed(2)}
-                    </p>
+                    <p className="text-sm font-medium text-foreground truncate">{product.name}</p>
+                    <p className="text-xs text-muted-foreground">${product.price.toFixed(2)}</p>
                   </div>
                 </button>
               ))}

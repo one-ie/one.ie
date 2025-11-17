@@ -1,17 +1,16 @@
-import React, { useState } from "react";
-import { Card, CardHeader, CardTitle, CardContent } from "@/components/ui/card";
-import { Badge } from "@/components/ui/badge";
-import { Button } from "@/components/ui/button";
 import { ChevronDown, ChevronRight } from "lucide-react";
+import { useState } from "react";
+import { Button } from "@/components/ui/button";
+import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 
 export interface ToolCallProps {
   name: string;
-  args: Record<string, any>;
-  result?: any;
+  args: Record<string, unknown>;
+  result?: unknown;
   status?: "pending" | "running" | "completed" | "failed";
 }
 
-export function ToolCall({ name, args, result, status = "completed" }: ToolCallProps) {
+export function ToolCall({ name, args, result }: ToolCallProps) {
   const [showDetails, setShowDetails] = useState(false);
 
   return (
@@ -20,7 +19,11 @@ export function ToolCall({ name, args, result, status = "completed" }: ToolCallP
         <div className="flex items-center justify-between">
           <CardTitle className="text-sm">Function: {name}</CardTitle>
           <Button variant="ghost" size="sm" onClick={() => setShowDetails(!showDetails)}>
-            {showDetails ? <ChevronDown className="h-4 w-4" /> : <ChevronRight className="h-4 w-4" />}
+            {showDetails ? (
+              <ChevronDown className="h-4 w-4" />
+            ) : (
+              <ChevronRight className="h-4 w-4" />
+            )}
           </Button>
         </div>
       </CardHeader>
@@ -34,7 +37,9 @@ export function ToolCall({ name, args, result, status = "completed" }: ToolCallP
             {result && (
               <div>
                 <p className="mb-2 text-xs font-medium text-muted-foreground">Result:</p>
-                <pre className="rounded bg-muted p-2 text-xs">{JSON.stringify(result, null, 2)}</pre>
+                <pre className="rounded bg-muted p-2 text-xs">
+                  {JSON.stringify(result, null, 2)}
+                </pre>
               </div>
             )}
           </div>

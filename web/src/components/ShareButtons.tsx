@@ -1,8 +1,8 @@
-'use client';
+"use client";
 
-import * as React from 'react';
-import { Button } from '@/components/ui/button';
-import { Share2, Twitter, Facebook, Linkedin } from 'lucide-react';
+import { Facebook, Linkedin, Share2, Twitter } from "lucide-react";
+import * as React from "react";
+import { Button } from "@/components/ui/button";
 
 interface ShareButtonsProps {
   title: string;
@@ -14,9 +14,7 @@ export function ShareButtons({ title, url }: ShareButtonsProps) {
 
   React.useEffect(() => {
     // Check if Web Share API is available
-    setIsWebShareSupported(
-      typeof navigator !== 'undefined' && 'share' in navigator
-    );
+    setIsWebShareSupported(typeof navigator !== "undefined" && "share" in navigator);
   }, []);
 
   const handleWebShare = async () => {
@@ -28,7 +26,7 @@ export function ShareButtons({ title, url }: ShareButtonsProps) {
         });
       } catch (error) {
         // User cancelled share or share failed
-        console.warn('Share cancelled or failed:', error);
+        console.warn("Share cancelled or failed:", error);
       }
     }
   };
@@ -37,12 +35,8 @@ export function ShareButtons({ title, url }: ShareButtonsProps) {
     twitter: `https://twitter.com/intent/tweet?text=${encodeURIComponent(
       title
     )}&url=${encodeURIComponent(url)}`,
-    facebook: `https://www.facebook.com/sharer/sharer.php?u=${encodeURIComponent(
-      url
-    )}`,
-    linkedin: `https://www.linkedin.com/sharing/share-offsite/?url=${encodeURIComponent(
-      url
-    )}`,
+    facebook: `https://www.facebook.com/sharer/sharer.php?u=${encodeURIComponent(url)}`,
+    linkedin: `https://www.linkedin.com/sharing/share-offsite/?url=${encodeURIComponent(url)}`,
   };
 
   return (
@@ -62,52 +56,22 @@ export function ShareButtons({ title, url }: ShareButtonsProps) {
         </Button>
       )}
 
-      <Button
-        variant="outline"
-        size="sm"
-        asChild
-        aria-label="Share on Twitter/X"
-      >
-        <a
-          href={shareUrls.twitter}
-          target="_blank"
-          rel="noopener noreferrer"
-          className="gap-2"
-        >
+      <Button variant="outline" size="sm" asChild aria-label="Share on Twitter/X">
+        <a href={shareUrls.twitter} target="_blank" rel="noopener noreferrer" className="gap-2">
           <Twitter className="h-4 w-4" />
           <span className="hidden sm:inline">Twitter</span>
         </a>
       </Button>
 
-      <Button
-        variant="outline"
-        size="sm"
-        asChild
-        aria-label="Share on Facebook"
-      >
-        <a
-          href={shareUrls.facebook}
-          target="_blank"
-          rel="noopener noreferrer"
-          className="gap-2"
-        >
+      <Button variant="outline" size="sm" asChild aria-label="Share on Facebook">
+        <a href={shareUrls.facebook} target="_blank" rel="noopener noreferrer" className="gap-2">
           <Facebook className="h-4 w-4" />
           <span className="hidden sm:inline">Facebook</span>
         </a>
       </Button>
 
-      <Button
-        variant="outline"
-        size="sm"
-        asChild
-        aria-label="Share on LinkedIn"
-      >
-        <a
-          href={shareUrls.linkedin}
-          target="_blank"
-          rel="noopener noreferrer"
-          className="gap-2"
-        >
+      <Button variant="outline" size="sm" asChild aria-label="Share on LinkedIn">
+        <a href={shareUrls.linkedin} target="_blank" rel="noopener noreferrer" className="gap-2">
           <Linkedin className="h-4 w-4" />
           <span className="hidden sm:inline">LinkedIn</span>
         </a>

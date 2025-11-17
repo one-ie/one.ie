@@ -1,16 +1,17 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
+
+import { ConvexHttpClient } from "convex/browser";
+import { Mail } from "lucide-react";
 import { useState } from "react";
+import { toast } from "sonner";
+import { Alert, AlertDescription } from "@/components/ui/alert";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
-import { toast } from "sonner";
 import { AuthCard } from "./AuthCard";
-import { Mail } from "lucide-react";
-import { Alert, AlertDescription } from "@/components/ui/alert";
-import { ConvexHttpClient } from "convex/browser";
 
 const convex = new ConvexHttpClient(
-  import.meta.env.PUBLIC_CONVEX_URL || import.meta.env.NEXT_PUBLIC_CONVEX_URL,
+  import.meta.env.PUBLIC_CONVEX_URL || import.meta.env.NEXT_PUBLIC_CONVEX_URL
 );
 
 export function RequestMagicLinkForm() {
@@ -24,9 +25,7 @@ export function RequestMagicLinkForm() {
 
     try {
       // Use production URL in production, localhost in dev
-      const baseUrl = import.meta.env.PROD
-        ? "https://stack.one.ie"
-        : window.location.origin;
+      const baseUrl = import.meta.env.PROD ? "https://stack.one.ie" : window.location.origin;
 
       await convex.mutation("auth:requestMagicLink" as any, {
         email,
@@ -35,8 +34,7 @@ export function RequestMagicLinkForm() {
 
       setEmailSent(true);
       toast.success("Magic link sent!", {
-        description:
-          "Check your email for a link to sign in. The link expires in 15 minutes.",
+        description: "Check your email for a link to sign in. The link expires in 15 minutes.",
       });
     } catch (err: any) {
       const errorMessage = err.message || "Unable to send magic link";
@@ -45,8 +43,7 @@ export function RequestMagicLinkForm() {
 
       if (errorMessage.toLowerCase().includes("rate limit")) {
         title = "Too many requests";
-        description =
-          "Please wait a few minutes before requesting another magic link.";
+        description = "Please wait a few minutes before requesting another magic link.";
       } else if (
         errorMessage.toLowerCase().includes("network") ||
         errorMessage.toLowerCase().includes("connection")
@@ -71,10 +68,7 @@ export function RequestMagicLinkForm() {
         footer={
           <p className="text-sm text-muted-foreground text-center w-full">
             Didn't receive the email?{" "}
-            <button
-              onClick={() => setEmailSent(false)}
-              className="text-primary hover:underline"
-            >
+            <button onClick={() => setEmailSent(false)} className="text-primary hover:underline">
               Try again
             </button>
           </p>
@@ -83,8 +77,8 @@ export function RequestMagicLinkForm() {
         <Alert className="border-blue-500/50 bg-blue-500/10">
           <Mail className="h-4 w-4 text-blue-500" />
           <AlertDescription className="text-sm">
-            We've sent a magic link to <strong>{email}</strong>. Click the link
-            in the email to sign in. The link expires in 15 minutes.
+            We've sent a magic link to <strong>{email}</strong>. Click the link in the email to sign
+            in. The link expires in 15 minutes.
           </AlertDescription>
         </Alert>
 

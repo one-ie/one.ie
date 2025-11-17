@@ -3,10 +3,10 @@
  * Enhanced dual-thumb slider with live tooltips and smooth animations
  */
 
-'use client';
+"use client";
 
-import { useState } from 'react';
-import { Slider } from '@/components/ui/slider';
+import { useState } from "react";
+import { Slider } from "@/components/ui/slider";
 
 interface PriceRangeSliderProps {
   min: number;
@@ -47,9 +47,9 @@ export function PriceRangeSlider({
 
   // Format currency
   const formatPrice = (price: number) => {
-    return new Intl.NumberFormat('en-US', {
-      style: 'currency',
-      currency: 'USD',
+    return new Intl.NumberFormat("en-US", {
+      style: "currency",
+      currency: "USD",
       minimumFractionDigits: 0,
       maximumFractionDigits: 0,
     }).format(price);
@@ -78,16 +78,16 @@ export function PriceRangeSlider({
               }}
               onBlur={() => handleCommit(localValue)}
               onKeyDown={(e) => {
-                if (e.key === 'Enter') {
+                if (e.key === "Enter") {
                   handleCommit(localValue);
                   e.currentTarget.blur();
                 }
-                if (e.key === 'ArrowUp') {
+                if (e.key === "ArrowUp") {
                   e.preventDefault();
                   const newVal = Math.min(localValue[0] + step, localValue[1]);
                   handleChange([newVal, localValue[1]]);
                 }
-                if (e.key === 'ArrowDown') {
+                if (e.key === "ArrowDown") {
                   e.preventDefault();
                   const newVal = Math.max(localValue[0] - step, min);
                   handleChange([newVal, localValue[1]]);
@@ -115,16 +115,16 @@ export function PriceRangeSlider({
               }}
               onBlur={() => handleCommit(localValue)}
               onKeyDown={(e) => {
-                if (e.key === 'Enter') {
+                if (e.key === "Enter") {
                   handleCommit(localValue);
                   e.currentTarget.blur();
                 }
-                if (e.key === 'ArrowUp') {
+                if (e.key === "ArrowUp") {
                   e.preventDefault();
                   const newVal = Math.min(localValue[1] + step, max);
                   handleChange([localValue[0], newVal]);
                 }
-                if (e.key === 'ArrowDown') {
+                if (e.key === "ArrowDown") {
                   e.preventDefault();
                   const newVal = Math.max(localValue[1] - step, localValue[0]);
                   handleChange([localValue[0], newVal]);
@@ -145,7 +145,7 @@ export function PriceRangeSlider({
         {isDragging && (
           <div
             className="absolute -top-1 transition-all duration-150 ease-out"
-            style={{ left: `${minPercent}%`, transform: 'translateX(-50%)' }}
+            style={{ left: `${minPercent}%`, transform: "translateX(-50%)" }}
           >
             <div className="bg-primary text-primary-foreground px-2.5 py-1.5 rounded-md text-xs font-semibold shadow-lg animate-in fade-in-0 slide-in-from-bottom-2">
               {formatPrice(localValue[0])}
@@ -158,7 +158,7 @@ export function PriceRangeSlider({
         {isDragging && (
           <div
             className="absolute -top-1 transition-all duration-150 ease-out"
-            style={{ left: `${maxPercent}%`, transform: 'translateX(-50%)' }}
+            style={{ left: `${maxPercent}%`, transform: "translateX(-50%)" }}
           >
             <div className="bg-primary text-primary-foreground px-2.5 py-1.5 rounded-md text-xs font-semibold shadow-lg animate-in fade-in-0 slide-in-from-bottom-2">
               {formatPrice(localValue[1])}
@@ -182,9 +182,7 @@ export function PriceRangeSlider({
       {/* Range display and reset */}
       <div className="flex items-center justify-between text-xs">
         <div className="space-y-1">
-          <div className="text-muted-foreground">
-            Selected Range
-          </div>
+          <div className="text-muted-foreground">Selected Range</div>
           <div className="font-semibold text-foreground text-sm">
             {formatPrice(localValue[0])} - {formatPrice(localValue[1])}
           </div>
@@ -207,7 +205,7 @@ export function PriceRangeSlider({
         <div
           className="absolute h-full bg-primary/20 transition-all"
           style={{
-            left: '0%',
+            left: "0%",
             width: `${minPercent}%`,
           }}
         />

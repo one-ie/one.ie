@@ -11,10 +11,7 @@
  * console.log(minutes); // 5
  * ```
  */
-export function calculateReadingTime(
-  content: string,
-  wordsPerMinute = 200
-): number {
+export function calculateReadingTime(content: string, wordsPerMinute = 200): number {
   // Split content on whitespace and filter out empty strings
   const words = content
     .trim()
@@ -41,10 +38,7 @@ export function calculateReadingTime(
  * console.log(formatted); // "5 min read"
  * ```
  */
-export function formatReadingTime(
-  content: string,
-  wordsPerMinute = 200
-): string {
+export function formatReadingTime(content: string, wordsPerMinute = 200): string {
   const minutes = calculateReadingTime(content, wordsPerMinute);
   return `${minutes} min read`;
 }

@@ -6,14 +6,14 @@
  */
 
 import { Effect, Layer } from "effect";
-import { convexProvider } from "../convex/ConvexProvider";
-import { wordPressProvider } from "../wordpress/WordPressProvider";
-import { compositeProvider } from "../composite/CompositeProvider";
-import { DataProviderService } from "../DataProvider";
-import { ThingService } from "../../services/ThingService";
 import { ConnectionService } from "../../services/ConnectionService";
 import { EventService } from "../../services/EventService";
 import { KnowledgeService } from "../../services/KnowledgeService";
+import { ThingService } from "../../services/ThingService";
+import { compositeProvider } from "../composite/CompositeProvider";
+import { convexProvider } from "../convex/ConvexProvider";
+import { DataProviderService } from "../DataProvider";
+import { wordPressProvider } from "../wordpress/WordPressProvider";
 
 // ============================================================================
 // EXAMPLE 1: Simple Convex Backend
@@ -130,11 +130,7 @@ export const example3_CourseEnrollment = async (userId: string, courseId: string
 
     // 2. Check if already enrolled
     console.log("Checking existing enrollment...");
-    const alreadyEnrolled = yield* ConnectionService.exists(
-      userId,
-      courseId,
-      "enrolled_in"
-    );
+    const alreadyEnrolled = yield* ConnectionService.exists(userId, courseId, "enrolled_in");
 
     if (alreadyEnrolled) {
       console.log("⚠ User already enrolled\n");

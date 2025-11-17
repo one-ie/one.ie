@@ -1,21 +1,17 @@
-import type { LucideIcon } from "lucide-react"
-import { cn } from "@/lib/utils"
-import { buttonVariants } from "@/components/ui/button"
-import {
-  Tooltip,
-  TooltipContent,
-  TooltipTrigger,
-} from "@/components/ui/tooltip"
+import type { LucideIcon } from "lucide-react";
+import { buttonVariants } from "@/components/ui/button";
+import { Tooltip, TooltipContent, TooltipTrigger } from "@/components/ui/tooltip";
+import { cn } from "@/lib/utils";
 
 interface NavProps {
-  isCollapsed: boolean
+  isCollapsed: boolean;
   links: {
-    title: string
-    label?: string
-    icon: LucideIcon
-    variant: "default" | "ghost"
-    onClick?: () => void
-  }[]
+    title: string;
+    label?: string;
+    icon: LucideIcon;
+    variant: "default" | "ghost";
+    onClick?: () => void;
+  }[];
 }
 
 export function Nav({ links, isCollapsed }: NavProps) {
@@ -44,11 +40,7 @@ export function Nav({ links, isCollapsed }: NavProps) {
               </TooltipTrigger>
               <TooltipContent side="right" className="flex items-center gap-4">
                 {link.title}
-                {link.label && (
-                  <span className="ml-auto text-muted-foreground">
-                    {link.label}
-                  </span>
-                )}
+                {link.label && <span className="ml-auto text-muted-foreground">{link.label}</span>}
               </TooltipContent>
             </Tooltip>
           ) : (
@@ -68,8 +60,7 @@ export function Nav({ links, isCollapsed }: NavProps) {
                 <span
                   className={cn(
                     "ml-auto",
-                    link.variant === "default" &&
-                      "text-background dark:text-white"
+                    link.variant === "default" && "text-background dark:text-white"
                   )}
                 >
                   {link.label}
@@ -80,5 +71,5 @@ export function Nav({ links, isCollapsed }: NavProps) {
         )}
       </nav>
     </div>
-  )
+  );
 }

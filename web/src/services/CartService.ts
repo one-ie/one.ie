@@ -10,9 +10,9 @@
  */
 
 import { Effect } from "effect";
-import { ThingService } from "./ThingService";
 import { ConnectionService } from "./ConnectionService";
 import { EventService } from "./EventService";
+import { ThingService } from "./ThingService";
 
 // ============================================================================
 // TYPES
@@ -73,9 +73,7 @@ export class CartService {
       // Find variant price
       const variant = props.variants.find((v: any) => v.sku === selectedSku);
       if (!variant) {
-        return yield* Effect.fail(
-          new Error(`Variant with SKU ${selectedSku} not found`)
-        );
+        return yield* Effect.fail(new Error(`Variant with SKU ${selectedSku} not found`));
       }
 
       const priceAtAdd = props.price + (variant.priceModifier || 0);
@@ -181,11 +179,7 @@ export class CartService {
   /**
    * Update item quantity
    */
-  static updateQuantity = (
-    userId: string,
-    productId: string,
-    newQuantity: number
-  ) =>
+  static updateQuantity = (userId: string, productId: string, newQuantity: number) =>
     Effect.gen(function* () {
       if (newQuantity <= 0) {
         return yield* CartService.removeItem(userId, productId);

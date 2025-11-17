@@ -13,7 +13,7 @@
  * - SSR-compatible for Astro pages
  */
 
-import { VideoEmbed } from './VideoEmbed';
+import { VideoEmbed } from "./VideoEmbed";
 
 // Example usage in Astro component:
 // <VideoEmbed

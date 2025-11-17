@@ -4,17 +4,17 @@
  * Randomizes viewer count for urgency
  */
 
-'use client';
+"use client";
 
-import { useEffect, useState, useId } from 'react';
-import { motion, AnimatePresence } from 'framer-motion';
+import { AnimatePresence, motion } from "framer-motion";
+import { useEffect, useId, useState } from "react";
 
 interface ViewersCounterProps {
   productId: string;
   minViewers?: number;
   maxViewers?: number;
   updateInterval?: number; // milliseconds
-  size?: 'sm' | 'md' | 'lg';
+  size?: "sm" | "md" | "lg";
 }
 
 // Deterministic random generator using product ID and timestamp
@@ -22,7 +22,7 @@ function getInitialViewerCount(productId: string, minViewers: number, maxViewers
   // Use product ID hash to seed deterministic value
   let hash = 0;
   for (let i = 0; i < productId.length; i++) {
-    hash = ((hash << 5) - hash) + productId.charCodeAt(i);
+    hash = (hash << 5) - hash + productId.charCodeAt(i);
     hash = hash & hash; // Convert to 32-bit integer
   }
   // Ensure positive number and map to range
@@ -35,9 +35,9 @@ export function ViewersCounter({
   minViewers = 2,
   maxViewers = 15,
   updateInterval = 8000,
-  size = 'sm'
+  size = "sm",
 }: ViewersCounterProps) {
-  const clientId = useId();
+  const _clientId = useId();
   const [viewerCount, setViewerCount] = useState<number>(() =>
     getInitialViewerCount(productId, minViewers, maxViewers)
   );
@@ -63,15 +63,15 @@ export function ViewersCounter({
   }, [minViewers, maxViewers, updateInterval]);
 
   const sizeClasses = {
-    sm: 'text-xs gap-1.5',
-    md: 'text-sm gap-2',
-    lg: 'text-base gap-2.5',
+    sm: "text-xs gap-1.5",
+    md: "text-sm gap-2",
+    lg: "text-base gap-2.5",
   };
 
   const iconSize = {
-    sm: 'h-3.5 w-3.5',
-    md: 'h-4 w-4',
-    lg: 'h-5 w-5',
+    sm: "h-3.5 w-3.5",
+    md: "h-4 w-4",
+    lg: "h-5 w-5",
   };
 
   return (
@@ -114,9 +114,8 @@ export function ViewersCounter({
             </motion.span>
           )}
           {!isMounted && <span className="inline-block">{viewerCount}</span>}
-        </AnimatePresence>
-        {' '}
-        {viewerCount === 1 ? 'person' : 'people'} viewing
+        </AnimatePresence>{" "}
+        {viewerCount === 1 ? "person" : "people"} viewing
       </span>
 
       {/* Pulse indicator */}
@@ -129,10 +128,10 @@ export function ViewersCounter({
           transition={{
             duration: 2,
             repeat: Infinity,
-            ease: 'easeInOut',
+            ease: "easeInOut",
           }}
           className={`inline-block rounded-full bg-green-500 ${
-            size === 'sm' ? 'h-1.5 w-1.5' : size === 'md' ? 'h-2 w-2' : 'h-2.5 w-2.5'
+            size === "sm" ? "h-1.5 w-1.5" : size === "md" ? "h-2 w-2" : "h-2.5 w-2.5"
           }`}
           aria-hidden="true"
         />
@@ -140,7 +139,7 @@ export function ViewersCounter({
       {!isMounted && (
         <span
           className={`inline-block rounded-full bg-green-500 ${
-            size === 'sm' ? 'h-1.5 w-1.5' : size === 'md' ? 'h-2 w-2' : 'h-2.5 w-2.5'
+            size === "sm" ? "h-1.5 w-1.5" : size === "md" ? "h-2 w-2" : "h-2.5 w-2.5"
           }`}
           aria-hidden="true"
         />

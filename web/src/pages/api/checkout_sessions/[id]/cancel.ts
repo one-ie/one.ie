@@ -8,22 +8,19 @@
  * - Return 405 if already completed/canceled
  */
 
-import type { APIRoute } from 'astro';
-import type {
-  CheckoutSessionResponse,
-  ErrorResponse,
-} from '@/lib/types/agentic-checkout';
-import { sessions } from '../../checkout_sessions';
+import type { APIRoute } from "astro";
+import type { CheckoutSessionResponse, ErrorResponse } from "@/lib/types/agentic-checkout";
+import { sessions } from "../../checkout_sessions";
 
 /**
  * Validate API key
  */
 function validateApiKey(authHeader: string | null): boolean {
-  if (!authHeader?.startsWith('Bearer ')) {
+  if (!authHeader?.startsWith("Bearer ")) {
     return false;
   }
   const apiKey = authHeader.slice(7);
-  const expectedKey = import.meta.env.COMMERCE_API_KEY || 'test_key_change_in_production';
+  const expectedKey = import.meta.env.COMMERCE_API_KEY || "test_key_change_in_production";
   return apiKey === expectedKey;
 }
 
@@ -33,24 +30,24 @@ export const POST: APIRoute = async ({ params, request }) => {
     if (!sessionId) {
       return new Response(
         JSON.stringify({
-          type: 'invalid_request',
-          code: 'missing',
-          message: 'Session ID is required',
+          type: "invalid_request",
+          code: "missing",
+          message: "Session ID is required",
         } as ErrorResponse),
-        { status: 400, headers: { 'Content-Type': 'application/json' } }
+        { status: 400, headers: { "Content-Type": "application/json" } }
       );
     }
 
     // Validate API key
-    const authHeader = request.headers.get('Authorization');
+    const authHeader = request.headers.get("Authorization");
     if (!validateApiKey(authHeader)) {
       return new Response(
         JSON.stringify({
-          type: 'invalid_request',
-          code: 'unauthorized',
-          message: 'Invalid API key',
+          type: "invalid_request",
+          code: "unauthorized",
+          message: "Invalid API key",
         } as ErrorResponse),
-        { status: 401, headers: { 'Content-Type': 'application/json' } }
+        { status: 401, headers: { "Content-Type": "application/json" } }
       );
     }
 
@@ -59,31 +56,31 @@ export const POST: APIRoute = async ({ params, request }) => {
     if (!existingSession) {
       return new Response(
         JSON.stringify({
-          type: 'invalid_request',
-          code: 'not_found',
-          message: 'Checkout session not found',
+          type: "invalid_request",
+          code: "not_found",
+          message: "Checkout session not found",
         } as ErrorResponse),
-        { status: 404, headers: { 'Content-Type': 'application/json' } }
+        { status: 404, headers: { "Content-Type": "application/json" } }
       );
     }
 
     // Check if already completed or canceled
-    if (existingSession.status === 'completed' || existingSession.status === 'canceled') {
+    if (existingSession.status === "completed" || existingSession.status === "canceled") {
       // Per ACP spec: return 405 Method Not Allowed
       return new Response(
         JSON.stringify({
-          type: 'invalid_request',
-          code: 'invalid',
+          type: "invalid_request",
+          code: "invalid",
           message: `Cannot cancel ${existingSession.status} session`,
         } as ErrorResponse),
-        { status: 405, headers: { 'Content-Type': 'application/json' } }
+        { status: 405, headers: { "Content-Type": "application/json" } }
       );
     }
 
     // Cancel the session
     const canceledSession: CheckoutSessionResponse = {
       ...existingSession,
-      status: 'canceled',
+      status: "canceled",
     };
 
     // Update session in store
@@ -97,27 +94,27 @@ export const POST: APIRoute = async ({ params, request }) => {
     const { created_at, updated_at, ...response } = canceledSession;
 
     // Return response
-    const idempotencyKey = request.headers.get('Idempotency-Key') || '';
-    const requestId = request.headers.get('Request-Id') || '';
+    const idempotencyKey = request.headers.get("Idempotency-Key") || "";
+    const requestId = request.headers.get("Request-Id") || "";
 
     return new Response(JSON.stringify(response), {
       status: 200,
       headers: {
-        'Content-Type': 'application/json',
-        'Idempotency-Key': idempotencyKey,
-        'Request-Id': requestId,
+        "Content-Type": "application/json",
+        "Idempotency-Key": idempotencyKey,
+        "Request-Id": requestId,
       },
     });
   } catch (error) {
-    console.error('Cancel checkout session error:', error);
+    console.error("Cancel checkout session error:", error);
 
     return new Response(
       JSON.stringify({
-        type: 'invalid_request',
-        code: 'processing_error',
-        message: error instanceof Error ? error.message : 'Unknown error',
+        type: "invalid_request",
+        code: "processing_error",
+        message: error instanceof Error ? error.message : "Unknown error",
       } as ErrorResponse),
-      { status: 500, headers: { 'Content-Type': 'application/json' } }
+      { status: 500, headers: { "Content-Type": "application/json" } }
     );
   }
 };

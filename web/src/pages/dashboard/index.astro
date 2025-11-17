@@ -6,24 +6,16 @@
  * Uses Effect services for server-side rendering.
  */
 
-import { Effect } from "effect";
 import { ConvexReactClient } from "convex/react";
-import { ThingService } from "@/services/ThingService";
+import { Effect } from "effect";
+import { createDataProvider, createDataProviderLayer } from "@/providers/factory";
 import { EventService } from "@/services/EventService";
 import { OrganizationService } from "@/services/OrganizationService";
-import {
-  createDataProvider,
-  createDataProviderLayer,
-} from "@/providers/factory";
-import Layout from "@/layouts/Layout.astro";
-import { DashboardStats } from "@/components/dashboard/DashboardStats";
-import { EntityOverview } from "@/components/dashboard/EntityOverview";
-import { RecentActivity } from "@/components/dashboard/RecentActivity";
-import { QuickActions } from "@/components/dashboard/QuickActions";
+import { ThingService } from "@/services/ThingService";
 
 // Mock auth context - TODO: Replace with actual auth
 const currentOrgId = "default-org";
-const currentUserId = "system";
+const _currentUserId = "system";
 
 // Initialize Convex provider
 const convexUrl = import.meta.env.PUBLIC_CONVEX_URL;
@@ -41,30 +33,32 @@ const providerLayer = createDataProviderLayer(provider);
 const program = Effect.gen(function* () {
   // Get organization details
   const org = yield* OrganizationService.get(currentOrgId).pipe(
-    Effect.catchAll(() => Effect.succeed({
-      _id: currentOrgId,
-      name: "Default Organization",
-      type: "organization" as const,
-      status: "active" as const,
-      properties: { plan: "starter" },
-      createdAt: Date.now(),
-      updatedAt: Date.now(),
-    }))
+    Effect.catchAll(() =>
+      Effect.succeed({
+        _id: currentOrgId,
+        name: "Default Organization",
+        type: "organization" as const,
+        status: "active" as const,
+        properties: { plan: "starter" },
+        createdAt: Date.now(),
+        updatedAt: Date.now(),
+      })
+    )
   );
 
   // Get entity counts by type
   const productCount = yield* ThingService.list({ type: "product" }).pipe(
-    Effect.map(items => items.length),
+    Effect.map((items) => items.length),
     Effect.catchAll(() => Effect.succeed(0))
   );
 
   const courseCount = yield* ThingService.list({ type: "course" }).pipe(
-    Effect.map(items => items.length),
+    Effect.map((items) => items.length),
     Effect.catchAll(() => Effect.succeed(0))
   );
 
   const userCount = yield* ThingService.list({ type: "creator" }).pipe(
-    Effect.map(items => items.length),
+    Effect.map((items) => items.length),
     Effect.catchAll(() => Effect.succeed(0))
   );
 
@@ -92,7 +86,7 @@ const program = Effect.gen(function* () {
 });
 
 // Run Effect program with DataProvider layer
-const data = await Effect.runPromise(
+const _data = await Effect.runPromise(
   program.pipe(
     Effect.provide(providerLayer),
     Effect.catchAll((error) => {

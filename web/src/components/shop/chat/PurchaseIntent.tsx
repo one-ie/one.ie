@@ -5,10 +5,10 @@
  * Creates checkout session and guides user through purchase flow
  */
 
-import { useState } from 'react';
-import { Button } from '@/components/ui/button';
-import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
-import { Loader2, ShoppingCart } from 'lucide-react';
+import { Loader2, ShoppingCart } from "lucide-react";
+import { useState } from "react";
+import { Button } from "@/components/ui/button";
+import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 
 interface PurchaseIntentProps {
   productId: string;
@@ -31,10 +31,10 @@ export function PurchaseIntent({
     setError(null);
 
     try {
-      const response = await fetch('/api/checkout_sessions', {
-        method: 'POST',
+      const response = await fetch("/api/checkout_sessions", {
+        method: "POST",
         headers: {
-          'Content-Type': 'application/json',
+          "Content-Type": "application/json",
           Authorization: `Bearer ${import.meta.env.PUBLIC_COMMERCE_API_KEY}`,
         },
         body: JSON.stringify({
@@ -48,17 +48,19 @@ export function PurchaseIntent({
       });
 
       if (!response.ok) {
-        const errorData = await response.json().catch(() => ({ message: 'Unknown error' }));
-        console.error('[PurchaseIntent] API error:', errorData);
-        throw new Error(errorData.message || `HTTP ${response.status}: Failed to create checkout session`);
+        const errorData = await response.json().catch(() => ({ message: "Unknown error" }));
+        console.error("[PurchaseIntent] API error:", errorData);
+        throw new Error(
+          errorData.message || `HTTP ${response.status}: Failed to create checkout session`
+        );
       }
 
       const session = await response.json();
-      console.log('[PurchaseIntent] Session created:', session);
+      console.log("[PurchaseIntent] Session created:", session);
       onSessionCreated(session.id);
     } catch (err) {
-      console.error('[PurchaseIntent] Error:', err);
-      setError(err instanceof Error ? err.message : 'Something went wrong');
+      console.error("[PurchaseIntent] Error:", err);
+      setError(err instanceof Error ? err.message : "Something went wrong");
     } finally {
       setIsCreating(false);
     }
@@ -79,23 +81,17 @@ export function PurchaseIntent({
         </div>
 
         {error && (
-          <div className="text-sm text-destructive bg-destructive/10 p-3 rounded-md">
-            {error}
-          </div>
+          <div className="text-sm text-destructive bg-destructive/10 p-3 rounded-md">{error}</div>
         )}
 
-        <Button
-          className="w-full"
-          onClick={createCheckoutSession}
-          disabled={isCreating}
-        >
+        <Button className="w-full" onClick={createCheckoutSession} disabled={isCreating}>
           {isCreating ? (
             <>
               <Loader2 className="mr-2 h-4 w-4 animate-spin" />
               Creating checkout...
             </>
           ) : (
-            'Start Checkout'
+            "Start Checkout"
           )}
         </Button>
 

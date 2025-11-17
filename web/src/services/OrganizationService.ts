@@ -7,16 +7,10 @@
  */
 
 import { Effect } from "effect";
-import {
-  DataProviderService,
-} from "../providers/DataProvider";
-import {
-  DEFAULT_LIMITS,
-  isValidPlan,
-  type OrganizationPlan,
-} from "./constants";
-import type { CreateOrganizationArgs, OrganizationError } from "./types";
 import type { Person } from "../lib/ontology/types";
+import { DataProviderService } from "../providers/DataProvider";
+import { DEFAULT_LIMITS, isValidPlan, type OrganizationPlan } from "./constants";
+import type { CreateOrganizationArgs, OrganizationError } from "./types";
 
 // ============================================================================
 // ORGANIZATION SERVICE

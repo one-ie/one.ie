@@ -4,11 +4,10 @@
  *
  * Token usage analytics - requires backend
  */
-import { backendConfig } from '@/config/backend';
-import Layout from '@/layouts/Layout.astro';
+import { backendConfig } from "@/config/backend";
 
 if (!backendConfig.enabled) {
-  return Astro.redirect('/upgrade?feature=analytics');
+  return Astro.redirect("/upgrade?feature=analytics");
 }
 ---
 

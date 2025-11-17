@@ -6,27 +6,27 @@
  * Requires client:load hydration
  */
 
-'use client';
+"use client";
 
 // Extend Window interface for ApplePaySession
 declare global {
   interface Window {
     ApplePaySession?: {
       canMakePayments(): boolean;
-      new(version: number, request: any): any;
+      new (version: number, request: any): any;
     };
   }
 
   var ApplePaySession:
     | {
         canMakePayments(): boolean;
-        new(version: number, request: any): any;
+        new (version: number, request: any): any;
       }
     | undefined;
 }
 
-import { useEffect, useState } from 'react';
-import { toastActions } from './Toast';
+import { useEffect, useState } from "react";
+import { toastActions } from "./Toast";
 
 interface OneClickPaymentsProps {
   productId: string;
@@ -49,7 +49,7 @@ export function OneClickPayments({
 
   useEffect(() => {
     // Check Apple Pay availability
-    if (window.ApplePaySession && window.ApplePaySession.canMakePayments()) {
+    if (window.ApplePaySession?.canMakePayments()) {
       setApplePayAvailable(true);
     }
 
@@ -70,13 +70,13 @@ export function OneClickPayments({
       await new Promise((resolve) => setTimeout(resolve, 1500));
 
       toastActions.success(
-        'Order Placed!',
+        "Order Placed!",
         `Your order for ${productName} has been confirmed via Apple Pay`
       );
 
       onSuccess?.();
     } catch (_error) {
-      toastActions.error('Payment Failed', 'Please try again or use another payment method');
+      toastActions.error("Payment Failed", "Please try again or use another payment method");
     } finally {
       setIsProcessing(false);
     }
@@ -90,13 +90,13 @@ export function OneClickPayments({
       await new Promise((resolve) => setTimeout(resolve, 1500));
 
       toastActions.success(
-        'Order Placed!',
+        "Order Placed!",
         `Your order for ${productName} has been confirmed via Google Pay`
       );
 
       onSuccess?.();
     } catch (_error) {
-      toastActions.error('Payment Failed', 'Please try again or use another payment method');
+      toastActions.error("Payment Failed", "Please try again or use another payment method");
     } finally {
       setIsProcessing(false);
     }
@@ -110,13 +110,13 @@ export function OneClickPayments({
       await new Promise((resolve) => setTimeout(resolve, 1500));
 
       toastActions.success(
-        'Order Placed!',
+        "Order Placed!",
         `Your order for ${productName} has been confirmed via Shop Pay`
       );
 
       onSuccess?.();
     } catch (_error) {
-      toastActions.error('Payment Failed', 'Please try again or use another payment method');
+      toastActions.error("Payment Failed", "Please try again or use another payment method");
     } finally {
       setIsProcessing(false);
     }
@@ -134,9 +134,7 @@ export function OneClickPayments({
           <div className="w-full border-t border-border" />
         </div>
         <div className="relative flex justify-center text-xs uppercase">
-          <span className="bg-background px-2 text-muted-foreground">
-            Or buy with
-          </span>
+          <span className="bg-background px-2 text-muted-foreground">Or buy with</span>
         </div>
       </div>
 
@@ -151,11 +149,7 @@ export function OneClickPayments({
           >
             {isProcessing ? (
               <span className="flex items-center gap-2">
-                <svg
-                  className="h-5 w-5 animate-spin"
-                  fill="none"
-                  viewBox="0 0 24 24"
-                >
+                <svg className="h-5 w-5 animate-spin" fill="none" viewBox="0 0 24 24">
                   <circle
                     className="opacity-25"
                     cx="12"
@@ -193,11 +187,7 @@ export function OneClickPayments({
           >
             {isProcessing ? (
               <span className="flex items-center gap-2">
-                <svg
-                  className="h-5 w-5 animate-spin text-gray-800"
-                  fill="none"
-                  viewBox="0 0 24 24"
-                >
+                <svg className="h-5 w-5 animate-spin text-gray-800" fill="none" viewBox="0 0 24 24">
                   <circle
                     className="opacity-25"
                     cx="12"
@@ -237,11 +227,7 @@ export function OneClickPayments({
         >
           {isProcessing ? (
             <span className="flex items-center gap-2">
-              <svg
-                className="h-5 w-5 animate-spin"
-                fill="none"
-                viewBox="0 0 24 24"
-              >
+              <svg className="h-5 w-5 animate-spin" fill="none" viewBox="0 0 24 24">
                 <circle
                   className="opacity-25"
                   cx="12"

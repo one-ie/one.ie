@@ -1,8 +1,8 @@
-'use client';
+"use client";
 
-import { Input } from '@/components/ui/input';
-import { Search } from 'lucide-react';
-import type { FormEvent } from 'react';
+import { Search } from "lucide-react";
+import type { FormEvent } from "react";
+import { Input } from "@/components/ui/input";
 
 interface DocSearchProps {
   value: string;
@@ -11,24 +11,19 @@ interface DocSearchProps {
   tagFilter?: string;
 }
 
-export function DocSearch({
-  value,
-  viewMode,
-  folderFilter,
-  tagFilter,
-}: DocSearchProps) {
+export function DocSearch({ value, viewMode, folderFilter, tagFilter }: DocSearchProps) {
   const handleSubmit = (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     const formData = new FormData(e.currentTarget);
-    const searchQuery = formData.get('search') as string;
+    const searchQuery = formData.get("search") as string;
 
     const params = new URLSearchParams();
-    if (searchQuery) params.set('search', searchQuery);
-    if (viewMode && viewMode !== 'list') params.set('view', viewMode);
-    if (folderFilter) params.set('folder', folderFilter);
-    if (tagFilter) params.set('tag', tagFilter);
+    if (searchQuery) params.set("search", searchQuery);
+    if (viewMode && viewMode !== "list") params.set("view", viewMode);
+    if (folderFilter) params.set("folder", folderFilter);
+    if (tagFilter) params.set("tag", tagFilter);
 
-    const url = params.toString() ? `/docs?${params.toString()}` : '/docs';
+    const url = params.toString() ? `/docs?${params.toString()}` : "/docs";
     window.location.href = url;
   };
 

@@ -4,10 +4,10 @@
  * Auto-shows at random intervals, slides in from bottom-right
  */
 
-'use client';
+"use client";
 
-import { useEffect, useState } from 'react';
-import { motion, AnimatePresence } from 'framer-motion';
+import { AnimatePresence, motion } from "framer-motion";
+import { useEffect, useState } from "react";
 
 interface Purchase {
   id: string;
@@ -26,33 +26,33 @@ interface SocialProofNotificationProps {
 }
 
 // Mock data for realistic notifications
-const MOCK_PURCHASES: Omit<Purchase, 'id' | 'timeAgo'>[] = [
-  { name: 'John', city: 'NYC', productName: 'Premium Cotton T-Shirt' },
-  { name: 'Sarah', city: 'Los Angeles', productName: 'Wireless Headphones' },
-  { name: 'Michael', city: 'Chicago', productName: 'Leather Wallet' },
-  { name: 'Emily', city: 'Houston', productName: 'Smart Watch' },
-  { name: 'David', city: 'Phoenix', productName: 'Designer Sunglasses' },
-  { name: 'Jessica', city: 'Philadelphia', productName: 'Running Shoes' },
-  { name: 'Chris', city: 'San Antonio', productName: 'Backpack' },
-  { name: 'Ashley', city: 'San Diego', productName: 'Yoga Mat' },
-  { name: 'Daniel', city: 'Dallas', productName: 'Coffee Maker' },
-  { name: 'Amanda', city: 'San Jose', productName: 'Desk Lamp' },
-  { name: 'Ryan', city: 'Austin', productName: 'Bluetooth Speaker' },
-  { name: 'Lauren', city: 'Jacksonville', productName: 'Water Bottle' },
-  { name: 'Brandon', city: 'Fort Worth', productName: 'Phone Case' },
-  { name: 'Stephanie', city: 'Columbus', productName: 'Notebook Set' },
-  { name: 'Kevin', city: 'Charlotte', productName: 'USB Cable' },
+const MOCK_PURCHASES: Omit<Purchase, "id" | "timeAgo">[] = [
+  { name: "John", city: "NYC", productName: "Premium Cotton T-Shirt" },
+  { name: "Sarah", city: "Los Angeles", productName: "Wireless Headphones" },
+  { name: "Michael", city: "Chicago", productName: "Leather Wallet" },
+  { name: "Emily", city: "Houston", productName: "Smart Watch" },
+  { name: "David", city: "Phoenix", productName: "Designer Sunglasses" },
+  { name: "Jessica", city: "Philadelphia", productName: "Running Shoes" },
+  { name: "Chris", city: "San Antonio", productName: "Backpack" },
+  { name: "Ashley", city: "San Diego", productName: "Yoga Mat" },
+  { name: "Daniel", city: "Dallas", productName: "Coffee Maker" },
+  { name: "Amanda", city: "San Jose", productName: "Desk Lamp" },
+  { name: "Ryan", city: "Austin", productName: "Bluetooth Speaker" },
+  { name: "Lauren", city: "Jacksonville", productName: "Water Bottle" },
+  { name: "Brandon", city: "Fort Worth", productName: "Phone Case" },
+  { name: "Stephanie", city: "Columbus", productName: "Notebook Set" },
+  { name: "Kevin", city: "Charlotte", productName: "USB Cable" },
 ];
 
 const TIME_OPTIONS = [
-  '2 minutes ago',
-  '5 minutes ago',
-  '12 minutes ago',
-  '23 minutes ago',
-  '45 minutes ago',
-  '1 hour ago',
-  '2 hours ago',
-  '3 hours ago',
+  "2 minutes ago",
+  "5 minutes ago",
+  "12 minutes ago",
+  "23 minutes ago",
+  "45 minutes ago",
+  "1 hour ago",
+  "2 hours ago",
+  "3 hours ago",
 ];
 
 function generateRandomPurchase(): Purchase {
@@ -119,7 +119,7 @@ export function SocialProofNotification({
             initial={{ x: 400, opacity: 0 }}
             animate={{ x: 0, opacity: 1 }}
             exit={{ x: 400, opacity: 0 }}
-            transition={{ type: 'spring', damping: 25, stiffness: 200 }}
+            transition={{ type: "spring", damping: 25, stiffness: 200 }}
             className="pointer-events-auto"
           >
             <div className="overflow-hidden rounded-lg border border-border bg-card shadow-lg">
@@ -145,15 +145,13 @@ export function SocialProofNotification({
                 <div className="flex-1 min-w-0">
                   <p className="text-sm font-medium text-foreground">
                     <span className="font-semibold">{currentPurchase.name}</span>
-                    {' from '}
+                    {" from "}
                     <span className="font-semibold">{currentPurchase.city}</span>
                   </p>
                   <p className="mt-0.5 text-sm text-muted-foreground line-clamp-1">
                     Purchased {currentPurchase.productName}
                   </p>
-                  <p className="mt-1 text-xs text-muted-foreground">
-                    {currentPurchase.timeAgo}
-                  </p>
+                  <p className="mt-1 text-xs text-muted-foreground">{currentPurchase.timeAgo}</p>
                 </div>
 
                 {/* Pulse indicator */}
@@ -165,7 +163,7 @@ export function SocialProofNotification({
                   transition={{
                     duration: 2,
                     repeat: Infinity,
-                    ease: 'easeInOut',
+                    ease: "easeInOut",
                   }}
                   className="flex-shrink-0 h-2 w-2 rounded-full bg-green-500"
                   aria-hidden="true"
@@ -176,7 +174,7 @@ export function SocialProofNotification({
               <motion.div
                 initial={{ scaleX: 0 }}
                 animate={{ scaleX: 1 }}
-                transition={{ duration: duration / 1000, ease: 'linear' }}
+                transition={{ duration: duration / 1000, ease: "linear" }}
                 className="h-1 bg-gradient-to-r from-green-500 to-emerald-500 origin-left"
               />
             </div>

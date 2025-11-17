@@ -5,7 +5,7 @@
  * with Mux Player and YouTube embeds.
  */
 
-import { VideoPlayer } from './VideoPlayer';
+import { VideoPlayer } from "./VideoPlayer";
 
 /**
  * Example 1: Mux Video with Metadata Tracking
@@ -47,12 +47,7 @@ export function YouTubeExample() {
  * Metadata is automatically populated from playbackId
  */
 export function MuxVideoMinimalExample() {
-  return (
-    <VideoPlayer
-      playbackId="DS00Spx1CV902MCtPj5WknGlR102V5HFkDe"
-      title="Big Buck Bunny"
-    />
-  );
+  return <VideoPlayer playbackId="DS00Spx1CV902MCtPj5WknGlR102V5HFkDe" title="Big Buck Bunny" />;
 }
 
 /**
@@ -85,11 +80,7 @@ export function AspectRatioExamples() {
       />
 
       {/* 4:3 - Classic aspect ratio */}
-      <VideoPlayer
-        youtubeId="dQw4w9WgXcQ"
-        title="4:3 Aspect Ratio"
-        aspectRatio="4/3"
-      />
+      <VideoPlayer youtubeId="dQw4w9WgXcQ" title="4:3 Aspect Ratio" aspectRatio="4/3" />
 
       {/* 21:9 - Ultra-wide */}
       <VideoPlayer
@@ -99,11 +90,7 @@ export function AspectRatioExamples() {
       />
 
       {/* 1:1 - Square */}
-      <VideoPlayer
-        youtubeId="dQw4w9WgXcQ"
-        title="1:1 Square Aspect Ratio"
-        aspectRatio="1/1"
-      />
+      <VideoPlayer youtubeId="dQw4w9WgXcQ" title="1:1 Square Aspect Ratio" aspectRatio="1/1" />
     </div>
   );
 }
@@ -151,12 +138,7 @@ export function MuxVideoFullExample() {
  * Shows placeholder when no playbackId or youtubeId provided
  */
 export function NoSourceExample() {
-  return (
-    <VideoPlayer
-      title="Missing Video"
-      aspectRatio="16/9"
-    />
-  );
+  return <VideoPlayer title="Missing Video" aspectRatio="16/9" />;
 }
 
 /**
@@ -178,9 +160,7 @@ export function PageIntegrationExample() {
 
       <div className="mt-6 prose prose-lg">
         <h2>About This Video</h2>
-        <p>
-          This tutorial covers everything you need to know about the ONE Platform.
-        </p>
+        <p>This tutorial covers everything you need to know about the ONE Platform.</p>
       </div>
     </div>
   );

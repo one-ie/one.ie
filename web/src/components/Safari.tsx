@@ -29,6 +29,7 @@ export function Safari({
       xmlns="http://www.w3.org/2000/svg"
       {...props}
     >
+      <title>Safari browser window mockup</title>
       <g clipPath="url(#path0)" filter="url(#shadow)">
         <path
           d="M0 52H1202V741C1202 747.627 1196.63 753 1190 753H12C5.37258 753 0 747.627 0 741V52Z"
@@ -46,24 +47,9 @@ export function Safari({
           d="M1.06738 12C1.06738 5.92487 5.99225 1 12.0674 1H1189.93C1196.01 1 1200.93 5.92487 1200.93 12V51H1.06738V12Z"
           className="fill-white dark:fill-[#262626]"
         />
-        <circle
-          cx="20"
-          cy="25"
-          r="6"
-          className="fill-[#E5E5E5] dark:fill-[#404040]"
-        />
-        <circle
-          cx="40"
-          cy="25"
-          r="6"
-          className="fill-[#E5E5E5] dark:fill-[#404040]"
-        />
-        <circle
-          cx="60"
-          cy="25"
-          r="6"
-          className="fill-[#E5E5E5] dark:fill-[#404040]"
-        />
+        <circle cx="20" cy="25" r="6" className="fill-[#E5E5E5] dark:fill-[#404040]" />
+        <circle cx="40" cy="25" r="6" className="fill-[#E5E5E5] dark:fill-[#404040]" />
+        <circle cx="60" cy="25" r="6" className="fill-[#E5E5E5] dark:fill-[#404040]" />
         <path
           d="M286 17C286 13.6863 288.686 11 292 11H946C949.314 11 952 13.6863 952 17V35C952 38.3137 949.314 41 946 41H292C288.686 41 286 38.3137 286 35V17Z"
           className="fill-[#E5E5E5] dark:fill-[#404040]"
@@ -75,13 +61,7 @@ export function Safari({
           />
         </g>
         <g className="mix-blend-luminosity">
-          <text
-            x="580"
-            y="30"
-            fill="#A3A3A3"
-            fontSize="12"
-            fontFamily="Arial, sans-serif"
-          >
+          <text x="580" y="30" fill="#A3A3A3" fontSize="12" fontFamily="Arial, sans-serif">
             {url}
           </text>
         </g>
@@ -176,7 +156,14 @@ export function Safari({
               loop
               muted
               playsInline
-            />
+            >
+              <track
+                kind="captions"
+                src="/captions/safari-demo.vtt"
+                srcLang="en"
+                label="English captions"
+              />
+            </video>
           </foreignObject>
         )}
       </g>

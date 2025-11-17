@@ -1,30 +1,23 @@
-import * as React from 'react';
 import {
   Bar,
   BarChart,
   CartesianGrid,
+  Legend,
+  ResponsiveContainer,
+  Tooltip,
   XAxis,
   YAxis,
-  Tooltip,
-  ResponsiveContainer,
-  Legend,
-} from 'recharts';
-import {
-  Card,
-  CardContent,
-  CardDescription,
-  CardHeader,
-  CardTitle,
-} from '@/components/ui/card';
+} from "recharts";
+import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 
 const activityData = [
-  { day: 'Mon', active: 145, new: 32 },
-  { day: 'Tue', active: 189, new: 45 },
-  { day: 'Wed', active: 156, new: 28 },
-  { day: 'Thu', active: 234, new: 67 },
-  { day: 'Fri', active: 198, new: 52 },
-  { day: 'Sat', active: 167, new: 38 },
-  { day: 'Sun', active: 142, new: 29 },
+  { day: "Mon", active: 145, new: 32 },
+  { day: "Tue", active: 189, new: 45 },
+  { day: "Wed", active: 156, new: 28 },
+  { day: "Thu", active: 234, new: 67 },
+  { day: "Fri", active: 198, new: 52 },
+  { day: "Sat", active: 167, new: 38 },
+  { day: "Sun", active: 142, new: 29 },
 ];
 
 export function ActivityChart() {
@@ -32,17 +25,12 @@ export function ActivityChart() {
     <Card>
       <CardHeader>
         <CardTitle>User Activity</CardTitle>
-        <CardDescription>
-          Daily active users and new sign-ups for the past week
-        </CardDescription>
+        <CardDescription>Daily active users and new sign-ups for the past week</CardDescription>
       </CardHeader>
       <CardContent>
         <div className="h-[350px] w-full">
           <ResponsiveContainer width="100%" height="100%">
-            <BarChart
-              data={activityData}
-              margin={{ top: 10, right: 10, left: 0, bottom: 0 }}
-            >
+            <BarChart data={activityData} margin={{ top: 10, right: 10, left: 0, bottom: 0 }}>
               <CartesianGrid
                 strokeDasharray="3 3"
                 stroke="hsl(var(--color-border))"
@@ -63,17 +51,17 @@ export function ActivityChart() {
               />
               <Tooltip
                 contentStyle={{
-                  backgroundColor: 'hsl(var(--color-card))',
-                  border: '1px solid hsl(var(--color-border))',
-                  borderRadius: '8px',
-                  color: 'hsl(var(--color-foreground))',
+                  backgroundColor: "hsl(var(--color-card))",
+                  border: "1px solid hsl(var(--color-border))",
+                  borderRadius: "8px",
+                  color: "hsl(var(--color-foreground))",
                 }}
               />
               <Legend
                 wrapperStyle={{
-                  paddingTop: '20px',
-                  fontSize: '12px',
-                  color: 'hsl(var(--color-muted-foreground))',
+                  paddingTop: "20px",
+                  fontSize: "12px",
+                  color: "hsl(var(--color-muted-foreground))",
                 }}
               />
               <Bar

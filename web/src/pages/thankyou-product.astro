@@ -1,33 +1,30 @@
 ---
+import Layout from "@/layouts/Layout.astro";
 export const prerender = false; // Must be server-rendered to retrieve Stripe session
 
-import Layout from "../layouts/Layout.astro";
+import type { Stripe as StripeType } from "stripe";
 import Stripe from "stripe";
-import { Button } from "@/components/ui/button";
-import { Card, CardHeader, CardContent, CardFooter } from "@/components/ui/card";
-import { Check, ArrowRight, Mail } from 'lucide-react';
-import type { Stripe as StripeType } from 'stripe';
 
 const stripe = new Stripe(import.meta.env.STRIPE_SECRET_KEY) as StripeType;
-const sessionId = Astro.url.searchParams.get('session_id');
+const sessionId = Astro.url.searchParams.get("session_id");
 
 let session;
-let lineItems;
+let _lineItems;
 try {
-  if (!sessionId) throw new Error('No session ID provided');
+  if (!sessionId) throw new Error("No session ID provided");
   session = await stripe.checkout.sessions.retrieve(sessionId, {
-    expand: ['line_items']
+    expand: ["line_items"],
   });
-  lineItems = session.line_items?.data || [];
-} catch (e) {
+  _lineItems = session.line_items?.data || [];
+} catch (_e) {
   // Session retrieval failed, redirect to product page
-  return Astro.redirect('/shop/product-landing-stripe');
+  return Astro.redirect("/shop/product-landing-stripe");
 }
 
 const { name, email } = session.customer_details || {};
-const totalAmount = (session.amount_total || 0) / 100;
-const currency = session.currency?.toUpperCase() || 'USD';
-const metadata = session.metadata || {};
+const _totalAmount = (session.amount_total || 0) / 100;
+const _currency = session.currency?.toUpperCase() || "USD";
+const _metadata = session.metadata || {};
 ---
 
 <Layout title="Payment Successful - Thank You">

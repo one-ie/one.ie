@@ -8,16 +8,16 @@
 
 import { Effect } from "effect";
 import {
-  THING_TYPES,
   CONNECTION_TYPES,
   EVENT_TYPES,
-  isValidThingType,
   isValidConnectionType,
   isValidEventType,
   isValidStatusTransition,
+  isValidThingType,
+  THING_TYPES,
   type ThingType,
 } from "../constants";
-import type { ThingError, ConnectionError, EventError } from "../types";
+import type { ConnectionError, EventError, ThingError } from "../types";
 
 // ============================================================================
 // THING VALIDATION
@@ -40,10 +40,7 @@ export function validateThingType(type: string): Effect.Effect<void, ThingError>
 /**
  * Validate required field is present and non-empty
  */
-export function validateRequired(
-  value: any,
-  fieldName: string
-): Effect.Effect<void, ThingError> {
+export function validateRequired(value: any, fieldName: string): Effect.Effect<void, ThingError> {
   if (!value || (typeof value === "string" && value.trim() === "")) {
     return Effect.fail({
       _tag: "ValidationError",
@@ -74,9 +71,7 @@ export function validateStatusTransition(
 /**
  * Validate course properties
  */
-export function validateCourseProperties(
-  properties: any
-): Effect.Effect<void, ThingError> {
+export function validateCourseProperties(properties: any): Effect.Effect<void, ThingError> {
   if (!properties.title) {
     return Effect.fail({
       _tag: "ValidationError",
@@ -107,9 +102,7 @@ export function validateCourseProperties(
 /**
  * Validate lesson properties
  */
-export function validateLessonProperties(
-  properties: any
-): Effect.Effect<void, ThingError> {
+export function validateLessonProperties(properties: any): Effect.Effect<void, ThingError> {
   if (!properties.courseId) {
     return Effect.fail({
       _tag: "ValidationError",
@@ -132,9 +125,7 @@ export function validateLessonProperties(
 /**
  * Validate token properties
  */
-export function validateTokenProperties(
-  properties: any
-): Effect.Effect<void, ThingError> {
+export function validateTokenProperties(properties: any): Effect.Effect<void, ThingError> {
   if (!properties.symbol) {
     return Effect.fail({
       _tag: "ValidationError",
@@ -165,9 +156,7 @@ export function validateTokenProperties(
 /**
  * Validate payment properties
  */
-export function validatePaymentProperties(
-  properties: any
-): Effect.Effect<void, ThingError> {
+export function validatePaymentProperties(properties: any): Effect.Effect<void, ThingError> {
   if (!properties.amount || properties.amount <= 0) {
     return Effect.fail({
       _tag: "ValidationError",
@@ -198,9 +187,7 @@ export function validatePaymentProperties(
 /**
  * Validate AI clone properties
  */
-export function validateAICloneProperties(
-  properties: any
-): Effect.Effect<void, ThingError> {
+export function validateAICloneProperties(properties: any): Effect.Effect<void, ThingError> {
   if (!properties.systemPrompt) {
     return Effect.fail({
       _tag: "ValidationError",
@@ -254,9 +241,7 @@ export function validateTypeSpecificProperties(
 /**
  * Validate connection type is one of 25 defined types
  */
-export function validateConnectionType(
-  type: string
-): Effect.Effect<void, ConnectionError> {
+export function validateConnectionType(type: string): Effect.Effect<void, ConnectionError> {
   if (!isValidConnectionType(type)) {
     return Effect.fail({
       _tag: "InvalidRelationshipTypeError",
@@ -336,9 +321,7 @@ export function validateEventFields(
 /**
  * Validate organization is active
  */
-export function validateOrganizationActive(
-  status: string
-): Effect.Effect<void, ThingError> {
+export function validateOrganizationActive(status: string): Effect.Effect<void, ThingError> {
   if (status !== "active") {
     return Effect.fail({
       _tag: "BusinessRuleError",

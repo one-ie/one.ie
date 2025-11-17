@@ -27,7 +27,7 @@ export interface Product {
 export interface ProductVariant {
   id: string;
   name: string;
-  type: 'size' | 'color' | 'material' | 'custom';
+  type: "size" | "color" | "material" | "custom";
   options: VariantOption[];
 }
 
@@ -91,8 +91,8 @@ export interface Order {
   tax: number;
   total: number;
   shippingAddress: ShippingAddress;
-  status: 'pending' | 'processing' | 'shipped' | 'delivered' | 'cancelled';
-  paymentStatus: 'pending' | 'paid' | 'failed' | 'refunded';
+  status: "pending" | "processing" | "shipped" | "delivered" | "cancelled";
+  paymentStatus: "pending" | "paid" | "failed" | "refunded";
   createdAt: Date;
   updatedAt: Date;
 }
@@ -117,5 +117,5 @@ export interface FilterOptions {
   inStockOnly?: boolean;
   tags?: string[];
   rating?: number; // Minimum star rating (1-5)
-  sortBy?: 'price-asc' | 'price-desc' | 'newest' | 'popular' | 'rating';
+  sortBy?: "price-asc" | "price-desc" | "newest" | "popular" | "rating";
 }

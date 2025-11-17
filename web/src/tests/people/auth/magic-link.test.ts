@@ -1,14 +1,13 @@
-import { describe, it, expect, beforeEach } from "vitest";
+import { beforeEach, describe, expect, it } from "vitest";
 import { api } from "../../../../../backend/convex/_generated/api";
 import {
-  convex,
-  generateTestEmail,
-  generateTestPassword,
-  createTestUser,
-  TestLogger,
   assert,
   assertErrorMessage,
-  wait,
+  convex,
+  createTestUser,
+  generateTestEmail,
+  generateTestPassword,
+  TestLogger,
 } from "./utils";
 
 /**

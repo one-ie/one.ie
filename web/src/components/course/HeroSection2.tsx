@@ -1,8 +1,7 @@
-import React from "react";
+import { ArrowRight, Check, Shield } from "lucide-react";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
-import { ArrowRight, Check, Shield } from "lucide-react";
 
 interface HeroStat {
   value: string;
@@ -27,17 +26,11 @@ interface HeroSectionProps {
   heroStats: HeroStat[];
 }
 
-export function CourseHeroSection({
-  courseDetails,
-  heroStats,
-}: HeroSectionProps) {
+export function CourseHeroSection({ courseDetails, heroStats }: HeroSectionProps) {
   return (
     <section className="container mx-auto px-6 py-16 border-b border-border bg-background/50 backdrop-blur-sm">
       <div className="w-full max-w-[1400px] mx-auto flex flex-col items-center gap-8 text-center">
-        <Badge
-          variant="outline"
-          className="text-sm md:text-base animate-fade-in"
-        >
+        <Badge variant="outline" className="text-sm md:text-base animate-fade-in">
           {courseDetails.badge}
         </Badge>
 
@@ -56,9 +49,7 @@ export function CourseHeroSection({
         <div className="grid grid-cols-1 md:grid-cols-3 gap-6 w-full max-w-4xl mt-8">
           {heroStats.map((stat) => (
             <Card key={stat.value} className="p-6 text-center">
-              <h3 className="text-3xl font-bold text-primary mb-2">
-                {stat.value}
-              </h3>
+              <h3 className="text-3xl font-bold text-primary mb-2">{stat.value}</h3>
               <p className="text-sm text-muted-foreground">{stat.label}</p>
             </Card>
           ))}
@@ -72,9 +63,7 @@ export function CourseHeroSection({
           >
             <a href="#pricing" className="no-underline flex items-center">
               <span className="flex flex-col items-start text-left">
-                <span className="badge-glow inline-flex items-center">
-                  🔥 Special Launch Price
-                </span>
+                <span className="badge-glow inline-flex items-center">🔥 Special Launch Price</span>
                 <span className="mt-1">Save $1,000 Today</span>
               </span>
               <ArrowRight className="ml-2 h-5 w-5 group-hover:translate-x-1 transition-transform" />
@@ -86,10 +75,7 @@ export function CourseHeroSection({
             className="text-lg px-8 py-6 button-shadow button-outline group transition-all duration-300"
             asChild
           >
-            <a
-              href="#framework"
-              className="no-underline flex items-center gap-2"
-            >
+            <a href="#framework" className="no-underline flex items-center gap-2">
               See Framework Details
               <ArrowRight className="h-5 w-5 group-hover:translate-x-1 transition-transform" />
             </a>

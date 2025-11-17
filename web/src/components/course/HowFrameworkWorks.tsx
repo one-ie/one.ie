@@ -1,7 +1,6 @@
-import React from "react";
+import { ArrowRight, BookOpen, MessageSquare, Zap } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
-import { ArrowRight, BookOpen, MessageSquare, Zap } from "lucide-react";
 
 export function HowFrameworkWorks() {
   const steps = [
@@ -18,11 +17,7 @@ export function HowFrameworkWorks() {
       title: "Choose Your Play & Prompts",
       description:
         "Navigate the 100 Prompt System, organized by key marketing objectives. Find the specific prompts designed for your task (writing ads, emails, product descriptions, etc.).",
-      focus: [
-        "Select marketing goal",
-        "Choose relevant prompts",
-        "Customize with your data",
-      ],
+      focus: ["Select marketing goal", "Choose relevant prompts", "Customize with your data"],
       icon: <Zap className="w-6 h-6" />,
     },
     {
@@ -39,9 +34,7 @@ export function HowFrameworkWorks() {
     <section className="py-20 relative">
       <div className="container px-4 mx-auto">
         <div className="max-w-4xl mx-auto text-center mb-16">
-          <h2 className="text-3xl lg:text-4xl font-bold mb-4">
-            How the ONE Playbook Works
-          </h2>
+          <h2 className="text-3xl lg:text-4xl font-bold mb-4">How the ONE Playbook Works</h2>
           <p className="text-xl text-muted-foreground">
             Your Simplified Path to AI-Powered Ecom Growth
           </p>
@@ -59,9 +52,7 @@ export function HowFrameworkWorks() {
                 </div>
               </div>
               <h3 className="text-xl font-bold mb-3">{step.title}</h3>
-              <p className="text-muted-foreground mb-4 text-sm">
-                {step.description}
-              </p>
+              <p className="text-muted-foreground mb-4 text-sm">{step.description}</p>
               <div className="space-y-2">
                 <p className="text-sm font-medium">Focus Areas:</p>
                 <ul className="space-y-1">

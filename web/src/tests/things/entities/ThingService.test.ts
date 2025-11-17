@@ -14,11 +14,11 @@
  * - Enrich thing with connections
  */
 
-import { describe, it, expect, beforeEach } from "vitest";
 import { Effect, Layer } from "effect";
-import { ThingService } from "@/services/ThingService";
-import { DataProviderService } from "@/providers/DataProvider";
+import { describe, expect, it } from "vitest";
 import type { CreateThingInput } from "@/providers/DataProvider";
+import { DataProviderService } from "@/providers/DataProvider";
+import { ThingService } from "@/services/ThingService";
 
 // Mock DataProvider for testing
 const MockDataProvider = Layer.succeed(DataProviderService, {
@@ -45,7 +45,7 @@ const MockDataProvider = Layer.succeed(DataProviderService, {
           updatedAt: Date.now(),
         },
       ]),
-    create: (input: CreateThingInput) => Effect.succeed("thing_new_123" as any),
+    create: (_input: CreateThingInput) => Effect.succeed("thing_new_123" as any),
     update: () => Effect.succeed(undefined),
     delete: () => Effect.succeed(undefined),
     search: () => Effect.succeed([]),

@@ -1,5 +1,5 @@
+import type { EntityCard as EntityCardType } from "@/data/app-data";
 import { cn } from "@/lib/utils";
-import { type EntityCard as EntityCardType } from "@/data/app-data";
 
 interface EntityCardProps {
   entity: EntityCardType;
@@ -10,13 +10,13 @@ interface EntityCardProps {
 export function EntityCard({ entity, selected, onClick }: EntityCardProps) {
   return (
     <button
+      type="button"
       onClick={onClick}
       className={cn(
         "group relative w-full rounded-lg border bg-white p-4 text-left transition-all duration-200",
         "hover:bg-gray-50 hover:shadow-md hover:border-gray-300",
         "focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-black focus-visible:ring-offset-2",
-        selected &&
-          "bg-muted border-l-4 border-l-black shadow-md ring-1 ring-gray-200",
+        selected && "bg-muted border-l-4 border-l-black shadow-md ring-1 ring-gray-200"
       )}
     >
       {/* Unread dot */}
@@ -36,27 +36,21 @@ export function EntityCard({ entity, selected, onClick }: EntityCardProps) {
 
       {/* Character Code */}
       {entity.characterCode && (
-        <div className="text-sm text-gray-600 mb-2 font-mono">
-          Character {entity.characterCode}
-        </div>
+        <div className="text-sm text-gray-600 mb-2 font-mono">Character {entity.characterCode}</div>
       )}
 
       {/* Subtitle */}
-      <div className="text-sm font-medium text-gray-700 mb-2.5">
-        {entity.subtitle}
-      </div>
+      <div className="text-sm font-medium text-gray-700 mb-2.5">{entity.subtitle}</div>
 
       {/* Preview */}
-      <p className="text-sm text-gray-600 line-clamp-2 leading-relaxed mb-4">
-        {entity.preview}
-      </p>
+      <p className="text-sm text-gray-600 line-clamp-2 leading-relaxed mb-4">{entity.preview}</p>
 
       {/* Tags */}
       {entity.tags.length > 0 && (
         <div className="flex flex-wrap gap-2">
-          {entity.tags.map((tag, i) => (
+          {entity.tags.map((tag) => (
             <span
-              key={i}
+              key={tag}
               className="inline-flex items-center bg-black text-white text-xs font-medium px-3 py-1 rounded-full shadow-sm"
             >
               {tag}

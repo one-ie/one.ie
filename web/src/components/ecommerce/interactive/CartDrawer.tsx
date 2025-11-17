@@ -4,20 +4,20 @@
  * Beautiful animations and real-time updates
  */
 
-import { useState, useEffect } from 'react';
-import { ShoppingCart, X, Plus, Minus, Trash2, ArrowRight } from 'lucide-react';
-import { Button } from '@/components/ui/button';
-import { cn } from '@/lib/utils';
+import { ArrowRight, Minus, Plus, ShoppingCart, Trash2, X } from "lucide-react";
+import { useEffect, useState } from "react";
+import { Badge } from "@/components/ui/badge";
+import { Button } from "@/components/ui/button";
+import { Separator } from "@/components/ui/separator";
 import {
   Sheet,
   SheetContent,
   SheetDescription,
   SheetHeader,
   SheetTitle,
-} from '@/components/ui/sheet';
-import { Badge } from '@/components/ui/badge';
-import { Separator } from '@/components/ui/separator';
-import type { CartItem } from '@/stores/cart';
+} from "@/components/ui/sheet";
+import { cn } from "@/lib/utils";
+import type { CartItem } from "@/stores/cart";
 
 interface CartDrawerProps {
   isOpen: boolean;
@@ -68,7 +68,7 @@ export function CartDrawer({
               <SheetTitle className="text-xl">Shopping Cart</SheetTitle>
               {itemCount > 0 && (
                 <Badge variant="secondary" className="ml-2">
-                  {itemCount} {itemCount === 1 ? 'item' : 'items'}
+                  {itemCount} {itemCount === 1 ? "item" : "items"}
                 </Badge>
               )}
             </div>
@@ -84,7 +84,7 @@ export function CartDrawer({
           </div>
           <SheetDescription>
             {subtotal >= 50
-              ? '🎉 You qualify for free shipping!'
+              ? "🎉 You qualify for free shipping!"
               : `Add $${(50 - subtotal).toFixed(2)} more for free shipping`}
           </SheetDescription>
         </SheetHeader>
@@ -111,7 +111,7 @@ export function CartDrawer({
                   {/* Product Image */}
                   <div className="flex-shrink-0">
                     <img
-                      src={item.image || '/placeholder.jpg'}
+                      src={item.image || "/placeholder.jpg"}
                       alt={item.name}
                       className="h-24 w-24 rounded-md object-cover border border-border"
                     />
@@ -119,13 +119,11 @@ export function CartDrawer({
 
                   {/* Product Details */}
                   <div className="flex-1 min-w-0">
-                    <h4 className="font-medium text-foreground truncate mb-1">
-                      {item.name}
-                    </h4>
+                    <h4 className="font-medium text-foreground truncate mb-1">{item.name}</h4>
                     {item.variant && (item.variant.size || item.variant.color) && (
                       <p className="text-sm text-muted-foreground mb-2">
                         {item.variant.color && `Color: ${item.variant.color}`}
-                        {item.variant.color && item.variant.size && ' • '}
+                        {item.variant.color && item.variant.size && " • "}
                         {item.variant.size && `Size: ${item.variant.size}`}
                       </p>
                     )}
@@ -133,9 +131,7 @@ export function CartDrawer({
                       <p className="text-lg font-semibold text-foreground">
                         ${item.price.toFixed(2)}
                       </p>
-                      <span className="text-sm text-muted-foreground">
-                        × {item.quantity}
-                      </span>
+                      <span className="text-sm text-muted-foreground">× {item.quantity}</span>
                     </div>
 
                     {/* Quantity Controls */}
@@ -205,9 +201,7 @@ export function CartDrawer({
               <Separator />
               <div className="flex justify-between">
                 <span className="text-base font-semibold">Total</span>
-                <span className="text-lg font-bold text-primary">
-                  ${total.toFixed(2)}
-                </span>
+                <span className="text-lg font-bold text-primary">${total.toFixed(2)}</span>
               </div>
             </div>
 
@@ -215,9 +209,9 @@ export function CartDrawer({
             <div className="px-6 py-4 border-t border-border">
               <Button
                 className={cn(
-                  'w-full h-12 text-base font-semibold',
-                  'bg-[hsl(var(--color-primary))] text-[hsl(var(--color-primary-foreground))]',
-                  'hover:bg-[hsl(var(--color-primary))]/90 focus-visible:ring-[hsl(var(--color-primary))]/40',
+                  "w-full h-12 text-base font-semibold",
+                  "bg-[hsl(var(--color-primary))] text-[hsl(var(--color-primary-foreground))]",
+                  "hover:bg-[hsl(var(--color-primary))]/90 focus-visible:ring-[hsl(var(--color-primary))]/40"
                 )}
                 size="lg"
                 onClick={onCheckout}
@@ -225,11 +219,7 @@ export function CartDrawer({
                 Proceed to Checkout
                 <ArrowRight className="ml-2 h-5 w-5" />
               </Button>
-              <Button
-                variant="ghost"
-                className="w-full mt-2"
-                onClick={handleClose}
-              >
+              <Button variant="ghost" className="w-full mt-2" onClick={handleClose}>
                 Continue Shopping
               </Button>
             </div>
@@ -246,19 +236,14 @@ export function CartDrawer({
  */
 export function CartButton({ itemCount, onClick }: { itemCount: number; onClick: () => void }) {
   return (
-    <Button
-      variant="outline"
-      size="icon"
-      className="relative h-10 w-10"
-      onClick={onClick}
-    >
+    <Button variant="outline" size="icon" className="relative h-10 w-10" onClick={onClick}>
       <ShoppingCart className="h-5 w-5" />
       {itemCount > 0 && (
         <Badge
           variant="destructive"
           className="absolute -top-2 -right-2 h-5 w-5 flex items-center justify-center p-0 text-xs animate-in zoom-in"
         >
-          {itemCount > 9 ? '9+' : itemCount}
+          {itemCount > 9 ? "9+" : itemCount}
         </Badge>
       )}
     </Button>

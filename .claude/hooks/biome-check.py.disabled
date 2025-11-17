@@ -1,0 +1,194 @@
+#!/usr/bin/env python3
+"""
+Biome Code Quality Hook
+
+Runs Biome checks on files being edited to ensure code quality.
+Part of the agent-clean workflow.
+
+Usage: Called automatically by Claude Code on Edit/Write operations
+"""
+
+import subprocess
+import sys
+import os
+import json
+from pathlib import Path
+
+def get_project_root():
+    """Find the project root directory."""
+    current = Path(__file__).resolve().parent
+    while current != current.parent:
+        if (current / "package.json").exists():
+            return current
+        current = current.parent
+    return None
+
+def is_web_file(file_path):
+    """Check if file is in web/ directory and should be linted."""
+    extensions = {'.ts', '.tsx', '.js', '.jsx', '.astro', '.json'}
+    path = Path(file_path)
+
+    # Must be in web/ directory
+    if 'web/' not in str(path):
+        return False
+
+    # Must have lintable extension
+    if path.suffix not in extensions:
+        return False
+
+    # Exclude certain paths
+    excluded_patterns = [
+        'node_modules/',
+        'dist/',
+        '.astro/',
+        '_generated/',
+        '.wrangler/',
+        'coverage/',
+        '.d.ts',
+        '.min.js'
+    ]
+
+    for pattern in excluded_patterns:
+        if pattern in str(path):
+            return False
+
+    return True
+
+def run_biome_check(file_path):
+    """
+    Run Biome check on a specific file.
+
+    Returns:
+        tuple: (success: bool, output: str, stats: dict)
+    """
+    project_root = get_project_root()
+    if not project_root:
+        return True, "No project root found", {}
+
+    # Convert to relative path from web/
+    try:
+        rel_path = Path(file_path).relative_to(project_root)
+    except ValueError:
+        # File is outside project
+        return True, "File outside project", {}
+
+    # Check if file should be linted
+    if not is_web_file(file_path):
+        return True, "Skipping non-web file", {}
+
+    web_dir = project_root / "web"
+    if not web_dir.exists():
+        return True, "Web directory not found", {}
+
+    # Run Biome check (read-only, no fixes)
+    try:
+        result = subprocess.run(
+            ["npx", "@biomejs/biome", "check", "--no-errors-on-unmatched", str(rel_path)],
+            cwd=str(web_dir),
+            capture_output=True,
+            text=True,
+            timeout=10
+        )
+
+        # Parse output for stats
+        stats = {
+            "errors": 0,
+            "warnings": 0,
+            "fixable": 0
+        }
+
+        # Count errors/warnings from output
+        for line in result.stdout.split('\n') + result.stderr.split('\n'):
+            if 'error' in line.lower():
+                stats["errors"] += 1
+            if 'warning' in line.lower():
+                stats["warnings"] += 1
+            if 'fixable' in line.lower():
+                stats["fixable"] += 1
+
+        success = result.returncode == 0
+        output = result.stdout if result.stdout else result.stderr
+
+        return success, output, stats
+
+    except subprocess.TimeoutExpired:
+        return False, "Biome check timed out", {}
+    except Exception as e:
+        return False, f"Error running Biome: {str(e)}", {}
+
+def format_output(success, output, stats, file_path):
+    """Format the output message."""
+    if success:
+        return {
+            "success": True,
+            "message": f"✓ Code quality check passed for {Path(file_path).name}"
+        }
+
+    # Build detailed message
+    parts = []
+    parts.append(f"⚠ Code quality issues found in {Path(file_path).name}")
+
+    if stats.get("errors", 0) > 0:
+        parts.append(f"  Errors: {stats['errors']}")
+    if stats.get("warnings", 0) > 0:
+        parts.append(f"  Warnings: {stats['warnings']}")
+    if stats.get("fixable", 0) > 0:
+        parts.append(f"  Auto-fixable: {stats['fixable']}")
+
+    parts.append("\nRun 'bun run lint:fix' in web/ to auto-fix issues")
+
+    # Include first few lines of output
+    if output:
+        output_lines = [l for l in output.split('\n') if l.strip()][:5]
+        if output_lines:
+            parts.append("\nFirst few issues:")
+            parts.extend(f"  {line}" for line in output_lines)
+
+    return {
+        "success": False,
+        "message": "\n".join(parts),
+        "stats": stats
+    }
+
+def main():
+    """Main entry point."""
+    # Get file path from environment or stdin
+    file_path = os.getenv("CLAUDE_FILE_PATH")
+
+    if not file_path:
+        # Try to read from stdin
+        try:
+            data = json.loads(sys.stdin.read())
+            file_path = data.get("file_path")
+        except:
+            pass
+
+    if not file_path:
+        print(json.dumps({
+            "success": True,
+            "message": "No file path provided"
+        }))
+        return
+
+    # Check if file exists
+    if not Path(file_path).exists():
+        print(json.dumps({
+            "success": True,
+            "message": "File not found (may be new file)"
+        }))
+        return
+
+    # Run Biome check
+    success, output, stats = run_biome_check(file_path)
+
+    # Format and output result
+    result = format_output(success, output, stats, file_path)
+    print(json.dumps(result))
+
+    # Exit with appropriate code
+    # Note: We return 0 (success) even on errors to not block Claude
+    # The message will inform the user of issues
+    sys.exit(0)
+
+if __name__ == "__main__":
+    main()

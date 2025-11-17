@@ -6,9 +6,9 @@
  * GET /api/knowledge/search - Semantic search
  */
 
-import type { APIRoute } from 'astro';
-import { getDefaultProvider } from '@/providers/factory';
-import { successResponse, errorResponse, getStatusCode } from '../response';
+import type { APIRoute } from "astro";
+import { getDefaultProvider } from "@/providers/factory";
+import { errorResponse, getStatusCode, successResponse } from "../response";
 
 /**
  * GET /api/knowledge/search
@@ -44,39 +44,33 @@ import { successResponse, errorResponse, getStatusCode } from '../response';
 export const GET: APIRoute = async ({ url }) => {
   try {
     const provider = getDefaultProvider();
-    const { Effect } = await import('effect');
+    const { Effect } = await import("effect");
 
     // Parse query parameters
-    const query = url.searchParams.get('q');
-    const limit = Math.min(
-      parseInt(url.searchParams.get('limit') || '10'),
-      100
-    );
-    const threshold = parseFloat(url.searchParams.get('threshold') || '0.5');
-    const groupId = url.searchParams.get('groupId');
-    const type = url.searchParams.get('type');
+    const query = url.searchParams.get("q");
+    const limit = Math.min(parseInt(url.searchParams.get("limit") || "10", 10), 100);
+    const threshold = parseFloat(url.searchParams.get("threshold") || "0.5");
+    const groupId = url.searchParams.get("groupId");
+    const type = url.searchParams.get("type");
 
     // Validate search query
     if (!query || query.trim().length < 3) {
       const response = errorResponse(
-        'VALIDATION_ERROR',
-        'Search query must be at least 3 characters'
+        "VALIDATION_ERROR",
+        "Search query must be at least 3 characters"
       );
       return new Response(JSON.stringify(response), {
         status: getStatusCode(response.error),
-        headers: { 'Content-Type': 'application/json' },
+        headers: { "Content-Type": "application/json" },
       });
     }
 
     // Validate threshold
     if (threshold < 0 || threshold > 1) {
-      const response = errorResponse(
-        'VALIDATION_ERROR',
-        'Threshold must be between 0 and 1'
-      );
+      const response = errorResponse("VALIDATION_ERROR", "Threshold must be between 0 and 1");
       return new Response(JSON.stringify(response), {
         status: getStatusCode(response.error),
-        headers: { 'Content-Type': 'application/json' },
+        headers: { "Content-Type": "application/json" },
       });
     }
 
@@ -95,9 +89,7 @@ export const GET: APIRoute = async ({ url }) => {
 
     // Filter by threshold if provided
     if (threshold > 0) {
-      results = results.filter(
-        (item: any) => (item.score || 1) >= threshold
-      );
+      results = results.filter((item: any) => (item.score || 1) >= threshold);
     }
 
     // Filter by group if provided
@@ -120,19 +112,19 @@ export const GET: APIRoute = async ({ url }) => {
       {
         status: 200,
         headers: {
-          'Content-Type': 'application/json',
-          'Cache-Control': 'max-age=300, public',
+          "Content-Type": "application/json",
+          "Cache-Control": "max-age=300, public",
         },
       }
     );
   } catch (error) {
-    const message = error instanceof Error ? error.message : 'Unknown error';
-    const response = errorResponse('INTERNAL_ERROR', message);
+    const message = error instanceof Error ? error.message : "Unknown error";
+    const response = errorResponse("INTERNAL_ERROR", message);
     const status = getStatusCode(response.error);
 
     return new Response(JSON.stringify(response), {
       status,
-      headers: { 'Content-Type': 'application/json' },
+      headers: { "Content-Type": "application/json" },
     });
   }
 };

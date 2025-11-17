@@ -1,20 +1,31 @@
-import { atom, useAtom } from "jotai"
-import { type Mail, mails } from "@/data/mail-data"
+import { atom, useAtom } from "jotai";
+import { type Mail, mails } from "@/data/mail-data";
 
-export type MailFolder = "inbox" | "drafts" | "sent" | "junk" | "trash" | "archive" | "social" | "updates" | "forums" | "shopping" | "promotions"
+export type MailFolder =
+  | "inbox"
+  | "drafts"
+  | "sent"
+  | "junk"
+  | "trash"
+  | "archive"
+  | "social"
+  | "updates"
+  | "forums"
+  | "shopping"
+  | "promotions";
 
 interface Config {
-  selected: Mail["id"] | null
-  activeFolder: MailFolder
-  searchQuery: string
+  selected: Mail["id"] | null;
+  activeFolder: MailFolder;
+  searchQuery: string;
 }
 
 const configAtom = atom<Config>({
   selected: mails[0].id,
   activeFolder: "inbox",
   searchQuery: "",
-})
+});
 
 export function useMail() {
-  return useAtom(configAtom)
+  return useAtom(configAtom);
 }

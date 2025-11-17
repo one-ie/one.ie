@@ -4,20 +4,20 @@
  * Requires client:load hydration
  */
 
-'use client';
+"use client";
 
-import { useState } from 'react';
-import type { Product } from '@/types/ecommerce';
-import { PriceDisplay } from '../static/PriceDisplay';
-import { ReviewStars } from '../static/ReviewStars';
-import { Button } from '@/components/ui/button';
-import { Badge } from '@/components/ui/badge';
-import { QuickViewModal } from './QuickViewModal';
-import { cartActions } from '@/stores/cart';
-import { toastActions } from './Toast';
-import { ViewersCounter } from './ViewersCounter';
-import { WishlistButton, wishlistActions } from './Wishlist';
-import { motion } from 'framer-motion';
+import { motion } from "framer-motion";
+import { useState } from "react";
+import { Badge } from "@/components/ui/badge";
+import { Button } from "@/components/ui/button";
+import { cartActions } from "@/stores/cart";
+import type { Product } from "@/types/ecommerce";
+import { PriceDisplay } from "../static/PriceDisplay";
+import { ReviewStars } from "../static/ReviewStars";
+import { QuickViewModal } from "./QuickViewModal";
+import { toastActions } from "./Toast";
+import { ViewersCounter } from "./ViewersCounter";
+import { WishlistButton, wishlistActions } from "./Wishlist";
 
 interface ProductCardProps {
   product: Product;
@@ -51,7 +51,7 @@ function ProductCard({ product }: ProductCardProps) {
     });
 
     // Show success toast
-    toastActions.success('Added to cart', `${product.name} has been added to your cart`);
+    toastActions.success("Added to cart", `${product.name} has been added to your cart`);
 
     // Show feedback animation
     setTimeout(() => {
@@ -65,16 +65,17 @@ function ProductCard({ product }: ProductCardProps) {
     const added = wishlistActions.toggle(product.id);
 
     if (added) {
-      toastActions.info('Added to wishlist', product.name);
+      toastActions.info("Added to wishlist", product.name);
     } else {
-      toastActions.info('Removed from wishlist', product.name);
+      toastActions.info("Removed from wishlist", product.name);
     }
   };
 
   const hasDiscount = product.compareAtPrice && product.compareAtPrice > product.price;
-  const discountPercent = hasDiscount && product.compareAtPrice
-    ? Math.round(((product.compareAtPrice - product.price) / product.compareAtPrice) * 100)
-    : 0;
+  const discountPercent =
+    hasDiscount && product.compareAtPrice
+      ? Math.round(((product.compareAtPrice - product.price) / product.compareAtPrice) * 100)
+      : 0;
 
   return (
     <div className="group relative overflow-hidden rounded-lg border border-border bg-card transition-all duration-200 hover:shadow-lg hover:scale-[1.02]">
@@ -97,21 +98,13 @@ function ProductCard({ product }: ProductCardProps) {
             Out of Stock
           </Badge>
         )}
-        {product.featured && (
-          <Badge className="bg-primary text-primary-foreground">
-            Featured
-          </Badge>
-        )}
+        {product.featured && <Badge className="bg-primary text-primary-foreground">Featured</Badge>}
         {hasDiscount && (
           <Badge variant="destructive" className="font-bold">
             -{discountPercent}% OFF
           </Badge>
         )}
-        {isNewProduct(product.createdAt) && (
-          <Badge className="bg-green-600 text-white">
-            New
-          </Badge>
-        )}
+        {isNewProduct(product.createdAt) && <Badge className="bg-green-600 text-white">New</Badge>}
         {isLowStock(product.inventory) && product.inStock && (
           <motion.div
             animate={{
@@ -120,7 +113,7 @@ function ProductCard({ product }: ProductCardProps) {
             transition={{
               duration: 2,
               repeat: Infinity,
-              ease: 'easeInOut',
+              ease: "easeInOut",
             }}
           >
             <Badge
@@ -143,12 +136,7 @@ function ProductCard({ product }: ProductCardProps) {
           className="rounded-full bg-background/90 p-2 opacity-0 shadow transition-all duration-200 group-hover:opacity-100 hover:scale-110 hover:bg-background"
           aria-label="Quick view"
         >
-          <svg
-            className="h-5 w-5"
-            fill="none"
-            stroke="currentColor"
-            viewBox="0 0 24 24"
-          >
+          <svg className="h-5 w-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
             <path
               strokeLinecap="round"
               strokeLinejoin="round"
@@ -180,20 +168,12 @@ function ProductCard({ product }: ProductCardProps) {
 
         {product.rating && (
           <div className="mt-2">
-            <ReviewStars
-              rating={product.rating}
-              reviewCount={product.reviewCount}
-              size="sm"
-            />
+            <ReviewStars rating={product.rating} reviewCount={product.reviewCount} size="sm" />
           </div>
         )}
 
         <div className="mt-3">
-          <PriceDisplay
-            price={product.price}
-            compareAtPrice={product.compareAtPrice}
-            size="md"
-          />
+          <PriceDisplay price={product.price} compareAtPrice={product.compareAtPrice} size="md" />
         </div>
 
         {/* Add to Cart Button */}
@@ -205,11 +185,7 @@ function ProductCard({ product }: ProductCardProps) {
         >
           {isAdding ? (
             <>
-              <svg
-                className="mr-2 h-4 w-4 animate-spin"
-                fill="none"
-                viewBox="0 0 24 24"
-              >
+              <svg className="mr-2 h-4 w-4 animate-spin" fill="none" viewBox="0 0 24 24">
                 <circle
                   className="opacity-25"
                   cx="12"
@@ -227,15 +203,10 @@ function ProductCard({ product }: ProductCardProps) {
               Adding...
             </>
           ) : !product.inStock ? (
-            'Out of Stock'
+            "Out of Stock"
           ) : (
             <>
-              <svg
-                className="mr-2 h-4 w-4"
-                fill="none"
-                stroke="currentColor"
-                viewBox="0 0 24 24"
-              >
+              <svg className="mr-2 h-4 w-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                 <path
                   strokeLinecap="round"
                   strokeLinejoin="round"
@@ -255,12 +226,7 @@ function ProductCard({ product }: ProductCardProps) {
             animate={{ opacity: 1, y: 0 }}
             className="mt-2 flex items-center gap-1.5 text-xs font-medium text-red-600 dark:text-red-400"
           >
-            <svg
-              className="h-3.5 w-3.5"
-              fill="none"
-              stroke="currentColor"
-              viewBox="0 0 24 24"
-            >
+            <svg className="h-3.5 w-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
               <path
                 strokeLinecap="round"
                 strokeLinejoin="round"
@@ -274,11 +240,7 @@ function ProductCard({ product }: ProductCardProps) {
       </div>
 
       {/* Quick View Modal */}
-      <QuickViewModal
-        product={product}
-        open={showQuickView}
-        onOpenChange={setShowQuickView}
-      />
+      <QuickViewModal product={product} open={showQuickView} onOpenChange={setShowQuickView} />
     </div>
   );
 }

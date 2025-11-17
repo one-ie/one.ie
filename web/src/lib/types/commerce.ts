@@ -36,17 +36,17 @@ export interface Product {
 }
 
 export type ProductCategory =
-  | 'padel_racket'
-  | 'course'
-  | 'clothing'
-  | 'software'
-  | 'electronics'
-  | 'other';
+  | "padel_racket"
+  | "course"
+  | "clothing"
+  | "software"
+  | "electronics"
+  | "other";
 
 export interface CustomerNeeds {
-  skillLevel?: 'beginner' | 'intermediate' | 'advanced';
+  skillLevel?: "beginner" | "intermediate" | "advanced";
   budget?: { min: number; max: number };
-  playingStyle?: 'aggressive' | 'defensive' | 'balanced';
+  playingStyle?: "aggressive" | "defensive" | "balanced";
   painPoints?: string[];
   preferences?: string[];
   concerns?: string[];
@@ -54,7 +54,7 @@ export interface CustomerNeeds {
 
 export interface ConversationMessage {
   id: string;
-  role: 'user' | 'assistant';
+  role: "user" | "assistant";
   content: string;
   timestamp: number;
   mentionedProducts?: string[];
@@ -65,13 +65,13 @@ export interface ProductRecommendation {
   product: Product;
   reasoning: string;
   confidenceScore: number;
-  type: 'primary' | 'alternative' | 'upgrade' | 'complementary';
+  type: "primary" | "alternative" | "upgrade" | "complementary";
 }
 
 export interface ConversationSession {
   id: string;
   userId: string | null;
-  platform: 'web' | 'chatgpt' | 'claude' | 'gemini';
+  platform: "web" | "chatgpt" | "claude" | "gemini";
   messages: ConversationMessage[];
   inferredNeeds: CustomerNeeds;
   suggestedProducts: string[];
@@ -79,7 +79,7 @@ export interface ConversationSession {
   productsAddedToCart: string[];
   ordersCompleted: string[];
   totalValue: number;
-  status: 'active' | 'completed' | 'abandoned';
+  status: "active" | "completed" | "abandoned";
   startedAt: number;
   endedAt?: number;
 }
@@ -94,13 +94,13 @@ export interface ChatResponse {
 }
 
 export interface SuggestedAction {
-  type: 'view_details' | 'add_to_cart' | 'buy_now' | 'compare' | 'ask_question';
+  type: "view_details" | "add_to_cart" | "buy_now" | "compare" | "ask_question";
   label: string;
   productId?: string;
 }
 
 export interface Conflict {
-  type: 'style_vs_health' | 'budget_vs_preference' | 'skill_vs_product';
+  type: "style_vs_health" | "budget_vs_preference" | "skill_vs_product";
   description: string;
   clarifyingQuestion: string;
   resolution: string;

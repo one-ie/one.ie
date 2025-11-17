@@ -10,17 +10,14 @@
 
 /* global global */
 
-import { vi } from 'vitest';
+import { vi } from "vitest";
 
 // Set up environment variables for tests
 process.env.PUBLIC_CONVEX_URL =
-  process.env.PUBLIC_CONVEX_URL || 'https://shocking-falcon-870.convex.cloud';
-process.env.CONVEX_DEPLOYMENT =
-  process.env.CONVEX_DEPLOYMENT || 'prod:shocking-falcon-870';
-process.env.BETTER_AUTH_SECRET =
-  process.env.BETTER_AUTH_SECRET || 'test-secret-key';
-process.env.BETTER_AUTH_URL =
-  process.env.BETTER_AUTH_URL || 'http://localhost:4321';
+  process.env.PUBLIC_CONVEX_URL || "https://shocking-falcon-870.convex.cloud";
+process.env.CONVEX_DEPLOYMENT = process.env.CONVEX_DEPLOYMENT || "prod:shocking-falcon-870";
+process.env.BETTER_AUTH_SECRET = process.env.BETTER_AUTH_SECRET || "test-secret-key";
+process.env.BETTER_AUTH_URL = process.env.BETTER_AUTH_URL || "http://localhost:4321";
 
 // Mock fetch for test environment
 global.fetch = vi.fn();
@@ -36,7 +33,7 @@ global.fetch = vi.fn();
 // };
 
 // Mock window.matchMedia for components that check dark mode
-Object.defineProperty(window, 'matchMedia', {
+Object.defineProperty(window, "matchMedia", {
   writable: true,
   value: vi.fn().mockImplementation((query) => ({
     matches: false,
@@ -91,4 +88,4 @@ class MockResizeObserver {
 global.ResizeObserver = MockResizeObserver as any;
 
 // Setup complete
-console.log('✓ Test environment initialized');
+console.log("✓ Test environment initialized");

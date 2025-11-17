@@ -118,18 +118,18 @@ function parseFeatureFlags(): FeatureFlags {
       const parsed = JSON.parse(featuresJson);
       Object.assign(flags, parsed);
     } catch (err) {
-      console.warn('Failed to parse VITE_FEATURES:', err);
+      console.warn("Failed to parse VITE_FEATURES:", err);
     }
   }
 
   // Check for individual feature flags
-  for (const [key, value] of Object.entries(defaultFeatures)) {
+  for (const [key, _value] of Object.entries(defaultFeatures)) {
     const envKey = `VITE_FEATURE_${key.toUpperCase()}`;
     const envValue = import.meta.env[envKey];
 
     if (envValue !== undefined) {
       flags[key as keyof FeatureFlags] =
-        envValue === 'true' || envValue === '1' || envValue === true;
+        envValue === "true" || envValue === "1" || envValue === true;
     }
   }
 
@@ -232,7 +232,7 @@ export interface FeatureRequirement {
  */
 export function checkFeatureRequirements(requirement: FeatureRequirement): boolean {
   if (requirement.required) {
-    return requirement.required.every(f => isFeatureEnabled(f));
+    return requirement.required.every((f) => isFeatureEnabled(f));
   }
   return true;
 }
@@ -271,12 +271,12 @@ export function getDisabledFeatures(): (keyof FeatureFlags)[] {
  * Determines what "mode" the app is running in based on features
  */
 export type FeatureMode =
-  | 'frontend-only' // No backend
-  | 'basic' // Static content only
-  | 'authenticated' // Auth + basic features
-  | 'multi-tenant' // Full groups/orgs support
-  | 'full' // All features enabled
-  | 'custom'; // Custom feature combo
+  | "frontend-only" // No backend
+  | "basic" // Static content only
+  | "authenticated" // Auth + basic features
+  | "multi-tenant" // Full groups/orgs support
+  | "full" // All features enabled
+  | "custom"; // Custom feature combo
 
 /**
  * Detect current feature mode
@@ -297,26 +297,26 @@ export function getFeatureMode(): FeatureMode {
   const enabled = getEnabledFeatures();
 
   if (enabled.length === 0) {
-    return 'frontend-only';
+    return "frontend-only";
   }
 
   const hasCore = features.auth && features.permissions;
   const hasTenant = features.groups;
-  const hasFull = enabled.includes('realtime') && enabled.includes('search');
+  const hasFull = enabled.includes("realtime") && enabled.includes("search");
 
   if (hasTenant && hasFull) {
-    return 'full';
+    return "full";
   }
 
   if (hasTenant) {
-    return 'multi-tenant';
+    return "multi-tenant";
   }
 
   if (hasCore) {
-    return 'authenticated';
+    return "authenticated";
   }
 
-  return 'custom';
+  return "custom";
 }
 
 /**
@@ -371,11 +371,11 @@ export function logFeatureConfiguration(): void {
   const enabled = getEnabledFeatures();
   const disabled = getDisabledFeatures();
 
-  console.group('Feature Configuration');
-  console.log('Mode:', mode);
-  console.log('Enabled:', enabled);
-  console.log('Disabled:', disabled);
-  console.log('Full Config:', features);
+  console.group("Feature Configuration");
+  console.log("Mode:", mode);
+  console.log("Enabled:", enabled);
+  console.log("Disabled:", disabled);
+  console.log("Full Config:", features);
   console.groupEnd();
 }
 

@@ -5,21 +5,21 @@
  * and specify their roles (editor or viewer)
  */
 
-import { useState } from 'react';
-import { Button } from '@/components/ui/button';
-import { Input } from '@/components/ui/input';
-import { Label } from '@/components/ui/label';
+import { AlertCircle, Plus } from "lucide-react";
+import { useState } from "react";
+import { toast } from "sonner";
+import { Alert, AlertDescription } from "@/components/ui/alert";
+import { Button } from "@/components/ui/button";
+import { Input } from "@/components/ui/input";
+import { Label } from "@/components/ui/label";
 import {
   Select,
   SelectContent,
   SelectItem,
   SelectTrigger,
   SelectValue,
-} from '@/components/ui/select';
-import { Alert, AlertDescription } from '@/components/ui/alert';
-import { useInviteTeamMember } from '@/hooks/useOnboarding';
-import { toast } from 'sonner';
-import { Plus, AlertCircle } from 'lucide-react';
+} from "@/components/ui/select";
+import { useInviteTeamMember } from "@/hooks/useOnboarding";
 
 interface TeamInviteFormProps {
   userId: string;
@@ -30,20 +30,15 @@ interface TeamInviteFormProps {
 
 interface PendingInvitation {
   email: string;
-  role: 'editor' | 'viewer';
+  role: "editor" | "viewer";
   id: string;
 }
 
-export function TeamInviteForm({
-  userId,
-  workspaceId,
-  onSuccess,
-  onSkip,
-}: TeamInviteFormProps) {
-  const [email, setEmail] = useState('');
-  const [role, setRole] = useState<'editor' | 'viewer'>('editor');
+export function TeamInviteForm({ userId, workspaceId, onSuccess, onSkip }: TeamInviteFormProps) {
+  const [email, setEmail] = useState("");
+  const [role, setRole] = useState<"editor" | "viewer">("editor");
   const [pendingInvites, setPendingInvites] = useState<PendingInvitation[]>([]);
-  const [emailError, setEmailError] = useState('');
+  const [emailError, setEmailError] = useState("");
   const { mutate: inviteTeamMember, loading, nextRetryAt } = useInviteTeamMember();
   const [nextRetryCountdown, setNextRetryCountdown] = useState(0);
 
@@ -65,20 +60,20 @@ export function TeamInviteForm({
   const handleAddInvite = async (e: React.FormEvent) => {
     e.preventDefault();
 
-    setEmailError('');
+    setEmailError("");
 
     if (!email.trim()) {
-      setEmailError('Please enter an email address');
+      setEmailError("Please enter an email address");
       return;
     }
 
     if (!validateEmail(email)) {
-      setEmailError('Please enter a valid email address');
+      setEmailError("Please enter a valid email address");
       return;
     }
 
     if (pendingInvites.some((invite) => invite.email === email)) {
-      setEmailError('This email has already been added');
+      setEmailError("This email has already been added");
       return;
     }
 
@@ -99,16 +94,16 @@ export function TeamInviteForm({
             id: result.data?.invitationId || `${email}-${Date.now()}`,
           },
         ]);
-        setEmail('');
-        setRole('editor');
-        toast.success('Invitation sent!', {
+        setEmail("");
+        setRole("editor");
+        toast.success("Invitation sent!", {
           description: `Invitation sent to ${email}`,
         });
       }
     } catch (err) {
-      const message = err instanceof Error ? err.message : 'Failed to send invitation';
+      const message = err instanceof Error ? err.message : "Failed to send invitation";
       setEmailError(message);
-      toast.error('Invitation failed', { description: message });
+      toast.error("Invitation failed", { description: message });
     }
   };
 
@@ -147,15 +142,13 @@ export function TeamInviteForm({
               <Plus className="w-4 h-4" />
             </Button>
           </div>
-          {emailError && (
-            <p className="text-sm font-medium text-destructive">{emailError}</p>
-          )}
+          {emailError && <p className="text-sm font-medium text-destructive">{emailError}</p>}
         </div>
 
         {/* Role Selection */}
         <div className="space-y-2">
           <Label htmlFor="role">Role</Label>
-          <Select value={role} onValueChange={(value) => setRole(value as 'editor' | 'viewer')}>
+          <Select value={role} onValueChange={(value) => setRole(value as "editor" | "viewer")}>
             <SelectTrigger id="role" disabled={loading}>
               <SelectValue />
             </SelectTrigger>
@@ -174,7 +167,8 @@ export function TeamInviteForm({
           <Alert variant="destructive">
             <AlertCircle className="h-4 w-4" />
             <AlertDescription>
-              You've sent too many invitations. Please wait {nextRetryCountdown}s before sending more.
+              You've sent too many invitations. Please wait {nextRetryCountdown}s before sending
+              more.
             </AlertDescription>
           </Alert>
         )}
@@ -193,7 +187,7 @@ export function TeamInviteForm({
                 <div className="flex-1">
                   <p className="text-sm font-medium">{invite.email}</p>
                   <p className="text-xs text-muted-foreground capitalize">
-                    {invite.role === 'editor' ? 'Can edit' : 'View only'}
+                    {invite.role === "editor" ? "Can edit" : "View only"}
                   </p>
                 </div>
                 <Button
@@ -214,20 +208,15 @@ export function TeamInviteForm({
       <Alert>
         <AlertCircle className="h-4 w-4" />
         <AlertDescription className="text-sm">
-          Team members will receive an email invitation to join your workspace.
-          You can invite more people later from your workspace settings.
+          Team members will receive an email invitation to join your workspace. You can invite more
+          people later from your workspace settings.
         </AlertDescription>
       </Alert>
 
       {/* Action Buttons */}
       <div className="space-y-2">
-        <Button
-          type="button"
-          className="w-full"
-          onClick={handleContinue}
-          disabled={loading}
-        >
-          {pendingInvites.length > 0 ? 'Continue' : 'Skip for Now'}
+        <Button type="button" className="w-full" onClick={handleContinue} disabled={loading}>
+          {pendingInvites.length > 0 ? "Continue" : "Skip for Now"}
         </Button>
       </div>
     </div>

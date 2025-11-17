@@ -4,7 +4,6 @@
  * Display event history for an entity in a compact timeline.
  */
 
-import React from "react";
 import { Badge } from "@/components/ui/badge";
 
 interface Event {
@@ -40,9 +39,7 @@ export function EventHistory({ events }: EventHistoryProps) {
   return (
     <div className="space-y-3">
       {events.length === 0 ? (
-        <p className="text-sm text-gray-500 dark:text-gray-400">
-          No activity yet
-        </p>
+        <p className="text-sm text-gray-500 dark:text-gray-400">No activity yet</p>
       ) : (
         events.map((event, index) => (
           <div
@@ -53,9 +50,7 @@ export function EventHistory({ events }: EventHistoryProps) {
                 : ""
             }`}
           >
-            <div className="flex-shrink-0 text-xl">
-              {getEventIcon(event.type)}
-            </div>
+            <div className="flex-shrink-0 text-xl">{getEventIcon(event.type)}</div>
             <div className="flex-grow">
               <div className="flex items-start justify-between">
                 <Badge variant="outline" className="text-xs">

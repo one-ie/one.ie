@@ -30,10 +30,7 @@ export function successResponse<T>(data: T): ApiResponse<T> {
 /**
  * Create an error response
  */
-export function errorResponse(
-  code: string,
-  message: string
-): ApiResponse {
+export function errorResponse(code: string, message: string): ApiResponse {
   return {
     success: false,
     data: null,

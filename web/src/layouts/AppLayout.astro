@@ -1,6 +1,5 @@
 ---
-import ThemeInit from '@/components/ThemeInit.astro';
-import '../styles/global.css';
+import "../styles/global.css";
 
 interface Props {
   title: string;
@@ -9,10 +8,10 @@ interface Props {
 
 const {
   title,
-  description = 'ONE App - Ontology-driven platform for things, connections, events, and tags',
+  description = "ONE App - Ontology-driven platform for things, connections, events, and tags",
 } = Astro.props;
 
-const canonicalURL = new URL(Astro.url.pathname, Astro.site);
+const _canonicalURL = new URL(Astro.url.pathname, Astro.site);
 ---
 
 <!doctype html>

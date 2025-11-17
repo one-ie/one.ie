@@ -77,7 +77,7 @@ export function useOntology() {
     /** Metadata about ontology composition (counts, generation time) */
     metadata: undefined as OntologyMetadata | undefined,
     /** Check if a specific feature is enabled */
-    hasFeature: (feature: string) => false,
+    hasFeature: (_feature: string) => false,
     /** True while ontology data is loading */
     isLoading: false,
   };
@@ -101,7 +101,7 @@ export function useOntology() {
  * }
  * ```
  */
-export function useHasFeature(feature: string) {
+export function useHasFeature(_feature: string) {
   // const hasFeature = useQuery(api.queries.ontology.hasFeature, { feature });
   return false;
 }

@@ -4,7 +4,7 @@
  * Converts [x] to green checkmarks and [ ] to empty checkboxes
  */
 
-import { useEffect } from 'react';
+import { useEffect } from "react";
 
 interface CheckboxProcessorProps {
   containerSelector?: string;
@@ -14,7 +14,7 @@ interface CheckboxProcessorProps {
  * Process a text node and replace checkbox patterns with styled elements
  */
 function processTextNode(textNode: Text, parent: Node) {
-  const text = textNode.nodeValue || '';
+  const text = textNode.nodeValue || "";
   const completedPattern = /\[\s*[xX]\s*\]/g;
   const pendingPattern = /\[\s*\]/g;
 
@@ -25,21 +25,18 @@ function processTextNode(textNode: Text, parent: Node) {
 
   // Reset patterns for actual replacement
   const patterns = [
-    { regex: /\[\s*[xX]\s*\]/g, className: 'checkbox-completed', text: '✓' },
-    { regex: /\[\s*\]/g, className: 'checkbox-pending', text: '' }
+    { regex: /\[\s*[xX]\s*\]/g, className: "checkbox-completed", text: "✓" },
+    { regex: /\[\s*\]/g, className: "checkbox-pending", text: "" },
   ];
 
   let htmlContent = text;
   patterns.forEach(({ regex, className, text: content }) => {
-    htmlContent = htmlContent.replace(
-      regex,
-      `<span class="${className}">${content}</span>`
-    );
+    htmlContent = htmlContent.replace(regex, `<span class="${className}">${content}</span>`);
   });
 
   // Only replace if changes were made
   if (htmlContent !== text) {
-    const tempDiv = document.createElement('div');
+    const tempDiv = document.createElement("div");
     tempDiv.innerHTML = htmlContent;
 
     // Replace the original text node with the processed content
@@ -54,11 +51,7 @@ function processTextNode(textNode: Text, parent: Node) {
  * Recursively process all text nodes in a container
  */
 function processElement(element: Element) {
-  const walker = document.createTreeWalker(
-    element,
-    NodeFilter.SHOW_TEXT,
-    null
-  );
+  const walker = document.createTreeWalker(element, NodeFilter.SHOW_TEXT, null);
 
   const nodesToProcess: [Text, Node][] = [];
 
@@ -66,7 +59,7 @@ function processElement(element: Element) {
   while (node) {
     // Skip text inside code blocks
     const parentElement = node.parentElement;
-    if (parentElement && !parentElement.closest('code, pre')) {
+    if (parentElement && !parentElement.closest("code, pre")) {
       nodesToProcess.push([node, parentElement]);
     }
     node = walker.nextNode() as Text | null;
@@ -79,9 +72,7 @@ function processElement(element: Element) {
   }
 }
 
-export function CheckboxProcessor({
-  containerSelector = '.plan-content'
-}: CheckboxProcessorProps) {
+export function CheckboxProcessor({ containerSelector = ".plan-content" }: CheckboxProcessorProps) {
   useEffect(() => {
     const container = document.querySelector(containerSelector);
     if (container) {

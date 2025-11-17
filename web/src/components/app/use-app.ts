@@ -1,10 +1,10 @@
 import { atom, useAtom } from "jotai";
 import {
   type EntityId,
-  type NavigationView,
-  type StatusFilter,
   type JourneyStage,
   mockEntities,
+  type NavigationView,
+  type StatusFilter,
 } from "@/data/app-data";
 
 interface AppState {

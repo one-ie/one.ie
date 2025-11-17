@@ -21,7 +21,7 @@
  * ```
  */
 
-import { createContext, useContext } from 'react';
+import { createContext, useContext } from "react";
 
 /**
  * Minimal provider interface for type checking
@@ -50,11 +50,7 @@ export function DataProviderProvider({
   provider: IDataProvider | null;
   children: React.ReactNode;
 }) {
-  return (
-    <ProviderContext.Provider value={provider}>
-      {children}
-    </ProviderContext.Provider>
-  );
+  return <ProviderContext.Provider value={provider}>{children}</ProviderContext.Provider>;
 }
 
 /**
@@ -87,8 +83,8 @@ export function useProvider(): IDataProvider | null {
 
   if (context === undefined) {
     throw new Error(
-      'useProvider must be called within DataProviderProvider. ' +
-        'Wrap your app with <DataProviderProvider provider={provider}>'
+      "useProvider must be called within DataProviderProvider. " +
+        "Wrap your app with <DataProviderProvider provider={provider}>"
     );
   }
 
@@ -133,19 +129,17 @@ export function useIsProviderAvailable(): boolean {
  * }
  * ```
  */
-export function useProviderCapability(
-  capability: 'groups' | 'people' | 'realtime'
-): boolean {
+export function useProviderCapability(capability: "groups" | "people" | "realtime"): boolean {
   const provider = useProvider();
 
   if (!provider) return false;
 
   switch (capability) {
-    case 'groups':
+    case "groups":
       return provider.supportsGroups !== false;
-    case 'people':
+    case "people":
       return provider.supportsPeople !== false;
-    case 'realtime':
+    case "realtime":
       return provider.supportsRealtime !== false;
     default:
       return false;

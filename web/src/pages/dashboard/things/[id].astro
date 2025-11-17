@@ -6,20 +6,11 @@
  * Uses Effect services for server-side rendering and client-side mutations.
  */
 
-import { Effect } from "effect";
 import { ConvexReactClient } from "convex/react";
-import { ThingService } from "@/services/ThingService";
-import { ConnectionService } from "@/services/ConnectionService";
+import { Effect } from "effect";
+import { createDataProvider, createDataProviderLayer } from "@/providers/factory";
 import { EventService } from "@/services/EventService";
-import {
-  createDataProvider,
-  createDataProviderLayer,
-} from "@/providers/factory";
-import Layout from "@/layouts/Layout.astro";
-import { EntityDetail } from "@/components/dashboard/EntityDetail";
-import { EntityForm } from "@/components/dashboard/EntityForm";
-import { ConnectionList } from "@/components/dashboard/ConnectionList";
-import { EventHistory } from "@/components/dashboard/EventHistory";
+import { ThingService } from "@/services/ThingService";
 
 // Get entity ID from URL params
 const { id } = Astro.params;

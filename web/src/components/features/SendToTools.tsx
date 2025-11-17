@@ -1,18 +1,18 @@
-import { useEffect, useState, type ReactNode } from "react";
-import { Button } from "@/components/ui/button";
-import { Badge } from "@/components/ui/badge";
 import {
-  Sparkles,
+  Check,
+  ClipboardCopy,
   Code2,
   Folders,
+  MessageSquare,
+  Send,
+  Sparkles,
   SquareCode,
   Wind,
-  MessageSquare,
-  ClipboardCopy,
-  Check,
-  Send,
   X,
 } from "lucide-react";
+import { type ReactNode, useEffect, useState } from "react";
+import { Badge } from "@/components/ui/badge";
+import { Button } from "@/components/ui/button";
 import { cn } from "@/lib/utils";
 
 const DEFAULT_SNIPPET = `FEATURE: Generate welcome kit
@@ -121,7 +121,9 @@ const TOOLS: Tool[] = [
     instructions: (
       <ol className="space-y-2 text-sm leading-relaxed text-muted-foreground">
         <li>1. Open ChatGPT and start a new conversation.</li>
-        <li>2. Paste the prompt, optionally prefixing with “You are an ontology-aligned engineer.”</li>
+        <li>
+          2. Paste the prompt, optionally prefixing with “You are an ontology-aligned engineer.”
+        </li>
         <li>3. Ask for code, docs, or design support and refine iteratively.</li>
       </ol>
     ),
@@ -238,10 +240,7 @@ export function SendToTools({ snippet = DEFAULT_SNIPPET, className }: SendToTool
                     size="sm"
                     className="gap-2"
                     onClick={() =>
-                      copy(
-                        [`### ${activeTool.label}`, " ", snippet.trim()].join("\n"),
-                        "brief"
-                      )
+                      copy([`### ${activeTool.label}`, " ", snippet.trim()].join("\n"), "brief")
                     }
                   >
                     {copiedState === "brief" ? (
@@ -264,7 +263,11 @@ export function SendToTools({ snippet = DEFAULT_SNIPPET, className }: SendToTool
             </div>
 
             <div className="flex items-center justify-between gap-3 border-t border-border/60 px-6 py-4">
-              <Button variant="secondary" className="gap-2" onClick={() => handleOpenLink(activeTool)}>
+              <Button
+                variant="secondary"
+                className="gap-2"
+                onClick={() => handleOpenLink(activeTool)}
+              >
                 <Send className="h-4 w-4" />
                 Open {activeTool.display}
               </Button>

@@ -11,9 +11,9 @@
  */
 
 import { Effect } from "effect";
-import { ThingService } from "./ThingService";
 import { ConnectionService } from "./ConnectionService";
 import { EventService } from "./EventService";
+import { ThingService } from "./ThingService";
 
 // ============================================================================
 // TYPES
@@ -78,21 +78,14 @@ export class ReviewService {
     Effect.gen(function* () {
       // Validate rating
       if (input.rating < 1 || input.rating > 5) {
-        return yield* Effect.fail(
-          new Error("Rating must be between 1 and 5")
-        );
+        return yield* Effect.fail(new Error("Rating must be between 1 and 5"));
       }
 
       // Check if user already reviewed this product
-      const existing = yield* ReviewService.getUserReviewForProduct(
-        input.userId,
-        input.productId
-      );
+      const existing = yield* ReviewService.getUserReviewForProduct(input.userId, input.productId);
 
       if (existing.length > 0) {
-        return yield* Effect.fail(
-          new Error("You have already reviewed this product")
-        );
+        return yield* Effect.fail(new Error("You have already reviewed this product"));
       }
 
       // Create review thing
@@ -163,9 +156,7 @@ export class ReviewService {
       // Verify user owns this review
       const isOwner = yield* ReviewService.isReviewOwner(reviewId, userId);
       if (!isOwner) {
-        return yield* Effect.fail(
-          new Error("You can only edit your own reviews")
-        );
+        return yield* Effect.fail(new Error("You can only edit your own reviews"));
       }
 
       // Get current review
@@ -199,9 +190,7 @@ export class ReviewService {
       // Verify user owns this review
       const isOwner = yield* ReviewService.isReviewOwner(reviewId, userId);
       if (!isOwner) {
-        return yield* Effect.fail(
-          new Error("You can only delete your own reviews")
-        );
+        return yield* Effect.fail(new Error("You can only delete your own reviews"));
       }
 
       // Soft delete review
@@ -224,19 +213,14 @@ export class ReviewService {
   static getProductReviews = (productId: string, limit?: number) =>
     Effect.gen(function* () {
       // Get review connections
-      const connections = yield* ConnectionService.listTo(
-        productId,
-        "review" as any
-      );
+      const connections = yield* ConnectionService.listTo(productId, "review" as any);
 
       // Get review details
       const reviewIds = limit
         ? connections.slice(0, limit).map((conn: any) => conn.fromEntityId)
         : connections.map((conn: any) => conn.fromEntityId);
 
-      const reviews = yield* Effect.all(
-        reviewIds.map((id: string) => ThingService.get(id))
-      );
+      const reviews = yield* Effect.all(reviewIds.map((id: string) => ThingService.get(id)));
 
       // Get user details for each review
       const reviewsWithUsers: Review[] = [];
@@ -244,9 +228,7 @@ export class ReviewService {
         const userConnections = yield* ConnectionService.listTo(review._id, "owns");
         const userId = userConnections[0]?.fromEntityId || "unknown";
 
-        const user = userConnections[0]
-          ? yield* ThingService.get(userId)
-          : null as any;
+        const user = userConnections[0] ? yield* ThingService.get(userId) : (null as any);
 
         const props = review.properties as ReviewProperties;
 
@@ -282,13 +264,9 @@ export class ReviewService {
       });
 
       // Filter for reviews and get details
-      const reviewIds = connections
-        .map((conn: any) => conn.toEntityId)
-        .slice(0, limit);
+      const reviewIds = connections.map((conn: any) => conn.toEntityId).slice(0, limit);
 
-      const reviews = yield* Effect.all(
-        reviewIds.map((id: string) => ThingService.get(id))
-      );
+      const reviews = yield* Effect.all(reviewIds.map((id: string) => ThingService.get(id)));
 
       return reviews.filter((thing: any) => thing.type === "review");
     });
@@ -413,19 +391,5 @@ export class ReviewService {
       });
 
       return distribution;
-    });
-
-  /**
-   * Check if user owns review
-   */
-  private static isReviewOwner = (reviewId: string, userId: string) =>
-    Effect.gen(function* () {
-      const connections = yield* ConnectionService.list({
-        fromEntityId: userId,
-        toEntityId: reviewId,
-        relationshipType: "owns",
-      });
-
-      return connections.length > 0;
     });
 }

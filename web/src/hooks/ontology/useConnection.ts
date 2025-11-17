@@ -26,64 +26,64 @@
  * ```
  */
 
-import { useCallback, useEffect, useState } from 'react';
-import { Effect } from 'effect';
-import type { Id } from '@/types/convex';
-import { useEffectRunner } from '../useEffectRunner';
-import { useIsProviderAvailable } from './useProvider';
+import { Effect } from "effect";
+import { useCallback, useEffect, useState } from "react";
+import type { Id } from "@/types/convex";
+import { useEffectRunner } from "../useEffectRunner";
+import { useIsProviderAvailable } from "./useProvider";
 
 /**
  * Connection (relationship) types
  */
 export type ConnectionType =
   // Ownership
-  | 'owns'
-  | 'created_by'
+  | "owns"
+  | "created_by"
   // AI
-  | 'clone_of'
-  | 'trained_on'
-  | 'powers'
+  | "clone_of"
+  | "trained_on"
+  | "powers"
   // Content
-  | 'authored'
-  | 'generated_by'
-  | 'published_to'
-  | 'part_of'
-  | 'references'
+  | "authored"
+  | "generated_by"
+  | "published_to"
+  | "part_of"
+  | "references"
   // Community
-  | 'member_of'
-  | 'following'
-  | 'moderates'
-  | 'participated_in'
+  | "member_of"
+  | "following"
+  | "moderates"
+  | "participated_in"
   // Business
-  | 'manages'
-  | 'reports_to'
-  | 'collaborates_with'
+  | "manages"
+  | "reports_to"
+  | "collaborates_with"
   // Token
-  | 'holds_tokens'
-  | 'staked_in'
-  | 'earned_from'
+  | "holds_tokens"
+  | "staked_in"
+  | "earned_from"
   // Product
-  | 'purchased'
-  | 'enrolled_in'
-  | 'completed'
-  | 'teaching'
+  | "purchased"
+  | "enrolled_in"
+  | "completed"
+  | "teaching"
   // Consolidated with metadata
-  | 'transacted'
-  | 'notified'
-  | 'referred'
-  | 'communicated'
-  | 'delegated'
-  | 'approved'
-  | 'fulfilled';
+  | "transacted"
+  | "notified"
+  | "referred"
+  | "communicated"
+  | "delegated"
+  | "approved"
+  | "fulfilled";
 
 /**
  * Connection entity
  */
 export interface Connection {
-  _id: Id<'connections'>;
+  _id: Id<"connections">;
   _creationTime: number;
-  fromEntityId: Id<'entities'>;
-  toEntityId: Id<'entities'>;
+  fromEntityId: Id<"entities">;
+  toEntityId: Id<"entities">;
   relationshipType: ConnectionType;
   metadata?: Record<string, any>;
   strength?: number;
@@ -98,8 +98,8 @@ export interface Connection {
  * Input for creating a connection
  */
 export interface CreateConnectionInput {
-  fromEntityId: Id<'entities'>;
-  toEntityId: Id<'entities'>;
+  fromEntityId: Id<"entities">;
+  toEntityId: Id<"entities">;
   relationshipType: ConnectionType;
   metadata?: Record<string, any>;
   strength?: number;
@@ -111,8 +111,8 @@ export interface CreateConnectionInput {
  * Filters for querying connections
  */
 export interface ConnectionFilter {
-  fromEntityId?: Id<'entities'>;
-  toEntityId?: Id<'entities'>;
+  fromEntityId?: Id<"entities">;
+  toEntityId?: Id<"entities">;
   relationshipType?: ConnectionType;
   limit?: number;
   offset?: number;
@@ -146,14 +146,14 @@ export function useConnection() {
    */
   const create = useCallback(
     async (
-      input: CreateConnectionInput,
+      _input: CreateConnectionInput,
       options?: {
         onSuccess?: (connection: Connection) => void;
         onError?: (error: unknown) => void;
       }
     ) => {
       if (!isProviderAvailable) {
-        options?.onError?.(new Error('Provider not available'));
+        options?.onError?.(new Error("Provider not available"));
         return null;
       }
 
@@ -174,15 +174,15 @@ export function useConnection() {
    */
   const update = useCallback(
     async (
-      id: Id<'connections'>,
-      updates: Partial<CreateConnectionInput>,
+      _id: Id<"connections">,
+      _updates: Partial<CreateConnectionInput>,
       options?: {
         onSuccess?: (connection: Connection) => void;
         onError?: (error: unknown) => void;
       }
     ) => {
       if (!isProviderAvailable) {
-        options?.onError?.(new Error('Provider not available'));
+        options?.onError?.(new Error("Provider not available"));
         return null;
       }
 
@@ -203,14 +203,14 @@ export function useConnection() {
    */
   const remove = useCallback(
     async (
-      id: Id<'connections'>,
+      _id: Id<"connections">,
       options?: {
         onSuccess?: () => void;
         onError?: (error: unknown) => void;
       }
     ) => {
       if (!isProviderAvailable) {
-        options?.onError?.(new Error('Provider not available'));
+        options?.onError?.(new Error("Provider not available"));
         return;
       }
 
@@ -248,7 +248,7 @@ export function useConnection() {
  * });
  * ```
  */
-export function useConnections(filter?: ConnectionFilter) {
+export function useConnections(_filter?: ConnectionFilter) {
   const { run, loading, error } = useEffectRunner<unknown, any>();
   const isProviderAvailable = useIsProviderAvailable();
   const [connections, setConnections] = useState<Connection[]>([]);
@@ -269,7 +269,7 @@ export function useConnections(filter?: ConnectionFilter) {
     run(program, {
       onSuccess: (data) => setConnections(data),
     });
-  }, [isProviderAvailable, filter?.fromEntityId, filter?.toEntityId, run]);
+  }, [isProviderAvailable, run]);
 
   return {
     connections,
@@ -304,9 +304,9 @@ export function useConnections(filter?: ConnectionFilter) {
  * ```
  */
 export function useRelatedEntities(
-  entityId?: Id<'entities'>,
+  entityId?: Id<"entities">,
   relationshipType?: ConnectionType,
-  direction?: 'from' | 'to' | 'both'
+  direction?: "from" | "to" | "both"
 ) {
   const { run, loading, error } = useEffectRunner<unknown, any>();
   const isProviderAvailable = useIsProviderAvailable();
@@ -318,8 +318,8 @@ export function useRelatedEntities(
       return;
     }
 
-    const filter: ConnectionFilter =
-      direction === 'from' || direction === 'both'
+    const _filter: ConnectionFilter =
+      direction === "from" || direction === "both"
         ? { fromEntityId: entityId, relationshipType }
         : { toEntityId: entityId, relationshipType };
 
@@ -356,8 +356,8 @@ export function useRelatedEntities(
  * ```
  */
 export function useIsConnected(
-  fromId?: Id<'entities'>,
-  toId?: Id<'entities'>,
+  fromId?: Id<"entities">,
+  toId?: Id<"entities">,
   relationshipType?: ConnectionType
 ): boolean {
   const { connections } = useConnections({
@@ -380,8 +380,8 @@ export function useIsConnected(
  * const { entities: courses } = useOwnedEntities(organizationId);
  * ```
  */
-export function useOwnedEntities(ownerId: Id<'entities'>) {
-  return useRelatedEntities(ownerId, 'owns', 'from');
+export function useOwnedEntities(ownerId: Id<"entities">) {
+  return useRelatedEntities(ownerId, "owns", "from");
 }
 
 /**
@@ -395,8 +395,8 @@ export function useOwnedEntities(ownerId: Id<'entities'>) {
  * const { entities: followers } = useFollowers(authorId);
  * ```
  */
-export function useFollowers(entityId: Id<'entities'>) {
-  return useRelatedEntities(entityId, 'following', 'to');
+export function useFollowers(entityId: Id<"entities">) {
+  return useRelatedEntities(entityId, "following", "to");
 }
 
 /**
@@ -410,8 +410,8 @@ export function useFollowers(entityId: Id<'entities'>) {
  * const { entities: following } = useFollowing(userId);
  * ```
  */
-export function useFollowing(userId: Id<'entities'>) {
-  return useRelatedEntities(userId, 'following', 'from');
+export function useFollowing(userId: Id<"entities">) {
+  return useRelatedEntities(userId, "following", "from");
 }
 
 /**
@@ -425,8 +425,8 @@ export function useFollowing(userId: Id<'entities'>) {
  * const { entities: students } = useEnrollments(courseId);
  * ```
  */
-export function useEnrollments(courseId: Id<'entities'>) {
-  return useRelatedEntities(courseId, 'enrolled_in', 'to');
+export function useEnrollments(courseId: Id<"entities">) {
+  return useRelatedEntities(courseId, "enrolled_in", "to");
 }
 
 /**
@@ -440,6 +440,6 @@ export function useEnrollments(courseId: Id<'entities'>) {
  * const { entities: courses } = useUserEnrollments(userId);
  * ```
  */
-export function useUserEnrollments(userId: Id<'entities'>) {
-  return useRelatedEntities(userId, 'enrolled_in', 'from');
+export function useUserEnrollments(userId: Id<"entities">) {
+  return useRelatedEntities(userId, "enrolled_in", "from");
 }

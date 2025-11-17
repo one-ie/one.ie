@@ -1,6 +1,6 @@
-import { Play } from 'lucide-react';
-import { Card, CardContent, CardFooter, CardHeader } from '@/components/ui/card';
-import { Badge } from '@/components/ui/badge';
+import { Play } from "lucide-react";
+import { Badge } from "@/components/ui/badge";
+import { Card, CardContent, CardFooter, CardHeader } from "@/components/ui/card";
 
 interface VideoCardProps {
   title: string;
@@ -22,10 +22,10 @@ function formatDuration(seconds: number): string {
   const secs = seconds % 60;
 
   if (hours > 0) {
-    return `${hours}:${String(minutes).padStart(2, '0')}:${String(secs).padStart(2, '0')}`;
+    return `${hours}:${String(minutes).padStart(2, "0")}:${String(secs).padStart(2, "0")}`;
   }
 
-  return `${minutes}:${String(secs).padStart(2, '0')}`;
+  return `${minutes}:${String(secs).padStart(2, "0")}`;
 }
 
 /**
@@ -36,15 +36,15 @@ function formatPublishDate(date: Date): string {
   const diffMs = now.getTime() - date.getTime();
   const diffDays = Math.floor(diffMs / (1000 * 60 * 60 * 24));
 
-  if (diffDays === 0) return 'Today';
-  if (diffDays === 1) return 'Yesterday';
+  if (diffDays === 0) return "Today";
+  if (diffDays === 1) return "Yesterday";
   if (diffDays < 7) return `${diffDays} days ago`;
   if (diffDays < 30) return `${Math.floor(diffDays / 7)} weeks ago`;
 
-  return date.toLocaleDateString('en-US', {
-    year: 'numeric',
-    month: 'short',
-    day: 'numeric'
+  return date.toLocaleDateString("en-US", {
+    year: "numeric",
+    month: "short",
+    day: "numeric",
   });
 }
 
@@ -88,13 +88,14 @@ export function VideoCard({
   slug,
   author,
   publishedAt,
-  youtubeId
+  youtubeId,
 }: VideoCardProps) {
   // Auto-generate YouTube thumbnail if youtubeId is provided and no custom thumbnail
   // YouTube thumbnail URLs: https://img.youtube.com/vi/{VIDEO_ID}/hqdefault.jpg
-  const thumbnailUrl = youtubeId && (!thumbnail || !thumbnail.startsWith('http'))
-    ? `https://img.youtube.com/vi/${youtubeId}/hqdefault.jpg`
-    : thumbnail;
+  const thumbnailUrl =
+    youtubeId && (!thumbnail || !thumbnail.startsWith("http"))
+      ? `https://img.youtube.com/vi/${youtubeId}/hqdefault.jpg`
+      : thumbnail;
 
   return (
     <a
@@ -142,19 +143,13 @@ export function VideoCard({
         </CardHeader>
 
         <CardContent className="pb-3 px-4 sm:px-6">
-          <p className="text-sm sm:text-base text-muted-foreground line-clamp-2">
-            {description}
-          </p>
+          <p className="text-sm sm:text-base text-muted-foreground line-clamp-2">{description}</p>
         </CardContent>
 
         {/* Footer with author and date - responsive text size */}
         <CardFooter className="pt-0 px-4 sm:px-6 pb-4 sm:pb-6 flex items-center justify-between text-xs sm:text-sm text-muted-foreground gap-2">
-          {author && (
-            <span className="font-medium truncate">{author}</span>
-          )}
-          <span className={author ? 'ml-auto shrink-0' : ''}>
-            {formatPublishDate(publishedAt)}
-          </span>
+          {author && <span className="font-medium truncate">{author}</span>}
+          <span className={author ? "ml-auto shrink-0" : ""}>{formatPublishDate(publishedAt)}</span>
         </CardFooter>
       </Card>
     </a>

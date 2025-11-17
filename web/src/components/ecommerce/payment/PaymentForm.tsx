@@ -9,17 +9,13 @@
  * />
  */
 
-import { useState, useEffect } from 'react';
-import {
-  PaymentElement,
-  useStripe,
-  useElements,
-} from '@stripe/react-stripe-js';
-import { Button } from '@/components/ui/button';
-import { Input } from '@/components/ui/input';
-import { Label } from '@/components/ui/label';
-import { Alert, AlertDescription } from '@/components/ui/alert';
-import type { BillingAddress, StripeError } from '@/types/stripe';
+import { PaymentElement, useElements, useStripe } from "@stripe/react-stripe-js";
+import { useEffect, useState } from "react";
+import { Alert, AlertDescription } from "@/components/ui/alert";
+import { Button } from "@/components/ui/button";
+import { Input } from "@/components/ui/input";
+import { Label } from "@/components/ui/label";
+import type { BillingAddress, StripeError } from "@/types/stripe";
 
 interface PaymentFormProps {
   onSuccess: (orderId: string) => void;
@@ -41,23 +37,23 @@ export function PaymentForm({
 
   // Billing address state
   const [billingAddress, setBillingAddress] = useState<BillingAddress>({
-    name: '',
-    email: '',
-    line1: '',
-    line2: '',
-    city: '',
-    state: '',
-    postal_code: '',
-    country: 'US',
+    name: "",
+    email: "",
+    line1: "",
+    line2: "",
+    city: "",
+    state: "",
+    postal_code: "",
+    country: "US",
   });
 
   // Track when payment element is ready
   useEffect(() => {
     if (!elements) return;
 
-    const paymentElement = elements.getElement('payment');
+    const paymentElement = elements.getElement("payment");
     if (paymentElement) {
-      paymentElement.on('ready', () => {
+      paymentElement.on("ready", () => {
         setIsReady(true);
       });
     }
@@ -66,10 +62,7 @@ export function PaymentForm({
   /**
    * Handle billing address field changes
    */
-  const handleAddressChange = (
-    field: keyof BillingAddress,
-    value: string
-  ) => {
+  const handleAddressChange = (field: keyof BillingAddress, value: string) => {
     setBillingAddress((prev) => ({
       ...prev,
       [field]: value,
@@ -80,10 +73,10 @@ export function PaymentForm({
    * Validate billing address
    */
   const validateBillingAddress = (): boolean => {
-    const required = ['name', 'email', 'line1', 'city', 'state', 'postal_code'];
+    const required = ["name", "email", "line1", "city", "state", "postal_code"];
     for (const field of required) {
       if (!billingAddress[field as keyof BillingAddress]) {
-        setError(`Please enter your ${field.replace('_', ' ')}`);
+        setError(`Please enter your ${field.replace("_", " ")}`);
         return false;
       }
     }
@@ -91,7 +84,7 @@ export function PaymentForm({
     // Validate email format
     const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
     if (!emailRegex.test(billingAddress.email)) {
-      setError('Please enter a valid email address');
+      setError("Please enter a valid email address");
       return false;
     }
 
@@ -106,7 +99,7 @@ export function PaymentForm({
 
     // Validate Stripe is loaded
     if (!stripe || !elements) {
-      setError('Payment system not ready. Please try again.');
+      setError("Payment system not ready. Please try again.");
       return;
     }
 
@@ -139,15 +132,15 @@ export function PaymentForm({
             },
           },
         },
-        redirect: 'if_required',
+        redirect: "if_required",
       });
 
       if (stripeError) {
         // Payment failed
         const errorObj: StripeError = {
-          type: stripeError.type as StripeError['type'],
+          type: stripeError.type as StripeError["type"],
           code: stripeError.code,
-          message: stripeError.message || 'Payment failed',
+          message: stripeError.message || "Payment failed",
           param: stripeError.param,
         };
 
@@ -158,13 +151,13 @@ export function PaymentForm({
         return;
       }
 
-      if (paymentIntent && paymentIntent.status === 'succeeded') {
+      if (paymentIntent && paymentIntent.status === "succeeded") {
         // Payment succeeded - confirm with backend
         try {
-          const response = await fetch('/api/checkout/confirm', {
-            method: 'POST',
+          const response = await fetch("/api/checkout/confirm", {
+            method: "POST",
             headers: {
-              'Content-Type': 'application/json',
+              "Content-Type": "application/json",
             },
             body: JSON.stringify({
               paymentIntentId: paymentIntent.id,
@@ -173,19 +166,19 @@ export function PaymentForm({
           });
 
           if (!response.ok) {
-            throw new Error('Failed to confirm order');
+            throw new Error("Failed to confirm order");
           }
 
           const data = await response.json();
           onSuccess(data.orderId);
         } catch (err) {
-          setError('Payment succeeded but order confirmation failed. Please contact support.');
-          console.error('Order confirmation error:', err);
+          setError("Payment succeeded but order confirmation failed. Please contact support.");
+          console.error("Order confirmation error:", err);
         }
       }
     } catch (err) {
-      console.error('Payment error:', err);
-      setError('An unexpected error occurred. Please try again.');
+      console.error("Payment error:", err);
+      setError("An unexpected error occurred. Please try again.");
     } finally {
       setIsProcessing(false);
     }
@@ -206,7 +199,7 @@ export function PaymentForm({
               type="text"
               placeholder="John Doe"
               value={billingAddress.name}
-              onChange={(e) => handleAddressChange('name', e.target.value)}
+              onChange={(e) => handleAddressChange("name", e.target.value)}
               disabled={isProcessing}
               required
             />
@@ -219,7 +212,7 @@ export function PaymentForm({
               type="email"
               placeholder="john@example.com"
               value={billingAddress.email}
-              onChange={(e) => handleAddressChange('email', e.target.value)}
+              onChange={(e) => handleAddressChange("email", e.target.value)}
               disabled={isProcessing}
               required
             />
@@ -234,7 +227,7 @@ export function PaymentForm({
             type="text"
             placeholder="123 Main Street"
             value={billingAddress.line1}
-            onChange={(e) => handleAddressChange('line1', e.target.value)}
+            onChange={(e) => handleAddressChange("line1", e.target.value)}
             disabled={isProcessing}
             required
           />
@@ -247,8 +240,8 @@ export function PaymentForm({
             id="line2"
             type="text"
             placeholder="Apt 4B"
-            value={billingAddress.line2 || ''}
-            onChange={(e) => handleAddressChange('line2', e.target.value)}
+            value={billingAddress.line2 || ""}
+            onChange={(e) => handleAddressChange("line2", e.target.value)}
             disabled={isProcessing}
           />
         </div>
@@ -262,7 +255,7 @@ export function PaymentForm({
               type="text"
               placeholder="New York"
               value={billingAddress.city}
-              onChange={(e) => handleAddressChange('city', e.target.value)}
+              onChange={(e) => handleAddressChange("city", e.target.value)}
               disabled={isProcessing}
               required
             />
@@ -275,7 +268,7 @@ export function PaymentForm({
               type="text"
               placeholder="NY"
               value={billingAddress.state}
-              onChange={(e) => handleAddressChange('state', e.target.value)}
+              onChange={(e) => handleAddressChange("state", e.target.value)}
               disabled={isProcessing}
               required
             />
@@ -288,7 +281,7 @@ export function PaymentForm({
               type="text"
               placeholder="10001"
               value={billingAddress.postal_code}
-              onChange={(e) => handleAddressChange('postal_code', e.target.value)}
+              onChange={(e) => handleAddressChange("postal_code", e.target.value)}
               disabled={isProcessing}
               required
             />
@@ -304,7 +297,7 @@ export function PaymentForm({
         <div className="rounded-lg border p-4">
           <PaymentElement
             options={{
-              layout: 'tabs',
+              layout: "tabs",
             }}
           />
         </div>
@@ -330,7 +323,7 @@ export function PaymentForm({
             Processing...
           </>
         ) : (
-          'Complete Purchase'
+          "Complete Purchase"
         )}
       </Button>
 

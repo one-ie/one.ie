@@ -8,9 +8,9 @@
  * Requires authentication via Better Auth cookie.
  */
 
-import type { APIRoute } from 'astro';
-import { getDefaultProvider } from '@/providers/factory';
-import { successResponse, errorResponse, getStatusCode } from '../response';
+import type { APIRoute } from "astro";
+import { getDefaultProvider } from "@/providers/factory";
+import { errorResponse, getStatusCode, successResponse } from "../response";
 
 /**
  * GET /api/people/me
@@ -32,21 +32,19 @@ import { successResponse, errorResponse, getStatusCode } from '../response';
 export const GET: APIRoute = async ({ request, cookies }) => {
   try {
     const provider = getDefaultProvider();
-    const { Effect } = await import('effect');
+    const { Effect } = await import("effect");
 
     // Get current authenticated user via auth provider
-    const currentUser = await Effect.runPromise(
-      provider.auth.getCurrentUser()
-    );
+    const currentUser = await Effect.runPromise(provider.auth.getCurrentUser());
 
     if (!currentUser) {
       const response = errorResponse(
-        'UNAUTHORIZED',
-        'No authenticated user found. Please sign in.'
+        "UNAUTHORIZED",
+        "No authenticated user found. Please sign in."
       );
       return new Response(JSON.stringify(response), {
         status: getStatusCode(response.error),
-        headers: { 'Content-Type': 'application/json' },
+        headers: { "Content-Type": "application/json" },
       });
     }
 
@@ -65,19 +63,19 @@ export const GET: APIRoute = async ({ request, cookies }) => {
       {
         status: 200,
         headers: {
-          'Content-Type': 'application/json',
-          'Cache-Control': 'private, max-age=60',
+          "Content-Type": "application/json",
+          "Cache-Control": "private, max-age=60",
         },
       }
     );
   } catch (error) {
-    const message = error instanceof Error ? error.message : 'Unknown error';
-    const response = errorResponse('INTERNAL_ERROR', message);
+    const message = error instanceof Error ? error.message : "Unknown error";
+    const response = errorResponse("INTERNAL_ERROR", message);
     const status = getStatusCode(response.error);
 
     return new Response(JSON.stringify(response), {
       status,
-      headers: { 'Content-Type': 'application/json' },
+      headers: { "Content-Type": "application/json" },
     });
   }
 };

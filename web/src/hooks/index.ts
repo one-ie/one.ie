@@ -47,117 +47,107 @@
 // PROVIDER & CONTEXT
 // ============================================================================
 
-export { DataProviderProvider, useDataProvider, queryClient } from './useDataProvider';
+export { DataProviderProvider, queryClient, useDataProvider } from "./useDataProvider";
 
 // ============================================================================
 // TYPES
 // ============================================================================
 
 export type {
-  QueryResult,
-  MutationResult,
-  QueryOptions,
-  MutationOptions,
-  ExtractQueryData,
   ExtractMutationArgs,
   ExtractMutationData,
-} from './types';
+  ExtractQueryData,
+  MutationOptions,
+  MutationResult,
+  QueryOptions,
+  QueryResult,
+} from "./types";
 
 // ============================================================================
 // THINGS DIMENSION
 // ============================================================================
 
 export {
-  // Query hooks
-  useThings,
-  useThing,
-
-  // Mutation hooks
-  useCreateThing,
-  useUpdateThing,
-  useDeleteThing,
-
-  // Type-specific hooks
-  useCourses,
   useAgents,
   useBlogPosts,
+  // Type-specific hooks
+  useCourses,
+  // Mutation hooks
+  useCreateThing,
+  useDeleteThing,
+  useThing,
+  // Query hooks
+  useThings,
   useTokens,
-} from './useThings';
+  useUpdateThing,
+} from "./useThings";
 
 // ============================================================================
 // CONNECTIONS DIMENSION
 // ============================================================================
 
 export {
+  useConnection,
   // Query hooks
   useConnections,
-  useConnection,
-
   // Mutation hooks
   useCreateConnection,
   useDeleteConnection,
-
-  // Relationship-specific hooks
-  useOwnedThings,
   useEnrollments,
   useFollowing,
+  // Relationship-specific hooks
+  useOwnedThings,
   useTokenHoldings,
-} from './useConnections';
+} from "./useConnections";
 
 // ============================================================================
 // EVENTS DIMENSION
 // ============================================================================
 
 export {
-  // Query hooks
-  useEvents,
-  useEvent,
-
-  // Mutation hooks
-  useLogEvent,
-
+  useActivityFeed,
   // Convenience hooks
   useAuditTrail,
-  useActivityFeed,
+  useEvent,
+  // Query hooks
+  useEvents,
+  // Mutation hooks
+  useLogEvent,
   useRecentEvents,
-} from './useEvents';
+} from "./useEvents";
 
 // ============================================================================
 // KNOWLEDGE DIMENSION
 // ============================================================================
 
 export {
-  // Query hooks
-  useKnowledge,
-  useSearch,
-
   // Mutation hooks
   useCreateKnowledge,
-  useLinkKnowledge,
-
+  // Query hooks
+  useKnowledge,
   // Convenience hooks
   useLabels,
+  useLinkKnowledge,
+  useSearch,
   useThingKnowledge,
-} from './useKnowledge';
+} from "./useKnowledge";
 
 // ============================================================================
 // ORGANIZATIONS DIMENSION
 // ============================================================================
 
 export {
-  // Query hooks
-  useOrganization,
-  useOrganizations,
-
   // Mutation hooks
   useCreateOrganization,
-  useUpdateOrganization,
-  useDeleteOrganization,
-
   // Convenience hooks
   useCurrentOrganization,
+  useDeleteOrganization,
+  // Query hooks
+  useOrganization,
   useOrganizationMembers,
-} from './useOrganizations';
+  useOrganizations,
+  useUpdateOrganization,
+} from "./useOrganizations";
 
 // ============================================================================
 // PEOPLE DIMENSION
@@ -166,57 +156,49 @@ export {
 export {
   // Query hooks
   useCurrentUser,
-  usePerson,
-  usePeople,
-
-  // Mutation hooks
-  useUpdatePerson,
-  useInvitePerson,
-
   // Role & permission helpers
   useHasPermission,
   useHasRole,
-} from './usePeople';
+  useInvitePerson,
+  usePeople,
+  usePerson,
+  // Mutation hooks
+  useUpdatePerson,
+} from "./usePeople";
 
 // ============================================================================
 // AUTH DIMENSION
 // ============================================================================
 
 export {
+  // Two-factor authentication
+  use2FA,
   // Authentication hooks
   useLogin,
-  useSignup,
   useLogout,
   useMagicLinkAuth,
-
   // Password management
   usePasswordReset,
   usePasswordResetComplete,
-
+  useSignup,
   // Email verification
   useVerifyEmail,
-
-  // Two-factor authentication
-  use2FA,
-} from './useAuth';
+} from "./useAuth";
 
 // ============================================================================
 // ONTOLOGY DISCOVERY
 // ============================================================================
 
 export {
+  useConnectionTypes,
+  useEnabledFeatures,
+  useEventTypes,
+  useFeatureBreakdown,
+  // Feature detection
+  useHasFeature,
   // Complete ontology
   useOntology,
   useOntologyMetadata,
-
-  // Feature detection
-  useHasFeature,
-  useEnabledFeatures,
-  useFeatureBreakdown,
-
   // Type discovery
   useThingTypes,
-  useConnectionTypes,
-  useEventTypes,
-} from './useOntology';
-
+} from "./useOntology";

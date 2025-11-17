@@ -6,18 +6,10 @@
  * Performance: 95% static HTML, GPU-accelerated animations, glass morphism
  */
 
-import Layout from '@/layouts/Layout.astro';
-import { getCollection } from 'astro:content';
-import { ProductCard } from '@/components/ecommerce/interactive/ProductCard';
-import { CategoryCard } from '@/components/ecommerce/static/CategoryCard';
-import { ProductGrid } from '@/components/ecommerce/static/ProductGrid';
-import { Button } from '@/components/ui/button';
-import { Badge } from '@/components/ui/badge';
-import { CountdownTimer } from '@/components/ecommerce/interactive/CountdownTimer';
-import { SocialProofNotification } from '@/components/ecommerce/interactive/SocialProofNotification';
+import { getCollection } from "astro:content";
 
 // Get all products from content collection
-const allProducts = await getCollection('products');
+const allProducts = await getCollection("products");
 
 // Transform product helper function
 const transformProduct = (p: any) => ({
@@ -41,45 +33,49 @@ const transformProduct = (p: any) => ({
 });
 
 // Get all collections from content
-const allCollections = await getCollection('collections');
+const allCollections = await getCollection("collections");
 
 // Get collection-specific products
-const newArrivalsCollection = allCollections.find(c => c.slug === 'new-arrivals');
-const newArrivalsProducts = newArrivalsCollection?.data.products
-  ?.map((slug: string) => allProducts.find(p => p.slug === slug))
-  .filter(Boolean)
-  .slice(0, 4)
-  .map(transformProduct) || [];
+const newArrivalsCollection = allCollections.find((c) => c.slug === "new-arrivals");
+const _newArrivalsProducts =
+  newArrivalsCollection?.data.products
+    ?.map((slug: string) => allProducts.find((p) => p.slug === slug))
+    .filter(Boolean)
+    .slice(0, 4)
+    .map(transformProduct) || [];
 
-const bestSellersCollection = allCollections.find(c => c.slug === 'bestsellers');
-const bestSellersProducts = bestSellersCollection?.data.products
-  ?.map((slug: string) => allProducts.find(p => p.slug === slug))
-  .filter(Boolean)
-  .slice(0, 4)
-  .map(transformProduct) || [];
+const bestSellersCollection = allCollections.find((c) => c.slug === "bestsellers");
+const _bestSellersProducts =
+  bestSellersCollection?.data.products
+    ?.map((slug: string) => allProducts.find((p) => p.slug === slug))
+    .filter(Boolean)
+    .slice(0, 4)
+    .map(transformProduct) || [];
 
-const saleCollection = allCollections.find(c => c.slug === 'sale');
-const saleProducts = saleCollection?.data.products
-  ?.map((slug: string) => allProducts.find(p => p.slug === slug))
-  .filter(Boolean)
-  .slice(0, 4)
-  .map(transformProduct) || [];
+const saleCollection = allCollections.find((c) => c.slug === "sale");
+const _saleProducts =
+  saleCollection?.data.products
+    ?.map((slug: string) => allProducts.find((p) => p.slug === slug))
+    .filter(Boolean)
+    .slice(0, 4)
+    .map(transformProduct) || [];
 
 // Get category collections (filter out special collections)
-const categoryCollections = allCollections
-  .filter(c => !['new-arrivals', 'bestsellers', 'sale'].includes(c.slug))
-  .map(collection => ({
+const _categoryCollections = allCollections
+  .filter((c) => !["new-arrivals", "bestsellers", "sale"].includes(c.slug))
+  .map((collection) => ({
     id: collection.id,
     slug: collection.slug,
     name: collection.data.name,
     description: collection.data.description,
-    image: collection.data.image || '/placeholder.jpg',
+    image: collection.data.image || "/placeholder.jpg",
     productCount: collection.data.products?.length || 0,
-    products: collection.data.products
-      ?.map((slug: string) => allProducts.find(p => p.slug === slug))
-      .filter(Boolean)
-      .slice(0, 3)
-      .map(transformProduct) || []
+    products:
+      collection.data.products
+        ?.map((slug: string) => allProducts.find((p) => p.slug === slug))
+        .filter(Boolean)
+        .slice(0, 3)
+        .map(transformProduct) || [],
   }));
 ---
 

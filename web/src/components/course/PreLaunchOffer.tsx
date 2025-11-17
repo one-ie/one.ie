@@ -1,17 +1,16 @@
-import React from "react";
-import { Card } from "@/components/ui/card";
+import {
+  AlertTriangle,
+  ArrowRight,
+  CheckCircle2,
+  Clock,
+  FileCheck,
+  Shield,
+  Star,
+  User,
+} from "lucide-react";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
-import {
-  ArrowRight,
-  Clock,
-  CheckCircle2,
-  User,
-  FileCheck,
-  Star,
-  Shield,
-  AlertTriangle,
-} from "lucide-react";
+import { Card } from "@/components/ui/card";
 
 export function PreLaunchOffer() {
   return (
@@ -29,18 +28,15 @@ export function PreLaunchOffer() {
             ONLY 4 SPOTS AVAILABLE WORLDWIDE
           </Badge>
           <h2 className="text-4xl md:text-5xl font-bold mb-6 bg-clip-text">
-            PRE-LAUNCH Offer: Implement the AI Growth System 1:1 Directly with
-            Anthony O'Connell
+            PRE-LAUNCH Offer: Implement the AI Growth System 1:1 Directly with Anthony O'Connell
           </h2>
           <p className="text-xl text-muted-foreground max-w-3xl mx-auto">
-            To get some early feedback and to refine the course I am offering
-            personalised implementation sessions with me. This is your{" "}
-            <span className="font-bold">single opportunity</span> before June
-            2025 to bypass the queue and have The Elevate Ecommerce Framework &
-            AI Prompt Playbook For Ecommerce system{" "}
+            To get some early feedback and to refine the course I am offering personalised
+            implementation sessions with me. This is your{" "}
+            <span className="font-bold">single opportunity</span> before June 2025 to bypass the
+            queue and have The Elevate Ecommerce Framework & AI Prompt Playbook For Ecommerce system{" "}
             <span className="font-bold">
-              personally architected and implemented for YOUR business, directly
-              by me.
+              personally architected and implemented for YOUR business, directly by me.
             </span>
           </p>
         </div>
@@ -50,8 +46,7 @@ export function PreLaunchOffer() {
           <div className="flex items-center gap-3 text-destructive">
             <AlertTriangle className="w-5 h-5" />
             <p className="font-semibold">
-              This level of direct access may never be offered again at any
-              price.
+              This level of direct access may never be offered again at any price.
             </p>
           </div>
         </Card>
@@ -60,20 +55,15 @@ export function PreLaunchOffer() {
         <Card className="max-w-4xl mx-auto p-8 md:p-12 border-primary/20">
           <div className="prose prose-lg dark:prose-invert max-w-none mb-8">
             <p className="lead">
-              The full "AI Prompt Playbook For Ecommerce for Ecom Growth"
-              digital course arrives June 1, 2025, offering a powerful
-              self-paced system.
+              The full "AI Prompt Playbook For Ecommerce for Ecom Growth" digital course arrives
+              June 1, 2025, offering a powerful self-paced system.
             </p>
             <p className="font-bold text-xl">
-              But for 4 Ecom Leaders ONLY, I'm offering something far more
-              potent.
+              But for 4 Ecom Leaders ONLY, I'm offering something far more potent.
             </p>
             <p>
-              This is <span className="font-bold">not</span> the digital course.
-              This is a{" "}
-              <span className="font-bold">
-                white-glove, personalized implementation program
-              </span>{" "}
+              This is <span className="font-bold">not</span> the digital course. This is a{" "}
+              <span className="font-bold">white-glove, personalized implementation program</span>{" "}
               designed for maximum speed and impact.
             </p>
           </div>
@@ -116,9 +106,7 @@ export function PreLaunchOffer() {
                   </div>
                   <div>
                     <h4 className="font-semibold mb-2">{item.title}</h4>
-                    <p className="text-sm text-muted-foreground">
-                      {item.description}
-                    </p>
+                    <p className="text-sm text-muted-foreground">{item.description}</p>
                   </div>
                 </div>
               ))}
@@ -136,8 +124,7 @@ export function PreLaunchOffer() {
               {[
                 {
                   value: "$4,997+",
-                  title:
-                    "Direct 1:1 Implementation Coaching with Anthony O'Connell",
+                  title: "Direct 1:1 Implementation Coaching with Anthony O'Connell",
                   description:
                     "Intensive, personalized video sessions laser-focused on implementing the system in your specific Ecom business.",
                 },
@@ -160,20 +147,13 @@ export function PreLaunchOffer() {
                     "Leverage the system's power months before your competitors even know it exists.",
                 },
               ].map((item, i) => (
-                <div
-                  key={i}
-                  className="flex items-start gap-4 p-4 rounded-lg border bg-card"
-                >
+                <div key={i} className="flex items-start gap-4 p-4 rounded-lg border bg-card">
                   <div className="w-16 h-16 rounded-full bg-primary/10 flex items-center justify-center flex-shrink-0">
-                    <span className="text-sm font-bold text-primary">
-                      ${item.value}
-                    </span>
+                    <span className="text-sm font-bold text-primary">${item.value}</span>
                   </div>
                   <div>
                     <h4 className="font-semibold">{item.title}</h4>
-                    <p className="text-sm text-muted-foreground">
-                      {item.description}
-                    </p>
+                    <p className="text-sm text-muted-foreground">{item.description}</p>
                   </div>
                 </div>
               ))}
@@ -187,10 +167,9 @@ export function PreLaunchOffer() {
               ONLY 4 SPOTS. PERIOD.
             </h3>
             <p className="text-sm mb-4">
-              Let me be blunt: My time for 1:1 work is severely limited. I am
-              making <span className="font-bold">only four (4)</span> of these
-              personalized coaching spots available before the official course
-              launch.
+              Let me be blunt: My time for 1:1 work is severely limited. I am making{" "}
+              <span className="font-bold">only four (4)</span> of these personalized coaching spots
+              available before the official course launch.
             </p>
             <ul className="space-y-2 text-sm">
               <li className="flex items-start gap-2">
@@ -199,13 +178,13 @@ export function PreLaunchOffer() {
               </li>
               <li className="flex items-start gap-2">
                 <span className="text-destructive">•</span>
-                Once these 4 spots are claimed, this specific offer disappears
-                completely and WILL NOT be repeated.
+                Once these 4 spots are claimed, this specific offer disappears completely and WILL
+                NOT be repeated.
               </li>
               <li className="flex items-start gap-2">
                 <span className="text-destructive">•</span>
-                This level of direct, personal access to implement the system
-                with me may genuinely never be available again at any price.
+                This level of direct, personal access to implement the system with me may genuinely
+                never be available again at any price.
               </li>
             </ul>
           </Card>
@@ -217,9 +196,7 @@ export function PreLaunchOffer() {
                 Secure this unique, high-touch implementation package for just
               </p>
               <div className="flex items-center justify-center gap-4">
-                <span className="text-4xl md:text-5xl font-bold text-primary">
-                  $1,499
-                </span>
+                <span className="text-4xl md:text-5xl font-bold text-primary">$1,499</span>
                 <Badge variant="outline" className="text-sm">
                   Total Value: Over $6,000+
                 </Badge>
@@ -242,8 +219,8 @@ export function PreLaunchOffer() {
                 </Button>
               </a>
               <p className="text-xs text-muted-foreground mt-3">
-                Only 4 Spots Worldwide | Offer Vanishes When Full | Includes
-                Lifetime Course Access | Secure Checkout
+                Only 4 Spots Worldwide | Offer Vanishes When Full | Includes Lifetime Course Access
+                | Secure Checkout
               </p>
             </div>
           </div>
@@ -283,14 +260,12 @@ export function PreLaunchOffer() {
                 My Personal Implementation Guarantee
               </h4>
               <p className="text-sm text-muted-foreground">
-                My commitment is to ensure that during our dedicated 1:1
-                coaching time, we successfully tailor and begin implementing the
-                core pillars of The Elevate Ecommerce Framework & AI Prompt
-                Playbook For Ecommerce system specifically for your business.
-                If, by the end of our scheduled sessions, you don't feel we have
-                achieved this foundational implementation together, I will
-                personally work with you to find a solution or offer a full
-                refund.
+                My commitment is to ensure that during our dedicated 1:1 coaching time, we
+                successfully tailor and begin implementing the core pillars of The Elevate Ecommerce
+                Framework & AI Prompt Playbook For Ecommerce system specifically for your business.
+                If, by the end of our scheduled sessions, you don't feel we have achieved this
+                foundational implementation together, I will personally work with you to find a
+                solution or offer a full refund.
               </p>
             </div>
           </div>

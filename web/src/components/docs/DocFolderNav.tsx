@@ -1,12 +1,5 @@
-import { Badge } from '@/components/ui/badge';
-import {
-  Rocket,
-  Layers,
-  Zap,
-  BookText,
-  AlertCircle,
-  FolderOpen,
-} from 'lucide-react';
+import { AlertCircle, BookText, FolderOpen, Layers, Rocket, Zap } from "lucide-react";
+import { Badge } from "@/components/ui/badge";
 
 interface DocFolderNavProps {
   folders: Record<string, number>;
@@ -16,18 +9,18 @@ interface DocFolderNavProps {
 export function DocFolderNav({ folders, currentFolder }: DocFolderNavProps) {
   const getFolderIcon = (folder: string) => {
     switch (folder.toLowerCase()) {
-      case 'getting-started':
+      case "getting-started":
         return Rocket;
-      case 'overview':
+      case "overview":
         return Layers;
-      case 'develop':
+      case "develop":
         return Zap;
-      case 'advanced':
-      case 'ai-sdk':
+      case "advanced":
+      case "ai-sdk":
         return Zap;
-      case 'tutorials':
+      case "tutorials":
         return BookText;
-      case 'troubleshooting':
+      case "troubleshooting":
         return AlertCircle;
       default:
         return FolderOpen;
@@ -36,10 +29,10 @@ export function DocFolderNav({ folders, currentFolder }: DocFolderNavProps) {
 
   const formatFolderName = (folder: string): string => {
     const folderNameMap: Record<string, string> = {
-      'root': 'Root',
-      'getting-started': 'Quick Start',
-      'overview': 'Overview',
-      'develop': 'Develop',
+      root: "Root",
+      "getting-started": "Quick Start",
+      overview: "Overview",
+      develop: "Develop",
     };
 
     if (folderNameMap[folder]) {
@@ -47,17 +40,17 @@ export function DocFolderNav({ folders, currentFolder }: DocFolderNavProps) {
     }
 
     return folder
-      .replace(/-/g, ' ')
-      .split(' ')
+      .replace(/-/g, " ")
+      .split(" ")
       .map((word) => word.charAt(0).toUpperCase() + word.slice(1))
-      .join(' ');
+      .join(" ");
   };
 
   const getFolderOrder = (folder: string): number => {
     const orderMap: Record<string, number> = {
-      'getting-started': 1,
-      'overview': 2,
-      'develop': 3,
+      "getting-started": 1,
+      overview: 2,
+      develop: 3,
     };
     return orderMap[folder] ?? 999;
   };

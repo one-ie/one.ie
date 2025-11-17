@@ -10,9 +10,9 @@
  */
 
 import { Effect } from "effect";
-import { ThingService } from "./ThingService";
 import { ConnectionService } from "./ConnectionService";
 import { EventService } from "./EventService";
+import { ThingService } from "./ThingService";
 
 // ============================================================================
 // TYPES
@@ -116,7 +116,7 @@ export class ProductService {
   /**
    * List all products
    */
-  static list = (groupId?: string, limit?: number) =>
+  static list = (_groupId?: string, limit?: number) =>
     Effect.gen(function* () {
       // Note: groupId parameter is kept for API compatibility but not used in DataProvider
       // Group scoping should be handled at the caller level if needed
@@ -135,8 +135,7 @@ export class ProductService {
       const allProducts = yield* ProductService.list(groupId);
 
       return allProducts.filter(
-        (product: any) =>
-          (product.properties as ProductProperties).category === category
+        (product: any) => (product.properties as ProductProperties).category === category
       );
     });
 
@@ -180,10 +179,7 @@ export class ProductService {
       const product = yield* ProductService.get(id);
 
       // Get review connections
-      const reviewConnections = yield* ConnectionService.listTo(
-        id,
-        "review" as any
-      );
+      const reviewConnections = yield* ConnectionService.listTo(id, "review" as any);
 
       // Get review things
       const reviews = yield* Effect.all(
@@ -197,19 +193,6 @@ export class ProductService {
         averageRating: ProductService.calculateAverageRating(reviews),
       };
     });
-
-  /**
-   * Calculate average rating from reviews
-   */
-  private static calculateAverageRating = (reviews: any[]): number => {
-    if (reviews.length === 0) return 0;
-
-    const sum = reviews.reduce(
-      (acc, review) => acc + (review.properties.rating || 0),
-      0
-    );
-    return sum / reviews.length;
-  };
 
   /**
    * Get related products (same category)
@@ -280,9 +263,7 @@ export class ProductService {
       });
 
       const categories = new Set(
-        allProducts.map(
-          (product: any) => (product.properties as ProductProperties).category
-        )
+        allProducts.map((product: any) => (product.properties as ProductProperties).category)
       );
 
       return Array.from(categories);

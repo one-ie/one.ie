@@ -5,18 +5,15 @@
  * auto-generated and customizable slug
  */
 
-import { useState, useEffect, useCallback } from 'react';
-import { Button } from '@/components/ui/button';
-import { Input } from '@/components/ui/input';
-import { Label } from '@/components/ui/label';
-import { Textarea } from '@/components/ui/textarea';
-import { Alert, AlertDescription } from '@/components/ui/alert';
-import {
-  useCreateWorkspace,
-  useCheckWorkspaceSlugAvailable,
-} from '@/hooks/useOnboarding';
-import { toast } from 'sonner';
-import { Check, X, AlertCircle } from 'lucide-react';
+import { AlertCircle, Check, X } from "lucide-react";
+import { useCallback, useEffect, useState } from "react";
+import { toast } from "sonner";
+import { Alert, AlertDescription } from "@/components/ui/alert";
+import { Button } from "@/components/ui/button";
+import { Input } from "@/components/ui/input";
+import { Label } from "@/components/ui/label";
+import { Textarea } from "@/components/ui/textarea";
+import { useCheckWorkspaceSlugAvailable, useCreateWorkspace } from "@/hooks/useOnboarding";
 
 interface WorkspaceFormProps {
   userId: string;
@@ -24,15 +21,11 @@ interface WorkspaceFormProps {
   onSkip?: () => void;
 }
 
-export function WorkspaceForm({
-  userId,
-  onSuccess,
-  onSkip,
-}: WorkspaceFormProps) {
-  const [name, setName] = useState('');
-  const [slug, setSlug] = useState('');
-  const [description, setDescription] = useState('');
-  const [slugStatus, setSlugStatus] = useState<'available' | 'taken' | 'checking' | null>(null);
+export function WorkspaceForm({ userId, onSuccess, onSkip }: WorkspaceFormProps) {
+  const [name, setName] = useState("");
+  const [slug, setSlug] = useState("");
+  const [description, setDescription] = useState("");
+  const [slugStatus, setSlugStatus] = useState<"available" | "taken" | "checking" | null>(null);
   const [errors, setErrors] = useState<Record<string, string>>({});
   const { mutate: createWorkspace, loading } = useCreateWorkspace();
   const { check: checkSlug, loading: checkingSlug } = useCheckWorkspaceSlugAvailable();
@@ -42,10 +35,10 @@ export function WorkspaceForm({
     return workspaceName
       .toLowerCase()
       .trim()
-      .replace(/[^\w\s-]/g, '')
-      .replace(/\s+/g, '-')
-      .replace(/-+/g, '-')
-      .replace(/^-+|-+$/g, '')
+      .replace(/[^\w\s-]/g, "")
+      .replace(/\s+/g, "-")
+      .replace(/-+/g, "-")
+      .replace(/^-+|-+$/g, "")
       .slice(0, 50);
   }, []);
 
@@ -64,9 +57,9 @@ export function WorkspaceForm({
     }
 
     const timer = setTimeout(async () => {
-      setSlugStatus('checking');
+      setSlugStatus("checking");
       const available = await checkSlug(slug);
-      setSlugStatus(available ? 'available' : 'taken');
+      setSlugStatus(available ? "available" : "taken");
     }, 500);
 
     return () => clearTimeout(timer);
@@ -76,21 +69,21 @@ export function WorkspaceForm({
     const newErrors: Record<string, string> = {};
 
     if (!name || name.trim().length === 0) {
-      newErrors.name = 'Workspace name is required';
+      newErrors.name = "Workspace name is required";
     } else if (name.length < 2 || name.length > 100) {
-      newErrors.name = 'Name must be 2-100 characters';
+      newErrors.name = "Name must be 2-100 characters";
     }
 
     if (!slug || slug.trim().length === 0) {
-      newErrors.slug = 'Workspace slug is required';
+      newErrors.slug = "Workspace slug is required";
     } else if (slug.length < 3 || slug.length > 50) {
-      newErrors.slug = 'Slug must be 3-50 characters';
-    } else if (!/^[a-z0-9\-]+$/.test(slug)) {
-      newErrors.slug = 'Slug can only contain lowercase letters, numbers, and hyphens';
+      newErrors.slug = "Slug must be 3-50 characters";
+    } else if (!/^[a-z0-9-]+$/.test(slug)) {
+      newErrors.slug = "Slug can only contain lowercase letters, numbers, and hyphens";
     }
 
     if (description && description.length > 500) {
-      newErrors.description = 'Description must be 500 characters or less';
+      newErrors.description = "Description must be 500 characters or less";
     }
 
     setErrors(newErrors);
@@ -102,10 +95,10 @@ export function WorkspaceForm({
 
     if (!validateForm()) return;
 
-    if (slugStatus !== 'available') {
+    if (slugStatus !== "available") {
       setErrors({
         ...errors,
-        slug: slugStatus === 'taken' ? 'Slug already taken' : 'Please check slug',
+        slug: slugStatus === "taken" ? "Slug already taken" : "Please check slug",
       });
       return;
     }
@@ -119,14 +112,14 @@ export function WorkspaceForm({
       });
 
       if (result.success) {
-        toast.success('Workspace created!', {
+        toast.success("Workspace created!", {
           description: `Your workspace "${name}" has been created.`,
         });
         onSuccess();
       }
     } catch (err) {
-      const message = err instanceof Error ? err.message : 'Workspace creation failed';
-      toast.error('Creation failed', { description: message });
+      const message = err instanceof Error ? err.message : "Workspace creation failed";
+      toast.error("Creation failed", { description: message });
     }
   };
 
@@ -143,9 +136,7 @@ export function WorkspaceForm({
           onChange={(e) => setName(e.target.value)}
           disabled={loading}
         />
-        {errors.name && (
-          <p className="text-sm font-medium text-destructive">{errors.name}</p>
-        )}
+        {errors.name && <p className="text-sm font-medium text-destructive">{errors.name}</p>}
         <p className="text-xs text-muted-foreground">
           This is the name of your workspace that others will see
         </p>
@@ -164,24 +155,22 @@ export function WorkspaceForm({
               value={slug}
               onChange={(e) => setSlug(e.target.value.toLowerCase())}
               disabled={loading}
-              className={slugStatus === 'checking' ? 'pr-10' : ''}
+              className={slugStatus === "checking" ? "pr-10" : ""}
             />
             {slug && (
               <div className="absolute right-3 top-1/2 -translate-y-1/2">
                 {checkingSlug ? (
                   <div className="animate-spin rounded-full h-4 w-4 border-b-2 border-primary" />
-                ) : slugStatus === 'available' ? (
+                ) : slugStatus === "available" ? (
                   <Check className="w-4 h-4 text-green-500" />
-                ) : slugStatus === 'taken' ? (
+                ) : slugStatus === "taken" ? (
                   <X className="w-4 h-4 text-destructive" />
                 ) : null}
               </div>
             )}
           </div>
         </div>
-        {errors.slug && (
-          <p className="text-sm font-medium text-destructive">{errors.slug}</p>
-        )}
+        {errors.slug && <p className="text-sm font-medium text-destructive">{errors.slug}</p>}
         <p className="text-xs text-muted-foreground">
           3-50 characters, lowercase, numbers, and hyphens only
         </p>
@@ -202,17 +191,15 @@ export function WorkspaceForm({
         {errors.description && (
           <p className="text-sm font-medium text-destructive">{errors.description}</p>
         )}
-        <p className="text-xs text-muted-foreground">
-          {description.length}/500 characters
-        </p>
+        <p className="text-xs text-muted-foreground">{description.length}/500 characters</p>
       </div>
 
       {/* Info Alert */}
       <Alert>
         <AlertCircle className="h-4 w-4" />
         <AlertDescription className="text-sm">
-          Your workspace URL is how others will access your workspace.
-          Choose something memorable and relevant.
+          Your workspace URL is how others will access your workspace. Choose something memorable
+          and relevant.
         </AlertDescription>
       </Alert>
 
@@ -220,13 +207,9 @@ export function WorkspaceForm({
       <Button
         type="submit"
         className="w-full"
-        disabled={
-          loading ||
-          !name ||
-          (slug && slugStatus !== 'available')
-        }
+        disabled={loading || !name || (slug && slugStatus !== "available")}
       >
-        {loading ? 'Creating...' : 'Create Workspace'}
+        {loading ? "Creating..." : "Create Workspace"}
       </Button>
 
       {/* Skip Button */}

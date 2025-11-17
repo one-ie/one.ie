@@ -1,15 +1,15 @@
 // Product types for ecommerce templates
 // Maps to ecommerce ontology: products, categories, collections
 
-import type { CollectionEntry } from 'astro:content';
+import type { CollectionEntry } from "astro:content";
 
 // Core product types from content collections
-export type Product = CollectionEntry<'products'>['data'] & {
+export type Product = CollectionEntry<"products">["data"] & {
   id?: string; // Optional ID (defaults to slug if not provided)
 };
-export type ProductVariant = NonNullable<Product['variants']>[number];
-export type Category = CollectionEntry<'categories'>['data'];
-export type ProductCollection = CollectionEntry<'collections'>['data'];
+export type ProductVariant = NonNullable<Product["variants"]>[number];
+export type Category = CollectionEntry<"categories">["data"];
+export type ProductCollection = CollectionEntry<"collections">["data"];
 
 // Extended product with slug and body
 export interface ProductWithContent extends Product {
@@ -48,7 +48,7 @@ export interface Order {
   tax: number;
   shipping: number;
   total: number;
-  status: 'pending' | 'processing' | 'shipped' | 'delivered' | 'cancelled';
+  status: "pending" | "processing" | "shipped" | "delivered" | "cancelled";
   shippingAddress: Address;
   billingAddress: Address;
   paymentId?: string;
@@ -71,8 +71,8 @@ export interface Payment {
   orderId: string;
   amount: number;
   currency: string;
-  status: 'pending' | 'completed' | 'failed' | 'refunded';
-  method: 'card' | 'paypal' | 'crypto' | 'bank_transfer';
+  status: "pending" | "completed" | "failed" | "refunded";
+  method: "card" | "paypal" | "crypto" | "bank_transfer";
   transactionId?: string;
   createdAt: number;
 }
@@ -94,7 +94,7 @@ export interface Review {
 // Discount types (thing type: discount_code in ontology)
 export interface DiscountCode {
   code: string;
-  type: 'percentage' | 'fixed' | 'free_shipping';
+  type: "percentage" | "fixed" | "free_shipping";
   value: number;
   minPurchase?: number;
   expiresAt?: number;

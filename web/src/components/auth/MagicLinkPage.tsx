@@ -1,6 +1,6 @@
 import { AppProviders } from "@/components/providers/AppProviders";
-import { RequestMagicLinkForm } from "./RequestMagicLinkForm";
 import { MagicLinkAuth } from "./MagicLinkAuth";
+import { RequestMagicLinkForm } from "./RequestMagicLinkForm";
 
 export function MagicLinkPage({ token }: { token?: string | null }) {
   return (

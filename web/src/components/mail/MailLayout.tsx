@@ -1,6 +1,5 @@
-"use client"
+"use client";
 
-import * as React from "react"
 import {
   AlertCircle,
   Archive,
@@ -14,38 +13,29 @@ import {
   ShoppingCart,
   Trash2,
   Users2,
-} from "lucide-react"
-import { Toaster } from "sonner"
-
-import { cn } from "@/lib/utils"
-import { Input } from "@/components/ui/input"
-import { Button } from "@/components/ui/button"
-import {
-  ResizableHandle,
-  ResizablePanel,
-  ResizablePanelGroup,
-} from "@/components/ui/resizable"
-import { Separator } from "@/components/ui/separator"
-import {
-  Tabs,
-  TabsContent,
-  TabsList,
-  TabsTrigger,
-} from "@/components/ui/tabs"
-import { TooltipProvider } from "@/components/ui/tooltip"
-import { AccountSwitcher } from "./AccountSwitcher"
-import { MailDisplay } from "./MailDisplay"
-import { MailList } from "./MailList"
-import { Nav } from "./Nav"
-import { MobileSidebar } from "./MobileSidebar"
-import { accounts, mails } from "@/data/mail-data"
-import { useMail, type MailFolder } from "./use-mail"
-import { useMediaQuery } from "@/hooks/use-media-query"
+} from "lucide-react";
+import * as React from "react";
+import { Toaster } from "sonner";
+import { Button } from "@/components/ui/button";
+import { Input } from "@/components/ui/input";
+import { ResizableHandle, ResizablePanel, ResizablePanelGroup } from "@/components/ui/resizable";
+import { Separator } from "@/components/ui/separator";
+import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
+import { TooltipProvider } from "@/components/ui/tooltip";
+import { accounts, mails } from "@/data/mail-data";
+import { useMediaQuery } from "@/hooks/use-media-query";
+import { cn } from "@/lib/utils";
+import { AccountSwitcher } from "./AccountSwitcher";
+import { MailDisplay } from "./MailDisplay";
+import { MailList } from "./MailList";
+import { MobileSidebar } from "./MobileSidebar";
+import { Nav } from "./Nav";
+import { type MailFolder, useMail } from "./use-mail";
 
 interface MailLayoutProps {
-  defaultLayout?: number[] | undefined
-  defaultCollapsed?: boolean
-  navCollapsedSize?: number
+  defaultLayout?: number[] | undefined;
+  defaultCollapsed?: boolean;
+  navCollapsedSize?: number;
 }
 
 export function MailLayout({
@@ -53,11 +43,11 @@ export function MailLayout({
   defaultCollapsed = false,
   navCollapsedSize = 4,
 }: MailLayoutProps) {
-  const [isCollapsed, setIsCollapsed] = React.useState(defaultCollapsed)
-  const [mail, setMail] = useMail()
-  const [filteredMails, setFilteredMails] = React.useState(mails)
-  const [showMailDisplay, setShowMailDisplay] = React.useState(false)
-  const isMobile = useMediaQuery("(max-width: 768px)")
+  const [isCollapsed, setIsCollapsed] = React.useState(defaultCollapsed);
+  const [mail, setMail] = useMail();
+  const [filteredMails, setFilteredMails] = React.useState(mails);
+  const [showMailDisplay, setShowMailDisplay] = React.useState(false);
+  const isMobile = useMediaQuery("(max-width: 768px)");
 
   // Filter mails based on active folder and search query
   const filterMailsByFolder = React.useCallback((folder: MailFolder) => {
@@ -76,59 +66,59 @@ export function MailLayout({
             !m.labels.includes("forums") &&
             !m.labels.includes("shopping") &&
             !m.labels.includes("promotions")
-        )
+        );
       case "drafts":
-        return mails.filter((m) => m.labels.includes("draft"))
+        return mails.filter((m) => m.labels.includes("draft"));
       case "sent":
-        return mails.filter((m) => m.labels.includes("sent"))
+        return mails.filter((m) => m.labels.includes("sent"));
       case "junk":
-        return mails.filter((m) => m.labels.includes("junk"))
+        return mails.filter((m) => m.labels.includes("junk"));
       case "trash":
-        return mails.filter((m) => m.labels.includes("trash"))
+        return mails.filter((m) => m.labels.includes("trash"));
       case "archive":
-        return mails.filter((m) => m.labels.includes("archive"))
+        return mails.filter((m) => m.labels.includes("archive"));
       case "social":
-        return mails.filter((m) => m.labels.includes("social"))
+        return mails.filter((m) => m.labels.includes("social"));
       case "updates":
-        return mails.filter((m) => m.labels.includes("updates"))
+        return mails.filter((m) => m.labels.includes("updates"));
       case "forums":
-        return mails.filter((m) => m.labels.includes("forums"))
+        return mails.filter((m) => m.labels.includes("forums"));
       case "shopping":
-        return mails.filter((m) => m.labels.includes("shopping"))
+        return mails.filter((m) => m.labels.includes("shopping"));
       case "promotions":
-        return mails.filter((m) => m.labels.includes("promotions"))
+        return mails.filter((m) => m.labels.includes("promotions"));
       default:
-        return mails
+        return mails;
     }
-  }, [])
+  }, []);
 
   // Apply folder filtering and search query
   React.useEffect(() => {
-    let filtered = filterMailsByFolder(mail.activeFolder)
+    let filtered = filterMailsByFolder(mail.activeFolder);
 
     if (mail.searchQuery.trim() !== "") {
-      const query = mail.searchQuery.toLowerCase()
+      const query = mail.searchQuery.toLowerCase();
       filtered = filtered.filter(
         (m) =>
           m.name.toLowerCase().includes(query) ||
           m.subject.toLowerCase().includes(query) ||
           m.text.toLowerCase().includes(query) ||
           m.email.toLowerCase().includes(query)
-      )
+      );
     }
 
-    setFilteredMails(filtered)
-  }, [mail.activeFolder, mail.searchQuery, filterMailsByFolder])
+    setFilteredMails(filtered);
+  }, [mail.activeFolder, mail.searchQuery, filterMailsByFolder]);
 
   // Handler for folder navigation
   const handleFolderClick = (folder: MailFolder) => {
-    setMail({ ...mail, activeFolder: folder })
-  }
+    setMail({ ...mail, activeFolder: folder });
+  };
 
   // Get folder display name
   const getFolderDisplayName = (folder: MailFolder): string => {
-    return folder.charAt(0).toUpperCase() + folder.slice(1)
-  }
+    return folder.charAt(0).toUpperCase() + folder.slice(1);
+  };
 
   // Calculate badge counts for each folder
   const folderCounts = React.useMemo(() => {
@@ -144,17 +134,17 @@ export function MailLayout({
       forums: filterMailsByFolder("forums").length,
       shopping: filterMailsByFolder("shopping").length,
       promotions: filterMailsByFolder("promotions").length,
-    }
-  }, [filterMailsByFolder])
+    };
+  }, [filterMailsByFolder]);
 
   // On mobile, show mail display when email is selected
   React.useEffect(() => {
     if (isMobile && mail.selected) {
-      setShowMailDisplay(true)
+      setShowMailDisplay(true);
     } else if (!isMobile) {
-      setShowMailDisplay(false)
+      setShowMailDisplay(false);
     }
-  }, [mail.selected, isMobile])
+  }, [mail.selected, isMobile]);
 
   // Prepare navigation links for reuse
   const primaryLinks = [
@@ -200,7 +190,7 @@ export function MailLayout({
       variant: mail.activeFolder === "archive" ? ("default" as const) : ("ghost" as const),
       onClick: () => handleFolderClick("archive"),
     },
-  ]
+  ];
 
   const secondaryLinks = [
     {
@@ -238,7 +228,7 @@ export function MailLayout({
       variant: mail.activeFolder === "promotions" ? ("default" as const) : ("ghost" as const),
       onClick: () => handleFolderClick("promotions"),
     },
-  ]
+  ];
 
   // Mobile layout - show either list or detail
   if (isMobile) {
@@ -296,21 +286,25 @@ export function MailLayout({
                 size="sm"
                 className="m-2 w-fit gap-2"
                 onClick={() => {
-                  setShowMailDisplay(false)
-                  setMail({ ...mail, selected: null })
+                  setShowMailDisplay(false);
+                  setMail({ ...mail, selected: null });
                 }}
               >
                 <ArrowLeft className="size-4" />
                 Back to list
               </Button>
               <MailDisplay
-                mail={filteredMails.find((item) => item.id === mail.selected) || mails.find((item) => item.id === mail.selected) || null}
+                mail={
+                  filteredMails.find((item) => item.id === mail.selected) ||
+                  mails.find((item) => item.id === mail.selected) ||
+                  null
+                }
               />
             </div>
           )}
         </div>
       </TooltipProvider>
-    )
+    );
   }
 
   // Desktop layout (existing code)
@@ -320,7 +314,7 @@ export function MailLayout({
       <ResizablePanelGroup
         direction="horizontal"
         onLayout={(sizes: number[]) => {
-          document.cookie = `react-resizable-panels:layout=${JSON.stringify(sizes)}`
+          document.cookie = `react-resizable-panels:layout=${JSON.stringify(sizes)}`;
         }}
         className="h-full items-stretch"
       >
@@ -331,17 +325,14 @@ export function MailLayout({
           minSize={15}
           maxSize={20}
           onCollapse={() => {
-            setIsCollapsed(true)
-            document.cookie = `react-resizable-panels:collapsed=${JSON.stringify(true)}`
+            setIsCollapsed(true);
+            document.cookie = `react-resizable-panels:collapsed=${JSON.stringify(true)}`;
           }}
           onExpand={() => {
-            setIsCollapsed(false)
-            document.cookie = `react-resizable-panels:collapsed=${JSON.stringify(false)}`
+            setIsCollapsed(false);
+            document.cookie = `react-resizable-panels:collapsed=${JSON.stringify(false)}`;
           }}
-          className={cn(
-            isCollapsed &&
-              "min-w-[50px] transition-all duration-300 ease-in-out"
-          )}
+          className={cn(isCollapsed && "min-w-[50px] transition-all duration-300 ease-in-out")}
         >
           <div
             className={cn(
@@ -349,21 +340,12 @@ export function MailLayout({
               isCollapsed ? "h-[52px]" : "px-2"
             )}
           >
-            <AccountSwitcher
-              isCollapsed={isCollapsed}
-              accounts={accounts}
-            />
+            <AccountSwitcher isCollapsed={isCollapsed} accounts={accounts} />
           </div>
           <Separator />
-          <Nav
-            isCollapsed={isCollapsed}
-            links={primaryLinks}
-          />
+          <Nav isCollapsed={isCollapsed} links={primaryLinks} />
           <Separator />
-          <Nav
-            isCollapsed={isCollapsed}
-            links={secondaryLinks}
-          />
+          <Nav isCollapsed={isCollapsed} links={secondaryLinks} />
         </ResizablePanel>
         <ResizableHandle withHandle />
         <ResizablePanel defaultSize={defaultLayout[1]} minSize={30}>
@@ -371,16 +353,10 @@ export function MailLayout({
             <div className="flex items-center px-4 py-2">
               <h1 className="text-xl font-bold">{getFolderDisplayName(mail.activeFolder)}</h1>
               <TabsList className="ml-auto">
-                <TabsTrigger
-                  value="all"
-                  className="text-zinc-600 dark:text-zinc-200"
-                >
+                <TabsTrigger value="all" className="text-zinc-600 dark:text-zinc-200">
                   All mail
                 </TabsTrigger>
-                <TabsTrigger
-                  value="unread"
-                  className="text-zinc-600 dark:text-zinc-200"
-                >
+                <TabsTrigger value="unread" className="text-zinc-600 dark:text-zinc-200">
                   Unread
                 </TabsTrigger>
               </TabsList>
@@ -410,10 +386,14 @@ export function MailLayout({
         <ResizableHandle withHandle />
         <ResizablePanel defaultSize={defaultLayout[2]} minSize={30}>
           <MailDisplay
-            mail={filteredMails.find((item) => item.id === mail.selected) || mails.find((item) => item.id === mail.selected) || null}
+            mail={
+              filteredMails.find((item) => item.id === mail.selected) ||
+              mails.find((item) => item.id === mail.selected) ||
+              null
+            }
           />
         </ResizablePanel>
       </ResizablePanelGroup>
     </TooltipProvider>
-  )
+  );
 }

@@ -1,4 +1,5 @@
 ---
+import Layout from "@/layouts/Layout.astro";
 /**
  * Infer 12: Create Home Page - ULTRA PREMIUM v4.0
  * Polished & Beautiful Ecommerce Storefront
@@ -16,13 +17,12 @@
  * ✅ Performance optimized
  */
 
-import Layout from '@/layouts/Layout.astro';
-import { getCollection } from 'astro:content';
-import ProductCard from '@/components/ecommerce/interactive/ProductCard';
-import { CategoryGrid } from '@/components/ecommerce/static/CategoryGrid';
+import { getCollection } from "astro:content";
+import { ProductCard } from "@/components/ecommerce/interactive/ProductCard";
+import { CategoryGrid } from "@/components/ecommerce/static/CategoryGrid";
 
 // Get all products from content collection
-const allProducts = await getCollection('products');
+const allProducts = await getCollection("products");
 
 // Transform product helper function
 const transformProduct = (p: any) => ({
@@ -47,70 +47,75 @@ const transformProduct = (p: any) => ({
 });
 
 // Get all collections from content
-const allCollections = await getCollection('collections');
+const allCollections = await getCollection("collections");
 
 // Transform collections to include images
 const transformCollection = (collection: any) => ({
   slug: collection.slug,
   name: collection.data.name || collection.slug,
-  description: collection.data.description || '',
-  image: collection.data.image || 'https://images.unsplash.com/photo-1441986300917-64674bd600d8?w=1200&q=80',
+  description: collection.data.description || "",
+  image:
+    collection.data.image ||
+    "https://images.unsplash.com/photo-1441986300917-64674bd600d8?w=1200&q=80",
   products: collection.data.products || [],
 });
 
 // Get all categories from content
-const allCategories = await getCollection('categories');
+const allCategories = await getCollection("categories");
 
 // Get featured products (6 items)
 const featuredProducts = allProducts
-  .filter(p => p.data.featured)
+  .filter((p) => p.data.featured)
   .slice(0, 6)
   .map(transformProduct);
 
 // If not enough featured, fill with random products
 if (featuredProducts.length < 6) {
   const remaining = allProducts
-    .filter(p => !p.data.featured)
+    .filter((p) => !p.data.featured)
     .slice(0, 6 - featuredProducts.length)
     .map(transformProduct);
   featuredProducts.push(...remaining);
 }
 
 // Get new arrivals (4 items) - products in new-arrivals collection
-const newArrivalsCollection = allCollections.find(c => c.slug === 'new-arrivals');
-const newArrivalsProducts = newArrivalsCollection?.data.products
-  ?.map((slug: string) => allProducts.find(p => p.slug === slug))
-  .filter(Boolean)
-  .slice(0, 4)
-  .map(transformProduct) || allProducts.slice(0, 4).map(transformProduct);
+const newArrivalsCollection = allCollections.find((c) => c.slug === "new-arrivals");
+const newArrivalsProducts =
+  newArrivalsCollection?.data.products
+    ?.map((slug: string) => allProducts.find((p) => p.slug === slug))
+    .filter(Boolean)
+    .slice(0, 4)
+    .map(transformProduct) || allProducts.slice(0, 4).map(transformProduct);
 
 // Get best sellers (4 items) - products in bestsellers collection
-const bestSellersCollection = allCollections.find(c => c.slug === 'bestsellers');
-const bestSellersProducts = bestSellersCollection?.data.products
-  ?.map((slug: string) => allProducts.find(p => p.slug === slug))
-  .filter(Boolean)
-  .slice(0, 4)
-  .map(transformProduct) || allProducts.slice(4, 8).map(transformProduct);
+const bestSellersCollection = allCollections.find((c) => c.slug === "bestsellers");
+const bestSellersProducts =
+  bestSellersCollection?.data.products
+    ?.map((slug: string) => allProducts.find((p) => p.slug === slug))
+    .filter(Boolean)
+    .slice(0, 4)
+    .map(transformProduct) || allProducts.slice(4, 8).map(transformProduct);
 
 // Get sale products
-const saleCollection = allCollections.find(c => c.slug === 'sale');
-const saleProducts = saleCollection?.data.products
-  ?.map((slug: string) => allProducts.find(p => p.slug === slug))
-  .filter(Boolean)
-  .slice(0, 4)
-  .map(transformProduct) || [];
+const saleCollection = allCollections.find((c) => c.slug === "sale");
+const saleProducts =
+  saleCollection?.data.products
+    ?.map((slug: string) => allProducts.find((p) => p.slug === slug))
+    .filter(Boolean)
+    .slice(0, 4)
+    .map(transformProduct) || [];
 
 // Get categories from API - map to icons and images
 const categoryCards = allCategories
-  .filter(cat => cat.slug !== 'pacha') // Filter out pacha category
+  .filter((cat) => cat.slug !== "pacha") // Filter out pacha category
   .map((cat: any, idx: number) => {
     const icons = [
-      { icon: '💻', accent: 'from-blue-600 to-cyan-600' },
-      { icon: '🛋️', accent: 'from-orange-600 to-yellow-600' },
-      { icon: '👟', accent: 'from-red-600 to-pink-600' },
-      { icon: '🎨', accent: 'from-purple-600 to-pink-600' },
-      { icon: '👜', accent: 'from-amber-600 to-orange-600' },
-      { icon: '🏡', accent: 'from-green-600 to-emerald-600' },
+      { icon: "💻", accent: "from-blue-600 to-cyan-600" },
+      { icon: "🛋️", accent: "from-orange-600 to-yellow-600" },
+      { icon: "👟", accent: "from-red-600 to-pink-600" },
+      { icon: "🎨", accent: "from-purple-600 to-pink-600" },
+      { icon: "👜", accent: "from-amber-600 to-orange-600" },
+      { icon: "🏡", accent: "from-green-600 to-emerald-600" },
     ];
     const iconSet = icons[idx % icons.length];
 
@@ -127,40 +132,44 @@ const categoryCards = allCategories
 // Testimonials data
 const testimonials = [
   {
-    name: 'Sarah Anderson',
-    title: 'Fashion Designer',
+    name: "Sarah Anderson",
+    title: "Fashion Designer",
     rating: 5,
-    review: 'The quality is exceptional. I recommend this to all my clients. The attention to detail is unmatched.',
-    avatar: 'SA',
+    review:
+      "The quality is exceptional. I recommend this to all my clients. The attention to detail is unmatched.",
+    avatar: "SA",
     verified: true,
-    avatar_gradient: 'from-pink-500 to-rose-500',
+    avatar_gradient: "from-pink-500 to-rose-500",
   },
   {
-    name: 'Michael Rodriguez',
-    title: 'Tech Entrepreneur',
+    name: "Michael Rodriguez",
+    title: "Tech Entrepreneur",
     rating: 5,
-    review: 'Best purchase I\'ve made in years. The product is durable, stylish, and worth every penny.',
-    avatar: 'MR',
+    review:
+      "Best purchase I've made in years. The product is durable, stylish, and worth every penny.",
+    avatar: "MR",
     verified: true,
-    avatar_gradient: 'from-blue-500 to-cyan-500',
+    avatar_gradient: "from-blue-500 to-cyan-500",
   },
   {
-    name: 'Emma Wilson',
-    title: 'Brand Strategist',
+    name: "Emma Wilson",
+    title: "Brand Strategist",
     rating: 5,
-    review: 'Customer service is outstanding. They went above and beyond to ensure my satisfaction.',
-    avatar: 'EW',
+    review:
+      "Customer service is outstanding. They went above and beyond to ensure my satisfaction.",
+    avatar: "EW",
     verified: true,
-    avatar_gradient: 'from-purple-500 to-pink-500',
+    avatar_gradient: "from-purple-500 to-pink-500",
   },
   {
-    name: 'James Chen',
-    title: 'Creative Director',
+    name: "James Chen",
+    title: "Creative Director",
     rating: 5,
-    review: 'Premium quality at a fair price. I\'ve purchased multiple times and never been disappointed.',
-    avatar: 'JC',
+    review:
+      "Premium quality at a fair price. I've purchased multiple times and never been disappointed.",
+    avatar: "JC",
     verified: true,
-    avatar_gradient: 'from-orange-500 to-yellow-500',
+    avatar_gradient: "from-orange-500 to-yellow-500",
   },
 ];
 ---

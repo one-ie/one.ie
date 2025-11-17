@@ -3,20 +3,20 @@ import { z } from "zod";
 // Base schemas
 export const LessonSchema = z.object({
   name: z.string(),
-  value: z.string()
+  value: z.string(),
 });
 
 export const ModuleDetailsSchema = z.object({
   overview: z.string(),
   benefits: z.array(z.string()),
-  implementation: z.array(z.string())
+  implementation: z.array(z.string()),
 });
 
 export const ModuleSchema = z.object({
   title: z.string(),
   description: z.string(),
   features: z.array(z.string()),
-  details: ModuleDetailsSchema.optional()
+  details: ModuleDetailsSchema.optional(),
 });
 
 export const CourseDetailsSchema = z.object({
@@ -30,9 +30,9 @@ export const CourseDetailsSchema = z.object({
   valueProposition: z.string(),
   spots: z.object({
     total: z.number(),
-    remaining: z.number()
+    remaining: z.number(),
   }),
-  launchDate: z.string()
+  launchDate: z.string(),
 });
 
 // Derived types
@@ -64,4 +64,4 @@ export interface LegacyModule {
   mainDescription: string;
   output: string;
   lessons: Lesson[];
-} 
+}

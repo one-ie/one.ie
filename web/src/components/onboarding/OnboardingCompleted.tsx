@@ -4,9 +4,9 @@
  * Shows congratulations message and next steps
  */
 
-import { Button } from '@/components/ui/button';
-import { Card } from '@/components/ui/card';
-import { CheckCircle, ArrowRight, Settings } from 'lucide-react';
+import { ArrowRight, CheckCircle, Settings } from "lucide-react";
+import { Button } from "@/components/ui/button";
+import { Card } from "@/components/ui/card";
 
 interface OnboardingCompletedProps {
   userId: string;
@@ -15,7 +15,7 @@ interface OnboardingCompletedProps {
 
 export function OnboardingCompleted({
   userId,
-  workspaceName = 'Your Workspace',
+  workspaceName = "Your Workspace",
 }: OnboardingCompletedProps) {
   return (
     <div className="space-y-8 text-center">
@@ -30,9 +30,7 @@ export function OnboardingCompleted({
       {/* Success Message */}
       <div className="space-y-2">
         <h2 className="text-2xl font-bold">You're All Set!</h2>
-        <p className="text-muted-foreground">
-          Your Wave 1 creator profile is ready to go
-        </p>
+        <p className="text-muted-foreground">Your Wave 1 creator profile is ready to go</p>
       </div>
 
       {/* What You've Created */}
@@ -57,9 +55,7 @@ export function OnboardingCompleted({
             </div>
             <div>
               <p className="font-medium">Workspace</p>
-              <p className="text-sm text-muted-foreground">
-                {workspaceName} for your projects
-              </p>
+              <p className="text-sm text-muted-foreground">{workspaceName} for your projects</p>
             </div>
           </div>
 
@@ -69,9 +65,7 @@ export function OnboardingCompleted({
             </div>
             <div>
               <p className="font-medium">Team Invitations Sent</p>
-              <p className="text-sm text-muted-foreground">
-                Your team members can join anytime
-              </p>
+              <p className="text-sm text-muted-foreground">Your team members can join anytime</p>
             </div>
           </div>
         </div>
@@ -93,7 +87,7 @@ export function OnboardingCompleted({
           className="w-full"
           size="lg"
           onClick={() => {
-            window.location.href = '/dashboard';
+            window.location.href = "/dashboard";
           }}
         >
           Go to Dashboard
@@ -104,7 +98,7 @@ export function OnboardingCompleted({
           variant="outline"
           className="w-full"
           onClick={() => {
-            window.location.href = '/account/settings';
+            window.location.href = "/account/settings";
           }}
         >
           <Settings className="w-4 h-4 mr-2" />
@@ -114,13 +108,14 @@ export function OnboardingCompleted({
 
       {/* Footer */}
       <div className="text-xs text-muted-foreground pt-4 space-y-1">
-        <p>Have questions? Visit our{' '}
+        <p>
+          Have questions? Visit our{" "}
           <a href="/help" className="text-primary hover:underline">
             help center
           </a>
         </p>
         <p>
-          Learn more about{' '}
+          Learn more about{" "}
           <a href="/docs" className="text-primary hover:underline">
             Wave 1 features
           </a>

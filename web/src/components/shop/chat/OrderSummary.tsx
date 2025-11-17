@@ -5,12 +5,12 @@
  * Displays before payment confirmation
  */
 
-import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
-import { Separator } from '@/components/ui/separator';
-import { Receipt } from 'lucide-react';
+import { Receipt } from "lucide-react";
+import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import { Separator } from "@/components/ui/separator";
 
 interface Total {
-  type: 'subtotal' | 'shipping' | 'tax' | 'total';
+  type: "subtotal" | "shipping" | "tax" | "total";
   label: string;
   amount: number;
 }
@@ -25,10 +25,10 @@ export function OrderSummary({ totals, currency }: OrderSummaryProps) {
     return `$${(amount / 100).toFixed(2)}`;
   };
 
-  const subtotal = totals.find((t) => t.type === 'subtotal');
-  const shipping = totals.find((t) => t.type === 'shipping');
-  const tax = totals.find((t) => t.type === 'tax');
-  const total = totals.find((t) => t.type === 'total');
+  const subtotal = totals.find((t) => t.type === "subtotal");
+  const shipping = totals.find((t) => t.type === "shipping");
+  const tax = totals.find((t) => t.type === "tax");
+  const total = totals.find((t) => t.type === "total");
 
   return (
     <Card className="border-primary">

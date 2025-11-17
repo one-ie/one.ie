@@ -1,10 +1,10 @@
-import { useState, useEffect } from "react";
-import { ExternalLink, Code2 } from "lucide-react";
-import { Card } from "@/components/ui/card";
-import { Badge } from "@/components/ui/badge";
-import { Button } from "@/components/ui/button";
+import { Code2, ExternalLink } from "lucide-react";
+import { useEffect, useState } from "react";
 import { CopyButton } from "@/components/CopyButton";
 import { SendToClaudeCodeModal } from "@/components/SendToClaudeCodeModal";
+import { Badge } from "@/components/ui/badge";
+import { Button } from "@/components/ui/button";
+import { Card } from "@/components/ui/card";
 
 interface Project {
   id: string;
@@ -25,11 +25,7 @@ interface ProjectsGridProps {
   gridColumns: "2" | "3";
 }
 
-export function ProjectsGrid({
-  projects,
-  viewMode,
-  gridColumns,
-}: ProjectsGridProps) {
+export function ProjectsGrid({ projects, viewMode, gridColumns }: ProjectsGridProps) {
   const [filteredProjects, setFilteredProjects] = useState(projects);
   const [selectedProject, setSelectedProject] = useState<Project | null>(null);
   const [isModalOpen, setIsModalOpen] = useState(false);
@@ -64,9 +60,7 @@ export function ProjectsGrid({
   if (filteredProjects.length === 0) {
     return (
       <div className="text-center py-12">
-        <p className="text-lg font-semibold text-foreground mb-2">
-          No projects found
-        </p>
+        <p className="text-lg font-semibold text-foreground mb-2">No projects found</p>
         <p className="text-muted-foreground">
           Try adjusting your search or clear the filter to see all projects.
         </p>
@@ -93,16 +87,12 @@ export function ProjectsGrid({
                   </div>
                   <div className="flex-1 min-w-0">
                     <div className="flex items-center gap-2 mb-1">
-                      <h3 className="font-semibold text-lg text-foreground">
-                        {project.title}
-                      </h3>
+                      <h3 className="font-semibold text-lg text-foreground">{project.title}</h3>
                       <Badge variant="secondary" className="text-xs flex-shrink-0">
                         {project.level}
                       </Badge>
                     </div>
-                    <p className="text-sm text-muted-foreground mb-2">
-                      {project.description}
-                    </p>
+                    <p className="text-sm text-muted-foreground mb-2">{project.description}</p>
                     <p className="text-sm text-muted-foreground mb-3">
                       {project.prompt.split("\n")[0]}
                     </p>
@@ -116,10 +106,7 @@ export function ProjectsGrid({
                         <ExternalLink className="h-4 w-4" />
                         View Demo
                       </a>
-                      <CopyButton
-                        text={project.prompt}
-                        className="h-10 text-sm px-4"
-                      />
+                      <CopyButton text={project.prompt} className="h-10 text-sm px-4" />
                       <Button
                         onClick={() => handleSendToClaudeCode(project)}
                         variant="outline"
@@ -163,9 +150,7 @@ export function ProjectsGrid({
                     <h3 className="font-semibold text-base leading-tight text-foreground">
                       {project.title}
                     </h3>
-                    <p className="text-sm text-muted-foreground mt-1">
-                      {project.description}
-                    </p>
+                    <p className="text-sm text-muted-foreground mt-1">{project.description}</p>
                   </div>
                 </div>
                 <div className="mb-3">
@@ -188,10 +173,7 @@ export function ProjectsGrid({
                       View Demo
                     </a>
                     <div className="flex gap-2">
-                      <CopyButton
-                        text={project.prompt}
-                        className="flex-1 h-10 text-sm"
-                      />
+                      <CopyButton text={project.prompt} className="flex-1 h-10 text-sm" />
                       <Button
                         onClick={() => handleSendToClaudeCode(project)}
                         variant="outline"

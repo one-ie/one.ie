@@ -1,5 +1,5 @@
-import { useState } from 'react';
-import { Target, Waves, Zap } from 'lucide-react';
+import { Target, Waves, Zap } from "lucide-react";
+import { useState } from "react";
 
 export function InteractionDemo() {
   const [focusDemo, setFocusDemo] = useState(false);
@@ -16,14 +16,15 @@ export function InteractionDemo() {
           <div>
             <p className="text-base font-medium">Visible Focus</p>
             <p className="mt-1 text-sm text-muted-foreground">
-              Focus states use a 2px outline with primary color and 2px offset. Never remove focus for aesthetics.
+              Focus states use a 2px outline with primary color and 2px offset. Never remove focus
+              for aesthetics.
             </p>
           </div>
           <button
             onFocus={() => setFocusDemo(true)}
             onBlur={() => setFocusDemo(false)}
             className={`rounded-md bg-primary px-4 py-2 text-sm font-semibold text-white transition-all duration-150 ${
-              focusDemo ? 'ring-2 ring-primary ring-offset-2' : ''
+              focusDemo ? "ring-2 ring-primary ring-offset-2" : ""
             }`}
           >
             Click to Focus Me
@@ -45,7 +46,8 @@ export function InteractionDemo() {
           <div>
             <p className="text-base font-medium">Purposeful Motion</p>
             <p className="mt-1 text-sm text-muted-foreground">
-              Pair animations with motion tokens and respect `prefers-reduced-motion`. Motion should communicate spatial change.
+              Pair animations with motion tokens and respect `prefers-reduced-motion`. Motion should
+              communicate spatial change.
             </p>
           </div>
           <div
@@ -55,12 +57,12 @@ export function InteractionDemo() {
           >
             <div
               className={`absolute inset-y-0 left-0 w-12 bg-primary/20 transition-all duration-300 ease-in-out ${
-                hoverDemo ? 'w-full' : 'w-12'
+                hoverDemo ? "w-full" : "w-12"
               }`}
             />
             <div className="relative flex items-center justify-center h-full">
               <span className="text-sm font-medium">
-                {hoverDemo ? 'Motion communicates expansion' : 'Hover over me'}
+                {hoverDemo ? "Motion communicates expansion" : "Hover over me"}
               </span>
             </div>
           </div>

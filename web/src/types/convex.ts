@@ -12,9 +12,9 @@ export type Id<TableName extends string> = string & { __tableName: TableName };
 /**
  * Table names in the backend schema
  */
-export type TableNames = 
+export type TableNames =
   | "entities"
-  | "connections" 
+  | "connections"
   | "events"
   | "knowledge"
   | "thingTags"

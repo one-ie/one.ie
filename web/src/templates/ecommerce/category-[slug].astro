@@ -5,35 +5,31 @@
  * Dynamic route: /store/category/[slug]
  */
 
-import Layout from '@/layouts/Layout.astro';
-import { ProductCard } from '@/components/ecommerce/interactive/ProductCard';
-import { FilterSidebar } from '@/components/ecommerce/interactive/FilterSidebar';
-import { ProductGrid } from '@/components/ecommerce/static/ProductGrid';
-import { Breadcrumbs, type BreadcrumbItem } from '@/components/ecommerce/static/Breadcrumbs';
+import type { BreadcrumbItem } from "@/components/ecommerce/static/Breadcrumbs";
 
 const { slug } = Astro.params;
 
 // Mock data - replace with content collections or API
 const category = {
-  id: slug || 'all',
-  slug: slug || 'all',
-  name: slug === 'all' ? 'All Products' : slug?.charAt(0).toUpperCase() + slug?.slice(1),
-  description: 'Browse our collection',
+  id: slug || "all",
+  slug: slug || "all",
+  name: slug === "all" ? "All Products" : slug?.charAt(0).toUpperCase() + slug?.slice(1),
+  description: "Browse our collection",
   productCount: 42,
 };
 
-const products = [
+const _products = [
   {
-    id: '1',
-    slug: 'product-1',
-    name: 'Sample Product 1',
-    description: 'High quality product',
+    id: "1",
+    slug: "product-1",
+    name: "Sample Product 1",
+    description: "High quality product",
     price: 49.99,
     compareAtPrice: 69.99,
-    images: ['/images/products/sample-1.jpg'],
-    thumbnail: '/images/products/sample-1.jpg',
-    category: slug || 'all',
-    tags: ['new', 'sale'],
+    images: ["/images/products/sample-1.jpg"],
+    thumbnail: "/images/products/sample-1.jpg",
+    category: slug || "all",
+    tags: ["new", "sale"],
     inStock: true,
     rating: 4.5,
     reviewCount: 42,
@@ -44,16 +40,16 @@ const products = [
   // Add more products...
 ];
 
-const categories = [
-  { id: 'apparel', name: 'Apparel' },
-  { id: 'electronics', name: 'Electronics' },
-  { id: 'accessories', name: 'Accessories' },
+const _categories = [
+  { id: "apparel", name: "Apparel" },
+  { id: "electronics", name: "Electronics" },
+  { id: "accessories", name: "Accessories" },
 ];
 
-const tags = ['new', 'sale', 'premium', 'eco-friendly'];
+const _tags = ["new", "sale", "premium", "eco-friendly"];
 
-const breadcrumbs: BreadcrumbItem[] = [
-  { label: 'Categories', href: '/store' },
+const _breadcrumbs: BreadcrumbItem[] = [
+  { label: "Categories", href: "/store" },
   { label: category.name },
 ];
 ---

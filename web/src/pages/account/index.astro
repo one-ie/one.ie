@@ -1,10 +1,7 @@
 ---
-import Layout from '@/layouts/Layout.astro';
-import { DashboardLayout } from '@/components/dashboard/dashboard-layout';
-
 export const prerender = false;
 
-const user = Astro.locals.user;
+const _user = Astro.locals.user;
 ---
 
 <Layout title="Dashboard" sidebarInitialCollapsed={true}>

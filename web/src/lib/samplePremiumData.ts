@@ -7,9 +7,9 @@
  * - Agent messages
  */
 
-import type { AgentUIMessage } from '@/components/ai/AgentMessage';
-import type { ReasoningStep } from '@/components/ai/Reasoning';
-import type { ToolCallProps } from '@/components/ai/ToolCall';
+import type { AgentUIMessage } from "@/components/ai/AgentMessage";
+import type { ReasoningStep } from "@/components/ai/Reasoning";
+import type { ToolCallProps } from "@/components/ai/ToolCall";
 
 // Sample reasoning steps
 export const sampleReasoning: ReasoningStep[] = [
@@ -116,27 +116,25 @@ export const sampleAgentMessages: AgentUIMessage[] = [
 ];
 
 // Helper to create test messages with different types
-export function createTestMessage(type: AgentUIMessage['type'], payload?: any): AgentUIMessage {
+export function createTestMessage(type: AgentUIMessage["type"], payload?: any): AgentUIMessage {
   switch (type) {
-    case 'reasoning':
+    case "reasoning":
       return {
-        type: 'reasoning',
+        type: "reasoning",
         payload: { steps: payload || sampleReasoning },
         timestamp: Date.now(),
       };
 
-    case 'tool_call':
+    case "tool_call":
       return {
-        type: 'tool_call',
+        type: "tool_call",
         payload: payload || sampleToolCalls[0],
         timestamp: Date.now(),
       };
-
-    case 'text':
     default:
       return {
-        type: 'text',
-        payload: { text: payload || 'Sample message' },
+        type: "text",
+        payload: { text: payload || "Sample message" },
         timestamp: Date.now(),
       };
   }

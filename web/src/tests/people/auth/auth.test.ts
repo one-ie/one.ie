@@ -1,17 +1,17 @@
-import { describe, it, expect, beforeAll } from "vitest";
+import { beforeAll, describe, expect, it } from "vitest";
 import { api } from "../../../../../backend/convex/_generated/api";
 import {
-  convex,
-  generateTestEmail,
-  generateTestPassword,
-  createTestUser,
-  signInTestUser,
-  getCurrentUser,
-  signOut,
-  TestLogger,
   assert,
   assertErrorMessage,
+  convex,
+  createTestUser,
+  generateTestEmail,
+  generateTestPassword,
+  getCurrentUser,
   isValidToken,
+  signInTestUser,
+  signOut,
+  TestLogger,
 } from "./utils";
 
 /**
@@ -309,7 +309,7 @@ describe("Auth System - Core Flows", () => {
       const logger = new TestLogger("Security - Rate Limit Signup");
       logger.log("Testing signup rate limiting (3 per hour)");
 
-      const email = generateTestEmail("rate-limit");
+      const _email = generateTestEmail("rate-limit");
 
       // Note: This test will fail if run multiple times quickly
       // because of actual rate limiting. In production, you'd use

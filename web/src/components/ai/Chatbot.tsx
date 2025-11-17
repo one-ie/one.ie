@@ -3,19 +3,18 @@
  * Provides full chat interface with messages, input, and suggestions
  */
 
-import React from "react";
 import { Card } from "@/components/ui/card";
+import { ScrollArea } from "@/components/ui/scroll-area";
 import { MessageList } from "./MessageList";
 import { PromptInput } from "./PromptInput";
 import { Suggestions } from "./Suggestions";
-import { ScrollArea } from "@/components/ui/scroll-area";
 
 export interface Message {
   id: string;
   role: "user" | "assistant" | "system";
   content: string;
   timestamp: number;
-  metadata?: any;
+  metadata?: Record<string, unknown>;
 }
 
 export interface ChatbotProps {

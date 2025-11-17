@@ -1,18 +1,18 @@
-'use client';
+"use client";
 
-import { useState, useMemo } from 'react';
-import { Input } from '@/components/ui/input';
-import { Button } from '@/components/ui/button';
+import { Search, X } from "lucide-react";
+import { useMemo, useState } from "react";
+import { Badge } from "@/components/ui/badge";
+import { Button } from "@/components/ui/button";
+import { Input } from "@/components/ui/input";
 import {
   Select,
   SelectContent,
   SelectItem,
   SelectTrigger,
   SelectValue,
-} from '@/components/ui/select';
-import { Badge } from '@/components/ui/badge';
-import { ProductCard } from './ProductCard';
-import { Search, X } from 'lucide-react';
+} from "@/components/ui/select";
+import { ProductCard } from "./ProductCard";
 
 interface ProductData {
   slug: string;
@@ -31,8 +31,8 @@ interface ProductData {
 
 interface ProductSearchProps {
   products: ProductData[];
-  viewMode: 'list' | 'grid';
-  gridColumns: '2' | '3' | '4';
+  viewMode: "list" | "grid";
+  gridColumns: "2" | "3" | "4";
   initialCategory?: string;
 }
 
@@ -40,13 +40,13 @@ function ProductSearch({
   products,
   viewMode,
   gridColumns,
-  initialCategory = 'all',
+  initialCategory = "all",
 }: ProductSearchProps) {
-  const [searchQuery, setSearchQuery] = useState('');
+  const [searchQuery, setSearchQuery] = useState("");
   const [selectedCategory, setSelectedCategory] = useState<string>(initialCategory);
-  const [priceFilter, setPriceFilter] = useState<string>('all');
-  const [stockFilter, setStockFilter] = useState<string>('all');
-  const [sortBy, setSortBy] = useState<string>('featured');
+  const [priceFilter, setPriceFilter] = useState<string>("all");
+  const [stockFilter, setStockFilter] = useState<string>("all");
+  const [sortBy, setSortBy] = useState<string>("featured");
 
   // Extract unique categories
   const categories = useMemo(() => {
@@ -70,24 +70,22 @@ function ProductSearch({
     }
 
     // Category filter
-    if (selectedCategory !== 'all') {
-      filtered = filtered.filter(
-        (product) => product.data.category === selectedCategory
-      );
+    if (selectedCategory !== "all") {
+      filtered = filtered.filter((product) => product.data.category === selectedCategory);
     }
 
     // Price filter
-    if (priceFilter !== 'all') {
+    if (priceFilter !== "all") {
       filtered = filtered.filter((product) => {
         const price = product.data.price;
         switch (priceFilter) {
-          case 'under-50':
+          case "under-50":
             return price < 50;
-          case '50-100':
+          case "50-100":
             return price >= 50 && price < 100;
-          case '100-200':
+          case "100-200":
             return price >= 100 && price < 200;
-          case 'over-200':
+          case "over-200":
             return price >= 200;
           default:
             return true;
@@ -96,24 +94,24 @@ function ProductSearch({
     }
 
     // Stock filter
-    if (stockFilter === 'in-stock') {
+    if (stockFilter === "in-stock") {
       filtered = filtered.filter((product) => product.data.inStock);
-    } else if (stockFilter === 'out-of-stock') {
+    } else if (stockFilter === "out-of-stock") {
       filtered = filtered.filter((product) => !product.data.inStock);
     }
 
     // Sort
     filtered.sort((a, b) => {
       switch (sortBy) {
-        case 'featured':
+        case "featured":
           return (b.data.featured ? 1 : 0) - (a.data.featured ? 1 : 0);
-        case 'price-low':
+        case "price-low":
           return a.data.price - b.data.price;
-        case 'price-high':
+        case "price-high":
           return b.data.price - a.data.price;
-        case 'name-asc':
+        case "name-asc":
           return a.data.name.localeCompare(b.data.name);
-        case 'name-desc':
+        case "name-desc":
           return b.data.name.localeCompare(a.data.name);
         default:
           return 0;
@@ -124,24 +122,24 @@ function ProductSearch({
   }, [products, searchQuery, selectedCategory, priceFilter, stockFilter, sortBy]);
 
   const handleClearFilters = () => {
-    setSearchQuery('');
-    setSelectedCategory('all');
-    setPriceFilter('all');
-    setStockFilter('all');
-    setSortBy('featured');
+    setSearchQuery("");
+    setSelectedCategory("all");
+    setPriceFilter("all");
+    setStockFilter("all");
+    setSortBy("featured");
   };
 
   const hasActiveFilters =
-    searchQuery !== '' ||
-    selectedCategory !== 'all' ||
-    priceFilter !== 'all' ||
-    stockFilter !== 'all' ||
-    sortBy !== 'featured';
+    searchQuery !== "" ||
+    selectedCategory !== "all" ||
+    priceFilter !== "all" ||
+    stockFilter !== "all" ||
+    sortBy !== "featured";
 
   const gridColsClass = {
-    '2': 'md:grid-cols-2',
-    '3': 'md:grid-cols-2 lg:grid-cols-3',
-    '4': 'md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4',
+    "2": "md:grid-cols-2",
+    "3": "md:grid-cols-2 lg:grid-cols-3",
+    "4": "md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4",
   }[gridColumns];
 
   return (
@@ -212,11 +210,7 @@ function ProductSearch({
           </Select>
 
           {hasActiveFilters && (
-            <Button
-              variant="outline"
-              onClick={handleClearFilters}
-              className="gap-2"
-            >
+            <Button variant="outline" onClick={handleClearFilters} className="gap-2">
               <X className="w-4 h-4" />
               Clear Filters
             </Button>
@@ -229,35 +223,23 @@ function ProductSearch({
         <p className="text-sm text-muted-foreground">
           Showing {filteredProducts.length} of {products.length} products
         </p>
-        {hasActiveFilters && (
-          <Badge variant="secondary">Filters Active</Badge>
-        )}
+        {hasActiveFilters && <Badge variant="secondary">Filters Active</Badge>}
       </div>
 
       {/* Products Grid/List */}
       {filteredProducts.length === 0 ? (
         <div className="text-center py-12">
-          <p className="text-lg text-muted-foreground mb-2">
-            No products found
-          </p>
+          <p className="text-lg text-muted-foreground mb-2">No products found</p>
           <p className="text-sm text-muted-foreground">
             Try adjusting your filters or search query
           </p>
         </div>
       ) : (
         <div
-          className={
-            viewMode === 'grid'
-              ? `grid grid-cols-1 ${gridColsClass} gap-6`
-              : 'space-y-4'
-          }
+          className={viewMode === "grid" ? `grid grid-cols-1 ${gridColsClass} gap-6` : "space-y-4"}
         >
           {filteredProducts.map((product) => (
-            <ProductCard
-              key={product.slug}
-              product={product}
-              viewMode={viewMode}
-            />
+            <ProductCard key={product.slug} product={product} viewMode={viewMode} />
           ))}
         </div>
       )}

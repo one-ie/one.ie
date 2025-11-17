@@ -1,4 +1,4 @@
-import type { APIRoute } from 'astro';
+import type { APIRoute } from "astro";
 
 /**
  * Web Vitals Collection Endpoint
@@ -18,20 +18,17 @@ export const POST: APIRoute = async ({ request }) => {
 
     // Validate metric structure
     if (!metric.name || !metric.value) {
-      return new Response(
-        JSON.stringify({ error: 'Invalid metric format' }),
-        {
-          status: 400,
-          headers: { 'Content-Type': 'application/json' },
-        }
-      );
+      return new Response(JSON.stringify({ error: "Invalid metric format" }), {
+        status: 400,
+        headers: { "Content-Type": "application/json" },
+      });
     }
 
     // Log metric (in production, send to analytics service)
-    console.log('Web Vital:', {
+    console.log("Web Vital:", {
       name: metric.name,
       value: metric.value,
-      rating: metric.rating || 'unknown',
+      rating: metric.rating || "unknown",
       id: metric.id,
       navigationType: metric.navigationType,
       timestamp: Date.now(),
@@ -45,21 +42,15 @@ export const POST: APIRoute = async ({ request }) => {
     //   body: JSON.stringify(metric),
     // });
 
-    return new Response(
-      JSON.stringify({ received: true, metric: metric.name }),
-      {
-        status: 200,
-        headers: { 'Content-Type': 'application/json' },
-      }
-    );
+    return new Response(JSON.stringify({ received: true, metric: metric.name }), {
+      status: 200,
+      headers: { "Content-Type": "application/json" },
+    });
   } catch (error) {
-    console.error('Failed to process web vital:', error);
-    return new Response(
-      JSON.stringify({ error: 'Failed to process metric' }),
-      {
-        status: 500,
-        headers: { 'Content-Type': 'application/json' },
-      }
-    );
+    console.error("Failed to process web vital:", error);
+    return new Response(JSON.stringify({ error: "Failed to process metric" }), {
+      status: 500,
+      headers: { "Content-Type": "application/json" },
+    });
   }
 };

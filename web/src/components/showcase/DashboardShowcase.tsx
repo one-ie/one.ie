@@ -1,9 +1,9 @@
-'use client';
+"use client";
 
-import { SectionCards } from '@/components/dashboard/section-cards';
-import { RevenueChart } from '@/components/dashboard/revenue-chart';
-import { ActivityChart } from '@/components/dashboard/activity-chart';
-import { RecentTransactions } from '@/components/dashboard/recent-transactions';
+import { ActivityChart } from "@/components/dashboard/activity-chart";
+import { RecentTransactions } from "@/components/dashboard/recent-transactions";
+import { RevenueChart } from "@/components/dashboard/revenue-chart";
+import { SectionCards } from "@/components/dashboard/section-cards";
 
 export function DashboardShowcase() {
   return (
@@ -16,8 +16,8 @@ export function DashboardShowcase() {
           Data-rich dashboards without scaffolding
         </h3>
         <p className="max-w-xl text-sm text-muted-foreground sm:text-base">
-          Stats tiles, micro-interactions, and live charts land with one import.
-          Swap datasets, keep the same cinematic presentation.
+          Stats tiles, micro-interactions, and live charts land with one import. Swap datasets, keep
+          the same cinematic presentation.
         </p>
       </div>
 

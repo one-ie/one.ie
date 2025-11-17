@@ -1,24 +1,20 @@
 ---
-import { getCollection } from 'astro:content';
-import Layout from '../../layouts/Layout.astro';
-import type { CollectionEntry } from 'astro:content';
-import { ChevronRight, Calendar, Target, Zap } from 'lucide-react';
-import ProjectActionButtons from '@/components/ProjectActionButtons.astro';
-import { ProjectDetailActions } from '@/components/ProjectDetailActions';
+import type { CollectionEntry } from "astro:content";
+import { getCollection } from "astro:content";
 
 // Disable transitions for better content rendering
 export const prerender = true;
 
 export async function getStaticPaths() {
-  const projects = await getCollection('projects');
-  return projects.map((entry: CollectionEntry<'projects'>) => ({
+  const projects = await getCollection("projects");
+  return projects.map((entry: CollectionEntry<"projects">) => ({
     params: { slug: entry.slug },
     props: { entry },
   }));
 }
 
 interface Props {
-  entry: CollectionEntry<'projects'>;
+  entry: CollectionEntry<"projects">;
 }
 
 const { entry } = Astro.props;
@@ -26,30 +22,30 @@ const { Content } = await entry.render();
 
 // Generate project prompt similar to the index page
 function generateProjectPrompt(data: any, slug: string): string {
-  const objectives = (data.objectives || []).map((o: string) => `- ${o}`).join('\n');
-  const deliverables = (data.deliverables || []).map((d: string) => `- ${d}`).join('\n');
-  const dimensions = (data.ontologyDimensions || []).map((dim: string) => `- ${dim}`).join('\n');
+  const objectives = (data.objectives || []).map((o: string) => `- ${o}`).join("\n");
+  const deliverables = (data.deliverables || []).map((d: string) => `- ${d}`).join("\n");
+  const dimensions = (data.ontologyDimensions || []).map((dim: string) => `- ${dim}`).join("\n");
 
   return `# ${data.title} Project
 
-**Status:** ${data.status || 'Planning'}
-**Priority:** ${data.priority || 'Medium'}
+**Status:** ${data.status || "Planning"}
+**Priority:** ${data.priority || "Medium"}
 **Progress:** ${data.progress || 0}%
-**Estimated Hours:** ${data.estimatedHours || 'TBD'}
+**Estimated Hours:** ${data.estimatedHours || "TBD"}
 
 ## Description
 ${data.description}
 
-${objectives ? `## Objectives\n${objectives}\n` : ''}
-${deliverables ? `## Deliverables\n${deliverables}\n` : ''}
-${dimensions ? `## Ontology Dimensions\n${dimensions}\n` : ''}
+${objectives ? `## Objectives\n${objectives}\n` : ""}
+${deliverables ? `## Deliverables\n${deliverables}\n` : ""}
+${dimensions ? `## Ontology Dimensions\n${dimensions}\n` : ""}
 
 ## Timeline
-${data.startDate ? `Start Date: ${new Date(data.startDate).toLocaleDateString()}` : ''}
-${data.targetEndDate ? `Target End: ${new Date(data.targetEndDate).toLocaleDateString()}` : ''}
+${data.startDate ? `Start Date: ${new Date(data.startDate).toLocaleDateString()}` : ""}
+${data.targetEndDate ? `Target End: ${new Date(data.targetEndDate).toLocaleDateString()}` : ""}
 
-${data.budget ? `## Budget\nTotal Budget: $${data.budget}` : ''}
-${data.spent ? `Spent: $${data.spent}` : ''}
+${data.budget ? `## Budget\nTotal Budget: $${data.budget}` : ""}
+${data.spent ? `Spent: $${data.spent}` : ""}
 
 ## Getting Started
 1. Review the full project details at /projects/${slug}
@@ -58,54 +54,59 @@ ${data.spent ? `Spent: $${data.spent}` : ''}
 4. Test thoroughly
 5. Deploy to production
 
-${data.demoUrl ? `Demo: ${data.demoUrl}` : ''}
-${data.planUrl ? `Plan: ${data.planUrl}` : ''}`;
+${data.demoUrl ? `Demo: ${data.demoUrl}` : ""}
+${data.planUrl ? `Plan: ${data.planUrl}` : ""}`;
 }
 
-const projectPrompt = generateProjectPrompt(entry.data, entry.slug);
+const _projectPrompt = generateProjectPrompt(entry.data, entry.slug);
 
 // Calculate statistics
-const budgetPercentage = entry.data.budget && entry.data.spent
-  ? Math.round((entry.data.spent / entry.data.budget) * 100)
-  : 0;
+const _budgetPercentage =
+  entry.data.budget && entry.data.spent
+    ? Math.round((entry.data.spent / entry.data.budget) * 100)
+    : 0;
 
-const hoursPercentage = entry.data.estimatedHours && entry.data.actualHours
-  ? Math.round((entry.data.actualHours / entry.data.estimatedHours) * 100)
-  : 0;
+const _hoursPercentage =
+  entry.data.estimatedHours && entry.data.actualHours
+    ? Math.round((entry.data.actualHours / entry.data.estimatedHours) * 100)
+    : 0;
 
-const statusBadgeClass = (status: string) => {
+const _statusBadgeClass = (status: string) => {
   switch (status) {
-    case 'completed':
-      return 'bg-green-100 text-green-700 dark:bg-green-900 dark:text-green-200';
-    case 'active':
-      return 'bg-blue-100 text-blue-700 dark:bg-blue-900 dark:text-blue-200';
-    case 'on_hold':
-      return 'bg-yellow-100 text-yellow-700 dark:bg-yellow-900 dark:text-yellow-200';
-    case 'planning':
-      return 'bg-purple-100 text-purple-700 dark:bg-purple-900 dark:text-purple-200';
-    case 'archived':
-      return 'bg-gray-100 text-gray-700 dark:bg-gray-800 dark:text-gray-200';
+    case "completed":
+      return "bg-green-100 text-green-700 dark:bg-green-900 dark:text-green-200";
+    case "active":
+      return "bg-blue-100 text-blue-700 dark:bg-blue-900 dark:text-blue-200";
+    case "on_hold":
+      return "bg-yellow-100 text-yellow-700 dark:bg-yellow-900 dark:text-yellow-200";
+    case "planning":
+      return "bg-purple-100 text-purple-700 dark:bg-purple-900 dark:text-purple-200";
+    case "archived":
+      return "bg-gray-100 text-gray-700 dark:bg-gray-800 dark:text-gray-200";
     default:
-      return 'bg-gray-100 text-gray-700';
+      return "bg-gray-100 text-gray-700";
   }
 };
 
-const statusLabel = (status: string) => {
-  return status.split('_').map(word => word.charAt(0).toUpperCase() + word.slice(1)).join(' ');
+const _statusLabel = (status: string) => {
+  return status
+    .split("_")
+    .map((word) => word.charAt(0).toUpperCase() + word.slice(1))
+    .join(" ");
 };
 
-const priorityBadgeClass = (priority?: string) => {
+const _priorityBadgeClass = (priority?: string) => {
   switch (priority) {
-    case 'critical':
-      return 'bg-red-100 text-red-700 dark:bg-red-900 dark:text-red-200';
-    case 'high':
-      return 'bg-orange-100 text-orange-700 dark:bg-orange-900 dark:text-orange-200';
-    case 'medium':
-      return 'bg-blue-100 text-blue-700 dark:bg-blue-900 dark:text-blue-200';
-    case 'low':
-      return 'bg-green-100 text-green-700 dark:bg-green-900 dark:text-green-200';
+    case "critical":
+      return "bg-red-100 text-red-700 dark:bg-red-900 dark:text-red-200";
+    case "high":
+      return "bg-orange-100 text-orange-700 dark:bg-orange-900 dark:text-orange-200";
+    case "medium":
+      return "bg-blue-100 text-blue-700 dark:bg-blue-900 dark:text-blue-200";
+    case "low":
+      return "bg-green-100 text-green-700 dark:bg-green-900 dark:text-green-200";
     default:
-      return '';
+      return "";
   }
 };
 ---

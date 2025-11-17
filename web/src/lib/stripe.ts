@@ -3,10 +3,10 @@
  * Handles Stripe SDK initialization and common operations
  */
 
-import { loadStripe, type Stripe } from '@stripe/stripe-js';
+import { loadStripe, type Stripe } from "@stripe/stripe-js";
 
 // Stripe publishable key (from environment variables)
-const stripePublishableKey = import.meta.env.PUBLIC_STRIPE_PUBLISHABLE_KEY || '';
+const stripePublishableKey = import.meta.env.PUBLIC_STRIPE_PUBLISHABLE_KEY || "";
 
 let stripePromise: Promise<Stripe | null> | null = null;
 
@@ -16,7 +16,7 @@ let stripePromise: Promise<Stripe | null> | null = null;
 export function getStripe(): Promise<Stripe | null> {
   if (!stripePromise) {
     if (!stripePublishableKey) {
-      console.error('Stripe publishable key is not configured');
+      console.error("Stripe publishable key is not configured");
       return Promise.resolve(null);
     }
     stripePromise = loadStripe(stripePublishableKey);
@@ -28,7 +28,7 @@ export function getStripe(): Promise<Stripe | null> {
  * Format currency amount for Stripe
  * Stripe expects amounts in cents (smallest currency unit)
  */
-export function formatAmountForStripe(amount: number, currency = 'usd'): number {
+export function formatAmountForStripe(amount: number, _currency = "usd"): number {
   // Convert dollar amount to cents
   return Math.round(amount * 100);
 }
@@ -37,7 +37,7 @@ export function formatAmountForStripe(amount: number, currency = 'usd'): number 
  * Format Stripe amount for display
  * Convert cents back to dollars
  */
-export function formatAmountFromStripe(amount: number, currency = 'usd'): number {
+export function formatAmountFromStripe(amount: number, _currency = "usd"): number {
   return amount / 100;
 }
 
@@ -54,10 +54,10 @@ export async function createPaymentIntent(params: {
   paymentIntentId: string;
 } | null> {
   try {
-    const response = await fetch('/api/checkout/create-intent', {
-      method: 'POST',
+    const response = await fetch("/api/checkout/create-intent", {
+      method: "POST",
       headers: {
-        'Content-Type': 'application/json',
+        "Content-Type": "application/json",
       },
       body: JSON.stringify({
         items: params.items || [],
@@ -67,7 +67,7 @@ export async function createPaymentIntent(params: {
 
     if (!response.ok) {
       const error = await response.json();
-      console.error('Failed to create payment intent:', error);
+      console.error("Failed to create payment intent:", error);
       return null;
     }
 
@@ -77,7 +77,7 @@ export async function createPaymentIntent(params: {
       paymentIntentId: data.paymentIntentId,
     };
   } catch (error) {
-    console.error('Error creating payment intent:', error);
+    console.error("Error creating payment intent:", error);
     return null;
   }
 }
@@ -90,10 +90,10 @@ export async function confirmPayment(params: {
   orderId: string;
 }): Promise<boolean> {
   try {
-    const response = await fetch('/api/stripe/confirm-payment', {
-      method: 'POST',
+    const response = await fetch("/api/stripe/confirm-payment", {
+      method: "POST",
       headers: {
-        'Content-Type': 'application/json',
+        "Content-Type": "application/json",
       },
       body: JSON.stringify(params),
     });
@@ -104,7 +104,7 @@ export async function confirmPayment(params: {
 
     return true;
   } catch (error) {
-    console.error('Error confirming payment:', error);
+    console.error("Error confirming payment:", error);
     return false;
   }
 }
@@ -113,10 +113,10 @@ export async function confirmPayment(params: {
  * Stripe test card numbers for development
  */
 export const TEST_CARDS = {
-  SUCCESS: '4242424242424242',
-  REQUIRE_3DS: '4000002500003155',
-  DECLINE: '4000000000000002',
-  INSUFFICIENT_FUNDS: '4000000000009995',
+  SUCCESS: "4242424242424242",
+  REQUIRE_3DS: "4000002500003155",
+  DECLINE: "4000000000000002",
+  INSUFFICIENT_FUNDS: "4000000000009995",
 } as const;
 
 /**
@@ -124,46 +124,46 @@ export const TEST_CARDS = {
  */
 export function getStripeAppearance() {
   return {
-    theme: 'stripe' as const,
+    theme: "stripe" as const,
     variables: {
       // Primary color from your design system (deep blue)
-      colorPrimary: 'hsl(216, 55%, 25%)',
-      colorBackground: 'hsl(36, 8%, 88%)',
-      colorText: 'hsl(0, 0%, 13%)',
-      colorDanger: 'hsl(0, 84%, 60%)',
+      colorPrimary: "hsl(216, 55%, 25%)",
+      colorBackground: "hsl(36, 8%, 88%)",
+      colorText: "hsl(0, 0%, 13%)",
+      colorDanger: "hsl(0, 84%, 60%)",
       fontFamily: 'system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif',
-      spacingUnit: '4px',
-      borderRadius: '8px',
-      fontSizeBase: '16px',
-      fontWeightNormal: '400',
-      fontWeightMedium: '500',
-      fontWeightBold: '600',
+      spacingUnit: "4px",
+      borderRadius: "8px",
+      fontSizeBase: "16px",
+      fontWeightNormal: "400",
+      fontWeightMedium: "500",
+      fontWeightBold: "600",
     },
     rules: {
-      '.Tab': {
-        border: '1px solid hsl(0, 0%, 100%, 0.1)',
-        boxShadow: '0 1px 3px 0 rgba(0, 0, 0, 0.1)',
-        padding: '12px',
+      ".Tab": {
+        border: "1px solid hsl(0, 0%, 100%, 0.1)",
+        boxShadow: "0 1px 3px 0 rgba(0, 0, 0, 0.1)",
+        padding: "12px",
       },
-      '.Tab:hover': {
-        boxShadow: '0 4px 6px -1px rgba(0, 0, 0, 0.1)',
+      ".Tab:hover": {
+        boxShadow: "0 4px 6px -1px rgba(0, 0, 0, 0.1)",
       },
-      '.Tab--selected': {
-        borderColor: 'hsl(216, 55%, 25%)',
-        boxShadow: '0 4px 6px -1px rgba(0, 0, 0, 0.1)',
+      ".Tab--selected": {
+        borderColor: "hsl(216, 55%, 25%)",
+        boxShadow: "0 4px 6px -1px rgba(0, 0, 0, 0.1)",
       },
-      '.Input': {
-        padding: '12px',
-        fontSize: '16px',
-        border: '1px solid hsl(0, 0%, 100%, 0.1)',
+      ".Input": {
+        padding: "12px",
+        fontSize: "16px",
+        border: "1px solid hsl(0, 0%, 100%, 0.1)",
       },
-      '.Input:focus': {
-        borderColor: 'hsl(216, 55%, 25%)',
-        boxShadow: '0 0 0 2px hsl(216, 55%, 25%, 0.2)',
+      ".Input:focus": {
+        borderColor: "hsl(216, 55%, 25%)",
+        boxShadow: "0 0 0 2px hsl(216, 55%, 25%, 0.2)",
       },
-      '.Label': {
-        fontWeight: '500',
-        marginBottom: '8px',
+      ".Label": {
+        fontWeight: "500",
+        marginBottom: "8px",
       },
     },
   };

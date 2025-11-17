@@ -1,11 +1,12 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import { useState, useEffect } from "react";
+
+import { CheckCircle2, Mail } from "lucide-react";
+import { useEffect, useState } from "react";
+import { toast } from "sonner";
+import { Alert, AlertDescription } from "@/components/ui/alert";
 import { Button } from "@/components/ui/button";
 import { useVerifyEmail } from "@/hooks/useAuth";
-import { toast } from "sonner";
 import { AuthCard } from "./AuthCard";
-import { CheckCircle2, Mail } from "lucide-react";
-import { Alert, AlertDescription } from "@/components/ui/alert";
 
 interface VerifyEmailFormProps {
   token: string;
@@ -35,8 +36,7 @@ export function VerifyEmailForm({ token }: VerifyEmailFormProps) {
         if (result?.success) {
           setVerifySuccess(true);
           toast.success("Email verified successfully!", {
-            description:
-              "Your email has been verified. You can now access all features.",
+            description: "Your email has been verified. You can now access all features.",
           });
         }
       } catch (err: any) {
@@ -97,8 +97,8 @@ export function VerifyEmailForm({ token }: VerifyEmailFormProps) {
         <Alert variant="destructive">
           <Mail className="h-4 w-4" />
           <AlertDescription className="text-sm">
-            This verification link has expired or is invalid. If you need a new
-            verification email, please contact support.
+            This verification link has expired or is invalid. If you need a new verification email,
+            please contact support.
           </AlertDescription>
         </Alert>
 
@@ -125,8 +125,7 @@ export function VerifyEmailForm({ token }: VerifyEmailFormProps) {
         <Alert className="border-green-500/50 bg-green-500/10">
           <CheckCircle2 className="h-4 w-4 text-green-500" />
           <AlertDescription className="text-sm">
-            Your email has been successfully verified. You can now access all
-            features.
+            Your email has been successfully verified. You can now access all features.
           </AlertDescription>
         </Alert>
 

@@ -1,4 +1,4 @@
-import { defineCollection, z } from 'astro:content';
+import { defineCollection, z } from "astro:content";
 
 // Define the Blog schema
 const BlogSchema = z.object({
@@ -8,11 +8,9 @@ const BlogSchema = z.object({
   draft: z.boolean().optional(),
   image: z.string().optional(),
   picture: z.string().optional(), // Support oneieold blog posts
-  author: z.string().default('ONE'),
+  author: z.string().default("ONE"),
   tags: z.array(z.string()).default([]),
-  category: z
-    .enum(['tutorial', 'news', 'guide', 'review', 'article'])
-    .default('article'),
+  category: z.enum(["tutorial", "news", "guide", "review", "article"]).default("article"),
   readingTime: z.number().optional(),
   featured: z.boolean().default(false),
   type: z.string().optional(), // Support oneieold blog posts
@@ -20,7 +18,7 @@ const BlogSchema = z.object({
 
 // Define the Blog collection schema
 const blog = defineCollection({
-  type: 'content',
+  type: "content",
   schema: BlogSchema,
 });
 
@@ -30,7 +28,7 @@ const NewsSchema = z.object({
   title: z.string(), // Required: title of the article/update
   date: z.date(), // Required: publication/update date
   description: z.string().optional(), // Optional description
-  author: z.string().optional().default('ONE'), // Author name
+  author: z.string().optional().default("ONE"), // Author name
   category: z.string().optional(), // News category (AI, Platform, Technology, etc.)
   type: z.string().optional(), // Type of activity: file_created, feature_added, etc.
   tags: z.array(z.string()).optional().default([]), // Tags for categorization
@@ -46,7 +44,7 @@ const NewsSchema = z.object({
 
 // Define the News collection
 const news = defineCollection({
-  type: 'content',
+  type: "content",
   schema: NewsSchema,
 });
 
@@ -83,7 +81,7 @@ const ProductSchema = z.object({
 
 // Define the Products collection
 const products = defineCollection({
-  type: 'content',
+  type: "content",
   schema: ProductSchema,
 });
 
@@ -98,7 +96,7 @@ const CategorySchema = z.object({
 
 // Define the Categories collection
 const categories = defineCollection({
-  type: 'content',
+  type: "content",
   schema: CategorySchema,
 });
 
@@ -113,7 +111,7 @@ const ProductCollectionSchema = z.object({
 
 // Define the Collections collection
 const productCollections = defineCollection({
-  type: 'content',
+  type: "content",
   schema: ProductCollectionSchema,
 });
 
@@ -123,30 +121,42 @@ const PlanSchema = z.object({
   description: z.string(),
   feature: z.string(), // Feature name
   organization: z.string().optional(), // Organization name
-  personRole: z.enum(['platform_owner', 'org_owner', 'org_user', 'customer']).optional(),
+  personRole: z.enum(["platform_owner", "org_owner", "org_user", "customer"]).optional(),
   ontologyDimensions: z.array(z.string()).optional(), // Groups, People, Things, Connections, Events, Knowledge
   assignedSpecialist: z.string().optional(), // Agent name
   totalCycles: z.number().default(100),
   completedCycles: z.number().default(0),
-  cycleTemplate: z.array(z.object({
-    range: z.string(), // e.g., "1-10"
-    phase: z.string(), // e.g., "Foundation & Setup"
-    description: z.string(),
-    tasks: z.array(z.string()).optional(),
-  })).optional(),
-  tasks: z.array(z.object({
-    cycleNumber: z.number(),
-    content: z.string(), // Task description
-    status: z.enum(['pending', 'in_progress', 'completed']).default('pending'),
-    activeForm: z.string(), // Present continuous form of task
-    dependencies: z.array(z.number()).optional(), // Other cycle numbers it depends on
-  })).optional(),
+  cycleTemplate: z
+    .array(
+      z.object({
+        range: z.string(), // e.g., "1-10"
+        phase: z.string(), // e.g., "Foundation & Setup"
+        description: z.string(),
+        tasks: z.array(z.string()).optional(),
+      })
+    )
+    .optional(),
+  tasks: z
+    .array(
+      z.object({
+        cycleNumber: z.number(),
+        content: z.string(), // Task description
+        status: z.enum(["pending", "in_progress", "completed"]).default("pending"),
+        activeForm: z.string(), // Present continuous form of task
+        dependencies: z.array(z.number()).optional(), // Other cycle numbers it depends on
+      })
+    )
+    .optional(),
   dependenciesMet: z.number().default(0),
   totalDependencies: z.number().default(0),
-  lessonsLearned: z.array(z.object({
-    cycle: z.number(),
-    lesson: z.string(),
-  })).optional(),
+  lessonsLearned: z
+    .array(
+      z.object({
+        cycle: z.number(),
+        lesson: z.string(),
+      })
+    )
+    .optional(),
   createdAt: z.date().optional(),
   updatedAt: z.date().optional(),
   startedAt: z.date().optional(),
@@ -156,7 +166,7 @@ const PlanSchema = z.object({
 
 // Define the Plans collection
 const plans = defineCollection({
-  type: 'content',
+  type: "content",
   schema: PlanSchema,
 });
 
@@ -166,14 +176,14 @@ const ProjectSchema = z.object({
   description: z.string(),
   project: z.string(), // Project name
   organization: z.string().optional(), // Organization name
-  personRole: z.enum(['platform_owner', 'org_owner', 'org_user', 'customer']).optional(),
+  personRole: z.enum(["platform_owner", "org_owner", "org_user", "customer"]).optional(),
   ontologyDimensions: z.array(z.string()).optional(), // Groups, People, Things, Connections, Events, Knowledge
   assignedSpecialist: z.string().optional(), // Agent name
-  status: z.enum(['planning', 'active', 'on_hold', 'completed', 'archived']).default('planning'),
-  priority: z.enum(['low', 'medium', 'high', 'critical']).optional(),
+  status: z.enum(["planning", "active", "on_hold", "completed", "archived"]).default("planning"),
+  priority: z.enum(["low", "medium", "high", "critical"]).optional(),
 
   // Display properties for project cards
-  level: z.enum(['Beginner', 'Intermediate', 'Advanced']).optional(),
+  level: z.enum(["Beginner", "Intermediate", "Advanced"]).optional(),
   demoUrl: z.string().optional(),
   planUrl: z.string().optional(),
   iconName: z.string().optional(),
@@ -214,10 +224,14 @@ const ProjectSchema = z.object({
   teams: z.array(z.string()).optional(),
 
   // Lessons
-  lessonsLearned: z.array(z.object({
-    milestone: z.string(),
-    lesson: z.string(),
-  })).optional(),
+  lessonsLearned: z
+    .array(
+      z.object({
+        milestone: z.string(),
+        lesson: z.string(),
+      })
+    )
+    .optional(),
 
   // Timestamps
   createdAt: z.date().optional(),
@@ -227,7 +241,7 @@ const ProjectSchema = z.object({
 
 // Define the Projects collection
 const projects = defineCollection({
-  type: 'content',
+  type: "content",
   schema: ProjectSchema,
 });
 
@@ -236,55 +250,73 @@ const ConnectionSchema = z.object({
   title: z.string(), // Protocol name
   description: z.string(), // Brief description
   protocol: z.string(), // Protocol ID (acp, mcp, a2a, ap2, x402, agui)
-  category: z.enum(['communication', 'context', 'coordination', 'payments', 'interface']).optional(), // Protocol category
+  category: z
+    .enum(["communication", "context", "coordination", "payments", "interface"])
+    .optional(), // Protocol category
   organization: z.string().optional(), // Organization behind protocol
-  personRole: z.enum(['platform_owner', 'org_owner', 'org_user', 'customer']).optional(),
+  personRole: z.enum(["platform_owner", "org_owner", "org_user", "customer"]).optional(),
   ontologyDimensions: z.array(z.string()).optional(), // Groups, People, Things, Connections, Events, Knowledge
   assignedSpecialist: z.string().optional(), // Agent name
 
   // Protocol specification
-  specification: z.object({
-    version: z.string().optional(), // Protocol version
-    status: z.enum(['draft', 'active', 'stable', 'deprecated']).optional(), // Protocol status
-    standards: z.array(z.string()).optional(), // Standards (RFC, Linux Foundation, etc)
-  }).optional(),
+  specification: z
+    .object({
+      version: z.string().optional(), // Protocol version
+      status: z.enum(["draft", "active", "stable", "deprecated"]).optional(), // Protocol status
+      standards: z.array(z.string()).optional(), // Standards (RFC, Linux Foundation, etc)
+    })
+    .optional(),
 
   // Ontology mapping
-  ontologyMapping: z.object({
-    groups: z.string().optional(),
-    people: z.string().optional(),
-    things: z.string().optional(),
-    connections: z.string().optional(),
-    events: z.string().optional(),
-    knowledge: z.string().optional(),
-  }).optional(),
+  ontologyMapping: z
+    .object({
+      groups: z.string().optional(),
+      people: z.string().optional(),
+      things: z.string().optional(),
+      connections: z.string().optional(),
+      events: z.string().optional(),
+      knowledge: z.string().optional(),
+    })
+    .optional(),
 
   // Use cases
-  useCases: z.array(z.object({
-    title: z.string(),
-    description: z.string(),
-    protocols: z.array(z.string()).optional(),
-  })).optional(),
+  useCases: z
+    .array(
+      z.object({
+        title: z.string(),
+        description: z.string(),
+        protocols: z.array(z.string()).optional(),
+      })
+    )
+    .optional(),
 
   // Code examples
-  examples: z.array(z.object({
-    title: z.string(),
-    language: z.string(), // typescript, python, javascript
-    code: z.string(),
-  })).optional(),
+  examples: z
+    .array(
+      z.object({
+        title: z.string(),
+        language: z.string(), // typescript, python, javascript
+        code: z.string(),
+      })
+    )
+    .optional(),
 
   // Features
-  features: z.array(z.object({
-    name: z.string(),
-    description: z.string(),
-  })).optional(),
+  features: z
+    .array(
+      z.object({
+        name: z.string(),
+        description: z.string(),
+      })
+    )
+    .optional(),
 
   // Standards & organizations
   standards: z.array(z.string()).optional(),
   organizations: z.array(z.string()).optional(),
 
   // Integration
-  integrationLevel: z.enum(['basic', 'advanced', 'enterprise']).optional(),
+  integrationLevel: z.enum(["basic", "advanced", "enterprise"]).optional(),
   prerequisites: z.array(z.string()).optional(),
 
   // Timestamps
@@ -295,7 +327,7 @@ const ConnectionSchema = z.object({
 
 // Define the Connections collection
 const connections = defineCollection({
-  type: 'content',
+  type: "content",
   schema: ConnectionSchema,
 });
 
@@ -304,121 +336,153 @@ const FeatureSchema = z.object({
   title: z.string(), // Feature name
   description: z.string(), // Brief description
   featureId: z.string(), // Unique feature identifier (e.g., "auth-magic-links", "ecommerce-cart")
-  category: z.enum([
-    'authentication',
-    'ecommerce',
-    'ai-agents',
-    'protocols',
-    'payments',
-    'analytics',
-    'content',
-    'communication',
-    'infrastructure',
-    'integrations',
-    'developer-tools',
-    'other'
-  ]).optional(), // Feature category
+  category: z
+    .enum([
+      "authentication",
+      "ecommerce",
+      "ai-agents",
+      "protocols",
+      "payments",
+      "analytics",
+      "content",
+      "communication",
+      "infrastructure",
+      "integrations",
+      "developer-tools",
+      "other",
+    ])
+    .optional(), // Feature category
 
   // Feature status and metadata
-  status: z.enum(['planned', 'in_development', 'beta', 'completed', 'deprecated']).default('planned'),
+  status: z
+    .enum(["planned", "in_development", "beta", "completed", "deprecated"])
+    .default("planned"),
   version: z.string().optional(), // Feature version (e.g., "1.0.0", "2.1.3")
   releaseDate: z.date().optional(), // When feature was released
   plannedDate: z.date().optional(), // When feature is planned for release
 
   // Ontology alignment
   organization: z.string().optional(), // Organization that owns/builds this feature
-  personRole: z.enum(['platform_owner', 'org_owner', 'org_user', 'customer']).optional(),
+  personRole: z.enum(["platform_owner", "org_owner", "org_user", "customer"]).optional(),
   ontologyDimensions: z.array(z.string()).optional(), // Groups, People, Things, Connections, Events, Knowledge
   assignedSpecialist: z.string().optional(), // Agent name (agent-backend, agent-frontend, etc.)
 
   // Technical specification
-  specification: z.object({
-    complexity: z.enum(['simple', 'moderate', 'complex', 'expert']).optional(),
-    estimatedHours: z.number().optional(),
-    dependencies: z.array(z.string()).optional(), // Other features this depends on
-    technologies: z.array(z.string()).optional(), // Tech stack (React, Convex, Astro, etc.)
-    apiEndpoints: z.array(z.object({
-      method: z.enum(['GET', 'POST', 'PUT', 'PATCH', 'DELETE']),
-      path: z.string(),
-      description: z.string(),
-    })).optional(),
-  }).optional(),
+  specification: z
+    .object({
+      complexity: z.enum(["simple", "moderate", "complex", "expert"]).optional(),
+      estimatedHours: z.number().optional(),
+      dependencies: z.array(z.string()).optional(), // Other features this depends on
+      technologies: z.array(z.string()).optional(), // Tech stack (React, Convex, Astro, etc.)
+      apiEndpoints: z
+        .array(
+          z.object({
+            method: z.enum(["GET", "POST", "PUT", "PATCH", "DELETE"]),
+            path: z.string(),
+            description: z.string(),
+          })
+        )
+        .optional(),
+    })
+    .optional(),
 
   // Ontology mapping (how this feature uses the 6 dimensions)
-  ontologyMapping: z.object({
-    groups: z.string().optional(),
-    people: z.string().optional(),
-    things: z.string().optional(),
-    connections: z.string().optional(),
-    events: z.string().optional(),
-    knowledge: z.string().optional(),
-  }).optional(),
+  ontologyMapping: z
+    .object({
+      groups: z.string().optional(),
+      people: z.string().optional(),
+      things: z.string().optional(),
+      connections: z.string().optional(),
+      events: z.string().optional(),
+      knowledge: z.string().optional(),
+    })
+    .optional(),
 
   // Use cases
-  useCases: z.array(z.object({
-    title: z.string(),
-    description: z.string(),
-    userType: z.string().optional(), // Who uses this (creator, customer, admin)
-    scenario: z.string().optional(), // Step-by-step scenario
-  })).optional(),
+  useCases: z
+    .array(
+      z.object({
+        title: z.string(),
+        description: z.string(),
+        userType: z.string().optional(), // Who uses this (creator, customer, admin)
+        scenario: z.string().optional(), // Step-by-step scenario
+      })
+    )
+    .optional(),
 
   // Code examples
-  examples: z.array(z.object({
-    title: z.string(),
-    language: z.string(), // typescript, python, javascript
-    code: z.string(),
-    description: z.string().optional(),
-  })).optional(),
+  examples: z
+    .array(
+      z.object({
+        title: z.string(),
+        language: z.string(), // typescript, python, javascript
+        code: z.string(),
+        description: z.string().optional(),
+      })
+    )
+    .optional(),
 
   // Features (sub-features or capabilities)
-  features: z.array(z.object({
-    name: z.string(),
-    description: z.string(),
-    status: z.enum(['planned', 'in_development', 'completed']).optional(),
-  })).optional(),
+  features: z
+    .array(
+      z.object({
+        name: z.string(),
+        description: z.string(),
+        status: z.enum(["planned", "in_development", "completed"]).optional(),
+      })
+    )
+    .optional(),
 
   // Marketing & positioning
-  marketingPosition: z.object({
-    tagline: z.string().optional(), // One-line positioning
-    valueProposition: z.string().optional(), // Why this matters
-    targetAudience: z.array(z.string()).optional(), // Who needs this
-    competitiveAdvantage: z.string().optional(), // What makes it better
-    pricingImpact: z.enum(['free', 'starter', 'pro', 'enterprise']).optional(),
-  }).optional(),
+  marketingPosition: z
+    .object({
+      tagline: z.string().optional(), // One-line positioning
+      valueProposition: z.string().optional(), // Why this matters
+      targetAudience: z.array(z.string()).optional(), // Who needs this
+      competitiveAdvantage: z.string().optional(), // What makes it better
+      pricingImpact: z.enum(["free", "starter", "pro", "enterprise"]).optional(),
+    })
+    .optional(),
 
   // Screenshots and media
-  media: z.object({
-    screenshot: z.string().optional(), // Main screenshot URL
-    video: z.string().optional(), // Demo video URL
-    demo: z.string().optional(), // Live demo URL
-    gallery: z.array(z.string()).optional(), // Additional images
-  }).optional(),
+  media: z
+    .object({
+      screenshot: z.string().optional(), // Main screenshot URL
+      video: z.string().optional(), // Demo video URL
+      demo: z.string().optional(), // Live demo URL
+      gallery: z.array(z.string()).optional(), // Additional images
+    })
+    .optional(),
 
   // Integration details
-  integrationLevel: z.enum(['basic', 'advanced', 'enterprise']).optional(),
+  integrationLevel: z.enum(["basic", "advanced", "enterprise"]).optional(),
   prerequisites: z.array(z.string()).optional(),
   relatedFeatures: z.array(z.string()).optional(), // IDs of related features
 
   // Quality metrics
-  metrics: z.object({
-    testCoverage: z.number().optional(), // Percentage
-    performanceScore: z.number().optional(), // Lighthouse score
-    accessibilityScore: z.number().optional(), // WCAG compliance
-    securityAudit: z.boolean().optional(), // Has been audited
-  }).optional(),
+  metrics: z
+    .object({
+      testCoverage: z.number().optional(), // Percentage
+      performanceScore: z.number().optional(), // Lighthouse score
+      accessibilityScore: z.number().optional(), // WCAG compliance
+      securityAudit: z.boolean().optional(), // Has been audited
+    })
+    .optional(),
 
   // Documentation links
-  documentation: z.object({
-    userGuide: z.string().optional(),
-    apiReference: z.string().optional(),
-    videoTutorial: z.string().optional(),
-    blogPost: z.string().optional(),
-  }).optional(),
+  documentation: z
+    .object({
+      userGuide: z.string().optional(),
+      apiReference: z.string().optional(),
+      videoTutorial: z.string().optional(),
+      blogPost: z.string().optional(),
+    })
+    .optional(),
 
   // Tags and categorization
   tags: z.array(z.string()).optional(),
   featured: z.boolean().default(false),
-  priority: z.enum(['low', 'medium', 'high', 'critical']).optional(),
+  priority: z.enum(["low", "medium", "high", "critical"]).optional(),
 
   // Timestamps
   createdAt: z.date().optional(),
@@ -428,7 +492,7 @@ const FeatureSchema = z.object({
 
 // Define the Features collection (MDX-enabled for component embedding)
 const features = defineCollection({
-  type: 'content',
+  type: "content",
   schema: FeatureSchema,
 });
 
@@ -445,7 +509,7 @@ const DocsSchema = z.object({
 
 // Define the Docs collection
 const docs = defineCollection({
-  type: 'content',
+  type: "content",
   schema: DocsSchema,
 });
 
@@ -457,35 +521,43 @@ const VideoSchema = z.object({
   description: z.string(),
 
   // Video sources (prioritized: Mux > YouTube > Direct URL)
-  playbackId: z.string().optional(),  // Mux playback ID (primary - professional hosting)
-  muxAssetId: z.string().optional(),  // Mux asset ID for metadata tracking
-  youtubeId: z.string().optional(),   // YouTube fallback
-  videoUrl: z.string().optional(),    // Direct URL fallback
+  playbackId: z.string().optional(), // Mux playback ID (primary - professional hosting)
+  muxAssetId: z.string().optional(), // Mux asset ID for metadata tracking
+  youtubeId: z.string().optional(), // YouTube fallback
+  videoUrl: z.string().optional(), // Direct URL fallback
 
-  thumbnail: z.string(),              // Image URL or path
-  duration: z.number(),               // Seconds
-  publishedAt: z.coerce.date(),       // Coerce string to Date
+  thumbnail: z.string(), // Image URL or path
+  duration: z.number(), // Seconds
+  publishedAt: z.coerce.date(), // Coerce string to Date
   author: z.string().optional(),
   categories: z.array(z.string()).default([]),
   tags: z.array(z.string()).default([]),
 
   // Premium features - Education & News
-  chapters: z.array(z.object({
-    startTime: z.number(),          // Seconds from start
-    endTime: z.number().optional(), // Optional end time
-    text: z.string(),               // Chapter title
-  })).optional(),                   // Chapter markers for navigation
+  chapters: z
+    .array(
+      z.object({
+        startTime: z.number(), // Seconds from start
+        endTime: z.number().optional(), // Optional end time
+        text: z.string(), // Chapter title
+      })
+    )
+    .optional(), // Chapter markers for navigation
 
-  subtitles: z.array(z.object({
-    src: z.string(),                // VTT file URL
-    label: z.string(),              // Display name (e.g., "English")
-    language: z.string(),           // Language code (e.g., "en")
-    kind: z.enum(['subtitles', 'captions']), // Type of text track
-    default: z.boolean().optional(), // Default language
-  })).optional(),                   // Multi-language subtitle support
+  subtitles: z
+    .array(
+      z.object({
+        src: z.string(), // VTT file URL
+        label: z.string(), // Display name (e.g., "English")
+        language: z.string(), // Language code (e.g., "en")
+        kind: z.enum(["subtitles", "captions"]), // Type of text track
+        default: z.boolean().optional(), // Default language
+      })
+    )
+    .optional(), // Multi-language subtitle support
 
   thumbnails: z.string().optional(), // VTT file with thumbnail previews
-  streamType: z.enum(['on-demand', 'live', 'live:dvr']).optional(), // Video type
+  streamType: z.enum(["on-demand", "live", "live:dvr"]).optional(), // Video type
   aspectRatio: z.string().optional(), // Custom aspect ratio (default: 16/9)
   featured: z.boolean().default(false), // Feature on homepage
   draft: z.boolean().default(false), // Hide if draft
@@ -493,7 +565,7 @@ const VideoSchema = z.object({
 
 // Define the Videos collection
 const videos = defineCollection({
-  type: 'content',
+  type: "content",
   schema: VideoSchema,
 });
 
@@ -503,46 +575,54 @@ const PodcastSchema = z.object({
   // Basic metadata
   title: z.string(),
   description: z.string(),
-  audioUrl: z.string().optional(),  // Audio file URL
+  audioUrl: z.string().optional(), // Audio file URL
   thumbnail: z.string().optional(), // Cover art image
-  duration: z.string().optional(),  // Duration in HH:MM:SS or MM:SS format
-  date: z.coerce.date(),            // Publication date
+  duration: z.string().optional(), // Duration in HH:MM:SS or MM:SS format
+  date: z.coerce.date(), // Publication date
   author: z.string().optional(),
-  category: z.string().optional(),  // Podcast category
+  category: z.string().optional(), // Podcast category
   tags: z.array(z.string()).default([]),
 
   // Episode information
-  episode: z.number().optional(),   // Episode number
-  season: z.number().optional(),    // Season number
+  episode: z.number().optional(), // Episode number
+  season: z.number().optional(), // Season number
 
   // Status and visibility
-  status: z.enum(['draft', 'public', 'archived']).optional().default('public'),
+  status: z.enum(["draft", "public", "archived"]).optional().default("public"),
   featured: z.boolean().default(false),
 
   // Premium features
-  chapters: z.array(z.object({
-    startTime: z.number(),          // Seconds from start
-    endTime: z.number().optional(), // Optional end time
-    text: z.string(),               // Chapter title
-  })).optional(),                   // Chapter markers for navigation
+  chapters: z
+    .array(
+      z.object({
+        startTime: z.number(), // Seconds from start
+        endTime: z.number().optional(), // Optional end time
+        text: z.string(), // Chapter title
+      })
+    )
+    .optional(), // Chapter markers for navigation
 
-  subtitles: z.array(z.object({
-    src: z.string(),                // VTT file URL
-    label: z.string(),              // Display name (e.g., "English")
-    language: z.string(),           // Language code (e.g., "en")
-    kind: z.enum(['subtitles', 'captions']), // Type of text track
-    default: z.boolean().optional(), // Default language
-  })).optional(),                   // Multi-language subtitle support
+  subtitles: z
+    .array(
+      z.object({
+        src: z.string(), // VTT file URL
+        label: z.string(), // Display name (e.g., "English")
+        language: z.string(), // Language code (e.g., "en")
+        kind: z.enum(["subtitles", "captions"]), // Type of text track
+        default: z.boolean().optional(), // Default language
+      })
+    )
+    .optional(), // Multi-language subtitle support
 
   transcript: z.string().optional(), // Full episode transcript
 
   // Ontology alignment
-  slug: z.string().optional(),      // URL slug (optional, defaults to filename)
+  slug: z.string().optional(), // URL slug (optional, defaults to filename)
 });
 
 // Define the Podcasts collection
 const podcasts = defineCollection({
-  type: 'content',
+  type: "content",
   schema: PodcastSchema,
 });
 

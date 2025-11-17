@@ -4,13 +4,13 @@
  * Requires client:load hydration
  */
 
-'use client';
+"use client";
 
-import { useState } from 'react';
-import { Button } from '@/components/ui/button';
-import { DemoPaymentForm } from '@/components/ecommerce/interactive/DemoPaymentForm';
-import { cn } from '@/lib/utils';
-import type { ShippingAddress } from '@/types/ecommerce';
+import { useState } from "react";
+import { DemoPaymentForm } from "@/components/ecommerce/interactive/DemoPaymentForm";
+import { Button } from "@/components/ui/button";
+import { cn } from "@/lib/utils";
+import type { ShippingAddress } from "@/types/ecommerce";
 
 interface CheckoutFormProps {
   total: number;
@@ -18,21 +18,21 @@ interface CheckoutFormProps {
 }
 
 export function CheckoutForm({ total, onSubmit }: CheckoutFormProps) {
-  const [step, setStep] = useState<'shipping' | 'payment'>('shipping');
+  const [step, setStep] = useState<"shipping" | "payment">("shipping");
   const [shippingAddress, setShippingAddress] = useState<ShippingAddress>({
-    fullName: '',
-    addressLine1: '',
-    addressLine2: '',
-    city: '',
-    state: '',
-    postalCode: '',
-    country: 'USA',
-    phone: '',
+    fullName: "",
+    addressLine1: "",
+    addressLine2: "",
+    city: "",
+    state: "",
+    postalCode: "",
+    country: "USA",
+    phone: "",
   });
 
   const handleShippingSubmit = (e: React.FormEvent) => {
     e.preventDefault();
-    setStep('payment');
+    setStep("payment");
   };
 
   // Payment submission handled by DemoPaymentForm
@@ -43,9 +43,9 @@ export function CheckoutForm({ total, onSubmit }: CheckoutFormProps) {
       <div className="flex items-center gap-4">
         <div
           className={`flex h-8 w-8 items-center justify-center rounded-full ${
-            step === 'shipping'
-              ? 'bg-primary text-primary-foreground'
-              : 'bg-muted text-muted-foreground'
+            step === "shipping"
+              ? "bg-primary text-primary-foreground"
+              : "bg-muted text-muted-foreground"
           }`}
         >
           1
@@ -53,9 +53,9 @@ export function CheckoutForm({ total, onSubmit }: CheckoutFormProps) {
         <div className="flex-1 border-t-2 border-border" />
         <div
           className={`flex h-8 w-8 items-center justify-center rounded-full ${
-            step === 'payment'
-              ? 'bg-primary text-primary-foreground'
-              : 'bg-muted text-muted-foreground'
+            step === "payment"
+              ? "bg-primary text-primary-foreground"
+              : "bg-muted text-muted-foreground"
           }`}
         >
           2
@@ -63,7 +63,7 @@ export function CheckoutForm({ total, onSubmit }: CheckoutFormProps) {
       </div>
 
       {/* Shipping Form */}
-      {step === 'shipping' && (
+      {step === "shipping" && (
         <form onSubmit={handleShippingSubmit} className="space-y-4">
           <h2 className="text-lg font-semibold">Shipping Information</h2>
 
@@ -73,9 +73,7 @@ export function CheckoutForm({ total, onSubmit }: CheckoutFormProps) {
               type="text"
               required
               value={shippingAddress.fullName}
-              onChange={(e) =>
-                setShippingAddress({ ...shippingAddress, fullName: e.target.value })
-              }
+              onChange={(e) => setShippingAddress({ ...shippingAddress, fullName: e.target.value })}
               className="w-full rounded-md border border-input bg-background px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-ring"
             />
           </div>
@@ -112,9 +110,7 @@ export function CheckoutForm({ total, onSubmit }: CheckoutFormProps) {
                 type="text"
                 required
                 value={shippingAddress.city}
-                onChange={(e) =>
-                  setShippingAddress({ ...shippingAddress, city: e.target.value })
-                }
+                onChange={(e) => setShippingAddress({ ...shippingAddress, city: e.target.value })}
                 className="w-full rounded-md border border-input bg-background px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-ring"
               />
             </div>
@@ -124,9 +120,7 @@ export function CheckoutForm({ total, onSubmit }: CheckoutFormProps) {
                 type="text"
                 required
                 value={shippingAddress.state}
-                onChange={(e) =>
-                  setShippingAddress({ ...shippingAddress, state: e.target.value })
-                }
+                onChange={(e) => setShippingAddress({ ...shippingAddress, state: e.target.value })}
                 className="w-full rounded-md border border-input bg-background px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-ring"
               />
             </div>
@@ -167,9 +161,7 @@ export function CheckoutForm({ total, onSubmit }: CheckoutFormProps) {
             <input
               type="tel"
               value={shippingAddress.phone}
-              onChange={(e) =>
-                setShippingAddress({ ...shippingAddress, phone: e.target.value })
-              }
+              onChange={(e) => setShippingAddress({ ...shippingAddress, phone: e.target.value })}
               className="w-full rounded-md border border-input bg-background px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-ring"
             />
           </div>
@@ -177,9 +169,9 @@ export function CheckoutForm({ total, onSubmit }: CheckoutFormProps) {
           <Button
             type="submit"
             className={cn(
-              'w-full',
-              'bg-[hsl(var(--color-primary))] text-[hsl(var(--color-primary-foreground))]',
-              'hover:bg-[hsl(var(--color-primary))]/90 focus-visible:ring-[hsl(var(--color-primary))]/40',
+              "w-full",
+              "bg-[hsl(var(--color-primary))] text-[hsl(var(--color-primary-foreground))]",
+              "hover:bg-[hsl(var(--color-primary))]/90 focus-visible:ring-[hsl(var(--color-primary))]/40"
             )}
           >
             Continue to Payment
@@ -188,16 +180,11 @@ export function CheckoutForm({ total, onSubmit }: CheckoutFormProps) {
       )}
 
       {/* Payment Form */}
-      {step === 'payment' && (
+      {step === "payment" && (
         <div className="space-y-4">
           <div className="flex items-center justify-between">
             <h2 className="text-lg font-semibold">Payment</h2>
-            <Button
-              type="button"
-              variant="ghost"
-              size="sm"
-              onClick={() => setStep('shipping')}
-            >
+            <Button type="button" variant="ghost" size="sm" onClick={() => setStep("shipping")}>
               ← Edit Shipping
             </Button>
           </div>

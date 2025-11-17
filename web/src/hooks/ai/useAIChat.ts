@@ -6,9 +6,9 @@
  * - PREMIUM TIER (backend=on): useBackendChat (persistent, database, analytics)
  */
 
-import { backendConfig } from '@/config/backend';
-import { useClientChat, UseClientChatOptions } from './basic/useClientChat';
-import { useBackendChat, UseBackendChatOptions } from './premium/useBackendChat';
+import { backendConfig } from "@/config/backend";
+import { type UseClientChatOptions, useClientChat } from "./basic/useClientChat";
+import { type UseBackendChatOptions, useBackendChat } from "./premium/useBackendChat";
 
 export type UseAIChatOptions = UseClientChatOptions | UseBackendChatOptions;
 

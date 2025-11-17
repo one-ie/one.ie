@@ -1,0 +1,60 @@
+{
+  "mcpServers": {
+    "ultracite": {
+      "command": "npx",
+      "args": [
+        "-y",
+        "ultracite",
+        "mcp"
+      ],
+      "cwd": "${workspaceFolder}/web",
+      "env": {
+        "NODE_OPTIONS": "--max-old-space-size=4096"
+      },
+      "disabled": false,
+      "alwaysAllow": []
+    },
+    "shadcn": {
+      "command": "npx",
+      "args": [
+        "-y",
+        "@joshuacc/mcp-server-shadcn@latest"
+      ],
+      "disabled": false,
+      "alwaysAllow": []
+    },
+    "cloudflare-builds": {
+      "command": "npx",
+      "args": [
+        "-y",
+        "@cloudflare/mcp-server-cloudflare",
+        "builds"
+      ],
+      "env": {
+        "CLOUDFLARE_API_TOKEN": "${CLOUDFLARE_API_TOKEN}",
+        "CLOUDFLARE_ACCOUNT_ID": "${CLOUDFLARE_ACCOUNT_ID}"
+      },
+      "disabled": false,
+      "alwaysAllow": []
+    },
+    "cloudflare-docs": {
+      "command": "npx",
+      "args": [
+        "-y",
+        "@cloudflare/mcp-server-cloudflare",
+        "docs"
+      ],
+      "disabled": false,
+      "alwaysAllow": []
+    },
+    "chrome-devtools": {
+      "command": "npx",
+      "args": [
+        "-y",
+        "@automatalabs/mcp-server-chrome"
+      ],
+      "disabled": false,
+      "alwaysAllow": []
+    }
+  }
+}

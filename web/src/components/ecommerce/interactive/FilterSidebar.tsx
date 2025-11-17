@@ -4,17 +4,17 @@
  * Requires client:load hydration
  */
 
-'use client';
+"use client";
 
-import { useState, useEffect } from 'react';
-import type { FilterOptions } from '@/types/ecommerce';
-import { Button } from '@/components/ui/button';
-import { Badge } from '@/components/ui/badge';
-import { Sheet, SheetContent, SheetHeader, SheetTitle, SheetTrigger } from '@/components/ui/sheet';
-import { Collapsible, CollapsibleContent, CollapsibleTrigger } from '@/components/ui/collapsible';
-import { Checkbox } from '@/components/ui/checkbox';
-import { Star } from 'lucide-react';
-import { PriceRangeSlider } from './PriceRangeSlider';
+import { Star } from "lucide-react";
+import { useEffect, useState } from "react";
+import { Badge } from "@/components/ui/badge";
+import { Button } from "@/components/ui/button";
+import { Checkbox } from "@/components/ui/checkbox";
+import { Collapsible, CollapsibleContent, CollapsibleTrigger } from "@/components/ui/collapsible";
+import { Sheet, SheetContent, SheetHeader, SheetTitle, SheetTrigger } from "@/components/ui/sheet";
+import type { FilterOptions } from "@/types/ecommerce";
+import { PriceRangeSlider } from "./PriceRangeSlider";
 
 interface FilterSidebarProps {
   categories: { id: string; name: string; count?: number }[];
@@ -42,11 +42,11 @@ export function FilterSidebar({
       tags: [],
       inStockOnly: false,
       priceRange: undefined,
-      sortBy: 'newest',
+      sortBy: "newest",
       rating: undefined,
     };
 
-    if (typeof window === 'undefined') {
+    if (typeof window === "undefined") {
       return {
         ...baseFilters,
         ...initialFilters,
@@ -55,27 +55,28 @@ export function FilterSidebar({
 
     const params = new URLSearchParams(window.location.search);
     const fromParams: FilterOptions = {
-      categories: params.get('categories')?.split(',').filter(Boolean) || [],
-      tags: params.get('tags')?.split(',').filter(Boolean) || [],
-      inStockOnly: params.get('inStock') === 'true',
-      priceRange: params.get('minPrice') || params.get('maxPrice')
-        ? {
-            min: parseFloat(params.get('minPrice') || String(minPrice)),
-            max: parseFloat(params.get('maxPrice') || String(maxPrice)),
-          }
-        : undefined,
-      sortBy: (params.get('sort') as FilterOptions['sortBy']) || 'newest',
-      rating: params.get('rating') ? parseInt(params.get('rating') || '0') : undefined,
+      categories: params.get("categories")?.split(",").filter(Boolean) || [],
+      tags: params.get("tags")?.split(",").filter(Boolean) || [],
+      inStockOnly: params.get("inStock") === "true",
+      priceRange:
+        params.get("minPrice") || params.get("maxPrice")
+          ? {
+              min: parseFloat(params.get("minPrice") || String(minPrice)),
+              max: parseFloat(params.get("maxPrice") || String(maxPrice)),
+            }
+          : undefined,
+      sortBy: (params.get("sort") as FilterOptions["sortBy"]) || "newest",
+      rating: params.get("rating") ? parseInt(params.get("rating") || "0", 10) : undefined,
     };
 
     const hasParams =
-      params.has('categories') ||
-      params.has('tags') ||
-      params.has('inStock') ||
-      params.has('minPrice') ||
-      params.has('maxPrice') ||
-      params.has('sort') ||
-      params.has('rating');
+      params.has("categories") ||
+      params.has("tags") ||
+      params.has("inStock") ||
+      params.has("minPrice") ||
+      params.has("maxPrice") ||
+      params.has("sort") ||
+      params.has("rating");
 
     if (hasParams) {
       return fromParams;
@@ -90,10 +91,7 @@ export function FilterSidebar({
   const [filters, setFilters] = useState<FilterOptions>(getInitialFilters);
   const [priceRange, setPriceRange] = useState<[number, number]>(() => {
     const initial = getInitialFilters();
-    return [
-      initial.priceRange?.min || minPrice,
-      initial.priceRange?.max || maxPrice,
-    ];
+    return [initial.priceRange?.min || minPrice, initial.priceRange?.max || maxPrice];
   });
   const [selectedRatings, setSelectedRatings] = useState<number[]>(() => {
     const initial = getInitialFilters();
@@ -112,45 +110,42 @@ export function FilterSidebar({
   useEffect(() => {
     const initial = getInitialFilters();
     setFilters(initial);
-    setPriceRange([
-      initial.priceRange?.min || minPrice,
-      initial.priceRange?.max || maxPrice,
-    ]);
+    setPriceRange([initial.priceRange?.min || minPrice, initial.priceRange?.max || maxPrice]);
     setSelectedRatings(initial.rating ? [initial.rating] : []);
     onFilterChange?.(initial);
-  }, [initialFilters?.categories?.join(','), initialFilters?.tags?.join(','), initialFilters?.inStockOnly, initialFilters?.priceRange?.min, initialFilters?.priceRange?.max, initialFilters?.rating]);
+  }, [getInitialFilters, maxPrice, minPrice, onFilterChange]);
 
   // Update URL params when filters change
   useEffect(() => {
-    if (typeof window === 'undefined') return;
+    if (typeof window === "undefined") return;
 
     const params = new URLSearchParams();
 
     if (filters.categories?.length) {
-      params.set('categories', filters.categories.join(','));
+      params.set("categories", filters.categories.join(","));
     }
     if (filters.tags?.length) {
-      params.set('tags', filters.tags.join(','));
+      params.set("tags", filters.tags.join(","));
     }
     if (filters.inStockOnly) {
-      params.set('inStock', 'true');
+      params.set("inStock", "true");
     }
     if (filters.priceRange) {
-      params.set('minPrice', String(filters.priceRange.min));
-      params.set('maxPrice', String(filters.priceRange.max));
+      params.set("minPrice", String(filters.priceRange.min));
+      params.set("maxPrice", String(filters.priceRange.max));
     }
-    if (filters.sortBy && filters.sortBy !== 'newest') {
-      params.set('sort', filters.sortBy);
+    if (filters.sortBy && filters.sortBy !== "newest") {
+      params.set("sort", filters.sortBy);
     }
     if (filters.rating) {
-      params.set('rating', String(filters.rating));
+      params.set("rating", String(filters.rating));
     }
 
     const newUrl = params.toString()
       ? `${window.location.pathname}?${params.toString()}`
       : window.location.pathname;
 
-    window.history.replaceState({}, '', newUrl);
+    window.history.replaceState({}, "", newUrl);
   }, [filters]);
 
   const toggleSection = (section: keyof typeof openSections) => {
@@ -214,7 +209,7 @@ export function FilterSidebar({
     onFilterChange?.(newFilters);
   };
 
-  const handleSortChange = (sortBy: FilterOptions['sortBy']) => {
+  const handleSortChange = (sortBy: FilterOptions["sortBy"]) => {
     const newFilters = { ...filters, sortBy };
     setFilters(newFilters);
     onFilterChange?.(newFilters);
@@ -232,7 +227,7 @@ export function FilterSidebar({
       tags: [],
       inStockOnly: false,
       priceRange: undefined,
-      sortBy: 'newest',
+      sortBy: "newest",
       rating: undefined,
     };
     setFilters(newFilters);
@@ -242,19 +237,22 @@ export function FilterSidebar({
   };
 
   // Remove single filter chip
-  const removeFilter = (type: 'category' | 'tag' | 'price' | 'stock' | 'rating', value?: string) => {
-    if (type === 'category' && value) {
+  const removeFilter = (
+    type: "category" | "tag" | "price" | "stock" | "rating",
+    value?: string
+  ) => {
+    if (type === "category" && value) {
       handleCategoryToggle(value);
-    } else if (type === 'tag' && value) {
+    } else if (type === "tag" && value) {
       handleTagToggle(value);
-    } else if (type === 'price') {
+    } else if (type === "price") {
       const newFilters = { ...filters, priceRange: undefined };
       setFilters(newFilters);
       setPriceRange([minPrice, maxPrice]);
       onFilterChange?.(newFilters);
-    } else if (type === 'stock') {
+    } else if (type === "stock") {
       handleInStockToggle();
-    } else if (type === 'rating') {
+    } else if (type === "rating") {
       setSelectedRatings([]);
       const newFilters = { ...filters, rating: undefined };
       setFilters(newFilters);
@@ -288,11 +286,21 @@ export function FilterSidebar({
                   key={catId}
                   variant="secondary"
                   className="cursor-pointer hover:bg-secondary/80"
-                  onClick={() => removeFilter('category', catId)}
+                  onClick={() => removeFilter("category", catId)}
                 >
                   {cat.name}
-                  <svg className="ml-1 h-3 w-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
+                  <svg
+                    className="ml-1 h-3 w-3"
+                    fill="none"
+                    stroke="currentColor"
+                    viewBox="0 0 24 24"
+                  >
+                    <path
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                      strokeWidth={2}
+                      d="M6 18L18 6M6 6l12 12"
+                    />
                   </svg>
                 </Badge>
               ) : null;
@@ -302,11 +310,16 @@ export function FilterSidebar({
                 key={tag}
                 variant="secondary"
                 className="cursor-pointer hover:bg-secondary/80"
-                onClick={() => removeFilter('tag', tag)}
+                onClick={() => removeFilter("tag", tag)}
               >
                 {tag}
                 <svg className="ml-1 h-3 w-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
+                  <path
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                    strokeWidth={2}
+                    d="M6 18L18 6M6 6l12 12"
+                  />
                 </svg>
               </Badge>
             ))}
@@ -314,11 +327,16 @@ export function FilterSidebar({
               <Badge
                 variant="secondary"
                 className="cursor-pointer hover:bg-secondary/80"
-                onClick={() => removeFilter('stock')}
+                onClick={() => removeFilter("stock")}
               >
                 In Stock Only
                 <svg className="ml-1 h-3 w-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
+                  <path
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                    strokeWidth={2}
+                    d="M6 18L18 6M6 6l12 12"
+                  />
                 </svg>
               </Badge>
             )}
@@ -326,11 +344,16 @@ export function FilterSidebar({
               <Badge
                 variant="secondary"
                 className="cursor-pointer hover:bg-secondary/80"
-                onClick={() => removeFilter('price')}
+                onClick={() => removeFilter("price")}
               >
                 ${filters.priceRange.min} - ${filters.priceRange.max}
                 <svg className="ml-1 h-3 w-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
+                  <path
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                    strokeWidth={2}
+                    d="M6 18L18 6M6 6l12 12"
+                  />
                 </svg>
               </Badge>
             )}
@@ -338,11 +361,16 @@ export function FilterSidebar({
               <Badge
                 variant="secondary"
                 className="cursor-pointer hover:bg-secondary/80"
-                onClick={() => removeFilter('rating')}
+                onClick={() => removeFilter("rating")}
               >
                 {filters.rating}+ Stars
                 <svg className="ml-1 h-3 w-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
+                  <path
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                    strokeWidth={2}
+                    d="M6 18L18 6M6 6l12 12"
+                  />
                 </svg>
               </Badge>
             )}
@@ -351,11 +379,11 @@ export function FilterSidebar({
       )}
 
       {/* Sort By */}
-      <Collapsible open={openSections.sort} onOpenChange={() => toggleSection('sort')}>
+      <Collapsible open={openSections.sort} onOpenChange={() => toggleSection("sort")}>
         <CollapsibleTrigger className="flex w-full items-center justify-between">
           <h3 className="text-sm font-semibold text-foreground">Sort By</h3>
           <svg
-            className={`h-4 w-4 transition-transform ${openSections.sort ? 'rotate-180' : ''}`}
+            className={`h-4 w-4 transition-transform ${openSections.sort ? "rotate-180" : ""}`}
             fill="none"
             stroke="currentColor"
             viewBox="0 0 24 24"
@@ -366,7 +394,7 @@ export function FilterSidebar({
         <CollapsibleContent className="mt-3">
           <select
             value={filters.sortBy}
-            onChange={(e) => handleSortChange(e.target.value as FilterOptions['sortBy'])}
+            onChange={(e) => handleSortChange(e.target.value as FilterOptions["sortBy"])}
             className="w-full rounded-md border border-input bg-background px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-ring"
           >
             <option value="newest">Newest</option>
@@ -379,7 +407,7 @@ export function FilterSidebar({
       </Collapsible>
 
       {/* Categories */}
-      <Collapsible open={openSections.categories} onOpenChange={() => toggleSection('categories')}>
+      <Collapsible open={openSections.categories} onOpenChange={() => toggleSection("categories")}>
         <CollapsibleTrigger className="flex w-full items-center justify-between">
           <div className="flex items-center gap-2">
             <h3 className="text-sm font-semibold text-foreground">Categories</h3>
@@ -390,7 +418,7 @@ export function FilterSidebar({
             )}
           </div>
           <svg
-            className={`h-4 w-4 transition-transform ${openSections.categories ? 'rotate-180' : ''}`}
+            className={`h-4 w-4 transition-transform ${openSections.categories ? "rotate-180" : ""}`}
             fill="none"
             stroke="currentColor"
             viewBox="0 0 24 24"
@@ -401,7 +429,10 @@ export function FilterSidebar({
         <CollapsibleContent className="mt-3">
           <div className="space-y-2">
             {categories.map((category) => (
-              <label key={category.id} className="flex items-center justify-between gap-2 cursor-pointer group">
+              <label
+                key={category.id}
+                className="flex items-center justify-between gap-2 cursor-pointer group"
+              >
                 <div className="flex items-center gap-2">
                   <Checkbox
                     checked={filters.categories?.includes(category.id)}
@@ -421,7 +452,7 @@ export function FilterSidebar({
       </Collapsible>
 
       {/* Price Range Slider */}
-      <Collapsible open={openSections.price} onOpenChange={() => toggleSection('price')}>
+      <Collapsible open={openSections.price} onOpenChange={() => toggleSection("price")}>
         <CollapsibleTrigger className="flex w-full items-center justify-between">
           <div className="flex items-center gap-2">
             <h3 className="text-sm font-semibold text-foreground">Price Range</h3>
@@ -432,7 +463,7 @@ export function FilterSidebar({
             )}
           </div>
           <svg
-            className={`h-4 w-4 transition-transform ${openSections.price ? 'rotate-180' : ''}`}
+            className={`h-4 w-4 transition-transform ${openSections.price ? "rotate-180" : ""}`}
             fill="none"
             stroke="currentColor"
             viewBox="0 0 24 24"
@@ -453,7 +484,7 @@ export function FilterSidebar({
       </Collapsible>
 
       {/* Star Rating Filter */}
-      <Collapsible open={openSections.rating} onOpenChange={() => toggleSection('rating')}>
+      <Collapsible open={openSections.rating} onOpenChange={() => toggleSection("rating")}>
         <CollapsibleTrigger className="flex w-full items-center justify-between">
           <div className="flex items-center gap-2">
             <h3 className="text-sm font-semibold text-foreground">Customer Rating</h3>
@@ -464,7 +495,7 @@ export function FilterSidebar({
             )}
           </div>
           <svg
-            className={`h-4 w-4 transition-transform ${openSections.rating ? 'rotate-180' : ''}`}
+            className={`h-4 w-4 transition-transform ${openSections.rating ? "rotate-180" : ""}`}
             fill="none"
             stroke="currentColor"
             viewBox="0 0 24 24"
@@ -485,14 +516,12 @@ export function FilterSidebar({
                     <Star
                       key={i}
                       className={`h-4 w-4 ${
-                        i < rating
-                          ? 'fill-yellow-400 text-yellow-400'
-                          : 'text-muted-foreground'
+                        i < rating ? "fill-yellow-400 text-yellow-400" : "text-muted-foreground"
                       }`}
                     />
                   ))}
                   <span className="ml-2 text-sm text-foreground group-hover:text-primary transition-colors">
-                    {rating === 5 ? '5 stars' : `${rating}+ stars`}
+                    {rating === 5 ? "5 stars" : `${rating}+ stars`}
                   </span>
                 </div>
               </label>
@@ -502,7 +531,10 @@ export function FilterSidebar({
       </Collapsible>
 
       {/* Availability */}
-      <Collapsible open={openSections.availability} onOpenChange={() => toggleSection('availability')}>
+      <Collapsible
+        open={openSections.availability}
+        onOpenChange={() => toggleSection("availability")}
+      >
         <CollapsibleTrigger className="flex w-full items-center justify-between">
           <div className="flex items-center gap-2">
             <h3 className="text-sm font-semibold text-foreground">Availability</h3>
@@ -513,7 +545,7 @@ export function FilterSidebar({
             )}
           </div>
           <svg
-            className={`h-4 w-4 transition-transform ${openSections.availability ? 'rotate-180' : ''}`}
+            className={`h-4 w-4 transition-transform ${openSections.availability ? "rotate-180" : ""}`}
             fill="none"
             stroke="currentColor"
             viewBox="0 0 24 24"
@@ -536,7 +568,7 @@ export function FilterSidebar({
 
       {/* Tags */}
       {tags.length > 0 && (
-        <Collapsible open={openSections.tags} onOpenChange={() => toggleSection('tags')}>
+        <Collapsible open={openSections.tags} onOpenChange={() => toggleSection("tags")}>
           <CollapsibleTrigger className="flex w-full items-center justify-between">
             <div className="flex items-center gap-2">
               <h3 className="text-sm font-semibold text-foreground">Tags</h3>
@@ -547,12 +579,17 @@ export function FilterSidebar({
               )}
             </div>
             <svg
-              className={`h-4 w-4 transition-transform ${openSections.tags ? 'rotate-180' : ''}`}
+              className={`h-4 w-4 transition-transform ${openSections.tags ? "rotate-180" : ""}`}
               fill="none"
               stroke="currentColor"
               viewBox="0 0 24 24"
             >
-              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" />
+              <path
+                strokeLinecap="round"
+                strokeLinejoin="round"
+                strokeWidth={2}
+                d="M19 9l-7 7-7-7"
+              />
             </svg>
           </CollapsibleTrigger>
           <CollapsibleContent className="mt-3">
@@ -563,8 +600,8 @@ export function FilterSidebar({
                   onClick={() => handleTagToggle(tag)}
                   className={`rounded-full px-3 py-1 text-xs font-medium transition-colors ${
                     filters.tags?.includes(tag)
-                      ? 'bg-primary text-primary-foreground'
-                      : 'bg-muted text-muted-foreground hover:bg-muted-foreground/20'
+                      ? "bg-primary text-primary-foreground"
+                      : "bg-muted text-muted-foreground hover:bg-muted-foreground/20"
                   }`}
                 >
                   {tag}
@@ -584,7 +621,12 @@ export function FilterSidebar({
         <SheetTrigger asChild>
           <Button variant="outline" className="w-full md:hidden">
             <svg className="mr-2 h-4 w-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 6V4m0 2a2 2 0 100 4m0-4a2 2 0 110 4m-6 8a2 2 0 100-4m0 4a2 2 0 110-4m0 4v2m0-6V4m6 6v10m6-2a2 2 0 100-4m0 4a2 2 0 110-4m0 4v2m0-6V4" />
+              <path
+                strokeLinecap="round"
+                strokeLinejoin="round"
+                strokeWidth={2}
+                d="M12 6V4m0 2a2 2 0 100 4m0-4a2 2 0 110 4m-6 8a2 2 0 100-4m0 4a2 2 0 110-4m0 4v2m0-6V4m6 6v10m6-2a2 2 0 100-4m0 4a2 2 0 110-4m0 4v2m0-6V4"
+              />
             </svg>
             Filters {activeFilterCount > 0 && `(${activeFilterCount})`}
           </Button>

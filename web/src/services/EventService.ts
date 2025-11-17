@@ -9,10 +9,10 @@
 
 import { Effect } from "effect";
 import {
-  DataProviderService,
   type CreateEventInput,
-  type ListEventsOptions,
+  DataProviderService,
   EventCreateError,
+  type ListEventsOptions,
 } from "../providers/DataProvider";
 
 // ============================================================================
@@ -89,11 +89,7 @@ export class EventService {
   /**
    * Log user event
    */
-  static logUserEvent = (
-    type: string,
-    userId: string,
-    metadata?: Record<string, any>
-  ) =>
+  static logUserEvent = (type: string, userId: string, metadata?: Record<string, any>) =>
     Effect.gen(function* () {
       return yield* EventService.create({
         type,
@@ -410,7 +406,7 @@ export class EventService {
   /**
    * Get AI usage statistics
    */
-  static getAIUsageStats = (groupId?: string, since?: number, until?: number) =>
+  static getAIUsageStats = (_groupId?: string, since?: number, until?: number) =>
     Effect.gen(function* () {
       const events = yield* EventService.list({
         type: "ai_generation_completed",
@@ -420,7 +416,7 @@ export class EventService {
 
       let totalPromptTokens = 0;
       let totalCompletionTokens = 0;
-      let totalCalls = events.length;
+      const totalCalls = events.length;
 
       for (const event of events) {
         totalPromptTokens += event.metadata?.promptTokens || 0;

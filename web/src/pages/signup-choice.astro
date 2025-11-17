@@ -1,12 +1,9 @@
 ---
-import Layout from '@/layouts/Layout.astro';
-import { Button } from '@/components/ui/button';
-import { Card, CardHeader, CardTitle, CardDescription, CardContent } from '@/components/ui/card';
-import { Zap, BookOpen } from 'lucide-react';
+import Layout from "@/layouts/Layout.astro";
 
 // Redirect if already logged in
 if (Astro.locals.user) {
-  return Astro.redirect('/dashboard');
+  return Astro.redirect("/dashboard");
 }
 ---
 

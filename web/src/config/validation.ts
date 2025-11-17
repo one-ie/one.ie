@@ -15,14 +15,14 @@
  * ```
  */
 
-import { Effect, Data } from "effect";
 import { z } from "astro/zod";
+import { Data, Effect } from "effect";
 import type { ProviderConfig } from "@/providers/factory";
 import {
   ConvexEnvSchema,
-  WordPressEnvSchema,
   NotionEnvSchema,
   SupabaseEnvSchema,
+  WordPressEnvSchema,
 } from "./providers";
 
 // ============================================================================
@@ -109,7 +109,7 @@ export function validateConfig(
           }
           return config;
 
-        case "wordpress":
+        case "wordpress": {
           // Validate WordPress config
           const wpConfig = config as any;
           if (!wpConfig.url || !wpConfig.username || !wpConfig.password) {
@@ -131,8 +131,9 @@ export function validateConfig(
           }
 
           return config;
+        }
 
-        case "notion":
+        case "notion": {
           // Validate Notion config
           const notionConfig = config as any;
           if (!notionConfig.apiKey || !notionConfig.databaseId) {
@@ -145,8 +146,9 @@ export function validateConfig(
           }
 
           return config;
+        }
 
-        case "supabase":
+        case "supabase": {
           // Validate Supabase config
           const supabaseConfig = config as any;
           if (!supabaseConfig.url || !supabaseConfig.anonKey) {
@@ -161,6 +163,7 @@ export function validateConfig(
           }
 
           return config;
+        }
 
         default:
           throw new Error(`Unknown provider type: ${(config as any).type}`);
@@ -193,9 +196,7 @@ export function validateConfig(
  * );
  * ```
  */
-export function validateEncryptionKey(
-  key?: string
-): Effect.Effect<string, EncryptionKeyError> {
+export function validateEncryptionKey(key?: string): Effect.Effect<string, EncryptionKeyError> {
   return Effect.try({
     try: () => {
       if (!key) {
@@ -384,22 +385,25 @@ export function validateConfigComprehensive(
         // Convex validation handled by validateConfig
         break;
 
-      case "wordpress":
+      case "wordpress": {
         const wpConfig = config as any;
         yield* validateRequiredFields(wpConfig, ["url", "username", "password"]);
         yield* validateUrl(wpConfig.url, "url");
         break;
+      }
 
-      case "notion":
+      case "notion": {
         const notionConfig = config as any;
         yield* validateRequiredFields(notionConfig, ["apiKey", "databaseId"]);
         break;
+      }
 
-      case "supabase":
+      case "supabase": {
         const supabaseConfig = config as any;
         yield* validateRequiredFields(supabaseConfig, ["url", "anonKey"]);
         yield* validateUrl(supabaseConfig.url, "url");
         break;
+      }
     }
 
     return config;
@@ -431,9 +435,7 @@ export function validateOrganizationConfig(
     const config = getConfigFn(organizationId);
 
     if (!config) {
-      return yield* Effect.fail(
-        new OrganizationConfigNotFoundError({ organizationId })
-      );
+      return yield* Effect.fail(new OrganizationConfigNotFoundError({ organizationId }));
     }
 
     return config;
@@ -487,9 +489,7 @@ export function getValidationErrors(config: ProviderConfig): string[] {
   const result = Effect.runSync(
     validateConfig(config).pipe(
       Effect.map(() => [] as string[]),
-      Effect.catchTag("ConfigValidationError", (error) =>
-        Effect.succeed(error.errors)
-      )
+      Effect.catchTag("ConfigValidationError", (error) => Effect.succeed(error.errors))
     )
   );
   return result;

@@ -5,10 +5,10 @@
  * Shows enabled features, thing types, connection types, and event types
  */
 
-import { useOntology, useFeatureBreakdown } from '@/hooks/useOntology';
-import { Card, CardHeader, CardTitle, CardContent, CardDescription } from '@/components/ui/card';
-import { Badge } from '@/components/ui/badge';
-import { Skeleton } from '@/components/ui/skeleton';
+import { Badge } from "@/components/ui/badge";
+import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
+import { Skeleton } from "@/components/ui/skeleton";
+import { useFeatureBreakdown, useOntology } from "@/hooks/useOntology";
 
 export function OntologyExplorer() {
   const { ontology, isLoading } = useOntology();
@@ -59,9 +59,7 @@ export function OntologyExplorer() {
               <div className="text-sm text-muted-foreground">Event Types</div>
             </div>
             <div className="text-center">
-              <div className="text-3xl font-bold text-primary">
-                {ontology.features.length}
-              </div>
+              <div className="text-3xl font-bold text-primary">{ontology.features.length}</div>
               <div className="text-sm text-muted-foreground">Features</div>
             </div>
           </div>
@@ -72,13 +70,11 @@ export function OntologyExplorer() {
       <Card>
         <CardHeader>
           <CardTitle>Enabled Features</CardTitle>
-          <CardDescription>
-            Features included in this ontology composition
-          </CardDescription>
+          <CardDescription>Features included in this ontology composition</CardDescription>
         </CardHeader>
         <CardContent>
           <div className="flex flex-wrap gap-2">
-            {ontology.features.map(feature => (
+            {ontology.features.map((feature) => (
               <Badge key={feature} variant="secondary">
                 {feature}
               </Badge>
@@ -107,7 +103,7 @@ export function OntologyExplorer() {
                         Thing Types ({feature.thingTypes.length})
                       </h4>
                       <div className="flex flex-wrap gap-1">
-                        {feature.thingTypes.map(type => (
+                        {feature.thingTypes.map((type) => (
                           <Badge key={type} variant="outline" className="text-xs">
                             {type}
                           </Badge>
@@ -119,7 +115,7 @@ export function OntologyExplorer() {
                         Connection Types ({feature.connectionTypes.length})
                       </h4>
                       <div className="flex flex-wrap gap-1">
-                        {feature.connectionTypes.map(type => (
+                        {feature.connectionTypes.map((type) => (
                           <Badge key={type} variant="outline" className="text-xs">
                             {type}
                           </Badge>
@@ -131,7 +127,7 @@ export function OntologyExplorer() {
                         Event Types ({feature.eventTypes.length})
                       </h4>
                       <div className="flex flex-wrap gap-1">
-                        {feature.eventTypes.map(type => (
+                        {feature.eventTypes.map((type) => (
                           <Badge key={type} variant="outline" className="text-xs">
                             {type}
                           </Badge>
@@ -154,7 +150,7 @@ export function OntologyExplorer() {
         </CardHeader>
         <CardContent>
           <div className="flex flex-wrap gap-2">
-            {ontology.thingTypes.map(type => (
+            {ontology.thingTypes.map((type) => (
               <Badge key={type} variant="outline">
                 {type}
               </Badge>
@@ -171,7 +167,7 @@ export function OntologyExplorer() {
         </CardHeader>
         <CardContent>
           <div className="flex flex-wrap gap-2">
-            {ontology.connectionTypes.map(type => (
+            {ontology.connectionTypes.map((type) => (
               <Badge key={type} variant="outline">
                 {type}
               </Badge>
@@ -188,7 +184,7 @@ export function OntologyExplorer() {
         </CardHeader>
         <CardContent>
           <div className="flex flex-wrap gap-2">
-            {ontology.eventTypes.map(type => (
+            {ontology.eventTypes.map((type) => (
               <Badge key={type} variant="outline">
                 {type}
               </Badge>

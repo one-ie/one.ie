@@ -1,6 +1,5 @@
-import React from 'react';
-import MuxPlayer from '@mux/mux-player-react';
-import { cn } from '@/lib/utils';
+import MuxPlayer from "@mux/mux-player-react";
+import { cn } from "@/lib/utils";
 
 interface VideoPlayerProps {
   // Mux Video
@@ -21,7 +20,7 @@ interface VideoPlayerProps {
   className?: string;
 
   // Media type
-  type?: 'video' | 'audio';
+  type?: "video" | "audio";
 
   // Player options
   autoplay?: boolean;
@@ -108,43 +107,43 @@ export function VideoPlayer({
   muxAssetId,
   youtubeId,
   videoUrl,
-  title = 'Video Player',
+  title = "Video Player",
   videoId,
   poster,
-  className = '',
+  className = "",
   autoplay = false,
   muted = false,
   loop = false,
-  aspectRatio = '16/9',
+  aspectRatio = "16/9",
   viewerUserId,
 }: VideoPlayerProps) {
   // Map aspect ratio to Tailwind classes
   const getAspectClass = (ratio: string) => {
     switch (ratio) {
-      case '16/9':
-        return 'aspect-video';
-      case '4/3':
-        return 'aspect-[4/3]';
-      case '21/9':
-        return 'aspect-[21/9]';
-      case '1/1':
-        return 'aspect-square';
+      case "16/9":
+        return "aspect-video";
+      case "4/3":
+        return "aspect-[4/3]";
+      case "21/9":
+        return "aspect-[21/9]";
+      case "1/1":
+        return "aspect-square";
       default:
-        return 'aspect-video';
+        return "aspect-video";
     }
   };
 
   // Direct video URL (native HTML5 video)
   if (videoUrl && !playbackId && !youtubeId) {
     return (
-      <div className={cn('one-video-player-wrapper w-full', className)}>
+      <div className={cn("one-video-player-wrapper w-full", className)}>
         <div
           className={cn(
-            'one-video-player relative overflow-hidden rounded-xl w-full group',
-            'border-2 border-primary/20 bg-gradient-to-br from-primary/5 to-accent/5',
-            'shadow-lg shadow-primary/10',
-            'hover:border-primary/40 hover:shadow-xl hover:shadow-primary/20',
-            'transition-all duration-500',
+            "one-video-player relative overflow-hidden rounded-xl w-full group",
+            "border-2 border-primary/20 bg-gradient-to-br from-primary/5 to-accent/5",
+            "shadow-lg shadow-primary/10",
+            "hover:border-primary/40 hover:shadow-xl hover:shadow-primary/20",
+            "transition-all duration-500",
             getAspectClass(aspectRatio)
           )}
         >
@@ -161,6 +160,12 @@ export function VideoPlayer({
             playsInline
             controlsList="nodownload"
           >
+            <track
+              kind="captions"
+              src="/captions/video-player.vtt"
+              srcLang="en"
+              label="English captions"
+            />
             Your browser does not support the video tag.
           </video>
 
@@ -178,15 +183,15 @@ export function VideoPlayer({
 
   // YouTube embed
   if (youtubeId && !playbackId) {
-    const autoplayParam = autoplay ? '&autoplay=1' : '';
-    const muteParam = muted ? '&mute=1' : '';
-    const loopParam = loop ? '&loop=1' : '';
+    const autoplayParam = autoplay ? "&autoplay=1" : "";
+    const muteParam = muted ? "&mute=1" : "";
+    const loopParam = loop ? "&loop=1" : "";
 
     return (
       <div
         className={cn(
-          'one-video-player relative overflow-hidden w-full',
-          'rounded-xl border bg-card shadow',
+          "one-video-player relative overflow-hidden w-full",
+          "rounded-xl border bg-card shadow",
           getAspectClass(aspectRatio),
           className
         )}
@@ -214,14 +219,14 @@ export function VideoPlayer({
   // Mux video player
   if (playbackId) {
     return (
-      <div className={cn('one-video-player-wrapper w-full', className)}>
+      <div className={cn("one-video-player-wrapper w-full", className)}>
         <div
           className={cn(
-            'one-video-player relative overflow-hidden rounded-xl w-full',
-            'border-2 border-primary/20 bg-gradient-to-br from-primary/5 to-accent/5',
-            'shadow-lg shadow-primary/10',
-            'hover:border-primary/40 hover:shadow-xl hover:shadow-primary/20',
-            'transition-all duration-500',
+            "one-video-player relative overflow-hidden rounded-xl w-full",
+            "border-2 border-primary/20 bg-gradient-to-br from-primary/5 to-accent/5",
+            "shadow-lg shadow-primary/10",
+            "hover:border-primary/40 hover:shadow-xl hover:shadow-primary/20",
+            "transition-all duration-500",
             getAspectClass(aspectRatio)
           )}
         >
@@ -230,13 +235,13 @@ export function VideoPlayer({
             metadata={{
               video_id: videoId || muxAssetId || playbackId,
               video_title: title,
-              viewer_user_id: viewerUserId || 'anonymous',
+              viewer_user_id: viewerUserId || "anonymous",
             }}
             poster={poster}
             autoPlay={autoplay}
             muted={muted}
             loop={loop}
-            style={{ height: '100%', width: '100%' }}
+            style={{ height: "100%", width: "100%" }}
             streamType="on-demand"
             accentColor="#0A0A0A"
           />
@@ -257,7 +262,7 @@ export function VideoPlayer({
   return (
     <div
       className={cn(
-        'flex items-center justify-center w-full bg-muted rounded-xl border',
+        "flex items-center justify-center w-full bg-muted rounded-xl border",
         getAspectClass(aspectRatio),
         className
       )}
@@ -278,9 +283,7 @@ export function VideoPlayer({
           />
         </svg>
         <p className="text-sm text-muted-foreground font-medium">No video source</p>
-        <p className="text-xs text-muted-foreground/70 mt-1">
-          Provide playbackId or youtubeId
-        </p>
+        <p className="text-xs text-muted-foreground/70 mt-1">Provide playbackId or youtubeId</p>
       </div>
     </div>
   );

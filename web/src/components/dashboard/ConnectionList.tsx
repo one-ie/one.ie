@@ -4,7 +4,6 @@
  * Display entity connections (relationships) with direction indicators.
  */
 
-import React from "react";
 import { Badge } from "@/components/ui/badge";
 
 interface Connection {
@@ -31,9 +30,7 @@ export function ConnectionList({ entityId, outgoing, incoming }: ConnectionListP
           Outgoing Connections ({outgoing.length})
         </h4>
         {outgoing.length === 0 ? (
-          <p className="text-sm text-gray-500 dark:text-gray-400">
-            No outgoing connections
-          </p>
+          <p className="text-sm text-gray-500 dark:text-gray-400">No outgoing connections</p>
         ) : (
           <div className="space-y-2">
             {outgoing.map((conn) => (
@@ -68,9 +65,7 @@ export function ConnectionList({ entityId, outgoing, incoming }: ConnectionListP
           Incoming Connections ({incoming.length})
         </h4>
         {incoming.length === 0 ? (
-          <p className="text-sm text-gray-500 dark:text-gray-400">
-            No incoming connections
-          </p>
+          <p className="text-sm text-gray-500 dark:text-gray-400">No incoming connections</p>
         ) : (
           <div className="space-y-2">
             {incoming.map((conn) => (

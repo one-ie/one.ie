@@ -5,17 +5,17 @@
  * while being backend-agnostic through DataProvider.
  */
 
-import { useCallback, useEffect } from 'react';
-import { useQuery, useMutation as useReactMutation, useQueryClient } from '@tanstack/react-query';
-import { Effect } from 'effect';
-import { useDataProvider, queryClient } from './useDataProvider';
-import type { QueryResult, MutationResult, QueryOptions, MutationOptions } from './types';
+import { useQuery, useQueryClient, useMutation as useReactMutation } from "@tanstack/react-query";
+import { Effect } from "effect";
+import { useEffect } from "react";
 import type {
-  Thing,
   CreateThingInput,
-  UpdateThingInput,
   ListThingsOptions,
-} from '@/providers/DataProvider';
+  Thing,
+  UpdateThingInput,
+} from "@/providers/DataProvider";
+import type { MutationOptions, MutationResult, QueryOptions, QueryResult } from "./types";
+import { useDataProvider } from "./useDataProvider";
 
 // ============================================================================
 // QUERY HOOKS
@@ -53,7 +53,7 @@ export function useThings<T extends Thing = Thing>(
   const { realtime = false, enabled = true, ...reactQueryOptions } = queryOptions ?? {};
 
   // Build query key (used for caching and invalidation)
-  const queryKey = ['things', options];
+  const queryKey = ["things", options];
 
   // Query function
   const queryFn = async (): Promise<T[]> => {
@@ -82,7 +82,7 @@ export function useThings<T extends Thing = Thing>(
     return () => {
       // Cleanup subscription
     };
-  }, [realtime, enabled, JSON.stringify(options)]);
+  }, [realtime, enabled]);
 
   return {
     data: query.data ?? null,
@@ -118,10 +118,10 @@ export function useThing<T extends Thing = Thing>(
   const provider = useDataProvider();
   const { enabled = true, ...reactQueryOptions } = queryOptions ?? {};
 
-  const queryKey = ['thing', id];
+  const queryKey = ["thing", id];
 
   const queryFn = async (): Promise<T> => {
-    if (!id) throw new Error('Thing ID is required');
+    if (!id) throw new Error("Thing ID is required");
     const effect = provider.things.get(id);
     const result = await Effect.runPromise(effect);
     return result as T;
@@ -188,10 +188,10 @@ export function useCreateThing(
     onSuccess: async (id, input) => {
       // Invalidate list queries for this type
       await queryClient.invalidateQueries({
-        queryKey: ['things', { type: input.type }],
+        queryKey: ["things", { type: input.type }],
       });
       await queryClient.invalidateQueries({
-        queryKey: ['things'],
+        queryKey: ["things"],
       });
 
       await mutationOptions?.onSuccess?.(id, input);
@@ -244,14 +244,14 @@ export function useUpdateThing(
     },
     onMutate: async ({ id, ...updates }) => {
       // Cancel outgoing queries
-      await queryClient.cancelQueries({ queryKey: ['thing', id] });
+      await queryClient.cancelQueries({ queryKey: ["thing", id] });
 
       // Snapshot previous value
-      const previous = queryClient.getQueryData(['thing', id]);
+      const previous = queryClient.getQueryData(["thing", id]);
 
       // Optimistically update
       if (previous) {
-        queryClient.setQueryData(['thing', id], {
+        queryClient.setQueryData(["thing", id], {
           ...previous,
           ...updates,
           updatedAt: Date.now(),
@@ -265,17 +265,17 @@ export function useUpdateThing(
     onError: async (error, { id, ...updates }, context) => {
       // Rollback on error
       if (context?.previous) {
-        queryClient.setQueryData(['thing', id], context.previous);
+        queryClient.setQueryData(["thing", id], context.previous);
       }
 
       await mutationOptions?.onError?.(error as Error, { id, ...updates });
     },
     onSuccess: async (data, { id, ...updates }) => {
       // Update single entity cache
-      await queryClient.invalidateQueries({ queryKey: ['thing', id] });
+      await queryClient.invalidateQueries({ queryKey: ["thing", id] });
 
       // Invalidate list queries
-      await queryClient.invalidateQueries({ queryKey: ['things'] });
+      await queryClient.invalidateQueries({ queryKey: ["things"] });
 
       await mutationOptions?.onSuccess?.(data, { id, ...updates });
     },
@@ -315,10 +315,10 @@ export function useDeleteThing(
     },
     onSuccess: async (data, id) => {
       // Remove from cache
-      queryClient.removeQueries({ queryKey: ['thing', id] });
+      queryClient.removeQueries({ queryKey: ["thing", id] });
 
       // Invalidate all thing lists
-      await queryClient.invalidateQueries({ queryKey: ['things'] });
+      await queryClient.invalidateQueries({ queryKey: ["things"] });
 
       await mutationOptions?.onSuccess?.(data, id);
     },
@@ -343,27 +343,30 @@ export function useDeleteThing(
 /**
  * useCourses - Shorthand for useThings with type='course'
  */
-export function useCourses(options?: Omit<ListThingsOptions, 'type'>, queryOptions?: QueryOptions) {
-  return useThings({ ...options, type: 'course' }, queryOptions);
+export function useCourses(options?: Omit<ListThingsOptions, "type">, queryOptions?: QueryOptions) {
+  return useThings({ ...options, type: "course" }, queryOptions);
 }
 
 /**
  * useAgents - Shorthand for useThings with type='ai_clone'
  */
-export function useAgents(options?: Omit<ListThingsOptions, 'type'>, queryOptions?: QueryOptions) {
-  return useThings({ ...options, type: 'ai_clone' }, queryOptions);
+export function useAgents(options?: Omit<ListThingsOptions, "type">, queryOptions?: QueryOptions) {
+  return useThings({ ...options, type: "ai_clone" }, queryOptions);
 }
 
 /**
  * useBlogPosts - Shorthand for useThings with type='blog_post'
  */
-export function useBlogPosts(options?: Omit<ListThingsOptions, 'type'>, queryOptions?: QueryOptions) {
-  return useThings({ ...options, type: 'blog_post' }, queryOptions);
+export function useBlogPosts(
+  options?: Omit<ListThingsOptions, "type">,
+  queryOptions?: QueryOptions
+) {
+  return useThings({ ...options, type: "blog_post" }, queryOptions);
 }
 
 /**
  * useTokens - Shorthand for useThings with type='token'
  */
-export function useTokens(options?: Omit<ListThingsOptions, 'type'>, queryOptions?: QueryOptions) {
-  return useThings({ ...options, type: 'token' }, queryOptions);
+export function useTokens(options?: Omit<ListThingsOptions, "type">, queryOptions?: QueryOptions) {
+  return useThings({ ...options, type: "token" }, queryOptions);
 }

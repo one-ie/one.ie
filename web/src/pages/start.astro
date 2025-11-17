@@ -1,9 +1,9 @@
 ---
-import Layout from '../layouts/Layout.astro';
-import { getCollection } from 'astro:content';
+import { getCollection } from "astro:content";
+import Layout from "@/layouts/Layout.astro";
 
 // Get all doc entries for grid display
-const docEntries = await getCollection('docs');
+const _docEntries = await getCollection("docs");
 ---
 
 <Layout title="Server Started - ONE Platform">

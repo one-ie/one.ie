@@ -1,11 +1,8 @@
-import type { ModuleContentProps } from "@/types/course";
-import { Card } from "@/components/ui/card";
 import { CheckCircle } from "lucide-react";
+import { Card } from "@/components/ui/card";
+import type { ModuleContentProps } from "@/types/course";
 
-export function CourseModuleContent({
-  module,
-  lessons,
-}: ModuleContentProps) {
+export function CourseModuleContent({ module, lessons }: ModuleContentProps) {
   // Handle legacy format
   if (lessons) {
     return (
@@ -61,9 +58,7 @@ export function CourseModuleContent({
                 <Card key={index} className="p-4">
                   <div className="flex items-start gap-4">
                     <div className="flex-shrink-0 w-8 h-8 rounded-full bg-primary/10 flex items-center justify-center">
-                      <span className="font-semibold text-primary">
-                        {index + 1}
-                      </span>
+                      <span className="font-semibold text-primary">{index + 1}</span>
                     </div>
                     <p>{step}</p>
                   </div>

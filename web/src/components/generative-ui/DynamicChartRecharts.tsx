@@ -9,21 +9,24 @@
  * To test: Rename this file to DynamicChart.tsx (backup the CSS version first)
  */
 
-import React, { useState, useEffect, lazy, Suspense } from 'react';
-import { Card, CardHeader, CardTitle, CardDescription, CardContent } from '@/components/ui/card';
-import { Badge } from '@/components/ui/badge';
+import { lazy, Suspense, useEffect, useState } from "react";
+import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 
 // Dynamically import Recharts to avoid SSR issues
-const LineChart = lazy(() => import('recharts').then(mod => ({ default: mod.LineChart })));
-const BarChart = lazy(() => import('recharts').then(mod => ({ default: mod.BarChart })));
-const Line = lazy(() => import('recharts').then(mod => ({ default: mod.Line })));
-const Bar = lazy(() => import('recharts').then(mod => ({ default: mod.Bar })));
-const XAxis = lazy(() => import('recharts').then(mod => ({ default: mod.XAxis })));
-const YAxis = lazy(() => import('recharts').then(mod => ({ default: mod.YAxis })));
-const CartesianGrid = lazy(() => import('recharts').then(mod => ({ default: mod.CartesianGrid })));
-const Tooltip = lazy(() => import('recharts').then(mod => ({ default: mod.Tooltip })));
-const Legend = lazy(() => import('recharts').then(mod => ({ default: mod.Legend })));
-const ResponsiveContainer = lazy(() => import('recharts').then(mod => ({ default: mod.ResponsiveContainer })));
+const LineChart = lazy(() => import("recharts").then((mod) => ({ default: mod.LineChart })));
+const BarChart = lazy(() => import("recharts").then((mod) => ({ default: mod.BarChart })));
+const Line = lazy(() => import("recharts").then((mod) => ({ default: mod.Line })));
+const Bar = lazy(() => import("recharts").then((mod) => ({ default: mod.Bar })));
+const XAxis = lazy(() => import("recharts").then((mod) => ({ default: mod.XAxis })));
+const YAxis = lazy(() => import("recharts").then((mod) => ({ default: mod.YAxis })));
+const CartesianGrid = lazy(() =>
+  import("recharts").then((mod) => ({ default: mod.CartesianGrid }))
+);
+const Tooltip = lazy(() => import("recharts").then((mod) => ({ default: mod.Tooltip })));
+const Legend = lazy(() => import("recharts").then((mod) => ({ default: mod.Legend })));
+const ResponsiveContainer = lazy(() =>
+  import("recharts").then((mod) => ({ default: mod.ResponsiveContainer }))
+);
 
 export function DynamicChartRecharts({ data, layout }: any) {
   const [isMounted, setIsMounted] = useState(false);
@@ -32,13 +35,17 @@ export function DynamicChartRecharts({ data, layout }: any) {
     setIsMounted(true);
   }, []);
 
-  const chartData = data.labels?.map((label: string, i: number) => ({
-    name: label,
-    ...(data.datasets?.reduce((acc: any, dataset: any) => ({
-      ...acc,
-      [dataset.label]: dataset.data[i],
-    }), {}) || {}),
-  })) || [];
+  const chartData =
+    data.labels?.map((label: string, i: number) => ({
+      name: label,
+      ...(data.datasets?.reduce(
+        (acc: any, dataset: any) => ({
+          ...acc,
+          [dataset.label]: dataset.data[i],
+        }),
+        {}
+      ) || {}),
+    })) || [];
 
   if (!isMounted) {
     return (
@@ -78,26 +85,23 @@ export function DynamicChartRecharts({ data, layout }: any) {
         >
           <div className="w-full h-[300px]">
             <ResponsiveContainer width="100%" height="100%">
-              {data.chartType === 'line' ? (
+              {data.chartType === "line" ? (
                 <LineChart data={chartData} margin={{ top: 5, right: 30, left: 20, bottom: 5 }}>
                   <CartesianGrid strokeDasharray="3 3" className="stroke-border" />
                   <XAxis
                     dataKey="name"
                     className="text-xs"
-                    tick={{ fill: 'hsl(var(--color-font))' }}
+                    tick={{ fill: "hsl(var(--color-font))" }}
                   />
-                  <YAxis
-                    className="text-xs"
-                    tick={{ fill: 'hsl(var(--color-font))' }}
-                  />
+                  <YAxis className="text-xs" tick={{ fill: "hsl(var(--color-font))" }} />
                   <Tooltip
                     contentStyle={{
-                      backgroundColor: 'hsl(var(--color-background))',
-                      border: '1px solid hsl(var(--color-border))',
-                      borderRadius: '0.5rem',
-                      color: 'hsl(var(--color-font))',
+                      backgroundColor: "hsl(var(--color-background))",
+                      border: "1px solid hsl(var(--color-border))",
+                      borderRadius: "0.5rem",
+                      color: "hsl(var(--color-font))",
                     }}
-                    cursor={{ fill: 'hsl(var(--color-font) / 0.03)' }}
+                    cursor={{ fill: "hsl(var(--color-font) / 0.03)" }}
                   />
                   <Legend />
                   {data.datasets?.map((dataset: any, i: number) => (
@@ -105,7 +109,7 @@ export function DynamicChartRecharts({ data, layout }: any) {
                       key={i}
                       type="monotone"
                       dataKey={dataset.label}
-                      stroke={dataset.color || '#3b82f6'}
+                      stroke={dataset.color || "#3b82f6"}
                       strokeWidth={2}
                       dot={{ r: 4 }}
                       activeDot={{ r: 6 }}
@@ -118,27 +122,24 @@ export function DynamicChartRecharts({ data, layout }: any) {
                   <XAxis
                     dataKey="name"
                     className="text-xs"
-                    tick={{ fill: 'hsl(var(--color-font))' }}
+                    tick={{ fill: "hsl(var(--color-font))" }}
                   />
-                  <YAxis
-                    className="text-xs"
-                    tick={{ fill: 'hsl(var(--color-font))' }}
-                  />
+                  <YAxis className="text-xs" tick={{ fill: "hsl(var(--color-font))" }} />
                   <Tooltip
                     contentStyle={{
-                      backgroundColor: 'hsl(var(--color-background))',
-                      border: '1px solid hsl(var(--color-border))',
-                      borderRadius: '0.5rem',
-                      color: 'hsl(var(--color-font))',
+                      backgroundColor: "hsl(var(--color-background))",
+                      border: "1px solid hsl(var(--color-border))",
+                      borderRadius: "0.5rem",
+                      color: "hsl(var(--color-font))",
                     }}
-                    cursor={{ fill: 'hsl(var(--color-font) / 0.03)' }}
+                    cursor={{ fill: "hsl(var(--color-font) / 0.03)" }}
                   />
                   <Legend />
                   {data.datasets?.map((dataset: any, i: number) => (
                     <Bar
                       key={i}
                       dataKey={dataset.label}
-                      fill={dataset.color || '#3b82f6'}
+                      fill={dataset.color || "#3b82f6"}
                       radius={[4, 4, 0, 0]}
                       label={false}
                     />

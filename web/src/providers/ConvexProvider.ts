@@ -9,42 +9,42 @@
  * without breaking them. Zero changes to backend required.
  */
 
-import { Effect } from "effect";
 import type { ConvexReactClient } from "convex/react";
+import { Effect } from "effect";
+import { createBetterAuthProvider } from "./BetterAuthProvider";
 import type {
-  DataProvider,
-  Group,
-  Thing,
   Connection,
-  Event,
-  Knowledge,
-  ThingKnowledge,
-  CreateThingInput,
-  UpdateThingInput,
-  CreateGroupInput,
-  UpdateGroupInput,
   CreateConnectionInput,
   CreateEventInput,
+  CreateGroupInput,
   CreateKnowledgeInput,
-  ListThingsOptions,
+  CreateThingInput,
+  DataProvider,
+  Event,
+  Group,
+  Knowledge,
   ListConnectionsOptions,
   ListEventsOptions,
   ListGroupsOptions,
+  ListThingsOptions,
   SearchKnowledgeOptions,
+  Thing,
+  ThingKnowledge,
+  UpdateGroupInput,
+  UpdateThingInput,
 } from "./DataProvider";
 import {
-  ThingNotFoundError,
-  ThingCreateError,
-  ThingUpdateError,
-  ConnectionNotFoundError,
   ConnectionCreateError,
+  ConnectionNotFoundError,
   EventCreateError,
-  KnowledgeNotFoundError,
-  GroupNotFoundError,
   GroupCreateError,
+  GroupNotFoundError,
+  KnowledgeNotFoundError,
   QueryError,
+  ThingCreateError,
+  ThingNotFoundError,
+  ThingUpdateError,
 } from "./DataProvider";
-import { createBetterAuthProvider } from "./BetterAuthProvider";
 
 /**
  * Configuration for ConvexProvider
@@ -101,8 +101,7 @@ export function createConvexProvider(config: ConvexProviderConfig): DataProvider
               }
               return result as Group;
             }),
-          (message) =>
-            new GroupNotFoundError(id, message)
+          (message) => new GroupNotFoundError(id, message)
         ),
 
       getBySlug: (slug: string) =>
@@ -114,15 +113,14 @@ export function createConvexProvider(config: ConvexProviderConfig): DataProvider
               }
               return result as Group;
             }),
-          (message) =>
-            new GroupNotFoundError(slug, message)
+          (message) => new GroupNotFoundError(slug, message)
         ),
 
       list: (options?: ListGroupsOptions) =>
         toEffect(
-          () => client.query("groups:list" as any, options || {}).then((result) => result as Group[]),
-          (message, cause) =>
-            new QueryError(message, cause)
+          () =>
+            client.query("groups:list" as any, options || {}).then((result) => result as Group[]),
+          (message, cause) => new QueryError(message, cause)
         ),
 
       create: (input: CreateGroupInput) =>
@@ -140,8 +138,7 @@ export function createConvexProvider(config: ConvexProviderConfig): DataProvider
               createdAt: Date.now(),
               updatedAt: Date.now(),
             }),
-          (message, cause) =>
-            new GroupCreateError(message, cause)
+          (message, cause) => new GroupCreateError(message, cause)
         ),
 
       update: (id: string, input: UpdateGroupInput) =>
@@ -152,15 +149,13 @@ export function createConvexProvider(config: ConvexProviderConfig): DataProvider
               ...input,
               updatedAt: Date.now(),
             }),
-          (message, cause) =>
-            new QueryError(message, cause)
+          (message, cause) => new QueryError(message, cause)
         ),
 
       delete: (id: string) =>
         toEffect(
           () => client.mutation("groups:delete" as any, { id }),
-          (message) =>
-            new GroupNotFoundError(id, message)
+          (message) => new GroupNotFoundError(id, message)
         ),
     },
 
@@ -175,15 +170,14 @@ export function createConvexProvider(config: ConvexProviderConfig): DataProvider
               }
               return result as Thing;
             }),
-          (message) =>
-            new ThingNotFoundError(id, message)
+          (message) => new ThingNotFoundError(id, message)
         ),
 
       list: (options?: ListThingsOptions) =>
         toEffect(
-          () => client.query("entities:list" as any, options || {}).then((result) => result as Thing[]),
-          (message, cause) =>
-            new QueryError(message, cause)
+          () =>
+            client.query("entities:list" as any, options || {}).then((result) => result as Thing[]),
+          (message, cause) => new QueryError(message, cause)
         ),
 
       create: (input: CreateThingInput) =>
@@ -197,8 +191,7 @@ export function createConvexProvider(config: ConvexProviderConfig): DataProvider
               createdAt: Date.now(),
               updatedAt: Date.now(),
             }),
-          (message, cause) =>
-            new ThingCreateError(message, cause)
+          (message, cause) => new ThingCreateError(message, cause)
         ),
 
       update: (id: string, input: UpdateThingInput) =>
@@ -209,15 +202,13 @@ export function createConvexProvider(config: ConvexProviderConfig): DataProvider
               ...input,
               updatedAt: Date.now(),
             }),
-          (message, cause) =>
-            new ThingUpdateError(id, message, cause)
+          (message, cause) => new ThingUpdateError(id, message, cause)
         ),
 
       delete: (id: string) =>
         toEffect(
           () => client.mutation("entities:delete" as any, { id }),
-          (message) =>
-            new ThingNotFoundError(id, message)
+          (message) => new ThingNotFoundError(id, message)
         ),
     },
 
@@ -232,15 +223,16 @@ export function createConvexProvider(config: ConvexProviderConfig): DataProvider
               }
               return result as Connection;
             }),
-          (message) =>
-            new ConnectionNotFoundError(id, message)
+          (message) => new ConnectionNotFoundError(id, message)
         ),
 
       list: (options?: ListConnectionsOptions) =>
         toEffect(
-          () => client.query("connections:list" as any, options || {}).then((result) => result as Connection[]),
-          (message, cause) =>
-            new QueryError(message, cause)
+          () =>
+            client
+              .query("connections:list" as any, options || {})
+              .then((result) => result as Connection[]),
+          (message, cause) => new QueryError(message, cause)
         ),
 
       create: (input: CreateConnectionInput) =>
@@ -250,15 +242,13 @@ export function createConvexProvider(config: ConvexProviderConfig): DataProvider
               ...input,
               createdAt: Date.now(),
             }),
-          (message, cause) =>
-            new ConnectionCreateError(message, cause)
+          (message, cause) => new ConnectionCreateError(message, cause)
         ),
 
       delete: (id: string) =>
         toEffect(
           () => client.mutation("connections:delete" as any, { id }),
-          (message) =>
-            new ConnectionNotFoundError(id, message)
+          (message) => new ConnectionNotFoundError(id, message)
         ),
     },
 
@@ -273,15 +263,14 @@ export function createConvexProvider(config: ConvexProviderConfig): DataProvider
               }
               return result as Event;
             }),
-          (message) =>
-            new QueryError(message)
+          (message) => new QueryError(message)
         ),
 
       list: (options?: ListEventsOptions) =>
         toEffect(
-          () => client.query("events:list" as any, options || {}).then((result) => result as Event[]),
-          (message, cause) =>
-            new QueryError(message, cause)
+          () =>
+            client.query("events:list" as any, options || {}).then((result) => result as Event[]),
+          (message, cause) => new QueryError(message, cause)
         ),
 
       create: (input: CreateEventInput) =>
@@ -291,8 +280,7 @@ export function createConvexProvider(config: ConvexProviderConfig): DataProvider
               ...input,
               timestamp: Date.now(),
             }),
-          (message, cause) =>
-            new EventCreateError(message, cause)
+          (message, cause) => new EventCreateError(message, cause)
         ),
     },
 
@@ -307,15 +295,16 @@ export function createConvexProvider(config: ConvexProviderConfig): DataProvider
               }
               return result as Knowledge;
             }),
-          (message) =>
-            new KnowledgeNotFoundError(id, message)
+          (message) => new KnowledgeNotFoundError(id, message)
         ),
 
       list: (options?: SearchKnowledgeOptions) =>
         toEffect(
-          () => client.query("knowledge:list" as any, options || {}).then((result) => result as Knowledge[]),
-          (message, cause) =>
-            new QueryError(message, cause)
+          () =>
+            client
+              .query("knowledge:list" as any, options || {})
+              .then((result) => result as Knowledge[]),
+          (message, cause) => new QueryError(message, cause)
         ),
 
       create: (input: CreateKnowledgeInput) =>
@@ -326,8 +315,7 @@ export function createConvexProvider(config: ConvexProviderConfig): DataProvider
               createdAt: Date.now(),
               updatedAt: Date.now(),
             }),
-          (message, cause) =>
-            new QueryError(message, cause)
+          (message, cause) => new QueryError(message, cause)
         ),
 
       link: (thingId: string, knowledgeId: string, role?: ThingKnowledge["role"]) =>
@@ -339,8 +327,7 @@ export function createConvexProvider(config: ConvexProviderConfig): DataProvider
               role,
               createdAt: Date.now(),
             }),
-          (message, cause) =>
-            new QueryError(message, cause)
+          (message, cause) => new QueryError(message, cause)
         ),
 
       search: (embedding: number[], options?: SearchKnowledgeOptions) =>
@@ -352,8 +339,7 @@ export function createConvexProvider(config: ConvexProviderConfig): DataProvider
                 ...options,
               })
               .then((result) => result as Knowledge[]),
-          (message, cause) =>
-            new QueryError(message, cause)
+          (message, cause) => new QueryError(message, cause)
         ),
     },
 

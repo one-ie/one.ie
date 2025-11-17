@@ -5,23 +5,13 @@
  * Dynamic route: /products/[slug]
  */
 
-import Layout from '@/layouts/Layout.astro';
-import { getCollection, getEntry } from 'astro:content';
-import { ProductGallery } from '@/components/ecommerce/interactive/ProductGallery';
-import { VariantSelector } from '@/components/ecommerce/interactive/VariantSelector';
-import { AddToCartButton } from '@/components/ecommerce/interactive/AddToCartButton';
-import { QuantitySelector } from '@/components/ecommerce/interactive/QuantitySelector';
-import { PriceDisplay } from '@/components/ecommerce/static/PriceDisplay';
-import { ReviewStars } from '@/components/ecommerce/static/ReviewStars';
-import { Breadcrumbs, type BreadcrumbItem } from '@/components/ecommerce/static/Breadcrumbs';
-import { WishlistButton } from '@/components/ecommerce/interactive/Wishlist';
-import RecommendationsCarousel from '@/components/ecommerce/static/RecommendationsCarousel';
-import { ProductFAQ } from '@/components/ecommerce/static/FAQAccordion';
+import { getCollection, getEntry } from "astro:content";
+import type { BreadcrumbItem } from "@/components/ecommerce/static/Breadcrumbs";
 
 // Generate static paths for all products
 export async function getStaticPaths() {
-  const products = await getCollection('products');
-  return products.map(product => ({
+  const products = await getCollection("products");
+  return products.map((product) => ({
     params: { slug: product.slug },
   }));
 }
@@ -29,10 +19,10 @@ export async function getStaticPaths() {
 const { slug } = Astro.params;
 
 // Get product from content collection
-const productEntry = await getEntry('products', slug!);
+const productEntry = await getEntry("products", slug!);
 
 if (!productEntry) {
-  return Astro.redirect('/404');
+  return Astro.redirect("/404");
 }
 
 const productData = productEntry.data;
@@ -56,26 +46,28 @@ const product = {
   featured: productData.featured,
   createdAt: new Date(),
   updatedAt: new Date(),
-  variants: productData.variants?.length ? [
-    {
-      id: 'variant',
-      name: 'Options',
-      type: 'custom' as const,
-      options: productData.variants.map(v => ({
-        value: v.id,
-        label: v.name,
-        inStock: v.inStock,
-      })),
-    },
-  ] : [],
+  variants: productData.variants?.length
+    ? [
+        {
+          id: "variant",
+          name: "Options",
+          type: "custom" as const,
+          options: productData.variants.map((v) => ({
+            value: v.id,
+            label: v.name,
+            inStock: v.inStock,
+          })),
+        },
+      ]
+    : [],
 };
 
 // Get related products from same category
-const allProducts = await getCollection('products');
-const relatedProducts = allProducts
-  .filter(p => p.slug !== slug && p.data.category === productData.category)
+const allProducts = await getCollection("products");
+const _relatedProducts = allProducts
+  .filter((p) => p.slug !== slug && p.data.category === productData.category)
   .slice(0, 4)
-  .map(p => ({
+  .map((p) => ({
     id: p.id,
     slug: p.slug,
     name: p.data.name,
@@ -95,9 +87,12 @@ const relatedProducts = allProducts
     updatedAt: new Date(),
   }));
 
-const breadcrumbs: BreadcrumbItem[] = [
-  { label: 'Shop', href: '/shop' },
-  { label: productData.category.charAt(0).toUpperCase() + productData.category.slice(1), href: `/products/?category=${productData.category}` },
+const _breadcrumbs: BreadcrumbItem[] = [
+  { label: "Shop", href: "/shop" },
+  {
+    label: productData.category.charAt(0).toUpperCase() + productData.category.slice(1),
+    href: `/products/?category=${productData.category}`,
+  },
   { label: product.name },
 ];
 ---

@@ -1,15 +1,11 @@
 ---
-import Layout from "../layouts/Layout.astro";
+import { getCollection } from "astro:content";
 import { GitSection } from "@/components/GitSection";
-import { PerformanceChart } from "@/components/features/PerformanceChart";
-import OrbitingCircles from "@/components/magicui/orbiting-circles";
-import DownloadSection from "@/components/DownloadSection.astro";
-import { FeaturedPodcast } from "@/components/FeaturedPodcast";
-import { getCollection } from 'astro:content';
+import Layout from "@/layouts/Layout.astro";
 
 // Get the featured ONE ontology podcast
-const podcasts = await getCollection('podcasts');
-const featuredPodcast = podcasts.find(p => p.slug === 'one-ontology');
+const podcasts = await getCollection("podcasts");
+const _featuredPodcast = podcasts.find((p) => p.slug === "one-ontology");
 ---
 
 <Layout
@@ -32,6 +28,12 @@ const featuredPodcast = podcasts.find(p => p.slug === 'one-ontology');
           poster="/demo.png"
         >
           <source src="https://media.one.ie/ONE-demo.mp4" type="video/mp4" />
+          <track
+            kind="captions"
+            src="/captions/one-demo.vtt"
+            srcLang="en"
+            label="English captions"
+          />
           Your browser does not support the video tag.
         </video>
       </div>

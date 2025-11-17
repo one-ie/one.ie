@@ -19,5 +19,18 @@
     "skipLibCheck": true,
     "lib": ["ES2022", "DOM", "DOM.Iterable"]
   },
-  "exclude": ["node_modules", "dist", "test", "tests", "**/*.test.ts", "**/*.test.tsx", "**/*.spec.ts", "**/*.spec.tsx", "src/tests", "src/templates/**/*", "src/lib/ontology/_archived", "src/pages/demo/_disabled"]
+  "exclude": [
+    "node_modules",
+    "dist",
+    "test",
+    "tests",
+    "**/*.test.ts",
+    "**/*.test.tsx",
+    "**/*.spec.ts",
+    "**/*.spec.tsx",
+    "src/tests",
+    "src/templates/**/*",
+    "src/lib/ontology/_archived",
+    "src/pages/demo/_disabled"
+  ]
 }

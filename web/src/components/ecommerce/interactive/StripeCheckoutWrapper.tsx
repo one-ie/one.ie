@@ -3,14 +3,14 @@
  * Provides Stripe Elements context and handles payment intent creation
  */
 
-import { useState, useEffect } from 'react';
-import { Elements } from '@stripe/react-stripe-js';
-import { StripeCheckoutForm } from './StripeCheckoutForm';
-import { getStripe, createPaymentIntent, getStripeAppearance } from '@/lib/stripe';
-import { Loader2 } from 'lucide-react';
-import { Alert, AlertDescription } from '@/components/ui/alert';
-import type { ShippingAddress } from '@/types/ecommerce';
-import { $cart } from '@/stores/cart';
+import { Elements } from "@stripe/react-stripe-js";
+import { Loader2 } from "lucide-react";
+import { useEffect, useState } from "react";
+import { Alert, AlertDescription } from "@/components/ui/alert";
+import { createPaymentIntent, getStripe, getStripeAppearance } from "@/lib/stripe";
+import { $cart } from "@/stores/cart";
+import type { ShippingAddress } from "@/types/ecommerce";
+import { StripeCheckoutForm } from "./StripeCheckoutForm";
 
 interface StripeCheckoutWrapperProps {
   amount: number;
@@ -24,7 +24,7 @@ interface StripeCheckoutWrapperProps {
 
 export function StripeCheckoutWrapper({
   amount,
-  currency = 'usd',
+  currency = "usd",
   metadata = {},
   items,
   shippingAddress,
@@ -39,10 +39,12 @@ export function StripeCheckoutWrapper({
     async function initializePayment() {
       try {
         // Get cart items if not provided
-        const cartItems = items || $cart.get().items.map(item => ({
-          productId: item.id,
-          quantity: item.quantity,
-        }));
+        const cartItems =
+          items ||
+          $cart.get().items.map((item) => ({
+            productId: item.id,
+            quantity: item.quantity,
+          }));
 
         const result = await createPaymentIntent({
           amount,
@@ -61,17 +63,17 @@ export function StripeCheckoutWrapper({
         if (result) {
           setClientSecret(result.clientSecret);
         } else {
-          setError('Failed to initialize payment. Please try again.');
+          setError("Failed to initialize payment. Please try again.");
         }
       } catch (_err) {
-        setError('An error occurred while setting up payment.');
+        setError("An error occurred while setting up payment.");
       } finally {
         setLoading(false);
       }
     }
 
     initializePayment();
-  }, [amount, currency, items?.length, shippingAddress]);
+  }, [amount, currency, items?.length, shippingAddress, items, metadata]);
 
   if (loading) {
     return (
@@ -93,7 +95,9 @@ export function StripeCheckoutWrapper({
   if (!clientSecret) {
     return (
       <Alert variant="destructive">
-        <AlertDescription>Unable to initialize payment. Please refresh and try again.</AlertDescription>
+        <AlertDescription>
+          Unable to initialize payment. Please refresh and try again.
+        </AlertDescription>
       </Alert>
     );
   }
@@ -107,7 +111,7 @@ export function StripeCheckoutWrapper({
         clientSecret,
         appearance: getStripeAppearance(),
         // Enable automatic payment methods (Google Pay, Apple Pay, Link, etc.)
-        loader: 'auto',
+        loader: "auto",
       }}
     >
       <StripeCheckoutForm

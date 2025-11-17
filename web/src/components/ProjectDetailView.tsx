@@ -1,11 +1,11 @@
-import { useState } from 'react';
-import { ExternalLink, Code2, Copy, Check } from 'lucide-react';
-import { Badge } from '@/components/ui/badge';
+import { Check, Code2, Copy, ExternalLink } from "lucide-react";
+import { useState } from "react";
+import { Badge } from "@/components/ui/badge";
 
 interface ProjectDetailViewProps {
   title: string;
   description: string;
-  level: 'Beginner' | 'Intermediate' | 'Advanced';
+  level: "Beginner" | "Intermediate" | "Advanced";
   demoUrl: string;
   prompt: string;
   features?: string[];
@@ -35,7 +35,7 @@ export function ProjectDetailView({
       setCopied(true);
       setTimeout(() => setCopied(false), 2000);
     } catch (err) {
-      console.error('Failed to copy:', err);
+      console.error("Failed to copy:", err);
     }
   };
 
@@ -65,6 +65,7 @@ export function ProjectDetailView({
             View Demo
           </a>
           <button
+            type="button"
             onClick={handleCopyPrompt}
             className="inline-flex items-center gap-2 text-sm px-4 py-2 rounded-lg bg-primary/10 hover:bg-primary/20 transition-colors text-primary"
           >
@@ -80,7 +81,10 @@ export function ProjectDetailView({
               </>
             )}
           </button>
-          <button className="inline-flex items-center gap-2 text-sm px-4 py-2 rounded-lg bg-primary/10 hover:bg-primary/20 transition-colors text-primary">
+          <button
+            type="button"
+            className="inline-flex items-center gap-2 text-sm px-4 py-2 rounded-lg bg-primary/10 hover:bg-primary/20 transition-colors text-primary"
+          >
             <Code2 className="h-4 w-4" />
             Send to Claude Code
           </button>
@@ -123,8 +127,11 @@ export function ProjectDetailView({
         <div className="mb-8">
           <h2 className="text-xl font-bold mb-4">Key Features</h2>
           <div className="grid gap-3 md:grid-cols-2">
-            {features.map((feature, idx) => (
-              <div key={idx} className="flex items-start gap-3 rounded-lg border border-border/50 p-3">
+            {features.map((feature) => (
+              <div
+                key={feature}
+                className="flex items-start gap-3 rounded-lg border border-border/50 p-3"
+              >
                 <span className="text-primary font-bold flex-shrink-0">✓</span>
                 <span className="text-sm text-muted-foreground">{feature}</span>
               </div>
@@ -138,8 +145,8 @@ export function ProjectDetailView({
         <div className="mb-8">
           <h2 className="text-xl font-bold mb-4">What You'll Learn</h2>
           <ul className="space-y-2">
-            {learningPath.map((item, idx) => (
-              <li key={idx} className="flex items-start gap-3 text-sm">
+            {learningPath.map((item) => (
+              <li key={item} className="flex items-start gap-3 text-sm">
                 <span className="text-primary mt-1 flex-shrink-0">→</span>
                 <span className="text-muted-foreground">{item}</span>
               </li>
@@ -156,6 +163,7 @@ export function ProjectDetailView({
             {prompt}
           </pre>
           <button
+            type="button"
             onClick={handleCopyPrompt}
             className="absolute top-4 right-4 p-2 rounded bg-primary/20 hover:bg-primary/30 transition-colors"
           >

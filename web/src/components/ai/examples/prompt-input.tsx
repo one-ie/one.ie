@@ -1,5 +1,7 @@
 "use client";
 
+import { CheckIcon, GlobeIcon } from "lucide-react";
+import { useRef, useState } from "react";
 import {
   ModelSelector,
   ModelSelectorContent,
@@ -34,8 +36,6 @@ import {
 } from "@/components/ai/elements/prompt-input";
 import { Button } from "@/components/ui/button";
 import { ButtonGroup } from "@/components/ui/button-group";
-import { CheckIcon, GlobeIcon } from "lucide-react";
-import { useRef, useState } from "react";
 
 const models = [
   {
@@ -85,9 +85,7 @@ const HeaderControls = () => {
     <header className="mt-8 flex items-center justify-between">
       <p className="text-sm">
         Header Controls via{" "}
-        <code className="rounded-md bg-muted p-1 font-bold">
-          PromptInputProvider
-        </code>
+        <code className="rounded-md bg-muted p-1 font-bold">PromptInputProvider</code>
       </p>
       <ButtonGroup>
         <Button
@@ -129,9 +127,7 @@ const HeaderControls = () => {
 const Example = () => {
   const [model, setModel] = useState<string>(models[0].id);
   const [modelSelectorOpen, setModelSelectorOpen] = useState(false);
-  const [status, setStatus] = useState<
-    "submitted" | "streaming" | "ready" | "error"
-  >("ready");
+  const [status, setStatus] = useState<"submitted" | "streaming" | "ready" | "error">("ready");
   const textareaRef = useRef<HTMLTextAreaElement>(null);
 
   const selectedModelData = models.find((m) => m.id === model);
@@ -181,21 +177,14 @@ const Example = () => {
                 <GlobeIcon size={16} />
                 <span>Search</span>
               </PromptInputButton>
-              <ModelSelector
-                onOpenChange={setModelSelectorOpen}
-                open={modelSelectorOpen}
-              >
+              <ModelSelector onOpenChange={setModelSelectorOpen} open={modelSelectorOpen}>
                 <ModelSelectorTrigger asChild>
                   <PromptInputButton>
                     {selectedModelData?.chefSlug && (
-                      <ModelSelectorLogo
-                        provider={selectedModelData.chefSlug}
-                      />
+                      <ModelSelectorLogo provider={selectedModelData.chefSlug} />
                     )}
                     {selectedModelData?.name && (
-                      <ModelSelectorName>
-                        {selectedModelData.name}
-                      </ModelSelectorName>
+                      <ModelSelectorName>{selectedModelData.name}</ModelSelectorName>
                     )}
                   </PromptInputButton>
                 </ModelSelectorTrigger>
@@ -220,10 +209,7 @@ const Example = () => {
                               <ModelSelectorName>{m.name}</ModelSelectorName>
                               <ModelSelectorLogoGroup>
                                 {m.providers.map((provider) => (
-                                  <ModelSelectorLogo
-                                    key={provider}
-                                    provider={provider}
-                                  />
+                                  <ModelSelectorLogo key={provider} provider={provider} />
                                 ))}
                               </ModelSelectorLogoGroup>
                               {model === m.id ? (

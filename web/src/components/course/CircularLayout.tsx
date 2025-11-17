@@ -1,5 +1,3 @@
-import React from "react";
-
 interface IconData {
   name: string;
   icon: string;
@@ -49,15 +47,9 @@ export function CircularLayout() {
           style={getOuterPosition(index, aiProviders.length, 200)}
         >
           <div className="w-16 h-16 rounded-full bg-white shadow-lg p-2 hover:shadow-xl transition-shadow">
-            <img
-              src={provider.icon}
-              alt={provider.name}
-              className="w-full h-full object-contain"
-            />
+            <img src={provider.icon} alt={provider.name} className="w-full h-full object-contain" />
           </div>
-          <p className="text-sm font-medium text-center mt-2">
-            {provider.name}
-          </p>
+          <p className="text-sm font-medium text-center mt-2">{provider.name}</p>
         </div>
       ))}
 
@@ -69,11 +61,7 @@ export function CircularLayout() {
           style={getInnerPosition(index, ecommerceApps.length, 120)}
         >
           <div className="w-14 h-14 rounded-full bg-white shadow-lg p-2 hover:shadow-xl transition-shadow">
-            <img
-              src={app.icon}
-              alt={app.name}
-              className="w-full h-full object-contain"
-            />
+            <img src={app.icon} alt={app.name} className="w-full h-full object-contain" />
           </div>
           <p className="text-sm font-medium text-center mt-2">{app.name}</p>
         </div>
@@ -82,11 +70,7 @@ export function CircularLayout() {
       {/* Center - ONE Logo */}
       <div className="absolute left-1/2 top-1/2 transform -translate-x-1/2 -translate-y-1/2 transition-all duration-500 hover:scale-110">
         <div className="w-20 h-20 rounded-full bg-white shadow-lg p-2 hover:shadow-xl transition-shadow">
-          <img
-            src="/icons/one.svg"
-            alt="ONE"
-            className="w-full h-full object-contain"
-          />
+          <img src="/icons/one.svg" alt="ONE" className="w-full h-full object-contain" />
         </div>
         <p className="text-lg font-bold text-center mt-2">ONE</p>
       </div>

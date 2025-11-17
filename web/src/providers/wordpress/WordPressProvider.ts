@@ -12,38 +12,32 @@
  */
 
 import { Effect, Layer } from "effect";
-import {
-  DataProviderService,
-  ThingNotFoundError,
-  ThingCreateError,
-  ThingUpdateError,
-  ConnectionNotFoundError,
-  ConnectionCreateError,
-  EventCreateError,
-  KnowledgeNotFoundError,
-  GroupNotFoundError,
-  GroupCreateError,
-  QueryError,
-} from "../DataProvider";
 import type {
-  DataProvider,
-  Thing,
-  Connection,
-  Event,
-  Knowledge,
-  Group,
-  CreateThingInput,
-  UpdateThingInput,
   CreateConnectionInput,
   CreateEventInput,
   CreateKnowledgeInput,
-  CreateGroupInput,
-  UpdateGroupInput,
-  ListThingsOptions,
+  CreateThingInput,
+  DataProvider,
+  Knowledge,
   ListConnectionsOptions,
   ListEventsOptions,
-  ListGroupsOptions,
+  ListThingsOptions,
   SearchKnowledgeOptions,
+  Thing,
+  UpdateThingInput,
+} from "../DataProvider";
+import {
+  ConnectionCreateError,
+  ConnectionNotFoundError,
+  DataProviderService,
+  EventCreateError,
+  GroupCreateError,
+  GroupNotFoundError,
+  KnowledgeNotFoundError,
+  QueryError,
+  ThingCreateError,
+  ThingNotFoundError,
+  ThingUpdateError,
 } from "../DataProvider";
 
 // ============================================================================
@@ -112,7 +106,7 @@ export const makeWordPressProvider = (config: WordPressProviderConfig): DataProv
 
   if (config.auth) {
     const credentials = btoa(`${config.auth.username}:${config.auth.applicationPassword}`);
-    headers["Authorization"] = `Basic ${credentials}`;
+    headers.Authorization = `Basic ${credentials}`;
   }
 
   const fetchWP = async (endpoint: string, options?: RequestInit) => {
@@ -144,12 +138,12 @@ export const makeWordPressProvider = (config: WordPressProviderConfig): DataProv
       tags: post.tags,
       wordpressId: post.id,
     },
-    status: post.status === "publish" ? "published" : post.status as any,
+    status: post.status === "publish" ? "published" : (post.status as any),
     createdAt: new Date(post.date).getTime(),
     updatedAt: new Date(post.modified).getTime(),
   });
 
-  const mapUserToThing = (user: WPUser): Thing => ({
+  const _mapUserToThing = (user: WPUser): Thing => ({
     _id: `wp-user-${user.id}`,
     type: "creator",
     name: user.name,
@@ -182,22 +176,15 @@ export const makeWordPressProvider = (config: WordPressProviderConfig): DataProv
     // ===== GROUPS =====
     groups: {
       get: (id: string) =>
-        Effect.fail(
-          new GroupNotFoundError(id, "WordPress provider does not support groups")
-        ),
+        Effect.fail(new GroupNotFoundError(id, "WordPress provider does not support groups")),
 
       getBySlug: (slug: string) =>
-        Effect.fail(
-          new GroupNotFoundError(slug, "WordPress provider does not support groups")
-        ),
+        Effect.fail(new GroupNotFoundError(slug, "WordPress provider does not support groups")),
 
-      list: () =>
-        Effect.succeed([]),
+      list: () => Effect.succeed([]),
 
       create: () =>
-        Effect.fail(
-          new GroupCreateError("WordPress provider does not support creating groups")
-        ),
+        Effect.fail(new GroupCreateError("WordPress provider does not support creating groups")),
 
       update: () =>
         Effect.fail(
@@ -309,10 +296,9 @@ export const makeWordPressProvider = (config: WordPressProviderConfig): DataProv
           new ConnectionNotFoundError(id, "WordPress provider does not support connections")
         ),
 
-      list: (options?: ListConnectionsOptions) =>
-        Effect.succeed([]), // WordPress doesn't have native connections
+      list: (_options?: ListConnectionsOptions) => Effect.succeed([]), // WordPress doesn't have native connections
 
-      create: (input: CreateConnectionInput) =>
+      create: (_input: CreateConnectionInput) =>
         Effect.fail(
           new ConnectionCreateError("WordPress provider does not support creating connections")
         ),
@@ -325,13 +311,12 @@ export const makeWordPressProvider = (config: WordPressProviderConfig): DataProv
 
     // ===== EVENTS =====
     events: {
-      get: (id: string) =>
+      get: (_id: string) =>
         Effect.fail(new QueryError("WordPress provider does not support events")),
 
-      list: (options?: ListEventsOptions) =>
-        Effect.succeed([]), // Could map comments to events in the future
+      list: (_options?: ListEventsOptions) => Effect.succeed([]), // Could map comments to events in the future
 
-      create: (input: CreateEventInput) =>
+      create: (_input: CreateEventInput) =>
         Effect.fail(new EventCreateError("WordPress provider does not support creating events")),
     },
 
@@ -352,7 +337,7 @@ export const makeWordPressProvider = (config: WordPressProviderConfig): DataProv
           catch: (error) => new KnowledgeNotFoundError(id, String(error)),
         }),
 
-      list: (options?: SearchKnowledgeOptions) =>
+      list: (_options?: SearchKnowledgeOptions) =>
         Effect.tryPromise({
           try: async () => {
             const categories = await fetchWP("/categories");
@@ -361,49 +346,42 @@ export const makeWordPressProvider = (config: WordPressProviderConfig): DataProv
           catch: (error) => new QueryError("Failed to list WordPress categories", error),
         }),
 
-      create: (input: CreateKnowledgeInput) =>
-        Effect.fail(
-          new QueryError("WordPress provider does not support creating knowledge")
-        ),
+      create: (_input: CreateKnowledgeInput) =>
+        Effect.fail(new QueryError("WordPress provider does not support creating knowledge")),
 
-      link: (thingId: string, knowledgeId: string, role?: any) =>
-        Effect.fail(
-          new QueryError("WordPress provider does not support linking knowledge")
-        ),
+      link: (_thingId: string, _knowledgeId: string, _role?: any) =>
+        Effect.fail(new QueryError("WordPress provider does not support linking knowledge")),
 
-      search: (embedding: number[], options?: SearchKnowledgeOptions) =>
-        Effect.fail(
-          new QueryError("WordPress provider does not support embedding search")
-        ),
+      search: (_embedding: number[], _options?: SearchKnowledgeOptions) =>
+        Effect.fail(new QueryError("WordPress provider does not support embedding search")),
     },
 
     // ===== AUTH =====
     // WordPress does not provide a built-in auth system via REST API
     // Authentication should be handled separately (e.g., via Better Auth)
     auth: {
-      login: (args) =>
+      login: (_args) =>
         Effect.fail(new QueryError("WordPress provider does not provide auth") as any),
-      signup: (args) =>
+      signup: (_args) =>
         Effect.fail(new QueryError("WordPress provider does not provide auth") as any),
-      logout: () =>
-        Effect.fail(new QueryError("WordPress provider does not provide auth") as any),
+      logout: () => Effect.fail(new QueryError("WordPress provider does not provide auth") as any),
       getCurrentUser: () =>
         Effect.fail(new QueryError("WordPress provider does not provide auth") as any),
-      magicLinkAuth: (args) =>
+      magicLinkAuth: (_args) =>
         Effect.fail(new QueryError("WordPress provider does not provide auth") as any),
-      passwordReset: (args) =>
+      passwordReset: (_args) =>
         Effect.fail(new QueryError("WordPress provider does not provide auth") as any),
-      passwordResetComplete: (args) =>
+      passwordResetComplete: (_args) =>
         Effect.fail(new QueryError("WordPress provider does not provide auth") as any),
-      verifyEmail: (args) =>
+      verifyEmail: (_args) =>
         Effect.fail(new QueryError("WordPress provider does not provide auth") as any),
       get2FAStatus: () =>
         Effect.fail(new QueryError("WordPress provider does not provide auth") as any),
       setup2FA: () =>
         Effect.fail(new QueryError("WordPress provider does not provide auth") as any),
-      verify2FA: (args) =>
+      verify2FA: (_args) =>
         Effect.fail(new QueryError("WordPress provider does not provide auth") as any),
-      disable2FA: (args) =>
+      disable2FA: (_args) =>
         Effect.fail(new QueryError("WordPress provider does not provide auth") as any),
     },
   };

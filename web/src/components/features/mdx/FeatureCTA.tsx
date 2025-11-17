@@ -1,6 +1,6 @@
+import { ArrowRight, Zap } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
-import { ArrowRight, Zap } from "lucide-react";
 
 interface FeatureCTAProps {
   title: string;
@@ -36,13 +36,14 @@ export function FeatureCTA({
   primaryUrl = "/signup",
   secondaryText,
   secondaryUrl,
-  variant = "default"
+  variant = "default",
 }: FeatureCTAProps) {
-  const gradientClass = variant === "gradient"
-    ? "bg-gradient-to-r from-primary to-primary/70 text-primary-foreground"
-    : variant === "minimal"
-    ? "border-2 border-primary/20 bg-background"
-    : "bg-primary/5 border border-primary/20";
+  const gradientClass =
+    variant === "gradient"
+      ? "bg-gradient-to-r from-primary to-primary/70 text-primary-foreground"
+      : variant === "minimal"
+        ? "border-2 border-primary/20 bg-background"
+        : "bg-primary/5 border border-primary/20";
 
   return (
     <Card className={`my-12 ${gradientClass}`}>
@@ -54,28 +55,24 @@ export function FeatureCTA({
               <h3 className="text-2xl font-bold">{title}</h3>
             </div>
             {description && (
-              <p className={variant === "gradient" ? "text-primary-foreground/90" : "text-muted-foreground"}>
+              <p
+                className={
+                  variant === "gradient" ? "text-primary-foreground/90" : "text-muted-foreground"
+                }
+              >
                 {description}
               </p>
             )}
           </div>
           <div className="flex flex-col sm:flex-row gap-3">
-            <Button
-              size="lg"
-              variant={variant === "gradient" ? "secondary" : "default"}
-              asChild
-            >
+            <Button size="lg" variant={variant === "gradient" ? "secondary" : "default"} asChild>
               <a href={primaryUrl}>
                 {primaryText}
                 <ArrowRight className="ml-2 h-4 w-4" />
               </a>
             </Button>
             {secondaryText && secondaryUrl && (
-              <Button
-                size="lg"
-                variant="outline"
-                asChild
-              >
+              <Button size="lg" variant="outline" asChild>
                 <a href={secondaryUrl}>{secondaryText}</a>
               </Button>
             )}

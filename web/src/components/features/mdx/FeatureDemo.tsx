@@ -1,6 +1,6 @@
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import { Code, PlayCircle } from "lucide-react";
 import { Button } from "@/components/ui/button";
-import { PlayCircle, Code } from "lucide-react";
+import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 
 interface FeatureDemoProps {
   title: string;
@@ -25,13 +25,7 @@ interface FeatureDemoProps {
  *   Custom demo content here
  * </FeatureDemo>
  */
-export function FeatureDemo({
-  title,
-  description,
-  demoUrl,
-  codeUrl,
-  children
-}: FeatureDemoProps) {
+export function FeatureDemo({ title, description, demoUrl, codeUrl, children }: FeatureDemoProps) {
   return (
     <Card className="border-primary/20 bg-gradient-to-br from-primary/5 to-primary/10 my-8">
       <CardHeader>
@@ -41,9 +35,7 @@ export function FeatureDemo({
               <PlayCircle className="h-5 w-5 text-primary" />
               {title}
             </CardTitle>
-            {description && (
-              <p className="text-sm text-muted-foreground mt-2">{description}</p>
-            )}
+            {description && <p className="text-sm text-muted-foreground mt-2">{description}</p>}
           </div>
           <div className="flex gap-2">
             {demoUrl && (

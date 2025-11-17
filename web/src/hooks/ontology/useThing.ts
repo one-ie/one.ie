@@ -22,22 +22,22 @@
  * ```
  */
 
-import { useCallback, useEffect, useState } from 'react';
-import { Effect } from 'effect';
-import type { Id } from '@/types/convex';
-import { useEffectRunner } from '../useEffectRunner';
-import { useIsProviderAvailable } from './useProvider';
+import { Effect } from "effect";
+import { useCallback, useEffect, useState } from "react";
+import type { Id } from "@/types/convex";
+import { useEffectRunner } from "../useEffectRunner";
+import { useIsProviderAvailable } from "./useProvider";
 
 /**
  * Base Thing entity (all 66+ types)
  */
 export interface Thing {
-  _id: Id<'entities'>;
+  _id: Id<"entities">;
   _creationTime: number;
   type: string;
   name: string;
   properties: Record<string, any>;
-  status?: 'active' | 'inactive' | 'draft' | 'published' | 'archived';
+  status?: "active" | "inactive" | "draft" | "published" | "archived";
   createdAt: number;
   updatedAt: number;
   deletedAt?: number;
@@ -50,7 +50,7 @@ export interface CreateThingInput {
   type: string;
   name: string;
   properties: Record<string, any>;
-  status?: 'active' | 'inactive' | 'draft' | 'published' | 'archived';
+  status?: "active" | "inactive" | "draft" | "published" | "archived";
 }
 
 /**
@@ -59,7 +59,7 @@ export interface CreateThingInput {
 export interface UpdateThingInput {
   name?: string;
   properties?: Record<string, any>;
-  status?: 'active' | 'inactive' | 'draft' | 'published' | 'archived';
+  status?: "active" | "inactive" | "draft" | "published" | "archived";
 }
 
 /**
@@ -67,7 +67,7 @@ export interface UpdateThingInput {
  */
 export interface ThingFilter {
   type?: string;
-  status?: 'active' | 'inactive' | 'draft' | 'published' | 'archived';
+  status?: "active" | "inactive" | "draft" | "published" | "archived";
   limit?: number;
   offset?: number;
   search?: string;
@@ -103,14 +103,14 @@ export function useThing() {
    */
   const get = useCallback(
     async (
-      id: Id<'entities'>,
+      _id: Id<"entities">,
       options?: {
         onSuccess?: (thing: Thing) => void;
         onError?: (error: unknown) => void;
       }
     ) => {
       if (!isProviderAvailable) {
-        options?.onError?.(new Error('Provider not available'));
+        options?.onError?.(new Error("Provider not available"));
         return null;
       }
 
@@ -131,14 +131,14 @@ export function useThing() {
    */
   const create = useCallback(
     async (
-      input: CreateThingInput,
+      _input: CreateThingInput,
       options?: {
         onSuccess?: (thing: Thing) => void;
         onError?: (error: unknown) => void;
       }
     ) => {
       if (!isProviderAvailable) {
-        options?.onError?.(new Error('Provider not available'));
+        options?.onError?.(new Error("Provider not available"));
         return null;
       }
 
@@ -159,15 +159,15 @@ export function useThing() {
    */
   const update = useCallback(
     async (
-      id: Id<'entities'>,
-      input: UpdateThingInput,
+      _id: Id<"entities">,
+      _input: UpdateThingInput,
       options?: {
         onSuccess?: (thing: Thing) => void;
         onError?: (error: unknown) => void;
       }
     ) => {
       if (!isProviderAvailable) {
-        options?.onError?.(new Error('Provider not available'));
+        options?.onError?.(new Error("Provider not available"));
         return null;
       }
 
@@ -188,14 +188,14 @@ export function useThing() {
    */
   const remove = useCallback(
     async (
-      id: Id<'entities'>,
+      _id: Id<"entities">,
       options?: {
         onSuccess?: () => void;
         onError?: (error: unknown) => void;
       }
     ) => {
       if (!isProviderAvailable) {
-        options?.onError?.(new Error('Provider not available'));
+        options?.onError?.(new Error("Provider not available"));
         return;
       }
 
@@ -242,7 +242,7 @@ export function useThing() {
  * );
  * ```
  */
-export function useThings(filter?: ThingFilter) {
+export function useThings(_filter?: ThingFilter) {
   const { run, loading, error } = useEffectRunner<unknown, any>();
   const isProviderAvailable = useIsProviderAvailable();
   const [things, setThings] = useState<Thing[]>([]);
@@ -263,7 +263,7 @@ export function useThings(filter?: ThingFilter) {
     run(program, {
       onSuccess: (data) => setThings(data),
     });
-  }, [isProviderAvailable, filter?.type, filter?.status, run]);
+  }, [isProviderAvailable, run]);
 
   return {
     things,
@@ -286,7 +286,7 @@ export function useThings(filter?: ThingFilter) {
  * return <CourseDetail course={course} />;
  * ```
  */
-export function useThingDetail(id?: Id<'entities'>) {
+export function useThingDetail(id?: Id<"entities">) {
   const { get } = useThing();
   const [thing, setThing] = useState<Thing | null>(null);
   const [loading, setLoading] = useState(false);
@@ -329,10 +329,7 @@ export function useThingDetail(id?: Id<'entities'>) {
  * const { things: agents } = useThingsByType('ai_clone');
  * ```
  */
-export function useThingsByType<T extends string>(
-  type: T,
-  filter?: Omit<ThingFilter, 'type'>
-) {
+export function useThingsByType<T extends string>(type: T, filter?: Omit<ThingFilter, "type">) {
   return useThings({
     ...filter,
     type,
@@ -383,7 +380,7 @@ export function useThingSearch(query: string, type?: string) {
 export function usePublishedThings(type?: string) {
   return useThings({
     type,
-    status: 'published',
+    status: "published",
   });
 }
 

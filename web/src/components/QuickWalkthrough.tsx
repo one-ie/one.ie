@@ -1,10 +1,10 @@
-'use client';
+"use client";
 
-import React, { useState } from 'react';
-import { Card, CardHeader, CardTitle, CardDescription, CardContent } from '@/components/ui/card';
-import { Badge } from '@/components/ui/badge';
-import { Button } from '@/components/ui/button';
-import { ChevronDown, ChevronUp, Copy, CheckCircle } from 'lucide-react';
+import { CheckCircle, ChevronDown, ChevronUp, Copy } from "lucide-react";
+import { useState } from "react";
+import { Badge } from "@/components/ui/badge";
+import { Button } from "@/components/ui/button";
+import { Card, CardContent } from "@/components/ui/card";
 
 interface WalkthroughStep {
   id: number;
@@ -19,20 +19,20 @@ interface WalkthroughStep {
 const steps: WalkthroughStep[] = [
   {
     id: 1,
-    title: 'Start Development Server',
-    description: 'Launch the local development environment',
-    file: 'terminal',
+    title: "Start Development Server",
+    description: "Launch the local development environment",
+    file: "terminal",
     codeBlock: `bun install
 bun run dev`,
     explanation:
-      'Your site will be available at http://localhost:4321. The dev server watches for file changes and hot-reloads automatically.',
-    timeEstimate: '1 min',
+      "Your site will be available at http://localhost:4321. The dev server watches for file changes and hot-reloads automatically.",
+    timeEstimate: "1 min",
   },
   {
     id: 2,
-    title: 'Create Your First Thing (Entity)',
-    description: 'Add product data to your content collection',
-    file: 'src/content/products/first-product.md',
+    title: "Create Your First Thing (Entity)",
+    description: "Add product data to your content collection",
+    file: "src/content/products/first-product.md",
     codeBlock: `---
 title: My First Product
 description: A simple product demonstration
@@ -49,14 +49,14 @@ This product demonstrates the **Things** dimension.
 - **Properties:** price, category, status
 - **Scoped to:** Your group (automatically)`,
     explanation:
-      'Content collections provide type-safe, frontmatter-based data. Markdown files are automatically converted to TypeScript types via Zod schemas.',
-    timeEstimate: '2 min',
+      "Content collections provide type-safe, frontmatter-based data. Markdown files are automatically converted to TypeScript types via Zod schemas.",
+    timeEstimate: "2 min",
   },
   {
     id: 3,
-    title: 'Display with Components',
-    description: 'Render your things using shadcn/ui components',
-    file: 'src/pages/products.astro',
+    title: "Display with Components",
+    description: "Render your things using shadcn/ui components",
+    file: "src/pages/products.astro",
     codeBlock: `---
 import Layout from '../layouts/Layout.astro';
 import { getCollection } from 'astro:content';
@@ -94,14 +94,14 @@ const products = await getCollection('products');
   </div>
 </Layout>`,
     explanation:
-      'Astro uses file-based routing and server-side rendering. The page is 100% static HTML by default - no JavaScript needed unless you add interactive components with client:load.',
-    timeEstimate: '3 min',
+      "Astro uses file-based routing and server-side rendering. The page is 100% static HTML by default - no JavaScript needed unless you add interactive components with client:load.",
+    timeEstimate: "3 min",
   },
   {
     id: 4,
-    title: 'Understand Things',
-    description: 'Learn the Things dimension of the ontology',
-    file: 'understanding-things.ts',
+    title: "Understand Things",
+    description: "Learn the Things dimension of the ontology",
+    file: "understanding-things.ts",
     codeBlock: `// Every Thing is an entity with:
 interface Thing {
   _id: string;              // Unique ID
@@ -128,14 +128,14 @@ interface Thing {
 // src/content/users/ → Things of type "user"
 // src/content/agents/ → Things of type "ai_clone"`,
     explanation:
-      'Things are the fundamental entities in the 6-dimension ontology. They map to real-world concepts (products, users, agents) and scale from friend circles to enterprises.',
-    timeEstimate: '2 min',
+      "Things are the fundamental entities in the 6-dimension ontology. They map to real-world concepts (products, users, agents) and scale from friend circles to enterprises.",
+    timeEstimate: "2 min",
   },
   {
     id: 5,
-    title: 'Add Connections',
-    description: 'Model relationships between Things',
-    file: 'understanding-connections.ts',
+    title: "Add Connections",
+    description: "Model relationships between Things",
+    file: "understanding-connections.ts",
     codeBlock: `// Connections link Things with metadata
 interface Connection {
   fromThingId: string;      // Source (e.g., customer)
@@ -168,8 +168,8 @@ interface Connection {
 // relationshipType: "holds_tokens"
 // metadata: { balance: 1, purchaseDate: now }`,
     explanation:
-      'Connections represent relationships between entities. Every purchase, enrollment, follow, or ownership is a Connection with rich metadata for context.',
-    timeEstimate: '2 min',
+      "Connections represent relationships between entities. Every purchase, enrollment, follow, or ownership is a Connection with rich metadata for context.",
+    timeEstimate: "2 min",
   },
 ];
 
@@ -206,18 +206,17 @@ export function QuickWalkthrough() {
       </div>
 
       <div className="space-y-3">
-        {steps.map((step, idx) => {
+        {steps.map((step) => {
           const isExpanded = expandedSteps.has(step.id);
 
           return (
             <Card
               key={step.id}
-              className={`cursor-pointer transition-all ${
-                isExpanded ? 'ring-2 ring-primary' : ''
-              }`}
+              className={`cursor-pointer transition-all ${isExpanded ? "ring-2 ring-primary" : ""}`}
             >
-              <div
-                className="p-4 flex items-start justify-between hover:bg-muted/50 transition"
+              <button
+                type="button"
+                className="p-4 flex items-start justify-between hover:bg-muted/50 transition w-full text-left"
                 onClick={() => toggleStep(step.id)}
               >
                 <div className="flex items-start gap-4 flex-1 min-w-0">
@@ -229,13 +228,9 @@ export function QuickWalkthrough() {
                   {/* Content */}
                   <div className="flex-1 min-w-0">
                     <h3 className="font-semibold text-base">{step.title}</h3>
-                    <p className="text-sm text-muted-foreground">
-                      {step.description}
-                    </p>
+                    <p className="text-sm text-muted-foreground">{step.description}</p>
                     {!isExpanded && (
-                      <div className="text-xs text-muted-foreground mt-2">
-                        {step.file}
-                      </div>
+                      <div className="text-xs text-muted-foreground mt-2">{step.file}</div>
                     )}
                   </div>
                 </div>
@@ -251,7 +246,7 @@ export function QuickWalkthrough() {
                     <ChevronDown className="w-5 h-5 text-muted-foreground" />
                   )}
                 </div>
-              </div>
+              </button>
 
               {/* Expanded Content */}
               {isExpanded && (
@@ -264,9 +259,7 @@ export function QuickWalkthrough() {
                   {/* Code Block */}
                   <div className="space-y-2">
                     <div className="flex items-center justify-between">
-                      <label className="text-xs font-semibold text-muted-foreground">
-                        CODE
-                      </label>
+                      <span className="text-xs font-semibold text-muted-foreground">CODE</span>
                       <Button
                         size="sm"
                         variant="ghost"
@@ -297,7 +290,7 @@ export function QuickWalkthrough() {
                   {/* Explanation */}
                   <div className="bg-blue-50 dark:bg-blue-950/30 border border-blue-200 dark:border-blue-800 rounded-lg p-3">
                     <p className="text-sm text-blue-900 dark:text-blue-100">
-                      <strong>Why this works:</strong> {step.explanation}
+                      <span className="font-bold">Why this works:</span> {step.explanation}
                     </p>
                   </div>
                 </div>

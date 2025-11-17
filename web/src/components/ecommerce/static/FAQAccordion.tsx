@@ -4,15 +4,15 @@
  * Uses shadcn/ui Accordion component
  */
 
-'use client';
+"use client";
 
-import { useState } from 'react';
+import { useState } from "react";
 import {
   Accordion,
   AccordionContent,
   AccordionItem,
   AccordionTrigger,
-} from '@/components/ui/accordion';
+} from "@/components/ui/accordion";
 
 interface FAQItem {
   id: string;
@@ -31,16 +31,14 @@ interface FAQAccordionProps {
 function FAQAccordion({
   faqs,
   searchable = true,
-  title = 'Frequently Asked Questions',
-  description = 'Find answers to common questions about our products and services',
+  title = "Frequently Asked Questions",
+  description = "Find answers to common questions about our products and services",
 }: FAQAccordionProps) {
-  const [searchQuery, setSearchQuery] = useState('');
+  const [searchQuery, setSearchQuery] = useState("");
   const [selectedCategory, setSelectedCategory] = useState<string | null>(null);
 
   // Extract unique categories
-  const categories = Array.from(
-    new Set(faqs.map((faq) => faq.category).filter(Boolean))
-  );
+  const categories = Array.from(new Set(faqs.map((faq) => faq.category).filter(Boolean)));
 
   // Filter FAQs based on search and category
   const filteredFaqs = faqs.filter((faq) => {
@@ -86,8 +84,8 @@ function FAQAccordion({
                 onClick={() => setSelectedCategory(null)}
                 className={`border-2 px-6 py-3 text-xs font-bold tracking-[0.2em] uppercase transition-all ${
                   selectedCategory === null
-                    ? 'bg-black dark:bg-white text-white dark:text-black border-black dark:border-white'
-                    : 'bg-transparent border-black dark:border-white hover:bg-black/5 dark:hover:bg-white/5'
+                    ? "bg-black dark:bg-white text-white dark:text-black border-black dark:border-white"
+                    : "bg-transparent border-black dark:border-white hover:bg-black/5 dark:hover:bg-white/5"
                 }`}
               >
                 All
@@ -98,8 +96,8 @@ function FAQAccordion({
                   onClick={() => setSelectedCategory(category!)}
                   className={`border-2 px-6 py-3 text-xs font-bold tracking-[0.2em] uppercase transition-all ${
                     selectedCategory === category
-                      ? 'bg-black dark:bg-white text-white dark:text-black border-black dark:border-white'
-                      : 'bg-transparent border-black dark:border-white hover:bg-black/5 dark:hover:bg-white/5'
+                      ? "bg-black dark:bg-white text-white dark:text-black border-black dark:border-white"
+                      : "bg-transparent border-black dark:border-white hover:bg-black/5 dark:hover:bg-white/5"
                   }`}
                 >
                   {category}
@@ -118,15 +116,18 @@ function FAQAccordion({
       ) : (
         <div className="space-y-4">
           {filteredFaqs.map((faq) => (
-            <Accordion key={faq.id} type="single" collapsible className="border border-black dark:border-white">
+            <Accordion
+              key={faq.id}
+              type="single"
+              collapsible
+              className="border border-black dark:border-white"
+            >
               <AccordionItem value={faq.id} className="border-none">
                 <AccordionTrigger className="text-left px-6 py-5 hover:no-underline hover:bg-black/5 dark:hover:bg-white/5 transition-colors">
                   <span className="text-base font-medium tracking-wide">{faq.question}</span>
                 </AccordionTrigger>
                 <AccordionContent className="px-6 pb-6 border-t border-black dark:border-white">
-                  <div className="pt-4 text-base leading-relaxed">
-                    {faq.answer}
-                  </div>
+                  <div className="pt-4 text-base leading-relaxed">{faq.answer}</div>
                 </AccordionContent>
               </AccordionItem>
             </Accordion>
@@ -136,9 +137,7 @@ function FAQAccordion({
 
       {/* Still have questions CTA */}
       <div className="pt-12 text-center">
-        <h3 className="text-2xl font-light tracking-tight mb-4">
-          Still have questions?
-        </h3>
+        <h3 className="text-2xl font-light tracking-tight mb-4">Still have questions?</h3>
         <p className="text-base leading-relaxed mb-8 max-w-xl mx-auto">
           Can't find the answer you're looking for? Our customer support team is here to help.
         </p>
@@ -156,88 +155,88 @@ function FAQAccordion({
  */
 export const defaultEcommerceFAQs: FAQItem[] = [
   {
-    id: 'shipping-time',
-    question: 'How long does shipping take?',
+    id: "shipping-time",
+    question: "How long does shipping take?",
     answer:
-      'Standard shipping typically takes 5-7 business days. Express shipping is available for 2-3 business day delivery. You will receive a tracking number once your order ships.',
-    category: 'Shipping',
+      "Standard shipping typically takes 5-7 business days. Express shipping is available for 2-3 business day delivery. You will receive a tracking number once your order ships.",
+    category: "Shipping",
   },
   {
-    id: 'shipping-cost',
-    question: 'Do you offer free shipping?',
+    id: "shipping-cost",
+    question: "Do you offer free shipping?",
     answer:
-      'Yes! We offer free standard shipping on all orders over $50 within the continental US. Orders under $50 have a flat shipping rate of $5.99.',
-    category: 'Shipping',
+      "Yes! We offer free standard shipping on all orders over $50 within the continental US. Orders under $50 have a flat shipping rate of $5.99.",
+    category: "Shipping",
   },
   {
-    id: 'international-shipping',
-    question: 'Do you ship internationally?',
+    id: "international-shipping",
+    question: "Do you ship internationally?",
     answer:
-      'Currently, we only ship within the United States and Canada. International shipping to other countries will be available soon.',
-    category: 'Shipping',
+      "Currently, we only ship within the United States and Canada. International shipping to other countries will be available soon.",
+    category: "Shipping",
   },
   {
-    id: 'return-policy',
-    question: 'What is your return policy?',
+    id: "return-policy",
+    question: "What is your return policy?",
     answer:
-      'We offer a 30-day money-back guarantee. If you\'re not completely satisfied with your purchase, you can return it for a full refund within 30 days of delivery. Items must be unused and in original packaging.',
-    category: 'Returns',
+      "We offer a 30-day money-back guarantee. If you're not completely satisfied with your purchase, you can return it for a full refund within 30 days of delivery. Items must be unused and in original packaging.",
+    category: "Returns",
   },
   {
-    id: 'return-shipping',
-    question: 'Who pays for return shipping?',
+    id: "return-shipping",
+    question: "Who pays for return shipping?",
     answer:
-      'We provide free return shipping for defective or incorrect items. For other returns, customers are responsible for return shipping costs. We recommend using a trackable shipping service.',
-    category: 'Returns',
+      "We provide free return shipping for defective or incorrect items. For other returns, customers are responsible for return shipping costs. We recommend using a trackable shipping service.",
+    category: "Returns",
   },
   {
-    id: 'exchange',
-    question: 'Can I exchange an item?',
+    id: "exchange",
+    question: "Can I exchange an item?",
     answer:
-      'Yes! If you need a different size or color, we offer free exchanges within 30 days. Contact our customer service team to initiate an exchange.',
-    category: 'Returns',
+      "Yes! If you need a different size or color, we offer free exchanges within 30 days. Contact our customer service team to initiate an exchange.",
+    category: "Returns",
   },
   {
-    id: 'payment-methods',
-    question: 'What payment methods do you accept?',
+    id: "payment-methods",
+    question: "What payment methods do you accept?",
     answer:
-      'We accept all major credit cards (Visa, Mastercard, American Express, Discover), PayPal, Apple Pay, Google Pay, and Shop Pay. All payments are securely processed.',
-    category: 'Payment',
+      "We accept all major credit cards (Visa, Mastercard, American Express, Discover), PayPal, Apple Pay, Google Pay, and Shop Pay. All payments are securely processed.",
+    category: "Payment",
   },
   {
-    id: 'secure-checkout',
-    question: 'Is checkout secure?',
+    id: "secure-checkout",
+    question: "Is checkout secure?",
     answer:
-      'Absolutely. We use industry-standard SSL encryption to protect your payment information. We never store your full credit card details on our servers.',
-    category: 'Payment',
+      "Absolutely. We use industry-standard SSL encryption to protect your payment information. We never store your full credit card details on our servers.",
+    category: "Payment",
   },
   {
-    id: 'order-tracking',
-    question: 'How can I track my order?',
+    id: "order-tracking",
+    question: "How can I track my order?",
     answer:
-      'Once your order ships, you\'ll receive an email with a tracking number. You can also track your order by logging into your account and viewing your order history.',
-    category: 'Orders',
+      "Once your order ships, you'll receive an email with a tracking number. You can also track your order by logging into your account and viewing your order history.",
+    category: "Orders",
   },
   {
-    id: 'cancel-order',
-    question: 'Can I cancel or modify my order?',
+    id: "cancel-order",
+    question: "Can I cancel or modify my order?",
     answer:
-      'Orders can be cancelled or modified within 1 hour of placement. After that, your order is processed for shipping. Please contact us immediately if you need to make changes.',
-    category: 'Orders',
+      "Orders can be cancelled or modified within 1 hour of placement. After that, your order is processed for shipping. Please contact us immediately if you need to make changes.",
+    category: "Orders",
   },
   {
-    id: 'warranty',
-    question: 'Do products come with a warranty?',
+    id: "warranty",
+    question: "Do products come with a warranty?",
     answer:
-      'Yes, all our products come with a 1-year manufacturer\'s warranty against defects. Extended warranty options are available at checkout.',
-    category: 'Product Info',
+      "Yes, all our products come with a 1-year manufacturer's warranty against defects. Extended warranty options are available at checkout.",
+    category: "Product Info",
   },
   {
-    id: 'size-guide',
-    question: 'How do I find the right size?',
+    id: "size-guide",
+    question: "How do I find the right size?",
     answer:
-      'Each product page has a detailed size guide with measurements. If you\'re between sizes, we recommend sizing up. Feel free to contact us if you need help choosing the right size.',
-    category: 'Product Info',
+      "Each product page has a detailed size guide with measurements. If you're between sizes, we recommend sizing up. Feel free to contact us if you need help choosing the right size.",
+    category: "Product Info",
   },
 ];
 
@@ -254,9 +253,7 @@ function ProductFAQ({ productType, customFaqs }: ProductFAQProps) {
   // Filter default FAQs or use custom FAQs
   const faqs = customFaqs || defaultEcommerceFAQs;
 
-  return (
-    <FAQAccordion faqs={faqs} searchable={faqs.length > 5} />
-  );
+  return <FAQAccordion faqs={faqs} searchable={faqs.length > 5} />;
 }
 
 // Export both default and named for compatibility

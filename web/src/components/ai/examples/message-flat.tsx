@@ -1,7 +1,7 @@
 "use client";
 
-import { Message, MessageContent } from "@/components/ai/elements/message";
 import { nanoid } from "nanoid";
+import { Message, MessageContent } from "@/components/ai/elements/message";
 
 const messages: {
   key: string;
@@ -28,8 +28,7 @@ const messages: {
   {
     key: nanoid(),
     from: "user",
-    content:
-      "That looks much cleaner! I like how it matches modern AI interfaces.",
+    content: "That looks much cleaner! I like how it matches modern AI interfaces.",
     avatar: "https://github.com/haydenbleasel.png",
     name: "Hayden Bleasel",
   },
