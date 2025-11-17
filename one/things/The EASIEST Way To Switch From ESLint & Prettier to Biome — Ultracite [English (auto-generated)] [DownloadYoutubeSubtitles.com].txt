@@ -1,0 +1,521 @@
+Say goodbye to ESLin and prettier. This
+
+video is a two for one where I get to
+
+show you biome, a rustbased llinter and
+
+formatter, but I also show you a zero
+
+config setup of it called ultrasite. If
+
+you've been holding out on trying biome,
+
+this is absolutely the way to do it.
+
+With a single command, you'll be ready
+
+to go so you can write and generate code
+
+faster with biome doing all the work in
+
+the background. If you need more
+
+convincing than that, Shadien loves and
+
+uses it too. And it even has an MCP
+
+server. So, let's take a look. And while
+
+we're going, I'll point out my top five
+
+reasons for loving Ultraight. Starting
+
+at number one, it is super easy to set
+
+up. You literally only need one command
+
+and that is npx ultrasight in it or in
+
+my case, I've switched it out for bun.
+
+Once we run that, we'll be taken to the
+
+setup wizard. But I'm actually going to
+
+go ahead and skip the rest of the setup
+
+here as first I want to go over the
+
+features so that all of these options in
+
+the setup actually make sense. So, we'll
+
+put reason one on pause for now and jump
+
+straight to reason two. And that's
+
+what's at the core of Ultrasight. Super
+
+fast linting and formatting powered by
+
+Biome. If you haven't heard of Biome
+
+before, it's a blazingly fast all-in-one
+
+tool chain that replaces ESLint,
+
+prettier, and more. And as you may have
+
+already guessed, that's because it is
+
+written in Rust. The benchmarks on the
+
+site have it close to 35 times faster
+
+than prettier. And I believe that using
+
+it personally, I forget it's even there.
+
+It is so quick. I won't go into too much
+
+more detail on biome itself as I trust
+
+you know what to expect from a lint and
+
+formatter. Biome is just the same but
+
+much, much faster. You can see on VS
+
+Code we get all of the usuals like the
+
+call outs here that say we have an
+
+error. It underlines everything. We can
+
+use the quick fixes and we have the
+
+output down here as well. And if we go
+
+ahead and save this, you can see that
+
+it's formatting and linting on save. It
+
+also has all of the usual commands that
+
+you'd expect for checking your code and
+
+also autofixing it. If you're using
+
+ultrasight, you can actually use that
+
+wrapper CLI where we can do npx
+
+ultrasight lint. That's actually just a
+
+wrapper around the biome check command
+
+that makes it a little bit easier to
+
+type out. And we have the same thing as
+
+well. If we do format, this will go
+
+ahead and write the changes that it's
+
+able to make to your codebase for you.
+
+And it's the same as the biomech check-
+
+command. So just a little helper there
+
+from Ultraite. Now something obviously
+
+very important to your Linton formatter
+
+is the rules that you set up in the
+
+configuration file. You can see my biome
+
+config here and this is where you'd
+
+usually have all of your rules, but we
+
+just have one thing which is extends
+
+ultrasight. Ultraight is actually a
+
+highly opinionated rule set and it
+
+includes rules like enforcing TypeScript
+
+strictness following the ESLint
+
+recommended rules where it can in biome
+
+and it has rules for React, Next.js,
+
+Node and accessibility all built in and
+
+then when it comes to formatting, it
+
+includes conventions like two space
+
+indentations and max line width. Now,
+
+this is where I want to specifically
+
+call out that you don't need to be
+
+scared that ultra site is another tool
+
+chain in the JavaScript world. I think
+
+we have enough of those. Just think of
+
+it as a helper for setting up the best
+
+tools and also providing some linting
+
+and formatting defaults straight out of
+
+the box. You could actually delete
+
+ultrasight from the biome config, remove
+
+the package and everything would
+
+continue to work. Even those CLI
+
+commands that I showed you earlier, as I
+
+said, they were just wrappers around
+
+biome commands. Plus, if you don't agree
+
+with some of these rules, since this is
+
+biome, you can literally just come in
+
+here and modify the rules as you see
+
+fit. If you want to find out what all of
+
+Ultraight's rules are exactly, you can
+
+check out that biome configuration on
+
+that GitHub. Or perhaps an easier way to
+
+do it is to read the AI helper files
+
+that you can generate in the setup
+
+process. This is my third reason for
+
+loving Ultraite. It is AI friendly.
+
+During the setup process, you can
+
+actually select which AI assistants you
+
+use, and it will generate the specific
+
+rule files. They're going to help guide
+
+your AI assistants to write better, more
+
+consistent code that follows the best
+
+practices. You can see all of the rules
+
+written out in plain English here. And I
+
+actually have two of these files in my
+
+project. One for Claude and one for
+
+cursor since apparently we can't agree
+
+on a standard for all of these AI
+
+assistant files. Please guys, settle on
+
+a standard for these markdown files. It
+
+is super annoying to have a different
+
+one for every single AI agent. Now, if
+
+you're wondering why it matters that
+
+your AI assistant has access to these
+
+rules when you're probably going to lint
+
+and format afterwards anyways, well,
+
+it's actually a dual approach that
+
+ensures that the AI assistants write
+
+better code from the start, reducing the
+
+need for fixes later and for you having
+
+to go back to the AI to ask it to fix
+
+the linting issues. Something that I've
+
+already encountered a lot of times when
+
+using other tools without these rules.
+
+You actually see here in cursor when I
+
+asked it to add me a new endpoint that
+
+it says make sure it follows the
+
+ultrasite rules and user preferences.
+
+So, I know that that code that's
+
+generated is probably going to need a
+
+lot less linting and formatting and it's
+
+already following the best practices
+
+from Ultrasight. That's all that really
+
+needs to be said about the AI
+
+integration. So, let's jump into reason
+
+number four for why I love Ultrasight
+
+and that is that it plays nicely with
+
+others and gives you built-in
+
+scaffolding to set up hooks like husky,
+
+lint, staged or left hook. In my case, I
+
+used ultrasight to set up husky and it
+
+installed the package for me and set up
+
+the configuration for my pre-commit hook
+
+to just have that single command mpx
+
+ultrasight format. This means for me
+
+that all of my committed code will
+
+follow my standards and the code quality
+
+is enforced. So I don't have to remember
+
+to format my code every single time I
+
+commit. As I said earlier, Ultraight
+
+isn't really in the business of being a
+
+tool itself. Its purpose is a quick
+
+start with existing tools. Obviously for
+
+Husky, this would have been easy for me
+
+to set up myself, but it's just really
+
+nice that there's a tool out there that
+
+handles it all for me quickly in every
+
+single new project that I might start.
+
+And for other tools like linstage and a
+
+left hook, the configuration is a little
+
+more involved and it will also handle
+
+them as well. Onto my fifth reason then
+
+for loving Ultrasight and that is that
+
+it has an MCP server. With this you can
+
+quiz your assistant on the rules that
+
+Ultrasight has. Maybe you want to know
+
+some details about a specific rule and
+
+why they might have put that in place.
+
+But it also means that you can bring
+
+these rules into every single chat that
+
+you have with an AI. Even if the tool
+
+doesn't support extra rules like in a
+
+markdown file means you don't have to go
+
+and copy and paste all of these rules,
+
+paste them in there and ask it something
+
+else. My example of that is claw desktop
+
+where sometimes I ask it to write me
+
+short snippets of code and it's nice
+
+that I know it's going to follow the
+
+ultrasite rules since it's able to pull
+
+them in via the MCP server. That's my
+
+top five reasons for loving Ultraite.
+
+Then if you've made it this far and you
+
+like what you see, let's go back to
+
+reason number one, ease of setup. With
+
+our single command of MPX ultrasight in
+
+it entered, we'll be taken to a setup
+
+wizard where all we need to do is answer
+
+a few questions. The first one is which
+
+package manager do you use? Hopefully
+
+you can get that right and in my case
+
+I'm going to select button. Then we're
+
+asked which editors do you want to
+
+configure. Now, this is a really cool
+
+thing about Ultraite is it will set up
+
+your editor to be using biome instead of
+
+prettier or ESLint for the formatting.
+
+And it will also set it up to format on
+
+save and on paste. And it's just a super
+
+nice thing to have in your project
+
+settings so that you know every time you
+
+open up the project that has ultra site
+
+in it, it will be using biome as your
+
+formatter and that you're not changing
+
+your global settings on VS Code or
+
+anything like that. I personally use VS
+
+Code or cursor. So, I'll go ahead and
+
+select that option. But it's also really
+
+nice to see that they support zed as
+
+well. Next, we ask which editor rules do
+
+you want to enable? When we saw those AI
+
+files earlier, this is where we select
+
+which ones we actually use. In my case,
+
+I use cursor hand clawed code. And we
+
+can hit enter on that. Then, would you
+
+like any of the following? And this is
+
+where we can choose the pre-commit hooks
+
+that we looked at earlier. And in my
+
+case, I was using husky, but they
+
+support left hook and lint staged. And
+
+there we go. That is all there is to
+
+setting up ultra site. It goes ahead,
+
+installs the dependencies for you, and
+
+creates the files. We can actually see
+
+in the getit changes here all of the
+
+files that it's created there for me
+
+using that setup process. We have our
+
+biome configuration. It's added in a few
+
+packages into my package.json like husky
+
+and ultra site here and also biome
+
+itself. It's then gone ahead and added
+
+in those markdown files that I wanted it
+
+to create for my AI assistance. Set up
+
+the pre-commit hook and then change the
+
+settings for VS Code here to make sure
+
+that we're using biome as our formatter.
+
+And then as I said it adds things like
+
+format on save, format and paste and a
+
+few other things. Now, you do want to
+
+make sure that you do have the biome
+
+extension installed as well to make sure
+
+that it can actually work as the
+
+formatterater for your editor of choice.
+
+And there we go. That is Ultrasight. Let
+
+me know what you think in the comments
+
+down below. While you're there, like and
+
+subscribe. And as always, see you in the
+
+next one.
+
+
