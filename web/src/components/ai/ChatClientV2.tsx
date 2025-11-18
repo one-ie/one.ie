@@ -1258,15 +1258,26 @@ export function ChatClientV2() {
 		return (
 			<Message key={msg.id} from={msg.role}>
 				<div>
+					{/* Thinking/Reasoning Display - Claude Code style */}
 					{msg.reasoning && msg.reasoning.content && (
-						<Reasoning
-							duration={msg.reasoning.duration}
-							isStreaming={msg.isReasoningStreaming}
-							defaultOpen={true}
-						>
-							<ReasoningTrigger />
-							<ReasoningContent>{msg.reasoning.content}</ReasoningContent>
-						</Reasoning>
+						<Card className="mb-4 border-l-4 border-l-purple-500 bg-purple-500/5">
+							<CardContent className="pt-4">
+								<div className="space-y-2">
+									<div className="flex items-center gap-2">
+										<Brain className="h-4 w-4 text-purple-600" />
+										<span className="font-semibold text-purple-600">Thinking</span>
+										{msg.isReasoningStreaming && (
+											<Badge variant="outline" className="text-xs">Streaming...</Badge>
+										)}
+									</div>
+									<div className="bg-muted/50 rounded-md p-3">
+										<pre className="whitespace-pre-wrap text-xs font-mono leading-relaxed">
+											{msg.reasoning.content}
+										</pre>
+									</div>
+								</div>
+							</CardContent>
+						</Card>
 					)}
 
 					{/* Tool Call Display */}
@@ -1325,25 +1336,34 @@ export function ChatClientV2() {
 												)}
 										</div>
 
-										{/* Show result prominently */}
+										{/* Show result prominently - FULL OUTPUT like Claude Code CLI */}
 										<div className="bg-muted/50 rounded-md p-3 space-y-2">
-											<div className="text-xs font-medium text-muted-foreground uppercase">
-												Output:
+											<div className="flex items-center justify-between">
+												<div className="text-xs font-medium text-muted-foreground uppercase">
+													Output:
+												</div>
+												{typeof msg.payload.result === "string" && msg.payload.result.length > 0 && (
+													<div className="text-xs text-muted-foreground">
+														{msg.payload.result.length.toLocaleString()} chars
+													</div>
+												)}
 											</div>
-											<div className="text-xs max-h-96 overflow-y-auto">
+											<div className="text-xs max-h-[600px] overflow-y-auto">
 												{typeof msg.payload.result === "string" ? (
-													<pre className="whitespace-pre-wrap font-mono text-xs">
-														{msg.payload.result.length > 2000
-															? msg.payload.result.slice(0, 2000) +
-																"\n\n... (truncated, " +
-																msg.payload.result.length +
-																" chars total)"
+													<pre className="whitespace-pre-wrap font-mono text-xs leading-relaxed">
+														{msg.payload.result.length > 10000
+															? msg.payload.result.slice(0, 10000) +
+																"\n\n... (showing first 10,000 of " +
+																msg.payload.result.length.toLocaleString() +
+																" chars)"
 															: msg.payload.result}
 													</pre>
-												) : (
-													<pre className="overflow-x-auto">
+												) : msg.payload.result !== null && msg.payload.result !== undefined ? (
+													<pre className="overflow-x-auto font-mono text-xs leading-relaxed">
 														{JSON.stringify(msg.payload.result, null, 2)}
 													</pre>
+												) : (
+													<div className="text-muted-foreground italic">No output</div>
 												)}
 											</div>
 										</div>

@@ -104,6 +104,9 @@ export const POST: APIRoute = async ({ request }) => {
 					try {
 						// Use fullStream to get all parts including tool calls and thinking
 						for await (const part of result.fullStream) {
+							// Log EVERY part we receive
+							console.log("[API] Received part:", part.type, part);
+
 							// Handle reasoning/thinking parts
 							if (part.type === "reasoning-delta") {
 								const data = JSON.stringify({
@@ -153,6 +156,10 @@ export const POST: APIRoute = async ({ request }) => {
 									],
 								});
 								controller.enqueue(encoder.encode(`data: ${data}\n\n`));
+							}
+							// Catch all unhandled part types
+							else {
+								console.warn("[API] Unhandled part type:", part.type, part);
 							}
 						}
 
