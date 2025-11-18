@@ -225,31 +225,30 @@ const TRUST_BADGES: any[] = [];
 const POPULAR_MODELS = [
 	// Claude Code models (via Claude Pro/Max subscription + CLI auth)
 	// NOTE: Requires running `claude login` in terminal first
-	// DISABLED BY DEFAULT - Uncomment to enable after authentication
-	// {
-	//   id: 'claude-code/sonnet',
-	//   name: 'Claude Code Sonnet',
-	//   chef: 'Anthropic',
-	//   chefSlug: 'anthropic',
-	//   providers: ['claude-code'],
-	//   free: true,
-	//   context: '200K',
-	//   requiresAuth: 'CLI: claude login',
-	//   hasTools: true,
-	//   isClaudeCode: true,
-	// },
-	// {
-	//   id: 'claude-code/opus',
-	//   name: 'Claude Code Opus',
-	//   chef: 'Anthropic',
-	//   chefSlug: 'anthropic',
-	//   providers: ['claude-code'],
-	//   free: true,
-	//   context: '200K',
-	//   requiresAuth: 'CLI: claude login',
-	//   hasTools: true,
-	//   isClaudeCode: true,
-	// },
+	{
+		id: "claude-code/sonnet",
+		name: "Claude Code Sonnet",
+		chef: "Anthropic",
+		chefSlug: "anthropic",
+		providers: ["claude-code"],
+		free: true,
+		context: "200K",
+		requiresAuth: "CLI: claude login",
+		hasTools: true,
+		isClaudeCode: true,
+	},
+	{
+		id: "claude-code/opus",
+		name: "Claude Code Opus",
+		chef: "Anthropic",
+		chefSlug: "anthropic",
+		providers: ["claude-code"],
+		free: true,
+		context: "200K",
+		requiresAuth: "CLI: claude login",
+		hasTools: true,
+		isClaudeCode: true,
+	},
 	// Free models
 	{
 		id: "google/gemini-2.5-flash-lite",
@@ -757,6 +756,7 @@ export function ChatClientV2() {
 	const [thinkingStatus, setThinkingStatus] = useState<string>("");
 	const [activeTools, setActiveTools] = useState<string[]>([]);
 	const [activeCategory, setActiveCategory] = useState<string>("");
+	const [toolStartTimes, setToolStartTimes] = useState<Record<string, number>>({});
 	const { toast } = useToast();
 	const textareaRef = useRef<HTMLTextAreaElement>(null);
 	const messagesEndRef = useRef<HTMLDivElement>(null);
@@ -938,6 +938,7 @@ export function ChatClientV2() {
 		setError(null);
 		setThinkingStatus("Connecting to AI...");
 		setActiveTools([]);
+		setToolStartTimes({});
 
 		// Check if this is a demo request
 		const messageLower = text.toLowerCase();
@@ -1056,40 +1057,73 @@ export function ChatClientV2() {
 				for (const line of lines) {
 					if (line.startsWith("data: ")) {
 						const data = line.slice(6);
-						if (data === "[DONE]") continue;
+						if (data === "[DONE]") {
+							console.log("[Stream] Received [DONE] signal");
+							continue;
+						}
 
 						try {
 							const parsed = JSON.parse(data);
-							console.log("Parsed stream data:", parsed);
+							console.log("[Stream] Received:", parsed.type || "text", parsed);
 
 							// Check for tool call messages
 							if (parsed.type === "tool_call") {
-								console.log("Received tool call:", parsed.payload);
+								hasReceivedAnyData = true; // IMPORTANT: Mark as received
 								const toolName = parsed.payload?.name || "Unknown tool";
+								const toolStartTime = Date.now();
+								console.log(`[Tool Call] ${toolName} started at ${new Date(toolStartTime).toLocaleTimeString()}`);
+								console.log("  Args:", parsed.payload?.args);
+
 								setThinkingStatus(`Using tool: ${toolName}...`);
 								setActiveTools((prev) => [...prev, toolName]);
+								setToolStartTimes((prev) => ({ ...prev, [toolName]: toolStartTime }));
+
 								const toolMessage: ExtendedMessage = {
 									id: `tool-${crypto.randomUUID()}`,
 									role: "assistant",
 									content: "",
 									type: "tool_call",
 									payload: parsed.payload,
-									timestamp: Date.now(),
+									timestamp: toolStartTime,
 								};
 								setMessages((prev) => [...prev, toolMessage]);
 							}
 							// Check for tool result messages
 							else if (parsed.type === "tool_result") {
-								console.log("Received tool result:", parsed.payload);
+								hasReceivedAnyData = true; // IMPORTANT: Mark as received
+								const toolName = parsed.payload?.name || "Unknown tool";
+								const toolEndTime = Date.now();
+								const toolStartTime = toolStartTimes[toolName];
+								const duration = toolStartTime ? (toolEndTime - toolStartTime) / 1000 : null;
+
+								console.log(`[Tool Result] ${toolName} completed at ${new Date(toolEndTime).toLocaleTimeString()}`);
+								if (duration !== null) {
+									console.log(`  Duration: ${duration.toFixed(2)}s`);
+								}
+								console.log("  Result:", parsed.payload?.result);
+
 								const toolResultMessage: ExtendedMessage = {
 									id: `tool-result-${crypto.randomUUID()}`,
 									role: "assistant",
 									content: "",
 									type: "tool_result",
-									payload: parsed.payload,
-									timestamp: Date.now(),
+									payload: {
+										...parsed.payload,
+										startTime: toolStartTime,
+										endTime: toolEndTime,
+										duration,
+									},
+									timestamp: toolEndTime,
 								};
 								setMessages((prev) => [...prev, toolResultMessage]);
+
+								// Remove from active tools
+								setActiveTools((prev) => prev.filter(t => t !== toolName));
+								setToolStartTimes((prev) => {
+									const updated = { ...prev };
+									delete updated[toolName];
+									return updated;
+								});
 							}
 							// Check for UI component messages (charts, tables, etc.)
 							else if (parsed.type && parsed.type !== "text") {
@@ -1226,39 +1260,75 @@ export function ChatClientV2() {
 					{/* Tool Call Display */}
 					{msg.type === "tool_call" && msg.payload && (
 						<div className="mb-4">
-							<Tool defaultOpen={true}>
-								<ToolHeader
-									title={msg.payload.name}
-									type={`tool-${msg.payload.name}`}
-									state={msg.payload.state || "input-available"}
-								/>
-								<ToolContent>
-									<ToolInput
-										input={msg.payload.args}
-										toolName={msg.payload.name}
-									/>
-								</ToolContent>
-							</Tool>
+							<Card className="border-l-4 border-l-blue-500 bg-blue-500/5">
+								<CardContent className="pt-4">
+									<div className="space-y-3">
+										<div className="flex items-center gap-2">
+											<Wrench className="h-4 w-4 text-blue-600" />
+											<span className="font-semibold text-blue-600">Tool Call: {msg.payload.name}</span>
+											<Badge variant="outline" className="text-xs">Running</Badge>
+										</div>
+
+										{/* Show arguments prominently */}
+										<div className="bg-muted/50 rounded-md p-3 space-y-2">
+											<div className="text-xs font-medium text-muted-foreground uppercase">Arguments:</div>
+											<pre className="text-xs overflow-x-auto">
+												{JSON.stringify(msg.payload.args, null, 2)}
+											</pre>
+										</div>
+									</div>
+								</CardContent>
+							</Card>
 						</div>
 					)}
 
 					{/* Tool Result Display */}
 					{msg.type === "tool_result" && msg.payload && (
 						<div className="mb-4">
-							<Tool defaultOpen={true}>
-								<ToolHeader
-									title={`${msg.payload.name} Result`}
-									type={`tool-${msg.payload.name}`}
-									state={msg.payload.state || "output-available"}
-								/>
-								<ToolContent>
-									<ToolOutput
-										output={msg.payload.result}
-										errorText={msg.payload.error}
-										toolName={msg.payload.name}
-									/>
-								</ToolContent>
-							</Tool>
+							<Card className="border-l-4 border-l-green-500 bg-green-500/5">
+								<CardContent className="pt-4">
+									<div className="space-y-3">
+										<div className="flex items-center gap-2">
+											<CheckIcon className="h-4 w-4 text-green-600" />
+											<span className="font-semibold text-green-600">Result: {msg.payload.name}</span>
+											<Badge variant="outline" className="text-xs text-green-600">Completed</Badge>
+											{msg.payload.duration !== null && msg.payload.duration !== undefined && (
+												<span className="text-xs text-muted-foreground">
+													⏱️ {msg.payload.duration.toFixed(2)}s
+												</span>
+											)}
+										</div>
+
+										{/* Show result prominently */}
+										<div className="bg-muted/50 rounded-md p-3 space-y-2">
+											<div className="text-xs font-medium text-muted-foreground uppercase">Output:</div>
+											<div className="text-xs max-h-96 overflow-y-auto">
+												{typeof msg.payload.result === 'string' ? (
+													<pre className="whitespace-pre-wrap font-mono text-xs">
+														{msg.payload.result.length > 2000
+															? msg.payload.result.slice(0, 2000) + '\n\n... (truncated, ' + msg.payload.result.length + ' chars total)'
+															: msg.payload.result
+														}
+													</pre>
+												) : (
+													<pre className="overflow-x-auto">
+														{JSON.stringify(msg.payload.result, null, 2)}
+													</pre>
+												)}
+											</div>
+										</div>
+
+										{msg.payload.error && (
+											<div className="bg-red-500/10 rounded-md p-3 space-y-2">
+												<div className="text-xs font-medium text-red-600 uppercase">Error:</div>
+												<pre className="text-xs text-red-600 whitespace-pre-wrap">
+													{msg.payload.error}
+												</pre>
+											</div>
+										)}
+									</div>
+								</CardContent>
+							</Card>
 						</div>
 					)}
 
@@ -1626,7 +1696,30 @@ export function ChatClientV2() {
 				<Conversation className="w-full" initial="auto" resize="auto">
 					<ConversationContent className="w-full md:max-w-3xl mx-auto px-4 pb-[145px]">
 						{messages.map((msg) => renderMessage(msg))}
-						{isLoading && (
+
+						{/* Active Tool Execution Status */}
+						{isLoading && activeTools.length > 0 && (
+							<Card className="border-blue-500/50 bg-blue-500/5">
+								<CardContent className="pt-4">
+									<div className="flex items-start gap-3">
+										<Wrench className="h-5 w-5 text-blue-500 animate-pulse mt-1" />
+										<div className="flex-1 space-y-2">
+											<p className="font-medium text-sm">{thinkingStatus}</p>
+											<div className="flex flex-wrap gap-2">
+												{activeTools.map((tool, idx) => (
+													<Badge key={idx} variant="outline" className="text-xs">
+														{tool}
+													</Badge>
+												))}
+											</div>
+										</div>
+									</div>
+								</CardContent>
+							</Card>
+						)}
+
+						{/* Regular thinking indicator */}
+						{isLoading && activeTools.length === 0 && (
 							<div className="flex items-center gap-2 text-sm text-muted-foreground">
 								<Brain className="h-4 w-4 animate-pulse" />
 								<span>{thinkingStatus || "Thinking..."}</span>
@@ -1983,22 +2076,21 @@ export function ChatClientV2() {
 								onMouseLeave={() => setActiveCategory("")}
 							>
 								<div className="flex flex-col gap-2">
-									{/* Category headings in one row */}
-									<div className="grid grid-cols-5 gap-2">
+									{/* Category pills - simple, no icons */}
+									<div className="flex gap-2 justify-center flex-wrap">
 										{suggestionGroups.map((group) => (
-											<div
+											<button
 												key={group.label}
 												onMouseEnter={() => setActiveCategory(group.label)}
 												className={cn(
-													"font-medium text-sm capitalize flex items-center gap-2 p-2 rounded cursor-pointer transition-all duration-200",
+													"px-4 py-2 rounded-full text-sm font-medium capitalize cursor-pointer transition-all duration-200",
 													activeCategory === group.label
 														? "bg-accent scale-105"
-														: "hover:bg-accent/50",
+														: "bg-muted hover:bg-accent/50",
 												)}
 											>
-												<Brain className="h-4 w-4" />
 												{group.label}
-											</div>
+											</button>
 										))}
 									</div>
 
@@ -2019,7 +2111,7 @@ export function ChatClientV2() {
 																	handleDemoSelect(item);
 																	setActiveCategory("");
 																}}
-																className="w-full text-left text-sm p-3 rounded-md hover:bg-accent/80 transition-all duration-200 hover:scale-[1.01] hover:shadow-sm"
+																className="w-full text-left text-sm p-3 rounded-md bg-accent/10 hover:bg-accent/20 transition-all duration-200 hover:scale-[1.01] hover:shadow-sm"
 																style={{
 																	animationDelay: `${index * 50}ms`,
 																}}
