@@ -35,40 +35,40 @@
  * ```
  */
 
-import { useState, useCallback } from 'react';
-import { useDataProvider } from './useDataProvider';
-import { Effect } from 'effect';
+import { Effect } from "effect";
+import { useCallback, useState } from "react";
 import type {
-  AuthResult,
-  User,
-  TwoFactorStatus,
-  TwoFactorSetup,
-  LoginArgs,
-  SignupArgs,
-  MagicLinkArgs,
-  PasswordResetArgs,
-  PasswordResetCompleteArgs,
-  VerifyEmailArgs,
-  Verify2FAArgs,
-  Disable2FAArgs,
-  AuthError,
-} from '@/providers/DataProvider';
+	AuthError,
+	AuthResult,
+	Disable2FAArgs,
+	LoginArgs,
+	MagicLinkArgs,
+	PasswordResetArgs,
+	PasswordResetCompleteArgs,
+	SignupArgs,
+	TwoFactorSetup,
+	TwoFactorStatus,
+	User,
+	Verify2FAArgs,
+	VerifyEmailArgs,
+} from "@/providers/DataProvider";
+import { useDataProvider } from "./useDataProvider";
 
 // ============================================================================
 // HOOK RESULT TYPES
 // ============================================================================
 
 interface MutationResult<TData, TArgs> {
-  mutate: (args: TArgs) => Promise<TData>;
-  loading: boolean;
-  error: AuthError | null;
+	mutate: (args: TArgs) => Promise<TData>;
+	loading: boolean;
+	error: AuthError | null;
 }
 
 interface QueryResult<TData> {
-  data: TData | null;
-  loading: boolean;
-  error: AuthError | null;
-  refetch: () => Promise<void>;
+	data: TData | null;
+	loading: boolean;
+	error: AuthError | null;
+	refetch: () => Promise<void>;
 }
 
 // ============================================================================
@@ -95,30 +95,30 @@ interface QueryResult<TData> {
  * ```
  */
 export function useLogin(): MutationResult<AuthResult, LoginArgs> {
-  const provider = useDataProvider();
-  const [loading, setLoading] = useState(false);
-  const [error, setError] = useState<AuthError | null>(null);
+	const provider = useDataProvider();
+	const [loading, setLoading] = useState(false);
+	const [error, setError] = useState<AuthError | null>(null);
 
-  const mutate = useCallback(
-    async (args: LoginArgs): Promise<AuthResult> => {
-      setLoading(true);
-      setError(null);
+	const mutate = useCallback(
+		async (args: LoginArgs): Promise<AuthResult> => {
+			setLoading(true);
+			setError(null);
 
-      try {
-        const result = await Effect.runPromise(provider.auth.login(args));
-        setLoading(false);
-        return result;
-      } catch (err) {
-        const authError = err as AuthError;
-        setError(authError);
-        setLoading(false);
-        throw authError;
-      }
-    },
-    [provider]
-  );
+			try {
+				const result = await Effect.runPromise(provider.auth.login(args));
+				setLoading(false);
+				return result;
+			} catch (err) {
+				const authError = err as AuthError;
+				setError(authError);
+				setLoading(false);
+				throw authError;
+			}
+		},
+		[provider],
+	);
 
-  return { mutate, loading, error };
+	return { mutate, loading, error };
 }
 
 // ============================================================================
@@ -140,30 +140,30 @@ export function useLogin(): MutationResult<AuthResult, LoginArgs> {
  * ```
  */
 export function useSignup(): MutationResult<AuthResult, SignupArgs> {
-  const provider = useDataProvider();
-  const [loading, setLoading] = useState(false);
-  const [error, setError] = useState<AuthError | null>(null);
+	const provider = useDataProvider();
+	const [loading, setLoading] = useState(false);
+	const [error, setError] = useState<AuthError | null>(null);
 
-  const mutate = useCallback(
-    async (args: SignupArgs): Promise<AuthResult> => {
-      setLoading(true);
-      setError(null);
+	const mutate = useCallback(
+		async (args: SignupArgs): Promise<AuthResult> => {
+			setLoading(true);
+			setError(null);
 
-      try {
-        const result = await Effect.runPromise(provider.auth.signup(args));
-        setLoading(false);
-        return result;
-      } catch (err) {
-        const authError = err as AuthError;
-        setError(authError);
-        setLoading(false);
-        throw authError;
-      }
-    },
-    [provider]
-  );
+			try {
+				const result = await Effect.runPromise(provider.auth.signup(args));
+				setLoading(false);
+				return result;
+			} catch (err) {
+				const authError = err as AuthError;
+				setError(authError);
+				setLoading(false);
+				throw authError;
+			}
+		},
+		[provider],
+	);
 
-  return { mutate, loading, error };
+	return { mutate, loading, error };
 }
 
 // ============================================================================
@@ -182,26 +182,26 @@ export function useSignup(): MutationResult<AuthResult, SignupArgs> {
  * ```
  */
 export function useLogout(): MutationResult<void, void> {
-  const provider = useDataProvider();
-  const [loading, setLoading] = useState(false);
-  const [error, setError] = useState<AuthError | null>(null);
+	const provider = useDataProvider();
+	const [loading, setLoading] = useState(false);
+	const [error, setError] = useState<AuthError | null>(null);
 
-  const mutate = useCallback(async (): Promise<void> => {
-    setLoading(true);
-    setError(null);
+	const mutate = useCallback(async (): Promise<void> => {
+		setLoading(true);
+		setError(null);
 
-    try {
-      await Effect.runPromise(provider.auth.logout());
-      setLoading(false);
-    } catch (err) {
-      const authError = err as AuthError;
-      setError(authError);
-      setLoading(false);
-      throw authError;
-    }
-  }, [provider]);
+		try {
+			await Effect.runPromise(provider.auth.logout());
+			setLoading(false);
+		} catch (err) {
+			const authError = err as AuthError;
+			setError(authError);
+			setLoading(false);
+			throw authError;
+		}
+	}, [provider]);
 
-  return { mutate, loading, error };
+	return { mutate, loading, error };
 }
 
 // ============================================================================
@@ -222,35 +222,35 @@ export function useLogout(): MutationResult<void, void> {
  * ```
  */
 export function useCurrentUser(): QueryResult<User> {
-  const provider = useDataProvider();
-  const [data, setData] = useState<User | null>(null);
-  const [loading, setLoading] = useState(true);
-  const [error, setError] = useState<AuthError | null>(null);
+	const provider = useDataProvider();
+	const [data, setData] = useState<User | null>(null);
+	const [loading, setLoading] = useState(true);
+	const [error, setError] = useState<AuthError | null>(null);
 
-  const refetch = useCallback(async () => {
-    setLoading(true);
-    setError(null);
+	const refetch = useCallback(async () => {
+		setLoading(true);
+		setError(null);
 
-    try {
-      const user = await Effect.runPromise(provider.auth.getCurrentUser());
-      setData(user);
-      setLoading(false);
-    } catch (err) {
-      const authError = err as AuthError;
-      setError(authError);
-      setLoading(false);
-      throw authError;
-    }
-  }, [provider]);
+		try {
+			const user = await Effect.runPromise(provider.auth.getCurrentUser());
+			setData(user);
+			setLoading(false);
+		} catch (err) {
+			const authError = err as AuthError;
+			setError(authError);
+			setLoading(false);
+			throw authError;
+		}
+	}, [provider]);
 
-  // Initial fetch
-  useState(() => {
-    refetch().catch(() => {
-      // Error already handled in refetch
-    });
-  });
+	// Initial fetch
+	useState(() => {
+		refetch().catch(() => {
+			// Error already handled in refetch
+		});
+	});
 
-  return { data, loading, error, refetch };
+	return { data, loading, error, refetch };
 }
 
 // ============================================================================
@@ -273,30 +273,32 @@ export function useCurrentUser(): QueryResult<User> {
  * ```
  */
 export function useMagicLinkAuth(): MutationResult<AuthResult, MagicLinkArgs> {
-  const provider = useDataProvider();
-  const [loading, setLoading] = useState(false);
-  const [error, setError] = useState<AuthError | null>(null);
+	const provider = useDataProvider();
+	const [loading, setLoading] = useState(false);
+	const [error, setError] = useState<AuthError | null>(null);
 
-  const mutate = useCallback(
-    async (args: MagicLinkArgs): Promise<AuthResult> => {
-      setLoading(true);
-      setError(null);
+	const mutate = useCallback(
+		async (args: MagicLinkArgs): Promise<AuthResult> => {
+			setLoading(true);
+			setError(null);
 
-      try {
-        const result = await Effect.runPromise(provider.auth.magicLinkAuth(args));
-        setLoading(false);
-        return result;
-      } catch (err) {
-        const authError = err as AuthError;
-        setError(authError);
-        setLoading(false);
-        throw authError;
-      }
-    },
-    [provider]
-  );
+			try {
+				const result = await Effect.runPromise(
+					provider.auth.magicLinkAuth(args),
+				);
+				setLoading(false);
+				return result;
+			} catch (err) {
+				const authError = err as AuthError;
+				setError(authError);
+				setLoading(false);
+				throw authError;
+			}
+		},
+		[provider],
+	);
 
-  return { mutate, loading, error };
+	return { mutate, loading, error };
 }
 
 // ============================================================================
@@ -315,29 +317,29 @@ export function useMagicLinkAuth(): MutationResult<AuthResult, MagicLinkArgs> {
  * ```
  */
 export function usePasswordReset(): MutationResult<void, PasswordResetArgs> {
-  const provider = useDataProvider();
-  const [loading, setLoading] = useState(false);
-  const [error, setError] = useState<AuthError | null>(null);
+	const provider = useDataProvider();
+	const [loading, setLoading] = useState(false);
+	const [error, setError] = useState<AuthError | null>(null);
 
-  const mutate = useCallback(
-    async (args: PasswordResetArgs): Promise<void> => {
-      setLoading(true);
-      setError(null);
+	const mutate = useCallback(
+		async (args: PasswordResetArgs): Promise<void> => {
+			setLoading(true);
+			setError(null);
 
-      try {
-        await Effect.runPromise(provider.auth.passwordReset(args));
-        setLoading(false);
-      } catch (err) {
-        const authError = err as AuthError;
-        setError(authError);
-        setLoading(false);
-        throw authError;
-      }
-    },
-    [provider]
-  );
+			try {
+				await Effect.runPromise(provider.auth.passwordReset(args));
+				setLoading(false);
+			} catch (err) {
+				const authError = err as AuthError;
+				setError(authError);
+				setLoading(false);
+				throw authError;
+			}
+		},
+		[provider],
+	);
 
-  return { mutate, loading, error };
+	return { mutate, loading, error };
 }
 
 /**
@@ -353,30 +355,33 @@ export function usePasswordReset(): MutationResult<void, PasswordResetArgs> {
  * });
  * ```
  */
-export function usePasswordResetComplete(): MutationResult<void, PasswordResetCompleteArgs> {
-  const provider = useDataProvider();
-  const [loading, setLoading] = useState(false);
-  const [error, setError] = useState<AuthError | null>(null);
+export function usePasswordResetComplete(): MutationResult<
+	void,
+	PasswordResetCompleteArgs
+> {
+	const provider = useDataProvider();
+	const [loading, setLoading] = useState(false);
+	const [error, setError] = useState<AuthError | null>(null);
 
-  const mutate = useCallback(
-    async (args: PasswordResetCompleteArgs): Promise<void> => {
-      setLoading(true);
-      setError(null);
+	const mutate = useCallback(
+		async (args: PasswordResetCompleteArgs): Promise<void> => {
+			setLoading(true);
+			setError(null);
 
-      try {
-        await Effect.runPromise(provider.auth.passwordResetComplete(args));
-        setLoading(false);
-      } catch (err) {
-        const authError = err as AuthError;
-        setError(authError);
-        setLoading(false);
-        throw authError;
-      }
-    },
-    [provider]
-  );
+			try {
+				await Effect.runPromise(provider.auth.passwordResetComplete(args));
+				setLoading(false);
+			} catch (err) {
+				const authError = err as AuthError;
+				setError(authError);
+				setLoading(false);
+				throw authError;
+			}
+		},
+		[provider],
+	);
 
-  return { mutate, loading, error };
+	return { mutate, loading, error };
 }
 
 // ============================================================================
@@ -399,30 +404,30 @@ export function usePasswordResetComplete(): MutationResult<void, PasswordResetCo
  * ```
  */
 export function useVerifyEmail(): MutationResult<AuthResult, VerifyEmailArgs> {
-  const provider = useDataProvider();
-  const [loading, setLoading] = useState(false);
-  const [error, setError] = useState<AuthError | null>(null);
+	const provider = useDataProvider();
+	const [loading, setLoading] = useState(false);
+	const [error, setError] = useState<AuthError | null>(null);
 
-  const mutate = useCallback(
-    async (args: VerifyEmailArgs): Promise<AuthResult> => {
-      setLoading(true);
-      setError(null);
+	const mutate = useCallback(
+		async (args: VerifyEmailArgs): Promise<AuthResult> => {
+			setLoading(true);
+			setError(null);
 
-      try {
-        const result = await Effect.runPromise(provider.auth.verifyEmail(args));
-        setLoading(false);
-        return result;
-      } catch (err) {
-        const authError = err as AuthError;
-        setError(authError);
-        setLoading(false);
-        throw authError;
-      }
-    },
-    [provider]
-  );
+			try {
+				const result = await Effect.runPromise(provider.auth.verifyEmail(args));
+				setLoading(false);
+				return result;
+			} catch (err) {
+				const authError = err as AuthError;
+				setError(authError);
+				setLoading(false);
+				throw authError;
+			}
+		},
+		[provider],
+	);
 
-  return { mutate, loading, error };
+	return { mutate, loading, error };
 }
 
 // ============================================================================
@@ -451,69 +456,69 @@ export function useVerifyEmail(): MutationResult<AuthResult, VerifyEmailArgs> {
  * ```
  */
 export function use2FA() {
-  const provider = useDataProvider();
-  const [loading, setLoading] = useState(false);
-  const [error, setError] = useState<AuthError | null>(null);
+	const provider = useDataProvider();
+	const [loading, setLoading] = useState(false);
+	const [error, setError] = useState<AuthError | null>(null);
 
-  const getStatus = useCallback(async (): Promise<TwoFactorStatus> => {
-    try {
-      return await Effect.runPromise(provider.auth.get2FAStatus());
-    } catch (err) {
-      throw err as AuthError;
-    }
-  }, [provider]);
+	const getStatus = useCallback(async (): Promise<TwoFactorStatus> => {
+		try {
+			return await Effect.runPromise(provider.auth.get2FAStatus());
+		} catch (err) {
+			throw err as AuthError;
+		}
+	}, [provider]);
 
-  const setup = useCallback(async (): Promise<TwoFactorSetup> => {
-    setLoading(true);
-    setError(null);
+	const setup = useCallback(async (): Promise<TwoFactorSetup> => {
+		setLoading(true);
+		setError(null);
 
-    try {
-      const result = await Effect.runPromise(provider.auth.setup2FA());
-      setLoading(false);
-      return result;
-    } catch (err) {
-      const authError = err as AuthError;
-      setError(authError);
-      setLoading(false);
-      throw authError;
-    }
-  }, [provider]);
+		try {
+			const result = await Effect.runPromise(provider.auth.setup2FA());
+			setLoading(false);
+			return result;
+		} catch (err) {
+			const authError = err as AuthError;
+			setError(authError);
+			setLoading(false);
+			throw authError;
+		}
+	}, [provider]);
 
-  const verify = useCallback(
-    async (args: Verify2FAArgs): Promise<void> => {
-      setLoading(true);
-      setError(null);
+	const verify = useCallback(
+		async (args: Verify2FAArgs): Promise<void> => {
+			setLoading(true);
+			setError(null);
 
-      try {
-        await Effect.runPromise(provider.auth.verify2FA(args));
-        setLoading(false);
-      } catch (err) {
-        const authError = err as AuthError;
-        setError(authError);
-        setLoading(false);
-        throw authError;
-      }
-    },
-    [provider]
-  );
+			try {
+				await Effect.runPromise(provider.auth.verify2FA(args));
+				setLoading(false);
+			} catch (err) {
+				const authError = err as AuthError;
+				setError(authError);
+				setLoading(false);
+				throw authError;
+			}
+		},
+		[provider],
+	);
 
-  const disable = useCallback(
-    async (args: Disable2FAArgs): Promise<void> => {
-      setLoading(true);
-      setError(null);
+	const disable = useCallback(
+		async (args: Disable2FAArgs): Promise<void> => {
+			setLoading(true);
+			setError(null);
 
-      try {
-        await Effect.runPromise(provider.auth.disable2FA(args));
-        setLoading(false);
-      } catch (err) {
-        const authError = err as AuthError;
-        setError(authError);
-        setLoading(false);
-        throw authError;
-      }
-    },
-    [provider]
-  );
+			try {
+				await Effect.runPromise(provider.auth.disable2FA(args));
+				setLoading(false);
+			} catch (err) {
+				const authError = err as AuthError;
+				setError(authError);
+				setLoading(false);
+				throw authError;
+			}
+		},
+		[provider],
+	);
 
-  return { getStatus, setup, verify, disable, loading, error };
+	return { getStatus, setup, verify, disable, loading, error };
 }

@@ -6,9 +6,9 @@
  * GET /api/knowledge/search - Semantic search
  */
 
-import type { APIRoute } from 'astro';
-import { getDefaultProvider } from '@/providers/factory';
-import { successResponse, errorResponse, getStatusCode } from '../response';
+import type { APIRoute } from "astro";
+import { getDefaultProvider } from "@/providers/factory";
+import { errorResponse, getStatusCode, successResponse } from "../response";
 
 /**
  * GET /api/knowledge/search
@@ -42,97 +42,95 @@ import { successResponse, errorResponse, getStatusCode } from '../response';
  * ```
  */
 export const GET: APIRoute = async ({ url }) => {
-  try {
-    const provider = getDefaultProvider();
-    const { Effect } = await import('effect');
+	try {
+		const provider = getDefaultProvider();
+		const { Effect } = await import("effect");
 
-    // Parse query parameters
-    const query = url.searchParams.get('q');
-    const limit = Math.min(
-      parseInt(url.searchParams.get('limit') || '10'),
-      100
-    );
-    const threshold = parseFloat(url.searchParams.get('threshold') || '0.5');
-    const groupId = url.searchParams.get('groupId');
-    const type = url.searchParams.get('type');
+		// Parse query parameters
+		const query = url.searchParams.get("q");
+		const limit = Math.min(
+			parseInt(url.searchParams.get("limit") || "10"),
+			100,
+		);
+		const threshold = parseFloat(url.searchParams.get("threshold") || "0.5");
+		const groupId = url.searchParams.get("groupId");
+		const type = url.searchParams.get("type");
 
-    // Validate search query
-    if (!query || query.trim().length < 3) {
-      const response = errorResponse(
-        'VALIDATION_ERROR',
-        'Search query must be at least 3 characters'
-      );
-      return new Response(JSON.stringify(response), {
-        status: getStatusCode(response.error),
-        headers: { 'Content-Type': 'application/json' },
-      });
-    }
+		// Validate search query
+		if (!query || query.trim().length < 3) {
+			const response = errorResponse(
+				"VALIDATION_ERROR",
+				"Search query must be at least 3 characters",
+			);
+			return new Response(JSON.stringify(response), {
+				status: getStatusCode(response.error),
+				headers: { "Content-Type": "application/json" },
+			});
+		}
 
-    // Validate threshold
-    if (threshold < 0 || threshold > 1) {
-      const response = errorResponse(
-        'VALIDATION_ERROR',
-        'Threshold must be between 0 and 1'
-      );
-      return new Response(JSON.stringify(response), {
-        status: getStatusCode(response.error),
-        headers: { 'Content-Type': 'application/json' },
-      });
-    }
+		// Validate threshold
+		if (threshold < 0 || threshold > 1) {
+			const response = errorResponse(
+				"VALIDATION_ERROR",
+				"Threshold must be between 0 and 1",
+			);
+			return new Response(JSON.stringify(response), {
+				status: getStatusCode(response.error),
+				headers: { "Content-Type": "application/json" },
+			});
+		}
 
-    // TODO: Implement embedding generation for semantic search
-    // For now, use text-based search via knowledge.list() method
-    // When full implementation needed: generate embedding from query string
-    // then call: provider.knowledge.search(embedding, { limit, sourceThingId: groupId })
+		// TODO: Implement embedding generation for semantic search
+		// For now, use text-based search via knowledge.list() method
+		// When full implementation needed: generate embedding from query string
+		// then call: provider.knowledge.search(embedding, { limit, sourceThingId: groupId })
 
-    let results = await Effect.runPromise(
-      provider.knowledge.list({
-        query: query.trim(),
-        knowledgeType: type as any,
-        limit: limit * 2, // Get extra to filter
-      })
-    );
+		let results = await Effect.runPromise(
+			provider.knowledge.list({
+				query: query.trim(),
+				knowledgeType: type as any,
+				limit: limit * 2, // Get extra to filter
+			}),
+		);
 
-    // Filter by threshold if provided
-    if (threshold > 0) {
-      results = results.filter(
-        (item: any) => (item.score || 1) >= threshold
-      );
-    }
+		// Filter by threshold if provided
+		if (threshold > 0) {
+			results = results.filter((item: any) => (item.score || 1) >= threshold);
+		}
 
-    // Filter by group if provided
-    if (groupId) {
-      results = results.filter((item: any) => item.sourceThingId === groupId);
-    }
+		// Filter by group if provided
+		if (groupId) {
+			results = results.filter((item: any) => item.sourceThingId === groupId);
+		}
 
-    // Limit results
-    results = results.slice(0, limit);
+		// Limit results
+		results = results.slice(0, limit);
 
-    return new Response(
-      JSON.stringify(
-        successResponse({
-          results,
-          query: query.trim(),
-          total: results.length,
-          limit,
-        })
-      ),
-      {
-        status: 200,
-        headers: {
-          'Content-Type': 'application/json',
-          'Cache-Control': 'max-age=300, public',
-        },
-      }
-    );
-  } catch (error) {
-    const message = error instanceof Error ? error.message : 'Unknown error';
-    const response = errorResponse('INTERNAL_ERROR', message);
-    const status = getStatusCode(response.error);
+		return new Response(
+			JSON.stringify(
+				successResponse({
+					results,
+					query: query.trim(),
+					total: results.length,
+					limit,
+				}),
+			),
+			{
+				status: 200,
+				headers: {
+					"Content-Type": "application/json",
+					"Cache-Control": "max-age=300, public",
+				},
+			},
+		);
+	} catch (error) {
+		const message = error instanceof Error ? error.message : "Unknown error";
+		const response = errorResponse("INTERNAL_ERROR", message);
+		const status = getStatusCode(response.error);
 
-    return new Response(JSON.stringify(response), {
-      status,
-      headers: { 'Content-Type': 'application/json' },
-    });
-  }
+		return new Response(JSON.stringify(response), {
+			status,
+			headers: { "Content-Type": "application/json" },
+		});
+	}
 };

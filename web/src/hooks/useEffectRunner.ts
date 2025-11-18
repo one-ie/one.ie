@@ -1,5 +1,5 @@
-import { useCallback, useState } from 'react';
-import { Effect, Exit } from 'effect';
+import { Effect, Exit } from "effect";
+import { useCallback, useState } from "react";
 
 /**
  * Hook for running Effect programs in React components
@@ -25,60 +25,61 @@ import { Effect, Exit } from 'effect';
  * ```
  */
 export function useEffectRunner<E = unknown, A = unknown>() {
-  const [loading, setLoading] = useState(false);
-  const [error, setError] = useState<E | null>(null);
-  const [data, setData] = useState<A | null>(null);
+	const [loading, setLoading] = useState(false);
+	const [error, setError] = useState<E | null>(null);
+	const [data, setData] = useState<A | null>(null);
 
-  const run = useCallback(
-    async (
-      program: Effect.Effect<A, E, never>,
-      options?: {
-        onSuccess?: (result: A) => void;
-        onError?: (error: E) => void;
-        onFinally?: () => void;
-      }
-    ) => {
-      setLoading(true);
-      setError(null);
+	const run = useCallback(
+		async (
+			program: Effect.Effect<A, E, never>,
+			options?: {
+				onSuccess?: (result: A) => void;
+				onError?: (error: E) => void;
+				onFinally?: () => void;
+			},
+		) => {
+			setLoading(true);
+			setError(null);
 
-      try {
-        const exit = await Effect.runPromiseExit(program);
+			try {
+				const exit = await Effect.runPromiseExit(program);
 
-        if (Exit.isSuccess(exit)) {
-          const result = exit.value;
-          setData(result);
-          options?.onSuccess?.(result);
-        } else {
-          const cause = exit.cause;
-          // Extract the error from the cause
-          const err = cause._tag === 'Fail' ? cause.error : (cause as unknown as E);
-          setError(err);
-          options?.onError?.(err);
-        }
-      } catch (err) {
-        setError(err as E);
-        options?.onError?.(err as E);
-      } finally {
-        setLoading(false);
-        options?.onFinally?.();
-      }
-    },
-    []
-  );
+				if (Exit.isSuccess(exit)) {
+					const result = exit.value;
+					setData(result);
+					options?.onSuccess?.(result);
+				} else {
+					const cause = exit.cause;
+					// Extract the error from the cause
+					const err =
+						cause._tag === "Fail" ? cause.error : (cause as unknown as E);
+					setError(err);
+					options?.onError?.(err);
+				}
+			} catch (err) {
+				setError(err as E);
+				options?.onError?.(err as E);
+			} finally {
+				setLoading(false);
+				options?.onFinally?.();
+			}
+		},
+		[],
+	);
 
-  const reset = useCallback(() => {
-    setLoading(false);
-    setError(null);
-    setData(null);
-  }, []);
+	const reset = useCallback(() => {
+		setLoading(false);
+		setError(null);
+		setData(null);
+	}, []);
 
-  return {
-    run,
-    reset,
-    loading,
-    error,
-    data,
-  };
+	return {
+		run,
+		reset,
+		loading,
+		error,
+		data,
+	};
 }
 
 /**
@@ -101,18 +102,18 @@ export function useEffectRunner<E = unknown, A = unknown>() {
  * ```
  */
 export function useEffectAction<E = unknown, A = unknown>() {
-  const { run } = useEffectRunner<E, A>();
+	const { run } = useEffectRunner<E, A>();
 
-  return useCallback(
-    (
-      program: Effect.Effect<A, E, never>,
-      options?: {
-        onSuccess?: (result: A) => void;
-        onError?: (error: E) => void;
-      }
-    ) => {
-      return run(program, options);
-    },
-    [run]
-  );
+	return useCallback(
+		(
+			program: Effect.Effect<A, E, never>,
+			options?: {
+				onSuccess?: (result: A) => void;
+				onError?: (error: E) => void;
+			},
+		) => {
+			return run(program, options);
+		},
+		[run],
+	);
 }

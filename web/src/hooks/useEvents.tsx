@@ -4,11 +4,24 @@
  * Provides hooks for querying event streams and logging events.
  */
 
-import { useQuery, useMutation as useReactMutation, useQueryClient } from '@tanstack/react-query';
-import { Effect } from 'effect';
-import { useDataProvider } from './useDataProvider';
-import type { QueryResult, MutationResult, QueryOptions, MutationOptions } from './types';
-import type { Event, CreateEventInput, ListEventsOptions } from '@/providers/DataProvider';
+import {
+	useQuery,
+	useQueryClient,
+	useMutation as useReactMutation,
+} from "@tanstack/react-query";
+import { Effect } from "effect";
+import type {
+	CreateEventInput,
+	Event,
+	ListEventsOptions,
+} from "@/providers/DataProvider";
+import type {
+	MutationOptions,
+	MutationResult,
+	QueryOptions,
+	QueryResult,
+} from "./types";
+import { useDataProvider } from "./useDataProvider";
 
 // ============================================================================
 // QUERY HOOKS
@@ -36,35 +49,35 @@ import type { Event, CreateEventInput, ListEventsOptions } from '@/providers/Dat
  * ```
  */
 export function useEvents(
-  options?: ListEventsOptions,
-  queryOptions?: QueryOptions
+	options?: ListEventsOptions,
+	queryOptions?: QueryOptions,
 ): QueryResult<Event[]> {
-  const provider = useDataProvider();
-  const { enabled = true, ...reactQueryOptions } = queryOptions ?? {};
+	const provider = useDataProvider();
+	const { enabled = true, ...reactQueryOptions } = queryOptions ?? {};
 
-  const queryKey = ['events', options];
+	const queryKey = ["events", options];
 
-  const queryFn = async (): Promise<Event[]> => {
-    const effect = provider.events.list(options);
-    return await Effect.runPromise(effect);
-  };
+	const queryFn = async (): Promise<Event[]> => {
+		const effect = provider.events.list(options);
+		return await Effect.runPromise(effect);
+	};
 
-  const query = useQuery({
-    queryKey,
-    queryFn,
-    enabled,
-    ...reactQueryOptions,
-  });
+	const query = useQuery({
+		queryKey,
+		queryFn,
+		enabled,
+		...reactQueryOptions,
+	});
 
-  return {
-    data: query.data ?? null,
-    loading: query.isLoading,
-    error: query.error as Error | null,
-    refetch: async () => {
-      await query.refetch();
-    },
-    refetching: query.isRefetching,
-  };
+	return {
+		data: query.data ?? null,
+		loading: query.isLoading,
+		error: query.error as Error | null,
+		refetch: async () => {
+			await query.refetch();
+		},
+		refetching: query.isRefetching,
+	};
 }
 
 /**
@@ -78,34 +91,37 @@ export function useEvents(
  * const { data: event } = useEvent(eventId);
  * ```
  */
-export function useEvent(id: string | null, queryOptions?: QueryOptions): QueryResult<Event> {
-  const provider = useDataProvider();
-  const { enabled = true, ...reactQueryOptions } = queryOptions ?? {};
+export function useEvent(
+	id: string | null,
+	queryOptions?: QueryOptions,
+): QueryResult<Event> {
+	const provider = useDataProvider();
+	const { enabled = true, ...reactQueryOptions } = queryOptions ?? {};
 
-  const queryKey = ['event', id];
+	const queryKey = ["event", id];
 
-  const queryFn = async (): Promise<Event> => {
-    if (!id) throw new Error('Event ID is required');
-    const effect = provider.events.get(id);
-    return await Effect.runPromise(effect);
-  };
+	const queryFn = async (): Promise<Event> => {
+		if (!id) throw new Error("Event ID is required");
+		const effect = provider.events.get(id);
+		return await Effect.runPromise(effect);
+	};
 
-  const query = useQuery({
-    queryKey,
-    queryFn,
-    enabled: enabled && !!id,
-    ...reactQueryOptions,
-  });
+	const query = useQuery({
+		queryKey,
+		queryFn,
+		enabled: enabled && !!id,
+		...reactQueryOptions,
+	});
 
-  return {
-    data: query.data ?? null,
-    loading: query.isLoading,
-    error: query.error as Error | null,
-    refetch: async () => {
-      await query.refetch();
-    },
-    refetching: query.isRefetching,
-  };
+	return {
+		data: query.data ?? null,
+		loading: query.isLoading,
+		error: query.error as Error | null,
+		refetch: async () => {
+			await query.refetch();
+		},
+		refetching: query.isRefetching,
+	};
 }
 
 // ============================================================================
@@ -132,46 +148,46 @@ export function useEvent(id: string | null, queryOptions?: QueryOptions): QueryR
  * ```
  */
 export function useLogEvent(
-  mutationOptions?: MutationOptions<string, CreateEventInput>
+	mutationOptions?: MutationOptions<string, CreateEventInput>,
 ): MutationResult<string, CreateEventInput> {
-  const provider = useDataProvider();
-  const queryClient = useQueryClient();
+	const provider = useDataProvider();
+	const queryClient = useQueryClient();
 
-  const mutation = useReactMutation({
-    mutationFn: async (input: CreateEventInput): Promise<string> => {
-      const effect = provider.events.create(input);
-      return await Effect.runPromise(effect);
-    },
-    onSuccess: async (id, input) => {
-      // Invalidate event queries for affected entities
-      await queryClient.invalidateQueries({ queryKey: ['events'] });
+	const mutation = useReactMutation({
+		mutationFn: async (input: CreateEventInput): Promise<string> => {
+			const effect = provider.events.create(input);
+			return await Effect.runPromise(effect);
+		},
+		onSuccess: async (id, input) => {
+			// Invalidate event queries for affected entities
+			await queryClient.invalidateQueries({ queryKey: ["events"] });
 
-      if (input.actorId) {
-        await queryClient.invalidateQueries({
-          queryKey: ['events', { actorId: input.actorId }],
-        });
-      }
+			if (input.actorId) {
+				await queryClient.invalidateQueries({
+					queryKey: ["events", { actorId: input.actorId }],
+				});
+			}
 
-      if (input.targetId) {
-        await queryClient.invalidateQueries({
-          queryKey: ['events', { targetId: input.targetId }],
-        });
-      }
+			if (input.targetId) {
+				await queryClient.invalidateQueries({
+					queryKey: ["events", { targetId: input.targetId }],
+				});
+			}
 
-      await mutationOptions?.onSuccess?.(id, input);
-    },
-    onError: async (error, input) => {
-      await mutationOptions?.onError?.(error as Error, input);
-    },
-  });
+			await mutationOptions?.onSuccess?.(id, input);
+		},
+		onError: async (error, input) => {
+			await mutationOptions?.onError?.(error as Error, input);
+		},
+	});
 
-  return {
-    mutate: mutation.mutateAsync,
-    loading: mutation.isPending,
-    error: mutation.error as Error | null,
-    reset: mutation.reset,
-    data: mutation.data ?? null,
-  };
+	return {
+		mutate: mutation.mutateAsync,
+		loading: mutation.isPending,
+		error: mutation.error as Error | null,
+		reset: mutation.reset,
+		data: mutation.data ?? null,
+	};
 }
 
 // ============================================================================
@@ -199,20 +215,20 @@ export function useLogEvent(
  * ```
  */
 export function useAuditTrail(
-  targetId: string | null,
-  options?: { limit?: number; since?: number },
-  queryOptions?: QueryOptions
+	targetId: string | null,
+	options?: { limit?: number; since?: number },
+	queryOptions?: QueryOptions,
 ) {
-  return useEvents(
-    targetId
-      ? {
-          targetId,
-          limit: options?.limit ?? 50,
-          since: options?.since,
-        }
-      : undefined,
-    { ...queryOptions, enabled: queryOptions?.enabled && !!targetId }
-  );
+	return useEvents(
+		targetId
+			? {
+					targetId,
+					limit: options?.limit ?? 50,
+					since: options?.since,
+				}
+			: undefined,
+		{ ...queryOptions, enabled: queryOptions?.enabled && !!targetId },
+	);
 }
 
 /**
@@ -229,20 +245,20 @@ export function useAuditTrail(
  * ```
  */
 export function useActivityFeed(
-  actorId: string | null,
-  options?: { limit?: number; since?: number },
-  queryOptions?: QueryOptions
+	actorId: string | null,
+	options?: { limit?: number; since?: number },
+	queryOptions?: QueryOptions,
 ) {
-  return useEvents(
-    actorId
-      ? {
-          actorId,
-          limit: options?.limit ?? 20,
-          since: options?.since,
-        }
-      : undefined,
-    { ...queryOptions, enabled: queryOptions?.enabled && !!actorId }
-  );
+	return useEvents(
+		actorId
+			? {
+					actorId,
+					limit: options?.limit ?? 20,
+					since: options?.since,
+				}
+			: undefined,
+		{ ...queryOptions, enabled: queryOptions?.enabled && !!actorId },
+	);
 }
 
 /**
@@ -257,18 +273,18 @@ export function useActivityFeed(
  * ```
  */
 export function useRecentEvents(
-  eventType: string | null,
-  options?: { limit?: number; since?: number },
-  queryOptions?: QueryOptions
+	eventType: string | null,
+	options?: { limit?: number; since?: number },
+	queryOptions?: QueryOptions,
 ) {
-  return useEvents(
-    eventType
-      ? {
-          type: eventType,
-          limit: options?.limit ?? 20,
-          since: options?.since,
-        }
-      : undefined,
-    { ...queryOptions, enabled: queryOptions?.enabled && !!eventType }
-  );
+	return useEvents(
+		eventType
+			? {
+					type: eventType,
+					limit: options?.limit ?? 20,
+					since: options?.since,
+				}
+			: undefined,
+		{ ...queryOptions, enabled: queryOptions?.enabled && !!eventType },
+	);
 }

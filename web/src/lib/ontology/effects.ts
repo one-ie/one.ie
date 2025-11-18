@@ -11,7 +11,7 @@
  * - Full dependency injection
  */
 
-import type { IOntologyProvider } from './types';
+import type { IOntologyProvider } from "./types";
 
 // ============================================================================
 // Service Types (Placeholder)
@@ -23,27 +23,27 @@ import type { IOntologyProvider } from './types';
  * and provide typed operations for each ontology dimension.
  */
 export class GroupsService {
-  static readonly Default = undefined;
+	static readonly Default = undefined;
 }
 
 export class PeopleService {
-  static readonly Default = undefined;
+	static readonly Default = undefined;
 }
 
 export class ThingsService {
-  static readonly Default = undefined;
+	static readonly Default = undefined;
 }
 
 export class ConnectionsService {
-  static readonly Default = undefined;
+	static readonly Default = undefined;
 }
 
 export class EventsService {
-  static readonly Default = undefined;
+	static readonly Default = undefined;
 }
 
 export class KnowledgeService {
-  static readonly Default = undefined;
+	static readonly Default = undefined;
 }
 
 // ============================================================================
@@ -61,7 +61,7 @@ export class KnowledgeService {
  * - Handle cross-dimensional relationships
  */
 export class OntologyServices {
-  static readonly Default = undefined;
+	static readonly Default = undefined;
 }
 
 // ============================================================================

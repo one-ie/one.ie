@@ -5,74 +5,78 @@
  * Dynamic route: /store/product/[slug]
  */
 
-import Layout from '@/layouts/Layout.astro';
-import { ProductGallery } from '@/components/ecommerce/interactive/ProductGallery';
-import { VariantSelector } from '@/components/ecommerce/interactive/VariantSelector';
-import { AddToCartButton } from '@/components/ecommerce/interactive/AddToCartButton';
-import { QuantitySelector } from '@/components/ecommerce/interactive/QuantitySelector';
-import { PriceDisplay } from '@/components/ecommerce/static/PriceDisplay';
-import { ReviewStars } from '@/components/ecommerce/static/ReviewStars';
-import { Breadcrumbs, type BreadcrumbItem } from '@/components/ecommerce/static/Breadcrumbs';
-import { ProductCard } from '@/components/ecommerce/interactive/ProductCard';
+import { AddToCartButton } from "@/components/shop/interactive/AddToCartButton";
+import { ProductCard } from "@/components/shop/interactive/ProductCard";
+import { ProductGallery } from "@/components/shop/interactive/ProductGallery";
+import { QuantitySelector } from "@/components/shop/interactive/QuantitySelector";
+import { VariantSelector } from "@/components/shop/interactive/VariantSelector";
+import {
+	type BreadcrumbItem,
+	Breadcrumbs,
+} from "@/components/shop/static/Breadcrumbs";
+import { PriceDisplay } from "@/components/shop/static/PriceDisplay";
+import { ReviewStars } from "@/components/shop/static/ReviewStars";
+import Layout from "@/layouts/Layout.astro";
 
 const { slug } = Astro.params;
 
 // Mock product - replace with content collection or API
 const product = {
-  id: '1',
-  slug: slug || 'sample-product',
-  name: 'Premium Cotton T-Shirt',
-  description: 'Ultra-soft premium cotton t-shirt. Perfect for everyday wear with a modern fit and sustainable materials.',
-  price: 29.99,
-  compareAtPrice: 39.99,
-  images: [
-    '/images/products/tshirt-1.jpg',
-    '/images/products/tshirt-2.jpg',
-    '/images/products/tshirt-3.jpg',
-  ],
-  thumbnail: '/images/products/tshirt-1.jpg',
-  category: 'apparel',
-  tags: ['cotton', 'casual', 'sustainable'],
-  inStock: true,
-  inventory: 48,
-  rating: 4.5,
-  reviewCount: 128,
-  featured: true,
-  createdAt: new Date(),
-  updatedAt: new Date(),
-  variants: [
-    {
-      id: 'size',
-      name: 'Size',
-      type: 'size' as const,
-      options: [
-        { value: 'S', label: 'Small', inStock: true },
-        { value: 'M', label: 'Medium', inStock: true },
-        { value: 'L', label: 'Large', inStock: true },
-        { value: 'XL', label: 'Extra Large', inStock: false },
-      ],
-    },
-    {
-      id: 'color',
-      name: 'Color',
-      type: 'color' as const,
-      options: [
-        { value: '#000000', label: 'Black', inStock: true },
-        { value: '#FFFFFF', label: 'White', inStock: true },
-        { value: '#4A5568', label: 'Gray', inStock: true },
-      ],
-    },
-  ],
+	id: "1",
+	slug: slug || "sample-product",
+	name: "Premium Cotton T-Shirt",
+	description:
+		"Ultra-soft premium cotton t-shirt. Perfect for everyday wear with a modern fit and sustainable materials.",
+	price: 29.99,
+	compareAtPrice: 39.99,
+	images: [
+		"/images/products/tshirt-1.jpg",
+		"/images/products/tshirt-2.jpg",
+		"/images/products/tshirt-3.jpg",
+	],
+	thumbnail: "/images/products/tshirt-1.jpg",
+	category: "apparel",
+	tags: ["cotton", "casual", "sustainable"],
+	inStock: true,
+	inventory: 48,
+	rating: 4.5,
+	reviewCount: 128,
+	featured: true,
+	createdAt: new Date(),
+	updatedAt: new Date(),
+	variants: [
+		{
+			id: "size",
+			name: "Size",
+			type: "size" as const,
+			options: [
+				{ value: "S", label: "Small", inStock: true },
+				{ value: "M", label: "Medium", inStock: true },
+				{ value: "L", label: "Large", inStock: true },
+				{ value: "XL", label: "Extra Large", inStock: false },
+			],
+		},
+		{
+			id: "color",
+			name: "Color",
+			type: "color" as const,
+			options: [
+				{ value: "#000000", label: "Black", inStock: true },
+				{ value: "#FFFFFF", label: "White", inStock: true },
+				{ value: "#4A5568", label: "Gray", inStock: true },
+			],
+		},
+	],
 };
 
 const relatedProducts = [
-  // Add related products here
+	// Add related products here
 ];
 
 const breadcrumbs: BreadcrumbItem[] = [
-  { label: 'Categories', href: '/store' },
-  { label: 'Apparel', href: '/store/category/apparel' },
-  { label: product.name },
+	{ label: "Categories", href: "/store" },
+	{ label: "Apparel", href: "/store/category/apparel" },
+	{ label: product.name },
 ];
 ---
 

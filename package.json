@@ -2,9 +2,6 @@
   "name": "one",
   "version": "1.0.0",
   "private": true,
-  "workspaces": [
-    "web"
-  ],
   "scripts": {
     "dev": "cd web && astro dev",
     "build": "cd web && bun install && bun run build"

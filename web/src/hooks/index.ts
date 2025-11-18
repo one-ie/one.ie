@@ -47,176 +47,162 @@
 // PROVIDER & CONTEXT
 // ============================================================================
 
-export { DataProviderProvider, useDataProvider, queryClient } from './useDataProvider';
+export {
+	DataProviderProvider,
+	queryClient,
+	useDataProvider,
+} from "./useDataProvider";
 
 // ============================================================================
 // TYPES
 // ============================================================================
 
 export type {
-  QueryResult,
-  MutationResult,
-  QueryOptions,
-  MutationOptions,
-  ExtractQueryData,
-  ExtractMutationArgs,
-  ExtractMutationData,
-} from './types';
+	ExtractMutationArgs,
+	ExtractMutationData,
+	ExtractQueryData,
+	MutationOptions,
+	MutationResult,
+	QueryOptions,
+	QueryResult,
+} from "./types";
 
 // ============================================================================
 // THINGS DIMENSION
 // ============================================================================
 
 export {
-  // Query hooks
-  useThings,
-  useThing,
-
-  // Mutation hooks
-  useCreateThing,
-  useUpdateThing,
-  useDeleteThing,
-
-  // Type-specific hooks
-  useCourses,
-  useAgents,
-  useBlogPosts,
-  useTokens,
-} from './useThings';
+	useAgents,
+	useBlogPosts,
+	// Type-specific hooks
+	useCourses,
+	// Mutation hooks
+	useCreateThing,
+	useDeleteThing,
+	useThing,
+	// Query hooks
+	useThings,
+	useTokens,
+	useUpdateThing,
+} from "./useThings";
 
 // ============================================================================
 // CONNECTIONS DIMENSION
 // ============================================================================
 
 export {
-  // Query hooks
-  useConnections,
-  useConnection,
-
-  // Mutation hooks
-  useCreateConnection,
-  useDeleteConnection,
-
-  // Relationship-specific hooks
-  useOwnedThings,
-  useEnrollments,
-  useFollowing,
-  useTokenHoldings,
-} from './useConnections';
+	useConnection,
+	// Query hooks
+	useConnections,
+	// Mutation hooks
+	useCreateConnection,
+	useDeleteConnection,
+	useEnrollments,
+	useFollowing,
+	// Relationship-specific hooks
+	useOwnedThings,
+	useTokenHoldings,
+} from "./useConnections";
 
 // ============================================================================
 // EVENTS DIMENSION
 // ============================================================================
 
 export {
-  // Query hooks
-  useEvents,
-  useEvent,
-
-  // Mutation hooks
-  useLogEvent,
-
-  // Convenience hooks
-  useAuditTrail,
-  useActivityFeed,
-  useRecentEvents,
-} from './useEvents';
+	useActivityFeed,
+	// Convenience hooks
+	useAuditTrail,
+	useEvent,
+	// Query hooks
+	useEvents,
+	// Mutation hooks
+	useLogEvent,
+	useRecentEvents,
+} from "./useEvents";
 
 // ============================================================================
 // KNOWLEDGE DIMENSION
 // ============================================================================
 
 export {
-  // Query hooks
-  useKnowledge,
-  useSearch,
-
-  // Mutation hooks
-  useCreateKnowledge,
-  useLinkKnowledge,
-
-  // Convenience hooks
-  useLabels,
-  useThingKnowledge,
-} from './useKnowledge';
+	// Mutation hooks
+	useCreateKnowledge,
+	// Query hooks
+	useKnowledge,
+	// Convenience hooks
+	useLabels,
+	useLinkKnowledge,
+	useSearch,
+	useThingKnowledge,
+} from "./useKnowledge";
 
 // ============================================================================
 // ORGANIZATIONS DIMENSION
 // ============================================================================
 
 export {
-  // Query hooks
-  useOrganization,
-  useOrganizations,
-
-  // Mutation hooks
-  useCreateOrganization,
-  useUpdateOrganization,
-  useDeleteOrganization,
-
-  // Convenience hooks
-  useCurrentOrganization,
-  useOrganizationMembers,
-} from './useOrganizations';
+	// Mutation hooks
+	useCreateOrganization,
+	// Convenience hooks
+	useCurrentOrganization,
+	useDeleteOrganization,
+	// Query hooks
+	useOrganization,
+	useOrganizationMembers,
+	useOrganizations,
+	useUpdateOrganization,
+} from "./useOrganizations";
 
 // ============================================================================
 // PEOPLE DIMENSION
 // ============================================================================
 
 export {
-  // Query hooks
-  useCurrentUser,
-  usePerson,
-  usePeople,
-
-  // Mutation hooks
-  useUpdatePerson,
-  useInvitePerson,
-
-  // Role & permission helpers
-  useHasPermission,
-  useHasRole,
-} from './usePeople';
+	// Query hooks
+	useCurrentUser,
+	// Role & permission helpers
+	useHasPermission,
+	useHasRole,
+	useInvitePerson,
+	usePeople,
+	usePerson,
+	// Mutation hooks
+	useUpdatePerson,
+} from "./usePeople";
 
 // ============================================================================
 // AUTH DIMENSION
 // ============================================================================
 
 export {
-  // Authentication hooks
-  useLogin,
-  useSignup,
-  useLogout,
-  useMagicLinkAuth,
-
-  // Password management
-  usePasswordReset,
-  usePasswordResetComplete,
-
-  // Email verification
-  useVerifyEmail,
-
-  // Two-factor authentication
-  use2FA,
-} from './useAuth';
+	// Two-factor authentication
+	use2FA,
+	// Authentication hooks
+	useLogin,
+	useLogout,
+	useMagicLinkAuth,
+	// Password management
+	usePasswordReset,
+	usePasswordResetComplete,
+	useSignup,
+	// Email verification
+	useVerifyEmail,
+} from "./useAuth";
 
 // ============================================================================
 // ONTOLOGY DISCOVERY
 // ============================================================================
 
 export {
-  // Complete ontology
-  useOntology,
-  useOntologyMetadata,
-
-  // Feature detection
-  useHasFeature,
-  useEnabledFeatures,
-  useFeatureBreakdown,
-
-  // Type discovery
-  useThingTypes,
-  useConnectionTypes,
-  useEventTypes,
-} from './useOntology';
-
+	useConnectionTypes,
+	useEnabledFeatures,
+	useEventTypes,
+	useFeatureBreakdown,
+	// Feature detection
+	useHasFeature,
+	// Complete ontology
+	useOntology,
+	useOntologyMetadata,
+	// Type discovery
+	useThingTypes,
+} from "./useOntology";

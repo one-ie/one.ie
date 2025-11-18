@@ -3,7 +3,7 @@ import { Button } from "@/components/ui/button";
 import type { CTASectionProps } from "@/types/landing-page";
 
 interface Props extends Omit<CTASectionProps, "branding"> {
-  branding?: any;
+	branding?: any;
 }
 
 const { section, branding } = Astro.props;
@@ -11,7 +11,7 @@ const { section, branding } = Astro.props;
 // Generate background styling
 let backgroundStyle = "";
 if (section.backgroundImage) {
-  backgroundStyle = `background-image: url('${section.backgroundImage}'); background-size: cover; background-position: center;`;
+	backgroundStyle = `background-image: url('${section.backgroundImage}'); background-size: cover; background-position: center;`;
 }
 
 const containerClass = `relative overflow-hidden px-4 py-20 sm:px-6 sm:py-24 md:px-8 md:py-32 ${section.customClass || ""}`;

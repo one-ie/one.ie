@@ -1,41 +1,41 @@
 ---
-import Layout from '../layouts/Layout.astro';
-import { Button } from '@/components/ui/button';
+import { getCollection } from "astro:content";
 import {
-  Card,
-  CardHeader,
-  CardTitle,
-  CardDescription,
-  CardContent,
-} from '@/components/ui/card';
-import { Badge } from '@/components/ui/badge';
+	Activity,
+	ArrowRight,
+	Box,
+	Brain,
+	Building2,
+	Check,
+	ChevronDown,
+	Code,
+	Coins,
+	Database,
+	FileText,
+	GitBranch,
+	Globe,
+	MessageSquare,
+	Network,
+	Shield,
+	Sparkles,
+	Users,
+	Zap,
+} from "lucide-react";
+import { FeaturedPodcast } from "@/components/FeaturedPodcast";
+import { Badge } from "@/components/ui/badge";
+import { Button } from "@/components/ui/button";
 import {
-  ArrowRight,
-  Check,
-  Users,
-  Box,
-  GitBranch,
-  Activity,
-  Brain,
-  Network,
-  Sparkles,
-  Code,
-  FileText,
-  Zap,
-  Database,
-  MessageSquare,
-  ChevronDown,
-  Building2,
-  Shield,
-  Globe,
-  Coins,
-} from 'lucide-react';
-import { FeaturedPodcast } from '@/components/FeaturedPodcast';
-import { getCollection } from 'astro:content';
+	Card,
+	CardContent,
+	CardDescription,
+	CardHeader,
+	CardTitle,
+} from "@/components/ui/card";
+import Layout from "../layouts/Layout.astro";
 
 // Get the featured ONE ontology podcast
-const podcasts = await getCollection('podcasts');
-const featuredPodcast = podcasts.find(p => p.slug === 'one-ontology');
+const podcasts = await getCollection("podcasts");
+const featuredPodcast = podcasts.find((p) => p.slug === "one-ontology");
 ---
 
 <Layout title="The ONE Ontology - ONE Platform">

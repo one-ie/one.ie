@@ -1,25 +1,25 @@
 ---
-import { ViewTransitions } from 'astro:transitions';
-import { Toaster } from '@/components/ui/sonner';
-import { GlobalCartDrawer } from '@/components/ecommerce/GlobalCartDrawer';
-import { TransitionController } from '@/components/TransitionController';
-import ThemeInit from '@/components/ThemeInit.astro';
-import PoweredByONE from '@/components/PoweredByONE.astro';
-import '../styles/global.css';
-import '../styles/transitions.css';
+import { ViewTransitions } from "astro:transitions";
+import PoweredByONE from "@/components/PoweredByONE.astro";
+import { GlobalCartDrawer } from "@/components/shop/GlobalCartDrawer";
+import ThemeInit from "@/components/ThemeInit.astro";
+import { TransitionController } from "@/components/TransitionController";
+import { Toaster } from "@/components/ui/sonner";
+import "../styles/global.css";
+import "../styles/transitions.css";
 
 interface Props {
-  title: string;
-  description?: string;
-  image?: string;
-  type?: string;
+	title: string;
+	description?: string;
+	image?: string;
+	type?: string;
 }
 
 const {
-  title,
-  description = 'Premium products & luxury goods',
-  image = '/og.jpg',
-  type = 'website',
+	title,
+	description = "Premium products & luxury goods",
+	image = "/og.jpg",
+	type = "website",
 } = Astro.props;
 
 // Generate canonical URL and full image URL

@@ -1,0 +1,77 @@
+---
+/**
+ * Checkout Success Page
+ *
+ * Displayed after successful Stripe payment
+ */
+
+import { CheckCircle2 } from "lucide-react";
+import Layout from "@/layouts/Layout.astro";
+
+const sessionId = Astro.url.searchParams.get("session_id");
+---
+
+<Layout title="Payment Successful" sidebarInitialCollapsed={true}>
+  <div class="min-h-screen flex items-center justify-center p-6">
+    <div class="max-w-md w-full space-y-8 text-center">
+      <!-- Success Icon -->
+      <div class="flex justify-center">
+        <div class="rounded-full bg-green-100 dark:bg-green-900/20 p-6">
+          <CheckCircle2 className="h-16 w-16 text-green-600 dark:text-green-400" />
+        </div>
+      </div>
+
+      <!-- Success Message -->
+      <div class="space-y-4">
+        <h1 class="text-4xl font-bold text-foreground">
+          Payment Successful!
+        </h1>
+        <p class="text-lg text-muted-foreground">
+          Thank you for your purchase. Your order has been confirmed.
+        </p>
+      </div>
+
+      <!-- Order Details -->
+      {sessionId && (
+        <div class="bg-muted/50 rounded-lg p-6 space-y-2 text-sm">
+          <div class="flex justify-between">
+            <span class="text-muted-foreground">Session ID:</span>
+            <span class="font-mono text-xs">{sessionId.slice(0, 20)}...</span>
+          </div>
+        </div>
+      )}
+
+      <!-- Next Steps -->
+      <div class="space-y-4 pt-6 border-t">
+        <p class="text-sm text-muted-foreground">
+          A confirmation email has been sent to your inbox with order details and tracking information.
+        </p>
+
+        <div class="flex flex-col sm:flex-row gap-3">
+          <a
+            href="/"
+            class="flex-1 inline-flex items-center justify-center px-6 py-3 border border-transparent text-base font-medium rounded-md text-white bg-primary hover:bg-primary/90 transition-colors"
+          >
+            Return to Home
+          </a>
+          <a
+            href="/chat"
+            class="flex-1 inline-flex items-center justify-center px-6 py-3 border border-border text-base font-medium rounded-md text-foreground bg-background hover:bg-muted transition-colors"
+          >
+            Continue Shopping
+          </a>
+        </div>
+      </div>
+
+      <!-- Support -->
+      <div class="pt-6 text-xs text-muted-foreground">
+        <p>
+          Need help? Contact us at{' '}
+          <a href="mailto:support@example.com" class="underline hover:text-foreground">
+            support@example.com
+          </a>
+        </p>
+      </div>
+    </div>
+  </div>
+</Layout>

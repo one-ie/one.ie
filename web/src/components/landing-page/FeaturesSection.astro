@@ -1,47 +1,52 @@
 ---
-import { Card, CardHeader, CardTitle, CardDescription } from "@/components/ui/card";
+import {
+	Code,
+	DollarSign,
+	Globe,
+	Shield,
+	Sparkles,
+	TrendingUp,
+	Wand2,
+	Zap,
+} from "lucide-react";
 import { Badge } from "@/components/ui/badge";
 import {
-  Wand2,
-  Code,
-  TrendingUp,
-  DollarSign,
-  Globe,
-  Shield,
-  Zap,
-  Sparkles,
-} from "lucide-react";
+	Card,
+	CardDescription,
+	CardHeader,
+	CardTitle,
+} from "@/components/ui/card";
 import type { FeaturesSectionProps } from "@/types/landing-page";
 
 interface Props extends Omit<FeaturesSectionProps, "branding"> {
-  branding?: any;
+	branding?: any;
 }
 
 const { section, branding } = Astro.props;
 
 // Icon mapping for feature icons
 const iconMap: Record<string, any> = {
-  wand: Wand2,
-  code: Code,
-  trending: TrendingUp,
-  dollar: DollarSign,
-  globe: Globe,
-  shield: Shield,
-  zap: Zap,
-  sparkles: Sparkles,
+	wand: Wand2,
+	code: Code,
+	trending: TrendingUp,
+	dollar: DollarSign,
+	globe: Globe,
+	shield: Shield,
+	zap: Zap,
+	sparkles: Sparkles,
 };
 
 const columns = section.columns || 3;
 const gridClass =
-  columns === 2
-    ? "grid-cols-1 sm:grid-cols-2"
-    : columns === 4
-      ? "grid-cols-1 sm:grid-cols-2 lg:grid-cols-4"
-      : "grid-cols-1 sm:grid-cols-2 lg:grid-cols-3";
+	columns === 2
+		? "grid-cols-1 sm:grid-cols-2"
+		: columns === 4
+			? "grid-cols-1 sm:grid-cols-2 lg:grid-cols-4"
+			: "grid-cols-1 sm:grid-cols-2 lg:grid-cols-3";
 
 const brandingStyle = branding
-  ? `--primary: ${branding.primaryColor || "#3b82f6"};`
-  : "";
+	? `--primary: ${branding.primaryColor || "#3b82f6"};`
+	: "";
 ---
 
 <section class={`px-4 py-20 sm:px-6 sm:py-24 md:px-8 md:py-32 ${section.customClass || ""}`} style={brandingStyle}>

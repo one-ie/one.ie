@@ -12,20 +12,20 @@
  * ```
  */
 export function calculateReadingTime(
-  content: string,
-  wordsPerMinute = 200
+	content: string,
+	wordsPerMinute = 200,
 ): number {
-  // Split content on whitespace and filter out empty strings
-  const words = content
-    .trim()
-    .split(/\s+/)
-    .filter((word) => word.length > 0);
-  const wordCount = words.length;
+	// Split content on whitespace and filter out empty strings
+	const words = content
+		.trim()
+		.split(/\s+/)
+		.filter((word) => word.length > 0);
+	const wordCount = words.length;
 
-  // Calculate minutes and round up
-  const minutes = Math.ceil(wordCount / wordsPerMinute);
+	// Calculate minutes and round up
+	const minutes = Math.ceil(wordCount / wordsPerMinute);
 
-  return minutes;
+	return minutes;
 }
 
 /**
@@ -42,9 +42,9 @@ export function calculateReadingTime(
  * ```
  */
 export function formatReadingTime(
-  content: string,
-  wordsPerMinute = 200
+	content: string,
+	wordsPerMinute = 200,
 ): string {
-  const minutes = calculateReadingTime(content, wordsPerMinute);
-  return `${minutes} min read`;
+	const minutes = calculateReadingTime(content, wordsPerMinute);
+	return `${minutes} min read`;
 }

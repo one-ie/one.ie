@@ -1,194 +1,228 @@
 ---
-import Layout from '../layouts/Layout.astro';
-import { Button } from '@/components/ui/button';
-import { Card, CardHeader, CardTitle, CardDescription, CardContent } from '@/components/ui/card';
-import { Badge } from '@/components/ui/badge';
 import {
-  Sparkles,
-  Rocket,
-  Clock,
-  DollarSign,
-  MoonStar,
-  PlayCircle,
-  Mic,
-  FileText,
-  Users,
-  Mail,
-  ShoppingBag,
-  Bot,
-  MessageCircle,
-  GraduationCap,
-  BarChart3,
-  Zap,
-  Layers,
-  Gauge,
-  ShieldCheck,
-  Megaphone,
-  Coins,
-  Target,
-  Check,
-  ArrowRight
-} from 'lucide-react';
+	ArrowRight,
+	BarChart3,
+	Bot,
+	Check,
+	Clock,
+	Coins,
+	DollarSign,
+	FileText,
+	Gauge,
+	GraduationCap,
+	Layers,
+	Mail,
+	Megaphone,
+	MessageCircle,
+	Mic,
+	MoonStar,
+	PlayCircle,
+	Rocket,
+	ShieldCheck,
+	ShoppingBag,
+	Sparkles,
+	Target,
+	Users,
+	Zap,
+} from "lucide-react";
+import { Badge } from "@/components/ui/badge";
+import { Button } from "@/components/ui/button";
+import {
+	Card,
+	CardContent,
+	CardDescription,
+	CardHeader,
+	CardTitle,
+} from "@/components/ui/card";
+import Layout from "../layouts/Layout.astro";
 
 const siteFeatures = [
-  {
-    title: 'Auto Blog Publishing',
-    description: 'CreatorOS ingests every YouTube video, TikTok, reel, and newsletter, then publishes SEO-rich articles without you lifting a finger.',
-    icon: FileText,
-  },
-  {
-    title: 'Video & Short Hub',
-    description: 'A cinematic video library that syncs with YouTube, TikTok, and Shorts in real time. Chapters, CTAs, and transcripts are generated automatically.',
-    icon: PlayCircle,
-  },
-  {
-    title: 'Podcast Theater',
-    description: 'Pull episodes from any RSS feed. CreatorOS adds show notes, highlights, and audio summaries within minutes of release.',
-    icon: Mic,
-  },
-  {
-    title: 'Community HQ',
-    description: 'Members-only spaces, live events, challenges, and AI moderation keep your tribe energized without you living in DMs.',
-    icon: Users,
-  },
-  {
-    title: 'Smart Newsletter',
-    description: 'One-click email campaigns built from your latest videos, blog posts, and community updates. Optimized send windows included.',
-    icon: Mail,
-  },
-  {
-    title: 'Digital Storefront',
-    description: 'Courses, cohorts, downloads, and subscriptions arranged into high-converting funnels with upsells, bundles, and checkout analytics.',
-    icon: ShoppingBag,
-  },
+	{
+		title: "Auto Blog Publishing",
+		description:
+			"CreatorOS ingests every YouTube video, TikTok, reel, and newsletter, then publishes SEO-rich articles without you lifting a finger.",
+		icon: FileText,
+	},
+	{
+		title: "Video & Short Hub",
+		description:
+			"A cinematic video library that syncs with YouTube, TikTok, and Shorts in real time. Chapters, CTAs, and transcripts are generated automatically.",
+		icon: PlayCircle,
+	},
+	{
+		title: "Podcast Theater",
+		description:
+			"Pull episodes from any RSS feed. CreatorOS adds show notes, highlights, and audio summaries within minutes of release.",
+		icon: Mic,
+	},
+	{
+		title: "Community HQ",
+		description:
+			"Members-only spaces, live events, challenges, and AI moderation keep your tribe energized without you living in DMs.",
+		icon: Users,
+	},
+	{
+		title: "Smart Newsletter",
+		description:
+			"One-click email campaigns built from your latest videos, blog posts, and community updates. Optimized send windows included.",
+		icon: Mail,
+	},
+	{
+		title: "Digital Storefront",
+		description:
+			"Courses, cohorts, downloads, and subscriptions arranged into high-converting funnels with upsells, bundles, and checkout analytics.",
+		icon: ShoppingBag,
+	},
 ];
 
 const aiPowers = [
-  {
-    title: 'Chat with Your Content',
-    description: 'Visitors speak to your CreatorOS Concierge trained on your videos, podcasts, and notes. It references exact clips and timestamps instantly.',
-    icon: MessageCircle,
-  },
-  {
-    title: 'Autonomous Content Sprints',
-    description: 'Give CreatorOS a theme. It drafts scripts, blog outlines, newsletters, social threads, and publishing schedules in one flow.',
-    icon: Bot,
-  },
-  {
-    title: 'Adaptive Learning',
-    description: 'Students get an on-demand tutor powered by your lessons. It quizzes, recommends modules, and checks progress automatically.',
-    icon: GraduationCap,
-  },
-  {
-    title: 'Conversion Intelligence',
-    description: 'Predicts top offers, tunes CTAs in real time, and surfaces paywall moments based on behavioral and revenue data.',
-    icon: BarChart3,
-  },
+	{
+		title: "Chat with Your Content",
+		description:
+			"Visitors speak to your CreatorOS Concierge trained on your videos, podcasts, and notes. It references exact clips and timestamps instantly.",
+		icon: MessageCircle,
+	},
+	{
+		title: "Autonomous Content Sprints",
+		description:
+			"Give CreatorOS a theme. It drafts scripts, blog outlines, newsletters, social threads, and publishing schedules in one flow.",
+		icon: Bot,
+	},
+	{
+		title: "Adaptive Learning",
+		description:
+			"Students get an on-demand tutor powered by your lessons. It quizzes, recommends modules, and checks progress automatically.",
+		icon: GraduationCap,
+	},
+	{
+		title: "Conversion Intelligence",
+		description:
+			"Predicts top offers, tunes CTAs in real time, and surfaces paywall moments based on behavioral and revenue data.",
+		icon: BarChart3,
+	},
 ];
 
 const experienceHighlights = [
-  {
-    title: 'Lightning Fast Launch',
-    description: 'Your entire CreatorOS site goes live in 7 days or less with automated migrations and design presets tuned for creators and educators.',
-    icon: Rocket,
-  },
-  {
-    title: 'Headless & Future-Proof',
-    description: 'Built on Astro, shadcn/ui, Convex, and Better Auth. Blazing performance, native SEO, and unlimited extensibility for your team.',
-    icon: Layers,
-  },
-  {
-    title: 'Always Optimized',
-    description: 'Automated Lighthouse audits, accessibility checks, and experiment-ready landing pages keep every funnel sharp.',
-    icon: Gauge,
-  },
-  {
-    title: 'Enterprise-Grade Trust',
-    description: 'SSO, granular permissions, compliant payments, and content protection out of the box for serious creators and academies.',
-    icon: ShieldCheck,
-  },
+	{
+		title: "Lightning Fast Launch",
+		description:
+			"Your entire CreatorOS site goes live in 7 days or less with automated migrations and design presets tuned for creators and educators.",
+		icon: Rocket,
+	},
+	{
+		title: "Headless & Future-Proof",
+		description:
+			"Built on Astro, shadcn/ui, Convex, and Better Auth. Blazing performance, native SEO, and unlimited extensibility for your team.",
+		icon: Layers,
+	},
+	{
+		title: "Always Optimized",
+		description:
+			"Automated Lighthouse audits, accessibility checks, and experiment-ready landing pages keep every funnel sharp.",
+		icon: Gauge,
+	},
+	{
+		title: "Enterprise-Grade Trust",
+		description:
+			"SSO, granular permissions, compliant payments, and content protection out of the box for serious creators and academies.",
+		icon: ShieldCheck,
+	},
 ];
 
 const launchSteps = [
-  {
-    step: '01',
-    title: 'Ingest & Train',
-    description: 'Connect YouTube, TikTok, podcast, courses, and docs. CreatorOS scrapes transcripts, assets, metadata, and voice samples overnight.',
-  },
-  {
-    step: '02',
-    title: 'Design & Automate',
-    description: 'Choose your visual language. Our team configures funnels, automations, and AI concierge personalities matched to your brand.',
-  },
-  {
-    step: '03',
-    title: 'Launch & Scale',
-    description: 'Preview on staging, then go live. CreatorOS keeps publishing, selling, and supporting while you focus on your next idea.',
-  },
+	{
+		step: "01",
+		title: "Ingest & Train",
+		description:
+			"Connect YouTube, TikTok, podcast, courses, and docs. CreatorOS scrapes transcripts, assets, metadata, and voice samples overnight.",
+	},
+	{
+		step: "02",
+		title: "Design & Automate",
+		description:
+			"Choose your visual language. Our team configures funnels, automations, and AI concierge personalities matched to your brand.",
+	},
+	{
+		step: "03",
+		title: "Launch & Scale",
+		description:
+			"Preview on staging, then go live. CreatorOS keeps publishing, selling, and supporting while you focus on your next idea.",
+	},
 ];
 
 const problemPainPoints = [
-  {
-    title: 'Time Trapped',
-    description: 'You juggle recording, editing, teaching, and community management. Every extra offer steals time from creating.',
-    icon: Clock,
-  },
-  {
-    title: 'Revenue Ceiling',
-    description: 'You only monetize what you can manually launch. Courses and memberships stall without constant personal energy.',
-    icon: DollarSign,
-  },
-  {
-    title: 'Always On',
-    description: 'Audiences expect instant replies, personalized feedback, and new content daily. You can’t be everywhere at once.',
-    icon: MoonStar,
-  },
+	{
+		title: "Time Trapped",
+		description:
+			"You juggle recording, editing, teaching, and community management. Every extra offer steals time from creating.",
+		icon: Clock,
+	},
+	{
+		title: "Revenue Ceiling",
+		description:
+			"You only monetize what you can manually launch. Courses and memberships stall without constant personal energy.",
+		icon: DollarSign,
+	},
+	{
+		title: "Always On",
+		description:
+			"Audiences expect instant replies, personalized feedback, and new content daily. You can’t be everywhere at once.",
+		icon: MoonStar,
+	},
 ];
 
 const aiCloneBenefits = [
-  {
-    title: 'AI Clone You',
-    description: 'Your voice, values, and knowledge replicated. Teaches courses, hosts Q&A, and guides learners automatically.',
-    icon: Bot,
-  },
-  {
-    title: 'Autopilot Engagement',
-    description: 'CreatorOS nurtures leads, welcomes new members, and keeps conversations active without you living in DMs.',
-    icon: MessageCircle,
-  },
-  {
-    title: 'Monetize Everything',
-    description: 'Bundle courses, cohorts, and downloads with dynamic upsells driven by conversion intelligence.',
-    icon: ShoppingBag,
-  },
-  {
-    title: 'Insight-Driven Growth',
-    description: 'Know exactly what your audience consumes, asks, and buys—so you record the next breakout hit.',
-    icon: BarChart3,
-  },
+	{
+		title: "AI Clone You",
+		description:
+			"Your voice, values, and knowledge replicated. Teaches courses, hosts Q&A, and guides learners automatically.",
+		icon: Bot,
+	},
+	{
+		title: "Autopilot Engagement",
+		description:
+			"CreatorOS nurtures leads, welcomes new members, and keeps conversations active without you living in DMs.",
+		icon: MessageCircle,
+	},
+	{
+		title: "Monetize Everything",
+		description:
+			"Bundle courses, cohorts, and downloads with dynamic upsells driven by conversion intelligence.",
+		icon: ShoppingBag,
+	},
+	{
+		title: "Insight-Driven Growth",
+		description:
+			"Know exactly what your audience consumes, asks, and buys—so you record the next breakout hit.",
+		icon: BarChart3,
+	},
 ];
 
 const growthStack = [
-  {
-    title: 'Launch Studio',
-    description: 'Proven campaign playbooks for cohorts, challenges, and product launches—automated with emails, pages, and AI prompts.',
-    icon: Megaphone,
-  },
-  {
-    title: 'Revenue Engines',
-    description: 'Subscriptions, bundles, affiliate offers, and sponsorships orchestrated in one dashboard with live forecasting.',
-    icon: Coins,
-  },
-  {
-    title: 'Community Flywheel',
-    description: 'Private community, live events, and token-based access tied into your site so engagement drives recurring revenue.',
-    icon: Users,
-  },
-  {
-    title: 'Creator Advisory',
-    description: 'Strategy sessions, design support, and automation experts on tap so you’re never building alone.',
-    icon: Sparkles,
-  },
+	{
+		title: "Launch Studio",
+		description:
+			"Proven campaign playbooks for cohorts, challenges, and product launches—automated with emails, pages, and AI prompts.",
+		icon: Megaphone,
+	},
+	{
+		title: "Revenue Engines",
+		description:
+			"Subscriptions, bundles, affiliate offers, and sponsorships orchestrated in one dashboard with live forecasting.",
+		icon: Coins,
+	},
+	{
+		title: "Community Flywheel",
+		description:
+			"Private community, live events, and token-based access tied into your site so engagement drives recurring revenue.",
+		icon: Users,
+	},
+	{
+		title: "Creator Advisory",
+		description:
+			"Strategy sessions, design support, and automation experts on tap so you’re never building alone.",
+		icon: Sparkles,
+	},
 ];
 ---
 

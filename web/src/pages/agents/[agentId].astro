@@ -2,11 +2,11 @@
 /**
  * Agent Detail Page (PREMIUM TIER)
  */
-import { backendConfig } from '@/config/backend';
-import Layout from '@/layouts/Layout.astro';
+import { backendConfig } from "@/config/backend";
+import Layout from "@/layouts/Layout.astro";
 
 if (!backendConfig.enabled) {
-  return Astro.redirect('/upgrade?feature=agent-management');
+	return Astro.redirect("/upgrade?feature=agent-management");
 }
 
 const { agentId } = Astro.params;

@@ -1,402 +1,548 @@
 ---
-import Layout from '../layouts/Layout.astro';
-import { Card, CardHeader, CardTitle, CardDescription, CardContent } from '@/components/ui/card';
-import { Badge } from '@/components/ui/badge';
-import { Button } from '@/components/ui/button';
 import {
-  Sparkles,
-  Layout as LayoutIcon,
-  Zap,
-  Eye,
-  Palette,
-  Type,
-  Grid3x3,
-  Circle,
-  Layers,
-  Waves,
-  Target,
-  Info,
-  Check,
-  AlertCircle,
-  ArrowRight,
-  Users,
-  Rocket,
-  TrendingUp,
-  Shield,
-  Lightbulb
-} from 'lucide-react';
+	AlertCircle,
+	ArrowRight,
+	Check,
+	Circle,
+	Eye,
+	Grid3x3,
+	Info,
+	Layers,
+	Layout as LayoutIcon,
+	Lightbulb,
+	Palette,
+	Rocket,
+	Shield,
+	Sparkles,
+	Target,
+	TrendingUp,
+	Type,
+	Users,
+	Waves,
+	Zap,
+} from "lucide-react";
+import { Badge } from "@/components/ui/badge";
+import { Button } from "@/components/ui/button";
+import {
+	Card,
+	CardContent,
+	CardDescription,
+	CardHeader,
+	CardTitle,
+} from "@/components/ui/card";
+import Layout from "../layouts/Layout.astro";
 
 // Hero section data
 const heroData = {
-  tagline: 'Launch faster. Scale smarter.',
-  headline: 'Your product deserves a design system that grows with you',
-  description: 'ONE platform combines tokens, components, and documentation to ship pixel-perfect experiences across web, mobile, and beyond.',
-  primaryCTA: { label: 'Start building', href: '#get-started' },
-  secondaryCTA: { label: 'See in action', href: '#features' },
+	tagline: "Launch faster. Scale smarter.",
+	headline: "Your product deserves a design system that grows with you",
+	description:
+		"ONE platform combines tokens, components, and documentation to ship pixel-perfect experiences across web, mobile, and beyond.",
+	primaryCTA: { label: "Start building", href: "#get-started" },
+	secondaryCTA: { label: "See in action", href: "#features" },
 };
 
 // Value propositions
 const valueProps = [
-  {
-    title: 'Ship 3x faster',
-    description: 'Reusable components and tokens eliminate design decisions. Focus on what matters.',
-    icon: Rocket,
-  },
-  {
-    title: 'Scale consistently',
-    description: 'One source of truth propagates across all products. Update tokens once, everywhere changes.',
-    icon: TrendingUp,
-  },
-  {
-    title: 'Stay accessible',
-    description: 'WCAG AA+ by default. Contrast, focus states, and motion preferences built into every component.',
-    icon: Shield,
-  },
+	{
+		title: "Ship 3x faster",
+		description:
+			"Reusable components and tokens eliminate design decisions. Focus on what matters.",
+		icon: Rocket,
+	},
+	{
+		title: "Scale consistently",
+		description:
+			"One source of truth propagates across all products. Update tokens once, everywhere changes.",
+		icon: TrendingUp,
+	},
+	{
+		title: "Stay accessible",
+		description:
+			"WCAG AA+ by default. Contrast, focus states, and motion preferences built into every component.",
+		icon: Shield,
+	},
 ];
 
 // Core features
 const features = [
-  {
-    title: 'Design Tokens',
-    description: 'Semantic color, typography, spacing, and motion tokens that sync across Figma and code.',
-    icon: Palette,
-  },
-  {
-    title: 'Component Library',
-    description: '50+ pre-built, accessible components ready to compose into any experience.',
-    icon: Layers,
-  },
-  {
-    title: 'Typography System',
-    description: 'Humanist type scale with responsive sizing, line-height, and tracking built in.',
-    icon: Type,
-  },
-  {
-    title: 'Responsive Layouts',
-    description: 'Predictable grid system and container queries for content-aware breakpoints.',
-    icon: LayoutIcon,
-  },
-  {
-    title: 'Motion & Interaction',
-    description: 'Easing curves and timing that respect prefers-reduced-motion and feel responsive.',
-    icon: Waves,
-  },
-  {
-    title: 'Living Documentation',
-    description: 'Keep patterns, principles, and decisions in one discoverable place.',
-    icon: Lightbulb,
-  },
+	{
+		title: "Design Tokens",
+		description:
+			"Semantic color, typography, spacing, and motion tokens that sync across Figma and code.",
+		icon: Palette,
+	},
+	{
+		title: "Component Library",
+		description:
+			"50+ pre-built, accessible components ready to compose into any experience.",
+		icon: Layers,
+	},
+	{
+		title: "Typography System",
+		description:
+			"Humanist type scale with responsive sizing, line-height, and tracking built in.",
+		icon: Type,
+	},
+	{
+		title: "Responsive Layouts",
+		description:
+			"Predictable grid system and container queries for content-aware breakpoints.",
+		icon: LayoutIcon,
+	},
+	{
+		title: "Motion & Interaction",
+		description:
+			"Easing curves and timing that respect prefers-reduced-motion and feel responsive.",
+		icon: Waves,
+	},
+	{
+		title: "Living Documentation",
+		description:
+			"Keep patterns, principles, and decisions in one discoverable place.",
+		icon: Lightbulb,
+	},
 ];
 
 // How it works steps
 const workflowSteps = [
-  {
-    step: '01',
-    title: 'Define tokens',
-    description: 'Start with color, typography, spacing, and motion in Figma and CSS variables.',
-  },
-  {
-    step: '02',
-    title: 'Build components',
-    description: 'Compose tokens into reusable components with full state coverage.',
-  },
-  {
-    step: '03',
-    title: 'Ship confidently',
-    description: 'Use components across products knowing they\'re accessible and on-brand.',
-  },
-  {
-    step: '04',
-    title: 'Evolve together',
-    description: 'Update tokens and components once, propagate everywhere automatically.',
-  },
+	{
+		step: "01",
+		title: "Define tokens",
+		description:
+			"Start with color, typography, spacing, and motion in Figma and CSS variables.",
+	},
+	{
+		step: "02",
+		title: "Build components",
+		description:
+			"Compose tokens into reusable components with full state coverage.",
+	},
+	{
+		step: "03",
+		title: "Ship confidently",
+		description:
+			"Use components across products knowing they're accessible and on-brand.",
+	},
+	{
+		step: "04",
+		title: "Evolve together",
+		description:
+			"Update tokens and components once, propagate everywhere automatically.",
+	},
 ];
 
 // Social proof / testimonials
 const testimonials = [
-  {
-    quote: 'ONE\'s design system let us ship features 3x faster without compromising accessibility.',
-    author: 'Sarah Chen',
-    role: 'Head of Product',
-    company: 'StartupXYZ',
-  },
-  {
-    quote: 'The token-first approach solved years of inconsistency across our products.',
-    author: 'James Rodriguez',
-    role: 'Design Director',
-    company: 'Enterprise Co',
-  },
-  {
-    quote: 'Finally, designers and engineers speaking the same language. No more handoff friction.',
-    author: 'Emma Wilson',
-    role: 'Engineering Lead',
-    company: 'TechCorp',
-  },
+	{
+		quote:
+			"ONE's design system let us ship features 3x faster without compromising accessibility.",
+		author: "Sarah Chen",
+		role: "Head of Product",
+		company: "StartupXYZ",
+	},
+	{
+		quote:
+			"The token-first approach solved years of inconsistency across our products.",
+		author: "James Rodriguez",
+		role: "Design Director",
+		company: "Enterprise Co",
+	},
+	{
+		quote:
+			"Finally, designers and engineers speaking the same language. No more handoff friction.",
+		author: "Emma Wilson",
+		role: "Engineering Lead",
+		company: "TechCorp",
+	},
 ];
 
 // Use cases
 const useCases = [
-  {
-    title: 'SaaS Platforms',
-    description: 'Consistent dashboards, workflows, and data tables across complex applications.',
-    icon: Target,
-  },
-  {
-    title: 'Marketing Sites',
-    description: 'Storytelling-first layouts with motion and rhythm that feels premium.',
-    icon: Sparkles,
-  },
-  {
-    title: 'Mobile Apps',
-    description: 'Touch-friendly components with proper hit targets and haptic feedback patterns.',
-    icon: Zap,
-  },
+	{
+		title: "SaaS Platforms",
+		description:
+			"Consistent dashboards, workflows, and data tables across complex applications.",
+		icon: Target,
+	},
+	{
+		title: "Marketing Sites",
+		description:
+			"Storytelling-first layouts with motion and rhythm that feels premium.",
+		icon: Sparkles,
+	},
+	{
+		title: "Mobile Apps",
+		description:
+			"Touch-friendly components with proper hit targets and haptic feedback patterns.",
+		icon: Zap,
+	},
 ];
 
 // FAQ
 const faqs = [
-  {
-    question: 'How long does it take to implement?',
-    answer: 'Most teams see value within the first sprint. Implementation ranges from 1-4 weeks depending on complexity and existing design debt.',
-  },
-  {
-    question: 'Can I customize the tokens?',
-    answer: 'Yes. Tokens are designed to be forked and extended. Follow the pattern with your brand colors, typography, and spacing.',
-  },
-  {
-    question: 'Is this framework-agnostic?',
-    answer: 'Tokens are pure CSS. Components ship in React but the patterns work with any JavaScript framework or vanilla HTML.',
-  },
-  {
-    question: 'What about dark mode?',
-    answer: 'Built-in. Tokens define light and dark variants. Components automatically respond to prefers-color-scheme.',
-  },
+	{
+		question: "How long does it take to implement?",
+		answer:
+			"Most teams see value within the first sprint. Implementation ranges from 1-4 weeks depending on complexity and existing design debt.",
+	},
+	{
+		question: "Can I customize the tokens?",
+		answer:
+			"Yes. Tokens are designed to be forked and extended. Follow the pattern with your brand colors, typography, and spacing.",
+	},
+	{
+		question: "Is this framework-agnostic?",
+		answer:
+			"Tokens are pure CSS. Components ship in React but the patterns work with any JavaScript framework or vanilla HTML.",
+	},
+	{
+		question: "What about dark mode?",
+		answer:
+			"Built-in. Tokens define light and dark variants. Components automatically respond to prefers-color-scheme.",
+	},
 ];
 
 // Social proof stats
 const stats = [
-  { label: 'Components shipped', value: '50+' },
-  { label: 'Teams using ONE', value: '100+' },
-  { label: 'Avg time saved', value: '40%' },
+	{ label: "Components shipped", value: "50+" },
+	{ label: "Teams using ONE", value: "100+" },
+	{ label: "Avg time saved", value: "40%" },
 ];
 
 const dna = [
-  {
-    title: 'Clarity',
-    description: 'Layouts start with measured whitespace, bold hierarchy, and predictable grid alignment.',
-    icon: LayoutIcon,
-    footnote: 'Structure before decoration',
-  },
-  {
-    title: 'Velocity',
-    description: 'Reusable tokens, components, and documentation make shipping fast without sacrificing polish.',
-    icon: Zap,
-    footnote: 'Decide once, reuse everywhere',
-  },
-  {
-    title: 'Inclusive',
-    description: 'Accessibility, contrast, and motion preferences are first-class constraints—not afterthoughts.',
-    icon: Eye,
-    footnote: 'Comfort for every user',
-  },
+	{
+		title: "Clarity",
+		description:
+			"Layouts start with measured whitespace, bold hierarchy, and predictable grid alignment.",
+		icon: LayoutIcon,
+		footnote: "Structure before decoration",
+	},
+	{
+		title: "Velocity",
+		description:
+			"Reusable tokens, components, and documentation make shipping fast without sacrificing polish.",
+		icon: Zap,
+		footnote: "Decide once, reuse everywhere",
+	},
+	{
+		title: "Inclusive",
+		description:
+			"Accessibility, contrast, and motion preferences are first-class constraints—not afterthoughts.",
+		icon: Eye,
+		footnote: "Comfort for every user",
+	},
 ];
 
 const colorTokens = [
-  { name: '--primary', value: '216 55% 25%', label: 'Deep navy · Primary actions' },
-  { name: '--primary-foreground', value: '36 8% 96%', label: 'Warm light foreground' },
-  { name: '--secondary', value: '219 14% 28%', label: 'Graphite · Secondary surfaces' },
-  { name: '--accent', value: '105 22% 25%', label: 'Leaf · Positive accent' },
-  { name: '--muted', value: '36 8% 88%', label: 'Stone · Neutral backdrop' },
+	{
+		name: "--primary",
+		value: "216 55% 25%",
+		label: "Deep navy · Primary actions",
+	},
+	{
+		name: "--primary-foreground",
+		value: "36 8% 96%",
+		label: "Warm light foreground",
+	},
+	{
+		name: "--secondary",
+		value: "219 14% 28%",
+		label: "Graphite · Secondary surfaces",
+	},
+	{ name: "--accent", value: "105 22% 25%", label: "Leaf · Positive accent" },
+	{ name: "--muted", value: "36 8% 88%", label: "Stone · Neutral backdrop" },
 ];
 
 const spacingScale = [
-  { token: '2', px: '8px', rem: '0.5rem', usage: 'Dense clusters' },
-  { token: '3', px: '12px', rem: '0.75rem', usage: 'Component gaps' },
-  { token: '4', px: '16px', rem: '1rem', usage: 'Default padding' },
-  { token: '6', px: '24px', rem: '1.5rem', usage: 'Card gutters' },
-  { token: '8', px: '32px', rem: '2rem', usage: 'Section rhythm' },
-  { token: '12', px: '48px', rem: '3rem', usage: 'Hero whitespace' },
+	{ token: "2", px: "8px", rem: "0.5rem", usage: "Dense clusters" },
+	{ token: "3", px: "12px", rem: "0.75rem", usage: "Component gaps" },
+	{ token: "4", px: "16px", rem: "1rem", usage: "Default padding" },
+	{ token: "6", px: "24px", rem: "1.5rem", usage: "Card gutters" },
+	{ token: "8", px: "32px", rem: "2rem", usage: "Section rhythm" },
+	{ token: "12", px: "48px", rem: "3rem", usage: "Hero whitespace" },
 ];
 
 const radii = [
-  { token: '--radius-xs', value: '4px', usage: 'Pills & badges' },
-  { token: '--radius-sm', value: '6px', usage: 'Inputs & controls' },
-  { token: '--radius-md', value: '12px', usage: 'Cards' },
-  { token: '--radius-lg', value: '24px', usage: 'Modals & hero surfaces' },
-  { token: '--radius-full', value: '9999px', usage: 'Circular avatars' },
+	{ token: "--radius-xs", value: "4px", usage: "Pills & badges" },
+	{ token: "--radius-sm", value: "6px", usage: "Inputs & controls" },
+	{ token: "--radius-md", value: "12px", usage: "Cards" },
+	{ token: "--radius-lg", value: "24px", usage: "Modals & hero surfaces" },
+	{ token: "--radius-full", value: "9999px", usage: "Circular avatars" },
 ];
 
 const elevation = [
-  { token: 'shadow-sm', value: '0 1px 2px 0 hsl(219 14% 28% / 0.15)', usage: 'Inputs & lists' },
-  { token: 'shadow-md', value: '0 14px 32px -18px hsl(216 55% 25% / 0.32)', usage: 'Prominent cards' },
-  { token: 'shadow-lg', value: '0 40px 80px -30px hsl(216 63% 17% / 0.45)', usage: 'Dialogs & overlays' },
+	{
+		token: "shadow-sm",
+		value: "0 1px 2px 0 hsl(219 14% 28% / 0.15)",
+		usage: "Inputs & lists",
+	},
+	{
+		token: "shadow-md",
+		value: "0 14px 32px -18px hsl(216 55% 25% / 0.32)",
+		usage: "Prominent cards",
+	},
+	{
+		token: "shadow-lg",
+		value: "0 40px 80px -30px hsl(216 63% 17% / 0.45)",
+		usage: "Dialogs & overlays",
+	},
 ];
 
 const motionTokens = [
-  { name: '--ease-snappy', value: 'cubic-bezier(0.4, 0, 0.2, 1)', usage: 'Buttons & chip interactions' },
-  { name: '--ease-natural', value: 'cubic-bezier(0.16, 1, 0.3, 1)', usage: 'Modals & drawers' },
-  { name: '--duration-rapid', value: '120ms', usage: 'Hover & focus' },
-  { name: '--duration-base', value: '200ms', usage: 'Component transitions' },
-  { name: '--duration-slow', value: '320ms', usage: 'Page transitions' },
+	{
+		name: "--ease-snappy",
+		value: "cubic-bezier(0.4, 0, 0.2, 1)",
+		usage: "Buttons & chip interactions",
+	},
+	{
+		name: "--ease-natural",
+		value: "cubic-bezier(0.16, 1, 0.3, 1)",
+		usage: "Modals & drawers",
+	},
+	{ name: "--duration-rapid", value: "120ms", usage: "Hover & focus" },
+	{ name: "--duration-base", value: "200ms", usage: "Component transitions" },
+	{ name: "--duration-slow", value: "320ms", usage: "Page transitions" },
 ];
 
 const colorModes = {
-  light: [
-    { name: 'Background', value: '36 8% 88%', description: 'Warm stone canvas' },
-    { name: 'Card', value: '0 0% 100%', description: 'Paper surfaces' },
-    { name: 'Muted', value: '219 14% 92%', description: 'Soft graphite panels' },
-    { name: 'Border', value: '219 14% 70%', description: 'Weathered outlines' },
-  ],
-  dark: [
-    { name: 'Background', value: '0 0% 13%', description: 'Ink backdrop' },
-    { name: 'Card', value: '219 14% 20%', description: 'Graphite layers' },
-    { name: 'Muted', value: '216 63% 17%', description: 'Slate overlays' },
-    { name: 'Border', value: '216 40% 32%', description: 'Dim outlines' },
-  ],
+	light: [
+		{
+			name: "Background",
+			value: "36 8% 88%",
+			description: "Warm stone canvas",
+		},
+		{ name: "Card", value: "0 0% 100%", description: "Paper surfaces" },
+		{
+			name: "Muted",
+			value: "219 14% 92%",
+			description: "Soft graphite panels",
+		},
+		{ name: "Border", value: "219 14% 70%", description: "Weathered outlines" },
+	],
+	dark: [
+		{ name: "Background", value: "0 0% 13%", description: "Ink backdrop" },
+		{ name: "Card", value: "219 14% 20%", description: "Graphite layers" },
+		{ name: "Muted", value: "216 63% 17%", description: "Slate overlays" },
+		{ name: "Border", value: "216 40% 32%", description: "Dim outlines" },
+	],
 };
 
 const typographyScale = [
-  { name: 'Display', size: '56px / 3.5rem', lineHeight: '1.1', tailwind: 'text-5xl md:text-6xl', usage: 'Hero statements' },
-  { name: 'Headline', size: '40px / 2.5rem', lineHeight: '1.2', tailwind: 'text-4xl', usage: 'Section titles' },
-  { name: 'Title', size: '28px / 1.75rem', lineHeight: '1.3', tailwind: 'text-2xl', usage: 'Card titles' },
-  { name: 'Subtitle', size: '20px / 1.25rem', lineHeight: '1.5', tailwind: 'text-xl', usage: 'Supporting copy' },
-  { name: 'Body', size: '16px / 1rem', lineHeight: '1.7', tailwind: 'text-base leading-7', usage: 'Paragraphs' },
-  { name: 'Caption', size: '14px / 0.875rem', lineHeight: '1.6', tailwind: 'text-sm', usage: 'Metadata & labels' },
+	{
+		name: "Display",
+		size: "56px / 3.5rem",
+		lineHeight: "1.1",
+		tailwind: "text-5xl md:text-6xl",
+		usage: "Hero statements",
+	},
+	{
+		name: "Headline",
+		size: "40px / 2.5rem",
+		lineHeight: "1.2",
+		tailwind: "text-4xl",
+		usage: "Section titles",
+	},
+	{
+		name: "Title",
+		size: "28px / 1.75rem",
+		lineHeight: "1.3",
+		tailwind: "text-2xl",
+		usage: "Card titles",
+	},
+	{
+		name: "Subtitle",
+		size: "20px / 1.25rem",
+		lineHeight: "1.5",
+		tailwind: "text-xl",
+		usage: "Supporting copy",
+	},
+	{
+		name: "Body",
+		size: "16px / 1rem",
+		lineHeight: "1.7",
+		tailwind: "text-base leading-7",
+		usage: "Paragraphs",
+	},
+	{
+		name: "Caption",
+		size: "14px / 0.875rem",
+		lineHeight: "1.6",
+		tailwind: "text-sm",
+		usage: "Metadata & labels",
+	},
 ];
 
 const containerRules = [
-  { label: 'Content', value: 'max-w-3xl · 48px section padding', usage: 'Articles, docs, knowledge' },
-  { label: 'Application', value: 'max-w-5xl · 64px section padding', usage: 'Dashboards & workflows' },
-  { label: 'Wide', value: 'max-w-6xl · responsive gutters', usage: 'Data dense screens' },
-  { label: 'Fluid', value: 'full width · clamp(24px, 5vw, 80px)', usage: 'Marketing & storytelling' },
+	{
+		label: "Content",
+		value: "max-w-3xl · 48px section padding",
+		usage: "Articles, docs, knowledge",
+	},
+	{
+		label: "Application",
+		value: "max-w-5xl · 64px section padding",
+		usage: "Dashboards & workflows",
+	},
+	{
+		label: "Wide",
+		value: "max-w-6xl · responsive gutters",
+		usage: "Data dense screens",
+	},
+	{
+		label: "Fluid",
+		value: "full width · clamp(24px, 5vw, 80px)",
+		usage: "Marketing & storytelling",
+	},
 ];
 
 const componentPrinciples = [
-  {
-    title: 'Atomic → Pattern → Experience',
-    description: 'Compose experiences from documented atoms. Never duplicate markup when a primitive exists.',
-    icon: Layers,
-  },
-  {
-    title: 'Statefulness Baked In',
-    description: 'Every component ships with hover, focus, active, loading, and disabled states out of the box.',
-    icon: Target,
-  },
-  {
-    title: 'Content-Aware Layouts',
-    description: 'Components adapt to variable content through flexible spacing, min/max widths, and responsive typography.',
-    icon: Type,
-  },
+	{
+		title: "Atomic → Pattern → Experience",
+		description:
+			"Compose experiences from documented atoms. Never duplicate markup when a primitive exists.",
+		icon: Layers,
+	},
+	{
+		title: "Statefulness Baked In",
+		description:
+			"Every component ships with hover, focus, active, loading, and disabled states out of the box.",
+		icon: Target,
+	},
+	{
+		title: "Content-Aware Layouts",
+		description:
+			"Components adapt to variable content through flexible spacing, min/max widths, and responsive typography.",
+		icon: Type,
+	},
 ];
 
 const interactionGuidelines = [
-  {
-    title: 'Visible Focus',
-    description: 'Focus states use a 2px outline with primary color and 2px offset. Never remove focus for aesthetics.',
-    icon: Target,
-  },
-  {
-    title: 'Purposeful Motion',
-    description: 'Pair animations with motion tokens and respect `prefers-reduced-motion`. Motion should communicate spatial change.',
-    icon: Waves,
-  },
-  {
-    title: 'Immediate Feedback',
-    description: 'Hover within 80ms, active within 40ms, and show result states or loaders within 200ms.',
-    icon: Zap,
-  },
+	{
+		title: "Visible Focus",
+		description:
+			"Focus states use a 2px outline with primary color and 2px offset. Never remove focus for aesthetics.",
+		icon: Target,
+	},
+	{
+		title: "Purposeful Motion",
+		description:
+			"Pair animations with motion tokens and respect `prefers-reduced-motion`. Motion should communicate spatial change.",
+		icon: Waves,
+	},
+	{
+		title: "Immediate Feedback",
+		description:
+			"Hover within 80ms, active within 40ms, and show result states or loaders within 200ms.",
+		icon: Zap,
+	},
 ];
 
 const accessibilityChecklist = [
-  {
-    title: 'Contrast AA+',
-    description: 'Maintain 4.5:1 contrast for body text and 3:1 for large headings. Validate all token combinations.',
-  },
-  {
-    title: 'Readable Typography',
-    description: 'Limit line length to 60–70 characters, set body copy to leading-7, and avoid center-aligned paragraphs over 3 lines.',
-  },
-  {
-    title: 'Motion Preferences',
-    description: 'Wrap transitions in `motion-safe` classes and provide alternatives like color or elevation for motion-reduced users.',
-  },
+	{
+		title: "Contrast AA+",
+		description:
+			"Maintain 4.5:1 contrast for body text and 3:1 for large headings. Validate all token combinations.",
+	},
+	{
+		title: "Readable Typography",
+		description:
+			"Limit line length to 60–70 characters, set body copy to leading-7, and avoid center-aligned paragraphs over 3 lines.",
+	},
+	{
+		title: "Motion Preferences",
+		description:
+			"Wrap transitions in `motion-safe` classes and provide alternatives like color or elevation for motion-reduced users.",
+	},
 ];
 
 const implementationSteps = [
-  {
-    title: 'Tokens as Source of Truth',
-    description: 'Update Tailwind config and CSS variables first. UI code must consume tokens—not hard coded values.',
-  },
-  {
-    title: 'Composable Primitives',
-    description: 'Extend components via props and slots. If structure diverges, create a new primitive and document it here.',
-  },
-  {
-    title: 'Design QA Loop',
-    description: 'Pair every UI change with screenshots, contrast checks, and accessibility notes before merging.',
-  },
+	{
+		title: "Tokens as Source of Truth",
+		description:
+			"Update Tailwind config and CSS variables first. UI code must consume tokens—not hard coded values.",
+	},
+	{
+		title: "Composable Primitives",
+		description:
+			"Extend components via props and slots. If structure diverges, create a new primitive and document it here.",
+	},
+	{
+		title: "Design QA Loop",
+		description:
+			"Pair every UI change with screenshots, contrast checks, and accessibility notes before merging.",
+	},
 ];
 
 const buttonVariants = [
-  {
-    name: 'Primary',
-    description: 'One per view. Drives the core action with the --primary token to anchor attention.',
-    label: 'Get started',
-    variant: 'default',
-    size: 'lg',
-    className:
-      'group inline-flex h-12 items-center gap-2 px-8 text-base font-semibold',
-  },
-  {
-    name: 'Secondary',
-    description: 'Use for supportive actions that keep users in-flow. Works best in medium density areas.',
-    label: 'Add to collection',
-    variant: 'secondary',
-    size: 'default',
-    className: 'h-11 px-6 text-sm font-medium transition-all',
-  },
-  {
-    name: 'Outline',
-    description: 'Pair with primary for complementary navigation (e.g., “View docs”). Great on dark surfaces.',
-    label: 'View guidelines',
-    variant: 'outline',
-    size: 'default',
-    className: 'h-11 px-6 text-sm font-medium transition-all hover:bg-card/80',
-  },
-  {
-    name: 'Ghost',
-    description: 'Use for contextual actions within dense layouts or tables. Hover adds a subtle surface tint.',
-    label: 'Copy link',
-    variant: 'ghost',
-    size: 'default',
-    className: 'h-10 px-4 text-sm font-medium transition-colors hover:bg-card/70',
-  },
+	{
+		name: "Primary",
+		description:
+			"One per view. Drives the core action with the --primary token to anchor attention.",
+		label: "Get started",
+		variant: "default",
+		size: "lg",
+		className:
+			"group inline-flex h-12 items-center gap-2 px-8 text-base font-semibold",
+	},
+	{
+		name: "Secondary",
+		description:
+			"Use for supportive actions that keep users in-flow. Works best in medium density areas.",
+		label: "Add to collection",
+		variant: "secondary",
+		size: "default",
+		className: "h-11 px-6 text-sm font-medium transition-all",
+	},
+	{
+		name: "Outline",
+		description:
+			"Pair with primary for complementary navigation (e.g., “View docs”). Great on dark surfaces.",
+		label: "View guidelines",
+		variant: "outline",
+		size: "default",
+		className: "h-11 px-6 text-sm font-medium transition-all hover:bg-card/80",
+	},
+	{
+		name: "Ghost",
+		description:
+			"Use for contextual actions within dense layouts or tables. Hover adds a subtle surface tint.",
+		label: "Copy link",
+		variant: "ghost",
+		size: "default",
+		className:
+			"h-10 px-4 text-sm font-medium transition-colors hover:bg-card/70",
+	},
 ];
 
 const buttonStates = [
-  {
-    title: 'Hover',
-    description: 'Strengthen fill by 8% (primary) or introduce a 10% surface tint (outline/ghost) while preserving contrast.',
-  },
-  {
-    title: 'Focus',
-    description: 'Apply a 2px ring in `--color-primary` with 2px offset. Never rely on box-shadow alone for focus.',
-  },
-  {
-    title: 'Active',
-    description: 'Reduce elevation, darken fill by 12%, and compress transition timing to <80ms for instant feedback.',
-  },
-  {
-    title: 'Disabled',
-    description: 'Lower opacity to 55%, remove hover styles, and ensure tooltips or helper text clarify next steps.',
-  },
+	{
+		title: "Hover",
+		description:
+			"Strengthen fill by 8% (primary) or introduce a 10% surface tint (outline/ghost) while preserving contrast.",
+	},
+	{
+		title: "Focus",
+		description:
+			"Apply a 2px ring in `--color-primary` with 2px offset. Never rely on box-shadow alone for focus.",
+	},
+	{
+		title: "Active",
+		description:
+			"Reduce elevation, darken fill by 12%, and compress transition timing to <80ms for instant feedback.",
+	},
+	{
+		title: "Disabled",
+		description:
+			"Lower opacity to 55%, remove hover styles, and ensure tooltips or helper text clarify next steps.",
+	},
 ];
 
 const buttonGuidelines = [
-  'Pair icon buttons with tooltips and keep hit area ≥44px.',
-  'Default spacing: 16px horizontal, 12px vertical inside button; stack buttons with 16px gap.',
-  'Never place two primary buttons side by side—use secondary or outline for supporting actions.',
-  'Primary CTA uses inverse fill: white background, primary text, and primary ring for focus.',
+	"Pair icon buttons with tooltips and keep hit area ≥44px.",
+	"Default spacing: 16px horizontal, 12px vertical inside button; stack buttons with 16px gap.",
+	"Never place two primary buttons side by side—use secondary or outline for supporting actions.",
+	"Primary CTA uses inverse fill: white background, primary text, and primary ring for focus.",
 ];
 ---
 

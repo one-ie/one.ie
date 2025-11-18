@@ -5,38 +5,38 @@
  * Features: Order summary, tracking info, next steps
  */
 
-import Layout from '@/layouts/Layout.astro';
-import { Button } from '@/components/ui/button';
-import { CheckCircle, Package, Mail, ArrowRight } from 'lucide-react';
-import { TrustBadges } from '@/components/ecommerce/static/TrustBadges';
+import { ArrowRight, CheckCircle, Mail, Package } from "lucide-react";
+import { TrustBadges } from "@/components/shop/static/TrustBadges";
+import { Button } from "@/components/ui/button";
+import Layout from "@/layouts/Layout.astro";
 
 // In production, you'd fetch order details from database using query params
 const searchParams = new URL(Astro.request.url).searchParams;
-const paymentIntentId = searchParams.get('payment_intent');
-const clientSecret = searchParams.get('payment_intent_client_secret');
+const paymentIntentId = searchParams.get("payment_intent");
+const clientSecret = searchParams.get("payment_intent_client_secret");
 
 // Order data will be loaded client-side from localStorage
 // This is just fallback data for SSR
 const fallbackOrder = {
-  id: 'ORD-LOADING',
-  date: new Date().toLocaleDateString('en-US', {
-    month: 'long',
-    day: 'numeric',
-    year: 'numeric',
-  }),
-  total: '$0.00',
-  subtotal: '$0.00',
-  shipping: '$0.00',
-  tax: '$0.00',
-  email: 'customer@example.com',
-  shippingAddress: {
-    fullName: 'Loading...',
-    addressLine1: '',
-    city: '',
-    state: '',
-    postalCode: '',
-  },
-  items: [],
+	id: "ORD-LOADING",
+	date: new Date().toLocaleDateString("en-US", {
+		month: "long",
+		day: "numeric",
+		year: "numeric",
+	}),
+	total: "$0.00",
+	subtotal: "$0.00",
+	shipping: "$0.00",
+	tax: "$0.00",
+	email: "customer@example.com",
+	shippingAddress: {
+		fullName: "Loading...",
+		addressLine1: "",
+		city: "",
+		state: "",
+		postalCode: "",
+	},
+	items: [],
 };
 ---
 
@@ -169,7 +169,7 @@ const fallbackOrder = {
                 </a>
               </Button>
               <Button asChild variant="outline" className="w-full" size="lg">
-                <a href="/products">
+                <a href="/shop/products">
                   <ArrowRight className="mr-2 h-4 w-4" />
                   Continue Shopping
                 </a>

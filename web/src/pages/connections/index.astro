@@ -1,42 +1,51 @@
 ---
-import Layout from '../../layouts/Layout.astro';
-import { getCollection } from 'astro:content';
+import { getCollection } from "astro:content";
 import {
-  Card,
-  CardHeader,
-  CardTitle,
-  CardDescription,
-  CardContent,
-} from '@/components/ui/card';
-import { Badge } from '@/components/ui/badge';
-import { Button } from '@/components/ui/button';
-import { ArrowRight, MessageSquare, Layers, Bot, DollarSign, Wallet, Link2, Search } from 'lucide-react';
+	ArrowRight,
+	Bot,
+	DollarSign,
+	Layers,
+	Link2,
+	MessageSquare,
+	Search,
+	Wallet,
+} from "lucide-react";
+import { Badge } from "@/components/ui/badge";
+import { Button } from "@/components/ui/button";
+import {
+	Card,
+	CardContent,
+	CardDescription,
+	CardHeader,
+	CardTitle,
+} from "@/components/ui/card";
+import Layout from "../../layouts/Layout.astro";
 
 // Get all connections
-const connections = await getCollection('connections');
+const connections = await getCollection("connections");
 const sortedConnections = connections.sort((a, b) => {
-  const protocolOrder = ['acp', 'mcp', 'a2a', 'ap2', 'x402', 'agui'];
-  const aIndex = protocolOrder.indexOf(a.data.protocol);
-  const bIndex = protocolOrder.indexOf(b.data.protocol);
-  return aIndex - bIndex;
+	const protocolOrder = ["acp", "mcp", "a2a", "ap2", "x402", "agui"];
+	const aIndex = protocolOrder.indexOf(a.data.protocol);
+	const bIndex = protocolOrder.indexOf(b.data.protocol);
+	return aIndex - bIndex;
 });
 
 const protocolIcons = {
-  acp: MessageSquare,
-  mcp: Layers,
-  a2a: Bot,
-  ap2: DollarSign,
-  x402: Wallet,
-  agui: Link2,
+	acp: MessageSquare,
+	mcp: Layers,
+	a2a: Bot,
+	ap2: DollarSign,
+	x402: Wallet,
+	agui: Link2,
 };
 
 const protocolColors = {
-  acp: 'text-blue-500',
-  mcp: 'text-purple-500',
-  a2a: 'text-cyan-500',
-  ap2: 'text-amber-500',
-  x402: 'text-green-500',
-  agui: 'text-pink-500',
+	acp: "text-blue-500",
+	mcp: "text-purple-500",
+	a2a: "text-cyan-500",
+	ap2: "text-amber-500",
+	x402: "text-green-500",
+	agui: "text-pink-500",
 };
 ---
 

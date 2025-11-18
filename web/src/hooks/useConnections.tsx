@@ -4,15 +4,24 @@
  * Provides hooks for querying and mutating relationships between entities.
  */
 
-import { useQuery, useMutation as useReactMutation, useQueryClient } from '@tanstack/react-query';
-import { Effect } from 'effect';
-import { useDataProvider } from './useDataProvider';
-import type { QueryResult, MutationResult, QueryOptions, MutationOptions } from './types';
+import {
+	useQuery,
+	useQueryClient,
+	useMutation as useReactMutation,
+} from "@tanstack/react-query";
+import { Effect } from "effect";
 import type {
-  Connection,
-  CreateConnectionInput,
-  ListConnectionsOptions,
-} from '@/providers/DataProvider';
+	Connection,
+	CreateConnectionInput,
+	ListConnectionsOptions,
+} from "@/providers/DataProvider";
+import type {
+	MutationOptions,
+	MutationResult,
+	QueryOptions,
+	QueryResult,
+} from "./types";
+import { useDataProvider } from "./useDataProvider";
 
 // ============================================================================
 // QUERY HOOKS
@@ -40,35 +49,35 @@ import type {
  * ```
  */
 export function useConnections(
-  options?: ListConnectionsOptions,
-  queryOptions?: QueryOptions
+	options?: ListConnectionsOptions,
+	queryOptions?: QueryOptions,
 ): QueryResult<Connection[]> {
-  const provider = useDataProvider();
-  const { enabled = true, ...reactQueryOptions } = queryOptions ?? {};
+	const provider = useDataProvider();
+	const { enabled = true, ...reactQueryOptions } = queryOptions ?? {};
 
-  const queryKey = ['connections', options];
+	const queryKey = ["connections", options];
 
-  const queryFn = async (): Promise<Connection[]> => {
-    const effect = provider.connections.list(options);
-    return await Effect.runPromise(effect);
-  };
+	const queryFn = async (): Promise<Connection[]> => {
+		const effect = provider.connections.list(options);
+		return await Effect.runPromise(effect);
+	};
 
-  const query = useQuery({
-    queryKey,
-    queryFn,
-    enabled,
-    ...reactQueryOptions,
-  });
+	const query = useQuery({
+		queryKey,
+		queryFn,
+		enabled,
+		...reactQueryOptions,
+	});
 
-  return {
-    data: query.data ?? null,
-    loading: query.isLoading,
-    error: query.error as Error | null,
-    refetch: async () => {
-      await query.refetch();
-    },
-    refetching: query.isRefetching,
-  };
+	return {
+		data: query.data ?? null,
+		loading: query.isLoading,
+		error: query.error as Error | null,
+		refetch: async () => {
+			await query.refetch();
+		},
+		refetching: query.isRefetching,
+	};
 }
 
 /**
@@ -83,36 +92,36 @@ export function useConnections(
  * ```
  */
 export function useConnection(
-  id: string | null,
-  queryOptions?: QueryOptions
+	id: string | null,
+	queryOptions?: QueryOptions,
 ): QueryResult<Connection> {
-  const provider = useDataProvider();
-  const { enabled = true, ...reactQueryOptions } = queryOptions ?? {};
+	const provider = useDataProvider();
+	const { enabled = true, ...reactQueryOptions } = queryOptions ?? {};
 
-  const queryKey = ['connection', id];
+	const queryKey = ["connection", id];
 
-  const queryFn = async (): Promise<Connection> => {
-    if (!id) throw new Error('Connection ID is required');
-    const effect = provider.connections.get(id);
-    return await Effect.runPromise(effect);
-  };
+	const queryFn = async (): Promise<Connection> => {
+		if (!id) throw new Error("Connection ID is required");
+		const effect = provider.connections.get(id);
+		return await Effect.runPromise(effect);
+	};
 
-  const query = useQuery({
-    queryKey,
-    queryFn,
-    enabled: enabled && !!id,
-    ...reactQueryOptions,
-  });
+	const query = useQuery({
+		queryKey,
+		queryFn,
+		enabled: enabled && !!id,
+		...reactQueryOptions,
+	});
 
-  return {
-    data: query.data ?? null,
-    loading: query.isLoading,
-    error: query.error as Error | null,
-    refetch: async () => {
-      await query.refetch();
-    },
-    refetching: query.isRefetching,
-  };
+	return {
+		data: query.data ?? null,
+		loading: query.isLoading,
+		error: query.error as Error | null,
+		refetch: async () => {
+			await query.refetch();
+		},
+		refetching: query.isRefetching,
+	};
 }
 
 // ============================================================================
@@ -139,38 +148,42 @@ export function useConnection(
  * ```
  */
 export function useCreateConnection(
-  mutationOptions?: MutationOptions<string, CreateConnectionInput>
+	mutationOptions?: MutationOptions<string, CreateConnectionInput>,
 ): MutationResult<string, CreateConnectionInput> {
-  const provider = useDataProvider();
-  const queryClient = useQueryClient();
+	const provider = useDataProvider();
+	const queryClient = useQueryClient();
 
-  const mutation = useReactMutation({
-    mutationFn: async (input: CreateConnectionInput): Promise<string> => {
-      const effect = provider.connections.create(input);
-      return await Effect.runPromise(effect);
-    },
-    onSuccess: async (id, input) => {
-      // Invalidate connection queries
-      await queryClient.invalidateQueries({ queryKey: ['connections'] });
+	const mutation = useReactMutation({
+		mutationFn: async (input: CreateConnectionInput): Promise<string> => {
+			const effect = provider.connections.create(input);
+			return await Effect.runPromise(effect);
+		},
+		onSuccess: async (id, input) => {
+			// Invalidate connection queries
+			await queryClient.invalidateQueries({ queryKey: ["connections"] });
 
-      // Invalidate related things
-      await queryClient.invalidateQueries({ queryKey: ['thing', input.fromEntityId] });
-      await queryClient.invalidateQueries({ queryKey: ['thing', input.toEntityId] });
+			// Invalidate related things
+			await queryClient.invalidateQueries({
+				queryKey: ["thing", input.fromEntityId],
+			});
+			await queryClient.invalidateQueries({
+				queryKey: ["thing", input.toEntityId],
+			});
 
-      await mutationOptions?.onSuccess?.(id, input);
-    },
-    onError: async (error, input) => {
-      await mutationOptions?.onError?.(error as Error, input);
-    },
-  });
+			await mutationOptions?.onSuccess?.(id, input);
+		},
+		onError: async (error, input) => {
+			await mutationOptions?.onError?.(error as Error, input);
+		},
+	});
 
-  return {
-    mutate: mutation.mutateAsync,
-    loading: mutation.isPending,
-    error: mutation.error as Error | null,
-    reset: mutation.reset,
-    data: mutation.data ?? null,
-  };
+	return {
+		mutate: mutation.mutateAsync,
+		loading: mutation.isPending,
+		error: mutation.error as Error | null,
+		reset: mutation.reset,
+		data: mutation.data ?? null,
+	};
 }
 
 /**
@@ -186,37 +199,37 @@ export function useCreateConnection(
  * ```
  */
 export function useDeleteConnection(
-  mutationOptions?: MutationOptions<void, string>
+	mutationOptions?: MutationOptions<void, string>,
 ): MutationResult<void, string> {
-  const provider = useDataProvider();
-  const queryClient = useQueryClient();
+	const provider = useDataProvider();
+	const queryClient = useQueryClient();
 
-  const mutation = useReactMutation({
-    mutationFn: async (id: string): Promise<void> => {
-      const effect = provider.connections.delete(id);
-      return await Effect.runPromise(effect);
-    },
-    onSuccess: async (data, id) => {
-      // Remove from cache
-      queryClient.removeQueries({ queryKey: ['connection', id] });
+	const mutation = useReactMutation({
+		mutationFn: async (id: string): Promise<void> => {
+			const effect = provider.connections.delete(id);
+			return await Effect.runPromise(effect);
+		},
+		onSuccess: async (data, id) => {
+			// Remove from cache
+			queryClient.removeQueries({ queryKey: ["connection", id] });
 
-      // Invalidate all connection lists
-      await queryClient.invalidateQueries({ queryKey: ['connections'] });
+			// Invalidate all connection lists
+			await queryClient.invalidateQueries({ queryKey: ["connections"] });
 
-      await mutationOptions?.onSuccess?.(data, id);
-    },
-    onError: async (error, id) => {
-      await mutationOptions?.onError?.(error as Error, id);
-    },
-  });
+			await mutationOptions?.onSuccess?.(data, id);
+		},
+		onError: async (error, id) => {
+			await mutationOptions?.onError?.(error as Error, id);
+		},
+	});
 
-  return {
-    mutate: mutation.mutateAsync,
-    loading: mutation.isPending,
-    error: mutation.error as Error | null,
-    reset: mutation.reset,
-    data: mutation.data ?? null,
-  };
+	return {
+		mutate: mutation.mutateAsync,
+		loading: mutation.isPending,
+		error: mutation.error as Error | null,
+		reset: mutation.reset,
+		data: mutation.data ?? null,
+	};
 }
 
 // ============================================================================
@@ -231,11 +244,14 @@ export function useDeleteConnection(
  * const { data: ownedCourses } = useOwnedThings(creatorId);
  * ```
  */
-export function useOwnedThings(ownerId: string | null, queryOptions?: QueryOptions) {
-  return useConnections(
-    ownerId ? { fromEntityId: ownerId, relationshipType: 'owns' } : undefined,
-    { ...queryOptions, enabled: queryOptions?.enabled && !!ownerId }
-  );
+export function useOwnedThings(
+	ownerId: string | null,
+	queryOptions?: QueryOptions,
+) {
+	return useConnections(
+		ownerId ? { fromEntityId: ownerId, relationshipType: "owns" } : undefined,
+		{ ...queryOptions, enabled: queryOptions?.enabled && !!ownerId },
+	);
 }
 
 /**
@@ -246,11 +262,16 @@ export function useOwnedThings(ownerId: string | null, queryOptions?: QueryOptio
  * const { data: enrollments } = useEnrollments(userId);
  * ```
  */
-export function useEnrollments(userId: string | null, queryOptions?: QueryOptions) {
-  return useConnections(
-    userId ? { fromEntityId: userId, relationshipType: 'enrolled_in' } : undefined,
-    { ...queryOptions, enabled: queryOptions?.enabled && !!userId }
-  );
+export function useEnrollments(
+	userId: string | null,
+	queryOptions?: QueryOptions,
+) {
+	return useConnections(
+		userId
+			? { fromEntityId: userId, relationshipType: "enrolled_in" }
+			: undefined,
+		{ ...queryOptions, enabled: queryOptions?.enabled && !!userId },
+	);
 }
 
 /**
@@ -261,11 +282,16 @@ export function useEnrollments(userId: string | null, queryOptions?: QueryOption
  * const { data: following } = useFollowing(userId);
  * ```
  */
-export function useFollowing(userId: string | null, queryOptions?: QueryOptions) {
-  return useConnections(
-    userId ? { fromEntityId: userId, relationshipType: 'following' } : undefined,
-    { ...queryOptions, enabled: queryOptions?.enabled && !!userId }
-  );
+export function useFollowing(
+	userId: string | null,
+	queryOptions?: QueryOptions,
+) {
+	return useConnections(
+		userId
+			? { fromEntityId: userId, relationshipType: "following" }
+			: undefined,
+		{ ...queryOptions, enabled: queryOptions?.enabled && !!userId },
+	);
 }
 
 /**
@@ -276,9 +302,14 @@ export function useFollowing(userId: string | null, queryOptions?: QueryOptions)
  * const { data: holdings } = useTokenHoldings(userId);
  * ```
  */
-export function useTokenHoldings(userId: string | null, queryOptions?: QueryOptions) {
-  return useConnections(
-    userId ? { fromEntityId: userId, relationshipType: 'holds_tokens' } : undefined,
-    { ...queryOptions, enabled: queryOptions?.enabled && !!userId }
-  );
+export function useTokenHoldings(
+	userId: string | null,
+	queryOptions?: QueryOptions,
+) {
+	return useConnections(
+		userId
+			? { fromEntityId: userId, relationshipType: "holds_tokens" }
+			: undefined,
+		{ ...queryOptions, enabled: queryOptions?.enabled && !!userId },
+	);
 }

@@ -1,147 +1,150 @@
 ---
 export const prerender = false;
 
-import Layout from '../../layouts/Layout.astro';
-import { getCollection } from 'astro:content';
-import type { CollectionEntry } from 'astro:content';
-import { DocSearch } from '@/components/docs/DocSearch';
-import { DocViewToggle } from '@/components/docs/DocViewToggle';
-import { DocList } from '@/components/docs/DocList';
-import { DocGrid } from '@/components/docs/DocGrid';
-import { DocCompact } from '@/components/docs/DocCompact';
-import { DocFolderNav } from '@/components/docs/DocFolderNav';
-import { DocFilterResults } from '@/components/docs/DocFilterResults';
-import { FileText } from 'lucide-react';
+import type { CollectionEntry } from "astro:content";
+import { getCollection } from "astro:content";
+import { FileText } from "lucide-react";
+import { DocCompact } from "@/components/docs/DocCompact";
+import { DocFilterResults } from "@/components/docs/DocFilterResults";
+import { DocFolderNav } from "@/components/docs/DocFolderNav";
+import { DocGrid } from "@/components/docs/DocGrid";
+import { DocList } from "@/components/docs/DocList";
+import { DocSearch } from "@/components/docs/DocSearch";
+import { DocViewToggle } from "@/components/docs/DocViewToggle";
+import Layout from "../../layouts/Layout.astro";
 
-type DocEntry = CollectionEntry<'docs'>;
+type DocEntry = CollectionEntry<"docs">;
 type DocFolder = Record<string, DocEntry[]>;
 
 // Get view preference from URL or default to compact view
-const viewMode = (Astro.url.searchParams.get('view') || 'compact') as
-  | 'list'
-  | 'compact'
-  | 'grid2'
-  | 'grid3'
-  | 'grid4';
+const viewMode = (Astro.url.searchParams.get("view") || "compact") as
+	| "list"
+	| "compact"
+	| "grid2"
+	| "grid3"
+	| "grid4";
 
 // Get all docs entries
-const entries = (await getCollection('docs')) as DocEntry[];
+const entries = (await getCollection("docs")) as DocEntry[];
 
 // Get search query from URL
-const searchQuery = Astro.url.searchParams.get('search')?.toLowerCase() || '';
+const searchQuery = Astro.url.searchParams.get("search")?.toLowerCase() || "";
 
 // Get tag filter from URL
-const tagFilter = Astro.url.searchParams.get('tag')?.toLowerCase() || '';
+const tagFilter = Astro.url.searchParams.get("tag")?.toLowerCase() || "";
 
 // Get folder filter from URL
-const folderFilter = Astro.url.searchParams.get('folder')?.toLowerCase() || '';
+const folderFilter = Astro.url.searchParams.get("folder")?.toLowerCase() || "";
 
 // Filter entries by search query, tag, or folder
-const filteredEntries = searchQuery || tagFilter || folderFilter
-  ? entries.filter((entry: DocEntry) => {
-      const title = entry.data.title?.toLowerCase() || '';
-      const description = entry.data.description?.toLowerCase() || '';
-      const section = entry.data.section?.toLowerCase() || '';
-      const tags = entry.data.tags?.map((t: string) => t.toLowerCase()) || [];
-      const folderPath = entry.slug.split('/')[0].toLowerCase();
+const filteredEntries =
+	searchQuery || tagFilter || folderFilter
+		? entries.filter((entry: DocEntry) => {
+				const title = entry.data.title?.toLowerCase() || "";
+				const description = entry.data.description?.toLowerCase() || "";
+				const section = entry.data.section?.toLowerCase() || "";
+				const tags = entry.data.tags?.map((t: string) => t.toLowerCase()) || [];
+				const folderPath = entry.slug.split("/")[0].toLowerCase();
 
-      // If folder filter is present, it takes precedence
-      if (folderFilter) {
-        return folderPath === folderFilter;
-      }
+				// If folder filter is present, it takes precedence
+				if (folderFilter) {
+					return folderPath === folderFilter;
+				}
 
-      // If tag filter is present, it takes precedence over search
-      if (tagFilter) {
-        return tags.includes(tagFilter);
-      }
+				// If tag filter is present, it takes precedence over search
+				if (tagFilter) {
+					return tags.includes(tagFilter);
+				}
 
-      // Otherwise use search query
-      return (
-        title.includes(searchQuery) ||
-        description.includes(searchQuery) ||
-        section.includes(searchQuery) ||
-        tags.some((tag: string) => tag.includes(searchQuery))
-      );
-    })
-  : entries;
+				// Otherwise use search query
+				return (
+					title.includes(searchQuery) ||
+					description.includes(searchQuery) ||
+					section.includes(searchQuery) ||
+					tags.some((tag: string) => tag.includes(searchQuery))
+				);
+			})
+		: entries;
 
 // Group by folders (first level of path)
 const folders = filteredEntries.reduce((acc: DocFolder, entry: DocEntry) => {
-  // Extract the folder name from the slug (first part before slash, or 'root' if no slash)
-  const folderPath = entry.slug.includes('/') ? entry.slug.split('/')[0] : 'root';
+	// Extract the folder name from the slug (first part before slash, or 'root' if no slash)
+	const folderPath = entry.slug.includes("/")
+		? entry.slug.split("/")[0]
+		: "root";
 
-  if (!acc[folderPath]) {
-    acc[folderPath] = [];
-  }
-  acc[folderPath].push(entry);
-  return acc;
+	if (!acc[folderPath]) {
+		acc[folderPath] = [];
+	}
+	acc[folderPath].push(entry);
+	return acc;
 }, {});
 
 // Sort folders by custom order: Quick Start, Overview, Develop
 const orderedFolders = Object.entries(folders)
-  .sort(([a, _a]: [string, DocEntry[]], [b, _b]: [string, DocEntry[]]) => {
-    const orderA = getFolderOrder(a);
-    const orderB = getFolderOrder(b);
-    if (orderA !== orderB) return orderA - orderB;
-    return a.localeCompare(b);
-  })
-  .reduce((acc, [key, value]) => ({ ...acc, [key]: value }), {}) as Record<
-  string,
-  DocEntry[]
+	.sort(([a, _a]: [string, DocEntry[]], [b, _b]: [string, DocEntry[]]) => {
+		const orderA = getFolderOrder(a);
+		const orderB = getFolderOrder(b);
+		if (orderA !== orderB) return orderA - orderB;
+		return a.localeCompare(b);
+	})
+	.reduce((acc, [key, value]) => ({ ...acc, [key]: value }), {}) as Record<
+	string,
+	DocEntry[]
 >;
 
 // Get appropriate icon based on folder name
 function getFolderIcon(folder: string) {
-  const iconMap: Record<string, string> = {
-    'getting-started': '🚀',
-    'overview': '🏗️',
-    'develop': '⚡',
-    advanced: '⚡',
-    'ai-sdk': '⚡',
-    tutorials: '📚',
-    troubleshooting: 'ℹ️',
-  };
-  return iconMap[folder.toLowerCase()] || '📁';
+	const iconMap: Record<string, string> = {
+		"getting-started": "🚀",
+		overview: "🏗️",
+		develop: "⚡",
+		advanced: "⚡",
+		"ai-sdk": "⚡",
+		tutorials: "📚",
+		troubleshooting: "ℹ️",
+	};
+	return iconMap[folder.toLowerCase()] || "📁";
 }
 
 // Format folder name for display
 function formatFolderName(folder: string): string {
-  const folderNameMap: Record<string, string> = {
-    'root': 'Root',
-    'getting-started': 'Quick Start',
-    'overview': 'Overview',
-    'develop': 'Develop',
-  };
+	const folderNameMap: Record<string, string> = {
+		root: "Root",
+		"getting-started": "Quick Start",
+		overview: "Overview",
+		develop: "Develop",
+	};
 
-  if (folderNameMap[folder]) {
-    return folderNameMap[folder];
-  }
+	if (folderNameMap[folder]) {
+		return folderNameMap[folder];
+	}
 
-  // Replace hyphens with spaces and capitalize each word
-  return folder
-    .replace(/-/g, ' ')
-    .split(' ')
-    .map((word) => word.charAt(0).toUpperCase() + word.slice(1))
-    .join(' ');
+	// Replace hyphens with spaces and capitalize each word
+	return folder
+		.replace(/-/g, " ")
+		.split(" ")
+		.map((word) => word.charAt(0).toUpperCase() + word.slice(1))
+		.join(" ");
 }
 
 // Get folder sort order
 function getFolderOrder(folder: string): number {
-  const orderMap: Record<string, number> = {
-    'getting-started': 1,
-    'overview': 2,
-    'develop': 3,
-  };
-  return orderMap[folder] ?? 999;
+	const orderMap: Record<string, number> = {
+		"getting-started": 1,
+		overview: 2,
+		develop: 3,
+	};
+	return orderMap[folder] ?? 999;
 }
 
 // Get folder counts for navigation
 const folderCounts = Object.entries(orderedFolders).reduce(
-  (acc, [folder, entries]) => {
-    acc[folder] = entries.length;
-    return acc;
-  },
-  {} as Record<string, number>
+	(acc, [folder, entries]) => {
+		acc[folder] = entries.length;
+		return acc;
+	},
+	{} as Record<string, number>,
 );
 ---
 

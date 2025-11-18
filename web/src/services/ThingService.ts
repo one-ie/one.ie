@@ -8,12 +8,12 @@
 
 import { Effect } from "effect";
 import {
-  DataProviderService,
-  type CreateThingInput,
-  type UpdateThingInput,
-  type ListThingsOptions,
-  type ThingStatus,
-  ThingCreateError,
+	type CreateThingInput,
+	DataProviderService,
+	type ListThingsOptions,
+	ThingCreateError,
+	type ThingStatus,
+	type UpdateThingInput,
 } from "../providers/DataProvider";
 
 // ============================================================================
@@ -21,306 +21,310 @@ import {
 // ============================================================================
 
 export class ThingService {
-  // Utility class with only static methods
-  // eslint-disable-next-line @typescript-eslint/no-empty-function
-  private constructor() {}
+	// Utility class with only static methods
+	// eslint-disable-next-line @typescript-eslint/no-empty-function
+	private constructor() {}
 
-  /**
-   * Get a thing by ID
-   */
-  static get = (id: string) =>
-    Effect.gen(function* () {
-      const provider = yield* DataProviderService;
-      return yield* provider.things.get(id);
-    });
+	/**
+	 * Get a thing by ID
+	 */
+	static get = (id: string) =>
+		Effect.gen(function* () {
+			const provider = yield* DataProviderService;
+			return yield* provider.things.get(id);
+		});
 
-  /**
-   * List things with filters
-   */
-  static list = (options?: ListThingsOptions) =>
-    Effect.gen(function* () {
-      const provider = yield* DataProviderService;
-      return yield* provider.things.list(options);
-    });
+	/**
+	 * List things with filters
+	 */
+	static list = (options?: ListThingsOptions) =>
+		Effect.gen(function* () {
+			const provider = yield* DataProviderService;
+			return yield* provider.things.list(options);
+		});
 
-  /**
-   * Create a new thing
-   */
-  static create = (input: CreateThingInput) =>
-    Effect.gen(function* () {
-      const provider = yield* DataProviderService;
+	/**
+	 * Create a new thing
+	 */
+	static create = (input: CreateThingInput) =>
+		Effect.gen(function* () {
+			const provider = yield* DataProviderService;
 
-      // Validate input
-      if (!input.name || input.name.trim() === "") {
-        return yield* Effect.fail(new ThingCreateError("Thing name cannot be empty"));
-      }
+			// Validate input
+			if (!input.name || input.name.trim() === "") {
+				return yield* Effect.fail(
+					new ThingCreateError("Thing name cannot be empty"),
+				);
+			}
 
-      if (!input.type || input.type.trim() === "") {
-        return yield* Effect.fail(new ThingCreateError("Thing type is required"));
-      }
+			if (!input.type || input.type.trim() === "") {
+				return yield* Effect.fail(
+					new ThingCreateError("Thing type is required"),
+				);
+			}
 
-      // Create thing
-      const thingId = yield* provider.things.create(input);
+			// Create thing
+			const thingId = yield* provider.things.create(input);
 
-      // Log creation event
-      yield* provider.events.create({
-        type: "entity_created",
-        actorId: "system", // TODO: Get from auth context
-        targetId: thingId,
-        metadata: {
-          entityType: input.type,
-        },
-      });
+			// Log creation event
+			yield* provider.events.create({
+				type: "entity_created",
+				actorId: "system", // TODO: Get from auth context
+				targetId: thingId,
+				metadata: {
+					entityType: input.type,
+				},
+			});
 
-      return thingId;
-    });
+			return thingId;
+		});
 
-  /**
-   * Update an existing thing
-   */
-  static update = (id: string, input: UpdateThingInput) =>
-    Effect.gen(function* () {
-      const provider = yield* DataProviderService;
+	/**
+	 * Update an existing thing
+	 */
+	static update = (id: string, input: UpdateThingInput) =>
+		Effect.gen(function* () {
+			const provider = yield* DataProviderService;
 
-      // Validate thing exists
-      yield* provider.things.get(id);
+			// Validate thing exists
+			yield* provider.things.get(id);
 
-      // Update thing
-      yield* provider.things.update(id, input);
+			// Update thing
+			yield* provider.things.update(id, input);
 
-      // Log update event
-      yield* provider.events.create({
-        type: "entity_updated",
-        actorId: "system", // TODO: Get from auth context
-        targetId: id,
-        metadata: {
-          updatedFields: Object.keys(input),
-        },
-      });
-    });
+			// Log update event
+			yield* provider.events.create({
+				type: "entity_updated",
+				actorId: "system", // TODO: Get from auth context
+				targetId: id,
+				metadata: {
+					updatedFields: Object.keys(input),
+				},
+			});
+		});
 
-  /**
-   * Delete a thing (soft delete by default)
-   */
-  static delete = (id: string) =>
-    Effect.gen(function* () {
-      const provider = yield* DataProviderService;
+	/**
+	 * Delete a thing (soft delete by default)
+	 */
+	static delete = (id: string) =>
+		Effect.gen(function* () {
+			const provider = yield* DataProviderService;
 
-      // Validate thing exists
-      yield* provider.things.get(id);
+			// Validate thing exists
+			yield* provider.things.get(id);
 
-      // Soft delete: update status to archived
-      yield* provider.things.update(id, {
-        status: "archived",
-      });
+			// Soft delete: update status to archived
+			yield* provider.things.update(id, {
+				status: "archived",
+			});
 
-      // Log deletion event
-      yield* provider.events.create({
-        type: "entity_archived",
-        actorId: "system", // TODO: Get from auth context
-        targetId: id,
-        metadata: {
-          deletedAt: Date.now(),
-        },
-      });
-    });
+			// Log deletion event
+			yield* provider.events.create({
+				type: "entity_archived",
+				actorId: "system", // TODO: Get from auth context
+				targetId: id,
+				metadata: {
+					deletedAt: Date.now(),
+				},
+			});
+		});
 
-  /**
-   * Change thing status
-   */
-  static changeStatus = (id: string, status: ThingStatus) =>
-    Effect.gen(function* () {
-      const provider = yield* DataProviderService;
+	/**
+	 * Change thing status
+	 */
+	static changeStatus = (id: string, status: ThingStatus) =>
+		Effect.gen(function* () {
+			const provider = yield* DataProviderService;
 
-      // Get current thing
-      const thing = yield* provider.things.get(id);
+			// Get current thing
+			const thing = yield* provider.things.get(id);
 
-      // Update status
-      yield* provider.things.update(id, { status });
+			// Update status
+			yield* provider.things.update(id, { status });
 
-      // Log status change event
-      yield* provider.events.create({
-        type: "entity_updated",
-        actorId: "system", // TODO: Get from auth context
-        targetId: id,
-        metadata: {
-          previousStatus: thing.status,
-          newStatus: status,
-          statusChanged: true,
-        },
-      });
-    });
+			// Log status change event
+			yield* provider.events.create({
+				type: "entity_updated",
+				actorId: "system", // TODO: Get from auth context
+				targetId: id,
+				metadata: {
+					previousStatus: thing.status,
+					newStatus: status,
+					statusChanged: true,
+				},
+			});
+		});
 
-  /**
-   * List things by type
-   */
-  static listByType = (type: string, limit?: number) =>
-    Effect.gen(function* () {
-      return yield* ThingService.list({ type, limit });
-    });
+	/**
+	 * List things by type
+	 */
+	static listByType = (type: string, limit?: number) =>
+		Effect.gen(function* () {
+			return yield* ThingService.list({ type, limit });
+		});
 
-  /**
-   * List things by status
-   */
-  static listByStatus = (status: ThingStatus, limit?: number) =>
-    Effect.gen(function* () {
-      return yield* ThingService.list({ status, limit });
-    });
+	/**
+	 * List things by status
+	 */
+	static listByStatus = (status: ThingStatus, limit?: number) =>
+		Effect.gen(function* () {
+			return yield* ThingService.list({ status, limit });
+		});
 
-  /**
-   * Get thing with relationships
-   */
-  static getWithRelationships = (id: string) =>
-    Effect.gen(function* () {
-      const provider = yield* DataProviderService;
+	/**
+	 * Get thing with relationships
+	 */
+	static getWithRelationships = (id: string) =>
+		Effect.gen(function* () {
+			const provider = yield* DataProviderService;
 
-      // Get thing
-      const thing = yield* provider.things.get(id);
+			// Get thing
+			const thing = yield* provider.things.get(id);
 
-      // Get outgoing connections (things this thing relates to)
-      const outgoing = yield* provider.connections.list({
-        fromEntityId: id,
-      });
+			// Get outgoing connections (things this thing relates to)
+			const outgoing = yield* provider.connections.list({
+				fromEntityId: id,
+			});
 
-      // Get incoming connections (things that relate to this thing)
-      const incoming = yield* provider.connections.list({
-        toEntityId: id,
-      });
+			// Get incoming connections (things that relate to this thing)
+			const incoming = yield* provider.connections.list({
+				toEntityId: id,
+			});
 
-      return {
-        ...thing,
-        relationships: {
-          outgoing,
-          incoming,
-        },
-      };
-    });
+			return {
+				...thing,
+				relationships: {
+					outgoing,
+					incoming,
+				},
+			};
+		});
 
-  /**
-   * Get thing history (events)
-   */
-  static getHistory = (id: string, limit?: number) =>
-    Effect.gen(function* () {
-      const provider = yield* DataProviderService;
+	/**
+	 * Get thing history (events)
+	 */
+	static getHistory = (id: string, limit?: number) =>
+		Effect.gen(function* () {
+			const provider = yield* DataProviderService;
 
-      // Validate thing exists
-      yield* provider.things.get(id);
+			// Validate thing exists
+			yield* provider.things.get(id);
 
-      // Get events for this thing
-      return yield* provider.events.list({
-        targetId: id,
-        limit,
-      });
-    });
+			// Get events for this thing
+			return yield* provider.events.list({
+				targetId: id,
+				limit,
+			});
+		});
 
-  /**
-   * Batch create things
-   */
-  static batchCreate = (inputs: CreateThingInput[]) =>
-    Effect.gen(function* () {
-      const results: string[] = [];
+	/**
+	 * Batch create things
+	 */
+	static batchCreate = (inputs: CreateThingInput[]) =>
+		Effect.gen(function* () {
+			const results: string[] = [];
 
-      for (const input of inputs) {
-        const id = yield* ThingService.create(input);
-        results.push(id);
-      }
+			for (const input of inputs) {
+				const id = yield* ThingService.create(input);
+				results.push(id);
+			}
 
-      return results;
-    });
+			return results;
+		});
 
-  /**
-   * Search things by name (simple text search)
-   */
-  static search = (query: string, options?: Omit<ListThingsOptions, "name">) =>
-    Effect.gen(function* () {
-      const provider = yield* DataProviderService;
+	/**
+	 * Search things by name (simple text search)
+	 */
+	static search = (query: string, options?: Omit<ListThingsOptions, "name">) =>
+		Effect.gen(function* () {
+			const provider = yield* DataProviderService;
 
-      // List all things with filters
-      const things = yield* provider.things.list(options);
+			// List all things with filters
+			const things = yield* provider.things.list(options);
 
-      // Filter by name (case-insensitive)
-      const lowerQuery = query.toLowerCase();
-      return things.filter((thing) =>
-        thing.name.toLowerCase().includes(lowerQuery)
-      );
-    });
+			// Filter by name (case-insensitive)
+			const lowerQuery = query.toLowerCase();
+			return things.filter((thing) =>
+				thing.name.toLowerCase().includes(lowerQuery),
+			);
+		});
 
-  /**
-   * Create an AI agent thing
-   */
-  static createAgent = (input: {
-    name: string;
-    description?: string;
-    model: string;
-    systemPrompt?: string;
-    tools?: string[];
-    groupId?: string;
-  }) =>
-    Effect.gen(function* () {
-      return yield* ThingService.create({
-        name: input.name,
-        type: "agent",
-        properties: {
-          description: input.description,
-          model: input.model,
-          systemPrompt: input.systemPrompt,
-          tools: input.tools || [],
-        },
-        status: "active",
-        groupId: input.groupId,
-      });
-    });
+	/**
+	 * Create an AI agent thing
+	 */
+	static createAgent = (input: {
+		name: string;
+		description?: string;
+		model: string;
+		systemPrompt?: string;
+		tools?: string[];
+		groupId?: string;
+	}) =>
+		Effect.gen(function* () {
+			return yield* ThingService.create({
+				name: input.name,
+				type: "agent",
+				properties: {
+					description: input.description,
+					model: input.model,
+					systemPrompt: input.systemPrompt,
+					tools: input.tools || [],
+				},
+				status: "active",
+				groupId: input.groupId,
+			});
+		});
 
-  /**
-   * Create a conversation thread thing
-   */
-  static createThread = (input: {
-    title: string;
-    agentId: string;
-    userId: string;
-    groupId?: string;
-  }) =>
-    Effect.gen(function* () {
-      return yield* ThingService.create({
-        name: input.title,
-        type: "conversation",
-        properties: {
-          agentId: input.agentId,
-          userId: input.userId,
-          messageCount: 0,
-        },
-        status: "active",
-        groupId: input.groupId,
-      });
-    });
+	/**
+	 * Create a conversation thread thing
+	 */
+	static createThread = (input: {
+		title: string;
+		agentId: string;
+		userId: string;
+		groupId?: string;
+	}) =>
+		Effect.gen(function* () {
+			return yield* ThingService.create({
+				name: input.title,
+				type: "conversation",
+				properties: {
+					agentId: input.agentId,
+					userId: input.userId,
+					messageCount: 0,
+				},
+				status: "active",
+				groupId: input.groupId,
+			});
+		});
 
-  /**
-   * List all agents
-   */
-  static listAgents = (groupId?: string) =>
-    Effect.gen(function* () {
-      return yield* ThingService.list({
-        type: "agent",
-        status: "active",
-        groupId,
-      });
-    });
+	/**
+	 * List all agents
+	 */
+	static listAgents = (groupId?: string) =>
+		Effect.gen(function* () {
+			return yield* ThingService.list({
+				type: "agent",
+				status: "active",
+				groupId,
+			});
+		});
 
-  /**
-   * List all conversations/threads
-   */
-  static listThreads = (userId?: string, groupId?: string) =>
-    Effect.gen(function* () {
-      const threads = yield* ThingService.list({
-        type: "conversation",
-        status: "active",
-        groupId,
-      });
+	/**
+	 * List all conversations/threads
+	 */
+	static listThreads = (userId?: string, groupId?: string) =>
+		Effect.gen(function* () {
+			const threads = yield* ThingService.list({
+				type: "conversation",
+				status: "active",
+				groupId,
+			});
 
-      if (userId) {
-        return threads.filter((t) => t.properties.userId === userId);
-      }
+			if (userId) {
+				return threads.filter((t) => t.properties.userId === userId);
+			}
 
-      return threads;
-    });
+			return threads;
+		});
 }

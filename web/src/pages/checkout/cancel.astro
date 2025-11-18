@@ -1,0 +1,84 @@
+---
+/**
+ * Checkout Cancelled Page
+ *
+ * Displayed when user cancels Stripe payment
+ */
+
+import { XCircle } from "lucide-react";
+import Layout from "@/layouts/Layout.astro";
+---
+
+<Layout title="Checkout Cancelled" sidebarInitialCollapsed={true}>
+  <div class="min-h-screen flex items-center justify-center p-6">
+    <div class="max-w-md w-full space-y-8 text-center">
+      <!-- Cancel Icon -->
+      <div class="flex justify-center">
+        <div class="rounded-full bg-orange-100 dark:bg-orange-900/20 p-6">
+          <XCircle className="h-16 w-16 text-orange-600 dark:text-orange-400" />
+        </div>
+      </div>
+
+      <!-- Cancel Message -->
+      <div class="space-y-4">
+        <h1 class="text-4xl font-bold text-foreground">
+          Checkout Cancelled
+        </h1>
+        <p class="text-lg text-muted-foreground">
+          Your payment was cancelled. No charges were made.
+        </p>
+      </div>
+
+      <!-- What Happened -->
+      <div class="bg-muted/50 rounded-lg p-6 text-sm text-left space-y-3">
+        <h3 class="font-semibold text-foreground">What happened?</h3>
+        <ul class="space-y-2 text-muted-foreground">
+          <li class="flex items-start gap-2">
+            <span class="text-primary">•</span>
+            <span>You cancelled the checkout process</span>
+          </li>
+          <li class="flex items-start gap-2">
+            <span class="text-primary">•</span>
+            <span>No payment was processed</span>
+          </li>
+          <li class="flex items-start gap-2">
+            <span class="text-primary">•</span>
+            <span>Your cart items are still available</span>
+          </li>
+        </ul>
+      </div>
+
+      <!-- Next Steps -->
+      <div class="space-y-4 pt-6 border-t">
+        <p class="text-sm text-muted-foreground">
+          Ready to complete your purchase? You can try again anytime.
+        </p>
+
+        <div class="flex flex-col sm:flex-row gap-3">
+          <a
+            href="/chat"
+            class="flex-1 inline-flex items-center justify-center px-6 py-3 border border-transparent text-base font-medium rounded-md text-white bg-primary hover:bg-primary/90 transition-colors"
+          >
+            Try Again
+          </a>
+          <a
+            href="/"
+            class="flex-1 inline-flex items-center justify-center px-6 py-3 border border-border text-base font-medium rounded-md text-foreground bg-background hover:bg-muted transition-colors"
+          >
+            Return to Home
+          </a>
+        </div>
+      </div>
+
+      <!-- Support -->
+      <div class="pt-6 text-xs text-muted-foreground">
+        <p>
+          Having trouble? Contact us at{' '}
+          <a href="mailto:support@example.com" class="underline hover:text-foreground">
+            support@example.com
+          </a>
+        </p>
+      </div>
+    </div>
+  </div>
+</Layout>

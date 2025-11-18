@@ -9,9 +9,9 @@
  * POST /api/connections              - Create a new connection
  */
 
-import type { APIRoute } from 'astro';
-import { getDefaultProvider } from '@/providers/factory';
-import { successResponse, errorResponse, getStatusCode } from '../response';
+import type { APIRoute } from "astro";
+import { getDefaultProvider } from "@/providers/factory";
+import { errorResponse, getStatusCode, successResponse } from "../response";
 
 /**
  * GET /api/connections
@@ -44,61 +44,63 @@ import { successResponse, errorResponse, getStatusCode } from '../response';
  * ```
  */
 export const GET: APIRoute = async ({ url }) => {
-  try {
-    const provider = getDefaultProvider();
-    const { Effect } = await import('effect');
+	try {
+		const provider = getDefaultProvider();
+		const { Effect } = await import("effect");
 
-    // Parse query parameters
-    const type = url.searchParams.get('type');
-    const fromEntityId = url.searchParams.get('fromEntityId');
-    const toEntityId = url.searchParams.get('toEntityId');
-    const groupId = url.searchParams.get('groupId');
-    const limit = Math.min(
-      parseInt(url.searchParams.get('limit') || '50'),
-      1000
-    );
-    const offset = parseInt(url.searchParams.get('offset') || '0');
+		// Parse query parameters
+		const type = url.searchParams.get("type");
+		const fromEntityId = url.searchParams.get("fromEntityId");
+		const toEntityId = url.searchParams.get("toEntityId");
+		const groupId = url.searchParams.get("groupId");
+		const limit = Math.min(
+			parseInt(url.searchParams.get("limit") || "50"),
+			1000,
+		);
+		const offset = parseInt(url.searchParams.get("offset") || "0");
 
-    // Build filter
-    const filter: Record<string, any> = {};
-    if (type) filter.relationshipType = type;
-    if (fromEntityId) filter.fromEntityId = fromEntityId;
-    if (toEntityId) filter.toEntityId = toEntityId;
-    if (groupId) filter.groupId = groupId;
+		// Build filter
+		const filter: Record<string, any> = {};
+		if (type) filter.relationshipType = type;
+		if (fromEntityId) filter.fromEntityId = fromEntityId;
+		if (toEntityId) filter.toEntityId = toEntityId;
+		if (groupId) filter.groupId = groupId;
 
-    // List connections via provider and extract Effect value
-    const connections = await Effect.runPromise(provider.connections.list(filter));
+		// List connections via provider and extract Effect value
+		const connections = await Effect.runPromise(
+			provider.connections.list(filter),
+		);
 
-    // Paginate
-    const paginated = connections.slice(offset, offset + limit);
+		// Paginate
+		const paginated = connections.slice(offset, offset + limit);
 
-    return new Response(
-      JSON.stringify(
-        successResponse({
-          connections: paginated,
-          total: connections.length,
-          limit,
-          offset,
-        })
-      ),
-      {
-        status: 200,
-        headers: {
-          'Content-Type': 'application/json',
-          'Cache-Control': 'max-age=60, public',
-        },
-      }
-    );
-  } catch (error) {
-    const message = error instanceof Error ? error.message : 'Unknown error';
-    const response = errorResponse('INTERNAL_ERROR', message);
-    const status = getStatusCode(response.error);
+		return new Response(
+			JSON.stringify(
+				successResponse({
+					connections: paginated,
+					total: connections.length,
+					limit,
+					offset,
+				}),
+			),
+			{
+				status: 200,
+				headers: {
+					"Content-Type": "application/json",
+					"Cache-Control": "max-age=60, public",
+				},
+			},
+		);
+	} catch (error) {
+		const message = error instanceof Error ? error.message : "Unknown error";
+		const response = errorResponse("INTERNAL_ERROR", message);
+		const status = getStatusCode(response.error);
 
-    return new Response(JSON.stringify(response), {
-      status,
-      headers: { 'Content-Type': 'application/json' },
-    });
-  }
+		return new Response(JSON.stringify(response), {
+			status,
+			headers: { "Content-Type": "application/json" },
+		});
+	}
 };
 
 /**
@@ -144,82 +146,85 @@ export const GET: APIRoute = async ({ url }) => {
  * ```
  */
 export const POST: APIRoute = async ({ request }) => {
-  try {
-    const provider = getDefaultProvider();
-    const { Effect } = await import('effect');
-    const body = await request.json();
+	try {
+		const provider = getDefaultProvider();
+		const { Effect } = await import("effect");
+		const body = await request.json();
 
-    // Validate required fields
-    if (!body.fromEntityId || typeof body.fromEntityId !== 'string') {
-      const response = errorResponse(
-        'VALIDATION_ERROR',
-        'fromEntityId is required and must be a string'
-      );
-      return new Response(JSON.stringify(response), {
-        status: getStatusCode(response.error),
-        headers: { 'Content-Type': 'application/json' },
-      });
-    }
+		// Validate required fields
+		if (!body.fromEntityId || typeof body.fromEntityId !== "string") {
+			const response = errorResponse(
+				"VALIDATION_ERROR",
+				"fromEntityId is required and must be a string",
+			);
+			return new Response(JSON.stringify(response), {
+				status: getStatusCode(response.error),
+				headers: { "Content-Type": "application/json" },
+			});
+		}
 
-    if (!body.toEntityId || typeof body.toEntityId !== 'string') {
-      const response = errorResponse(
-        'VALIDATION_ERROR',
-        'toEntityId is required and must be a string'
-      );
-      return new Response(JSON.stringify(response), {
-        status: getStatusCode(response.error),
-        headers: { 'Content-Type': 'application/json' },
-      });
-    }
+		if (!body.toEntityId || typeof body.toEntityId !== "string") {
+			const response = errorResponse(
+				"VALIDATION_ERROR",
+				"toEntityId is required and must be a string",
+			);
+			return new Response(JSON.stringify(response), {
+				status: getStatusCode(response.error),
+				headers: { "Content-Type": "application/json" },
+			});
+		}
 
-    if (!body.relationshipType || typeof body.relationshipType !== 'string') {
-      const response = errorResponse(
-        'VALIDATION_ERROR',
-        'relationshipType is required and must be a string'
-      );
-      return new Response(JSON.stringify(response), {
-        status: getStatusCode(response.error),
-        headers: { 'Content-Type': 'application/json' },
-      });
-    }
+		if (!body.relationshipType || typeof body.relationshipType !== "string") {
+			const response = errorResponse(
+				"VALIDATION_ERROR",
+				"relationshipType is required and must be a string",
+			);
+			return new Response(JSON.stringify(response), {
+				status: getStatusCode(response.error),
+				headers: { "Content-Type": "application/json" },
+			});
+		}
 
-    if (!body.groupId || typeof body.groupId !== 'string') {
-      const response = errorResponse(
-        'VALIDATION_ERROR',
-        'groupId is required and must be a string'
-      );
-      return new Response(JSON.stringify(response), {
-        status: getStatusCode(response.error),
-        headers: { 'Content-Type': 'application/json' },
-      });
-    }
+		if (!body.groupId || typeof body.groupId !== "string") {
+			const response = errorResponse(
+				"VALIDATION_ERROR",
+				"groupId is required and must be a string",
+			);
+			return new Response(JSON.stringify(response), {
+				status: getStatusCode(response.error),
+				headers: { "Content-Type": "application/json" },
+			});
+		}
 
-    // Create connection and extract Effect value
-    const connectionId = await Effect.runPromise(
-      provider.connections.create({
-        fromEntityId: body.fromEntityId,
-        toEntityId: body.toEntityId,
-        relationshipType: body.relationshipType,
-        groupId: body.groupId,
-        metadata: body.metadata || {},
-      })
-    );
+		// Create connection and extract Effect value
+		const connectionId = await Effect.runPromise(
+			provider.connections.create({
+				fromEntityId: body.fromEntityId,
+				toEntityId: body.toEntityId,
+				relationshipType: body.relationshipType,
+				groupId: body.groupId,
+				metadata: body.metadata || {},
+			}),
+		);
 
-    return new Response(JSON.stringify(successResponse({ _id: connectionId })), {
-      status: 201,
-      headers: {
-        'Content-Type': 'application/json',
-        'Cache-Control': 'no-cache',
-      },
-    });
-  } catch (error) {
-    const message = error instanceof Error ? error.message : 'Unknown error';
-    const response = errorResponse('INTERNAL_ERROR', message);
-    const status = getStatusCode(response.error);
+		return new Response(
+			JSON.stringify(successResponse({ _id: connectionId })),
+			{
+				status: 201,
+				headers: {
+					"Content-Type": "application/json",
+					"Cache-Control": "no-cache",
+				},
+			},
+		);
+	} catch (error) {
+		const message = error instanceof Error ? error.message : "Unknown error";
+		const response = errorResponse("INTERNAL_ERROR", message);
+		const status = getStatusCode(response.error);
 
-    return new Response(JSON.stringify(response), {
-      status,
-      headers: { 'Content-Type': 'application/json' },
-    });
-  }
+		return new Response(JSON.stringify(response), {
+			status,
+			headers: { "Content-Type": "application/json" },
+		});
+	}
 };

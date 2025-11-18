@@ -5,8 +5,8 @@
  * Multi-step checkout with Stripe integration
  */
 
-import Layout from '@/layouts/Layout.astro';
-import { CheckoutForm } from '@/components/ecommerce/interactive/CheckoutForm';
+import { CheckoutForm } from "@/components/shop/interactive/CheckoutForm";
+import Layout from "@/layouts/Layout.astro";
 ---
 
 <Layout title="Checkout - ONE Store" description="Complete your purchase">
@@ -84,7 +84,7 @@ import { CheckoutForm } from '@/components/ecommerce/interactive/CheckoutForm';
   <!-- Client-side rendering -->
   <script>
     import { $cart, $cartSubtotal, $cartTotal, cartActions } from '@/stores/cart';
-    import { CheckoutForm } from '@/components/ecommerce/interactive/CheckoutForm';
+    import { CheckoutForm } from '@/components/shop/interactive/CheckoutForm';
     import { createElement } from 'react';
     import { createRoot } from 'react-dom/client';
 

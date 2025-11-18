@@ -22,55 +22,55 @@
  * ```
  */
 
-import { useCallback, useEffect, useState } from 'react';
-import { Effect } from 'effect';
-import type { Id } from '@/types/convex';
-import { useEffectRunner } from '../useEffectRunner';
-import { useIsProviderAvailable } from './useProvider';
+import { Effect } from "effect";
+import { useCallback, useEffect, useState } from "react";
+import type { Id } from "@/types/convex";
+import { useEffectRunner } from "../useEffectRunner";
+import { useIsProviderAvailable } from "./useProvider";
 
 /**
  * Base Thing entity (all 66+ types)
  */
 export interface Thing {
-  _id: Id<'entities'>;
-  _creationTime: number;
-  type: string;
-  name: string;
-  properties: Record<string, any>;
-  status?: 'active' | 'inactive' | 'draft' | 'published' | 'archived';
-  createdAt: number;
-  updatedAt: number;
-  deletedAt?: number;
+	_id: Id<"entities">;
+	_creationTime: number;
+	type: string;
+	name: string;
+	properties: Record<string, any>;
+	status?: "active" | "inactive" | "draft" | "published" | "archived";
+	createdAt: number;
+	updatedAt: number;
+	deletedAt?: number;
 }
 
 /**
  * Input for creating a new thing
  */
 export interface CreateThingInput {
-  type: string;
-  name: string;
-  properties: Record<string, any>;
-  status?: 'active' | 'inactive' | 'draft' | 'published' | 'archived';
+	type: string;
+	name: string;
+	properties: Record<string, any>;
+	status?: "active" | "inactive" | "draft" | "published" | "archived";
 }
 
 /**
  * Input for updating a thing
  */
 export interface UpdateThingInput {
-  name?: string;
-  properties?: Record<string, any>;
-  status?: 'active' | 'inactive' | 'draft' | 'published' | 'archived';
+	name?: string;
+	properties?: Record<string, any>;
+	status?: "active" | "inactive" | "draft" | "published" | "archived";
 }
 
 /**
  * Filters for querying things
  */
 export interface ThingFilter {
-  type?: string;
-  status?: 'active' | 'inactive' | 'draft' | 'published' | 'archived';
-  limit?: number;
-  offset?: number;
-  search?: string;
+	type?: string;
+	status?: "active" | "inactive" | "draft" | "published" | "archived";
+	limit?: number;
+	offset?: number;
+	search?: string;
 }
 
 /**
@@ -95,129 +95,129 @@ export interface ThingFilter {
  * ```
  */
 export function useThing() {
-  const { run, loading, error } = useEffectRunner<unknown, any>();
-  const isProviderAvailable = useIsProviderAvailable();
+	const { run, loading, error } = useEffectRunner<unknown, any>();
+	const isProviderAvailable = useIsProviderAvailable();
 
-  /**
-   * Get a single thing by ID
-   */
-  const get = useCallback(
-    async (
-      id: Id<'entities'>,
-      options?: {
-        onSuccess?: (thing: Thing) => void;
-        onError?: (error: unknown) => void;
-      }
-    ) => {
-      if (!isProviderAvailable) {
-        options?.onError?.(new Error('Provider not available'));
-        return null;
-      }
+	/**
+	 * Get a single thing by ID
+	 */
+	const get = useCallback(
+		async (
+			id: Id<"entities">,
+			options?: {
+				onSuccess?: (thing: Thing) => void;
+				onError?: (error: unknown) => void;
+			},
+		) => {
+			if (!isProviderAvailable) {
+				options?.onError?.(new Error("Provider not available"));
+				return null;
+			}
 
-      const program = Effect.gen(function* () {
-        // TODO: Implement with actual DataProvider
-        // const provider = yield* DataProvider;
-        // return yield* provider.things.get(id);
-        return null as unknown as Thing;
-      });
+			const program = Effect.gen(function* () {
+				// TODO: Implement with actual DataProvider
+				// const provider = yield* DataProvider;
+				// return yield* provider.things.get(id);
+				return null as unknown as Thing;
+			});
 
-      return run(program, options);
-    },
-    [isProviderAvailable, run]
-  );
+			return run(program, options);
+		},
+		[isProviderAvailable, run],
+	);
 
-  /**
-   * Create a new thing
-   */
-  const create = useCallback(
-    async (
-      input: CreateThingInput,
-      options?: {
-        onSuccess?: (thing: Thing) => void;
-        onError?: (error: unknown) => void;
-      }
-    ) => {
-      if (!isProviderAvailable) {
-        options?.onError?.(new Error('Provider not available'));
-        return null;
-      }
+	/**
+	 * Create a new thing
+	 */
+	const create = useCallback(
+		async (
+			input: CreateThingInput,
+			options?: {
+				onSuccess?: (thing: Thing) => void;
+				onError?: (error: unknown) => void;
+			},
+		) => {
+			if (!isProviderAvailable) {
+				options?.onError?.(new Error("Provider not available"));
+				return null;
+			}
 
-      const program = Effect.gen(function* () {
-        // TODO: Implement with actual DataProvider
-        // const provider = yield* DataProvider;
-        // return yield* provider.things.create(input);
-        return null as unknown as Thing;
-      });
+			const program = Effect.gen(function* () {
+				// TODO: Implement with actual DataProvider
+				// const provider = yield* DataProvider;
+				// return yield* provider.things.create(input);
+				return null as unknown as Thing;
+			});
 
-      return run(program, options);
-    },
-    [isProviderAvailable, run]
-  );
+			return run(program, options);
+		},
+		[isProviderAvailable, run],
+	);
 
-  /**
-   * Update an existing thing
-   */
-  const update = useCallback(
-    async (
-      id: Id<'entities'>,
-      input: UpdateThingInput,
-      options?: {
-        onSuccess?: (thing: Thing) => void;
-        onError?: (error: unknown) => void;
-      }
-    ) => {
-      if (!isProviderAvailable) {
-        options?.onError?.(new Error('Provider not available'));
-        return null;
-      }
+	/**
+	 * Update an existing thing
+	 */
+	const update = useCallback(
+		async (
+			id: Id<"entities">,
+			input: UpdateThingInput,
+			options?: {
+				onSuccess?: (thing: Thing) => void;
+				onError?: (error: unknown) => void;
+			},
+		) => {
+			if (!isProviderAvailable) {
+				options?.onError?.(new Error("Provider not available"));
+				return null;
+			}
 
-      const program = Effect.gen(function* () {
-        // TODO: Implement with actual DataProvider
-        // const provider = yield* DataProvider;
-        // return yield* provider.things.update(id, input);
-        return null as unknown as Thing;
-      });
+			const program = Effect.gen(function* () {
+				// TODO: Implement with actual DataProvider
+				// const provider = yield* DataProvider;
+				// return yield* provider.things.update(id, input);
+				return null as unknown as Thing;
+			});
 
-      return run(program, options);
-    },
-    [isProviderAvailable, run]
-  );
+			return run(program, options);
+		},
+		[isProviderAvailable, run],
+	);
 
-  /**
-   * Delete (soft delete) a thing
-   */
-  const remove = useCallback(
-    async (
-      id: Id<'entities'>,
-      options?: {
-        onSuccess?: () => void;
-        onError?: (error: unknown) => void;
-      }
-    ) => {
-      if (!isProviderAvailable) {
-        options?.onError?.(new Error('Provider not available'));
-        return;
-      }
+	/**
+	 * Delete (soft delete) a thing
+	 */
+	const remove = useCallback(
+		async (
+			id: Id<"entities">,
+			options?: {
+				onSuccess?: () => void;
+				onError?: (error: unknown) => void;
+			},
+		) => {
+			if (!isProviderAvailable) {
+				options?.onError?.(new Error("Provider not available"));
+				return;
+			}
 
-      const program = Effect.gen(function* () {
-        // TODO: Implement with actual DataProvider
-        // const provider = yield* DataProvider;
-        // return yield* provider.things.delete(id);
-      });
+			const program = Effect.gen(function* () {
+				// TODO: Implement with actual DataProvider
+				// const provider = yield* DataProvider;
+				// return yield* provider.things.delete(id);
+			});
 
-      return run(program, options);
-    },
-    [isProviderAvailable, run]
-  );
+			return run(program, options);
+		},
+		[isProviderAvailable, run],
+	);
 
-  return {
-    get,
-    create,
-    update,
-    remove,
-    loading,
-    error,
-  };
+	return {
+		get,
+		create,
+		update,
+		remove,
+		loading,
+		error,
+	};
 }
 
 /**
@@ -243,33 +243,33 @@ export function useThing() {
  * ```
  */
 export function useThings(filter?: ThingFilter) {
-  const { run, loading, error } = useEffectRunner<unknown, any>();
-  const isProviderAvailable = useIsProviderAvailable();
-  const [things, setThings] = useState<Thing[]>([]);
+	const { run, loading, error } = useEffectRunner<unknown, any>();
+	const isProviderAvailable = useIsProviderAvailable();
+	const [things, setThings] = useState<Thing[]>([]);
 
-  useEffect(() => {
-    if (!isProviderAvailable) {
-      setThings([]);
-      return;
-    }
+	useEffect(() => {
+		if (!isProviderAvailable) {
+			setThings([]);
+			return;
+		}
 
-    const program = Effect.gen(function* () {
-      // TODO: Implement with actual DataProvider
-      // const provider = yield* DataProvider;
-      // return yield* provider.things.list(filter);
-      return [] as Thing[];
-    });
+		const program = Effect.gen(function* () {
+			// TODO: Implement with actual DataProvider
+			// const provider = yield* DataProvider;
+			// return yield* provider.things.list(filter);
+			return [] as Thing[];
+		});
 
-    run(program, {
-      onSuccess: (data) => setThings(data),
-    });
-  }, [isProviderAvailable, filter?.type, filter?.status, run]);
+		run(program, {
+			onSuccess: (data) => setThings(data),
+		});
+	}, [isProviderAvailable, filter?.type, filter?.status, run]);
 
-  return {
-    things,
-    loading,
-    error,
-  };
+	return {
+		things,
+		loading,
+		error,
+	};
 }
 
 /**
@@ -286,34 +286,34 @@ export function useThings(filter?: ThingFilter) {
  * return <CourseDetail course={course} />;
  * ```
  */
-export function useThingDetail(id?: Id<'entities'>) {
-  const { get } = useThing();
-  const [thing, setThing] = useState<Thing | null>(null);
-  const [loading, setLoading] = useState(false);
+export function useThingDetail(id?: Id<"entities">) {
+	const { get } = useThing();
+	const [thing, setThing] = useState<Thing | null>(null);
+	const [loading, setLoading] = useState(false);
 
-  useEffect(() => {
-    if (!id) {
-      setThing(null);
-      return;
-    }
+	useEffect(() => {
+		if (!id) {
+			setThing(null);
+			return;
+		}
 
-    setLoading(true);
-    get(id, {
-      onSuccess: (data) => {
-        setThing(data);
-        setLoading(false);
-      },
-      onError: () => {
-        setThing(null);
-        setLoading(false);
-      },
-    });
-  }, [id, get]);
+		setLoading(true);
+		get(id, {
+			onSuccess: (data) => {
+				setThing(data);
+				setLoading(false);
+			},
+			onError: () => {
+				setThing(null);
+				setLoading(false);
+			},
+		});
+	}, [id, get]);
 
-  return {
-    thing,
-    loading,
-  };
+	return {
+		thing,
+		loading,
+	};
 }
 
 /**
@@ -330,13 +330,13 @@ export function useThingDetail(id?: Id<'entities'>) {
  * ```
  */
 export function useThingsByType<T extends string>(
-  type: T,
-  filter?: Omit<ThingFilter, 'type'>
+	type: T,
+	filter?: Omit<ThingFilter, "type">,
 ) {
-  return useThings({
-    ...filter,
-    type,
-  });
+	return useThings({
+		...filter,
+		type,
+	});
 }
 
 /**
@@ -363,10 +363,10 @@ export function useThingsByType<T extends string>(
  * ```
  */
 export function useThingSearch(query: string, type?: string) {
-  return useThings({
-    search: query,
-    type,
-  });
+	return useThings({
+		search: query,
+		type,
+	});
 }
 
 /**
@@ -381,10 +381,10 @@ export function useThingSearch(query: string, type?: string) {
  * ```
  */
 export function usePublishedThings(type?: string) {
-  return useThings({
-    type,
-    status: 'published',
-  });
+	return useThings({
+		type,
+		status: "published",
+	});
 }
 
 /**
@@ -399,9 +399,9 @@ export function usePublishedThings(type?: string) {
  * ```
  */
 export function useMyThings(type?: string) {
-  // In real implementation, this would query by connection
-  // (things where current user has 'owns' connection)
-  return useThings({
-    type,
-  });
+	// In real implementation, this would query by connection
+	// (things where current user has 'owns' connection)
+	return useThings({
+		type,
+	});
 }

@@ -11,9 +11,9 @@ import { AppProviders } from "@/components/providers/AppProviders";
 import { SimpleSignInForm } from "./SimpleSignInForm";
 
 export function SignInPage() {
-  return (
-    <AppProviders>
-      <SimpleSignInForm />
-    </AppProviders>
-  );
+	return (
+		<AppProviders>
+			<SimpleSignInForm />
+		</AppProviders>
+	);
 }

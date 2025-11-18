@@ -24,78 +24,78 @@
  * ```
  */
 
-import { useCallback, useEffect, useState } from 'react';
-import { Effect } from 'effect';
-import type { Id } from '@/types/convex';
-import { useEffectRunner } from '../useEffectRunner';
-import { useIsProviderAvailable } from './useProvider';
+import { Effect } from "effect";
+import { useCallback, useEffect, useState } from "react";
+import type { Id } from "@/types/convex";
+import { useEffectRunner } from "../useEffectRunner";
+import { useIsProviderAvailable } from "./useProvider";
 
 /**
  * Group types (6 types total)
  */
 export type GroupType =
-  | 'friend_circle'
-  | 'business'
-  | 'community'
-  | 'dao'
-  | 'government'
-  | 'organization';
+	| "friend_circle"
+	| "business"
+	| "community"
+	| "dao"
+	| "government"
+	| "organization";
 
 /**
  * Pricing plans for organizations
  */
-export type GroupPlan = 'starter' | 'pro' | 'enterprise';
+export type GroupPlan = "starter" | "pro" | "enterprise";
 
 /**
  * Group entity from ontology
  */
 export interface Group {
-  _id: Id<'groups'>;
-  _creationTime: number;
-  name: string;
-  type: GroupType;
-  parentGroupId?: Id<'groups'>;
-  properties: {
-    description?: string;
-    plan?: GroupPlan;
-    settings?: Record<string, any>;
-    metadata?: Record<string, any>;
-  };
-  status: 'draft' | 'active' | 'archived';
-  createdAt: number;
-  updatedAt: number;
+	_id: Id<"groups">;
+	_creationTime: number;
+	name: string;
+	type: GroupType;
+	parentGroupId?: Id<"groups">;
+	properties: {
+		description?: string;
+		plan?: GroupPlan;
+		settings?: Record<string, any>;
+		metadata?: Record<string, any>;
+	};
+	status: "draft" | "active" | "archived";
+	createdAt: number;
+	updatedAt: number;
 }
 
 /**
  * Input for creating a new group
  */
 export interface CreateGroupInput {
-  name: string;
-  type: GroupType;
-  description?: string;
-  plan?: GroupPlan;
-  parentGroupId?: Id<'groups'>;
+	name: string;
+	type: GroupType;
+	description?: string;
+	plan?: GroupPlan;
+	parentGroupId?: Id<"groups">;
 }
 
 /**
  * Input for updating a group
  */
 export interface UpdateGroupInput {
-  name?: string;
-  description?: string;
-  plan?: GroupPlan;
-  status?: 'draft' | 'active' | 'archived';
+	name?: string;
+	description?: string;
+	plan?: GroupPlan;
+	status?: "draft" | "active" | "archived";
 }
 
 /**
  * Query filters for listing groups
  */
 export interface GroupFilter {
-  type?: GroupType;
-  parentGroupId?: Id<'groups'>;
-  status?: 'draft' | 'active' | 'archived';
-  limit?: number;
-  offset?: number;
+	type?: GroupType;
+	parentGroupId?: Id<"groups">;
+	status?: "draft" | "active" | "archived";
+	limit?: number;
+	offset?: number;
 }
 
 /**
@@ -117,101 +117,101 @@ export interface GroupFilter {
  * ```
  */
 export function useGroup() {
-  const { run, loading, error } = useEffectRunner<unknown, any>();
-  const isProviderAvailable = useIsProviderAvailable();
+	const { run, loading, error } = useEffectRunner<unknown, any>();
+	const isProviderAvailable = useIsProviderAvailable();
 
-  /**
-   * Get a single group by ID
-   */
-  const get = useCallback(
-    async (
-      id: Id<'groups'>,
-      options?: {
-        onSuccess?: (group: Group) => void;
-        onError?: (error: unknown) => void;
-      }
-    ) => {
-      if (!isProviderAvailable) {
-        options?.onError?.(new Error('Provider not available'));
-        return null;
-      }
+	/**
+	 * Get a single group by ID
+	 */
+	const get = useCallback(
+		async (
+			id: Id<"groups">,
+			options?: {
+				onSuccess?: (group: Group) => void;
+				onError?: (error: unknown) => void;
+			},
+		) => {
+			if (!isProviderAvailable) {
+				options?.onError?.(new Error("Provider not available"));
+				return null;
+			}
 
-      const program = Effect.gen(function* () {
-        // TODO: Implement with actual DataProvider
-        // const provider = yield* DataProvider;
-        // return yield* provider.groups.get(id);
-        return null as unknown as Group;
-      });
+			const program = Effect.gen(function* () {
+				// TODO: Implement with actual DataProvider
+				// const provider = yield* DataProvider;
+				// return yield* provider.groups.get(id);
+				return null as unknown as Group;
+			});
 
-      return run(program, options);
-    },
-    [isProviderAvailable, run]
-  );
+			return run(program, options);
+		},
+		[isProviderAvailable, run],
+	);
 
-  /**
-   * Create a new group
-   */
-  const create = useCallback(
-    async (
-      input: CreateGroupInput,
-      options?: {
-        onSuccess?: (group: Group) => void;
-        onError?: (error: unknown) => void;
-      }
-    ) => {
-      if (!isProviderAvailable) {
-        options?.onError?.(new Error('Provider not available'));
-        return null;
-      }
+	/**
+	 * Create a new group
+	 */
+	const create = useCallback(
+		async (
+			input: CreateGroupInput,
+			options?: {
+				onSuccess?: (group: Group) => void;
+				onError?: (error: unknown) => void;
+			},
+		) => {
+			if (!isProviderAvailable) {
+				options?.onError?.(new Error("Provider not available"));
+				return null;
+			}
 
-      const program = Effect.gen(function* () {
-        // TODO: Implement with actual DataProvider
-        // const provider = yield* DataProvider;
-        // return yield* provider.groups.create(input);
-        return null as unknown as Group;
-      });
+			const program = Effect.gen(function* () {
+				// TODO: Implement with actual DataProvider
+				// const provider = yield* DataProvider;
+				// return yield* provider.groups.create(input);
+				return null as unknown as Group;
+			});
 
-      return run(program, options);
-    },
-    [isProviderAvailable, run]
-  );
+			return run(program, options);
+		},
+		[isProviderAvailable, run],
+	);
 
-  /**
-   * Update an existing group
-   */
-  const update = useCallback(
-    async (
-      id: Id<'groups'>,
-      input: UpdateGroupInput,
-      options?: {
-        onSuccess?: (group: Group) => void;
-        onError?: (error: unknown) => void;
-      }
-    ) => {
-      if (!isProviderAvailable) {
-        options?.onError?.(new Error('Provider not available'));
-        return null;
-      }
+	/**
+	 * Update an existing group
+	 */
+	const update = useCallback(
+		async (
+			id: Id<"groups">,
+			input: UpdateGroupInput,
+			options?: {
+				onSuccess?: (group: Group) => void;
+				onError?: (error: unknown) => void;
+			},
+		) => {
+			if (!isProviderAvailable) {
+				options?.onError?.(new Error("Provider not available"));
+				return null;
+			}
 
-      const program = Effect.gen(function* () {
-        // TODO: Implement with actual DataProvider
-        // const provider = yield* DataProvider;
-        // return yield* provider.groups.update(id, input);
-        return null as unknown as Group;
-      });
+			const program = Effect.gen(function* () {
+				// TODO: Implement with actual DataProvider
+				// const provider = yield* DataProvider;
+				// return yield* provider.groups.update(id, input);
+				return null as unknown as Group;
+			});
 
-      return run(program, options);
-    },
-    [isProviderAvailable, run]
-  );
+			return run(program, options);
+		},
+		[isProviderAvailable, run],
+	);
 
-  return {
-    get,
-    create,
-    update,
-    loading,
-    error,
-  };
+	return {
+		get,
+		create,
+		update,
+		loading,
+		error,
+	};
 }
 
 /**
@@ -237,33 +237,33 @@ export function useGroup() {
  * ```
  */
 export function useGroups(filter?: GroupFilter) {
-  const { run, loading, error } = useEffectRunner<unknown, any>();
-  const isProviderAvailable = useIsProviderAvailable();
-  const [groups, setGroups] = useState<Group[]>([]);
+	const { run, loading, error } = useEffectRunner<unknown, any>();
+	const isProviderAvailable = useIsProviderAvailable();
+	const [groups, setGroups] = useState<Group[]>([]);
 
-  useEffect(() => {
-    if (!isProviderAvailable) {
-      setGroups([]);
-      return;
-    }
+	useEffect(() => {
+		if (!isProviderAvailable) {
+			setGroups([]);
+			return;
+		}
 
-    const program = Effect.gen(function* () {
-      // TODO: Implement with actual DataProvider
-      // const provider = yield* DataProvider;
-      // return yield* provider.groups.list(filter);
-      return [] as Group[];
-    });
+		const program = Effect.gen(function* () {
+			// TODO: Implement with actual DataProvider
+			// const provider = yield* DataProvider;
+			// return yield* provider.groups.list(filter);
+			return [] as Group[];
+		});
 
-    run(program, {
-      onSuccess: (data) => setGroups(data),
-    });
-  }, [isProviderAvailable, filter?.type, filter?.parentGroupId, run]);
+		run(program, {
+			onSuccess: (data) => setGroups(data),
+		});
+	}, [isProviderAvailable, filter?.type, filter?.parentGroupId, run]);
 
-  return {
-    groups,
-    loading,
-    error,
-  };
+	return {
+		groups,
+		loading,
+		error,
+	};
 }
 
 /**
@@ -281,25 +281,25 @@ export function useGroups(filter?: GroupFilter) {
  * return <h1>{group.name}</h1>;
  * ```
  */
-export function useCurrentGroup(groupId?: Id<'groups'>) {
-  const { groups, loading, error } = useGroups();
-  const [currentGroup, setCurrentGroup] = useState<Group | null>(null);
+export function useCurrentGroup(groupId?: Id<"groups">) {
+	const { groups, loading, error } = useGroups();
+	const [currentGroup, setCurrentGroup] = useState<Group | null>(null);
 
-  useEffect(() => {
-    if (!groupId || !groups) {
-      setCurrentGroup(null);
-      return;
-    }
+	useEffect(() => {
+		if (!groupId || !groups) {
+			setCurrentGroup(null);
+			return;
+		}
 
-    const group = groups.find((g) => g._id === groupId);
-    setCurrentGroup(group || null);
-  }, [groupId, groups]);
+		const group = groups.find((g) => g._id === groupId);
+		setCurrentGroup(group || null);
+	}, [groupId, groups]);
 
-  return {
-    group: currentGroup,
-    loading,
-    error,
-  };
+	return {
+		group: currentGroup,
+		loading,
+		error,
+	};
 }
 
 /**
@@ -314,9 +314,9 @@ export function useCurrentGroup(groupId?: Id<'groups'>) {
  * // Returns all departments under organization
  * ```
  */
-export function useChildGroups(parentGroupId: Id<'groups'>) {
-  return useGroups({
-    parentGroupId,
-    status: 'active',
-  });
+export function useChildGroups(parentGroupId: Id<"groups">) {
+	return useGroups({
+		parentGroupId,
+		status: "active",
+	});
 }

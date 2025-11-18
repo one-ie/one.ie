@@ -1,33 +1,35 @@
 ---
-import Layout from '../../../../layouts/Layout.astro';
-import { Button } from '@/components/ui/button';
-import { Badge } from '@/components/ui/badge';
+import { Heart, RefreshCcw, ShoppingCart, Star, TruckIcon } from "lucide-react";
+import { Badge } from "@/components/ui/badge";
+import { Button } from "@/components/ui/button";
 import {
-  Card,
-  CardHeader,
-  CardTitle,
-  CardDescription,
-} from '@/components/ui/card';
-import { products } from '../../lib/products';
-import type { Product } from '../../lib/types';
-import { ShoppingCart, Heart, Star, TruckIcon, RefreshCcw } from 'lucide-react';
+	Card,
+	CardDescription,
+	CardHeader,
+	CardTitle,
+} from "@/components/ui/card";
+import Layout from "../../../../layouts/Layout.astro";
+import { products } from "../../lib/products";
+import type { Product } from "../../lib/types";
 
 const { id } = Astro.params;
 const product = products.find((p: Product) => p.id === id);
 
 if (!product) {
-  return Astro.redirect('/shop');
+	return Astro.redirect("/shop");
 }
 
 // Get related products (same category, exclude current)
 const relatedProducts = products
-  .filter((p: Product) => p.category === product.category && p.id !== product.id)
-  .slice(0, 4);
+	.filter(
+		(p: Product) => p.category === product.category && p.id !== product.id,
+	)
+	.slice(0, 4);
 
 const displayPrice = product.salePrice || product.price;
 const savings = product.salePrice
-  ? Math.round(((product.price - product.salePrice) / product.price) * 100)
-  : 0;
+	? Math.round(((product.price - product.salePrice) / product.price) * 100)
+	: 0;
 ---
 
 <Layout title={`${product.name} | SHOS`}>

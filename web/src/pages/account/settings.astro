@@ -1,21 +1,21 @@
 ---
-import Layout from '@/layouts/Layout.astro';
+import { Button } from "@/components/ui/button";
 import {
-  Card,
-  CardContent,
-  CardDescription,
-  CardHeader,
-  CardTitle,
-} from '@/components/ui/card';
-import { Button } from '@/components/ui/button';
-import { Input } from '@/components/ui/input';
-import { Label } from '@/components/ui/label';
+	Card,
+	CardContent,
+	CardDescription,
+	CardHeader,
+	CardTitle,
+} from "@/components/ui/card";
+import { Input } from "@/components/ui/input";
+import { Label } from "@/components/ui/label";
+import Layout from "@/layouts/Layout.astro";
 
 export const prerender = false;
 
 const session = Astro.locals.session;
 if (!session) {
-  return Astro.redirect('/auth?redirect=/settings');
+	return Astro.redirect("/auth?redirect=/settings");
 }
 
 const user = Astro.locals.user;

@@ -1,28 +1,29 @@
 ---
-import { Button } from "@/components/ui/button";
-import { Badge } from "@/components/ui/badge";
 import { Rocket } from "lucide-react";
+import { Badge } from "@/components/ui/badge";
+import { Button } from "@/components/ui/button";
 import type { HeroSectionProps } from "@/types/landing-page";
 
 interface Props extends Omit<HeroSectionProps, "branding"> {
-  branding?: any;
+	branding?: any;
 }
 
 const { section, branding } = Astro.props;
 
 // Generate CSS variables for branding colors
 const brandingStyle = branding
-  ? `--primary: ${branding.primaryColor || "#3b82f6"}; --accent: ${branding.accentColor || "#f59e0b"};`
-  : "";
+	? `--primary: ${branding.primaryColor || "#3b82f6"}; --accent: ${branding.accentColor || "#f59e0b"};`
+	: "";
 
 // Determine background styling
 let backgroundStyle = "";
 if (section.backgroundImage) {
-  backgroundStyle = `background-image: url('${section.backgroundImage}'); background-size: cover; background-position: center;`;
+	backgroundStyle = `background-image: url('${section.backgroundImage}'); background-size: cover; background-position: center;`;
 } else if (section.backgroundGradient) {
-  backgroundStyle = `background: ${section.backgroundGradient};`;
+	backgroundStyle = `background: ${section.backgroundGradient};`;
 } else {
-  backgroundStyle = "background: linear-gradient(135deg, rgba(59, 130, 246, 0.1) 0%, rgba(245, 158, 11, 0.1) 100%);";
+	backgroundStyle =
+		"background: linear-gradient(135deg, rgba(59, 130, 246, 0.1) 0%, rgba(245, 158, 11, 0.1) 100%);";
 }
 
 const containerClass = `relative overflow-hidden px-4 py-20 sm:px-6 sm:py-32 md:px-8 md:py-40 ${section.customClass || ""}`;

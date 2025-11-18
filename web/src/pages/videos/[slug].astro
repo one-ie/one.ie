@@ -9,9 +9,9 @@
  * Example: /videos/VguPAHfksEY (YouTube video ID)
  */
 
-import Layout from '@/layouts/Layout.astro';
-import { VideoPlayer } from '@/components/media/VideoPlayer';
-import { fetchYouTubeVideo, fetchYouTubeVideos } from '@/services/youtube';
+import { VideoPlayer } from "@/components/media/VideoPlayer";
+import Layout from "@/layouts/Layout.astro";
+import { fetchYouTubeVideo, fetchYouTubeVideos } from "@/services/youtube";
 
 // Get YouTube API credentials
 const YOUTUBE_API_KEY = import.meta.env.YOUTUBE_API_KEY;
@@ -19,25 +19,29 @@ const YOUTUBE_CHANNEL_ID = import.meta.env.YOUTUBE_CHANNEL_ID;
 
 // Generate static paths for all videos from YouTube
 export async function getStaticPaths() {
-  const YOUTUBE_API_KEY = import.meta.env.YOUTUBE_API_KEY;
-  const YOUTUBE_CHANNEL_ID = import.meta.env.YOUTUBE_CHANNEL_ID;
+	const YOUTUBE_API_KEY = import.meta.env.YOUTUBE_API_KEY;
+	const YOUTUBE_CHANNEL_ID = import.meta.env.YOUTUBE_CHANNEL_ID;
 
-  if (!YOUTUBE_API_KEY || !YOUTUBE_CHANNEL_ID) {
-    console.warn('YouTube API credentials not configured');
-    return [];
-  }
+	if (!YOUTUBE_API_KEY || !YOUTUBE_CHANNEL_ID) {
+		console.warn("YouTube API credentials not configured");
+		return [];
+	}
 
-  try {
-    const videos = await fetchYouTubeVideos(YOUTUBE_API_KEY, YOUTUBE_CHANNEL_ID, 50);
+	try {
+		const videos = await fetchYouTubeVideos(
+			YOUTUBE_API_KEY,
+			YOUTUBE_CHANNEL_ID,
+			50,
+		);
 
-    return videos.map(video => ({
-      params: { slug: video.id },
-      props: { video }
-    }));
-  } catch (error) {
-    console.error('Error fetching videos for static paths:', error);
-    return [];
-  }
+		return videos.map((video) => ({
+			params: { slug: video.id },
+			props: { video },
+		}));
+	} catch (error) {
+		console.error("Error fetching videos for static paths:", error);
+		return [];
+	}
 }
 
 // Get video ID from URL params
@@ -47,16 +51,16 @@ const videoId = Astro.params.slug;
 let videoData = Astro.props.video;
 
 if (!videoData && YOUTUBE_API_KEY) {
-  try {
-    videoData = await fetchYouTubeVideo(YOUTUBE_API_KEY, videoId);
-  } catch (error) {
-    console.error('Error fetching video:', error);
-  }
+	try {
+		videoData = await fetchYouTubeVideo(YOUTUBE_API_KEY, videoId);
+	} catch (error) {
+		console.error("Error fetching video:", error);
+	}
 }
 
 // If no video found, redirect to videos page
 if (!videoData) {
-  return Astro.redirect('/videos');
+	return Astro.redirect("/videos");
 }
 
 // Page metadata

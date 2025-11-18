@@ -24,98 +24,98 @@
  * ```
  */
 
-import { useCallback, useEffect, useState } from 'react';
-import { Effect } from 'effect';
-import type { Id } from '@/types/convex';
-import { useEffectRunner } from '../useEffectRunner';
-import { useIsProviderAvailable } from './useProvider';
+import { Effect } from "effect";
+import { useCallback, useEffect, useState } from "react";
+import type { Id } from "@/types/convex";
+import { useEffectRunner } from "../useEffectRunner";
+import { useIsProviderAvailable } from "./useProvider";
 
 /**
  * Event types (67+ types including cycle and blockchain)
  */
 export type EventType =
-  // Core entity events
-  | 'entity_created'
-  | 'entity_updated'
-  | 'entity_deleted'
-  | 'entity_published'
-  | 'entity_archived'
-  // Content events
-  | 'blog_post_published'
-  | 'blog_post_commented'
-  | 'content_viewed'
-  | 'content_shared'
-  // User actions
-  | 'user_signup'
-  | 'user_login'
-  | 'user_logout'
-  | 'user_profile_updated'
-  // Course events
-  | 'course_created'
-  | 'course_enrolled'
-  | 'course_started'
-  | 'course_completed'
-  | 'lesson_completed'
-  // Token events
-  | 'tokens_purchased'
-  | 'tokens_transferred'
-  | 'tokens_staked'
-  // Transaction events
-  | 'payment_received'
-  | 'payment_failed'
-  | 'refund_issued'
-  // Cycle events
-  | 'cycle_request'
-  | 'cycle_completed'
-  | 'cycle_failed'
-  | 'cycle_quota_exceeded'
-  // Blockchain events
-  | 'nft_minted'
-  | 'nft_transferred'
-  | 'tokens_bridged'
-  // Community events
-  | 'comment_created'
-  | 'reaction_added'
-  | 'member_joined'
-  | 'member_left'
-  | string; // Allow custom event types
+	// Core entity events
+	| "entity_created"
+	| "entity_updated"
+	| "entity_deleted"
+	| "entity_published"
+	| "entity_archived"
+	// Content events
+	| "blog_post_published"
+	| "blog_post_commented"
+	| "content_viewed"
+	| "content_shared"
+	// User actions
+	| "user_signup"
+	| "user_login"
+	| "user_logout"
+	| "user_profile_updated"
+	// Course events
+	| "course_created"
+	| "course_enrolled"
+	| "course_started"
+	| "course_completed"
+	| "lesson_completed"
+	// Token events
+	| "tokens_purchased"
+	| "tokens_transferred"
+	| "tokens_staked"
+	// Transaction events
+	| "payment_received"
+	| "payment_failed"
+	| "refund_issued"
+	// Cycle events
+	| "cycle_request"
+	| "cycle_completed"
+	| "cycle_failed"
+	| "cycle_quota_exceeded"
+	// Blockchain events
+	| "nft_minted"
+	| "nft_transferred"
+	| "tokens_bridged"
+	// Community events
+	| "comment_created"
+	| "reaction_added"
+	| "member_joined"
+	| "member_left"
+	| string; // Allow custom event types
 
 /**
  * Event entity
  */
 export interface Event {
-  _id: Id<'events'>;
-  _creationTime: number;
-  type: EventType;
-  actorId?: Id<'entities'>;
-  targetId?: Id<'entities'>;
-  timestamp: number;
-  metadata?: Record<string, any>;
-  createdAt: number;
-  updatedAt?: number;
+	_id: Id<"events">;
+	_creationTime: number;
+	type: EventType;
+	actorId?: Id<"entities">;
+	targetId?: Id<"entities">;
+	timestamp: number;
+	metadata?: Record<string, any>;
+	createdAt: number;
+	updatedAt?: number;
 }
 
 /**
  * Input for recording a new event
  */
 export interface RecordEventInput {
-  type: EventType;
-  actorId?: Id<'entities'>;
-  targetId?: Id<'entities'>;
-  metadata?: Record<string, any>;
+	type: EventType;
+	actorId?: Id<"entities">;
+	targetId?: Id<"entities">;
+	metadata?: Record<string, any>;
 }
 
 /**
  * Filters for querying events
  */
 export interface EventFilter {
-  type?: EventType;
-  actorId?: Id<'entities'>;
-  targetId?: Id<'entities'>;
-  startTime?: number;
-  endTime?: number;
-  limit?: number;
-  offset?: number;
+	type?: EventType;
+	actorId?: Id<"entities">;
+	targetId?: Id<"entities">;
+	startTime?: number;
+	endTime?: number;
+	limit?: number;
+	offset?: number;
 }
 
 /**
@@ -137,42 +137,42 @@ export interface EventFilter {
  * ```
  */
 export function useEvent() {
-  const { run, loading, error } = useEffectRunner<unknown, any>();
-  const isProviderAvailable = useIsProviderAvailable();
+	const { run, loading, error } = useEffectRunner<unknown, any>();
+	const isProviderAvailable = useIsProviderAvailable();
 
-  /**
-   * Record a new event
-   */
-  const record = useCallback(
-    async (
-      input: RecordEventInput,
-      options?: {
-        onSuccess?: (event: Event) => void;
-        onError?: (error: unknown) => void;
-      }
-    ) => {
-      if (!isProviderAvailable) {
-        options?.onError?.(new Error('Provider not available'));
-        return null;
-      }
+	/**
+	 * Record a new event
+	 */
+	const record = useCallback(
+		async (
+			input: RecordEventInput,
+			options?: {
+				onSuccess?: (event: Event) => void;
+				onError?: (error: unknown) => void;
+			},
+		) => {
+			if (!isProviderAvailable) {
+				options?.onError?.(new Error("Provider not available"));
+				return null;
+			}
 
-      const program = Effect.gen(function* () {
-        // TODO: Implement with actual DataProvider
-        // const provider = yield* DataProvider;
-        // return yield* provider.events.record(input);
-        return null as unknown as Event;
-      });
+			const program = Effect.gen(function* () {
+				// TODO: Implement with actual DataProvider
+				// const provider = yield* DataProvider;
+				// return yield* provider.events.record(input);
+				return null as unknown as Event;
+			});
 
-      return run(program, options);
-    },
-    [isProviderAvailable, run]
-  );
+			return run(program, options);
+		},
+		[isProviderAvailable, run],
+	);
 
-  return {
-    record,
-    loading,
-    error,
-  };
+	return {
+		record,
+		loading,
+		error,
+	};
 }
 
 /**
@@ -194,33 +194,39 @@ export function useEvent() {
  * ```
  */
 export function useEvents(filter?: EventFilter) {
-  const { run, loading, error } = useEffectRunner<unknown, any>();
-  const isProviderAvailable = useIsProviderAvailable();
-  const [events, setEvents] = useState<Event[]>([]);
+	const { run, loading, error } = useEffectRunner<unknown, any>();
+	const isProviderAvailable = useIsProviderAvailable();
+	const [events, setEvents] = useState<Event[]>([]);
 
-  useEffect(() => {
-    if (!isProviderAvailable) {
-      setEvents([]);
-      return;
-    }
+	useEffect(() => {
+		if (!isProviderAvailable) {
+			setEvents([]);
+			return;
+		}
 
-    const program = Effect.gen(function* () {
-      // TODO: Implement with actual DataProvider
-      // const provider = yield* DataProvider;
-      // return yield* provider.events.list(filter);
-      return [] as Event[];
-    });
+		const program = Effect.gen(function* () {
+			// TODO: Implement with actual DataProvider
+			// const provider = yield* DataProvider;
+			// return yield* provider.events.list(filter);
+			return [] as Event[];
+		});
 
-    run(program, {
-      onSuccess: (data) => setEvents(data),
-    });
-  }, [isProviderAvailable, filter?.type, filter?.actorId, filter?.targetId, run]);
+		run(program, {
+			onSuccess: (data) => setEvents(data),
+		});
+	}, [
+		isProviderAvailable,
+		filter?.type,
+		filter?.actorId,
+		filter?.targetId,
+		run,
+	]);
 
-  return {
-    events,
-    loading,
-    error,
-  };
+	return {
+		events,
+		loading,
+		error,
+	};
 }
 
 /**
@@ -243,10 +249,10 @@ export function useEvents(filter?: EventFilter) {
  * ```
  */
 export function useActivityFeed(limit = 20) {
-  return useEvents({
-    limit,
-    offset: 0,
-  });
+	return useEvents({
+		limit,
+		offset: 0,
+	});
 }
 
 /**
@@ -261,11 +267,11 @@ export function useActivityFeed(limit = 20) {
  * // Shows all changes, views, etc. for the course
  * ```
  */
-export function useAuditTrail(targetId?: Id<'entities'>) {
-  return useEvents({
-    targetId,
-    limit: 100,
-  });
+export function useAuditTrail(targetId?: Id<"entities">) {
+	return useEvents({
+		targetId,
+		limit: 100,
+	});
 }
 
 /**
@@ -280,11 +286,11 @@ export function useAuditTrail(targetId?: Id<'entities'>) {
  * // Shows everything this user has done
  * ```
  */
-export function useUserHistory(userId?: Id<'entities'>) {
-  return useEvents({
-    actorId: userId,
-    limit: 100,
-  });
+export function useUserHistory(userId?: Id<"entities">) {
+	return useEvents({
+		actorId: userId,
+		limit: 100,
+	});
 }
 
 /**
@@ -300,10 +306,10 @@ export function useUserHistory(userId?: Id<'entities'>) {
  * ```
  */
 export function useEventsByType(type: EventType, limit = 20) {
-  return useEvents({
-    type,
-    limit,
-  });
+	return useEvents({
+		type,
+		limit,
+	});
 }
 
 /**
@@ -318,8 +324,8 @@ export function useEventsByType(type: EventType, limit = 20) {
  * ```
  */
 export function useEventCount(type: EventType): number {
-  const { events } = useEventsByType(type, 1000);
-  return events.length;
+	const { events } = useEventsByType(type, 1000);
+	return events.length;
 }
 
 /**
@@ -337,11 +343,11 @@ export function useEventCount(type: EventType): number {
  * ```
  */
 export function useTimeline(startTime: number, endTime: number) {
-  return useEvents({
-    startTime,
-    endTime,
-    limit: 1000,
-  });
+	return useEvents({
+		startTime,
+		endTime,
+		limit: 1000,
+	});
 }
 
 /**
@@ -362,30 +368,30 @@ export function useTimeline(startTime: number, endTime: number) {
  * ```
  */
 export function useEventStream(
-  filter?: EventFilter,
-  onNewEvent?: (event: Event) => void
+	filter?: EventFilter,
+	onNewEvent?: (event: Event) => void,
 ) {
-  const { events, loading, error } = useEvents(filter);
-  const [isSubscribed, setIsSubscribed] = useState(false);
+	const { events, loading, error } = useEvents(filter);
+	const [isSubscribed, setIsSubscribed] = useState(false);
 
-  useEffect(() => {
-    if (onNewEvent) {
-      // TODO: Implement with actual DataProvider WebSocket subscription
-      // const unsubscribe = provider.events.subscribe(filter, onNewEvent);
-      setIsSubscribed(true);
+	useEffect(() => {
+		if (onNewEvent) {
+			// TODO: Implement with actual DataProvider WebSocket subscription
+			// const unsubscribe = provider.events.subscribe(filter, onNewEvent);
+			setIsSubscribed(true);
 
-      // Cleanup
-      // return () => {
-      //   unsubscribe();
-      //   setIsSubscribed(false);
-      // };
-    }
-  }, [filter, onNewEvent]);
+			// Cleanup
+			// return () => {
+			//   unsubscribe();
+			//   setIsSubscribed(false);
+			// };
+		}
+	}, [filter, onNewEvent]);
 
-  return {
-    events,
-    loading,
-    error,
-    isSubscribed,
-  };
+	return {
+		events,
+		loading,
+		error,
+		isSubscribed,
+	};
 }

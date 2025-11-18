@@ -5,9 +5,9 @@
  * Uses React Context for dependency injection similar to Convex's ConvexProvider.
  */
 
-import React, { createContext, useContext, type ReactNode } from 'react';
-import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
-import type { DataProvider } from '@/providers/DataProvider';
+import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
+import React, { createContext, type ReactNode, useContext } from "react";
+import type { DataProvider } from "@/providers/DataProvider";
 
 // ============================================================================
 // CONTEXT SETUP
@@ -24,18 +24,18 @@ const DataProviderContext = createContext<DataProvider | null>(null);
  * matching Convex's behavior
  */
 export const queryClient = new QueryClient({
-  defaultOptions: {
-    queries: {
-      staleTime: 5000, // Data is fresh for 5 seconds
-      gcTime: 300000, // Cache for 5 minutes (formerly cacheTime)
-      refetchOnWindowFocus: false, // Don't refetch on window focus (can enable if needed)
-      retry: 1, // Retry failed queries once
-      refetchOnMount: true, // Refetch on mount if stale
-    },
-    mutations: {
-      retry: 0, // Don't retry mutations automatically
-    },
-  },
+	defaultOptions: {
+		queries: {
+			staleTime: 5000, // Data is fresh for 5 seconds
+			gcTime: 300000, // Cache for 5 minutes (formerly cacheTime)
+			refetchOnWindowFocus: false, // Don't refetch on window focus (can enable if needed)
+			retry: 1, // Retry failed queries once
+			refetchOnMount: true, // Refetch on mount if stale
+		},
+		mutations: {
+			retry: 0, // Don't retry mutations automatically
+		},
+	},
 });
 
 // ============================================================================
@@ -43,8 +43,8 @@ export const queryClient = new QueryClient({
 // ============================================================================
 
 export interface DataProviderProviderProps {
-  provider: DataProvider;
-  children: ReactNode;
+	provider: DataProvider;
+	children: ReactNode;
 }
 
 /**
@@ -65,14 +65,17 @@ export interface DataProviderProviderProps {
  * </DataProviderProvider>
  * ```
  */
-export function DataProviderProvider({ provider, children }: DataProviderProviderProps) {
-  return (
-    <QueryClientProvider client={queryClient}>
-      <DataProviderContext.Provider value={provider}>
-        {children}
-      </DataProviderContext.Provider>
-    </QueryClientProvider>
-  );
+export function DataProviderProvider({
+	provider,
+	children,
+}: DataProviderProviderProps) {
+	return (
+		<QueryClientProvider client={queryClient}>
+			<DataProviderContext.Provider value={provider}>
+				{children}
+			</DataProviderContext.Provider>
+		</QueryClientProvider>
+	);
 }
 
 // ============================================================================
@@ -92,21 +95,23 @@ export function DataProviderProvider({ provider, children }: DataProviderProvide
  * ```
  */
 export function useDataProvider(): DataProvider {
-  const provider = useContext(DataProviderContext);
+	const provider = useContext(DataProviderContext);
 
-  if (!provider) {
-    throw new Error(
-      'useDataProvider must be used within a DataProviderProvider. ' +
-        'Make sure to wrap your app with <DataProviderProvider provider={...}>.'
-    );
-  }
+	if (!provider) {
+		throw new Error(
+			"useDataProvider must be used within a DataProviderProvider. " +
+				"Make sure to wrap your app with <DataProviderProvider provider={...}>.",
+		);
+	}
 
-  return provider;
+	return provider;
 }
 
 /**
  * Type guard to check if DataProvider is available
  */
-export function hasDataProvider(provider: DataProvider | null): provider is DataProvider {
-  return provider !== null;
+export function hasDataProvider(
+	provider: DataProvider | null,
+): provider is DataProvider {
+	return provider !== null;
 }

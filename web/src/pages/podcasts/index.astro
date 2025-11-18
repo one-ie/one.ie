@@ -19,39 +19,43 @@
  * - Desktop (>1024px): 3 columns
  */
 
-import { getCollection } from 'astro:content';
-import Layout from '@/layouts/Layout.astro';
-import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
-import { Badge } from '@/components/ui/badge';
-import { Button } from '@/components/ui/button';
+import { getCollection } from "astro:content";
+import { Badge } from "@/components/ui/badge";
+import { Button } from "@/components/ui/button";
+import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import Layout from "@/layouts/Layout.astro";
 
 // Get all public podcast episodes
-const allEpisodes = await getCollection('podcasts', ({ data }) => {
-  return !data.status || data.status === 'public';
+const allEpisodes = await getCollection("podcasts", ({ data }) => {
+	return !data.status || data.status === "public";
 });
 
 // Sort by date (newest first)
 const sortedEpisodes = allEpisodes.sort((a, b) => {
-  const dateA = a.data.date instanceof Date ? a.data.date : new Date(a.data.date);
-  const dateB = b.data.date instanceof Date ? b.data.date : new Date(b.data.date);
-  return dateB.getTime() - dateA.getTime();
+	const dateA =
+		a.data.date instanceof Date ? a.data.date : new Date(a.data.date);
+	const dateB =
+		b.data.date instanceof Date ? b.data.date : new Date(b.data.date);
+	return dateB.getTime() - dateA.getTime();
 });
 
 // Get unique categories
-const categories = [...new Set(allEpisodes.map(ep => ep.data.category).filter(Boolean))];
+const categories = [
+	...new Set(allEpisodes.map((ep) => ep.data.category).filter(Boolean)),
+];
 
 // Get featured episodes
-const featuredEpisodes = sortedEpisodes.filter(ep => ep.data.featured);
+const featuredEpisodes = sortedEpisodes.filter((ep) => ep.data.featured);
 
 // Helper function
 function formatDate(dateValue: any): string {
-  if (!dateValue) return "";
-  const date = dateValue instanceof Date ? dateValue : new Date(dateValue);
-  return new Intl.DateTimeFormat("en-US", {
-    year: "numeric",
-    month: "short",
-    day: "numeric",
-  }).format(date);
+	if (!dateValue) return "";
+	const date = dateValue instanceof Date ? dateValue : new Date(dateValue);
+	return new Intl.DateTimeFormat("en-US", {
+		year: "numeric",
+		month: "short",
+		day: "numeric",
+	}).format(date);
 }
 ---
 

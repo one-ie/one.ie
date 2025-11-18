@@ -26,96 +26,96 @@
  * ```
  */
 
-import { useCallback, useEffect, useState } from 'react';
-import { Effect } from 'effect';
-import type { Id } from '@/types/convex';
-import { useEffectRunner } from '../useEffectRunner';
-import { useIsProviderAvailable } from './useProvider';
+import { Effect } from "effect";
+import { useCallback, useEffect, useState } from "react";
+import type { Id } from "@/types/convex";
+import { useEffectRunner } from "../useEffectRunner";
+import { useIsProviderAvailable } from "./useProvider";
 
 /**
  * Connection (relationship) types
  */
 export type ConnectionType =
-  // Ownership
-  | 'owns'
-  | 'created_by'
-  // AI
-  | 'clone_of'
-  | 'trained_on'
-  | 'powers'
-  // Content
-  | 'authored'
-  | 'generated_by'
-  | 'published_to'
-  | 'part_of'
-  | 'references'
-  // Community
-  | 'member_of'
-  | 'following'
-  | 'moderates'
-  | 'participated_in'
-  // Business
-  | 'manages'
-  | 'reports_to'
-  | 'collaborates_with'
-  // Token
-  | 'holds_tokens'
-  | 'staked_in'
-  | 'earned_from'
-  // Product
-  | 'purchased'
-  | 'enrolled_in'
-  | 'completed'
-  | 'teaching'
-  // Consolidated with metadata
-  | 'transacted'
-  | 'notified'
-  | 'referred'
-  | 'communicated'
-  | 'delegated'
-  | 'approved'
-  | 'fulfilled';
+	// Ownership
+	| "owns"
+	| "created_by"
+	// AI
+	| "clone_of"
+	| "trained_on"
+	| "powers"
+	// Content
+	| "authored"
+	| "generated_by"
+	| "published_to"
+	| "part_of"
+	| "references"
+	// Community
+	| "member_of"
+	| "following"
+	| "moderates"
+	| "participated_in"
+	// Business
+	| "manages"
+	| "reports_to"
+	| "collaborates_with"
+	// Token
+	| "holds_tokens"
+	| "staked_in"
+	| "earned_from"
+	// Product
+	| "purchased"
+	| "enrolled_in"
+	| "completed"
+	| "teaching"
+	// Consolidated with metadata
+	| "transacted"
+	| "notified"
+	| "referred"
+	| "communicated"
+	| "delegated"
+	| "approved"
+	| "fulfilled";
 
 /**
  * Connection entity
  */
 export interface Connection {
-  _id: Id<'connections'>;
-  _creationTime: number;
-  fromEntityId: Id<'entities'>;
-  toEntityId: Id<'entities'>;
-  relationshipType: ConnectionType;
-  metadata?: Record<string, any>;
-  strength?: number;
-  validFrom?: number;
-  validTo?: number;
-  createdAt: number;
-  updatedAt?: number;
-  deletedAt?: number;
+	_id: Id<"connections">;
+	_creationTime: number;
+	fromEntityId: Id<"entities">;
+	toEntityId: Id<"entities">;
+	relationshipType: ConnectionType;
+	metadata?: Record<string, any>;
+	strength?: number;
+	validFrom?: number;
+	validTo?: number;
+	createdAt: number;
+	updatedAt?: number;
+	deletedAt?: number;
 }
 
 /**
  * Input for creating a connection
  */
 export interface CreateConnectionInput {
-  fromEntityId: Id<'entities'>;
-  toEntityId: Id<'entities'>;
-  relationshipType: ConnectionType;
-  metadata?: Record<string, any>;
-  strength?: number;
-  validFrom?: number;
-  validTo?: number;
+	fromEntityId: Id<"entities">;
+	toEntityId: Id<"entities">;
+	relationshipType: ConnectionType;
+	metadata?: Record<string, any>;
+	strength?: number;
+	validFrom?: number;
+	validTo?: number;
 }
 
 /**
  * Filters for querying connections
  */
 export interface ConnectionFilter {
-  fromEntityId?: Id<'entities'>;
-  toEntityId?: Id<'entities'>;
-  relationshipType?: ConnectionType;
-  limit?: number;
-  offset?: number;
+	fromEntityId?: Id<"entities">;
+	toEntityId?: Id<"entities">;
+	relationshipType?: ConnectionType;
+	limit?: number;
+	offset?: number;
 }
 
 /**
@@ -138,100 +138,100 @@ export interface ConnectionFilter {
  * ```
  */
 export function useConnection() {
-  const { run, loading, error } = useEffectRunner<unknown, any>();
-  const isProviderAvailable = useIsProviderAvailable();
+	const { run, loading, error } = useEffectRunner<unknown, any>();
+	const isProviderAvailable = useIsProviderAvailable();
 
-  /**
-   * Create a new connection
-   */
-  const create = useCallback(
-    async (
-      input: CreateConnectionInput,
-      options?: {
-        onSuccess?: (connection: Connection) => void;
-        onError?: (error: unknown) => void;
-      }
-    ) => {
-      if (!isProviderAvailable) {
-        options?.onError?.(new Error('Provider not available'));
-        return null;
-      }
+	/**
+	 * Create a new connection
+	 */
+	const create = useCallback(
+		async (
+			input: CreateConnectionInput,
+			options?: {
+				onSuccess?: (connection: Connection) => void;
+				onError?: (error: unknown) => void;
+			},
+		) => {
+			if (!isProviderAvailable) {
+				options?.onError?.(new Error("Provider not available"));
+				return null;
+			}
 
-      const program = Effect.gen(function* () {
-        // TODO: Implement with actual DataProvider
-        // const provider = yield* DataProvider;
-        // return yield* provider.connections.create(input);
-        return null as unknown as Connection;
-      });
+			const program = Effect.gen(function* () {
+				// TODO: Implement with actual DataProvider
+				// const provider = yield* DataProvider;
+				// return yield* provider.connections.create(input);
+				return null as unknown as Connection;
+			});
 
-      return run(program, options);
-    },
-    [isProviderAvailable, run]
-  );
+			return run(program, options);
+		},
+		[isProviderAvailable, run],
+	);
 
-  /**
-   * Update connection metadata or strength
-   */
-  const update = useCallback(
-    async (
-      id: Id<'connections'>,
-      updates: Partial<CreateConnectionInput>,
-      options?: {
-        onSuccess?: (connection: Connection) => void;
-        onError?: (error: unknown) => void;
-      }
-    ) => {
-      if (!isProviderAvailable) {
-        options?.onError?.(new Error('Provider not available'));
-        return null;
-      }
+	/**
+	 * Update connection metadata or strength
+	 */
+	const update = useCallback(
+		async (
+			id: Id<"connections">,
+			updates: Partial<CreateConnectionInput>,
+			options?: {
+				onSuccess?: (connection: Connection) => void;
+				onError?: (error: unknown) => void;
+			},
+		) => {
+			if (!isProviderAvailable) {
+				options?.onError?.(new Error("Provider not available"));
+				return null;
+			}
 
-      const program = Effect.gen(function* () {
-        // TODO: Implement with actual DataProvider
-        // const provider = yield* DataProvider;
-        // return yield* provider.connections.update(id, updates);
-        return null as unknown as Connection;
-      });
+			const program = Effect.gen(function* () {
+				// TODO: Implement with actual DataProvider
+				// const provider = yield* DataProvider;
+				// return yield* provider.connections.update(id, updates);
+				return null as unknown as Connection;
+			});
 
-      return run(program, options);
-    },
-    [isProviderAvailable, run]
-  );
+			return run(program, options);
+		},
+		[isProviderAvailable, run],
+	);
 
-  /**
-   * Delete a connection
-   */
-  const remove = useCallback(
-    async (
-      id: Id<'connections'>,
-      options?: {
-        onSuccess?: () => void;
-        onError?: (error: unknown) => void;
-      }
-    ) => {
-      if (!isProviderAvailable) {
-        options?.onError?.(new Error('Provider not available'));
-        return;
-      }
+	/**
+	 * Delete a connection
+	 */
+	const remove = useCallback(
+		async (
+			id: Id<"connections">,
+			options?: {
+				onSuccess?: () => void;
+				onError?: (error: unknown) => void;
+			},
+		) => {
+			if (!isProviderAvailable) {
+				options?.onError?.(new Error("Provider not available"));
+				return;
+			}
 
-      const program = Effect.gen(function* () {
-        // TODO: Implement with actual DataProvider
-        // const provider = yield* DataProvider;
-        // return yield* provider.connections.delete(id);
-      });
+			const program = Effect.gen(function* () {
+				// TODO: Implement with actual DataProvider
+				// const provider = yield* DataProvider;
+				// return yield* provider.connections.delete(id);
+			});
 
-      return run(program, options);
-    },
-    [isProviderAvailable, run]
-  );
+			return run(program, options);
+		},
+		[isProviderAvailable, run],
+	);
 
-  return {
-    create,
-    update,
-    remove,
-    loading,
-    error,
-  };
+	return {
+		create,
+		update,
+		remove,
+		loading,
+		error,
+	};
 }
 
 /**
@@ -249,33 +249,33 @@ export function useConnection() {
  * ```
  */
 export function useConnections(filter?: ConnectionFilter) {
-  const { run, loading, error } = useEffectRunner<unknown, any>();
-  const isProviderAvailable = useIsProviderAvailable();
-  const [connections, setConnections] = useState<Connection[]>([]);
+	const { run, loading, error } = useEffectRunner<unknown, any>();
+	const isProviderAvailable = useIsProviderAvailable();
+	const [connections, setConnections] = useState<Connection[]>([]);
 
-  useEffect(() => {
-    if (!isProviderAvailable) {
-      setConnections([]);
-      return;
-    }
+	useEffect(() => {
+		if (!isProviderAvailable) {
+			setConnections([]);
+			return;
+		}
 
-    const program = Effect.gen(function* () {
-      // TODO: Implement with actual DataProvider
-      // const provider = yield* DataProvider;
-      // return yield* provider.connections.list(filter);
-      return [] as Connection[];
-    });
+		const program = Effect.gen(function* () {
+			// TODO: Implement with actual DataProvider
+			// const provider = yield* DataProvider;
+			// return yield* provider.connections.list(filter);
+			return [] as Connection[];
+		});
 
-    run(program, {
-      onSuccess: (data) => setConnections(data),
-    });
-  }, [isProviderAvailable, filter?.fromEntityId, filter?.toEntityId, run]);
+		run(program, {
+			onSuccess: (data) => setConnections(data),
+		});
+	}, [isProviderAvailable, filter?.fromEntityId, filter?.toEntityId, run]);
 
-  return {
-    connections,
-    loading,
-    error,
-  };
+	return {
+		connections,
+		loading,
+		error,
+	};
 }
 
 /**
@@ -304,42 +304,42 @@ export function useConnections(filter?: ConnectionFilter) {
  * ```
  */
 export function useRelatedEntities(
-  entityId?: Id<'entities'>,
-  relationshipType?: ConnectionType,
-  direction?: 'from' | 'to' | 'both'
+	entityId?: Id<"entities">,
+	relationshipType?: ConnectionType,
+	direction?: "from" | "to" | "both",
 ) {
-  const { run, loading, error } = useEffectRunner<unknown, any>();
-  const isProviderAvailable = useIsProviderAvailable();
-  const [entities, setEntities] = useState<any[]>([]);
+	const { run, loading, error } = useEffectRunner<unknown, any>();
+	const isProviderAvailable = useIsProviderAvailable();
+	const [entities, setEntities] = useState<any[]>([]);
 
-  useEffect(() => {
-    if (!entityId || !isProviderAvailable) {
-      setEntities([]);
-      return;
-    }
+	useEffect(() => {
+		if (!entityId || !isProviderAvailable) {
+			setEntities([]);
+			return;
+		}
 
-    const filter: ConnectionFilter =
-      direction === 'from' || direction === 'both'
-        ? { fromEntityId: entityId, relationshipType }
-        : { toEntityId: entityId, relationshipType };
+		const filter: ConnectionFilter =
+			direction === "from" || direction === "both"
+				? { fromEntityId: entityId, relationshipType }
+				: { toEntityId: entityId, relationshipType };
 
-    const program = Effect.gen(function* () {
-      // TODO: Implement with actual DataProvider
-      // const provider = yield* DataProvider;
-      // return yield* provider.connections.getRelated(filter);
-      return [] as any[];
-    });
+		const program = Effect.gen(function* () {
+			// TODO: Implement with actual DataProvider
+			// const provider = yield* DataProvider;
+			// return yield* provider.connections.getRelated(filter);
+			return [] as any[];
+		});
 
-    run(program, {
-      onSuccess: (data) => setEntities(data),
-    });
-  }, [entityId, relationshipType, direction, isProviderAvailable, run]);
+		run(program, {
+			onSuccess: (data) => setEntities(data),
+		});
+	}, [entityId, relationshipType, direction, isProviderAvailable, run]);
 
-  return {
-    entities,
-    loading,
-    error,
-  };
+	return {
+		entities,
+		loading,
+		error,
+	};
 }
 
 /**
@@ -356,17 +356,17 @@ export function useRelatedEntities(
  * ```
  */
 export function useIsConnected(
-  fromId?: Id<'entities'>,
-  toId?: Id<'entities'>,
-  relationshipType?: ConnectionType
+	fromId?: Id<"entities">,
+	toId?: Id<"entities">,
+	relationshipType?: ConnectionType,
 ): boolean {
-  const { connections } = useConnections({
-    fromEntityId: fromId,
-    toEntityId: toId,
-    relationshipType,
-  });
+	const { connections } = useConnections({
+		fromEntityId: fromId,
+		toEntityId: toId,
+		relationshipType,
+	});
 
-  return connections.length > 0;
+	return connections.length > 0;
 }
 
 /**
@@ -380,8 +380,8 @@ export function useIsConnected(
  * const { entities: courses } = useOwnedEntities(organizationId);
  * ```
  */
-export function useOwnedEntities(ownerId: Id<'entities'>) {
-  return useRelatedEntities(ownerId, 'owns', 'from');
+export function useOwnedEntities(ownerId: Id<"entities">) {
+	return useRelatedEntities(ownerId, "owns", "from");
 }
 
 /**
@@ -395,8 +395,8 @@ export function useOwnedEntities(ownerId: Id<'entities'>) {
  * const { entities: followers } = useFollowers(authorId);
  * ```
  */
-export function useFollowers(entityId: Id<'entities'>) {
-  return useRelatedEntities(entityId, 'following', 'to');
+export function useFollowers(entityId: Id<"entities">) {
+	return useRelatedEntities(entityId, "following", "to");
 }
 
 /**
@@ -410,8 +410,8 @@ export function useFollowers(entityId: Id<'entities'>) {
  * const { entities: following } = useFollowing(userId);
  * ```
  */
-export function useFollowing(userId: Id<'entities'>) {
-  return useRelatedEntities(userId, 'following', 'from');
+export function useFollowing(userId: Id<"entities">) {
+	return useRelatedEntities(userId, "following", "from");
 }
 
 /**
@@ -425,8 +425,8 @@ export function useFollowing(userId: Id<'entities'>) {
  * const { entities: students } = useEnrollments(courseId);
  * ```
  */
-export function useEnrollments(courseId: Id<'entities'>) {
-  return useRelatedEntities(courseId, 'enrolled_in', 'to');
+export function useEnrollments(courseId: Id<"entities">) {
+	return useRelatedEntities(courseId, "enrolled_in", "to");
 }
 
 /**
@@ -440,6 +440,6 @@ export function useEnrollments(courseId: Id<'entities'>) {
  * const { entities: courses } = useUserEnrollments(userId);
  * ```
  */
-export function useUserEnrollments(userId: Id<'entities'>) {
-  return useRelatedEntities(userId, 'enrolled_in', 'from');
+export function useUserEnrollments(userId: Id<"entities">) {
+	return useRelatedEntities(userId, "enrolled_in", "from");
 }

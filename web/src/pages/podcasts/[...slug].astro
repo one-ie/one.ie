@@ -28,26 +28,29 @@
  * - Desktop (>1024px): Centered content with max-width
  */
 
-import { getCollection, type CollectionEntry } from 'astro:content';
-import Layout from '@/layouts/Layout.astro';
-import { VideoPlayer } from '@/components/media/VideoPlayer';
+import { type CollectionEntry, getCollection } from "astro:content";
+import { VideoPlayer } from "@/components/media/VideoPlayer";
+import Layout from "@/layouts/Layout.astro";
 
 export const prerender = true;
 
 export async function getStaticPaths() {
-  // Get all public podcast episodes
-  const episodes = await getCollection('podcasts', ({ data }: CollectionEntry<'podcasts'>) => {
-    return !data.status || data.status === 'public';
-  });
+	// Get all public podcast episodes
+	const episodes = await getCollection(
+		"podcasts",
+		({ data }: CollectionEntry<"podcasts">) => {
+			return !data.status || data.status === "public";
+		},
+	);
 
-  return episodes.map((entry: CollectionEntry<'podcasts'>) => ({
-    params: { slug: entry.slug },
-    props: { entry },
-  }));
+	return episodes.map((entry: CollectionEntry<"podcasts">) => ({
+		params: { slug: entry.slug },
+		props: { entry },
+	}));
 }
 
 type Props = {
-  entry: CollectionEntry<'podcasts'>;
+	entry: CollectionEntry<"podcasts">;
 };
 
 const { entry } = Astro.props as Props;
@@ -55,20 +58,20 @@ const { Content } = await entry.render();
 
 // Helper functions
 function formatDate(dateValue: any): string {
-  if (!dateValue) return "";
-  const date = dateValue instanceof Date ? dateValue : new Date(dateValue);
-  return new Intl.DateTimeFormat("en-US", {
-    year: "numeric",
-    month: "long",
-    day: "numeric",
-  }).format(date);
+	if (!dateValue) return "";
+	const date = dateValue instanceof Date ? dateValue : new Date(dateValue);
+	return new Intl.DateTimeFormat("en-US", {
+		year: "numeric",
+		month: "long",
+		day: "numeric",
+	}).format(date);
 }
 
 function estimateReadingTime(text: string | undefined): number {
-  if (!text) return 1;
-  const wordsPerMinute = 200;
-  const words = text.trim().split(/\s+/).length;
-  return Math.ceil(words / wordsPerMinute);
+	if (!text) return 1;
+	const wordsPerMinute = 200;
+	const words = text.trim().split(/\s+/).length;
+	return Math.ceil(words / wordsPerMinute);
 }
 ---
 

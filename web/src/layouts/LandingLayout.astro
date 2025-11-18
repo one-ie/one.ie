@@ -1,21 +1,21 @@
 ---
-import { Toaster } from '@/components/ui/sonner';
-import ThemeInit from '@/components/ThemeInit.astro';
-import '../styles/global.css';
-import '../styles/landing-theme.css';
+import ThemeInit from "@/components/ThemeInit.astro";
+import { Toaster } from "@/components/ui/sonner";
+import "../styles/global.css";
+import "../styles/landing-theme.css";
 
 interface Props {
-  title: string;
-  description?: string;
-  image?: string;
-  type?: string;
+	title: string;
+	description?: string;
+	image?: string;
+	type?: string;
 }
 
 const {
-  title,
-  description = 'Make Your Ideas Real - Built on a 6-dimension ontology for infinite scale',
-  image = '/og.jpg',
-  type = 'website',
+	title,
+	description = "Make Your Ideas Real - Built on a 6-dimension ontology for infinite scale",
+	image = "/og.jpg",
+	type = "website",
 } = Astro.props;
 
 // Generate canonical URL and full image URL

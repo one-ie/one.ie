@@ -13,26 +13,26 @@
 
 // Type definitions for ontology data
 export interface OntologyMetadata {
-  features: string[];
-  thingTypeCount: number;
-  connectionTypeCount: number;
-  eventTypeCount: number;
-  generatedAt: number;
+	features: string[];
+	thingTypeCount: number;
+	connectionTypeCount: number;
+	eventTypeCount: number;
+	generatedAt: number;
 }
 
 export interface Ontology {
-  metadata: OntologyMetadata;
-  features: string[];
-  thingTypes: string[];
-  connectionTypes: string[];
-  eventTypes: string[];
+	metadata: OntologyMetadata;
+	features: string[];
+	thingTypes: string[];
+	connectionTypes: string[];
+	eventTypes: string[];
 }
 
 export interface FeatureDetail {
-  description: string;
-  thingTypes: string[];
-  connectionTypes: string[];
-  eventTypes: string[];
+	description: string;
+	thingTypes: string[];
+	connectionTypes: string[];
+	eventTypes: string[];
 }
 
 export type FeatureBreakdown = Record<string, FeatureDetail | undefined>;
@@ -61,26 +61,26 @@ export type FeatureBreakdown = Record<string, FeatureDetail | undefined>;
  * ```
  */
 export function useOntology() {
-  // const ontology = useQuery(api.queries.ontology.getOntology);
+	// const ontology = useQuery(api.queries.ontology.getOntology);
 
-  return {
-    /** Complete ontology information */
-    ontology: null as Ontology | null,
-    /** Array of enabled features (e.g., ['core', 'blog', 'portfolio']) */
-    features: [] as string[],
-    /** Array of available thing types (e.g., ['page', 'user', 'blog_post']) */
-    thingTypes: [] as string[],
-    /** Array of available connection types (e.g., ['created_by', 'posted_in']) */
-    connectionTypes: [] as string[],
-    /** Array of available event types (e.g., ['thing_created', 'blog_post_published']) */
-    eventTypes: [] as string[],
-    /** Metadata about ontology composition (counts, generation time) */
-    metadata: undefined as OntologyMetadata | undefined,
-    /** Check if a specific feature is enabled */
-    hasFeature: (feature: string) => false,
-    /** True while ontology data is loading */
-    isLoading: false,
-  };
+	return {
+		/** Complete ontology information */
+		ontology: null as Ontology | null,
+		/** Array of enabled features (e.g., ['core', 'blog', 'portfolio']) */
+		features: [] as string[],
+		/** Array of available thing types (e.g., ['page', 'user', 'blog_post']) */
+		thingTypes: [] as string[],
+		/** Array of available connection types (e.g., ['created_by', 'posted_in']) */
+		connectionTypes: [] as string[],
+		/** Array of available event types (e.g., ['thing_created', 'blog_post_published']) */
+		eventTypes: [] as string[],
+		/** Metadata about ontology composition (counts, generation time) */
+		metadata: undefined as OntologyMetadata | undefined,
+		/** Check if a specific feature is enabled */
+		hasFeature: (feature: string) => false,
+		/** True while ontology data is loading */
+		isLoading: false,
+	};
 }
 
 /**
@@ -102,8 +102,8 @@ export function useOntology() {
  * ```
  */
 export function useHasFeature(feature: string) {
-  // const hasFeature = useQuery(api.queries.ontology.hasFeature, { feature });
-  return false;
+	// const hasFeature = useQuery(api.queries.ontology.hasFeature, { feature });
+	return false;
 }
 
 /**
@@ -132,8 +132,8 @@ export function useHasFeature(feature: string) {
  * ```
  */
 export function useOntologyMetadata(): OntologyMetadata | undefined {
-  // return useQuery(api.queries.ontology.getMetadata);
-  return undefined;
+	// return useQuery(api.queries.ontology.getMetadata);
+	return undefined;
 }
 
 /**
@@ -158,8 +158,8 @@ export function useOntologyMetadata(): OntologyMetadata | undefined {
  * ```
  */
 export function useThingTypes() {
-  // const types = useQuery(api.queries.ontology.getThingTypes);
-  return [];
+	// const types = useQuery(api.queries.ontology.getThingTypes);
+	return [];
 }
 
 /**
@@ -184,8 +184,8 @@ export function useThingTypes() {
  * ```
  */
 export function useConnectionTypes() {
-  // const types = useQuery(api.queries.ontology.getConnectionTypes);
-  return [];
+	// const types = useQuery(api.queries.ontology.getConnectionTypes);
+	return [];
 }
 
 /**
@@ -210,8 +210,8 @@ export function useConnectionTypes() {
  * ```
  */
 export function useEventTypes() {
-  // const types = useQuery(api.queries.ontology.getEventTypes);
-  return [];
+	// const types = useQuery(api.queries.ontology.getEventTypes);
+	return [];
 }
 
 /**
@@ -236,8 +236,8 @@ export function useEventTypes() {
  * ```
  */
 export function useEnabledFeatures() {
-  // const features = useQuery(api.queries.ontology.getEnabledFeatures);
-  return [];
+	// const features = useQuery(api.queries.ontology.getEnabledFeatures);
+	return [];
 }
 
 /**
@@ -268,6 +268,6 @@ export function useEnabledFeatures() {
  * ```
  */
 export function useFeatureBreakdown(): FeatureBreakdown | undefined {
-  // return useQuery(api.queries.ontology.getFeatureBreakdown);
-  return undefined;
+	// return useQuery(api.queries.ontology.getFeatureBreakdown);
+	return undefined;
 }

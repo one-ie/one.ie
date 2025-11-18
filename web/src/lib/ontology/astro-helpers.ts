@@ -22,7 +22,7 @@
  * ```
  */
 
-import { features } from './features';
+import { features } from "./features";
 
 /**
  * Get provider instance for Astro SSR
@@ -48,17 +48,17 @@ import { features } from './features';
  * ```
  */
 export async function getProvider() {
-  // This would be implemented to return the actual provider
-  // For now, it's a placeholder showing the pattern
+	// This would be implemented to return the actual provider
+	// For now, it's a placeholder showing the pattern
 
-  if (!features.connections) {
-    return null;
-  }
+	if (!features.connections) {
+		return null;
+	}
 
-  // TODO: Initialize and return actual DataProvider
-  // return convexProvider || notionProvider || null;
+	// TODO: Initialize and return actual DataProvider
+	// return convexProvider || notionProvider || null;
 
-  return null;
+	return null;
 }
 
 /**
@@ -80,27 +80,27 @@ export async function getProvider() {
  * ```
  */
 export async function getStaticPaths(type?: string) {
-  const provider = await getProvider();
+	const provider = await getProvider();
 
-  if (!provider) {
-    // No provider - return empty (on-demand rendering)
-    return [];
-  }
+	if (!provider) {
+		// No provider - return empty (on-demand rendering)
+		return [];
+	}
 
-  try {
-    const things = await (provider as any).things.list({
-      type,
-      status: 'published',
-    });
+	try {
+		const things = await (provider as any).things.list({
+			type,
+			status: "published",
+		});
 
-    return things.map((thing: any) => ({
-      params: { id: thing._id, type: thing.type },
-      props: { thing },
-    }));
-  } catch (error) {
-    console.error('Failed to get static paths:', error);
-    return [];
-  }
+		return things.map((thing: any) => ({
+			params: { id: thing._id, type: thing.type },
+			props: { thing },
+		}));
+	} catch (error) {
+		console.error("Failed to get static paths:", error);
+		return [];
+	}
 }
 
 /**
@@ -127,18 +127,18 @@ export async function getStaticPaths(type?: string) {
  * ```
  */
 export async function getThingWithFallback(id: string) {
-  const provider = await getProvider();
+	const provider = await getProvider();
 
-  if (!provider) {
-    return null;
-  }
+	if (!provider) {
+		return null;
+	}
 
-  try {
-    return await (provider as any).things.get(id as any);
-  } catch (error) {
-    console.error(`Failed to fetch thing ${id}:`, error);
-    return null;
-  }
+	try {
+		return await (provider as any).things.get(id as any);
+	} catch (error) {
+		console.error(`Failed to fetch thing ${id}:`, error);
+		return null;
+	}
 }
 
 /**
@@ -159,22 +159,22 @@ export async function getThingWithFallback(id: string) {
  * ```
  */
 export async function getThings(filter?: {
-  type?: string;
-  status?: string;
-  limit?: number;
+	type?: string;
+	status?: string;
+	limit?: number;
 }) {
-  const provider = await getProvider();
+	const provider = await getProvider();
 
-  if (!provider) {
-    return [];
-  }
+	if (!provider) {
+		return [];
+	}
 
-  try {
-    return await (provider as any).things.list(filter);
-  } catch (error) {
-    console.error('Failed to fetch things:', error);
-    return [];
-  }
+	try {
+		return await (provider as any).things.list(filter);
+	} catch (error) {
+		console.error("Failed to fetch things:", error);
+		return [];
+	}
 }
 
 /**
@@ -193,24 +193,24 @@ export async function getThings(filter?: {
  * ```
  */
 export async function getRelatedThings(
-  entityId: string,
-  relationshipType: string
+	entityId: string,
+	relationshipType: string,
 ) {
-  const provider = await getProvider();
+	const provider = await getProvider();
 
-  if (!provider) {
-    return [];
-  }
+	if (!provider) {
+		return [];
+	}
 
-  try {
-    return await (provider as any).connections.list({
-      fromEntityId: entityId as any,
-      relationshipType: relationshipType as any,
-    });
-  } catch (error) {
-    console.error('Failed to fetch related things:', error);
-    return [];
-  }
+	try {
+		return await (provider as any).connections.list({
+			fromEntityId: entityId as any,
+			relationshipType: relationshipType as any,
+		});
+	} catch (error) {
+		console.error("Failed to fetch related things:", error);
+		return [];
+	}
 }
 
 /**
@@ -235,24 +235,24 @@ export async function getRelatedThings(
  * ```
  */
 export async function getCurrentUser(request?: Request) {
-  if (!features.auth) {
-    return null;
-  }
+	if (!features.auth) {
+		return null;
+	}
 
-  const provider = await getProvider();
+	const provider = await getProvider();
 
-  if (!provider) {
-    return null;
-  }
+	if (!provider) {
+		return null;
+	}
 
-  try {
-    // TODO: Extract user from request headers/cookies and fetch
-    // return await provider.people.current();
-    return null;
-  } catch (error) {
-    console.error('Failed to fetch current user:', error);
-    return null;
-  }
+	try {
+		// TODO: Extract user from request headers/cookies and fetch
+		// return await provider.people.current();
+		return null;
+	} catch (error) {
+		console.error("Failed to fetch current user:", error);
+		return null;
+	}
 }
 
 /**
@@ -266,9 +266,9 @@ export async function getCurrentUser(request?: Request) {
  * @returns Group data or null
  */
 export async function getGroup(groupId: string) {
-  // Groups are managed through the things dimension
-  // Use getThings({ type: 'group' }) to fetch groups
-  return null;
+	// Groups are managed through the things dimension
+	// Use getThings({ type: 'group' }) to fetch groups
+	return null;
 }
 
 /**
@@ -289,22 +289,22 @@ export async function getGroup(groupId: string) {
  * ```
  */
 export async function searchThings(query: string, type?: string) {
-  if (!features.search) {
-    return [];
-  }
+	if (!features.search) {
+		return [];
+	}
 
-  const provider = await getProvider();
+	const provider = await getProvider();
 
-  if (!provider) {
-    return [];
-  }
+	if (!provider) {
+		return [];
+	}
 
-  try {
-    return await (provider as any).knowledge.search(query, { type });
-  } catch (error) {
-    console.error('Failed to search:', error);
-    return [];
-  }
+	try {
+		return await (provider as any).knowledge.search(query, { type });
+	} catch (error) {
+		console.error("Failed to search:", error);
+		return [];
+	}
 }
 
 /**
@@ -321,22 +321,22 @@ export async function searchThings(query: string, type?: string) {
  * ```
  */
 export async function getRecentEvents(limit = 20) {
-  if (!features.events) {
-    return [];
-  }
+	if (!features.events) {
+		return [];
+	}
 
-  const provider = await getProvider();
+	const provider = await getProvider();
 
-  if (!provider) {
-    return [];
-  }
+	if (!provider) {
+		return [];
+	}
 
-  try {
-    return await (provider as any).events.list({ limit });
-  } catch (error) {
-    console.error('Failed to fetch events:', error);
-    return [];
-  }
+	try {
+		return await (provider as any).events.list({ limit });
+	} catch (error) {
+		console.error("Failed to fetch events:", error);
+		return [];
+	}
 }
 
 /**
@@ -357,47 +357,47 @@ export async function getRecentEvents(limit = 20) {
  * ```
  */
 export function shouldRenderRoute(
-  featureCheck: () => boolean,
-  fallbackRoute?: string
+	featureCheck: () => boolean,
+	fallbackRoute?: string,
 ): boolean {
-  if (!featureCheck()) {
-    if (fallbackRoute) {
-      // Astro can't redirect in this context, return false
-      // and handle redirect in component
-      return false;
-    }
-    return false;
-  }
-  return true;
+	if (!featureCheck()) {
+		if (fallbackRoute) {
+			// Astro can't redirect in this context, return false
+			// and handle redirect in component
+			return false;
+		}
+		return false;
+	}
+	return true;
 }
 
 /**
  * Cache control helpers for Astro responses
  */
 export const cacheControl = {
-  /** Static content (long TTL) */
-  static: 'public, max-age=31536000, immutable',
+	/** Static content (long TTL) */
+	static: "public, max-age=31536000, immutable",
 
-  /** User-specific content (no cache) */
-  private: 'private, no-cache, no-store, must-revalidate',
+	/** User-specific content (no cache) */
+	private: "private, no-cache, no-store, must-revalidate",
 
-  /** Generated content (medium TTL) */
-  generated: 'public, max-age=3600, s-maxage=3600',
+	/** Generated content (medium TTL) */
+	generated: "public, max-age=3600, s-maxage=3600",
 
-  /** Real-time content (short TTL) */
-  dynamic: 'public, max-age=60, s-maxage=60',
+	/** Real-time content (short TTL) */
+	dynamic: "public, max-age=60, s-maxage=60",
 };
 
 /**
  * HTTP status codes for error handling
  */
 export const statusCodes = {
-  ok: 200,
-  created: 201,
-  badRequest: 400,
-  unauthorized: 401,
-  forbidden: 403,
-  notFound: 404,
-  conflict: 409,
-  serverError: 500,
+	ok: 200,
+	created: 201,
+	badRequest: 400,
+	unauthorized: 401,
+	forbidden: 403,
+	notFound: 404,
+	conflict: 409,
+	serverError: 500,
 };

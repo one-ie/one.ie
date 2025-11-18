@@ -7,28 +7,40 @@
  * - 1/3 of the page: Chat interface (right)
  */
 
-import { ViewTransitions } from 'astro:transitions';
-import { Toaster } from '@/components/ui/sonner';
-import { GlobalCartDrawer } from '@/components/ecommerce/GlobalCartDrawer';
-import { TransitionController } from '@/components/TransitionController';
-import ChatSidebar from '@/components/shop/ChatSidebar.tsx';
-import ThemeInit from '@/components/ThemeInit.astro';
-import PoweredByONE from '@/components/PoweredByONE.astro';
-import '../styles/global.css';
-import '../styles/transitions.css';
+import { ViewTransitions } from "astro:transitions";
+import PoweredByONE from "@/components/PoweredByONE.astro";
+import ChatSidebar from "@/components/shop/ChatSidebar.tsx";
+import { GlobalCartDrawer } from "@/components/shop/GlobalCartDrawer";
+import ThemeInit from "@/components/ThemeInit.astro";
+import { TransitionController } from "@/components/TransitionController";
+import { Toaster } from "@/components/ui/sonner";
+import "../styles/global.css";
+import "../styles/transitions.css";
 
 interface Props {
-  title: string;
-  description?: string;
-  image?: string;
-  type?: string;
+	title: string;
+	description?: string;
+	image?: string;
+	type?: string;
+	product?: {
+		id: string;
+		name: string;
+		price: number;
+		description: string;
+		category: string;
+		brand?: string;
+		stock: number;
+		features?: string[];
+		image?: string;
+	};
 }
 
 const {
-  title,
-  description = 'Premium products with AI shopping assistant',
-  image = '/og.jpg',
-  type = 'website',
+	title,
+	description = "Premium products with AI shopping assistant",
+	image = "/og.jpg",
+	type = "website",
+	product,
 } = Astro.props;
 
 // Generate canonical URL and full image URL
@@ -128,8 +140,8 @@ const imageURL = new URL(image, Astro.site);
       <slot />
     </main>
 
-    <!-- Chat Sidebar - Fixed right, 33% width when open -->
-    <ChatSidebar client:load initialOpen={true} />
+    <!-- Chat Sidebar - Fixed right, 45% width when open, closed by default -->
+    <ChatSidebar client:load product={product} />
 
     <Toaster client:only="react" />
     <GlobalCartDrawer client:only="react" />

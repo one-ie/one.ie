@@ -20,7 +20,7 @@
  * ```
  */
 
-import type { Id } from '@/types/convex';
+import type { Id } from "@/types/convex";
 
 // ============================================================================
 // Core Ontology Types
@@ -31,16 +31,16 @@ import type { Id } from '@/types/convex';
  * Represents ANY entity in the system (products, users, content, etc.)
  */
 export interface Thing {
-  _id: Id<'entities'>;
-  _creationTime: number;
-  groupId: Id<'groups'>;
-  type: string; // Will be specific like 'product', 'user', 'blog_post', etc.
-  name: string;
-  properties: Record<string, any>;
-  status?: 'active' | 'inactive' | 'draft' | 'published' | 'archived';
-  createdAt: number;
-  updatedAt: number;
-  deletedAt?: number;
+	_id: Id<"entities">;
+	_creationTime: number;
+	groupId: Id<"groups">;
+	type: string; // Will be specific like 'product', 'user', 'blog_post', etc.
+	name: string;
+	properties: Record<string, any>;
+	status?: "active" | "inactive" | "draft" | "published" | "archived";
+	createdAt: number;
+	updatedAt: number;
+	deletedAt?: number;
 }
 
 /**
@@ -48,19 +48,19 @@ export interface Thing {
  * Represents relationships between things
  */
 export interface Connection {
-  _id: Id<'connections'>;
-  _creationTime: number;
-  groupId: Id<'groups'>;
-  fromEntityId: Id<'entities'>;
-  toEntityId: Id<'entities'>;
-  relationshipType: string; // e.g., 'purchased', 'in_cart', 'variant_of'
-  metadata?: Record<string, any>;
-  strength?: number;
-  validFrom?: number;
-  validTo?: number;
-  createdAt: number;
-  updatedAt?: number;
-  deletedAt?: number;
+	_id: Id<"connections">;
+	_creationTime: number;
+	groupId: Id<"groups">;
+	fromEntityId: Id<"entities">;
+	toEntityId: Id<"entities">;
+	relationshipType: string; // e.g., 'purchased', 'in_cart', 'variant_of'
+	metadata?: Record<string, any>;
+	strength?: number;
+	validFrom?: number;
+	validTo?: number;
+	createdAt: number;
+	updatedAt?: number;
+	deletedAt?: number;
 }
 
 /**
@@ -68,14 +68,14 @@ export interface Connection {
  * Represents actions/state changes over time
  */
 export interface Event {
-  _id: Id<'events'>;
-  _creationTime: number;
-  groupId: Id<'groups'>;
-  type: string; // e.g., 'product_added_to_cart', 'order_placed'
-  actorId: Id<'entities'>;
-  targetId?: Id<'entities'>;
-  timestamp: number;
-  metadata?: Record<string, any>;
+	_id: Id<"events">;
+	_creationTime: number;
+	groupId: Id<"groups">;
+	type: string; // e.g., 'product_added_to_cart', 'order_placed'
+	actorId: Id<"entities">;
+	targetId?: Id<"entities">;
+	timestamp: number;
+	metadata?: Record<string, any>;
 }
 
 // ============================================================================
@@ -87,41 +87,41 @@ export interface Event {
  * Base type that all template types should extend
  */
 export interface TemplateEntity {
-  id: string;
-  [key: string]: any;
+	id: string;
+	[key: string]: any;
 }
 
 /**
  * Input type for creating a new Thing in the ontology
  */
 export interface CreateThingInput {
-  groupId: Id<'groups'>;
-  type: string;
-  name: string;
-  properties: Record<string, any>;
-  status?: 'active' | 'inactive' | 'draft' | 'published' | 'archived';
+	groupId: Id<"groups">;
+	type: string;
+	name: string;
+	properties: Record<string, any>;
+	status?: "active" | "inactive" | "draft" | "published" | "archived";
 }
 
 /**
  * Input type for creating a new Connection in the ontology
  */
 export interface CreateConnectionInput {
-  groupId: Id<'groups'>;
-  fromEntityId: Id<'entities'>;
-  toEntityId: Id<'entities'>;
-  relationshipType: string;
-  metadata?: Record<string, any>;
+	groupId: Id<"groups">;
+	fromEntityId: Id<"entities">;
+	toEntityId: Id<"entities">;
+	relationshipType: string;
+	metadata?: Record<string, any>;
 }
 
 /**
  * Input type for creating a new Event in the ontology
  */
 export interface CreateEventInput {
-  groupId: Id<'groups'>;
-  type: string;
-  actorId: Id<'entities'>;
-  targetId?: Id<'entities'>;
-  metadata?: Record<string, any>;
+	groupId: Id<"groups">;
+	type: string;
+	actorId: Id<"entities">;
+	targetId?: Id<"entities">;
+	metadata?: Record<string, any>;
 }
 
 // ============================================================================
@@ -132,30 +132,30 @@ export interface CreateEventInput {
  * Check if a Thing has a specific type
  */
 export function isThingOfType<T extends string>(
-  thing: Thing,
-  type: T
+	thing: Thing,
+	type: T,
 ): thing is Thing & { type: T } {
-  return thing.type === type;
+	return thing.type === type;
 }
 
 /**
  * Check if a Connection has a specific relationship type
  */
 export function isConnectionOfType<T extends string>(
-  connection: Connection,
-  relationshipType: T
+	connection: Connection,
+	relationshipType: T,
 ): connection is Connection & { relationshipType: T } {
-  return connection.relationshipType === relationshipType;
+	return connection.relationshipType === relationshipType;
 }
 
 /**
  * Check if an Event has a specific type
  */
 export function isEventOfType<T extends string>(
-  event: Event,
-  type: T
+	event: Event,
+	type: T,
 ): event is Event & { type: T } {
-  return event.type === type;
+	return event.type === type;
 }
 
 // ============================================================================
@@ -174,18 +174,18 @@ export function isEventOfType<T extends string>(
  * @param propertyMapper - Function to map entity fields to properties
  */
 export function templateToThing<T extends TemplateEntity>(
-  entity: T,
-  type: string,
-  groupId: Id<'groups'>,
-  propertyMapper: (entity: T) => Record<string, any>
+	entity: T,
+	type: string,
+	groupId: Id<"groups">,
+	propertyMapper: (entity: T) => Record<string, any>,
 ): CreateThingInput {
-  return {
-    groupId,
-    type,
-    name: entity.name || entity.title || entity.id,
-    properties: propertyMapper(entity),
-    status: entity.status || 'active',
-  };
+	return {
+		groupId,
+		type,
+		name: entity.name || entity.title || entity.id,
+		properties: propertyMapper(entity),
+		status: entity.status || "active",
+	};
 }
 
 /**
@@ -198,10 +198,10 @@ export function templateToThing<T extends TemplateEntity>(
  * @param entityMapper - Function to map thing to template entity
  */
 export function thingToTemplate<T extends TemplateEntity>(
-  thing: Thing,
-  entityMapper: (thing: Thing) => T
+	thing: Thing,
+	entityMapper: (thing: Thing) => T,
 ): T {
-  return entityMapper(thing);
+	return entityMapper(thing);
 }
 
 // ============================================================================
@@ -213,39 +213,39 @@ export function thingToTemplate<T extends TemplateEntity>(
  * Type-safe property extraction with validation
  */
 export function getProperty<T>(
-  thing: Thing,
-  key: string,
-  defaultValue?: T
+	thing: Thing,
+	key: string,
+	defaultValue?: T,
 ): T | undefined {
-  const value = thing.properties[key];
-  return value !== undefined ? (value as T) : defaultValue;
+	const value = thing.properties[key];
+	return value !== undefined ? (value as T) : defaultValue;
 }
 
 /**
  * Get required property or throw error
  */
 export function getRequiredProperty<T>(thing: Thing, key: string): T {
-  const value = thing.properties[key];
-  if (value === undefined) {
-    throw new Error(
-      `Required property '${key}' not found on thing ${thing._id}`
-    );
-  }
-  return value as T;
+	const value = thing.properties[key];
+	if (value === undefined) {
+		throw new Error(
+			`Required property '${key}' not found on thing ${thing._id}`,
+		);
+	}
+	return value as T;
 }
 
 /**
  * Map multiple properties at once
  */
 export function mapProperties<T extends Record<string, any>>(
-  thing: Thing,
-  propertyMap: Record<keyof T, string>
+	thing: Thing,
+	propertyMap: Record<keyof T, string>,
 ): T {
-  const result: any = {};
-  for (const [targetKey, sourceKey] of Object.entries(propertyMap)) {
-    result[targetKey] = thing.properties[sourceKey];
-  }
-  return result;
+	const result: any = {};
+	for (const [targetKey, sourceKey] of Object.entries(propertyMap)) {
+		result[targetKey] = thing.properties[sourceKey];
+	}
+	return result;
 }
 
 // ============================================================================
@@ -256,32 +256,29 @@ export function mapProperties<T extends Record<string, any>>(
  * Validate that a Thing has required properties
  */
 export function validateThingProperties(
-  thing: Thing,
-  requiredProperties: string[]
+	thing: Thing,
+	requiredProperties: string[],
 ): void {
-  const missing = requiredProperties.filter(
-    (prop) => thing.properties[prop] === undefined
-  );
+	const missing = requiredProperties.filter(
+		(prop) => thing.properties[prop] === undefined,
+	);
 
-  if (missing.length > 0) {
-    throw new Error(
-      `Thing ${thing._id} is missing required properties: ${missing.join(', ')}`
-    );
-  }
+	if (missing.length > 0) {
+		throw new Error(
+			`Thing ${thing._id} is missing required properties: ${missing.join(", ")}`,
+		);
+	}
 }
 
 /**
  * Validate thing type matches expected type
  */
-export function validateThingType(
-  thing: Thing,
-  expectedType: string
-): void {
-  if (thing.type !== expectedType) {
-    throw new Error(
-      `Expected thing type '${expectedType}', got '${thing.type}'`
-    );
-  }
+export function validateThingType(thing: Thing, expectedType: string): void {
+	if (thing.type !== expectedType) {
+		throw new Error(
+			`Expected thing type '${expectedType}', got '${thing.type}'`,
+		);
+	}
 }
 
 // ============================================================================
@@ -292,24 +289,24 @@ export function validateThingType(
  * Convert array of template entities to Things
  */
 export function batchTemplateToThing<T extends TemplateEntity>(
-  entities: T[],
-  type: string,
-  groupId: Id<'groups'>,
-  propertyMapper: (entity: T) => Record<string, any>
+	entities: T[],
+	type: string,
+	groupId: Id<"groups">,
+	propertyMapper: (entity: T) => Record<string, any>,
 ): CreateThingInput[] {
-  return entities.map((entity) =>
-    templateToThing(entity, type, groupId, propertyMapper)
-  );
+	return entities.map((entity) =>
+		templateToThing(entity, type, groupId, propertyMapper),
+	);
 }
 
 /**
  * Convert array of Things to template entities
  */
 export function batchThingToTemplate<T extends TemplateEntity>(
-  things: Thing[],
-  entityMapper: (thing: Thing) => T
+	things: Thing[],
+	entityMapper: (thing: Thing) => T,
 ): T[] {
-  return things.map((thing) => thingToTemplate(thing, entityMapper));
+	return things.map((thing) => thingToTemplate(thing, entityMapper));
 }
 
 // ============================================================================
@@ -320,35 +317,35 @@ export function batchThingToTemplate<T extends TemplateEntity>(
  * Map template status to ontology status
  */
 export function mapStatus(
-  templateStatus: string
-): 'active' | 'inactive' | 'draft' | 'published' | 'archived' {
-  const statusMap: Record<string, Thing['status']> = {
-    available: 'active',
-    unavailable: 'inactive',
-    draft: 'draft',
-    published: 'published',
-    archived: 'archived',
-    active: 'active',
-    inactive: 'inactive',
-  };
+	templateStatus: string,
+): "active" | "inactive" | "draft" | "published" | "archived" {
+	const statusMap: Record<string, Thing["status"]> = {
+		available: "active",
+		unavailable: "inactive",
+		draft: "draft",
+		published: "published",
+		archived: "archived",
+		active: "active",
+		inactive: "inactive",
+	};
 
-  return statusMap[templateStatus.toLowerCase()] || 'active';
+	return statusMap[templateStatus.toLowerCase()] || "active";
 }
 
 /**
  * Map ontology status to template-specific status
  */
 export function mapStatusToTemplate(
-  ontologyStatus: Thing['status'],
-  templateStatusMap?: Record<string, string>
+	ontologyStatus: Thing["status"],
+	templateStatusMap?: Record<string, string>,
 ): string {
-  if (!ontologyStatus) return 'active';
+	if (!ontologyStatus) return "active";
 
-  if (templateStatusMap) {
-    return templateStatusMap[ontologyStatus] || ontologyStatus;
-  }
+	if (templateStatusMap) {
+		return templateStatusMap[ontologyStatus] || ontologyStatus;
+	}
 
-  return ontologyStatus;
+	return ontologyStatus;
 }
 
 // ============================================================================

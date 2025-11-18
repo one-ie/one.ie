@@ -1,83 +1,94 @@
 ---
-import Layout from '../../layouts/Layout.astro';
-import { getCollection } from 'astro:content';
+import { getCollection } from "astro:content";
 import {
-  Card,
-  CardHeader,
-  CardTitle,
-  CardDescription,
-  CardContent,
-} from '@/components/ui/card';
-import { Badge } from '@/components/ui/badge';
-import { Button } from '@/components/ui/button';
-import { ArrowLeft, Code, CheckCircle2, Clock, AlertCircle, Users, Database, FileText, Zap, Link as LinkIcon } from 'lucide-react';
-import { FeatureSidebarNav } from '@/components/features/FeatureSidebarNav';
+	AlertCircle,
+	ArrowLeft,
+	CheckCircle2,
+	Clock,
+	Code,
+	Database,
+	FileText,
+	Link as LinkIcon,
+	Users,
+	Zap,
+} from "lucide-react";
+import { FeatureSidebarNav } from "@/components/features/FeatureSidebarNav";
 // Import MDX components for embedding in feature pages
-import * as MDXComponents from '@/components/features/mdx';
+import * as MDXComponents from "@/components/features/mdx";
+import { Badge } from "@/components/ui/badge";
+import { Button } from "@/components/ui/button";
+import {
+	Card,
+	CardContent,
+	CardDescription,
+	CardHeader,
+	CardTitle,
+} from "@/components/ui/card";
+import Layout from "../../layouts/Layout.astro";
 
 // Enable static pre-rendering for this dynamic route
 export const prerender = true;
 
 // Generate static paths
 export async function getStaticPaths() {
-  const features = await getCollection('features');
-  return features.map((feature) => ({
-    params: { slug: feature.slug },
-    props: { feature, allFeatures: features },
-  }));
+	const features = await getCollection("features");
+	return features.map((feature) => ({
+		params: { slug: feature.slug },
+		props: { feature, allFeatures: features },
+	}));
 }
 
 interface Props {
-  feature: unknown;
-  allFeatures: unknown[];
+	feature: unknown;
+	allFeatures: unknown[];
 }
 
 const { feature, allFeatures } = Astro.props;
 
 // Check if this is an MDX file by looking at the file path
-const isMDX = feature.id.endsWith('.mdx');
+const isMDX = feature.id.endsWith(".mdx");
 
 // Render the content
 const { Content } = await feature.render();
 
 const statusIcons = {
-  completed: CheckCircle2,
-  beta: Zap,
-  in_development: Clock,
-  planned: AlertCircle,
-  deprecated: AlertCircle,
+	completed: CheckCircle2,
+	beta: Zap,
+	in_development: Clock,
+	planned: AlertCircle,
+	deprecated: AlertCircle,
 };
 
 const statusColors = {
-  completed: 'bg-green-50 text-green-700 border-green-200',
-  beta: 'bg-blue-50 text-blue-700 border-blue-200',
-  in_development: 'bg-yellow-50 text-yellow-700 border-yellow-200',
-  planned: 'bg-gray-50 text-gray-700 border-gray-200',
-  deprecated: 'bg-red-50 text-red-700 border-red-200',
+	completed: "bg-green-50 text-green-700 border-green-200",
+	beta: "bg-blue-50 text-blue-700 border-blue-200",
+	in_development: "bg-yellow-50 text-yellow-700 border-yellow-200",
+	planned: "bg-gray-50 text-gray-700 border-gray-200",
+	deprecated: "bg-red-50 text-red-700 border-red-200",
 };
 
 const ontologyIcons = {
-  groups: Users,
-  people: Users,
-  things: Database,
-  connections: LinkIcon,
-  events: Zap,
-  knowledge: FileText,
+	groups: Users,
+	people: Users,
+	things: Database,
+	connections: LinkIcon,
+	events: Zap,
+	knowledge: FileText,
 };
 
 const categoryColors = {
-  authentication: 'bg-purple-50 text-purple-700 border-purple-200',
-  ecommerce: 'bg-blue-50 text-blue-700 border-blue-200',
-  'ai-agents': 'bg-pink-50 text-pink-700 border-pink-200',
-  protocols: 'bg-indigo-50 text-indigo-700 border-indigo-200',
-  payments: 'bg-emerald-50 text-emerald-700 border-emerald-200',
-  analytics: 'bg-cyan-50 text-cyan-700 border-cyan-200',
-  content: 'bg-orange-50 text-orange-700 border-orange-200',
-  communication: 'bg-rose-50 text-rose-700 border-rose-200',
-  infrastructure: 'bg-slate-50 text-slate-700 border-slate-200',
-  integrations: 'bg-lime-50 text-lime-700 border-lime-200',
-  'developer-tools': 'bg-amber-50 text-amber-700 border-amber-200',
-  other: 'bg-gray-50 text-gray-700 border-gray-200',
+	authentication: "bg-purple-50 text-purple-700 border-purple-200",
+	ecommerce: "bg-blue-50 text-blue-700 border-blue-200",
+	"ai-agents": "bg-pink-50 text-pink-700 border-pink-200",
+	protocols: "bg-indigo-50 text-indigo-700 border-indigo-200",
+	payments: "bg-emerald-50 text-emerald-700 border-emerald-200",
+	analytics: "bg-cyan-50 text-cyan-700 border-cyan-200",
+	content: "bg-orange-50 text-orange-700 border-orange-200",
+	communication: "bg-rose-50 text-rose-700 border-rose-200",
+	infrastructure: "bg-slate-50 text-slate-700 border-slate-200",
+	integrations: "bg-lime-50 text-lime-700 border-lime-200",
+	"developer-tools": "bg-amber-50 text-amber-700 border-amber-200",
+	other: "bg-gray-50 text-gray-700 border-gray-200",
 };
 ---
 

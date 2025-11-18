@@ -25,47 +25,53 @@
  * - Desktop (>1024px): 3 columns, spacious grid
  */
 
-import Layout from '@/layouts/Layout.astro';
-import { VideoGallery } from '@/components/media/VideoGallery';
-import { fetchYouTubeVideos } from '@/services/youtube';
+import { VideoGallery } from "@/components/media/VideoGallery";
+import Layout from "@/layouts/Layout.astro";
+import { fetchYouTubeVideos } from "@/services/youtube";
 
 // Get YouTube API credentials from environment
 const YOUTUBE_API_KEY = import.meta.env.YOUTUBE_API_KEY;
 const YOUTUBE_CHANNEL_ID = import.meta.env.YOUTUBE_CHANNEL_ID;
 
 let videoData = [];
-let errorMessage = '';
+let errorMessage = "";
 
 // Fetch videos from YouTube API
 if (!YOUTUBE_API_KEY || !YOUTUBE_CHANNEL_ID) {
-  errorMessage = 'YouTube API credentials not configured. Please set YOUTUBE_API_KEY and YOUTUBE_CHANNEL_ID in your .env file.';
-  console.error(errorMessage);
+	errorMessage =
+		"YouTube API credentials not configured. Please set YOUTUBE_API_KEY and YOUTUBE_CHANNEL_ID in your .env file.";
+	console.error(errorMessage);
 } else {
-  try {
-    const youtubeVideos = await fetchYouTubeVideos(YOUTUBE_API_KEY, YOUTUBE_CHANNEL_ID, 50);
+	try {
+		const youtubeVideos = await fetchYouTubeVideos(
+			YOUTUBE_API_KEY,
+			YOUTUBE_CHANNEL_ID,
+			50,
+		);
 
-    // Transform YouTube data for VideoGallery component
-    videoData = youtubeVideos.map(v => ({
-      title: v.title,
-      description: v.description,
-      thumbnail: v.thumbnail,
-      duration: v.duration,
-      slug: v.id, // Use YouTube ID as slug
-      author: v.channelTitle,
-      publishedAt: v.publishedAt,
-      youtubeId: v.id, // YouTube video ID
-      viewCount: v.viewCount,
-      likeCount: v.likeCount,
-    }));
-  } catch (error) {
-    errorMessage = `Error fetching videos from YouTube: ${error instanceof Error ? error.message : 'Unknown error'}`;
-    console.error(errorMessage);
-  }
+		// Transform YouTube data for VideoGallery component
+		videoData = youtubeVideos.map((v) => ({
+			title: v.title,
+			description: v.description,
+			thumbnail: v.thumbnail,
+			duration: v.duration,
+			slug: v.id, // Use YouTube ID as slug
+			author: v.channelTitle,
+			publishedAt: v.publishedAt,
+			youtubeId: v.id, // YouTube video ID
+			viewCount: v.viewCount,
+			likeCount: v.likeCount,
+		}));
+	} catch (error) {
+		errorMessage = `Error fetching videos from YouTube: ${error instanceof Error ? error.message : "Unknown error"}`;
+		console.error(errorMessage);
+	}
 }
 
 // Page metadata
-const pageTitle = 'Videos - ONE Platform';
-const pageDescription = 'Explore our collection of video tutorials, guides, and insights about blockchain technology, Sui, Web3, and the ONE Platform.';
+const pageTitle = "Videos - ONE Platform";
+const pageDescription =
+	"Explore our collection of video tutorials, guides, and insights about blockchain technology, Sui, Web3, and the ONE Platform.";
 ---
 
 <Layout

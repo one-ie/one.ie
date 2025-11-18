@@ -35,44 +35,44 @@
  * - events: Activity logging and audit trail
  */
 export interface FeatureFlags {
-  /** Authentication enabled (requires user login) */
-  auth: boolean;
+	/** Authentication enabled (requires user login) */
+	auth: boolean;
 
-  /** Multi-tenant groups enabled (org/team support) */
-  groups: boolean;
+	/** Multi-tenant groups enabled (org/team support) */
+	groups: boolean;
 
-  /** Role-based permissions (platform_owner, org_owner, org_user, customer) */
-  permissions: boolean;
+	/** Role-based permissions (platform_owner, org_owner, org_user, customer) */
+	permissions: boolean;
 
-  /** Real-time subscriptions (WebSocket via Convex) */
-  realtime: boolean;
+	/** Real-time subscriptions (WebSocket via Convex) */
+	realtime: boolean;
 
-  /** Full-text search (database search index) */
-  search: boolean;
+	/** Full-text search (database search index) */
+	search: boolean;
 
-  /** Vector search and embeddings (RAG support) */
-  knowledge: boolean;
+	/** Vector search and embeddings (RAG support) */
+	knowledge: boolean;
 
-  /** Connection tracking (relationships between entities) */
-  connections: boolean;
+	/** Connection tracking (relationships between entities) */
+	connections: boolean;
 
-  /** Event logging (audit trail and activity feed) */
-  events: boolean;
+	/** Event logging (audit trail and activity feed) */
+	events: boolean;
 
-  /** Cycle (AI/LLM integration) */
-  cycle: boolean;
+	/** Cycle (AI/LLM integration) */
+	cycle: boolean;
 
-  /** Blockchain integration (NFTs, tokens, smart contracts) */
-  blockchain: boolean;
+	/** Blockchain integration (NFTs, tokens, smart contracts) */
+	blockchain: boolean;
 
-  /** Payment processing (Stripe, payment gateways) */
-  payments: boolean;
+	/** Payment processing (Stripe, payment gateways) */
+	payments: boolean;
 
-  /** Marketplace features (buy/sell, e-commerce) */
-  marketplace: boolean;
+	/** Marketplace features (buy/sell, e-commerce) */
+	marketplace: boolean;
 
-  /** Community features (comments, reactions, following) */
-  community: boolean;
+	/** Community features (comments, reactions, following) */
+	community: boolean;
 }
 
 /**
@@ -85,19 +85,19 @@ export interface FeatureFlags {
  * etc.
  */
 export const defaultFeatures: FeatureFlags = {
-  auth: false,
-  groups: false,
-  permissions: false,
-  realtime: false,
-  search: false,
-  knowledge: false,
-  connections: false,
-  events: false,
-  cycle: false,
-  blockchain: false,
-  payments: false,
-  marketplace: false,
-  community: false,
+	auth: false,
+	groups: false,
+	permissions: false,
+	realtime: false,
+	search: false,
+	knowledge: false,
+	connections: false,
+	events: false,
+	cycle: false,
+	blockchain: false,
+	payments: false,
+	marketplace: false,
+	community: false,
 };
 
 /**
@@ -109,44 +109,44 @@ export const defaultFeatures: FeatureFlags = {
  * @returns Merged feature flags
  */
 function parseFeatureFlags(): FeatureFlags {
-  const flags = { ...defaultFeatures };
+	const flags = { ...defaultFeatures };
 
-  // Check for JSON-based features config
-  const featuresJson = import.meta.env.VITE_FEATURES;
-  if (featuresJson) {
-    try {
-      const parsed = JSON.parse(featuresJson);
-      Object.assign(flags, parsed);
-    } catch (err) {
-      console.warn('Failed to parse VITE_FEATURES:', err);
-    }
-  }
+	// Check for JSON-based features config
+	const featuresJson = import.meta.env.VITE_FEATURES;
+	if (featuresJson) {
+		try {
+			const parsed = JSON.parse(featuresJson);
+			Object.assign(flags, parsed);
+		} catch (err) {
+			console.warn("Failed to parse VITE_FEATURES:", err);
+		}
+	}
 
-  // Check for individual feature flags
-  for (const [key, value] of Object.entries(defaultFeatures)) {
-    const envKey = `VITE_FEATURE_${key.toUpperCase()}`;
-    const envValue = import.meta.env[envKey];
+	// Check for individual feature flags
+	for (const [key, value] of Object.entries(defaultFeatures)) {
+		const envKey = `VITE_FEATURE_${key.toUpperCase()}`;
+		const envValue = import.meta.env[envKey];
 
-    if (envValue !== undefined) {
-      flags[key as keyof FeatureFlags] =
-        envValue === 'true' || envValue === '1' || envValue === true;
-    }
-  }
+		if (envValue !== undefined) {
+			flags[key as keyof FeatureFlags] =
+				envValue === "true" || envValue === "1" || envValue === true;
+		}
+	}
 
-  // If Convex URL is available, enable realtime and most features by default
-  if (import.meta.env.PUBLIC_CONVEX_URL) {
-    flags.realtime = true;
-    flags.search = true;
-    flags.connections = true;
-    flags.events = true;
-  }
+	// If Convex URL is available, enable realtime and most features by default
+	if (import.meta.env.PUBLIC_CONVEX_URL) {
+		flags.realtime = true;
+		flags.search = true;
+		flags.connections = true;
+		flags.events = true;
+	}
 
-  // Better Auth implies auth is enabled
-  if (import.meta.env.BETTER_AUTH_SECRET) {
-    flags.auth = true;
-  }
+	// Better Auth implies auth is enabled
+	if (import.meta.env.BETTER_AUTH_SECRET) {
+		flags.auth = true;
+	}
 
-  return flags;
+	return flags;
 }
 
 /**
@@ -170,7 +170,7 @@ export const features = parseFeatureFlags();
  * ```
  */
 export function isFeatureEnabled(feature: keyof FeatureFlags): boolean {
-  return features[feature];
+	return features[feature];
 }
 
 /**
@@ -188,12 +188,12 @@ export function isFeatureEnabled(feature: keyof FeatureFlags): boolean {
  * ```
  */
 export function assertFeatureEnabled(feature: keyof FeatureFlags): void {
-  if (!features[feature]) {
-    throw new Error(
-      `Feature '${feature}' is not enabled. ` +
-        `Set VITE_FEATURE_${feature.toUpperCase()}=true to enable.`
-    );
-  }
+	if (!features[feature]) {
+		throw new Error(
+			`Feature '${feature}' is not enabled. ` +
+				`Set VITE_FEATURE_${feature.toUpperCase()}=true to enable.`,
+		);
+	}
 }
 
 /**
@@ -202,14 +202,14 @@ export function assertFeatureEnabled(feature: keyof FeatureFlags): void {
  * Declares what features a route/component requires
  */
 export interface FeatureRequirement {
-  /** Features that are required (all must be enabled) */
-  required?: (keyof FeatureFlags)[];
+	/** Features that are required (all must be enabled) */
+	required?: (keyof FeatureFlags)[];
 
-  /** Features that are recommended (at least one should be enabled) */
-  recommended?: (keyof FeatureFlags)[];
+	/** Features that are recommended (at least one should be enabled) */
+	recommended?: (keyof FeatureFlags)[];
 
-  /** Fallback route if features not available */
-  fallback?: string;
+	/** Fallback route if features not available */
+	fallback?: string;
 }
 
 /**
@@ -230,11 +230,13 @@ export interface FeatureRequirement {
  * }
  * ```
  */
-export function checkFeatureRequirements(requirement: FeatureRequirement): boolean {
-  if (requirement.required) {
-    return requirement.required.every(f => isFeatureEnabled(f));
-  }
-  return true;
+export function checkFeatureRequirements(
+	requirement: FeatureRequirement,
+): boolean {
+	if (requirement.required) {
+		return requirement.required.every((f) => isFeatureEnabled(f));
+	}
+	return true;
 }
 
 /**
@@ -249,9 +251,9 @@ export function checkFeatureRequirements(requirement: FeatureRequirement): boole
  * ```
  */
 export function getEnabledFeatures(): (keyof FeatureFlags)[] {
-  return Object.entries(features)
-    .filter(([, enabled]) => enabled)
-    .map(([name]) => name as keyof FeatureFlags);
+	return Object.entries(features)
+		.filter(([, enabled]) => enabled)
+		.map(([name]) => name as keyof FeatureFlags);
 }
 
 /**
@@ -260,9 +262,9 @@ export function getEnabledFeatures(): (keyof FeatureFlags)[] {
  * @returns Array of disabled feature names
  */
 export function getDisabledFeatures(): (keyof FeatureFlags)[] {
-  return Object.entries(features)
-    .filter(([, enabled]) => !enabled)
-    .map(([name]) => name as keyof FeatureFlags);
+	return Object.entries(features)
+		.filter(([, enabled]) => !enabled)
+		.map(([name]) => name as keyof FeatureFlags);
 }
 
 /**
@@ -271,12 +273,12 @@ export function getDisabledFeatures(): (keyof FeatureFlags)[] {
  * Determines what "mode" the app is running in based on features
  */
 export type FeatureMode =
-  | 'frontend-only' // No backend
-  | 'basic' // Static content only
-  | 'authenticated' // Auth + basic features
-  | 'multi-tenant' // Full groups/orgs support
-  | 'full' // All features enabled
-  | 'custom'; // Custom feature combo
+	| "frontend-only" // No backend
+	| "basic" // Static content only
+	| "authenticated" // Auth + basic features
+	| "multi-tenant" // Full groups/orgs support
+	| "full" // All features enabled
+	| "custom"; // Custom feature combo
 
 /**
  * Detect current feature mode
@@ -294,29 +296,29 @@ export type FeatureMode =
  * ```
  */
 export function getFeatureMode(): FeatureMode {
-  const enabled = getEnabledFeatures();
+	const enabled = getEnabledFeatures();
 
-  if (enabled.length === 0) {
-    return 'frontend-only';
-  }
+	if (enabled.length === 0) {
+		return "frontend-only";
+	}
 
-  const hasCore = features.auth && features.permissions;
-  const hasTenant = features.groups;
-  const hasFull = enabled.includes('realtime') && enabled.includes('search');
+	const hasCore = features.auth && features.permissions;
+	const hasTenant = features.groups;
+	const hasFull = enabled.includes("realtime") && enabled.includes("search");
 
-  if (hasTenant && hasFull) {
-    return 'full';
-  }
+	if (hasTenant && hasFull) {
+		return "full";
+	}
 
-  if (hasTenant) {
-    return 'multi-tenant';
-  }
+	if (hasTenant) {
+		return "multi-tenant";
+	}
 
-  if (hasCore) {
-    return 'authenticated';
-  }
+	if (hasCore) {
+		return "authenticated";
+	}
 
-  return 'custom';
+	return "custom";
 }
 
 /**
@@ -325,13 +327,13 @@ export function getFeatureMode(): FeatureMode {
  * Helps determine which backend provider is needed
  */
 export interface ProviderRequirement {
-  supportsAuth: boolean;
-  supportsGroups: boolean;
-  supportsRealtime: boolean;
-  supportsSearch: boolean;
-  supportsKnowledge: boolean;
-  supportsPayments: boolean;
-  supportsBlockchain: boolean;
+	supportsAuth: boolean;
+	supportsGroups: boolean;
+	supportsRealtime: boolean;
+	supportsSearch: boolean;
+	supportsKnowledge: boolean;
+	supportsPayments: boolean;
+	supportsBlockchain: boolean;
 }
 
 /**
@@ -346,15 +348,15 @@ export interface ProviderRequirement {
  * ```
  */
 export function getProviderRequirements(): ProviderRequirement {
-  return {
-    supportsAuth: features.auth,
-    supportsGroups: features.groups,
-    supportsRealtime: features.realtime,
-    supportsSearch: features.search,
-    supportsKnowledge: features.knowledge,
-    supportsPayments: features.payments,
-    supportsBlockchain: features.blockchain,
-  };
+	return {
+		supportsAuth: features.auth,
+		supportsGroups: features.groups,
+		supportsRealtime: features.realtime,
+		supportsSearch: features.search,
+		supportsKnowledge: features.knowledge,
+		supportsPayments: features.payments,
+		supportsBlockchain: features.blockchain,
+	};
 }
 
 /**
@@ -367,114 +369,114 @@ export function getProviderRequirements(): ProviderRequirement {
  * ```
  */
 export function logFeatureConfiguration(): void {
-  const mode = getFeatureMode();
-  const enabled = getEnabledFeatures();
-  const disabled = getDisabledFeatures();
+	const mode = getFeatureMode();
+	const enabled = getEnabledFeatures();
+	const disabled = getDisabledFeatures();
 
-  console.group('Feature Configuration');
-  console.log('Mode:', mode);
-  console.log('Enabled:', enabled);
-  console.log('Disabled:', disabled);
-  console.log('Full Config:', features);
-  console.groupEnd();
+	console.group("Feature Configuration");
+	console.log("Mode:", mode);
+	console.log("Enabled:", enabled);
+	console.log("Disabled:", disabled);
+	console.log("Full Config:", features);
+	console.groupEnd();
 }
 
 /**
  * Configuration examples for common scenarios
  */
 export const FEATURE_PRESETS = {
-  /**
-   * Frontend-only (markdown + content collections, no backend)
-   */
-  frontendOnly: {
-    auth: false,
-    groups: false,
-    permissions: false,
-    realtime: false,
-    search: false,
-    knowledge: false,
-    connections: false,
-    events: false,
-    cycle: false,
-    blockchain: false,
-    payments: false,
-    marketplace: false,
-    community: false,
-  } as FeatureFlags,
+	/**
+	 * Frontend-only (markdown + content collections, no backend)
+	 */
+	frontendOnly: {
+		auth: false,
+		groups: false,
+		permissions: false,
+		realtime: false,
+		search: false,
+		knowledge: false,
+		connections: false,
+		events: false,
+		cycle: false,
+		blockchain: false,
+		payments: false,
+		marketplace: false,
+		community: false,
+	} as FeatureFlags,
 
-  /**
-   * Static site with basic search
-   */
-  basicStatic: {
-    auth: false,
-    groups: false,
-    permissions: false,
-    realtime: false,
-    search: true, // Client-side search
-    knowledge: false,
-    connections: false,
-    events: false,
-    cycle: false,
-    blockchain: false,
-    payments: false,
-    marketplace: false,
-    community: false,
-  } as FeatureFlags,
+	/**
+	 * Static site with basic search
+	 */
+	basicStatic: {
+		auth: false,
+		groups: false,
+		permissions: false,
+		realtime: false,
+		search: true, // Client-side search
+		knowledge: false,
+		connections: false,
+		events: false,
+		cycle: false,
+		blockchain: false,
+		payments: false,
+		marketplace: false,
+		community: false,
+	} as FeatureFlags,
 
-  /**
-   * SaaS app with auth and multi-tenant
-   */
-  saas: {
-    auth: true,
-    groups: true,
-    permissions: true,
-    realtime: true,
-    search: true,
-    knowledge: false,
-    connections: true,
-    events: true,
-    cycle: false,
-    blockchain: false,
-    payments: true,
-    marketplace: false,
-    community: false,
-  } as FeatureFlags,
+	/**
+	 * SaaS app with auth and multi-tenant
+	 */
+	saas: {
+		auth: true,
+		groups: true,
+		permissions: true,
+		realtime: true,
+		search: true,
+		knowledge: false,
+		connections: true,
+		events: true,
+		cycle: false,
+		blockchain: false,
+		payments: true,
+		marketplace: false,
+		community: false,
+	} as FeatureFlags,
 
-  /**
-   * Full-featured platform with all services
-   */
-  full: {
-    auth: true,
-    groups: true,
-    permissions: true,
-    realtime: true,
-    search: true,
-    knowledge: true,
-    connections: true,
-    events: true,
-    cycle: true,
-    blockchain: true,
-    payments: true,
-    marketplace: true,
-    community: true,
-  } as FeatureFlags,
+	/**
+	 * Full-featured platform with all services
+	 */
+	full: {
+		auth: true,
+		groups: true,
+		permissions: true,
+		realtime: true,
+		search: true,
+		knowledge: true,
+		connections: true,
+		events: true,
+		cycle: true,
+		blockchain: true,
+		payments: true,
+		marketplace: true,
+		community: true,
+	} as FeatureFlags,
 
-  /**
-   * Marketplace app (products, payments, community)
-   */
-  marketplace: {
-    auth: true,
-    groups: true,
-    permissions: true,
-    realtime: true,
-    search: true,
-    knowledge: false,
-    connections: true,
-    events: true,
-    cycle: false,
-    blockchain: false,
-    payments: true,
-    marketplace: true,
-    community: true,
-  } as FeatureFlags,
+	/**
+	 * Marketplace app (products, payments, community)
+	 */
+	marketplace: {
+		auth: true,
+		groups: true,
+		permissions: true,
+		realtime: true,
+		search: true,
+		knowledge: false,
+		connections: true,
+		events: true,
+		cycle: false,
+		blockchain: false,
+		payments: true,
+		marketplace: true,
+		community: true,
+	} as FeatureFlags,
 } as const;

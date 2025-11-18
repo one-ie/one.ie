@@ -1,6 +1,9 @@
 "use client";
 
-import { CodeBlock, CodeBlockCopyButton } from "@/components/ai/elements/code-block";
+import {
+	CodeBlock,
+	CodeBlockCopyButton,
+} from "@/components/ai/elements/code-block";
 
 const code = `function MyComponent(props) {
   return (
@@ -12,14 +15,14 @@ const code = `function MyComponent(props) {
 }`;
 
 const Example = () => (
-  <div className="dark">
-    <CodeBlock code={code} language="jsx">
-      <CodeBlockCopyButton
-        onCopy={() => console.log("Copied code to clipboard")}
-        onError={() => console.error("Failed to copy code to clipboard")}
-      />
-    </CodeBlock>
-  </div>
+	<div className="dark">
+		<CodeBlock code={code} language="jsx">
+			<CodeBlockCopyButton
+				onCopy={() => console.log("Copied code to clipboard")}
+				onError={() => console.error("Failed to copy code to clipboard")}
+			/>
+		</CodeBlock>
+	</div>
 );
 
 export default Example;

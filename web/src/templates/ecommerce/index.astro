@@ -5,92 +5,92 @@
  * Performance: 90% static HTML, minimal JavaScript
  */
 
-import Layout from '@/layouts/Layout.astro';
-import { ProductCard } from '@/components/ecommerce/interactive/ProductCard';
-import { CategoryCard } from '@/components/ecommerce/static/CategoryCard';
-import { ProductGrid } from '@/components/ecommerce/static/ProductGrid';
-import { Button } from '@/components/ui/button';
+import { ProductCard } from "@/components/shop/interactive/ProductCard";
+import { CategoryCard } from "@/components/shop/static/CategoryCard";
+import { ProductGrid } from "@/components/shop/static/ProductGrid";
+import { Button } from "@/components/ui/button";
+import Layout from "@/layouts/Layout.astro";
 
 // Mock data - replace with content collections or API calls
 const featuredProducts = [
-  {
-    id: '1',
-    slug: 'premium-tshirt',
-    name: 'Premium Cotton T-Shirt',
-    description: 'Ultra-soft premium cotton',
-    price: 29.99,
-    compareAtPrice: 39.99,
-    images: ['/images/products/tshirt-1.jpg'],
-    thumbnail: '/images/products/tshirt-1.jpg',
-    category: 'apparel',
-    tags: ['cotton', 'casual'],
-    inStock: true,
-    rating: 4.5,
-    reviewCount: 128,
-    featured: true,
-    createdAt: new Date(),
-    updatedAt: new Date(),
-  },
-  {
-    id: '2',
-    slug: 'wireless-headphones',
-    name: 'Wireless Bluetooth Headphones',
-    description: 'Premium sound quality',
-    price: 149.99,
-    images: ['/images/products/headphones-1.jpg'],
-    thumbnail: '/images/products/headphones-1.jpg',
-    category: 'electronics',
-    tags: ['audio', 'wireless'],
-    inStock: true,
-    rating: 4.8,
-    reviewCount: 342,
-    featured: true,
-    createdAt: new Date(),
-    updatedAt: new Date(),
-  },
-  {
-    id: '3',
-    slug: 'leather-wallet',
-    name: 'Genuine Leather Wallet',
-    description: 'Handcrafted leather',
-    price: 59.99,
-    images: ['/images/products/wallet-1.jpg'],
-    thumbnail: '/images/products/wallet-1.jpg',
-    category: 'accessories',
-    tags: ['leather', 'handmade'],
-    inStock: true,
-    rating: 4.7,
-    reviewCount: 89,
-    createdAt: new Date(),
-    updatedAt: new Date(),
-  },
+	{
+		id: "1",
+		slug: "premium-tshirt",
+		name: "Premium Cotton T-Shirt",
+		description: "Ultra-soft premium cotton",
+		price: 29.99,
+		compareAtPrice: 39.99,
+		images: ["/images/products/tshirt-1.jpg"],
+		thumbnail: "/images/products/tshirt-1.jpg",
+		category: "apparel",
+		tags: ["cotton", "casual"],
+		inStock: true,
+		rating: 4.5,
+		reviewCount: 128,
+		featured: true,
+		createdAt: new Date(),
+		updatedAt: new Date(),
+	},
+	{
+		id: "2",
+		slug: "wireless-headphones",
+		name: "Wireless Bluetooth Headphones",
+		description: "Premium sound quality",
+		price: 149.99,
+		images: ["/images/products/headphones-1.jpg"],
+		thumbnail: "/images/products/headphones-1.jpg",
+		category: "electronics",
+		tags: ["audio", "wireless"],
+		inStock: true,
+		rating: 4.8,
+		reviewCount: 342,
+		featured: true,
+		createdAt: new Date(),
+		updatedAt: new Date(),
+	},
+	{
+		id: "3",
+		slug: "leather-wallet",
+		name: "Genuine Leather Wallet",
+		description: "Handcrafted leather",
+		price: 59.99,
+		images: ["/images/products/wallet-1.jpg"],
+		thumbnail: "/images/products/wallet-1.jpg",
+		category: "accessories",
+		tags: ["leather", "handmade"],
+		inStock: true,
+		rating: 4.7,
+		reviewCount: 89,
+		createdAt: new Date(),
+		updatedAt: new Date(),
+	},
 ];
 
 const categories = [
-  {
-    id: 'apparel',
-    slug: 'apparel',
-    name: 'Apparel',
-    description: 'Clothing and fashion',
-    image: '/images/categories/apparel.jpg',
-    productCount: 156,
-  },
-  {
-    id: 'electronics',
-    slug: 'electronics',
-    name: 'Electronics',
-    description: 'Tech and gadgets',
-    image: '/images/categories/electronics.jpg',
-    productCount: 89,
-  },
-  {
-    id: 'accessories',
-    slug: 'accessories',
-    name: 'Accessories',
-    description: 'Complete your look',
-    image: '/images/categories/accessories.jpg',
-    productCount: 234,
-  },
+	{
+		id: "apparel",
+		slug: "apparel",
+		name: "Apparel",
+		description: "Clothing and fashion",
+		image: "/images/categories/apparel.jpg",
+		productCount: 156,
+	},
+	{
+		id: "electronics",
+		slug: "electronics",
+		name: "Electronics",
+		description: "Tech and gadgets",
+		image: "/images/categories/electronics.jpg",
+		productCount: 89,
+	},
+	{
+		id: "accessories",
+		slug: "accessories",
+		name: "Accessories",
+		description: "Complete your look",
+		image: "/images/categories/accessories.jpg",
+		productCount: 234,
+	},
 ];
 ---
 

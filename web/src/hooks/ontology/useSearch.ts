@@ -30,64 +30,64 @@
  * ```
  */
 
-import { useCallback, useEffect, useState } from 'react';
-import { Effect } from 'effect';
-import { useEffectRunner } from '../useEffectRunner';
-import { useIsProviderAvailable } from './useProvider';
+import { Effect } from "effect";
+import { useCallback, useEffect, useState } from "react";
+import { useEffectRunner } from "../useEffectRunner";
+import { useIsProviderAvailable } from "./useProvider";
 
 /**
  * Label/tag categories for knowledge organization
  */
 export type LabelCategory =
-  | 'industry'
-  | 'skill'
-  | 'topic'
-  | 'format'
-  | 'goal'
-  | 'audience'
-  | 'technology'
-  | 'status'
-  | 'capability'
-  | 'protocol'
-  | 'payment_method'
-  | 'network'
-  | string;
+	| "industry"
+	| "skill"
+	| "topic"
+	| "format"
+	| "goal"
+	| "audience"
+	| "technology"
+	| "status"
+	| "capability"
+	| "protocol"
+	| "payment_method"
+	| "network"
+	| string;
 
 /**
  * Label/tag for categorizing and organizing entities
  */
 export interface Label {
-  _id: string;
-  _creationTime: number;
-  name: string;
-  category: LabelCategory;
-  description?: string;
-  color?: string;
-  createdAt: number;
+	_id: string;
+	_creationTime: number;
+	name: string;
+	category: LabelCategory;
+	description?: string;
+	color?: string;
+	createdAt: number;
 }
 
 /**
  * Search result item
  */
 export interface SearchResult {
-  _id: string;
-  type: string;
-  name: string;
-  snippet?: string;
-  score?: number;
-  relevance?: number;
-  matchedFields?: string[];
+	_id: string;
+	type: string;
+	name: string;
+	snippet?: string;
+	score?: number;
+	relevance?: number;
+	matchedFields?: string[];
 }
 
 /**
  * Semantic search options
  */
 export interface SearchOptions {
-  limit?: number;
-  offset?: number;
-  type?: string;
-  filters?: Record<string, any>;
-  includeArchived?: boolean;
+	limit?: number;
+	offset?: number;
+	type?: string;
+	filters?: Record<string, any>;
+	includeArchived?: boolean;
 }
 
 /**
@@ -106,39 +106,39 @@ export interface SearchOptions {
  * ```
  */
 export function useSearch(query: string, options?: SearchOptions) {
-  const { run, loading, error } = useEffectRunner<unknown, any>();
-  const isProviderAvailable = useIsProviderAvailable();
-  const [results, setResults] = useState<SearchResult[]>([]);
+	const { run, loading, error } = useEffectRunner<unknown, any>();
+	const isProviderAvailable = useIsProviderAvailable();
+	const [results, setResults] = useState<SearchResult[]>([]);
 
-  useEffect(() => {
-    if (!query.trim() || !isProviderAvailable) {
-      setResults([]);
-      return;
-    }
+	useEffect(() => {
+		if (!query.trim() || !isProviderAvailable) {
+			setResults([]);
+			return;
+		}
 
-    const program = Effect.gen(function* () {
-      // TODO: Implement with actual DataProvider
-      // const provider = yield* DataProvider;
-      // return yield* provider.knowledge.search(query, options);
-      return [] as SearchResult[];
-    });
+		const program = Effect.gen(function* () {
+			// TODO: Implement with actual DataProvider
+			// const provider = yield* DataProvider;
+			// return yield* provider.knowledge.search(query, options);
+			return [] as SearchResult[];
+		});
 
-    // Debounce search
-    const timeout = setTimeout(() => {
-      run(program, {
-        onSuccess: (data) => setResults(data),
-      });
-    }, 300);
+		// Debounce search
+		const timeout = setTimeout(() => {
+			run(program, {
+				onSuccess: (data) => setResults(data),
+			});
+		}, 300);
 
-    return () => clearTimeout(timeout);
-  }, [query, options?.type, isProviderAvailable, run]);
+		return () => clearTimeout(timeout);
+	}, [query, options?.type, isProviderAvailable, run]);
 
-  return {
-    results,
-    loading,
-    error,
-    hasResults: results.length > 0,
-  };
+	return {
+		results,
+		loading,
+		error,
+		hasResults: results.length > 0,
+	};
 }
 
 /**
@@ -155,7 +155,7 @@ export function useSearch(query: string, options?: SearchOptions) {
  * ```
  */
 export function useSearchByType(query: string, type: string) {
-  return useSearch(query, { type });
+	return useSearch(query, { type });
 }
 
 /**
@@ -171,33 +171,33 @@ export function useSearchByType(query: string, type: string) {
  * ```
  */
 export function useLabels(category?: LabelCategory) {
-  const { run, loading, error } = useEffectRunner<unknown, any>();
-  const isProviderAvailable = useIsProviderAvailable();
-  const [labels, setLabels] = useState<Label[]>([]);
+	const { run, loading, error } = useEffectRunner<unknown, any>();
+	const isProviderAvailable = useIsProviderAvailable();
+	const [labels, setLabels] = useState<Label[]>([]);
 
-  useEffect(() => {
-    if (!isProviderAvailable) {
-      setLabels([]);
-      return;
-    }
+	useEffect(() => {
+		if (!isProviderAvailable) {
+			setLabels([]);
+			return;
+		}
 
-    const program = Effect.gen(function* () {
-      // TODO: Implement with actual DataProvider
-      // const provider = yield* DataProvider;
-      // return yield* provider.knowledge.labels(category);
-      return [] as Label[];
-    });
+		const program = Effect.gen(function* () {
+			// TODO: Implement with actual DataProvider
+			// const provider = yield* DataProvider;
+			// return yield* provider.knowledge.labels(category);
+			return [] as Label[];
+		});
 
-    run(program, {
-      onSuccess: (data) => setLabels(data),
-    });
-  }, [category, isProviderAvailable, run]);
+		run(program, {
+			onSuccess: (data) => setLabels(data),
+		});
+	}, [category, isProviderAvailable, run]);
 
-  return {
-    labels,
-    loading,
-    error,
-  };
+	return {
+		labels,
+		loading,
+		error,
+	};
 }
 
 /**
@@ -212,7 +212,7 @@ export function useLabels(category?: LabelCategory) {
  * ```
  */
 export function useLabelsByCategory(category: LabelCategory) {
-  return useLabels(category);
+	return useLabels(category);
 }
 
 /**
@@ -228,33 +228,33 @@ export function useLabelsByCategory(category: LabelCategory) {
  * ```
  */
 export function useEntityLabels(entityId?: string) {
-  const { run, loading, error } = useEffectRunner<unknown, any>();
-  const isProviderAvailable = useIsProviderAvailable();
-  const [labels, setLabels] = useState<Label[]>([]);
+	const { run, loading, error } = useEffectRunner<unknown, any>();
+	const isProviderAvailable = useIsProviderAvailable();
+	const [labels, setLabels] = useState<Label[]>([]);
 
-  useEffect(() => {
-    if (!entityId || !isProviderAvailable) {
-      setLabels([]);
-      return;
-    }
+	useEffect(() => {
+		if (!entityId || !isProviderAvailable) {
+			setLabels([]);
+			return;
+		}
 
-    const program = Effect.gen(function* () {
-      // TODO: Implement with actual DataProvider
-      // const provider = yield* DataProvider;
-      // return yield* provider.knowledge.getEntityLabels(entityId);
-      return [] as Label[];
-    });
+		const program = Effect.gen(function* () {
+			// TODO: Implement with actual DataProvider
+			// const provider = yield* DataProvider;
+			// return yield* provider.knowledge.getEntityLabels(entityId);
+			return [] as Label[];
+		});
 
-    run(program, {
-      onSuccess: (data) => setLabels(data),
-    });
-  }, [entityId, isProviderAvailable, run]);
+		run(program, {
+			onSuccess: (data) => setLabels(data),
+		});
+	}, [entityId, isProviderAvailable, run]);
 
-  return {
-    labels,
-    loading,
-    error,
-  };
+	return {
+		labels,
+		loading,
+		error,
+	};
 }
 
 /**
@@ -270,33 +270,33 @@ export function useEntityLabels(entityId?: string) {
  * ```
  */
 export function useEntitiesByLabel(labelId?: string) {
-  const { run, loading, error } = useEffectRunner<unknown, any>();
-  const isProviderAvailable = useIsProviderAvailable();
-  const [entities, setEntities] = useState<any[]>([]);
+	const { run, loading, error } = useEffectRunner<unknown, any>();
+	const isProviderAvailable = useIsProviderAvailable();
+	const [entities, setEntities] = useState<any[]>([]);
 
-  useEffect(() => {
-    if (!labelId || !isProviderAvailable) {
-      setEntities([]);
-      return;
-    }
+	useEffect(() => {
+		if (!labelId || !isProviderAvailable) {
+			setEntities([]);
+			return;
+		}
 
-    const program = Effect.gen(function* () {
-      // TODO: Implement with actual DataProvider
-      // const provider = yield* DataProvider;
-      // return yield* provider.knowledge.getEntitiesByLabel(labelId);
-      return [] as any[];
-    });
+		const program = Effect.gen(function* () {
+			// TODO: Implement with actual DataProvider
+			// const provider = yield* DataProvider;
+			// return yield* provider.knowledge.getEntitiesByLabel(labelId);
+			return [] as any[];
+		});
 
-    run(program, {
-      onSuccess: (data) => setEntities(data),
-    });
-  }, [labelId, isProviderAvailable, run]);
+		run(program, {
+			onSuccess: (data) => setEntities(data),
+		});
+	}, [labelId, isProviderAvailable, run]);
 
-  return {
-    entities,
-    loading,
-    error,
-  };
+	return {
+		entities,
+		loading,
+		error,
+	};
 }
 
 /**
@@ -314,37 +314,34 @@ export function useEntitiesByLabel(labelId?: string) {
  * // Shows courses similar to this one
  * ```
  */
-export function useSimilarEntities(
-  entityId?: string,
-  limit = 10
-) {
-  const { run, loading, error } = useEffectRunner<unknown, any>();
-  const isProviderAvailable = useIsProviderAvailable();
-  const [results, setResults] = useState<any[]>([]);
+export function useSimilarEntities(entityId?: string, limit = 10) {
+	const { run, loading, error } = useEffectRunner<unknown, any>();
+	const isProviderAvailable = useIsProviderAvailable();
+	const [results, setResults] = useState<any[]>([]);
 
-  useEffect(() => {
-    if (!entityId || !isProviderAvailable) {
-      setResults([]);
-      return;
-    }
+	useEffect(() => {
+		if (!entityId || !isProviderAvailable) {
+			setResults([]);
+			return;
+		}
 
-    const program = Effect.gen(function* () {
-      // TODO: Implement with actual DataProvider
-      // const provider = yield* DataProvider;
-      // return yield* provider.knowledge.findSimilar(entityId, limit);
-      return [] as any[];
-    });
+		const program = Effect.gen(function* () {
+			// TODO: Implement with actual DataProvider
+			// const provider = yield* DataProvider;
+			// return yield* provider.knowledge.findSimilar(entityId, limit);
+			return [] as any[];
+		});
 
-    run(program, {
-      onSuccess: (data) => setResults(data),
-    });
-  }, [entityId, limit, isProviderAvailable, run]);
+		run(program, {
+			onSuccess: (data) => setResults(data),
+		});
+	}, [entityId, limit, isProviderAvailable, run]);
 
-  return {
-    results,
-    loading,
-    error,
-  };
+	return {
+		results,
+		loading,
+		error,
+	};
 }
 
 /**
@@ -368,50 +365,50 @@ export function useSimilarEntities(
  * ```
  */
 export function useFacetedSearch(
-  query: string,
-  facets?: Record<string, string>
+	query: string,
+	facets?: Record<string, string>,
 ) {
-  const { run, loading, error } = useEffectRunner<unknown, any>();
-  const isProviderAvailable = useIsProviderAvailable();
-  const [results, setResults] = useState<SearchResult[]>([]);
-  const [availableFacets, setAvailableFacets] = useState<
-    Record<string, string[]>
-  >({});
+	const { run, loading, error } = useEffectRunner<unknown, any>();
+	const isProviderAvailable = useIsProviderAvailable();
+	const [results, setResults] = useState<SearchResult[]>([]);
+	const [availableFacets, setAvailableFacets] = useState<
+		Record<string, string[]>
+	>({});
 
-  useEffect(() => {
-    if (!query.trim() || !isProviderAvailable) {
-      setResults([]);
-      return;
-    }
+	useEffect(() => {
+		if (!query.trim() || !isProviderAvailable) {
+			setResults([]);
+			return;
+		}
 
-    const program = Effect.gen(function* () {
-      // TODO: Implement with actual DataProvider
-      // const provider = yield* DataProvider;
-      // return yield* provider.knowledge.facetedSearch(query, facets);
-      return {
-        results: [] as SearchResult[],
-        facets: {} as Record<string, string[]>,
-      };
-    });
+		const program = Effect.gen(function* () {
+			// TODO: Implement with actual DataProvider
+			// const provider = yield* DataProvider;
+			// return yield* provider.knowledge.facetedSearch(query, facets);
+			return {
+				results: [] as SearchResult[],
+				facets: {} as Record<string, string[]>,
+			};
+		});
 
-    const timeout = setTimeout(() => {
-      run(program, {
-        onSuccess: (data) => {
-          setResults(data.results);
-          setAvailableFacets(data.facets);
-        },
-      });
-    }, 300);
+		const timeout = setTimeout(() => {
+			run(program, {
+				onSuccess: (data) => {
+					setResults(data.results);
+					setAvailableFacets(data.facets);
+				},
+			});
+		}, 300);
 
-    return () => clearTimeout(timeout);
-  }, [query, facets?.category, facets?.type, isProviderAvailable, run]);
+		return () => clearTimeout(timeout);
+	}, [query, facets?.category, facets?.type, isProviderAvailable, run]);
 
-  return {
-    results,
-    facets: availableFacets,
-    loading,
-    error,
-  };
+	return {
+		results,
+		facets: availableFacets,
+		loading,
+		error,
+	};
 }
 
 /**
@@ -427,33 +424,33 @@ export function useFacetedSearch(
  * ```
  */
 export function useTrendingEntities(entityType?: string, limit = 10) {
-  const { run, loading, error } = useEffectRunner<unknown, any>();
-  const isProviderAvailable = useIsProviderAvailable();
-  const [results, setResults] = useState<SearchResult[]>([]);
+	const { run, loading, error } = useEffectRunner<unknown, any>();
+	const isProviderAvailable = useIsProviderAvailable();
+	const [results, setResults] = useState<SearchResult[]>([]);
 
-  useEffect(() => {
-    if (!isProviderAvailable) {
-      setResults([]);
-      return;
-    }
+	useEffect(() => {
+		if (!isProviderAvailable) {
+			setResults([]);
+			return;
+		}
 
-    const program = Effect.gen(function* () {
-      // TODO: Implement with actual DataProvider
-      // const provider = yield* DataProvider;
-      // return yield* provider.knowledge.getTrending(entityType, limit);
-      return [] as SearchResult[];
-    });
+		const program = Effect.gen(function* () {
+			// TODO: Implement with actual DataProvider
+			// const provider = yield* DataProvider;
+			// return yield* provider.knowledge.getTrending(entityType, limit);
+			return [] as SearchResult[];
+		});
 
-    run(program, {
-      onSuccess: (data) => setResults(data),
-    });
-  }, [entityType, limit, isProviderAvailable, run]);
+		run(program, {
+			onSuccess: (data) => setResults(data),
+		});
+	}, [entityType, limit, isProviderAvailable, run]);
 
-  return {
-    results,
-    loading,
-    error,
-  };
+	return {
+		results,
+		loading,
+		error,
+	};
 }
 
 /**
@@ -472,31 +469,31 @@ export function useTrendingEntities(entityType?: string, limit = 10) {
  * ```
  */
 export function useRecommendations(userId?: string, limit = 20) {
-  const { run, loading, error } = useEffectRunner<unknown, any>();
-  const isProviderAvailable = useIsProviderAvailable();
-  const [results, setResults] = useState<SearchResult[]>([]);
+	const { run, loading, error } = useEffectRunner<unknown, any>();
+	const isProviderAvailable = useIsProviderAvailable();
+	const [results, setResults] = useState<SearchResult[]>([]);
 
-  useEffect(() => {
-    if (!userId || !isProviderAvailable) {
-      setResults([]);
-      return;
-    }
+	useEffect(() => {
+		if (!userId || !isProviderAvailable) {
+			setResults([]);
+			return;
+		}
 
-    const program = Effect.gen(function* () {
-      // TODO: Implement with actual DataProvider + RAG
-      // const provider = yield* DataProvider;
-      // return yield* provider.knowledge.getRecommendations(userId, limit);
-      return [] as SearchResult[];
-    });
+		const program = Effect.gen(function* () {
+			// TODO: Implement with actual DataProvider + RAG
+			// const provider = yield* DataProvider;
+			// return yield* provider.knowledge.getRecommendations(userId, limit);
+			return [] as SearchResult[];
+		});
 
-    run(program, {
-      onSuccess: (data) => setResults(data),
-    });
-  }, [userId, limit, isProviderAvailable, run]);
+		run(program, {
+			onSuccess: (data) => setResults(data),
+		});
+	}, [userId, limit, isProviderAvailable, run]);
 
-  return {
-    results,
-    loading,
-    error,
-  };
+	return {
+		results,
+		loading,
+		error,
+	};
 }

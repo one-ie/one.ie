@@ -1,110 +1,109 @@
 ---
-import Layout from '../layouts/Layout.astro';
-import { Button } from '@/components/ui/button';
 import {
-  Card,
-  CardHeader,
-  CardTitle,
-  CardDescription,
-  CardContent,
-} from '@/components/ui/card';
-import { Badge } from '@/components/ui/badge';
-import { GitSection } from '@/components/GitSection';
-import { PerformanceChart } from '@/components/features/PerformanceChart';
-import OrbitingCircles from '@/components/magicui/orbiting-circles';
+	Activity,
+	Bot,
+	Box,
+	Brain,
+	Building2,
+	Check,
+	Code,
+	Coins,
+	DollarSign,
+	GitBranch,
+	Github,
+	Globe,
+	Network,
+	Rocket,
+	Shield,
+	Sparkles,
+	Target,
+	TrendingUp,
+	Users,
+	Wand2,
+	Zap,
+} from "lucide-react";
+import { PerformanceChart } from "@/components/features/PerformanceChart";
+import { GitSection } from "@/components/GitSection";
+import OrbitingCircles from "@/components/magicui/orbiting-circles";
+import { Badge } from "@/components/ui/badge";
+import { Button } from "@/components/ui/button";
 import {
-  Github,
-  Check,
-  Rocket,
-  Users,
-  Box,
-  GitBranch,
-  Activity,
-  Brain,
-  Coins,
-  Wand2,
-  Sparkles,
-  Zap,
-  Globe,
-  Shield,
-  Target,
-  TrendingUp,
-  Code,
-  DollarSign,
-  Network,
-  Bot,
-  Building2,
-} from 'lucide-react';
+	Card,
+	CardContent,
+	CardDescription,
+	CardHeader,
+	CardTitle,
+} from "@/components/ui/card";
+import Layout from "../layouts/Layout.astro";
 
 const innerOrbits = [
-  {
-    startAngle: 0,
-    duration: 36,
-    logo: '/logos/shopify.svg',
-    name: 'Shopify',
-    caption: 'Storefront',
-  },
-  {
-    startAngle: 90,
-    duration: 36,
-    logo: '/logos/woocommerce.svg',
-    name: 'WooCommerce',
-    caption: 'Commerce',
-  },
-  {
-    startAngle: 180,
-    duration: 36,
-    logo: '/logos/magento.svg',
-    name: 'Magento',
-    caption: 'Enterprise',
-  },
-  {
-    startAngle: 270,
-    duration: 36,
-    logo: '/logos/stripe.svg',
-    name: 'Stripe',
-    caption: 'Billing',
-  },
+	{
+		startAngle: 0,
+		duration: 36,
+		logo: "/logos/shopify.svg",
+		name: "Shopify",
+		caption: "Storefront",
+	},
+	{
+		startAngle: 90,
+		duration: 36,
+		logo: "/logos/woocommerce.svg",
+		name: "WooCommerce",
+		caption: "Commerce",
+	},
+	{
+		startAngle: 180,
+		duration: 36,
+		logo: "/logos/magento.svg",
+		name: "Magento",
+		caption: "Enterprise",
+	},
+	{
+		startAngle: 270,
+		duration: 36,
+		logo: "/logos/stripe.svg",
+		name: "Stripe",
+		caption: "Billing",
+	},
 ];
 
 const outerOrbits = [
-  {
-    startAngle: 0,
-    duration: 48,
-    logo: '/logos/openai.svg',
-    name: 'OpenAI',
-    caption: 'GPT-4',
-  },
-  {
-    startAngle: 72,
-    duration: 48,
-    logo: '/logos/anthropic.svg',
-    name: 'Anthropic',
-    caption: 'Claude 3',
-  },
-  {
-    startAngle: 144,
-    duration: 48,
-    logo: '/logos/gemini.svg',
-    name: 'Google Gemini',
-    caption: 'Multimodal',
-  },
-  {
-    startAngle: 216,
-    duration: 48,
-    logo: '/logos/mistral.svg',
-    name: 'Mistral AI',
-    caption: 'Open-Weight',
-  },
-  {
-    startAngle: 288,
-    duration: 48,
-    logo: '/logos/deepseek.svg',
-    name: 'DeepSeek',
-    caption: 'Optimized',
-  },
+	{
+		startAngle: 0,
+		duration: 48,
+		logo: "/logos/openai.svg",
+		name: "OpenAI",
+		caption: "GPT-4",
+	},
+	{
+		startAngle: 72,
+		duration: 48,
+		logo: "/logos/anthropic.svg",
+		name: "Anthropic",
+		caption: "Claude 3",
+	},
+	{
+		startAngle: 144,
+		duration: 48,
+		logo: "/logos/gemini.svg",
+		name: "Google Gemini",
+		caption: "Multimodal",
+	},
+	{
+		startAngle: 216,
+		duration: 48,
+		logo: "/logos/mistral.svg",
+		name: "Mistral AI",
+		caption: "Open-Weight",
+	},
+	{
+		startAngle: 288,
+		duration: 48,
+		logo: "/logos/deepseek.svg",
+		name: "DeepSeek",
+		caption: "Optimized",
+	},
 ];
-
 ---
 
 <Layout title="ONE - Build AI Agents, Applications, and Your Audience">

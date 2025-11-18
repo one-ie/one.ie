@@ -1,55 +1,58 @@
 ---
-import Layout from "@/layouts/Layout.astro";
-import { getCollection } from "astro:content";
-import { Card } from "@/components/ui/card";
-import { Calendar, Clock } from "lucide-react";
 import type { CollectionEntry } from "astro:content";
+import { getCollection } from "astro:content";
+import { Calendar, Clock } from "lucide-react";
+import { Card } from "@/components/ui/card";
+import Layout from "@/layouts/Layout.astro";
 
 // Helper function to safely parse dates
 function safeParseDate(dateValue: any): Date {
-  if (!dateValue) return new Date();
-  if (dateValue instanceof Date) return dateValue;
-  const parsed = new Date(dateValue);
-  return isNaN(parsed.getTime()) ? new Date() : parsed;
+	if (!dateValue) return new Date();
+	if (dateValue instanceof Date) return dateValue;
+	const parsed = new Date(dateValue);
+	return isNaN(parsed.getTime()) ? new Date() : parsed;
 }
 
 // Get all Blog entries sorted by date
 const entries = (await getCollection("blog"))
-  .filter((entry: CollectionEntry<"blog">) =>
-    // Only include entries with valid frontmatter
-    entry.data && (entry.data.title || entry.data.description)
-  )
-  .sort((a: CollectionEntry<"blog">, b: CollectionEntry<"blog">) =>
-    safeParseDate(b.data.date).getTime() - safeParseDate(a.data.date).getTime()
-  );
+	.filter(
+		(entry: CollectionEntry<"blog">) =>
+			// Only include entries with valid frontmatter
+			entry.data && (entry.data.title || entry.data.description),
+	)
+	.sort(
+		(a: CollectionEntry<"blog">, b: CollectionEntry<"blog">) =>
+			safeParseDate(b.data.date).getTime() -
+			safeParseDate(a.data.date).getTime(),
+	);
 
 function formatDate(dateValue: any): string {
-  const date = safeParseDate(dateValue);
-  return new Intl.DateTimeFormat("en-US", {
-    year: "numeric",
-    month: "short",
-    day: "numeric",
-  }).format(date);
+	const date = safeParseDate(dateValue);
+	return new Intl.DateTimeFormat("en-US", {
+		year: "numeric",
+		month: "short",
+		day: "numeric",
+	}).format(date);
 }
 
 function estimateReadingTime(text: string | undefined): number {
-  if (!text) return 1;
-  const wordsPerMinute = 200;
-  const words = text.trim().split(/\s+/).length;
-  return Math.ceil(words / wordsPerMinute);
+	if (!text) return 1;
+	const wordsPerMinute = 200;
+	const words = text.trim().split(/\s+/).length;
+	return Math.ceil(words / wordsPerMinute);
 }
 
 function getBlogImage(entry: CollectionEntry<"blog">): string {
-  // Try picture first (from oneieold), then image
-  let imageUrl = entry.data.picture || entry.data.image;
+	// Try picture first (from oneieold), then image
+	const imageUrl = entry.data.picture || entry.data.image;
 
-  // Check if we have a valid image URL
-  if (imageUrl && typeof imageUrl === 'string' && imageUrl.trim() !== '') {
-    return imageUrl;
-  }
+	// Check if we have a valid image URL
+	if (imageUrl && typeof imageUrl === "string" && imageUrl.trim() !== "") {
+		return imageUrl;
+	}
 
-  // Return placeholder if no image
-  return "/images/placeholders/blog-placeholder-3.jpg";
+	// Return placeholder if no image
+	return "/images/placeholders/blog-placeholder-3.jpg";
 }
 ---
 

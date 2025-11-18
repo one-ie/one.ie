@@ -1,17 +1,23 @@
 ---
-import Layout from '../../../layouts/Layout.astro';
-import { Button } from '@/components/ui/button';
 import {
-  Card,
-  CardHeader,
-  CardTitle,
-  CardDescription,
-  CardContent,
-} from '@/components/ui/card';
-import { Badge } from '@/components/ui/badge';
-import { products } from '../lib/products';
-import type { Product } from '../lib/types';
-import { ShoppingBag, TruckIcon, RefreshCcw, ShieldCheck, Star } from 'lucide-react';
+	RefreshCcw,
+	ShieldCheck,
+	ShoppingBag,
+	Star,
+	TruckIcon,
+} from "lucide-react";
+import { Badge } from "@/components/ui/badge";
+import { Button } from "@/components/ui/button";
+import {
+	Card,
+	CardContent,
+	CardDescription,
+	CardHeader,
+	CardTitle,
+} from "@/components/ui/card";
+import Layout from "../../../layouts/Layout.astro";
+import { products } from "../lib/products";
+import type { Product } from "../lib/types";
 
 // Get featured products (new arrivals and sale items)
 const newArrivals = products.filter((p: Product) => p.isNew).slice(0, 4);
