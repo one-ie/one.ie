@@ -106,8 +106,6 @@ import {
 	OpenInClaude,
 	OpenInContent,
 	OpenInCursor,
-	OpenInScira,
-	OpenInT3,
 	OpenInTrigger,
 	OpenInv0,
 } from "@/components/ai/elements/open-in-chat";
@@ -2293,8 +2291,6 @@ export function ChatClientV2() {
 										<OpenInContent>
 											<OpenInChatGPT />
 											<OpenInClaude />
-											<OpenInT3 />
-											<OpenInScira />
 											<OpenInv0 />
 											<OpenInCursor />
 										</OpenInContent>
