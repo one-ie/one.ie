@@ -1071,7 +1071,10 @@ export function ChatClientV2() {
 							// Check for tool call messages
 							if (parsed.type === "tool_call") {
 								hasReceivedAnyData = true; // IMPORTANT: Mark as received
-								console.log("[Tool Call] Full payload structure:", JSON.stringify(parsed.payload, null, 2));
+								console.log(
+									"[Tool Call] Full payload structure:",
+									JSON.stringify(parsed.payload, null, 2),
+								);
 								const toolName = parsed.payload?.name || "Unknown tool";
 								const toolStartTime = Date.now();
 								console.log(
@@ -1265,9 +1268,13 @@ export function ChatClientV2() {
 								<div className="space-y-2">
 									<div className="flex items-center gap-2">
 										<Brain className="h-4 w-4 text-purple-600" />
-										<span className="font-semibold text-purple-600">Thinking</span>
+										<span className="font-semibold text-purple-600">
+											Thinking
+										</span>
 										{msg.isReasoningStreaming && (
-											<Badge variant="outline" className="text-xs">Streaming...</Badge>
+											<Badge variant="outline" className="text-xs">
+												Streaming...
+											</Badge>
 										)}
 									</div>
 									<div className="bg-muted/50 rounded-md p-3">
@@ -1342,11 +1349,12 @@ export function ChatClientV2() {
 												<div className="text-xs font-medium text-muted-foreground uppercase">
 													Output:
 												</div>
-												{typeof msg.payload.result === "string" && msg.payload.result.length > 0 && (
-													<div className="text-xs text-muted-foreground">
-														{msg.payload.result.length.toLocaleString()} chars
-													</div>
-												)}
+												{typeof msg.payload.result === "string" &&
+													msg.payload.result.length > 0 && (
+														<div className="text-xs text-muted-foreground">
+															{msg.payload.result.length.toLocaleString()} chars
+														</div>
+													)}
 											</div>
 											<div className="text-xs max-h-[600px] overflow-y-auto">
 												{typeof msg.payload.result === "string" ? (
@@ -1358,12 +1366,15 @@ export function ChatClientV2() {
 																" chars)"
 															: msg.payload.result}
 													</pre>
-												) : msg.payload.result !== null && msg.payload.result !== undefined ? (
+												) : msg.payload.result !== null &&
+													msg.payload.result !== undefined ? (
 													<pre className="overflow-x-auto font-mono text-xs leading-relaxed">
 														{JSON.stringify(msg.payload.result, null, 2)}
 													</pre>
 												) : (
-													<div className="text-muted-foreground italic">No output</div>
+													<div className="text-muted-foreground italic">
+														No output
+													</div>
 												)}
 											</div>
 										</div>

@@ -120,7 +120,11 @@ export const POST: APIRoute = async ({ request }) => {
 							}
 							// Handle tool call parts
 							else if (part.type === "tool-call") {
-								console.log("[API] Tool call received:", part.toolName, part.input);
+								console.log(
+									"[API] Tool call received:",
+									part.toolName,
+									part.input,
+								);
 								const toolData = JSON.stringify({
 									type: "tool_call",
 									payload: {
