@@ -20,6 +20,8 @@ import {
 	ChartBar,
 	CheckCheckIcon,
 	CheckIcon,
+	ChevronDown,
+	ChevronRight,
 	Code2,
 	CopyIcon,
 	Database,
@@ -41,6 +43,7 @@ import {
 	Shield,
 	ShoppingCart,
 	Sparkles,
+	Square,
 	Star,
 	Table,
 	TrendingUp,
@@ -51,12 +54,13 @@ import {
 	X,
 	Zap,
 } from "lucide-react";
-import { useEffect, useRef, useState } from "react";
+import { useCallback, useEffect, useRef, useState } from "react";
 import {
 	AgentMessage,
 	type AgentUIMessage,
 } from "@/components/ai/AgentMessage";
 import { TelegramMessage, SystemMessage } from "@/components/ai/TelegramMessage";
+import { ChatMessages } from "@/components/ai/ChatMessages";
 import type { ConversationMessage } from "@/lib/claude-code-events";
 import {
 	Conversation,
@@ -96,6 +100,17 @@ import {
 	ToolInput,
 	ToolOutput,
 } from "@/components/ai/elements/tool";
+import {
+	OpenIn,
+	OpenInChatGPT,
+	OpenInClaude,
+	OpenInContent,
+	OpenInCursor,
+	OpenInScira,
+	OpenInT3,
+	OpenInTrigger,
+	OpenInv0,
+} from "@/components/ai/elements/open-in-chat";
 import { MessageList } from "@/components/ai/MessageList";
 import { Alert, AlertDescription } from "@/components/ui/alert";
 import { Badge } from "@/components/ui/badge";
@@ -761,6 +776,54 @@ const DEMO_RESPONSES: Record<string, ExtendedMessage[]> = {
 
 // Hero section component - removed, content moved to main layout
 
+// Helper function to get human-readable tool descriptions
+function getToolDescription(toolName: string, args?: Record<string, any>): string {
+	const toolDescriptions: Record<string, (args?: Record<string, any>) => string> = {
+		Glob: (args) => args?.pattern ? `Searching for files matching "${args.pattern}"` : 'Searching for files',
+		Grep: (args) => args?.pattern ? `Searching code for "${args.pattern}"` : 'Searching code',
+		Read: (args) => args?.file_path ? `Reading file ${args.file_path.split('/').pop()}` : 'Reading file',
+		Write: (args) => args?.file_path ? `Writing to ${args.file_path.split('/').pop()}` : 'Writing file',
+		Edit: (args) => args?.file_path ? `Editing ${args.file_path.split('/').pop()}` : 'Editing file',
+		Bash: (args) => args?.command ? `Running command: ${args.command.substring(0, 50)}${args.command.length > 50 ? '...' : ''}` : 'Running command',
+		Task: (args) => args?.description ? `${args.description}` : 'Starting task',
+		WebFetch: (args) => args?.url ? `Fetching ${new URL(args.url).hostname}` : 'Fetching web content',
+		WebSearch: (args) => args?.query ? `Searching for "${args.query}"` : 'Searching the web',
+		TodoWrite: () => 'Updating task list',
+		AskUserQuestion: () => 'Asking for clarification',
+	};
+
+	const descFn = toolDescriptions[toolName];
+	return descFn ? descFn(args) : `Using ${toolName}`;
+}
+
+// Helper function to format tool results
+function formatToolResult(toolName: string, result: any): string {
+	if (!result) return 'Completed';
+
+	if (typeof result === 'string') {
+		// For file operations, show first line or summary
+		if (toolName === 'Read' || toolName === 'Grep' || toolName === 'Glob') {
+			const lines = result.split('\n');
+			const count = lines.length;
+			return count > 1 ? `Found ${count} ${count === 1 ? 'result' : 'results'}` : result.substring(0, 100);
+		}
+		return result.substring(0, 100);
+	}
+
+	if (typeof result === 'object') {
+		// Extract meaningful info from objects
+		if (result.files && Array.isArray(result.files)) {
+			return `Found ${result.files.length} ${result.files.length === 1 ? 'file' : 'files'}`;
+		}
+		if (result.matches) {
+			return `Found ${result.matches} ${result.matches === 1 ? 'match' : 'matches'}`;
+		}
+		return JSON.stringify(result).substring(0, 100);
+	}
+
+	return String(result).substring(0, 100);
+}
+
 export function ChatClientV2() {
 	const [apiKey, setApiKey] = useState("");
 	// Default to Claude Code Sonnet (free, no API key needed)
@@ -786,58 +849,28 @@ export function ChatClientV2() {
 	const [directorThinking, setDirectorThinking] = useState<string[]>([]);
 	const [assignedAgents, setAssignedAgents] = useState<Array<{name: string, status: string, timestamp: number}>>([]);
 	const [activeAgents, setActiveAgents] = useState<string[]>([]); // Agents currently in conversation
-	const [isUserScrolledUp, setIsUserScrolledUp] = useState(false); // Track if user has scrolled up
+	const [isAtBottom, setIsAtBottom] = useState(true); // Track if user is at bottom (from StickToBottom)
 	const [newMessageSender, setNewMessageSender] = useState<string | null>(null); // Track new messages while scrolled up
 	const { toast } = useToast();
 	const textareaRef = useRef<HTMLTextAreaElement>(null);
 	const messagesEndRef = useRef<HTMLDivElement>(null);
-	const conversationRef = useRef<HTMLDivElement>(null);
+	const abortControllerRef = useRef<AbortController | null>(null);
 
 	const selectedModelData = POPULAR_MODELS.find((m) => m.id === selectedModel);
 	const hasApiKey = !!apiKey;
 
-	// Detect when user scrolls up manually
-	useEffect(() => {
-		const conversationElement = conversationRef.current;
-		if (!conversationElement) return;
+	// Handle scroll state changes from StickToBottom library
+	const handleScrollStateChange = useCallback((atBottom: boolean, latestSender: string | null) => {
+		setIsAtBottom(atBottom);
 
-		const handleScroll = () => {
-			const { scrollTop, scrollHeight, clientHeight } = conversationElement;
-			const distanceFromBottom = scrollHeight - scrollTop - clientHeight;
-
-			// Consider "at bottom" if within 100px of bottom
-			const isAtBottom = distanceFromBottom < 100;
-
-			if (isAtBottom && isUserScrolledUp) {
-				// User scrolled back to bottom
-				setIsUserScrolledUp(false);
-				setNewMessageSender(null);
-			} else if (!isAtBottom && !isUserScrolledUp) {
-				// User scrolled up
-				setIsUserScrolledUp(true);
-			}
-		};
-
-		conversationElement.addEventListener('scroll', handleScroll);
-		return () => conversationElement.removeEventListener('scroll', handleScroll);
-	}, [isUserScrolledUp]);
-
-	// Auto-scroll to bottom when messages change (only if user hasn't scrolled up)
-	useEffect(() => {
-		if (!isUserScrolledUp) {
-			// Smooth, slower scroll so user can scan messages
-			messagesEndRef.current?.scrollIntoView({
-				behavior: "smooth",
-				block: "end"
-			});
-		} else {
-			// User has scrolled up - notify them of new message
-			const latestMessage = messages[messages.length - 1];
-			if (latestMessage && latestMessage.metadata?.sender) {
-				setNewMessageSender(latestMessage.metadata.sender);
-			}
+		if (atBottom) {
+			// User is at bottom, clear notification
+			setNewMessageSender(null);
+		} else if (latestSender) {
+			// User scrolled up and there's a new message
+			setNewMessageSender(latestSender);
 		}
-	}, [messages, isUserScrolledUp]);
+	}, []);
 
 	// Load API key and model from secure storage on mount
 	useEffect(() => {
@@ -1013,6 +1046,9 @@ export function ChatClientV2() {
 		setDirectorThinking([]);
 		setAssignedAgents([]);
 
+		// Create new abort controller for this request
+		abortControllerRef.current = new AbortController();
+
 		// Check if this is a demo request
 		const messageLower = text.toLowerCase();
 		let demoKey: string | null = null;
@@ -1062,6 +1098,7 @@ export function ChatClientV2() {
 						],
 						activeAgents, // Send currently active agents
 					}),
+					signal: abortControllerRef.current?.signal,
 				});
 
 				if (!directorResponse.ok) {
@@ -1087,10 +1124,13 @@ export function ChatClientV2() {
 								const data = JSON.parse(line.slice(6));
 
 								if (data.type === "message") {
+									// Create deterministic ID to prevent duplicates
+									const messageId = data.isStreaming && streamingMessageId
+										? streamingMessageId
+										: `${data.sender}-${data.timestamp}`;
+
 									const newMessage: ExtendedMessage = {
-										id: data.isStreaming && streamingMessageId
-											? streamingMessageId
-											: `${data.sender}-${data.timestamp}-${Math.random().toString(36).substring(2, 9)}`,
+										id: messageId,
 										role: data.sender === 'System' ? 'system' : 'assistant',
 										content: data.content,
 										type: 'text',
@@ -1221,6 +1261,7 @@ export function ChatClientV2() {
 								enableGenerativeUI: isGenerativeUIRequest,
 							},
 				),
+				signal: abortControllerRef.current?.signal,
 			});
 
 			if (!response.ok) {
@@ -1282,8 +1323,9 @@ export function ChatClientV2() {
 								);
 								console.log("  Args:", parsed.payload?.args || "NO ARGS FOUND");
 
-								setThinkingStatus(`Using tool: ${toolName}...`);
-								setActiveTools((prev) => [...prev, toolName]);
+								const humanReadableDesc = getToolDescription(toolName, parsed.payload?.args);
+							setThinkingStatus(humanReadableDesc);
+								setActiveTools((prev) => [...prev, humanReadableDesc]);
 								setToolStartTimes((prev) => ({
 									...prev,
 									[toolName]: toolStartTime,
@@ -1291,9 +1333,9 @@ export function ChatClientV2() {
 
 								// Show toast notification for tool call
 								toast({
-									title: `🔧 ${toolName}`,
+									title: `🔧 ${humanReadableDesc}`,
 									description: `Arguments: ${JSON.stringify(parsed.payload?.args || {}).substring(0, 100)}${JSON.stringify(parsed.payload?.args || {}).length > 100 ? "..." : ""}`,
-									duration: 10000, // 10 seconds
+									duration: 5000,
 								});
 							}
 							// Check for tool result messages
@@ -1320,9 +1362,9 @@ export function ChatClientV2() {
 									: JSON.stringify(parsed.payload?.result || {}).substring(0, 200);
 
 								toast({
-									title: `✅ ${toolName} ${duration ? `(${duration.toFixed(2)}s)` : ""}`,
-									description: `${resultPreview}${resultPreview.length >= 200 ? "..." : ""}`,
-									duration: 10000, // 10 seconds
+									title: `✅ ${getToolDescription(toolName, parsed.payload?.args)} ${duration ? `(${duration.toFixed(2)}s)` : ""}`,
+									description: formatToolResult(toolName, parsed.payload?.result),
+									duration: 5000,
 								});
 
 								// Remove from active tools
@@ -1437,13 +1479,37 @@ export function ChatClientV2() {
 				);
 			}
 		} catch (err) {
-			console.error("Chat error:", err);
-			setError(err instanceof Error ? err.message : "Failed to send message");
+			// Check if this was an intentional abort
+			if (err instanceof Error && err.name === 'AbortError') {
+				console.log("Request cancelled by user");
+				toast({
+					title: "Cancelled",
+					description: "Request stopped by user",
+				});
+			} else {
+				console.error("Chat error:", err);
+				setError(err instanceof Error ? err.message : "Failed to send message");
+			}
 			setMessages((prev) => prev.filter((msg) => msg.id !== userMessage.id));
 		} finally {
 			setIsLoading(false);
 			setThinkingStatus("");
 			setActiveTools([]);
+			abortControllerRef.current = null;
+		}
+	};
+
+	// Stop the current request
+	const handleStop = () => {
+		if (abortControllerRef.current) {
+			abortControllerRef.current.abort();
+			setIsLoading(false);
+			setThinkingStatus("");
+			setActiveTools([]);
+			toast({
+				title: "Stopped",
+				description: "Agent work has been cancelled",
+			});
 		}
 	};
 
@@ -1492,30 +1558,60 @@ export function ChatClientV2() {
 				<div>
 
 					{/* Thinking/Reasoning Display - Claude Code style */}
-					{msg.reasoning && msg.reasoning.content && (
-						<Card className="mb-4 border-l-4 border-l-purple-500 bg-purple-500/5">
-							<CardContent className="pt-4">
-								<div className="space-y-2">
-									<div className="flex items-center gap-2">
-										<Brain className="h-4 w-4 text-purple-600" />
-										<span className="font-semibold text-purple-600">
-											Thinking
-										</span>
-										{msg.isReasoningStreaming && (
-											<Badge variant="outline" className="text-xs">
-												Streaming...
-											</Badge>
-										)}
+					{msg.reasoning && msg.reasoning.content && (() => {
+						const paragraphs = msg.reasoning.content.split('\n\n');
+						const firstParagraph = paragraphs[0];
+						const restParagraphs = paragraphs.slice(1).join('\n\n');
+						const hasMultipleParagraphs = paragraphs.length > 1;
+						const [isThinkingExpanded, setIsThinkingExpanded] = useState(false);
+
+						return (
+							<Card className="mb-4 border-l-4 border-l-purple-500 bg-purple-500/5 opacity-80">
+								<CardContent className="px-6 py-4">
+									<div className="space-y-3">
+										<div className="flex items-center justify-between gap-2">
+											<div className="flex items-center gap-2">
+												<Brain className="h-4 w-4 text-purple-600" />
+												<span className="font-semibold text-purple-600">
+													Thinking
+												</span>
+												{msg.isReasoningStreaming && (
+													<Badge variant="outline" className="text-xs">
+														Streaming...
+													</Badge>
+												)}
+											</div>
+											{hasMultipleParagraphs && !msg.isReasoningStreaming && (
+												<Button
+													variant="ghost"
+													size="sm"
+													onClick={() => setIsThinkingExpanded(!isThinkingExpanded)}
+													className="h-6 px-2"
+												>
+													{isThinkingExpanded ? (
+														<ChevronDown className="h-4 w-4" />
+													) : (
+														<ChevronRight className="h-4 w-4" />
+													)}
+												</Button>
+											)}
+										</div>
+										<div className="bg-muted/50 rounded-md px-4 py-3">
+											<pre className="whitespace-pre-wrap text-xs font-mono leading-relaxed">
+												{firstParagraph}
+												{hasMultipleParagraphs && isThinkingExpanded && restParagraphs && (
+													<>
+														{'\n\n'}
+														{restParagraphs}
+													</>
+												)}
+											</pre>
+										</div>
 									</div>
-									<div className="bg-muted/50 rounded-md p-3">
-										<pre className="whitespace-pre-wrap text-xs font-mono leading-relaxed">
-											{msg.reasoning.content}
-										</pre>
-									</div>
-								</div>
-							</CardContent>
-						</Card>
-					)}
+								</CardContent>
+							</Card>
+						);
+					})()}
 
 					{/* Tool calls/results are now shown as toast notifications */}
 
@@ -2002,12 +2098,10 @@ export function ChatClientV2() {
 			{hasMessages && (
 				<div className="relative w-full">
 					{/* New Message Notification - shows when user has scrolled up */}
-					{isUserScrolledUp && newMessageSender && (
+					{!isAtBottom && newMessageSender && (
 						<div className="absolute top-4 left-1/2 transform -translate-x-1/2 z-50 animate-in slide-in-from-top duration-300">
 							<Button
 								onClick={() => {
-									setIsUserScrolledUp(false);
-									setNewMessageSender(null);
 									messagesEndRef.current?.scrollIntoView({ behavior: "smooth" });
 								}}
 								className="shadow-lg bg-primary text-primary-foreground hover:bg-primary/90 flex items-center gap-2"
@@ -2019,11 +2113,12 @@ export function ChatClientV2() {
 					)}
 
 					<Conversation className="w-full" initial="auto" resize="auto">
-						<ConversationContent
-							ref={conversationRef}
-							className="w-full md:max-w-3xl mx-auto px-4 pb-[145px]"
-						>
-						{messages.map((msg) => renderMessage(msg))}
+						<ConversationContent className="w-full md:max-w-3xl mx-auto px-4 pb-[145px]">
+							<ChatMessages
+								messages={messages}
+								renderMessage={renderMessage}
+								onScrollStateChange={handleScrollStateChange}
+							/>
 
 						{/* Director Thinking Visualization - shows the director's analysis */}
 						{isLoading && useDirector && messages.length > 0 && (() => {
@@ -2131,9 +2226,23 @@ export function ChatClientV2() {
 							</div>
 						)}
 
-						{/* Copy Conversation Button - At end of conversation */}
-						{messages.length > 0 && !isLoading && (
-							<div className="flex justify-center mt-4 mb-5">
+						{/* Action Buttons - At end of conversation */}
+						{messages.length > 0 && (
+							<div className="flex justify-center gap-2 mt-4 mb-5">
+								{/* Stop button - only show when loading */}
+								{isLoading && (
+									<Button
+										variant="destructive"
+										size="sm"
+										onClick={handleStop}
+										className="transition-all duration-200"
+									>
+										<Square className="h-4 w-4 mr-2 fill-current" />
+										Stop
+									</Button>
+								)}
+
+								{/* Copy Conversation Button - always show when there are messages */}
 								<Button
 									variant={conversationCopied ? "default" : "outline"}
 									size="sm"
@@ -2157,6 +2266,40 @@ export function ChatClientV2() {
 										</>
 									)}
 								</Button>
+
+								{/* Open in Chat button - only show when not loading */}
+								{!isLoading && (
+									<OpenIn
+										query={messages
+											.filter((msg) => msg.type !== "tool_call" && msg.type !== "tool_result")
+											.map((msg) => {
+												const role = msg.role === "user" ? "You" : "Assistant";
+												const content = typeof msg.content === "string"
+													? msg.content
+													: msg.content?.[0]?.type === "text"
+														? msg.content[0].text
+														: "";
+												return `${role}: ${content}`;
+											})
+											.join("\n\n")}
+									>
+										<OpenInTrigger>
+											<Button variant="outline" size="sm">
+												<MessageSquare className="h-4 w-4 mr-2" />
+												Open in Chat
+												<ChevronDown className="h-4 w-4 ml-2" />
+											</Button>
+										</OpenInTrigger>
+										<OpenInContent>
+											<OpenInChatGPT />
+											<OpenInClaude />
+											<OpenInT3 />
+											<OpenInScira />
+											<OpenInv0 />
+											<OpenInCursor />
+										</OpenInContent>
+									</OpenIn>
+								)}
 							</div>
 						)}
 
@@ -2164,6 +2307,7 @@ export function ChatClientV2() {
 					</ConversationContent>
 					<ConversationScrollButton />
 				</Conversation>
+			</div>
 			)}
 
 			{/* Login Banner - Show when no API key */}
@@ -2504,32 +2648,39 @@ export function ChatClientV2() {
 										</ModelSelector>
 									</div>
 
-									{/* Send button (Primary Blue) */}
+									{/* Send/Stop button (Primary Blue / Red when stopping) */}
 									<Button
 										variant="default"
-										className="gap-2 bg-[hsl(var(--color-primary))] text-[hsl(var(--color-primary-foreground))] hover:bg-[hsl(var(--color-primary))]/90 shadow-lg hover:shadow-xl active:shadow-md transition-all"
-										disabled={isLoading}
+										className={`gap-2 shadow-lg hover:shadow-xl active:shadow-md transition-all ${
+											isLoading
+												? 'bg-red-500 text-white hover:bg-red-600'
+												: 'bg-[hsl(var(--color-primary))] text-[hsl(var(--color-primary-foreground))] hover:bg-[hsl(var(--color-primary))]/90'
+										}`}
 										onClick={() => {
-											const textarea = textareaRef.current;
-											if (textarea && textarea.value.trim()) {
-												handleSubmit(
-													{ text: textarea.value, files: attachments } as any,
-													new Event("submit") as any,
-												);
-												textarea.value = "";
-												setAttachments([]);
+											if (isLoading) {
+												handleStop();
+											} else {
+												const textarea = textareaRef.current;
+												if (textarea && textarea.value.trim()) {
+													handleSubmit(
+														{ text: textarea.value, files: attachments } as any,
+														new Event("submit") as any,
+													);
+													textarea.value = "";
+													setAttachments([]);
+												}
 											}
 										}}
 									>
 										{isLoading ? (
 											<>
-												<div className="h-4 w-4 animate-spin rounded-full border-2 border-current border-t-transparent" />
-												<span className="hidden sm:inline">Sending</span>
+												<Square className="h-4 w-4 fill-current" />
+												<span>Stop</span>
 											</>
 										) : (
 											<>
 												<Play className="h-4 w-4" />
-												<span className="hidden sm:inline">Send</span>
+												<span>Send</span>
 											</>
 										)}
 									</Button>
