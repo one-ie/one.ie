@@ -1,0 +1,210 @@
+---
+import Layout from "@/layouts/Layout.astro";
+import { StaffTable } from "@/components/features/staff/StaffTable";
+import type { StaffMember } from "@/components/features/staff/StaffTable";
+
+const title = "Staff Management - Self-Sorting Demo";
+const description = "Interactive staff list with self-sorting capabilities for oil rig management";
+
+// Demo staff data (oil rig crew)
+const staffMembers: StaffMember[] = [
+	{
+		id: "1",
+		name: "John Martinez",
+		role: "Rig Manager",
+		department: "Operations",
+		certifications: ["H2S Safety", "Well Control", "Leadership"],
+		yearsExperience: 15,
+		status: "active",
+	},
+	{
+		id: "2",
+		name: "Sarah Chen",
+		role: "Drilling Supervisor",
+		department: "Drilling",
+		certifications: ["IWCF Level 4", "Crane Operations"],
+		yearsExperience: 12,
+		status: "active",
+	},
+	{
+		id: "3",
+		name: "Michael O'Brien",
+		role: "Safety Officer",
+		department: "Safety",
+		certifications: ["NEBOSH", "Fire Safety", "First Aid", "Emergency Response"],
+		yearsExperience: 8,
+		status: "active",
+	},
+	{
+		id: "4",
+		name: "Ana Rodriguez",
+		role: "Mechanical Engineer",
+		department: "Maintenance",
+		certifications: ["API 510", "Welding Inspector"],
+		yearsExperience: 6,
+		status: "offsite",
+	},
+	{
+		id: "5",
+		name: "David Kim",
+		role: "Roughneck",
+		department: "Drilling",
+		certifications: ["Basic H2S", "Rigging"],
+		yearsExperience: 3,
+		status: "active",
+	},
+	{
+		id: "6",
+		name: "Lisa Thompson",
+		role: "Electrical Technician",
+		department: "Maintenance",
+		certifications: ["Electrical Safety", "NFPA 70E", "Arc Flash"],
+		yearsExperience: 9,
+		status: "on-leave",
+	},
+	{
+		id: "7",
+		name: "James Wilson",
+		role: "Driller",
+		department: "Drilling",
+		certifications: ["Well Control", "BOP Operations", "Kick Detection"],
+		yearsExperience: 11,
+		status: "active",
+	},
+	{
+		id: "8",
+		name: "Maria Santos",
+		role: "Geologist",
+		department: "Operations",
+		certifications: ["Mud Logging", "Core Analysis"],
+		yearsExperience: 7,
+		status: "active",
+	},
+	{
+		id: "9",
+		name: "Robert Taylor",
+		role: "Crane Operator",
+		department: "Logistics",
+		certifications: ["NCCCO Certification", "Load Charts", "Rigging"],
+		yearsExperience: 10,
+		status: "active",
+	},
+	{
+		id: "10",
+		name: "Emily Davis",
+		role: "Medic",
+		department: "Safety",
+		certifications: ["Paramedic", "Offshore Medicine", "ACLS", "PHTLS"],
+		yearsExperience: 5,
+		status: "active",
+	},
+	{
+		id: "11",
+		name: "Carlos Mendez",
+		role: "Roustabout",
+		department: "Logistics",
+		certifications: ["Basic Safety", "Forklift"],
+		yearsExperience: 2,
+		status: "active",
+	},
+	{
+		id: "12",
+		name: "Jennifer Lee",
+		role: "Production Engineer",
+		department: "Operations",
+		certifications: ["Process Safety", "Reservoir Engineering", "Flow Assurance"],
+		yearsExperience: 13,
+		status: "offsite",
+	},
+];
+---
+
+<Layout title={title} description={description}>
+	<div class="container mx-auto py-8 px-4 space-y-8">
+		<!-- Header -->
+		<div class="space-y-2">
+			<h1 class="text-4xl font-bold tracking-tight">Staff Management</h1>
+			<p class="text-lg text-muted-foreground">
+				Self-sorting staff roster for oil rig crew. Click any column header to sort.
+			</p>
+		</div>
+
+		<!-- Stats Cards -->
+		<div class="grid grid-cols-1 md:grid-cols-4 gap-4">
+			<div class="rounded-lg border bg-card p-6">
+				<div class="text-2xl font-bold">{staffMembers.length}</div>
+				<p class="text-xs text-muted-foreground">Total Staff</p>
+			</div>
+			<div class="rounded-lg border bg-card p-6">
+				<div class="text-2xl font-bold text-green-600">
+					{staffMembers.filter((s) => s.status === "active").length}
+				</div>
+				<p class="text-xs text-muted-foreground">Active</p>
+			</div>
+			<div class="rounded-lg border bg-card p-6">
+				<div class="text-2xl font-bold text-blue-600">
+					{staffMembers.filter((s) => s.status === "offsite").length}
+				</div>
+				<p class="text-xs text-muted-foreground">Offsite</p>
+			</div>
+			<div class="rounded-lg border bg-card p-6">
+				<div class="text-2xl font-bold text-yellow-600">
+					{staffMembers.filter((s) => s.status === "on-leave").length}
+				</div>
+				<p class="text-xs text-muted-foreground">On Leave</p>
+			</div>
+		</div>
+
+		<!-- Features Info -->
+		<div class="rounded-lg border bg-muted/50 p-6">
+			<h2 class="text-lg font-semibold mb-3">Sorting Features</h2>
+			<ul class="space-y-2 text-sm text-muted-foreground">
+				<li class="flex items-start gap-2">
+					<span class="text-primary">•</span>
+					<span><strong>Click once</strong> on any column header to sort ascending</span>
+				</li>
+				<li class="flex items-start gap-2">
+					<span class="text-primary">•</span>
+					<span><strong>Click twice</strong> to sort descending</span>
+				</li>
+				<li class="flex items-start gap-2">
+					<span class="text-primary">•</span>
+					<span><strong>Click three times</strong> to clear sorting</span>
+				</li>
+				<li class="flex items-start gap-2">
+					<span class="text-primary">•</span>
+					<span>Sort by name, role, department, certifications count, experience, or status</span>
+				</li>
+			</ul>
+		</div>
+
+		<!-- Staff Table -->
+		<div class="space-y-4">
+			<h2 class="text-2xl font-semibold">Staff Roster</h2>
+			<StaffTable staff={staffMembers} client:load />
+		</div>
+
+		<!-- Additional Info -->
+		<div class="rounded-lg border bg-card p-6 space-y-4">
+			<h2 class="text-lg font-semibold">About This Demo</h2>
+			<div class="text-sm text-muted-foreground space-y-2">
+				<p>
+					This is a demonstration of the self-sorting staff management interface for oil rig operations.
+					The table shows key staff information including:
+				</p>
+				<ul class="list-disc list-inside space-y-1 ml-4">
+					<li>Staff member names and roles</li>
+					<li>Department assignments</li>
+					<li>Certifications held (with count badges)</li>
+					<li>Years of experience</li>
+					<li>Current status (active, on-leave, or offsite)</li>
+				</ul>
+				<p class="mt-4">
+					The sorting functionality is built with React and uses the shadcn/ui table component for
+					consistent styling and accessibility. Click any column header to sort the staff list
+					dynamically.
+				</p>
+			</div>
+		</div>
+	</div>
+</Layout>

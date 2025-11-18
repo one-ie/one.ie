@@ -11,6 +11,7 @@
 
 import type { ChatStatus, ToolUIPart } from "ai";
 import {
+	ArrowDown,
 	ArrowRight,
 	Bot,
 	Brain,
@@ -24,8 +25,8 @@ import {
 	Database,
 	FileSearch,
 	FormInput,
-	GlobeIcon,
 	Image,
+	Info,
 	Layers,
 	LineChart,
 	Lock,
@@ -47,6 +48,7 @@ import {
 	Users,
 	Wand2,
 	Wrench,
+	X,
 	Zap,
 } from "lucide-react";
 import { useEffect, useRef, useState } from "react";
@@ -54,6 +56,8 @@ import {
 	AgentMessage,
 	type AgentUIMessage,
 } from "@/components/ai/AgentMessage";
+import { TelegramMessage, SystemMessage } from "@/components/ai/TelegramMessage";
+import type { ConversationMessage } from "@/lib/claude-code-events";
 import {
 	Conversation,
 	ConversationContent,
@@ -109,6 +113,12 @@ import {
 	HoverCardTrigger,
 } from "@/components/ui/hover-card";
 import { Input } from "@/components/ui/input";
+import {
+	Tooltip,
+	TooltipContent,
+	TooltipProvider,
+	TooltipTrigger,
+} from "@/components/ui/tooltip";
 import { Label } from "@/components/ui/label";
 import {
 	Select,
@@ -118,6 +128,7 @@ import {
 	SelectValue,
 } from "@/components/ui/select";
 import { useToast } from "@/hooks/use-toast";
+import { Toaster } from "@/components/ui/toaster";
 import { secureGetItem, secureRemoveItem, secureSetItem } from "@/lib/security";
 import { cn } from "@/lib/utils";
 
@@ -160,47 +171,36 @@ const DEMO_CATEGORIES = {
 // Suggestion groups with expandable categories
 const suggestionGroups = [
 	{
-		label: "Chart",
-		highlight: "Chart",
+		label: "Marketing",
+		highlight: "Marketing",
 		items: [
-			"Show me beautiful conversion rate charts comparing AI chat vs traditional forms. Include: 1) Sales funnel showing drop-off at each stage (Landing → Engagement → Qualification → Demo → Closed Won), 2) Upsell success rates (Basic → Pro → Enterprise → Annual), 3) Code to production deployment timeline with Cloudflare, and 4) Edge performance metrics (response time + requests/sec). Make the charts visually stunning with clear comparisons showing AI chat crushing traditional forms.",
-			"Create a crypto price chart for Bitcoin over the last 30 days",
-			"Show me sales revenue charts for the last quarter",
-			"Generate a line chart comparing monthly active users",
-			"Build a dashboard with multiple chart types",
+			"Create a landing page for our new AI product with hero section, features, and testimonials",
+			"Design an email campaign template for our product launch",
+			"Build a content calendar for our social media strategy",
+			"Generate a marketing funnel visualization with conversion rates",
+			"Create a brand positioning statement and messaging framework",
 		],
 	},
 	{
-		label: "Product",
-		highlight: "Product",
+		label: "Sales",
+		highlight: "Sales",
 		items: [
 			"Show me the Wireless Noise-Canceling Headphones product card with a working Add to Cart button. Make it look professional with product image, price, rating, stock count, and quantity selector.",
-			"Create a product grid for an e-commerce store",
-			"Design a product detail page with image gallery",
-			"Build a product comparison table",
-			"Generate a product catalog with filters",
+			"Create a sales pipeline dashboard with deal stages and values",
+			"Build a customer proposal template with pricing tiers",
+			"Generate a competitive analysis comparison table",
+			"Design a sales performance leaderboard",
 		],
 	},
 	{
-		label: "Table",
-		highlight: "Table",
+		label: "Service",
+		highlight: "Service",
 		items: [
-			"📋 Create a data table (demo)",
-			"Generate a customer list table with sorting",
-			"Build an invoice table with totals",
-			"Create a product inventory table",
-			"Design a pricing comparison table",
-		],
-	},
-	{
-		label: "Form",
-		highlight: "Form",
-		items: [
-			"📝 Build a contact form (demo)",
-			"Create a user registration form",
-			"Design a payment checkout form",
-			"Build a survey form with multiple questions",
-			"Generate a multi-step wizard form",
+			"Create a customer support ticket system interface",
+			"Build a knowledge base article template",
+			"Design a customer satisfaction survey",
+			"Generate a service level agreement (SLA) dashboard",
+			"Create a customer onboarding checklist",
 		],
 	},
 	{
@@ -212,6 +212,28 @@ const suggestionGroups = [
 			"Build a testimonial carousel",
 			"Generate a feature comparison grid",
 			"Create a call-to-action banner",
+		],
+	},
+	{
+		label: "Engineering",
+		highlight: "Engineering",
+		items: [
+			"Show me beautiful conversion rate charts comparing AI chat vs traditional forms. Include: 1) Sales funnel showing drop-off at each stage (Landing → Engagement → Qualification → Demo → Closed Won), 2) Upsell success rates (Basic → Pro → Enterprise → Annual), 3) Code to production deployment timeline with Cloudflare, and 4) Edge performance metrics (response time + requests/sec). Make the charts visually stunning with clear comparisons showing AI chat crushing traditional forms.",
+			"Create a system architecture diagram for microservices",
+			"Build a code review checklist and pull request template",
+			"Generate a sprint planning board with task breakdown",
+			"Design a CI/CD pipeline visualization",
+		],
+	},
+	{
+		label: "Intelligence",
+		highlight: "Intelligence",
+		items: [
+			"Create a business intelligence dashboard with key metrics",
+			"Build a data analysis report with charts and insights",
+			"Generate a predictive analytics model visualization",
+			"Design a real-time analytics monitoring system",
+			"Create a customer behavior analysis dashboard",
 		],
 	},
 ];
@@ -741,8 +763,9 @@ const DEMO_RESPONSES: Record<string, ExtendedMessage[]> = {
 
 export function ChatClientV2() {
 	const [apiKey, setApiKey] = useState("");
+	// Default to Claude Code Sonnet (free, no API key needed)
 	const [selectedModel, setSelectedModel] = useState(
-		"google/gemini-2.5-flash-lite",
+		"claude-code/sonnet",
 	);
 	const [modelSelectorOpen, setModelSelectorOpen] = useState(false);
 	const [messages, setMessages] = useState<ExtendedMessage[]>([]);
@@ -759,17 +782,62 @@ export function ChatClientV2() {
 	const [toolStartTimes, setToolStartTimes] = useState<Record<string, number>>(
 		{},
 	);
+	const [useDirector, setUseDirector] = useState(true); // Use agent-director by default
+	const [directorThinking, setDirectorThinking] = useState<string[]>([]);
+	const [assignedAgents, setAssignedAgents] = useState<Array<{name: string, status: string, timestamp: number}>>([]);
+	const [activeAgents, setActiveAgents] = useState<string[]>([]); // Agents currently in conversation
+	const [isUserScrolledUp, setIsUserScrolledUp] = useState(false); // Track if user has scrolled up
+	const [newMessageSender, setNewMessageSender] = useState<string | null>(null); // Track new messages while scrolled up
 	const { toast } = useToast();
 	const textareaRef = useRef<HTMLTextAreaElement>(null);
 	const messagesEndRef = useRef<HTMLDivElement>(null);
+	const conversationRef = useRef<HTMLDivElement>(null);
 
 	const selectedModelData = POPULAR_MODELS.find((m) => m.id === selectedModel);
 	const hasApiKey = !!apiKey;
 
-	// Auto-scroll to bottom when messages change
+	// Detect when user scrolls up manually
 	useEffect(() => {
-		messagesEndRef.current?.scrollIntoView({ behavior: "smooth" });
-	}, [messages]);
+		const conversationElement = conversationRef.current;
+		if (!conversationElement) return;
+
+		const handleScroll = () => {
+			const { scrollTop, scrollHeight, clientHeight } = conversationElement;
+			const distanceFromBottom = scrollHeight - scrollTop - clientHeight;
+
+			// Consider "at bottom" if within 100px of bottom
+			const isAtBottom = distanceFromBottom < 100;
+
+			if (isAtBottom && isUserScrolledUp) {
+				// User scrolled back to bottom
+				setIsUserScrolledUp(false);
+				setNewMessageSender(null);
+			} else if (!isAtBottom && !isUserScrolledUp) {
+				// User scrolled up
+				setIsUserScrolledUp(true);
+			}
+		};
+
+		conversationElement.addEventListener('scroll', handleScroll);
+		return () => conversationElement.removeEventListener('scroll', handleScroll);
+	}, [isUserScrolledUp]);
+
+	// Auto-scroll to bottom when messages change (only if user hasn't scrolled up)
+	useEffect(() => {
+		if (!isUserScrolledUp) {
+			// Smooth, slower scroll so user can scan messages
+			messagesEndRef.current?.scrollIntoView({
+				behavior: "smooth",
+				block: "end"
+			});
+		} else {
+			// User has scrolled up - notify them of new message
+			const latestMessage = messages[messages.length - 1];
+			if (latestMessage && latestMessage.metadata?.sender) {
+				setNewMessageSender(latestMessage.metadata.sender);
+			}
+		}
+	}, [messages, isUserScrolledUp]);
 
 	// Load API key and model from secure storage on mount
 	useEffect(() => {
@@ -845,6 +913,7 @@ export function ChatClientV2() {
 	const handleCopyConversation = async () => {
 		try {
 			const conversationText = messages
+				.filter((msg) => msg.type !== "tool_call" && msg.type !== "tool_result")
 				.map((msg) => {
 					const role = msg.role === "user" ? "You" : "Assistant";
 					return `${role}: ${msg.content}`;
@@ -938,9 +1007,11 @@ export function ChatClientV2() {
 		setMessages((prev) => [...prev, userMessage]);
 		setIsLoading(true);
 		setError(null);
-		setThinkingStatus("Connecting to AI...");
+		setThinkingStatus("Thinking...");
 		setActiveTools([]);
 		setToolStartTimes({});
+		setDirectorThinking([]);
+		setAssignedAgents([]);
 
 		// Check if this is a demo request
 		const messageLower = text.toLowerCase();
@@ -979,6 +1050,135 @@ export function ChatClientV2() {
 		}
 
 		try {
+			// Use agent-director for intelligent routing and parallel execution
+			if (useDirector && !demoKey) {
+				const directorResponse = await fetch("/api/chat-director", {
+					method: "POST",
+					headers: { "Content-Type": "application/json" },
+					body: JSON.stringify({
+						messages: [
+							...messages.map((m) => ({ role: m.role, content: m.content, metadata: m.metadata })),
+							{ role: "user", content: text.trim() },
+						],
+						activeAgents, // Send currently active agents
+					}),
+				});
+
+				if (!directorResponse.ok) {
+					throw new Error(`Director error: ${directorResponse.status}`);
+				}
+
+				const reader = directorResponse.body?.getReader();
+				if (!reader) throw new Error("No response body");
+
+				const decoder = new TextDecoder();
+				let streamingMessageId: string | null = null;
+
+				while (true) {
+					const { done, value } = await reader.read();
+					if (done) break;
+
+					const chunk = decoder.decode(value);
+					const lines = chunk.split("\n");
+
+					for (const line of lines) {
+						if (line.startsWith("data: ")) {
+							try {
+								const data = JSON.parse(line.slice(6));
+
+								if (data.type === "message") {
+									const newMessage: ExtendedMessage = {
+										id: data.isStreaming && streamingMessageId
+											? streamingMessageId
+											: `${data.sender}-${data.timestamp}-${Math.random().toString(36).substring(2, 9)}`,
+										role: data.sender === 'System' ? 'system' : 'assistant',
+										content: data.content,
+										type: 'text',
+										timestamp: data.timestamp,
+										metadata: {
+											sender: data.sender,
+											avatar: data.avatar,
+											isStreaming: data.isStreaming,
+											isComplete: false,
+											agents: data.metadata?.agents,
+										},
+									};
+
+									// Update thinking status when director is streaming
+									if (data.sender === 'Agent Director' && data.isStreaming) {
+										setThinkingStatus("Analyzing request and identifying relevant agents...");
+									}
+
+									if (data.isStreaming) {
+										// For streaming messages, append to existing or create new
+										setMessages((prev) => {
+											const existingIndex = prev.findIndex(
+												msg => msg.metadata?.sender === data.sender && msg.metadata?.isStreaming
+											);
+
+											if (existingIndex !== -1) {
+												// Update existing streaming message
+												const updated = [...prev];
+												updated[existingIndex] = {
+													...updated[existingIndex],
+													content: updated[existingIndex].content + data.content,
+												};
+												return updated;
+											} else {
+												// Create new streaming message
+												streamingMessageId = newMessage.id;
+												return [...prev, newMessage];
+											}
+										});
+									} else {
+										// Non-streaming messages: check for duplicates before adding
+										setMessages((prev) => {
+											const exists = prev.some(msg => msg.id === newMessage.id);
+											if (exists) {
+												console.log('⚠️ Duplicate message ignored:', newMessage.id);
+												return prev;
+											}
+											return [...prev, newMessage];
+										});
+									}
+
+									console.log('📨 Message added:', data.sender, '-', data.content.substring(0, 50));
+								} else if (data.type === "agent-presence") {
+									// Update active agents in conversation
+									if (data.agents && Array.isArray(data.agents)) {
+										setActiveAgents((prev) => {
+											const newAgents = [...new Set([...prev, ...data.agents])];
+											console.log('👂 Active agents updated:', newAgents);
+											return newAgents;
+										});
+									}
+								} else if (data.type === "done") {
+									// Mark streaming complete
+									setMessages((prev) =>
+										prev.map(msg =>
+											msg.metadata?.isStreaming
+												? { ...msg, metadata: { ...msg.metadata, isStreaming: false, isComplete: true } }
+												: msg
+										)
+									);
+									setThinkingStatus("");
+									setIsLoading(false);
+									streamingMessageId = null;
+									return;
+								} else if (data.type === "error") {
+									throw new Error(data.message);
+								}
+							} catch (e) {
+								console.error('Parse error:', e);
+							}
+						}
+					}
+				}
+
+				setIsLoading(false);
+				return;
+			}
+
 			// Always make the API call - free tier works without API key!
 			const allMessages = [
 				...messages.map((m) => ({ role: m.role, content: m.content })),
@@ -1089,15 +1289,12 @@ export function ChatClientV2() {
 									[toolName]: toolStartTime,
 								}));
 
-								const toolMessage: ExtendedMessage = {
-									id: `tool-${crypto.randomUUID()}`,
-									role: "assistant",
-									content: "",
-									type: "tool_call",
-									payload: parsed.payload,
-									timestamp: toolStartTime,
-								};
-								setMessages((prev) => [...prev, toolMessage]);
+								// Show toast notification for tool call
+								toast({
+									title: `🔧 ${toolName}`,
+									description: `Arguments: ${JSON.stringify(parsed.payload?.args || {}).substring(0, 100)}${JSON.stringify(parsed.payload?.args || {}).length > 100 ? "..." : ""}`,
+									duration: 10000, // 10 seconds
+								});
 							}
 							// Check for tool result messages
 							else if (parsed.type === "tool_result") {
@@ -1117,20 +1314,16 @@ export function ChatClientV2() {
 								}
 								console.log("  Result:", parsed.payload?.result);
 
-								const toolResultMessage: ExtendedMessage = {
-									id: `tool-result-${crypto.randomUUID()}`,
-									role: "assistant",
-									content: "",
-									type: "tool_result",
-									payload: {
-										...parsed.payload,
-										startTime: toolStartTime,
-										endTime: toolEndTime,
-										duration,
-									},
-									timestamp: toolEndTime,
-								};
-								setMessages((prev) => [...prev, toolResultMessage]);
+								// Show toast notification for tool result
+								const resultPreview = typeof parsed.payload?.result === "string"
+									? parsed.payload.result.substring(0, 200)
+									: JSON.stringify(parsed.payload?.result || {}).substring(0, 200);
+
+								toast({
+									title: `✅ ${toolName} ${duration ? `(${duration.toFixed(2)}s)` : ""}`,
+									description: `${resultPreview}${resultPreview.length >= 200 ? "..." : ""}`,
+									duration: 10000, // 10 seconds
+								});
 
 								// Remove from active tools
 								setActiveTools((prev) => prev.filter((t) => t !== toolName));
@@ -1254,13 +1447,50 @@ export function ChatClientV2() {
 		}
 	};
 
+	// Convert ExtendedMessage to ConversationMessage for Telegram display
+	const toConversationMessage = (msg: ExtendedMessage): ConversationMessage => {
+		return {
+			id: msg.id,
+			type: msg.role === 'user' ? 'user' : (msg.metadata?.sender === 'System' ? 'system' : 'director'),
+			sender: msg.metadata?.sender || (msg.role === 'user' ? 'You' : 'Agent Director'),
+			content: msg.content,
+			timestamp: msg.timestamp,
+			avatar: msg.metadata?.avatar,
+			metadata: msg.metadata,
+			isStreaming: msg.metadata?.isStreaming,
+			isComplete: msg.metadata?.isComplete,
+		};
+	};
+
 	// Render message
 	const renderMessage = (msg: ExtendedMessage) => {
+		const conversationMsg = toConversationMessage(msg);
+		const isUser = msg.role === 'user';
+		const isSystemMsg = conversationMsg.type === 'system';
+
+		// Skip streaming Agent Director messages - they're shown in the thinking block
+		if (msg.metadata?.sender === 'Agent Director' && msg.metadata?.isStreaming) {
+			return null;
+		}
+
+		// System messages (agent joined, etc.)
+		if (isSystemMsg) {
+			return <SystemMessage key={msg.id} message={conversationMsg} />;
+		}
+
+		// Regular messages (user or assistant)
+		return <TelegramMessage key={msg.id} message={conversationMsg} isUser={isUser} />;
+	};
+
+	// OLD RENDER METHOD (keeping for reference, remove later)
+	const renderMessage_OLD = (msg: ExtendedMessage) => {
 		const isCopied = copiedMessageId === msg.id;
+		const isDirectorMessage = msg.id.startsWith('director-');
 
 		return (
 			<Message key={msg.id} from={msg.role}>
 				<div>
+
 					{/* Thinking/Reasoning Display - Claude Code style */}
 					{msg.reasoning && msg.reasoning.content && (
 						<Card className="mb-4 border-l-4 border-l-purple-500 bg-purple-500/5">
@@ -1287,113 +1517,7 @@ export function ChatClientV2() {
 						</Card>
 					)}
 
-					{/* Tool Call Display */}
-					{msg.type === "tool_call" && msg.payload && (
-						<div className="mb-4">
-							<Card className="border-l-4 border-l-blue-500 bg-blue-500/5">
-								<CardContent className="pt-4">
-									<div className="space-y-3">
-										<div className="flex items-center gap-2">
-											<Wrench className="h-4 w-4 text-blue-600" />
-											<span className="font-semibold text-blue-600">
-												Tool Call: {msg.payload.name}
-											</span>
-											<Badge variant="outline" className="text-xs">
-												Running
-											</Badge>
-										</div>
-
-										{/* Show arguments prominently */}
-										<div className="bg-muted/50 rounded-md p-3 space-y-2">
-											<div className="text-xs font-medium text-muted-foreground uppercase">
-												Arguments:
-											</div>
-											<pre className="text-xs overflow-x-auto">
-												{JSON.stringify(msg.payload.args, null, 2)}
-											</pre>
-										</div>
-									</div>
-								</CardContent>
-							</Card>
-						</div>
-					)}
-
-					{/* Tool Result Display */}
-					{msg.type === "tool_result" && msg.payload && (
-						<div className="mb-4">
-							<Card className="border-l-4 border-l-green-500 bg-green-500/5">
-								<CardContent className="pt-4">
-									<div className="space-y-3">
-										<div className="flex items-center gap-2">
-											<CheckIcon className="h-4 w-4 text-green-600" />
-											<span className="font-semibold text-green-600">
-												Result: {msg.payload.name}
-											</span>
-											<Badge
-												variant="outline"
-												className="text-xs text-green-600"
-											>
-												Completed
-											</Badge>
-											{msg.payload.duration !== null &&
-												msg.payload.duration !== undefined && (
-													<span className="text-xs text-muted-foreground">
-														⏱️ {msg.payload.duration.toFixed(2)}s
-													</span>
-												)}
-										</div>
-
-										{/* Show result prominently - FULL OUTPUT like Claude Code CLI */}
-										<div className="bg-muted/50 rounded-md p-3 space-y-2">
-											<div className="flex items-center justify-between">
-												<div className="text-xs font-medium text-muted-foreground uppercase">
-													Output:
-												</div>
-												{typeof msg.payload.result === "string" &&
-													msg.payload.result.length > 0 && (
-														<div className="text-xs text-muted-foreground">
-															{msg.payload.result.length.toLocaleString()} chars
-														</div>
-													)}
-											</div>
-											<div className="text-xs max-h-[600px] overflow-y-auto">
-												{typeof msg.payload.result === "string" ? (
-													<pre className="whitespace-pre-wrap font-mono text-xs leading-relaxed">
-														{msg.payload.result.length > 10000
-															? msg.payload.result.slice(0, 10000) +
-																"\n\n... (showing first 10,000 of " +
-																msg.payload.result.length.toLocaleString() +
-																" chars)"
-															: msg.payload.result}
-													</pre>
-												) : msg.payload.result !== null &&
-													msg.payload.result !== undefined ? (
-													<pre className="overflow-x-auto font-mono text-xs leading-relaxed">
-														{JSON.stringify(msg.payload.result, null, 2)}
-													</pre>
-												) : (
-													<div className="text-muted-foreground italic">
-														No output
-													</div>
-												)}
-											</div>
-										</div>
-
-										{msg.payload.error && (
-											<div className="bg-red-500/10 rounded-md p-3 space-y-2">
-												<div className="text-xs font-medium text-red-600 uppercase">
-													Error:
-												</div>
-												<pre className="text-xs text-red-600 whitespace-pre-wrap">
-													{msg.payload.error}
-												</pre>
-											</div>
-										)}
-									</div>
-								</CardContent>
-							</Card>
-						</div>
-					)}
+					{/* Tool calls/results are now shown as toast notifications */}
 
 					{/* UI Components (charts, tables, etc.) */}
 					{msg.type &&
@@ -1420,21 +1544,80 @@ export function ChatClientV2() {
 							<MessageContent
 								className={cn(
 									"group-[.is-user]:rounded-[24px] group-[.is-user]:bg-[#2f2f2f] group-[.is-user]:text-[#ececec]",
-									"group-[.is-assistant]:bg-transparent group-[.is-assistant]:p-0 group-[.is-assistant]:text-foreground",
+									"group-[.is-assistant]:rounded-[24px] group-[.is-assistant]:bg-[#2f2f2f] group-[.is-assistant]:px-6 group-[.is-assistant]:py-5 group-[.is-assistant]:text-[#ececec]",
 								)}
 							>
-								<MessageResponse>{msg.content}</MessageResponse>
+								<MessageResponse>
+									{isDirectorMessage && assignedAgents.length > 0 ? (
+										<div className="space-y-6">
+											{/* Agent Assignment Cards */}
+											<div className="mb-6">
+												<Card className="border-l-4 border-l-purple-600 bg-gradient-to-br from-purple-500/5 to-pink-500/5">
+													<CardContent className="pt-4">
+														<div className="space-y-4">
+															{/* Header */}
+															<div className="flex items-center gap-3 mb-4">
+																<Bot className="h-5 w-5 text-purple-600" />
+																<span className="text-base font-semibold text-purple-600">
+																	{assignedAgents.length > 1 ? '⚡ Parallel Execution' : '🔧 Agent Assigned'}
+																</span>
+																<Badge variant="outline" className="text-sm">
+																	{assignedAgents.length} {assignedAgents.length === 1 ? 'agent' : 'agents'}
+																</Badge>
+															</div>
+
+															{/* Agent Cards */}
+															<div className="grid gap-3">
+																{assignedAgents.map((agent, idx) => (
+																	<div
+																		key={idx}
+																		className="flex items-start gap-3 p-3 rounded-md bg-purple-500/5 border border-purple-500/10 animate-in fade-in duration-300"
+																		style={{ animationDelay: `${idx * 100}ms` }}
+																	>
+																		<Wrench className="h-5 w-5 text-purple-600 mt-0.5 flex-shrink-0" />
+																		<div className="flex-1 min-w-0">
+																			<div className="text-sm font-medium mb-1">{agent.name}</div>
+																			<div className="text-xs text-muted-foreground">
+																				{getAgentDescription(agent.name)}
+																			</div>
+																		</div>
+																		{assignedAgents.length > 1 && (
+																			<Zap className="h-4 w-4 text-yellow-500 flex-shrink-0" />
+																		)}
+																	</div>
+																))}
+															</div>
+														</div>
+													</CardContent>
+												</Card>
+											</div>
+
+											{/* Director's Response */}
+											<div className="prose prose-base max-w-none dark:prose-invert prose-headings:text-[#ececec] prose-p:text-[#ececec] prose-p:leading-relaxed prose-li:text-[#ececec] prose-strong:text-[#ececec] prose-code:text-[#ececec] prose-pre:bg-[#1a1a1a] animate-in fade-in duration-500">
+												{msg.content}
+												{msg.metadata?.isStreaming && (
+													<span className="inline-block w-1.5 h-4 ml-0.5 bg-foreground animate-pulse" />
+												)}
+											</div>
+										</div>
+									) : (
+										<div className="prose prose-base max-w-none dark:prose-invert prose-headings:text-[#ececec] prose-p:text-[#ececec] prose-p:leading-relaxed prose-li:text-[#ececec] prose-strong:text-[#ececec] prose-code:text-[#ececec] prose-pre:bg-[#1a1a1a] animate-in fade-in duration-500">
+											{msg.content}
+											{msg.metadata?.isStreaming && (
+												<span className="inline-block w-1.5 h-4 ml-0.5 bg-foreground animate-pulse" />
+											)}
+										</div>
+									)}
+								</MessageResponse>
 							</MessageContent>
 						)}
 
-					{/* Show placeholder if assistant message has no content but has other elements */}
+					{/* Show placeholder if assistant message has no content but has reasoning */}
 					{msg.role === "assistant" &&
 						!msg.content &&
-						(msg.reasoning ||
-							msg.type === "tool_call" ||
-							msg.type === "tool_result") && (
+						msg.reasoning && (
 							<div className="text-xs text-muted-foreground italic">
-								{/* Reasoning/tools shown above, no text response */}
+								{/* Reasoning shown above, no text response yet */}
 							</div>
 						)}
 
@@ -1457,10 +1640,25 @@ export function ChatClientV2() {
 		);
 	};
 
+	// Helper function to get agent descriptions
+	const getAgentDescription = (agentName: string): string => {
+		const descriptions: Record<string, string> = {
+			'agent-frontend': 'UI/UX specialist • Pages, components, Astro + React',
+			'agent-backend': 'Backend specialist • Services, mutations, Convex + Effect.ts',
+			'agent-builder': 'Full-stack builder • End-to-end features with nanostores',
+			'agent-quality': 'Quality assurance • Testing, validation, quality checks',
+			'agent-designer': 'Design specialist • Wireframes, UI/UX, design systems',
+			'agent-integrator': 'Integration expert • APIs, protocols, external systems',
+			'agent-ops': 'DevOps specialist • Deployment, CI/CD, infrastructure',
+		};
+		return descriptions[agentName] || 'Specialist agent';
+	};
+
 	const hasMessages = messages.length > 0;
 
 	return (
-		<div className="relative flex size-full flex-col overflow-hidden items-center justify-center bg-background">
+		<TooltipProvider>
+			<div className="relative flex size-full flex-col overflow-hidden items-center justify-center bg-background">
 			<style>{`
         textarea:focus, input:focus, button:focus {
           outline: none !important;
@@ -1546,14 +1744,16 @@ export function ChatClientV2() {
         }
       `}</style>
 
-			{/* Top Left: New Chat Button (Tertiary Green) - 20px from sidebar on desktop, left edge padding on mobile */}
-			<div className="fixed top-4 left-4 md:left-[100px] z-[100]">
+			{/* Top Left: New Chat Button + Director Toggle */}
+			<div className="fixed top-4 left-4 md:left-[100px] z-[100] flex items-center gap-2">
 				<Button
 					size="sm"
 					variant="default"
 					onClick={() => {
 						setMessages([]);
 						setError(null);
+						setDirectorThinking([]);
+						setAssignedAgents([]);
 						if (textareaRef.current) {
 							textareaRef.current.value = "";
 						}
@@ -1562,6 +1762,50 @@ export function ChatClientV2() {
 				>
 					<Plus className="w-4 h-4" />
 				</Button>
+
+				{/* Director Mode Toggle */}
+				<HoverCard openDelay={200}>
+					<HoverCardTrigger asChild>
+						<Button
+							size="sm"
+							variant={useDirector ? "default" : "outline"}
+							onClick={() => setUseDirector(!useDirector)}
+							className={cn(
+								"transition-all",
+								useDirector
+									? "bg-purple-600 hover:bg-purple-700 text-white"
+									: "bg-background hover:bg-accent"
+							)}
+						>
+							<Bot className="w-4 h-4" />
+						</Button>
+					</HoverCardTrigger>
+					<HoverCardContent side="right" className="w-80">
+						<div className="space-y-2">
+							<div className="flex items-start gap-2">
+								<Brain className="h-5 w-5 text-purple-600 mt-0.5" />
+								<div>
+									<p className="font-semibold text-sm">
+										{useDirector ? "Director Mode: ON" : "Director Mode: OFF"}
+									</p>
+									<p className="text-xs text-muted-foreground mt-1">
+										{useDirector
+											? "Agent Director analyzes requests, assigns specialist agents, and orchestrates parallel execution with real-time thinking visibility."
+											: "Direct model access without director routing. Faster for simple queries."}
+									</p>
+								</div>
+							</div>
+							{useDirector && (
+								<div className="mt-3 pt-3 border-t text-xs text-muted-foreground space-y-1">
+									<p>• Validates against 6-dimension ontology</p>
+									<p>• Searches for existing templates</p>
+									<p>• Assigns multiple agents in parallel</p>
+									<p>• Shows thinking process in real-time</p>
+								</div>
+							)}
+						</div>
+					</HoverCardContent>
+				</HoverCard>
 			</div>
 
 			{/* Settings Modal */}
@@ -1756,9 +2000,103 @@ export function ChatClientV2() {
 
 			{/* Messages Area - Only show when there are messages */}
 			{hasMessages && (
-				<Conversation className="w-full" initial="auto" resize="auto">
-					<ConversationContent className="w-full md:max-w-3xl mx-auto px-4 pb-[145px]">
+				<div className="relative w-full">
+					{/* New Message Notification - shows when user has scrolled up */}
+					{isUserScrolledUp && newMessageSender && (
+						<div className="absolute top-4 left-1/2 transform -translate-x-1/2 z-50 animate-in slide-in-from-top duration-300">
+							<Button
+								onClick={() => {
+									setIsUserScrolledUp(false);
+									setNewMessageSender(null);
+									messagesEndRef.current?.scrollIntoView({ behavior: "smooth" });
+								}}
+								className="shadow-lg bg-primary text-primary-foreground hover:bg-primary/90 flex items-center gap-2"
+							>
+								<span>New message from {newMessageSender}</span>
+								<ArrowDown className="h-4 w-4" />
+							</Button>
+						</div>
+					)}
+
+					<Conversation className="w-full" initial="auto" resize="auto">
+						<ConversationContent
+							ref={conversationRef}
+							className="w-full md:max-w-3xl mx-auto px-4 pb-[145px]"
+						>
 						{messages.map((msg) => renderMessage(msg))}
+
+						{/* Director Thinking Visualization - shows the director's analysis */}
+						{isLoading && useDirector && messages.length > 0 && (() => {
+							// Find the latest streaming Agent Director message
+							const directorMessage = messages
+								.slice()
+								.reverse()
+								.find(m => m.metadata?.sender === 'Agent Director' && m.metadata?.isStreaming);
+
+							return directorMessage && directorMessage.content ? (
+								<div className="mb-4">
+									<Reasoning isStreaming={isLoading} open={true}>
+										<div className="mb-2">
+											<div className="flex items-center gap-2 text-muted-foreground">
+												<Brain className="h-4 w-4 animate-pulse" />
+												<span className="text-sm font-medium">Agent Director Thinking...</span>
+											</div>
+										</div>
+										<ReasoningContent>
+											{directorMessage.content}
+										</ReasoningContent>
+									</Reasoning>
+								</div>
+							) : null;
+						})()}
+
+						{/* Active Agents Listening */}
+						{useDirector && activeAgents.length > 0 && (
+							<Card className="border-green-500/50 bg-green-500/5 mb-4">
+								<CardContent className="pt-4">
+									<div className="flex items-start gap-3">
+										<div className="flex-shrink-0 w-8 h-8 rounded-full bg-green-500/10 flex items-center justify-center">
+											👂
+										</div>
+										<div className="flex-1 space-y-2">
+											<div className="flex items-center gap-2">
+												<p className="font-medium text-sm text-green-700 dark:text-green-400">
+													Active Agents Listening
+												</p>
+												<Badge variant="outline" className="text-xs border-green-500/30">
+													{activeAgents.length} listening
+												</Badge>
+											</div>
+											<p className="text-xs text-muted-foreground">
+												These agents are watching the conversation and will respond when they can add value
+											</p>
+											<div className="flex flex-wrap gap-2 mt-3">
+												{activeAgents.map((agentId, idx) => {
+													const agentName = agentId.replace('agent-', '').replace(/^./, (c) => c.toUpperCase());
+													const agentEmojis: Record<string, string> = {
+														'agent-frontend': '🎨',
+														'agent-backend': '⚙️',
+														'agent-builder': '🔨',
+														'agent-quality': '✅',
+														'agent-designer': '🎯',
+													};
+													return (
+														<Badge
+															key={idx}
+															variant="secondary"
+															className="text-xs flex items-center gap-1 bg-green-500/10 border-green-500/20"
+														>
+															<span>{agentEmojis[agentId] || '🤖'}</span>
+															{agentName}
+														</Badge>
+													);
+												})}
+											</div>
+										</div>
+									</div>
+								</CardContent>
+							</Card>
+						)}
 
 						{/* Active Tool Execution Status */}
 						{isLoading && activeTools.length > 0 && (
@@ -1826,6 +2164,57 @@ export function ChatClientV2() {
 					</ConversationContent>
 					<ConversationScrollButton />
 				</Conversation>
+			)}
+
+			{/* Login Banner - Show when no API key */}
+			{!hasApiKey && typeof window !== 'undefined' && !localStorage.getItem('hideLoginBanner') && (
+				<div className="fixed top-20 left-1/2 -translate-x-1/2 w-full max-w-2xl z-[90] px-6 animate-in fade-in slide-in-from-top-4 duration-500">
+					<Card className="border-blue-500/50 bg-gradient-to-br from-blue-500/10 to-cyan-500/10 shadow-lg">
+						<CardContent className="pt-4 pb-4">
+							<div className="flex items-start gap-3">
+								<div className="p-2 rounded-lg bg-blue-500/20 flex-shrink-0">
+									<Sparkles className="h-5 w-5 text-blue-600" />
+								</div>
+								<div className="flex-1 space-y-2">
+									<div>
+										<h3 className="font-semibold text-blue-600 mb-1">✨ Using Claude Code (Free)</h3>
+										<p className="text-sm text-muted-foreground">
+											You're using Claude Code Sonnet - completely free with no API key needed!
+										</p>
+									</div>
+									<div className="flex items-start gap-2 p-2 rounded-md bg-blue-500/5 border border-blue-500/20">
+										<Info className="h-4 w-4 text-blue-600 mt-0.5 flex-shrink-0" />
+										<p className="text-xs text-muted-foreground">
+											<span className="font-medium text-foreground">Want 200+ models?</span> Add your OpenRouter API key in Settings to access GPT-4, Claude Opus, Gemini, and more.
+										</p>
+									</div>
+									<Button
+										variant="outline"
+										size="sm"
+										onClick={() => setShowSettings(true)}
+										className="gap-2 mt-2"
+									>
+										<Settings className="h-4 w-4" />
+										Add API Key for More Models
+									</Button>
+								</div>
+								<Button
+									variant="ghost"
+									size="icon"
+									className="h-6 w-6 text-muted-foreground hover:text-foreground flex-shrink-0"
+									onClick={() => {
+										if (typeof window !== 'undefined') {
+											localStorage.setItem('hideLoginBanner', 'true');
+											window.location.reload();
+										}
+									}}
+								>
+									<X className="h-4 w-4" />
+								</Button>
+							</div>
+						</CardContent>
+					</Card>
+				</div>
 			)}
 
 			{/* Centered Layout - Empty State */}
@@ -1961,16 +2350,28 @@ export function ChatClientV2() {
 									</div>
 
 									{/* Web search */}
-									<Button
-										variant="ghost"
-										size="sm"
-										className="gap-1.5"
-										onClick={handleWebSearch}
-										title="Search the web"
-									>
-										<GlobeIcon className="h-4 w-4" />
-										<span className="hidden sm:inline">Search</span>
-									</Button>
+									<Tooltip>
+										<TooltipTrigger asChild>
+											<Button
+												variant="ghost"
+												size="sm"
+												className="gap-1.5"
+												onClick={handleWebSearch}
+											>
+												<img
+													src="/icon.svg"
+													alt="ONE"
+													className="h-5 w-5 dark:invert-0 invert"
+												/>
+											</Button>
+										</TooltipTrigger>
+										<TooltipContent>
+											<p>Powered by ONE</p>
+											<a href="https://one.ie" target="_blank" rel="noopener noreferrer" className="text-xs text-blue-400 hover:underline">
+												https://one.ie
+											</a>
+										</TooltipContent>
+									</Tooltip>
 								</div>
 
 								<div className="flex items-center gap-2">
@@ -2324,16 +2725,28 @@ export function ChatClientV2() {
 								</div>
 
 								{/* Web search */}
-								<Button
-									variant="ghost"
-									size="sm"
-									className="gap-1.5"
-									onClick={handleWebSearch}
-									title="Search the web"
-								>
-									<GlobeIcon className="h-4 w-4" />
-									<span className="hidden sm:inline">Search</span>
-								</Button>
+								<Tooltip>
+									<TooltipTrigger asChild>
+										<Button
+											variant="ghost"
+											size="sm"
+											className="gap-1.5"
+											onClick={handleWebSearch}
+										>
+											<img
+												src="/icon.svg"
+												alt="ONE"
+												className="h-5 w-5 dark:invert-0 invert"
+											/>
+										</Button>
+									</TooltipTrigger>
+									<TooltipContent>
+										<p>Powered by ONE</p>
+										<a href="https://one.ie" target="_blank" rel="noopener noreferrer" className="text-xs text-blue-400 hover:underline">
+											https://one.ie
+										</a>
+									</TooltipContent>
+								</Tooltip>
 							</div>
 
 							<div className="flex items-center gap-2">
@@ -2500,6 +2913,10 @@ export function ChatClientV2() {
 					</div>
 				</div>
 			)}
-		</div>
+
+			{/* Toast notifications for tool calls */}
+			<Toaster />
+			</div>
+		</TooltipProvider>
 	);
 }
