@@ -756,7 +756,9 @@ export function ChatClientV2() {
 	const [thinkingStatus, setThinkingStatus] = useState<string>("");
 	const [activeTools, setActiveTools] = useState<string[]>([]);
 	const [activeCategory, setActiveCategory] = useState<string>("");
-	const [toolStartTimes, setToolStartTimes] = useState<Record<string, number>>({});
+	const [toolStartTimes, setToolStartTimes] = useState<Record<string, number>>(
+		{},
+	);
 	const { toast } = useToast();
 	const textareaRef = useRef<HTMLTextAreaElement>(null);
 	const messagesEndRef = useRef<HTMLDivElement>(null);
@@ -1069,14 +1071,20 @@ export function ChatClientV2() {
 							// Check for tool call messages
 							if (parsed.type === "tool_call") {
 								hasReceivedAnyData = true; // IMPORTANT: Mark as received
+								console.log("[Tool Call] Full payload structure:", JSON.stringify(parsed.payload, null, 2));
 								const toolName = parsed.payload?.name || "Unknown tool";
 								const toolStartTime = Date.now();
-								console.log(`[Tool Call] ${toolName} started at ${new Date(toolStartTime).toLocaleTimeString()}`);
-								console.log("  Args:", parsed.payload?.args);
+								console.log(
+									`[Tool Call] ${toolName} started at ${new Date(toolStartTime).toLocaleTimeString()}`,
+								);
+								console.log("  Args:", parsed.payload?.args || "NO ARGS FOUND");
 
 								setThinkingStatus(`Using tool: ${toolName}...`);
 								setActiveTools((prev) => [...prev, toolName]);
-								setToolStartTimes((prev) => ({ ...prev, [toolName]: toolStartTime }));
+								setToolStartTimes((prev) => ({
+									...prev,
+									[toolName]: toolStartTime,
+								}));
 
 								const toolMessage: ExtendedMessage = {
 									id: `tool-${crypto.randomUUID()}`,
@@ -1094,9 +1102,13 @@ export function ChatClientV2() {
 								const toolName = parsed.payload?.name || "Unknown tool";
 								const toolEndTime = Date.now();
 								const toolStartTime = toolStartTimes[toolName];
-								const duration = toolStartTime ? (toolEndTime - toolStartTime) / 1000 : null;
+								const duration = toolStartTime
+									? (toolEndTime - toolStartTime) / 1000
+									: null;
 
-								console.log(`[Tool Result] ${toolName} completed at ${new Date(toolEndTime).toLocaleTimeString()}`);
+								console.log(
+									`[Tool Result] ${toolName} completed at ${new Date(toolEndTime).toLocaleTimeString()}`,
+								);
 								if (duration !== null) {
 									console.log(`  Duration: ${duration.toFixed(2)}s`);
 								}
@@ -1118,7 +1130,7 @@ export function ChatClientV2() {
 								setMessages((prev) => [...prev, toolResultMessage]);
 
 								// Remove from active tools
-								setActiveTools((prev) => prev.filter(t => t !== toolName));
+								setActiveTools((prev) => prev.filter((t) => t !== toolName));
 								setToolStartTimes((prev) => {
 									const updated = { ...prev };
 									delete updated[toolName];
@@ -1265,13 +1277,19 @@ export function ChatClientV2() {
 									<div className="space-y-3">
 										<div className="flex items-center gap-2">
 											<Wrench className="h-4 w-4 text-blue-600" />
-											<span className="font-semibold text-blue-600">Tool Call: {msg.payload.name}</span>
-											<Badge variant="outline" className="text-xs">Running</Badge>
+											<span className="font-semibold text-blue-600">
+												Tool Call: {msg.payload.name}
+											</span>
+											<Badge variant="outline" className="text-xs">
+												Running
+											</Badge>
 										</div>
 
 										{/* Show arguments prominently */}
 										<div className="bg-muted/50 rounded-md p-3 space-y-2">
-											<div className="text-xs font-medium text-muted-foreground uppercase">Arguments:</div>
+											<div className="text-xs font-medium text-muted-foreground uppercase">
+												Arguments:
+											</div>
 											<pre className="text-xs overflow-x-auto">
 												{JSON.stringify(msg.payload.args, null, 2)}
 											</pre>
@@ -1290,25 +1308,37 @@ export function ChatClientV2() {
 									<div className="space-y-3">
 										<div className="flex items-center gap-2">
 											<CheckIcon className="h-4 w-4 text-green-600" />
-											<span className="font-semibold text-green-600">Result: {msg.payload.name}</span>
-											<Badge variant="outline" className="text-xs text-green-600">Completed</Badge>
-											{msg.payload.duration !== null && msg.payload.duration !== undefined && (
-												<span className="text-xs text-muted-foreground">
-													⏱️ {msg.payload.duration.toFixed(2)}s
-												</span>
-											)}
+											<span className="font-semibold text-green-600">
+												Result: {msg.payload.name}
+											</span>
+											<Badge
+												variant="outline"
+												className="text-xs text-green-600"
+											>
+												Completed
+											</Badge>
+											{msg.payload.duration !== null &&
+												msg.payload.duration !== undefined && (
+													<span className="text-xs text-muted-foreground">
+														⏱️ {msg.payload.duration.toFixed(2)}s
+													</span>
+												)}
 										</div>
 
 										{/* Show result prominently */}
 										<div className="bg-muted/50 rounded-md p-3 space-y-2">
-											<div className="text-xs font-medium text-muted-foreground uppercase">Output:</div>
+											<div className="text-xs font-medium text-muted-foreground uppercase">
+												Output:
+											</div>
 											<div className="text-xs max-h-96 overflow-y-auto">
-												{typeof msg.payload.result === 'string' ? (
+												{typeof msg.payload.result === "string" ? (
 													<pre className="whitespace-pre-wrap font-mono text-xs">
 														{msg.payload.result.length > 2000
-															? msg.payload.result.slice(0, 2000) + '\n\n... (truncated, ' + msg.payload.result.length + ' chars total)'
-															: msg.payload.result
-														}
+															? msg.payload.result.slice(0, 2000) +
+																"\n\n... (truncated, " +
+																msg.payload.result.length +
+																" chars total)"
+															: msg.payload.result}
 													</pre>
 												) : (
 													<pre className="overflow-x-auto">
@@ -1320,7 +1350,9 @@ export function ChatClientV2() {
 
 										{msg.payload.error && (
 											<div className="bg-red-500/10 rounded-md p-3 space-y-2">
-												<div className="text-xs font-medium text-red-600 uppercase">Error:</div>
+												<div className="text-xs font-medium text-red-600 uppercase">
+													Error:
+												</div>
 												<pre className="text-xs text-red-600 whitespace-pre-wrap">
 													{msg.payload.error}
 												</pre>
@@ -1707,7 +1739,11 @@ export function ChatClientV2() {
 											<p className="font-medium text-sm">{thinkingStatus}</p>
 											<div className="flex flex-wrap gap-2">
 												{activeTools.map((tool, idx) => (
-													<Badge key={idx} variant="outline" className="text-xs">
+													<Badge
+														key={idx}
+														variant="outline"
+														className="text-xs"
+													>
 														{tool}
 													</Badge>
 												))}

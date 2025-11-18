@@ -109,7 +109,7 @@ export const POST: APIRoute = async ({ request }) => {
 								const data = JSON.stringify({
 									choices: [
 										{
-											delta: { reasoning: part.textDelta },
+											delta: { reasoning: part.text },
 										},
 									],
 								});
@@ -117,11 +117,12 @@ export const POST: APIRoute = async ({ request }) => {
 							}
 							// Handle tool call parts
 							else if (part.type === "tool-call") {
+								console.log("[API] Tool call received:", part.toolName, part.input);
 								const toolData = JSON.stringify({
 									type: "tool_call",
 									payload: {
 										name: part.toolName,
-										args: part.args,
+										args: part.input, // AI SDK v4 uses 'input' not 'args'
 										state: "input-available",
 									},
 								});
@@ -129,11 +130,12 @@ export const POST: APIRoute = async ({ request }) => {
 							}
 							// Handle tool result parts
 							else if (part.type === "tool-result") {
+								console.log("[API] Tool result received:", part.toolName);
 								const toolResultData = JSON.stringify({
 									type: "tool_result",
 									payload: {
 										name: part.toolName,
-										result: part.result,
+										result: part.output, // AI SDK v4 uses 'output' not 'result'
 										state: "output-available",
 									},
 								});
@@ -146,7 +148,7 @@ export const POST: APIRoute = async ({ request }) => {
 								const data = JSON.stringify({
 									choices: [
 										{
-											delta: { content: part.textDelta },
+											delta: { content: part.text }, // AI SDK v4 uses 'text' not 'textDelta'
 										},
 									],
 								});
