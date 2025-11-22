@@ -304,6 +304,15 @@ const POPULAR_MODELS = [
 		context: "256K",
 	},
 	{
+		id: "openrouter/sherlock-think-alpha",
+		name: "Sherlock Think Alpha",
+		chef: "OpenRouter",
+		chefSlug: "openrouter",
+		providers: ["openrouter"],
+		free: true,
+		context: "256K",
+	},
+	{
 		id: "tngtech/deepseek-r1t2-chimera:free",
 		name: "DeepSeek R1T2 Chimera",
 		chef: "TNG",
@@ -350,6 +359,15 @@ const POPULAR_MODELS = [
 		context: "400K",
 	},
 	{
+		id: "openai/o3-deep-research",
+		name: "o3 Deep Research",
+		chef: "OpenAI",
+		chefSlug: "openai",
+		providers: ["openai"],
+		free: false,
+		context: "200K",
+	},
+	{
 		id: "google/gemini-2.5-pro",
 		name: "Gemini 2.5 Pro",
 		chef: "Google",
@@ -357,6 +375,15 @@ const POPULAR_MODELS = [
 		providers: ["google"],
 		free: false,
 		context: "1M",
+	},
+	{
+		id: "google/gemini-3-pro-preview",
+		name: "Gemini 3 Pro Preview",
+		chef: "Google",
+		chefSlug: "google",
+		providers: ["google"],
+		free: false,
+		context: "2M",
 	},
 	{
 		id: "anthropic/claude-sonnet-4",
@@ -829,6 +856,8 @@ export function ChatClientV2() {
 		"claude-code/sonnet",
 	);
 	const [modelSelectorOpen, setModelSelectorOpen] = useState(false);
+	const [customModels, setCustomModels] = useState<typeof POPULAR_MODELS>([]);
+	const [quickAddInput, setQuickAddInput] = useState("");
 	const [messages, setMessages] = useState<ExtendedMessage[]>([]);
 	const [isLoading, setIsLoading] = useState(false);
 	const [error, setError] = useState<string | null>(null);
@@ -854,8 +883,41 @@ export function ChatClientV2() {
 	const messagesEndRef = useRef<HTMLDivElement>(null);
 	const abortControllerRef = useRef<AbortController | null>(null);
 
-	const selectedModelData = POPULAR_MODELS.find((m) => m.id === selectedModel);
+	// Combine popular models with custom models
+	const allModels = [...POPULAR_MODELS, ...customModels];
+	const selectedModelData = allModels.find((m) => m.id === selectedModel);
 	const hasApiKey = !!apiKey;
+
+	// Quick add model from OpenRouter
+	const handleQuickAddModel = () => {
+		const input = quickAddInput.trim();
+		if (!input) return;
+
+		// Parse model ID (e.g., "openai/o3-deep-research" or just "o3-deep-research")
+		const parts = input.includes('/') ? input.split('/') : ['openrouter', input];
+		const [provider, modelName] = parts;
+
+		// Create custom model entry
+		const customModel = {
+			id: input,
+			name: modelName.split('-').map(word =>
+				word.charAt(0).toUpperCase() + word.slice(1)
+			).join(' '),
+			chef: provider.charAt(0).toUpperCase() + provider.slice(1),
+			chefSlug: provider.toLowerCase(),
+			providers: [provider.toLowerCase()],
+			free: false,
+			context: "128K", // Default context
+		};
+
+		// Add to custom models if not already exists
+		if (!allModels.some(m => m.id === input)) {
+			setCustomModels(prev => [...prev, customModel]);
+			setSelectedModel(input);
+			setQuickAddInput("");
+			setModelSelectorOpen(false);
+		}
+	};
 
 	// Handle scroll state changes from StickToBottom library
 	const handleScrollStateChange = useCallback((atBottom: boolean, latestSender: string | null) => {
@@ -870,11 +932,12 @@ export function ChatClientV2() {
 		}
 	}, []);
 
-	// Load API key and model from secure storage on mount
+	// Load API key, model, and custom models from storage on mount
 	useEffect(() => {
 		if (typeof window !== "undefined") {
 			const savedKey = secureGetItem(STORAGE_KEY);
 			const savedModel = localStorage.getItem(MODEL_KEY); // Model selection is not sensitive
+			const savedCustomModels = localStorage.getItem("custom-models");
 
 			if (savedKey) {
 				setApiKey(savedKey);
@@ -882,8 +945,22 @@ export function ChatClientV2() {
 			if (savedModel) {
 				setSelectedModel(savedModel);
 			}
+			if (savedCustomModels) {
+				try {
+					setCustomModels(JSON.parse(savedCustomModels));
+				} catch (e) {
+					console.error("Failed to load custom models:", e);
+				}
+			}
 		}
 	}, []);
+
+	// Save custom models to localStorage whenever they change
+	useEffect(() => {
+		if (typeof window !== "undefined" && customModels.length > 0) {
+			localStorage.setItem("custom-models", JSON.stringify(customModels));
+		}
+	}, [customModels]);
 
 	// Save API key to secure storage
 	const handleSaveApiKey = () => {
@@ -2528,14 +2605,82 @@ export function ChatClientV2() {
 											</ModelSelectorTrigger>
 											<ModelSelectorContent>
 												<ModelSelectorInput placeholder="Search models..." />
+
+												{/* Quick Add Model */}
+												<div className="px-2 py-3 border-b">
+													<div className="text-xs font-medium text-muted-foreground mb-2">
+														Quick Add Model
+													</div>
+													<div className="flex gap-2">
+														<input
+															type="text"
+															placeholder="Paste model ID (e.g., openai/o3-deep-research)"
+															value={quickAddInput}
+															onChange={(e) => setQuickAddInput(e.target.value)}
+															onKeyDown={(e) => {
+																if (e.key === 'Enter') {
+																	handleQuickAddModel();
+																}
+															}}
+															className="flex-1 px-3 py-1.5 text-sm rounded-md border bg-background"
+														/>
+														<Button
+															size="sm"
+															onClick={handleQuickAddModel}
+															disabled={!quickAddInput.trim()}
+														>
+															Add
+														</Button>
+													</div>
+													<p className="text-xs text-muted-foreground mt-1.5">
+														Paste any OpenRouter model ID from{" "}
+														<a
+															href="https://openrouter.ai/models"
+															target="_blank"
+															rel="noopener noreferrer"
+															className="text-blue-500 hover:underline"
+														>
+															openrouter.ai/models
+														</a>
+													</p>
+												</div>
+
 												<ModelSelectorList>
 													<ModelSelectorEmpty>
 														No models found.
 													</ModelSelectorEmpty>
 
+													{/* Custom Models */}
+													{customModels.length > 0 && (
+														<ModelSelectorGroup heading="Custom Models" key="custom">
+															{customModels.map((m) => (
+																<ModelSelectorItem
+																	key={m.id}
+																	onSelect={() => {
+																		setSelectedModel(m.id);
+																		setModelSelectorOpen(false);
+																	}}
+																	value={m.id}
+																>
+																	<ModelSelectorLogo provider={m.chefSlug} />
+																	<ModelSelectorName>{m.name}</ModelSelectorName>
+																	<Badge
+																		variant="secondary"
+																		className="ml-2 text-xs"
+																	>
+																		Custom
+																	</Badge>
+																	{selectedModel === m.id && (
+																		<CheckIcon className="ml-auto size-4" />
+																	)}
+																</ModelSelectorItem>
+															))}
+														</ModelSelectorGroup>
+													)}
+
 													{/* Free Models */}
 													<ModelSelectorGroup heading="Free Models" key="free">
-														{POPULAR_MODELS.filter((m) => m.free).map((m) => (
+														{allModels.filter((m) => m.free).map((m) => (
 															<ModelSelectorItem
 																key={m.id}
 																onSelect={() => {
@@ -2586,7 +2731,7 @@ export function ChatClientV2() {
 														"DeepSeek",
 														"Meta",
 													].map((chef) => {
-														const chefModels = POPULAR_MODELS.filter(
+														const chefModels = allModels.filter(
 															(m) => !m.free && m.chef === chef,
 														);
 														if (chefModels.length === 0) return null;

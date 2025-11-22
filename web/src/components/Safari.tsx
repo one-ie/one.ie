@@ -176,6 +176,7 @@ export function Safari({
 							loop
 							muted
 							playsInline
+							controls
 						/>
 					</foreignObject>
 				)}
