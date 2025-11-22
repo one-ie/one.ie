@@ -1,0 +1,49 @@
+---
+/**
+ * Sessions Management Page (Cycle 82)
+ *
+ * Allows users to:
+ * - View all active sessions
+ * - See device, browser, OS, IP, location for each session
+ * - Revoke individual sessions
+ * - Revoke all other sessions
+ */
+
+import Layout from "@/layouts/Layout.astro";
+import { SessionsList } from "@/components/auth/SessionsList";
+
+export const prerender = false;
+
+const session = Astro.locals.session;
+if (!session) {
+  return Astro.redirect("/account/signin?redirect=/account/sessions");
+}
+
+const user = Astro.locals.user;
+const sessionToken = session.token;
+---
+
+<Layout title="Active Sessions">
+  <main class="container mx-auto py-8 max-w-4xl">
+    <div class="mb-8">
+      <h1 class="text-3xl font-bold mb-2">Active Sessions</h1>
+      <p class="text-muted-foreground">
+        Manage your active sessions across different devices. For security, revoke any
+        sessions you don't recognize.
+      </p>
+    </div>
+
+    <SessionsList client:load sessionToken={sessionToken} />
+
+    <!-- Security Tips -->
+    <div class="mt-8 p-4 bg-muted rounded-lg">
+      <h3 class="font-semibold mb-2">Security Tips</h3>
+      <ul class="text-sm text-muted-foreground space-y-1 list-disc list-inside">
+        <li>Review your active sessions regularly</li>
+        <li>Revoke sessions from devices you no longer use</li>
+        <li>If you see an unfamiliar session, revoke it immediately and change your password</li>
+        <li>Each session remains active for 30 days</li>
+      </ul>
+    </div>
+  </main>
+</Layout>

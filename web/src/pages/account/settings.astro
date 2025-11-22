@@ -157,6 +157,66 @@ const user = Astro.locals.user;
         </CardContent>
       </Card>
 
+      <!-- Session Management - Cycle 82 -->
+      <Card>
+        <CardHeader>
+          <CardTitle>Active Sessions</CardTitle>
+          <CardDescription>Manage devices with access to your account</CardDescription>
+        </CardHeader>
+        <CardContent>
+          <p class="text-sm text-muted-foreground mb-4">
+            View and revoke sessions on other devices for enhanced security.
+          </p>
+          <a href="/account/sessions">
+            <Button>Manage Sessions</Button>
+          </a>
+        </CardContent>
+      </Card>
+
+      <!-- Last Login - Cycle 97 -->
+      <Card>
+        <CardHeader>
+          <CardTitle>Last Login</CardTitle>
+          <CardDescription>Your most recent sign-in activity</CardDescription>
+        </CardHeader>
+        <CardContent>
+          <div id="last-login-info" class="space-y-3">
+            <div class="animate-pulse space-y-2">
+              <div class="h-4 bg-gray-200 rounded w-3/4"></div>
+              <div class="h-4 bg-gray-200 rounded w-1/2"></div>
+            </div>
+          </div>
+        </CardContent>
+      </Card>
+
+      <!-- Login History - Cycle 97 -->
+      <Card>
+        <CardHeader>
+          <CardTitle>Recent Login Activity</CardTitle>
+          <CardDescription>Your last 10 sign-ins</CardDescription>
+        </CardHeader>
+        <CardContent>
+          <div id="login-history" class="space-y-2">
+            <div class="animate-pulse space-y-2">
+              <div class="h-4 bg-gray-200 rounded w-full"></div>
+              <div class="h-4 bg-gray-200 rounded w-full"></div>
+              <div class="h-4 bg-gray-200 rounded w-full"></div>
+            </div>
+          </div>
+        </CardContent>
+      </Card>
+
+      <!-- Unusual Activity - Cycle 97 (hidden by default) -->
+      <Card id="unusual-activity-card" class="border-amber-200" style="display: none;">
+        <CardHeader>
+          <CardTitle className="text-amber-600">⚠️ Unusual Activity Detected</CardTitle>
+          <CardDescription>Recent logins from new devices or locations</CardDescription>
+        </CardHeader>
+        <CardContent>
+          <div id="unusual-activity" class="space-y-2"></div>
+        </CardContent>
+      </Card>
+
       <!-- Danger Zone -->
       <Card className="border-destructive">
         <CardHeader>
@@ -182,10 +242,205 @@ const user = Astro.locals.user;
 </Layout>
 
 <script>
+  import { ConvexHttpClient } from 'convex/browser';
+  import { api } from '../../../backend/convex/_generated/api';
+
   const convexUrl =
     import.meta.env.PUBLIC_CONVEX_URL || import.meta.env.NEXT_PUBLIC_CONVEX_URL;
 
+  // Initialize Convex client
+  const client = new ConvexHttpClient(convexUrl);
+
+  // Format timestamp to relative time
+  function formatTimestamp(timestamp: number): string {
+    const date = new Date(timestamp);
+    const now = new Date();
+    const diff = now.getTime() - date.getTime();
+    const seconds = Math.floor(diff / 1000);
+    const minutes = Math.floor(seconds / 60);
+    const hours = Math.floor(minutes / 60);
+    const days = Math.floor(hours / 24);
+
+    let relativeTime = '';
+    if (days > 0) {
+      relativeTime = `${days} day${days > 1 ? 's' : ''} ago`;
+    } else if (hours > 0) {
+      relativeTime = `${hours} hour${hours > 1 ? 's' : ''} ago`;
+    } else if (minutes > 0) {
+      relativeTime = `${minutes} minute${minutes > 1 ? 's' : ''} ago`;
+    } else {
+      relativeTime = 'Just now';
+    }
+
+    const formatted = date.toLocaleDateString('en-US', {
+      month: 'short',
+      day: 'numeric',
+      year: 'numeric',
+      hour: 'numeric',
+      minute: '2-digit',
+    });
+
+    return `${relativeTime} (${formatted})`;
+  }
+
+  // Format login method
+  function formatMethod(method: string): string {
+    const methods: Record<string, string> = {
+      email_password: 'Email & Password',
+      google: 'Google',
+      github: 'GitHub',
+      apple: 'Apple',
+      facebook: 'Facebook',
+      twitter: 'Twitter',
+    };
+    return methods[method] || method;
+  }
+
+  // Load last login info (Cycle 97)
+  async function loadLastLoginInfo() {
+    try {
+      const lastLogin = await client.query(api.queries.user.getLastLoginInfo);
+      const container = document.getElementById('last-login-info');
+      if (!container) return;
+
+      if (!lastLogin) {
+        container.innerHTML = `<p class="text-sm text-muted-foreground">No login history available yet.</p>`;
+        return;
+      }
+
+      container.innerHTML = `
+        <div class="space-y-2 text-sm">
+          <div class="flex items-center gap-2">
+            <span class="font-semibold">Method:</span>
+            <span class="px-2 py-1 bg-primary/10 text-primary rounded text-xs font-medium">
+              ${formatMethod(lastLogin.method)}
+            </span>
+          </div>
+          <div>
+            <span class="font-semibold">When:</span>
+            <span class="text-muted-foreground">${formatTimestamp(lastLogin.timestamp)}</span>
+          </div>
+          <div>
+            <span class="font-semibold">Device:</span>
+            <span class="text-muted-foreground">${lastLogin.device.browser} on ${lastLogin.device.os}</span>
+          </div>
+          <div>
+            <span class="font-semibold">Location:</span>
+            <span class="text-muted-foreground">${lastLogin.location}</span>
+          </div>
+          <div>
+            <span class="font-semibold">IP Address:</span>
+            <span class="text-muted-foreground font-mono text-xs">${lastLogin.ip}</span>
+          </div>
+        </div>
+      `;
+    } catch (error) {
+      console.error('Failed to load last login info:', error);
+      const container = document.getElementById('last-login-info');
+      if (container) {
+        container.innerHTML = `<p class="text-sm text-destructive">Failed to load last login information.</p>`;
+      }
+    }
+  }
+
+  // Load login history (Cycle 97)
+  async function loadLoginHistory() {
+    try {
+      const history = await client.query(api.queries.user.getLoginHistory, { limit: 10 });
+      const container = document.getElementById('login-history');
+      if (!container) return;
+
+      if (history.length === 0) {
+        container.innerHTML = `<p class="text-sm text-muted-foreground">No login history available yet.</p>`;
+        return;
+      }
+
+      const historyHTML = history
+        .map(
+          (login: any) => `
+        <div class="border-b last:border-b-0 py-3 ${
+          login.isNewDevice || login.isNewLocation
+            ? 'bg-amber-50 dark:bg-amber-900/20 px-3 rounded'
+            : ''
+        }">
+          <div class="flex justify-between items-start mb-1">
+            <span class="text-sm font-medium">${formatMethod(login.method)}</span>
+            <span class="text-xs text-muted-foreground">${formatTimestamp(login.timestamp)}</span>
+          </div>
+          <div class="text-xs text-muted-foreground">
+            ${login.device} • ${login.ip}
+          </div>
+          ${
+            login.isNewDevice || login.isNewLocation
+              ? `
+            <div class="text-xs text-amber-600 dark:text-amber-400 mt-1 font-medium">
+              ⚠️ ${login.isNewDevice ? 'New device' : 'New location'}
+            </div>
+          `
+              : ''
+          }
+        </div>
+      `
+        )
+        .join('');
+
+      container.innerHTML = historyHTML;
+    } catch (error) {
+      console.error('Failed to load login history:', error);
+      const container = document.getElementById('login-history');
+      if (container) {
+        container.innerHTML = `<p class="text-sm text-destructive">Failed to load login history.</p>`;
+      }
+    }
+  }
+
+  // Load unusual activity (Cycle 97)
+  async function loadUnusualActivity() {
+    try {
+      const activity = await client.query(api.queries.user.getUnusualLoginActivity, { limit: 5 });
+      const card = document.getElementById('unusual-activity-card');
+      const container = document.getElementById('unusual-activity');
+
+      if (!card || !container) return;
+
+      if (activity.length === 0) {
+        card.style.display = 'none';
+        return;
+      }
+
+      card.style.display = 'block';
+
+      const activityHTML = activity
+        .map(
+          (event: any) => `
+        <div class="border-b last:border-b-0 py-3">
+          <div class="flex justify-between items-start mb-1">
+            <span class="text-sm font-medium text-amber-700 dark:text-amber-300">
+              ${event.reason === 'new_device' ? '🖥️ New Device Detected' : '📍 New Location Detected'}
+            </span>
+            <span class="text-xs text-muted-foreground">${formatTimestamp(event.timestamp)}</span>
+          </div>
+          <div class="text-xs text-muted-foreground space-y-1">
+            <div>Previous: ${event.previousDevice} (${event.previousIp})</div>
+            <div>Current: ${event.currentDevice} (${event.currentIp})</div>
+          </div>
+        </div>
+      `
+        )
+        .join('');
+
+      container.innerHTML = activityHTML;
+    } catch (error) {
+      console.error('Failed to load unusual activity:', error);
+    }
+  }
+
   document.addEventListener('DOMContentLoaded', () => {
+    // Load login tracking data (Cycle 97)
+    loadLastLoginInfo();
+    loadLoginHistory();
+    loadUnusualActivity();
+
     // Profile form handler
     const profileForm = document.getElementById(
       'profile-form'

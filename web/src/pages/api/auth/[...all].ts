@@ -120,8 +120,10 @@ export const ALL: APIRoute = async ({ request, cookies }) => {
 
 			try {
 				const result = await convex.mutation("auth:signIn" as any, {
-					email,
+					emailOrUsername: email, // Cycle 45: supports email or username
 					password,
+					ipAddress: clientIP, // Cycle 82: Session metadata
+					userAgent: request.headers.get("user-agent") || undefined, // Cycle 82: Session metadata
 				});
 
 				cookies.set("auth_token", result.token, {
@@ -214,6 +216,8 @@ export const ALL: APIRoute = async ({ request, cookies }) => {
 					email,
 					password,
 					name: name || undefined,
+					ipAddress: clientIP, // Cycle 82: Session metadata
+					userAgent: request.headers.get("user-agent") || undefined, // Cycle 82: Session metadata
 				});
 
 				cookies.set("auth_token", result.token, {

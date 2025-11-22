@@ -495,7 +495,7 @@ export interface TwoFactorSetup {
 }
 
 export interface LoginArgs {
-	email: string;
+	emailOrUsername: string; // Cycle 45: Support username or email
 	password: string;
 }
 
@@ -503,6 +503,7 @@ export interface SignupArgs {
 	email: string;
 	password: string;
 	name?: string;
+	username?: string; // Cycle 45: Optional username field
 }
 
 export interface MagicLinkArgs {

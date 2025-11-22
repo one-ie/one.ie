@@ -20,13 +20,14 @@ export function SimpleSignUpForm({ onSuccess }: SimpleSignUpFormProps) {
 	const [email, setEmail] = useState("");
 	const [password, setPassword] = useState("");
 	const [name, setName] = useState("");
+	const [username, setUsername] = useState(""); // Cycle 45: Username field
 	const { mutate: signup, loading } = useSignup();
 
 	const handleSubmit = async (e: React.FormEvent) => {
 		e.preventDefault();
 
 		try {
-			const result = await signup({ email, password, name });
+			const result = await signup({ email, password, name, username });
 
 			if (result.success) {
 				// Success
@@ -133,6 +134,26 @@ export function SimpleSignUpForm({ onSuccess }: SimpleSignUpFormProps) {
 		window.location.href = "/api/auth/google";
 	};
 
+	const handleAppleSignIn = () => {
+		window.location.href = "/api/auth/apple";
+	};
+
+	const handleDiscordSignIn = () => {
+		window.location.href = "/api/auth/discord";
+	};
+
+	const handleNotionSignIn = () => {
+		window.location.href = "/api/auth/notion";
+	};
+
+	const handleFacebookSignIn = () => {
+		window.location.href = "/api/auth/facebook";
+	};
+
+	const handleFigmaSignIn = () => {
+		window.location.href = "/api/auth/figma";
+	};
+
 	return (
 		<AuthCard
 			title="Create Account"
@@ -150,6 +171,11 @@ export function SimpleSignUpForm({ onSuccess }: SimpleSignUpFormProps) {
 				mode="signup"
 				onGithubClick={handleGithubSignIn}
 				onGoogleClick={handleGoogleSignIn}
+				onAppleClick={handleAppleSignIn}
+				onDiscordClick={handleDiscordSignIn}
+				onNotionClick={handleNotionSignIn}
+				onFacebookClick={handleFacebookSignIn}
+				onFigmaClick={handleFigmaSignIn}
 			/>
 
 			<form onSubmit={handleSubmit} className="space-y-4">
@@ -162,6 +188,24 @@ export function SimpleSignUpForm({ onSuccess }: SimpleSignUpFormProps) {
 						value={name}
 						onChange={(e) => setName(e.target.value)}
 					/>
+				</div>
+
+				<div className="space-y-2">
+					<Label htmlFor="username">
+						Username <span className="text-muted-foreground text-xs">(optional)</span>
+					</Label>
+					<Input
+						id="username"
+						type="text"
+						placeholder="yourname"
+						value={username}
+						onChange={(e) => setUsername(e.target.value)}
+						pattern="[a-zA-Z0-9_-]{3,20}"
+						title="3-20 characters, letters, numbers, underscores, and hyphens only"
+					/>
+					<p className="text-xs text-muted-foreground">
+						3-20 characters, letters, numbers, underscores, and hyphens only
+					</p>
 				</div>
 
 				<div className="space-y-2">
