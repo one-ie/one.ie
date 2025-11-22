@@ -1,0 +1,29 @@
+---
+/**
+ * CYCLE 45-46: Mentions Page
+ *
+ * Dedicated page listing all messages mentioning current user
+ * - Filter by read/unread status
+ * - "Mark all as read" button
+ * - Real-time updates via Convex
+ */
+
+import Layout from "@/layouts/Layout.astro";
+import { MentionsList } from "@/components/chat/MentionsList";
+
+const title = "Mentions";
+const description = "Messages where you were @mentioned";
+---
+
+<Layout title={title} description={description}>
+  <div class="container max-w-4xl mx-auto py-8 px-4">
+    <div class="mb-8">
+      <h1 class="text-3xl font-bold mb-2">Mentions</h1>
+      <p class="text-muted-foreground">
+        All messages where you were @mentioned
+      </p>
+    </div>
+
+    <MentionsList client:load />
+  </div>
+</Layout>

@@ -1,0 +1,32 @@
+---
+/**
+ * CYCLE 21: Chat Page
+ *
+ * SSR page that loads channel metadata and pre-fetches initial messages
+ * SEO-friendly channel URLs with fast initial render
+ */
+
+import Layout from '@/layouts/Layout.astro';
+import { ChatContainer } from '@/components/chat/ChatContainer';
+
+const { channelId } = Astro.params;
+
+// Page metadata
+const title = 'Chat';
+const description = 'Real-time chat collaboration';
+---
+
+<Layout
+  title={title}
+  description={description}
+  sidebarInitialCollapsed={true}
+>
+  <!--
+    ChatContainer loads with client:load for real-time functionality
+    channelId is passed from URL params
+  -->
+  <ChatContainer
+    client:load
+    channelId={channelId}
+  />
+</Layout>

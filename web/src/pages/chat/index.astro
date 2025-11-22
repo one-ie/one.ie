@@ -1,32 +1,40 @@
 ---
 /**
- * Unified AI Chat Page
+ * Chat Demo Page with Sidebar Navigation
  *
- * One chat app for all users:
- * - Free tier: Works without API keys (Gemini Flash Lite only)
- * - Premium: Users add their own OpenRouter keys for full model access
- * - Smart UI: Show/hide features based on user API key status
+ * CYCLES 51-60: Discord/WhatsApp-like sidebar with 7 sections
  *
- * Features scale with backend capabilities:
- * - Reasoning visualization (when available)
- * - Tool call display (when available)
- * - Generative UI components (when available)
+ * Features:
+ * - Stream (activity feed)
+ * - Organisations (org switching)
+ * - Groups (team structure)
+ * - Channels (public/private/DM)
+ * - Tools (integrations)
+ * - Agents (AI assistants)
+ * - People (team members)
  */
 
-import { ChatClientV2 } from "@/components/ai/ChatClientV2";
-import Layout from "@/layouts/Layout.astro";
+import Layout from '@/layouts/Layout.astro';
+import { ChatContainer } from '@/components/chat/ChatContainer';
 
-const title = "AI Chat - Experience the Future";
-const description =
-	"Free AI chat with reasoning visualization, tool calls, and dynamic UI generation. 10x faster than ChatGPT.";
+const title = 'Chat with Sidebar';
+const description = 'Discord/WhatsApp-style chat interface with 7-section sidebar';
 ---
 
 <Layout
   title={title}
   description={description}
   sidebarInitialCollapsed={true}
-  hideHeader={true}
-  fullHeight={true}
 >
-  <ChatClientV2 client:only="react" />
+  <div class="h-screen w-full">
+    <ChatContainer client:only="react" channelId="general" />
+  </div>
 </Layout>
+
+<style>
+  /* Full screen layout without default padding */
+  :global(main) {
+    padding: 0 !important;
+    max-width: 100% !important;
+  }
+</style>
