@@ -1,0 +1,155 @@
+---
+/**
+ * AI Clone Creation Page
+ * Multi-step wizard for creators to build their AI clone
+ */
+
+import Layout from "@/layouts/Layout.astro";
+import { CloneCreationWizard } from "@/components/ai-clone/CloneCreationWizard";
+
+const title = "Create Your AI Clone";
+const description =
+	"Build a personalized AI assistant trained on your content, voice, and expertise";
+
+// In a real app, fetch creator data from auth/database
+const creatorName = "Alex Thompson"; // Mock data
+const creatorId = "creator-123"; // Mock data
+---
+
+<Layout title={title} description={description}>
+	<div class="container mx-auto px-4 py-12">
+		<!-- Header -->
+		<div class="text-center mb-12">
+			<h1 class="text-4xl md:text-5xl font-bold mb-4">
+				Create Your AI Clone
+			</h1>
+			<p class="text-xl text-muted-foreground max-w-2xl mx-auto">
+				Build a personalized AI assistant that sounds like you, thinks like you,
+				and helps your audience 24/7
+			</p>
+		</div>
+
+		<!-- Wizard -->
+		<CloneCreationWizard
+			client:load
+			creatorName={creatorName}
+			onComplete={(cloneId) => {
+				// Redirect to clone dashboard on completion
+				window.location.href = `/clone/${cloneId}`;
+			}}
+		/>
+
+		<!-- Features Section -->
+		<div class="mt-16 grid grid-cols-1 md:grid-cols-3 gap-8 max-w-5xl mx-auto">
+			<div class="text-center">
+				<div class="text-4xl mb-4">🎯</div>
+				<h3 class="font-semibold mb-2">Trained on Your Content</h3>
+				<p class="text-sm text-muted-foreground">
+					Your clone learns from your blog posts, courses, videos, and products
+				</p>
+			</div>
+			<div class="text-center">
+				<div class="text-4xl mb-4">🎤</div>
+				<h3 class="font-semibold mb-2">Sounds Like You</h3>
+				<p class="text-sm text-muted-foreground">
+					Optional voice cloning for authentic audio responses
+				</p>
+			</div>
+			<div class="text-center">
+				<div class="text-4xl mb-4">🤖</div>
+				<h3 class="font-semibold mb-2">Works 24/7</h3>
+				<p class="text-sm text-muted-foreground">
+					Engage with your audience at scale, anytime, anywhere
+				</p>
+			</div>
+		</div>
+
+		<!-- FAQ Section -->
+		<div class="mt-16 max-w-3xl mx-auto">
+			<h2 class="text-2xl font-bold mb-6 text-center">
+				Frequently Asked Questions
+			</h2>
+			<div class="space-y-4">
+				<details class="group border rounded-lg p-4">
+					<summary
+						class="cursor-pointer font-medium flex justify-between items-center"
+					>
+						How long does it take to create a clone?
+						<span class="group-open:rotate-180 transition-transform">▼</span>
+					</summary>
+					<p class="mt-3 text-muted-foreground text-sm">
+						The wizard takes about 5-10 minutes to complete. After you submit,
+						the clone creation process takes an additional 5-10 minutes to
+						extract content, generate embeddings, and configure your AI
+						personality.
+					</p>
+				</details>
+
+				<details class="group border rounded-lg p-4">
+					<summary
+						class="cursor-pointer font-medium flex justify-between items-center"
+					>
+						Is voice and photo cloning required?
+						<span class="group-open:rotate-180 transition-transform">▼</span>
+					</summary>
+					<p class="mt-3 text-muted-foreground text-sm">
+						No! Voice and photo are completely optional. Your clone will work
+						perfectly with text-only responses. Voice cloning adds audio
+						responses, and photo cloning enables video avatar responses.
+					</p>
+				</details>
+
+				<details class="group border rounded-lg p-4">
+					<summary
+						class="cursor-pointer font-medium flex justify-between items-center"
+					>
+						Can I edit my clone after creation?
+						<span class="group-open:rotate-180 transition-transform">▼</span>
+					</summary>
+					<p class="mt-3 text-muted-foreground text-sm">
+						Yes! You can update your clone's name, personality, training
+						sources, and configuration anytime from the clone dashboard. You can
+						also retrain your clone with new content as you publish it.
+					</p>
+				</details>
+
+				<details class="group border rounded-lg p-4">
+					<summary
+						class="cursor-pointer font-medium flex justify-between items-center"
+					>
+						How many clones can I create?
+						<span class="group-open:rotate-180 transition-transform">▼</span>
+					</summary>
+					<p class="mt-3 text-muted-foreground text-sm">
+						You can create multiple clones for different purposes (e.g., a
+						business coach clone, a technical advisor clone, a sales assistant
+						clone). Each clone is trained on different content and has its own
+						personality configuration.
+					</p>
+				</details>
+
+				<details class="group border rounded-lg p-4">
+					<summary
+						class="cursor-pointer font-medium flex justify-between items-center"
+					>
+						What content can I use for training?
+						<span class="group-open:rotate-180 transition-transform">▼</span>
+					</summary>
+					<p class="mt-3 text-muted-foreground text-sm">
+						Any content you own: blog posts, course materials, video
+						transcripts, product descriptions, documentation, etc. The more
+						content you provide, the smarter and more helpful your clone will
+						be.
+					</p>
+				</details>
+			</div>
+		</div>
+	</div>
+</Layout>
+
+<style>
+	/* Custom styling for details/summary */
+	details summary::-webkit-details-marker {
+		display: none;
+	}
+</style>

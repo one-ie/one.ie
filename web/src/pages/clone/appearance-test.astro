@@ -1,0 +1,163 @@
+---
+/**
+ * Appearance Cloning Test Page
+ *
+ * CYCLE 5: Test page for avatar creation and video generation
+ *
+ * Features:
+ * - Photo upload and camera capture
+ * - Avatar creation progress tracking
+ * - Video generation with custom text
+ * - Real-time progress updates
+ *
+ * Usage:
+ * 1. Navigate to /clone/appearance-test
+ * 2. Upload a photo or use webcam
+ * 3. Wait for avatar creation (30-60s)
+ * 4. Generate test video
+ * 5. View completed video
+ *
+ * Requirements:
+ * - HEYGEN_API_KEY in .env.local
+ * - Active HeyGen account with credits
+ * - Modern browser with camera access (for webcam feature)
+ */
+
+import Layout from '@/layouts/Layout.astro';
+import { AppearanceCloneUploadClient } from './appearance-test-client';
+
+const title = 'Appearance Cloning Test';
+const description = 'Test HeyGen avatar creation and video generation';
+---
+
+<Layout
+  title={title}
+  description={description}
+  sidebarInitialCollapsed={false}
+>
+  <div class="container max-w-4xl mx-auto py-8 px-4">
+    <!-- Header -->
+    <div class="mb-8">
+      <h1 class="text-4xl font-bold mb-2">Appearance Cloning Test</h1>
+      <p class="text-lg text-muted-foreground">
+        Test HeyGen avatar creation and video generation
+      </p>
+    </div>
+
+    <!-- Instructions -->
+    <div class="mb-8 p-6 bg-muted rounded-lg">
+      <h2 class="text-xl font-semibold mb-4">Instructions</h2>
+      <ol class="list-decimal list-inside space-y-2 text-sm">
+        <li>Upload a clear photo of your face (or use webcam)</li>
+        <li>Wait for avatar creation (typically 30-60 seconds)</li>
+        <li>Enter text for your avatar to speak</li>
+        <li>Click "Generate Video" and wait for processing</li>
+        <li>Watch your AI clone speak!</li>
+      </ol>
+
+      <div class="mt-4 p-4 bg-yellow-500/10 border border-yellow-500/20 rounded-lg">
+        <p class="text-sm text-yellow-900 dark:text-yellow-100">
+          <strong>Note:</strong> Requires HeyGen API key in .env.local and credits in your HeyGen account.
+        </p>
+      </div>
+    </div>
+
+    <!-- Component -->
+    <AppearanceCloneUploadClient client:only="react" />
+
+    <!-- API Documentation -->
+    <div class="mt-12 p-6 bg-muted rounded-lg">
+      <h2 class="text-xl font-semibold mb-4">API Documentation</h2>
+
+      <div class="space-y-6">
+        <!-- Service -->
+        <div>
+          <h3 class="text-lg font-medium mb-2">Service Layer</h3>
+          <p class="text-sm text-muted-foreground mb-2">
+            File: <code class="px-1.5 py-0.5 bg-background rounded text-xs">/web/src/lib/services/AppearanceCloneService.ts</code>
+          </p>
+          <pre class="bg-background p-4 rounded-lg text-xs overflow-x-auto"><code>import { AppearanceCloneService } from '@/lib/services/AppearanceCloneService';
+
+const service = new AppearanceCloneService();
+
+// Create avatar
+const avatar = await service.createAvatar({
+  photo: photoFile,
+  name: "My Avatar",
+  gender: "male"
+});
+
+// Generate video
+const video = await service.generateVideo({
+  avatarId: avatar.avatarId,
+  text: "Hello world!",
+  aspectRatio: "16:9"
+});</code></pre>
+        </div>
+
+        <!-- Mutations -->
+        <div>
+          <h3 class="text-lg font-medium mb-2">Backend Mutations</h3>
+          <p class="text-sm text-muted-foreground mb-2">
+            File: <code class="px-1.5 py-0.5 bg-background rounded text-xs">/backend/convex/mutations/appearance-cloning.ts</code>
+          </p>
+          <pre class="bg-background p-4 rounded-lg text-xs overflow-x-auto"><code>import { useMutation } from 'convex/react';
+import { api } from '@/convex/_generated/api';
+
+// Clone appearance
+const cloneAppearance = useMutation(api.mutations.appearanceCloning.cloneAppearance);
+
+await cloneAppearance({
+  cloneId: cloneId,
+  avatarId: avatarId,
+  avatarName: "Creator Avatar"
+});
+
+// Generate video
+const generateVideo = useMutation(api.mutations.appearanceCloning.generateVideo);
+
+await generateVideo({
+  cloneId: cloneId,
+  videoId: videoId,
+  text: "Hello!",
+  voiceUrl: "https://..."
+});</code></pre>
+        </div>
+
+        <!-- Component -->
+        <div>
+          <h3 class="text-lg font-medium mb-2">React Component</h3>
+          <p class="text-sm text-muted-foreground mb-2">
+            File: <code class="px-1.5 py-0.5 bg-background rounded text-xs">/web/src/components/ai-clone/AppearanceCloneUpload.tsx</code>
+          </p>
+          <pre class="bg-background p-4 rounded-lg text-xs overflow-x-auto"><code>import { AppearanceCloneUpload } from '@/components/ai-clone/AppearanceCloneUpload';
+
+&lt;AppearanceCloneUpload
+  cloneId={cloneId}
+  onAvatarCreated={(avatarId) => {
+    console.log('Avatar created:', avatarId);
+  }}
+  onVideoGenerated={(videoUrl) => {
+    console.log('Video ready:', videoUrl);
+  }}
+/&gt;</code></pre>
+        </div>
+      </div>
+    </div>
+
+    <!-- Event Tracking -->
+    <div class="mt-8 p-6 bg-muted rounded-lg">
+      <h2 class="text-xl font-semibold mb-4">Event Tracking</h2>
+      <p class="text-sm text-muted-foreground mb-4">
+        All appearance cloning actions are logged as events in the database:
+      </p>
+      <ul class="list-disc list-inside space-y-1 text-sm">
+        <li><code class="px-1.5 py-0.5 bg-background rounded text-xs">photo_uploaded</code> - Photo uploaded for avatar</li>
+        <li><code class="px-1.5 py-0.5 bg-background rounded text-xs">appearance_cloning_started</code> - Avatar creation initiated</li>
+        <li><code class="px-1.5 py-0.5 bg-background rounded text-xs">appearance_cloned</code> - Avatar creation completed</li>
+        <li><code class="px-1.5 py-0.5 bg-background rounded text-xs">video_generation_started</code> - Video generation initiated</li>
+        <li><code class="px-1.5 py-0.5 bg-background rounded text-xs">video_generated</code> - Video generation completed</li>
+      </ul>
+    </div>
+  </div>
+</Layout>

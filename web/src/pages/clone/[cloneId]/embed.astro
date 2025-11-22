@@ -1,0 +1,191 @@
+---
+/**
+ * AI Clone Embed Code Generator Page
+ *
+ * Allows creators to generate embed code for their AI clones.
+ * Shows customization options, preview, and installation instructions.
+ *
+ * Ontology Mapping:
+ * - Reads ai_clone thing (cloneId from URL params)
+ * - Creates external_connection when embed code is generated
+ * - Logs communication_event (metadata.protocol: 'embed')
+ */
+
+import Layout from '@/layouts/Layout.astro';
+import { EmbedCodeGenerator } from '@/components/ai-clone/EmbedCodeGenerator';
+
+// Get clone ID from URL params
+const { cloneId } = Astro.params;
+
+if (!cloneId) {
+  return Astro.redirect('/404');
+}
+
+// TODO: Fetch clone from Convex
+// const clone = await convex.query(api.queries.aiClones.get, { cloneId });
+// For now, mock data
+const clone = {
+  _id: cloneId,
+  name: 'My AI Clone',
+  type: 'ai_clone',
+  status: 'ready',
+  groupId: 'mock-group-id',
+  properties: {
+    voiceId: 'voice_123',
+    appearanceId: 'appearance_456',
+    systemPrompt: 'You are a helpful AI assistant.',
+  },
+};
+
+if (!clone) {
+  return Astro.redirect('/404');
+}
+
+// Get base URL for embed generation
+const baseUrl = import.meta.env.PUBLIC_BASE_URL || Astro.site?.toString() || 'https://one.ie';
+
+const title = `Embed ${clone.name}`;
+const description = `Generate embed code for ${clone.name} AI clone chat widget`;
+---
+
+<Layout title={title} description={description}>
+  <div class="container mx-auto px-4 py-8 max-w-7xl">
+    {/* Breadcrumbs */}
+    <nav class="mb-6 text-sm text-muted-foreground">
+      <a href="/clone" class="hover:text-foreground transition-colors">My Clones</a>
+      <span class="mx-2">/</span>
+      <a href={`/clone/${cloneId}`} class="hover:text-foreground transition-colors">
+        {clone.name}
+      </a>
+      <span class="mx-2">/</span>
+      <span class="text-foreground">Embed</span>
+    </nav>
+
+    {/* Embed Code Generator */}
+    <EmbedCodeGenerator
+      client:load
+      cloneId={cloneId}
+      cloneName={clone.name}
+      baseUrl={baseUrl}
+    />
+
+    {/* Additional Resources */}
+    <div class="mt-8 grid md:grid-cols-2 gap-6">
+      <div class="rounded-lg border p-6 space-y-3">
+        <h3 class="text-lg font-semibold">Need Help?</h3>
+        <p class="text-sm text-muted-foreground">
+          Check out our documentation for platform-specific guides and troubleshooting.
+        </p>
+        <div class="flex gap-2">
+          <a
+            href="/docs/embed"
+            class="inline-flex items-center justify-center rounded-md text-sm font-medium ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 border border-input bg-background hover:bg-accent hover:text-accent-foreground h-9 px-4 py-2"
+          >
+            View Documentation
+          </a>
+          <a
+            href="/support"
+            class="inline-flex items-center justify-center rounded-md text-sm font-medium ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 border border-input bg-background hover:bg-accent hover:text-accent-foreground h-9 px-4 py-2"
+          >
+            Get Support
+          </a>
+        </div>
+      </div>
+
+      <div class="rounded-lg border p-6 space-y-3">
+        <h3 class="text-lg font-semibold">Advanced Features</h3>
+        <p class="text-sm text-muted-foreground">
+          Unlock advanced customization and analytics with our Pro plan.
+        </p>
+        <ul class="text-sm text-muted-foreground space-y-1">
+          <li>✓ Custom branding and white-label</li>
+          <li>✓ Advanced analytics dashboard</li>
+          <li>✓ API access for programmatic control</li>
+          <li>✓ Priority support</li>
+        </ul>
+        <a
+          href="/pricing"
+          class="inline-flex items-center justify-center rounded-md text-sm font-medium ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 bg-primary text-primary-foreground hover:bg-primary/90 h-9 px-4 py-2"
+        >
+          Upgrade to Pro
+        </a>
+      </div>
+    </div>
+
+    {/* FAQ Section */}
+    <div class="mt-8">
+      <h3 class="text-2xl font-bold mb-4">Frequently Asked Questions</h3>
+      <div class="space-y-4">
+        <details class="rounded-lg border p-4">
+          <summary class="font-semibold cursor-pointer">
+            Will the widget work on any website?
+          </summary>
+          <p class="mt-2 text-sm text-muted-foreground">
+            Yes! The embed widget works on any website that allows custom HTML/JavaScript.
+            This includes WordPress, Shopify, Webflow, Wix, and custom sites.
+          </p>
+        </details>
+
+        <details class="rounded-lg border p-4">
+          <summary class="font-semibold cursor-pointer">
+            How much does it cost to embed my clone?
+          </summary>
+          <p class="mt-2 text-sm text-muted-foreground">
+            Embedding is included in all plans. You can embed on unlimited websites.
+            Pro plans include advanced analytics and white-label options.
+          </p>
+        </details>
+
+        <details class="rounded-lg border p-4">
+          <summary class="font-semibold cursor-pointer">
+            Can I customize the widget's appearance?
+          </summary>
+          <p class="mt-2 text-sm text-muted-foreground">
+            Yes! You can customize colors, position, theme, and initial message.
+            Pro plans unlock additional customization options like custom CSS and branding.
+          </p>
+        </details>
+
+        <details class="rounded-lg border p-4">
+          <summary class="font-semibold cursor-pointer">
+            Is the widget mobile-friendly?
+          </summary>
+          <p class="mt-2 text-sm text-muted-foreground">
+            Absolutely! The widget is fully responsive and works great on mobile devices.
+            It automatically adjusts its size and position for optimal mobile experience.
+          </p>
+        </details>
+
+        <details class="rounded-lg border p-4">
+          <summary class="font-semibold cursor-pointer">
+            Can I track conversations and analytics?
+          </summary>
+          <p class="mt-2 text-sm text-muted-foreground">
+            Yes! All conversations are tracked in your dashboard. You can see conversation
+            counts, user engagement, and response times. Upgrade to Pro for advanced analytics.
+          </p>
+        </details>
+      </div>
+    </div>
+  </div>
+</Layout>
+
+<style>
+  details summary::-webkit-details-marker {
+    display: none;
+  }
+
+  details summary::marker {
+    content: '';
+  }
+
+  details summary::before {
+    content: '▶';
+    margin-right: 0.5rem;
+    transition: transform 0.2s;
+  }
+
+  details[open] summary::before {
+    transform: rotate(90deg);
+  }
+</style>

@@ -1,0 +1,57 @@
+---
+/**
+ * AI Clone Dashboard Page
+ *
+ * Displays comprehensive clone management interface with:
+ * - Clone stats and analytics
+ * - Training status
+ * - Voice/appearance preview
+ * - Settings management
+ * - Recent conversations
+ */
+
+import Layout from '@/layouts/Layout.astro';
+import { CloneDashboard } from '@/components/ai-clone/CloneDashboard';
+
+// Get cloneId from URL params
+const { cloneId } = Astro.params;
+
+if (!cloneId) {
+  return Astro.redirect('/404');
+}
+
+// TODO: Fetch clone data from Convex
+// For now, use mock data
+const cloneData = {
+  id: cloneId,
+  name: 'Alex AI Clone',
+  avatarUrl: 'https://api.dicebear.com/7.x/avataaars/svg?seed=' + cloneId,
+  status: 'active' as const,
+  systemPrompt: 'You are a helpful AI assistant trained on the creator\'s content. Respond in a friendly, professional tone.',
+  temperature: 0.7,
+  tone: 'professional',
+  voiceId: 'voice_123',
+  appearanceId: 'appearance_456',
+  createdAt: Date.now() - 30 * 24 * 60 * 60 * 1000, // 30 days ago
+  stats: {
+    totalConversations: 1247,
+    totalMessages: 8934,
+    avgResponseTime: 1.2, // seconds
+    satisfaction: 4.7, // out of 5
+  },
+  training: {
+    knowledgeBaseSize: 15678, // chunks
+    lastUpdated: Date.now() - 2 * 24 * 60 * 60 * 1000, // 2 days ago
+    status: 'complete' as const,
+  },
+};
+
+const title = `${cloneData.name} - Dashboard`;
+const description = `Manage your AI clone: ${cloneData.name}`;
+---
+
+<Layout title={title} description={description}>
+  <div class="container mx-auto py-6 px-4 max-w-7xl">
+    <CloneDashboard clone={cloneData} client:load />
+  </div>
+</Layout>

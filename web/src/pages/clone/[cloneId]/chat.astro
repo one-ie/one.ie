@@ -1,0 +1,37 @@
+---
+/**
+ * AI Clone Chat Page
+ *
+ * Dynamic route for chatting with an AI clone.
+ * Features:
+ * - Real-time streaming responses
+ * - RAG with citation tracking
+ * - Voice/video playback (if cloned)
+ * - Thinking process visualization
+ * - Message history with threads
+ */
+
+import Layout from '@/layouts/Layout.astro';
+import { CloneChatInterface } from '@/components/ai-clone/CloneChatInterface';
+
+const { cloneId } = Astro.params;
+
+if (!cloneId) {
+  return Astro.redirect('/404');
+}
+
+// TODO: In production, fetch clone data from Convex to verify access
+// For now, we'll pass the cloneId and let the component handle it
+const title = `AI Clone Chat`;
+const description = 'Chat with your AI clone';
+---
+
+<Layout
+  title={title}
+  description={description}
+  sidebarInitialCollapsed={true}
+  hideHeader={false}
+  fullHeight={true}
+>
+  <CloneChatInterface client:only="react" cloneId={cloneId} />
+</Layout>

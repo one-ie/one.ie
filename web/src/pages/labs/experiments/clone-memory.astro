@@ -1,0 +1,114 @@
+---
+/**
+ * Experiment 3: Clone Memory
+ * Remember past conversations across sessions with privacy controls
+ */
+import Layout from '../../../layouts/Layout.astro';
+---
+
+<Layout title="Clone Memory | Labs" description="AI clones that remember past conversations and personalize responses">
+  <div class="min-h-screen bg-gradient-to-br from-green-50 to-teal-50 py-12">
+    <div class="max-w-7xl mx-auto px-4">
+      <a href="/labs" class="inline-flex items-center text-green-600 hover:text-green-700 mb-6">
+        <svg class="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7" />
+        </svg>
+        Back to Labs
+      </a>
+
+      <div class="bg-white rounded-2xl shadow-sm p-8 mb-8">
+        <div class="flex items-start gap-4">
+          <div class="text-6xl">🧠</div>
+          <div class="flex-1">
+            <h1 class="text-3xl font-bold text-gray-900 mb-2">Clone Memory</h1>
+            <p class="text-lg text-gray-600 mb-4">
+              Your AI clone remembers past conversations and personalizes responses based on your history. Full privacy controls included.
+            </p>
+            <div class="flex gap-2">
+              <span class="px-3 py-1 bg-green-100 text-green-800 rounded-full text-sm">Memory</span>
+              <span class="px-3 py-1 bg-teal-100 text-teal-800 rounded-full text-sm">Personalization</span>
+              <span class="px-3 py-1 bg-blue-100 text-blue-800 rounded-full text-sm">Privacy</span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="grid lg:grid-cols-2 gap-8">
+        <div class="bg-white rounded-2xl shadow-sm p-6">
+          <h2 class="text-xl font-semibold mb-4">Memory Timeline</h2>
+          <div class="space-y-4">
+            <div class="flex gap-3 p-4 bg-green-50 rounded-lg">
+              <div class="text-2xl">💭</div>
+              <div class="flex-1">
+                <div class="text-sm text-gray-500 mb-1">2 days ago</div>
+                <div class="font-medium text-gray-900">Discussed Python basics</div>
+                <div class="text-sm text-gray-600">You asked about list comprehensions</div>
+              </div>
+            </div>
+            <div class="flex gap-3 p-4 bg-green-50 rounded-lg">
+              <div class="text-2xl">💭</div>
+              <div class="flex-1">
+                <div class="text-sm text-gray-500 mb-1">1 week ago</div>
+                <div class="font-medium text-gray-900">Fitness goals conversation</div>
+                <div class="text-sm text-gray-600">Set target to run 5K in 25 minutes</div>
+              </div>
+            </div>
+            <div class="flex gap-3 p-4 bg-green-50 rounded-lg">
+              <div class="text-2xl">💭</div>
+              <div class="flex-1">
+                <div class="text-sm text-gray-500 mb-1">2 weeks ago</div>
+                <div class="font-medium text-gray-900">Marketing strategy ideas</div>
+                <div class="text-sm text-gray-600">Brainstormed content calendar</div>
+              </div>
+            </div>
+          </div>
+          <div class="mt-4 flex gap-2">
+            <button class="flex-1 px-4 py-2 bg-red-100 text-red-700 rounded-lg hover:bg-red-200 font-medium">
+              Forget All Memories
+            </button>
+            <button class="px-4 py-2 bg-green-100 text-green-700 rounded-lg hover:bg-green-200 font-medium">
+              Export
+            </button>
+          </div>
+        </div>
+
+        <div class="space-y-6">
+          <div class="bg-white rounded-2xl shadow-sm p-6">
+            <h3 class="text-lg font-semibold mb-4">Privacy Controls</h3>
+            <div class="space-y-4">
+              <div class="flex items-center justify-between p-3 bg-gray-50 rounded-lg">
+                <span class="font-medium">Remember conversations</span>
+                <label class="relative inline-flex items-center cursor-pointer">
+                  <input type="checkbox" checked class="sr-only peer">
+                  <div class="w-11 h-6 bg-gray-200 peer-focus:outline-none peer-focus:ring-4 peer-focus:ring-green-300 rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-green-600"></div>
+                </label>
+              </div>
+              <div class="flex items-center justify-between p-3 bg-gray-50 rounded-lg">
+                <span class="font-medium">Auto-delete after 30 days</span>
+                <label class="relative inline-flex items-center cursor-pointer">
+                  <input type="checkbox" class="sr-only peer">
+                  <div class="w-11 h-6 bg-gray-200 peer-focus:outline-none peer-focus:ring-4 peer-focus:ring-green-300 rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-green-600"></div>
+                </label>
+              </div>
+              <div class="flex items-center justify-between p-3 bg-gray-50 rounded-lg">
+                <span class="font-medium">Encrypt memories</span>
+                <label class="relative inline-flex items-center cursor-pointer">
+                  <input type="checkbox" checked class="sr-only peer">
+                  <div class="w-11 h-6 bg-gray-200 peer-focus:outline-none peer-focus:ring-4 peer-focus:ring-green-300 rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-green-600"></div>
+                </label>
+              </div>
+            </div>
+          </div>
+          <div class="bg-gradient-to-r from-green-600 to-teal-600 rounded-2xl p-6 text-white">
+            <h3 class="text-lg font-semibold mb-4">Stats</h3>
+            <div class="grid grid-cols-3 gap-4">
+              <div><div class="text-3xl font-bold">234</div><div class="text-sm text-green-100">Uses</div></div>
+              <div><div class="text-3xl font-bold">4.5</div><div class="text-sm text-green-100">Rating</div></div>
+              <div><div class="text-3xl font-bold">1.2K</div><div class="text-sm text-green-100">Memories</div></div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</Layout>

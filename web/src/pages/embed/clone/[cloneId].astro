@@ -1,0 +1,266 @@
+---
+/**
+ * AI Clone Embed Page
+ *
+ * Lightweight embed page for AI clone chat widget.
+ * Designed to be embedded via iframe or script tag.
+ *
+ * Features:
+ * - No navigation (maximizes chat area)
+ * - Minimal bundle size (<50KB gzipped)
+ * - postMessage API for parent communication
+ * - Session persistence
+ * - CORS-enabled for external websites
+ * - Mobile-responsive
+ * - WCAG accessibility compliant
+ *
+ * Ontology Mapping:
+ * - Thing: ai_clone (type: 'ai_clone')
+ * - Connection: user ↔ clone (relationshipType: 'communicated')
+ * - Event: communication_event (metadata.protocol: 'embed')
+ */
+
+import { CloneEmbedWidget } from '@/components/ai-clone/CloneEmbedWidget';
+
+// Get clone ID from URL params
+const { cloneId } = Astro.params;
+
+if (!cloneId) {
+  return Astro.redirect('/404');
+}
+
+// Get customization params from URL query
+const url = new URL(Astro.request.url);
+const primaryColor = url.searchParams.get('color') || '#000000';
+const position = url.searchParams.get('position') || 'bottom-right';
+const initialMessage = url.searchParams.get('message') || undefined;
+const theme = url.searchParams.get('theme') || 'light';
+const compact = url.searchParams.get('compact') === 'true';
+
+// Get optional external site URL for tracking
+const referrer = url.searchParams.get('referrer') || Astro.request.headers.get('referer') || 'direct';
+
+// TODO: Fetch clone metadata from Convex
+// const clone = await convex.query(api.queries.aiClones.get, { cloneId });
+// For now, mock data
+const clone = {
+  _id: cloneId,
+  name: 'AI Assistant',
+  status: 'ready',
+  properties: {
+    voiceId: undefined,
+    appearanceId: undefined,
+  },
+};
+
+// Set CORS headers for external embedding
+Astro.response.headers.set('Access-Control-Allow-Origin', '*');
+Astro.response.headers.set('Access-Control-Allow-Methods', 'GET, POST, OPTIONS');
+Astro.response.headers.set('Access-Control-Allow-Headers', 'Content-Type, Authorization');
+
+// Set CSP headers for security (allow parent iframe embedding)
+Astro.response.headers.set(
+  'Content-Security-Policy',
+  "frame-ancestors *; default-src 'self' 'unsafe-inline' 'unsafe-eval' https:; connect-src 'self' https://*;"
+);
+
+// Set cache headers (short cache for embed widget)
+Astro.response.headers.set('Cache-Control', 'public, max-age=300'); // 5 minutes
+---
+
+<!doctype html>
+<html lang="en" class={theme === 'dark' ? 'dark' : ''}>
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="robots" content="noindex, nofollow" />
+    <title>{clone.name} - Chat Widget</title>
+
+    <!-- Minimal CSS for performance -->
+    <style>
+      /* Reset for iframe embedding */
+      * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+      }
+
+      html,
+      body {
+        width: 100%;
+        height: 100%;
+        overflow: hidden;
+        background: transparent;
+      }
+
+      #embed-root {
+        width: 100%;
+        height: 100%;
+        display: flex;
+        flex-direction: column;
+      }
+
+      /* Loading state */
+      .embed-loading {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        height: 100%;
+        font-family: system-ui, -apple-system, sans-serif;
+        color: #666;
+      }
+
+      /* Custom scrollbar */
+      ::-webkit-scrollbar {
+        width: 6px;
+      }
+
+      ::-webkit-scrollbar-track {
+        background: transparent;
+      }
+
+      ::-webkit-scrollbar-thumb {
+        background: rgba(0, 0, 0, 0.2);
+        border-radius: 3px;
+      }
+
+      ::-webkit-scrollbar-thumb:hover {
+        background: rgba(0, 0, 0, 0.3);
+      }
+    </style>
+
+    <!-- Tailwind CSS (production build, minimal) -->
+    <link rel="stylesheet" href="/src/styles/global.css" />
+
+    <!-- Preconnect to API endpoints for performance -->
+    <link rel="preconnect" href={import.meta.env.PUBLIC_CONVEX_URL} />
+    <link rel="dns-prefetch" href={import.meta.env.PUBLIC_CONVEX_URL} />
+  </head>
+
+  <body>
+    <div id="embed-root">
+      <div class="embed-loading">Loading chat...</div>
+    </div>
+
+    <!-- postMessage API for parent-child communication -->
+    <script is:inline>
+      // Notify parent window that embed is ready
+      window.addEventListener('load', () => {
+        if (window.parent !== window) {
+          window.parent.postMessage(
+            {
+              type: 'CLONE_EMBED_READY',
+              cloneId: '{cloneId}',
+              timestamp: Date.now(),
+            },
+            '*'
+          );
+        }
+      });
+
+      // Listen for commands from parent window
+      window.addEventListener('message', (event) => {
+        const { type, data } = event.data;
+
+        switch (type) {
+          case 'CLONE_EMBED_SEND_MESSAGE':
+            // Forward message to chat widget
+            window.dispatchEvent(
+              new CustomEvent('embed:send-message', { detail: data })
+            );
+            break;
+
+          case 'CLONE_EMBED_CLEAR_HISTORY':
+            // Clear chat history
+            window.dispatchEvent(new CustomEvent('embed:clear-history'));
+            break;
+
+          case 'CLONE_EMBED_SET_THEME':
+            // Change theme
+            document.documentElement.classList.toggle('dark', data.theme === 'dark');
+            break;
+        }
+      });
+
+      // Send events to parent window
+      function notifyParent(type, data) {
+        if (window.parent !== window) {
+          window.parent.postMessage(
+            {
+              type,
+              data,
+              timestamp: Date.now(),
+            },
+            '*'
+          );
+        }
+      }
+
+      // Track widget interactions
+      window.addEventListener('embed:message-sent', (e) => {
+        notifyParent('CLONE_EMBED_MESSAGE_SENT', e.detail);
+      });
+
+      window.addEventListener('embed:message-received', (e) => {
+        notifyParent('CLONE_EMBED_MESSAGE_RECEIVED', e.detail);
+      });
+
+      window.addEventListener('embed:conversation-started', (e) => {
+        notifyParent('CLONE_EMBED_CONVERSATION_STARTED', e.detail);
+      });
+
+      // Track unread count
+      window.addEventListener('embed:unread-count', (e) => {
+        notifyParent('CLONE_EMBED_UNREAD_COUNT', e.detail);
+      });
+    </script>
+
+    <!-- Mount React widget -->
+    <CloneEmbedWidget
+      client:only="react"
+      cloneId={cloneId}
+      primaryColor={primaryColor}
+      position={position}
+      initialMessage={initialMessage}
+      theme={theme}
+      compact={compact}
+      referrer={referrer}
+    />
+
+    <!-- Analytics tracking (track usage per clone) -->
+    <script is:inline define:vars={{ cloneId, referrer }}>
+      // Track widget load event
+      fetch('/api/analytics/embed', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          event: 'widget_loaded',
+          cloneId,
+          referrer,
+          timestamp: Date.now(),
+          userAgent: navigator.userAgent,
+          viewport: {
+            width: window.innerWidth,
+            height: window.innerHeight,
+          },
+        }),
+      }).catch(() => {}); // Silently fail
+
+      // Track session duration on unload
+      const sessionStart = Date.now();
+      window.addEventListener('beforeunload', () => {
+        const duration = Date.now() - sessionStart;
+        navigator.sendBeacon(
+          '/api/analytics/embed',
+          JSON.stringify({
+            event: 'widget_unloaded',
+            cloneId,
+            referrer,
+            duration,
+            timestamp: Date.now(),
+          })
+        );
+      });
+    </script>
+  </body>
+</html>

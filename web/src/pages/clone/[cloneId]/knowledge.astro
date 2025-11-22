@@ -1,0 +1,315 @@
+---
+/**
+ * AI Clone Knowledge Graph Page
+ *
+ * Interactive visualization of the clone's knowledge graph showing:
+ * - Creator node (center)
+ * - Clone node
+ * - Content sources (blog posts, courses, videos)
+ * - Knowledge chunks (embeddings)
+ * - Relationships (trained_on, authored, related_to, similar_to)
+ *
+ * Features:
+ * - Force-directed graph layout
+ * - Zoom and pan controls
+ * - Click nodes to view details
+ * - Hover to highlight connected nodes
+ * - Search within graph
+ * - Filter by node type
+ * - Export as JSON or PNG
+ * - Stats panel
+ */
+
+import Layout from '@/layouts/Layout.astro';
+import { KnowledgeGraph } from '@/components/ai-clone/KnowledgeGraph';
+
+// Get cloneId from URL params
+const { cloneId } = Astro.params;
+
+if (!cloneId) {
+  return Astro.redirect('/404');
+}
+
+// TODO: Fetch clone and knowledge data from Convex
+// For now, use mock data
+
+const cloneData = {
+  id: cloneId,
+  name: 'Alex AI Clone',
+  avatarUrl: 'https://api.dicebear.com/7.x/avataaars/svg?seed=' + cloneId,
+  creatorId: 'creator_123',
+  creatorName: 'Alex Johnson',
+  creatorAvatarUrl: 'https://api.dicebear.com/7.x/avataaars/svg?seed=creator',
+  stats: {
+    totalNodes: 247,
+    totalEdges: 389,
+    clusters: 12,
+    knowledgeChunks: 156,
+    contentSources: 23,
+  },
+  // Mock knowledge graph data
+  nodes: [
+    // Creator node (center)
+    {
+      id: 'creator_123',
+      type: 'creator',
+      name: 'Alex Johnson',
+      avatarUrl: 'https://api.dicebear.com/7.x/avataaars/svg?seed=creator',
+      properties: {
+        role: 'org_owner',
+        expertise: ['React', 'TypeScript', 'AI'],
+      },
+    },
+    // Clone node
+    {
+      id: cloneId,
+      type: 'clone',
+      name: 'Alex AI Clone',
+      avatarUrl: 'https://api.dicebear.com/7.x/avataaars/svg?seed=' + cloneId,
+      properties: {
+        model: 'gpt-4',
+        temperature: 0.7,
+        voiceId: 'voice_123',
+      },
+    },
+    // Content sources
+    {
+      id: 'blog_1',
+      type: 'content_source',
+      name: 'Building Modern Web Apps',
+      properties: {
+        sourceType: 'blog_post',
+        url: '/blog/modern-web-apps',
+        publishedAt: Date.now() - 30 * 24 * 60 * 60 * 1000,
+        wordCount: 2500,
+      },
+    },
+    {
+      id: 'course_1',
+      type: 'content_source',
+      name: 'React Mastery Course',
+      properties: {
+        sourceType: 'course',
+        lessons: 24,
+        duration: '8 hours',
+        enrollments: 1234,
+      },
+    },
+    {
+      id: 'video_1',
+      type: 'content_source',
+      name: 'Introduction to TypeScript',
+      properties: {
+        sourceType: 'video',
+        duration: '45 min',
+        views: 12500,
+      },
+    },
+    // Knowledge chunks
+    {
+      id: 'chunk_1',
+      type: 'knowledge_chunk',
+      name: 'React Hooks Overview',
+      properties: {
+        text: 'React hooks allow you to use state and other React features without writing a class...',
+        embedding: [0.1, 0.2, 0.3], // Mock embedding
+        sourceId: 'blog_1',
+        position: 0,
+      },
+    },
+    {
+      id: 'chunk_2',
+      type: 'knowledge_chunk',
+      name: 'useState Hook Pattern',
+      properties: {
+        text: 'The useState hook is the most common hook. It lets you add state to function components...',
+        embedding: [0.11, 0.21, 0.31],
+        sourceId: 'blog_1',
+        position: 1,
+      },
+    },
+    {
+      id: 'chunk_3',
+      type: 'knowledge_chunk',
+      name: 'useEffect for Side Effects',
+      properties: {
+        text: 'useEffect lets you perform side effects in function components. It serves the same purpose as componentDidMount...',
+        embedding: [0.12, 0.22, 0.32],
+        sourceId: 'course_1',
+        position: 0,
+      },
+    },
+    {
+      id: 'chunk_4',
+      type: 'knowledge_chunk',
+      name: 'TypeScript Basics',
+      properties: {
+        text: 'TypeScript adds static types to JavaScript. This helps catch errors early and improves code quality...',
+        embedding: [0.5, 0.6, 0.7],
+        sourceId: 'video_1',
+        position: 0,
+      },
+    },
+    {
+      id: 'chunk_5',
+      type: 'knowledge_chunk',
+      name: 'Type Annotations',
+      properties: {
+        text: 'Type annotations in TypeScript allow you to explicitly specify the type of a variable, parameter, or return value...',
+        embedding: [0.51, 0.61, 0.71],
+        sourceId: 'video_1',
+        position: 1,
+      },
+    },
+  ],
+  // Mock edges (relationships)
+  edges: [
+    // Creator → Clone (created)
+    {
+      id: 'edge_1',
+      source: 'creator_123',
+      target: cloneId,
+      type: 'created',
+      label: 'created',
+    },
+    // Clone → Content sources (trained_on)
+    {
+      id: 'edge_2',
+      source: cloneId,
+      target: 'blog_1',
+      type: 'trained_on',
+      label: 'trained on',
+    },
+    {
+      id: 'edge_3',
+      source: cloneId,
+      target: 'course_1',
+      type: 'trained_on',
+      label: 'trained on',
+    },
+    {
+      id: 'edge_4',
+      source: cloneId,
+      target: 'video_1',
+      type: 'trained_on',
+      label: 'trained on',
+    },
+    // Creator → Content sources (authored)
+    {
+      id: 'edge_5',
+      source: 'creator_123',
+      target: 'blog_1',
+      type: 'authored',
+      label: 'authored',
+    },
+    {
+      id: 'edge_6',
+      source: 'creator_123',
+      target: 'course_1',
+      type: 'authored',
+      label: 'authored',
+    },
+    {
+      id: 'edge_7',
+      source: 'creator_123',
+      target: 'video_1',
+      type: 'authored',
+      label: 'authored',
+    },
+    // Content sources → Knowledge chunks (contains)
+    {
+      id: 'edge_8',
+      source: 'blog_1',
+      target: 'chunk_1',
+      type: 'contains',
+      label: 'contains',
+    },
+    {
+      id: 'edge_9',
+      source: 'blog_1',
+      target: 'chunk_2',
+      type: 'contains',
+      label: 'contains',
+    },
+    {
+      id: 'edge_10',
+      source: 'course_1',
+      target: 'chunk_3',
+      type: 'contains',
+      label: 'contains',
+    },
+    {
+      id: 'edge_11',
+      source: 'video_1',
+      target: 'chunk_4',
+      type: 'contains',
+      label: 'contains',
+    },
+    {
+      id: 'edge_12',
+      source: 'video_1',
+      target: 'chunk_5',
+      type: 'contains',
+      label: 'contains',
+    },
+    // Knowledge chunks → Related chunks (similar_to)
+    {
+      id: 'edge_13',
+      source: 'chunk_1',
+      target: 'chunk_2',
+      type: 'similar_to',
+      label: 'similar (0.95)',
+      weight: 0.95,
+    },
+    {
+      id: 'edge_14',
+      source: 'chunk_2',
+      target: 'chunk_3',
+      type: 'similar_to',
+      label: 'similar (0.82)',
+      weight: 0.82,
+    },
+    {
+      id: 'edge_15',
+      source: 'chunk_4',
+      target: 'chunk_5',
+      type: 'similar_to',
+      label: 'similar (0.91)',
+      weight: 0.91,
+    },
+  ],
+};
+
+const title = `${cloneData.name} - Knowledge Graph`;
+const description = `Explore the knowledge graph for ${cloneData.name}`;
+---
+
+<Layout title={title} description={description}>
+  <div class="container mx-auto py-6 px-4 max-w-7xl">
+    {/* Header */}
+    <div class="flex items-center justify-between mb-6">
+      <div>
+        <h1 class="text-3xl font-bold">{cloneData.name}</h1>
+        <p class="text-muted-foreground mt-1">
+          Knowledge Graph Visualization
+        </p>
+      </div>
+      <a
+        href={`/clone/${cloneId}`}
+        class="text-sm text-muted-foreground hover:text-foreground transition-colors"
+      >
+        ← Back to Dashboard
+      </a>
+    </div>
+
+    {/* Knowledge Graph Component */}
+    <KnowledgeGraph
+      cloneId={cloneData.id}
+      cloneName={cloneData.name}
+      nodes={cloneData.nodes}
+      edges={cloneData.edges}
+      stats={cloneData.stats}
+      client:load
+    />
+  </div>
+</Layout>

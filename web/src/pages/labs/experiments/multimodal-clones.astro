@@ -1,0 +1,215 @@
+---
+/**
+ * Experiment 1: Multi-modal Clones
+ *
+ * Voice + video + text responses in single conversation
+ * Automatic mode switching based on user preference
+ */
+
+import Layout from '../../../layouts/Layout.astro';
+
+const title = 'Multi-modal Clones | Experimental Labs';
+const description = 'Experience AI clones that seamlessly switch between voice, video, and text in a single conversation';
+---
+
+<Layout title={title} description={description}>
+  <div class="min-h-screen bg-gradient-to-br from-purple-50 to-blue-50">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
+      <!-- Back button -->
+      <a href="/labs" class="inline-flex items-center text-blue-600 hover:text-blue-700 mb-6">
+        <svg class="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7" />
+        </svg>
+        Back to Labs
+      </a>
+
+      <!-- Header -->
+      <div class="bg-white rounded-2xl shadow-sm p-8 mb-8">
+        <div class="flex items-start gap-4">
+          <div class="text-6xl">🎭</div>
+          <div class="flex-1">
+            <div class="flex items-center gap-3 mb-2">
+              <h1 class="text-3xl font-bold text-gray-900">Multi-modal Clones</h1>
+              <span class="px-3 py-1 bg-green-100 text-green-800 rounded-full text-sm font-semibold">
+                Experiment #1
+              </span>
+            </div>
+            <p class="text-lg text-gray-600 mb-4">
+              Experience AI clones that seamlessly switch between voice, video, and text responses
+              in a single conversation. Automatic mode adaptation based on context and user preference.
+            </p>
+            <div class="flex gap-2">
+              <span class="px-3 py-1 bg-purple-100 text-purple-800 rounded-full text-sm">Voice</span>
+              <span class="px-3 py-1 bg-blue-100 text-blue-800 rounded-full text-sm">Video</span>
+              <span class="px-3 py-1 bg-indigo-100 text-indigo-800 rounded-full text-sm">Text</span>
+              <span class="px-3 py-1 bg-pink-100 text-pink-800 rounded-full text-sm">AI</span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Demo Section -->
+      <div class="grid lg:grid-cols-2 gap-8">
+        <!-- Left: Chat Interface -->
+        <div class="bg-white rounded-2xl shadow-sm p-6">
+          <h2 class="text-xl font-semibold text-gray-900 mb-4">Try it Now</h2>
+
+          <!-- Mode selector -->
+          <div class="flex gap-2 mb-4">
+            <button class="flex-1 px-4 py-2 bg-purple-600 text-white rounded-lg font-medium hover:bg-purple-700">
+              🎤 Voice
+            </button>
+            <button class="flex-1 px-4 py-2 bg-gray-100 text-gray-700 rounded-lg font-medium hover:bg-gray-200">
+              📹 Video
+            </button>
+            <button class="flex-1 px-4 py-2 bg-gray-100 text-gray-700 rounded-lg font-medium hover:bg-gray-200">
+              💬 Text
+            </button>
+            <button class="px-4 py-2 bg-blue-100 text-blue-700 rounded-lg font-medium hover:bg-blue-200">
+              🤖 Auto
+            </button>
+          </div>
+
+          <!-- Chat messages -->
+          <div class="bg-gray-50 rounded-lg p-4 h-96 overflow-y-auto mb-4 space-y-4">
+            <!-- User message -->
+            <div class="flex justify-end">
+              <div class="bg-blue-600 text-white rounded-lg px-4 py-2 max-w-xs">
+                Tell me about multi-modal AI
+              </div>
+            </div>
+
+            <!-- Clone voice response -->
+            <div class="flex gap-3">
+              <div class="w-10 h-10 bg-purple-100 rounded-full flex items-center justify-center text-purple-600 font-semibold">
+                AI
+              </div>
+              <div class="bg-white rounded-lg px-4 py-2 max-w-xs border border-gray-200">
+                <div class="flex items-center gap-2 mb-2">
+                  <span class="text-xs text-purple-600 font-semibold">🎤 VOICE MODE</span>
+                </div>
+                <p class="text-sm text-gray-700">
+                  Multi-modal AI combines voice, video, and text seamlessly...
+                </p>
+                <audio controls class="w-full mt-2">
+                  <source src="/audio/sample.mp3" type="audio/mpeg">
+                </audio>
+              </div>
+            </div>
+
+            <!-- Demo placeholder -->
+            <div class="text-center py-8 text-gray-500">
+              <p class="text-sm">Demo conversation will appear here</p>
+            </div>
+          </div>
+
+          <!-- Input area -->
+          <div class="flex gap-2">
+            <input
+              type="text"
+              placeholder="Type your message or click mic to speak..."
+              class="flex-1 px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-purple-500 focus:border-transparent"
+            />
+            <button class="px-4 py-3 bg-purple-600 text-white rounded-lg hover:bg-purple-700">
+              <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 19l9 2-9-18-9 18 9-2zm0 0v-8" />
+              </svg>
+            </button>
+          </div>
+        </div>
+
+        <!-- Right: Features & Info -->
+        <div class="space-y-6">
+          <!-- Features -->
+          <div class="bg-white rounded-2xl shadow-sm p-6">
+            <h3 class="text-lg font-semibold text-gray-900 mb-4">Features</h3>
+            <ul class="space-y-3">
+              <li class="flex items-start gap-3">
+                <svg class="w-5 h-5 text-green-500 mt-0.5" fill="currentColor" viewBox="0 0 20 20">
+                  <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd" />
+                </svg>
+                <div>
+                  <div class="font-medium text-gray-900">Seamless Mode Switching</div>
+                  <div class="text-sm text-gray-600">Switch between voice, video, and text mid-conversation</div>
+                </div>
+              </li>
+              <li class="flex items-start gap-3">
+                <svg class="w-5 h-5 text-green-500 mt-0.5" fill="currentColor" viewBox="0 0 20 20">
+                  <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd" />
+                </svg>
+                <div>
+                  <div class="font-medium text-gray-900">Automatic Adaptation</div>
+                  <div class="text-sm text-gray-600">AI chooses best mode based on context and query type</div>
+                </div>
+              </li>
+              <li class="flex items-start gap-3">
+                <svg class="w-5 h-5 text-green-500 mt-0.5" fill="currentColor" viewBox="0 0 20 20">
+                  <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd" />
+                </svg>
+                <div>
+                  <div class="font-medium text-gray-900">Context Preservation</div>
+                  <div class="text-sm text-gray-600">Conversation context maintained across all modes</div>
+                </div>
+              </li>
+              <li class="flex items-start gap-3">
+                <svg class="w-5 h-5 text-green-500 mt-0.5" fill="currentColor" viewBox="0 0 20 20">
+                  <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd" />
+                </svg>
+                <div>
+                  <div class="font-medium text-gray-900">User Preference Learning</div>
+                  <div class="text-sm text-gray-600">Remembers your preferred modes for different types of questions</div>
+                </div>
+              </li>
+            </ul>
+          </div>
+
+          <!-- Technical Details -->
+          <div class="bg-white rounded-2xl shadow-sm p-6">
+            <h3 class="text-lg font-semibold text-gray-900 mb-4">How it Works</h3>
+            <ol class="space-y-3 text-sm text-gray-600">
+              <li class="flex gap-3">
+                <span class="flex-shrink-0 w-6 h-6 bg-purple-100 text-purple-600 rounded-full flex items-center justify-center font-semibold">1</span>
+                <span>User asks question via any mode (voice/video/text)</span>
+              </li>
+              <li class="flex gap-3">
+                <span class="flex-shrink-0 w-6 h-6 bg-purple-100 text-purple-600 rounded-full flex items-center justify-center font-semibold">2</span>
+                <span>AI analyzes query type and user preference history</span>
+              </li>
+              <li class="flex gap-3">
+                <span class="flex-shrink-0 w-6 h-6 bg-purple-100 text-purple-600 rounded-full flex items-center justify-center font-semibold">3</span>
+                <span>Optimal response mode is selected automatically</span>
+              </li>
+              <li class="flex gap-3">
+                <span class="flex-shrink-0 w-6 h-6 bg-purple-100 text-purple-600 rounded-full flex items-center justify-center font-semibold">4</span>
+                <span>Response generated in chosen mode(s)</span>
+              </li>
+              <li class="flex gap-3">
+                <span class="flex-shrink-0 w-6 h-6 bg-purple-100 text-purple-600 rounded-full flex items-center justify-center font-semibold">5</span>
+                <span>User preference learned for future interactions</span>
+              </li>
+            </ol>
+          </div>
+
+          <!-- Stats -->
+          <div class="bg-gradient-to-r from-purple-600 to-blue-600 rounded-2xl p-6 text-white">
+            <h3 class="text-lg font-semibold mb-4">Experiment Stats</h3>
+            <div class="grid grid-cols-3 gap-4">
+              <div>
+                <div class="text-3xl font-bold">127</div>
+                <div class="text-sm text-purple-100">Total Uses</div>
+              </div>
+              <div>
+                <div class="text-3xl font-bold">4.2</div>
+                <div class="text-sm text-purple-100">Avg Rating</div>
+              </div>
+              <div>
+                <div class="text-3xl font-bold">23</div>
+                <div class="text-sm text-purple-100">Feedback</div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</Layout>
