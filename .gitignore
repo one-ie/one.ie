@@ -38,3 +38,5 @@ one/events/nine-padel/
 .claude/hooks/.last-news-context
 .claude/state/cycle.json
 one/events/0-changes.md
+__pycache__/
+*.pyc
