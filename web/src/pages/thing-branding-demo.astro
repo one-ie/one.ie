@@ -1,0 +1,438 @@
+---
+/**
+ * Thing Branding Demo
+ *
+ * Demonstrates ThingCard component with:
+ * - Platform default colors
+ * - Custom brand colors (Purple, Teal, Orange themes)
+ * - Thing-level branding examples
+ */
+
+import Layout from '@/layouts/Layout.astro';
+import { ThingCard } from '@/components/ontology-ui/universal';
+import { CardHeader, CardTitle, CardContent } from '@/components/ui/card';
+import { Button } from '@/components/ui/button';
+import { Badge } from '@/components/ui/badge';
+import type { Thing } from '@/lib/ontology/types';
+
+const title = 'Thing Branding Demo';
+const description = 'Examples of ThingCard with platform defaults and custom brand colors';
+
+// Example 1: Platform defaults (no custom colors)
+const defaultProduct: Thing = {
+	_id: '1',
+	groupId: 'demo',
+	type: 'product',
+	name: 'Platform Default Product',
+	properties: {
+		description: 'This product uses the beautiful platform default colors (blue theme). Most products should use these defaults.',
+		price: 49.99,
+		category: 'Example'
+	},
+	status: 'active',
+	createdAt: Date.now(),
+	updatedAt: Date.now()
+};
+
+// Example 2: Purple brand (luxury/premium)
+const purpleProduct: Thing = {
+	_id: '2',
+	groupId: 'demo',
+	type: 'product',
+	name: 'Purple Luxury Brand',
+	properties: {
+		description: 'Custom purple branding for a luxury product. Notice how all buttons and text adapt to the brand colors.',
+		price: 149.99,
+		category: 'Luxury',
+		colors: {
+			background: '270 50% 92%',   // Light purple surface
+			foreground: '270 50% 98%',   // Almost white
+			font: '270 50% 15%',         // Dark purple text
+			primary: '280 100% 60%',     // Vibrant purple CTA
+			secondary: '200 100% 50%',   // Teal secondary
+			tertiary: '150 80% 40%'      // Green accent
+		}
+	},
+	status: 'active',
+	createdAt: Date.now(),
+	updatedAt: Date.now()
+};
+
+// Example 3: Teal brand (modern/tech)
+const tealProduct: Thing = {
+	_id: '3',
+	groupId: 'demo',
+	type: 'product',
+	name: 'Teal Tech Product',
+	properties: {
+		description: 'Modern teal branding for a tech product. Clean, professional, and trustworthy.',
+		price: 99.99,
+		category: 'Technology',
+		colors: {
+			background: '180 30% 90%',   // Light teal surface
+			foreground: '180 20% 98%',   // Almost white
+			font: '180 40% 15%',         // Dark teal text
+			primary: '180 80% 40%',      // Rich teal CTA
+			secondary: '210 70% 50%',    // Blue secondary
+			tertiary: '45 100% 50%'      // Gold accent
+		}
+	},
+	status: 'active',
+	createdAt: Date.now(),
+	updatedAt: Date.now()
+};
+
+// Example 4: Orange brand (energetic/friendly)
+const orangeProduct: Thing = {
+	_id: '4',
+	groupId: 'demo',
+	type: 'product',
+	name: 'Orange Energy Brand',
+	properties: {
+		description: 'Bold orange branding for an energetic, friendly product. Warm and inviting.',
+		price: 79.99,
+		category: 'Lifestyle',
+		colors: {
+			background: '30 70% 90%',    // Light orange surface
+			foreground: '30 50% 98%',    // Warm white
+			font: '30 60% 20%',          // Dark orange-brown text
+			primary: '25 95% 55%',       // Vibrant orange CTA
+			secondary: '200 70% 45%',    // Blue contrast
+			tertiary: '140 60% 45%'      // Green accent
+		}
+	},
+	status: 'active',
+	createdAt: Date.now(),
+	updatedAt: Date.now()
+};
+---
+
+<Layout title={title} description={description}>
+	<div class="container mx-auto px-4 py-8 max-w-7xl">
+		<!-- Header -->
+		<div class="mb-8">
+			<h1 class="text-4xl font-bold mb-2">Thing Branding Demo</h1>
+			<p class="text-lg text-muted-foreground">
+				ThingCard component with platform defaults and custom brand colors
+			</p>
+		</div>
+
+		<!-- Introduction -->
+		<div class="mb-8 p-6 bg-card rounded-lg border">
+			<h2 class="text-2xl font-semibold mb-4">How It Works</h2>
+			<div class="space-y-3 text-sm">
+				<p>
+					<strong>Platform Defaults:</strong> All Things use beautiful blue theme by default.
+					No custom colors needed - the platform defaults look great for 90% of use cases.
+				</p>
+				<p>
+					<strong>Thing-Level Branding (Optional):</strong> When a Thing has strong brand identity,
+					define 6 colors in <code class="bg-muted px-1 py-0.5 rounded">thing.properties.colors</code>.
+					All buttons, text, and surfaces automatically adapt.
+				</p>
+				<p>
+					<strong>Zero Custom CSS:</strong> Same component structure, different brands.
+					ThingCard applies colors via CSS custom properties.
+				</p>
+			</div>
+		</div>
+
+		<!-- Examples Grid -->
+		<div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+			<!-- Example 1: Platform Defaults -->
+			<div>
+				<div class="mb-2 flex items-center gap-2">
+					<Badge variant="outline">Platform Default</Badge>
+					<span class="text-sm text-muted-foreground">Blue theme (recommended)</span>
+				</div>
+				<ThingCard thing={defaultProduct} client:load>
+					<CardHeader>
+						<CardTitle className="text-font">{defaultProduct.name}</CardTitle>
+					</CardHeader>
+					<CardContent className="space-y-4">
+						<p class="text-font opacity-80 text-sm">
+							{defaultProduct.properties.description}
+						</p>
+						<div class="flex items-center justify-between">
+							<span class="text-2xl font-bold text-font">
+								${defaultProduct.properties.price}
+							</span>
+							<Badge className="bg-tertiary text-white">
+								{defaultProduct.properties.category}
+							</Badge>
+						</div>
+						<div class="flex gap-2">
+							<Button variant="primary" size="sm" className="flex-1">
+								Purchase
+							</Button>
+							<Button variant="secondary" size="sm">
+								Details
+							</Button>
+						</div>
+					</CardContent>
+				</ThingCard>
+				<div class="mt-2 p-3 bg-muted rounded text-xs font-mono">
+					<div>thing.properties.colors: <strong>undefined</strong></div>
+					<div class="text-muted-foreground">→ Uses platform defaults</div>
+				</div>
+			</div>
+
+			<!-- Example 2: Purple Brand -->
+			<div>
+				<div class="mb-2 flex items-center gap-2">
+					<Badge variant="outline">Custom Brand</Badge>
+					<span class="text-sm text-muted-foreground">Purple luxury theme</span>
+				</div>
+				<ThingCard thing={purpleProduct} client:load>
+					<CardHeader>
+						<CardTitle className="text-font">{purpleProduct.name}</CardTitle>
+					</CardHeader>
+					<CardContent className="space-y-4">
+						<p class="text-font opacity-80 text-sm">
+							{purpleProduct.properties.description}
+						</p>
+						<div class="flex items-center justify-between">
+							<span class="text-2xl font-bold text-font">
+								${purpleProduct.properties.price}
+							</span>
+							<Badge className="bg-tertiary text-white">
+								{purpleProduct.properties.category}
+							</Badge>
+						</div>
+						<div class="flex gap-2">
+							<Button variant="primary" size="sm" className="flex-1">
+								Purchase
+							</Button>
+							<Button variant="secondary" size="sm">
+								Details
+							</Button>
+						</div>
+					</CardContent>
+				</ThingCard>
+				<div class="mt-2 p-3 bg-muted rounded text-xs font-mono space-y-1">
+					<div>background: <strong>270 50% 92%</strong></div>
+					<div>primary: <strong>280 100% 60%</strong></div>
+					<div class="text-muted-foreground">→ Custom purple brand</div>
+				</div>
+			</div>
+
+			<!-- Example 3: Teal Brand -->
+			<div>
+				<div class="mb-2 flex items-center gap-2">
+					<Badge variant="outline">Custom Brand</Badge>
+					<span class="text-sm text-muted-foreground">Teal tech theme</span>
+				</div>
+				<ThingCard thing={tealProduct} client:load>
+					<CardHeader>
+						<CardTitle className="text-font">{tealProduct.name}</CardTitle>
+					</CardHeader>
+					<CardContent className="space-y-4">
+						<p class="text-font opacity-80 text-sm">
+							{tealProduct.properties.description}
+						</p>
+						<div class="flex items-center justify-between">
+							<span class="text-2xl font-bold text-font">
+								${tealProduct.properties.price}
+							</span>
+							<Badge className="bg-tertiary text-white">
+								{tealProduct.properties.category}
+							</Badge>
+						</div>
+						<div class="flex gap-2">
+							<Button variant="primary" size="sm" className="flex-1">
+								Purchase
+							</Button>
+							<Button variant="secondary" size="sm">
+								Details
+							</Button>
+						</div>
+					</CardContent>
+				</ThingCard>
+				<div class="mt-2 p-3 bg-muted rounded text-xs font-mono space-y-1">
+					<div>background: <strong>180 30% 90%</strong></div>
+					<div>primary: <strong>180 80% 40%</strong></div>
+					<div class="text-muted-foreground">→ Custom teal brand</div>
+				</div>
+			</div>
+
+			<!-- Example 4: Orange Brand -->
+			<div>
+				<div class="mb-2 flex items-center gap-2">
+					<Badge variant="outline">Custom Brand</Badge>
+					<span class="text-sm text-muted-foreground">Orange energy theme</span>
+				</div>
+				<ThingCard thing={orangeProduct} client:load>
+					<CardHeader>
+						<CardTitle className="text-font">{orangeProduct.name}</CardTitle>
+					</CardHeader>
+					<CardContent className="space-y-4">
+						<p class="text-font opacity-80 text-sm">
+							{orangeProduct.properties.description}
+						</p>
+						<div class="flex items-center justify-between">
+							<span class="text-2xl font-bold text-font">
+								${orangeProduct.properties.price}
+							</span>
+							<Badge className="bg-tertiary text-white">
+								{orangeProduct.properties.category}
+							</Badge>
+						</div>
+						<div class="flex gap-2">
+							<Button variant="primary" size="sm" className="flex-1">
+								Purchase
+							</Button>
+							<Button variant="secondary" size="sm">
+								Details
+							</Button>
+						</div>
+					</CardContent>
+				</ThingCard>
+				<div class="mt-2 p-3 bg-muted rounded text-xs font-mono space-y-1">
+					<div>background: <strong>30 70% 90%</strong></div>
+					<div>primary: <strong>25 95% 55%</strong></div>
+					<div class="text-muted-foreground">→ Custom orange brand</div>
+				</div>
+			</div>
+		</div>
+
+		<!-- Code Examples -->
+		<div class="mt-12 space-y-6">
+			<h2 class="text-2xl font-semibold">Code Examples</h2>
+
+			<!-- Example 1: Using Platform Defaults -->
+			<div class="space-y-2">
+				<h3 class="text-lg font-medium">1. Using Platform Defaults (Recommended)</h3>
+				<div class="p-4 bg-card rounded-lg border">
+					<pre class="text-sm overflow-x-auto"><code>{`import { ThingCard } from '@/components/ontology-ui/universal';
+import { CardHeader, CardTitle, CardContent } from '@/components/ui/card';
+
+// Thing without custom colors uses beautiful platform defaults
+const product: Thing = {
+  _id: '1',
+  name: 'My Product',
+  properties: {
+    description: 'A great product',
+    price: 49.99
+  }
+};
+
+<ThingCard thing={product}>
+  <CardHeader>
+    <CardTitle>{product.name}</CardTitle>
+  </CardHeader>
+  <CardContent>
+    <p className="text-font">{product.properties.description}</p>
+    <Button variant="primary">Purchase</Button>
+  </CardContent>
+</ThingCard>`}</code></pre>
+				</div>
+			</div>
+
+			<!-- Example 2: Custom Brand Colors -->
+			<div class="space-y-2">
+				<h3 class="text-lg font-medium">2. Adding Custom Brand Colors (Optional)</h3>
+				<div class="p-4 bg-card rounded-lg border">
+					<pre class="text-sm overflow-x-auto"><code>{`// Define custom colors in thing.properties.colors
+const brandedProduct: Thing = {
+  _id: '2',
+  name: 'Branded Product',
+  properties: {
+    description: 'Custom branded product',
+    price: 99.99,
+    colors: {
+      background: '270 50% 92%',   // Light purple
+      foreground: '270 50% 98%',   // Almost white
+      font: '270 50% 15%',         // Dark purple
+      primary: '280 100% 60%',     // Vibrant purple
+      secondary: '200 100% 50%',   // Teal
+      tertiary: '150 80% 40%'      // Green
+    }
+  }
+};
+
+// Same component code - colors applied automatically!
+<ThingCard thing={brandedProduct}>
+  <CardHeader>
+    <CardTitle className="text-font">{brandedProduct.name}</CardTitle>
+  </CardHeader>
+  <CardContent>
+    <Button variant="primary">Purchase</Button>
+  </CardContent>
+</ThingCard>`}</code></pre>
+				</div>
+			</div>
+
+			<!-- Example 3: Database Schema -->
+			<div class="space-y-2">
+				<h3 class="text-lg font-medium">3. Database Schema (Convex)</h3>
+				<div class="p-4 bg-card rounded-lg border">
+					<pre class="text-sm overflow-x-auto"><code>{`// backend/convex/schema.ts
+import { defineTable } from "convex/server";
+import { v } from "convex/values";
+
+export default defineSchema({
+  things: defineTable({
+    groupId: v.string(),
+    type: v.string(),
+    name: v.string(),
+    properties: v.object({
+      // Optional colors for thing-level branding
+      colors: v.optional(v.object({
+        background: v.string(),  // HSL: "270 50% 92%"
+        foreground: v.string(),  // HSL: "270 50% 98%"
+        font: v.string(),        // HSL: "270 50% 15%"
+        primary: v.string(),     // HSL: "280 100% 60%"
+        secondary: v.string(),   // HSL: "200 100% 50%"
+        tertiary: v.string()     // HSL: "150 80% 40%"
+      }))
+    }),
+    status: v.string(),
+    createdAt: v.number(),
+    updatedAt: v.number()
+  })
+});`}</code></pre>
+				</div>
+			</div>
+		</div>
+
+		<!-- Design System Reference -->
+		<div class="mt-12 p-6 bg-card rounded-lg border">
+			<h2 class="text-2xl font-semibold mb-4">The 6-Color Design System</h2>
+			<div class="space-y-4">
+				<p class="text-sm text-muted-foreground">
+					Every Thing can optionally define these 6 colors. When undefined, platform defaults are used.
+				</p>
+				<div class="grid grid-cols-1 md:grid-cols-2 gap-4 text-sm">
+					<div>
+						<strong>background</strong> - Card surface color
+						<div class="text-muted-foreground">Light: gray, Dark: dark gray</div>
+					</div>
+					<div>
+						<strong>foreground</strong> - Content area
+						<div class="text-muted-foreground">Light: white, Dark: dark</div>
+					</div>
+					<div>
+						<strong>font</strong> - All text color
+						<div class="text-muted-foreground">Readable in both modes</div>
+					</div>
+					<div>
+						<strong>primary</strong> - Main CTA buttons
+						<div class="text-muted-foreground">Blue by default</div>
+					</div>
+					<div>
+						<strong>secondary</strong> - Supporting actions
+						<div class="text-muted-foreground">Gray-blue by default</div>
+					</div>
+					<div>
+						<strong>tertiary</strong> - Accent highlights
+						<div class="text-muted-foreground">Green by default</div>
+					</div>
+				</div>
+				<p class="text-sm text-muted-foreground mt-4">
+					<strong>Format:</strong> HSL values in format <code class="bg-muted px-1 py-0.5 rounded">H S% L%</code>
+					(e.g., "216 55% 25%" for blue)
+				</p>
+			</div>
+		</div>
+	</div>
+</Layout>

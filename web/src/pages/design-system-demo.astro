@@ -1,0 +1,425 @@
+---
+import Layout from "@/layouts/Layout.astro";
+import { Button } from "@/components/ui/button";
+import { Card, CardHeader, CardTitle, CardContent, CardFooter } from "@/components/ui/card";
+import { Badge } from "@/components/ui/badge";
+import { Separator } from "@/components/ui/separator";
+
+const title = "Design System Demo";
+const description = "Showcase of the 6-token design system with 4 design properties";
+
+// Color tokens
+const colorTokens = [
+  { name: "background", description: "Card surface color", variable: "--color-background" },
+  { name: "foreground", description: "Content area inside cards", variable: "--color-foreground" },
+  { name: "font", description: "All text color", variable: "--color-font" },
+  { name: "primary", description: "Main CTA buttons, links", variable: "--color-primary" },
+  { name: "secondary", description: "Supporting actions", variable: "--color-secondary" },
+  { name: "tertiary", description: "Accent highlights, success states", variable: "--color-tertiary" },
+];
+
+// Color variants
+const colorVariants = [
+  { name: "primary-light", description: "Lighter primary for hover", variable: "--color-primary-light" },
+  { name: "primary-dark", description: "Darker primary for active", variable: "--color-primary-dark" },
+  { name: "secondary-light", description: "Lighter secondary for hover", variable: "--color-secondary-light" },
+  { name: "secondary-dark", description: "Darker secondary for active", variable: "--color-secondary-dark" },
+  { name: "tertiary-light", description: "Lighter tertiary for hover", variable: "--color-tertiary-light" },
+  { name: "tertiary-dark", description: "Darker tertiary for active", variable: "--color-tertiary-dark" },
+];
+
+// Design properties
+const designProperties = [
+  {
+    name: "States",
+    description: "Interactive feedback for all components",
+    examples: [
+      "hover: opacity-90 scale-[1.02]",
+      "active: opacity-80 scale-[0.98]",
+      "focus: ring-2",
+      "disabled: opacity-50"
+    ]
+  },
+  {
+    name: "Elevation",
+    description: "Shadow depth for visual hierarchy",
+    examples: [
+      "shadow-sm: Cards",
+      "shadow-md: Dropdowns",
+      "shadow-lg: Modals",
+      "shadow-xl: Popovers"
+    ]
+  },
+  {
+    name: "Radius",
+    description: "Border radius scale",
+    examples: [
+      "rounded-sm: 6px",
+      "rounded-md: 8px (default)",
+      "rounded-lg: 12px",
+      "rounded-xl: 16px",
+      "rounded-full: Circular"
+    ]
+  },
+  {
+    name: "Motion",
+    description: "Animation timing",
+    examples: [
+      "duration-150: Fast (150ms)",
+      "duration-300: Normal (300ms)",
+      "duration-500: Slow (500ms)",
+      "ease-in-out: Smooth easing"
+    ]
+  }
+];
+---
+
+<Layout title={title} description={description}>
+  <div class="container mx-auto px-4 py-12 max-w-6xl">
+    <!-- Header -->
+    <div class="mb-12">
+      <h1 class="text-4xl font-bold mb-4">Design System Demo</h1>
+      <p class="text-lg text-muted-foreground">
+        Showcase of the 6-token + 4-property design system. All components flow from this foundation.
+      </p>
+    </div>
+
+    <!-- Button Variants Section -->
+    <section class="mb-16">
+      <h2 class="text-3xl font-bold mb-6">Button Variants</h2>
+      <p class="text-muted-foreground mb-6">
+        All 6 button variants with comprehensive hover, active, focus, and disabled states.
+      </p>
+
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+        <!-- Default/Primary -->
+        <Card>
+          <CardHeader>
+            <CardTitle>Primary</CardTitle>
+          </CardHeader>
+          <CardContent class="space-y-4">
+            <div class="space-y-2">
+              <Button variant="primary" client:load>Primary Button</Button>
+              <p class="text-sm text-muted-foreground">Main CTA (bg-primary)</p>
+            </div>
+            <div class="space-y-2">
+              <Button variant="primary" disabled client:load>Disabled State</Button>
+              <p class="text-sm text-muted-foreground">opacity-50, no pointer events</p>
+            </div>
+          </CardContent>
+        </Card>
+
+        <!-- Secondary -->
+        <Card>
+          <CardHeader>
+            <CardTitle>Secondary</CardTitle>
+          </CardHeader>
+          <CardContent class="space-y-4">
+            <div class="space-y-2">
+              <Button variant="secondary" client:load>Secondary Button</Button>
+              <p class="text-sm text-muted-foreground">Supporting action (bg-secondary)</p>
+            </div>
+            <div class="space-y-2">
+              <Button variant="secondary" disabled client:load>Disabled State</Button>
+              <p class="text-sm text-muted-foreground">opacity-50, no pointer events</p>
+            </div>
+          </CardContent>
+        </Card>
+
+        <!-- Tertiary -->
+        <Card>
+          <CardHeader>
+            <CardTitle>Tertiary</CardTitle>
+          </CardHeader>
+          <CardContent class="space-y-4">
+            <div class="space-y-2">
+              <Button variant="tertiary" client:load>Tertiary Button</Button>
+              <p class="text-sm text-muted-foreground">Accent action (bg-tertiary)</p>
+            </div>
+            <div class="space-y-2">
+              <Button variant="tertiary" disabled client:load>Disabled State</Button>
+              <p class="text-sm text-muted-foreground">opacity-50, no pointer events</p>
+            </div>
+          </CardContent>
+        </Card>
+
+        <!-- Outline -->
+        <Card>
+          <CardHeader>
+            <CardTitle>Outline</CardTitle>
+          </CardHeader>
+          <CardContent class="space-y-4">
+            <div class="space-y-2">
+              <Button variant="outline" client:load>Outline Button</Button>
+              <p class="text-sm text-muted-foreground">Neutral action (border-font)</p>
+            </div>
+            <div class="space-y-2">
+              <Button variant="outline" disabled client:load>Disabled State</Button>
+              <p class="text-sm text-muted-foreground">opacity-50, no pointer events</p>
+            </div>
+          </CardContent>
+        </Card>
+
+        <!-- Ghost -->
+        <Card>
+          <CardHeader>
+            <CardTitle>Ghost</CardTitle>
+          </CardHeader>
+          <CardContent class="space-y-4">
+            <div class="space-y-2">
+              <Button variant="ghost" client:load>Ghost Button</Button>
+              <p class="text-sm text-muted-foreground">Minimal action (hover:bg-font/10)</p>
+            </div>
+            <div class="space-y-2">
+              <Button variant="ghost" disabled client:load>Disabled State</Button>
+              <p class="text-sm text-muted-foreground">opacity-50, no pointer events</p>
+            </div>
+          </CardContent>
+        </Card>
+
+        <!-- Link -->
+        <Card>
+          <CardHeader>
+            <CardTitle>Link</CardTitle>
+          </CardHeader>
+          <CardContent class="space-y-4">
+            <div class="space-y-2">
+              <Button variant="link" client:load>Link Button</Button>
+              <p class="text-sm text-muted-foreground">Text link (text-primary)</p>
+            </div>
+            <div class="space-y-2">
+              <Button variant="link" disabled client:load>Disabled State</Button>
+              <p class="text-sm text-muted-foreground">opacity-50, no pointer events</p>
+            </div>
+          </CardContent>
+        </Card>
+
+        <!-- Destructive -->
+        <Card>
+          <CardHeader>
+            <CardTitle>Destructive</CardTitle>
+          </CardHeader>
+          <CardContent class="space-y-4">
+            <div class="space-y-2">
+              <Button variant="destructive" client:load>Destructive Button</Button>
+              <p class="text-sm text-muted-foreground">Danger action (bg-destructive)</p>
+            </div>
+            <div class="space-y-2">
+              <Button variant="destructive" disabled client:load>Disabled State</Button>
+              <p class="text-sm text-muted-foreground">opacity-50, no pointer events</p>
+            </div>
+          </CardContent>
+        </Card>
+
+        <!-- Button Sizes -->
+        <Card>
+          <CardHeader>
+            <CardTitle>Button Sizes</CardTitle>
+          </CardHeader>
+          <CardContent class="space-y-4">
+            <div class="flex items-center gap-2 flex-wrap">
+              <Button size="sm" client:load>Small</Button>
+              <Button size="default" client:load>Default</Button>
+              <Button size="lg" client:load>Large</Button>
+            </div>
+            <p class="text-sm text-muted-foreground">sm (h-8), default (h-9), lg (h-10)</p>
+          </CardContent>
+        </Card>
+      </div>
+    </section>
+
+    <!-- Color Palette Section -->
+    <section class="mb-16">
+      <h2 class="text-3xl font-bold mb-6">6 Color Tokens</h2>
+      <p class="text-muted-foreground mb-6">
+        Foundation colors that power the entire design system.
+      </p>
+
+      <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
+        {colorTokens.map(token => (
+          <Card>
+            <CardHeader>
+              <div class="flex items-center justify-between">
+                <CardTitle class="text-lg">{token.name}</CardTitle>
+                <div
+                  class={`w-12 h-12 rounded-md border border-border`}
+                  style={`background-color: hsl(var(${token.variable}))`}
+                />
+              </div>
+            </CardHeader>
+            <CardContent>
+              <p class="text-sm text-muted-foreground mb-2">{token.description}</p>
+              <code class="text-xs bg-muted px-2 py-1 rounded">{token.variable}</code>
+            </CardContent>
+          </Card>
+        ))}
+      </div>
+    </section>
+
+    <!-- Color Variants Section -->
+    <section class="mb-16">
+      <h2 class="text-3xl font-bold mb-6">Color Variants</h2>
+      <p class="text-muted-foreground mb-6">
+        Auto-generated lighter and darker variants for hover/active states.
+      </p>
+
+      <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
+        {colorVariants.map(variant => (
+          <Card>
+            <CardHeader>
+              <div class="flex items-center justify-between">
+                <CardTitle class="text-lg">{variant.name}</CardTitle>
+                <div
+                  class={`w-12 h-12 rounded-md border border-border`}
+                  style={`background-color: hsl(var(${variant.variable}))`}
+                />
+              </div>
+            </CardHeader>
+            <CardContent>
+              <p class="text-sm text-muted-foreground mb-2">{variant.description}</p>
+              <code class="text-xs bg-muted px-2 py-1 rounded">{variant.variable}</code>
+            </CardContent>
+          </Card>
+        ))}
+      </div>
+    </section>
+
+    <!-- Design Properties Section -->
+    <section class="mb-16">
+      <h2 class="text-3xl font-bold mb-6">4 Design Properties</h2>
+      <p class="text-muted-foreground mb-6">
+        Consistent behavior and visual hierarchy across all components.
+      </p>
+
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+        {designProperties.map(prop => (
+          <Card>
+            <CardHeader>
+              <CardTitle>{prop.name}</CardTitle>
+            </CardHeader>
+            <CardContent>
+              <p class="text-sm text-muted-foreground mb-4">{prop.description}</p>
+              <ul class="space-y-2">
+                {prop.examples.map(example => (
+                  <li class="text-sm">
+                    <code class="bg-muted px-2 py-1 rounded text-xs">{example}</code>
+                  </li>
+                ))}
+              </ul>
+            </CardContent>
+          </Card>
+        ))}
+      </div>
+    </section>
+
+    <!-- Card Examples Section -->
+    <section class="mb-16">
+      <h2 class="text-3xl font-bold mb-6">Card Examples</h2>
+      <p class="text-muted-foreground mb-6">
+        Frame + content pattern with background and foreground tokens.
+      </p>
+
+      <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
+        <!-- Basic Card -->
+        <Card class="bg-background p-1 shadow-sm">
+          <div class="bg-foreground p-4 rounded-md">
+            <CardHeader>
+              <CardTitle>Basic Card</CardTitle>
+            </CardHeader>
+            <CardContent>
+              <p class="text-sm text-font">
+                Frame (background) + content (foreground) pattern.
+              </p>
+            </CardContent>
+          </div>
+        </Card>
+
+        <!-- Card with Badge -->
+        <Card class="bg-background p-1 shadow-md">
+          <div class="bg-foreground p-4 rounded-md">
+            <CardHeader>
+              <div class="flex items-center justify-between">
+                <CardTitle>With Badge</CardTitle>
+                <Badge variant="secondary">New</Badge>
+              </div>
+            </CardHeader>
+            <CardContent>
+              <p class="text-sm text-font">
+                Medium shadow (shadow-md) for elevated content.
+              </p>
+            </CardContent>
+          </div>
+        </Card>
+
+        <!-- Card with Action -->
+        <Card class="bg-background p-1 shadow-lg">
+          <div class="bg-foreground p-4 rounded-md">
+            <CardHeader>
+              <CardTitle>With Action</CardTitle>
+            </CardHeader>
+            <CardContent>
+              <p class="text-sm text-font mb-4">
+                Large shadow (shadow-lg) for modals and important content.
+              </p>
+            </CardContent>
+            <CardFooter>
+              <Button variant="primary" size="sm" client:load>
+                Take Action
+              </Button>
+            </CardFooter>
+          </div>
+        </Card>
+      </div>
+    </section>
+
+    <!-- States Demonstration -->
+    <section class="mb-16">
+      <h2 class="text-3xl font-bold mb-6">Interactive States</h2>
+      <p class="text-muted-foreground mb-6">
+        Hover, active, focus, and disabled states for all interactive components.
+      </p>
+
+      <Card>
+        <CardHeader>
+          <CardTitle>Try Interacting with These Buttons</CardTitle>
+        </CardHeader>
+        <CardContent>
+          <div class="space-y-6">
+            <div>
+              <p class="text-sm font-medium mb-2">Hover State (opacity-90 scale-[1.02])</p>
+              <Button variant="primary" client:load>Hover Over Me</Button>
+            </div>
+
+            <Separator />
+
+            <div>
+              <p class="text-sm font-medium mb-2">Active State (opacity-80 scale-[0.98])</p>
+              <Button variant="secondary" client:load>Click and Hold</Button>
+            </div>
+
+            <Separator />
+
+            <div>
+              <p class="text-sm font-medium mb-2">Focus State (ring-2)</p>
+              <Button variant="tertiary" client:load>Tab to Focus</Button>
+            </div>
+
+            <Separator />
+
+            <div>
+              <p class="text-sm font-medium mb-2">Disabled State (opacity-50)</p>
+              <Button variant="primary" disabled client:load>Cannot Interact</Button>
+            </div>
+          </div>
+        </CardContent>
+      </Card>
+    </section>
+
+    <!-- Footer -->
+    <footer class="mt-16 pt-8 border-t border-border">
+      <p class="text-center text-sm text-muted-foreground">
+        Design System v1.0.0 • 6 Tokens + 4 Properties = Infinite Possibilities
+      </p>
+    </footer>
+  </div>
+</Layout>

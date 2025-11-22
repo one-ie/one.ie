@@ -95,6 +95,13 @@
   --color-secondary-foreground: 36 8% 96%;
   --color-tertiary: 105 22% 25%;
   --color-tertiary-foreground: 36 8% 96%;
+  /* Auto-generated color variants for hover states */
+  --color-primary-light: 216 55% 35%;
+  --color-primary-dark: 216 55% 15%;
+  --color-secondary-light: 219 14% 38%;
+  --color-secondary-dark: 219 14% 18%;
+  --color-tertiary-light: 105 22% 35%;
+  --color-tertiary-dark: 105 22% 15%;
   --color-muted: 219 14% 92%;
   --color-muted-foreground: 219 14% 30%;
   --color-accent: 105 22% 25%;
@@ -244,6 +251,13 @@ html, body {
   --color-secondary-foreground: 36 8% 96%;
   --color-tertiary: 105 22% 35%;
   --color-tertiary-foreground: 36 8% 96%;
+  /* Auto-generated color variants for hover states */
+  --color-primary-light: 216 55% 35%;
+  --color-primary-dark: 216 55% 15%;
+  --color-secondary-light: 219 14% 38%;
+  --color-secondary-dark: 219 14% 18%;
+  --color-tertiary-light: 105 22% 35%;
+  --color-tertiary-dark: 105 22% 15%;
   --color-muted: 216 63% 17%;
   --color-muted-foreground: 36 8% 80%;
   --color-accent: 105 22% 35%;

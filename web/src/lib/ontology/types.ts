@@ -11,6 +11,20 @@
 // Core Ontology Types
 // ============================================================================
 
+/**
+ * Color tokens for thing-level design system overrides.
+ * All colors should be in HSL format without the hsl() wrapper.
+ * Example: "216 55% 25%" not "hsl(216 55% 25%)"
+ */
+export interface ColorTokens {
+	background: string; // HSL format: "0 0% 93%"
+	foreground: string; // HSL format: "0 0% 100%"
+	font: string; // HSL format: "0 0% 13%"
+	primary: string; // HSL format: "216 55% 25%"
+	secondary: string; // HSL format: "219 14% 28%"
+	tertiary: string; // HSL format: "105 22% 25%"
+}
+
 export interface Group {
 	_id: string;
 	slug: string;
@@ -58,6 +72,7 @@ export interface Thing {
 	type: string;
 	name: string;
 	properties: Record<string, any>;
+	colors?: ColorTokens; // Optional thing-level color overrides
 	status?: "active" | "inactive" | "draft" | "published" | "archived";
 	createdAt: number;
 	updatedAt: number;
@@ -147,12 +162,14 @@ export interface CreateThingInput {
 	type: string;
 	name: string;
 	properties?: Record<string, any>;
+	colors?: ColorTokens; // Optional thing-level color overrides
 	status?: "active" | "inactive" | "draft" | "published" | "archived";
 }
 
 export interface UpdateThingInput {
 	name?: string;
 	properties?: Record<string, any>;
+	colors?: ColorTokens; // Optional thing-level color overrides
 	status?: "active" | "inactive" | "draft" | "published" | "archived";
 }
 

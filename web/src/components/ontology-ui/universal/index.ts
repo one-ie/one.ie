@@ -37,6 +37,10 @@ export type { OntologyDrawerProps } from "./OntologyDrawer";
 export { OntologySheet } from "./OntologySheet";
 export type { OntologySheetProps } from "./OntologySheet";
 
+// Thing Card - Card wrapper with thing-level branding support
+export { ThingCard } from "./ThingCard";
+export type { ThingCardProps } from "./ThingCard";
+
 // Re-export FormField type for convenience
 export type { FormField } from "../types";
 
@@ -155,5 +159,47 @@ export type { FormField } from "../types";
  * >
  *   <SearchInterface />
  * </OntologySheet>
+ * ```
+ *
+ * @example Thing Card with Branding
+ * ```tsx
+ * import { ThingCard } from "@/components/ontology-ui/universal";
+ * import { CardHeader, CardTitle, CardContent } from "@/components/ui/card";
+ * import { Button } from "@/components/ui/button";
+ *
+ * // Uses platform defaults if thing.properties.colors is undefined
+ * <ThingCard thing={product}>
+ *   <CardHeader>
+ *     <CardTitle>{product.name}</CardTitle>
+ *   </CardHeader>
+ *   <CardContent>
+ *     <p className="text-font">{product.properties.description}</p>
+ *     <Button variant="primary">Purchase</Button>
+ *   </CardContent>
+ * </ThingCard>
+ *
+ * // Automatically applies custom colors if defined in thing.properties.colors
+ * const customProduct = {
+ *   ...product,
+ *   properties: {
+ *     colors: {
+ *       background: '270 50% 92%',
+ *       foreground: '270 50% 98%',
+ *       font: '270 50% 15%',
+ *       primary: '280 100% 60%',
+ *       secondary: '200 100% 50%',
+ *       tertiary: '150 80% 40%'
+ *     }
+ *   }
+ * };
+ *
+ * <ThingCard thing={customProduct}>
+ *   <CardHeader>
+ *     <CardTitle className="text-font">Custom Branded Product</CardTitle>
+ *   </CardHeader>
+ *   <CardContent>
+ *     <Button variant="primary">Buy Now</Button>
+ *   </CardContent>
+ * </ThingCard>
  * ```
  */
