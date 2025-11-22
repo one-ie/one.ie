@@ -1,0 +1,15 @@
+---
+/**
+ * AI Copywriting Assistant Demo Page
+ * Interactive tool for generating funnel copy
+ */
+import Layout from '@/layouts/Layout.astro';
+import { CopywritingAssistant } from '@/components/ai/CopywritingAssistant';
+
+const title = 'AI Copywriting Assistant';
+const description = 'Generate compelling headlines, CTAs, and body copy using proven conversion frameworks.';
+---
+
+<Layout title={title} description={description}>
+	<CopywritingAssistant client:load />
+</Layout>

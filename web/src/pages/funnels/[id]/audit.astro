@@ -1,0 +1,335 @@
+---
+/**
+ * Funnel Audit Log Page (Cycle 40)
+ *
+ * Complete audit trail for funnel changes with:
+ * - All funnel-related events with details
+ * - Filter by event type, actor, date range
+ * - Export audit log to CSV
+ * - Show before/after values for updates
+ * - Search within change descriptions
+ *
+ * @see /one/things/plans/clickfunnels-builder-100-cycles.md - Cycle 40
+ */
+
+import { ConvexHttpClient } from "convex/browser";
+import Layout from "@/layouts/Layout.astro";
+import { AuditLog } from "@/components/ontology-ui/events/AuditLog";
+import { api } from "@/convex/_generated/api";
+
+// Get funnel ID from URL params
+const { id } = Astro.params;
+
+if (!id) {
+  return Astro.redirect("/funnels");
+}
+
+// Initialize Convex client
+const convexUrl = import.meta.env.PUBLIC_CONVEX_URL;
+if (!convexUrl) {
+  throw new Error("PUBLIC_CONVEX_URL environment variable is not set");
+}
+
+const convex = new ConvexHttpClient(convexUrl);
+
+// Fetch funnel data
+let funnel;
+try {
+  funnel = await convex.query(api.queries.funnels.get, {
+    id: id as any,
+  });
+} catch (error) {
+  console.error("Failed to fetch funnel:", error);
+  return Astro.redirect("/funnels");
+}
+
+if (!funnel) {
+  return Astro.redirect("/funnels");
+}
+
+// Fetch all funnel-related events
+const funnelEventTypes = [
+  "funnel_created",
+  "funnel_updated",
+  "funnel_published",
+  "funnel_unpublished",
+  "funnel_duplicated",
+  "funnel_archived",
+  "step_added",
+  "step_removed",
+  "step_reordered",
+  "element_added",
+  "element_updated",
+  "element_removed",
+];
+
+let auditEvents = [];
+try {
+  auditEvents = await convex.query(api.queries.events.byTarget, {
+    targetId: id as any,
+    types: funnelEventTypes,
+    limit: 500,
+  });
+} catch (error) {
+  console.error("Failed to fetch audit events:", error);
+}
+
+// Count total events
+const totalEvents = auditEvents.length;
+
+// Get unique event types for filtering
+const eventTypes = [...new Set(auditEvents.map((e) => e.type))].sort();
+
+// Get unique actors for filtering
+const actorIds = [...new Set(auditEvents.map((e) => e.actorId))];
+
+const title = `${funnel.name} - Audit Log`;
+const description = `Complete audit trail for ${funnel.name} funnel with ${totalEvents} events`;
+---
+
+<Layout title={title} description={description}>
+  <div class="min-h-screen bg-background">
+    <!-- Header -->
+    <header class="border-b bg-card">
+      <div class="mx-auto max-w-7xl px-4 py-6 sm:px-6 lg:px-8">
+        <div class="flex items-center justify-between">
+          <div class="flex items-center gap-4">
+            <a
+              href={`/funnels/${id}`}
+              class="text-muted-foreground hover:text-foreground transition-colors"
+            >
+              ← Back to Funnel
+            </a>
+            <div class="h-6 w-px bg-border"></div>
+            <div>
+              <h1 class="text-3xl font-bold text-foreground">
+                Audit Log
+              </h1>
+              <p class="mt-1 text-sm text-muted-foreground">
+                {funnel.name}
+              </p>
+            </div>
+          </div>
+          <div class="flex items-center gap-2">
+            <span class="inline-flex items-center rounded-full bg-primary/10 px-3 py-1 text-sm font-medium text-primary">
+              {totalEvents} events
+            </span>
+          </div>
+        </div>
+      </div>
+    </header>
+
+    <!-- Main Content -->
+    <main class="mx-auto max-w-7xl px-4 py-8 sm:px-6 lg:px-8">
+      <!-- Funnel Info Card -->
+      <div class="mb-6 rounded-lg border bg-card p-4 shadow-sm">
+        <div class="flex items-center justify-between">
+          <div class="flex items-center gap-3">
+            <div class="flex h-12 w-12 items-center justify-center rounded-lg bg-primary/10">
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                class="h-6 w-6 text-primary"
+                fill="none"
+                viewBox="0 0 24 24"
+                stroke="currentColor"
+              >
+                <path
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                  stroke-width="2"
+                  d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z"
+                />
+              </svg>
+            </div>
+            <div>
+              <h2 class="text-lg font-semibold text-foreground">
+                {funnel.name}
+              </h2>
+              <div class="flex items-center gap-2 mt-1">
+                <span class="inline-flex items-center rounded-full bg-secondary px-2 py-0.5 text-xs font-medium text-secondary-foreground">
+                  {funnel.type}
+                </span>
+                <span
+                  class={`inline-flex items-center rounded-full px-2 py-0.5 text-xs font-medium ${
+                    funnel.status === "published"
+                      ? "bg-green-100 dark:bg-green-900 text-green-800 dark:text-green-200"
+                      : funnel.status === "draft"
+                        ? "bg-gray-100 dark:bg-gray-700 text-gray-800 dark:text-gray-200"
+                        : "bg-red-100 dark:bg-red-900 text-red-800 dark:text-red-200"
+                  }`}
+                >
+                  {funnel.status}
+                </span>
+                <span class="text-xs text-muted-foreground">
+                  ID: {funnel._id.slice(0, 8)}...
+                </span>
+              </div>
+            </div>
+          </div>
+          <div class="text-right">
+            <div class="text-sm text-muted-foreground">
+              Created: {new Date(funnel._creationTime).toLocaleDateString()}
+            </div>
+            <div class="text-sm text-muted-foreground">
+              Steps: {funnel.properties?.stepCount || 0}
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Audit Log Stats -->
+      <div class="mb-6 grid grid-cols-1 gap-4 sm:grid-cols-4">
+        <div class="rounded-lg border bg-card p-4 shadow-sm">
+          <div class="flex items-center justify-between">
+            <div>
+              <p class="text-sm font-medium text-muted-foreground">Total Events</p>
+              <p class="text-2xl font-bold text-foreground">{totalEvents}</p>
+            </div>
+            <div class="flex h-10 w-10 items-center justify-center rounded-full bg-primary/10">
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                class="h-5 w-5 text-primary"
+                fill="none"
+                viewBox="0 0 24 24"
+                stroke="currentColor"
+              >
+                <path
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                  stroke-width="2"
+                  d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"
+                />
+              </svg>
+            </div>
+          </div>
+        </div>
+
+        <div class="rounded-lg border bg-card p-4 shadow-sm">
+          <div class="flex items-center justify-between">
+            <div>
+              <p class="text-sm font-medium text-muted-foreground">Event Types</p>
+              <p class="text-2xl font-bold text-foreground">{eventTypes.length}</p>
+            </div>
+            <div class="flex h-10 w-10 items-center justify-center rounded-full bg-blue-500/10">
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                class="h-5 w-5 text-blue-500"
+                fill="none"
+                viewBox="0 0 24 24"
+                stroke="currentColor"
+              >
+                <path
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                  stroke-width="2"
+                  d="M7 7h.01M7 3h5c.512 0 1.024.195 1.414.586l7 7a2 2 0 010 2.828l-7 7a2 2 0 01-2.828 0l-7-7A1.994 1.994 0 013 12V7a4 4 0 014-4z"
+                />
+              </svg>
+            </div>
+          </div>
+        </div>
+
+        <div class="rounded-lg border bg-card p-4 shadow-sm">
+          <div class="flex items-center justify-between">
+            <div>
+              <p class="text-sm font-medium text-muted-foreground">Contributors</p>
+              <p class="text-2xl font-bold text-foreground">{actorIds.length}</p>
+            </div>
+            <div class="flex h-10 w-10 items-center justify-center rounded-full bg-green-500/10">
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                class="h-5 w-5 text-green-500"
+                fill="none"
+                viewBox="0 0 24 24"
+                stroke="currentColor"
+              >
+                <path
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                  stroke-width="2"
+                  d="M12 4.354a4 4 0 110 5.292M15 21H3v-1a6 6 0 0112 0v1zm0 0h6v-1a6 6 0 00-9-5.197M13 7a4 4 0 11-8 0 4 4 0 018 0z"
+                />
+              </svg>
+            </div>
+          </div>
+        </div>
+
+        <div class="rounded-lg border bg-card p-4 shadow-sm">
+          <div class="flex items-center justify-between">
+            <div>
+              <p class="text-sm font-medium text-muted-foreground">Time Range</p>
+              <p class="text-sm font-bold text-foreground">
+                {
+                  auditEvents.length > 0
+                    ? Math.ceil(
+                        (auditEvents[0].timestamp -
+                          auditEvents[auditEvents.length - 1].timestamp) /
+                          (1000 * 60 * 60 * 24)
+                      ) + " days"
+                    : "N/A"
+                }
+              </p>
+            </div>
+            <div class="flex h-10 w-10 items-center justify-center rounded-full bg-purple-500/10">
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                class="h-5 w-5 text-purple-500"
+                fill="none"
+                viewBox="0 0 24 24"
+                stroke="currentColor"
+              >
+                <path
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                  stroke-width="2"
+                  d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"
+                />
+              </svg>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Audit Log Component -->
+      <div class="rounded-lg border bg-card shadow-sm">
+        <AuditLog
+          client:load
+          events={auditEvents}
+          searchable={true}
+          exportable={true}
+        />
+      </div>
+
+      <!-- Quick Tips -->
+      <div class="mt-6 rounded-lg border border-blue-200 bg-blue-50 dark:border-blue-800 dark:bg-blue-950 p-4">
+        <div class="flex items-start gap-3">
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            class="h-5 w-5 text-blue-500 mt-0.5"
+            fill="none"
+            viewBox="0 0 24 24"
+            stroke="currentColor"
+          >
+            <path
+              stroke-linecap="round"
+              stroke-linejoin="round"
+              stroke-width="2"
+              d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"
+            />
+          </svg>
+          <div class="flex-1">
+            <h3 class="text-sm font-semibold text-blue-900 dark:text-blue-100">
+              Audit Log Features
+            </h3>
+            <ul class="mt-2 space-y-1 text-sm text-blue-800 dark:text-blue-200">
+              <li>• <strong>Search:</strong> Filter events by type, actor, or target ID</li>
+              <li>• <strong>Export:</strong> Download complete audit trail as CSV for compliance</li>
+              <li>• <strong>Details:</strong> Click any event to see full metadata and changes</li>
+              <li>• <strong>Timeline:</strong> Events are sorted newest first with timestamps</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </main>
+  </div>
+</Layout>

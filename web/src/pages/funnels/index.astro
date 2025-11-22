@@ -1,0 +1,185 @@
+---
+/**
+ * Funnel Dashboard Page
+ *
+ * Main dashboard for managing funnels with grid/list view toggle.
+ * Uses ontology-ui ThingGrid and ThingList components.
+ * View preference persists in localStorage.
+ *
+ * Part of Cycles 31-32: ClickFunnels-Style Funnel Builder
+ * @see /one/things/plans/clickfunnels-builder-100-cycles.md
+ */
+
+import Layout from "@/layouts/Layout.astro";
+import { FunnelDashboard } from "@/components/features/funnels/FunnelDashboard";
+
+// TODO: Replace with actual Convex query when backend is ready (Cycle 11-30)
+// import { ConvexHttpClient } from 'convex/browser';
+// import { api } from '@/convex/_generated/api';
+
+// Mock funnel data for frontend development (Cycles 31-32)
+const mockFunnels = [
+  {
+    _id: '1',
+    _creationTime: Date.now() - 86400000 * 7,
+    groupId: 'org-1',
+    type: 'funnel' as const,
+    name: 'Product Launch Funnel',
+    description: 'Complete funnel for launching new products with webinar and upsells',
+    status: 'published',
+    tags: ['ecommerce', 'product-launch', 'high-converting'],
+    metadata: {
+      steps: 5,
+      conversions: 234,
+      revenue: 12450,
+      visitors: 1200,
+    },
+    protocol: 'clickfunnels-builder',
+    createdAt: new Date(Date.now() - 86400000 * 7).toISOString(),
+    updatedAt: new Date(Date.now() - 86400000 * 2).toISOString(),
+  },
+  {
+    _id: '2',
+    _creationTime: Date.now() - 86400000 * 14,
+    groupId: 'org-1',
+    type: 'funnel' as const,
+    name: 'Lead Magnet Funnel',
+    description: 'Free guide download with email capture and welcome sequence',
+    status: 'published',
+    tags: ['lead-gen', 'email-marketing'],
+    metadata: {
+      steps: 3,
+      conversions: 567,
+      visitors: 890,
+    },
+    protocol: 'clickfunnels-builder',
+    createdAt: new Date(Date.now() - 86400000 * 14).toISOString(),
+    updatedAt: new Date(Date.now() - 86400000 * 5).toISOString(),
+  },
+  {
+    _id: '3',
+    _creationTime: Date.now() - 86400000 * 3,
+    groupId: 'org-1',
+    type: 'funnel' as const,
+    name: 'Webinar Registration',
+    description: 'Live webinar sign-up with automated reminders',
+    status: 'draft',
+    tags: ['webinar', 'live-event'],
+    metadata: {
+      steps: 4,
+      conversions: 45,
+      visitors: 123,
+    },
+    protocol: 'clickfunnels-builder',
+    createdAt: new Date(Date.now() - 86400000 * 3).toISOString(),
+    updatedAt: new Date(Date.now() - 86400000 * 1).toISOString(),
+  },
+  {
+    _id: '4',
+    _creationTime: Date.now() - 86400000 * 21,
+    groupId: 'org-1',
+    type: 'funnel' as const,
+    name: 'Book Launch Campaign',
+    description: 'Pre-order campaign with bonus offers and countdown timer',
+    status: 'published',
+    tags: ['book-launch', 'info-products'],
+    metadata: {
+      steps: 6,
+      conversions: 189,
+      revenue: 5670,
+      visitors: 756,
+    },
+    protocol: 'clickfunnels-builder',
+    createdAt: new Date(Date.now() - 86400000 * 21).toISOString(),
+    updatedAt: new Date(Date.now() - 86400000 * 7).toISOString(),
+  },
+  {
+    _id: '5',
+    _creationTime: Date.now() - 86400000 * 1,
+    groupId: 'org-1',
+    type: 'funnel' as const,
+    name: 'Membership Sign-Up',
+    description: 'Monthly membership with trial period and exclusive content access',
+    status: 'draft',
+    tags: ['membership', 'subscription'],
+    metadata: {
+      steps: 5,
+      conversions: 12,
+      visitors: 45,
+    },
+    protocol: 'clickfunnels-builder',
+    createdAt: new Date(Date.now() - 86400000 * 1).toISOString(),
+    updatedAt: new Date().toISOString(),
+  },
+  {
+    _id: '6',
+    _creationTime: Date.now() - 86400000 * 10,
+    groupId: 'org-1',
+    type: 'funnel' as const,
+    name: 'SaaS Free Trial',
+    description: '14-day trial with onboarding emails and feature highlights',
+    status: 'published',
+    tags: ['saas', 'free-trial'],
+    metadata: {
+      steps: 4,
+      conversions: 345,
+      visitors: 980,
+    },
+    protocol: 'clickfunnels-builder',
+    createdAt: new Date(Date.now() - 86400000 * 10).toISOString(),
+    updatedAt: new Date(Date.now() - 86400000 * 3).toISOString(),
+  },
+  {
+    _id: '7',
+    _creationTime: Date.now() - 86400000 * 4,
+    groupId: 'org-1',
+    type: 'funnel' as const,
+    name: 'Coaching Program',
+    description: 'High-ticket coaching program with application and interview process',
+    status: 'published',
+    tags: ['coaching', 'high-ticket'],
+    metadata: {
+      steps: 7,
+      conversions: 23,
+      revenue: 34500,
+      visitors: 234,
+    },
+    protocol: 'clickfunnels-builder',
+    createdAt: new Date(Date.now() - 86400000 * 4).toISOString(),
+    updatedAt: new Date(Date.now() - 86400000 * 1).toISOString(),
+  },
+  {
+    _id: '8',
+    _creationTime: Date.now() - 86400000 * 30,
+    groupId: 'org-1',
+    type: 'funnel' as const,
+    name: 'Summit Registration',
+    description: 'Virtual summit with multiple speakers and bonus content',
+    status: 'archived',
+    tags: ['summit', 'event'],
+    metadata: {
+      steps: 5,
+      conversions: 1234,
+      visitors: 5600,
+    },
+    protocol: 'clickfunnels-builder',
+    createdAt: new Date(Date.now() - 86400000 * 30).toISOString(),
+    updatedAt: new Date(Date.now() - 86400000 * 25).toISOString(),
+  },
+];
+
+const title = "Funnels";
+const description = "Manage your sales funnels and conversion pages";
+---
+
+<Layout title={title} description={description}>
+	<div class="container mx-auto max-w-7xl px-4 py-8 sm:px-6 lg:px-8">
+		<FunnelDashboard
+			client:load
+			funnels={mockFunnels}
+			onFunnelClick={(funnel) => {
+				window.location.href = `/funnels/${funnel._id}`;
+			}}
+		/>
+	</div>
+</Layout>

@@ -1,0 +1,42 @@
+---
+/**
+ * Funnel Builder Page (AI-Powered Conversational Creation)
+ *
+ * Create sales funnels through natural conversation with AI:
+ * - Understand goals and audience
+ * - Recommend optimal templates
+ * - Customize branding and design
+ * - Build pages step-by-step
+ * - Preview and publish
+ *
+ * Part of Cycle 43: Conversational Funnel Creation Flow
+ * @see /one/things/plans/clickfunnels-builder-100-cycles.md
+ */
+
+import Layout from "@/layouts/Layout.astro";
+import { FunnelBuilderChat } from "@/components/ai/FunnelBuilderChat";
+
+const title = "AI Funnel Builder - Create Converting Funnels in Minutes";
+const description =
+	"Build high-converting sales funnels through conversation. AI guides you through templates, customization, and launch.";
+---
+
+<Layout
+	title={title}
+	description={description}
+	sidebarInitialCollapsed={true}
+	hideHeader={true}
+	fullHeight={true}
+>
+	<FunnelBuilderChat client:only="react" />
+</Layout>
+
+<style>
+	/**
+	 * Full-height chat interface
+	 * Sidebar collapsed to maximize chat space
+	 */
+	:global(body) {
+		overflow: hidden;
+	}
+</style>

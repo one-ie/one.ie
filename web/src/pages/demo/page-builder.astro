@@ -1,0 +1,26 @@
+---
+/**
+ * Page Builder Demo
+ *
+ * Demonstrates conversational page building with AI.
+ */
+
+import Layout from "@/layouts/Layout.astro";
+import { PageBuilderDemo } from "@/components/demo/PageBuilderDemo";
+
+const title = "AI Page Builder Demo";
+const description = "Build beautiful landing pages through conversation";
+---
+
+<Layout title={title} description={description}>
+	<div class="container mx-auto py-8">
+		<div class="mb-8 text-center">
+			<h1 class="text-4xl font-bold mb-4">AI Page Builder</h1>
+			<p class="text-xl text-muted-foreground">
+				Build beautiful, high-converting pages through natural conversation
+			</p>
+		</div>
+
+		<PageBuilderDemo client:load />
+	</div>
+</Layout>

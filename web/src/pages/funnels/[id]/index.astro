@@ -1,0 +1,272 @@
+---
+/**
+ * Funnel Detail Page
+ *
+ * Shows funnel overview with:
+ * - Funnel flow visualization
+ * - Step details
+ * - Conversion metrics
+ * - Edit capabilities
+ * - Audit log access (Cycle 40)
+ */
+
+import Layout from "@/layouts/Layout.astro";
+import { FunnelFlowExample } from "@/components/features/funnel/FunnelFlowExample";
+import { ConvexHttpClient } from "convex/browser";
+import { api } from "@/convex/_generated/api";
+
+const { id } = Astro.params;
+
+if (!id) {
+  return Astro.redirect("/funnels");
+}
+
+// Initialize Convex client
+const convexUrl = import.meta.env.PUBLIC_CONVEX_URL;
+let funnel = null;
+let funnelName = "Funnel Details";
+
+if (convexUrl) {
+  const convex = new ConvexHttpClient(convexUrl);
+  try {
+    funnel = await convex.query(api.queries.funnels.get, {
+      id: id as any,
+    });
+    if (funnel) {
+      funnelName = funnel.name;
+    }
+  } catch (error) {
+    console.error("Failed to fetch funnel:", error);
+  }
+}
+
+const title = funnelName;
+const description = "View and edit your funnel steps and conversion rates";
+---
+
+<Layout title={title} description={description}>
+  <div class="min-h-screen bg-background">
+    <!-- Header with Navigation -->
+    <header class="border-b bg-card">
+      <div class="mx-auto max-w-7xl px-4 py-6 sm:px-6 lg:px-8">
+        <div class="flex items-center justify-between">
+          <div class="flex items-center gap-4">
+            <a
+              href="/funnels"
+              class="text-muted-foreground hover:text-foreground transition-colors"
+            >
+              ← Back to Funnels
+            </a>
+            <div class="h-6 w-px bg-border"></div>
+            <div>
+              <h1 class="text-3xl font-bold text-foreground">
+                {funnelName}
+              </h1>
+              <p class="mt-1 text-sm text-muted-foreground">
+                {funnel?.properties?.description || description}
+              </p>
+            </div>
+          </div>
+          {
+            funnel && (
+              <span
+                class={`inline-flex items-center rounded-full px-2.5 py-0.5 text-xs font-medium ${
+                  funnel.status === "published"
+                    ? "bg-green-100 dark:bg-green-900 text-green-800 dark:text-green-200"
+                    : funnel.status === "draft"
+                      ? "bg-gray-100 dark:bg-gray-700 text-gray-800 dark:text-gray-200"
+                      : "bg-red-100 dark:bg-red-900 text-red-800 dark:text-red-200"
+                }`}
+              >
+                {funnel.status}
+              </span>
+            )
+          }
+        </div>
+
+        <!-- Tabs Navigation -->
+        <nav class="mt-6 flex space-x-4 border-b" aria-label="Funnel tabs">
+          <a
+            href={`/funnels/${id}`}
+            class="border-b-2 border-primary px-1 pb-4 text-sm font-medium text-foreground"
+            aria-current="page"
+          >
+            Overview
+          </a>
+          <a
+            href={`/funnels/${id}/analytics`}
+            class="border-b-2 border-transparent px-1 pb-4 text-sm font-medium text-muted-foreground hover:border-border hover:text-foreground transition-colors"
+          >
+            Analytics
+          </a>
+          <a
+            href={`/funnels/${id}/settings`}
+            class="border-b-2 border-transparent px-1 pb-4 text-sm font-medium text-muted-foreground hover:border-border hover:text-foreground transition-colors"
+          >
+            Settings
+          </a>
+          <a
+            href={`/funnels/${id}/audit`}
+            class="border-b-2 border-transparent px-1 pb-4 text-sm font-medium text-muted-foreground hover:border-border hover:text-foreground transition-colors"
+          >
+            <div class="flex items-center gap-1.5">
+              Audit Log
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                class="h-4 w-4"
+                fill="none"
+                viewBox="0 0 24 24"
+                stroke="currentColor"
+              >
+                <path
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                  stroke-width="2"
+                  d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"
+                />
+              </svg>
+            </div>
+          </a>
+        </nav>
+      </div>
+    </header>
+
+    <!-- Main Content -->
+    <div class="mx-auto max-w-7xl px-4 py-8 sm:px-6 lg:px-8">
+      <!-- Funnel Flow Visualization -->
+      <div class="mb-8">
+        <FunnelFlowExample funnelId={id} client:load />
+      </div>
+
+      <!-- Quick Actions -->
+      <div class="grid grid-cols-1 md:grid-cols-3 gap-6 mb-8">
+        <a
+          href={`/funnels/${id}/analytics`}
+          class="group flex items-center gap-4 p-6 border rounded-lg bg-card hover:border-primary hover:shadow-md transition-all"
+        >
+          <div class="flex h-12 w-12 items-center justify-center rounded-lg bg-blue-500/10 group-hover:bg-blue-500/20 transition-colors">
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              class="h-6 w-6 text-blue-500"
+              fill="none"
+              viewBox="0 0 24 24"
+              stroke="currentColor"
+            >
+              <path
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                stroke-width="2"
+                d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z"
+              />
+            </svg>
+          </div>
+          <div>
+            <h3 class="text-lg font-semibold text-foreground mb-1">Analytics</h3>
+            <p class="text-sm text-muted-foreground">
+              View performance metrics
+            </p>
+          </div>
+        </a>
+
+        <a
+          href={`/funnels/${id}/audit`}
+          class="group flex items-center gap-4 p-6 border rounded-lg bg-card hover:border-purple-500 hover:shadow-md transition-all"
+        >
+          <div class="flex h-12 w-12 items-center justify-center rounded-lg bg-purple-500/10 group-hover:bg-purple-500/20 transition-colors">
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              class="h-6 w-6 text-purple-500"
+              fill="none"
+              viewBox="0 0 24 24"
+              stroke="currentColor"
+            >
+              <path
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                stroke-width="2"
+                d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"
+              />
+            </svg>
+          </div>
+          <div>
+            <h3 class="text-lg font-semibold text-foreground mb-1">Audit Log</h3>
+            <p class="text-sm text-muted-foreground">
+              View complete change history
+            </p>
+          </div>
+        </a>
+
+        <a
+          href={`/funnels/${id}/settings`}
+          class="group flex items-center gap-4 p-6 border rounded-lg bg-card hover:border-gray-500 hover:shadow-md transition-all"
+        >
+          <div class="flex h-12 w-12 items-center justify-center rounded-lg bg-gray-500/10 group-hover:bg-gray-500/20 transition-colors">
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              class="h-6 w-6 text-gray-500"
+              fill="none"
+              viewBox="0 0 24 24"
+              stroke="currentColor"
+            >
+              <path
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                stroke-width="2"
+                d="M10.325 4.317c.426-1.756 2.924-1.756 3.35 0a1.724 1.724 0 002.573 1.066c1.543-.94 3.31.826 2.37 2.37a1.724 1.724 0 001.065 2.572c1.756.426 1.756 2.924 0 3.35a1.724 1.724 0 00-1.066 2.573c.94 1.543-.826 3.31-2.37 2.37a1.724 1.724 0 00-2.572 1.065c-.426 1.756-2.924 1.756-3.35 0a1.724 1.724 0 00-2.573-1.066c-1.543.94-3.31-.826-2.37-2.37a1.724 1.724 0 00-1.065-2.572c-1.756-.426-1.756-2.924 0-3.35a1.724 1.724 0 001.066-2.573c-.94-1.543.826-3.31 2.37-2.37.996.608 2.296.07 2.572-1.065z"
+              />
+              <path
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                stroke-width="2"
+                d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"
+              />
+            </svg>
+          </div>
+          <div>
+            <h3 class="text-lg font-semibold text-foreground mb-1">Settings</h3>
+            <p class="text-sm text-muted-foreground">
+              Configure funnel options
+            </p>
+          </div>
+        </a>
+      </div>
+
+      <!-- Additional sections -->
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+        <div class="p-6 border rounded-lg bg-card">
+          <h3 class="text-lg font-semibold mb-4 text-foreground">Quick Stats</h3>
+          <p class="text-sm text-muted-foreground">
+            Overall funnel performance metrics will appear here
+          </p>
+        </div>
+
+        <div class="p-6 border rounded-lg bg-card">
+          <h3 class="text-lg font-semibold mb-4 text-foreground">Recent Activity</h3>
+          <p class="text-sm text-muted-foreground">
+            Funnel activity and changes will appear here
+          </p>
+          <a
+            href={`/funnels/${id}/audit`}
+            class="mt-4 inline-flex items-center text-sm font-medium text-primary hover:text-primary/80 transition-colors"
+          >
+            View full audit log
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              class="ml-1 h-4 w-4"
+              fill="none"
+              viewBox="0 0 24 24"
+              stroke="currentColor"
+            >
+              <path
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                stroke-width="2"
+                d="M9 5l7 7-7 7"
+              />
+            </svg>
+          </a>
+        </div>
+      </div>
+    </div>
+  </div>
+</Layout>

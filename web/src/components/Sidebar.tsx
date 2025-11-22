@@ -38,6 +38,7 @@ import {
 } from "@/components/ui/dropdown-menu";
 import { useIsMobile } from "@/hooks/use-mobile";
 import { authClient } from "@/lib/auth-client";
+import { NotificationProvider } from "@/components/layout/NotificationProvider";
 
 interface NavItemBase {
 	title: string;
@@ -565,7 +566,7 @@ export function Sidebar({
 				{!hideHeader && (
 					<header
 						data-home-header
-						className="flex h-16 shrink-0 items-center border-b px-4 sticky top-0 bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60 z-40"
+						className="flex h-16 shrink-0 items-center justify-between border-b px-4 sticky top-0 bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60 z-40"
 					>
 						<div className="flex items-center gap-2">
 							<Button
@@ -602,6 +603,12 @@ export function Sidebar({
 								}}
 							/>
 						</a>
+						{authEnabled && user && (
+							<div className="flex items-center gap-2">
+								<NotificationProvider />
+								<ModeToggle />
+							</div>
+						)}
 					</header>
 				)}
 				<main

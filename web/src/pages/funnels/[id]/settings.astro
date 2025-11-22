@@ -1,0 +1,166 @@
+---
+/**
+ * Funnel Settings Page
+ *
+ * Edit funnel metadata, settings, SEO, tracking codes, and design
+ */
+
+import Layout from "@/layouts/Layout.astro";
+import { FunnelSettingsEditor } from "@/components/features/funnels/FunnelSettingsEditor";
+import type { FunnelProperties } from "@/lib/schemas/funnel-schema";
+
+// Get funnel ID from URL
+const { id } = Astro.params;
+
+// TODO: Fetch funnel from database
+// For now, using mock data to demonstrate the component
+const mockFunnel = {
+  _id: id as string,
+  _creationTime: Date.now(),
+  type: "funnel" as const,
+  name: "My Sales Funnel",
+  description: "A high-converting sales funnel",
+  groupId: "group_123",
+  ownerId: "user_123",
+  tags: ["sales", "ecommerce"],
+  status: "draft",
+  createdAt: Date.now(),
+  properties: {
+    name: "My Sales Funnel",
+    slug: "my-sales-funnel",
+    description: "A high-converting sales funnel for digital products",
+    domain: "example.com",
+    customDomain: "",
+    googleAnalyticsId: "",
+    facebookPixelId: "",
+    customHeadCode: "",
+    customBodyCode: "",
+    metaTitle: "My Sales Funnel - Convert More Visitors",
+    metaDescription: "Discover our amazing products and transform your business today",
+    metaKeywords: ["sales", "funnel", "conversion"],
+    ogImage: "",
+    theme: "light" as const,
+    primaryColor: "#000000",
+    secondaryColor: "#666666",
+    enableComments: false,
+    enableAnalytics: true,
+    requireAuth: false,
+    status: "draft" as const,
+  } as FunnelProperties,
+};
+
+// Page metadata
+const title = `Settings - ${mockFunnel.name}`;
+const description = "Edit funnel settings and configuration";
+---
+
+<Layout title={title}>
+  <div class="container mx-auto py-8 max-w-6xl">
+    {/* Page Header */}
+    <div class="mb-8">
+      <div class="flex items-center gap-2 text-sm text-muted-foreground mb-2">
+        <a href="/funnels" class="hover:text-foreground">Funnels</a>
+        <span>/</span>
+        <a href={`/funnels/${id}`} class="hover:text-foreground">{mockFunnel.name}</a>
+        <span>/</span>
+        <span class="text-foreground">Settings</span>
+      </div>
+      <h1 class="text-3xl font-bold">Funnel Settings</h1>
+      <p class="text-muted-foreground mt-2">
+        {description}
+      </p>
+    </div>
+
+    {/* Settings Editor */}
+    <FunnelSettingsEditor
+      funnel={mockFunnel}
+      autoSave={true}
+      autoSaveDelay={1000}
+      client:load
+    />
+
+    {/* Info Cards */}
+    <div class="mt-8 grid grid-cols-1 md:grid-cols-3 gap-4">
+      <div class="rounded-lg border p-4">
+        <h3 class="font-semibold mb-2">Funnel ID</h3>
+        <p class="text-sm font-mono text-muted-foreground">{mockFunnel._id}</p>
+      </div>
+
+      <div class="rounded-lg border p-4">
+        <h3 class="font-semibold mb-2">Created</h3>
+        <p class="text-sm text-muted-foreground">
+          {new Date(mockFunnel.createdAt).toLocaleDateString()}
+        </p>
+      </div>
+
+      <div class="rounded-lg border p-4">
+        <h3 class="font-semibold mb-2">Owner</h3>
+        <p class="text-sm text-muted-foreground">{mockFunnel.ownerId}</p>
+      </div>
+    </div>
+
+    {/* Quick Actions */}
+    <div class="mt-8 p-4 rounded-lg border bg-muted/50">
+      <h3 class="font-semibold mb-2">Quick Actions</h3>
+      <div class="flex gap-2">
+        <a
+          href={`/funnels/${id}`}
+          class="inline-flex items-center justify-center rounded-md text-sm font-medium ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 border border-input bg-background hover:bg-accent hover:text-accent-foreground h-10 px-4 py-2"
+        >
+          View Funnel
+        </a>
+        <a
+          href={`/funnels/${id}/builder`}
+          class="inline-flex items-center justify-center rounded-md text-sm font-medium ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 border border-input bg-background hover:bg-accent hover:text-accent-foreground h-10 px-4 py-2"
+        >
+          Edit Builder
+        </a>
+        <a
+          href={`/funnels/${id}/analytics`}
+          class="inline-flex items-center justify-center rounded-md text-sm font-medium ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 border border-input bg-background hover:bg-accent hover:text-accent-foreground h-10 px-4 py-2"
+        >
+          View Analytics
+        </a>
+      </div>
+    </div>
+  </div>
+</Layout>
+
+<script>
+  /**
+   * Client-side save handler
+   *
+   * This script handles saving funnel settings to the backend.
+   * TODO: Integrate with Convex mutations once backend is ready.
+   */
+
+  // Listen for save events from the FunnelSettingsEditor
+  window.addEventListener('DOMContentLoaded', () => {
+    // TODO: Set up Convex client and mutation handlers
+    // Example:
+    // const convex = new ConvexHttpClient(import.meta.env.PUBLIC_CONVEX_URL);
+    // const updateFunnel = async (id, properties) => {
+    //   await convex.mutation(api.mutations.funnels.update, { id, properties });
+    // };
+
+    console.log('Funnel settings page loaded');
+  });
+</script>
+
+<style>
+  /* Custom styles for settings page */
+  .container {
+    animation: fadeIn 0.3s ease-in-out;
+  }
+
+  @keyframes fadeIn {
+    from {
+      opacity: 0;
+      transform: translateY(10px);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+</style>

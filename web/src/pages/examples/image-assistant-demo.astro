@@ -1,0 +1,52 @@
+---
+/**
+ * Image Assistant Demo
+ *
+ * Example page showing how to use the AI Image Suggestion System
+ * in a funnel builder context.
+ */
+import Layout from '@/layouts/Layout.astro';
+---
+
+<Layout title="Image Assistant Demo" sidebarInitialCollapsed={true}>
+  <div class="container mx-auto py-8 space-y-8">
+    <!-- Header -->
+    <div class="space-y-2">
+      <h1 class="text-4xl font-bold">AI Image Assistant Demo</h1>
+      <p class="text-muted-foreground">
+        Find perfect images for your landing pages with AI-powered suggestions
+      </p>
+    </div>
+
+    <!-- Demo Container -->
+    <div id="demo-container"></div>
+  </div>
+</Layout>
+
+<script>
+  import { ImageAssistant } from '@/components/ai/ImageAssistant';
+  import { createRoot } from 'react-dom/client';
+  import { createElement } from 'react';
+
+  // Mount ImageAssistant component
+  const container = document.getElementById('demo-container');
+  if (container) {
+    const root = createRoot(container);
+    root.render(
+      createElement(ImageAssistant, {
+        pageType: 'landing',
+        industry: 'productivity software',
+        onSelectImage: (image) => {
+          console.log('Selected image:', image);
+          // In real app, this would update funnel page
+          alert(`Selected: ${image.title}\nURL: ${image.url}`);
+        },
+        onGeneratePrompt: (prompt) => {
+          console.log('Generated AI prompt:', prompt);
+          // In real app, this would send to Stable Diffusion/DALL-E
+          alert(`AI Prompt:\n\n${prompt}`);
+        },
+      })
+    );
+  }
+</script>

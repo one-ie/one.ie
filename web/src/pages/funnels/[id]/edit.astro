@@ -1,0 +1,179 @@
+---
+/**
+ * Funnel Editor Page
+ *
+ * Visual editor for building and customizing sales funnels.
+ * Features property panel, canvas, and step management.
+ *
+ * Part of Cycle 35: Create Funnel Property Panel
+ * @see /one/things/plans/clickfunnels-builder-100-cycles.md
+ */
+
+import Layout from "@/layouts/Layout.astro";
+import { FunnelPropertyPanel } from "@/components/funnel/FunnelPropertyPanel";
+import type { Thing } from "@/components/ontology-ui/types";
+
+const { id } = Astro.params;
+
+// Mock funnel data for development
+// TODO: Replace with actual Convex query in future cycles
+const mockFunnel: Thing = {
+	_id: id as any,
+	_creationTime: Date.now() - 86400000 * 7, // 7 days ago
+	type: "content" as const,
+	name: "Product Launch Funnel",
+	description: "High-converting funnel for new product launches with email sequence and upsells",
+	groupId: "g_123" as any,
+	ownerId: "t_456" as any,
+	status: "published",
+	tags: ["ecommerce", "launch", "email-sequence"],
+	metadata: {
+		viewCount: 12845,
+		conversionRate: 0.0876, // 8.76%
+		revenue: 45678.90,
+		stepCount: 5,
+		publishedAt: Date.now() - 86400000 * 3, // 3 days ago
+		lastPublishedAt: Date.now() - 86400000, // 1 day ago
+		domain: "example.com",
+		isTemplate: false,
+	},
+	createdAt: Date.now() - 86400000 * 7,
+	updatedAt: Date.now() - 3600000, // 1 hour ago
+};
+
+const title = `Edit: ${mockFunnel.name}`;
+const description = "Visual editor for building and customizing your sales funnel";
+---
+
+<Layout title={title} description={description}>
+	<div class="flex h-screen bg-background">
+		<!-- Main Editor Area -->
+		<div class="flex flex-1 flex-col overflow-hidden">
+			<!-- Editor Header -->
+			<div class="border-b bg-card px-6 py-4">
+				<div class="flex items-center justify-between">
+					<div class="flex items-center gap-4">
+						<a
+							href="/funnels"
+							class="text-muted-foreground transition-colors hover:text-foreground"
+						>
+							<svg
+								xmlns="http://www.w3.org/2000/svg"
+								width="20"
+								height="20"
+								viewBox="0 0 24 24"
+								fill="none"
+								stroke="currentColor"
+								stroke-width="2"
+								stroke-linecap="round"
+								stroke-linejoin="round"
+							>
+								<path d="m12 19-7-7 7-7"></path>
+								<path d="M19 12H5"></path>
+							</svg>
+						</a>
+						<div>
+							<h1 class="text-xl font-semibold text-foreground">
+								{mockFunnel.name}
+							</h1>
+							<p class="text-sm text-muted-foreground">
+								{mockFunnel.metadata?.stepCount || 0} steps · Last saved 1 hour ago
+							</p>
+						</div>
+					</div>
+					<div class="flex items-center gap-2">
+						<button
+							class="rounded-md border border-input bg-background px-4 py-2 text-sm font-medium text-foreground transition-colors hover:bg-accent"
+						>
+							Preview
+						</button>
+						<button
+							class="rounded-md bg-primary px-4 py-2 text-sm font-medium text-primary-foreground shadow-sm transition-colors hover:bg-primary/90"
+						>
+							Publish
+						</button>
+					</div>
+				</div>
+			</div>
+
+			<!-- Editor Canvas -->
+			<div class="flex-1 overflow-auto bg-muted/30 p-6">
+				<div class="mx-auto max-w-4xl">
+					<!-- Placeholder for editor canvas -->
+					<div
+						class="rounded-lg border-2 border-dashed border-muted-foreground/25 bg-card p-12 text-center"
+					>
+						<svg
+							xmlns="http://www.w3.org/2000/svg"
+							width="48"
+							height="48"
+							viewBox="0 0 24 24"
+							fill="none"
+							stroke="currentColor"
+							stroke-width="2"
+							stroke-linecap="round"
+							stroke-linejoin="round"
+							class="mx-auto mb-4 text-muted-foreground"
+						>
+							<path d="M22 12h-4l-3 9L9 3l-3 9H2"></path>
+						</svg>
+						<h3 class="mb-2 text-lg font-medium text-foreground">
+							Funnel Canvas
+						</h3>
+						<p class="text-sm text-muted-foreground">
+							Visual editor coming in future cycles
+						</p>
+						<p class="mt-4 text-xs text-muted-foreground">
+							For now, use the property panel to view funnel details →
+						</p>
+					</div>
+
+					<!-- Step List Placeholder -->
+					<div class="mt-6 space-y-3">
+						<h3 class="text-sm font-medium text-foreground">Funnel Steps</h3>
+						{Array.from({ length: mockFunnel.metadata?.stepCount as number || 3 }).map((_, i) => (
+							<div class="rounded-lg border bg-card p-4 transition-colors hover:bg-accent/50">
+								<div class="flex items-center justify-between">
+									<div class="flex items-center gap-3">
+										<div class="flex h-8 w-8 items-center justify-center rounded-full bg-primary/10 text-sm font-medium text-primary">
+											{i + 1}
+										</div>
+										<div>
+											<div class="font-medium text-foreground">
+												Step {i + 1}: {i === 0 ? "Landing Page" : i === 1 ? "Email Capture" : i === 2 ? "Product Offer" : i === 3 ? "Upsell" : "Thank You"}
+											</div>
+											<div class="text-sm text-muted-foreground">
+												{i === 0 ? "Entry point with hero section" : i === 1 ? "Email opt-in form" : i === 2 ? "Main product sales page" : i === 3 ? "One-time offer" : "Confirmation and next steps"}
+											</div>
+										</div>
+									</div>
+									<svg
+										xmlns="http://www.w3.org/2000/svg"
+										width="20"
+										height="20"
+										viewBox="0 0 24 24"
+										fill="none"
+										stroke="currentColor"
+										stroke-width="2"
+										stroke-linecap="round"
+										stroke-linejoin="round"
+										class="text-muted-foreground"
+									>
+										<path d="m9 18 6-6-6-6"></path>
+									</svg>
+								</div>
+							</div>
+						))}
+					</div>
+				</div>
+			</div>
+		</div>
+
+		<!-- Property Panel (Right Sidebar) -->
+		<div class="w-80 border-l bg-card overflow-y-auto">
+			<div class="p-4">
+				<FunnelPropertyPanel funnel={mockFunnel} client:load />
+			</div>
+		</div>
+	</div>
+</Layout>

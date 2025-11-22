@@ -1,0 +1,326 @@
+---
+/**
+ * Design Suggestions Demo Page
+ *
+ * Showcases the AI design suggestion system with live analysis.
+ *
+ * Part of Cycle 46: Add AI Design Suggestion System
+ */
+
+import Layout from "@/layouts/Layout.astro";
+import { DesignSuggestions } from "@/components/ai/DesignSuggestions";
+
+const title = "AI Design Suggestions";
+const description =
+	"AI-powered design analysis and suggestions for funnel optimization";
+---
+
+<Layout title={title} description={description}>
+	<div class="container mx-auto max-w-4xl py-8">
+		<!-- Header -->
+		<div class="mb-8">
+			<h1 class="mb-2 text-4xl font-bold">AI Design Suggestions</h1>
+			<p class="text-lg text-muted-foreground">
+				Get instant AI-powered feedback on your funnel design with actionable
+				suggestions to improve conversions.
+			</p>
+		</div>
+
+		<!-- Features -->
+		<div class="mb-8 grid gap-4 md:grid-cols-3">
+			<div class="rounded-lg border bg-card p-4">
+				<div class="mb-2 text-2xl">🎯</div>
+				<h3 class="mb-1 font-semibold">Conversion-Focused</h3>
+				<p class="text-sm text-muted-foreground">
+					Suggestions based on proven A/B test winners and industry benchmarks.
+				</p>
+			</div>
+			<div class="rounded-lg border bg-card p-4">
+				<div class="mb-2 text-2xl">⚡</div>
+				<h3 class="mb-1 font-semibold">Auto-Fix</h3>
+				<p class="text-sm text-muted-foreground">
+					One-click fixes for common design issues. No manual tweaking needed.
+				</p>
+			</div>
+			<div class="rounded-lg border bg-card p-4">
+				<div class="mb-2 text-2xl">📊</div>
+				<h3 class="mb-1 font-semibold">Benchmarks</h3>
+				<p class="text-sm text-muted-foreground">
+					Compare your design to industry standards and best practices.
+				</p>
+			</div>
+		</div>
+
+		<!-- Live Demo -->
+		<div class="rounded-lg border bg-muted/30 p-6">
+			<div class="mb-4">
+				<h2 class="text-2xl font-bold">Live Demo</h2>
+				<p class="text-sm text-muted-foreground">
+					Analyzing a mock funnel page with intentional design issues
+				</p>
+			</div>
+
+			<!-- Design Suggestions Component -->
+			<DesignSuggestions client:load />
+		</div>
+
+		<!-- How It Works -->
+		<div class="mt-12 space-y-6">
+			<h2 class="text-2xl font-bold">How It Works</h2>
+
+			<div class="space-y-4">
+				<div class="flex gap-4">
+					<div
+						class="flex h-10 w-10 shrink-0 items-center justify-center rounded-full bg-primary text-primary-foreground"
+					>
+						1
+					</div>
+					<div>
+						<h3 class="mb-1 font-semibold">AI Analyzes Your Design</h3>
+						<p class="text-sm text-muted-foreground">
+							The system checks your funnel against 50+ design rules covering
+							layout, colors, copy, forms, and conversion optimization.
+						</p>
+					</div>
+				</div>
+
+				<div class="flex gap-4">
+					<div
+						class="flex h-10 w-10 shrink-0 items-center justify-center rounded-full bg-primary text-primary-foreground"
+					>
+						2
+					</div>
+					<div>
+						<h3 class="mb-1 font-semibold">Receive Actionable Suggestions</h3>
+						<p class="text-sm text-muted-foreground">
+							Get prioritized suggestions categorized by severity (critical,
+							warning, tip) with specific recommendations for improvement.
+						</p>
+					</div>
+				</div>
+
+				<div class="flex gap-4">
+					<div
+						class="flex h-10 w-10 shrink-0 items-center justify-center rounded-full bg-primary text-primary-foreground"
+					>
+						3
+					</div>
+					<div>
+						<h3 class="mb-1 font-semibold">Apply Fixes Automatically</h3>
+						<p class="text-sm text-muted-foreground">
+							Select issues and click "Apply Fixes" to automatically optimize
+							your design. Or implement suggestions manually.
+						</p>
+					</div>
+				</div>
+
+				<div class="flex gap-4">
+					<div
+						class="flex h-10 w-10 shrink-0 items-center justify-center rounded-full bg-primary text-primary-foreground"
+					>
+						4
+					</div>
+					<div>
+						<h3 class="mb-1 font-semibold">Track Improvements</h3>
+						<p class="text-sm text-muted-foreground">
+							Watch your design score improve from 45/100 to 95/100 as you
+							address critical issues and optimization tips.
+						</p>
+					</div>
+				</div>
+			</div>
+		</div>
+
+		<!-- Rule Categories -->
+		<div class="mt-12">
+			<h2 class="mb-6 text-2xl font-bold">What We Analyze</h2>
+
+			<div class="grid gap-4 md:grid-cols-2">
+				<div class="rounded-lg border bg-card p-4">
+					<h3 class="mb-2 font-semibold">📐 Layout</h3>
+					<ul class="space-y-1 text-sm text-muted-foreground">
+						<li>• Headline size (optimal: 48-64px)</li>
+						<li>• CTA placement (must be above fold)</li>
+						<li>• White space and readability</li>
+						<li>• Mobile responsiveness</li>
+					</ul>
+				</div>
+
+				<div class="rounded-lg border bg-card p-4">
+					<h3 class="mb-2 font-semibold">🎨 Colors & Contrast</h3>
+					<ul class="space-y-1 text-sm text-muted-foreground">
+						<li>• Text contrast ratio (WCAG 4.5:1)</li>
+						<li>• CTA button visibility</li>
+						<li>• Color psychology</li>
+						<li>• Brand consistency</li>
+					</ul>
+				</div>
+
+				<div class="rounded-lg border bg-card p-4">
+					<h3 class="mb-2 font-semibold">✍️ Copy & Messaging</h3>
+					<ul class="space-y-1 text-sm text-muted-foreground">
+						<li>• CTA button text effectiveness</li>
+						<li>• Headline clarity</li>
+						<li>• Character count optimization</li>
+						<li>• Value proposition strength</li>
+					</ul>
+				</div>
+
+				<div class="rounded-lg border bg-card p-4">
+					<h3 class="mb-2 font-semibold">📝 Forms</h3>
+					<ul class="space-y-1 text-sm text-muted-foreground">
+						<li>• Field count (optimal: 3-5)</li>
+						<li>• Required field optimization</li>
+						<li>• Button size and prominence</li>
+						<li>• Form UX patterns</li>
+					</ul>
+				</div>
+
+				<div class="rounded-lg border bg-card p-4">
+					<h3 class="mb-2 font-semibold">⭐ Social Proof</h3>
+					<ul class="space-y-1 text-sm text-muted-foreground">
+						<li>• Testimonials placement</li>
+						<li>• Trust badges</li>
+						<li>• Social proof numbers</li>
+						<li>• Customer reviews</li>
+					</ul>
+				</div>
+
+				<div class="rounded-lg border bg-card p-4">
+					<h3 class="mb-2 font-semibold">🖼️ Images & Media</h3>
+					<ul class="space-y-1 text-sm text-muted-foreground">
+						<li>• Hero image presence</li>
+						<li>• Image quality (min 1200px)</li>
+						<li>• Alt text for accessibility</li>
+						<li>• Media optimization</li>
+					</ul>
+				</div>
+
+				<div class="rounded-lg border bg-card p-4">
+					<h3 class="mb-2 font-semibold">📈 Conversion</h3>
+					<ul class="space-y-1 text-sm text-muted-foreground">
+						<li>• Urgency/scarcity elements</li>
+						<li>• Value proposition clarity</li>
+						<li>• Friction reduction</li>
+						<li>• Conversion flow steps</li>
+					</ul>
+				</div>
+
+				<div class="rounded-lg border bg-card p-4">
+					<h3 class="mb-2 font-semibold">⚡ Performance</h3>
+					<ul class="space-y-1 text-sm text-muted-foreground">
+						<li>• Page load speed (< 3s)</li>
+						<li>• Mobile optimization</li>
+						<li>• Core Web Vitals</li>
+						<li>• Resource optimization</li>
+					</ul>
+				</div>
+			</div>
+		</div>
+
+		<!-- A/B Test Winners -->
+		<div class="mt-12">
+			<h2 class="mb-6 text-2xl font-bold">Based on A/B Test Winners</h2>
+
+			<div class="space-y-3">
+				<div class="rounded-lg border bg-card p-4">
+					<div class="flex items-start justify-between">
+						<div>
+							<h3 class="font-semibold">Green CTA Buttons</h3>
+							<p class="text-sm text-muted-foreground">
+								Green buttons convey trust and safety
+							</p>
+						</div>
+						<div class="text-right">
+							<div class="text-lg font-bold text-green-600">+12%</div>
+							<div class="text-xs text-muted-foreground">conversions</div>
+						</div>
+					</div>
+				</div>
+
+				<div class="rounded-lg border bg-card p-4">
+					<div class="flex items-start justify-between">
+						<div>
+							<h3 class="font-semibold">"Get Started" vs "Submit"</h3>
+							<p class="text-sm text-muted-foreground">
+								Action-oriented CTA text performs better
+							</p>
+						</div>
+						<div class="text-right">
+							<div class="text-lg font-bold text-green-600">+21%</div>
+							<div class="text-xs text-muted-foreground">conversions</div>
+						</div>
+					</div>
+				</div>
+
+				<div class="rounded-lg border bg-card p-4">
+					<div class="flex items-start justify-between">
+						<div>
+							<h3 class="font-semibold">3 Fields vs 7 Fields</h3>
+							<p class="text-sm text-muted-foreground">
+								Fewer form fields reduce friction
+							</p>
+						</div>
+						<div class="text-right">
+							<div class="text-lg font-bold text-green-600">+25%</div>
+							<div class="text-xs text-muted-foreground">conversions</div>
+						</div>
+					</div>
+				</div>
+
+				<div class="rounded-lg border bg-card p-4">
+					<div class="flex items-start justify-between">
+						<div>
+							<h3 class="font-semibold">Testimonials Before CTA</h3>
+							<p class="text-sm text-muted-foreground">
+								Social proof builds trust before purchase
+							</p>
+						</div>
+						<div class="text-right">
+							<div class="text-lg font-bold text-green-600">+18%</div>
+							<div class="text-xs text-muted-foreground">conversions</div>
+						</div>
+					</div>
+				</div>
+
+				<div class="rounded-lg border bg-card p-4">
+					<div class="flex items-start justify-between">
+						<div>
+							<h3 class="font-semibold">Countdown Timer</h3>
+							<p class="text-sm text-muted-foreground">
+								Urgency creates FOMO (fear of missing out)
+							</p>
+						</div>
+						<div class="text-right">
+							<div class="text-lg font-bold text-green-600">+15%</div>
+							<div class="text-xs text-muted-foreground">conversions</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+
+		<!-- Next Steps -->
+		<div class="mt-12 rounded-lg border bg-primary/5 p-6">
+			<h2 class="mb-4 text-2xl font-bold">Ready to Optimize Your Funnels?</h2>
+			<p class="mb-4 text-muted-foreground">
+				The AI Design Suggestion System is integrated into the funnel editor.
+				Create or edit a funnel to see real-time design suggestions.
+			</p>
+			<div class="flex gap-3">
+				<a
+					href="/funnels"
+					class="inline-flex items-center justify-center rounded-md bg-primary px-4 py-2 text-sm font-medium text-primary-foreground shadow-sm transition-colors hover:bg-primary/90"
+				>
+					View Funnels
+				</a>
+				<a
+					href="/ai/design-suggestions"
+					class="inline-flex items-center justify-center rounded-md border border-input bg-background px-4 py-2 text-sm font-medium transition-colors hover:bg-accent"
+				>
+					Learn More
+				</a>
+			</div>
+		</div>
+	</div>
+</Layout>

@@ -1,0 +1,169 @@
+---
+/**
+ * Property Editor Demo
+ *
+ * Cycle 49: Conversational Property Editing
+ *
+ * Demonstrates the conversational property editing system.
+ */
+
+import Layout from "@/layouts/Layout.astro";
+import PropertyEditChat from "@/components/ai/PropertyEditChat";
+---
+
+<Layout title="Property Editor Demo" description="Edit element properties using natural language">
+	<div class="container mx-auto px-4 py-8">
+		<div class="mb-8">
+			<h1 class="text-4xl font-bold mb-4">Conversational Property Editor</h1>
+			<p class="text-lg text-muted-foreground">
+				Edit element properties using natural language. Try commands like "make it bigger",
+				"change the color to blue", or "make it look like Apple's website".
+			</p>
+		</div>
+
+		<div class="grid grid-cols-1 lg:grid-cols-2 gap-8">
+			<!-- Left: Element Preview -->
+			<div class="space-y-4">
+				<h2 class="text-2xl font-semibold">Element Preview</h2>
+
+				<div class="border rounded-lg p-8 bg-card">
+					<div id="demo-element" class="transition-all duration-300">
+						<h3 class="text-2xl font-bold mb-2">Sample Headline</h3>
+						<p class="text-base mb-4">
+							This is a sample paragraph. You can edit its properties using the chat interface
+							on the right. Try changing colors, sizes, spacing, fonts, and more!
+						</p>
+						<button
+							class="px-4 py-2 bg-primary text-primary-foreground rounded-md hover:bg-primary/90"
+						>
+							Sample Button
+						</button>
+					</div>
+				</div>
+
+				<!-- Current Properties Display -->
+				<div class="border rounded-lg p-4 bg-muted/50">
+					<h3 class="text-sm font-semibold mb-2">Current Properties</h3>
+					<pre id="properties-display" class="text-xs overflow-x-auto">
+						<code>{"{}"}</code>
+					</pre>
+				</div>
+
+				<!-- Instructions -->
+				<div class="border rounded-lg p-4 bg-blue-50 dark:bg-blue-950/20">
+					<h3 class="text-sm font-semibold mb-2 flex items-center gap-2">
+						<span class="text-blue-500">ℹ️</span>
+						Try These Commands:
+					</h3>
+					<ul class="text-sm space-y-1 text-muted-foreground">
+						<li>• "Make the headline bigger"</li>
+						<li>• "Change the button to green"</li>
+						<li>• "Add more space above the headline"</li>
+						<li>• "Make it look like Apple's website"</li>
+						<li>• "Make the text bold"</li>
+						<li>• "Improve the contrast"</li>
+						<li>• "What improvements would you suggest?"</li>
+					</ul>
+				</div>
+			</div>
+
+			<!-- Right: Chat Interface -->
+			<div>
+				<h2 class="text-2xl font-semibold mb-4">Chat Interface</h2>
+				<PropertyEditChat
+					client:load
+					elementId="demo-element"
+					showPreview={true}
+					enableHistory={true}
+				/>
+			</div>
+		</div>
+
+		<!-- Feature Cards -->
+		<div class="mt-12 grid grid-cols-1 md:grid-cols-3 gap-6">
+			<div class="border rounded-lg p-6">
+				<h3 class="text-lg font-semibold mb-2">🎨 Smart Color Parsing</h3>
+				<p class="text-sm text-muted-foreground">
+					Understands color names ("green", "blue"), hex codes (#ff0000), RGB values, and even
+					brand references ("like Apple")
+				</p>
+			</div>
+
+			<div class="border rounded-lg p-6">
+				<h3 class="text-lg font-semibold mb-2">📏 Intelligent Sizing</h3>
+				<p class="text-sm text-muted-foreground">
+					Parses relative sizes ("bigger", "double") and absolute values ("24px", "1.5rem") with
+					context awareness
+				</p>
+			</div>
+
+			<div class="border rounded-lg p-6">
+				<h3 class="text-lg font-semibold mb-2">✨ Style Presets</h3>
+				<p class="text-sm text-muted-foreground">
+					Apply complete design systems instantly: Apple, Stripe, Minimalist, or Bold styles
+				</p>
+			</div>
+
+			<div class="border rounded-lg p-6">
+				<h3 class="text-lg font-semibold mb-2">💡 Smart Suggestions</h3>
+				<p class="text-sm text-muted-foreground">
+					Get AI-powered suggestions for related changes and design improvements
+				</p>
+			</div>
+
+			<div class="border rounded-lg p-6">
+				<h3 class="text-lg font-semibold mb-2">⏮️ Undo/Redo</h3>
+				<p class="text-sm text-muted-foreground">
+					Full history tracking lets you experiment freely and revert any changes
+				</p>
+			</div>
+
+			<div class="border rounded-lg p-6">
+				<h3 class="text-lg font-semibold mb-2">👁️ Live Preview</h3>
+				<p class="text-sm text-muted-foreground">
+					See changes applied in real-time as you chat, with smooth animations
+				</p>
+			</div>
+		</div>
+	</div>
+</Layout>
+
+<script>
+	// Initialize element properties display
+	function updatePropertiesDisplay() {
+		const element = document.getElementById("demo-element");
+		const display = document.getElementById("properties-display");
+
+		if (!element || !display) return;
+
+		const computed = window.getComputedStyle(element);
+
+		const properties = {
+			color: computed.color,
+			backgroundColor: computed.backgroundColor,
+			fontSize: computed.fontSize,
+			fontFamily: computed.fontFamily,
+			fontWeight: computed.fontWeight,
+			lineHeight: computed.lineHeight,
+			marginTop: computed.marginTop,
+			marginBottom: computed.marginBottom,
+			paddingTop: computed.paddingTop,
+			paddingBottom: computed.paddingBottom,
+		};
+
+		display.textContent = JSON.stringify(properties, null, 2);
+	}
+
+	// Update on load
+	updatePropertiesDisplay();
+
+	// Update when element changes (using MutationObserver)
+	const element = document.getElementById("demo-element");
+	if (element) {
+		const observer = new MutationObserver(updatePropertiesDisplay);
+		observer.observe(element, {
+			attributes: true,
+			attributeFilter: ["style"],
+		});
+	}
+</script>
