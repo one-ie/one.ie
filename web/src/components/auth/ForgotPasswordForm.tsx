@@ -31,7 +31,15 @@ export function ForgotPasswordForm() {
 			let description = `Error: ${errorMessage}. Please try again.`;
 
 			// Check for typed errors
-			if (err._tag === "UserNotFound") {
+			if (err._tag === "CSRFValidation") {
+				title = "Security token expired";
+				description =
+					"Your security token has expired. Please refresh the page and try again.";
+				// Optionally: Auto-refresh after showing error
+				setTimeout(() => {
+					window.location.reload();
+				}, 2000);
+			} else if (err._tag === "UserNotFound") {
 				title = "Email not found";
 				description =
 					"No account exists with this email address. Please check your email or sign up for a new account.";

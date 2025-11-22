@@ -1,6 +1,17 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import type { APIRoute } from "astro";
 import { ConvexHttpClient } from "convex/browser";
+import {
+	checkRateLimit,
+	getClientIP,
+	resetRateLimit,
+} from "@/lib/auth/rate-limiter";
+import {
+	logRateLimitViolation,
+	logSignInAttempt,
+	logSignUpAttempt,
+	logPasswordResetRequest,
+} from "@/lib/auth/event-logger";
 
 export const prerender = false;
 
@@ -89,47 +100,90 @@ export const ALL: APIRoute = async ({ request, cookies }) => {
 			const body = await request.json();
 			const { email, password } = body;
 
-			const result = await convex.mutation("auth:signIn" as any, {
-				email,
-				password,
-			});
+			// RATE LIMITING: 5 attempts per 15 minutes per IP
+			const clientIP = getClientIP(request);
+			const rateLimitKey = `signin:${clientIP}`;
+			const rateLimit = checkRateLimit(rateLimitKey, "SIGN_IN");
 
-			cookies.set("auth_token", result.token, {
-				path: "/",
-				maxAge: 30 * 24 * 60 * 60,
-				sameSite: "lax",
-				httpOnly: true,
-				secure: import.meta.env.PROD,
-			});
+			if (!rateLimit.allowed) {
+				// Log rate limit violation
+				await logRateLimitViolation({
+					endpoint: "/sign-in/email",
+					ipAddress: clientIP,
+					email,
+					userAgent: request.headers.get("user-agent") || undefined,
+					resetAt: rateLimit.resetAt,
+				});
 
-			const user = await convex.query("auth:getCurrentUser" as any, {
-				token: result.token,
-			});
+				return rateLimit.response!;
+			}
 
-			return new Response(
-				JSON.stringify({
-					user: user
-						? {
-								id: user.id,
-								email: user.email,
-								name: user.name || null,
-								emailVerified: false,
-								image: null,
-							}
-						: null,
-					session: user
-						? {
-								id: result.token,
-								userId: user.id,
-								expiresAt: new Date(Date.now() + 30 * 24 * 60 * 60 * 1000),
-							}
-						: null,
-				}),
-				{
-					status: 200,
-					headers: { "Content-Type": "application/json" },
-				},
-			);
+			try {
+				const result = await convex.mutation("auth:signIn" as any, {
+					email,
+					password,
+				});
+
+				cookies.set("auth_token", result.token, {
+					path: "/",
+					maxAge: 30 * 24 * 60 * 60,
+					sameSite: "lax",
+					httpOnly: true,
+					secure: import.meta.env.PROD,
+				});
+
+				const user = await convex.query("auth:getCurrentUser" as any, {
+					token: result.token,
+				});
+
+				// Reset rate limit on successful login
+				resetRateLimit(rateLimitKey);
+
+				// Log successful sign-in
+				await logSignInAttempt({
+					email,
+					ipAddress: clientIP,
+					userAgent: request.headers.get("user-agent") || undefined,
+					success: true,
+					userId: user?.id,
+				});
+
+				return new Response(
+					JSON.stringify({
+						user: user
+							? {
+									id: user.id,
+									email: user.email,
+									name: user.name || null,
+									emailVerified: false,
+									image: null,
+								}
+							: null,
+						session: user
+							? {
+									id: result.token,
+									userId: user.id,
+									expiresAt: new Date(Date.now() + 30 * 24 * 60 * 60 * 1000),
+								}
+							: null,
+					}),
+					{
+						status: 200,
+						headers: { "Content-Type": "application/json" },
+					},
+				);
+			} catch (error: any) {
+				// Log failed sign-in attempt
+				await logSignInAttempt({
+					email,
+					ipAddress: clientIP,
+					userAgent: request.headers.get("user-agent") || undefined,
+					success: false,
+					reason: error.message,
+				});
+
+				throw error;
+			}
 		}
 
 		// Handle sign-up endpoint
@@ -137,48 +191,91 @@ export const ALL: APIRoute = async ({ request, cookies }) => {
 			const body = await request.json();
 			const { email, password, name } = body;
 
-			const result = await convex.mutation("auth:signUp" as any, {
-				email,
-				password,
-				name: name || undefined,
-			});
+			// RATE LIMITING: 3 signups per hour per IP
+			const clientIP = getClientIP(request);
+			const rateLimitKey = `signup:${clientIP}`;
+			const rateLimit = checkRateLimit(rateLimitKey, "SIGN_UP");
 
-			cookies.set("auth_token", result.token, {
-				path: "/",
-				maxAge: 30 * 24 * 60 * 60,
-				sameSite: "lax",
-				httpOnly: true,
-				secure: import.meta.env.PROD,
-			});
+			if (!rateLimit.allowed) {
+				// Log rate limit violation
+				await logRateLimitViolation({
+					endpoint: "/sign-up/email",
+					ipAddress: clientIP,
+					email,
+					userAgent: request.headers.get("user-agent") || undefined,
+					resetAt: rateLimit.resetAt,
+				});
 
-			const user = await convex.query("auth:getCurrentUser" as any, {
-				token: result.token,
-			});
+				return rateLimit.response!;
+			}
 
-			return new Response(
-				JSON.stringify({
-					user: user
-						? {
-								id: user.id,
-								email: user.email,
-								name: user.name || null,
-								emailVerified: false,
-								image: null,
-							}
-						: null,
-					session: user
-						? {
-								id: result.token,
-								userId: user.id,
-								expiresAt: new Date(Date.now() + 30 * 24 * 60 * 60 * 1000),
-							}
-						: null,
-				}),
-				{
-					status: 200,
-					headers: { "Content-Type": "application/json" },
-				},
-			);
+			try {
+				const result = await convex.mutation("auth:signUp" as any, {
+					email,
+					password,
+					name: name || undefined,
+				});
+
+				cookies.set("auth_token", result.token, {
+					path: "/",
+					maxAge: 30 * 24 * 60 * 60,
+					sameSite: "lax",
+					httpOnly: true,
+					secure: import.meta.env.PROD,
+				});
+
+				const user = await convex.query("auth:getCurrentUser" as any, {
+					token: result.token,
+				});
+
+				// Reset rate limit on successful signup
+				resetRateLimit(rateLimitKey);
+
+				// Log successful sign-up
+				await logSignUpAttempt({
+					email,
+					ipAddress: clientIP,
+					userAgent: request.headers.get("user-agent") || undefined,
+					success: true,
+					userId: user?.id,
+				});
+
+				return new Response(
+					JSON.stringify({
+						user: user
+							? {
+									id: user.id,
+									email: user.email,
+									name: user.name || null,
+									emailVerified: false,
+									image: null,
+								}
+							: null,
+						session: user
+							? {
+									id: result.token,
+									userId: user.id,
+									expiresAt: new Date(Date.now() + 30 * 24 * 60 * 60 * 1000),
+								}
+							: null,
+					}),
+					{
+						status: 200,
+						headers: { "Content-Type": "application/json" },
+					},
+				);
+			} catch (error: any) {
+				// Log failed sign-up attempt
+				await logSignUpAttempt({
+					email,
+					ipAddress: clientIP,
+					userAgent: request.headers.get("user-agent") || undefined,
+					success: false,
+					reason: error.message,
+				});
+
+				throw error;
+			}
 		}
 
 		// Handle social sign-in endpoint (GitHub, Google)
@@ -203,11 +300,31 @@ export const ALL: APIRoute = async ({ request, cookies }) => {
 			const body = await request.json();
 			const { email } = body;
 
+			// RATE LIMITING: 3 requests per hour per email
+			const rateLimitKey = `password-reset:${email}`;
+			const rateLimit = checkRateLimit(rateLimitKey, "PASSWORD_RESET");
+
+			if (!rateLimit.allowed) {
+				const clientIP = getClientIP(request);
+
+				// Log rate limit violation
+				await logRateLimitViolation({
+					endpoint: "/forgot-password",
+					ipAddress: clientIP,
+					email,
+					userAgent: request.headers.get("user-agent") || undefined,
+					resetAt: rateLimit.resetAt,
+				});
+
+				return rateLimit.response!;
+			}
+
 			// Use production URL in production, localhost in dev
 			const baseUrl = import.meta.env.PROD
 				? "https://stack.one.ie"
 				: new URL(request.url).origin;
 
+			const clientIP = getClientIP(request);
 			console.log("Calling requestPasswordReset action for:", email);
 
 			try {
@@ -216,11 +333,28 @@ export const ALL: APIRoute = async ({ request, cookies }) => {
 					{
 						email,
 						baseUrl,
-					},
+					}
 				);
 				console.log("Password reset result:", result);
-			} catch (error) {
+
+				// Log successful password reset request
+				await logPasswordResetRequest({
+					email,
+					ipAddress: clientIP,
+					userAgent: request.headers.get("user-agent") || undefined,
+					success: true,
+				});
+			} catch (error: any) {
 				console.error("Error calling requestPasswordReset:", error);
+
+				// Log failed password reset request
+				await logPasswordResetRequest({
+					email,
+					ipAddress: clientIP,
+					userAgent: request.headers.get("user-agent") || undefined,
+					success: false,
+					reason: error.message,
+				});
 			}
 
 			return new Response(JSON.stringify({ success: true }), {
@@ -265,6 +399,8 @@ export const ALL: APIRoute = async ({ request, cookies }) => {
 			const body = await request.json();
 			const { token, password } = body;
 
+			// Note: Reset password uses token verification, not rate limiting by IP
+			// The token itself is rate-limited via the forgot-password endpoint
 			await convex.mutation("auth:resetPassword" as any, { token, password });
 
 			return new Response(JSON.stringify({ success: true }), {

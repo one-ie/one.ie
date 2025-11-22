@@ -27,3 +27,22 @@ export function debounce<T extends (...args: any[]) => any>(
 		timeout = setTimeout(later, wait);
 	};
 }
+
+/**
+ * Extract a cookie value by name
+ */
+export function getCookie(name: string): string | null {
+	if (typeof document === "undefined") return null;
+
+	const cookies = document.cookie.split("; ");
+	const cookie = cookies.find((row) => row.startsWith(`${name}=`));
+	return cookie ? decodeURIComponent(cookie.split("=")[1]) : null;
+}
+
+/**
+ * Get CSRF token from cookies
+ * Better Auth stores CSRF token in the 'better-auth.csrf-token' cookie
+ */
+export function getCSRFToken(): string | null {
+	return getCookie("better-auth.csrf-token");
+}

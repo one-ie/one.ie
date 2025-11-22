@@ -27,6 +27,7 @@ import type {
 	VerifyEmailArgs,
 } from "./DataProvider";
 import {
+	CSRFValidationError,
 	EmailAlreadyExistsError,
 	EmailNotVerifiedError,
 	Invalid2FACodeError,
@@ -49,6 +50,14 @@ interface ErrorPattern {
 }
 
 const ERROR_PATTERNS: ErrorPattern[] = [
+	{
+		matchers: (msg) =>
+			msg.includes("csrf") ||
+			msg.includes("invalid token") ||
+			msg.includes("forbidden") ||
+			msg.includes("403"),
+		error: () => new CSRFValidationError(),
+	},
 	{
 		matchers: (msg) =>
 			msg.includes("invalid email or password") ||
@@ -103,6 +112,14 @@ const ERROR_PATTERNS: ErrorPattern[] = [
 function parseAuthError(error: unknown): AuthError {
 	const message = String(error).toLowerCase();
 
+	// Check for HTTP status codes (e.g., from fetch errors)
+	if (error instanceof Error && "status" in error) {
+		const status = (error as any).status;
+		if (status === 403) {
+			return new CSRFValidationError();
+		}
+	}
+
 	for (const pattern of ERROR_PATTERNS) {
 		if (pattern.matchers(message)) {
 			return pattern.error(message);
@@ -121,6 +138,19 @@ function getAuthToken(): string | null {
 	const cookies = document.cookie.split("; ");
 	const authCookie = cookies.find((row) => row.startsWith("auth_token="));
 	return authCookie ? authCookie.split("=")[1] : null;
+}
+
+/**
+ * Get CSRF token from cookies (client-side)
+ * Better Auth stores CSRF token in the 'better-auth.csrf-token' cookie
+ */
+function getCSRFToken(): string | null {
+	if (typeof document === "undefined") return null;
+	const cookies = document.cookie.split("; ");
+	const csrfCookie = cookies.find((row) =>
+		row.startsWith("better-auth.csrf-token="),
+	);
+	return csrfCookie ? decodeURIComponent(csrfCookie.split("=")[1]) : null;
 }
 
 /**
@@ -149,9 +179,11 @@ export function createBetterAuthProvider(client: ConvexReactClient) {
 		login: (args: LoginArgs) =>
 			Effect.tryPromise({
 				try: async () => {
+					const csrfToken = getCSRFToken();
 					const result = await client.mutation("auth:signIn" as any, {
 						email: args.email,
 						password: args.password,
+						csrfToken,
 					});
 
 					if (result?.token) {
@@ -171,6 +203,7 @@ export function createBetterAuthProvider(client: ConvexReactClient) {
 		signup: (args: SignupArgs) =>
 			Effect.tryPromise({
 				try: async () => {
+					const csrfToken = getCSRFToken();
 					const result = await client.mutation("auth:signUp" as any, {
 						email: args.email,
 						password: args.password,
@@ -180,6 +213,7 @@ export function createBetterAuthProvider(client: ConvexReactClient) {
 							typeof window !== "undefined"
 								? window.location.origin
 								: "http://localhost:4321",
+						csrfToken,
 					});
 
 					if (result?.token) {
@@ -200,8 +234,9 @@ export function createBetterAuthProvider(client: ConvexReactClient) {
 			Effect.tryPromise({
 				try: async () => {
 					const token = getAuthToken();
+					const csrfToken = getCSRFToken();
 					if (token) {
-						await client.mutation("auth:signOut" as any, { token });
+						await client.mutation("auth:signOut" as any, { token, csrfToken });
 						clearAuthToken();
 					}
 				},
@@ -227,10 +262,12 @@ export function createBetterAuthProvider(client: ConvexReactClient) {
 		magicLinkAuth: (args: MagicLinkArgs) =>
 			Effect.tryPromise({
 				try: async () => {
+					const csrfToken = getCSRFToken();
 					const result = await client.mutation(
 						"auth:signInWithMagicLink" as any,
 						{
 							token: args.token,
+							csrfToken,
 						},
 					);
 
@@ -251,12 +288,14 @@ export function createBetterAuthProvider(client: ConvexReactClient) {
 		passwordReset: (args: PasswordResetArgs) =>
 			Effect.tryPromise({
 				try: async () => {
+					const csrfToken = getCSRFToken();
 					await client.mutation("auth:requestPasswordReset" as any, {
 						email: args.email,
 						baseUrl:
 							typeof window !== "undefined"
 								? window.location.origin
 								: "http://localhost:4321",
+						csrfToken,
 					});
 				},
 				catch: (error) => parseAuthError(error),
@@ -266,9 +305,11 @@ export function createBetterAuthProvider(client: ConvexReactClient) {
 		passwordResetComplete: (args: PasswordResetCompleteArgs) =>
 			Effect.tryPromise({
 				try: async () => {
+					const csrfToken = getCSRFToken();
 					await client.mutation("auth:resetPassword" as any, {
 						token: args.token,
 						password: args.newPassword,
+						csrfToken,
 					});
 				},
 				catch: (error) => parseAuthError(error),
@@ -278,8 +319,10 @@ export function createBetterAuthProvider(client: ConvexReactClient) {
 		verifyEmail: (args: VerifyEmailArgs) =>
 			Effect.tryPromise({
 				try: async () => {
+					const csrfToken = getCSRFToken();
 					await client.mutation("auth:verifyEmail" as any, {
 						token: args.token,
+						csrfToken,
 					});
 
 					return {
@@ -307,12 +350,14 @@ export function createBetterAuthProvider(client: ConvexReactClient) {
 			Effect.tryPromise({
 				try: async () => {
 					const token = getAuthToken();
+					const csrfToken = getCSRFToken();
 					if (!token) {
 						throw new Error("Not authenticated");
 					}
 
 					const result = await client.mutation("auth:setup2FA" as any, {
 						token,
+						csrfToken,
 					});
 					return result as TwoFactorSetup;
 				},
@@ -324,11 +369,12 @@ export function createBetterAuthProvider(client: ConvexReactClient) {
 			Effect.tryPromise({
 				try: async () => {
 					const token = getAuthToken();
+					const csrfToken = getCSRFToken();
 					if (!token) {
 						throw new Error("Not authenticated");
 					}
 
-					await client.mutation("auth:verify2FA" as any, { token });
+					await client.mutation("auth:verify2FA" as any, { token, csrfToken });
 				},
 				catch: (error) => parseAuthError(error),
 			}),
@@ -338,6 +384,7 @@ export function createBetterAuthProvider(client: ConvexReactClient) {
 			Effect.tryPromise({
 				try: async () => {
 					const token = getAuthToken();
+					const csrfToken = getCSRFToken();
 					if (!token) {
 						throw new Error("Not authenticated");
 					}
@@ -345,6 +392,7 @@ export function createBetterAuthProvider(client: ConvexReactClient) {
 					await client.mutation("auth:disable2FA" as any, {
 						token,
 						password: args.password,
+						csrfToken,
 					});
 				},
 				catch: (error) => parseAuthError(error),

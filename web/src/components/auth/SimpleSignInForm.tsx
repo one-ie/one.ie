@@ -36,7 +36,15 @@ export function SimpleSignInForm() {
 			let description = `Error: ${errorMessage}. Please check your credentials and try again.`;
 
 			// Check for typed errors
-			if (error?._tag === "InvalidCredentials") {
+			if (error?._tag === "CSRFValidation") {
+				title = "Security token expired";
+				description =
+					"Your security token has expired. Please refresh the page and try again.";
+				// Optionally: Auto-refresh after showing error
+				setTimeout(() => {
+					window.location.reload();
+				}, 2000);
+			} else if (error?._tag === "InvalidCredentials") {
 				title = "Incorrect password";
 				description =
 					"The password you entered is incorrect. Please try again or use the 'Forgot password' option.";

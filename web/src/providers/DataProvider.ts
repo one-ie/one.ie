@@ -140,6 +140,11 @@ export class RateLimitExceededError {
 	constructor(readonly message = "Too many requests, please wait") {}
 }
 
+export class CSRFValidationError {
+	readonly _tag = "CSRFValidation";
+	constructor(readonly message = "Invalid security token. Please refresh and try again.") {}
+}
+
 export class EmailNotVerifiedError {
 	readonly _tag = "EmailNotVerified";
 	constructor(readonly message = "Email address not verified") {}
@@ -166,7 +171,8 @@ export type AuthError =
 	| RateLimitExceededError
 	| EmailNotVerifiedError
 	| TwoFactorRequiredError
-	| Invalid2FACodeError;
+	| Invalid2FACodeError
+	| CSRFValidationError;
 
 export type DataProviderError =
 	| ThingNotFoundError

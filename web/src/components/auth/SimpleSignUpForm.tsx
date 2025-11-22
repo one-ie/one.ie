@@ -55,7 +55,15 @@ export function SimpleSignUpForm({ onSuccess }: SimpleSignUpFormProps) {
 			let description = `Error: ${errorMessage}. Please verify your information and try again.`;
 
 			// Check for typed errors
-			if (error?._tag === "UserAlreadyExists") {
+			if (error?._tag === "CSRFValidation") {
+				title = "Security token expired";
+				description =
+					"Your security token has expired. Please refresh the page and try again.";
+				// Optionally: Auto-refresh after showing error
+				setTimeout(() => {
+					window.location.reload();
+				}, 2000);
+			} else if (error?._tag === "UserAlreadyExists") {
 				title = "Email already registered";
 				description =
 					"This email is already in use. Please sign in instead or use a different email address.";

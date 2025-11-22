@@ -81,7 +81,15 @@ export function ResetPasswordForm({ token }: ResetPasswordFormProps) {
 			let description = `Error: ${errorMessage}. Please try again.`;
 
 			// Check for typed errors
-			if (err._tag === "InvalidToken" || err._tag === "TokenExpired") {
+			if (err._tag === "CSRFValidation") {
+				title = "Security token expired";
+				description =
+					"Your security token has expired. Please refresh the page and try again.";
+				// Optionally: Auto-refresh after showing error
+				setTimeout(() => {
+					window.location.reload();
+				}, 2000);
+			} else if (err._tag === "InvalidToken" || err._tag === "TokenExpired") {
 				title = "Invalid or expired token";
 				description =
 					"This password reset link is invalid or has expired. Please request a new password reset email.";
