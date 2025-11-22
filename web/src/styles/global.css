@@ -120,6 +120,7 @@
   --color-sidebar-ring: 216 63% 17%;
   --color-gold: 45 93% 47%;
   --color-gold-foreground: 0 0% 0%;
+  --logo-filter: brightness(0);
   /* Border Radius Tokens - Modern Scale (2025) */
   --radius-xs: 0.25rem;    /* 4px - Badges, chips, inline pills */
   --radius-sm: 0.375rem;   /* 6px - Input fields, small buttons, tags */
@@ -274,6 +275,7 @@ html, body {
   --sidebar-accent-foreground: 36 8% 96%;
   --sidebar-border: 0 0% 100% / 0.1;
   --sidebar-ring: 216 63% 68%;
+  --logo-filter: brightness(0) invert(1);
 }
 
 /* Keep gradient text readable when background clipping is unavailable */
