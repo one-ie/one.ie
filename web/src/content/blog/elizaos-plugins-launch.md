@@ -1,10 +1,10 @@
 ---
 title: "Introducing ElizaOS Plugins: 261+ Capabilities for Your AI Agents"
 description: "ONE Platform now supports the entire ElizaOS plugin ecosystem. Build AI agents with blockchain capabilities, knowledge systems, browser automation, and more—all mapped to our 6-dimension ontology."
-pubDate: 2025-11-22
+date: 2025-11-22
 author: "ONE Platform Team"
 tags: ["elizaos", "plugins", "integration", "ai-agents", "launch"]
-category: "Product Launch"
+category: "news"
 featured: true
 image: "/images/blog/elizaos-plugins-launch.jpg"
 ---

@@ -31,7 +31,7 @@
 		"@anthropic-ai/sdk": "^0.70.0",
 		"@astro-community/astro-embed-youtube": "^0.5.7",
 		"@astrojs/check": "^0.9.4",
-		"@astrojs/cloudflare": "^12.6.9",
+		"@astrojs/cloudflare": "^12.6.11",
 		"@astrojs/mdx": "^4.3.10",
 		"@astrojs/node": "^9.4.4",
 		"@astrojs/react": "^4.4.0",
