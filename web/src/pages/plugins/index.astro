@@ -1,0 +1,90 @@
+---
+/**
+ * Plugin Registry Page
+ * Browse and discover ElizaOS plugins
+ * CYCLE-031: Plugin registry with grid, search, filters
+ */
+
+import Layout from "@/layouts/Layout.astro";
+import { PluginRegistryClient } from "@/components/features/plugins/PluginRegistryClient";
+
+const title = "Plugin Registry";
+const description = "Discover and install ElizaOS plugins to extend your AI agents";
+---
+
+<Layout title={title} description={description}>
+  <div class="min-h-screen bg-background">
+    <!-- Header -->
+    <header class="border-b bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60">
+      <div class="container mx-auto px-4 py-6">
+        <div class="flex items-center justify-between">
+          <div>
+            <h1 class="text-4xl font-bold text-foreground">
+              Plugin Registry
+            </h1>
+            <p class="mt-2 text-muted-foreground">
+              Discover 261+ ElizaOS plugins to supercharge your AI agents
+            </p>
+          </div>
+          <a
+            href="/plugins/installed"
+            class="inline-flex items-center gap-2 rounded-md bg-primary px-4 py-2 text-sm font-medium text-primary-foreground shadow-sm hover:bg-primary/90 transition-colors"
+          >
+            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path>
+            </svg>
+            View Installed
+          </a>
+        </div>
+      </div>
+    </header>
+
+    <!-- Main Content -->
+    <main class="container mx-auto px-4 py-8">
+      <PluginRegistryClient client:load />
+    </main>
+
+    <!-- Info Section -->
+    <section class="border-t bg-muted/30 py-12 mt-12">
+      <div class="container mx-auto px-4">
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+          <div class="text-center">
+            <div class="inline-flex items-center justify-center w-12 h-12 rounded-full bg-primary/10 text-primary mb-4">
+              <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z"></path>
+              </svg>
+            </div>
+            <h3 class="font-semibold text-lg mb-2">Instant Installation</h3>
+            <p class="text-sm text-muted-foreground">
+              Install plugins with a single click. Configuration and dependencies handled automatically.
+            </p>
+          </div>
+
+          <div class="text-center">
+            <div class="inline-flex items-center justify-center w-12 h-12 rounded-full bg-primary/10 text-primary mb-4">
+              <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z"></path>
+              </svg>
+            </div>
+            <h3 class="font-semibold text-lg mb-2">Secure & Sandboxed</h3>
+            <p class="text-sm text-muted-foreground">
+              All plugins run in isolated environments with strict permission controls.
+            </p>
+          </div>
+
+          <div class="text-center">
+            <div class="inline-flex items-center justify-center w-12 h-12 rounded-full bg-primary/10 text-primary mb-4">
+              <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 12l3-3 3 3 4-4M8 21l4-4 4 4M3 4h18M4 4h16v12a1 1 0 01-1 1H5a1 1 0 01-1-1V4z"></path>
+              </svg>
+            </div>
+            <h3 class="font-semibold text-lg mb-2">Real-time Monitoring</h3>
+            <p class="text-sm text-muted-foreground">
+              Track plugin usage, performance, and health with live dashboards.
+            </p>
+          </div>
+        </div>
+      </div>
+    </section>
+  </div>
+</Layout>

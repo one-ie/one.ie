@@ -1,0 +1,81 @@
+---
+/**
+ * Plugin Detail Page
+ * Detailed view of a single plugin
+ * CYCLE-032: Plugin detail page with installation, config, and actions
+ */
+
+import Layout from "@/layouts/Layout.astro";
+import { PluginDetailClient } from "@/components/features/plugins/PluginDetailClient";
+import { mockPlugins } from "@/lib/mockPluginData";
+
+const { id } = Astro.params;
+
+// Find plugin by ID
+const plugin = mockPlugins.find((p) => p._id === id);
+
+if (!plugin) {
+  return Astro.redirect("/404");
+}
+
+const title = plugin.name;
+const description = plugin.description;
+---
+
+<Layout title={title} description={description}>
+  <div class="min-h-screen bg-background">
+    <!-- Header -->
+    <header class="border-b bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60">
+      <div class="container mx-auto px-4 py-6">
+        <nav class="flex items-center gap-2 text-sm text-muted-foreground mb-4">
+          <a href="/plugins" class="hover:text-foreground transition-colors">Plugins</a>
+          <span>/</span>
+          <span class="text-foreground">{plugin.name}</span>
+        </nav>
+        <div class="flex items-start justify-between">
+          <div class="flex-1">
+            <h1 class="text-4xl font-bold text-foreground">
+              {plugin.name}
+            </h1>
+            <p class="mt-2 text-muted-foreground max-w-3xl">
+              {plugin.description}
+            </p>
+            <div class="flex items-center gap-4 mt-4">
+              <span class="text-sm text-muted-foreground">
+                by {plugin.author}
+              </span>
+              <span class="text-sm text-muted-foreground">
+                v{plugin.version}
+              </span>
+              {plugin.npmPackage && (
+                <a
+                  href={`https://www.npmjs.com/package/${plugin.npmPackage}`}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  class="text-sm text-primary hover:underline"
+                >
+                  npm →
+                </a>
+              )}
+              {plugin.githubRepo && (
+                <a
+                  href={`https://github.com/${plugin.githubRepo}`}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  class="text-sm text-primary hover:underline"
+                >
+                  GitHub →
+                </a>
+              )}
+            </div>
+          </div>
+        </div>
+      </div>
+    </header>
+
+    <!-- Main Content -->
+    <main class="container mx-auto px-4 py-8">
+      <PluginDetailClient plugin={plugin} client:load />
+    </main>
+  </div>
+</Layout>

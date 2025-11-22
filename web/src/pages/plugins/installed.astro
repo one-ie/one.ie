@@ -1,0 +1,52 @@
+---
+/**
+ * Installed Plugins Dashboard
+ * Manage and monitor installed plugins
+ * CYCLE-035: Installed plugins dashboard with usage stats and controls
+ */
+
+import Layout from "@/layouts/Layout.astro";
+import { InstalledPluginsClient } from "@/components/features/plugins/InstalledPluginsClient";
+
+const title = "Installed Plugins";
+const description = "Manage and monitor your installed plugins";
+---
+
+<Layout title={title} description={description}>
+  <div class="min-h-screen bg-background">
+    <!-- Header -->
+    <header class="border-b bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60">
+      <div class="container mx-auto px-4 py-6">
+        <nav class="flex items-center gap-2 text-sm text-muted-foreground mb-4">
+          <a href="/plugins" class="hover:text-foreground transition-colors">Plugins</a>
+          <span>/</span>
+          <span class="text-foreground">Installed</span>
+        </nav>
+        <div class="flex items-center justify-between">
+          <div>
+            <h1 class="text-4xl font-bold text-foreground">
+              Installed Plugins
+            </h1>
+            <p class="mt-2 text-muted-foreground">
+              Manage and monitor your active plugins
+            </p>
+          </div>
+          <a
+            href="/plugins"
+            class="inline-flex items-center gap-2 rounded-md border border-input bg-background px-4 py-2 text-sm font-medium shadow-sm hover:bg-accent hover:text-accent-foreground transition-colors"
+          >
+            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4"></path>
+            </svg>
+            Browse Plugins
+          </a>
+        </div>
+      </div>
+    </header>
+
+    <!-- Main Content -->
+    <main class="container mx-auto px-4 py-8">
+      <InstalledPluginsClient client:load />
+    </main>
+  </div>
+</Layout>

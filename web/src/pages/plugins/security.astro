@@ -1,0 +1,33 @@
+---
+/**
+ * Plugin Security Dashboard
+ * CYCLE-059: Create security audit dashboard
+ *
+ * Features:
+ * - Security overview (score, alerts, plugin count)
+ * - Security audit log (paginated, filterable)
+ * - Active security alerts
+ * - Plugin security status
+ * - Permission management
+ * - Network allowlist management
+ */
+
+import Layout from '@/layouts/Layout.astro';
+import { PluginSecurityDashboard } from '@/components/plugins/PluginSecurityDashboard';
+
+const title = 'Plugin Security Dashboard';
+const description = 'Monitor and manage plugin security across your organization';
+---
+
+<Layout title={title} description={description}>
+  <div class="container mx-auto px-4 py-8">
+    <div class="mb-8">
+      <h1 class="text-4xl font-bold mb-2">Plugin Security</h1>
+      <p class="text-muted-foreground">
+        Monitor security threats, manage permissions, and review audit logs
+      </p>
+    </div>
+
+    <PluginSecurityDashboard client:load />
+  </div>
+</Layout>

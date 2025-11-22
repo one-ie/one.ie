@@ -86,6 +86,14 @@ For complete connection type definitions, see **[Ontology.md](./ontology.md#conn
 - `completed` - Person completed course
 - `teaching` - AI teaching course
 
+### Plugin Relationships (6) - NEW for ElizaOS Integration
+- `plugin_depends_on` - Plugin A depends on Plugin B
+- `plugin_powers` - Plugin powers/enables Agent
+- `plugin_provides` - Plugin provides Action/Provider/Evaluator
+- `plugin_installed_in` - Plugin Instance installed in Organization
+- `plugin_created_by` - Plugin created by Person (author)
+- `plugin_uses` - Agent uses Plugin Instance
+
 ### Group Types (7)
 Uses `metadata` for variants + protocol identity:
 
@@ -225,6 +233,60 @@ Uses `metadata` for variants + protocol identity:
     messageType: "task_delegation",
     task: "research_market_trends",
     messagesExchanged: 42
+  },
+  createdAt: Date.now()
+}
+```
+
+### Pattern 8: Plugin Dependency (ElizaOS)
+
+```typescript
+// Plugin-solana depends on plugin-wallet
+{
+  fromThingId: pluginSolanaId,
+  toThingId: pluginWalletId,
+  relationshipType: "plugin_depends_on",
+  metadata: {
+    version_required: ">=2.0.0",
+    dependency_type: "required", // or "optional"
+    reason: "Wallet management for token operations"
+  },
+  createdAt: Date.now()
+}
+```
+
+### Pattern 9: Plugin Powers Agent (ElizaOS)
+
+```typescript
+// Solana plugin powers AI trading agent
+{
+  fromThingId: pluginInstanceSolanaId,
+  toThingId: agentTraderId,
+  relationshipType: "plugin_powers",
+  metadata: {
+    enabled_actions: ["swapTokens", "getBalance", "getPrice"],
+    permissions: ["execute_transactions", "query_balances"],
+    activated_at: Date.now()
+  },
+  createdAt: Date.now()
+}
+```
+
+### Pattern 10: Agent Uses Plugin (ElizaOS)
+
+```typescript
+// Agent uses installed plugin instance
+{
+  fromThingId: agentId,
+  toThingId: pluginInstanceId,
+  relationshipType: "plugin_uses",
+  metadata: {
+    usage_count: 142,
+    last_used_at: Date.now(),
+    configuration: {
+      priority: 1,
+      auto_execute: true
+    }
   },
   createdAt: Date.now()
 }
