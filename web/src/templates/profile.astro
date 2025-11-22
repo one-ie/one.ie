@@ -1,0 +1,259 @@
+---
+/**
+ * Profile Template
+ *
+ * Production-ready user profile page with ontology-ui components
+ *
+ * Features:
+ * - UserCard with avatar and details
+ * - UserActivity feed showing recent actions
+ * - UserPermissions matrix for role management
+ * - UserAvatar with status indicator
+ *
+ * Usage:
+ * Copy this template to your project and customize:
+ * - Replace mock user data with real user queries
+ * - Customize permissions display
+ * - Add your specific user actions
+ */
+
+import Layout from '@/layouts/Layout.astro';
+import { UserCard } from '@/components/ontology-ui/people/UserCard';
+import { UserActivity } from '@/components/ontology-ui/people/UserActivity';
+import { UserPermissions } from '@/components/ontology-ui/people/UserPermissions';
+import { UserAvatar } from '@/components/ontology-ui/people/UserAvatar';
+import { Card, CardHeader, CardTitle, CardContent } from '@/components/ui/card';
+import { Badge } from '@/components/ui/badge';
+import { Button } from '@/components/ui/button';
+import { Separator } from '@/components/ui/separator';
+
+// Page metadata
+const title = 'User Profile';
+const description = 'View and manage user profile, activity, and permissions';
+
+// Mock user data (replace with Convex query)
+const user = {
+  id: 'user-123',
+  name: 'Sarah Johnson',
+  email: 'sarah@example.com',
+  avatar: 'https://api.dicebear.com/7.x/avataaars/svg?seed=Sarah',
+  role: 'org_owner' as const,
+  status: 'online' as const,
+  createdAt: new Date('2024-01-15').getTime(),
+  metadata: {
+    bio: 'Product designer and creative director. Love building beautiful, accessible products.',
+    location: 'San Francisco, CA',
+    website: 'https://sarahjohnson.com',
+    timezone: 'America/Los_Angeles',
+  }
+};
+
+// Mock activity data
+const activities = [
+  { id: '1', type: 'created', entity: 'Product Launch Campaign', timestamp: Date.now() - 3600000 },
+  { id: '2', type: 'updated', entity: 'Design System v2', timestamp: Date.now() - 7200000 },
+  { id: '3', type: 'joined', entity: 'Marketing Team', timestamp: Date.now() - 86400000 },
+  { id: '4', type: 'completed', entity: 'Onboarding Checklist', timestamp: Date.now() - 172800000 },
+];
+
+// Mock stats
+const stats = [
+  { label: 'Projects', value: 24 },
+  { label: 'Connections', value: 156 },
+  { label: 'Contributions', value: 432 },
+];
+---
+
+<Layout title={title} description={description}>
+  <div class="container mx-auto px-4 py-8 max-w-6xl">
+    <!-- Profile Header -->
+    <div class="mb-8">
+      <div class="flex items-start justify-between gap-6">
+        <!-- User Card -->
+        <div class="flex-1">
+          <UserCard
+            user={user}
+            showRole={true}
+            showEmail={true}
+            showActions={true}
+            onMessage={() => console.log('Message user')}
+            onViewProfile={() => console.log('View full profile')}
+            client:load
+          />
+        </div>
+
+        <!-- Actions -->
+        <div class="flex gap-2">
+          <Button variant="outline">
+            ✏️ Edit Profile
+          </Button>
+          <Button variant="outline">
+            ⚙️ Settings
+          </Button>
+        </div>
+      </div>
+
+      <!-- Stats -->
+      <div class="grid grid-cols-3 gap-4 mt-6">
+        {stats.map(stat => (
+          <Card>
+            <CardContent class="pt-6">
+              <div class="text-center">
+                <div class="text-3xl font-bold">{stat.value}</div>
+                <div class="text-sm text-muted-foreground mt-1">{stat.label}</div>
+              </div>
+            </CardContent>
+          </Card>
+        ))}
+      </div>
+    </div>
+
+    <Separator class="my-8" />
+
+    <!-- Content Grid -->
+    <div class="grid grid-cols-1 lg:grid-cols-3 gap-8">
+      <!-- Main Content (2 columns) -->
+      <div class="lg:col-span-2 space-y-6">
+        <!-- About Section -->
+        <Card>
+          <CardHeader>
+            <CardTitle>About</CardTitle>
+          </CardHeader>
+          <CardContent class="space-y-4">
+            <div>
+              <h3 class="font-semibold mb-2">Bio</h3>
+              <p class="text-muted-foreground">{user.metadata.bio}</p>
+            </div>
+
+            <div class="grid grid-cols-2 gap-4">
+              <div>
+                <h3 class="font-semibold mb-2">📍 Location</h3>
+                <p class="text-muted-foreground">{user.metadata.location}</p>
+              </div>
+              <div>
+                <h3 class="font-semibold mb-2">🌐 Website</h3>
+                <a href={user.metadata.website} class="text-primary hover:underline">
+                  {user.metadata.website}
+                </a>
+              </div>
+            </div>
+          </CardContent>
+        </Card>
+
+        <!-- Activity Feed -->
+        <Card>
+          <CardHeader>
+            <div class="flex items-center justify-between">
+              <CardTitle>Recent Activity</CardTitle>
+              <Badge variant="outline">Last 7 days</Badge>
+            </div>
+          </CardHeader>
+          <CardContent>
+            <UserActivity
+              userId={user.id}
+              limit={10}
+              showTimestamp={true}
+              client:load
+            />
+          </CardContent>
+        </Card>
+
+        <!-- Connections -->
+        <Card>
+          <CardHeader>
+            <CardTitle>Connections</CardTitle>
+          </CardHeader>
+          <CardContent>
+            <div class="flex gap-2 flex-wrap">
+              {[1, 2, 3, 4, 5, 6, 7, 8].map(i => (
+                <UserAvatar
+                  user={{
+                    id: `user-${i}`,
+                    name: `User ${i}`,
+                    avatar: `https://api.dicebear.com/7.x/avataaars/svg?seed=User${i}`,
+                    status: i % 3 === 0 ? 'online' : 'offline'
+                  }}
+                  size="md"
+                  showStatus={true}
+                  client:load
+                />
+              ))}
+            </div>
+            <Button variant="outline" class="w-full mt-4">
+              View All Connections
+            </Button>
+          </CardContent>
+        </Card>
+      </div>
+
+      <!-- Sidebar (1 column) -->
+      <div class="space-y-6">
+        <!-- Permissions -->
+        <Card>
+          <CardHeader>
+            <CardTitle>Permissions</CardTitle>
+          </CardHeader>
+          <CardContent>
+            <UserPermissions
+              userId={user.id}
+              role={user.role}
+              editable={true}
+              client:load
+            />
+          </CardContent>
+        </Card>
+
+        <!-- Teams -->
+        <Card>
+          <CardHeader>
+            <CardTitle>Teams</CardTitle>
+          </CardHeader>
+          <CardContent class="space-y-2">
+            <div class="flex items-center justify-between p-2 rounded hover:bg-accent">
+              <div class="flex items-center gap-2">
+                <span class="text-2xl">🎨</span>
+                <span class="font-medium">Design Team</span>
+              </div>
+              <Badge variant="secondary">Owner</Badge>
+            </div>
+            <div class="flex items-center justify-between p-2 rounded hover:bg-accent">
+              <div class="flex items-center gap-2">
+                <span class="text-2xl">📱</span>
+                <span class="font-medium">Product Team</span>
+              </div>
+              <Badge variant="outline">Member</Badge>
+            </div>
+            <div class="flex items-center justify-between p-2 rounded hover:bg-accent">
+              <div class="flex items-center gap-2">
+                <span class="text-2xl">🚀</span>
+                <span class="font-medium">Marketing Team</span>
+              </div>
+              <Badge variant="outline">Member</Badge>
+            </div>
+          </CardContent>
+        </Card>
+
+        <!-- Quick Links -->
+        <Card>
+          <CardHeader>
+            <CardTitle>Quick Links</CardTitle>
+          </CardHeader>
+          <CardContent class="space-y-2">
+            <Button variant="ghost" class="w-full justify-start">
+              📊 My Dashboard
+            </Button>
+            <Button variant="ghost" class="w-full justify-start">
+              📝 My Projects
+            </Button>
+            <Button variant="ghost" class="w-full justify-start">
+              💬 Messages
+            </Button>
+            <Button variant="ghost" class="w-full justify-start">
+              🔔 Notifications
+            </Button>
+          </CardContent>
+        </Card>
+      </div>
+    </div>
+  </div>
+</Layout>

@@ -3,6 +3,18 @@
  *
  * Creates complete .astro file code from natural language description
  * Uses component library for building blocks
+ *
+ * Available Templates:
+ * - dashboard: Admin dashboard with DimensionNav, EntityDisplay, UnifiedSearch (/templates/dashboard.astro)
+ * - profile: User profile with UserCard, UserActivity, UserPermissions (/templates/profile.astro)
+ * - marketplace: E-commerce with ProductCard, TokenCard, NFTCard (/templates/marketplace.astro)
+ * - analytics: Analytics dashboard with charts and visualizations (/templates/analytics.astro)
+ * - chat: Real-time chat with ChatMessage, ChatInput, LiveNotifications (/templates/chat.astro)
+ * - product: Product landing page with gallery and checkout
+ * - blog: Blog listing and posts
+ * - docs: Documentation pages
+ * - landing: Marketing landing pages
+ * - auth: Authentication pages
  */
 
 import type { CoreTool } from "ai";
@@ -29,11 +41,14 @@ export const generateAstroPageTool: CoreTool = {
 				"blog",
 				"docs",
 				"dashboard",
+				"profile",
+				"marketplace",
+				"analytics",
 				"auth",
 				"chat",
 				"custom",
 			])
-			.describe("The type of page being generated"),
+			.describe("The type of page being generated. Use template-based types (dashboard, profile, marketplace, analytics, chat) for production-ready pages with ontology-ui components."),
 		features: z
 			.array(z.string())
 			.optional()
@@ -113,23 +128,40 @@ ${markup}`;
 function generateImports(pageType: string, features: string[]): string {
 	const imports: string[] = ["import Layout from '@/layouts/Layout.astro';"];
 
-	// Add shadcn/ui components based on page type
+	// Add ontology-ui components based on page type
 	if (pageType === "product" || pageType === "landing") {
 		imports.push(
 			"import { Card, CardHeader, CardTitle, CardContent, CardFooter } from '@/components/ui/card';",
 		);
 		imports.push("import { Button } from '@/components/ui/button';");
 		imports.push("import { Badge } from '@/components/ui/badge';");
+		// Ontology-UI: Thing components for products
+		imports.push("import { ThingCard } from '@/components/ontology-ui/things';");
+		imports.push("import { ProductCard } from '@/components/ontology-ui/things';");
 	}
 
 	if (pageType === "dashboard") {
 		imports.push("import { Separator } from '@/components/ui/separator';");
 		imports.push("import { Skeleton } from '@/components/ui/skeleton';");
+		// Ontology-UI: Dashboard components
+		imports.push("import { DimensionNav } from '@/components/ontology-ui/app';");
+		imports.push("import { EntityDisplay } from '@/components/ontology-ui/app';");
+		imports.push("import { UnifiedSearch } from '@/components/ontology-ui/app';");
 	}
 
 	if (pageType === "auth") {
 		imports.push("import { Input } from '@/components/ui/input';");
 		imports.push("import { Label } from '@/components/ui/label';");
+		// Ontology-UI: User/People components
+		imports.push("import { UserCard } from '@/components/ontology-ui/people';");
+		imports.push("import { UserProfile } from '@/components/ontology-ui/people';");
+	}
+
+	if (pageType === "chat") {
+		// Ontology-UI: Streaming components
+		imports.push("import { LiveActivityFeed } from '@/components/ontology-ui/streaming';");
+		imports.push("import { ChatMessage } from '@/components/ontology-ui/streaming';");
+		imports.push("import { PresenceIndicator } from '@/components/ontology-ui/streaming';");
 	}
 
 	if (features.includes("stripe-checkout")) {
@@ -140,6 +172,25 @@ function generateImports(pageType: string, features: string[]): string {
 		imports.push(
 			"import { ProductGallery } from '@/components/features/products/ProductGallery';",
 		);
+	}
+
+	if (features.includes("crypto")) {
+		// Ontology-UI: Crypto components
+		imports.push("import { WalletConnectButton } from '@/components/ontology-ui/crypto/wallet';");
+		imports.push("import { TokenSwap } from '@/components/ontology-ui/crypto/dex';");
+		imports.push("import { TokenBalance } from '@/components/ontology-ui/crypto/portfolio';");
+	}
+
+	if (features.includes("analytics")) {
+		// Ontology-UI: Visualization components
+		imports.push("import { TimeSeriesChart } from '@/components/ontology-ui/visualization';");
+		imports.push("import { HeatmapChart } from '@/components/ontology-ui/visualization';");
+	}
+
+	if (features.includes("marketplace")) {
+		// Ontology-UI: NFT/Marketplace components
+		imports.push("import { NFTCard } from '@/components/ontology-ui/crypto/nft';");
+		imports.push("import { NFTMarketplace } from '@/components/ontology-ui/crypto/nft';");
 	}
 
 	return imports.join("\n");
@@ -264,9 +315,19 @@ function generateMarkup(
 	if (pageType === "dashboard") {
 		return `<Layout title={title} sidebarInitialCollapsed={false}>
   <div class="container mx-auto px-4 py-8">
+    <!-- Ontology-UI: Dimension Navigation -->
+    <DimensionNav client:load />
+
     <h1 class="text-3xl font-bold mb-8">{title}</h1>
 
-    <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+    <!-- Ontology-UI: Unified Search -->
+    <UnifiedSearch
+      placeholder="Search across all dimensions..."
+      dimensions={['things', 'people', 'events']}
+      client:load
+    />
+
+    <div class="grid grid-cols-1 md:grid-cols-3 gap-6 mt-8">
       <Card>
         <CardHeader>
           <CardTitle>Metric 1</CardTitle>
@@ -294,6 +355,13 @@ function generateMarkup(
         </CardContent>
       </Card>
     </div>
+
+    <!-- Ontology-UI: Entity Display -->
+    <EntityDisplay
+      entityType="thing"
+      filters={{ status: "active" }}
+      client:load
+    />
   </div>
 </Layout>`;
 	}
@@ -301,13 +369,31 @@ function generateMarkup(
 	if (pageType === "chat") {
 		return `<Layout title="Chat" sidebarInitialCollapsed={true}>
   <div class="h-screen flex flex-col">
-    <!-- Chat interface goes here -->
-    <div class="flex-1 overflow-y-auto p-4">
-      <p>Chat messages will appear here</p>
+    <!-- Ontology-UI: Presence Indicators -->
+    <div class="border-b p-4">
+      <PresenceIndicator
+        users={[]}
+        showNames={true}
+        client:load
+      />
     </div>
 
+    <!-- Ontology-UI: Chat Messages -->
+    <div class="flex-1 overflow-y-auto p-4">
+      <LiveActivityFeed
+        groupId="current-group"
+        eventTypes={['message_sent', 'user_joined']}
+        client:load
+      />
+    </div>
+
+    <!-- Ontology-UI: Chat Input -->
     <div class="border-t p-4">
-      <Input placeholder="Type a message..." />
+      <ChatMessage
+        mode="input"
+        onSend={(message) => console.log('Send:', message)}
+        client:load
+      />
     </div>
   </div>
 </Layout>`;

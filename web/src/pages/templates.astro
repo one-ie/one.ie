@@ -1,0 +1,377 @@
+---
+/**
+ * Templates Preview Page
+ *
+ * Browse and preview all available page templates
+ * Shows template features, components used, and use cases
+ */
+
+import Layout from '@/layouts/Layout.astro';
+import { Card, CardHeader, CardTitle, CardDescription, CardContent, CardFooter } from '@/components/ui/card';
+import { Badge } from '@/components/ui/badge';
+import { Button } from '@/components/ui/button';
+import { Separator } from '@/components/ui/separator';
+
+const title = 'Page Templates';
+const description = 'Production-ready page templates using ontology-ui components';
+
+// Template catalog
+const templates = [
+  {
+    id: 'dashboard',
+    name: 'Dashboard Template',
+    description: 'Admin dashboard with 6-dimension navigation',
+    icon: '📊',
+    category: 'Admin',
+    templatePath: '/templates/dashboard.astro',
+    previewUrl: '/templates/preview/dashboard',
+    components: ['DimensionNav', 'EntityDisplay', 'UnifiedSearch', 'TimeSeriesChart'],
+    features: [
+      '6-dimension navigation with keyboard shortcuts',
+      'Cross-dimensional unified search',
+      'Real-time entity display',
+      'Quick action buttons',
+      'Stats dashboard',
+    ],
+    useCases: [
+      'Platform administration',
+      'Entity management',
+      'Multi-tenant dashboards',
+      'Analytics overview',
+    ],
+    complexity: 'medium',
+    readyForProduction: true,
+  },
+  {
+    id: 'profile',
+    name: 'Profile Template',
+    description: 'User profile with activity and permissions',
+    icon: '👤',
+    category: 'User Management',
+    templatePath: '/templates/profile.astro',
+    previewUrl: '/templates/preview/profile',
+    components: ['UserCard', 'UserActivity', 'UserPermissions', 'UserAvatar'],
+    features: [
+      'User profile card with avatar',
+      'Activity timeline',
+      'Permission matrix',
+      'Team membership',
+      'Connection network',
+    ],
+    useCases: [
+      'User profiles',
+      'Team member pages',
+      'Account management',
+      'Social profiles',
+    ],
+    complexity: 'easy',
+    readyForProduction: true,
+  },
+  {
+    id: 'marketplace',
+    name: 'Marketplace Template',
+    description: 'E-commerce for products, tokens, and NFTs',
+    icon: '🛒',
+    category: 'E-commerce',
+    templatePath: '/templates/marketplace.astro',
+    previewUrl: '/templates/preview/marketplace',
+    components: ['ProductCard', 'TokenCard', 'NFTCard', 'SearchBar'],
+    features: [
+      'Product listings with images',
+      'Token price tracking',
+      'NFT collectibles gallery',
+      'Category filtering',
+      'Search functionality',
+    ],
+    useCases: [
+      'Product marketplaces',
+      'NFT galleries',
+      'Token exchanges',
+      'Digital goods stores',
+    ],
+    complexity: 'medium',
+    readyForProduction: true,
+  },
+  {
+    id: 'analytics',
+    name: 'Analytics Template',
+    description: 'Data visualization and insights dashboard',
+    icon: '📈',
+    category: 'Analytics',
+    templatePath: '/templates/analytics.astro',
+    previewUrl: '/templates/preview/analytics',
+    components: ['TimeSeriesChart', 'HeatmapChart', 'NetworkDiagram', 'KnowledgeGraph'],
+    features: [
+      'Time series trend charts',
+      'Activity heatmaps',
+      'Network visualizations',
+      'Knowledge graphs',
+      'Key metrics display',
+    ],
+    useCases: [
+      'Analytics dashboards',
+      'Performance tracking',
+      'Data insights',
+      'Relationship visualization',
+    ],
+    complexity: 'hard',
+    readyForProduction: true,
+  },
+  {
+    id: 'chat',
+    name: 'Chat Template',
+    description: 'Real-time messaging and collaboration',
+    icon: '💬',
+    category: 'Communication',
+    templatePath: '/templates/chat.astro',
+    previewUrl: '/templates/preview/chat',
+    components: ['ChatMessage', 'ChatInput', 'LiveNotifications', 'PresenceIndicator'],
+    features: [
+      'Real-time messaging',
+      'Channel management',
+      'User presence indicators',
+      'Typing indicators',
+      'Message reactions',
+    ],
+    useCases: [
+      'Team chat',
+      'Customer support',
+      'Community forums',
+      'Live collaboration',
+    ],
+    complexity: 'hard',
+    readyForProduction: true,
+  },
+];
+
+// Category grouping
+const categories = [...new Set(templates.map(t => t.category))];
+
+// Complexity levels
+const complexityColors: Record<string, string> = {
+  easy: 'bg-green-100 text-green-800',
+  medium: 'bg-yellow-100 text-yellow-800',
+  hard: 'bg-red-100 text-red-800',
+};
+---
+
+<Layout title={title} description={description}>
+  <!-- Hero Section -->
+  <section class="bg-gradient-to-r from-primary/10 to-primary/5 border-b">
+    <div class="container mx-auto px-4 py-16">
+      <div class="max-w-3xl">
+        <Badge variant="outline" class="mb-4">
+          INTEGRATION CYCLE 6 Complete
+        </Badge>
+        <h1 class="text-5xl font-bold mb-4">
+          Page Templates
+        </h1>
+        <p class="text-xl text-muted-foreground mb-6">
+          Production-ready templates built with 286+ ontology-ui components. Copy, customize, and deploy in minutes.
+        </p>
+        <div class="flex gap-3">
+          <Badge variant="default">5 Templates</Badge>
+          <Badge variant="outline">286+ Components</Badge>
+          <Badge variant="outline">6 Dimensions</Badge>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <div class="container mx-auto px-4 py-12">
+    <!-- Stats -->
+    <div class="grid grid-cols-1 md:grid-cols-4 gap-4 mb-12">
+      <Card>
+        <CardContent class="pt-6">
+          <div class="text-center">
+            <div class="text-3xl font-bold">{templates.length}</div>
+            <div class="text-sm text-muted-foreground mt-1">Templates</div>
+          </div>
+        </CardContent>
+      </Card>
+      <Card>
+        <CardContent class="pt-6">
+          <div class="text-center">
+            <div class="text-3xl font-bold">{categories.length}</div>
+            <div class="text-sm text-muted-foreground mt-1">Categories</div>
+          </div>
+        </CardContent>
+      </Card>
+      <Card>
+        <CardContent class="pt-6">
+          <div class="text-center">
+            <div class="text-3xl font-bold">
+              {templates.flatMap(t => t.components).length}
+            </div>
+            <div class="text-sm text-muted-foreground mt-1">Components</div>
+          </div>
+        </CardContent>
+      </Card>
+      <Card>
+        <CardContent class="pt-6">
+          <div class="text-center">
+            <div class="text-3xl font-bold text-green-600">
+              {templates.filter(t => t.readyForProduction).length}
+            </div>
+            <div class="text-sm text-muted-foreground mt-1">Production Ready</div>
+          </div>
+        </CardContent>
+      </Card>
+    </div>
+
+    <!-- Templates Grid -->
+    <div class="space-y-4 mb-12">
+      <div class="flex items-center justify-between">
+        <h2 class="text-3xl font-bold">Available Templates</h2>
+        <div class="flex gap-2">
+          {categories.map(cat => (
+            <Badge variant="outline">{cat}</Badge>
+          ))}
+        </div>
+      </div>
+
+      <div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
+        {templates.map(template => (
+          <Card class="hover:shadow-lg transition-all">
+            <CardHeader>
+              <div class="flex items-start justify-between mb-3">
+                <div class="flex items-center gap-3">
+                  <span class="text-4xl">{template.icon}</span>
+                  <div>
+                    <CardTitle class="text-xl">{template.name}</CardTitle>
+                    <Badge variant="secondary" class="mt-1">
+                      {template.category}
+                    </Badge>
+                  </div>
+                </div>
+                <Badge class={complexityColors[template.complexity]}>
+                  {template.complexity}
+                </Badge>
+              </div>
+              <CardDescription>{template.description}</CardDescription>
+            </CardHeader>
+
+            <CardContent class="space-y-4">
+              <!-- Components Used -->
+              <div>
+                <h4 class="font-semibold text-sm mb-2">Components:</h4>
+                <div class="flex flex-wrap gap-1">
+                  {template.components.map(comp => (
+                    <Badge variant="outline" class="text-xs font-mono">
+                      {comp}
+                    </Badge>
+                  ))}
+                </div>
+              </div>
+
+              <!-- Features -->
+              <div>
+                <h4 class="font-semibold text-sm mb-2">Features:</h4>
+                <ul class="text-sm text-muted-foreground space-y-1">
+                  {template.features.slice(0, 3).map(feature => (
+                    <li class="flex items-start gap-2">
+                      <span class="text-green-500 shrink-0">✓</span>
+                      <span>{feature}</span>
+                    </li>
+                  ))}
+                </ul>
+              </div>
+
+              <!-- Use Cases -->
+              <div>
+                <h4 class="font-semibold text-sm mb-2">Use Cases:</h4>
+                <div class="flex flex-wrap gap-1">
+                  {template.useCases.map(useCase => (
+                    <span class="text-xs bg-muted px-2 py-1 rounded">
+                      {useCase}
+                    </span>
+                  ))}
+                </div>
+              </div>
+            </CardContent>
+
+            <CardFooter class="flex gap-2">
+              <Button variant="default" class="flex-1" asChild>
+                <a href={template.templatePath} target="_blank">
+                  View Source
+                </a>
+              </Button>
+              <Button variant="outline" asChild>
+                <a href={`https://github.com/one-ie/one.ie/tree/main/web/src${template.templatePath}`} target="_blank">
+                  GitHub →
+                </a>
+              </Button>
+            </CardFooter>
+          </Card>
+        ))}
+      </div>
+    </div>
+
+    <Separator class="my-12" />
+
+    <!-- Quick Start Guide -->
+    <section class="space-y-6">
+      <h2 class="text-3xl font-bold">Quick Start</h2>
+
+      <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+        <Card>
+          <CardHeader>
+            <div class="text-3xl mb-2">1️⃣</div>
+            <CardTitle>Choose a Template</CardTitle>
+          </CardHeader>
+          <CardContent>
+            <p class="text-sm text-muted-foreground">
+              Browse the templates above and select one that matches your needs. Each template is production-ready with ontology-ui components.
+            </p>
+          </CardContent>
+        </Card>
+
+        <Card>
+          <CardHeader>
+            <div class="text-3xl mb-2">2️⃣</div>
+            <CardTitle>Copy & Customize</CardTitle>
+          </CardHeader>
+          <CardContent>
+            <p class="text-sm text-muted-foreground">
+              Copy the template to your project and customize the data, styling, and components to match your specific requirements.
+            </p>
+          </CardContent>
+        </Card>
+
+        <Card>
+          <CardHeader>
+            <div class="text-3xl mb-2">3️⃣</div>
+            <CardTitle>Deploy</CardTitle>
+          </CardHeader>
+          <CardContent>
+            <p class="text-sm text-muted-foreground">
+              Test locally with <code class="bg-muted px-1 py-0.5 rounded">bun run dev</code>, then deploy to production with Cloudflare Pages.
+            </p>
+          </CardContent>
+        </Card>
+      </div>
+    </section>
+
+    <!-- CTA -->
+    <Card class="mt-12 bg-gradient-to-r from-primary/10 to-primary/5 border-2 border-primary/20">
+      <CardContent class="p-8 text-center">
+        <h3 class="text-2xl font-bold mb-2">Ready to Build?</h3>
+        <p class="text-muted-foreground mb-6 max-w-2xl mx-auto">
+          All templates are built on the 6-dimension ontology with 286+ production-ready components. Start building amazing applications today.
+        </p>
+        <div class="flex gap-4 justify-center">
+          <Button size="lg" asChild>
+            <a href="/ontology-ui">
+              Browse Components →
+            </a>
+          </Button>
+          <Button size="lg" variant="outline" asChild>
+            <a href="https://github.com/one-ie/one.ie" target="_blank">
+              View on GitHub
+            </a>
+          </Button>
+        </div>
+      </CardContent>
+    </Card>
+  </div>
+</Layout>

@@ -6,7 +6,6 @@ import {
 	WebPreview,
 	WebPreviewNavigation,
 	WebPreviewNavigationButton,
-	WebPreviewBody,
 	WebPreviewConsole,
 } from "@/components/ai/elements/web-preview";
 import {
@@ -18,7 +17,6 @@ import {
 	CheckCircleIcon,
 	ZoomInIcon,
 	ZoomOutIcon,
-	MaximizeIcon,
 	ExternalLinkIcon,
 } from "lucide-react";
 import { Alert, AlertDescription, AlertTitle } from "@/components/ui/alert";
@@ -64,28 +62,14 @@ export function LivePreview({
 	const [lastCompileTime, setLastCompileTime] = useState<Date | null>(null);
 	const [zoom, setZoom] = useState(100);
 	const iframeKey = useRef(0);
-	const compileTimeoutRef = useRef<NodeJS.Timeout>();
+	const compileTimeoutRef = useRef<NodeJS.Timeout | undefined>(undefined);
 
-	// Auto-compile on code change
-	useEffect(() => {
-		if (!autoCompile) return;
-
-		// Clear existing timeout
-		if (compileTimeoutRef.current) {
-			clearTimeout(compileTimeoutRef.current);
-		}
-
-		// Set new timeout for compilation
-		compileTimeoutRef.current = setTimeout(() => {
-			compile(code);
-		}, compileDelay);
-
-		return () => {
-			if (compileTimeoutRef.current) {
-				clearTimeout(compileTimeoutRef.current);
-			}
-		};
-	}, [code, autoCompile, compileDelay]);
+	const addConsoleLog = useCallback((level: ConsoleLog["level"], message: string) => {
+		setConsoleLogs((prev) => [
+			...prev,
+			{ level, message, timestamp: new Date() },
+		]);
+	}, []);
 
 	const compile = useCallback(async (sourceCode: string) => {
 		setIsCompiling(true);
@@ -130,27 +114,41 @@ export function LivePreview({
 		} finally {
 			setIsCompiling(false);
 		}
-	}, [language]);
+	}, [language, addConsoleLog]);
+
+	// Auto-compile on code change
+	useEffect(() => {
+		if (!autoCompile) return;
+
+		// Clear existing timeout
+		if (compileTimeoutRef.current) {
+			clearTimeout(compileTimeoutRef.current);
+		}
+
+		// Set new timeout for compilation
+		compileTimeoutRef.current = setTimeout(() => {
+			void compile(code);
+		}, compileDelay);
+
+		return () => {
+			if (compileTimeoutRef.current) {
+				clearTimeout(compileTimeoutRef.current);
+			}
+		};
+	}, [code, autoCompile, compileDelay, compile]);
 
 	const handleCodeChange = useCallback((newCode: string) => {
 		setCode(newCode);
 	}, []);
 
 	const handleRun = useCallback((sourceCode: string) => {
-		compile(sourceCode);
+		void compile(sourceCode);
 	}, [compile]);
 
 	const handleRefresh = useCallback(() => {
 		iframeKey.current += 1;
 		addConsoleLog("log", "↻ Preview refreshed");
-	}, []);
-
-	const addConsoleLog = useCallback((level: ConsoleLog["level"], message: string) => {
-		setConsoleLogs((prev) => [
-			...prev,
-			{ level, message, timestamp: new Date() },
-		]);
-	}, []);
+	}, [addConsoleLog]);
 
 	const handleZoomIn = useCallback(() => {
 		setZoom((prev) => Math.min(prev + 10, 200));
@@ -433,25 +431,30 @@ ${html}
 </html>`;
 }
 
-const DEFAULT_CODE = `<div class="max-w-2xl mx-auto">
-	<h1 class="text-4xl font-bold mb-4">Hello, World!</h1>
-	<p class="text-lg text-gray-600 mb-6">
-		This is a live preview editor. Edit the code on the left to see changes here.
-	</p>
+const DEFAULT_CODE = `---
+import { ThingCard } from '@/components/ontology-ui/things/ThingCard';
+import { PersonCard } from '@/components/ontology-ui/people/PersonCard';
+---
 
-	<div class="grid grid-cols-2 gap-4">
-		<div class="p-4 bg-blue-100 rounded-lg">
-			<h3 class="font-bold">Feature 1</h3>
-			<p class="text-sm">Build amazing things</p>
-		</div>
-		<div class="p-4 bg-green-100 rounded-lg">
-			<h3 class="font-bold">Feature 2</h3>
-			<p class="text-sm">Ship faster</p>
-		</div>
+<div class="max-w-4xl mx-auto space-y-6">
+	<div class="text-center mb-8">
+		<h1 class="text-4xl font-bold mb-2">Ontology-UI Live Preview</h1>
+		<p class="text-lg text-muted-foreground">
+			Edit the code on the left to see changes here
+		</p>
 	</div>
 
-	<button class="mt-6 px-6 py-3 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors"
-		onclick="alert('Hello from the preview!')">
-		Click Me
-	</button>
+	<div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+		<ThingCard />
+		<PersonCard />
+	</div>
+
+	<div class="mt-8 p-6 border border-blue-200 bg-blue-50 dark:bg-blue-900/20 rounded-lg">
+		<h3 class="font-semibold text-blue-900 dark:text-blue-100 mb-2">
+			💡 Tip: Ontology-UI Components
+		</h3>
+		<p class="text-sm text-blue-800 dark:text-blue-200">
+			This preview supports 286+ ontology-ui components. They appear as previews here and will be fully functional when deployed with backend integration.
+		</p>
+	</div>
 </div>`;

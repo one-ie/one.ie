@@ -37,7 +37,7 @@ export const generatePage = mutation({
       })
     ),
   },
-  handler: async (ctx, args) => {
+  handler: async (ctx: any, args: any) => {
     // 1. AUTHENTICATE
     const identity = await ctx.auth.getUserIdentity();
     if (!identity) {
@@ -46,8 +46,8 @@ export const generatePage = mutation({
 
     const creator = await ctx.db
       .query("entities")
-      .withIndex("by_type", (q) => q.eq("type", "creator"))
-      .filter((q) => q.eq(q.field("properties.email"), identity.email))
+      .withIndex("by_type", (q: any) => q.eq("type", "creator"))
+      .filter((q: any) => q.eq(q.field("properties.email"), identity.email))
       .first();
 
     if (!creator) {
@@ -63,10 +63,10 @@ export const generatePage = mutation({
     // Verify ownership
     const ownership = await ctx.db
       .query("connections")
-      .withIndex("from_type", (q) =>
+      .withIndex("from_type", (q: any) =>
         q.eq("fromEntityId", creator._id).eq("relationshipType", "owns")
       )
-      .filter((q) => q.eq(q.field("toEntityId"), args.websiteId))
+      .filter((q: any) => q.eq(q.field("toEntityId"), args.websiteId))
       .first();
 
     if (!ownership) {
@@ -288,7 +288,7 @@ export const modifyPage = mutation({
       action: v.optional(v.string()), // "add", "remove", "modify", "replace"
     })),
   },
-  handler: async (ctx, args) => {
+  handler: async (ctx: any, args: any) => {
     // 1. AUTHENTICATE
     const identity = await ctx.auth.getUserIdentity();
     if (!identity) {
@@ -297,8 +297,8 @@ export const modifyPage = mutation({
 
     const creator = await ctx.db
       .query("entities")
-      .withIndex("by_type", (q) => q.eq("type", "creator"))
-      .filter((q) => q.eq(q.field("properties.email"), identity.email))
+      .withIndex("by_type", (q: any) => q.eq("type", "creator"))
+      .filter((q: any) => q.eq(q.field("properties.email"), identity.email))
       .first();
 
     if (!creator) {
@@ -314,7 +314,7 @@ export const modifyPage = mutation({
     // Get website
     const websiteConnection = await ctx.db
       .query("connections")
-      .withIndex("to_type", (q) =>
+      .withIndex("to_type", (q: any) =>
         q.eq("toEntityId", args.pageId).eq("relationshipType", "contains")
       )
       .first();
@@ -331,10 +331,10 @@ export const modifyPage = mutation({
     // Verify ownership
     const ownership = await ctx.db
       .query("connections")
-      .withIndex("from_type", (q) =>
+      .withIndex("from_type", (q: any) =>
         q.eq("fromEntityId", creator._id).eq("relationshipType", "owns")
       )
-      .filter((q) => q.eq(q.field("toEntityId"), website._id))
+      .filter((q: any) => q.eq(q.field("toEntityId"), website._id))
       .first();
 
     if (!ownership) {

@@ -1,0 +1,165 @@
+---
+/**
+ * Dashboard Template
+ *
+ * Production-ready admin dashboard with ontology-ui components
+ *
+ * Features:
+ * - DimensionNav for 6-dimension navigation
+ * - EntityDisplay for showing current entities
+ * - UnifiedSearch for cross-dimensional search
+ * - Real-time data with Convex
+ *
+ * Usage:
+ * Copy this template to your project and customize:
+ * - Update groupId fetching logic
+ * - Customize dimension counts
+ * - Add your specific entity types
+ */
+
+import Layout from '@/layouts/Layout.astro';
+import { DimensionNav } from '@/components/ontology-ui/app/DimensionNav';
+import { EntityDisplay } from '@/components/ontology-ui/app/EntityDisplay';
+import { UnifiedSearch } from '@/components/ontology-ui/app/UnifiedSearch';
+import { Card, CardHeader, CardTitle, CardContent } from '@/components/ui/card';
+import { Badge } from '@/components/ui/badge';
+import type { Dimension } from '@/components/ontology-ui/types';
+
+// Page metadata
+const title = 'Dashboard';
+const description = 'Manage your groups, people, things, connections, events, and knowledge';
+
+// Default active dimension (can be set from URL params)
+const defaultDimension: Dimension = 'things';
+
+// Mock data for demonstration (replace with real Convex queries)
+const dimensionCounts = {
+  groups: 12,
+  people: 45,
+  things: 234,
+  connections: 567,
+  events: 1234,
+  knowledge: 89,
+};
+
+// Recent activity for quick stats
+const stats = [
+  { label: 'Total Entities', value: 2181, change: '+12%', trend: 'up' },
+  { label: 'Active Today', value: 89, change: '+5%', trend: 'up' },
+  { label: 'Pending Actions', value: 7, change: '-2', trend: 'down' },
+  { label: 'Collaborators', value: 45, change: '+3', trend: 'up' },
+];
+---
+
+<Layout title={title} description={description}>
+  <div class="flex h-screen overflow-hidden">
+    <!-- Sidebar Navigation -->
+    <aside class="w-64 border-r bg-card p-4 overflow-y-auto">
+      <div class="mb-6">
+        <h1 class="text-2xl font-bold mb-2">Dashboard</h1>
+        <p class="text-sm text-muted-foreground">
+          Navigate across all 6 dimensions
+        </p>
+      </div>
+
+      <!-- Client-side dimension navigation with keyboard shortcuts -->
+      <DimensionNav
+        activeDimension={defaultDimension}
+        onDimensionChange={(dim) => console.log('Navigate to:', dim)}
+        counts={dimensionCounts}
+        collapsed={false}
+        client:load
+      />
+    </aside>
+
+    <!-- Main Content Area -->
+    <main class="flex-1 overflow-y-auto">
+      <!-- Search Bar -->
+      <div class="sticky top-0 z-10 bg-background border-b p-4">
+        <UnifiedSearch
+          placeholder="Search across all dimensions..."
+          onSearch={(query) => console.log('Search:', query)}
+          client:load
+        />
+      </div>
+
+      <!-- Stats Grid -->
+      <div class="p-6 space-y-6">
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
+          {stats.map(stat => (
+            <Card>
+              <CardHeader class="pb-3">
+                <div class="flex items-center justify-between">
+                  <CardTitle class="text-sm font-medium text-muted-foreground">
+                    {stat.label}
+                  </CardTitle>
+                  <Badge
+                    variant={stat.trend === 'up' ? 'default' : 'secondary'}
+                    class={stat.trend === 'up' ? 'bg-green-100 text-green-800' : 'bg-gray-100 text-gray-800'}
+                  >
+                    {stat.change}
+                  </Badge>
+                </div>
+              </CardHeader>
+              <CardContent>
+                <div class="text-3xl font-bold">{stat.value.toLocaleString()}</div>
+              </CardContent>
+            </Card>
+          ))}
+        </div>
+
+        <!-- Entity Display -->
+        <div>
+          <div class="flex items-center justify-between mb-4">
+            <h2 class="text-2xl font-bold">Recent Entities</h2>
+            <Badge variant="outline">
+              {dimensionCounts[defaultDimension]} total
+            </Badge>
+          </div>
+
+          <EntityDisplay
+            dimension={defaultDimension}
+            groupId="example-group-id"
+            limit={10}
+            showFilters={true}
+            client:load
+          />
+        </div>
+
+        <!-- Quick Actions -->
+        <Card>
+          <CardHeader>
+            <CardTitle>Quick Actions</CardTitle>
+          </CardHeader>
+          <CardContent>
+            <div class="grid grid-cols-2 md:grid-cols-4 gap-3">
+              <button class="p-4 rounded-lg border hover:bg-accent hover:text-accent-foreground transition-colors text-left">
+                <div class="text-2xl mb-2">➕</div>
+                <div class="font-medium">Add Thing</div>
+              </button>
+              <button class="p-4 rounded-lg border hover:bg-accent hover:text-accent-foreground transition-colors text-left">
+                <div class="text-2xl mb-2">👥</div>
+                <div class="font-medium">Invite User</div>
+              </button>
+              <button class="p-4 rounded-lg border hover:bg-accent hover:text-accent-foreground transition-colors text-left">
+                <div class="text-2xl mb-2">🔗</div>
+                <div class="font-medium">Create Connection</div>
+              </button>
+              <button class="p-4 rounded-lg border hover:bg-accent hover:text-accent-foreground transition-colors text-left">
+                <div class="text-2xl mb-2">📊</div>
+                <div class="font-medium">View Analytics</div>
+              </button>
+            </div>
+          </CardContent>
+        </Card>
+      </div>
+    </main>
+  </div>
+</Layout>
+
+<style>
+  /* Ensure full height layout */
+  :global(body) {
+    overflow: hidden;
+  }
+</style>

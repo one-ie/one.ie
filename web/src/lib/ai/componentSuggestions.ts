@@ -90,6 +90,22 @@ const KEYWORD_MAPPING: Record<string, string[]> = {
 	// Data display
 	chart: ["chart", "graph", "analytics", "data visualization"],
 	stats: ["stats", "statistics", "metrics", "numbers"],
+
+	// Crypto - Wallet
+	"wallet-connect": ["wallet", "connect wallet", "web3", "metamask", "wallet connect"],
+	"wallet-balance": ["balance", "wallet balance", "crypto balance", "token balance"],
+
+	// Crypto - Payments
+	"send-token": ["send", "transfer", "send crypto", "send token", "payment"],
+	"receive-payment": ["receive", "receive payment", "accept crypto", "payment address"],
+
+	// Crypto - DEX
+	"token-swap": ["swap", "exchange", "trade", "dex", "uniswap", "token swap"],
+
+	// Crypto - NFT
+	"nft-card": ["nft", "nft card", "digital art", "collectible"],
+	"nft-gallery": ["nft gallery", "nft collection", "art gallery"],
+	"nft-marketplace": ["nft marketplace", "buy nft", "sell nft", "marketplace"],
 };
 
 /**

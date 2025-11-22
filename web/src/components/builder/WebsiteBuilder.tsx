@@ -18,30 +18,71 @@ import {
 import { ChatPanel } from "./panels/ChatPanel";
 import { PreviewPanel } from "./panels/PreviewPanel";
 import { CodeEditorPanel } from "./panels/CodeEditorPanel";
+import { UnifiedNav, type BreadcrumbStep } from "./navigation/UnifiedNav";
+import { KeyboardShortcuts } from "./navigation/KeyboardShortcuts";
+import { CollaborationWrapper } from "./CollaborationWrapper";
 
 interface WebsiteBuilderProps {
 	websiteId: string;
 	pageId: string;
 	defaultLayout?: number[];
+	userId?: string;
+	userName?: string;
 }
 
 export function WebsiteBuilder({
 	websiteId,
 	pageId,
 	defaultLayout = [25, 50, 25],
+	userId = "anonymous",
+	userName = "Guest User",
 }: WebsiteBuilderProps) {
 	const [showChat, setShowChat] = React.useState(true);
 	const [showCode, setShowCode] = React.useState(true);
 	const [activePanel, setActivePanel] = React.useState<
 		"chat" | "preview" | "code"
 	>("preview");
+	const [currentStep, setCurrentStep] = React.useState<BreadcrumbStep>("builder");
 	const isMobile = useMediaQuery("(max-width: 768px)");
 
-	// Mobile layout - show one panel at a time
-	if (isMobile) {
-		return (
-			<div className="h-full flex flex-col">
-				{/* Mobile Navigation */}
+	// Handle navigation between different screens
+	const handleNavigate = React.useCallback((step: BreadcrumbStep) => {
+		setCurrentStep(step);
+		// In a real app, this would navigate to /chat or other routes
+		// For now, it updates the active panel in the builder
+		if (step === "chat") {
+			setActivePanel("chat");
+		} else if (step === "preview") {
+			setActivePanel("preview");
+		}
+	}, []);
+
+	// Wrap mobile and desktop layouts with collaboration
+	const MobileLayout = () => (
+		<div className="h-full flex flex-col">
+				{/* Unified Navigation */}
+				<UnifiedNav
+					currentStep={currentStep}
+					onNavigate={handleNavigate}
+					context="builder"
+					websiteId={websiteId}
+					pageId={pageId}
+					showBreadcrumbs={false}
+					showQuickActions={true}
+					quickActions={{
+						onAskAI: () => setActivePanel("chat"),
+						onBrowseComponents: () => {
+							// Emit event to open component picker modal
+							window.dispatchEvent(
+								new CustomEvent("open-component-picker")
+							);
+						},
+						onPreview: () => setActivePanel("preview"),
+						context: "builder",
+					}}
+				/>
+
+				{/* Mobile Panel Navigation */}
 				<div className="border-b bg-background px-4 py-2 flex items-center gap-2">
 					<Button
 						variant={activePanel === "chat" ? "default" : "ghost"}
@@ -82,26 +123,51 @@ export function WebsiteBuilder({
 						<CodeEditorPanel websiteId={websiteId} pageId={pageId} />
 					)}
 				</div>
-			</div>
-		);
-	}
 
-	// Desktop layout - resizable three-panel layout
-	return (
+			{/* Keyboard Shortcuts */}
+			<KeyboardShortcuts />
+		</div>
+	);
+
+	const DesktopLayout = () => (
 		<div className="h-full flex flex-col">
-			{/* Desktop Panel Toggles */}
-			<div className="border-b bg-background px-4 py-2 flex items-center justify-between">
+			{/* Unified Navigation */}
+			<UnifiedNav
+				currentStep={currentStep}
+				onNavigate={handleNavigate}
+				context="builder"
+				websiteId={websiteId}
+				pageId={pageId}
+				showBreadcrumbs={true}
+				showQuickActions={true}
+				quickActions={{
+					onAskAI: () => setShowChat(true),
+					onBrowseComponents: () => {
+						// Emit event to open component picker modal
+						window.dispatchEvent(
+							new CustomEvent("open-component-picker")
+						);
+					},
+					onPreview: () => setCurrentStep("preview"),
+					onGenerateCode: () => {
+						// Focus on chat panel to continue conversation
+						setActivePanel("chat");
+					},
+					context: "builder",
+				}}
+			/>
+
+			{/* Desktop Panel Toggles (legacy, kept for backward compatibility) */}
+			<div className="border-b bg-secondary/30 px-4 py-2 flex items-center justify-between">
 				<div className="flex items-center gap-2">
-					<h1 className="text-lg font-semibold">Website Builder</h1>
-					<span className="text-sm text-muted-foreground">
-						{websiteId} / {pageId}
-					</span>
+					<span className="text-sm text-muted-foreground">Panel visibility:</span>
 				</div>
 				<div className="flex items-center gap-2">
 					<Button
 						variant={showChat ? "default" : "outline"}
 						size="sm"
 						onClick={() => setShowChat(!showChat)}
+						title="Toggle chat panel"
 					>
 						{showChat ? (
 							<ChevronLeft className="h-4 w-4 mr-2" />
@@ -115,6 +181,7 @@ export function WebsiteBuilder({
 						variant={showCode ? "default" : "outline"}
 						size="sm"
 						onClick={() => setShowCode(!showCode)}
+						title="Toggle code panel"
 					>
 						<Code2 className="h-4 w-4 mr-2" />
 						Code
@@ -183,6 +250,21 @@ export function WebsiteBuilder({
 					</>
 				)}
 			</ResizablePanelGroup>
+
+			{/* Keyboard Shortcuts */}
+			<KeyboardShortcuts />
 		</div>
+	);
+
+	// Wrap with collaboration features
+	return (
+		<CollaborationWrapper
+			websiteId={websiteId}
+			pageId={pageId}
+			userId={userId}
+			userName={userName}
+		>
+			{isMobile ? <MobileLayout /> : <DesktopLayout />}
+		</CollaborationWrapper>
 	);
 }

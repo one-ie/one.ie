@@ -1,0 +1,362 @@
+---
+/**
+ * Crypto Landing Page Template
+ *
+ * Complete crypto landing page with:
+ * - WalletConnect integration
+ * - Token swap interface
+ * - NFT gallery showcase
+ * - Crypto payment features
+ *
+ * Usage:
+ * 1. Copy this template to your pages directory
+ * 2. Customize branding and content
+ * 3. Add real wallet integration if needed
+ */
+
+import Layout from "@/layouts/Layout.astro";
+import { WalletConnectButton } from "@/components/ontology-ui/crypto/wallet";
+import { TokenSwap } from "@/components/ontology-ui/crypto/dex";
+import { NFTGallery } from "@/components/ontology-ui/crypto/nft";
+import { SendToken, ReceivePayment } from "@/components/ontology-ui/crypto/payments";
+import { Button } from "@/components/ui/button";
+import { Card, CardHeader, CardTitle, CardDescription, CardContent } from "@/components/ui/card";
+import { Badge } from "@/components/ui/badge";
+
+const title = "Web3 Platform | Crypto, NFTs & DeFi";
+const description = "Connect your wallet, swap tokens, and explore NFTs on our decentralized platform";
+
+// Mock NFT data for gallery
+const mockNFTs = [
+  {
+    name: "Cool NFT #1",
+    contract: "0x1234567890abcdef1234567890abcdef12345678",
+    tokenId: "1",
+    imageUrl: "/placeholder-nft-1.jpg",
+    owner: "0xabcdef1234567890abcdef1234567890abcdef12",
+    standard: "ERC-721",
+    chainName: "Ethereum",
+    collection: {
+      name: "Cool Collection",
+      floorPrice: "0.5"
+    }
+  },
+  {
+    name: "Cool NFT #2",
+    contract: "0x1234567890abcdef1234567890abcdef12345678",
+    tokenId: "2",
+    imageUrl: "/placeholder-nft-2.jpg",
+    owner: "0xabcdef1234567890abcdef1234567890abcdef12",
+    standard: "ERC-721",
+    chainName: "Ethereum",
+    collection: {
+      name: "Cool Collection",
+      floorPrice: "0.5"
+    }
+  },
+  {
+    name: "Cool NFT #3",
+    contract: "0x1234567890abcdef1234567890abcdef12345678",
+    tokenId: "3",
+    imageUrl: "/placeholder-nft-3.jpg",
+    owner: "0xabcdef1234567890abcdef1234567890abcdef12",
+    standard: "ERC-721",
+    chainName: "Ethereum",
+    collection: {
+      name: "Cool Collection",
+      floorPrice: "0.5"
+    }
+  },
+];
+---
+
+<Layout title={title} description={description}>
+  <div class="min-h-screen bg-gradient-to-b from-background to-secondary">
+
+    <!-- Hero Section -->
+    <section class="container mx-auto px-4 py-20">
+      <div class="text-center max-w-4xl mx-auto">
+        <Badge variant="secondary" class="mb-4 text-lg px-4 py-2">
+          🌐 Web3 Enabled
+        </Badge>
+
+        <h1 class="text-5xl md:text-6xl font-bold mb-6 bg-gradient-to-r from-primary to-purple-500 bg-clip-text text-transparent">
+          The Future of Crypto is Here
+        </h1>
+
+        <p class="text-xl text-muted-foreground mb-8 max-w-2xl mx-auto">
+          Connect your wallet, swap tokens, trade NFTs, and explore the decentralized web.
+          All in one place, powered by blockchain technology.
+        </p>
+
+        <div class="flex flex-col sm:flex-row gap-4 justify-center items-center">
+          <WalletConnectButton
+            label="Connect Wallet"
+            showBalance={true}
+            size="lg"
+            client:load
+          />
+
+          <Button variant="outline" size="lg" class="gap-2">
+            <span class="text-xl">📚</span>
+            Learn More
+          </Button>
+        </div>
+
+        <!-- Stats -->
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-6 mt-16">
+          <Card>
+            <CardContent class="pt-6">
+              <div class="text-4xl font-bold text-primary mb-2">$2.5M+</div>
+              <p class="text-muted-foreground">Total Volume</p>
+            </CardContent>
+          </Card>
+
+          <Card>
+            <CardContent class="pt-6">
+              <div class="text-4xl font-bold text-primary mb-2">10K+</div>
+              <p class="text-muted-foreground">Active Users</p>
+            </CardContent>
+          </Card>
+
+          <Card>
+            <CardContent class="pt-6">
+              <div class="text-4xl font-bold text-primary mb-2">5+</div>
+              <p class="text-muted-foreground">Supported Chains</p>
+            </CardContent>
+          </Card>
+        </div>
+      </div>
+    </section>
+
+    <!-- Token Swap Section -->
+    <section class="container mx-auto px-4 py-20">
+      <div class="text-center mb-12">
+        <Badge variant="secondary" class="mb-4">
+          💱 DEX Integration
+        </Badge>
+        <h2 class="text-4xl font-bold mb-4">Swap Tokens Instantly</h2>
+        <p class="text-xl text-muted-foreground max-w-2xl mx-auto">
+          Trade any token with the best rates. Powered by Uniswap, Jupiter, and more.
+        </p>
+      </div>
+
+      <div class="max-w-2xl mx-auto">
+        <TokenSwap
+          chainId={1}
+          onSwap={(swap) => {
+            console.log('Swap executed:', swap);
+          }}
+          client:load
+        />
+      </div>
+    </section>
+
+    <!-- NFT Gallery Section -->
+    <section class="container mx-auto px-4 py-20 bg-secondary/50">
+      <div class="text-center mb-12">
+        <Badge variant="secondary" class="mb-4">
+          🖼️ NFT Collections
+        </Badge>
+        <h2 class="text-4xl font-bold mb-4">Explore Digital Art</h2>
+        <p class="text-xl text-muted-foreground max-w-2xl mx-auto">
+          Discover, collect, and trade unique NFTs from top creators.
+        </p>
+      </div>
+
+      <NFTGallery
+        nfts={mockNFTs}
+        columns={3}
+        showFilters={false}
+        onSelect={(nft) => {
+          console.log('Selected NFT:', nft);
+        }}
+        client:load
+      />
+
+      <div class="text-center mt-8">
+        <Button variant="outline" size="lg">
+          View All Collections
+        </Button>
+      </div>
+    </section>
+
+    <!-- Payment Features Section -->
+    <section class="container mx-auto px-4 py-20">
+      <div class="text-center mb-12">
+        <Badge variant="secondary" class="mb-4">
+          💸 Crypto Payments
+        </Badge>
+        <h2 class="text-4xl font-bold mb-4">Send & Receive Crypto</h2>
+        <p class="text-xl text-muted-foreground max-w-2xl mx-auto">
+          Seamless crypto payments with QR codes, gas estimation, and instant confirmations.
+        </p>
+      </div>
+
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-8 max-w-6xl mx-auto">
+        <!-- Send Token -->
+        <Card>
+          <CardHeader>
+            <CardTitle class="flex items-center gap-2">
+              <span class="text-2xl">📤</span>
+              Send Tokens
+            </CardTitle>
+            <CardDescription>
+              Transfer ERC-20 tokens to any address with real-time gas estimation
+            </CardDescription>
+          </CardHeader>
+          <CardContent>
+            <SendToken
+              chainId={1}
+              onSend={(tx) => {
+                console.log('Transaction sent:', tx);
+              }}
+              client:load
+            />
+          </CardContent>
+        </Card>
+
+        <!-- Receive Payment -->
+        <Card>
+          <CardHeader>
+            <CardTitle class="flex items-center gap-2">
+              <span class="text-2xl">📥</span>
+              Receive Payments
+            </CardTitle>
+            <CardDescription>
+              Share your address or QR code to receive crypto payments instantly
+            </CardDescription>
+          </CardHeader>
+          <CardContent>
+            <ReceivePayment
+              walletAddress="0x742d35Cc6634C0532925a3b844Bc9e7595f0bEb"
+              showQR={true}
+              client:load
+            />
+          </CardContent>
+        </Card>
+      </div>
+    </section>
+
+    <!-- Features Grid -->
+    <section class="container mx-auto px-4 py-20 bg-secondary/30">
+      <div class="text-center mb-12">
+        <h2 class="text-4xl font-bold mb-4">Why Choose Us?</h2>
+        <p class="text-xl text-muted-foreground max-w-2xl mx-auto">
+          Built for security, speed, and simplicity
+        </p>
+      </div>
+
+      <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 max-w-6xl mx-auto">
+        <Card>
+          <CardHeader>
+            <CardTitle class="flex items-center gap-2">
+              <span class="text-2xl">🔒</span>
+              Secure & Audited
+            </CardTitle>
+          </CardHeader>
+          <CardContent>
+            <p class="text-muted-foreground">
+              Smart contracts audited by leading security firms. Your funds are always safe.
+            </p>
+          </CardContent>
+        </Card>
+
+        <Card>
+          <CardHeader>
+            <CardTitle class="flex items-center gap-2">
+              <span class="text-2xl">⚡</span>
+              Lightning Fast
+            </CardTitle>
+          </CardHeader>
+          <CardContent>
+            <p class="text-muted-foreground">
+              Optimized for speed with layer-2 support and instant swaps.
+            </p>
+          </CardContent>
+        </Card>
+
+        <Card>
+          <CardHeader>
+            <CardTitle class="flex items-center gap-2">
+              <span class="text-2xl">🌍</span>
+              Multi-Chain
+            </CardTitle>
+          </CardHeader>
+          <CardContent>
+            <p class="text-muted-foreground">
+              Support for Ethereum, Polygon, BSC, Solana, and more.
+            </p>
+          </CardContent>
+        </Card>
+
+        <Card>
+          <CardHeader>
+            <CardTitle class="flex items-center gap-2">
+              <span class="text-2xl">💰</span>
+              Low Fees
+            </CardTitle>
+          </CardHeader>
+          <CardContent>
+            <p class="text-muted-foreground">
+              Minimal platform fees and optimized gas costs for all transactions.
+            </p>
+          </CardContent>
+        </Card>
+
+        <Card>
+          <CardHeader>
+            <CardTitle class="flex items-center gap-2">
+              <span class="text-2xl">📱</span>
+              Mobile Ready
+            </CardTitle>
+          </CardHeader>
+          <CardContent>
+            <p class="text-muted-foreground">
+              Fully responsive design works perfectly on any device.
+            </p>
+          </CardContent>
+        </Card>
+
+        <Card>
+          <CardHeader>
+            <CardTitle class="flex items-center gap-2">
+              <span class="text-2xl">🤝</span>
+              Community Driven
+            </CardTitle>
+          </CardHeader>
+          <CardContent>
+            <p class="text-muted-foreground">
+              Join thousands of users in our vibrant Web3 community.
+            </p>
+          </CardContent>
+        </Card>
+      </div>
+    </section>
+
+    <!-- CTA Section -->
+    <section class="container mx-auto px-4 py-20">
+      <div class="text-center max-w-3xl mx-auto bg-gradient-to-r from-primary/10 to-purple-500/10 rounded-2xl p-12 border border-primary/20">
+        <h2 class="text-4xl font-bold mb-4">Ready to Get Started?</h2>
+        <p class="text-xl text-muted-foreground mb-8">
+          Connect your wallet and join the future of decentralized finance
+        </p>
+
+        <div class="flex flex-col sm:flex-row gap-4 justify-center">
+          <WalletConnectButton
+            label="Connect Wallet Now"
+            showBalance={true}
+            size="lg"
+            variant="default"
+            client:load
+          />
+
+          <Button variant="outline" size="lg">
+            Read Documentation
+          </Button>
+        </div>
+      </div>
+    </section>
+
+  </div>
+</Layout>

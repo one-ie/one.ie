@@ -1,11 +1,35 @@
 /**
  * Component Library Catalog
  *
- * CYCLE 15: Complete catalog of all available components
- * Provides metadata, previews, and usage examples
+ * INTEGRATION CYCLE 1: Complete catalog of all available components
+ * - shadcn/ui components (50+)
+ * - Ontology-UI components (277+)
+ * - Builder components
+ * - Total: 330+ components
  */
 
 import type { ComponentItem, ComponentCategory } from "@/stores/componentPicker";
+
+// Import all ontology-ui component registries
+import {
+	ADVANCED_COMPONENTS as ONTOLOGY_ADVANCED,
+	APP_COMPONENTS as ONTOLOGY_APP,
+	CONNECTIONS_COMPONENTS as ONTOLOGY_CONNECTIONS,
+	CRYPTO_COMPONENTS as ONTOLOGY_CRYPTO,
+	ENHANCED_COMPONENTS as ONTOLOGY_ENHANCED,
+	EVENTS_COMPONENTS as ONTOLOGY_EVENTS,
+	GENERATIVE_COMPONENTS as ONTOLOGY_GENERATIVE,
+	GROUPS_COMPONENTS as ONTOLOGY_GROUPS,
+	INTEGRATION_COMPONENTS as ONTOLOGY_INTEGRATION,
+	KNOWLEDGE_COMPONENTS as ONTOLOGY_KNOWLEDGE,
+	LAYOUTS_COMPONENTS as ONTOLOGY_LAYOUTS,
+	MAIL_COMPONENTS as ONTOLOGY_MAIL,
+	PEOPLE_COMPONENTS as ONTOLOGY_PEOPLE,
+	STREAMING_COMPONENTS as ONTOLOGY_STREAMING,
+	THINGS_COMPONENTS as ONTOLOGY_THINGS,
+	UNIVERSAL_COMPONENTS as ONTOLOGY_UNIVERSAL,
+	VISUALIZATION_COMPONENTS as ONTOLOGY_VISUALIZATION,
+} from "./componentRegistryGenerated";
 
 /**
  * shadcn/ui Components (50+ UI primitives)
@@ -165,7 +189,7 @@ export const SHADCN_COMPONENTS: ComponentItem[] = [
   <AvatarImage src="/avatar.jpg" />
   <AvatarFallback>JD</AvatarFallback>
 </Avatar>`,
-		example: `import { Avatar, AvatarImage, AvatarFallback } from '@/components/ui/avatar';
+		example: `import { Avatar, AvatarImage, AvatarFallback} from '@/components/ui/avatar';
 
 <Avatar>
   <AvatarImage src="/avatar.jpg" />
@@ -364,52 +388,66 @@ export const SHADCN_COMPONENTS: ComponentItem[] = [
 ];
 
 /**
+ * Custom Builder Components
+ */
+export const BUILDER_COMPONENTS: ComponentItem[] = [
+	{
+		id: "live-preview",
+		name: "LivePreview",
+		category: "builder",
+		path: "@/components/features/creator/LivePreview",
+		description: "Live code editor with preview panel",
+		props: ["initialCode", "language", "useMonaco", "autoCompile"],
+		tags: ["editor", "code", "preview", "compiler"],
+		previewCode: `<LivePreview
+  initialCode="<h1>Hello</h1>"
+  language="html"
+  autoCompile={true}
+/>`,
+		example: `import { LivePreview } from '@/components/features/creator/LivePreview';
+
+<LivePreview
+  client:only="react"
+  initialCode={sampleCode}
+  language="astro"
+  autoCompile={true}
+/>`,
+	},
+	{
+		id: "chat-client",
+		name: "ChatClient",
+		category: "builder",
+		path: "@/components/ai/ChatClient",
+		description: "AI chat interface component",
+		props: [],
+		tags: ["chat", "ai", "assistant", "conversation"],
+		previewCode: `<ChatClient client:only="react" />`,
+		example: `import { ChatClient } from '@/components/ai/ChatClient';
+
+<ChatClient client:only="react" />`,
+	},
+	{
+		id: "component-picker",
+		name: "ComponentPicker",
+		category: "builder",
+		path: "@/components/features/creator/ComponentPicker",
+		description: "Visual component library browser",
+		props: ["onSelect", "categories"],
+		tags: ["picker", "library", "browse", "components"],
+		previewCode: `<ComponentPicker onSelect={handleSelect} />`,
+		example: `import { ComponentPicker } from '@/components/features/creator/ComponentPicker';
+
+<ComponentPicker
+  client:load
+  onSelect={(component) => console.log(component)}
+/>`,
+	},
+];
+
+/**
  * Custom Feature Components
  */
 export const FEATURE_COMPONENTS: ComponentItem[] = [
-	{
-		id: "thing-card",
-		name: "ThingCard",
-		category: "ontology",
-		path: "@/components/features/ontology/ThingCard",
-		description:
-			"Universal card for rendering any 'thing' (product, course, token, agent)",
-		props: ["thing", "type", "variant", "onSelect"],
-		tags: ["thing", "entity", "ontology", "card"],
-		previewCode: `<ThingCard thing={product} type="product" />`,
-		example: `import { ThingCard } from '@/components/features/ontology/ThingCard';
-
-// Works with any thing type
-<ThingCard thing={product} type="product" />
-<ThingCard thing={course} type="course" />
-<ThingCard thing={token} type="token" />`,
-	},
-	{
-		id: "person-card",
-		name: "PersonCard",
-		category: "ontology",
-		path: "@/components/features/ontology/PersonCard",
-		description: "Card for rendering people/users with role badges",
-		props: ["person", "showRole"],
-		tags: ["person", "user", "profile", "ontology"],
-		previewCode: `<PersonCard person={user} showRole={true} />`,
-		example: `import { PersonCard } from '@/components/features/ontology/PersonCard';
-
-<PersonCard person={user} showRole={true} />`,
-	},
-	{
-		id: "event-item",
-		name: "EventItem",
-		category: "ontology",
-		path: "@/components/features/ontology/EventItem",
-		description: "Render events in activity feeds or timelines",
-		props: ["event", "compact"],
-		tags: ["event", "activity", "timeline", "ontology"],
-		previewCode: `<EventItem event={event} compact={false} />`,
-		example: `import { EventItem } from '@/components/features/ontology/EventItem';
-
-<EventItem event={event} compact={false} />`,
-	},
 	{
 		id: "product-gallery",
 		name: "ProductGallery",
@@ -432,41 +470,6 @@ export const FEATURE_COMPONENTS: ComponentItem[] = [
   client:load
 />`,
 	},
-	{
-		id: "chat-client",
-		name: "ChatClient",
-		category: "features",
-		path: "@/components/ai/ChatClient",
-		description: "AI chat interface component",
-		props: [],
-		tags: ["chat", "ai", "assistant", "conversation"],
-		previewCode: `<ChatClient client:only="react" />`,
-		example: `import { ChatClient } from '@/components/ai/ChatClient';
-
-<ChatClient client:only="react" />`,
-	},
-	{
-		id: "live-preview",
-		name: "LivePreview",
-		category: "features",
-		path: "@/components/features/creator/LivePreview",
-		description: "Live code editor with preview panel",
-		props: ["initialCode", "language", "useMonaco", "autoCompile"],
-		tags: ["editor", "code", "preview", "compiler"],
-		previewCode: `<LivePreview
-  initialCode="<h1>Hello</h1>"
-  language="html"
-  autoCompile={true}
-/>`,
-		example: `import { LivePreview } from '@/components/features/creator/LivePreview';
-
-<LivePreview
-  client:only="react"
-  initialCode={sampleCode}
-  language="astro"
-  autoCompile={true}
-/>`,
-	},
 ];
 
 /**
@@ -474,8 +477,56 @@ export const FEATURE_COMPONENTS: ComponentItem[] = [
  */
 export const ALL_COMPONENTS: ComponentItem[] = [
 	...SHADCN_COMPONENTS,
+	...BUILDER_COMPONENTS,
 	...FEATURE_COMPONENTS,
+	// Ontology-UI Components (277)
+	...ONTOLOGY_ADVANCED,
+	...ONTOLOGY_APP,
+	...ONTOLOGY_CONNECTIONS,
+	...ONTOLOGY_CRYPTO,
+	...ONTOLOGY_ENHANCED,
+	...ONTOLOGY_EVENTS,
+	...ONTOLOGY_GENERATIVE,
+	...ONTOLOGY_GROUPS,
+	...ONTOLOGY_INTEGRATION,
+	...ONTOLOGY_KNOWLEDGE,
+	...ONTOLOGY_LAYOUTS,
+	...ONTOLOGY_MAIL,
+	...ONTOLOGY_PEOPLE,
+	...ONTOLOGY_STREAMING,
+	...ONTOLOGY_THINGS,
+	...ONTOLOGY_UNIVERSAL,
+	...ONTOLOGY_VISUALIZATION,
 ];
+
+/**
+ * Component statistics
+ */
+export const COMPONENT_STATS = {
+	total: ALL_COMPONENTS.length,
+	shadcn: SHADCN_COMPONENTS.length,
+	builder: BUILDER_COMPONENTS.length,
+	feature: FEATURE_COMPONENTS.length,
+	ontologyUI: {
+		advanced: ONTOLOGY_ADVANCED.length,
+		app: ONTOLOGY_APP.length,
+		connections: ONTOLOGY_CONNECTIONS.length,
+		crypto: ONTOLOGY_CRYPTO.length,
+		enhanced: ONTOLOGY_ENHANCED.length,
+		events: ONTOLOGY_EVENTS.length,
+		generative: ONTOLOGY_GENERATIVE.length,
+		groups: ONTOLOGY_GROUPS.length,
+		integration: ONTOLOGY_INTEGRATION.length,
+		knowledge: ONTOLOGY_KNOWLEDGE.length,
+		layouts: ONTOLOGY_LAYOUTS.length,
+		mail: ONTOLOGY_MAIL.length,
+		people: ONTOLOGY_PEOPLE.length,
+		streaming: ONTOLOGY_STREAMING.length,
+		things: ONTOLOGY_THINGS.length,
+		universal: ONTOLOGY_UNIVERSAL.length,
+		visualization: ONTOLOGY_VISUALIZATION.length,
+	},
+};
 
 /**
  * Get components by category
@@ -486,7 +537,38 @@ export function getComponentsByCategory(
 	if (category === "all") {
 		return ALL_COMPONENTS;
 	}
-	return ALL_COMPONENTS.filter((c) => c.category === category);
+
+	// Map category to component collections
+	const categoryMap: Record<string, ComponentItem[]> = {
+		ui: SHADCN_COMPONENTS.filter((c) => c.category === "ui"),
+		layout: SHADCN_COMPONENTS.filter((c) => c.category === "layout"),
+		form: SHADCN_COMPONENTS.filter((c) => c.category === "form"),
+		"data-display": SHADCN_COMPONENTS.filter((c) => c.category === "data-display"),
+		feedback: SHADCN_COMPONENTS.filter((c) => c.category === "feedback"),
+		overlay: SHADCN_COMPONENTS.filter((c) => c.category === "overlay"),
+		navigation: SHADCN_COMPONENTS.filter((c) => c.category === "navigation"),
+		builder: BUILDER_COMPONENTS,
+		features: FEATURE_COMPONENTS,
+		advanced: ONTOLOGY_ADVANCED,
+		app: ONTOLOGY_APP,
+		connections: ONTOLOGY_CONNECTIONS,
+		crypto: ONTOLOGY_CRYPTO,
+		enhanced: ONTOLOGY_ENHANCED,
+		events: ONTOLOGY_EVENTS,
+		generative: ONTOLOGY_GENERATIVE,
+		groups: ONTOLOGY_GROUPS,
+		integration: ONTOLOGY_INTEGRATION,
+		knowledge: ONTOLOGY_KNOWLEDGE,
+		layouts: ONTOLOGY_LAYOUTS,
+		mail: ONTOLOGY_MAIL,
+		people: ONTOLOGY_PEOPLE,
+		streaming: ONTOLOGY_STREAMING,
+		things: ONTOLOGY_THINGS,
+		universal: ONTOLOGY_UNIVERSAL,
+		visualization: ONTOLOGY_VISUALIZATION,
+	};
+
+	return categoryMap[category] || [];
 }
 
 /**
@@ -522,7 +604,7 @@ export function filterComponents(
 
 	// Filter by category
 	if (category !== "all") {
-		results = results.filter((c) => c.category === category);
+		results = getComponentsByCategory(category);
 	}
 
 	// Search by query
@@ -552,6 +634,24 @@ export function getComponentById(id: string): ComponentItem | null {
  */
 export const CATEGORY_LABELS: Record<ComponentCategory, string> = {
 	all: "All Components",
+	builder: "Website Builder",
+	things: "Things",
+	people: "People",
+	groups: "Groups",
+	connections: "Connections",
+	events: "Events",
+	knowledge: "Knowledge",
+	crypto: "Crypto & Web3",
+	streaming: "Real-time & Streaming",
+	advanced: "Advanced UI",
+	enhanced: "Enhanced Components",
+	generative: "AI-Generated",
+	visualization: "Visualization",
+	universal: "Universal",
+	layouts: "Layouts",
+	app: "Application",
+	integration: "Integrations",
+	mail: "Mail & Messaging",
 	ui: "UI Primitives",
 	layout: "Layout",
 	form: "Forms",
@@ -564,17 +664,69 @@ export const CATEGORY_LABELS: Record<ComponentCategory, string> = {
 };
 
 /**
- * Category icons
+ * Category icons (Lucide icon names)
  */
 export const CATEGORY_ICONS: Record<ComponentCategory, string> = {
 	all: "grid-3x3",
+	builder: "wrench",
+	things: "box",
+	people: "users",
+	groups: "building",
+	connections: "link",
+	events: "activity",
+	knowledge: "brain",
+	crypto: "coins",
+	streaming: "radio",
+	advanced: "sparkles",
+	enhanced: "zap",
+	generative: "bot",
+	visualization: "bar-chart-3",
+	universal: "globe",
+	layouts: "layout",
+	app: "app-window",
+	integration: "plug",
+	mail: "mail",
 	ui: "square",
 	layout: "layout-grid",
 	form: "file-input",
-	"data-display": "bar-chart-3",
+	"data-display": "database",
 	feedback: "message-circle",
 	overlay: "layers",
 	navigation: "compass",
 	features: "package",
 	ontology: "boxes",
+};
+
+/**
+ * Category descriptions
+ */
+export const CATEGORY_DESCRIPTIONS: Record<ComponentCategory, string> = {
+	all: "All available components across the entire library",
+	builder: "Website builder components for creating pages with AI",
+	things: "All entities (products, courses, tokens, agents, content)",
+	people: "User profiles, teams, roles, and permissions",
+	groups: "Multi-tenant containers with infinite nesting",
+	connections: "Relationships between entities (25+ types)",
+	events: "Complete audit trail and activity tracking (67+ event types)",
+	knowledge: "Labels, vectors, semantic search, and RAG",
+	crypto: "Cryptocurrency, Web3, DeFi, NFTs, and wallets",
+	streaming: "Real-time data, live updates, and WebSocket components",
+	advanced: "Advanced UI features (rich text, file upload, date pickers)",
+	enhanced: "Enhanced component variants with advanced features",
+	generative: "AI-powered UI generation and dynamic components",
+	visualization: "Charts, graphs, and data visualization",
+	universal: "Cross-dimensional components that work with any dimension",
+	layouts: "Navigation, headers, footers, and page structure",
+	app: "Application-level components (search, filters, navigation)",
+	integration: "Third-party integrations and external services",
+	mail: "Email, inbox, and messaging components",
+	ui: "UI primitives (buttons, cards, badges, inputs)",
+	layout: "Layout components (grids, containers, separators)",
+	form: "Form components (inputs, selects, checkboxes)",
+	"data-display": "Data display (tables, avatars, lists)",
+	feedback: "Feedback components (alerts, toasts, skeletons)",
+	overlay: "Overlays (dialogs, dropdowns, tooltips)",
+	navigation: "Navigation components (tabs, breadcrumbs, menus)",
+	features: "Custom feature components",
+	ontology: "6-dimension ontology components",
 };

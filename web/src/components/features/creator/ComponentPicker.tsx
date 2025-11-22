@@ -60,8 +60,35 @@ import {
 	ExternalLinkIcon,
 	CheckIcon,
 	ClockIcon,
+	BoxIcon,
+	UsersIcon,
+	BuildingIcon,
+	LinkIcon,
+	ActivityIcon,
+	BrainIcon,
+	CoinsIcon,
+	RadioIcon,
+	SparklesIcon,
+	WrenchIcon,
 } from "lucide-react";
 import { cn } from "@/lib/utils";
+
+/**
+ * Category Icon Mapping
+ */
+const CATEGORY_ICON_MAP: Record<string, typeof BoxIcon> = {
+	all: GridIcon,
+	builder: WrenchIcon,
+	things: BoxIcon,
+	people: UsersIcon,
+	groups: BuildingIcon,
+	connections: LinkIcon,
+	events: ActivityIcon,
+	knowledge: BrainIcon,
+	crypto: CoinsIcon,
+	streaming: RadioIcon,
+	advanced: SparklesIcon,
+};
 
 export function ComponentPicker() {
 	const isOpen = useStore(isComponentPickerOpen$);
@@ -107,9 +134,14 @@ export function ComponentPicker() {
 				<DialogHeader className="px-6 pt-6 pb-4">
 					<div className="flex items-center justify-between">
 						<div>
-							<DialogTitle>Component Library</DialogTitle>
+							<DialogTitle className="flex items-center gap-2">
+								Component Library
+								<Badge variant="secondary" className="text-xs">
+									{filteredComponents.length} components
+								</Badge>
+							</DialogTitle>
 							<DialogDescription>
-								Browse and insert components into your page
+								Browse 286+ ontology-ui components across all 6 dimensions
 							</DialogDescription>
 						</div>
 						<div className="flex items-center gap-2">
@@ -161,13 +193,36 @@ export function ComponentPicker() {
 							setSelectedCategory(value as ComponentCategory)
 						}
 					>
-						<TabsList className="w-full justify-start overflow-x-auto flex-nowrap">
-							{Object.entries(CATEGORY_LABELS).map(([key, label]) => (
-								<TabsTrigger key={key} value={key} className="whitespace-nowrap">
-									{label}
-								</TabsTrigger>
-							))}
-						</TabsList>
+						<ScrollArea className="w-full">
+							<TabsList className="w-full justify-start flex-nowrap">
+								{[
+									"all",
+									"builder",
+									"things",
+									"people",
+									"groups",
+									"connections",
+									"events",
+									"knowledge",
+									"crypto",
+									"streaming",
+									"advanced",
+								].map((key) => {
+									const Icon = CATEGORY_ICON_MAP[key] || BoxIcon;
+									const label = CATEGORY_LABELS[key as ComponentCategory];
+									return (
+										<TabsTrigger
+											key={key}
+											value={key}
+											className="whitespace-nowrap gap-2"
+										>
+											<Icon className="h-4 w-4" />
+											{label}
+										</TabsTrigger>
+									);
+								})}
+							</TabsList>
+						</ScrollArea>
 					</Tabs>
 				</div>
 
@@ -312,6 +367,9 @@ function ComponentCard({
 		);
 	}
 
+	// Get category icon
+	const Icon = CATEGORY_ICON_MAP[component.category] || BoxIcon;
+
 	return (
 		<div
 			draggable
@@ -319,22 +377,23 @@ function ComponentCard({
 			onDragEnd={handleDragEnd}
 			className={cn(
 				"group relative p-4 rounded-lg border bg-card hover:shadow-md transition-all cursor-move",
-				isDragging && "opacity-50"
+				isDragging && "opacity-50 scale-95"
 			)}
 		>
-			{/* Preview Code */}
-			{component.previewCode && (
-				<div className="mb-3 p-3 rounded-md bg-muted/50 font-mono text-xs overflow-x-auto">
-					<code>{component.previewCode}</code>
-				</div>
-			)}
-
-			<div className="space-y-2">
+			<div className="space-y-3">
+				{/* Header with icon */}
 				<div className="flex items-start justify-between gap-2">
-					<h4 className="text-sm font-semibold">{component.name}</h4>
-					<Badge variant="outline" className="text-xs shrink-0">
-						{CATEGORY_LABELS[component.category]}
-					</Badge>
+					<div className="flex items-center gap-2">
+						<div className="p-2 rounded-md bg-muted">
+							<Icon className="h-4 w-4 text-muted-foreground" />
+						</div>
+						<div>
+							<h4 className="text-sm font-semibold">{component.name}</h4>
+							<Badge variant="outline" className="text-xs mt-1">
+								{CATEGORY_LABELS[component.category]}
+							</Badge>
+						</div>
+					</div>
 				</div>
 
 				<p className="text-xs text-muted-foreground line-clamp-2">
@@ -351,9 +410,23 @@ function ComponentCard({
 						))}
 						{component.props.length > 3 && (
 							<Badge variant="secondary" className="text-xs">
-								+{component.props.length - 3}
+								+{component.props.length - 3} more
 							</Badge>
 						)}
+					</div>
+				)}
+
+				{/* Tags */}
+				{component.tags && component.tags.length > 0 && (
+					<div className="flex flex-wrap gap-1">
+						{component.tags.slice(0, 4).map((tag) => (
+							<span
+								key={tag}
+								className="text-xs px-1.5 py-0.5 rounded bg-muted text-muted-foreground"
+							>
+								#{tag}
+							</span>
+						))}
 					</div>
 				)}
 			</div>
@@ -364,11 +437,21 @@ function ComponentCard({
 					variant="outline"
 					size="sm"
 					className="flex-1"
-					onClick={() => onSelect(component)}
+					onClick={(e) => {
+						e.stopPropagation();
+						onSelect(component);
+					}}
 				>
 					Preview
 				</Button>
-				<Button size="sm" className="flex-1" onClick={() => onInsert(component)}>
+				<Button
+					size="sm"
+					className="flex-1"
+					onClick={(e) => {
+						e.stopPropagation();
+						onInsert(component);
+					}}
+				>
 					Insert
 				</Button>
 			</div>

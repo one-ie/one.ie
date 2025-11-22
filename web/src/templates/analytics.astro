@@ -1,0 +1,319 @@
+---
+/**
+ * Analytics Template
+ *
+ * Production-ready analytics dashboard with ontology-ui visualization components
+ *
+ * Features:
+ * - TimeSeriesChart for trends over time
+ * - HeatmapChart for activity patterns
+ * - NetworkDiagram for relationship visualization
+ * - KnowledgeGraph for semantic connections
+ *
+ * Usage:
+ * Copy this template to your project and customize:
+ * - Replace mock data with real analytics queries
+ * - Add date range filters
+ * - Customize chart colors and themes
+ */
+
+import Layout from '@/layouts/Layout.astro';
+import { HeatmapChart } from '@/components/ontology-ui/visualization/HeatmapChart';
+import { NetworkDiagram } from '@/components/ontology-ui/visualization/NetworkDiagram';
+import { KnowledgeGraph } from '@/components/ontology-ui/knowledge/KnowledgeGraph';
+import { Card, CardHeader, CardTitle, CardDescription, CardContent } from '@/components/ui/card';
+import { Badge } from '@/components/ui/badge';
+import { Button } from '@/components/ui/button';
+import { Separator } from '@/components/ui/separator';
+
+// Page metadata
+const title = 'Analytics Dashboard';
+const description = 'Visualize your data with interactive charts and graphs';
+
+// Mock time series data
+const timeSeriesData = [
+  { date: '2025-01-01', value: 120 },
+  { date: '2025-01-02', value: 145 },
+  { date: '2025-01-03', value: 132 },
+  { date: '2025-01-04', value: 178 },
+  { date: '2025-01-05', value: 190 },
+  { date: '2025-01-06', value: 165 },
+  { date: '2025-01-07', value: 205 },
+];
+
+// Mock heatmap data (activity by hour and day)
+const heatmapData = [
+  { day: 'Mon', hour: '9AM', value: 45 },
+  { day: 'Mon', hour: '12PM', value: 78 },
+  { day: 'Mon', hour: '3PM', value: 92 },
+  { day: 'Mon', hour: '6PM', value: 65 },
+  { day: 'Tue', hour: '9AM', value: 52 },
+  { day: 'Tue', hour: '12PM', value: 85 },
+  { day: 'Tue', hour: '3PM', value: 110 },
+  { day: 'Tue', hour: '6PM', value: 70 },
+  { day: 'Wed', hour: '9AM', value: 48 },
+  { day: 'Wed', hour: '12PM', value: 95 },
+  { day: 'Wed', hour: '3PM', value: 105 },
+  { day: 'Wed', hour: '6PM', value: 75 },
+  { day: 'Thu', hour: '9AM', value: 55 },
+  { day: 'Thu', hour: '12PM', value: 88 },
+  { day: 'Thu', hour: '3PM', value: 98 },
+  { day: 'Thu', hour: '6PM', value: 68 },
+  { day: 'Fri', hour: '9AM', value: 60 },
+  { day: 'Fri', hour: '12PM', value: 92 },
+  { day: 'Fri', hour: '3PM', value: 115 },
+  { day: 'Fri', hour: '6PM', value: 80 },
+];
+
+// Mock network data (nodes and connections)
+const networkData = {
+  nodes: [
+    { id: '1', name: 'Design Team', type: 'group', size: 12 },
+    { id: '2', name: 'Product Team', type: 'group', size: 8 },
+    { id: '3', name: 'Marketing Team', type: 'group', size: 6 },
+    { id: '4', name: 'Sarah Johnson', type: 'person', size: 4 },
+    { id: '5', name: 'Mike Chen', type: 'person', size: 4 },
+    { id: '6', name: 'Lisa Park', type: 'person', size: 4 },
+    { id: '7', name: 'Product Launch', type: 'project', size: 10 },
+    { id: '8', name: 'Design System', type: 'project', size: 8 },
+  ],
+  edges: [
+    { source: '4', target: '1', strength: 0.9 },
+    { source: '4', target: '7', strength: 0.8 },
+    { source: '5', target: '2', strength: 0.7 },
+    { source: '5', target: '7', strength: 0.9 },
+    { source: '6', target: '3', strength: 0.8 },
+    { source: '6', target: '8', strength: 0.6 },
+    { source: '1', target: '8', strength: 0.7 },
+    { source: '2', target: '7', strength: 0.8 },
+  ]
+};
+
+// Key metrics
+const metrics = [
+  { label: 'Total Users', value: '2,543', change: '+12%', trend: 'up' },
+  { label: 'Active Sessions', value: '1,234', change: '+8%', trend: 'up' },
+  { label: 'Avg. Duration', value: '8m 32s', change: '+5%', trend: 'up' },
+  { label: 'Conversion Rate', value: '3.2%', change: '-0.3%', trend: 'down' },
+];
+---
+
+<Layout title={title} description={description}>
+  <div class="container mx-auto px-4 py-8">
+    <!-- Header -->
+    <div class="flex items-center justify-between mb-8">
+      <div>
+        <h1 class="text-4xl font-bold mb-2">Analytics Dashboard</h1>
+        <p class="text-muted-foreground">
+          Track performance and visualize data insights
+        </p>
+      </div>
+
+      <!-- Date Range Filter -->
+      <div class="flex gap-2">
+        <Button variant="outline">
+          Last 7 Days
+        </Button>
+        <Button variant="outline">
+          Last 30 Days
+        </Button>
+        <Button variant="outline">
+          Custom Range
+        </Button>
+      </div>
+    </div>
+
+    <!-- Key Metrics -->
+    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4 mb-8">
+      {metrics.map(metric => (
+        <Card>
+          <CardHeader class="pb-3">
+            <div class="flex items-center justify-between">
+              <CardTitle class="text-sm font-medium text-muted-foreground">
+                {metric.label}
+              </CardTitle>
+              <Badge
+                variant={metric.trend === 'up' ? 'default' : 'secondary'}
+                class={metric.trend === 'up' ? 'bg-green-100 text-green-800' : 'bg-red-100 text-red-800'}
+              >
+                {metric.change}
+              </Badge>
+            </div>
+          </CardHeader>
+          <CardContent>
+            <div class="text-3xl font-bold">{metric.value}</div>
+          </CardContent>
+        </Card>
+      ))}
+    </div>
+
+    <!-- Charts Grid -->
+    <div class="grid grid-cols-1 lg:grid-cols-2 gap-6 mb-8">
+      <!-- Time Series Chart -->
+      <Card>
+        <CardHeader>
+          <CardTitle>User Activity Trend</CardTitle>
+          <CardDescription>Daily active users over the past week</CardDescription>
+        </CardHeader>
+        <CardContent>
+          <div class="h-64">
+            <!-- Time series chart component would go here -->
+            <div class="w-full h-full flex items-center justify-center bg-muted/20 rounded-lg">
+              <div class="text-center">
+                <div class="text-4xl mb-2">📈</div>
+                <p class="text-sm text-muted-foreground">
+                  Time Series Chart
+                </p>
+                <p class="text-xs text-muted-foreground mt-1">
+                  Replace with TimeSeriesChart component
+                </p>
+              </div>
+            </div>
+          </div>
+        </CardContent>
+      </Card>
+
+      <!-- Heatmap Chart -->
+      <Card>
+        <CardHeader>
+          <CardTitle>Activity Heatmap</CardTitle>
+          <CardDescription>User activity by day and time</CardDescription>
+        </CardHeader>
+        <CardContent>
+          <div class="h-64">
+            <HeatmapChart
+              data={heatmapData}
+              xKey="hour"
+              yKey="day"
+              valueKey="value"
+              colorScheme="blues"
+              client:load
+            />
+          </div>
+        </CardContent>
+      </Card>
+
+      <!-- Network Diagram -->
+      <Card class="lg:col-span-2">
+        <CardHeader>
+          <CardTitle>Organization Network</CardTitle>
+          <CardDescription>Relationships between teams, people, and projects</CardDescription>
+        </CardHeader>
+        <CardContent>
+          <div class="h-96">
+            <NetworkDiagram
+              nodes={networkData.nodes}
+              edges={networkData.edges}
+              interactive={true}
+              showLabels={true}
+              client:load
+            />
+          </div>
+        </CardContent>
+      </Card>
+    </div>
+
+    <Separator class="my-8" />
+
+    <!-- Knowledge Graph -->
+    <Card>
+      <CardHeader>
+        <div class="flex items-center justify-between">
+          <div>
+            <CardTitle>Knowledge Graph</CardTitle>
+            <CardDescription>
+              Semantic connections and relationships across all entities
+            </CardDescription>
+          </div>
+          <Button variant="outline">
+            Explore Full Graph →
+          </Button>
+        </div>
+      </CardHeader>
+      <CardContent>
+        <div class="h-96">
+          <KnowledgeGraph
+            groupId="example-group"
+            dimension="things"
+            maxNodes={50}
+            interactive={true}
+            client:load
+          />
+        </div>
+      </CardContent>
+    </Card>
+
+    <!-- Data Tables -->
+    <div class="grid grid-cols-1 lg:grid-cols-2 gap-6 mt-8">
+      <!-- Top Pages -->
+      <Card>
+        <CardHeader>
+          <CardTitle>Top Pages</CardTitle>
+        </CardHeader>
+        <CardContent>
+          <div class="space-y-3">
+            {[
+              { page: '/dashboard', views: 1234, change: '+12%' },
+              { page: '/products', views: 987, change: '+8%' },
+              { page: '/analytics', views: 756, change: '+15%' },
+              { page: '/profile', views: 543, change: '+5%' },
+              { page: '/settings', views: 321, change: '-2%' },
+            ].map((item, i) => (
+              <div class="flex items-center justify-between">
+                <div class="flex items-center gap-3">
+                  <div class="font-mono text-sm text-muted-foreground">
+                    #{i + 1}
+                  </div>
+                  <div>
+                    <div class="font-medium">{item.page}</div>
+                    <div class="text-sm text-muted-foreground">
+                      {item.views.toLocaleString()} views
+                    </div>
+                  </div>
+                </div>
+                <Badge variant={item.change.startsWith('+') ? 'default' : 'secondary'}>
+                  {item.change}
+                </Badge>
+              </div>
+            ))}
+          </div>
+        </CardContent>
+      </Card>
+
+      <!-- Top Referrers -->
+      <Card>
+        <CardHeader>
+          <CardTitle>Top Referrers</CardTitle>
+        </CardHeader>
+        <CardContent>
+          <div class="space-y-3">
+            {[
+              { source: 'Google Search', visits: 456, change: '+20%' },
+              { source: 'Direct', visits: 234, change: '+5%' },
+              { source: 'Twitter', visits: 189, change: '+18%' },
+              { source: 'LinkedIn', visits: 123, change: '+12%' },
+              { source: 'Facebook', visits: 89, change: '+3%' },
+            ].map((item, i) => (
+              <div class="flex items-center justify-between">
+                <div class="flex items-center gap-3">
+                  <div class="font-mono text-sm text-muted-foreground">
+                    #{i + 1}
+                  </div>
+                  <div>
+                    <div class="font-medium">{item.source}</div>
+                    <div class="text-sm text-muted-foreground">
+                      {item.visits.toLocaleString()} visits
+                    </div>
+                  </div>
+                </div>
+                <Badge variant="default">
+                  {item.change}
+                </Badge>
+              </div>
+            ))}
+          </div>
+        </CardContent>
+      </Card>
+    </div>
+  </div>
+</Layout>

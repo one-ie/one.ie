@@ -24,7 +24,7 @@ export const create = mutation({
     branch: v.optional(v.string()),
     commitMessage: v.optional(v.string()),
   },
-  handler: async (ctx, args) => {
+  handler: async (ctx: any, args: any) => {
     // 1. AUTHENTICATE
     const identity = await ctx.auth.getUserIdentity();
     if (!identity) {
@@ -33,8 +33,8 @@ export const create = mutation({
 
     const creator = await ctx.db
       .query("entities")
-      .withIndex("by_type", (q) => q.eq("type", "creator"))
-      .filter((q) => q.eq(q.field("properties.email"), identity.email))
+      .withIndex("by_type", (q: any) => q.eq("type", "creator"))
+      .filter((q: any) => q.eq(q.field("properties.email"), identity.email))
       .first();
 
     if (!creator) {
@@ -50,10 +50,10 @@ export const create = mutation({
     // Verify ownership
     const ownership = await ctx.db
       .query("connections")
-      .withIndex("from_type", (q) =>
+      .withIndex("from_type", (q: any) =>
         q.eq("fromEntityId", creator._id).eq("relationshipType", "owns")
       )
-      .filter((q) => q.eq(q.field("toEntityId"), args.websiteId))
+      .filter((q: any) => q.eq(q.field("toEntityId"), args.websiteId))
       .first();
 
     if (!ownership) {
@@ -174,7 +174,7 @@ export const updateStatus = mutation({
     error: v.optional(v.string()),
     cloudflareDeploymentId: v.optional(v.string()),
   },
-  handler: async (ctx, args) => {
+  handler: async (ctx: any, args: any) => {
     // 1. AUTHENTICATE (could be system user for webhooks)
     const identity = await ctx.auth.getUserIdentity();
     if (!identity) {
@@ -183,8 +183,8 @@ export const updateStatus = mutation({
 
     const creator = await ctx.db
       .query("entities")
-      .withIndex("by_type", (q) => q.eq("type", "creator"))
-      .filter((q) => q.eq(q.field("properties.email"), identity.email))
+      .withIndex("by_type", (q: any) => q.eq("type", "creator"))
+      .filter((q: any) => q.eq(q.field("properties.email"), identity.email))
       .first();
 
     if (!creator) {
@@ -282,7 +282,7 @@ export const rollback = mutation({
     websiteId: v.id("entities"),
     targetDeploymentId: v.id("entities"), // Deployment to roll back to
   },
-  handler: async (ctx, args) => {
+  handler: async (ctx: any, args: any) => {
     // 1. AUTHENTICATE
     const identity = await ctx.auth.getUserIdentity();
     if (!identity) {
@@ -291,8 +291,8 @@ export const rollback = mutation({
 
     const creator = await ctx.db
       .query("entities")
-      .withIndex("by_type", (q) => q.eq("type", "creator"))
-      .filter((q) => q.eq(q.field("properties.email"), identity.email))
+      .withIndex("by_type", (q: any) => q.eq("type", "creator"))
+      .filter((q: any) => q.eq(q.field("properties.email"), identity.email))
       .first();
 
     if (!creator) {
@@ -317,10 +317,10 @@ export const rollback = mutation({
     // Verify ownership
     const ownership = await ctx.db
       .query("connections")
-      .withIndex("from_type", (q) =>
+      .withIndex("from_type", (q: any) =>
         q.eq("fromEntityId", creator._id).eq("relationshipType", "owns")
       )
-      .filter((q) => q.eq(q.field("toEntityId"), args.websiteId))
+      .filter((q: any) => q.eq(q.field("toEntityId"), args.websiteId))
       .first();
 
     if (!ownership) {

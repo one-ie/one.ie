@@ -10,39 +10,11 @@ const description = 'Build websites by talking to AI. Generate pages, components
 	title={title}
 	description={description}
 	sidebarInitialCollapsed={true}
+	hideHeader={true}
+	fullHeight={true}
 >
 	<div class="flex h-full flex-col">
-		{/* Header with branding */}
-		<div class="border-b bg-gradient-to-r from-background via-primary/5 to-background px-6 py-4">
-			<div class="flex items-center justify-between">
-				<div class="space-y-1">
-					<h1 class="text-2xl font-bold tracking-tight flex items-center gap-2">
-						<svg class="h-6 w-6 text-primary" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-							<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 20l4-16m4 4l4 4-4 4M6 16l-4-4 4-4" />
-						</svg>
-						AI Website Builder
-					</h1>
-					<p class="text-sm text-muted-foreground">
-						Powered by Claude Code - Build websites with natural language
-					</p>
-				</div>
-				<div class="flex items-center gap-2">
-					<a
-						href="/websites"
-						class="inline-flex items-center gap-2 rounded-lg bg-primary/10 px-3 py-2 text-sm font-medium text-primary hover:bg-primary/20 transition-colors"
-					>
-						<svg class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-							<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
-						</svg>
-						Learn More
-					</a>
-				</div>
-			</div>
-		</div>
-
-		{/* Chat interface - full height */}
-		<div class="flex-1 overflow-hidden">
-			<WebsiteBuilderChat client:only="react" />
-		</div>
+		{/* Chat interface with integrated navigation - full height */}
+		<WebsiteBuilderChat client:only="react" />
 	</div>
 </Layout>

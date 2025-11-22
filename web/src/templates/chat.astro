@@ -1,0 +1,307 @@
+---
+/**
+ * Chat Template
+ *
+ * Production-ready real-time chat interface with ontology-ui components
+ *
+ * Features:
+ * - ChatMessage for displaying messages
+ * - ChatInput for composing messages
+ * - LiveNotifications for real-time updates
+ * - PresenceIndicator for user status
+ *
+ * Usage:
+ * Copy this template to your project and customize:
+ * - Replace mock data with Convex real-time queries
+ * - Add message persistence
+ * - Integrate WebSocket or Convex subscriptions
+ */
+
+import Layout from '@/layouts/Layout.astro';
+import { ChatMessage } from '@/components/ontology-ui/streaming/ChatMessage';
+import { ChatInput } from '@/components/ontology-ui/streaming/ChatInput';
+import { UserAvatar } from '@/components/ontology-ui/people/UserAvatar';
+import { Card, CardHeader, CardTitle, CardContent } from '@/components/ui/card';
+import { Badge } from '@/components/ui/badge';
+import { Button } from '@/components/ui/button';
+import { Separator } from '@/components/ui/separator';
+
+// Page metadata
+const title = 'Chat';
+const description = 'Real-time messaging and collaboration';
+
+// Mock current user
+const currentUser = {
+  id: 'user-1',
+  name: 'Sarah Johnson',
+  avatar: 'https://api.dicebear.com/7.x/avataaars/svg?seed=Sarah',
+  status: 'online' as const,
+};
+
+// Mock chat rooms/channels
+const channels = [
+  { id: 'general', name: 'General', unread: 3, lastMessage: '2m ago' },
+  { id: 'design', name: 'Design Team', unread: 0, lastMessage: '1h ago' },
+  { id: 'product', name: 'Product Updates', unread: 7, lastMessage: '5m ago' },
+  { id: 'random', name: 'Random', unread: 1, lastMessage: '10m ago' },
+];
+
+// Mock online users
+const onlineUsers = [
+  { id: 'user-2', name: 'Mike Chen', avatar: 'https://api.dicebear.com/7.x/avataaars/svg?seed=Mike', status: 'online' as const },
+  { id: 'user-3', name: 'Lisa Park', avatar: 'https://api.dicebear.com/7.x/avataaars/svg?seed=Lisa', status: 'online' as const },
+  { id: 'user-4', name: 'John Doe', avatar: 'https://api.dicebear.com/7.x/avataaars/svg?seed=John', status: 'online' as const },
+  { id: 'user-5', name: 'Jane Smith', avatar: 'https://api.dicebear.com/7.x/avataaars/svg?seed=Jane', status: 'away' as const },
+];
+
+// Mock messages
+const messages = [
+  {
+    id: 'msg-1',
+    userId: 'user-2',
+    userName: 'Mike Chen',
+    userAvatar: 'https://api.dicebear.com/7.x/avataaars/svg?seed=Mike',
+    content: 'Hey everyone! Just pushed the latest design updates to staging.',
+    timestamp: Date.now() - 3600000,
+    reactions: [
+      { emoji: '👍', count: 3, userIds: ['user-1', 'user-3', 'user-4'] },
+      { emoji: '🎉', count: 2, userIds: ['user-1', 'user-3'] },
+    ],
+  },
+  {
+    id: 'msg-2',
+    userId: 'user-3',
+    userName: 'Lisa Park',
+    userAvatar: 'https://api.dicebear.com/7.x/avataaars/svg?seed=Lisa',
+    content: 'Awesome! I\'ll review them this afternoon. The new color scheme looks great!',
+    timestamp: Date.now() - 3000000,
+    reactions: [
+      { emoji: '❤️', count: 1, userIds: ['user-2'] },
+    ],
+  },
+  {
+    id: 'msg-3',
+    userId: 'user-1',
+    userName: 'Sarah Johnson',
+    userAvatar: 'https://api.dicebear.com/7.x/avataaars/svg?seed=Sarah',
+    content: 'Thanks Mike! Can you also update the documentation when you get a chance?',
+    timestamp: Date.now() - 1800000,
+    reactions: [],
+  },
+  {
+    id: 'msg-4',
+    userId: 'user-2',
+    userName: 'Mike Chen',
+    userAvatar: 'https://api.dicebear.com/7.x/avataaars/svg?seed=Mike',
+    content: 'Will do! I\'ll have that ready by end of day.',
+    timestamp: Date.now() - 600000,
+    reactions: [],
+  },
+];
+---
+
+<Layout title={title} description={description} sidebarInitialCollapsed={true}>
+  <div class="flex h-screen overflow-hidden">
+    <!-- Channels Sidebar -->
+    <aside class="w-64 border-r bg-card flex flex-col">
+      <!-- Header -->
+      <div class="p-4 border-b">
+        <h2 class="text-lg font-bold mb-1">Channels</h2>
+        <p class="text-xs text-muted-foreground">
+          {channels.reduce((sum, ch) => sum + ch.unread, 0)} unread messages
+        </p>
+      </div>
+
+      <!-- Channel List -->
+      <div class="flex-1 overflow-y-auto p-2">
+        {channels.map(channel => (
+          <button
+            class="w-full flex items-center justify-between p-3 rounded-lg hover:bg-accent transition-colors text-left"
+          >
+            <div class="flex items-center gap-3 flex-1 min-w-0">
+              <span class="text-xl">#</span>
+              <div class="flex-1 min-w-0">
+                <div class="font-medium truncate">{channel.name}</div>
+                <div class="text-xs text-muted-foreground">{channel.lastMessage}</div>
+              </div>
+            </div>
+            {channel.unread > 0 && (
+              <Badge variant="default" class="shrink-0">
+                {channel.unread}
+              </Badge>
+            )}
+          </button>
+        ))}
+      </div>
+
+      <Separator />
+
+      <!-- Online Users -->
+      <div class="p-4">
+        <h3 class="text-sm font-semibold mb-3 text-muted-foreground">
+          Online ({onlineUsers.filter(u => u.status === 'online').length})
+        </h3>
+        <div class="space-y-2">
+          {onlineUsers.slice(0, 5).map(user => (
+            <button class="w-full flex items-center gap-2 p-2 rounded hover:bg-accent transition-colors text-left">
+              <UserAvatar
+                user={user}
+                size="sm"
+                showStatus={true}
+                client:load
+              />
+              <span class="text-sm truncate">{user.name}</span>
+            </button>
+          ))}
+        </div>
+      </div>
+    </aside>
+
+    <!-- Main Chat Area -->
+    <div class="flex-1 flex flex-col">
+      <!-- Chat Header -->
+      <header class="border-b p-4">
+        <div class="flex items-center justify-between">
+          <div>
+            <h1 class="text-xl font-bold"># general</h1>
+            <p class="text-sm text-muted-foreground">
+              {onlineUsers.length} members online
+            </p>
+          </div>
+
+          <div class="flex gap-2">
+            <Button variant="ghost" size="icon">
+              🔍
+            </Button>
+            <Button variant="ghost" size="icon">
+              ℹ️
+            </Button>
+            <Button variant="ghost" size="icon">
+              ⚙️
+            </Button>
+          </div>
+        </div>
+      </header>
+
+      <!-- Messages Area -->
+      <div class="flex-1 overflow-y-auto p-4 space-y-4">
+        {messages.map((message, index) => (
+          <ChatMessage
+            message={{
+              id: message.id,
+              content: message.content,
+              timestamp: message.timestamp,
+              userId: message.userId,
+              userName: message.userName,
+              userAvatar: message.userAvatar,
+            }}
+            currentUserId={currentUser.id}
+            showAvatar={true}
+            showTimestamp={true}
+            client:load
+          />
+        ))}
+
+        <!-- Typing Indicator -->
+        <div class="flex items-center gap-2 text-sm text-muted-foreground">
+          <div class="flex gap-1">
+            <span class="w-2 h-2 bg-current rounded-full animate-bounce" style="animation-delay: 0ms"></span>
+            <span class="w-2 h-2 bg-current rounded-full animate-bounce" style="animation-delay: 150ms"></span>
+            <span class="w-2 h-2 bg-current rounded-full animate-bounce" style="animation-delay: 300ms"></span>
+          </div>
+          <span>John is typing...</span>
+        </div>
+      </div>
+
+      <!-- Message Input -->
+      <div class="border-t p-4">
+        <ChatInput
+          placeholder="Type a message..."
+          onSend={(content) => console.log('Send message:', content)}
+          onTyping={() => console.log('User is typing')}
+          showFormatting={true}
+          showAttachments={true}
+          client:load
+        />
+      </div>
+    </div>
+
+    <!-- Thread/Details Sidebar (Optional) -->
+    <aside class="w-80 border-l bg-card p-4 overflow-y-auto hidden xl:block">
+      <h3 class="font-bold mb-4">Channel Details</h3>
+
+      <!-- Channel Description -->
+      <Card class="mb-4">
+        <CardHeader>
+          <CardTitle class="text-base">Description</CardTitle>
+        </CardHeader>
+        <CardContent>
+          <p class="text-sm text-muted-foreground">
+            General discussion for the team. Share updates, ask questions, and collaborate.
+          </p>
+        </CardContent>
+      </Card>
+
+      <!-- Pinned Messages -->
+      <Card class="mb-4">
+        <CardHeader>
+          <CardTitle class="text-base">Pinned Messages</CardTitle>
+        </CardHeader>
+        <CardContent class="space-y-3">
+          <div class="text-sm">
+            <div class="flex items-center gap-2 mb-1">
+              <UserAvatar
+                user={onlineUsers[0]}
+                size="xs"
+                client:load
+              />
+              <span class="font-medium text-xs">{onlineUsers[0].name}</span>
+            </div>
+            <p class="text-muted-foreground">
+              📌 Team standup every Monday at 10am
+            </p>
+          </div>
+        </CardContent>
+      </Card>
+
+      <!-- Shared Files -->
+      <Card>
+        <CardHeader>
+          <CardTitle class="text-base">Shared Files</CardTitle>
+        </CardHeader>
+        <CardContent class="space-y-2">
+          {['Design-v2.fig', 'Mockups.pdf', 'Screenshot.png'].map(file => (
+            <button class="w-full flex items-center gap-2 p-2 rounded hover:bg-accent transition-colors text-left">
+              <span class="text-xl">📄</span>
+              <div class="flex-1 min-w-0">
+                <div class="text-sm font-medium truncate">{file}</div>
+                <div class="text-xs text-muted-foreground">2 days ago</div>
+              </div>
+            </button>
+          ))}
+        </CardContent>
+      </Card>
+    </aside>
+  </div>
+</Layout>
+
+<style>
+  /* Full height layout */
+  :global(body) {
+    overflow: hidden;
+  }
+
+  /* Typing indicator animation */
+  @keyframes bounce {
+    0%, 80%, 100% {
+      transform: translateY(0);
+    }
+    40% {
+      transform: translateY(-8px);
+    }
+  }
+
+  .animate-bounce {
+    animation: bounce 1.4s infinite ease-in-out;
+  }
+</style>

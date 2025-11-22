@@ -1,0 +1,127 @@
+---
+/**
+ * Example: Simple Token Swap Page
+ *
+ * Demonstrates TokenSwap component integration
+ * - Token selection
+ * - Real-time quotes
+ * - Slippage settings
+ * - Swap execution
+ */
+
+import Layout from "@/layouts/Layout.astro";
+import { WalletConnectButton } from "@/components/ontology-ui/crypto/wallet";
+import { TokenSwap } from "@/components/ontology-ui/crypto/dex";
+import { Card, CardHeader, CardTitle, CardDescription, CardContent } from "@/components/ui/card";
+import { Badge } from "@/components/ui/badge";
+import { Alert, AlertDescription } from "@/components/ui/alert";
+
+const title = "Token Swap Example | ONE Platform";
+const description = "Simple token swap interface using DEX protocols";
+---
+
+<Layout title={title} description={description}>
+  <div class="container mx-auto px-4 py-12 max-w-4xl">
+
+    <!-- Header -->
+    <div class="text-center mb-8">
+      <Badge variant="secondary" class="mb-4">
+        💱 DEX Example
+      </Badge>
+      <h1 class="text-4xl font-bold mb-4">Token Swap</h1>
+      <p class="text-xl text-muted-foreground">
+        Swap tokens using decentralized exchange protocols
+      </p>
+    </div>
+
+    <!-- Wallet Connection -->
+    <div class="mb-8 flex justify-center">
+      <WalletConnectButton
+        label="Connect Wallet to Swap"
+        showBalance={true}
+        size="lg"
+        client:load
+      />
+    </div>
+
+    <!-- Info Alert -->
+    <Alert class="mb-8">
+      <AlertDescription>
+        <strong>Note:</strong> This is a demo using mock data. Connect a real wallet provider (MetaMask, WalletConnect) for actual swaps.
+      </AlertDescription>
+    </Alert>
+
+    <!-- Main Swap Interface -->
+    <div class="max-w-2xl mx-auto">
+      <TokenSwap
+        chainId={1}
+        onSwap={(swap) => {
+          console.log('Swap executed:', swap);
+          // Add toast notification
+          alert(`Swapped ${swap.fromAmount} ${swap.fromToken} for ${swap.toAmount} ${swap.toToken}`);
+        }}
+        client:load
+      />
+    </div>
+
+    <!-- Features Grid -->
+    <div class="grid grid-cols-1 md:grid-cols-3 gap-4 mt-12">
+      <Card>
+        <CardHeader>
+          <CardTitle class="text-base">Best Rates</CardTitle>
+        </CardHeader>
+        <CardContent>
+          <p class="text-sm text-muted-foreground">
+            Aggregates prices from multiple DEXs to find the best rate
+          </p>
+        </CardContent>
+      </Card>
+
+      <Card>
+        <CardHeader>
+          <CardTitle class="text-base">Slippage Protection</CardTitle>
+        </CardHeader>
+        <CardContent>
+          <p class="text-sm text-muted-foreground">
+            Customizable slippage tolerance to protect your trades
+          </p>
+        </CardContent>
+      </Card>
+
+      <Card>
+        <CardHeader>
+          <CardTitle class="text-base">Gas Optimization</CardTitle>
+        </CardHeader>
+        <CardContent>
+          <p class="text-sm text-muted-foreground">
+            Real-time gas estimates and optimization for lower fees
+          </p>
+        </CardContent>
+      </Card>
+    </div>
+
+    <!-- Code Example -->
+    <div class="mt-12">
+      <Card>
+        <CardHeader>
+          <CardTitle>Usage Example</CardTitle>
+          <CardDescription>
+            Copy this code to add token swap to your page
+          </CardDescription>
+        </CardHeader>
+        <CardContent>
+          <pre class="bg-secondary p-4 rounded-lg overflow-x-auto text-sm"><code>{`import { TokenSwap } from '@/components/ontology-ui/crypto/dex';
+
+<TokenSwap
+  chainId={1}
+  onSwap={(swap) => {
+    console.log('Swap:', swap.fromToken, '->', swap.toToken);
+  }}
+  client:load
+/>`}</code></pre>
+        </CardContent>
+      </Card>
+    </div>
+
+  </div>
+</Layout>

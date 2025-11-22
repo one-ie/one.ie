@@ -1,0 +1,315 @@
+---
+/**
+ * Example: NFT Marketplace Page
+ *
+ * Demonstrates NFT components:
+ * - NFTGallery for collection display
+ * - NFTMarketplace for trading
+ * - Wallet integration
+ */
+
+import Layout from "@/layouts/Layout.astro";
+import { WalletConnectButton } from "@/components/ontology-ui/crypto/wallet";
+import { NFTGallery, NFTMarketplace } from "@/components/ontology-ui/crypto/nft";
+import { Card, CardHeader, CardTitle, CardDescription, CardContent } from "@/components/ui/card";
+import { Badge } from "@/components/ui/badge";
+import { Alert, AlertDescription } from "@/components/ui/alert";
+import { Button } from "@/components/ui/button";
+import { Tabs, TabsList, TabsTrigger, TabsContent } from "@/components/ui/tabs";
+
+const title = "NFT Marketplace Example | ONE Platform";
+const description = "Browse, buy, and sell NFTs on a decentralized marketplace";
+
+// Mock NFT collection data
+const mockNFTCollection = [
+  {
+    name: "Crypto Punk #3100",
+    contract: "0xb47e3cd837dDF8e4c57F05d70Ab865de6e193BBB",
+    tokenId: "3100",
+    imageUrl: "/placeholder-nft-1.jpg",
+    owner: "0x1234567890abcdef1234567890abcdef12345678",
+    standard: "ERC-721",
+    chainName: "Ethereum",
+    collection: {
+      name: "CryptoPunks",
+      floorPrice: "45.5"
+    },
+    lastSale: {
+      price: "50.0",
+      currency: "ETH",
+      priceUsd: 125000
+    },
+    rarity: {
+      rank: 12,
+      total: 10000
+    }
+  },
+  {
+    name: "Bored Ape #5123",
+    contract: "0xBC4CA0EdA7647A8aB7C2061c2E118A18a936f13D",
+    tokenId: "5123",
+    imageUrl: "/placeholder-nft-2.jpg",
+    owner: "0xabcdef1234567890abcdef1234567890abcdef12",
+    standard: "ERC-721",
+    chainName: "Ethereum",
+    collection: {
+      name: "Bored Ape Yacht Club",
+      floorPrice: "32.8"
+    },
+    lastSale: {
+      price: "35.2",
+      currency: "ETH",
+      priceUsd: 88000
+    },
+    rarity: {
+      rank: 523,
+      total: 10000
+    }
+  },
+  {
+    name: "Azuki #7890",
+    contract: "0xED5AF388653567Af2F388E6224dC7C4b3241C544",
+    tokenId: "7890",
+    imageUrl: "/placeholder-nft-3.jpg",
+    owner: "0xfedcba0987654321fedcba0987654321fedcba09",
+    standard: "ERC-721",
+    chainName: "Ethereum",
+    collection: {
+      name: "Azuki",
+      floorPrice: "12.3"
+    },
+    lastSale: {
+      price: "14.5",
+      currency: "ETH",
+      priceUsd: 36250
+    },
+    rarity: {
+      rank: 789,
+      total: 10000
+    }
+  },
+];
+
+// Mock marketplace listings
+const mockMarketplaceListings = mockNFTCollection.map(nft => ({
+  ...nft,
+  price: parseFloat(nft.lastSale.price) * 0.95, // Slightly below last sale
+  isListed: true,
+}));
+---
+
+<Layout title={title} description={description}>
+  <div class="min-h-screen bg-gradient-to-b from-background to-secondary">
+
+    <!-- Header -->
+    <section class="container mx-auto px-4 py-12">
+      <div class="text-center mb-8">
+        <Badge variant="secondary" class="mb-4 text-lg px-4 py-2">
+          🖼️ NFT Marketplace
+        </Badge>
+        <h1 class="text-5xl font-bold mb-4 bg-gradient-to-r from-primary to-purple-500 bg-clip-text text-transparent">
+          Discover Digital Art
+        </h1>
+        <p class="text-xl text-muted-foreground max-w-2xl mx-auto">
+          Browse, buy, and sell NFTs from top collections
+        </p>
+      </div>
+
+      <!-- Wallet Connection & Stats -->
+      <div class="flex flex-col md:flex-row items-center justify-between gap-6 max-w-6xl mx-auto mb-8">
+        <WalletConnectButton
+          label="Connect Wallet"
+          showBalance={true}
+          size="lg"
+          client:load
+        />
+
+        <div class="flex gap-6">
+          <div class="text-center">
+            <div class="text-2xl font-bold text-primary">2.5K</div>
+            <div class="text-sm text-muted-foreground">Items</div>
+          </div>
+          <div class="text-center">
+            <div class="text-2xl font-bold text-primary">890</div>
+            <div class="text-sm text-muted-foreground">Owners</div>
+          </div>
+          <div class="text-center">
+            <div class="text-2xl font-bold text-primary">45Ξ</div>
+            <div class="text-sm text-muted-foreground">Floor</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Info Alert -->
+      <Alert class="max-w-4xl mx-auto mb-8">
+        <AlertDescription>
+          <strong>Demo Mode:</strong> This marketplace uses mock data. Connect a real wallet and integrate with OpenSea API or Alchemy NFT API for live data.
+        </AlertDescription>
+      </Alert>
+    </section>
+
+    <!-- Tabs: Gallery vs Marketplace -->
+    <section class="container mx-auto px-4 pb-20">
+      <Tabs defaultValue="gallery" class="w-full">
+        <TabsList class="grid w-full max-w-md mx-auto grid-cols-2 mb-8">
+          <TabsTrigger value="gallery">NFT Gallery</TabsTrigger>
+          <TabsTrigger value="marketplace">Marketplace</TabsTrigger>
+        </TabsList>
+
+        <!-- NFT Gallery Tab -->
+        <TabsContent value="gallery">
+          <div class="mb-6 text-center">
+            <h2 class="text-2xl font-bold mb-2">NFT Gallery</h2>
+            <p class="text-muted-foreground">
+              Browse NFT collections with filtering and sorting
+            </p>
+          </div>
+
+          <NFTGallery
+            nfts={mockNFTCollection}
+            columns={3}
+            showFilters={true}
+            onSelect={(nft) => {
+              console.log('Selected NFT:', nft);
+              alert(`Selected: ${nft.name}`);
+            }}
+            client:load
+          />
+        </TabsContent>
+
+        <!-- NFT Marketplace Tab -->
+        <TabsContent value="marketplace">
+          <div class="mb-6 text-center">
+            <h2 class="text-2xl font-bold mb-2">NFT Marketplace</h2>
+            <p class="text-muted-foreground">
+              Buy, sell, and trade NFTs with instant transactions
+            </p>
+          </div>
+
+          <NFTMarketplace
+            listings={mockMarketplaceListings}
+            onBuy={(listing) => {
+              console.log('Buy NFT:', listing);
+              alert(`Buying ${listing.name} for ${listing.price} ETH`);
+            }}
+            onList={(nft, price) => {
+              console.log('List NFT:', nft, price);
+              alert(`Listed ${nft.name} for ${price} ETH`);
+            }}
+            showFilters={true}
+            chainId={1}
+            client:load
+          />
+        </TabsContent>
+      </Tabs>
+    </section>
+
+    <!-- Features Section -->
+    <section class="container mx-auto px-4 py-20 bg-secondary/50">
+      <div class="text-center mb-12">
+        <h2 class="text-3xl font-bold mb-4">Marketplace Features</h2>
+        <p class="text-xl text-muted-foreground">
+          Everything you need to trade NFTs
+        </p>
+      </div>
+
+      <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 max-w-6xl mx-auto">
+        <Card>
+          <CardHeader>
+            <CardTitle class="flex items-center gap-2">
+              <span class="text-2xl">🔍</span>
+              Discovery
+            </CardTitle>
+          </CardHeader>
+          <CardContent>
+            <p class="text-sm text-muted-foreground">
+              Advanced filtering and search across all collections
+            </p>
+          </CardContent>
+        </Card>
+
+        <Card>
+          <CardHeader>
+            <CardTitle class="flex items-center gap-2">
+              <span class="text-2xl">💎</span>
+              Rarity Tools
+            </CardTitle>
+          </CardHeader>
+          <CardContent>
+            <p class="text-sm text-muted-foreground">
+              Rarity scores and rankings for informed purchases
+            </p>
+          </CardContent>
+        </Card>
+
+        <Card>
+          <CardHeader>
+            <CardTitle class="flex items-center gap-2">
+              <span class="text-2xl">⚡</span>
+              Instant Trading
+            </CardTitle>
+          </CardHeader>
+          <CardContent>
+            <p class="text-sm text-muted-foreground">
+              Fast transactions with optimized gas fees
+            </p>
+          </CardContent>
+        </Card>
+
+        <Card>
+          <CardHeader>
+            <CardTitle class="flex items-center gap-2">
+              <span class="text-2xl">🔒</span>
+              Secure
+            </CardTitle>
+          </CardHeader>
+          <CardContent>
+            <p class="text-sm text-muted-foreground">
+              Verified contracts and secure wallet integration
+            </p>
+          </CardContent>
+        </Card>
+      </div>
+    </section>
+
+    <!-- Code Example -->
+    <section class="container mx-auto px-4 py-12">
+      <Card class="max-w-4xl mx-auto">
+        <CardHeader>
+          <CardTitle>Integration Code</CardTitle>
+          <CardDescription>
+            Add NFT marketplace to your page
+          </CardDescription>
+        </CardHeader>
+        <CardContent class="space-y-6">
+          <div>
+            <h3 class="font-semibold mb-2">NFT Gallery Component</h3>
+            <pre class="bg-secondary p-4 rounded-lg overflow-x-auto text-sm"><code>{`import { NFTGallery } from '@/components/ontology-ui/crypto/nft';
+
+<NFTGallery
+  nfts={collection}
+  columns={3}
+  showFilters={true}
+  onSelect={(nft) => console.log(nft)}
+  client:load
+/>`}</code></pre>
+          </div>
+
+          <div>
+            <h3 class="font-semibold mb-2">NFT Marketplace Component</h3>
+            <pre class="bg-secondary p-4 rounded-lg overflow-x-auto text-sm"><code>{`import { NFTMarketplace } from '@/components/ontology-ui/crypto/nft';
+
+<NFTMarketplace
+  listings={marketplaceListings}
+  onBuy={(listing) => handleBuy(listing)}
+  onList={(nft, price) => handleList(nft, price)}
+  showFilters={true}
+  client:load
+/>`}</code></pre>
+          </div>
+        </CardContent>
+      </Card>
+    </section>
+
+  </div>
+</Layout>

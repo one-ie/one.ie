@@ -1,0 +1,309 @@
+---
+/**
+ * Marketplace Template
+ *
+ * Production-ready marketplace with ontology-ui components
+ *
+ * Features:
+ * - ProductCard for physical/digital products
+ * - TokenCard for cryptocurrency tokens
+ * - NFTCard for NFT collectibles
+ * - SearchBar for filtering items
+ *
+ * Usage:
+ * Copy this template to your project and customize:
+ * - Replace mock data with real Convex queries
+ * - Add shopping cart functionality
+ * - Integrate Stripe or crypto payments
+ */
+
+import Layout from '@/layouts/Layout.astro';
+import { ProductCard } from '@/components/ontology-ui/things/ProductCard';
+import { TokenCard } from '@/components/ontology-ui/things/TokenCard';
+import { SearchBar } from '@/components/ontology-ui/knowledge/SearchBar';
+import { Card, CardHeader, CardTitle, CardContent } from '@/components/ui/card';
+import { Badge } from '@/components/ui/badge';
+import { Button } from '@/components/ui/button';
+import { Separator } from '@/components/ui/separator';
+
+// Page metadata
+const title = 'Marketplace';
+const description = 'Browse and purchase products, tokens, and NFTs';
+
+// Mock products (replace with Convex queries)
+const products = [
+  {
+    _id: 'product-1',
+    name: 'Premium T-Shirt',
+    description: 'Organic cotton t-shirt with minimalist design',
+    type: 'product' as const,
+    status: 'active' as const,
+    groupId: 'group-1',
+    createdAt: Date.now(),
+    metadata: {
+      price: 49.99,
+      image: 'https://images.unsplash.com/photo-1521572163474-6864f9cf17ab?w=400',
+      category: 'Clothing',
+      stock: 24,
+    }
+  },
+  {
+    _id: 'product-2',
+    name: 'Designer Mug',
+    description: 'Ceramic mug with unique hand-painted design',
+    type: 'product' as const,
+    status: 'active' as const,
+    groupId: 'group-1',
+    createdAt: Date.now(),
+    metadata: {
+      price: 29.99,
+      image: 'https://images.unsplash.com/photo-1514228742587-6b1558fcca3d?w=400',
+      category: 'Home',
+      stock: 15,
+    }
+  },
+  {
+    _id: 'product-3',
+    name: 'Wireless Headphones',
+    description: 'Premium noise-cancelling headphones',
+    type: 'product' as const,
+    status: 'active' as const,
+    groupId: 'group-1',
+    createdAt: Date.now(),
+    metadata: {
+      price: 299.99,
+      image: 'https://images.unsplash.com/photo-1505740420928-5e560c06d30e?w=400',
+      category: 'Electronics',
+      stock: 8,
+    }
+  },
+];
+
+// Mock tokens (replace with Convex queries)
+const tokens = [
+  {
+    _id: 'token-1',
+    name: 'Platform Token',
+    description: 'Utility token for platform governance',
+    type: 'token' as const,
+    status: 'active' as const,
+    groupId: 'group-1',
+    createdAt: Date.now(),
+    metadata: {
+      symbol: 'PLAT',
+      price: 2.45,
+      marketCap: 24500000,
+      supply: 10000000,
+      change24h: 5.2,
+    }
+  },
+  {
+    _id: 'token-2',
+    name: 'Rewards Token',
+    description: 'Earn rewards for platform participation',
+    type: 'token' as const,
+    status: 'active' as const,
+    groupId: 'group-1',
+    createdAt: Date.now(),
+    metadata: {
+      symbol: 'RWRD',
+      price: 0.85,
+      marketCap: 8500000,
+      supply: 10000000,
+      change24h: -2.1,
+    }
+  },
+];
+
+// Mock NFTs (replace with Convex queries)
+const nfts = [
+  {
+    _id: 'nft-1',
+    name: 'Digital Art #001',
+    description: 'Unique generative art piece',
+    type: 'nft' as const,
+    status: 'active' as const,
+    groupId: 'group-1',
+    createdAt: Date.now(),
+    metadata: {
+      price: 1.5,
+      image: 'https://images.unsplash.com/photo-1618005182384-a83a8bd57fbe?w=400',
+      collection: 'Genesis Collection',
+      edition: '1 of 100',
+    }
+  },
+  {
+    _id: 'nft-2',
+    name: 'Digital Art #002',
+    description: 'Limited edition collectible',
+    type: 'nft' as const,
+    status: 'active' as const,
+    groupId: 'group-1',
+    createdAt: Date.now(),
+    metadata: {
+      price: 2.8,
+      image: 'https://images.unsplash.com/photo-1634986666676-ec8fd927c23d?w=400',
+      collection: 'Genesis Collection',
+      edition: '2 of 100',
+    }
+  },
+];
+
+// Categories
+const categories = [
+  { name: 'All', count: products.length + tokens.length + nfts.length },
+  { name: 'Products', count: products.length },
+  { name: 'Tokens', count: tokens.length },
+  { name: 'NFTs', count: nfts.length },
+];
+---
+
+<Layout title={title} description={description}>
+  <!-- Hero Section -->
+  <div class="bg-gradient-to-r from-primary/10 to-primary/5 border-b">
+    <div class="container mx-auto px-4 py-12">
+      <div class="max-w-3xl">
+        <h1 class="text-4xl md:text-5xl font-bold mb-4">
+          Welcome to the Marketplace
+        </h1>
+        <p class="text-lg text-muted-foreground mb-6">
+          Discover unique products, tokens, and NFTs from creators worldwide
+        </p>
+
+        <!-- Search Bar -->
+        <SearchBar
+          placeholder="Search products, tokens, NFTs..."
+          onSearch={(query) => console.log('Search:', query)}
+          client:load
+        />
+      </div>
+    </div>
+  </div>
+
+  <div class="container mx-auto px-4 py-8">
+    <!-- Category Filters -->
+    <div class="flex gap-2 mb-8 overflow-x-auto pb-2">
+      {categories.map(cat => (
+        <Button variant="outline" class="whitespace-nowrap">
+          {cat.name}
+          <Badge variant="secondary" class="ml-2">
+            {cat.count}
+          </Badge>
+        </Button>
+      ))}
+    </div>
+
+    <!-- Products Section -->
+    <section class="mb-12">
+      <div class="flex items-center justify-between mb-6">
+        <div>
+          <h2 class="text-3xl font-bold">Products</h2>
+          <p class="text-muted-foreground">Physical and digital goods</p>
+        </div>
+        <Button variant="outline">
+          View All →
+        </Button>
+      </div>
+
+      <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+        {products.map(product => (
+          <ProductCard
+            product={product}
+            price={product.metadata.price as number}
+            inStock={true}
+            onAddToCart={(p) => console.log('Add to cart:', p.name)}
+            client:load
+          />
+        ))}
+      </div>
+    </section>
+
+    <Separator class="my-12" />
+
+    <!-- Tokens Section -->
+    <section class="mb-12">
+      <div class="flex items-center justify-between mb-6">
+        <div>
+          <h2 class="text-3xl font-bold">Tokens</h2>
+          <p class="text-muted-foreground">Cryptocurrency and utility tokens</p>
+        </div>
+        <Button variant="outline">
+          View All →
+        </Button>
+      </div>
+
+      <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+        {tokens.map(token => (
+          <TokenCard
+            token={token}
+            showChart={true}
+            client:load
+          />
+        ))}
+      </div>
+    </section>
+
+    <Separator class="my-12" />
+
+    <!-- NFTs Section -->
+    <section class="mb-12">
+      <div class="flex items-center justify-between mb-6">
+        <div>
+          <h2 class="text-3xl font-bold">NFT Collectibles</h2>
+          <p class="text-muted-foreground">Unique digital art and collectibles</p>
+        </div>
+        <Button variant="outline">
+          View All →
+        </Button>
+      </div>
+
+      <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+        {nfts.map(nft => (
+          <Card class="cursor-pointer hover:shadow-lg transition-shadow">
+            <div class="aspect-square overflow-hidden">
+              <img
+                src={nft.metadata.image as string}
+                alt={nft.name}
+                class="w-full h-full object-cover hover:scale-105 transition-transform"
+              />
+            </div>
+            <CardHeader>
+              <div class="flex items-center justify-between">
+                <CardTitle>{nft.name}</CardTitle>
+                <Badge variant="outline">{nft.metadata.edition}</Badge>
+              </div>
+            </CardHeader>
+            <CardContent>
+              <p class="text-sm text-muted-foreground mb-4">{nft.description}</p>
+              <div class="flex items-center justify-between">
+                <div>
+                  <div class="text-xs text-muted-foreground">Current Price</div>
+                  <div class="text-xl font-bold">{nft.metadata.price} ETH</div>
+                </div>
+                <Button>Buy Now</Button>
+              </div>
+            </CardContent>
+          </Card>
+        ))}
+      </div>
+    </section>
+
+    <!-- CTA Section -->
+    <Card class="bg-gradient-to-r from-primary/10 to-primary/5 border-2 border-primary/20">
+      <CardContent class="p-8 text-center">
+        <h3 class="text-2xl font-bold mb-2">Start Selling</h3>
+        <p class="text-muted-foreground mb-6 max-w-2xl mx-auto">
+          Join thousands of creators selling products, tokens, and NFTs on our platform
+        </p>
+        <div class="flex gap-4 justify-center">
+          <Button size="lg">
+            List Your Items
+          </Button>
+          <Button size="lg" variant="outline">
+            Learn More
+          </Button>
+        </div>
+      </CardContent>
+    </Card>
+  </div>
+</Layout>

@@ -33,7 +33,7 @@ export const create = mutation({
       })
     ),
   },
-  handler: async (ctx, args) => {
+  handler: async (ctx: any, args: any) => {
     // 1. AUTHENTICATE
     const identity = await ctx.auth.getUserIdentity();
     if (!identity) {
@@ -42,8 +42,8 @@ export const create = mutation({
 
     const creator = await ctx.db
       .query("entities")
-      .withIndex("by_type", (q) => q.eq("type", "creator"))
-      .filter((q) => q.eq(q.field("properties.email"), identity.email))
+      .withIndex("by_type", (q: any) => q.eq("type", "creator"))
+      .filter((q: any) => q.eq(q.field("properties.email"), identity.email))
       .first();
 
     if (!creator) {
@@ -59,10 +59,10 @@ export const create = mutation({
     // Verify user owns the parent website
     const ownership = await ctx.db
       .query("connections")
-      .withIndex("from_type", (q) =>
+      .withIndex("from_type", (q: any) =>
         q.eq("fromEntityId", creator._id).eq("relationshipType", "owns")
       )
-      .filter((q) => q.eq(q.field("toEntityId"), args.websiteId))
+      .filter((q: any) => q.eq(q.field("toEntityId"), args.websiteId))
       .first();
 
     if (!ownership) {
@@ -161,7 +161,7 @@ export const update = mutation({
       )
     ),
   },
-  handler: async (ctx, args) => {
+  handler: async (ctx: any, args: any) => {
     // 1. AUTHENTICATE
     const identity = await ctx.auth.getUserIdentity();
     if (!identity) {
@@ -170,8 +170,8 @@ export const update = mutation({
 
     const creator = await ctx.db
       .query("entities")
-      .withIndex("by_type", (q) => q.eq("type", "creator"))
-      .filter((q) => q.eq(q.field("properties.email"), identity.email))
+      .withIndex("by_type", (q: any) => q.eq("type", "creator"))
+      .filter((q: any) => q.eq(q.field("properties.email"), identity.email))
       .first();
 
     if (!creator) {
@@ -187,7 +187,7 @@ export const update = mutation({
     // Get parent website
     const websiteConnection = await ctx.db
       .query("connections")
-      .withIndex("from_type", (q) =>
+      .withIndex("from_type", (q: any) =>
         q.eq("fromEntityId", args.id).eq("relationshipType", "part_of")
       )
       .first();
@@ -199,10 +199,10 @@ export const update = mutation({
     // Verify user owns the parent website
     const ownership = await ctx.db
       .query("connections")
-      .withIndex("from_type", (q) =>
+      .withIndex("from_type", (q: any) =>
         q.eq("fromEntityId", creator._id).eq("relationshipType", "owns")
       )
-      .filter((q) => q.eq(q.field("toEntityId"), websiteConnection.toEntityId))
+      .filter((q: any) => q.eq(q.field("toEntityId"), websiteConnection.toEntityId))
       .first();
 
     if (!ownership) {
@@ -273,7 +273,7 @@ export const deletePage = mutation({
   args: {
     id: v.id("entities"),
   },
-  handler: async (ctx, args) => {
+  handler: async (ctx: any, args: any) => {
     // 1. AUTHENTICATE
     const identity = await ctx.auth.getUserIdentity();
     if (!identity) {
@@ -282,8 +282,8 @@ export const deletePage = mutation({
 
     const creator = await ctx.db
       .query("entities")
-      .withIndex("by_type", (q) => q.eq("type", "creator"))
-      .filter((q) => q.eq(q.field("properties.email"), identity.email))
+      .withIndex("by_type", (q: any) => q.eq("type", "creator"))
+      .filter((q: any) => q.eq(q.field("properties.email"), identity.email))
       .first();
 
     if (!creator) {
@@ -299,7 +299,7 @@ export const deletePage = mutation({
     // Get parent website
     const websiteConnection = await ctx.db
       .query("connections")
-      .withIndex("from_type", (q) =>
+      .withIndex("from_type", (q: any) =>
         q.eq("fromEntityId", args.id).eq("relationshipType", "part_of")
       )
       .first();
@@ -311,10 +311,10 @@ export const deletePage = mutation({
     // Verify ownership
     const ownership = await ctx.db
       .query("connections")
-      .withIndex("from_type", (q) =>
+      .withIndex("from_type", (q: any) =>
         q.eq("fromEntityId", creator._id).eq("relationshipType", "owns")
       )
-      .filter((q) => q.eq(q.field("toEntityId"), websiteConnection.toEntityId))
+      .filter((q: any) => q.eq(q.field("toEntityId"), websiteConnection.toEntityId))
       .first();
 
     if (!ownership) {

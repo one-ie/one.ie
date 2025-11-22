@@ -25,7 +25,7 @@ export const create = mutation({
     ),
     customCSS: v.optional(v.string()),
   },
-  handler: async (ctx, args) => {
+  handler: async (ctx: any, args: any) => {
     // 1. AUTHENTICATE: Get user identity
     const identity = await ctx.auth.getUserIdentity();
     if (!identity) {
@@ -35,8 +35,8 @@ export const create = mutation({
     // Get the creator (person) from identity
     const creator = await ctx.db
       .query("entities")
-      .withIndex("by_type", (q) => q.eq("type", "creator"))
-      .filter((q) => q.eq(q.field("properties.email"), identity.email))
+      .withIndex("by_type", (q: any) => q.eq("type", "creator"))
+      .filter((q: any) => q.eq(q.field("properties.email"), identity.email))
       .first();
 
     if (!creator) {
@@ -137,7 +137,7 @@ export const update = mutation({
       )
     ),
   },
-  handler: async (ctx, args) => {
+  handler: async (ctx: any, args: any) => {
     // 1. AUTHENTICATE
     const identity = await ctx.auth.getUserIdentity();
     if (!identity) {
@@ -146,8 +146,8 @@ export const update = mutation({
 
     const creator = await ctx.db
       .query("entities")
-      .withIndex("by_type", (q) => q.eq("type", "creator"))
-      .filter((q) => q.eq(q.field("properties.email"), identity.email))
+      .withIndex("by_type", (q: any) => q.eq("type", "creator"))
+      .filter((q: any) => q.eq(q.field("properties.email"), identity.email))
       .first();
 
     if (!creator) {
@@ -163,10 +163,10 @@ export const update = mutation({
     // Verify user owns this website
     const ownership = await ctx.db
       .query("connections")
-      .withIndex("from_type", (q) =>
+      .withIndex("from_type", (q: any) =>
         q.eq("fromEntityId", creator._id).eq("relationshipType", "owns")
       )
-      .filter((q) => q.eq(q.field("toEntityId"), args.id))
+      .filter((q: any) => q.eq(q.field("toEntityId"), args.id))
       .first();
 
     if (!ownership) {
@@ -225,7 +225,7 @@ export const deleteWebsite = mutation({
   args: {
     id: v.id("entities"),
   },
-  handler: async (ctx, args) => {
+  handler: async (ctx: any, args: any) => {
     // 1. AUTHENTICATE
     const identity = await ctx.auth.getUserIdentity();
     if (!identity) {
@@ -234,8 +234,8 @@ export const deleteWebsite = mutation({
 
     const creator = await ctx.db
       .query("entities")
-      .withIndex("by_type", (q) => q.eq("type", "creator"))
-      .filter((q) => q.eq(q.field("properties.email"), identity.email))
+      .withIndex("by_type", (q: any) => q.eq("type", "creator"))
+      .filter((q: any) => q.eq(q.field("properties.email"), identity.email))
       .first();
 
     if (!creator) {
@@ -250,10 +250,10 @@ export const deleteWebsite = mutation({
 
     const ownership = await ctx.db
       .query("connections")
-      .withIndex("from_type", (q) =>
+      .withIndex("from_type", (q: any) =>
         q.eq("fromEntityId", creator._id).eq("relationshipType", "owns")
       )
-      .filter((q) => q.eq(q.field("toEntityId"), args.id))
+      .filter((q: any) => q.eq(q.field("toEntityId"), args.id))
       .first();
 
     if (!ownership) {

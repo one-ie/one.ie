@@ -3,7 +3,7 @@
 import { useCallback, useState, useEffect } from "react";
 import { nanoid } from "nanoid";
 import { toast } from "sonner";
-import { Code2, FileCode, Sparkles, CheckCircle2, AlertCircle, Loader2 } from "lucide-react";
+import { Code2, FileCode, Sparkles, CheckCircle2, AlertCircle, Loader2, Package, Filter } from "lucide-react";
 import {
 	Conversation,
 	ConversationContent,
@@ -32,7 +32,7 @@ import {
 } from "@/components/ai/elements/reasoning";
 import { Suggestion, Suggestions } from "@/components/ai/elements/suggestion";
 import { Button } from "@/components/ui/button";
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import { Card, CardContent, CardHeader, CardTitle, CardDescription } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { Separator } from "@/components/ui/separator";
 import {
@@ -40,6 +40,15 @@ import {
 	CollapsibleContent,
 	CollapsibleTrigger,
 } from "@/components/ui/collapsible";
+import { Tabs, TabsList, TabsTrigger } from "@/components/ui/tabs";
+import { ScrollArea } from "@/components/ui/scroll-area";
+import {
+	suggestComponents,
+	CATEGORY_INFO,
+	type OntologyComponent,
+	type OntologyCategory,
+} from "@/lib/ontology-ui-registry";
+import { openComponentPicker } from "@/stores/componentPicker";
 
 /**
  * Tool call type from the API
@@ -83,6 +92,7 @@ export function WebsiteBuilderChat() {
 	const [messages, setMessages] = useState<MessageType[]>([]);
 	const [currentReasoning, setCurrentReasoning] = useState<string>("");
 	const [currentToolCalls, setCurrentToolCalls] = useState<ToolCall[]>([]);
+	const [componentSuggestions, setComponentSuggestions] = useState<OntologyComponent[]>([]);
 
 	const suggestions = [
 		"Create a landing page with hero section",
@@ -91,6 +101,9 @@ export function WebsiteBuilderChat() {
 		"Create a contact form",
 		"Generate a blog post layout",
 		"Build an e-commerce product page",
+		"Create a crypto wallet dashboard",
+		"Build an NFT marketplace",
+		"Add token swap functionality",
 	];
 
 	/**
@@ -264,6 +277,29 @@ export function WebsiteBuilderChat() {
 		[handleSubmit],
 	);
 
+	/**
+	 * Handle component selection from suggestions
+	 */
+	const handleComponentSelect = useCallback((component: OntologyComponent) => {
+		const code = component.example || `<${component.name} />`;
+		navigator.clipboard.writeText(code);
+		toast.success(`${component.name} code copied!`, {
+			description: 'Paste it into your page or ask AI to integrate it',
+		});
+	}, []);
+
+	/**
+	 * Update component suggestions when user types
+	 */
+	useEffect(() => {
+		if (text.length > 3) {
+			const suggestions = suggestComponents(text);
+			setComponentSuggestions(suggestions);
+		} else {
+			setComponentSuggestions([]);
+		}
+	}, [text]);
+
 	return (
 		<div className="relative flex size-full flex-col divide-y overflow-hidden">
 			{/* Chat messages */}
@@ -372,6 +408,37 @@ export function WebsiteBuilderChat() {
 							/>
 						))}
 					</Suggestions>
+				)}
+
+				{/* Component Suggestions (when user types) */}
+				{componentSuggestions.length > 0 && (
+					<div className="px-4">
+						<div className="flex items-center justify-between mb-3">
+							<div className="flex items-center gap-2">
+								<Package className="h-4 w-4 text-muted-foreground" />
+								<h3 className="text-sm font-medium">Suggested Components</h3>
+							</div>
+							<Button
+								variant="ghost"
+								size="sm"
+								onClick={() => openComponentPicker()}
+							>
+								<Filter className="mr-2 h-4 w-4" />
+								Browse All
+							</Button>
+						</div>
+						<ScrollArea className="w-full">
+							<div className="flex gap-3 pb-2">
+								{componentSuggestions.map((component) => (
+									<ComponentSuggestionCard
+										key={component.name}
+										component={component}
+										onSelect={handleComponentSelect}
+									/>
+								))}
+							</div>
+						</ScrollArea>
+					</div>
 				)}
 
 				<div className="w-full px-4 pb-4">
@@ -512,4 +579,51 @@ function extractCodeBlocks(content: string): string[] {
 	const codeBlockRegex = /```[\s\S]*?```/g;
 	const matches = content.match(codeBlockRegex) || [];
 	return matches.map((block) => block.replace(/```\w*\n?/g, "").trim());
+}
+
+/**
+ * Component suggestion card
+ */
+interface ComponentSuggestionCardProps {
+	component: OntologyComponent;
+	onSelect: (component: OntologyComponent) => void;
+}
+
+function ComponentSuggestionCard({ component, onSelect }: ComponentSuggestionCardProps) {
+	const categoryInfo = CATEGORY_INFO[component.category];
+
+	return (
+		<Card className="min-w-[280px] hover:shadow-md transition-shadow cursor-pointer" onClick={() => onSelect(component)}>
+			<CardHeader className="pb-3">
+				<div className="flex items-start justify-between gap-2">
+					<div className="flex items-center gap-2">
+						<span className="text-xl">{categoryInfo.icon}</span>
+						<div>
+							<CardTitle className="text-sm font-medium">{component.name}</CardTitle>
+							<Badge variant="secondary" className="text-xs mt-1">
+								{component.category}
+							</Badge>
+						</div>
+					</div>
+				</div>
+			</CardHeader>
+			<CardContent className="space-y-2">
+				<CardDescription className="text-xs line-clamp-2">
+					{component.description}
+				</CardDescription>
+				{component.example && (
+					<div className="bg-muted p-2 rounded text-xs font-mono overflow-x-auto">
+						{component.example}
+					</div>
+				)}
+				<Button size="sm" variant="outline" className="w-full" onClick={(e) => {
+					e.stopPropagation();
+					onSelect(component);
+				}}>
+					<CheckCircle2 className="mr-2 h-3 w-3" />
+					Copy Code
+				</Button>
+			</CardContent>
+		</Card>
+	);
 }
