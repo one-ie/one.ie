@@ -69,6 +69,140 @@ All three accounts authenticate the same user (`user_123`), but through differen
 
 ---
 
+## Session Management
+
+**Better Auth uses cookie-based session management** with the following characteristics:
+
+### Cookie Storage
+- Session tokens stored in **httpOnly, secure cookies** (signed with `BETTER_AUTH_SECRET`)
+- Cookies also store OAuth state, PKCE verifiers, and other auth data
+- Automatically secure in production mode
+
+### Session Lifecycle
+- **Default expiration**: 7 days
+- **Auto-refresh**: Sessions extend when `updateAge` is reached
+- **Session endpoints**:
+  - `/get-session` - Validate current session
+  - `/list-sessions` - List all user sessions
+  - `/revoke-session` - Revoke specific session
+  - `/revoke-sessions` - Revoke all sessions
+  - `/revoke-other-sessions` - Revoke all except current
+
+### Cookie Caching (Performance Optimization)
+- Stores session data in short-lived signed cookie (like JWT access tokens)
+- Reduces database lookups on every request
+- Three strategies available:
+  - **compact** (default) - Minimal data in cookie
+  - **jwt** - JWT-encoded session data
+  - **jwe** - Encrypted JWT session data
+- Enable with `session.cookieCache.enabled = true`
+
+### Implementation in Roadmap
+- **Cycle 82**: Multi-session management UI (list/revoke sessions)
+- **Phase 2**: Cookie-based sessions (automatic with Better Auth migration)
+
+---
+
+## TypeScript Type Safety
+
+**Better Auth is fully type-safe** with automatic type inference:
+
+### Type Inference with $Infer
+```typescript
+import { authClient } from "./auth-client";
+
+// Automatically infer extended types from plugins
+type User = typeof authClient.$Infer.User;
+type Session = typeof authClient.$Infer.Session;
+```
+
+### Plugin Type Extensions
+- Plugins automatically extend base types (User, Session, Account)
+- Type inference works across client and server
+- Full TypeScript strict mode support
+
+### Separate Client/Server Projects
+**Two approaches:**
+
+1. **Same project**: Use `inferAdditionalFields` plugin (automatic type sync)
+2. **Separate projects**: Manually specify additional fields in client config
+
+```typescript
+// Client in separate project - manual type specification
+export const authClient = createAuthClient<{
+  user: {
+    id: string;
+    email: string;
+    customField: string; // Manually keep in sync with server
+  }
+}>({
+  baseURL: "https://api.example.com"
+});
+```
+
+### Implementation in Roadmap
+- **Phase 2**: TypeScript type safety configured during Better Auth migration
+- All cycles maintain strict TypeScript compliance
+
+---
+
+## Hooks (Lifecycle Events)
+
+**Hooks allow custom logic without writing full plugins**:
+
+### Endpoint Hooks
+- **Before hooks**: Run before endpoint execution
+  - Validate/modify requests
+  - Pre-validate data
+  - Return early (abort operation)
+
+- **After hooks**: Run after endpoint execution
+  - Modify responses
+  - Log events
+  - Trigger side effects
+
+### Database Hooks
+Available for `user`, `session`, and `account` models:
+
+```typescript
+betterAuth({
+  databaseHooks: {
+    user: {
+      create: {
+        before: async (user) => {
+          // Validate user data
+          // Return false to abort creation
+        },
+        after: async (user) => {
+          // Send welcome email
+          // Log user creation event
+        }
+      }
+    }
+  }
+});
+```
+
+### Organization Hooks
+- Before/after organization creation
+- Before/after team member addition
+- Before/after role changes
+
+### Implementation in Roadmap
+- **Cycle 20**: Configure hooks during Better Auth setup
+- **Cycle 64**: Organization hooks for team management
+- **Phase 7**: Hooks for logging and monitoring
+
+### Example Use Cases
+1. **Email validation** - Before user creation
+2. **Login tracking** - After session creation (Last Login Method)
+3. **Event logging** - After all operations (maps to events dimension)
+4. **Multi-tenant scoping** - Before data access (add groupId)
+5. **Welcome emails** - After user signup
+6. **Audit trails** - After admin actions
+
+---
+
 ## Better Auth Plugins to Implement
 
 ### Core Authentication
