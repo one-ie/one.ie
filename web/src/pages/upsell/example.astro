@@ -1,0 +1,177 @@
+---
+/**
+ * Upsell Example Page
+ * Demonstrates the complete upsell flow with sample data
+ *
+ * To test:
+ * 1. Visit /upsell/example
+ * 2. See the upsell offer with countdown timer
+ * 3. Click "YES! Add to My Order" or "No Thanks"
+ * 4. Navigates to next upsell or thank you page
+ */
+
+import Layout from "@/layouts/Layout.astro";
+import { UpsellOffer } from "@/components/checkout/UpsellOffer";
+import type { UpsellOffer as UpsellOfferType } from "@/components/checkout/UpsellOffer";
+
+const exampleOffer: UpsellOfferType = {
+  id: "example-upsell",
+  product: {
+    id: "prod_example",
+    name: "Premium Course Bundle",
+    headline: "🎯 Upgrade to Premium - Save 80% Right Now!",
+    description:
+      "Get instant access to our complete course library with over 100 hours of premium content. This exclusive one-time offer won't be available again.",
+    benefits: [
+      "100+ hours of premium video content",
+      "Lifetime access to all current and future courses",
+      "Downloadable resources and worksheets",
+      "Private community forum access",
+      "Monthly live Q&A sessions with instructors",
+      "Certificate of completion for each course",
+    ],
+    image: "https://images.unsplash.com/photo-1501504905252-473c47e087f8?w=800&h=600&fit=crop",
+    originalPrice: 99700, // $997.00
+    discountedPrice: 19700, // $197.00
+    discountPercentage: 80,
+    stockRemaining: 5,
+  },
+  timerSeconds: 600, // 10 minutes
+  nextOfferId: "advanced-training", // Chain to next upsell
+};
+
+const title = "Special Upsell Offer Example";
+const description = "Example upsell page with countdown timer and one-click purchase";
+---
+
+<Layout
+  title={title}
+  description={description}
+  sidebarInitialCollapsed={true}
+>
+  <!-- Example Banner -->
+  <div class="bg-blue-50 border-b border-blue-200 p-4 dark:bg-blue-900/20 dark:border-blue-800">
+    <div class="max-w-4xl mx-auto">
+      <p class="text-center text-sm font-medium text-blue-800 dark:text-blue-200">
+        📘 This is an example upsell page. In production, this would process real payments using saved payment methods.
+      </p>
+    </div>
+  </div>
+
+  <div class="min-h-screen bg-gradient-to-br from-background via-secondary/5 to-background py-8">
+    <UpsellOffer
+      client:load
+      offer={exampleOffer}
+      paymentMethodId="pm_example_1234567890"
+      onAccept={(orderId: string) => {
+        console.log("Upsell accepted! Order ID:", orderId);
+        alert(`✅ Upsell accepted! Order ID: ${orderId}\n\nIn production, this would:\n1. Charge the saved payment method\n2. Add product to order\n3. Navigate to next upsell or thank you page`);
+
+        // Navigate to next upsell
+        if (exampleOffer.nextOfferId) {
+          window.location.href = `/upsell/${exampleOffer.nextOfferId}`;
+        } else {
+          window.location.href = "/thankyou";
+        }
+      }}
+      onDecline={() => {
+        console.log("Upsell declined");
+        alert("❌ Upsell declined.\n\nIn production, this would navigate to the next upsell or thank you page.");
+
+        // Navigate to next upsell or thank you
+        if (exampleOffer.nextOfferId) {
+          window.location.href = `/upsell/${exampleOffer.nextOfferId}`;
+        } else {
+          window.location.href = "/thankyou";
+        }
+      }}
+    />
+  </div>
+
+  <!-- Implementation Notes -->
+  <div class="bg-gray-50 border-t p-8 dark:bg-gray-900/20">
+    <div class="max-w-4xl mx-auto space-y-6">
+      <div>
+        <h2 class="text-2xl font-bold mb-4">Implementation Guide</h2>
+
+        <div class="space-y-4">
+          <div>
+            <h3 class="text-lg font-semibold mb-2">Frontend (Completed ✓)</h3>
+            <ul class="list-disc list-inside space-y-1 text-sm text-muted-foreground">
+              <li><code>/web/src/pages/upsell/[offerId].astro</code> - Dynamic upsell page</li>
+              <li><code>/web/src/components/checkout/UpsellOffer.tsx</code> - Upsell offer component</li>
+              <li>Countdown timer with urgency</li>
+              <li>Analytics tracking (views, accepts, declines, acceptance rate)</li>
+              <li>Chained upsells support</li>
+              <li>One-click purchase flow</li>
+            </ul>
+          </div>
+
+          <div>
+            <h3 class="text-lg font-semibold mb-2">Backend (Required)</h3>
+            <ul class="list-disc list-inside space-y-1 text-sm text-muted-foreground">
+              <li><code>api.mutations.payments.processUpsell</code> - Convex mutation for one-click payment</li>
+              <li>Stripe payment processing with saved payment method</li>
+              <li>Order creation and fulfillment</li>
+              <li>Event tracking in ontology (product_purchased event)</li>
+              <li>Connection creation (purchased connection type)</li>
+            </ul>
+          </div>
+
+          <div>
+            <h3 class="text-lg font-semibold mb-2">Expected API Contract</h3>
+            <div class="bg-white dark:bg-gray-800 rounded-lg p-4 font-mono text-xs">
+              <p class="font-semibold mb-2">POST /api/checkout/upsell</p>
+              <pre class="text-muted-foreground">{`{
+  "offerId": "advanced-training",
+  "productId": "prod_advanced_training",
+  "amount": 9700,
+  "paymentMethodId": "pm_1234567890"
+}
+
+Response (200 OK):
+{
+  "success": true,
+  "orderId": "order_abc123",
+  "paymentIntentId": "pi_1234567890",
+  "nextOfferId": "premium-support" // Optional
+}
+
+Response (400 Bad Request):
+{
+  "success": false,
+  "error": "Payment failed",
+  "code": "card_declined"
+}`}</pre>
+            </div>
+          </div>
+
+          <div>
+            <h3 class="text-lg font-semibold mb-2">Upsell Flow</h3>
+            <ol class="list-decimal list-inside space-y-2 text-sm text-muted-foreground">
+              <li>Customer completes initial checkout → Payment method saved</li>
+              <li>Redirect to <code>/upsell/[offerId]?pm=[paymentMethodId]</code></li>
+              <li>Show upsell offer with countdown timer and urgency</li>
+              <li>If accepted: Process one-click payment → Navigate to next upsell or thank you</li>
+              <li>If declined: Navigate to next upsell or thank you</li>
+              <li>Repeat for each upsell in the chain</li>
+              <li>Final destination: Thank you page with order summary</li>
+            </ol>
+          </div>
+
+          <div>
+            <h3 class="text-lg font-semibold mb-2">Analytics Events</h3>
+            <ul class="list-disc list-inside space-y-1 text-sm text-muted-foreground">
+              <li><code>upsell_viewed</code> - Upsell page loaded</li>
+              <li><code>upsell_accepted</code> - Customer clicked "Yes"</li>
+              <li><code>upsell_declined</code> - Customer clicked "No Thanks"</li>
+              <li><code>upsell_payment_failed</code> - Payment processing error</li>
+              <li><code>upsell_acceptance_rate</code> - Calculated acceptance rate</li>
+              <li><code>upsell_timer_expired</code> - Countdown timer reached zero</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</Layout>

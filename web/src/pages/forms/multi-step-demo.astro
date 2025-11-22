@@ -1,0 +1,83 @@
+---
+/**
+ * Multi-Step Form Demo Page (Cycle 68)
+ *
+ * Demonstrates the complete multi-step form system with:
+ * - 3-step registration form
+ * - Real-time validation
+ * - Progress tracking
+ * - Save & resume functionality
+ */
+
+import Layout from '@/layouts/Layout.astro';
+import { MultiStepFormDemo } from '@/components/forms/MultiStepFormDemo';
+
+const title = 'Multi-Step Form Demo';
+const description = 'Complete multi-step form with validation, progress tracking, and save/resume functionality';
+---
+
+<Layout title={title} description={description}>
+	<div class="container max-w-4xl mx-auto py-12 px-4">
+		<div class="mb-8 space-y-4">
+			<h1 class="text-4xl font-bold">Multi-Step Form Demo</h1>
+			<p class="text-lg text-muted-foreground">
+				This form demonstrates a complete multi-step form system with validation,
+				progress tracking, and the ability to save and resume later.
+			</p>
+
+			{/* Feature list */}
+			<div class="grid md:grid-cols-2 gap-4 mt-6">
+				<div class="flex items-start gap-3 p-4 rounded-lg border bg-card">
+					<div class="mt-1">
+						<svg class="h-5 w-5 text-green-600" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+							<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7" />
+						</svg>
+					</div>
+					<div>
+						<h3 class="font-semibold">Progress Tracking</h3>
+						<p class="text-sm text-muted-foreground">Visual progress bar with step indicators</p>
+					</div>
+				</div>
+
+				<div class="flex items-start gap-3 p-4 rounded-lg border bg-card">
+					<div class="mt-1">
+						<svg class="h-5 w-5 text-green-600" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+							<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7" />
+						</svg>
+					</div>
+					<div>
+						<h3 class="font-semibold">Step Validation</h3>
+						<p class="text-sm text-muted-foreground">Validate each step before proceeding</p>
+					</div>
+				</div>
+
+				<div class="flex items-start gap-3 p-4 rounded-lg border bg-card">
+					<div class="mt-1">
+						<svg class="h-5 w-5 text-green-600" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+							<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7" />
+						</svg>
+					</div>
+					<div>
+						<h3 class="font-semibold">Save Progress</h3>
+						<p class="text-sm text-muted-foreground">Auto-save to localStorage</p>
+					</div>
+				</div>
+
+				<div class="flex items-start gap-3 p-4 rounded-lg border bg-card">
+					<div class="mt-1">
+						<svg class="h-5 w-5 text-green-600" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+							<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7" />
+						</svg>
+					</div>
+					<div>
+						<h3 class="font-semibold">Resume Later</h3>
+						<p class="text-sm text-muted-foreground">Send email link to continue</p>
+					</div>
+				</div>
+			</div>
+		</div>
+
+		{/* Demo Form */}
+		<MultiStepFormDemo client:load />
+	</div>
+</Layout>

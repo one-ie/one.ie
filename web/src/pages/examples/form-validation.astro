@@ -1,0 +1,140 @@
+---
+/**
+ * Form Validation Example Page - Cycle 63
+ *
+ * Demonstrates comprehensive form validation system with:
+ * - Real-time validation (on blur and on change)
+ * - Visual feedback (red borders for errors, green for valid)
+ * - Success indicators (green checkmarks)
+ * - Custom validators
+ * - All field types
+ *
+ * URL: /examples/form-validation
+ */
+
+import Layout from '@/layouts/Layout.astro';
+import { ValidatedForm } from '@/components/forms/ValidatedForm';
+---
+
+<Layout
+  title="Form Validation Example"
+  description="Comprehensive form validation with real-time feedback and visual indicators"
+>
+  <div class="container mx-auto py-8">
+    <!-- Header -->
+    <div class="mb-8">
+      <h1 class="text-4xl font-bold mb-2">Form Validation System</h1>
+      <p class="text-lg text-muted-foreground">
+        Real-time validation with visual feedback, success indicators, and custom validators
+      </p>
+    </div>
+
+    <!-- Features List -->
+    <div class="mb-8 grid grid-cols-1 md:grid-cols-2 gap-4">
+      <div class="p-4 border rounded-lg">
+        <h3 class="font-semibold mb-2">✅ Real-Time Validation</h3>
+        <p class="text-sm text-muted-foreground">
+          Validates on blur and on change for immediate feedback
+        </p>
+      </div>
+
+      <div class="p-4 border rounded-lg">
+        <h3 class="font-semibold mb-2">🎨 Visual Feedback</h3>
+        <p class="text-sm text-muted-foreground">
+          Red borders for errors, green borders for valid fields
+        </p>
+      </div>
+
+      <div class="p-4 border rounded-lg">
+        <h3 class="font-semibold mb-2">✓ Success Indicators</h3>
+        <p class="text-sm text-muted-foreground">
+          Green checkmarks appear when fields are valid
+        </p>
+      </div>
+
+      <div class="p-4 border rounded-lg">
+        <h3 class="font-semibold mb-2">⚙️ Custom Validators</h3>
+        <p class="text-sm text-muted-foreground">
+          Supports synchronous and asynchronous validation
+        </p>
+      </div>
+    </div>
+
+    <!-- Form Example -->
+    <div class="bg-card border rounded-lg p-6">
+      <ValidatedForm client:load />
+    </div>
+
+    <!-- Implementation Guide -->
+    <div class="mt-8 prose dark:prose-invert max-w-none">
+      <h2>Implementation Guide</h2>
+
+      <h3>1. Import Schema and Hook</h3>
+      <pre><code class="language-typescript">{'import { useFormValidation } from "@/lib/forms/validation";'}<br />{'import { productFormSchema, type ProductFormData } from "@/lib/forms/schemas";'}</code></pre>
+
+      <h3>2. Initialize Form</h3>
+      <pre><code class="language-typescript">{'const form = useFormValidation<ProductFormData>({'}<br />{'  schema: productFormSchema,'}<br />{'  mode: "onBlur", // Validate when field loses focus'}<br />{'  revalidateMode: "onChange", // Re-validate on every change'}<br />{'  defaultValues: {'}<br />{'    name: "",'}<br />{'    price: 0,'}<br />{'    // ... other fields'}<br />{'  },'}<br />{'});'}</code></pre>
+
+      <h3>3. Use in Form</h3>
+      <pre><code class="language-tsx">{'<FormField'}<br />{'  control={form.control}'}<br />{'  name="name"'}<br />{'  render={({ field }) => ('}<br />{'    <FormItem>'}<br />{'      <FormLabel>Product Name</FormLabel>'}<br />{'      <FormControl>'}<br />{'        <Input {...field} />'}<br />{'      </FormControl>'}<br />{'      <FormMessage />'}<br />{'    </FormItem>'}<br />{'  )}'}<br />{'/>'}</code></pre>
+
+      <h3>Validation Rules</h3>
+      <ul>
+        <li><strong>Required fields:</strong> Name, Slug, Description, Price, SKU, Inventory, Category, Image URL</li>
+        <li><strong>Min/Max length:</strong> Description (10-2000 chars), SKU (1-50 chars)</li>
+        <li><strong>Email format:</strong> Valid email address with lowercase conversion</li>
+        <li><strong>Phone format:</strong> US phone number with various formats supported</li>
+        <li><strong>Custom regex:</strong> Slug (lowercase alphanumeric with hyphens only)</li>
+        <li><strong>Number range:</strong> Price ($0.01 - $1,000,000)</li>
+      </ul>
+
+      <h3>Available Schemas</h3>
+      <p>Pre-built schemas for common use cases:</p>
+      <ul>
+        <li><code>contactFormSchema</code> - Contact form with name, email, message</li>
+        <li><code>registrationFormSchema</code> - User registration with password validation</li>
+        <li><code>loginFormSchema</code> - Simple login form</li>
+        <li><code>productFormSchema</code> - Product creation (shown above)</li>
+        <li><code>profileFormSchema</code> - User profile updates</li>
+        <li><code>addressFormSchema</code> - Address with ZIP code validation</li>
+        <li><code>courseFormSchema</code> - Course creation</li>
+        <li><code>paymentFormSchema</code> - Payment with credit card validation</li>
+      </ul>
+
+      <h3>Files</h3>
+      <ul>
+        <li><code>/web/src/lib/forms/schemas.ts</code> - Zod schemas</li>
+        <li><code>/web/src/lib/forms/validation.ts</code> - Validation utilities</li>
+        <li><code>/web/src/components/forms/ValidatedForm.tsx</code> - Example component</li>
+        <li><code>/web/src/lib/forms/README.md</code> - Complete documentation</li>
+      </ul>
+
+      <h3>Learn More</h3>
+      <ul>
+        <li><a href="/web/src/lib/forms/README.md">Full Documentation</a></li>
+        <li><a href="https://zod.dev/" target="_blank">Zod Documentation</a></li>
+        <li><a href="https://react-hook-form.com/" target="_blank">React Hook Form</a></li>
+        <li><a href="https://ui.shadcn.com/docs/components/form" target="_blank">shadcn/ui Forms</a></li>
+      </ul>
+    </div>
+  </div>
+</Layout>
+
+<style>
+  pre {
+    background-color: hsl(var(--color-muted));
+    padding: 1rem;
+    border-radius: 0.5rem;
+    overflow-x: auto;
+  }
+
+  code {
+    font-size: 0.875rem;
+    font-family: ui-monospace, monospace;
+  }
+
+  .prose a {
+    color: hsl(var(--color-primary));
+    text-decoration: underline;
+  }
+</style>

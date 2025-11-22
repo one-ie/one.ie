@@ -1,0 +1,198 @@
+---
+/**
+ * Form Analytics Dashboard (Cycle 69)
+ *
+ * Comprehensive analytics for form performance:
+ * - Conversion metrics (views, submissions, conversion rate)
+ * - Field analytics (abandonment tracking)
+ * - Time tracking (completion time, time per field)
+ * - Device breakdown (desktop vs mobile)
+ * - Real-time charts with StreamingChart and DynamicChart
+ */
+
+import Layout from "@/layouts/Layout.astro";
+import { FormAnalyticsDashboard } from "@/components/forms/FormAnalyticsDashboard";
+import { ConvexHttpClient } from "convex/browser";
+import { api } from "@/convex/_generated/api";
+
+const { id } = Astro.params;
+
+if (!id) {
+  return Astro.redirect("/funnels");
+}
+
+// Initialize Convex client
+const convexUrl = import.meta.env.PUBLIC_CONVEX_URL;
+let funnel = null;
+let funnelName = "Form Analytics";
+
+if (convexUrl) {
+  const convex = new ConvexHttpClient(convexUrl);
+  try {
+    funnel = await convex.query(api.queries.funnels.get, {
+      id: id as any,
+    });
+    if (funnel) {
+      funnelName = funnel.name;
+    }
+  } catch (error) {
+    console.error("Failed to fetch funnel:", error);
+  }
+}
+
+const title = `${funnelName} - Analytics`;
+const description = "Track form performance and optimize conversion";
+---
+
+<Layout title={title} description={description}>
+  <div class="min-h-screen bg-background">
+    <!-- Header with Navigation -->
+    <header class="border-b bg-card">
+      <div class="mx-auto max-w-7xl px-4 py-6 sm:px-6 lg:px-8">
+        <div class="flex items-center justify-between">
+          <div class="flex items-center gap-4">
+            <a
+              href="/funnels"
+              class="text-muted-foreground hover:text-foreground transition-colors"
+            >
+              ← Back to Funnels
+            </a>
+            <div class="h-6 w-px bg-border"></div>
+            <div>
+              <h1 class="text-3xl font-bold text-foreground">
+                {funnelName}
+              </h1>
+              <p class="mt-1 text-sm text-muted-foreground">
+                Form performance analytics and insights
+              </p>
+            </div>
+          </div>
+          {
+            funnel && (
+              <span
+                class={`inline-flex items-center rounded-full px-2.5 py-0.5 text-xs font-medium ${
+                  funnel.status === "published"
+                    ? "bg-green-100 dark:bg-green-900 text-green-800 dark:text-green-200"
+                    : funnel.status === "draft"
+                      ? "bg-gray-100 dark:bg-gray-700 text-gray-800 dark:text-gray-200"
+                      : "bg-red-100 dark:bg-red-900 text-red-800 dark:text-red-200"
+                }`}
+              >
+                {funnel.status}
+              </span>
+            )
+          }
+        </div>
+
+        <!-- Tabs Navigation -->
+        <nav class="mt-6 flex space-x-4 border-b" aria-label="Funnel tabs">
+          <a
+            href={`/funnels/${id}`}
+            class="border-b-2 border-transparent px-1 pb-4 text-sm font-medium text-muted-foreground hover:border-border hover:text-foreground transition-colors"
+          >
+            Overview
+          </a>
+          <a
+            href={`/funnels/${id}/form-analytics`}
+            class="border-b-2 border-primary px-1 pb-4 text-sm font-medium text-foreground"
+            aria-current="page"
+          >
+            <div class="flex items-center gap-1.5">
+              Analytics
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                class="h-4 w-4"
+                fill="none"
+                viewBox="0 0 24 24"
+                stroke="currentColor"
+              >
+                <path
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                  stroke-width="2"
+                  d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z"
+                />
+              </svg>
+            </div>
+          </a>
+          <a
+            href={`/funnels/${id}/submissions`}
+            class="border-b-2 border-transparent px-1 pb-4 text-sm font-medium text-muted-foreground hover:border-border hover:text-foreground transition-colors"
+          >
+            Submissions
+          </a>
+          <a
+            href={`/funnels/${id}/settings`}
+            class="border-b-2 border-transparent px-1 pb-4 text-sm font-medium text-muted-foreground hover:border-border hover:text-foreground transition-colors"
+          >
+            Settings
+          </a>
+          <a
+            href={`/funnels/${id}/audit`}
+            class="border-b-2 border-transparent px-1 pb-4 text-sm font-medium text-muted-foreground hover:border-border hover:text-foreground transition-colors"
+          >
+            Audit Log
+          </a>
+        </nav>
+      </div>
+    </header>
+
+    <!-- Main Content -->
+    <div class="mx-auto max-w-7xl px-4 py-8 sm:px-6 lg:px-8">
+      <!-- Info Card -->
+      <div class="mb-6 rounded-lg border bg-blue-50 dark:bg-blue-950 p-4">
+        <div class="flex">
+          <div class="flex-shrink-0">
+            <svg
+              class="h-5 w-5 text-blue-400"
+              xmlns="http://www.w3.org/2000/svg"
+              viewBox="0 0 20 20"
+              fill="currentColor"
+              aria-hidden="true"
+            >
+              <path
+                fill-rule="evenodd"
+                d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-7-4a1 1 0 11-2 0 1 1 0 012 0zM9 9a1 1 0 000 2v3a1 1 0 001 1h1a1 1 0 100-2v-3a1 1 0 00-1-1H9z"
+                clip-rule="evenodd"></path>
+            </svg>
+          </div>
+          <div class="ml-3 flex-1">
+            <h3 class="text-sm font-medium text-blue-800 dark:text-blue-200">
+              Real-time Analytics
+            </h3>
+            <div class="mt-2 text-sm text-blue-700 dark:text-blue-300">
+              <p>
+                Track form performance in real-time. Identify drop-off points,
+                optimize field completion, and improve conversion rates. All
+                charts update automatically as new data arrives.
+              </p>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Analytics Dashboard -->
+      {
+        funnel ? (
+          <FormAnalyticsDashboard funnelId={id as any} client:load />
+        ) : (
+          <div class="text-center py-12">
+            <p class="text-muted-foreground">
+              Funnel not found or you don't have access.
+            </p>
+          </div>
+        )
+      }
+    </div>
+  </div>
+</Layout>
+
+<style>
+  /* Ensure responsive layout */
+  @media (max-width: 768px) {
+    .mx-auto {
+      padding-left: 1rem;
+      padding-right: 1rem;
+    }
+  }
+</style>

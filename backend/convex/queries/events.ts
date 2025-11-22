@@ -330,3 +330,81 @@ export const count = query({
     return count;
   },
 });
+
+// ============================================================================
+// Get Custom Events (Cycle 79)
+// ============================================================================
+
+/**
+ * Get custom events for analytics dashboard
+ *
+ * CRITICAL: Always scoped to user's groupId
+ *
+ * Use case: Custom event tracking, business analytics
+ * Example: Track video_watched, pdf_downloaded, form_submitted events
+ */
+export const getCustomEvents = query({
+  args: {
+    eventNames: v.optional(v.array(v.string())), // Filter to specific event names
+    startDate: v.optional(v.number()), // Filter by date range
+    endDate: v.optional(v.number()),
+    limit: v.optional(v.number()),
+  },
+  handler: async (ctx, args) => {
+    // 1. Authenticate
+    const identity = await ctx.auth.getUserIdentity();
+    if (!identity) {
+      return [];
+    }
+
+    // 2. Get user's group
+    const person = await ctx.db
+      .query("things")
+      .withIndex("by_type", (q) => q.eq("type", "creator"))
+      .filter((t) => t.properties?.email === identity.email)
+      .first();
+
+    if (!person?.groupId) {
+      return [];
+    }
+
+    // 3. Query all events (we'll filter by group)
+    const allEvents = await ctx.db
+      .query("events")
+      .withIndex("by_time")
+      .order("desc")
+      .take(5000); // Take more for better filtering
+
+    // 4. Filter to user's group and optional criteria
+    const groupEvents = [];
+    for (const event of allEvents) {
+      // Check actor's group
+      const actor = await ctx.db.get(event.actorId);
+      if (actor?.groupId !== person.groupId) {
+        continue;
+      }
+
+      // Filter by event names (custom events)
+      if (args.eventNames && !args.eventNames.includes(event.type)) {
+        continue;
+      }
+
+      // Filter by date range
+      if (args.startDate && event.timestamp < args.startDate) {
+        continue;
+      }
+      if (args.endDate && event.timestamp > args.endDate) {
+        continue;
+      }
+
+      groupEvents.push(event);
+
+      // Stop if we have enough
+      if (groupEvents.length >= (args.limit || 1000)) {
+        break;
+      }
+    }
+
+    return groupEvents;
+  },
+});

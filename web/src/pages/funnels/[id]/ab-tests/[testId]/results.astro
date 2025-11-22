@@ -1,0 +1,202 @@
+---
+/**
+ * A/B Test Results Page
+ *
+ * Displays comprehensive A/B test results including:
+ * - Variant performance comparison table
+ * - Statistical significance indicators
+ * - Winner highlighting with confidence levels
+ * - Conversion charts (bar and line)
+ * - Declare winner functionality
+ * - Historical tests overview
+ *
+ * Part of Cycle 76: A/B Test Results Dashboard
+ */
+
+import Layout from "@/layouts/Layout.astro";
+import { ABTestResults } from "@/components/analytics/ABTestResults";
+import { ConvexHttpClient } from "convex/browser";
+import { api } from "@/convex/_generated/api";
+
+const { id, testId } = Astro.params;
+
+if (!id || !testId) {
+  return Astro.redirect("/funnels");
+}
+
+// Initialize Convex client
+const convexUrl = import.meta.env.PUBLIC_CONVEX_URL;
+let funnel = null;
+let test = null;
+let funnelName = "Funnel";
+let testName = "A/B Test Results";
+let groupId = "default-org";
+
+if (convexUrl) {
+  const convex = new ConvexHttpClient(convexUrl);
+
+  try {
+    // Fetch funnel data
+    funnel = await convex.query(api.queries.funnels.get, {
+      id: id as any,
+    });
+
+    if (funnel) {
+      funnelName = funnel.name;
+      groupId = funnel.groupId || groupId;
+    }
+
+    // Fetch test data
+    test = await convex.query(api.queries.abTests.getResults, {
+      testId: testId as any,
+    });
+
+    if (test) {
+      testName = test.name;
+    }
+  } catch (error) {
+    console.error("Failed to fetch data:", error);
+  }
+}
+
+const title = `${testName} - ${funnelName}`;
+const description = "View A/B test results with statistical analysis and performance metrics";
+---
+
+<Layout title={title} description={description}>
+  <div class="min-h-screen bg-background">
+    <!-- Header with Navigation -->
+    <header class="border-b bg-card">
+      <div class="mx-auto max-w-7xl px-4 py-6 sm:px-6 lg:px-8">
+        <div class="flex items-center justify-between">
+          <div class="flex items-center gap-4">
+            <a
+              href={`/funnels/${id}/analytics`}
+              class="text-muted-foreground hover:text-foreground transition-colors"
+            >
+              ← Back to Analytics
+            </a>
+            <div class="h-6 w-px bg-border"></div>
+            <div>
+              <h1 class="text-3xl font-bold text-foreground">
+                {testName}
+              </h1>
+              <p class="mt-1 text-sm text-muted-foreground">
+                {funnelName}
+              </p>
+            </div>
+          </div>
+          {
+            test && (
+              <span
+                class={`inline-flex items-center rounded-full px-2.5 py-0.5 text-xs font-medium ${
+                  test.status === "running"
+                    ? "bg-green-100 dark:bg-green-900 text-green-800 dark:text-green-200"
+                    : test.status === "completed"
+                      ? "bg-blue-100 dark:bg-blue-900 text-blue-800 dark:text-blue-200"
+                      : "bg-gray-100 dark:bg-gray-700 text-gray-800 dark:text-gray-200"
+                }`}
+              >
+                {test.status}
+              </span>
+            )
+          }
+        </div>
+
+        <!-- Breadcrumb Navigation -->
+        <nav class="mt-4 flex items-center space-x-2 text-sm" aria-label="Breadcrumb">
+          <a
+            href="/funnels"
+            class="text-muted-foreground hover:text-foreground transition-colors"
+          >
+            Funnels
+          </a>
+          <span class="text-muted-foreground">/</span>
+          <a
+            href={`/funnels/${id}`}
+            class="text-muted-foreground hover:text-foreground transition-colors"
+          >
+            {funnelName}
+          </a>
+          <span class="text-muted-foreground">/</span>
+          <a
+            href={`/funnels/${id}/analytics`}
+            class="text-muted-foreground hover:text-foreground transition-colors"
+          >
+            Analytics
+          </a>
+          <span class="text-muted-foreground">/</span>
+          <span class="text-foreground font-medium">A/B Tests</span>
+        </nav>
+      </div>
+    </header>
+
+    <!-- Main Content -->
+    <div class="mx-auto max-w-7xl px-4 py-8 sm:px-6 lg:px-8">
+      <!-- A/B Test Results Component -->
+      <ABTestResults
+        testId={testId}
+        funnelId={id}
+        groupId={groupId}
+        client:load
+      />
+    </div>
+
+    <!-- Help Section -->
+    <div class="mx-auto max-w-7xl px-4 py-8 sm:px-6 lg:px-8">
+      <div class="rounded-lg border bg-card p-6">
+        <h2 class="text-lg font-semibold mb-4">Understanding A/B Test Results</h2>
+
+        <div class="grid gap-6 md:grid-cols-2">
+          <div>
+            <h3 class="font-medium mb-2">What is Statistical Significance?</h3>
+            <p class="text-sm text-muted-foreground">
+              Statistical significance tells you how confident you can be that the difference in performance
+              between variants is real and not due to random chance. We use confidence levels to measure this:
+            </p>
+            <ul class="mt-2 space-y-1 text-sm text-muted-foreground list-disc list-inside">
+              <li><strong>99% confidence:</strong> Very strong evidence the difference is real</li>
+              <li><strong>95% confidence:</strong> Standard threshold for declaring a winner (recommended)</li>
+              <li><strong>&lt;95% confidence:</strong> Insufficient evidence - continue testing</li>
+            </ul>
+          </div>
+
+          <div>
+            <h3 class="font-medium mb-2">When to Declare a Winner?</h3>
+            <p class="text-sm text-muted-foreground">
+              Before declaring a winner, ensure:
+            </p>
+            <ul class="mt-2 space-y-1 text-sm text-muted-foreground list-disc list-inside">
+              <li>At least 95% confidence level is achieved</li>
+              <li>Sufficient sample size (minimum 100 conversions recommended)</li>
+              <li>Test has run for at least 1-2 weeks to account for day-of-week variations</li>
+              <li>Results are consistent over time (no sudden spikes or drops)</li>
+            </ul>
+          </div>
+
+          <div>
+            <h3 class="font-medium mb-2">Reading the Charts</h3>
+            <p class="text-sm text-muted-foreground">
+              The bar chart shows total conversions for each variant, making it easy to compare performance
+              at a glance. The line chart shows performance over time, helping you identify trends and
+              ensure results are stable before declaring a winner.
+            </p>
+          </div>
+
+          <div>
+            <h3 class="font-medium mb-2">What Happens After Declaring a Winner?</h3>
+            <p class="text-sm text-muted-foreground">
+              When you declare a winner:
+            </p>
+            <ul class="mt-2 space-y-1 text-sm text-muted-foreground list-disc list-inside">
+              <li>The test is automatically stopped</li>
+              <li>100% of traffic is directed to the winning variant</li>
+              <li>The winning variant becomes the new default</li>
+              <li>Results are saved for historical reference</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</Layout>

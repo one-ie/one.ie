@@ -62,7 +62,7 @@ const groups = defineTable({
 // ============================================================================
 
 /**
- * Thing Types (66+ types, extensible via properties)
+ * Thing Types (67+ types, extensible via properties)
  *
  * PEOPLE TYPES (Dimension 2):
  * - creator, customer, team_member
@@ -94,7 +94,7 @@ const groups = defineTable({
  * FUNNEL BUILDER TYPES (NEW - Cycle 011):
  * - funnel, funnel_step, page_element, funnel_template, page_template
  * - form_submission, ab_test, funnel_domain, funnel_analytics, email_sequence
- * - custom_code
+ * - custom_code, template_version
  */
 const things = defineTable({
   // Core fields
@@ -133,7 +133,7 @@ const things = defineTable({
 // ============================================================================
 
 /**
- * Connection Types (25+ types)
+ * Connection Types (26+ types)
  *
  * OWNERSHIP:
  * - owns, created_by
@@ -160,7 +160,7 @@ const things = defineTable({
  * - funnel_contains_step, step_contains_element, funnel_based_on_template
  * - step_based_on_template, visitor_entered_funnel, visitor_viewed_step
  * - visitor_submitted_form, customer_purchased_via_funnel, funnel_leads_to_product
- * - ab_test_variant, funnel_sends_email, funnel_uses_domain
+ * - ab_test_variant, funnel_sends_email, funnel_uses_domain, has_version
  *
  * CONSOLIDATED:
  * - transacted, notified, referred, communicated, delegated, approved, fulfilled
@@ -195,7 +195,7 @@ const connections = defineTable({
 // ============================================================================
 
 /**
- * Event Types (67+ types)
+ * Event Types (72+ types)
  *
  * ENTITY LIFECYCLE:
  * - entity_created, entity_updated, entity_deleted, entity_archived
@@ -224,6 +224,13 @@ const connections = defineTable({
  * - element_added, element_updated, element_removed
  * - form_submitted, purchase_completed, ab_test_started, ab_test_completed
  * - email_sent, domain_connected, analytics_generated
+ *
+ * TEMPLATE VERSIONING (NEW - Cycle 060):
+ * - template_updated, template_version_created, template_rolled_back
+ * - template_version_archived, template_version_metadata_updated
+ *
+ * PAYMENT EVENTS (NEW - Cycle 088):
+ * - refund_processed, dispute_evidence_submitted
  *
  * CONSOLIDATED:
  * - content_event, payment_event, subscription_event, commerce_event

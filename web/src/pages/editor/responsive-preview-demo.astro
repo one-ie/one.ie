@@ -1,0 +1,245 @@
+---
+/**
+ * Responsive Preview Demo
+ *
+ * Demonstrates the mobile responsive preview system for funnel builders.
+ */
+
+import Layout from '@/layouts/Layout.astro';
+import { ResponsivePreview } from '@/components/editor/ResponsivePreview';
+
+const title = 'Responsive Preview Demo';
+const description = 'Test your funnels across different devices and screen sizes';
+
+// Example funnel HTML
+const exampleFunnelHtml = `
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Example Funnel</title>
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+      background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+      min-height: 100vh;
+      padding: 20px;
+    }
+
+    .container {
+      max-width: 800px;
+      margin: 0 auto;
+      background: white;
+      border-radius: 16px;
+      padding: 40px;
+      box-shadow: 0 20px 60px rgba(0,0,0,0.3);
+    }
+
+    h1 {
+      font-size: 2.5rem;
+      color: #1a202c;
+      margin-bottom: 16px;
+    }
+
+    p {
+      font-size: 1.125rem;
+      color: #4a5568;
+      line-height: 1.75;
+      margin-bottom: 24px;
+    }
+
+    .features {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+      gap: 20px;
+      margin: 32px 0;
+    }
+
+    .feature {
+      padding: 20px;
+      background: #f7fafc;
+      border-radius: 8px;
+      text-align: center;
+    }
+
+    .feature-icon {
+      font-size: 2rem;
+      margin-bottom: 8px;
+    }
+
+    .feature-title {
+      font-size: 1rem;
+      font-weight: 600;
+      color: #2d3748;
+      margin-bottom: 4px;
+    }
+
+    .feature-desc {
+      font-size: 0.875rem;
+      color: #718096;
+    }
+
+    .cta-button {
+      display: inline-block;
+      background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+      color: white;
+      font-size: 1.125rem;
+      font-weight: 600;
+      padding: 16px 48px;
+      border-radius: 8px;
+      text-decoration: none;
+      transition: transform 0.2s, box-shadow 0.2s;
+      margin-top: 24px;
+    }
+
+    .cta-button:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 12px 24px rgba(102, 126, 234, 0.4);
+    }
+
+    .cta-button:active {
+      transform: translateY(0);
+    }
+
+    /* Mobile optimizations */
+    @media (max-width: 640px) {
+      body {
+        padding: 10px;
+      }
+
+      .container {
+        padding: 24px;
+      }
+
+      h1 {
+        font-size: 1.875rem;
+      }
+
+      .features {
+        grid-template-columns: 1fr;
+      }
+
+      .cta-button {
+        width: 100%;
+        text-align: center;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h1>🚀 Launch Your Product</h1>
+    <p>
+      Transform your idea into a successful business with our proven framework.
+      Join thousands of entrepreneurs who have already made the leap.
+    </p>
+
+    <div class="features">
+      <div class="feature">
+        <div class="feature-icon">⚡</div>
+        <div class="feature-title">Fast Setup</div>
+        <div class="feature-desc">Get started in minutes</div>
+      </div>
+
+      <div class="feature">
+        <div class="feature-icon">📈</div>
+        <div class="feature-title">High Converting</div>
+        <div class="feature-desc">Proven conversion rates</div>
+      </div>
+
+      <div class="feature">
+        <div class="feature-icon">💰</div>
+        <div class="feature-title">ROI Guaranteed</div>
+        <div class="feature-desc">Or your money back</div>
+      </div>
+    </div>
+
+    <p>
+      <strong>Limited Time Offer:</strong> Get 50% off your first month when you
+      sign up today. No credit card required.
+    </p>
+
+    <a href="#" class="cta-button">Get Started Free →</a>
+  </div>
+
+  <script>
+    // Touch interaction demo
+    document.querySelector('.cta-button').addEventListener('click', (e) => {
+      e.preventDefault();
+      alert('CTA clicked! This would redirect to your checkout page.');
+    });
+
+    // Log viewport dimensions for testing
+    console.log('Viewport:', window.innerWidth, 'x', window.innerHeight);
+
+    // Listen for resize events
+    window.addEventListener('resize', () => {
+      console.log('Resized to:', window.innerWidth, 'x', window.innerHeight);
+    });
+  </script>
+</body>
+</html>
+`;
+---
+
+<Layout title={title} description={description} sidebarInitialCollapsed={true}>
+  <div class="flex flex-col h-screen">
+    {/* Header */}
+    <div class="border-b bg-background p-4">
+      <h1 class="text-2xl font-bold">{title}</h1>
+      <p class="text-sm text-muted-foreground mt-1">
+        Test your funnel across iPhone, iPad, Android, and desktop devices
+      </p>
+    </div>
+
+    {/* Responsive Preview */}
+    <div class="flex-1 overflow-hidden">
+      <ResponsivePreview
+        client:only="react"
+        htmlContent={exampleFunnelHtml}
+        defaultDevice="iphone_14_pro"
+        defaultOrientation="portrait"
+        showWarnings={true}
+        enableTouchSimulation={true}
+        className="h-full"
+      />
+    </div>
+
+    {/* Instructions */}
+    <div class="border-t bg-muted/50 p-4">
+      <div class="max-w-4xl mx-auto">
+        <h2 class="text-sm font-semibold mb-2">How to Use</h2>
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-4 text-xs">
+          <div>
+            <strong>Device Selection:</strong>
+            <p class="text-muted-foreground mt-1">
+              Choose from iPhone, iPad, Android phones, or desktop sizes to see how your
+              funnel looks on different devices.
+            </p>
+          </div>
+          <div>
+            <strong>Orientation:</strong>
+            <p class="text-muted-foreground mt-1">
+              Toggle between portrait and landscape modes for mobile and tablet devices.
+              Desktop devices don't rotate.
+            </p>
+          </div>
+          <div>
+            <strong>Touch Simulation:</strong>
+            <p class="text-muted-foreground mt-1">
+              Click or tap anywhere on the preview to see touch interaction visualizations.
+              Great for testing mobile UX.
+            </p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</Layout>

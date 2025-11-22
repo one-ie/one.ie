@@ -1,0 +1,41 @@
+---
+/**
+ * Payment Settings Page - Configure Stripe for funnels
+ *
+ * Features:
+ * - Create Stripe product from funnel
+ * - Configure pricing (one-time, recurring, usage-based)
+ * - View payment settings
+ * - Test payment flow
+ *
+ * @see /web/CLAUDE.md - Frontend patterns
+ * @see /one/knowledge/ontology.md - 6-dimension ontology
+ */
+
+import Layout from "@/layouts/Layout.astro";
+import { PaymentSettingsClient } from "@/components/payments/PaymentSettingsClient";
+
+const { id } = Astro.params;
+
+if (!id) {
+  return Astro.redirect("/funnels");
+}
+
+const title = "Payment Settings";
+const description = "Configure Stripe payment processing for your funnel";
+---
+
+<Layout title={title} description={description}>
+  <div class="container mx-auto px-4 py-8 max-w-4xl">
+    <!-- Header -->
+    <div class="mb-8">
+      <h1 class="text-3xl font-bold text-foreground mb-2">Payment Settings</h1>
+      <p class="text-muted-foreground">
+        Configure Stripe payment processing for your funnel
+      </p>
+    </div>
+
+    <!-- Payment Settings Client Component -->
+    <PaymentSettingsClient client:load funnelId={id} />
+  </div>
+</Layout>

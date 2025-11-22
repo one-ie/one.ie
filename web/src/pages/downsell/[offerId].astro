@@ -1,0 +1,198 @@
+---
+/**
+ * Downsell Page
+ *
+ * Dynamic route for downsell offers.
+ * Shows when user declines upsell, offering cheaper alternative.
+ *
+ * Flow:
+ * 1. User declines upsell → redirected here
+ * 2. User sees lower-priced offer with one-click purchase
+ * 3. Accept → process payment with saved method → order confirmation
+ * 4. Decline → skip to order confirmation
+ */
+
+import Layout from "@/layouts/Layout.astro";
+import { DownsellOffer } from "@/components/checkout/DownsellOffer";
+
+// Get offer ID from URL
+const { offerId } = Astro.params;
+
+// In production, fetch from database/API based on offerId
+// For now, using static data as example
+const downsellOffers: Record<
+	string,
+	{
+		productName: string;
+		originalPrice: number;
+		downsellPrice: number;
+		features: string[];
+		image?: string;
+	}
+> = {
+	"basic-course": {
+		productName: "Basic Course Package",
+		originalPrice: 297,
+		downsellPrice: 97,
+		features: [
+			"Complete video course (10+ hours)",
+			"Downloadable workbooks and templates",
+			"Private community access",
+			"Email support",
+			"Lifetime access to all updates",
+		],
+		image: "/images/course-basic.jpg",
+	},
+	"starter-toolkit": {
+		productName: "Starter Toolkit",
+		originalPrice: 497,
+		downsellPrice: 197,
+		features: [
+			"Essential templates library (50+ templates)",
+			"Quick-start video tutorials",
+			"1 month of email coaching",
+			"Access to resource library",
+			"Free updates for 1 year",
+		],
+		image: "/images/toolkit-starter.jpg",
+	},
+	"mini-membership": {
+		productName: "3-Month Mini Membership",
+		originalPrice: 997,
+		downsellPrice: 297,
+		features: [
+			"3 months of full platform access",
+			"Weekly group coaching calls",
+			"All course materials",
+			"Community forum access",
+			"Priority email support",
+		],
+		image: "/images/membership-mini.jpg",
+	},
+};
+
+const offer = offerId ? downsellOffers[offerId] : null;
+
+// If offer not found, redirect to home
+if (!offer) {
+	return Astro.redirect("/");
+}
+
+const savings = offer.originalPrice - offer.downsellPrice;
+
+// Get original order ID from query params (passed from upsell decline)
+const originalOrderId = Astro.url.searchParams.get("orderId");
+---
+
+<Layout title={`Special Offer: ${offer.productName}`} sidebarInitialCollapsed={true}>
+	<DownsellOffer
+		client:load
+		offerId={offerId!}
+		productName={offer.productName}
+		originalPrice={offer.originalPrice}
+		downsellPrice={offer.downsellPrice}
+		savings={savings}
+		features={offer.features}
+		image={offer.image}
+		onAccept={async (offerId: string) => {
+			// In production, this would:
+			// 1. Retrieve saved payment method from original order
+			// 2. Create new Stripe PaymentIntent with saved payment method
+			// 3. Process payment
+			// 4. Create order in database
+			// 5. Redirect to order confirmation
+
+			try {
+				const response = await fetch("/api/downsell/accept", {
+					method: "POST",
+					headers: {
+						"Content-Type": "application/json",
+					},
+					body: JSON.stringify({
+						offerId,
+						originalOrderId,
+					}),
+				});
+
+				if (!response.ok) {
+					throw new Error("Failed to process downsell order");
+				}
+
+				const { orderId, sessionId } = await response.json();
+
+				// Redirect to order confirmation with both order IDs
+				window.location.href = `/shop/orders/thank-you-product?session_id=${sessionId}&downsell=true`;
+			} catch (error) {
+				console.error("Downsell acceptance error:", error);
+				throw error;
+			}
+		}}
+		onDecline={() => {
+			// Redirect to original order confirmation
+			// Skip the downsell and complete the funnel
+			if (originalOrderId) {
+				window.location.href = `/shop/orders/thank-you-product?session_id=${originalOrderId}`;
+			} else {
+				window.location.href = "/shop/orders/thank-you-product";
+			}
+		}}
+	/>
+</Layout>
+
+<script>
+	// Track downsell page view
+	if (typeof window !== "undefined" && window.gtag) {
+		window.gtag("event", "page_view", {
+			page_title: "Downsell Offer",
+			page_location: window.location.href,
+			page_path: window.location.pathname,
+		});
+	}
+
+	// Track when user declines
+	document.addEventListener("click", (e) => {
+		const target = e.target as HTMLElement;
+		if (
+			target.textContent?.includes("No thanks") ||
+			target.closest('button[aria-label="Skip offer"]')
+		) {
+			if (typeof window !== "undefined" && window.gtag) {
+				window.gtag("event", "downsell_declined", {
+					offer_id: window.location.pathname.split("/").pop(),
+				});
+			}
+		}
+	});
+</script>
+
+<!--
+	API Implementation Guide (for backend integration):
+
+	POST /api/downsell/accept
+	{
+		"offerId": "basic-course",
+		"originalOrderId": "pi_xxxxxxxxxxxxx"
+	}
+
+	Response:
+	{
+		"orderId": "order_yyyyyyyyyyy",
+		"sessionId": "cs_zzzzzzzzzzzz",
+		"success": true
+	}
+
+	Implementation steps:
+	1. Retrieve original payment method from Stripe PaymentIntent
+	2. Create new PaymentIntent with saved payment method:
+		 const paymentIntent = await stripe.paymentIntents.create({
+			 amount: downsellPrice * 100,
+			 currency: 'usd',
+			 customer: originalCustomerId,
+			 payment_method: originalPaymentMethod,
+			 off_session: true,
+			 confirm: true,
+		 });
+	3. Create order record in database
+	4. Send confirmation email
+	5. Return order details
+-->

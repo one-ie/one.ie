@@ -1,0 +1,270 @@
+---
+/**
+ * Order Bump Demo Page
+ * Demonstrates the order bump system with live examples
+ */
+import Layout from '@/layouts/Layout.astro';
+import { CheckoutWithBumps } from '@/components/checkout/CheckoutWithBumps';
+import { orderBumpTemplates } from '@/lib/checkout/order-bump-logic';
+import type { OrderBumpConfig } from '@/lib/checkout/order-bump-logic';
+
+const title = 'Order Bump Demo';
+const description = 'Live demonstration of order bump checkout flow';
+
+// Define example order bumps
+const demoOrderBumps: OrderBumpConfig[] = [
+	{
+		...orderBumpTemplates.expressShipping,
+		position: 'before_payment',
+	},
+	{
+		productId: 'premium-support',
+		productName: 'Premium Support Package',
+		productDescription: '24/7 priority support with dedicated account manager for 1 year',
+		productImage: 'https://images.unsplash.com/photo-1596496181848-3091d4878b24?w=400',
+		originalPrice: 9900, // $99.00
+		discountType: 'percentage',
+		discountValue: 50, // 50% off = $49.50
+		position: 'before_payment',
+		conditions: {
+			minCartValue: 5000, // Only show if cart > $50
+		},
+	},
+	{
+		...orderBumpTemplates.giftWrapping,
+		position: 'before_payment',
+	},
+];
+---
+
+<Layout title={title} description={description}>
+	<div class="container mx-auto max-w-7xl px-4 py-12">
+		<!-- Page Header -->
+		<div class="mb-8 space-y-4">
+			<div class="flex items-center gap-3">
+				<a
+					href="/demo"
+					class="text-muted-foreground hover:text-foreground transition-colors"
+				>
+					← Back to Demos
+				</a>
+			</div>
+			<h1 class="text-4xl font-bold">Order Bump Demo</h1>
+			<p class="text-xl text-muted-foreground max-w-3xl">
+				Increase Average Order Value (AOV) with strategic checkout upsells
+			</p>
+		</div>
+
+		<!-- Info Cards -->
+		<div class="grid gap-6 md:grid-cols-3 mb-12">
+			<div class="rounded-lg border bg-card p-6">
+				<div class="text-4xl mb-2">📈</div>
+				<h3 class="font-semibold mb-2">Increase AOV</h3>
+				<p class="text-sm text-muted-foreground">
+					Order bumps increase average order value by 15-25%
+				</p>
+			</div>
+
+			<div class="rounded-lg border bg-card p-6">
+				<div class="text-4xl mb-2">🎯</div>
+				<h3 class="font-semibold mb-2">Strategic Positioning</h3>
+				<p class="text-sm text-muted-foreground">
+					Show bumps before or after payment for maximum conversion
+				</p>
+			</div>
+
+			<div class="rounded-lg border bg-card p-6">
+				<div class="text-4xl mb-2">📊</div>
+				<h3 class="font-semibold mb-2">Track Everything</h3>
+				<p class="text-sm text-muted-foreground">
+					Full analytics integration with Google Analytics 4
+				</p>
+			</div>
+		</div>
+
+		<!-- Features List -->
+		<div class="mb-12 rounded-lg border bg-card p-8">
+			<h2 class="text-2xl font-bold mb-6">Features Implemented</h2>
+			<div class="grid gap-4 md:grid-cols-2">
+				<div class="flex items-start gap-3">
+					<span class="text-green-600 text-xl">✓</span>
+					<div>
+						<h3 class="font-medium">Order Bump Checkbox</h3>
+						<p class="text-sm text-muted-foreground">
+							"Yes, add X to my order for only $Y"
+						</p>
+					</div>
+				</div>
+
+				<div class="flex items-start gap-3">
+					<span class="text-green-600 text-xl">✓</span>
+					<div>
+						<h3 class="font-medium">Product Selection</h3>
+						<p class="text-sm text-muted-foreground">
+							Choose which products to offer as bumps
+						</p>
+					</div>
+				</div>
+
+				<div class="flex items-start gap-3">
+					<span class="text-green-600 text-xl">✓</span>
+					<div>
+						<h3 class="font-medium">Flexible Discounts</h3>
+						<p class="text-sm text-muted-foreground">
+							Percentage, fixed, BOGO, or free shipping
+						</p>
+					</div>
+				</div>
+
+				<div class="flex items-start gap-3">
+					<span class="text-green-600 text-xl">✓</span>
+					<div>
+						<h3 class="font-medium">Smart Positioning</h3>
+						<p class="text-sm text-muted-foreground">
+							Before or after payment form
+						</p>
+					</div>
+				</div>
+
+				<div class="flex items-start gap-3">
+					<span class="text-green-600 text-xl">✓</span>
+					<div>
+						<h3 class="font-medium">Analytics Tracking</h3>
+						<p class="text-sm text-muted-foreground">
+							Track acceptance rates with GA4
+						</p>
+					</div>
+				</div>
+
+				<div class="flex items-start gap-3">
+					<span class="text-green-600 text-xl">✓</span>
+					<div>
+						<h3 class="font-medium">Multiple Bumps</h3>
+						<p class="text-sm text-muted-foreground">
+							Support for up to 3 order bumps
+						</p>
+					</div>
+				</div>
+			</div>
+		</div>
+
+		<!-- Live Demo -->
+		<div class="mb-12">
+			<div class="mb-6">
+				<h2 class="text-3xl font-bold mb-2">Live Demo</h2>
+				<p class="text-muted-foreground">
+					Try the checkout flow with order bumps. Add items to cart first to see bumps.
+				</p>
+			</div>
+
+			<CheckoutWithBumps
+				client:load
+				bumpConfigs={demoOrderBumps}
+				maxBumps={3}
+				showBumpsBeforePayment={true}
+				showBumpsAfterPayment={false}
+			/>
+		</div>
+
+		<!-- Code Examples -->
+		<div class="mb-12 space-y-6">
+			<h2 class="text-3xl font-bold">Code Examples</h2>
+
+			<!-- Basic Usage -->
+			<div class="rounded-lg border bg-card overflow-hidden">
+				<div class="border-b bg-muted px-6 py-3">
+					<h3 class="font-semibold">Basic Usage</h3>
+				</div>
+				<pre class="p-6 overflow-x-auto"><code class="text-sm">{`import { CheckoutWithBumps } from '@/components/checkout/CheckoutWithBumps';
+
+<CheckoutWithBumps
+  client:load
+  bumpConfigs={orderBumps}
+  maxBumps={3}
+  showBumpsBeforePayment={true}
+/>`}</code></pre>
+			</div>
+
+			<!-- Custom Configuration -->
+			<div class="rounded-lg border bg-card overflow-hidden">
+				<div class="border-b bg-muted px-6 py-3">
+					<h3 class="font-semibold">Custom Configuration</h3>
+				</div>
+				<pre class="p-6 overflow-x-auto"><code class="text-sm">{`const customBump: OrderBumpConfig = {
+  productId: 'express-shipping',
+  productName: 'Express Shipping',
+  productDescription: 'Get your order in 2-3 days',
+  originalPrice: 1500, // $15.00
+  discountType: 'percentage',
+  discountValue: 33, // 33% off
+  position: 'before_payment',
+  conditions: {
+    minCartValue: 5000, // Only show if cart > $50
+  },
+};`}</code></pre>
+			</div>
+
+			<!-- Analytics -->
+			<div class="rounded-lg border bg-card overflow-hidden">
+				<div class="border-b bg-muted px-6 py-3">
+					<h3 class="font-semibold">Analytics Tracking</h3>
+				</div>
+				<pre class="p-6 overflow-x-auto"><code class="text-sm">{`import { calculateAnalytics } from '@/lib/checkout/order-bump-logic';
+
+const analytics = calculateAnalytics(allBumps, acceptedBumpIds);
+
+console.log({
+  acceptanceRate: analytics.acceptanceRate, // 35%
+  totalRevenue: analytics.totalRevenue, // $1,400
+  totalSavings: analytics.totalSavings, // $600
+});`}</code></pre>
+			</div>
+		</div>
+
+		<!-- Documentation Links -->
+		<div class="rounded-lg border bg-card p-8">
+			<h2 class="text-2xl font-bold mb-4">Documentation</h2>
+			<div class="space-y-3">
+				<a
+					href="/src/components/checkout/ORDER-BUMP-README.md"
+					class="block p-4 rounded-lg border hover:border-primary transition-colors"
+				>
+					<div class="font-medium">Complete Documentation</div>
+					<div class="text-sm text-muted-foreground">
+						Full usage guide, API reference, and examples
+					</div>
+				</a>
+
+				<a
+					href="/src/components/checkout/CYCLE-83-SUMMARY.md"
+					class="block p-4 rounded-lg border hover:border-primary transition-colors"
+				>
+					<div class="font-medium">Implementation Summary</div>
+					<div class="text-sm text-muted-foreground">
+						Technical details and cycle completion report
+					</div>
+				</a>
+
+				<a
+					href="https://one.ie/docs/develop/stripe"
+					class="block p-4 rounded-lg border hover:border-primary transition-colors"
+				>
+					<div class="font-medium">Stripe Integration</div>
+					<div class="text-sm text-muted-foreground">
+						Connect Stripe for real payment processing
+					</div>
+				</a>
+			</div>
+		</div>
+	</div>
+</Layout>
+
+<style>
+	code {
+		font-family: 'Courier New', monospace;
+	}
+
+	pre {
+		background: transparent;
+	}
+</style>

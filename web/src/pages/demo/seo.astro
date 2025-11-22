@@ -1,0 +1,248 @@
+---
+/**
+ * SEO Tools Demo Page
+ *
+ * Demonstrates:
+ * - SEO Editor component
+ * - SEO Analyzer (score 0-100)
+ * - Schema.org generator
+ * - AI-powered suggestions
+ */
+
+import Layout from "@/layouts/Layout.astro";
+import { SEOEditor } from "@/components/seo/SEOEditor";
+
+const title = "SEO Optimization Tools - ONE Platform";
+const description =
+  "Comprehensive SEO tools including meta tags editor, schema.org generator, and AI-powered suggestions";
+---
+
+<Layout title={title} description={description}>
+  <div class="container mx-auto px-4 py-8 max-w-5xl">
+    <!-- Header -->
+    <div class="mb-8">
+      <h1 class="text-4xl font-bold mb-2">SEO Optimization Tools</h1>
+      <p class="text-lg text-muted-foreground">
+        Optimize your pages for search engines and social media with our
+        comprehensive SEO toolkit
+      </p>
+    </div>
+
+    <!-- Feature Highlights -->
+    <div class="grid grid-cols-1 md:grid-cols-3 gap-4 mb-8">
+      <div class="border rounded-lg p-4">
+        <div class="text-2xl font-bold text-green-600 mb-1">0-100</div>
+        <div class="text-sm font-medium mb-1">SEO Score</div>
+        <div class="text-xs text-muted-foreground">
+          Real-time analysis of your page's SEO quality
+        </div>
+      </div>
+
+      <div class="border rounded-lg p-4">
+        <div class="text-2xl font-bold text-blue-600 mb-1">Schema.org</div>
+        <div class="text-sm font-medium mb-1">Structured Data</div>
+        <div class="text-xs text-muted-foreground">
+          Auto-generate JSON-LD for Product, Organization, FAQ
+        </div>
+      </div>
+
+      <div class="border rounded-lg p-4">
+        <div class="text-2xl font-bold text-purple-600 mb-1">AI-Powered</div>
+        <div class="text-sm font-medium mb-1">Suggestions</div>
+        <div class="text-xs text-muted-foreground">
+          Get smart recommendations to improve rankings
+        </div>
+      </div>
+    </div>
+
+    <!-- SEO Editor -->
+    <SEOEditor
+      client:load
+      initialData={{
+        title: "Amazing Product - Buy Now | ONE Platform",
+        metaDescription:
+          "Discover our amazing product with free shipping, 30-day returns, and unbeatable quality. Order today and save 20%!",
+        keywords: ["product", "shop", "buy online", "free shipping"],
+        canonicalUrl: "https://one.ie/products/amazing-product",
+        ogImage: "https://one.ie/og-image.jpg",
+      }}
+      showAnalyzer={true}
+      showPreview={true}
+    />
+
+    <!-- Documentation -->
+    <div class="mt-12 border-t pt-8">
+      <h2 class="text-2xl font-bold mb-4">How to Use</h2>
+
+      <div class="space-y-6">
+        <div>
+          <h3 class="text-lg font-semibold mb-2">1. Meta Tags</h3>
+          <p class="text-sm text-muted-foreground mb-2">
+            Edit your page title and description to appear in Google search
+            results:
+          </p>
+          <ul class="list-disc list-inside text-sm text-muted-foreground space-y-1">
+            <li>Title: 50-60 characters (includes brand and main keyword)</li>
+            <li>
+              Description: 150-160 characters (compelling call-to-action)
+            </li>
+            <li>Keywords: Comma-separated list of target keywords</li>
+            <li>Canonical URL: Prevents duplicate content issues</li>
+            <li>OG Image: 1200x630px for social media sharing</li>
+          </ul>
+        </div>
+
+        <div>
+          <h3 class="text-lg font-semibold mb-2">2. Schema.org</h3>
+          <p class="text-sm text-muted-foreground mb-2">
+            Add structured data to help search engines understand your content:
+          </p>
+          <ul class="list-disc list-inside text-sm text-muted-foreground space-y-1">
+            <li>
+              Product schema: Shows price, availability, and ratings in search
+            </li>
+            <li>Organization schema: Displays brand info in knowledge panel</li>
+            <li>FAQ schema: Gets featured in FAQ search results</li>
+            <li>
+              Copy generated JSON-LD and paste into your page's &lt;head&gt;
+            </li>
+          </ul>
+        </div>
+
+        <div>
+          <h3 class="text-lg font-semibold mb-2">3. SEO Score</h3>
+          <p class="text-sm text-muted-foreground mb-2">
+            Your page is analyzed across 25+ SEO factors:
+          </p>
+          <ul class="list-disc list-inside text-sm text-muted-foreground space-y-1">
+            <li>Meta tags (title length, description, OG tags)</li>
+            <li>Content quality (word count, headings, keywords)</li>
+            <li>Images (alt text, optimization)</li>
+            <li>Structured data (schema.org validation)</li>
+            <li>Overall score: 80+ is excellent, 60-80 is good, &lt;60 needs work</li>
+          </ul>
+        </div>
+
+        <div>
+          <h3 class="text-lg font-semibold mb-2">4. AI Suggestions</h3>
+          <p class="text-sm text-muted-foreground mb-2">
+            Get smart recommendations based on SEO best practices:
+          </p>
+          <ul class="list-disc list-inside text-sm text-muted-foreground space-y-1">
+            <li>High priority: Critical improvements (biggest impact)</li>
+            <li>Medium priority: Recommended improvements</li>
+            <li>Low priority: Nice-to-have enhancements</li>
+            <li>Each suggestion shows expected impact on rankings</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+
+    <!-- Integration Guide -->
+    <div class="mt-12 border-t pt-8">
+      <h2 class="text-2xl font-bold mb-4">Integration Guide</h2>
+
+      <div class="space-y-4">
+        <div>
+          <h3 class="text-lg font-semibold mb-2">Add to Your Pages</h3>
+          <pre class="bg-muted p-4 rounded-lg text-sm overflow-x-auto"><code>{`import { SEOEditor } from '@/components/seo/SEOEditor';
+
+<SEOEditor
+  client:load
+  initialData={{
+    title: "Your Page Title",
+    metaDescription: "Your description",
+    canonicalUrl: "https://example.com/page"
+  }}
+  showAnalyzer={true}
+  showPreview={true}
+/>`}</code></pre>
+        </div>
+
+        <div>
+          <h3 class="text-lg font-semibold mb-2">Analyze Existing Pages</h3>
+          <pre class="bg-muted p-4 rounded-lg text-sm overflow-x-auto"><code>{`import { analyzeSEO } from '@/lib/seo/seo-analyzer';
+
+const analysis = analyzeSEO({
+  title: "Page Title",
+  metaDescription: "Description",
+  content: "<html content>",
+  images: [{ src: "/img.jpg", alt: "Alt text" }]
+});
+
+console.log('SEO Score:', analysis.score);
+console.log('Issues:', analysis.issues);`}</code></pre>
+        </div>
+
+        <div>
+          <h3 class="text-lg font-semibold mb-2">Generate Schema.org</h3>
+          <pre class="bg-muted p-4 rounded-lg text-sm overflow-x-auto"><code>{`import { generateProductSchema } from '@/lib/seo/schema-generator';
+
+const schema = generateProductSchema({
+  name: "Product Name",
+  description: "Description",
+  price: 99.99,
+  currency: "USD",
+  availability: "InStock",
+  aggregateRating: {
+    ratingValue: 4.5,
+    reviewCount: 128
+  }
+});
+
+// Add to page <head>:
+<script type="application/ld+json">
+  {\`\${JSON.stringify(schema)}\`}
+</script>`}</code></pre>
+        </div>
+      </div>
+    </div>
+
+    <!-- Files Created -->
+    <div class="mt-12 border-t pt-8">
+      <h2 class="text-2xl font-bold mb-4">Files Created</h2>
+      <div class="space-y-2 text-sm">
+        <div class="flex items-start gap-2">
+          <div class="font-mono text-xs bg-muted px-2 py-1 rounded">
+            /web/src/lib/seo/seo-analyzer.ts
+          </div>
+          <div class="text-muted-foreground">
+            SEO analysis engine (25+ checks, scoring 0-100)
+          </div>
+        </div>
+        <div class="flex items-start gap-2">
+          <div class="font-mono text-xs bg-muted px-2 py-1 rounded">
+            /web/src/lib/seo/schema-generator.ts
+          </div>
+          <div class="text-muted-foreground">
+            Schema.org JSON-LD generator (Product, Organization, FAQ)
+          </div>
+        </div>
+        <div class="flex items-start gap-2">
+          <div class="font-mono text-xs bg-muted px-2 py-1 rounded">
+            /web/src/lib/seo/robots-sitemap.ts
+          </div>
+          <div class="text-muted-foreground">
+            Robots.txt and sitemap utilities
+          </div>
+        </div>
+        <div class="flex items-start gap-2">
+          <div class="font-mono text-xs bg-muted px-2 py-1 rounded">
+            /web/src/components/seo/SEOEditor.tsx
+          </div>
+          <div class="text-muted-foreground">
+            Comprehensive SEO editor component
+          </div>
+        </div>
+        <div class="flex items-start gap-2">
+          <div class="font-mono text-xs bg-muted px-2 py-1 rounded">
+            /web/public/robots.txt
+          </div>
+          <div class="text-muted-foreground">
+            Production robots.txt with sitemap reference
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</Layout>

@@ -1,0 +1,315 @@
+---
+/**
+ * Funnel Checkout Page (Cycle 82)
+ * Payment checkout page with Stripe integration
+ *
+ * URL: /checkout/{funnelId}/{stepId}
+ *
+ * Features:
+ * - Product summary with image and details
+ * - Stripe Elements card input with validation
+ * - Billing address collection
+ * - Order summary (subtotal, tax, total)
+ * - Trust badges (secure payment, money-back guarantee)
+ * - Loading states and error handling
+ * - Responsive design with mobile optimization
+ */
+
+import Layout from "@/layouts/Layout.astro";
+import { OrderSummary } from "@/components/shop/payment/OrderSummary";
+import { PaymentForm } from "@/components/shop/payment/PaymentForm";
+import { StripeProvider } from "@/components/shop/payment/StripeProvider";
+import { CheckoutForm } from "@/components/checkout/CheckoutForm";
+import type { CartItem } from "@/types/products";
+
+// Get funnel and step IDs from URL
+const { funnelId, stepId } = Astro.params;
+
+// TODO: Fetch funnel step data from backend
+// For now, using mock data
+const mockCartItems: CartItem[] = [
+  {
+    productSlug: "premium-course",
+    productName: "Premium Online Course",
+    price: 9900, // $99.00 in cents
+    quantity: 1,
+    image: "/images/course-thumbnail.jpg",
+  },
+];
+
+// Calculate order totals
+const subtotal = mockCartItems.reduce((sum, item) => sum + item.price * item.quantity, 0);
+const shipping = 0; // Digital product
+const tax = Math.round(subtotal * 0.08); // 8% tax
+const total = subtotal + shipping + tax;
+
+const calculation = {
+  subtotal,
+  shipping,
+  tax,
+  total,
+  currency: "usd",
+};
+
+// Create PaymentIntent
+let clientSecret: string | null = null;
+let error: string | null = null;
+
+try {
+  const response = await fetch(`${Astro.url.origin}/api/checkout/create-intent`, {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify({
+      items: mockCartItems.map((item) => ({
+        productId: item.productSlug,
+        quantity: item.quantity,
+      })),
+      metadata: {
+        funnelId,
+        stepId,
+      },
+    }),
+  });
+
+  if (!response.ok) {
+    const errorData = await response.json();
+    error = errorData.error || "Failed to initialize checkout";
+  } else {
+    const data = await response.json();
+    clientSecret = data.clientSecret;
+  }
+} catch (err) {
+  console.error("Checkout initialization error:", err);
+  error = "Failed to connect to payment system";
+}
+---
+
+<Layout title="Secure Checkout" sidebarInitialCollapsed={true}>
+  <div class="min-h-screen bg-background py-8">
+    <div class="container mx-auto max-w-6xl px-4">
+      <!-- Header -->
+      <div class="mb-8 text-center">
+        <h1 class="text-3xl font-bold">Secure Checkout</h1>
+        <p class="mt-2 text-muted-foreground">
+          Complete your purchase securely with Stripe
+        </p>
+      </div>
+
+      <!-- Error State -->
+      {
+        error && (
+          <div class="mx-auto max-w-2xl rounded-lg border border-destructive bg-destructive/10 p-6 text-center">
+            <h2 class="text-xl font-semibold text-destructive">Payment Setup Error</h2>
+            <p class="mt-2 text-destructive">{error}</p>
+            <p class="mt-2 text-sm text-muted-foreground">
+              Please check your Stripe configuration and try again.
+            </p>
+            <a
+              href={`/funnel/${funnelId}/step/${stepId}`}
+              class="mt-4 inline-block rounded-md bg-primary px-6 py-2 text-primary-foreground hover:bg-primary/90"
+            >
+              Go Back
+            </a>
+          </div>
+        )
+      }
+
+      <!-- Checkout Grid -->
+      {
+        !error && clientSecret && (
+          <div class="grid gap-8 lg:grid-cols-2">
+            {/* Order Summary - Left Column */}
+            <div class="order-2 lg:order-1">
+              <OrderSummary
+                client:load
+                items={mockCartItems}
+                calculation={calculation}
+              />
+
+              {/* Trust Badges */}
+              <div class="mt-6 space-y-4 rounded-lg border bg-muted/50 p-6">
+                <h3 class="font-semibold">Your Purchase is Protected</h3>
+                <div class="grid gap-3 text-sm">
+                  <div class="flex items-center gap-3">
+                    <svg
+                      class="h-5 w-5 text-green-600"
+                      fill="none"
+                      stroke="currentColor"
+                      viewBox="0 0 24 24"
+                    >
+                      <path
+                        stroke-linecap="round"
+                        stroke-linejoin="round"
+                        stroke-width="2"
+                        d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z"
+                      />
+                    </svg>
+                    <span>256-bit SSL encryption</span>
+                  </div>
+                  <div class="flex items-center gap-3">
+                    <svg
+                      class="h-5 w-5 text-green-600"
+                      fill="none"
+                      stroke="currentColor"
+                      viewBox="0 0 24 24"
+                    >
+                      <path
+                        stroke-linecap="round"
+                        stroke-linejoin="round"
+                        stroke-width="2"
+                        d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"
+                      />
+                    </svg>
+                    <span>PCI DSS compliant</span>
+                  </div>
+                  <div class="flex items-center gap-3">
+                    <svg
+                      class="h-5 w-5 text-green-600"
+                      fill="none"
+                      stroke="currentColor"
+                      viewBox="0 0 24 24"
+                    >
+                      <path
+                        stroke-linecap="round"
+                        stroke-linejoin="round"
+                        stroke-width="2"
+                        d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"
+                      />
+                    </svg>
+                    <span>30-day money-back guarantee</span>
+                  </div>
+                  <div class="flex items-center gap-3">
+                    <svg
+                      class="h-5 w-5 text-green-600"
+                      fill="none"
+                      stroke="currentColor"
+                      viewBox="0 0 24 24"
+                    >
+                      <path
+                        stroke-linecap="round"
+                        stroke-linejoin="round"
+                        stroke-width="2"
+                        d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"
+                      />
+                    </svg>
+                    <span>Instant access after payment</span>
+                  </div>
+                </div>
+              </div>
+
+              {/* Test Card Information (only in development) */}
+              {import.meta.env.MODE === "development" && (
+                <div class="mt-6 rounded-lg border bg-muted/50 p-4">
+                  <h3 class="mb-2 font-semibold">Test Cards (Development Only)</h3>
+                  <div class="space-y-2 text-sm text-muted-foreground">
+                    <p>
+                      <strong>Success:</strong> 4242 4242 4242 4242
+                    </p>
+                    <p>
+                      <strong>Decline:</strong> 4000 0000 0000 0002
+                    </p>
+                    <p>
+                      <strong>Auth Required:</strong> 4000 0027 6000 3184
+                    </p>
+                    <p class="text-xs">
+                      Use any future expiry date (e.g., 12/34), any CVC (e.g.,
+                      123), and any ZIP (e.g., 12345)
+                    </p>
+                  </div>
+                </div>
+              )}
+            </div>
+
+            {/* Payment Form - Right Column */}
+            <div class="order-1 lg:order-2">
+              <div class="sticky top-8 rounded-lg border bg-card p-6 shadow-sm">
+                <StripeProvider client:load clientSecret={clientSecret}>
+                  <CheckoutForm
+                    client:load
+                    funnelId={funnelId!}
+                    stepId={stepId!}
+                    total={total}
+                    onSuccess={(orderId: string) => {
+                      console.log('Payment successful! Order ID:', orderId);
+                      // Redirect to thank you page
+                      window.location.href = `/checkout/success?session_id=${orderId}&funnel=${funnelId}`;
+                    }}
+                  />
+                </StripeProvider>
+              </div>
+            </div>
+          </div>
+        )
+      }
+
+      <!-- Security Footer -->
+      <div class="mt-12 flex flex-wrap items-center justify-center gap-6 text-muted-foreground">
+        <div class="flex items-center gap-2">
+          <svg
+            class="h-5 w-5"
+            fill="none"
+            stroke="currentColor"
+            viewBox="0 0 24 24"
+          >
+            <path
+              stroke-linecap="round"
+              stroke-linejoin="round"
+              stroke-width="2"
+              d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z"
+            ></path>
+          </svg>
+          <span class="text-sm">SSL Encrypted</span>
+        </div>
+        <div class="flex items-center gap-2">
+          <svg
+            class="h-5 w-5"
+            fill="none"
+            stroke="currentColor"
+            viewBox="0 0 24 24"
+          >
+            <path
+              stroke-linecap="round"
+              stroke-linejoin="round"
+              stroke-width="2"
+              d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z"
+            ></path>
+          </svg>
+          <span class="text-sm">PCI Compliant</span>
+        </div>
+        <div class="flex items-center gap-2">
+          <svg
+            class="h-5 w-5"
+            fill="none"
+            stroke="currentColor"
+            viewBox="0 0 24 24"
+          >
+            <path
+              stroke-linecap="round"
+              stroke-linejoin="round"
+              stroke-width="2"
+              d="M3 10h18M7 15h1m4 0h1m-7 4h12a3 3 0 003-3V8a3 3 0 00-3-3H6a3 3 0 00-3 3v8a3 3 0 003 3z"
+            ></path>
+          </svg>
+          <span class="text-sm">Powered by Stripe</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</Layout>
+
+<style>
+  /* Ensure proper spacing on mobile */
+  @media (max-width: 1024px) {
+    .container {
+      padding-left: 1rem;
+      padding-right: 1rem;
+    }
+  }
+
+  /* Sticky positioning for payment form */
+  .sticky {
+    position: sticky;
+  }
+</style>

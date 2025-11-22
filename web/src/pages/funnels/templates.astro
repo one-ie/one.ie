@@ -1,0 +1,38 @@
+---
+/**
+ * Funnel Templates Marketplace Page
+ *
+ * Browse and select from 7 proven funnel templates across 6 categories.
+ * Features filtering, search, sorting, preview, and one-click template creation.
+ *
+ * Uses real templates from @/lib/funnel-templates library with:
+ * - Lead Generation (2 templates)
+ * - Product Launch (1 template)
+ * - Webinar (1 template)
+ * - E-commerce (1 template)
+ * - Membership (1 template)
+ * - Virtual Summit (1 template)
+ *
+ * Part of Cycle 51: Create Template Marketplace UI
+ * @see /one/things/plans/clickfunnels-builder-100-cycles.md
+ */
+
+import Layout from "@/layouts/Layout.astro";
+import { TemplateMarketplace } from "@/components/features/funnels/TemplateMarketplace";
+
+const title = "Funnel Templates";
+const description = "Choose from proven funnel templates to get started quickly";
+---
+
+<Layout title={title} description={description}>
+	<div class="container mx-auto max-w-7xl px-4 py-8 sm:px-6 lg:px-8">
+		<TemplateMarketplace
+			client:load
+			onCreateFromTemplate={(templateId) => {
+				// TODO: Replace with actual Convex mutation when backend is ready (Cycle 21-30)
+				// For now, redirect to builder with template ID
+				window.location.href = `/funnels/builder?template=${templateId}`;
+			}}
+		/>
+	</div>
+</Layout>

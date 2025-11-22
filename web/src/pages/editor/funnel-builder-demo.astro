@@ -1,0 +1,88 @@
+---
+/**
+ * Funnel Builder Demo
+ *
+ * Complete funnel builder with side-by-side editing and responsive preview.
+ * Shows real-time updates across multiple device sizes.
+ */
+
+import Layout from '@/layouts/Layout.astro';
+import { FunnelEditorWithPreview } from '@/components/editor/FunnelEditorWithPreview';
+
+const title = 'Funnel Builder';
+const description = 'Create beautiful, high-converting funnels with live preview';
+
+// Example initial funnel
+const initialFunnel = {
+  name: 'Product Launch Funnel',
+  slug: 'product-launch',
+  status: 'draft' as const,
+  headline: 'Transform Your Business with AI',
+  subheadline: 'Join thousands of entrepreneurs using AI to scale their operations and increase revenue.',
+  ctaText: 'Start Free Trial',
+  primaryColor: '#667eea',
+  theme: 'light' as const,
+  description: 'A high-converting funnel for launching digital products',
+};
+---
+
+<Layout title={title} description={description} sidebarInitialCollapsed={true}>
+  <div class="h-screen flex flex-col">
+    {/* Header */}
+    <div class="border-b bg-background p-4 flex items-center justify-between">
+      <div>
+        <h1 class="text-2xl font-bold">{title}</h1>
+        <p class="text-sm text-muted-foreground mt-1">
+          Edit your funnel and see changes across all devices in real-time
+        </p>
+      </div>
+
+      <div class="flex items-center gap-2">
+        <button class="px-4 py-2 text-sm border rounded-md hover:bg-muted transition-colors">
+          Save Draft
+        </button>
+        <button class="px-4 py-2 text-sm bg-primary text-primary-foreground rounded-md hover:bg-primary/90 transition-colors">
+          Publish
+        </button>
+      </div>
+    </div>
+
+    {/* Editor with Preview */}
+    <div class="flex-1 overflow-hidden">
+      <FunnelEditorWithPreview
+        client:only="react"
+        initialFunnel={initialFunnel}
+        showPreview={true}
+        defaultDevice="iphone_14_pro"
+      />
+    </div>
+
+    {/* Footer Help */}
+    <div class="border-t bg-muted/30 p-3">
+      <div class="max-w-6xl mx-auto flex items-center justify-between text-xs">
+        <div class="flex items-center gap-6">
+          <div>
+            <strong>Keyboard Shortcuts:</strong>
+            <span class="text-muted-foreground ml-2">
+              Cmd/Ctrl + S to save • Cmd/Ctrl + Z to undo • Cmd/Ctrl + Y to redo
+            </span>
+          </div>
+        </div>
+
+        <div class="flex items-center gap-4 text-muted-foreground">
+          <span>Auto-save enabled</span>
+          <span>•</span>
+          <span>Last saved: Just now</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</Layout>
+
+<style>
+  /* Ensure full height */
+  :global(html, body) {
+    height: 100%;
+    overflow: hidden;
+  }
+</style>

@@ -1,0 +1,134 @@
+---
+/**
+ * Form Integrations Dashboard (Cycle 66)
+ *
+ * Configure and manage integrations for form submissions.
+ *
+ * ONTOLOGY MAPPING (6 Dimensions):
+ * - GROUPS: Group-scoped integrations
+ * - PEOPLE: Actor permissions for managing integrations
+ * - THINGS: external_connection entities for each integration
+ * - CONNECTIONS: integrated relationship (funnel → external_connection)
+ * - EVENTS: integration_event with triggered/succeeded/failed
+ * - KNOWLEDGE: Integration patterns and lessons
+ *
+ * Features:
+ * - Configure webhooks, Zapier, email marketing, CRM
+ * - Test integrations
+ * - View integration logs and success rates
+ * - Enable/disable integrations
+ * - Real-time status updates
+ */
+
+import Layout from "@/layouts/Layout.astro";
+import { IntegrationsManager } from "@/components/integrations/IntegrationsManager";
+import { ConvexHttpClient } from "convex/browser";
+import { api } from "@/convex/_generated/api";
+
+const { id } = Astro.params;
+
+if (!id) {
+  return Astro.redirect("/funnels");
+}
+
+// Initialize Convex client
+const convexUrl = import.meta.env.PUBLIC_CONVEX_URL;
+let funnel = null;
+let funnelName = "Integrations";
+
+if (convexUrl) {
+  const convex = new ConvexHttpClient(convexUrl);
+  try {
+    funnel = await convex.query(api.queries.funnels.get, {
+      id: id as any,
+    });
+    if (funnel) {
+      funnelName = funnel.name;
+    }
+  } catch (error) {
+    console.error("Failed to fetch funnel:", error);
+  }
+}
+
+const title = `${funnelName} - Integrations`;
+const description = "Configure webhooks, Zapier, CRM, and email marketing integrations";
+---
+
+<Layout title={title} description={description}>
+  <div class="min-h-screen bg-background">
+    <!-- Header with Navigation -->
+    <header class="border-b bg-card">
+      <div class="mx-auto max-w-7xl px-4 py-6 sm:px-6 lg:px-8">
+        <div class="flex items-center justify-between">
+          <div class="flex items-center gap-4">
+            <a
+              href="/funnels"
+              class="text-muted-foreground hover:text-foreground transition-colors"
+            >
+              ← Back to Funnels
+            </a>
+            <div class="h-6 w-px bg-border"></div>
+            <div>
+              <h1 class="text-3xl font-bold text-foreground">
+                {funnelName}
+              </h1>
+              <p class="mt-1 text-sm text-muted-foreground">
+                Connect external services and automate workflows
+              </p>
+            </div>
+          </div>
+          {
+            funnel && (
+              <span
+                class={`inline-flex items-center rounded-full px-2.5 py-0.5 text-xs font-medium ${
+                  funnel.status === "published"
+                    ? "bg-green-100 dark:bg-green-900 text-green-800 dark:text-green-200"
+                    : funnel.status === "draft"
+                      ? "bg-gray-100 dark:bg-gray-700 text-gray-800 dark:text-gray-200"
+                      : "bg-red-100 dark:bg-red-900 text-red-800 dark:text-red-200"
+                }`}
+              >
+                {funnel.status}
+              </span>
+            )
+          }
+        </div>
+
+        <!-- Tabs Navigation -->
+        <nav class="mt-6 flex space-x-4 border-b" aria-label="Funnel tabs">
+          <a
+            href={`/funnels/${id}`}
+            class="border-b-2 border-transparent px-1 pb-4 text-sm font-medium text-muted-foreground hover:border-border hover:text-foreground transition-colors"
+          >
+            Overview
+          </a>
+          <a
+            href={`/funnels/${id}/analytics`}
+            class="border-b-2 border-transparent px-1 pb-4 text-sm font-medium text-muted-foreground hover:border-border hover:text-foreground transition-colors"
+          >
+            Analytics
+          </a>
+          <a
+            href={`/funnels/${id}/submissions`}
+            class="border-b-2 border-transparent px-1 pb-4 text-sm font-medium text-muted-foreground hover:border-border hover:text-foreground transition-colors"
+          >
+            Submissions
+          </a>
+          <a
+            href={`/funnels/${id}/integrations`}
+            class="border-b-2 border-primary px-1 pb-4 text-sm font-medium text-foreground transition-colors"
+            aria-current="page"
+          >
+            Integrations
+          </a>
+        </nav>
+      </div>
+    </header>
+
+    <!-- Main Content -->
+    <main class="mx-auto max-w-7xl px-4 py-8 sm:px-6 lg:px-8">
+      <!-- Integrations Manager Component -->
+      <IntegrationsManager funnelId={id} client:load />
+    </main>
+  </div>
+</Layout>

@@ -90,5 +90,24 @@ class MockResizeObserver {
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
 global.ResizeObserver = MockResizeObserver as any;
 
+// Mock localStorage for tests
+const localStorageMock = {
+	getItem: vi.fn((key: string) => {
+		return localStorageMock.store[key] || null;
+	}),
+	setItem: vi.fn((key: string, value: string) => {
+		localStorageMock.store[key] = value;
+	}),
+	removeItem: vi.fn((key: string) => {
+		delete localStorageMock.store[key];
+	}),
+	clear: vi.fn(() => {
+		localStorageMock.store = {};
+	}),
+	store: {} as Record<string, string>,
+};
+
+global.localStorage = localStorageMock as any;
+
 // Setup complete
 console.log("✓ Test environment initialized");

@@ -1,0 +1,57 @@
+---
+/**
+ * Template Statistics Page
+ *
+ * Displays comprehensive usage statistics for a funnel template.
+ *
+ * Features:
+ * - Usage metrics (times used, conversions, avg rate)
+ * - Trending badge for popular templates
+ * - Event timeline (template_viewed, template_used)
+ * - Connection list (funnels created from template)
+ *
+ * Part of Cycle 58: Template Usage Statistics
+ * @see /one/things/plans/clickfunnels-builder-100-cycles.md
+ */
+
+import Layout from "@/layouts/Layout.astro";
+import { TemplateUsageStats } from "@/components/features/funnels/TemplateUsageStats";
+
+// Get template ID from route params
+const { id } = Astro.params;
+
+const title = "Template Statistics";
+const description = "View usage statistics and performance metrics for this template";
+---
+
+<Layout title={title} description={description}>
+	<div class="container mx-auto px-4 py-8 max-w-5xl">
+		<!-- Header -->
+		<div class="mb-8">
+			<div class="flex items-center gap-2 text-sm text-muted-foreground mb-2">
+				<a href="/templates" class="hover:text-foreground transition-colors">
+					Templates
+				</a>
+				<span>/</span>
+				<a href={`/templates/${id}`} class="hover:text-foreground transition-colors">
+					Template
+				</a>
+				<span>/</span>
+				<span class="text-foreground">Statistics</span>
+			</div>
+			<h1 class="text-3xl font-bold tracking-tight">Template Statistics</h1>
+			<p class="mt-2 text-muted-foreground">
+				Comprehensive usage data and performance metrics
+			</p>
+		</div>
+
+		<!-- Statistics Dashboard (Client Component) -->
+		{id && (
+			<TemplateUsageStats
+				client:load
+				templateId={id}
+				trendingThreshold={3}
+			/>
+		)}
+	</div>
+</Layout>

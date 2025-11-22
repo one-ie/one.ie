@@ -1,0 +1,28 @@
+---
+/**
+ * Team Collaboration Page
+ *
+ * Manage team members, permissions, and activity
+ * Part of Cycle 96: Team Collaboration Features
+ */
+
+import Layout from '@/layouts/Layout.astro';
+import { TeamCollaboration } from '@/components/team/TeamCollaboration';
+
+const title = 'Team Collaboration';
+const description = 'Manage team members, permissions, and activity';
+---
+
+<Layout title={title} description={description}>
+  <div class="container mx-auto py-8 px-4">
+    <div class="mb-8">
+      <h1 class="text-4xl font-bold mb-2">Team Collaboration</h1>
+      <p class="text-muted-foreground">
+        Manage team members, roles, permissions, and track activity
+      </p>
+    </div>
+
+    <!-- Team Collaboration Interface -->
+    <TeamCollaboration client:load />
+  </div>
+</Layout>

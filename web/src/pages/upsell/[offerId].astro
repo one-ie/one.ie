@@ -1,0 +1,212 @@
+---
+/**
+ * Upsell Page (Cycle 84)
+ * Dynamic one-click upsell page with countdown timer
+ *
+ * Features:
+ * - One-click purchase using saved payment method
+ * - Product presentation with urgency
+ * - Countdown timer
+ * - Accept/Decline buttons
+ * - Analytics tracking
+ * - Chained upsells support
+ *
+ * Route: /upsell/{offerId}
+ * Example: /upsell/advanced-training
+ */
+
+import Layout from "@/layouts/Layout.astro";
+import { UpsellOffer } from "@/components/checkout/UpsellOffer";
+import type { UpsellOffer as UpsellOfferType } from "@/components/checkout/UpsellOffer";
+
+const { offerId } = Astro.params;
+
+// In production, fetch from database or API
+// For now, we'll use mock data based on offerId
+const getUpsellOffer = (id: string): UpsellOfferType | null => {
+  const offers: Record<string, UpsellOfferType> = {
+    "advanced-training": {
+      id: "advanced-training",
+      product: {
+        id: "prod_advanced_training",
+        name: "Advanced Training Program",
+        headline: "🚀 Unlock Advanced Training - Limited Time Only!",
+        description:
+          "Take your skills to the next level with our comprehensive advanced training program. Includes 50+ video lessons, live coaching sessions, and exclusive community access.",
+        benefits: [
+          "50+ HD video lessons covering advanced techniques",
+          "12 months of live weekly coaching sessions",
+          "Access to private community of 5,000+ members",
+          "Downloadable worksheets and templates",
+          "Certificate of completion",
+          "Lifetime access to all future updates",
+        ],
+        image: "https://images.unsplash.com/photo-1516321318423-f06f85e504b3?w=800&h=600&fit=crop",
+        originalPrice: 49700, // $497.00
+        discountedPrice: 9700, // $97.00
+        discountPercentage: 80,
+        stockRemaining: 7,
+      },
+      timerSeconds: 600, // 10 minutes
+      nextOfferId: "premium-support", // Chain to next upsell
+    },
+    "premium-support": {
+      id: "premium-support",
+      product: {
+        id: "prod_premium_support",
+        name: "Premium Support Package",
+        headline: "💎 Add Premium Support - One-Time Offer!",
+        description:
+          "Get priority support and personalized guidance from our expert team. Skip the line and get answers fast.",
+        benefits: [
+          "Priority email support (24-hour response time)",
+          "Monthly 1-on-1 coaching calls (30 minutes each)",
+          "Direct access to founders via Slack",
+          "Custom implementation assistance",
+          "Strategy review and optimization",
+          "Quarterly business reviews",
+        ],
+        image: "https://images.unsplash.com/photo-1556761175-b413da4baf72?w=800&h=600&fit=crop",
+        originalPrice: 29700, // $297.00
+        discountedPrice: 6700, // $67.00
+        discountPercentage: 77,
+        stockRemaining: 3,
+      },
+      timerSeconds: 480, // 8 minutes
+      nextOfferId: "bonus-resources", // Chain to next upsell
+    },
+    "bonus-resources": {
+      id: "bonus-resources",
+      product: {
+        id: "prod_bonus_resources",
+        name: "Bonus Resource Library",
+        headline: "📚 Complete Your Toolkit - Final Offer!",
+        description:
+          "Access our complete library of templates, swipe files, and done-for-you resources. Everything you need to succeed, ready to use.",
+        benefits: [
+          "200+ done-for-you templates",
+          "Swipe file of 1,000+ examples",
+          "Video walkthroughs for each template",
+          "Customizable in Google Docs & Canva",
+          "Commercial usage rights included",
+          "Monthly new template additions",
+        ],
+        image: "https://images.unsplash.com/photo-1456513080510-7bf3a84b82f8?w=800&h=600&fit=crop",
+        originalPrice: 19700, // $197.00
+        discountedPrice: 4700, // $47.00
+        discountPercentage: 76,
+        stockRemaining: 12,
+      },
+      timerSeconds: 360, // 6 minutes
+      // No nextOfferId - this is the final upsell
+    },
+  };
+
+  return offers[id] || null;
+};
+
+const offer = getUpsellOffer(offerId || "");
+
+// If offer not found, redirect to thank you page
+if (!offer) {
+  return Astro.redirect("/thankyou");
+}
+
+// Get payment method ID from URL params or session
+// In production, this would come from the initial checkout session
+const paymentMethodId = Astro.url.searchParams.get("pm") || undefined;
+
+const title = `Special Offer: ${offer.product.name}`;
+const description = offer.product.description;
+---
+
+<Layout
+  title={title}
+  description={description}
+  sidebarInitialCollapsed={true}
+>
+  <!-- No distractions - full width upsell page -->
+  <div class="min-h-screen bg-gradient-to-br from-background via-secondary/5 to-background py-8">
+    <UpsellOffer
+      client:load
+      offer={offer}
+      paymentMethodId={paymentMethodId}
+      onAccept={(orderId: string) => {
+        // Track successful upsell
+        if (typeof window !== "undefined" && window.gtag) {
+          window.gtag("event", "purchase", {
+            transaction_id: orderId,
+            value: offer.product.discountedPrice / 100,
+            currency: "USD",
+            items: [
+              {
+                item_id: offer.product.id,
+                item_name: offer.product.name,
+                price: offer.product.discountedPrice / 100,
+                quantity: 1,
+              },
+            ],
+          });
+        }
+
+        // Navigate to next upsell or thank you page
+        if (offer.nextOfferId) {
+          window.location.href = `/upsell/${offer.nextOfferId}?pm=${paymentMethodId || ""}`;
+        } else {
+          window.location.href = "/thankyou";
+        }
+      }}
+      onDecline={() => {
+        // Navigate to next upsell or thank you page
+        if (offer.nextOfferId) {
+          window.location.href = `/upsell/${offer.nextOfferId}?pm=${paymentMethodId || ""}`;
+        } else {
+          window.location.href = "/thankyou";
+        }
+      }}
+    />
+  </div>
+
+  <!-- Schema.org structured data for SEO -->
+  <script type="application/ld+json" set:html={JSON.stringify({
+    "@context": "https://schema.org",
+    "@type": "Product",
+    "name": offer.product.name,
+    "description": offer.product.description,
+    "image": offer.product.image,
+    "offers": {
+      "@type": "Offer",
+      "price": (offer.product.discountedPrice / 100).toFixed(2),
+      "priceCurrency": "USD",
+      "availability": offer.product.stockRemaining && offer.product.stockRemaining > 0
+        ? "https://schema.org/InStock"
+        : "https://schema.org/OutOfStock",
+      "priceValidUntil": new Date(Date.now() + offer.timerSeconds * 1000).toISOString(),
+    }
+  })} />
+
+  <!-- Analytics tracking script -->
+  <script is:inline>
+    // Track page view
+    if (typeof window !== "undefined" && window.gtag) {
+      window.gtag("event", "page_view", {
+        page_title: document.title,
+        page_location: window.location.href,
+        page_path: window.location.pathname,
+      });
+    }
+
+    // Track timer expiration
+    const timerSeconds = parseInt(document.querySelector('[data-timer]')?.dataset?.timer || '0');
+    if (timerSeconds > 0) {
+      setTimeout(() => {
+        if (typeof window !== "undefined" && window.gtag) {
+          window.gtag("event", "upsell_timer_expired", {
+            offer_id: window.location.pathname.split("/").pop(),
+            timer_duration: timerSeconds,
+          });
+        }
+      }, timerSeconds * 1000);
+    }
+  </script>
+</Layout>

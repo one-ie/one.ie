@@ -1,0 +1,47 @@
+---
+/**
+ * Revenue Analytics Dashboard Page
+ *
+ * Comprehensive revenue analytics showing:
+ * - Real-time KPIs (total revenue, AOV, LTV, refund rate)
+ * - Interactive charts (revenue over time, revenue by product, revenue by funnel)
+ * - Revenue breakdown (product sales, upsells, order bumps, subscriptions)
+ * - Cohort analysis (revenue by acquisition date)
+ * - MRR/ARR tracking for subscriptions
+ * - Export functionality (PDF, CSV)
+ *
+ * Part of Cycle 89: Revenue Analytics Dashboard
+ */
+
+import Layout from "@/layouts/Layout.astro";
+import { RevenueDashboard } from "@/components/revenue/RevenueDashboard";
+
+const title = "Revenue Analytics";
+const description = "Track revenue from funnel sales and subscription payments with comprehensive analytics and reporting";
+---
+
+<Layout title={title} description={description}>
+  <div class="min-h-screen bg-background">
+    <!-- Header -->
+    <header class="border-b bg-card">
+      <div class="mx-auto max-w-7xl px-4 py-6 sm:px-6 lg:px-8">
+        <div class="flex items-center justify-between">
+          <div>
+            <h1 class="text-3xl font-bold text-foreground">
+              {title}
+            </h1>
+            <p class="mt-1 text-sm text-muted-foreground">
+              {description}
+            </p>
+          </div>
+        </div>
+      </div>
+    </header>
+
+    <!-- Main Content -->
+    <div class="mx-auto max-w-7xl px-4 py-8 sm:px-6 lg:px-8">
+      <!-- Revenue Dashboard Component -->
+      <RevenueDashboard client:load />
+    </div>
+  </div>
+</Layout>

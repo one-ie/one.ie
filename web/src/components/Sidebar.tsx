@@ -20,6 +20,7 @@ import {
 	Settings,
 	Shield,
 	UserPlus,
+	Users,
 	X,
 	Youtube,
 } from "lucide-react";
@@ -58,6 +59,7 @@ type NavItem = NavItemWithUrl | NavItemWithSubmenu;
 const navItems: NavItem[] = [
 	{ title: "News", url: "/news", icon: Newspaper },
 	{ title: "Chat", url: "/chat", icon: MessageSquare },
+	{ title: "Team", url: "/organization/team", icon: Users },
 	{
 		title: "Projects",
 		icon: BarChart3,

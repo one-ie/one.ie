@@ -1,0 +1,38 @@
+---
+/**
+ * Form Builder Demo Page
+ *
+ * Showcases the conversational AI-powered form builder.
+ *
+ * Features:
+ * - AI chat interface for form generation
+ * - Drag-and-drop field reordering
+ * - Field property editing
+ * - Live preview
+ * - Code export
+ *
+ * Part of Cycle 61: Form Builder UI
+ */
+
+import Layout from "@/layouts/Layout.astro";
+import { FormBuilder } from "@/components/forms/FormBuilder";
+
+const title = "Form Builder";
+const description = "Create forms with AI - just describe what you need";
+---
+
+<Layout title={title} description={description} sidebarInitialCollapsed={true}>
+	<div class="h-screen flex flex-col">
+		<FormBuilder client:only="react" enableAI={true} />
+	</div>
+</Layout>
+
+<style>
+	/* Ensure full height layout */
+	:global(html),
+	:global(body),
+	:global(#app) {
+		height: 100%;
+		overflow: hidden;
+	}
+</style>

@@ -1,0 +1,100 @@
+---
+/**
+ * Individual Session Recording Player Page
+ *
+ * Cycle 78: Session Recording
+ *
+ * Displays a single session recording with:
+ * - Full playback controls
+ * - Session metadata
+ * - Timeline of events
+ * - Link back to sessions list
+ */
+
+import Layout from "@/layouts/Layout.astro";
+import { SessionPlayer } from "@/components/analytics/SessionPlayer";
+import { ConvexHttpClient } from "convex/browser";
+import { api } from "@/convex/_generated/api";
+
+const { id, sessionId } = Astro.params;
+
+if (!id || !sessionId) {
+	return Astro.redirect("/funnels");
+}
+
+// Initialize Convex client
+const convexUrl = import.meta.env.PUBLIC_CONVEX_URL;
+let funnel = null;
+let funnelName = "Session Recording";
+let session = null;
+
+if (convexUrl) {
+	const convex = new ConvexHttpClient(convexUrl);
+	try {
+		// Get funnel
+		funnel = await convex.query(api.queries.funnels.get, {
+			id: id as any,
+		});
+
+		// Get session from events
+		const events = await convex.query(api.queries.events.byType, {
+			type: "session_recorded",
+		});
+
+		// Find session by ID
+		const sessionEvent = events?.find(
+			(e) => e.metadata?.sessionId === sessionId
+		);
+
+		if (sessionEvent) {
+			session = sessionEvent.metadata;
+		}
+
+		if (funnel) {
+			funnelName = funnel.name;
+		}
+	} catch (error) {
+		console.error("Failed to fetch session:", error);
+	}
+}
+
+// If session not found, redirect
+if (!session) {
+	return Astro.redirect(`/funnels/${id}/sessions`);
+}
+
+const title = `${funnelName} - Session Recording`;
+const description = "Watch recorded user session";
+---
+
+<Layout title={title} description={description}>
+	<div class="min-h-screen bg-background">
+		<!-- Header -->
+		<header class="border-b bg-card">
+			<div class="mx-auto max-w-7xl px-4 py-6 sm:px-6 lg:px-8">
+				<div class="flex items-center gap-4">
+					<a
+						href={`/funnels/${id}/sessions`}
+						class="text-muted-foreground hover:text-foreground transition-colors"
+					>
+						← Back to Sessions
+					</a>
+					<div class="h-6 w-px bg-border"></div>
+					<div>
+						<h1 class="text-2xl font-bold text-foreground">
+							Session Recording
+						</h1>
+						<p class="mt-1 text-sm text-muted-foreground">
+							{session.sessionId}
+						</p>
+					</div>
+				</div>
+			</div>
+		</header>
+
+		<!-- Main Content -->
+		<div class="mx-auto max-w-7xl px-4 py-8 sm:px-6 lg:px-8">
+			<SessionPlayer session={session} autoPlay={true} showMetadata={true} client:load />
+		</div>
+	</div>
+</Layout>

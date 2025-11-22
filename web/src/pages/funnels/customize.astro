@@ -1,0 +1,31 @@
+---
+/**
+ * Funnel Customization Demo Page
+ *
+ * Example usage of the TemplateCustomizationWizard component
+ * Cycle 56: Template Customization Wizard
+ */
+
+import Layout from "@/layouts/Layout.astro";
+import { FunnelCustomizerDemo } from "@/components/templates/FunnelCustomizerDemo";
+
+const title = "Customize Your Funnel";
+const description = "Create a beautiful sales funnel in 5 easy steps";
+---
+
+<Layout title={title} description={description}>
+  <div class="container mx-auto px-4 py-12">
+    <div class="max-w-6xl mx-auto">
+      <!-- Header -->
+      <div class="text-center mb-12">
+        <h1 class="text-4xl font-bold mb-4">Create Your Perfect Funnel</h1>
+        <p class="text-xl text-muted-foreground">
+          Customize your sales funnel template in just 5 steps
+        </p>
+      </div>
+
+      <!-- Wizard -->
+      <FunnelCustomizerDemo client:only="react" />
+    </div>
+  </div>
+</Layout>

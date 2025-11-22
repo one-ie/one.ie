@@ -1,0 +1,197 @@
+---
+/**
+ * Form Builder Demo - Simple Example
+ *
+ * Shows how to use the FormBuilder component with examples.
+ *
+ * Part of Cycle 61: Form Builder UI
+ */
+
+import Layout from "@/layouts/Layout.astro";
+import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
+import { FormBuilderIntegration } from "@/components/forms/FormBuilderIntegration";
+
+const title = "Form Builder Demo";
+const description = "Create forms with AI - see it in action";
+---
+
+<Layout title={title} description={description}>
+	<div class="container mx-auto py-12 px-4">
+		<!-- Header -->
+		<div class="max-w-4xl mx-auto mb-12 text-center">
+			<h1 class="text-4xl font-bold mb-4">Form Builder Demo</h1>
+			<p class="text-xl text-muted-foreground mb-8">
+				Create forms conversationally with AI or use drag-and-drop
+			</p>
+		</div>
+
+		<!-- Features Grid -->
+		<div class="max-w-6xl mx-auto grid md:grid-cols-3 gap-6 mb-12">
+			<Card>
+				<CardHeader>
+					<CardTitle>🤖 AI-Powered</CardTitle>
+				</CardHeader>
+				<CardContent>
+					<p class="text-sm text-muted-foreground">
+						Say "Add a contact form with name, email, phone" and watch the AI build it
+						instantly.
+					</p>
+				</CardContent>
+			</Card>
+
+			<Card>
+				<CardHeader>
+					<CardTitle>🎯 Drag & Drop</CardTitle>
+				</CardHeader>
+				<CardContent>
+					<p class="text-sm text-muted-foreground">
+						Reorder fields by dragging them. Full keyboard accessibility for power
+						users.
+					</p>
+				</CardContent>
+			</Card>
+
+			<Card>
+				<CardHeader>
+					<CardTitle>👁️ Live Preview</CardTitle>
+				</CardHeader>
+				<CardContent>
+					<p class="text-sm text-muted-foreground">
+						See exactly how your form will look. Test it in real-time before
+						publishing.
+					</p>
+				</CardContent>
+			</Card>
+		</div>
+
+		<!-- Try It Section -->
+		<div class="max-w-4xl mx-auto">
+			<Card>
+				<CardHeader>
+					<CardTitle>Try It Now</CardTitle>
+					<CardDescription>
+						Click the button below to open the form builder. Try these examples:
+					</CardDescription>
+				</CardHeader>
+				<CardContent class="space-y-4">
+					<!-- Examples -->
+					<div class="bg-muted p-4 rounded-lg space-y-2">
+						<p class="font-semibold">AI Prompts to Try:</p>
+						<ul class="list-disc list-inside space-y-1 text-sm text-muted-foreground">
+							<li>"Add a contact form with name, email, phone"</li>
+							<li>"Create a registration form"</li>
+							<li>"Build a feedback form with rating"</li>
+							<li>"Make a newsletter signup form"</li>
+							<li>"Design a job application form"</li>
+						</ul>
+					</div>
+
+					<!-- Launch Button -->
+					<div class="flex justify-center pt-4">
+						<FormBuilderIntegration
+							client:load
+							onFormAdded={(formElement) => {
+								console.log("Form created:", formElement);
+							}}
+						/>
+					</div>
+
+					<!-- Features List -->
+					<div class="pt-8 border-t">
+						<h3 class="font-semibold mb-4">What You Can Do:</h3>
+						<div class="grid md:grid-cols-2 gap-4">
+							<div>
+								<h4 class="font-medium mb-2">Field Types</h4>
+								<ul class="text-sm text-muted-foreground space-y-1">
+									<li>✓ Text input</li>
+									<li>✓ Email address</li>
+									<li>✓ Phone number</li>
+									<li>✓ Textarea (long text)</li>
+									<li>✓ Dropdown select</li>
+									<li>✓ Checkboxes</li>
+									<li>✓ Radio buttons</li>
+									<li>✓ File upload</li>
+								</ul>
+							</div>
+
+							<div>
+								<h4 class="font-medium mb-2">Customization</h4>
+								<ul class="text-sm text-muted-foreground space-y-1">
+									<li>✓ Custom labels & placeholders</li>
+									<li>✓ Required/optional fields</li>
+									<li>✓ Validation rules (regex)</li>
+									<li>✓ Custom error messages</li>
+									<li>✓ Success messages</li>
+									<li>✓ Redirect URLs</li>
+									<li>✓ Submit button text</li>
+									<li>✓ Form title & description</li>
+								</ul>
+							</div>
+						</div>
+					</div>
+
+					<!-- View Modes -->
+					<div class="pt-8 border-t">
+						<h3 class="font-semibold mb-4">Three View Modes:</h3>
+						<div class="grid md:grid-cols-3 gap-4">
+							<Card>
+								<CardHeader>
+									<CardTitle class="text-base">Builder</CardTitle>
+								</CardHeader>
+								<CardContent class="text-sm text-muted-foreground">
+									Drag-and-drop interface with field properties panel. AI chat
+									available.
+								</CardContent>
+							</Card>
+
+							<Card>
+								<CardHeader>
+									<CardTitle class="text-base">Preview</CardTitle>
+								</CardHeader>
+								<CardContent class="text-sm text-muted-foreground">
+									See exactly how your form looks. Fully functional for testing.
+								</CardContent>
+							</Card>
+
+							<Card>
+								<CardHeader>
+									<CardTitle class="text-base">Code</CardTitle>
+								</CardHeader>
+								<CardContent class="text-sm text-muted-foreground">
+									Export as code. Copy-paste ready for DynamicForm component.
+								</CardContent>
+							</Card>
+						</div>
+					</div>
+
+					<!-- Integration -->
+					<div class="pt-8 border-t">
+						<h3 class="font-semibold mb-4">Integration:</h3>
+						<div class="bg-muted p-4 rounded-lg">
+							<pre
+								class="text-xs overflow-x-auto"><code>{`import { FormBuilder } from '@/components/forms/FormBuilder';
+
+<FormBuilder
+  enableAI={true}
+  onSave={(fields, settings) => {
+    console.log('Form saved:', { fields, settings });
+    // Save to database or use in your app
+  }}
+/>`}</code></pre>
+						</div>
+					</div>
+				</CardContent>
+			</Card>
+		</div>
+
+		<!-- Documentation Link -->
+		<div class="max-w-4xl mx-auto mt-8 text-center">
+			<p class="text-sm text-muted-foreground">
+				Read the <a
+					href="/forms/builder"
+					class="text-primary hover:underline">full documentation</a
+				> for more examples and API reference.
+			</p>
+		</div>
+	</div>
+</Layout>

@@ -478,6 +478,55 @@ export function FunnelSettingsEditor({
               </div>
             </CardContent>
           </Card>
+
+          {/* Advanced SEO Tools */}
+          <Card>
+            <CardHeader>
+              <CardTitle className="flex items-center gap-2">
+                Advanced SEO Tools
+                <Badge variant="secondary">New</Badge>
+              </CardTitle>
+              <CardDescription>
+                Get comprehensive SEO analysis and optimization recommendations
+              </CardDescription>
+            </CardHeader>
+            <CardContent className="space-y-4">
+              <div className="grid grid-cols-3 gap-4 text-center">
+                <div className="border rounded-lg p-3">
+                  <div className="text-xl font-bold text-green-600">0-100</div>
+                  <div className="text-xs text-muted-foreground">SEO Score</div>
+                </div>
+                <div className="border rounded-lg p-3">
+                  <div className="text-xl font-bold text-blue-600">Schema.org</div>
+                  <div className="text-xs text-muted-foreground">Structured Data</div>
+                </div>
+                <div className="border rounded-lg p-3">
+                  <div className="text-xl font-bold text-purple-600">AI Tips</div>
+                  <div className="text-xs text-muted-foreground">Smart Suggestions</div>
+                </div>
+              </div>
+
+              <Button
+                variant="outline"
+                className="w-full"
+                onClick={() => window.open('/demo/seo', '_blank')}
+              >
+                <ExternalLink className="mr-2 h-4 w-4" />
+                Open Advanced SEO Editor
+              </Button>
+
+              <div className="text-xs text-muted-foreground">
+                <p className="font-semibold mb-1">Features:</p>
+                <ul className="list-disc list-inside space-y-1">
+                  <li>Real-time SEO score (0-100)</li>
+                  <li>Schema.org JSON-LD generator (Product, Organization, FAQ)</li>
+                  <li>AI-powered optimization suggestions</li>
+                  <li>Search preview (Google, Twitter, Facebook)</li>
+                  <li>25+ SEO checks and validations</li>
+                </ul>
+              </div>
+            </CardContent>
+          </Card>
         </TabsContent>
 
         {/* Tracking Tab */}

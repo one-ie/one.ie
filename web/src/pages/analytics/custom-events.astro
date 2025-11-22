@@ -1,0 +1,253 @@
+---
+/**
+ * Custom Events Demo Page
+ *
+ * Cycle 79: Custom Event Tracking
+ *
+ * Interactive demo of the custom event tracking system with:
+ * - Live event tracking dashboard
+ * - Test buttons to trigger sample events
+ * - Event library browser
+ * - Goal creation and tracking
+ */
+
+import Layout from '@/layouts/Layout.astro';
+import { CustomEventsDashboard } from '@/components/analytics/CustomEventsDashboard';
+
+const title = 'Custom Event Tracking';
+const description = 'Track and analyze custom business events';
+---
+
+<Layout title={title} description={description}>
+	<div class="container mx-auto py-8 px-4 max-w-7xl">
+		<!-- Page Header -->
+		<div class="mb-8">
+			<h1 class="text-4xl font-bold mb-2">Custom Event Tracking</h1>
+			<p class="text-lg text-muted-foreground">
+				Track custom business events and analyze user behavior with flexible event definitions and goals.
+			</p>
+		</div>
+
+		<!-- Quick Actions (Test Buttons) -->
+		<div class="mb-8 p-6 border rounded-lg bg-card">
+			<h2 class="text-xl font-semibold mb-4">Quick Actions (Test Events)</h2>
+			<p class="text-sm text-muted-foreground mb-4">
+				Click these buttons to trigger sample events and see them appear in the dashboard below.
+			</p>
+			<div class="flex flex-wrap gap-2" id="quick-actions">
+				<!-- Buttons will be added via JavaScript -->
+			</div>
+		</div>
+
+		<!-- Dashboard -->
+		<CustomEventsDashboard client:load />
+
+		<!-- Documentation -->
+		<div class="mt-8 p-6 border rounded-lg bg-muted/50">
+			<h2 class="text-xl font-semibold mb-4">How to Use</h2>
+			<div class="space-y-4 text-sm">
+				<div>
+					<h3 class="font-medium mb-2">1. Track Events in Your Code</h3>
+					<pre
+						class="bg-background p-3 rounded border overflow-x-auto"
+					><code>import &#123; trackEvent, EventLibrary &#125; from '@/lib/analytics/custom-events';
+
+// Use pre-built event
+trackEvent(EventLibrary.VIDEO_WATCHED, &#123;
+  videoId: 'intro-video',
+  duration: 120,
+  percentWatched: 95
+&#125;);
+
+// Track custom event
+trackEvent('pricing_viewed', &#123;
+  plan: 'pro',
+  source: 'homepage'
+&#125;);</code></pre>
+				</div>
+
+				<div>
+					<h3 class="font-medium mb-2">2. Create Event Goals</h3>
+					<p class="text-muted-foreground">
+						Go to the "Goals" tab to set targets for specific events. Track progress towards your
+						business objectives in real-time.
+					</p>
+				</div>
+
+				<div>
+					<h3 class="font-medium mb-2">3. Analyze Event Data</h3>
+					<p class="text-muted-foreground">
+						Use the "Analytics" tab to visualize event trends, top events, and category
+						distribution. Export data as CSV for further analysis.
+					</p>
+				</div>
+
+				<div>
+					<h3 class="font-medium mb-2">4. Browse Event Library</h3>
+					<p class="text-muted-foreground">
+						The "Event Library" tab shows pre-built events you can use in your application,
+						including video tracking, form submissions, and navigation events.
+					</p>
+				</div>
+			</div>
+		</div>
+
+		<!-- Features -->
+		<div class="mt-8 grid gap-4 md:grid-cols-3">
+			<div class="p-6 border rounded-lg">
+				<div class="text-3xl mb-2">📊</div>
+				<h3 class="font-semibold mb-2">Flexible Tracking</h3>
+				<p class="text-sm text-muted-foreground">
+					Track any custom event with rich metadata. Use pre-built events or define your own.
+				</p>
+			</div>
+
+			<div class="p-6 border rounded-lg">
+				<div class="text-3xl mb-2">🎯</div>
+				<h3 class="font-semibold mb-2">Event Goals</h3>
+				<p class="text-sm text-muted-foreground">
+					Set targets for events and track progress towards business objectives.
+				</p>
+			</div>
+
+			<div class="p-6 border rounded-lg">
+				<div class="text-3xl mb-2">📈</div>
+				<h3 class="font-semibold mb-2">Rich Analytics</h3>
+				<p class="text-sm text-muted-foreground">
+					Visualize event trends over time with interactive charts and insights.
+				</p>
+			</div>
+		</div>
+	</div>
+</Layout>
+
+<script>
+	/**
+	 * Client-side event tracking initialization
+	 */
+	import { trackEvent, EventLibrary } from '@/lib/analytics/custom-events';
+
+	// Quick action buttons
+	const quickActions = [
+		{
+			label: 'Track Video Play',
+			icon: '▶️',
+			event: EventLibrary.VIDEO_PLAYED,
+			properties: {
+				videoId: 'demo-video',
+				title: 'Product Demo',
+				duration: 180,
+			},
+		},
+		{
+			label: 'Track Video Watched',
+			icon: '✓',
+			event: EventLibrary.VIDEO_WATCHED,
+			properties: {
+				videoId: 'demo-video',
+				watchTime: 145,
+				percentWatched: 80,
+			},
+		},
+		{
+			label: 'Track PDF Download',
+			icon: '📄',
+			event: EventLibrary.PDF_DOWNLOADED,
+			properties: {
+				fileName: 'product-guide.pdf',
+				fileSize: 2.4,
+				fileUrl: '/downloads/guide.pdf',
+			},
+		},
+		{
+			label: 'Track Form Submission',
+			icon: '📝',
+			event: EventLibrary.FORM_SUBMITTED,
+			properties: {
+				formId: 'contact-form',
+				formName: 'Contact Us',
+				fields: { name: 'John Doe', email: 'john@example.com' },
+			},
+		},
+		{
+			label: 'Track Signup Started',
+			icon: '🚀',
+			event: EventLibrary.SIGNUP_STARTED,
+			properties: {
+				source: 'homepage',
+				plan: 'pro',
+			},
+		},
+		{
+			label: 'Track Button Click',
+			icon: '🔘',
+			event: EventLibrary.BUTTON_CLICKED,
+			properties: {
+				buttonId: 'cta-hero',
+				buttonText: 'Get Started',
+				location: 'hero-section',
+			},
+		},
+		{
+			label: 'Track Search',
+			icon: '🔍',
+			event: EventLibrary.SEARCH_PERFORMED,
+			properties: {
+				query: 'analytics dashboard',
+				resultsCount: 12,
+			},
+		},
+		{
+			label: 'Track Custom Event',
+			icon: '⚡',
+			event: 'custom_action',
+			properties: {
+				action: 'test',
+				timestamp: Date.now(),
+			},
+		},
+	];
+
+	// Add buttons to the page
+	const container = document.getElementById('quick-actions');
+	if (container) {
+		quickActions.forEach((action) => {
+			const button = document.createElement('button');
+			button.className =
+				'inline-flex items-center gap-2 px-4 py-2 rounded-md border bg-background hover:bg-accent transition-colors text-sm';
+			button.innerHTML = `
+				<span>${action.icon}</span>
+				<span>${action.label}</span>
+			`;
+			button.onclick = () => {
+				trackEvent(action.event, action.properties);
+
+				// Visual feedback
+				button.classList.add('bg-green-100', 'dark:bg-green-900');
+				setTimeout(() => {
+					button.classList.remove('bg-green-100', 'dark:bg-green-900');
+				}, 500);
+			};
+			container.appendChild(button);
+		});
+	}
+
+	// Track page view automatically
+	trackEvent(EventLibrary.PAGE_VIEWED, {
+		pageUrl: window.location.href,
+		pageTitle: document.title,
+	});
+</script>
+
+<style>
+	/* Ensure code blocks are readable */
+	pre {
+		white-space: pre-wrap;
+		word-wrap: break-word;
+	}
+
+	code {
+		font-family: 'Courier New', monospace;
+		font-size: 0.9em;
+	}
+</style>

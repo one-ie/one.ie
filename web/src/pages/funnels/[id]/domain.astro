@@ -1,0 +1,196 @@
+---
+/**
+ * Funnel Domain Setup Page
+ *
+ * Configure custom domains for funnels:
+ * - View default subdomain
+ * - Add custom domains
+ * - Configure DNS records
+ * - Verify domain ownership
+ * - Manage SSL certificates
+ */
+
+import Layout from "@/layouts/Layout.astro";
+import { DomainSetup } from "@/components/funnel/DomainSetup";
+import type { FunnelProperties } from "@/lib/schemas/funnel-schema";
+
+// Get funnel ID from URL
+const { id } = Astro.params;
+
+// TODO: Fetch funnel from database
+// For now, using mock data to demonstrate the component
+const mockFunnel = {
+  _id: id as string,
+  _creationTime: Date.now(),
+  type: "funnel" as const,
+  name: "My Sales Funnel",
+  description: "A high-converting sales funnel",
+  groupId: "group_123",
+  ownerId: "user_123",
+  tags: ["sales", "ecommerce"],
+  status: "draft",
+  createdAt: Date.now(),
+  properties: {
+    name: "My Sales Funnel",
+    slug: "my-sales-funnel",
+    description: "A high-converting sales funnel for digital products",
+    domain: "funnels.one.ie",
+    customDomain: "",
+    googleAnalyticsId: "",
+    facebookPixelId: "",
+    customHeadCode: "",
+    customBodyCode: "",
+    metaTitle: "My Sales Funnel - Convert More Visitors",
+    metaDescription: "Discover our amazing products and transform your business today",
+    metaKeywords: ["sales", "funnel", "conversion"],
+    ogImage: "",
+    theme: "light" as const,
+    primaryColor: "#000000",
+    secondaryColor: "#666666",
+    enableComments: false,
+    enableAnalytics: true,
+    requireAuth: false,
+    status: "draft" as const,
+  } as FunnelProperties,
+};
+
+// Page metadata
+const title = `Domain Setup - ${mockFunnel.name}`;
+const description = "Configure custom domains and DNS settings for your funnel";
+---
+
+<Layout title={title}>
+  <div class="container mx-auto py-8 max-w-6xl">
+    {/* Page Header */}
+    <div class="mb-8">
+      <div class="flex items-center gap-2 text-sm text-muted-foreground mb-2">
+        <a href="/funnels" class="hover:text-foreground">Funnels</a>
+        <span>/</span>
+        <a href={`/funnels/${id}`} class="hover:text-foreground">{mockFunnel.name}</a>
+        <span>/</span>
+        <span class="text-foreground">Domain Setup</span>
+      </div>
+      <h1 class="text-3xl font-bold">Domain Setup</h1>
+      <p class="text-muted-foreground mt-2">
+        Configure custom domains and DNS settings for your funnel
+      </p>
+    </div>
+
+    {/* Domain Setup Component */}
+    <DomainSetup
+      funnelId={mockFunnel._id}
+      funnelSlug={mockFunnel.properties.slug}
+      funnelName={mockFunnel.name}
+      client:load
+    />
+
+    {/* Info Cards */}
+    <div class="mt-8 grid grid-cols-1 md:grid-cols-3 gap-4">
+      <div class="rounded-lg border p-4">
+        <h3 class="font-semibold mb-2">Funnel ID</h3>
+        <p class="text-sm font-mono text-muted-foreground">{mockFunnel._id}</p>
+      </div>
+
+      <div class="rounded-lg border p-4">
+        <h3 class="font-semibold mb-2">Slug</h3>
+        <p class="text-sm font-mono text-muted-foreground">{mockFunnel.properties.slug}</p>
+      </div>
+
+      <div class="rounded-lg border p-4">
+        <h3 class="font-semibold mb-2">Status</h3>
+        <p class="text-sm text-muted-foreground capitalize">{mockFunnel.properties.status}</p>
+      </div>
+    </div>
+
+    {/* Quick Actions */}
+    <div class="mt-8 p-4 rounded-lg border bg-muted/50">
+      <h3 class="font-semibold mb-2">Quick Actions</h3>
+      <div class="flex gap-2 flex-wrap">
+        <a
+          href={`/funnels/${id}`}
+          class="inline-flex items-center justify-center rounded-md text-sm font-medium ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 border border-input bg-background hover:bg-accent hover:text-accent-foreground h-10 px-4 py-2"
+        >
+          View Funnel
+        </a>
+        <a
+          href={`/funnels/${id}/edit`}
+          class="inline-flex items-center justify-center rounded-md text-sm font-medium ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 border border-input bg-background hover:bg-accent hover:text-accent-foreground h-10 px-4 py-2"
+        >
+          Edit Funnel
+        </a>
+        <a
+          href={`/funnels/${id}/settings`}
+          class="inline-flex items-center justify-center rounded-md text-sm font-medium ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 border border-input bg-background hover:bg-accent hover:text-accent-foreground h-10 px-4 py-2"
+        >
+          Settings
+        </a>
+        <a
+          href={`/funnels/${id}/analytics`}
+          class="inline-flex items-center justify-center rounded-md text-sm font-medium ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 border border-input bg-background hover:bg-accent hover:text-accent-foreground h-10 px-4 py-2"
+        >
+          Analytics
+        </a>
+        <a
+          href={`/funnels/${id}/integrations`}
+          class="inline-flex items-center justify-center rounded-md text-sm font-medium ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 border border-input bg-background hover:bg-accent hover:text-accent-foreground h-10 px-4 py-2"
+        >
+          Integrations
+        </a>
+      </div>
+    </div>
+
+    {/* Help Section */}
+    <div class="mt-8 rounded-lg border bg-muted/30 p-6">
+      <h3 class="font-semibold mb-4">Need Help?</h3>
+      <div class="space-y-3 text-sm">
+        <div>
+          <p class="font-medium">How long does DNS verification take?</p>
+          <p class="text-muted-foreground mt-1">
+            DNS changes typically propagate within 1-24 hours, but can take up to 48 hours in rare cases.
+            After adding the DNS records, wait a few minutes and click "Verify Domain".
+          </p>
+        </div>
+        <div>
+          <p class="font-medium">What if verification fails?</p>
+          <p class="text-muted-foreground mt-1">
+            Double-check that you've added the correct DNS records to your domain provider.
+            Make sure there are no typos and that you've selected the correct record type (CNAME or A).
+            Some providers require you to use "@" for the domain root.
+          </p>
+        </div>
+        <div>
+          <p class="font-medium">Can I use a subdomain?</p>
+          <p class="text-muted-foreground mt-1">
+            Yes! You can use any subdomain (e.g., shop.yourdomain.com, buy.example.com).
+            Subdomains are often easier to configure than root domains.
+          </p>
+        </div>
+        <div>
+          <p class="font-medium">Is SSL/HTTPS included?</p>
+          <p class="text-muted-foreground mt-1">
+            Yes, SSL certificates are automatically provisioned via Let's Encrypt once your domain
+            is verified. This usually happens within 24 hours of verification.
+          </p>
+        </div>
+      </div>
+    </div>
+  </div>
+</Layout>
+
+<style>
+  /* Custom styles for domain setup page */
+  .container {
+    animation: fadeIn 0.3s ease-in-out;
+  }
+
+  @keyframes fadeIn {
+    from {
+      opacity: 0;
+      transform: translateY(10px);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+</style>

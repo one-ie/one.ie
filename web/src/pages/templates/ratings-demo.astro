@@ -1,0 +1,111 @@
+---
+/**
+ * Template Ratings Demo Page
+ * Demonstrates the complete rating system
+ */
+
+import Layout from "@/layouts/Layout.astro";
+import { TemplateRatings } from "@/components/features/templates/TemplateRatings";
+import { TemplateCardWithRating } from "@/components/features/templates/TemplateCardWithRating";
+
+const title = "Template Ratings Demo";
+const description = "See the template rating system in action";
+
+// Mock template ID (replace with real template ID in production)
+const mockTemplateId = "demo-template-id" as any;
+---
+
+<Layout title={title} description={description}>
+	<div class="container mx-auto py-8 max-w-5xl">
+		<!-- Header -->
+		<div class="mb-8">
+			<h1 class="text-4xl font-bold mb-2">Template Ratings System</h1>
+			<p class="text-lg text-muted-foreground">
+				Complete rating and review system for templates
+			</p>
+		</div>
+
+		<!-- Feature Overview -->
+		<div class="grid md:grid-cols-2 gap-6 mb-8">
+			<div class="space-y-2">
+				<h2 class="text-xl font-semibold">Features</h2>
+				<ul class="list-disc list-inside space-y-1 text-sm text-muted-foreground">
+					<li>5-star rating system</li>
+					<li>Written reviews (optional)</li>
+					<li>Rating breakdown by stars</li>
+					<li>Helpful voting on reviews</li>
+					<li>Sort by recent, helpful, or rating</li>
+					<li>Edit and delete your own reviews</li>
+					<li>Real-time updates via Convex</li>
+				</ul>
+			</div>
+
+			<div class="space-y-2">
+				<h2 class="text-xl font-semibold">Ontology Mapping</h2>
+				<ul class="list-disc list-inside space-y-1 text-sm text-muted-foreground">
+					<li><strong>CONNECTION:</strong> <code>rated</code> (user → template)</li>
+					<li><strong>EVENT:</strong> <code>rated</code>, <code>review_updated</code></li>
+					<li><strong>METADATA:</strong> rating, reviewText, helpfulVotes</li>
+					<li><strong>THINGS:</strong> Templates (funnel_template, page_template)</li>
+				</ul>
+			</div>
+		</div>
+
+		<!-- Demo: Template Card with Rating -->
+		<div class="mb-8">
+			<h2 class="text-2xl font-bold mb-4">Template Card (With Rating)</h2>
+			<div class="max-w-sm">
+				<TemplateCardWithRating
+					client:load
+					template={{
+						_id: mockTemplateId,
+						name: "E-commerce Landing Page",
+						type: "page_template",
+						properties: {
+							description: "High-converting product landing page with Stripe checkout",
+							category: "E-commerce",
+							thumbnail: "/images/template-preview.jpg",
+							usageCount: 1247,
+						},
+					}}
+				/>
+			</div>
+		</div>
+
+		<!-- Demo: Full Rating System -->
+		<div>
+			<h2 class="text-2xl font-bold mb-4">Complete Rating System</h2>
+			<TemplateRatings client:load templateId={mockTemplateId} />
+		</div>
+
+		<!-- Usage Instructions -->
+		<div class="mt-12 p-6 bg-muted rounded-lg">
+			<h3 class="text-lg font-semibold mb-3">Usage</h3>
+			<div class="space-y-4">
+				<div>
+					<h4 class="font-medium mb-1">On Template Detail Page</h4>
+					<pre class="text-xs bg-background p-3 rounded overflow-x-auto"><code>{`<TemplateRatings client:load templateId={template._id} />`}</code></pre>
+				</div>
+
+				<div>
+					<h4 class="font-medium mb-1">On Template Card</h4>
+					<pre class="text-xs bg-background p-3 rounded overflow-x-auto"><code>{`<TemplateCardWithRating
+  client:load
+  template={template}
+  onSelect={(id) => navigate(\`/templates/\${id}\`)}
+  onPreview={(id) => openPreview(id)}
+/>`}</code></pre>
+				</div>
+
+				<div>
+					<h4 class="font-medium mb-1">Sort Templates by Rating</h4>
+					<pre class="text-xs bg-background p-3 rounded overflow-x-auto"><code>{`const templates = useQuery(api.queries.ratings.listTemplatesByRating, {
+  groupId,
+  minRating: 4.0,
+  limit: 20,
+});`}</code></pre>
+				</div>
+			</div>
+		</div>
+	</div>
+</Layout>

@@ -1,0 +1,170 @@
+---
+/**
+ * Funnel Analytics Page
+ *
+ * Comprehensive analytics dashboard showing:
+ * - Real-time KPIs (visitors, conversions, conversion rate, revenue)
+ * - Interactive charts (line, bar, pie)
+ * - Funnel visualization with NetworkDiagram
+ * - Date range selector (today, 7 days, 30 days, custom)
+ * - Export functionality (PDF, CSV)
+ *
+ * Part of Cycle 71: Funnel Analytics Dashboard
+ */
+
+import Layout from "@/layouts/Layout.astro";
+import { AnalyticsDashboard } from "@/components/analytics/AnalyticsDashboard";
+import { ConvexHttpClient } from "convex/browser";
+import { api } from "@/convex/_generated/api";
+
+const { id } = Astro.params;
+
+if (!id) {
+  return Astro.redirect("/funnels");
+}
+
+// Initialize Convex client
+const convexUrl = import.meta.env.PUBLIC_CONVEX_URL;
+let funnel = null;
+let funnelName = "Funnel Analytics";
+let groupId = "default-org";
+
+if (convexUrl) {
+  const convex = new ConvexHttpClient(convexUrl);
+  try {
+    funnel = await convex.query(api.queries.funnels.get, {
+      id: id as any,
+    });
+    if (funnel) {
+      funnelName = funnel.name;
+      groupId = funnel.groupId || groupId;
+    }
+  } catch (error) {
+    console.error("Failed to fetch funnel:", error);
+  }
+}
+
+const title = `${funnelName} - Analytics`;
+const description = "View comprehensive analytics and performance metrics for your funnel";
+---
+
+<Layout title={title} description={description}>
+  <div class="min-h-screen bg-background">
+    <!-- Header with Navigation -->
+    <header class="border-b bg-card">
+      <div class="mx-auto max-w-7xl px-4 py-6 sm:px-6 lg:px-8">
+        <div class="flex items-center justify-between">
+          <div class="flex items-center gap-4">
+            <a
+              href="/funnels"
+              class="text-muted-foreground hover:text-foreground transition-colors"
+            >
+              ← Back to Funnels
+            </a>
+            <div class="h-6 w-px bg-border"></div>
+            <div>
+              <h1 class="text-3xl font-bold text-foreground">
+                {funnelName}
+              </h1>
+              <p class="mt-1 text-sm text-muted-foreground">
+                {funnel?.properties?.description || description}
+              </p>
+            </div>
+          </div>
+          {
+            funnel && (
+              <span
+                class={`inline-flex items-center rounded-full px-2.5 py-0.5 text-xs font-medium ${
+                  funnel.status === "published"
+                    ? "bg-green-100 dark:bg-green-900 text-green-800 dark:text-green-200"
+                    : funnel.status === "draft"
+                      ? "bg-gray-100 dark:bg-gray-700 text-gray-800 dark:text-gray-200"
+                      : "bg-red-100 dark:bg-red-900 text-red-800 dark:text-red-200"
+                }`}
+              >
+                {funnel.status}
+              </span>
+            )
+          }
+        </div>
+
+        <!-- Tabs Navigation -->
+        <nav class="mt-6 flex space-x-4 border-b" aria-label="Funnel tabs">
+          <a
+            href={`/funnels/${id}`}
+            class="border-b-2 border-transparent px-1 pb-4 text-sm font-medium text-muted-foreground hover:border-border hover:text-foreground transition-colors"
+          >
+            Overview
+          </a>
+          <a
+            href={`/funnels/${id}/analytics`}
+            class="border-b-2 border-primary px-1 pb-4 text-sm font-medium text-foreground"
+            aria-current="page"
+          >
+            Analytics
+          </a>
+          <a
+            href={`/funnels/${id}/submissions`}
+            class="border-b-2 border-transparent px-1 pb-4 text-sm font-medium text-muted-foreground hover:border-border hover:text-foreground transition-colors"
+          >
+            <div class="flex items-center gap-1.5">
+              Submissions
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                class="h-4 w-4"
+                fill="none"
+                viewBox="0 0 24 24"
+                stroke="currentColor"
+              >
+                <path
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                  stroke-width="2"
+                  d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"
+                />
+              </svg>
+            </div>
+          </a>
+          <a
+            href={`/funnels/${id}/settings`}
+            class="border-b-2 border-transparent px-1 pb-4 text-sm font-medium text-muted-foreground hover:border-border hover:text-foreground transition-colors"
+          >
+            Settings
+          </a>
+          <a
+            href={`/funnels/${id}/audit`}
+            class="border-b-2 border-transparent px-1 pb-4 text-sm font-medium text-muted-foreground hover:border-border hover:text-foreground transition-colors"
+          >
+            <div class="flex items-center gap-1.5">
+              Audit Log
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                class="h-4 w-4"
+                fill="none"
+                viewBox="0 0 24 24"
+                stroke="currentColor"
+              >
+                <path
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                  stroke-width="2"
+                  d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"
+                />
+              </svg>
+            </div>
+          </a>
+        </nav>
+      </div>
+    </header>
+
+    <!-- Main Content -->
+    <div class="mx-auto max-w-7xl px-4 py-8 sm:px-6 lg:px-8">
+      <!-- Analytics Dashboard Component -->
+      <AnalyticsDashboard
+        funnelId={id}
+        groupId={groupId}
+        client:load
+      />
+    </div>
+  </div>
+</Layout>

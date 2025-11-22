@@ -1,2 +1,18 @@
+# ONE Platform - Robots.txt
+# Generated for production deployment
+
 User-agent: *
 Allow: /
+
+# Block private routes
+Disallow: /api/
+Disallow: /admin/
+Disallow: /_astro/
+Disallow: /private/
+
+# Block file types
+Disallow: /*.json$
+Disallow: /*.xml$
+
+# Sitemap
+Sitemap: https://one.ie/sitemap-index.xml

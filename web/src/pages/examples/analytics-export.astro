@@ -1,0 +1,513 @@
+---
+/**
+ * Analytics Export Example Page
+ *
+ * Demonstrates the analytics export and reporting functionality.
+ * Shows different configurations and use cases.
+ *
+ * Part of Cycle 80: Analytics Export & Reports
+ */
+
+import Layout from '@/layouts/Layout.astro';
+import { ExportReportModal } from '@/components/analytics/ExportReportModal';
+import { Card, CardHeader, CardTitle, CardDescription, CardContent } from '@/components/ui/card';
+import { Button } from '@/components/ui/button';
+import { Download, FileText, TrendingUp, DollarSign, TestTube, FileSpreadsheet } from 'lucide-react';
+
+const title = 'Analytics Export Examples';
+const description = 'Explore different ways to export analytics data';
+---
+
+<Layout title={title} description={description}>
+  <div class="container mx-auto py-12 space-y-12">
+    {/* Header */}
+    <div class="text-center space-y-4">
+      <h1 class="text-4xl font-bold">Analytics Export Examples</h1>
+      <p class="text-xl text-muted-foreground max-w-2xl mx-auto">
+        Export your analytics data in multiple formats for external analysis and reporting
+      </p>
+    </div>
+
+    {/* Report Types */}
+    <div class="space-y-6">
+      <h2 class="text-2xl font-bold">Report Types</h2>
+      <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
+        {/* Traffic Report */}
+        <Card>
+          <CardHeader>
+            <div class="flex items-start justify-between">
+              <div class="space-y-2">
+                <CardTitle class="flex items-center gap-2">
+                  <TrendingUp class="h-5 w-5 text-primary" />
+                  Traffic Report
+                </CardTitle>
+                <CardDescription>
+                  Visitor analytics, sources, and page views
+                </CardDescription>
+              </div>
+            </div>
+          </CardHeader>
+          <CardContent class="space-y-4">
+            <div class="text-sm text-muted-foreground">
+              <ul class="list-disc list-inside space-y-1">
+                <li>Total page views</li>
+                <li>Unique visitors</li>
+                <li>Traffic sources breakdown</li>
+                <li>Hourly time-series data</li>
+              </ul>
+            </div>
+            <ExportReportModal
+              client:only="react"
+              defaultReportType="traffic"
+              variant="outline"
+            />
+          </CardContent>
+        </Card>
+
+        {/* Conversions Report */}
+        <Card>
+          <CardHeader>
+            <div class="flex items-start justify-between">
+              <div class="space-y-2">
+                <CardTitle class="flex items-center gap-2">
+                  <FileText class="h-5 w-5 text-primary" />
+                  Conversions Report
+                </CardTitle>
+                <CardDescription>
+                  Conversion rates and funnel performance
+                </CardDescription>
+              </div>
+            </div>
+          </CardHeader>
+          <CardContent class="space-y-4">
+            <div class="text-sm text-muted-foreground">
+              <ul class="list-disc list-inside space-y-1">
+                <li>Total conversions</li>
+                <li>Conversion rate</li>
+                <li>Daily conversion trends</li>
+                <li>Funnel performance metrics</li>
+              </ul>
+            </div>
+            <ExportReportModal
+              client:only="react"
+              defaultReportType="conversions"
+              variant="outline"
+            />
+          </CardContent>
+        </Card>
+
+        {/* Revenue Report */}
+        <Card>
+          <CardHeader>
+            <div class="flex items-start justify-between">
+              <div class="space-y-2">
+                <CardTitle class="flex items-center gap-2">
+                  <DollarSign class="h-5 w-5 text-primary" />
+                  Revenue Report
+                </CardTitle>
+                <CardDescription>
+                  Revenue analytics and transaction data
+                </CardDescription>
+              </div>
+            </div>
+          </CardHeader>
+          <CardContent class="space-y-4">
+            <div class="text-sm text-muted-foreground">
+              <ul class="list-disc list-inside space-y-1">
+                <li>Total revenue</li>
+                <li>Average order value</li>
+                <li>Transaction details</li>
+                <li>Daily revenue trends</li>
+              </ul>
+            </div>
+            <ExportReportModal
+              client:only="react"
+              defaultReportType="revenue"
+              variant="outline"
+            />
+          </CardContent>
+        </Card>
+
+        {/* A/B Tests Report */}
+        <Card>
+          <CardHeader>
+            <div class="flex items-start justify-between">
+              <div class="space-y-2">
+                <CardTitle class="flex items-center gap-2">
+                  <TestTube class="h-5 w-5 text-primary" />
+                  A/B Tests Report
+                </CardTitle>
+                <CardDescription>
+                  A/B test results and comparisons
+                </CardDescription>
+              </div>
+            </div>
+          </CardHeader>
+          <CardContent class="space-y-4">
+            <div class="text-sm text-muted-foreground">
+              <ul class="list-disc list-inside space-y-1">
+                <li>Total tests</li>
+                <li>Participant counts</li>
+                <li>Completion rates</li>
+                <li>Test-by-test breakdown</li>
+              </ul>
+            </div>
+            <ExportReportModal
+              client:only="react"
+              defaultReportType="ab_tests"
+              variant="outline"
+            />
+          </CardContent>
+        </Card>
+
+        {/* Forms Report */}
+        <Card>
+          <CardHeader>
+            <div class="flex items-start justify-between">
+              <div class="space-y-2">
+                <CardTitle class="flex items-center gap-2">
+                  <FileSpreadsheet class="h-5 w-5 text-primary" />
+                  Forms Report
+                </CardTitle>
+                <CardDescription>
+                  Form submission analytics
+                </CardDescription>
+              </div>
+            </div>
+          </CardHeader>
+          <CardContent class="space-y-4">
+            <div class="text-sm text-muted-foreground">
+              <ul class="list-disc list-inside space-y-1">
+                <li>Total submissions</li>
+                <li>Unique forms</li>
+                <li>Form-by-form breakdown</li>
+                <li>Daily submission trends</li>
+              </ul>
+            </div>
+            <ExportReportModal
+              client:only="react"
+              defaultReportType="forms"
+              variant="outline"
+            />
+          </CardContent>
+        </Card>
+      </div>
+    </div>
+
+    {/* Export Formats */}
+    <div class="space-y-6">
+      <h2 class="text-2xl font-bold">Export Formats</h2>
+      <div class="grid md:grid-cols-2 gap-6">
+        <Card>
+          <CardHeader>
+            <CardTitle>Available Formats</CardTitle>
+            <CardDescription>
+              Choose the format that best suits your needs
+            </CardDescription>
+          </CardHeader>
+          <CardContent>
+            <ul class="space-y-3">
+              <li class="flex items-start gap-3">
+                <div class="mt-0.5">
+                  <FileText class="h-5 w-5 text-primary" />
+                </div>
+                <div>
+                  <p class="font-medium">CSV (Comma-separated values)</p>
+                  <p class="text-sm text-muted-foreground">
+                    Universal format, opens in Excel, Google Sheets, and all data tools
+                  </p>
+                </div>
+              </li>
+              <li class="flex items-start gap-3">
+                <div class="mt-0.5">
+                  <FileSpreadsheet class="h-5 w-5 text-primary" />
+                </div>
+                <div>
+                  <p class="font-medium">Excel (.xlsx)</p>
+                  <p class="text-sm text-muted-foreground">
+                    Opens directly in Microsoft Excel with formatting preserved
+                  </p>
+                </div>
+              </li>
+              <li class="flex items-start gap-3">
+                <div class="mt-0.5">
+                  <FileText class="h-5 w-5 text-primary" />
+                </div>
+                <div>
+                  <p class="font-medium">JSON (Structured data)</p>
+                  <p class="text-sm text-muted-foreground">
+                    For developers and API integrations, includes nested data structures
+                  </p>
+                </div>
+              </li>
+              <li class="flex items-start gap-3">
+                <div class="mt-0.5">
+                  <FileText class="h-5 w-5 text-primary" />
+                </div>
+                <div>
+                  <p class="font-medium">PDF (Document)</p>
+                  <p class="text-sm text-muted-foreground">
+                    Shareable reports with summary data, ideal for presentations
+                  </p>
+                </div>
+              </li>
+            </ul>
+          </CardContent>
+        </Card>
+
+        <Card>
+          <CardHeader>
+            <CardTitle>Date Range Options</CardTitle>
+            <CardDescription>
+              Filter data by time period
+            </CardDescription>
+          </CardHeader>
+          <CardContent>
+            <ul class="space-y-3">
+              <li class="flex items-start gap-3">
+                <div class="mt-0.5">
+                  <div class="h-2 w-2 rounded-full bg-primary mt-1.5" />
+                </div>
+                <div>
+                  <p class="font-medium">Today</p>
+                  <p class="text-sm text-muted-foreground">
+                    Data from midnight to now
+                  </p>
+                </div>
+              </li>
+              <li class="flex items-start gap-3">
+                <div class="mt-0.5">
+                  <div class="h-2 w-2 rounded-full bg-primary mt-1.5" />
+                </div>
+                <div>
+                  <p class="font-medium">Last 7 days</p>
+                  <p class="text-sm text-muted-foreground">
+                    One week of recent data
+                  </p>
+                </div>
+              </li>
+              <li class="flex items-start gap-3">
+                <div class="mt-0.5">
+                  <div class="h-2 w-2 rounded-full bg-primary mt-1.5" />
+                </div>
+                <div>
+                  <p class="font-medium">Last 30 days</p>
+                  <p class="text-sm text-muted-foreground">
+                    One month of historical data
+                  </p>
+                </div>
+              </li>
+              <li class="flex items-start gap-3">
+                <div class="mt-0.5">
+                  <div class="h-2 w-2 rounded-full bg-primary mt-1.5" />
+                </div>
+                <div>
+                  <p class="font-medium">Custom range</p>
+                  <p class="text-sm text-muted-foreground">
+                    Choose your own start and end dates with calendar picker
+                  </p>
+                </div>
+              </li>
+            </ul>
+          </CardContent>
+        </Card>
+      </div>
+    </div>
+
+    {/* Usage Examples */}
+    <div class="space-y-6">
+      <h2 class="text-2xl font-bold">Integration Examples</h2>
+
+      <Card>
+        <CardHeader>
+          <CardTitle>Basic Export</CardTitle>
+          <CardDescription>
+            Simple export button with default settings
+          </CardDescription>
+        </CardHeader>
+        <CardContent class="space-y-4">
+          <pre class="bg-muted p-4 rounded-lg overflow-x-auto text-sm">
+            <code>{`import { ExportReportModal } from '@/components/analytics/ExportReportModal';
+
+<ExportReportModal />`}</code>
+          </pre>
+          <div>
+            <ExportReportModal client:only="react" />
+          </div>
+        </CardContent>
+      </Card>
+
+      <Card>
+        <CardHeader>
+          <CardTitle>Pre-selected Report Type</CardTitle>
+          <CardDescription>
+            Export button with default report type
+          </CardDescription>
+        </CardHeader>
+        <CardContent class="space-y-4">
+          <pre class="bg-muted p-4 rounded-lg overflow-x-auto text-sm">
+            <code>{`<ExportReportModal
+  defaultReportType="revenue"
+  variant="outline"
+/>`}</code>
+          </pre>
+          <div>
+            <ExportReportModal
+              client:only="react"
+              defaultReportType="revenue"
+              variant="outline"
+            />
+          </div>
+        </CardContent>
+      </Card>
+
+      <Card>
+        <CardHeader>
+          <CardTitle>Custom Trigger</CardTitle>
+          <CardDescription>
+            Use your own button or element as the trigger
+          </CardDescription>
+        </CardHeader>
+        <CardContent class="space-y-4">
+          <pre class="bg-muted p-4 rounded-lg overflow-x-auto text-sm">
+            <code>{`<ExportReportModal
+  trigger={
+    <Button variant="ghost" size="sm">
+      <Download className="mr-2 h-4 w-4" />
+      Export Data
+    </Button>
+  }
+/>`}</code>
+          </pre>
+          <div>
+            <ExportReportModal
+              client:only="react"
+              trigger={
+                <Button client:only="react" variant="ghost" size="sm">
+                  <Download className="mr-2 h-4 w-4" />
+                  Export Data
+                </Button>
+              }
+            />
+          </div>
+        </CardContent>
+      </Card>
+    </div>
+
+    {/* Features List */}
+    <div class="space-y-6">
+      <h2 class="text-2xl font-bold">Features</h2>
+      <div class="grid md:grid-cols-2 gap-6">
+        <Card>
+          <CardHeader>
+            <CardTitle>Export Features</CardTitle>
+          </CardHeader>
+          <CardContent>
+            <ul class="space-y-2 text-sm">
+              <li class="flex items-start gap-2">
+                <span class="text-primary">✓</span>
+                <span>Multiple export formats (CSV, Excel, JSON, PDF)</span>
+              </li>
+              <li class="flex items-start gap-2">
+                <span class="text-primary">✓</span>
+                <span>5 report types covering all analytics needs</span>
+              </li>
+              <li class="flex items-start gap-2">
+                <span class="text-primary">✓</span>
+                <span>Flexible date ranges (presets + custom calendar)</span>
+              </li>
+              <li class="flex items-start gap-2">
+                <span class="text-primary">✓</span>
+                <span>Optional filters (funnel, step, source, campaign)</span>
+              </li>
+              <li class="flex items-start gap-2">
+                <span class="text-primary">✓</span>
+                <span>Automatic file download with correct mime type</span>
+              </li>
+              <li class="flex items-start gap-2">
+                <span class="text-primary">✓</span>
+                <span>Real-time progress indicator during export</span>
+              </li>
+              <li class="flex items-start gap-2">
+                <span class="text-primary">✓</span>
+                <span>Success/error toast notifications</span>
+              </li>
+            </ul>
+          </CardContent>
+        </Card>
+
+        <Card>
+          <CardHeader>
+            <CardTitle>Security & Performance</CardTitle>
+          </CardHeader>
+          <CardContent>
+            <ul class="space-y-2 text-sm">
+              <li class="flex items-start gap-2">
+                <span class="text-primary">✓</span>
+                <span>Multi-tenant isolation (only your organization's data)</span>
+              </li>
+              <li class="flex items-start gap-2">
+                <span class="text-primary">✓</span>
+                <span>Authentication required for all exports</span>
+              </li>
+              <li class="flex items-start gap-2">
+                <span class="text-primary">✓</span>
+                <span>Audit trail with analytics_generated events</span>
+              </li>
+              <li class="flex items-start gap-2">
+                <span class="text-primary">✓</span>
+                <span>Optimized queries using event time index</span>
+              </li>
+              <li class="flex items-start gap-2">
+                <span class="text-primary">✓</span>
+                <span>Client-side file generation (no server load)</span>
+              </li>
+              <li class="flex items-start gap-2">
+                <span class="text-primary">✓</span>
+                <span>Graceful handling of large datasets</span>
+              </li>
+              <li class="flex items-start gap-2">
+                <span class="text-primary">✓</span>
+                <span>TypeScript type safety throughout</span>
+              </li>
+            </ul>
+          </CardContent>
+        </Card>
+      </div>
+    </div>
+
+    {/* Documentation Links */}
+    <Card>
+      <CardHeader>
+        <CardTitle>Documentation</CardTitle>
+        <CardDescription>
+          Learn more about the analytics export system
+        </CardDescription>
+      </CardHeader>
+      <CardContent>
+        <ul class="space-y-2 text-sm">
+          <li>
+            <a href="/one/events/cycle-080-analytics-export.md" class="text-primary hover:underline">
+              Cycle 80 Implementation Summary
+            </a>
+          </li>
+          <li>
+            <a href="/backend/convex/services/analytics/report-generator.ts" class="text-primary hover:underline">
+              Report Generator Service (Effect.ts)
+            </a>
+          </li>
+          <li>
+            <a href="/backend/convex/mutations/analytics.ts" class="text-primary hover:underline">
+              Analytics Mutations (Convex)
+            </a>
+          </li>
+          <li>
+            <a href="/web/src/components/analytics/ExportReportModal.tsx" class="text-primary hover:underline">
+              Export Modal Component (React)
+            </a>
+          </li>
+        </ul>
+      </CardContent>
+    </Card>
+  </div>
+</Layout>

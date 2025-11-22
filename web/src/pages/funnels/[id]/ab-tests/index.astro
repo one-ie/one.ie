@@ -1,0 +1,231 @@
+---
+/**
+ * A/B Tests List Page
+ *
+ * Lists all A/B tests for a funnel with:
+ * - Active tests with status badges
+ * - Quick access to templates
+ * - Test archive management
+ * - Variant comparison
+ *
+ * Enhanced in Cycle 95: A/B Test UI Polish
+ */
+
+import Layout from "@/layouts/Layout.astro";
+import { Button } from "@/components/ui/button";
+import { ConvexHttpClient } from "convex/browser";
+import { api } from "@/convex/_generated/api";
+
+const { id } = Astro.params;
+
+if (!id) {
+  return Astro.redirect("/funnels");
+}
+
+// Initialize Convex client
+const convexUrl = import.meta.env.PUBLIC_CONVEX_URL;
+let funnel = null;
+let funnelName = "Funnel";
+
+if (convexUrl) {
+  const convex = new ConvexHttpClient(convexUrl);
+  try {
+    funnel = await convex.query(api.queries.funnels.get, {
+      id: id as any,
+    });
+    if (funnel) {
+      funnelName = funnel.name;
+    }
+  } catch (error) {
+    console.error("Failed to fetch funnel:", error);
+  }
+}
+
+const title = `A/B Tests - ${funnelName}`;
+const description = "Manage A/B tests for this funnel";
+---
+
+<Layout title={title} description={description}>
+  <div class="min-h-screen bg-background">
+    <!-- Header -->
+    <header class="border-b bg-card">
+      <div class="mx-auto max-w-7xl px-4 py-6 sm:px-6 lg:px-8">
+        <div class="flex items-center justify-between">
+          <div class="flex items-center gap-4">
+            <a
+              href={`/funnels/${id}/analytics`}
+              class="text-muted-foreground hover:text-foreground transition-colors"
+            >
+              ← Back to Analytics
+            </a>
+            <div class="h-6 w-px bg-border"></div>
+            <div>
+              <h1 class="text-2xl font-bold text-foreground">A/B Tests</h1>
+              <p class="mt-1 text-sm text-muted-foreground">
+                Optimize your funnel with data-driven testing
+              </p>
+            </div>
+          </div>
+          <div class="flex gap-2">
+            <a
+              href={`/funnels/${id}/ab-tests/archive`}
+              class="inline-flex items-center px-4 py-2 border border-border text-sm font-medium rounded-md shadow-sm hover:bg-muted transition-colors"
+            >
+              <svg
+                class="mr-2 h-4 w-4"
+                fill="none"
+                stroke="currentColor"
+                viewBox="0 0 24 24"
+              >
+                <path
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                  stroke-width="2"
+                  d="M5 8h14M5 8a2 2 0 110-4h14a2 2 0 110 4M5 8v10a2 2 0 002 2h10a2 2 0 002-2V8m-9 4h4"
+                />
+              </svg>
+              Archive
+            </a>
+            <a
+              href={`/funnels/${id}/ab-tests/new`}
+              class="inline-flex items-center px-4 py-2 border border-transparent text-sm font-medium rounded-md shadow-sm text-white bg-primary hover:bg-primary/90"
+            >
+              <svg
+                class="mr-2 h-4 w-4"
+                fill="none"
+                stroke="currentColor"
+                viewBox="0 0 24 24"
+              >
+                <path
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                  stroke-width="2"
+                  d="M12 4v16m8-8H4"
+                />
+              </svg>
+              Create A/B Test
+            </a>
+          </div>
+        </div>
+      </div>
+    </header>
+
+    <!-- Main Content -->
+    <div class="mx-auto max-w-7xl px-4 py-8 sm:px-6 lg:px-8">
+      {
+        funnel ? (
+          <div class="space-y-6">
+            <!-- Quick Start Options -->
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+              <!-- Templates Card -->
+              <div class="rounded-lg border bg-gradient-to-br from-purple-50 to-blue-50 dark:from-purple-950 dark:to-blue-950 p-6">
+                <div class="flex items-start gap-4">
+                  <div class="p-3 rounded-lg bg-purple-100 dark:bg-purple-900">
+                    <svg
+                      class="h-6 w-6 text-purple-600 dark:text-purple-400"
+                      fill="none"
+                      stroke="currentColor"
+                      viewBox="0 0 24 24"
+                    >
+                      <path
+                        stroke-linecap="round"
+                        stroke-linejoin="round"
+                        stroke-width="2"
+                        d="M7 21a4 4 0 01-4-4V5a2 2 0 012-2h4a2 2 0 012 2v12a4 4 0 01-4 4zm0 0h12a2 2 0 002-2v-4a2 2 0 00-2-2h-2.343M11 7.343l1.657-1.657a2 2 0 012.828 0l2.829 2.829a2 2 0 010 2.828l-8.486 8.485M7 17h.01"
+                      />
+                    </svg>
+                  </div>
+                  <div class="flex-1">
+                    <h3 class="text-lg font-semibold mb-2">Use a Template</h3>
+                    <p class="text-sm text-muted-foreground mb-4">
+                      Start with proven test templates for headlines, CTAs, pricing, and more.
+                    </p>
+                    <a
+                      href={`/funnels/${id}/ab-tests/templates`}
+                      class="inline-flex items-center text-sm font-medium text-purple-600 dark:text-purple-400 hover:underline"
+                    >
+                      Browse Templates →
+                    </a>
+                  </div>
+                </div>
+              </div>
+
+              <!-- Custom Test Card -->
+              <div class="rounded-lg border bg-gradient-to-br from-green-50 to-emerald-50 dark:from-green-950 dark:to-emerald-950 p-6">
+                <div class="flex items-start gap-4">
+                  <div class="p-3 rounded-lg bg-green-100 dark:bg-green-900">
+                    <svg
+                      class="h-6 w-6 text-green-600 dark:text-green-400"
+                      fill="none"
+                      stroke="currentColor"
+                      viewBox="0 0 24 24"
+                    >
+                      <path
+                        stroke-linecap="round"
+                        stroke-linejoin="round"
+                        stroke-width="2"
+                        d="M12 4v16m8-8H4"
+                      />
+                    </svg>
+                  </div>
+                  <div class="flex-1">
+                    <h3 class="text-lg font-semibold mb-2">Create Custom Test</h3>
+                    <p class="text-sm text-muted-foreground mb-4">
+                      Build a test from scratch with full control over variants and settings.
+                    </p>
+                    <a
+                      href={`/funnels/${id}/ab-tests/new`}
+                      class="inline-flex items-center text-sm font-medium text-green-600 dark:text-green-400 hover:underline"
+                    >
+                      Start from Scratch →
+                    </a>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <!-- Info Card -->
+            <div class="rounded-lg border bg-blue-50 dark:bg-blue-950 p-4">
+              <div class="flex">
+                <div class="flex-shrink-0">
+                  <svg
+                    class="h-5 w-5 text-blue-400"
+                    xmlns="http://www.w3.org/2000/svg"
+                    viewBox="0 0 20 20"
+                    fill="currentColor"
+                  >
+                    <path
+                      fill-rule="evenodd"
+                      d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-7-4a1 1 0 11-2 0 1 1 0 012 0zM9 9a1 1 0 000 2v3a1 1 0 001 1h1a1 1 0 100-2v-3a1 1 0 00-1-1H9z"
+                      clip-rule="evenodd"
+                    />
+                  </svg>
+                </div>
+                <div class="ml-3">
+                  <h3 class="text-sm font-medium text-blue-800 dark:text-blue-200">
+                    A/B Testing Best Practices
+                  </h3>
+                  <div class="mt-2 text-sm text-blue-700 dark:text-blue-300">
+                    <ul class="list-disc list-inside space-y-1">
+                      <li>Run tests for at least 7-14 days to account for weekly patterns</li>
+                      <li>Wait for 95% statistical significance before declaring a winner</li>
+                      <li>Test one element at a time for clear insights</li>
+                      <li>Ensure you have enough traffic for reliable results (300+ visitors per variant)</li>
+                    </ul>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        ) : (
+          <div class="text-center py-12">
+            <p class="text-muted-foreground">Funnel not found or you don't have access.</p>
+            <a href="/funnels" class="text-primary hover:underline mt-4 inline-block">
+              Back to Funnels
+            </a>
+          </div>
+        )
+      }
+    </div>
+  </div>
+</Layout>

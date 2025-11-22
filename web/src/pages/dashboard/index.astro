@@ -12,6 +12,8 @@ import { DashboardStats } from "@/components/dashboard/DashboardStats";
 import { EntityOverview } from "@/components/dashboard/EntityOverview";
 import { QuickActions } from "@/components/dashboard/QuickActions";
 import { RecentActivity } from "@/components/dashboard/RecentActivity";
+import { OnboardingChecklist } from "@/components/onboarding/OnboardingChecklist";
+import { ProductTour } from "@/components/onboarding/ProductTour";
 import Layout from "@/layouts/Layout.astro";
 import {
 	createDataProvider,
@@ -136,8 +138,13 @@ const data = await Effect.runPromise(
 
     <!-- Main Content -->
     <main class="mx-auto max-w-7xl px-4 py-8 sm:px-6 lg:px-8">
-      <!-- Stats Section -->
+      <!-- Onboarding Checklist (New Users) -->
       <div class="mb-8">
+        <OnboardingChecklist client:load />
+      </div>
+
+      <!-- Stats Section -->
+      <div class="mb-8" data-tour="analytics">
         <h2 class="mb-4 text-xl font-semibold text-gray-900 dark:text-white">
           Overview
         </h2>
@@ -145,7 +152,7 @@ const data = await Effect.runPromise(
       </div>
 
       <!-- Quick Actions -->
-      <div class="mb-8">
+      <div class="mb-8" data-tour="create-funnel">
         <h2 class="mb-4 text-xl font-semibold text-gray-900 dark:text-white">
           Quick Actions
         </h2>
@@ -153,7 +160,7 @@ const data = await Effect.runPromise(
       </div>
 
       <!-- Entity Overview -->
-      <div class="mb-8">
+      <div class="mb-8" data-tour="funnel-builder">
         <h2 class="mb-4 text-xl font-semibold text-gray-900 dark:text-white">
           Recent Entities
         </h2>
@@ -168,5 +175,26 @@ const data = await Effect.runPromise(
         <RecentActivity client:visible events={data.recentEvents} />
       </div>
     </main>
+
+    <!-- Product Tour -->
+    <ProductTour client:idle autoStart={false} />
   </div>
+
+  <!-- Auto-start tour for new users -->
+  <script>
+    // Check if user is new (hasn't completed tour or onboarding)
+    const hasCompletedTour = localStorage.getItem('productTourCompleted');
+    const hasSkippedTour = localStorage.getItem('productTourSkipped');
+
+    // Show welcome message for first-time users
+    if (!hasCompletedTour && !hasSkippedTour) {
+      setTimeout(() => {
+        const tourStartBtn = document.querySelector('[data-tour-start]');
+        if (tourStartBtn) {
+          // Optionally auto-start tour after 2 seconds
+          // tourStartBtn.click();
+        }
+      }, 2000);
+    }
+  </script>
 </Layout>

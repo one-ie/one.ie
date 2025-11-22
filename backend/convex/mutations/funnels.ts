@@ -572,3 +572,170 @@ export const duplicate = mutation({
     return newFunnelId;
   },
 });
+
+// ============================================================================
+// Save Funnel as Template
+// ============================================================================
+
+/**
+ * Save a funnel as a reusable template
+ *
+ * CRITICAL:
+ * - Captures funnel structure (all steps and elements)
+ * - Creates funnel_template thing type
+ * - Sets visibility (private/public)
+ * - Logs template_created event
+ */
+export const saveAsTemplate = mutation({
+  args: {
+    funnelId: v.id("things"),
+    templateName: v.string(),
+    description: v.string(),
+    category: v.string(),
+    tags: v.array(v.string()),
+    visibility: v.union(v.literal("private"), v.literal("public")),
+    conversionRate: v.optional(v.number()),
+  },
+  handler: async (ctx, args) => {
+    // 1. Authenticate
+    const identity = await ctx.auth.getUserIdentity();
+    if (!identity) {
+      throw new Error("Not authenticated");
+    }
+
+    // 2. Get user
+    const person = await ctx.db
+      .query("things")
+      .withIndex("by_type", (q) => q.eq("type", "creator"))
+      .filter((t) => t.properties?.email === identity.email)
+      .first();
+
+    if (!person?.groupId) {
+      throw new Error("User must belong to a group");
+    }
+
+    // 3. Get funnel and verify ownership
+    const funnel = await ctx.db.get(args.funnelId);
+    if (!funnel || funnel.type !== "funnel") {
+      throw new Error("Funnel not found");
+    }
+
+    // 4. Validate access
+    const role = person.properties?.role;
+    const hasAccess =
+      role === "platform_owner" || funnel.groupId === person.groupId;
+
+    if (!hasAccess) {
+      throw new Error("Unauthorized");
+    }
+
+    // 5. Get all funnel steps
+    const steps = await ctx.db
+      .query("things")
+      .withIndex("by_type", (q) => q.eq("type", "funnel_step"))
+      .filter((step) => step.properties?.funnelId === args.funnelId)
+      .collect();
+
+    // 6. Get all elements for all steps
+    const allElements = await Promise.all(
+      steps.map(async (step) => {
+        const elements = await ctx.db
+          .query("things")
+          .withIndex("by_type", (q) => q.eq("type", "page_element"))
+          .filter((el) => el.properties?.stepId === step._id)
+          .collect();
+        return { stepId: step._id, elements };
+      })
+    );
+
+    // 7. Generate slug for template
+    const slug = args.templateName
+      .toLowerCase()
+      .replace(/[^a-z0-9]+/g, "-")
+      .replace(/^-|-$/g, "");
+
+    // 8. Create template thing
+    const templateId = await ctx.db.insert("things", {
+      type: "funnel_template",
+      name: args.templateName,
+      groupId: person.groupId, // Template belongs to creator's group
+      properties: {
+        slug,
+        description: args.description,
+        category: args.category,
+        tags: args.tags,
+        visibility: args.visibility,
+        conversionRate: args.conversionRate,
+        originalFunnelId: args.funnelId,
+        stepCount: steps.length,
+        // Capture complete funnel structure
+        funnelStructure: {
+          name: funnel.name,
+          description: funnel.properties?.description,
+          settings: funnel.properties?.settings,
+          steps: steps.map((step) => ({
+            id: step._id,
+            name: step.name,
+            type: step.properties?.type,
+            order: step.properties?.order,
+            settings: step.properties?.settings,
+            elements: allElements
+              .find((e) => e.stepId === step._id)
+              ?.elements.map((el) => ({
+                id: el._id,
+                type: el.properties?.elementType,
+                position: el.properties?.position,
+                properties: el.properties,
+              })),
+          })),
+        },
+        // Metadata
+        createdBy: person._id,
+        createdByName: person.name,
+        createdAt: Date.now(),
+      },
+      status: args.visibility === "public" ? "published" : "draft",
+      createdAt: Date.now(),
+      updatedAt: Date.now(),
+    });
+
+    // 9. Create ownership connection
+    await ctx.db.insert("connections", {
+      fromThingId: person._id,
+      toThingId: templateId,
+      relationshipType: "owns",
+      metadata: { role: person.properties?.role },
+      validFrom: Date.now(),
+      createdAt: Date.now(),
+    });
+
+    // 10. Create funnel -> template connection
+    await ctx.db.insert("connections", {
+      fromThingId: args.funnelId,
+      toThingId: templateId,
+      relationshipType: "template_created_from",
+      metadata: { category: args.category },
+      validFrom: Date.now(),
+      createdAt: Date.now(),
+    });
+
+    // 11. Log event
+    await ctx.db.insert("events", {
+      type: "template_created",
+      actorId: person._id,
+      targetId: templateId,
+      timestamp: Date.now(),
+      metadata: {
+        groupId: person.groupId,
+        templateName: args.templateName,
+        category: args.category,
+        visibility: args.visibility,
+        originalFunnelId: args.funnelId,
+        stepCount: steps.length,
+        protocol: "clickfunnels-builder",
+      },
+    });
+
+    return templateId;
+  },
+});

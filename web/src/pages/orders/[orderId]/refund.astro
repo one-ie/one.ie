@@ -1,0 +1,368 @@
+---
+/**
+ * Refund Management Page
+ *
+ * Features:
+ * - View refund history for order
+ * - Process new refunds
+ * - View refund analytics
+ * - Handle disputes
+ *
+ * @see /backend/convex/queries/payments.ts - listPaymentRefunds
+ * @see /backend/convex/mutations/payments.ts - processRefund
+ */
+
+import Layout from "../../../layouts/Layout.astro";
+import { Button } from "../../../components/ui/button";
+---
+
+<Layout title="Refund Management">
+  <div class="container mx-auto px-4 py-8">
+    <div class="mb-8">
+      <h1 class="text-3xl font-bold mb-2">Refund Management</h1>
+      <p class="text-muted-foreground">
+        Process refunds and view refund analytics
+      </p>
+    </div>
+
+    <div id="refund-app" class="space-y-6"></div>
+  </div>
+
+  <script>
+    import { createRoot } from "react-dom/client";
+    import { ConvexProvider, ConvexReactClient } from "convex/react";
+    import { useQuery, useMutation } from "convex/react";
+    import { api } from "../../../../convex/_generated/api";
+    import RefundModal from "../../../components/payments/RefundModal";
+    import { useState } from "react";
+    import {
+      Card,
+      CardContent,
+      CardDescription,
+      CardHeader,
+      CardTitle,
+    } from "../../../components/ui/card";
+    import { Badge } from "../../../components/ui/badge";
+    import { Button } from "../../../components/ui/button";
+    import {
+      Table,
+      TableBody,
+      TableCell,
+      TableHead,
+      TableHeader,
+      TableRow,
+    } from "../../../components/ui/table";
+    import {
+      ArrowLeft,
+      RefreshCw,
+      DollarSign,
+      TrendingDown,
+      AlertTriangle,
+      CheckCircle2,
+      Clock,
+    } from "lucide-react";
+
+    const convex = new ConvexReactClient(
+      import.meta.env.PUBLIC_CONVEX_URL || ""
+    );
+
+    function RefundManagement() {
+      const [selectedPayment, setSelectedPayment] = useState(null);
+      const [isRefundModalOpen, setIsRefundModalOpen] = useState(false);
+
+      // Get refunds for organization
+      const refunds = useQuery(api.queries.payments.listOrganizationRefunds, {
+        limit: 50,
+      });
+
+      // Get refund analytics
+      const analytics = useQuery(api.queries.payments.getRefundAnalytics, {});
+
+      const formatCurrency = (amount: number, currency: string = "usd") => {
+        return new Intl.NumberFormat("en-US", {
+          style: "currency",
+          currency: currency.toUpperCase(),
+        }).format(amount / 100);
+      };
+
+      const formatDate = (timestamp: number) => {
+        return new Date(timestamp).toLocaleDateString("en-US", {
+          year: "numeric",
+          month: "short",
+          day: "numeric",
+          hour: "2-digit",
+          minute: "2-digit",
+        });
+      };
+
+      const getStatusBadge = (status: string) => {
+        switch (status) {
+          case "published":
+            return (
+              <Badge className="bg-green-100 text-green-800">Succeeded</Badge>
+            );
+          case "active":
+            return <Badge className="bg-blue-100 text-blue-800">Pending</Badge>;
+          case "archived":
+            return <Badge className="bg-gray-100 text-gray-800">Failed</Badge>;
+          default:
+            return <Badge>{status}</Badge>;
+        }
+      };
+
+      const getReasonLabel = (reason: string) => {
+        const labels = {
+          requested_by_customer: "Customer Request",
+          duplicate: "Duplicate Payment",
+          fraudulent: "Fraudulent",
+          other: "Other",
+        };
+        return labels[reason as keyof typeof labels] || reason;
+      };
+
+      if (!refunds || !analytics) {
+        return (
+          <div className="flex items-center justify-center py-12">
+            <RefreshCw className="h-8 w-8 animate-spin text-muted-foreground" />
+          </div>
+        );
+      }
+
+      return (
+        <div className="space-y-6">
+          {/* Back Button */}
+          <Button variant="ghost" asChild>
+            <a href="/orders">
+              <ArrowLeft className="mr-2 h-4 w-4" />
+              Back to Orders
+            </a>
+          </Button>
+
+          {/* Analytics Cards */}
+          <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-4">
+            <Card>
+              <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
+                <CardTitle className="text-sm font-medium">
+                  Total Refunds
+                </CardTitle>
+                <RefreshCw className="h-4 w-4 text-muted-foreground" />
+              </CardHeader>
+              <CardContent>
+                <div className="text-2xl font-bold">
+                  {analytics.totalRefunds}
+                </div>
+                <p className="text-xs text-muted-foreground">
+                  {analytics.fullRefunds} full, {analytics.partialRefunds}{" "}
+                  partial
+                </p>
+              </CardContent>
+            </Card>
+
+            <Card>
+              <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
+                <CardTitle className="text-sm font-medium">
+                  Refunded Amount
+                </CardTitle>
+                <DollarSign className="h-4 w-4 text-muted-foreground" />
+              </CardHeader>
+              <CardContent>
+                <div className="text-2xl font-bold">
+                  {formatCurrency(
+                    analytics.totalRefundedAmount,
+                    analytics.currency
+                  )}
+                </div>
+                <p className="text-xs text-muted-foreground">
+                  {((analytics.totalRefundedAmount / analytics.totalPaymentAmount) * 100).toFixed(1)}% of total revenue
+                </p>
+              </CardContent>
+            </Card>
+
+            <Card>
+              <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
+                <CardTitle className="text-sm font-medium">
+                  Refund Rate
+                </CardTitle>
+                <TrendingDown className="h-4 w-4 text-muted-foreground" />
+              </CardHeader>
+              <CardContent>
+                <div className="text-2xl font-bold">
+                  {analytics.refundRate.toFixed(1)}%
+                </div>
+                <p className="text-xs text-muted-foreground">
+                  {analytics.totalRefunds} of {analytics.totalPayments} orders
+                </p>
+              </CardContent>
+            </Card>
+
+            <Card>
+              <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
+                <CardTitle className="text-sm font-medium">
+                  Average Refund
+                </CardTitle>
+                <DollarSign className="h-4 w-4 text-muted-foreground" />
+              </CardHeader>
+              <CardContent>
+                <div className="text-2xl font-bold">
+                  {formatCurrency(
+                    analytics.averageRefundAmount,
+                    analytics.currency
+                  )}
+                </div>
+                <p className="text-xs text-muted-foreground">
+                  Per refund transaction
+                </p>
+              </CardContent>
+            </Card>
+          </div>
+
+          {/* Refund Reasons Breakdown */}
+          <Card>
+            <CardHeader>
+              <CardTitle>Refund Reasons</CardTitle>
+              <CardDescription>
+                Breakdown of refunds by reason
+              </CardDescription>
+            </CardHeader>
+            <CardContent>
+              <div className="space-y-2">
+                {Object.entries(analytics.refundsByReason).map(
+                  ([reason, count]) => (
+                    <div
+                      key={reason}
+                      className="flex items-center justify-between"
+                    >
+                      <span className="text-sm">{getReasonLabel(reason)}</span>
+                      <div className="flex items-center gap-2">
+                        <div className="h-2 w-32 bg-muted rounded-full overflow-hidden">
+                          <div
+                            className="h-full bg-primary"
+                            style={{
+                              width: `${(count / analytics.totalRefunds) * 100}%`,
+                            }}
+                          />
+                        </div>
+                        <span className="text-sm font-medium w-8 text-right">
+                          {count}
+                        </span>
+                      </div>
+                    </div>
+                  )
+                )}
+              </div>
+            </CardContent>
+          </Card>
+
+          {/* Refunds List */}
+          <Card>
+            <CardHeader>
+              <CardTitle>Recent Refunds</CardTitle>
+              <CardDescription>
+                All refunds processed for your organization
+              </CardDescription>
+            </CardHeader>
+            <CardContent>
+              {refunds.length === 0 ? (
+                <div className="text-center py-12">
+                  <CheckCircle2 className="mx-auto h-12 w-12 text-muted-foreground mb-4" />
+                  <p className="text-lg font-medium mb-2">No refunds yet</p>
+                  <p className="text-sm text-muted-foreground">
+                    Refunded payments will appear here
+                  </p>
+                </div>
+              ) : (
+                <Table>
+                  <TableHeader>
+                    <TableRow>
+                      <TableHead>Date</TableHead>
+                      <TableHead>Original Payment</TableHead>
+                      <TableHead>Amount</TableHead>
+                      <TableHead>Type</TableHead>
+                      <TableHead>Reason</TableHead>
+                      <TableHead>Status</TableHead>
+                      <TableHead>Notes</TableHead>
+                    </TableRow>
+                  </TableHeader>
+                  <TableBody>
+                    {refunds.map((refund: any) => (
+                      <TableRow key={refund._id}>
+                        <TableCell className="text-sm">
+                          {formatDate(refund.createdAt)}
+                        </TableCell>
+                        <TableCell>
+                          {refund.originalPayment ? (
+                            <div>
+                              <div className="font-medium">
+                                {refund.originalPayment.name}
+                              </div>
+                              <div className="text-xs text-muted-foreground">
+                                {formatCurrency(
+                                  refund.originalPayment.amount,
+                                  refund.properties.currency
+                                )}
+                              </div>
+                            </div>
+                          ) : (
+                            <span className="text-muted-foreground">—</span>
+                          )}
+                        </TableCell>
+                        <TableCell className="font-medium">
+                          {formatCurrency(
+                            refund.properties.amount,
+                            refund.properties.currency
+                          )}
+                        </TableCell>
+                        <TableCell>
+                          {refund.properties.isPartialRefund ? (
+                            <Badge variant="outline">Partial</Badge>
+                          ) : (
+                            <Badge variant="outline">Full</Badge>
+                          )}
+                        </TableCell>
+                        <TableCell className="text-sm">
+                          {getReasonLabel(refund.properties.reason)}
+                        </TableCell>
+                        <TableCell>
+                          {getStatusBadge(refund.status)}
+                        </TableCell>
+                        <TableCell className="text-sm max-w-xs truncate">
+                          {refund.properties.notes || "—"}
+                        </TableCell>
+                      </TableRow>
+                    ))}
+                  </TableBody>
+                </Table>
+              )}
+            </CardContent>
+          </Card>
+
+          {/* Refund Modal */}
+          {selectedPayment && (
+            <RefundModal
+              isOpen={isRefundModalOpen}
+              onClose={() => {
+                setIsRefundModalOpen(false);
+                setSelectedPayment(null);
+              }}
+              paymentId={selectedPayment._id}
+              paymentAmount={selectedPayment.properties.amount}
+              currency={selectedPayment.properties.currency}
+              paymentName={selectedPayment.name}
+            />
+          )}
+        </div>
+      );
+    }
+
+    // Mount React app
+    const container = document.getElementById("refund-app");
+    if (container) {
+      const root = createRoot(container);
+      root.render(
+        <ConvexProvider client={convex}>
+          <RefundManagement />
+        </ConvexProvider>
+      );
+    }
+  </script>
+</Layout>

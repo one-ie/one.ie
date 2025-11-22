@@ -1,0 +1,199 @@
+---
+/**
+ * Welcome Page
+ *
+ * User onboarding page with:
+ * - Welcome wizard (5-step setup)
+ * - Product tour option
+ * - Embedded video walkthrough
+ * - Quick links to help resources
+ */
+
+import Layout from '@/layouts/Layout.astro';
+import { WelcomeWizard } from '@/components/onboarding/WelcomeWizard';
+import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
+import { Badge } from '@/components/ui/badge';
+
+const title = 'Welcome to ONE Funnels';
+const description = 'Get started with your funnel builder in just 5 minutes';
+---
+
+<Layout title={title} description={description} sidebarInitialCollapsed={false}>
+  <div class="min-h-screen bg-gradient-to-b from-background to-muted/20">
+    <!-- Welcome Wizard -->
+    <div class="py-12">
+      <WelcomeWizard client:load />
+    </div>
+
+    <!-- Video Walkthrough Section -->
+    <div class="mx-auto max-w-4xl px-6 pb-12">
+      <Card>
+        <CardHeader>
+          <div class="flex items-center gap-2">
+            <CardTitle>Quick Start Video</CardTitle>
+            <Badge variant="secondary">5 min</Badge>
+          </div>
+          <CardDescription>
+            Watch this short tutorial to learn the basics of funnel building
+          </CardDescription>
+        </CardHeader>
+        <CardContent>
+          <div class="aspect-video overflow-hidden rounded-lg bg-muted">
+            <!-- Placeholder for video - replace with actual video embed -->
+            <div class="flex h-full items-center justify-center">
+              <div class="text-center">
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  class="mx-auto h-16 w-16 text-muted-foreground"
+                  fill="none"
+                  viewBox="0 0 24 24"
+                  stroke="currentColor"
+                >
+                  <path
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                    stroke-width="2"
+                    d="M14.752 11.168l-3.197-2.132A1 1 0 0010 9.87v4.263a1 1 0 001.555.832l3.197-2.132a1 1 0 000-1.664z"
+                  />
+                  <path
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                    stroke-width="2"
+                    d="M21 12a9 9 0 11-18 0 9 9 0 0118 0z"
+                  />
+                </svg>
+                <p class="mt-4 text-sm text-muted-foreground">
+                  Video walkthrough coming soon
+                </p>
+                <p class="mt-1 text-xs text-muted-foreground">
+                  For now, follow the wizard above to get started
+                </p>
+              </div>
+            </div>
+
+            <!-- Example YouTube embed (uncomment when video is ready):
+            <iframe
+              width="100%"
+              height="100%"
+              src="https://www.youtube.com/embed/VIDEO_ID"
+              title="ONE Funnels Quick Start"
+              frameborder="0"
+              allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+              allowfullscreen
+            ></iframe>
+            -->
+          </div>
+        </CardContent>
+      </Card>
+    </div>
+
+    <!-- Help Resources -->
+    <div class="mx-auto max-w-4xl px-6 pb-12">
+      <h2 class="mb-6 text-2xl font-bold">Need Help?</h2>
+      <div class="grid gap-4 md:grid-cols-3">
+        <Card class="transition-shadow hover:shadow-lg">
+          <CardHeader>
+            <CardTitle class="text-lg">Documentation</CardTitle>
+            <CardDescription>
+              Comprehensive guides and tutorials
+            </CardDescription>
+          </CardHeader>
+          <CardContent>
+            <a
+              href="/docs"
+              class="text-sm font-medium text-primary hover:underline"
+            >
+              Browse Docs →
+            </a>
+          </CardContent>
+        </Card>
+
+        <Card class="transition-shadow hover:shadow-lg">
+          <CardHeader>
+            <CardTitle class="text-lg">Video Tutorials</CardTitle>
+            <CardDescription>
+              Step-by-step video walkthroughs
+            </CardDescription>
+          </CardHeader>
+          <CardContent>
+            <a
+              href="/help/videos"
+              class="text-sm font-medium text-primary hover:underline"
+            >
+              Watch Videos →
+            </a>
+          </CardContent>
+        </Card>
+
+        <Card class="transition-shadow hover:shadow-lg">
+          <CardHeader>
+            <CardTitle class="text-lg">Community Support</CardTitle>
+            <CardDescription>
+              Get help from other users
+            </CardDescription>
+          </CardHeader>
+          <CardContent>
+            <a
+              href="/community"
+              class="text-sm font-medium text-primary hover:underline"
+            >
+              Join Community →
+            </a>
+          </CardContent>
+        </Card>
+      </div>
+    </div>
+
+    <!-- Sample Funnel Preview -->
+    <div class="mx-auto max-w-4xl px-6 pb-12">
+      <Card>
+        <CardHeader>
+          <div class="flex items-center gap-2">
+            <CardTitle>Explore a Sample Funnel</CardTitle>
+            <Badge>Example</Badge>
+          </div>
+          <CardDescription>
+            See how a complete funnel looks before you build your own
+          </CardDescription>
+        </CardHeader>
+        <CardContent>
+          <div class="flex items-center justify-between rounded-lg border bg-muted/50 p-4">
+            <div>
+              <h3 class="font-medium">Product Launch Funnel</h3>
+              <p class="text-sm text-muted-foreground">
+                A complete funnel for launching and selling a digital product
+              </p>
+            </div>
+            <a
+              href="/samples/product-launch"
+              class="inline-flex items-center gap-2 rounded-md bg-primary px-4 py-2 text-sm font-medium text-primary-foreground hover:bg-primary/90"
+            >
+              View Sample
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                class="h-4 w-4"
+                fill="none"
+                viewBox="0 0 24 24"
+                stroke="currentColor"
+              >
+                <path
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                  stroke-width="2"
+                  d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14"
+                />
+              </svg>
+            </a>
+          </div>
+        </CardContent>
+      </Card>
+    </div>
+  </div>
+</Layout>
+
+<style>
+  /* Smooth scrolling for the page */
+  html {
+    scroll-behavior: smooth;
+  }
+</style>

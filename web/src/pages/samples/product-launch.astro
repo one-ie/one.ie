@@ -1,0 +1,296 @@
+---
+/**
+ * Sample Funnel - Product Launch
+ *
+ * A complete example funnel showing best practices for
+ * launching and selling a digital product.
+ */
+
+import Layout from '@/layouts/Layout.astro';
+import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
+import { Badge } from '@/components/ui/badge';
+import { Button } from '@/components/ui/button';
+
+const title = 'Sample Funnel: Product Launch';
+const description = 'Explore a complete product launch funnel';
+---
+
+<Layout title={title} description={description}>
+  <div class="min-h-screen bg-background">
+    <!-- Header -->
+    <div class="border-b bg-muted/30">
+      <div class="mx-auto max-w-5xl px-4 py-8 sm:px-6 lg:px-8">
+        <div class="mb-4 flex items-center gap-2">
+          <Badge variant="secondary">Sample Funnel</Badge>
+          <Badge variant="outline">Template</Badge>
+        </div>
+        <h1 class="text-4xl font-bold">Product Launch Funnel</h1>
+        <p class="mt-2 text-lg text-muted-foreground">
+          A proven funnel structure for launching and selling digital products
+        </p>
+        <div class="mt-6 flex gap-3">
+          <a href="/funnels/create?template=product-launch">
+            <Button size="lg">
+              Use This Template
+            </Button>
+          </a>
+          <Button variant="outline" size="lg">
+            Preview Live Demo
+          </Button>
+        </div>
+      </div>
+    </div>
+
+    <!-- Funnel Overview -->
+    <div class="mx-auto max-w-5xl px-4 py-12 sm:px-6 lg:px-8">
+      <div class="space-y-8">
+        <!-- Step 1: Landing Page -->
+        <Card>
+          <CardHeader>
+            <div class="flex items-center gap-2">
+              <div class="flex h-8 w-8 items-center justify-center rounded-full bg-primary text-primary-foreground">
+                1
+              </div>
+              <CardTitle>Landing Page</CardTitle>
+            </div>
+            <CardDescription>
+              Capture attention and collect email addresses
+            </CardDescription>
+          </CardHeader>
+          <CardContent>
+            <div class="space-y-4">
+              <div class="rounded-lg border bg-muted/50 p-6">
+                <h3 class="mb-2 text-lg font-semibold">Key Elements:</h3>
+                <ul class="list-inside list-disc space-y-1 text-sm text-muted-foreground">
+                  <li>Compelling headline that addresses pain point</li>
+                  <li>Hero image or video demonstrating product</li>
+                  <li>Clear value proposition (3-5 key benefits)</li>
+                  <li>Email opt-in form with lead magnet offer</li>
+                  <li>Social proof (testimonials or user count)</li>
+                </ul>
+              </div>
+              <div class="aspect-video overflow-hidden rounded-lg border bg-white">
+                <div class="flex h-full items-center justify-center text-muted-foreground">
+                  Landing Page Preview
+                </div>
+              </div>
+            </div>
+          </CardContent>
+        </Card>
+
+        <!-- Step 2: Thank You Page -->
+        <Card>
+          <CardHeader>
+            <div class="flex items-center gap-2">
+              <div class="flex h-8 w-8 items-center justify-center rounded-full bg-primary text-primary-foreground">
+                2
+              </div>
+              <CardTitle>Thank You Page</CardTitle>
+            </div>
+            <CardDescription>
+              Confirm subscription and build anticipation
+            </CardDescription>
+          </CardHeader>
+          <CardContent>
+            <div class="space-y-4">
+              <div class="rounded-lg border bg-muted/50 p-6">
+                <h3 class="mb-2 text-lg font-semibold">Key Elements:</h3>
+                <ul class="list-inside list-disc space-y-1 text-sm text-muted-foreground">
+                  <li>Confirmation message and next steps</li>
+                  <li>Download link for lead magnet</li>
+                  <li>Preview of upcoming email sequence</li>
+                  <li>Social media follow buttons</li>
+                  <li>Optional: Tripwire offer (low-cost product)</li>
+                </ul>
+              </div>
+              <div class="aspect-video overflow-hidden rounded-lg border bg-white">
+                <div class="flex h-full items-center justify-center text-muted-foreground">
+                  Thank You Page Preview
+                </div>
+              </div>
+            </div>
+          </CardContent>
+        </Card>
+
+        <!-- Step 3: Sales Page -->
+        <Card>
+          <CardHeader>
+            <div class="flex items-center gap-2">
+              <div class="flex h-8 w-8 items-center justify-center rounded-full bg-primary text-primary-foreground">
+                3
+              </div>
+              <CardTitle>Sales Page</CardTitle>
+            </div>
+            <CardDescription>
+              Present main product offer and drive conversions
+            </CardDescription>
+          </CardHeader>
+          <CardContent>
+            <div class="space-y-4">
+              <div class="rounded-lg border bg-muted/50 p-6">
+                <h3 class="mb-2 text-lg font-semibold">Key Elements:</h3>
+                <ul class="list-inside list-disc space-y-1 text-sm text-muted-foreground">
+                  <li>Engaging headline and subheadline</li>
+                  <li>Product demo video (3-5 minutes)</li>
+                  <li>Detailed feature breakdown with benefits</li>
+                  <li>Pricing options with comparison table</li>
+                  <li>Customer testimonials and case studies</li>
+                  <li>FAQ section addressing objections</li>
+                  <li>Strong call-to-action buttons (multiple)</li>
+                  <li>Money-back guarantee badge</li>
+                </ul>
+              </div>
+              <div class="aspect-video overflow-hidden rounded-lg border bg-white">
+                <div class="flex h-full items-center justify-center text-muted-foreground">
+                  Sales Page Preview
+                </div>
+              </div>
+            </div>
+          </CardContent>
+        </Card>
+
+        <!-- Step 4: Checkout Page -->
+        <Card>
+          <CardHeader>
+            <div class="flex items-center gap-2">
+              <div class="flex h-8 w-8 items-center justify-center rounded-full bg-primary text-primary-foreground">
+                4
+              </div>
+              <CardTitle>Checkout Page</CardTitle>
+            </div>
+            <CardDescription>
+              Streamlined payment process
+            </CardDescription>
+          </CardHeader>
+          <CardContent>
+            <div class="space-y-4">
+              <div class="rounded-lg border bg-muted/50 p-6">
+                <h3 class="mb-2 text-lg font-semibold">Key Elements:</h3>
+                <ul class="list-inside list-disc space-y-1 text-sm text-muted-foreground">
+                  <li>Simple, distraction-free design</li>
+                  <li>Order summary with product details</li>
+                  <li>Secure payment form (Stripe integration)</li>
+                  <li>Trust badges and security indicators</li>
+                  <li>Optional: Order bump (complementary product)</li>
+                  <li>Clear refund policy link</li>
+                </ul>
+              </div>
+              <div class="aspect-video overflow-hidden rounded-lg border bg-white">
+                <div class="flex h-full items-center justify-center text-muted-foreground">
+                  Checkout Page Preview
+                </div>
+              </div>
+            </div>
+          </CardContent>
+        </Card>
+
+        <!-- Step 5: Confirmation Page -->
+        <Card>
+          <CardHeader>
+            <div class="flex items-center gap-2">
+              <div class="flex h-8 w-8 items-center justify-center rounded-full bg-primary text-primary-foreground">
+                5
+              </div>
+              <CardTitle>Order Confirmation</CardTitle>
+            </div>
+            <CardDescription>
+              Deliver product and encourage next steps
+            </CardDescription>
+          </CardHeader>
+          <CardContent>
+            <div class="space-y-4">
+              <div class="rounded-lg border bg-muted/50 p-6">
+                <h3 class="mb-2 text-lg font-semibold">Key Elements:</h3>
+                <ul class="list-inside list-disc space-y-1 text-sm text-muted-foreground">
+                  <li>Order confirmation and receipt</li>
+                  <li>Immediate product access/download</li>
+                  <li>Getting started guide or tutorial link</li>
+                  <li>Support contact information</li>
+                  <li>Optional: Upsell offer (premium version)</li>
+                  <li>Referral program invitation</li>
+                </ul>
+              </div>
+              <div class="aspect-video overflow-hidden rounded-lg border bg-white">
+                <div class="flex h-full items-center justify-center text-muted-foreground">
+                  Confirmation Page Preview
+                </div>
+              </div>
+            </div>
+          </CardContent>
+        </Card>
+
+        <!-- Email Sequence -->
+        <Card>
+          <CardHeader>
+            <div class="flex items-center gap-2">
+              <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" />
+              </svg>
+              <CardTitle>Automated Email Sequence</CardTitle>
+            </div>
+            <CardDescription>
+              Follow-up emails to nurture leads and drive sales
+            </CardDescription>
+          </CardHeader>
+          <CardContent>
+            <div class="rounded-lg border bg-muted/50 p-6">
+              <h3 class="mb-4 text-lg font-semibold">7-Day Email Sequence:</h3>
+              <ol class="space-y-3">
+                <li class="flex gap-3">
+                  <Badge variant="outline">Day 1</Badge>
+                  <span class="text-sm">Welcome email + lead magnet delivery</span>
+                </li>
+                <li class="flex gap-3">
+                  <Badge variant="outline">Day 2</Badge>
+                  <span class="text-sm">Value email: Share helpful tip or insight</span>
+                </li>
+                <li class="flex gap-3">
+                  <Badge variant="outline">Day 3</Badge>
+                  <span class="text-sm">Social proof: Customer success story</span>
+                </li>
+                <li class="flex gap-3">
+                  <Badge variant="outline">Day 4</Badge>
+                  <span class="text-sm">Product introduction with soft pitch</span>
+                </li>
+                <li class="flex gap-3">
+                  <Badge variant="outline">Day 5</Badge>
+                  <span class="text-sm">Address common objections with FAQ</span>
+                </li>
+                <li class="flex gap-3">
+                  <Badge variant="outline">Day 6</Badge>
+                  <span class="text-sm">Limited-time offer announcement</span>
+                </li>
+                <li class="flex gap-3">
+                  <Badge variant="outline">Day 7</Badge>
+                  <span class="text-sm">Final reminder before offer expires</span>
+                </li>
+              </ol>
+            </div>
+          </CardContent>
+        </Card>
+
+        <!-- CTA -->
+        <Card class="bg-primary/5">
+          <CardContent class="p-8 text-center">
+            <h2 class="mb-2 text-2xl font-bold">Ready to launch your product?</h2>
+            <p class="mb-6 text-muted-foreground">
+              Use this proven funnel template to start selling today
+            </p>
+            <div class="flex justify-center gap-3">
+              <a href="/funnels/create?template=product-launch">
+                <Button size="lg">
+                  Use This Template
+                </Button>
+              </a>
+              <a href="/help">
+                <Button variant="outline" size="lg">
+                  Learn More
+                </Button>
+              </a>
+            </div>
+          </CardContent>
+        </Card>
+      </div>
+    </div>
+  </div>
+</Layout>
