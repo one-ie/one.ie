@@ -8,6 +8,8 @@
 !/one/**
 !/web/
 !/web/**
+!/backend/
+!/backend/**
 
 # Whitelist specific files at root level
 !/.gitignore
@@ -25,7 +27,6 @@
 
 # Explicitly exclude unwanted directories (must come after !*/)
 /apps/
-/backend/
 /cli/
 /docs/
 /import/

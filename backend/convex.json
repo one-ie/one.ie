@@ -1,0 +1,12 @@
+{
+  "node": {
+    "version": "22"
+  },
+  "functions": "convex/",
+  "authInfo": [
+    {
+      "applicationID": "convex",
+      "domain": "https://shocking-falcon-870.convex.cloud"
+    }
+  ]
+}

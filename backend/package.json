@@ -1,0 +1,23 @@
+{
+  "name": "oneie-backend",
+  "version": "1.0.0",
+  "description": "ONE Platform Backend - Convex + Effect.ts + Better Auth",
+  "type": "module",
+  "scripts": {
+    "dev": "convex dev",
+    "deploy": "convex deploy",
+    "codegen": "convex dev --once",
+    "predev": "convex dev --once"
+  },
+  "dependencies": {
+    "convex": "^1.28.2",
+    "effect": "^3.18.4"
+  },
+  "devDependencies": {
+    "@types/node": "^22.0.0",
+    "typescript": "^5.9.2"
+  },
+  "engines": {
+    "node": ">=22.16.0"
+  }
+}
