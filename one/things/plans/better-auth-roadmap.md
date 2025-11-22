@@ -31,6 +31,44 @@ This roadmap implements a complete, production-ready Better Auth system followin
 **Target State:** Full Better Auth Convex component integration with ALL Better Auth plugins
 **Total Cycles:** 100
 
+## Better Auth Architecture: Users vs Accounts
+
+**Critical Concept:** Better Auth separates **Users** (profiles) from **Accounts** (authentication methods).
+
+### User Table
+- Stores user **profile information**: name, email, image, phone, etc.
+- Represents the **person** using the system
+- One user = one identity in your application
+
+### Account Table
+- Stores **authentication credentials**: passwords, OAuth tokens, provider info
+- Represents **how** a user authenticates
+- One user can have **multiple accounts** (email/password + GitHub + Google)
+
+### Why This Matters
+This architecture enables:
+1. **Account Linking**: Users can sign in with email OR GitHub OR Google (all linked to one user)
+2. **Credential Security**: Passwords stored separately from profile data
+3. **Multi-Provider Support**: Users can add/remove authentication methods
+4. **Flexibility**: Can change authentication logic without touching user profiles
+
+### Implementation in 6-Dimension Ontology
+- **User** → Maps to `things` table (type: 'creator')
+- **Accounts** → Maps to `connections` table (type: 'linked_account')
+- Multiple accounts per user = Multiple connections to one thing
+
+**Example:**
+```
+User ID: user_123
+├── Account 1: Email/Password (account_email_456)
+├── Account 2: GitHub OAuth (account_github_789)
+└── Account 3: Google OAuth (account_google_012)
+```
+
+All three accounts authenticate the same user (`user_123`), but through different methods.
+
+---
+
 ## Better Auth Plugins to Implement
 
 ### Core Authentication
