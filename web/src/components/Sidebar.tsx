@@ -592,8 +592,15 @@ export function Sidebar({
 								<PanelLeft className="h-4 w-4" aria-hidden="true" />
 							</Button>
 						</div>
-						<a href="/" className="absolute left-1/2 -translate-x-1/2">
-							<span className="text-lg font-semibold">ONE</span>
+						<a href="/" className="absolute left-1/2 -translate-x-1/2 hover:opacity-80 transition-opacity">
+							<img
+								src="/logo.svg"
+								alt="ONE Logo"
+								className="w-20 h-20"
+								style={{
+									filter: 'var(--logo-filter, brightness(0))'
+								}}
+							/>
 						</a>
 					</header>
 				)}
