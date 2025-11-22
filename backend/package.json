@@ -7,7 +7,11 @@
     "dev": "convex dev",
     "deploy": "convex deploy",
     "codegen": "convex dev --once",
-    "predev": "convex dev --once"
+    "predev": "convex dev --once",
+    "test": "vitest",
+    "test:run": "vitest run",
+    "test:watch": "vitest watch",
+    "test:coverage": "vitest run --coverage"
   },
   "dependencies": {
     "convex": "^1.28.2",
@@ -15,7 +19,9 @@
   },
   "devDependencies": {
     "@types/node": "^22.0.0",
-    "typescript": "^5.9.2"
+    "@vitest/coverage-v8": "^3.2.4",
+    "typescript": "^5.9.2",
+    "vitest": "^3.2.4"
   },
   "engines": {
     "node": ">=22.16.0"
