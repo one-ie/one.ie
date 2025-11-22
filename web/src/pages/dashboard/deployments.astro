@@ -1,0 +1,206 @@
+---
+/**
+ * Deployment History Page
+ *
+ * Main dashboard page for viewing deployment history, rollbacks, and version comparison.
+ * Uses Convex queries to fetch deployment data.
+ */
+
+import { ConvexHttpClient } from "convex/browser";
+import { api } from "@/convex/_generated/api";
+import Layout from "@/layouts/Layout.astro";
+import { DeploymentHistoryTable } from "@/components/dashboard/DeploymentHistoryTable";
+import { Badge } from "@/components/ui/badge";
+import {
+	Card,
+	CardContent,
+	CardDescription,
+	CardHeader,
+	CardTitle,
+} from "@/components/ui/card";
+import { Button } from "@/components/ui/button";
+
+// Initialize Convex
+const convexUrl = import.meta.env.PUBLIC_CONVEX_URL;
+if (!convexUrl) {
+	throw new Error("PUBLIC_CONVEX_URL environment variable is not set");
+}
+
+const convex = new ConvexHttpClient(convexUrl);
+
+// Mock auth context - TODO: Replace with actual auth
+const currentUserId = "system";
+const groupId = Astro.params.groupId || "default-group";
+
+// Fetch deployment history
+const deployments = await convex.query(api.queries.deployments.list, {
+	limit: 100,
+});
+
+// Get statistics
+const liveDeployments = deployments.filter((d) => d.status === "live");
+const failedDeployments = deployments.filter((d) => d.status === "failed");
+const totalDeployments = deployments.length;
+const avgDuration =
+	totalDeployments > 0
+		? deployments.reduce((sum, d) => sum + (d._metadata?.duration || 0), 0) /
+			totalDeployments
+		: 0;
+
+const stats = {
+	total: totalDeployments,
+	live: liveDeployments.length,
+	failed: failedDeployments.length,
+	avgDuration: Math.round(avgDuration / 1000), // Convert to seconds
+};
+---
+
+<Layout title="Deployment History" sidebarInitialCollapsed={false}>
+	<div class="space-y-8 p-6">
+		<!-- Header -->
+		<div class="space-y-2">
+			<h1 class="text-3xl font-bold">Deployment History</h1>
+			<p class="text-muted-foreground">
+				View and manage all deployments. Rollback to previous versions or
+				compare changes.
+			</p>
+		</div>
+
+		<!-- Stats -->
+		<div class="grid gap-4 md:grid-cols-4">
+			<Card>
+				<CardHeader class="pb-3">
+					<CardTitle class="text-sm font-medium">Total Deployments</CardTitle>
+				</CardHeader>
+				<CardContent>
+					<div class="text-2xl font-bold">{stats.total}</div>
+					<p class="text-xs text-muted-foreground">
+						All deployments to date
+					</p>
+				</CardContent>
+			</Card>
+
+			<Card>
+				<CardHeader class="pb-3">
+					<CardTitle class="text-sm font-medium">Live Deployments</CardTitle>
+				</CardHeader>
+				<CardContent>
+					<div class="text-2xl font-bold text-green-600">{stats.live}</div>
+					<p class="text-xs text-muted-foreground">
+						Currently in production
+					</p>
+				</CardContent>
+			</Card>
+
+			<Card>
+				<CardHeader class="pb-3">
+					<CardTitle class="text-sm font-medium">Failed Deployments</CardTitle>
+				</CardHeader>
+				<CardContent>
+					<div class="text-2xl font-bold text-red-600">{stats.failed}</div>
+					<p class="text-xs text-muted-foreground">
+						Deployments with errors
+					</p>
+				</CardContent>
+			</Card>
+
+			<Card>
+				<CardHeader class="pb-3">
+					<CardTitle class="text-sm font-medium">Avg Build Time</CardTitle>
+				</CardHeader>
+				<CardContent>
+					<div class="text-2xl font-bold">{stats.avgDuration}s</div>
+					<p class="text-xs text-muted-foreground">
+						Average deployment duration
+					</p>
+				</CardContent>
+			</Card>
+		</div>
+
+		<!-- Deployment History Table -->
+		<Card>
+			<CardHeader>
+				<CardTitle>Recent Deployments</CardTitle>
+				<CardDescription>
+					View all deployments, rollback to previous versions, or delete old
+					deployments.
+				</CardDescription>
+			</CardHeader>
+			<CardContent>
+				<DeploymentHistoryTable
+					deployments={deployments}
+					websiteId={groupId}
+					client:load
+				/>
+			</CardContent>
+		</Card>
+
+		<!-- Info Section -->
+		<div class="grid gap-4 md:grid-cols-2">
+			<Card>
+				<CardHeader>
+					<CardTitle class="text-lg">About Deployment History</CardTitle>
+				</CardHeader>
+				<CardContent class="space-y-3 text-sm">
+					<p>
+						<strong>Live Deployments:</strong> Currently active deployments
+						available to users
+					</p>
+					<p>
+						<strong>Rollback:</strong> Create a new deployment from a previous
+						version's code
+					</p>
+					<p>
+						<strong>Build Duration:</strong> Time taken to build and deploy your
+						application
+					</p>
+					<p>
+						<strong>Delete Old:</strong> Remove previous deployments to save space
+					</p>
+				</CardContent>
+			</Card>
+
+			<Card>
+				<CardHeader>
+					<CardTitle class="text-lg">Quick Actions</CardTitle>
+				</CardHeader>
+				<CardContent class="space-y-3">
+					<Button variant="outline" class="w-full" asChild>
+						<a href="/deploy">Deploy New Version</a>
+					</Button>
+					<Button variant="outline" class="w-full" disabled>
+						Compare Versions (Coming Soon)
+					</Button>
+					<Button variant="outline" class="w-full" disabled>
+						Deployment Analytics (Coming Soon)
+					</Button>
+				</CardContent>
+			</Card>
+		</div>
+
+		<!-- Legend -->
+		<Card class="bg-muted/50">
+			<CardHeader>
+				<CardTitle class="text-sm">Legend</CardTitle>
+			</CardHeader>
+			<CardContent class="flex flex-wrap gap-4 text-sm">
+				<div class="flex items-center gap-2">
+					<Badge>Live (Current)</Badge>
+					<span class="text-muted-foreground">Currently in production</span>
+				</div>
+				<div class="flex items-center gap-2">
+					<Badge variant="secondary">Live (Previous)</Badge>
+					<span class="text-muted-foreground">Previous production versions</span>
+				</div>
+				<div class="flex items-center gap-2">
+					<Badge variant="secondary">Deploying...</Badge>
+					<span class="text-muted-foreground">In progress</span>
+				</div>
+				<div class="flex items-center gap-2">
+					<Badge variant="destructive">Failed</Badge>
+					<span class="text-muted-foreground">Deployment errors</span>
+				</div>
+			</CardContent>
+		</Card>
+	</div>
+</Layout>
