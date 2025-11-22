@@ -6,55 +6,55 @@
  * URL: /orders/confirmation?orderId=pi_xxx
  */
 
-import Layout from '@/layouts/Layout.astro';
-import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
-import { Button } from '@/components/ui/button';
+import { Button } from "@/components/ui/button";
+import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import Layout from "@/layouts/Layout.astro";
 
 // Get order ID from URL
-const orderId = Astro.url.searchParams.get('orderId');
+const orderId = Astro.url.searchParams.get("orderId");
 
 let order: any = null;
 let error: string | null = null;
 
 if (!orderId) {
-  error = 'No order ID provided';
+	error = "No order ID provided";
 } else {
-  try {
-    // Fetch order status from API
-    const response = await fetch(
-      `${Astro.url.origin}/api/checkout/status/${orderId}`
-    );
+	try {
+		// Fetch order status from API
+		const response = await fetch(
+			`${Astro.url.origin}/api/checkout/status/${orderId}`,
+		);
 
-    if (!response.ok) {
-      const errorData = await response.json();
-      error = errorData.error || 'Failed to load order details';
-    } else {
-      order = await response.json();
-    }
-  } catch (err) {
-    console.error('Order fetch error:', err);
-    error = 'Failed to load order details';
-  }
+		if (!response.ok) {
+			const errorData = await response.json();
+			error = errorData.error || "Failed to load order details";
+		} else {
+			order = await response.json();
+		}
+	} catch (err) {
+		console.error("Order fetch error:", err);
+		error = "Failed to load order details";
+	}
 }
 
 /**
  * Format currency
  */
-function formatCurrency(amount: number, currency = 'usd'): string {
-  return new Intl.NumberFormat('en-US', {
-    style: 'currency',
-    currency: currency.toUpperCase(),
-  }).format(amount / 100);
+function formatCurrency(amount: number, currency = "usd"): string {
+	return new Intl.NumberFormat("en-US", {
+		style: "currency",
+		currency: currency.toUpperCase(),
+	}).format(amount / 100);
 }
 
 /**
  * Format date
  */
 function formatDate(timestamp: number): string {
-  return new Intl.DateTimeFormat('en-US', {
-    dateStyle: 'long',
-    timeStyle: 'short',
-  }).format(new Date(timestamp));
+	return new Intl.DateTimeFormat("en-US", {
+		dateStyle: "long",
+		timeStyle: "short",
+	}).format(new Date(timestamp));
 }
 ---
 
@@ -198,7 +198,7 @@ function formatDate(timestamp: number): string {
             {/* Actions */}
             <div class="flex flex-col gap-3 sm:flex-row">
               <Button className="flex-1">
-                <a href="/orders" class="flex items-center gap-2">
+                <a href="/shop/orders" class="flex items-center gap-2">
                   <svg
                     class="h-4 w-4"
                     fill="none"
@@ -255,7 +255,7 @@ function formatDate(timestamp: number): string {
                 {order?.error || 'Something went wrong with your payment.'}
               </p>
               <Button className="mt-6">
-                <a href="/checkout">Try Again</a>
+                <a href="/shop/checkout">Try Again</a>
               </Button>
             </CardContent>
           </Card>

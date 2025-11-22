@@ -6,84 +6,87 @@
  * Uses Effect services for server-side rendering with pagination.
  */
 
-import { Effect } from "effect";
 import { ConvexReactClient } from "convex/react";
-import { ThingService } from "@/services/ThingService";
-import {
-  createDataProvider,
-  createDataProviderLayer,
-} from "@/providers/factory";
-import Layout from "@/layouts/Layout.astro";
-import { EntityTable } from "@/components/dashboard/EntityTable";
+import { Effect } from "effect";
 import { EntityFilters } from "@/components/dashboard/EntityFilters";
+import { EntityTable } from "@/components/dashboard/EntityTable";
+import Layout from "@/layouts/Layout.astro";
+import {
+	createDataProvider,
+	createDataProviderLayer,
+} from "@/providers/factory";
+import { ThingService } from "@/services/ThingService";
 
 // Get query parameters for filters
 const url = new URL(Astro.request.url);
 const typeFilter = url.searchParams.get("type") || undefined;
-const statusFilter = url.searchParams.get("status") as "draft" | "active" | "published" | "archived" | undefined;
+const statusFilter = url.searchParams.get("status") as
+	| "draft"
+	| "active"
+	| "published"
+	| "archived"
+	| undefined;
 const page = parseInt(url.searchParams.get("page") || "1");
 const limit = 20;
 
 // Initialize Convex provider
 const convexUrl = import.meta.env.PUBLIC_CONVEX_URL;
 if (!convexUrl) {
-  throw new Error("PUBLIC_CONVEX_URL environment variable is not set");
+	throw new Error("PUBLIC_CONVEX_URL environment variable is not set");
 }
 const convexClient = new ConvexReactClient(convexUrl);
 const provider = createDataProvider({
-  type: "convex",
-  client: convexClient,
+	type: "convex",
+	client: convexClient,
 });
 const providerLayer = createDataProviderLayer(provider);
 
 // Server-side data fetching using Effect
 const program = Effect.gen(function* () {
-  // List all things with filters
-  const allThings = yield* ThingService.list({
-    type: typeFilter,
-    status: statusFilter,
-    limit: limit * page, // Fetch up to current page
-  }).pipe(
-    Effect.catchAll(() => Effect.succeed([]))
-  );
+	// List all things with filters
+	const allThings = yield* ThingService.list({
+		type: typeFilter,
+		status: statusFilter,
+		limit: limit * page, // Fetch up to current page
+	}).pipe(Effect.catchAll(() => Effect.succeed([])));
 
-  // Get unique types for filter dropdown
-  const uniqueTypes = [...new Set(allThings.map(thing => thing.type))];
+	// Get unique types for filter dropdown
+	const uniqueTypes = [...new Set(allThings.map((thing) => thing.type))];
 
-  // Paginate results
-  const startIndex = (page - 1) * limit;
-  const endIndex = startIndex + limit;
-  const paginatedThings = allThings.slice(startIndex, endIndex);
+	// Paginate results
+	const startIndex = (page - 1) * limit;
+	const endIndex = startIndex + limit;
+	const paginatedThings = allThings.slice(startIndex, endIndex);
 
-  return {
-    things: paginatedThings,
-    total: allThings.length,
-    page,
-    totalPages: Math.ceil(allThings.length / limit),
-    uniqueTypes,
-    filters: {
-      type: typeFilter,
-      status: statusFilter,
-    },
-  };
+	return {
+		things: paginatedThings,
+		total: allThings.length,
+		page,
+		totalPages: Math.ceil(allThings.length / limit),
+		uniqueTypes,
+		filters: {
+			type: typeFilter,
+			status: statusFilter,
+		},
+	};
 });
 
 // Run Effect program with DataProvider layer
 const data = await Effect.runPromise(
-  program.pipe(
-    Effect.provide(providerLayer),
-    Effect.catchAll((error) => {
-      console.error("Things list fetch failed:", error);
-      return Effect.succeed({
-        things: [],
-        total: 0,
-        page: 1,
-        totalPages: 0,
-        uniqueTypes: [],
-        filters: { type: typeFilter, status: statusFilter },
-      });
-    })
-  )
+	program.pipe(
+		Effect.provide(providerLayer),
+		Effect.catchAll((error) => {
+			console.error("Things list fetch failed:", error);
+			return Effect.succeed({
+				things: [],
+				total: 0,
+				page: 1,
+				totalPages: 0,
+				uniqueTypes: [],
+				filters: { type: typeFilter, status: statusFilter },
+			});
+		}),
+	),
 );
 ---
 

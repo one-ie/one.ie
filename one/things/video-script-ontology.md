@@ -17,7 +17,6 @@ ai_context: |
 ---
 
 # Video Script: Why the 6-Dimension Ontology is Non-Negotiable
-
 ## Opening Hook (30 seconds)
 
 "You're drowning in feature requests. Your codebase is fragmenting. Your estimates are consistently wrong. Your team ships slower every sprint.

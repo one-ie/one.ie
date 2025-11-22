@@ -5,16 +5,25 @@
  * Provides hooks for semantic search, RAG, and knowledge management.
  */
 
-import { useState, useEffect } from 'react';
-import { useQuery, useMutation as useReactMutation, useQueryClient } from '@tanstack/react-query';
-import { Effect } from 'effect';
-import { useDataProvider } from './useDataProvider';
-import type { QueryResult, MutationResult, QueryOptions, MutationOptions } from './types';
+import {
+	useQuery,
+	useQueryClient,
+	useMutation as useReactMutation,
+} from "@tanstack/react-query";
+import { Effect } from "effect";
+import { useEffect, useState } from "react";
 import type {
-  Knowledge,
-  CreateKnowledgeInput,
-  SearchKnowledgeOptions,
-} from '@/providers/DataProvider';
+	CreateKnowledgeInput,
+	Knowledge,
+	SearchKnowledgeOptions,
+} from "@/providers/DataProvider";
+import type {
+	MutationOptions,
+	MutationResult,
+	QueryOptions,
+	QueryResult,
+} from "./types";
+import { useDataProvider } from "./useDataProvider";
 
 // ============================================================================
 // QUERY HOOKS
@@ -41,35 +50,35 @@ import type {
  * ```
  */
 export function useKnowledge(
-  options?: SearchKnowledgeOptions,
-  queryOptions?: QueryOptions
+	options?: SearchKnowledgeOptions,
+	queryOptions?: QueryOptions,
 ): QueryResult<Knowledge[]> {
-  const provider = useDataProvider();
-  const { enabled = true, ...reactQueryOptions } = queryOptions ?? {};
+	const provider = useDataProvider();
+	const { enabled = true, ...reactQueryOptions } = queryOptions ?? {};
 
-  const queryKey = ['knowledge', options];
+	const queryKey = ["knowledge", options];
 
-  const queryFn = async (): Promise<Knowledge[]> => {
-    const effect = provider.knowledge.list(options);
-    return await Effect.runPromise(effect);
-  };
+	const queryFn = async (): Promise<Knowledge[]> => {
+		const effect = provider.knowledge.list(options);
+		return await Effect.runPromise(effect);
+	};
 
-  const query = useQuery({
-    queryKey,
-    queryFn,
-    enabled,
-    ...reactQueryOptions,
-  });
+	const query = useQuery({
+		queryKey,
+		queryFn,
+		enabled,
+		...reactQueryOptions,
+	});
 
-  return {
-    data: query.data ?? null,
-    loading: query.isLoading,
-    error: query.error as Error | null,
-    refetch: async () => {
-      await query.refetch();
-    },
-    refetching: query.isRefetching,
-  };
+	return {
+		data: query.data ?? null,
+		loading: query.isLoading,
+		error: query.error as Error | null,
+		refetch: async () => {
+			await query.refetch();
+		},
+		refetching: query.isRefetching,
+	};
 }
 
 /**
@@ -105,53 +114,53 @@ export function useKnowledge(
  * ```
  */
 export function useSearch(
-  query: string,
-  options?: Omit<SearchKnowledgeOptions, 'query'>,
-  queryOptions?: QueryOptions
+	query: string,
+	options?: Omit<SearchKnowledgeOptions, "query">,
+	queryOptions?: QueryOptions,
 ): QueryResult<Knowledge[]> {
-  const [debouncedQuery, setDebouncedQuery] = useState(query);
+	const [debouncedQuery, setDebouncedQuery] = useState(query);
 
-  // Debounce search query
-  useEffect(() => {
-    const timer = setTimeout(() => {
-      setDebouncedQuery(query);
-    }, 300); // 300ms debounce
+	// Debounce search query
+	useEffect(() => {
+		const timer = setTimeout(() => {
+			setDebouncedQuery(query);
+		}, 300); // 300ms debounce
 
-    return () => clearTimeout(timer);
-  }, [query]);
+		return () => clearTimeout(timer);
+	}, [query]);
 
-  const provider = useDataProvider();
-  const { enabled = true, ...reactQueryOptions } = queryOptions ?? {};
+	const provider = useDataProvider();
+	const { enabled = true, ...reactQueryOptions } = queryOptions ?? {};
 
-  const queryKey = ['search', debouncedQuery, options];
+	const queryKey = ["search", debouncedQuery, options];
 
-  const queryFn = async (): Promise<Knowledge[]> => {
-    // TODO: Implement text-to-embedding conversion
-    // For now, this assumes the backend handles text queries
-    const effect = provider.knowledge.list({
-      query: debouncedQuery,
-      ...options,
-    });
-    return await Effect.runPromise(effect);
-  };
+	const queryFn = async (): Promise<Knowledge[]> => {
+		// TODO: Implement text-to-embedding conversion
+		// For now, this assumes the backend handles text queries
+		const effect = provider.knowledge.list({
+			query: debouncedQuery,
+			...options,
+		});
+		return await Effect.runPromise(effect);
+	};
 
-  const searchQuery = useQuery({
-    queryKey,
-    queryFn,
-    enabled: enabled && debouncedQuery.length > 0,
-    staleTime: 60000, // Cache search results for 1 minute
-    ...reactQueryOptions,
-  });
+	const searchQuery = useQuery({
+		queryKey,
+		queryFn,
+		enabled: enabled && debouncedQuery.length > 0,
+		staleTime: 60000, // Cache search results for 1 minute
+		...reactQueryOptions,
+	});
 
-  return {
-    data: searchQuery.data ?? null,
-    loading: searchQuery.isLoading,
-    error: searchQuery.error as Error | null,
-    refetch: async () => {
-      await searchQuery.refetch();
-    },
-    refetching: searchQuery.isRefetching,
-  };
+	return {
+		data: searchQuery.data ?? null,
+		loading: searchQuery.isLoading,
+		error: searchQuery.error as Error | null,
+		refetch: async () => {
+			await searchQuery.refetch();
+		},
+		refetching: searchQuery.isRefetching,
+	};
 }
 
 // ============================================================================
@@ -175,34 +184,34 @@ export function useSearch(
  * ```
  */
 export function useCreateKnowledge(
-  mutationOptions?: MutationOptions<string, CreateKnowledgeInput>
+	mutationOptions?: MutationOptions<string, CreateKnowledgeInput>,
 ): MutationResult<string, CreateKnowledgeInput> {
-  const provider = useDataProvider();
-  const queryClient = useQueryClient();
+	const provider = useDataProvider();
+	const queryClient = useQueryClient();
 
-  const mutation = useReactMutation({
-    mutationFn: async (input: CreateKnowledgeInput): Promise<string> => {
-      const effect = provider.knowledge.create(input);
-      return await Effect.runPromise(effect);
-    },
-    onSuccess: async (id, input) => {
-      // Invalidate knowledge queries
-      await queryClient.invalidateQueries({ queryKey: ['knowledge'] });
+	const mutation = useReactMutation({
+		mutationFn: async (input: CreateKnowledgeInput): Promise<string> => {
+			const effect = provider.knowledge.create(input);
+			return await Effect.runPromise(effect);
+		},
+		onSuccess: async (id, input) => {
+			// Invalidate knowledge queries
+			await queryClient.invalidateQueries({ queryKey: ["knowledge"] });
 
-      await mutationOptions?.onSuccess?.(id, input);
-    },
-    onError: async (error, input) => {
-      await mutationOptions?.onError?.(error as Error, input);
-    },
-  });
+			await mutationOptions?.onSuccess?.(id, input);
+		},
+		onError: async (error, input) => {
+			await mutationOptions?.onError?.(error as Error, input);
+		},
+	});
 
-  return {
-    mutate: mutation.mutateAsync,
-    loading: mutation.isPending,
-    error: mutation.error as Error | null,
-    reset: mutation.reset,
-    data: mutation.data ?? null,
-  };
+	return {
+		mutate: mutation.mutateAsync,
+		loading: mutation.isPending,
+		error: mutation.error as Error | null,
+		reset: mutation.reset,
+		data: mutation.data ?? null,
+	};
 }
 
 /**
@@ -222,50 +231,57 @@ export function useCreateKnowledge(
  * ```
  */
 export function useLinkKnowledge(
-  mutationOptions?: MutationOptions<
-    string,
-    { thingId: string; knowledgeId: string; role?: string }
-  >
-): MutationResult<string, { thingId: string; knowledgeId: string; role?: string }> {
-  const provider = useDataProvider();
-  const queryClient = useQueryClient();
+	mutationOptions?: MutationOptions<
+		string,
+		{ thingId: string; knowledgeId: string; role?: string }
+	>,
+): MutationResult<
+	string,
+	{ thingId: string; knowledgeId: string; role?: string }
+> {
+	const provider = useDataProvider();
+	const queryClient = useQueryClient();
 
-  const mutation = useReactMutation({
-    mutationFn: async ({
-      thingId,
-      knowledgeId,
-      role,
-    }: {
-      thingId: string;
-      knowledgeId: string;
-      role?: string;
-    }): Promise<string> => {
-      const effect = provider.knowledge.link(thingId, knowledgeId, role as any);
-      return await Effect.runPromise(effect);
-    },
-    onSuccess: async (id, { thingId }) => {
-      // Invalidate knowledge queries for this thing
-      await queryClient.invalidateQueries({
-        queryKey: ['knowledge', { sourceThingId: thingId }],
-      });
+	const mutation = useReactMutation({
+		mutationFn: async ({
+			thingId,
+			knowledgeId,
+			role,
+		}: {
+			thingId: string;
+			knowledgeId: string;
+			role?: string;
+		}): Promise<string> => {
+			const effect = provider.knowledge.link(thingId, knowledgeId, role as any);
+			return await Effect.runPromise(effect);
+		},
+		onSuccess: async (id, { thingId }) => {
+			// Invalidate knowledge queries for this thing
+			await queryClient.invalidateQueries({
+				queryKey: ["knowledge", { sourceThingId: thingId }],
+			});
 
-      // Invalidate the thing itself (it may display linked knowledge)
-      await queryClient.invalidateQueries({ queryKey: ['thing', thingId] });
+			// Invalidate the thing itself (it may display linked knowledge)
+			await queryClient.invalidateQueries({ queryKey: ["thing", thingId] });
 
-      await mutationOptions?.onSuccess?.(id, { thingId, knowledgeId: '', role: '' });
-    },
-    onError: async (error, input) => {
-      await mutationOptions?.onError?.(error as Error, input);
-    },
-  });
+			await mutationOptions?.onSuccess?.(id, {
+				thingId,
+				knowledgeId: "",
+				role: "",
+			});
+		},
+		onError: async (error, input) => {
+			await mutationOptions?.onError?.(error as Error, input);
+		},
+	});
 
-  return {
-    mutate: mutation.mutateAsync,
-    loading: mutation.isPending,
-    error: mutation.error as Error | null,
-    reset: mutation.reset,
-    data: mutation.data ?? null,
-  };
+	return {
+		mutate: mutation.mutateAsync,
+		loading: mutation.isPending,
+		error: mutation.error as Error | null,
+		reset: mutation.reset,
+		data: mutation.data ?? null,
+	};
 }
 
 // ============================================================================
@@ -285,17 +301,17 @@ export function useLinkKnowledge(
  * ```
  */
 export function useLabels(category?: string, queryOptions?: QueryOptions) {
-  return useKnowledge(
-    {
-      knowledgeType: 'label',
-      // Note: category filtering would need to be implemented in the backend
-      // For now, this returns all labels and filtering can be done client-side
-    },
-    {
-      staleTime: 300000, // Labels are relatively static, cache for 5 minutes
-      ...queryOptions,
-    }
-  );
+	return useKnowledge(
+		{
+			knowledgeType: "label",
+			// Note: category filtering would need to be implemented in the backend
+			// For now, this returns all labels and filtering can be done client-side
+		},
+		{
+			staleTime: 300000, // Labels are relatively static, cache for 5 minutes
+			...queryOptions,
+		},
+	);
 }
 
 /**
@@ -306,13 +322,16 @@ export function useLabels(category?: string, queryOptions?: QueryOptions) {
  * const { data: courseLabels } = useThingKnowledge(courseId);
  * ```
  */
-export function useThingKnowledge(thingId: string | null, queryOptions?: QueryOptions) {
-  return useKnowledge(
-    thingId
-      ? {
-          sourceThingId: thingId,
-        }
-      : undefined,
-    { ...queryOptions, enabled: queryOptions?.enabled && !!thingId }
-  );
+export function useThingKnowledge(
+	thingId: string | null,
+	queryOptions?: QueryOptions,
+) {
+	return useKnowledge(
+		thingId
+			? {
+					sourceThingId: thingId,
+				}
+			: undefined,
+		{ ...queryOptions, enabled: queryOptions?.enabled && !!thingId },
+	);
 }

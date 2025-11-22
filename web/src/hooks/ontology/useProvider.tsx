@@ -21,18 +21,18 @@
  * ```
  */
 
-import { createContext, useContext } from 'react';
+import { createContext, useContext } from "react";
 
 /**
  * Minimal provider interface for type checking
  * Full interface defined in lib/ontology/types.ts
  */
 export interface IDataProvider {
-  name: string;
-  isAvailable: boolean;
-  supportsGroups?: boolean;
-  supportsPeople?: boolean;
-  supportsRealtime?: boolean;
+	name: string;
+	isAvailable: boolean;
+	supportsGroups?: boolean;
+	supportsPeople?: boolean;
+	supportsRealtime?: boolean;
 }
 
 /**
@@ -44,17 +44,17 @@ const ProviderContext = createContext<IDataProvider | null>(null);
  * Provider for wrapping the app
  */
 export function DataProviderProvider({
-  provider,
-  children,
+	provider,
+	children,
 }: {
-  provider: IDataProvider | null;
-  children: React.ReactNode;
+	provider: IDataProvider | null;
+	children: React.ReactNode;
 }) {
-  return (
-    <ProviderContext.Provider value={provider}>
-      {children}
-    </ProviderContext.Provider>
-  );
+	return (
+		<ProviderContext.Provider value={provider}>
+			{children}
+		</ProviderContext.Provider>
+	);
 }
 
 /**
@@ -83,16 +83,16 @@ export function DataProviderProvider({
  * ```
  */
 export function useProvider(): IDataProvider | null {
-  const context = useContext(ProviderContext);
+	const context = useContext(ProviderContext);
 
-  if (context === undefined) {
-    throw new Error(
-      'useProvider must be called within DataProviderProvider. ' +
-        'Wrap your app with <DataProviderProvider provider={provider}>'
-    );
-  }
+	if (context === undefined) {
+		throw new Error(
+			"useProvider must be called within DataProviderProvider. " +
+				"Wrap your app with <DataProviderProvider provider={provider}>",
+		);
+	}
 
-  return context;
+	return context;
 }
 
 /**
@@ -114,8 +114,8 @@ export function useProvider(): IDataProvider | null {
  * ```
  */
 export function useIsProviderAvailable(): boolean {
-  const provider = useProvider();
-  return !!provider?.isAvailable;
+	const provider = useProvider();
+	return !!provider?.isAvailable;
 }
 
 /**
@@ -134,22 +134,22 @@ export function useIsProviderAvailable(): boolean {
  * ```
  */
 export function useProviderCapability(
-  capability: 'groups' | 'people' | 'realtime'
+	capability: "groups" | "people" | "realtime",
 ): boolean {
-  const provider = useProvider();
+	const provider = useProvider();
 
-  if (!provider) return false;
+	if (!provider) return false;
 
-  switch (capability) {
-    case 'groups':
-      return provider.supportsGroups !== false;
-    case 'people':
-      return provider.supportsPeople !== false;
-    case 'realtime':
-      return provider.supportsRealtime !== false;
-    default:
-      return false;
-  }
+	switch (capability) {
+		case "groups":
+			return provider.supportsGroups !== false;
+		case "people":
+			return provider.supportsPeople !== false;
+		case "realtime":
+			return provider.supportsRealtime !== false;
+		default:
+			return false;
+	}
 }
 
 /**
@@ -164,6 +164,6 @@ export function useProviderCapability(
  * ```
  */
 export function useProviderName(): string | null {
-  const provider = useProvider();
-  return provider?.name || null;
+	const provider = useProvider();
+	return provider?.name || null;
 }

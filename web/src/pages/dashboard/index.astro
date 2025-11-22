@@ -6,20 +6,20 @@
  * Uses Effect services for server-side rendering.
  */
 
-import { Effect } from "effect";
 import { ConvexReactClient } from "convex/react";
-import { ThingService } from "@/services/ThingService";
-import { EventService } from "@/services/EventService";
-import { OrganizationService } from "@/services/OrganizationService";
-import {
-  createDataProvider,
-  createDataProviderLayer,
-} from "@/providers/factory";
-import Layout from "@/layouts/Layout.astro";
+import { Effect } from "effect";
 import { DashboardStats } from "@/components/dashboard/DashboardStats";
 import { EntityOverview } from "@/components/dashboard/EntityOverview";
-import { RecentActivity } from "@/components/dashboard/RecentActivity";
 import { QuickActions } from "@/components/dashboard/QuickActions";
+import { RecentActivity } from "@/components/dashboard/RecentActivity";
+import Layout from "@/layouts/Layout.astro";
+import {
+	createDataProvider,
+	createDataProviderLayer,
+} from "@/providers/factory";
+import { EventService } from "@/services/EventService";
+import { OrganizationService } from "@/services/OrganizationService";
+import { ThingService } from "@/services/ThingService";
 
 // Mock auth context - TODO: Replace with actual auth
 const currentOrgId = "default-org";
@@ -28,91 +28,93 @@ const currentUserId = "system";
 // Initialize Convex provider
 const convexUrl = import.meta.env.PUBLIC_CONVEX_URL;
 if (!convexUrl) {
-  throw new Error("PUBLIC_CONVEX_URL environment variable is not set");
+	throw new Error("PUBLIC_CONVEX_URL environment variable is not set");
 }
 const convexClient = new ConvexReactClient(convexUrl);
 const provider = createDataProvider({
-  type: "convex",
-  client: convexClient,
+	type: "convex",
+	client: convexClient,
 });
 const providerLayer = createDataProviderLayer(provider);
 
 // Server-side data fetching using Effect
 const program = Effect.gen(function* () {
-  // Get organization details
-  const org = yield* OrganizationService.get(currentOrgId).pipe(
-    Effect.catchAll(() => Effect.succeed({
-      _id: currentOrgId,
-      name: "Default Organization",
-      type: "organization" as const,
-      status: "active" as const,
-      properties: { plan: "starter" },
-      createdAt: Date.now(),
-      updatedAt: Date.now(),
-    }))
-  );
+	// Get organization details
+	const org = yield* OrganizationService.get(currentOrgId).pipe(
+		Effect.catchAll(() =>
+			Effect.succeed({
+				_id: currentOrgId,
+				name: "Default Organization",
+				type: "organization" as const,
+				status: "active" as const,
+				properties: { plan: "starter" },
+				createdAt: Date.now(),
+				updatedAt: Date.now(),
+			}),
+		),
+	);
 
-  // Get entity counts by type
-  const productCount = yield* ThingService.list({ type: "product" }).pipe(
-    Effect.map(items => items.length),
-    Effect.catchAll(() => Effect.succeed(0))
-  );
+	// Get entity counts by type
+	const productCount = yield* ThingService.list({ type: "product" }).pipe(
+		Effect.map((items) => items.length),
+		Effect.catchAll(() => Effect.succeed(0)),
+	);
 
-  const courseCount = yield* ThingService.list({ type: "course" }).pipe(
-    Effect.map(items => items.length),
-    Effect.catchAll(() => Effect.succeed(0))
-  );
+	const courseCount = yield* ThingService.list({ type: "course" }).pipe(
+		Effect.map((items) => items.length),
+		Effect.catchAll(() => Effect.succeed(0)),
+	);
 
-  const userCount = yield* ThingService.list({ type: "creator" }).pipe(
-    Effect.map(items => items.length),
-    Effect.catchAll(() => Effect.succeed(0))
-  );
+	const userCount = yield* ThingService.list({ type: "creator" }).pipe(
+		Effect.map((items) => items.length),
+		Effect.catchAll(() => Effect.succeed(0)),
+	);
 
-  // Get recent events
-  const recentEvents = yield* EventService.list({ limit: 10 }).pipe(
-    Effect.catchAll(() => Effect.succeed([]))
-  );
+	// Get recent events
+	const recentEvents = yield* EventService.list({ limit: 10 }).pipe(
+		Effect.catchAll(() => Effect.succeed([])),
+	);
 
-  // Get all things for overview
-  const allThings = yield* ThingService.list({ limit: 50 }).pipe(
-    Effect.catchAll(() => Effect.succeed([]))
-  );
+	// Get all things for overview
+	const allThings = yield* ThingService.list({ limit: 50 }).pipe(
+		Effect.catchAll(() => Effect.succeed([])),
+	);
 
-  return {
-    org,
-    stats: {
-      products: productCount,
-      courses: courseCount,
-      users: userCount,
-      total: productCount + courseCount + userCount,
-    },
-    recentEvents,
-    allThings,
-  };
+	return {
+		org,
+		stats: {
+			products: productCount,
+			courses: courseCount,
+			users: userCount,
+			total: productCount + courseCount + userCount,
+		},
+		recentEvents,
+		allThings,
+	};
 });
 
 // Run Effect program with DataProvider layer
 const data = await Effect.runPromise(
-  program.pipe(
-    Effect.provide(providerLayer),
-    Effect.catchAll((error) => {
-      console.error("Dashboard data fetch failed:", error);
-      return Effect.succeed({
-        org: {
-          _id: currentOrgId,
-          name: "Error Loading Organization",
-          type: "organization" as const,
-          status: "active" as const,
-          properties: {},
-          createdAt: Date.now(),
-          updatedAt: Date.now(),
-        },
-        stats: { products: 0, courses: 0, users: 0, total: 0 },
-        recentEvents: [],
-        allThings: [],
-      });
-    })
-  )
+	program.pipe(
+		Effect.provide(providerLayer),
+		Effect.catchAll((error) => {
+			console.error("Dashboard data fetch failed:", error);
+			return Effect.succeed({
+				org: {
+					_id: currentOrgId,
+					name: "Error Loading Organization",
+					type: "organization" as const,
+					status: "active" as const,
+					properties: {},
+					createdAt: Date.now(),
+					updatedAt: Date.now(),
+				},
+				stats: { products: 0, courses: 0, users: 0, total: 0 },
+				recentEvents: [],
+				allThings: [],
+			});
+		}),
+	),
 );
 ---
 

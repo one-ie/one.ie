@@ -368,8 +368,7 @@ tags: ["payment_method:stripe", "status:completed", "audience:engaged"];
 
 ---
 
-## 📐 Data Flow Through The Ontology
-
+## 📐 Data Flow
 ```
 0. Groups (Isolation Layer)
    ↓ Establishes scope for all operations (with optional nesting)

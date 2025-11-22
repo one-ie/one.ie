@@ -6,6 +6,7 @@
       {
         "id": "aa4f5b159ebfbe8c",
         "type": "tabs",
+        "dimension": 50.29288702928871,
         "children": [
           {
             "id": "613025f84d05f0e8",
@@ -76,6 +77,42 @@
           }
         ],
         "currentTab": 2
+      },
+      {
+        "id": "7337e3e8e0550c60",
+        "type": "tabs",
+        "dimension": 49.70711297071129,
+        "children": [
+          {
+            "id": "45bdc9c426ab0878",
+            "type": "leaf",
+            "state": {
+              "type": "markdown",
+              "state": {
+                "file": "things/video-script-demo.md",
+                "mode": "source",
+                "source": false
+              },
+              "icon": "lucide-file",
+              "title": "video-script-demo"
+            }
+          },
+          {
+            "id": "42abf53db2986b23",
+            "type": "leaf",
+            "state": {
+              "type": "markdown",
+              "state": {
+                "file": "bullfm-big-build.md",
+                "mode": "source",
+                "source": false
+              },
+              "icon": "lucide-file",
+              "title": "bullfm-big-build"
+            }
+          }
+        ],
+        "currentTab": 1
       }
     ],
     "direction": "vertical"
@@ -132,7 +169,7 @@
       }
     ],
     "direction": "horizontal",
-    "width": 346.5
+    "width": 246.5
   },
   "right": {
     "id": "0a970b1e4a99862b",
@@ -224,10 +261,24 @@
       "terminal:Open terminal": false
     }
   },
-  "active": "d5d16e1429820f2d",
+  "active": "42abf53db2986b23",
   "lastOpenFiles": [
-    "oil.md",
+    "things/video-script-demo.md",
+    "bullfm-big-build.md",
+    "groups/groups.md",
+    "things/video-script.md",
+    "README.md",
+    "things/video-script-backup.md",
+    "things/video-script-ontology.md",
+    "things/video-script.md.tmp.31005.1763412204174",
+    "things/video-script.md.tmp.31005.1763412184361",
+    "things/video-script.md.tmp.31005.1763412160848",
+    "events/biome-ai-components-cleanup-2025-11-18.md",
+    "events/parallel-agent-clean-2025-11-18.md",
+    "events/biome-implementation-2025-11-18.md",
+    "knowledge/biome-clean-code-guide.md",
     "knowledge/dsl.md",
+    "oil.md",
     "things/ontologies/oilfield-staffing.md",
     "things/ontologies",
     "events/cycle-3-video-player-port-complete-20251108.md",
@@ -242,25 +293,11 @@
     "events/2025-11-08-parallel-agent-implementation.md",
     "knowledge/claude-code-integration.md",
     "knowledge/parallel-agents.md",
-    "events/2025-11-08-security-incident-env-exposure.md",
-    "events/plan-files-updated.md",
-    "events/plan-completion-audit.md",
-    "events/2025-11-08-backend-claude-refactor.md",
-    "knowledge/performance.md",
     "knowledge/performance.md.tmp.10741.1762543026526",
-    "knowledge/troubleshooting.md",
-    "knowledge/guidelines.md",
     "knowledge/guidelines.md.tmp.10741.1762543026243",
-    "knowledge/development-commands.md",
-    "knowledge/cascading-context-specification.md",
-    "events/games-crypto.md",
-    "events/games-crypto-strategy.md",
     "things/plans/npx-agent.md.tmp.10741.1762536409144",
     "things/plans/npx-agent.md.tmp.10741.1762536401133",
     "connections/x402-Baazar.txt",
-    "things/todo-projects.md.tmp.37955.1761791028387",
-    "things/files.yaml",
-    "things/files.yaml.tmp.40358.1761761141598",
-    "knowledge/ontology-files.yaml"
+    "things/todo-projects.md.tmp.37955.1761791028387"
   ]
 }

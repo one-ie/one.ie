@@ -1,33 +1,38 @@
 ---
-import { getCollection } from 'astro:content';
-import Layout from '../../layouts/Layout.astro';
-import type { CollectionEntry } from 'astro:content';
-import { ChevronRight } from 'lucide-react';
-import { PlanTaskList } from '@/components/features/PlanTaskList';
+import type { CollectionEntry } from "astro:content";
+import { getCollection } from "astro:content";
+import { ChevronRight } from "lucide-react";
+import { PlanTaskList } from "@/components/features/PlanTaskList";
+import Layout from "../../layouts/Layout.astro";
 
 // Disable transitions for better content rendering
 export const prerender = true;
 
 export async function getStaticPaths() {
-  const plans = await getCollection('plans');
-  return plans.map((entry: CollectionEntry<'plans'>) => ({
-    params: { slug: entry.slug },
-    props: { entry },
-  }));
+	const plans = await getCollection("plans");
+	return plans.map((entry: CollectionEntry<"plans">) => ({
+		params: { slug: entry.slug },
+		props: { entry },
+	}));
 }
 
 interface Props {
-  entry: CollectionEntry<'plans'>;
+	entry: CollectionEntry<"plans">;
 }
 
 const { entry } = Astro.props;
 const { Content } = await entry.render();
 
 // Calculate statistics
-const progressPercent = Math.round((entry.data.completedInferences / entry.data.totalInferences) * 100);
-const completedTasks = entry.data.tasks?.filter(t => t.status === 'completed').length || 0;
-const inProgressTasks = entry.data.tasks?.filter(t => t.status === 'in_progress').length || 0;
-const pendingTasks = entry.data.tasks?.filter(t => t.status === 'pending').length || 0;
+const progressPercent = Math.round(
+	(entry.data.completedInferences / entry.data.totalInferences) * 100,
+);
+const completedTasks =
+	entry.data.tasks?.filter((t) => t.status === "completed").length || 0;
+const inProgressTasks =
+	entry.data.tasks?.filter((t) => t.status === "in_progress").length || 0;
+const pendingTasks =
+	entry.data.tasks?.filter((t) => t.status === "pending").length || 0;
 ---
 
 <Layout

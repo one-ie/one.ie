@@ -1,18 +1,18 @@
 ---
-import { Badge } from "@/components/ui/badge";
 import { HelpCircle } from "lucide-react";
 import FAQAccordion from "@/components/FaqAccordion";
+import { Badge } from "@/components/ui/badge";
 import type { FAQSectionProps } from "@/types/landing-page";
 
 interface Props extends Omit<FAQSectionProps, "branding"> {
-  branding?: any;
+	branding?: any;
 }
 
 const { section, branding } = Astro.props;
 
 const brandingStyle = branding
-  ? `--primary: ${branding.primaryColor || "#3b82f6"};`
-  : "";
+	? `--primary: ${branding.primaryColor || "#3b82f6"};`
+	: "";
 ---
 
 <section class={`px-4 py-20 sm:px-6 sm:py-24 md:px-8 md:py-32 ${section.customClass || ""}`} style={brandingStyle}>

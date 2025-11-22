@@ -5,25 +5,25 @@
  * with Mux Player and YouTube embeds.
  */
 
-import { VideoPlayer } from './VideoPlayer';
+import { VideoPlayer } from "./VideoPlayer";
 
 /**
  * Example 1: Mux Video with Metadata Tracking
  * Production-ready video player with built-in analytics
  */
 export function MuxVideoExample() {
-  return (
-    <VideoPlayer
-      playbackId="a4nOgmxGWg6gULfcBbAa00gXyfcwPnAFldF8RdsNyk8M"
-      title="Tutorial: Getting Started"
-      videoId="tutorial-getting-started"
-      viewerUserId="user-123"
-      poster="/thumbnails/tutorial.jpg"
-      aspectRatio="16/9"
-      autoplay={false}
-      muted={false}
-    />
-  );
+	return (
+		<VideoPlayer
+			playbackId="a4nOgmxGWg6gULfcBbAa00gXyfcwPnAFldF8RdsNyk8M"
+			title="Tutorial: Getting Started"
+			videoId="tutorial-getting-started"
+			viewerUserId="user-123"
+			poster="/thumbnails/tutorial.jpg"
+			aspectRatio="16/9"
+			autoplay={false}
+			muted={false}
+		/>
+	);
 }
 
 /**
@@ -31,15 +31,15 @@ export function MuxVideoExample() {
  * Automatically detects YouTube URLs and renders iframe embed
  */
 export function YouTubeExample() {
-  return (
-    <VideoPlayer
-      youtubeId="dQw4w9WgXcQ"
-      title="YouTube Video Example"
-      aspectRatio="16/9"
-      autoplay={false}
-      muted={true}
-    />
-  );
+	return (
+		<VideoPlayer
+			youtubeId="dQw4w9WgXcQ"
+			title="YouTube Video Example"
+			aspectRatio="16/9"
+			autoplay={false}
+			muted={true}
+		/>
+	);
 }
 
 /**
@@ -47,12 +47,12 @@ export function YouTubeExample() {
  * Metadata is automatically populated from playbackId
  */
 export function MuxVideoMinimalExample() {
-  return (
-    <VideoPlayer
-      playbackId="DS00Spx1CV902MCtPj5WknGlR102V5HFkDe"
-      title="Big Buck Bunny"
-    />
-  );
+	return (
+		<VideoPlayer
+			playbackId="DS00Spx1CV902MCtPj5WknGlR102V5HFkDe"
+			title="Big Buck Bunny"
+		/>
+	);
 }
 
 /**
@@ -60,14 +60,14 @@ export function MuxVideoMinimalExample() {
  * Override default styles with custom className
  */
 export function CustomStyledExample() {
-  return (
-    <VideoPlayer
-      playbackId="a4nOgmxGWg6gULfcBbAa00gXyfcwPnAFldF8RdsNyk8M"
-      title="Custom Styled Video"
-      className="shadow-2xl border-4 border-primary/40"
-      aspectRatio="21/9"
-    />
-  );
+	return (
+		<VideoPlayer
+			playbackId="a4nOgmxGWg6gULfcBbAa00gXyfcwPnAFldF8RdsNyk8M"
+			title="Custom Styled Video"
+			className="shadow-2xl border-4 border-primary/40"
+			aspectRatio="21/9"
+		/>
+	);
 }
 
 /**
@@ -75,37 +75,37 @@ export function CustomStyledExample() {
  * Supports 16/9, 4/3, 21/9, 1/1 (square)
  */
 export function AspectRatioExamples() {
-  return (
-    <div className="grid grid-cols-2 gap-4">
-      {/* 16:9 - Standard widescreen */}
-      <VideoPlayer
-        playbackId="a4nOgmxGWg6gULfcBbAa00gXyfcwPnAFldF8RdsNyk8M"
-        title="16:9 Aspect Ratio"
-        aspectRatio="16/9"
-      />
+	return (
+		<div className="grid grid-cols-2 gap-4">
+			{/* 16:9 - Standard widescreen */}
+			<VideoPlayer
+				playbackId="a4nOgmxGWg6gULfcBbAa00gXyfcwPnAFldF8RdsNyk8M"
+				title="16:9 Aspect Ratio"
+				aspectRatio="16/9"
+			/>
 
-      {/* 4:3 - Classic aspect ratio */}
-      <VideoPlayer
-        youtubeId="dQw4w9WgXcQ"
-        title="4:3 Aspect Ratio"
-        aspectRatio="4/3"
-      />
+			{/* 4:3 - Classic aspect ratio */}
+			<VideoPlayer
+				youtubeId="dQw4w9WgXcQ"
+				title="4:3 Aspect Ratio"
+				aspectRatio="4/3"
+			/>
 
-      {/* 21:9 - Ultra-wide */}
-      <VideoPlayer
-        playbackId="a4nOgmxGWg6gULfcBbAa00gXyfcwPnAFldF8RdsNyk8M"
-        title="21:9 Aspect Ratio"
-        aspectRatio="21/9"
-      />
+			{/* 21:9 - Ultra-wide */}
+			<VideoPlayer
+				playbackId="a4nOgmxGWg6gULfcBbAa00gXyfcwPnAFldF8RdsNyk8M"
+				title="21:9 Aspect Ratio"
+				aspectRatio="21/9"
+			/>
 
-      {/* 1:1 - Square */}
-      <VideoPlayer
-        youtubeId="dQw4w9WgXcQ"
-        title="1:1 Square Aspect Ratio"
-        aspectRatio="1/1"
-      />
-    </div>
-  );
+			{/* 1:1 - Square */}
+			<VideoPlayer
+				youtubeId="dQw4w9WgXcQ"
+				title="1:1 Square Aspect Ratio"
+				aspectRatio="1/1"
+			/>
+		</div>
+	);
 }
 
 /**
@@ -113,16 +113,16 @@ export function AspectRatioExamples() {
  * Note: Autoplay typically requires muted=true for browser policies
  */
 export function AutoplayLoopExample() {
-  return (
-    <VideoPlayer
-      playbackId="a4nOgmxGWg6gULfcBbAa00gXyfcwPnAFldF8RdsNyk8M"
-      title="Background Video"
-      autoplay={true}
-      muted={true}
-      loop={true}
-      aspectRatio="16/9"
-    />
-  );
+	return (
+		<VideoPlayer
+			playbackId="a4nOgmxGWg6gULfcBbAa00gXyfcwPnAFldF8RdsNyk8M"
+			title="Background Video"
+			autoplay={true}
+			muted={true}
+			loop={true}
+			aspectRatio="16/9"
+		/>
+	);
 }
 
 /**
@@ -130,20 +130,20 @@ export function AutoplayLoopExample() {
  * Complete example with all metadata options
  */
 export function MuxVideoFullExample() {
-  return (
-    <VideoPlayer
-      playbackId="a4nOgmxGWg6gULfcBbAa00gXyfcwPnAFldF8RdsNyk8M"
-      muxAssetId="asset-123456"
-      title="Advanced Tutorial"
-      videoId="advanced-tutorial-001"
-      viewerUserId="user-456"
-      poster="/thumbnails/advanced-tutorial.jpg"
-      aspectRatio="16/9"
-      autoplay={false}
-      muted={false}
-      loop={false}
-    />
-  );
+	return (
+		<VideoPlayer
+			playbackId="a4nOgmxGWg6gULfcBbAa00gXyfcwPnAFldF8RdsNyk8M"
+			muxAssetId="asset-123456"
+			title="Advanced Tutorial"
+			videoId="advanced-tutorial-001"
+			viewerUserId="user-456"
+			poster="/thumbnails/advanced-tutorial.jpg"
+			aspectRatio="16/9"
+			autoplay={false}
+			muted={false}
+			loop={false}
+		/>
+	);
 }
 
 /**
@@ -151,12 +151,7 @@ export function MuxVideoFullExample() {
  * Shows placeholder when no playbackId or youtubeId provided
  */
 export function NoSourceExample() {
-  return (
-    <VideoPlayer
-      title="Missing Video"
-      aspectRatio="16/9"
-    />
-  );
+	return <VideoPlayer title="Missing Video" aspectRatio="16/9" />;
 }
 
 /**
@@ -164,24 +159,25 @@ export function NoSourceExample() {
  * How to use VideoPlayer in an Astro page
  */
 export function PageIntegrationExample() {
-  return (
-    <div className="max-w-4xl mx-auto py-8">
-      <h1 className="text-3xl font-bold mb-6">Video Tutorial</h1>
+	return (
+		<div className="max-w-4xl mx-auto py-8">
+			<h1 className="text-3xl font-bold mb-6">Video Tutorial</h1>
 
-      <VideoPlayer
-        playbackId="a4nOgmxGWg6gULfcBbAa00gXyfcwPnAFldF8RdsNyk8M"
-        title="Complete Tutorial"
-        videoId="tutorial-complete"
-        viewerUserId="user-789"
-        poster="/thumbnails/tutorial.jpg"
-      />
+			<VideoPlayer
+				playbackId="a4nOgmxGWg6gULfcBbAa00gXyfcwPnAFldF8RdsNyk8M"
+				title="Complete Tutorial"
+				videoId="tutorial-complete"
+				viewerUserId="user-789"
+				poster="/thumbnails/tutorial.jpg"
+			/>
 
-      <div className="mt-6 prose prose-lg">
-        <h2>About This Video</h2>
-        <p>
-          This tutorial covers everything you need to know about the ONE Platform.
-        </p>
-      </div>
-    </div>
-  );
+			<div className="mt-6 prose prose-lg">
+				<h2>About This Video</h2>
+				<p>
+					This tutorial covers everything you need to know about the ONE
+					Platform.
+				</p>
+			</div>
+		</div>
+	);
 }

@@ -1,15 +1,16 @@
 ---
-import Layout from "../layouts/Layout.astro";
-import { GitSection } from "@/components/GitSection";
-import { PerformanceChart } from "@/components/features/PerformanceChart";
-import OrbitingCircles from "@/components/magicui/orbiting-circles";
+import { getCollection } from "astro:content";
 import DownloadSection from "@/components/DownloadSection.astro";
 import { FeaturedPodcast } from "@/components/FeaturedPodcast";
-import { getCollection } from 'astro:content';
+import { PerformanceChart } from "@/components/features/PerformanceChart";
+import { GitSection } from "@/components/GitSection";
+import OrbitingCircles from "@/components/magicui/orbiting-circles";
+import { Safari } from "@/components/Safari";
+import Layout from "../layouts/Layout.astro";
 
 // Get the featured ONE ontology podcast
-const podcasts = await getCollection('podcasts');
-const featuredPodcast = podcasts.find(p => p.slug === 'one-ontology');
+const podcasts = await getCollection("podcasts");
+const featuredPodcast = podcasts.find((p) => p.slug === "one-ontology");
 ---
 
 <Layout
@@ -17,23 +18,21 @@ const featuredPodcast = podcasts.find(p => p.slug === 'one-ontology');
   description="A beautiful dashboard built with Astro and shadcn/ui"
   sidebarInitialCollapsed={true}
 >
-  <!-- Main Content -->
-  <GitSection client:idle />
-
   <!-- Video Section -->
   <section class="w-screen relative left-1/2 right-1/2 -ml-[50vw] -mr-[50vw] py-4 sm:py-8 sm:w-full sm:left-0 sm:right-0 sm:ml-0 sm:mr-0">
     <div class="w-full sm:mx-auto sm:max-w-7xl sm:px-4">
-      <h2 class="text-2xl sm:text-3xl md:text-4xl font-bold mb-3 sm:mb-4 md:mb-6 text-center px-4 sm:px-0">Demo</h2>
-      <div class="video-container border-0 sm:border-[16px] border-primary rounded-none sm:rounded-lg overflow-hidden sm:shadow-xl">
-        <video
-          controls
-          preload="metadata"
-          class="w-full h-auto"
-          poster="/demo.png"
-        >
-          <source src="https://media.one.ie/ONE-demo.mp4" type="video/mp4" />
-          Your browser does not support the video tag.
-        </video>
+      <h2 class="text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-bold mb-3 sm:mb-4 md:mb-6 text-center px-4 sm:px-0 leading-tight">BRING YOUR IDEAS TO LIFE</h2>
+      <p class="text-lg sm:text-xl md:text-2xl font-semibold text-primary max-w-4xl mx-auto leading-relaxed text-center px-4 sm:px-0 mb-6">
+        Build apps, websites, and AI agents in English. Download to your computer, run in the cloud and deploy to the edge or your own server. ONE is open source and free forever.
+      </p>
+      <div class="flex justify-center px-4 sm:px-0">
+        <Safari
+          videoSrc="https://media.one.ie/ONE.mp4"
+          url="one.ie"
+          width={1203}
+          height={753}
+          client:load
+        />
       </div>
     </div>
   </section>
@@ -1755,18 +1754,6 @@ EVERY DAY at 8am:
 
   <!-- Performance Chart - lazy load when visible -->
   <PerformanceChart client:visible />
-
-  <!-- Final CTA Section -->
-  <DownloadSection
-    title="BRING YOUR IDEAS TO LIFE"
-    subtitle="Download FREE · Own FOREVER"
-    source="Free Forever"
-    description="No credit card. No trial limits. No vendor lock-in."
-    downloadButtonText="Download Free"
-    deployButtonText="Deploy to Edge"
-    downloadUrl="/download"
-    deployUrl="/deploy"
-  />
 </Layout>
 
 <style>

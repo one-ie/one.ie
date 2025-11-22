@@ -27,298 +27,303 @@
  * AgentMessage.tsx automatically renders the UI using GenerativeUIRenderer.
  */
 
-import Layout from '@/layouts/Layout.astro';
-import { AgentMessage } from '@/components/ai/AgentMessage';
+import { AgentMessage } from "@/components/ai/AgentMessage";
+import Layout from "@/layouts/Layout.astro";
 
 // Test data for all 6 component types
 const testMessages = [
-  {
-    type: "text" as const,
-    payload: { text: "Here are some examples of generative UI components I can create:" },
-    timestamp: Date.now()
-  },
+	{
+		type: "text" as const,
+		payload: {
+			text: "Here are some examples of generative UI components I can create:",
+		},
+		timestamp: Date.now(),
+	},
 
-  // 1. CHART - Line Chart
-  {
-    type: "ui" as const,
-    payload: {
-      component: "chart" as const,
-      data: {
-        title: "Sales Growth (Line Chart)",
-        description: "Monthly revenue over Q1 2025",
-        chartType: "line",
-        labels: ["January", "February", "March"],
-        datasets: [
-          {
-            label: "Revenue",
-            data: [45000, 52000, 61000],
-            color: "#3b82f6"
-          },
-          {
-            label: "Expenses",
-            data: [30000, 35000, 38000],
-            color: "#ef4444"
-          }
-        ]
-      }
-    },
-    timestamp: Date.now()
-  },
+	// 1. CHART - Line Chart
+	{
+		type: "ui" as const,
+		payload: {
+			component: "chart" as const,
+			data: {
+				title: "Sales Growth (Line Chart)",
+				description: "Monthly revenue over Q1 2025",
+				chartType: "line",
+				labels: ["January", "February", "March"],
+				datasets: [
+					{
+						label: "Revenue",
+						data: [45000, 52000, 61000],
+						color: "#3b82f6",
+					},
+					{
+						label: "Expenses",
+						data: [30000, 35000, 38000],
+						color: "#ef4444",
+					},
+				],
+			},
+		},
+		timestamp: Date.now(),
+	},
 
-  // 2. CHART - Bar Chart
-  {
-    type: "ui" as const,
-    payload: {
-      component: "chart" as const,
-      data: {
-        title: "Product Sales (Bar Chart)",
-        description: "Units sold by product category",
-        chartType: "bar",
-        labels: ["Electronics", "Clothing", "Books", "Home"],
-        datasets: [
-          {
-            label: "Q1 Sales",
-            data: [850, 620, 340, 480],
-            color: "#10b981"
-          }
-        ]
-      }
-    },
-    timestamp: Date.now()
-  },
+	// 2. CHART - Bar Chart
+	{
+		type: "ui" as const,
+		payload: {
+			component: "chart" as const,
+			data: {
+				title: "Product Sales (Bar Chart)",
+				description: "Units sold by product category",
+				chartType: "bar",
+				labels: ["Electronics", "Clothing", "Books", "Home"],
+				datasets: [
+					{
+						label: "Q1 Sales",
+						data: [850, 620, 340, 480],
+						color: "#10b981",
+					},
+				],
+			},
+		},
+		timestamp: Date.now(),
+	},
 
-  // 3. TABLE - User Data
-  {
-    type: "ui" as const,
-    payload: {
-      component: "table" as const,
-      data: {
-        title: "Team Members",
-        headers: ["Name", "Email", "Role", "Status"],
-        rows: [
-          ["Alice Johnson", "alice@example.com", "Admin", "Active"],
-          ["Bob Smith", "bob@example.com", "Editor", "Active"],
-          ["Carol White", "carol@example.com", "Viewer", "Pending"],
-          ["David Brown", "david@example.com", "Admin", "Active"]
-        ]
-      }
-    },
-    timestamp: Date.now()
-  },
+	// 3. TABLE - User Data
+	{
+		type: "ui" as const,
+		payload: {
+			component: "table" as const,
+			data: {
+				title: "Team Members",
+				headers: ["Name", "Email", "Role", "Status"],
+				rows: [
+					["Alice Johnson", "alice@example.com", "Admin", "Active"],
+					["Bob Smith", "bob@example.com", "Editor", "Active"],
+					["Carol White", "carol@example.com", "Viewer", "Pending"],
+					["David Brown", "david@example.com", "Admin", "Active"],
+				],
+			},
+		},
+		timestamp: Date.now(),
+	},
 
-  // 4. TABLE - Product Inventory
-  {
-    type: "ui" as const,
-    payload: {
-      component: "table" as const,
-      data: {
-        title: "Product Inventory",
-        headers: ["Product", "SKU", "Stock", "Price", "Category"],
-        rows: [
-          ["Wireless Headphones", "WH-1000", "245", "$89.99", "Electronics"],
-          ["Cotton T-Shirt", "TS-2040", "1,200", "$19.99", "Clothing"],
-          ["Programming Book", "BK-3050", "87", "$49.99", "Books"],
-          ["Coffee Maker", "CM-4060", "62", "$129.99", "Home"]
-        ]
-      }
-    },
-    timestamp: Date.now()
-  },
+	// 4. TABLE - Product Inventory
+	{
+		type: "ui" as const,
+		payload: {
+			component: "table" as const,
+			data: {
+				title: "Product Inventory",
+				headers: ["Product", "SKU", "Stock", "Price", "Category"],
+				rows: [
+					["Wireless Headphones", "WH-1000", "245", "$89.99", "Electronics"],
+					["Cotton T-Shirt", "TS-2040", "1,200", "$19.99", "Clothing"],
+					["Programming Book", "BK-3050", "87", "$49.99", "Books"],
+					["Coffee Maker", "CM-4060", "62", "$129.99", "Home"],
+				],
+			},
+		},
+		timestamp: Date.now(),
+	},
 
-  // 5. FORM - Contact Form
-  {
-    type: "ui" as const,
-    payload: {
-      component: "form" as const,
-      data: {
-        title: "Contact Us",
-        fields: [
-          {
-            label: "Full Name",
-            type: "text",
-            name: "name",
-            required: true
-          },
-          {
-            label: "Email Address",
-            type: "email",
-            name: "email",
-            required: true
-          },
-          {
-            label: "Phone Number",
-            type: "tel",
-            name: "phone",
-            required: false
-          },
-          {
-            label: "Message",
-            type: "text",
-            name: "message",
-            required: true
-          }
-        ],
-        submitLabel: "Send Message"
-      }
-    },
-    timestamp: Date.now()
-  },
+	// 5. FORM - Contact Form
+	{
+		type: "ui" as const,
+		payload: {
+			component: "form" as const,
+			data: {
+				title: "Contact Us",
+				fields: [
+					{
+						label: "Full Name",
+						type: "text",
+						name: "name",
+						required: true,
+					},
+					{
+						label: "Email Address",
+						type: "email",
+						name: "email",
+						required: true,
+					},
+					{
+						label: "Phone Number",
+						type: "tel",
+						name: "phone",
+						required: false,
+					},
+					{
+						label: "Message",
+						type: "text",
+						name: "message",
+						required: true,
+					},
+				],
+				submitLabel: "Send Message",
+			},
+		},
+		timestamp: Date.now(),
+	},
 
-  // 6. FORM - Survey Form
-  {
-    type: "ui" as const,
-    payload: {
-      component: "form" as const,
-      data: {
-        title: "Customer Satisfaction Survey",
-        fields: [
-          {
-            label: "How satisfied are you?",
-            type: "text",
-            name: "satisfaction",
-            required: true,
-            defaultValue: "Very satisfied"
-          },
-          {
-            label: "Would you recommend us?",
-            type: "text",
-            name: "recommend",
-            required: true
-          },
-          {
-            label: "Additional Comments",
-            type: "text",
-            name: "comments",
-            required: false
-          }
-        ],
-        submitLabel: "Submit Survey"
-      }
-    },
-    timestamp: Date.now()
-  },
+	// 6. FORM - Survey Form
+	{
+		type: "ui" as const,
+		payload: {
+			component: "form" as const,
+			data: {
+				title: "Customer Satisfaction Survey",
+				fields: [
+					{
+						label: "How satisfied are you?",
+						type: "text",
+						name: "satisfaction",
+						required: true,
+						defaultValue: "Very satisfied",
+					},
+					{
+						label: "Would you recommend us?",
+						type: "text",
+						name: "recommend",
+						required: true,
+					},
+					{
+						label: "Additional Comments",
+						type: "text",
+						name: "comments",
+						required: false,
+					},
+				],
+				submitLabel: "Submit Survey",
+			},
+		},
+		timestamp: Date.now(),
+	},
 
-  // 7. LIST - Features
-  {
-    type: "ui" as const,
-    payload: {
-      component: "list" as const,
-      data: {
-        title: "Platform Features",
-        items: [
-          { icon: "✓", label: "Real-time collaboration" },
-          { icon: "✓", label: "Cloud storage integration" },
-          { icon: "✓", label: "Advanced security" },
-          { icon: "✓", label: "Mobile apps" },
-          { icon: "✓", label: "24/7 support" }
-        ]
-      }
-    },
-    timestamp: Date.now()
-  },
+	// 7. LIST - Features
+	{
+		type: "ui" as const,
+		payload: {
+			component: "list" as const,
+			data: {
+				title: "Platform Features",
+				items: [
+					{ icon: "✓", label: "Real-time collaboration" },
+					{ icon: "✓", label: "Cloud storage integration" },
+					{ icon: "✓", label: "Advanced security" },
+					{ icon: "✓", label: "Mobile apps" },
+					{ icon: "✓", label: "24/7 support" },
+				],
+			},
+		},
+		timestamp: Date.now(),
+	},
 
-  // 8. LIST - Requirements
-  {
-    type: "ui" as const,
-    payload: {
-      component: "list" as const,
-      data: {
-        title: "System Requirements",
-        items: [
-          { icon: "⚙️", label: "Node.js 18+ installed" },
-          { icon: "⚙️", label: "8GB RAM minimum" },
-          { icon: "⚙️", label: "Modern browser (Chrome, Firefox, Safari)" },
-          { icon: "⚙️", label: "Internet connection" }
-        ]
-      }
-    },
-    timestamp: Date.now()
-  },
+	// 8. LIST - Requirements
+	{
+		type: "ui" as const,
+		payload: {
+			component: "list" as const,
+			data: {
+				title: "System Requirements",
+				items: [
+					{ icon: "⚙️", label: "Node.js 18+ installed" },
+					{ icon: "⚙️", label: "8GB RAM minimum" },
+					{ icon: "⚙️", label: "Modern browser (Chrome, Firefox, Safari)" },
+					{ icon: "⚙️", label: "Internet connection" },
+				],
+			},
+		},
+		timestamp: Date.now(),
+	},
 
-  // 9. TIMELINE - Project Events
-  {
-    type: "ui" as const,
-    payload: {
-      component: "timeline" as const,
-      data: {
-        title: "Project Timeline",
-        events: [
-          { title: "Project kickoff", timestamp: "2025-01-01" },
-          { title: "Design phase completed", timestamp: "2025-01-15" },
-          { title: "Development started", timestamp: "2025-02-01" },
-          { title: "Beta testing begins", timestamp: "2025-03-01" },
-          { title: "Launch planned", timestamp: "2025-04-01" }
-        ]
-      }
-    },
-    timestamp: Date.now()
-  },
+	// 9. TIMELINE - Project Events
+	{
+		type: "ui" as const,
+		payload: {
+			component: "timeline" as const,
+			data: {
+				title: "Project Timeline",
+				events: [
+					{ title: "Project kickoff", timestamp: "2025-01-01" },
+					{ title: "Design phase completed", timestamp: "2025-01-15" },
+					{ title: "Development started", timestamp: "2025-02-01" },
+					{ title: "Beta testing begins", timestamp: "2025-03-01" },
+					{ title: "Launch planned", timestamp: "2025-04-01" },
+				],
+			},
+		},
+		timestamp: Date.now(),
+	},
 
-  // 10. TIMELINE - Order Status
-  {
-    type: "ui" as const,
-    payload: {
-      component: "timeline" as const,
-      data: {
-        title: "Order Status",
-        events: [
-          { title: "Order placed", timestamp: "2025-01-08 10:30 AM" },
-          { title: "Payment confirmed", timestamp: "2025-01-08 10:35 AM" },
-          { title: "Processing", timestamp: "2025-01-08 11:00 AM" },
-          { title: "Shipped", timestamp: "2025-01-09 9:15 AM" },
-          { title: "Out for delivery", timestamp: "2025-01-10 8:00 AM" }
-        ]
-      }
-    },
-    timestamp: Date.now()
-  },
+	// 10. TIMELINE - Order Status
+	{
+		type: "ui" as const,
+		payload: {
+			component: "timeline" as const,
+			data: {
+				title: "Order Status",
+				events: [
+					{ title: "Order placed", timestamp: "2025-01-08 10:30 AM" },
+					{ title: "Payment confirmed", timestamp: "2025-01-08 10:35 AM" },
+					{ title: "Processing", timestamp: "2025-01-08 11:00 AM" },
+					{ title: "Shipped", timestamp: "2025-01-09 9:15 AM" },
+					{ title: "Out for delivery", timestamp: "2025-01-10 8:00 AM" },
+				],
+			},
+		},
+		timestamp: Date.now(),
+	},
 
-  // 11. CARD - Quick Stats
-  {
-    type: "ui" as const,
-    payload: {
-      component: "card" as const,
-      data: {
-        title: "Quick Stats",
-        description: "Current platform metrics",
-        content: {
-          users: "1,234",
-          revenue: "$52,340",
-          growth: "+12.5%"
-        },
-        actions: [
-          { label: "View Details", variant: "default" },
-          { label: "Export", variant: "outline" }
-        ]
-      }
-    },
-    timestamp: Date.now()
-  },
+	// 11. CARD - Quick Stats
+	{
+		type: "ui" as const,
+		payload: {
+			component: "card" as const,
+			data: {
+				title: "Quick Stats",
+				description: "Current platform metrics",
+				content: {
+					users: "1,234",
+					revenue: "$52,340",
+					growth: "+12.5%",
+				},
+				actions: [
+					{ label: "View Details", variant: "default" },
+					{ label: "Export", variant: "outline" },
+				],
+			},
+		},
+		timestamp: Date.now(),
+	},
 
-  // 12. CARD - User Profile
-  {
-    type: "ui" as const,
-    payload: {
-      component: "card" as const,
-      data: {
-        title: "Alice Johnson",
-        description: "Senior Product Manager",
-        content: "Alice has been with the team for 3 years and leads the platform development efforts. She specializes in user experience and product strategy.",
-        actions: [
-          { label: "View Profile", variant: "default" },
-          { label: "Send Message", variant: "outline" }
-        ]
-      }
-    },
-    timestamp: Date.now()
-  },
+	// 12. CARD - User Profile
+	{
+		type: "ui" as const,
+		payload: {
+			component: "card" as const,
+			data: {
+				title: "Alice Johnson",
+				description: "Senior Product Manager",
+				content:
+					"Alice has been with the team for 3 years and leads the platform development efforts. She specializes in user experience and product strategy.",
+				actions: [
+					{ label: "View Profile", variant: "default" },
+					{ label: "Send Message", variant: "outline" },
+				],
+			},
+		},
+		timestamp: Date.now(),
+	},
 
-  // Final text message
-  {
-    type: "text" as const,
-    payload: { text: "These are all the generative UI components available. AI can create any of these dynamically based on user requests!" },
-    timestamp: Date.now()
-  }
+	// Final text message
+	{
+		type: "text" as const,
+		payload: {
+			text: "These are all the generative UI components available. AI can create any of these dynamically based on user requests!",
+		},
+		timestamp: Date.now(),
+	},
 ];
 ---
 

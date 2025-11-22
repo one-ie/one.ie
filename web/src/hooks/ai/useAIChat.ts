@@ -6,18 +6,24 @@
  * - PREMIUM TIER (backend=on): useBackendChat (persistent, database, analytics)
  */
 
-import { backendConfig } from '@/config/backend';
-import { useClientChat, UseClientChatOptions } from './basic/useClientChat';
-import { useBackendChat, UseBackendChatOptions } from './premium/useBackendChat';
+import { backendConfig } from "@/config/backend";
+import {
+	type UseClientChatOptions,
+	useClientChat,
+} from "./basic/useClientChat";
+import {
+	type UseBackendChatOptions,
+	useBackendChat,
+} from "./premium/useBackendChat";
 
 export type UseAIChatOptions = UseClientChatOptions | UseBackendChatOptions;
 
 export function useAIChat(options: any) {
-  if (backendConfig.enabled) {
-    // PREMIUM: Use backend with persistence, analytics, HITL
-    return useBackendChat(options as UseBackendChatOptions);
-  } else {
-    // FREE: Direct client-side chat (no persistence)
-    return useClientChat(options as UseClientChatOptions);
-  }
+	if (backendConfig.enabled) {
+		// PREMIUM: Use backend with persistence, analytics, HITL
+		return useBackendChat(options as UseBackendChatOptions);
+	} else {
+		// FREE: Direct client-side chat (no persistence)
+		return useClientChat(options as UseClientChatOptions);
+	}
 }

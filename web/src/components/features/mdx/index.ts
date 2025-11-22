@@ -5,10 +5,10 @@
  * All components are TSX (React) for maximum interactivity and reusability.
  */
 
-export { FeatureDemo } from "./FeatureDemo";
-export { FeatureCTA } from "./FeatureCTA";
+export { AuthDemo } from "./AuthDemo";
+export { CodePlayground } from "./CodePlayground";
 export { FeatureComparison } from "./FeatureComparison";
+export { FeatureCTA } from "./FeatureCTA";
+export { FeatureDemo } from "./FeatureDemo";
 export { PricingCalculator } from "./PricingCalculator";
 export { SocialProof } from "./SocialProof";
-export { CodePlayground } from "./CodePlayground";
-export { AuthDemo } from "./AuthDemo";

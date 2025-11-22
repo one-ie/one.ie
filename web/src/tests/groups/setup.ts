@@ -4,88 +4,88 @@
  */
 /* eslint-disable @typescript-eslint/no-explicit-any */
 
-import { vi, beforeEach } from 'vitest';
-import { createRequire } from 'module';
+import { createRequire } from "module";
+import { beforeEach, vi } from "vitest";
 
 const require = createRequire(import.meta.url);
 
 try {
-  require('@testing-library/jest-dom');
+	require("@testing-library/jest-dom");
 } catch {
-  // Optional dependency; tests will be skipped when the library is unavailable
+	// Optional dependency; tests will be skipped when the library is unavailable
 }
 
 // Mock Convex hooks (only if vi.mock is available)
 export const mockUseQuery = vi.fn();
 export const mockUseMutation = vi.fn();
 
-if (typeof (vi as any)?.mock === 'function') {
-  vi.mock('convex/react', () => ({
-    useQuery: mockUseQuery,
-    useMutation: mockUseMutation,
-    ConvexProvider: ({ children }: any) => children,
-  }));
+if (typeof (vi as any)?.mock === "function") {
+	vi.mock("convex/react", () => ({
+		useQuery: mockUseQuery,
+		useMutation: mockUseMutation,
+		ConvexProvider: ({ children }: any) => children,
+	}));
 
-  // Mock next-themes
-  vi.mock('next-themes', () => ({
-    useTheme: () => ({
-      theme: 'light',
-      setTheme: vi.fn(),
-    }),
-  }));
+	// Mock next-themes
+	vi.mock("next-themes", () => ({
+		useTheme: () => ({
+			theme: "light",
+			setTheme: vi.fn(),
+		}),
+	}));
 }
 
 // Test data generators
 export function createMockGroup(overrides?: any) {
-  return {
-    _id: `group_${Math.random()}`,
-    slug: 'test-group',
-    name: 'Test Group',
-    type: 'business',
-    status: 'active',
-    settings: {
-      visibility: 'private',
-      joinPolicy: 'invite_only',
-      plan: 'starter',
-    },
-    createdAt: Date.now(),
-    updatedAt: Date.now(),
-    ...overrides,
-  };
+	return {
+		_id: `group_${Math.random()}`,
+		slug: "test-group",
+		name: "Test Group",
+		type: "business",
+		status: "active",
+		settings: {
+			visibility: "private",
+			joinPolicy: "invite_only",
+			plan: "starter",
+		},
+		createdAt: Date.now(),
+		updatedAt: Date.now(),
+		...overrides,
+	};
 }
 
 export function createMockGroupHierarchy(levels: number) {
-  const groups = [];
-  let currentParentId = undefined;
+	const groups = [];
+	let currentParentId;
 
-  for (let i = 0; i < levels; i++) {
-    const group = createMockGroup({
-      slug: `level-${i}`,
-      name: `Level ${i}`,
-      parentGroupId: currentParentId,
-    });
-    groups.push(group);
-    currentParentId = group._id;
-  }
+	for (let i = 0; i < levels; i++) {
+		const group = createMockGroup({
+			slug: `level-${i}`,
+			name: `Level ${i}`,
+			parentGroupId: currentParentId,
+		});
+		groups.push(group);
+		currentParentId = group._id;
+	}
 
-  return groups;
+	return groups;
 }
 
 export function createMockStats() {
-  return {
-    members: 5,
-    entities: 20,
-    connections: 15,
-    events: 50,
-    knowledge: 10,
-    subgroups: 3,
-  };
+	return {
+		members: 5,
+		entities: 20,
+		connections: 15,
+		events: 50,
+		knowledge: 10,
+		subgroups: 3,
+	};
 }
 
 // Reset mocks before each test when supported by the runner
-if (typeof beforeEach === 'function') {
-  beforeEach(() => {
-    mockUseQuery.mockReset();
-    mockUseMutation.mockReset();
-  });
+if (typeof beforeEach === "function") {
+	beforeEach(() => {
+		mockUseQuery.mockReset();
+		mockUseMutation.mockReset();
+	});
 }

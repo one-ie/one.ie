@@ -6,8 +6,8 @@
  */
 
 export interface ProcessedContent {
-  html: string;
-  hasCheckboxes: boolean;
+	html: string;
+	hasCheckboxes: boolean;
 }
 
 /**
@@ -17,33 +17,33 @@ export interface ProcessedContent {
  * - [ ] → empty checkbox
  */
 export function processCheckboxes(htmlContent: string): ProcessedContent {
-  let processed = htmlContent;
-  let hasCheckboxes = false;
+	let processed = htmlContent;
+	let hasCheckboxes = false;
 
-  // Pattern for completed checkboxes: [x], [ x], [X], [ X]
-  const completedPattern = /\[\s*[xX]\s*\]/g;
-  if (completedPattern.test(processed)) {
-    hasCheckboxes = true;
-    processed = processed.replace(
-      completedPattern,
-      '<span class="checkbox-completed">✓</span>'
-    );
-  }
+	// Pattern for completed checkboxes: [x], [ x], [X], [ X]
+	const completedPattern = /\[\s*[xX]\s*\]/g;
+	if (completedPattern.test(processed)) {
+		hasCheckboxes = true;
+		processed = processed.replace(
+			completedPattern,
+			'<span class="checkbox-completed">✓</span>',
+		);
+	}
 
-  // Pattern for pending checkboxes: [ ]
-  const pendingPattern = /\[\s*\]/g;
-  if (pendingPattern.test(processed)) {
-    hasCheckboxes = true;
-    processed = processed.replace(
-      pendingPattern,
-      '<span class="checkbox-pending"></span>'
-    );
-  }
+	// Pattern for pending checkboxes: [ ]
+	const pendingPattern = /\[\s*\]/g;
+	if (pendingPattern.test(processed)) {
+		hasCheckboxes = true;
+		processed = processed.replace(
+			pendingPattern,
+			'<span class="checkbox-pending"></span>',
+		);
+	}
 
-  return {
-    html: processed,
-    hasCheckboxes,
-  };
+	return {
+		html: processed,
+		hasCheckboxes,
+	};
 }
 
 /**
@@ -51,10 +51,10 @@ export function processCheckboxes(htmlContent: string): ProcessedContent {
  * This is used for client-side processing if needed
  */
 export function createCheckboxElement(isCompleted: boolean): HTMLElement {
-  const span = document.createElement('span');
-  span.className = isCompleted ? 'checkbox-completed' : 'checkbox-pending';
-  if (isCompleted) {
-    span.textContent = '✓';
-  }
-  return span;
+	const span = document.createElement("span");
+	span.className = isCompleted ? "checkbox-completed" : "checkbox-pending";
+	if (isCompleted) {
+		span.textContent = "✓";
+	}
+	return span;
 }

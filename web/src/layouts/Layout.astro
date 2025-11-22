@@ -1,33 +1,33 @@
 ---
-import { ViewTransitions } from 'astro:transitions';
-import { Sidebar } from '@/components/Sidebar';
-import { MinimalSidebar } from '@/components/MinimalSidebar';
-import { Toaster } from '@/components/ui/sonner';
-import { GlobalCartDrawer } from '@/components/ecommerce/GlobalCartDrawer';
-import { TransitionController } from '@/components/TransitionController';
-import ThemeInit from '@/components/ThemeInit.astro';
-import PoweredByONE from '@/components/PoweredByONE.astro';
-import '../styles/global.css';
-import '../styles/transitions.css';
+import { ViewTransitions } from "astro:transitions";
+import { MinimalSidebar } from "@/components/MinimalSidebar";
+import PoweredByONE from "@/components/PoweredByONE.astro";
+import { Sidebar } from "@/components/Sidebar";
+import { GlobalCartDrawer } from "@/components/shop/GlobalCartDrawer";
+import ThemeInit from "@/components/ThemeInit.astro";
+import { TransitionController } from "@/components/TransitionController";
+import { Toaster } from "@/components/ui/sonner";
+import "../styles/global.css";
+import "../styles/transitions.css";
 
 interface Props {
-  title: string;
-  description?: string;
-  image?: string;
-  type?: string;
-  sidebarInitialCollapsed?: boolean;
-  hideHeader?: boolean;
-  fullHeight?: boolean;
+	title: string;
+	description?: string;
+	image?: string;
+	type?: string;
+	sidebarInitialCollapsed?: boolean;
+	hideHeader?: boolean;
+	fullHeight?: boolean;
 }
 
 const {
-  title,
-  description = 'A beautiful dashboard built with Astro and shadcn/ui',
-  image = '/og.jpg',
-  type = 'website',
-  sidebarInitialCollapsed = false,
-  hideHeader = false,
-  fullHeight = false,
+	title,
+	description = "A beautiful dashboard built with Astro and shadcn/ui",
+	image = "/og.jpg",
+	type = "website",
+	sidebarInitialCollapsed = false,
+	hideHeader = false,
+	fullHeight = false,
 } = Astro.props;
 
 // Generate canonical URL and full image URL

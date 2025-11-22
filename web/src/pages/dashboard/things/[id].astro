@@ -6,89 +6,89 @@
  * Uses Effect services for server-side rendering and client-side mutations.
  */
 
-import { Effect } from "effect";
 import { ConvexReactClient } from "convex/react";
-import { ThingService } from "@/services/ThingService";
-import { ConnectionService } from "@/services/ConnectionService";
-import { EventService } from "@/services/EventService";
-import {
-  createDataProvider,
-  createDataProviderLayer,
-} from "@/providers/factory";
-import Layout from "@/layouts/Layout.astro";
+import { Effect } from "effect";
+import { ConnectionList } from "@/components/dashboard/ConnectionList";
 import { EntityDetail } from "@/components/dashboard/EntityDetail";
 import { EntityForm } from "@/components/dashboard/EntityForm";
-import { ConnectionList } from "@/components/dashboard/ConnectionList";
 import { EventHistory } from "@/components/dashboard/EventHistory";
+import Layout from "@/layouts/Layout.astro";
+import {
+	createDataProvider,
+	createDataProviderLayer,
+} from "@/providers/factory";
+import { ConnectionService } from "@/services/ConnectionService";
+import { EventService } from "@/services/EventService";
+import { ThingService } from "@/services/ThingService";
 
 // Get entity ID from URL params
 const { id } = Astro.params;
 
 if (!id) {
-  return Astro.redirect("/dashboard/things");
+	return Astro.redirect("/dashboard/things");
 }
 
 // Initialize Convex provider
 const convexUrl = import.meta.env.PUBLIC_CONVEX_URL;
 if (!convexUrl) {
-  throw new Error("PUBLIC_CONVEX_URL environment variable is not set");
+	throw new Error("PUBLIC_CONVEX_URL environment variable is not set");
 }
 const convexClient = new ConvexReactClient(convexUrl);
 const provider = createDataProvider({
-  type: "convex",
-  client: convexClient,
+	type: "convex",
+	client: convexClient,
 });
 const providerLayer = createDataProviderLayer(provider);
 
 // Server-side data fetching using Effect
 const program = Effect.gen(function* () {
-  // Get entity with relationships
-  const thing = yield* ThingService.getWithRelationships(id);
+	// Get entity with relationships
+	const thing = yield* ThingService.getWithRelationships(id);
 
-  // Get entity history
-  const history = yield* EventService.list({
-    targetId: id,
-    limit: 20,
-  });
+	// Get entity history
+	const history = yield* EventService.list({
+		targetId: id,
+		limit: 20,
+	});
 
-  return {
-    thing,
-    history,
-  };
+	return {
+		thing,
+		history,
+	};
 });
 
 // Run Effect program with DataProvider layer
 const result = await Effect.runPromise(
-  program.pipe(
-    Effect.provide(providerLayer),
-    Effect.catchTag("ThingNotFoundError", (error) => {
-      return Effect.succeed({ notFound: true, message: error.message });
-    }),
-    Effect.catchAll((error) => {
-      console.error("Entity detail fetch failed:", error);
-      return Effect.succeed({ notFound: true, message: "Entity not found" });
-    })
-  )
+	program.pipe(
+		Effect.provide(providerLayer),
+		Effect.catchTag("ThingNotFoundError", (error) => {
+			return Effect.succeed({ notFound: true, message: error.message });
+		}),
+		Effect.catchAll((error) => {
+			console.error("Entity detail fetch failed:", error);
+			return Effect.succeed({ notFound: true, message: "Entity not found" });
+		}),
+	),
 );
 
 // Handle not found
 if ("notFound" in result && result.notFound) {
-  return Astro.redirect("/dashboard/things");
+	return Astro.redirect("/dashboard/things");
 }
 
 const { thing, history } = result as {
-  thing: {
-    _id: string;
-    type: string;
-    name: string;
-    status: string;
-    properties: any;
-    relationships: {
-      outgoing: any[];
-      incoming: any[];
-    };
-  };
-  history: any[];
+	thing: {
+		_id: string;
+		type: string;
+		name: string;
+		status: string;
+		properties: any;
+		relationships: {
+			outgoing: any[];
+			incoming: any[];
+		};
+	};
+	history: any[];
 };
 ---
 

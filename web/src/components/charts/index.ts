@@ -7,13 +7,13 @@
  * @module @/components/charts
  */
 
-export { PerformanceMetrics } from './PerformanceMetrics';
-export { DeploymentSpeed } from './DeploymentSpeed';
-export { PricingComparison } from './PricingComparison';
-export { IncludedFeatures } from './IncludedFeatures';
+export type {} from "./DeploymentSpeed";
+export { DeploymentSpeed } from "./DeploymentSpeed";
+export type {} from "./IncludedFeatures";
+export { IncludedFeatures } from "./IncludedFeatures";
 
 // Export types if needed
-export type { } from './PerformanceMetrics';
-export type { } from './DeploymentSpeed';
-export type { } from './PricingComparison';
-export type { } from './IncludedFeatures';
+export type {} from "./PerformanceMetrics";
+export { PerformanceMetrics } from "./PerformanceMetrics";
+export type {} from "./PricingComparison";
+export { PricingComparison } from "./PricingComparison";

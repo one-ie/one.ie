@@ -6,8 +6,8 @@
 
 import { ConvexReactClient } from "convex/react";
 import {
-  createDataProvider,
-  createDataProviderLayer,
+	createDataProvider,
+	createDataProviderLayer,
 } from "@/providers/factory";
 
 /**
@@ -17,18 +17,18 @@ import {
  * and returns an Effect Layer for dependency injection.
  */
 export function getDataProviderLayer() {
-  const convexUrl = import.meta.env.PUBLIC_CONVEX_URL;
-  if (!convexUrl) {
-    throw new Error("PUBLIC_CONVEX_URL environment variable is not set");
-  }
+	const convexUrl = import.meta.env.PUBLIC_CONVEX_URL;
+	if (!convexUrl) {
+		throw new Error("PUBLIC_CONVEX_URL environment variable is not set");
+	}
 
-  const convexClient = new ConvexReactClient(convexUrl);
-  const provider = createDataProvider({
-    type: "convex",
-    client: convexClient,
-  });
+	const convexClient = new ConvexReactClient(convexUrl);
+	const provider = createDataProvider({
+		type: "convex",
+		client: convexClient,
+	});
 
-  return createDataProviderLayer(provider);
+	return createDataProviderLayer(provider);
 }
 
 /**
@@ -37,8 +37,8 @@ export function getDataProviderLayer() {
 let cachedLayer: ReturnType<typeof createDataProviderLayer> | null = null;
 
 export function getOrCreateDataProviderLayer() {
-  if (!cachedLayer) {
-    cachedLayer = getDataProviderLayer();
-  }
-  return cachedLayer;
+	if (!cachedLayer) {
+		cachedLayer = getDataProviderLayer();
+	}
+	return cachedLayer;
 }

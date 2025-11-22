@@ -2,37 +2,37 @@ import { z } from "zod";
 
 // Base schemas
 export const LessonSchema = z.object({
-  name: z.string(),
-  value: z.string()
+	name: z.string(),
+	value: z.string(),
 });
 
 export const ModuleDetailsSchema = z.object({
-  overview: z.string(),
-  benefits: z.array(z.string()),
-  implementation: z.array(z.string())
+	overview: z.string(),
+	benefits: z.array(z.string()),
+	implementation: z.array(z.string()),
 });
 
 export const ModuleSchema = z.object({
-  title: z.string(),
-  description: z.string(),
-  features: z.array(z.string()),
-  details: ModuleDetailsSchema.optional()
+	title: z.string(),
+	description: z.string(),
+	features: z.array(z.string()),
+	details: ModuleDetailsSchema.optional(),
 });
 
 export const CourseDetailsSchema = z.object({
-  badge: z.string(),
-  title: z.string(),
-  subtitle: z.string(),
-  originalPrice: z.string(),
-  currentPrice: z.string(),
-  guarantee: z.string(),
-  ctaText: z.string(),
-  valueProposition: z.string(),
-  spots: z.object({
-    total: z.number(),
-    remaining: z.number()
-  }),
-  launchDate: z.string()
+	badge: z.string(),
+	title: z.string(),
+	subtitle: z.string(),
+	originalPrice: z.string(),
+	currentPrice: z.string(),
+	guarantee: z.string(),
+	ctaText: z.string(),
+	valueProposition: z.string(),
+	spots: z.object({
+		total: z.number(),
+		remaining: z.number(),
+	}),
+	launchDate: z.string(),
 });
 
 // Derived types
@@ -43,25 +43,25 @@ export type CourseDetails = z.infer<typeof CourseDetailsSchema>;
 
 // Component Props
 export interface ModuleContentProps {
-  module?: Module;
-  lessons?: Lesson[];
-  moduleNumber?: number;
+	module?: Module;
+	lessons?: Lesson[];
+	moduleNumber?: number;
 }
 
 export interface CourseHeroProps {
-  courseDetails: CourseDetails;
-  heroStats: {
-    value: string;
-    label: string;
-  }[];
+	courseDetails: CourseDetails;
+	heroStats: {
+		value: string;
+		label: string;
+	}[];
 }
 
 // Legacy interfaces (to be migrated)
 export interface LegacyModule {
-  title: string;
-  description: string;
-  objective: string;
-  mainDescription: string;
-  output: string;
-  lessons: Lesson[];
-} 
+	title: string;
+	description: string;
+	objective: string;
+	mainDescription: string;
+	output: string;
+	lessons: Lesson[];
+}

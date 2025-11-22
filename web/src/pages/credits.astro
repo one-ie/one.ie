@@ -2,338 +2,356 @@
 import Layout from "../layouts/Layout.astro";
 
 interface Link {
-  label: string;
-  url: string;
+	label: string;
+	url: string;
 }
 
 interface Person {
-  name: string;
-  title: string;
-  message: string;
-  avatar?: string;
-  links: Link[];
+	name: string;
+	title: string;
+	message: string;
+	avatar?: string;
+	links: Link[];
 }
 
 interface CreditGroup {
-  category: string;
-  summary: string;
-  people: Person[];
+	category: string;
+	summary: string;
+	people: Person[];
 }
 
 interface Package {
-  name: string;
-  version: string;
-  url: string;
+	name: string;
+	version: string;
+	url: string;
 }
 
 const creditGroups: CreditGroup[] = [
-  {
-    category: "Framework & Runtime",
-    summary:
-      "Core runtime choices from web/package.json that give ONE consistent performance, DX, and deployment flexibility.",
-    people: [
-      {
-        name: "Fred K. Schott",
-        title: "Co-creator, Astro & Snowpack",
-        message:
-          "We selected Astro to deliver content-first pages with island architecture. Fred's vision for content-driven sites and predictable DX keeps our marketing surfaces static-fast while letting interactive dashboards hydrate where needed. Astro's 54.2k stars reflect the trust the community places in this framework.",
-        links: [
-          { label: "GitHub", url: "https://github.com/FredKSchott" },
-          { label: "X", url: "https://twitter.com/FredKSchott" },
-          { label: "Astro", url: "https://astro.build" },
-        ],
-      },
-      {
-        name: "Matthew Phillips",
-        title: "Core maintainer, Astro (Louisville, KY)",
-        message:
-          "Matthew's governance and stewardship of Astro's roadmap make it safe for our team to ship weekly without breakage. His contributions to web components (Haunted) and state machines (Robot) inform Astro's design philosophy. With 369 open-source repositories, Matthew embodies the kind of prolific, thoughtful engineering we aspire to.",
-        links: [
-          { label: "GitHub", url: "https://github.com/matthewp" },
-          { label: "X", url: "https://twitter.com/matthewcp" },
-          { label: "Website", url: "https://matthewphillips.info" },
-        ],
-      },
-      {
-        name: "Evan You & Anthony Fu",
-        title: "Creators of Vite (76.4k stars)",
-        message:
-          "Evan's vision for next-generation frontend tooling and Anthony's prolific contributions power our dev experience. Vite's 76.4k stars and Vue.js's 52.1k stars for Vue 3 represent massive trust in their engineering. We rely on Vite's lightning-fast HMR and deterministic builds for instant feedback and reproducible deployments. Evan's leadership of VoidZero continues to push the boundaries of JavaScript tooling.",
-        links: [
-          { label: "Evan (yyx990803)", url: "https://github.com/yyx990803" },
-          { label: "Anthony (antfu)", url: "https://github.com/antfu" },
-          { label: "Vite", url: "https://vitejs.dev" },
-          { label: "Evan's Site", url: "https://evanyou.me" },
-        ],
-      },
-      {
-        name: "Jarred Sumner & the Oven team",
-        title: "Creators of Bun (81.9k stars)",
-        message:
-          "Jarred's vision for an all-in-one JavaScript runtime is redefining developer experience. Bun's 81,996 stars on GitHub (written in Zig) represent the fastest-growing runtime ecosystem. We chose Bun for its fast installs, deterministic locks, built-in test runners, and TypeScript-first design. The Oven team's dedication to performance and DX aligns perfectly with our shipping velocity goals.",
-        links: [
-          { label: "GitHub", url: "https://github.com/oven-sh/bun" },
-          { label: "Website", url: "https://bun.sh" },
-          { label: "Twitter", url: "https://twitter.com/bunjavascript" },
-        ],
-      },
-      {
-        name: "Cloudflare Developers",
-        title: "Builders of Workers, Pages & Edge Runtime",
-        message:
-          "Cloudflare's edge network and developer-first platform transform how we deploy. The `@astrojs/cloudflare` adapter lets us render React components server-side using `react-dom/server.edge` across 330+ global locations with < 330ms latency. Cloudflare's commitment to zero-config deployments and unlimited requests on the free tier aligns with our vision of lowering barriers to entry.",
-        links: [
-          { label: "GitHub", url: "https://github.com/cloudflare" },
-          { label: "Developers", url: "https://developers.cloudflare.com" },
-          { label: "Astro Adapter", url: "https://docs.astro.build/en/guides/integrations-guide/cloudflare/" },
-        ],
-      },
-    ],
-  },
-  {
-    category: "Interface & Design System",
-    summary:
-      "Interface primitives defined in web/package.json shape our component system, accessibility guarantees, and visual language.",
-    people: [
-      {
-        name: "shadcn",
-        title: "Creator, shadcn/ui (99.1k stars)",
-        message:
-          "shadcn's approach to component distribution—copy-paste composition patterns over heavy dependencies—transformed how we build UIs. With 99,100+ stars and 50+ pre-installed accessible components, shadcn/ui lets us own and refactor patterns without vendor lock-in. His work at Vercel reflects the modern composability philosophy that guides our component architecture.",
-        links: [
-          { label: "GitHub", url: "https://github.com/shadcn" },
-          { label: "shadcn/ui", url: "https://ui.shadcn.com" },
-          { label: "X", url: "https://x.com/shadcn" },
-        ],
-      },
-      {
-        name: "Adam Wathan & Tailwind Labs team",
-        title: "Creators, Tailwind CSS v4 (90.9k stars)",
-        message:
-          "Adam's utility-first CSS paradigm revolutionized how we think about styling. Tailwind CSS v4's CSS-based configuration and 90,900+ stars represent the industry's shift toward composable, sustainable styling. We standardized on Tailwind v4 to move fast with semantically meaningful utilities while keeping themes consistent across Astro and React islands. Adam's \"Refactoring UI\" book and Full Stack Radio podcast reflect his commitment to making design accessible to developers.",
-        links: [
-          { label: "Adam (GitHub)", url: "https://github.com/adamwathan" },
-          { label: "Tailwind CSS", url: "https://tailwindcss.com" },
-          { label: "Full Stack Radio", url: "https://www.fullstackradio.com" },
-        ],
-      },
-      {
-        name: "Lucide contributors (273 contributors)",
-        title: "Maintainers, Lucide icon set (19.6k stars)",
-        message:
-          "The Lucide community, led by ericfennis, karsa-mistmere, and jguddas, created a 1000+ icon library that powers our visual language. With 19,600+ stars, ISC licensing, and Figma integration, Lucide gives us cohesive, accessible icons for both product and marketing without licensing friction. Sponsored by Vercel and DigitalOcean, Lucide is used by 1.7+ million projects—a testament to its community-driven quality.",
-        links: [
-          { label: "GitHub", url: "https://github.com/lucide-icons/lucide" },
-          { label: "Lucide Icons", url: "https://lucide.dev" },
-          { label: "Figma Plugin", url: "https://www.figma.com/community/plugin/1101450596816564643/lucide-icons" },
-        ],
-      },
-    ],
-  },
-  {
-    category: "AI & Developer Tooling",
-    summary:
-      "Engineering foundations in web/package.json that keep our AI workflows type-safe, observable, and production-ready.",
-    people: [
-      {
-        name: "Microsoft TypeScript team",
-        title: "Maintainers, TypeScript (107k stars)",
-        message:
-          "TypeScript's optional type system transforms how we write scalable, maintainable code. With 107,000+ stars, 811 contributors, and 24.5+ million dependent projects, TypeScript has become the industry standard. Led by Anders Hejlsberg, Sheetal Kamat, and Nathan Sanderson, TypeScript enables our AI agents and frontend code to refactor safely with full type guarantees. The Apache-2.0 license and active community governance reflect Microsoft's commitment to the ecosystem.",
-        links: [
-          { label: "GitHub", url: "https://github.com/microsoft/TypeScript" },
-          { label: "TypeScript", url: "https://www.typescriptlang.org" },
-          { label: "Handbook", url: "https://www.typescriptlang.org/docs/" },
-        ],
-      },
-      {
-        name: "OpenAI Research & Engineering",
-        title: "Models powering ONE's AI & Assembler",
-        message:
-          "OpenAI's models—from Claude 3 to GPT-4—power our `/ai` assembler features and conversational workflows. We chose OpenAI for broad capability coverage, rigorous evaluation tooling, and production-grade reliability. Their commitment to safety, transparency, and developer experience aligns with our mission to make AI accessible and trustworthy. OpenAI's APIs have become the de facto standard for AI-powered applications.",
-        links: [
-          { label: "OpenAI", url: "https://openai.com" },
-          { label: "API Docs", url: "https://platform.openai.com/docs" },
-          { label: "GitHub", url: "https://github.com/openai" },
-        ],
-      },
-      {
-        name: "Convex team",
-        title: "Creators, Convex DB & Backend (8k stars)",
-        message:
-          "Convex is the \"open-source reactive database for app developers\" that powers ONE's entire backend. With 8,000+ stars, 165 repositories, and 40+ interconnected packages, Convex provides our typed functions, real-time subscriptions, and authentication backbone (convex v1.27.3 + better-auth). The Convex team's sponsorship of Vite, Tokio, and Zod shows their commitment to the broader ecosystem. Convex's TypeScript-first approach and zero-config deployment align perfectly with our vision.",
-        links: [
-          { label: "GitHub", url: "https://github.com/get-convex" },
-          { label: "Convex", url: "https://www.convex.dev" },
-          { label: "Docs", url: "https://docs.convex.dev" },
-        ],
-      },
-    ],
-  },
-  {
-    category: "Learning & Inspiration",
-    summary:
-      "Leaders whose public work shapes our engineering playbooks, architecture principles, and shipping cadence.",
-    people: [
-      {
-        name: "Guillermo Rauch",
-        title: "Founder, Vercel (16.2k followers)",
-        message:
-          "Guillermo's vision for global edge delivery and obsessive focus on developer ergonomics informs our deployment strategy. Vercel's sponsorship of Lucide, shadcn/ui, and countless open-source projects reflects Guillermo's commitment to lifting the entire ecosystem. His leadership of Next.js and focus on atomic deployments shape how we think about shipping at speed. We're deeply influenced by Vercel's focus on the edge and instant feedback loops.",
-        links: [
-          { label: "Guillermo (GitHub)", url: "https://github.com/rauchg" },
-          { label: "Vercel", url: "https://vercel.com" },
-          { label: "X", url: "https://twitter.com/rauchg" },
-        ],
-      },
-      {
-        name: "Theo Browne",
-        title: "CEO, Ping.gg & Creator, Create T3 App (28.2k stars)",
-        message:
-          "Theo's relentless advocacy for end-to-end type safety shapes our engineering culture. His create-t3-app (28,200+ stars) shows how to scaffold a modern full-stack TypeScript application. UploadThing (4,900+ stars) and his content on Twitch and YouTube (@t3dotgg, @theo) make TypeScript approachable for developers at all levels. Theo's content-first approach and willingness to challenge conventions influence how we think about shipping fast with confidence.",
-        links: [
-          { label: "GitHub", url: "https://github.com/t3dotgg" },
-          { label: "create-t3-app", url: "https://create.t3.gg" },
-          { label: "YouTube", url: "https://www.youtube.com/@t3dotgg" },
-          { label: "Twitch", url: "https://twitch.tv/theo" },
-        ],
-      },
-      {
-        name: "Tania Rascia",
-        title: "Educator & Developer Advocate (Since 1998)",
-        message:
-          "Tania's philosophy—\"Everything on this site is written by me, not AI\"—sets the gold standard for authentic technical education. Building websites since 1998, her deep-dive guides on React, Vue, CSS, and command-line tools make complex topics approachable. Her open-source projects (TakeNote, New Moon editor theme) and content-first approach to learning influence how we think about documentation and knowledge sharing. Tania's commitment to human-centered technology aligns with our values.",
-        links: [
-          { label: "Website", url: "https://taniarascia.com" },
-          { label: "GitHub", url: "https://github.com/taniarascia" },
-          { label: "TakeNote", url: "https://github.com/taniarascia/takenote" },
-        ],
-      },
-    ],
-  },
-  {
-    category: "Production Dependencies",
-    summary:
-      "88+ production packages powering ONE's functionality, from state management to real-time databases.",
-    people: [
-      {
-        name: "React & React DOM",
-        title: "UI framework v19.1.1 (240k stars)",
-        message:
-          "React's declarative component model and hooks revolutionized how we build UIs. With 240,000+ stars, 1,720 contributors, and 29.8+ million dependents, React powers ONE's interactive islands. We pair React with react-dom for server-side rendering on Cloudflare's edge using `react-dom/server.edge`. React's proven, battle-tested API makes it the obvious choice for scaling component systems across teams.",
-        links: [
-          { label: "React", url: "https://github.com/facebook/react" },
-          { label: "React.dev", url: "https://react.dev" },
-          { label: "React Native", url: "https://reactnative.dev" },
-        ],
-      },
-      {
-        name: "Convex Team",
-        title: "Real-time database & backend",
-        message:
-          "Convex provides our typed functions, real-time subscriptions, and authentication backbone (convex v1.27.3 + better-auth).",
-        links: [
-          { label: "GitHub", url: "https://github.com/get-convex" },
-          { label: "Website", url: "https://www.convex.dev" },
-        ],
-      },
-      {
-        name: "Radix UI Team (WorkOS)",
-        title: "25+ accessible primitives (18.1k stars)",
-        message:
-          "Radix Primitives (18,100+ stars) provide the unstyled, accessible foundation for our component system. With 25 React components (accordion, dialog, dropdown, tabs, etc.) built on WAI-ARIA standards, Radix lets us compose complex UIs without rebuilding accessibility from scratch. Their commitment to a11y and focus on developer experience make Radix the trusted choice for design systems across the industry.",
-        links: [
-          { label: "Radix UI", url: "https://www.radix-ui.com" },
-          { label: "Primitives", url: "https://github.com/radix-ui/primitives" },
-          { label: "Themes", url: "https://www.radix-ui.com/themes" },
-        ],
-      },
-      {
-        name: "TanStack (Salt Lake City)",
-        title: "Data management & tables (47.3k + 27.2k stars)",
-        message:
-          "TanStack's suite of libraries—Query (47,300+ stars), Table (27,200+ stars), Router, Form, Virtual—handle everything from server state to complex data grids. Founded in Salt Lake City with 8,500+ followers, TanStack provides enterprise-grade, headless components for React, Vue, Solid, Svelte, and Angular. Their TypeScript-first approach and framework-agnostic design embody the modern JavaScript philosophy.",
-        links: [
-          { label: "TanStack", url: "https://tanstack.com" },
-          { label: "Query", url: "https://tanstack.com/query" },
-          { label: "Table", url: "https://tanstack.com/table" },
-        ],
-      },
-      {
-        name: "Framer & Motion Division",
-        title: "Animation & motion primitives (30.2k stars)",
-        message:
-          "Motion (30,200+ stars) powers smooth, GPU-accelerated animations across web, React, and Vue. With a hybrid engine combining JavaScript and native browser APIs, Motion brings professional animation capabilities to the masses. Motion+ offers premium features (180+ code examples, VS Code editing), and sponsors from Figma, Linear, Sanity, and Notion reflect the tool's strategic importance. We use Motion (v12.23.24) for transitions and interactive visual feedback that delights users.",
-        links: [
-          { label: "Motion", url: "https://github.com/motiondivision/motion" },
-          { label: "Website", url: "https://motion.dev" },
-          { label: "Motion+", url: "https://motion.dev/premium" },
-        ],
-      },
-    ],
-  },
-  {
-    category: "Developer Experience",
-    summary:
-      "Tools & utilities in web/package.json that make development faster, safer, and more enjoyable.",
-    people: [
-      {
-        name: "Effect team",
-        title: "Functional effect system (11.8k stars)",
-        message:
-          "Effect (11,800+ stars, 168 contributors) is our foundation for production-ready TypeScript. With 40+ packages covering AI integration (OpenAI, Anthropic, Bedrock), databases (SQL, PostgreSQL, MySQL), and observability (OpenTelemetry), Effect provides comprehensive standard library for functional programming. Effect's type-safe error handling, dependency injection, and structured concurrency enable us to build resilient, maintainable services. 31,300+ dependent projects rely on Effect.",
-        links: [
-          { label: "Effect", url: "https://effect.website" },
-          { label: "GitHub", url: "https://github.com/effect-ts/effect" },
-          { label: "Docs", url: "https://effect.website/docs/getting-started/what-is-effect" },
-        ],
-      },
-      {
-        name: "Colin McDaniel & Zod team",
-        title: "Schema validation (40.6k stars)",
-        message:
-          "Zod (40,600+ stars, 488 contributors) is our schema validation layer with zero dependencies and a tiny 2KB gzipped bundle. Colin's TypeScript-first approach to validation makes it safe to parse untrusted data (form submissions, API responses, user input) while maintaining full type inference. With 2.7+ million dependent projects, Zod has become the standard for runtime type safety in TypeScript.",
-        links: [
-          { label: "Zod", url: "https://zod.dev" },
-          { label: "GitHub", url: "https://github.com/colinhacks/zod" },
-          { label: "Playground", url: "https://stackblitz.com/github/colinhacks/zod" },
-        ],
-      },
-      {
-        name: "React Hook Form Team",
-        title: "Form state management (44.1k stars)",
-        message:
-          "React Hook Form (44,100+ stars, 363 contributors) is the modern approach to form handling. With a focus on performance, UX, and DX, it leverages native HTML form validation and integrates seamlessly with Zod, Yup, AJV, and other validation libraries. Used by 1.6+ million projects, React Hook Form keeps our form code minimal, testable, and performant across web and React Native.",
-        links: [
-          { label: "React Hook Form", url: "https://react-hook-form.com" },
-          { label: "GitHub", url: "https://github.com/react-hook-form/react-hook-form" },
-          { label: "Documentation", url: "https://react-hook-form.com/docs" },
-        ],
-      },
-      {
-        name: "Vitest Team (VoidZero Inc.)",
-        title: "Unit testing framework (15.3k stars)",
-        message:
-          "Vitest (15,300+ stars, 657 contributors) brings the power of Vite to testing. By leveraging Vite's config, transformers, and plugins, Vitest provides Jest-compatible APIs with instant watch mode and HMR-like feedback loops. With 522k+ dependents, browser mode for component testing (Vue, React, Svelte), built-in coverage, and benchmarking support, Vitest makes test-driven development a joy. We use Vitest (v3.2.4) for rapid iteration and comprehensive test coverage.",
-        links: [
-          { label: "Vitest", url: "https://vitest.dev" },
-          { label: "GitHub", url: "https://github.com/vitest-dev/vitest" },
-          { label: "Guide", url: "https://vitest.dev/guide/" },
-        ],
-      },
-      {
-        name: "ESLint & TypeScript-ESLint teams",
-        title: "Code quality & linting",
-        message:
-          "ESLint (9.36.0) is the de facto JavaScript linter, now with a modern flat config system. Paired with typescript-eslint (8.45.0), we enforce consistent patterns across 988+ rules covering code quality, accessibility, and best practices. ESLint's plugin ecosystem and the TypeScript-ESLint bridge let us catch errors before production—from typos to subtle type mismatches. These tools, driven by volunteer maintainers across the ecosystem, keep our code quality high and consistent.",
-        links: [
-          { label: "ESLint", url: "https://eslint.org" },
-          { label: "GitHub", url: "https://github.com/eslint/eslint" },
-          { label: "TypeScript-ESLint", url: "https://typescript-eslint.io" },
-        ],
-      },
-    ],
-  },
+	{
+		category: "Framework & Runtime",
+		summary:
+			"Core runtime choices from web/package.json that give ONE consistent performance, DX, and deployment flexibility.",
+		people: [
+			{
+				name: "Fred K. Schott",
+				title: "Co-creator, Astro & Snowpack",
+				message:
+					"We selected Astro to deliver content-first pages with island architecture. Fred's vision for content-driven sites and predictable DX keeps our marketing surfaces static-fast while letting interactive dashboards hydrate where needed. Astro's 54.2k stars reflect the trust the community places in this framework.",
+				links: [
+					{ label: "GitHub", url: "https://github.com/FredKSchott" },
+					{ label: "X", url: "https://twitter.com/FredKSchott" },
+					{ label: "Astro", url: "https://astro.build" },
+				],
+			},
+			{
+				name: "Matthew Phillips",
+				title: "Core maintainer, Astro (Louisville, KY)",
+				message:
+					"Matthew's governance and stewardship of Astro's roadmap make it safe for our team to ship weekly without breakage. His contributions to web components (Haunted) and state machines (Robot) inform Astro's design philosophy. With 369 open-source repositories, Matthew embodies the kind of prolific, thoughtful engineering we aspire to.",
+				links: [
+					{ label: "GitHub", url: "https://github.com/matthewp" },
+					{ label: "X", url: "https://twitter.com/matthewcp" },
+					{ label: "Website", url: "https://matthewphillips.info" },
+				],
+			},
+			{
+				name: "Evan You & Anthony Fu",
+				title: "Creators of Vite (76.4k stars)",
+				message:
+					"Evan's vision for next-generation frontend tooling and Anthony's prolific contributions power our dev experience. Vite's 76.4k stars and Vue.js's 52.1k stars for Vue 3 represent massive trust in their engineering. We rely on Vite's lightning-fast HMR and deterministic builds for instant feedback and reproducible deployments. Evan's leadership of VoidZero continues to push the boundaries of JavaScript tooling.",
+				links: [
+					{ label: "Evan (yyx990803)", url: "https://github.com/yyx990803" },
+					{ label: "Anthony (antfu)", url: "https://github.com/antfu" },
+					{ label: "Vite", url: "https://vitejs.dev" },
+					{ label: "Evan's Site", url: "https://evanyou.me" },
+				],
+			},
+			{
+				name: "Jarred Sumner & the Oven team",
+				title: "Creators of Bun (81.9k stars)",
+				message:
+					"Jarred's vision for an all-in-one JavaScript runtime is redefining developer experience. Bun's 81,996 stars on GitHub (written in Zig) represent the fastest-growing runtime ecosystem. We chose Bun for its fast installs, deterministic locks, built-in test runners, and TypeScript-first design. The Oven team's dedication to performance and DX aligns perfectly with our shipping velocity goals.",
+				links: [
+					{ label: "GitHub", url: "https://github.com/oven-sh/bun" },
+					{ label: "Website", url: "https://bun.sh" },
+					{ label: "Twitter", url: "https://twitter.com/bunjavascript" },
+				],
+			},
+			{
+				name: "Cloudflare Developers",
+				title: "Builders of Workers, Pages & Edge Runtime",
+				message:
+					"Cloudflare's edge network and developer-first platform transform how we deploy. The `@astrojs/cloudflare` adapter lets us render React components server-side using `react-dom/server.edge` across 330+ global locations with < 330ms latency. Cloudflare's commitment to zero-config deployments and unlimited requests on the free tier aligns with our vision of lowering barriers to entry.",
+				links: [
+					{ label: "GitHub", url: "https://github.com/cloudflare" },
+					{ label: "Developers", url: "https://developers.cloudflare.com" },
+					{
+						label: "Astro Adapter",
+						url: "https://docs.astro.build/en/guides/integrations-guide/cloudflare/",
+					},
+				],
+			},
+		],
+	},
+	{
+		category: "Interface & Design System",
+		summary:
+			"Interface primitives defined in web/package.json shape our component system, accessibility guarantees, and visual language.",
+		people: [
+			{
+				name: "shadcn",
+				title: "Creator, shadcn/ui (99.1k stars)",
+				message:
+					"shadcn's approach to component distribution—copy-paste composition patterns over heavy dependencies—transformed how we build UIs. With 99,100+ stars and 50+ pre-installed accessible components, shadcn/ui lets us own and refactor patterns without vendor lock-in. His work at Vercel reflects the modern composability philosophy that guides our component architecture.",
+				links: [
+					{ label: "GitHub", url: "https://github.com/shadcn" },
+					{ label: "shadcn/ui", url: "https://ui.shadcn.com" },
+					{ label: "X", url: "https://x.com/shadcn" },
+				],
+			},
+			{
+				name: "Adam Wathan & Tailwind Labs team",
+				title: "Creators, Tailwind CSS v4 (90.9k stars)",
+				message:
+					"Adam's utility-first CSS paradigm revolutionized how we think about styling. Tailwind CSS v4's CSS-based configuration and 90,900+ stars represent the industry's shift toward composable, sustainable styling. We standardized on Tailwind v4 to move fast with semantically meaningful utilities while keeping themes consistent across Astro and React islands. Adam's \"Refactoring UI\" book and Full Stack Radio podcast reflect his commitment to making design accessible to developers.",
+				links: [
+					{ label: "Adam (GitHub)", url: "https://github.com/adamwathan" },
+					{ label: "Tailwind CSS", url: "https://tailwindcss.com" },
+					{ label: "Full Stack Radio", url: "https://www.fullstackradio.com" },
+				],
+			},
+			{
+				name: "Lucide contributors (273 contributors)",
+				title: "Maintainers, Lucide icon set (19.6k stars)",
+				message:
+					"The Lucide community, led by ericfennis, karsa-mistmere, and jguddas, created a 1000+ icon library that powers our visual language. With 19,600+ stars, ISC licensing, and Figma integration, Lucide gives us cohesive, accessible icons for both product and marketing without licensing friction. Sponsored by Vercel and DigitalOcean, Lucide is used by 1.7+ million projects—a testament to its community-driven quality.",
+				links: [
+					{ label: "GitHub", url: "https://github.com/lucide-icons/lucide" },
+					{ label: "Lucide Icons", url: "https://lucide.dev" },
+					{
+						label: "Figma Plugin",
+						url: "https://www.figma.com/community/plugin/1101450596816564643/lucide-icons",
+					},
+				],
+			},
+		],
+	},
+	{
+		category: "AI & Developer Tooling",
+		summary:
+			"Engineering foundations in web/package.json that keep our AI workflows type-safe, observable, and production-ready.",
+		people: [
+			{
+				name: "Microsoft TypeScript team",
+				title: "Maintainers, TypeScript (107k stars)",
+				message:
+					"TypeScript's optional type system transforms how we write scalable, maintainable code. With 107,000+ stars, 811 contributors, and 24.5+ million dependent projects, TypeScript has become the industry standard. Led by Anders Hejlsberg, Sheetal Kamat, and Nathan Sanderson, TypeScript enables our AI agents and frontend code to refactor safely with full type guarantees. The Apache-2.0 license and active community governance reflect Microsoft's commitment to the ecosystem.",
+				links: [
+					{ label: "GitHub", url: "https://github.com/microsoft/TypeScript" },
+					{ label: "TypeScript", url: "https://www.typescriptlang.org" },
+					{ label: "Handbook", url: "https://www.typescriptlang.org/docs/" },
+				],
+			},
+			{
+				name: "OpenAI Research & Engineering",
+				title: "Models powering ONE's AI & Assembler",
+				message:
+					"OpenAI's models—from Claude 3 to GPT-4—power our `/ai` assembler features and conversational workflows. We chose OpenAI for broad capability coverage, rigorous evaluation tooling, and production-grade reliability. Their commitment to safety, transparency, and developer experience aligns with our mission to make AI accessible and trustworthy. OpenAI's APIs have become the de facto standard for AI-powered applications.",
+				links: [
+					{ label: "OpenAI", url: "https://openai.com" },
+					{ label: "API Docs", url: "https://platform.openai.com/docs" },
+					{ label: "GitHub", url: "https://github.com/openai" },
+				],
+			},
+			{
+				name: "Convex team",
+				title: "Creators, Convex DB & Backend (8k stars)",
+				message:
+					"Convex is the \"open-source reactive database for app developers\" that powers ONE's entire backend. With 8,000+ stars, 165 repositories, and 40+ interconnected packages, Convex provides our typed functions, real-time subscriptions, and authentication backbone (convex v1.27.3 + better-auth). The Convex team's sponsorship of Vite, Tokio, and Zod shows their commitment to the broader ecosystem. Convex's TypeScript-first approach and zero-config deployment align perfectly with our vision.",
+				links: [
+					{ label: "GitHub", url: "https://github.com/get-convex" },
+					{ label: "Convex", url: "https://www.convex.dev" },
+					{ label: "Docs", url: "https://docs.convex.dev" },
+				],
+			},
+		],
+	},
+	{
+		category: "Learning & Inspiration",
+		summary:
+			"Leaders whose public work shapes our engineering playbooks, architecture principles, and shipping cadence.",
+		people: [
+			{
+				name: "Guillermo Rauch",
+				title: "Founder, Vercel (16.2k followers)",
+				message:
+					"Guillermo's vision for global edge delivery and obsessive focus on developer ergonomics informs our deployment strategy. Vercel's sponsorship of Lucide, shadcn/ui, and countless open-source projects reflects Guillermo's commitment to lifting the entire ecosystem. His leadership of Next.js and focus on atomic deployments shape how we think about shipping at speed. We're deeply influenced by Vercel's focus on the edge and instant feedback loops.",
+				links: [
+					{ label: "Guillermo (GitHub)", url: "https://github.com/rauchg" },
+					{ label: "Vercel", url: "https://vercel.com" },
+					{ label: "X", url: "https://twitter.com/rauchg" },
+				],
+			},
+			{
+				name: "Theo Browne",
+				title: "CEO, Ping.gg & Creator, Create T3 App (28.2k stars)",
+				message:
+					"Theo's relentless advocacy for end-to-end type safety shapes our engineering culture. His create-t3-app (28,200+ stars) shows how to scaffold a modern full-stack TypeScript application. UploadThing (4,900+ stars) and his content on Twitch and YouTube (@t3dotgg, @theo) make TypeScript approachable for developers at all levels. Theo's content-first approach and willingness to challenge conventions influence how we think about shipping fast with confidence.",
+				links: [
+					{ label: "GitHub", url: "https://github.com/t3dotgg" },
+					{ label: "create-t3-app", url: "https://create.t3.gg" },
+					{ label: "YouTube", url: "https://www.youtube.com/@t3dotgg" },
+					{ label: "Twitch", url: "https://twitch.tv/theo" },
+				],
+			},
+			{
+				name: "Tania Rascia",
+				title: "Educator & Developer Advocate (Since 1998)",
+				message:
+					"Tania's philosophy—\"Everything on this site is written by me, not AI\"—sets the gold standard for authentic technical education. Building websites since 1998, her deep-dive guides on React, Vue, CSS, and command-line tools make complex topics approachable. Her open-source projects (TakeNote, New Moon editor theme) and content-first approach to learning influence how we think about documentation and knowledge sharing. Tania's commitment to human-centered technology aligns with our values.",
+				links: [
+					{ label: "Website", url: "https://taniarascia.com" },
+					{ label: "GitHub", url: "https://github.com/taniarascia" },
+					{ label: "TakeNote", url: "https://github.com/taniarascia/takenote" },
+				],
+			},
+		],
+	},
+	{
+		category: "Production Dependencies",
+		summary:
+			"88+ production packages powering ONE's functionality, from state management to real-time databases.",
+		people: [
+			{
+				name: "React & React DOM",
+				title: "UI framework v19.1.1 (240k stars)",
+				message:
+					"React's declarative component model and hooks revolutionized how we build UIs. With 240,000+ stars, 1,720 contributors, and 29.8+ million dependents, React powers ONE's interactive islands. We pair React with react-dom for server-side rendering on Cloudflare's edge using `react-dom/server.edge`. React's proven, battle-tested API makes it the obvious choice for scaling component systems across teams.",
+				links: [
+					{ label: "React", url: "https://github.com/facebook/react" },
+					{ label: "React.dev", url: "https://react.dev" },
+					{ label: "React Native", url: "https://reactnative.dev" },
+				],
+			},
+			{
+				name: "Convex Team",
+				title: "Real-time database & backend",
+				message:
+					"Convex provides our typed functions, real-time subscriptions, and authentication backbone (convex v1.27.3 + better-auth).",
+				links: [
+					{ label: "GitHub", url: "https://github.com/get-convex" },
+					{ label: "Website", url: "https://www.convex.dev" },
+				],
+			},
+			{
+				name: "Radix UI Team (WorkOS)",
+				title: "25+ accessible primitives (18.1k stars)",
+				message:
+					"Radix Primitives (18,100+ stars) provide the unstyled, accessible foundation for our component system. With 25 React components (accordion, dialog, dropdown, tabs, etc.) built on WAI-ARIA standards, Radix lets us compose complex UIs without rebuilding accessibility from scratch. Their commitment to a11y and focus on developer experience make Radix the trusted choice for design systems across the industry.",
+				links: [
+					{ label: "Radix UI", url: "https://www.radix-ui.com" },
+					{
+						label: "Primitives",
+						url: "https://github.com/radix-ui/primitives",
+					},
+					{ label: "Themes", url: "https://www.radix-ui.com/themes" },
+				],
+			},
+			{
+				name: "TanStack (Salt Lake City)",
+				title: "Data management & tables (47.3k + 27.2k stars)",
+				message:
+					"TanStack's suite of libraries—Query (47,300+ stars), Table (27,200+ stars), Router, Form, Virtual—handle everything from server state to complex data grids. Founded in Salt Lake City with 8,500+ followers, TanStack provides enterprise-grade, headless components for React, Vue, Solid, Svelte, and Angular. Their TypeScript-first approach and framework-agnostic design embody the modern JavaScript philosophy.",
+				links: [
+					{ label: "TanStack", url: "https://tanstack.com" },
+					{ label: "Query", url: "https://tanstack.com/query" },
+					{ label: "Table", url: "https://tanstack.com/table" },
+				],
+			},
+			{
+				name: "Framer & Motion Division",
+				title: "Animation & motion primitives (30.2k stars)",
+				message:
+					"Motion (30,200+ stars) powers smooth, GPU-accelerated animations across web, React, and Vue. With a hybrid engine combining JavaScript and native browser APIs, Motion brings professional animation capabilities to the masses. Motion+ offers premium features (180+ code examples, VS Code editing), and sponsors from Figma, Linear, Sanity, and Notion reflect the tool's strategic importance. We use Motion (v12.23.24) for transitions and interactive visual feedback that delights users.",
+				links: [
+					{ label: "Motion", url: "https://github.com/motiondivision/motion" },
+					{ label: "Website", url: "https://motion.dev" },
+					{ label: "Motion+", url: "https://motion.dev/premium" },
+				],
+			},
+		],
+	},
+	{
+		category: "Developer Experience",
+		summary:
+			"Tools & utilities in web/package.json that make development faster, safer, and more enjoyable.",
+		people: [
+			{
+				name: "Effect team",
+				title: "Functional effect system (11.8k stars)",
+				message:
+					"Effect (11,800+ stars, 168 contributors) is our foundation for production-ready TypeScript. With 40+ packages covering AI integration (OpenAI, Anthropic, Bedrock), databases (SQL, PostgreSQL, MySQL), and observability (OpenTelemetry), Effect provides comprehensive standard library for functional programming. Effect's type-safe error handling, dependency injection, and structured concurrency enable us to build resilient, maintainable services. 31,300+ dependent projects rely on Effect.",
+				links: [
+					{ label: "Effect", url: "https://effect.website" },
+					{ label: "GitHub", url: "https://github.com/effect-ts/effect" },
+					{
+						label: "Docs",
+						url: "https://effect.website/docs/getting-started/what-is-effect",
+					},
+				],
+			},
+			{
+				name: "Colin McDaniel & Zod team",
+				title: "Schema validation (40.6k stars)",
+				message:
+					"Zod (40,600+ stars, 488 contributors) is our schema validation layer with zero dependencies and a tiny 2KB gzipped bundle. Colin's TypeScript-first approach to validation makes it safe to parse untrusted data (form submissions, API responses, user input) while maintaining full type inference. With 2.7+ million dependent projects, Zod has become the standard for runtime type safety in TypeScript.",
+				links: [
+					{ label: "Zod", url: "https://zod.dev" },
+					{ label: "GitHub", url: "https://github.com/colinhacks/zod" },
+					{
+						label: "Playground",
+						url: "https://stackblitz.com/github/colinhacks/zod",
+					},
+				],
+			},
+			{
+				name: "React Hook Form Team",
+				title: "Form state management (44.1k stars)",
+				message:
+					"React Hook Form (44,100+ stars, 363 contributors) is the modern approach to form handling. With a focus on performance, UX, and DX, it leverages native HTML form validation and integrates seamlessly with Zod, Yup, AJV, and other validation libraries. Used by 1.6+ million projects, React Hook Form keeps our form code minimal, testable, and performant across web and React Native.",
+				links: [
+					{ label: "React Hook Form", url: "https://react-hook-form.com" },
+					{
+						label: "GitHub",
+						url: "https://github.com/react-hook-form/react-hook-form",
+					},
+					{ label: "Documentation", url: "https://react-hook-form.com/docs" },
+				],
+			},
+			{
+				name: "Vitest Team (VoidZero Inc.)",
+				title: "Unit testing framework (15.3k stars)",
+				message:
+					"Vitest (15,300+ stars, 657 contributors) brings the power of Vite to testing. By leveraging Vite's config, transformers, and plugins, Vitest provides Jest-compatible APIs with instant watch mode and HMR-like feedback loops. With 522k+ dependents, browser mode for component testing (Vue, React, Svelte), built-in coverage, and benchmarking support, Vitest makes test-driven development a joy. We use Vitest (v3.2.4) for rapid iteration and comprehensive test coverage.",
+				links: [
+					{ label: "Vitest", url: "https://vitest.dev" },
+					{ label: "GitHub", url: "https://github.com/vitest-dev/vitest" },
+					{ label: "Guide", url: "https://vitest.dev/guide/" },
+				],
+			},
+			{
+				name: "ESLint & TypeScript-ESLint teams",
+				title: "Code quality & linting",
+				message:
+					"ESLint (9.36.0) is the de facto JavaScript linter, now with a modern flat config system. Paired with typescript-eslint (8.45.0), we enforce consistent patterns across 988+ rules covering code quality, accessibility, and best practices. ESLint's plugin ecosystem and the TypeScript-ESLint bridge let us catch errors before production—from typos to subtle type mismatches. These tools, driven by volunteer maintainers across the ecosystem, keep our code quality high and consistent.",
+				links: [
+					{ label: "ESLint", url: "https://eslint.org" },
+					{ label: "GitHub", url: "https://github.com/eslint/eslint" },
+					{ label: "TypeScript-ESLint", url: "https://typescript-eslint.io" },
+				],
+			},
+		],
+	},
 ];
 ---
 

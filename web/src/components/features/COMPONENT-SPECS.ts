@@ -8,7 +8,7 @@
  * dimension framework. Each component renders one specific dimension.
  */
 
-import type { ReactNode } from 'react';
+import type { ReactNode } from "react";
 
 // ============================================================================
 // TYPES & INTERFACES
@@ -19,21 +19,21 @@ import type { ReactNode } from 'react';
  * Maps to backend things table with type: "feature"
  */
 export interface Feature {
-  id: string;
-  name: string;
-  description: string;
-  status: 'completed' | 'in_development' | 'planned' | 'deprecated';
-  category: string;
-  properties: {
-    tags?: string[];
-    icon?: string;
-    difficulty?: 'beginner' | 'intermediate' | 'advanced';
-    estimatedReleaseDate?: string;
-    relatedFeatures?: string[];
-    dependencies?: string[];
-  };
-  createdAt: number;
-  updatedAt: number;
+	id: string;
+	name: string;
+	description: string;
+	status: "completed" | "in_development" | "planned" | "deprecated";
+	category: string;
+	properties: {
+		tags?: string[];
+		icon?: string;
+		difficulty?: "beginner" | "intermediate" | "advanced";
+		estimatedReleaseDate?: string;
+		relatedFeatures?: string[];
+		dependencies?: string[];
+	};
+	createdAt: number;
+	updatedAt: number;
 }
 
 /**
@@ -41,11 +41,11 @@ export interface Feature {
  * Used to display numeric information about features
  */
 export interface FeatureStat {
-  label: string;
-  value: number | string;
-  unit?: string;
-  trend?: 'up' | 'down' | 'neutral';
-  trendPercent?: number;
+	label: string;
+	value: number | string;
+	unit?: string;
+	trend?: "up" | "down" | "neutral";
+	trendPercent?: number;
 }
 
 // ============================================================================
@@ -92,29 +92,29 @@ export interface FeatureStat {
  * ```
  */
 export interface FeatureCardProps {
-  feature: Feature;
-  variant?: 'default' | 'compact' | 'elevated';
-  showCategory?: boolean;
-  showStatus?: boolean;
-  onClick?: (feature: Feature) => void;
-  className?: string;
-  isLoading?: boolean;
+	feature: Feature;
+	variant?: "default" | "compact" | "elevated";
+	showCategory?: boolean;
+	showStatus?: boolean;
+	onClick?: (feature: Feature) => void;
+	className?: string;
+	isLoading?: boolean;
 }
 
 export interface FeatureCardComposition {
-  Header: {
-    title: string;
-    icon?: ReactNode;
-  };
-  Body: {
-    description: string;
-    tags?: string[];
-  };
-  Footer: {
-    status: Feature['status'];
-    category: string;
-    difficulty?: string;
-  };
+	Header: {
+		title: string;
+		icon?: ReactNode;
+	};
+	Body: {
+		description: string;
+		tags?: string[];
+	};
+	Footer: {
+		status: Feature["status"];
+		category: string;
+		difficulty?: string;
+	};
 }
 
 // ============================================================================
@@ -161,15 +161,15 @@ export interface FeatureCardComposition {
  * ```
  */
 export interface FeatureStatProps {
-  label: string;
-  value: number | string;
-  unit?: string;
-  trend?: 'up' | 'down' | 'neutral';
-  trendPercent?: number;
-  variant?: 'default' | 'horizontal';
-  emphasis?: 'primary' | 'secondary';
-  className?: string;
-  isLoading?: boolean;
+	label: string;
+	value: number | string;
+	unit?: string;
+	trend?: "up" | "down" | "neutral";
+	trendPercent?: number;
+	variant?: "default" | "horizontal";
+	emphasis?: "primary" | "secondary";
+	className?: string;
+	isLoading?: boolean;
 }
 
 // ============================================================================
@@ -221,25 +221,25 @@ export interface FeatureStatProps {
  * ```
  */
 export interface FeatureListProps {
-  features: Feature[];
-  variant?: 'grid' | 'list' | 'compact';
-  filterStatus?: Feature['status'][];
-  filterCategory?: string[];
-  sortBy?: 'name' | 'updated' | 'status';
-  onFeatureClick?: (feature: Feature) => void;
-  isLoading?: boolean;
-  pagination?: {
-    page: number;
-    pageSize: number;
-    total: number;
-  };
-  onPageChange?: (page: number) => void;
-  className?: string;
-  emptyState?: {
-    icon?: ReactNode;
-    title?: string;
-    description?: string;
-  };
+	features: Feature[];
+	variant?: "grid" | "list" | "compact";
+	filterStatus?: Feature["status"][];
+	filterCategory?: string[];
+	sortBy?: "name" | "updated" | "status";
+	onFeatureClick?: (feature: Feature) => void;
+	isLoading?: boolean;
+	pagination?: {
+		page: number;
+		pageSize: number;
+		total: number;
+	};
+	onPageChange?: (page: number) => void;
+	className?: string;
+	emptyState?: {
+		icon?: ReactNode;
+		title?: string;
+		description?: string;
+	};
 }
 
 // ============================================================================
@@ -283,11 +283,11 @@ export interface FeatureListProps {
  * ```
  */
 export interface StatusBadgeProps {
-  status: Feature['status'];
-  variant?: 'badge' | 'pill' | 'dot';
-  size?: 'sm' | 'md' | 'lg';
-  showLabel?: boolean;
-  className?: string;
+	status: Feature["status"];
+	variant?: "badge" | "pill" | "dot";
+	size?: "sm" | "md" | "lg";
+	showLabel?: boolean;
+	className?: string;
 }
 
 // ============================================================================
@@ -328,13 +328,13 @@ export interface StatusBadgeProps {
  * ```
  */
 export interface CategoryPillProps {
-  category: string;
-  variant?: 'pill' | 'badge' | 'button';
-  size?: 'sm' | 'md' | 'lg';
-  removable?: boolean;
-  onRemove?: () => void;
-  className?: string;
-  icon?: ReactNode;
+	category: string;
+	variant?: "pill" | "badge" | "button";
+	size?: "sm" | "md" | "lg";
+	removable?: boolean;
+	onRemove?: () => void;
+	className?: string;
+	icon?: ReactNode;
 }
 
 // ============================================================================
@@ -375,15 +375,15 @@ export interface CategoryPillProps {
  * ```
  */
 export interface FeatureHeaderProps {
-  feature: Feature;
-  showBreadcrumb?: boolean;
-  showActions?: boolean;
-  actions?: Array<{
-    label: string;
-    onClick: () => void;
-    variant?: 'primary' | 'secondary' | 'destructive';
-  }>;
-  className?: string;
+	feature: Feature;
+	showBreadcrumb?: boolean;
+	showActions?: boolean;
+	actions?: Array<{
+		label: string;
+		onClick: () => void;
+		variant?: "primary" | "secondary" | "destructive";
+	}>;
+	className?: string;
 }
 
 // ============================================================================
@@ -428,14 +428,14 @@ export interface FeatureHeaderProps {
  * ```
  */
 export interface FeatureFilterProps {
-  statuses: Feature['status'][];
-  categories: string[];
-  selectedStatuses?: Feature['status'][];
-  selectedCategories?: string[];
-  onStatusChange?: (statuses: Feature['status'][]) => void;
-  onCategoryChange?: (categories: string[]) => void;
-  onClear?: () => void;
-  className?: string;
+	statuses: Feature["status"][];
+	categories: string[];
+	selectedStatuses?: Feature["status"][];
+	selectedCategories?: string[];
+	onStatusChange?: (statuses: Feature["status"][]) => void;
+	onCategoryChange?: (categories: string[]) => void;
+	onClear?: () => void;
+	className?: string;
 }
 
 // ============================================================================
@@ -479,12 +479,12 @@ export interface FeatureFilterProps {
  * ```
  */
 export interface FeatureSummaryProps {
-  stats: FeatureStat[];
-  title: string;
-  description?: string;
-  layout?: 'grid' | 'flex';
-  isLoading?: boolean;
-  className?: string;
+	stats: FeatureStat[];
+	title: string;
+	description?: string;
+	layout?: "grid" | "flex";
+	isLoading?: boolean;
+	className?: string;
 }
 
 // ============================================================================
@@ -492,49 +492,49 @@ export interface FeatureSummaryProps {
 // ============================================================================
 
 export const accessibilityChecklist = {
-  FeatureCard: [
-    '[ ] Uses semantic <article> or role="article"',
-    '[ ] Feature name uses <h3> heading level',
-    '[ ] Focus ring visible per WCAG (2px solid)',
-    '[ ] Status badge has aria-label',
-    '[ ] Category badge has aria-label',
-    '[ ] Description text has sufficient contrast (4.5:1)',
-    '[ ] Hover states don\'t rely on color alone',
-    '[ ] Click handler includes keyboard support',
-  ],
+	FeatureCard: [
+		'[ ] Uses semantic <article> or role="article"',
+		"[ ] Feature name uses <h3> heading level",
+		"[ ] Focus ring visible per WCAG (2px solid)",
+		"[ ] Status badge has aria-label",
+		"[ ] Category badge has aria-label",
+		"[ ] Description text has sufficient contrast (4.5:1)",
+		"[ ] Hover states don't rely on color alone",
+		"[ ] Click handler includes keyboard support",
+	],
 
-  StatusBadge: [
-    '[ ] Uses role="status" for dynamic updates',
-    '[ ] aria-label provides full status text',
-    '[ ] Color + icon (not color alone) conveys meaning',
-    '[ ] Contrast ratio meets WCAG AA (4.5:1)',
-    '[ ] Dot variant includes tooltip on hover',
-  ],
+	StatusBadge: [
+		'[ ] Uses role="status" for dynamic updates',
+		"[ ] aria-label provides full status text",
+		"[ ] Color + icon (not color alone) conveys meaning",
+		"[ ] Contrast ratio meets WCAG AA (4.5:1)",
+		"[ ] Dot variant includes tooltip on hover",
+	],
 
-  CategoryPill: [
-    '[ ] Removable variant is keyboard accessible',
-    '[ ] aria-label describes category',
-    '[ ] Focus ring visible when interactive',
-    '[ ] Remove button has aria-label',
-  ],
+	CategoryPill: [
+		"[ ] Removable variant is keyboard accessible",
+		"[ ] aria-label describes category",
+		"[ ] Focus ring visible when interactive",
+		"[ ] Remove button has aria-label",
+	],
 
-  FeatureList: [
-    '[ ] Container uses <section> with aria-label',
-    '[ ] Filter updates announce with aria-live',
-    '[ ] Keyboard navigation supported',
-    '[ ] Focus moved to results on filter change',
-    '[ ] Empty state has descriptive text',
-    '[ ] Pagination controls fully keyboard accessible',
-  ],
+	FeatureList: [
+		"[ ] Container uses <section> with aria-label",
+		"[ ] Filter updates announce with aria-live",
+		"[ ] Keyboard navigation supported",
+		"[ ] Focus moved to results on filter change",
+		"[ ] Empty state has descriptive text",
+		"[ ] Pagination controls fully keyboard accessible",
+	],
 
-  FeatureFilter: [
-    '[ ] Uses <fieldset> with <legend>',
-    '[ ] Checkboxes have associated <label> elements',
-    '[ ] Keyboard navigation with arrow keys',
-    '[ ] Space/Enter toggles checkboxes',
-    '[ ] Focus ring visible on all controls',
-    '[ ] Clear button has aria-label',
-  ],
+	FeatureFilter: [
+		"[ ] Uses <fieldset> with <legend>",
+		"[ ] Checkboxes have associated <label> elements",
+		"[ ] Keyboard navigation with arrow keys",
+		"[ ] Space/Enter toggles checkboxes",
+		"[ ] Focus ring visible on all controls",
+		"[ ] Clear button has aria-label",
+	],
 } as const;
 
 // ============================================================================
@@ -542,21 +542,21 @@ export const accessibilityChecklist = {
 // ============================================================================
 
 export type ComponentVariant =
-  | 'default'
-  | 'compact'
-  | 'elevated'
-  | 'grid'
-  | 'list'
-  | 'badge'
-  | 'pill';
+	| "default"
+	| "compact"
+	| "elevated"
+	| "grid"
+	| "list"
+	| "badge"
+	| "pill";
 
 export interface ComponentRegistry {
-  FeatureCard: FeatureCardProps;
-  FeatureStat: FeatureStatProps;
-  FeatureList: FeatureListProps;
-  StatusBadge: StatusBadgeProps;
-  CategoryPill: CategoryPillProps;
-  FeatureHeader: FeatureHeaderProps;
-  FeatureFilter: FeatureFilterProps;
-  FeatureSummary: FeatureSummaryProps;
+	FeatureCard: FeatureCardProps;
+	FeatureStat: FeatureStatProps;
+	FeatureList: FeatureListProps;
+	StatusBadge: StatusBadgeProps;
+	CategoryPill: CategoryPillProps;
+	FeatureHeader: FeatureHeaderProps;
+	FeatureFilter: FeatureFilterProps;
+	FeatureSummary: FeatureSummaryProps;
 }

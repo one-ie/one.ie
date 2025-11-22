@@ -2,25 +2,25 @@
 // Download / CTA Section Component
 // Reusable component for displaying download call-to-action
 interface Props {
-  title?: string;
-  subtitle?: string;
-  source?: string;
-  description?: string;
-  downloadButtonText?: string;
-  deployButtonText?: string;
-  downloadUrl?: string;
-  deployUrl?: string;
+	title?: string;
+	subtitle?: string;
+	source?: string;
+	description?: string;
+	downloadButtonText?: string;
+	deployButtonText?: string;
+	downloadUrl?: string;
+	deployUrl?: string;
 }
 
 const {
-  title = "BRING YOUR IDEAS TO LIFE",
-  subtitle = "Download FREE · Own FOREVER",
-  source = "Free Forever",
-  description = "No credit card. No trial limits. No vendor lock-in.",
-  downloadButtonText = "Download Free",
-  deployButtonText = "Deploy to Edge",
-  downloadUrl = "/download",
-  deployUrl = "/deploy",
+	title = "BRING YOUR IDEAS TO LIFE",
+	subtitle = "Download FREE · Own FOREVER",
+	source = "Free Forever",
+	description = "No credit card. No trial limits. No vendor lock-in.",
+	downloadButtonText = "Download Free",
+	deployButtonText = "Deploy to Edge",
+	downloadUrl = "/download",
+	deployUrl = "/deploy",
 } = Astro.props;
 ---
 

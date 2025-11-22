@@ -9,16 +9,20 @@
  * - Premium UI components
  */
 
-import Layout from '@/layouts/Layout.astro';
-import { AgentMessage } from '@/components/ai/AgentMessage';
-import { Reasoning } from '@/components/ai/Reasoning';
-import { ToolCall } from '@/components/ai/ToolCall';
-import { Card, CardHeader, CardTitle, CardContent } from '@/components/ui/card';
-import { Badge } from '@/components/ui/badge';
-import { sampleReasoning, sampleToolCalls, sampleAgentMessages } from '@/lib/samplePremiumData';
+import { AgentMessage } from "@/components/ai/AgentMessage";
+import { Reasoning } from "@/components/ai/Reasoning";
+import { ToolCall } from "@/components/ai/ToolCall";
+import { Badge } from "@/components/ui/badge";
+import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import Layout from "@/layouts/Layout.astro";
+import {
+	sampleAgentMessages,
+	sampleReasoning,
+	sampleToolCalls,
+} from "@/lib/samplePremiumData";
 
-const title = 'Premium Chat Demo';
-const description = 'Interactive demo of premium chat features';
+const title = "Premium Chat Demo";
+const description = "Interactive demo of premium chat features";
 ---
 
 <Layout title={title} description={description}>

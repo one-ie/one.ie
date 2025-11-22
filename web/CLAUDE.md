@@ -10,6 +10,25 @@
 - Cascading context system (closer to file = higher precedence)
 - Technology stack (Astro 5, React 19, Tailwind v4, shadcn/ui)
 
+## 🎨 CRITICAL: Design System Enforcement
+
+**BEFORE writing ANY UI code, read:**
+- `/.claude/prompts/design-system.md` - Complete enforcement rules
+- `/one/things/design-system.md` - Specification (source of truth)
+- `/web/src/pages/design.astro` - Live examples
+
+**The 6-Color + 4-Property System is NON-NEGOTIABLE:**
+- 6 Colors: background, foreground, font, primary, secondary, tertiary
+- 4 Properties: states, elevation, radius, motion
+- NEVER deviate without updating the design system first
+
+**Quick check before committing:**
+- [ ] Uses ONLY 6 color tokens (no hardcoded colors)
+- [ ] All buttons have hover/active/focus/disabled states
+- [ ] Uses shadow-sm/md/lg/xl (no custom shadows)
+- [ ] Uses rounded-sm/md/lg/xl/full (no custom radius)
+- [ ] Uses duration-150/300/500 with ease-in-out (no custom timing)
+
 **What this file adds:**
 - Frontend RENDERS the 6 dimensions
 - Progressive complexity (5 layers)

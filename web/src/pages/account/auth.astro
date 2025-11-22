@@ -1,12 +1,12 @@
 ---
-import Layout from "@/layouts/Layout.astro"
-import { SimpleSignInForm } from "@/components/auth/SimpleSignInForm"
+import { SimpleSignInForm } from "@/components/auth/SimpleSignInForm";
+import Layout from "@/layouts/Layout.astro";
 
-export const prerender = false
+export const prerender = false;
 
 // Redirect if already logged in
 if (Astro.locals.user) {
-  return Astro.redirect("/account")
+	return Astro.redirect("/account");
 }
 ---
 

@@ -5,17 +5,26 @@
  * while being backend-agnostic through DataProvider.
  */
 
-import { useCallback, useEffect } from 'react';
-import { useQuery, useMutation as useReactMutation, useQueryClient } from '@tanstack/react-query';
-import { Effect } from 'effect';
-import { useDataProvider, queryClient } from './useDataProvider';
-import type { QueryResult, MutationResult, QueryOptions, MutationOptions } from './types';
+import {
+	useQuery,
+	useQueryClient,
+	useMutation as useReactMutation,
+} from "@tanstack/react-query";
+import { Effect } from "effect";
+import { useCallback, useEffect } from "react";
 import type {
-  Thing,
-  CreateThingInput,
-  UpdateThingInput,
-  ListThingsOptions,
-} from '@/providers/DataProvider';
+	CreateThingInput,
+	ListThingsOptions,
+	Thing,
+	UpdateThingInput,
+} from "@/providers/DataProvider";
+import type {
+	MutationOptions,
+	MutationResult,
+	QueryOptions,
+	QueryResult,
+} from "./types";
+import { queryClient, useDataProvider } from "./useDataProvider";
 
 // ============================================================================
 // QUERY HOOKS
@@ -46,53 +55,57 @@ import type {
  * ```
  */
 export function useThings<T extends Thing = Thing>(
-  options?: ListThingsOptions,
-  queryOptions?: QueryOptions
+	options?: ListThingsOptions,
+	queryOptions?: QueryOptions,
 ): QueryResult<T[]> {
-  const provider = useDataProvider();
-  const { realtime = false, enabled = true, ...reactQueryOptions } = queryOptions ?? {};
+	const provider = useDataProvider();
+	const {
+		realtime = false,
+		enabled = true,
+		...reactQueryOptions
+	} = queryOptions ?? {};
 
-  // Build query key (used for caching and invalidation)
-  const queryKey = ['things', options];
+	// Build query key (used for caching and invalidation)
+	const queryKey = ["things", options];
 
-  // Query function
-  const queryFn = async (): Promise<T[]> => {
-    const effect = provider.things.list(options);
-    const result = await Effect.runPromise(effect);
-    return result as T[];
-  };
+	// Query function
+	const queryFn = async (): Promise<T[]> => {
+		const effect = provider.things.list(options);
+		const result = await Effect.runPromise(effect);
+		return result as T[];
+	};
 
-  // Execute query
-  const query = useQuery({
-    queryKey,
-    queryFn,
-    enabled,
-    ...reactQueryOptions,
-  });
+	// Execute query
+	const query = useQuery({
+		queryKey,
+		queryFn,
+		enabled,
+		...reactQueryOptions,
+	});
 
-  // Set up real-time subscription
-  useEffect(() => {
-    if (!realtime || !enabled) return;
+	// Set up real-time subscription
+	useEffect(() => {
+		if (!realtime || !enabled) return;
 
-    // TODO: Implement subscription mechanism
-    // This would depend on the backend provider's subscription capabilities
-    // For Convex, this would use Convex subscriptions
-    // For other providers, this might use WebSockets or polling
+		// TODO: Implement subscription mechanism
+		// This would depend on the backend provider's subscription capabilities
+		// For Convex, this would use Convex subscriptions
+		// For other providers, this might use WebSockets or polling
 
-    return () => {
-      // Cleanup subscription
-    };
-  }, [realtime, enabled, JSON.stringify(options)]);
+		return () => {
+			// Cleanup subscription
+		};
+	}, [realtime, enabled, JSON.stringify(options)]);
 
-  return {
-    data: query.data ?? null,
-    loading: query.isLoading,
-    error: query.error as Error | null,
-    refetch: async () => {
-      await query.refetch();
-    },
-    refetching: query.isRefetching,
-  };
+	return {
+		data: query.data ?? null,
+		loading: query.isLoading,
+		error: query.error as Error | null,
+		refetch: async () => {
+			await query.refetch();
+		},
+		refetching: query.isRefetching,
+	};
 }
 
 /**
@@ -112,37 +125,37 @@ export function useThings<T extends Thing = Thing>(
  * ```
  */
 export function useThing<T extends Thing = Thing>(
-  id: string | null,
-  queryOptions?: QueryOptions
+	id: string | null,
+	queryOptions?: QueryOptions,
 ): QueryResult<T> {
-  const provider = useDataProvider();
-  const { enabled = true, ...reactQueryOptions } = queryOptions ?? {};
+	const provider = useDataProvider();
+	const { enabled = true, ...reactQueryOptions } = queryOptions ?? {};
 
-  const queryKey = ['thing', id];
+	const queryKey = ["thing", id];
 
-  const queryFn = async (): Promise<T> => {
-    if (!id) throw new Error('Thing ID is required');
-    const effect = provider.things.get(id);
-    const result = await Effect.runPromise(effect);
-    return result as T;
-  };
+	const queryFn = async (): Promise<T> => {
+		if (!id) throw new Error("Thing ID is required");
+		const effect = provider.things.get(id);
+		const result = await Effect.runPromise(effect);
+		return result as T;
+	};
 
-  const query = useQuery({
-    queryKey,
-    queryFn,
-    enabled: enabled && !!id,
-    ...reactQueryOptions,
-  });
+	const query = useQuery({
+		queryKey,
+		queryFn,
+		enabled: enabled && !!id,
+		...reactQueryOptions,
+	});
 
-  return {
-    data: query.data ?? null,
-    loading: query.isLoading,
-    error: query.error as Error | null,
-    refetch: async () => {
-      await query.refetch();
-    },
-    refetching: query.isRefetching,
-  };
+	return {
+		data: query.data ?? null,
+		loading: query.isLoading,
+		error: query.error as Error | null,
+		refetch: async () => {
+			await query.refetch();
+		},
+		refetching: query.isRefetching,
+	};
 }
 
 // ============================================================================
@@ -172,45 +185,49 @@ export function useThing<T extends Thing = Thing>(
  * ```
  */
 export function useCreateThing(
-  mutationOptions?: MutationOptions<string, CreateThingInput>
+	mutationOptions?: MutationOptions<string, CreateThingInput>,
 ): MutationResult<string, CreateThingInput> {
-  const provider = useDataProvider();
-  const queryClient = useQueryClient();
+	const provider = useDataProvider();
+	const queryClient = useQueryClient();
 
-  const mutation = useReactMutation({
-    mutationFn: async (input: CreateThingInput): Promise<string> => {
-      const effect = provider.things.create(input);
-      return await Effect.runPromise(effect);
-    },
-    onMutate: async (input) => {
-      await mutationOptions?.onMutate?.(input);
-    },
-    onSuccess: async (id, input) => {
-      // Invalidate list queries for this type
-      await queryClient.invalidateQueries({
-        queryKey: ['things', { type: input.type }],
-      });
-      await queryClient.invalidateQueries({
-        queryKey: ['things'],
-      });
+	const mutation = useReactMutation({
+		mutationFn: async (input: CreateThingInput): Promise<string> => {
+			const effect = provider.things.create(input);
+			return await Effect.runPromise(effect);
+		},
+		onMutate: async (input) => {
+			await mutationOptions?.onMutate?.(input);
+		},
+		onSuccess: async (id, input) => {
+			// Invalidate list queries for this type
+			await queryClient.invalidateQueries({
+				queryKey: ["things", { type: input.type }],
+			});
+			await queryClient.invalidateQueries({
+				queryKey: ["things"],
+			});
 
-      await mutationOptions?.onSuccess?.(id, input);
-    },
-    onError: async (error, input) => {
-      await mutationOptions?.onError?.(error as Error, input);
-    },
-    onSettled: async (data, error, input) => {
-      await mutationOptions?.onSettled?.(data ?? null, error as Error | null, input);
-    },
-  });
+			await mutationOptions?.onSuccess?.(id, input);
+		},
+		onError: async (error, input) => {
+			await mutationOptions?.onError?.(error as Error, input);
+		},
+		onSettled: async (data, error, input) => {
+			await mutationOptions?.onSettled?.(
+				data ?? null,
+				error as Error | null,
+				input,
+			);
+		},
+	});
 
-  return {
-    mutate: mutation.mutateAsync,
-    loading: mutation.isPending,
-    error: mutation.error as Error | null,
-    reset: mutation.reset,
-    data: mutation.data ?? null,
-  };
+	return {
+		mutate: mutation.mutateAsync,
+		loading: mutation.isPending,
+		error: mutation.error as Error | null,
+		reset: mutation.reset,
+		data: mutation.data ?? null,
+	};
 }
 
 /**
@@ -232,62 +249,65 @@ export function useCreateThing(
  * ```
  */
 export function useUpdateThing(
-  mutationOptions?: MutationOptions<void, { id: string } & UpdateThingInput>
+	mutationOptions?: MutationOptions<void, { id: string } & UpdateThingInput>,
 ): MutationResult<void, { id: string } & UpdateThingInput> {
-  const provider = useDataProvider();
-  const queryClient = useQueryClient();
+	const provider = useDataProvider();
+	const queryClient = useQueryClient();
 
-  const mutation = useReactMutation({
-    mutationFn: async ({ id, ...input }: { id: string } & UpdateThingInput): Promise<void> => {
-      const effect = provider.things.update(id, input);
-      return await Effect.runPromise(effect);
-    },
-    onMutate: async ({ id, ...updates }) => {
-      // Cancel outgoing queries
-      await queryClient.cancelQueries({ queryKey: ['thing', id] });
+	const mutation = useReactMutation({
+		mutationFn: async ({
+			id,
+			...input
+		}: { id: string } & UpdateThingInput): Promise<void> => {
+			const effect = provider.things.update(id, input);
+			return await Effect.runPromise(effect);
+		},
+		onMutate: async ({ id, ...updates }) => {
+			// Cancel outgoing queries
+			await queryClient.cancelQueries({ queryKey: ["thing", id] });
 
-      // Snapshot previous value
-      const previous = queryClient.getQueryData(['thing', id]);
+			// Snapshot previous value
+			const previous = queryClient.getQueryData(["thing", id]);
 
-      // Optimistically update
-      if (previous) {
-        queryClient.setQueryData(['thing', id], {
-          ...previous,
-          ...updates,
-          updatedAt: Date.now(),
-        });
-      }
+			// Optimistically update
+			if (previous) {
+				queryClient.setQueryData(["thing", id], {
+					...previous,
+					...updates,
+					updatedAt: Date.now(),
+				});
+			}
 
-      await mutationOptions?.onMutate?.({ id, ...updates });
+			await mutationOptions?.onMutate?.({ id, ...updates });
 
-      return { previous };
-    },
-    onError: async (error, { id, ...updates }, context) => {
-      // Rollback on error
-      if (context?.previous) {
-        queryClient.setQueryData(['thing', id], context.previous);
-      }
+			return { previous };
+		},
+		onError: async (error, { id, ...updates }, context) => {
+			// Rollback on error
+			if (context?.previous) {
+				queryClient.setQueryData(["thing", id], context.previous);
+			}
 
-      await mutationOptions?.onError?.(error as Error, { id, ...updates });
-    },
-    onSuccess: async (data, { id, ...updates }) => {
-      // Update single entity cache
-      await queryClient.invalidateQueries({ queryKey: ['thing', id] });
+			await mutationOptions?.onError?.(error as Error, { id, ...updates });
+		},
+		onSuccess: async (data, { id, ...updates }) => {
+			// Update single entity cache
+			await queryClient.invalidateQueries({ queryKey: ["thing", id] });
 
-      // Invalidate list queries
-      await queryClient.invalidateQueries({ queryKey: ['things'] });
+			// Invalidate list queries
+			await queryClient.invalidateQueries({ queryKey: ["things"] });
 
-      await mutationOptions?.onSuccess?.(data, { id, ...updates });
-    },
-  });
+			await mutationOptions?.onSuccess?.(data, { id, ...updates });
+		},
+	});
 
-  return {
-    mutate: mutation.mutateAsync,
-    loading: mutation.isPending,
-    error: mutation.error as Error | null,
-    reset: mutation.reset,
-    data: mutation.data ?? null,
-  };
+	return {
+		mutate: mutation.mutateAsync,
+		loading: mutation.isPending,
+		error: mutation.error as Error | null,
+		reset: mutation.reset,
+		data: mutation.data ?? null,
+	};
 }
 
 /**
@@ -303,37 +323,37 @@ export function useUpdateThing(
  * ```
  */
 export function useDeleteThing(
-  mutationOptions?: MutationOptions<void, string>
+	mutationOptions?: MutationOptions<void, string>,
 ): MutationResult<void, string> {
-  const provider = useDataProvider();
-  const queryClient = useQueryClient();
+	const provider = useDataProvider();
+	const queryClient = useQueryClient();
 
-  const mutation = useReactMutation({
-    mutationFn: async (id: string): Promise<void> => {
-      const effect = provider.things.delete(id);
-      return await Effect.runPromise(effect);
-    },
-    onSuccess: async (data, id) => {
-      // Remove from cache
-      queryClient.removeQueries({ queryKey: ['thing', id] });
+	const mutation = useReactMutation({
+		mutationFn: async (id: string): Promise<void> => {
+			const effect = provider.things.delete(id);
+			return await Effect.runPromise(effect);
+		},
+		onSuccess: async (data, id) => {
+			// Remove from cache
+			queryClient.removeQueries({ queryKey: ["thing", id] });
 
-      // Invalidate all thing lists
-      await queryClient.invalidateQueries({ queryKey: ['things'] });
+			// Invalidate all thing lists
+			await queryClient.invalidateQueries({ queryKey: ["things"] });
 
-      await mutationOptions?.onSuccess?.(data, id);
-    },
-    onError: async (error, id) => {
-      await mutationOptions?.onError?.(error as Error, id);
-    },
-  });
+			await mutationOptions?.onSuccess?.(data, id);
+		},
+		onError: async (error, id) => {
+			await mutationOptions?.onError?.(error as Error, id);
+		},
+	});
 
-  return {
-    mutate: mutation.mutateAsync,
-    loading: mutation.isPending,
-    error: mutation.error as Error | null,
-    reset: mutation.reset,
-    data: mutation.data ?? null,
-  };
+	return {
+		mutate: mutation.mutateAsync,
+		loading: mutation.isPending,
+		error: mutation.error as Error | null,
+		reset: mutation.reset,
+		data: mutation.data ?? null,
+	};
 }
 
 // ============================================================================
@@ -343,27 +363,39 @@ export function useDeleteThing(
 /**
  * useCourses - Shorthand for useThings with type='course'
  */
-export function useCourses(options?: Omit<ListThingsOptions, 'type'>, queryOptions?: QueryOptions) {
-  return useThings({ ...options, type: 'course' }, queryOptions);
+export function useCourses(
+	options?: Omit<ListThingsOptions, "type">,
+	queryOptions?: QueryOptions,
+) {
+	return useThings({ ...options, type: "course" }, queryOptions);
 }
 
 /**
  * useAgents - Shorthand for useThings with type='ai_clone'
  */
-export function useAgents(options?: Omit<ListThingsOptions, 'type'>, queryOptions?: QueryOptions) {
-  return useThings({ ...options, type: 'ai_clone' }, queryOptions);
+export function useAgents(
+	options?: Omit<ListThingsOptions, "type">,
+	queryOptions?: QueryOptions,
+) {
+	return useThings({ ...options, type: "ai_clone" }, queryOptions);
 }
 
 /**
  * useBlogPosts - Shorthand for useThings with type='blog_post'
  */
-export function useBlogPosts(options?: Omit<ListThingsOptions, 'type'>, queryOptions?: QueryOptions) {
-  return useThings({ ...options, type: 'blog_post' }, queryOptions);
+export function useBlogPosts(
+	options?: Omit<ListThingsOptions, "type">,
+	queryOptions?: QueryOptions,
+) {
+	return useThings({ ...options, type: "blog_post" }, queryOptions);
 }
 
 /**
  * useTokens - Shorthand for useThings with type='token'
  */
-export function useTokens(options?: Omit<ListThingsOptions, 'type'>, queryOptions?: QueryOptions) {
-  return useThings({ ...options, type: 'token' }, queryOptions);
+export function useTokens(
+	options?: Omit<ListThingsOptions, "type">,
+	queryOptions?: QueryOptions,
+) {
+	return useThings({ ...options, type: "token" }, queryOptions);
 }

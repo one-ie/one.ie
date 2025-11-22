@@ -1,9 +1,9 @@
 ---
-import Layout from '@/layouts/Layout.astro';
-import { VerifyEmailPage } from '@/components/auth/VerifyEmailPage';
+import { VerifyEmailPage } from "@/components/auth/VerifyEmailPage";
+import Layout from "@/layouts/Layout.astro";
 
 const url = new URL(Astro.request.url);
-const token = url.searchParams.get('token') || '';
+const token = url.searchParams.get("token") || "";
 ---
 
 <Layout title="Verify Email - ONE">
