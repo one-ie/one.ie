@@ -1,0 +1,299 @@
+---
+import Layout from '@/layouts/Layout.astro';
+import { TokenCreationWizard } from '@/components/sui/launchpad/TokenCreationWizard';
+import { Card, CardHeader, CardTitle, CardDescription, CardContent } from '@/components/ui/card';
+
+const title = "Sui Token Launchpad";
+const description = "Launch your own crypto token on Sui blockchain in minutes. Create tokens for companies, AI agents, DAOs, and more with built-in vesting, staking, and governance.";
+---
+
+<Layout title={title} description={description}>
+  <div class="container mx-auto px-4 py-12">
+    <!-- Hero Section -->
+    <div class="text-center mb-16">
+      <h1 class="text-5xl font-bold mb-4 bg-gradient-to-r from-blue-600 to-purple-600 bg-clip-text text-transparent">
+        Sui Token Launchpad
+      </h1>
+      <p class="text-xl text-muted-foreground max-w-3xl mx-auto mb-8">
+        {description}
+      </p>
+      <div class="flex gap-4 justify-center">
+        <div class="text-center">
+          <div class="text-3xl font-bold text-primary">$0.00005</div>
+          <div class="text-sm text-muted-foreground">Cost per transaction</div>
+        </div>
+        <div class="text-center">
+          <div class="text-3xl font-bold text-primary">400ms</div>
+          <div class="text-sm text-muted-foreground">Transaction finality</div>
+        </div>
+        <div class="text-center">
+          <div class="text-3xl font-bold text-primary">100%</div>
+          <div class="text-sm text-muted-foreground">Parallel execution</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Features Grid -->
+    <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-6 mb-16">
+      <Card>
+        <CardHeader>
+          <CardTitle>🚀 Launch in Minutes</CardTitle>
+          <CardDescription>
+            No coding required. Create professional-grade tokens with our intuitive wizard.
+          </CardDescription>
+        </CardHeader>
+      </Card>
+
+      <Card>
+        <CardHeader>
+          <CardTitle>📊 Built-in Tokenomics</CardTitle>
+          <CardDescription>
+            6 pre-configured templates: Standard, Team Vesting, Fair Launch, DAO, AI Agent, Revenue Share.
+          </CardDescription>
+        </CardHeader>
+      </Card>
+
+      <Card>
+        <CardHeader>
+          <CardTitle>🔒 Vesting Schedules</CardTitle>
+          <CardDescription>
+            Create time-locked token distributions for team members and investors with cliff periods.
+          </CardDescription>
+        </CardHeader>
+      </Card>
+
+      <Card>
+        <CardHeader>
+          <CardTitle>💰 Staking Pools</CardTitle>
+          <CardDescription>
+            Built-in staking with customizable APY, lock periods, and automatic reward distribution.
+          </CardDescription>
+        </CardHeader>
+      </Card>
+
+      <Card>
+        <CardHeader>
+          <CardTitle>🗳️ DAO Governance</CardTitle>
+          <CardDescription>
+            Token-weighted voting, proposal creation, and on-chain execution for decentralized control.
+          </CardDescription>
+        </CardHeader>
+      </Card>
+
+      <Card>
+        <CardHeader>
+          <CardTitle>🏦 Multi-sig Treasury</CardTitle>
+          <CardDescription>
+            Secure fund management with M-of-N signature requirements and transparent approval flow.
+          </CardDescription>
+        </CardHeader>
+      </Card>
+
+      <Card>
+        <CardHeader>
+          <CardTitle>🤖 AI Agent Integration</CardTitle>
+          <CardDescription>
+            Special token template for AI agents with utility rewards and sponsored transactions.
+          </CardDescription>
+        </CardHeader>
+      </Card>
+
+      <Card>
+        <CardHeader>
+          <CardTitle>⚡ Fastest & Cheapest</CardTitle>
+          <CardDescription>
+            Sui's parallel execution means sub-second finality and costs less than $0.0001 per transaction.
+          </CardDescription>
+        </CardHeader>
+      </Card>
+
+      <Card>
+        <CardHeader>
+          <CardTitle>🔍 Verified Tokens</CardTitle>
+          <CardDescription>
+            Platform verification system with trust badges to protect users from scam tokens.
+          </CardDescription>
+        </CardHeader>
+      </Card>
+    </div>
+
+    <!-- Use Cases -->
+    <div class="mb-16">
+      <h2 class="text-3xl font-bold mb-8 text-center">Perfect For</h2>
+      <div class="grid md:grid-cols-2 gap-6">
+        <Card>
+          <CardHeader>
+            <CardTitle>🏢 Companies & Startups</CardTitle>
+          </CardHeader>
+          <CardContent>
+            <ul class="space-y-2 text-muted-foreground">
+              <li>✓ Raise capital with token sales</li>
+              <li>✓ Reward early supporters and employees</li>
+              <li>✓ Build community-owned ecosystems</li>
+              <li>✓ Create utility tokens for products</li>
+            </ul>
+          </CardContent>
+        </Card>
+
+        <Card>
+          <CardHeader>
+            <CardTitle>🤖 AI Agent Developers</CardTitle>
+          </CardHeader>
+          <CardContent>
+            <ul class="space-y-2 text-muted-foreground">
+              <li>✓ Monetize AI agent services</li>
+              <li>✓ Pay-per-use or subscription models</li>
+              <li>✓ Revenue sharing with token holders</li>
+              <li>✓ Sponsored transactions for users</li>
+            </ul>
+          </CardContent>
+        </Card>
+
+        <Card>
+          <CardHeader>
+            <CardTitle>🏛️ DAOs & Communities</CardTitle>
+          </CardHeader>
+          <CardContent>
+            <ul class="space-y-2 text-muted-foreground">
+              <li>✓ Decentralized governance tokens</li>
+              <li>✓ Treasury management with multi-sig</li>
+              <li>✓ Proposal voting and execution</li>
+              <li>✓ Member rewards and incentives</li>
+            </ul>
+          </CardContent>
+        </Card>
+
+        <Card>
+          <CardHeader>
+            <CardTitle>💎 Creators & Influencers</CardTitle>
+          </CardHeader>
+          <CardContent>
+            <ul class="space-y-2 text-muted-foreground">
+              <li>✓ Fan tokens with exclusive perks</li>
+              <li>✓ Revenue sharing with supporters</li>
+              <li>✓ Membership tiers with token gating</li>
+              <li>✓ Community voting on content</li>
+            </ul>
+          </CardContent>
+        </Card>
+      </div>
+    </div>
+
+    <!-- Token Creation Wizard -->
+    <div class="mb-16">
+      <h2 class="text-3xl font-bold mb-8 text-center">Create Your Token</h2>
+      <TokenCreationWizard
+        client:load
+        groupId="default-group"
+        onSuccess={(tokenId) => {
+          console.log('Token created:', tokenId);
+          window.location.href = `/sui/launchpad/tokens/${tokenId}`;
+        }}
+      />
+    </div>
+
+    <!-- How It Works -->
+    <div class="mb-16">
+      <h2 class="text-3xl font-bold mb-8 text-center">How It Works</h2>
+      <div class="grid md:grid-cols-4 gap-6">
+        <Card>
+          <CardHeader>
+            <CardTitle>1. Configure</CardTitle>
+          </CardHeader>
+          <CardContent>
+            <p class="text-muted-foreground">
+              Choose your token name, symbol, supply, and select a tokenomics template.
+            </p>
+          </CardContent>
+        </Card>
+
+        <Card>
+          <CardHeader>
+            <CardTitle>2. Customize</CardTitle>
+          </CardHeader>
+          <CardContent>
+            <p class="text-muted-foreground">
+              Add vesting schedules, enable governance, configure staking pools.
+            </p>
+          </CardContent>
+        </Card>
+
+        <Card>
+          <CardHeader>
+            <CardTitle>3. Deploy</CardTitle>
+          </CardHeader>
+          <CardContent>
+            <p class="text-muted-foreground">
+              Review and deploy to Sui blockchain in one transaction. No coding needed.
+            </p>
+          </CardContent>
+        </Card>
+
+        <Card>
+          <CardHeader>
+            <CardTitle>4. Manage</CardTitle>
+          </CardHeader>
+          <CardContent>
+            <p class="text-muted-foreground">
+              Use the dashboard to manage tokens, vesting, staking, governance, and treasury.
+            </p>
+          </CardContent>
+        </Card>
+      </div>
+    </div>
+
+    <!-- Why Sui? -->
+    <div class="mb-16">
+      <h2 class="text-3xl font-bold mb-8 text-center">Why Sui Blockchain?</h2>
+      <div class="bg-gradient-to-r from-blue-50 to-purple-50 dark:from-blue-950 dark:to-purple-950 p-8 rounded-lg">
+        <div class="grid md:grid-cols-2 gap-8">
+          <div>
+            <h3 class="text-xl font-semibold mb-4">⚡ Blazing Fast</h3>
+            <p class="text-muted-foreground mb-4">
+              400-500ms transaction finality - the fastest in crypto. Users don't wait, they transact.
+            </p>
+          </div>
+          <div>
+            <h3 class="text-xl font-semibold mb-4">💰 Ultra Cheap</h3>
+            <p class="text-muted-foreground mb-4">
+              $0.00005 per transaction at current SUI prices. Launch and manage tokens without worrying about gas fees.
+            </p>
+          </div>
+          <div>
+            <h3 class="text-xl font-semibold mb-4">🚀 Parallel Execution</h3>
+            <p class="text-muted-foreground mb-4">
+              Sui's object-centric model enables true parallelism. Thousands of transactions process simultaneously.
+            </p>
+          </div>
+          <div>
+            <h3 class="text-xl font-semibold mb-4">🔒 Move Language</h3>
+            <p class="text-muted-foreground mb-4">
+              Compiler-enforced safety prevents common smart contract vulnerabilities. Your tokens are secure by design.
+            </p>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- CTA -->
+    <div class="text-center">
+      <h2 class="text-3xl font-bold mb-4">Ready to Launch?</h2>
+      <p class="text-xl text-muted-foreground mb-8">
+        Create your token in under 2 minutes. No blockchain experience required.
+      </p>
+      <button
+        class="px-8 py-4 bg-primary text-primary-foreground rounded-lg text-lg font-semibold hover:bg-primary/90 transition-colors"
+        onclick="document.querySelector('[data-wizard]').scrollIntoView({ behavior: 'smooth' })"
+      >
+        Start Creating →
+      </button>
+    </div>
+  </div>
+</Layout>
+
+<style>
+  /* Smooth scroll for anchor links */
+  html {
+    scroll-behavior: smooth;
+  }
+</style>

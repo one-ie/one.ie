@@ -1,0 +1,39 @@
+---
+/**
+ * DAO Governance Demo Page
+ *
+ * Example implementation of the DAO governance components.
+ * Shows how to integrate DAODashboard into an Astro page.
+ */
+
+import Layout from '@/layouts/Layout.astro';
+import { DAODashboard } from '@/components/sui/launchpad/dao';
+
+const title = 'DAO Governance';
+const description = 'Participate in decentralized decision-making';
+---
+
+<Layout title={title} description={description}>
+	<div class="container mx-auto px-4 py-8">
+		<!--
+			DAODashboard includes:
+			- Statistics cards (members, proposals, treasury, tokens)
+			- User voting power display
+			- Proposal creation form
+			- Proposals list with filters
+			- Recent activity feed
+			- Vote modal
+		-->
+		<DAODashboard
+			client:load
+			userAddress="0x1234567890abcdef"
+		/>
+	</div>
+
+	<!-- Optional: Custom Styling -->
+	<style>
+		.container {
+			max-width: 1280px;
+		}
+	</style>
+</Layout>
