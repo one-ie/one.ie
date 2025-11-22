@@ -40,20 +40,21 @@ export function VectorSearch({
   };
 
   return (
-    <Card className={className}>
-      <CardHeader>
-        <div className="flex items-center justify-between">
-          <CardTitle className="flex items-center gap-2">
-            <Sparkles className="h-5 w-5 text-primary" />
-            Semantic Search
-          </CardTitle>
-          <Badge variant="outline" className="gap-1">
-            <Sparkles className="h-3 w-3" />
-            Powered by AI
-          </Badge>
-        </div>
-      </CardHeader>
-      <CardContent className="space-y-4">
+    <Card className="bg-background p-1 shadow-sm rounded-md">
+      <div className="bg-foreground p-4 rounded-md">
+        <CardHeader className="p-0 pb-4">
+          <div className="flex items-center justify-between">
+            <CardTitle className="flex items-center gap-2 text-font">
+              <Sparkles className="h-5 w-5 text-primary" />
+              Semantic Search
+            </CardTitle>
+            <Badge variant="outline" className="gap-1">
+              <Sparkles className="h-3 w-3" />
+              Powered by AI
+            </Badge>
+          </div>
+        </CardHeader>
+        <CardContent className="space-y-4 p-0">
         {/* Search Input */}
         <form onSubmit={handleSearch} className="flex gap-2">
           <div className="relative flex-1">
@@ -70,7 +71,7 @@ export function VectorSearch({
           <Button
             type="submit"
             disabled={loading || !query.trim()}
-            className="gap-2"
+            className="gap-2 transition-all duration-150 hover:scale-[1.02] active:scale-[0.98]"
           >
             {loading ? (
               <>
@@ -88,7 +89,7 @@ export function VectorSearch({
 
         {/* Loading State */}
         {loading && (
-          <div className="flex items-center justify-center py-8 text-muted-foreground">
+          <div className="flex items-center justify-center py-8 text-font/60">
             <div className="flex items-center gap-2">
               <Loader2 className="h-5 w-5 animate-spin" />
               <span>Finding similar content...</span>
@@ -100,13 +101,14 @@ export function VectorSearch({
         {!loading && results.length > 0 && (
           <div className="space-y-3">
             <div className="flex items-center justify-between text-sm">
-              <span className="text-muted-foreground">
+              <span className="text-font/60">
                 Found {results.length} {results.length === 1 ? 'result' : 'results'}
               </span>
               <Button
                 variant="ghost"
                 size="sm"
                 onClick={handleClear}
+                className="transition-all duration-150 hover:scale-[1.02]"
               >
                 Clear search
               </Button>
@@ -122,8 +124,8 @@ export function VectorSearch({
         {/* Empty State */}
         {!loading && query && results.length === 0 && (
           <div className="text-center py-8 space-y-2">
-            <p className="text-muted-foreground">No similar content found</p>
-            <p className="text-xs text-muted-foreground">
+            <p className="text-font/60">No similar content found</p>
+            <p className="text-xs text-font/60">
               Try rephrasing your query or using different keywords
             </p>
           </div>
@@ -136,8 +138,8 @@ export function VectorSearch({
               <Sparkles className="h-6 w-6 text-primary" />
             </div>
             <div className="space-y-1">
-              <p className="font-medium">AI-Powered Search</p>
-              <p className="text-sm text-muted-foreground max-w-md mx-auto">
+              <p className="font-medium text-font">AI-Powered Search</p>
+              <p className="text-sm text-font/60 max-w-md mx-auto">
                 Search by meaning instead of exact keywords. Our AI understands context
                 and finds semantically similar content.
               </p>
@@ -145,6 +147,7 @@ export function VectorSearch({
           </div>
         )}
       </CardContent>
+      </div>
     </Card>
   );
 }

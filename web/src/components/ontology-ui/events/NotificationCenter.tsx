@@ -76,8 +76,7 @@ export function NotificationCenter({
           <span className="text-xl">🔔</span>
           {unreadCount > 0 && (
             <Badge
-              variant="destructive"
-              className="absolute -top-1 -right-1 h-5 w-5 rounded-full p-0 flex items-center justify-center text-xs"
+              className="absolute -top-1 -right-1 h-5 w-5 rounded-full p-0 flex items-center justify-center text-xs bg-primary text-white"
             >
               {unreadCount > 99 ? "99+" : unreadCount}
             </Badge>
@@ -86,11 +85,11 @@ export function NotificationCenter({
       </PopoverTrigger>
 
       <PopoverContent
-        className="w-[400px] p-0"
+        className="w-[400px] p-0 bg-background shadow-lg rounded-md"
         align="end"
         sideOffset={8}
       >
-        <div className="flex flex-col">
+        <div className="flex flex-col bg-foreground rounded-md text-font">
           {/* Header */}
           <div className="px-4 py-3 border-b">
             <div className="flex items-center justify-between">

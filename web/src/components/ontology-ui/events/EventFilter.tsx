@@ -99,23 +99,24 @@ export function EventFilter({
   };
 
   return (
-    <Card className={cn("", className)}>
-      <CardHeader>
-        <CardTitle className="flex items-center justify-between">
-          <span>Event Filters</span>
-          {activeFilters.length > 0 && (
-            <Button
-              variant="ghost"
-              size="sm"
-              onClick={clearAllFilters}
-            >
-              Clear all
-            </Button>
-          )}
-        </CardTitle>
-      </CardHeader>
+    <Card className={cn("bg-background p-1 shadow-sm rounded-md", className)}>
+      <div className="bg-foreground rounded-md text-font">
+        <CardHeader>
+          <CardTitle className="flex items-center justify-between text-font">
+            <span>Event Filters</span>
+            {activeFilters.length > 0 && (
+              <Button
+                variant="ghost"
+                size="sm"
+                onClick={clearAllFilters}
+              >
+                Clear all
+              </Button>
+            )}
+          </CardTitle>
+        </CardHeader>
 
-      <CardContent className="space-y-6">
+        <CardContent className="space-y-6">
         {/* Active filters */}
         {activeFilters.length > 0 && (
           <div>
@@ -295,7 +296,8 @@ export function EventFilter({
             </Button>
           </div>
         </div>
-      </CardContent>
+        </CardContent>
+      </div>
     </Card>
   );
 }

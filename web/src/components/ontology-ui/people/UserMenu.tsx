@@ -37,34 +37,36 @@ export function UserMenu({
       <DropdownMenuTrigger asChild>
         <button
           className={cn(
-            "flex items-center gap-2 rounded-lg px-2 py-1.5",
-            "hover:bg-accent transition-colors",
-            "focus:outline-none focus-visible:ring-2 focus-visible:ring-ring",
+            "flex items-center gap-2 rounded-md px-2 py-1.5",
+            "hover:bg-background transition-all duration-150",
+            "focus:outline-none focus-visible:ring-2 focus-visible:ring-primary",
             className
           )}
         >
-          <Avatar className="h-8 w-8">
+          <Avatar className="h-8 w-8 rounded-full border-2 border-font/20">
             <AvatarImage src={user.avatar} alt={user.name} />
-            <AvatarFallback className="text-xs">
+            <AvatarFallback className="text-xs text-font bg-background">
               {user.name.slice(0, 2).toUpperCase()}
             </AvatarFallback>
           </Avatar>
-          <span className="text-sm font-medium hidden sm:inline-block">
+          <span className="text-sm font-medium hidden sm:inline-block text-font">
             {user.name}
           </span>
         </button>
       </DropdownMenuTrigger>
 
-      <DropdownMenuContent align="end" className="w-56">
+      <DropdownMenuContent align="end" className="w-56 bg-foreground shadow-lg rounded-md border border-font/10">
         <div className="flex items-center gap-2 px-2 py-1.5">
-          <Avatar className="h-10 w-10">
+          <Avatar className="h-10 w-10 rounded-full border-2 border-font/20">
             <AvatarImage src={user.avatar} alt={user.name} />
-            <AvatarFallback>{user.name.slice(0, 2).toUpperCase()}</AvatarFallback>
+            <AvatarFallback className="text-font bg-background">
+              {user.name.slice(0, 2).toUpperCase()}
+            </AvatarFallback>
           </Avatar>
           <div className="flex flex-col space-y-1">
-            <p className="text-sm font-medium leading-none">{user.name}</p>
+            <p className="text-sm font-medium leading-none text-font">{user.name}</p>
             {user.email && (
-              <p className="text-xs text-muted-foreground leading-none">
+              <p className="text-xs text-font/60 leading-none">
                 {user.email}
               </p>
             )}

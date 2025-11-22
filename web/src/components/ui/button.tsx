@@ -5,23 +5,23 @@ import type * as React from "react";
 import { cn } from "@/lib/utils";
 
 const buttonVariants = cva(
-	"inline-flex items-center justify-center gap-2 whitespace-nowrap rounded-md text-sm font-medium transition-all disabled:pointer-events-none disabled:opacity-50 [&_svg]:pointer-events-none [&_svg:not([class*='size-'])]:size-4 shrink-0 [&_svg]:shrink-0 outline-none focus-visible:border-ring focus-visible:ring-ring/50 focus-visible:ring-[3px] aria-invalid:ring-destructive/20 dark:aria-invalid:ring-destructive/40 aria-invalid:border-destructive",
+	"inline-flex items-center justify-center gap-2 whitespace-nowrap rounded-md text-sm font-medium transition-all duration-150 ease-in-out disabled:pointer-events-none disabled:opacity-50 disabled:cursor-not-allowed [&_svg]:pointer-events-none [&_svg:not([class*='size-'])]:size-4 shrink-0 [&_svg]:shrink-0 outline-none",
 	{
 		variants: {
 			variant: {
-				primary: "bg-primary text-primary-foreground hover:bg-primary/90 active:opacity-80 active:scale-[0.98] focus-visible:ring-2 focus-visible:ring-ring/50 disabled:opacity-50",
-				default: "bg-primary text-primary-foreground hover:bg-primary/90 active:opacity-80 active:scale-[0.98] focus-visible:ring-2 focus-visible:ring-ring/50 disabled:opacity-50",
+				primary: "bg-[hsl(216_55%_25%)] text-white shadow-lg hover:bg-[hsl(216_55%_20%)] hover:shadow-xl hover:scale-[1.02] active:shadow-md active:scale-[0.98] focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-2",
+				default: "bg-[hsl(216_55%_25%)] text-white shadow-lg hover:bg-[hsl(216_55%_20%)] hover:shadow-xl hover:scale-[1.02] active:shadow-md active:scale-[0.98] focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-2",
 				secondary:
-					"bg-secondary text-secondary-foreground hover:bg-secondary/90 active:opacity-80 active:scale-[0.98] focus-visible:ring-2 focus-visible:ring-ring/50 disabled:opacity-50",
+					"bg-[hsl(219_14%_28%)] text-white shadow-lg hover:bg-[hsl(219_14%_23%)] hover:shadow-xl hover:scale-[1.02] active:shadow-md active:scale-[0.98] focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-2",
 				tertiary:
-					"bg-tertiary text-tertiary-foreground hover:bg-tertiary/90 active:opacity-80 active:scale-[0.98] focus-visible:ring-2 focus-visible:ring-ring/50 disabled:opacity-50",
+					"bg-[hsl(105_22%_25%)] text-white shadow-lg hover:bg-[hsl(105_22%_20%)] hover:shadow-xl hover:scale-[1.02] active:shadow-md active:scale-[0.98] focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-2",
 				destructive:
-					"bg-destructive text-white hover:bg-destructive/90 active:opacity-80 active:scale-[0.98] focus-visible:ring-destructive/20 dark:focus-visible:ring-destructive/40 dark:bg-destructive/60 disabled:opacity-50",
+					"bg-destructive text-white shadow-lg hover:bg-destructive/90 hover:shadow-xl hover:scale-[1.02] active:shadow-md active:scale-[0.98] focus-visible:ring-2 focus-visible:ring-destructive focus-visible:ring-offset-2 dark:bg-destructive/60",
 				outline:
-					"border bg-background shadow-xs hover:bg-accent hover:text-accent-foreground hover:opacity-90 active:opacity-80 active:scale-[0.98] dark:bg-input/30 dark:border-input dark:hover:bg-input/50 disabled:opacity-50",
+					"border-2 border-font/20 bg-transparent shadow-md hover:bg-primary/10 hover:shadow-lg hover:scale-[1.02] active:shadow-sm active:scale-[0.98] focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-2",
 				ghost:
-					"hover:bg-accent hover:text-accent-foreground hover:opacity-90 active:opacity-80 active:scale-[0.98] dark:hover:bg-accent/50 disabled:opacity-50",
-				link: "text-primary underline-offset-4 hover:underline hover:opacity-90 active:opacity-80 disabled:opacity-50",
+					"bg-transparent shadow-sm hover:bg-font/10 hover:shadow-md hover:scale-[1.02] active:shadow-xs active:scale-[0.98] focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-2",
+				link: "text-primary underline-offset-4 hover:underline hover:opacity-90 active:opacity-80",
 			},
 			size: {
 				default: "h-9 px-4 py-2 has-[>svg]:px-3",

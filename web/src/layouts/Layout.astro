@@ -1,4 +1,28 @@
 ---
+/**
+ * Layout.astro - Main Layout Component
+ *
+ * DESIGN SYSTEM: Uses 6-token system throughout
+ * - bg-background: Page background (adaptive: light gray → dark gray)
+ * - text-font: All text content (adaptive: dark → white)
+ * - Theme persistence via ThemeInit.astro
+ * - Dark mode support via .dark class
+ *
+ * FEATURES:
+ * - Collapsible sidebar (optional)
+ * - Skip to content link (accessibility)
+ * - View transitions (smooth navigation)
+ * - Toast notifications
+ * - Global cart drawer
+ *
+ * PROPS:
+ * @param title - Page title (required)
+ * @param description - Meta description
+ * @param image - OG image URL
+ * @param sidebarInitialCollapsed - Start with collapsed sidebar (for wide content like chat)
+ * @param hideHeader - Hide header for fullscreen experiences
+ * @param fullHeight - Use full viewport height
+ */
 import { ViewTransitions } from "astro:transitions";
 import { MinimalSidebar } from "@/components/MinimalSidebar";
 import PoweredByONE from "@/components/PoweredByONE.astro";

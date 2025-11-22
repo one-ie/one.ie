@@ -53,18 +53,18 @@ export function EventCard({
 
   const getEventColor = (type: string) => {
     if (type.includes("created") || type.includes("started")) {
-      return "bg-green-100 text-green-800 dark:bg-green-900 dark:text-green-100";
+      return "bg-tertiary/10 text-tertiary border-tertiary/20";
     }
     if (type.includes("updated") || type.includes("changed")) {
-      return "bg-blue-100 text-blue-800 dark:bg-blue-900 dark:text-blue-100";
+      return "bg-primary/10 text-primary border-primary/20";
     }
     if (type.includes("deleted") || type.includes("failed")) {
-      return "bg-red-100 text-red-800 dark:bg-red-900 dark:text-red-100";
+      return "bg-destructive/10 text-destructive border-destructive/20";
     }
     if (type.includes("completed") || type.includes("approved")) {
-      return "bg-emerald-100 text-emerald-800 dark:bg-emerald-900 dark:text-emerald-100";
+      return "bg-tertiary/10 text-tertiary border-tertiary/20";
     }
-    return "bg-gray-100 text-gray-800 dark:bg-gray-900 dark:text-gray-100";
+    return "bg-secondary/10 text-secondary border-secondary/20";
   };
 
   const hasMetadata = event.metadata && Object.keys(event.metadata).length > 0;
@@ -72,12 +72,17 @@ export function EventCard({
   return (
     <Card
       className={cn(
-        sizeClasses[size],
-        variantClasses[variant],
-        interactive && "cursor-pointer hover:shadow-lg transition-shadow",
+        "bg-background p-1 shadow-sm rounded-md transition-all duration-300",
+        interactive && "cursor-pointer hover:shadow-lg hover:scale-[1.02]",
         className
       )}
       onClick={onClick}
+    >
+      <div className={cn(
+        "bg-foreground rounded-md text-font",
+        sizeClasses[size],
+        variantClasses[variant]
+      )}
     >
       <CardHeader className="pb-3">
         <div className="flex items-start justify-between gap-2">
@@ -176,6 +181,7 @@ export function EventCard({
           </div>
         )}
       </CardContent>
+      </div>
     </Card>
   );
 }

@@ -32,15 +32,12 @@ export function EventDetails({
   className,
 }: EventDetailsProps) {
   return (
-    <Card className={cn("w-full", className)}>
-      <CardHeader>
+    <Card className={cn("w-full bg-background p-1 shadow-sm rounded-md", className)}>
+      <div className="bg-foreground rounded-md text-font p-6 space-y-6">
         <div className="flex items-start justify-between gap-4">
-          <CardTitle className="text-xl">Event Details</CardTitle>
+          <h2 className="text-xl font-semibold text-font">Event Details</h2>
           <Badge variant="outline">{getEventTypeDisplay(event.type)}</Badge>
         </div>
-      </CardHeader>
-
-      <CardContent className="space-y-6">
         {/* Event Information */}
         <div className="space-y-3">
           <h3 className="text-sm font-semibold text-muted-foreground">Event Information</h3>
@@ -123,7 +120,7 @@ export function EventDetails({
             </div>
           </>
         )}
-      </CardContent>
+      </div>
     </Card>
   );
 }

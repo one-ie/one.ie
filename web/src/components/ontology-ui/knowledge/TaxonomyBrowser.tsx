@@ -100,23 +100,24 @@ export function TaxonomyBrowser({
   };
 
   return (
-    <Card className={className}>
-      <CardHeader>
-        <CardTitle>Taxonomy Browser</CardTitle>
-        <div className="mt-2">
-          <div className="relative">
-            <Search className="absolute left-2 top-2.5 h-4 w-4 text-muted-foreground" />
-            <Input
-              type="text"
-              placeholder="Search labels and categories..."
-              value={searchQuery}
-              onChange={(e) => setSearchQuery(e.target.value)}
-              className="pl-8"
-            />
+    <Card className="bg-background p-1 shadow-sm rounded-md">
+      <div className="bg-foreground p-4 rounded-md">
+        <CardHeader className="p-0 pb-4">
+          <CardTitle className="text-font">Taxonomy Browser</CardTitle>
+          <div className="mt-2">
+            <div className="relative">
+              <Search className="absolute left-2 top-2.5 h-4 w-4 text-font/60" />
+              <Input
+                type="text"
+                placeholder="Search labels and categories..."
+                value={searchQuery}
+                onChange={(e) => setSearchQuery(e.target.value)}
+                className="pl-8"
+              />
+            </div>
           </div>
-        </div>
-      </CardHeader>
-      <CardContent>
+        </CardHeader>
+        <CardContent className="p-0">
         <Tabs defaultValue="tree" className="w-full">
           <TabsList className="grid w-full grid-cols-3">
             <TabsTrigger value="tree">Tree View</TabsTrigger>
@@ -142,7 +143,7 @@ export function TaxonomyBrowser({
                 maxTags={50}
               />
             ) : (
-              <p className="text-sm text-muted-foreground text-center py-8">
+              <p className="text-sm text-font/60 text-center py-8">
                 No labels found
               </p>
             )}
@@ -153,26 +154,26 @@ export function TaxonomyBrowser({
             {labelsByCategory.size > 0 ? (
               Array.from(labelsByCategory.entries()).map(([category, categoryLabels]) => (
                 <div key={category} className="space-y-2">
-                  <h4 className="text-sm font-semibold text-foreground">
+                  <h4 className="text-sm font-semibold text-font">
                     {category}
                   </h4>
                   <div className="space-y-1">
                     {categoryLabels.map((label) => (
                       <div
                         key={label._id}
-                        className="flex items-center justify-between py-1.5 px-3 rounded-md hover:bg-accent transition-colors"
+                        className="flex items-center justify-between py-1.5 px-3 rounded-md hover:bg-background transition-all duration-150"
                       >
                         <div className="flex items-center gap-2">
                           <Badge variant="outline" className="text-xs">
                             {label.label}
                           </Badge>
                           {label.confidence !== undefined && (
-                            <span className="text-xs text-muted-foreground">
+                            <span className="text-xs text-font/60">
                               {Math.round(label.confidence * 100)}% confidence
                             </span>
                           )}
                         </div>
-                        <span className="text-xs text-muted-foreground">
+                        <span className="text-xs text-font/60">
                           {thingCountsByLabel.get(label.label) || 0} items
                         </span>
                       </div>
@@ -181,7 +182,7 @@ export function TaxonomyBrowser({
                 </div>
               ))
             ) : (
-              <p className="text-sm text-muted-foreground text-center py-8">
+              <p className="text-sm text-font/60 text-center py-8">
                 No labels found
               </p>
             )}
@@ -189,12 +190,13 @@ export function TaxonomyBrowser({
         </Tabs>
 
         {/* Summary Stats */}
-        <div className="mt-6 pt-4 border-t flex items-center justify-between text-sm text-muted-foreground">
+        <div className="mt-6 pt-4 border-t border-font/10 flex items-center justify-between text-sm text-font/60">
           <span>{filteredLabels.length} labels</span>
           <span>{categories.length} categories</span>
           <span>{things.length} items</span>
         </div>
       </CardContent>
+      </div>
     </Card>
   );
 }

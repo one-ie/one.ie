@@ -114,7 +114,7 @@ export function CategoryTree({
         {/* Category Row */}
         <div
           className={cn(
-            "flex items-center gap-2 py-1.5 px-2 rounded-md hover:bg-accent transition-colors cursor-pointer",
+            "flex items-center gap-2 py-1.5 px-2 rounded-md hover:bg-background transition-all duration-150 cursor-pointer",
             depth > 0 && "ml-4"
           )}
           style={{ paddingLeft: `${depth * 16 + 8}px` }}
@@ -124,9 +124,9 @@ export function CategoryTree({
           <div className="w-4 h-4 flex items-center justify-center">
             {hasChildren ? (
               isExpanded ? (
-                <ChevronDown className="h-4 w-4 text-muted-foreground" />
+                <ChevronDown className="h-4 w-4 text-font/60" />
               ) : (
-                <ChevronRight className="h-4 w-4 text-muted-foreground" />
+                <ChevronRight className="h-4 w-4 text-font/60" />
               )
             ) : (
               <div className="w-4 h-4" />
@@ -134,14 +134,14 @@ export function CategoryTree({
           </div>
 
           {/* Folder Icon */}
-          <Folder className="h-4 w-4 text-muted-foreground flex-shrink-0" />
+          <Folder className="h-4 w-4 text-font/60 flex-shrink-0" />
 
           {/* Category Name */}
-          <span className="text-sm font-medium flex-1">{node.name}</span>
+          <span className="text-sm font-medium flex-1 text-font">{node.name}</span>
 
           {/* Label Count */}
           {node.labelCount > 0 && (
-            <span className="text-xs text-muted-foreground bg-muted px-2 py-0.5 rounded-full">
+            <span className="text-xs text-font/60 bg-background px-2 py-0.5 rounded-full">
               {node.labelCount}
             </span>
           )}
@@ -161,25 +161,29 @@ export function CategoryTree({
 
   if (categories.length === 0) {
     return (
-      <Card className={className}>
-        <CardHeader>
-          <CardTitle className="text-base">Categories</CardTitle>
-        </CardHeader>
-        <CardContent>
-          <p className="text-sm text-muted-foreground">No categories found</p>
-        </CardContent>
+      <Card className="bg-background p-1 shadow-sm rounded-md">
+        <div className="bg-foreground p-4 rounded-md">
+          <CardHeader className="p-0 pb-4">
+            <CardTitle className="text-base text-font">Categories</CardTitle>
+          </CardHeader>
+          <CardContent className="p-0">
+            <p className="text-sm text-font/60">No categories found</p>
+          </CardContent>
+        </div>
       </Card>
     );
   }
 
   return (
-    <Card className={className}>
-      <CardHeader>
-        <CardTitle className="text-base">Categories</CardTitle>
-      </CardHeader>
-      <CardContent className="space-y-1">
-        {renderNode(tree)}
-      </CardContent>
+    <Card className="bg-background p-1 shadow-sm rounded-md">
+      <div className="bg-foreground p-4 rounded-md">
+        <CardHeader className="p-0 pb-4">
+          <CardTitle className="text-base text-font">Categories</CardTitle>
+        </CardHeader>
+        <CardContent className="space-y-1 p-0">
+          {renderNode(tree)}
+        </CardContent>
+      </div>
     </Card>
   );
 }

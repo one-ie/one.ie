@@ -119,32 +119,33 @@ export function LabelCreator({
     onCancel?.();
   };
 
-  // Calculate confidence color for preview
+  // Calculate confidence color for preview using design system
   const getConfidenceColor = (conf: number): string => {
-    if (conf >= 0.8) return "bg-green-500";
-    if (conf >= 0.6) return "bg-yellow-500";
-    return "bg-orange-500";
+    if (conf >= 0.8) return "bg-tertiary"; // Green for high
+    if (conf >= 0.6) return "bg-secondary"; // Secondary for medium
+    return "bg-primary"; // Primary for lower
   };
 
   return (
-    <Card className={cn("w-full", className)}>
-      <CardHeader>
-        <CardTitle>Create Label</CardTitle>
-        <CardDescription>
-          Add a new label to classify or categorize this item
-        </CardDescription>
-      </CardHeader>
+    <Card className={cn("w-full bg-background p-1 shadow-sm rounded-md", className)}>
+      <div className="bg-foreground p-4 rounded-md">
+        <CardHeader className="p-0 pb-4">
+          <CardTitle className="text-font">Create Label</CardTitle>
+          <CardDescription className="text-font/60">
+            Add a new label to classify or categorize this item
+          </CardDescription>
+        </CardHeader>
 
-      <CardContent className="space-y-4">
+        <CardContent className="space-y-4 p-0">
         {/* Thing ID Reference */}
-        <div className="flex items-center gap-2 text-sm text-muted-foreground">
+        <div className="flex items-center gap-2 text-sm text-font/60">
           <span>For Thing:</span>
           <Badge variant="outline">{thingId}</Badge>
         </div>
 
         {/* Label Text Input */}
         <div className="space-y-2">
-          <Label htmlFor="label-text">Label Text *</Label>
+          <Label htmlFor="label-text" className="text-font">Label Text *</Label>
           <Input
             id="label-text"
             type="text"
@@ -160,7 +161,7 @@ export function LabelCreator({
 
         {/* Category Selection */}
         <div className="space-y-2">
-          <Label htmlFor="category">Category *</Label>
+          <Label htmlFor="category" className="text-font">Category *</Label>
 
           {!useCustomCategory ? (
             <div className="space-y-2">
@@ -182,6 +183,7 @@ export function LabelCreator({
                 size="sm"
                 type="button"
                 onClick={() => setUseCustomCategory(true)}
+                className="transition-all duration-150 hover:scale-[1.02]"
               >
                 + Add custom category
               </Button>
@@ -217,8 +219,8 @@ export function LabelCreator({
         {/* Confidence Slider */}
         <div className="space-y-2">
           <div className="flex items-center justify-between">
-            <Label htmlFor="confidence">Confidence</Label>
-            <span className="text-sm font-medium">{(confidence * 100).toFixed(0)}%</span>
+            <Label htmlFor="confidence" className="text-font">Confidence</Label>
+            <span className="text-sm font-medium text-font">{(confidence * 100).toFixed(0)}%</span>
           </div>
 
           <div className="space-y-2">
@@ -236,7 +238,7 @@ export function LabelCreator({
               }}
             />
 
-            <div className="flex justify-between text-xs text-muted-foreground">
+            <div className="flex justify-between text-xs text-font/60">
               <span>Low (0%)</span>
               <span>High (100%)</span>
             </div>
@@ -245,17 +247,17 @@ export function LabelCreator({
 
         {/* Preview */}
         {labelText && (
-          <div className="pt-4 border-t">
-            <Label className="text-sm text-muted-foreground mb-2 block">Preview</Label>
-            <div className="flex items-center gap-2 p-3 border rounded-lg bg-muted/50">
+          <div className="pt-4 border-t border-font/10">
+            <Label className="text-sm text-font/60 mb-2 block">Preview</Label>
+            <div className="flex items-center gap-2 p-3 border border-font/10 rounded-md bg-background/50">
               <span className="text-lg">🏷️</span>
-              <span className="font-medium">{labelText}</span>
+              <span className="font-medium text-font">{labelText}</span>
               {(useCustomCategory ? customCategory : category) && (
                 <Badge variant="secondary">
                   {useCustomCategory ? customCategory : category}
                 </Badge>
               )}
-              <span className="ml-auto text-sm text-muted-foreground">
+              <span className="ml-auto text-sm text-font/60">
                 {(confidence * 100).toFixed(0)}%
               </span>
             </div>
@@ -264,29 +266,36 @@ export function LabelCreator({
 
         {/* Error Message */}
         {error && (
-          <div className="text-sm text-destructive bg-destructive/10 p-3 rounded-lg">
+          <div className="text-sm text-destructive bg-destructive/10 p-3 rounded-md">
             {error}
           </div>
         )}
 
         {/* Helper Text */}
-        <p className="text-sm text-muted-foreground">
+        <p className="text-sm text-font/60">
           * Required fields. The label will be associated with the specified thing.
         </p>
       </CardContent>
 
-      <CardFooter className="flex justify-end gap-2">
-        <Button variant="outline" onClick={handleCancel} type="button">
+      <CardFooter className="flex justify-end gap-2 p-0 pt-4">
+        <Button
+          variant="outline"
+          onClick={handleCancel}
+          type="button"
+          className="transition-all duration-150 hover:scale-[1.02] active:scale-[0.98]"
+        >
           Cancel
         </Button>
         <Button
           onClick={handleSubmit}
           disabled={!labelText.trim() || (!category && !customCategory.trim())}
           type="button"
+          className="transition-all duration-150 hover:scale-[1.02] active:scale-[0.98]"
         >
           Create Label
         </Button>
       </CardFooter>
+      </div>
     </Card>
   );
 }

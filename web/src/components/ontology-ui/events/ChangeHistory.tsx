@@ -50,15 +50,15 @@ export function ChangeHistory({
   const getEventColor = (type: string) => {
     switch (type) {
       case "created":
-        return "bg-green-100 text-green-800 dark:bg-green-900 dark:text-green-200";
+        return "bg-tertiary/10 text-tertiary border-tertiary/20";
       case "updated":
       case "settings_changed":
       case "profile_updated":
-        return "bg-blue-100 text-blue-800 dark:bg-blue-900 dark:text-blue-200";
+        return "bg-primary/10 text-primary border-primary/20";
       case "deleted":
-        return "bg-red-100 text-red-800 dark:bg-red-900 dark:text-red-200";
+        return "bg-destructive/10 text-destructive border-destructive/20";
       default:
-        return "bg-gray-100 text-gray-800 dark:bg-gray-900 dark:text-gray-200";
+        return "bg-secondary/10 text-secondary border-secondary/20";
     }
   };
 
@@ -77,27 +77,26 @@ export function ChangeHistory({
 
   if (changeEvents.length === 0) {
     return (
-      <Card className={cn("w-full", className)}>
-        <CardHeader>
-          <CardTitle>Change History</CardTitle>
-        </CardHeader>
-        <CardContent>
+      <Card className={cn("w-full bg-background p-1 shadow-sm rounded-md", className)}>
+        <div className="bg-foreground rounded-md text-font p-6">
+          <h3 className="font-semibold text-font mb-2">Change History</h3>
           <p className="text-sm text-muted-foreground">No changes recorded</p>
-        </CardContent>
+        </div>
       </Card>
     );
   }
 
   return (
-    <Card className={cn("w-full", className)}>
-      <CardHeader>
-        <div className="flex items-center justify-between">
-          <CardTitle>Change History</CardTitle>
-          <Badge variant="secondary">{changeEvents.length} changes</Badge>
-        </div>
-      </CardHeader>
+    <Card className={cn("w-full bg-background p-1 shadow-sm rounded-md", className)}>
+      <div className="bg-foreground rounded-md text-font">
+        <CardHeader>
+          <div className="flex items-center justify-between">
+            <CardTitle className="text-font">Change History</CardTitle>
+            <Badge variant="secondary">{changeEvents.length} changes</Badge>
+          </div>
+        </CardHeader>
 
-      <CardContent>
+        <CardContent>
         <div className="space-y-4">
           {changeEvents.map((event, index) => {
             const diffData = showDiff ? getDiffData(event) : null;
@@ -111,12 +110,12 @@ export function ChangeHistory({
                     <div
                       className={cn(
                         "h-2.5 w-2.5 rounded-full",
-                        event.type === "created" && "bg-green-500",
+                        event.type === "created" && "bg-tertiary",
                         (event.type === "updated" ||
                           event.type === "settings_changed" ||
                           event.type === "profile_updated") &&
-                          "bg-blue-500",
-                        event.type === "deleted" && "bg-red-500"
+                          "bg-primary",
+                        event.type === "deleted" && "bg-destructive"
                       )}
                     />
                     {index < changeEvents.length - 1 && (
@@ -200,7 +199,8 @@ export function ChangeHistory({
             );
           })}
         </div>
-      </CardContent>
+        </CardContent>
+      </div>
     </Card>
   );
 }

@@ -3,6 +3,8 @@
  *
  * Tree view of hierarchical relationships
  * Part of CONNECTIONS dimension (ontology-ui)
+ *
+ * Design System: Uses 6-token system with hover states and smooth animations
  */
 
 import React, { useState } from "react";
@@ -77,18 +79,18 @@ function TreeNodeComponent({
     <div className="select-none">
       <div
         className={cn(
-          "flex items-center gap-2 py-2 px-3 rounded-md hover:bg-accent transition-colors",
-          hasChildren && "cursor-pointer"
+          "flex items-center gap-2 py-2 px-3 rounded-md transition-all duration-150 ease-in-out",
+          hasChildren && "cursor-pointer hover:bg-background hover:scale-[1.01]"
         )}
         style={{ paddingLeft: `${depth * 1.5 + 0.75}rem` }}
         onClick={() => hasChildren && setIsExpanded(!isExpanded)}
       >
         {hasChildren ? (
-          <button className="flex-shrink-0" aria-label={isExpanded ? "Collapse" : "Expand"}>
+          <button className="flex-shrink-0 transition-transform duration-150 ease-in-out" aria-label={isExpanded ? "Collapse" : "Expand"}>
             {isExpanded ? (
-              <ChevronDown className="h-4 w-4 text-muted-foreground" />
+              <ChevronDown className="h-4 w-4 text-primary" />
             ) : (
-              <ChevronRight className="h-4 w-4 text-muted-foreground" />
+              <ChevronRight className="h-4 w-4 text-font/60" />
             )}
           </button>
         ) : (
@@ -98,16 +100,16 @@ function TreeNodeComponent({
         <span className="text-lg flex-shrink-0">{getThingTypeIcon(node.thing.type)}</span>
 
         <div className="flex-1 min-w-0">
-          <div className="font-medium text-sm truncate">{node.thing.name}</div>
+          <div className="font-medium text-sm truncate text-font">{node.thing.name}</div>
           {node.connection && (
-            <div className="text-xs text-muted-foreground">
+            <div className="text-xs text-font/60">
               {getConnectionTypeDisplay(node.connection.type)}
             </div>
           )}
         </div>
 
         {hasChildren && (
-          <span className="text-xs text-muted-foreground flex-shrink-0">
+          <span className="text-xs text-font/60 flex-shrink-0">
             {node.children.length} {node.children.length === 1 ? "child" : "children"}
           </span>
         )}
@@ -133,16 +135,18 @@ export function RelationshipTree({
   const tree = buildTree(rootThing, connections, things);
 
   return (
-    <Card className={cn("w-full", className)}>
-      <CardHeader>
-        <CardTitle className="flex items-center gap-2">
-          <span className="text-2xl">🔗</span>
-          <span>Relationship Tree</span>
-        </CardTitle>
-      </CardHeader>
-      <CardContent className="pt-0">
-        <TreeNodeComponent node={tree} depth={0} />
-      </CardContent>
+    <Card className={cn("w-full bg-background p-1 shadow-sm rounded-md", className)}>
+      <div className="bg-foreground rounded-md">
+        <CardHeader>
+          <CardTitle className="flex items-center gap-2 text-font">
+            <span className="text-2xl">🔗</span>
+            <span>Relationship Tree</span>
+          </CardTitle>
+        </CardHeader>
+        <CardContent className="pt-0">
+          <TreeNodeComponent node={tree} depth={0} />
+        </CardContent>
+      </div>
     </Card>
   );
 }

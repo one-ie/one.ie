@@ -48,9 +48,12 @@ export function UserAvatar({
 }: UserAvatarProps) {
   return (
     <div className={cn("relative inline-block", className)}>
-      <Avatar className={cn(sizeClasses[size])}>
+      <Avatar className={cn(
+        sizeClasses[size],
+        "rounded-full border-2 border-font/20"
+      )}>
         <AvatarImage src={user.avatar} alt={user.name} />
-        <AvatarFallback className="text-xs font-medium">
+        <AvatarFallback className="text-xs font-medium text-font bg-background">
           {user.name.slice(0, 2).toUpperCase()}
         </AvatarFallback>
       </Avatar>
@@ -58,7 +61,7 @@ export function UserAvatar({
       {showStatus && (
         <span
           className={cn(
-            "absolute bottom-0 right-0 block rounded-full border-2 border-background",
+            "absolute bottom-0 right-0 block rounded-full border-2 border-foreground",
             statusSizes[size],
             statusColors[status]
           )}

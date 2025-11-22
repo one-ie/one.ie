@@ -1,19 +1,29 @@
 /**
- * AgentCard Component
+ * AgentCard - Card for AI agents and automated systems
  *
- * Display AI agent information with status and capabilities
- * Part of THINGS dimension (ontology-ui)
+ * Displays agent information with status, model, capabilities, and activity.
+ * Supports thing-level branding for different AI platforms.
  */
 
-import React from "react";
-import { Card, CardHeader, CardTitle, CardDescription, CardContent } from "@/components/ui/card";
+import type { Thing } from "@/lib/ontology/types";
+import { ThingCard } from "../universal/ThingCard";
+import {
+  CardHeader,
+  CardTitle,
+  CardDescription,
+  CardContent,
+} from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
-import type { Thing, CardProps } from "../types";
 import { cn } from "../utils";
 
-export interface AgentCardProps extends CardProps {
+interface AgentCardProps {
   agent: Thing;
   status?: "active" | "idle" | "offline";
+  variant?: "default" | "outline" | "ghost";
+  size?: "sm" | "md" | "lg";
+  interactive?: boolean;
+  onClick?: () => void;
+  className?: string;
 }
 
 export function AgentCard({
@@ -25,15 +35,16 @@ export function AgentCard({
   onClick,
   className,
 }: AgentCardProps) {
-  const agentStatus = status ?? (agent.metadata?.status as "active" | "idle" | "offline") ?? "idle";
-  const capabilities = agent.metadata?.capabilities as string[] | undefined;
-  const model = agent.metadata?.model as string;
-  const tasks = agent.metadata?.tasks as number;
+  const agentStatus = status ?? (agent.properties?.status as "active" | "idle" | "offline") ?? "idle";
+  const capabilities = agent.properties?.capabilities as string[] | undefined;
+  const model = agent.properties?.model as string;
+  const tasks = agent.properties?.tasks as number;
+  const lastActive = agent.properties?.lastActive as number;
 
   const statusColors: Record<string, string> = {
-    active: "bg-green-500 text-white",
-    idle: "bg-yellow-500 text-white",
-    offline: "bg-gray-500 text-white",
+    active: "bg-tertiary/10 text-tertiary border-tertiary/30",
+    idle: "bg-secondary/10 text-secondary border-secondary/30",
+    offline: "bg-font/10 text-font border-font/30",
   };
 
   const statusIcons: Record<string, string> = {
@@ -42,88 +53,108 @@ export function AgentCard({
     offline: "⚫",
   };
 
+  const contentPadding = {
+    sm: "p-3",
+    md: "p-4",
+    lg: "p-6",
+  };
+
   return (
-    <Card
+    <ThingCard
+      thing={agent}
       className={cn(
-        "group relative transition-all duration-200",
-        interactive && "cursor-pointer hover:shadow-lg hover:scale-[1.02]",
-        size === "sm" && "p-3",
-        size === "md" && "p-4",
-        size === "lg" && "p-6",
+        interactive && "cursor-pointer hover:shadow-xl hover:scale-[1.02] transition-all duration-300",
         className
       )}
-      onClick={onClick}
     >
-      <CardHeader className="pb-3">
-        <div className="flex items-start justify-between">
-          <div className="flex-1">
-            <CardTitle className="flex items-center gap-2">
-              <span className="text-2xl">🤖</span>
-              <span className="line-clamp-1">{agent.name}</span>
-            </CardTitle>
-            {agent.description && (
-              <CardDescription className="mt-1 line-clamp-2">
-                {agent.description}
-              </CardDescription>
-            )}
-          </div>
-          <div className="flex items-center gap-2 ml-2">
-            <span>{statusIcons[agentStatus]}</span>
-            <Badge className={statusColors[agentStatus]}>
-              {agentStatus}
-            </Badge>
-          </div>
-        </div>
-      </CardHeader>
-
-      <CardContent className="space-y-3">
-        {model && (
-          <div className="flex items-center gap-2 text-sm">
-            <span className="text-muted-foreground">Model:</span>
-            <code className="text-xs font-mono bg-secondary px-2 py-1 rounded">
-              {model}
-            </code>
-          </div>
-        )}
-
-        {tasks !== undefined && (
-          <div className="flex items-center justify-between text-sm">
-            <span className="text-muted-foreground">Tasks Completed</span>
-            <span className="font-bold">{tasks}</span>
-          </div>
-        )}
-
-        {capabilities && capabilities.length > 0 && (
-          <div className="space-y-2">
-            <span className="text-xs text-muted-foreground">Capabilities</span>
-            <div className="flex flex-wrap gap-1">
-              {capabilities.slice(0, 6).map((capability, index) => (
-                <Badge key={index} variant="secondary" className="text-xs">
-                  {capability}
-                </Badge>
-              ))}
-              {capabilities.length > 6 && (
-                <Badge variant="outline" className="text-xs">
-                  +{capabilities.length - 6} more
-                </Badge>
+      <div
+        onClick={onClick}
+        className={cn("bg-foreground rounded-md", contentPadding[size])}
+      >
+        <CardHeader className="px-0 pb-3">
+          <div className="flex items-start justify-between">
+            <div className="flex-1">
+              <CardTitle className={cn(
+                "flex items-center gap-2 text-font",
+                size === "sm" ? "text-base" : size === "lg" ? "text-2xl" : "text-lg"
+              )}>
+                <span className="text-2xl">🤖</span>
+                <span className="line-clamp-1">{agent.name}</span>
+              </CardTitle>
+              {agent.properties.description && (
+                <CardDescription className="mt-1 line-clamp-2 text-font/70">
+                  {agent.properties.description}
+                </CardDescription>
               )}
             </div>
+            <div className="flex items-center gap-2 ml-2">
+              <span>{statusIcons[agentStatus]}</span>
+              <Badge
+                variant="outline"
+                className={statusColors[agentStatus]}
+              >
+                {agentStatus}
+              </Badge>
+            </div>
           </div>
-        )}
+        </CardHeader>
 
-        {agent.metadata?.lastActive && (
-          <div className="flex items-center gap-2 text-xs text-muted-foreground border-t pt-2">
-            <span>⏱️</span>
-            <span>Last active: {new Date(agent.metadata.lastActive as number).toLocaleString()}</span>
-          </div>
-        )}
+        <CardContent className="space-y-3 px-0">
+          {model && (
+            <div className="flex items-center gap-2 text-sm">
+              <span className="text-font/60">Model:</span>
+              <code className="text-xs font-mono bg-background px-2 py-1 rounded text-primary">
+                {model}
+              </code>
+            </div>
+          )}
 
-        {interactive && (
-          <div className="text-xs text-muted-foreground opacity-0 group-hover:opacity-100 transition-opacity border-t pt-2">
-            View agent details →
-          </div>
-        )}
-      </CardContent>
-    </Card>
+          {tasks !== undefined && (
+            <div className="flex items-center justify-between p-3 bg-background rounded-md">
+              <span className="text-sm text-font/60">Tasks Completed</span>
+              <span className="font-bold text-primary">{tasks}</span>
+            </div>
+          )}
+
+          {capabilities && capabilities.length > 0 && (
+            <div className="space-y-2">
+              <span className="text-xs text-font/60">Capabilities</span>
+              <div className="flex flex-wrap gap-1">
+                {capabilities.slice(0, 6).map((capability, index) => (
+                  <Badge
+                    key={index}
+                    variant="outline"
+                    className="text-xs border-font/20 text-font"
+                  >
+                    {capability}
+                  </Badge>
+                ))}
+                {capabilities.length > 6 && (
+                  <Badge
+                    variant="outline"
+                    className="text-xs border-font/20 text-font"
+                  >
+                    +{capabilities.length - 6} more
+                  </Badge>
+                )}
+              </div>
+            </div>
+          )}
+
+          {lastActive && (
+            <div className="flex items-center gap-2 text-xs text-font/50 border-t border-font/10 pt-2">
+              <span>⏱️</span>
+              <span>Last active: {new Date(lastActive).toLocaleString()}</span>
+            </div>
+          )}
+
+          {interactive && (
+            <div className="text-xs text-font/40 opacity-0 group-hover:opacity-100 transition-opacity border-t border-font/10 pt-2">
+              View agent details →
+            </div>
+          )}
+        </CardContent>
+      </div>
+    </ThingCard>
   );
 }

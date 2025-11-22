@@ -142,13 +142,13 @@ export function TokenChart({
   const CustomTooltip = ({ active, payload }: any) => {
     if (active && payload && payload.length) {
       return (
-        <div className="bg-background border rounded-lg p-3 shadow-lg">
-          <p className="text-sm font-medium mb-1">{payload[0].payload.date}</p>
+        <div className="bg-foreground border border-font/10 rounded-md p-3 shadow-lg">
+          <p className="text-sm font-medium mb-1 text-font">{payload[0].payload.date}</p>
           <p className="text-lg font-bold text-primary">
             {formatUsdValue(payload[0].value)}
           </p>
           {showVolume && payload[1] && (
-            <p className="text-sm text-muted-foreground">
+            <p className="text-sm text-font/60">
               Vol: {formatLargeNumber(payload[1].value)}
             </p>
           )}
@@ -160,37 +160,42 @@ export function TokenChart({
 
   if (loading) {
     return (
-      <Card>
-        <CardHeader>
-          <Skeleton className="h-6 w-48" />
-          <Skeleton className="h-4 w-32" />
-        </CardHeader>
-        <CardContent>
-          <Skeleton className="h-8 w-full mb-4" />
-          <Skeleton className="h-80 w-full" />
-        </CardContent>
+      <Card className="bg-background p-1 shadow-sm rounded-md">
+        <div className="bg-foreground p-4 rounded-md">
+          <CardHeader className="p-0 mb-4">
+            <Skeleton className="h-6 w-48" />
+            <Skeleton className="h-4 w-32" />
+          </CardHeader>
+          <CardContent className="p-0">
+            <Skeleton className="h-8 w-full mb-4" />
+            <Skeleton className="h-80 w-full" />
+          </CardContent>
+        </div>
       </Card>
     );
   }
 
   if (error) {
     return (
-      <Card>
-        <CardHeader>
-          <CardTitle>Error Loading Chart</CardTitle>
-        </CardHeader>
-        <CardContent>
-          <p className="text-destructive">{error}</p>
-          <Button
-            onClick={() => {
-              const range = timeRanges.find((r) => r.value === timeRange);
-              if (range) fetchChartData(range.days);
-            }}
-            className="mt-4"
-          >
-            Retry
-          </Button>
-        </CardContent>
+      <Card className="bg-background p-1 shadow-sm rounded-md">
+        <div className="bg-foreground p-4 rounded-md">
+          <CardHeader className="p-0 mb-4">
+            <CardTitle className="text-font">Error Loading Chart</CardTitle>
+          </CardHeader>
+          <CardContent className="p-0">
+            <p className="text-destructive">{error}</p>
+            <Button
+              variant="primary"
+              onClick={() => {
+                const range = timeRanges.find((r) => r.value === timeRange);
+                if (range) fetchChartData(range.days);
+              }}
+              className="mt-4"
+            >
+              Retry
+            </Button>
+          </CardContent>
+        </div>
       </Card>
     );
   }
@@ -202,49 +207,50 @@ export function TokenChart({
         100
       : 0;
 
-  const chartColor = priceChange >= 0 ? "#22c55e" : "#ef4444";
+  const chartColor = priceChange >= 0 ? "hsl(var(--color-tertiary))" : "hsl(var(--color-destructive))";
 
   return (
-    <Card>
-      <CardHeader>
-        <div className="flex items-start justify-between">
-          <div>
-            <CardTitle>
-              {tokenName} Price Chart
-            </CardTitle>
-            <CardDescription>{tokenSymbol.toUpperCase()}/USD</CardDescription>
-          </div>
-          <div className="text-right">
-            <div
-              className={`text-2xl font-bold ${
-                priceChange >= 0
-                  ? "text-green-600 dark:text-green-400"
-                  : "text-red-600 dark:text-red-400"
-              }`}
-            >
-              {priceChange >= 0 ? "+" : ""}
-              {priceChange.toFixed(2)}%
+    <Card className="bg-background p-1 shadow-sm rounded-md">
+      <div className="bg-foreground p-4 rounded-md">
+        <CardHeader className="p-0 mb-4">
+          <div className="flex items-start justify-between">
+            <div>
+              <CardTitle className="text-font">
+                {tokenName} Price Chart
+              </CardTitle>
+              <CardDescription className="text-font/60">{tokenSymbol.toUpperCase()}/USD</CardDescription>
             </div>
-            <div className="text-sm text-muted-foreground">
-              {timeRanges.find((r) => r.value === timeRange)?.label}
+            <div className="text-right">
+              <div
+                className={`text-2xl font-bold ${
+                  priceChange >= 0
+                    ? "text-tertiary"
+                    : "text-destructive"
+                }`}
+              >
+                {priceChange >= 0 ? "+" : ""}
+                {priceChange.toFixed(2)}%
+              </div>
+              <div className="text-sm text-font/60">
+                {timeRanges.find((r) => r.value === timeRange)?.label}
+              </div>
             </div>
           </div>
-        </div>
-      </CardHeader>
-      <CardContent>
-        {/* Time Range Selector */}
-        <div className="flex gap-2 mb-6">
-          {timeRanges.map((range) => (
-            <Button
-              key={range.value}
-              variant={timeRange === range.value ? "default" : "outline"}
-              size="sm"
-              onClick={() => handleTimeRangeChange(range.value)}
-            >
-              {range.label}
-            </Button>
-          ))}
-        </div>
+        </CardHeader>
+        <CardContent className="p-0">
+          {/* Time Range Selector */}
+          <div className="flex gap-2 mb-6">
+            {timeRanges.map((range) => (
+              <Button
+                key={range.value}
+                variant={timeRange === range.value ? "primary" : "outline"}
+                size="sm"
+                onClick={() => handleTimeRangeChange(range.value)}
+              >
+                {range.label}
+              </Button>
+            ))}
+          </div>
 
         {/* Price Chart */}
         <div className="mb-6">
@@ -257,7 +263,7 @@ export function TokenChart({
                     <stop offset="95%" stopColor={chartColor} stopOpacity={0} />
                   </linearGradient>
                 </defs>
-                <CartesianGrid strokeDasharray="3 3" className="stroke-muted" />
+                <CartesianGrid strokeDasharray="3 3" className="stroke-font/10" />
                 <XAxis
                   dataKey="timestamp"
                   tickFormatter={(timestamp) => {
@@ -273,11 +279,11 @@ export function TokenChart({
                       day: "numeric",
                     });
                   }}
-                  className="text-muted-foreground"
+                  className="text-font/60"
                 />
                 <YAxis
                   tickFormatter={(value) => `$${formatLargeNumber(value)}`}
-                  className="text-muted-foreground"
+                  className="text-font/60"
                 />
                 <Tooltip content={<CustomTooltip />} />
                 <Area
@@ -291,7 +297,7 @@ export function TokenChart({
               </AreaChart>
             ) : (
               <LineChart data={chartData}>
-                <CartesianGrid strokeDasharray="3 3" className="stroke-muted" />
+                <CartesianGrid strokeDasharray="3 3" className="stroke-font/10" />
                 <XAxis
                   dataKey="timestamp"
                   tickFormatter={(timestamp) => {
@@ -307,11 +313,11 @@ export function TokenChart({
                       day: "numeric",
                     });
                   }}
-                  className="text-muted-foreground"
+                  className="text-font/60"
                 />
                 <YAxis
                   tickFormatter={(value) => `$${formatLargeNumber(value)}`}
-                  className="text-muted-foreground"
+                  className="text-font/60"
                 />
                 <Tooltip content={<CustomTooltip />} />
                 <Line
@@ -329,10 +335,10 @@ export function TokenChart({
         {/* Volume Chart */}
         {showVolume && (
           <div>
-            <h4 className="text-sm font-medium mb-2">Volume</h4>
+            <h4 className="text-sm font-medium mb-2 text-font">Volume</h4>
             <ResponsiveContainer width="100%" height={120}>
               <BarChart data={chartData}>
-                <CartesianGrid strokeDasharray="3 3" className="stroke-muted" />
+                <CartesianGrid strokeDasharray="3 3" className="stroke-font/10" />
                 <XAxis
                   dataKey="timestamp"
                   tickFormatter={(timestamp) => {
@@ -342,11 +348,11 @@ export function TokenChart({
                       day: "numeric",
                     });
                   }}
-                  className="text-muted-foreground"
+                  className="text-font/60"
                 />
                 <YAxis
                   tickFormatter={(value) => formatLargeNumber(value)}
-                  className="text-muted-foreground"
+                  className="text-font/60"
                 />
                 <Tooltip
                   formatter={(value: number) => formatLargeNumber(value)}
@@ -359,7 +365,8 @@ export function TokenChart({
             </ResponsiveContainer>
           </div>
         )}
-      </CardContent>
+        </CardContent>
+      </div>
     </Card>
   );
 }

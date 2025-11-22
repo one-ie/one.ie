@@ -108,81 +108,99 @@ export function UserInvite({
   };
 
   return (
-    <Card className={cn("w-full", className)}>
-      <CardHeader>
-        <CardTitle>Invite Users</CardTitle>
-        <CardDescription>
-          Send invitations to new users to join your organization
-        </CardDescription>
-      </CardHeader>
+    <Card className={cn("w-full bg-background p-1 shadow-sm rounded-md", className)}>
+      <div className="bg-foreground rounded-md text-font">
+        <CardHeader>
+          <CardTitle className="text-font">Invite Users</CardTitle>
+          <CardDescription className="text-font/80">
+            Send invitations to new users to join your organization
+          </CardDescription>
+        </CardHeader>
 
-      <CardContent className="space-y-4">
-        {/* Email Input */}
-        <div className="space-y-2">
-          <Label htmlFor="email-input">Email Addresses</Label>
-          <div className="flex gap-2">
-            <Input
-              id="email-input"
-              type="email"
-              placeholder="Enter email address"
-              value={emailInput}
-              onChange={(e) => {
-                setEmailInput(e.target.value);
-                setError(null);
-              }}
-              onKeyDown={handleKeyDown}
-              className="flex-1"
-            />
-            <Button onClick={handleAddEmail} variant="outline" type="button">
-              Add
-            </Button>
-          </div>
-          {error && <p className="text-sm text-destructive">{error}</p>}
-        </div>
-
-        {/* Email List */}
-        {emails.length > 0 && (
+        <CardContent className="space-y-4">
+          {/* Email Input */}
           <div className="space-y-2">
-            <Label>Added Emails ({emails.length})</Label>
-            <div className="flex flex-wrap gap-2">
-              {emails.map((email) => (
-                <Badge key={email} variant="secondary" className="text-sm">
-                  {email}
-                  <button
-                    onClick={() => handleRemoveEmail(email)}
-                    className="ml-2 hover:text-destructive"
-                    aria-label={`Remove ${email}`}
-                  >
-                    ×
-                  </button>
-                </Badge>
-              ))}
+            <Label htmlFor="email-input" className="text-font">Email Addresses</Label>
+            <div className="flex gap-2">
+              <Input
+                id="email-input"
+                type="email"
+                placeholder="Enter email address"
+                value={emailInput}
+                onChange={(e) => {
+                  setEmailInput(e.target.value);
+                  setError(null);
+                }}
+                onKeyDown={handleKeyDown}
+                className="flex-1 bg-foreground text-font border-font/20 focus:ring-2 focus:ring-primary"
+              />
+              <Button
+                onClick={handleAddEmail}
+                variant="outline"
+                type="button"
+                className="transition-all duration-150 hover:scale-[1.02] active:scale-[0.98]"
+              >
+                Add
+              </Button>
             </div>
+            {error && <p className="text-sm text-destructive">{error}</p>}
           </div>
-        )}
 
-        {/* Role Selection */}
-        <UserRoleSelector
-          value={selectedRole}
-          onChange={setSelectedRole}
-          excludeRoles={["platform_owner"]} // Platform owner can only be assigned manually
-        />
+          {/* Email List */}
+          {emails.length > 0 && (
+            <div className="space-y-2">
+              <Label className="text-font">Added Emails ({emails.length})</Label>
+              <div className="flex flex-wrap gap-2">
+                {emails.map((email) => (
+                  <Badge key={email} variant="secondary" className="text-sm">
+                    {email}
+                    <button
+                      onClick={() => handleRemoveEmail(email)}
+                      className="ml-2 hover:text-destructive transition-colors duration-150"
+                      aria-label={`Remove ${email}`}
+                    >
+                      ×
+                    </button>
+                  </Badge>
+                ))}
+              </div>
+            </div>
+          )}
 
-        {/* Helper Text */}
-        <p className="text-sm text-muted-foreground">
-          Invitation emails will be sent to all addresses with the selected role.
-        </p>
-      </CardContent>
+          {/* Role Selection */}
+          <UserRoleSelector
+            value={selectedRole}
+            onChange={setSelectedRole}
+            excludeRoles={["platform_owner"]} // Platform owner can only be assigned manually
+          />
 
-      <CardFooter className="flex justify-end gap-2">
-        <Button variant="outline" onClick={handleCancel} type="button">
-          Cancel
-        </Button>
-        <Button onClick={handleSubmit} disabled={emails.length === 0} type="button">
-          Send {emails.length > 0 ? `${emails.length} ` : ""}
-          Invite{emails.length !== 1 ? "s" : ""}
-        </Button>
-      </CardFooter>
+          {/* Helper Text */}
+          <p className="text-sm text-font/60">
+            Invitation emails will be sent to all addresses with the selected role.
+          </p>
+        </CardContent>
+
+        <CardFooter className="flex justify-end gap-2">
+          <Button
+            variant="outline"
+            onClick={handleCancel}
+            type="button"
+            className="transition-all duration-150 hover:scale-[1.02] active:scale-[0.98]"
+          >
+            Cancel
+          </Button>
+          <Button
+            variant="primary"
+            onClick={handleSubmit}
+            disabled={emails.length === 0}
+            type="button"
+            className="transition-all duration-150 hover:scale-[1.02] active:scale-[0.98]"
+          >
+            Send {emails.length > 0 ? `${emails.length} ` : ""}
+            Invite{emails.length !== 1 ? "s" : ""}
+          </Button>
+        </CardFooter>
+      </div>
     </Card>
   );
 }

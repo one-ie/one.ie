@@ -57,7 +57,7 @@ const protocolColors = {
     </div>
 
     <div class="mx-auto max-w-full sm:max-w-6xl space-y-8 text-center">
-      <div class="inline-flex items-center gap-2 rounded-full border border-border/50 bg-card/50 px-4 py-2 backdrop-blur">
+      <div class="inline-flex items-center gap-2 rounded-full border border-border/50 bg-background/50 px-4 py-2 backdrop-blur">
         <Search className="h-4 w-4 text-primary" />
         <span class="text-sm font-medium">Protocol Documentation</span>
       </div>
@@ -107,7 +107,7 @@ const protocolColors = {
 
           return (
             <a href={`/connections/${connection.slug}`}>
-              <Card className="group border-border/50 bg-card/50 backdrop-blur transition-all hover:scale-[1.02] hover:border-primary/20 hover:bg-card hover:shadow-lg hover:shadow-primary/5 h-full">
+              <Card className="group border-border/50 bg-background/50 backdrop-blur transition-all hover:scale-[1.02] hover:border-primary/20 hover:bg-card hover:shadow-lg hover:shadow-primary/5 h-full">
                 <CardHeader className="space-y-4">
                   <div class="flex h-12 w-12 items-center justify-center rounded-lg bg-primary/10 transition-colors group-hover:bg-primary/15">
                     <Icon className={`h-6 w-6 ${colorClass}`} />
@@ -154,7 +154,7 @@ const protocolColors = {
         </p>
       </div>
 
-      <div class="overflow-x-auto rounded-lg border border-border/50 bg-card/50 backdrop-blur">
+      <div class="overflow-x-auto rounded-lg border border-border/50 bg-background/50 backdrop-blur">
         <table class="w-full text-sm">
           <thead>
             <tr class="border-b border-border/50">

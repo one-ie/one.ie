@@ -31,16 +31,16 @@ function HierarchyNode({
     <div className="relative">
       <div
         className={cn(
-          "flex items-center gap-2 py-2 px-3 rounded-md hover:bg-accent cursor-pointer transition-colors border",
+          "flex items-center gap-2 py-2 px-3 rounded-md hover:bg-background cursor-pointer transition-colors duration-150 border border-font/10",
           "max-w-xs"
         )}
         onClick={() => onGroupClick?.(group)}
       >
         <span>🏢</span>
         <div className="flex-1 min-w-0">
-          <p className="font-medium truncate">{group.name}</p>
+          <p className="font-medium truncate text-font">{group.name}</p>
           {group.description && (
-            <p className="text-xs text-muted-foreground truncate">
+            <p className="text-xs text-font/60 truncate">
               {group.description}
             </p>
           )}
@@ -48,7 +48,7 @@ function HierarchyNode({
       </div>
 
       {hasChildren && (
-        <div className="ml-8 mt-2 space-y-2 border-l-2 border-border pl-4">
+        <div className="ml-8 mt-2 space-y-2 border-l-2 border-font/20 pl-4">
           {group.children!.map((child, index) => (
             <HierarchyNode
               key={child._id}
@@ -79,18 +79,20 @@ export function GroupHierarchy({
   const totalGroups = 1 + countDescendants(root);
 
   return (
-    <Card className={cn(className)}>
-      <CardHeader>
-        <CardTitle className="flex items-center gap-2">
-          <span>🌳</span>
-          Group Hierarchy
-        </CardTitle>
-        <p className="text-sm text-muted-foreground">{totalGroups} total groups</p>
-      </CardHeader>
+    <Card className={cn("bg-background p-1 shadow-sm rounded-md", className)}>
+      <div className="bg-foreground rounded-md p-4 text-font">
+        <CardHeader className="p-0 pb-4">
+          <CardTitle className="flex items-center gap-2 text-font">
+            <span>🌳</span>
+            Group Hierarchy
+          </CardTitle>
+          <p className="text-sm text-font/60">{totalGroups} total groups</p>
+        </CardHeader>
 
-      <CardContent>
-        <HierarchyNode group={root} onGroupClick={onGroupClick} isLast={true} />
-      </CardContent>
+        <CardContent className="p-0">
+          <HierarchyNode group={root} onGroupClick={onGroupClick} isLast={true} />
+        </CardContent>
+      </div>
     </Card>
   );
 }

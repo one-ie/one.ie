@@ -79,36 +79,38 @@ export function UserSearch({
   };
 
   return (
-    <Command className={cn("rounded-lg border shadow-md", className)}>
+    <Command className={cn("rounded-md border border-font/10 shadow-md bg-foreground", className)}>
       <CommandInput
         placeholder={placeholder}
         value={searchQuery}
         onValueChange={setSearchQuery}
+        className="text-font border-font/10"
       />
-      <CommandList>
-        <CommandEmpty>No users found.</CommandEmpty>
+      <CommandList className="bg-foreground">
+        <CommandEmpty className="text-font/60">No users found.</CommandEmpty>
 
         {Object.entries(groupedUsers).map(([role, roleUsers]) => (
           <CommandGroup
             key={role}
             heading={groupByRole && role !== "all" ? getRoleDisplay(role as any) : undefined}
+            className="text-font"
           >
             {roleUsers.map((user) => (
               <CommandItem
                 key={user._id}
                 value={user._id}
                 onSelect={() => handleUserSelect(user)}
-                className="flex items-center gap-3 cursor-pointer"
+                className="flex items-center gap-3 cursor-pointer hover:bg-background transition-colors duration-150"
               >
                 <UserAvatar user={user} size="sm" />
                 <div className="flex-1 min-w-0">
-                  <div className="font-medium truncate">{user.name}</div>
+                  <div className="font-medium truncate text-font">{user.name}</div>
                   {user.email && (
-                    <div className="text-sm text-muted-foreground truncate">{user.email}</div>
+                    <div className="text-sm text-font/60 truncate">{user.email}</div>
                   )}
                 </div>
                 {!groupByRole && (
-                  <div className="text-xs text-muted-foreground">{getRoleDisplay(user.role)}</div>
+                  <div className="text-xs text-font/60">{getRoleDisplay(user.role)}</div>
                 )}
               </CommandItem>
             ))}

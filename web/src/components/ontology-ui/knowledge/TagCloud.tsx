@@ -63,7 +63,7 @@ export function TagCloud({
 
   if (labels.length === 0) {
     return (
-      <div className={cn("text-center p-8 text-muted-foreground", className)}>
+      <div className={cn("text-center p-8 text-font/60", className)}>
         No labels available
       </div>
     );
@@ -85,14 +85,14 @@ export function TagCloud({
             key={label._id}
             variant={variant}
             className={cn(
-              "transition-all duration-200 cursor-pointer hover:scale-110",
+              "transition-all duration-150 cursor-pointer hover:scale-110 active:scale-95",
               onTagClick && "hover:shadow-md",
-              // Color classes based on category
-              color === "blue" && "bg-blue-100 text-blue-800 dark:bg-blue-900 dark:text-blue-200",
-              color === "green" && "bg-green-100 text-green-800 dark:bg-green-900 dark:text-green-200",
-              color === "purple" && "bg-purple-100 text-purple-800 dark:bg-purple-900 dark:text-purple-200",
-              color === "orange" && "bg-orange-100 text-orange-800 dark:bg-orange-900 dark:text-orange-200",
-              color === "red" && "bg-red-100 text-red-800 dark:bg-red-900 dark:text-red-200"
+              // Color classes based on category using design system
+              color === "blue" && "bg-primary/10 text-primary",
+              color === "green" && "bg-tertiary/10 text-tertiary",
+              color === "purple" && "bg-secondary/10 text-secondary",
+              color === "orange" && "bg-primary/10 text-primary",
+              color === "red" && "bg-destructive/10 text-destructive"
             )}
             style={{
               fontSize: `${label.size}rem`,

@@ -78,19 +78,23 @@ export function WalletBalance({
 
   if (!address) {
     return (
-      <Card className={cn("p-6 text-center", className)}>
-        <p className="text-sm text-muted-foreground">
-          No wallet connected
-        </p>
+      <Card className={cn("bg-background p-1 shadow-sm rounded-md", className)}>
+        <div className="bg-foreground p-6 rounded-md text-center">
+          <p className="text-sm text-font/60">
+            No wallet connected
+          </p>
+        </div>
       </Card>
     );
   }
 
   if (isLoading && balance === null) {
     return (
-      <Card className={cn("p-6", className)}>
-        <Skeleton className="h-8 w-32 mb-2" />
-        <Skeleton className="h-4 w-24" />
+      <Card className={cn("bg-background p-1 shadow-sm rounded-md", className)}>
+        <div className="bg-foreground p-6 rounded-md">
+          <Skeleton className="h-8 w-32 mb-2" />
+          <Skeleton className="h-4 w-24" />
+        </div>
       </Card>
     );
   }
@@ -98,55 +102,61 @@ export function WalletBalance({
   return (
     <Card
       className={cn(
-        "group relative transition-all duration-200",
-        interactive && "cursor-pointer hover:shadow-lg",
-        size === "sm" && "p-3",
-        size === "md" && "p-4",
-        size === "lg" && "p-6",
+        "bg-background p-1 shadow-sm rounded-md group relative transition-all duration-300 ease-in-out",
+        interactive && "cursor-pointer hover:shadow-xl",
         className
       )}
     >
-      <CardHeader className="pb-3">
-        <div className="flex items-start justify-between">
-          <div className="flex-1">
-            <CardTitle className="flex items-center gap-2">
-              <span className="text-2xl">💰</span>
-              <span>Balance</span>
-            </CardTitle>
-            <CardDescription className="mt-1 text-xs">
-              Updated {new Date(lastUpdated).toLocaleTimeString()}
-            </CardDescription>
-          </div>
-          <Badge variant="outline">{symbol}</Badge>
-        </div>
-      </CardHeader>
-
-      <CardContent className="space-y-3">
-        <div className="space-y-1">
-          <div className="text-3xl font-bold">
-            {balance ? formatNumber(parseFloat(balance)) : "0.000000"}
-          </div>
-          <div className="text-sm text-muted-foreground">{symbol}</div>
-        </div>
-
-        {showUsd && usdValue !== null && (
-          <div className="flex items-center justify-between p-3 bg-secondary rounded-lg">
-            <span className="text-sm text-muted-foreground">USD Value</span>
-            <span className="text-lg font-bold">
-              {formatCurrency(usdValue)}
-            </span>
-          </div>
+      <div
+        className={cn(
+          "bg-foreground rounded-md text-font",
+          size === "sm" && "p-3",
+          size === "md" && "p-4",
+          size === "lg" && "p-6"
         )}
+      >
+        <CardHeader className="pb-3 p-0 mb-3">
+          <div className="flex items-start justify-between">
+            <div className="flex-1">
+              <CardTitle className="flex items-center gap-2 text-font">
+                <span className="text-2xl">💰</span>
+                <span>Balance</span>
+              </CardTitle>
+              <CardDescription className="mt-1 text-xs text-font/60">
+                Updated {new Date(lastUpdated).toLocaleTimeString()}
+              </CardDescription>
+            </div>
+            <Badge variant="outline" className="border-font/20">{symbol}</Badge>
+          </div>
+        </CardHeader>
 
-        <div className="flex items-center justify-between text-xs text-muted-foreground border-t pt-3">
-          <span>Chain ID: {chainId}</span>
-          {interactive && (
-            <span className="opacity-0 group-hover:opacity-100 transition-opacity">
-              Refresh →
-            </span>
+        <CardContent className="space-y-3 p-0">
+          <div className="space-y-1">
+            <div className="text-3xl font-bold text-font">
+              {balance ? formatNumber(parseFloat(balance)) : "0.000000"}
+            </div>
+            <div className="text-sm text-font/60">{symbol}</div>
+          </div>
+
+          {showUsd && usdValue !== null && (
+            <div className="flex items-center justify-between p-3 bg-background rounded-md">
+              <span className="text-sm text-font/60">USD Value</span>
+              <span className="text-lg font-bold text-font">
+                {formatCurrency(usdValue)}
+              </span>
+            </div>
           )}
-        </div>
-      </CardContent>
+
+          <div className="flex items-center justify-between text-xs text-font/60 border-t border-font/10 pt-3">
+            <span>Chain ID: {chainId}</span>
+            {interactive && (
+              <span className="opacity-0 group-hover:opacity-100 transition-opacity duration-150">
+                Refresh →
+              </span>
+            )}
+          </div>
+        </CardContent>
+      </div>
     </Card>
   );
 }

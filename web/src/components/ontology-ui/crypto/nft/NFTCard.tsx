@@ -44,8 +44,8 @@ export function NFTCard({
   return (
     <Card
       className={cn(
-        "group relative transition-all duration-200 overflow-hidden",
-        interactive && "cursor-pointer hover:shadow-lg hover:scale-[1.02]",
+        "bg-background p-1 shadow-sm rounded-md group relative transition-all duration-300 ease-in-out overflow-hidden",
+        interactive && "cursor-pointer hover:shadow-xl hover:scale-[1.02]",
         size === "sm" && "max-w-xs",
         size === "lg" && "max-w-2xl",
         className
@@ -53,7 +53,7 @@ export function NFTCard({
       onClick={() => onSelect?.(nft)}
     >
       {/* NFT Image/Video */}
-      <div className="relative aspect-square overflow-hidden bg-secondary">
+      <div className="relative aspect-square overflow-hidden bg-background rounded-t-md">
         {hasImage ? (
           isVideo && nft.animationUrl ? (
             <video
@@ -81,7 +81,7 @@ export function NFTCard({
         {/* Rarity Badge */}
         {showRarity && rarityInfo && (
           <div className="absolute top-2 right-2">
-            <Badge variant="secondary" className={cn("backdrop-blur-sm", rarityInfo.color)}>
+            <Badge className={cn("backdrop-blur-sm", rarityInfo.color)}>
               {rarityInfo.tier}
             </Badge>
           </div>
@@ -90,127 +90,129 @@ export function NFTCard({
         {/* ERC-1155 Balance */}
         {nft.balance && parseInt(nft.balance) > 1 && (
           <div className="absolute top-2 left-2">
-            <Badge variant="secondary" className="backdrop-blur-sm">
+            <Badge className="backdrop-blur-sm bg-background/90">
               ×{nft.balance}
             </Badge>
           </div>
         )}
       </div>
 
-      <CardHeader className="pb-3">
-        <div className="flex items-start justify-between gap-2">
-          <div className="flex-1 min-w-0">
-            <CardTitle className="text-base truncate">{nft.name}</CardTitle>
-            <CardDescription className="flex items-center gap-2 mt-1">
-              <span className="truncate">
-                {nft.collection?.name || nft.contractName || truncate(nft.contract, 12)}
-              </span>
-              <Badge variant="outline" className="text-xs">
-                {formatTokenId(nft.tokenId)}
-              </Badge>
-            </CardDescription>
-          </div>
+      <div className="bg-foreground p-4 rounded-b-md">
+        <CardHeader className="pb-3 p-0 mb-3">
+          <div className="flex items-start justify-between gap-2">
+            <div className="flex-1 min-w-0">
+              <CardTitle className="text-base truncate text-font">{nft.name}</CardTitle>
+              <CardDescription className="flex items-center gap-2 mt-1 text-font/60">
+                <span className="truncate">
+                  {nft.collection?.name || nft.contractName || truncate(nft.contract, 12)}
+                </span>
+                <Badge variant="outline" className="text-xs border-font/20">
+                  {formatTokenId(nft.tokenId)}
+                </Badge>
+              </CardDescription>
+            </div>
 
-          {/* Standard Badge */}
-          <Badge variant="outline" className="shrink-0 text-xs">
-            {nft.standard}
+            {/* Standard Badge */}
+            <Badge variant="outline" className="shrink-0 text-xs border-font/20">
+              {nft.standard}
+            </Badge>
+          </div>
+        </CardHeader>
+
+        <CardContent className="space-y-3 p-0">
+          {/* Price Info */}
+          {showPrice && (
+            <div className="space-y-2">
+              {nft.collection?.floorPrice && (
+                <div className="flex items-center justify-between text-sm">
+                  <span className="text-font/60">Floor Price</span>
+                  <span className="font-medium text-font">
+                    {nft.collection.floorPrice} {nft.chainName === "Ethereum" ? "ETH" : "MATIC"}
+                  </span>
+                </div>
+              )}
+
+              {nft.lastSale && (
+                <div className="flex items-center justify-between text-sm">
+                  <span className="text-font/60">Last Sale</span>
+                  <div className="text-right">
+                    <div className="font-medium text-font">
+                      {nft.lastSale.price} {nft.lastSale.currency}
+                    </div>
+                    {nft.lastSale.priceUsd && (
+                      <div className="text-xs text-font/60">
+                        ${nft.lastSale.priceUsd.toLocaleString()}
+                      </div>
+                    )}
+                  </div>
+                </div>
+              )}
+            </div>
+          )}
+
+          {/* Owner Info */}
+          {showOwner && (
+            <div className="flex items-center gap-2 p-2 bg-background rounded-md">
+              <Avatar className="h-6 w-6">
+                <AvatarImage src={`https://api.dicebear.com/7.x/identicon/svg?seed=${nft.owner}`} />
+                <AvatarFallback>{nft.owner.slice(2, 4)}</AvatarFallback>
+              </Avatar>
+              <div className="flex-1 min-w-0">
+                <div className="text-xs text-font/60">Owner</div>
+                <div className="text-sm font-mono truncate text-font">{truncate(nft.owner, 14)}</div>
+              </div>
+            </div>
+          )}
+
+          {/* Rarity Score */}
+          {showRarity && nft.rarity && (
+            <div className="flex items-center justify-between p-2 bg-background rounded-md">
+              <span className="text-sm text-font/60">Rarity Rank</span>
+              <span className="text-sm font-bold text-font">
+                #{nft.rarity.rank} / {nft.rarity.total}
+              </span>
+            </div>
+          )}
+        </CardContent>
+
+        {/* Quick Actions */}
+        {interactive && (onTransfer || onList) && (
+          <CardFooter className="flex gap-2 pt-3 p-0 mt-3">
+            {onTransfer && (
+              <Button
+                variant="outline"
+                size="sm"
+                className="flex-1"
+                onClick={(e) => {
+                  e.stopPropagation();
+                  onTransfer(nft);
+                }}
+              >
+                Transfer
+              </Button>
+            )}
+            {onList && (
+              <Button
+                variant="primary"
+                size="sm"
+                className="flex-1"
+                onClick={(e) => {
+                  e.stopPropagation();
+                  onList(nft);
+                }}
+              >
+                List for Sale
+              </Button>
+            )}
+          </CardFooter>
+        )}
+
+        {/* Chain Badge */}
+        <div className="absolute bottom-2 right-2">
+          <Badge className="text-xs backdrop-blur-sm bg-background/90">
+            {nft.chainName}
           </Badge>
         </div>
-      </CardHeader>
-
-      <CardContent className="space-y-3">
-        {/* Price Info */}
-        {showPrice && (
-          <div className="space-y-2">
-            {nft.collection?.floorPrice && (
-              <div className="flex items-center justify-between text-sm">
-                <span className="text-muted-foreground">Floor Price</span>
-                <span className="font-medium">
-                  {nft.collection.floorPrice} {nft.chainName === "Ethereum" ? "ETH" : "MATIC"}
-                </span>
-              </div>
-            )}
-
-            {nft.lastSale && (
-              <div className="flex items-center justify-between text-sm">
-                <span className="text-muted-foreground">Last Sale</span>
-                <div className="text-right">
-                  <div className="font-medium">
-                    {nft.lastSale.price} {nft.lastSale.currency}
-                  </div>
-                  {nft.lastSale.priceUsd && (
-                    <div className="text-xs text-muted-foreground">
-                      ${nft.lastSale.priceUsd.toLocaleString()}
-                    </div>
-                  )}
-                </div>
-              </div>
-            )}
-          </div>
-        )}
-
-        {/* Owner Info */}
-        {showOwner && (
-          <div className="flex items-center gap-2 p-2 bg-secondary rounded-lg">
-            <Avatar className="h-6 w-6">
-              <AvatarImage src={`https://api.dicebear.com/7.x/identicon/svg?seed=${nft.owner}`} />
-              <AvatarFallback>{nft.owner.slice(2, 4)}</AvatarFallback>
-            </Avatar>
-            <div className="flex-1 min-w-0">
-              <div className="text-xs text-muted-foreground">Owner</div>
-              <div className="text-sm font-mono truncate">{truncate(nft.owner, 14)}</div>
-            </div>
-          </div>
-        )}
-
-        {/* Rarity Score */}
-        {showRarity && nft.rarity && (
-          <div className="flex items-center justify-between p-2 bg-secondary rounded-lg">
-            <span className="text-sm text-muted-foreground">Rarity Rank</span>
-            <span className="text-sm font-bold">
-              #{nft.rarity.rank} / {nft.rarity.total}
-            </span>
-          </div>
-        )}
-      </CardContent>
-
-      {/* Quick Actions */}
-      {interactive && (onTransfer || onList) && (
-        <CardFooter className="flex gap-2 pt-3">
-          {onTransfer && (
-            <Button
-              variant="outline"
-              size="sm"
-              className="flex-1"
-              onClick={(e) => {
-                e.stopPropagation();
-                onTransfer(nft);
-              }}
-            >
-              Transfer
-            </Button>
-          )}
-          {onList && (
-            <Button
-              variant="default"
-              size="sm"
-              className="flex-1"
-              onClick={(e) => {
-                e.stopPropagation();
-                onList(nft);
-              }}
-            >
-              List for Sale
-            </Button>
-          )}
-        </CardFooter>
-      )}
-
-      {/* Chain Badge */}
-      <div className="absolute bottom-2 right-2">
-        <Badge variant="secondary" className="text-xs backdrop-blur-sm">
-          {nft.chainName}
-        </Badge>
       </div>
     </Card>
   );

@@ -110,19 +110,19 @@ const planStats = {
 
     <!-- Statistics -->
     <div class="grid grid-cols-2 sm:grid-cols-4 gap-4 mb-12">
-      <div class="bg-card border rounded-lg p-4">
+      <div class="bg-background border rounded-lg p-4">
         <div class="text-3xl font-bold">{planStats.total}</div>
         <div class="text-sm text-muted-foreground">Total Plans</div>
       </div>
-      <div class="bg-card border rounded-lg p-4">
+      <div class="bg-background border rounded-lg p-4">
         <div class="text-3xl font-bold text-green-600">{planStats.completed}</div>
         <div class="text-sm text-muted-foreground">Completed</div>
       </div>
-      <div class="bg-card border rounded-lg p-4">
+      <div class="bg-background border rounded-lg p-4">
         <div class="text-3xl font-bold text-blue-600">{planStats.inProgress}</div>
         <div class="text-sm text-muted-foreground">In Progress</div>
       </div>
-      <div class="bg-card border rounded-lg p-4">
+      <div class="bg-background border rounded-lg p-4">
         <div class="text-3xl font-bold text-yellow-600">{planStats.averageProgress}%</div>
         <div class="text-sm text-muted-foreground">Avg Progress</div>
       </div>
@@ -147,7 +147,7 @@ const planStats = {
 
           return (
             <a href={`/plans/${plan.slug}`} class="group">
-              <div class="bg-card border rounded-lg p-6 hover:border-accent hover:shadow-lg transition-all duration-300 h-full flex flex-col">
+              <div class="bg-background border rounded-lg p-6 hover:border-accent hover:shadow-lg transition-all duration-300 h-full flex flex-col">
                 {/* Header */}
                 <div class="mb-4">
                   <div class="flex items-start justify-between mb-2">
@@ -222,7 +222,7 @@ const planStats = {
 
               return (
                 <a href={`/plans/${plan.slug}`} class="group block">
-                  <div class="bg-card border rounded-lg p-4 hover:border-accent hover:shadow-md transition-all duration-300">
+                  <div class="bg-background border rounded-lg p-4 hover:border-accent hover:shadow-md transition-all duration-300">
                     <div class="flex items-center justify-between gap-4">
                       <div class="flex-1">
                         <div class="flex items-center gap-2 mb-2">

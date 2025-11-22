@@ -35,7 +35,7 @@ export function GroupHeader({
   const coverUrl = group.metadata?.cover as string | undefined;
 
   return (
-    <div className={cn("border-b bg-card", className)}>
+    <div className={cn("border-b border-font/10 bg-foreground", className)}>
       {/* Cover Image */}
       {coverUrl && (
         <div
@@ -57,18 +57,18 @@ export function GroupHeader({
         {/* Header Content */}
         <div className="flex items-start gap-4">
           {/* Logo */}
-          <Avatar className="h-16 w-16 border-2 border-background">
+          <Avatar className="h-16 w-16 border-2 border-font/20">
             <AvatarImage src={logoUrl} alt={group.name} />
-            <AvatarFallback className="text-2xl">
+            <AvatarFallback className="text-2xl bg-background text-font">
               {group.name.slice(0, 2).toUpperCase()}
             </AvatarFallback>
           </Avatar>
 
           {/* Info */}
           <div className="flex-1">
-            <h1 className="text-3xl font-bold mb-1">{group.name}</h1>
+            <h1 className="text-3xl font-bold mb-1 text-font">{group.name}</h1>
             {group.description && (
-              <p className="text-muted-foreground">{group.description}</p>
+              <p className="text-font/60">{group.description}</p>
             )}
           </div>
 

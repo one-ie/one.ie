@@ -501,7 +501,7 @@ const buttonVariants = [
 		label: "View guidelines",
 		variant: "outline",
 		size: "default",
-		className: "h-11 px-6 text-sm font-medium transition-all hover:bg-card/80",
+		className: "h-11 px-6 text-sm font-medium transition-all hover:bg-background/80",
 	},
 	{
 		name: "Ghost",
@@ -511,7 +511,7 @@ const buttonVariants = [
 		variant: "ghost",
 		size: "default",
 		className:
-			"h-10 px-4 text-sm font-medium transition-colors hover:bg-card/70",
+			"h-10 px-4 text-sm font-medium transition-colors hover:bg-background/70",
 	},
 ];
 
@@ -1142,7 +1142,7 @@ const buttonGuidelines = [
             <p>
               Mix weight sparingly: bold for emphasis, medium for actionable labels, regular for long-form reading.
             </p>
-            <p class="flex items-center gap-2 rounded-lg border bg-card/60 p-3 text-xs uppercase tracking-wide text-primary">
+            <p class="flex items-center gap-2 rounded-lg border bg-background/60 p-3 text-xs uppercase tracking-wide text-primary">
               <Info className="h-4 w-4" />
               Always include smart quotes, en/em dashes, and proper apostrophes in editorial content.
             </p>
@@ -1172,7 +1172,7 @@ const buttonGuidelines = [
             </CardDescription>
           </CardHeader>
           <CardContent className="space-y-4">
-            <div class="space-y-3 rounded-2xl border bg-card/70 p-6 shadow-inner">
+            <div class="space-y-3 rounded-2xl border bg-background/70 p-6 shadow-inner">
               {spacingScale.map((item) => (
                 <div class="flex items-center gap-4">
                   <span class="w-20 text-xs font-semibold uppercase tracking-wide text-muted-foreground">
@@ -1209,7 +1209,7 @@ const buttonGuidelines = [
         </Card>
       </div>
 
-      <div class="overflow-hidden rounded-2xl border bg-card/70 p-6 shadow-inner">
+      <div class="overflow-hidden rounded-2xl border bg-background/70 p-6 shadow-inner">
         <p class="text-sm font-semibold uppercase tracking-wide text-primary">Grid Example</p>
         <p class="mt-2 text-sm text-muted-foreground">
           Each column aligns to 72px at desktop with 24px gutters. Collapse to two columns on tablet, one on mobile.
@@ -1350,11 +1350,11 @@ const buttonGuidelines = [
                   <CardDescription>Snapshot of platform health, updated in real-time.</CardDescription>
                 </CardHeader>
                 <CardContent className="grid gap-2 text-sm text-muted-foreground">
-                  <div class="flex items-center justify-between rounded-md border bg-card/70 px-3 py-2">
+                  <div class="flex items-center justify-between rounded-md border bg-background/70 px-3 py-2">
                     <span>Active creators</span>
                     <span class="font-medium text-foreground">128</span>
                   </div>
-                  <div class="flex items-center justify-between rounded-md border bg-card/70 px-3 py-2">
+                  <div class="flex items-center justify-between rounded-md border bg-background/70 px-3 py-2">
                     <span>Pending mandates</span>
                     <span class="font-medium text-foreground">12</span>
                   </div>
@@ -1468,7 +1468,7 @@ const buttonGuidelines = [
             </CardDescription>
           </CardHeader>
           <CardContent className="rounded-xl border bg-background/80 p-4 shadow-inner">
-            <pre class="overflow-x-auto rounded-lg bg-card/80 p-4 text-sm">
+            <pre class="overflow-x-auto rounded-lg bg-background/80 p-4 text-sm">
 <code>{`:root {
   --color-primary: 216 55% 25%;
   --color-primary-foreground: 36 8% 96%;

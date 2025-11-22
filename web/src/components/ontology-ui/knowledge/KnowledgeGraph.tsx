@@ -36,15 +36,15 @@ interface Edge {
   connection: Connection;
 }
 
-// Label category colors
+// Label category colors using design system tokens
 const CATEGORY_COLORS: Record<string, string> = {
-  product: "#3b82f6",     // blue
-  course: "#8b5cf6",      // purple
-  user: "#10b981",        // green
-  content: "#f59e0b",     // amber
-  agent: "#ef4444",       // red
-  token: "#06b6d4",       // cyan
-  default: "#6b7280",     // gray
+  product: "hsl(var(--color-primary))",      // primary
+  course: "hsl(var(--color-secondary))",     // secondary
+  user: "hsl(var(--color-tertiary))",        // tertiary
+  content: "hsl(var(--color-primary))",      // primary
+  agent: "hsl(var(--color-secondary))",      // secondary
+  token: "hsl(var(--color-tertiary))",       // tertiary
+  default: "hsl(var(--color-font) / 0.6)",   // font/60
 };
 
 export function KnowledgeGraph({
@@ -115,7 +115,8 @@ export function KnowledgeGraph({
         ctx.beginPath();
         ctx.moveTo(fromNode.x, fromNode.y);
         ctx.lineTo(toNode.x, toNode.y);
-        ctx.strokeStyle = "#e5e7eb";
+        // Use font color with low opacity for connection lines
+        ctx.strokeStyle = "hsl(var(--color-font) / 0.2)";
         ctx.lineWidth = edge.connection.strength ? edge.connection.strength / 50 : 1;
         ctx.stroke();
 
@@ -136,7 +137,7 @@ export function KnowledgeGraph({
           toNode.y - toNode.radius * Math.sin(angle) - arrowSize * Math.sin(angle + Math.PI / 6)
         );
         ctx.closePath();
-        ctx.fillStyle = "#e5e7eb";
+        ctx.fillStyle = "hsl(var(--color-font) / 0.2)";
         ctx.fill();
       }
     });
@@ -153,13 +154,14 @@ export function KnowledgeGraph({
       ctx.fill();
 
       if (isHovered || isCentered) {
-        ctx.strokeStyle = isCentered ? "#fbbf24" : "#ffffff";
+        // Use tertiary color for center node, foreground for hover
+        ctx.strokeStyle = isCentered ? "hsl(var(--color-tertiary))" : "hsl(var(--color-foreground))";
         ctx.lineWidth = 3;
         ctx.stroke();
       }
 
       // Node label
-      ctx.fillStyle = "#1f2937";
+      ctx.fillStyle = "hsl(var(--color-font))";
       ctx.font = isHovered ? "bold 12px sans-serif" : "11px sans-serif";
       ctx.textAlign = "center";
       ctx.fillText(
@@ -172,7 +174,7 @@ export function KnowledgeGraph({
 
       // Show labels on hover
       if (isHovered && node.labels.length > 0) {
-        ctx.fillStyle = "#6b7280";
+        ctx.fillStyle = "hsl(var(--color-font) / 0.6)";
         ctx.font = "10px sans-serif";
         node.labels.slice(0, 2).forEach((label, idx) => {
           ctx.fillText(
@@ -230,53 +232,57 @@ export function KnowledgeGraph({
   };
 
   return (
-    <Card className={className}>
-      <CardHeader>
-        <div className="flex items-center justify-between">
-          <CardTitle className="flex items-center gap-2">
-            <Network className="h-5 w-5 text-primary" />
-            Knowledge Graph
-          </CardTitle>
-          <div className="flex items-center gap-1">
-            <Button
-              variant="outline"
-              size="icon"
-              onClick={handleZoomOut}
-              title="Zoom out"
-            >
-              <ZoomOut className="h-4 w-4" />
-            </Button>
-            <Button
-              variant="outline"
-              size="icon"
-              onClick={handleZoomIn}
-              title="Zoom in"
-            >
-              <ZoomIn className="h-4 w-4" />
-            </Button>
-            <Button
-              variant="outline"
-              size="icon"
-              onClick={handleReset}
-              title="Reset view"
-            >
-              <Maximize2 className="h-4 w-4" />
-            </Button>
+    <Card className="bg-background p-1 shadow-sm rounded-md">
+      <CardContent className="bg-foreground p-4 rounded-md">
+        <CardHeader>
+          <div className="flex items-center justify-between">
+            <CardTitle className="flex items-center gap-2 text-font">
+              <Network className="h-5 w-5 text-primary" />
+              Knowledge Graph
+            </CardTitle>
+            <div className="flex items-center gap-1">
+              <Button
+                variant="outline"
+                size="icon"
+                onClick={handleZoomOut}
+                title="Zoom out"
+                className="transition-all duration-150 hover:scale-[1.02] active:scale-[0.98]"
+              >
+                <ZoomOut className="h-4 w-4" />
+              </Button>
+              <Button
+                variant="outline"
+                size="icon"
+                onClick={handleZoomIn}
+                title="Zoom in"
+                className="transition-all duration-150 hover:scale-[1.02] active:scale-[0.98]"
+              >
+                <ZoomIn className="h-4 w-4" />
+              </Button>
+              <Button
+                variant="outline"
+                size="icon"
+                onClick={handleReset}
+                title="Reset view"
+                className="transition-all duration-150 hover:scale-[1.02] active:scale-[0.98]"
+              >
+                <Maximize2 className="h-4 w-4" />
+              </Button>
+            </div>
           </div>
-        </div>
-        <div className="flex items-center gap-2 flex-wrap">
-          <Badge variant="secondary">{things.length} nodes</Badge>
-          <Badge variant="secondary">{connections.length} edges</Badge>
-          <Badge variant="secondary">{labels.length} labels</Badge>
-        </div>
-      </CardHeader>
-      <CardContent>
+          <div className="flex items-center gap-2 flex-wrap">
+            <Badge variant="secondary">{things.length} nodes</Badge>
+            <Badge variant="secondary">{connections.length} edges</Badge>
+            <Badge variant="secondary">{labels.length} labels</Badge>
+          </div>
+        </CardHeader>
+        <div className="space-y-4">
         <div className="relative">
           <canvas
             ref={canvasRef}
             width={600}
             height={400}
-            className="border rounded-lg bg-white dark:bg-gray-950 cursor-move"
+            className="border rounded-md bg-foreground cursor-move transition-all duration-300"
             onMouseMove={handleMouseMove}
             onMouseDown={handleMouseDown}
             onMouseUp={handleMouseUp}
@@ -285,10 +291,10 @@ export function KnowledgeGraph({
 
           {/* Hover tooltip */}
           {hoveredNode && (
-            <div className="absolute top-2 left-2 bg-background border rounded-lg shadow-lg p-3 max-w-xs">
-              <h4 className="font-medium text-sm mb-1">{hoveredNode.thing.name}</h4>
+            <div className="absolute top-2 left-2 bg-background border rounded-md shadow-lg p-3 max-w-xs">
+              <h4 className="font-medium text-sm mb-1 text-font">{hoveredNode.thing.name}</h4>
               {hoveredNode.thing.description && (
-                <p className="text-xs text-muted-foreground mb-2 line-clamp-2">
+                <p className="text-xs text-font/60 mb-2 line-clamp-2">
                   {hoveredNode.thing.description}
                 </p>
               )}
@@ -305,27 +311,27 @@ export function KnowledgeGraph({
           )}
 
           {/* Legend */}
-          <div className="mt-4 p-3 border rounded-lg bg-muted/50">
-            <p className="text-xs font-medium mb-2">Graph Legend</p>
-            <div className="grid grid-cols-2 gap-2 text-xs">
+          <div className="mt-4 p-3 border rounded-md bg-background/50">
+            <p className="text-xs font-medium mb-2 text-font">Graph Legend</p>
+            <div className="grid grid-cols-2 gap-2 text-xs text-font/60">
               <div className="flex items-center gap-2">
-                <div className="w-3 h-3 rounded-full border-2 border-yellow-400" />
-                <span className="text-muted-foreground">Center node</span>
+                <div className="w-3 h-3 rounded-full border-2 border-tertiary" />
+                <span>Center node</span>
               </div>
               <div className="flex items-center gap-2">
-                <div className="w-3 h-0.5 bg-gray-300" />
-                <span className="text-muted-foreground">Connection</span>
+                <div className="w-3 h-0.5 bg-font/20" />
+                <span>Connection</span>
               </div>
               <div className="flex items-center gap-2">
-                <div className="w-3 h-3 rounded-full bg-blue-500" />
-                <span className="text-muted-foreground">Product</span>
+                <div className="w-3 h-3 rounded-full bg-primary" />
+                <span>Primary</span>
               </div>
               <div className="flex items-center gap-2">
-                <div className="w-3 h-3 rounded-full bg-purple-500" />
-                <span className="text-muted-foreground">Course</span>
+                <div className="w-3 h-3 rounded-full bg-secondary" />
+                <span>Secondary</span>
               </div>
             </div>
-            <p className="text-xs text-muted-foreground mt-2">
+            <p className="text-xs text-font/60 mt-2">
               Click and drag to pan • Use zoom controls to navigate
             </p>
           </div>

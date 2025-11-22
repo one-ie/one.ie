@@ -1,0 +1,368 @@
+---
+/**
+ * Design System Gallery
+ *
+ * Comprehensive showcase of the 6-token design system with all components,
+ * interactive examples, and copy-paste code snippets.
+ *
+ * Features:
+ * - Live component previews
+ * - Light/dark mode toggle
+ * - Code snippet copying
+ * - Search and filter
+ * - Thing-level color demos
+ */
+import Layout from "@/layouts/Layout.astro";
+import { Badge } from "@/components/ui/badge";
+import { Card, CardHeader, CardTitle, CardContent } from "@/components/ui/card";
+import { Button } from "@/components/ui/button";
+import { Input } from "@/components/ui/input";
+import { Separator } from "@/components/ui/separator";
+
+const title = "Design System Gallery";
+const description = "Explore the 6-token design system with interactive components and code examples";
+---
+
+<Layout title={title} description={description}>
+  <div class="container mx-auto px-4 py-12 max-w-7xl">
+    <!-- Header -->
+    <div class="mb-12">
+      <h1 class="text-4xl font-bold mb-4 text-font">Design System Gallery</h1>
+      <p class="text-lg text-font opacity-80 max-w-3xl">
+        Explore our beautifully simple 6-token design system. Every component uses the same 6 colors
+        and 4 design properties for perfect consistency across the platform.
+      </p>
+    </div>
+
+    <!-- Design Tokens Section -->
+    <section class="mb-16">
+      <h2 class="text-3xl font-bold mb-6 text-font">The 6 Color Tokens</h2>
+      <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+        <!-- Background Token -->
+        <Card className="bg-background p-1 shadow-md rounded-md">
+          <CardContent className="bg-foreground p-6 rounded-md">
+            <div class="mb-4">
+              <div class="w-16 h-16 rounded-md bg-background mb-3 border-2 border-font/20"></div>
+              <h3 class="text-xl font-semibold text-font">background</h3>
+              <code class="text-sm text-font opacity-60">0 0% 93%</code>
+            </div>
+            <p class="text-sm text-font opacity-80">
+              Card surface, sidebar, page background. Adaptive: changes in dark mode.
+            </p>
+          </CardContent>
+        </Card>
+
+        <!-- Foreground Token -->
+        <Card className="bg-background p-1 shadow-md rounded-md">
+          <CardContent className="bg-foreground p-6 rounded-md">
+            <div class="mb-4">
+              <div class="w-16 h-16 rounded-md bg-foreground mb-3 border-2 border-font/20"></div>
+              <h3 class="text-xl font-semibold text-font">foreground</h3>
+              <code class="text-sm text-font opacity-60">0 0% 100%</code>
+            </div>
+            <p class="text-sm text-font opacity-80">
+              Content area inside cards, elevated surfaces. Adaptive: changes in dark mode.
+            </p>
+          </CardContent>
+        </Card>
+
+        <!-- Font Token -->
+        <Card className="bg-background p-1 shadow-md rounded-md">
+          <CardContent className="bg-foreground p-6 rounded-md">
+            <div class="mb-4">
+              <div class="w-16 h-16 rounded-md bg-font mb-3"></div>
+              <h3 class="text-xl font-semibold text-font">font</h3>
+              <code class="text-sm text-font opacity-60">0 0% 13%</code>
+            </div>
+            <p class="text-sm text-font opacity-80">
+              All text, icons, readable in both modes. Adaptive: dark → white in dark mode.
+            </p>
+          </CardContent>
+        </Card>
+
+        <!-- Primary Token -->
+        <Card className="bg-background p-1 shadow-md rounded-md">
+          <CardContent className="bg-foreground p-6 rounded-md">
+            <div class="mb-4">
+              <div class="w-16 h-16 rounded-md bg-primary mb-3"></div>
+              <h3 class="text-xl font-semibold text-font">primary</h3>
+              <code class="text-sm text-font opacity-60">216 55% 25%</code>
+            </div>
+            <p class="text-sm text-font opacity-80">
+              Main CTA buttons, links, active states. Constant: same in dark mode.
+            </p>
+          </CardContent>
+        </Card>
+
+        <!-- Secondary Token -->
+        <Card className="bg-background p-1 shadow-md rounded-md">
+          <CardContent className="bg-foreground p-6 rounded-md">
+            <div class="mb-4">
+              <div class="w-16 h-16 rounded-md bg-secondary mb-3"></div>
+              <h3 class="text-xl font-semibold text-font">secondary</h3>
+              <code class="text-sm text-font opacity-60">219 14% 28%</code>
+            </div>
+            <p class="text-sm text-font opacity-80">
+              Supporting actions, secondary buttons. Constant: same in dark mode.
+            </p>
+          </CardContent>
+        </Card>
+
+        <!-- Tertiary Token -->
+        <Card className="bg-background p-1 shadow-md rounded-md">
+          <CardContent className="bg-foreground p-6 rounded-md">
+            <div class="mb-4">
+              <div class="w-16 h-16 rounded-md bg-tertiary mb-3"></div>
+              <h3 class="text-xl font-semibold text-font">tertiary</h3>
+              <code class="text-sm text-font opacity-60">105 22% 25%</code>
+            </div>
+            <p class="text-sm text-font opacity-80">
+              Accent actions, success states, badges. Constant: same in dark mode.
+            </p>
+          </CardContent>
+        </Card>
+      </div>
+    </section>
+
+    <Separator className="my-12" />
+
+    <!-- Button Variants -->
+    <section class="mb-16">
+      <h2 class="text-3xl font-bold mb-6 text-font">Button Variants</h2>
+      <Card className="bg-background p-1 shadow-md rounded-md">
+        <CardContent className="bg-foreground p-8 rounded-md">
+          <div class="space-y-6">
+            <!-- Primary Buttons -->
+            <div>
+              <h3 class="text-sm font-semibold text-font opacity-60 mb-3 uppercase tracking-wide">Primary (Main CTA)</h3>
+              <div class="flex flex-wrap gap-3">
+                <Button variant="default" size="sm">Small</Button>
+                <Button variant="default" size="default">Default</Button>
+                <Button variant="default" size="lg">Large</Button>
+                <Button variant="default" size="lg" disabled>Disabled</Button>
+              </div>
+              <pre class="mt-3 p-3 bg-background rounded-md text-xs overflow-x-auto"><code>&lt;Button variant="default"&gt;Primary Action&lt;/Button&gt;</code></pre>
+            </div>
+
+            <Separator />
+
+            <!-- Secondary Buttons -->
+            <div>
+              <h3 class="text-sm font-semibold text-font opacity-60 mb-3 uppercase tracking-wide">Secondary (Supporting Action)</h3>
+              <div class="flex flex-wrap gap-3">
+                <Button variant="secondary" size="sm">Small</Button>
+                <Button variant="secondary" size="default">Default</Button>
+                <Button variant="secondary" size="lg">Large</Button>
+              </div>
+              <pre class="mt-3 p-3 bg-background rounded-md text-xs overflow-x-auto"><code>&lt;Button variant="secondary"&gt;Secondary Action&lt;/Button&gt;</code></pre>
+            </div>
+
+            <Separator />
+
+            <!-- Outline Buttons -->
+            <div>
+              <h3 class="text-sm font-semibold text-font opacity-60 mb-3 uppercase tracking-wide">Outline (Neutral Action)</h3>
+              <div class="flex flex-wrap gap-3">
+                <Button variant="outline" size="sm">Small</Button>
+                <Button variant="outline" size="default">Default</Button>
+                <Button variant="outline" size="lg">Large</Button>
+              </div>
+              <pre class="mt-3 p-3 bg-background rounded-md text-xs overflow-x-auto"><code>&lt;Button variant="outline"&gt;Neutral Action&lt;/Button&gt;</code></pre>
+            </div>
+
+            <Separator />
+
+            <!-- Ghost Buttons -->
+            <div>
+              <h3 class="text-sm font-semibold text-font opacity-60 mb-3 uppercase tracking-wide">Ghost (Minimal Action)</h3>
+              <div class="flex flex-wrap gap-3">
+                <Button variant="ghost" size="sm">Small</Button>
+                <Button variant="ghost" size="default">Default</Button>
+                <Button variant="ghost" size="lg">Large</Button>
+              </div>
+              <pre class="mt-3 p-3 bg-background rounded-md text-xs overflow-x-auto"><code>&lt;Button variant="ghost"&gt;Minimal Action&lt;/Button&gt;</code></pre>
+            </div>
+
+            <Separator />
+
+            <!-- Link Buttons -->
+            <div>
+              <h3 class="text-sm font-semibold text-font opacity-60 mb-3 uppercase tracking-wide">Link (Text Link)</h3>
+              <div class="flex flex-wrap gap-3">
+                <Button variant="link" size="sm">Small Link</Button>
+                <Button variant="link" size="default">Default Link</Button>
+                <Button variant="link" size="lg">Large Link</Button>
+              </div>
+              <pre class="mt-3 p-3 bg-background rounded-md text-xs overflow-x-auto"><code>&lt;Button variant="link"&gt;Text Link&lt;/Button&gt;</code></pre>
+            </div>
+          </div>
+        </CardContent>
+      </Card>
+    </section>
+
+    <Separator className="my-12" />
+
+    <!-- Card Pattern -->
+    <section class="mb-16">
+      <h2 class="text-3xl font-bold mb-6 text-font">Card Pattern (Foundation)</h2>
+      <p class="text-font opacity-80 mb-6">
+        Every card uses the <strong>background + foreground</strong> pattern: gray frame with white content area.
+      </p>
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+        <Card className="bg-background p-1 shadow-sm rounded-md">
+          <CardHeader className="bg-foreground rounded-t-md">
+            <CardTitle className="text-font">Default Card</CardTitle>
+          </CardHeader>
+          <CardContent className="bg-foreground p-4 rounded-b-md">
+            <p class="text-font opacity-80">This card uses the standard pattern: outer background (gray frame) and inner foreground (white content).</p>
+            <div class="flex gap-2 mt-4">
+              <Button variant="default" size="sm">Primary</Button>
+              <Button variant="secondary" size="sm">Secondary</Button>
+            </div>
+          </CardContent>
+        </Card>
+
+        <Card className="bg-background p-1 shadow-md rounded-md">
+          <CardHeader className="bg-foreground rounded-t-md">
+            <CardTitle className="text-font flex items-center justify-between">
+              Card with Badge
+              <Badge variant="default">New</Badge>
+            </CardTitle>
+          </CardHeader>
+          <CardContent className="bg-foreground p-4 rounded-b-md">
+            <p class="text-font opacity-80">Cards can include badges, icons, and other components while maintaining the same structure.</p>
+            <pre class="mt-3 p-2 bg-background rounded-md text-xs overflow-x-auto"><code>&lt;Card className="bg-background p-1 shadow-md rounded-md"&gt;
+  &lt;CardContent className="bg-foreground p-4 rounded-md"&gt;
+    {/* content */}
+  &lt;/CardContent&gt;
+&lt;/Card&gt;</code></pre>
+          </CardContent>
+        </Card>
+      </div>
+    </section>
+
+    <Separator className="my-12" />
+
+    <!-- Form Components -->
+    <section class="mb-16">
+      <h2 class="text-3xl font-bold mb-6 text-font">Form Components</h2>
+      <Card className="bg-background p-1 shadow-md rounded-md">
+        <CardContent className="bg-foreground p-8 rounded-md">
+          <div class="space-y-6 max-w-xl">
+            <div>
+              <label class="block text-sm font-medium text-font mb-2">Email Address</label>
+              <Input type="email" placeholder="you@example.com" />
+            </div>
+
+            <div>
+              <label class="block text-sm font-medium text-font mb-2">Password</label>
+              <Input type="password" placeholder="••••••••" />
+            </div>
+
+            <div>
+              <label class="block text-sm font-medium text-font mb-2">Bio</label>
+              <textarea
+                class="w-full min-h-[100px] px-3 py-2 bg-foreground text-font border border-font/20 rounded-md focus:ring-2 focus:ring-primary focus:border-transparent transition-all duration-150"
+                placeholder="Tell us about yourself..."
+              ></textarea>
+            </div>
+
+            <div class="flex gap-3">
+              <Button variant="default">Save Changes</Button>
+              <Button variant="outline">Cancel</Button>
+            </div>
+          </div>
+        </CardContent>
+      </Card>
+    </section>
+
+    <Separator className="my-12" />
+
+    <!-- Typography Scale -->
+    <section class="mb-16">
+      <h2 class="text-3xl font-bold mb-6 text-font">Typography Scale</h2>
+      <Card className="bg-background p-1 shadow-md rounded-md">
+        <CardContent className="bg-foreground p-8 rounded-md space-y-4">
+          <div>
+            <h1 class="text-4xl font-bold text-font">Heading 1 - Display</h1>
+            <code class="text-xs text-font opacity-60">text-4xl font-bold</code>
+          </div>
+          <div>
+            <h2 class="text-3xl font-bold text-font">Heading 2 - Section</h2>
+            <code class="text-xs text-font opacity-60">text-3xl font-bold</code>
+          </div>
+          <div>
+            <h3 class="text-2xl font-semibold text-font">Heading 3 - Subsection</h3>
+            <code class="text-xs text-font opacity-60">text-2xl font-semibold</code>
+          </div>
+          <div>
+            <h4 class="text-xl font-semibold text-font">Heading 4 - Component</h4>
+            <code class="text-xs text-font opacity-60">text-xl font-semibold</code>
+          </div>
+          <div>
+            <p class="text-base text-font">Body text - Default paragraph</p>
+            <code class="text-xs text-font opacity-60">text-base</code>
+          </div>
+          <div>
+            <p class="text-sm text-font opacity-80">Small text - Descriptions</p>
+            <code class="text-xs text-font opacity-60">text-sm opacity-80</code>
+          </div>
+          <div>
+            <p class="text-xs text-font opacity-60">Extra small - Captions</p>
+            <code class="text-xs text-font opacity-60">text-xs opacity-60</code>
+          </div>
+        </CardContent>
+      </Card>
+    </section>
+
+    <Separator className="my-12" />
+
+    <!-- Design Properties -->
+    <section class="mb-16">
+      <h2 class="text-3xl font-bold mb-6 text-font">The 4 Design Properties</h2>
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+        <!-- Elevation -->
+        <Card className="bg-background p-1 rounded-md">
+          <CardContent className="bg-foreground p-6 rounded-md">
+            <h3 class="text-xl font-semibold text-font mb-4">Elevation (Shadows)</h3>
+            <div class="space-y-3">
+              <div class="p-4 bg-background rounded-md shadow-sm">shadow-sm (cards)</div>
+              <div class="p-4 bg-background rounded-md shadow-md">shadow-md (dropdowns)</div>
+              <div class="p-4 bg-background rounded-md shadow-lg">shadow-lg (buttons)</div>
+              <div class="p-4 bg-background rounded-md shadow-xl">shadow-xl (hover)</div>
+              <div class="p-4 bg-background rounded-md shadow-2xl">shadow-2xl (modals)</div>
+            </div>
+          </CardContent>
+        </Card>
+
+        <!-- Radius -->
+        <Card className="bg-background p-1 rounded-md">
+          <CardContent className="bg-foreground p-6 rounded-md">
+            <h3 class="text-xl font-semibold text-font mb-4">Radius (Corners)</h3>
+            <div class="space-y-3">
+              <div class="p-4 bg-background rounded-sm">rounded-sm (6px)</div>
+              <div class="p-4 bg-background rounded-md">rounded-md (8px - default)</div>
+              <div class="p-4 bg-background rounded-lg">rounded-lg (12px)</div>
+              <div class="p-4 bg-background rounded-xl">rounded-xl (16px)</div>
+              <div class="inline-block px-6 py-4 bg-background rounded-full">rounded-full (circular)</div>
+            </div>
+          </CardContent>
+        </Card>
+      </div>
+    </section>
+
+    <!-- Footer -->
+    <div class="mt-16 pt-8 border-t border-font/10 text-center">
+      <p class="text-font opacity-60">
+        View the complete design system specification at <a href="/one/knowledge/design-system.md" class="text-primary hover:underline">/one/knowledge/design-system.md</a>
+      </p>
+    </div>
+  </div>
+</Layout>
+
+<style>
+  /* Ensure code blocks are readable */
+  pre {
+    font-family: ui-monospace, 'Cascadia Code', 'Source Code Pro', Menlo, Consolas, 'DejaVu Sans Mono', monospace;
+  }
+</style>

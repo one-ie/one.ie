@@ -1,0 +1,418 @@
+---
+/**
+ * Button Component Documentation
+ *
+ * Complete reference for all button variants, sizes, and states.
+ */
+import Layout from "@/layouts/Layout.astro";
+import { Button } from "@/components/ui/button";
+import { Card, CardHeader, CardTitle, CardContent } from "@/components/ui/card";
+import { Separator } from "@/components/ui/separator";
+import { Badge } from "@/components/ui/badge";
+
+const title = "Button Component";
+const description = "Complete reference for button variants, sizes, and states";
+---
+
+<Layout title={title} description={description}>
+  <div class="container mx-auto px-4 py-12 max-w-5xl">
+    <!-- Header -->
+    <div class="mb-12">
+      <h1 class="text-4xl font-bold mb-4 text-font">Button Component</h1>
+      <p class="text-lg text-font opacity-80">
+        Buttons are the primary way users take action. We have 6 variants designed for different contexts.
+      </p>
+    </div>
+
+    <!-- Variants Section -->
+    <section class="mb-12">
+      <h2 class="text-3xl font-bold mb-6 text-font">Variants</h2>
+
+      <!-- Default (Primary) -->
+      <Card className="bg-background p-1 shadow-md rounded-md mb-6">
+        <CardHeader className="bg-foreground rounded-t-md">
+          <CardTitle className="text-font flex items-center gap-2">
+            Primary (Default)
+            <Badge variant="default" className="text-xs">Most Common</Badge>
+          </CardTitle>
+        </CardHeader>
+        <CardContent className="bg-foreground p-6 rounded-b-md space-y-4">
+          <p class="text-font opacity-80">
+            Use for main actions like "Buy Now", "Save", "Submit", etc.
+          </p>
+          <div class="flex gap-3 items-center">
+            <Button variant="default">Primary Button</Button>
+            <Button variant="default" disabled>Disabled</Button>
+          </div>
+          <pre class="p-4 bg-background rounded-md text-sm overflow-x-auto"><code>&lt;Button variant="default"&gt;Primary Button&lt;/Button&gt;</code></pre>
+          <div class="mt-4">
+            <h4 class="font-semibold text-font mb-2">When to use:</h4>
+            <ul class="list-disc list-inside text-font opacity-80 space-y-1">
+              <li>Main call-to-action on a page</li>
+              <li>Form submission</li>
+              <li>Purchase/checkout actions</li>
+              <li>Important confirmations</li>
+            </ul>
+          </div>
+        </CardContent>
+      </Card>
+
+      <!-- Secondary -->
+      <Card className="bg-background p-1 shadow-md rounded-md mb-6">
+        <CardHeader className="bg-foreground rounded-t-md">
+          <CardTitle className="text-font">Secondary</CardTitle>
+        </CardHeader>
+        <CardContent className="bg-foreground p-6 rounded-b-md space-y-4">
+          <p class="text-font opacity-80">
+            Use for supporting actions like "Learn More", "View Details", etc.
+          </p>
+          <div class="flex gap-3 items-center">
+            <Button variant="secondary">Secondary Button</Button>
+            <Button variant="secondary" disabled>Disabled</Button>
+          </div>
+          <pre class="p-4 bg-background rounded-md text-sm overflow-x-auto"><code>&lt;Button variant="secondary"&gt;Secondary Button&lt;/Button&gt;</code></pre>
+          <div class="mt-4">
+            <h4 class="font-semibold text-font mb-2">When to use:</h4>
+            <ul class="list-disc list-inside text-font opacity-80 space-y-1">
+              <li>Supporting actions next to a primary button</li>
+              <li>Less important actions</li>
+              <li>Alternative paths</li>
+            </ul>
+          </div>
+        </CardContent>
+      </Card>
+
+      <!-- Outline -->
+      <Card className="bg-background p-1 shadow-md rounded-md mb-6">
+        <CardHeader className="bg-foreground rounded-t-md">
+          <CardTitle className="text-font">Outline</CardTitle>
+        </CardHeader>
+        <CardContent className="bg-foreground p-6 rounded-b-md space-y-4">
+          <p class="text-font opacity-80">
+            Use for neutral actions like "Cancel", "Go Back", etc.
+          </p>
+          <div class="flex gap-3 items-center">
+            <Button variant="outline">Outline Button</Button>
+            <Button variant="outline" disabled>Disabled</Button>
+          </div>
+          <pre class="p-4 bg-background rounded-md text-sm overflow-x-auto"><code>&lt;Button variant="outline"&gt;Outline Button&lt;/Button&gt;</code></pre>
+          <div class="mt-4">
+            <h4 class="font-semibold text-font mb-2">When to use:</h4>
+            <ul class="list-disc list-inside text-font opacity-80 space-y-1">
+              <li>Cancel or dismiss actions</li>
+              <li>Neutral choices</li>
+              <li>Alternative options in a list</li>
+            </ul>
+          </div>
+        </CardContent>
+      </Card>
+
+      <!-- Ghost -->
+      <Card className="bg-background p-1 shadow-md rounded-md mb-6">
+        <CardHeader className="bg-foreground rounded-t-md">
+          <CardTitle className="text-font">Ghost</CardTitle>
+        </CardHeader>
+        <CardContent className="bg-foreground p-6 rounded-b-md space-y-4">
+          <p class="text-font opacity-80">
+            Use for minimal actions in navigation, menus, or subtle links.
+          </p>
+          <div class="flex gap-3 items-center">
+            <Button variant="ghost">Ghost Button</Button>
+            <Button variant="ghost" disabled>Disabled</Button>
+          </div>
+          <pre class="p-4 bg-background rounded-md text-sm overflow-x-auto"><code>&lt;Button variant="ghost"&gt;Ghost Button&lt;/Button&gt;</code></pre>
+          <div class="mt-4">
+            <h4 class="font-semibold text-font mb-2">When to use:</h4>
+            <ul class="list-disc list-inside text-font opacity-80 space-y-1">
+              <li>Navigation menu items</li>
+              <li>Icon buttons</li>
+              <li>Subtle actions in tables</li>
+              <li>Dropdown menu triggers</li>
+            </ul>
+          </div>
+        </CardContent>
+      </Card>
+
+      <!-- Link -->
+      <Card className="bg-background p-1 shadow-md rounded-md mb-6">
+        <CardHeader className="bg-foreground rounded-t-md">
+          <CardTitle className="text-font">Link</CardTitle>
+        </CardHeader>
+        <CardContent className="bg-foreground p-6 rounded-b-md space-y-4">
+          <p class="text-font opacity-80">
+            Use for text-based navigation and inline actions.
+          </p>
+          <div class="flex gap-3 items-center">
+            <Button variant="link">Link Button</Button>
+            <Button variant="link" disabled>Disabled</Button>
+          </div>
+          <pre class="p-4 bg-background rounded-md text-sm overflow-x-auto"><code>&lt;Button variant="link"&gt;Link Button&lt;/Button&gt;</code></pre>
+          <div class="mt-4">
+            <h4 class="font-semibold text-font mb-2">When to use:</h4>
+            <ul class="list-disc list-inside text-font opacity-80 space-y-1">
+              <li>Inline text navigation</li>
+              <li>Secondary links in paragraphs</li>
+              <li>Breadcrumb navigation</li>
+            </ul>
+          </div>
+        </CardContent>
+      </Card>
+
+      <!-- Destructive -->
+      <Card className="bg-background p-1 shadow-md rounded-md mb-6">
+        <CardHeader className="bg-foreground rounded-t-md">
+          <CardTitle className="text-font flex items-center gap-2">
+            Destructive
+            <Badge variant="destructive" className="text-xs">Use Sparingly</Badge>
+          </CardTitle>
+        </CardHeader>
+        <CardContent className="bg-foreground p-6 rounded-b-md space-y-4">
+          <p class="text-font opacity-80">
+            Use for dangerous actions like "Delete", "Remove", "Revoke Access".
+          </p>
+          <div class="flex gap-3 items-center">
+            <Button variant="destructive">Delete Account</Button>
+            <Button variant="destructive" disabled>Disabled</Button>
+          </div>
+          <pre class="p-4 bg-background rounded-md text-sm overflow-x-auto"><code>&lt;Button variant="destructive"&gt;Delete Account&lt;/Button&gt;</code></pre>
+          <div class="mt-4">
+            <h4 class="font-semibold text-font mb-2">When to use:</h4>
+            <ul class="list-disc list-inside text-font opacity-80 space-y-1">
+              <li>Permanent deletion actions</li>
+              <li>Removing important data</li>
+              <li>Revoking access or permissions</li>
+              <li>Always confirm before executing</li>
+            </ul>
+          </div>
+        </CardContent>
+      </Card>
+    </section>
+
+    <Separator className="my-12" />
+
+    <!-- Sizes Section -->
+    <section class="mb-12">
+      <h2 class="text-3xl font-bold mb-6 text-font">Sizes</h2>
+      <Card className="bg-background p-1 shadow-md rounded-md">
+        <CardContent className="bg-foreground p-6 rounded-md space-y-6">
+          <div>
+            <h3 class="text-lg font-semibold text-font mb-3">Small</h3>
+            <Button variant="default" size="sm">Small Button</Button>
+            <pre class="mt-3 p-3 bg-background rounded-md text-sm overflow-x-auto"><code>&lt;Button size="sm"&gt;Small Button&lt;/Button&gt;</code></pre>
+          </div>
+
+          <Separator />
+
+          <div>
+            <h3 class="text-lg font-semibold text-font mb-3">Default (Medium)</h3>
+            <Button variant="default" size="default">Default Button</Button>
+            <pre class="mt-3 p-3 bg-background rounded-md text-sm overflow-x-auto"><code>&lt;Button size="default"&gt;Default Button&lt;/Button&gt;</code></pre>
+          </div>
+
+          <Separator />
+
+          <div>
+            <h3 class="text-lg font-semibold text-font mb-3">Large</h3>
+            <Button variant="default" size="lg">Large Button</Button>
+            <pre class="mt-3 p-3 bg-background rounded-md text-sm overflow-x-auto"><code>&lt;Button size="lg"&gt;Large Button&lt;/Button&gt;</code></pre>
+          </div>
+
+          <Separator />
+
+          <div>
+            <h3 class="text-lg font-semibold text-font mb-3">Icon (Square)</h3>
+            <Button variant="default" size="icon">
+              <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <circle cx="12" cy="12" r="10"/>
+                <line x1="12" y1="8" x2="12" y2="16"/>
+                <line x1="8" y1="12" x2="16" y2="12"/>
+              </svg>
+            </Button>
+            <pre class="mt-3 p-3 bg-background rounded-md text-sm overflow-x-auto"><code>&lt;Button size="icon"&gt;
+  &lt;PlusIcon /&gt;
+&lt;/Button&gt;</code></pre>
+          </div>
+        </CardContent>
+      </Card>
+    </section>
+
+    <Separator className="my-12" />
+
+    <!-- States Section -->
+    <section class="mb-12">
+      <h2 class="text-3xl font-bold mb-6 text-font">States</h2>
+      <Card className="bg-background p-1 shadow-md rounded-md">
+        <CardContent className="bg-foreground p-6 rounded-md space-y-6">
+          <div>
+            <h3 class="text-lg font-semibold text-font mb-3">Default State</h3>
+            <Button variant="default">Default State</Button>
+            <p class="mt-2 text-sm text-font opacity-60">Normal appearance, no user interaction</p>
+          </div>
+
+          <Separator />
+
+          <div>
+            <h3 class="text-lg font-semibold text-font mb-3">Hover State</h3>
+            <p class="text-sm text-font opacity-60 mb-2">opacity: 0.9, scale: 1.02, shadow increases</p>
+            <p class="text-xs text-font opacity-60">Hover over any button to see this effect</p>
+          </div>
+
+          <Separator />
+
+          <div>
+            <h3 class="text-lg font-semibold text-font mb-3">Active State (Clicking)</h3>
+            <p class="text-sm text-font opacity-60 mb-2">opacity: 0.8, scale: 0.98, shadow decreases</p>
+            <p class="text-xs text-font opacity-60">Click and hold any button to see this effect</p>
+          </div>
+
+          <Separator />
+
+          <div>
+            <h3 class="text-lg font-semibold text-font mb-3">Focus State (Keyboard Navigation)</h3>
+            <Button variant="default">Focus Me (Tab)</Button>
+            <p class="mt-2 text-sm text-font opacity-60">ring-2 ring-primary ring-offset-2 (tab to see)</p>
+          </div>
+
+          <Separator />
+
+          <div>
+            <h3 class="text-lg font-semibold text-font mb-3">Disabled State</h3>
+            <Button variant="default" disabled>Disabled Button</Button>
+            <p class="mt-2 text-sm text-font opacity-60">opacity: 0.5, cursor: not-allowed, no interactions</p>
+          </div>
+        </CardContent>
+      </Card>
+    </section>
+
+    <Separator className="my-12" />
+
+    <!-- Best Practices -->
+    <section class="mb-12">
+      <h2 class="text-3xl font-bold mb-6 text-font">Best Practices</h2>
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+        <!-- Do's -->
+        <Card className="bg-background p-1 shadow-md rounded-md border-2 border-tertiary">
+          <CardHeader className="bg-foreground rounded-t-md">
+            <CardTitle className="text-font text-lg flex items-center gap-2">
+              <span class="text-2xl">✓</span> Do
+            </CardTitle>
+          </CardHeader>
+          <CardContent className="bg-foreground p-6 rounded-b-md">
+            <ul class="space-y-3 text-font opacity-80">
+              <li class="flex items-start gap-2">
+                <span class="text-tertiary">•</span>
+                <span>Use one primary button per page or section</span>
+              </li>
+              <li class="flex items-start gap-2">
+                <span class="text-tertiary">•</span>
+                <span>Use clear, action-oriented labels ("Save Changes" not "OK")</span>
+              </li>
+              <li class="flex items-start gap-2">
+                <span class="text-tertiary">•</span>
+                <span>Place primary action on the right in forms</span>
+              </li>
+              <li class="flex items-start gap-2">
+                <span class="text-tertiary">•</span>
+                <span>Always provide focus indicators for accessibility</span>
+              </li>
+              <li class="flex items-start gap-2">
+                <span class="text-tertiary">•</span>
+                <span>Use consistent button sizes within the same context</span>
+              </li>
+            </ul>
+          </CardContent>
+        </Card>
+
+        <!-- Don'ts -->
+        <Card className="bg-background p-1 shadow-md rounded-md border-2 border-destructive">
+          <CardHeader className="bg-foreground rounded-t-md">
+            <CardTitle className="text-font text-lg flex items-center gap-2">
+              <span class="text-2xl">✗</span> Don't
+            </CardTitle>
+          </CardHeader>
+          <CardContent className="bg-foreground p-6 rounded-b-md">
+            <ul class="space-y-3 text-font opacity-80">
+              <li class="flex items-start gap-2">
+                <span class="text-destructive">•</span>
+                <span>Use multiple primary buttons in one section</span>
+              </li>
+              <li class="flex items-start gap-2">
+                <span class="text-destructive">•</span>
+                <span>Use vague labels like "Click Here" or "Submit"</span>
+              </li>
+              <li class="flex items-start gap-2">
+                <span class="text-destructive">•</span>
+                <span>Disable buttons without explanation</span>
+              </li>
+              <li class="flex items-start gap-2">
+                <span class="text-destructive">•</span>
+                <span>Use destructive variant for non-destructive actions</span>
+              </li>
+              <li class="flex items-start gap-2">
+                <span class="text-destructive">•</span>
+                <span>Mix button sizes inconsistently</span>
+              </li>
+            </ul>
+          </CardContent>
+        </Card>
+      </div>
+    </section>
+
+    <!-- Props Reference -->
+    <section class="mb-12">
+      <h2 class="text-3xl font-bold mb-6 text-font">Props Reference</h2>
+      <Card className="bg-background p-1 shadow-md rounded-md">
+        <CardContent className="bg-foreground p-6 rounded-md">
+          <div class="overflow-x-auto">
+            <table class="w-full">
+              <thead>
+                <tr class="border-b border-font/20">
+                  <th class="text-left py-3 px-4 font-semibold text-font">Prop</th>
+                  <th class="text-left py-3 px-4 font-semibold text-font">Type</th>
+                  <th class="text-left py-3 px-4 font-semibold text-font">Default</th>
+                  <th class="text-left py-3 px-4 font-semibold text-font">Description</th>
+                </tr>
+              </thead>
+              <tbody class="text-font opacity-80">
+                <tr class="border-b border-font/10">
+                  <td class="py-3 px-4 font-mono text-sm">variant</td>
+                  <td class="py-3 px-4 text-sm">"default" | "secondary" | "outline" | "ghost" | "link" | "destructive"</td>
+                  <td class="py-3 px-4 text-sm">"default"</td>
+                  <td class="py-3 px-4 text-sm">Visual style of the button</td>
+                </tr>
+                <tr class="border-b border-font/10">
+                  <td class="py-3 px-4 font-mono text-sm">size</td>
+                  <td class="py-3 px-4 text-sm">"sm" | "default" | "lg" | "icon"</td>
+                  <td class="py-3 px-4 text-sm">"default"</td>
+                  <td class="py-3 px-4 text-sm">Size of the button</td>
+                </tr>
+                <tr class="border-b border-font/10">
+                  <td class="py-3 px-4 font-mono text-sm">disabled</td>
+                  <td class="py-3 px-4 text-sm">boolean</td>
+                  <td class="py-3 px-4 text-sm">false</td>
+                  <td class="py-3 px-4 text-sm">Disables button interactions</td>
+                </tr>
+                <tr class="border-b border-font/10">
+                  <td class="py-3 px-4 font-mono text-sm">asChild</td>
+                  <td class="py-3 px-4 text-sm">boolean</td>
+                  <td class="py-3 px-4 text-sm">false</td>
+                  <td class="py-3 px-4 text-sm">Render as child component (advanced)</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </CardContent>
+      </Card>
+    </section>
+
+    <!-- Footer -->
+    <div class="mt-16 pt-8 border-t border-font/10">
+      <a href="/design-system-gallery" class="inline-flex items-center gap-2 text-primary hover:underline font-medium">
+        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+          <path d="M15 18l-6-6 6-6"/>
+        </svg>
+        Back to Design System Gallery
+      </a>
+    </div>
+  </div>
+</Layout>

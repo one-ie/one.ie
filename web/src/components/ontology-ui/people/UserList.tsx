@@ -106,7 +106,7 @@ export function UserList({
       )}
 
       {/* Results Count */}
-      <div className="text-sm text-muted-foreground">
+      <div className="text-sm text-font/60">
         {sortedData.length === users.length ? (
           <span>{sortedData.length} users</span>
         ) : (
@@ -119,7 +119,7 @@ export function UserList({
       {/* User List */}
       <div className="space-y-3">
         {displayData.length === 0 ? (
-          <div className="text-center py-12 text-muted-foreground">
+          <div className="text-center py-12 text-font/60">
             <p className="text-lg">No users found</p>
             {query && (
               <p className="text-sm mt-2">
@@ -141,8 +141,8 @@ export function UserList({
 
       {/* Pagination Controls */}
       {paginated && totalPages > 1 && (
-        <div className="flex items-center justify-between border-t pt-4">
-          <div className="text-sm text-muted-foreground">
+        <div className="flex items-center justify-between border-t border-font/10 pt-4">
+          <div className="text-sm text-font/60">
             Page {pagination.page} of {totalPages}
           </div>
 

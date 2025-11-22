@@ -1,0 +1,313 @@
+---
+import Layout from '../layouts/Layout.astro';
+import {
+	ColorSwatch,
+	StateDemo,
+	ElevationDemo,
+	RadiusDemo,
+	MotionDemo
+} from '@/components/design/primitives';
+import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
+import { Badge } from '@/components/ui/badge';
+
+const title = 'Design System Primitives Demo';
+const description = 'Interactive showcase of the 6-color + 4-property design system';
+---
+
+<Layout title={title} description={description}>
+	<!-- Hero Section -->
+	<section class="relative overflow-hidden border-b px-6 py-12 md:px-8">
+		<div class="mx-auto max-w-5xl space-y-6 text-center">
+			<Badge variant="outline" className="text-xs">
+				Cycle 4 Complete
+			</Badge>
+			<h1 class="text-4xl font-bold leading-tight tracking-tight sm:text-5xl md:text-6xl">
+				Design System Primitives
+			</h1>
+			<p class="mx-auto max-w-2xl text-lg text-muted-foreground">
+				Interactive components showcasing the ONE Design System's 6 color tokens and 4 design properties.
+				Each primitive component is reusable, accessible, and follows the design system specification.
+			</p>
+		</div>
+	</section>
+
+	<!-- Color Swatches -->
+	<section class="px-6 py-12 md:px-8">
+		<div class="mx-auto max-w-5xl space-y-8">
+			<div class="space-y-4 text-center">
+				<h2 class="text-3xl font-bold leading-tight tracking-tight">
+					Color Tokens
+				</h2>
+				<p class="text-muted-foreground">
+					The 6 extractable colors that power the entire design system
+				</p>
+			</div>
+
+			<Card>
+				<CardHeader>
+					<CardTitle>Adaptive Colors</CardTitle>
+					<CardDescription>
+						These colors change between light and dark mode for optimal readability
+					</CardDescription>
+				</CardHeader>
+				<CardContent className="space-y-3">
+					<ColorSwatch
+						client:load
+						name="background"
+						value="0 0% 93%"
+						darkValue="0 0% 10%"
+						description="Card surface · Sidebar color"
+						adaptive={true}
+					/>
+					<ColorSwatch
+						client:load
+						name="foreground"
+						value="0 0% 100%"
+						darkValue="0 0% 13%"
+						description="Content area inside card"
+						adaptive={true}
+					/>
+					<ColorSwatch
+						client:load
+						name="font"
+						value="0 0% 13%"
+						darkValue="0 0% 100%"
+						description="Text color · Readable in both modes"
+						adaptive={true}
+					/>
+				</CardContent>
+			</Card>
+
+			<Card>
+				<CardHeader>
+					<CardTitle>Brand Colors</CardTitle>
+					<CardDescription>
+						These colors remain constant across light and dark modes
+					</CardDescription>
+				</CardHeader>
+				<CardContent className="space-y-3">
+					<ColorSwatch
+						client:load
+						name="primary"
+						value="216 55% 25%"
+						description="Main CTA buttons · Primary actions"
+					/>
+					<ColorSwatch
+						client:load
+						name="secondary"
+						value="219 14% 28%"
+						description="Supporting actions · Secondary buttons"
+					/>
+					<ColorSwatch
+						client:load
+						name="tertiary"
+						value="105 22% 25%"
+						description="Accent actions · Success states"
+					/>
+				</CardContent>
+			</Card>
+		</div>
+	</section>
+
+	<!-- Button States -->
+	<section class="border-y bg-muted/50 px-6 py-12 md:px-8">
+		<div class="mx-auto max-w-5xl space-y-8">
+			<div class="space-y-4 text-center">
+				<h2 class="text-3xl font-bold leading-tight tracking-tight">
+					Button States
+				</h2>
+				<p class="text-muted-foreground">
+					All buttons have 5 states: default, hover, active, focus, and disabled
+				</p>
+			</div>
+
+			<div class="grid gap-6 lg:grid-cols-2">
+				<Card>
+					<CardHeader>
+						<CardTitle>Primary Button</CardTitle>
+						<CardDescription>Main call-to-action buttons</CardDescription>
+					</CardHeader>
+					<CardContent>
+						<StateDemo client:load variant="primary" label="Buy Now" />
+					</CardContent>
+				</Card>
+
+				<Card>
+					<CardHeader>
+						<CardTitle>Secondary Button</CardTitle>
+						<CardDescription>Supporting actions</CardDescription>
+					</CardHeader>
+					<CardContent>
+						<StateDemo client:load variant="secondary" label="Learn More" />
+					</CardContent>
+				</Card>
+
+				<Card>
+					<CardHeader>
+						<CardTitle>Tertiary Button</CardTitle>
+						<CardDescription>Accent actions</CardDescription>
+					</CardHeader>
+					<CardContent>
+						<StateDemo client:load variant="tertiary" label="Get Started" />
+					</CardContent>
+				</Card>
+
+				<Card>
+					<CardHeader>
+						<CardTitle>Outline Button</CardTitle>
+						<CardDescription>Neutral actions with borders</CardDescription>
+					</CardHeader>
+					<CardContent>
+						<StateDemo client:load variant="outline" label="Cancel" />
+					</CardContent>
+				</Card>
+			</div>
+		</div>
+	</section>
+
+	<!-- Elevation -->
+	<section class="px-6 py-12 md:px-8">
+		<div class="mx-auto max-w-5xl space-y-8">
+			<div class="space-y-4 text-center">
+				<h2 class="text-3xl font-bold leading-tight tracking-tight">
+					Elevation
+				</h2>
+				<p class="text-muted-foreground">
+					Shadow levels create visual hierarchy and depth
+				</p>
+			</div>
+
+			<Card>
+				<CardHeader>
+					<CardTitle>Shadow Levels</CardTitle>
+					<CardDescription>
+						From shadow-none to shadow-2xl, each level serves a specific purpose
+					</CardDescription>
+				</CardHeader>
+				<CardContent>
+					<ElevationDemo client:visible />
+				</CardContent>
+			</Card>
+		</div>
+	</section>
+
+	<!-- Radius -->
+	<section class="border-y bg-muted/50 px-6 py-12 md:px-8">
+		<div class="mx-auto max-w-5xl space-y-8">
+			<div class="space-y-4 text-center">
+				<h2 class="text-3xl font-bold leading-tight tracking-tight">
+					Border Radius
+				</h2>
+				<p class="text-muted-foreground">
+					Consistent corner rounding creates cohesive, modern interfaces
+				</p>
+			</div>
+
+			<Card>
+				<CardHeader>
+					<CardTitle>Radius Options</CardTitle>
+					<CardDescription>
+						From sharp corners to fully rounded, each option has its place
+					</CardDescription>
+				</CardHeader>
+				<CardContent>
+					<RadiusDemo client:visible />
+				</CardContent>
+			</Card>
+		</div>
+	</section>
+
+	<!-- Motion -->
+	<section class="px-6 py-12 md:px-8">
+		<div class="mx-auto max-w-5xl space-y-8">
+			<div class="space-y-4 text-center">
+				<h2 class="text-3xl font-bold leading-tight tracking-tight">
+					Motion Timing
+				</h2>
+				<p class="text-muted-foreground">
+					Animation timing creates smooth, natural interactions
+				</p>
+			</div>
+
+			<Card>
+				<CardHeader>
+					<CardTitle>Timing Functions</CardTitle>
+					<CardDescription>
+						From instant to slow, each timing serves different interaction needs
+					</CardDescription>
+				</CardHeader>
+				<CardContent>
+					<MotionDemo client:visible />
+				</CardContent>
+			</Card>
+		</div>
+	</section>
+
+	<!-- Implementation Guide -->
+	<section class="border-t bg-muted/50 px-6 py-12 md:px-8">
+		<div class="mx-auto max-w-5xl space-y-8">
+			<div class="space-y-4 text-center">
+				<h2 class="text-3xl font-bold leading-tight tracking-tight">
+					Implementation
+				</h2>
+				<p class="text-muted-foreground">
+					How to use these primitives in your pages
+				</p>
+			</div>
+
+			<Card>
+				<CardHeader>
+					<CardTitle>Import Primitives</CardTitle>
+					<CardDescription>
+						All components are exported from the primitives directory
+					</CardDescription>
+				</CardHeader>
+				<CardContent>
+					<pre class="overflow-x-auto rounded-lg bg-muted p-4 text-sm"><code>{`import {
+  ColorSwatch,
+  StateDemo,
+  ElevationDemo,
+  RadiusDemo,
+  MotionDemo
+} from '@/components/design/primitives';
+
+// Use in Astro pages
+<ColorSwatch
+  client:load
+  name="primary"
+  value="216 55% 25%"
+  description="Main CTA buttons"
+/>
+
+<StateDemo client:load variant="primary" />
+<ElevationDemo client:visible />
+<RadiusDemo client:visible />
+<MotionDemo client:visible />`}</code></pre>
+				</CardContent>
+			</Card>
+
+			<Card className="border-primary/30">
+				<CardHeader>
+					<CardTitle>Design System Reference</CardTitle>
+					<CardDescription>
+						Complete documentation and specification
+					</CardDescription>
+				</CardHeader>
+				<CardContent className="space-y-2 text-sm">
+					<p>
+						<strong>Plan:</strong> <code class="text-xs">/one/events/design-system-100-cycle-implementation.md</code>
+					</p>
+					<p>
+						<strong>Spec:</strong> <code class="text-xs">/one/things/design-system.md</code>
+					</p>
+					<p>
+						<strong>Page:</strong> <code class="text-xs">/web/src/pages/design.astro</code>
+					</p>
+					<p>
+						<strong>Components:</strong> <code class="text-xs">/web/src/components/design/primitives/</code>
+					</p>
+				</CardContent>
+			</Card>
+		</div>
+	</section>
+</Layout>

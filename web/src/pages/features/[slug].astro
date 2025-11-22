@@ -214,7 +214,7 @@ const categoryColors = {
                 if (!description) return null;
                 const Icon = ontologyIcons[dimension as keyof typeof ontologyIcons] || FileText;
                 return (
-                  <Card className="border-border/50 bg-card/50">
+                  <Card className="border-border/50 bg-background/50">
                     <CardHeader className="space-y-3">
                       <div class="flex items-center gap-3">
                         <div class="flex h-10 w-10 items-center justify-center rounded-lg bg-primary/10">
@@ -241,7 +241,7 @@ const categoryColors = {
             <h2 class="text-3xl font-bold mb-6">Capabilities</h2>
             <div class="space-y-3">
               {feature.data.features.map((feature: any) => (
-                <Card className="border-border/50 bg-card/50">
+                <Card className="border-border/50 bg-background/50">
                   <CardContent className="pt-6">
                     <div class="flex items-start justify-between gap-4">
                       <div class="flex-1">
@@ -269,7 +269,7 @@ const categoryColors = {
             <h2 class="text-3xl font-bold mb-6">Use Cases</h2>
             <div class="space-y-4">
               {feature.data.useCases.map((useCase: any) => (
-                <Card className="border-border/50 bg-card/50">
+                <Card className="border-border/50 bg-background/50">
                   <CardHeader>
                     <div class="flex items-start justify-between">
                       <div>
@@ -306,7 +306,7 @@ const categoryColors = {
             </h2>
             <div class="space-y-6">
               {feature.data.examples.map((example: any) => (
-                <Card className="border-border/50 bg-card/50">
+                <Card className="border-border/50 bg-background/50">
                   <CardHeader>
                     <div class="flex items-center justify-between">
                       <div>
@@ -339,7 +339,7 @@ const categoryColors = {
             <h2 class="text-3xl font-bold mb-6">Technical Specifications</h2>
             <div class="grid gap-4 md:grid-cols-2">
               {feature.data.specification.complexity && (
-                <Card className="border-border/50 bg-card/50">
+                <Card className="border-border/50 bg-background/50">
                   <CardHeader>
                     <CardTitle className="text-sm">Complexity</CardTitle>
                   </CardHeader>
@@ -349,7 +349,7 @@ const categoryColors = {
                 </Card>
               )}
               {feature.data.specification.estimatedHours && (
-                <Card className="border-border/50 bg-card/50">
+                <Card className="border-border/50 bg-background/50">
                   <CardHeader>
                     <CardTitle className="text-sm">Estimated Hours</CardTitle>
                   </CardHeader>
@@ -359,7 +359,7 @@ const categoryColors = {
                 </Card>
               )}
               {feature.data.specification.technologies && feature.data.specification.technologies.length > 0 && (
-                <Card className="border-border/50 bg-card/50 md:col-span-2">
+                <Card className="border-border/50 bg-background/50 md:col-span-2">
                   <CardHeader>
                     <CardTitle className="text-sm">Technologies</CardTitle>
                   </CardHeader>
@@ -384,7 +384,7 @@ const categoryColors = {
             <h2 class="text-3xl font-bold mb-6">Quality Metrics</h2>
             <div class="grid gap-4 md:grid-cols-2 lg:grid-cols-4">
               {feature.data.metrics.testCoverage !== undefined && (
-                <Card className="border-border/50 bg-card/50">
+                <Card className="border-border/50 bg-background/50">
                   <CardHeader>
                     <CardTitle className="text-sm">Test Coverage</CardTitle>
                   </CardHeader>
@@ -394,7 +394,7 @@ const categoryColors = {
                 </Card>
               )}
               {feature.data.metrics.performanceScore !== undefined && (
-                <Card className="border-border/50 bg-card/50">
+                <Card className="border-border/50 bg-background/50">
                   <CardHeader>
                     <CardTitle className="text-sm">Performance</CardTitle>
                   </CardHeader>
@@ -404,7 +404,7 @@ const categoryColors = {
                 </Card>
               )}
               {feature.data.metrics.accessibilityScore !== undefined && (
-                <Card className="border-border/50 bg-card/50">
+                <Card className="border-border/50 bg-background/50">
                   <CardHeader>
                     <CardTitle className="text-sm">Accessibility</CardTitle>
                   </CardHeader>
@@ -414,7 +414,7 @@ const categoryColors = {
                 </Card>
               )}
               {feature.data.metrics.securityAudit && (
-                <Card className="border-border/50 bg-card/50">
+                <Card className="border-border/50 bg-background/50">
                   <CardHeader>
                     <CardTitle className="text-sm">Security</CardTitle>
                   </CardHeader>

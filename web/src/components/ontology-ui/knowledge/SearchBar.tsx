@@ -123,7 +123,7 @@ export function SearchBar({
           }}
           className="w-full"
         />
-        <kbd className="absolute right-3 top-1/2 -translate-y-1/2 pointer-events-none inline-flex h-5 select-none items-center gap-1 rounded border bg-muted px-1.5 font-mono text-[10px] font-medium text-muted-foreground opacity-100">
+        <kbd className="absolute right-3 top-1/2 -translate-y-1/2 pointer-events-none inline-flex h-5 select-none items-center gap-1 rounded border bg-background px-1.5 font-mono text-[10px] font-medium text-font/60 opacity-100">
           <span className="text-xs">⌘</span>K
         </kbd>
       </div>
@@ -134,7 +134,7 @@ export function SearchBar({
   return (
     <div className={cn("relative", className)}>
       <Command
-        className="rounded-lg border shadow-md"
+        className="rounded-md border shadow-md bg-foreground"
         shouldFilter={false}
       >
         <CommandInput
@@ -157,7 +157,7 @@ export function SearchBar({
 
         {isOpen && (
           <CommandList>
-            <CommandEmpty>No results found.</CommandEmpty>
+            <CommandEmpty className="text-font/60">No results found.</CommandEmpty>
 
             {/* Recent Searches */}
             {recentSearches.length > 0 && query === "" && (
@@ -169,6 +169,7 @@ export function SearchBar({
                       setQuery(search);
                       handleSearch(search);
                     }}
+                    className="transition-all duration-150 hover:bg-background"
                   >
                     <span className="mr-2">🕐</span>
                     {search}
@@ -184,12 +185,13 @@ export function SearchBar({
                   <CommandItem
                     key={suggestion._id}
                     onSelect={() => handleSelectSuggestion(suggestion)}
+                    className="transition-all duration-150 hover:bg-background"
                   >
                     <span className="mr-2">{getThingTypeIcon(suggestion.type as any)}</span>
                     <div className="flex flex-col">
-                      <span className="font-medium">{suggestion.name}</span>
+                      <span className="font-medium text-font">{suggestion.name}</span>
                       {suggestion.description && (
-                        <span className="text-xs text-muted-foreground">
+                        <span className="text-xs text-font/60">
                           {suggestion.description}
                         </span>
                       )}
@@ -202,7 +204,7 @@ export function SearchBar({
         )}
       </Command>
 
-      <kbd className="absolute right-3 top-3 pointer-events-none inline-flex h-5 select-none items-center gap-1 rounded border bg-muted px-1.5 font-mono text-[10px] font-medium text-muted-foreground opacity-100">
+      <kbd className="absolute right-3 top-3 pointer-events-none inline-flex h-5 select-none items-center gap-1 rounded border bg-background px-1.5 font-mono text-[10px] font-medium text-font/60 opacity-100">
         <span className="text-xs">⌘</span>K
       </kbd>
     </div>

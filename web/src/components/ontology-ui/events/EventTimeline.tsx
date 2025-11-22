@@ -98,21 +98,21 @@ export function EventTimeline({
 
   const getEventColor = (type: string) => {
     if (type.includes("created") || type.includes("started")) {
-      return "bg-green-100 text-green-800 dark:bg-green-900 dark:text-green-100";
+      return "bg-tertiary/10 text-tertiary border-tertiary/20";
     }
     if (type.includes("updated") || type.includes("changed")) {
-      return "bg-blue-100 text-blue-800 dark:bg-blue-900 dark:text-blue-100";
+      return "bg-primary/10 text-primary border-primary/20";
     }
     if (type.includes("deleted") || type.includes("failed")) {
-      return "bg-red-100 text-red-800 dark:bg-red-900 dark:text-red-100";
+      return "bg-destructive/10 text-destructive border-destructive/20";
     }
     if (type.includes("completed") || type.includes("approved")) {
-      return "bg-emerald-100 text-emerald-800 dark:bg-emerald-900 dark:text-emerald-100";
+      return "bg-tertiary/10 text-tertiary border-tertiary/20";
     }
     if (type.includes("purchased") || type.includes("payment")) {
-      return "bg-amber-100 text-amber-800 dark:bg-amber-900 dark:text-amber-100";
+      return "bg-secondary/10 text-secondary border-secondary/20";
     }
-    return "bg-gray-100 text-gray-800 dark:bg-gray-900 dark:text-gray-100";
+    return "bg-foreground/50 text-font border-font/20";
   };
 
   if (displayEvents.length === 0) {
@@ -126,17 +126,18 @@ export function EventTimeline({
   }
 
   return (
-    <Card className={className}>
-      {!compact && (
-        <CardHeader>
-          <CardTitle className="flex items-center gap-2">
-            <span className="text-2xl">⏱️</span>
-            Event Timeline
-          </CardTitle>
-        </CardHeader>
-      )}
+    <Card className={cn("bg-background p-1 shadow-sm rounded-md", className)}>
+      <div className="bg-foreground rounded-md text-font">
+        {!compact && (
+          <CardHeader>
+            <CardTitle className="flex items-center gap-2 text-font">
+              <span className="text-2xl">⏱️</span>
+              Event Timeline
+            </CardTitle>
+          </CardHeader>
+        )}
 
-      <CardContent className={cn("space-y-6", compact && "pt-6")}>
+        <CardContent className={cn("space-y-6", compact && "pt-6")}>
         {groupedEvents.map((group) => (
           <div key={group.label} className="space-y-4">
             {/* Group label */}
@@ -210,7 +211,8 @@ export function EventTimeline({
             +{events.length - limit} more events
           </p>
         )}
-      </CardContent>
+        </CardContent>
+      </div>
     </Card>
   );
 }

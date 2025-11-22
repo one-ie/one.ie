@@ -58,62 +58,64 @@ export function UserPermissions({
   const roleColorClass = `bg-${getRoleColor(user.role)}-100 text-${getRoleColor(user.role)}-800 dark:bg-${getRoleColor(user.role)}-900 dark:text-${getRoleColor(user.role)}-300`;
 
   return (
-    <Card className={cn("w-full", className)}>
-      <CardHeader>
-        <div className="flex items-center justify-between">
-          <CardTitle>User Permissions</CardTitle>
-          <Badge className={roleColorClass}>
-            {getRoleDisplay(user.role)}
-          </Badge>
-        </div>
-        <p className="text-sm text-muted-foreground">
-          {user.name} ({user.email})
-        </p>
-      </CardHeader>
-      <CardContent>
-        <div className="space-y-6">
-          {resources.length === 0 ? (
-            <p className="text-sm text-muted-foreground text-center py-4">
-              No permissions configured
-            </p>
-          ) : (
-            resources.map((resource) => (
-              <div key={resource} className="space-y-3">
-                <h4 className="text-sm font-semibold capitalize">
-                  {resource.replace(/_/g, " ")}
-                </h4>
-                <div className="grid grid-cols-2 md:grid-cols-4 gap-3">
-                  {PERMISSION_ACTIONS.map((action) => {
-                    const isGranted = permissionsByResource[resource][action] || false;
+    <Card className={cn("w-full bg-background p-1 shadow-sm rounded-md", className)}>
+      <div className="bg-foreground rounded-md text-font">
+        <CardHeader>
+          <div className="flex items-center justify-between">
+            <CardTitle className="text-font">User Permissions</CardTitle>
+            <Badge className={roleColorClass}>
+              {getRoleDisplay(user.role)}
+            </Badge>
+          </div>
+          <p className="text-sm text-font/80">
+            {user.name} ({user.email})
+          </p>
+        </CardHeader>
+        <CardContent>
+          <div className="space-y-6">
+            {resources.length === 0 ? (
+              <p className="text-sm text-font/60 text-center py-4">
+                No permissions configured
+              </p>
+            ) : (
+              resources.map((resource) => (
+                <div key={resource} className="space-y-3">
+                  <h4 className="text-sm font-semibold capitalize text-font">
+                    {resource.replace(/_/g, " ")}
+                  </h4>
+                  <div className="grid grid-cols-2 md:grid-cols-4 gap-3">
+                    {PERMISSION_ACTIONS.map((action) => {
+                      const isGranted = permissionsByResource[resource][action] || false;
 
-                    return (
-                      <div
-                        key={`${resource}-${action}`}
-                        className="flex items-center justify-between p-2 rounded-md border bg-muted/50"
-                      >
-                        <label
-                          htmlFor={`${resource}-${action}`}
-                          className="text-sm capitalize cursor-pointer flex-1"
+                      return (
+                        <div
+                          key={`${resource}-${action}`}
+                          className="flex items-center justify-between p-2 rounded-md border border-font/10 bg-background/50"
                         >
-                          {action}
-                        </label>
-                        <Switch
-                          id={`${resource}-${action}`}
-                          checked={isGranted}
-                          onCheckedChange={() =>
-                            handlePermissionToggle(resource, action, isGranted)
-                          }
-                          disabled={readOnly}
-                        />
-                      </div>
-                    );
-                  })}
+                          <label
+                            htmlFor={`${resource}-${action}`}
+                            className="text-sm capitalize cursor-pointer flex-1 text-font"
+                          >
+                            {action}
+                          </label>
+                          <Switch
+                            id={`${resource}-${action}`}
+                            checked={isGranted}
+                            onCheckedChange={() =>
+                              handlePermissionToggle(resource, action, isGranted)
+                            }
+                            disabled={readOnly}
+                          />
+                        </div>
+                      );
+                    })}
+                  </div>
                 </div>
-              </div>
-            ))
-          )}
-        </div>
-      </CardContent>
+              ))
+            )}
+          </div>
+        </CardContent>
+      </div>
     </Card>
   );
 }

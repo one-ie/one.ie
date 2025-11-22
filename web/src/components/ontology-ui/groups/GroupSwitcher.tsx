@@ -56,10 +56,10 @@ export function GroupSwitcher({
           <ChevronsUpDown className="ml-2 h-4 w-4 shrink-0 opacity-50" />
         </Button>
       </PopoverTrigger>
-      <PopoverContent className="w-[300px] p-0">
-        <Command>
-          <CommandInput placeholder="Search groups..." />
-          <CommandEmpty>No group found.</CommandEmpty>
+      <PopoverContent className="w-[300px] p-0 bg-foreground border-font/20">
+        <Command className="bg-foreground text-font">
+          <CommandInput placeholder="Search groups..." className="text-font" />
+          <CommandEmpty className="text-font/60">No group found.</CommandEmpty>
           <CommandGroup>
             {groups.map((group) => (
               <CommandItem
@@ -69,18 +69,19 @@ export function GroupSwitcher({
                   onGroupChange?.(group._id);
                   setOpen(false);
                 }}
+                className="hover:bg-background text-font"
               >
                 <Check
                   className={cn(
-                    "mr-2 h-4 w-4",
+                    "mr-2 h-4 w-4 text-primary",
                     currentGroupId === group._id ? "opacity-100" : "opacity-0"
                   )}
                 />
                 <span className="mr-2">🏢</span>
                 <div className="flex-1">
-                  <p className="font-medium">{group.name}</p>
+                  <p className="font-medium text-font">{group.name}</p>
                   {group.description && (
-                    <p className="text-xs text-muted-foreground truncate">
+                    <p className="text-xs text-font/60 truncate">
                       {group.description}
                     </p>
                   )}

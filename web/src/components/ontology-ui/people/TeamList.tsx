@@ -74,7 +74,7 @@ export function TeamList({
           ))}
         </div>
       ) : (
-        <div className="text-center py-12 text-muted-foreground">
+        <div className="text-center py-12 text-font/60">
           {query ? `No teams found matching "${query}"` : "No teams yet"}
         </div>
       )}
@@ -82,7 +82,7 @@ export function TeamList({
       {/* Pagination */}
       {paginated && totalPages > 1 && (
         <div className="flex items-center justify-between">
-          <div className="text-sm text-muted-foreground">
+          <div className="text-sm text-font/60">
             Page {pagination.page} of {totalPages} ({pagination.total} teams)
           </div>
           <div className="flex items-center gap-2">

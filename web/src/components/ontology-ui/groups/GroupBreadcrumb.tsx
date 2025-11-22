@@ -32,14 +32,14 @@ export function GroupBreadcrumb({
         return (
           <React.Fragment key={group._id}>
             {index > 0 && (
-              <ChevronRight className="h-4 w-4 text-muted-foreground" />
+              <ChevronRight className="h-4 w-4 text-font/40" />
             )}
             <Button
-              variant={isLast ? "default" : "ghost"}
+              variant={isLast ? "primary" : "ghost"}
               size="sm"
               onClick={() => onGroupClick?.(group)}
               disabled={isLast}
-              className={cn(!isLast && "hover:underline")}
+              className={cn(!isLast && "hover:underline text-font")}
             >
               <span className="mr-1">🏢</span>
               {group.name}

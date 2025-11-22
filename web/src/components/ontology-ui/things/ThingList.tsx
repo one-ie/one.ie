@@ -1,11 +1,14 @@
 /**
- * ThingList - List of things with filtering, search, sort, and pagination
+ * ThingList - Filterable, searchable list of things
  *
- * Provides a complete data table experience for things.
+ * Provides a complete data table experience with search, filtering, sorting, and pagination.
+ * Supports thing-level branding via ThingCard wrapper.
+ *
+ * Cycle 32: Updated for 6-token design system with thing-level color support
  */
 
 import { useState, useMemo } from "react";
-import type { Thing, ThingType, ListProps } from "../types";
+import type { Thing } from "@/lib/ontology/types";
 import { ThingCard } from "./ThingCard";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
@@ -19,10 +22,16 @@ import {
 import { useSearch, useSort, useFilter, usePagination } from "../hooks";
 import { getThingTypeDisplay, cn } from "../utils";
 
-interface ThingListProps extends ListProps {
+interface ThingListProps {
   things: Thing[];
   onThingClick?: (thing: Thing) => void;
-  typeFilter?: ThingType[];
+  typeFilter?: string[];
+  searchable?: boolean;
+  filterable?: boolean;
+  sortable?: boolean;
+  paginated?: boolean;
+  pageSize?: number;
+  className?: string;
 }
 
 export function ThingList({
@@ -36,7 +45,7 @@ export function ThingList({
   pageSize = 12,
   className,
 }: ThingListProps) {
-  const [selectedType, setSelectedType] = useState<ThingType | "all">("all");
+  const [selectedType, setSelectedType] = useState<string | "all">("all");
 
   // Get unique types from things
   const availableTypes = useMemo(() => {
@@ -45,7 +54,7 @@ export function ThingList({
   }, [things]);
 
   // Search
-  const { searchedData, query, setQuery } = useSearch(things, ["name", "description"]);
+  const { searchedData, query, setQuery } = useSearch(things, ["name", "properties.description"]);
 
   // Filter by type
   const typeFilteredData = useMemo(() => {
@@ -72,9 +81,9 @@ export function ThingList({
   // Empty state
   if (things.length === 0) {
     return (
-      <div className={cn("text-center py-12", className)}>
-        <p className="text-lg text-muted-foreground">No things found</p>
-        <p className="text-sm text-muted-foreground mt-2">
+      <div className={cn("text-center py-12 text-font/60", className)}>
+        <p className="text-lg">No things found</p>
+        <p className="text-sm mt-2">
           Create your first thing to get started
         </p>
       </div>
@@ -95,7 +104,7 @@ export function ThingList({
               placeholder="Search things..."
               value={query}
               onChange={(e) => setQuery(e.target.value)}
-              className="w-full"
+              className="w-full bg-foreground border-font/20 text-font placeholder:text-font/40"
             />
           </div>
         )}
@@ -103,15 +112,17 @@ export function ThingList({
         {filterable && (
           <Select
             value={selectedType}
-            onValueChange={(value) => setSelectedType(value as ThingType | "all")}
+            onValueChange={(value) => setSelectedType(value)}
           >
-            <SelectTrigger className="w-full sm:w-48">
+            <SelectTrigger className="w-full sm:w-48 bg-foreground border-font/20 text-font">
               <SelectValue placeholder="Filter by type" />
             </SelectTrigger>
-            <SelectContent>
-              <SelectItem value="all">All Types</SelectItem>
+            <SelectContent className="bg-foreground border-font/20">
+              <SelectItem value="all" className="text-font hover:bg-background">
+                All Types
+              </SelectItem>
               {availableTypes.map((type) => (
-                <SelectItem key={type} value={type}>
+                <SelectItem key={type} value={type} className="text-font hover:bg-background">
                   {getThingTypeDisplay(type)}
                 </SelectItem>
               ))}
@@ -127,27 +138,42 @@ export function ThingList({
               setSort(field, direction as "asc" | "desc");
             }}
           >
-            <SelectTrigger className="w-full sm:w-48">
+            <SelectTrigger className="w-full sm:w-48 bg-foreground border-font/20 text-font">
               <SelectValue placeholder="Sort by" />
             </SelectTrigger>
-            <SelectContent>
-              <SelectItem value="name-asc">Name (A-Z)</SelectItem>
-              <SelectItem value="name-desc">Name (Z-A)</SelectItem>
-              <SelectItem value="createdAt-desc">Newest First</SelectItem>
-              <SelectItem value="createdAt-asc">Oldest First</SelectItem>
-              <SelectItem value="updatedAt-desc">Recently Updated</SelectItem>
+            <SelectContent className="bg-foreground border-font/20">
+              <SelectItem value="name-asc" className="text-font hover:bg-background">
+                Name (A-Z)
+              </SelectItem>
+              <SelectItem value="name-desc" className="text-font hover:bg-background">
+                Name (Z-A)
+              </SelectItem>
+              <SelectItem value="createdAt-desc" className="text-font hover:bg-background">
+                Newest First
+              </SelectItem>
+              <SelectItem value="createdAt-asc" className="text-font hover:bg-background">
+                Oldest First
+              </SelectItem>
+              <SelectItem value="updatedAt-desc" className="text-font hover:bg-background">
+                Recently Updated
+              </SelectItem>
             </SelectContent>
           </Select>
         )}
       </div>
 
       {/* Results count */}
-      <div className="flex items-center justify-between text-sm text-muted-foreground">
+      <div className="flex items-center justify-between text-sm text-font/60">
         <span>
           Showing {paginatedData.length} of {sortedData.length} things
         </span>
         {query && (
-          <Button variant="ghost" size="sm" onClick={() => setQuery("")}>
+          <Button
+            variant="ghost"
+            size="sm"
+            onClick={() => setQuery("")}
+            className="text-font/60 hover:text-font hover:bg-background"
+          >
             Clear search
           </Button>
         )}
@@ -156,15 +182,25 @@ export function ThingList({
       {/* Empty results */}
       {hasNoResults && (
         <div className="text-center py-12">
-          <p className="text-lg text-muted-foreground">No things match your filters</p>
+          <p className="text-lg text-font/60">No things match your filters</p>
           <div className="flex gap-2 justify-center mt-4">
             {query && (
-              <Button variant="outline" size="sm" onClick={() => setQuery("")}>
+              <Button
+                variant="outline"
+                size="sm"
+                onClick={() => setQuery("")}
+                className="border-font/20 text-font hover:bg-background"
+              >
                 Clear search
               </Button>
             )}
             {selectedType !== "all" && (
-              <Button variant="outline" size="sm" onClick={() => setSelectedType("all")}>
+              <Button
+                variant="outline"
+                size="sm"
+                onClick={() => setSelectedType("all")}
+                className="border-font/20 text-font hover:bg-background"
+              >
                 Clear type filter
               </Button>
             )}
@@ -188,8 +224,8 @@ export function ThingList({
 
       {/* Pagination */}
       {paginated && totalPages > 1 && (
-        <div className="flex items-center justify-between pt-4 border-t">
-          <div className="text-sm text-muted-foreground">
+        <div className="flex items-center justify-between pt-4 border-t border-font/10">
+          <div className="text-sm text-font/60">
             Page {pagination.page} of {totalPages}
           </div>
           <div className="flex gap-2">
@@ -198,6 +234,7 @@ export function ThingList({
               size="sm"
               onClick={prevPage}
               disabled={pagination.page === 1}
+              className="border-font/20 text-font hover:bg-background disabled:opacity-50"
             >
               Previous
             </Button>
@@ -209,6 +246,11 @@ export function ThingList({
                   variant={pagination.page === page ? "default" : "outline"}
                   size="sm"
                   onClick={() => goToPage(page)}
+                  className={
+                    pagination.page === page
+                      ? "bg-primary text-white"
+                      : "border-font/20 text-font hover:bg-background"
+                  }
                 >
                   {page}
                 </Button>
@@ -216,11 +258,16 @@ export function ThingList({
             })}
             {totalPages > 5 && (
               <>
-                <span className="px-2 py-1">...</span>
+                <span className="px-2 py-1 text-font/60">...</span>
                 <Button
                   variant={pagination.page === totalPages ? "default" : "outline"}
                   size="sm"
                   onClick={() => goToPage(totalPages)}
+                  className={
+                    pagination.page === totalPages
+                      ? "bg-primary text-white"
+                      : "border-font/20 text-font hover:bg-background"
+                  }
                 >
                   {totalPages}
                 </Button>
@@ -231,6 +278,7 @@ export function ThingList({
               size="sm"
               onClick={nextPage}
               disabled={pagination.page === totalPages}
+              className="border-font/20 text-font hover:bg-background disabled:opacity-50"
             >
               Next
             </Button>

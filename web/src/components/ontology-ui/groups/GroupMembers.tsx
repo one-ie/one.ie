@@ -37,67 +37,69 @@ export function GroupMembers({
   );
 
   return (
-    <Card className={cn(className)}>
-      <CardHeader>
-        <div className="flex items-center justify-between">
-          <CardTitle className="flex items-center gap-2">
-            <span>👥</span>
-            Members ({members.length})
-          </CardTitle>
-          {onInvite && (
-            <Button onClick={onInvite} size="sm">
-              + Invite
-            </Button>
-          )}
-        </div>
-
-        {showRoles && Object.keys(roleCount).length > 0 && (
-          <div className="flex gap-2 flex-wrap pt-2">
-            {Object.entries(roleCount).map(([role, count]) => (
-              <Badge
-                key={role}
-                variant="outline"
-                className={`bg-${getRoleColor(role as UserRole)}-50`}
-              >
-                {count} {getRoleDisplay(role as UserRole)}
-              </Badge>
-            ))}
+    <Card className={cn("bg-background p-1 shadow-sm rounded-md", className)}>
+      <div className="bg-foreground rounded-md p-4 text-font">
+        <CardHeader className="p-0 pb-4">
+          <div className="flex items-center justify-between">
+            <CardTitle className="flex items-center gap-2 text-font">
+              <span>👥</span>
+              Members ({members.length})
+            </CardTitle>
+            {onInvite && (
+              <Button variant="primary" onClick={onInvite} size="sm">
+                + Invite
+              </Button>
+            )}
           </div>
-        )}
-      </CardHeader>
 
-      <CardContent>
-        <div className="space-y-3">
-          {members.map((member) => (
-            <div
-              key={member._id}
-              className={cn(
-                "flex items-center gap-3 p-3 rounded-lg hover:bg-accent transition-colors",
-                onMemberClick && "cursor-pointer"
-              )}
-              onClick={() => onMemberClick?.(member)}
-            >
-              <Avatar>
-                <AvatarImage src={member.avatar} alt={member.name} />
-                <AvatarFallback>{member.name.slice(0, 2).toUpperCase()}</AvatarFallback>
-              </Avatar>
+          {showRoles && Object.keys(roleCount).length > 0 && (
+            <div className="flex gap-2 flex-wrap pt-2">
+              {Object.entries(roleCount).map(([role, count]) => (
+                <Badge
+                  key={role}
+                  variant="outline"
+                  className={`bg-${getRoleColor(role as UserRole)}-50`}
+                >
+                  {count} {getRoleDisplay(role as UserRole)}
+                </Badge>
+              ))}
+            </div>
+          )}
+        </CardHeader>
 
-              <div className="flex-1 min-w-0">
-                <p className="font-medium truncate">{member.name}</p>
-                {member.email && (
-                  <p className="text-sm text-muted-foreground truncate">
-                    {member.email}
-                  </p>
+        <CardContent className="p-0">
+          <div className="space-y-2">
+            {members.map((member) => (
+              <div
+                key={member._id}
+                className={cn(
+                  "flex items-center gap-3 p-3 rounded-lg hover:bg-background transition-colors duration-150",
+                  onMemberClick && "cursor-pointer"
+                )}
+                onClick={() => onMemberClick?.(member)}
+              >
+                <Avatar>
+                  <AvatarImage src={member.avatar} alt={member.name} />
+                  <AvatarFallback>{member.name.slice(0, 2).toUpperCase()}</AvatarFallback>
+                </Avatar>
+
+                <div className="flex-1 min-w-0">
+                  <p className="font-medium truncate text-font">{member.name}</p>
+                  {member.email && (
+                    <p className="text-sm text-font/60 truncate">
+                      {member.email}
+                    </p>
+                  )}
+                </div>
+
+                {showRoles && (
+                  <Badge variant="secondary">{getRoleDisplay(member.role)}</Badge>
                 )}
               </div>
-
-              {showRoles && (
-                <Badge variant="secondary">{getRoleDisplay(member.role)}</Badge>
-              )}
-            </div>
-          ))}
-        </div>
-      </CardContent>
+            ))}
+          </div>
+        </CardContent>
+      </div>
     </Card>
   );
 }

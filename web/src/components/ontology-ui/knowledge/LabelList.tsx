@@ -115,6 +115,7 @@ export function LabelList({
                 }
                 size="sm"
                 onClick={() => setSort("label")}
+                className="transition-all duration-150 hover:scale-[1.02] active:scale-[0.98]"
               >
                 Label{" "}
                 {sortConfig?.field === "label" &&
@@ -126,6 +127,7 @@ export function LabelList({
                 }
                 size="sm"
                 onClick={() => setSort("category")}
+                className="transition-all duration-150 hover:scale-[1.02] active:scale-[0.98]"
               >
                 Category{" "}
                 {sortConfig?.field === "category" &&
@@ -137,6 +139,7 @@ export function LabelList({
                 }
                 size="sm"
                 onClick={() => setSort("confidence")}
+                className="transition-all duration-150 hover:scale-[1.02] active:scale-[0.98]"
               >
                 Confidence{" "}
                 {sortConfig?.field === "confidence" &&
@@ -154,6 +157,7 @@ export function LabelList({
             variant={selectedCategory === null ? "default" : "outline"}
             size="sm"
             onClick={() => setSelectedCategory(null)}
+            className="transition-all duration-150 hover:scale-[1.02] active:scale-[0.98]"
           >
             All Labels {showCounts && `(${labels.length})`}
           </Button>
@@ -163,6 +167,7 @@ export function LabelList({
               variant={selectedCategory === category ? "default" : "outline"}
               size="sm"
               onClick={() => setSelectedCategory(category)}
+              className="transition-all duration-150 hover:scale-[1.02] active:scale-[0.98]"
             >
               {category} {showCounts && `(${count})`}
             </Button>
@@ -171,7 +176,7 @@ export function LabelList({
       )}
 
       {/* Results Count */}
-      <div className="text-sm text-muted-foreground">
+      <div className="text-sm text-font/60">
         {sortedData.length === labels.length ? (
           <span>{sortedData.length} labels</span>
         ) : (
@@ -188,7 +193,7 @@ export function LabelList({
           {Object.entries(groupedData).map(([category, categoryLabels]) => (
             <div key={category} className="space-y-3">
               <div className="flex items-center gap-2">
-                <h3 className="text-lg font-semibold">{category || "Uncategorized"}</h3>
+                <h3 className="text-lg font-semibold text-font">{category || "Uncategorized"}</h3>
                 <Badge variant="secondary">{categoryLabels.length}</Badge>
               </div>
               <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-3">
@@ -208,7 +213,7 @@ export function LabelList({
         // Standard Grid
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-3">
           {displayData.length === 0 ? (
-            <div className="col-span-full text-center py-12 text-muted-foreground">
+            <div className="col-span-full text-center py-12 text-font/60">
               <p className="text-lg">No labels found</p>
               {query && (
                 <p className="text-sm mt-2">
@@ -231,8 +236,8 @@ export function LabelList({
 
       {/* Pagination Controls */}
       {paginated && totalPages > 1 && (
-        <div className="flex items-center justify-between border-t pt-4">
-          <div className="text-sm text-muted-foreground">
+        <div className="flex items-center justify-between border-t border-font/10 pt-4">
+          <div className="text-sm text-font/60">
             Page {pagination.page} of {totalPages}
           </div>
 
@@ -242,6 +247,7 @@ export function LabelList({
               size="sm"
               onClick={prevPage}
               disabled={pagination.page === 1}
+              className="transition-all duration-150 hover:scale-[1.02] active:scale-[0.98]"
             >
               Previous
             </Button>
@@ -269,6 +275,7 @@ export function LabelList({
                     }
                     size="sm"
                     onClick={() => goToPage(pageNum)}
+                    className="transition-all duration-150 hover:scale-[1.02] active:scale-[0.98]"
                   >
                     {pageNum}
                   </Button>
@@ -281,6 +288,7 @@ export function LabelList({
               size="sm"
               onClick={nextPage}
               disabled={pagination.page === totalPages}
+              className="transition-all duration-150 hover:scale-[1.02] active:scale-[0.98]"
             >
               Next
             </Button>

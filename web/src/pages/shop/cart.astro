@@ -27,13 +27,13 @@ import Layout from "@/layouts/Layout.astro";
 
           <div id="cart-items" class="mt-4 space-y-4">
             <!-- Cart items will be rendered here by client-side JavaScript -->
-            <div class="rounded-lg border border-border bg-card p-6 text-center">
+            <div class="rounded-lg border border-border bg-background p-6 text-center">
               <p class="text-muted-foreground">Loading cart...</p>
             </div>
           </div>
 
           <!-- Empty Cart Message -->
-          <div id="empty-cart" class="hidden rounded-lg border border-border bg-card p-12 text-center">
+          <div id="empty-cart" class="hidden rounded-lg border border-border bg-background p-12 text-center">
             <svg
               class="mx-auto h-16 w-16 text-muted-foreground"
               fill="none"
@@ -57,7 +57,7 @@ import Layout from "@/layouts/Layout.astro";
 
         <!-- Order Summary -->
         <div class="lg:col-span-1">
-          <div class="rounded-lg border border-border bg-card p-6 sticky top-4">
+          <div class="rounded-lg border border-border bg-background p-6 sticky top-4">
             <h2 class="text-lg font-semibold text-foreground">Order Summary</h2>
 
             <div class="mt-4 space-y-3">
@@ -142,7 +142,7 @@ import Layout from "@/layouts/Layout.astro";
         cartItemsEl.innerHTML = cart.items
           .map(
             (item) => `
-          <div class="flex gap-4 rounded-lg border border-border bg-card p-4">
+          <div class="flex gap-4 rounded-lg border border-border bg-background p-4">
             <img
               src="${item.image || '/placeholder.jpg'}"
               alt="${item.name}"

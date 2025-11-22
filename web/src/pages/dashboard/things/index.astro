@@ -91,16 +91,16 @@ const data = await Effect.runPromise(
 ---
 
 <Layout title="Entity Management">
-  <div class="min-h-screen bg-gray-50 dark:bg-gray-900">
+  <div class="min-h-screen bg-background">
     <!-- Header -->
-    <header class="bg-white dark:bg-gray-800 shadow">
+    <header class="bg-foreground shadow-sm">
       <div class="mx-auto max-w-7xl px-4 py-6 sm:px-6 lg:px-8">
         <div class="flex items-center justify-between">
           <div>
-            <h1 class="text-3xl font-bold text-gray-900 dark:text-white">
+            <h1 class="text-3xl font-bold text-font">
               Entity Management
             </h1>
-            <p class="mt-1 text-sm text-gray-500 dark:text-gray-400">
+            <p class="mt-1 text-sm text-font/60">
               Manage all {data.total} entities across your organization
             </p>
           </div>
@@ -126,7 +126,7 @@ const data = await Effect.runPromise(
       </div>
 
       <!-- Entity Table -->
-      <div class="overflow-hidden bg-white dark:bg-gray-800 shadow sm:rounded-lg">
+      <div class="overflow-hidden bg-foreground shadow sm:rounded-lg">
         <EntityTable
           client:load
           entities={data.things}
@@ -146,7 +146,7 @@ const data = await Effect.runPromise(
             {data.page > 1 && (
               <a
                 href={`/dashboard/things?page=${data.page - 1}${typeFilter ? `&type=${typeFilter}` : ""}${statusFilter ? `&status=${statusFilter}` : ""}`}
-                class="inline-flex items-center rounded-md bg-white dark:bg-gray-700 px-4 py-2 text-sm font-medium text-gray-700 dark:text-gray-200 shadow-sm hover:bg-gray-50 dark:hover:bg-gray-600"
+                class="inline-flex items-center rounded-md bg-white dark:bg-gray-700 px-4 py-2 text-sm font-medium text-font shadow-sm hover:bg-gray-50 dark:hover:bg-gray-600"
               >
                 Previous
               </a>
@@ -154,7 +154,7 @@ const data = await Effect.runPromise(
             {data.page < data.totalPages && (
               <a
                 href={`/dashboard/things?page=${data.page + 1}${typeFilter ? `&type=${typeFilter}` : ""}${statusFilter ? `&status=${statusFilter}` : ""}`}
-                class="inline-flex items-center rounded-md bg-white dark:bg-gray-700 px-4 py-2 text-sm font-medium text-gray-700 dark:text-gray-200 shadow-sm hover:bg-gray-50 dark:hover:bg-gray-600"
+                class="inline-flex items-center rounded-md bg-white dark:bg-gray-700 px-4 py-2 text-sm font-medium text-font shadow-sm hover:bg-gray-50 dark:hover:bg-gray-600"
               >
                 Next
               </a>

@@ -3,6 +3,8 @@
  *
  * Displays all incoming and outgoing connections for a thing
  * with tabs to filter by direction and grouping by connection type
+ *
+ * Design System: Uses 6-token system with tabs and badges
  */
 
 import React, { useMemo, useState } from "react";
@@ -72,14 +74,15 @@ export function RelationshipViewer({
   const renderConnectionGroup = (type: ConnectionType, conns: Connection[]) => (
     <div key={type} className="space-y-3">
       <div className="flex items-center gap-2">
-        <h3 className="text-sm font-semibold">{getConnectionTypeDisplay(type)}</h3>
-        <Badge variant="secondary">{conns.length}</Badge>
+        <h3 className="text-sm font-semibold text-font">{getConnectionTypeDisplay(type)}</h3>
+        <Badge variant="secondary" className="bg-primary/10 text-primary">
+          {conns.length}
+        </Badge>
       </div>
       <div className="space-y-2">
         {conns.map((conn) => {
           const fromThing = thingMap.get(conn.fromId);
           const toThing = thingMap.get(conn.toId);
-          const direction = conn.fromId === thing._id ? "from" : "to";
 
           return (
             <ConnectionCard
@@ -87,7 +90,6 @@ export function RelationshipViewer({
               connection={conn}
               fromThing={fromThing}
               toThing={toThing}
-              direction={direction}
             />
           );
         })}
@@ -96,76 +98,78 @@ export function RelationshipViewer({
   );
 
   return (
-    <Card className={cn("w-full", className)}>
-      <CardHeader>
-        <div className="flex items-center justify-between">
-          <CardTitle>Relationships</CardTitle>
-          <Badge variant="outline">
-            {connections.length} {connections.length === 1 ? "connection" : "connections"}
-          </Badge>
-        </div>
-      </CardHeader>
+    <Card className={cn("w-full bg-background p-1 shadow-sm rounded-md", className)}>
+      <div className="bg-foreground rounded-md">
+        <CardHeader>
+          <div className="flex items-center justify-between">
+            <CardTitle className="text-font">Relationships</CardTitle>
+            <Badge variant="outline" className="border-primary/20 text-primary">
+              {connections.length} {connections.length === 1 ? "connection" : "connections"}
+            </Badge>
+          </div>
+        </CardHeader>
 
-      <CardContent>
-        <Tabs value={activeTab} onValueChange={(v) => setActiveTab(v as typeof activeTab)}>
-          <TabsList className="grid w-full grid-cols-3">
-            <TabsTrigger value="all">
-              All
-              <Badge variant="secondary" className="ml-2">
-                {connections.length}
-              </Badge>
-            </TabsTrigger>
-            <TabsTrigger value="outgoing">
-              Outgoing
-              <Badge variant="secondary" className="ml-2">
-                {outgoing.length}
-              </Badge>
-            </TabsTrigger>
-            <TabsTrigger value="incoming">
-              Incoming
-              <Badge variant="secondary" className="ml-2">
-                {incoming.length}
-              </Badge>
-            </TabsTrigger>
-          </TabsList>
+        <CardContent>
+          <Tabs value={activeTab} onValueChange={(v) => setActiveTab(v as typeof activeTab)}>
+            <TabsList className="grid w-full grid-cols-3 bg-background">
+              <TabsTrigger value="all" className="data-[state=active]:bg-foreground transition-all duration-150">
+                All
+                <Badge variant="secondary" className="ml-2 bg-primary/10 text-primary">
+                  {connections.length}
+                </Badge>
+              </TabsTrigger>
+              <TabsTrigger value="outgoing" className="data-[state=active]:bg-foreground transition-all duration-150">
+                Outgoing
+                <Badge variant="secondary" className="ml-2 bg-primary/10 text-primary">
+                  {outgoing.length}
+                </Badge>
+              </TabsTrigger>
+              <TabsTrigger value="incoming" className="data-[state=active]:bg-foreground transition-all duration-150">
+                Incoming
+                <Badge variant="secondary" className="ml-2 bg-primary/10 text-primary">
+                  {incoming.length}
+                </Badge>
+              </TabsTrigger>
+            </TabsList>
 
-          <TabsContent value="all" className="space-y-6 mt-4">
-            {Object.keys(groupedConnections).length === 0 ? (
-              <div className="text-center py-8 text-muted-foreground">
-                No connections found
-              </div>
-            ) : (
-              Object.entries(groupedConnections).map(([type, conns]) =>
-                renderConnectionGroup(type as ConnectionType, conns)
-              )
-            )}
-          </TabsContent>
+            <TabsContent value="all" className="space-y-6 mt-4">
+              {Object.keys(groupedConnections).length === 0 ? (
+                <div className="text-center py-8 text-font/60">
+                  No connections found
+                </div>
+              ) : (
+                Object.entries(groupedConnections).map(([type, conns]) =>
+                  renderConnectionGroup(type as ConnectionType, conns)
+                )
+              )}
+            </TabsContent>
 
-          <TabsContent value="outgoing" className="space-y-6 mt-4">
-            {outgoing.length === 0 ? (
-              <div className="text-center py-8 text-muted-foreground">
-                No outgoing connections
-              </div>
-            ) : (
-              Object.entries(groupBy(outgoing, "type") as Record<ConnectionType, Connection[]>).map(
-                ([type, conns]) => renderConnectionGroup(type as ConnectionType, conns)
-              )
-            )}
-          </TabsContent>
+            <TabsContent value="outgoing" className="space-y-6 mt-4">
+              {outgoing.length === 0 ? (
+                <div className="text-center py-8 text-font/60">
+                  No outgoing connections
+                </div>
+              ) : (
+                Object.entries(groupBy(outgoing, "type") as Record<ConnectionType, Connection[]>).map(
+                  ([type, conns]) => renderConnectionGroup(type as ConnectionType, conns)
+                )
+              )}
+            </TabsContent>
 
-          <TabsContent value="incoming" className="space-y-6 mt-4">
-            {incoming.length === 0 ? (
-              <div className="text-center py-8 text-muted-foreground">
-                No incoming connections
-              </div>
-            ) : (
-              Object.entries(groupBy(incoming, "type") as Record<ConnectionType, Connection[]>).map(
-                ([type, conns]) => renderConnectionGroup(type as ConnectionType, conns)
-              )
-            )}
-          </TabsContent>
-        </Tabs>
-      </CardContent>
+            <TabsContent value="incoming" className="space-y-6 mt-4">
+              {incoming.length === 0 ? (
+                <div className="text-center py-8 text-font/60">
+                  No incoming connections
+                </div>
+              ) : (
+                Object.entries(groupBy(incoming, "type") as Record<ConnectionType, Connection[]>).map(
+                  ([type, conns]) => renderConnectionGroup(type as ConnectionType, conns)
+                )
+              )}
+            </TabsContent>
+          </Tabs>
+        </CardContent>
+      </div>
     </Card>
   );
 }

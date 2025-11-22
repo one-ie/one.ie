@@ -89,68 +89,70 @@ export function UserActivity({
   };
 
   return (
-    <Card className={cn("w-full", className)}>
-      <CardHeader>
-        <CardTitle>Activity Feed</CardTitle>
-        <p className="text-sm text-muted-foreground">
-          Recent activity for {user.name}
-        </p>
-      </CardHeader>
-      <CardContent>
-        {displayedEvents.length === 0 ? (
-          <p className="text-sm text-muted-foreground text-center py-8">
-            No activity to display
+    <Card className={cn("w-full bg-background p-1 shadow-sm rounded-md", className)}>
+      <div className="bg-foreground rounded-md text-font">
+        <CardHeader>
+          <CardTitle className="text-font">Activity Feed</CardTitle>
+          <p className="text-sm text-font/80">
+            Recent activity for {user.name}
           </p>
-        ) : (
-          <div className="space-y-4">
-            {displayedEvents.map((event) => (
-              <div
-                key={event._id}
-                className="flex items-start gap-3 pb-4 border-b last:border-b-0 last:pb-0"
-              >
+        </CardHeader>
+        <CardContent>
+          {displayedEvents.length === 0 ? (
+            <p className="text-sm text-font/60 text-center py-8">
+              No activity to display
+            </p>
+          ) : (
+            <div className="space-y-4">
+              {displayedEvents.map((event) => (
                 <div
-                  className={cn(
-                    "flex items-center justify-center w-8 h-8 rounded-full bg-muted text-lg",
-                    getEventColor(event.type)
-                  )}
+                  key={event._id}
+                  className="flex items-start gap-3 pb-4 border-b border-font/10 last:border-b-0 last:pb-0"
                 >
-                  {getEventIcon(event.type)}
-                </div>
-
-                <div className="flex-1 min-w-0 space-y-1">
-                  <div className="flex items-center gap-2">
-                    <Badge variant="outline" className="text-xs">
-                      {getEventTypeDisplay(event.type)}
-                    </Badge>
-                    <span className="text-xs text-muted-foreground">
-                      {formatRelativeTime(event.timestamp)}
-                    </span>
+                  <div
+                    className={cn(
+                      "flex items-center justify-center w-8 h-8 rounded-full bg-background text-lg",
+                      getEventColor(event.type)
+                    )}
+                  >
+                    {getEventIcon(event.type)}
                   </div>
 
-                  <p className="text-sm">{getEventDescription(event)}</p>
+                  <div className="flex-1 min-w-0 space-y-1">
+                    <div className="flex items-center gap-2">
+                      <Badge variant="outline" className="text-xs">
+                        {getEventTypeDisplay(event.type)}
+                      </Badge>
+                      <span className="text-xs text-font/60">
+                        {formatRelativeTime(event.timestamp)}
+                      </span>
+                    </div>
 
-                  {event.metadata && Object.keys(event.metadata).length > 1 && (
-                    <details className="text-xs text-muted-foreground">
-                      <summary className="cursor-pointer hover:text-foreground">
-                        View details
-                      </summary>
-                      <pre className="mt-2 p-2 bg-muted rounded text-xs overflow-x-auto">
-                        {JSON.stringify(event.metadata, null, 2)}
-                      </pre>
-                    </details>
-                  )}
+                    <p className="text-sm text-font">{getEventDescription(event)}</p>
+
+                    {event.metadata && Object.keys(event.metadata).length > 1 && (
+                      <details className="text-xs text-font/60">
+                        <summary className="cursor-pointer hover:text-font transition-colors duration-150">
+                          View details
+                        </summary>
+                        <pre className="mt-2 p-2 bg-background rounded-md text-xs overflow-x-auto">
+                          {JSON.stringify(event.metadata, null, 2)}
+                        </pre>
+                      </details>
+                    )}
+                  </div>
                 </div>
-              </div>
-            ))}
+              ))}
 
-            {events.length > maxItems && (
-              <p className="text-sm text-muted-foreground text-center pt-2">
-                Showing {maxItems} of {events.length} events
-              </p>
-            )}
-          </div>
-        )}
-      </CardContent>
+              {events.length > maxItems && (
+                <p className="text-sm text-font/60 text-center pt-2">
+                  Showing {maxItems} of {events.length} events
+                </p>
+              )}
+            </div>
+          )}
+        </CardContent>
+      </div>
     </Card>
   );
 }

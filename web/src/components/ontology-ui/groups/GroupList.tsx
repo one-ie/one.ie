@@ -48,7 +48,7 @@ export function GroupList({
       {searchable && (
         <div className="flex items-center gap-2">
           <div className="relative flex-1">
-            <span className="absolute left-3 top-1/2 -translate-y-1/2 text-muted-foreground">
+            <span className="absolute left-3 top-1/2 -translate-y-1/2 text-font/60">
               🔍
             </span>
             <Input
@@ -56,7 +56,7 @@ export function GroupList({
               placeholder="Search groups..."
               value={query}
               onChange={(e) => setQuery(e.target.value)}
-              className="pl-10"
+              className="pl-10 bg-foreground text-font"
             />
           </div>
           {sortable && (
@@ -77,13 +77,13 @@ export function GroupList({
       )}
 
       {/* Results Count */}
-      <div className="text-sm text-muted-foreground">
+      <div className="text-sm text-font/60">
         Showing {displayData.length} of {groups.length} groups
       </div>
 
       {/* Group List */}
       {displayData.length === 0 ? (
-        <div className="text-center py-12 text-muted-foreground">
+        <div className="text-center py-12 text-font/60">
           <div className="text-4xl mb-2">🏢</div>
           <p>{emptyMessage}</p>
         </div>
@@ -102,8 +102,8 @@ export function GroupList({
 
       {/* Pagination */}
       {paginated && totalPages > 1 && (
-        <div className="flex items-center justify-between border-t pt-4">
-          <div className="text-sm text-muted-foreground">
+        <div className="flex items-center justify-between border-t border-font/10 pt-4">
+          <div className="text-sm text-font/60">
             Page {pagination.page} of {totalPages}
           </div>
           <div className="flex gap-2">

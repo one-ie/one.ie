@@ -60,11 +60,11 @@ export function SearchResults({
     );
   };
 
-  // Get score color based on relevance
+  // Get score color based on relevance using design system
   const getScoreColor = (score: number): string => {
-    if (score >= 0.8) return "text-green-600 dark:text-green-400";
-    if (score >= 0.5) return "text-yellow-600 dark:text-yellow-400";
-    return "text-gray-600 dark:text-gray-400";
+    if (score >= 0.8) return "text-tertiary"; // Green for high score
+    if (score >= 0.5) return "text-secondary"; // Secondary for medium
+    return "text-font/60"; // Muted for lower scores
   };
 
   // Format score percentage
@@ -76,12 +76,12 @@ export function SearchResults({
     return (
       <div
         className={cn(
-          "text-center p-12 text-muted-foreground",
+          "text-center p-12 text-font/60",
           className
         )}
       >
         <div className="text-6xl mb-4">🔍</div>
-        <h3 className="text-lg font-medium mb-2">No results found</h3>
+        <h3 className="text-lg font-medium mb-2 text-font">No results found</h3>
         <p className="text-sm">
           Try adjusting your search query or browse categories
         </p>
@@ -97,16 +97,16 @@ export function SearchResults({
   return (
     <div className={cn("space-y-6", className)}>
       {/* Results count */}
-      <div className="text-sm text-muted-foreground">
+      <div className="text-sm text-font/60">
         Found {results.length} result{results.length !== 1 ? "s" : ""} for{" "}
-        <span className="font-medium text-foreground">"{query}"</span>
+        <span className="font-medium text-font">"{query}"</span>
       </div>
 
       {/* Grouped results */}
       {Object.entries(groupedResults).map(([type, typeResults]) => (
         <div key={type}>
           {groupByType && (
-            <h3 className="text-lg font-semibold mb-3 flex items-center gap-2">
+            <h3 className="text-lg font-semibold mb-3 flex items-center gap-2 text-font">
               <span>{getThingTypeIcon(type as ThingType)}</span>
               {getThingTypeDisplay(type as ThingType)}
               <Badge variant="secondary" className="ml-2">
@@ -120,54 +120,56 @@ export function SearchResults({
               <Card
                 key={result._id}
                 className={cn(
-                  "transition-all duration-200",
+                  "bg-background p-1 shadow-sm rounded-md transition-all duration-150",
                   onResultClick &&
-                    "cursor-pointer hover:shadow-md hover:border-primary"
+                    "cursor-pointer hover:shadow-md hover:scale-[1.02] active:scale-[0.98] hover:border-primary"
                 )}
                 onClick={() => onResultClick?.(result)}
               >
-                <CardHeader className="pb-3">
-                  <div className="flex items-start justify-between gap-2">
-                    <div className="flex items-center gap-2 flex-1">
-                      <span className="text-xl">
-                        {getThingTypeIcon(result.type as any)}
+                <div className="bg-foreground p-4 rounded-md">
+                  <CardHeader className="pb-3 p-0">
+                    <div className="flex items-start justify-between gap-2">
+                      <div className="flex items-center gap-2 flex-1">
+                        <span className="text-xl">
+                          {getThingTypeIcon(result.type as any)}
+                        </span>
+                        <CardTitle className="text-base text-font">
+                          {highlightText(result.name, query)}
+                        </CardTitle>
+                      </div>
+                      {/* Relevance score */}
+                      <span
+                        className={cn(
+                          "text-xs font-medium",
+                          getScoreColor(result.score)
+                        )}
+                      >
+                        {formatScore(result.score)}
                       </span>
-                      <CardTitle className="text-base">
-                        {highlightText(result.name, query)}
-                      </CardTitle>
                     </div>
-                    {/* Relevance score */}
-                    <span
-                      className={cn(
-                        "text-xs font-medium",
-                        getScoreColor(result.score)
-                      )}
-                    >
-                      {formatScore(result.score)}
-                    </span>
-                  </div>
-                  {result.description && (
-                    <CardDescription className="text-sm">
-                      {highlightText(result.description, query)}
-                    </CardDescription>
-                  )}
-                </CardHeader>
+                    {result.description && (
+                      <CardDescription className="text-sm text-font/60">
+                        {highlightText(result.description, query)}
+                      </CardDescription>
+                    )}
+                  </CardHeader>
 
-                {/* Highlights from search */}
-                {result.highlights && result.highlights.length > 0 && (
-                  <CardContent className="pt-0">
-                    <div className="space-y-1">
-                      {result.highlights.map((highlight, idx) => (
-                        <div
-                          key={idx}
-                          className="text-xs text-muted-foreground border-l-2 border-muted pl-2"
-                        >
-                          {highlightText(highlight, query)}
-                        </div>
-                      ))}
-                    </div>
-                  </CardContent>
-                )}
+                  {/* Highlights from search */}
+                  {result.highlights && result.highlights.length > 0 && (
+                    <CardContent className="pt-2 p-0">
+                      <div className="space-y-1">
+                        {result.highlights.map((highlight, idx) => (
+                          <div
+                            key={idx}
+                            className="text-xs text-font/60 border-l-2 border-font/20 pl-2"
+                          >
+                            {highlightText(highlight, query)}
+                          </div>
+                        ))}
+                      </div>
+                    </CardContent>
+                  )}
+                </div>
               </Card>
             ))}
           </div>

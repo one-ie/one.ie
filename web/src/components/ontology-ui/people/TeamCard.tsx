@@ -49,88 +49,93 @@ export function TeamCard({
   return (
     <Card
       className={cn(
-        "group relative transition-all duration-200",
+        "bg-background p-1 shadow-sm rounded-md",
+        "group relative transition-all duration-300 ease-in-out",
         interactive && "cursor-pointer hover:shadow-lg hover:scale-[1.02]",
-        size === "sm" && "p-3",
-        size === "md" && "p-4",
-        size === "lg" && "p-6",
         className
       )}
       onClick={handleClick}
     >
-      <CardHeader className="pb-3">
-        <div className="flex items-start justify-between">
-          <div className="flex-1 min-w-0">
-            <CardTitle className="truncate">{team.name}</CardTitle>
-            {team.description && (
-              <CardDescription className="line-clamp-2 mt-1">
-                {team.description}
-              </CardDescription>
+      <div className={cn(
+        "bg-foreground rounded-md text-font",
+        size === "sm" && "p-3",
+        size === "md" && "p-4",
+        size === "lg" && "p-6"
+      )}>
+        <CardHeader className="p-0 pb-3">
+          <div className="flex items-start justify-between">
+            <div className="flex-1 min-w-0">
+              <CardTitle className="truncate text-font">{team.name}</CardTitle>
+              {team.description && (
+                <CardDescription className="line-clamp-2 mt-1 text-font/80">
+                  {team.description}
+                </CardDescription>
+              )}
+            </div>
+            {showMemberCount && (
+              <Badge variant="secondary" className="ml-2">
+                {pluralize(members.length, "member")}
+              </Badge>
             )}
           </div>
-          {showMemberCount && (
-            <Badge variant="secondary" className="ml-2">
-              {pluralize(members.length, "member")}
-            </Badge>
-          )}
-        </div>
-      </CardHeader>
+        </CardHeader>
 
-      <CardContent>
-        {/* Member Avatars */}
-        <div className="flex items-center gap-2">
-          <div className="flex -space-x-2">
-            {visibleMembers.map((member) => {
-              const initials = member.name
-                .split(" ")
-                .map((part) => part[0])
-                .join("")
-                .toUpperCase()
-                .slice(0, 2);
+        <CardContent className="p-0">
+          {/* Member Avatars */}
+          <div className="flex items-center gap-2">
+            <div className="flex -space-x-2">
+              {visibleMembers.map((member) => {
+                const initials = member.name
+                  .split(" ")
+                  .map((part) => part[0])
+                  .join("")
+                  .toUpperCase()
+                  .slice(0, 2);
 
-              return (
-                <Avatar
-                  key={member._id}
-                  className="h-8 w-8 border-2 border-background ring-2 ring-background transition-transform hover:scale-110 hover:z-10"
-                  title={member.name}
+                return (
+                  <Avatar
+                    key={member._id}
+                    className="h-8 w-8 border-2 border-font/20 rounded-full transition-transform hover:scale-110 hover:z-10"
+                    title={member.name}
+                  >
+                    <AvatarImage src={member.avatar} alt={member.name} />
+                    <AvatarFallback className="text-xs text-font bg-background">{initials}</AvatarFallback>
+                  </Avatar>
+                );
+              })}
+
+              {remainingCount > 0 && (
+                <div
+                  className="flex h-8 w-8 items-center justify-center rounded-full border-2 border-font/20 bg-background text-xs font-medium text-font"
+                  title={`${remainingCount} more member${remainingCount !== 1 ? "s" : ""}`}
                 >
-                  <AvatarImage src={member.avatar} alt={member.name} />
-                  <AvatarFallback className="text-xs">{initials}</AvatarFallback>
-                </Avatar>
-              );
-            })}
+                  +{remainingCount}
+                </div>
+              )}
+            </div>
 
-            {remainingCount > 0 && (
-              <div
-                className="flex h-8 w-8 items-center justify-center rounded-full border-2 border-background bg-muted text-xs font-medium text-muted-foreground ring-2 ring-background"
-                title={`${remainingCount} more member${remainingCount !== 1 ? "s" : ""}`}
-              >
-                +{remainingCount}
-              </div>
+            {members.length === 0 && (
+              <p className="text-sm text-font/60">No members yet</p>
             )}
           </div>
 
-          {members.length === 0 && (
-            <p className="text-sm text-muted-foreground">No members yet</p>
+          {/* Team Metadata */}
+          {team.metadata && Object.keys(team.metadata).length > 0 && (
+            <div className="mt-3 flex flex-wrap gap-1">
+              {team.metadata.department && (
+                <Badge variant="outline" className="text-xs">
+                  {team.metadata.department as string}
+                </Badge>
+              )}
+              {team.metadata.location && (
+                <Badge variant="outline" className="text-xs">
+                  📍 {team.metadata.location as string}
+                </Badge>
+              )}
+            </div>
           )}
-        </div>
-
-        {/* Team Metadata */}
-        {team.metadata && Object.keys(team.metadata).length > 0 && (
-          <div className="mt-3 flex flex-wrap gap-1">
-            {team.metadata.department && (
-              <Badge variant="outline" className="text-xs">
-                {team.metadata.department as string}
-              </Badge>
-            )}
-            {team.metadata.location && (
-              <Badge variant="outline" className="text-xs">
-                📍 {team.metadata.location as string}
-              </Badge>
-            )}
-          </div>
-        )}
-      </CardContent>
+        </CardContent>
+      </div>
     </Card>
   );
 }

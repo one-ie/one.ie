@@ -79,7 +79,8 @@ export function EventSearch({
     : { all: filteredEvents };
 
   return (
-    <Command className={cn("rounded-lg border shadow-md", className)}>
+    <Command className={cn("bg-background p-1 rounded-md shadow-sm border-0", className)}>
+      <div className="bg-foreground rounded-md text-font">
       <CommandInput
         placeholder={placeholder}
         value={query}
@@ -127,6 +128,7 @@ export function EventSearch({
           </CommandGroup>
         ))}
       </CommandList>
+      </div>
     </Command>
   );
 }

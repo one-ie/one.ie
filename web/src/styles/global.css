@@ -81,42 +81,70 @@
 
 @variant dark (.dark &);
 
+/* ============================================================================
+   6-TOKEN DESIGN SYSTEM (Version 1.0.0)
+   Source: /web/src/pages/design.astro
+   ============================================================================ */
+
 @theme {
-  --color-background: 0 0% 100%;
-  --color-foreground: 0 0% 13%;
+  /* ========================================
+     CORE 6 TOKENS (Light Mode)
+     ======================================== */
+
+  /* 1. BACKGROUND - Card surface, sidebar (adaptive: changes in dark mode) */
+  --color-background: 0 0% 93%;
+
+  /* 2. FOREGROUND - Content area inside cards (adaptive: changes in dark mode) */
+  --color-foreground: 0 0% 100%;
+
+  /* 3. FONT - Text color, readable in both modes (adaptive: changes in dark mode) */
   --color-font: 0 0% 13%;
-  --color-card: 0 0% 93.3%;
-  --color-card-foreground: 0 0% 13%;
-  --color-popover: 0 0% 93.3%;
-  --color-popover-foreground: 0 0% 13%;
+
+  /* 4. PRIMARY - Main CTA buttons (constant: same in dark mode) */
   --color-primary: 216 55% 25%;
   --color-primary-foreground: 36 8% 96%;
+
+  /* 5. SECONDARY - Supporting actions (constant: same in dark mode) */
   --color-secondary: 219 14% 28%;
   --color-secondary-foreground: 36 8% 96%;
+
+  /* 6. TERTIARY - Accent actions, success states (constant: same in dark mode) */
   --color-tertiary: 105 22% 25%;
   --color-tertiary-foreground: 36 8% 96%;
-  /* Auto-generated color variants for hover states */
-  --color-primary-light: 216 55% 35%;
-  --color-primary-dark: 216 55% 15%;
+
+  /* ========================================
+     AUTO-GENERATED COLOR VARIANTS
+     For hover/active states
+     ======================================== */
+  --color-primary-light: 216 55% 35%;    /* Lighter version for hover */
+  --color-primary-dark: 216 55% 15%;     /* Darker version for active */
   --color-secondary-light: 219 14% 38%;
   --color-secondary-dark: 219 14% 18%;
   --color-tertiary-light: 105 22% 35%;
   --color-tertiary-dark: 105 22% 15%;
-  --color-muted: 219 14% 92%;
-  --color-muted-foreground: 219 14% 30%;
-  --color-accent: 105 22% 25%;
-  --color-accent-foreground: 36 8% 96%;
+
+  /* ========================================
+     UTILITY TOKENS (Keep for compatibility)
+     ======================================== */
+
+  /* Error states - Keep for destructive actions */
   --color-destructive: 0 84% 60%;
   --color-destructive-foreground: 0 0% 100%;
+
+  /* Borders and inputs */
   --color-border: 0 0% 100% / 0.1;
   --color-input: 0 0% 100% / 0.1;
   --color-ring: 216 63% 17%;
   --color-overlay: 216 63% 17%;
-  --color-chart-1: 216 55% 25%;
-  --color-chart-2: 105 22% 32%;
-  --color-chart-3: 219 14% 40%;
-  --color-chart-4: 36 8% 55%;
-  --color-chart-5: 0 0% 13%;
+
+  /* Charts (use 6 core tokens) */
+  --color-chart-1: 216 55% 25%;  /* Primary */
+  --color-chart-2: 105 22% 32%;  /* Tertiary */
+  --color-chart-3: 219 14% 40%;  /* Secondary */
+  --color-chart-4: 36 8% 55%;    /* Neutral */
+  --color-chart-5: 0 0% 13%;     /* Font */
+
+  /* Sidebar (uses background/foreground) */
   --color-sidebar-background: 0 0% 93.3%;
   --color-sidebar-foreground: 0 0% 13%;
   --color-sidebar-primary: 216 55% 25%;
@@ -125,16 +153,36 @@
   --color-sidebar-accent-foreground: 36 8% 96%;
   --color-sidebar-border: 0 0% 100% / 0.1;
   --color-sidebar-ring: 216 63% 17%;
+
+  /* Special colors */
   --color-gold: 45 93% 47%;
   --color-gold-foreground: 0 0% 0%;
   --logo-filter: brightness(0);
-  /* Border Radius Tokens - Modern Scale (2025) */
+
+  /* ========================================
+     DESIGN PROPERTIES (4 Properties)
+     ======================================== */
+
+  /* RADIUS - Modern scale (2025) */
   --radius-xs: 0.25rem;    /* 4px - Badges, chips, inline pills */
   --radius-sm: 0.375rem;   /* 6px - Input fields, small buttons, tags */
   --radius-md: 0.5rem;     /* 8px - Cards, primary buttons (OPTIMAL) */
   --radius-lg: 0.75rem;    /* 12px - Modals, hero cards, feature sections */
   --radius-xl: 1rem;       /* 16px - Large hero surfaces, landing sections */
   --radius-full: 9999px;   /* Circular avatars, icon buttons */
+
+  /* MOTION - Timing scale */
+  --duration-fast: 150ms;    /* Quick interactions */
+  --duration-normal: 300ms;  /* Standard transitions */
+  --duration-slow: 500ms;    /* Emphasized animations */
+  --ease-elegant: cubic-bezier(0.4, 0.0, 0.2, 1);
+
+  /* ELEVATION - Shadow scale (defined in Tailwind) */
+  /* shadow-sm - Cards, default elevation */
+  /* shadow-md - Dropdowns, minor emphasis */
+  /* shadow-lg - Buttons, CTA elements */
+  /* shadow-xl - Hover states, lifted elements */
+  /* shadow-2xl - Modals, major emphasis */
 
   /* Product Landing Page Design Tokens */
   --spacing-section: 6rem;
@@ -146,7 +194,6 @@
   --color-urgency-stock: 24 100% 50%;
   --color-urgency-offer: 142 71% 45%;
   --color-urgency-timer: 0 84% 60%;
-  --ease-elegant: cubic-bezier(0.4, 0.0, 0.2, 1);
 }
 
 @source "./components/ui/**/*.{ts,tsx}";
@@ -235,44 +282,50 @@ html, body {
   --sidebar-ring: 216 63% 17%;
 }
 
+/* ============================================================================
+   DARK MODE OVERRIDES
+   Only 3 tokens change: background, foreground, font
+   Primary, secondary, tertiary stay constant
+   ============================================================================ */
+
 .dark {
-  --primary: 216 55% 25%;
-  --primary-foreground: 36 8% 96%;
-  --color-background: 0 0% 13%;
-  --color-foreground: 36 8% 96%;
-  --color-font: 0 0% 100%;
-  --color-card: 0 0% 10%;
-  --color-card-foreground: 36 8% 96%;
-  --color-popover: 0 0% 10%;
-  --color-popover-foreground: 36 8% 96%;
+  /* Adaptive tokens (change in dark mode) */
+  --color-background: 0 0% 10%;      /* Darker card surface */
+  --color-foreground: 0 0% 13%;      /* Darker content area */
+  --color-font: 0 0% 100%;           /* White text */
+
+  /* Constant tokens (same in dark mode) */
   --color-primary: 216 55% 25%;
   --color-primary-foreground: 36 8% 96%;
-  --color-secondary: 219 14% 32%;
+  --color-secondary: 219 14% 32%;    /* Slightly lighter for dark mode */
   --color-secondary-foreground: 36 8% 96%;
-  --color-tertiary: 105 22% 35%;
+  --color-tertiary: 105 22% 35%;     /* Slightly lighter for dark mode */
   --color-tertiary-foreground: 36 8% 96%;
-  /* Auto-generated color variants for hover states */
+
+  /* Auto-generated variants */
   --color-primary-light: 216 55% 35%;
   --color-primary-dark: 216 55% 15%;
   --color-secondary-light: 219 14% 38%;
   --color-secondary-dark: 219 14% 18%;
   --color-tertiary-light: 105 22% 35%;
   --color-tertiary-dark: 105 22% 15%;
-  --color-muted: 216 63% 17%;
-  --color-muted-foreground: 36 8% 80%;
-  --color-accent: 105 22% 35%;
-  --color-accent-foreground: 36 8% 96%;
+
+  /* Utility tokens */
   --color-destructive: 0 84% 60%;
   --color-destructive-foreground: 0 0% 98%;
   --color-border: 0 0% 100% / 0.1;
   --color-input: 0 0% 100% / 0.1;
   --color-ring: 216 63% 68%;
   --color-overlay: 0 0% 0%;
+
+  /* Charts */
   --color-chart-1: 216 63% 68%;
   --color-chart-2: 105 22% 45%;
   --color-chart-3: 219 14% 38%;
   --color-chart-4: 36 8% 60%;
   --color-chart-5: 0 0% 96%;
+
+  /* Sidebar */
   --color-sidebar-background: 0 0% 10%;
   --color-sidebar-foreground: 36 8% 96%;
   --color-sidebar-primary: 216 63% 68%;
@@ -289,6 +342,8 @@ html, body {
   --sidebar-accent-foreground: 36 8% 96%;
   --sidebar-border: 0 0% 100% / 0.1;
   --sidebar-ring: 216 63% 68%;
+
+  /* Special colors */
   --logo-filter: brightness(0) invert(1);
 }
 
@@ -354,14 +409,14 @@ html, body {
   padding-top: 0.125rem;
   padding-bottom: 0.125rem;
   border-radius: 0.375rem;
-  background-color: hsl(var(--color-muted));
-  color: hsl(var(--color-foreground));
+  background-color: hsl(var(--color-background));
+  color: hsl(var(--color-font));
   font-size: 0.875em;
 }
 
 /* Streamdown / Markdown code block styling for chat messages */
 .is-assistant pre {
-  background-color: hsl(var(--color-muted)) !important;
+  background-color: hsl(var(--color-background)) !important;
   border: 1px solid hsl(var(--color-border)) !important;
   border-radius: 0.5rem !important;
   padding: 1rem !important;
@@ -385,7 +440,7 @@ html, body {
 }
 
 .is-assistant :not(pre) > code {
-  background-color: hsl(var(--color-muted)) !important;
+  background-color: hsl(var(--color-background)) !important;
   padding: 0.125rem 0.375rem !important;
   border-radius: 0.25rem !important;
   font-size: 0.875em !important;
@@ -405,13 +460,7 @@ html, body {
   font-size: 0.75rem !important;
   font-weight: 600 !important;
   text-transform: uppercase !important;
-  color: hsl(var(--color-muted-foreground)) !important;
-}
-
-/* Ensure translucent card utility pulls full surface color */
-.bg-card\/50 {
-  --tw-bg-opacity: 1 !important;
-  background-color: hsl(var(--color-card)) !important;
+  color: hsl(var(--color-font) / 0.6) !important;
 }
 
 /* Scroll area styles */
@@ -582,7 +631,7 @@ body {
 [data-radix-alert-dialog-content],
 [data-vaul-drawer],
 [data-state="open"] {
-  background-color: hsl(var(--color-card)) !important;
+  background-color: hsl(var(--color-foreground)) !important;
   --tw-bg-opacity: 1 !important;
 }
 
@@ -681,7 +730,7 @@ body {
 /* 4. GLASS MORPHISM FIXES - Proper backgrounds */
 .glass,
 [class*="bg-background/"],
-[class*="bg-card/"] {
+[class*="bg-foreground/"] {
   position: relative;
   isolation: isolate;
 }
@@ -693,11 +742,11 @@ body {
 .bg-background\/30::before,
 .bg-background\/40::before,
 .bg-background\/50::before,
-.bg-card\/10::before,
-.bg-card\/20::before,
-.bg-card\/30::before,
-.bg-card\/40::before,
-.bg-card\/50::before {
+.bg-foreground\/10::before,
+.bg-foreground\/20::before,
+.bg-foreground\/30::before,
+.bg-foreground\/40::before,
+.bg-foreground\/50::before {
   content: '';
   position: absolute;
   inset: 0;
@@ -712,20 +761,20 @@ body {
 [data-radix-dropdown-menu-content],
 [data-radix-select-content],
 [data-radix-tooltip-content] {
-  background-color: hsl(var(--color-popover)) !important;
-  color: hsl(var(--color-popover-foreground)) !important;
+  background-color: hsl(var(--color-foreground)) !important;
+  color: hsl(var(--color-font)) !important;
   --tw-bg-opacity: 1 !important;
   border: 1px solid hsl(var(--color-border)) !important;
 }
 
-/* 6. CARD TRANSPARENCY FIXES */
-.bg-card {
-  background-color: hsl(var(--color-card)) !important;
+/* 6. BACKGROUND TRANSPARENCY FIXES */
+.bg-background {
+  background-color: hsl(var(--color-background)) !important;
   --tw-bg-opacity: 1 !important;
 }
 
-.bg-background {
-  background-color: hsl(var(--color-background)) !important;
+.bg-foreground {
+  background-color: hsl(var(--color-foreground)) !important;
   --tw-bg-opacity: 1 !important;
 }
 
@@ -751,7 +800,7 @@ button[class*="bg-"] {
 
 /* 10. SHEET/DRAWER FIXES */
 [data-vaul-drawer] {
-  background-color: hsl(var(--color-card)) !important;
+  background-color: hsl(var(--color-foreground)) !important;
   --tw-bg-opacity: 1 !important;
 }
 
@@ -784,7 +833,7 @@ body * {
 [data-sonner-toast],
 .toast,
 .notification {
-  background-color: hsl(var(--color-card)) !important;
+  background-color: hsl(var(--color-foreground)) !important;
   border: 1px solid hsl(var(--color-border)) !important;
   --tw-bg-opacity: 1 !important;
 }
@@ -985,7 +1034,7 @@ body * {
 
   /* Code */
   & code {
-    background-color: hsl(var(--muted));
+    background-color: hsl(var(--color-background));
     padding: 0.125rem 0.375rem;
     border-radius: 0.25rem;
     font-size: 0.9em;
@@ -993,7 +1042,7 @@ body * {
   }
 
   & pre {
-    background-color: hsl(var(--muted));
+    background-color: hsl(var(--color-background));
     padding: 0.75rem;
     border-radius: 0.5rem;
     overflow-x: auto;
@@ -1008,7 +1057,7 @@ body * {
 
   /* Links */
   & a {
-    color: hsl(var(--primary));
+    color: hsl(var(--color-primary));
     text-decoration: underline;
     text-underline-offset: 2px;
   }
@@ -1019,7 +1068,7 @@ body * {
 
   /* Blockquotes */
   & blockquote {
-    border-left: 3px solid hsl(var(--muted));
+    border-left: 3px solid hsl(var(--color-background));
     padding-left: 1em;
     margin: 0.25em 0;
     opacity: 0.8;
@@ -1028,7 +1077,7 @@ body * {
   /* Horizontal rules */
   & hr {
     border: none;
-    border-top: 1px solid hsl(var(--border));
+    border-top: 1px solid hsl(var(--color-border));
     margin: 0.5em 0;
   }
 
@@ -1040,13 +1089,13 @@ body * {
   }
 
   & th, & td {
-    border: 1px solid hsl(var(--border));
+    border: 1px solid hsl(var(--color-border));
     padding: 0.5em;
     text-align: left;
   }
 
   & th {
-    background-color: hsl(var(--muted));
+    background-color: hsl(var(--color-background));
     font-weight: 600;
   }
 
@@ -1057,5 +1106,181 @@ body * {
 
   & em {
     font-style: italic;
+  }
+}
+
+/* ============================================================================
+   UTILITY CLASSES - Design System Helpers
+   ============================================================================ */
+
+/* Text Opacity Utilities (for hierarchy without color changes) */
+.text-muted { opacity: 0.8; }
+.text-subtle { opacity: 0.6; }
+.text-disabled { opacity: 0.5; }
+
+/* Scrollbar Styling (design system colors) */
+::-webkit-scrollbar {
+  width: 12px;
+  height: 12px;
+}
+
+::-webkit-scrollbar-track {
+  background: hsl(var(--color-background));
+}
+
+::-webkit-scrollbar-thumb {
+  background: hsl(var(--color-font) / 0.2);
+  border-radius: 6px;
+  border: 2px solid hsl(var(--color-background));
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: hsl(var(--color-font) / 0.3);
+}
+
+.dark ::-webkit-scrollbar-track {
+  background: hsl(var(--color-background));
+}
+
+.dark ::-webkit-scrollbar-thumb {
+  background: hsl(var(--color-font) / 0.15);
+}
+
+.dark ::-webkit-scrollbar-thumb:hover {
+  background: hsl(var(--color-font) / 0.25);
+}
+
+/* Firefox scrollbar */
+* {
+  scrollbar-width: thin;
+  scrollbar-color: hsl(var(--color-font) / 0.2) hsl(var(--color-background));
+}
+
+.dark * {
+  scrollbar-color: hsl(var(--color-font) / 0.15) hsl(var(--color-background));
+}
+
+/* Focus Visible Utilities (accessibility) */
+.focus-ring {
+  outline: 2px solid hsl(var(--color-ring));
+  outline-offset: 2px;
+}
+
+/* Print Styles (optimized for PDFs) */
+@media print {
+  /* Hide non-printable elements */
+  .no-print,
+  nav,
+  aside,
+  button,
+  .sidebar,
+  .toaster,
+  .drawer,
+  .modal,
+  .dialog {
+    display: none !important;
+  }
+
+  /* Optimize colors for print */
+  * {
+    color: #000 !important;
+    background: #fff !important;
+  }
+
+  /* Ensure links show URLs */
+  a[href]:after {
+    content: " (" attr(href) ")";
+  }
+
+  /* Page breaks */
+  h1, h2, h3, h4, h5, h6 {
+    page-break-after: avoid;
+  }
+
+  pre, blockquote {
+    page-break-inside: avoid;
+  }
+
+  /* Margins for print */
+  @page {
+    margin: 2cm;
+  }
+
+  body {
+    font-size: 12pt;
+    line-height: 1.5;
+  }
+}
+
+/* Prose Enhancements (for markdown/rich content) */
+.prose {
+  /* Better link styling */
+  a {
+    color: hsl(var(--color-primary));
+    text-decoration: underline;
+    text-decoration-color: hsl(var(--color-primary) / 0.3);
+    text-underline-offset: 2px;
+    transition: text-decoration-color 150ms ease;
+  }
+
+  a:hover {
+    text-decoration-color: hsl(var(--color-primary));
+  }
+
+  /* Better code blocks */
+  code {
+    background-color: hsl(var(--color-background));
+    color: hsl(var(--color-font));
+    padding: 0.25rem 0.5rem;
+    border-radius: 0.375rem;
+    font-size: 0.875em;
+  }
+
+  pre code {
+    background-color: transparent;
+    padding: 0;
+  }
+
+  /* Better tables */
+  table {
+    width: 100%;
+    border-collapse: collapse;
+  }
+
+  th, td {
+    border: 1px solid hsl(var(--color-border));
+    padding: 0.75rem 1rem;
+  }
+
+  th {
+    background-color: hsl(var(--color-background));
+    font-weight: 600;
+  }
+
+  /* Better blockquotes */
+  blockquote {
+    border-left: 4px solid hsl(var(--color-primary));
+    padding-left: 1rem;
+    font-style: italic;
+    color: hsl(var(--color-font) / 0.8);
+  }
+}
+
+/* Smooth Transitions (global performance setting) */
+@media (prefers-reduced-motion: no-preference) {
+  * {
+    transition-timing-function: ease-in-out;
+  }
+}
+
+/* Reduced Motion Support (accessibility) */
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
   }
 }

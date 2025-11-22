@@ -80,67 +80,73 @@ export function WalletConnectButton({
   return (
     <Card
       className={cn(
-        "group relative transition-all duration-200",
-        interactive && "cursor-pointer hover:shadow-lg",
-        size === "sm" && "p-2",
-        size === "md" && "p-4",
-        size === "lg" && "p-6",
+        "bg-background p-1 shadow-sm rounded-md group relative transition-all duration-300 ease-in-out",
+        interactive && "cursor-pointer hover:shadow-xl",
         className
       )}
     >
-      <CardHeader className="pb-3">
-        <div className="flex items-start justify-between">
-          <div className="flex-1">
-            <CardTitle className="flex items-center gap-2 text-base">
-              <span className="text-xl">👛</span>
-              <span className="font-mono text-sm">
-                {truncate(wallet?.address || "", 16)}
-              </span>
-            </CardTitle>
-            {wallet?.ensName && (
-              <CardDescription className="mt-1">
-                {wallet.ensName}
-              </CardDescription>
-            )}
-          </div>
-          <Badge variant="outline" className="ml-2">
-            {wallet?.connector || "Connected"}
-          </Badge>
-        </div>
-      </CardHeader>
-
-      <CardContent className="space-y-3">
-        {showBalance && wallet?.balance && (
-          <div className="flex items-center justify-between p-3 bg-secondary rounded-lg">
-            <span className="text-sm text-muted-foreground">Balance</span>
-            <span className="text-lg font-bold">{wallet.balance} ETH</span>
-          </div>
+      <div
+        className={cn(
+          "bg-foreground rounded-md text-font",
+          size === "sm" && "p-2",
+          size === "md" && "p-4",
+          size === "lg" && "p-6"
         )}
+      >
+        <CardHeader className="pb-3 p-0 mb-3">
+          <div className="flex items-start justify-between">
+            <div className="flex-1">
+              <CardTitle className="flex items-center gap-2 text-base text-font">
+                <span className="text-xl">👛</span>
+                <span className="font-mono text-sm">
+                  {truncate(wallet?.address || "", 16)}
+                </span>
+              </CardTitle>
+              {wallet?.ensName && (
+                <CardDescription className="mt-1 text-font/60">
+                  {wallet.ensName}
+                </CardDescription>
+              )}
+            </div>
+            <Badge variant="outline" className="ml-2 border-font/20">
+              {wallet?.connector || "Connected"}
+            </Badge>
+          </div>
+        </CardHeader>
 
-        <div className="flex gap-2">
-          <Button
-            variant="outline"
-            size="sm"
-            className="flex-1"
-            onClick={(e) => {
-              e.stopPropagation();
-              navigator.clipboard.writeText(wallet?.address || "");
-            }}
-          >
-            Copy Address
-          </Button>
-          <Button
-            variant="destructive"
-            size="sm"
-            onClick={(e) => {
-              e.stopPropagation();
-              handleDisconnect();
-            }}
-          >
-            Disconnect
-          </Button>
-        </div>
-      </CardContent>
+        <CardContent className="space-y-3 p-0">
+          {showBalance && wallet?.balance && (
+            <div className="flex items-center justify-between p-3 bg-background rounded-md">
+              <span className="text-sm text-font/60">Balance</span>
+              <span className="text-lg font-bold text-font">{wallet.balance} ETH</span>
+            </div>
+          )}
+
+          <div className="flex gap-2">
+            <Button
+              variant="outline"
+              size="sm"
+              className="flex-1"
+              onClick={(e) => {
+                e.stopPropagation();
+                navigator.clipboard.writeText(wallet?.address || "");
+              }}
+            >
+              Copy Address
+            </Button>
+            <Button
+              variant="secondary"
+              size="sm"
+              onClick={(e) => {
+                e.stopPropagation();
+                handleDisconnect();
+              }}
+            >
+              Disconnect
+            </Button>
+          </div>
+        </CardContent>
+      </div>
     </Card>
   );
 }

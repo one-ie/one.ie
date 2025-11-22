@@ -3,6 +3,8 @@
  *
  * Displays connections with search, filter by type, sort, and pagination.
  * Part of CONNECTIONS dimension (ontology-ui)
+ *
+ * Design System: Uses 6-token system with proper interactive states
  */
 
 import React, { useState } from "react";
@@ -101,7 +103,7 @@ export function ConnectionList({
                 placeholder="Search by connection type..."
                 value={query}
                 onChange={(e) => setQuery(e.target.value)}
-                className="w-full"
+                className="w-full bg-foreground text-font border-font/20 focus:ring-2 focus:ring-primary transition-all duration-150"
               />
             </div>
           )}
@@ -110,10 +112,10 @@ export function ConnectionList({
             {/* Type Filter */}
             {filterable && (
               <Select value={selectedType} onValueChange={setSelectedType}>
-                <SelectTrigger className="w-[180px]">
+                <SelectTrigger className="w-[180px] bg-foreground text-font border-font/20">
                   <SelectValue placeholder="Filter by type" />
                 </SelectTrigger>
-                <SelectContent>
+                <SelectContent className="bg-foreground shadow-lg">
                   <SelectItem value="all">All Types</SelectItem>
                   {connectionTypes.map((type) => (
                     <SelectItem key={type} value={type}>
@@ -133,6 +135,7 @@ export function ConnectionList({
                   }
                   size="sm"
                   onClick={() => setSort("createdAt")}
+                  className="transition-all duration-150 hover:scale-[1.02] active:scale-[0.98]"
                 >
                   Created{" "}
                   {sortConfig?.field === "createdAt" &&
@@ -144,6 +147,7 @@ export function ConnectionList({
                   }
                   size="sm"
                   onClick={() => setSort("strength")}
+                  className="transition-all duration-150 hover:scale-[1.02] active:scale-[0.98]"
                 >
                   Strength{" "}
                   {sortConfig?.field === "strength" &&
@@ -156,7 +160,7 @@ export function ConnectionList({
       )}
 
       {/* Results Count */}
-      <div className="text-sm text-muted-foreground">
+      <div className="text-sm text-font/60">
         {sortedData.length === connections.length ? (
           <span>{sortedData.length} connections</span>
         ) : (
@@ -169,7 +173,7 @@ export function ConnectionList({
       {/* Connection List */}
       <div className="space-y-3">
         {displayData.length === 0 ? (
-          <div className="text-center py-12 text-muted-foreground">
+          <div className="text-center py-12 text-font/60 bg-background rounded-md">
             <p className="text-lg">No connections found</p>
             {(query || selectedType !== "all") && (
               <p className="text-sm mt-2">
@@ -191,8 +195,8 @@ export function ConnectionList({
 
       {/* Pagination Controls */}
       {paginated && totalPages > 1 && (
-        <div className="flex items-center justify-between border-t pt-4">
-          <div className="text-sm text-muted-foreground">
+        <div className="flex items-center justify-between border-t border-font/10 pt-4">
+          <div className="text-sm text-font/60">
             Page {pagination.page} of {totalPages}
           </div>
 
@@ -202,6 +206,7 @@ export function ConnectionList({
               size="sm"
               onClick={prevPage}
               disabled={pagination.page === 1}
+              className="transition-all duration-150 hover:scale-[1.02] active:scale-[0.98] disabled:opacity-50"
             >
               Previous
             </Button>
@@ -229,6 +234,7 @@ export function ConnectionList({
                     }
                     size="sm"
                     onClick={() => goToPage(pageNum)}
+                    className="transition-all duration-150 hover:scale-[1.02] active:scale-[0.98]"
                   >
                     {pageNum}
                   </Button>
@@ -241,6 +247,7 @@ export function ConnectionList({
               size="sm"
               onClick={nextPage}
               disabled={pagination.page === totalPages}
+              className="transition-all duration-150 hover:scale-[1.02] active:scale-[0.98] disabled:opacity-50"
             >
               Next
             </Button>

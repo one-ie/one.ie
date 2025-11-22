@@ -110,25 +110,29 @@ export function NotificationCard({
   return (
     <Card
       className={cn(
-        "group relative transition-all duration-200",
-        interactive && "cursor-pointer hover:shadow-lg",
-        unread && "border-l-4 border-l-blue-500",
-        size === "sm" && "p-3",
-        size === "md" && "p-4",
-        size === "lg" && "p-6",
+        "bg-background p-1 shadow-sm rounded-md transition-all duration-300",
+        interactive && "cursor-pointer hover:shadow-lg hover:scale-[1.02]",
+        unread && "border-l-4 border-l-primary",
         className
       )}
       onClick={handleCardClick}
+    >
+      <div className={cn(
+        "bg-foreground rounded-md text-font",
+        size === "sm" && "p-3",
+        size === "md" && "p-4",
+        size === "lg" && "p-6"
+      )}
     >
       <CardHeader className="pb-3">
         <div className="flex items-start justify-between gap-3">
           <div className="flex items-start gap-3 flex-1 min-w-0">
             <div className="text-2xl">{icon}</div>
             <div className="flex-1 min-w-0">
-              <CardTitle className="text-base flex items-center gap-2">
+              <CardTitle className="text-base flex items-center gap-2 text-font">
                 {getMessage()}
                 {unread && (
-                  <span className="h-2 w-2 rounded-full bg-blue-500 flex-shrink-0" />
+                  <span className="h-2 w-2 rounded-full bg-primary flex-shrink-0" />
                 )}
               </CardTitle>
               <CardDescription className="mt-1">
@@ -184,6 +188,7 @@ export function NotificationCard({
           )}
         </CardContent>
       )}
+      </div>
     </Card>
   );
 }

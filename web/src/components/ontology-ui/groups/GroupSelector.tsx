@@ -35,17 +35,17 @@ export function GroupSelector({
 }: GroupSelectorProps) {
   return (
     <Select value={value} onValueChange={onChange} disabled={disabled}>
-      <SelectTrigger className={cn("w-full", className)}>
+      <SelectTrigger className={cn("w-full bg-foreground text-font border-font/20", className)}>
         <SelectValue placeholder={placeholder} />
       </SelectTrigger>
-      <SelectContent>
+      <SelectContent className="bg-foreground border-font/20">
         {groups.map((group) => (
-          <SelectItem key={group._id} value={group._id}>
+          <SelectItem key={group._id} value={group._id} className="text-font hover:bg-background">
             <div className="flex items-center gap-2">
               <span>🏢</span>
               <span>{group.name}</span>
               {group.parentGroupId && (
-                <span className="text-xs text-muted-foreground">(nested)</span>
+                <span className="text-xs text-font/60">(nested)</span>
               )}
             </div>
           </SelectItem>

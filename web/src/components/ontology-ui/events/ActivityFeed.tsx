@@ -59,39 +59,40 @@ export function ActivityFeed({
   const hasMore = events.length > displayedEvents.length;
 
   return (
-    <Card className={cn("", className)}>
-      <CardHeader>
-        <div className="flex items-center justify-between">
-          <CardTitle className="flex items-center gap-2">
-            Activity Feed
-            {displayedEvents.length > 0 && (
-              <Badge variant="secondary" className="text-xs">
-                {displayedEvents.length} of {events.length}
-              </Badge>
-            )}
-          </CardTitle>
+    <Card className={cn("bg-background p-1 shadow-sm rounded-md", className)}>
+      <div className="bg-foreground rounded-md text-font">
+        <CardHeader>
+          <div className="flex items-center justify-between">
+            <CardTitle className="flex items-center gap-2 text-font">
+              Activity Feed
+              {displayedEvents.length > 0 && (
+                <Badge variant="secondary" className="text-xs">
+                  {displayedEvents.length} of {events.length}
+                </Badge>
+              )}
+            </CardTitle>
 
-          {/* New activity badge */}
-          {hasNewActivity && (
-            <Button
-              variant="outline"
-              size="sm"
-              onClick={showNewActivity}
-              className="animate-pulse"
-            >
-              <span className="flex items-center gap-1">
-                <span className="relative flex h-2 w-2">
-                  <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-green-400 opacity-75"></span>
-                  <span className="relative inline-flex rounded-full h-2 w-2 bg-green-500"></span>
+            {/* New activity badge */}
+            {hasNewActivity && (
+              <Button
+                variant="outline"
+                size="sm"
+                onClick={showNewActivity}
+                className="animate-pulse"
+              >
+                <span className="flex items-center gap-1">
+                  <span className="relative flex h-2 w-2">
+                    <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-tertiary opacity-75"></span>
+                    <span className="relative inline-flex rounded-full h-2 w-2 bg-tertiary"></span>
+                  </span>
+                  New activity
                 </span>
-                New activity
-              </span>
-            </Button>
-          )}
-        </div>
-      </CardHeader>
+              </Button>
+            )}
+          </div>
+        </CardHeader>
 
-      <CardContent>
+        <CardContent>
         {/* Event list */}
         {displayedEvents.length === 0 ? (
           <div className="text-center py-8 text-muted-foreground">
@@ -127,14 +128,15 @@ export function ActivityFeed({
           <div className="mt-4 pt-4 border-t text-center text-xs text-muted-foreground">
             <span className="flex items-center justify-center gap-1">
               <span className="relative flex h-2 w-2">
-                <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-blue-400 opacity-75"></span>
-                <span className="relative inline-flex rounded-full h-2 w-2 bg-blue-500"></span>
+                <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-primary opacity-75"></span>
+                <span className="relative inline-flex rounded-full h-2 w-2 bg-primary"></span>
               </span>
               Auto-refreshing
             </span>
           </div>
         )}
-      </CardContent>
+        </CardContent>
+      </div>
     </Card>
   );
 }

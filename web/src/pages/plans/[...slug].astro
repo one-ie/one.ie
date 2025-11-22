@@ -50,24 +50,24 @@ const pendingTasks =
     <!-- Metadata -->
     <div class="grid grid-cols-2 sm:grid-cols-4 gap-4 mb-8">
       {entry.data.feature && (
-        <div class="bg-card border rounded-lg p-4">
+        <div class="bg-background border rounded-lg p-4">
           <div class="text-xs text-muted-foreground mb-1">Feature</div>
           <div class="font-medium">{entry.data.feature}</div>
         </div>
       )}
       {entry.data.assignedSpecialist && (
-        <div class="bg-card border rounded-lg p-4">
+        <div class="bg-background border rounded-lg p-4">
           <div class="text-xs text-muted-foreground mb-1">Specialist</div>
           <div class="font-medium">{entry.data.assignedSpecialist}</div>
         </div>
       )}
       {entry.data.organization && (
-        <div class="bg-card border rounded-lg p-4">
+        <div class="bg-background border rounded-lg p-4">
           <div class="text-xs text-muted-foreground mb-1">Organization</div>
           <div class="font-medium">{entry.data.organization}</div>
         </div>
       )}
-      <div class="bg-card border rounded-lg p-4">
+      <div class="bg-background border rounded-lg p-4">
         <div class="text-xs text-muted-foreground mb-1">Progress</div>
         <div class="font-medium">{entry.data.completedInferences}/{entry.data.totalInferences}</div>
       </div>
@@ -89,7 +89,7 @@ const pendingTasks =
           </div>
         )}
         {pendingTasks > 0 && (
-          <div class="bg-gray-50 dark:bg-gray-900 border border-gray-200 dark:border-gray-800 rounded-lg p-4">
+          <div class="bg-background border border-gray-200 dark:border-gray-800 rounded-lg p-4">
             <div class="text-2xl font-bold text-gray-600">{pendingTasks}</div>
             <div class="text-sm text-gray-700 dark:text-gray-300">Pending</div>
           </div>
@@ -101,7 +101,7 @@ const pendingTasks =
       <!-- Main Content -->
       <div class="lg:col-span-2">
         <!-- Plan Content -->
-        <div class="bg-card border rounded-lg p-8 mb-8">
+        <div class="bg-background border rounded-lg p-8 mb-8">
           <div class="prose dark:prose-invert max-w-none">
             <Content />
           </div>
@@ -120,7 +120,7 @@ const pendingTasks =
       <div class="lg:col-span-1">
         <!-- Ontology Dimensions -->
         {entry.data.ontologyDimensions && entry.data.ontologyDimensions.length > 0 && (
-          <div class="bg-card border rounded-lg p-6 mb-6">
+          <div class="bg-background border rounded-lg p-6 mb-6">
             <h3 class="font-semibold mb-4">Ontology Dimensions</h3>
             <div class="space-y-2">
               {entry.data.ontologyDimensions.map((dimension) => (
@@ -135,7 +135,7 @@ const pendingTasks =
 
         <!-- Lessons Learned -->
         {entry.data.lessonsLearned && entry.data.lessonsLearned.length > 0 && (
-          <div class="bg-card border rounded-lg p-6 mb-6">
+          <div class="bg-background border rounded-lg p-6 mb-6">
             <h3 class="font-semibold mb-4">Lessons Learned</h3>
             <div class="space-y-3">
               {entry.data.lessonsLearned.slice(0, 5).map((lesson) => (
@@ -154,7 +154,7 @@ const pendingTasks =
         )}
 
         <!-- Timestamps -->
-        <div class="bg-card border rounded-lg p-6">
+        <div class="bg-background border rounded-lg p-6">
           <h3 class="font-semibold mb-4">Timeline</h3>
           <div class="space-y-3 text-sm">
             {entry.data.createdAt && (

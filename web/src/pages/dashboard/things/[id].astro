@@ -93,21 +93,21 @@ const { thing, history } = result as {
 ---
 
 <Layout title={`${thing.name} - Entity Detail`}>
-  <div class="min-h-screen bg-gray-50 dark:bg-gray-900">
+  <div class="min-h-screen bg-background">
     <!-- Header -->
-    <header class="bg-white dark:bg-gray-800 shadow">
+    <header class="bg-foreground shadow-sm">
       <div class="mx-auto max-w-7xl px-4 py-6 sm:px-6 lg:px-8">
         <div class="flex items-center justify-between">
           <div class="flex items-center gap-4">
             <a
               href="/dashboard/things"
-              class="text-gray-500 hover:text-gray-700 dark:text-gray-400 dark:hover:text-gray-200"
+              class="text-font/60 hover:text-font transition-colors"
             >
               ← Back
             </a>
             <div>
               <div class="flex items-center gap-2">
-                <h1 class="text-3xl font-bold text-gray-900 dark:text-white">
+                <h1 class="text-3xl font-bold text-font">
                   {thing.name}
                 </h1>
                 <span class="inline-flex items-center rounded-full bg-blue-100 dark:bg-blue-900 px-2.5 py-0.5 text-xs font-medium text-blue-800 dark:text-blue-200">
@@ -122,7 +122,7 @@ const { thing, history } = result as {
                   {thing.status}
                 </span>
               </div>
-              <p class="mt-1 text-sm text-gray-500 dark:text-gray-400">
+              <p class="mt-1 text-sm text-font/60">
                 ID: {thing._id}
               </p>
             </div>
@@ -130,7 +130,7 @@ const { thing, history } = result as {
           <div class="flex gap-2">
             <button
               onclick="document.getElementById('edit-form')?.scrollIntoView({ behavior: 'smooth' })"
-              class="inline-flex items-center rounded-md bg-white dark:bg-gray-700 px-4 py-2 text-sm font-medium text-gray-700 dark:text-gray-200 shadow-sm hover:bg-gray-50 dark:hover:bg-gray-600"
+              class="inline-flex items-center rounded-md bg-white dark:bg-gray-700 px-4 py-2 text-sm font-medium text-font shadow-sm hover:bg-gray-50 dark:hover:bg-gray-600"
             >
               Edit
             </button>
@@ -151,9 +151,9 @@ const { thing, history } = result as {
         <!-- Left Column: Entity Details -->
         <div class="lg:col-span-2 space-y-8">
           <!-- Entity Properties -->
-          <div class="bg-white dark:bg-gray-800 shadow sm:rounded-lg">
+          <div class="bg-foreground shadow sm:rounded-lg">
             <div class="px-4 py-5 sm:p-6">
-              <h3 class="text-lg font-medium leading-6 text-gray-900 dark:text-white">
+              <h3 class="text-lg font-medium leading-6 text-font">
                 Properties
               </h3>
               <div class="mt-4">
@@ -163,9 +163,9 @@ const { thing, history } = result as {
           </div>
 
           <!-- Edit Form -->
-          <div id="edit-form" class="bg-white dark:bg-gray-800 shadow sm:rounded-lg">
+          <div id="edit-form" class="bg-foreground shadow sm:rounded-lg">
             <div class="px-4 py-5 sm:p-6">
-              <h3 class="text-lg font-medium leading-6 text-gray-900 dark:text-white">
+              <h3 class="text-lg font-medium leading-6 text-font">
                 Edit Entity
               </h3>
               <div class="mt-4">
@@ -175,9 +175,9 @@ const { thing, history } = result as {
           </div>
 
           <!-- Connections -->
-          <div class="bg-white dark:bg-gray-800 shadow sm:rounded-lg">
+          <div class="bg-foreground shadow sm:rounded-lg">
             <div class="px-4 py-5 sm:p-6">
-              <h3 class="text-lg font-medium leading-6 text-gray-900 dark:text-white mb-4">
+              <h3 class="text-lg font-medium leading-6 text-font mb-4">
                 Connections
               </h3>
               <ConnectionList
@@ -192,9 +192,9 @@ const { thing, history } = result as {
 
         <!-- Right Column: History -->
         <div class="lg:col-span-1">
-          <div class="bg-white dark:bg-gray-800 shadow sm:rounded-lg sticky top-4">
+          <div class="bg-foreground shadow sm:rounded-lg sticky top-4">
             <div class="px-4 py-5 sm:p-6">
-              <h3 class="text-lg font-medium leading-6 text-gray-900 dark:text-white mb-4">
+              <h3 class="text-lg font-medium leading-6 text-font mb-4">
                 Activity History
               </h3>
               <EventHistory client:visible events={history} />

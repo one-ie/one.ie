@@ -180,7 +180,7 @@ const transformedItems: CartItem[] = cartItems.map((item) => ({
 
             {/* Payment Form - Right Column */}
             <div class="order-1 lg:order-2">
-              <div class="rounded-lg border bg-card p-6 shadow-sm">
+              <div class="rounded-lg border bg-background p-6 shadow-sm">
                 <StripeProvider client:load clientSecret={clientSecret}>
                   <PaymentForm
                     client:load

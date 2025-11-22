@@ -88,30 +88,31 @@ export function AuditLog({
   };
 
   return (
-    <Card className={cn("", className)}>
-      <CardHeader>
-        <div className="flex items-center justify-between">
-          <CardTitle className="flex items-center gap-2">
-            Audit Log
-            <Badge variant="secondary" className="text-xs">
-              {events.length} events
-            </Badge>
-          </CardTitle>
+    <Card className={cn("bg-background p-1 shadow-sm rounded-md", className)}>
+      <div className="bg-foreground rounded-md text-font">
+        <CardHeader>
+          <div className="flex items-center justify-between">
+            <CardTitle className="flex items-center gap-2 text-font">
+              Audit Log
+              <Badge variant="secondary" className="text-xs">
+                {events.length} events
+              </Badge>
+            </CardTitle>
 
-          {/* Export button */}
-          {exportable && (
-            <Button
-              variant="outline"
-              size="sm"
-              onClick={exportToCsv}
-            >
-              Export CSV
-            </Button>
-          )}
-        </div>
-      </CardHeader>
+            {/* Export button */}
+            {exportable && (
+              <Button
+                variant="outline"
+                size="sm"
+                onClick={exportToCsv}
+              >
+                Export CSV
+              </Button>
+            )}
+          </div>
+        </CardHeader>
 
-      <CardContent>
+        <CardContent>
         {/* Search bar */}
         {searchable && (
           <div className="mb-4">
@@ -267,7 +268,8 @@ export function AuditLog({
             </div>
           </div>
         )}
-      </CardContent>
+        </CardContent>
+      </div>
     </Card>
   );
 }

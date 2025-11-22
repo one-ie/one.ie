@@ -37,7 +37,7 @@ function TreeNode({
     <div className="select-none">
       <div
         className={cn(
-          "flex items-center gap-2 py-2 px-3 rounded-md hover:bg-accent cursor-pointer transition-colors",
+          "flex items-center gap-2 py-2 px-3 rounded-md hover:bg-background cursor-pointer transition-colors duration-150",
           isSelected && "bg-primary/10 border-l-2 border-primary"
         )}
         style={{ paddingLeft: `${level * 1.5 + 0.75}rem` }}
@@ -54,9 +54,9 @@ function TreeNode({
             }}
           >
             {isExpanded ? (
-              <ChevronDown className="h-3 w-3" />
+              <ChevronDown className="h-3 w-3 text-font" />
             ) : (
-              <ChevronRight className="h-3 w-3" />
+              <ChevronRight className="h-3 w-3 text-font" />
             )}
           </Button>
         ) : (
@@ -64,9 +64,9 @@ function TreeNode({
         )}
 
         <span className="text-lg">🏢</span>
-        <span className="flex-1 font-medium">{group.name}</span>
+        <span className="flex-1 font-medium text-font">{group.name}</span>
         {hasChildren && (
-          <span className="text-xs text-muted-foreground">
+          <span className="text-xs text-font/60">
             {group.children!.length}
           </span>
         )}
@@ -96,7 +96,7 @@ export function GroupTree({
   className,
 }: GroupTreeProps) {
   return (
-    <div className={cn("border rounded-lg p-2 bg-card", className)}>
+    <div className={cn("border border-font/10 rounded-lg p-2 bg-foreground", className)}>
       <div className="space-y-1">
         {groups.map((group) => (
           <TreeNode

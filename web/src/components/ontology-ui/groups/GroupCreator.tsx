@@ -43,66 +43,70 @@ export function GroupCreator({
   const isValid = name.trim().length > 0;
 
   return (
-    <Card className={cn(className)}>
-      <CardHeader>
-        <CardTitle className="flex items-center gap-2">
-          <span>🏢</span>
-          Create New Group
-        </CardTitle>
-      </CardHeader>
+    <Card className={cn("bg-background p-1 shadow-sm rounded-md", className)}>
+      <div className="bg-foreground rounded-md p-6 text-font">
+        <CardHeader className="p-0 pb-4">
+          <CardTitle className="flex items-center gap-2 text-font">
+            <span>🏢</span>
+            Create New Group
+          </CardTitle>
+        </CardHeader>
 
-      <form onSubmit={handleSubmit}>
-        <CardContent className="space-y-4">
-          <div className="space-y-2">
-            <Label htmlFor="name">Group Name *</Label>
-            <Input
-              id="name"
-              type="text"
-              placeholder="Enter group name"
-              value={name}
-              onChange={(e) => setName(e.target.value)}
-              required
-            />
-          </div>
-
-          <div className="space-y-2">
-            <Label htmlFor="description">Description</Label>
-            <Textarea
-              id="description"
-              placeholder="Describe this group"
-              value={description}
-              onChange={(e) => setDescription(e.target.value)}
-              rows={3}
-            />
-          </div>
-
-          {allowNesting && parentGroups.length > 0 && (
+        <form onSubmit={handleSubmit}>
+          <CardContent className="space-y-4 p-0">
             <div className="space-y-2">
-              <Label htmlFor="parent">Parent Group (optional)</Label>
-              <GroupSelector
-                groups={parentGroups}
-                value={parentGroupId}
-                onChange={setParentGroupId}
-                placeholder="Select parent group"
+              <Label htmlFor="name" className="text-font">Group Name *</Label>
+              <Input
+                id="name"
+                type="text"
+                placeholder="Enter group name"
+                value={name}
+                onChange={(e) => setName(e.target.value)}
+                required
+                className="bg-foreground text-font border-font/20"
               />
-              <p className="text-xs text-muted-foreground">
-                Leave empty to create a root-level group
-              </p>
             </div>
-          )}
-        </CardContent>
 
-        <CardFooter className="flex justify-end gap-2">
-          {onCancel && (
-            <Button type="button" variant="outline" onClick={onCancel}>
-              Cancel
+            <div className="space-y-2">
+              <Label htmlFor="description" className="text-font">Description</Label>
+              <Textarea
+                id="description"
+                placeholder="Describe this group"
+                value={description}
+                onChange={(e) => setDescription(e.target.value)}
+                rows={3}
+                className="bg-foreground text-font border-font/20"
+              />
+            </div>
+
+            {allowNesting && parentGroups.length > 0 && (
+              <div className="space-y-2">
+                <Label htmlFor="parent" className="text-font">Parent Group (optional)</Label>
+                <GroupSelector
+                  groups={parentGroups}
+                  value={parentGroupId}
+                  onChange={setParentGroupId}
+                  placeholder="Select parent group"
+                />
+                <p className="text-xs text-font/60">
+                  Leave empty to create a root-level group
+                </p>
+              </div>
+            )}
+          </CardContent>
+
+          <CardFooter className="flex justify-end gap-2 p-0 pt-6 border-t border-font/10">
+            {onCancel && (
+              <Button type="button" variant="ghost" onClick={onCancel}>
+                Cancel
+              </Button>
+            )}
+            <Button type="submit" variant="primary" disabled={!isValid}>
+              Create Group
             </Button>
-          )}
-          <Button type="submit" disabled={!isValid}>
-            Create Group
-          </Button>
-        </CardFooter>
-      </form>
+          </CardFooter>
+        </form>
+      </div>
     </Card>
   );
 }
