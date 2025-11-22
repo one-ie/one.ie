@@ -1,0 +1,13 @@
+---
+import Layout from '../../layouts/Layout.astro';
+import { ApiKeyManagement } from '../../components/auth/ApiKeyManagement';
+
+const title = "API Keys";
+const description = "Manage API keys for programmatic access to your account";
+---
+
+<Layout title={title} description={description}>
+  <div class="container mx-auto px-4 py-8 max-w-6xl">
+    <ApiKeyManagement client:load />
+  </div>
+</Layout>
