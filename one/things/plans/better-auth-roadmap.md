@@ -28,8 +28,49 @@ ai_context: |
 This roadmap implements a complete, production-ready Better Auth system following the 6-dimension ontology and cycle-based planning methodology.
 
 **Current State:** Hybrid auth system (custom backend + Better Auth UI)
-**Target State:** Full Better Auth Convex component integration with all features
+**Target State:** Full Better Auth Convex component integration with ALL Better Auth plugins
 **Total Cycles:** 100
+
+## Better Auth Plugins to Implement
+
+### Core Authentication
+- ✅ Two Factor (TOTP) - Phase 2
+- ⏳ Username - Phase 3
+- ⏳ Anonymous - Phase 5
+- ⏳ Phone Number - Phase 5
+- ✅ Magic Link - Phase 2
+- ⏳ Email OTP - Phase 3
+- ✅ Passkey - Phase 3
+- ⏳ Generic OAuth - Phase 3
+- ⏳ One Tap (Google) - Phase 3
+- ✅ Sign In With Ethereum - Phase 5
+
+### Authorization & Admin
+- ⏳ Admin Role System - Phase 4
+- ⏳ API Key Authentication - Phase 5
+- ⏳ MCP (Model Context Protocol) - Phase 6
+- ⏳ Bearer Token Auth - Phase 5
+
+### Organization & Enterprise
+- ✅ Organization - Phase 4
+- ✅ Enterprise SSO - Phase 6
+- ⏳ OIDC Provider (as auth server) - Phase 6
+- ⏳ SCIM (user provisioning) - Phase 6
+
+### Security & Utility
+- ⏳ Device Authorization (OAuth) - Phase 5
+- ⏳ Captcha - Phase 7
+- ⏳ SQL Injection Protection - Phase 1
+- ⏳ Have I Been Pwned - Phase 7
+- ⏳ Last Login Method Tracking - Phase 7
+- ⏳ Multi Session Management - Phase 7
+- ⏳ OAuth Proxy - Phase 6
+- ⏳ One-Time Token - Phase 5
+- ⏳ Open API Documentation - Phase 7
+- ⏳ JWT Support - Phase 5
+
+### 3rd Party Integrations
+- ✅ Stripe Subscriptions - Phase 5
 
 ---
 
@@ -108,10 +149,17 @@ This roadmap implements a complete, production-ready Better Auth system followin
 - Test cross-origin request blocking
 - Test token rotation on session changes
 
+**Cycle 14:** Implement SQL injection protection
+- Add input validation for all auth endpoints
+- Use parameterized queries (Convex does this by default)
+- Add ';-- (SQL comment) detection and blocking
+- Test for SQL injection vulnerabilities
+
 **Cycle 15:** Security audit checkpoint
 - Verify Argon2 password hashing active
 - Verify rate limiting working
 - Verify CSRF protection enabled
+- Verify SQL injection protection
 - Document security improvements
 
 ---
@@ -272,350 +320,516 @@ This roadmap implements a complete, production-ready Better Auth system followin
 - Test passkey authentication
 - Test multiple passkeys per user
 
-**Cycle 45:** Passkey implementation checkpoint
+**Cycle 45:** Add username authentication plugin
+- Enable username plugin in Better Auth
+- Update sign-up form to include username field
+- Add username validation (uniqueness, format)
+- Test username-based login
+
+**Cycle 46:** Implement Email OTP plugin
+- Enable Email OTP plugin in Better Auth
+- Configure email sending for OTP codes
+- Create OTP verification UI
+- Test Email OTP flow
+
+**Cycle 47:** Add Generic OAuth plugin
+- Enable Generic OAuth plugin
+- Configure additional OAuth providers (Twitter, LinkedIn, Microsoft)
+- Create provider configuration UI
+- Test generic OAuth flows
+
+**Cycle 48:** Implement Google One Tap
+- Enable One Tap plugin in Better Auth
+- Add One Tap button to sign-in page
+- Configure Google One Tap credentials
+- Test One Tap authentication
+
+**Cycle 49:** Phase 3 checkpoint
 - Verify passkey registration works
 - Verify passkey authentication works
-- Document passkey usage
+- Verify username login works
+- Verify Email OTP works
+- Verify generic OAuth works
+- Verify One Tap works
+- Document passwordless features
 
 ---
 
-## Phase 4: Organizations & Teams (Cycles 46-60)
+## Phase 4: Organizations, Teams & Admin (Cycles 50-64)
 
-### MULTI-TENANT FEATURES
+### MULTI-TENANT FEATURES & ADMIN SYSTEM
 
-**Cycle 46:** Read Better Auth organizations documentation
+**Cycle 50:** Read Better Auth organizations documentation
 - Study organizations plugin API
 - Understand team/member model
 - Review role-based access control
 
-**Cycle 47:** Enable organizations plugin
+**Cycle 51:** Enable organizations plugin
 - Add organizations plugin to Better Auth config
 - Configure organization settings
 - Generate organization tables
 
-**Cycle 48:** Map organizations to 6-dimension ontology
+**Cycle 52:** Map organizations to 6-dimension ontology
 - Align Better Auth organizations with groups dimension
 - Design integration with existing groups table
 - Document mapping strategy
 
-**Cycle 49:** Create organization creation UI
+**Cycle 53:** Create organization creation UI
 - Design `CreateOrganization.tsx` component
 - Implement organization creation form
 - Add validation
 
-**Cycle 50:** Implement organization creation backend
+**Cycle 54:** Implement organization creation backend
 - Create organization mutation
 - Link organization to user
 - Set user as organization owner
 
-**Cycle 51:** Create organization settings page
+**Cycle 55:** Create organization settings page
 - Design `/account/organizations/[id]/settings.astro`
 - Display organization details
 - Add edit functionality
 
-**Cycle 52:** Implement team invitation system
+**Cycle 56:** Implement team invitation system
 - Create team invitation component
 - Send invitation emails
 - Generate invitation tokens
 
-**Cycle 53:** Create team invitation acceptance flow
+**Cycle 57:** Create team invitation acceptance flow
 - Design invitation acceptance page
 - Verify invitation tokens
 - Add member to organization
 
-**Cycle 54:** Implement role-based access control
-- Define roles (owner, admin, member)
-- Create role checking utilities
-- Protect organization routes by role
+**Cycle 58:** Implement admin role system
+- Enable Admin plugin in Better Auth
+- Define admin roles (platform_owner, org_owner, org_admin)
+- Create admin middleware and guards
+- Add admin dashboard route
 
-**Cycle 55:** Create organization member management UI
+**Cycle 59:** Create admin panel UI
+- Design admin dashboard
+- Add user management (list, edit, delete)
+- Add organization management
+- Add system settings
+
+**Cycle 60:** Implement role-based access control
+- Create role checking utilities
+- Protect admin routes by role
+- Add permission system (CRUD permissions)
+- Test role enforcement
+
+**Cycle 61:** Create organization member management UI
 - List organization members
 - Change member roles
 - Remove members
+- Invite new members
 
-**Cycle 56:** Implement organization member backend
-- Create add member mutation
-- Create update role mutation
-- Create remove member mutation
-
-**Cycle 57:** Add organization switcher UI
+**Cycle 62:** Add organization switcher UI
 - Create organization dropdown
 - Switch active organization
 - Store organization context
+- Update UI based on active org
 
-**Cycle 58:** Integrate organizations with existing features
+**Cycle 63:** Integrate organizations with existing features
 - Scope products to organizations
 - Scope content to organizations
 - Update existing queries for multi-tenancy
+- Add groupId to all relevant tables
 
-**Cycle 59:** Test organization flows end-to-end
+**Cycle 64:** Test organization and admin flows
 - Test organization creation
 - Test team invitations
 - Test role management
-
-**Cycle 60:** Organizations implementation checkpoint
-- Verify organization CRUD works
-- Verify team invitations work
-- Document organization features
+- Test admin panel
+- Organizations & admin checkpoint
 
 ---
 
-## Phase 5: Advanced Features (Cycles 61-80)
+## Phase 5: Advanced Features (Cycles 65-83)
 
-### SUBSCRIPTIONS, WEB3, SMS 2FA
+### SUBSCRIPTIONS, WEB3, PHONE AUTH, API KEYS, OAUTH PROVIDERS
 
-**Cycle 61:** Read Better Auth subscription documentation
+**Cycle 65:** Add additional OAuth providers
+- Configure Apple Sign In (OAuth)
+- Configure Notion OAuth
+- Configure Facebook Login
+- Configure Discord OAuth
+- Configure Figma OAuth
+- Test all new OAuth providers
+
+**Cycle 66:** Implement Phone Number authentication
+- Enable Phone Number plugin
+- Add phone number to sign-up form
+- Implement SMS verification for phone
+- Test phone-based login
+
+**Cycle 67:** Implement Anonymous authentication
+- Enable Anonymous plugin in Better Auth
+- Create guest account creation flow
+- Add convert guest to user functionality
+- Test anonymous session management
+
+**Cycle 68:** Read Better Auth subscription documentation
 - Study subscription plugin API
 - Understand Stripe integration
 - Review subscription lifecycle
 
-**Cycle 62:** Configure subscription plugin
+**Cycle 69:** Configure subscription plugin
 - Add subscription plugin to Better Auth
 - Set up Stripe webhook endpoints
-- Configure subscription tiers
+- Configure subscription tiers (free, pro, enterprise)
 
-**Cycle 63:** Create subscription management UI
+**Cycle 70:** Create subscription management UI
 - Design subscription plans page
 - Display current subscription
 - Add upgrade/downgrade buttons
+- Add billing portal link
 
-**Cycle 64:** Implement subscription purchase flow
+**Cycle 71:** Implement subscription purchase flow
 - Create Stripe checkout integration
 - Handle subscription webhooks
 - Update user subscription status
+- Test subscription creation
 
-**Cycle 65:** Create subscription settings page
-- Display subscription details
-- Add cancel subscription
-- Add payment method management
-
-**Cycle 66:** Test subscription flows
-- Test subscription purchase
-- Test subscription upgrade
-- Test subscription cancellation
-
-**Cycle 67:** Read Web3 authentication documentation
-- Study wallet authentication approaches
+**Cycle 72:** Read Web3 authentication documentation
+- Study Sign In With Ethereum (SIWE)
 - Review `walletAddress` table schema
-- Understand sign-in with Ethereum
+- Understand wallet signature verification
 
-**Cycle 68:** Install Web3 authentication dependencies
+**Cycle 73:** Install Web3 authentication dependencies
 - Add `ethers` or `viem` library
-- Configure wallet authentication plugin
-- Verify compatibility
+- Configure SIWE plugin in Better Auth
+- Verify compatibility with Convex
 
-**Cycle 69:** Create wallet connection UI
+**Cycle 74:** Create wallet connection UI
 - Design `WalletConnect.tsx` component
 - Implement MetaMask connection
 - Implement WalletConnect protocol
+- Add Coinbase Wallet support
 
-**Cycle 70:** Implement wallet authentication backend
-- Create wallet signature verification
+**Cycle 75:** Implement wallet authentication backend
+- Create wallet signature verification mutation
 - Link wallet address to user account
 - Create session on successful verification
+- Support multiple wallets per user
 
-**Cycle 71:** Add wallet management UI
-- List connected wallets
-- Remove wallet
-- Set primary wallet
+**Cycle 76:** Implement API Key authentication
+- Enable API Key plugin in Better Auth
+- Create API key generation UI
+- Add API key to settings page
+- Implement API key validation middleware
 
-**Cycle 72:** Test Web3 authentication
-- Test MetaMask connection
-- Test wallet signature
-- Test account linking
+**Cycle 77:** Create API key management UI
+- List user's API keys
+- Generate new API key
+- Revoke API key
+- Set API key expiration
+- Test API key authentication
 
-**Cycle 73:** Read SMS 2FA documentation
-- Study SMS plugin API
-- Research SMS providers (Twilio, Vonage)
-- Configure SMS plugin
+**Cycle 78:** Implement Bearer token authentication
+- Enable Bearer plugin in Better Auth
+- Configure token generation
+- Add token refresh endpoint
+- Test Bearer token auth
 
-**Cycle 74:** Install SMS 2FA dependencies
-- Add SMS provider SDK
-- Configure SMS plugin in Better Auth
-- Set up SMS provider credentials
+**Cycle 79:** Implement JWT support
+- Enable JWT plugin in Better Auth
+- Configure JWT signing and verification
+- Create JWT token endpoint
+- Add JWT to API responses
+- Test JWT authentication
 
-**Cycle 75:** Create SMS 2FA enrollment UI
-- Design phone number input
-- Create verification code input
-- Add to account settings
+**Cycle 80:** Implement One-Time Token plugin
+- Enable One-Time Token plugin
+- Create OTT generation for email links
+- Add OTT verification endpoint
+- Test one-time token flows
 
-**Cycle 76:** Implement SMS 2FA backend
-- Create send SMS code mutation
-- Create verify SMS code mutation
-- Store phone number on user
+**Cycle 81:** Implement Device Authorization flow
+- Enable Device Authorization plugin (OAuth 2.0)
+- Create device code generation endpoint
+- Add device verification UI
+- Test device authorization (TV, IoT devices)
 
-**Cycle 77:** Add SMS 2FA to sign-in flow
-- Prompt for SMS code after password
-- Verify SMS code
-- Create session on success
-
-**Cycle 78:** Test SMS 2FA flows
-- Test SMS enrollment
-- Test SMS verification
-- Test fallback to TOTP
-
-**Cycle 79:** Implement session management UI
+**Cycle 82:** Implement session management UI
 - Create active sessions list page
-- Display device, location, last active
+- Display device, location, last active, IP address
 - Add revoke session functionality
+- Add revoke all sessions button
+- Test multi-session management
 
-**Cycle 80:** Advanced features checkpoint
+**Cycle 83:** Phase 5 checkpoint
+- Verify all OAuth providers work
 - Verify subscription management works
 - Verify Web3 authentication works
-- Verify SMS 2FA works
+- Verify API key auth works
+- Verify JWT auth works
 - Document advanced features
 
 ---
 
-## Phase 6: Enterprise & SSO (Cycles 81-90)
+## Phase 6: Enterprise, SSO & MCP (Cycles 84-94)
 
-### ENTERPRISE AUTHENTICATION
+### ENTERPRISE AUTHENTICATION & INTEGRATIONS
 
-**Cycle 81:** Read Better Auth SSO documentation
+**Cycle 84:** Read Better Auth SSO documentation
 - Study SSO provider configuration
 - Understand SAML vs OIDC
-- Review enterprise requirements
+- Review enterprise requirements (Okta, Auth0, Azure AD)
 
-**Cycle 82:** Configure generic OAuth plugin
-- Add generic OAuth plugin
-- Configure for enterprise providers
-- Test with sample provider
-
-**Cycle 83:** Create SSO provider configuration UI
-- Design SSO settings page (admin only)
-- Add SSO provider form
-- List configured providers
-
-**Cycle 84:** Implement SAML authentication
+**Cycle 85:** Implement SAML authentication
 - Configure SAML plugin
 - Create SAML metadata endpoint
-- Test SAML flow
+- Test SAML flow with test IdP
+- Add SAML provider to sign-in page
 
-**Cycle 85:** Implement OIDC authentication
-- Configure OIDC plugin
+**Cycle 86:** Implement OIDC authentication (as client)
+- Configure OIDC plugin for enterprise providers
 - Create OIDC discovery endpoint
 - Test OIDC flow
+- Support multiple OIDC providers
 
-**Cycle 86:** Add Just-in-Time (JIT) provisioning
+**Cycle 87:** Implement OIDC Provider (as auth server)
+- Enable OIDC Provider plugin
+- Configure authorization server endpoints
+- Create consent screen
+- Issue ID tokens and access tokens
+- Test with OIDC client
+
+**Cycle 88:** Add Just-in-Time (JIT) provisioning
 - Auto-create users from SSO
 - Map SSO attributes to user fields
-- Assign default roles
+- Assign default roles based on SSO claims
+- Test JIT user creation
 
-**Cycle 87:** Implement domain verification
-- Create domain verification process
+**Cycle 89:** Implement SCIM user provisioning
+- Enable SCIM plugin in Better Auth
+- Create SCIM endpoints (Users, Groups)
+- Implement SCIM user lifecycle (Create, Update, Delete)
+- Test with Azure AD SCIM integration
+
+**Cycle 90:** Implement OAuth Proxy plugin
+- Enable OAuth Proxy plugin
+- Create proxy configuration for external OAuth providers
+- Add token exchange functionality
+- Test OAuth proxy flows
+
+**Cycle 91:** Implement MCP (Model Context Protocol) integration
+- Enable MCP plugin in Better Auth
+- Configure MCP server endpoints
+- Create MCP authentication flows
+- Add MCP to AI agent authentication
+- Test MCP integration
+
+**Cycle 92:** Create SSO admin dashboard
+- Design SSO management UI (admin only)
+- Add SSO provider configuration form
+- List configured SSO providers
+- View SSO usage statistics and logs
+- Add domain verification UI
+
+**Cycle 93:** Implement domain verification
+- Create domain verification process (DNS/email)
 - Restrict SSO to verified domains
-- Add domain management UI
+- Add verified domain management
+- Test domain verification flow
 
-**Cycle 88:** Create admin dashboard for SSO
-- List SSO providers
-- View SSO usage statistics
-- Manage SSO configurations
-
-**Cycle 89:** Test enterprise SSO flows
-- Test SAML authentication
-- Test OIDC authentication
-- Test JIT provisioning
-
-**Cycle 90:** Enterprise features checkpoint
-- Verify SSO providers work
-- Verify JIT provisioning works
-- Document enterprise features
+**Cycle 94:** Test all enterprise features
+- Test SAML authentication end-to-end
+- Test OIDC client authentication
+- Test OIDC provider (as auth server)
+- Test SCIM provisioning
+- Test MCP integration
+- Enterprise features checkpoint
 
 ---
 
-## Phase 7: Polish & Production (Cycles 91-100)
+## Phase 7: Polish, Security & Production (Cycles 95-100)
 
-### FINAL TESTING, DOCUMENTATION, DEPLOYMENT
+### FINAL SECURITY, UTILITIES & DEPLOYMENT
 
-**Cycle 91:** Comprehensive security audit
-- Review all authentication flows
-- Test for common vulnerabilities (OWASP)
+**Cycle 95:** Implement Captcha protection
+- Enable Captcha plugin in Better Auth
+- Add reCAPTCHA v3 to sign-up form
+- Add hCaptcha as alternative
+- Configure captcha verification
+- Test bot protection
+
+**Cycle 96:** Implement Have I Been Pwned integration
+- Enable HIBP plugin in Better Auth
+- Check passwords against pwned database on signup
+- Warn users about compromised passwords
+- Force password change for pwned passwords
+- Test HIBP integration
+
+**Cycle 97:** Implement Last Login Method tracking
+- Add last login method to user schema
+- Track login method (email, OAuth provider, passkey)
+- Display last login info in settings
+- Add last login timestamp
+- Show login history
+
+**Cycle 98:** Create Open API documentation
+- Enable Open API plugin
+- Generate OpenAPI 3.0 spec for all auth endpoints
+- Create Swagger UI for API docs
+- Document all request/response schemas
+- Add authentication examples
+
+**Cycle 99:** Comprehensive security audit & testing
+- Review all authentication flows for OWASP Top 10
 - Verify rate limiting on all endpoints
+- Test for session fixation vulnerabilities
+- Test CSRF protection
+- Test SQL injection protection
+- Penetration testing
 
-**Cycle 92:** Performance optimization
-- Add database indexes for auth queries
-- Optimize session lookup performance
-- Cache frequently accessed data
-
-**Cycle 93:** Error handling improvements
-- Add user-friendly error messages
-- Implement retry logic for transient failures
-- Log errors for monitoring
-
-**Cycle 94:** Accessibility audit
-- Test all auth pages with screen readers
-- Ensure keyboard navigation works
-- Add ARIA labels
-
-**Cycle 95:** Mobile responsiveness testing
-- Test all auth flows on mobile
-- Verify touch interactions
-- Optimize mobile UI
-
-**Cycle 96:** Browser compatibility testing
-- Test on Chrome, Firefox, Safari, Edge
-- Test passkeys on all browsers
-- Document browser support
-
-**Cycle 97:** Create comprehensive documentation
-- Document all auth features
-- Create developer guide
-- Write user documentation
-
-**Cycle 98:** Set up monitoring and alerts
-- Add auth metrics (login success rate, signup rate)
-- Set up error alerts
-- Create auth dashboard
-
-**Cycle 99:** Production deployment
+**Cycle 100:** Production deployment & final checkpoint
 - Deploy Better Auth to production
 - Verify all environment variables
-- Run smoke tests
-
-**Cycle 100:** Final checkpoint and handoff
-- Complete 100-cycle review
-- Document lessons learned
+- Run smoke tests on production
+- Set up monitoring and alerts (login success rate, errors)
+- Create auth metrics dashboard
+- Document all features and configurations
 - Archive roadmap as completed
+- Celebrate! 🎉
 
 ---
 
 ## Feature Matrix
 
+### Core Authentication Features
 | Feature | Current | Cycle | Status |
 |---------|---------|-------|--------|
-| **Email/Password** | Custom | 16-35 | Migration |
+| **Email/Password** | ✅ Custom | 16-35 | Migration |
 | **Argon2 Hashing** | ❌ SHA-256 | 1-5 | Critical |
+| **Username Login** | ❌ | 45 | New |
 | **Rate Limiting** | ❌ | 6-9 | Critical |
 | **CSRF Protection** | ❌ | 10-14 | Critical |
-| **GitHub OAuth** | ✅ Custom | 22 | Migration |
-| **Google OAuth** | ✅ Custom | 23 | Migration |
+| **SQL Injection Protection** | ⚠️ Basic | 14 | Enhancement |
 | **Magic Links** | ✅ Custom | 28 | Migration |
+| **Email OTP** | ❌ | 46 | New |
+| **Anonymous Auth** | ❌ | 67 | New |
+| **Phone Number Auth** | ❌ | 66 | New |
+
+### OAuth & Social Providers
+| Provider | Current | Cycle | Status |
+|----------|---------|-------|--------|
+| **GitHub** | ✅ Custom | 22 | Migration |
+| **Google** | ✅ Custom | 23 | Migration |
+| **Google One Tap** | ❌ | 48 | New |
+| **Apple** | ❌ | 65 | New |
+| **Facebook** | ❌ | 65 | New |
+| **Discord** | ❌ | 65 | New |
+| **Notion** | ❌ | 65 | New |
+| **Figma** | ❌ | 65 | New |
+| **Generic OAuth** | ❌ | 47 | New |
+
+### Security & 2FA
+| Feature | Current | Cycle | Status |
+|---------|---------|-------|--------|
 | **TOTP 2FA** | ✅ Custom | 29 | Migration |
-| **SMS 2FA** | ❌ | 73-78 | New |
-| **Passkeys** | ❌ | 36-45 | New |
-| **Organizations** | ❌ | 46-60 | New |
-| **Teams** | ❌ | 46-60 | New |
-| **Subscriptions** | ❌ | 61-66 | New |
-| **Web3 Wallets** | ❌ | 67-72 | New |
-| **SSO/SAML** | ❌ | 81-89 | New |
-| **Session Management** | Basic | 79 | Enhancement |
+| **SMS 2FA** | ❌ | 66 | New |
+| **Passkeys (WebAuthn)** | ❌ | 36-44 | New |
+| **Captcha Protection** | ❌ | 95 | New |
+| **Have I Been Pwned** | ❌ | 96 | New |
+
+### Organizations & Teams
+| Feature | Current | Cycle | Status |
+|---------|---------|-------|--------|
+| **Organizations** | ❌ | 50-64 | New |
+| **Teams** | ❌ | 50-64 | New |
+| **Admin Role System** | ❌ | 58-60 | New |
+| **Invitations** | ❌ | 56-57 | New |
+| **Multi-tenancy** | ❌ | 63 | New |
+
+### API & Token Authentication
+| Feature | Current | Cycle | Status |
+|---------|---------|-------|--------|
+| **API Key Auth** | ❌ | 76-77 | New |
+| **Bearer Token** | ❌ | 78 | New |
+| **JWT Support** | ❌ | 79 | New |
+| **One-Time Token** | ❌ | 80 | New |
+| **Device Authorization** | ❌ | 81 | New |
+
+### Advanced Features
+| Feature | Current | Cycle | Status |
+|---------|---------|-------|--------|
+| **Stripe Subscriptions** | ❌ | 68-71 | New |
+| **Web3 Wallets (SIWE)** | ❌ | 72-75 | New |
+| **Session Management UI** | ⚠️ Basic | 82 | Enhancement |
+| **Last Login Tracking** | ❌ | 97 | New |
+
+### Enterprise Features
+| Feature | Current | Cycle | Status |
+|---------|---------|-------|--------|
+| **SAML SSO** | ❌ | 85 | New |
+| **OIDC (Client)** | ❌ | 86 | New |
+| **OIDC Provider (Server)** | ❌ | 87 | New |
+| **JIT Provisioning** | ❌ | 88 | New |
+| **SCIM Provisioning** | ❌ | 89 | New |
+| **OAuth Proxy** | ❌ | 90 | New |
+| **MCP Integration** | ❌ | 91 | New |
+
+### Documentation & Tooling
+| Feature | Current | Cycle | Status |
+|---------|---------|-------|--------|
+| **Open API Docs** | ❌ | 98 | New |
+| **Monitoring Dashboard** | ❌ | 100 | New |
 
 ---
 
 ## Dependencies
 
 ### NPM Packages (Already Installed)
-- ✅ `better-auth` - v1.3.23
-- ✅ `@daveyplate/better-auth-ui` - v3.2.5
-- ✅ `@convex-dev/better-auth` - v0.9.7
-- ✅ `convex` - v1.17.4
+- ✅ `better-auth` - v1.3.23 (Core authentication library)
+- ✅ `@daveyplate/better-auth-ui` - v3.2.5 (Pre-built UI components)
+- ✅ `@convex-dev/better-auth` - v0.9.7 (Convex adapter)
+- ✅ `convex` - v1.17.4 (Backend database)
 
-### Additional Packages Needed
-- `@node-rs/argon2` - Password hashing (Cycle 3)
-- `@simplewebauthn/server` - Passkeys (Cycle 37)
-- `ethers` or `viem` - Web3 authentication (Cycle 68)
-- SMS provider SDK - Twilio/Vonage (Cycle 74)
-- SAML/OIDC libraries - Enterprise SSO (Cycle 84)
+### Security Packages (Phase 1)
+- `@node-rs/argon2` - Argon2id password hashing (Cycle 3)
+
+### Authentication Plugins (Phase 3)
+- `@simplewebauthn/server` - WebAuthn/Passkeys (Cycle 37)
+- Better Auth plugins (built-in):
+  - `better-auth/plugins/username` (Cycle 45)
+  - `better-auth/plugins/email-otp` (Cycle 46)
+  - `better-auth/plugins/generic-oauth` (Cycle 47)
+  - `better-auth/plugins/one-tap` (Cycle 48)
+
+### Organization & Admin (Phase 4)
+- Better Auth plugins (built-in):
+  - `better-auth/plugins/organization` (Cycle 51)
+  - `better-auth/plugins/admin` (Cycle 58)
+
+### Advanced Features (Phase 5)
+- `ethers` or `viem` - Web3/Ethereum authentication (Cycle 73)
+- `twilio` or `vonage` - SMS provider for Phone auth (Cycle 66)
+- Better Auth plugins (built-in):
+  - `better-auth/plugins/phone-number` (Cycle 66)
+  - `better-auth/plugins/anonymous` (Cycle 67)
+  - `better-auth/plugins/subscription` (Cycle 69)
+  - `better-auth/plugins/api-key` (Cycle 76)
+  - `better-auth/plugins/bearer` (Cycle 78)
+  - `better-auth/plugins/jwt` (Cycle 79)
+  - `better-auth/plugins/one-time-token` (Cycle 80)
+  - `better-auth/plugins/device-authorization` (Cycle 81)
+
+### Enterprise Features (Phase 6)
+- `saml2-js` or `passport-saml` - SAML authentication (Cycle 85)
+- Better Auth plugins (built-in):
+  - `better-auth/plugins/oidc` (Cycle 86)
+  - `better-auth/plugins/oidc-provider` (Cycle 87)
+  - `better-auth/plugins/scim` (Cycle 89)
+  - `better-auth/plugins/oauth-proxy` (Cycle 90)
+  - `better-auth/plugins/mcp` (Cycle 91)
+
+### Security & Utilities (Phase 7)
+- `@google-cloud/recaptcha-enterprise` or `hcaptcha` - Bot protection (Cycle 95)
+- Better Auth plugins (built-in):
+  - `better-auth/plugins/captcha` (Cycle 95)
+  - `better-auth/plugins/hibp` (Have I Been Pwned) (Cycle 96)
+  - `better-auth/plugins/openapi` (Cycle 98)
 
 ---
 
