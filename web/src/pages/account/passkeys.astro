@@ -1,0 +1,34 @@
+---
+/**
+ * Account Passkeys Settings Page (Cycle 43)
+ *
+ * Dedicated page for passkey management.
+ * Shows registration, management, and security information.
+ */
+
+import { PasskeySettings } from "../../components/auth/PasskeySettings";
+
+// TODO: Get CSRF token from session
+// For now, placeholder - integrate with actual session management
+const csrfToken = "placeholder-csrf-token";
+---
+
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width" />
+    <title>Passkey Settings - ONE Platform</title>
+  </head>
+  <body>
+    <div class="container mx-auto py-8 px-4 max-w-4xl">
+      <div class="mb-8">
+        <h1 class="text-3xl font-bold mb-2">Passkey Settings</h1>
+        <p class="text-muted-foreground">
+          Manage your passwordless authentication with passkeys
+        </p>
+      </div>
+
+      <PasskeySettings client:load csrfToken={csrfToken} />
+    </div>
+  </body>
+</html>
