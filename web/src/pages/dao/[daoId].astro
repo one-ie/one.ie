@@ -1,0 +1,41 @@
+---
+/**
+ * DAO Detail Page
+ *
+ * Displays DAO overview, governance parameters, and membership info.
+ * Maps to CYCLE-036 of the Solana Launchpad plan.
+ *
+ * Features:
+ * - DAO governance parameters
+ * - Member count and voting power
+ * - Recent proposals
+ * - Treasury overview
+ *
+ * @dimension things (DAO detail)
+ * @category solana-launchpad
+ */
+
+import Layout from '@/layouts/Layout.astro';
+import { DAODashboard } from '@/components/dao/DAODashboard';
+import { TreasuryOverview } from '@/components/dao/TreasuryOverview';
+
+const { daoId } = Astro.params;
+
+if (!daoId) {
+  return Astro.redirect('/404');
+}
+
+const title = 'DAO Dashboard | Solana Launchpad';
+const description = 'View DAO governance and proposals';
+---
+
+<Layout title={title} description={description}>
+  <div class="container mx-auto py-12 px-4">
+    <DAODashboard client:load daoId={daoId} />
+
+    <div class="mt-8">
+      <h2 class="text-2xl font-bold mb-4">Treasury</h2>
+      <TreasuryOverview client:load daoId={daoId} />
+    </div>
+  </div>
+</Layout>

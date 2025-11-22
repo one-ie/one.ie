@@ -1,0 +1,59 @@
+---
+import Layout from '@/layouts/Layout.astro';
+import { TokenList } from '@/components/launchpad/TokenList';
+
+const title = 'Solana Token Launchpad';
+const description = 'Create and manage SPL tokens on Solana';
+---
+
+<Layout title={title} description={description}>
+  <div class="container mx-auto py-8 px-4">
+    <div class="max-w-7xl mx-auto">
+      <!-- Header -->
+      <div class="mb-8">
+        <h1 class="text-4xl font-bold mb-2">Solana Token Launchpad</h1>
+        <p class="text-muted-foreground text-lg">
+          Create, manage, and launch SPL tokens on Solana in minutes
+        </p>
+      </div>
+
+      <!-- Quick Stats -->
+      <div class="grid grid-cols-1 md:grid-cols-3 gap-4 mb-8">
+        <div class="rounded-lg border bg-card p-6">
+          <div class="text-sm text-muted-foreground mb-1">Total Tokens</div>
+          <div class="text-3xl font-bold">0</div>
+        </div>
+        <div class="rounded-lg border bg-card p-6">
+          <div class="text-sm text-muted-foreground mb-1">Total Value Locked</div>
+          <div class="text-3xl font-bold">$0</div>
+        </div>
+        <div class="rounded-lg border bg-card p-6">
+          <div class="text-sm text-muted-foreground mb-1">Active Creators</div>
+          <div class="text-3xl font-bold">0</div>
+        </div>
+      </div>
+
+      <!-- CTA Section -->
+      <div class="rounded-lg border bg-gradient-to-r from-primary/10 to-secondary/10 p-8 mb-8">
+        <div class="max-w-2xl">
+          <h2 class="text-2xl font-bold mb-2">Ready to Launch Your Token?</h2>
+          <p class="text-muted-foreground mb-4">
+            Create your SPL token with custom tokenomics, metadata, and launch on Solana in under 5 minutes.
+          </p>
+          <a
+            href="/launchpad/create-token"
+            class="inline-flex items-center justify-center rounded-md bg-primary px-6 py-3 text-sm font-medium text-primary-foreground shadow transition-colors hover:bg-primary/90"
+          >
+            Create Token
+          </a>
+        </div>
+      </div>
+
+      <!-- Token List -->
+      <div>
+        <h2 class="text-2xl font-bold mb-4">Your Tokens</h2>
+        <TokenList client:load />
+      </div>
+    </div>
+  </div>
+</Layout>

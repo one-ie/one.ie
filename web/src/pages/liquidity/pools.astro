@@ -1,0 +1,219 @@
+---
+import Layout from '@/layouts/Layout.astro';
+import { PoolCard } from '@/components/liquidity/PoolCard';
+import { Button } from '@/components/ui/button';
+import { Input } from '@/components/ui/input';
+import { Select, SelectTrigger, SelectValue, SelectContent, SelectItem } from '@/components/ui/select';
+import { Badge } from '@/components/ui/badge';
+import { Plus, Search, TrendingUp, Droplets } from 'lucide-react';
+
+const title = 'Liquidity Pools | Solana Launchpad';
+const description = 'Browse and manage liquidity pools';
+
+// Mock data (replace with Convex query)
+const pools = [
+  {
+    id: 'pool-1',
+    tokenA: { symbol: 'SOL', icon: '/tokens/sol.png' },
+    tokenB: { symbol: 'USDC', icon: '/tokens/usdc.png' },
+    tvl: 5420000,
+    volume24h: 1230000,
+    fees24h: 3690,
+    apy: 24.8,
+    priceChange24h: 2.4,
+  },
+  {
+    id: 'pool-2',
+    tokenA: { symbol: 'BONK', icon: '/tokens/bonk.png' },
+    tokenB: { symbol: 'SOL', icon: '/tokens/sol.png' },
+    tvl: 2100000,
+    volume24h: 890000,
+    fees24h: 2670,
+    apy: 46.3,
+    priceChange24h: -1.2,
+  },
+  {
+    id: 'pool-3',
+    tokenA: { symbol: 'JUP', icon: '/tokens/jup.png' },
+    tokenB: { symbol: 'USDC', icon: '/tokens/usdc.png' },
+    tvl: 3800000,
+    volume24h: 670000,
+    fees24h: 2010,
+    apy: 19.3,
+    priceChange24h: 5.7,
+  },
+  {
+    id: 'pool-4',
+    tokenA: { symbol: 'RAY', icon: '/tokens/ray.png' },
+    tokenB: { symbol: 'SOL', icon: '/tokens/sol.png' },
+    tvl: 1560000,
+    volume24h: 430000,
+    fees24h: 1290,
+    apy: 30.2,
+    priceChange24h: 3.1,
+  },
+];
+
+const totalTVL = pools.reduce((sum, pool) => sum + pool.tvl, 0);
+const total24hVolume = pools.reduce((sum, pool) => sum + pool.volume24h, 0);
+const total24hFees = pools.reduce((sum, pool) => sum + pool.fees24h, 0);
+---
+
+<Layout title={title} description={description}>
+  <div class="container mx-auto py-8 space-y-8">
+    <!-- Header -->
+    <div class="flex flex-col gap-4 md:flex-row md:items-center md:justify-between">
+      <div>
+        <h1 class="text-4xl font-bold mb-2">Liquidity Pools</h1>
+        <p class="text-muted-foreground">
+          Provide liquidity and earn trading fees
+        </p>
+      </div>
+      <Button size="lg" asChild>
+        <a href="/liquidity/create">
+          <Plus className="h-4 w-4 mr-2" />
+          Create Pool
+        </a>
+      </Button>
+    </div>
+
+    <!-- Stats Overview -->
+    <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
+      <div class="p-6 rounded-lg border bg-card">
+        <div class="flex items-center gap-2 text-sm text-muted-foreground mb-2">
+          <Droplets class="h-4 w-4" />
+          <span>Total Value Locked</span>
+        </div>
+        <div class="text-3xl font-bold">
+          ${(totalTVL / 1000000).toFixed(2)}M
+        </div>
+      </div>
+
+      <div class="p-6 rounded-lg border bg-card">
+        <div class="flex items-center gap-2 text-sm text-muted-foreground mb-2">
+          <TrendingUp class="h-4 w-4" />
+          <span>24h Volume</span>
+        </div>
+        <div class="text-3xl font-bold">
+          ${(total24hVolume / 1000000).toFixed(2)}M
+        </div>
+      </div>
+
+      <div class="p-6 rounded-lg border bg-card">
+        <div class="flex items-center gap-2 text-sm text-muted-foreground mb-2">
+          <span>24h Fees</span>
+        </div>
+        <div class="text-3xl font-bold text-green-600">
+          ${total24hFees.toLocaleString()}
+        </div>
+      </div>
+    </div>
+
+    <!-- Filters and Search -->
+    <div class="flex flex-col gap-4 md:flex-row md:items-center">
+      <div class="relative flex-1 max-w-md">
+        <Search class="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-muted-foreground" />
+        <Input
+          placeholder="Search pools..."
+          class="pl-10"
+          client:load
+        />
+      </div>
+
+      <div class="flex gap-2">
+        <Select client:load>
+          <SelectTrigger class="w-[140px]">
+            <SelectValue placeholder="Sort by" />
+          </SelectTrigger>
+          <SelectContent>
+            <SelectItem value="tvl">TVL</SelectItem>
+            <SelectItem value="volume">Volume</SelectItem>
+            <SelectItem value="apy">APY</SelectItem>
+            <SelectItem value="fees">Fees</SelectItem>
+          </SelectContent>
+        </Select>
+
+        <Select client:load>
+          <SelectTrigger class="w-[140px]">
+            <SelectValue placeholder="All Pools" />
+          </SelectTrigger>
+          <SelectContent>
+            <SelectItem value="all">All Pools</SelectItem>
+            <SelectItem value="my-positions">My Positions</SelectItem>
+            <SelectItem value="high-apy">High APY</SelectItem>
+            <SelectItem value="stable">Stablecoin</SelectItem>
+          </SelectContent>
+        </Select>
+      </div>
+    </div>
+
+    <!-- Quick Filters -->
+    <div class="flex flex-wrap gap-2">
+      <Badge variant="outline" class="cursor-pointer hover:bg-accent">
+        All Pools ({pools.length})
+      </Badge>
+      <Badge variant="outline" class="cursor-pointer hover:bg-accent">
+        High APY (2)
+      </Badge>
+      <Badge variant="outline" class="cursor-pointer hover:bg-accent">
+        New Pools (0)
+      </Badge>
+      <Badge variant="outline" class="cursor-pointer hover:bg-accent">
+        My Positions (0)
+      </Badge>
+    </div>
+
+    <!-- Pool Grid -->
+    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+      {pools.map((pool) => (
+        <PoolCard
+          pool={pool}
+          onClick={() => window.location.href = `/liquidity/${pool.id}`}
+          client:load
+        />
+      ))}
+    </div>
+
+    <!-- Empty State (show when no pools) -->
+    <!--
+    <div class="text-center py-12">
+      <div class="w-16 h-16 mx-auto mb-4 rounded-full bg-muted flex items-center justify-center">
+        <Droplets class="h-8 w-8 text-muted-foreground" />
+      </div>
+      <h3 class="text-lg font-semibold mb-2">No pools found</h3>
+      <p class="text-muted-foreground mb-6">
+        Be the first to create a liquidity pool
+      </p>
+      <Button asChild>
+        <a href="/liquidity/create">
+          <Plus class="h-4 w-4 mr-2" />
+          Create Pool
+        </a>
+      </Button>
+    </div>
+    -->
+
+    <!-- Info Section -->
+    <div class="mt-12 p-6 rounded-lg border bg-muted/50">
+      <h3 class="text-lg font-semibold mb-3">About Liquidity Pools</h3>
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-4 text-sm text-muted-foreground">
+        <div>
+          <p class="mb-2">
+            <strong>Earn Trading Fees:</strong> Liquidity providers earn a share of trading fees proportional to their pool ownership.
+          </p>
+          <p>
+            <strong>Automated Market Making:</strong> Pools use constant product formula (x × y = k) for automated price discovery.
+          </p>
+        </div>
+        <div>
+          <p class="mb-2">
+            <strong>Impermanent Loss:</strong> Be aware that token price divergence may result in temporary losses compared to holding.
+          </p>
+          <p>
+            <strong>Pool Share:</strong> Your LP tokens represent your share of the pool and can be redeemed anytime.
+          </p>
+        </div>
+      </div>
+    </div>
+  </div>
+</Layout>

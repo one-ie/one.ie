@@ -1,0 +1,261 @@
+---
+import Layout from '@/layouts/Layout.astro';
+import { PoolMetrics } from '@/components/liquidity/PoolMetrics';
+import { SwapInterface } from '@/components/liquidity/SwapInterface';
+import { AddLiquidityForm } from '@/components/liquidity/AddLiquidityForm';
+import { LPPositionCard } from '@/components/liquidity/LPPositionCard';
+import { Button } from '@/components/ui/button';
+import { Tabs, TabsList, TabsTrigger, TabsContent } from '@/components/ui/tabs';
+import { Card, CardHeader, CardTitle, CardContent } from '@/components/ui/card';
+import { Badge } from '@/components/ui/badge';
+import { ArrowLeft, ExternalLink, TrendingUp } from 'lucide-react';
+
+const { poolId } = Astro.params;
+
+// Mock pool data (replace with Convex query)
+const pool = {
+  id: poolId,
+  tokenA: {
+    id: 'sol',
+    symbol: 'SOL',
+    name: 'Solana',
+    icon: '/tokens/sol.png',
+    balance: 100,
+    decimals: 9,
+  },
+  tokenB: {
+    id: 'usdc',
+    symbol: 'USDC',
+    name: 'USD Coin',
+    icon: '/tokens/usdc.png',
+    balance: 1000,
+    decimals: 6,
+  },
+  reserveA: 50000,
+  reserveB: 7500000,
+  totalLPTokens: 500000,
+  metrics: {
+    tvl: 5420000,
+    tvlChange24h: 3.2,
+    volume24h: 1230000,
+    volumeChange24h: 12.5,
+    fees24h: 3690,
+    feesChange24h: 8.4,
+    apy: 24.8,
+    apyChange7d: -2.1,
+    totalTransactions: 8547,
+    uniqueTraders24h: 423,
+  },
+};
+
+// Mock user position (replace with Convex query)
+const userPosition = {
+  poolId: poolId!,
+  tokenA: pool.tokenA,
+  tokenB: pool.tokenB,
+  lpTokens: 1234.56,
+  shareOfPool: 0.247,
+  valueA: 123.45,
+  valueB: 18517.5,
+  initialValueA: 120,
+  initialValueB: 18000,
+  feesEarnedUSD: 45.67,
+  currentValueUSD: 13380,
+  initialValueUSD: 13200,
+};
+
+const tokens = [pool.tokenA, pool.tokenB];
+
+const title = `${pool.tokenA.symbol}/${pool.tokenB.symbol} Pool | Solana Launchpad`;
+const description = `Trade and provide liquidity for ${pool.tokenA.symbol}/${pool.tokenB.symbol} pool`;
+---
+
+<Layout title={title} description={description}>
+  <div class="container mx-auto py-8 space-y-8">
+    <!-- Back Button -->
+    <Button variant="ghost" asChild>
+      <a href="/liquidity/pools">
+        <ArrowLeft class="h-4 w-4 mr-2" />
+        Back to Pools
+      </a>
+    </Button>
+
+    <!-- Pool Header -->
+    <div class="flex flex-col gap-4 md:flex-row md:items-start md:justify-between">
+      <div class="flex items-center gap-4">
+        <div class="flex items-center -space-x-3">
+          <img src={pool.tokenA.icon} alt="" class="w-16 h-16 rounded-full border-4 border-background" />
+          <img src={pool.tokenB.icon} alt="" class="w-16 h-16 rounded-full border-4 border-background" />
+        </div>
+        <div>
+          <h1 class="text-4xl font-bold">
+            {pool.tokenA.symbol} / {pool.tokenB.symbol}
+          </h1>
+          <div class="flex items-center gap-2 mt-2">
+            <Badge variant="outline">Pool #{poolId}</Badge>
+            <Badge variant="outline" class="text-green-600 border-green-600">
+              {pool.metrics.apy.toFixed(2)}% APY
+            </Badge>
+          </div>
+        </div>
+      </div>
+
+      <div class="flex gap-2">
+        <Button variant="outline" size="sm">
+          <ExternalLink class="h-4 w-4 mr-2" />
+          View on Explorer
+        </Button>
+      </div>
+    </div>
+
+    <!-- Pool Metrics -->
+    <PoolMetrics metrics={pool.metrics} client:load />
+
+    <!-- Main Content Tabs -->
+    <Tabs defaultValue="swap" client:load>
+      <TabsList class="grid w-full grid-cols-3">
+        <TabsTrigger value="swap">Swap</TabsTrigger>
+        <TabsTrigger value="liquidity">Add Liquidity</TabsTrigger>
+        <TabsTrigger value="positions">My Position</TabsTrigger>
+      </TabsList>
+
+      <TabsContent value="swap" class="mt-6">
+        <div class="max-w-2xl mx-auto">
+          <SwapInterface
+            tokens={tokens}
+            onSwap={async (from, to, fromAmount, toAmount, slippage) => {
+              console.log('Swap:', { from, to, fromAmount, toAmount, slippage });
+            }}
+            client:load
+          />
+        </div>
+      </TabsContent>
+
+      <TabsContent value="liquidity" class="mt-6">
+        <div class="max-w-2xl mx-auto">
+          <AddLiquidityForm
+            pool={pool}
+            onAddLiquidity={async (amountA, amountB) => {
+              console.log('Add liquidity:', { amountA, amountB });
+            }}
+            client:load
+          />
+        </div>
+      </TabsContent>
+
+      <TabsContent value="positions" class="mt-6">
+        <div class="max-w-2xl mx-auto space-y-6">
+          {/* User's LP Position */}
+          <LPPositionCard
+            position={userPosition}
+            onAddMore={() => {
+              // Switch to liquidity tab
+            }}
+            onRemove={async (percentage) => {
+              console.log('Remove liquidity:', percentage);
+            }}
+            client:load
+          />
+
+          {/* No Position State */}
+          <!--
+          <Card>
+            <CardContent class="py-12 text-center">
+              <div class="w-16 h-16 mx-auto mb-4 rounded-full bg-muted flex items-center justify-center">
+                <TrendingUp class="h-8 w-8 text-muted-foreground" />
+              </div>
+              <h3 class="text-lg font-semibold mb-2">No Position Yet</h3>
+              <p class="text-muted-foreground mb-6">
+                Start earning fees by adding liquidity to this pool
+              </p>
+              <Button>Add Liquidity</Button>
+            </CardContent>
+          </Card>
+          -->
+        </div>
+      </TabsContent>
+    </Tabs>
+
+    <!-- Pool Information -->
+    <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mt-12">
+      <Card>
+        <CardHeader>
+          <CardTitle>Pool Information</CardTitle>
+        </CardHeader>
+        <CardContent class="space-y-3 text-sm">
+          <div class="flex justify-between">
+            <span class="text-muted-foreground">Pool Address</span>
+            <code class="text-xs bg-muted px-2 py-1 rounded">pool_{poolId}...</code>
+          </div>
+          <div class="flex justify-between">
+            <span class="text-muted-foreground">Total LP Tokens</span>
+            <span class="font-medium">{pool.totalLPTokens.toLocaleString()}</span>
+          </div>
+          <div class="flex justify-between">
+            <span class="text-muted-foreground">Fee Tier</span>
+            <span class="font-medium">0.3%</span>
+          </div>
+          <div class="flex justify-between">
+            <span class="text-muted-foreground">Created</span>
+            <span class="font-medium">30 days ago</span>
+          </div>
+        </CardContent>
+      </Card>
+
+      <Card>
+        <CardHeader>
+          <CardTitle>Pool Reserves</CardTitle>
+        </CardHeader>
+        <CardContent class="space-y-3 text-sm">
+          <div class="flex justify-between items-center">
+            <div class="flex items-center gap-2">
+              <img src={pool.tokenA.icon} alt="" class="w-5 h-5" />
+              <span class="text-muted-foreground">{pool.tokenA.symbol}</span>
+            </div>
+            <span class="font-medium">{pool.reserveA.toLocaleString()}</span>
+          </div>
+          <div class="flex justify-between items-center">
+            <div class="flex items-center gap-2">
+              <img src={pool.tokenB.icon} alt="" class="w-5 h-5" />
+              <span class="text-muted-foreground">{pool.tokenB.symbol}</span>
+            </div>
+            <span class="font-medium">{pool.reserveB.toLocaleString()}</span>
+          </div>
+          <div class="pt-3 border-t flex justify-between">
+            <span class="text-muted-foreground">Current Price</span>
+            <span class="font-medium">
+              1 {pool.tokenA.symbol} = {(pool.reserveB / pool.reserveA).toFixed(4)} {pool.tokenB.symbol}
+            </span>
+          </div>
+        </CardContent>
+      </Card>
+    </div>
+
+    <!-- Risks and Rewards -->
+    <Card>
+      <CardHeader>
+        <CardTitle>Important Information</CardTitle>
+      </CardHeader>
+      <CardContent class="grid grid-cols-1 md:grid-cols-2 gap-6 text-sm">
+        <div>
+          <h4 class="font-semibold mb-2 text-green-600">Rewards</h4>
+          <ul class="space-y-2 text-muted-foreground">
+            <li>• Earn {pool.metrics.apy.toFixed(2)}% APY from trading fees</li>
+            <li>• Proportional share of all pool fees</li>
+            <li>• LP tokens can be redeemed anytime</li>
+            <li>• Automatic compounding of earnings</li>
+          </ul>
+        </div>
+        <div>
+          <h4 class="font-semibold mb-2 text-orange-600">Risks</h4>
+          <ul class="space-y-2 text-muted-foreground">
+            <li>• Impermanent loss from price divergence</li>
+            <li>• Smart contract risks</li>
+            <li>• Market volatility affects returns</li>
+            <li>• No guaranteed APY (varies with volume)</li>
+          </ul>
+        </div>
+      </CardContent>
+    </Card>
+  </div>
+</Layout>

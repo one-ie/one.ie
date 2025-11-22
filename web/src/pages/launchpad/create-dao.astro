@@ -1,0 +1,50 @@
+---
+/**
+ * Create DAO Page
+ *
+ * Allows users to create a new DAO with governance parameters.
+ * Maps to CYCLE-036 of the Solana Launchpad plan.
+ *
+ * Features:
+ * - DAO creation form with governance token selection
+ * - Quorum and proposal threshold configuration
+ * - Voting period and execution delay settings
+ * - Real-time validation and submission
+ *
+ * @dimension things (DAO creation)
+ * @category solana-launchpad
+ */
+
+import Layout from '@/layouts/Layout.astro';
+import { CreateDAOForm } from '@/components/dao/CreateDAOForm';
+
+const title = 'Create DAO | Solana Launchpad';
+const description = 'Launch your decentralized autonomous organization on Solana';
+---
+
+<Layout title={title} description={description}>
+  <div class="container mx-auto py-12 px-4 max-w-4xl">
+    <div class="mb-8">
+      <h1 class="text-4xl font-bold mb-2">Create Your DAO</h1>
+      <p class="text-lg text-muted-foreground">
+        Launch a decentralized autonomous organization with SPL Governance
+      </p>
+    </div>
+
+    <div class="bg-card border rounded-lg p-6 mb-6">
+      <h2 class="text-lg font-semibold mb-4">What is a DAO?</h2>
+      <p class="text-muted-foreground mb-4">
+        A Decentralized Autonomous Organization (DAO) is a community-led entity with no central authority.
+        Decisions are made through proposals and voting by token holders.
+      </p>
+      <ul class="list-disc list-inside text-muted-foreground space-y-2">
+        <li>Token-based governance voting</li>
+        <li>Transparent proposal and execution system</li>
+        <li>Community-controlled treasury</li>
+        <li>On-chain verification and immutability</li>
+      </ul>
+    </div>
+
+    <CreateDAOForm client:load />
+  </div>
+</Layout>

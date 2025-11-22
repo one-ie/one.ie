@@ -1,0 +1,69 @@
+---
+import Layout from '@/layouts/Layout.astro';
+import { CreateTokenForm } from '@/components/launchpad/CreateTokenForm';
+
+const title = 'Create Token | Solana Launchpad';
+const description = 'Launch your SPL token on Solana';
+---
+
+<Layout title={title} description={description}>
+  <div class="container mx-auto py-8 px-4">
+    <div class="max-w-4xl mx-auto">
+      <!-- Header -->
+      <div class="mb-8">
+        <a
+          href="/launchpad"
+          class="inline-flex items-center text-sm text-muted-foreground hover:text-foreground mb-4"
+        >
+          <svg
+            class="w-4 h-4 mr-1"
+            fill="none"
+            stroke="currentColor"
+            viewBox="0 0 24 24"
+          >
+            <path
+              stroke-linecap="round"
+              stroke-linejoin="round"
+              stroke-width="2"
+              d="M15 19l-7-7 7-7"
+            ></path>
+          </svg>
+          Back to Launchpad
+        </a>
+        <h1 class="text-4xl font-bold mb-2">Create Your Token</h1>
+        <p class="text-muted-foreground text-lg">
+          Configure your SPL token and launch it on Solana
+        </p>
+      </div>
+
+      <!-- Progress Steps -->
+      <div class="mb-8">
+        <div class="flex items-center justify-between max-w-2xl mx-auto">
+          <div class="flex flex-col items-center">
+            <div class="w-10 h-10 rounded-full bg-primary text-primary-foreground flex items-center justify-center font-semibold mb-2">
+              1
+            </div>
+            <div class="text-sm font-medium">Token Details</div>
+          </div>
+          <div class="flex-1 h-px bg-border mx-4"></div>
+          <div class="flex flex-col items-center">
+            <div class="w-10 h-10 rounded-full bg-muted text-muted-foreground flex items-center justify-center font-semibold mb-2">
+              2
+            </div>
+            <div class="text-sm text-muted-foreground">Tokenomics</div>
+          </div>
+          <div class="flex-1 h-px bg-border mx-4"></div>
+          <div class="flex flex-col items-center">
+            <div class="w-10 h-10 rounded-full bg-muted text-muted-foreground flex items-center justify-center font-semibold mb-2">
+              3
+            </div>
+            <div class="text-sm text-muted-foreground">Deploy</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Form -->
+      <CreateTokenForm client:load />
+    </div>
+  </div>
+</Layout>

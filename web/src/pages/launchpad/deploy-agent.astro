@@ -1,0 +1,79 @@
+---
+/**
+ * Agent Deployment Page - CYCLE-047
+ * Deploy AI agents for token utility and governance
+ */
+import Layout from '@/layouts/Layout.astro';
+import { AgentDeploymentForm } from '@/components/agent/AgentDeploymentForm';
+
+const title = 'Deploy AI Agent';
+const description = 'Deploy autonomous AI agents for trading, treasury management, community engagement, and governance.';
+---
+
+<Layout title={title} description={description}>
+  <div class="container mx-auto max-w-4xl py-8 px-4">
+    <!-- Header -->
+    <div class="mb-8">
+      <div class="mb-4">
+        <a href="/launchpad" class="text-sm text-primary hover:underline">
+          ← Back to Launchpad
+        </a>
+      </div>
+
+      <h1 class="text-4xl font-bold mb-2">Deploy AI Agent</h1>
+      <p class="text-lg text-muted-foreground">
+        Create autonomous agents to power your token ecosystem with AI-driven automation.
+      </p>
+    </div>
+
+    <!-- Agent Types Overview -->
+    <div class="grid grid-cols-1 md:grid-cols-2 gap-4 mb-8">
+      <div class="p-4 border rounded-lg">
+        <h3 class="font-semibold mb-2">🤖 Trading Agent</h3>
+        <p class="text-sm text-muted-foreground">
+          Automated trading strategies, market making, and liquidity management.
+        </p>
+      </div>
+
+      <div class="p-4 border rounded-lg">
+        <h3 class="font-semibold mb-2">💰 Treasury Agent</h3>
+        <p class="text-sm text-muted-foreground">
+          Automated treasury operations, fund allocation, and yield optimization.
+        </p>
+      </div>
+
+      <div class="p-4 border rounded-lg">
+        <h3 class="font-semibold mb-2">👥 Community Agent</h3>
+        <p class="text-sm text-muted-foreground">
+          Community engagement, rewards distribution, and social moderation.
+        </p>
+      </div>
+
+      <div class="p-4 border rounded-lg">
+        <h3 class="font-semibold mb-2">🏛️ Governance Agent</h3>
+        <p class="text-sm text-muted-foreground">
+          Proposal creation, voting automation, and governance participation.
+        </p>
+      </div>
+    </div>
+
+    <!-- Deployment Form -->
+    <div class="bg-card border rounded-lg p-6 shadow-sm">
+      <AgentDeploymentForm client:load />
+    </div>
+
+    <!-- Safety Notice -->
+    <div class="mt-8 p-4 bg-yellow-50 dark:bg-yellow-950/20 border border-yellow-200 dark:border-yellow-800 rounded-lg">
+      <h4 class="font-semibold text-yellow-800 dark:text-yellow-200 mb-2">
+        ⚠️ Important Security Notice
+      </h4>
+      <ul class="text-sm text-yellow-700 dark:text-yellow-300 space-y-1">
+        <li>• Agents will have a dedicated Solana wallet with limited permissions</li>
+        <li>• Set maximum transaction values to limit risk exposure</li>
+        <li>• Start with supervised mode before enabling full autonomy</li>
+        <li>• Review agent activity regularly in the dashboard</li>
+        <li>• You can pause or disable agents at any time</li>
+      </ul>
+    </div>
+  </div>
+</Layout>

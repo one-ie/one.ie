@@ -1,0 +1,64 @@
+---
+/**
+ * DAO Proposals Page
+ *
+ * Displays all proposals for a DAO with voting interface.
+ * Maps to CYCLE-036 of the Solana Launchpad plan.
+ *
+ * Features:
+ * - List all proposals with status
+ * - Create new proposal form
+ * - Vote on active proposals
+ * - View voting results
+ *
+ * @dimension things (proposals)
+ * @category solana-launchpad
+ */
+
+import Layout from '@/layouts/Layout.astro';
+import { ProposalList } from '@/components/dao/ProposalList';
+import { CreateProposalForm } from '@/components/dao/CreateProposalForm';
+import { Button } from '@/components/ui/button';
+
+const { daoId } = Astro.params;
+
+if (!daoId) {
+  return Astro.redirect('/404');
+}
+
+const title = 'DAO Proposals | Solana Launchpad';
+const description = 'View and vote on DAO governance proposals';
+---
+
+<Layout title={title} description={description}>
+  <div class="container mx-auto py-12 px-4 max-w-6xl">
+    {/* Header */}
+    <div class="flex items-center justify-between mb-8">
+      <div>
+        <h1 class="text-3xl font-bold mb-2">Proposals</h1>
+        <p class="text-muted-foreground">
+          View and vote on governance proposals
+        </p>
+      </div>
+      <div>
+        <a href={`/dao/${daoId}`}>
+          <Button variant="outline">
+            Back to DAO
+          </Button>
+        </a>
+      </div>
+    </div>
+
+    {/* Create Proposal Section */}
+    <div class="mb-12">
+      <h2 class="text-2xl font-bold mb-4">Create New Proposal</h2>
+      <CreateProposalForm client:load daoId={daoId} />
+    </div>
+
+    {/* Proposals List */}
+    <div>
+      <h2 class="text-2xl font-bold mb-4">All Proposals</h2>
+      <ProposalList client:load daoId={daoId} />
+    </div>
+  </div>
+</Layout>

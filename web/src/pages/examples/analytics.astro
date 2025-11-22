@@ -1,0 +1,170 @@
+---
+import Layout from '@/layouts/Layout.astro';
+import { TokenAnalyticsDashboard } from '@/components/analytics';
+
+// Mock data for demonstration
+const mockMetrics = {
+  price: 0.000245,
+  priceChange24h: 12.5,
+  volume24h: 450000,
+  marketCap: 2450000,
+  holders: 1250,
+  transactions24h: 3420,
+  priceHistory: Array.from({ length: 24 }, (_, i) => ({
+    timestamp: Date.now() - (24 - i) * 3600000,
+    price: 0.000200 + Math.random() * 0.0001,
+    date: new Date(Date.now() - (24 - i) * 3600000).toLocaleTimeString('en-US', { hour: '2-digit' }),
+  })),
+  volumeHistory: Array.from({ length: 24 }, (_, i) => ({
+    timestamp: Date.now() - (24 - i) * 3600000,
+    volume: 15000 + Math.random() * 30000,
+    date: new Date(Date.now() - (24 - i) * 3600000).toLocaleTimeString('en-US', { hour: '2-digit' }),
+  })),
+  distribution: {
+    top10Holders: 45.6,
+    walletConcentration: 0.68,
+  },
+};
+
+const mockRiskScore = {
+  overallScore: 35,
+  factors: {
+    rugPullRisk: 25,
+    liquidityRisk: 40,
+    concentrationRisk: 45,
+    contractRisk: 30,
+  },
+  signals: {
+    redFlags: [
+      'Top holder controls 15% of supply',
+    ],
+    yellowFlags: [
+      'Liquidity pool less than 90 days old',
+      'Limited trading history',
+    ],
+    greenFlags: [
+      'Contract verified on Solscan',
+      'No mint authority',
+      'Growing holder base',
+    ],
+  },
+};
+
+const mockHolders = Array.from({ length: 100 }, (_, i) => ({
+  walletAddress: `${'ABCDEFGHIJKLMNOPQRSTUVWXYZ123456789'[Math.floor(Math.random() * 35)]}${Math.random().toString(36).substring(2, 42)}`,
+  balance: (1000000 * Math.pow(0.8, i)).toFixed(2),
+  percentage: 100 * Math.pow(0.8, i) / 10,
+  valueUSD: 1000000 * Math.pow(0.8, i) * 0.000245,
+  rank: i + 1,
+}));
+
+const mockPattern = {
+  pattern: 'accumulation' as const,
+  confidence: 0.78,
+  detectedAt: Date.now() - 3600000,
+  description: 'Large wallets have been steadily accumulating over the past 6 hours',
+};
+
+const title = 'Token Analytics Dashboard - Example';
+const description = 'Demonstration of the analytics dashboard components';
+---
+
+<Layout title={title} description={description}>
+  <div class="container mx-auto py-8 space-y-8">
+    <div class="space-y-2">
+      <h1 class="text-4xl font-bold">Token Analytics Dashboard</h1>
+      <p class="text-lg text-muted-foreground">
+        Complete analytics suite for Solana token monitoring and risk assessment
+      </p>
+    </div>
+
+    <div class="rounded-lg border bg-card p-6">
+      <div class="mb-4">
+        <h2 class="text-2xl font-semibold mb-2">Example Token: DEMO</h2>
+        <div class="flex items-center gap-4 text-sm text-muted-foreground">
+          <span>Network: Solana</span>
+          <span>•</span>
+          <span>Type: SPL Token</span>
+          <span>•</span>
+          <span>Created: 2024-11-01</span>
+        </div>
+      </div>
+
+      <TokenAnalyticsDashboard
+        client:load
+        tokenId="demo_token_123"
+        metrics={mockMetrics}
+        riskScore={mockRiskScore}
+        holders={mockHolders}
+        pattern={mockPattern}
+        isLoading={false}
+      />
+    </div>
+
+    <div class="rounded-lg border bg-card p-6 space-y-4">
+      <h2 class="text-2xl font-semibold">Usage</h2>
+
+      <div class="space-y-2">
+        <h3 class="text-lg font-medium">Basic Import</h3>
+        <pre class="rounded-lg bg-muted p-4 overflow-x-auto"><code>{`import { TokenAnalyticsDashboard } from '@/components/analytics';
+
+<TokenAnalyticsDashboard
+  tokenId="your_token_id"
+  metrics={tokenMetrics}
+  riskScore={riskScore}
+  holders={holders}
+  pattern={pattern}
+  isLoading={false}
+/>`}</code></pre>
+      </div>
+
+      <div class="space-y-2">
+        <h3 class="text-lg font-medium">With Convex Real-time Data</h3>
+        <pre class="rounded-lg bg-muted p-4 overflow-x-auto"><code>{`import { useQuery } from "convex/react";
+import { api } from "@/convex/_generated/api";
+import { TokenAnalyticsDashboard } from "@/components/analytics";
+
+export function TokenPage({ tokenId }) {
+  const metrics = useQuery(api.analytics.getTokenMetrics, { tokenId });
+  const riskScore = useQuery(api.analytics.getRiskScore, { tokenId });
+  const holders = useQuery(api.analytics.getHolders, { tokenId });
+  const pattern = useQuery(api.analytics.detectPattern, { tokenId });
+
+  return (
+    <TokenAnalyticsDashboard
+      tokenId={tokenId}
+      metrics={metrics || null}
+      riskScore={riskScore || null}
+      holders={holders || []}
+      pattern={pattern || null}
+      isLoading={metrics === undefined}
+    />
+  );
+}`}</code></pre>
+      </div>
+    </div>
+
+    <div class="rounded-lg border bg-card p-6 space-y-4">
+      <h2 class="text-2xl font-semibold">Components</h2>
+      <div class="grid gap-4 md:grid-cols-2">
+        <div class="space-y-2">
+          <h3 class="font-medium">Charts</h3>
+          <ul class="space-y-1 text-sm text-muted-foreground">
+            <li>• PriceChart - Price history visualization</li>
+            <li>• VolumeChart - Trading volume over time</li>
+            <li>• HolderDistribution - Token distribution pie chart</li>
+          </ul>
+        </div>
+        <div class="space-y-2">
+          <h3 class="font-medium">Analytics</h3>
+          <ul class="space-y-1 text-sm text-muted-foreground">
+            <li>• MetricsOverview - Key metrics grid</li>
+            <li>• RiskScoreCard - Risk assessment</li>
+            <li>• HolderList - Top holders table</li>
+            <li>• TradingPatternAlert - Pattern detection</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </div>
+</Layout>
