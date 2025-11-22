@@ -1,0 +1,308 @@
+---
+import Layout from '@/layouts/Layout.astro';
+
+const title = 'Component Picker';
+const description = 'Browse and insert components visually';
+---
+
+<Layout title={title} description={description} sidebarInitialCollapsed={true}>
+	<div class="container mx-auto px-4 py-8">
+		<!-- Header -->
+		<div class="mb-8">
+			<h1 class="text-4xl font-bold mb-2">Component Picker</h1>
+			<p class="text-muted-foreground">
+				Visual component library browser with AI-powered suggestions
+			</p>
+		</div>
+
+		<!-- Features Grid -->
+		<div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 mb-8">
+			<div class="rounded-lg border bg-card p-6">
+				<div class="flex items-center gap-3 mb-3">
+					<div class="h-10 w-10 rounded-lg bg-primary/10 flex items-center justify-center">
+						<svg
+							class="h-5 w-5 text-primary"
+							fill="none"
+							stroke="currentColor"
+							viewBox="0 0 24 24"
+						>
+							<path
+								stroke-linecap="round"
+								stroke-linejoin="round"
+								stroke-width="2"
+								d="M4 5a1 1 0 011-1h4a1 1 0 011 1v7a1 1 0 01-1 1H5a1 1 0 01-1-1V5zM14 5a1 1 0 011-1h4a1 1 0 011 1v7a1 1 0 01-1 1h-4a1 1 0 01-1-1V5zM4 16a1 1 0 011-1h4a1 1 0 011 1v3a1 1 0 01-1 1H5a1 1 0 01-1-1v-3zM14 16a1 1 0 011-1h4a1 1 0 011 1v3a1 1 0 01-1 1h-4a1 1 0 01-1-1v-3z"
+							></path>
+						</svg>
+					</div>
+					<h3 class="font-semibold">Visual Browse</h3>
+				</div>
+				<p class="text-sm text-muted-foreground">
+					Grid view of all 50+ components with live previews
+				</p>
+			</div>
+
+			<div class="rounded-lg border bg-card p-6">
+				<div class="flex items-center gap-3 mb-3">
+					<div class="h-10 w-10 rounded-lg bg-primary/10 flex items-center justify-center">
+						<svg
+							class="h-5 w-5 text-primary"
+							fill="none"
+							stroke="currentColor"
+							viewBox="0 0 24 24"
+						>
+							<path
+								stroke-linecap="round"
+								stroke-linejoin="round"
+								stroke-width="2"
+								d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"></path>
+						</svg>
+					</div>
+					<h3 class="font-semibold">Smart Search</h3>
+				</div>
+				<p class="text-sm text-muted-foreground">
+					Search by name, description, or tags. Filter by category
+				</p>
+			</div>
+
+			<div class="rounded-lg border bg-card p-6">
+				<div class="flex items-center gap-3 mb-3">
+					<div class="h-10 w-10 rounded-lg bg-primary/10 flex items-center justify-center">
+						<svg
+							class="h-5 w-5 text-primary"
+							fill="none"
+							stroke="currentColor"
+							viewBox="0 0 24 24"
+						>
+							<path
+								stroke-linecap="round"
+								stroke-linejoin="round"
+								stroke-width="2"
+								d="M13 10V3L4 14h7v7l9-11h-7z"></path>
+						</svg>
+					</div>
+					<h3 class="font-semibold">AI Suggestions</h3>
+				</div>
+				<p class="text-sm text-muted-foreground">
+					Get component recommendations based on your intent
+				</p>
+			</div>
+
+			<div class="rounded-lg border bg-card p-6">
+				<div class="flex items-center gap-3 mb-3">
+					<div class="h-10 w-10 rounded-lg bg-primary/10 flex items-center justify-center">
+						<svg
+							class="h-5 w-5 text-primary"
+							fill="none"
+							stroke="currentColor"
+							viewBox="0 0 24 24"
+						>
+							<path
+								stroke-linecap="round"
+								stroke-linejoin="round"
+								stroke-width="2"
+								d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"></path>
+							<path
+								stroke-linecap="round"
+								stroke-linejoin="round"
+								stroke-width="2"
+								d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z"
+							></path>
+						</svg>
+					</div>
+					<h3 class="font-semibold">Live Preview</h3>
+				</div>
+				<p class="text-sm text-muted-foreground">
+					Preview components with code examples before inserting
+				</p>
+			</div>
+
+			<div class="rounded-lg border bg-card p-6">
+				<div class="flex items-center gap-3 mb-3">
+					<div class="h-10 w-10 rounded-lg bg-primary/10 flex items-center justify-center">
+						<svg
+							class="h-5 w-5 text-primary"
+							fill="none"
+							stroke="currentColor"
+							viewBox="0 0 24 24"
+						>
+							<path
+								stroke-linecap="round"
+								stroke-linejoin="round"
+								stroke-width="2"
+								d="M7 16V4m0 0L3 8m4-4l4 4m6 0v12m0 0l4-4m-4 4l-4-4"></path>
+						</svg>
+					</div>
+					<h3 class="font-semibold">Drag & Drop</h3>
+				</div>
+				<p class="text-sm text-muted-foreground">
+					Drag components into your editor or click to insert
+				</p>
+			</div>
+
+			<div class="rounded-lg border bg-card p-6">
+				<div class="flex items-center gap-3 mb-3">
+					<div class="h-10 w-10 rounded-lg bg-primary/10 flex items-center justify-center">
+						<svg
+							class="h-5 w-5 text-primary"
+							fill="none"
+							stroke="currentColor"
+							viewBox="0 0 24 24"
+						>
+							<path
+								stroke-linecap="round"
+								stroke-linejoin="round"
+								stroke-width="2"
+								d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+						</svg>
+					</div>
+					<h3 class="font-semibold">Recently Used</h3>
+				</div>
+				<p class="text-sm text-muted-foreground">
+					Quick access to your last 10 used components
+				</p>
+			</div>
+		</div>
+
+		<!-- Demo Section -->
+		<div class="rounded-lg border bg-card p-8 mb-8">
+			<h2 class="text-2xl font-bold mb-4">Try it Out</h2>
+			<p class="text-muted-foreground mb-6">
+				Click the button below to open the component picker and explore the library
+			</p>
+
+			<!-- Component Picker Integration -->
+			<div class="flex gap-4">
+				<!-- Trigger Button -->
+				<div id="picker-trigger"></div>
+
+				<!-- FAB Button -->
+				<div id="picker-fab"></div>
+			</div>
+
+			<!-- Component Picker Modal -->
+			<div id="component-picker"></div>
+		</div>
+
+		<!-- Component Categories -->
+		<div class="mb-8">
+			<h2 class="text-2xl font-bold mb-4">Component Categories</h2>
+			<div class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-4">
+				<div class="rounded-lg border bg-card p-4 text-center">
+					<div class="text-2xl mb-2">🎨</div>
+					<h3 class="font-medium text-sm">UI Primitives</h3>
+					<p class="text-xs text-muted-foreground mt-1">Button, Card, Badge</p>
+				</div>
+				<div class="rounded-lg border bg-card p-4 text-center">
+					<div class="text-2xl mb-2">📝</div>
+					<h3 class="font-medium text-sm">Forms</h3>
+					<p class="text-xs text-muted-foreground mt-1">Input, Select, Checkbox</p>
+				</div>
+				<div class="rounded-lg border bg-card p-4 text-center">
+					<div class="text-2xl mb-2">📊</div>
+					<h3 class="font-medium text-sm">Data Display</h3>
+					<p class="text-xs text-muted-foreground mt-1">Table, Avatar, Chart</p>
+				</div>
+				<div class="rounded-lg border bg-card p-4 text-center">
+					<div class="text-2xl mb-2">💬</div>
+					<h3 class="font-medium text-sm">Feedback</h3>
+					<p class="text-xs text-muted-foreground mt-1">Alert, Skeleton, Toast</p>
+				</div>
+				<div class="rounded-lg border bg-card p-4 text-center">
+					<div class="text-2xl mb-2">🎭</div>
+					<h3 class="font-medium text-sm">Overlays</h3>
+					<p class="text-xs text-muted-foreground mt-1">Dialog, Tooltip, Popover</p>
+				</div>
+				<div class="rounded-lg border bg-card p-4 text-center">
+					<div class="text-2xl mb-2">🧭</div>
+					<h3 class="font-medium text-sm">Navigation</h3>
+					<p class="text-xs text-muted-foreground mt-1">Tabs, Breadcrumb, Menu</p>
+				</div>
+				<div class="rounded-lg border bg-card p-4 text-center">
+					<div class="text-2xl mb-2">📐</div>
+					<h3 class="font-medium text-sm">Layout</h3>
+					<p class="text-xs text-muted-foreground mt-1">Accordion, Separator</p>
+				</div>
+				<div class="rounded-lg border bg-card p-4 text-center">
+					<div class="text-2xl mb-2">✨</div>
+					<h3 class="font-medium text-sm">Features</h3>
+					<p class="text-xs text-muted-foreground mt-1">Chat, Gallery, Editor</p>
+				</div>
+				<div class="rounded-lg border bg-card p-4 text-center">
+					<div class="text-2xl mb-2">🔷</div>
+					<h3 class="font-medium text-sm">Ontology</h3>
+					<p class="text-xs text-muted-foreground mt-1">ThingCard, PersonCard</p>
+				</div>
+			</div>
+		</div>
+
+		<!-- Quick Start Guide -->
+		<div class="rounded-lg border bg-muted/50 p-6">
+			<h3 class="font-bold mb-3">Quick Start Guide</h3>
+			<ol class="space-y-2 text-sm">
+				<li class="flex items-start gap-2">
+					<span class="font-bold text-primary">1.</span>
+					<span>Click "Add Component" to open the component picker</span>
+				</li>
+				<li class="flex items-start gap-2">
+					<span class="font-bold text-primary">2.</span>
+					<span>Use the search bar to find components by name or description</span>
+				</li>
+				<li class="flex items-start gap-2">
+					<span class="font-bold text-primary">3.</span>
+					<span>Filter by category using the tabs (UI, Forms, Data Display, etc.)</span>
+				</li>
+				<li class="flex items-start gap-2">
+					<span class="font-bold text-primary">4.</span>
+					<span>Click "Preview" to see usage examples and documentation</span>
+				</li>
+				<li class="flex items-start gap-2">
+					<span class="font-bold text-primary">5.</span>
+					<span>Click "Insert" or drag the component into your editor</span>
+				</li>
+				<li class="flex items-start gap-2">
+					<span class="font-bold text-primary">6.</span>
+					<span>Recently used components appear at the top for quick access</span>
+				</li>
+			</ol>
+		</div>
+	</div>
+
+	<!-- Client Components -->
+	<script>
+		import { ComponentPicker } from '@/components/features/creator/ComponentPicker';
+		import {
+			ComponentPickerTrigger,
+			ComponentPickerFAB,
+		} from '@/components/features/creator/ComponentPickerTrigger';
+		import { createRoot } from 'react-dom/client';
+		import { createElement } from 'react';
+
+		// Mount ComponentPicker
+		const pickerEl = document.getElementById('component-picker');
+		if (pickerEl) {
+			const pickerRoot = createRoot(pickerEl);
+			pickerRoot.render(createElement(ComponentPicker));
+		}
+
+		// Mount Trigger Button
+		const triggerEl = document.getElementById('picker-trigger');
+		if (triggerEl) {
+			const triggerRoot = createRoot(triggerEl);
+			triggerRoot.render(createElement(ComponentPickerTrigger));
+		}
+
+		// Mount FAB Button
+		const fabEl = document.getElementById('picker-fab');
+		if (fabEl) {
+			const fabRoot = createRoot(fabEl);
+			fabRoot.render(createElement(ComponentPickerFAB));
+		}
+
+		// Listen for component insert events
+		window.addEventListener('insertComponent', (e: any) => {
+			console.log('Component inserted:', e.detail.component);
+			// You can handle component insertion here
+			// e.g., insert into code editor, update preview, etc.
+		});
+	</script>
+</Layout>

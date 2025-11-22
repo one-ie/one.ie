@@ -1,0 +1,22 @@
+---
+/**
+ * Admin: Environment Variables Management Page
+ *
+ * Secure management of environment variables, API keys, and feature flags
+ * Requires org_owner or platform_owner role
+ */
+
+import Layout from '@/layouts/Layout.astro';
+import EnvironmentVariablesManager from '@/components/admin/EnvironmentVariablesManager';
+
+const title = 'Environment Variables';
+const description = 'Manage configuration, API keys, and feature flags securely';
+---
+
+<Layout
+  title={title}
+  description={description}
+  sidebarInitialCollapsed={false}
+>
+  <EnvironmentVariablesManager client:only="react" />
+</Layout>

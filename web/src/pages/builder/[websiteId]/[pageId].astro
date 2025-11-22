@@ -1,0 +1,42 @@
+---
+/**
+ * Website Builder - Main Editor Interface
+ *
+ * Three-panel layout for building websites with AI:
+ * - Left: AI Chat panel for natural language commands
+ * - Center: Live Preview panel with responsive viewport controls
+ * - Right: Code Editor panel (optional) for direct code editing
+ *
+ * Features:
+ * - Resizable panels with drag handles
+ * - Panel show/hide toggles
+ * - Responsive layout (mobile shows one panel at a time)
+ * - Persistent layout preferences
+ */
+
+import { WebsiteBuilder } from "@/components/builder/WebsiteBuilder";
+import Layout from "@/layouts/Layout.astro";
+
+const { websiteId, pageId } = Astro.params;
+
+if (!websiteId || !pageId) {
+	return Astro.redirect("/404");
+}
+
+const title = `Building ${pageId} | ${websiteId}`;
+const description = "AI-powered website builder with live preview and code editor";
+---
+
+<Layout
+	title={title}
+	description={description}
+	sidebarInitialCollapsed={true}
+	hideHeader={true}
+	fullHeight={true}
+>
+	<WebsiteBuilder
+		websiteId={websiteId}
+		pageId={pageId}
+		client:only="react"
+	/>
+</Layout>

@@ -1,0 +1,85 @@
+---
+/**
+ * Domain Management Admin Page
+ *
+ * Allows platform owners and org owners to configure custom domains
+ * for their Cloudflare Pages projects.
+ */
+
+import Layout from '../../layouts/Layout.astro';
+import { DomainManager } from '../../components/DomainManager';
+
+// Note: In production, get these from authenticated session
+const demoGroupId = 'kg28x4qe0s7hqnbqh4rfjpkp9d73bt5' as any; // Replace with actual group ID
+const projectName = 'web'; // Cloudflare Pages project name
+---
+
+<Layout title="Domain Management">
+  <div class="container mx-auto py-12 px-4">
+    <div class="max-w-4xl mx-auto">
+      <div class="mb-8">
+        <h1 class="text-4xl font-bold mb-4">Custom Domain Management</h1>
+        <p class="text-gray-600">
+          Configure custom domains for your Cloudflare Pages projects. Add your domain,
+          configure DNS settings, and Cloudflare will automatically provision SSL certificates.
+        </p>
+      </div>
+
+      <DomainManager
+        client:load
+        groupId={demoGroupId}
+        projectName={projectName}
+      />
+
+      <div class="mt-12 border-t pt-8">
+        <h2 class="text-2xl font-bold mb-4">How It Works</h2>
+
+        <div class="space-y-6">
+          <div>
+            <h3 class="text-lg font-semibold mb-2">1. Add Your Domain</h3>
+            <p class="text-gray-600">
+              Click "Add Custom Domain" and enter your domain name (e.g., example.com or
+              www.example.com). Choose whether to use a CNAME record (recommended) or A records.
+            </p>
+          </div>
+
+          <div>
+            <h3 class="text-lg font-semibold mb-2">2. Configure DNS</h3>
+            <p class="text-gray-600">
+              After adding your domain, you'll receive step-by-step instructions to configure
+              your DNS settings. Go to your DNS provider (e.g., Cloudflare, GoDaddy, Namecheap)
+              and create the required DNS records.
+            </p>
+          </div>
+
+          <div>
+            <h3 class="text-lg font-semibold mb-2">3. Verify Configuration</h3>
+            <p class="text-gray-600">
+              Wait 5-10 minutes for DNS propagation, then click "Verify DNS Configuration"
+              to check if your settings are correct. The system will validate your DNS records.
+            </p>
+          </div>
+
+          <div>
+            <h3 class="text-lg font-semibold mb-2">4. SSL Certificate</h3>
+            <p class="text-gray-600">
+              Once DNS is verified, Cloudflare automatically provisions a free SSL certificate
+              for your domain. This usually takes 5-15 minutes. Your site will be accessible
+              via HTTPS.
+            </p>
+          </div>
+        </div>
+
+        <div class="mt-8 p-4 bg-blue-50 rounded-lg">
+          <h3 class="font-semibold mb-2">Need Help?</h3>
+          <ul class="list-disc list-inside space-y-1 text-sm text-gray-700">
+            <li>DNS changes can take 5-10 minutes to propagate globally</li>
+            <li>CNAME records are recommended for easier management</li>
+            <li>SSL certificates are automatically renewed by Cloudflare</li>
+            <li>You can add multiple domains to the same project</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </div>
+</Layout>

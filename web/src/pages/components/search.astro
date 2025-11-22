@@ -1,0 +1,126 @@
+---
+/**
+ * Component Search Demo Page
+ *
+ * CYCLE 6: Demo page for semantic component search
+ *
+ * This page demonstrates the component search functionality,
+ * allowing developers to discover components using natural language.
+ *
+ * URL: /components/search
+ */
+
+import Layout from "@/layouts/Layout.astro";
+import { ComponentSearch } from "@/components/ComponentSearch";
+
+const title = "Component Search - AI-Powered Component Discovery";
+const description = "Search components using natural language queries";
+---
+
+<Layout title={title} description={description}>
+  <div class="container mx-auto px-4 py-12">
+    <!-- Header -->
+    <div class="max-w-4xl mx-auto mb-12 text-center">
+      <h1 class="text-4xl font-bold mb-4">Component Search</h1>
+      <p class="text-xl text-muted-foreground mb-2">
+        Discover components using natural language
+      </p>
+      <p class="text-sm text-muted-foreground">
+        Powered by OpenAI text-embedding-3-large (3072D embeddings)
+      </p>
+    </div>
+
+    <!-- Search Component -->
+    <ComponentSearch client:load />
+
+    <!-- Documentation -->
+    <div class="max-w-4xl mx-auto mt-16 prose prose-lg dark:prose-invert">
+      <h2>How It Works</h2>
+
+      <p>
+        This semantic search uses AI embeddings to understand component
+        descriptions and match them to your natural language queries.
+      </p>
+
+      <h3>Examples</h3>
+
+      <ul>
+        <li>
+          <strong>"pricing table"</strong> - Finds pricing components and
+          tables
+        </li>
+        <li>
+          <strong>"dark mode toggle"</strong> - Finds theme switching
+          components
+        </li>
+        <li>
+          <strong>"user avatar"</strong> - Finds avatar and profile components
+        </li>
+        <li>
+          <strong>"analytics chart"</strong> - Finds data visualization
+          components
+        </li>
+      </ul>
+
+      <h3>Technology Stack</h3>
+
+      <ul>
+        <li>
+          <strong>Embeddings:</strong> OpenAI text-embedding-3-large (3072
+          dimensions)
+        </li>
+        <li>
+          <strong>Vector Database:</strong> Convex with vector search
+        </li>
+        <li>
+          <strong>Ontology:</strong> Knowledge dimension (6D ontology)
+        </li>
+        <li>
+          <strong>Search Algorithm:</strong> Cosine similarity with threshold
+          filtering
+        </li>
+      </ul>
+
+      <h3>Integration</h3>
+
+      <p>To use component search in your project:</p>
+
+      <pre><code class="language-typescript">{`import { ComponentSearch } from '@/components/ComponentSearch';
+
+<ComponentSearch
+  initialQuery="pricing table"
+  limit={5}
+  showSamples={true}
+  client:load
+/>`}</code></pre>
+
+      <h3>API Endpoint</h3>
+
+      <p>You can also use the API directly:</p>
+
+      <pre><code class="language-bash">{`curl -X POST /api/components/search \\
+  -H "Content-Type: application/json" \\
+  -d '{"query": "pricing table", "limit": 5}'`}</code></pre>
+
+      <h3>Generating Embeddings</h3>
+
+      <p>To regenerate component embeddings:</p>
+
+      <pre><code class="language-bash">{`# 1. Generate embeddings from components
+bun run scripts/generate-component-embeddings.ts
+
+# 2. Upload to Convex
+bun run scripts/upload-embeddings-to-convex.ts
+
+# 3. Test search
+bun run scripts/test-component-search.ts "your query"`}</code></pre>
+
+      <h3>Configuration</h3>
+
+      <p>Required environment variables in <code>.env.local</code>:</p>
+
+      <pre><code class="language-bash">{`OPENAI_API_KEY=sk-...
+PUBLIC_CONVEX_URL=https://....convex.cloud`}</code></pre>
+    </div>
+  </div>
+</Layout>

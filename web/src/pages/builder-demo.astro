@@ -1,0 +1,381 @@
+---
+/**
+ * Builder Component Library Demo Page
+ *
+ * Showcases all 21 builder components with live examples.
+ * Use this page to test components and see how they work.
+ */
+
+import Layout from '@/layouts/Layout.astro';
+import {
+  HeroCentered,
+  HeroSplit,
+  HeroMinimal,
+  HeroWithStats,
+  HeroGradient,
+  FeaturesGrid,
+  FeaturesWithImages,
+  FeaturesComparison,
+  PricingThreeTier,
+  TestimonialsGrid,
+  CTASimple,
+  CTAWithForm,
+  Header,
+  Footer,
+} from '@/components/builder';
+import { Zap, Shield, Globe, Users, Sparkles, Rocket } from 'lucide-react';
+
+// Sample data
+const heroStats = [
+  { value: '10K+', label: 'Active Users', description: 'Growing daily' },
+  { value: '99.9%', label: 'Uptime', description: 'Always reliable' },
+  { value: '24/7', label: 'Support', description: "We're here for you" },
+  { value: '150+', label: 'Countries', description: 'Global reach' },
+];
+
+const features = [
+  {
+    icon: Zap,
+    title: 'Lightning Fast',
+    description: 'Optimized for speed and performance with zero configuration needed.',
+  },
+  {
+    icon: Shield,
+    title: 'Secure by Default',
+    description: 'Enterprise-grade security built-in from day one.',
+  },
+  {
+    icon: Globe,
+    title: 'Global CDN',
+    description: 'Fast loading times worldwide with automatic edge caching.',
+  },
+  {
+    icon: Users,
+    title: 'Team Collaboration',
+    description: 'Work together seamlessly with real-time sync.',
+  },
+  {
+    icon: Sparkles,
+    title: 'AI-Powered',
+    description: 'Intelligent features that adapt to your workflow.',
+  },
+  {
+    icon: Rocket,
+    title: 'Deploy Instantly',
+    description: 'One-click deployment to production in seconds.',
+  },
+];
+
+const featuresWithImages = [
+  {
+    title: 'Real-Time Collaboration',
+    description: 'Work together seamlessly with your team using real-time sync, instant updates, and built-in team chat.',
+    benefits: [
+      'Live cursor tracking',
+      'Instant sync across devices',
+      'Team chat and comments',
+      'Version history',
+    ],
+    image: {
+      src: 'https://images.unsplash.com/photo-1522071820081-009f0129c71c?w=800&auto=format&fit=crop',
+      alt: 'Team collaboration',
+    },
+    cta: {
+      text: 'Learn More',
+      href: '/features/collaboration',
+    },
+  },
+  {
+    title: 'Advanced Analytics',
+    description: 'Get deep insights into your performance with real-time analytics, custom dashboards, and automated reports.',
+    benefits: [
+      'Real-time metrics',
+      'Custom dashboards',
+      'Automated reports',
+      'Export capabilities',
+    ],
+    image: {
+      src: 'https://images.unsplash.com/photo-1551288049-bebda4e38f71?w=800&auto=format&fit=crop',
+      alt: 'Analytics dashboard',
+    },
+    cta: {
+      text: 'View Demo',
+      href: '/demo/analytics',
+    },
+  },
+];
+
+const comparisonItems = [
+  {
+    label: 'Deployment Time',
+    before: { value: '2 hours', description: 'Manual process' },
+    after: { value: '30 seconds', description: 'One-click deploy' },
+  },
+  {
+    label: 'Team Collaboration',
+    before: { value: false },
+    after: { value: true },
+  },
+  {
+    label: 'Support',
+    before: { value: 'Email only', description: '48hr response' },
+    after: { value: '24/7 Priority', description: 'Live chat & phone' },
+  },
+];
+
+const pricingTiers = [
+  {
+    name: 'Starter',
+    description: 'Perfect for individuals and small projects',
+    monthlyPrice: 0,
+    annualPrice: 0,
+    features: [
+      { text: 'Up to 3 projects', included: true },
+      { text: '1GB storage', included: true },
+      { text: 'Basic support', included: true },
+      { text: 'Team collaboration', included: false },
+      { text: 'Advanced analytics', included: false },
+      { text: 'Priority support', included: false },
+    ],
+    cta: { text: 'Start Free', href: '/signup' },
+  },
+  {
+    name: 'Pro',
+    description: 'For growing teams and businesses',
+    monthlyPrice: 29,
+    annualPrice: 290,
+    featured: true,
+    features: [
+      { text: 'Unlimited projects', included: true },
+      { text: '100GB storage', included: true },
+      { text: 'Priority support', included: true },
+      { text: 'Team collaboration', included: true },
+      { text: 'Advanced analytics', included: true },
+      { text: 'Custom integrations', included: false },
+    ],
+    cta: { text: 'Start Free Trial', href: '/trial' },
+  },
+  {
+    name: 'Enterprise',
+    description: 'For large organizations with custom needs',
+    monthlyPrice: 99,
+    annualPrice: 990,
+    features: [
+      { text: 'Unlimited everything', included: true },
+      { text: 'Unlimited storage', included: true },
+      { text: 'Dedicated support', included: true },
+      { text: 'Team collaboration', included: true },
+      { text: 'Advanced analytics', included: true },
+      { text: 'Custom integrations', included: true },
+    ],
+    cta: { text: 'Contact Sales', href: '/contact' },
+  },
+];
+
+const testimonials = [
+  {
+    quote: 'This platform has completely transformed how we work. The speed and reliability are unmatched.',
+    author: 'Sarah Johnson',
+    role: 'CEO',
+    company: 'TechCorp',
+    avatar: 'https://i.pravatar.cc/150?img=1',
+    rating: 5,
+  },
+  {
+    quote: "Best investment we've made this year. Our productivity has increased by 300%.",
+    author: 'Michael Chen',
+    role: 'CTO',
+    company: 'InnovateLabs',
+    avatar: 'https://i.pravatar.cc/150?img=2',
+    rating: 5,
+  },
+  {
+    quote: 'The support team is amazing. They helped us migrate our entire infrastructure seamlessly.',
+    author: 'Emily Rodriguez',
+    role: 'Head of Engineering',
+    company: 'DataFlow',
+    avatar: 'https://i.pravatar.cc/150?img=3',
+    rating: 5,
+  },
+];
+---
+
+<Layout title="Builder Component Library Demo" description="Live examples of all builder components">
+  <div class="space-y-0">
+    <!-- Hero: Centered -->
+    <HeroCentered
+      client:load
+      badge="🚀 Component Library v1.0"
+      headline="Build Beautiful Websites Fast"
+      subheadline="21 production-ready components built with React 19, TypeScript, Tailwind v4, and shadcn/ui. Responsive, accessible, and dark mode ready."
+      primaryCTA={{ text: 'View Components', href: '#components' }}
+      secondaryCTA={{ text: 'Read Docs', href: '/builder/README.md' }}
+    />
+
+    <!-- Divider -->
+    <div class="border-t border-border"></div>
+
+    <!-- Hero: Split -->
+    <HeroSplit
+      client:visible
+      badge="Featured"
+      headline="Split Layout Hero"
+      description="Perfect for showcasing products with a visual demo. The image can be positioned on either side with responsive stacking on mobile."
+      features={[
+        'Responsive design',
+        'Image left or right',
+        'Feature highlights',
+        'Multiple CTAs',
+      ]}
+      primaryCTA={{ text: 'Get Started', href: '/signup' }}
+      secondaryCTA={{ text: 'Watch Demo', href: '/demo' }}
+      image={{
+        src: 'https://images.unsplash.com/photo-1460925895917-afdab827c52f?w=800&auto=format&fit=crop',
+        alt: 'Dashboard screenshot',
+      }}
+      imagePosition="right"
+    />
+
+    <!-- Divider -->
+    <div class="border-t border-border"></div>
+
+    <!-- Hero: Minimal -->
+    <HeroMinimal
+      client:visible
+      headline="Minimal & Clean"
+      description="Sometimes less is more. This minimal hero focuses on typography and whitespace for maximum impact."
+      cta={{ text: 'Explore →', href: '#explore' }}
+    />
+
+    <!-- Divider -->
+    <div class="border-t border-border"></div>
+
+    <!-- Hero: With Stats -->
+    <HeroWithStats
+      client:visible
+      badge="Trusted by Thousands"
+      headline="Powered by Numbers"
+      description="Show off your impressive metrics with this stats-focused hero section. Perfect for social proof and building trust."
+      primaryCTA={{ text: 'Join Now', href: '/signup' }}
+      secondaryCTA={{ text: 'Case Studies', href: '/cases' }}
+      stats={heroStats}
+    />
+
+    <!-- Divider -->
+    <div class="border-t border-border"></div>
+
+    <!-- Hero: Gradient -->
+    <HeroGradient
+      client:visible
+      badge="New & Exciting"
+      headline="Eye-Catching Gradients"
+      subheadline="Make a bold statement with animated gradient backgrounds. Fully customizable colors and dark mode compatible."
+      primaryCTA={{ text: 'Experience It', href: '/demo' }}
+      secondaryCTA={{ text: 'Customize', href: '/customize' }}
+      gradientFrom="from-purple-600"
+      gradientVia="via-pink-500"
+      gradientTo="to-orange-500"
+    />
+
+    <!-- Divider -->
+    <div class="border-t border-border"></div>
+
+    <!-- Features: Grid -->
+    <FeaturesGrid
+      client:visible
+      title="Powerful Features"
+      subtitle="Everything you need to build modern websites"
+      badge="Features"
+      columns={3}
+      features={features}
+    />
+
+    <!-- Divider -->
+    <div class="border-t border-border"></div>
+
+    <!-- Features: With Images -->
+    <FeaturesWithImages
+      client:visible
+      title="See It In Action"
+      subtitle="Detailed features with visual demonstrations"
+      features={featuresWithImages}
+    />
+
+    <!-- Divider -->
+    <div class="border-t border-border"></div>
+
+    <!-- Features: Comparison -->
+    <FeaturesComparison
+      client:visible
+      title="Before vs After"
+      subtitle="See the dramatic improvements"
+      beforeLabel="Old Way"
+      afterLabel="Our Way"
+      items={comparisonItems}
+      highlightAfter={true}
+    />
+
+    <!-- Divider -->
+    <div class="border-t border-border"></div>
+
+    <!-- Pricing: Three Tier -->
+    <PricingThreeTier
+      client:load
+      title="Simple, Transparent Pricing"
+      subtitle="Choose the plan that's right for you"
+      tiers={pricingTiers}
+      showToggle={true}
+      defaultBilling="monthly"
+    />
+
+    <!-- Divider -->
+    <div class="border-t border-border"></div>
+
+    <!-- Testimonials: Grid -->
+    <TestimonialsGrid
+      client:visible
+      title="Loved by Developers"
+      subtitle="See what our customers are saying"
+      badge="⭐ 5.0 Rating"
+      testimonials={testimonials}
+      columns={3}
+    />
+
+    <!-- Divider -->
+    <div class="border-t border-border"></div>
+
+    <!-- CTA: Simple -->
+    <CTASimple
+      client:visible
+      headline="Ready to Get Started?"
+      description="Join thousands of developers building amazing websites with our component library."
+      primaryCTA={{ text: 'Start Building', href: '/signup' }}
+      secondaryCTA={{ text: 'View Docs', href: '/docs' }}
+      variant="gradient"
+    />
+
+    <!-- Divider -->
+    <div class="border-t border-border"></div>
+
+    <!-- CTA: With Form -->
+    <CTAWithForm
+      client:load
+      badge="📧 Newsletter"
+      headline="Stay Updated"
+      description="Get the latest components, updates, and tips delivered to your inbox."
+      placeholder="Enter your email"
+      buttonText="Subscribe"
+      onSubmit={async (email) => {
+        console.log('Newsletter signup:', email);
+        // Add your newsletter signup logic here
+      }}
+    />
+  </div>
+</Layout>
+
+<style>
+  /* Smooth scrolling for anchor links */
+  html {
+    scroll-behavior: smooth;
+  }
+</style>

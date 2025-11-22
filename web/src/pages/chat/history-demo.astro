@@ -1,0 +1,28 @@
+---
+/**
+ * Conversation History Demo
+ *
+ * Demonstrates:
+ * - Conversation history sidebar
+ * - Resume from any message
+ * - Undo/redo code changes
+ * - Export as markdown
+ * - Search functionality
+ * - Clear conversation
+ */
+
+import Layout from '@/layouts/Layout.astro';
+import { ChatHistoryDemo } from '@/components/features/chat/ChatHistoryDemo';
+
+const title = 'Conversation History Demo';
+const description = 'AI chat with full conversation history management';
+---
+
+<Layout
+  title={title}
+  description={description}
+  sidebarInitialCollapsed={true}
+  fullHeight={true}
+>
+  <ChatHistoryDemo client:only="react" />
+</Layout>

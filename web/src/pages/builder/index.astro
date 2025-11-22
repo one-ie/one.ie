@@ -1,0 +1,83 @@
+---
+/**
+ * Builder Index Page
+ *
+ * Lists all websites or redirects to a demo website builder.
+ */
+
+import Layout from "@/layouts/Layout.astro";
+import { Button } from "@/components/ui/button";
+import { Card, CardHeader, CardTitle, CardContent } from "@/components/ui/card";
+
+const title = "Website Builder";
+const description = "Build websites with AI assistance";
+
+// For now, redirect to a demo builder instance
+// Later, this will list user's websites from the database
+const demoWebsiteId = "my-website";
+const demoPageId = "home";
+---
+
+<Layout title={title} description={description}>
+	<div class="container mx-auto py-8 px-4">
+		<div class="max-w-4xl mx-auto">
+			<h1 class="text-4xl font-bold mb-4">Website Builder</h1>
+			<p class="text-xl text-muted-foreground mb-8">
+				Build beautiful websites with AI assistance
+			</p>
+
+			<Card>
+				<CardHeader>
+					<CardTitle>Quick Start</CardTitle>
+				</CardHeader>
+				<CardContent class="space-y-4">
+					<p class="text-muted-foreground">
+						Try the builder with a demo website, or create your own.
+					</p>
+
+					<div class="flex gap-4">
+						<a href={`/builder/${demoWebsiteId}/${demoPageId}`}>
+							<Button size="lg">
+								Try Demo Builder
+							</Button>
+						</a>
+						<Button variant="outline" size="lg" disabled>
+							Create New Website (Coming Soon)
+						</Button>
+					</div>
+				</CardContent>
+			</Card>
+
+			<div class="mt-8 grid gap-4 md:grid-cols-2">
+				<Card>
+					<CardHeader>
+						<CardTitle>Features</CardTitle>
+					</CardHeader>
+					<CardContent>
+						<ul class="space-y-2 text-sm text-muted-foreground">
+							<li>✓ AI-powered chat interface</li>
+							<li>✓ Live preview with responsive controls</li>
+							<li>✓ Code editor for manual editing</li>
+							<li>✓ Resizable panels</li>
+							<li>✓ Mobile-friendly interface</li>
+						</ul>
+					</CardContent>
+				</Card>
+
+				<Card>
+					<CardHeader>
+						<CardTitle>How It Works</CardTitle>
+					</CardHeader>
+					<CardContent>
+						<ol class="space-y-2 text-sm text-muted-foreground">
+							<li>1. Chat with AI to describe your website</li>
+							<li>2. Watch it build in real-time preview</li>
+							<li>3. Edit code directly if needed</li>
+							<li>4. Publish when ready</li>
+						</ol>
+					</CardContent>
+				</Card>
+			</div>
+		</div>
+	</div>
+</Layout>

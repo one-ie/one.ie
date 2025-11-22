@@ -1,0 +1,14 @@
+---
+import Layout from '@/layouts/Layout.astro';
+import { CreatorStudio } from '@/components/features/creator';
+
+const title = 'Creator Studio';
+const description = 'AI-powered website builder with chat and code editor';
+---
+
+<Layout title={title} description={description} sidebarInitialCollapsed={true}>
+	<div class="h-screen flex flex-col">
+		<!-- Full-height Creator Studio -->
+		<CreatorStudio client:only="react" />
+	</div>
+</Layout>

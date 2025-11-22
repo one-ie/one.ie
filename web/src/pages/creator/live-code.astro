@@ -1,0 +1,103 @@
+---
+import Layout from '@/layouts/Layout.astro';
+import { LivePreview } from '@/components/features/creator/LivePreview';
+
+const title = 'Live Code Editor';
+const description = 'Build and preview code in real-time';
+
+const sampleAstroCode = `---
+const title = "My Astro Component";
+const items = ["React", "Astro", "Tailwind"];
+---
+
+<div class="max-w-4xl mx-auto p-8">
+	<h1 class="text-5xl font-bold mb-4 bg-gradient-to-r from-blue-600 to-purple-600 bg-clip-text text-transparent">
+		{title}
+	</h1>
+
+	<p class="text-xl text-gray-600 mb-8">
+		Build beautiful websites with modern tools
+	</p>
+
+	<div class="grid md:grid-cols-3 gap-6">
+		{items.map((item) => (
+			<div class="p-6 bg-white rounded-xl shadow-lg hover:shadow-xl transition-shadow">
+				<h3 class="text-2xl font-bold mb-2">{item}</h3>
+				<p class="text-gray-600">Build amazing things</p>
+			</div>
+		))}
+	</div>
+
+	<button
+		class="mt-8 px-8 py-4 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors text-lg font-semibold shadow-lg"
+		onclick="alert('Hello from Astro!')">
+		Get Started
+	</button>
+</div>`;
+---
+
+<Layout title={title} description={description} sidebarInitialCollapsed={true}>
+	<div class="container mx-auto px-4 py-8">
+		<!-- Header -->
+		<div class="mb-8">
+			<h1 class="text-4xl font-bold mb-2">Live Code Editor</h1>
+			<p class="text-muted-foreground">
+				Write code on the left, see it come to life on the right. Auto-compiles as you type.
+			</p>
+		</div>
+
+		{/* Live Preview Component */}
+		<LivePreview
+			client:only="react"
+			initialCode={sampleAstroCode}
+			language="astro"
+			useMonaco={false}
+			autoCompile={true}
+			compileDelay={500}
+			className="h-[calc(100vh-200px)]"
+		/>
+
+		<!-- Features -->
+		<div class="mt-8 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
+			<div class="rounded-lg border bg-card p-4">
+				<h3 class="font-bold mb-2">🔥 Hot Reload</h3>
+				<p class="text-sm text-muted-foreground">
+					See changes instantly as you type
+				</p>
+			</div>
+			<div class="rounded-lg border bg-card p-4">
+				<h3 class="font-bold mb-2">⚡ Server Compilation</h3>
+				<p class="text-sm text-muted-foreground">
+					Astro code compiled server-side
+				</p>
+			</div>
+			<div class="rounded-lg border bg-card p-4">
+				<h3 class="font-bold mb-2">📱 Responsive Preview</h3>
+				<p class="text-sm text-muted-foreground">
+					Test desktop, tablet, and mobile views
+				</p>
+			</div>
+			<div class="rounded-lg border bg-card p-4">
+				<h3 class="font-bold mb-2">🔍 Zoom Controls</h3>
+				<p class="text-sm text-muted-foreground">
+					Zoom in/out for precise inspection
+				</p>
+			</div>
+		</div>
+
+		<!-- Instructions -->
+		<div class="mt-8 rounded-lg border bg-muted/50 p-6">
+			<h3 class="font-bold mb-3">Quick Start</h3>
+			<ul class="space-y-2 text-sm text-muted-foreground">
+				<li>• Edit the code on the left to see live updates</li>
+				<li>• Press <kbd class="rounded bg-muted px-2 py-1">⌘</kbd> + <kbd class="rounded bg-muted px-2 py-1">Enter</kbd> to manually compile</li>
+				<li>• Use the viewport buttons (Desktop/Tablet/Mobile) to preview different screen sizes</li>
+				<li>• Zoom in/out with the zoom controls for precise inspection (50% - 200%)</li>
+				<li>• Click the external link icon to open the preview in a new tab</li>
+				<li>• Click the refresh icon to force reload the preview</li>
+				<li>• Check the console at the bottom for compilation logs and messages</li>
+				<li>• Errors will appear in both the editor and preview areas with helpful suggestions</li>
+			</ul>
+		</div>
+	</div>
+</Layout>

@@ -1,0 +1,259 @@
+---
+import Layout from '@/layouts/Layout.astro';
+import { LivePreview } from '@/components/features/creator/LivePreview';
+
+const title = 'Live Code Test Suite';
+const description = 'Test live code compilation and preview';
+
+// Test Examples
+const examples = {
+	simple: `<div class="p-8">
+	<h1 class="text-4xl font-bold">Hello, World!</h1>
+	<p class="text-gray-600 mt-4">This is a simple HTML example.</p>
+</div>`,
+
+	interactive: `<div class="p-8">
+	<h2 class="text-3xl font-bold mb-4">Interactive Example</h2>
+	<button
+		onclick="document.getElementById('output').textContent = 'Button clicked!'"
+		class="px-6 py-3 bg-blue-600 text-white rounded-lg hover:bg-blue-700">
+		Click Me
+	</button>
+	<p id="output" class="mt-4 text-lg"></p>
+</div>`,
+
+	responsive: `<div class="p-8">
+	<div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+		<div class="p-6 bg-red-100 rounded-lg">
+			<h3 class="font-bold">Mobile</h3>
+			<p class="text-sm">Stacks vertically</p>
+		</div>
+		<div class="p-6 bg-blue-100 rounded-lg">
+			<h3 class="font-bold">Tablet</h3>
+			<p class="text-sm">2 columns</p>
+		</div>
+		<div class="p-6 bg-green-100 rounded-lg">
+			<h3 class="font-bold">Desktop</h3>
+			<p class="text-sm">3 columns</p>
+		</div>
+	</div>
+</div>`,
+
+	error: `<div class="p-8">
+	<h2>Error Test</h2>
+	<p>This has a syntax error:</p>
+	<div class="unclosed
+</div>`,
+
+	astro: `---
+const framework = "Astro";
+const version = "5.0";
+const features = ["Fast", "Modern", "Powerful"];
+---
+
+<div class="p-8">
+	<h1 class="text-4xl font-bold mb-4">
+		{framework} {version}
+	</h1>
+
+	<div class="grid grid-cols-3 gap-4 mb-6">
+		{features.map((feature) => (
+			<div class="p-4 bg-gradient-to-br from-blue-500 to-purple-600 text-white rounded-lg text-center">
+				<p class="font-bold">{feature}</p>
+			</div>
+		))}
+	</div>
+
+	<button
+		class="px-6 py-3 bg-blue-600 text-white rounded-lg hover:bg-blue-700"
+		onclick="alert('Built with Astro!')">
+		Learn More
+	</button>
+</div>`,
+
+	complex: `<div class="min-h-screen bg-gradient-to-br from-purple-500 to-pink-500 p-8">
+	<div class="max-w-4xl mx-auto bg-white rounded-2xl shadow-2xl p-8">
+		<h1 class="text-5xl font-bold mb-4 bg-gradient-to-r from-blue-600 to-purple-600 bg-clip-text text-transparent">
+			Complex Layout
+		</h1>
+
+		<div class="grid md:grid-cols-2 gap-6 mb-8">
+			<div class="space-y-4">
+				<h2 class="text-2xl font-bold">Features</h2>
+				<div class="space-y-2">
+					<div class="flex items-center gap-2">
+						<span class="text-green-600">✓</span>
+						<span>Live Preview</span>
+					</div>
+					<div class="flex items-center gap-2">
+						<span class="text-green-600">✓</span>
+						<span>Auto Compilation</span>
+					</div>
+					<div class="flex items-center gap-2">
+						<span class="text-green-600">✓</span>
+						<span>Error Handling</span>
+					</div>
+				</div>
+			</div>
+
+			<div>
+				<h2 class="text-2xl font-bold mb-4">Stats</h2>
+				<div class="space-y-3">
+					<div>
+						<div class="flex justify-between mb-1">
+							<span class="text-sm">Performance</span>
+							<span class="text-sm">95%</span>
+						</div>
+						<div class="w-full bg-gray-200 rounded-full h-2">
+							<div class="bg-blue-600 h-2 rounded-full" style="width: 95%"></div>
+						</div>
+					</div>
+					<div>
+						<div class="flex justify-between mb-1">
+							<span class="text-sm">Speed</span>
+							<span class="text-sm">87%</span>
+						</div>
+						<div class="w-full bg-gray-200 rounded-full h-2">
+							<div class="bg-green-600 h-2 rounded-full" style="width: 87%"></div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+
+		<button
+			onclick="alert('Complex layout works!')"
+			class="w-full py-4 bg-gradient-to-r from-blue-600 to-purple-600 text-white rounded-lg font-bold text-lg hover:from-blue-700 hover:to-purple-700 transition-all shadow-lg">
+			Get Started
+		</button>
+	</div>
+</div>`,
+};
+---
+
+<Layout title={title} description={description} sidebarInitialCollapsed={true}>
+	<div class="container mx-auto px-4 py-8">
+		<!-- Header -->
+		<div class="mb-6">
+			<h1 class="text-4xl font-bold mb-2">Live Code Test Suite</h1>
+			<p class="text-muted-foreground">
+				Test different code examples and features
+			</p>
+		</div>
+
+		<!-- Test Tabs -->
+		<div class="mb-6 flex flex-wrap gap-2">
+			{Object.keys(examples).map((key) => (
+				<button
+					class="rounded-lg border bg-card px-4 py-2 text-sm font-medium hover:bg-accent"
+					data-example={key}>
+					{key.charAt(0).toUpperCase() + key.slice(1)}
+				</button>
+			))}
+		</div>
+
+		<!-- Live Preview Area -->
+		<div id="preview-container">
+			<LivePreview
+				client:only="react"
+				initialCode={examples.simple}
+				language="html"
+				useMonaco={false}
+				autoCompile={true}
+				compileDelay={300}
+				className="h-[calc(100vh-250px)]"
+			/>
+		</div>
+
+		<!-- Test Results -->
+		<div class="mt-8 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+			<div class="rounded-lg border bg-card p-4">
+				<h3 class="font-bold mb-2">✓ Server Compilation</h3>
+				<p class="text-sm text-muted-foreground">
+					Astro code compiled on the server
+				</p>
+			</div>
+			<div class="rounded-lg border bg-card p-4">
+				<h3 class="font-bold mb-2">✓ Hot Reload</h3>
+				<p class="text-sm text-muted-foreground">
+					Changes reflected instantly
+				</p>
+			</div>
+			<div class="rounded-lg border bg-card p-4">
+				<h3 class="font-bold mb-2">✓ Error Handling</h3>
+				<p class="text-sm text-muted-foreground">
+					Syntax and runtime errors displayed
+				</p>
+			</div>
+			<div class="rounded-lg border bg-card p-4">
+				<h3 class="font-bold mb-2">✓ Responsive Preview</h3>
+				<p class="text-sm text-muted-foreground">
+					Test mobile, tablet, desktop
+				</p>
+			</div>
+			<div class="rounded-lg border bg-card p-4">
+				<h3 class="font-bold mb-2">✓ Console Output</h3>
+				<p class="text-sm text-muted-foreground">
+					Logs and errors captured
+				</p>
+			</div>
+			<div class="rounded-lg border bg-card p-4">
+				<h3 class="font-bold mb-2">✓ Keyboard Shortcuts</h3>
+				<p class="text-sm text-muted-foreground">
+					⌘↵ to compile and run
+				</p>
+			</div>
+		</div>
+
+		<!-- Test Instructions -->
+		<div class="mt-8 rounded-lg border bg-muted/50 p-6">
+			<h3 class="font-bold mb-3">Test Scenarios</h3>
+			<div class="space-y-3 text-sm">
+				<div>
+					<p class="font-medium">1. Simple HTML</p>
+					<p class="text-muted-foreground">Basic HTML rendering with Tailwind CSS</p>
+				</div>
+				<div>
+					<p class="font-medium">2. Interactive</p>
+					<p class="text-muted-foreground">JavaScript event handlers and DOM manipulation</p>
+				</div>
+				<div>
+					<p class="font-medium">3. Responsive</p>
+					<p class="text-muted-foreground">Test different viewport sizes</p>
+				</div>
+				<div>
+					<p class="font-medium">4. Error</p>
+					<p class="text-muted-foreground">Invalid HTML triggers error overlay</p>
+				</div>
+				<div>
+					<p class="font-medium">5. Astro</p>
+					<p class="text-muted-foreground">Frontmatter, expressions, and map operations</p>
+				</div>
+				<div>
+					<p class="font-medium">6. Complex</p>
+					<p class="text-muted-foreground">Full page layout with gradients and animations</p>
+				</div>
+			</div>
+		</div>
+	</div>
+
+	<!-- Client-side example switching -->
+	<script define:vars={{ examples }}>
+		const buttons = document.querySelectorAll('[data-example]');
+		buttons.forEach(button => {
+			button.addEventListener('click', () => {
+				const exampleKey = button.dataset.example;
+				const code = examples[exampleKey];
+
+				// Update active button
+				buttons.forEach(b => b.classList.remove('bg-accent'));
+				button.classList.add('bg-accent');
+
+				// Dispatch custom event to update preview
+				window.dispatchEvent(new CustomEvent('updateCode', {
+					detail: { code, language: exampleKey === 'astro' ? 'astro' : 'html' }
+				}));
+			});
+		});
+	</script>
+</Layout>

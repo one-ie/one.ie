@@ -1,0 +1,32 @@
+---
+/**
+ * Website Builder - Deployment Interface
+ *
+ * One-click deployment with real-time build logs, status tracking,
+ * and live URL display.
+ *
+ * Route: /builder/[websiteId]/deploy
+ */
+
+import { DeploymentPanel } from "@/components/builder/DeploymentPanel";
+import Layout from "@/layouts/Layout.astro";
+
+const { websiteId } = Astro.params;
+
+if (!websiteId) {
+  return Astro.redirect("/404");
+}
+
+const title = `Deploy | ${websiteId}`;
+const description = "Deploy your website to production";
+---
+
+<Layout
+  title={title}
+  description={description}
+  sidebarInitialCollapsed={true}
+  hideHeader={true}
+  fullHeight={true}
+>
+  <DeploymentPanel websiteId={websiteId} client:only="react" />
+</Layout>

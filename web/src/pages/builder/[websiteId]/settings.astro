@@ -1,0 +1,38 @@
+---
+/**
+ * Website Builder Settings Page
+ *
+ * Configuration page for website settings including:
+ * - Domain configuration (custom domain + .pages.dev)
+ * - Site metadata (title, description, favicon)
+ * - Analytics configuration (Plausible, Google Analytics)
+ * - Environment variables for production
+ * - Save settings to Convex
+ */
+
+import Layout from "@/layouts/Layout.astro";
+import { WebsiteSettingsForm } from "@/components/builder/WebsiteSettingsForm";
+
+const { websiteId } = Astro.params;
+
+if (!websiteId) {
+  return Astro.redirect("/404");
+}
+
+const title = `Settings | ${websiteId}`;
+const description = "Configure your website settings and integrations";
+---
+
+<Layout title={title} description={description}>
+  <div class="container mx-auto py-8 px-4 max-w-4xl">
+    <div class="mb-8">
+      <h1 class="text-3xl font-bold mb-2">Website Settings</h1>
+      <p class="text-muted-foreground">
+        Configure your website domain, metadata, analytics, and environment
+        variables
+      </p>
+    </div>
+
+    <WebsiteSettingsForm websiteId={websiteId} client:load />
+  </div>
+</Layout>

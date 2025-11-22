@@ -1,0 +1,102 @@
+---
+/**
+ * Preview Route
+ *
+ * Renders the live preview of a website page in an iframe.
+ * This is a bare-bones page without the builder UI chrome.
+ */
+
+const { websiteId, pageId } = Astro.params;
+
+if (!websiteId || !pageId) {
+	return Astro.redirect("/404");
+}
+
+// TODO: Fetch actual page content from backend
+// For now, show a placeholder
+const pageContent = `
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>${pageId}</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        body {
+            font-family: system-ui, -apple-system, sans-serif;
+            padding: 2rem;
+            max-width: 1200px;
+            margin: 0 auto;
+            line-height: 1.6;
+        }
+        h1 {
+            font-size: 2.5rem;
+            margin-bottom: 1rem;
+            color: #1a1a1a;
+        }
+        p {
+            font-size: 1.125rem;
+            color: #4a5568;
+            margin-bottom: 1rem;
+        }
+        .meta {
+            display: flex;
+            gap: 1rem;
+            padding: 1rem;
+            background: #f7fafc;
+            border-radius: 0.5rem;
+            margin-top: 2rem;
+        }
+        .meta-item {
+            display: flex;
+            flex-direction: column;
+            gap: 0.25rem;
+        }
+        .meta-label {
+            font-size: 0.875rem;
+            font-weight: 600;
+            color: #718096;
+            text-transform: uppercase;
+        }
+        .meta-value {
+            font-size: 1rem;
+            color: #2d3748;
+        }
+    </style>
+</head>
+<body>
+    <h1>Welcome to ${pageId}</h1>
+    <p>This is a preview of your website page. Use the AI chat to build your site!</p>
+    <p>Try asking the AI to:</p>
+    <ul style="margin-left: 2rem; margin-bottom: 1rem;">
+        <li>Add a hero section</li>
+        <li>Create a contact form</li>
+        <li>Build a product showcase</li>
+        <li>Add a pricing table</li>
+    </ul>
+
+    <div class="meta">
+        <div class="meta-item">
+            <span class="meta-label">Website ID</span>
+            <span class="meta-value">${websiteId}</span>
+        </div>
+        <div class="meta-item">
+            <span class="meta-label">Page ID</span>
+            <span class="meta-value">${pageId}</span>
+        </div>
+        <div class="meta-item">
+            <span class="meta-label">Status</span>
+            <span class="meta-value">Draft</span>
+        </div>
+    </div>
+</body>
+</html>
+`;
+---
+
+<Fragment set:html={pageContent} />
