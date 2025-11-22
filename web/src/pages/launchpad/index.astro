@@ -1,0 +1,455 @@
+---
+/**
+ * Launchpad Homepage
+ * Launch Your Token on Base
+ *
+ * Features:
+ * ✅ Hero section with gradient background
+ * ✅ Features grid (4 features)
+ * ✅ Live stats (Tokens launched, Market cap, Active DAOs)
+ * ✅ Recent launches card grid
+ * ✅ How It Works (3-step process)
+ * ✅ Final CTA section
+ * ✅ Fully responsive & accessible
+ */
+
+import Layout from "@/layouts/Layout.astro";
+import { Card, CardHeader, CardTitle, CardContent } from "@/components/ui/card";
+import { Badge } from "@/components/ui/badge";
+
+// TODO: Replace with actual Convex queries when backend is ready
+// import { ConvexHttpClient } from "convex/browser";
+// import { api } from "@/convex/_generated/api";
+// const convex = new ConvexHttpClient(import.meta.env.PUBLIC_CONVEX_URL);
+
+// Mock data (replace with Convex queries)
+const stats = {
+  tokensLaunched: 1247,
+  totalMarketCap: "$12.4M",
+  activeDAOs: 89,
+};
+
+// Mock recent launches (replace with api.tokens.listRecent)
+const recentLaunches = [
+  {
+    id: "1",
+    name: "MOON",
+    symbol: "MOON",
+    description: "Community-driven meme token with DAO governance",
+    marketCap: "$2.4M",
+    holders: 15234,
+    launchedAt: "2 hours ago",
+    logo: "🌙",
+    chain: "Base",
+  },
+  {
+    id: "2",
+    name: "DEGEN",
+    symbol: "DEGEN",
+    description: "For the degens, by the degens. Pure vibes.",
+    marketCap: "$1.8M",
+    holders: 8945,
+    launchedAt: "5 hours ago",
+    logo: "🎲",
+    chain: "Base",
+  },
+  {
+    id: "3",
+    name: "WAGMI",
+    symbol: "WAGMI",
+    description: "We're all gonna make it. Together.",
+    marketCap: "$950K",
+    holders: 5621,
+    launchedAt: "1 day ago",
+    logo: "🚀",
+    chain: "Base",
+  },
+  {
+    id: "4",
+    name: "BASED",
+    symbol: "BASED",
+    description: "The most based token on Base chain",
+    marketCap: "$780K",
+    holders: 4328,
+    launchedAt: "1 day ago",
+    logo: "⚡",
+    chain: "Base",
+  },
+];
+
+const features = [
+  {
+    icon: "⚡",
+    title: "One-Click Deploy",
+    description: "Launch your token in seconds. No coding required. Just connect your wallet and deploy.",
+    gradient: "from-blue-500 to-cyan-500",
+  },
+  {
+    icon: "🏛️",
+    title: "DAO Governance",
+    description: "Built-in governance tools. Create proposals, vote on decisions, and manage your community.",
+    gradient: "from-purple-500 to-pink-500",
+  },
+  {
+    icon: "🌐",
+    title: "Multi-Chain",
+    description: "Deploy on Base, Ethereum, or Polygon. Bridge seamlessly between chains.",
+    gradient: "from-orange-500 to-yellow-500",
+  },
+  {
+    icon: "🤖",
+    title: "AI-Powered",
+    description: "Smart contract optimization. AI-driven tokenomics. Automated security audits.",
+    gradient: "from-green-500 to-emerald-500",
+  },
+];
+
+const howItWorks = [
+  {
+    step: "1",
+    title: "Create",
+    description: "Choose your token name, symbol, and supply. Configure tokenomics with our visual builder.",
+    icon: "✨",
+  },
+  {
+    step: "2",
+    title: "Deploy",
+    description: "Review your smart contract. Connect your wallet. Deploy to Base in one click.",
+    icon: "🚀",
+  },
+  {
+    step: "3",
+    title: "Manage",
+    description: "Monitor holders, track analytics, and govern your DAO. All in one dashboard.",
+    icon: "📊",
+  },
+];
+---
+
+<Layout
+  title="Launchpad - Launch Your Token on Base"
+  description="Create and deploy your own token in minutes. One-click deployment, DAO governance, and AI-powered tools."
+>
+  <div class="min-h-screen bg-background">
+
+    <!-- ========== HERO SECTION ========== -->
+    <section class="relative py-32 md:py-40 overflow-hidden">
+      <!-- Gradient Background -->
+      <div class="absolute inset-0 bg-gradient-to-br from-blue-500/10 via-purple-500/10 to-pink-500/10 dark:from-blue-500/5 dark:via-purple-500/5 dark:to-pink-500/5"></div>
+      <div class="absolute inset-0 opacity-30">
+        <div class="absolute top-0 left-1/4 w-96 h-96 bg-blue-500 rounded-full blur-3xl"></div>
+        <div class="absolute bottom-0 right-1/4 w-96 h-96 bg-purple-500 rounded-full blur-3xl"></div>
+      </div>
+
+      <div class="container relative mx-auto px-4 text-center">
+        <div class="max-w-4xl mx-auto space-y-8">
+          <!-- Badge -->
+          <div class="inline-flex items-center gap-2 rounded-full bg-primary/10 border border-primary/30 px-4 py-2" data-usal="fade-down duration-600">
+            <svg class="h-4 w-4 text-primary" fill="currentColor" viewBox="0 0 24 24">
+              <path d="M13 10V3L4 14h7v7l9-11h-7z" />
+            </svg>
+            <span class="text-sm font-bold text-primary">Powered by Base</span>
+          </div>
+
+          <!-- Title -->
+          <h1 class="text-5xl md:text-7xl font-black text-foreground leading-tight" data-usal="fade-up duration-700 delay-100">
+            Launch Your Token<br />
+            <span class="bg-gradient-to-r from-blue-600 via-purple-600 to-pink-600 bg-clip-text text-transparent">
+              on Base
+            </span>
+          </h1>
+
+          <!-- Description -->
+          <p class="text-xl md:text-2xl text-muted-foreground max-w-2xl mx-auto" data-usal="fade-up duration-700 delay-200">
+            Create and deploy your own token in minutes. No coding required. Built-in DAO governance and AI-powered tools.
+          </p>
+
+          <!-- CTA Buttons -->
+          <div class="flex flex-col sm:flex-row gap-4 justify-center pt-4" data-usal="fade-up duration-700 delay-300">
+            <a
+              href="/launchpad/create"
+              class="group inline-flex items-center justify-center gap-2 rounded-xl bg-gradient-to-r from-blue-600 to-purple-600 text-white px-10 py-4 text-lg font-semibold hover:shadow-2xl hover:shadow-purple-500/50 hover:scale-105 transition-all duration-300 active:scale-95"
+            >
+              <span>Launch Your Token</span>
+              <svg class="h-5 w-5 transition-transform group-hover:translate-x-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 7l5 5m0 0l-5 5m5-5H6" />
+              </svg>
+            </a>
+            <a
+              href="#how-it-works"
+              class="inline-flex items-center justify-center gap-2 rounded-xl border-2 border-primary/30 text-foreground px-10 py-4 text-lg font-semibold hover:border-primary/60 hover:bg-primary/5 transition-all duration-300"
+            >
+              <svg class="h-5 w-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
+              </svg>
+              <span>How It Works</span>
+            </a>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ========== STATS SECTION ========== -->
+    <section class="py-20 bg-muted/40 border-y border-border">
+      <div class="container mx-auto px-4">
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-8 max-w-5xl mx-auto">
+          <!-- Tokens Launched -->
+          <div class="text-center space-y-2" data-usal="fade-up duration-600 delay-100">
+            <div class="text-5xl md:text-6xl font-black text-primary tabular-nums">
+              {stats.tokensLaunched.toLocaleString()}
+            </div>
+            <div class="text-lg font-semibold text-muted-foreground">
+              Tokens Launched
+            </div>
+          </div>
+
+          <!-- Total Market Cap -->
+          <div class="text-center space-y-2" data-usal="fade-up duration-600 delay-200">
+            <div class="text-5xl md:text-6xl font-black text-primary tabular-nums">
+              {stats.totalMarketCap}
+            </div>
+            <div class="text-lg font-semibold text-muted-foreground">
+              Total Market Cap
+            </div>
+          </div>
+
+          <!-- Active DAOs -->
+          <div class="text-center space-y-2" data-usal="fade-up duration-600 delay-300">
+            <div class="text-5xl md:text-6xl font-black text-primary tabular-nums">
+              {stats.activeDAOs}
+            </div>
+            <div class="text-lg font-semibold text-muted-foreground">
+              Active DAOs
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ========== FEATURES SECTION ========== -->
+    <section class="py-20 md:py-32">
+      <div class="container mx-auto px-4">
+        <div class="mb-16 text-center max-w-2xl mx-auto">
+          <h2 class="text-4xl md:text-5xl font-black text-foreground mb-4" data-usal="fade-up duration-700">
+            Everything You Need
+          </h2>
+          <p class="text-lg text-muted-foreground" data-usal="fade-up duration-700 delay-100">
+            Professional-grade tools to launch and manage your token project
+          </p>
+        </div>
+
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+          {features.map((feature, idx) => (
+            <div
+              class="group rounded-2xl border border-border/50 bg-card/50 backdrop-blur p-8 hover:border-primary/50 transition-all duration-300 hover:shadow-xl hover:shadow-primary/5 hover:scale-105"
+              data-usal={`fade-up duration-600 delay-${(idx + 1) * 100}`}
+            >
+              <!-- Icon -->
+              <div class={`flex h-16 w-16 items-center justify-center rounded-2xl bg-gradient-to-br ${feature.gradient} text-white text-3xl mb-6 group-hover:scale-110 transition-transform duration-300`}>
+                {feature.icon}
+              </div>
+
+              <!-- Title -->
+              <h3 class="text-xl font-bold text-foreground mb-3">
+                {feature.title}
+              </h3>
+
+              <!-- Description -->
+              <p class="text-sm text-muted-foreground leading-relaxed">
+                {feature.description}
+              </p>
+            </div>
+          ))}
+        </div>
+      </div>
+    </section>
+
+    <!-- ========== RECENT LAUNCHES SECTION ========== -->
+    <section class="py-20 md:py-32 bg-muted/40">
+      <div class="container mx-auto px-4">
+        <div class="mb-16 text-center max-w-2xl mx-auto">
+          <div class="inline-flex items-center gap-2 rounded-full bg-green-500/10 border border-green-500/30 px-4 py-2 mb-4" data-usal="fade-down duration-600">
+            <svg class="h-4 w-4 text-green-600" fill="currentColor" viewBox="0 0 20 20">
+              <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd" />
+            </svg>
+            <span class="text-sm font-bold text-green-700">Live on Base</span>
+          </div>
+          <h2 class="text-4xl md:text-5xl font-black text-foreground mb-4" data-usal="fade-up duration-700 delay-100">
+            Recent Launches
+          </h2>
+          <p class="text-lg text-muted-foreground" data-usal="fade-up duration-700 delay-200">
+            Join hundreds of successful projects launched on our platform
+          </p>
+        </div>
+
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+          {recentLaunches.map((token, idx) => (
+            <div
+              class="group rounded-2xl border border-border/50 bg-card backdrop-blur hover:border-primary/50 transition-all duration-300 hover:shadow-xl hover:shadow-primary/5 hover:scale-105 overflow-hidden"
+              data-usal={`fade-up duration-600 delay-${(idx + 1) * 100}`}
+            >
+              <div class="p-6 space-y-4">
+                <!-- Token Logo & Chain -->
+                <div class="flex items-start justify-between">
+                  <div class="flex h-14 w-14 items-center justify-center rounded-2xl bg-gradient-to-br from-blue-500 to-purple-500 text-white text-2xl">
+                    {token.logo}
+                  </div>
+                  <Badge variant="outline" className="text-xs">
+                    {token.chain}
+                  </Badge>
+                </div>
+
+                <!-- Token Info -->
+                <div>
+                  <h3 class="text-xl font-bold text-foreground mb-1">
+                    {token.name}
+                  </h3>
+                  <p class="text-sm text-muted-foreground font-mono">
+                    ${token.symbol}
+                  </p>
+                </div>
+
+                <!-- Description -->
+                <p class="text-sm text-muted-foreground leading-relaxed line-clamp-2">
+                  {token.description}
+                </p>
+
+                <!-- Stats -->
+                <div class="grid grid-cols-2 gap-4 pt-4 border-t border-border">
+                  <div>
+                    <div class="text-xs text-muted-foreground mb-1">Market Cap</div>
+                    <div class="text-sm font-bold text-foreground">{token.marketCap}</div>
+                  </div>
+                  <div>
+                    <div class="text-xs text-muted-foreground mb-1">Holders</div>
+                    <div class="text-sm font-bold text-foreground">{token.holders.toLocaleString()}</div>
+                  </div>
+                </div>
+
+                <!-- Launch Time -->
+                <div class="text-xs text-muted-foreground">
+                  Launched {token.launchedAt}
+                </div>
+              </div>
+            </div>
+          ))}
+        </div>
+      </div>
+    </section>
+
+    <!-- ========== HOW IT WORKS SECTION ========== -->
+    <section id="how-it-works" class="py-20 md:py-32">
+      <div class="container mx-auto px-4">
+        <div class="mb-16 text-center max-w-2xl mx-auto">
+          <h2 class="text-4xl md:text-5xl font-black text-foreground mb-4" data-usal="fade-up duration-700">
+            How It Works
+          </h2>
+          <p class="text-lg text-muted-foreground" data-usal="fade-up duration-700 delay-100">
+            Launch your token in three simple steps
+          </p>
+        </div>
+
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-12 max-w-5xl mx-auto">
+          {howItWorks.map((step, idx) => (
+            <div class="relative" data-usal={`fade-up duration-600 delay-${(idx + 1) * 100}`}>
+              <!-- Connector Line (hidden on mobile) -->
+              {idx < howItWorks.length - 1 && (
+                <div class="hidden md:block absolute top-12 left-1/2 w-full h-0.5 bg-gradient-to-r from-primary to-primary/20"></div>
+              )}
+
+              <!-- Step Card -->
+              <div class="relative bg-card border-2 border-border rounded-2xl p-8 space-y-6 hover:border-primary/50 transition-all duration-300 hover:shadow-xl">
+                <!-- Step Number -->
+                <div class="flex h-24 w-24 items-center justify-center rounded-2xl bg-gradient-to-br from-blue-500 to-purple-500 text-white text-4xl font-black mx-auto">
+                  {step.icon}
+                </div>
+
+                <!-- Step Number Badge -->
+                <div class="text-center">
+                  <div class="inline-flex items-center justify-center rounded-full bg-primary/10 border border-primary/30 px-4 py-1">
+                    <span class="text-sm font-bold text-primary">Step {step.step}</span>
+                  </div>
+                </div>
+
+                <!-- Title -->
+                <h3 class="text-2xl font-bold text-foreground text-center">
+                  {step.title}
+                </h3>
+
+                <!-- Description -->
+                <p class="text-sm text-muted-foreground leading-relaxed text-center">
+                  {step.description}
+                </p>
+              </div>
+            </div>
+          ))}
+        </div>
+      </div>
+    </section>
+
+    <!-- ========== FINAL CTA SECTION ========== -->
+    <section class="py-20 md:py-32 bg-gradient-to-br from-blue-600 via-purple-600 to-pink-600 relative overflow-hidden">
+      <div class="absolute inset-0 opacity-20">
+        <div class="absolute top-0 left-1/3 w-96 h-96 bg-white rounded-full blur-3xl"></div>
+        <div class="absolute bottom-0 right-1/3 w-96 h-96 bg-white rounded-full blur-3xl"></div>
+      </div>
+
+      <div class="container relative mx-auto px-4 text-center">
+        <div class="max-w-3xl mx-auto space-y-8">
+          <h2 class="text-4xl md:text-6xl font-black text-white leading-tight" data-usal="fade-up duration-700">
+            Ready to Launch?
+          </h2>
+          <p class="text-xl md:text-2xl text-white/90" data-usal="fade-up duration-700 delay-100">
+            Join thousands of projects building the future of web3
+          </p>
+          <div class="pt-4" data-usal="fade-up duration-700 delay-200">
+            <a
+              href="/launchpad/create"
+              class="group inline-flex items-center justify-center gap-2 rounded-xl bg-white text-purple-600 px-12 py-5 text-lg font-bold hover:shadow-2xl hover:scale-105 transition-all duration-300 active:scale-95"
+            >
+              <span>Launch Your Token Now</span>
+              <svg class="h-6 w-6 transition-transform group-hover:translate-x-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 7l5 5m0 0l-5 5m5-5H6" />
+              </svg>
+            </a>
+          </div>
+          <p class="text-sm text-white/70 pt-4">
+            No credit card required • Deploy in minutes • Full DAO governance
+          </p>
+        </div>
+      </div>
+    </section>
+
+  </div>
+</Layout>
+
+<style>
+  /* Gradient text animation */
+  @keyframes gradient-shift {
+    0% {
+      background-position: 0% 50%;
+    }
+    50% {
+      background-position: 100% 50%;
+    }
+    100% {
+      background-position: 0% 50%;
+    }
+  }
+
+  .bg-gradient-to-r {
+    background-size: 200% auto;
+    animation: gradient-shift 3s ease infinite;
+  }
+
+  /* Accessibility: Respect user motion preferences */
+  @media (prefers-reduced-motion: reduce) {
+    *,
+    *::before,
+    *::after {
+      animation-duration: 0.01ms !important;
+      animation-iteration-count: 1 !important;
+      transition-duration: 0.01ms !important;
+    }
+  }
+</style>

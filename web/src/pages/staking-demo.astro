@@ -1,0 +1,262 @@
+---
+/**
+ * Staking Demo Page
+ *
+ * Example page showing how to use the StakingInterface component
+ */
+
+import Layout from '@/layouts/Layout.astro';
+import { StakingInterface } from '@/components/features/staking';
+import type { StakingPool, UserStake, PendingRewards } from '@/components/features/staking';
+
+// Example data (in production, this would come from Convex)
+const examplePools: StakingPool[] = [
+  {
+    _id: 'pool_eth',
+    name: 'ETH Staking',
+    tokenSymbol: 'ETH',
+    tokenAddress: '0x000...eth',
+    totalValueLocked: 25_000_000,
+    baseApy: 5,
+    maxApy: 15,
+    participants: 2847,
+    minStake: 0.1,
+    maxStake: 100,
+    lockPeriods: [
+      { duration: 30, apyBonus: 2, penaltyRate: 5 },
+      { duration: 90, apyBonus: 5, penaltyRate: 3 },
+      { duration: 180, apyBonus: 10, penaltyRate: 2 },
+    ],
+    status: 'active',
+    startDate: Date.now() - (30 * 24 * 60 * 60 * 1000),
+  },
+  {
+    _id: 'pool_usdc',
+    name: 'USDC Stablecoin Staking',
+    tokenSymbol: 'USDC',
+    tokenAddress: '0x000...usdc',
+    totalValueLocked: 50_000_000,
+    baseApy: 8,
+    maxApy: 12,
+    participants: 5234,
+    minStake: 100,
+    lockPeriods: [
+      { duration: 30, apyBonus: 1, penaltyRate: 2 },
+      { duration: 90, apyBonus: 2, penaltyRate: 1 },
+      { duration: 180, apyBonus: 4, penaltyRate: 0.5 },
+    ],
+    status: 'active',
+    startDate: Date.now() - (60 * 24 * 60 * 60 * 1000),
+  },
+  {
+    _id: 'pool_dai',
+    name: 'DAI Yield Farming',
+    tokenSymbol: 'DAI',
+    tokenAddress: '0x000...dai',
+    totalValueLocked: 15_000_000,
+    baseApy: 6,
+    maxApy: 10,
+    participants: 1532,
+    minStake: 50,
+    maxStake: 10000,
+    lockPeriods: [
+      { duration: 30, apyBonus: 1, penaltyRate: 3 },
+      { duration: 60, apyBonus: 2, penaltyRate: 2 },
+      { duration: 120, apyBonus: 4, penaltyRate: 1 },
+    ],
+    status: 'active',
+    startDate: Date.now() - (45 * 24 * 60 * 60 * 1000),
+  },
+  {
+    _id: 'pool_btc',
+    name: 'Wrapped BTC Staking',
+    tokenSymbol: 'WBTC',
+    tokenAddress: '0x000...wbtc',
+    totalValueLocked: 80_000_000,
+    baseApy: 4,
+    maxApy: 8,
+    participants: 892,
+    minStake: 0.01,
+    maxStake: 10,
+    lockPeriods: [
+      { duration: 90, apyBonus: 2, penaltyRate: 4 },
+      { duration: 180, apyBonus: 4, penaltyRate: 2 },
+    ],
+    status: 'active',
+    startDate: Date.now() - (90 * 24 * 60 * 60 * 1000),
+  },
+  {
+    _id: 'pool_old',
+    name: 'Legacy Pool (Ended)',
+    tokenSymbol: 'OLD',
+    tokenAddress: '0x000...old',
+    totalValueLocked: 500_000,
+    baseApy: 10,
+    maxApy: 20,
+    participants: 45,
+    minStake: 10,
+    lockPeriods: [
+      { duration: 30, apyBonus: 5, penaltyRate: 10 },
+      { duration: 90, apyBonus: 10, penaltyRate: 5 },
+    ],
+    status: 'ended',
+    startDate: Date.now() - (365 * 24 * 60 * 60 * 1000),
+    endDate: Date.now() - (30 * 24 * 60 * 60 * 1000),
+  },
+];
+
+const exampleUserStakes: UserStake[] = [
+  {
+    _id: 'stake_1',
+    poolId: 'pool_eth',
+    userId: 'user_demo',
+    amount: 5,
+    lockDuration: 90,
+    startTime: Date.now() - (30 * 24 * 60 * 60 * 1000),
+    endTime: Date.now() + (60 * 24 * 60 * 60 * 1000),
+    rewards: 0.2054,
+    status: 'active',
+  },
+  {
+    _id: 'stake_2',
+    poolId: 'pool_usdc',
+    userId: 'user_demo',
+    amount: 5000,
+    lockDuration: 180,
+    startTime: Date.now() - (60 * 24 * 60 * 60 * 1000),
+    endTime: Date.now() + (120 * 24 * 60 * 60 * 1000),
+    rewards: 329.32,
+    status: 'active',
+  },
+];
+
+const examplePendingRewards: PendingRewards[] = [
+  {
+    poolId: 'pool_eth',
+    amount: 0.2054,
+    lastUpdated: Date.now(),
+  },
+  {
+    poolId: 'pool_usdc',
+    amount: 329.32,
+    lastUpdated: Date.now(),
+  },
+];
+
+const title = 'Staking Demo';
+const description = 'Interactive demo of the staking interface with example data';
+---
+
+<Layout title={title} description={description}>
+  <div class="container mx-auto px-4 py-8">
+    <!-- Demo Notice -->
+    <div class="mb-8 rounded-lg border border-primary/20 bg-primary/5 p-4">
+      <h2 class="text-lg font-semibold mb-2">Demo Mode</h2>
+      <p class="text-sm text-muted-foreground">
+        This is a demonstration of the staking interface with example data.
+        In production, this would connect to your Convex backend.
+      </p>
+    </div>
+
+    <!-- Staking Interface -->
+    <StakingInterface
+      userId="user_demo"
+      initialPools={examplePools}
+      initialStakes={exampleUserStakes}
+      initialRewards={examplePendingRewards}
+      initialBalance={10000}
+      onStake={async (poolId, data) => {
+        console.log('Staking:', poolId, data);
+        alert(`Demo: Would stake ${data.amount} for ${data.lockDuration} days in pool ${poolId}`);
+      }}
+      onUnstake={async (stakeId) => {
+        console.log('Unstaking:', stakeId);
+        alert(`Demo: Would unstake ${stakeId}`);
+      }}
+      onClaimRewards={async (poolId) => {
+        console.log('Claiming rewards from:', poolId);
+        alert(`Demo: Would claim rewards from pool ${poolId}`);
+      }}
+      client:load
+    />
+
+    <!-- Integration Instructions -->
+    <div class="mt-12 space-y-6">
+      <h2 class="text-2xl font-bold">Integration Guide</h2>
+
+      <div class="rounded-lg border bg-card p-6">
+        <h3 class="text-lg font-semibold mb-3">1. Install Dependencies</h3>
+        <pre class="bg-muted p-4 rounded-md overflow-x-auto"><code>bun add convex @radix-ui/react-dialog lucide-react</code></pre>
+      </div>
+
+      <div class="rounded-lg border bg-card p-6">
+        <h3 class="text-lg font-semibold mb-3">2. Set Up Convex Queries</h3>
+        <p class="text-sm text-muted-foreground mb-3">
+          Create queries in <code>convex/staking/queries.ts</code>:
+        </p>
+        <pre class="bg-muted p-4 rounded-md overflow-x-auto text-xs"><code>// convex/staking/queries.ts
+export const listPools = query({'{'}
+  handler: async (ctx) => {'{'}
+    return await ctx.db.query('staking_pools').collect();
+  {'}'}
+{'}'});
+
+export const getUserStakes = query({'{'}
+  args: {'{'} userId: v.string() {'}'},
+  handler: async (ctx, args) => {'{'}
+    return await ctx.db
+      .query('user_stakes')
+      .filter(q => q.eq(q.field('userId'), args.userId))
+      .collect();
+  {'}'}
+{'}'});</code></pre>
+      </div>
+
+      <div class="rounded-lg border bg-card p-6">
+        <h3 class="text-lg font-semibold mb-3">3. Create Mutations</h3>
+        <p class="text-sm text-muted-foreground mb-3">
+          Create mutations in <code>convex/staking/mutations.ts</code>:
+        </p>
+        <pre class="bg-muted p-4 rounded-md overflow-x-auto text-xs"><code>// convex/staking/mutations.ts
+export const stake = mutation({'{'}
+  args: {'{'}
+    poolId: v.string(),
+    userId: v.string(),
+    amount: v.number(),
+    lockDuration: v.number(),
+  {'}'},
+  handler: async (ctx, args) => {'{'}
+    // Implementation in README.md
+  {'}'}
+{'}'});</code></pre>
+      </div>
+
+      <div class="rounded-lg border bg-card p-6">
+        <h3 class="text-lg font-semibold mb-3">4. Use with Convex Hooks</h3>
+        <pre class="bg-muted p-4 rounded-md overflow-x-auto text-xs"><code>import {'{'} useQuery, useMutation {'}'} from 'convex/react';
+import {'{'} api {'}'} from '@/convex/_generated/api';
+import {'{'} StakingInterface {'}'} from '@/components/features/staking';
+
+const pools = useQuery(api.staking.queries.listPools);
+const stakes = useQuery(api.staking.queries.getUserStakes, {'{'} userId {'}'});
+const stake = useMutation(api.staking.mutations.stake);
+
+&lt;StakingInterface
+  userId={'{'}userId{'}'}
+  initialPools={'{'}pools{'}'}
+  initialStakes={'{'}stakes{'}'}
+  onStake={'{'}stake{'}'}
+  client:load
+/&gt;</code></pre>
+      </div>
+
+      <div class="rounded-lg border bg-card p-6">
+        <h3 class="text-lg font-semibold mb-3">5. View Full Documentation</h3>
+        <p class="text-sm text-muted-foreground">
+          See <code>/web/src/components/features/staking/README.md</code> for complete integration guide,
+          Convex queries/mutations, type definitions, and best practices.
+        </p>
+      </div>
+    </div>
+  </div>
+</Layout>

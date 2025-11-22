@@ -1,0 +1,150 @@
+---
+import Layout from '@/layouts/Layout.astro';
+import { WalletProvider } from '@/components/features/wallet/WalletProvider';
+import { WalletConnect } from '@/components/features/wallet/WalletConnect';
+import { NetworkSwitcher } from '@/components/features/wallet/NetworkSwitcher';
+
+const title = 'Wallet Demo';
+const description = 'Connect your Web3 wallet and switch between networks';
+---
+
+<Layout title={title} description={description}>
+  <div class="container mx-auto px-4 py-8 max-w-6xl">
+    <!-- Header -->
+    <div class="mb-8">
+      <h1 class="text-4xl font-bold mb-2">Wallet Connection</h1>
+      <p class="text-lg text-muted-foreground">
+        Connect your Web3 wallet to interact with the platform
+      </p>
+    </div>
+
+    <!-- Wallet Provider wraps all wallet components -->
+    <WalletProvider client:only="react">
+      <div class="grid md:grid-cols-2 gap-6">
+        <!-- Wallet Connection -->
+        <div>
+          <h2 class="text-2xl font-semibold mb-4">Connect Wallet</h2>
+          <WalletConnect client:load />
+        </div>
+
+        <!-- Network Switcher -->
+        <div>
+          <h2 class="text-2xl font-semibold mb-4">Switch Network</h2>
+          <NetworkSwitcher client:load />
+        </div>
+      </div>
+
+      <!-- Integration Guide -->
+      <div class="mt-12 prose prose-slate dark:prose-invert max-w-none">
+        <h2>Integration Guide</h2>
+
+        <h3>1. Environment Setup</h3>
+        <p>Add your WalletConnect Project ID to <code>.env</code>:</p>
+        <pre><code>PUBLIC_WALLETCONNECT_PROJECT_ID=your_project_id_here</code></pre>
+        <p>
+          Get your Project ID from{' '}
+          <a href="https://cloud.walletconnect.com/" target="_blank" rel="noopener">
+            WalletConnect Cloud
+          </a>
+        </p>
+
+        <h3>2. Wrap Your App</h3>
+        <p>Add <code>WalletProvider</code> to your layout:</p>
+        <pre><code>{`---
+import { WalletProvider } from '@/components/features/wallet';
+---
+
+<Layout>
+  <WalletProvider client:only="react">
+    <slot />
+  </WalletProvider>
+</Layout>`}</code></pre>
+
+        <h3>3. Use Wallet Components</h3>
+        <p>Import and use wallet components in your pages:</p>
+        <pre><code>{`---
+import { WalletConnect, NetworkSwitcher } from '@/components/features/wallet';
+---
+
+<WalletConnect client:load />
+<NetworkSwitcher client:load />`}</code></pre>
+
+        <h3>4. Use Wallet Hooks</h3>
+        <p>Access wallet state in your React components:</p>
+        <pre><code>{`import { useAccount, useBalance, useSignMessage } from 'wagmi';
+
+export function MyComponent() {
+  const { address, isConnected, chain } = useAccount();
+  const { data: balance } = useBalance({ address });
+  const { signMessage } = useSignMessage();
+
+  // Your component logic...
+}`}</code></pre>
+
+        <h3>5. Supported Networks</h3>
+        <ul>
+          <li><strong>Base (8453)</strong> - Production network</li>
+          <li><strong>Base Sepolia (84532)</strong> - Testnet for development</li>
+        </ul>
+
+        <h3>6. Available Hooks</h3>
+        <p>wagmi provides many useful hooks:</p>
+        <ul>
+          <li><code>useAccount()</code> - Get connected account info</li>
+          <li><code>useBalance()</code> - Get account balance</li>
+          <li><code>useConnect()</code> - Connect wallet programmatically</li>
+          <li><code>useDisconnect()</code> - Disconnect wallet</li>
+          <li><code>useSwitchChain()</code> - Switch networks</li>
+          <li><code>useSignMessage()</code> - Sign messages</li>
+          <li><code>useReadContract()</code> - Read from smart contracts</li>
+          <li><code>useWriteContract()</code> - Write to smart contracts</li>
+          <li><code>useWaitForTransactionReceipt()</code> - Wait for transactions</li>
+        </ul>
+
+        <h3>7. Integration with Convex</h3>
+        <p>Save wallet address to user entity:</p>
+        <pre><code>{`import { useMutation } from 'convex/react';
+import { api } from '@/convex/_generated/api';
+import { useAccount } from 'wagmi';
+
+export function SaveWalletAddress() {
+  const { address } = useAccount();
+  const updateUser = useMutation(api.mutations.users.update);
+
+  const saveAddress = async () => {
+    if (!address) return;
+
+    await updateUser({
+      walletAddress: address,
+    });
+  };
+
+  return (
+    <button onClick={saveAddress}>
+      Save Wallet Address
+    </button>
+  );
+}`}</code></pre>
+
+        <h3>Resources</h3>
+        <ul>
+          <li>
+            <a href="https://www.rainbowkit.com/docs/introduction" target="_blank" rel="noopener">
+              RainbowKit Documentation
+            </a>
+          </li>
+          <li>
+            <a href="https://wagmi.sh/react/getting-started" target="_blank" rel="noopener">
+              wagmi Documentation
+            </a>
+          </li>
+          <li>
+            <a href="https://docs.base.org/" target="_blank" rel="noopener">
+              Base Network Documentation
+            </a>
+          </li>
+        </ul>
+      </div>
+    </WalletProvider>
+  </div>
+</Layout>

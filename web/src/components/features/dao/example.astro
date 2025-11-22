@@ -1,0 +1,77 @@
+---
+/**
+ * Example DAO Governance Page
+ *
+ * This demonstrates how to use the GovernanceInterface component in an Astro page.
+ * Copy this to /web/src/pages/dao/[id].astro to create a DAO governance page.
+ */
+
+import Layout from '@/layouts/Layout.astro';
+import { GovernanceInterface } from '@/components/features/dao';
+
+// Get DAO ID from URL params
+const { id } = Astro.params;
+
+// Optional: Get user address from session/cookie
+// const userAddress = Astro.cookies.get('wallet_address')?.value;
+
+const title = 'DAO Governance';
+const description = 'Participate in DAO governance by voting on proposals';
+---
+
+<Layout title={title} description={description}>
+  <div class="container mx-auto py-8 px-4">
+    <div class="max-w-6xl mx-auto">
+      {/* Page Header */}
+      <div class="mb-8">
+        <h1 class="text-4xl font-bold mb-2">DAO Governance</h1>
+        <p class="text-lg text-muted-foreground">
+          Vote on proposals, create new proposals, and participate in DAO decision-making
+        </p>
+      </div>
+
+      {/* Governance Interface */}
+      <GovernanceInterface
+        client:load
+        daoId={id || 'default-dao'}
+        groupId="my-group-id"
+        userAddress="0x1234567890abcdef"
+      />
+
+      {/* Help Section */}
+      <div class="mt-12 p-6 rounded-lg border bg-muted/50">
+        <h2 class="text-xl font-bold mb-4">How DAO Governance Works</h2>
+        <div class="grid md:grid-cols-2 gap-4 text-sm">
+          <div>
+            <h3 class="font-semibold mb-2">Creating Proposals</h3>
+            <p class="text-muted-foreground">
+              Any member can create a proposal. Click "Create Proposal" to submit a new
+              proposal for the DAO to vote on.
+            </p>
+          </div>
+          <div>
+            <h3 class="font-semibold mb-2">Voting</h3>
+            <p class="text-muted-foreground">
+              Vote "For" to support, "Against" to oppose, or "Abstain" to participate
+              without taking a position. Your voting power is based on your token holdings.
+            </p>
+          </div>
+          <div>
+            <h3 class="font-semibold mb-2">Quorum</h3>
+            <p class="text-muted-foreground">
+              A minimum number of votes (quorum) must be reached for a proposal to be valid.
+              Watch the quorum progress bar on each proposal.
+            </p>
+          </div>
+          <div>
+            <h3 class="font-semibold mb-2">Execution</h3>
+            <p class="text-muted-foreground">
+              Proposals that succeed and meet quorum can be executed. Execution performs
+              the on-chain actions specified in the proposal.
+            </p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</Layout>
