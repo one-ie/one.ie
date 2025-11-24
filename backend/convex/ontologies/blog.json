@@ -1,0 +1,30 @@
+{
+  "name": "blog",
+  "description": "Blog and content publishing functionality",
+  "version": "1.0.0",
+  "requires": ["base"],
+  "thingTypes": [
+    "blog_post",
+    "blog_draft",
+    "blog_category",
+    "blog_tag",
+    "comment",
+    "author"
+  ],
+  "connectionTypes": [
+    "authored",
+    "published_to",
+    "categorized_as",
+    "tagged_with",
+    "commented_on",
+    "replied_to"
+  ],
+  "eventTypes": [
+    "post_published",
+    "post_updated",
+    "post_deleted",
+    "comment_added",
+    "comment_moderated",
+    "post_viewed"
+  ]
+}

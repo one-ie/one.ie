@@ -1,0 +1,34 @@
+{
+  "name": "courses",
+  "description": "Online learning and course management",
+  "version": "1.0.0",
+  "requires": ["base"],
+  "thingTypes": [
+    "course",
+    "lesson",
+    "module",
+    "quiz",
+    "assignment",
+    "enrollment",
+    "certificate",
+    "progress"
+  ],
+  "connectionTypes": [
+    "enrolled_in",
+    "completed",
+    "teaching",
+    "assigned_to",
+    "submitted",
+    "graded_by",
+    "certified_for"
+  ],
+  "eventTypes": [
+    "course_enrolled",
+    "lesson_started",
+    "lesson_completed",
+    "quiz_submitted",
+    "assignment_submitted",
+    "grade_received",
+    "certificate_earned"
+  ]
+}

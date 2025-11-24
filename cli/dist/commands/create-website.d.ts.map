@@ -1,0 +1,1 @@
+{"version":3,"file":"create-website.d.ts","sourceRoot":"","sources":["../../src/commands/create-website.ts"],"names":[],"mappings":"AAAA;;;;;;;;GAQG;AAkBH,UAAU,cAAc;IACtB,IAAI,CAAC,EAAE,MAAM,CAAC;IACd,OAAO,CAAC,EAAE,MAAM,CAAC;IACjB,UAAU,CAAC,EAAE,MAAM,CAAC;IACpB,SAAS,CAAC,EAAE,MAAM,CAAC;IACnB,cAAc,CAAC,EAAE,OAAO,CAAC;CAC1B;AAED,wBAAsB,aAAa,CAAC,OAAO,GAAE,cAAmB,iBA8B/D"}

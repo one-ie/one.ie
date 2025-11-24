@@ -1,0 +1,34 @@
+{
+  "name": "ecommerce",
+  "description": "E-commerce and marketplace functionality",
+  "version": "1.0.0",
+  "requires": ["base"],
+  "thingTypes": [
+    "product",
+    "product_variant",
+    "cart",
+    "order",
+    "payment",
+    "shipping",
+    "review",
+    "discount",
+    "inventory"
+  ],
+  "connectionTypes": [
+    "purchased",
+    "added_to_cart",
+    "reviewed",
+    "discounted_by",
+    "shipped_to",
+    "fulfilled_by"
+  ],
+  "eventTypes": [
+    "product_viewed",
+    "cart_updated",
+    "order_placed",
+    "payment_processed",
+    "order_shipped",
+    "order_delivered",
+    "review_submitted"
+  ]
+}

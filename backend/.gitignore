@@ -1,0 +1,44 @@
+# Environment files
+.env
+.env.local
+.env.*.local
+
+# Dependencies
+node_modules/
+
+# Build outputs
+.astro/
+dist/
+apps/
+/apps
+/apps/*
+docs/
+cli/
+one/
+web/
+backend/
+import/
+# Ignore patterns
+.gi
+
+# Installation folders (customer-specific customization)
+# Exclude by default - customers can opt-in via separate repo
+
+# Exception: Always track global templates
+!/.claude/
+
+# macOS
+.DS_Store
+.AppleDouble
+.LSOverride
+
+# Editor files
+.vscode/
+.idea/
+
+# Temporary files
+*.tmp
+*.bak
+*.swp
+*.swo
+*~

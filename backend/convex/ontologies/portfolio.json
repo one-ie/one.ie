@@ -1,0 +1,28 @@
+{
+  "name": "portfolio",
+  "description": "Portfolio and showcase functionality",
+  "version": "1.0.0",
+  "requires": ["base"],
+  "thingTypes": [
+    "project",
+    "case_study",
+    "testimonial",
+    "skill",
+    "certificate",
+    "work_experience"
+  ],
+  "connectionTypes": [
+    "showcases",
+    "demonstrates",
+    "endorsed_by",
+    "certified_in",
+    "worked_on"
+  ],
+  "eventTypes": [
+    "project_published",
+    "project_updated",
+    "testimonial_added",
+    "skill_endorsed",
+    "portfolio_viewed"
+  ]
+}

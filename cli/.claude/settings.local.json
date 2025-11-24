@@ -1,0 +1,113 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(convex dev:*)",
+      "Bash(cat:*)",
+      "Bash(chmod:*)",
+      "Bash(./scripts/migrate-to-backend-convex.sh:*)",
+      "Bash(npx convex deploy:*)",
+      "Bash(lsof:*)",
+      "Bash(xargs kill:*)",
+      "Bash(bun run:*)",
+      "Bash(npx convex:*)",
+      "Bash(timeout 5 npx convex run queries/connections:list)",
+      "Bash(git add:*)",
+      "Bash(git commit -m:*)",
+      "Bash(git push:*)",
+      "Bash(bunx astro:*)",
+      "Bash(git commit:*)",
+      "Bash(git rev-parse:*)",
+      "Bash(git checkout:*)",
+      "Bash(git merge:*)",
+      "Bash(repomix:*)",
+      "Bash(bun scripts/validate-6-dimension-migration.ts:*)",
+      "Bash(gh pr create:*)",
+      "Bash(mkdir:*)",
+      "Bash(git clone:*)",
+      "Bash(mv:*)",
+      "Bash(rm:*)",
+      "Bash(/Users/toc/Server/ONE/.claude/hooks/validate-ontology-structure.py)",
+      "Bash(echo \"Exit code: $?\")",
+      "Bash(/Users/toc/Server/ONE/.claude/hooks/check-filenames.py)",
+      "Bash(bun install:*)",
+      "Bash(tree:*)",
+      "Bash(curl:*)",
+      "Bash(wrangler pages deployment list:*)",
+      "Bash(bun add:*)",
+      "Bash(bun test:*)",
+      "Bash(node:*)",
+      "Bash(./scripts/pre-deployment-check.sh:*)",
+      "Bash(./scripts/release.sh:*)",
+      "Bash(git tag:*)",
+      "Bash(npm whoami:*)",
+      "Bash(npm publish:*)",
+      "Bash(npm version:*)",
+      "Bash(npm view:*)",
+      "Bash(./scripts/cloudflare-deploy.sh:*)",
+      "Bash(wrangler pages deploy:*)",
+      "Bash(npx oneie@latest --version)",
+      "Bash([ -d web ])",
+      "Bash(git rm:*)",
+      "WebFetch(domain:github.com)"
+    ],
+    "deny": [],
+    "ask": []
+  },
+  "enabledMcpjsonServers": [],
+  "hooks": {
+    "UserPromptSubmit": [
+      {
+        "hooks": [
+          {
+            "type": "command",
+            "command": "\"$CLAUDE_PROJECT_DIR\"/.claude/hooks/todo.py",
+            "timeout": 10
+          }
+        ]
+      }
+    ],
+    "Stop": [
+      {
+        "hooks": [
+          {
+            "type": "command",
+            "command": "\"$CLAUDE_PROJECT_DIR\"/.claude/hooks/done.py",
+            "timeout": 10
+          }
+        ]
+      }
+    ],
+    "PreToolUse": [
+      {
+        "matcher": "Edit|Write|MultiEdit",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "\"$CLAUDE_PROJECT_DIR\"/.claude/hooks/validate-ontology-structure.py"
+          },
+          {
+            "type": "command",
+            "command": "\"$CLAUDE_PROJECT_DIR\"/.claude/hooks/knowledge-pre.py",
+            "timeout": 5
+          }
+        ]
+      }
+    ],
+    "PostToolUse": [
+      {
+        "matcher": "Edit|Write|MultiEdit",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "\"$CLAUDE_PROJECT_DIR\"/.claude/hooks/validate-ontology-structure.py"
+          },
+          {
+            "type": "command",
+            "command": "\"$CLAUDE_PROJECT_DIR\"/.claude/hooks/knowledge-post.py",
+            "timeout": 5
+          }
+        ]
+      }
+    ]
+  }
+}

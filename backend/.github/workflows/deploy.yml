@@ -1,0 +1,108 @@
+name: Deploy ONE Platform
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+    branches: [main]
+
+env:
+  INSTALLATION_NAME: ${{ secrets.INSTALLATION_NAME || 'one-group' }}
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Setup Bun
+        uses: oven-sh/setup-bun@v1
+
+      - name: Install dependencies
+        run: |
+          cd web && bun install
+          cd ../cli && bun install
+
+      - name: Run tests
+        run: |
+          cd web && bun test
+          cd ../cli && bun test
+
+      - name: Type check
+        run: cd web && bunx astro check
+
+  build-web:
+    needs: test
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Setup Bun
+        uses: oven-sh/setup-bun@v1
+
+      - name: Check for installation folder
+        id: check-installation
+        run: |
+          if [ -d "/${INSTALLATION_NAME}" ]; then
+            echo "found=true" >> $GITHUB_OUTPUT
+            echo "✅ Installation folder found: /${INSTALLATION_NAME}"
+          else
+            echo "found=false" >> $GITHUB_OUTPUT
+            echo "⚠️ Installation folder not found, using global /one/ only"
+          fi
+
+      - name: Build web
+        working-directory: web
+        env:
+          PUBLIC_CONVEX_URL: ${{ secrets.PUBLIC_CONVEX_URL }}
+          INSTALLATION_NAME: ${{ env.INSTALLATION_NAME }}
+          PUBLIC_INSTALLATION_NAME: ${{ env.INSTALLATION_NAME }}
+        run: bun run build
+
+      - name: Upload dist artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: web-dist
+          path: web/dist
+
+  deploy-cloudflare:
+    needs: build-web
+    runs-on: ubuntu-latest
+    if: github.ref == 'refs/heads/main'
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Download dist artifact
+        uses: actions/download-artifact@v4
+        with:
+          name: web-dist
+          path: web/dist
+
+      - name: Deploy to Cloudflare Pages
+        uses: cloudflare/pages-action@v1
+        with:
+          apiToken: ${{ secrets.CLOUDFLARE_API_TOKEN }}
+          accountId: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
+          projectName: web
+          directory: web/dist
+          gitHubToken: ${{ secrets.GITHUB_TOKEN }}
+
+  deploy-convex:
+    needs: test
+    runs-on: ubuntu-latest
+    if: github.ref == 'refs/heads/main'
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+
+      - name: Deploy to Convex
+        working-directory: backend
+        env:
+          CONVEX_DEPLOY_KEY: ${{ secrets.CONVEX_DEPLOY_KEY }}
+        run: |
+          npm install -g convex
+          npx convex deploy --cmd 'bun run build'

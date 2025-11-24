@@ -1,0 +1,33 @@
+{
+  "name": "base",
+  "description": "Core ontology required for all ONE Platform installations",
+  "version": "1.0.0",
+  "thingTypes": [
+    "creator",
+    "user",
+    "organization",
+    "group",
+    "content",
+    "file",
+    "image",
+    "video",
+    "audio"
+  ],
+  "connectionTypes": [
+    "owns",
+    "created_by",
+    "member_of",
+    "following",
+    "part_of",
+    "references"
+  ],
+  "eventTypes": [
+    "thing_created",
+    "thing_updated",
+    "thing_deleted",
+    "connection_created",
+    "connection_deleted",
+    "user_login",
+    "user_logout"
+  ]
+}

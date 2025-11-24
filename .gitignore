@@ -25,8 +25,6 @@
 
 # Explicitly exclude unwanted directories (must come after !*/)
 /apps/
-/backend/
-/cli/
 /docs/
 /import/
 /one.ie/
